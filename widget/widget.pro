@@ -5,6 +5,10 @@ QT += core gui
 contains(QT_MAJOR_VERSION, 5) {
     QT += widgets
 }
+CONFIG += debug_and_release
+CONFIG(debug, debug|release) {
+    TARGET = ChartWidgetd
+}
 
 SOURCES += \
     chartwidget.cpp

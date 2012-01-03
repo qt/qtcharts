@@ -1,5 +1,9 @@
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/Charts
 
 contains(CHARTS, widget) {
+    CONFIG(debug, debug|release) {
+        LIBS += -lChartWidgetd
+    } else {
 	LIBS += -lChartWidget
+    }
 }
