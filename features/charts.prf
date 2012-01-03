@@ -1,0 +1,5 @@
+INCLUDEPATH += $$[QT_INSTALL_HEADERS]/Charts
+
+contains(CHARTS, widget) {
+	LIBS += -lChartWidget
+}
