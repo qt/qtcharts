@@ -4,7 +4,7 @@ TARGET = qmlchartplugin
 CONFIG += qt plugin
 QT += declarative
 
-contains($$QT_MAJOR_VERSION, 5) {
+contains(QT_MAJOR_VERSION, 5) {
     DEFINES += QTQUICK2
 }
 
