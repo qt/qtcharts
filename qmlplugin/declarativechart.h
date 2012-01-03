@@ -2,7 +2,7 @@
 #define DECLARATIVECHART_H
 
 #include <QtCore/QtGlobal>
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+#ifndef QTQUICK2
     #include <QDeclarativeItem>
 #else
     #include <QtQuick/QQuickPaintedItem>
@@ -10,7 +10,7 @@
 #include <QColor>
 #include "../src/chart.h"
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+#ifndef QTQUICK2
 class DeclarativeChart : public QDeclarativeItem, public Chart
 #else
 class DeclarativeChart : public QQuickPaintedItem, public Chart
@@ -20,13 +20,13 @@ class DeclarativeChart : public QQuickPaintedItem, public Chart
     Q_PROPERTY(QColor color READ color WRITE setColor)
 
 public:
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+#ifndef QTQUICK2
     DeclarativeChart(QDeclarativeItem *parent = 0);
 #else
     DeclarativeChart(QQuickItem *parent = 0);
 #endif
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+#ifndef QTQUICK2
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 #else
     void paint(QPainter *painter);

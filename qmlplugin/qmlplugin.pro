@@ -4,6 +4,10 @@ TARGET = qmlchartplugin
 CONFIG += qt plugin
 QT += declarative
 
+contains($$QT_MAJOR_VERSION, 5) {
+    DEFINES += QTQUICK2
+}
+
 OBJECTS_DIR = tmp
 MOC_DIR = tmp
 

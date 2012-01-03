@@ -1,7 +1,7 @@
 #include "declarativechart.h"
 #include <QPainter>
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+#ifndef QTQUICK2
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     : QDeclarativeItem(parent)
 {
@@ -16,7 +16,7 @@ DeclarativeChart::DeclarativeChart(QQuickItem *parent)
 }
 #endif
 
-#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
+#ifndef QTQUICK2
 void DeclarativeChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 #else
 void DeclarativeChart::paint(QPainter *painter)
