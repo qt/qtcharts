@@ -12,5 +12,11 @@ CHARTS += widget
 OBJECTS_DIR = tmp
 MOC_DIR = tmp
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    mainwidget.cpp
+
+HEADERS += \
+    mainwidget.h
+
+
 

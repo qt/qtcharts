@@ -4,16 +4,14 @@
 #else
 #include <QtWidgets/QApplication>
 #endif
-#include <chartwidget.h>
+#include "mainwidget.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    ChartWidget w;
-    w.resize(QSize(200,200));
-    w.setColor(Qt::red);
+    MainWidget w;
     w.show();
-    
+
     return a.exec();
 }

@@ -1,5 +1,5 @@
-//import QtQuick 1.1
-import QtQuick 2.0
+import QtQuick 1.1
+//import QtQuick 2.0
 import com.digia.charts 1.0
 
 Chart {
