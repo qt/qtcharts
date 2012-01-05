@@ -19,6 +19,8 @@ MainWidget::MainWidget(QWidget *parent) :
     m_chartWidget->setColor(Qt::red);
 
     // Chart type
+    // TODO: How about multiple types?
+    // Should the type be a property of a graph instead of the chart?
     QComboBox *chartTypeCombo = new QComboBox(this);
     chartTypeCombo->addItem("Line");
     chartTypeCombo->addItem("Area");
@@ -42,6 +44,7 @@ MainWidget::MainWidget(QWidget *parent) :
             this, SLOT(backgroundChanged(int)));
 
     // Axis
+    // TODO: multiple axes?
     QCheckBox *autoScaleCheck = new QCheckBox("Automatic scaling");
     connect(autoScaleCheck, SIGNAL(stateChanged(int)), this, SLOT(autoScaleChanged(int)));
     // Allow setting also non-sense values (like -2147483648 and 2147483647)
