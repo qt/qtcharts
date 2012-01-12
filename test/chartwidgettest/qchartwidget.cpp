@@ -4,17 +4,12 @@
 #include <QGraphicsScene>
 
 QChartWidget::QChartWidget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    m_scatter(0)
 {
-    // scatter
     m_scene = new QGraphicsScene();
     m_view = new QGraphicsView(m_scene, this);
-    m_view->resize(300, 300);
-
-    // TODO: implement graphics item for axis
-    m_scene->addLine(0, 0, 0, 100);
-    m_scene->addLine(0, 100, 100, 100);
-
+    m_view->resize(490, 300);
     m_view->show();
 }
 
@@ -38,4 +33,12 @@ void QChartWidget::setType(/*TODO QChart::Type*/ int type)
             m_scatter = 0;
         }
     }
+}
+
+void QChartWidget::setData(QList<QChartDataPoint> data)
+//void QChartWidget::setData(QList<int> data)
+{
+    // TODO: other chart types... this looks ugly
+    if (m_scatter)
+        m_scatter->setData(data);
 }

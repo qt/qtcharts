@@ -15,12 +15,16 @@ MOC_DIR = tmp
 SOURCES += main.cpp \
     mainwidget.cpp \
     qscatterseries.cpp \
-    qchartwidget.cpp
+    qchartwidget.cpp \
+    qseriespointgraphicsitem.cpp
 
 HEADERS += \
     mainwidget.h \
     qscatterseries.h \
-    qchartwidget.h
+    qchartwidget.h \
+    qseriespointgraphicsitem.h
+
+
 
 
 

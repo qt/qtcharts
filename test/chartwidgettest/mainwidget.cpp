@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QSpacerItem>
 #include <QMessageBox>
+#include <cmath>
 #include <QDebug>
 
 MainWidget::MainWidget(QWidget *parent) :
@@ -96,6 +97,7 @@ MainWidget::MainWidget(QWidget *parent) :
     setLayout(hbox);
 
     m_autoScaleCheck->setChecked(true);
+    chartTypeChanged(4);
 }
 
 void MainWidget::chartTypeChanged(int itemIndex)
@@ -103,12 +105,24 @@ void MainWidget::chartTypeChanged(int itemIndex)
     // TODO: change chart type
     switch (itemIndex) {
     case 4: {
-            m_chartWidget->setType(4);
-            break;
-        }
-    default:
+        QList<QChartDataPoint> data;
+        for (int x = 0; x < 1000; ++x) {
+            data.append(QChartDataPoint() << x -200 << 2 * (uint(sin(3.14159/50*x)*80) % 100));
+         }
+//        data.append(QChartDataPoint() << 0 << 0);
+//        data.append(QChartDataPoint() << 2 << 2);
+//        data.append(QChartDataPoint() << 4 << 5);
+//        data.append(QChartDataPoint() << 5 << 9);
+//        data.append(QChartDataPoint() << 20 << 20);
+//        QList<int> data;
+        m_chartWidget->setType(4);
+        m_chartWidget->setData(data);
+        break;
+    }
+    default: {
         m_chartWidget->setType(0);
         break;
+    }
     }
 }
 

@@ -3,16 +3,23 @@
 
 #include <QGraphicsItem>
 
+// TODO:
+#define QChartDataPoint QList<QVariant>
+
+class QSeriesPointGraphicsItem;
+
 class QScatterSeries : public QGraphicsItem
 {
 public:
-    explicit QScatterSeries(QGraphicsItem *parent = 0);
+    QScatterSeries(QGraphicsItem *parent = 0);
+    void setData(QList<QChartDataPoint> data);
+//    void setData(QList<int> data);
 
 signals:
 
 public slots:
 
-private:
+public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 };
