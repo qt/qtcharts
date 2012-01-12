@@ -3,8 +3,9 @@
 
 #include <QWidget>
 
-class ChartWidget;
+class QChartWidget;
 class QSpinBox;
+class QCheckBox;
 
 class MainWidget : public QWidget
 {
@@ -25,7 +26,8 @@ private slots:
     void yMaxChanged(int value);
 
 private:
-    ChartWidget *m_chartWidget;
+    QChartWidget *m_chartWidget;
+    QCheckBox *m_autoScaleCheck;
     QSpinBox *m_xMinSpin;
     QSpinBox *m_xMaxSpin;
     QSpinBox *m_yMinSpin;

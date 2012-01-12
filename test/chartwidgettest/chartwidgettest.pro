@@ -13,10 +13,16 @@ OBJECTS_DIR = tmp
 MOC_DIR = tmp
 
 SOURCES += main.cpp \
-    mainwidget.cpp
+    mainwidget.cpp \
+    qscatterseries.cpp \
+    qchartwidget.cpp
 
 HEADERS += \
-    mainwidget.h
+    mainwidget.h \
+    qscatterseries.h \
+    qchartwidget.h
+
+
 
 
 

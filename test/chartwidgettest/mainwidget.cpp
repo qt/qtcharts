@@ -1,5 +1,6 @@
 #include "mainwidget.h"
-#include <chartwidget.h>
+#include "qchartwidget.h"
+//#include <chartwidget.h>
 #include <QPushButton>
 #include <QComboBox>
 #include <QSpinBox>
@@ -14,10 +15,9 @@
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent)
 {
-    m_chartWidget = new ChartWidget(this);
-    m_chartWidget->resize(QSize(200,200));
-    m_chartWidget->setColor(Qt::red);
-
+    m_chartWidget = new QChartWidget(this);
+//    m_chartWidget->resize(QSize(200,200));
+//    m_chartWidget->setColor(Qt::red);
     // Chart type
     // TODO: How about multiple types?
     // Should the type be a property of a graph instead of the chart?
@@ -32,10 +32,8 @@ MainWidget::MainWidget(QWidget *parent) :
             this, SLOT(chartTypeChanged(int)));
 
     // Test data selector
-    QComboBox *dataCombo = new QComboBox(this);
-    dataCombo->addItem("todo: add test data");
-    connect(dataCombo, SIGNAL(currentIndexChanged(QString)),
-            this, SLOT(dataChanged(QString)));
+    QPushButton *fileButton = new QPushButton("From file");
+    QPushButton *urlButton = new QPushButton("From URL");
 
     // Chart background
     QComboBox *backgroundCombo = new QComboBox(this);
@@ -45,8 +43,8 @@ MainWidget::MainWidget(QWidget *parent) :
 
     // Axis
     // TODO: multiple axes?
-    QCheckBox *autoScaleCheck = new QCheckBox("Automatic scaling");
-    connect(autoScaleCheck, SIGNAL(stateChanged(int)), this, SLOT(autoScaleChanged(int)));
+    m_autoScaleCheck = new QCheckBox("Automatic scaling");
+    connect(m_autoScaleCheck, SIGNAL(stateChanged(int)), this, SLOT(autoScaleChanged(int)));
     // Allow setting also non-sense values (like -2147483648 and 2147483647)
     m_xMinSpin = new QSpinBox();
     m_xMinSpin->setMinimum(INT_MIN);
@@ -72,20 +70,21 @@ MainWidget::MainWidget(QWidget *parent) :
     QGridLayout *grid = new QGridLayout();
     QHBoxLayout *hbox = new QHBoxLayout();
     grid->addWidget(new QLabel("Chart type:"), 0, 0);
-    grid->addWidget(chartTypeCombo, 0, 1);
+    grid->addWidget(chartTypeCombo, 0, 1, 1, 2);
     grid->addWidget(new QLabel("Data:"), 1, 0);
-    grid->addWidget(dataCombo, 1, 1);
+    grid->addWidget(fileButton, 1, 1);
+    grid->addWidget(urlButton, 1, 2);
     grid->addWidget(new QLabel("Background:"), 2, 0);
-    grid->addWidget(backgroundCombo, 2, 1);
-    grid->addWidget(autoScaleCheck, 3, 0);
+    grid->addWidget(backgroundCombo, 2, 1, 1, 2);
+    grid->addWidget(m_autoScaleCheck, 3, 0);
     grid->addWidget(new QLabel("x min:"), 4, 0);
-    grid->addWidget(m_xMinSpin, 4, 1);
+    grid->addWidget(m_xMinSpin, 4, 1, 1, 2);
     grid->addWidget(new QLabel("x max:"), 5, 0);
-    grid->addWidget(m_xMaxSpin, 5, 1);
+    grid->addWidget(m_xMaxSpin, 5, 1, 1, 2);
     grid->addWidget(new QLabel("y min:"), 6, 0);
-    grid->addWidget(m_yMinSpin, 6, 1);
+    grid->addWidget(m_yMinSpin, 6, 1, 1, 2);
     grid->addWidget(new QLabel("y max:"), 7, 0);
-    grid->addWidget(m_yMaxSpin, 7, 1);
+    grid->addWidget(m_yMaxSpin, 7, 1, 1, 2);
     // add row with empty label to make all the other rows static
     grid->addWidget(new QLabel(""), 8, 0);
     grid->setRowStretch(8, 1);
@@ -96,17 +95,21 @@ MainWidget::MainWidget(QWidget *parent) :
 
     setLayout(hbox);
 
-    // Setting auto scale affects min/max value spin boxes, so it needs to be done after they have
-    // been constructed
-    autoScaleCheck->setChecked(true);
+    m_autoScaleCheck->setChecked(true);
 }
 
 void MainWidget::chartTypeChanged(int itemIndex)
 {
-    qDebug() << "chartTypeChanged: " << itemIndex;
-    QMessageBox msg;
-    msg.setText("TODO: API for setting chart type");
-    msg.exec();
+    // TODO: change chart type
+    switch (itemIndex) {
+    case 4: {
+            m_chartWidget->setType(4);
+            break;
+        }
+    default:
+        m_chartWidget->setType(0);
+        break;
+    }
 }
 
 void MainWidget::dataChanged(QString itemText)
@@ -121,17 +124,16 @@ void MainWidget::backgroundChanged(int itemIndex)
 
 void MainWidget::autoScaleChanged(int value)
 {
-    if (this->isVisible()) {
-        QMessageBox msg;
-        msg.setText("TODO: APIs for using either auto scaling or explicit values");
-        msg.exec();
+    if (value) {
+        // TODO: enable auto scaling
+    } else {
+        // TODO: set scaling manually (and disable auto scaling)
     }
 
-    // TODO: get initial spin box axis values from charts widget
-    m_xMinSpin->setEnabled(value == Qt::Unchecked);
-    m_xMaxSpin->setEnabled(value == Qt::Unchecked);
-    m_yMinSpin->setEnabled(value == Qt::Unchecked);
-    m_yMaxSpin->setEnabled(value == Qt::Unchecked);
+    m_xMinSpin->setEnabled(!value);
+    m_xMaxSpin->setEnabled(!value);
+    m_yMinSpin->setEnabled(!value);
+    m_yMaxSpin->setEnabled(!value);
 }
 
 void MainWidget::xMinChanged(int value)
