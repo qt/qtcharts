@@ -1,0 +1,25 @@
+#ifndef CHARTCONFIG_H
+#define CHARTCONFIG_H
+
+#define QCHART_VERSION_STR   "1.0"
+#define QCHART_VERSION 0x01
+
+#if defined(QCHART_LIBRARY)
+#  define QCHART_EXPORT Q_DECL_EXPORT
+#else
+#  define QCHART_EXPORT Q_DECL_IMPORT
+#endif
+
+#define QCHART_NAMESPACE QtChart
+
+#ifdef QCHART_NAMESPACE
+# define QCHART_BEGIN_NAMESPACE namespace QCHART_NAMESPACE {
+# define QCHART_END_NAMESPACE }
+# define QCHART_USE_NAMESPACE using namespace QCHART_NAMESPACE;
+#else
+# define QCHART_BEGIN_NAMESPACE
+# define QCHART_END_NAMESPACE
+# define QCHART_USE_NAMESPACE
+#endif
+
+#endif
