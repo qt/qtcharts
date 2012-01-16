@@ -28,8 +28,8 @@ int main(int argc, char *argv[])
 
     for (int x = 0; x < numPoints; ++x) {
     	  series0->add(x,0);
-    	  series1->add(x, uint(sin(PI/25*x)*100) % 100);
-    	  series2->add(x, uint(cos(PI/25*x)*100) % 100);
+    	  series1->add(x, abs(sin(PI/50*x)*100));
+    	  series2->add(x, abs(cos(PI/50*x)*100));
     	  series3->add(x,100);
      }
 
