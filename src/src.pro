@@ -28,7 +28,8 @@ PUBLIC_HEADERS += \
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 
-INCLUDEPATH += xylinechart
+INCLUDEPATH += xylinechart \
+               .
 
 OBJECTS_DIR = ../build/lib
 MOC_DIR = ../build/lib
