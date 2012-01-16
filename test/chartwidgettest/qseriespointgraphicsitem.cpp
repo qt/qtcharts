@@ -25,13 +25,17 @@ void QSeriesPointGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphi
 
     QPen pen = painter->pen();
     QBrush brush = pen.brush();
-    brush.setColor(Qt::darkRed);
+    // TODO: The opacity should be user definable...
+    brush.setColor(QColor(255, 82, 0, 50));
     pen.setBrush(brush);
+    pen.setWidth(4);
     painter->setPen(pen);
+    painter->drawArc(0, 0, 4, 4, 0, 5760);
 
-    QPixmap pixmap;
-    pixmap.load("scatter.png");
-    painter->drawPixmap(boundingRect().toRect(), pixmap);
+    // TODO: how about using a bitmap?
+//    QPixmap pixmap;
+//    pixmap.load("scatter.png");
+//    painter->drawPixmap(boundingRect().toRect(), pixmap);
 
 //    painter->drawRect(boundingRect());
 }
