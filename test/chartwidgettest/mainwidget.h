@@ -17,7 +17,7 @@ signals:
 
 private slots:
     void chartTypeChanged(int itemIndex);
-    void dataChanged(QString itemText);
+    void testDataChanged(int itemIndex);
     void backgroundChanged(int itemIndex);
     void autoScaleChanged(int value);
     void xMinChanged(int value);

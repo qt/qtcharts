@@ -33,12 +33,20 @@ MainWidget::MainWidget(QWidget *parent) :
             this, SLOT(chartTypeChanged(int)));
 
     // Test data selector
-    QPushButton *fileButton = new QPushButton("From file");
-    QPushButton *urlButton = new QPushButton("From URL");
+    QComboBox *testDataCombo = new QComboBox(this);
+    testDataCombo->addItem("linear");
+    testDataCombo->addItem("SIN");
+    testDataCombo->addItem("SIN + random component");
+    testDataCombo->addItem("TODO From file...");
+    testDataCombo->addItem("TODO From URL...");
+    connect(testDataCombo, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(testDataChanged(int)));
 
     // Chart background
     QComboBox *backgroundCombo = new QComboBox(this);
-    backgroundCombo->addItem("todo: add background types");
+    backgroundCombo->addItem("None");
+    backgroundCombo->addItem("TODO Grid");
+    backgroundCombo->addItem("TODO Image");
     connect(backgroundCombo, SIGNAL(currentIndexChanged(int)),
             this, SLOT(backgroundChanged(int)));
 
@@ -71,21 +79,20 @@ MainWidget::MainWidget(QWidget *parent) :
     QGridLayout *grid = new QGridLayout();
     QHBoxLayout *hbox = new QHBoxLayout();
     grid->addWidget(new QLabel("Chart type:"), 0, 0);
-    grid->addWidget(chartTypeCombo, 0, 1, 1, 2);
+    grid->addWidget(chartTypeCombo, 0, 1);
     grid->addWidget(new QLabel("Data:"), 1, 0);
-    grid->addWidget(fileButton, 1, 1);
-    grid->addWidget(urlButton, 1, 2);
+    grid->addWidget(testDataCombo, 1, 1);
     grid->addWidget(new QLabel("Background:"), 2, 0);
-    grid->addWidget(backgroundCombo, 2, 1, 1, 2);
+    grid->addWidget(backgroundCombo, 2, 1);
     grid->addWidget(m_autoScaleCheck, 3, 0);
     grid->addWidget(new QLabel("x min:"), 4, 0);
-    grid->addWidget(m_xMinSpin, 4, 1, 1, 2);
+    grid->addWidget(m_xMinSpin, 4, 1);
     grid->addWidget(new QLabel("x max:"), 5, 0);
-    grid->addWidget(m_xMaxSpin, 5, 1, 1, 2);
+    grid->addWidget(m_xMaxSpin, 5, 1);
     grid->addWidget(new QLabel("y min:"), 6, 0);
-    grid->addWidget(m_yMinSpin, 6, 1, 1, 2);
+    grid->addWidget(m_yMinSpin, 6, 1);
     grid->addWidget(new QLabel("y max:"), 7, 0);
-    grid->addWidget(m_yMaxSpin, 7, 1, 1, 2);
+    grid->addWidget(m_yMaxSpin, 7, 1);
     // add row with empty label to make all the other rows static
     grid->addWidget(new QLabel(""), 8, 0);
     grid->setRowStretch(8, 1);
@@ -98,23 +105,16 @@ MainWidget::MainWidget(QWidget *parent) :
 
     m_autoScaleCheck->setChecked(true);
     chartTypeChanged(4);
+    testDataChanged(0);
 }
 
 void MainWidget::chartTypeChanged(int itemIndex)
 {
     // TODO: change chart type
     switch (itemIndex) {
-    case 4: {
-        QList<QChartDataPoint> data;
-        for (int x = 0; x < 1000; ++x) {
-            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
-            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
-            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
-         }
+    case 4:
         m_chartWidget->setType(4);
-        m_chartWidget->setData(data);
         break;
-    }
     default: {
         m_chartWidget->setType(0);
         break;
@@ -122,9 +122,41 @@ void MainWidget::chartTypeChanged(int itemIndex)
     }
 }
 
-void MainWidget::dataChanged(QString itemText)
+void MainWidget::testDataChanged(int itemIndex)
 {
-    qDebug() << "dataChanged: " << itemText;
+    qDebug() << "testDataChanged: " << itemIndex;
+
+    switch (itemIndex) {
+    case 0: {
+        QList<QChartDataPoint> data;
+        for (int x = 0; x < 20; x++) {
+            data.append(QChartDataPoint() << x << x / 2);
+        }
+        m_chartWidget->setData(data);
+        break;
+    }
+    case 1: {
+        QList<QChartDataPoint> data;
+        for (int x = 0; x < 100; x++) {
+            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100));
+        }
+        m_chartWidget->setData(data);
+        break;
+    }
+    case 2: {
+        QList<QChartDataPoint> data;
+        for (int x = 0; x < 1000; x++) {
+            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
+            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
+            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
+        }
+        m_chartWidget->setData(data);
+        break;
+    }
+    default:
+        break;
+    }
+
 }
 
 void MainWidget::backgroundChanged(int itemIndex)
