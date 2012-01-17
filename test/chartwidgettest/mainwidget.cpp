@@ -21,31 +21,9 @@ MainWidget::MainWidget(QWidget *parent) :
     m_chartWidget = new QChartWidget(this);
 //    m_chartWidget->resize(QSize(200,200));
 //    m_chartWidget->setColor(Qt::red);
-    // Chart type
-    // TODO: How about multiple types?
-    // Should the type be a property of a graph instead of the chart?
-//    QComboBox *chartTypeCombo = new QComboBox(this);
-//    chartTypeCombo->addItem("Line");
-//    chartTypeCombo->addItem("Area");
-//    chartTypeCombo->addItem("Bar");
-//    chartTypeCombo->addItem("Pie");
-//    chartTypeCombo->addItem("Scatter");
-//    chartTypeCombo->addItem("Spline");
-//    connect(chartTypeCombo, SIGNAL(currentIndexChanged(int)),
-//            this, SLOT(chartTypeChanged(int)));
 
     QPushButton *addSeriesButton = new QPushButton("Add series");
     connect(addSeriesButton, SIGNAL(clicked()), this, SLOT(addSeries()));
-
-    // Test data selector
-    QComboBox *testDataCombo = new QComboBox(this);
-    testDataCombo->addItem("linear");
-    testDataCombo->addItem("SIN");
-    testDataCombo->addItem("SIN + random component");
-    testDataCombo->addItem("TODO From file...");
-    testDataCombo->addItem("TODO From URL...");
-    connect(testDataCombo, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(testDataChanged(int)));
 
     // Chart background
     QComboBox *backgroundCombo = new QComboBox(this);
@@ -85,10 +63,6 @@ MainWidget::MainWidget(QWidget *parent) :
     QHBoxLayout *hbox = new QHBoxLayout();
     //grid->addWidget(new QLabel("Add series:"), 0, 0);
     grid->addWidget(addSeriesButton, 0, 1);
-//    grid->addWidget(new QLabel("Chart type:"), 0, 0);
-//    grid->addWidget(chartTypeCombo, 0, 1);
-    grid->addWidget(new QLabel("Data:"), 1, 0);
-    grid->addWidget(testDataCombo, 1, 1);
     grid->addWidget(new QLabel("Background:"), 2, 0);
     grid->addWidget(backgroundCombo, 2, 1);
     grid->addWidget(m_autoScaleCheck, 3, 0);
@@ -118,24 +92,43 @@ MainWidget::MainWidget(QWidget *parent) :
 void MainWidget::addSeries()
 {
     DataSerieDialog dialog(this);
-    connect(&dialog, SIGNAL(addSeries(QString)), this, SLOT(addSeries(QString)));
+    connect(&dialog, SIGNAL(accepted(QString, QString)), this, SLOT(addSeries(QString, QString)));
     dialog.exec();
 }
 
-void MainWidget::addSeries(QString series)
+void MainWidget::addSeries(QString series, QString data)
 {
-    if (series == "Scatter") {
-        QXYSeries* series0 = new QXYSeries();
+    qDebug() << "addSeries: " << series << " data: " << data;
+
+    QXYSeries* series0 = new QXYSeries();
+
+    if (data == "linear") {
+        // TODO
+    } else if (data == "SIN") {
         series0->setColor(Qt::blue);
         for (int x = 0; x < 100; x++)
               series0->add(x, abs(sin(3.14159265358979 / 50 * x) * 100));
         QList<QXYSeries*> dataset;
         dataset << series0;
+    } else if (data == "SIN + random") {
+        series0->setColor(Qt::blue);
+        for (qreal x = 0; x < 100; x += 0.1) {
+            series0->add(x + (rand() % 5),
+                         abs(sin(3.14159265358979 / 50 * x) * 100) + (rand() % 5));
+        }
+    } else {
+        // TODO: check if data has a valid file name
+    }
+
+    QList<QXYSeries*> dataset;
+    dataset << series0;
+
+    if (series == "Scatter") {
         m_chartWidget->addDataSeries(QChart::DataSeriesTypeScatter, dataset);
-        //m_chartWidget->addDataSeries(dataset);
+    } else if (series == "Line") {
+        m_chartWidget->addDataSeries(QChart::DataSeriesTypeLine, dataset);
     } else {
         // TODO
-        qDebug() << "addSeries: " << series;
     }
 }
 

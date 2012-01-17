@@ -3,7 +3,7 @@
 
 #include <QDialog>
 
-class QAbstractButton;
+class QComboBox;
 
 class DataSerieDialog : public QDialog
 {
@@ -12,10 +12,14 @@ public:
     explicit DataSerieDialog(QWidget *parent = 0);
 
 signals:
-    void addSeries(QString series);
+    void accepted(QString series, QString data);
 
 public slots:
-    void addSeries(QAbstractButton *button);
+    void accept();
+
+private:
+    QComboBox *m_seriesTypeCombo;
+    QComboBox *m_testDataCombo;
 };
 
 #endif // DATASERIEDIALOG_H

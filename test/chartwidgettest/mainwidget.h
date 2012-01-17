@@ -21,7 +21,7 @@ signals:
 private slots:
     void chartTypeChanged(int itemIndex);
     void addSeries();
-    void addSeries(QString series);
+    void addSeries(QString series, QString data);
     void testDataChanged(int itemIndex);
     void backgroundChanged(int itemIndex);
     void autoScaleChanged(int value);
