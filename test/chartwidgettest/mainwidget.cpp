@@ -1,6 +1,6 @@
 #include "mainwidget.h"
-#include "qchartwidget.h"
-//#include <chartwidget.h>
+#include "dataseriedialog.h"
+#include <qxyseries.h>
 #include <QPushButton>
 #include <QComboBox>
 #include <QSpinBox>
@@ -13,6 +13,8 @@
 #include <cmath>
 #include <QDebug>
 
+QCHART_USE_NAMESPACE
+
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent)
 {
@@ -22,15 +24,18 @@ MainWidget::MainWidget(QWidget *parent) :
     // Chart type
     // TODO: How about multiple types?
     // Should the type be a property of a graph instead of the chart?
-    QComboBox *chartTypeCombo = new QComboBox(this);
-    chartTypeCombo->addItem("Line");
-    chartTypeCombo->addItem("Area");
-    chartTypeCombo->addItem("Bar");
-    chartTypeCombo->addItem("Pie");
-    chartTypeCombo->addItem("Scatter");
-    chartTypeCombo->addItem("Spline");
-    connect(chartTypeCombo, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(chartTypeChanged(int)));
+//    QComboBox *chartTypeCombo = new QComboBox(this);
+//    chartTypeCombo->addItem("Line");
+//    chartTypeCombo->addItem("Area");
+//    chartTypeCombo->addItem("Bar");
+//    chartTypeCombo->addItem("Pie");
+//    chartTypeCombo->addItem("Scatter");
+//    chartTypeCombo->addItem("Spline");
+//    connect(chartTypeCombo, SIGNAL(currentIndexChanged(int)),
+//            this, SLOT(chartTypeChanged(int)));
+
+    QPushButton *addSeriesButton = new QPushButton("Add series");
+    connect(addSeriesButton, SIGNAL(clicked()), this, SLOT(addSeries()));
 
     // Test data selector
     QComboBox *testDataCombo = new QComboBox(this);
@@ -78,8 +83,10 @@ MainWidget::MainWidget(QWidget *parent) :
 
     QGridLayout *grid = new QGridLayout();
     QHBoxLayout *hbox = new QHBoxLayout();
-    grid->addWidget(new QLabel("Chart type:"), 0, 0);
-    grid->addWidget(chartTypeCombo, 0, 1);
+    //grid->addWidget(new QLabel("Add series:"), 0, 0);
+    grid->addWidget(addSeriesButton, 0, 1);
+//    grid->addWidget(new QLabel("Chart type:"), 0, 0);
+//    grid->addWidget(chartTypeCombo, 0, 1);
     grid->addWidget(new QLabel("Data:"), 1, 0);
     grid->addWidget(testDataCombo, 1, 1);
     grid->addWidget(new QLabel("Background:"), 2, 0);
@@ -108,15 +115,39 @@ MainWidget::MainWidget(QWidget *parent) :
     testDataChanged(0);
 }
 
+void MainWidget::addSeries()
+{
+    DataSerieDialog dialog(this);
+    connect(&dialog, SIGNAL(addSeries(QString)), this, SLOT(addSeries(QString)));
+    dialog.exec();
+}
+
+void MainWidget::addSeries(QString series)
+{
+    if (series == "Scatter") {
+        QXYSeries* series0 = new QXYSeries();
+        series0->setColor(Qt::blue);
+        for (int x = 0; x < 100; x++)
+              series0->add(x, abs(sin(3.14159265358979 / 50 * x) * 100));
+        QList<QXYSeries*> dataset;
+        dataset << series0;
+        m_chartWidget->addDataSeries(QChart::DataSeriesTypeScatter, dataset);
+        //m_chartWidget->addDataSeries(dataset);
+    } else {
+        // TODO
+        qDebug() << "addSeries: " << series;
+    }
+}
+
 void MainWidget::chartTypeChanged(int itemIndex)
 {
     // TODO: change chart type
     switch (itemIndex) {
     case 4:
-        m_chartWidget->setType(4);
+        //m_chartWidget->setType(4);
         break;
     default: {
-        m_chartWidget->setType(0);
+        //m_chartWidget->setType(0);
         break;
     }
     }
@@ -126,37 +157,36 @@ void MainWidget::testDataChanged(int itemIndex)
 {
     qDebug() << "testDataChanged: " << itemIndex;
 
-    switch (itemIndex) {
-    case 0: {
-        QList<QChartDataPoint> data;
-        for (int x = 0; x < 20; x++) {
-            data.append(QChartDataPoint() << x << x / 2);
-        }
-        m_chartWidget->setData(data);
-        break;
-    }
-    case 1: {
-        QList<QChartDataPoint> data;
-        for (int x = 0; x < 100; x++) {
-            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100));
-        }
-        m_chartWidget->setData(data);
-        break;
-    }
-    case 2: {
-        QList<QChartDataPoint> data;
-        for (int x = 0; x < 1000; x++) {
-            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
-            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
-            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
-        }
-        m_chartWidget->setData(data);
-        break;
-    }
-    default:
-        break;
-    }
-
+//    switch (itemIndex) {
+//    case 0: {
+//        QList<QChartDataPoint> data;
+//        for (int x = 0; x < 20; x++) {
+//            data.append(QChartDataPoint() << x << x / 2);
+//        }
+//        m_chartWidget->setData(data);
+//        break;
+//    }
+//    case 1: {
+//        QList<QChartDataPoint> data;
+//        for (int x = 0; x < 100; x++) {
+//            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100));
+//        }
+//        m_chartWidget->setData(data);
+//        break;
+//    }
+//    case 2: {
+//        QList<QChartDataPoint> data;
+//        for (int x = 0; x < 1000; x++) {
+//            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
+//            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
+//            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
+//        }
+//        m_chartWidget->setData(data);
+//        break;
+//    }
+//    default:
+//        break;
+//    }
 }
 
 void MainWidget::backgroundChanged(int itemIndex)

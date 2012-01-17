@@ -4,27 +4,28 @@ QT += core \
     gui
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QChartd
+
 SOURCES += \ 
-    xylinechart/qchartwidget.cpp \
-    xylinechart/qchart.cpp \
+    xylinechart/qchartgraphicswidget.cpp \
     xylinechart/qxyseries.cpp \
-    xylinechart/axis.cpp \
     xylinechart/xylinechart.cpp \
     xylinechart/xygrid.cpp \
-    xylinechart/xyplotdata.cpp 
+    xylinechart/xyplotdata.cpp \
+    qchart.cpp \
+    axis.cpp \
+    qchartwidget.cpp
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechart_p.h \
-    xylinechart/axis_p.h \
     xylinechart/xygrid_p.h \
-    xylinechart/xyplotdata_p.h
-    
+    xylinechart/xyplotdata_p.h \
+    axis_p.h
 PUBLIC_HEADERS += \
-    xylinechart/qchart.h \
     xylinechart/qxyseries.h \
-    xylinechart/qchartwidget.h \
-    qchartconfig.h 
-    
+    xylinechart/qchartgraphicswidget.h \
+    qchart.h \
+    qchartwidget.h \
+    qchartconfig.h
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 

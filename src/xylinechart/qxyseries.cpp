@@ -1,7 +1,9 @@
 #include "qxyseries.h"
 
+QCHART_BEGIN_NAMESPACE
+
 QXYSeries::QXYSeries():
-m_color(Qt::black)
+    m_color(Qt::black)
 {
 }
 
@@ -57,3 +59,5 @@ QDebug operator<< (QDebug debug, const QXYSeries series)
     }
     return debug.space();
 }
+
+QCHART_END_NAMESPACE

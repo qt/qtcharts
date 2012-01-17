@@ -1,38 +1,38 @@
-#include "qchartwidget.h"
+#include "qchartgraphicswidget.h"
 #include "qchart.h"
 
 QCHART_BEGIN_NAMESPACE
 
 
-class QChartWidgetPrivate
+class QChartGraphicsWidgetPrivate
 {
 public:
     QChart* chart;
     //Q_DECLARE_PUBLIC(ChartWidget)
-    QChartWidgetPrivate() {}
+    QChartGraphicsWidgetPrivate() {}
 };
 
 ////////////////////////////////////////////////////////////////////////////
 
-QChartWidget::QChartWidget(QGraphicsItem *parent,Qt::WindowFlags wFlags)
+QChartGraphicsWidget::QChartGraphicsWidget(QGraphicsItem *parent,Qt::WindowFlags wFlags)
     : QGraphicsWidget(parent,wFlags),
-      d_ptr(new QChartWidgetPrivate())
+      d_ptr(new QChartGraphicsWidgetPrivate())
 {
 }
 
-QChartWidget::~QChartWidget()
+QChartGraphicsWidget::~QChartGraphicsWidget()
 {
     delete d_ptr;
 }
 
 
-void QChartWidget::addChart(QChart *chart)
+void QChartGraphicsWidget::addChart(QChart *chart)
 {
     d_ptr->chart=chart;
     chart->setParentItem(this);
 }
 
-void QChartWidget::setGeometry(const QRectF & rect)
+void QChartGraphicsWidget::setGeometry(const QRectF & rect)
 {
     d_ptr->chart->setSize(rect.size());
     QGraphicsWidget::setGeometry(rect);

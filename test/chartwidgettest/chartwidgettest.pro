@@ -7,22 +7,23 @@ contains(QT_MAJOR_VERSION, 5) {
 }
 
 CONFIG += charts
-CHARTS += widget
 
 OBJECTS_DIR = tmp
 MOC_DIR = tmp
 
 SOURCES += main.cpp \
     mainwidget.cpp \
-    qscatterseries.cpp \
-    qchartwidget.cpp \
-    qseriespointgraphicsitem.cpp
+#    qscatterseries.cpp \
+#    qseriespointgraphicsitem.cpp \
+    dataseriedialog.cpp
 
 HEADERS += \
     mainwidget.h \
-    qscatterseries.h \
-    qchartwidget.h \
-    qseriespointgraphicsitem.h
+#    qscatterseries.h \
+#    qseriespointgraphicsitem.h \
+    dataseriedialog.h
+
+
 
 
 

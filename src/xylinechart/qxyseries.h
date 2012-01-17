@@ -1,10 +1,13 @@
 #ifndef QXYSERIES_H_
 #define QXYSERIES_H_
+
+#include "qchartconfig.h"
 #include <QDebug>
 #include <QColor>
 
+QCHART_BEGIN_NAMESPACE
 
-class QXYSeries
+class QCHART_EXPORT QXYSeries
 {
 public:
     QXYSeries();
@@ -24,5 +27,7 @@ private:
     QList<qreal> m_y;
 
 };
+
+QCHART_END_NAMESPACE
 
 #endif

@@ -1,11 +1,14 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
+#include <qchartconfig.h>
+#include <qchartwidget.h>
 #include <QWidget>
 
-class QChartWidget;
 class QSpinBox;
 class QCheckBox;
+
+QCHART_USE_NAMESPACE
 
 class MainWidget : public QWidget
 {
@@ -17,6 +20,8 @@ signals:
 
 private slots:
     void chartTypeChanged(int itemIndex);
+    void addSeries();
+    void addSeries(QString series);
     void testDataChanged(int itemIndex);
     void backgroundChanged(int itemIndex);
     void autoScaleChanged(int value);

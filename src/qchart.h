@@ -9,6 +9,15 @@ QCHART_BEGIN_NAMESPACE
 
 class QCHART_EXPORT QChart : public QGraphicsItem
 {
+public:
+    enum DataSeriesType {
+        DataSeriesTypeLine = 0,
+        DataSeriesTypeArea,
+        DataSeriesTypeBar,
+        DataSeriesTypePie,
+        DataSeriesTypeScatter,
+        DataSeriesTypeSpline
+    };
 
 protected:
     QChart(QGraphicsItem* parent =0);

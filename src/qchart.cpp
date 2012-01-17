@@ -14,17 +14,16 @@ QChart::~QChart(){}
 
 QChart* QChart::createXYLineChart(const QList<QXYSeries*>& dataset)
 {
-
     XYLineChart* chart = new XYLineChart();
     foreach (const QXYSeries* series,dataset) {
-    chart->addXYSeries(series);
+        chart->addXYSeries(series);
     }
     return chart;
 }
 
 void QChart::setMargin(int margin)
 {
-	m_marginSize=margin;
+    m_marginSize = margin;
 }
 
 QCHART_END_NAMESPACE
