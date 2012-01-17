@@ -1,3 +1,5 @@
+message( "Configuring with qchart addon..." )
+
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QCharts
 
 CONFIG(debug, debug|release) {
