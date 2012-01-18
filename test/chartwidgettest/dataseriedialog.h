@@ -9,7 +9,7 @@ class DataSerieDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit DataSerieDialog(QWidget *parent = 0);
+    explicit DataSerieDialog(QString defaultType, QWidget *parent = 0);
 
 signals:
     void accepted(QString series, QString data);

@@ -6,7 +6,7 @@
 #include <QLabel>
 #include <QDebug>
 
-DataSerieDialog::DataSerieDialog(QWidget *parent) :
+DataSerieDialog::DataSerieDialog(QString defaultType, QWidget *parent) :
     QDialog(parent)
 {
     // Combo box for selecting the series type
@@ -17,6 +17,13 @@ DataSerieDialog::DataSerieDialog(QWidget *parent) :
     m_seriesTypeCombo->addItem("Pie");
     m_seriesTypeCombo->addItem("Scatter");
     m_seriesTypeCombo->addItem("Spline");
+
+    // Allow pre-selection of a series type
+    if (defaultType != "") {
+        int index = m_seriesTypeCombo->findText(defaultType);
+        if (index > 0)
+            m_seriesTypeCombo->setCurrentIndex(index);
+    }
 
     // Combo box for selecting data for the new series
     m_testDataCombo = new QComboBox(this);

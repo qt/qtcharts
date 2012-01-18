@@ -37,6 +37,7 @@ private:
     QSpinBox *m_xMaxSpin;
     QSpinBox *m_yMinSpin;
     QSpinBox *m_yMaxSpin;
+    QString m_defaultSeries;
 };
 
 #endif // MAINWIDGET_H

@@ -91,7 +91,7 @@ MainWidget::MainWidget(QWidget *parent) :
 
 void MainWidget::addSeries()
 {
-    DataSerieDialog dialog(this);
+    DataSerieDialog dialog(m_defaultSeries, this);
     connect(&dialog, SIGNAL(accepted(QString, QString)), this, SLOT(addSeries(QString, QString)));
     dialog.exec();
 }
@@ -99,6 +99,7 @@ void MainWidget::addSeries()
 void MainWidget::addSeries(QString series, QString data)
 {
     qDebug() << "addSeries: " << series << " data: " << data;
+    m_defaultSeries = series;
 
     QXYChartSeries* series0 = new QXYChartSeries();
 
