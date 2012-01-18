@@ -16,6 +16,7 @@ SOURCES += \
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
+    xylinechart/xyplotdata_p.h \# to be removed  
     xylinechart/xygrid_p.h \
     axis_p.h
     
@@ -24,8 +25,7 @@ PUBLIC_HEADERS += \
     qchart.h \
     qchartwidget.h \
     qchartconfig.h \ 
-    xylinechart/qxychartseries.h \
-    xylinechart/xyplotdata_p.h # to be removed  
+    xylinechart/qxychartseries.h 
    
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS

@@ -1,6 +1,7 @@
 #include "qchart.h"
 #include "qchartseries.h"
 #include "xylinechartitem_p.h"
+#include "xyplotdata_p.h"
 #include "axis_p.h"
 #include "xygrid_p.h"
 #include <QDebug>
@@ -18,19 +19,21 @@ m_plotDataIndex(0)
     // set axis
         m_axisY->rotate(90);
 
-        XYPlotData data;
-        data.m_minX = 0.0;
-        data.m_maxX = 100.0;
-        data.m_minY = 0.0;
-        data.m_maxY = 100.0;
-        data.m_ticksX=4;
-        data.m_ticksY=4;
+
+        //TODO hardcoded values , to removed soon
+        XYPlotData* data = new XYPlotData();
+        data->m_minX = 0.0;
+        data->m_maxX = 100.0;
+        data->m_minY = 0.0;
+        data->m_maxY = 100.0;
+        data->m_ticksX=4;
+        data->m_ticksY=4;
 
         m_plotDataList.clear();
         m_plotDataList << data;
 
         m_grid->setZValue(10);
-        m_grid->setXYPlotData(m_plotDataList.at(0));
+        m_grid->setXYPlotData(*m_plotDataList.at(0));
 }
 
 QChart::~QChart(){}
@@ -47,9 +50,8 @@ void QChart::addSeries(QChartSeries* series)
     switch(series->type())
     {
     case QChartSeries::LINE:
-        qDebug()<<"xyline added";
         XYLineChartItem* item = new XYLineChartItem(reinterpret_cast<QXYChartSeries*>(series),this);
-        item->setXYPlotData(m_plotDataList.at(0));
+        item->setXYPlotData(*m_plotDataList.at(0));
         m_items<<item;
         break;
     }

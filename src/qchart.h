@@ -2,8 +2,6 @@
 #define CHART_H
 
 #include <qchartconfig.h>
-//TODO: temporary class
-#include <xyplotdata_p.h>
 #include <QGraphicsItem>
 
 QCHART_BEGIN_NAMESPACE
@@ -11,6 +9,7 @@ QCHART_BEGIN_NAMESPACE
 class Axis;
 class XYGrid;
 class QChartSeries;
+class XYPlotData;
 
 class QCHART_EXPORT QChart : public QGraphicsItem
 {
@@ -35,7 +34,7 @@ private:
     Axis* m_axisX;
     Axis* m_axisY;
     XYGrid* m_grid;
-    QList<XYPlotData> m_plotDataList;
+    QList<XYPlotData*> m_plotDataList;
     QList<QGraphicsItem*> m_items;
     int m_plotDataIndex;
     int m_marginSize;
