@@ -6,9 +6,8 @@ CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QChartd
 
 SOURCES += \ 
-    xylinechart/qchartgraphicswidget.cpp \
-    xylinechart/qxyseries.cpp \
-    xylinechart/xylinechart.cpp \
+    xylinechart/qxychartseries.cpp \
+    xylinechart/xylinechartitem.cpp \
     xylinechart/xygrid.cpp \
     xylinechart/xyplotdata.cpp \
     qchart.cpp \
@@ -16,16 +15,18 @@ SOURCES += \
     qchartwidget.cpp
 
 PRIVATE_HEADERS += \ 
-    xylinechart/xylinechart_p.h \
+    xylinechart/xylinechartitem_p.h \
     xylinechart/xygrid_p.h \
-    xylinechart/xyplotdata_p.h \
     axis_p.h
+    
 PUBLIC_HEADERS += \
-    xylinechart/qxyseries.h \
-    xylinechart/qchartgraphicswidget.h \
+    qchartseries.h \
     qchart.h \
     qchartwidget.h \
-    qchartconfig.h
+    qchartconfig.h \ 
+    xylinechart/qxychartseries.h \
+    xylinechart/xyplotdata_p.h # to be removed  
+   
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 

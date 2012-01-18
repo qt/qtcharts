@@ -7,7 +7,7 @@
 
 QCHART_BEGIN_NAMESPACE
 
-class QXYSeries;
+class QChartSeries;
 class QChartWidgetPrivate;
 
 class QCHART_EXPORT QChartWidget : public QWidget
@@ -16,19 +16,18 @@ class QCHART_EXPORT QChartWidget : public QWidget
 public:
     explicit QChartWidget(QWidget *parent = 0);
     ~QChartWidget();
-    // TODO: replace QXYSeries list with a charts data API
-    // TODO: return QChartDataSeries
-    void addDataSeries(QChart::DataSeriesType dataSeriesType, QList<QXYSeries*> dataset);
 
-signals:
+    //implement from QWidget
+    void resizeEvent(QResizeEvent *event);
 
-public slots:
+    void addSeries(QChartSeries* series);
+protected:
+    QChartWidgetPrivate * const d_ptr;
 
 private:
-    friend class QChartWidgetPrivate;
     Q_DISABLE_COPY(QChartWidget)
-//    Q_DECLARE_PRIVATE(QChartWidget)
-    QChartWidgetPrivate * const d;
+    Q_DECLARE_PRIVATE(QChartWidget)
+
 };
 
 QCHART_END_NAMESPACE

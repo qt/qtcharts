@@ -2,36 +2,42 @@
 #define CHART_H
 
 #include <qchartconfig.h>
-#include <qxyseries.h>
+//TODO: temporary class
+#include <xyplotdata_p.h>
 #include <QGraphicsItem>
 
 QCHART_BEGIN_NAMESPACE
 
+class Axis;
+class XYGrid;
+class QChartSeries;
+
 class QCHART_EXPORT QChart : public QGraphicsItem
 {
-public:
-    enum DataSeriesType {
-        DataSeriesTypeLine = 0,
-        DataSeriesTypeArea,
-        DataSeriesTypeBar,
-        DataSeriesTypePie,
-        DataSeriesTypeScatter,
-        DataSeriesTypeSpline
-    };
-
-protected:
-    QChart(QGraphicsItem* parent =0);
 
 public:
+    QChart(QGraphicsItem* parent = 0);
     virtual ~QChart();
 
-    static QChart* createXYLineChart(const QList<QXYSeries*>& dataset);
+    //from QGraphicsItem
+    virtual QRectF boundingRect() const;
+    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
 
-    virtual void setSize(const QSizeF& rect)=0;
+    void addSeries(QChartSeries* series);
+
+    virtual void setSize(const QSizeF& rect);
     void setMargin(int margin);
     int margin() const { return m_marginSize;}
 
 private:
+    QRect m_rect;
+    QList<const QChartSeries*> m_series;
+    Axis* m_axisX;
+    Axis* m_axisY;
+    XYGrid* m_grid;
+    QList<XYPlotData> m_plotDataList;
+    QList<QGraphicsItem*> m_items;
+    int m_plotDataIndex;
     int m_marginSize;
 };
 

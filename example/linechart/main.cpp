@@ -1,6 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <qchartwidget.h>
+#include <qxychartseries.h>
 #include <qchart.h>
 #include "chartview.h"
 #include <cmath>
@@ -15,13 +16,13 @@ int main(int argc, char *argv[])
 
     QMainWindow window;
 
-    QXYSeries* series0 = new QXYSeries();
+    QXYChartSeries* series0 = QXYChartSeries::create();
     series0->setColor(Qt::blue);
-    QXYSeries* series1 = new QXYSeries();
+    QXYChartSeries* series1 = QXYChartSeries::create();
     series1->setColor(Qt::red);
-    QXYSeries* series2 = new QXYSeries();
+    QXYChartSeries* series2 = QXYChartSeries::create();
     series2->setColor(Qt::gray);
-    QXYSeries* series3 = new QXYSeries();
+    QXYChartSeries* series3 = QXYChartSeries::create();
     series3->setColor(Qt::green);
 
     int numPoints = 100;
@@ -33,23 +34,21 @@ int main(int argc, char *argv[])
     	  series3->add(x,100);
      }
 
-    QList<QXYSeries*> dataset;
+    QList<QXYChartSeries*> dataset;
 
-    qDebug()<<"Series 1:" << *series1;
-    qDebug()<<"Series 2:" << *series2;
+    //qDebug()<<"Series 1:" << *series1;
+    //qDebug()<<"Series 2:" << *series2;
 
     dataset << series0;
     dataset << series1;
     dataset << series2;
     dataset << series3;
 
-    QChart* chart = QChart::createXYLineChart(dataset);
-    chart->setMargin(50);
-    QChartWidget* chartWidget =  new QChartWidget();
-    chartWidget->addChart(chart);
+    QChartWidget* chartWidget =  new QChartWidget(&window);
+    chartWidget->addSeries(series1);
+    chartWidget->addSeries(series2);
 
-    ChartView* view = new ChartView(chartWidget,&window);
-    window.setCentralWidget(view);
+    window.setCentralWidget(chartWidget);
     window.resize(400, 300);
     window.show();
 

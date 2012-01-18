@@ -100,7 +100,7 @@ void MainWidget::addSeries(QString series, QString data)
 {
     qDebug() << "addSeries: " << series << " data: " << data;
 
-    QXYSeries* series0 = new QXYSeries();
+    QXYChartSeries* series0 = new QXYChartSeries();
 
     if (data == "linear") {
         // TODO
@@ -108,7 +108,7 @@ void MainWidget::addSeries(QString series, QString data)
         series0->setColor(Qt::blue);
         for (int x = 0; x < 100; x++)
               series0->add(x, abs(sin(3.14159265358979 / 50 * x) * 100));
-        QList<QXYSeries*> dataset;
+        QList<QXYChartSeries*> dataset;
         dataset << series0;
     } else if (data == "SIN + random") {
         series0->setColor(Qt::blue);
@@ -120,7 +120,7 @@ void MainWidget::addSeries(QString series, QString data)
         // TODO: check if data has a valid file name
     }
 
-    QList<QXYSeries*> dataset;
+    QList<QXYChartSeries*> dataset;
     dataset << series0;
 
     if (series == "Scatter") {

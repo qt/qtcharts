@@ -1,51 +1,63 @@
 #include "qchartwidget.h"
-#include "qxyseries.h"
-#include "xylinechart_p.h"
+#include "qchartseries.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QResizeEvent>
 
 QCHART_BEGIN_NAMESPACE
 
 class QChartWidgetPrivate
 {
 public:
-    QChartWidgetPrivate(QWidget *parent) : m_view(0), m_scene(0), m_chart(0) {
+    QChartWidgetPrivate(QChartWidget *parent) :
+    m_view(0),
+    m_scene(0),
+    m_chart(0),
+    q_ptr( parent )
+    {
         m_scene = new QGraphicsScene();
-        m_view = new QGraphicsView(m_scene, parent);
-        m_view->resize(490, 300);
-        m_view->show();
+        m_view = new QGraphicsView(parent);
+        m_view->setScene(m_scene);
+        m_chart = new QChart();
+        m_scene->addItem(m_chart);
     }
+
     ~QChartWidgetPrivate() {
-        delete m_view;
-        delete m_scene;
     }
 
     QGraphicsView *m_view;
     QGraphicsScene *m_scene;
     QChart* m_chart;
+    QChartWidget * const q_ptr;
+    Q_DECLARE_PUBLIC(QChartWidget);
 };
 
 QChartWidget::QChartWidget(QWidget *parent) :
     QWidget(parent),
-    d(new QChartWidgetPrivate(this))
+    d_ptr(new QChartWidgetPrivate(this))
 {
-    setMinimumSize(d->m_view->size());
+
 }
 
 QChartWidget::~QChartWidget()
 {
-    delete d;
+    delete d_ptr;
 }
 
-void QChartWidget::addDataSeries(
-        QChart::DataSeriesType dataSeriesType,
-        QList<QXYSeries*> dataset)
+void QChartWidget::resizeEvent(QResizeEvent *event)
 {
-    // TODO: implement management of several data series of different types
+    Q_D(QChartWidget);
+    d->m_view->resize(size().width(),size().height());
+    d->m_scene->setSceneRect(0,0,size().width(),size().height());
+    d->m_chart->setSize(size());
+    QWidget::resizeEvent(event);
+}
 
-    d->m_chart = QChart::createXYLineChart(dataset);
-    d->m_scene->addItem(d->m_chart);
-    d->m_chart->setSize(this->size());
+
+void QChartWidget::addSeries(QChartSeries* series)
+{
+    Q_D(QChartWidget);
+    d->m_chart->addSeries(series);
 }
 
 #include "moc_qchartwidget.cpp"
