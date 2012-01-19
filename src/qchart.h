@@ -1,10 +1,10 @@
 #ifndef CHART_H
 #define CHART_H
 
-#include <qchartconfig.h>
+#include <qchartglobal.h>
 #include <QGraphicsItem>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Axis;
 class XYGrid;
@@ -12,7 +12,7 @@ class QChartSeries;
 class XYPlotDomain;
 class QChartPrivate;
 
-class QCHART_EXPORT QChart : public QGraphicsItem
+class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsItem
 {
 
 public:
@@ -38,6 +38,6 @@ private:
 
 };
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif

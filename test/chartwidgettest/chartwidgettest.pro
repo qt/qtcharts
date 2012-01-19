@@ -6,7 +6,7 @@ contains(QT_MAJOR_VERSION, 5) {
     QT += widgets
 }
 
-CONFIG += charts
+CONFIG += qtcommercialchart
 
 OBJECTS_DIR = tmp
 MOC_DIR = tmp

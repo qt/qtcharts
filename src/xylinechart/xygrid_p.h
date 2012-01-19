@@ -1,11 +1,11 @@
 #ifndef XYGRID_H_
 #define XYGRID_H_
 
-#include <qchartconfig.h>
+#include <qchartglobal.h>
 #include <xyplotdomain_p.h>
 #include <QGraphicsItem>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class XYGrid : public QGraphicsItem
 {
@@ -26,6 +26,6 @@ private:
     XYPlotDomain m_xyPlotData;
 };
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif /* XYGRID_H_ */

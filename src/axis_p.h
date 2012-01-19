@@ -1,10 +1,10 @@
 #ifndef AXIS_H_
 #define AXIS_H_
 
-#include <qchartconfig.h>
+#include <qchartglobal.h>
 #include <QGraphicsItem>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Axis: public QGraphicsItem
 {
@@ -24,6 +24,6 @@ private:
     QPainterPath m_path;
 };
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif /* AXIS_H_ */

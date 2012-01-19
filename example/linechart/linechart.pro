@@ -3,6 +3,6 @@ TEMPLATE = app
 
 QT += core gui
 
-CONFIG += charts
+CONFIG += qtcommercialchart
 
 SOURCES += main.cpp 

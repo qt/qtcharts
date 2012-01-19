@@ -4,7 +4,7 @@
 #include <QGraphicsScene>
 #include <QResizeEvent>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChartWidgetPrivate
 {
@@ -66,4 +66,4 @@ void QChartWidget::addSeries(QChartSeries* series)
 
 #include "moc_qchartwidget.cpp"
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE

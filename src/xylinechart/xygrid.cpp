@@ -2,7 +2,7 @@
 #include <QPainter>
 #include <QDebug>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 XYGrid::XYGrid(QGraphicsItem* parent):QGraphicsItem(parent)
 {
@@ -67,4 +67,4 @@ void XYGrid::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWi
     //painter->drawRect(m_rect.adjusted(0, 0, -1, -1));
 }
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE

@@ -5,7 +5,7 @@
 #include <qchart.h>
 #include <cmath>
 
-QCHART_USE_NAMESPACE
+QTCOMMERCIALCHART_USE_NAMESPACE
 
 #define PI 3.14159265358979
 

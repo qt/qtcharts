@@ -1,9 +1,9 @@
-TARGET = QChart
+TARGET = QtCommercialChart
 TEMPLATE = lib
 QT += core \
     gui
 CONFIG += debug_and_release
-CONFIG(debug, debug|release):TARGET = QChartd
+CONFIG(debug, debug|release):TARGET = QtCommercialChartd
 
 SOURCES += \ 
     xylinechart/qxychartseries.cpp \
@@ -24,7 +24,7 @@ PUBLIC_HEADERS += \
     qchartseries.h \
     qchart.h \
     qchartwidget.h \
-    qchartconfig.h \ 
+    qchartglobal.h \
     xylinechart/qxychartseries.h 
    
 HEADERS += $$PUBLIC_HEADERS
@@ -37,10 +37,13 @@ OBJECTS_DIR = ../build/lib
 MOC_DIR = ../build/lib
 UI_DIR = ../build/lib
 RCC_DIR = ../build/lib
-DEFINES += QCHART_LIBRARY
+DEFINES += QTCOMMERCIALCHART_LIBRARY
 
-public_headers.path = $$[QT_INSTALL_HEADERS]/QCharts
+public_headers.path = $$[QT_INSTALL_HEADERS]/QtCommercialChart
 public_headers.files = $$PUBLIC_HEADERS
 target.path = $$[QT_INSTALL_LIBS]
 INSTALLS += target \
     public_headers
+
+
+

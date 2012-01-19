@@ -1,16 +1,23 @@
 #ifndef QCHARTSERIES_H
 #define QCHARTSERIES_H
 
-#include "qchartconfig.h"
+#include "qchartglobal.h"
 #include <QObject>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QCHART_EXPORT QChartSeries : public QObject
+class QTCOMMERCIALCHART_EXPORT QChartSeries : public QObject
 {
 
 public:
-    enum QChartSeriesType {LINE,PIE,BAR};
+    enum QChartSeriesType {
+        SeriesTypeLine = 0,
+//        SeriesTypeArea,
+//        SeriesTypeBar,
+//        SeriesTypePie,
+        SeriesTypeScatter
+//        SeriesTypeSpline
+    };
 
 protected:
     QChartSeries(QObject *parent = 0):QObject(parent){};
@@ -25,7 +32,7 @@ public:
 
 };
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif
 

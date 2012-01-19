@@ -2,7 +2,7 @@
 #include <QPainter>
 #include <QDebug>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 Axis::Axis(QGraphicsItem* parent): QGraphicsItem(parent)
 {
@@ -47,4 +47,4 @@ void Axis::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidg
     painter->restore();
 }
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE

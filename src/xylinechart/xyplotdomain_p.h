@@ -1,9 +1,9 @@
 #ifndef PLOTDOMAIN_H_
 #define PLOTDOMAIN_H_
-#include "qchartconfig.h"
+#include "qchartglobal.h"
 #include <QRect>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class XYPlotDomain {
 public:
@@ -25,6 +25,6 @@ public:
 	QRect m_viewportRect;
 };
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif /* PLOTTER_H_ */

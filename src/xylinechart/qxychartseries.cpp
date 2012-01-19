@@ -1,6 +1,6 @@
 #include "qxychartseries.h"
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QXYChartSeries::QXYChartSeries(QObject* parent):QChartSeries(parent),
     m_color(Qt::black)
@@ -65,4 +65,4 @@ QDebug operator<< (QDebug debug, const QXYChartSeries series)
     return debug.space();
 }
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE

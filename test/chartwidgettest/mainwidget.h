@@ -1,14 +1,14 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include <qchartconfig.h>
+#include <qchartglobal.h>
 #include <qchartwidget.h>
 #include <QWidget>
 
 class QSpinBox;
 class QCheckBox;
 
-QCHART_USE_NAMESPACE
+QTCOMMERCIALCHART_USE_NAMESPACE
 
 class MainWidget : public QWidget
 {

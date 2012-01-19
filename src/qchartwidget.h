@@ -1,16 +1,16 @@
 #ifndef QCHARTWIDGET_H
 #define QCHARTWIDGET_H
 
-#include "qchartconfig.h"
+#include "qchartglobal.h"
 #include "qchart.h"
 #include <QWidget>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChartSeries;
 class QChartWidgetPrivate;
 
-class QCHART_EXPORT QChartWidget : public QWidget
+class QTCOMMERCIALCHART_EXPORT QChartWidget : public QWidget
 {
     Q_OBJECT
 public:
@@ -31,6 +31,6 @@ private:
 
 };
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif // QCHARTWIDGET_H

@@ -6,7 +6,7 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 XYLineChartItem::XYLineChartItem(QXYChartSeries* series,QGraphicsItem *parent):QGraphicsItem(parent),
 m_series(series)
@@ -53,4 +53,4 @@ void XYLineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 }
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE

@@ -13,15 +13,11 @@
 #include <cmath>
 #include <QDebug>
 
-QCHART_USE_NAMESPACE
+QTCOMMERCIALCHART_USE_NAMESPACE
 
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent)
 {
-    m_chartWidget = new QChartWidget(this);
-//    m_chartWidget->resize(QSize(200,200));
-//    m_chartWidget->setColor(Qt::red);
-
     QPushButton *addSeriesButton = new QPushButton("Add series");
     connect(addSeriesButton, SIGNAL(clicked()), this, SLOT(addSeries()));
 
@@ -79,8 +75,11 @@ MainWidget::MainWidget(QWidget *parent) :
     grid->setRowStretch(8, 1);
 
     hbox->addLayout(grid);
+
+    m_chartWidget = new QChartWidget(this);
+    //m_chartWidget->setColor(Qt::red);
     hbox->addWidget(m_chartWidget);
-    hbox->setStretch(1, 1);
+//    hbox->setStretch(1, 1);
 
     setLayout(hbox);
 
@@ -101,8 +100,17 @@ void MainWidget::addSeries(QString series, QString data)
     qDebug() << "addSeries: " << series << " data: " << data;
     m_defaultSeries = series;
 
+    QXYChartSeries* series0 = 0;
+
     // TODO: color of the series
-    QXYChartSeries* series0 = QXYChartSeries::create();
+    if (series == "Scatter") {
+        series0 = QXYChartSeries::create();
+    } else if (series == "Line") {
+        series0 = QXYChartSeries::create();
+    } else {
+        // TODO
+        series0 = QXYChartSeries::create();
+    }
 
     if (data == "linear") {
         for (int i = 0; i < 10; i++)
@@ -124,13 +132,7 @@ void MainWidget::addSeries(QString series, QString data)
         // TODO: check if data has a valid file name
     }
 
-    if (series == "Scatter") {
-        m_chartWidget->addSeries(series0);
-    } else if (series == "Line") {
-        m_chartWidget->addSeries(series0);
-    } else {
-        // TODO
-    }
+    m_chartWidget->addSeries(series0);
 }
 
 void MainWidget::chartTypeChanged(int itemIndex)

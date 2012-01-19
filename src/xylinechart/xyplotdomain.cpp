@@ -1,6 +1,6 @@
 #include "xyplotdomain_p.h"
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 XYPlotDomain::XYPlotDomain():
 m_ticksX(0),
@@ -30,4 +30,4 @@ qreal XYPlotDomain::spanY() const
 	return m_maxY - m_minY;
 }
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE

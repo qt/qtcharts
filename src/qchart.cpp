@@ -6,7 +6,7 @@
 #include "xygrid_p.h"
 #include <QDebug>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChartPrivate
 {
@@ -72,11 +72,15 @@ void QChart::addSeries(QChartSeries* series)
 
     switch(series->type())
     {
-    case QChartSeries::LINE:
+    case QChartSeries::SeriesTypeLine: {
         XYLineChartItem* item = new XYLineChartItem(reinterpret_cast<QXYChartSeries*>(series),this);
         item->updateXYPlotData(d->m_plotDataList.at(0));
         d->m_items<<item;
         break;
+    }
+    case QChartSeries::SeriesTypeScatter: {
+        break;
+    }
     }
 }
 
@@ -107,6 +111,4 @@ void QChart::setMargin(int margin)
     d->m_marginSize = margin;
 }
 
-
-
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE

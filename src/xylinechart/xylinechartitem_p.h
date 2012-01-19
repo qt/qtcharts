@@ -1,11 +1,11 @@
 #ifndef XYLINECHARTITEM_H
 #define XYLINECHARTITEM_H
 
-#include "qchartconfig.h"
+#include "qchartglobal.h"
 #include "qchart.h"
 #include "xyplotdomain_p.h"
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYChartSeries;
 
@@ -28,6 +28,6 @@ private:
     XYPlotDomain m_xyPlotData;
 };
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif

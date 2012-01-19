@@ -1,14 +1,14 @@
 #ifndef QXYSERIES_H_
 #define QXYSERIES_H_
 
-#include "qchartconfig.h"
+#include "qchartglobal.h"
 #include "qchartseries.h"
 #include <QDebug>
 #include <QColor>
 
-QCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QCHART_EXPORT QXYChartSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QXYChartSeries : public QChartSeries
 {
 private:
     QXYChartSeries(QObject* parent=0);
@@ -17,7 +17,7 @@ public:
 
     //implemented from QChartSeries
     static QXYChartSeries* create(QObject* parent=0);
-    virtual QChartSeriesType type() const { return QChartSeries::LINE;};
+    virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeLine;}
 
     void add(qreal x, qreal y);
     void clear();
@@ -35,6 +35,6 @@ private:
 
 };
 
-QCHART_END_NAMESPACE
+QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif
