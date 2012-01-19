@@ -12,8 +12,7 @@ public:
     QChartWidgetPrivate(QChartWidget *parent) :
     m_view(0),
     m_scene(0),
-    m_chart(0),
-    q_ptr( parent )
+    m_chart(0)
     {
         m_scene = new QGraphicsScene();
         m_view = new QGraphicsView(parent);
@@ -28,9 +27,9 @@ public:
     QGraphicsView *m_view;
     QGraphicsScene *m_scene;
     QChart* m_chart;
-    QChartWidget * const q_ptr;
-    Q_DECLARE_PUBLIC(QChartWidget);
 };
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QChartWidget::QChartWidget(QWidget *parent) :
     QWidget(parent),

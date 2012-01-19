@@ -10,6 +10,7 @@ class Axis;
 class XYGrid;
 class QChartSeries;
 class XYPlotDomain;
+class QChartPrivate;
 
 class QCHART_EXPORT QChart : public QGraphicsItem
 {
@@ -26,18 +27,15 @@ public:
 
     virtual void setSize(const QSizeF& rect);
     void setMargin(int margin);
-    int margin() const { return m_marginSize;}
+    int margin() const;
+
+protected:
+    QChartPrivate * const d_ptr;
 
 private:
-    QRect m_rect;
-    QList<const QChartSeries*> m_series;
-    Axis* m_axisX;
-    Axis* m_axisY;
-    XYGrid* m_grid;
-    QList<XYPlotDomain*> m_plotDataList;
-    QList<QGraphicsItem*> m_items;
-    int m_plotDataIndex;
-    int m_marginSize;
+    Q_DISABLE_COPY(QChart)
+    Q_DECLARE_PRIVATE(QChart)
+
 };
 
 QCHART_END_NAMESPACE

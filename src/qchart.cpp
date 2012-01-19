@@ -8,71 +8,105 @@
 
 QCHART_BEGIN_NAMESPACE
 
-QChart::QChart(QGraphicsItem* parent):QGraphicsItem(parent),
-m_marginSize(0),
-m_axisX(new Axis(this)),
-m_axisY(new Axis(this)),
-m_grid(new XYGrid(this)),
-m_plotDataIndex(0)
+class QChartPrivate
 {
-  //  setFlags(QGraphicsItem::ItemClipsChildrenToShape);
+public:
+
+    QChartPrivate(QChart* parent):
+    m_axisX(new Axis(parent)),
+    m_axisY(new Axis(parent)),
+    m_grid(new XYGrid(parent)),
+    m_plotDataIndex(0),
+    m_marginSize(0){}
+
+    Axis* m_axisX;
+    Axis* m_axisY;
+    XYGrid* m_grid;
+    QRect m_rect;
+    QList<const QChartSeries*> m_series;
+    QList<XYPlotDomain> m_plotDataList;
+    QList<QGraphicsItem*> m_items;
+    int m_plotDataIndex;
+    int m_marginSize;
+
+};
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QChart::QChart(QGraphicsItem* parent):QGraphicsItem(parent),
+d_ptr(new QChartPrivate(this))
+{
+    //  setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     // set axis
-        m_axisY->rotate(90);
+    Q_D(QChart);
+    d->m_axisY->rotate(90);
 
+    //TODO hardcoded values , to removed soon
+    XYPlotDomain data;
+    data.m_minX = 0.0;
+    data.m_maxX = 100.0;
+    data.m_minY = 0.0;
+    data.m_maxY = 100.0;
+    data.m_ticksX=4;
+    data.m_ticksY=4;
 
-        //TODO hardcoded values , to removed soon
-        XYPlotDomain* data = new XYPlotDomain();
-        data->m_minX = 0.0;
-        data->m_maxX = 100.0;
-        data->m_minY = 0.0;
-        data->m_maxY = 100.0;
-        data->m_ticksX=4;
-        data->m_ticksY=4;
+    d->m_plotDataList.clear();
+    d->m_plotDataList << data;
 
-        m_plotDataList.clear();
-        m_plotDataList << data;
-
-        m_grid->setZValue(10);
-        m_grid->setXYPlotData(*m_plotDataList.at(0));
+    d->m_grid->setZValue(10);
+    d->m_grid->setXYPlotData(d->m_plotDataList.at(0));
 }
 
 QChart::~QChart(){}
 
 QRectF QChart::boundingRect() const
 {
-    return m_rect;
+    Q_D(const QChart);
+    return d->m_rect;
 }
 
 void QChart::addSeries(QChartSeries* series)
 {
-    m_series<<series;
+    Q_D(QChart);
+    d->m_series<<series;
 
     switch(series->type())
     {
     case QChartSeries::LINE:
         XYLineChartItem* item = new XYLineChartItem(reinterpret_cast<QXYChartSeries*>(series),this);
-        item->updateXYPlotData(*m_plotDataList.at(0));
-        m_items<<item;
+        item->updateXYPlotData(d->m_plotDataList.at(0));
+        d->m_items<<item;
         break;
     }
 }
 
-void QChart::setSize(const QSizeF& size) {
+void QChart::setSize(const QSizeF& size)
+{
+    Q_D(QChart);
     //TODO refactor to setGeometry
-    m_rect = QRect(QPoint(0,0),size.toSize());
-    m_rect.adjust(margin(),margin(),-margin(),-margin());
-    m_grid->setPos(m_rect.topLeft());
-    m_grid->setSize(m_rect.size());
-    m_plotDataList.at(0)->m_viewportRect = m_rect;
-    foreach(QGraphicsItem* item , m_items)
-    reinterpret_cast<XYLineChartItem*>(item)->updateXYPlotData(*m_plotDataList.at(0));
+    d->m_rect = QRect(QPoint(0,0),size.toSize());
+    d->m_rect.adjust(margin(),margin(),-margin(),-margin());
+    d->m_grid->setPos(d->m_rect.topLeft());
+    d->m_grid->setSize(d->m_rect.size());
+    d->m_plotDataList[0].m_viewportRect = d->m_rect;
+    foreach(QGraphicsItem* item , d->m_items)
+    reinterpret_cast<XYLineChartItem*>(item)->updateXYPlotData(d->m_plotDataList.at(0));
     update();
 
 }
 
+int QChart::margin() const
+{
+    Q_D(const QChart);
+    return d->m_marginSize;
+}
+
 void QChart::setMargin(int margin)
 {
-    m_marginSize = margin;
+    Q_D(QChart);
+    d->m_marginSize = margin;
 }
+
+
 
 QCHART_END_NAMESPACE
