@@ -3,7 +3,7 @@
 
 #include "qchartconfig.h"
 #include "qchart.h"
-#include "xyplotdata_p.h"
+#include "xyplotdomain_p.h"
 
 QCHART_BEGIN_NAMESPACE
 
@@ -20,16 +20,12 @@ public:
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    //TODO: this is just temporary interface
-    void setChartSize(const QRectF& size);
-    void setXYPlotData(const XYPlotData& data);
+    void updateXYPlotData(const XYPlotDomain& data);
 
 private:
-    QRectF m_rect;
     QPolygonF m_polyline;
     QXYChartSeries* m_series;
-    XYPlotData m_xyPlotData;
-    bool m_dirtyGeometry;
+    XYPlotDomain m_xyPlotData;
 };
 
 QCHART_END_NAMESPACE

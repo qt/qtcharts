@@ -1,14 +1,14 @@
-#ifndef PLOTTER_H_
-#define PLOTTER_H_
+#ifndef PLOTDOMAIN_H_
+#define PLOTDOMAIN_H_
 #include "qchartconfig.h"
-#include <QtGlobal>
+#include <QRect>
 
 QCHART_BEGIN_NAMESPACE
 
-class XYPlotData {
+class XYPlotDomain {
 public:
-	XYPlotData();
-	virtual ~XYPlotData();
+	XYPlotDomain();
+	virtual ~XYPlotDomain();
 
 	qreal spanX() const;
 	qreal spanY() const;
@@ -22,8 +22,7 @@ public:
 	qreal m_maxX;
 	qreal m_minY;
 	qreal m_maxY;
-
-
+	QRect m_viewportRect;
 };
 
 QCHART_END_NAMESPACE

@@ -9,14 +9,14 @@ SOURCES += \
     xylinechart/qxychartseries.cpp \
     xylinechart/xylinechartitem.cpp \
     xylinechart/xygrid.cpp \
-    xylinechart/xyplotdata.cpp \
+    xylinechart/xyplotdomain.cpp \
     qchart.cpp \
     axis.cpp \
     qchartwidget.cpp
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
-    xylinechart/xyplotdata_p.h \# to be removed  
+    xylinechart/xyplotdomain_p.h \  
     xylinechart/xygrid_p.h \
     axis_p.h
     

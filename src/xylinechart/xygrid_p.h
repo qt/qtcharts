@@ -2,7 +2,7 @@
 #define XYGRID_H_
 
 #include <qchartconfig.h>
-#include <xyplotdata_p.h>
+#include <xyplotdomain_p.h>
 #include <QGraphicsItem>
 
 QCHART_BEGIN_NAMESPACE
@@ -18,12 +18,12 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     //TODO: this is just temporary interface
-    void setXYPlotData(const XYPlotData& xyPlotData);
+    void setXYPlotData(const XYPlotDomain& xyPlotData);
     void setSize(const QSizeF& rect);
 
 private:
     QRectF m_rect;
-    XYPlotData m_xyPlotData;
+    XYPlotDomain m_xyPlotData;
 };
 
 QCHART_END_NAMESPACE
