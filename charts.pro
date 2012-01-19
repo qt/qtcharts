@@ -1,8 +1,8 @@
 TEMPLATE = subdirs
-SUBDIRS += src #qmlplugin
-
+SUBDIRS +=  src example #qmlplugin
+CONFIG += ordered
 QMAKE_CXXFLAGS += -g -Wall
-QMAKE_DISTCLEAN += -r build
+QMAKE_DISTCLEAN += -r build bin 
 
 # install feature file
 feature.path = $$[QT_INSTALL_DATA]/mkspecs/features

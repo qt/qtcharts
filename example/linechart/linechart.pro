@@ -1,8 +1,13 @@
+CONFIG += internal_build
+
 TARGET = lineChart
 TEMPLATE = app
-
 QT += core gui
+SOURCES += main.cpp
 
-CONFIG += qtcommercialchart
+!include( ../../common.pri ) {
+ message('missing common pri')
+ CONFIG += qtcommercialchart
+}
 
-SOURCES += main.cpp 
+
