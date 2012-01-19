@@ -2,11 +2,13 @@
 error( Couldn't find the common.pri file! )
 }
 
+
 TARGET = QtCommercialChart
 DESTDIR = $$CHART_BUILD_LIB_DIR
 TEMPLATE = lib
 QT += core \
     gui
+CONFIG -= internal_build
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
 

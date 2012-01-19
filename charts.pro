@@ -1,5 +1,9 @@
+!include(common.pri) {
+ error('missing common.pri')
+}
+
 TEMPLATE = subdirs
-SUBDIRS +=  src example #qmlplugin
+SUBDIRS +=  src example test
 CONFIG += ordered
 QMAKE_CXXFLAGS += -g -Wall
 QMAKE_DISTCLEAN += -r build bin 

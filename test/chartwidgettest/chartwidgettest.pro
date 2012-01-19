@@ -1,3 +1,12 @@
+!include( ../../common.pri ) {
+error( Couldn't find the common.pri file! )
+}
+
+!include( ../../internal.pri ) {
+error( Couldn't find the internal.pri file! )
+}
+
+
 TARGET = chartwidgettest
 TEMPLATE = app
 
@@ -6,7 +15,6 @@ contains(QT_MAJOR_VERSION, 5) {
     QT += widgets
 }
 
-CONFIG += qtcommercialchart
 
 OBJECTS_DIR = tmp
 MOC_DIR = tmp
@@ -22,12 +30,4 @@ HEADERS += \
 #    qscatterseries.h \
 #    qseriespointgraphicsitem.h \
     dataseriedialog.h
-
-
-
-
-
-
-
-
 

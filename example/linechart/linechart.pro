@@ -1,13 +1,15 @@
-CONFIG += internal_build
+!include( ../../common.pri ) {
+ error( Couldn't find the common.pri file! )
+}
+
+!include( ../../internal.pri ) {
+ error( Couldn't find the internal.pri file !)
+}
 
 TARGET = lineChart
 TEMPLATE = app
 QT += core gui
 SOURCES += main.cpp
 
-!include( ../../common.pri ) {
- message('missing common pri')
- CONFIG += qtcommercialchart
-}
 
 
