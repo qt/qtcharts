@@ -1,6 +1,6 @@
 #include "mainwidget.h"
 #include "dataseriedialog.h"
-#include <qxyseries.h>
+#include <qxychartseries.h>
 #include <QPushButton>
 #include <QComboBox>
 #include <QSpinBox>
@@ -101,18 +101,21 @@ void MainWidget::addSeries(QString series, QString data)
     qDebug() << "addSeries: " << series << " data: " << data;
     m_defaultSeries = series;
 
-    QXYChartSeries* series0 = new QXYChartSeries();
+    // TODO: color of the series
+    QXYChartSeries* series0 = QXYChartSeries::create();
 
     if (data == "linear") {
-        // TODO
+        for (int i = 0; i < 10; i++)
+            series0->add(i, 10);
+    } else if (data == "linear, 1M") {
+        for (int i = 0; i < 1000000; i++)
+            series0->add(i, 20);
     } else if (data == "SIN") {
-        series0->setColor(Qt::blue);
         for (int x = 0; x < 100; x++)
               series0->add(x, abs(sin(3.14159265358979 / 50 * x) * 100));
         QList<QXYChartSeries*> dataset;
         dataset << series0;
     } else if (data == "SIN + random") {
-        series0->setColor(Qt::blue);
         for (qreal x = 0; x < 100; x += 0.1) {
             series0->add(x + (rand() % 5),
                          abs(sin(3.14159265358979 / 50 * x) * 100) + (rand() % 5));
@@ -121,13 +124,10 @@ void MainWidget::addSeries(QString series, QString data)
         // TODO: check if data has a valid file name
     }
 
-    QList<QXYChartSeries*> dataset;
-    dataset << series0;
-
     if (series == "Scatter") {
-        m_chartWidget->addDataSeries(QChart::DataSeriesTypeScatter, dataset);
+        m_chartWidget->addSeries(series0);
     } else if (series == "Line") {
-        m_chartWidget->addDataSeries(QChart::DataSeriesTypeLine, dataset);
+        m_chartWidget->addSeries(series0);
     } else {
         // TODO
     }

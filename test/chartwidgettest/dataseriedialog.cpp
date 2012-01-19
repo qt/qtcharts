@@ -28,6 +28,7 @@ DataSerieDialog::DataSerieDialog(QString defaultType, QWidget *parent) :
     // Combo box for selecting data for the new series
     m_testDataCombo = new QComboBox(this);
     m_testDataCombo->addItem("linear");
+    m_testDataCombo->addItem("linear, 1M");
     m_testDataCombo->addItem("SIN");
     m_testDataCombo->addItem("SIN + random");
     m_testDataCombo->addItem("TODO From file...");

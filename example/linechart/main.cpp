@@ -3,7 +3,6 @@
 #include <qchartwidget.h>
 #include <qxychartseries.h>
 #include <qchart.h>
-#include "chartview.h"
 #include <cmath>
 
 QCHART_USE_NAMESPACE
