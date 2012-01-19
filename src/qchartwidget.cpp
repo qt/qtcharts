@@ -29,13 +29,13 @@ public:
     QChart* m_chart;
 };
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 QChartWidget::QChartWidget(QWidget *parent) :
     QWidget(parent),
     d_ptr(new QChartWidgetPrivate(this))
 {
-
+    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
 QChartWidget::~QChartWidget()
@@ -52,6 +52,11 @@ void QChartWidget::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
+QSize QChartWidget::sizeHint() const
+{
+    // TODO: calculate size hint based on contents?
+    return QSize(100, 100);
+}
 
 void QChartWidget::addSeries(QChartSeries* series)
 {

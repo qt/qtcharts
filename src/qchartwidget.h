@@ -19,6 +19,7 @@ public:
 
     //implement from QWidget
     void resizeEvent(QResizeEvent *event);
+    QSize sizeHint() const;
 
     void addSeries(QChartSeries* series);
 protected:
