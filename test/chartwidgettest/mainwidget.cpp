@@ -101,38 +101,46 @@ void MainWidget::addSeries(QString series, QString data)
     m_defaultSeries = series;
 
     QXYChartSeries* series0 = 0;
-
-    // TODO: color of the series
-    if (series == "Scatter") {
-        series0 = QXYChartSeries::create();
-    } else if (series == "Line") {
-        series0 = QXYChartSeries::create();
-    } else {
-        // TODO
-        series0 = QXYChartSeries::create();
-    }
+    QChartSeries* scatterSeries = 0;
+    // TODO: a dedicated data class for storing x and y values
+    QList<qreal> x;
+    QList<qreal> y;
 
     if (data == "linear") {
-        for (int i = 0; i < 10; i++)
-            series0->add(i, 10);
+        for (int i = 0; i < 10; i++) {
+            x.append(i);
+            y.append(10);
+        }
     } else if (data == "linear, 1M") {
-        for (int i = 0; i < 1000000; i++)
-            series0->add(i, 20);
+        for (int i = 0; i < 10000; i++) {
+            x.append(i);
+            y.append(20);
+        }
     } else if (data == "SIN") {
-        for (int x = 0; x < 100; x++)
-              series0->add(x, abs(sin(3.14159265358979 / 50 * x) * 100));
-        QList<QXYChartSeries*> dataset;
-        dataset << series0;
+        for (int i = 0; i < 100; i++) {
+            x.append(i);
+            y.append(abs(sin(3.14159265358979 / 50 * i) * 100));
+        }
     } else if (data == "SIN + random") {
-        for (qreal x = 0; x < 100; x += 0.1) {
-            series0->add(x + (rand() % 5),
-                         abs(sin(3.14159265358979 / 50 * x) * 100) + (rand() % 5));
+        for (qreal i = 0; i < 100; i += 0.1) {
+            x.append(i + (rand() % 5));
+            y.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
         }
     } else {
         // TODO: check if data has a valid file name
     }
 
-    m_chartWidget->addSeries(series0);
+    // TODO: color of the series
+    if (series == "Scatter") {
+        scatterSeries = m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypeScatter);
+    } else if (series == "Line") {
+        series0 = QXYChartSeries::create();
+        for (int i = 0; i < 1000000; i++)
+            series0->add(i, 20);
+        m_chartWidget->addSeries(series0);
+    } else {
+        // TODO
+    }
 }
 
 void MainWidget::chartTypeChanged(int itemIndex)

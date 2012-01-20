@@ -20,16 +20,15 @@ public:
     };
 
 protected:
-    QChartSeries(QObject *parent = 0):QObject(parent){};
+    QChartSeries(QObject *parent = 0) : QObject(parent) {};
 
 public:
-    virtual ~QChartSeries(){};
+    virtual ~QChartSeries() {};
 
     //factory method
-    static QChartSeries* create(QObject* parent = 0 ){ return 0;}
+    static QChartSeries* create(QObject* parent = 0) { return 0;}
     //pure virtual
     virtual QChartSeriesType type() const = 0;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
