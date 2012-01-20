@@ -2,8 +2,8 @@
 error( Couldn't find the common.pri file! )
 }
 
-!include( ../../internal.pri ) {
-error( Couldn't find the internal.pri file! )
+!include( ../../integrated.pri ) {
+error( Couldn't find the integrated.pri file! )
 }
 
 
