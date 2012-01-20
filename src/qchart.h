@@ -2,6 +2,7 @@
 #define CHART_H
 
 #include <qchartglobal.h>
+#include <qchartseries.h>
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -12,7 +13,15 @@ class QChartSeries;
 class XYPlotDomain;
 class QChartPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsItem
+// TODO: We don't need to have QChart tied to QGraphicsItem:
+//class QTCOMMERCIALCHART_EXPORT QChart
+//class QTCOMMERCIALCHART_EXPORT QChartGraphicsItem : public QGraphicsItem {
+// public: QChartGraphicsItem(QChart &chart);
+
+/*!
+ * TODO: define the responsibilities
+ */
+class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsItem, public QObject
 {
 
 public:
@@ -24,6 +33,9 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
 
     void addSeries(QChartSeries* series);
+    //TODO: QChartSeries* createSeries(QSeriesData *data, QChartSeries::QChartSeriesType type);
+    // TODO: who owns the series now? maybe owned by chart and returned a reference instead...
+    QChartSeries* createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type);
 
     virtual void setSize(const QSizeF& rect);
     void setMargin(int margin);

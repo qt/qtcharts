@@ -1,9 +1,12 @@
 #include "qchart.h"
 #include "qchartseries.h"
+#include "qscatterseries.h"
+#include "qscatterseries_p.h"
 #include "xylinechartitem_p.h"
 #include "xyplotdomain_p.h"
 #include "axis_p.h"
 #include "xygrid_p.h"
+#include <QGraphicsScene>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -84,6 +87,28 @@ void QChart::addSeries(QChartSeries* series)
     }
 }
 
+QChartSeries* QChart::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type)
+{
+    Q_D(QChart);
+
+    // TODO: support also other types
+    Q_ASSERT(type == QChartSeries::SeriesTypeScatter);
+    QChartSeries *series = 0;
+
+    switch (type) {
+    case QChartSeries::SeriesTypeScatter: {
+        QScatterSeries *scatterSeries = new QScatterSeries(x, y, this);
+        d->m_items.append(scatterSeries->d);
+        scene()->addItem(scatterSeries->d);
+        //series = qobject_cast<QChartSeries *>(scatterSeries);
+        break;
+    }
+    default:
+        break;
+    }
+
+    return series;
+}
 void QChart::setSize(const QSizeF& size)
 {
     Q_D(QChart);
@@ -93,10 +118,11 @@ void QChart::setSize(const QSizeF& size)
     d->m_grid->setPos(d->m_rect.topLeft());
     d->m_grid->setSize(d->m_rect.size());
     d->m_plotDataList[0].m_viewportRect = d->m_rect;
+    // TODO: line chart items would need to be updated separately as they don't support update
+    // via paint method
     foreach(QGraphicsItem* item , d->m_items)
-    reinterpret_cast<XYLineChartItem*>(item)->updateXYPlotData(d->m_plotDataList.at(0));
+        reinterpret_cast<XYLineChartItem*>(item)->updateXYPlotData(d->m_plotDataList.at(0));
     update();
-
 }
 
 int QChart::margin() const

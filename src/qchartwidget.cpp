@@ -19,6 +19,7 @@ public:
         m_view->setScene(m_scene);
         m_chart = new QChart();
         m_scene->addItem(m_chart);
+        m_view->show();
     }
 
     ~QChartWidgetPrivate() {
@@ -64,6 +65,11 @@ void QChartWidget::addSeries(QChartSeries* series)
     d->m_chart->addSeries(series);
 }
 
+QChartSeries* QChartWidget::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type)
+{
+    Q_D(QChartWidget);
+    return d->m_chart->createSeries(x, y, type);
+}
 #include "moc_qchartwidget.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

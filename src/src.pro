@@ -17,6 +17,7 @@ SOURCES += \
     xylinechart/xylinechartitem.cpp \
     xylinechart/xygrid.cpp \
     xylinechart/xyplotdomain.cpp \
+    qscatterseries.cpp \
     qchart.cpp \
     axis.cpp \
     qchartwidget.cpp
@@ -25,10 +26,12 @@ PRIVATE_HEADERS += \
     xylinechart/xylinechartitem_p.h \
     xylinechart/xyplotdomain_p.h \  
     xylinechart/xygrid_p.h \
+    qscatterseries_p.h \
     axis_p.h
     
 PUBLIC_HEADERS += \
     qchartseries.h \
+    qscatterseries.h \
     qchart.h \
     qchartwidget.h \
     qchartglobal.h \
