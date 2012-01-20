@@ -100,41 +100,49 @@ void MainWidget::addSeries(QString series, QString data)
     qDebug() << "addSeries: " << series << " data: " << data;
     m_defaultSeries = series;
 
+    QXYChartSeries* series0 = QXYChartSeries::create();
+
     // TODO: a dedicated data class for storing x and y values
     QList<qreal> x;
     QList<qreal> y;
 
     if (data == "linear") {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             x.append(i);
-            y.append(10);
+            y.append(i);
         }
+        for (int i = 0; i < 20; i++)
+            series0->add(i, i);
     } else if (data == "linear, 1M") {
         for (int i = 0; i < 10000; i++) {
             x.append(i);
             y.append(20);
         }
+        for (int i = 0; i < 1000000; i++)
+            series0->add(i, 10);
     } else if (data == "SIN") {
         for (int i = 0; i < 100; i++) {
             x.append(i);
             y.append(abs(sin(3.14159265358979 / 50 * i) * 100));
         }
+        for (int i = 0; i < 100; i++)
+            series0->add(i, abs(sin(3.14159265358979 / 50 * i) * 100));
     } else if (data == "SIN + random") {
         for (qreal i = 0; i < 100; i += 0.1) {
             x.append(i + (rand() % 5));
             y.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
         }
+        for (qreal i = 0; i < 100; i += 0.1)
+            series0->add(i + (rand() % 5), abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
     } else {
         // TODO: check if data has a valid file name
     }
 
     // TODO: color of the series
     if (series == "Scatter") {
-        /*QChartSeries* scatterSeries = */m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypeScatter);
+        /*QChartSeries* scatterSeries = */
+        m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypeScatter);
     } else if (series == "Line") {
-        QXYChartSeries* series0 = QXYChartSeries::create();
-        for (int i = 0; i < 1000000; i++)
-            series0->add(i, 20);
         m_chartWidget->addSeries(series0);
     } else {
         // TODO

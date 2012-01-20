@@ -2,7 +2,7 @@
 #define XYLINECHARTITEM_H
 
 #include "qchartglobal.h"
-#include "qchart.h"
+#include <QGraphicsItem>
 #include "xyplotdomain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

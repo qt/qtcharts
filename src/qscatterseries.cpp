@@ -3,6 +3,7 @@
 #include "qchart.h"
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -15,13 +16,21 @@ QScatterSeriesPrivate::QScatterSeriesPrivate(QList<qreal> x, QList<qreal> y, QGr
 {
 }
 
-void QScatterSeriesPrivate::setSize()
+void QScatterSeriesPrivate::resize(QRectF rect, qreal xscale, qreal yscale)
 {
+    m_scenex.clear();
+    m_sceney.clear();
+
+    foreach(qreal x, m_x)
+        m_scenex.append(rect.left() + x * xscale);
+
+    foreach(qreal y, m_y)
+        m_sceney.append(rect.bottom() - y * yscale);
 }
 
 QRectF QScatterSeriesPrivate::boundingRect() const
 {
-    return QRectF(0, 0, 100, 100);
+    return QRectF(0, 0, 55, 100);
 }
 
 void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -33,21 +42,13 @@ void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsI
     pen.setBrush(brush);
     pen.setWidth(4);
     painter->setPen(pen);
-    QTransform transform = painter->transform();
 
-    // TODO: get min and max values of the axes from the QChart (or some dedicated class)
-    const qreal xmin = 0.0;
-    const qreal xmax = 100.0;
-    const qreal xscale = scene()->width() / (xmax - xmin);
-    const qreal ymin = 0.0;
-    const qreal ymax = 100.0;
-    const qreal yscale = scene()->height() / (ymax - ymin);
-
-    for (int i(0); i < m_x.count() && i < m_y.count(); i++) {
-        transform.reset();
-        transform.translate(m_x.at(i) * xscale, m_y.at(i) * yscale);
-        painter->setTransform(transform);
-        painter->drawArc(0, 0, 4, 4, 0, 5760);
+    // TODO: m_scenex and m_sceny are left empty during construction -> we would need a resize
+    // event right after construction or maybe given a size during initialization
+    for (int i(0); i < m_scenex.count() && i < m_sceney.count(); i++) {
+        if (scene()->width() > m_scenex.at(i) && scene()->height() > m_sceney.at(i))
+            //painter->drawArc(m_scenex.at(i), m_sceney.at(i), 2, 2, 0, 5760);
+            painter->drawPoint(m_scenex.at(i), m_sceney.at(i));
     }
 }
 
@@ -55,6 +56,15 @@ QScatterSeries::QScatterSeries(QList<qreal> x, QList<qreal> y, QObject *parent) 
     QChartSeries(parent),
     d(new QScatterSeriesPrivate(x, y, qobject_cast<QGraphicsItem *> (parent)))
 {
+    connect(parent, SIGNAL(sizeChanged(QRectF, qreal, qreal)), this, SLOT(chartSizeChanged(QRectF, qreal, qreal)));
+}
+
+void QScatterSeries::chartSizeChanged(QRectF rect, qreal xscale, qreal yscale)
+{
+    // Recalculate scatter data point locations on the scene
+//    d->transform().reset();
+//    d->transform().translate();
+    d->resize(rect, xscale, yscale);
 }
 
 QScatterSeries::~QScatterSeries()

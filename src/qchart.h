@@ -3,7 +3,7 @@
 
 #include <qchartglobal.h>
 #include <qchartseries.h>
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -21,16 +21,16 @@ class QChartPrivate;
 /*!
  * TODO: define the responsibilities
  */
-class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsItem, public QObject
+class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsObject
 {
-
+    Q_OBJECT
 public:
-    QChart(QGraphicsItem* parent = 0);
-    virtual ~QChart();
+    QChart(QGraphicsObject* parent = 0);
+    ~QChart();
 
     //from QGraphicsItem
-    virtual QRectF boundingRect() const;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
 
     void addSeries(QChartSeries* series);
     //TODO: QChartSeries* createSeries(QSeriesData *data, QChartSeries::QChartSeriesType type);
@@ -41,13 +41,13 @@ public:
     void setMargin(int margin);
     int margin() const;
 
-protected:
-    QChartPrivate * const d_ptr;
+signals:
+    void sizeChanged(QRectF rect, qreal xscale, qreal yscale);
 
 private:
+//    Q_DECLARE_PRIVATE(QChart)
     Q_DISABLE_COPY(QChart)
-    Q_DECLARE_PRIVATE(QChart)
-
+    QChartPrivate *d;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

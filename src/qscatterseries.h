@@ -2,6 +2,7 @@
 #define QSCATTERSERIES_H
 
 #include "qchartseries.h"
+#include <QRectF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QScatterSeriesPrivate;
@@ -16,6 +17,9 @@ public:
 
 public: // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeScatter; }
+
+public Q_SLOTS:
+    void chartSizeChanged(QRectF rect, qreal xscale, qreal yscale);
 
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)

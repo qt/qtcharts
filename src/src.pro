@@ -2,7 +2,6 @@
 error( Couldn't find the common.pri file! )
 }
 
-
 TARGET = QtCommercialChart
 DESTDIR = $$CHART_BUILD_LIB_DIR
 TEMPLATE = lib

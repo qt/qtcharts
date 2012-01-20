@@ -38,12 +38,11 @@ public:
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QChart::QChart(QGraphicsItem* parent):QGraphicsItem(parent),
-d_ptr(new QChartPrivate(this))
+QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
+d(new QChartPrivate(this))
 {
     //  setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     // set axis
-    Q_D(QChart);
     d->m_axisY->rotate(90);
 }
 
@@ -51,13 +50,12 @@ QChart::~QChart(){}
 
 QRectF QChart::boundingRect() const
 {
-    Q_D(const QChart);
     return d->m_rect;
 }
 
 void QChart::addSeries(QChartSeries* series)
 {
-    Q_D(QChart);
+    // TODO: we should check the series not already added
 
     d->m_series<<series;
 
@@ -89,6 +87,11 @@ void QChart::addSeries(QChartSeries* series)
         break;
     }
     case QChartSeries::SeriesTypeScatter: {
+        QScatterSeries *scatter = qobject_cast<QScatterSeries *>(series);
+        if (scatter) {
+            scatter->d->setParentItem(this);
+            scene()->addItem(scatter->d);
+        }
         break;
     }
     }
@@ -96,18 +99,14 @@ void QChart::addSeries(QChartSeries* series)
 
 QChartSeries* QChart::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type)
 {
-    Q_D(QChart);
-
-    // TODO: support also other types
+    // TODO: support also other types in addition to scatter
     Q_ASSERT(type == QChartSeries::SeriesTypeScatter);
     QChartSeries *series = 0;
 
     switch (type) {
     case QChartSeries::SeriesTypeScatter: {
         QScatterSeries *scatterSeries = new QScatterSeries(x, y, this);
-        d->m_items.append(scatterSeries->d);
-        scene()->addItem(scatterSeries->d);
-        //series = qobject_cast<QChartSeries *>(scatterSeries);
+        scatterSeries->d->setParentItem(this);
         break;
     }
     default:
@@ -116,21 +115,26 @@ QChartSeries* QChart::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries:
 
     return series;
 }
+
 void QChart::setSize(const QSizeF& size)
 {
-    Q_D(QChart);
     d->m_rect = QRect(QPoint(0,0),size.toSize());
-    d->m_rect.adjust(margin(),margin(),-margin(),-margin());
+    d->m_rect.adjust(margin(),margin(), -margin(), -margin());
     d->m_grid->setPos(d->m_rect.topLeft());
     d->m_grid->setSize(d->m_rect.size());
-    // TODO: line chart items would need to be updated separately as they don't support update
-    // via paint method
-    for (int i =0; i< d->m_plotDomainList.size();i++)
-    {
+
+    // TODO: calculate the scale
+    // TODO: calculate the origo
+    // TODO: not sure if emitting a signal here is the best from performance point of view
+    const qreal xscale = size.width() / 100;
+    const qreal yscale = size.height() / 100;
+    emit sizeChanged(QRectF(0, 0, size.width(), size.height()), xscale, yscale);
+
+    for (int i(0); i < d->m_plotDomainList.size(); i++)
         d->m_plotDomainList[i].m_viewportRect = d->m_rect;
 
-    }
-
+    // TODO: line chart items are updated separately as they don't support update
+    // via sizeChanged signal
     foreach(XYLineChartItem* item , d->m_xyLineChartItems)
         item->updateXYPlotDomain(d->m_plotDomainList.at(d->m_plotDataIndex));
 
@@ -140,14 +144,15 @@ void QChart::setSize(const QSizeF& size)
 
 int QChart::margin() const
 {
-    Q_D(const QChart);
     return d->m_marginSize;
 }
 
 void QChart::setMargin(int margin)
 {
-    Q_D(QChart);
     d->m_marginSize = margin;
 }
+
+#include "moc_qchart.cpp"
+
 
 QTCOMMERCIALCHART_END_NAMESPACE
