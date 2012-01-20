@@ -21,10 +21,7 @@ public:
     void resizeEvent(QResizeEvent *event);
     QSize sizeHint() const;
 
-    // TODO: addSeries and createSeries are optional solutions
     void addSeries(QChartSeries* series);
-    QChartSeries* createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type);
-
 protected:
     QChartWidgetPrivate * const d_ptr;
 
