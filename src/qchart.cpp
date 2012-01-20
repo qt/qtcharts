@@ -2,6 +2,7 @@
 #include "qchartseries.h"
 #include "qscatterseries.h"
 #include "qscatterseries_p.h"
+#include "qxychartseries.h"
 #include "xylinechartitem_p.h"
 #include "xyplotdomain_p.h"
 #include "axis_p.h"
@@ -71,12 +72,13 @@ QRectF QChart::boundingRect() const
 void QChart::addSeries(QChartSeries* series)
 {
     Q_D(QChart);
+
     d->m_series<<series;
 
     switch(series->type())
     {
     case QChartSeries::SeriesTypeLine: {
-        XYLineChartItem* item = new XYLineChartItem(reinterpret_cast<QXYChartSeries*>(series),this);
+        XYLineChartItem* item = new XYLineChartItem(static_cast<QXYChartSeries*>(series),this);
         item->updateXYPlotData(d->m_plotDataList.at(0));
         d->m_items<<item;
         break;
