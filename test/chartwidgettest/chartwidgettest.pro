@@ -1,11 +1,5 @@
-!include( ../../common.pri ) {
-error( Couldn't find the common.pri file! )
-}
-
-!include( ../../integrated.pri ) {
-error( Couldn't find the integrated.pri file! )
-}
-
+include( ../../common.pri )
+include( ../../integrated.pri )
 
 TARGET = chartwidgettest
 TEMPLATE = app
