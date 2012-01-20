@@ -6,7 +6,8 @@ TEMPLATE = subdirs
 SUBDIRS +=  src example test
 CONFIG += ordered
 QMAKE_CXXFLAGS += -g -Wall
-QMAKE_DISTCLEAN += -r build bin 
+unix:QMAKE_DISTCLEAN += -r build bin 
+win32:QMAKE_DISTCLEAN += build bin 
 
 # install feature file
 feature.path = $$[QT_INSTALL_DATA]/mkspecs/features
