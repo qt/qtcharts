@@ -14,7 +14,7 @@ m_series(series)
 
 }
 
-void XYLineChartItem::updateXYPlotData(const XYPlotDomain& data)
+void XYLineChartItem::updateXYPlotDomain(const XYPlotDomain& data)
 {
     m_xyPlotData=data;
 

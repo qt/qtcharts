@@ -20,7 +20,7 @@ public:
     virtual QRectF boundingRect() const;
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    void updateXYPlotData(const XYPlotDomain& data);
+    void updateXYPlotDomain(const XYPlotDomain& data);
 
 private:
     QPolygonF m_polyline;
