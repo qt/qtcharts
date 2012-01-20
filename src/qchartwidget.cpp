@@ -16,6 +16,8 @@ public:
     {
         m_scene = new QGraphicsScene();
         m_view = new QGraphicsView(parent);
+        m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        m_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         m_view->setScene(m_scene);
         m_chart = new QChart();
         m_scene->addItem(m_chart);
