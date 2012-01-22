@@ -138,7 +138,8 @@ void QChart::setSize(const QSizeF& size)
     foreach(XYLineChartItem* item , d->m_xyLineChartItems)
         item->updateXYPlotDomain(d->m_plotDomainList.at(d->m_plotDataIndex));
 
-    d->m_grid->setXYPlotData(d->m_plotDomainList.at(d->m_plotDataIndex));
+    if (d->m_plotDomainList.count())
+        d->m_grid->setXYPlotData(d->m_plotDomainList.at(d->m_plotDataIndex));
     update();
 }
 
