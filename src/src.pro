@@ -17,20 +17,24 @@ SOURCES += \
     xylinechart/xygrid.cpp \
     xylinechart/xyplotdomain.cpp \
     qscatterseries.cpp \
+    qpieseries.cpp \
     qchart.cpp \
     axis.cpp \
-    qchartwidget.cpp
+    qchartwidget.cpp \
+    pieslice.cpp
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
     xylinechart/xyplotdomain_p.h \  
     xylinechart/xygrid_p.h \
     qscatterseries_p.h \
+    pieslice.h \
     axis_p.h
     
 PUBLIC_HEADERS += \
     qchartseries.h \
     qscatterseries.h \
+    qpieseries.h \
     qchart.h \
     qchartwidget.h \
     qchartglobal.h \
@@ -73,3 +77,5 @@ QMAKE_EXTRA_TARGETS += chartversion
 
 unix:QMAKE_DISTCLEAN += -r $$CHART_BUILD_HEADER_DIR $$CHART_BUILD_LIB_DIR
 win32:QMAKE_DISTCLEAN += /Q $$CHART_BUILD_HEADER_DIR $$CHART_BUILD_LIB_DIR
+
+

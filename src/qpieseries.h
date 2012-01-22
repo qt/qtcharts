@@ -1,0 +1,40 @@
+#ifndef PIESERIES_H
+#define PIESERIES_H
+
+#include "qchartseries.h"
+#include <QObject>
+#include <QRectF>
+#include <QColor>
+
+class QGraphicsObject;
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class PieSlice;
+
+class QTCOMMERCIALCHART_EXPORT QPieSeries : public QChartSeries
+{
+    Q_OBJECT
+public:
+    // TODO: use a generic data class instead of x and y
+    QPieSeries(QList<qreal> x, QGraphicsObject *parent = 0);
+    ~QPieSeries();
+    QColor randomColor();
+    void setData(QList<int> data);
+
+public: // from QChartSeries
+    QChartSeriesType type() const { return QChartSeries::SeriesTypePie; }
+
+public Q_SLOTS:
+    void chartSizeChanged(QRectF rect, qreal xscale, qreal yscale);
+
+private:
+    //Q_DECLARE_PRIVATE(QPieSeries)
+    Q_DISABLE_COPY(QPieSeries)
+    // TODO: move the followin to internal impl
+    QList<qreal> m_x;
+    QList<PieSlice*> m_slices;
+    QSizeF m_size;
+};
+
+QTCOMMERCIALCHART_END_NAMESPACE
+
+#endif // PIESERIES_H

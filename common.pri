@@ -1,4 +1,4 @@
-CONFIG+=integrated_build #remove if you want to build against installed libs
+#CONFIG+=integrated_build #remove if you want to build against installed libs
 
 CHART_BUILD_HEADER_DIR = $$PWD/include
 CHART_BUILD_LIB_DIR = $$PWD/lib

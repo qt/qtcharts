@@ -14,7 +14,7 @@ public:
         SeriesTypeLine = 0,
 //        SeriesTypeArea,
 //        SeriesTypeBar,
-//        SeriesTypePie,
+        SeriesTypePie,
         SeriesTypeScatter
 //        SeriesTypeSpline
     };

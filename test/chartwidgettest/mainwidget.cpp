@@ -142,6 +142,8 @@ void MainWidget::addSeries(QString series, QString data)
     if (series == "Scatter") {
         /*QChartSeries* scatterSeries = */
         m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypeScatter);
+    } else if (series == "Pie") {
+        m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypePie);
     } else if (series == "Line") {
         m_chartWidget->addSeries(series0);
     } else {

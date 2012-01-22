@@ -2,6 +2,7 @@
 #include "qchartseries.h"
 #include "qscatterseries.h"
 #include "qscatterseries_p.h"
+#include "qpieseries.h"
 #include "qxychartseries.h"
 #include "xylinechartitem_p.h"
 #include "xyplotdomain_p.h"
@@ -86,34 +87,45 @@ void QChart::addSeries(QChartSeries* series)
         d->m_xyLineChartItems<<item;
         break;
     }
-    case QChartSeries::SeriesTypeScatter: {
-        QScatterSeries *scatter = qobject_cast<QScatterSeries *>(series);
-        if (scatter) {
-            scatter->d->setParentItem(this);
-            scene()->addItem(scatter->d);
-        }
-        break;
-    }
+        // TODO: Not tested:
+//    case QChartSeries::SeriesTypeScatter: {
+//        QScatterSeries *scatter = qobject_cast<QScatterSeries *>(series);
+//        if (scatter) {
+//            scatter->d->setParentItem(this);
+//            scene()->addItem(scatter->d);
+//        }
+//        break;
+//    }
     }
 }
 
 QChartSeries* QChart::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type)
 {
-    // TODO: support also other types in addition to scatter
-    Q_ASSERT(type == QChartSeries::SeriesTypeScatter);
-    QChartSeries *series = 0;
+    // TODO: support also other types; not only scatter and pie
+    Q_ASSERT(type == QChartSeries::SeriesTypeScatter
+             || type == QChartSeries::SeriesTypePie);
 
     switch (type) {
     case QChartSeries::SeriesTypeScatter: {
         QScatterSeries *scatterSeries = new QScatterSeries(x, y, this);
+        connect(this, SIGNAL(sizeChanged(QRectF, qreal, qreal)),
+                scatterSeries, SLOT(chartSizeChanged(QRectF, qreal, qreal)));
         scatterSeries->d->setParentItem(this);
-        break;
+        return scatterSeries;
+    }
+    case QChartSeries::SeriesTypePie: {
+        // TODO: we now have also a list of y values as a parameter, it is ignored
+        // we should use a generic data class instead of list of x and y values
+        QPieSeries *pieSeries = new QPieSeries(x, this);
+        connect(this, SIGNAL(sizeChanged(QRectF, qreal, qreal)),
+                pieSeries, SLOT(chartSizeChanged(QRectF, qreal, qreal)));
+        return pieSeries;
     }
     default:
         break;
     }
 
-    return series;
+    return 0;
 }
 
 void QChart::setSize(const QSizeF& size)

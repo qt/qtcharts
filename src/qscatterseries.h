@@ -12,11 +12,11 @@ class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QChartSeries
     Q_OBJECT
 public:
     //QScatterSeries(QSeriesData *data, QObject *chart);
-    QScatterSeries(QList<qreal> x, QList<qreal> y, QObject *chart = 0);
+    QScatterSeries(QList<qreal> x, QList<qreal> y, QObject *parent = 0);
     ~QScatterSeries();
 
 public: // from QChartSeries
-    virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeScatter; }
+    QChartSeriesType type() const { return QChartSeries::SeriesTypeScatter; }
 
 public Q_SLOTS:
     void chartSizeChanged(QRectF rect, qreal xscale, qreal yscale);

@@ -56,7 +56,6 @@ QScatterSeries::QScatterSeries(QList<qreal> x, QList<qreal> y, QObject *parent) 
     QChartSeries(parent),
     d(new QScatterSeriesPrivate(x, y, qobject_cast<QGraphicsItem *> (parent)))
 {
-    connect(parent, SIGNAL(sizeChanged(QRectF, qreal, qreal)), this, SLOT(chartSizeChanged(QRectF, qreal, qreal)));
 }
 
 void QScatterSeries::chartSizeChanged(QRectF rect, qreal xscale, qreal yscale)
