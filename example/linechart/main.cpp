@@ -1,6 +1,6 @@
 #include <QApplication>
 #include <QMainWindow>
-#include <qchartwidget.h>
+#include <qchartview.h>
 #include <qxychartseries.h>
 #include <qchart.h>
 #include <cmath>
@@ -43,11 +43,11 @@ int main(int argc, char *argv[])
     dataset << series2;
     dataset << series3;
 
-    QChartWidget* chartWidget =  new QChartWidget(&window);
-    chartWidget->addSeries(series1);
-    chartWidget->addSeries(series2);
+    QChartView* chartView =  new QChartView(&window);
+    chartView->addSeries(series1);
+    chartView->addSeries(series2);
 
-    window.setCentralWidget(chartWidget);
+    window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
 
