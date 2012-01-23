@@ -13,52 +13,30 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartPrivate
-{
-public:
-
-    QChartPrivate(QChart* parent):
-    m_axisX(new Axis(parent)),
-    m_axisY(new Axis(parent)),
-    m_grid(new XYGrid(parent)),
-    m_plotDataIndex(0),
-    m_marginSize(0){}
-
-    Axis* m_axisX;
-    Axis* m_axisY;
-    XYGrid* m_grid;
-    QRect m_rect;
-    QList<const QChartSeries*> m_series;
-    QList<XYPlotDomain> m_plotDomainList;
-    QList<XYLineChartItem*> m_xyLineChartItems;
-    QList<QGraphicsItem*> m_items;
-    int m_plotDataIndex;
-    int m_marginSize;
-
-};
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
-d(new QChartPrivate(this))
+		m_axisX(new Axis(this)),
+		m_axisY(new Axis(this)),
+		m_grid(new XYGrid(this)),
+		m_plotDataIndex(0),
+		m_marginSize(0)
 {
     //  setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     // set axis
-    d->m_axisY->rotate(90);
+    m_axisY->rotate(90);
 }
 
 QChart::~QChart(){}
 
 QRectF QChart::boundingRect() const
 {
-    return d->m_rect;
+    return m_rect;
 }
 
 void QChart::addSeries(QChartSeries* series)
 {
     // TODO: we should check the series not already added
 
-    d->m_series<<series;
+    m_series<<series;
 
     switch(series->type())
     {
@@ -83,8 +61,8 @@ void QChart::addSeries(QChartSeries* series)
 
         XYLineChartItem* item = new XYLineChartItem(xyseries,this);
         item->updateXYPlotDomain(domain);
-        d->m_plotDomainList<<domain;
-        d->m_xyLineChartItems<<item;
+        m_plotDomainList<<domain;
+        m_xyLineChartItems<<item;
         break;
     }
         // TODO: Not tested:
@@ -130,10 +108,10 @@ QChartSeries* QChart::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries:
 
 void QChart::setSize(const QSizeF& size)
 {
-    d->m_rect = QRect(QPoint(0,0),size.toSize());
-    d->m_rect.adjust(margin(),margin(), -margin(), -margin());
-    d->m_grid->setPos(d->m_rect.topLeft());
-    d->m_grid->setSize(d->m_rect.size());
+    m_rect = QRect(QPoint(0,0),size.toSize());
+    m_rect.adjust(margin(),margin(), -margin(), -margin());
+    m_grid->setPos(m_rect.topLeft());
+    m_grid->setSize(m_rect.size());
 
     // TODO: calculate the scale
     // TODO: calculate the origo
@@ -142,27 +120,29 @@ void QChart::setSize(const QSizeF& size)
     const qreal yscale = size.height() / 100;
     emit sizeChanged(QRectF(0, 0, size.width(), size.height()), xscale, yscale);
 
-    for (int i(0); i < d->m_plotDomainList.size(); i++)
-        d->m_plotDomainList[i].m_viewportRect = d->m_rect;
+    for (int i(0); i < m_plotDomainList.size(); i++)
+        m_plotDomainList[i].m_viewportRect = m_rect;
 
     // TODO: line chart items are updated separately as they don't support update
     // via sizeChanged signal
-    foreach(XYLineChartItem* item , d->m_xyLineChartItems)
-        item->updateXYPlotDomain(d->m_plotDomainList.at(d->m_plotDataIndex));
+    foreach(XYLineChartItem* item ,m_xyLineChartItems)
+        item->updateXYPlotDomain(m_plotDomainList.at(m_plotDataIndex));
 
-    if (d->m_plotDomainList.count())
-        d->m_grid->setXYPlotData(d->m_plotDomainList.at(d->m_plotDataIndex));
+
+    if (m_plotDomainList.count())
+        m_grid->setXYPlotData(m_plotDomainList.at(m_plotDataIndex));
+
     update();
 }
 
 int QChart::margin() const
 {
-    return d->m_marginSize;
+    return m_marginSize;
 }
 
 void QChart::setMargin(int margin)
 {
-    d->m_marginSize = margin;
+    m_marginSize = margin;
 }
 
 #include "moc_qchart.cpp"

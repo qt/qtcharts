@@ -11,7 +11,7 @@ class Axis;
 class XYGrid;
 class QChartSeries;
 class XYPlotDomain;
-class QChartPrivate;
+class XYLineChartItem;
 
 // TODO: We don't need to have QChart tied to QGraphicsItem:
 //class QTCOMMERCIALCHART_EXPORT QChart
@@ -45,9 +45,17 @@ signals:
     void sizeChanged(QRectF rect, qreal xscale, qreal yscale);
 
 private:
-//    Q_DECLARE_PRIVATE(QChart)
     Q_DISABLE_COPY(QChart)
-    QChartPrivate *d;
+    Axis* m_axisX;
+    Axis* m_axisY;
+    XYGrid* m_grid;
+    QRect m_rect;
+    QList<const QChartSeries*> m_series;
+    QList<XYPlotDomain> m_plotDomainList;
+    QList<XYLineChartItem*> m_xyLineChartItems;
+    QList<QGraphicsItem*> m_items;
+    int m_plotDataIndex;
+    int m_marginSize;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

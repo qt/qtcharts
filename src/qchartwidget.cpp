@@ -6,52 +6,28 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartWidgetPrivate
-{
-public:
-    QChartWidgetPrivate(QChartWidget *parent) :
-    m_view(0),
-    m_scene(0),
-    m_chart(0)
-    {
-        m_scene = new QGraphicsScene();
-        m_view = new QGraphicsView(parent);
-        m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_view->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        m_view->setScene(m_scene);
-        m_chart = new QChart();
-        m_scene->addItem(m_chart);
-        m_view->show();
-    }
-
-    ~QChartWidgetPrivate() {
-    }
-
-    QGraphicsView *m_view;
-    QGraphicsScene *m_scene;
-    QChart* m_chart;
-};
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 QChartWidget::QChartWidget(QWidget *parent) :
-    QWidget(parent),
-    d_ptr(new QChartWidgetPrivate(this))
+QWidget(parent)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    m_scene = new QGraphicsScene();
+    m_view = new QGraphicsView(parent);
+    m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_view->setScene(m_scene);
+    m_chart = new QChart();
+    m_scene->addItem(m_chart);
+    m_view->show();
 }
 
 QChartWidget::~QChartWidget()
 {
-    delete d_ptr;
 }
 
 void QChartWidget::resizeEvent(QResizeEvent *event)
 {
-    Q_D(QChartWidget);
-    d->m_view->resize(size().width(),size().height());
-    d->m_scene->setSceneRect(0,0,size().width(),size().height());
-    d->m_chart->setSize(size());
+    m_view->resize(size().width(),size().height());
+    m_scene->setSceneRect(0,0,size().width(),size().height());
+    m_chart->setSize(size());
     QWidget::resizeEvent(event);
 }
 
@@ -63,14 +39,12 @@ QSize QChartWidget::sizeHint() const
 
 void QChartWidget::addSeries(QChartSeries* series)
 {
-    Q_D(QChartWidget);
-    d->m_chart->addSeries(series);
+    m_chart->addSeries(series);
 }
 
 QChartSeries* QChartWidget::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type)
 {
-    Q_D(QChartWidget);
-    return d->m_chart->createSeries(x, y, type);
+    return m_chart->createSeries(x, y, type);
 }
 #include "moc_qchartwidget.cpp"
 

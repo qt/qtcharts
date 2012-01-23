@@ -5,6 +5,9 @@
 #include "qchart.h"
 #include <QWidget>
 
+class QGraphicsView;
+class QGraphicsScene;
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChartSeries;
@@ -24,12 +27,12 @@ public:
     // TODO: addSeries and createSeries are optional solutions
     void addSeries(QChartSeries* series);
     QChartSeries* createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type);
-protected:
-    QChartWidgetPrivate * const d_ptr;
 
 private:
     Q_DISABLE_COPY(QChartWidget)
-    Q_DECLARE_PRIVATE(QChartWidget)
+    QGraphicsView *m_view;
+    QGraphicsScene *m_scene;
+    QChart* m_chart;
 
 };
 
