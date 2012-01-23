@@ -86,8 +86,8 @@ QChartSeries* QChart::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries:
     switch (type) {
     case QChartSeries::SeriesTypeScatter: {
         QScatterSeries *scatterSeries = new QScatterSeries(x, y, this);
-        connect(this, SIGNAL(sizeChanged(QRectF, qreal, qreal)),
-                scatterSeries, SLOT(chartSizeChanged(QRectF, qreal, qreal)));
+        connect(this, SIGNAL(sizeChanged(QRectF)),
+                scatterSeries, SLOT(chartSizeChanged(QRectF)));
         scatterSeries->d->setParentItem(this);
         return scatterSeries;
     }
@@ -95,8 +95,8 @@ QChartSeries* QChart::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries:
         // TODO: we now have also a list of y values as a parameter, it is ignored
         // we should use a generic data class instead of list of x and y values
         QPieSeries *pieSeries = new QPieSeries(x, this);
-        connect(this, SIGNAL(sizeChanged(QRectF, qreal, qreal)),
-                pieSeries, SLOT(chartSizeChanged(QRectF, qreal, qreal)));
+        connect(this, SIGNAL(sizeChanged(QRectF)),
+                pieSeries, SLOT(chartSizeChanged(QRectF)));
         return pieSeries;
     }
     default:
@@ -113,12 +113,11 @@ void QChart::setSize(const QSizeF& size)
     m_grid->setPos(m_rect.topLeft());
     m_grid->setSize(m_rect.size());
 
-    // TODO: calculate the scale
+    // TODO: TTD for setting scale
+    //emit scaleChanged(100, 100);
     // TODO: calculate the origo
     // TODO: not sure if emitting a signal here is the best from performance point of view
-    const qreal xscale = size.width() / 100;
-    const qreal yscale = size.height() / 100;
-    emit sizeChanged(QRectF(0, 0, size.width(), size.height()), xscale, yscale);
+    emit sizeChanged(QRectF(0, 0, size.width(), size.height()));
 
     for (int i(0); i < m_plotDomainList.size(); i++)
         m_plotDomainList[i].m_viewportRect = m_rect;

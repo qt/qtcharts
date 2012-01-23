@@ -15,13 +15,15 @@ public:
     QScatterSeriesPrivate(QList<qreal> x, QList<qreal> y, QGraphicsItem *parent);
 
 public: // from QGraphicsItem
-    void resize(QRectF rect, qreal xscale, qreal yscale);
+    void resize(QRectF rect);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     // TODO: use the chart data class instead of list of x and y values?
     QList<qreal> m_x;
     QList<qreal> m_y;
+    qreal m_scalex;
+    qreal m_scaley;
     QList<qreal> m_scenex;
     QList<qreal> m_sceney;
 };

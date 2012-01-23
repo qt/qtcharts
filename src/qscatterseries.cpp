@@ -12,21 +12,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QScatterSeriesPrivate::QScatterSeriesPrivate(QList<qreal> x, QList<qreal> y, QGraphicsItem *parent) :
     QGraphicsItem(parent),
     m_x(x),
-    m_y(y)
+    m_y(y),
+    m_scalex(100), // TODO: let the use define the scale (or autoscaled)
+    m_scaley(100)
 {
+    resize(parent->boundingRect());
 }
 
-void QScatterSeriesPrivate::resize(QRectF rect, qreal xscale, qreal yscale)
+void QScatterSeriesPrivate::resize(QRectF rect)
 {
     m_scenex.clear();
     m_sceney.clear();
 
     foreach(qreal x, m_x)
-        m_scenex.append(rect.left() + x * xscale);
+        m_scenex.append(rect.left() + x * (rect.width() / m_scalex));
 
     foreach(qreal y, m_y)
-        m_sceney.append(rect.bottom() - y * yscale);
+        m_sceney.append(rect.bottom() - y * (rect.height() / m_scaley));
 }
+
+// TODO:
+//void QScatterSeriesPrivate::setAxisScale(qreal xscale, qreal yscale)
 
 QRectF QScatterSeriesPrivate::boundingRect() const
 {
@@ -38,7 +44,7 @@ void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsI
     QPen pen = painter->pen();
     QBrush brush = pen.brush();
     // TODO: The opacity should be user definable...
-    brush.setColor(QColor(255, 82, 0, 50));
+    brush.setColor(QColor(255, 82, 0, 100));
     pen.setBrush(brush);
     pen.setWidth(4);
     painter->setPen(pen);
@@ -58,13 +64,19 @@ QScatterSeries::QScatterSeries(QList<qreal> x, QList<qreal> y, QObject *parent) 
 {
 }
 
-void QScatterSeries::chartSizeChanged(QRectF rect, qreal xscale, qreal yscale)
+void QScatterSeries::chartSizeChanged(QRectF rect)
 {
     // Recalculate scatter data point locations on the scene
 //    d->transform().reset();
 //    d->transform().translate();
-    d->resize(rect, xscale, yscale);
+    d->resize(rect);
 }
+
+// TODO:
+//void QScatterSeries::chartScaleChanged(qreal xscale, qreal yscale)
+//{
+//    d->rescale(xscale, yscale);
+//}
 
 QScatterSeries::~QScatterSeries()
 {

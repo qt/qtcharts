@@ -9,24 +9,16 @@ QPieSeries::QPieSeries(QList<qreal> x, QGraphicsObject *parent) :
     QChartSeries(parent),
     m_x(x)
 {
-}
-
-QPieSeries::~QPieSeries()
-{
-}
-
-void QPieSeries::chartSizeChanged(QRectF rect, qreal xscale, qreal yscale)
-{
+    // Create slices
     qreal fullPie = 360;
     qreal total = 0;
     foreach (qreal value, m_x)
         total += value;
 
-    // We must have a parent for the graphics items we create
-    // TODO: maybe QChartSeries needs to be a QGraphicsObject to make this clear for the users?
-    QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent());
+    QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent);
     Q_ASSERT(parentItem);
     qreal angle = 0;
+    // TODO: no need to create new slices in case size changed; we should re-use the existing ones
     foreach (qreal value, m_x) {
         qreal span = value / total * fullPie;
         PieSlice *slice = new PieSlice(randomColor(), angle, span);
@@ -34,6 +26,14 @@ void QPieSeries::chartSizeChanged(QRectF rect, qreal xscale, qreal yscale)
         m_slices.append(slice);
         angle += span;
     }
+}
+
+QPieSeries::~QPieSeries()
+{
+}
+
+void QPieSeries::chartSizeChanged(QRectF /*rect*/)
+{
 }
 
 QColor QPieSeries::randomColor()

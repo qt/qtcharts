@@ -24,7 +24,7 @@ public: // from QChartSeries
     QChartSeriesType type() const { return QChartSeries::SeriesTypePie; }
 
 public Q_SLOTS:
-    void chartSizeChanged(QRectF rect, qreal xscale, qreal yscale);
+    void chartSizeChanged(QRectF rect);
 
 private:
     //Q_DECLARE_PRIVATE(QPieSeries)

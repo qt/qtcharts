@@ -42,7 +42,8 @@ public:
     int margin() const;
 
 signals:
-    void sizeChanged(QRectF rect, qreal xscale, qreal yscale);
+    void sizeChanged(QRectF rect);
+    void scaleChanged(qreal xscale, qreal yscale);
 
 private:
     Q_DISABLE_COPY(QChart)
