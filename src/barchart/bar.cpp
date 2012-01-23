@@ -1,6 +1,6 @@
 #include "bar.h"
 #include <QDebug>
-#include <Qpainter>
+#include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
