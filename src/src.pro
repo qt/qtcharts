@@ -11,7 +11,10 @@ QT += core \
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
 
-SOURCES += \ 
+SOURCES += \
+    barchart/barchartseries.cpp \
+    barchart/bargroup.cpp \
+    barchart/bar.cpp \
     xylinechart/qxychartseries.cpp \
     xylinechart/xylinechartitem.cpp \
     xylinechart/xygrid.cpp \
@@ -38,12 +41,15 @@ PUBLIC_HEADERS += \
     qchart.h \
     qchartwidget.h \
     qchartglobal.h \
-    xylinechart/qxychartseries.h 
-   
+    xylinechart/qxychartseries.h \
+    barchart/barchartseries.h \
+    barchart/bargroup.h
+
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 
 INCLUDEPATH += xylinechart \
+               barchart \
                .
 
 OBJECTS_DIR = $$CHART_BUILD_DIR/lib

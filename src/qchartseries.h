@@ -13,7 +13,7 @@ public:
     enum QChartSeriesType {
         SeriesTypeLine = 0,
 //        SeriesTypeArea,
-//        SeriesTypeBar,
+        SeriesTypeBar,
         SeriesTypePie,
         SeriesTypeScatter
 //        SeriesTypeSpline

@@ -24,6 +24,7 @@ public:
     QSize sizeHint() const;
 
     // TODO: addSeries and createSeries are optional solutions
+    // TODO: currently createSeries assumes x, y value pairs. This isn't case with all charts. So is there another createSeries for other types (for example one list of ints)?
     void addSeries(QChartSeries* series);
     QChartSeries* createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type);
 

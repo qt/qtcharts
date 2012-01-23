@@ -4,6 +4,10 @@
 #include "qscatterseries_p.h"
 #include "qpieseries.h"
 #include "qxychartseries.h"
+
+#include "barchartseries.h"
+#include "bargroup.h"
+
 #include "xylinechartitem_p.h"
 #include "xyplotdomain_p.h"
 #include "axis_p.h"
@@ -74,6 +78,18 @@ void QChart::addSeries(QChartSeries* series)
 //        }
 //        break;
 //    }
+
+    case QChartSeries::SeriesTypeBar: {
+
+        qDebug() << "barSeries added";
+        BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
+
+        // Who owns the series?
+        BarGroup* group = new BarGroup(*barSeries, this);
+        scene()->addItem(group);
+        m_BarGroupItems.append(group); // If we need to access group later
+        break;
+        }
     }
 }
 

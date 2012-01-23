@@ -12,6 +12,7 @@ class XYGrid;
 class QChartSeries;
 class XYPlotDomain;
 class XYLineChartItem;
+class BarGroup;
 
 // TODO: We don't need to have QChart tied to QGraphicsItem:
 //class QTCOMMERCIALCHART_EXPORT QChart
@@ -57,6 +58,8 @@ private:
     QList<QGraphicsItem*> m_items;
     int m_plotDataIndex;
     int m_marginSize;
+
+    QList<BarGroup*> m_BarGroupItems;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
