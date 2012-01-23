@@ -7,16 +7,15 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChartWidget::QChartWidget(QWidget *parent) :
-QWidget(parent)
+QGraphicsView(parent)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_scene = new QGraphicsScene();
-    m_view = new QGraphicsView(parent);
-    m_view->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    m_view->setScene(m_scene);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setScene(m_scene);
     m_chart = new QChart();
     m_scene->addItem(m_chart);
-    m_view->show();
+    show();
 }
 
 QChartWidget::~QChartWidget()
@@ -25,7 +24,6 @@ QChartWidget::~QChartWidget()
 
 void QChartWidget::resizeEvent(QResizeEvent *event)
 {
-    m_view->resize(size().width(),size().height());
     m_scene->setSceneRect(0,0,size().width(),size().height());
     m_chart->setSize(size());
     QWidget::resizeEvent(event);

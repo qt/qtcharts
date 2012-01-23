@@ -3,9 +3,8 @@
 
 #include "qchartglobal.h"
 #include "qchart.h"
-#include <QWidget>
+#include <QGraphicsView>
 
-class QGraphicsView;
 class QGraphicsScene;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -13,7 +12,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChartSeries;
 class QChartWidgetPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QChartWidget : public QWidget
+class QTCOMMERCIALCHART_EXPORT QChartWidget : public QGraphicsView
 {
     Q_OBJECT
 public:
@@ -30,7 +29,6 @@ public:
 
 private:
     Q_DISABLE_COPY(QChartWidget)
-    QGraphicsView *m_view;
     QGraphicsScene *m_scene;
     QChart* m_chart;
 
