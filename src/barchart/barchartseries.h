@@ -10,13 +10,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 // Container for series
 class QTCOMMERCIALCHART_EXPORT BarChartSeries : public QChartSeries
 {
-
+    // TODO:
+//    Q_OBJECT
 public:
-    BarChartSeries(QList<int> data, QObject* parent=0);
+    BarChartSeries(QObject* parent=0);
 
     // from QChartSeries
-    static QChartSeries* create(QObject* parent = 0 );
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }
+
+    virtual bool setData(QList<int> data);
+    virtual bool setData(QList<qreal> data) {return false;}
+    virtual bool setData(QList<qreal> x, QList<qreal> y) {return false;}
+
 
     // Methods to find out minimum and maximum values of data
     int min();

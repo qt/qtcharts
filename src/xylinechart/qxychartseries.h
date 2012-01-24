@@ -10,6 +10,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QTCOMMERCIALCHART_EXPORT QXYChartSeries : public QChartSeries
 {
+    //TODO:
+//    Q_OBJECT
 private:
     QXYChartSeries(QObject* parent=0);
 public:

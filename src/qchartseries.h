@@ -8,7 +8,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QTCOMMERCIALCHART_EXPORT QChartSeries : public QObject
 {
-
+    //TODO:
+    //Q_OBJECT
 public:
     enum QChartSeriesType {
         SeriesTypeLine = 0,
@@ -26,7 +27,8 @@ public:
     virtual ~QChartSeries(){};
 
     // Factory method
-    static QChartSeries* create(QObject* parent = 0 ){ return 0;}
+    static QChartSeries* create(QChartSeriesType type, QObject* parent = 0 );
+
     // Pure virtual
     virtual QChartSeriesType type() const = 0;
 

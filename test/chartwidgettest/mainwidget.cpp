@@ -3,6 +3,7 @@
 #include "qchartseries.h"
 #include "qpieseries.h"
 #include <qxychartseries.h>
+#include <barchartseries.h>
 #include <QPushButton>
 #include <QComboBox>
 #include <QSpinBox>
@@ -163,6 +164,22 @@ void MainWidget::addSeries(QString series, QString data)
         Q_ASSERT(newSeries->setData(x, y));
     } else {
         // TODO
+    }
+
+    // BarChart
+    if (series == "Bar") {
+        qDebug() << "Bar chart series";
+        QChartSeries* barSeries = QChartSeries::create(QChartSeries::SeriesTypeBar, this);
+        QList<int> barData;
+        barData << 1;
+        barData << 12;
+        barData << 5;
+        barData << 8;
+        barData << 17;
+        barData << 9;
+        barSeries->setData(barData);
+        m_chartWidget->addSeries(barSeries);
+
     }
 
     setCurrentSeries(newSeries);

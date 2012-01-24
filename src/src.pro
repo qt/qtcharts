@@ -25,7 +25,8 @@ SOURCES += \
     axis.cpp \
     qchartwidget.cpp \
     pieslice.cpp \
-    qchartview.cpp
+    qchartview.cpp \
+    qchartseries.cpp
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
