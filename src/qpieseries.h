@@ -16,7 +16,7 @@ class QTCOMMERCIALCHART_EXPORT QPieSeries : public QChartSeries
 
 public:
     // TODO: use a generic data class instead of x and y
-    QPieSeries(QList<qreal> x, QGraphicsObject *parent = 0);
+    QPieSeries(QGraphicsObject *parent = 0);
     ~QPieSeries();
     QColor randomColor();
     void setSizeFactor(qreal sizeFactor);
@@ -24,6 +24,7 @@ public:
 
 public: // from QChartSeries
     QChartSeriesType type() const { return QChartSeries::SeriesTypePie; }
+    bool setData(QList<qreal> data);
 
 public Q_SLOTS:
     void chartSizeChanged(QRectF rect);
@@ -33,7 +34,7 @@ private:
     //Q_DECLARE_PRIVATE(QPieSeries)
     Q_DISABLE_COPY(QPieSeries)
     // TODO: move the followin to internal impl
-    QList<qreal> m_x;
+    QList<qreal> m_data;
     QList<PieSlice*> m_slices;
     QRectF m_chartSize;
     qreal m_sizeFactor;

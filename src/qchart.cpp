@@ -93,15 +93,13 @@ void QChart::addSeries(QChartSeries* series)
     }
 }
 
-QChartSeries* QChart::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type)
+QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
 {
     // TODO: support also other types; not only scatter and pie
-    Q_ASSERT(type == QChartSeries::SeriesTypeScatter
-             || type == QChartSeries::SeriesTypePie);
 
     switch (type) {
     case QChartSeries::SeriesTypeScatter: {
-        QScatterSeries *scatterSeries = new QScatterSeries(x, y, this);
+        QScatterSeries *scatterSeries = new QScatterSeries(this);
         connect(this, SIGNAL(sizeChanged(QRectF)),
                 scatterSeries, SLOT(chartSizeChanged(QRectF)));
         scatterSeries->d->setParentItem(this);
@@ -110,12 +108,13 @@ QChartSeries* QChart::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries:
     case QChartSeries::SeriesTypePie: {
         // TODO: we now have also a list of y values as a parameter, it is ignored
         // we should use a generic data class instead of list of x and y values
-        QPieSeries *pieSeries = new QPieSeries(x, this);
+        QPieSeries *pieSeries = new QPieSeries(this);
         connect(this, SIGNAL(sizeChanged(QRectF)),
                 pieSeries, SLOT(chartSizeChanged(QRectF)));
         return pieSeries;
     }
     default:
+        Q_ASSERT(false);
         break;
     }
 

@@ -40,10 +40,10 @@ void QChartView::addSeries(QChartSeries* series)
     m_chart->addSeries(series);
 }
 
-QChartSeries* QChartView::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type)
+QChartSeries* QChartView::createSeries(QChartSeries::QChartSeriesType type)
 {
 
-    return m_chart->createSeries(x, y, type);
+    return m_chart->createSeries(type);
 }
 
 void QChartView::mousePressEvent(QMouseEvent *event)

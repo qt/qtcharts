@@ -36,7 +36,7 @@ public:
     void addSeries(QChartSeries* series);
     //TODO: QChartSeries* createSeries(QSeriesData *data, QChartSeries::QChartSeriesType type);
     // TODO: who owns the series now? maybe owned by chart and returned a reference instead...
-    QChartSeries* createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type);
+    QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
 
     virtual void setSize(const QSizeF& rect);
     void setMargin(int margin);

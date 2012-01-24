@@ -9,14 +9,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //#define QSeriesData QList<qreal>
 
-QScatterSeriesPrivate::QScatterSeriesPrivate(QList<qreal> x, QList<qreal> y, QGraphicsItem *parent) :
+QScatterSeriesPrivate::QScatterSeriesPrivate(QGraphicsItem *parent) :
     QGraphicsItem(parent),
-    m_x(x),
-    m_y(y),
     m_scalex(100), // TODO: let the use define the scale (or autoscaled)
     m_scaley(100)
 {
-    resize(parent->boundingRect());
 }
 
 void QScatterSeriesPrivate::resize(QRectF rect)
@@ -58,10 +55,21 @@ void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsI
     }
 }
 
-QScatterSeries::QScatterSeries(QList<qreal> x, QList<qreal> y, QObject *parent) :
+QScatterSeries::QScatterSeries(QObject *parent) :
     QChartSeries(parent),
-    d(new QScatterSeriesPrivate(x, y, qobject_cast<QGraphicsItem *> (parent)))
+    d(new QScatterSeriesPrivate(qobject_cast<QGraphicsItem *> (parent)))
 {
+}
+
+bool QScatterSeries::setData(QList<qreal> x, QList<qreal> y)
+{
+    // TODO: validate data
+    d->m_x = x;
+    d->m_y = y;
+    QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent());
+    Q_ASSERT(parentItem);
+    d->resize(parentItem->boundingRect());
+    return true;
 }
 
 void QScatterSeries::chartSizeChanged(QRectF rect)

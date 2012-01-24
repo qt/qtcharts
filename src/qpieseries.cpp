@@ -5,23 +5,34 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QPieSeries::QPieSeries(QList<qreal> x, QGraphicsObject *parent) :
+QPieSeries::QPieSeries(QGraphicsObject *parent) :
     QChartSeries(parent),
-    m_x(x),
     m_sizeFactor(1.0)
 {
+}
+
+QPieSeries::~QPieSeries()
+{
+    while (m_slices.count())
+        delete m_slices.takeLast();
+}
+
+bool QPieSeries::setData(QList<qreal> data)
+{
+    m_data = data;
+
     // Create slices
     qreal fullPie = 360;
     qreal total = 0;
-    foreach (qreal value, m_x)
+    foreach (qreal value, m_data)
         total += value;
 
-    QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent);
+    QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent());
     Q_ASSERT(parentItem);
     m_chartSize = parentItem->boundingRect();
     qreal angle = 0;
     // TODO: no need to create new slices in case size changed; we should re-use the existing ones
-    foreach (qreal value, m_x) {
+    foreach (qreal value, m_data) {
         qreal span = value / total * fullPie;
         PieSlice *slice = new PieSlice(randomColor(), angle, span, parentItem->boundingRect());
         slice->setParentItem(parentItem);
@@ -30,12 +41,7 @@ QPieSeries::QPieSeries(QList<qreal> x, QGraphicsObject *parent) :
     }
 
     resizeSlices(m_chartSize);
-}
-
-QPieSeries::~QPieSeries()
-{
-    while (m_slices.count())
-        delete m_slices.takeLast();
+    return true;
 }
 
 void QPieSeries::chartSizeChanged(QRectF chartRect)

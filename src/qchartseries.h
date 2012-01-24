@@ -25,11 +25,14 @@ protected:
 public:
     virtual ~QChartSeries(){};
 
-    //factory method
+    // Factory method
     static QChartSeries* create(QObject* parent = 0 ){ return 0;}
-    //pure virtual
+    // Pure virtual
     virtual QChartSeriesType type() const = 0;
 
+    virtual bool setData(QList<int> data) { return false; }
+    virtual bool setData(QList<qreal> data) { return false; }
+    virtual bool setData(QList<qreal> x, QList<qreal> y){ return false; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

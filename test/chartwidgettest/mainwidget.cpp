@@ -120,7 +120,6 @@ void MainWidget::addSeries(QString series, QString data)
 {
     qDebug() << "addSeries: " << series << " data: " << data;
     m_defaultSeriesName = series;
-    QChartSeries *newSeries = QXYChartSeries::create();
 
     // TODO: a dedicated data class for storing x and y values
     QList<qreal> x;
@@ -131,40 +130,37 @@ void MainWidget::addSeries(QString series, QString data)
             x.append(i);
             y.append(i);
         }
-        for (int i = 0; i < 20; i++)
-            ((QXYChartSeries *)newSeries)->add(i, i);
     } else if (data == "linear, 1M") {
         for (int i = 0; i < 10000; i++) {
             x.append(i);
             y.append(20);
         }
-        for (int i = 0; i < 1000000; i++)
-            ((QXYChartSeries *)newSeries)->add(i, 10);
     } else if (data == "SIN") {
         for (int i = 0; i < 100; i++) {
             x.append(i);
             y.append(abs(sin(3.14159265358979 / 50 * i) * 100));
         }
-        for (int i = 0; i < 100; i++)
-            ((QXYChartSeries *)newSeries)->add(i, abs(sin(3.14159265358979 / 50 * i) * 100));
     } else if (data == "SIN + random") {
         for (qreal i = 0; i < 100; i += 0.1) {
             x.append(i + (rand() % 5));
             y.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
         }
-        for (qreal i = 0; i < 100; i += 0.1)
-            ((QXYChartSeries *)newSeries)->add(i + (rand() % 5), abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
     } else {
         // TODO: check if data has a valid file name
+        Q_ASSERT(false);
     }
 
     // TODO: color of the series
+    QChartSeries *newSeries = 0;
     if (series == "Scatter") {
-        newSeries = m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypeScatter);
+        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypeScatter);
+        Q_ASSERT(newSeries->setData(x, y));
     } else if (series == "Pie") {
-        newSeries = m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypePie);
+        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypePie);
+        Q_ASSERT(newSeries->setData(y));
     } else if (series == "Line") {
-        m_chartWidget->addSeries(newSeries);
+        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypePie);
+        Q_ASSERT(newSeries->setData(x, y));
     } else {
         // TODO
     }

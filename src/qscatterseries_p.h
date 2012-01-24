@@ -12,7 +12,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QScatterSeriesPrivate : public QGraphicsItem
 {
 public:
-    QScatterSeriesPrivate(QList<qreal> x, QList<qreal> y, QGraphicsItem *parent);
+    QScatterSeriesPrivate(QGraphicsItem *parent);
 
 public: // from QGraphicsItem
     void resize(QRectF rect);

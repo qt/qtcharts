@@ -21,9 +21,9 @@ public:
     //implement from QWidget
     void resizeEvent(QResizeEvent *event);
 
-    // TODO: addSeries and createSeries are optional solutions
     void addSeries(QChartSeries* series);
-    QChartSeries* createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type);
+    // Convenience function
+    QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
 
 protected:
     void mouseMoveEvent (QMouseEvent *event);

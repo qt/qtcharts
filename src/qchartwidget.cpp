@@ -42,9 +42,9 @@ void QChartWidget::addSeries(QChartSeries* series)
     m_chart->addSeries(series);
 }
 
-QChartSeries* QChartWidget::createSeries(QList<qreal> x, QList<qreal> y, QChartSeries::QChartSeriesType type)
+QChartSeries* QChartWidget::createSeries(QChartSeries::QChartSeriesType type)
 {
-    return m_chart->createSeries(x, y, type);
+    return m_chart->createSeries(type);
 }
 #include "moc_qchartwidget.cpp"
 
