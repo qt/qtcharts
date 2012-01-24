@@ -1,5 +1,7 @@
 #include "mainwidget.h"
 #include "dataseriedialog.h"
+#include "qchartseries.h"
+#include "qpieseries.h"
 #include <qxychartseries.h>
 #include <QPushButton>
 #include <QComboBox>
@@ -56,7 +58,7 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(m_yMaxSpin, SIGNAL(valueChanged(int)), this, SLOT(yMaxChanged(int)));
 
     QGridLayout *grid = new QGridLayout();
-    QHBoxLayout *hbox = new QHBoxLayout();
+    QGridLayout *mainLayout = new QGridLayout();
     //grid->addWidget(new QLabel("Add series:"), 0, 0);
     grid->addWidget(addSeriesButton, 0, 1);
     grid->addWidget(new QLabel("Background:"), 2, 0);
@@ -74,23 +76,42 @@ MainWidget::MainWidget(QWidget *parent) :
     grid->addWidget(new QLabel(""), 8, 0);
     grid->setRowStretch(8, 1);
 
-    hbox->addLayout(grid);
+    mainLayout->addLayout(grid, 0, 0);
+
+    // Scatter specific settings
+    m_scatterLayout = new QGridLayout();
+    m_scatterLayout->addWidget(new QLabel("scatter"), 0, 0);
+    m_scatterLayout->setEnabled(false);
+
+    // Pie specific settings
+    m_pieLayout = new QGridLayout();
+    m_pieLayout->addWidget(new QLabel("Pie size factor"), 0, 0);
+    QDoubleSpinBox *pieSizeSpin = new QDoubleSpinBox();
+    pieSizeSpin->setMinimum(LONG_MIN);
+    pieSizeSpin->setMaximum(LONG_MAX);
+    pieSizeSpin->setValue(1.0);
+    pieSizeSpin->setSingleStep(0.1);
+    connect(pieSizeSpin, SIGNAL(valueChanged(double)), this, SLOT(setPieSizeFactor(double)));
+    m_pieLayout->setEnabled(false);
+    m_pieLayout->addWidget(pieSizeSpin, 0, 1);
+
+    mainLayout->addLayout(m_scatterLayout, 1, 0);
+    mainLayout->addLayout(m_pieLayout, 2, 0);
 
     m_chartWidget = new QChartWidget(this);
     //m_chartWidget->setColor(Qt::red);
-    hbox->addWidget(m_chartWidget);
+    mainLayout->addWidget(m_chartWidget, 0, 1, 3, 1);
 //    hbox->setStretch(1, 1);
 
-    setLayout(hbox);
+    setLayout(mainLayout);
 
     m_autoScaleCheck->setChecked(true);
-    chartTypeChanged(4);
     testDataChanged(0);
 }
 
 void MainWidget::addSeries()
 {
-    DataSerieDialog dialog(m_defaultSeries, this);
+    DataSerieDialog dialog(m_defaultSeriesName, this);
     connect(&dialog, SIGNAL(accepted(QString, QString)), this, SLOT(addSeries(QString, QString)));
     dialog.exec();
 }
@@ -98,9 +119,8 @@ void MainWidget::addSeries()
 void MainWidget::addSeries(QString series, QString data)
 {
     qDebug() << "addSeries: " << series << " data: " << data;
-    m_defaultSeries = series;
-
-    QXYChartSeries* series0 = QXYChartSeries::create();
+    m_defaultSeriesName = series;
+    QChartSeries *newSeries = QXYChartSeries::create();
 
     // TODO: a dedicated data class for storing x and y values
     QList<qreal> x;
@@ -112,56 +132,59 @@ void MainWidget::addSeries(QString series, QString data)
             y.append(i);
         }
         for (int i = 0; i < 20; i++)
-            series0->add(i, i);
+            ((QXYChartSeries *)newSeries)->add(i, i);
     } else if (data == "linear, 1M") {
         for (int i = 0; i < 10000; i++) {
             x.append(i);
             y.append(20);
         }
         for (int i = 0; i < 1000000; i++)
-            series0->add(i, 10);
+            ((QXYChartSeries *)newSeries)->add(i, 10);
     } else if (data == "SIN") {
         for (int i = 0; i < 100; i++) {
             x.append(i);
             y.append(abs(sin(3.14159265358979 / 50 * i) * 100));
         }
         for (int i = 0; i < 100; i++)
-            series0->add(i, abs(sin(3.14159265358979 / 50 * i) * 100));
+            ((QXYChartSeries *)newSeries)->add(i, abs(sin(3.14159265358979 / 50 * i) * 100));
     } else if (data == "SIN + random") {
         for (qreal i = 0; i < 100; i += 0.1) {
             x.append(i + (rand() % 5));
             y.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
         }
         for (qreal i = 0; i < 100; i += 0.1)
-            series0->add(i + (rand() % 5), abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
+            ((QXYChartSeries *)newSeries)->add(i + (rand() % 5), abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
     } else {
         // TODO: check if data has a valid file name
     }
 
     // TODO: color of the series
     if (series == "Scatter") {
-        /*QChartSeries* scatterSeries = */
-        m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypeScatter);
+        newSeries = m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypeScatter);
     } else if (series == "Pie") {
-        m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypePie);
+        newSeries = m_chartWidget->createSeries(x, y, QChartSeries::SeriesTypePie);
     } else if (series == "Line") {
-        m_chartWidget->addSeries(series0);
+        m_chartWidget->addSeries(newSeries);
     } else {
         // TODO
     }
+
+    setCurrentSeries(newSeries);
 }
 
-void MainWidget::chartTypeChanged(int itemIndex)
+void MainWidget::setCurrentSeries(QChartSeries *series)
 {
-    // TODO: change chart type
-    switch (itemIndex) {
-    case 4:
-        //m_chartWidget->setType(4);
+    m_currentSeries = series;
+    switch (m_currentSeries->type()) {
+    case QChartSeries::SeriesTypeLine:
         break;
-    default: {
-        //m_chartWidget->setType(0);
+    case QChartSeries::SeriesTypeScatter:
         break;
-    }
+    case QChartSeries::SeriesTypePie:
+        break;
+    default:
+        Q_ASSERT(false);
+        break;
     }
 }
 
@@ -238,4 +261,11 @@ void MainWidget::yMinChanged(int value)
 void MainWidget::yMaxChanged(int value)
 {
     qDebug() << "yMaxChanged: " << value;
+}
+
+void MainWidget::setPieSizeFactor(double size)
+{
+    QPieSeries *pie = qobject_cast<QPieSeries *>(m_currentSeries);
+    Q_ASSERT(pie);
+    pie->setSizeFactor(qreal(size));
 }

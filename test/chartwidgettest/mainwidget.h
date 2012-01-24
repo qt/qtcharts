@@ -7,6 +7,7 @@
 
 class QSpinBox;
 class QCheckBox;
+class QGridLayout;
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -19,7 +20,6 @@ public:
 signals:
 
 private slots:
-    void chartTypeChanged(int itemIndex);
     void addSeries();
     void addSeries(QString series, QString data);
     void testDataChanged(int itemIndex);
@@ -29,6 +29,8 @@ private slots:
     void xMaxChanged(int value);
     void yMinChanged(int value);
     void yMaxChanged(int value);
+    void setCurrentSeries(QChartSeries *series);
+    void setPieSizeFactor(double margin);
 
 private:
     QChartWidget *m_chartWidget;
@@ -37,7 +39,10 @@ private:
     QSpinBox *m_xMaxSpin;
     QSpinBox *m_yMinSpin;
     QSpinBox *m_yMaxSpin;
-    QString m_defaultSeries;
+    QString m_defaultSeriesName;
+    QChartSeries *m_currentSeries;
+    QGridLayout *m_scatterLayout;
+    QGridLayout *m_pieLayout;
 };
 
 #endif // MAINWIDGET_H

@@ -4,10 +4,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PieSlice::PieSlice(const QColor& color, qreal startAngle, qreal span)
+PieSlice::PieSlice(const QColor& color, qreal startAngle, qreal span, QRectF rect)
     : m_color(color),
     m_startAngle(startAngle),
-    m_span(span)
+    m_span(span),
+    m_rect(rect)
 {
     setAcceptHoverEvents(true);
 }
@@ -18,7 +19,7 @@ PieSlice::~PieSlice()
 
 QRectF PieSlice::boundingRect() const
 {
-    return parentItem()->boundingRect();
+    return m_rect;
 }
 
 QPainterPath PieSlice::shape() const

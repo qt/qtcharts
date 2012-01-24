@@ -11,7 +11,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class PieSlice : public QGraphicsItem
 {
 public:
-    PieSlice(const QColor& color, qreal startAngle, qreal span);
+    PieSlice(const QColor& color, qreal startAngle, qreal span, QRectF rect);
     ~PieSlice();
 
 public: // from QGraphicsItem
@@ -20,10 +20,11 @@ public: // from QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
 
-private:
+public:
     QColor m_color;
     qreal m_startAngle;
     qreal m_span;
+    QRectF m_rect;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

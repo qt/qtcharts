@@ -1,9 +1,9 @@
 !include(common.pri) {
- error('missing common.pri')
+    error('missing common.pri')
 }
 
 TEMPLATE = subdirs
-SUBDIRS +=  src example test
+SUBDIRS += src example test
 CONFIG += ordered
 QMAKE_CXXFLAGS += -g -Wall
 unix:QMAKE_DISTCLEAN += -r build bin 
