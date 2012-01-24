@@ -168,8 +168,9 @@ void MainWidget::addSeries(QString series, QString data)
 
     // BarChart
     if (series == "Bar") {
+        // This is the another way of creating series. Should we create test cases for both ways, if we support them?
         qDebug() << "Bar chart series";
-        QChartSeries* barSeries = QChartSeries::create(QChartSeries::SeriesTypeBar, this);
+        newSeries = QChartSeries::create(QChartSeries::SeriesTypeBar, this);
         QList<int> barData;
         barData << 1;
         barData << 12;
@@ -177,9 +178,8 @@ void MainWidget::addSeries(QString series, QString data)
         barData << 8;
         barData << 17;
         barData << 9;
-        barSeries->setData(barData);
-        m_chartWidget->addSeries(barSeries);
-
+        newSeries->setData(barData);
+        m_chartWidget->addSeries(newSeries);
     }
 
     setCurrentSeries(newSeries);
@@ -194,6 +194,9 @@ void MainWidget::setCurrentSeries(QChartSeries *series)
     case QChartSeries::SeriesTypeScatter:
         break;
     case QChartSeries::SeriesTypePie:
+        break;
+    case QChartSeries::SeriesTypeBar:
+        qDebug() << "setCurrentSeries (bar)";
         break;
     default:
         Q_ASSERT(false);
