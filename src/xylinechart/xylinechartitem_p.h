@@ -2,30 +2,35 @@
 #define XYLINECHARTITEM_H
 
 #include "qchartglobal.h"
-#include <QGraphicsItem>
-#include "xyplotdomain_p.h"
+#include "chartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYChartSeries;
 
-class XYLineChartItem : public QGraphicsItem
+class XYLineChartItem : public ChartItem
 {
 
 public:
     XYLineChartItem(QXYChartSeries* m_series,QGraphicsItem *parent = 0);
-    virtual ~ XYLineChartItem(){};
+    ~ XYLineChartItem(){};
 
     //from QGraphicsItem
-    virtual QRectF boundingRect() const;
-    virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
-    void updateXYPlotDomain(const XYPlotDomain& data);
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    //from ChartItem
+    void setSize(const QSize& size);
+    void setPlotDomain(const PlotDomain& data);
 
 private:
+    void updateGeometry();
+
+private:
+    QRect m_rect;
     QPolygonF m_polyline;
     QXYChartSeries* m_series;
-    XYPlotDomain m_xyPlotData;
+    PlotDomain m_plotDomain;
+    bool m_dirty;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

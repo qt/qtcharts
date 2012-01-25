@@ -1,8 +1,7 @@
+#include "chartwidget.h"
 #include <QApplication>
 #include <QMainWindow>
-#include <qchartview.h>
 #include <qxychartseries.h>
-#include <qchart.h>
 #include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -25,13 +24,13 @@ int main(int argc, char *argv[])
     for (int x = 0; x <= numPoints; ++x) {
     	  series0->add(x, abs(sin(PI/50*x)*100));
     	  series1->add(x, abs(cos(PI/50*x)*100));
-    }
+     }
 
-    QChartView* chartView =  new QChartView(&window);
-    chartView->addSeries(series0);
-    chartView->addSeries(series1);
+    ChartWidget* chartWidget =  new ChartWidget(&window);
+    chartWidget->addSeries(series0);
+    chartWidget->addSeries(series1);
 
-    window.setCentralWidget(chartView);
+    window.setCentralWidget(chartWidget);
     window.resize(400, 300);
     window.show();
 

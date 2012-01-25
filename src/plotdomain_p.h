@@ -5,24 +5,19 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class XYPlotDomain {
+class PlotDomain {
 public:
-	XYPlotDomain();
-	virtual ~XYPlotDomain();
+	PlotDomain();
+	virtual ~PlotDomain();
 
 	qreal spanX() const;
 	qreal spanY() const;
-	int ticksX() const { return m_ticksX; }
-	int ticksY() const { return m_ticksY; }
 
 public:
-	int m_ticksX;
-	int m_ticksY;
 	qreal m_minX;
 	qreal m_maxX;
 	qreal m_minY;
 	qreal m_maxY;
-	QRect m_viewportRect;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -7,11 +7,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class Axis;
-class XYGrid;
+class AxisItem;
 class QChartSeries;
-class XYPlotDomain;
-class XYLineChartItem;
+class PlotDomain;
+class ChartItem;
 class BarGroup;
 
 // TODO: We don't need to have QChart tied to QGraphicsItem:
@@ -45,24 +44,29 @@ public:
     // TODO: who owns the series now? maybe owned by chart and returned a reference instead...
     QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
 
-    virtual void setSize(const QSizeF& rect);
+    void setSize(const QSize& size);
     void setMargin(int margin);
     int margin() const;
     void setTheme(QChart::ChartTheme theme);
 
+    void zoomInToRect(const QRect& rectangle);
+    void zoomIn();
+    void zoomOut();
+
 signals:
+    //TODO chage to const QSize& size
     void sizeChanged(QRectF rect);
     void scaleChanged(qreal xscale, qreal yscale);
 
 private:
     Q_DISABLE_COPY(QChart)
-    Axis* m_axisX;
-    Axis* m_axisY;
-    XYGrid* m_grid;
+    AxisItem* m_axisX;
+    AxisItem* m_axisY;
     QRect m_rect;
     QList<const QChartSeries*> m_series;
-    QList<XYPlotDomain> m_plotDomainList;
-    QList<XYLineChartItem*> m_xyLineChartItems;
+    QVector<PlotDomain> m_plotDomainList;
+    QList<ChartItem*> m_chartItems;
+    //TODO: remove
     QList<QGraphicsItem*> m_items;
     int m_plotDataIndex;
     int m_marginSize;

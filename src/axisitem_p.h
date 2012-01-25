@@ -1,0 +1,40 @@
+#ifndef AXISITEM_H_
+#define AXISITEM_H_
+
+#include "chartitem_p.h"
+#include "plotdomain_p.h"
+#include <QGraphicsItem>
+
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+class AxisItem: public ChartItem
+{
+public:
+    enum AxisType{X_AXIS,Y_AXIS};
+
+    AxisItem(AxisType type = X_AXIS,QGraphicsItem* parent = 0);
+    ~AxisItem();
+
+    //from QGraphicsItem
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+
+    //from ChartItem
+    void setSize(const QSize& size);
+    void setPlotDomain(const PlotDomain& data);
+
+    void setLength(int length);
+    void setWidth(int width);
+    AxisType axisType() const {return m_type;};
+
+private:
+    QRectF m_rect;
+    int m_ticks;
+    PlotDomain m_plotDomain;
+    QPainterPath m_path;
+    AxisType m_type;
+};
+
+QTCOMMERCIALCHART_END_NAMESPACE
+
+#endif /* AXISITEM_H_ */

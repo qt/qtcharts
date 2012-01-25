@@ -18,12 +18,12 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     //TODO: this is just temporary interface
-    void setXYPlotData(const XYPlotDomain& xyPlotData);
+    void setXYPlotData(const PlotDomain& xyPlotData);
     void setSize(const QSizeF& rect);
 
 private:
     QRectF m_rect;
-    XYPlotDomain m_xyPlotData;
+    PlotDomain m_xyPlotData;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

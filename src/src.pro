@@ -17,12 +17,11 @@ SOURCES += \
     barchart/bar.cpp \
     xylinechart/qxychartseries.cpp \
     xylinechart/xylinechartitem.cpp \
-    xylinechart/xygrid.cpp \
-    xylinechart/xyplotdomain.cpp \
+    plotdomain.cpp \
     qscatterseries.cpp \
     qpieseries.cpp \
     qchart.cpp \
-    axis.cpp \
+    axisitem.cpp \
     qchartwidget.cpp \
     pieslice.cpp \
     qchartview.cpp \
@@ -30,11 +29,11 @@ SOURCES += \
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
-    xylinechart/xyplotdomain_p.h \  
-    xylinechart/xygrid_p.h \
+    plotdomain_p.h \  
     qscatterseries_p.h \
     pieslice.h \
-    axis_p.h
+    axisitem_p.h \
+    chartitem_p.h
     
 PUBLIC_HEADERS += \
     qchartseries.h \

@@ -11,9 +11,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QChartView::QChartView(QWidget *parent) :
     QGraphicsView(parent),
     m_scene(new QGraphicsScene()),
-    m_chart(new QChart()),
-    m_rubberBand(0),
-    m_showRubberBand(false)
+    m_chart(new QChart())
 {
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -46,36 +44,23 @@ QChartSeries* QChartView::createSeries(QChartSeries::QChartSeriesType type)
     return m_chart->createSeries(type);
 }
 
-void QChartView::mousePressEvent(QMouseEvent *event)
+void QChartView::zoomInToRect(const QRect& rectangle)
 {
-    int margin = m_chart->margin();
-
-    QRect rect(margin,margin,width()-2*margin,height()-2*margin);
-
-    m_origin = event->pos();
-
-    if (!rect.contains(m_origin)) return;
-
-    if (!m_rubberBand)
-    m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
-    m_rubberBand->setGeometry(QRect(m_origin, QSize()));
-    m_showRubberBand=true;
-    m_rubberBand->show();
-
+    m_chart->zoomInToRect(rectangle);
 }
 
- void QChartView::mouseMoveEvent(QMouseEvent *event)
+void QChartView::zoomIn()
 {
-    if(m_showRubberBand)
-    m_rubberBand->setGeometry(QRect(m_origin, event->pos()).normalized());
+    m_chart->zoomIn();
 }
 
- void QChartView::mouseReleaseEvent(QMouseEvent *event)
+void QChartView::zoomOut()
 {
-    if(m_showRubberBand) {
-        m_rubberBand->hide();
-        m_showRubberBand=false;
-    }
+    m_chart->zoomOut();
 }
 
+int QChartView::margin() const
+{
+    return m_chart->margin();
+}
 QTCOMMERCIALCHART_END_NAMESPACE

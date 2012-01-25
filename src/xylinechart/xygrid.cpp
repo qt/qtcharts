@@ -18,7 +18,7 @@ void XYGrid::setSize(const QSizeF& size)
 	m_rect.setSize(size.toSize());
 }
 
-void XYGrid::setXYPlotData(const XYPlotDomain& xyPlotData)
+void XYGrid::setXYPlotData(const PlotDomain& xyPlotData)
 {
     m_xyPlotData = xyPlotData;
 }
