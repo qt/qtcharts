@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     QChartView* chartView =  new QChartView(&window);
     chartView->addSeries(series0);
     chartView->addSeries(series1);
+    chartView->setBackgroundColor(Qt::yellow);
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);

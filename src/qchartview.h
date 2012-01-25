@@ -6,7 +6,6 @@
 #include <QGraphicsView>
 
 class QGraphicsScene;
-class QRubberBand;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -25,17 +24,17 @@ public:
     // Convenience function
     QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
 
-protected:
-    void mouseMoveEvent (QMouseEvent *event);
-    void mousePressEvent (QMouseEvent *event);
-    void mouseReleaseEvent (QMouseEvent *event);
+    int margin() const;
+    void setTitle(const QString& title);
+    void setBackgroundColor(const QColor& color);
+    void zoomInToRect(const QRect& rectangle);
+    void zoomIn();
+    void zoomOut();
 
 private:
     QGraphicsScene *m_scene;
     QChart* m_chart;
-    QRubberBand *m_rubberBand;
     QPoint m_origin;
-    bool m_showRubberBand;
     Q_DISABLE_COPY(QChartView)
 
 
