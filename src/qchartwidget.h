@@ -32,7 +32,7 @@ public:
      * Set color theme for the chart. Themes define harmonic colors for the graphical elements of
      * the chart.
      */
-    void setTheme(QChart::ChartTheme theme);
+    void setTheme(QChart::ChartThemeId theme);
 
 private:
     Q_DISABLE_COPY(QChartWidget)

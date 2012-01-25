@@ -47,7 +47,7 @@ QChartSeries* QChartWidget::createSeries(QChartSeries::QChartSeriesType type)
     return m_chart->createSeries(type);
 }
 
-void QChartWidget::setTheme(QChart::ChartTheme theme)
+void QChartWidget::setTheme(QChart::ChartThemeId theme)
 {
     m_chart->setTheme(theme);
 }

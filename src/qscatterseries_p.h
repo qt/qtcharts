@@ -19,6 +19,7 @@ public: // from QGraphicsItem
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
+public:
     // TODO: use the chart data class instead of list of x and y values?
     QList<qreal> m_x;
     QList<qreal> m_y;

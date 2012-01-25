@@ -23,6 +23,7 @@ public: // from QChartSeries
 public Q_SLOTS:
     void chartSizeChanged(QRectF rect);
     void setMarkerColor(QColor color);
+    QColor markerColor();
     //void chartScaleChanged(qreal xscale, qreal yscale);
 
 private:

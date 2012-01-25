@@ -34,7 +34,7 @@ bool QPieSeries::setData(QList<qreal> data)
     // TODO: no need to create new slices in case size changed; we should re-use the existing ones
     foreach (qreal value, m_data) {
         qreal span = value / total * fullPie;
-        PieSlice *slice = new PieSlice(randomColor(), angle, span, parentItem->boundingRect());
+        PieSlice *slice = new PieSlice(QColor(), angle, span, parentItem->boundingRect());
         slice->setParentItem(parentItem);
         m_slices.append(slice);
         angle += span;
@@ -42,6 +42,25 @@ bool QPieSeries::setData(QList<qreal> data)
 
     resizeSlices(m_chartSize);
     return true;
+}
+
+void QPieSeries::setSliceColor(int index, QColor color)
+{
+    if (index >= 0 && index < m_slices.count())
+        m_slices.at(index)->m_color = color;
+}
+
+QColor QPieSeries::sliceColor(int index)
+{
+    if (index >= 0 && index < m_slices.count())
+        return m_slices.at(index)->m_color;
+    else
+        return QColor();
+}
+
+int QPieSeries::sliceCount()
+{
+    return m_slices.count();
 }
 
 void QPieSeries::chartSizeChanged(QRectF chartRect)
@@ -81,16 +100,6 @@ void QPieSeries::setSizeFactor(qreal factor)
     Q_ASSERT(parentItem);
     parentItem->update();
 }
-
-QColor QPieSeries::randomColor()
-{
-    QColor c;
-    c.setRed(qrand() % 255);
-    c.setGreen(qrand() % 255);
-    c.setBlue(qrand() % 255);
-    return c;
-}
-
 
 #include "moc_qpieseries.cpp"
 

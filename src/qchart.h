@@ -27,7 +27,7 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    enum ChartTheme {
+    enum ChartThemeId {
         ChartThemeVanilla = 0,
         ChartThemeIcy,
         ChartThemeGrayscale
@@ -49,7 +49,7 @@ public:
     void setSize(const QSize& size);
     void setMargin(int margin);
     int margin() const;
-    void setTheme(QChart::ChartTheme theme);
+    void setTheme(QChart::ChartThemeId theme);
 
     void setTitle(const QString& title);
     void setBackgroundColor(const QColor& color);
@@ -69,6 +69,8 @@ signals:
     void scaleChanged(qreal xscale, qreal yscale);
 
 private:
+    QColor nextColor();
+
     Q_DISABLE_COPY(QChart)
     QGraphicsRectItem* m_background;
     QLinearGradient m_backgroundGradient;
@@ -76,11 +78,9 @@ private:
     AxisItem* m_axisX;
     AxisItem* m_axisY;
     QRect m_rect;
-    QList<const QChartSeries*> m_series;
+    QList<QChartSeries*> m_chartSeries;
     QVector<PlotDomain> m_plotDomainList;
     QList<ChartItem*> m_chartItems;
-    //TODO: remove
-    QList<QGraphicsItem*> m_items;
     int m_plotDataIndex;
     int m_marginSize;
     QList<QColor> m_themeColors;
