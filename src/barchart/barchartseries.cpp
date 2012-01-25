@@ -1,5 +1,6 @@
 #include <QDebug>
 #include "barchartseries.h"
+#include "bargroup.h"
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarChartSeries::BarChartSeries(QObject *parent)
@@ -11,7 +12,6 @@ bool BarChartSeries::setData(QAbstractItemModel* model)
 {
     mModel = model;
 }
-
 
 int BarChartSeries::min()
 {
@@ -79,10 +79,10 @@ int BarChartSeries::valueAt(int series, int item)
     return mModel->data(index).toInt();
 }
 
-
 void BarChartSeries::chartSizeChanged(QRectF rect)
 {
     qDebug() << "barchart size changed:" << rect;
+//    mBarGroup->resize(rect.toRect().width(), rect.toRect().height());
 }
 
 #include "moc_barchartseries.cpp"

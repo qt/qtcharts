@@ -1,10 +1,8 @@
 #ifndef QBARCHART_H
 #define QBARCHART_H
 
-#include <QGraphicsObject>
-
+#include "chartitem_p.h"
 #include "bar.h"
-//#include "qbarchartview.h"
 #include "barchartseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -12,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 // TODO: Better name for this? The function of this class is to know where each bar in series is laid out.
 //class BarGroup : public QGraphicsItemGroup
 
-class BarGroup : public QGraphicsItem
+class BarGroup : public ChartItem
 {
 /* // TODO: implement as singleton?
 private:
@@ -29,7 +27,7 @@ public:
 private:
 */
 public:
-    explicit BarGroup(BarChartSeries& series, QGraphicsItem *parent = 0);
+    explicit BarGroup(BarChartSeries& series, ChartItem *parent = 0);
 
     // Layout "api"
     void resize( int w, int h );        // Size for whole series. Single bars are drawn inside this area

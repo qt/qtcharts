@@ -7,6 +7,9 @@
 #include "qchartseries.h"
 #include "qchartglobal.h"
 
+// TODO: Can this class be combined with series?
+class BarGroup;
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 // Container for series
@@ -36,8 +39,8 @@ public Q_SLOTS:
 
 private:
 
-    //QList<int> mData;
     QAbstractItemModel* mModel;
+    BarGroup* mBarGroup;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

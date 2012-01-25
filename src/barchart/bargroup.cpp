@@ -10,8 +10,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 //BarGroup::BarGroup(QGraphicsItem *parent) :
 //    QGraphicsItem(parent)
 //    ,mSeries(series)
-BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
-  QGraphicsItem(parent)
+BarGroup::BarGroup(BarChartSeries& series, ChartItem *parent) :
+  ChartItem(parent)
   ,mSeries(series)
   ,mLayoutSet(false)
   ,mLayoutDirty(true)
