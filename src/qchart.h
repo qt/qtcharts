@@ -26,6 +26,13 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsObject
 {
     Q_OBJECT
 public:
+    enum ChartTheme {
+        ChartThemeVanilla = 0,
+        ChartThemeIcy,
+        ChartThemeGrayscale
+    };
+
+public:
     QChart(QGraphicsObject* parent = 0);
     ~QChart();
 
@@ -41,6 +48,7 @@ public:
     virtual void setSize(const QSizeF& rect);
     void setMargin(int margin);
     int margin() const;
+    void setTheme(QChart::ChartTheme theme);
 
 signals:
     void sizeChanged(QRectF rect);
@@ -58,6 +66,7 @@ private:
     QList<QGraphicsItem*> m_items;
     int m_plotDataIndex;
     int m_marginSize;
+    QList<QColor> m_themeColors;
 
     QList<BarGroup*> m_BarGroupItems;
 };

@@ -18,12 +18,14 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
-		m_axisX(new Axis(this)),
-		m_axisY(new Axis(this)),
-		m_grid(new XYGrid(this)),
-		m_plotDataIndex(0),
-		m_marginSize(0)
+    m_axisX(new Axis(this)),
+    m_axisY(new Axis(this)),
+    m_grid(new XYGrid(this)),
+    m_plotDataIndex(0),
+    m_marginSize(0)
 {
+    // TODO: the default theme?
+    setTheme(QChart::ChartThemeVanilla);
     //  setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     // set axis
     m_axisY->rotate(90);
@@ -103,6 +105,9 @@ QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
         connect(this, SIGNAL(sizeChanged(QRectF)),
                 scatterSeries, SLOT(chartSizeChanged(QRectF)));
         scatterSeries->d->setParentItem(this);
+        QColor nextColor = m_themeColors.takeFirst();
+        nextColor.setAlpha(150); // TODO: default opacity?
+        scatterSeries->setMarkerColor(nextColor);
         return scatterSeries;
     }
     case QChartSeries::SeriesTypePie: {
@@ -111,6 +116,7 @@ QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
         QPieSeries *pieSeries = new QPieSeries(this);
         connect(this, SIGNAL(sizeChanged(QRectF)),
                 pieSeries, SLOT(chartSizeChanged(QRectF)));
+        // TODO: how to define the color for all the slices of a pie?
         return pieSeries;
     }
     default:
@@ -159,7 +165,39 @@ void QChart::setMargin(int margin)
     m_marginSize = margin;
 }
 
-#include "moc_qchart.cpp"
+void QChart::setTheme(QChart::ChartTheme theme)
+{
+    // TODO: define color themes
+    switch (theme) {
+    case ChartThemeVanilla:
+        m_themeColors.append(QColor(255, 238, 174));
+        m_themeColors.append(QColor(228, 228, 160));
+        m_themeColors.append(QColor(228, 179, 160));
+        m_themeColors.append(QColor(180, 151, 18));
+        m_themeColors.append(QColor(252, 252, 37));
+        break;
+    case ChartThemeIcy:
+        m_themeColors.append(QColor(255, 238, 174));
+        m_themeColors.append(QColor(228, 228, 160));
+        m_themeColors.append(QColor(228, 179, 160));
+        m_themeColors.append(QColor(180, 151, 18));
+        m_themeColors.append(QColor(252, 252, 37));
+        break;
+    case ChartThemeGrayscale:
+        m_themeColors.append(QColor(255, 238, 174));
+        m_themeColors.append(QColor(228, 228, 160));
+        m_themeColors.append(QColor(228, 179, 160));
+        m_themeColors.append(QColor(180, 151, 18));
+        m_themeColors.append(QColor(252, 252, 37));
+        break;
+    default:
+        Q_ASSERT(false);
+        break;
+    }
 
+    // TODO: update coloring of different elements to match the selected theme
+}
+
+#include "moc_qchart.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

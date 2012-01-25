@@ -12,7 +12,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QScatterSeriesPrivate::QScatterSeriesPrivate(QGraphicsItem *parent) :
     QGraphicsItem(parent),
     m_scalex(100), // TODO: let the use define the scale (or autoscaled)
-    m_scaley(100)
+    m_scaley(100),
+    m_markerColor(QColor())
 {
 }
 
@@ -41,7 +42,8 @@ void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsI
     QPen pen = painter->pen();
     QBrush brush = pen.brush();
     // TODO: The opacity should be user definable...
-    brush.setColor(QColor(255, 82, 0, 100));
+    //brush.setColor(QColor(255, 82, 0, 100));
+    brush.setColor(m_markerColor);
     pen.setBrush(brush);
     pen.setWidth(4);
     painter->setPen(pen);
@@ -78,6 +80,11 @@ void QScatterSeries::chartSizeChanged(QRectF rect)
 //    d->transform().reset();
 //    d->transform().translate();
     d->resize(rect);
+}
+
+void QScatterSeries::setMarkerColor(QColor color)
+{
+    d->m_markerColor = color;
 }
 
 // TODO:

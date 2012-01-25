@@ -58,6 +58,14 @@ MainWidget::MainWidget(QWidget *parent) :
     m_yMaxSpin->setValue(10);
     connect(m_yMaxSpin, SIGNAL(valueChanged(int)), this, SLOT(yMaxChanged(int)));
 
+    QComboBox *chartTheme = new QComboBox();
+    chartTheme->addItem("Vanilla");
+    chartTheme->addItem("Icy");
+    chartTheme->addItem("Grayscale");
+    chartTheme->addItem("Tobedefined");
+    connect(chartTheme, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(changeChartTheme(int)));
+
     QGridLayout *grid = new QGridLayout();
     QGridLayout *mainLayout = new QGridLayout();
     //grid->addWidget(new QLabel("Add series:"), 0, 0);
@@ -73,9 +81,11 @@ MainWidget::MainWidget(QWidget *parent) :
     grid->addWidget(m_yMinSpin, 6, 1);
     grid->addWidget(new QLabel("y max:"), 7, 0);
     grid->addWidget(m_yMaxSpin, 7, 1);
+    grid->addWidget(new QLabel("Chart theme:"), 8, 0);
+    grid->addWidget(chartTheme, 8, 1);
     // add row with empty label to make all the other rows static
-    grid->addWidget(new QLabel(""), 8, 0);
-    grid->setRowStretch(8, 1);
+    grid->addWidget(new QLabel(""), 9, 0);
+    grid->setRowStretch(9, 1);
 
     mainLayout->addLayout(grid, 0, 0);
 
@@ -274,6 +284,12 @@ void MainWidget::yMinChanged(int value)
 void MainWidget::yMaxChanged(int value)
 {
     qDebug() << "yMaxChanged: " << value;
+}
+
+void MainWidget::changeChartTheme(int themeIndex)
+{
+    qDebug() << "changeChartTheme: " << themeIndex;
+    m_chartWidget->setTheme((QChart::ChartTheme) themeIndex);
 }
 
 void MainWidget::setPieSizeFactor(double size)

@@ -26,6 +26,7 @@ public: // from QGraphicsItem
     qreal m_scaley;
     QList<qreal> m_scenex;
     QList<qreal> m_sceney;
+    QColor m_markerColor;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

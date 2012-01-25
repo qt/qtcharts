@@ -28,6 +28,12 @@ public:
     void addSeries(QChartSeries* series);
     QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
 
+    /*!
+     * Set color theme for the chart. Themes define harmonic colors for the graphical elements of
+     * the chart.
+     */
+    void setTheme(QChart::ChartTheme theme);
+
 private:
     Q_DISABLE_COPY(QChartWidget)
     QGraphicsScene *m_scene;

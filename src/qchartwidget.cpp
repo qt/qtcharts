@@ -46,6 +46,12 @@ QChartSeries* QChartWidget::createSeries(QChartSeries::QChartSeriesType type)
 {
     return m_chart->createSeries(type);
 }
+
+void QChartWidget::setTheme(QChart::ChartTheme theme)
+{
+    m_chart->setTheme(theme);
+}
+
 #include "moc_qchartwidget.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
