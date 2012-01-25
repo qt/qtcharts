@@ -1,3 +1,4 @@
+#include <QDebug>
 #include "barchartseries.h"
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -6,23 +7,29 @@ BarChartSeries::BarChartSeries(QObject *parent)
 {
 }
 
-bool BarChartSeries::setData(QList<int> data)
+bool BarChartSeries::setData(QAbstractItemModel* model)
 {
-    mData = data;
-    return true;
+    mModel = model;
 }
+
 
 int BarChartSeries::min()
 {
-    Q_ASSERT(mData.count() > 0);
+    Q_ASSERT(mModel->rowCount() > 0);
+    Q_ASSERT(mModel->columnCount() > 0);
 
     // TODO: make min and max members and update them when data changes.
     // This is slower since they are checked every time, even if data is same since previous call.
-    int min = mData.at(0);
+    QModelIndex modelIndex = mModel->index(0,0);
+    int min = mModel->data(modelIndex).toInt();
 
-    for (int i=0; i <mData.count(); i++) {
-        if (mData.at(i) < min) {
-            min = mData.at(i);
+    for (int i=0; i <mModel->rowCount(); i++) {
+        for(int j=0; j<mModel->columnCount(); j++) {
+            modelIndex = mModel->index(i,j);
+            int temp = mModel->data(modelIndex).toInt();
+            if (temp < min) {
+                min = temp;
+            }
         }
     }
     return min;
@@ -30,26 +37,54 @@ int BarChartSeries::min()
 
 int BarChartSeries::max()
 {
-    Q_ASSERT(mData.count() > 0);
+    Q_ASSERT(mModel->rowCount() > 0);
+    Q_ASSERT(mModel->columnCount() > 0);
 
-    int max = mData.at(0);
+    // TODO: make min and max members and update them when data changes.
+    // This is slower since they are checked every time, even if data is same since previous call.
+    QModelIndex modelIndex = mModel->index(0,0);
+    int max = mModel->data(modelIndex).toInt();
 
-    for (int i=0; i <mData.count(); i++) {
-        if (mData.at(i) > max) {
-            max = mData.at(i);
+    for (int i=0; i <mModel->rowCount(); i++) {
+        for(int j=0; j<mModel->columnCount(); j++) {
+            modelIndex = mModel->index(i,j);
+            int temp = mModel->data(modelIndex).toInt();
+            if (temp > max) {
+                max = temp;
+            }
         }
     }
     return max;
 }
 
-int BarChartSeries::count()
+
+int BarChartSeries::countSeries()
 {
-    return mData.count();
+    return mModel->rowCount();
 }
 
-int BarChartSeries::valueAt(int i)
+int BarChartSeries::countItemsInSeries()
 {
-    return mData.at(i);
+    return mModel->columnCount();
 }
+
+int BarChartSeries::countTotalItems()
+{
+    return mModel->rowCount() * mModel->columnCount();
+}
+
+int BarChartSeries::valueAt(int series, int item)
+{
+    QModelIndex index = mModel->index(series,item);
+    return mModel->data(index).toInt();
+}
+
+
+void BarChartSeries::chartSizeChanged(QRectF rect)
+{
+    qDebug() << "barchart size changed:" << rect;
+}
+
+#include "moc_barchartseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

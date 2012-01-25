@@ -8,6 +8,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChartSeries* QChartSeries::create(QChartSeriesType type, QObject* parent)
 {
+    qDebug() << "QChartSeries::create";
     // TODO: Other types
     switch (type) {
     case QChartSeries::SeriesTypeLine: {
@@ -29,4 +30,5 @@ QChartSeries* QChartSeries::create(QChartSeriesType type, QObject* parent)
     }
 }
 
+#include "moc_qchartseries.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

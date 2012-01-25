@@ -3,13 +3,13 @@
 
 #include "qchartglobal.h"
 #include <QObject>
+#include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QTCOMMERCIALCHART_EXPORT QChartSeries : public QObject
 {
-    //TODO:
-    //Q_OBJECT
+    Q_OBJECT
 public:
     enum QChartSeriesType {
         SeriesTypeLine = 0,
@@ -35,6 +35,10 @@ public:
     virtual bool setData(QList<int> data) { return false; }
     virtual bool setData(QList<qreal> data) { return false; }
     virtual bool setData(QList<qreal> x, QList<qreal> y){ return false; }
+
+    // Prototype for data model. TODO: remove the other setData methods and use something like this for now?
+    virtual bool setData(QAbstractItemModel* model) { return false; }
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

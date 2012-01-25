@@ -4,11 +4,17 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+// TODO: singleton?
+//BarGroup* BarGroup::mBarGroupInstance = NULL;
+
+//BarGroup::BarGroup(QGraphicsItem *parent) :
+//    QGraphicsItem(parent)
+//    ,mSeries(series)
 BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
-    QGraphicsItem(parent)
-    ,mSeries(series)
-    ,mLayoutSet(false)
-    ,mLayoutDirty(true)
+  QGraphicsItem(parent)
+  ,mSeries(series)
+  ,mLayoutSet(false)
+  ,mLayoutDirty(true)
 {
     dataChanged();
 }
@@ -68,7 +74,8 @@ void BarGroup::dataChanged()
     }
 
     // Create new graphic items for bars
-    for (int i=0; i<mSeries.count(); i++) {
+    int totalItems = mSeries.countTotalItems();
+    for (int i=0; i<totalItems; i++) {
         Bar *bar = new Bar(this);
         childItems().append(bar);
     }
@@ -80,7 +87,7 @@ void BarGroup::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
-    int count = mSeries.count();
+    int count = mSeries.countSeries();
     if (count <= 0) {
         // Nothing to do.
         return;
@@ -92,13 +99,17 @@ void BarGroup::layoutChanged()
     qDebug() << "startpos" << startPos;
 
     // Scaling. TODO: better one.
-    for (int i=0; i<count; i++) {
-        int barHeight = mSeries.valueAt(i) * mHeight / mMax;
-        Bar* bar = reinterpret_cast<Bar*> (childItems().at(i));
+    int itemIndex(0);
+    for (int series = 0; series < count; series++) {
+        for (int item=0; item < count; item++) {
+            int barHeight = mSeries.valueAt(series, item) * mHeight / mMax;
+            Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
-        bar->resize(mBarDefaultWidth, barHeight);        // TODO: width settable per bar
-        bar->setColor(mColor);
-        bar->setPos(i*posStep+startPos, 0);
+            bar->resize(mBarDefaultWidth, barHeight);        // TODO: width settable per bar
+            bar->setColor(mColor);
+            bar->setPos(itemIndex*posStep+startPos, 0);
+            itemIndex++;
+        }
     }
     mLayoutDirty = true;
 }

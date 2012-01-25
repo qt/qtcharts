@@ -78,7 +78,6 @@ private:
     int m_plotDataIndex;
     int m_marginSize;
     QList<QColor> m_themeColors;
-    QList<BarGroup*> m_BarGroupItems;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

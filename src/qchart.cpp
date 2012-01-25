@@ -84,11 +84,9 @@ void QChart::addSeries(QChartSeries* series)
 
         qDebug() << "barSeries added";
         BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
+        connect(this, SIGNAL(sizeChanged(QRectF)),
+                barSeries, SLOT(chartSizeChanged(QRectF)));
 
-        // Who owns the series?
-        BarGroup* group = new BarGroup(*barSeries, this);
-        scene()->addItem(group);
-        m_BarGroupItems.append(group); // If we need to access group later
         break;
         }
     case QChartSeries::SeriesTypeScatter: {
