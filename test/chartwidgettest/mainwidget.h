@@ -30,6 +30,7 @@ private slots:
     void yMinChanged(int value);
     void yMaxChanged(int value);
     void setCurrentSeries(QChartSeries *series);
+    void changeChartTheme(int themeIndex);
     void setPieSizeFactor(double margin);
 
 private:

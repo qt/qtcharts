@@ -3,6 +3,7 @@
 
 #include "qchartseries.h"
 #include <QRectF>
+#include <QColor>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QScatterSeriesPrivate;
@@ -21,6 +22,7 @@ public: // from QChartSeries
 
 public Q_SLOTS:
     void chartSizeChanged(QRectF rect);
+    void setMarkerColor(QColor color);
     //void chartScaleChanged(qreal xscale, qreal yscale);
 
 private:

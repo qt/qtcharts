@@ -58,6 +58,14 @@ MainWidget::MainWidget(QWidget *parent) :
     m_yMaxSpin->setValue(10);
     connect(m_yMaxSpin, SIGNAL(valueChanged(int)), this, SLOT(yMaxChanged(int)));
 
+    QComboBox *chartTheme = new QComboBox();
+    chartTheme->addItem("Vanilla");
+    chartTheme->addItem("Icy");
+    chartTheme->addItem("Grayscale");
+    chartTheme->addItem("Tobedefined");
+    connect(chartTheme, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(changeChartTheme(int)));
+
     QGridLayout *grid = new QGridLayout();
     QGridLayout *mainLayout = new QGridLayout();
     //grid->addWidget(new QLabel("Add series:"), 0, 0);
@@ -73,9 +81,11 @@ MainWidget::MainWidget(QWidget *parent) :
     grid->addWidget(m_yMinSpin, 6, 1);
     grid->addWidget(new QLabel("y max:"), 7, 0);
     grid->addWidget(m_yMaxSpin, 7, 1);
+    grid->addWidget(new QLabel("Chart theme:"), 8, 0);
+    grid->addWidget(chartTheme, 8, 1);
     // add row with empty label to make all the other rows static
-    grid->addWidget(new QLabel(""), 8, 0);
-    grid->setRowStretch(8, 1);
+    grid->addWidget(new QLabel(""), 9, 0);
+    grid->setRowStretch(9, 1);
 
     mainLayout->addLayout(grid, 0, 0);
 
@@ -160,8 +170,19 @@ void MainWidget::addSeries(QString series, QString data)
         newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypePie);
         Q_ASSERT(newSeries->setData(y));
     } else if (series == "Line") {
-        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypePie);
-        Q_ASSERT(newSeries->setData(x, y));
+        // TODO: adding data to an existing line series does not give any visuals for some reason
+//        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypeLine);
+//        QXYChartSeries *lineSeries = static_cast<QXYChartSeries *>(newSeries);
+//        lineSeries->setColor(Qt::blue);
+//        for (int i(0); i < x.count() && i < y.count(); i++) {
+//            lineSeries->add(x.at(i), y.at(i));
+//        }
+        //Q_ASSERT(newSeries->setData(x, y));
+        QXYChartSeries* series0 = QXYChartSeries::create();
+        for (int i(0); i < x.count() && i < y.count(); i++)
+            series0->add(x.at(i), y.at(i));
+        m_chartWidget->addSeries(series0);
+        newSeries = series0;
     } else {
         // TODO
     }
@@ -277,6 +298,12 @@ void MainWidget::yMinChanged(int value)
 void MainWidget::yMaxChanged(int value)
 {
     qDebug() << "yMaxChanged: " << value;
+}
+
+void MainWidget::changeChartTheme(int themeIndex)
+{
+    qDebug() << "changeChartTheme: " << themeIndex;
+    m_chartWidget->setTheme((QChart::ChartTheme) themeIndex);
 }
 
 void MainWidget::setPieSizeFactor(double size)
