@@ -25,7 +25,8 @@ SOURCES += \
     qchartwidget.cpp \
     pieslice.cpp \
     qchartview.cpp \
-    qchartseries.cpp
+    qchartseries.cpp \
+    qchartaxis.cpp
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
@@ -45,7 +46,8 @@ PUBLIC_HEADERS += \
     xylinechart/qxychartseries.h \
     barchart/barchartseries.h \
     barchart/bargroup.h \
-    qchartview.h 
+    qchartview.h \
+    qchartaxis.h 
    
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
