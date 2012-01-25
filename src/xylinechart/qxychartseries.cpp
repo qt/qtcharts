@@ -3,7 +3,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QXYChartSeries::QXYChartSeries(QObject* parent):QChartSeries(parent),
-    m_color(Qt::black)
+    m_color()
 {
 }
 

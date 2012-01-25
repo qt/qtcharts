@@ -170,8 +170,19 @@ void MainWidget::addSeries(QString series, QString data)
         newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypePie);
         Q_ASSERT(newSeries->setData(y));
     } else if (series == "Line") {
-        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypePie);
-        Q_ASSERT(newSeries->setData(x, y));
+        // TODO: adding data to an existing line series does not give any visuals for some reason
+//        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypeLine);
+//        QXYChartSeries *lineSeries = static_cast<QXYChartSeries *>(newSeries);
+//        lineSeries->setColor(Qt::blue);
+//        for (int i(0); i < x.count() && i < y.count(); i++) {
+//            lineSeries->add(x.at(i), y.at(i));
+//        }
+        //Q_ASSERT(newSeries->setData(x, y));
+        QXYChartSeries* series0 = QXYChartSeries::create();
+        for (int i(0); i < x.count() && i < y.count(); i++)
+            series0->add(x.at(i), y.at(i));
+        m_chartWidget->addSeries(series0);
+        newSeries = series0;
     } else {
         // TODO
     }

@@ -49,6 +49,9 @@ void QChart::addSeries(QChartSeries* series)
     case QChartSeries::SeriesTypeLine: {
 
         QXYChartSeries* xyseries = static_cast<QXYChartSeries*>(series);
+        // Use color defined by theme in case the series does not define a custom color
+        if (!xyseries->color().isValid() && m_themeColors.count())
+            xyseries->setColor(m_themeColors.takeFirst());
 
         XYPlotDomain domain;
         //TODO "nice numbers algorithm"
@@ -71,16 +74,6 @@ void QChart::addSeries(QChartSeries* series)
         m_xyLineChartItems<<item;
         break;
     }
-        // TODO: Not tested:
-//    case QChartSeries::SeriesTypeScatter: {
-//        QScatterSeries *scatter = qobject_cast<QScatterSeries *>(series);
-//        if (scatter) {
-//            scatter->d->setParentItem(this);
-//            scene()->addItem(scatter->d);
-//        }
-//        break;
-//    }
-
     case QChartSeries::SeriesTypeBar: {
 
         qDebug() << "barSeries added";
@@ -92,6 +85,23 @@ void QChart::addSeries(QChartSeries* series)
         m_BarGroupItems.append(group); // If we need to access group later
         break;
         }
+    case QChartSeries::SeriesTypeScatter: {
+        QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
+        connect(this, SIGNAL(sizeChanged(QRectF)),
+                scatterSeries, SLOT(chartSizeChanged(QRectF)));
+        scatterSeries->d->setParentItem(this);
+        QColor nextColor = m_themeColors.takeFirst();
+        nextColor.setAlpha(150); // TODO: default opacity?
+        scatterSeries->setMarkerColor(nextColor);
+        }
+    case QChartSeries::SeriesTypePie: {
+        // TODO: we now have also a list of y values as a parameter, it is ignored
+        // we should use a generic data class instead of list of x and y values
+        QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
+        connect(this, SIGNAL(sizeChanged(QRectF)),
+                pieSeries, SLOT(chartSizeChanged(QRectF)));
+        // TODO: how to define the color for all the slices of a pie?
+        }
     }
 }
 
@@ -99,32 +109,32 @@ QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
 {
     // TODO: support also other types; not only scatter and pie
 
+    QChartSeries *series(0);
+
     switch (type) {
+    case QChartSeries::SeriesTypeLine: {
+        series = QXYChartSeries::create();
+        break;
+    }
+    case QChartSeries::SeriesTypeBar: {
+        series = new BarChartSeries(this);
+        break;
+    }
     case QChartSeries::SeriesTypeScatter: {
-        QScatterSeries *scatterSeries = new QScatterSeries(this);
-        connect(this, SIGNAL(sizeChanged(QRectF)),
-                scatterSeries, SLOT(chartSizeChanged(QRectF)));
-        scatterSeries->d->setParentItem(this);
-        QColor nextColor = m_themeColors.takeFirst();
-        nextColor.setAlpha(150); // TODO: default opacity?
-        scatterSeries->setMarkerColor(nextColor);
-        return scatterSeries;
+        series = new QScatterSeries(this);
+        break;
     }
     case QChartSeries::SeriesTypePie: {
-        // TODO: we now have also a list of y values as a parameter, it is ignored
-        // we should use a generic data class instead of list of x and y values
-        QPieSeries *pieSeries = new QPieSeries(this);
-        connect(this, SIGNAL(sizeChanged(QRectF)),
-                pieSeries, SLOT(chartSizeChanged(QRectF)));
-        // TODO: how to define the color for all the slices of a pie?
-        return pieSeries;
+        series = new QPieSeries(this);
+        break;
     }
     default:
         Q_ASSERT(false);
         break;
     }
 
-    return 0;
+    addSeries(series);
+    return series;
 }
 
 void QChart::setSize(const QSizeF& size)
