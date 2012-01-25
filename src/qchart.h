@@ -4,6 +4,7 @@
 #include <qchartglobal.h>
 #include <qchartseries.h>
 #include <QGraphicsObject>
+#include <QLinearGradient>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -49,6 +50,9 @@ public:
     int margin() const;
     void setTheme(QChart::ChartTheme theme);
 
+    void setTitle(const QString& title);
+    void setBackgroundColor(const QColor& color);
+
     void zoomInToRect(const QRect& rectangle);
     void zoomIn();
     void zoomOut();
@@ -60,6 +64,9 @@ signals:
 
 private:
     Q_DISABLE_COPY(QChart)
+    QGraphicsRectItem* m_background;
+    QLinearGradient m_backgroundGradient;
+    QGraphicsTextItem* m_title;
     AxisItem* m_axisX;
     AxisItem* m_axisY;
     QRect m_rect;
@@ -71,7 +78,6 @@ private:
     int m_plotDataIndex;
     int m_marginSize;
     QList<QColor> m_themeColors;
-
     QList<BarGroup*> m_BarGroupItems;
 };
 

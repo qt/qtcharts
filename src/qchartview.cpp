@@ -63,4 +63,15 @@ int QChartView::margin() const
 {
     return m_chart->margin();
 }
+
+void QChartView::setTitle(const QString& title)
+{
+    m_chart->setTitle(title);
+}
+
+void QChartView::setBackgroundColor(const QColor& color)
+{
+    m_chart->setBackgroundColor(color);
+}
+
 QTCOMMERCIALCHART_END_NAMESPACE

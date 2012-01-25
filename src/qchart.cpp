@@ -17,6 +17,8 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
+    m_background(new QGraphicsRectItem(this)),
+    m_title(new QGraphicsTextItem(this)),
     m_axisX(new AxisItem(AxisItem::X_AXIS,this)),
     m_axisY(new AxisItem(AxisItem::Y_AXIS,this)),
     m_plotDataIndex(0),
@@ -146,6 +148,13 @@ void QChart::setSize(const QSize& size)
     m_rect = QRect(QPoint(0,0),size);
     QRect rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
 
+
+    //recalculate background gradient
+    m_background->setRect(rect);
+    m_backgroundGradient.setFinalStop(0,m_background->rect().height());
+    m_background->setBrush(m_backgroundGradient);
+
+    //resize elements
     foreach (ChartItem* item ,m_chartItems) {
         item->setPos(rect.topLeft());
         item->setSize(rect.size());
@@ -158,6 +167,20 @@ void QChart::setSize(const QSize& size)
     emit sizeChanged(QRectF(0, 0, size.width(), size.height()));
 
     update();
+}
+
+void QChart::setBackgroundColor(const QColor& color)
+{
+    m_backgroundGradient.setColorAt( 0.0, Qt::white);
+    m_backgroundGradient.setColorAt( 1.0, color);
+    m_background->setBrush(m_backgroundGradient);
+    m_background->setPen(Qt::NoPen);
+    m_background->update();
+}
+
+void QChart::setTitle(const QString& title)
+{
+    m_title->setPlainText(title);
 }
 
 int QChart::margin() const

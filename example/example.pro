@@ -1,3 +1,4 @@
 TEMPLATE = subdirs
 SUBDIRS += linechart \
-           zoomlinechart
+           zoomlinechart \
+           colorlinechart

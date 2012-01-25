@@ -25,6 +25,8 @@ public:
     QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
 
     int margin() const;
+    void setTitle(const QString& title);
+    void setBackgroundColor(const QColor& color);
     void zoomInToRect(const QRect& rectangle);
     void zoomIn();
     void zoomOut();
