@@ -13,6 +13,7 @@ class QChartSeries;
 class PlotDomain;
 class ChartItem;
 class BarGroup;
+class QChartAxis;
 
 // TODO: We don't need to have QChart tied to QGraphicsItem:
 //class QTCOMMERCIALCHART_EXPORT QChart
@@ -56,6 +57,11 @@ public:
     void zoomInToRect(const QRect& rectangle);
     void zoomIn();
     void zoomOut();
+
+    void setAxisX(QChartAxis* axis){};
+    void setAxisY(QChartAxis* axis){};
+    void setAxisY(QList<QChartAxis*> axis){};
+
 
 signals:
     //TODO chage to const QSize& size
