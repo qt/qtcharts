@@ -33,6 +33,7 @@ int main(int argc, char *argv[])
 
     QChartView* chartView =  new QChartView(&window);
     chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setTitle("Example: sin & cos functions");
     chartView->addSeries(series0);
     chartView->addSeries(series1);
 
