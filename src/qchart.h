@@ -28,9 +28,12 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsObject
     Q_OBJECT
 public:
     enum ChartThemeId {
-        ChartThemeVanilla = 0,
+        /*! The default theme follows the GUI style of the Operating System */
+        ChartThemeDefault = 0,
+        ChartThemeVanilla,
         ChartThemeIcy,
         ChartThemeGrayscale,
+        //ChartThemeScientific,
         ChartThemeUnnamed1
     };
 

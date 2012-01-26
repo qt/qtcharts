@@ -207,6 +207,9 @@ void QChart::setTheme(QChart::ChartThemeId theme)
 
     // TODO: define color themes
     switch (theme) {
+    case QChart::ChartThemeDefault:
+        // TODO: define the default theme based on the OS
+        // For now we just fallthrough to "vanilla"
     case QChart::ChartThemeVanilla:
         m_themeColors.append(QColor(217, 197, 116));
         m_themeColors.append(QColor(214, 168, 150));
@@ -226,7 +229,7 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         m_themeColors.append(QColor(110, 70, 228));
 
         m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xffe4ffff)));
-        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
+        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffe4ffff)));
         break;
     case QChart::ChartThemeGrayscale:
         m_themeColors.append(QColor(0, 0, 0));

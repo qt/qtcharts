@@ -63,12 +63,18 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(m_yMaxSpin, SIGNAL(valueChanged(int)), this, SLOT(yMaxChanged(int)));
 
     QComboBox *chartTheme = new QComboBox();
+    chartTheme->addItem("Default");
     chartTheme->addItem("Vanilla");
     chartTheme->addItem("Icy");
     chartTheme->addItem("Grayscale");
     chartTheme->addItem("Unnamed1");
     connect(chartTheme, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeChartTheme(int)));
+//    connect(chartTheme, SIGNAL(currentIndexChanged(int)),
+//            m_signalMapper, SLOT(map()));
+//    m_signalMapper->setMapping(chartTheme, (QChart::ChartThemeId)chartTheme->currentIndex());
+//    connect(m_signalMapper, SIGNAL(mapped(QChart::ChartThemeId)),
+//            m_chartWidget, SLOT(setTheme(QChart::ChartThemeId)));
 
     QCheckBox *zoomCheckBox = new QCheckBox("Zoom enabled");
     connect(zoomCheckBox, SIGNAL(toggled(bool)), m_chartWidget, SLOT(setZoomEnabled(bool)));
@@ -161,7 +167,12 @@ void MainWidget::addSeries(QString series, QString data)
             y.append(i);
         }
     } else if (data == "linear, 1M") {
-        for (int i = 0; i < 10000; i++) {
+        // 1 million data points from 0.0001 to 100
+        // TODO: What is the requirement? Should we be able to show this kind of data with
+        // reasonable performance, or can we expect the application developer to do "data mining"
+        // for us, so that the count of data points given to QtCommercial Chart is always
+        // reasonable?
+        for (qreal i = 0; i < 100; i += 0.0001) {
             x.append(i);
             y.append(20);
         }
