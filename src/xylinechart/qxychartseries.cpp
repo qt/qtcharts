@@ -52,10 +52,6 @@ void QXYChartSeries::setPen(const QPen& pen)
     m_pen=pen;
 }
 
-void QXYChartSeries::setBrush(const QBrush& brush)
-{
-    m_brush=brush;
-}
 
 QDebug operator<< (QDebug debug, const QXYChartSeries series)
 {

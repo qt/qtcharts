@@ -60,7 +60,7 @@ void XYLineChartItem::updateGeometry()
 
    m_pathItem->setPath(path);
    m_pathItem->setPen(m_series->pen());
-   m_pathItem->setBrush(m_series->brush());
+   m_pathItem->setBrush(Qt::NoBrush);
 }
 
 

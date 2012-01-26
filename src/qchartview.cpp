@@ -69,9 +69,9 @@ void QChartView::setTitle(const QString& title)
     m_chart->setTitle(title);
 }
 
-void QChartView::setBackgroundColor(const QColor& color)
+void QChartView::setBackground(const QColor& startColor, const QColor& endColor, QChart::GradientOrientation orientation)
 {
-    m_chart->setBackgroundColor(color);
+    m_chart->setBackground(startColor,endColor,orientation);
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

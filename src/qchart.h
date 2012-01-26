@@ -27,6 +27,10 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsObject
 {
     Q_OBJECT
 public:
+    enum GradientOrientation {
+        HorizonatlGradientOrientation,
+        VerticalGradientOrientation
+    };
     enum ChartThemeId {
         /*! The default theme follows the GUI style of the Operating System */
         ChartThemeDefault = 0,
@@ -56,7 +60,7 @@ public:
     void setTheme(QChart::ChartThemeId theme);
 
     void setTitle(const QString& title);
-    void setBackgroundColor(const QColor& color);
+    void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, GradientOrientation orientation = VerticalGradientOrientation);
 
     void zoomInToRect(const QRect& rectangle);
     void zoomIn();
@@ -80,6 +84,7 @@ private:
     Q_DISABLE_COPY(QChart)
     QGraphicsRectItem* m_background;
     QLinearGradient m_backgroundGradient;
+    GradientOrientation m_bacgroundOrinetation;
     QGraphicsTextItem* m_title;
     AxisItem* m_axisX;
     QList<AxisItem*> m_axisY;

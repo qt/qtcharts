@@ -27,8 +27,6 @@ public:
 
     void setPen(const QPen& pen);
     const QPen& pen() const { return m_pen;}
-    void setBrush(const QBrush& brush);
-    const QBrush& brush() const { return m_brush;}
 
     int count() const;
     qreal x(int pos) const;
@@ -38,7 +36,6 @@ public:
 private:
     QList<qreal> m_x;
     QList<qreal> m_y;
-    QBrush m_brush;
     QPen m_pen;
 
 };

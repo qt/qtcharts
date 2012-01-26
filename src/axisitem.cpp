@@ -120,13 +120,9 @@ void AxisItem::createItems()
 
              int x = i * deltaX + m_rect.left();
 
-             //last grid outside chart rect
-             if(i==0) x--;
-             if(i==m_ticks) x++;
-
              qreal label = m_plotDomain.m_minX + (i * m_plotDomain.spanX()/ m_ticks);
 
-             m_grid<<new QGraphicsLineItem(x, m_rect.top()-1, x, m_rect.bottom()+1+LABEL_PADDING,this);
+             m_grid<<new QGraphicsLineItem(x, m_rect.top(), x, m_rect.bottom(),this);
 
              QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
              QPointF center = text->boundingRect().center();
@@ -144,14 +140,10 @@ void AxisItem::createItems()
 
              int y = j * -deltaY + m_rect.bottom();
 
-             //last grid outside chart rect
-             if(j==0) y++;
-             if(j==m_ticks) y--;
-
              qreal label = m_plotDomain.m_minY + (j * m_plotDomain.spanY()
                  / m_ticks);
 
-             m_grid<<new QGraphicsLineItem(m_rect.left()- 1 - LABEL_PADDING , y, m_rect.right()+1, y,this);
+             m_grid<<new QGraphicsLineItem(m_rect.left()  , y, m_rect.right(), y,this);
              QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
              QPointF center = text->boundingRect().center();
 

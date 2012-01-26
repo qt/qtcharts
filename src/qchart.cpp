@@ -17,15 +17,14 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
-    m_background(new QGraphicsRectItem()),
-    m_title(new QGraphicsTextItem(this)),
+    m_background(0),
+    m_title(0),
     m_axisX(new AxisItem(AxisItem::X_AXIS,this)),
     m_plotDataIndex(0),
     m_marginSize(0)
 {
     // TODO: the default theme?
     //setTheme(QChart::ChartThemeVanilla);
-    m_backgroundGradient.setColorAt(0.0, Qt::white);
 
     PlotDomain domain;
     m_plotDomainList<<domain;
@@ -164,12 +163,21 @@ void QChart::setSize(const QSize& size)
     m_rect = QRect(QPoint(0,0),size);
     QRect rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
 
+    //recaculate title
+    if(m_title){
+
+    }
 
     //recalculate background gradient
-    m_background->setRect(rect);
-    m_backgroundGradient.setFinalStop(0,m_background->rect().height());
-    m_background->setBrush(m_backgroundGradient);
-    m_background->setPen(Qt::NoPen);
+    if(m_background){
+        m_background->setRect(rect);
+        if(m_bacgroundOrinetation==HorizonatlGradientOrientation)
+        m_backgroundGradient.setFinalStop(m_background->rect().width(),0);
+        else
+        m_backgroundGradient.setFinalStop(0,m_background->rect().height());
+
+        m_background->setBrush(m_backgroundGradient);
+    }
 
     //resize elements
     foreach (ChartItem* item ,m_chartItems) {
@@ -186,10 +194,25 @@ void QChart::setSize(const QSize& size)
     update();
 }
 
-void QChart::setBackgroundColor(const QColor& color)
+void QChart::setBackground(const QColor& startColor, const QColor& endColor, GradientOrientation orientation)
 {
-    m_backgroundGradient.setColorAt( 0.0, Qt::white);
-    m_backgroundGradient.setColorAt( 1.0, color);
+
+    if(!m_background){
+        m_background = new QGraphicsRectItem(this);
+        m_background->setZValue(-1);
+    }
+
+    m_bacgroundOrinetation = orientation;
+    m_backgroundGradient.setColorAt( 0.0, startColor);
+    m_backgroundGradient.setColorAt( 1.0, endColor);
+    m_backgroundGradient.setStart(0,0);
+
+    if(orientation == VerticalGradientOrientation){
+        m_backgroundGradient.setFinalStop(0,m_rect.height());
+    }else{
+        m_backgroundGradient.setFinalStop(m_rect.width(),0);
+    }
+
     m_background->setBrush(m_backgroundGradient);
     m_background->setPen(Qt::NoPen);
     m_background->update();
@@ -197,6 +220,7 @@ void QChart::setBackgroundColor(const QColor& color)
 
 void QChart::setTitle(const QString& title)
 {
+    if(!m_title) m_title = new QGraphicsTextItem(this);
     m_title->setPlainText(title);
 }
 
@@ -266,8 +290,10 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         break;
     }
 
+    if(m_background){
     m_background->setBrush(m_backgroundGradient);
     m_background->setPen(Qt::NoPen);
+    }
 
     foreach(QChartSeries* series, m_chartSeries) {
         // TODO: other series interested on themes?

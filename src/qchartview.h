@@ -3,6 +3,7 @@
 
 #include "qchartglobal.h"
 #include "qchartseries.h"
+#include "qchart.h"
 #include <QGraphicsView>
 
 class QGraphicsScene;
@@ -26,7 +27,7 @@ public:
 
     int margin() const;
     void setTitle(const QString& title);
-    void setBackgroundColor(const QColor& color);
+    void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, QChart::GradientOrientation orientation = QChart::VerticalGradientOrientation);
     void zoomInToRect(const QRect& rectangle);
     void zoomIn();
     void zoomOut();

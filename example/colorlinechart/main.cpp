@@ -32,9 +32,10 @@ int main(int argc, char *argv[])
     }
 
     QChartView* chartView =  new QChartView(&window);
+    chartView->setRenderHint(QPainter::Antialiasing);
     chartView->addSeries(series0);
     chartView->addSeries(series1);
-    //chartView->setBackgroundColor(Qt::yellow);
+    chartView->setBackground(Qt::blue,Qt::yellow,QChart::HorizonatlGradientOrientation);
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);
