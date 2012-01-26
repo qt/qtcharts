@@ -42,7 +42,6 @@ void Bar::setPos(qreal x, qreal y)
 void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (0 == mHeight) {
-        // Nothing to draw
         return;
     }
     // Set color for bar. TODO: gradients, textures etc
@@ -52,7 +51,7 @@ void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     painter->setPen(pen);
 
     // Draw bar
-    painter->drawLine(mXpos, mYpos ,
+    painter->drawLine(mXpos, mYpos,
                       mXpos, mYpos - mHeight);
 }
 

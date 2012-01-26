@@ -126,9 +126,6 @@ void BarGroup::layoutChanged()
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
             bar->setColor(mColors.at(series));
-
-            // TODO: bar width shouldn't affect height. Currently it does because pen width also affects height. (QPainter thingy...)
-//            bar->setPos(item*posStep+startPos + series * mBarDefaultWidth, mHeight - barHeight);
             bar->setPos(item*posStep+startPos + series * mBarDefaultWidth, mHeight);
             itemIndex++;
         }
