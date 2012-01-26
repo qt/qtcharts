@@ -269,18 +269,11 @@ void QChart::zoomInToRect(const QRect& rectangle)
     rect.translate(-margin, -margin);
 
     PlotDomain& oldDomain = m_plotDomainList[m_plotDataIndex];
-    PlotDomain newDomain;
 
-    qreal dx = oldDomain.spanX() / (m_rect.width() - 2 * margin);
-    qreal dy = oldDomain.spanY() / (m_rect.height() - 2 * margin);
-
-    newDomain.m_minX = oldDomain.m_minX + dx * rect.left();
-    newDomain.m_maxX = oldDomain.m_minX + dx * rect.right();
-    newDomain.m_minY = oldDomain.m_maxY - dy * rect.bottom();
-    newDomain.m_maxY = oldDomain.m_maxY - dy * rect.top();
+    PlotDomain domain = oldDomain.subDomain(rect,m_rect.width() - 2 * margin,m_rect.height() - 2 * margin);
 
     m_plotDomainList.resize(m_plotDataIndex + 1);
-    m_plotDomainList<<newDomain;
+    m_plotDomainList<<domain;
     m_plotDataIndex++;
 
     foreach (ChartItem* item ,m_chartItems)

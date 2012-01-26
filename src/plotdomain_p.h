@@ -13,6 +13,9 @@ public:
 	qreal spanX() const;
 	qreal spanY() const;
 
+	PlotDomain subDomain(const QRect& rect, qreal maxWidth, qreal maxHeight) const;
+
+
 public:
 	qreal m_minX;
 	qreal m_maxX;
