@@ -41,6 +41,9 @@ void Bar::setPos(qreal x, qreal y)
 
 void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    if (0 == mHeight) {
+        return;
+    }
     // Set color for bar. TODO: gradients, textures etc
     QPen pen = painter->pen();
     pen.setColor( mColor );
@@ -49,14 +52,13 @@ void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
 
     // Draw bar
     // TODO: Pen width affects bar height for now. This should be rect
-    painter->drawLine(scenePos().x() + mXpos, scenePos().y() + mYpos + parentItem()->boundingRect().height() - mHeight - mWidth,
-                      scenePos().x() + mXpos, scenePos().y() + mYpos + parentItem()->boundingRect().height() - mWidth);
+//    painter->drawRect(mXpos,mYpos,mWidth,mHeight);
+    painter->drawLine(mXpos, mYpos + mHeight - mWidth,
+                      mXpos, mYpos + mWidth);
 }
 
 QRectF Bar::boundingRect() const
 {
-    // TODO: check validity of this (I suppose there is easier way, and currently this bit incorrect :)
-//    QRectF r(scenePos().x()+mXpos, scenePos().y()+mYpos, scenePos().x() + mWidth, scenePos().y() + mHeight );
     QRectF r(mXpos, mYpos, mXpos + mWidth, mYpos + mHeight);
     return r;
 }

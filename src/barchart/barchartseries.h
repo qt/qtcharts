@@ -22,7 +22,7 @@ public:
     // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }
 
-    // TODO: This as dataModel instead of n different setters. (data model itself can accept lists and whatnot)
+    // TODO: Better data model?
     virtual bool setData(QAbstractItemModel* model);
 
     // Methods to find out minimum and maximum values of data
@@ -35,7 +35,8 @@ public:
 
 public Q_SLOTS:
 
-    void chartSizeChanged(QRectF rect);
+    // TODO: wrong place for this... series don't know anything about layout
+//    void chartSizeChanged(QRectF rect);
 
 private:
 

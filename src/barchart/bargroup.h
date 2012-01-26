@@ -37,7 +37,9 @@ public:
     void resize( int w, int h );        // Size for whole series. Single bars are drawn inside this area
     void setPos(qreal x, qreal y);
     void setBarWidth( int w );          // Default width for each bar
-    void setColor( QColor color );      // Default color for each bar
+
+    // TODO: set color theme instead? or use some external color theme call this
+    int addColor( QColor color );
 
     // From QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -59,11 +61,10 @@ private:
     int mWidth;
     int mBarDefaultWidth;
 
-    QColor mColor;
-
     bool mLayoutSet;    // True, if component has been laid out.
     bool mLayoutDirty;
 
+    QList<QColor> mColors;  // List of colors for series for now
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

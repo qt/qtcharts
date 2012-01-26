@@ -84,6 +84,14 @@ void QChart::addSeries(QChartSeries* series)
         qDebug() << "barSeries added";
         BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
         BarGroup* barGroup = new BarGroup(*barSeries,this);
+
+        // Add some fugly colors for 5 fist series...
+        barGroup->addColor(QColor(255,0,0,128));
+        barGroup->addColor(QColor(255,255,0,128));
+        barGroup->addColor(QColor(0,255,0,128));
+        barGroup->addColor(QColor(0,0,255,128));
+        barGroup->addColor(QColor(255,128,0,128));
+
         m_chartItems<<barGroup;
         childItems().append(barGroup);
         break;

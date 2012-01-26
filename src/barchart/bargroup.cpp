@@ -31,6 +31,7 @@ void BarGroup::setSize(const QSize& size)
 void BarGroup::setPlotDomain(const PlotDomain& data)
 {
     qDebug() << "BarGroup::setPlotDomain";
+    // TODO:
 }
 
 
@@ -48,9 +49,11 @@ void BarGroup::setBarWidth( int w )
     mBarDefaultWidth = w;
 }
 
-void BarGroup::setColor( QColor color )
+int BarGroup::addColor( QColor color )
 {
-    mColor = color;
+    int colorIndex = mColors.count();
+    mColors.append(color);
+    return colorIndex;
 }
 
 void BarGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -69,7 +72,6 @@ void BarGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 QRectF BarGroup::boundingRect() const
 {
-    // TODO: correct this (currently ignores position)
     return QRectF(0,0,mWidth,mHeight);
 }
 
@@ -107,13 +109,13 @@ void BarGroup::layoutChanged()
         return;
     }
 
-    // Align center
+    // TODO: better way to auto-layout
     int count = mSeries.countItemsInSeries();
-    int posStep = (mWidth / (count));
-    int startPos = (mWidth / count+1);
+    int posStep = (mWidth / (count+1));
+    int startPos = (mWidth / (count+1)) - mSeries.countSeries() * mBarDefaultWidth /2;
     qDebug() << "startpos" << startPos;
 
-    // Scaling. TODO: better one.
+    // Scaling.
     int itemIndex(0);
     for (int series = 0; series < mSeries.countSeries(); series++) {
         for (int item=0; item < mSeries.countItemsInSeries(); item++) {
@@ -121,14 +123,12 @@ void BarGroup::layoutChanged()
             int barHeight = mSeries.valueAt(series, item) * mHeight / mMax;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
-            bar->resize(mBarDefaultWidth, barHeight);        // TODO: width settable per bar
-            //TODO: test hack
-            if (0 == series) {
-                bar->setColor(QColor(255,0,0,128));
-            } else {
-                bar->setColor(QColor(255,255,0,128));
-            }
-            bar->setPos(item*posStep+startPos + series * mBarDefaultWidth, 0);
+            // TODO: width settable per bar?
+            bar->resize(mBarDefaultWidth, barHeight);
+            bar->setColor(mColors.at(series));
+
+            // TODO: bar width shouldn't affect height. Currently it does because pen width also affects height. (QPainter thingy...)
+            bar->setPos(item*posStep+startPos + series * mBarDefaultWidth, mHeight - barHeight + mBarDefaultWidth);
             itemIndex++;
         }
     }
