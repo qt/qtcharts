@@ -7,7 +7,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QPieSeries::QPieSeries(QGraphicsObject *parent) :
     QChartSeries(parent),
-    m_sizeFactor(1.0)
+    m_sizeFactor(1.0),
+    m_position(PiePositionMaximized)
 {
 }
 
@@ -34,7 +35,7 @@ bool QPieSeries::setData(QList<qreal> data)
     // TODO: no need to create new slices in case size changed; we should re-use the existing ones
     foreach (qreal value, m_data) {
         qreal span = value / total * fullPie;
-        PieSlice *slice = new PieSlice(randomColor(), angle, span, parentItem->boundingRect());
+        PieSlice *slice = new PieSlice(QColor(), angle, span, parentItem->boundingRect());
         slice->setParentItem(parentItem);
         m_slices.append(slice);
         angle += span;
@@ -42,6 +43,25 @@ bool QPieSeries::setData(QList<qreal> data)
 
     resizeSlices(m_chartSize);
     return true;
+}
+
+void QPieSeries::setSliceColor(int index, QColor color)
+{
+    if (index >= 0 && index < m_slices.count())
+        m_slices.at(index)->m_color = color;
+}
+
+QColor QPieSeries::sliceColor(int index)
+{
+    if (index >= 0 && index < m_slices.count())
+        return m_slices.at(index)->m_color;
+    else
+        return QColor();
+}
+
+int QPieSeries::sliceCount()
+{
+    return m_slices.count();
 }
 
 void QPieSeries::chartSizeChanged(QRectF chartRect)
@@ -65,6 +85,35 @@ void QPieSeries::resizeSlices(QRectF rect)
         tempRect.moveCenter(rect.center());
     }
 
+    switch (m_position) {
+        case PiePositionTopLeft: {
+            tempRect.setHeight(tempRect.height() / 2);
+            tempRect.setWidth(tempRect.height());
+            tempRect.moveCenter(QPointF(rect.center().x() / 2, rect.center().y() / 2));
+            break;
+        }
+        case PiePositionTopRight: {
+            tempRect.setHeight(tempRect.height() / 2);
+            tempRect.setWidth(tempRect.height());
+            tempRect.moveCenter(QPointF((rect.center().x() / 2) * 3, rect.center().y() / 2));
+            break;
+        }
+        case PiePositionBottomLeft: {
+            tempRect.setHeight(tempRect.height() / 2);
+            tempRect.setWidth(tempRect.height());
+            tempRect.moveCenter(QPointF(rect.center().x() / 2, (rect.center().y() / 2) * 3));
+            break;
+        }
+        case PiePositionBottomRight: {
+            tempRect.setHeight(tempRect.height() / 2);
+            tempRect.setWidth(tempRect.height());
+            tempRect.moveCenter(QPointF((rect.center().x() / 2) * 3, (rect.center().y() / 2) * 3));
+            break;
+        }
+        default:
+            break;
+    }
+
     foreach (PieSlice *slice, m_slices)
         slice->m_rect = tempRect;
 }
@@ -82,15 +131,17 @@ void QPieSeries::setSizeFactor(qreal factor)
     parentItem->update();
 }
 
-QColor QPieSeries::randomColor()
+void QPieSeries::setPosition(PiePosition position)
 {
-    QColor c;
-    c.setRed(qrand() % 255);
-    c.setGreen(qrand() % 255);
-    c.setBlue(qrand() % 255);
-    return c;
-}
+    m_position = position;
+    resizeSlices(m_chartSize);
 
+    // Initiate update via the parent graphics item
+    // TODO: potential issue: what if this function is called from the parent context?
+    QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent());
+    Q_ASSERT(parentItem);
+    parentItem->update();
+}
 
 #include "moc_qpieseries.cpp"
 

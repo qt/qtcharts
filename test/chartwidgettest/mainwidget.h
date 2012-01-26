@@ -32,6 +32,7 @@ private slots:
     void setCurrentSeries(QChartSeries *series);
     void changeChartTheme(int themeIndex);
     void setPieSizeFactor(double margin);
+    void setPiePosition(int position);
 
 private:
     QChartWidget *m_chartWidget;

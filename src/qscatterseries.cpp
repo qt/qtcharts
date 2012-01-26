@@ -87,6 +87,11 @@ void QScatterSeries::setMarkerColor(QColor color)
     d->m_markerColor = color;
 }
 
+QColor QScatterSeries::markerColor()
+{
+    return d->m_markerColor;
+}
+
 // TODO:
 //void QScatterSeries::chartScaleChanged(qreal xscale, qreal yscale)
 //{

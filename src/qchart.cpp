@@ -45,7 +45,7 @@ void QChart::addSeries(QChartSeries* series)
 {
     // TODO: we should check the series not already added
 
-    m_series<<series;
+    m_chartSeries << series;
 
     switch(series->type())
     {
@@ -54,7 +54,7 @@ void QChart::addSeries(QChartSeries* series)
         QXYChartSeries* xyseries = static_cast<QXYChartSeries*>(series);
         // Use color defined by theme in case the series does not define a custom color
         if (!xyseries->color().isValid() && m_themeColors.count())
-            xyseries->setColor(m_themeColors.takeFirst());
+            xyseries->setColor(nextColor());
 
         m_plotDataIndex = 0 ;
         m_plotDomainList.resize(1);
@@ -72,7 +72,6 @@ void QChart::addSeries(QChartSeries* series)
         }
 
         XYLineChartItem* item = new XYLineChartItem(xyseries,this);
-
         m_chartItems<<item;
 
         foreach(ChartItem* i ,m_chartItems)
@@ -91,20 +90,30 @@ void QChart::addSeries(QChartSeries* series)
         }
     case QChartSeries::SeriesTypeScatter: {
         QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
+        scatterSeries->d->setParentItem(this);
+        // Set pre-defined colors in case the series has no colors defined
+        if (!scatterSeries->markerColor().isValid())
+            scatterSeries->setMarkerColor(nextColor());
         connect(this, SIGNAL(sizeChanged(QRectF)),
                 scatterSeries, SLOT(chartSizeChanged(QRectF)));
-        scatterSeries->d->setParentItem(this);
-        QColor nextColor = m_themeColors.takeFirst();
-        nextColor.setAlpha(150); // TODO: default opacity?
-        scatterSeries->setMarkerColor(nextColor);
+//        QColor nextColor = m_themeColors.takeFirst();
+//        nextColor.setAlpha(150); // TODO: default opacity?
+//        scatterSeries->setMarkerColor(nextColor);
+        break;
         }
     case QChartSeries::SeriesTypePie: {
-        // TODO: we now have also a list of y values as a parameter, it is ignored
-        // we should use a generic data class instead of list of x and y values
         QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
+        for (int i(0); i < pieSeries->sliceCount(); i++) {
+            if (!pieSeries->sliceColor(i).isValid())
+                pieSeries->setSliceColor(i, nextColor());
+        }
         connect(this, SIGNAL(sizeChanged(QRectF)),
                 pieSeries, SLOT(chartSizeChanged(QRectF)));
+
+        // Set pre-defined colors in case the series has no colors defined
         // TODO: how to define the color for all the slices of a pie?
+//        for (int (i); i < pieSeries.sliceCount(); i++)
+        break;
         }
     }
 }
@@ -191,37 +200,84 @@ void QChart::setMargin(int margin)
     m_marginSize = margin;
 }
 
-void QChart::setTheme(QChart::ChartTheme theme)
+void QChart::setTheme(QChart::ChartThemeId theme)
 {
+//    if (theme != m_currentTheme) {
+    m_themeColors.clear();
+
     // TODO: define color themes
     switch (theme) {
-    case ChartThemeVanilla:
-        m_themeColors.append(QColor(255, 238, 174));
-        m_themeColors.append(QColor(228, 228, 160));
-        m_themeColors.append(QColor(228, 179, 160));
-        m_themeColors.append(QColor(180, 151, 18));
-        m_themeColors.append(QColor(252, 252, 37));
+    case QChart::ChartThemeVanilla:
+        m_themeColors.append(QColor(217, 197, 116));
+        m_themeColors.append(QColor(214, 168, 150));
+        m_themeColors.append(QColor(160, 160, 113));
+        m_themeColors.append(QColor(210, 210, 52));
+        m_themeColors.append(QColor(136, 114, 58));
+
+        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xff9d844d)));
+        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
         break;
-    case ChartThemeIcy:
-        m_themeColors.append(QColor(255, 238, 174));
-        m_themeColors.append(QColor(228, 228, 160));
-        m_themeColors.append(QColor(228, 179, 160));
-        m_themeColors.append(QColor(180, 151, 18));
-        m_themeColors.append(QColor(252, 252, 37));
+    case QChart::ChartThemeIcy:
+        m_themeColors.append(QColor(0, 3, 165));
+        m_themeColors.append(QColor(49, 52, 123));
+        m_themeColors.append(QColor(71, 114, 187));
+        m_themeColors.append(QColor(48, 97, 87));
+        m_themeColors.append(QColor(19, 71, 90));
+        m_themeColors.append(QColor(110, 70, 228));
+
+        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xffe4ffff)));
+        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
         break;
-    case ChartThemeGrayscale:
-        m_themeColors.append(QColor(255, 238, 174));
-        m_themeColors.append(QColor(228, 228, 160));
-        m_themeColors.append(QColor(228, 179, 160));
-        m_themeColors.append(QColor(180, 151, 18));
-        m_themeColors.append(QColor(252, 252, 37));
+    case QChart::ChartThemeGrayscale:
+        m_themeColors.append(QColor(0, 0, 0));
+        m_themeColors.append(QColor(50, 50, 50));
+        m_themeColors.append(QColor(100, 100, 100));
+        m_themeColors.append(QColor(140, 140, 140));
+        m_themeColors.append(QColor(180, 180, 180));
+
+        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xffffffff)));
+        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
+        break;
+    case QChart::ChartThemeUnnamed1:
+        m_themeColors.append(QColor(QRgb(0xff3fa9f5)));
+        m_themeColors.append(QColor(QRgb(0xff7AC943)));
+        m_themeColors.append(QColor(QRgb(0xffFF931E)));
+        m_themeColors.append(QColor(QRgb(0xffFF1D25)));
+        m_themeColors.append(QColor(QRgb(0xffFF7BAC)));
+
+        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xfff3dc9e)));
+        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
         break;
     default:
         Q_ASSERT(false);
         break;
     }
 
-    // TODO: update coloring of different elements to match the selected theme
+    m_background->setBrush(m_backgroundGradient);
+    m_background->setPen(Qt::NoPen);
+
+    foreach(QChartSeries* series, m_chartSeries) {
+        // TODO: other series interested on themes?
+        if (series->type() == QChartSeries::SeriesTypeLine) {
+            QXYChartSeries *lineseries = reinterpret_cast<QXYChartSeries *>(series);
+            lineseries->setColor(nextColor());
+        } else if (series->type() == QChartSeries::SeriesTypeScatter) {
+            QScatterSeries *scatter = qobject_cast<QScatterSeries *>(series);
+            scatter->setMarkerColor(nextColor());
+        } else if (series->type() == QChartSeries::SeriesTypePie) {
+            QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
+            for (int i(0); i < pieSeries->sliceCount(); i++)
+                pieSeries->setSliceColor(i, nextColor());
+        }
+    }
+    update();
+}
+
+QColor QChart::nextColor()
+{
+    QColor nextColor = m_themeColors.first();
+    m_themeColors.move(0, m_themeColors.size() - 1);
+    return nextColor;
 }
 
 void QChart::zoomInToRect(const QRect& rectangle)
@@ -235,18 +291,11 @@ void QChart::zoomInToRect(const QRect& rectangle)
     rect.translate(-margin, -margin);
 
     PlotDomain& oldDomain = m_plotDomainList[m_plotDataIndex];
-    PlotDomain newDomain;
 
-    qreal dx = oldDomain.spanX() / (m_rect.width() - 2 * margin);
-    qreal dy = oldDomain.spanY() / (m_rect.height() - 2 * margin);
-
-    newDomain.m_minX = oldDomain.m_minX + dx * rect.left();
-    newDomain.m_maxX = oldDomain.m_minX + dx * rect.right();
-    newDomain.m_minY = oldDomain.m_maxY - dy * rect.bottom();
-    newDomain.m_maxY = oldDomain.m_maxY - dy * rect.top();
+    PlotDomain domain = oldDomain.subDomain(rect,m_rect.width() - 2 * margin,m_rect.height() - 2 * margin);
 
     m_plotDomainList.resize(m_plotDataIndex + 1);
-    m_plotDomainList<<newDomain;
+    m_plotDomainList<<domain;
     m_plotDataIndex++;
 
     foreach (ChartItem* item ,m_chartItems)
