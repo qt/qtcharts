@@ -62,10 +62,12 @@ public:
     void zoomIn();
     void zoomOut();
 
-    void setAxisX(QChartAxis* axis){};
-    void setAxisY(QChartAxis* axis){};
-    void setAxisY(QList<QChartAxis*> axis){};
+    void setAxisX(const QChartAxis& axis);
+    void setAxisY(const QChartAxis& axis);
+    void setAxisY(const QList<QChartAxis>& axis);
 
+private:
+    void setAxis(AxisItem *item, const QChartAxis& axis);
 
 signals:
     //TODO chage to const QSize& size
@@ -80,7 +82,7 @@ private:
     QLinearGradient m_backgroundGradient;
     QGraphicsTextItem* m_title;
     AxisItem* m_axisX;
-    AxisItem* m_axisY;
+    QList<AxisItem*> m_axisY;
     QRect m_rect;
     QList<QChartSeries*> m_chartSeries;
     QVector<PlotDomain> m_plotDomainList;

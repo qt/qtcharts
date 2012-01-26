@@ -4,7 +4,7 @@
 #include "qscatterseries_p.h"
 #include "qpieseries.h"
 #include "qxychartseries.h"
-
+#include "qchartaxis.h"
 #include "barchartseries.h"
 #include "bargroup.h"
 
@@ -17,21 +17,21 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
-    m_background(new QGraphicsRectItem(this)),
+    m_background(new QGraphicsRectItem()),
     m_title(new QGraphicsTextItem(this)),
     m_axisX(new AxisItem(AxisItem::X_AXIS,this)),
-    m_axisY(new AxisItem(AxisItem::Y_AXIS,this)),
     m_plotDataIndex(0),
     m_marginSize(0)
 {
     // TODO: the default theme?
-    setTheme(QChart::ChartThemeVanilla);
-    //  setFlags(QGraphicsItem::ItemClipsChildrenToShape);
+    //setTheme(QChart::ChartThemeVanilla);
+    m_backgroundGradient.setColorAt(0.0, Qt::white);
+
     PlotDomain domain;
     m_plotDomainList<<domain;
-
+    m_axisY << new AxisItem(AxisItem::Y_AXIS,this);
     m_chartItems<<m_axisX;
-    m_chartItems<<m_axisY;
+    m_chartItems<<m_axisY.at(0);
 }
 
 QChart::~QChart(){}
@@ -53,8 +53,9 @@ void QChart::addSeries(QChartSeries* series)
 
         QXYChartSeries* xyseries = static_cast<QXYChartSeries*>(series);
         // Use color defined by theme in case the series does not define a custom color
-        if (!xyseries->color().isValid() && m_themeColors.count())
-            xyseries->setColor(nextColor());
+
+        if (!xyseries->pen().color().isValid() && m_themeColors.count()) //TODO: wtf
+            xyseries->setPen(nextColor());
 
         m_plotDataIndex = 0 ;
         m_plotDomainList.resize(1);
@@ -168,6 +169,7 @@ void QChart::setSize(const QSize& size)
     m_background->setRect(rect);
     m_backgroundGradient.setFinalStop(0,m_background->rect().height());
     m_background->setBrush(m_backgroundGradient);
+    m_background->setPen(Qt::NoPen);
 
     //resize elements
     foreach (ChartItem* item ,m_chartItems) {
@@ -271,7 +273,7 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         // TODO: other series interested on themes?
         if (series->type() == QChartSeries::SeriesTypeLine) {
             QXYChartSeries *lineseries = reinterpret_cast<QXYChartSeries *>(series);
-            lineseries->setColor(nextColor());
+            lineseries->setPen(nextColor());
         } else if (series->type() == QChartSeries::SeriesTypeScatter) {
             QScatterSeries *scatter = qobject_cast<QScatterSeries *>(series);
             scatter->setMarkerColor(nextColor());
@@ -338,6 +340,25 @@ void QChart::zoomOut()
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();
     }
+}
+
+void QChart::setAxisX(const QChartAxis& axis)
+{
+    setAxis(m_axisX,axis);
+}
+void QChart::setAxisY(const QChartAxis& axis)
+{
+    setAxis(m_axisY.at(0),axis);
+}
+
+void QChart::setAxisY(const QList<QChartAxis>& axis)
+{
+    //TODO not implemented
+}
+
+void QChart::setAxis(AxisItem *item, const QChartAxis& axis)
+{
+    item->setVisible(axis.isAxisVisible());
 }
 
 #include "moc_qchart.cpp"

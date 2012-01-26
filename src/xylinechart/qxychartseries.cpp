@@ -2,8 +2,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QXYChartSeries::QXYChartSeries(QObject* parent):QChartSeries(parent),
-    m_color()
+QXYChartSeries::QXYChartSeries(QObject* parent):QChartSeries(parent)
 {
 }
 
@@ -16,11 +15,6 @@ QXYChartSeries* QXYChartSeries::create(QObject* parent)
     //TODO: here we take QChartData when it is ready
     // return null if malformed;
     return new QXYChartSeries(parent);
-}
-
-void QXYChartSeries::setColor(const QColor& color)
-{
-	m_color = color;
 }
 
 void QXYChartSeries::add(qreal x,qreal y)
@@ -51,6 +45,16 @@ int QXYChartSeries::count() const
 
 	return m_x.size();
 
+}
+
+void QXYChartSeries::setPen(const QPen& pen)
+{
+    m_pen=pen;
+}
+
+void QXYChartSeries::setBrush(const QBrush& brush)
+{
+    m_brush=brush;
 }
 
 QDebug operator<< (QDebug debug, const QXYChartSeries series)

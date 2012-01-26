@@ -16,9 +16,13 @@ int main(int argc, char *argv[])
     QMainWindow window;
 
     QXYChartSeries* series0 = QXYChartSeries::create();
-    series0->setColor(Qt::blue);
+    QPen blue(Qt::blue);
+    blue.setWidth(3);
+    series0->setPen(blue);
     QXYChartSeries* series1 = QXYChartSeries::create();
-    series1->setColor(Qt::red);
+    QPen red(Qt::red);
+    red.setWidth(3);
+    series1->setPen(red);
 
     int numPoints = 100;
 
@@ -28,6 +32,7 @@ int main(int argc, char *argv[])
     }
 
     QChartView* chartView =  new QChartView(&window);
+    chartView->setRenderHint(QPainter::Antialiasing);
     chartView->addSeries(series0);
     chartView->addSeries(series1);
 

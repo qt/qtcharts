@@ -2,6 +2,8 @@
 #include <QPainter>
 #include <QDebug>
 
+#define LABEL_PADDING 5
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 AxisItem::AxisItem(AxisType type,QGraphicsItem* parent): ChartItem(parent),
@@ -17,6 +19,7 @@ AxisItem::~AxisItem()
 void  AxisItem::setSize(const QSize& size)
 {
     m_rect = QRectF(QPoint(0,0),size);
+    createItems();
 }
 
 void AxisItem::setLength(int length)
@@ -42,52 +45,124 @@ QRectF AxisItem::boundingRect() const
 void AxisItem::setPlotDomain(const PlotDomain& plotDomain)
 {
     m_plotDomain = plotDomain;
+    createItems();
 }
-
+/*
 void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget)
 {
     if (!m_rect.isValid())
-      return;
+    return;
 
     if(m_type==X_AXIS) {
 
-      const qreal deltaX = (m_rect.width() -1) / m_ticks;
+        const qreal deltaX = m_rect.width() / m_ticks;
 
-      for (int i = 0; i <= m_ticks; ++i) {
+        for (int i = 0; i <= m_ticks; ++i) {
 
-          int x = i * deltaX + m_rect.left();
-          qreal label = m_plotDomain.m_minX + (i * m_plotDomain.spanX()
-              / m_ticks);
-          painter->drawLine(x, m_rect.top()+1, x, m_rect.bottom());
-          //painter->drawLine(x, m_rect.bottom(), x, m_rect.bottom() + 5);
+            int x = i * deltaX + m_rect.left();
 
-          painter->drawText(x - 50, m_rect.bottom() + 5, 100, 20,
-              Qt::AlignHCenter | Qt::AlignTop,
-              QString::number(label));
-      }
+            if(i==0) x--;
+            if(i==m_ticks) x++;
+
+            qreal label = m_plotDomain.m_minX + (i * m_plotDomain.spanX()
+                / m_ticks);
+            painter->drawLine(x, m_rect.top()-1, x, m_rect.bottom()+1);
+           // painter->drawLine(x, m_rect.bottom()-1, x, m_rect.bottom()-1 + 5);
+
+            painter->drawText(x - 50, m_rect.bottom() + 5, 100, 20,Qt::AlignHCenter | Qt::AlignTop, QString::number(label));
+        }
     }
 
     if(m_type==Y_AXIS) {
 
-      const qreal deltaY = (m_rect.height() - 1) / m_ticks;
+        const qreal deltaY = (m_rect.height()) / m_ticks;
 
-      for (int j = 0; j <= m_ticks; ++j) {
+        for (int j = 0; j <= m_ticks; ++j) {
 
-          int y = j * -deltaY + m_rect.bottom();
-          qreal label = m_plotDomain.m_minY + (j * m_plotDomain.spanY()
-              / m_ticks);
+            int y = j * -deltaY + m_rect.bottom();
 
-          painter->drawLine(m_rect.left(), y, m_rect.right()-1, y);
-          //painter->drawLine(m_rect.left() - 5, y, m_rect.left(), y);
-          //TODO : margin = 50 ;
-          painter->drawText(m_rect.left() - 50, y - 10, 50 - 5, 20,
-              Qt::AlignRight | Qt::AlignVCenter,
-              QString::number(label));
-      }
+            if(j==0) y++;
+            if(j==m_ticks) y--;
+
+            qreal label = m_plotDomain.m_minY + (j * m_plotDomain.spanY()
+                / m_ticks);
+
+            painter->drawLine(m_rect.left()-1, y, m_rect.right()+1, y);
+            //painter->drawLine(m_rect.left() - 5, y, m_rect.left(), y);
+            //TODO : margin = 50 ;
+            painter->drawText(m_rect.left() - 50, y - 10, 50 - 5, 20,
+                Qt::AlignRight | Qt::AlignVCenter,
+                QString::number(label));
+        }
     }
 
     //painter->drawRect(m_rect.adjusted(0, 0, -1, -1));
+}
+*/
+void AxisItem::createItems()
+{
 
+    //TODO: this is very inefficient handling
+
+        qDeleteAll(m_shades);
+        m_shades.clear();
+        qDeleteAll(m_grid);
+        m_grid.clear();
+        qDeleteAll(m_labels);
+        m_labels.clear();
+
+
+       if(m_type==X_AXIS) {
+
+         const qreal deltaX = m_rect.width() / m_ticks;
+
+         for (int i = 0; i <= m_ticks; ++i) {
+
+             int x = i * deltaX + m_rect.left();
+
+             //last grid outside chart rect
+             if(i==0) x--;
+             if(i==m_ticks) x++;
+
+             qreal label = m_plotDomain.m_minX + (i * m_plotDomain.spanX()/ m_ticks);
+
+             m_grid<<new QGraphicsLineItem(x, m_rect.top()-1, x, m_rect.bottom()+1+LABEL_PADDING,this);
+
+             QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
+             QPointF center = text->boundingRect().center();
+             text->setPos(x - center.x(), m_rect.bottom() + LABEL_PADDING);
+             //text->rotate(-45);
+             m_labels<<text;
+         }
+       }
+
+       if(m_type==Y_AXIS) {
+
+         const qreal deltaY = m_rect.height()/ m_ticks;
+
+         for (int j = 0; j <= m_ticks; ++j) {
+
+             int y = j * -deltaY + m_rect.bottom();
+
+             //last grid outside chart rect
+             if(j==0) y++;
+             if(j==m_ticks) y--;
+
+             qreal label = m_plotDomain.m_minY + (j * m_plotDomain.spanY()
+                 / m_ticks);
+
+             m_grid<<new QGraphicsLineItem(m_rect.left()- 1 - LABEL_PADDING , y, m_rect.right()+1, y,this);
+             QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
+             QPointF center = text->boundingRect().center();
+
+             text->setPos(m_rect.left() - text->boundingRect().width() - LABEL_PADDING , y-center.y());
+             //text->rotate(-45);
+              m_labels<<text;
+
+         }
+       }
+
+       //painter->drawRect(m_rect.adjusted(0, 0, -1, -1));
 }
 
 //TODO "nice numbers algorithm"

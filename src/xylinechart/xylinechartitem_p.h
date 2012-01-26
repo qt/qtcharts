@@ -17,7 +17,8 @@ public:
 
     //from QGraphicsItem
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
+   // virtual QPainterPath shape() const;
     //from ChartItem
     void setSize(const QSize& size);
     void setPlotDomain(const PlotDomain& data);
@@ -30,7 +31,7 @@ private:
     QPolygonF m_polyline;
     QXYChartSeries* m_series;
     PlotDomain m_plotDomain;
-    bool m_dirty;
+    QGraphicsPathItem *m_pathItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

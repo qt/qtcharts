@@ -17,7 +17,7 @@ public:
 
     //from QGraphicsItem
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
 
     //from ChartItem
     void setSize(const QSize& size);
@@ -28,10 +28,16 @@ public:
     AxisType axisType() const {return m_type;};
 
 private:
+    void createItems();
+private:
     QRectF m_rect;
     int m_ticks;
     PlotDomain m_plotDomain;
     QPainterPath m_path;
+
+    QList<QGraphicsLineItem*> m_grid;
+    QList<QGraphicsRectItem*> m_shades;
+    QList<QGraphicsSimpleTextItem*> m_labels;
     AxisType m_type;
 };
 
