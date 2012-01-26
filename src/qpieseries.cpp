@@ -7,7 +7,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QPieSeries::QPieSeries(QGraphicsObject *parent) :
     QChartSeries(parent),
-    m_sizeFactor(1.0)
+    m_sizeFactor(1.0),
+    m_position(PiePositionMaximized)
 {
 }
 
@@ -84,6 +85,35 @@ void QPieSeries::resizeSlices(QRectF rect)
         tempRect.moveCenter(rect.center());
     }
 
+    switch (m_position) {
+        case PiePositionTopLeft: {
+            tempRect.setHeight(tempRect.height() / 2);
+            tempRect.setWidth(tempRect.height());
+            tempRect.moveCenter(QPointF(rect.center().x() / 2, rect.center().y() / 2));
+            break;
+        }
+        case PiePositionTopRight: {
+            tempRect.setHeight(tempRect.height() / 2);
+            tempRect.setWidth(tempRect.height());
+            tempRect.moveCenter(QPointF((rect.center().x() / 2) * 3, rect.center().y() / 2));
+            break;
+        }
+        case PiePositionBottomLeft: {
+            tempRect.setHeight(tempRect.height() / 2);
+            tempRect.setWidth(tempRect.height());
+            tempRect.moveCenter(QPointF(rect.center().x() / 2, (rect.center().y() / 2) * 3));
+            break;
+        }
+        case PiePositionBottomRight: {
+            tempRect.setHeight(tempRect.height() / 2);
+            tempRect.setWidth(tempRect.height());
+            tempRect.moveCenter(QPointF((rect.center().x() / 2) * 3, (rect.center().y() / 2) * 3));
+            break;
+        }
+        default:
+            break;
+    }
+
     foreach (PieSlice *slice, m_slices)
         slice->m_rect = tempRect;
 }
@@ -92,6 +122,18 @@ void QPieSeries::setSizeFactor(qreal factor)
 {
     if (factor > 0.0)
         m_sizeFactor = factor;
+    resizeSlices(m_chartSize);
+
+    // Initiate update via the parent graphics item
+    // TODO: potential issue: what if this function is called from the parent context?
+    QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent());
+    Q_ASSERT(parentItem);
+    parentItem->update();
+}
+
+void QPieSeries::setPosition(PiePosition position)
+{
+    m_position = position;
     resizeSlices(m_chartSize);
 
     // Initiate update via the parent graphics item

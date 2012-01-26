@@ -30,7 +30,8 @@ public:
     enum ChartThemeId {
         ChartThemeVanilla = 0,
         ChartThemeIcy,
-        ChartThemeGrayscale
+        ChartThemeGrayscale,
+        ChartThemeUnnamed1
     };
 
 public:

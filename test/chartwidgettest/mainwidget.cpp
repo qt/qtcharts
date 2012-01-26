@@ -21,14 +21,16 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent)
 {
+    m_chartWidget = new QChartWidget(this);
+
     QPushButton *addSeriesButton = new QPushButton("Add series");
     connect(addSeriesButton, SIGNAL(clicked()), this, SLOT(addSeries()));
 
     // Chart background
     QComboBox *backgroundCombo = new QComboBox(this);
-    backgroundCombo->addItem("None");
-    backgroundCombo->addItem("TODO Grid");
-    backgroundCombo->addItem("TODO Image");
+    backgroundCombo->addItem("Color");
+    backgroundCombo->addItem("Gradient");
+    backgroundCombo->addItem("Image");
     connect(backgroundCombo, SIGNAL(currentIndexChanged(int)),
             this, SLOT(backgroundChanged(int)));
 
@@ -62,13 +64,16 @@ MainWidget::MainWidget(QWidget *parent) :
     chartTheme->addItem("Vanilla");
     chartTheme->addItem("Icy");
     chartTheme->addItem("Grayscale");
-    chartTheme->addItem("Tobedefined");
+    chartTheme->addItem("Unnamed1");
     connect(chartTheme, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeChartTheme(int)));
 
+    QCheckBox *zoomCheckBox = new QCheckBox("Zoom enabled");
+    connect(zoomCheckBox, SIGNAL(toggled(bool)), m_chartWidget, SLOT(setZoomEnabled(bool)));
+    zoomCheckBox->setChecked(true);
+
     QGridLayout *grid = new QGridLayout();
     QGridLayout *mainLayout = new QGridLayout();
-    //grid->addWidget(new QLabel("Add series:"), 0, 0);
     grid->addWidget(addSeriesButton, 0, 1);
     grid->addWidget(new QLabel("Background:"), 2, 0);
     grid->addWidget(backgroundCombo, 2, 1);
@@ -83,9 +88,10 @@ MainWidget::MainWidget(QWidget *parent) :
     grid->addWidget(m_yMaxSpin, 7, 1);
     grid->addWidget(new QLabel("Chart theme:"), 8, 0);
     grid->addWidget(chartTheme, 8, 1);
+    grid->addWidget(zoomCheckBox, 9, 0);
     // add row with empty label to make all the other rows static
-    grid->addWidget(new QLabel(""), 9, 0);
-    grid->setRowStretch(9, 1);
+    grid->addWidget(new QLabel(""), 10, 0);
+    grid->setRowStretch(10, 1);
 
     mainLayout->addLayout(grid, 0, 0);
 
@@ -95,21 +101,32 @@ MainWidget::MainWidget(QWidget *parent) :
     m_scatterLayout->setEnabled(false);
 
     // Pie specific settings
-    m_pieLayout = new QGridLayout();
-    m_pieLayout->addWidget(new QLabel("Pie size factor"), 0, 0);
+    // Pie size factory
     QDoubleSpinBox *pieSizeSpin = new QDoubleSpinBox();
     pieSizeSpin->setMinimum(LONG_MIN);
     pieSizeSpin->setMaximum(LONG_MAX);
     pieSizeSpin->setValue(1.0);
     pieSizeSpin->setSingleStep(0.1);
     connect(pieSizeSpin, SIGNAL(valueChanged(double)), this, SLOT(setPieSizeFactor(double)));
+    // Pie position
+    QComboBox *piePosCombo = new QComboBox(this);
+    piePosCombo->addItem("Maximized");
+    piePosCombo->addItem("Top left");
+    piePosCombo->addItem("Top right");
+    piePosCombo->addItem("Bottom left");
+    piePosCombo->addItem("Bottom right");
+    connect(piePosCombo, SIGNAL(currentIndexChanged(int)),
+            this, SLOT(setPiePosition(int)));
+    m_pieLayout = new QGridLayout();
     m_pieLayout->setEnabled(false);
+    m_pieLayout->addWidget(new QLabel("Pie size factor"), 0, 0);
     m_pieLayout->addWidget(pieSizeSpin, 0, 1);
+    m_pieLayout->addWidget(new QLabel("Pie position"), 1, 0);
+    m_pieLayout->addWidget(piePosCombo, 1, 1);
 
     mainLayout->addLayout(m_scatterLayout, 1, 0);
     mainLayout->addLayout(m_pieLayout, 2, 0);
 
-    m_chartWidget = new QChartWidget(this);
     //m_chartWidget->setColor(Qt::red);
     mainLayout->addWidget(m_chartWidget, 0, 1, 3, 1);
 //    hbox->setStretch(1, 1);
@@ -311,4 +328,11 @@ void MainWidget::setPieSizeFactor(double size)
     QPieSeries *pie = qobject_cast<QPieSeries *>(m_currentSeries);
     if (pie)
         pie->setSizeFactor(qreal(size));
+}
+
+void MainWidget::setPiePosition(int position)
+{
+    QPieSeries *pie = qobject_cast<QPieSeries *>(m_currentSeries);
+    if (pie)
+        pie->setPosition((QPieSeries::PiePosition) position);
 }

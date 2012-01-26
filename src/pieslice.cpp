@@ -48,6 +48,7 @@ void PieSlice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 {
     // Setup painter
     painter->setBrush(m_color);
+    painter->setRenderHint(QPainter::Antialiasing);
     QPen pen;
     //pen.setColor(m_color.darker());
     pen.setColor(Qt::gray);

@@ -15,11 +15,18 @@ class QTCOMMERCIALCHART_EXPORT QPieSeries : public QChartSeries
     Q_OBJECT
 
 public:
+    enum PiePosition {
+        PiePositionMaximized = 0,
+        PiePositionTopLeft,
+        PiePositionTopRight,
+        PiePositionBottomLeft,
+        PiePositionBottomRight
+    };
+
+public:
     // TODO: use a generic data class instead of x and y
     QPieSeries(QGraphicsObject *parent = 0);
     ~QPieSeries();
-    void setSizeFactor(qreal sizeFactor);
-    qreal sizeFactor() { return m_sizeFactor; }
 
 public: // from QChartSeries
     QChartSeriesType type() const { return QChartSeries::SeriesTypePie; }
@@ -29,6 +36,9 @@ public:
     void setSliceColor(int index, QColor color);
     QColor sliceColor(int index);
     int sliceCount();
+    void setSizeFactor(qreal sizeFactor);
+    qreal sizeFactor() { return m_sizeFactor; }
+    void setPosition(PiePosition position);
 
 public Q_SLOTS:
     void chartSizeChanged(QRectF rect);
@@ -43,6 +53,7 @@ private:
     QList<PieSlice*> m_slices;
     QRectF m_chartSize;
     qreal m_sizeFactor;
+    PiePosition m_position;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

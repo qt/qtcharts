@@ -213,6 +213,9 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         m_themeColors.append(QColor(160, 160, 113));
         m_themeColors.append(QColor(210, 210, 52));
         m_themeColors.append(QColor(136, 114, 58));
+
+        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xff9d844d)));
+        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
         break;
     case QChart::ChartThemeIcy:
         m_themeColors.append(QColor(0, 3, 165));
@@ -221,6 +224,9 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         m_themeColors.append(QColor(48, 97, 87));
         m_themeColors.append(QColor(19, 71, 90));
         m_themeColors.append(QColor(110, 70, 228));
+
+        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xffe4ffff)));
+        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
         break;
     case QChart::ChartThemeGrayscale:
         m_themeColors.append(QColor(0, 0, 0));
@@ -228,11 +234,27 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         m_themeColors.append(QColor(100, 100, 100));
         m_themeColors.append(QColor(140, 140, 140));
         m_themeColors.append(QColor(180, 180, 180));
+
+        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xffffffff)));
+        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
+        break;
+    case QChart::ChartThemeUnnamed1:
+        m_themeColors.append(QColor(QRgb(0xff3fa9f5)));
+        m_themeColors.append(QColor(QRgb(0xff7AC943)));
+        m_themeColors.append(QColor(QRgb(0xffFF931E)));
+        m_themeColors.append(QColor(QRgb(0xffFF1D25)));
+        m_themeColors.append(QColor(QRgb(0xffFF7BAC)));
+
+        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xfff3dc9e)));
+        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
         break;
     default:
         Q_ASSERT(false);
         break;
     }
+
+    m_background->setBrush(m_backgroundGradient);
+    m_background->setPen(Qt::NoPen);
 
     foreach(QChartSeries* series, m_chartSeries) {
         // TODO: other series interested on themes?
