@@ -15,6 +15,8 @@
 #include <QMessageBox>
 #include <cmath>
 #include <QDebug>
+#include <QStandardItemModel>
+
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -192,14 +194,29 @@ void MainWidget::addSeries(QString series, QString data)
         // This is the another way of creating series. Should we create test cases for both ways, if we support them?
         qDebug() << "Bar chart series";
         newSeries = QChartSeries::create(QChartSeries::SeriesTypeBar, this);
-        QList<int> barData;
-        barData << 1;
-        barData << 12;
-        barData << 5;
-        barData << 8;
-        barData << 17;
-        barData << 9;
-        newSeries->setData(barData);
+
+        // Create some test data to chart
+        QStandardItemModel dataModel(2,10,this);
+        QModelIndex index;
+        index = dataModel.index(0,0);
+        // Series 1, items 6 to 9 missing.
+        dataModel.setData(dataModel.index(0,0),1);
+        dataModel.setData(dataModel.index(0,1),12);
+        dataModel.setData(dataModel.index(0,2),5);
+        dataModel.setData(dataModel.index(0,3),8);
+        dataModel.setData(dataModel.index(0,4),17);
+        dataModel.setData(dataModel.index(0,5),9);
+
+        // Series 2, some other items missing
+        dataModel.setData(dataModel.index(1,0),5);
+        dataModel.setData(dataModel.index(1,3),4);
+        dataModel.setData(dataModel.index(1,5),7);
+        dataModel.setData(dataModel.index(1,6),8);
+        dataModel.setData(dataModel.index(1,8),9);
+        dataModel.setData(dataModel.index(1,9),9);
+
+        newSeries->setData(&dataModel);
+
         m_chartWidget->addSeries(newSeries);
     }
 

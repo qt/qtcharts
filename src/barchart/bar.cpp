@@ -23,6 +23,7 @@ void Bar::setPlotDomain(const PlotDomain& data)
 
 void Bar::resize( int w, int h )
 {
+    qDebug() << "bar::resize" << w << h;
     mWidth = w;
     mHeight = h;
 }
@@ -33,6 +34,7 @@ void Bar::setColor( QColor col )
 }
 void Bar::setPos(qreal x, qreal y)
 {
+    qDebug() << "Bar::setpos" << x << y;
     mXpos = x;
     mYpos = y;
 }

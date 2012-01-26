@@ -27,7 +27,11 @@ public:
 private:
 */
 public:
-    explicit BarGroup(BarChartSeries& series, ChartItem *parent = 0);
+    explicit BarGroup(BarChartSeries& series, QGraphicsItem *parent = 0);
+
+    // From ChartItem
+    virtual void setSize(const QSize& size);
+    virtual void setPlotDomain(const PlotDomain& data);
 
     // Layout "api"
     void resize( int w, int h );        // Size for whole series. Single bars are drawn inside this area

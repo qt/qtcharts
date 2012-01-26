@@ -10,14 +10,29 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 //BarGroup::BarGroup(QGraphicsItem *parent) :
 //    QGraphicsItem(parent)
 //    ,mSeries(series)
-BarGroup::BarGroup(BarChartSeries& series, ChartItem *parent) :
+BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
   ChartItem(parent)
   ,mSeries(series)
   ,mLayoutSet(false)
   ,mLayoutDirty(true)
+  ,mBarDefaultWidth(10)
 {
     dataChanged();
 }
+
+
+void BarGroup::setSize(const QSize& size)
+{
+    // TODO: refactor this
+    qDebug() << "BarGroup::setSize";
+    resize(size.width(),size.height());
+}
+
+void BarGroup::setPlotDomain(const PlotDomain& data)
+{
+    qDebug() << "BarGroup::setPlotDomain";
+}
+
 
 void BarGroup::resize( int w, int h )
 {
@@ -87,27 +102,33 @@ void BarGroup::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
-    int count = mSeries.countSeries();
-    if (count <= 0) {
+    if (mSeries.countSeries() <= 0) {
         // Nothing to do.
         return;
     }
 
     // Align center
+    int count = mSeries.countItemsInSeries();
     int posStep = (mWidth / (count));
     int startPos = (mWidth / count+1);
     qDebug() << "startpos" << startPos;
 
     // Scaling. TODO: better one.
     int itemIndex(0);
-    for (int series = 0; series < count; series++) {
-        for (int item=0; item < count; item++) {
+    for (int series = 0; series < mSeries.countSeries(); series++) {
+        for (int item=0; item < mSeries.countItemsInSeries(); item++) {
+            qDebug() << itemIndex;
             int barHeight = mSeries.valueAt(series, item) * mHeight / mMax;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
             bar->resize(mBarDefaultWidth, barHeight);        // TODO: width settable per bar
-            bar->setColor(mColor);
-            bar->setPos(itemIndex*posStep+startPos, 0);
+            //TODO: test hack
+            if (0 == series) {
+                bar->setColor(QColor(255,0,0,128));
+            } else {
+                bar->setColor(QColor(255,255,0,128));
+            }
+            bar->setPos(itemIndex*posStep+startPos + series * mBarDefaultWidth, 0);
             itemIndex++;
         }
     }

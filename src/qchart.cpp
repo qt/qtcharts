@@ -84,9 +84,9 @@ void QChart::addSeries(QChartSeries* series)
 
         qDebug() << "barSeries added";
         BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
-        connect(this, SIGNAL(sizeChanged(QRectF)),
-                barSeries, SLOT(chartSizeChanged(QRectF)));
-
+        BarGroup* barGroup = new BarGroup(*barSeries,this);
+        m_chartItems<<barGroup;
+        childItems().append(barGroup);
         break;
         }
     case QChartSeries::SeriesTypeScatter: {
