@@ -128,7 +128,7 @@ void BarGroup::layoutChanged()
             } else {
                 bar->setColor(QColor(255,255,0,128));
             }
-            bar->setPos(itemIndex*posStep+startPos + series * mBarDefaultWidth, 0);
+            bar->setPos(item*posStep+startPos + series * mBarDefaultWidth, 0);
             itemIndex++;
         }
     }
