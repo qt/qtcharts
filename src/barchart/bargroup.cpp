@@ -48,6 +48,11 @@ int BarGroup::addColor( QColor color )
     return colorIndex;
 }
 
+void BarGroup::resetColors()
+{
+    mColors.clear();
+}
+
 void BarGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (!mLayoutSet) {

@@ -37,8 +37,8 @@ public:
     void setPos(qreal x, qreal y);
     void setBarWidth( int w );          // Default width for each bar
 
-    // TODO: set color theme instead? or use some external color theme call this
     int addColor( QColor color );
+    void resetColors();
 
     // From QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
