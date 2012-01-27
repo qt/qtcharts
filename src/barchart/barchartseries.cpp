@@ -20,13 +20,11 @@ int BarChartSeries::min()
 
     // TODO: make min and max members and update them when data changes.
     // This is slower since they are checked every time, even if data is same since previous call.
-    QModelIndex modelIndex = mModel->index(0,0);
-    int min = mModel->data(modelIndex).toInt();
+    int min = INT_MAX;
 
     for (int i=0; i <mModel->rowCount(); i++) {
         for(int j=0; j<mModel->columnCount(); j++) {
-            modelIndex = mModel->index(i,j);
-            int temp = mModel->data(modelIndex).toInt();
+            int temp = mModel->data(mModel->index(i,j)).toInt();
             if (temp < min) {
                 min = temp;
             }
@@ -42,13 +40,11 @@ int BarChartSeries::max()
 
     // TODO: make min and max members and update them when data changes.
     // This is slower since they are checked every time, even if data is same since previous call.
-    QModelIndex modelIndex = mModel->index(0,0);
-    int max = mModel->data(modelIndex).toInt();
+    int max = INT_MIN;
 
     for (int i=0; i <mModel->rowCount(); i++) {
         for(int j=0; j<mModel->columnCount(); j++) {
-            modelIndex = mModel->index(i,j);
-            int temp = mModel->data(modelIndex).toInt();
+            int temp = mModel->data(mModel->index(i,j)).toInt();
             if (temp > max) {
                 max = temp;
             }
@@ -63,7 +59,7 @@ int BarChartSeries::countSeries()
     return mModel->rowCount();
 }
 
-int BarChartSeries::countItemsInSeries()
+int BarChartSeries::countColumns()
 {
     return mModel->columnCount();
 }
@@ -73,19 +69,11 @@ int BarChartSeries::countTotalItems()
     return mModel->rowCount() * mModel->columnCount();
 }
 
-int BarChartSeries::valueAt(int series, int item)
+int BarChartSeries::valueAt(int row, int column)
 {
-    QModelIndex index = mModel->index(series,item);
-    return mModel->data(index).toInt();
+    return mModel->data(mModel->index(row,column)).toInt();
 }
 
-/*
-void BarChartSeries::chartSizeChanged(QRectF rect)
-{
-    qDebug() << "barchart size changed:" << rect;
-//    mBarGroup->resize(rect.toRect().width(), rect.toRect().height());
-}
-*/
 #include "moc_barchartseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

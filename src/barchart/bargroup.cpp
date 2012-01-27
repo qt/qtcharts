@@ -4,12 +4,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// TODO: singleton?
-//BarGroup* BarGroup::mBarGroupInstance = NULL;
-
-//BarGroup::BarGroup(QGraphicsItem *parent) :
-//    QGraphicsItem(parent)
-//    ,mSeries(series)
 BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
   ChartItem(parent)
   ,mSeries(series)
@@ -107,7 +101,7 @@ void BarGroup::layoutChanged()
     }
 
     // TODO: better way to auto-layout
-    int count = mSeries.countItemsInSeries();
+    int count = mSeries.countColumns();
     int posStep = (mWidth / (count+1));
     int startPos = (mWidth / (count+1)) - mSeries.countSeries() * mBarDefaultWidth /2;
     qDebug() << "startpos" << startPos;
@@ -115,7 +109,7 @@ void BarGroup::layoutChanged()
     // Scaling.
     int itemIndex(0);
     for (int series = 0; series < mSeries.countSeries(); series++) {
-        for (int item=0; item < mSeries.countItemsInSeries(); item++) {
+        for (int item=0; item < mSeries.countColumns(); item++) {
             qDebug() << itemIndex;
             int barHeight = mSeries.valueAt(series, item) * mHeight / mMax;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));

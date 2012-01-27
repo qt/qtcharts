@@ -2,7 +2,7 @@
 #define BARCHARTSERIES_H
 
 #include <QList>
-#include <QRectF>
+//#include <QRectF>
 #include <QAbstractItemModel>
 #include "qchartseries.h"
 #include "qchartglobal.h"
@@ -29,9 +29,9 @@ public:
     int min();
     int max();
     int countSeries();
-    int countItemsInSeries();     // Count items in one series.
+    int countColumns();     // Count items in one series.
     int countTotalItems();
-    int valueAt(int series, int item);
+    int valueAt(int row, int column);
 
 public Q_SLOTS:
 

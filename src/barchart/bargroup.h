@@ -1,5 +1,5 @@
-#ifndef QBARCHART_H
-#define QBARCHART_H
+#ifndef QBARGROUP_H
+#define QBARGROUP_H
 
 #include "chartitem_p.h"
 #include "bar.h"
@@ -7,25 +7,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// TODO: Better name for this? The function of this class is to know where each bar in series is laid out.
-//class BarGroup : public QGraphicsItemGroup
-
 class BarGroup : public ChartItem
 {
-/* // TODO: implement as singleton?
-private:
-    static BarGroup* mBarGroupInstance;
-
-public:
-    static BarGroup* instance()
-    {
-        if (mBarGroupInstance == NULL) {
-            mBarGroupInstance = new BarGroup();
-        }
-        return mBarGroupInstance;
-    }
-private:
-*/
 public:
     explicit BarGroup(BarChartSeries& series, QGraphicsItem *parent = 0);
 
@@ -68,4 +51,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QBARCHART_H
+#endif // QBARGROUP_H
