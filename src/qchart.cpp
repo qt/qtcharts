@@ -24,7 +24,7 @@ QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
     m_marginSize(0)
 {
     // TODO: the default theme?
-    //setTheme(QChart::ChartThemeVanilla);
+    setTheme(QChart::ChartThemeDefault);
 
     PlotDomain domain;
     m_plotDomainList<<domain;
@@ -246,7 +246,10 @@ void QChart::setTheme(QChart::ChartThemeId theme)
     switch (theme) {
     case QChart::ChartThemeDefault:
         // TODO: define the default theme based on the OS
-        // For now we just fallthrough to "vanilla"
+        m_themeColors.append(QColor(QRgb(0xff000000)));
+        m_themeColors.append(QColor(QRgb(0xff707070)));
+        setBackground(QColor(QRgb(0xffffffff)), QColor(QRgb(0xffafafaf)), VerticalGradientOrientation);
+        break;
     case QChart::ChartThemeVanilla:
         m_themeColors.append(QColor(217, 197, 116));
         m_themeColors.append(QColor(214, 168, 150));
@@ -254,8 +257,7 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         m_themeColors.append(QColor(210, 210, 52));
         m_themeColors.append(QColor(136, 114, 58));
 
-        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xff9d844d)));
-        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
+        setBackground(QColor(QRgb(0xff9d844d)), QColor(QRgb(0xffafafaf)), VerticalGradientOrientation);
         break;
     case QChart::ChartThemeIcy:
         m_themeColors.append(QColor(0, 3, 165));
@@ -265,8 +267,7 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         m_themeColors.append(QColor(19, 71, 90));
         m_themeColors.append(QColor(110, 70, 228));
 
-        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xffe4ffff)));
-        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffe4ffff)));
+        setBackground(QColor(QRgb(0xffe4ffff)), QColor(QRgb(0xffe4ffff)), VerticalGradientOrientation);
         break;
     case QChart::ChartThemeGrayscale:
         m_themeColors.append(QColor(0, 0, 0));
@@ -275,8 +276,7 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         m_themeColors.append(QColor(140, 140, 140));
         m_themeColors.append(QColor(180, 180, 180));
 
-        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xffffffff)));
-        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
+        setBackground(QColor(QRgb(0xffffffff)), QColor(QRgb(0xffafafaf)), VerticalGradientOrientation);
         break;
     case QChart::ChartThemeUnnamed1:
         m_themeColors.append(QColor(QRgb(0xff3fa9f5)));
@@ -285,8 +285,7 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         m_themeColors.append(QColor(QRgb(0xffFF1D25)));
         m_themeColors.append(QColor(QRgb(0xffFF7BAC)));
 
-        m_backgroundGradient.setColorAt(0.0, QColor(QRgb(0xfff3dc9e)));
-        m_backgroundGradient.setColorAt(1.0, QColor(QRgb(0xffafafaf)));
+        setBackground(QColor(QRgb(0xfff3dc9e)), QColor(QRgb(0xffafafaf)), VerticalGradientOrientation);
         break;
     default:
         Q_ASSERT(false);

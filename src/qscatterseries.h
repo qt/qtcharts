@@ -22,9 +22,11 @@ public: // from QChartSeries
 
 public Q_SLOTS:
     void chartSizeChanged(QRectF rect);
+    // TODO: also affects opacity of the marker...? To be documented
     void setMarkerColor(QColor color);
     QColor markerColor();
-    //void chartScaleChanged(qreal xscale, qreal yscale);
+    // TODO: marker shapes: "x", star, rectangle, tilted rect, triangle, circle, dot
+    //void setMarkerShape(QChartSeries::MarkerShape/QScatterSeries::MarkerShape shape);
 
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)
