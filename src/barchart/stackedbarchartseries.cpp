@@ -1,4 +1,5 @@
 #include <limits.h>
+#include <QDebug>
 #include "stackedbarchartseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -60,12 +61,13 @@ int StackedBarChartSeries::maxColumnSum()
 
     int max = INT_MIN;
 
-    for (int col=0; col <mModel->rowCount(); col++) {
+    for (int col=0; col <mModel->columnCount(); col++) {
         int sum = columnSum(col);
         if (sum > max) {
             max = sum;
         }
     }
+    qDebug() << "maxColumnSum" << max;
     return max;
 }
 
@@ -98,6 +100,7 @@ int StackedBarChartSeries::columnSum(int column)
     for (int row = 0; row < count; row++) {
         sum += mModel->data(mModel->index(row,column)).toInt();
     }
+    qDebug() << "sum for column" << column << "=" << sum;
     return sum;
 }
 

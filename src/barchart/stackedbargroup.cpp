@@ -9,7 +9,7 @@ StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *p
   ,mSeries(series)
   ,mLayoutSet(false)
   ,mLayoutDirty(true)
-  ,mBarDefaultWidth(10) // TODO: remove hard coding, when we have layout code ready
+  ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
 {
     dataChanged();
 }
@@ -110,11 +110,10 @@ void StackedBarGroup::layoutChanged()
     int posStepX = (mWidth / (count+1));
 
     int itemIndex(0);
-    int xPos = (mWidth / (count+1)) - mSeries.countColumns() * mBarDefaultWidth /2;
+    int xPos = (mWidth / (count+1)) - mSeries.countRows() * mBarDefaultWidth /2;
     for (int column = 0; column < mSeries.countColumns(); column++) {
         int yPos = mHeight;
         for (int row=0; row < mSeries.countRows(); row++) {
-            qDebug() << itemIndex;
             int barHeight = mSeries.valueAt(row, column) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
@@ -122,8 +121,9 @@ void StackedBarGroup::layoutChanged()
             bar->resize(mBarDefaultWidth, barHeight);
             bar->setColor(mColors.at(row));
             bar->setPos(xPos, yPos);
+            qDebug() << itemIndex << "pos" << xPos << yPos;
             itemIndex++;
-            yPos += barHeight;
+            yPos -= barHeight;
         }
         xPos += posStepX;
     }
