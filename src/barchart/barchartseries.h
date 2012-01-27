@@ -2,7 +2,6 @@
 #define BARCHARTSERIES_H
 
 #include <QList>
-//#include <QRectF>
 #include <QAbstractItemModel>
 #include "qchartseries.h"
 #include "qchartglobal.h"
@@ -34,9 +33,6 @@ public:
     int valueAt(int row, int column);
 
 public Q_SLOTS:
-
-    // TODO: wrong place for this... series don't know anything about layout
-//    void chartSizeChanged(QRectF rect);
 
 private:
 

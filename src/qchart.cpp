@@ -7,6 +7,8 @@
 #include "qchartaxis.h"
 #include "barchartseries.h"
 #include "bargroup.h"
+#include "stackedbarchartseries.h"
+#include "stackedbargroup.h"
 
 #include "xylinechartitem_p.h"
 #include "plotdomain_p.h"
@@ -96,6 +98,23 @@ void QChart::addSeries(QChartSeries* series)
         childItems().append(barGroup);
         break;
         }
+    case QChartSeries::SeriesTypeStackedBar: {
+
+        qDebug() << "barSeries added";
+        StackedBarChartSeries* stackedBarSeries = static_cast<StackedBarChartSeries*>(series);
+        StackedBarGroup* stackedBarGroup = new StackedBarGroup(*stackedBarSeries,this);
+
+        // Add some fugly colors for 5 fist series...
+        stackedBarGroup->addColor(QColor(255,0,0,128));
+        stackedBarGroup->addColor(QColor(255,255,0,128));
+        stackedBarGroup->addColor(QColor(0,255,0,128));
+        stackedBarGroup->addColor(QColor(0,0,255,128));
+        stackedBarGroup->addColor(QColor(255,128,0,128));
+
+        m_chartItems<<stackedBarGroup;
+        childItems().append(stackedBarGroup);
+        break;
+        }
     case QChartSeries::SeriesTypeScatter: {
         QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
         scatterSeries->d->setParentItem(this);
@@ -139,6 +158,10 @@ QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
     }
     case QChartSeries::SeriesTypeBar: {
         series = new BarChartSeries(this);
+        break;
+    }
+    case QChartSeries::SeriesTypeStackedBar: {
+        series = new StackedBarChartSeries(this);
         break;
     }
     case QChartSeries::SeriesTypeScatter: {

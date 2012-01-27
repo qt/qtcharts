@@ -15,6 +15,8 @@ SOURCES += \
     barchart/barchartseries.cpp \
     barchart/bargroup.cpp \
     barchart/bar.cpp \
+    barchart/stackedbarchartseries.cpp \
+    barchart/stackedbargroup.cpp \
     xylinechart/qxychartseries.cpp \
     xylinechart/xylinechartitem.cpp \
     plotdomain.cpp \
@@ -26,9 +28,7 @@ SOURCES += \
     pieslice.cpp \
     qchartview.cpp \
     qchartseries.cpp \
-    qchartaxis.cpp \
-    barchart/stackedbarchartseries.cpp \
-    barchart/stackedbargroup.cpp
+    qchartaxis.cpp
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
@@ -48,12 +48,12 @@ PUBLIC_HEADERS += \
     xylinechart/qxychartseries.h \
     barchart/barchartseries.h \
     barchart/bargroup.h \
+    barchart/stackedbarchartseries.h \
+    barchart/stackedbargroup.h \
     qchartview.h \
     qchartaxis.h 
    
-HEADERS += $$PUBLIC_HEADERS \
-    barchart/stackedbarchartseries.h \
-    barchart/stackedbargroup.h
+HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 
 INCLUDEPATH += xylinechart \
