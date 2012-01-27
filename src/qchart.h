@@ -66,6 +66,7 @@ public:
     void zoomInToRect(const QRect& rectangle);
     void zoomIn();
     void zoomOut();
+    void zoomReset();
 
     void setAxisX(const QChartAxis& axis);
     void setAxisY(const QChartAxis& axis);

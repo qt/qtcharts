@@ -351,7 +351,7 @@ void QChart::zoomIn()
         foreach (ChartItem* item ,m_chartItems)
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();
-    }else{
+    } else {
         QRect rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
         rect.setWidth(rect.width()/2);
         rect.setHeight(rect.height()/2);
@@ -364,6 +364,16 @@ void QChart::zoomOut()
 {
     if (m_plotDataIndex > 0) {
         m_plotDataIndex--;
+        foreach (ChartItem* item ,m_chartItems)
+            item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
+        update();
+    }
+}
+
+void QChart::zoomReset()
+{
+    if (m_plotDataIndex > 0) {
+        m_plotDataIndex = 0;
         foreach (ChartItem* item ,m_chartItems)
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();

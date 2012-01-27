@@ -8,7 +8,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChartWidget::QChartWidget(QWidget *parent) :
     QGraphicsView(parent),
-    m_rubberBand(QRubberBand::Rectangle, this)
+    m_rubberBand(QRubberBand::Rectangle, this),
+    m_originX(0)
 {
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_scene = new QGraphicsScene();
@@ -44,10 +45,10 @@ void QChartWidget::mousePressEvent(QMouseEvent *event)
     if(m_rubberBand.isEnabled() && event->button() == Qt::LeftButton) {
         int margin = m_chart->margin();
         QRect rect(margin, margin, width() - 2 * margin, height() - 2 * margin);
-        m_origin = event->pos();
 
-        if (rect.contains(m_origin)) {
-            m_rubberBand.setGeometry(QRect(m_origin, QSize()));
+        if (rect.contains(event->pos())) {
+            m_originX = event->pos().x();
+            m_rubberBand.setGeometry(QRect(m_originX, 0, 0, height()));
             m_rubberBand.show();
             event->accept();
         }
@@ -57,7 +58,8 @@ void QChartWidget::mousePressEvent(QMouseEvent *event)
 void QChartWidget::mouseMoveEvent(QMouseEvent *event)
 {
     if(m_rubberBand.isVisible())
-        m_rubberBand.setGeometry(QRect(m_origin, event->pos()).normalized());
+        m_rubberBand.setGeometry(QRect(m_originX, 0,
+            event->pos().x() - m_originX, height()).normalized());
 }
 
 void QChartWidget::mouseReleaseEvent(QMouseEvent *event)
@@ -69,9 +71,8 @@ void QChartWidget::mouseReleaseEvent(QMouseEvent *event)
         event->accept();
     }
 
-    if(event->button()==Qt::RightButton) {
-        m_chart->zoomOut();
-    }
+    if(event->button()==Qt::RightButton)
+        m_chart->zoomReset();
 }
 
 void QChartWidget::addSeries(QChartSeries* series)

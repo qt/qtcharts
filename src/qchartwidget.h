@@ -48,7 +48,7 @@ private:
     QGraphicsScene *m_scene;
     QChart* m_chart;
     QRubberBand m_rubberBand;
-    QPoint m_origin;
+    int m_originX;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
