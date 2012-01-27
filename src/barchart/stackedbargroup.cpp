@@ -107,25 +107,26 @@ void StackedBarGroup::layoutChanged()
     qreal scale = (h / maxSum);
 
     int count = mSeries.countColumns();
-    int posStepX = (mWidth / (count+1));
-
     int itemIndex(0);
-    int xPos = (mWidth / (count+1)) - mSeries.countRows() * mBarDefaultWidth /2;
+    qreal tW = mWidth;
+    qreal tC = count+1;
+    qreal xStep = (tW/tC);
+    qreal xPos = ((tW/tC) + mBarDefaultWidth / 2);
+
     for (int column = 0; column < mSeries.countColumns(); column++) {
-        int yPos = mHeight;
+        qreal yPos = h;
         for (int row=0; row < mSeries.countRows(); row++) {
-            int barHeight = mSeries.valueAt(row, column) * scale;
+            qreal barHeight = mSeries.valueAt(row, column) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
             bar->setColor(mColors.at(row));
             bar->setPos(xPos, yPos);
-            qDebug() << itemIndex << "pos" << xPos << yPos;
             itemIndex++;
             yPos -= barHeight;
         }
-        xPos += posStepX;
+        xPos += xStep;
     }
     mLayoutDirty = true;
 }
