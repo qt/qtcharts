@@ -27,7 +27,7 @@ public:
     // Methods to find out minimum and maximum values of data
     int min();
     int max();
-    int countSeries();
+    int countRows();
     int countColumns();     // Count items in one series.
     int countTotalItems();
     int valueAt(int row, int column);

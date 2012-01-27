@@ -101,7 +101,7 @@ void StackedBarGroup::layoutChanged()
     }
 
     // TODO: better way to auto-layout
-    // Use reals for accurancy (implicit casting here, we get a warning)
+    // Use reals for accurancy (we might get some compiler warnings... :)
     qreal maxSum = mSeries.maxColumnSum();
     qreal h = mHeight;
     qreal scale = (h / maxSum);

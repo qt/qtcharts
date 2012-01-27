@@ -54,7 +54,7 @@ int BarChartSeries::max()
 }
 
 
-int BarChartSeries::countSeries()
+int BarChartSeries::countRows()
 {
     return mModel->rowCount();
 }

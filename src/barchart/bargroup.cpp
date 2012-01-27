@@ -95,32 +95,64 @@ void BarGroup::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
-    if (mSeries.countSeries() <= 0) {
+    if (mSeries.countRows() <= 0) {
         // Nothing to do.
         return;
     }
 
     // TODO: better way to auto-layout
-    int count = mSeries.countColumns();
-    int posStep = (mWidth / (count+1));
-    int startPos = (mWidth / (count+1)) - mSeries.countSeries() * mBarDefaultWidth /2;
-    qDebug() << "startpos" << startPos;
+    // Use reals for accurancy (we might get some compiler warnings... :)
+    int columnCount = mSeries.countColumns();
+    int rowCount = mSeries.countRows();
 
+    qreal tW = mWidth;
+    qreal tH = mHeight;
+    qreal tM = mMax;
+    qreal scale = (tH/tM);
+
+    qreal tC = columnCount+1;
+    qreal xStepPerSeries = (tW/tC);
+
+    //qint startPos = (mWidth / (count+1)) - mSeries.countSeries() * mBarDefaultWidth /2;
+//    qDebug() << "XPOS:" << xPos;
+
+    qDebug() << "XSTEP:" << xStepPerSeries;
+
+    // TODO: Correct the calculations...
     // Scaling.
     int itemIndex(0);
-    for (int series = 0; series < mSeries.countSeries(); series++) {
+    for (int column=0; column < columnCount; column++) {
+        qreal xPos = xStepPerSeries * column + ((tW + mBarDefaultWidth*rowCount)/(columnCount*2));
+        qDebug() << "XPOS:" << xPos;
+        for (int row = 0; row < rowCount; row++) {
+            qreal barHeight = mSeries.valueAt(row, column) * scale;
+            Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
+
+            // TODO: width settable per bar?
+            bar->resize(mBarDefaultWidth, barHeight);
+            bar->setColor(mColors.at(row));
+            bar->setPos(xPos, mHeight); // item*posStep+startPos + series * mBarDefaultWidth, mHeight);
+            itemIndex++;
+            xPos += mBarDefaultWidth;
+        }
+    }
+
+    /*
+    for (int series = 0; series < mSeries.countRows(); series++) {
         for (int item=0; item < mSeries.countColumns(); item++) {
-            qDebug() << itemIndex;
-            int barHeight = mSeries.valueAt(series, item) * mHeight / mMax;
+            qreal barHeight = mSeries.valueAt(series, item) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
             bar->setColor(mColors.at(series));
-            bar->setPos(item*posStep+startPos + series * mBarDefaultWidth, mHeight);
+            bar->setPos(xPos, mHeight); // item*posStep+startPos + series * mBarDefaultWidth, mHeight);
             itemIndex++;
+            xPos += mBarDefaultWidth;
         }
+        xPos = xStepPerSeries * series;
     }
+    */
     mLayoutDirty = true;
 }
 
