@@ -34,7 +34,6 @@ public:
     virtual void setPlotDomain(const PlotDomain& data);
 
     // Layout "api"
-    void resize( int w, int h );        // Size for whole series. Single bars are drawn inside this area
     void setPos(qreal x, qreal y);
     void setBarWidth( int w );          // Default width for each bar
 

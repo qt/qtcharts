@@ -23,25 +23,17 @@ BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
 
 void BarGroup::setSize(const QSize& size)
 {
-    // TODO: refactor this
     qDebug() << "BarGroup::setSize";
-    resize(size.width(),size.height());
+    mWidth = size.width();
+    mHeight = size.height();
+    layoutChanged();
+    mLayoutSet = true;
 }
 
 void BarGroup::setPlotDomain(const PlotDomain& data)
 {
     qDebug() << "BarGroup::setPlotDomain";
     // TODO:
-}
-
-
-void BarGroup::resize( int w, int h )
-{
-    qDebug() << "QBarChart::resize";
-    mWidth = w;
-    mHeight = h;
-    layoutChanged();
-    mLayoutSet = true;
 }
 
 void BarGroup::setBarWidth( int w )
