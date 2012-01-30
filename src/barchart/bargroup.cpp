@@ -28,6 +28,7 @@ void BarGroup::setPlotDomain(const PlotDomain& data)
 {
     qDebug() << "BarGroup::setPlotDomain";
     // TODO:
+    mPlotDomain = data;
 }
 
 void BarGroup::setBarWidth( int w )
@@ -100,7 +101,7 @@ void BarGroup::layoutChanged()
         return;
     }
 
-    // TODO: better way to auto-layout
+    // TODO: better way to auto-layout?
     // Use reals for accurancy (we might get some compiler warnings... :)
     int columnCount = mSeries.countColumns();
     int rowCount = mSeries.countRows();
@@ -113,17 +114,12 @@ void BarGroup::layoutChanged()
     qreal tC = columnCount+1;
     qreal xStepPerSeries = (tW/tC);
 
-    //qint startPos = (mWidth / (count+1)) - mSeries.countSeries() * mBarDefaultWidth /2;
-//    qDebug() << "XPOS:" << xPos;
-
     qDebug() << "XSTEP:" << xStepPerSeries;
 
-    // TODO: Correct the calculations...
     // Scaling.
     int itemIndex(0);
     for (int column=0; column < columnCount; column++) {
         qreal xPos = xStepPerSeries * column + ((tW + mBarDefaultWidth*rowCount)/(columnCount*2));
-        qDebug() << "XPOS:" << xPos;
         for (int row = 0; row < rowCount; row++) {
             qreal barHeight = mSeries.valueAt(row, column) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
@@ -137,22 +133,6 @@ void BarGroup::layoutChanged()
         }
     }
 
-    /*
-    for (int series = 0; series < mSeries.countRows(); series++) {
-        for (int item=0; item < mSeries.countColumns(); item++) {
-            qreal barHeight = mSeries.valueAt(series, item) * scale;
-            Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
-
-            // TODO: width settable per bar?
-            bar->resize(mBarDefaultWidth, barHeight);
-            bar->setColor(mColors.at(series));
-            bar->setPos(xPos, mHeight); // item*posStep+startPos + series * mBarDefaultWidth, mHeight);
-            itemIndex++;
-            xPos += mBarDefaultWidth;
-        }
-        xPos = xStepPerSeries * series;
-    }
-    */
     mLayoutDirty = true;
 }
 

@@ -17,6 +17,8 @@ SOURCES += \
     barchart/bar.cpp \
     barchart/stackedbarchartseries.cpp \
     barchart/stackedbargroup.cpp \
+    barchart/percentbarchartseries.cpp \
+    barchart/percentbargroup.cpp \
     xylinechart/qxychartseries.cpp \
     xylinechart/xylinechartitem.cpp \
     plotdomain.cpp \
@@ -50,6 +52,8 @@ PUBLIC_HEADERS += \
     barchart/bargroup.h \
     barchart/stackedbarchartseries.h \
     barchart/stackedbargroup.h \
+    barchart/percentbarchartseries.h \
+    barchart/percentbargroup.h \
     qchartview.h \
     qchartaxis.h 
    

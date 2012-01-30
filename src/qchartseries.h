@@ -16,6 +16,7 @@ public:
 //        SeriesTypeArea,
         SeriesTypeBar,
         SeriesTypeStackedBar,
+        SeriesTypePercentBar,
         SeriesTypePie,
         SeriesTypeScatter
 //        SeriesTypeSpline

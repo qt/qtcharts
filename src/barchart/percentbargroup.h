@@ -1,16 +1,16 @@
-#ifndef QBARGROUP_H
-#define QBARGROUP_H
+#ifndef PERCENTBARGROUP_H
+#define PERCENTBARGROUP_H
 
 #include "chartitem_p.h"
 #include "bar.h"
-#include "barchartseries.h"
+#include "percentbarchartseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class BarGroup : public ChartItem
+class PercentBarGroup : public ChartItem
 {
 public:
-    explicit BarGroup(BarChartSeries& series, QGraphicsItem *parent = 0);
+    PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *parent = 0);
 
     // From ChartItem
     virtual void setSize(const QSize& size);
@@ -35,7 +35,7 @@ private:
 private:
 
     // Data
-    BarChartSeries& mSeries;
+    PercentBarChartSeries& mSeries;
     int mMin;                                   // Min and max values of data. (updated when data is changed, used when drawing)
     int mMax;
 
@@ -48,9 +48,8 @@ private:
 
     QList<QColor> mColors;  // List of colors for series for now
 
-    PlotDomain mPlotDomain;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QBARGROUP_H
+#endif // PERCENTBARGROUP_H
