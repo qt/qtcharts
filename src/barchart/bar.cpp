@@ -4,12 +4,17 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Bar::Bar(ChartItem *parent)
-    : ChartItem(parent)
+Bar::Bar(QGraphicsItem *parent)
+    : QGraphicsItem(parent)
 {
 }
 
-void Bar::setSize(const QSize& size)
+void Bar::setPos(const QPointF & pos)
+{
+    QGraphicsItem::setPos(pos);
+}
+
+void Bar::resize(const QSize& size)
 {
     mWidth = size.width();
     mHeight = size.height();
@@ -18,6 +23,11 @@ void Bar::setSize(const QSize& size)
 void Bar::setPlotDomain(const PlotDomain& data)
 {
     mPlotDomain = data;
+}
+
+void Bar::setTheme(ChartTheme *theme)
+{
+    // TODO
 }
 
 void Bar::resize( int w, int h )

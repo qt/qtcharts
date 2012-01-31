@@ -7,19 +7,25 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *parent) :
-  ChartItem(parent)
-  ,mSeries(series)
-  ,mLayoutSet(false)
-  ,mLayoutDirty(true)
-  ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
+    QGraphicsItem(parent)
+    ,mSeries(series)
+    ,mLayoutSet(false)
+    ,mLayoutDirty(true)
+    ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
 {
     dataChanged();
 }
 
 
-void StackedBarGroup::setSize(const QSize& size)
+void StackedBarGroup::setPos(const QPointF & pos)
 {
-    qDebug() << "StackedBarGroup::setSize";
+    qDebug() << "StackedBarGroup::setPos";
+    // TODO:
+}
+
+void StackedBarGroup::resize(const QSize& size)
+{
+    qDebug() << "StackedBarGroup::resize";
     mWidth = size.width();
     mHeight = size.height();
     layoutChanged();
@@ -29,6 +35,12 @@ void StackedBarGroup::setSize(const QSize& size)
 void StackedBarGroup::setPlotDomain(const PlotDomain& data)
 {
     qDebug() << "StackedBarGroup::setPlotDomain";
+    // TODO:
+}
+
+void StackedBarGroup::setTheme(ChartTheme *theme)
+{
+    qDebug() << "StackedBarGroup::setTheme";
     // TODO:
 }
 

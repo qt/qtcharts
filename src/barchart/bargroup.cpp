@@ -5,7 +5,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
-  ChartItem(parent)
+  QGraphicsItem(parent)
   ,mSeries(series)
   ,mLayoutSet(false)
   ,mLayoutDirty(true)
@@ -14,8 +14,12 @@ BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
     dataChanged();
 }
 
+void BarGroup::setPos(const QPointF & pos)
+{
+    QGraphicsItem::setPos(pos);
+}
 
-void BarGroup::setSize(const QSize& size)
+void BarGroup::resize(const QSize& size)
 {
     qDebug() << "BarGroup::setSize";
     mWidth = size.width();
@@ -29,6 +33,11 @@ void BarGroup::setPlotDomain(const PlotDomain& data)
     qDebug() << "BarGroup::setPlotDomain";
     // TODO:
     mPlotDomain = data;
+}
+
+void BarGroup::setTheme(ChartTheme *theme)
+{
+    // TODO
 }
 
 void BarGroup::setBarWidth( int w )

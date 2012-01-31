@@ -1,2 +1,5 @@
 TEMPLATE = subdirs
 SUBDIRS += chartwidgettest
+
+
+

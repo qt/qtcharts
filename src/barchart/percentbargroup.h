@@ -1,21 +1,25 @@
 #ifndef PERCENTBARGROUP_H
 #define PERCENTBARGROUP_H
 
-#include "chartitem_p.h"
+#include "chartitemcontrol.h"
 #include "bar.h"
 #include "percentbarchartseries.h"
+#include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class PercentBarGroup : public ChartItem
+class PercentBarGroup : public QGraphicsItem, public ChartItemControl
 {
 public:
     PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *parent = 0);
 
-    // From ChartItem
-    virtual void setSize(const QSize& size);
-    virtual void setPlotDomain(const PlotDomain& data);
+public: // From ChartItemControl
+    void setPos(const QPointF & pos);
+    void resize(const QSize &size);
+    void setTheme(ChartTheme *theme);
+    void setPlotDomain(const PlotDomain& data);
 
+public:
     // Layout "api"
     void setPos(qreal x, qreal y);
     void setBarWidth( int w );          // Default width for each bar

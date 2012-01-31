@@ -7,19 +7,33 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-XYLineChartItem::XYLineChartItem(QXYChartSeries* series,QGraphicsItem *parent):ChartItem(parent),
-m_series(series),
-m_pathItem(new QGraphicsPathItem(this))
+XYLineChartItem::XYLineChartItem(QXYChartSeries* series,QGraphicsItem *parent) :
+    QGraphicsItem(parent),
+    m_series(series),
+    m_pathItem(new QGraphicsPathItem(this))
 {
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
 }
 
-void XYLineChartItem::setSize(const QSize& size)
+void XYLineChartItem::setPos(const QPointF & pos)
 {
-    m_rect=QRect(0,0,size.width(),size.height());
+    QGraphicsItem::setPos(pos);
+}
+
+void XYLineChartItem::resize(const QSize &size)
+{
+    m_rect = QRect(0, 0, size.width(), size.height());
     prepareGeometryChange();
     updateGeometry();
+}
 
+void XYLineChartItem::setTheme(ChartTheme *theme)
+{
+    if (theme) {
+        m_theme = theme->themeForSeries();
+        prepareGeometryChange();
+        updateGeometry();
+    }
 }
 
 void XYLineChartItem::setPlotDomain(const PlotDomain& data)
@@ -59,7 +73,7 @@ void XYLineChartItem::updateGeometry()
    }
 
    m_pathItem->setPath(path);
-   m_pathItem->setPen(m_series->pen());
+   m_pathItem->setPen(m_theme.linePen);
    m_pathItem->setBrush(Qt::NoBrush);
 }
 

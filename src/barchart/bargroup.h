@@ -1,20 +1,23 @@
 #ifndef QBARGROUP_H
 #define QBARGROUP_H
 
-#include "chartitem_p.h"
+#include "chartitemcontrol.h"
 #include "bar.h"
 #include "barchartseries.h"
+#include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class BarGroup : public ChartItem
+class BarGroup : public QGraphicsItem, public ChartItemControl
 {
 public:
     explicit BarGroup(BarChartSeries& series, QGraphicsItem *parent = 0);
 
-    // From ChartItem
-    virtual void setSize(const QSize& size);
-    virtual void setPlotDomain(const PlotDomain& data);
+public: // from ChartItemControl
+    void setPos (const QPointF & pos);
+    void resize(const QSize &size);
+    void setTheme(ChartTheme *theme);
+    void setPlotDomain(const PlotDomain& data);
 
     // Layout "api"
     void setPos(qreal x, qreal y);

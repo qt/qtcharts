@@ -6,20 +6,15 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-AxisItem::AxisItem(AxisType type,QGraphicsItem* parent): ChartItem(parent),
-m_ticks(4),
-m_type(type)
+AxisItem::AxisItem(AxisType type,QGraphicsItem* parent) :
+    QGraphicsItem(parent),
+    m_ticks(4),
+    m_type(type)
 {
 }
 
 AxisItem::~AxisItem()
 {
-}
-
-void  AxisItem::setSize(const QSize& size)
-{
-    m_rect = QRectF(QPoint(0,0),size);
-    createItems();
 }
 
 void AxisItem::setLength(int length)
@@ -47,6 +42,25 @@ void AxisItem::setPlotDomain(const PlotDomain& plotDomain)
     m_plotDomain = plotDomain;
     createItems();
 }
+
+void AxisItem::setPos(const QPointF & pos)
+{
+    QGraphicsItem::setPos(pos);
+}
+
+void AxisItem::resize(const QSize &size)
+{
+    m_rect = QRectF(QPoint(0,0),size);
+    createItems();
+}
+
+void AxisItem::setTheme(ChartTheme *theme)
+{
+    if (theme) {
+        // TODO: add axis related properties to the theme class and use them here
+    }
+}
+
 /*
 void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget)
 {

@@ -21,7 +21,6 @@ public: // from QChartSeries
     bool setData(QList<qreal> x, QList<qreal> y);
 
 public Q_SLOTS:
-    void chartSizeChanged(QRectF rect);
     // TODO: also affects opacity of the marker...? To be documented
     void setMarkerColor(QColor color);
     QColor markerColor();

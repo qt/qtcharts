@@ -2,6 +2,7 @@
 #define PIESLICE_H
 
 #include "qchartglobal.h"
+#include "charttheme_p.h"
 #include <QGraphicsItem>
 #include <QRectF>
 #include <QColor>
@@ -25,6 +26,7 @@ public:
     qreal m_startAngle;
     qreal m_span;
     QRectF m_rect;
+    SeriesTheme m_theme;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

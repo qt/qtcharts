@@ -8,6 +8,7 @@
 
 class QGraphicsObject;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class QPieSeriesPrivate;
 class PieSlice;
 
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QChartSeries
@@ -37,23 +38,14 @@ public:
     QColor sliceColor(int index);
     int sliceCount();
     void setSizeFactor(qreal sizeFactor);
-    qreal sizeFactor() { return m_sizeFactor; }
+    qreal sizeFactor();
     void setPosition(PiePosition position);
 
-public Q_SLOTS:
-    void chartSizeChanged(QRectF rect);
-
 private:
-    void resizeSlices(QRectF rect);
-    //Q_DECLARE_PRIVATE(QPieSeries)
+    Q_DECLARE_PRIVATE(QPieSeries)
     Q_DISABLE_COPY(QPieSeries)
     friend class QChart;
-    // TODO: move the followin to internal impl
-    QList<qreal> m_data;
-    QList<PieSlice*> m_slices;
-    QRectF m_chartSize;
-    qreal m_sizeFactor;
-    PiePosition m_position;
+    QPieSeriesPrivate *const d;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

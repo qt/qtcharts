@@ -5,19 +5,24 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 PercentBarGroup::PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *parent) :
-  ChartItem(parent)
-  ,mSeries(series)
-  ,mLayoutSet(false)
-  ,mLayoutDirty(true)
-  ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
+    QGraphicsItem(parent)
+    ,mSeries(series)
+    ,mLayoutSet(false)
+    ,mLayoutDirty(true)
+    ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
 {
     dataChanged();
 }
 
-
-void PercentBarGroup::setSize(const QSize& size)
+void PercentBarGroup::setPos(const QPointF & pos)
 {
-    qDebug() << "PercentBarGroup::setSize";
+    qDebug() << "PercentBarGroup::setPos";
+    // TODO:
+}
+
+void PercentBarGroup::resize(const QSize& size)
+{
+    qDebug() << "PercentBarGroup::resize";
     mWidth = size.width();
     mHeight = size.height();
     layoutChanged();
@@ -27,6 +32,12 @@ void PercentBarGroup::setSize(const QSize& size)
 void PercentBarGroup::setPlotDomain(const PlotDomain& data)
 {
     qDebug() << "PercentBarGroup::setPlotDomain";
+    // TODO:
+}
+
+void PercentBarGroup::setTheme(ChartTheme *theme)
+{
+    qDebug() << "PercentBarGroup::setTheme";
     // TODO:
 }
 

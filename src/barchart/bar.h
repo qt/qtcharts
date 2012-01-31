@@ -1,20 +1,23 @@
 #ifndef BAR_H
 #define BAR_H
 
-#include "chartitem_p.h"
+#include "chartitemcontrol.h"
 #include "qchartglobal.h"
+#include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 // Single bar item of chart
-class Bar : public ChartItem
+class Bar : public QGraphicsItem, public ChartItemControl
 {
 public:
-    Bar(ChartItem *parent=0);
+    Bar(QGraphicsItem *parent=0);
 
-    // From ChartItem
-    virtual void setSize(const QSize& size);
-    virtual void setPlotDomain(const PlotDomain& data);
+public: // from ChartItemControl
+    void setPos (const QPointF & pos);
+    void resize(const QSize &size);
+    void setTheme(ChartTheme *theme);
+    void setPlotDomain(const PlotDomain& data);
 
     // Layout Stuff
     void resize( int w, int h );       // Size of bar. in screen coordinates.

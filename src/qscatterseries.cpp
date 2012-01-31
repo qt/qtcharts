@@ -39,14 +39,19 @@ QRectF QScatterSeriesPrivate::boundingRect() const
 
 void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    QPen pen = painter->pen();
-    QBrush brush = pen.brush();
-    // TODO: The opacity should be user definable...
+    // TODO: The opacity should be user definable?
     //brush.setColor(QColor(255, 82, 0, 100));
-    brush.setColor(m_markerColor);
-    pen.setBrush(brush);
-    pen.setWidth(4);
-    painter->setPen(pen);
+    if (m_markerColor.isValid()) {
+        QPen pen = painter->pen();
+        QBrush brush = pen.brush();
+        brush.setColor(m_markerColor);
+        pen.setBrush(brush);
+        pen.setWidth(4);
+        painter->setPen(pen);
+    }
+    else
+        painter->setPen(m_theme.markerPen);
+//        brush.setColor(m_theme..lineColor);
 
     // TODO: m_scenex and m_sceny are left empty during construction -> we would need a resize
     // event right after construction or maybe given a size during initialization
@@ -55,6 +60,26 @@ void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsI
             //painter->drawArc(m_scenex.at(i), m_sceney.at(i), 2, 2, 0, 5760);
             painter->drawPoint(m_scenex.at(i), m_sceney.at(i));
     }
+}
+
+void QScatterSeriesPrivate::setPos(const QPointF & pos)
+{
+    // TODO
+}
+
+void QScatterSeriesPrivate::resize(const QSize &size)
+{
+    resize(QRect(0, 0, size.width(), size.height()));
+}
+
+void QScatterSeriesPrivate::setTheme(ChartTheme *theme)
+{
+    m_theme = theme->themeForSeries();
+}
+
+void QScatterSeriesPrivate::setPlotDomain(const PlotDomain& plotDomain)
+{
+    // TODO
 }
 
 QScatterSeries::QScatterSeries(QObject *parent) :
@@ -72,14 +97,6 @@ bool QScatterSeries::setData(QList<qreal> x, QList<qreal> y)
     Q_ASSERT(parentItem);
     d->resize(parentItem->boundingRect());
     return true;
-}
-
-void QScatterSeries::chartSizeChanged(QRectF rect)
-{
-    // Recalculate scatter data point locations on the scene
-//    d->transform().reset();
-//    d->transform().translate();
-    d->resize(rect);
 }
 
 void QScatterSeries::setMarkerColor(QColor color)

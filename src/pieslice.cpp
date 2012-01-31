@@ -46,14 +46,10 @@ QPainterPath PieSlice::shape() const
 
 void PieSlice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    // Setup painter
-    painter->setBrush(m_color);
     painter->setRenderHint(QPainter::Antialiasing);
-    QPen pen;
-    //pen.setColor(m_color.darker());
-    pen.setColor(Qt::gray);
-    pen.setWidth(1);
-    painter->setPen(pen);
+    painter->setPen(m_theme.linePen);
+    // TODO:
+    painter->setBrush(m_theme.linePen.color());
 
     // From Qt docs:
     // The startAngle and spanAngle must be specified in 1/16th of a degree, i.e. a full circle equals 5760 (16 * 360).

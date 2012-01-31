@@ -12,9 +12,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class AxisItem;
 class QChartSeries;
 class PlotDomain;
-class ChartItem;
 class BarGroup;
 class QChartAxis;
+class ChartTheme;
+class ChartItemControl;
 
 // TODO: We don't need to have QChart tied to QGraphicsItem:
 //class QTCOMMERCIALCHART_EXPORT QChart
@@ -33,8 +34,9 @@ public:
         VerticalGradientOrientation
     };
     enum ChartThemeId {
+        ChartThemeInvalid = -1,
         /*! The default theme follows the GUI style of the Operating System */
-        ChartThemeDefault = 0,
+        ChartThemeDefault,
         ChartThemeVanilla,
         ChartThemeIcy,
         ChartThemeGrayscale,
@@ -75,14 +77,7 @@ public:
 private:
     void setAxis(AxisItem *item, const QChartAxis& axis);
 
-signals:
-    //TODO chage to const QSize& size
-    void sizeChanged(QRectF rect);
-    void scaleChanged(qreal xscale, qreal yscale);
-
 private:
-    QColor nextColor();
-
     Q_DISABLE_COPY(QChart)
     QGraphicsRectItem* m_backgroundItem;
     QLinearGradient m_backgroundGradient;
@@ -91,12 +86,12 @@ private:
     AxisItem* m_axisXItem;
     QList<AxisItem*> m_axisYItem;
     QRect m_rect;
-    QList<QChartSeries*> m_chartSeries;
+    QList<QChartSeries *> m_chartSeries;
+    QList<ChartItemControl *> m_chartItemControls;
     QVector<PlotDomain> m_plotDomainList;
-    QList<ChartItem*> m_chartItems;
     int m_plotDataIndex;
     int m_marginSize;
-    QList<QColor> m_themeColors;
+    ChartTheme *m_chartTheme;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

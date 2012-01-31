@@ -2,13 +2,15 @@
 #define XYLINECHARTITEM_H
 
 #include "qchartglobal.h"
-#include "chartitem_p.h"
+#include "chartitemcontrol.h"
+#include "charttheme_p.h"
+#include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYChartSeries;
 
-class XYLineChartItem : public ChartItem
+class XYLineChartItem : public QGraphicsItem, public ChartItemControl
 {
 
 public:
@@ -19,8 +21,11 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
    // virtual QPainterPath shape() const;
-    //from ChartItem
-    void setSize(const QSize& size);
+
+public: // from ChartItemControl
+    void setPos(const QPointF & pos);
+    void resize(const QSize &size);
+    void setTheme(ChartTheme *theme);
     void setPlotDomain(const PlotDomain& data);
 
 private:
@@ -32,6 +37,7 @@ private:
     QXYChartSeries* m_series;
     PlotDomain m_plotDomain;
     QGraphicsPathItem *m_pathItem;
+    SeriesTheme m_theme;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
