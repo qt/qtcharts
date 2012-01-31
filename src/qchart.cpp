@@ -100,14 +100,24 @@ void QChart::addSeries(QChartSeries* series)
 
         m_chartObjectInterfaces << barGroup;
         childItems().append(barGroup);
-/*
+
+        // TODO: setting of domain should this be somewhere else.
         m_plotDataIndex = 0 ;
         m_plotDomainList.resize(1);
 
+        qreal x = barSeries->countColumns();
+        qreal y = barSeries->max();
+
         PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
-        foreach(ChartItem* i ,m_chartItems)
+
+        domain.m_minX = qMin(domain.m_minX,x);
+        domain.m_minY = qMin(domain.m_minY,y);
+        domain.m_maxX = qMax(domain.m_maxX,x);
+        domain.m_maxY = qMax(domain.m_maxY,y);
+
+        foreach(ChartObjectInterface* i ,m_chartObjectInterfaces)
             i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
-*/
+
         break;
         }
     case QChartSeries::SeriesTypeStackedBar: {
@@ -125,14 +135,24 @@ void QChart::addSeries(QChartSeries* series)
 
         m_chartObjectInterfaces << stackedBarGroup;
         childItems().append(stackedBarGroup);
-/*
+
+        // TODO: setting of domain should this be somewhere else.
         m_plotDataIndex = 0 ;
         m_plotDomainList.resize(1);
 
+        qreal x = stackedBarSeries->countColumns();
+        qreal y = stackedBarSeries->maxColumnSum();
+
         PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
-        foreach(ChartItem* i ,m_chartItems)
+
+        domain.m_minX = qMin(domain.m_minX,x);
+        domain.m_minY = qMin(domain.m_minY,y);
+        domain.m_maxX = qMax(domain.m_maxX,x);
+        domain.m_maxY = qMax(domain.m_maxY,y);
+
+        foreach(ChartObjectInterface* i ,m_chartObjectInterfaces)
             i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
-*/
+
         break;
         }
     case QChartSeries::SeriesTypePercentBar: {
@@ -150,14 +170,23 @@ void QChart::addSeries(QChartSeries* series)
 
         m_chartObjectInterfaces << percentBarGroup;
         childItems().append(percentBarGroup);
-/*
+
+        // TODO: setting of domain should this be somewhere else.
         m_plotDataIndex = 0 ;
         m_plotDomainList.resize(1);
 
+        qreal x = percentBarSeries->countColumns();
+
         PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
-        foreach(ChartItem* i ,m_chartItems)
+
+        domain.m_minX = qMin(domain.m_minX,x);
+        domain.m_minY = 0;
+        domain.m_maxX = qMax(domain.m_maxX,x);
+        domain.m_maxY = 100;
+
+        foreach(ChartObjectInterface* i ,m_chartObjectInterfaces)
             i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
-*/
+
         break;
         }
     case QChartSeries::SeriesTypeScatter: {
