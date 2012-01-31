@@ -18,6 +18,7 @@ class PlotDomain;
 class ChartObjectInterface
 {
 public:
+// TODO: move setSize and setPlotDomain back to ChartItem. This interface should be only about handling themes.
     virtual void setSize(const QSize &size) = 0;
     virtual void setTheme(ChartTheme *theme) = 0;
     virtual void setPlotDomain(const PlotDomain& data) = 0;

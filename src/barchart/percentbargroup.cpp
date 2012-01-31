@@ -30,6 +30,12 @@ void PercentBarGroup::setPlotDomain(const PlotDomain& data)
     // TODO:
 }
 
+void PercentBarGroup::setTheme(ChartTheme *theme)
+{
+    qDebug() << "PercentBarGroup::setTheme";
+    // TODO:
+}
+
 void PercentBarGroup::setBarWidth( int w )
 {
     mBarDefaultWidth = w;

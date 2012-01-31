@@ -8,6 +8,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+// TODO: derive this from ChartObjectInterface, when setSize is back in ChartItem
 class StackedBarGroup : public ChartItem
 {
 public:

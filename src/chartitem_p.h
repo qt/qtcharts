@@ -6,7 +6,8 @@
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
+// TODO: setSize and set plotDomain back here. Derive this only from QGraphicsItem
+// class ChartItem : public QGraphicsItem
 class ChartItem : public QGraphicsItem, public ChartObjectInterface
 {
     enum ChartItemTypes{ AXIS_ITEM = UserType+1, XYLINE_ITEM};
