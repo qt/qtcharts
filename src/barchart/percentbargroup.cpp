@@ -1,60 +1,53 @@
 #include "percentbargroup.h"
-
-#include "stackedbargroup.h"
 #include "bar.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *parent) :
-    ChartItem(parent)
-    ,mSeries(series)
-    ,mLayoutSet(false)
-    ,mLayoutDirty(true)
-    ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
+PercentBarGroup::PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *parent) :
+  ChartItem(parent)
+  ,mSeries(series)
+  ,mLayoutSet(false)
+  ,mLayoutDirty(true)
+  ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
 {
     dataChanged();
 }
 
-void StackedBarGroup::setSize(const QSize& size)
+
+void PercentBarGroup::setSize(const QSize& size)
 {
-    qDebug() << "StackedBarGroup::setSize";
+//    qDebug() << "PercentBarGroup::setSize";
     mWidth = size.width();
     mHeight = size.height();
     layoutChanged();
     mLayoutSet = true;
 }
 
-void StackedBarGroup::setPlotDomain(const PlotDomain& data)
+void PercentBarGroup::setPlotDomain(const PlotDomain& data)
 {
-    qDebug() << "StackedBarGroup::setPlotDomain";
+    qDebug() << "PercentBarGroup::setPlotDomain";
     // TODO:
 }
 
-void StackedBarGroup::setTheme(ChartTheme *theme)
-{
-    qDebug() << "StackedBarGroup::setTheme";
-    // TODO:
-}
-
-void StackedBarGroup::setBarWidth( int w )
+void PercentBarGroup::setBarWidth( int w )
 {
     mBarDefaultWidth = w;
 }
 
-int StackedBarGroup::addColor( QColor color )
+int PercentBarGroup::addColor( QColor color )
 {
     int colorIndex = mColors.count();
     mColors.append(color);
     return colorIndex;
 }
 
-void StackedBarGroup::resetColors()
+void PercentBarGroup::resetColors()
 {
     mColors.clear();
 }
 
-void StackedBarGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void PercentBarGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (!mLayoutSet) {
         qDebug() << "QBarChart::paint called without layout set. Aborting.";
@@ -68,13 +61,13 @@ void StackedBarGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     }
 }
 
-QRectF StackedBarGroup::boundingRect() const
+QRectF PercentBarGroup::boundingRect() const
 {
     return QRectF(0,0,mWidth,mHeight);
 }
 
 
-void StackedBarGroup::dataChanged()
+void PercentBarGroup::dataChanged()
 {
     qDebug() << "QBarChart::dataChanged mSeries";
 
@@ -98,7 +91,7 @@ void StackedBarGroup::dataChanged()
     mLayoutDirty = true;
 }
 
-void StackedBarGroup::layoutChanged()
+void PercentBarGroup::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
@@ -109,10 +102,6 @@ void StackedBarGroup::layoutChanged()
 
     // TODO: better way to auto-layout
     // Use reals for accurancy (we might get some compiler warnings... :)
-    qreal maxSum = mSeries.maxColumnSum();
-    qreal h = mHeight;
-    qreal scale = (h / maxSum);
-
     int count = mSeries.countColumns();
     int itemIndex(0);
     qreal tW = mWidth;
@@ -121,6 +110,9 @@ void StackedBarGroup::layoutChanged()
     qreal xPos = ((tW/tC) + mBarDefaultWidth / 2);
 
     for (int column = 0; column < mSeries.countColumns(); column++) {
+        qreal colSum = mSeries.columnSum(column);
+        qreal h = mHeight;
+        qreal scale = (h / colSum);
         qreal yPos = h;
         for (int row=0; row < mSeries.countRows(); row++) {
             qreal barHeight = mSeries.valueAt(row, column) * scale;

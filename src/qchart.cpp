@@ -100,6 +100,14 @@ void QChart::addSeries(QChartSeries* series)
 
         m_chartObjectInterfaces << barGroup;
         childItems().append(barGroup);
+
+        m_plotDataIndex = 0 ;
+        m_plotDomainList.resize(1);
+
+        PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
+        foreach(ChartItem* i ,m_chartItems)
+            i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
+
         break;
         }
     case QChartSeries::SeriesTypeStackedBar: {
@@ -117,6 +125,13 @@ void QChart::addSeries(QChartSeries* series)
 
         m_chartObjectInterfaces << stackedBarGroup;
         childItems().append(stackedBarGroup);
+        m_plotDataIndex = 0 ;
+        m_plotDomainList.resize(1);
+
+        PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
+        foreach(ChartItem* i ,m_chartItems)
+            i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
+
         break;
         }
     case QChartSeries::SeriesTypePercentBar: {
@@ -134,6 +149,13 @@ void QChart::addSeries(QChartSeries* series)
 
         m_chartObjectInterfaces << percentBarGroup;
         childItems().append(percentBarGroup);
+        m_plotDataIndex = 0 ;
+        m_plotDomainList.resize(1);
+
+        PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
+        foreach(ChartItem* i ,m_chartItems)
+            i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
+
         break;
         }
     case QChartSeries::SeriesTypeScatter: {
