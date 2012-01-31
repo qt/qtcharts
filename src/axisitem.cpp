@@ -7,7 +7,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 AxisItem::AxisItem(AxisType type,QGraphicsItem* parent) :
-    QGraphicsItem(parent),
+    ChartItem(parent),
     m_ticks(4),
     m_type(type)
 {
@@ -43,12 +43,7 @@ void AxisItem::setPlotDomain(const PlotDomain& plotDomain)
     createItems();
 }
 
-void AxisItem::setPos(const QPointF & pos)
-{
-    QGraphicsItem::setPos(pos);
-}
-
-void AxisItem::resize(const QSize &size)
+void AxisItem::setSize(const QSize &size)
 {
     m_rect = QRectF(QPoint(0,0),size);
     createItems();

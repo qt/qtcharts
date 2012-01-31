@@ -5,7 +5,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 PercentBarGroup::PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *parent) :
-    QGraphicsItem(parent)
+    ChartItem(parent)
     ,mSeries(series)
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
@@ -14,15 +14,9 @@ PercentBarGroup::PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *p
     dataChanged();
 }
 
-void PercentBarGroup::setPos(const QPointF & pos)
+void PercentBarGroup::setSize(const QSize& size)
 {
-    qDebug() << "PercentBarGroup::setPos";
-    // TODO:
-}
-
-void PercentBarGroup::resize(const QSize& size)
-{
-    qDebug() << "PercentBarGroup::resize";
+    qDebug() << "PercentBarGroup::setSize";
     mWidth = size.width();
     mHeight = size.height();
     layoutChanged();

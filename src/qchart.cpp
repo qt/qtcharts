@@ -13,7 +13,7 @@
 #include "percentbarchartseries.h"
 #include "percentbargroup.h"
 #include "charttheme_p.h"
-#include "chartitemcontrol.h"
+#include "chartobjectinterface_p.h"
 
 #include "xylinechartitem_p.h"
 #include "plotdomain_p.h"
@@ -37,8 +37,8 @@ QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
     PlotDomain domain;
     m_plotDomainList << domain;
     m_axisYItem << new AxisItem(AxisItem::Y_AXIS,this);
-    m_chartItemControls << m_axisXItem;
-    m_chartItemControls << m_axisYItem.at(0);
+    m_chartObjectInterfaces << m_axisXItem;
+    m_chartObjectInterfaces << m_axisYItem.at(0);
 }
 
 QChart::~QChart(){}
@@ -76,11 +76,11 @@ void QChart::addSeries(QChartSeries* series)
 
         XYLineChartItem* item = new XYLineChartItem(xyseries,this);
 
-        // TODO: combine ChartItemControl and ChartItem apis
-        m_chartItemControls << item;
+        // TODO: combine ChartObjectInterface and ChartItem apis
+        m_chartObjectInterfaces << item;
         item->setTheme(m_chartTheme);
 
-        foreach(ChartItemControl* i, m_chartItemControls)
+        foreach(ChartObjectInterface* i, m_chartObjectInterfaces)
             i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
 
         break;
@@ -98,7 +98,7 @@ void QChart::addSeries(QChartSeries* series)
         barGroup->addColor(QColor(0,0,255,128));
         barGroup->addColor(QColor(255,128,0,128));
 
-        m_chartItemControls << barGroup;
+        m_chartObjectInterfaces << barGroup;
         childItems().append(barGroup);
         break;
         }
@@ -115,7 +115,7 @@ void QChart::addSeries(QChartSeries* series)
         stackedBarGroup->addColor(QColor(0,0,255,128));
         stackedBarGroup->addColor(QColor(255,128,0,128));
 
-        m_chartItemControls << stackedBarGroup;
+        m_chartObjectInterfaces << stackedBarGroup;
         childItems().append(stackedBarGroup);
         break;
         }
@@ -132,7 +132,7 @@ void QChart::addSeries(QChartSeries* series)
         percentBarGroup->addColor(QColor(0,0,255,128));
         percentBarGroup->addColor(QColor(255,128,0,128));
 
-        m_chartItemControls << percentBarGroup;
+        m_chartObjectInterfaces << percentBarGroup;
         childItems().append(percentBarGroup);
         break;
         }
@@ -140,7 +140,7 @@ void QChart::addSeries(QChartSeries* series)
         QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
         scatterSeries->d->m_theme  = m_chartTheme->themeForSeries();
         scatterSeries->d->setParentItem(this);
-        m_chartItemControls << scatterSeries->d;
+        m_chartObjectInterfaces << scatterSeries->d;
         //TODO:? scatterSeries->d->m_themeIndex = m_chartSeries.count() - 1;
         break;
         }
@@ -151,7 +151,7 @@ void QChart::addSeries(QChartSeries* series)
 //                pieSeries->setSliceColor(i, nextColor());
 //        }
         pieSeries->d->setTheme(m_chartTheme);
-        m_chartItemControls << pieSeries->d;
+        m_chartObjectInterfaces << pieSeries->d;
 
         // Set pre-defined colors in case the series has no colors defined
         // TODO: how to define the color for all the slices of a pie?
@@ -206,11 +206,10 @@ void QChart::setSize(const QSize& size)
     m_rect = QRect(QPoint(0,0),size);
     QRect rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
 
-    //recaculate title
-    if(m_titleItem){
+    // recalculate title position
+    if (m_titleItem) {
         QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
         m_titleItem->setPos(center.x(),m_rect.top()/2 + margin()/2);
-
     }
 
     //recalculate background gradient
@@ -223,9 +222,12 @@ void QChart::setSize(const QSize& size)
         m_backgroundItem->setBrush(m_backgroundGradient);
     }
 
-    foreach (ChartItemControl *ctrl, m_chartItemControls) {
-        ctrl->setPos(rect.topLeft());
-        ctrl->resize(rect.size());
+    // resize and reposition childs
+    foreach (ChartObjectInterface *ctrl, m_chartObjectInterfaces) {
+        QGraphicsItem *item = ctrl->graphicsItem();
+        if (item)
+            item->setPos(rect.topLeft());
+        ctrl->setSize(rect.size());
     }
 
     update();
@@ -279,7 +281,7 @@ void QChart::setTheme(QChart::ChartThemeId theme)
         setBackground(m_chartTheme->d->m_gradientStartColor,
                       m_chartTheme->d->m_gradientEndColor,
                       m_bacgroundOrinetation);
-        foreach (ChartItemControl *ctrl, m_chartItemControls)
+        foreach (ChartObjectInterface *ctrl, m_chartObjectInterfaces)
             ctrl->setTheme(m_chartTheme);
         update();
     }
@@ -303,7 +305,7 @@ void QChart::zoomInToRect(const QRect& rectangle)
     m_plotDomainList<<domain;
     m_plotDataIndex++;
 
-    foreach (ChartItemControl* ctrl, m_chartItemControls)
+    foreach (ChartObjectInterface* ctrl, m_chartObjectInterfaces)
         ctrl->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
     update();
 }
@@ -312,7 +314,7 @@ void QChart::zoomIn()
 {
     if (m_plotDataIndex < m_plotDomainList.count() - 1) {
         m_plotDataIndex++;
-        foreach (ChartItemControl* item, m_chartItemControls)
+        foreach (ChartObjectInterface* item, m_chartObjectInterfaces)
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();
     } else {
@@ -328,7 +330,7 @@ void QChart::zoomOut()
 {
     if (m_plotDataIndex > 0) {
         m_plotDataIndex--;
-        foreach (ChartItemControl* item, m_chartItemControls)
+        foreach (ChartObjectInterface* item, m_chartObjectInterfaces)
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();
     }
@@ -338,7 +340,7 @@ void QChart::zoomReset()
 {
     if (m_plotDataIndex > 0) {
         m_plotDataIndex = 0;
-        foreach (ChartItemControl* item, m_chartItemControls)
+        foreach (ChartObjectInterface* item, m_chartObjectInterfaces)
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();
     }

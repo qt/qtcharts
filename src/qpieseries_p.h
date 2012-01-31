@@ -1,7 +1,7 @@
 #ifndef PIESERIESPRIVATE_H
 #define PIESERIESPRIVATE_H
 
-#include "chartitemcontrol.h"
+#include "chartobjectinterface_p.h"
 #include "qpieseries.h"
 #include <QRectF>
 #include <QColor>
@@ -10,16 +10,15 @@ class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class PieSlice;
 
-class QPieSeriesPrivate : public ChartItemControl
+class QPieSeriesPrivate : public ChartObjectInterface
 {
 public:
     // TODO: use a generic data class instead of x and y
     QPieSeriesPrivate();
     ~QPieSeriesPrivate();
 
-public: // from ChartItemControl
-    void setPos(const QPointF & pos);
-    void resize(const QSize &size);
+public: // from ChartObjectInterface
+    void setSize(const QSize &size);
     void setTheme(ChartTheme *theme);
     void setPlotDomain(const PlotDomain& data);
 

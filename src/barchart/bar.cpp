@@ -5,16 +5,11 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 Bar::Bar(QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+    : ChartItem(parent)
 {
 }
 
-void Bar::setPos(const QPointF & pos)
-{
-    QGraphicsItem::setPos(pos);
-}
-
-void Bar::resize(const QSize& size)
+void Bar::setSize(const QSize& size)
 {
     mWidth = size.width();
     mHeight = size.height();

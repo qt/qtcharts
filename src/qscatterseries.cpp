@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 //#define QSeriesData QList<qreal>
 
 QScatterSeriesPrivate::QScatterSeriesPrivate(QGraphicsItem *parent) :
-    QGraphicsItem(parent),
+    ChartItem(parent),
     m_scalex(100), // TODO: let the use define the scale (or autoscaled)
     m_scaley(100),
     m_markerColor(QColor())
@@ -29,8 +29,22 @@ void QScatterSeriesPrivate::resize(QRectF rect)
         m_sceney.append(rect.bottom() - y * (rect.height() / m_scaley));
 }
 
-// TODO:
-//void QScatterSeriesPrivate::setAxisScale(qreal xscale, qreal yscale)
+void QScatterSeriesPrivate::setSize(const QSize &size)
+{
+    QGraphicsItem *parent = this->parentItem();
+    if (parent)
+        resize(QRectF(parent->pos(), size));
+}
+
+void QScatterSeriesPrivate::setTheme(ChartTheme *theme)
+{
+    m_theme = theme->themeForSeries();
+}
+
+void QScatterSeriesPrivate::setPlotDomain(const PlotDomain& plotDomain)
+{
+    // TODO
+}
 
 QRectF QScatterSeriesPrivate::boundingRect() const
 {
@@ -62,26 +76,6 @@ void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsI
     }
 }
 
-void QScatterSeriesPrivate::setPos(const QPointF & pos)
-{
-    // TODO
-}
-
-void QScatterSeriesPrivate::resize(const QSize &size)
-{
-    resize(QRect(0, 0, size.width(), size.height()));
-}
-
-void QScatterSeriesPrivate::setTheme(ChartTheme *theme)
-{
-    m_theme = theme->themeForSeries();
-}
-
-void QScatterSeriesPrivate::setPlotDomain(const PlotDomain& plotDomain)
-{
-    // TODO
-}
-
 QScatterSeries::QScatterSeries(QObject *parent) :
     QChartSeries(parent),
     d(new QScatterSeriesPrivate(qobject_cast<QGraphicsItem *> (parent)))
@@ -95,6 +89,8 @@ bool QScatterSeries::setData(QList<qreal> x, QList<qreal> y)
     d->m_y = y;
     QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent());
     Q_ASSERT(parentItem);
+//    d->setPos(parentItem->pos());
+//    d->setSize(parentItem->boundingRect().size().toSize());
     d->resize(parentItem->boundingRect());
     return true;
 }

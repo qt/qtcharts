@@ -8,19 +8,14 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 XYLineChartItem::XYLineChartItem(QXYChartSeries* series,QGraphicsItem *parent) :
-    QGraphicsItem(parent),
+    ChartItem(parent),
     m_series(series),
     m_pathItem(new QGraphicsPathItem(this))
 {
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
 }
 
-void XYLineChartItem::setPos(const QPointF & pos)
-{
-    QGraphicsItem::setPos(pos);
-}
-
-void XYLineChartItem::resize(const QSize &size)
+void XYLineChartItem::setSize(const QSize &size)
 {
     m_rect = QRect(0, 0, size.width(), size.height());
     prepareGeometryChange();

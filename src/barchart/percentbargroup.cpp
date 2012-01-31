@@ -7,7 +7,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *parent) :
-    QGraphicsItem(parent)
+    ChartItem(parent)
     ,mSeries(series)
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
@@ -16,16 +16,9 @@ StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *p
     dataChanged();
 }
 
-
-void StackedBarGroup::setPos(const QPointF & pos)
+void StackedBarGroup::setSize(const QSize& size)
 {
-    qDebug() << "StackedBarGroup::setPos";
-    // TODO:
-}
-
-void StackedBarGroup::resize(const QSize& size)
-{
-    qDebug() << "StackedBarGroup::resize";
+    qDebug() << "StackedBarGroup::setSize";
     mWidth = size.width();
     mHeight = size.height();
     layoutChanged();

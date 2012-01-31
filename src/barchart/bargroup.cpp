@@ -5,21 +5,16 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
-  QGraphicsItem(parent)
-  ,mSeries(series)
-  ,mLayoutSet(false)
-  ,mLayoutDirty(true)
-  ,mBarDefaultWidth(10)
+    ChartItem(parent)
+    ,mSeries(series)
+    ,mLayoutSet(false)
+    ,mLayoutDirty(true)
+    ,mBarDefaultWidth(10)
 {
     dataChanged();
 }
 
-void BarGroup::setPos(const QPointF & pos)
-{
-    QGraphicsItem::setPos(pos);
-}
-
-void BarGroup::resize(const QSize& size)
+void BarGroup::setSize(const QSize& size)
 {
     qDebug() << "BarGroup::setSize";
     mWidth = size.width();

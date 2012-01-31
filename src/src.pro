@@ -40,6 +40,7 @@ PRIVATE_HEADERS += \
     qpieseries_p.h \
     pieslice.h \
     axisitem_p.h \
+    chartitem_p.h \
     charttheme_p.h
 
 PUBLIC_HEADERS += \
@@ -60,7 +61,7 @@ PUBLIC_HEADERS += \
     qchartaxis.h 
    
 HEADERS += $$PUBLIC_HEADERS \
-    chartitemcontrol.h
+    chartobjectinterface_p.h
 HEADERS += $$PRIVATE_HEADERS
 
 INCLUDEPATH += xylinechart \
@@ -98,6 +99,8 @@ QMAKE_EXTRA_TARGETS += chartversion
 
 unix:QMAKE_DISTCLEAN += -r $$CHART_BUILD_HEADER_DIR $$CHART_BUILD_LIB_DIR
 win32:QMAKE_DISTCLEAN += /Q $$CHART_BUILD_HEADER_DIR $$CHART_BUILD_LIB_DIR
+
+
 
 
 

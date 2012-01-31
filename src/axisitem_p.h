@@ -2,12 +2,12 @@
 #define AXISITEM_H_
 
 #include "plotdomain_p.h"
-#include "chartitemcontrol.h"
+#include "chartitem_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class AxisItem: public QGraphicsItem, public ChartItemControl
+class AxisItem : public ChartItem
 {
 public:
     enum AxisType{X_AXIS,Y_AXIS};
@@ -19,9 +19,8 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
 
-public: // from ChartItemControl
-    void setPos (const QPointF & pos);
-    void resize(const QSize &size);
+public: // from ChartObjectInterface
+    void setSize(const QSize &size);
     void setTheme(ChartTheme *theme);
     void setPlotDomain(const PlotDomain& data);
 
