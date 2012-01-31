@@ -47,7 +47,8 @@ QPainterPath PieSlice::shape() const
 void PieSlice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setRenderHint(QPainter::Antialiasing);
-    painter->setPen(m_theme.linePen);
+    // TODO: how to map theme settings to a pie slice? Now we
+    //painter->setPen(m_theme.linePen);
     // TODO:
     painter->setBrush(m_theme.linePen.color());
 

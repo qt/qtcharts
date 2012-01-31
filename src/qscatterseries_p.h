@@ -4,6 +4,7 @@
 #include "qchartseries.h"
 #include "charttheme_p.h"
 #include "chartitem_p.h"
+#include "plotdomain_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -11,15 +12,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
  * The PIMPL class of QScatterSeries.
  */
-class QScatterSeriesPrivate : public ChartItem
+class QScatterSeriesPrivate : public ChartItem, public ChartThemeObserver
 {
 public:
     QScatterSeriesPrivate(QGraphicsItem *parent);
 
 public: // from ChartObjectInterface
     void setSize(const QSize &size);
-    void setTheme(ChartTheme *theme);
     void setPlotDomain(const PlotDomain& data);
+
+public: // from ChartThemeObserver
+    void themeChanged(ChartTheme *theme);
 
 public: // from QGraphicsItem
     QRectF boundingRect() const;
@@ -37,6 +40,7 @@ public:
     QList<qreal> m_sceney;
     QColor m_markerColor;
     SeriesTheme m_theme;
+    PlotDomain m_visibleChartArea;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

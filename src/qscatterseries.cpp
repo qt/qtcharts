@@ -11,22 +11,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QScatterSeriesPrivate::QScatterSeriesPrivate(QGraphicsItem *parent) :
     ChartItem(parent),
-    m_scalex(100), // TODO: let the use define the scale (or autoscaled)
-    m_scaley(100),
-    m_markerColor(QColor())
+    m_markerColor(QColor()),
+    m_visibleChartArea()
 {
 }
 
 void QScatterSeriesPrivate::resize(QRectF rect)
 {
+    qreal scalex = rect.width() / m_visibleChartArea.spanX();
+    qreal scaley = rect.height() / m_visibleChartArea.spanY();
+
     m_scenex.clear();
     m_sceney.clear();
 
+    // Convert relative coordinates to absolute pixel coordinates that can be used for drawing
     foreach(qreal x, m_x)
-        m_scenex.append(rect.left() + x * (rect.width() / m_scalex));
+        m_scenex.append(rect.left() + x * scalex - m_visibleChartArea.m_minX * scalex);
 
     foreach(qreal y, m_y)
-        m_sceney.append(rect.bottom() - y * (rect.height() / m_scaley));
+        m_sceney.append(rect.bottom() - y * scaley - m_visibleChartArea.m_minY * scaley);
 }
 
 void QScatterSeriesPrivate::setSize(const QSize &size)
@@ -36,14 +39,15 @@ void QScatterSeriesPrivate::setSize(const QSize &size)
         resize(QRectF(parent->pos(), size));
 }
 
-void QScatterSeriesPrivate::setTheme(ChartTheme *theme)
+void QScatterSeriesPrivate::themeChanged(ChartTheme *theme)
 {
     m_theme = theme->themeForSeries();
 }
 
 void QScatterSeriesPrivate::setPlotDomain(const PlotDomain& plotDomain)
 {
-    // TODO
+    m_visibleChartArea = plotDomain;
+    resize(parentItem()->boundingRect());
 }
 
 QRectF QScatterSeriesPrivate::boundingRect() const

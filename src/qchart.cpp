@@ -13,7 +13,7 @@
 #include "percentbarchartseries.h"
 #include "percentbargroup.h"
 #include "charttheme_p.h"
-#include "chartobjectinterface_p.h"
+#include "chartitem_p.h"
 
 #include "xylinechartitem_p.h"
 #include "plotdomain_p.h"
@@ -37,8 +37,8 @@ QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
     PlotDomain domain;
     m_plotDomainList << domain;
     m_axisYItem << new AxisItem(AxisItem::Y_AXIS,this);
-    m_chartObjectInterfaces << m_axisXItem;
-    m_chartObjectInterfaces << m_axisYItem.at(0);
+    m_chartItems << m_axisXItem;
+    m_chartItems << m_axisYItem.at(0);
 }
 
 QChart::~QChart(){}
@@ -64,8 +64,7 @@ void QChart::addSeries(QChartSeries* series)
 
         PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
 
-        for (int i = 0 ; i < xyseries->count() ; i++)
-        {
+        for (int i = 0 ; i < xyseries->count() ; i++) {
             qreal x = xyseries->x(i);
             qreal y = xyseries->y(i);
             domain.m_minX = qMin(domain.m_minX,x);
@@ -76,12 +75,9 @@ void QChart::addSeries(QChartSeries* series)
 
         XYLineChartItem* item = new XYLineChartItem(xyseries,this);
 
-        // TODO: combine ChartObjectInterface and ChartItem apis
-        m_chartObjectInterfaces << item;
-        item->setTheme(m_chartTheme);
-
-        foreach(ChartObjectInterface* i, m_chartObjectInterfaces)
-            i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
+        m_chartItems << item;
+        // TODO:
+        //m_chartTheme->addObserver(xyseries);
 
         break;
     }
@@ -98,7 +94,7 @@ void QChart::addSeries(QChartSeries* series)
         barGroup->addColor(QColor(0,0,255,128));
         barGroup->addColor(QColor(255,128,0,128));
 
-        m_chartObjectInterfaces << barGroup;
+        m_chartItems << barGroup;
         childItems().append(barGroup);
 
         // TODO: setting of domain should this be somewhere else.
@@ -114,10 +110,6 @@ void QChart::addSeries(QChartSeries* series)
         domain.m_minY = qMin(domain.m_minY,y);
         domain.m_maxX = qMax(domain.m_maxX,x);
         domain.m_maxY = qMax(domain.m_maxY,y);
-
-        foreach(ChartObjectInterface* i ,m_chartObjectInterfaces)
-            i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
-
         break;
         }
     case QChartSeries::SeriesTypeStackedBar: {
@@ -133,7 +125,7 @@ void QChart::addSeries(QChartSeries* series)
         stackedBarGroup->addColor(QColor(0,0,255,128));
         stackedBarGroup->addColor(QColor(255,128,0,128));
 
-        m_chartObjectInterfaces << stackedBarGroup;
+        m_chartItems << stackedBarGroup;
         childItems().append(stackedBarGroup);
 
         // TODO: setting of domain should this be somewhere else.
@@ -149,10 +141,6 @@ void QChart::addSeries(QChartSeries* series)
         domain.m_minY = qMin(domain.m_minY,y);
         domain.m_maxX = qMax(domain.m_maxX,x);
         domain.m_maxY = qMax(domain.m_maxY,y);
-
-        foreach(ChartObjectInterface* i ,m_chartObjectInterfaces)
-            i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
-
         break;
         }
     case QChartSeries::SeriesTypePercentBar: {
@@ -168,7 +156,7 @@ void QChart::addSeries(QChartSeries* series)
         percentBarGroup->addColor(QColor(0,0,255,128));
         percentBarGroup->addColor(QColor(255,128,0,128));
 
-        m_chartObjectInterfaces << percentBarGroup;
+        m_chartItems << percentBarGroup;
         childItems().append(percentBarGroup);
 
         // TODO: setting of domain should this be somewhere else.
@@ -183,35 +171,29 @@ void QChart::addSeries(QChartSeries* series)
         domain.m_minY = 0;
         domain.m_maxX = qMax(domain.m_maxX,x);
         domain.m_maxY = 100;
-
-        foreach(ChartObjectInterface* i ,m_chartObjectInterfaces)
-            i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
-
         break;
         }
     case QChartSeries::SeriesTypeScatter: {
         QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
-        scatterSeries->d->m_theme  = m_chartTheme->themeForSeries();
+        scatterSeries->d->m_theme = m_chartTheme->themeForSeries();
         scatterSeries->d->setParentItem(this);
-        m_chartObjectInterfaces << scatterSeries->d;
-        //TODO:? scatterSeries->d->m_themeIndex = m_chartSeries.count() - 1;
+        m_chartItems << scatterSeries->d;
+        m_chartTheme->addObserver(scatterSeries->d);
         break;
         }
     case QChartSeries::SeriesTypePie: {
         QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
-//        for (int i(0); i < pieSeries->sliceCount(); i++) {
-//            if (!pieSeries->sliceColor(i).isValid())
-//                pieSeries->setSliceColor(i, nextColor());
-//        }
-        pieSeries->d->setTheme(m_chartTheme);
-        m_chartObjectInterfaces << pieSeries->d;
-
-        // Set pre-defined colors in case the series has no colors defined
-        // TODO: how to define the color for all the slices of a pie?
-//        for (int (i); i < pieSeries.sliceCount(); i++)
+        pieSeries->d->setParentItem(this);
+        m_chartItems << pieSeries->d;
+        pieSeries->d->m_chartTheme = m_chartTheme;
+        m_chartTheme->addObserver(pieSeries->d);
         break;
         }
     }
+
+    // Update all the items to match the new visible area of the chart
+    foreach(ChartItem* i, m_chartItems)
+        i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
 }
 
 QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
@@ -276,11 +258,9 @@ void QChart::setSize(const QSize& size)
     }
 
     // resize and reposition childs
-    foreach (ChartObjectInterface *ctrl, m_chartObjectInterfaces) {
-        QGraphicsItem *item = ctrl->graphicsItem();
-        if (item)
-            item->setPos(rect.topLeft());
-        ctrl->setSize(rect.size());
+    foreach (ChartItem *item, m_chartItems) {
+        item->setPos(rect.topLeft());
+        item->setSize(rect.size());
     }
 
     update();
@@ -329,15 +309,24 @@ void QChart::setMargin(int margin)
 
 void QChart::setTheme(QChart::ChartThemeId theme)
 {
-    if (theme != m_chartTheme->d->m_currentTheme) {
-        m_chartTheme->d->setTheme(theme);
-        setBackground(m_chartTheme->d->m_gradientStartColor,
-                      m_chartTheme->d->m_gradientEndColor,
-                      m_bacgroundOrinetation);
-        foreach (ChartObjectInterface *ctrl, m_chartObjectInterfaces)
-            ctrl->setTheme(m_chartTheme);
-        update();
+    m_chartTheme->setTheme(theme);
+    setBackground(m_chartTheme->d->m_gradientStartColor,
+                  m_chartTheme->d->m_gradientEndColor,
+                  m_bacgroundOrinetation);
+
+    // TODO: Move the controlling of the series presentations into private implementation of the
+    // series instead of QChart controlling themes for each
+    // In other words, the following should be used when creating xy series:
+    // m_chartTheme->addObserver(xyseries)
+    foreach (QChartSeries *series, m_chartSeries) {
+        if (series->type() == QChartSeries::SeriesTypeLine) {
+            QXYChartSeries *xyseries = static_cast<QXYChartSeries *>(series);
+            SeriesTheme seriesTheme = m_chartTheme->themeForSeries();
+            xyseries->setPen(seriesTheme.linePen);
+        }
     }
+
+    update();
 }
 
 void QChart::zoomInToRect(const QRect& rectangle)
@@ -358,8 +347,8 @@ void QChart::zoomInToRect(const QRect& rectangle)
     m_plotDomainList<<domain;
     m_plotDataIndex++;
 
-    foreach (ChartObjectInterface* ctrl, m_chartObjectInterfaces)
-        ctrl->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
+    foreach (ChartItem* item, m_chartItems)
+        item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
     update();
 }
 
@@ -367,7 +356,7 @@ void QChart::zoomIn()
 {
     if (m_plotDataIndex < m_plotDomainList.count() - 1) {
         m_plotDataIndex++;
-        foreach (ChartObjectInterface* item, m_chartObjectInterfaces)
+        foreach (ChartItem* item, m_chartItems)
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();
     } else {
@@ -383,7 +372,7 @@ void QChart::zoomOut()
 {
     if (m_plotDataIndex > 0) {
         m_plotDataIndex--;
-        foreach (ChartObjectInterface* item, m_chartObjectInterfaces)
+        foreach (ChartItem* item, m_chartItems)
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();
     }
@@ -393,7 +382,7 @@ void QChart::zoomReset()
 {
     if (m_plotDataIndex > 0) {
         m_plotDataIndex = 0;
-        foreach (ChartObjectInterface* item, m_chartObjectInterfaces)
+        foreach (ChartItem* item, m_chartItems)
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();
     }

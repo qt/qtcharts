@@ -15,7 +15,6 @@ public:
 
 public: // from ChartItemControl
     void setSize(const QSize &size);
-    void setTheme(ChartTheme *theme);
     void setPlotDomain(const PlotDomain& data);
 
     // Layout Stuff

@@ -10,25 +10,28 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class ChartTheme;
+
+class ChartThemeObserver
+{
+public:
+    virtual void themeChanged(ChartTheme *theme) = 0;
+};
+
 /*!
  * The theme specific settings for the appearance of a series. TODO: These can be overridden by setting
  * custom settings to a QChartSeries object.
  */
 struct SeriesTheme {
 public:
-//    SeriesTheme() :
-//        themeIndex(-1), lineColor(QColor()) {}
-//    SeriesTheme(int index, QColor line) :
-//        themeIndex(index), lineColor(line) {}
     SeriesTheme() :
-        themeIndex(-1), linePen(QPen()), markerPen(QPen()) {}
-    SeriesTheme(int index, QColor lineColor, qreal lineWidth/*, QPen marker*/) :
-        themeIndex(index),
+        linePen(QPen()),
+        markerPen(QPen()) {}
+    SeriesTheme(QColor lineColor, qreal lineWidth/*, QPen marker*/) :
         linePen(QPen(QBrush(lineColor), lineWidth)),
         markerPen(linePen) {}
 
 //const QBrush & brush, qreal width, Qt::PenStyle style = Qt::SolidLine, Qt::PenCapStyle cap = Qt::SquareCap, Qt::PenJoinStyle join = Qt::BevelJo
-    int themeIndex;
     // TODO:
     //QColor lineColor;
     QPen linePen;
@@ -51,6 +54,7 @@ public:
 
 public:
     int m_currentTheme;
+    QList<ChartThemeObserver *> m_observers;
     QColor m_gradientStartColor;
     QColor m_gradientEndColor;
     QList<SeriesTheme> m_seriesThemes;
@@ -65,9 +69,9 @@ public:
     explicit ChartTheme(const ChartTheme &other) : d(other.d) {}
     void operator =(const ChartTheme &other) { d = other.d; }
 
-//signals:
-//    void themeChanged(ChartTheme theme);
+    void setTheme(int theme);
     SeriesTheme themeForSeries();
+    void addObserver(ChartThemeObserver *o) { d->m_observers << o; }
 
 public:
     // All the graphical elements of a QChart share the same theme settings

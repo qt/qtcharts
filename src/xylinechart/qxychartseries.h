@@ -18,10 +18,11 @@ private:
 public:
     virtual ~QXYChartSeries();
 
-    //implemented from QChartSeries
+public: // from QChartSeries
     static QXYChartSeries* create(QObject* parent=0);
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeLine;}
 
+public:
     void add(qreal x, qreal y);
     void clear();
 
@@ -37,7 +38,6 @@ private:
     QList<qreal> m_x;
     QList<qreal> m_y;
     QPen m_pen;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

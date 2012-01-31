@@ -6,9 +6,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QPieSeriesPrivate::QPieSeriesPrivate() :
+QPieSeriesPrivate::QPieSeriesPrivate(QGraphicsItem *parent) :
+    ChartItem(parent),
     m_sizeFactor(1.0),
-    m_position(QPieSeries::PiePositionMaximized)
+    m_position(QPieSeries::PiePositionMaximized),
+    m_chartTheme(0)
 {
 }
 
@@ -22,25 +24,25 @@ bool QPieSeriesPrivate::setData(QList<qreal> data)
 {
     m_data = data;
 
-    if (m_parentItem) {
+    if (parentItem()) {
         // Create slices
         qreal fullPie = 360;
         qreal total = 0;
         foreach (qreal value, m_data)
             total += value;
 
-        m_chartSize = m_parentItem->boundingRect();
+        m_chartSize = parentItem()->boundingRect();
         qreal angle = 0;
         // TODO: no need to create new slices in case size changed; we should re-use the existing ones
         foreach (qreal value, m_data) {
             qreal span = value / total * fullPie;
-            PieSlice *slice = new PieSlice(QColor(), angle, span, m_parentItem->boundingRect());
-            slice->setParentItem(m_parentItem);
+            PieSlice *slice = new PieSlice(QColor(), angle, span, parentItem()->boundingRect());
+            slice->setParentItem(parentItem());
             m_slices.append(slice);
             angle += span;
         }
 
-        setTheme(m_chartTheme);
+        themeChanged(m_chartTheme);
         resizeSlices(m_chartSize);
     }
 
@@ -55,18 +57,18 @@ void QPieSeriesPrivate::setSize(const QSize &size)
     resizeSlices(m_chartSize);
 }
 
-void QPieSeriesPrivate::setTheme(ChartTheme *theme)
+void QPieSeriesPrivate::setPlotDomain(const PlotDomain& plotDomain)
+{
+    // TODO
+}
+
+void QPieSeriesPrivate::themeChanged(ChartTheme *theme)
 {
     if (theme) {
         m_chartTheme = theme;
         for (int i(0); i < m_slices.count(); i++)
             m_slices.at(i)->m_theme = theme->themeForSeries();
     }
-}
-
-void QPieSeriesPrivate::setPlotDomain(const PlotDomain& plotDomain)
-{
-    // TODO
 }
 
 void QPieSeriesPrivate::resizeSlices(QRectF rect)
@@ -117,11 +119,8 @@ void QPieSeriesPrivate::resizeSlices(QRectF rect)
 
 QPieSeries::QPieSeries(QGraphicsObject *parent) :
     QChartSeries(parent),
-    d(new QPieSeriesPrivate())
+    d(new QPieSeriesPrivate(parent))
 {
-    QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent);
-    if (parentItem)
-        d->m_parentItem = parentItem;
 }
 
 QPieSeries::~QPieSeries()
@@ -161,8 +160,8 @@ void QPieSeries::setSizeFactor(qreal factor)
 
     // Initiate update via the parent graphics item
     // TODO: potential issue: what if this function is called from the parent context?
-    if (d->m_parentItem)
-        d->m_parentItem->update();
+    if (d->parentItem())
+        d->parentItem()->update();
 }
 
 qreal QPieSeries::sizeFactor()

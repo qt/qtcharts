@@ -20,11 +20,6 @@ void Bar::setPlotDomain(const PlotDomain& data)
     mPlotDomain = data;
 }
 
-void Bar::setTheme(ChartTheme *theme)
-{
-    // TODO
-}
-
 void Bar::resize( int w, int h )
 {
 //    qDebug() << "bar::resize" << w << h;

@@ -30,12 +30,6 @@ void StackedBarGroup::setPlotDomain(const PlotDomain& data)
     // TODO:
 }
 
-void StackedBarGroup::setTheme(ChartTheme *theme)
-{
-    qDebug() << "StackedBarGroup::setTheme";
-    // TODO:
-}
-
 void StackedBarGroup::setBarWidth( int w )
 {
     mBarDefaultWidth = w;

@@ -15,7 +15,7 @@ class PlotDomain;
 class BarGroup;
 class QChartAxis;
 class ChartTheme;
-class ChartObjectInterface;
+class ChartItem;
 
 // TODO: We don't need to have QChart tied to QGraphicsItem:
 //class QTCOMMERCIALCHART_EXPORT QChart
@@ -87,7 +87,7 @@ private:
     QList<AxisItem*> m_axisYItem;
     QRect m_rect;
     QList<QChartSeries *> m_chartSeries;
-    QList<ChartObjectInterface *> m_chartObjectInterfaces;
+    QList<ChartItem *> m_chartItems;
     QVector<PlotDomain> m_plotDomainList;
     int m_plotDataIndex;
     int m_marginSize;

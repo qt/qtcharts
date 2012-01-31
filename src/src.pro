@@ -60,8 +60,7 @@ PUBLIC_HEADERS += \
     qchartview.h \
     qchartaxis.h 
    
-HEADERS += $$PUBLIC_HEADERS \
-    chartobjectinterface_p.h
+HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 
 INCLUDEPATH += xylinechart \
@@ -99,6 +98,7 @@ QMAKE_EXTRA_TARGETS += chartversion
 
 unix:QMAKE_DISTCLEAN += -r $$CHART_BUILD_HEADER_DIR $$CHART_BUILD_LIB_DIR
 win32:QMAKE_DISTCLEAN += /Q $$CHART_BUILD_HEADER_DIR $$CHART_BUILD_LIB_DIR
+
 
 
 

@@ -22,15 +22,6 @@ void XYLineChartItem::setSize(const QSize &size)
     updateGeometry();
 }
 
-void XYLineChartItem::setTheme(ChartTheme *theme)
-{
-    if (theme) {
-        m_theme = theme->themeForSeries();
-        prepareGeometryChange();
-        updateGeometry();
-    }
-}
-
 void XYLineChartItem::setPlotDomain(const PlotDomain& data)
 {
     m_plotDomain=data;
@@ -41,8 +32,14 @@ void XYLineChartItem::setPlotDomain(const PlotDomain& data)
 
 QRectF XYLineChartItem::boundingRect() const
 {
-	return m_rect;
+    return m_rect;
 }
+
+void XYLineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    m_pathItem->setPen(m_series->pen());
+}
+
 /*
 QPainterPath XYLineChartItem::shape() const
 {
@@ -68,9 +65,8 @@ void XYLineChartItem::updateGeometry()
    }
 
    m_pathItem->setPath(path);
-   m_pathItem->setPen(m_theme.linePen);
+   m_pathItem->setPen(m_series->pen());
    m_pathItem->setBrush(Qt::NoBrush);
 }
-
 
 QTCOMMERCIALCHART_END_NAMESPACE

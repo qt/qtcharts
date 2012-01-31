@@ -19,9 +19,8 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
 
-public: // from ChartObjectInterface
+public: // from ChartItem
     void setSize(const QSize &size);
-    void setTheme(ChartTheme *theme);
     void setPlotDomain(const PlotDomain& data);
 
 public:

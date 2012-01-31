@@ -14,9 +14,8 @@ class StackedBarGroup : public ChartItem
 public:
     StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *parent = 0);
 
-public: // From ChartObjectInterface
+public: // From ChartItem
     void setSize(const QSize &size);
-    void setTheme(ChartTheme *theme);
     void setPlotDomain(const PlotDomain& data);
 
 public: // Layout "api"

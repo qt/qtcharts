@@ -30,12 +30,6 @@ void BarGroup::setPlotDomain(const PlotDomain& data)
     mPlotDomain = data;
 }
 
-void BarGroup::setTheme(ChartTheme *theme)
-{
-    qDebug() << "BarGroup::setTheme";
-    // TODO:
-}
-
 void BarGroup::setBarWidth( int w )
 {
     mBarDefaultWidth = w;

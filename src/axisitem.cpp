@@ -49,13 +49,6 @@ void AxisItem::setSize(const QSize &size)
     createItems();
 }
 
-void AxisItem::setTheme(ChartTheme *theme)
-{
-    if (theme) {
-        // TODO: add axis related properties to the theme class and use them here
-    }
-}
-
 /*
 void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget)
 {
