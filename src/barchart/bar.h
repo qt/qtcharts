@@ -13,12 +13,12 @@ class Bar : public ChartItem
 public:
     Bar(QGraphicsItem *parent=0);
 
-public: // from ChartItemControl
+public: // from ChartItem
     void setSize(const QSize &size);
     void setPlotDomain(const PlotDomain& data);
 
     // Layout Stuff
-    void resize( int w, int h );       // Size of bar. in screen coordinates.
+    void resize( qreal w, qreal h );   // Size of bar.
     void setColor( QColor col );       // Color of bar
     void setPos(qreal x, qreal y);
 
@@ -30,8 +30,8 @@ public:
 
 private:
 
-    int mHeight;
-    int mWidth;
+    qreal mHeight;
+    qreal mWidth;
     qreal mXpos;
     qreal mYpos;
     QColor mColor;

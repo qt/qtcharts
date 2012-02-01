@@ -20,7 +20,7 @@ void Bar::setPlotDomain(const PlotDomain& data)
     mPlotDomain = data;
 }
 
-void Bar::resize( int w, int h )
+void Bar::resize( qreal w, qreal h )
 {
 //    qDebug() << "bar::resize" << w << h;
     mWidth = w;
@@ -46,7 +46,15 @@ void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     // TODO: accept brush instead of color
     QBrush brush(mColor);
     painter->setBrush(brush);
-    painter->drawRect(mXpos-mWidth, mYpos-mHeight ,mWidth ,mHeight); // Evil inverse rect, because we want bars to grow from bottom to top :)
+
+    // This compensates for rounding errors. drawRect takes ints and cumulative error of pos + size may be over 1.
+    int x0 = mXpos;
+    int x1 = (mXpos + mWidth);
+    int w = x1-x0;
+    int y0 = mYpos;
+    int y1 = (mYpos + mHeight);
+    int h = y1-y0;
+    painter->drawRect(x0, y0 ,w ,h);
 }
 
 QRectF Bar::boundingRect() const

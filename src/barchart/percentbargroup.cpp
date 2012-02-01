@@ -121,7 +121,7 @@ void PercentBarGroup::layoutChanged()
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
             bar->setColor(mColors.at(row));
-            bar->setPos(xPos, yPos);
+            bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             yPos -= barHeight;
         }

@@ -1,6 +1,7 @@
 #ifndef STACKEDBARGROUP_H
 #define STACKEDBARGROUP_H
 
+#include "charttheme_p.h"
 #include "chartitem_p.h"
 #include "bar.h"
 #include "stackedbarchartseries.h"
@@ -9,7 +10,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 // TODO: derive this from ChartObjectInterface, when setSize is back in ChartItem
-class StackedBarGroup : public ChartItem
+class StackedBarGroup : public ChartItem, public ChartThemeObserver
 {
 public:
     StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *parent = 0);
@@ -17,6 +18,9 @@ public:
 public: // From ChartItem
     void setSize(const QSize &size);
     void setPlotDomain(const PlotDomain& data);
+
+    // From ChartThemeObserver
+    void themeChanged(ChartTheme *theme);
 
 public: // Layout "api"
     void setPos(qreal x, qreal y);
@@ -49,6 +53,8 @@ private:
     bool mLayoutDirty;
 
     QList<QColor> mColors;  // List of colors for series for now
+
+    ChartTheme* mTheme;
 
 };
 

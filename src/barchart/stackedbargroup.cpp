@@ -10,6 +10,7 @@ StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *p
   ,mLayoutSet(false)
   ,mLayoutDirty(true)
   ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
+  ,mTheme(0)
 {
     dataChanged();
 }
@@ -28,6 +29,11 @@ void StackedBarGroup::setPlotDomain(const PlotDomain& data)
 {
     qDebug() << "StackedBarGroup::setPlotDomain";
     // TODO:
+}
+
+void StackedBarGroup::themeChanged(ChartTheme *theme)
+{
+    mTheme = theme;
 }
 
 void StackedBarGroup::setBarWidth( int w )
@@ -111,7 +117,7 @@ void StackedBarGroup::layoutChanged()
     qreal tW = mWidth;
     qreal tC = count+1;
     qreal xStep = (tW/tC);
-    qreal xPos = ((tW/tC) + mBarDefaultWidth / 2);
+    qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
 
     for (int column = 0; column < mSeries.countColumns(); column++) {
         qreal yPos = h;
@@ -120,9 +126,11 @@ void StackedBarGroup::layoutChanged()
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
             // TODO: width settable per bar?
+            // TODO: how to get color for series(x) from theme?
+//            mTheme->themeForSeries();
             bar->resize(mBarDefaultWidth, barHeight);
             bar->setColor(mColors.at(row));
-            bar->setPos(xPos, yPos);
+            bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             yPos -= barHeight;
         }

@@ -119,6 +119,7 @@ void BarGroup::layoutChanged()
     int itemIndex(0);
     for (int column=0; column < columnCount; column++) {
         qreal xPos = xStepPerSeries * column + ((tW + mBarDefaultWidth*rowCount)/(columnCount*2));
+        qreal yPos = mHeight;
         for (int row = 0; row < rowCount; row++) {
             qreal barHeight = mSeries.valueAt(row, column) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
@@ -126,7 +127,7 @@ void BarGroup::layoutChanged()
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
             bar->setColor(mColors.at(row));
-            bar->setPos(xPos, mHeight); // item*posStep+startPos + series * mBarDefaultWidth, mHeight);
+            bar->setPos(xPos, yPos-barHeight); // item*posStep+startPos + series * mBarDefaultWidth, mHeight);
             itemIndex++;
             xPos += mBarDefaultWidth;
         }
