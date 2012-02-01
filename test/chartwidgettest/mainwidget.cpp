@@ -25,22 +25,24 @@ MainWidget::MainWidget(QWidget *parent) :
 {
     m_chartWidget = new QChartWidget(this);
 
-    // GridLayout for the controls for configuring the chart widget
+    // Grid layout for the controls for configuring the chart widget
     QGridLayout *grid = new QGridLayout();
-    QGridLayout *mainLayout = new QGridLayout();
     QPushButton *addSeriesButton = new QPushButton("Add series");
     connect(addSeriesButton, SIGNAL(clicked()), this, SLOT(addSeries()));
     grid->addWidget(addSeriesButton, 0, 1);
     initBackroundCombo(grid);
     initScaleControls(grid);
     initThemeCombo(grid);
-    QCheckBox *zoomCheckBox = new QCheckBox("Zoom enabled");
+    QCheckBox *zoomCheckBox = new QCheckBox("Drag'n drop Zoom");
     connect(zoomCheckBox, SIGNAL(toggled(bool)), m_chartWidget, SLOT(setZoomEnabled(bool)));
     zoomCheckBox->setChecked(true);
     grid->addWidget(zoomCheckBox, grid->rowCount(), 0);
     // add row with empty label to make all the other rows static
     grid->addWidget(new QLabel(""), grid->rowCount(), 0);
     grid->setRowStretch(grid->rowCount() - 1, 1);
+
+    // Another grid layout as a main layout
+    QGridLayout *mainLayout = new QGridLayout();
     mainLayout->addLayout(grid, 0, 0);
 
     // Init series type specific controls

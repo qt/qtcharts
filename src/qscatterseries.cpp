@@ -12,31 +12,36 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QScatterSeriesPrivate::QScatterSeriesPrivate(QGraphicsItem *parent) :
     ChartItem(parent),
     m_markerColor(QColor()),
-    m_visibleChartArea()
+    m_visibleChartArea(),
+    m_boundingRect()
 {
+    if (parent)
+        m_boundingRect = parent->boundingRect();
 }
 
-void QScatterSeriesPrivate::resize(QRectF rect)
+void QScatterSeriesPrivate::changeGeometry()
 {
-    qreal scalex = rect.width() / m_visibleChartArea.spanX();
-    qreal scaley = rect.height() / m_visibleChartArea.spanY();
+    if (m_boundingRect.isValid()) {
+        prepareGeometryChange();
+        qreal scalex = m_boundingRect.width() / m_visibleChartArea.spanX();
+        qreal scaley = m_boundingRect.height() / m_visibleChartArea.spanY();
+        m_scenex.clear();
+        m_sceney.clear();
 
-    m_scenex.clear();
-    m_sceney.clear();
+        // Convert relative coordinates to absolute pixel coordinates that can be used for drawing
+        foreach(qreal x, m_x)
+            m_scenex.append(m_boundingRect.left() + x * scalex - m_visibleChartArea.m_minX * scalex);
 
-    // Convert relative coordinates to absolute pixel coordinates that can be used for drawing
-    foreach(qreal x, m_x)
-        m_scenex.append(rect.left() + x * scalex - m_visibleChartArea.m_minX * scalex);
-
-    foreach(qreal y, m_y)
-        m_sceney.append(rect.bottom() - y * scaley - m_visibleChartArea.m_minY * scaley);
+        foreach(qreal y, m_y)
+            m_sceney.append(m_boundingRect.bottom() - y * scaley + m_visibleChartArea.m_minY * scaley);
+    }
 }
 
 void QScatterSeriesPrivate::setSize(const QSize &size)
 {
-    QGraphicsItem *parent = this->parentItem();
-    if (parent)
-        resize(QRectF(parent->pos(), size));
+//    m_boundingRect = QRectF(pos().x(), pos().y(), size.width(), size.height());
+    m_boundingRect = QRectF(0, 0, size.width(), size.height());
+    changeGeometry();
 }
 
 void QScatterSeriesPrivate::themeChanged(ChartTheme *theme)
@@ -47,12 +52,12 @@ void QScatterSeriesPrivate::themeChanged(ChartTheme *theme)
 void QScatterSeriesPrivate::setPlotDomain(const PlotDomain& plotDomain)
 {
     m_visibleChartArea = plotDomain;
-    resize(parentItem()->boundingRect());
+    changeGeometry();
 }
 
 QRectF QScatterSeriesPrivate::boundingRect() const
 {
-    return QRectF(0, 0, 55, 100);
+    return m_boundingRect;
 }
 
 void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/)
@@ -86,16 +91,26 @@ QScatterSeries::QScatterSeries(QObject *parent) :
 {
 }
 
-bool QScatterSeries::setData(QList<qreal> x, QList<qreal> y)
+bool QScatterSeries::setData(QList<qreal> xlist, QList<qreal> ylist)
 {
     // TODO: validate data
-    d->m_x = x;
-    d->m_y = y;
-    QGraphicsItem *parentItem = qobject_cast<QGraphicsItem *>(parent());
-    Q_ASSERT(parentItem);
-//    d->setPos(parentItem->pos());
-//    d->setSize(parentItem->boundingRect().size().toSize());
-    d->resize(parentItem->boundingRect());
+    d->m_x = xlist;
+    d->m_y = ylist;
+
+    // TODO: the following updates the visible chart area setting of the series, we would instead
+    // need to update the _chart's_ visible area... this would require a callback or
+    // similar to the parenting QChart object...
+    foreach (qreal x, d->m_x) {
+        d->m_visibleChartArea.m_minX = qMin(d->m_visibleChartArea.m_minX, x);
+        d->m_visibleChartArea.m_maxX = qMax(d->m_visibleChartArea.m_maxX, x);
+    }
+    foreach (qreal y, d->m_y) {
+        d->m_visibleChartArea.m_minY = qMin(d->m_visibleChartArea.m_minY, y);
+        d->m_visibleChartArea.m_maxY = qMax(d->m_visibleChartArea.m_maxY, y);
+    }
+
+    d->changeGeometry();
+
     return true;
 }
 

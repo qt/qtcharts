@@ -54,15 +54,15 @@ void QChart::addSeries(QChartSeries* series)
 
     m_chartSeries << series;
 
+    m_plotDataIndex = 0 ;
+    m_plotDomainList.resize(1);
+    PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
+
     switch(series->type())
     {
     case QChartSeries::SeriesTypeLine: {
 
         QXYChartSeries* xyseries = static_cast<QXYChartSeries*>(series);
-        m_plotDataIndex = 0 ;
-        m_plotDomainList.resize(1);
-
-        PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
 
         for (int i = 0 ; i < xyseries->count() ; i++) {
             qreal x = xyseries->x(i);
@@ -97,15 +97,8 @@ void QChart::addSeries(QChartSeries* series)
         m_chartItems << barGroup;
         childItems().append(barGroup);
 
-        // TODO: setting of domain should this be somewhere else.
-        m_plotDataIndex = 0 ;
-        m_plotDomainList.resize(1);
-
         qreal x = barSeries->countColumns();
         qreal y = barSeries->max();
-
-        PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
-
         domain.m_minX = qMin(domain.m_minX,x);
         domain.m_minY = qMin(domain.m_minY,y);
         domain.m_maxX = qMax(domain.m_maxX,x);
@@ -128,15 +121,8 @@ void QChart::addSeries(QChartSeries* series)
         m_chartItems << stackedBarGroup;
         childItems().append(stackedBarGroup);
 
-        // TODO: setting of domain should this be somewhere else.
-        m_plotDataIndex = 0 ;
-        m_plotDomainList.resize(1);
-
         qreal x = stackedBarSeries->countColumns();
         qreal y = stackedBarSeries->maxColumnSum();
-
-        PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
-
         domain.m_minX = qMin(domain.m_minX,x);
         domain.m_minY = qMin(domain.m_minY,y);
         domain.m_maxX = qMax(domain.m_maxX,x);
@@ -159,14 +145,7 @@ void QChart::addSeries(QChartSeries* series)
         m_chartItems << percentBarGroup;
         childItems().append(percentBarGroup);
 
-        // TODO: setting of domain should this be somewhere else.
-        m_plotDataIndex = 0 ;
-        m_plotDomainList.resize(1);
-
         qreal x = percentBarSeries->countColumns();
-
-        PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
-
         domain.m_minX = qMin(domain.m_minX,x);
         domain.m_minY = 0;
         domain.m_maxX = qMax(domain.m_maxX,x);
@@ -177,8 +156,19 @@ void QChart::addSeries(QChartSeries* series)
         QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
         scatterSeries->d->m_theme = m_chartTheme->themeForSeries();
         scatterSeries->d->setParentItem(this);
+        scatterSeries->d->m_boundingRect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
         m_chartItems << scatterSeries->d;
         m_chartTheme->addObserver(scatterSeries->d);
+
+        foreach (qreal x, scatterSeries->d->m_x) {
+            domain.m_minX = qMin(domain.m_minX, x);
+            domain.m_maxX = qMax(domain.m_maxX, x);
+        }
+        foreach (qreal y, scatterSeries->d->m_y) {
+            domain.m_minY = qMin(domain.m_minY, y);
+            domain.m_maxY = qMax(domain.m_maxY, y);
+        }
+
         break;
         }
     case QChartSeries::SeriesTypePie: {

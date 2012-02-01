@@ -18,6 +18,8 @@ QChartWidget::QChartWidget(QWidget *parent) :
     setScene(m_scene);
 
     m_chart = new QChart();
+    // TODO: currently setting the margins explicitly is required, if you wish to have axis labels visible
+    m_chart->setMargin(25);
     m_scene->addItem(m_chart);
     m_rubberBand.setEnabled(true); // TODO: should zoom be enabled by default?
     show();

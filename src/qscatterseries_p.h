@@ -29,13 +29,12 @@ public: // from QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 public:
-    void resize(QRectF rect); // TODO: replace with setSize
+    void changeGeometry();
 
+    QRectF m_boundingRect;
     // TODO: use the chart data class instead of list of x and y values?
     QList<qreal> m_x;
     QList<qreal> m_y;
-    qreal m_scalex;
-    qreal m_scaley;
     QList<qreal> m_scenex;
     QList<qreal> m_sceney;
     QColor m_markerColor;
