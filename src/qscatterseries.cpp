@@ -55,7 +55,7 @@ QRectF QScatterSeriesPrivate::boundingRect() const
     return QRectF(0, 0, 55, 100);
 }
 
-void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/)
 {
     // TODO: The opacity should be user definable?
     //brush.setColor(QColor(255, 82, 0, 100));

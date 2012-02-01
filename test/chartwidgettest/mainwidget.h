@@ -19,6 +19,12 @@ public:
 
 signals:
 
+private:
+    void initBackroundCombo(QGridLayout *grid);
+    void initScaleControls(QGridLayout *grid);
+    void initThemeCombo(QGridLayout *grid);
+    void initPieControls();
+
 private slots:
     void addSeries();
     void addSeries(QString series, QString data);

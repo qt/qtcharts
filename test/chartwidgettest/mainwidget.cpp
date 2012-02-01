@@ -25,10 +25,44 @@ MainWidget::MainWidget(QWidget *parent) :
 {
     m_chartWidget = new QChartWidget(this);
 
+    // GridLayout for the controls for configuring the chart widget
+    QGridLayout *grid = new QGridLayout();
+    QGridLayout *mainLayout = new QGridLayout();
     QPushButton *addSeriesButton = new QPushButton("Add series");
     connect(addSeriesButton, SIGNAL(clicked()), this, SLOT(addSeries()));
+    grid->addWidget(addSeriesButton, 0, 1);
+    initBackroundCombo(grid);
+    initScaleControls(grid);
+    initThemeCombo(grid);
+    QCheckBox *zoomCheckBox = new QCheckBox("Zoom enabled");
+    connect(zoomCheckBox, SIGNAL(toggled(bool)), m_chartWidget, SLOT(setZoomEnabled(bool)));
+    zoomCheckBox->setChecked(true);
+    grid->addWidget(zoomCheckBox, grid->rowCount(), 0);
+    // add row with empty label to make all the other rows static
+    grid->addWidget(new QLabel(""), grid->rowCount(), 0);
+    grid->setRowStretch(grid->rowCount() - 1, 1);
+    mainLayout->addLayout(grid, 0, 0);
 
-    // Chart background
+    // Init series type specific controls
+    initPieControls();
+    mainLayout->addLayout(m_pieLayout, 2, 0);
+    // Scatter series specific settings
+//    m_scatterLayout = new QGridLayout();
+//    m_scatterLayout->addWidget(new QLabel("scatter"), 0, 0);
+//    m_scatterLayout->setEnabled(false);
+//    mainLayout->addLayout(m_scatterLayout, 1, 0);
+
+    // Add layouts and the chart widget to the main layout
+    mainLayout->addWidget(m_chartWidget, 0, 1, 3, 1);
+    setLayout(mainLayout);
+
+    // force an update to test data
+    testDataChanged(0);
+}
+
+// Combo box for selecting the chart's background
+void MainWidget::initBackroundCombo(QGridLayout *grid)
+{
     QComboBox *backgroundCombo = new QComboBox(this);
     backgroundCombo->addItem("Color");
     backgroundCombo->addItem("Gradient");
@@ -36,8 +70,13 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(backgroundCombo, SIGNAL(currentIndexChanged(int)),
             this, SLOT(backgroundChanged(int)));
 
-    // Axis
-    // TODO: multiple axes?
+    grid->addWidget(new QLabel("Background:"), grid->rowCount(), 0);
+    grid->addWidget(backgroundCombo, grid->rowCount() - 1, 1);
+}
+
+// Scale related controls (auto-scale vs. manual min-max values)
+void MainWidget::initScaleControls(QGridLayout *grid)
+{
     m_autoScaleCheck = new QCheckBox("Automatic scaling");
     connect(m_autoScaleCheck, SIGNAL(stateChanged(int)), this, SLOT(autoScaleChanged(int)));
     // Allow setting also non-sense values (like -2147483648 and 2147483647)
@@ -62,6 +101,22 @@ MainWidget::MainWidget(QWidget *parent) :
     m_yMaxSpin->setValue(10);
     connect(m_yMaxSpin, SIGNAL(valueChanged(int)), this, SLOT(yMaxChanged(int)));
 
+    grid->addWidget(m_autoScaleCheck, grid->rowCount(), 0);
+    grid->addWidget(new QLabel("x min:"), grid->rowCount(), 0);
+    grid->addWidget(m_xMinSpin, grid->rowCount() - 1, 1);
+    grid->addWidget(new QLabel("x max:"), grid->rowCount(), 0);
+    grid->addWidget(m_xMaxSpin, grid->rowCount() - 1, 1);
+    grid->addWidget(new QLabel("y min:"), grid->rowCount(), 0);
+    grid->addWidget(m_yMinSpin, grid->rowCount() - 1, 1);
+    grid->addWidget(new QLabel("y max:"), grid->rowCount(), 0);
+    grid->addWidget(m_yMaxSpin, grid->rowCount() - 1, 1);
+
+    m_autoScaleCheck->setChecked(true);
+}
+
+// Combo box for selecting theme
+void MainWidget::initThemeCombo(QGridLayout *grid)
+{
     QComboBox *chartTheme = new QComboBox();
     chartTheme->addItem("Default");
     chartTheme->addItem("Vanilla");
@@ -70,45 +125,13 @@ MainWidget::MainWidget(QWidget *parent) :
     chartTheme->addItem("Unnamed1");
     connect(chartTheme, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeChartTheme(int)));
-//    connect(chartTheme, SIGNAL(currentIndexChanged(int)),
-//            m_signalMapper, SLOT(map()));
-//    m_signalMapper->setMapping(chartTheme, (QChart::ChartThemeId)chartTheme->currentIndex());
-//    connect(m_signalMapper, SIGNAL(mapped(QChart::ChartThemeId)),
-//            m_chartWidget, SLOT(setTheme(QChart::ChartThemeId)));
-
-    QCheckBox *zoomCheckBox = new QCheckBox("Zoom enabled");
-    connect(zoomCheckBox, SIGNAL(toggled(bool)), m_chartWidget, SLOT(setZoomEnabled(bool)));
-    zoomCheckBox->setChecked(true);
-
-    QGridLayout *grid = new QGridLayout();
-    QGridLayout *mainLayout = new QGridLayout();
-    grid->addWidget(addSeriesButton, 0, 1);
-    grid->addWidget(new QLabel("Background:"), 2, 0);
-    grid->addWidget(backgroundCombo, 2, 1);
-    grid->addWidget(m_autoScaleCheck, 3, 0);
-    grid->addWidget(new QLabel("x min:"), 4, 0);
-    grid->addWidget(m_xMinSpin, 4, 1);
-    grid->addWidget(new QLabel("x max:"), 5, 0);
-    grid->addWidget(m_xMaxSpin, 5, 1);
-    grid->addWidget(new QLabel("y min:"), 6, 0);
-    grid->addWidget(m_yMinSpin, 6, 1);
-    grid->addWidget(new QLabel("y max:"), 7, 0);
-    grid->addWidget(m_yMaxSpin, 7, 1);
     grid->addWidget(new QLabel("Chart theme:"), 8, 0);
     grid->addWidget(chartTheme, 8, 1);
-    grid->addWidget(zoomCheckBox, 9, 0);
-    // add row with empty label to make all the other rows static
-    grid->addWidget(new QLabel(""), 10, 0);
-    grid->setRowStretch(10, 1);
+}
 
-    mainLayout->addLayout(grid, 0, 0);
-
-    // Scatter specific settings
-    m_scatterLayout = new QGridLayout();
-    m_scatterLayout->addWidget(new QLabel("scatter"), 0, 0);
-    m_scatterLayout->setEnabled(false);
-
-    // Pie specific settings
+void MainWidget::initPieControls()
+{
+    // Pie series specific settings
     // Pie size factory
     QDoubleSpinBox *pieSizeSpin = new QDoubleSpinBox();
     pieSizeSpin->setMinimum(LONG_MIN);
@@ -131,18 +154,6 @@ MainWidget::MainWidget(QWidget *parent) :
     m_pieLayout->addWidget(pieSizeSpin, 0, 1);
     m_pieLayout->addWidget(new QLabel("Pie position"), 1, 0);
     m_pieLayout->addWidget(piePosCombo, 1, 1);
-
-    mainLayout->addLayout(m_scatterLayout, 1, 0);
-    mainLayout->addLayout(m_pieLayout, 2, 0);
-
-    //m_chartWidget->setColor(Qt::red);
-    mainLayout->addWidget(m_chartWidget, 0, 1, 3, 1);
-//    hbox->setStretch(1, 1);
-
-    setLayout(mainLayout);
-
-    m_autoScaleCheck->setChecked(true);
-    testDataChanged(0);
 }
 
 void MainWidget::addSeries()

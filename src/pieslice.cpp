@@ -44,7 +44,7 @@ QPainterPath PieSlice::shape() const
     return path;
 }
 
-void PieSlice::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void PieSlice::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/)
 {
     painter->setRenderHint(QPainter::Antialiasing);
     // TODO: how to map theme settings to a pie slice? Now we

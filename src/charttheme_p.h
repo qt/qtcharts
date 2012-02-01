@@ -66,7 +66,7 @@ class ChartTheme : public QObject
     Q_OBJECT
 public:
     explicit ChartTheme(QObject *parent = 0);
-    explicit ChartTheme(const ChartTheme &other) : d(other.d) {}
+    explicit ChartTheme(const ChartTheme &other, QObject *parent = 0) : QObject(parent), d(other.d) {}
     void operator =(const ChartTheme &other) { d = other.d; }
 
     void setTheme(int theme);

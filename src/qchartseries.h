@@ -34,12 +34,12 @@ public:
     // Pure virtual
     virtual QChartSeriesType type() const = 0;
 
-    virtual bool setData(QList<int> data) { return false; }
-    virtual bool setData(QList<qreal> data) { return false; }
-    virtual bool setData(QList<qreal> x, QList<qreal> y){ return false; }
+    virtual bool setData(QList<int> /*data*/) { return false; }
+    virtual bool setData(QList<qreal> /*data*/) { return false; }
+    virtual bool setData(QList<qreal> /*x*/, QList<qreal> /*y*/){ return false; }
 
     // Prototype for data model. TODO: remove the other setData methods and use something like this for now?
-    virtual bool setData(QAbstractItemModel* model) { return false; }
+    virtual bool setData(QAbstractItemModel* /*model*/) { return false; }
 
 };
 

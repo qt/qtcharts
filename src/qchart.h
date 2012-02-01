@@ -50,7 +50,7 @@ public:
 
     //from QGraphicsItem
     QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
+    void paint(QPainter */*painter*/, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/) {}
 
     void addSeries(QChartSeries* series);
     //TODO: QChartSeries* createSeries(QSeriesData *data, QChartSeries::QChartSeriesType type);

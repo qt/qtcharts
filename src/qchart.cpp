@@ -26,10 +26,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
     m_backgroundItem(0),
     m_titleItem(0),
-    m_axisXItem(new AxisItem(AxisItem::X_AXIS,this)),
+    m_axisXItem(new AxisItem(AxisItem::X_AXIS, this)),
     m_plotDataIndex(0),
     m_marginSize(0),
-    m_chartTheme(new ChartTheme())
+    m_chartTheme(new ChartTheme(this))
 {
     // TODO: the default theme?
     setTheme(QChart::ChartThemeDefault);
