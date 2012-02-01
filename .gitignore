@@ -245,6 +245,10 @@ d_exc_*.stk
 .make.cache
 *.d
 
+# OSX build files
+*.xcodeproj
+Info.plist
+
 qtc-debugging-helper
 qtc-qmldump
 qtc-qmldbg
@@ -263,3 +267,4 @@ src/xml/lib/
 *.dep
 *.map
 work
+
