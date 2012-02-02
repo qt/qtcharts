@@ -2,6 +2,7 @@
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include <QDebug>
+#include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -12,14 +13,18 @@ StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *p
   ,mLayoutDirty(true)
   ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
   ,mTheme(0)
+  ,mSeparatorsVisible(true)
 {
     dataChanged();
 }
 
+void StackedBarGroup::setSeparatorsVisible(bool visible)
+{
+    mSeparatorsVisible = visible;
+}
 
 void StackedBarGroup::setSize(const QSizeF& size)
 {
-//    qDebug() << "StackedBarGroup::setSize";
     mWidth = size.width();
     mHeight = size.height();
     layoutChanged();
@@ -65,8 +70,17 @@ void StackedBarGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         foreach(QGraphicsItem* i, childItems()) {
             i->paint(painter,option,widget);
         }
-        mLayoutDirty = false;
-    //TODO: draw labels.
+        if (mSeparatorsVisible) {
+            //TODO: own class for separators (graphicsitem), because they may have style etc later.
+            // this is just to see that the positions are calculated correctly.
+            QPen pen(QColor(0,0,255,255));
+            painter->setPen(pen);
+            for (int i=0; i<mSeparatorPositions.count(); i++ ) {
+                qreal xp = mSeparatorPositions.at(i);
+                painter->drawLine(xp,0,xp,mHeight);
+            }
+        }
+//        mLayoutDirty = false;
     }
 
 }
@@ -79,7 +93,7 @@ QRectF StackedBarGroup::boundingRect() const
 
 void StackedBarGroup::dataChanged()
 {
-    qDebug() << "QBarChart::dataChanged mSeries";
+    qDebug() << "QBarChart::dataChanged";
 
     // Find out maximum and minimum of all series
     mMax = mSeries.max();
@@ -107,6 +121,8 @@ void StackedBarGroup::dataChanged()
         childItems().append(label);
     }
 
+    mSeparatorPositions.clear();
+
     // TODO: if (autolayout) { layoutChanged() } or something
     mLayoutDirty = true;
 }
@@ -120,16 +136,21 @@ void StackedBarGroup::layoutChanged()
         return;
     }
 
+    if (mSeries.countColumns() == 0) {
+        // Nothing to do
+        return;
+    }
+
     // TODO: better way to auto-layout
     // Use reals for accurancy (we might get some compiler warnings... :)
+    // TODO: use temp variable for column count...
     qreal maxSum = mSeries.maxColumnSum();
     qreal h = mHeight;
     qreal scale = (h / maxSum);
 
-    int count = mSeries.countColumns();
     int itemIndex(0);
     qreal tW = mWidth;
-    qreal tC = count+1;
+    qreal tC = mSeries.countColumns() + 1;
     qreal xStep = (tW/tC);
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
     int labelIndex = mSeries.countColumns() * mSeries.countRows();
@@ -154,6 +175,14 @@ void StackedBarGroup::layoutChanged()
         BarLabel* label = reinterpret_cast<BarLabel*> (childItems().at(labelIndex));
         label->setPos(xPos, mHeight + 20);
         labelIndex++;
+        xPos += xStep;
+    }
+
+    // Position separators
+    mSeparatorPositions.clear();
+    xPos = xStep + xStep/2;     // Initial position is between first and second group. ie one and half steps from left.
+    for (int s=0; s < mSeries.countColumns() - 1; s++) {
+        mSeparatorPositions.append(xPos);
         xPos += xStep;
     }
 

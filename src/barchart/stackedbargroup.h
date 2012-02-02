@@ -16,6 +16,9 @@ class StackedBarGroup : public ChartItem, public ChartThemeObserver
 public:
     StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *parent = 0);
 
+    // Bar chart spesific
+    void setSeparatorsVisible(bool visible = true);
+
 public: // From ChartItem
     void setSize(const QSizeF &size);
     void setPlotDomain(const PlotDomain& data);
@@ -56,7 +59,8 @@ private:
     QList<QColor> mColors;  // List of colors for series for now
 
     ChartTheme* mTheme;
-//    QList<BarLabel*> mLabels;
+    bool mSeparatorsVisible;
+    QList<qreal> mSeparatorPositions;
 
 };
 

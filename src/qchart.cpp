@@ -99,6 +99,7 @@ void QChart::addSeries(QChartSeries* series)
         domain.m_minY = qMin(domain.m_minY,y);
         domain.m_maxX = qMax(domain.m_maxX,x);
         domain.m_maxY = qMax(domain.m_maxY,y);
+        m_axisXItem->setVisible(false);
         break;
         }
     case QChartSeries::SeriesTypeStackedBar: {
@@ -123,6 +124,7 @@ void QChart::addSeries(QChartSeries* series)
         domain.m_minY = qMin(domain.m_minY,y);
         domain.m_maxX = qMax(domain.m_maxX,x);
         domain.m_maxY = qMax(domain.m_maxY,y);
+        m_axisXItem->setVisible(false);
         break;
         }
     case QChartSeries::SeriesTypePercentBar: {
@@ -146,6 +148,7 @@ void QChart::addSeries(QChartSeries* series)
         domain.m_minY = 0;
         domain.m_maxX = qMax(domain.m_maxX,x);
         domain.m_maxY = 100;
+        m_axisXItem->setVisible(false);
         break;
         }
     case QChartSeries::SeriesTypeScatter: {
