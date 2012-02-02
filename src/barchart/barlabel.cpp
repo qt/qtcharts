@@ -18,7 +18,7 @@ void BarLabel::setPos(qreal x, qreal y)
     mYpos = y;
 }
 
-void BarLabel::setSize(const QSize &size)
+void BarLabel::setSize(const QSizeF &size)
 {
     mSize = size;
 }

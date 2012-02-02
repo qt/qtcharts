@@ -14,7 +14,7 @@ public:
     void setPos(qreal x, qreal y);
 
     // From ChartItem
-    void setSize(const QSize &size);
+    void setSize(const QSizeF &size);
     void setPlotDomain(const PlotDomain& data);
 
     // From QGraphicsItem
@@ -24,7 +24,7 @@ public:
 private:
 
     PlotDomain mDomain;
-    QSize mSize;
+    QSizeF mSize;
     QString mLabel;
     qreal mXpos;
     qreal mYpos;
