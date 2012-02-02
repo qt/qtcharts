@@ -1,22 +1,27 @@
 #include <QtDeclarative/qdeclarativeextensionplugin.h>
 #include <QtDeclarative/qdeclarative.h>
 #include "declarativechart.h"
+#include "declarativeseries.h"
 
-QT_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QmlChartPlugin : public QDeclarativeExtensionPlugin
+class ChartQmlPlugin : public QDeclarativeExtensionPlugin
 {
     Q_OBJECT
 public:
     virtual void registerTypes(const char *uri)
     {
-        Q_ASSERT(QLatin1String(uri) == QLatin1String("com.digia.charts"));
+        Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCommercial.Chart"));
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "Chart");
+        qmlRegisterType<DeclarativeSeries>(uri, 1, 0, "Series");
+        //qmlRegisterUncreatableType<QChartSeries::SeriesTypeBar>(uri, 1, 0, "Series.Se", QLatin1String("Do not create objects of this type."));
     }
 };
 
-QT_END_NAMESPACE
-
 #include "plugin.moc"
 
-Q_EXPORT_PLUGIN2(qmlchartplugin, QT_PREPEND_NAMESPACE(QmlChartPlugin));
+QTCOMMERCIALCHART_END_NAMESPACE
+
+QTCOMMERCIALCHART_USE_NAMESPACE
+
+Q_EXPORT_PLUGIN2(qtcommercialchartqml, QT_PREPEND_NAMESPACE(ChartQmlPlugin))

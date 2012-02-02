@@ -1,27 +1,29 @@
 #include "declarativechart.h"
-#include <QPainter>
 
-#ifndef QTQUICK2
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
-    : QDeclarativeItem(parent)
+    : QDeclarativeItem(parent),
+      m_chart(new QChart(this))
 {
-    // need to disable this flag to draw inside a QDeclarativeItem
     setFlag(QGraphicsItem::ItemHasNoContents, false);
+    m_chart->resize(QSize(height(), width()));
+    m_chart->setMargin(25); // TODO: should not be needed?
 }
-#else
-DeclarativeChart::DeclarativeChart(QQuickItem *parent)
-    : QQuickPaintedItem(parent)
+
+DeclarativeChart::ChartTheme DeclarativeChart::theme()
 {
-
+    if (m_chart)
+        return (ChartTheme) m_chart->theme();
+    else
+        return ThemeInvalid;
 }
-#endif
 
-#ifndef QTQUICK2
-void DeclarativeChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
-#else
-void DeclarativeChart::paint(QPainter *painter)
-#endif
+void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
-    drawChart(painter, boundingRect());
+    m_chart->resize(QSize(newGeometry.width(), newGeometry.height()));
 }
 
+#include "moc_declarativechart.cpp"
+
+QTCOMMERCIALCHART_END_NAMESPACE

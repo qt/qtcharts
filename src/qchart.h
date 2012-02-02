@@ -58,6 +58,7 @@ public:
     void setMargin(int margin);
     int margin() const;
     void setTheme(QChart::ChartThemeId theme);
+    QChart::ChartThemeId theme();
 
     void setTitle(const QString& title,const QFont& font = QFont());
     void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, GradientOrientation orientation = VerticalGradientOrientation);

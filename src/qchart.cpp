@@ -47,6 +47,8 @@ QChart::~QChart(){}
 void QChart::addSeries(QChartSeries* series)
 {
     // TODO: we should check the series not already added
+    Q_ASSERT(series);
+    Q_ASSERT(series->type() != QChartSeries::SeriesTypeInvalid);
 
     m_chartSeries << series;
 
@@ -178,6 +180,8 @@ void QChart::addSeries(QChartSeries* series)
         m_chartTheme->addObserver(pieSeries->d);
         break;
         }
+    default:
+        break;
     }
 
     // Update all the items to match the new visible area of the chart
@@ -286,6 +290,11 @@ void QChart::setTheme(QChart::ChartThemeId theme)
     }
 
     update();
+}
+
+QChart::ChartThemeId QChart::theme()
+{
+    return (QChart::ChartThemeId) m_chartTheme->d->m_currentTheme;
 }
 
 void QChart::zoomInToRect(const QRectF& rectangle)

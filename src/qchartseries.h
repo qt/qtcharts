@@ -12,7 +12,8 @@ class QTCOMMERCIALCHART_EXPORT QChartSeries : public QObject
     Q_OBJECT
 public:
     enum QChartSeriesType {
-        SeriesTypeLine = 0,
+        SeriesTypeInvalid = -1,
+        SeriesTypeLine,
 //        SeriesTypeArea,
         SeriesTypeBar,
         SeriesTypeStackedBar,

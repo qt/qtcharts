@@ -1,5 +1,3 @@
-message( "Configuring with QtCommercialChart addon..." )
-
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtCommercialChart
 
 CONFIG(debug, debug|release) {

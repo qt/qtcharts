@@ -3,7 +3,7 @@
 }
 
 TEMPLATE = subdirs
-SUBDIRS += src example test
+SUBDIRS += src qmlplugin example test
 CONFIG += ordered
 QMAKE_CXXFLAGS += -g -Wall
 unix:QMAKE_DISTCLEAN += -r build bin 

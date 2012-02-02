@@ -2,36 +2,44 @@
 #define DECLARATIVECHART_H
 
 #include <QtCore/QtGlobal>
-#ifndef QTQUICK2
-    #include <QDeclarativeItem>
-#else
-    #include <QtQuick/QQuickPaintedItem>
-#endif
-#include <QColor>
-#include "../src/chart.h"
+#include <QDeclarativeItem>
+#include <qchart.h>
 
-#ifndef QTQUICK2
-class DeclarativeChart : public QDeclarativeItem, public Chart
-#else
-class DeclarativeChart : public QQuickPaintedItem, public Chart
-#endif
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+class DeclarativeChart : public QDeclarativeItem
+// TODO: for QTQUICK2: extend QQuickPainterItem instead
+//class DeclarativeChart : public QQuickPaintedItem, public Chart
 {
     Q_OBJECT
-    Q_PROPERTY(QColor color READ color WRITE setColor)
+    Q_ENUMS(ChartTheme)
+    Q_PROPERTY(ChartTheme theme READ theme WRITE setTheme)
 
 public:
-#ifndef QTQUICK2
+    enum ChartTheme {
+        ThemeInvalid = QChart::ChartThemeInvalid,
+        ThemeDefault,
+        ThemeVanilla,
+        ThemeIcy,
+        ThemeGrayscale,
+        //ThemeScientific,
+        ThemeUnnamed1
+    };
     DeclarativeChart(QDeclarativeItem *parent = 0);
-#else
-    DeclarativeChart(QQuickItem *parent = 0);
-#endif
 
-#ifndef QTQUICK2
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
-#else
-    void paint(QPainter *painter);
-#endif
+public: // From QDeclarativeItem/QGraphicsItem
+    void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
+
+public:
+    void setTheme(ChartTheme theme) {m_chart->setTheme((QChart::ChartThemeId) theme);}
+    ChartTheme theme();
+
+public:
+    // Extending QChart with DeclarativeChart is not possible because QObject does not support
+    // multi inheritance, so we now have a QChart as a member instead
+    QChart *m_chart;
 };
 
+QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif // DECLARATIVECHART_H
