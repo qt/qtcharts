@@ -1,5 +1,6 @@
 #include "percentbargroup.h"
 #include "bar.h"
+#include "barlabel_p.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -58,6 +59,7 @@ void PercentBarGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         foreach(QGraphicsItem* i, childItems()) {
             i->paint(painter,option,widget);
         }
+        mLayoutDirty = false;
     }
 }
 
@@ -88,6 +90,16 @@ void PercentBarGroup::dataChanged()
         childItems().append(bar);
     }
 
+    // TODO: labels from series. This creates just some example labels
+    int count = mSeries.countColumns();
+    for (int i=0; i<count; i++) {
+        BarLabel* label = new BarLabel(this);
+        QString text("Label " + QString::number(i));
+        label->set(text);
+        childItems().append(label);
+    }
+
+    // TODO: if (autolayout) { layoutChanged() } or something
     mLayoutDirty = true;
 }
 
@@ -107,7 +119,9 @@ void PercentBarGroup::layoutChanged()
     qreal tW = mWidth;
     qreal tC = count+1;
     qreal xStep = (tW/tC);
-    qreal xPos = ((tW/tC) + mBarDefaultWidth / 2);
+//    qreal xPos = ((tW/tC) + mBarDefaultWidth / 2);
+    qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
+    int labelIndex = mSeries.countColumns() * mSeries.countRows();
 
     for (int column = 0; column < mSeries.countColumns(); column++) {
         qreal colSum = mSeries.columnSum(column);
@@ -125,6 +139,11 @@ void PercentBarGroup::layoutChanged()
             itemIndex++;
             yPos -= barHeight;
         }
+
+        // TODO: Layout for labels, remove magic number
+        BarLabel* label = reinterpret_cast<BarLabel*> (childItems().at(labelIndex));
+        label->setPos(xPos, mHeight + 20);
+        labelIndex++;
         xPos += xStep;
     }
     mLayoutDirty = true;

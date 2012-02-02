@@ -1,5 +1,6 @@
 #include "bargroup.h"
 #include "bar.h"
+#include "barlabel_p.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -57,6 +58,7 @@ void BarGroup::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
         // Layout or data has changed. Need to redraw.
         foreach(QGraphicsItem* i, childItems()) {
             i->paint(painter,option,widget);
+        mLayoutDirty = false;
         }
     }
 }
@@ -88,6 +90,16 @@ void BarGroup::dataChanged()
         childItems().append(bar);
     }
 
+    // TODO: labels from series. This creates just some example labels
+    int count = mSeries.countColumns();
+    for (int i=0; i<count; i++) {
+        BarLabel* label = new BarLabel(this);
+        QString text("Label " + QString::number(i));
+        label->set(text);
+        childItems().append(label);
+    }
+
+    // TODO: if (autolayout) { layoutChanged() } or something
     mLayoutDirty = true;
 }
 
@@ -113,10 +125,10 @@ void BarGroup::layoutChanged()
     qreal tC = columnCount+1;
     qreal xStepPerSeries = (tW/tC);
 
-    qDebug() << "XSTEP:" << xStepPerSeries;
-
     // Scaling.
     int itemIndex(0);
+    int labelIndex = mSeries.countColumns() * mSeries.countRows();
+
     for (int column=0; column < columnCount; column++) {
         qreal xPos = xStepPerSeries * column + ((tW + mBarDefaultWidth*rowCount)/(columnCount*2));
         qreal yPos = mHeight;
@@ -131,6 +143,12 @@ void BarGroup::layoutChanged()
             itemIndex++;
             xPos += mBarDefaultWidth;
         }
+
+        // TODO: Layout for labels, remove magic number
+        xPos = xStepPerSeries * column + ((tW + mBarDefaultWidth*rowCount)/(columnCount*2));
+        BarLabel* label = reinterpret_cast<BarLabel*> (childItems().at(labelIndex));
+        label->setPos(xPos, mHeight + 20);
+        labelIndex++;
     }
 
     mLayoutDirty = true;

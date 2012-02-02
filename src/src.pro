@@ -19,6 +19,7 @@ SOURCES += \
     barchart/stackedbargroup.cpp \
     barchart/percentbarchartseries.cpp \
     barchart/percentbargroup.cpp \
+    barchart/barlabel.cpp \
     xylinechart/qxychartseries.cpp \
     xylinechart/xylinechartitem.cpp \
     plotdomain.cpp \
@@ -35,7 +36,8 @@ SOURCES += \
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
-    plotdomain_p.h \  
+    barchart/barlabel_p.h \
+    plotdomain_p.h \
     qscatterseries_p.h \
     qpieseries_p.h \
     pieslice.h \

@@ -3,6 +3,7 @@
 
 #include "charttheme_p.h"
 #include "chartitem_p.h"
+#include "barlabel_p.h"
 #include "bar.h"
 #include "stackedbarchartseries.h"
 #include <QGraphicsItem>
@@ -55,6 +56,7 @@ private:
     QList<QColor> mColors;  // List of colors for series for now
 
     ChartTheme* mTheme;
+//    QList<BarLabel*> mLabels;
 
 };
 
