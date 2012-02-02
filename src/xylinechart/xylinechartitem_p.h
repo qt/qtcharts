@@ -22,7 +22,7 @@ public:
    // virtual QPainterPath shape() const;
 
 public: // from ChartItem
-    void setSize(const QSize &size);
+    void setSize(const QSizeF &size);
     void setPlotDomain(const PlotDomain& data);
 
 private:

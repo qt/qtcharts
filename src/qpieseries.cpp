@@ -49,7 +49,7 @@ bool QPieSeriesPrivate::setData(QList<qreal> data)
     return true;
 }
 
-void QPieSeriesPrivate::setSize(const QSize &size)
+void QPieSeriesPrivate::setSize(const QSizeF &size)
 {
     // TODO: allow user setting the size?
     // TODO: allow user defining the margins?

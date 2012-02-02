@@ -15,7 +15,7 @@ XYLineChartItem::XYLineChartItem(QXYChartSeries* series,QGraphicsItem *parent) :
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
 }
 
-void XYLineChartItem::setSize(const QSize &size)
+void XYLineChartItem::setSize(const QSizeF &size)
 {
     m_rect = QRect(0, 0, size.width(), size.height());
     prepareGeometryChange();

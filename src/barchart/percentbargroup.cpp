@@ -16,7 +16,7 @@ PercentBarGroup::PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *p
 }
 
 
-void PercentBarGroup::setSize(const QSize& size)
+void PercentBarGroup::setSize(const QSizeF& size)
 {
 //    qDebug() << "PercentBarGroup::setSize";
     mWidth = size.width();

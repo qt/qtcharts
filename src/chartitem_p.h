@@ -12,7 +12,7 @@ class ChartItem : public QGraphicsItem
 public:
     ChartItem(QGraphicsItem* parent = 0):QGraphicsItem(parent){};
     virtual ~ChartItem(){};
-    virtual void setSize(const QSize &size) = 0;
+    virtual void setSize(const QSizeF &size) = 0;
     virtual void setPlotDomain(const PlotDomain& data) = 0;
 };
 

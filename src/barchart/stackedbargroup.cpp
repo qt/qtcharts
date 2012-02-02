@@ -17,7 +17,7 @@ StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *p
 }
 
 
-void StackedBarGroup::setSize(const QSize& size)
+void StackedBarGroup::setSize(const QSizeF& size)
 {
 //    qDebug() << "StackedBarGroup::setSize";
     mWidth = size.width();

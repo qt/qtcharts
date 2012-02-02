@@ -18,7 +18,7 @@ public:
     QScatterSeriesPrivate(QGraphicsItem *parent);
 
 public: // from ChartObjectInterface
-    void setSize(const QSize &size);
+    void setSize(const QSizeF &size);
     void setPlotDomain(const PlotDomain& data);
 
 public: // from ChartThemeObserver

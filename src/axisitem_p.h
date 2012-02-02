@@ -20,7 +20,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget){};
 
 public: // from ChartItem
-    void setSize(const QSize &size);
+    void setSize(const QSizeF &size);
     void setPlotDomain(const PlotDomain& data);
 
 public:

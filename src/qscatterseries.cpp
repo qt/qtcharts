@@ -37,7 +37,7 @@ void QScatterSeriesPrivate::changeGeometry()
     }
 }
 
-void QScatterSeriesPrivate::setSize(const QSize &size)
+void QScatterSeriesPrivate::setSize(const QSizeF &size)
 {
 //    m_boundingRect = QRectF(pos().x(), pos().y(), size.width(), size.height());
     m_boundingRect = QRectF(0, 0, size.width(), size.height());

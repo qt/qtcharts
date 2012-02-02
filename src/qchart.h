@@ -3,9 +3,11 @@
 
 #include <qchartglobal.h>
 #include <qchartseries.h>
-#include <QGraphicsObject>
+#include <QGraphicsWidget>
 #include <QLinearGradient>
 #include <QFont>
+
+class QGraphicsSceneResizeEvent;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -25,7 +27,7 @@ class ChartItem;
 /*!
  * TODO: define the responsibilities
  */
-class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsObject
+class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
     Q_OBJECT
 public:
@@ -45,7 +47,7 @@ public:
     };
 
 public:
-    QChart(QGraphicsObject* parent = 0);
+    QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
     //from QGraphicsItem
@@ -57,7 +59,6 @@ public:
     // TODO: who owns the series now? maybe owned by chart and returned a reference instead...
     QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
 
-    void setSize(const QSize& size);
     void setMargin(int margin);
     int margin() const;
     void setTheme(QChart::ChartThemeId theme);
@@ -65,7 +66,7 @@ public:
     void setTitle(const QString& title,const QFont& font = QFont());
     void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, GradientOrientation orientation = VerticalGradientOrientation);
 
-    void zoomInToRect(const QRect& rectangle);
+    void zoomInToRect(const QRectF& rectangle);
     void zoomIn();
     void zoomOut();
     void zoomReset();
@@ -73,6 +74,9 @@ public:
     void setAxisX(const QChartAxis& axis);
     void setAxisY(const QChartAxis& axis);
     void setAxisY(const QList<QChartAxis>& axis);
+
+protected:
+    void resizeEvent(QGraphicsSceneResizeEvent *event);
 
 private:
     void setAxis(AxisItem *item, const QChartAxis& axis);
@@ -85,7 +89,7 @@ private:
     QGraphicsTextItem* m_titleItem;
     AxisItem* m_axisXItem;
     QList<AxisItem*> m_axisYItem;
-    QRect m_rect;
+    QRectF m_rect;
     QList<QChartSeries *> m_chartSeries;
     QList<ChartItem *> m_chartItems;
     QVector<PlotDomain> m_plotDomainList;

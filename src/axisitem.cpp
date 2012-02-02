@@ -43,7 +43,7 @@ void AxisItem::setPlotDomain(const PlotDomain& plotDomain)
     createItems();
 }
 
-void AxisItem::setSize(const QSize &size)
+void AxisItem::setSize(const QSizeF &size)
 {
     m_rect = QRectF(QPoint(0,0),size);
     createItems();

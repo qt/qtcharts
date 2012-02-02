@@ -28,7 +28,7 @@ qreal PlotDomain::spanY() const
 	return m_maxY - m_minY;
 }
 
-PlotDomain PlotDomain::subDomain(const QRect& rect, qreal maxWidth,qreal maxHeight) const
+PlotDomain PlotDomain::subDomain(const QRectF& rect, qreal maxWidth,qreal maxHeight) const
 {
   PlotDomain domain;
 

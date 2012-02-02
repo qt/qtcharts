@@ -19,7 +19,7 @@ public:
     ~QPieSeriesPrivate();
 
 public: // from ChartItem
-    void setSize(const QSize &size);
+    void setSize(const QSizeF &size);
     void setPlotDomain(const PlotDomain& data);
     // This is a dummy QGraphicsItem; dummy implementation
     QRectF boundingRect() const { return parentItem()->boundingRect(); }

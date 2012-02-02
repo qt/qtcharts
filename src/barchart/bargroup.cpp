@@ -15,7 +15,7 @@ BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
     dataChanged();
 }
 
-void BarGroup::setSize(const QSize& size)
+void BarGroup::setSize(const QSizeF& size)
 {
     qDebug() << "BarGroup::setSize";
     mWidth = size.width();

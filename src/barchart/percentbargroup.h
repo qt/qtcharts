@@ -14,7 +14,7 @@ public:
     PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *parent = 0);
 
 public: // From ChartItem
-    void setSize(const QSize &size);
+    void setSize(const QSizeF &size);
     void setPlotDomain(const PlotDomain& data);
 
 public:

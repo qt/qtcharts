@@ -14,7 +14,7 @@ public:
     explicit BarGroup(BarChartSeries& series, QGraphicsItem *parent = 0);
 
 public: // from ChartItem
-    void setSize(const QSize &size);
+    void setSize(const QSizeF &size);
     void setPlotDomain(const PlotDomain& data);
 
     // Layout "api"

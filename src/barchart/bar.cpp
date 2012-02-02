@@ -9,7 +9,7 @@ Bar::Bar(QGraphicsItem *parent)
 {
 }
 
-void Bar::setSize(const QSize& size)
+void Bar::setSize(const QSizeF& size)
 {
     mWidth = size.width();
     mHeight = size.height();

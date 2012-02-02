@@ -32,7 +32,7 @@ QChartWidget::~QChartWidget()
 void QChartWidget::resizeEvent(QResizeEvent *event)
 {
     m_scene->setSceneRect(0,0,size().width(),size().height());
-    m_chart->setSize(size());
+    m_chart->resize(size());
     QWidget::resizeEvent(event);
 }
 

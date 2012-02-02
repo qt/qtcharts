@@ -19,11 +19,12 @@
 #include "plotdomain_p.h"
 #include "axisitem_p.h"
 #include <QGraphicsScene>
+#include <QGraphicsSceneResizeEvent>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QChart::QChart(QGraphicsObject* parent) : QGraphicsObject(parent),
+QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
     m_backgroundItem(0),
     m_titleItem(0),
     m_axisXItem(new AxisItem(AxisItem::X_AXIS, this)),
@@ -226,36 +227,6 @@ QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
     return series;
 }
 
-void QChart::setSize(const QSize& size)
-{
-    m_rect = QRect(QPoint(0,0),size);
-    QRect rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
-
-    // recalculate title position
-    if (m_titleItem) {
-        QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
-        m_titleItem->setPos(center.x(),m_rect.top()/2 + margin()/2);
-    }
-
-    //recalculate background gradient
-    if (m_backgroundItem) {
-        m_backgroundItem->setRect(rect);
-        if (m_bacgroundOrinetation == HorizonatlGradientOrientation)
-            m_backgroundGradient.setFinalStop(m_backgroundItem->rect().width(), 0);
-        else
-            m_backgroundGradient.setFinalStop(0, m_backgroundItem->rect().height());
-        m_backgroundItem->setBrush(m_backgroundGradient);
-    }
-
-    // resize and reposition childs
-    foreach (ChartItem *item, m_chartItems) {
-        item->setPos(rect.topLeft());
-        item->setSize(rect.size());
-    }
-
-    update();
-}
-
 void QChart::setBackground(const QColor& startColor, const QColor& endColor, GradientOrientation orientation)
 {
 
@@ -319,14 +290,14 @@ void QChart::setTheme(QChart::ChartThemeId theme)
     update();
 }
 
-void QChart::zoomInToRect(const QRect& rectangle)
+void QChart::zoomInToRect(const QRectF& rectangle)
 {
 
     if(!rectangle.isValid()) return;
 
     qreal margin = this->margin();
 
-    QRect rect = rectangle.normalized();
+    QRectF rect = rectangle.normalized();
     rect.translate(-margin, -margin);
 
     PlotDomain& oldDomain = m_plotDomainList[m_plotDataIndex];
@@ -350,7 +321,7 @@ void QChart::zoomIn()
             item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
         update();
     } else {
-        QRect rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
+        QRectF rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
         rect.setWidth(rect.width()/2);
         rect.setHeight(rect.height()/2);
         rect.moveCenter(m_rect.center());
@@ -396,6 +367,39 @@ void QChart::setAxis(AxisItem *item, const QChartAxis& axis)
 {
     item->setVisible(axis.isAxisVisible());
 }
+
+void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
+{
+
+    m_rect = QRectF(QPoint(0,0),event->newSize());
+    QRectF rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
+
+    // recalculate title position
+    if (m_titleItem) {
+        QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
+        m_titleItem->setPos(center.x(),m_rect.top()/2 + margin()/2);
+    }
+
+    //recalculate background gradient
+    if (m_backgroundItem) {
+        m_backgroundItem->setRect(rect);
+        if (m_bacgroundOrinetation == HorizonatlGradientOrientation)
+        m_backgroundGradient.setFinalStop(m_backgroundItem->rect().width(), 0);
+        else
+        m_backgroundGradient.setFinalStop(0, m_backgroundItem->rect().height());
+        m_backgroundItem->setBrush(m_backgroundGradient);
+    }
+
+    // resize and reposition childs
+    foreach (ChartItem *item, m_chartItems) {
+        item->setPos(rect.topLeft());
+        item->setSize(rect.size());
+    }
+
+    update();
+}
+
+
 
 #include "moc_qchart.cpp"
 
