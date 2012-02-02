@@ -37,6 +37,7 @@ SOURCES += \
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
     barchart/barlabel_p.h \
+    barchart/bar_p.h \
     plotdomain_p.h \
     qscatterseries_p.h \
     qpieseries_p.h \

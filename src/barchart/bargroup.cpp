@@ -1,5 +1,5 @@
 #include "bargroup.h"
-#include "bar.h"
+#include "bar_p.h"
 #include "barlabel_p.h"
 #include <QDebug>
 

@@ -2,7 +2,7 @@
 #define QBARGROUP_H
 
 #include "chartitem_p.h"
-#include "bar.h"
+#include "bar_p.h"
 #include "barchartseries.h"
 #include <QGraphicsItem>
 

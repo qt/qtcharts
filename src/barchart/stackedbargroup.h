@@ -4,7 +4,7 @@
 #include "charttheme_p.h"
 #include "chartitem_p.h"
 #include "barlabel_p.h"
-#include "bar.h"
+#include "bar_p.h"
 #include "stackedbarchartseries.h"
 #include <QGraphicsItem>
 

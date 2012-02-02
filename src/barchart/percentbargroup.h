@@ -2,7 +2,7 @@
 #define PERCENTBARGROUP_H
 
 #include "chartitem_p.h"
-#include "bar.h"
+#include "bar_p.h"
 #include "percentbarchartseries.h"
 #include <QGraphicsItem>
 
