@@ -44,11 +44,6 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
 
 QChart::~QChart(){}
 
-QRectF QChart::boundingRect() const
-{
-    return m_rect;
-}
-
 void QChart::addSeries(QChartSeries* series)
 {
     // TODO: we should check the series not already added
@@ -396,6 +391,7 @@ void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
         item->setSize(rect.size());
     }
 
+    QGraphicsWidget::resizeEvent(event);
     update();
 }
 

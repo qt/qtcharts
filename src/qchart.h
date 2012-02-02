@@ -50,10 +50,6 @@ public:
     QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
-    //from QGraphicsItem
-    QRectF boundingRect() const;
-    void paint(QPainter */*painter*/, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/) {}
-
     void addSeries(QChartSeries* series);
     //TODO: QChartSeries* createSeries(QSeriesData *data, QChartSeries::QChartSeriesType type);
     // TODO: who owns the series now? maybe owned by chart and returned a reference instead...
