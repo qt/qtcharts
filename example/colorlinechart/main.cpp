@@ -36,7 +36,12 @@ int main(int argc, char *argv[])
     chartView->setTitle("Custom color line chart example");
     chartView->addSeries(series0);
     chartView->addSeries(series1);
-    chartView->setBackground(Qt::blue,Qt::yellow,QChart::HorizonatlGradientOrientation);
+
+    QLinearGradient backgroundGradient;
+    backgroundGradient.setColorAt(0.0, Qt::blue);
+    backgroundGradient.setColorAt(1.0, Qt::yellow);
+    backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+    chartView->setChartBackgroundBrush(backgroundGradient);
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);

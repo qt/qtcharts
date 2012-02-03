@@ -63,6 +63,9 @@ public:
     void setTitle(const QString& title,const QFont& font = QFont());
     void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, GradientOrientation orientation = VerticalGradientOrientation);
 
+    void setChartBackgroundBrush(const QBrush& brush);
+    void setChartBackgroundPen(const QPen& pen);
+
     void zoomInToRect(const QRectF& rectangle);
     void zoomIn();
     void zoomOut();

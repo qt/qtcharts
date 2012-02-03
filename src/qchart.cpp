@@ -71,7 +71,7 @@ void QChart::addSeries(QChartSeries* series)
             domain.m_maxY = qMax(domain.m_maxY,y);
         }
 
-        XYLineChartItem* item = new XYLineChartItem(xyseries,this);
+        XYLineChartItem* item = new XYLineChartItem(xyseries,0,this);
 
         m_chartItems << item;
         // TODO:
@@ -240,16 +240,40 @@ void QChart::setBackground(const QColor& startColor, const QColor& endColor, Gra
     m_bacgroundOrinetation = orientation;
     m_backgroundGradient.setColorAt(0.0, startColor);
     m_backgroundGradient.setColorAt(1.0, endColor);
-    m_backgroundGradient.setStart(0,0);
+    m_backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
 
     if(orientation == VerticalGradientOrientation){
-        m_backgroundGradient.setFinalStop(0,m_rect.height());
+        m_backgroundGradient.setFinalStop(0,1);
     }else{
-        m_backgroundGradient.setFinalStop(m_rect.width(),0);
+        m_backgroundGradient.setFinalStop(1,0);
     }
 
     m_backgroundItem->setBrush(m_backgroundGradient);
     m_backgroundItem->setPen(Qt::NoPen);
+    m_backgroundItem->update();
+}
+
+void QChart::setChartBackgroundBrush(const QBrush& brush)
+{
+
+    if(!m_backgroundItem){
+        m_backgroundItem = new QGraphicsRectItem(this);
+        m_backgroundItem->setZValue(-1);
+    }
+
+    m_backgroundItem->setBrush(brush);
+    m_backgroundItem->update();
+}
+
+void QChart::setChartBackgroundPen(const QPen& pen)
+{
+
+    if(!m_backgroundItem){
+        m_backgroundItem = new QGraphicsRectItem(this);
+        m_backgroundItem->setZValue(-1);
+    }
+
+    m_backgroundItem->setPen(pen);
     m_backgroundItem->update();
 }
 
@@ -390,11 +414,6 @@ void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
     //recalculate background gradient
     if (m_backgroundItem) {
         m_backgroundItem->setRect(rect);
-        if (m_bacgroundOrinetation == HorizonatlGradientOrientation)
-        m_backgroundGradient.setFinalStop(m_backgroundItem->rect().width(), 0);
-        else
-        m_backgroundGradient.setFinalStop(0, m_backgroundItem->rect().height());
-        m_backgroundItem->setBrush(m_backgroundGradient);
     }
 
     // resize and reposition childs

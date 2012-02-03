@@ -74,4 +74,12 @@ void QChartView::setBackground(const QColor& startColor, const QColor& endColor,
     m_chart->setBackground(startColor,endColor,orientation);
 }
 
+void QChartView::setChartBackgroundBrush(const QBrush& brush)
+{
+	 m_chart->setChartBackgroundBrush(brush);
+}
+void QChartView::setChartBackgroundPen(const QPen& pen)
+{
+	 m_chart->setChartBackgroundPen(pen);
+}
 QTCOMMERCIALCHART_END_NAMESPACE

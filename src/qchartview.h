@@ -27,7 +27,14 @@ public:
 
     int margin() const;
     void setTitle(const QString& title);
+
+    //Obsolete
     void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, QChart::GradientOrientation orientation = QChart::VerticalGradientOrientation);
+
+
+    void setChartBackgroundBrush(const QBrush& brush);
+    void setChartBackgroundPen(const QPen& pen);
+
     void zoomInToRect(const QRect& rectangle);
     void zoomIn();
     void zoomOut();
