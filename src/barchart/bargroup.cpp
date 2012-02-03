@@ -8,9 +8,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
     ChartItem(parent)
     ,mSeries(series)
+    ,mBarDefaultWidth(10)
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
-    ,mBarDefaultWidth(10)
 {
     dataChanged();
 }

@@ -14,6 +14,7 @@ PercentBarChartSeries::PercentBarChartSeries(QObject *parent) :
 bool PercentBarChartSeries::setData(QAbstractItemModel* model)
 {
     mModel = model;
+    return true;
 }
 
 int PercentBarChartSeries::min()

@@ -12,6 +12,7 @@ StackedBarChartSeries::StackedBarChartSeries(QObject *parent) :
 bool StackedBarChartSeries::setData(QAbstractItemModel* model)
 {
     mModel = model;
+    return true;
 }
 
 int StackedBarChartSeries::min()

@@ -1,7 +1,6 @@
 #include <QtGui/QApplication>
 #include <QDeclarativeEngine>
 #include "qmlapplicationviewer.h"
-#include "chart.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {

@@ -7,13 +7,13 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *parent) :
-  ChartItem(parent)
-  ,mSeries(series)
-  ,mLayoutSet(false)
-  ,mLayoutDirty(true)
-  ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
-  ,mTheme(0)
-  ,mSeparatorsVisible(true)
+    ChartItem(parent)
+    ,mSeries(series)
+    ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
+    ,mLayoutSet(false)
+    ,mLayoutDirty(true)
+    ,mTheme(0)
+    ,mSeparatorsVisible(true)
 {
     dataChanged();
 }

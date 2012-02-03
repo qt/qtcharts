@@ -11,9 +11,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QScatterSeriesPrivate::QScatterSeriesPrivate(QGraphicsItem *parent) :
     ChartItem(parent),
+    m_boundingRect(),
     m_markerColor(QColor()),
-    m_visibleChartArea(),
-    m_boundingRect()
+    m_visibleChartArea()
 {
     if (parent)
         m_boundingRect = parent->boundingRect();

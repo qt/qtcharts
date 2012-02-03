@@ -6,11 +6,11 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 PercentBarGroup::PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *parent) :
-  ChartItem(parent)
-  ,mSeries(series)
-  ,mLayoutSet(false)
-  ,mLayoutDirty(true)
-  ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
+    ChartItem(parent)
+    ,mSeries(series)
+    ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
+    ,mLayoutSet(false)
+    ,mLayoutDirty(true)
 {
     dataChanged();
 }

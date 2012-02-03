@@ -11,6 +11,7 @@ BarChartSeries::BarChartSeries(QObject *parent)
 bool BarChartSeries::setData(QAbstractItemModel* model)
 {
     mModel = model;
+    return true;
 }
 
 int BarChartSeries::min()
