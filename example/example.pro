@@ -4,4 +4,6 @@ SUBDIRS += linechart \
            colorlinechart \
            barchart \
            stackedbarchart \
-           percentbarchart
+           percentbarchart \
+           scatter
+
