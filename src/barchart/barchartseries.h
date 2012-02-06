@@ -3,36 +3,21 @@
 
 #include <QList>
 #include <QAbstractItemModel>
-#include "qchartseries.h"
-#include "qchartglobal.h"
+#include "barchartseriesbase.h"
 
-// TODO: Can this class be combined with series?
 class BarGroup;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 // Container for series
-class QTCOMMERCIALCHART_EXPORT BarChartSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT BarChartSeries : public BarChartSeriesBase
 {
     Q_OBJECT
 public:
     BarChartSeries(QObject* parent=0);
 
-    // from QChartSeries
+    // from BarChartSeriesBase
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }
-
-    // TODO: Better data model?
-    virtual bool setData(QAbstractItemModel* model);
-
-    // Methods to find out minimum and maximum values of data
-    int min();
-    int max();
-    int countRows();
-    int countColumns();     // Count items in one series.
-    int countTotalItems();
-    int valueAt(int row, int column);
-
-public Q_SLOTS:
 
 private:
 

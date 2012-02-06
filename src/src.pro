@@ -32,12 +32,16 @@ SOURCES += \
     qchartview.cpp \
     qchartseries.cpp \
     qchartaxis.cpp \
-    charttheme.cpp
+    charttheme.cpp \
+    barchart/separator.cpp \
+    barchart/bargroupbase.cpp \
+    barchart/barchartseriesbase.cpp
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
     barchart/barlabel_p.h \
     barchart/bar_p.h \
+    barchart/separator_p.h \
     plotdomain_p.h \
     qscatterseries_p.h \
     qpieseries_p.h \
@@ -60,6 +64,8 @@ PUBLIC_HEADERS += \
     barchart/stackedbargroup.h \
     barchart/percentbarchartseries.h \
     barchart/percentbargroup.h \
+    barchart/barchartseriesbase.h \
+    barchart/bargroupbase.h \
     qchartview.h \
     qchartaxis.h 
    
