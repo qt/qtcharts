@@ -71,7 +71,7 @@ void QChart::addSeries(QChartSeries* series)
             domain.m_maxY = qMax(domain.m_maxY,y);
         }
 
-        XYLineChartItem* item = new XYLineChartItem(xyseries,0,this);
+        XYLineChartItem* item = new XYLineChartItem(xyseries, this);
 
         m_chartItems << item;
         // TODO:
