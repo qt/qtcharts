@@ -22,7 +22,7 @@ public:
         ThemeVanilla,
         ThemeIcy,
         ThemeGrayscale,
-        //ThemeScientific,
+        ThemeScientific,
         ThemeUnnamed1
     };
     DeclarativeChart(QDeclarativeItem *parent = 0);

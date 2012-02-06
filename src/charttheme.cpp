@@ -33,24 +33,30 @@ void ChartThemeData::setTheme(int theme)
         m_gradientEndColor = QColor(QRgb(0xffafafaf));
         break;
     case QChart::ChartThemeIcy:
-        m_seriesThemes.append(SeriesTheme(QColor(0, 3, 165), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(49, 52, 123), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(71, 114, 187), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(48, 97, 87), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(19, 71, 90), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(110, 70, 228), 2));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFF0D2673), 2));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFF2685BF), 2));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFF3DADD9), 3));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFF62C3D9), 2));
 
-        m_gradientStartColor = QColor(QRgb(0xffe4ffff));
-        m_gradientEndColor = QColor(QRgb(0xffe4ffff));
+        m_gradientStartColor = QColor(QRgb(0xffBDE3F2));
+        m_gradientEndColor = QColor(QRgb(0xffafafaf));
         break;
     case QChart::ChartThemeGrayscale:
-        m_seriesThemes.append(SeriesTheme(QColor(0, 0, 0), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(50, 50, 50), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(100, 100, 100), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(140, 140, 140), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(180, 180, 180), 2));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFF869299), 2));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFFA5BDCC), 2));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFFE8FFFC), 3));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFFCCC2C2), 2));
 
         m_gradientStartColor = QColor(QRgb(0xffffffff));
+        m_gradientEndColor = QColor(QRgb(0xffafafaf));
+        break;
+    case QChart::ChartThemeScientific:
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFF000000), 3));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFFFFAD00), 2));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFF596A75), 2));
+        m_seriesThemes.append(SeriesTheme(QRgb(0xFF474747), 2));
+
+        m_gradientStartColor = QColor(QRgb(0xffafafaf));
         m_gradientEndColor = QColor(QRgb(0xffafafaf));
         break;
     case QChart::ChartThemeUnnamed1:

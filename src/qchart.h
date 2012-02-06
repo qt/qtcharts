@@ -42,7 +42,7 @@ public:
         ChartThemeVanilla,
         ChartThemeIcy,
         ChartThemeGrayscale,
-        //ChartThemeScientific,
+        ChartThemeScientific,
         ChartThemeUnnamed1
     };
 

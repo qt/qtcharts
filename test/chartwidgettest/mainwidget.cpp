@@ -124,6 +124,7 @@ void MainWidget::initThemeCombo(QGridLayout *grid)
     chartTheme->addItem("Vanilla");
     chartTheme->addItem("Icy");
     chartTheme->addItem("Grayscale");
+    chartTheme->addItem("Scientific");
     chartTheme->addItem("Unnamed1");
     connect(chartTheme, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeChartTheme(int)));
