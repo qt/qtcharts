@@ -1,8 +1,16 @@
 integrated_build:{
     message('Internal build within charts core source tree')
     INCLUDEPATH += $$CHART_BUILD_HEADER_DIR
-    LIBS += -L $$CHART_BUILD_LIB_DIR -Wl,-rpath,$$CHART_BUILD_LIB_DIR
+
+    !win32: {
+        # What is the purpose of this? We are already adding our lib depending on the release type below.
+        # Plus this causes an error in vs2010 build:
+        #    LINK : fatal error LNK1146: no argument specified with option '/LIBPATH:'
+        LIBS += -L $$CHART_BUILD_LIB_DIR -Wl,-rpath,$$CHART_BUILD_LIB_DIR
+    }
+
     DESTDIR = $$CHART_BUILD_BIN_DIR
+
     CONFIG(debug, debug|release) {
         LIBS += -lQtCommercialChartd
         #this is ugly hack to work around missing rpath, it simply copies lib
