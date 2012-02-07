@@ -33,10 +33,10 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     m_plotDataIndex(0),
     m_marginSize(0),
     m_chartTheme(new ChartTheme(this)),
-    //m_engine(0),
-    m_dataset(new ChartDataSet(this)),
-    //m_presenter(0)
-    m_presenter(new ChartPresenter(this,m_dataset))
+    m_dataset(0),
+    //m_dataset(new ChartDataSet(this)),
+    m_presenter(0)
+    //m_presenter(new ChartPresenter(this,m_dataset))
 {
     // TODO: the default theme?
     setTheme(QChart::ChartThemeDefault);
