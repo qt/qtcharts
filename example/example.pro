@@ -5,5 +5,6 @@ SUBDIRS += linechart \
            barchart \
            stackedbarchart \
            percentbarchart \
-           scatter
+           scatter \
+           piechart
 
