@@ -12,9 +12,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // Create widget and scatter series
-    QChartWidget chartWidget;
+    QChartWidget *chartWidget = new QChartWidget();
     QScatterSeries *scatter =
-            qobject_cast<QScatterSeries *>(chartWidget.createSeries(QChartSeries::SeriesTypeScatter));
+            qobject_cast<QScatterSeries *>(chartWidget->createSeries(QChartSeries::SeriesTypeScatter));
     Q_ASSERT(scatter);
 
     // Add test data to the series
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     // Use the chart widget as the central widget
     QMainWindow w;
     w.resize(640, 480);
-    w.setCentralWidget(&chartWidget);
+    w.setCentralWidget(chartWidget);
     w.show();
 
     return a.exec();
