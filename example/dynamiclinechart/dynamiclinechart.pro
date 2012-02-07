@@ -10,7 +10,7 @@ TARGET = dynamicLineChart
 TEMPLATE = app
 QT += core gui
 SOURCES += main.cpp
-HEADERS += updater.h
+HEADERS += wavegenerator.h
 
 
 

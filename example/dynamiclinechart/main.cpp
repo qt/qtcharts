@@ -4,7 +4,7 @@
 #include <qxychartseries.h>
 #include <qchart.h>
 #include <cmath>
-#include "updater.h"
+#include "wavegenerator.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,23 +21,18 @@ int main(int argc, char *argv[])
     red.setWidth(3);
     series1->setPen(red);
 
-    for (int x = 0; x <= numPoints; ++x) {
-    	  series0->add(x, fabs(sin(PI/50*x)*100));
-    	  series1->add(x, fabs(cos(PI/50*x)*100));
-    }
+    WaveGenerator generator(series0,series1);
 
     QChartView* chartView =  new QChartView(&window);
 
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setTitle("Basic line chart example");
+    chartView->setTitle("This is wave generator buahha.");
     chartView->addSeries(series0);
     chartView->addSeries(series1);
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
-
-    Updater updater(series0,series1);
 
     return a.exec();
 }
