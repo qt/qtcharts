@@ -28,7 +28,7 @@ public:
     int margin() const;
     void setTitle(const QString& title);
 
-    //Obsolete
+    //Obsolete interface
     void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, QChart::GradientOrientation orientation = QChart::VerticalGradientOrientation);
 
 

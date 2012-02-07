@@ -4,10 +4,7 @@
 #include <qxychartseries.h>
 #include <qchart.h>
 #include <cmath>
-
-QTCOMMERCIALCHART_USE_NAMESPACE
-
-#define PI 3.14159265358979
+#include "updater.h"
 
 int main(int argc, char *argv[])
 {
@@ -24,8 +21,6 @@ int main(int argc, char *argv[])
     red.setWidth(3);
     series1->setPen(red);
 
-    int numPoints = 100;
-
     for (int x = 0; x <= numPoints; ++x) {
     	  series0->add(x, fabs(sin(PI/50*x)*100));
     	  series1->add(x, fabs(cos(PI/50*x)*100));
@@ -41,6 +36,8 @@ int main(int argc, char *argv[])
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
+
+    Updater updater(series0,series1);
 
     return a.exec();
 }

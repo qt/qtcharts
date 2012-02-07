@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
     int numPoints = 100;
 
     for (int x = 0; x <= numPoints; ++x) {
-    	  series0->add(x, abs(sin(PI/50*x)*100));
-    	  series1->add(x, abs(cos(PI/50*x)*100));
+    	  series0->add(x, fabs(sin(PI/50*x)*100));
+    	  series1->add(x, fabs(cos(PI/50*x)*100));
      }
 
     ChartWidget* chartWidget =  new ChartWidget(&window);

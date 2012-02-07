@@ -11,8 +11,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QTCOMMERCIALCHART_EXPORT QXYChartSeries : public QChartSeries
 {
-    //TODO:
-//    Q_OBJECT
+    Q_OBJECT
 private:
     QXYChartSeries(QObject* parent=0);
 public:
@@ -23,7 +22,8 @@ public: // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeLine;}
 
 public:
-    void add(qreal x, qreal y);
+    int add(qreal x, qreal y);
+    void set(int index,qreal x,qreal y);
     void clear();
 
     void setPen(const QPen& pen);
@@ -34,9 +34,12 @@ public:
     qreal y(int pos) const;
     friend QDebug operator<< (QDebug d, const QXYChartSeries series);
 
+signals:
+    void changed(int index);
+
 private:
-    QList<qreal> m_x;
-    QList<qreal> m_y;
+    QVector<qreal> m_x;
+    QVector<qreal> m_y;
     QPen m_pen;
 };
 

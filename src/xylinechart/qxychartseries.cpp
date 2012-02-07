@@ -17,10 +17,18 @@ QXYChartSeries* QXYChartSeries::create(QObject* parent)
     return new QXYChartSeries(parent);
 }
 
-void QXYChartSeries::add(qreal x,qreal y)
+int QXYChartSeries::add(qreal x,qreal y)
 {
     m_x<<x;
     m_y<<y;
+    return m_x.size()-1;
+}
+
+void QXYChartSeries::set(int index,qreal x,qreal y)
+{
+    m_x[index]=x;
+    m_y[index]=y;
+    emit changed(index);
 }
 
 void QXYChartSeries::clear()
@@ -52,7 +60,6 @@ void QXYChartSeries::setPen(const QPen& pen)
     m_pen=pen;
 }
 
-
 QDebug operator<< (QDebug debug, const QXYChartSeries series)
 {
 	Q_ASSERT(series.m_x.size() == series.m_y.size());
@@ -64,5 +71,7 @@ QDebug operator<< (QDebug debug, const QXYChartSeries series)
     }
     return debug.space();
 }
+
+#include "moc_qxychartseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

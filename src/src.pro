@@ -22,6 +22,7 @@ SOURCES += \
     barchart/barlabel.cpp \
     xylinechart/qxychartseries.cpp \
     xylinechart/xylinechartitem.cpp \
+    xylinechart/linechartanimationitem.cpp \
     plotdomain.cpp \
     qscatterseries.cpp \
     qpieseries.cpp \
@@ -35,10 +36,14 @@ SOURCES += \
     charttheme.cpp \
     barchart/separator.cpp \
     barchart/bargroupbase.cpp \
-    barchart/barchartseriesbase.cpp
+    barchart/barchartseriesbase.cpp \
+    chartdataset.cpp \
+    chartpresenter.cpp \
+    domain.cpp
 
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
+    xylinechart/linechartanimationitem_p.h \
     barchart/barlabel_p.h \
     barchart/bar_p.h \
     barchart/separator_p.h \
@@ -48,7 +53,11 @@ PRIVATE_HEADERS += \
     pieslice.h \
     axisitem_p.h \
     chartitem_p.h \
-    charttheme_p.h
+    charttheme_p.h \
+    chartdataset_p.h \
+    chartpresenter_p.h \
+    domain_p.h \
+    chartanimation_p.h
 
 PUBLIC_HEADERS += \
     qchartseries.h \

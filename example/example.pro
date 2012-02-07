@@ -6,5 +6,5 @@ SUBDIRS += linechart \
            stackedbarchart \
            percentbarchart \
            scatter \
-           piechart
-
+           piechart \
+           dynamiclinechart

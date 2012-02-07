@@ -18,6 +18,8 @@
 #include "xylinechartitem_p.h"
 #include "plotdomain_p.h"
 #include "axisitem_p.h"
+#include "chartpresenter_p.h"
+#include "chartdataset_p.h"
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 #include <QDebug>
@@ -30,7 +32,11 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     m_axisXItem(new AxisItem(AxisItem::X_AXIS, this)),
     m_plotDataIndex(0),
     m_marginSize(0),
-    m_chartTheme(new ChartTheme(this))
+    m_chartTheme(new ChartTheme(this)),
+    //m_engine(0),
+    m_dataset(new ChartDataSet(this)),
+    //m_presenter(0)
+    m_presenter(new ChartPresenter(this,m_dataset))
 {
     // TODO: the default theme?
     setTheme(QChart::ChartThemeDefault);
@@ -46,9 +52,16 @@ QChart::~QChart(){}
 
 void QChart::addSeries(QChartSeries* series)
 {
-    // TODO: we should check the series not already added
+    if(m_dataset) {
+        m_dataset->addSeries(series);
+        return;
+    }
+
     Q_ASSERT(series);
     Q_ASSERT(series->type() != QChartSeries::SeriesTypeInvalid);
+
+    // TODO: we should check the series not already added
+
 
     m_chartSeries << series;
 
@@ -71,9 +84,9 @@ void QChart::addSeries(QChartSeries* series)
             domain.m_maxY = qMax(domain.m_maxY,y);
         }
 
-        XYLineChartItem* item = new XYLineChartItem(xyseries, this);
+        //XYLineChartItem* item = new XYLineChartItem(xyseries,0,this);
 
-        m_chartItems << item;
+        //m_chartItems << item;
         // TODO:
         //m_chartTheme->addObserver(xyseries);
 

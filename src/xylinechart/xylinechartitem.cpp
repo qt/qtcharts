@@ -1,72 +1,213 @@
 #include "xylinechartitem_p.h"
-#include "axisitem_p.h"
 #include "qxychartseries.h"
+#include "chartpresenter_p.h"
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-XYLineChartItem::XYLineChartItem(QXYChartSeries* series,QGraphicsItem *parent) :
-    ChartItem(parent),
-    m_series(series),
-    m_pathItem(new QGraphicsPathItem(this))
+XYLineChartItem::XYLineChartItem(ChartPresenter* presenter, QXYChartSeries* series,QGraphicsItem *parent):ChartItem(parent),
+m_presenter(presenter),
+m_series(series),
+m_dirtyData(false),
+m_dirtyGeometry(false),
+m_dirtyDomain(false)
 {
-    setFlags(QGraphicsItem::ItemClipsChildrenToShape);
-}
-
-void XYLineChartItem::setSize(const QSizeF &size)
-{
-    m_rect = QRect(0, 0, size.width(), size.height());
-    prepareGeometryChange();
-    updateGeometry();
-}
-
-void XYLineChartItem::setPlotDomain(const PlotDomain& data)
-{
-    m_plotDomain=data;
-    prepareGeometryChange();
-    updateGeometry();
-
+    QObject::connect(series,SIGNAL(changed(int)),this,SLOT(handleSeriesChanged(int)));
 }
 
 QRectF XYLineChartItem::boundingRect() const
 {
-    return m_rect;
+	return m_rect;
+}
+
+QPainterPath XYLineChartItem::shape() const
+{
+    return m_path;
+}
+
+void XYLineChartItem::setSize(const QSizeF& size)
+{
+    m_size=size;
+    m_dirtyGeometry=true;
+}
+
+void XYLineChartItem::setDomain(const Domain& domain)
+{
+    m_domain=domain;
+    m_dirtyDomain=true;
+}
+
+void XYLineChartItem::setSeries(QXYChartSeries* series)
+{
+    m_series = series;
+    m_dirtyData=true;
+}
+
+void XYLineChartItem::addPoints(const QVector<QPointF>& points)
+{
+    m_data = points;
+    for(int i=0; i<m_data.size();i++){
+    const QPointF& point =m_data[i];
+    QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
+    item->setPos(point.x()-1,point.y()-1);
+    m_points << item;
+    }
+}
+
+void XYLineChartItem::addPoint(const QPointF& point)
+{
+	m_data << point;
+	QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
+	item->setPos(point.x()-1,point.y()-1);
+	m_points << item;
+}
+
+void XYLineChartItem::removePoint(const QPointF& point)
+{
+    Q_ASSERT(m_data.count() == m_points.count());
+    int index = m_data.lastIndexOf(point,0);
+    m_data.remove(index);
+    delete(m_points.takeAt(index));
+}
+
+void XYLineChartItem::setPoint(const QPointF& oldPoint,const QPointF& newPoint)
+{
+    Q_ASSERT(m_data.count() == m_points.count());
+    int index = m_data.lastIndexOf(oldPoint,0);
+
+    if(index > -1){
+    m_data.replace(index,newPoint);
+    QGraphicsItem* item = m_points.at(index);
+    item->setPos(newPoint.x()-1,newPoint.y()-1);
+    }
+}
+
+void XYLineChartItem::setPoint(int index,const QPointF& point)
+{
+    Q_ASSERT(m_data.count() == m_points.count());
+    Q_ASSERT(index>=0);
+
+    m_data.replace(index,point);
+    QGraphicsItem* item = m_points.at(index);
+    item->setPos(point.x()-1,point.y()-1);
+}
+
+void XYLineChartItem::clear()
+{
+	 qDeleteAll(m_points);
+	 m_points.clear();
+	 m_hash.clear();
+	 m_path = QPainterPath();
+	 m_rect = QRect();
+	 m_data.clear();
+}
+
+void XYLineChartItem::clearView()
+{
+     qDeleteAll(m_points);
+     m_points.clear();
+     m_path = QPainterPath();
+     m_rect = QRect();
+     m_data.clear();
+}
+
+void XYLineChartItem::handleSeriesChanged(int index)
+{
+    Q_ASSERT(index<m_series->count());
+    if(m_hash.contains(index)){
+        int i = m_hash.value(index);
+        QPointF point;
+        calculatePoint(point,index,m_series,m_size,m_domain);
+        setPoint(i,point);
+    }
 }
 
 void XYLineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    m_pathItem->setPen(m_series->pen());
+	Q_UNUSED(widget);
+    Q_UNUSED(option);
+	painter->drawPath(m_path);
 }
 
-/*
-QPainterPath XYLineChartItem::shape() const
+void XYLineChartItem::calculatePoint(QPointF& point, int index, const QXYChartSeries* series,const QSizeF& size, const Domain& domain) const
 {
-    return m_pathItem->shape();
+    const qreal deltaX = size.width()/domain.spanX();
+    const qreal deltaY = size.height()/domain.spanY();
+    qreal x = (series->x(index) - domain.m_minX)* deltaX;
+    qreal y = (series->y(index) - domain.m_minY)*-deltaY + size.height();
+    point.setX(x);
+    point.setY(y);
 }
-*/
+
+
+void XYLineChartItem::calculatePoints(QVector<QPointF>& points, QHash<int,int>& hash,const QXYChartSeries* series,const QSizeF& size, const Domain& domain) const
+{
+    const qreal deltaX = size.width()/domain.spanX();
+    const qreal deltaY = size.height()/domain.spanY();
+
+    for (int i = 0; i < series->count(); ++i) {
+      qreal x = (series->x(i) - domain.m_minX)* deltaX;
+      if(x<0 || x > size.width()) continue;
+      qreal y = (series->y(i) - domain.m_minY)*-deltaY + size.height();
+      if(y<0 || y > size.height()) continue;
+      hash[i] = points.size();
+      points << QPointF(x,y);
+    }
+}
+
+void XYLineChartItem::updateDomain()
+{
+    clear();
+	calculatePoints(m_data,m_hash,m_series,m_size, m_domain);
+	addPoints(m_data);
+	m_dirtyGeometry = true;
+}
+
+void XYLineChartItem::updateData()
+{
+    //for now the same
+    updateDomain();
+}
+
 void XYLineChartItem::updateGeometry()
 {
-   if (!m_rect.isValid()) return;
 
-   const qreal deltaX = m_rect.width()/m_plotDomain.spanX();
-   const qreal deltaY = m_rect.height()/m_plotDomain.spanY();
+   if(m_data.size()==0) return;
 
+   prepareGeometryChange();
    QPainterPath path;
+   const QPointF& point = m_data.at(0);
+   path.moveTo(point);
 
-   for (int j = 0; j < m_series->count(); ++j) {
-       qreal dx = m_series->x(j) - m_plotDomain.m_minX;
-       qreal dy = m_series->y(j) - m_plotDomain.m_minY;
-       qreal x = (dx * deltaX) + m_rect.left();
-       qreal y = - (dy * deltaY) + m_rect.bottom();
-       if(j==0) path.moveTo(x,y);
-       else path.lineTo(x,y);
+   foreach( const QPointF& point , m_data) {
+       path.lineTo(point);
    }
 
-   m_pathItem->setPath(path);
-   m_pathItem->setPen(m_series->pen());
-   m_pathItem->setBrush(Qt::NoBrush);
+   m_path = path;
+   m_rect = path.boundingRect();
 }
+
+void XYLineChartItem::updateItem()
+{
+    if(m_dirtyDomain) {
+        updateDomain();
+        m_dirtyData = false;
+    }
+
+    if(m_dirtyData) {
+        updateData();
+        m_dirtyData = false;
+    }
+
+    if(m_dirtyGeometry) {
+        updateGeometry();
+        m_dirtyGeometry = false;
+    }
+
+    update();
+}
+
+#include "moc_xylinechartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

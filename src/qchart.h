@@ -18,6 +18,8 @@ class BarGroup;
 class QChartAxis;
 class ChartTheme;
 class ChartItem;
+class ChartDataSet;
+class ChartPresenter;
 
 // TODO: We don't need to have QChart tied to QGraphicsItem:
 //class QTCOMMERCIALCHART_EXPORT QChart
@@ -51,6 +53,7 @@ public:
     ~QChart();
 
     void addSeries(QChartSeries* series);
+
     //TODO: QChartSeries* createSeries(QSeriesData *data, QChartSeries::QChartSeriesType type);
     // TODO: who owns the series now? maybe owned by chart and returned a reference instead...
     QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
@@ -61,6 +64,8 @@ public:
     QChart::ChartThemeId theme();
 
     void setTitle(const QString& title,const QFont& font = QFont());
+
+    //Obsolete interface
     void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, GradientOrientation orientation = VerticalGradientOrientation);
 
     void setChartBackgroundBrush(const QBrush& brush);
@@ -96,6 +101,10 @@ private:
     int m_plotDataIndex;
     int m_marginSize;
     ChartTheme *m_chartTheme;
+
+
+    ChartDataSet *m_dataset;
+    ChartPresenter *m_presenter;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
