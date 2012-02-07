@@ -56,8 +56,7 @@ PRIVATE_HEADERS += \
     charttheme_p.h \
     chartdataset_p.h \
     chartpresenter_p.h \
-    domain_p.h \
-    chartanimation_p.h
+    domain_p.h 
 
 PUBLIC_HEADERS += \
     qchartseries.h \
