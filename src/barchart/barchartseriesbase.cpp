@@ -141,7 +141,7 @@ qreal BarChartSeriesBase::max()
     return max;
 }
 
-int BarChartSeriesBase::countItems()
+int BarChartSeriesBase::countValues()
 {
     Q_ASSERT(mData != 0);
     return mData->count();

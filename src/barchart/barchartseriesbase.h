@@ -39,7 +39,7 @@ public:
 
     qreal min();
     qreal max();
-    int countItems();
+    int countValues();
     qreal valueAt(int item);
 
 public Q_SLOTS:

@@ -33,8 +33,8 @@ int BarChartModel::countItemsInSeries()
 {
     int count(0);
     for (int i=0; i<mSeries.count(); i++){
-        // TODO: can we assume that all series have same number of items? If not. then which items are empty.
-        int temp = mSeries.at(i)->countItems();
+        // TODO: can we assume that all series have same number of values? If not. then which values are empty?
+        int temp = mSeries.at(i)->countValues();
         if (temp > count) {
             count = temp;
         }
@@ -86,7 +86,7 @@ qreal BarChartModel::valueAt(int series, int item)
     if ((series < 0) || (series >= mSeries.count())) {
         // No series, no value.
         return 0;
-    } else if ((item < 0) || (item >= mSeries.at(series)->countItems())) {
+    } else if ((item < 0) || (item >= mSeries.at(series)->countValues())) {
         // No item, no value.
         return 0;
     }
