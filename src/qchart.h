@@ -87,8 +87,6 @@ private:
     QRectF m_rect;
     QList<QChartSeries *> m_chartSeries;
     QList<ChartItem *> m_chartItems;
-    QVector<PlotDomain> m_plotDomainList;
-    int m_plotDataIndex;
     ChartTheme *m_chartTheme;
 
 

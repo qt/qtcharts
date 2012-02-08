@@ -33,11 +33,6 @@ protected:
 private:
     void clear();
 
-
-public: // from ChartItem
-    void setSize(const QSizeF &size){};
-    void setPlotDomain(const PlotDomain& data){};
-
 public:
     void setLength(int length);
     void setWidth(int width);

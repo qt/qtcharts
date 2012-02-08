@@ -29,7 +29,6 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     m_backgroundItem(0),
     m_titleItem(0),
     m_axisXItem(0),
-    m_plotDataIndex(0),
     m_chartTheme(new ChartTheme(this)),
     //m_dataset(0),
     m_dataset(new ChartDataSet(this)),
@@ -38,10 +37,6 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
 {
     // TODO: the default theme?
     setTheme(QChart::ChartThemeDefault);
-
-    PlotDomain domain;
-    m_plotDomainList << domain;
-
     //m_chartItems << m_axisXItem;
     //m_chartItems << m_axisYItem.at(0);
 }
