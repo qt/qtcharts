@@ -105,9 +105,10 @@ void QChartView::setRubberBandPolicy(const RubberBandPolicy policy)
             m_verticalRubberBand = false;
             return;
     }
-
+    if(!m_rubberBand){
     m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
     m_rubberBand->setEnabled(true);
+    }
 }
 
 QChartView::RubberBandPolicy QChartView::rubberBandPolicy() const
