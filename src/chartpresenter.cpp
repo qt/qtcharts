@@ -1,4 +1,5 @@
 #include "qchart.h"
+#include "qchartaxis.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
 //series
@@ -7,6 +8,7 @@
 #include "percentbarchartseries.h"
 #include "qxychartseries.h"
 //items
+#include "axisitem_p.h"
 #include "bargroup.h"
 #include "stackedbargroup.h"
 #include "xylinechartitem_p.h"
@@ -25,14 +27,30 @@ m_domainIndex(0),
 m_marginSize(0),
 m_rect(QRectF(QPoint(0,0),m_chart->size()))
 {
-	creteConnections();
+    createConnections();
+    createDeafultAxis();
 }
 
 ChartPresenter::~ChartPresenter()
 {
 }
 
-void ChartPresenter::creteConnections()
+void ChartPresenter::createDeafultAxis()
+{
+    //default axis
+    QChartAxis* axisX = new QChartAxis(this);
+    QChartAxis* axisY = new QChartAxis(this);
+
+    m_axis << new AxisItem(axisX,AxisItem::X_AXIS,m_chart);
+    m_axis << new AxisItem(axisY,AxisItem::Y_AXIS,m_chart);
+
+    foreach(AxisItem* item, m_axis) {
+        QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
+        QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
+    }
+}
+
+void ChartPresenter::createConnections()
 {
     QObject::connect(m_chart,SIGNAL(geometryChanged()),this,SLOT(handleGeometryChanged()));
     QObject::connect(m_dataset,SIGNAL(seriesAdded(QChartSeries*)),this,SLOT(handleSeriesAdded(QChartSeries*)));
@@ -123,15 +141,15 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             QObject::connect(percentBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
             m_chartItems.insert(series,item);
             break;
-         }
+        }
         /*
          case QChartSeries::SeriesTypeScatter: {
-             QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
-             scatterSeries->d->m_theme = m_chartTheme->themeForSeries();
-             scatterSeries->d->setParentItem(this);
-             scatterSeries->d->m_boundingRect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
-             m_chartItems << scatterSeries->d;
-             m_chartTheme->addObserver(scatterSeries->d);
+         QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
+         scatterSeries->d->m_theme = m_chartTheme->themeForSeries();
+         scatterSeries->d->setParentItem(this);
+         scatterSeries->d->m_boundingRect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
+         m_chartItems << scatterSeries->d;
+         m_chartTheme->addObserver(scatterSeries->d);
 
          foreach (qreal x, scatterSeries->d->m_x) {
          domain.m_minX = qMin(domain.m_minX, x);
@@ -166,7 +184,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
 void ChartPresenter::handleSeriesChanged(QChartSeries* series)
 {
-   //TODO:
+    //TODO:
 }
 
 void ChartPresenter::zoomInToRect(const QRectF& rect)
@@ -177,7 +195,6 @@ void ChartPresenter::zoomInToRect(const QRectF& rect)
     Domain domain (m_dataset->domain().subDomain(rect,m_rect.width(),m_rect.height()));
     m_dataset->addDomain(domain);
 }
-
 
 void ChartPresenter::zoomIn()
 {
@@ -202,25 +219,25 @@ void ChartPresenter::zoomReset()
 }
 
 /*
-void ChartPresenter::setAxisX(const QChartAxis& axis)
-{
-    setAxis(m_axisXItem,axis);
-}
-void ChartPresenter::setAxisY(const QChartAxis& axis)
-{
-    setAxis(m_axisYItem.at(0),axis);
-}
+ void ChartPresenter::setAxisX(const QChartAxis& axis)
+ {
+ setAxis(m_axisXItem,axis);
+ }
+ void ChartPresenter::setAxisY(const QChartAxis& axis)
+ {
+ setAxis(m_axisYItem.at(0),axis);
+ }
 
-void ChartPresenter::setAxisY(const QList<QChartAxis>& axis)
-{
-    //TODO not implemented
-}
+ void ChartPresenter::setAxisY(const QList<QChartAxis>& axis)
+ {
+ //TODO not implemented
+ }
 
-void ChartPresenter::setAxis(AxisItem *item, const QChartAxis& axis)
-{
-    item->setVisible(axis.isAxisVisible());
-}
-*/
+ void ChartPresenter::setAxis(AxisItem *item, const QChartAxis& axis)
+ {
+ item->setVisible(axis.isAxisVisible());
+ }
+ */
 #include "moc_chartpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -11,8 +11,7 @@ class QChartSeries;
 class ChartDataSet;
 class QChart;
 class Domain;
-class QXYChartSeries;
-class XYLineChartItem;
+class AxisItem;
 
 class ChartPresenter: public QObject
 {
@@ -37,7 +36,8 @@ public:
     void zoomReset();
 
 private:
-    void creteConnections();
+    void createConnections();
+    void createDeafultAxis();
 
 public slots:
     void handleSeriesAdded(QChartSeries* series);
@@ -54,6 +54,7 @@ private:
     QChart* m_chart;
     ChartDataSet* m_dataset;
     QVector<Domain> m_domains;
+    QList<AxisItem*> m_axis;
     int m_domainIndex;
     int m_marginSize;
     QRectF m_rect;

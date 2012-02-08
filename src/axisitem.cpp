@@ -1,4 +1,5 @@
 #include "axisitem_p.h"
+#include "qchartaxis.h"
 #include <QPainter>
 #include <QDebug>
 
@@ -6,8 +7,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-AxisItem::AxisItem(AxisType type,QGraphicsItem* parent) :
+AxisItem::AxisItem(QChartAxis* axis,AxisType type,QGraphicsItem* parent) :
     ChartItem(parent),
+    m_axis(axis),
     m_ticks(4),
     m_type(type)
 {
@@ -37,17 +39,6 @@ QRectF AxisItem::boundingRect() const
     return m_rect;
 }
 
-void AxisItem::setPlotDomain(const PlotDomain& plotDomain)
-{
-    m_plotDomain = plotDomain;
-    createItems();
-}
-
-void AxisItem::setSize(const QSizeF &size)
-{
-    m_rect = QRectF(QPoint(0,0),size);
-    createItems();
-}
 
 /*
 void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget)
@@ -104,15 +95,7 @@ void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,Q
 void AxisItem::createItems()
 {
 
-    //TODO: this is very inefficient handling
-
-        qDeleteAll(m_shades);
-        m_shades.clear();
-        qDeleteAll(m_grid);
-        m_grid.clear();
-        qDeleteAll(m_labels);
-        m_labels.clear();
-
+    if(!m_rect.isValid()) return;
 
        if(m_type==X_AXIS) {
 
@@ -122,7 +105,7 @@ void AxisItem::createItems()
 
              int x = i * deltaX + m_rect.left();
 
-             qreal label = m_plotDomain.m_minX + (i * m_plotDomain.spanX()/ m_ticks);
+             qreal label = m_domain.m_minX + (i * m_domain.spanX()/ m_ticks);
 
              m_grid<<new QGraphicsLineItem(x, m_rect.top(), x, m_rect.bottom(),this);
 
@@ -142,7 +125,7 @@ void AxisItem::createItems()
 
              int y = j * -deltaY + m_rect.bottom();
 
-             qreal label = m_plotDomain.m_minY + (j * m_plotDomain.spanY()
+             qreal label = m_domain.m_minY + (j * m_domain.spanY()
                  / m_ticks);
 
              m_grid<<new QGraphicsLineItem(m_rect.left()  , y, m_rect.right(), y,this);
@@ -159,6 +142,43 @@ void AxisItem::createItems()
        //painter->drawRect(m_rect.adjusted(0, 0, -1, -1));
 }
 
+void AxisItem::clear()
+{
+     qDeleteAll(m_shades);
+     m_shades.clear();
+     qDeleteAll(m_grid);
+     m_grid.clear();
+     qDeleteAll(m_labels);
+     m_labels.clear();
+}
+
+void AxisItem::updateDomain()
+{
+    clear();
+    createItems();
+}
+
+void AxisItem::handleAxisChanged()
+{
+    //m_axis->
+}
+
+void AxisItem::handleDomainChanged(const Domain& domain)
+{
+    m_domain = domain;
+    clear();
+    createItems();
+}
+
+void AxisItem::handleGeometryChanged(const QRectF& rect)
+{
+    Q_ASSERT(rect.isValid());
+    m_rect = rect;
+    clear();
+    createItems();
+}
+
 //TODO "nice numbers algorithm"
+#include "moc_axisitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

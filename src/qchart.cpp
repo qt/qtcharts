@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
     m_backgroundItem(0),
     m_titleItem(0),
-    m_axisXItem(new AxisItem(AxisItem::X_AXIS, this)),
+    m_axisXItem(0),
     m_plotDataIndex(0),
     m_chartTheme(new ChartTheme(this)),
     //m_dataset(0),
@@ -42,9 +42,8 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     PlotDomain domain;
     m_plotDomainList << domain;
 
-    m_axisYItem << new AxisItem(AxisItem::Y_AXIS,this);
-    m_chartItems << m_axisXItem;
-    m_chartItems << m_axisYItem.at(0);
+    //m_chartItems << m_axisXItem;
+    //m_chartItems << m_axisYItem.at(0);
 }
 
 QChart::~QChart(){}
