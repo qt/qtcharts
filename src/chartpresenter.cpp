@@ -7,6 +7,7 @@
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
 #include "qxychartseries.h"
+#include "qpieseries.h"
 //items
 #include "axisitem_p.h"
 #include "bargroup.h"
@@ -14,6 +15,7 @@
 #include "xylinechartitem_p.h"
 #include "percentbargroup.h"
 #include "linechartanimationitem_p.h"
+#include "piepresentation.h"
 
 #include <QAbstractAnimation>
 #include <QPropertyAnimation>
@@ -162,18 +164,17 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
          break;
          }
-         case QChartSeries::SeriesTypePie: {
-         QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
-         pieSeries->d->setParentItem(this);
-         m_chartItems << pieSeries->d;
-         pieSeries->d->m_chartTheme = m_chartTheme;
-         m_chartTheme->addObserver(pieSeries->d);
-         break;
-         }
-         default:
-         break;
-         }
          */
+
+        case QChartSeries::SeriesTypePie: {
+            QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
+            PiePresentation* pieChart = new PiePresentation(m_chart, pieSeries);
+            pieSeries->m_piePresentation = pieChart; // TODO: remove this pointer passing use signals&slots
+            QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), pieChart, SLOT(handleGeometryChanged(const QRectF&)));
+            QObject::connect(m_dataset, SIGNAL(domainChanged(const Domain&)), pieChart, SLOT(handleDomainChanged(const Domain&)));
+            m_chartItems.insert(series, pieChart);
+            break;
+        }
 
         default: {
             qDebug()<< "Series type" << series->type() << "not implemented.";

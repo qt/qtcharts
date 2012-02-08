@@ -17,12 +17,11 @@ int main(int argc, char *argv[])
     Q_ASSERT(series);
 
     // Add test data to the series
-    QList<qreal> x;
-    for (qreal i(0.0); i < 20; i += 0.5) {
-        // Linear data with random component
-        x.append(i + ((qreal)(rand() % 100)) / 100 );
-    }
-    series->setData(x);
+    series->add(QPieSlice(1, "test1", Qt::red));
+    series->add(QPieSlice(2, "test2", Qt::green));
+    series->add(QPieSlice(3, "test3", Qt::blue));
+    series->add(QPieSlice(4, "test4", Qt::darkRed));
+    series->add(QPieSlice(5, "test5", Qt::darkGreen));
 
     // Use the chart widget as the central widget
     QMainWindow w;

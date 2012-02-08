@@ -3,7 +3,6 @@
 #include "qscatterseries.h"
 #include "qscatterseries_p.h"
 #include "qpieseries.h"
-#include "qpieseries_p.h"
 #include "qchartaxis.h"
 #include "charttheme_p.h"
 #include "chartitem_p.h"
@@ -121,7 +120,7 @@ void QChart::setTitle(const QString& title,const QFont& font)
 
 int QChart::margin() const
 {
-    m_presenter->margin();
+    return m_presenter->margin();
 }
 
 void QChart::setMargin(int margin)

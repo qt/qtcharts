@@ -4,6 +4,8 @@
 #include "barchartseries.h"
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
+#include "piechart/qpieseries.h"
+#include "piechart/piepresentation.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -81,6 +83,12 @@ void ChartDataSet::addSeries(QChartSeries* series)
             domain.m_maxY = 100;
         }
             break;
+
+        case QChartSeries::SeriesTypePie: {
+            QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+            // TODO: domain stuff
+            break;
+        }
 
         default: {
             qDebug()<<__FUNCTION__<<"type" << series->type()<<"not supported";

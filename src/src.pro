@@ -23,12 +23,13 @@ SOURCES += \
     xylinechart/qxychartseries.cpp \
     xylinechart/xylinechartitem.cpp \
     xylinechart/linechartanimationitem.cpp \
+    piechart/qpieseries.cpp \
+    piechart/pieslice.cpp \
+    piechart/piepresentation.cpp \
     plotdomain.cpp \
     qscatterseries.cpp \
-    qpieseries.cpp \
     qchart.cpp \
     axisitem.cpp \
-    pieslice.cpp \
     qchartview.cpp \
     qchartseries.cpp \
     qchartaxis.cpp \
@@ -40,16 +41,18 @@ SOURCES += \
     chartpresenter.cpp \
     domain.cpp
 
+
+
 PRIVATE_HEADERS += \ 
     xylinechart/xylinechartitem_p.h \
     xylinechart/linechartanimationitem_p.h \
     barchart/barlabel_p.h \
     barchart/bar_p.h \
     barchart/separator_p.h \
+    piechart/piepresentation.h \
+    piechart/pieslice.h \
     plotdomain_p.h \
     qscatterseries_p.h \
-    qpieseries_p.h \
-    pieslice.h \
     axisitem_p.h \
     chartitem_p.h \
     charttheme_p.h \
@@ -60,7 +63,6 @@ PRIVATE_HEADERS += \
 PUBLIC_HEADERS += \
     qchartseries.h \
     qscatterseries.h \
-    qpieseries.h \
     qchart.h \
     qchartglobal.h \
     xylinechart/qxychartseries.h \
@@ -72,6 +74,7 @@ PUBLIC_HEADERS += \
     barchart/percentbargroup.h \
     barchart/barchartseriesbase.h \
     barchart/bargroupbase.h \
+    piechart/qpieseries.h \
     qchartview.h \
     qchartaxis.h 
    
@@ -80,6 +83,7 @@ HEADERS += $$PRIVATE_HEADERS
 
 INCLUDEPATH += xylinechart \
                barchart \
+               piechart \
                .
 
 OBJECTS_DIR = $$CHART_BUILD_DIR/lib

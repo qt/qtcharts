@@ -1,16 +1,19 @@
 #include "pieslice.h"
+#include "piepresentation.h"
 #include <QPainter>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PieSlice::PieSlice(const QColor& color, qreal startAngle, qreal span, QRectF rect)
-    : m_color(color),
+PieSlice::PieSlice(PiePresentation *piePresentation, int seriesIndex, qreal startAngle, qreal span)
+    :QGraphicsItem(piePresentation),
+    m_seriesIndex(seriesIndex),
     m_startAngle(startAngle),
-    m_span(span),
-    m_rect(rect)
+    m_span(span)
 {
+    Q_ASSERT(piePresentation);
     setAcceptHoverEvents(true);
+    setAcceptedMouseButtons(Qt::LeftButton);
 }
 
 PieSlice::~PieSlice()
@@ -19,17 +22,18 @@ PieSlice::~PieSlice()
 
 QRectF PieSlice::boundingRect() const
 {
-    return m_rect;
+    return shape().boundingRect();
 }
 
 QPainterPath PieSlice::shape() const
 {
+    QRectF rect = (static_cast<PiePresentation*>(parentItem()))->pieRect();
     qreal angle = (-m_startAngle) + (90);
     qreal span = -m_span;
 
     QPainterPath path;
-    path.moveTo(boundingRect().center());
-    path.arcTo(boundingRect(), angle, span);
+    path.moveTo(rect.center());
+    path.arcTo(rect, angle, span);
 
     // TODO: draw the shape so that it might have a hole in the center
     // - Sin & Cos will be needed to find inner/outer arc endpoints
@@ -44,13 +48,17 @@ QPainterPath PieSlice::shape() const
     return path;
 }
 
-void PieSlice::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/)
+void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
     painter->setRenderHint(QPainter::Antialiasing);
     // TODO: how to map theme settings to a pie slice? Now we
     //painter->setPen(m_theme.linePen);
     // TODO:
-    painter->setBrush(m_theme.linePen.color());
+
+    QPieSlice data = (static_cast<PiePresentation*>(parentItem()))->m_pieSeries->slice(m_seriesIndex);
+    painter->setBrush(data.m_color);
+
+    //painter->setBrush(m_theme.linePen.color());
 
     // From Qt docs:
     // The startAngle and spanAngle must be specified in 1/16th of a degree, i.e. a full circle equals 5760 (16 * 360).
@@ -63,12 +71,20 @@ void PieSlice::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option
     //painter->drawPie(boundingRect(), angle, span);
 
     painter->drawPath(shape());
+
+    // Draw the label
+    // TODO: do this better
+    painter->drawText(boundingRect().center(), data.m_label);
 }
 
 void PieSlice::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
 {
     QGraphicsItem::hoverEnterEvent(event);
-    qDebug() << "hover" << m_color << m_startAngle << m_span;
+    qDebug() << "hover" << m_seriesIndex << m_startAngle << m_span;
 }
 
+void PieSlice::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    QGraphicsItem::mousePressEvent(event);
+}
 QTCOMMERCIALCHART_END_NAMESPACE

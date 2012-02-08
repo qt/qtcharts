@@ -8,25 +8,26 @@
 #include <QColor>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class PiePresentation;
 
 class PieSlice : public QGraphicsItem
 {
 public:
-    PieSlice(const QColor& color, qreal startAngle, qreal span, QRectF rect);
+    PieSlice(PiePresentation *piePresentation, int seriesIndex, qreal startAngle, qreal span);
     ~PieSlice();
 
 public: // from QGraphicsItem
     QRectF boundingRect() const;
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    void hoverEnterEvent(QGraphicsSceneHoverEvent * event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
-public:
-    QColor m_color;
+private:
+    int m_seriesIndex;
     qreal m_startAngle;
     qreal m_span;
-    QRectF m_rect;
-    SeriesTheme m_theme;
+    //SeriesTheme m_theme;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
