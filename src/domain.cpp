@@ -28,7 +28,7 @@ qreal Domain::spanY() const
 	return m_maxY - m_minY;
 }
 
-Domain Domain::subDomain(const QRect& rect, qreal maxWidth,qreal maxHeight) const
+Domain Domain::subDomain(const QRectF& rect, qreal maxWidth,qreal maxHeight) const
 {
   Domain domain;
 

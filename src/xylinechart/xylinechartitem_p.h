@@ -3,6 +3,7 @@
 
 #include "qchartglobal.h"
 #include "chartitem_p.h"
+#include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -21,15 +22,16 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
-    //from ChartItem
-    void setSize(const QSizeF& size);
-    void setPlotDomain(const PlotDomain& data){};
-    void setDomain(const Domain& data);
-    void setSeries(QXYChartSeries* series);
-    const Domain& domain() const { return m_domain;}
-    //ChartAnimationManager* animationManager();
 
-    void updateItem();
+
+    void setPen(const QPen& pen);
+
+    //from ChartItem
+    void setSize(const QSizeF& size){};
+    void setPlotDomain(const PlotDomain& data){};
+
+
+    const Domain& domain() const { return m_domain;}
 
     virtual void addPoint(const QPointF& );
     virtual void addPoints(const QVector<QPointF>& points);
@@ -50,8 +52,10 @@ protected:
     void calculatePoint(QPointF& point, int index, const QXYChartSeries* series,const QSizeF& size, const Domain& domain) const;
     void calculatePoints(QVector<QPointF>& points,QHash<int,int>& hash,const QXYChartSeries* series, const QSizeF& size, const Domain& domain) const;
 
-private slots:
-    void handleSeriesChanged(int index);
+protected slots:
+    void handleModelChanged(int index);
+    void handleDomainChanged(const Domain& domain);
+    void handleGeometryChanged(const QRectF& size);
 
 private:
     ChartPresenter* m_presenter;
@@ -63,6 +67,7 @@ private:
     QVector<QPointF> m_data;
     QHash<int,int> m_hash;
     QXYChartSeries* m_series;
+    QPen m_pen;
     bool m_dirtyData;
     bool m_dirtyGeometry;
     bool m_dirtyDomain;

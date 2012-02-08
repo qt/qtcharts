@@ -15,11 +15,15 @@ public:
     virtual ~ChartDataSet();
 
     void addSeries(QChartSeries* series);
+    void addDomain(const Domain& domain);
+    bool nextDomain();
+    bool previousDomain();
+    void clearDomains();
     const Domain& domain() const;
 
 signals:
     void seriesAdded(QChartSeries* series);
-    void domainChanged();
+    void domainChanged(const Domain& domain);
 
 private:
     QList<QChartSeries*> m_chartSeries;

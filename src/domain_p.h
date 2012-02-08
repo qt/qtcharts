@@ -13,7 +13,7 @@ public:
 	qreal spanX() const;
 	qreal spanY() const;
 
-	Domain subDomain(const QRect& rect, qreal maxWidth, qreal maxHeight) const;
+	Domain subDomain(const QRectF& rect, qreal maxWidth, qreal maxHeight) const;
 
 public:
 	qreal m_minX;

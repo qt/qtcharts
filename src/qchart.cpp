@@ -4,22 +4,21 @@
 #include "qscatterseries_p.h"
 #include "qpieseries.h"
 #include "qpieseries_p.h"
-#include "qxychartseries.h"
 #include "qchartaxis.h"
-#include "barchartseries.h"
-#include "bargroup.h"
-#include "stackedbarchartseries.h"
-#include "stackedbargroup.h"
-#include "percentbarchartseries.h"
-#include "percentbargroup.h"
 #include "charttheme_p.h"
 #include "chartitem_p.h"
-
-#include "xylinechartitem_p.h"
 #include "plotdomain_p.h"
 #include "axisitem_p.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
+
+//series
+#include "barchartseries.h"
+#include "stackedbarchartseries.h"
+#include "percentbarchartseries.h"
+#include "qxychartseries.h"
+
+
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 #include <QDebug>
@@ -31,18 +30,18 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     m_titleItem(0),
     m_axisXItem(new AxisItem(AxisItem::X_AXIS, this)),
     m_plotDataIndex(0),
-    m_marginSize(0),
     m_chartTheme(new ChartTheme(this)),
-    m_dataset(0),
-    //m_dataset(new ChartDataSet(this)),
-    m_presenter(0)
-    //m_presenter(new ChartPresenter(this,m_dataset))
+    //m_dataset(0),
+    m_dataset(new ChartDataSet(this)),
+    //m_presenter(0)
+    m_presenter(new ChartPresenter(this,m_dataset))
 {
     // TODO: the default theme?
     setTheme(QChart::ChartThemeDefault);
 
     PlotDomain domain;
     m_plotDomainList << domain;
+
     m_axisYItem << new AxisItem(AxisItem::Y_AXIS,this);
     m_chartItems << m_axisXItem;
     m_chartItems << m_axisYItem.at(0);
@@ -52,154 +51,7 @@ QChart::~QChart(){}
 
 void QChart::addSeries(QChartSeries* series)
 {
-    if(m_dataset) {
-        m_dataset->addSeries(series);
-        return;
-    }
-
-    Q_ASSERT(series);
-    Q_ASSERT(series->type() != QChartSeries::SeriesTypeInvalid);
-
-    // TODO: we should check the series not already added
-
-
-    m_chartSeries << series;
-
-    m_plotDataIndex = 0 ;
-    m_plotDomainList.resize(1);
-    PlotDomain& domain = m_plotDomainList[m_plotDataIndex];
-
-    switch(series->type())
-    {
-    case QChartSeries::SeriesTypeLine: {
-
-        QXYChartSeries* xyseries = static_cast<QXYChartSeries*>(series);
-
-        for (int i = 0 ; i < xyseries->count() ; i++) {
-            qreal x = xyseries->x(i);
-            qreal y = xyseries->y(i);
-            domain.m_minX = qMin(domain.m_minX,x);
-            domain.m_minY = qMin(domain.m_minY,y);
-            domain.m_maxX = qMax(domain.m_maxX,x);
-            domain.m_maxY = qMax(domain.m_maxY,y);
-        }
-
-        //XYLineChartItem* item = new XYLineChartItem(xyseries,0,this);
-
-        //m_chartItems << item;
-        // TODO:
-        //m_chartTheme->addObserver(xyseries);
-
-        break;
-    }
-    case QChartSeries::SeriesTypeBar: {
-
-        qDebug() << "barSeries added";
-        BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
-        BarGroup* barGroup = new BarGroup(*barSeries,this);
-
-        // Add some fugly colors for 5 fist series...
-        barGroup->addColor(QColor(255,0,0,128));
-        barGroup->addColor(QColor(255,255,0,128));
-        barGroup->addColor(QColor(0,255,0,128));
-        barGroup->addColor(QColor(0,0,255,128));
-        barGroup->addColor(QColor(255,128,0,128));
-
-        m_chartItems << barGroup;
-        childItems().append(barGroup);
-
-        qreal x = barSeries->countColumns();
-        qreal y = barSeries->max();
-        domain.m_minX = qMin(domain.m_minX,x);
-        domain.m_minY = qMin(domain.m_minY,y);
-        domain.m_maxX = qMax(domain.m_maxX,x);
-        domain.m_maxY = qMax(domain.m_maxY,y);
-        m_axisXItem->setVisible(false);
-        break;
-        }
-    case QChartSeries::SeriesTypeStackedBar: {
-
-        qDebug() << "barSeries added";
-        StackedBarChartSeries* stackedBarSeries = static_cast<StackedBarChartSeries*>(series);
-        StackedBarGroup* stackedBarGroup = new StackedBarGroup(*stackedBarSeries,this);
-
-        // Add some fugly colors for 5 fist series...
-        stackedBarGroup->addColor(QColor(255,0,0,128));
-        stackedBarGroup->addColor(QColor(255,255,0,128));
-        stackedBarGroup->addColor(QColor(0,255,0,128));
-        stackedBarGroup->addColor(QColor(0,0,255,128));
-        stackedBarGroup->addColor(QColor(255,128,0,128));
-
-        m_chartItems << stackedBarGroup;
-        childItems().append(stackedBarGroup);
-
-        qreal x = stackedBarSeries->countColumns();
-        qreal y = stackedBarSeries->maxColumnSum();
-        domain.m_minX = qMin(domain.m_minX,x);
-        domain.m_minY = qMin(domain.m_minY,y);
-        domain.m_maxX = qMax(domain.m_maxX,x);
-        domain.m_maxY = qMax(domain.m_maxY,y);
-        m_axisXItem->setVisible(false);
-        break;
-        }
-    case QChartSeries::SeriesTypePercentBar: {
-
-        qDebug() << "barSeries added";
-        PercentBarChartSeries* percentBarSeries = static_cast<PercentBarChartSeries*>(series);
-        PercentBarGroup* percentBarGroup = new PercentBarGroup(*percentBarSeries,this);
-
-        // Add some fugly colors for 5 fist series...
-        percentBarGroup->addColor(QColor(255,0,0,128));
-        percentBarGroup->addColor(QColor(255,255,0,128));
-        percentBarGroup->addColor(QColor(0,255,0,128));
-        percentBarGroup->addColor(QColor(0,0,255,128));
-        percentBarGroup->addColor(QColor(255,128,0,128));
-
-        m_chartItems << percentBarGroup;
-        childItems().append(percentBarGroup);
-
-        qreal x = percentBarSeries->countColumns();
-        domain.m_minX = qMin(domain.m_minX,x);
-        domain.m_minY = 0;
-        domain.m_maxX = qMax(domain.m_maxX,x);
-        domain.m_maxY = 100;
-        m_axisXItem->setVisible(false);
-        break;
-        }
-    case QChartSeries::SeriesTypeScatter: {
-        QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
-        scatterSeries->d->m_theme = m_chartTheme->themeForSeries();
-        scatterSeries->d->setParentItem(this);
-        scatterSeries->d->m_boundingRect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
-        m_chartItems << scatterSeries->d;
-        m_chartTheme->addObserver(scatterSeries->d);
-
-        foreach (qreal x, scatterSeries->d->m_x) {
-            domain.m_minX = qMin(domain.m_minX, x);
-            domain.m_maxX = qMax(domain.m_maxX, x);
-        }
-        foreach (qreal y, scatterSeries->d->m_y) {
-            domain.m_minY = qMin(domain.m_minY, y);
-            domain.m_maxY = qMax(domain.m_maxY, y);
-        }
-
-        break;
-        }
-    case QChartSeries::SeriesTypePie: {
-        QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
-        pieSeries->d->setParentItem(this);
-        m_chartItems << pieSeries->d;
-        pieSeries->d->m_chartTheme = m_chartTheme;
-        m_chartTheme->addObserver(pieSeries->d);
-        break;
-        }
-    default:
-        break;
-    }
-
-    // Update all the items to match the new visible area of the chart
-    foreach(ChartItem* i, m_chartItems)
-        i->setPlotDomain(m_plotDomainList.at(m_plotDataIndex));
+   m_dataset->addSeries(series);
 }
 
 QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
@@ -275,12 +127,12 @@ void QChart::setTitle(const QString& title,const QFont& font)
 
 int QChart::margin() const
 {
-    return m_marginSize;
+    m_presenter->margin();
 }
 
 void QChart::setMargin(int margin)
 {
-    m_marginSize = margin;
+   m_presenter->setMargin(margin);
 }
 
 void QChart::setTheme(QChart::ChartThemeId theme)
@@ -315,61 +167,22 @@ QChart::ChartThemeId QChart::theme()
 
 void QChart::zoomInToRect(const QRectF& rectangle)
 {
-
-    if(!rectangle.isValid()) return;
-
-    qreal margin = this->margin();
-
-    QRectF rect = rectangle.normalized();
-    rect.translate(-margin, -margin);
-
-    PlotDomain& oldDomain = m_plotDomainList[m_plotDataIndex];
-
-    PlotDomain domain = oldDomain.subDomain(rect,m_rect.width() - 2 * margin,m_rect.height() - 2 * margin);
-
-    m_plotDomainList.resize(m_plotDataIndex + 1);
-    m_plotDomainList<<domain;
-    m_plotDataIndex++;
-
-    foreach (ChartItem* item, m_chartItems)
-        item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
-    update();
+    m_presenter->zoomInToRect(rectangle);
 }
 
 void QChart::zoomIn()
 {
-    if (m_plotDataIndex < m_plotDomainList.count() - 1) {
-        m_plotDataIndex++;
-        foreach (ChartItem* item, m_chartItems)
-            item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
-        update();
-    } else {
-        QRectF rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
-        rect.setWidth(rect.width()/2);
-        rect.setHeight(rect.height()/2);
-        rect.moveCenter(m_rect.center());
-        zoomInToRect(rect);
-    }
+    m_presenter->zoomIn();
 }
 
 void QChart::zoomOut()
 {
-    if (m_plotDataIndex > 0) {
-        m_plotDataIndex--;
-        foreach (ChartItem* item, m_chartItems)
-            item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
-        update();
-    }
+    m_presenter->zoomOut();
 }
 
 void QChart::zoomReset()
 {
-    if (m_plotDataIndex > 0) {
-        m_plotDataIndex = 0;
-        foreach (ChartItem* item, m_chartItems)
-            item->setPlotDomain(m_plotDomainList[m_plotDataIndex]);
-        update();
-    }
+    m_presenter->zoomReset();
 }
 
 void QChart::setAxisX(const QChartAxis& axis)
@@ -406,12 +219,6 @@ void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
     //recalculate background gradient
     if (m_backgroundItem) {
         m_backgroundItem->setRect(rect);
-    }
-
-    // resize and reposition childs
-    foreach (ChartItem *item, m_chartItems) {
-        item->setPos(rect.topLeft());
-        item->setSize(rect.size());
     }
 
     QGraphicsWidget::resizeEvent(event);

@@ -13,7 +13,6 @@ m_dirtyData(false),
 m_dirtyGeometry(false),
 m_dirtyDomain(false)
 {
-    QObject::connect(series,SIGNAL(changed(int)),this,SLOT(handleSeriesChanged(int)));
 }
 
 QRectF XYLineChartItem::boundingRect() const
@@ -26,23 +25,6 @@ QPainterPath XYLineChartItem::shape() const
     return m_path;
 }
 
-void XYLineChartItem::setSize(const QSizeF& size)
-{
-    m_size=size;
-    m_dirtyGeometry=true;
-}
-
-void XYLineChartItem::setDomain(const Domain& domain)
-{
-    m_domain=domain;
-    m_dirtyDomain=true;
-}
-
-void XYLineChartItem::setSeries(QXYChartSeries* series)
-{
-    m_series = series;
-    m_dirtyData=true;
-}
 
 void XYLineChartItem::addPoints(const QVector<QPointF>& points)
 {
@@ -112,21 +94,11 @@ void XYLineChartItem::clearView()
      m_data.clear();
 }
 
-void XYLineChartItem::handleSeriesChanged(int index)
-{
-    Q_ASSERT(index<m_series->count());
-    if(m_hash.contains(index)){
-        int i = m_hash.value(index);
-        QPointF point;
-        calculatePoint(point,index,m_series,m_size,m_domain);
-        setPoint(i,point);
-    }
-}
-
 void XYLineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 	Q_UNUSED(widget);
     Q_UNUSED(option);
+    painter->setPen(m_pen);
 	painter->drawPath(m_path);
 }
 
@@ -161,7 +133,6 @@ void XYLineChartItem::updateDomain()
     clear();
 	calculatePoints(m_data,m_hash,m_series,m_size, m_domain);
 	addPoints(m_data);
-	m_dirtyGeometry = true;
 }
 
 void XYLineChartItem::updateData()
@@ -188,25 +159,43 @@ void XYLineChartItem::updateGeometry()
    m_rect = path.boundingRect();
 }
 
-void XYLineChartItem::updateItem()
+void XYLineChartItem::setPen(const QPen& pen)
 {
-    if(m_dirtyDomain) {
-        updateDomain();
-        m_dirtyData = false;
-    }
+    m_pen = pen;
+}
 
-    if(m_dirtyData) {
-        updateData();
-        m_dirtyData = false;
-    }
+//handlers
 
-    if(m_dirtyGeometry) {
-        updateGeometry();
-        m_dirtyGeometry = false;
+void XYLineChartItem::handleModelChanged(int index)
+{
+    Q_ASSERT(index<m_series->count());
+    if(m_hash.contains(index)){
+        int i = m_hash.value(index);
+        QPointF point;
+        calculatePoint(point,index,m_series,m_size,m_domain);
+        setPoint(i,point);
     }
-
     update();
 }
+
+void XYLineChartItem::handleDomainChanged(const Domain& domain)
+{
+    m_domain = domain;
+    updateDomain();
+    update();
+}
+
+void XYLineChartItem::handleGeometryChanged(const QRectF& rect)
+{
+    Q_ASSERT(rect.isValid());
+
+    m_size=rect.size();
+    updateDomain();
+    updateGeometry();
+    setPos(rect.topLeft());
+    update();
+}
+
 
 #include "moc_xylinechartitem_p.cpp"
 

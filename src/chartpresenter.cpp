@@ -1,9 +1,17 @@
+#include "qchart.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
+//series
+#include "barchartseries.h"
+#include "stackedbarchartseries.h"
+#include "percentbarchartseries.h"
 #include "qxychartseries.h"
+//items
+#include "bargroup.h"
+#include "stackedbargroup.h"
 #include "xylinechartitem_p.h"
+#include "percentbargroup.h"
 #include "linechartanimationitem_p.h"
-#include "qchart.h"
 
 #include <QAbstractAnimation>
 #include <QPropertyAnimation>
@@ -13,6 +21,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(chart),
 m_chart(chart),
 m_dataset(dataset),
+m_domainIndex(0),
+m_marginSize(0),
 m_rect(QRectF(QPoint(0,0),m_chart->size()))
 {
 	creteConnections();
@@ -26,21 +36,23 @@ void ChartPresenter::creteConnections()
 {
     QObject::connect(m_chart,SIGNAL(geometryChanged()),this,SLOT(handleGeometryChanged()));
     QObject::connect(m_dataset,SIGNAL(seriesAdded(QChartSeries*)),this,SLOT(handleSeriesAdded(QChartSeries*)));
-    QObject::connect(m_dataset,SIGNAL(domainChanged()),this,SLOT(handleDomainChanged()));
 }
 
 void ChartPresenter::handleGeometryChanged()
 {
     m_rect = QRectF(QPoint(0,0),m_chart->size());
+    m_rect.adjust(m_marginSize,m_marginSize, -m_marginSize, -m_marginSize);
+    emit geometryChanged(m_rect);
+}
 
-    int margin = m_chart->margin();
-    m_rect.adjust(margin,margin, -margin, -margin);
+int ChartPresenter::margin() const
+{
+    return m_marginSize;
+}
 
-    foreach (ChartItem *item, m_chartItems) {
-        item->setPos(m_rect.topLeft());
-        item->setSize(m_rect.size());
-        item->updateItem();
-    }
+void ChartPresenter::setMargin(int margin)
+{
+    m_marginSize = margin;
 }
 
 void ChartPresenter::handleSeriesAdded(QChartSeries* series)
@@ -48,38 +60,167 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
     switch(series->type())
     {
         case QChartSeries::SeriesTypeLine: {
-
-            QXYChartSeries* xyseries = static_cast<QXYChartSeries*>(series);
-            //TODO: series->createViewItem();
-            //XYLineChartItem* item = new XYLineChartItem(this,m_chart);
-            XYLineChartItem* item = new LineChartAnimationItem(this,xyseries,m_chart);
-            item->setDomain(m_dataset->domain());
-            item->updateItem();
+            QXYChartSeries* lineSeries = static_cast<QXYChartSeries*>(series);
+            XYLineChartItem* item = new LineChartAnimationItem(this,lineSeries,m_chart);
+            item->setPen(lineSeries->pen());
+            QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
+            QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
+            QObject::connect(lineSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
             m_chartItems.insert(series,item);
             break;
         }
 
+        case QChartSeries::SeriesTypeBar: {
+            BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
+            BarGroup* item = new BarGroup(*barSeries,m_chart);
+
+            // Add some fugly colors for 5 fist series...
+            item->addColor(QColor(255,0,0,128));
+            item->addColor(QColor(255,255,0,128));
+            item->addColor(QColor(0,255,0,128));
+            item->addColor(QColor(0,0,255,128));
+            item->addColor(QColor(255,128,0,128));
+
+            QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
+            QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
+            QObject::connect(barSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
+            m_chartItems.insert(series,item);
+            // m_axisXItem->setVisible(false);
+            break;
+        }
+
+        case QChartSeries::SeriesTypeStackedBar: {
+
+            StackedBarChartSeries* stackedBarSeries = static_cast<StackedBarChartSeries*>(series);
+            StackedBarGroup* item = new StackedBarGroup(*stackedBarSeries,m_chart);
+
+            // Add some fugly colors for 5 fist series...
+            item->addColor(QColor(255,0,0,128));
+            item->addColor(QColor(255,255,0,128));
+            item->addColor(QColor(0,255,0,128));
+            item->addColor(QColor(0,0,255,128));
+            item->addColor(QColor(255,128,0,128));
+            QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
+            QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
+            QObject::connect(stackedBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
+            m_chartItems.insert(series,item);
+            break;
+        }
+
+        case QChartSeries::SeriesTypePercentBar: {
+
+            PercentBarChartSeries* percentBarSeries = static_cast<PercentBarChartSeries*>(series);
+            PercentBarGroup* item = new PercentBarGroup(*percentBarSeries,m_chart);
+
+            // Add some fugly colors for 5 fist series...
+            item->addColor(QColor(255,0,0,128));
+            item->addColor(QColor(255,255,0,128));
+            item->addColor(QColor(0,255,0,128));
+            item->addColor(QColor(0,0,255,128));
+            item->addColor(QColor(255,128,0,128));
+            QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
+            QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
+            QObject::connect(percentBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
+            m_chartItems.insert(series,item);
+            break;
+         }
+        /*
+         case QChartSeries::SeriesTypeScatter: {
+             QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
+             scatterSeries->d->m_theme = m_chartTheme->themeForSeries();
+             scatterSeries->d->setParentItem(this);
+             scatterSeries->d->m_boundingRect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
+             m_chartItems << scatterSeries->d;
+             m_chartTheme->addObserver(scatterSeries->d);
+
+         foreach (qreal x, scatterSeries->d->m_x) {
+         domain.m_minX = qMin(domain.m_minX, x);
+         domain.m_maxX = qMax(domain.m_maxX, x);
+         }
+         foreach (qreal y, scatterSeries->d->m_y) {
+         domain.m_minY = qMin(domain.m_minY, y);
+         domain.m_maxY = qMax(domain.m_maxY, y);
+         }
+
+         break;
+         }
+         case QChartSeries::SeriesTypePie: {
+         QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
+         pieSeries->d->setParentItem(this);
+         m_chartItems << pieSeries->d;
+         pieSeries->d->m_chartTheme = m_chartTheme;
+         m_chartTheme->addObserver(pieSeries->d);
+         break;
+         }
+         default:
+         break;
+         }
+         */
+
         default: {
-        	qDebug()<< "Series type" << series->type() << "not implemented.";
-        	break;
+            qDebug()<< "Series type" << series->type() << "not implemented.";
+            break;
         }
     }
 }
 
 void ChartPresenter::handleSeriesChanged(QChartSeries* series)
 {
-    switch(series->type())
-    {
-           case QChartSeries::SeriesTypeLine: {
-
-               break;
-           }
-
-   }
-
-   //m_chartItems.value(series)->updateItem();
+   //TODO:
 }
 
+void ChartPresenter::zoomInToRect(const QRectF& rect)
+{
+    if(!rect.isValid()) return;
+    QRectF r = rect.normalized();
+    r.translate(-m_marginSize, -m_marginSize);
+    Domain domain (m_dataset->domain().subDomain(rect,m_rect.width(),m_rect.height()));
+    m_dataset->addDomain(domain);
+}
+
+
+void ChartPresenter::zoomIn()
+{
+    if (!m_dataset->nextDomain()) {
+        QRectF rect = m_rect;
+        rect.setWidth(rect.width()/2);
+        rect.setHeight(rect.height()/2);
+        rect.moveCenter(m_rect.center());
+        Domain domain (m_dataset->domain().subDomain(rect,m_rect.width(),m_rect.height()));
+        m_dataset->addDomain(domain);
+    }
+}
+
+void ChartPresenter::zoomOut()
+{
+    m_dataset->previousDomain();
+}
+
+void ChartPresenter::zoomReset()
+{
+    m_dataset->clearDomains();
+}
+
+/*
+void ChartPresenter::setAxisX(const QChartAxis& axis)
+{
+    setAxis(m_axisXItem,axis);
+}
+void ChartPresenter::setAxisY(const QChartAxis& axis)
+{
+    setAxis(m_axisYItem.at(0),axis);
+}
+
+void ChartPresenter::setAxisY(const QList<QChartAxis>& axis)
+{
+    //TODO not implemented
+}
+
+void ChartPresenter::setAxis(AxisItem *item, const QChartAxis& axis)
+{
+    item->setVisible(axis.isAxisVisible());
+}
+*/
 #include "moc_chartpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

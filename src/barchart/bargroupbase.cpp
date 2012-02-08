@@ -24,20 +24,6 @@ void BarGroupBase::setSeparatorsVisible(bool visible)
     mSeparatorsVisible = visible;
 }
 
-void BarGroupBase::setSize(const QSizeF& size)
-{
-    mWidth = size.width();
-    mHeight = size.height();
-    layoutChanged();
-    mLayoutSet = true;
-}
-
-void BarGroupBase::setPlotDomain(const PlotDomain& data)
-{
-    qDebug() << "BarGroupBase::setPlotDomain";
-    // TODO:
-}
-
 void BarGroupBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (!mLayoutSet) {
@@ -118,5 +104,28 @@ void BarGroupBase::dataChanged()
     // TODO: if (autolayout) { layoutChanged() } or something
     mLayoutDirty = true;
 }
+
+//handlers
+
+void BarGroupBase::handleModelChanged(int index)
+{
+    qDebug() << "BarGroupBase::handleModelChanged";
+}
+
+void BarGroupBase::handleDomainChanged(const Domain& domain)
+{
+    qDebug() << "BarGroupBase::handleModelChanged";
+}
+
+void BarGroupBase::handleGeometryChanged(const QRectF& rect)
+{
+    mWidth = rect.width();
+    mHeight = rect.height();
+    layoutChanged();
+    mLayoutSet = true;
+    setPos(rect.topLeft());
+}
+
+#include "moc_bargroupbase.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
