@@ -72,11 +72,6 @@ void QChartView::setTitle(const QString& title)
     m_chart->setTitle(title);
 }
 
-void QChartView::setBackground(const QColor& startColor, const QColor& endColor, QChart::GradientOrientation orientation)
-{
-    m_chart->setBackground(startColor,endColor,orientation);
-}
-
 void QChartView::setChartBackgroundBrush(const QBrush& brush)
 {
 	 m_chart->setChartBackgroundBrush(brush);

@@ -64,10 +64,6 @@ public:
     QChart::ChartThemeId theme();
 
     void setTitle(const QString& title,const QFont& font = QFont());
-
-    //Obsolete interface
-    void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, GradientOrientation orientation = VerticalGradientOrientation);
-
     void setChartBackgroundBrush(const QBrush& brush);
     void setChartBackgroundPen(const QPen& pen);
 
@@ -89,7 +85,6 @@ private:
 private:
     Q_DISABLE_COPY(QChart)
     QGraphicsRectItem* m_backgroundItem;
-    QLinearGradient m_backgroundGradient;
     GradientOrientation m_bacgroundOrinetation;
     QGraphicsTextItem* m_titleItem;
     AxisItem* m_axisXItem;

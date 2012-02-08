@@ -242,30 +242,6 @@ QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
     return series;
 }
 
-void QChart::setBackground(const QColor& startColor, const QColor& endColor, GradientOrientation orientation)
-{
-
-    if(!m_backgroundItem){
-        m_backgroundItem = new QGraphicsRectItem(this);
-        m_backgroundItem->setZValue(-1);
-    }
-
-    m_bacgroundOrinetation = orientation;
-    m_backgroundGradient.setColorAt(0.0, startColor);
-    m_backgroundGradient.setColorAt(1.0, endColor);
-    m_backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
-
-    if(orientation == VerticalGradientOrientation){
-        m_backgroundGradient.setFinalStop(0,1);
-    }else{
-        m_backgroundGradient.setFinalStop(1,0);
-    }
-
-    m_backgroundItem->setBrush(m_backgroundGradient);
-    m_backgroundItem->setPen(Qt::NoPen);
-    m_backgroundItem->update();
-}
-
 void QChart::setChartBackgroundBrush(const QBrush& brush)
 {
 
@@ -310,9 +286,12 @@ void QChart::setMargin(int margin)
 void QChart::setTheme(QChart::ChartThemeId theme)
 {
     m_chartTheme->setTheme(theme);
-    setBackground(m_chartTheme->d->m_gradientStartColor,
-                  m_chartTheme->d->m_gradientEndColor,
-                  m_bacgroundOrinetation);
+
+    QLinearGradient backgroundGradient;
+    backgroundGradient.setColorAt(0.0, m_chartTheme->d->m_gradientStartColor);
+    backgroundGradient.setColorAt(1.0, m_chartTheme->d->m_gradientEndColor);
+    backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+    setChartBackgroundBrush(backgroundGradient);
 
     // TODO: Move the controlling of the series presentations into private implementation of the
     // series instead of QChart controlling themes for each
