@@ -6,17 +6,18 @@
 //#include "barlabel_p.h"
 //#include "bar_p.h"
 #include "barchartseriesbase.h"
+#include "barchartmodel_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 // Base Class for bar groups. Common implemantation of different groups. Not to be instantiated.
-
 class BarGroupBase : public QObject, public ChartItem
 {
     Q_OBJECT
 public:
     BarGroupBase(BarChartSeriesBase& series, QGraphicsItem *parent = 0);
+//    BarGroupBase(BarChartModel& model, QGraphicsItem *parent = 0);
     void setSeparatorsVisible(bool visible = true);
 
 public: // From ChartItem
@@ -46,9 +47,10 @@ protected slots:
 
 protected:
 
-    BarChartSeriesBase& mSeries;
+    //BarChartSeriesBase& mSeries;
 
-    int mMin;                                   // Min and max values of data. (updated when data is changed, used when drawing)
+    // TODO: consider these.
+    int mMin;           // Min and max values of data. (updated when data is changed, used when drawing)
     int mMax;
 
     int mHeight;        // Layout spesific
@@ -62,6 +64,8 @@ protected:
 
     ChartTheme* mTheme;
     bool mSeparatorsVisible;
+
+    BarChartModel mModel;
 
 };
 

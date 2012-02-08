@@ -14,12 +14,13 @@ SOURCES += barchart/barchartseries.cpp \
     barchart/percentbarchartseries.cpp \
     barchart/percentbargroup.cpp \
     barchart/barlabel.cpp \
-    linechart/linechartanimationitem.cpp \
-    linechart/linechartitem.cpp \
-    linechart/qlinechartseries.cpp \
+    barchart/barchartmodel.cpp \
     barchart/separator.cpp \
     barchart/bargroupbase.cpp \
     barchart/barchartseriesbase.cpp \
+    linechart/linechartanimationitem.cpp \
+    linechart/linechartitem.cpp \
+    linechart/qlinechartseries.cpp \
     qscatterseries.cpp \
     #scatterpresentation.cpp \
     qchart.cpp \
@@ -37,6 +38,7 @@ PRIVATE_HEADERS += linechart/linechartitem_p.h \
     barchart/barlabel_p.h \
     barchart/bar_p.h \
     barchart/separator_p.h \
+    barchart/barchartmodel_p.h \
     qscatterseries_p.h \
     #scatterpresentation.h \
     axisitem_p.h \

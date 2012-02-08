@@ -14,6 +14,7 @@ StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *p
 
 void StackedBarGroup::layoutChanged()
 {
+/*
     // Scale bars to new layout
     // Layout for bars:
     if (mSeries.countRows() <= 0) {
@@ -74,7 +75,7 @@ void StackedBarGroup::layoutChanged()
         xPos += xStep;
         separatorIndex++;
     }
-
+*/
     mLayoutDirty = true;
 }
 

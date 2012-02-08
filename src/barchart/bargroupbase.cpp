@@ -9,13 +9,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarGroupBase::BarGroupBase(BarChartSeriesBase& series, QGraphicsItem *parent)
     : ChartItem(parent)
-    ,mSeries(series)
+//    ,mSeries(series)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
     ,mTheme(0)
     ,mSeparatorsVisible(true)
 {
+    mModel.addSeries(series);
     dataChanged();
 }
 
@@ -69,9 +70,10 @@ void BarGroupBase::dataChanged()
 {
     qDebug() << "BarGroupBase::dataChanged";
 
-    // Find out maximum and minimum of all series
-    mMax = mSeries.max();
-    mMin = mSeries.min();
+    // Find out maximum and minimum of all series.
+    // TODO: is this actually needed?
+//    mMax = mModel.max();
+//    mMin = mModel.min();
 
     // Delete old bars
     foreach (QGraphicsItem* item, childItems()) {
@@ -79,14 +81,14 @@ void BarGroupBase::dataChanged()
     }
 
     // Create new graphic items for bars
-    int totalItems = mSeries.countTotalItems();
+    int totalItems = mModel.countTotalItems();  // mSeries.countTotalItems();
     for (int i=0; i<totalItems; i++) {
         Bar *bar = new Bar(this);
         childItems().append(bar);
     }
 
     // TODO: labels from series. This creates just some example labels
-    int count = mSeries.countColumns();
+    int count = mModel.countItemsInSeries();    // mSeries.countColumns();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
         QString text("Label " + QString::number(i));
@@ -94,7 +96,7 @@ void BarGroupBase::dataChanged()
         childItems().append(label);
     }
 
-    count = mSeries.countColumns() - 1; // There is one less separator than columns
+    count = mModel.countItemsInSeries() - 1;    // mSeries.countColumns() - 1; // There is one less separator than columns
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme

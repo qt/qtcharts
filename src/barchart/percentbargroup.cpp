@@ -14,6 +14,7 @@ PercentBarGroup::PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *p
 
 void PercentBarGroup::layoutChanged()
 {
+    /*
     // Scale bars to new layout
     // Layout for bars:
     if (mSeries.countRows() <= 0) {
@@ -66,7 +67,7 @@ void PercentBarGroup::layoutChanged()
         xPos += xStep;
         separatorIndex++;
     }
-
+*/
     mLayoutDirty = true;
 }
 

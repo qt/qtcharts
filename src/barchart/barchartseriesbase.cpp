@@ -7,15 +7,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarChartSeriesBase::BarChartSeriesBase(QObject *parent)
     : QChartSeries(parent)
+    ,mData(0)
 {
 }
-
-bool BarChartSeriesBase::setData(QAbstractItemModel* model)
+/*
+bool BarChartSeriesBase::setModel(QAbstractItemModel* model)
 {
     mModel = model;
     return true;
 }
-
+*/
+bool BarChartSeriesBase::setData(QList<qreal>& data)
+{
+    mData = &data;
+    return true;
+}
+/*
 int BarChartSeriesBase::min()
 {
     Q_ASSERT(mModel->rowCount() > 0);
@@ -102,6 +109,48 @@ int BarChartSeriesBase::columnSum(int column)
         sum += mModel->data(mModel->index(row,column)).toInt();
     }
     return sum;
+}
+*/
+qreal BarChartSeriesBase::min()
+{
+    Q_ASSERT(mData != 0);
+
+    int count = mData->count();
+    int min = INT_MAX;
+
+    for (int i=0; i<count; i++) {
+        if (mData->at(i) < min) {
+            min = mData->at(i);
+        }
+    }
+    return min;
+}
+
+qreal BarChartSeriesBase::max()
+{
+    Q_ASSERT(mData != 0);
+
+    int count = mData->count();
+    int max = INT_MIN;
+
+    for (int i=0; i<count; i++) {
+        if (mData->at(i) > max) {
+            max = mData->at(i);
+        }
+    }
+    return max;
+}
+
+int BarChartSeriesBase::countItems()
+{
+    Q_ASSERT(mData != 0);
+    return mData->count();
+}
+
+qreal BarChartSeriesBase::valueAt(int item)
+{
+    Q_ASSERT(mData != 0);
+    return mData->at(item);
 }
 
 #include "moc_barchartseriesbase.cpp"

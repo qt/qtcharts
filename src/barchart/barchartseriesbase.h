@@ -22,19 +22,25 @@ public:
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeInvalid; }
 
     // TODO: Better data model?
-    virtual bool setData(QAbstractItemModel* model);
+//    virtual bool setModel(QAbstractItemModel* model);
+    virtual bool setData(QList<qreal>& data);
 
     // Methods to find out minimum and maximum values of data
-    int min();
-    int max();
-    int maxColumnSum();     // returns maximum sum of items in all columns.
+//    int min(); // TODO: remove
+//    int max(); // TODO: remove
+//    int maxColumnSum();   // TODO: move to model. returns maximum sum of items in all columns.
 
-    int countRows();
-    int countColumns();     // Count items in one series.
-    int countTotalItems();
-    int valueAt(int row, int column);
+//    int countRows();    // TODO: remove.
+//    int countColumns();     // TODO: remove. Count items in one series.
+//    int countTotalItems();  // TODO: move to model
+//    int valueAt(int row, int column);   // TODO: move to model
 
-    int columnSum(int column);
+//    int columnSum(int column);  // TODO: move to model
+
+    qreal min();
+    qreal max();
+    int countItems();
+    qreal valueAt(int item);
 
 public Q_SLOTS:
 
@@ -42,6 +48,9 @@ private:
 
     QAbstractItemModel* mModel;
     BarGroupBase* mBarGroup;
+
+    QList<qreal>* mData;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
