@@ -28,7 +28,6 @@ SOURCES += \
     qpieseries.cpp \
     qchart.cpp \
     axisitem.cpp \
-    qchartwidget.cpp \
     pieslice.cpp \
     qchartview.cpp \
     qchartseries.cpp \
@@ -63,7 +62,6 @@ PUBLIC_HEADERS += \
     qscatterseries.h \
     qpieseries.h \
     qchart.h \
-    qchartwidget.h \
     qchartglobal.h \
     xylinechart/qxychartseries.h \
     barchart/barchartseries.h \

@@ -23,7 +23,8 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent)
 {
-    m_chartWidget = new QChartWidget(this);
+    m_chartWidget = new QChartView(this);
+    m_chartWidget->setRubberBandPolicy(QChartView::HorizonalRubberBand);
 
     // Grid layout for the controls for configuring the chart widget
     QGridLayout *grid = new QGridLayout();

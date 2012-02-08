@@ -2,7 +2,7 @@
 #define MAINWIDGET_H
 
 #include <qchartglobal.h>
-#include <qchartwidget.h>
+#include <qchartview.h>
 #include <QWidget>
 
 class QSpinBox;
@@ -41,7 +41,7 @@ private slots:
     void setPiePosition(int position);
 
 private:
-    QChartWidget *m_chartWidget;
+    QChartView *m_chartWidget;
     QCheckBox *m_autoScaleCheck;
     QSpinBox *m_xMinSpin;
     QSpinBox *m_xMaxSpin;

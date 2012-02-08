@@ -7,6 +7,7 @@
 #include <QGraphicsView>
 
 class QGraphicsScene;
+class QRubberBand;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -15,6 +16,8 @@ class QChart;
 class QTCOMMERCIALCHART_EXPORT QChartView : public QGraphicsView
 {
 public:
+    enum  RubberBandPolicy { NoRubberBand, VerticalRubberBand, HorizonalRubberBand, RectangleRubberBand };
+
     explicit QChartView(QWidget *parent = 0);
     ~QChartView();
 
@@ -22,15 +25,16 @@ public:
     void resizeEvent(QResizeEvent *event);
 
     void addSeries(QChartSeries* series);
+
     // Convenience function
     QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
 
     int margin() const;
+
     void setTitle(const QString& title);
 
     //Obsolete interface
     void setBackground(const QColor& startColor, const QColor& endColor = Qt::white, QChart::GradientOrientation orientation = QChart::VerticalGradientOrientation);
-
 
     void setChartBackgroundBrush(const QBrush& brush);
     void setChartBackgroundPen(const QPen& pen);
@@ -39,10 +43,25 @@ public:
     void zoomIn();
     void zoomOut();
 
+    void setRubberBandPolicy(const RubberBandPolicy );
+    RubberBandPolicy rubberBandPolicy() const;
+
+    void setTheme(QChart::ChartThemeId theme);
+
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+    void keyPressEvent(QKeyEvent *event);
+
+
 private:
     QGraphicsScene *m_scene;
     QChart* m_chart;
-    QPoint m_origin;
+    QPoint m_rubberBandOrigin;
+    QRubberBand* m_rubberBand;
+    bool m_verticalRubberBand;
+    bool m_horizonalRubberBand;
     Q_DISABLE_COPY(QChartView)
 
 
