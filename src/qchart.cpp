@@ -145,13 +145,29 @@ void QChart::zoomReset()
     m_presenter->zoomReset();
 }
 
-void QChart::setAxisX(QChartAxis* axis)
+QChartAxis* QChart::axisX()
 {
-    m_presenter->setAxisX(axis);
+    return m_presenter->axisX();
 }
-void QChart::addAxisY(QChartAxis* axis)
+
+QChartAxis* QChart::axisY()
 {
-    m_presenter->addAxisY(axis);
+    return m_presenter->axisY();
+}
+
+QChartAxis* QChart::addAxisX()
+{
+    return m_presenter->addAxisX();
+}
+
+QChartAxis* QChart::addAxisY()
+{
+    return m_presenter->addAxisY();
+}
+
+void QChart::removeAxis(QChartAxis* axis)
+{
+    m_presenter->removeAxis(axis);
 }
 
 void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)

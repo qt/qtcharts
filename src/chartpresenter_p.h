@@ -33,11 +33,14 @@ public:
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme();
 
-    void setAxisX(QChartAxis* axis);
-    void addAxisY(QChartAxis* axis);
+    QChartAxis* axisX();
+    QChartAxis* axisY();
+    QChartAxis* addAxisX();
+    QChartAxis* addAxisY();
+    void removeAxis(QChartAxis* axis);
+
 private:
     void createConnections();
-    void createDeafultAxis();
 
 public slots:
     void handleSeriesAdded(QChartSeries* series);
@@ -51,11 +54,13 @@ signals:
 
 private:
     QMap<QChartSeries*,ChartItem*> m_chartItems;
+    QMap<QChartAxis*,AxisItem*> m_axisItems;
     QChart* m_chart;
     ChartDataSet* m_dataset;
     QVector<Domain> m_domains;
-    QList<AxisItem*> m_axis;
     ChartTheme *m_chartTheme;
+    QChartAxis* m_axisX;
+    QChartAxis* m_axisY;
     int m_domainIndex;
     int m_marginSize;
     QRectF m_rect;

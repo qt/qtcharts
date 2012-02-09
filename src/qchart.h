@@ -67,14 +67,14 @@ public:
     void zoomOut();
     void zoomReset();
 
-    void setAxisX(QChartAxis* axis);
-    void addAxisY(QChartAxis* axis);
+    QChartAxis* axisX();
+    QChartAxis* axisY();
+    QChartAxis* addAxisX();
+    QChartAxis* addAxisY();
+    void removeAxis(QChartAxis* axis);
 
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
-
-private:
-    void setAxis(AxisItem *item, const QChartAxis& axis);
 
 private:
     Q_DISABLE_COPY(QChart)

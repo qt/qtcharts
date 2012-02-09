@@ -45,6 +45,12 @@ public:
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme() const;
 
+    QChartAxis* axisX();
+    QChartAxis* axisY();
+    QChartAxis* addAxisX();
+    QChartAxis* addAxisY();
+    void removeAxis(QChartAxis* axis);
+
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);

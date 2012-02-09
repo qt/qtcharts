@@ -26,36 +26,32 @@ m_dataset(dataset),
 m_chartTheme(0),
 m_domainIndex(0),
 m_marginSize(0),
+m_axisX(new QChartAxis(this)),
+m_axisY(new QChartAxis(this)),
 m_rect(QRectF(QPoint(0,0),m_chart->size()))
 {
     setChartTheme(QChart::ChartThemeDefault);
+    m_axisItems[m_axisX] = new AxisItem(m_axisX,AxisItem::X_AXIS,m_chart);
+    m_axisItems[m_axisY] = new AxisItem(m_axisY,AxisItem::Y_AXIS,m_chart);
     createConnections();
-    createDeafultAxis();
 }
 
 ChartPresenter::~ChartPresenter()
 {
 }
 
-void ChartPresenter::createDeafultAxis()
-{
-    //default axis
-    QChartAxis* axisX = new QChartAxis(this);
-    QChartAxis* axisY = new QChartAxis(this);
-
-    m_axis << new AxisItem(axisX,AxisItem::X_AXIS,m_chart);
-    m_axis << new AxisItem(axisY,AxisItem::Y_AXIS,m_chart);
-
-    foreach(AxisItem* item, m_axis) {
-        QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
-        QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
-    }
-}
-
 void ChartPresenter::createConnections()
 {
     QObject::connect(m_chart,SIGNAL(geometryChanged()),this,SLOT(handleGeometryChanged()));
     QObject::connect(m_dataset,SIGNAL(seriesAdded(QChartSeries*)),this,SLOT(handleSeriesAdded(QChartSeries*)));
+
+    QMapIterator<QChartAxis*,AxisItem*> i(m_axisItems);
+
+    while (i.hasNext()) {
+        i.next();
+        QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),i.value(),SLOT(handleGeometryChanged(const QRectF&)));
+        QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),i.value(),SLOT(handleDomainChanged(const Domain&)));
+    }
 }
 
 void ChartPresenter::handleGeometryChanged()
@@ -226,14 +222,49 @@ QChart::ChartTheme ChartPresenter::chartTheme()
     return m_chartTheme->id();
 }
 
-void ChartPresenter::setAxisX(QChartAxis* axis)
+QChartAxis* ChartPresenter::axisX()
 {
-
+   return m_axisX;
 }
 
-void ChartPresenter::addAxisY(QChartAxis* axis)
+QChartAxis* ChartPresenter::axisY()
 {
+   return m_axisY;
+}
 
+QChartAxis* ChartPresenter::addAxisX()
+{
+  //only one axis
+  if(m_axisX==0){
+      m_axisX = new QChartAxis(this);
+      m_axisItems[m_axisX] = new AxisItem(m_axisX,AxisItem::X_AXIS,m_chart);
+  }
+  return m_axisX;
+}
+
+QChartAxis* ChartPresenter::addAxisY()
+{
+    if(m_axisY==0){
+        m_axisY = new QChartAxis(this);
+        m_axisItems[m_axisY] = new AxisItem(m_axisY,AxisItem::Y_AXIS,m_chart);
+        return m_axisY;
+    }
+
+    QChartAxis* axis = new QChartAxis(this);
+    m_axisItems[axis] = new AxisItem(axis,AxisItem::Y_AXIS,m_chart);
+    return axis;
+}
+
+void ChartPresenter::removeAxis(QChartAxis* axis)
+{
+    AxisItem* item = m_axisItems.take(axis);
+    if(item){
+        delete item;
+        delete axis;
+    }
+    //reset pointers to default ones
+    if(axis == m_axisX) m_axisX=0;
+    else if(axis == m_axisY) m_axisY=0;
 }
 
 /*

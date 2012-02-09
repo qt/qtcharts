@@ -199,4 +199,29 @@ QChart::ChartTheme QChartView::chartTheme() const
     return m_chart->chartTheme();
 }
 
+QChartAxis* QChartView::axisX()
+{
+    return m_chart->axisX();
+}
+
+QChartAxis* QChartView::axisY()
+{
+    return m_chart->axisY();
+}
+
+QChartAxis* QChartView::addAxisX()
+{
+    return m_chart->addAxisX();
+}
+
+QChartAxis* QChartView::addAxisY()
+{
+    return m_chart->addAxisY();
+}
+
+void QChartView::removeAxis(QChartAxis* axis)
+{
+    m_chart->removeAxis(axis);
+}
+
 QTCOMMERCIALCHART_END_NAMESPACE

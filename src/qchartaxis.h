@@ -54,6 +54,7 @@ public:
     const QBrush& gridBrush();
      */
 
+
 signals:
     void axisVisibilityChanged();
     void axisPenChanged();
