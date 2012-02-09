@@ -163,6 +163,8 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             break;
         }
     }
+
+    if(m_rect.isValid()) emit geometryChanged(m_rect);
 }
 
 void ChartPresenter::handleSeriesChanged(QChartSeries* series)
