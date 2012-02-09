@@ -1,6 +1,6 @@
 #include "chartdataset_p.h"
 //series
-#include "qxychartseries.h"
+#include "qlinechartseries.h"
 #include "barchartseries.h"
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
@@ -38,7 +38,7 @@ void ChartDataSet::addSeries(QChartSeries* series)
     {
         case QChartSeries::SeriesTypeLine: {
 
-            QXYChartSeries* xyseries = static_cast<QXYChartSeries*>(series);
+            QLineChartSeries* xyseries = static_cast<QLineChartSeries*>(series);
 
             for (int i = 0; i < xyseries->count(); i++)
             {

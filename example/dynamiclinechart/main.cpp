@@ -1,10 +1,11 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <qchartview.h>
-#include <qxychartseries.h>
+#include <qlinechartseries.h>
 #include <qchart.h>
 #include <cmath>
 #include "wavegenerator.h"
+#include <QGLWidget>
 
 int main(int argc, char *argv[])
 {
@@ -12,11 +13,11 @@ int main(int argc, char *argv[])
 
     QMainWindow window;
 
-    QXYChartSeries* series0 = QXYChartSeries::create();
+    QLineChartSeries* series0 = QLineChartSeries::create();
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
-    QXYChartSeries* series1 = QXYChartSeries::create();
+    QLineChartSeries* series1 = QLineChartSeries::create();
     QPen red(Qt::red);
     red.setWidth(3);
     series1->setPen(red);
@@ -25,6 +26,7 @@ int main(int argc, char *argv[])
 
     QChartView* chartView =  new QChartView(&window);
 
+    chartView->setViewport( new QGLWidget() );
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setTitle("This is wave generator buahha.");
     chartView->addSeries(series0);

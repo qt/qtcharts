@@ -1,20 +1,20 @@
-#ifndef XYLINEPRESENTER_P_H_
-#define XYLINEPRESENTER_P_H_
+#ifndef LINECHARTANIMATIONITEM_P_H_
+#define LINECHARTANIMATIONITEM_P_H_
 
 #include "qchartglobal.h"
-#include "xylinechartitem_p.h"
+#include "linechartitem_p.h"
 #include "domain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class XYLineChartItem;
+class LineChartItem;
 
-class LineChartAnimationItem : public XYLineChartItem {
+class LineChartAnimationItem : public LineChartItem {
     Q_OBJECT
     Q_PROPERTY(int a_addPoints READ ar_addPoints WRITE aw_addPoints);
    // Q_PROPERTY(QPointF a_setPoint READ ar_setPoint WRITE aw_setPoint);
 public:
-	LineChartAnimationItem(ChartPresenter* presenter, QXYChartSeries *series, QGraphicsItem *parent = 0);
+	LineChartAnimationItem(ChartPresenter* presenter, QLineChartSeries *series, QGraphicsItem *parent = 0);
 	virtual ~LineChartAnimationItem();
 
 	void addPoints(const QVector<QPointF>& points);
@@ -52,4 +52,4 @@ public:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* XYLINEPRESENTER_P_H_ */
+#endif

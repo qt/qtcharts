@@ -7,19 +7,16 @@
 #include "barchartseries.h"
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
-#include "qxychartseries.h"
+#include "qlinechartseries.h"
 #include "qpieseries.h"
 //items
 #include "axisitem_p.h"
 #include "bargroup.h"
 #include "stackedbargroup.h"
-#include "xylinechartitem_p.h"
+#include "linechartitem_p.h"
 #include "percentbargroup.h"
 #include "linechartanimationitem_p.h"
 #include "piepresentation.h"
-
-#include <QAbstractAnimation>
-#include <QPropertyAnimation>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -83,8 +80,8 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
     switch(series->type())
     {
         case QChartSeries::SeriesTypeLine: {
-            QXYChartSeries* lineSeries = static_cast<QXYChartSeries*>(series);
-            XYLineChartItem* item = new LineChartAnimationItem(this,lineSeries,m_chart);
+            QLineChartSeries* lineSeries = static_cast<QLineChartSeries*>(series);
+            LineChartItem* item = new LineChartAnimationItem(this,lineSeries,m_chart);
             m_chartTheme->decorate(item,lineSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));

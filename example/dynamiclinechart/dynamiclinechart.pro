@@ -8,7 +8,7 @@
 
 TARGET = dynamicLineChart
 TEMPLATE = app
-QT += core gui
+QT += core gui opengl
 SOURCES += main.cpp
 HEADERS += wavegenerator.h
 

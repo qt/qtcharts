@@ -1,6 +1,6 @@
 #include "declarativeseries.h"
 #include "declarativechart.h"
-#include <qxychartseries.h>
+#include <qlinechartseries.h>
 #include <cmath>
 #include <QDebug>
 
@@ -44,9 +44,9 @@ void DeclarativeSeries::initSeries()
 
         switch (m_seriesType) {
         case SeriesTypeLine: {
-            m_series = QXYChartSeries::create(this);
+            m_series = QLineChartSeries::create(this);
             for (qreal i(0.0); i < 100.0; i += 1.0)
-                ((QXYChartSeries *)m_series)->add(i, i);
+                ((QLineChartSeries *)m_series)->add(i, i);
             chart->addSeries(m_series);
             break;
         }

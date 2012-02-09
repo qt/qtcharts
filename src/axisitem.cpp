@@ -13,25 +13,12 @@ AxisItem::AxisItem(QChartAxis* axis,AxisType type,QGraphicsItem* parent) :
     m_ticks(4),
     m_type(type)
 {
+    //initial initialization
+    handleAxisChanged();
 }
 
 AxisItem::~AxisItem()
 {
-}
-
-void AxisItem::setLength(int length)
-{
-    QPainterPath path;
-    path.moveTo(QPointF(0,0));
-    path.lineTo(length,0);
-   // path.lineTo(length-4,0);
-   // path.lineTo(length,3);
-   // path.lineTo(length-4,6);
-   // path.lineTo(length-4,4);
-   // path.lineTo(0,4);
-   // path.lineTo(0,2);
-    m_path=path;
-    update();
 }
 
 QRectF AxisItem::boundingRect() const
@@ -97,49 +84,54 @@ void AxisItem::createItems()
 
     if(!m_rect.isValid()) return;
 
-       if(m_type==X_AXIS) {
+    switch (m_type)
+    {
+        case X_AXIS:
+        {
+            const qreal deltaX = m_rect.width() / m_ticks;
 
-         const qreal deltaX = m_rect.width() / m_ticks;
+            for (int i = 0; i <= m_ticks; ++i) {
 
-         for (int i = 0; i <= m_ticks; ++i) {
+                int x = i * deltaX + m_rect.left();
 
-             int x = i * deltaX + m_rect.left();
+                qreal label = m_domain.m_minX + (i * m_domain.spanX()/ m_ticks);
 
-             qreal label = m_domain.m_minX + (i * m_domain.spanX()/ m_ticks);
+                m_grid<<new QGraphicsLineItem(x, m_rect.top(), x, m_rect.bottom(),this);
 
-             m_grid<<new QGraphicsLineItem(x, m_rect.top(), x, m_rect.bottom(),this);
+                QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
+                QPointF center = text->boundingRect().center();
+                text->setPos(x - center.x(), m_rect.bottom() + LABEL_PADDING);
+                //text->rotate(-45);
+                m_labels<<text;
+            }
+        }
+        break;
 
-             QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
-             QPointF center = text->boundingRect().center();
-             text->setPos(x - center.x(), m_rect.bottom() + LABEL_PADDING);
-             //text->rotate(-45);
-             m_labels<<text;
-         }
-       }
+        case Y_AXIS:
+        {
+            const qreal deltaY = m_rect.height()/ m_ticks;
 
-       if(m_type==Y_AXIS) {
+            for (int j = 0; j <= m_ticks; ++j) {
 
-         const qreal deltaY = m_rect.height()/ m_ticks;
+                int y = j * -deltaY + m_rect.bottom();
 
-         for (int j = 0; j <= m_ticks; ++j) {
+                qreal label = m_domain.m_minY + (j * m_domain.spanY()
+                    / m_ticks);
 
-             int y = j * -deltaY + m_rect.bottom();
+                m_grid<<new QGraphicsLineItem(m_rect.left() , y, m_rect.right(), y,this);
+                QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
+                QPointF center = text->boundingRect().center();
+                text->setPos(m_rect.left() - text->boundingRect().width() - LABEL_PADDING , y-center.y());
 
-             qreal label = m_domain.m_minY + (j * m_domain.spanY()
-                 / m_ticks);
+                m_labels<<text;
 
-             m_grid<<new QGraphicsLineItem(m_rect.left()  , y, m_rect.right(), y,this);
-             QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
-             QPointF center = text->boundingRect().center();
-
-             text->setPos(m_rect.left() - text->boundingRect().width() - LABEL_PADDING , y-center.y());
-             //text->rotate(-45);
-              m_labels<<text;
-
-         }
-       }
-
-       //painter->drawRect(m_rect.adjusted(0, 0, -1, -1));
+            }
+        }
+        break;
+        default:
+        qDebug()<<"Unknown axis type";
+        break;
+    }
 }
 
 void AxisItem::clear()

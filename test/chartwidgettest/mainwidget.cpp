@@ -2,7 +2,7 @@
 #include "dataseriedialog.h"
 #include "qchartseries.h"
 #include "qpieseries.h"
-#include <qxychartseries.h>
+#include <qlinechartseries.h>
 #include <barchartseries.h>
 #include <QPushButton>
 #include <QComboBox>
@@ -223,7 +223,7 @@ void MainWidget::addSeries(QString series, QString data)
 //            lineSeries->add(x.at(i), y.at(i));
 //        }
         //Q_ASSERT(newSeries->setData(x, y));
-        QXYChartSeries* series0 = QXYChartSeries::create();
+        QLineChartSeries* series0 = QLineChartSeries::create();
         for (int i(0); i < x.count() && i < y.count(); i++)
             series0->add(x.at(i), y.at(i));
         m_chartWidget->addSeries(series0);

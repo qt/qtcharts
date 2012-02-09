@@ -1,5 +1,5 @@
 #include "linechartanimationitem_p.h"
-#include "xylinechartitem_p.h"
+#include "linechartitem_p.h"
 #include <QPropertyAnimation>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -7,8 +7,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 const static int duration = 500;
 
 
-LineChartAnimationItem::LineChartAnimationItem(ChartPresenter* presenter, QXYChartSeries* series,QGraphicsItem *parent):
-XYLineChartItem(presenter,series,parent)
+LineChartAnimationItem::LineChartAnimationItem(ChartPresenter* presenter, QLineChartSeries* series,QGraphicsItem *parent):
+LineChartItem(presenter,series,parent)
 {
 
 }
@@ -44,7 +44,7 @@ void LineChartAnimationItem::aw_addPoints(int points)
 {
     int index = count();
     for(int i = index;i< points ;i++){
-        XYLineChartItem::addPoint(m_data.at(i));
+        LineChartItem::addPoint(m_data.at(i));
     }
     updateGeometry();
     update();
@@ -52,7 +52,7 @@ void LineChartAnimationItem::aw_addPoints(int points)
 
 void LineChartAnimationItem::aw_setPoint(int index,const QPointF& point)
 {
-    XYLineChartItem::setPoint(index,point);
+    LineChartItem::setPoint(index,point);
     updateGeometry();
     update();
 }

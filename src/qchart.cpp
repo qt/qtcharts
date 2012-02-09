@@ -15,7 +15,7 @@
 #include "barchartseries.h"
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
-#include "qxychartseries.h"
+#include "qlinechartseries.h"
 
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
@@ -47,7 +47,7 @@ QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
 
     switch (type) {
         case QChartSeries::SeriesTypeLine: {
-            series = QXYChartSeries::create();
+            series = QLineChartSeries::create();
             break;
         }
         case QChartSeries::SeriesTypeBar: {

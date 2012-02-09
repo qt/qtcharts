@@ -2,7 +2,7 @@
 #include <QTime>
 #include <QObject>
 #include <cmath>
-#include <qxychartseries.h>
+#include <qlinechartseries.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -14,7 +14,7 @@ class WaveGenerator: public QObject
     Q_OBJECT
 
 public:
-    WaveGenerator(QXYChartSeries* series1, QXYChartSeries* series2) :
+    WaveGenerator(QLineChartSeries* series1, QLineChartSeries* series2) :
         m_series1(series1),
         m_series2(series2),
         m_wave(0),
@@ -52,8 +52,8 @@ public slots:
     }
 
 private:
-    QXYChartSeries* m_series1;
-    QXYChartSeries* m_series2;
+    QLineChartSeries* m_series1;
+    QLineChartSeries* m_series2;
     int m_wave;
     qreal m_step;
     QTimer m_timer;

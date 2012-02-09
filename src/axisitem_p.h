@@ -34,8 +34,6 @@ private:
     void clear();
 
 public:
-    void setLength(int length);
-    void setWidth(int width);
     AxisType axisType() const {return m_type;};
 
 protected:
@@ -49,9 +47,6 @@ private:
     AxisType m_type;
     int m_ticks;
     Domain m_domain;
-
-
-
     QRectF m_rect;
 
     QPainterPath m_path;

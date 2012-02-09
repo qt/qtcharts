@@ -6,12 +6,12 @@
 #include "barchartseries.h"
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
-#include "qxychartseries.h"
+#include "qlinechartseries.h"
 //items
 #include "axisitem_p.h"
 #include "bargroup.h"
 #include "stackedbargroup.h"
-#include "xylinechartitem_p.h"
+#include "linechartitem_p.h"
 #include "percentbargroup.h"
 
 //themes
@@ -74,8 +74,8 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
     switch(series->type())
     {
         case QChartSeries::SeriesTypeLine: {
-            QXYChartSeries* s = static_cast<QXYChartSeries*>(series);
-            XYLineChartItem* i = static_cast<XYLineChartItem*>(item);
+            QLineChartSeries* s = static_cast<QLineChartSeries*>(series);
+            LineChartItem* i = static_cast<LineChartItem*>(item);
             decorate(i,s,count);
             break;
         }
@@ -104,7 +104,7 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
 
 }
 
-void ChartTheme::decorate(XYLineChartItem* item, QXYChartSeries* series,int count)
+void ChartTheme::decorate(LineChartItem* item, QLineChartSeries* series,int count)
 {
     item->setPen(series->pen());
 }

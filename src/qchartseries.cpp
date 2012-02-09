@@ -2,7 +2,7 @@
 #include "qchartseries.h"
 
 #include "barchartseries.h"
-#include "qxychartseries.h"
+#include "qlinechartseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -12,7 +12,7 @@ QChartSeries* QChartSeries::create(QChartSeriesType type, QObject* parent)
     // TODO: Other types
     switch (type) {
     case QChartSeries::SeriesTypeLine: {
-        QXYChartSeries* s = QXYChartSeries::create(parent); // TODO: do we need create method for derived implementations?
+        QLineChartSeries* s = QLineChartSeries::create(parent); // TODO: do we need create method for derived implementations?
         return s;
     }
     case QChartSeries::SeriesTypePie: {

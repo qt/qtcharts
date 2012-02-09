@@ -9,8 +9,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartItem;
 class QChartSeries;
-class XYLineChartItem;
-class QXYChartSeries;
+class LineChartItem;
+class QLineChartSeries;
 class BarGroup;
 class BarChartSeries;
 class StackedBarGroup;
@@ -26,7 +26,7 @@ public:
     static ChartTheme* createTheme(QChart::ChartThemeId theme);
     void decorate(QChart* chart);
     void decorate(ChartItem* item, QChartSeries* series,int count);
-    void decorate(XYLineChartItem* item, QXYChartSeries*, int count);
+    void decorate(LineChartItem* item, QLineChartSeries*, int count);
     void decorate(BarGroup* item, BarChartSeries* series,int count);
     void decorate(StackedBarGroup* item, StackedBarChartSeries* series,int count);
     void decorate(PercentBarGroup* item, PercentBarChartSeries* series,int count);
