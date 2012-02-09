@@ -15,7 +15,6 @@ public:
 
 public: // from ChartItem
     void setSize(const QSizeF &size);
-    void setPlotDomain(const PlotDomain& data);
 
     // Layout Stuff
     void resize( qreal w, qreal h );   // Size of bar.
@@ -36,7 +35,6 @@ private:
     qreal mYpos;
     QColor mColor;
 
-    PlotDomain mPlotDomain;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

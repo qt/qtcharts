@@ -4,7 +4,7 @@
 #include "qchartseries.h"
 #include "charttheme_p.h"
 #include "chartitem_p.h"
-#include "plotdomain_p.h"
+#include "domain_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -19,7 +19,7 @@ public:
 
 public: // from ChartObjectInterface
     void setSize(const QSizeF &size);
-    void setPlotDomain(const PlotDomain& data);
+    void setPlotDomain(const Domain& data);
 
 public: // from ChartThemeObserver
     void themeChanged(ChartTheme *theme);
@@ -39,7 +39,7 @@ public:
     QList<qreal> m_sceney;
     QColor m_markerColor;
     //SeriesTheme m_theme;
-    PlotDomain m_visibleChartArea;
+    Domain m_visibleChartArea;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

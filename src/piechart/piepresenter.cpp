@@ -47,19 +47,6 @@ void PiePresenter::seriesChanged()
     resize();
 }
 
-void PiePresenter::setSize(const QSizeF &size)
-{
-    // TODO: allow user setting the size?
-    // TODO: allow user defining the margins?
-    m_rect.setSize(size);
-    resize();
-}
-
-void PiePresenter::setPlotDomain(const PlotDomain& plotDomain)
-{
-    // TODO
-}
-
 void PiePresenter::resize()
 {
     m_pieRect = m_rect;
@@ -114,7 +101,10 @@ void PiePresenter::handleDomainChanged(const Domain& domain)
 
 void PiePresenter::handleGeometryChanged(const QRectF& rect)
 {
-    setSize(rect.size());
+    // TODO: allow user setting the size?
+    // TODO: allow user defining the margins?
+    m_rect.setSize(rect.size());
+    resize();
 }
 
 #include "moc_piepresenter.cpp"

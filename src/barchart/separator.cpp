@@ -26,11 +26,6 @@ void Separator::setSize(const QSizeF &size)
     mHeight = size.height();
 }
 
-void Separator::setPlotDomain(const PlotDomain& data)
-{
-
-}
-
 void Separator::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     qDebug() << "separator::paint" << boundingRect();

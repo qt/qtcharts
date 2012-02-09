@@ -15,7 +15,6 @@ public:
 
     // From ChartItem
     void setSize(const QSizeF &size);
-    void setPlotDomain(const PlotDomain& data);
 
     // From QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -23,7 +22,6 @@ public:
 
 private:
 
-    PlotDomain mDomain;
     QSizeF mSize;
     QString mLabel;
     qreal mXpos;

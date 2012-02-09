@@ -18,8 +18,6 @@ public:
     ~PiePresenter();
 
 public: // from ChartItem
-    void setSize(const QSizeF &size);
-    void setPlotDomain(const PlotDomain& data);
     QRectF boundingRect() const { return m_rect; }
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) {}
 

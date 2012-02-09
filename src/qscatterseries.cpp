@@ -49,9 +49,9 @@ void QScatterSeriesPrivate::themeChanged(ChartTheme *theme)
     //m_theme = theme->themeForSeries();
 }
 
-void QScatterSeriesPrivate::setPlotDomain(const PlotDomain& plotDomain)
+void QScatterSeriesPrivate::setPlotDomain(const Domain& plotDomain)
 {
-    m_visibleChartArea = plotDomain;
+    //m_visibleChartArea = plotDomain;
     changeGeometry();
 }
 

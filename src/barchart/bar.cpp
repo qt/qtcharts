@@ -15,10 +15,6 @@ void Bar::setSize(const QSizeF& size)
     mHeight = size.height();
 }
 
-void Bar::setPlotDomain(const PlotDomain& data)
-{
-    mPlotDomain = data;
-}
 
 void Bar::resize( qreal w, qreal h )
 {

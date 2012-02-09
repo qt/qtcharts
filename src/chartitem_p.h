@@ -1,7 +1,6 @@
 #ifndef CHARTITEM_H_
 #define CHARTITEM_H_
 
-#include "plotdomain_p.h"
 #include "domain_p.h"
 #include <QGraphicsItem>
 

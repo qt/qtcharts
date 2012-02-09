@@ -1,13 +1,8 @@
 #include "qchart.h"
-#include "qchartseries.h"
 #include "qscatterseries.h"
 #include "qscatterseries_p.h"
 #include "qpieseries.h"
 #include "qchartaxis.h"
-#include "charttheme_p.h"
-#include "chartitem_p.h"
-#include "plotdomain_p.h"
-#include "axisitem_p.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
 

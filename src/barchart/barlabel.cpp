@@ -23,11 +23,6 @@ void BarLabel::setSize(const QSizeF &size)
     mSize = size;
 }
 
-void BarLabel::setPlotDomain(const PlotDomain& data)
-{
-    mDomain = data;
-}
-
 void BarLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->drawText(boundingRect(),mLabel);

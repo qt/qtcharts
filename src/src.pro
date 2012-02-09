@@ -20,7 +20,6 @@ SOURCES += barchart/barchartseries.cpp \
     barchart/separator.cpp \
     barchart/bargroupbase.cpp \
     barchart/barchartseriesbase.cpp \
-    plotdomain.cpp \
     qscatterseries.cpp \
     qchart.cpp \
     axisitem.cpp \
@@ -36,7 +35,6 @@ PRIVATE_HEADERS += linechart/linechartitem_p.h \
     barchart/barlabel_p.h \
     barchart/bar_p.h \
     barchart/separator_p.h \
-    plotdomain_p.h \
     qscatterseries_p.h \
     axisitem_p.h \
     chartitem_p.h \
