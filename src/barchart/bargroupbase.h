@@ -17,7 +17,6 @@ class BarGroupBase : public QObject, public ChartItem
     Q_OBJECT
 public:
     BarGroupBase(BarChartSeriesBase& series, QGraphicsItem *parent = 0);
-//    BarGroupBase(BarChartModel& model, QGraphicsItem *parent = 0);
     void setSeparatorsVisible(bool visible = true);
 
 public: // From ChartItem
@@ -47,8 +46,6 @@ protected slots:
 
 protected:
 
-    //BarChartSeriesBase& mSeries;
-
     // TODO: consider these.
     int mMin;           // Min and max values of data. (updated when data is changed, used when drawing)
     int mMax;
@@ -65,7 +62,7 @@ protected:
     ChartTheme* mTheme;
     bool mSeparatorsVisible;
 
-    BarChartModel mModel;
+    BarChartModel& mModel;
 
 };
 

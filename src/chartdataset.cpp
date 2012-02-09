@@ -54,38 +54,33 @@ void ChartDataSet::addSeries(QChartSeries* series)
         case QChartSeries::SeriesTypeBar: {
 
             BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
-            qreal x = barSeries->countValues();
+            qreal x = barSeries->countColumns();
             qreal y = barSeries->max();
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = qMin(domain.m_minY,y);
             domain.m_maxX = qMax(domain.m_maxX,x);
             domain.m_maxY = qMax(domain.m_maxY,y);
-
         }
         break;
         case QChartSeries::SeriesTypeStackedBar: {
 
             StackedBarChartSeries* stackedBarSeries = static_cast<StackedBarChartSeries*>(series);
-/*
             qreal x = stackedBarSeries->countColumns();
             qreal y = stackedBarSeries->maxColumnSum();
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = qMin(domain.m_minY,y);
             domain.m_maxX = qMax(domain.m_maxX,x);
             domain.m_maxY = qMax(domain.m_maxY,y);
-*/
         }
             break;
         case QChartSeries::SeriesTypePercentBar: {
 
             PercentBarChartSeries* percentBarSeries = static_cast<PercentBarChartSeries*>(series);
-/*
             qreal x = percentBarSeries->countColumns();
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = 0;
             domain.m_maxX = qMax(domain.m_maxX,x);
             domain.m_maxY = 100;
-*/
         }
             break;
 

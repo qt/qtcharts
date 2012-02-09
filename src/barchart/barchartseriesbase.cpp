@@ -2,13 +2,15 @@
 #include <QDebug>
 #include "barchartseriesbase.h"
 #include "bargroup.h"
+#include "barchartmodel_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarChartSeriesBase::BarChartSeriesBase(QObject *parent)
     : QChartSeries(parent)
-    ,mData(0)
+    ,mModel(*(new BarChartModel(this))) // TODO: is this ok?
 {
+    qDebug() << "BarChartSeriesBase::BarChartSeriesBase";
 }
 /*
 bool BarChartSeriesBase::setModel(QAbstractItemModel* model)
@@ -17,11 +19,13 @@ bool BarChartSeriesBase::setModel(QAbstractItemModel* model)
     return true;
 }
 */
+/*
 bool BarChartSeriesBase::setData(QList<qreal>& data)
 {
     mData = &data;
     return true;
 }
+*/
 /*
 int BarChartSeriesBase::min()
 {
@@ -111,10 +115,22 @@ int BarChartSeriesBase::columnSum(int column)
     return sum;
 }
 */
+
+int BarChartSeriesBase::addData(QList<qreal> data)
+{
+    qDebug() << "BarChartSeriesBase::addData";
+    return mModel.addData(data);
+}
+
+void BarChartSeriesBase::removeData(int id)
+{
+    mModel.removeData(id);
+}
+
 qreal BarChartSeriesBase::min()
 {
-    Q_ASSERT(mData != 0);
-
+    return mModel.min();
+    /* Delegated to model
     int count = mData->count();
     int min = INT_MAX;
 
@@ -124,12 +140,13 @@ qreal BarChartSeriesBase::min()
         }
     }
     return min;
+    */
 }
 
 qreal BarChartSeriesBase::max()
 {
-    Q_ASSERT(mData != 0);
-
+    return mModel.max();
+    /* Delegated to model
     int count = mData->count();
     int max = INT_MIN;
 
@@ -139,18 +156,30 @@ qreal BarChartSeriesBase::max()
         }
     }
     return max;
+    */
 }
 
-int BarChartSeriesBase::countValues()
+int BarChartSeriesBase::countColumns()
 {
-    Q_ASSERT(mData != 0);
-    return mData->count();
+    return mModel.countColumns();
+//    return mData->count();
 }
 
-qreal BarChartSeriesBase::valueAt(int item)
+qreal BarChartSeriesBase::valueAt(int series, int item)
 {
-    Q_ASSERT(mData != 0);
-    return mData->at(item);
+    return mModel.valueAt(series,item);
+//    return mData->at(item);
+}
+
+qreal BarChartSeriesBase::maxColumnSum()
+{
+    qDebug() << "BarChartSeriesBase::maxColumnSum" << mModel.maxColumnSum();
+    return mModel.maxColumnSum();
+}
+
+BarChartModel& BarChartSeriesBase::model()
+{
+    return mModel;
 }
 
 #include "moc_barchartseriesbase.cpp"

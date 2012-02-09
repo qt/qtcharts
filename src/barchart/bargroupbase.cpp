@@ -9,15 +9,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarGroupBase::BarGroupBase(BarChartSeriesBase& series, QGraphicsItem *parent)
     : ChartItem(parent)
-//    ,mSeries(series)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
     ,mTheme(0)
     ,mSeparatorsVisible(true)
+    ,mModel(series.model())
 {
-    mModel.addSeries(series);
-    dataChanged();
 }
 
 void BarGroupBase::setSeparatorsVisible(bool visible)
@@ -27,16 +25,17 @@ void BarGroupBase::setSeparatorsVisible(bool visible)
 
 void BarGroupBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    qDebug() << "BarGroupBase::paint" << childItems().count();
     if (!mLayoutSet) {
         qDebug() << "BarGroupBase::paint called without layout set. Aborting.";
         return;
     }
-    if (mLayoutDirty) {
+//    if (mLayoutDirty) {
         // Layout or data has changed. Need to redraw.
         foreach(QGraphicsItem* i, childItems()) {
             i->paint(painter,option,widget);
         }
-    }
+//    }
 }
 
 QRectF BarGroupBase::boundingRect() const
@@ -70,11 +69,6 @@ void BarGroupBase::dataChanged()
 {
     qDebug() << "BarGroupBase::dataChanged";
 
-    // Find out maximum and minimum of all series.
-    // TODO: is this actually needed?
-//    mMax = mModel.max();
-//    mMin = mModel.min();
-
     // Delete old bars
     foreach (QGraphicsItem* item, childItems()) {
         delete item;
@@ -88,7 +82,7 @@ void BarGroupBase::dataChanged()
     }
 
     // TODO: labels from series. This creates just some example labels
-    int count = mModel.countItemsInSeries();    // mSeries.countColumns();
+    int count = mModel.countColumns();    // mSeries.countColumns();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
         QString text("Label " + QString::number(i));
@@ -96,7 +90,7 @@ void BarGroupBase::dataChanged()
         childItems().append(label);
     }
 
-    count = mModel.countItemsInSeries() - 1;    // mSeries.countColumns() - 1; // There is one less separator than columns
+    count = mModel.countColumns() - 1;    // mSeries.countColumns() - 1; // There is one less separator than columns
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
@@ -111,12 +105,14 @@ void BarGroupBase::dataChanged()
 
 void BarGroupBase::handleModelChanged(int index)
 {
-    qDebug() << "BarGroupBase::handleModelChanged";
+    qDebug() << "BarGroupBase::handleModelChanged PUUH" << index;
+    dataChanged();
 }
 
 void BarGroupBase::handleDomainChanged(const Domain& domain)
 {
-    qDebug() << "BarGroupBase::handleModelChanged";
+    qDebug() << "BarGroupBase::handleDomainChanged";
+    dataChanged();
 }
 
 void BarGroupBase::handleGeometryChanged(const QRectF& rect)

@@ -3,7 +3,7 @@
 #include "barlabel_p.h"
 #include "separator_p.h"
 #include <QDebug>
-#include <QPainter>
+//#include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -14,15 +14,15 @@ StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *p
 
 void StackedBarGroup::layoutChanged()
 {
-/*
+
     // Scale bars to new layout
     // Layout for bars:
-    if (mSeries.countRows() <= 0) {
+    if (mModel.countRows() <= 0) {
         // Nothing to do.
         return;
     }
 
-    if (mSeries.countColumns() == 0) {
+    if (mModel.countColumns() == 0) {
         // Nothing to do
         return;
     }
@@ -30,21 +30,21 @@ void StackedBarGroup::layoutChanged()
     // TODO: better way to auto-layout
     // Use reals for accurancy (we might get some compiler warnings... :)
     // TODO: use temp variable for column count...
-    qreal maxSum = mSeries.maxColumnSum();
+    qreal maxSum = mModel.maxColumnSum();
     qreal h = mHeight;
     qreal scale = (h / maxSum);
 
     int itemIndex(0);
     qreal tW = mWidth;
-    qreal tC = mSeries.countColumns() + 1;
+    qreal tC = mModel.countColumns() + 1;
     qreal xStep = (tW/tC);
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
-    int labelIndex = mSeries.countColumns() * mSeries.countRows();
+    int labelIndex = mModel.countRows() * mModel.countColumns();
 
-    for (int column = 0; column < mSeries.countColumns(); column++) {
+    for (int column = 0; column < mModel.countColumns(); column++) {
         qreal yPos = h;
-        for (int row=0; row < mSeries.countRows(); row++) {
-            qreal barHeight = mSeries.valueAt(row, column) * scale;
+        for (int row=0; row < mModel.countRows(); row++) {
+            qreal barHeight = mModel.valueAt(row, column) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
             // TODO: width settable per bar?
@@ -68,14 +68,14 @@ void StackedBarGroup::layoutChanged()
     // Position separators
     int separatorIndex = labelIndex;    // Separators are after labels in childItems(). TODO: better way to store these?
     xPos = xStep + xStep/2;             // Initial position is between first and second group. ie one and half steps from left.
-    for (int s=0; s < mSeries.countColumns() - 1; s++) {
+    for (int s=0; s < mModel.countColumns() - 1; s++) {
         Separator* sep = reinterpret_cast<Separator*> (childItems().at(separatorIndex));
         sep->setPos(xPos,0);
         sep->setSize(QSizeF(1,mHeight));
         xPos += xStep;
         separatorIndex++;
     }
-*/
+
     mLayoutDirty = true;
 }
 

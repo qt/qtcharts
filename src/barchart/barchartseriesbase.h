@@ -6,9 +6,10 @@
 #include "qchartseries.h"
 #include "qchartglobal.h"
 
-class BarGroupBase;
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+class BarGroupBase;
+class BarChartModel;
 
 // Container for series
 class QTCOMMERCIALCHART_EXPORT BarChartSeriesBase : public QChartSeries
@@ -21,35 +22,28 @@ public:
     // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeInvalid; }
 
-    // TODO: Better data model?
-//    virtual bool setModel(QAbstractItemModel* model);
-    virtual bool setData(QList<qreal>& data);
-
-    // Methods to find out minimum and maximum values of data
-//    int min(); // TODO: remove
-//    int max(); // TODO: remove
-//    int maxColumnSum();   // TODO: move to model. returns maximum sum of items in all columns.
-
-//    int countRows();    // TODO: remove.
-//    int countColumns();     // TODO: remove. Count items in one series.
-//    int countTotalItems();  // TODO: move to model
-//    int valueAt(int row, int column);   // TODO: move to model
-
-//    int columnSum(int column);  // TODO: move to model
+    // TODO: << operator for convinience
+    // Returns id for vector.
+    int addData(QList<qreal> data);
+    void removeData(int id);
 
     qreal min();
     qreal max();
-    int countValues();
-    qreal valueAt(int item);
+    int countColumns();     // Count items in one series.
+    qreal valueAt(int series, int item);
+    qreal maxColumnSum();
+
+    BarChartModel& model();
+
+signals:
+    void changed(int index);
 
 public Q_SLOTS:
 
 private:
 
-    QAbstractItemModel* mModel;
+    BarChartModel& mModel;
     BarGroupBase* mBarGroup;
-
-    QList<qreal>* mData;
 
 };
 

@@ -2,11 +2,11 @@
 #define BARCHARTMODEL_H
 
 #include <QObject>
-#include "barchartseries.h"
+#include "qchartglobal.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// Model for bar chart.
+// Model for bar chart. Internal class.
 // TODO: Implement as QAbstractItemModel?
 
 class BarChartModel : public QObject //, public QAbstractItemModel
@@ -14,18 +14,23 @@ class BarChartModel : public QObject //, public QAbstractItemModel
     Q_OBJECT
 public:
     explicit BarChartModel(QObject *parent = 0);
+    ~BarChartModel();
     
-    // Takes reference, Series are owned by QChart or model?
-    void addSeries(BarChartSeriesBase& series);
-    void removeSeries(BarChartSeriesBase& series);
+    // Adds data to model. returns id.
+    int addData(QList<qreal> data);
+    void removeData(int id);
 
-    int countSeries();          // Number of series in model
-    int countItemsInSeries();   // Maximum number of items in series
+    int countRows();            // Number of series in model
+    int countColumns();         // Maximum number of items in series
     int countTotalItems();      // Total items in all series. Includes empty items.
 
+    // TODO: qreal these
     int max();  // Maximum value of all series
     int min();  // Minimum value of all series
     qreal valueAt(int series, int item);
+
+    qreal columnSum(int column);
+    qreal maxColumnSum();   // returns maximum sum of items in all columns.
 
 signals:
     void modelUpdated();
@@ -34,10 +39,23 @@ public slots:
     
 private:
 
-    // Data
-    QList<BarChartSeriesBase*> mSeries;
+    // Little helper class.
+    class DataContainer {
+        public:
+            DataContainer(QList<qreal> data, int id) : mId(id), mData(data) {}
+            int countColumns() { return mData.count(); }
+            qreal valueAt(int item) { return mData.at(item); }
 
-    BarChartModel* mSingle;
+            int mId; // TODO: Is this needed?
+        private:
+            QList<qreal> mData;
+    };
+
+    // Owned. N series. each has a list of values.
+    QList<DataContainer*> mDataModel;
+    int mRunningId;
+    int mMaxColumns;    // longest series in datamodel
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

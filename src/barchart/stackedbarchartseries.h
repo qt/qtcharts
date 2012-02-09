@@ -22,7 +22,6 @@ public Q_SLOTS:
 
 private:
 
-    QAbstractItemModel* mModel;
     StackedBarGroup* mStackedBarGroup;
 };
 

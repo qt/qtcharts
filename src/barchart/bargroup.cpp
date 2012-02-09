@@ -13,22 +13,17 @@ BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
 
 void BarGroup::layoutChanged()
 {
+    qDebug() << "BarGroup::layoutChanged";
     // Scale bars to new layout
     // Layout for bars:
-   /*
-    if (mSeries.countRows() <= 0) {
-        // Nothing to do.
-        return;
-    }
-*/
-    if (mModel.countSeries() <= 0) {
+    if (mModel.countRows() <= 0) {
         return;
     }
 
     // TODO: better way to auto-layout?
     // Use reals for accurancy (we might get some compiler warnings... :)
-    int itemCount = mModel.countItemsInSeries();
-    int seriesCount = mModel.countSeries();
+    int itemCount = mModel.countColumns();
+    int seriesCount = mModel.countRows();
 
     qreal tW = mWidth;
     qreal tH = mHeight;

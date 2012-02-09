@@ -21,7 +21,6 @@ public:
 
 private:
 
-    QAbstractItemModel* mModel;
     BarGroup* mBarGroup;
 };
 
