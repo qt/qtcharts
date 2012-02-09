@@ -147,7 +147,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         case QChartSeries::SeriesTypePie: {
             QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
             PiePresenter* pie = new PiePresenter(m_chart, pieSeries);
-            pieSeries->m_piePresenter = pie; // TODO: remove this pointer passing use signals&slots
+            QObject::connect(pieSeries, SIGNAL(changed(const PieChangeSet&)), pie, SLOT(handleSeriesChanged(const PieChangeSet&)));
             QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), pie, SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset, SIGNAL(domainChanged(const Domain&)), pie, SLOT(handleDomainChanged(const Domain&)));
             m_chartItems.insert(series, pie);

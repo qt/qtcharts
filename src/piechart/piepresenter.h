@@ -17,16 +17,16 @@ public:
     PiePresenter(QGraphicsItem *parent, QPieSeries *series);
     ~PiePresenter();
 
-public: // from ChartItem
+public: // from QGraphicsItem
     QRectF boundingRect() const { return m_rect; }
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) {}
 
 public:
-    void seriesChanged();
-    void resize();
+    void updateGeometry();
     QRectF pieRect() const { return m_pieRect; }
 
 public Q_SLOTS:
+    void handleSeriesChanged(const PieChangeSet& changeSet);
     void handleDomainChanged(const Domain& domain);
     void handleGeometryChanged(const QRectF& rect);
 

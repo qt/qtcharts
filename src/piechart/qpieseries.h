@@ -26,6 +26,14 @@ public:
     bool m_isExploded;
 };
 
+class PieChangeSet
+{
+public:
+    QList<int> m_added;
+    QList<int> m_removed;
+    QList<int> m_changed;
+};
+
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QChartSeries
 {
     Q_OBJECT
@@ -69,13 +77,14 @@ public:
     void setPosition(PiePosition position);
     PiePosition position() const { return m_position; }
 
+Q_SIGNALS:
+    void changed(const PieChangeSet& changeSet);
+    void sizeFactorChanged();
+    void positionChanged();
+
 private:
     Q_DISABLE_COPY(QPieSeries)
     // TODO: use PIML
-    friend class ChartPresenter;
-    friend class ChartDataSet;
-    friend class PiePresenter;
-    PiePresenter *m_piePresenter;
     QList<QPieSlice> m_slices;
     qreal m_sizeFactor;
     PiePosition m_position;

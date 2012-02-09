@@ -21,7 +21,7 @@ PiePresenter::~PiePresenter()
         delete m_slices.takeLast();
 }
 
-void PiePresenter::seriesChanged()
+void PiePresenter::handleSeriesChanged(const PieChangeSet& changeSet)
 {
     const qreal fullPie = 360;
     qreal total = 0;
@@ -43,25 +43,25 @@ void PiePresenter::seriesChanged()
         m_slices.append(slice);
         angle += span;
     }
-
-    resize();
 }
 
-void PiePresenter::resize()
+void PiePresenter::updateGeometry()
 {
+    prepareGeometryChange();
+
     m_pieRect = m_rect;
 
     if (m_pieRect.width() < m_pieRect.height()) {
-        m_pieRect.setWidth(m_pieRect.width() * m_pieSeries->m_sizeFactor);
+        m_pieRect.setWidth(m_pieRect.width() * m_pieSeries->sizeFactor());
         m_pieRect.setHeight(m_pieRect.width());
         m_pieRect.moveCenter(m_rect.center());
     } else {
-        m_pieRect.setHeight(m_pieRect.height() * m_pieSeries->m_sizeFactor);
+        m_pieRect.setHeight(m_pieRect.height() * m_pieSeries->sizeFactor());
         m_pieRect.setWidth(m_pieRect.height());
         m_pieRect.moveCenter(m_rect.center());
     }
 
-    switch (m_pieSeries->m_position) {
+    switch (m_pieSeries->position()) {
         case QPieSeries::PiePositionTopLeft: {
             m_pieRect.setHeight(m_pieRect.height() / 2);
             m_pieRect.setWidth(m_pieRect.height());
@@ -92,6 +92,8 @@ void PiePresenter::resize()
 
     qDebug() << "presentation rect:" << m_rect;
     qDebug() << "pie rect:" << m_pieRect;
+    foreach (PieSlice *slice, m_slices)
+        slice->updateGeometry();
 }
 
 void PiePresenter::handleDomainChanged(const Domain& domain)
@@ -101,10 +103,9 @@ void PiePresenter::handleDomainChanged(const Domain& domain)
 
 void PiePresenter::handleGeometryChanged(const QRectF& rect)
 {
-    // TODO: allow user setting the size?
-    // TODO: allow user defining the margins?
-    m_rect.setSize(rect.size());
-    resize();
+    m_rect = rect;
+    updateGeometry();
+
 }
 
 #include "moc_piepresenter.cpp"
