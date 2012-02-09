@@ -177,7 +177,7 @@ void ChartPresenter::zoomInToRect(const QRectF& rect)
     if(!rect.isValid()) return;
     QRectF r = rect.normalized();
     r.translate(-m_marginSize, -m_marginSize);
-    Domain domain (m_dataset->domain().subDomain(rect,m_rect.width(),m_rect.height()));
+    Domain domain (m_dataset->domain().subDomain(r,m_rect.width(),m_rect.height()));
     m_dataset->addDomain(domain);
 }
 
