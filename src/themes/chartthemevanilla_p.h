@@ -5,7 +5,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartThemeVanilla: public ChartTheme
 {
 public:
-    ChartThemeVanilla()
+    ChartThemeVanilla():ChartTheme(QChart::ChartThemeVanilla)
     {
         m_seriesColor.append(QColor(217, 197, 116));
         m_seriesColor.append(QColor(214, 168, 150));

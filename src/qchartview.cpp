@@ -189,10 +189,14 @@ void QChartView::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void QChartView::setTheme(QChart::ChartThemeId theme)
+void QChartView::setChartTheme(QChart::ChartTheme theme)
 {
-    m_chart->setTheme(theme);
+    m_chart->setChartTheme(theme);
 }
 
+QChart::ChartTheme QChartView::chartTheme() const
+{
+    return m_chart->chartTheme();
+}
 
 QTCOMMERCIALCHART_END_NAMESPACE

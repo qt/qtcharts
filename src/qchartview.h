@@ -42,7 +42,8 @@ public:
     void setRubberBandPolicy(const RubberBandPolicy );
     RubberBandPolicy rubberBandPolicy() const;
 
-    void setTheme(QChart::ChartThemeId theme);
+    void setChartTheme(QChart::ChartTheme theme);
+    QChart::ChartTheme chartTheme() const;
 
 protected:
     void mousePressEvent(QMouseEvent *event);

@@ -5,7 +5,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartThemeIcy: public ChartTheme
 {
 public:
-    ChartThemeIcy()
+    ChartThemeIcy():ChartTheme(QChart::ChartThemeIcy)
     {
         m_seriesColor.append(QRgb(0xFF0D2673));
         m_seriesColor.append(QRgb(0xFF2685BF));

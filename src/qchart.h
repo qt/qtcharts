@@ -33,8 +33,7 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
     Q_OBJECT
 public:
-    enum ChartThemeId {
-        ChartThemeInvalid = -1,
+    enum ChartTheme {
         /*! The default theme follows the GUI style of the Operating System */
         ChartThemeDefault,
         ChartThemeVanilla,
@@ -56,8 +55,8 @@ public:
 
     void setMargin(int margin);
     int margin() const;
-    void setTheme(QChart::ChartThemeId theme);
-    QChart::ChartThemeId theme();
+    void setChartTheme(QChart::ChartTheme theme);
+    QChart::ChartTheme chartTheme() const;
 
     void setTitle(const QString& title,const QFont& font = QFont());
     void setChartBackgroundBrush(const QBrush& brush);
@@ -68,9 +67,8 @@ public:
     void zoomOut();
     void zoomReset();
 
-    void setAxisX(const QChartAxis& axis);
-    void setAxisY(const QChartAxis& axis);
-    void setAxisY(const QList<QChartAxis>& axis);
+    void setAxisX(QChartAxis* axis);
+    void addAxisY(QChartAxis* axis);
 
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);

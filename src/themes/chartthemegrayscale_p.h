@@ -5,7 +5,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartThemeGrayscale: public ChartTheme
 {
 public:
-    ChartThemeGrayscale()
+    ChartThemeGrayscale():ChartTheme(QChart::ChartThemeGrayscale)
     {
         m_seriesColor.append(QRgb(0xFF869299));
         m_seriesColor.append(QRgb(0xFFA5BDCC));

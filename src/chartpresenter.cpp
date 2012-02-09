@@ -28,7 +28,7 @@ m_domainIndex(0),
 m_marginSize(0),
 m_rect(QRectF(QPoint(0,0),m_chart->size()))
 {
-    setTheme(QChart::ChartThemeDefault);
+    setChartTheme(QChart::ChartThemeDefault);
     createConnections();
     createDeafultAxis();
 }
@@ -203,7 +203,7 @@ void ChartPresenter::zoomReset()
     m_dataset->clearDomains();
 }
 
-void ChartPresenter::setTheme(QChart::ChartThemeId theme)
+void ChartPresenter::setChartTheme(QChart::ChartTheme theme)
 {
     delete m_chartTheme;
 
@@ -221,9 +221,19 @@ void ChartPresenter::setTheme(QChart::ChartThemeId theme)
     }
 
 
-QChart::ChartThemeId ChartPresenter::theme()
+QChart::ChartTheme ChartPresenter::chartTheme()
 {
-    return (QChart::ChartThemeId) 0;
+    return m_chartTheme->id();
+}
+
+void ChartPresenter::setAxisX(QChartAxis* axis)
+{
+
+}
+
+void ChartPresenter::addAxisY(QChartAxis* axis)
+{
+
 }
 
 /*

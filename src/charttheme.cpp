@@ -35,8 +35,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
         m_gradientEndColor = QColor(QRgb(0xffafafaf));
 */
 
-ChartTheme::ChartTheme()
+ChartTheme::ChartTheme(QChart::ChartTheme id)
 {
+    m_id = id;
     m_seriesColor.append(QRgb(0xff000000));
     m_seriesColor.append(QRgb(0xff707070));
     m_gradientStartColor = QColor(QRgb(0xffffffff));
@@ -44,7 +45,7 @@ ChartTheme::ChartTheme()
 }
 
 
-ChartTheme* ChartTheme::createTheme(QChart::ChartThemeId theme)
+ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 {
     switch(theme) {
         case QChart::ChartThemeDefault:

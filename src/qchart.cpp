@@ -115,14 +115,14 @@ void QChart::setMargin(int margin)
     m_presenter->setMargin(margin);
 }
 
-void QChart::setTheme(QChart::ChartThemeId theme)
+void QChart::setChartTheme(QChart::ChartTheme theme)
 {
-    m_presenter->setTheme(theme);
+    m_presenter->setChartTheme(theme);
 }
 
-QChart::ChartThemeId QChart::theme()
+QChart::ChartTheme QChart::chartTheme() const
 {
-    return m_presenter->theme();
+    return m_presenter->chartTheme();
 }
 
 void QChart::zoomInToRect(const QRectF& rectangle)
@@ -145,23 +145,13 @@ void QChart::zoomReset()
     m_presenter->zoomReset();
 }
 
-void QChart::setAxisX(const QChartAxis& axis)
+void QChart::setAxisX(QChartAxis* axis)
 {
-
+    m_presenter->setAxisX(axis);
 }
-void QChart::setAxisY(const QChartAxis& axis)
+void QChart::addAxisY(QChartAxis* axis)
 {
-
-}
-
-void QChart::setAxisY(const QList<QChartAxis>& axis)
-{
-    //TODO not implemented
-}
-
-void QChart::setAxis(AxisItem *item, const QChartAxis& axis)
-{
-
+    m_presenter->addAxisY(axis);
 }
 
 void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)

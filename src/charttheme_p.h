@@ -21,9 +21,10 @@ class PercentBarGroup;
 class ChartTheme
 {
 protected:
-    explicit ChartTheme();
+    explicit ChartTheme(QChart::ChartTheme id =  QChart::ChartThemeDefault);
 public:
-    static ChartTheme* createTheme(QChart::ChartThemeId theme);
+    static ChartTheme* createTheme(QChart::ChartTheme theme);
+    QChart::ChartTheme id() const {return m_id;}
     void decorate(QChart* chart);
     void decorate(ChartItem* item, QChartSeries* series,int count);
     void decorate(LineChartItem* item, QLineChartSeries*, int count);
@@ -32,6 +33,7 @@ public:
     void decorate(PercentBarGroup* item, PercentBarChartSeries* series,int count);
 
 protected:
+    QChart::ChartTheme m_id;
     QColor m_gradientStartColor;
     QColor m_gradientEndColor;
     QList<QColor> m_seriesColor;

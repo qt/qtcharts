@@ -5,7 +5,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartThemeScientific: public ChartTheme
 {
 public:
-    ChartThemeScientific()
+    ChartThemeScientific():ChartTheme(QChart::ChartThemeScientific)
     {
         m_seriesColor.append(QRgb(0xFF000000));
         m_seriesColor.append(QRgb(0xFFFFAD00));
