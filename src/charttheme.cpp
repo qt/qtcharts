@@ -106,7 +106,14 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
 
 void ChartTheme::decorate(LineChartItem* item, QLineChartSeries* series,int count)
 {
-    item->setPen(series->pen());
+    QPen pen;
+    if(pen != series->pen()){
+        item->setPen(series->pen());
+        return;
+    }
+    pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
+    pen.setWidthF(2);
+    item->setPen(pen);
 }
 
 void ChartTheme::decorate(BarGroup* item, BarChartSeries* series,int count)
