@@ -6,7 +6,6 @@ BarLabel::BarLabel(QGraphicsItem* parent) : ChartItem(parent)
 {
 }
 
-
 void BarLabel::set(QString label)
 {
     mLabel = label;

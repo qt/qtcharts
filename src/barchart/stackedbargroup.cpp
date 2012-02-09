@@ -3,7 +3,6 @@
 #include "barlabel_p.h"
 #include "separator_p.h"
 #include <QDebug>
-//#include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -48,7 +47,7 @@ void StackedBarGroup::layoutChanged()
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
             // TODO: width settable per bar?
-            // TODO: how to get color for series(x) from theme?
+            // TODO: theme stuff
 //            mTheme->themeForSeries();
             bar->resize(mBarDefaultWidth, barHeight);
             bar->setColor(mColors.at(row));
