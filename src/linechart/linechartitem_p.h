@@ -55,6 +55,7 @@ private:
     QPainterPath m_path;
     QSizeF m_size;
     QRectF m_rect;
+    QRectF m_clipRect;
     Domain m_domain;
     QList<QGraphicsItem*> m_points;
     QVector<QPointF> m_data;

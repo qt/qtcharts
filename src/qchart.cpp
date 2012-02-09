@@ -122,7 +122,7 @@ void QChart::setTheme(QChart::ChartThemeId theme)
 
 QChart::ChartThemeId QChart::theme()
 {
-    return (QChart::ChartThemeId) m_presenter->theme();
+    return m_presenter->theme();
 }
 
 void QChart::zoomInToRect(const QRectF& rectangle)

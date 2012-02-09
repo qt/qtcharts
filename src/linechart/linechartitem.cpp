@@ -6,6 +6,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+//TODO: optimazie : remove points which are not visible
+
 LineChartItem::LineChartItem(ChartPresenter* presenter, QLineChartSeries* series,QGraphicsItem *parent):ChartItem(parent),
 m_presenter(presenter),
 m_series(series),
@@ -32,7 +34,8 @@ void LineChartItem::addPoints(const QVector<QPointF>& points)
     for(int i=0; i<m_data.size();i++){
     const QPointF& point =m_data[i];
     QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
-    item->setPos(point.x()-1,point.y()-1);
+    item->setPos(point.x()-1,point.y()-1);;
+    if(!m_clipRect.contains(point)) item->setVisible(false);
     m_points << item;
     }
 }
@@ -41,7 +44,9 @@ void LineChartItem::addPoint(const QPointF& point)
 {
 	m_data << point;
 	QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
+	m_clipRect.contains(point);
 	item->setPos(point.x()-1,point.y()-1);
+	if(!m_clipRect.contains(point)) item->setVisible(false);
 	m_points << item;
 }
 
@@ -99,6 +104,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 	Q_UNUSED(widget);
     Q_UNUSED(option);
     painter->setPen(m_pen);
+    painter->setClipRect(m_clipRect);
 	painter->drawPath(m_path);
 }
 
@@ -120,9 +126,7 @@ void LineChartItem::calculatePoints(QVector<QPointF>& points, QHash<int,int>& ha
 
     for (int i = 0; i < series->count(); ++i) {
       qreal x = (series->x(i) - domain.m_minX)* deltaX;
-      if(x<0 || x > size.width()) continue;
       qreal y = (series->y(i) - domain.m_minY)*-deltaY + size.height();
-      if(y<0 || y > size.height()) continue;
       hash[i] = points.size();
       points << QPointF(x,y);
     }
@@ -131,6 +135,7 @@ void LineChartItem::calculatePoints(QVector<QPointF>& points, QHash<int,int>& ha
 void LineChartItem::updateDomain()
 {
     clear();
+    prepareGeometryChange();
 	calculatePoints(m_data,m_hash,m_series,m_size, m_domain);
 	addPoints(m_data);
 }
@@ -188,8 +193,8 @@ void LineChartItem::handleDomainChanged(const Domain& domain)
 void LineChartItem::handleGeometryChanged(const QRectF& rect)
 {
     Q_ASSERT(rect.isValid());
-
     m_size=rect.size();
+    m_clipRect=rect.translated(-rect.topLeft());
     updateDomain();
     updateGeometry();
     setPos(rect.topLeft());
