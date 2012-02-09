@@ -17,7 +17,6 @@ class DeclarativeChart : public QDeclarativeItem
 
 public:
     enum ChartTheme {
-        ThemeInvalid = QChart::ChartThemeInvalid,
         ThemeDefault,
         ThemeVanilla,
         ThemeIcy,
@@ -31,7 +30,7 @@ public: // From QDeclarativeItem/QGraphicsItem
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
 
 public:
-    void setTheme(ChartTheme theme) {m_chart->setTheme((QChart::ChartThemeId) theme);}
+    void setTheme(ChartTheme theme) {m_chart->setChartTheme((QChart::ChartTheme) theme);}
     ChartTheme theme();
 
 public:

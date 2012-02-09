@@ -363,7 +363,7 @@ void MainWidget::yMaxChanged(int value)
 void MainWidget::changeChartTheme(int themeIndex)
 {
     qDebug() << "changeChartTheme: " << themeIndex;
-    m_chartWidget->setTheme((QChart::ChartThemeId) themeIndex);
+    m_chartWidget->setChartTheme((QChart::ChartTheme) themeIndex);
 }
 
 void MainWidget::setPieSizeFactor(double size)
