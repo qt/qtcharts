@@ -20,17 +20,22 @@ public: // from QChartSeries
     QChartSeriesType type() const { return QChartSeries::SeriesTypeScatter; }
     bool setData(QList<qreal> x, QList<qreal> y);
 
+public:
+    QList<QPointF> data();
+Q_SIGNALS:
+    // TODO: move to PIMPL?
+    // TODO: more finegrained signaling
+    void changed();
+
 public Q_SLOTS:
     // TODO: also affects opacity of the marker...? To be documented
     void setMarkerColor(QColor color);
     QColor markerColor();
     // TODO: marker shapes: "x", star, rectangle, tilted rect, triangle, circle, dot
     //void setMarkerShape(QChartSeries::MarkerShape/QScatterSeries::MarkerShape shape);
-
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)
     Q_DISABLE_COPY(QScatterSeries)
-    friend class QChart;
     QScatterSeriesPrivate *const d;
 };
 

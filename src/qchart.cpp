@@ -36,8 +36,6 @@ void QChart::addSeries(QChartSeries* series)
 //TODO on review, is it really needed ??
 QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
 {
-    // TODO: support also other types; not only scatter and pie
-
     QChartSeries *series(0);
 
     switch (type) {

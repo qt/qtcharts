@@ -21,6 +21,7 @@ SOURCES += barchart/barchartseries.cpp \
     barchart/bargroupbase.cpp \
     barchart/barchartseriesbase.cpp \
     qscatterseries.cpp \
+    #scatterpresentation.cpp \
     qchart.cpp \
     axisitem.cpp \
     qchartview.cpp \
@@ -29,13 +30,15 @@ SOURCES += barchart/barchartseries.cpp \
     charttheme.cpp \
     chartdataset.cpp \
     chartpresenter.cpp \
-    domain.cpp
+    domain.cpp \
+    scatterpresenter.cpp
 PRIVATE_HEADERS += linechart/linechartitem_p.h \
     linechart/linechartanimationitem_p.h \
     barchart/barlabel_p.h \
     barchart/bar_p.h \
     barchart/separator_p.h \
     qscatterseries_p.h \
+    #scatterpresentation.h \
     axisitem_p.h \
     chartitem_p.h \
     charttheme_p.h \
@@ -64,7 +67,8 @@ THEMES += themes/chartthemeicy_p.h \
     themes/chartthemegrayscale_p.h \
     themes/chartthemescientific_p.h \
     themes/chartthemevanilla_p.h
-HEADERS += $$PUBLIC_HEADERS
+HEADERS += $$PUBLIC_HEADERS \
+    scatterpresenter.h
 HEADERS += $$PRIVATE_HEADERS
 HEADERS += $$THEMES
 INCLUDEPATH += linechart \

@@ -5,6 +5,7 @@
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
 #include "qpieseries.h"
+#include "qscatterseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -86,6 +87,18 @@ void ChartDataSet::addSeries(QChartSeries* series)
         case QChartSeries::SeriesTypePie: {
             QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
             // TODO: domain stuff
+            break;
+        }
+
+        case QChartSeries::SeriesTypeScatter: {
+            QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
+            Q_ASSERT(scatterSeries);
+            foreach (QPointF point, scatterSeries->data()) {
+                domain.m_minX = qMin(domain.m_minX, point.x());
+                domain.m_maxX = qMax(domain.m_maxX, point.x());
+                domain.m_minY = qMin(domain.m_minY, point.y());
+                domain.m_maxY = qMax(domain.m_maxY, point.y());
+            }
             break;
         }
 

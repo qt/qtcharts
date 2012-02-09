@@ -9,6 +9,7 @@
 #include "percentbarchartseries.h"
 #include "qlinechartseries.h"
 #include "qpieseries.h"
+#include "qscatterseries.h"
 //items
 #include "axisitem_p.h"
 #include "bargroup.h"
@@ -17,6 +18,7 @@
 #include "percentbargroup.h"
 #include "linechartanimationitem_p.h"
 #include "piepresenter.h"
+#include "scatterpresenter.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -122,28 +124,19 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             m_chartItems.insert(series,item);
             break;
         }
-        /*
-         case QChartSeries::SeriesTypeScatter: {
-         QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
-         scatterSeries->d->m_theme = m_chartTheme->themeForSeries();
-         scatterSeries->d->setParentItem(this);
-         scatterSeries->d->m_boundingRect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
-         m_chartItems << scatterSeries->d;
-         m_chartTheme->addObserver(scatterSeries->d);
-
-         foreach (qreal x, scatterSeries->d->m_x) {
-         domain.m_minX = qMin(domain.m_minX, x);
-         domain.m_maxX = qMax(domain.m_maxX, x);
-         }
-         foreach (qreal y, scatterSeries->d->m_y) {
-         domain.m_minY = qMin(domain.m_minY, y);
-         domain.m_maxY = qMax(domain.m_maxY, y);
-         }
-
-         break;
-         }
-         */
-
+        case QChartSeries::SeriesTypeScatter: {
+            QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
+            ScatterPresenter *scatterPresenter = new ScatterPresenter(scatterSeries, m_chart);
+            QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)),
+                             scatterPresenter, SLOT(handleGeometryChanged(const QRectF&)));
+            QObject::connect(m_dataset, SIGNAL(domainChanged(const Domain&)),
+                             scatterPresenter, SLOT(handleDomainChanged(const Domain&)));
+//            scatterSeries->d->m_theme = m_chartTheme->themeForSeries();
+//            scatterSeries->d->setParentItem(this);
+//            scatterSeries->d->m_boundingRect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
+            m_chartItems.insert(scatterSeries, scatterPresenter);
+            break;
+        }
         case QChartSeries::SeriesTypePie: {
             QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
             PiePresenter* pie = new PiePresenter(m_chart, pieSeries);
@@ -153,7 +146,6 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             m_chartItems.insert(series, pie);
             break;
         }
-
         default: {
             qDebug()<< "Series type" << series->type() << "not implemented.";
             break;
