@@ -29,9 +29,6 @@ protected:
 public:
     virtual ~QChartSeries(){};
 
-    // Factory method
-    static QChartSeries* create(QChartSeriesType type, QObject* parent = 0 );
-
     // Pure virtual
     virtual QChartSeriesType type() const = 0;
 

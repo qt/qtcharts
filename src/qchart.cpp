@@ -42,7 +42,7 @@ QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
 
     switch (type) {
         case QChartSeries::SeriesTypeLine: {
-            series = QLineChartSeries::create();
+            series = new QLineChartSeries(this);
             break;
         }
         case QChartSeries::SeriesTypeBar: {

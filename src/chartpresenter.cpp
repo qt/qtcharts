@@ -267,26 +267,6 @@ void ChartPresenter::removeAxis(QChartAxis* axis)
     else if(axis == m_axisY) m_axisY=0;
 }
 
-/*
- void ChartPresenter::setAxisX(const QChartAxis& axis)
- {
- setAxis(m_axisXItem,axis);
- }
- void ChartPresenter::setAxisY(const QChartAxis& axis)
- {
- setAxis(m_axisYItem.at(0),axis);
- }
-
- void ChartPresenter::setAxisY(const QList<QChartAxis>& axis)
- {
- //TODO not implemented
- }
-
- void ChartPresenter::setAxis(AxisItem *item, const QChartAxis& axis)
- {
- item->setVisible(axis.isAxisVisible());
- }
- */
 #include "moc_chartpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

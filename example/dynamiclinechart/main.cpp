@@ -13,11 +13,11 @@ int main(int argc, char *argv[])
 
     QMainWindow window;
 
-    QLineChartSeries* series0 = QLineChartSeries::create();
+    QLineChartSeries* series0 = new QLineChartSeries();
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
-    QLineChartSeries* series1 = QLineChartSeries::create();
+    QLineChartSeries* series1 = new QLineChartSeries();
     QPen red(Qt::red);
     red.setWidth(3);
     series1->setPen(red);

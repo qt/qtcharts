@@ -12,13 +12,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QLineChartSeries : public QChartSeries
 {
     Q_OBJECT
-private:
-    QLineChartSeries(QObject* parent=0);
 public:
+    QLineChartSeries(QObject* parent=0);
     virtual ~QLineChartSeries();
 
 public: // from QChartSeries
-    static QLineChartSeries* create(QObject* parent=0);
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeLine;}
 
 public:

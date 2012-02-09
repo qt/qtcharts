@@ -10,13 +10,6 @@ QLineChartSeries::~QLineChartSeries()
 {
 }
 
-QLineChartSeries* QLineChartSeries::create(QObject* parent)
-{
-    //TODO: here we take QChartData when it is ready
-    // return null if malformed;
-    return new QLineChartSeries(parent);
-}
-
 int QLineChartSeries::add(qreal x,qreal y)
 {
     m_x<<x;

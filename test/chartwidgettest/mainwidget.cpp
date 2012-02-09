@@ -223,7 +223,7 @@ void MainWidget::addSeries(QString series, QString data)
 //            lineSeries->add(x.at(i), y.at(i));
 //        }
         //Q_ASSERT(newSeries->setData(x, y));
-        QLineChartSeries* series0 = QLineChartSeries::create();
+        QLineChartSeries* series0 = new QLineChartSeries();
         for (int i(0); i < x.count() && i < y.count(); i++)
             series0->add(x.at(i), y.at(i));
         m_chartWidget->addSeries(series0);
@@ -236,7 +236,7 @@ void MainWidget::addSeries(QString series, QString data)
     if (series == "Bar") {
         // This is the another way of creating series. Should we create test cases for both ways, if we support them?
         qDebug() << "Bar chart series";
-        newSeries = QChartSeries::create(QChartSeries::SeriesTypeBar, this);
+        newSeries = new BarChartSeries(this);
 
         // Create some test data to chart
         QStandardItemModel dataModel(2,10,this);
