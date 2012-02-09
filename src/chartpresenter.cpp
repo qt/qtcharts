@@ -62,6 +62,7 @@ void ChartPresenter::handleGeometryChanged()
 {
     m_rect = QRectF(QPoint(0,0),m_chart->size());
     m_rect.adjust(m_marginSize,m_marginSize, -m_marginSize, -m_marginSize);
+    Q_ASSERT(m_rect.isValid());
     emit geometryChanged(m_rect);
 }
 
