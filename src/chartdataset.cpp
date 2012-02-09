@@ -4,8 +4,7 @@
 #include "barchartseries.h"
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
-#include "piechart/qpieseries.h"
-#include "piechart/piepresentation.h"
+#include "qpieseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

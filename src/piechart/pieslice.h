@@ -8,12 +8,12 @@
 #include <QColor>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class PiePresentation;
+class PiePresenter;
 
 class PieSlice : public QGraphicsItem
 {
 public:
-    PieSlice(PiePresentation *piePresentation, int seriesIndex, qreal startAngle, qreal span);
+    PieSlice(PiePresenter *piePresentation, int seriesIndex, qreal startAngle, qreal span);
     ~PieSlice();
 
 public: // from QGraphicsItem

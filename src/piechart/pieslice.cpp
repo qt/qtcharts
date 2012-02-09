@@ -1,11 +1,11 @@
 #include "pieslice.h"
-#include "piepresentation.h"
+#include "piepresenter.h"
 #include <QPainter>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PieSlice::PieSlice(PiePresentation *piePresentation, int seriesIndex, qreal startAngle, qreal span)
+PieSlice::PieSlice(PiePresenter *piePresentation, int seriesIndex, qreal startAngle, qreal span)
     :QGraphicsItem(piePresentation),
     m_seriesIndex(seriesIndex),
     m_startAngle(startAngle),
@@ -27,7 +27,7 @@ QRectF PieSlice::boundingRect() const
 
 QPainterPath PieSlice::shape() const
 {
-    QRectF rect = (static_cast<PiePresentation*>(parentItem()))->pieRect();
+    QRectF rect = (static_cast<PiePresenter*>(parentItem()))->pieRect();
     qreal angle = (-m_startAngle) + (90);
     qreal span = -m_span;
 
@@ -55,7 +55,7 @@ void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option
     //painter->setPen(m_theme.linePen);
     // TODO:
 
-    QPieSlice data = (static_cast<PiePresentation*>(parentItem()))->m_pieSeries->slice(m_seriesIndex);
+    QPieSlice data = (static_cast<PiePresenter*>(parentItem()))->m_pieSeries->slice(m_seriesIndex);
     painter->setBrush(data.m_color);
 
 

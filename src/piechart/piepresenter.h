@@ -1,5 +1,5 @@
-#ifndef PIEPRESENTATION_H
-#define PIEPRESENTATION_H
+#ifndef PIEPRESENTER_H
+#define PIEPRESENTER_H
 
 #include "chartitem_p.h"
 #include "qpieseries.h"
@@ -8,14 +8,14 @@ class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class PieSlice;
 
-class PiePresentation : public QObject, public ChartItem
+class PiePresenter : public QObject, public ChartItem
 {
     Q_OBJECT
 
 public:
     // TODO: use a generic data class instead of x and y
-    PiePresentation(QGraphicsItem *parent, QPieSeries *series);
-    ~PiePresentation();
+    PiePresenter(QGraphicsItem *parent, QPieSeries *series);
+    ~PiePresenter();
 
 public: // from ChartItem
     void setSize(const QSizeF &size);
@@ -42,4 +42,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // PIEPRESENTATION_H
+#endif // PIEPRESENTER_H

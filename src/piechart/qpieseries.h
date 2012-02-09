@@ -8,7 +8,7 @@
 
 class QGraphicsObject;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class PiePresentation;
+class PiePresenter;
 class PieSlice;
 
 class QPieSlice
@@ -74,8 +74,8 @@ private:
     // TODO: use PIML
     friend class ChartPresenter;
     friend class ChartDataSet;
-    friend class PiePresentation;
-    PiePresentation *m_piePresentation;
+    friend class PiePresenter;
+    PiePresenter *m_piePresenter;
     QList<QPieSlice> m_slices;
     qreal m_sizeFactor;
     PiePosition m_position;

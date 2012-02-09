@@ -1,11 +1,11 @@
 
-#include "piepresentation.h"
+#include "piepresenter.h"
 #include "pieslice.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PiePresentation::PiePresentation(QGraphicsItem *parent, QPieSeries *series) :
+PiePresenter::PiePresenter(QGraphicsItem *parent, QPieSeries *series) :
     ChartItem(parent),
     m_pieSeries(series)
 {
@@ -15,13 +15,13 @@ PiePresentation::PiePresentation(QGraphicsItem *parent, QPieSeries *series) :
     setAcceptHoverEvents(true);
 }
 
-PiePresentation::~PiePresentation()
+PiePresenter::~PiePresenter()
 {
     while (m_slices.count())
         delete m_slices.takeLast();
 }
 
-void PiePresentation::seriesChanged()
+void PiePresenter::seriesChanged()
 {
     const qreal fullPie = 360;
     qreal total = 0;
@@ -47,7 +47,7 @@ void PiePresentation::seriesChanged()
     resize();
 }
 
-void PiePresentation::setSize(const QSizeF &size)
+void PiePresenter::setSize(const QSizeF &size)
 {
     // TODO: allow user setting the size?
     // TODO: allow user defining the margins?
@@ -55,12 +55,12 @@ void PiePresentation::setSize(const QSizeF &size)
     resize();
 }
 
-void PiePresentation::setPlotDomain(const PlotDomain& plotDomain)
+void PiePresenter::setPlotDomain(const PlotDomain& plotDomain)
 {
     // TODO
 }
 
-void PiePresentation::resize()
+void PiePresenter::resize()
 {
     m_pieRect = m_rect;
 
@@ -107,16 +107,16 @@ void PiePresentation::resize()
     qDebug() << "pie rect:" << m_pieRect;
 }
 
-void PiePresentation::handleDomainChanged(const Domain& domain)
+void PiePresenter::handleDomainChanged(const Domain& domain)
 {
     // TODO
 }
 
-void PiePresentation::handleGeometryChanged(const QRectF& rect)
+void PiePresenter::handleGeometryChanged(const QRectF& rect)
 {
     setSize(rect.size());
 }
 
-#include "moc_piepresentation.cpp"
+#include "moc_piepresenter.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -1,5 +1,5 @@
 #include "qpieseries.h"
-#include "piepresentation.h"
+#include "piepresenter.h"
 #include "pieslice.h"
 #include <QDebug>
 
@@ -7,7 +7,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QPieSeries::QPieSeries(QObject *parent) :
     QChartSeries(parent),
-    m_piePresentation(0),
+    m_piePresenter(0),
     m_sizeFactor(1.0),
     m_position(PiePositionMaximized)
 {
@@ -21,19 +21,19 @@ QPieSeries::~QPieSeries()
 void QPieSeries::set(QList<QPieSlice> slices)
 {
     m_slices = slices;
-    if (m_piePresentation) {
-        m_piePresentation->seriesChanged();
-        m_piePresentation->update();
+    if (m_piePresenter) {
+        m_piePresenter->seriesChanged();
+        m_piePresenter->update();
     }
 }
 
 void QPieSeries::add(QList<QPieSlice> slices)
 {
     m_slices += slices;
-    if (m_piePresentation) {
-        m_piePresentation->seriesChanged();
-        // TODO: m_piePresentation->seriesAppended()??
-        m_piePresentation->update();
+    if (m_piePresenter) {
+        m_piePresenter->seriesChanged();
+        // TODO: m_piePresenter->seriesAppended()??
+        m_piePresenter->update();
     }
 }
 
@@ -53,11 +53,11 @@ bool QPieSeries::update(int index, QPieSlice slice)
 {
     if ((index >= 0) && (index < m_slices.count())) {
         m_slices[index] = slice;
-        if (m_piePresentation) {
-            m_piePresentation->seriesChanged();
+        if (m_piePresenter) {
+            m_piePresenter->seriesChanged();
             // TODO: for a nice animation we need something like
-            // m_piePresentation->sliceChanged(index, oldslice, newslice)
-            m_piePresentation->update();
+            // m_piePresenter->sliceChanged(index, oldslice, newslice)
+            m_piePresenter->update();
         }
         return true;
     }
@@ -69,9 +69,9 @@ void QPieSeries::setSizeFactor(qreal factor)
     if (factor > 0.0)
         m_sizeFactor = factor;
 
-    if (m_piePresentation) {
-        m_piePresentation->resize();
-        m_piePresentation->update();
+    if (m_piePresenter) {
+        m_piePresenter->resize();
+        m_piePresenter->update();
         // TODO: do we have to update the parent item also?
         //  - potential issue: what if this function is called from the parent context?
     }
@@ -80,9 +80,9 @@ void QPieSeries::setSizeFactor(qreal factor)
 void QPieSeries::setPosition(PiePosition position)
 {
     m_position = position;
-    if (m_piePresentation) {
-        m_piePresentation->resize();
-        m_piePresentation->update();
+    if (m_piePresenter) {
+        m_piePresenter->resize();
+        m_piePresenter->update();
         // TODO: do we have to update the parent item also?
         //  - potential issue: what if this function is called from the parent context?
     }

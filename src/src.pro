@@ -17,9 +17,6 @@ SOURCES += barchart/barchartseries.cpp \
     linechart/linechartanimationitem.cpp \
     linechart/linechartitem.cpp \
     linechart/qlinechartseries.cpp \
-    piechart/qpieseries.cpp \
-    piechart/pieslice.cpp \
-    piechart/piepresentation.cpp \
     barchart/separator.cpp \
     barchart/bargroupbase.cpp \
     barchart/barchartseriesbase.cpp \
@@ -39,8 +36,6 @@ PRIVATE_HEADERS += linechart/linechartitem_p.h \
     barchart/barlabel_p.h \
     barchart/bar_p.h \
     barchart/separator_p.h \
-    piechart/piepresentation.h \
-    piechart/pieslice.h \
     plotdomain_p.h \
     qscatterseries_p.h \
     axisitem_p.h \
@@ -58,13 +53,15 @@ PUBLIC_HEADERS += linechart/qlinechartseries.h \
     barchart/percentbargroup.h \
     barchart/barchartseriesbase.h \
     barchart/bargroupbase.h \
-    piechart/qpieseries.h \
     qchartseries.h \
     qscatterseries.h \
     qchart.h \
     qchartglobal.h \
     qchartview.h \
     qchartaxis.h
+    
+include(piechart/piechart.pri)
+    
 THEMES += themes/chartthemeicy_p.h \
     themes/chartthemegrayscale_p.h \
     themes/chartthemescientific_p.h \
@@ -74,7 +71,6 @@ HEADERS += $$PRIVATE_HEADERS
 HEADERS += $$THEMES
 INCLUDEPATH += linechart \
     barchart \
-    piechart \
     themes \
     .
 OBJECTS_DIR = $$CHART_BUILD_DIR/lib

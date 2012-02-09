@@ -16,7 +16,7 @@
 #include "linechartitem_p.h"
 #include "percentbargroup.h"
 #include "linechartanimationitem_p.h"
-#include "piepresentation.h"
+#include "piepresenter.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -149,11 +149,11 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
         case QChartSeries::SeriesTypePie: {
             QPieSeries *pieSeries = qobject_cast<QPieSeries *>(series);
-            PiePresentation* pieChart = new PiePresentation(m_chart, pieSeries);
-            pieSeries->m_piePresentation = pieChart; // TODO: remove this pointer passing use signals&slots
-            QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), pieChart, SLOT(handleGeometryChanged(const QRectF&)));
-            QObject::connect(m_dataset, SIGNAL(domainChanged(const Domain&)), pieChart, SLOT(handleDomainChanged(const Domain&)));
-            m_chartItems.insert(series, pieChart);
+            PiePresenter* pie = new PiePresenter(m_chart, pieSeries);
+            pieSeries->m_piePresenter = pie; // TODO: remove this pointer passing use signals&slots
+            QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), pie, SLOT(handleGeometryChanged(const QRectF&)));
+            QObject::connect(m_dataset, SIGNAL(domainChanged(const Domain&)), pie, SLOT(handleDomainChanged(const Domain&)));
+            m_chartItems.insert(series, pie);
             break;
         }
 
