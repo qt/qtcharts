@@ -46,7 +46,7 @@ void QScatterSeriesPrivate::setSize(const QSizeF &size)
 
 void QScatterSeriesPrivate::themeChanged(ChartTheme *theme)
 {
-    m_theme = theme->themeForSeries();
+    //m_theme = theme->themeForSeries();
 }
 
 void QScatterSeriesPrivate::setPlotDomain(const PlotDomain& plotDomain)
@@ -73,7 +73,7 @@ void QScatterSeriesPrivate::paint(QPainter *painter, const QStyleOptionGraphicsI
         painter->setPen(pen);
     }
     else
-        painter->setPen(m_theme.markerPen);
+        //painter->setPen(m_theme.markerPen);
 //        brush.setColor(m_theme..lineColor);
 
     // TODO: m_scenex and m_sceny are left empty during construction -> we would need a resize

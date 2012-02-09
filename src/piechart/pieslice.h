@@ -27,6 +27,7 @@ private:
     int m_seriesIndex;
     qreal m_startAngle;
     qreal m_span;
+    QRectF m_rect;
     //SeriesTheme m_theme;
 };
 

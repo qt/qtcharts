@@ -2,6 +2,7 @@
 #include "qchartaxis.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
+#include "charttheme_p.h"
 //series
 #include "barchartseries.h"
 #include "stackedbarchartseries.h"
@@ -25,10 +26,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(chart),
 m_chart(chart),
 m_dataset(dataset),
+m_chartTheme(0),
 m_domainIndex(0),
 m_marginSize(0),
 m_rect(QRectF(QPoint(0,0),m_chart->size()))
 {
+    setTheme(QChart::ChartThemeDefault);
     createConnections();
     createDeafultAxis();
 }
@@ -82,7 +85,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         case QChartSeries::SeriesTypeLine: {
             QXYChartSeries* lineSeries = static_cast<QXYChartSeries*>(series);
             XYLineChartItem* item = new LineChartAnimationItem(this,lineSeries,m_chart);
-            item->setPen(lineSeries->pen());
+            m_chartTheme->decorate(item,lineSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
             QObject::connect(lineSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
@@ -93,14 +96,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         case QChartSeries::SeriesTypeBar: {
             BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
             BarGroup* item = new BarGroup(*barSeries,m_chart);
-
-            // Add some fugly colors for 5 fist series...
-            item->addColor(QColor(255,0,0,128));
-            item->addColor(QColor(255,255,0,128));
-            item->addColor(QColor(0,255,0,128));
-            item->addColor(QColor(0,0,255,128));
-            item->addColor(QColor(255,128,0,128));
-
+            m_chartTheme->decorate(item,barSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
             QObject::connect(barSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
@@ -113,13 +109,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
             StackedBarChartSeries* stackedBarSeries = static_cast<StackedBarChartSeries*>(series);
             StackedBarGroup* item = new StackedBarGroup(*stackedBarSeries,m_chart);
-
-            // Add some fugly colors for 5 fist series...
-            item->addColor(QColor(255,0,0,128));
-            item->addColor(QColor(255,255,0,128));
-            item->addColor(QColor(0,255,0,128));
-            item->addColor(QColor(0,0,255,128));
-            item->addColor(QColor(255,128,0,128));
+            m_chartTheme->decorate(item,stackedBarSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
             QObject::connect(stackedBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
@@ -131,13 +121,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
             PercentBarChartSeries* percentBarSeries = static_cast<PercentBarChartSeries*>(series);
             PercentBarGroup* item = new PercentBarGroup(*percentBarSeries,m_chart);
-
-            // Add some fugly colors for 5 fist series...
-            item->addColor(QColor(255,0,0,128));
-            item->addColor(QColor(255,255,0,128));
-            item->addColor(QColor(0,255,0,128));
-            item->addColor(QColor(0,0,255,128));
-            item->addColor(QColor(255,128,0,128));
+            m_chartTheme->decorate(item,percentBarSeries ,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
             QObject::connect(percentBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
@@ -217,6 +201,29 @@ void ChartPresenter::zoomOut()
 void ChartPresenter::zoomReset()
 {
     m_dataset->clearDomains();
+}
+
+void ChartPresenter::setTheme(QChart::ChartThemeId theme)
+{
+    delete m_chartTheme;
+
+    m_chartTheme = ChartTheme::createTheme(theme);
+
+    m_chartTheme->decorate(m_chart);
+    QMapIterator<QChartSeries*,ChartItem*> i(m_chartItems);
+
+    int index=0;
+    while (i.hasNext()) {
+        i.next();
+        index++;
+        m_chartTheme->decorate(i.value(),i.key(),index);
+      }
+    }
+
+
+QChart::ChartThemeId ChartPresenter::theme()
+{
+    return (QChart::ChartThemeId) 0;
 }
 
 /*

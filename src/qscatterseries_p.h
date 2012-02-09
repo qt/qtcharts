@@ -12,7 +12,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
  * The PIMPL class of QScatterSeries.
  */
-class QScatterSeriesPrivate : public ChartItem, public ChartThemeObserver
+class QScatterSeriesPrivate : public ChartItem
 {
 public:
     QScatterSeriesPrivate(QGraphicsItem *parent);
@@ -38,7 +38,7 @@ public:
     QList<qreal> m_scenex;
     QList<qreal> m_sceney;
     QColor m_markerColor;
-    SeriesTheme m_theme;
+    //SeriesTheme m_theme;
     PlotDomain m_visibleChartArea;
 };
 

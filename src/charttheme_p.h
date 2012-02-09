@@ -2,81 +2,40 @@
 #define CHARTTHEME_H
 
 #include "qchartglobal.h"
-#include <QObject>
-#include <QSharedData>
+#include "qchart.h"
 #include <QColor>
-#include <QLinearGradient>
-#include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartTheme;
+class ChartItem;
+class QChartSeries;
+class XYLineChartItem;
+class QXYChartSeries;
+class BarGroup;
+class BarChartSeries;
+class StackedBarGroup;
+class StackedBarChartSeries;
+class PercentBarChartSeries;
+class PercentBarGroup;
 
-class ChartThemeObserver
+class ChartTheme
 {
+protected:
+    explicit ChartTheme();
 public:
-    virtual void themeChanged(ChartTheme *theme) = 0;
-};
+    static ChartTheme* createTheme(QChart::ChartThemeId theme);
+    void decorate(QChart* chart);
+    void decorate(ChartItem* item, QChartSeries* series,int count);
+    void decorate(XYLineChartItem* item, QXYChartSeries*, int count);
+    void decorate(BarGroup* item, BarChartSeries* series,int count);
+    void decorate(StackedBarGroup* item, StackedBarChartSeries* series,int count);
+    void decorate(PercentBarGroup* item, PercentBarChartSeries* series,int count);
 
-/*!
- * The theme specific settings for the appearance of a series. TODO: These can be overridden by setting
- * custom settings to a QChartSeries object.
- */
-struct SeriesTheme {
-public:
-    SeriesTheme() :
-        linePen(QPen()),
-        markerPen(QPen()) {}
-    SeriesTheme(QColor lineColor, qreal lineWidth/*, QPen marker*/) :
-        linePen(QPen(QBrush(lineColor), lineWidth)),
-        markerPen(linePen) {}
-
-//const QBrush & brush, qreal width, Qt::PenStyle style = Qt::SolidLine, Qt::PenCapStyle cap = Qt::SquareCap, Qt::PenJoinStyle join = Qt::BevelJo
-    // TODO:
-    //QColor lineColor;
-    QPen linePen;
-    //QBrush lineBrush;
-    QPen markerPen;
-    //QBrush markerBrush;
-};
-
-/*!
- * Explicitly shared data class for the themes.
- */
-class ChartThemeData : public QSharedData
-{
-public:
-    ChartThemeData() : m_currentTheme(0) {}
-    ~ChartThemeData() {}
-
-public:
-    void setTheme(int theme);
-
-public:
-    int m_currentTheme;
-    QList<ChartThemeObserver *> m_observers;
+protected:
     QColor m_gradientStartColor;
     QColor m_gradientEndColor;
-    QList<SeriesTheme> m_seriesThemes;
-    int m_seriesIndex;
-};
+    QList<QColor> m_seriesColor;
 
-class ChartTheme : public QObject
-{
-    Q_OBJECT
-public:
-    explicit ChartTheme(QObject *parent = 0);
-    explicit ChartTheme(const ChartTheme &other, QObject *parent = 0) : QObject(parent), d(other.d) {}
-    void operator =(const ChartTheme &other) { d = other.d; }
-
-    void setTheme(int theme);
-    SeriesTheme themeForSeries();
-    void addObserver(ChartThemeObserver *o) { d->m_observers << o; }
-
-public:
-    // All the graphical elements of a QChart share the same theme settings
-    // so let's use explicitly shared data
-    QExplicitlySharedDataPointer<ChartThemeData> d;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

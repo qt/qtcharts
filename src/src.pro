@@ -39,7 +39,7 @@ SOURCES += \
     barchart/barchartseriesbase.cpp \
     chartdataset.cpp \
     chartpresenter.cpp \
-    domain.cpp
+    domain.cpp 
 
 
 
@@ -77,13 +77,22 @@ PUBLIC_HEADERS += \
     piechart/qpieseries.h \
     qchartview.h \
     qchartaxis.h 
+
+THEMES += \
+    themes/chartthemeicy_p.h \
+    themes/chartthemegrayscale_p.h \
+    themes/chartthemescientific_p.h \
+    themes/chartthemevanilla_p.h \
+       
    
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
+HEADERS += $$THEMES
 
 INCLUDEPATH += xylinechart \
                barchart \
                piechart \
+               themes \
                .
 
 OBJECTS_DIR = $$CHART_BUILD_DIR/lib

@@ -41,7 +41,7 @@ public:
         ChartThemeIcy,
         ChartThemeGrayscale,
         ChartThemeScientific,
-        ChartThemeUnnamed1
+        //ChartThemeUnnamed1
     };
 
 public:
@@ -82,14 +82,7 @@ private:
     Q_DISABLE_COPY(QChart)
     QGraphicsRectItem* m_backgroundItem;
     QGraphicsTextItem* m_titleItem;
-    AxisItem* m_axisXItem;
-    QList<AxisItem*> m_axisYItem;
     QRectF m_rect;
-    QList<QChartSeries *> m_chartSeries;
-    QList<ChartItem *> m_chartItems;
-    ChartTheme *m_chartTheme;
-
-
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
 };

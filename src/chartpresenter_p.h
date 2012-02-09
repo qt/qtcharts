@@ -2,6 +2,7 @@
 #define CHARTPRESENTER_H_
 
 #include "qchartglobal.h"
+#include "qchart.h" //becouse of QChart::ChartThemeId //TODO
 #include <QRectF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -9,9 +10,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartItem;
 class QChartSeries;
 class ChartDataSet;
-class QChart;
+//class QChart;
 class Domain;
 class AxisItem;
+class ChartTheme;
 
 class ChartPresenter: public QObject
 {
@@ -35,6 +37,9 @@ public:
     void zoomOut();
     void zoomReset();
 
+    void setTheme(QChart::ChartThemeId theme);
+    QChart::ChartThemeId theme();
+
 private:
     void createConnections();
     void createDeafultAxis();
@@ -55,9 +60,11 @@ private:
     ChartDataSet* m_dataset;
     QVector<Domain> m_domains;
     QList<AxisItem*> m_axis;
+    ChartTheme *m_chartTheme;
     int m_domainIndex;
     int m_marginSize;
     QRectF m_rect;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

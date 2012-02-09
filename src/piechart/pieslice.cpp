@@ -58,6 +58,7 @@ void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option
     QPieSlice data = (static_cast<PiePresentation*>(parentItem()))->m_pieSeries->slice(m_seriesIndex);
     painter->setBrush(data.m_color);
 
+
     //painter->setBrush(m_theme.linePen.color());
 
     // From Qt docs:
