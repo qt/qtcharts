@@ -4,6 +4,7 @@
 #include "qpieseries.h"
 #include <qlinechartseries.h>
 #include <barchartseries.h>
+#include <stackedbarchartseries.h>
 #include <QPushButton>
 #include <QComboBox>
 #include <QSpinBox>
@@ -236,31 +237,28 @@ void MainWidget::addSeries(QString series, QString data)
     if (series == "Bar") {
         // This is the another way of creating series. Should we create test cases for both ways, if we support them?
         qDebug() << "Bar chart series";
-        newSeries = new BarChartSeries(this);
+        StackedBarChartSeries* series0 = new StackedBarChartSeries(this);
 
         // Create some test data to chart
-        QStandardItemModel dataModel(2,10,this);
-        QModelIndex index;
-        index = dataModel.index(0,0);
-        // Series 1, items 6 to 9 missing.
-        dataModel.setData(dataModel.index(0,0),1);
-        dataModel.setData(dataModel.index(0,1),12);
-        dataModel.setData(dataModel.index(0,2),5);
-        dataModel.setData(dataModel.index(0,3),8);
-        dataModel.setData(dataModel.index(0,4),17);
-        dataModel.setData(dataModel.index(0,5),9);
+        QList<qreal> data0;
+        data0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10;
+        QList<qreal> data1;
+        data1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0;
+        QList<qreal> data2;
+        data2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1;
+        QList<qreal> data3;
+        data3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5;
+        QList<qreal> data4;
+        data4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10;
 
-        // Series 2, some other items missing
-        dataModel.setData(dataModel.index(1,0),5);
-        dataModel.setData(dataModel.index(1,3),4);
-        dataModel.setData(dataModel.index(1,5),7);
-        dataModel.setData(dataModel.index(1,6),8);
-        dataModel.setData(dataModel.index(1,8),9);
-        dataModel.setData(dataModel.index(1,9),9);
+        series0->addData(data0);
+        series0->addData(data1);
+        series0->addData(data2);
+        series0->addData(data3);
+        series0->addData(data4);
 
-        newSeries->setData(&dataModel);
-
-        m_chartWidget->addSeries(newSeries);
+        m_chartWidget->addSeries(series0);
+        newSeries = series0;
     }
 
     setCurrentSeries(newSeries);

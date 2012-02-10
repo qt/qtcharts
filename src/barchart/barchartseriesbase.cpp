@@ -39,6 +39,7 @@ int BarChartSeriesBase::countColumns()
 
 qreal BarChartSeriesBase::valueAt(int series, int item)
 {
+    qDebug() << "BarChartSeriesBase::valueAt" << series << item;
     return mModel.valueAt(series,item);
 }
 

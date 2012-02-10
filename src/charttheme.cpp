@@ -128,6 +128,9 @@ void ChartTheme::decorate(LineChartItem* item, QLineChartSeries* series,int coun
 
 void ChartTheme::decorate(BarGroup* item, BarChartSeries* series,int count)
 {
+    for (int i=0; i< m_seriesColor.count(); i++) {
+        item->addColor(m_seriesColor.at(i));
+    }
     item->addColor(QColor(255,0,0,128));
     item->addColor(QColor(255,255,0,128));
     item->addColor(QColor(0,255,0,128));
@@ -137,7 +140,9 @@ void ChartTheme::decorate(BarGroup* item, BarChartSeries* series,int count)
 
 void ChartTheme::decorate(StackedBarGroup* item, StackedBarChartSeries* series,int count)
 {
-    // Add some fugly colors for 5 fist series...
+    for (int i=0; i< m_seriesColor.count(); i++) {
+        item->addColor(m_seriesColor.at(i));
+    }
     item->addColor(QColor(255,0,0,128));
     item->addColor(QColor(255,255,0,128));
     item->addColor(QColor(0,255,0,128));
@@ -147,7 +152,9 @@ void ChartTheme::decorate(StackedBarGroup* item, StackedBarChartSeries* series,i
 
 void ChartTheme::decorate(PercentBarGroup* item, PercentBarChartSeries* series,int count)
 {
-// Add some fugly colors for 5 fist series...
+    for (int i=0; i< m_seriesColor.count(); i++) {
+        item->addColor(m_seriesColor.at(i));
+    }
     item->addColor(QColor(255,0,0,128));
     item->addColor(QColor(255,255,0,128));
     item->addColor(QColor(0,255,0,128));

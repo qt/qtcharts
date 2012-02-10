@@ -28,7 +28,7 @@ public: // From ChartItem
     QRectF boundingRect() const;
 
     // From ChartThemeObserver
-    void themeChanged(ChartTheme *theme);
+//    void themeChanged(ChartTheme *theme);
 
     // TODO: these may change with layout awarness.
     void setBarWidth( int w );

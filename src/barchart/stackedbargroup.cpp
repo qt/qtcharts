@@ -13,7 +13,7 @@ StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *p
 
 void StackedBarGroup::layoutChanged()
 {
-
+    qDebug() << "StackedBarGroup::layoutChanged";
     // Scale bars to new layout
     // Layout for bars:
     if (mModel.countRows() <= 0) {
