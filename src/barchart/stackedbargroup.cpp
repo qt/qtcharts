@@ -26,6 +26,11 @@ void StackedBarGroup::layoutChanged()
         return;
     }
 
+    if (childItems().count() == 0) {
+        qDebug() << "WARNING: StackedBarGroup::layoutChanged called before graphics items are created!";
+        return;
+    }
+
     // TODO: better way to auto-layout
     // Use reals for accurancy (we might get some compiler warnings... :)
     // TODO: use temp variable for column count...

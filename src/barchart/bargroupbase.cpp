@@ -25,7 +25,7 @@ void BarGroupBase::setSeparatorsVisible(bool visible)
 
 void BarGroupBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    qDebug() << "BarGroupBase::paint" << childItems().count();
+//    qDebug() << "BarGroupBase::paint" << childItems().count();
     if (!mLayoutSet) {
         qDebug() << "BarGroupBase::paint called without layout set. Aborting.";
         return;
@@ -42,13 +42,7 @@ QRectF BarGroupBase::boundingRect() const
 {
     return QRectF(0,0,mWidth,mHeight);
 }
-/*
-void BarGroupBase::themeChanged(ChartTheme *theme)
-{
-    qDebug() << "BarGroupBase::themeChanged"
-//    mTheme = theme;
-}
-*/
+
 void BarGroupBase::setBarWidth( int w )
 {
     mBarDefaultWidth = w;
@@ -56,7 +50,7 @@ void BarGroupBase::setBarWidth( int w )
 
 int BarGroupBase::addColor( QColor color )
 {
-    qDebug() << "BarGroupBase::addColor";
+//    qDebug() << "BarGroupBase::addColor";
     int colorIndex = mColors.count();
     mColors.append(color);
     return colorIndex;
@@ -64,13 +58,13 @@ int BarGroupBase::addColor( QColor color )
 
 void BarGroupBase::resetColors()
 {
-    qDebug() << "BarGroupBase::resetColors";
+//    qDebug() << "BarGroupBase::resetColors";
     mColors.clear();
 }
 
 void BarGroupBase::dataChanged()
 {
-    qDebug() << "BarGroupBase::dataChanged";
+//    qDebug() << "BarGroupBase::dataChanged";
 
     // Delete old bars
     foreach (QGraphicsItem* item, childItems()) {
@@ -108,19 +102,19 @@ void BarGroupBase::dataChanged()
 
 void BarGroupBase::handleModelChanged(int index)
 {
-    qDebug() << "BarGroupBase::handleModelChanged" << index;
+//    qDebug() << "BarGroupBase::handleModelChanged" << index;
     dataChanged();
 }
 
 void BarGroupBase::handleDomainChanged(const Domain& domain)
 {
-    qDebug() << "BarGroupBase::handleDomainChanged";
+//    qDebug() << "BarGroupBase::handleDomainChanged";
     dataChanged();
 }
 
 void BarGroupBase::handleGeometryChanged(const QRectF& rect)
 {
-    qDebug() << "BarGroupBase::handleGeometryChanged";
+//    qDebug() << "BarGroupBase::handleGeometryChanged";
     mWidth = rect.width();
     mHeight = rect.height();
     layoutChanged();

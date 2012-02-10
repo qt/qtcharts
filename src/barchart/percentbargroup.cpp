@@ -21,6 +21,11 @@ void PercentBarGroup::layoutChanged()
         return;
     }
 
+    if (childItems().count() == 0) {
+        qDebug() << "WARNING: PercentBarGroup::layoutChanged called before graphics items are created!";
+        return;
+    }
+
     // TODO: better way to auto-layout
     // Use reals for accurancy (we might get some compiler warnings... :)
     int count = mModel.countColumns();
@@ -28,7 +33,6 @@ void PercentBarGroup::layoutChanged()
     qreal tW = mWidth;
     qreal tC = count+1;
     qreal xStep = (tW/tC);
-//    qreal xPos = ((tW/tC) + mBarDefaultWidth / 2);
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
     int labelIndex = mModel.countColumns() * mModel.countRows();
 

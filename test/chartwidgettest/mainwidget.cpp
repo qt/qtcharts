@@ -5,6 +5,7 @@
 #include <qlinechartseries.h>
 #include <barchartseries.h>
 #include <stackedbarchartseries.h>
+#include <percentbarchartseries.h>
 #include <QPushButton>
 #include <QComboBox>
 #include <QSpinBox>
@@ -177,6 +178,12 @@ void MainWidget::addSeries(QString series, QString data)
     QList<qreal> x;
     QList<qreal> y;
 
+    QList<qreal> data0;
+    QList<qreal> data1;
+    QList<qreal> data2;
+    QList<qreal> data3;
+    QList<qreal> data4;
+
     if (data == "linear") {
         for (int i = 0; i < 20; i++) {
             x.append(i);
@@ -202,6 +209,13 @@ void MainWidget::addSeries(QString series, QString data)
             x.append(i + (rand() % 5));
             y.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
         }
+    } else if (data == "Table, 5 series"){
+        // Create some test data to chart
+        data0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10;
+        data1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0;
+        data2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1;
+        data3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5;
+        data4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10;
     } else {
         // TODO: check if data has a valid file name
         Q_ASSERT(false);
@@ -229,36 +243,38 @@ void MainWidget::addSeries(QString series, QString data)
             series0->add(x.at(i), y.at(i));
         m_chartWidget->addSeries(series0);
         newSeries = series0;
-    } else {
-        // TODO
-    }
-
-    // BarChart
-    if (series == "Bar") {
-        // This is the another way of creating series. Should we create test cases for both ways, if we support them?
+    } else if (series == "Bar") {
         qDebug() << "Bar chart series";
-        StackedBarChartSeries* series0 = new StackedBarChartSeries(this);
-
-        // Create some test data to chart
-        QList<qreal> data0;
-        data0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10;
-        QList<qreal> data1;
-        data1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0;
-        QList<qreal> data2;
-        data2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1;
-        QList<qreal> data3;
-        data3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5;
-        QList<qreal> data4;
-        data4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10;
-
+        BarChartSeries* series0 = new BarChartSeries(this);
         series0->addData(data0);
         series0->addData(data1);
         series0->addData(data2);
         series0->addData(data3);
         series0->addData(data4);
-
         m_chartWidget->addSeries(series0);
         newSeries = series0;
+    } else if (series == "StackedBar") {
+        qDebug() << "Bar chart series";
+        StackedBarChartSeries* series0 = new StackedBarChartSeries(this);
+        series0->addData(data0);
+        series0->addData(data1);
+        series0->addData(data2);
+        series0->addData(data3);
+        series0->addData(data4);
+        m_chartWidget->addSeries(series0);
+        newSeries = series0;
+    } else if (series == "PercentBar") {
+        qDebug() << "Bar chart series";
+        PercentBarChartSeries* series0 = new PercentBarChartSeries(this);
+        series0->addData(data0);
+        series0->addData(data1);
+        series0->addData(data2);
+        series0->addData(data3);
+        series0->addData(data4);
+        m_chartWidget->addSeries(series0);
+        newSeries = series0;
+    } else {
+        qDebug() << "Something weird going on in MainWidget::addSeries";
     }
 
     setCurrentSeries(newSeries);
@@ -276,6 +292,12 @@ void MainWidget::setCurrentSeries(QChartSeries *series)
         break;
     case QChartSeries::SeriesTypeBar:
         qDebug() << "setCurrentSeries (bar)";
+        break;
+    case QChartSeries::SeriesTypeStackedBar:
+        qDebug() << "setCurrentSeries (Stackedbar)";
+        break;
+    case QChartSeries::SeriesTypePercentBar:
+        qDebug() << "setCurrentSeries (Percentbar)";
         break;
     default:
         Q_ASSERT(false);

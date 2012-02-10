@@ -14,6 +14,8 @@ DataSerieDialog::DataSerieDialog(QString defaultType, QWidget *parent) :
     m_seriesTypeCombo->addItem("Line");
     m_seriesTypeCombo->addItem("Area");
     m_seriesTypeCombo->addItem("Bar");
+    m_seriesTypeCombo->addItem("StackedBar");
+    m_seriesTypeCombo->addItem("PercentBar");
     m_seriesTypeCombo->addItem("Pie");
     m_seriesTypeCombo->addItem("Scatter");
     m_seriesTypeCombo->addItem("Spline");
@@ -31,6 +33,7 @@ DataSerieDialog::DataSerieDialog(QString defaultType, QWidget *parent) :
     m_testDataCombo->addItem("linear, 1M");
     m_testDataCombo->addItem("SIN");
     m_testDataCombo->addItem("SIN + random");
+    m_testDataCombo->addItem("Table, 5 series");
     m_testDataCombo->addItem("TODO From file...");
     m_testDataCombo->addItem("TODO From URL...");
 

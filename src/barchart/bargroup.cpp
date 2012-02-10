@@ -20,6 +20,11 @@ void BarGroup::layoutChanged()
         return;
     }
 
+    if (childItems().count() == 0) {
+        qDebug() << "WARNING: BarGroup::layoutChanged called before graphics items are created!";
+        return;
+    }
+
     // TODO: better way to auto-layout?
     // Use reals for accurancy (we might get some compiler warnings... :)
     int itemCount = mModel.countColumns();
