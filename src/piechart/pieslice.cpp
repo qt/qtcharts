@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <qmath.h>
+#include <QGraphicsSceneEvent>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -63,23 +64,20 @@ void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option
     painter->drawText(m_center, sliceData().m_label);
 }
 
-void PieSlice::hoverEnterEvent(QGraphicsSceneHoverEvent * event)
+void PieSlice::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-    QGraphicsItem::hoverEnterEvent(event);
     m_brush = QBrush(sliceData().m_color.lighter());
     update();
 }
 
-void PieSlice::hoverLeaveEvent(QGraphicsSceneHoverEvent * event)
+void PieSlice::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
-    QGraphicsItem::hoverLeaveEvent(event);
     m_brush = QBrush(sliceData().m_color);
     update();
 }
 
-void PieSlice::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void PieSlice::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
 {
-    QGraphicsItem::mousePressEvent(event);
     QPieSlice data = sliceData();
     data.m_isExploded = !data.m_isExploded;
     (static_cast<PiePresenter*>(parentItem()))->m_pieSeries->update(m_seriesIndex, data);

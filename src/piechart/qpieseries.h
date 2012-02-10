@@ -15,14 +15,14 @@ class QPieSlice
 {
 public:
     QPieSlice()
-        :m_value(0), m_label("<empty>"), m_color(Qt::white), m_isExploded(false) {}
+        :m_value(0), m_label("<empty>"), m_color(QColor::Invalid), m_isExploded(false) {}
 
-    QPieSlice(qreal value, QString label, QColor color, bool exploded = false)
+    QPieSlice(qreal value, QString label = "<empty>", QColor color = QColor::Invalid, bool exploded = false)
         :m_value(value), m_label(label), m_color(color), m_isExploded(exploded) {}
 public:
     qreal m_value;
     QString m_label;
-    QColor m_color;
+    QColor m_color; // TODO: should we even define color here?
     bool m_isExploded;
 };
 
@@ -53,11 +53,12 @@ public:
 
 public: // from QChartSeries
     QChartSeriesType type() const { return QChartSeries::SeriesTypePie; }
+    virtual bool setData(QList<qreal> data);
 
 public:
-    void set(QList<QPieSlice> slices);
-    void add(QList<QPieSlice> slices);
-    void add(QPieSlice slice);
+    bool set(QList<QPieSlice> slices);
+    bool add(QList<QPieSlice> slices);
+    bool add(QPieSlice slice);
 
     int count() const { return m_slices.count(); }
 
@@ -84,6 +85,7 @@ Q_SIGNALS:
 
 private:
     Q_DISABLE_COPY(QPieSeries)
+    friend class PiePresenter;
     // TODO: use PIML
     QList<QPieSlice> m_slices;
     qreal m_sizeFactor;

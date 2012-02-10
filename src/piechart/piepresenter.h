@@ -22,13 +22,13 @@ public: // from QGraphicsItem
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) {}
 
 public:
-    void updateGeometry();
     QRectF pieRect() const { return m_pieRect; }
 
 public Q_SLOTS:
     void handleSeriesChanged(const PieChangeSet& changeSet);
     void handleDomainChanged(const Domain& domain);
     void handleGeometryChanged(const QRectF& rect);
+    void updateGeometry();
 
 private:
     friend class PieSlice;

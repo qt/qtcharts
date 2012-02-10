@@ -2,6 +2,7 @@
 #include "piepresenter.h"
 #include "pieslice.h"
 #include <QDebug>
+#include <QTime>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -11,8 +12,14 @@ PiePresenter::PiePresenter(QGraphicsItem *parent, QPieSeries *series) :
 {
     Q_ASSERT(parent);
     Q_ASSERT(series);
+
     m_rect = parentItem()->boundingRect();
     setAcceptHoverEvents(true);
+    qsrand(QTime::currentTime().msec()); // for random color generation
+
+    connect(series, SIGNAL(changed(const PieChangeSet&)), this, SLOT(handleSeriesChanged(const PieChangeSet&)));
+    connect(series, SIGNAL(sizeFactorChanged()), this, SLOT(updateGeometry()));
+    connect(series, SIGNAL(positionChanged()), this, SLOT(updateGeometry()));
 }
 
 PiePresenter::~PiePresenter()
@@ -21,14 +28,21 @@ PiePresenter::~PiePresenter()
         delete m_slices.takeLast();
 }
 
-void PiePresenter::handleSeriesChanged(const PieChangeSet& changeSet)
+void PiePresenter::handleSeriesChanged(const PieChangeSet& /*changeSet*/)
 {
     const qreal fullPie = 360;
     qreal total = 0;
 
-    // calculate total
-    foreach (QPieSlice sliceData, m_pieSeries->slices())
-        total += sliceData.m_value;
+    // calculate total and set random color if there is no color
+    for (int i=0; i<m_pieSeries->count(); i++) {
+        QPieSlice& slice = m_pieSeries->m_slices[i];
+        total += slice.m_value;
+        if  (slice.m_color == QColor::Invalid) {
+            slice.m_color.setRed(qrand() % 255);
+            slice.m_color.setGreen(qrand() % 255);
+            slice.m_color.setBlue(qrand() % 255);
+        }
+    }
 
     // TODO: no need to create new slices in case size changed; we should re-use the existing ones
     while (m_slices.count())

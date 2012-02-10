@@ -17,6 +17,8 @@ class StackedBarGroup;
 class StackedBarChartSeries;
 class PercentBarChartSeries;
 class PercentBarGroup;
+class PiePresenter;
+class QPieSeries;
 
 class ChartTheme
 {
@@ -31,6 +33,7 @@ public:
     void decorate(BarGroup* item, BarChartSeries* series,int count);
     void decorate(StackedBarGroup* item, StackedBarChartSeries* series,int count);
     void decorate(PercentBarGroup* item, PercentBarChartSeries* series,int count);
+    void decorate(PiePresenter* item, QPieSeries* series, int count);
 
 protected:
     QChart::ChartTheme m_id;

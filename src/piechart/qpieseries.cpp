@@ -17,8 +17,19 @@ QPieSeries::~QPieSeries()
 
 }
 
-void QPieSeries::set(QList<QPieSlice> slices)
+bool QPieSeries::setData(QList<qreal> data)
 {
+    QList<QPieSlice> slices;
+    foreach (int value, data)
+        slices << QPieSlice(value, QString::number(value));
+    return set(slices);
+}
+
+bool QPieSeries::set(QList<QPieSlice> slices)
+{
+    if (!slices.count())
+        return false;
+
     PieChangeSet changeSet;
 
     for (int i=slices.count(); i<m_slices.count(); i++)
@@ -33,21 +44,26 @@ void QPieSeries::set(QList<QPieSlice> slices)
 
     m_slices = slices;
     emit changed(changeSet);
+    return true;
 }
 
-void QPieSeries::add(QList<QPieSlice> slices)
+bool QPieSeries::add(QList<QPieSlice> slices)
 {
+    if (!slices.count())
+        return false;
+
     PieChangeSet changeSet;
     for (int i=0; i<slices.count(); i++)
         changeSet.m_added << m_slices.count() + i;
 
     m_slices += slices;
     emit changed(changeSet);
+    return true;
 }
 
-void QPieSeries::add(QPieSlice slice)
+bool QPieSeries::add(QPieSlice slice)
 {
-    add(QList<QPieSlice>() << slice);
+    return add(QList<QPieSlice>() << slice);
 }
 
 QPieSlice QPieSeries::slice(int index) const
@@ -71,15 +87,21 @@ bool QPieSeries::update(int index, QPieSlice slice)
 
 void QPieSeries::setSizeFactor(qreal factor)
 {
-    if (factor > 0.0)
+    if (factor < 0.0)
+        return;
+
+    if (m_sizeFactor != factor) {
         m_sizeFactor = factor;
-    emit sizeFactorChanged();
+        emit sizeFactorChanged();
+    }
 }
 
 void QPieSeries::setPosition(PiePosition position)
 {
-    m_position = position;
-    emit positionChanged();
+    if (m_position != position) {
+        m_position = position;
+        emit positionChanged();
+    }
 }
 
 #include "moc_qpieseries.cpp"

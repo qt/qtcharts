@@ -7,12 +7,15 @@
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
 #include "qlinechartseries.h"
+#include "qpieseries.h"
+
 //items
 #include "axisitem_p.h"
 #include "bargroup.h"
 #include "stackedbargroup.h"
 #include "linechartitem_p.h"
 #include "percentbargroup.h"
+#include "piepresenter.h"
 
 //themes
 #include "chartthemevanilla_p.h"
@@ -98,6 +101,12 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
             decorate(i,s,count);
             break;
         }
+        case QChartSeries::SeriesTypePie: {
+            QPieSeries* s = static_cast<QPieSeries*>(series);
+            PiePresenter* i = static_cast<PiePresenter*>(item);
+            decorate(i,s,count);
+            break;
+        }
         default:
         qDebug()<<"Wrong item to be decorated by theme";
         break;
@@ -144,6 +153,17 @@ void ChartTheme::decorate(PercentBarGroup* item, PercentBarChartSeries* series,i
     item->addColor(QColor(0,255,0,128));
     item->addColor(QColor(0,0,255,128));
     item->addColor(QColor(255,128,0,128));
+}
+
+void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
+{
+    // TODO: Does not work well. We need to generate enough different colors
+    // based on available theme and not use the same color twice.
+    for (int i=0; i<series->count(); i++) {
+        QPieSlice slice = series->slice(i);
+        slice.m_color = m_seriesColor.at(i % m_seriesColor.count());
+        series->update(i, slice);
+    }
 }
 
 
