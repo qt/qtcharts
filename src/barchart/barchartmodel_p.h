@@ -24,9 +24,8 @@ public:
     int countColumns();         // Maximum number of items in series
     int countTotalItems();      // Total items in all series. Includes empty items.
 
-    // TODO: qreal these
-    int max();  // Maximum value of all series
-    int min();  // Minimum value of all series
+    qreal max();  // Maximum value of all series
+    qreal min();  // Minimum value of all series
     qreal valueAt(int series, int item);
 
     qreal columnSum(int column);

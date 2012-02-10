@@ -32,9 +32,8 @@ void BarGroup::layoutChanged()
 
     qreal tW = mWidth;
     qreal tH = mHeight;
-    qreal tM = mMax;
+    qreal tM = mModel.max();
     qreal scale = (tH/tM);
-
     qreal tC = itemCount+1;
     qreal xStepPerSeries = (tW/tC);
 

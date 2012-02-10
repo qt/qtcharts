@@ -26,7 +26,9 @@ public:
     // Returns id for vector.
     int addData(QList<qreal> data);
     void removeData(int id);
+    void setLabels(QList<QString> labels);
 
+    // These shouldn't be visible to chart series user. However, ChartDataSet needs to access them, and friends are evil.
     qreal min();
     qreal max();
     int countColumns();     // Count items in one series.
@@ -34,6 +36,7 @@ public:
     qreal maxColumnSum();
 
     BarChartModel& model();
+    QString label(int item);
 
 signals:
     void changed(int index);
@@ -42,9 +45,9 @@ public Q_SLOTS:
 
 private:
 
-    BarChartModel& mModel;
-    BarGroupBase* mBarGroup;
+    BarChartModel* mModel;
 
+    QList<QString> mLabels;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

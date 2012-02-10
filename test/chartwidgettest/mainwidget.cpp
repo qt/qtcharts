@@ -251,6 +251,9 @@ void MainWidget::addSeries(QString series, QString data)
         series0->addData(data2);
         series0->addData(data3);
         series0->addData(data4);
+        QList<QString> labels;
+        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Nov" << "Dec";
+        series0->setLabels(labels);
         m_chartWidget->addSeries(series0);
         newSeries = series0;
     } else if (series == "StackedBar") {
@@ -261,6 +264,9 @@ void MainWidget::addSeries(QString series, QString data)
         series0->addData(data2);
         series0->addData(data3);
         series0->addData(data4);
+        QList<QString> labels;
+        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Nov" << "Dec";
+        series0->setLabels(labels);
         m_chartWidget->addSeries(series0);
         newSeries = series0;
     } else if (series == "PercentBar") {
@@ -271,6 +277,9 @@ void MainWidget::addSeries(QString series, QString data)
         series0->addData(data2);
         series0->addData(data3);
         series0->addData(data4);
+        QList<QString> labels;
+        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Nov" << "Dec";
+        series0->setLabels(labels);
         m_chartWidget->addSeries(series0);
         newSeries = series0;
     } else {
@@ -384,6 +393,10 @@ void MainWidget::changeChartTheme(int themeIndex)
 {
     qDebug() << "changeChartTheme: " << themeIndex;
     m_chartWidget->setChartTheme((QChart::ChartTheme) themeIndex);
+    //TODO: remove this hack. This is just to make it so that theme change is seen immediately.
+    QSize s = size();
+    s.setWidth(s.width()+1);
+    resize(s);
 }
 
 void MainWidget::setPieSizeFactor(double size)

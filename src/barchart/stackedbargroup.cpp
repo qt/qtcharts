@@ -51,9 +51,6 @@ void StackedBarGroup::layoutChanged()
             qreal barHeight = mModel.valueAt(row, column) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
-            // TODO: width settable per bar?
-            // TODO: theme stuff
-//            mTheme->themeForSeries();
             bar->resize(mBarDefaultWidth, barHeight);
             bar->setColor(mColors.at(row));
             bar->setPos(xPos, yPos-barHeight);

@@ -25,6 +25,7 @@ int BarChartModel::addData(QList<qreal> data)
     DataContainer* c = new DataContainer(data,mRunningId);
     mDataModel.append(c);
     mRunningId++;
+    emit modelUpdated();
     return mRunningId-1;
 }
 
@@ -37,6 +38,7 @@ void BarChartModel::removeData(int id)
             delete c;
         }
     }
+    emit modelUpdated();
 }
 
 int BarChartModel::countRows()
@@ -66,18 +68,18 @@ int BarChartModel::countTotalItems()
     return total;
 }
 
-int BarChartModel::min()
+qreal BarChartModel::min()
 {
  //   qDebug() << "BarChartModel::min";
     Q_ASSERT(mDataModel.count() > 0);
     // TODO: make min and max members and update them when data changes.
     // This is slower since they are checked every time, even if data is same since previous call.
-    int min = INT_MAX;
+    qreal min = INT_MAX;
 
     for (int i=0; i <mDataModel.count(); i++) {
         int itemCount = mDataModel.at(i)->countColumns();
         for (int j=0; j<itemCount; j++) {
-            int temp = mDataModel.at(i)->valueAt(j);
+            qreal temp = mDataModel.at(i)->valueAt(j);
             if (temp < min) {
                 min = temp;
             }
@@ -86,19 +88,19 @@ int BarChartModel::min()
     return min;
 }
 
-int BarChartModel::max()
+qreal BarChartModel::max()
 {
 //    qDebug() << "BarChartModel::max";
     Q_ASSERT(mDataModel.count() > 0);
 
     // TODO: make min and max members and update them when data changes.
     // This is slower since they are checked every time, even if data is same since previous call.
-    int max = INT_MIN;
+    qreal max = INT_MIN;
 
     for (int i=0; i <mDataModel.count(); i++) {
         int itemCount = mDataModel.at(i)->countColumns();
         for (int j=0; j<itemCount; j++) {
-            int temp = mDataModel.at(i)->valueAt(j);
+            qreal temp = mDataModel.at(i)->valueAt(j);
             if (temp > max) {
                 max = temp;
             }

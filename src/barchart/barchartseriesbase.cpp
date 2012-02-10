@@ -8,50 +8,64 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarChartSeriesBase::BarChartSeriesBase(QObject *parent)
     : QChartSeries(parent)
-    ,mModel(*(new BarChartModel(this))) // TODO: is this ok?
+    ,mModel(new BarChartModel(this))
 {
 }
 
 int BarChartSeriesBase::addData(QList<qreal> data)
 {
-    return mModel.addData(data);
+    return mModel->addData(data);
 }
 
 void BarChartSeriesBase::removeData(int id)
 {
-    mModel.removeData(id);
+    mModel->removeData(id);
+}
+
+void BarChartSeriesBase::setLabels(QList<QString> labels)
+{
+    mLabels = labels;
 }
 
 qreal BarChartSeriesBase::min()
 {
-    return mModel.min();
+    return mModel->min();
 }
 
 qreal BarChartSeriesBase::max()
 {
-    return mModel.max();
+    return mModel->max();
 }
 
 int BarChartSeriesBase::countColumns()
 {
-    return mModel.countColumns();
+    return mModel->countColumns();
 }
 
 qreal BarChartSeriesBase::valueAt(int series, int item)
 {
-    qDebug() << "BarChartSeriesBase::valueAt" << series << item;
-    return mModel.valueAt(series,item);
+//    qDebug() << "BarChartSeriesBase::valueAt" << series << item;
+    return mModel->valueAt(series,item);
 }
 
 qreal BarChartSeriesBase::maxColumnSum()
 {
-    qDebug() << "BarChartSeriesBase::maxColumnSum" << mModel.maxColumnSum();
-    return mModel.maxColumnSum();
+//    qDebug() << "BarChartSeriesBase::maxColumnSum" << mModel->maxColumnSum();
+    return mModel->maxColumnSum();
 }
 
 BarChartModel& BarChartSeriesBase::model()
 {
-    return mModel;
+    return *mModel;
+}
+
+QString BarChartSeriesBase::label(int item)
+{
+    if ((item>=0) && (item < mLabels.count()))  {
+        return mLabels.at(item);
+    }
+
+    return QString("");
 }
 
 #include "moc_barchartseriesbase.cpp"

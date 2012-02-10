@@ -12,10 +12,11 @@ BarGroupBase::BarGroupBase(BarChartSeriesBase& series, QGraphicsItem *parent)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
-    ,mTheme(0)
     ,mSeparatorsVisible(true)
     ,mModel(series.model())
+    ,mSeries(series)
 {
+    dataChanged();
 }
 
 void BarGroupBase::setSeparatorsVisible(bool visible)
@@ -82,8 +83,8 @@ void BarGroupBase::dataChanged()
     int count = mModel.countColumns();    // mSeries.countColumns();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
-        QString text("Label " + QString::number(i));
-        label->set(text);
+//        QString text("Label " + QString::number(i));
+        label->set(mSeries.label(i));
         childItems().append(label);
     }
 
@@ -102,14 +103,17 @@ void BarGroupBase::dataChanged()
 
 void BarGroupBase::handleModelChanged(int index)
 {
-//    qDebug() << "BarGroupBase::handleModelChanged" << index;
+    qDebug() << "BarGroupBase::handleModelChanged" << index;
     dataChanged();
 }
 
 void BarGroupBase::handleDomainChanged(const Domain& domain)
 {
 //    qDebug() << "BarGroupBase::handleDomainChanged";
-    dataChanged();
+
+    // TODO: Figure out the use case for this.
+    // Affects the size of visible item, so layout is changed.
+//    layoutChanged();
 }
 
 void BarGroupBase::handleGeometryChanged(const QRectF& rect)
