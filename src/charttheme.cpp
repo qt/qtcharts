@@ -164,13 +164,45 @@ void ChartTheme::decorate(PercentBarGroup* item, PercentBarChartSeries* series,i
 
 void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
 {
-    // TODO: Does not work well. We need to generate enough different colors
-    // based on available theme and not use the same color twice.
+    // create a list of slice colors based on current theme
+    int i = 0;
+    QList<QColor> colors;
+    while (colors.count() < series->count()) {
+
+        // get base color
+        QColor c = m_seriesColor[i++];
+        i = i % m_seriesColor.count();
+
+        // -1 means achromatic color -> cannot manipulate lightness
+        // TODO: find a better way to randomize lightness
+        if (c.toHsv().hue() == -1)
+            qWarning() << "ChartTheme::decorate() warning: achromatic theme color";
+
+        // randomize lightness
+        qreal f = 50 + (qrand() % 100); // 50 is 50% darker, 100 is the same, 150 is 50% lighter
+        c = c.lighter(f);
+
+        // find duplicates
+        bool isUnique = true;
+        foreach (QColor color, colors) {
+            if (c == color)
+                isUnique = false;
+        }
+
+        // add to array if unique
+        //if (isUnique)
+            colors << c;
+    }
+
+    // finally update colors
+    QList<QPieSlice> slices;
     for (int i=0; i<series->count(); i++) {
         QPieSlice slice = series->slice(i);
-        slice.m_color = m_seriesColor.at(i % m_seriesColor.count());
-        series->update(i, slice);
+        slice.m_color = colors.at(i);
+        slices << slice;
     }
+
+    series->set(slices);
 }
 
 

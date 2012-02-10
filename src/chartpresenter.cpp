@@ -140,6 +140,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         case QChartSeries::SeriesTypePie: {
             QPieSeries *s = qobject_cast<QPieSeries *>(series);
             PiePresenter* pie = new PiePresenter(m_chart, s);
+            m_chartTheme->decorate(pie, s, m_chartItems.count());
             QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), pie, SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset, SIGNAL(domainChanged(const Domain&)), pie, SLOT(handleDomainChanged(const Domain&)));
             m_chartItems.insert(series, pie);
