@@ -13,7 +13,7 @@ class QTCOMMERCIALCHART_EXPORT PercentBarChartSeries : public BarChartSeriesBase
 {
     Q_OBJECT
 public:
-    PercentBarChartSeries(QObject* parent=0);
+    PercentBarChartSeries(QBarCategory &category, QObject* parent=0);
 
     // from BarChartSeriesBase
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypePercentBar; }

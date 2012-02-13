@@ -13,7 +13,7 @@ BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
 
 void BarGroup::layoutChanged()
 {
-    qDebug() << "BarGroup::layoutChanged";
+//    qDebug() << "BarGroup::layoutChanged";
     // Scale bars to new layout
     // Layout for bars:
     if (mModel.countRows() <= 0) {

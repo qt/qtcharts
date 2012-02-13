@@ -4,8 +4,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-StackedBarChartSeries::StackedBarChartSeries(QObject *parent) :
-    BarChartSeriesBase(parent)
+StackedBarChartSeries::StackedBarChartSeries(QBarCategory &category, QObject *parent) :
+    BarChartSeriesBase(category, parent)
 {
 }
 

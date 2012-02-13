@@ -44,15 +44,15 @@ QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
             break;
         }
         case QChartSeries::SeriesTypeBar: {
-            series = new BarChartSeries(this);
+            //series = new BarChartSeries(this);
             break;
         }
         case QChartSeries::SeriesTypeStackedBar: {
-            series = new StackedBarChartSeries(this);
+            //series = new StackedBarChartSeries(this);
             break;
         }
         case QChartSeries::SeriesTypePercentBar: {
-            series = new PercentBarChartSeries(this);
+            //series = new PercentBarChartSeries(this);
             break;
         }
         case QChartSeries::SeriesTypeScatter: {

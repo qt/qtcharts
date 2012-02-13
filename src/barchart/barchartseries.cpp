@@ -3,8 +3,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartSeries::BarChartSeries(QObject *parent)
-    : BarChartSeriesBase(parent)
+BarChartSeries::BarChartSeries(QBarCategory &category, QObject *parent)
+    : BarChartSeriesBase(category, parent)
 {
 }
 

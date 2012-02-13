@@ -14,7 +14,7 @@ class QTCOMMERCIALCHART_EXPORT BarChartSeries : public BarChartSeriesBase
 {
     Q_OBJECT
 public:
-    BarChartSeries(QObject* parent=0);
+    BarChartSeries(QBarCategory &category, QObject* parent=0);
 
     // from BarChartSeriesBase
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }

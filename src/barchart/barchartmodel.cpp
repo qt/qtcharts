@@ -2,12 +2,15 @@
 #include <QVector>
 #include <QDebug>
 #include "barchartmodel_p.h"
+#include "qbarcategory.h"
+#include "qbarset.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartModel::BarChartModel(QObject *parent) :
+BarChartModel::BarChartModel(QBarCategory &category, QObject *parent) :
     QObject(parent)
     ,mRunningId(1)
+    ,mCategory(category)
 {
 }
 
@@ -40,6 +43,19 @@ void BarChartModel::removeData(int id)
     }
     emit modelUpdated();
 }
+
+void BarChartModel::addBarSet(QBarSet &set)
+{
+    DataContainer* c = new DataContainer(set.mValues,mRunningId);
+    mDataModel.append(c);
+    mRunningId++;
+}
+
+void BarChartModel::removeBarSet(QBarSet &set)
+{
+    // TODO:
+}
+
 
 int BarChartModel::countRows()
 {

@@ -211,11 +211,11 @@ void MainWidget::addSeries(QString series, QString data)
         }
     } else if (data == "Table, 5 series"){
         // Create some test data to chart
-        data0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10;
-        data1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0;
-        data2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1;
-        data3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5;
-        data4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10;
+        data0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10 << 5;
+        data1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0 << 4;
+        data2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1 << 3;
+        data3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5 << 2;
+        data4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10 << 1;
     } else {
         // TODO: check if data has a valid file name
         Q_ASSERT(false);

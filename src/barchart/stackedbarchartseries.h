@@ -13,7 +13,7 @@ class QTCOMMERCIALCHART_EXPORT StackedBarChartSeries : public BarChartSeriesBase
 {
     Q_OBJECT
 public:
-    StackedBarChartSeries(QObject* parent=0);
+    StackedBarChartSeries(QBarCategory &category, QObject* parent=0);
 
     // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeStackedBar; }

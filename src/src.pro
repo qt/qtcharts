@@ -18,6 +18,8 @@ SOURCES += barchart/barchartseries.cpp \
     barchart/separator.cpp \
     barchart/bargroupbase.cpp \
     barchart/barchartseriesbase.cpp \
+    barchart/qbarset.cpp \
+    barchart/qbarcategory.cpp \
     linechart/linechartanimationitem.cpp \
     linechart/linechartitem.cpp \
     linechart/qlinechartseries.cpp \
@@ -56,6 +58,8 @@ PUBLIC_HEADERS += linechart/qlinechartseries.h \
     barchart/percentbargroup.h \
     barchart/barchartseriesbase.h \
     barchart/bargroupbase.h \
+    barchart/qbarset.h \
+    barchart/qbarcategory.h \
     qchartseries.h \
     qscatterseries.h \
     qchart.h \

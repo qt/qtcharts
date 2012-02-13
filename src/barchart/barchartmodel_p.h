@@ -9,16 +9,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 // Model for bar chart. Internal class.
 // TODO: Implement as QAbstractItemModel?
 
+class QBarSet;
+class QBarCategory;
+
 class BarChartModel : public QObject //, public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit BarChartModel(QObject *parent = 0);
+    explicit BarChartModel(QBarCategory &category, QObject *parent = 0);
     ~BarChartModel();
-    
-    // Adds data to model. returns id.
+
+    // TODO: remove these after add and remove QBarSet works.
     int addData(QList<qreal> data);
     void removeData(int id);
+
+    void addBarSet(QBarSet &set);
+    void removeBarSet(QBarSet &set);
 
     int countRows();            // Number of series in model
     int countColumns();         // Maximum number of items in series
@@ -54,6 +60,7 @@ private:
     QList<DataContainer*> mDataModel;
     int mRunningId;
     int mMaxColumns;    // longest series in datamodel
+    QBarCategory& mCategory;
 
 };
 

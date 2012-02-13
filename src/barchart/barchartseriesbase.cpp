@@ -3,12 +3,13 @@
 #include "barchartseriesbase.h"
 #include "bargroup.h"
 #include "barchartmodel_p.h"
+#include "qbarset.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartSeriesBase::BarChartSeriesBase(QObject *parent)
+BarChartSeriesBase::BarChartSeriesBase(QBarCategory &category, QObject *parent)
     : QChartSeries(parent)
-    ,mModel(new BarChartModel(this))
+    ,mModel(new BarChartModel(category, this))
 {
 }
 
@@ -25,6 +26,16 @@ void BarChartSeriesBase::removeData(int id)
 void BarChartSeriesBase::setLabels(QList<QString> labels)
 {
     mLabels = labels;
+}
+
+void BarChartSeriesBase::addBarSet(QBarSet &set)
+{
+    mModel->addBarSet(set);
+}
+
+void BarChartSeriesBase::removeBarSet(QBarSet &set)
+{
+    mModel->removeBarSet(set);
 }
 
 qreal BarChartSeriesBase::min()

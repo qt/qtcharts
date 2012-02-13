@@ -6,8 +6,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PercentBarChartSeries::PercentBarChartSeries(QObject *parent) :
-    BarChartSeriesBase(parent)
+PercentBarChartSeries::PercentBarChartSeries(QBarCategory &category, QObject *parent) :
+    BarChartSeriesBase(category, parent)
 {
 }
 

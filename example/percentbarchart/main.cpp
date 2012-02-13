@@ -31,6 +31,10 @@ int main(int argc, char *argv[])
     series0->addData(data3);
     series0->addData(data4);
 
+    QList<QString> labels;
+    labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Nov" << "Dec";
+    series0->setLabels(labels);
+
     ChartWidget* chartWidget =  new ChartWidget(&window);
     chartWidget->addSeries(series0);
 
