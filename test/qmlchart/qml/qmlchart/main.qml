@@ -17,16 +17,16 @@ Rectangle {
 //            labels: ["point1", "point2", "point3", "point4", "point5"]
 //            datax: [2, 1.5, 3, 3, 3]
 //        }
-        PieSeries {
-            name: "raspberry pie"
-            seriesLabels: ["point1", "point2", "point3", "point4", "point5"]
-            seriesData: [2, 1.5, 3, 3, 3]
-        }
-        ScatterSeries {
-            name: "scatter1"
-            datax: [2, 1.5, 3, 3, 3]
-            datay: [2, 1.5, 3, 3, 3]
-        }
+//        PieSeries {
+//            name: "raspberry pie"
+//            seriesLabels: ["point1", "point2", "point3", "point4", "point5"]
+//            seriesData: [2, 1.5, 3, 3, 3]
+//        }
+//        ScatterSeries {
+//            name: "scatter1"
+//            datax: [2, 1.5, 3, 3, 3]
+//            datay: [2, 1.5, 3, 3, 3]
+//        }
 //        Series {
 //            labels: ["point1", "point2", "point3", "point4", "point5"]
 //            datax: [2, 1.5, 3, 3, 3]
