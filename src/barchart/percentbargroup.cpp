@@ -7,8 +7,8 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-PercentBarGroup::PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *parent) :
-    BarGroupBase(series, parent)
+PercentBarGroup::PercentBarGroup(BarChartModel& model, QGraphicsItem *parent) :
+    BarGroupBase(model, parent)
 {
 }
 

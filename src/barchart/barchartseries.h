@@ -3,14 +3,17 @@
 
 #include <QList>
 #include <QAbstractItemModel>
-#include "barchartseriesbase.h"
-
-class BarGroup;
+#include "qchartseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QBarCategory;
+class QBarSet;
+class BarGroup;
+class BarChartModel;
+
 // Container for series
-class QTCOMMERCIALCHART_EXPORT BarChartSeries : public BarChartSeriesBase
+class QTCOMMERCIALCHART_EXPORT BarChartSeries : public QChartSeries
 {
     Q_OBJECT
 public:
@@ -22,11 +25,24 @@ public:
     void addBarSet(QBarSet &set);
     void removeBarSet(QBarSet &set);
 
+    int countCategories();
+    qreal min();
+    qreal max();
+    qreal valueAt(int set, int category);
+    qreal maxCategorySum();
+
+    BarChartModel& model();
+
+signals:
+    void changed(int index);
+
 public Q_SLOTS:
 
 private:
 
     BarGroup* mBarGroup;
+    BarChartModel* mModel;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

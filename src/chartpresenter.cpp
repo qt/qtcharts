@@ -91,7 +91,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
         case QChartSeries::SeriesTypeBar: {
             BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
-            BarGroup* item = new BarGroup(*barSeries,m_chart);
+            BarGroup* item = new BarGroup(barSeries->model(),m_chart);
             m_chartTheme->decorate(item,barSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
@@ -104,7 +104,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         case QChartSeries::SeriesTypeStackedBar: {
 
             StackedBarChartSeries* stackedBarSeries = static_cast<StackedBarChartSeries*>(series);
-            StackedBarGroup* item = new StackedBarGroup(*stackedBarSeries,m_chart);
+            StackedBarGroup* item = new StackedBarGroup(stackedBarSeries->model(),m_chart);
             m_chartTheme->decorate(item,stackedBarSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
@@ -116,7 +116,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         case QChartSeries::SeriesTypePercentBar: {
 
             PercentBarChartSeries* percentBarSeries = static_cast<PercentBarChartSeries*>(series);
-            PercentBarGroup* item = new PercentBarGroup(*percentBarSeries,m_chart);
+            PercentBarGroup* item = new PercentBarGroup(percentBarSeries->model(),m_chart);
             m_chartTheme->decorate(item,percentBarSeries ,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));

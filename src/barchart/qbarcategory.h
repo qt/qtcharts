@@ -5,7 +5,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_EXPORT QBarCategory // : pubclic QObject // TODO: Need for this?
+class QTCOMMERCIALCHART_EXPORT QBarCategory // TODO? : pubclic QObject
 {
 public:
     QBarCategory();
@@ -14,7 +14,7 @@ public:
 
     // Number of items in category
     int count();
-    QList<QString>& items();
+    QString label(int category);
 
 public:
 

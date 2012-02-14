@@ -2,7 +2,6 @@
 #define BARGROUPBASE_H
 
 #include "chartitem_p.h"
-#include "barchartseriesbase.h"
 #include "barchartmodel_p.h"
 #include <QGraphicsItem>
 
@@ -13,7 +12,7 @@ class BarGroupBase : public QObject, public ChartItem
 {
     Q_OBJECT
 public:
-    BarGroupBase(BarChartSeriesBase& series, QGraphicsItem *parent = 0);
+    BarGroupBase(BarChartModel& model, QGraphicsItem *parent = 0);
     void setSeparatorsVisible(bool visible = true);
 
 public: // From ChartItem
@@ -53,7 +52,6 @@ protected:
     QList<QColor> mColors;  // List of colors for series for now
     bool mSeparatorsVisible;
     BarChartModel& mModel;
-    BarChartSeriesBase& mSeries;
 
 };
 

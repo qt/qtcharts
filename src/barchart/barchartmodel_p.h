@@ -33,6 +33,8 @@ public:
     qreal categorySum(int column);
     qreal maxCategorySum();     // returns maximum sum of sets in all categories.
 
+    QString label(int category);
+
 signals:
     void modelUpdated();
 

@@ -3,13 +3,16 @@
 
 #include <QList>
 #include <QAbstractItemModel>
-#include "barchartseriesbase.h"
+#include "qchartseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class PercentBarGroup;
+class QBarCategory;
+class QBarSet;
+class BarChartModel;
 
-class QTCOMMERCIALCHART_EXPORT PercentBarChartSeries : public BarChartSeriesBase
+class QTCOMMERCIALCHART_EXPORT PercentBarChartSeries : public QChartSeries
 {
     Q_OBJECT
 public:
@@ -21,11 +24,25 @@ public:
     void addBarSet(QBarSet &set);
     void removeBarSet(QBarSet &set);
 
+    int countCategories();
+    qreal min();
+    qreal max();
+    qreal valueAt(int set, int category);
+    qreal maxCategorySum();
+
+    BarChartModel& model();
+
+signals:
+    void changed(int index);
+
 public Q_SLOTS:
+
 
 private:
 
     PercentBarGroup* mPercentBarGroup;
+    BarChartModel* mModel;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

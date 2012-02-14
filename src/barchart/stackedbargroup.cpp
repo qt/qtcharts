@@ -6,8 +6,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-StackedBarGroup::StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *parent) :
-    BarGroupBase(series,parent)
+StackedBarGroup::StackedBarGroup(BarChartModel& model, QGraphicsItem *parent) :
+    BarGroupBase(model,parent)
 {
 }
 

@@ -12,7 +12,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class BarGroup : public BarGroupBase
 {
 public:
-    explicit BarGroup(BarChartSeries& series, QGraphicsItem *parent = 0);
+    explicit BarGroup(BarChartModel& model, QGraphicsItem *parent = 0);
 
 private:
 

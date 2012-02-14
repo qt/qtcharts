@@ -5,8 +5,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarGroup::BarGroup(BarChartSeries& series, QGraphicsItem *parent) :
-    BarGroupBase(series,parent)
+BarGroup::BarGroup(BarChartModel& model, QGraphicsItem *parent) :
+    BarGroupBase(model,parent)
 {
     mBarDefaultWidth = 10;
 }

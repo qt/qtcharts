@@ -12,7 +12,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class PercentBarGroup : public BarGroupBase
 {
 public:
-    PercentBarGroup(PercentBarChartSeries& series, QGraphicsItem *parent = 0);
+    PercentBarGroup(BarChartModel& model, QGraphicsItem *parent = 0);
 
 private:
 

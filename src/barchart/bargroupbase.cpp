@@ -2,19 +2,18 @@
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
-#include "barchartseriesbase.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarGroupBase::BarGroupBase(BarChartSeriesBase& series, QGraphicsItem *parent)
+BarGroupBase::BarGroupBase(BarChartModel& model, QGraphicsItem *parent)
     : ChartItem(parent)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
     ,mSeparatorsVisible(true)
-    ,mModel(series.model())
-    ,mSeries(series)
+    ,mModel(model)
+//    ,mSeries(series)
 {
     dataChanged();
 }
@@ -65,7 +64,7 @@ void BarGroupBase::resetColors()
 
 void BarGroupBase::dataChanged()
 {
-//    qDebug() << "BarGroupBase::dataChanged";
+    // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?
 
     // Delete old bars
     foreach (QGraphicsItem* item, childItems()) {
@@ -79,12 +78,10 @@ void BarGroupBase::dataChanged()
         childItems().append(bar);
     }
 
-    // TODO: labels from series. This creates just some example labels
     int count = mModel.countCategories();    // mSeries.countColumns();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
-//        QString text("Label " + QString::number(i));
-        label->set(mSeries.label(i));
+        label->set(mModel.label(i));
         childItems().append(label);
     }
 

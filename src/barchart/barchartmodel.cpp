@@ -133,6 +133,11 @@ qreal BarChartModel::maxCategorySum()
     return max;
 }
 
+QString BarChartModel::label(int category)
+{
+    return mCategory.label(category);
+}
+
 #include "moc_barchartmodel_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

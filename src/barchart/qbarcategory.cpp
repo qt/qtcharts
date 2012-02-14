@@ -17,9 +17,9 @@ int QBarCategory::count()
     return mList.count();
 }
 
-QList<QString>& QBarCategory::items()
+QString QBarCategory::label(int category)
 {
-    return mList;
+    return mList.at(category);
 }
 
 

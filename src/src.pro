@@ -17,7 +17,6 @@ SOURCES += barchart/barchartseries.cpp \
     barchart/barchartmodel.cpp \
     barchart/separator.cpp \
     barchart/bargroupbase.cpp \
-    barchart/barchartseriesbase.cpp \
     barchart/qbarset.cpp \
     barchart/qbarcategory.cpp \
     linechart/linechartanimationitem.cpp \
@@ -56,7 +55,6 @@ PUBLIC_HEADERS += linechart/qlinechartseries.h \
     barchart/stackedbargroup.h \
     barchart/percentbarchartseries.h \
     barchart/percentbargroup.h \
-    barchart/barchartseriesbase.h \
     barchart/bargroupbase.h \
     barchart/qbarset.h \
     barchart/qbarcategory.h \

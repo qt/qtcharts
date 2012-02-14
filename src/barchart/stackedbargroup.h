@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class StackedBarGroup : public BarGroupBase
 {
 public:
-    StackedBarGroup(StackedBarChartSeries& series, QGraphicsItem *parent = 0);
+    StackedBarGroup(BarChartModel& model, QGraphicsItem *parent = 0);
 
 private:
     // From BarGroupBase
