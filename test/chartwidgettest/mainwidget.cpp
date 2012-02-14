@@ -3,6 +3,8 @@
 #include "qchartseries.h"
 #include "qpieseries.h"
 #include <qlinechartseries.h>
+#include <qbarset.h>
+#include <qbarcategory.h>
 #include <barchartseries.h>
 #include <stackedbarchartseries.h>
 #include <percentbarchartseries.h>
@@ -178,11 +180,11 @@ void MainWidget::addSeries(QString series, QString data)
     QList<qreal> x;
     QList<qreal> y;
 
-    QList<qreal> data0;
-    QList<qreal> data1;
-    QList<qreal> data2;
-    QList<qreal> data3;
-    QList<qreal> data4;
+    QBarSet set0;
+    QBarSet set1;
+    QBarSet set2;
+    QBarSet set3;
+    QBarSet set4;
 
     if (data == "linear") {
         for (int i = 0; i < 20; i++) {
@@ -210,12 +212,12 @@ void MainWidget::addSeries(QString series, QString data)
             y.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
         }
     } else if (data == "Table, 5 series"){
-        // Create some test data to chart
-        data0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10 << 5;
-        data1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0 << 4;
-        data2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1 << 3;
-        data3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5 << 2;
-        data4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10 << 1;
+         // Create some test data to chart
+        set0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10 << 11 << 12;
+        set1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0 << 4 << 2;
+        set2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1 << 3 << 5;
+        set3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5 << 2 << 7;
+        set4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10 << 1 << 6;
     } else {
         // TODO: check if data has a valid file name
         Q_ASSERT(false);
@@ -245,41 +247,50 @@ void MainWidget::addSeries(QString series, QString data)
         newSeries = series0;
     } else if (series == "Bar") {
         qDebug() << "Bar chart series";
-        BarChartSeries* series0 = new BarChartSeries(this);
-        series0->addData(data0);
-        series0->addData(data1);
-        series0->addData(data2);
-        series0->addData(data3);
-        series0->addData(data4);
-        QList<QString> labels;
-        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Nov" << "Dec";
-        series0->setLabels(labels);
+
+        QBarCategory category;
+        category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+
+        BarChartSeries* series0 = new BarChartSeries(category, this);
+
+        series0->addBarSet(set0);
+        series0->addBarSet(set1);
+        series0->addBarSet(set2);
+        series0->addBarSet(set3);
+        series0->addBarSet(set4);
+
         m_chartWidget->addSeries(series0);
         newSeries = series0;
     } else if (series == "StackedBar") {
-        qDebug() << "Bar chart series";
-        StackedBarChartSeries* series0 = new StackedBarChartSeries(this);
-        series0->addData(data0);
-        series0->addData(data1);
-        series0->addData(data2);
-        series0->addData(data3);
-        series0->addData(data4);
-        QList<QString> labels;
-        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Nov" << "Dec";
-        series0->setLabels(labels);
+        qDebug() << "Stacked bar chart series";
+
+        QBarCategory category;
+        category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+
+        StackedBarChartSeries* series0 = new StackedBarChartSeries(category, this);
+
+        series0->addBarSet(set0);
+        series0->addBarSet(set1);
+        series0->addBarSet(set2);
+        series0->addBarSet(set3);
+        series0->addBarSet(set4);
+
         m_chartWidget->addSeries(series0);
         newSeries = series0;
     } else if (series == "PercentBar") {
-        qDebug() << "Bar chart series";
-        PercentBarChartSeries* series0 = new PercentBarChartSeries(this);
-        series0->addData(data0);
-        series0->addData(data1);
-        series0->addData(data2);
-        series0->addData(data3);
-        series0->addData(data4);
-        QList<QString> labels;
-        labels << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Nov" << "Dec";
-        series0->setLabels(labels);
+        qDebug() << "Percent bar chart series";
+
+        QBarCategory category;
+        category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+
+        PercentBarChartSeries* series0 = new PercentBarChartSeries(category, this);
+
+        series0->addBarSet(set0);
+        series0->addBarSet(set1);
+        series0->addBarSet(set2);
+        series0->addBarSet(set3);
+        series0->addBarSet(set4);
+
         m_chartWidget->addSeries(series0);
         newSeries = series0;
     } else {

@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     QMainWindow window;
 
     QBarCategory category;
-    category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Nov" << "Dec";
+    category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
     StackedBarChartSeries* series0 = new StackedBarChartSeries(category);
 

@@ -11,13 +11,15 @@ public:
     QBarSet();
 
     void setName(QString name);
-//    void setValues(QList<qreal> &values);
-
-    // TODO:
+    QString name();
     QBarSet& operator << (const qreal &value);
 
-    // TODO: Hide these from user of QBarSet. (but data model needs access to these)
-public:
+    //TODO: What is the way to set a single value to n:th item? Is there need for such functionality?
+
+    int count();
+    qreal valueAt(int index);
+
+private:
 
     QString mName;
     QList<qreal> mValues;

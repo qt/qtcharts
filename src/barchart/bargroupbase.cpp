@@ -80,7 +80,7 @@ void BarGroupBase::dataChanged()
     }
 
     // TODO: labels from series. This creates just some example labels
-    int count = mModel.countColumns();    // mSeries.countColumns();
+    int count = mModel.countCategories();    // mSeries.countColumns();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
 //        QString text("Label " + QString::number(i));
@@ -88,7 +88,7 @@ void BarGroupBase::dataChanged()
         childItems().append(label);
     }
 
-    count = mModel.countColumns() - 1;    // mSeries.countColumns() - 1; // There is one less separator than columns
+    count = mModel.countCategories() - 1;    // mSeries.countColumns() - 1; // There is one less separator than columns
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme

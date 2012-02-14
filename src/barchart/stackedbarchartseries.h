@@ -18,6 +18,9 @@ public:
     // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeStackedBar; }
 
+    void addBarSet(QBarSet &set);
+    void removeBarSet(QBarSet &set);
+
 public Q_SLOTS:
 
 private:

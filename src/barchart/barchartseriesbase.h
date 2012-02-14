@@ -25,15 +25,12 @@ public:
     // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeInvalid; }
 
-    // TODO: These 3 will be removed.
-    int addData(QList<qreal> data);
-    void removeData(int id);
-    void setLabels(QList<QString> labels);
+protected:
+    // Used by derived series
+    void addBarSet(QBarSet &set);
+    void removeBarSet(QBarSet &set);
 
-    // TODO: Expose these to user in derived class instead of here? Common implementation for all bar charts, but not visible to user
-    void addBarSet(QBarSet &set);        // Bob[1,5,6,2,15,4] first value goes to category 1 etc..
-    void removeBarSet(QBarSet &set);     //
-
+public:
     // These shouldn't be visible to chart series user. However, ChartDataSet needs to access them, and friends are evil.
     qreal min();
     qreal max();

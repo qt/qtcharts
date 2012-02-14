@@ -19,6 +19,11 @@ public:
     // from BarChartSeriesBase
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }
 
+    void addBarSet(QBarSet &set);
+    void removeBarSet(QBarSet &set);
+
+public Q_SLOTS:
+
 private:
 
     BarGroup* mBarGroup;

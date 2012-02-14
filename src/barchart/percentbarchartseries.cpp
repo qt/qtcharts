@@ -11,6 +11,16 @@ PercentBarChartSeries::PercentBarChartSeries(QBarCategory &category, QObject *pa
 {
 }
 
+void PercentBarChartSeries::addBarSet(QBarSet &set)
+{
+    BarChartSeriesBase::addBarSet(set);
+}
+
+void PercentBarChartSeries::removeBarSet(QBarSet &set)
+{
+    BarChartSeriesBase::removeBarSet(set);
+}
+
 #include "moc_percentbarchartseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

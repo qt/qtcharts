@@ -16,12 +16,12 @@ void StackedBarGroup::layoutChanged()
 //    qDebug() << "StackedBarGroup::layoutChanged";
     // Scale bars to new layout
     // Layout for bars:
-    if (mModel.countRows() <= 0) {
+    if (mModel.countSets() <= 0) {
         // Nothing to do.
         return;
     }
 
-    if (mModel.countColumns() == 0) {
+    if (mModel.countCategories() == 0) {
         // Nothing to do
         return;
     }
@@ -34,20 +34,20 @@ void StackedBarGroup::layoutChanged()
     // TODO: better way to auto-layout
     // Use reals for accurancy (we might get some compiler warnings... :)
     // TODO: use temp variable for column count...
-    qreal maxSum = mModel.maxColumnSum();
+    qreal maxSum = mModel.maxCategorySum();
     qreal h = mHeight;
     qreal scale = (h / maxSum);
 
     int itemIndex(0);
     qreal tW = mWidth;
-    qreal tC = mModel.countColumns() + 1;
+    qreal tC = mModel.countCategories() + 1;
     qreal xStep = (tW/tC);
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
-    int labelIndex = mModel.countRows() * mModel.countColumns();
+    int labelIndex = mModel.countSets() * mModel.countCategories();
 
-    for (int column = 0; column < mModel.countColumns(); column++) {
+    for (int column = 0; column < mModel.countCategories(); column++) {
         qreal yPos = h;
-        for (int row=0; row < mModel.countRows(); row++) {
+        for (int row=0; row < mModel.countSets(); row++) {
             qreal barHeight = mModel.valueAt(row, column) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
@@ -69,7 +69,7 @@ void StackedBarGroup::layoutChanged()
     // Position separators
     int separatorIndex = labelIndex;    // Separators are after labels in childItems(). TODO: better way to store these?
     xPos = xStep + xStep/2;             // Initial position is between first and second group. ie one and half steps from left.
-    for (int s=0; s < mModel.countColumns() - 1; s++) {
+    for (int s=0; s < mModel.countCategories() - 1; s++) {
         Separator* sep = reinterpret_cast<Separator*> (childItems().at(separatorIndex));
         sep->setPos(xPos,0);
         sep->setSize(QSizeF(1,mHeight));

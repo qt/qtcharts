@@ -16,7 +16,7 @@ void PercentBarGroup::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
-    if (mModel.countRows() <= 0) {
+    if (mModel.countSets() <= 0) {
         // Nothing to do.
         return;
     }
@@ -28,20 +28,20 @@ void PercentBarGroup::layoutChanged()
 
     // TODO: better way to auto-layout
     // Use reals for accurancy (we might get some compiler warnings... :)
-    int count = mModel.countColumns();
+    int count = mModel.countCategories();
     int itemIndex(0);
     qreal tW = mWidth;
     qreal tC = count+1;
     qreal xStep = (tW/tC);
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
-    int labelIndex = mModel.countColumns() * mModel.countRows();
+    int labelIndex = mModel.countCategories() * mModel.countSets();
 
-    for (int column = 0; column < mModel.countColumns(); column++) {
-        qreal colSum = mModel.columnSum(column);
+    for (int column = 0; column < mModel.countCategories(); column++) {
+        qreal colSum = mModel.categorySum(column);
         qreal h = mHeight;
         qreal scale = (h / colSum);
         qreal yPos = h;
-        for (int row=0; row < mModel.countRows(); row++) {
+        for (int row=0; row < mModel.countSets(); row++) {
             qreal barHeight = mModel.valueAt(row, column) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
@@ -63,7 +63,7 @@ void PercentBarGroup::layoutChanged()
     // Position separators
     int separatorIndex = labelIndex;    // Separators are after labels in childItems(). TODO: better way to store these?
     xPos = xStep + xStep/2;             // Initial position is between first and second group. ie one and half steps from left.
-    for (int s=0; s < mModel.countColumns() - 1; s++) {
+    for (int s=0; s < mModel.countCategories() - 1; s++) {
         Separator* sep = reinterpret_cast<Separator*> (childItems().at(separatorIndex));
         sep->setPos(xPos,0);
         sep->setSize(QSizeF(1,mHeight));

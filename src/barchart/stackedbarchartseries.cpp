@@ -9,6 +9,16 @@ StackedBarChartSeries::StackedBarChartSeries(QBarCategory &category, QObject *pa
 {
 }
 
+void StackedBarChartSeries::addBarSet(QBarSet &set)
+{
+    BarChartSeriesBase::addBarSet(set);
+}
+
+void StackedBarChartSeries::removeBarSet(QBarSet &set)
+{
+    BarChartSeriesBase::removeBarSet(set);
+}
+
 #include "moc_stackedbarchartseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

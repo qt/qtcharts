@@ -16,7 +16,7 @@ void BarGroup::layoutChanged()
 //    qDebug() << "BarGroup::layoutChanged";
     // Scale bars to new layout
     // Layout for bars:
-    if (mModel.countRows() <= 0) {
+    if (mModel.countSets() <= 0) {
         return;
     }
 
@@ -27,8 +27,8 @@ void BarGroup::layoutChanged()
 
     // TODO: better way to auto-layout?
     // Use reals for accurancy (we might get some compiler warnings... :)
-    int itemCount = mModel.countColumns();
-    int seriesCount = mModel.countRows();
+    int itemCount = mModel.countCategories();
+    int seriesCount = mModel.countSets();
 
     qreal tW = mWidth;
     qreal tH = mHeight;

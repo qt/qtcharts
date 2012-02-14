@@ -18,6 +18,9 @@ public:
     // from BarChartSeriesBase
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypePercentBar; }
 
+    void addBarSet(QBarSet &set);
+    void removeBarSet(QBarSet &set);
+
 public Q_SLOTS:
 
 private:

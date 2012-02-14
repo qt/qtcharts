@@ -17,25 +17,21 @@ class BarChartModel : public QObject //, public QAbstractItemModel
     Q_OBJECT
 public:
     explicit BarChartModel(QBarCategory &category, QObject *parent = 0);
-    ~BarChartModel();
 
-    // TODO: remove these after add and remove QBarSet works.
-    int addData(QList<qreal> data);
-    void removeData(int id);
-
+    QBarCategory& category();
     void addBarSet(QBarSet &set);
     void removeBarSet(QBarSet &set);
 
-    int countRows();            // Number of series in model
-    int countColumns();         // Maximum number of items in series
-    int countTotalItems();      // Total items in all series. Includes empty items.
+    int countSets();            // Number of sets in model
+    int countCategories();      // Number of categories
+    int countTotalItems();      // Total items in all sets. Includes empty items.
 
-    qreal max();  // Maximum value of all series
-    qreal min();  // Minimum value of all series
-    qreal valueAt(int series, int item);
+    qreal max();                // Maximum value of all sets
+    qreal min();                // Minimum value of all sets
+    qreal valueAt(int set, int category);
 
-    qreal columnSum(int column);
-    qreal maxColumnSum();   // returns maximum sum of items in all columns.
+    qreal categorySum(int column);
+    qreal maxCategorySum();     // returns maximum sum of sets in all categories.
 
 signals:
     void modelUpdated();
@@ -44,22 +40,7 @@ public slots:
     
 private:
 
-    // Little helper class.
-    class DataContainer {
-        public:
-            DataContainer(QList<qreal> data, int id) : mId(id), mData(data) {}
-            int countColumns() { return mData.count(); }
-            qreal valueAt(int item) { return mData.at(item); }
-
-            int mId; // TODO: Is this needed?
-        private:
-            QList<qreal> mData;
-    };
-
-    // Owned. N series. each has a list of values.
-    QList<DataContainer*> mDataModel;
-    int mRunningId;
-    int mMaxColumns;    // longest series in datamodel
+    QList<QBarSet*> mDataModel;
     QBarCategory& mCategory;
 
 };

@@ -9,67 +9,37 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarChartModel::BarChartModel(QBarCategory &category, QObject *parent) :
     QObject(parent)
-    ,mRunningId(1)
     ,mCategory(category)
 {
 }
 
-BarChartModel::~BarChartModel()
+QBarCategory& BarChartModel::category()
 {
-//    qDebug() << "BarChartModel::~BarChartModel";
-    foreach (DataContainer* c, mDataModel) {
-        delete c;
-    }
-}
-
-int BarChartModel::addData(QList<qreal> data)
-{
-//    qDebug() << "BarChartModel::addData" << data.count();
-    DataContainer* c = new DataContainer(data,mRunningId);
-    mDataModel.append(c);
-    mRunningId++;
-    emit modelUpdated();
-    return mRunningId-1;
-}
-
-void BarChartModel::removeData(int id)
-{
-//    qDebug() << "BarChartModel::removeData";
-    foreach(DataContainer* c, mDataModel) {
-        if (c->mId == id) {
-            mDataModel.removeOne(c);
-            delete c;
-        }
-    }
-    emit modelUpdated();
+    return mCategory;
 }
 
 void BarChartModel::addBarSet(QBarSet &set)
 {
-    DataContainer* c = new DataContainer(set.mValues,mRunningId);
-    mDataModel.append(c);
-    mRunningId++;
+    mDataModel.append(&set);
 }
 
 void BarChartModel::removeBarSet(QBarSet &set)
 {
-    // TODO:
+    mDataModel.removeOne(&set);
 }
 
 
-int BarChartModel::countRows()
+int BarChartModel::countSets()
 {
-//    qDebug() << "BarChartModel::countRows";
     return mDataModel.count();
 }
 
-int BarChartModel::countColumns()
+int BarChartModel::countCategories()
 {
-//    qDebug() << "BarChartModel::countColumns";
     int count(0);
     for (int i=0; i<mDataModel.count(); i++){
         // TODO: can we assume that all series have same number of values? If not. then which values are empty?
-        int temp = mDataModel.at(i)->countColumns();
+        int temp = mDataModel.at(i)->count();
         if (temp > count) {
             count = temp;
         }
@@ -79,21 +49,19 @@ int BarChartModel::countColumns()
 
 int BarChartModel::countTotalItems()
 {
-//    qDebug() << "BarChartModel::countTotalItems";
-    int total = mDataModel.count() * countColumns();
+    int total = mDataModel.count() * countCategories();
     return total;
 }
 
 qreal BarChartModel::min()
 {
- //   qDebug() << "BarChartModel::min";
     Q_ASSERT(mDataModel.count() > 0);
     // TODO: make min and max members and update them when data changes.
     // This is slower since they are checked every time, even if data is same since previous call.
     qreal min = INT_MAX;
 
     for (int i=0; i <mDataModel.count(); i++) {
-        int itemCount = mDataModel.at(i)->countColumns();
+        int itemCount = mDataModel.at(i)->count();
         for (int j=0; j<itemCount; j++) {
             qreal temp = mDataModel.at(i)->valueAt(j);
             if (temp < min) {
@@ -106,7 +74,6 @@ qreal BarChartModel::min()
 
 qreal BarChartModel::max()
 {
-//    qDebug() << "BarChartModel::max";
     Q_ASSERT(mDataModel.count() > 0);
 
     // TODO: make min and max members and update them when data changes.
@@ -114,7 +81,7 @@ qreal BarChartModel::max()
     qreal max = INT_MIN;
 
     for (int i=0; i <mDataModel.count(); i++) {
-        int itemCount = mDataModel.at(i)->countColumns();
+        int itemCount = mDataModel.at(i)->count();
         for (int j=0; j<itemCount; j++) {
             qreal temp = mDataModel.at(i)->valueAt(j);
             if (temp > max) {
@@ -126,43 +93,39 @@ qreal BarChartModel::max()
     return max;
 }
 
-qreal BarChartModel::valueAt(int series, int item)
+qreal BarChartModel::valueAt(int set, int category)
 {
-//    qDebug() << "BarChartModel::valueAt" << series << item;
-    if ((series < 0) || (series >= mDataModel.count())) {
-        // No series, no value.
+    if ((set < 0) || (set >= mDataModel.count())) {
+        // No set, no value.
         return 0;
-    } else if ((item < 0) || (item >= mDataModel.at(series)->countColumns())) {
-        // No item, no value.
+    } else if ((category < 0) || (category >= mDataModel.at(set)->count())) {
+        // No category, no value.
         return 0;
     }
 
-//    qDebug() << "ValueAt" << series << item << "=" << mDataModel.at(series)->valueAt(item);
-    return mDataModel.at(series)->valueAt(item);
+    return mDataModel.at(set)->valueAt(category);
 }
 
-qreal BarChartModel::columnSum(int column)
+qreal BarChartModel::categorySum(int column)
 {
-//    qDebug() << "BarChartModel::columnSum";
-    int sum(0);
+    qreal sum(0);
     int count = mDataModel.count(); // Count rows
 
     for (int row = 0; row < count; row++) {
-        if (column < mDataModel.at(row)->countColumns()) {
+        if (column < mDataModel.at(row)->count()) {
             sum += mDataModel.at(row)->valueAt(column);
         }
     }
     return sum;
 }
 
-qreal BarChartModel::maxColumnSum()
+qreal BarChartModel::maxCategorySum()
 {
-//    qDebug() << "BarChartModel::maxColumnSum";
-    int max = INT_MIN;
-    int count = countColumns();
+    qreal max = INT_MIN;
+    int count = countCategories();
 
     for (int col=0; col<count; col++) {
-        int sum = columnSum(col);
+        qreal sum = categorySum(col);
         if (sum > max) {
             max = sum;
         }

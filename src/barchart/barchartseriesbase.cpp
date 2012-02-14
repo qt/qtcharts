@@ -4,6 +4,7 @@
 #include "bargroup.h"
 #include "barchartmodel_p.h"
 #include "qbarset.h"
+#include "qbarcategory.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -11,21 +12,7 @@ BarChartSeriesBase::BarChartSeriesBase(QBarCategory &category, QObject *parent)
     : QChartSeries(parent)
     ,mModel(new BarChartModel(category, this))
 {
-}
-
-int BarChartSeriesBase::addData(QList<qreal> data)
-{
-    return mModel->addData(data);
-}
-
-void BarChartSeriesBase::removeData(int id)
-{
-    mModel->removeData(id);
-}
-
-void BarChartSeriesBase::setLabels(QList<QString> labels)
-{
-    mLabels = labels;
+    mLabels.append(category.items());
 }
 
 void BarChartSeriesBase::addBarSet(QBarSet &set)
@@ -50,7 +37,7 @@ qreal BarChartSeriesBase::max()
 
 int BarChartSeriesBase::countColumns()
 {
-    return mModel->countColumns();
+    return mModel->countCategories();
 }
 
 qreal BarChartSeriesBase::valueAt(int series, int item)
@@ -62,7 +49,7 @@ qreal BarChartSeriesBase::valueAt(int series, int item)
 qreal BarChartSeriesBase::maxColumnSum()
 {
 //    qDebug() << "BarChartSeriesBase::maxColumnSum" << mModel->maxColumnSum();
-    return mModel->maxColumnSum();
+    return mModel->maxCategorySum();
 }
 
 BarChartModel& BarChartSeriesBase::model()
