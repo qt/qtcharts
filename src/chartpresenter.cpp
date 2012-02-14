@@ -76,6 +76,7 @@ void ChartPresenter::setMargin(int margin)
 
 void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 {
+    qDebug() << " ChartPresenter::handleSeriesAdded";
     switch(series->type())
     {
         case QChartSeries::SeriesTypeLine: {

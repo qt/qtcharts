@@ -14,9 +14,11 @@ PercentBarGroup::PercentBarGroup(BarChartModel& model, QGraphicsItem *parent) :
 
 void PercentBarGroup::layoutChanged()
 {
+//    qDebug() << "PercentBarGroup::layoutChanged";
     // Scale bars to new layout
     // Layout for bars:
     if (mModel.countSets() <= 0) {
+        qDebug() << "No sets in model!";
         // Nothing to do.
         return;
     }

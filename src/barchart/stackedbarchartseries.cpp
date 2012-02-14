@@ -7,18 +7,18 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-StackedBarChartSeries::StackedBarChartSeries(QBarCategory &category, QObject *parent)
+StackedBarChartSeries::StackedBarChartSeries(QBarCategory *category, QObject *parent)
     : QChartSeries(parent)
     ,mModel(new BarChartModel(category, this))
 {
 }
 
-void StackedBarChartSeries::addBarSet(QBarSet &set)
+void StackedBarChartSeries::addBarSet(QBarSet *set)
 {
     mModel->addBarSet(set);
 }
 
-void StackedBarChartSeries::removeBarSet(QBarSet &set)
+void StackedBarChartSeries::removeBarSet(QBarSet *set)
 {
     mModel->removeBarSet(set);
 }

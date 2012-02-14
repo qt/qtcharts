@@ -5,8 +5,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_EXPORT QBarSet // : pubclic QObject // TODO: Need for this?
+class QTCOMMERCIALCHART_EXPORT QBarSet // TODO? : public QObject
 {
+    //Q_OBJECT;
 public:
     QBarSet();
 

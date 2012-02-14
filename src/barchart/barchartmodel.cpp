@@ -7,27 +7,35 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartModel::BarChartModel(QBarCategory &category, QObject *parent) :
+BarChartModel::BarChartModel(QBarCategory *category, QObject *parent) :
     QObject(parent)
     ,mCategory(category)
 {
 }
 
+BarChartModel::~BarChartModel()
+{
+    delete mCategory;
+}
+
+
 QBarCategory& BarChartModel::category()
 {
-    return mCategory;
+    return *mCategory;
 }
 
-void BarChartModel::addBarSet(QBarSet &set)
+void BarChartModel::addBarSet(QBarSet *set)
 {
-    mDataModel.append(&set);
+    mDataModel.append(set);
 }
 
-void BarChartModel::removeBarSet(QBarSet &set)
+void BarChartModel::removeBarSet(QBarSet *set)
 {
-    mDataModel.removeOne(&set);
+    if (mDataModel.contains(set)) {
+        mDataModel.removeOne(set);
+        delete set;
+    }
 }
-
 
 int BarChartModel::countSets()
 {
@@ -135,7 +143,7 @@ qreal BarChartModel::maxCategorySum()
 
 QString BarChartModel::label(int category)
 {
-    return mCategory.label(category);
+    return mCategory->label(category);
 }
 
 #include "moc_barchartmodel_p.cpp"

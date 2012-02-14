@@ -7,18 +7,18 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartSeries::BarChartSeries(QBarCategory &category, QObject *parent)
+BarChartSeries::BarChartSeries(QBarCategory *category, QObject *parent)
     : QChartSeries(parent)
     ,mModel(new BarChartModel(category, this))
 {
 }
 
-void BarChartSeries::addBarSet(QBarSet &set)
+void BarChartSeries::addBarSet(QBarSet *set)
 {
     mModel->addBarSet(set);
 }
 
-void BarChartSeries::removeBarSet(QBarSet &set)
+void BarChartSeries::removeBarSet(QBarSet *set)
 {
     mModel->removeBarSet(set);
 }

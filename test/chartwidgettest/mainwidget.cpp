@@ -180,11 +180,11 @@ void MainWidget::addSeries(QString series, QString data)
     QList<qreal> x;
     QList<qreal> y;
 
-    QBarSet set0;
-    QBarSet set1;
-    QBarSet set2;
-    QBarSet set3;
-    QBarSet set4;
+    QBarSet *set0 = new QBarSet;
+    QBarSet *set1 = new QBarSet;
+    QBarSet *set2 = new QBarSet;
+    QBarSet *set3 = new QBarSet;
+    QBarSet *set4 = new QBarSet;
 
     if (data == "linear") {
         for (int i = 0; i < 20; i++) {
@@ -213,11 +213,11 @@ void MainWidget::addSeries(QString series, QString data)
         }
     } else if (data == "Table, 5 series"){
          // Create some test data to chart
-        set0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10 << 11 << 12;
-        set1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0 << 4 << 2;
-        set2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1 << 3 << 5;
-        set3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5 << 2 << 7;
-        set4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10 << 1 << 6;
+        *set0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10 << 11 << 12;
+        *set1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0 << 4 << 2;
+        *set2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1 << 3 << 5;
+        *set3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5 << 2 << 7;
+        *set4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10 << 1 << 6;
     } else {
         // TODO: check if data has a valid file name
         Q_ASSERT(false);
@@ -248,8 +248,8 @@ void MainWidget::addSeries(QString series, QString data)
     } else if (series == "Bar") {
         qDebug() << "Bar chart series";
 
-        QBarCategory category;
-        category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+        QBarCategory *category = new QBarCategory;
+        *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
         BarChartSeries* series0 = new BarChartSeries(category, this);
 
@@ -264,8 +264,8 @@ void MainWidget::addSeries(QString series, QString data)
     } else if (series == "StackedBar") {
         qDebug() << "Stacked bar chart series";
 
-        QBarCategory category;
-        category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+        QBarCategory *category = new QBarCategory;
+        *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
         StackedBarChartSeries* series0 = new StackedBarChartSeries(category, this);
 
@@ -280,8 +280,8 @@ void MainWidget::addSeries(QString series, QString data)
     } else if (series == "PercentBar") {
         qDebug() << "Percent bar chart series";
 
-        QBarCategory category;
-        category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+        QBarCategory *category = new QBarCategory;
+        *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
         PercentBarChartSeries* series0 = new PercentBarChartSeries(category, this);
 

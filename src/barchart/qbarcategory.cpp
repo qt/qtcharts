@@ -22,5 +22,6 @@ QString QBarCategory::label(int category)
     return mList.at(category);
 }
 
-
+// TODO?:
+//#include "moc_qbarcategory.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

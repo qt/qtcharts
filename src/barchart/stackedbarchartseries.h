@@ -16,14 +16,19 @@ class QTCOMMERCIALCHART_EXPORT StackedBarChartSeries : public QChartSeries
 {
     Q_OBJECT
 public:
-    StackedBarChartSeries(QBarCategory &category, QObject* parent=0);
+    StackedBarChartSeries(QBarCategory *category, QObject* parent=0);
 
     // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeStackedBar; }
 
-    void addBarSet(QBarSet &set);
-    void removeBarSet(QBarSet &set);
+    void addBarSet(QBarSet *set);       // Takes ownership
+    void removeBarSet(QBarSet *set);    // Also deletes the set, if set is owned.
 
+    //TODO:
+    //QList<QString> legend();  // Returns legend of series (ie. names of all sets in series)
+
+    // TODO: Functions below this are not part of api and will be moved
+    // to private implementation, when we start using it (not part of api)
     int countCategories();
     qreal min();
     qreal max();

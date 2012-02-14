@@ -16,11 +16,12 @@ class BarChartModel : public QObject //, public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit BarChartModel(QBarCategory &category, QObject *parent = 0);
+    explicit BarChartModel(QBarCategory *category, QObject *parent = 0);
+    ~BarChartModel();
 
     QBarCategory& category();
-    void addBarSet(QBarSet &set);
-    void removeBarSet(QBarSet &set);
+    void addBarSet(QBarSet *set);
+    void removeBarSet(QBarSet *set);
 
     int countSets();            // Number of sets in model
     int countCategories();      // Number of categories
@@ -43,7 +44,7 @@ public slots:
 private:
 
     QList<QBarSet*> mDataModel;
-    QBarCategory& mCategory;
+    QBarCategory* mCategory;    // Owned
 
 };
 

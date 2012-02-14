@@ -52,7 +52,7 @@ void ChartDataSet::addSeries(QChartSeries* series)
             break;
         }
         case QChartSeries::SeriesTypeBar: {
-
+        qDebug() << "QChartSeries::SeriesTypeBar";
             BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
             qreal x = barSeries->countCategories();
             qreal y = barSeries->max();
@@ -63,6 +63,7 @@ void ChartDataSet::addSeries(QChartSeries* series)
             break;
         }
         case QChartSeries::SeriesTypeStackedBar: {
+        qDebug() << "QChartSeries::SeriesTypeStackedBar";
 
             StackedBarChartSeries* stackedBarSeries = static_cast<StackedBarChartSeries*>(series);
             qreal x = stackedBarSeries->countCategories();
@@ -74,6 +75,7 @@ void ChartDataSet::addSeries(QChartSeries* series)
             break;
         }
         case QChartSeries::SeriesTypePercentBar: {
+        qDebug() << "QChartSeries::SeriesTypePercentBar";
 
             PercentBarChartSeries* percentBarSeries = static_cast<PercentBarChartSeries*>(series);
             qreal x = percentBarSeries->countCategories();

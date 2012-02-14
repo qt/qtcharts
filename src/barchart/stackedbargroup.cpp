@@ -17,11 +17,13 @@ void StackedBarGroup::layoutChanged()
     // Scale bars to new layout
     // Layout for bars:
     if (mModel.countSets() <= 0) {
+        qDebug() << "No sets in model!";
         // Nothing to do.
         return;
     }
 
     if (mModel.countCategories() == 0) {
+        qDebug() << "No categories in model!";
         // Nothing to do
         return;
     }
@@ -64,7 +66,6 @@ void StackedBarGroup::layoutChanged()
         labelIndex++;
         xPos += xStep;
     }
-
 
     // Position separators
     int separatorIndex = labelIndex;    // Separators are after labels in childItems(). TODO: better way to store these?

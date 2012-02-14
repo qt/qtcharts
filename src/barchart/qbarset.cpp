@@ -31,5 +31,6 @@ qreal QBarSet::valueAt(int index)
     return mValues.at(index);
 }
 
-
+//TODO?:
+//#include "moc_qbarset.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

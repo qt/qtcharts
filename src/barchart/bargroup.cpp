@@ -8,7 +8,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 BarGroup::BarGroup(BarChartModel& model, QGraphicsItem *parent) :
     BarGroupBase(model,parent)
 {
-    mBarDefaultWidth = 10;
+    mBarDefaultWidth = 5;
 }
 
 void BarGroup::layoutChanged()
@@ -17,6 +17,7 @@ void BarGroup::layoutChanged()
     // Scale bars to new layout
     // Layout for bars:
     if (mModel.countSets() <= 0) {
+        qDebug() << "No sets in model!";
         return;
     }
 

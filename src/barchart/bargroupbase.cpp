@@ -13,7 +13,6 @@ BarGroupBase::BarGroupBase(BarChartModel& model, QGraphicsItem *parent)
     ,mLayoutDirty(true)
     ,mSeparatorsVisible(true)
     ,mModel(model)
-//    ,mSeries(series)
 {
     dataChanged();
 }
@@ -72,20 +71,20 @@ void BarGroupBase::dataChanged()
     }
 
     // Create new graphic items for bars
-    int totalItems = mModel.countTotalItems();  // mSeries.countTotalItems();
+    int totalItems = mModel.countTotalItems();
     for (int i=0; i<totalItems; i++) {
         Bar *bar = new Bar(this);
         childItems().append(bar);
     }
 
-    int count = mModel.countCategories();    // mSeries.countColumns();
+    int count = mModel.countCategories();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
         label->set(mModel.label(i));
         childItems().append(label);
     }
 
-    count = mModel.countCategories() - 1;    // mSeries.countColumns() - 1; // There is one less separator than columns
+    count = mModel.countCategories() - 1;   // There is one less separator than columns
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
@@ -100,14 +99,13 @@ void BarGroupBase::dataChanged()
 
 void BarGroupBase::handleModelChanged(int index)
 {
-    qDebug() << "BarGroupBase::handleModelChanged" << index;
+//    qDebug() << "BarGroupBase::handleModelChanged" << index;
     dataChanged();
 }
 
 void BarGroupBase::handleDomainChanged(const Domain& domain)
 {
 //    qDebug() << "BarGroupBase::handleDomainChanged";
-
     // TODO: Figure out the use case for this.
     // Affects the size of visible item, so layout is changed.
 //    layoutChanged();
@@ -115,7 +113,6 @@ void BarGroupBase::handleDomainChanged(const Domain& domain)
 
 void BarGroupBase::handleGeometryChanged(const QRectF& rect)
 {
-//    qDebug() << "BarGroupBase::handleGeometryChanged";
     mWidth = rect.width();
     mHeight = rect.height();
     layoutChanged();

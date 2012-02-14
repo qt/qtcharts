@@ -9,18 +9,18 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PercentBarChartSeries::PercentBarChartSeries(QBarCategory &category, QObject *parent)
+PercentBarChartSeries::PercentBarChartSeries(QBarCategory *category, QObject *parent)
     : QChartSeries(parent)
     ,mModel(new BarChartModel(category, this))
 {
 }
 
-void PercentBarChartSeries::addBarSet(QBarSet &set)
+void PercentBarChartSeries::addBarSet(QBarSet *set)
 {
     mModel->addBarSet(set);
 }
 
-void PercentBarChartSeries::removeBarSet(QBarSet &set)
+void PercentBarChartSeries::removeBarSet(QBarSet *set)
 {
     mModel->removeBarSet(set);
 }

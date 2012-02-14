@@ -16,14 +16,19 @@ class QTCOMMERCIALCHART_EXPORT PercentBarChartSeries : public QChartSeries
 {
     Q_OBJECT
 public:
-    PercentBarChartSeries(QBarCategory &category, QObject* parent=0);
+    PercentBarChartSeries(QBarCategory *category, QObject* parent=0);
 
     // from BarChartSeriesBase
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypePercentBar; }
 
-    void addBarSet(QBarSet &set);
-    void removeBarSet(QBarSet &set);
+    void addBarSet(QBarSet *set);       // Takes ownership
+    void removeBarSet(QBarSet *set);    // Also deletes the set, if set is owned.
 
+    //TODO:
+    //QList<QString> legend();  // Returns legend of series (ie. names of all sets in series)
+
+    // TODO: Functions below this are not part of api and will be moved
+    // to private implementation, when we start using it (not part of api)
     int countCategories();
     qreal min();
     qreal max();
