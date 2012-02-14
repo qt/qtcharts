@@ -32,16 +32,11 @@ public:
     // Pure virtual
     virtual QChartSeriesType type() const = 0;
 
-    virtual bool setData(QList<int> /*data*/) { return false; }
     virtual bool setData(QList<qreal> /*data*/) { return false; }
     virtual bool setData(QList<qreal> /*x*/, QList<qreal> /*y*/){ return false; }
 
     // Prototype for data model. TODO: remove the other setData methods and use something like this for now?
-    virtual bool setData(QAbstractItemModel* /*model*/) { return false; }
-
-    // Methods for building a table for bar chart. Call repeatedly to add more than one series
-    virtual int addData(QList<qreal> data) {return -1;}
-    virtual void removeData(int id) {}
+    virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

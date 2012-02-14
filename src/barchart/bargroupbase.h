@@ -15,8 +15,7 @@ public:
     BarGroupBase(BarChartModel& model, QGraphicsItem *parent = 0);
     void setSeparatorsVisible(bool visible = true);
 
-public: // From ChartItem
-//    void setSize(const QSizeF &size){};
+public:
 
     // From QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -39,9 +38,6 @@ protected slots:
 protected:
 
     // TODO: consider these.
-    //int mMin;           // Min and max values of data. (updated when data is changed, used when drawing)
-    //int mMax;
-
     int mHeight;        // Layout spesific
     int mWidth;
     int mBarDefaultWidth;
