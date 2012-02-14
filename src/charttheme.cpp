@@ -198,14 +198,12 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
     }
 
     // finally update colors
-    QList<QPieSlice> slices;
-    for (int i=0; i<series->count(); i++) {
-        QPieSlice slice = series->slice(i);
-        slice.m_color = colors.at(i);
-        slices << slice;
+    foreach (QPieSliceId id, series->ids()) {
+        QPieSlice s = series->slice(id);
+        s.setPen(QPen(Qt::black)); // TODO: get from theme
+        s.setBrush(colors.takeFirst());
+        series->update(s);
     }
-
-    series->set(slices);
 }
 
 

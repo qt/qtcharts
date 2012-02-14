@@ -17,11 +17,11 @@ int main(int argc, char *argv[])
     Q_ASSERT(series);
 
     // Add test data to the series
-    series->add(QPieSlice(1, "test1", Qt::red, true));
-    series->add(QPieSlice(2, "test2", Qt::green));
-    series->add(QPieSlice(3, "test3", Qt::blue));
-    series->add(QPieSlice(4, "test4", Qt::darkRed, true));
-    series->add(QPieSlice(5, "test5", Qt::darkGreen));
+    series->add(QPieSlice(1, "test1", true, true, QPen(Qt::red, 2), QBrush(Qt::red)));
+    series->add(QPieSlice(2, "test2"));
+    series->add(QPieSlice(3, "test3"));
+    series->add(QPieSlice(4, "test4"));
+    series->add(QPieSlice(5, "test5"));
 
     // Use the chart widget as the central widget
     QMainWindow w;

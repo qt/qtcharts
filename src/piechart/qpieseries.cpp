@@ -8,7 +8,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QPieSeries::QPieSeries(QObject *parent) :
     QChartSeries(parent),
     m_sizeFactor(1.0),
-    m_position(PiePositionMaximized)
+    m_position(PiePositionMaximized),
+    m_sliceIdSeed(0)
 {
 }
 
@@ -19,70 +20,93 @@ QPieSeries::~QPieSeries()
 
 bool QPieSeries::setData(QList<qreal> data)
 {
+    // TODO: remove this function
     QList<QPieSlice> slices;
     foreach (int value, data)
         slices << QPieSlice(value, QString::number(value));
     return set(slices);
 }
 
-bool QPieSeries::set(QList<QPieSlice> slices)
+bool QPieSeries::set(const QList<QPieSlice>& slices)
 {
     if (!slices.count())
         return false;
 
-    PieChangeSet changeSet;
+    ChangeSet changeSet;
 
-    for (int i=slices.count(); i<m_slices.count(); i++)
-        changeSet.m_removed << i;
+    foreach (QPieSlice s, m_slices.values())
+        changeSet.m_removed << s.id();
 
-    for (int i=0; i<slices.count(); i++) {
-        if (i < m_slices.count())
-            changeSet.m_changed << i;
-        else
-            changeSet.m_added << i;
+    m_slices.clear();
+
+    foreach (QPieSlice s, slices) {
+        s.m_id = generateSliceId();
+        m_slices.insert(s.id(), s);
+        changeSet.m_added << s.id();
     }
 
-    m_slices = slices;
+    updateDerivativeData();
     emit changed(changeSet);
+
     return true;
 }
 
-bool QPieSeries::add(QList<QPieSlice> slices)
+bool QPieSeries::add(const QList<QPieSlice>& slices)
 {
     if (!slices.count())
         return false;
 
-    PieChangeSet changeSet;
-    for (int i=0; i<slices.count(); i++)
-        changeSet.m_added << m_slices.count() + i;
+    ChangeSet changeSet;
+    foreach (QPieSlice s, slices) {
+        s.m_id = generateSliceId();
+        m_slices.insert(s.id(), s);
+        changeSet.m_added << s.id();
+    }
 
-    m_slices += slices;
+    updateDerivativeData();
     emit changed(changeSet);
+
     return true;
 }
 
-bool QPieSeries::add(QPieSlice slice)
+bool QPieSeries::add(const QPieSlice& slice)
 {
     return add(QList<QPieSlice>() << slice);
 }
 
-QPieSlice QPieSeries::slice(int index) const
+bool QPieSeries::update(const QPieSlice& slice)
 {
-    if ((index >= 0) && (index < m_slices.count()))
-        return m_slices.at(index);
-    return QPieSlice();
+    if (!m_slices.contains(slice.id()))
+        return false; // series does not contain this slice
+
+    m_slices[slice.id()] = slice;
+
+    ChangeSet changeSet;
+    changeSet.m_changed << slice.id();
+    updateDerivativeData();
+    emit changed(changeSet);
+
+    return true;
 }
 
-bool QPieSeries::update(int index, QPieSlice slice)
+bool QPieSeries::remove(QPieSliceId id)
 {
-    if ((index >= 0) && (index < m_slices.count())) {
-        m_slices[index] = slice;
-        PieChangeSet changeSet;
-        changeSet.m_changed << index;
-        emit changed(changeSet);
-        return true;
-    }
-    return false;
+    if (!m_slices.contains(id))
+        return false; // series does not contain this slice
+
+    m_slices.remove(id);
+
+    ChangeSet changeSet;
+    changeSet.m_removed << id;
+    updateDerivativeData();
+    emit changed(changeSet);
+
+    return true;
+}
+
+QPieSlice QPieSeries::slice(QPieSliceId id) const
+{
+    return m_slices.value(id);
 }
 
 void QPieSeries::setSizeFactor(qreal factor)
@@ -102,6 +126,25 @@ void QPieSeries::setPosition(PiePosition position)
         m_position = position;
         emit positionChanged();
     }
+}
+
+QPieSliceId QPieSeries::generateSliceId()
+{
+    // Id is quint64 so it should be enough for us.
+    // Note that id is not unique between pie series.
+    return m_sliceIdSeed++;
+}
+
+void QPieSeries::updateDerivativeData()
+{
+    m_total = 0;
+    foreach (const QPieSlice& s, m_slices.values())
+        m_total += s.value();
+
+    Q_ASSERT(m_total > 0); // TODO: remove this before release
+
+    foreach (QPieSliceId id, m_slices.keys())
+        m_slices[id].m_percentage = m_slices.value(id).value() / m_total;
 }
 
 #include "moc_qpieseries.cpp"

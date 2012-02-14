@@ -6,57 +6,50 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PiePresenter::PiePresenter(QGraphicsItem *parent, QPieSeries *series) :
-    ChartItem(parent),
-    m_pieSeries(series)
+PiePresenter::PiePresenter(QGraphicsItem *parent, QPieSeries *series)
+    :ChartItem(parent),
+    m_series(series)
 {
-    Q_ASSERT(parent);
     Q_ASSERT(series);
-
-    m_rect = parentItem()->boundingRect();
-    setAcceptHoverEvents(true);
-    qsrand(QTime::currentTime().msec()); // for random color generation
-
-    connect(series, SIGNAL(changed(const PieChangeSet&)), this, SLOT(handleSeriesChanged(const PieChangeSet&)));
+    connect(series, SIGNAL(changed(const QPieSeries::ChangeSet&)), this, SLOT(handleSeriesChanged(const QPieSeries::ChangeSet&)));
     connect(series, SIGNAL(sizeFactorChanged()), this, SLOT(updateGeometry()));
     connect(series, SIGNAL(positionChanged()), this, SLOT(updateGeometry()));
 }
 
 PiePresenter::~PiePresenter()
 {
-    while (m_slices.count())
-        delete m_slices.takeLast();
+    // slices deleted automatically through QGraphicsItem
 }
 
-void PiePresenter::handleSeriesChanged(const PieChangeSet& /*changeSet*/)
+void PiePresenter::paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *)
 {
-    const qreal fullPie = 360;
-    qreal total = 0;
+    // TODO: paint shadows for all components
+    // - get paths from items & merge & offset and draw with shadow color?
+}
 
-    // calculate total and set random color if there is no color
-    for (int i=0; i<m_pieSeries->count(); i++) {
-        QPieSlice& slice = m_pieSeries->m_slices[i];
-        total += slice.m_value;
-        if  (slice.m_color == QColor::Invalid) {
-            slice.m_color.setRed(qrand() % 255);
-            slice.m_color.setGreen(qrand() % 255);
-            slice.m_color.setBlue(qrand() % 255);
-        }
+void PiePresenter::handleSeriesChanged(const QPieSeries::ChangeSet& changeSet)
+{
+    qDebug() << "PiePresenter::handleSeriesChanged()";
+    qDebug() << "  added  : " << changeSet.m_added;
+    qDebug() << "  changed: " << changeSet.m_changed;
+    qDebug() << "  removed: " << changeSet.m_removed;
+
+    // ignore changeset when there are no visual slices
+    // changeset might not be valid about the added slices
+    if (m_slices.count() == 0) {
+        foreach (QPieSliceId id, m_series->m_slices.keys())
+            addSlice(id);
+        return;
     }
 
-    // TODO: no need to create new slices in case size changed; we should re-use the existing ones
-    while (m_slices.count())
-        delete m_slices.takeLast();
+    foreach (QPieSliceId id, changeSet.m_removed)
+        deleteSlice(id);
 
-    // create slices
-    qreal angle = 0;
-    for (int i=0; i<m_pieSeries->count(); i++) {
-        QPieSlice sliceData = m_pieSeries->slice(i);
-        qreal span = sliceData.m_value / total * fullPie;
-        PieSlice *slice = new PieSlice(this, i, angle, span);
-        m_slices.append(slice);
-        angle += span;
-    }
+    foreach (QPieSliceId id, changeSet.m_changed)
+        updateSlice(id);
+
+    foreach (QPieSliceId id, changeSet.m_added)
+        addSlice(id);
 }
 
 void PiePresenter::updateGeometry()
@@ -66,16 +59,16 @@ void PiePresenter::updateGeometry()
     m_pieRect = m_rect;
 
     if (m_pieRect.width() < m_pieRect.height()) {
-        m_pieRect.setWidth(m_pieRect.width() * m_pieSeries->sizeFactor());
+        m_pieRect.setWidth(m_pieRect.width() * m_series->sizeFactor());
         m_pieRect.setHeight(m_pieRect.width());
         m_pieRect.moveCenter(m_rect.center());
     } else {
-        m_pieRect.setHeight(m_pieRect.height() * m_pieSeries->sizeFactor());
+        m_pieRect.setHeight(m_pieRect.height() * m_series->sizeFactor());
         m_pieRect.setWidth(m_pieRect.height());
         m_pieRect.moveCenter(m_rect.center());
     }
 
-    switch (m_pieSeries->position()) {
+    switch (m_series->position()) {
         case QPieSeries::PiePositionTopLeft: {
             m_pieRect.setHeight(m_pieRect.height() / 2);
             m_pieRect.setWidth(m_pieRect.height());
@@ -104,10 +97,16 @@ void PiePresenter::updateGeometry()
             break;
     }
 
-    qDebug() << "presentation rect:" << m_rect;
-    qDebug() << "pie rect:" << m_pieRect;
-    foreach (PieSlice *slice, m_slices)
-        slice->updateGeometry();
+    // update slice geometry
+    const qreal fullPie = 360;
+    qreal angle = 0;
+    foreach (QPieSliceId id, m_slices.keys()) {
+        qreal span = fullPie * m_series->slice(id).percentage();
+        m_slices[id]->updateGeometry(m_pieRect, angle, span);
+        angle += span;
+    }
+
+    //qDebug() << "PiePresenter::updateGeometry" << m_rect << m_pieRect;
 }
 
 void PiePresenter::handleDomainChanged(const Domain& domain)
@@ -119,7 +118,51 @@ void PiePresenter::handleGeometryChanged(const QRectF& rect)
 {
     m_rect = rect;
     updateGeometry();
+}
 
+void PiePresenter::addSlice(QPieSliceId id)
+{
+    qDebug() << "PiePresenter::addSlice()" << id;
+
+    if (m_slices.contains(id)) {
+        qWarning() << "PiePresenter::addSlice(): slice already exists!" << id;
+        updateSlice(id);
+        return;
+    }
+
+    // create slice
+    PieSlice *slice = new PieSlice(id, m_series, this);
+    m_slices.insert(id, slice);
+
+    updateGeometry();
+}
+
+void PiePresenter::updateSlice(QPieSliceId id)
+{
+    qDebug() << "PiePresenter::updateSlice()" << id;
+
+    // TODO: animation
+    if (m_slices.contains(id))
+        m_slices.value(id)->updateData();
+    else {
+        qWarning() << "PiePresenter::updateSlice(): slice does not exist!" << id;
+        addSlice(id);
+    }
+
+    updateGeometry();
+}
+
+void PiePresenter::deleteSlice(QPieSliceId id)
+{
+    qDebug() << "PiePresenter::deleteSlice()" << id;
+
+    // TODO: animation
+    if (m_slices.contains(id))
+        delete m_slices.take(id);
+    else
+        qWarning() << "PiePresenter::deleteSlice(): slice does not exist!" << id;
+
+    updateGeometry();
 }
 
 #include "moc_piepresenter.cpp"
