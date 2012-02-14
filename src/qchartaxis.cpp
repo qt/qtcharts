@@ -1,13 +1,12 @@
-
 #include "qchartaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QChartAxis::QChartAxis(QObject* parent):QObject(parent),
+QChartAxis::QChartAxis():
 m_axisVisible(true),
-m_girdVisible(true),
+m_gridVisible(true),
 m_labelsVisible(true),
-m_rowShadesVisible(true)
+m_shadesVisible(true)
 {
     // TODO Auto-generated constructor stub
 
@@ -20,12 +19,12 @@ QChartAxis::~QChartAxis()
 
 void QChartAxis::setAxisPen(const QPen& pen)
 {
-    m_axisPen = pen;
+    m_axisPen=pen;
 }
 
 void QChartAxis::setAxisBrush(const QBrush& brush)
 {
-    m_axisBrush = brush;
+    m_axisBrush=brush;
 }
 
 void QChartAxis::setAxisVisible(bool visible)
@@ -35,7 +34,12 @@ void QChartAxis::setAxisVisible(bool visible)
 
 void QChartAxis::setGridVisible(bool visible)
 {
-    m_girdVisible=visible;
+    m_gridVisible=visible;
+}
+
+void QChartAxis::setGridPen(const QPen& pen)
+{
+    m_gridPen=pen;
 }
 
 void QChartAxis::setLabelsVisible(bool visible)
@@ -43,11 +47,40 @@ void QChartAxis::setLabelsVisible(bool visible)
     m_labelsVisible=visible;
 }
 
-void QChartAxis::setRowShadesVisible(bool visible)
+void QChartAxis::setLabelsPen(const QPen& pen)
 {
-    m_rowShadesVisible=visible;
+    m_labelsPen=pen;
 }
 
-#include "moc_qchartaxis.cpp"
+void QChartAxis::setLabelsBrush(const QBrush& brush)
+{
+    m_labelsBrush=brush;
+}
+
+void QChartAxis::setLabelsFont(const QFont& font)
+{
+    m_labelsFont=font;
+}
+
+void QChartAxis::setLabelsOrientation(LabelsOrientation orientation)
+{
+    m_labelsOrientation=orientation;
+}
+
+void QChartAxis::setShadesVisible(bool visible)
+{
+    m_shadesVisible=visible;
+}
+
+void QChartAxis::setShadesPen(const QPen& pen)
+{
+    m_shadesPen=pen;
+}
+
+void QChartAxis::setShadesBrush(const QBrush& brush)
+{
+    m_shadesBrush=brush;
+}
+
 
 QTCOMMERCIALCHART_END_NAMESPACE

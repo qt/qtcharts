@@ -1,5 +1,6 @@
 #include "charttheme_p.h"
 #include "qchart.h"
+#include "qchartaxis.h"
 
 
 //series
@@ -206,5 +207,14 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
     }
 }
 
+
+void ChartTheme::decorate(QChartAxis& axis,AxisItem* item)
+{
+    //TODO: dummy defults for now
+
+    axis.setLabelsBrush(Qt::black);
+    axis.setLabelsPen(Qt::NoPen);
+    item->handleAxisChanged(axis);
+}
 
 QTCOMMERCIALCHART_END_NAMESPACE

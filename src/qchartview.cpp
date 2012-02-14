@@ -1,5 +1,6 @@
 #include "qchartview.h"
 #include "qchart.h"
+#include "qchartaxis.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QRubberBand>
@@ -9,14 +10,14 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChartView::QChartView(QWidget *parent) :
-    QGraphicsView(parent),
-    m_scene(new QGraphicsScene()),
-    m_chart(new QChart()),
-    m_rubberBand(0),
-    m_verticalRubberBand(false),
-    m_horizonalRubberBand(false)
+QGraphicsView(parent),
+m_scene(new QGraphicsScene()),
+m_chart(new QChart()),
+m_rubberBand(0),
+m_verticalRubberBand(false),
+m_horizonalRubberBand(false)
 {
-	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setScene(m_scene);
     m_chart->setMargin(50);
@@ -34,7 +35,6 @@ void QChartView::resizeEvent(QResizeEvent *event)
     m_chart->resize(size());
     QWidget::resizeEvent(event);
 }
-
 
 void QChartView::addSeries(QChartSeries* series)
 {
@@ -74,40 +74,39 @@ void QChartView::setTitle(const QString& title)
 
 void QChartView::setChartBackgroundBrush(const QBrush& brush)
 {
-	 m_chart->setChartBackgroundBrush(brush);
+    m_chart->setChartBackgroundBrush(brush);
 }
 void QChartView::setChartBackgroundPen(const QPen& pen)
 {
-	 m_chart->setChartBackgroundPen(pen);
+    m_chart->setChartBackgroundPen(pen);
 }
-
 
 void QChartView::setRubberBandPolicy(const RubberBandPolicy policy)
 {
-    switch(policy){
+    switch(policy) {
         case VerticalRubberBand:
-            m_verticalRubberBand = true;
-            m_horizonalRubberBand = false;
-            break;
+        m_verticalRubberBand = true;
+        m_horizonalRubberBand = false;
+        break;
         case HorizonalRubberBand:
-            m_verticalRubberBand = false;
-            m_horizonalRubberBand = true;
-            break;
+        m_verticalRubberBand = false;
+        m_horizonalRubberBand = true;
+        break;
         case RectangleRubberBand:
-            m_verticalRubberBand = true;
-            m_horizonalRubberBand = true;
-            break;
+        m_verticalRubberBand = true;
+        m_horizonalRubberBand = true;
+        break;
         case NoRubberBand:
         default:
-            delete m_rubberBand;
-            m_rubberBand=0;
-            m_horizonalRubberBand = false;
-            m_verticalRubberBand = false;
-            return;
+        delete m_rubberBand;
+        m_rubberBand=0;
+        m_horizonalRubberBand = false;
+        m_verticalRubberBand = false;
+        return;
     }
-    if(!m_rubberBand){
-    m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
-    m_rubberBand->setEnabled(true);
+    if(!m_rubberBand) {
+        m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+        m_rubberBand->setEnabled(true);
     }
 }
 
@@ -118,7 +117,6 @@ QChartView::RubberBandPolicy QChartView::rubberBandPolicy() const
     if(m_verticalRubberBand) return VerticalRubberBand;
     return NoRubberBand;
 }
-
 
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
@@ -138,7 +136,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
-    if(m_rubberBand && m_rubberBand->isVisible()){
+    if(m_rubberBand && m_rubberBand->isVisible()) {
         int margin = m_chart->margin();
         QRect rect(margin, margin, width() - 2 * margin, height() - 2 * margin);
         int width = event->pos().x() - m_rubberBandOrigin.x();
@@ -152,24 +150,26 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
             width= rect.width();
         }
         m_rubberBand->setGeometry(QRect(m_rubberBandOrigin.x(),m_rubberBandOrigin.y(), width,height).normalized());
-    } else {
+    }
+    else {
         QGraphicsView::mouseMoveEvent(event);
     }
 }
 
 void QChartView::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(m_rubberBand){
-    if (event->button() == Qt::LeftButton && m_rubberBand->isVisible()) {
-        m_rubberBand->hide();
-        QRect rect = m_rubberBand->geometry();
-        m_chart->zoomInToRect(rect);
-        event->accept();
-    }
+    if(m_rubberBand) {
+        if (event->button() == Qt::LeftButton && m_rubberBand->isVisible()) {
+            m_rubberBand->hide();
+            QRect rect = m_rubberBand->geometry();
+            m_chart->zoomInToRect(rect);
+            event->accept();
+        }
 
-    if(event->button()==Qt::RightButton)
+        if(event->button()==Qt::RightButton)
         m_chart->zoomReset();
-    }else{
+    }
+    else {
         QGraphicsView::mouseReleaseEvent(event);
     }
 }
@@ -177,13 +177,13 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
 void QChartView::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
-    case Qt::Key_Plus:
+        case Qt::Key_Plus:
         zoomIn();
         break;
-    case Qt::Key_Minus:
+        case Qt::Key_Minus:
         zoomOut();
         break;
-    default:
+        default:
         QGraphicsView::keyPressEvent(event);
         break;
     }
@@ -199,29 +199,38 @@ QChart::ChartTheme QChartView::chartTheme() const
     return m_chart->chartTheme();
 }
 
-QChartAxis* QChartView::axisX()
+void QChartView::setDefaultAxisX(const QChartAxis& axis)
 {
-    return m_chart->axisX();
+    m_chart->setDefaultAxisX(axis);
 }
 
-QChartAxis* QChartView::axisY()
+void QChartView::setDefaultAxisY(const QChartAxis& axis)
 {
-    return m_chart->axisY();
+    m_chart->setDefaultAxisY(axis);
 }
 
-QChartAxis* QChartView::addAxisX()
+QChartAxis QChartView::defaultAxisX() const
 {
-    return m_chart->addAxisX();
+    return m_chart->defaultAxisX();
 }
 
-QChartAxis* QChartView::addAxisY()
+QChartAxis QChartView::defaultAxisY() const
 {
-    return m_chart->addAxisY();
+    return m_chart->defaultAxisY();
 }
 
-void QChartView::removeAxis(QChartAxis* axis)
+int QChartView::addAxisY(const QChartAxis& axis)
 {
-    m_chart->removeAxis(axis);
+    return m_chart->addAxisY(axis);
 }
 
+QChartAxis QChartView::axisY(int id) const
+{
+    return m_chart->axisY(id);
+}
+
+void QChartView::removeAxisY(int id)
+{
+    m_chart->removeAxisY(id);
+}
 QTCOMMERCIALCHART_END_NAMESPACE

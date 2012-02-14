@@ -26,15 +26,13 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
 m_chart(chart),
 m_dataset(dataset),
 m_chartTheme(0),
+m_axisXItem(new AxisItem(AxisItem::X_AXIS,m_chart)),
+m_axisYItem(new AxisItem(AxisItem::Y_AXIS,m_chart)),
 m_domainIndex(0),
 m_marginSize(0),
-m_axisX(new QChartAxis(this)),
-m_axisY(new QChartAxis(this)),
 m_rect(QRectF(QPoint(0,0),m_chart->size()))
 {
     setChartTheme(QChart::ChartThemeDefault);
-    m_axisItems[m_axisX] = new AxisItem(m_axisX,AxisItem::X_AXIS,m_chart);
-    m_axisItems[m_axisY] = new AxisItem(m_axisY,AxisItem::Y_AXIS,m_chart);
     createConnections();
 }
 
@@ -46,14 +44,10 @@ void ChartPresenter::createConnections()
 {
     QObject::connect(m_chart,SIGNAL(geometryChanged()),this,SLOT(handleGeometryChanged()));
     QObject::connect(m_dataset,SIGNAL(seriesAdded(QChartSeries*)),this,SLOT(handleSeriesAdded(QChartSeries*)));
-
-    QMapIterator<QChartAxis*,AxisItem*> i(m_axisItems);
-
-    while (i.hasNext()) {
-        i.next();
-        QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),i.value(),SLOT(handleGeometryChanged(const QRectF&)));
-        QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),i.value(),SLOT(handleDomainChanged(const Domain&)));
-    }
+    QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),m_axisXItem,SLOT(handleGeometryChanged(const QRectF&)));
+    QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),m_axisXItem,SLOT(handleDomainChanged(const Domain&)));
+    QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),m_axisYItem,SLOT(handleGeometryChanged(const QRectF&)));
+    QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),m_axisYItem,SLOT(handleDomainChanged(const Domain&)));
 }
 
 void ChartPresenter::handleGeometryChanged()
@@ -206,8 +200,12 @@ void ChartPresenter::setChartTheme(QChart::ChartTheme theme)
         i.next();
         index++;
         m_chartTheme->decorate(i.value(),i.key(),index);
-      }
     }
+
+    m_chartTheme->decorate(m_axisX, m_axisXItem);
+    m_chartTheme->decorate(m_axisY, m_axisYItem);
+
+}
 
 
 QChart::ChartTheme ChartPresenter::chartTheme()
@@ -215,49 +213,57 @@ QChart::ChartTheme ChartPresenter::chartTheme()
     return m_chartTheme->id();
 }
 
-QChartAxis* ChartPresenter::axisX()
+void ChartPresenter::setDefaultAxisX(const QChartAxis& axis)
 {
-   return m_axisX;
+    //if(m_axisX != axis) {
+        m_axisX = axis;
+        m_axisXItem->handleAxisChanged(m_axisX);
+    //}
 }
 
-QChartAxis* ChartPresenter::axisY()
+void ChartPresenter::setDefaultAxisY(const QChartAxis& axis)
 {
-   return m_axisY;
+    // if(m_axisY != axis) {
+        m_axisY = axis;
+        m_axisYItem->handleAxisChanged(m_axisY);
+    //}
 }
 
-QChartAxis* ChartPresenter::addAxisX()
+QChartAxis ChartPresenter::defaultAxisX() const
 {
-  //only one axis
-  if(m_axisX==0){
-      m_axisX = new QChartAxis(this);
-      m_axisItems[m_axisX] = new AxisItem(m_axisX,AxisItem::X_AXIS,m_chart);
-  }
-  return m_axisX;
+    return m_axisX;
 }
 
-QChartAxis* ChartPresenter::addAxisY()
+QChartAxis ChartPresenter::defaultAxisY() const
 {
-    if(m_axisY==0){
-        m_axisY = new QChartAxis(this);
-        m_axisItems[m_axisY] = new AxisItem(m_axisY,AxisItem::Y_AXIS,m_chart);
-        return m_axisY;
+    return m_axisY;
+}
+
+QChartAxis ChartPresenter::axisY(int id) const
+{
+    return m_axis.value(id);
+}
+
+int ChartPresenter::addAxisY(const QChartAxis& axis)
+{
+    int key =0 ;
+
+    while(m_axis.contains(key)){
+        key++;
+        //TODO overflow
     }
 
-    QChartAxis* axis = new QChartAxis(this);
-    m_axisItems[axis] = new AxisItem(axis,AxisItem::Y_AXIS,m_chart);
-    return axis;
+    m_axis.insert(key,axis);
+    m_axisItems.insert(key,new AxisItem(AxisItem::Y_AXIS,m_chart));
+
+    return key;
 }
 
-void ChartPresenter::removeAxis(QChartAxis* axis)
+
+void ChartPresenter::removeAxisY(int id)
 {
-    AxisItem* item = m_axisItems.take(axis);
-    if(item){
-        delete item;
-        delete axis;
-    }
-    //reset pointers to default ones
-    if(axis == m_axisX) m_axisX=0;
-    else if(axis == m_axisY) m_axisY=0;
+    m_axis.remove(id);
+    delete m_axisItems.take(id);
 }
 
 #include "moc_chartpresenter_p.cpp"

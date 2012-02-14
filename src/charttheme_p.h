@@ -34,6 +34,7 @@ public:
     void decorate(StackedBarGroup* item, StackedBarChartSeries* series,int count);
     void decorate(PercentBarGroup* item, PercentBarChartSeries* series,int count);
     void decorate(PiePresenter* item, QPieSeries* series, int count);
+    void decorate(QChartAxis& axis,AxisItem* item);
 
 protected:
     QChart::ChartTheme m_id;

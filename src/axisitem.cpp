@@ -3,18 +3,22 @@
 #include <QPainter>
 #include <QDebug>
 
-#define LABEL_PADDING 5
+static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-AxisItem::AxisItem(QChartAxis* axis,AxisType type,QGraphicsItem* parent) :
-    ChartItem(parent),
-    m_axis(axis),
-    m_ticks(4),
-    m_type(type)
+AxisItem::AxisItem(AxisType type,QGraphicsItem* parent) :
+ChartItem(parent),
+m_ticks(4),
+m_type(type),
+m_labelsAngle(0),
+m_shadesEnabled(true),
+m_grid(this),
+m_shades(this),
+m_labels(this)
 {
     //initial initialization
-    handleAxisChanged();
+    createItems();
 }
 
 AxisItem::~AxisItem()
@@ -26,148 +30,257 @@ QRectF AxisItem::boundingRect() const
     return m_rect;
 }
 
-
-/*
-void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,QWidget *widget)
-{
-    if (!m_rect.isValid())
-    return;
-
-    if(m_type==X_AXIS) {
-
-        const qreal deltaX = m_rect.width() / m_ticks;
-
-        for (int i = 0; i <= m_ticks; ++i) {
-
-            int x = i * deltaX + m_rect.left();
-
-            if(i==0) x--;
-            if(i==m_ticks) x++;
-
-            qreal label = m_plotDomain.m_minX + (i * m_plotDomain.spanX()
-                / m_ticks);
-            painter->drawLine(x, m_rect.top()-1, x, m_rect.bottom()+1);
-           // painter->drawLine(x, m_rect.bottom()-1, x, m_rect.bottom()-1 + 5);
-
-            painter->drawText(x - 50, m_rect.bottom() + 5, 100, 20,Qt::AlignHCenter | Qt::AlignTop, QString::number(label));
-        }
-    }
-
-    if(m_type==Y_AXIS) {
-
-        const qreal deltaY = (m_rect.height()) / m_ticks;
-
-        for (int j = 0; j <= m_ticks; ++j) {
-
-            int y = j * -deltaY + m_rect.bottom();
-
-            if(j==0) y++;
-            if(j==m_ticks) y--;
-
-            qreal label = m_plotDomain.m_minY + (j * m_plotDomain.spanY()
-                / m_ticks);
-
-            painter->drawLine(m_rect.left()-1, y, m_rect.right()+1, y);
-            //painter->drawLine(m_rect.left() - 5, y, m_rect.left(), y);
-            //TODO : margin = 50 ;
-            painter->drawText(m_rect.left() - 50, y - 10, 50 - 5, 20,
-                Qt::AlignRight | Qt::AlignVCenter,
-                QString::number(label));
-        }
-    }
-
-    //painter->drawRect(m_rect.adjusted(0, 0, -1, -1));
-}
-*/
 void AxisItem::createItems()
 {
-
-    if(!m_rect.isValid()) return;
-
-    switch (m_type)
-    {
-        case X_AXIS:
-        {
-            const qreal deltaX = m_rect.width() / m_ticks;
-
-            for (int i = 0; i <= m_ticks; ++i) {
-
-                int x = i * deltaX + m_rect.left();
-
-                qreal label = m_domain.m_minX + (i * m_domain.spanX()/ m_ticks);
-
-                m_grid<<new QGraphicsLineItem(x, m_rect.top(), x, m_rect.bottom(),this);
-
-                QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
-                QPointF center = text->boundingRect().center();
-                text->setPos(x - center.x(), m_rect.bottom() + LABEL_PADDING);
-                //text->rotate(-45);
-                m_labels<<text;
-            }
-        }
-        break;
-
-        case Y_AXIS:
-        {
-            const qreal deltaY = m_rect.height()/ m_ticks;
-
-            for (int j = 0; j <= m_ticks; ++j) {
-
-                int y = j * -deltaY + m_rect.bottom();
-
-                qreal label = m_domain.m_minY + (j * m_domain.spanY()
-                    / m_ticks);
-
-                m_grid<<new QGraphicsLineItem(m_rect.left() , y, m_rect.right(), y,this);
-                QGraphicsSimpleTextItem* text = new QGraphicsSimpleTextItem(QString::number(label),this);
-                QPointF center = text->boundingRect().center();
-                text->setPos(m_rect.left() - text->boundingRect().width() - LABEL_PADDING , y-center.y());
-
-                m_labels<<text;
-
-            }
-        }
-        break;
-        default:
-        qDebug()<<"Unknown axis type";
-        break;
-    }
+    for (int i = 0; i <= m_ticks; ++i) {
+           m_grid.addToGroup(new QGraphicsLineItem(this));
+           m_labels.addToGroup(new QGraphicsSimpleTextItem(this));
+           if(i%2) m_shades.addToGroup(new QGraphicsRectItem(this));
+       }
 }
 
 void AxisItem::clear()
 {
-     qDeleteAll(m_shades);
-     m_shades.clear();
-     qDeleteAll(m_grid);
-     m_grid.clear();
-     qDeleteAll(m_labels);
-     m_labels.clear();
+    foreach(QGraphicsItem* item , m_shades.childItems()) {
+        delete item;
+    }
+
+    foreach(QGraphicsItem* item , m_grid.childItems()) {
+        delete item;
+    }
+
+    foreach(QGraphicsItem* item , m_labels.childItems()) {
+        delete item;
+    }
+
+}
+
+void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+
 }
 
 void AxisItem::updateDomain()
 {
-    clear();
-    createItems();
+
+    QList<QGraphicsItem *> lines = m_grid.childItems();
+    QList<QGraphicsItem *> labels = m_labels.childItems();
+    QList<QGraphicsItem *> shades = m_shades.childItems();
+
+    switch (m_type)
+      {
+          case X_AXIS:
+          {
+              const qreal deltaX = m_rect.width() / m_ticks;
+
+              for (int i = 0; i <= m_ticks; ++i) {
+
+                  int x = i * deltaX + m_rect.left();
+
+                  qreal label = m_domain.m_minX + (i * m_domain.spanX()/ m_ticks);
+
+                  QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
+                  lineItem->setLine(x, m_rect.top(), x, m_rect.bottom());
+
+                  QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+                  labelItem->setText(QString::number(label));
+                  QPointF center = labelItem->boundingRect().center();
+                  labelItem->setTransformOriginPoint(center.x(), center.y());
+                  labelItem->setPos(x - center.x(), m_rect.bottom() + label_padding);
+
+                  if(i%2){
+                      QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
+                      rectItem->setRect(x,m_rect.top(),deltaX,m_rect.height());
+                  }
+              }
+          }
+          break;
+
+          case Y_AXIS:
+          {
+              const qreal deltaY = m_rect.height()/ m_ticks;
+
+              for (int i = 0; i <= m_ticks; ++i) {
+
+                  int y = i * -deltaY + m_rect.bottom();
+
+                  qreal label = m_domain.m_minY + (i * m_domain.spanY()/ m_ticks);
+
+                  QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
+                  lineItem->setLine(m_rect.left() , y, m_rect.right(), y);
+
+                  QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+                  labelItem->setText(QString::number(label));
+                  QPointF center = labelItem->boundingRect().center();
+                  labelItem->setTransformOriginPoint(center.x(), center.y());
+                  labelItem->setPos(m_rect.left() -  labelItem->boundingRect().width() - label_padding , y-center.y());
+
+
+                  if(i%2){
+                      QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
+                      rectItem->setRect(m_rect.left(),y,m_rect.width(),deltaY);
+                  }
+              }
+          }
+          break;
+          default:
+          qDebug()<<"Unknown axis type";
+          break;
+      }
 }
 
-void AxisItem::handleAxisChanged()
+void AxisItem::handleAxisChanged(const QChartAxis& axis)
 {
-    //m_axis->
+    if(axis.isGridVisible()) {
+        setGridOpacity(100);
+    }
+    else {
+        setGridOpacity(0);
+    }
+
+    if(axis.isLabelsVisible())
+    {
+        setLabelsOpacity(100);
+    }
+    else {
+        setLabelsOpacity(0);
+    }
+
+    if(axis.isShadesVisible()) {
+        setShadesOpacity(100);
+    }
+    else {
+        setShadesOpacity(0);
+    }
+
+    switch(axis.labelsOrientation())
+    {
+        case QChartAxis::LabelsOrientationHorizontal:
+            setLabelsAngle(0);
+            break;
+        case QChartAxis::LabelsOrientationVertical:
+            setLabelsAngle(90);
+            break;
+        case QChartAxis::LabelsOrientationSlide:
+            setLabelsAngle(-45);
+            break;
+        default:
+        break;
+    }
+
+    setLabelsPen(axis.labelsPen());
+    setLabelsBrush(axis.labelsBrush());
+    setLabelsFont(axis.labelFont());
+    setGridPen(axis.gridPen());
+    setShadesPen(axis.shadesPen());
+    setShadesBrush(axis.shadesBrush());
+
 }
 
 void AxisItem::handleDomainChanged(const Domain& domain)
 {
     m_domain = domain;
-    clear();
-    createItems();
+    updateDomain();
+    update();
 }
 
 void AxisItem::handleGeometryChanged(const QRectF& rect)
 {
-    Q_ASSERT(rect.isValid());
     m_rect = rect;
+    updateDomain();
+    update();
+}
+
+void AxisItem::setGridOpacity(qreal opacity)
+{
+    m_grid.setOpacity(opacity);
+}
+
+
+qreal AxisItem::gridOpacity() const
+{
+    return m_grid.opacity();
+}
+
+void AxisItem::setLabelsOpacity(qreal opacity)
+{
+    m_labels.setOpacity(opacity);
+}
+
+qreal AxisItem::labelsOpacity() const
+{
+    return m_labels.opacity();
+}
+
+void AxisItem::setShadesOpacity(qreal opacity)
+{
+    m_shades.setOpacity(opacity);
+}
+
+qreal AxisItem::shadesOpacity() const
+{
+    return m_shades.opacity();
+}
+
+void AxisItem::setLabelsAngle(int angle)
+{
+    foreach(QGraphicsItem* item , m_labels.childItems()) {
+          QPointF center = item->boundingRect().center();
+          item->setRotation(angle);
+    }
+
+    m_labelsAngle=angle;
+}
+
+void AxisItem::setLabelsPen(const QPen& pen)
+{
+    foreach(QGraphicsItem* item , m_labels.childItems()) {
+        static_cast<QGraphicsSimpleTextItem*>(item)->setPen(pen);
+    }
+}
+
+void AxisItem::setLabelsBrush(const QBrush& brush)
+{
+    foreach(QGraphicsItem* item , m_labels.childItems()) {
+        static_cast<QGraphicsSimpleTextItem*>(item)->setBrush(brush);
+    }
+}
+
+void AxisItem::setLabelsFont(const QFont& font)
+{
+    foreach(QGraphicsItem* item , m_labels.childItems()) {
+        static_cast<QGraphicsSimpleTextItem*>(item)->setFont(font);
+    }
+}
+
+void AxisItem::setShadesBrush(const QBrush& brush)
+{
+    foreach(QGraphicsItem* item , m_shades.childItems()) {
+        static_cast<QGraphicsRectItem*>(item)->setBrush(brush);
+    }
+}
+
+void AxisItem::setShadesPen(const QPen& pen)
+{
+    foreach(QGraphicsItem* item , m_shades.childItems()) {
+        static_cast<QGraphicsRectItem*>(item)->setPen(pen);
+    }
+}
+
+void AxisItem::setGridPen(const QPen& pen)
+{
+    foreach(QGraphicsItem* item , m_grid.childItems()) {
+        static_cast<QGraphicsLineItem*>(item)->setPen(pen);
+    }
+}
+
+void AxisItem::setTicks(int count)
+{
+    if(count!=m_ticks){
     clear();
+    m_ticks=count;
     createItems();
+    }
 }
 
 //TODO "nice numbers algorithm"
