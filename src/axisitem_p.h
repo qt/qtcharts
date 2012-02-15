@@ -24,6 +24,9 @@ public:
 
     AxisType axisType() const {return m_type;};
 
+    void setAxisOpacity(qreal opacity);
+    qreal axisOpacity() const;
+
     void setGridOpacity(qreal opacity);
     qreal gridOpacity() const;
 
@@ -42,6 +45,7 @@ public:
     void setShadesBrush(const QBrush& brush);
     void setShadesPen(const QPen& pen);
 
+    void setAxisPen(const QPen& pen);
     void setGridPen(const QPen& pen);
 
     void setLabelsPen(const QPen& pen);
@@ -67,6 +71,7 @@ private:
     QGraphicsItemGroup m_grid;
     QGraphicsItemGroup m_shades;
     QGraphicsItemGroup m_labels;
+    QGraphicsLineItem m_axis;
 
 };
 

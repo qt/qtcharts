@@ -13,11 +13,13 @@ m_ticks(4),
 m_type(type),
 m_labelsAngle(0),
 m_shadesEnabled(true),
-m_grid(this),
-m_shades(this),
-m_labels(this)
+m_grid(parent),
+m_shades(parent),
+m_labels(parent)
 {
     //initial initialization
+    m_shades.setZValue(0);
+    m_grid.setZValue(2);
     createItems();
 }
 
@@ -73,6 +75,8 @@ void AxisItem::updateDomain()
           {
               const qreal deltaX = m_rect.width() / m_ticks;
 
+              m_axis.setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
+
               for (int i = 0; i <= m_ticks; ++i) {
 
                   int x = i * deltaX + m_rect.left();
@@ -99,6 +103,8 @@ void AxisItem::updateDomain()
           case Y_AXIS:
           {
               const qreal deltaY = m_rect.height()/ m_ticks;
+
+              m_axis.setLine(m_rect.left() , m_rect.top(), m_rect.left(), m_rect.bottom());
 
               for (int i = 0; i <= m_ticks; ++i) {
 
@@ -131,6 +137,13 @@ void AxisItem::updateDomain()
 
 void AxisItem::handleAxisChanged(const QChartAxis& axis)
 {
+    if(axis.isAxisVisible()) {
+           setAxisOpacity(100);
+       }
+       else {
+           setAxisOpacity(0);
+    }
+
     if(axis.isGridVisible()) {
         setGridOpacity(100);
     }
@@ -168,6 +181,7 @@ void AxisItem::handleAxisChanged(const QChartAxis& axis)
         break;
     }
 
+    setAxisPen(axis.axisPen());
     setLabelsPen(axis.labelsPen());
     setLabelsBrush(axis.labelsBrush());
     setLabelsFont(axis.labelFont());
@@ -189,6 +203,16 @@ void AxisItem::handleGeometryChanged(const QRectF& rect)
     m_rect = rect;
     updateDomain();
     update();
+}
+
+void AxisItem::setAxisOpacity(qreal opacity)
+{
+    m_axis.setOpacity(opacity);
+}
+
+qreal AxisItem::axisOpacity() const
+{
+    return m_axis.opacity();
 }
 
 void AxisItem::setGridOpacity(qreal opacity)
@@ -265,6 +289,11 @@ void AxisItem::setShadesPen(const QPen& pen)
     foreach(QGraphicsItem* item , m_shades.childItems()) {
         static_cast<QGraphicsRectItem*>(item)->setPen(pen);
     }
+}
+
+void AxisItem::setAxisPen(const QPen& pen)
+{
+    m_axis.setPen(pen);
 }
 
 void AxisItem::setGridPen(const QPen& pen)

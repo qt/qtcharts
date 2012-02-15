@@ -22,11 +22,6 @@ void QChartAxis::setAxisPen(const QPen& pen)
     m_axisPen=pen;
 }
 
-void QChartAxis::setAxisBrush(const QBrush& brush)
-{
-    m_axisBrush=brush;
-}
-
 void QChartAxis::setAxisVisible(bool visible)
 {
     m_axisVisible=visible;

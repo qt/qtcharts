@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     axis.setGridPen(Qt::DashLine);
 
     chartView->setDefaultAxisX(axis);
-    //axis.setShadesBrush(Qt::gray);
+    axis.setShadesBrush(Qt::gray);
     chartView->setDefaultAxisY(axis);
 
     window.setCentralWidget(chartView);
