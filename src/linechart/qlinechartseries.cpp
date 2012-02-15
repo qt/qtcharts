@@ -2,7 +2,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QLineChartSeries::QLineChartSeries(QObject* parent):QChartSeries(parent)
+QLineChartSeries::QLineChartSeries(QObject* parent):QChartSeries(parent),
+m_pointsVisible(false)
 {
 }
 

@@ -31,6 +31,7 @@ public:
     virtual void removePoint(const QPointF& point);
     virtual void setPoint(const QPointF& oldPoint, const QPointF& newPoint);
     virtual void setPoint(int index,const QPointF& point);
+    void setPointsVisible(bool visible);
     void clear();
     void clearView();
     int count() const { return m_data.size();}
