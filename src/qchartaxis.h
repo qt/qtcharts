@@ -49,6 +49,9 @@ public:
     QPen shadesPen() const { return m_shadesPen;}
     void setShadesBrush(const QBrush& brush);
     QBrush shadesBrush() const { return m_shadesBrush;}
+    void setShadesOpacity(qreal opacity);
+    qreal shadesOpacity() const { return m_shadesOpacity;}
+
 
 
 private:
@@ -68,6 +71,9 @@ private:
     bool m_shadesVisible;
     QPen m_shadesPen;
     QBrush m_shadesBrush;
+
+    qreal m_shadesOpacity;
+
 
     LabelsOrientation m_labelsOrientation;
 };

@@ -240,6 +240,7 @@ void ChartTheme::decorate(QChartAxis& axis,AxisItem* item)
     axis.setLabelsBrush(Qt::black);
     axis.setLabelsPen(Qt::NoPen);
     axis.setShadesPen(Qt::NoPen);
+    axis.setShadesOpacity(0.5);
     item->handleAxisChanged(axis);
 }
 

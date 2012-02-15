@@ -6,7 +6,8 @@ QChartAxis::QChartAxis():
 m_axisVisible(true),
 m_gridVisible(true),
 m_labelsVisible(true),
-m_shadesVisible(true)
+m_shadesVisible(true),
+m_shadesOpacity(1.0)
 {
     // TODO Auto-generated constructor stub
 
@@ -77,5 +78,9 @@ void QChartAxis::setShadesBrush(const QBrush& brush)
     m_shadesBrush=brush;
 }
 
+void QChartAxis::setShadesOpacity(qreal opacity)
+{
+    m_shadesOpacity=opacity;
+}
 
 QTCOMMERCIALCHART_END_NAMESPACE

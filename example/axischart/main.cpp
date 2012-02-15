@@ -38,14 +38,20 @@ int main(int argc, char *argv[])
     chartView->setTitle("Basic line chart example");
     chartView->addSeries(series0);
     chartView->addSeries(series1);
-    chartView->setChartBackgroundBrush(Qt::white);
+
+
+    QLinearGradient backgroundGradient;
+    backgroundGradient.setColorAt(0.0, Qt::white);
+    backgroundGradient.setColorAt(1.0, QRgb(0xffff80));
+    backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+    chartView->setChartBackgroundBrush(backgroundGradient);
 
     QChartAxis axis = chartView->defaultAxisX();
     axis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);
     axis.setGridPen(Qt::DashLine);
 
     chartView->setDefaultAxisX(axis);
-    axis.setShadesBrush(Qt::lightGray);
+    axis.setShadesBrush(Qt::yellow);
     chartView->setDefaultAxisY(axis);
 
     window.setCentralWidget(chartView);

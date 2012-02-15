@@ -95,6 +95,7 @@ void AxisItem::updateDomain()
                   if(i%2){
                       QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
                       rectItem->setRect(x,m_rect.top(),deltaX,m_rect.height());
+                      rectItem->setOpacity( 0.5 );
                   }
               }
           }
@@ -125,6 +126,7 @@ void AxisItem::updateDomain()
                   if(i%2){
                       QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
                       rectItem->setRect(m_rect.left(),y,m_rect.width(),deltaY);
+
                   }
               }
           }
@@ -160,7 +162,7 @@ void AxisItem::handleAxisChanged(const QChartAxis& axis)
     }
 
     if(axis.isShadesVisible()) {
-        setShadesOpacity(100);
+        setShadesOpacity(axis.shadesOpacity());
     }
     else {
         setShadesOpacity(0);
