@@ -2,16 +2,6 @@
 #include "qchartaxis.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
-
-<<<<<<< HEAD
-//series
-#include "qbarchartseries.h"
-#include "qstackedbarchartseries.h"
-#include "qpercentbarchartseries.h"
-#include "qlinechartseries.h"
-#include "qscatterseries.h"
-//#include "scatterseries_p.h"
-#include "qpieseries.h"
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 #include <QDebug>
