@@ -140,10 +140,10 @@ void AxisItem::updateDomain()
 void AxisItem::handleAxisChanged(const QChartAxis& axis)
 {
     if(axis.isAxisVisible()) {
-           setAxisOpacity(100);
-       }
-       else {
-           setAxisOpacity(0);
+        setAxisOpacity(100);
+    }
+    else {
+        setAxisOpacity(0);
     }
 
     if(axis.isGridVisible()) {
@@ -180,7 +180,7 @@ void AxisItem::handleAxisChanged(const QChartAxis& axis)
             setLabelsAngle(-45);
             break;
         default:
-        break;
+            break;
     }
 
     setAxisPen(axis.axisPen());
