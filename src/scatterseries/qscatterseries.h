@@ -11,8 +11,21 @@ class QScatterSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QChartSeries
 {
     Q_OBJECT
+
 public:
-    //QScatterSeries(QSeriesData *data, QObject *chart);
+    enum MarkerShape {
+        // TODO: to be defined by the graphics design
+        // TODO: marker shapes: "x", star, rectangle, tilted rect, triangle, circle, dot
+        MarkerShapeDefault = 0,
+        MarkerShapePoint,
+        MarkerShapeX,
+        MarkerShapeRectangle,
+        MarkerShapeTiltedRectangle,
+        MarkerShapeTriangle,
+        MarkerShapeCircle
+    };
+
+public:
     QScatterSeries(QObject *parent = 0);
     ~QScatterSeries();
 
@@ -25,17 +38,20 @@ public:
     QScatterSeries& operator << (const QPointF &value);
     void setData(QList<QPointF> data);
     QList<QPointF> data();
-
-    //TODO? void insertData(int index, QPointF data);
+    //TODO: insertData?
 
     void setMarkerPen(QPen pen);
     QPen markerPen();
-    // TODO: marker shapes: "x", star, rectangle, tilted rect, triangle, circle, dot
-    //void setMarkerShape(MarkerShape shape);
+    void setMarkerBrush(QBrush brush);
+    QBrush markerBrush();
+    void setMarkerShape(MarkerShape shape);
+    MarkerShape markerShape();
+    // TODO: marker size?
 
 Q_SIGNALS:
-    // TODO: move to PIMPL?
+    // TODO: move to PIMPL for simplicity or does the user ever need these signals?
     // TODO: more finegrained signaling for performance reasons
+    // (check QPieSeries implementation with change sets)
     void changed();
 
 //public Q_SLOTS:
