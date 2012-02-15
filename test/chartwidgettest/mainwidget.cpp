@@ -227,11 +227,10 @@ void MainWidget::addSeries(QString series, QString data)
     // TODO: color of the series
     QChartSeries *newSeries = 0;
     if (series == "Scatter") {
-        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypeScatter);
-        QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(newSeries);
-        Q_ASSERT(scatterSeries);
+        QScatterSeries *scatter = new QScatterSeries();
         for (int i(0); i < x.count() && i < y.count(); i++)
-            scatterSeries->addData(QPointF(x.at(i), y.at(i)));
+            (*scatter) << QPointF(x.at(i), y.at(i));
+        m_chartWidget->addSeries(scatter);
     } else if (series == "Pie") {
         newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypePie);
         Q_ASSERT(newSeries->setData(y));
@@ -306,26 +305,28 @@ void MainWidget::addSeries(QString series, QString data)
 
 void MainWidget::setCurrentSeries(QChartSeries *series)
 {
-    m_currentSeries = series;
-    switch (m_currentSeries->type()) {
-    case QChartSeries::SeriesTypeLine:
-        break;
-    case QChartSeries::SeriesTypeScatter:
-        break;
-    case QChartSeries::SeriesTypePie:
-        break;
-    case QChartSeries::SeriesTypeBar:
-        qDebug() << "setCurrentSeries (bar)";
-        break;
-    case QChartSeries::SeriesTypeStackedBar:
-        qDebug() << "setCurrentSeries (Stackedbar)";
-        break;
-    case QChartSeries::SeriesTypePercentBar:
-        qDebug() << "setCurrentSeries (Percentbar)";
-        break;
-    default:
-        Q_ASSERT(false);
-        break;
+    if (series) {
+        m_currentSeries = series;
+        switch (m_currentSeries->type()) {
+        case QChartSeries::SeriesTypeLine:
+            break;
+        case QChartSeries::SeriesTypeScatter:
+            break;
+        case QChartSeries::SeriesTypePie:
+            break;
+        case QChartSeries::SeriesTypeBar:
+            qDebug() << "setCurrentSeries (bar)";
+            break;
+        case QChartSeries::SeriesTypeStackedBar:
+            qDebug() << "setCurrentSeries (Stackedbar)";
+            break;
+        case QChartSeries::SeriesTypePercentBar:
+            qDebug() << "setCurrentSeries (Percentbar)";
+            break;
+        default:
+            Q_ASSERT(false);
+            break;
+        }
     }
 }
 

@@ -20,8 +20,9 @@ public: // from QChartSeries
     QChartSeriesType type() const { return QChartSeries::SeriesTypeScatter; }
 
 public:
-    // TODO: the name of the function? addPoint? addData? addX?
-    void addData(QPointF data);
+    // TODO: the name of the function? addPoint? addData? addValue?
+    void addData(QPointF value);
+    QScatterSeries& operator << (const QPointF &value);
 
     void setData(QList<QPointF> data);
 

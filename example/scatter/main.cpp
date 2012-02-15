@@ -13,14 +13,15 @@ int main(int argc, char *argv[])
 
     // Create widget and scatter series
     QChartView *chartWidget = new QChartView();
-    QScatterSeries *scatter =
-            qobject_cast<QScatterSeries *>(chartWidget->createSeries(QChartSeries::SeriesTypeScatter));
-    Q_ASSERT(scatter);
+    QScatterSeries *scatter = new QScatterSeries();
 
     // Add test data to the series
     for (qreal i(0.0); i < 20; i += 0.5)
-        scatter->addData(QPointF(i + ((qreal)(rand() % 100)) / 100,
-                                 i + ((qreal)(rand() % 100)) / 100 ));
+        (*scatter) << QPointF(i + (qreal)(rand() % 100) / 100.0,
+                           i + (qreal)(rand() % 100) / 100.0);
+
+    // Add series to the chart widget
+    chartWidget->addSeries(scatter);
 
     // Use the chart widget as the central widget
     QMainWindow w;

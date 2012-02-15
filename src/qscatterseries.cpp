@@ -20,17 +20,22 @@ QScatterSeries::~QScatterSeries()
     delete d;
 }
 
-// TODO: change to list of QPointFs?
-//bool QScatterSeries::setData(QList<qreal> xlist, QList<qreal> ylist)
-void QScatterSeries::setData(QList<QPointF> data)
+void QScatterSeries::addData(QPointF value)
 {
-    d->m_data = data;
+    d->m_data.append(value);
     emit changed();
 }
 
-void QScatterSeries::addData(QPointF data)
+QScatterSeries& QScatterSeries::operator << (const QPointF &value)
 {
-    d->m_data.append(data);
+    d->m_data.append(value);
+    emit changed();
+    return *this;
+}
+
+void QScatterSeries::setData(QList<QPointF> data)
+{
+    d->m_data = data;
     emit changed();
 }
 

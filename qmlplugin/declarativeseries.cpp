@@ -23,12 +23,17 @@ void DeclarativeSeries::setSeriesType(SeriesType type)
     if (!m_series || type != m_seriesType) {
         m_seriesType = type;
         initSeries();
+    } else {
+        m_seriesType = type;
     }
 }
 
 void DeclarativeSeries::setParentForSeries()
 {
-    initSeries();
+    if (!m_series)
+        initSeries();
+    else if (m_series->type() != m_seriesType)
+        initSeries();
 }
 
 void DeclarativeSeries::initSeries()
