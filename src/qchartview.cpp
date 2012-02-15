@@ -67,9 +67,14 @@ int QChartView::margin() const
     return m_chart->margin();
 }
 
-void QChartView::setTitle(const QString& title)
+void QChartView::setChartTitle(const QString& title)
 {
-    m_chart->setTitle(title);
+    m_chart->setChartTitle(title);
+}
+
+void QChartView::setChartTitleFont(const QFont& font)
+{
+    m_chart->setChartTitleFont(font);
 }
 
 void QChartView::setChartBackgroundBrush(const QBrush& brush)

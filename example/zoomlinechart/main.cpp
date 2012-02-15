@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
     ChartWidget* chartWidget =  new ChartWidget(&window);
     chartWidget->setRenderHint(QPainter::Antialiasing);
-    chartWidget->setTitle("Zoom in/out line chart example");
+    chartWidget->setChartTitle("Zoom in/out line chart example");
     chartWidget->addSeries(series0);
     chartWidget->addSeries(series1);
 

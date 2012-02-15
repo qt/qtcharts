@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     QChartView* chartView =  new QChartView(&window);
 
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setTitle("Basic line chart example");
+    chartView->setChartTitle("This is custom axis chart example");
     chartView->addSeries(series0);
     chartView->addSeries(series1);
 

@@ -96,10 +96,15 @@ void QChart::setChartBackgroundPen(const QPen& pen)
     m_backgroundItem->update();
 }
 
-void QChart::setTitle(const QString& title,const QFont& font)
+void QChart::setChartTitle(const QString& title)
 {
     if(!m_titleItem) m_titleItem = new QGraphicsTextItem(this);
     m_titleItem->setPlainText(title);
+}
+
+void QChart::setChartTitleFont(const QFont& font)
+{
+    if(!m_titleItem) m_titleItem = new QGraphicsTextItem(this);
     m_titleItem->setFont(font);
 }
 

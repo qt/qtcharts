@@ -33,7 +33,11 @@ int main(int argc, char *argv[])
 
     QChartView* chartView =  new QChartView(&window);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setTitle("Custom color line chart example");
+
+    QFont font;
+    font.setPixelSize(18);
+    chartView->setChartTitleFont(font);
+    chartView->setChartTitle("Custom color line chart example");
     chartView->addSeries(series0);
     chartView->addSeries(series1);
 

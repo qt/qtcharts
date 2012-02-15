@@ -58,7 +58,8 @@ public:
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme() const;
 
-    void setTitle(const QString& title,const QFont& font = QFont());
+    void setChartTitle(const QString& title);
+    void setChartTitleFont(const QFont& font);
     void setChartBackgroundBrush(const QBrush& brush);
     void setChartBackgroundPen(const QPen& pen);
 

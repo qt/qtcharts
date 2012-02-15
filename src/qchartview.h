@@ -31,7 +31,8 @@ public:
 
     int margin() const;
 
-    void setTitle(const QString& title);
+    void setChartTitle(const QString& title);
+    void setChartTitleFont(const QFont& font);
     void setChartBackgroundBrush(const QBrush& brush);
     void setChartBackgroundPen(const QPen& pen);
 
