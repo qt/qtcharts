@@ -8,6 +8,7 @@
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
 #include "qlinechartseries.h"
+#include "qscatterseries.h"
 #include "qpieseries.h"
 
 //items
@@ -16,6 +17,7 @@
 #include "stackedbargroup.h"
 #include "linechartitem_p.h"
 #include "percentbargroup.h"
+#include "scatterpresenter.h"
 #include "piepresenter.h"
 
 //themes
@@ -164,6 +166,23 @@ void ChartTheme::decorate(PercentBarGroup* item, PercentBarChartSeries* series,i
     item->addColor(QColor(0,255,0,128));
     item->addColor(QColor(0,0,255,128));
     item->addColor(QColor(255,128,0,128));
+}
+
+void ChartTheme::decorate(ScatterPresenter* presenter, QScatterSeries* series, int count)
+{
+    Q_ASSERT(presenter);
+    Q_ASSERT(series);
+
+    presenter->m_markerPen.setColor(m_seriesColor.at(count % m_seriesColor.size()));
+
+//    QPen pen;
+//    if(pen != series->pen()){
+//        item->setPen(series->pen());
+//        return;
+//    }
+//    pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
+//    pen.setWidthF(2);
+//    item->setPen(pen);
 }
 
 void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)

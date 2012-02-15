@@ -23,9 +23,7 @@ public:
     // TODO: the name of the function? addPoint? addData? addValue?
     void addData(QPointF value);
     QScatterSeries& operator << (const QPointF &value);
-
     void setData(QList<QPointF> data);
-
     QList<QPointF> data();
 
     //TODO? void insertData(int index, QPointF data);

@@ -4,6 +4,7 @@
 #include "qchartglobal.h"
 #include "chartitem_p.h"
 #include <QObject>
+#include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -37,8 +38,8 @@ public:
     QRectF m_boundingRect;
     QList<qreal> m_scenex;
     QList<qreal> m_sceney;
-    QColor m_markerColor;
     Domain m_visibleChartArea;
+    QPen m_markerPen;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

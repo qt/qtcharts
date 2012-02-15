@@ -17,6 +17,8 @@ class StackedBarGroup;
 class StackedBarChartSeries;
 class PercentBarChartSeries;
 class PercentBarGroup;
+class QScatterSeries;
+class ScatterPresenter;
 class PiePresenter;
 class QPieSeries;
 
@@ -33,6 +35,7 @@ public:
     void decorate(BarGroup* item, BarChartSeries* series,int count);
     void decorate(StackedBarGroup* item, StackedBarChartSeries* series,int count);
     void decorate(PercentBarGroup* item, PercentBarChartSeries* series,int count);
+    void decorate(ScatterPresenter* presenter, QScatterSeries* series, int count);
     void decorate(PiePresenter* item, QPieSeries* series, int count);
     void decorate(QChartAxis& axis,AxisItem* item);
 

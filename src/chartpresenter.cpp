@@ -126,6 +126,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
                              scatterPresenter, SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset, SIGNAL(domainChanged(const Domain&)),
                              scatterPresenter, SLOT(handleDomainChanged(const Domain&)));
+            m_chartTheme->decorate(scatterPresenter, scatterSeries, m_chartItems.count());
 //            scatterSeries->d->m_theme = m_chartTheme->themeForSeries();
 //            scatterSeries->d->setParentItem(this);
 //            scatterSeries->d->m_boundingRect = m_rect.adjusted(margin(),margin(), -margin(), -margin());

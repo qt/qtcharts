@@ -12,7 +12,7 @@ ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *pare
     m_series(series),
     m_boundingRect(),
     //m_markerColor(QColor()),
-    m_markerColor(QColor(255, 0, 0)),
+//    m_markerColor(QColor(255, 0, 0)),
     m_visibleChartArea()
 {
     if (parent)
@@ -45,21 +45,25 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 {
     // TODO: The opacity should be user definable?
     //brush.setColor(QColor(255, 82, 0, 100));
-    if (m_markerColor.isValid()) {
+    //if (m_series->markerPen().isValid()) {
+    if (false) {
         QPen pen = painter->pen();
         QBrush brush = pen.brush();
-        brush.setColor(m_markerColor);
+        brush.setColor(m_series->markerPen().color());
         pen.setBrush(brush);
         pen.setWidth(4);
         painter->setPen(pen);
     }
     else {
-        //painter->setPen(m_theme.markerPen);
-//        brush.setColor(m_theme..lineColor);
+        // TODO: fix this
+        QPen pen = painter->pen();
+        QBrush brush = pen.brush();
+        brush.setColor(m_markerPen.color());
+        pen.setBrush(brush);
+        pen.setWidth(4);
+        painter->setPen(pen);
     }
 
-    // TODO: m_scenex and m_sceny are left empty during construction -> we would need a resize
-    // event right after construction or maybe given a size during initialization
     for (int i(0); i < m_scenex.count() && i < m_sceney.count(); i++) {
         if (scene()->width() > m_scenex.at(i) && scene()->height() > m_sceney.at(i))
             //painter->drawArc(m_scenex.at(i), m_sceney.at(i), 2, 2, 0, 5760);
