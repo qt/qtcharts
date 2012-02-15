@@ -25,7 +25,7 @@ public: // from QChartSeries
     void setPen(const QPen& pen);
     const QPen& pen() const { return m_pen;}
 
-    void pointsVisible(bool visible);
+    void setPointsVisible(bool visible);
     bool isPointsVisible() const {return m_pointsVisible;}
 
     int count() const;

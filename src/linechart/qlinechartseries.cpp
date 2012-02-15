@@ -66,6 +66,10 @@ QDebug operator<< (QDebug debug, const QLineChartSeries series)
     return debug.space();
 }
 
+void QLineChartSeries::setPointsVisible(bool visible)
+{
+    m_pointsVisible=visible;
+}
 #include "moc_qlinechartseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
