@@ -17,7 +17,7 @@
 #include "stackedbargroup.h"
 #include "linechartitem_p.h"
 #include "percentbargroup.h"
-#include "scatterpresenter.h"
+#include "scatterpresenter_p.h"
 #include "piepresenter.h"
 
 //themes

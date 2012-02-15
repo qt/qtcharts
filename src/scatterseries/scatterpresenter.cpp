@@ -1,4 +1,4 @@
-#include "scatterpresenter.h"
+#include "scatterpresenter_p.h"
 #include "qscatterseries.h"
 #include <QPen>
 #include <QPainter>
@@ -89,6 +89,6 @@ void ScatterPresenter::changeGeometry()
     }
 }
 
-#include "moc_scatterpresenter.cpp"
+#include "moc_scatterpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

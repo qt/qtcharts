@@ -22,8 +22,6 @@ SOURCES += barchart/barchartseries.cpp \
     linechart/linechartanimationitem.cpp \
     linechart/linechartitem.cpp \
     linechart/qlinechartseries.cpp \
-    qscatterseries.cpp \
-    #scatterpresentation.cpp \
     qchart.cpp \
     axisitem.cpp \
     qchartview.cpp \
@@ -32,16 +30,13 @@ SOURCES += barchart/barchartseries.cpp \
     charttheme.cpp \
     chartdataset.cpp \
     chartpresenter.cpp \
-    domain.cpp \
-    scatterpresenter.cpp
+    domain.cpp
 PRIVATE_HEADERS += linechart/linechartitem_p.h \
     linechart/linechartanimationitem_p.h \
     barchart/barlabel_p.h \
     barchart/bar_p.h \
     barchart/separator_p.h \
     barchart/barchartmodel_p.h \
-    qscatterseries_p.h \
-    #scatterpresentation.h \
     axisitem_p.h \
     chartitem_p.h \
     charttheme_p.h \
@@ -59,20 +54,19 @@ PUBLIC_HEADERS += linechart/qlinechartseries.h \
     barchart/qbarset.h \
     barchart/qbarcategory.h \
     qchartseries.h \
-    qscatterseries.h \
     qchart.h \
     qchartglobal.h \
     qchartview.h \
     qchartaxis.h
     
 include(piechart/piechart.pri)
-    
+include(scatterseries/scatter.pri)
+
 THEMES += themes/chartthemeicy_p.h \
     themes/chartthemegrayscale_p.h \
     themes/chartthemescientific_p.h \
     themes/chartthemevanilla_p.h
-HEADERS += $$PUBLIC_HEADERS \
-    scatterpresenter.h
+HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 HEADERS += $$THEMES
 INCLUDEPATH += linechart \
@@ -122,3 +116,4 @@ unix:QMAKE_DISTCLEAN += -r \
 win32:QMAKE_DISTCLEAN += /Q \
     $$CHART_BUILD_HEADER_DIR \
     $$CHART_BUILD_LIB_DIR
+

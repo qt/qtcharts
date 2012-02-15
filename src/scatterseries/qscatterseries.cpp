@@ -1,5 +1,5 @@
 #include "qscatterseries.h"
-#include "qscatterseries_p.h"
+#include "scatterseries_p.h"
 #include "qchart.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
