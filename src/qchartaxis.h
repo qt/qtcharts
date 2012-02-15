@@ -8,7 +8,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartAxis
+class QTCOMMERCIALCHART_EXPORT QChartAxis
 {
 public:
     enum LabelsOrientation{ LabelsOrientationHorizontal, LabelsOrientationVertical , LabelsOrientationSlide };
