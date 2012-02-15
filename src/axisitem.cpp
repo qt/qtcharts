@@ -18,8 +18,6 @@ m_shades(parent),
 m_labels(parent)
 {
     //initial initialization
-    m_shades.setZValue(0);
-    m_grid.setZValue(2);
     createItems();
 }
 
