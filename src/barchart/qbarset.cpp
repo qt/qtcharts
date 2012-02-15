@@ -31,6 +31,11 @@ qreal QBarSet::valueAt(int index)
     return mValues.at(index);
 }
 
+void QBarSet::setValue(int index, qreal value)
+{
+    mValues.replace(index,value);
+}
+
 //TODO?:
 //#include "moc_qbarset.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

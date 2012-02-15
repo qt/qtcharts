@@ -4,6 +4,8 @@
 #include "chartitem_p.h"
 #include "qchartglobal.h"
 #include <QGraphicsItem>
+#include <QPen>
+#include <QBrush>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -17,9 +19,11 @@ public: // from ChartItem
     void setSize(const QSizeF &size);
 
     // Layout Stuff
-    void resize( qreal w, qreal h );   // Size of bar.
-    void setColor( QColor col );       // Color of bar
+    void resize(qreal w, qreal h);   // Size of bar.
     void setPos(qreal x, qreal y);
+    void setPen(QPen pen);
+    void setBrush(QBrush brush);
+    void setColor( QColor col);     // deprecated
 
 public:
     // From QGraphicsItem
@@ -34,6 +38,9 @@ private:
     qreal mXpos;
     qreal mYpos;
     QColor mColor;
+
+    QBrush mBrush;
+    QPen mPen;
 
 };
 

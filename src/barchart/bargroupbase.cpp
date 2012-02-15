@@ -46,7 +46,7 @@ void BarGroupBase::setBarWidth( int w )
 {
     mBarDefaultWidth = w;
 }
-
+/*
 int BarGroupBase::addColor( QColor color )
 {
 //    qDebug() << "BarGroupBase::addColor";
@@ -54,12 +54,24 @@ int BarGroupBase::addColor( QColor color )
     mColors.append(color);
     return colorIndex;
 }
-
+*/
+/*
 void BarGroupBase::resetColors()
 {
 //    qDebug() << "BarGroupBase::resetColors";
     mColors.clear();
 }
+*/
+void BarGroupBase::resetBrushes()
+{
+    mBrushes.clear();
+}
+
+void BarGroupBase::addBrush(QBrush brush)
+{
+    mBrushes.append(brush);
+}
+
 
 void BarGroupBase::dataChanged()
 {

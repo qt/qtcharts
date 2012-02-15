@@ -2,6 +2,8 @@
 #define QBARSET_H
 
 #include "qchartglobal.h"
+#include <QPen>
+#include <QBrush>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -13,18 +15,16 @@ public:
 
     void setName(QString name);
     QString name();
-    QBarSet& operator << (const qreal &value);
+    QBarSet& operator << (const qreal &value);  // appends new value to set
 
-    //TODO: What is the way to set a single value to n:th item? Is there need for such functionality?
-
-    int count();
-    qreal valueAt(int index);
+    int count();                                // count of values in set
+    qreal valueAt(int index);                   // for modifying individual values
+    void setValue(int index, qreal value);      //
 
 private:
 
     QString mName;
     QList<qreal> mValues;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

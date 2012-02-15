@@ -27,11 +27,22 @@ void Bar::setColor( QColor col )
 {
     mColor = col;
 }
+
 void Bar::setPos(qreal x, qreal y)
 {
  //   qDebug() << "Bar::setpos" << x << y;
     mXpos = x;
     mYpos = y;
+}
+
+void Bar::setPen(QPen pen)
+{
+    mPen = pen;
+}
+
+void Bar::setBrush(QBrush brush)
+{
+    mBrush = brush;
 }
 
 void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -40,8 +51,9 @@ void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
         return;
     }
     // TODO: accept brush instead of color
-    QBrush brush(mColor);
-    painter->setBrush(brush);
+    painter->setBrush(mBrush);
+//    QBrush brush(mColor);
+//    painter->setBrush(brush);
 
     // This compensates for rounding errors. drawRect takes ints and cumulative error of pos + size may be over 1.
     int x0 = mXpos;

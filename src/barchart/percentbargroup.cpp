@@ -38,18 +38,20 @@ void PercentBarGroup::layoutChanged()
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
     int labelIndex = mModel.countCategories() * mModel.countSets();
 
-    for (int column = 0; column < mModel.countCategories(); column++) {
-        qreal colSum = mModel.categorySum(column);
+    for (int category = 0; category < mModel.countCategories(); category++) {
+        qreal colSum = mModel.categorySum(category);
         qreal h = mHeight;
         qreal scale = (h / colSum);
         qreal yPos = h;
-        for (int row=0; row < mModel.countSets(); row++) {
-            qreal barHeight = mModel.valueAt(row, column) * scale;
+        for (int set=0; set < mModel.countSets(); set++) {
+            qreal barHeight = mModel.valueAt(set, category) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setColor(mColors.at(row));
+            bar->setBrush(mBrushes.at(set));
+//            bar->setBrush(mBrush);
+//            bar->setColor(mColors.at(set));
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             yPos -= barHeight;

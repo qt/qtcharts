@@ -3,6 +3,8 @@
 
 #include "chartitem_p.h"
 #include "barchartmodel_p.h"
+#include <QPen>
+#include <QBrush>
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -23,8 +25,18 @@ public:
 
     // TODO: these may change with layout awarness.
     void setBarWidth( int w );
-    int addColor( QColor color );
-    void resetColors();
+//    int addColor( QColor color );
+//    void resetColors();
+
+    void resetBrushes();
+    void addBrush(QBrush brush);
+
+    void setPen(QPen pen);
+    QPen pen();
+
+    void setBrush(QBrush brush);
+    QBrush brush();
+
 
     // TODO: Consider the domain for layoutChanged. May be use case, may not be. If it is, then the derived classes need to implement it
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
@@ -49,6 +61,8 @@ protected:
     bool mSeparatorsVisible;
     BarChartModel& mModel;
 
+    QPen mPen;
+    QList<QBrush> mBrushes;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

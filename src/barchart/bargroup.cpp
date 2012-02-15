@@ -29,36 +29,39 @@ void BarGroup::layoutChanged()
     // TODO: better way to auto-layout?
     // Use reals for accurancy (we might get some compiler warnings... :)
     int itemCount = mModel.countCategories();
-    int seriesCount = mModel.countSets();
+    int setCount = mModel.countSets();
 
     qreal tW = mWidth;
     qreal tH = mHeight;
     qreal tM = mModel.max();
     qreal scale = (tH/tM);
     qreal tC = itemCount+1;
-    qreal xStepPerSeries = (tW/tC);
+    qreal xStepPerSet = (tW/tC);
 
     // Scaling.
     int itemIndex(0);
-    int labelIndex = itemCount * seriesCount;
+    int labelIndex = itemCount * setCount;
 
     for (int item=0; item < itemCount; item++) {
-        qreal xPos = xStepPerSeries * item + ((tW + mBarDefaultWidth*seriesCount)/(itemCount*2));
+        qreal xPos = xStepPerSet * item + ((tW + mBarDefaultWidth*setCount)/(itemCount*2));
         qreal yPos = mHeight;
-        for (int series = 0; series < seriesCount; series++) {
-            qreal barHeight = mModel.valueAt(series, item) * scale;
+        for (int set = 0; set < setCount; set++) {
+            qreal barHeight = mModel.valueAt(set, item) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setColor(mColors.at(series));
-            bar->setPos(xPos, yPos-barHeight); // item*posStep+startPos + series * mBarDefaultWidth, mHeight);
+            bar->setBrush(mBrushes.at(set));
+//            bar->setPen(mModel.barSet(set).pen());
+//            bar->setColor(mColors.at(set));
+//            bar->setPen();
+            bar->setPos(xPos, yPos-barHeight); // item*posStep+startPos + set * mBarDefaultWidth, mHeight);
             itemIndex++;
             xPos += mBarDefaultWidth;
         }
 
         // TODO: Layout for labels, remove magic number
-        xPos = xStepPerSeries * item + ((tW + mBarDefaultWidth*seriesCount)/(itemCount*2));
+        xPos = xStepPerSet * item + ((tW + mBarDefaultWidth*setCount)/(itemCount*2));
         BarLabel* label = reinterpret_cast<BarLabel*> (childItems().at(labelIndex));
         label->setPos(xPos, mHeight + 20);
         labelIndex++;

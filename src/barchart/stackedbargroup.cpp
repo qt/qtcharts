@@ -35,7 +35,7 @@ void StackedBarGroup::layoutChanged()
 
     // TODO: better way to auto-layout
     // Use reals for accurancy (we might get some compiler warnings... :)
-    // TODO: use temp variable for column count...
+    // TODO: use temp variable for category count...
     qreal maxSum = mModel.maxCategorySum();
     qreal h = mHeight;
     qreal scale = (h / maxSum);
@@ -47,14 +47,16 @@ void StackedBarGroup::layoutChanged()
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
     int labelIndex = mModel.countSets() * mModel.countCategories();
 
-    for (int column = 0; column < mModel.countCategories(); column++) {
+    for (int category = 0; category < mModel.countCategories(); category++) {
         qreal yPos = h;
-        for (int row=0; row < mModel.countSets(); row++) {
-            qreal barHeight = mModel.valueAt(row, column) * scale;
+        for (int set=0; set < mModel.countSets(); set++) {
+            qreal barHeight = mModel.valueAt(set, category) * scale;
             Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
 
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setColor(mColors.at(row));
+            bar->setBrush(mBrushes.at(set));
+//            bar->setBrush(mBrush);
+//            bar->setColor(mColors.at(set));
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             yPos -= barHeight;
