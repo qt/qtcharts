@@ -3,6 +3,7 @@
 
 #include "qchartglobal.h"
 #include "qchartseries.h"
+#include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -15,9 +16,8 @@ public:
     QScatterSeriesPrivate();
 
 public:
-
-    // TODO: use the chart data class instead of list of x and y values?
     QList<QPointF> m_data;
+    QPen m_markerPen;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -1,5 +1,6 @@
 #include "declarativeseries.h"
 #include "declarativechart.h"
+#include <qscatterseries.h>
 #include <qlinechartseries.h>
 #include <cmath>
 #include <QDebug>
@@ -54,13 +55,11 @@ void DeclarativeSeries::initSeries()
             // fallthrough; bar and scatter use the same test data
         case SeriesTypeScatter: {
             m_series = chart->createSeries((QChartSeries::QChartSeriesType) m_seriesType);
-            QList<qreal> datax;
-            QList<qreal> datay;
-            for (qreal i = 0; i < 100; i += 0.1) {
-                datax.append(i + (rand() % 5));
-                datay.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
-            }
-            Q_ASSERT(m_series->setData(datax, datay));
+            QScatterSeries *scatter = qobject_cast<QScatterSeries *>(m_series);
+            Q_ASSERT(scatter);
+            for (qreal i = 0; i < 100; i += 0.1)
+                scatter->addData(QPointF(i + (rand() % 5),
+                                         abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5)));
             break;
         }
         case SeriesTypeStackedBar:

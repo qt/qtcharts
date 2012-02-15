@@ -18,14 +18,9 @@ int main(int argc, char *argv[])
     Q_ASSERT(scatter);
 
     // Add test data to the series
-    QList<qreal> x;
-    QList<qreal> y;
-    for (qreal i(0.0); i < 20; i += 0.5) {
-        // Linear data with random component
-        x.append(i + ((qreal)(rand() % 100)) / 100 );
-        y.append(i + ((qreal)(rand() % 100)) / 100 );
-    }
-    scatter->setData(x, y);
+    for (qreal i(0.0); i < 20; i += 0.5)
+        scatter->addData(QPointF(i + ((qreal)(rand() % 100)) / 100,
+                                 i + ((qreal)(rand() % 100)) / 100 ));
 
     // Use the chart widget as the central widget
     QMainWindow w;

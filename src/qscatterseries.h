@@ -18,21 +18,28 @@ public:
 
 public: // from QChartSeries
     QChartSeriesType type() const { return QChartSeries::SeriesTypeScatter; }
-    bool setData(QList<qreal> x, QList<qreal> y);
 
 public:
+    // TODO: the name of the function? addPoint? addData? addX?
+    void addData(QPointF data);
+
+    void setData(QList<QPointF> data);
+
     QList<QPointF> data();
+
+    //TODO? void insertData(int index, QPointF data);
+
+    void setMarkerPen(QPen pen);
+    QPen markerPen();
+    // TODO: marker shapes: "x", star, rectangle, tilted rect, triangle, circle, dot
+    //void setMarkerShape(MarkerShape shape);
+
 Q_SIGNALS:
     // TODO: move to PIMPL?
-    // TODO: more finegrained signaling
+    // TODO: more finegrained signaling for performance reasons
     void changed();
 
-public Q_SLOTS:
-    // TODO: also affects opacity of the marker...? To be documented
-    void setMarkerColor(QColor color);
-    QColor markerColor();
-    // TODO: marker shapes: "x", star, rectangle, tilted rect, triangle, circle, dot
-    //void setMarkerShape(QChartSeries::MarkerShape/QScatterSeries::MarkerShape shape);
+//public Q_SLOTS:
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)
     Q_DISABLE_COPY(QScatterSeries)

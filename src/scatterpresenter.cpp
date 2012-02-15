@@ -60,10 +60,7 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
     // TODO: m_scenex and m_sceny are left empty during construction -> we would need a resize
     // event right after construction or maybe given a size during initialization
-    qDebug() << "scene w: "<< scene()->width() << " h: " << scene()->height();
     for (int i(0); i < m_scenex.count() && i < m_sceney.count(); i++) {
-        qDebug() << "scene w: "<< scene()->width() << " h: " << scene()->height();
-        qDebug() << "x: "<< m_scenex.at(i) << " y: " << m_sceney.at(i);
         if (scene()->width() > m_scenex.at(i) && scene()->height() > m_sceney.at(i))
             //painter->drawArc(m_scenex.at(i), m_sceney.at(i), 2, 2, 0, 5760);
             painter->drawPoint(m_scenex.at(i), m_sceney.at(i));

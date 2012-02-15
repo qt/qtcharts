@@ -2,6 +2,7 @@
 #include "dataseriedialog.h"
 #include "qchartseries.h"
 #include "qpieseries.h"
+#include "qscatterseries.h"
 #include <qlinechartseries.h>
 #include <qbarset.h>
 #include <qbarcategory.h>
@@ -227,7 +228,10 @@ void MainWidget::addSeries(QString series, QString data)
     QChartSeries *newSeries = 0;
     if (series == "Scatter") {
         newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypeScatter);
-        Q_ASSERT(newSeries->setData(x, y));
+        QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(newSeries);
+        Q_ASSERT(scatterSeries);
+        for (int i(0); i < x.count() && i < y.count(); i++)
+            scatterSeries->addData(QPointF(x.at(i), y.at(i)));
     } else if (series == "Pie") {
         newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypePie);
         Q_ASSERT(newSeries->setData(y));
