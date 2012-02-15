@@ -4,31 +4,52 @@
 #include "qchartglobal.h"
 #include <QGraphicsItem>
 #include <QPen>
+#include <QFontMetricsF>
 
+class QGraphicsTextItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class PieSliceLabel : public QGraphicsItem
 {
 public:
     PieSliceLabel(QGraphicsItem* parent = 0);
-    ~PieSliceLabel();
+    ~PieSliceLabel() {};
 
 public: // from QGraphicsItem
-    QRectF boundingRect() const;
-    QPainterPath shape() const;
+    QRectF boundingRect() const { return m_rect; }
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
 public:
-    void updateGeometry(const QPointF& startPoint, qreal armAngle, qreal armLength);
-    void setLabel(QString label);
-    QString label() const {return m_label;}
-    void setPen(QPen pen);
+    void updateGeometry();
+
+    void setArmStartPoint(QPointF point) { m_armStartPoint = point; }
+    QPointF armStartPoint() const { return m_armStartPoint; }
+
+    void setArmAngle(qreal angle) { m_armAngle = angle; }
+    qreal armAngle() const { return m_armAngle; }
+
+    void setArmLength(qreal len) { m_armLength = len; }
+    qreal armLength() const { return m_armLength; }
+
+    void setText(QString text) { m_text = text; }
+    QString text() const { return m_text; }
+
+    void setPen(QPen pen) { m_pen = pen; }
+    QPen pen() const { return m_pen; }
+
+    void setFont(QFont font) { m_font = font; }
+    QFont font() const { return m_font; }
 
 private:
-    QString m_label;
-    QPainterPath m_path;
+    QPointF m_armStartPoint;
+    qreal m_armAngle;
+    qreal m_armLength;
+    QString m_text;
     QRectF m_rect;
+    QPainterPath m_armPath;
+    QRectF m_textRect;
     QPen m_pen;
+    QFont m_font;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

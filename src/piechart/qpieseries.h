@@ -35,6 +35,14 @@ public:
     void setLabelVisible(bool visible) { m_isLabelVisible = visible; }
     bool isLabelVisible() const { return m_isLabelVisible; }
 
+    // TODO:
+    //void setLabelPen(QPen pen) {};
+    //QPen labelPen() const {};
+    //void setLabelFont(QFont font);
+    //QFont labelFont() const;
+    //void setLabelArmLenght(qreal len) {};
+    //qreal labelArmLenght() const {};
+
     void setExploded(bool exploded) { m_isExploded = exploded; }
     bool isExploded() const { return m_isExploded; }
 
@@ -109,16 +117,12 @@ public:
 
     // TODO: sorting?
 
-    // TODO: convenience functions
-    //void updateValue(int sliceIndex, qreal value);
-    //void updateLabel(int sliceIndex, QString label);
-    //void updateColor(int sliceIndex, QColor color);
-    //void updateExploded(int slizeIndex, bool exploded);
-
-    // TODO: customization
-    // set/get pen/brush
-    // - for label
-    // - for whole pie/slice
+    // TODO: convenience functions?
+    //void setValue(QPieSliceId id, qreal value);
+    //void setLabel(QPieSliceId id, QString label);
+    //void setPen(QPieSliceId id, QPen pen);
+    //void setBrush(QPieSliceId id, QBrush brush);
+    //void setExploded(QPieSliceId id, bool exploded);
 
     void setSizeFactor(qreal sizeFactor);
     qreal sizeFactor() const { return m_sizeFactor; }
@@ -130,9 +134,11 @@ Q_SIGNALS:
     void changed(const QPieSeries::ChangeSet& changeSet);
     void sizeFactorChanged();
     void positionChanged();
+
+    // TODO:
     //void sliceClicked(QPieSliceId id);
-    //void sliceHoverEnter(QPieSliceId id);
-    //void sliceHoverLeave(QPieSliceId id);
+    // ?? void sliceHoverEnter(QPieSliceId id);
+    // ?? void sliceHoverLeave(QPieSliceId id);
 
 private:
     QPieSliceId generateSliceId();
