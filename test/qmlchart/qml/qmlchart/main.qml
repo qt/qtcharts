@@ -9,106 +9,64 @@ Rectangle {
         anchors.centerIn: parent
     }
 
+    // Another option for QML data api:
 //    ListModel {
 //        id: listModelForPie
 //        // PieDataElement
 //        ListElement {
 //            label: "Apple"
-//            value: 40.3
+//            value: 4.3
 //        }
 //        ListElement {
-//            label: "Pumpkin"
-//            value: 10.1
-//        }
-//        ListElement {
-//            label: "Raspberry"
+//            label: "Blackberry"
 //            value: 15.1
 //        }
-//        ListElement {
-//            label: "Strawberry"
-//            value: 29.9
-//        }
 //    }
 
-//    ChartModel {
-//        id: chartModel
-//        ListElement {
-//            label: "dada"
-//            x: 1.1
-//            y: 3.2
-//        }
-//    }
-
-//    ChartModel {
-//        ScatterElement {x: 1.1; y: 1.2}
-//        ScatterElement {x: 1.3; y: 1.9}
-//        ScatterElement {x: 1.1; y: 1.2}
-//    }
-
-    ListModel {
-        id: listModelScatter
-        ListElement {
-            height: 154
-            weight: 54
-        }
-        ListElement {
-            height: 166
-            weight: 64
-        }
-        ListElement {
-            height: 199
-            weight: 97
-        }
+    Component.onCompleted: {
+//        console.log("Component.onCompleted: " + scatterElement.x);
+//        console.log("Component.onCompleted: " + scatterElement.y);
+//        console.log("Component.onCompleted: " + scatterElement.dataX);
+//        console.log("Component.onCompleted: " + scatterElement.dataY);
+        //console.log("Component.onCompleted: " + chartModel.get(0).x);
+        //console.log("Component.onCompleted: " + chartModel.scatterElements);
+//        console.log("Component.onCompleted: " + elementt.dataX);
+//        console.log("Component.onCompleted: " + chartModel.get(0).dataX);
     }
-
-//    Chart {
-//        anchors.fill: parent
-//        theme: Chart.ThemeIcy
-//        ScatterSeries {
-//            model: listModelScatter
-//            name: "scatter"
-//            xValue: x
-//            yValue: y
-//        }
-//    }
 
     Chart {
         anchors.fill: parent
         theme: Chart.ThemeIcy
 
-//        PieSeries {
-//            labels: ["point1", "point2", "point3", "point4", "point5"]
-//            datax: [2, 1.5, 3, 3, 3]
-//        }
-//        PieSeries {
-//            name: "raspberry pie"
-//            seriesLabels: ["point1", "point2", "point3", "point4", "point5"]
-//            seriesData: [2, 1.5, 3, 3, 3]
-//        }
-//        ScatterSeries {
-//            name: "scatter1"
-//            datax: [2, 1.5, 3, 3, 3]
-//            datay: [2, 1.5, 3, 3, 3]
-//        }
-//        Series {
-//            labels: ["point1", "point2", "point3", "point4", "point5"]
-//            datax: [2, 1.5, 3, 3, 3]
-//            seriesType: Series.SeriesTypePie
-//        }
-        Series {
-            seriesType: Series.SeriesTypePie
-            //model: listModelForPie
-            //seriesData: {11.0, 6.4, 12.6, 22.4}
-            //seriesLabels: {"Strawberry", "Blackberry", "Apple", "Pumpkin"}
+        ScatterSeries {
+            id: scatterSeries
+            data: [
+                ScatterElement { x: 1.1; y: 2.1 },
+                ScatterElement { x: 1.2; y: 2.0 },
+                ScatterElement { x: 1.4; y: 2.3 },
+                ScatterElement { x: 1.9; y: 2.5 },
+                ScatterElement { x: 1.9; y: 3.4 },
+                ScatterElement { x: 2.9; y: 1.4 },
+                ScatterElement { x: 2.9; y: 2.4 },
+                ScatterElement { x: 3.1; y: 5.3 },
+                ScatterElement { x: 4.1; y: 3.7 }
+            ]
+            Component.onCompleted: {
+                console.log("onCompleted " + data);
+//                console.log("onCompleted " + data.get(0));
+//                console.log("onCompleted " + data.get(0).x);
+//                var element = {"x": 9.9, "y": 8.5};
+//                data.append(element);
+            }
         }
 
-        Series {
-//            data: {[1.2], "y":2.2 }
-            seriesType: Series.SeriesTypeScatter
-        }
-        Series {
-            seriesType: Series.SeriesTypeLine
-        }
+//        Series {
+//            seriesType: Series.SeriesTypePie
+//        }
+
+//        Series {
+//            seriesType: Series.SeriesTypeLine
+//        }
         // TODO:
 //        Series {
 //            seriesType: Series.SeriesTypeBar

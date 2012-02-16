@@ -2,6 +2,8 @@
 #include <QtDeclarative/qdeclarative.h>
 #include "declarativechart.h"
 #include "declarativeseries.h"
+#include "scatterelement.h"
+#include "declarativescatterseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -14,7 +16,8 @@ public:
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCommercial.Chart"));
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "Chart");
         qmlRegisterType<DeclarativeSeries>(uri, 1, 0, "Series");
-        //qmlRegisterUncreatableType<QChartSeries::SeriesTypeBar>(uri, 1, 0, "Series.Se", QLatin1String("Do not create objects of this type."));
+        qmlRegisterType<DeclarativeScatterSeries>(uri, 1, 0, "ScatterSeries");
+        qmlRegisterType<ScatterElement>(uri, 1, 0, "ScatterElement");
     }
 };
 
