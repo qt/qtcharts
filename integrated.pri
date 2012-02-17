@@ -5,7 +5,13 @@ integrated_build:{
     !win32: {
         LIBS += -L $$CHART_BUILD_LIB_DIR -Wl,-rpath,$$CHART_BUILD_LIB_DIR
     }else{
-        LIBS += -L $$CHART_BUILD_LIB_DIR 
+        win32-msvc*: {
+            # hack fix for error:
+            #   "LINK : fatal error LNK1146: no argument specified with option '/LIBPATH:'"
+            QMAKE_LIBDIR += $$CHART_BUILD_LIB_DIR
+        }else{
+            LIBS += -L $$CHART_BUILD_LIB_DIR
+        }
     }
 
     DESTDIR = $$CHART_BUILD_BIN_DIR
