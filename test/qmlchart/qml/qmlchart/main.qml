@@ -4,10 +4,6 @@ import QtCommercial.Chart 1.0
 Rectangle {
     width: 360
     height: 360
-    Text {
-        text: qsTr("Hello World")
-        anchors.centerIn: parent
-    }
 
     // Another option for QML data api:
 //    ListModel {
@@ -34,9 +30,15 @@ Rectangle {
 //        console.log("Component.onCompleted: " + chartModel.get(0).dataX);
     }
 
+    // TODO: a bug: drawing order affects the drawing; if you draw chart1 first (by changing the
+    // z-order), then chart2 is not shown at all. By drawing chart2 first, both are visible.
     Chart {
-        anchors.fill: parent
-        theme: Chart.ThemeIcy
+        id: chart2
+        anchors.top: chart1.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        theme: Chart.ThemeScientific
 
         ScatterSeries {
             id: scatterSeries
@@ -44,32 +46,32 @@ Rectangle {
                 ScatterElement { x: 1.1; y: 2.1 },
                 ScatterElement { x: 1.2; y: 2.0 },
                 ScatterElement { x: 1.4; y: 2.3 },
-                ScatterElement { x: 1.9; y: 2.5 },
-                ScatterElement { x: 1.9; y: 3.4 },
-                ScatterElement { x: 2.9; y: 1.4 },
-                ScatterElement { x: 2.9; y: 2.4 },
                 ScatterElement { x: 3.1; y: 5.3 },
                 ScatterElement { x: 4.1; y: 3.7 }
             ]
-            Component.onCompleted: {
-                console.log("onCompleted " + data);
-//                console.log("onCompleted " + data.get(0));
-//                console.log("onCompleted " + data.get(0).x);
-//                var element = {"x": 9.9, "y": 8.5};
-//                data.append(element);
-            }
+        }
+    }
+
+    Chart {
+        id: chart1
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: parent.height / 2
+        theme: Chart.ThemeIcy
+        opacity: 0.3
+
+        Series {
+            seriesType: Series.SeriesTypePie
         }
 
-//        Series {
-//            seriesType: Series.SeriesTypePie
-//        }
-
-//        Series {
-//            seriesType: Series.SeriesTypeLine
-//        }
+        Series {
+            seriesType: Series.SeriesTypeLine
+        }
         // TODO:
 //        Series {
 //            seriesType: Series.SeriesTypeBar
 //        }
     }
+
 }
