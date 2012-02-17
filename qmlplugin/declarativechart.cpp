@@ -7,7 +7,6 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
       m_chart(new QChart(this))
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
-//    m_chart->setMargin(50); // TODO: should not be needed?
 }
 
 DeclarativeChart::ChartTheme DeclarativeChart::theme()
@@ -18,8 +17,21 @@ DeclarativeChart::ChartTheme DeclarativeChart::theme()
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
-    if (newGeometry.isValid())
-        m_chart->resize(newGeometry.width(), newGeometry.height());
+    qDebug() << "geometryChanged " << this << " old geometry: " << oldGeometry;
+    if (newGeometry.isValid()) {
+        if (newGeometry.width() > 0 && newGeometry.height() > 0) {
+            // TODO: setting margin should not be needed to make axis visible?
+            const int margin = 30;
+            if (m_chart->margin() == 0
+                    && newGeometry.width() > (margin * 2)
+                    && newGeometry.height() > (margin * 2)) {
+                m_chart->setMargin(margin);
+                m_chart->resize(newGeometry.width(), newGeometry.height());
+            } else {
+                m_chart->resize(newGeometry.width(), newGeometry.height());
+            }
+        }
+    }
 }
 
 #include "moc_declarativechart.cpp"

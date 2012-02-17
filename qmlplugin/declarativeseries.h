@@ -34,9 +34,6 @@ signals:
 public slots:
     void setParentForSeries();
 
-public: // from QDeclarativeItem
-    QVariant itemChange(GraphicsItemChange, const QVariant &);
-
 public:
     void setSeriesType(SeriesType type);
     SeriesType seriesType() { return m_seriesType; }
