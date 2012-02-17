@@ -70,15 +70,16 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
             case QScatterSeries::MarkerShapeRectangle:
                 painter->drawRect(m_scenex.at(i), m_sceney.at(i), 9, 9);
                 break;
-            case QScatterSeries::MarkerShapeTiltedRectangle:
-                // TODO:
-                static const QPointF points[4] = {
-                    QPointF(-1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
-                    QPointF(0.0 + m_scenex.at(i), 1.0 + m_sceney.at(i)),
-                    QPointF(1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
-                    QPointF(0.0 + m_scenex.at(i), -1.0 + m_sceney.at(i))
-                };
-                painter->drawPolygon(points, 4);
+            case QScatterSeries::MarkerShapeTiltedRectangle: {
+                    // TODO:
+                    static const QPointF points[4] = {
+                        QPointF(-1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
+                        QPointF(0.0 + m_scenex.at(i), 1.0 + m_sceney.at(i)),
+                        QPointF(1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
+                        QPointF(0.0 + m_scenex.at(i), -1.0 + m_sceney.at(i))
+                    };
+                    painter->drawPolygon(points, 4);
+                }
                 break;
             default:
                 // TODO: implement the rest of the shapes
