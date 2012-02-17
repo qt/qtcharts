@@ -8,6 +8,7 @@ SUBDIRS += linechart \
            scatter \
            piechart \
            dynamiclinechart \
+           axischart \
+           multichart \
            axischart\
-           gdpbarchart\
-           multichart
+           gdpbarchart
