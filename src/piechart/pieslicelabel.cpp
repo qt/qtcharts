@@ -24,8 +24,9 @@ void PieSliceLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem* /*o
     painter->drawPath(m_armPath);
 
     // TODO: do we need a pen for text?
-    painter->setFont(m_font);
-    painter->drawText(m_textRect, m_text);
+    QFont font;
+    painter->setFont(font);
+    painter->drawText(m_textRect.bottomLeft(), m_text);
 
     //qDebug() << "PieSliceLabel::paint" << m_text << m_textRect;
 }
@@ -52,6 +53,10 @@ void PieSliceLabel::updateGeometry()
          parm2 += QPointF(-m_textRect.width(),0);
          textRect.moveBottomLeft(parm2);
     }
+
+    // add a little offset to text so that it does not touch the arm
+    qreal yOffset = m_pen.widthF() ? m_pen.widthF() : 2;
+    textRect.translate(0, -yOffset);
 
     // update arm path
     QPainterPath path;
