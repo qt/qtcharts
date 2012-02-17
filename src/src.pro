@@ -89,15 +89,23 @@ public_headers.files = $$PUBLIC_HEADERS
 target.path = $$[QT_INSTALL_LIBS]
 INSTALLS += target \
     public_headers
-install_build_headers.name = bild_headers
-install_build_headers.output = $$CHART_BUILD_HEADER_DIR/${QMAKE_FILE_BASE}.h
-install_build_headers.input = PUBLIC_HEADERS
-install_build_headers.commands = $$QMAKE_COPY \
+install_build_public_headers.name = bild_public_headers
+install_build_public_headers.output = $$CHART_BUILD_PUBLIC_HEADER_DIR/${QMAKE_FILE_BASE}.h
+install_build_public_headers.input = PUBLIC_HEADERS
+install_build_public_headers.commands = $$QMAKE_COPY \
     ${QMAKE_FILE_NAME} \
-    $$CHART_BUILD_HEADER_DIR
-install_build_headers.CONFIG += target_predeps \
+    $$CHART_BUILD_PUBLIC_HEADER_DIR
+install_build_public_headers.CONFIG += target_predeps \
     no_link
-QMAKE_EXTRA_COMPILERS += install_build_headers
+install_build_private_headers.name = bild_private_headers
+install_build_private_headers.output = $$CHART_BUILD_PRIVATE_HEADER_DIR/${QMAKE_FILE_BASE}.h
+install_build_private_headers.input = PRIVATE_HEADERS
+install_build_private_headers.commands = $$QMAKE_COPY \
+    ${QMAKE_FILE_NAME} \
+    $$CHART_BUILD_PRIVATE_HEADER_DIR
+install_build_private_headers.CONFIG += target_predeps \
+    no_link
+QMAKE_EXTRA_COMPILERS += install_build_public_headers install_build_private_headers
 chartversion.target = qchartversion_p.h
 chartversion.commands = @echo \
     "build_time" \

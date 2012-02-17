@@ -1,6 +1,6 @@
 integrated_build:{
-    message('Internal build within charts core source tree')
-    INCLUDEPATH += $$CHART_BUILD_HEADER_DIR
+    message('Running integrated build against local libs...')
+    INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR
 
     !win32: {
         LIBS += -L $$CHART_BUILD_LIB_DIR -Wl,-rpath,$$CHART_BUILD_LIB_DIR
@@ -45,5 +45,6 @@ integrated_build:{
     }
 
 } else {
+    message('Running build aginst system libs...')
     CONFIG+=qtcommercialchart
 }
