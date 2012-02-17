@@ -24,10 +24,14 @@ RCC_DIR = $$CHART_BUILD_DIR/lib
 SOURCES += \
     plugin.cpp \
     declarativechart.cpp \
-    declarativeseries.cpp
+    declarativeseries.cpp \
+    declarativescatterseries.cpp \
+    scatterelement.cpp
 HEADERS += \
     declarativechart.h \
-    declarativeseries.h
+    declarativeseries.h \
+    declarativescatterseries.h \
+    scatterelement.h
 
 TARGETPATH = QtCommercial/Chart
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
@@ -35,5 +39,19 @@ qmldir.files += $$PWD/qmldir
 qmldir.path +=  $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
 
 INSTALLS += target qmldir
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

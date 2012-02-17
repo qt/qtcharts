@@ -86,15 +86,6 @@ void DeclarativeSeries::initSeries()
     }
 }
 
-QVariant DeclarativeSeries::itemChange(GraphicsItemChange change,
-                                       const QVariant &value)
-{
-    // For debugging purposes only:
-//    qDebug() << QString::number(change) << " : " << value.toString();
-    return QGraphicsItem::itemChange(change, value);
-}
-
-
 #include "moc_declarativeseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

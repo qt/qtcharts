@@ -1,9 +1,10 @@
 #include <QtGui/QApplication>
 #include <QMainWindow>
-#include <cmath>
 #include <qchartglobal.h>
 #include <qchartview.h>
 #include <qpieseries.h>
+#include <qpieslice.h>
+#include "customslice.h"
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -11,23 +12,31 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    // Create widget and scatter series
-    QChartView *chartWidget = new QChartView();
-    QPieSeries *series = qobject_cast<QPieSeries *>(chartWidget->createSeries(QChartSeries::SeriesTypePie));
-    Q_ASSERT(series);
+    QMainWindow window;
 
-    // Add test data to the series
-    series->add(QPieSlice(1, "test1", true, true, QPen(Qt::red, 2), QBrush(Qt::red)));
-    series->add(QPieSlice(2, "test2"));
-    series->add(QPieSlice(3, "test3"));
-    series->add(QPieSlice(4, "test4"));
-    series->add(QPieSlice(5, "test5"));
+    QPieSeries *series = new QPieSeries();
+    series->add(5, "Slice 1");
+    series->add(2, "Slice 2");
+    series->add(3, "Slice 3");
+    series->add(4, "Slice 4");
+    series->add(5, "Slice 5");
+    series->add(6, "Slice 6");
+    series->add(7, "Slice 7");
+    series->add(new CustomSlice(8));
+    series->enableClickExplodes(true);
+    series->enableHoverHighlight(true);
 
-    // Use the chart widget as the central widget
-    QMainWindow w;
-    w.resize(640, 480);
-    w.setCentralWidget(chartWidget);
-    w.show();
+    foreach (QPieSlice*s, series->slices())
+        qDebug() << s->angle() << s->span() << s->percentage();
+
+    QChartView* chartView =  new QChartView(&window);
+    chartView->addSeries(series);
+    chartView->setChartTitle("simple piechart");
+    chartView->setChartTheme(QChart::ChartThemeIcy);
+
+    window.setCentralWidget(chartView);
+    window.resize(600, 600);
+    window.show();
 
     return a.exec();
 }

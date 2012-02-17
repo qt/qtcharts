@@ -2,6 +2,7 @@
 #include "pieslicelabel.h"
 #include "piepresenter.h"
 #include "qpieseries.h"
+#include "qpieslice.h"
 #include <QPainter>
 #include <QDebug>
 #include <qmath.h>
@@ -20,27 +21,25 @@ QPointF offset(qreal angle, qreal length)
     return QPointF(dx, -dy);
 }
 
-PieSlice::PieSlice(QPieSliceId id, QPieSeries *series, QGraphicsItem* parent)
+PieSlice::PieSlice(QGraphicsItem* parent)
     :QGraphicsObject(parent),
-    m_id(id),
-    m_series(series),
     m_slicelabel(new PieSliceLabel(this)),
-    m_isHovering(false)
+    m_angle(0),
+    m_span(0),
+    m_isExploded(false)
 {
-    Q_ASSERT(series);
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::LeftButton);
-    updateData();
 }
 
 PieSlice::~PieSlice()
 {
-    qDebug() << "~PieSlice()" << m_id;
+
 }
 
 QRectF PieSlice::boundingRect() const
 {
-    return m_rect;
+    return m_path.boundingRect();
 }
 
 QPainterPath PieSlice::shape() const
@@ -50,50 +49,43 @@ QPainterPath PieSlice::shape() const
 
 void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
-    // set hover brush
-    // TODO: what if we are using gradients...
-    QBrush brush = m_data.brush();
-    if (m_isHovering)
-        brush.setColor(brush.color().lighter());
-
     painter->setRenderHint(QPainter::Antialiasing);
-    painter->setPen(m_data.pen());
-    painter->setBrush(brush);
+    painter->setPen(m_pen);
+    painter->setBrush(m_brush);
     painter->drawPath(m_path);
 }
 
 void PieSlice::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
-    m_isHovering = true;
-    update();
-    // TODO: emit hoverEnter()
+    emit hoverEnter();
 }
 
 void PieSlice::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
-    m_isHovering = false;
-    update();
-    // TODO: emit hoverLeave()
+    emit hoverLeave();
 }
 
 void PieSlice::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
 {
-    // TODO: emit clicked
-    // TODO: should we let the user decide if this can be exploded?
-    m_data.setExploded(!m_data.isExploded());
-    m_series->update(m_data);
+    emit clicked();
 }
 
-void PieSlice::updateGeometry(QRectF rect, qreal startAngle, qreal span)
+void PieSlice::setPieRect(QRectF rect)
+{
+    m_pieRect = rect;
+}
+
+void PieSlice::updateGeometry()
 {
     prepareGeometryChange();
 
     // calculate center angle
-    qreal centerAngle = startAngle + (span/2);
+    qreal centerAngle = m_angle + (m_span/2);
 
     // adjust rect for exploding
+    QRectF rect = m_pieRect;
     rect.adjust(EXPLODE_OFFSET, EXPLODE_OFFSET, -EXPLODE_OFFSET ,-EXPLODE_OFFSET);
-    if (m_data.isExploded()) {
+    if (m_isExploded) {
         QPointF d = offset((centerAngle), EXPLODE_OFFSET);
         rect.translate(d.x(), d.y());
     }
@@ -102,9 +94,9 @@ void PieSlice::updateGeometry(QRectF rect, qreal startAngle, qreal span)
     // TODO: draw the shape so that it might have a hole in the center
     QPainterPath path;
     path.moveTo(rect.center());
-    path.arcTo(rect, -startAngle + 90, -span);
+    path.arcTo(rect, -m_angle + 90, -m_span);
+    path.closeSubpath();
     m_path = path;
-    m_rect = path.boundingRect();
 
     // update label position
     qreal radius = rect.height() / 2;
@@ -112,27 +104,36 @@ void PieSlice::updateGeometry(QRectF rect, qreal startAngle, qreal span)
 
     m_slicelabel->setArmStartPoint(edgeCenter);
     m_slicelabel->setArmAngle(centerAngle);
-    m_slicelabel->setArmLength(50);
     m_slicelabel->updateGeometry();
 
-    //qDebug() << "PieSlice::updateGeometry" << m_rect;
+    //qDebug() << "PieSlice::updateGeometry" << m_slicelabel->text() << boundingRect() << m_angle << m_span;
 }
 
-void PieSlice::updateData()
+void PieSlice::handleSliceDataChanged()
 {
-    if (!m_series->m_slices.contains(m_id))
-        qWarning() << "PieSlice::updateData(): cannot find slice data!" << m_id;
+    QPieSlice *slice = qobject_cast<QPieSlice*>(sender());
+    Q_ASSERT(slice);
+    updateData(slice);
+}
 
-    QPieSlice data = m_series->slice(m_id);
-    // TODO: find out what has changed and trigger some animation
-    m_data = data;
+void PieSlice::updateData(const QPieSlice* sliceData)
+{
+    // TODO: compare what has changes to avoid unneccesary geometry updates
 
+    m_angle = sliceData->angle();
+    m_span = sliceData->span();
+    m_isExploded = sliceData->isExploded();
+    m_pen = sliceData->pen();
+    m_brush = sliceData->brush();
+
+    updateGeometry();
     update();
 
-    m_slicelabel->setVisible(m_data.isLabelVisible());
-    m_slicelabel->setText(m_data.label());
-    //m_slicelabel->setPen(m_data.labelPen());
-    //m_slicelabel->setFont(m_data.labelFont());
+    m_slicelabel->setVisible(sliceData->isLabelVisible());
+    m_slicelabel->setText(sliceData->label());
+    m_slicelabel->setPen(sliceData->labelPen());
+    m_slicelabel->setFont(sliceData->labelFont());
+    m_slicelabel->setArmLength(sliceData->labelArmLenght());
     m_slicelabel->updateGeometry(); // text size & font modifies the geometry
     m_slicelabel->update();
 }

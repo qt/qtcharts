@@ -9,4 +9,5 @@ SUBDIRS += linechart \
            piechart \
            dynamiclinechart \
            axischart\
-gdpbarchart
+           gdpbarchart\
+           multichart

@@ -10,6 +10,7 @@
 #include "qlinechartseries.h"
 #include "qscatterseries.h"
 #include "qpieseries.h"
+#include "qpieslice.h"
 
 //items
 #include "axisitem_p.h"
@@ -17,7 +18,7 @@
 #include "stackedbargroup.h"
 #include "linechartitem_p.h"
 #include "percentbargroup.h"
-#include "scatterpresenter.h"
+#include "scatterpresenter_p.h"
 #include "piepresenter.h"
 
 //themes
@@ -104,6 +105,14 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
             decorate(i,s,count);
             break;
         }
+        case QChartSeries::SeriesTypeScatter: {
+            QScatterSeries* s = qobject_cast<QScatterSeries*>(series);
+            Q_ASSERT(s);
+            ScatterPresenter* i = static_cast<ScatterPresenter*>(item);
+            Q_ASSERT(i);
+            decorate(i, s, count);
+            break;
+        }
         case QChartSeries::SeriesTypePie: {
             QPieSeries* s = static_cast<QPieSeries*>(series);
             PiePresenter* i = static_cast<PiePresenter*>(item);
@@ -179,16 +188,16 @@ void ChartTheme::decorate(ScatterPresenter* presenter, QScatterSeries* series, i
     Q_ASSERT(presenter);
     Q_ASSERT(series);
 
-    presenter->m_markerPen.setColor(m_seriesColor.at(count % m_seriesColor.size()));
+    QColor color = m_seriesColor.at(count % m_seriesColor.size());
+    // TODO: define alpha in the theme? or in the series?
+    color.setAlpha(120);
 
-//    QPen pen;
-//    if(pen != series->pen()){
-//        item->setPen(series->pen());
-//        return;
-//    }
-//    pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
-//    pen.setWidthF(2);
-//    item->setPen(pen);
+    QBrush brush(color, Qt::SolidPattern);
+    presenter->m_markerBrush = brush;
+
+    QPen pen(brush, 1);
+    pen.setColor(color);
+    presenter->m_markerPen = pen;
 }
 
 void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
@@ -224,11 +233,9 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
     }
 
     // finally update colors
-    foreach (QPieSliceId id, series->ids()) {
-        QPieSlice s = series->slice(id);
-        s.setPen(QPen(Qt::black)); // TODO: get from theme
-        s.setBrush(colors.takeFirst());
-        series->update(s);
+    foreach (QPieSlice* s, series->slices()) {
+        s->setPen(QPen(Qt::black)); // TODO: get from theme
+        s->setBrush(colors.takeFirst());
     }
 }
 

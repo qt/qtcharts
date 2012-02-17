@@ -1,4 +1,4 @@
-#include "scatterpresenter.h"
+#include "scatterpresenter_p.h"
 #include "qscatterseries.h"
 #include <QPen>
 #include <QPainter>
@@ -43,31 +43,49 @@ void ScatterPresenter::handleModelChanged()
 
 void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/)
 {
-    // TODO: The opacity should be user definable?
-    //brush.setColor(QColor(255, 82, 0, 100));
-    //if (m_series->markerPen().isValid()) {
-    if (false) {
-        QPen pen = painter->pen();
-        QBrush brush = pen.brush();
-        brush.setColor(m_series->markerPen().color());
-        pen.setBrush(brush);
-        pen.setWidth(4);
-        painter->setPen(pen);
+    // TODO: Optimization: avoid setting on every paint method call?
+    // The custom settings in series override those defined by the theme
+    if (m_series->markerPen().color().isValid()) {
+        painter->setPen(m_series->markerPen());
+        painter->setBrush(m_series->markerBrush());
+    } else {
+        painter->setPen(m_markerPen);
+        painter->setBrush(m_markerBrush);
     }
-    else {
-        // TODO: fix this
-        QPen pen = painter->pen();
-        QBrush brush = pen.brush();
-        brush.setColor(m_markerPen.color());
-        pen.setBrush(brush);
-        pen.setWidth(4);
-        painter->setPen(pen);
-    }
+
+    int shape = m_series->markerShape();
 
     for (int i(0); i < m_scenex.count() && i < m_sceney.count(); i++) {
         if (scene()->width() > m_scenex.at(i) && scene()->height() > m_sceney.at(i))
-            //painter->drawArc(m_scenex.at(i), m_sceney.at(i), 2, 2, 0, 5760);
-            painter->drawPoint(m_scenex.at(i), m_sceney.at(i));
+            // Paint a shape
+            switch (shape) {
+            case QScatterSeries::MarkerShapeDefault:
+                // Fallthrough, defaults to circle
+            case QScatterSeries::MarkerShapeCircle:
+                painter->drawChord(m_scenex.at(i), m_sceney.at(i), 9, 9, 0, 5760);
+                break;
+            case QScatterSeries::MarkerShapePoint:
+                painter->drawPoint(m_scenex.at(i), m_sceney.at(i));
+                break;
+            case QScatterSeries::MarkerShapeRectangle:
+                painter->drawRect(m_scenex.at(i), m_sceney.at(i), 9, 9);
+                break;
+            case QScatterSeries::MarkerShapeTiltedRectangle: {
+                    // TODO:
+                    static const QPointF points[4] = {
+                        QPointF(-1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
+                        QPointF(0.0 + m_scenex.at(i), 1.0 + m_sceney.at(i)),
+                        QPointF(1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
+                        QPointF(0.0 + m_scenex.at(i), -1.0 + m_sceney.at(i))
+                    };
+                    painter->drawPolygon(points, 4);
+                }
+                break;
+            default:
+                // TODO: implement the rest of the shapes
+                Q_ASSERT(false);
+                break;
+            }
     }
 }
 
@@ -89,6 +107,6 @@ void ScatterPresenter::changeGeometry()
     }
 }
 
-#include "moc_scatterpresenter.cpp"
+#include "moc_scatterpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

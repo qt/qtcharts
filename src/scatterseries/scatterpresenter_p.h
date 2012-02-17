@@ -40,6 +40,7 @@ public:
     QList<qreal> m_sceney;
     Domain m_visibleChartArea;
     QPen m_markerPen;
+    QBrush m_markerBrush;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

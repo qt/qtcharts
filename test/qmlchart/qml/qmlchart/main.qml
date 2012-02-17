@@ -4,114 +4,93 @@ import QtCommercial.Chart 1.0
 Rectangle {
     width: 360
     height: 360
-    Text {
-        text: qsTr("Hello World")
-        anchors.centerIn: parent
-    }
 
+    // Another option for QML data api:
 //    ListModel {
 //        id: listModelForPie
 //        // PieDataElement
 //        ListElement {
 //            label: "Apple"
-//            value: 40.3
+//            value: 4.3
 //        }
 //        ListElement {
-//            label: "Pumpkin"
-//            value: 10.1
-//        }
-//        ListElement {
-//            label: "Raspberry"
+//            label: "Blackberry"
 //            value: 15.1
 //        }
-//        ListElement {
-//            label: "Strawberry"
-//            value: 29.9
-//        }
 //    }
 
-//    ChartModel {
-//        id: chartModel
-//        ListElement {
-//            label: "dada"
-//            x: 1.1
-//            y: 3.2
-//        }
-//    }
-
-//    ChartModel {
-//        ScatterElement {x: 1.1; y: 1.2}
-//        ScatterElement {x: 1.3; y: 1.9}
-//        ScatterElement {x: 1.1; y: 1.2}
-//    }
-
-    ListModel {
-        id: listModelScatter
-        ListElement {
-            height: 154
-            weight: 54
-        }
-        ListElement {
-            height: 166
-            weight: 64
-        }
-        ListElement {
-            height: 199
-            weight: 97
-        }
+    Component.onCompleted: {
+//        console.log("Component.onCompleted: " + scatterElement.x);
+//        console.log("Component.onCompleted: " + scatterElement.y);
+//        console.log("Component.onCompleted: " + scatterElement.dataX);
+//        console.log("Component.onCompleted: " + scatterElement.dataY);
+        //console.log("Component.onCompleted: " + chartModel.get(0).x);
+        //console.log("Component.onCompleted: " + chartModel.scatterElements);
+//        console.log("Component.onCompleted: " + elementt.dataX);
+//        console.log("Component.onCompleted: " + chartModel.get(0).dataX);
     }
 
-//    Chart {
-//        anchors.fill: parent
-//        theme: Chart.ThemeIcy
-//        ScatterSeries {
-//            model: listModelScatter
-//            name: "scatter"
-//            xValue: x
-//            yValue: y
-//        }
-//    }
-
     Chart {
-        anchors.fill: parent
+        id: chart1
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: parent.height / 2
         theme: Chart.ThemeIcy
+//        opacity: 0.3
 
-//        PieSeries {
-//            labels: ["point1", "point2", "point3", "point4", "point5"]
-//            datax: [2, 1.5, 3, 3, 3]
-//        }
-//        PieSeries {
-//            name: "raspberry pie"
-//            seriesLabels: ["point1", "point2", "point3", "point4", "point5"]
-//            seriesData: [2, 1.5, 3, 3, 3]
-//        }
-//        ScatterSeries {
-//            name: "scatter1"
-//            datax: [2, 1.5, 3, 3, 3]
-//            datay: [2, 1.5, 3, 3, 3]
-//        }
-//        Series {
-//            labels: ["point1", "point2", "point3", "point4", "point5"]
-//            datax: [2, 1.5, 3, 3, 3]
-//            seriesType: Series.SeriesTypePie
-//        }
         Series {
             seriesType: Series.SeriesTypePie
-            //model: listModelForPie
-            //seriesData: {11.0, 6.4, 12.6, 22.4}
-            //seriesLabels: {"Strawberry", "Blackberry", "Apple", "Pumpkin"}
         }
 
-        Series {
-//            data: {[1.2], "y":2.2 }
-            seriesType: Series.SeriesTypeScatter
-        }
-        Series {
-            seriesType: Series.SeriesTypeLine
-        }
+        // TODO: a bug: drawing order affects the drawing; if you draw chart1 first (by changing the
+        // z-order), then chart2 is not shown at all. By drawing chart2 first, both are visible.
+        // Also, if you don't draw line series on chart1 (only pie), both charts are visible.
+//        Series {
+//            seriesType: Series.SeriesTypeLine
+//        }
         // TODO:
 //        Series {
 //            seriesType: Series.SeriesTypeBar
 //        }
+    }
+
+
+    Chart {
+        id: chart2
+        anchors.top: chart1.bottom
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        theme: Chart.ThemeScientific
+
+        ScatterSeries {
+            data: [
+                ScatterElement { x: 1.1; y: 2.1 },
+                ScatterElement { x: 1.2; y: 2.0 },
+                ScatterElement { x: 1.4; y: 2.3 }
+            ]
+        }
+        ScatterSeries {
+            data: [
+                ScatterElement { x: 1.2; y: 2.2 },
+                ScatterElement { x: 1.3; y: 2.2 },
+                ScatterElement { x: 1.7; y: 2.6 }
+            ]
+        }
+        ScatterSeries {
+            data: [
+                ScatterElement { x: 1.3; y: 2.3 },
+                ScatterElement { x: 1.5; y: 2.4 },
+                ScatterElement { x: 2.0; y: 2.9 }
+            ]
+        }
+        ScatterSeries {
+            data: [
+                ScatterElement { x: 1.4; y: 2.4 },
+                ScatterElement { x: 1.8; y: 2.7 },
+                ScatterElement { x: 2.5; y: 3.2 }
+            ]
+        }
     }
 }

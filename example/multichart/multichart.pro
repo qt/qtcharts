@@ -7,13 +7,15 @@
 
 QT += core gui
 
-TARGET = piechart
+TARGET = multichart
 TEMPLATE = app
 
-SOURCES += main.cpp customslice.cpp
-HEADERS += customslice.h
+SOURCES += main.cpp \
+    multichartwidget.cpp
 
-OBJECTS_DIR = tmp
-MOC_DIR = tmp
+HEADERS  += \
+    multichartwidget.h
+
+
 
 

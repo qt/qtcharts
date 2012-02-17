@@ -32,13 +32,12 @@ public Q_SLOTS:
     void updateGeometry();
 
 private:
-    void addSlice(QPieSliceId id);
-    void updateSlice(QPieSliceId id);
-    void deleteSlice(QPieSliceId id);
+    void addSlice(QPieSlice* sliceData);
+    void deleteSlice(QPieSlice* sliceData);
 
 private:
     friend class PieSlice;
-    QHash<QPieSliceId, PieSlice*> m_slices;
+    QHash<QPieSlice*, PieSlice*> m_slices;
     QPieSeries *m_series;
     QRectF m_rect;
     QRectF m_pieRect;

@@ -3,7 +3,14 @@
 }
 
 TEMPLATE = subdirs
-SUBDIRS += src qmlplugin example test
+SUBDIRS += src example test qmlplugin
+
+integrated_build:{
+    message('Configured for integrated build')
+} else {
+    message('Please build example test and qmlplugin after installing library.')
+}
+
 CONFIG += ordered
 QMAKE_CXXFLAGS += -g -Wall
 unix:QMAKE_DISTCLEAN += -r build bin 

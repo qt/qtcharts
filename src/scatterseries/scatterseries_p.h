@@ -18,6 +18,8 @@ public:
 public:
     QList<QPointF> m_data;
     QPen m_markerPen;
+    QBrush m_markerBrush;
+    int m_markerShape;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -24,7 +24,7 @@ public:
     //implement from QWidget
     void resizeEvent(QResizeEvent *event);
 
-    void addSeries(QChartSeries* series);
+    void addSeries(QChartSeries* series); // takes ownership
 
     // Convenience function
     QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
