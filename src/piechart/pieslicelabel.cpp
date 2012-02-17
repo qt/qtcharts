@@ -2,16 +2,18 @@
 #include <QPainter>
 #include <qmath.h>
 #include <QGraphicsTextItem>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 #define PI 3.14159265
 
 PieSliceLabel::PieSliceLabel(QGraphicsItem* parent)
-    :QGraphicsItem(parent)
+    :QGraphicsItem(parent),
+    m_armAngle(0),
+    m_armLength(0)
 {
-    // set defaults
-    m_pen = QPen(Qt::black);
+
 }
 
 void PieSliceLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
@@ -24,6 +26,8 @@ void PieSliceLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem* /*o
     // TODO: do we need a pen for text?
     painter->setFont(m_font);
     painter->drawText(m_textRect, m_text);
+
+    //qDebug() << "PieSliceLabel::paint" << m_text << m_textRect;
 }
 
 void PieSliceLabel::updateGeometry()
@@ -59,6 +63,8 @@ void PieSliceLabel::updateGeometry()
     m_armPath = path;
     m_textRect = textRect;
     m_rect = path.boundingRect().united(m_textRect);
+
+    //qDebug() << "PieSliceLabel::updateGeometry" << m_text << m_armStartPoint << m_armLength << m_armAngle << m_textRect;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

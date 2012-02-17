@@ -130,6 +130,8 @@ void PiePresenter::addSlice(QPieSlice* sliceData)
     PieSlice *slice = new PieSlice(this);
     slice->setPieRect(m_pieRect);
     slice->updateData(sliceData);
+    slice->updateGeometry();
+    slice->update();
     m_slices.insert(sliceData, slice);
 
     // connect signals

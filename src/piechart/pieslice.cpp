@@ -101,7 +101,6 @@ void PieSlice::updateGeometry()
     // update label position
     qreal radius = rect.height() / 2;
     QPointF edgeCenter = rect.center() + offset(centerAngle, radius + 5);
-
     m_slicelabel->setArmStartPoint(edgeCenter);
     m_slicelabel->setArmAngle(centerAngle);
     m_slicelabel->updateGeometry();
@@ -126,15 +125,14 @@ void PieSlice::updateData(const QPieSlice* sliceData)
     m_pen = sliceData->pen();
     m_brush = sliceData->brush();
 
-    updateGeometry();
-    update();
-
     m_slicelabel->setVisible(sliceData->isLabelVisible());
     m_slicelabel->setText(sliceData->label());
     m_slicelabel->setPen(sliceData->labelPen());
     m_slicelabel->setFont(sliceData->labelFont());
     m_slicelabel->setArmLength(sliceData->labelArmLenght());
-    m_slicelabel->updateGeometry(); // text size & font modifies the geometry
+
+    updateGeometry();
+    update();
     m_slicelabel->update();
 }
 
