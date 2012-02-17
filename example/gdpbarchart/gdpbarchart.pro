@@ -1,0 +1,23 @@
+#-------------------------------------------------
+#
+# Project created by QtCreator 2012-02-14T15:27:32
+#
+#-------------------------------------------------
+
+!include( ../../common.pri ) {
+    error( "Couldn't find the common.pri file!" )
+}
+!include( ../../integrated.pri ) {
+    error( "Couldn't find the integrated.pri file !")
+}
+
+QT       += core gui sql
+
+TARGET = gdpbarchart
+TEMPLATE = app
+
+
+SOURCES += main.cpp\
+        widget.cpp
+
+HEADERS  += widget.h
