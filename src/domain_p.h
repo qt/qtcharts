@@ -7,7 +7,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Domain {
 public:
-	Domain();
+	Domain(qreal minX=0, qreal maxX=0, qreal minY=0, qreal maxY=0);
 	virtual ~Domain();
 
 	qreal spanX() const;

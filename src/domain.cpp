@@ -2,18 +2,16 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Domain::Domain():
-m_minX(0),
-m_maxX(0),
-m_minY(0),
-m_maxY(0)
+Domain::Domain(qreal minX, qreal maxX, qreal minY, qreal maxY):
+m_minX(minX),
+m_maxX(maxX),
+m_minY(minY),
+m_maxY(maxY)
 {
-
 }
 
 Domain::~Domain()
 {
-	// TODO Auto-generated destructor stub
 }
 
 qreal Domain::spanX() const
