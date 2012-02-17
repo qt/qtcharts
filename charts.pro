@@ -3,13 +3,12 @@
 }
 
 TEMPLATE = subdirs
-SUBDIRS += src
+SUBDIRS += src example test qmlplugin
 
 integrated_build:{
- message('Configured for integrated build')
-SUBDIRS += example test qmlplugin
-}else{
- message('Please build example test and qmlplugin after installing library.')
+    message('Configured for integrated build')
+} else {
+    message('Please build example test and qmlplugin after installing library.')
 }
 
 CONFIG += ordered
