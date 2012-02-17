@@ -10,6 +10,7 @@
 #include "qlinechartseries.h"
 #include "qscatterseries.h"
 #include "qpieseries.h"
+#include "qpieslice.h"
 
 //items
 #include "axisitem_p.h"
@@ -232,11 +233,9 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
     }
 
     // finally update colors
-    foreach (QPieSliceId id, series->ids()) {
-        QPieSlice s = series->slice(id);
-        s.setPen(QPen(Qt::black)); // TODO: get from theme
-        s.setBrush(colors.takeFirst());
-        series->update(s);
+    foreach (QPieSlice* s, series->slices()) {
+        s->setPen(QPen(Qt::black)); // TODO: get from theme
+        s->setBrush(colors.takeFirst());
     }
 }
 

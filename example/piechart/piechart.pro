@@ -10,8 +10,10 @@ QT += core gui
 TARGET = piechart
 TEMPLATE = app
 
-SOURCES += main.cpp
+SOURCES += main.cpp customslice.cpp
+HEADERS += customslice.h
 
-HEADERS  +=
+OBJECTS_DIR = tmp
+MOC_DIR = tmp
 
 

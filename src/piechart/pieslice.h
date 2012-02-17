@@ -12,13 +12,14 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class PiePresenter;
 class PieSliceLabel;
+class QPieSlice;
 
 class PieSlice : public QGraphicsObject
 {
     Q_OBJECT
 
 public:
-    PieSlice(QPieSliceId id, QPieSeries *series, QGraphicsItem* parent = 0);
+    PieSlice(QGraphicsItem* parent = 0);
     ~PieSlice();
 
 public: // from QGraphicsItem
@@ -31,19 +32,27 @@ public: // from QGraphicsItem
 
 Q_SIGNALS:
     void clicked();
+    void hoverEnter();
+    void hoverLeave();
 
-public:
-    void updateGeometry(QRectF rect, qreal startAngle, qreal span);
-    void updateData();
+public Q_SLOTS:
+    void handleSliceDataChanged();
+    void setPieRect(QRectF rect);
+    void updateGeometry();
+    void updateData(const QPieSlice *sliceData);
 
 private:
-    QPieSliceId m_id;
-    QPieSeries* m_series;
-    QPieSlice m_data;
     PieSliceLabel* m_slicelabel;
+
+    QRectF m_pieRect;
     QPainterPath m_path;
-    QRectF m_rect;
-    bool m_isHovering;
+
+    qreal m_angle;
+    qreal m_span;
+    bool m_isExploded;
+
+    QPen m_pen;
+    QBrush m_brush;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -1,6 +1,7 @@
 
 #include "piepresenter.h"
 #include "pieslice.h"
+#include "qpieslice.h"
 #include <QDebug>
 #include <QTime>
 
@@ -29,84 +30,24 @@ void PiePresenter::paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *
 
 void PiePresenter::handleSeriesChanged(const QPieSeries::ChangeSet& changeSet)
 {
-    qDebug() << "PiePresenter::handleSeriesChanged()";
-    qDebug() << "  added  : " << changeSet.m_added;
-    qDebug() << "  changed: " << changeSet.m_changed;
-    qDebug() << "  removed: " << changeSet.m_removed;
+    //qDebug() << "PiePresenter::handleSeriesChanged()";
+    //qDebug() << "  added  : " << changeSet.added();
+    //qDebug() << "  changed: " << changeSet.changed();
+    //qDebug() << "  removed: " << changeSet.removed();
 
     // ignore changeset when there are no visual slices
     // changeset might not be valid about the added slices
     if (m_slices.count() == 0) {
-        foreach (QPieSliceId id, m_series->m_slices.keys())
-            addSlice(id);
+        foreach (QPieSlice* s, m_series->m_slices)
+            addSlice(s);
         return;
     }
 
-    foreach (QPieSliceId id, changeSet.m_removed)
-        deleteSlice(id);
+    foreach (QPieSlice* s, changeSet.removed())
+        deleteSlice(s);
 
-    foreach (QPieSliceId id, changeSet.m_changed)
-        updateSlice(id);
-
-    foreach (QPieSliceId id, changeSet.m_added)
-        addSlice(id);
-}
-
-void PiePresenter::updateGeometry()
-{
-    prepareGeometryChange();
-
-    m_pieRect = m_rect;
-
-    if (m_pieRect.width() < m_pieRect.height()) {
-        m_pieRect.setWidth(m_pieRect.width() * m_series->sizeFactor());
-        m_pieRect.setHeight(m_pieRect.width());
-        m_pieRect.moveCenter(m_rect.center());
-    } else {
-        m_pieRect.setHeight(m_pieRect.height() * m_series->sizeFactor());
-        m_pieRect.setWidth(m_pieRect.height());
-        m_pieRect.moveCenter(m_rect.center());
-    }
-
-    switch (m_series->position()) {
-        case QPieSeries::PiePositionTopLeft: {
-            m_pieRect.setHeight(m_pieRect.height() / 2);
-            m_pieRect.setWidth(m_pieRect.height());
-            m_pieRect.moveCenter(QPointF(m_rect.center().x() / 2, m_rect.center().y() / 2));
-            break;
-        }
-        case QPieSeries::PiePositionTopRight: {
-            m_pieRect.setHeight(m_pieRect.height() / 2);
-            m_pieRect.setWidth(m_pieRect.height());
-            m_pieRect.moveCenter(QPointF((m_rect.center().x() / 2) * 3, m_rect.center().y() / 2));
-            break;
-        }
-        case QPieSeries::PiePositionBottomLeft: {
-            m_pieRect.setHeight(m_pieRect.height() / 2);
-            m_pieRect.setWidth(m_pieRect.height());
-            m_pieRect.moveCenter(QPointF(m_rect.center().x() / 2, (m_rect.center().y() / 2) * 3));
-            break;
-        }
-        case QPieSeries::PiePositionBottomRight: {
-            m_pieRect.setHeight(m_pieRect.height() / 2);
-            m_pieRect.setWidth(m_pieRect.height());
-            m_pieRect.moveCenter(QPointF((m_rect.center().x() / 2) * 3, (m_rect.center().y() / 2) * 3));
-            break;
-        }
-        default:
-            break;
-    }
-
-    // update slice geometry
-    const qreal fullPie = 360;
-    qreal angle = 0;
-    foreach (QPieSliceId id, m_slices.keys()) {
-        qreal span = fullPie * m_series->slice(id).percentage();
-        m_slices[id]->updateGeometry(m_pieRect, angle, span);
-        angle += span;
-    }
-
-    //qDebug() << "PiePresenter::updateGeometry" << m_rect << m_pieRect;
+    foreach (QPieSlice* s, changeSet.added())
+        addSlice(s);
 }
 
 void PiePresenter::handleDomainChanged(const Domain& domain)
@@ -120,49 +61,93 @@ void PiePresenter::handleGeometryChanged(const QRectF& rect)
     updateGeometry();
 }
 
-void PiePresenter::addSlice(QPieSliceId id)
+void PiePresenter::updateGeometry()
 {
-    qDebug() << "PiePresenter::addSlice()" << id;
+    prepareGeometryChange();
 
-    if (m_slices.contains(id)) {
-        qWarning() << "PiePresenter::addSlice(): slice already exists!" << id;
-        updateSlice(id);
+    QRectF pieRect = m_rect;
+
+    if (pieRect.width() < pieRect.height()) {
+        pieRect.setWidth(pieRect.width() * m_series->sizeFactor());
+        pieRect.setHeight(pieRect.width());
+        pieRect.moveCenter(m_rect.center());
+    } else {
+        pieRect.setHeight(pieRect.height() * m_series->sizeFactor());
+        pieRect.setWidth(pieRect.height());
+        pieRect.moveCenter(m_rect.center());
+    }
+
+    switch (m_series->position()) {
+        case QPieSeries::PiePositionTopLeft: {
+            pieRect.setHeight(pieRect.height() / 2);
+            pieRect.setWidth(pieRect.height());
+            pieRect.moveCenter(QPointF(m_rect.center().x() / 2, m_rect.center().y() / 2));
+            break;
+        }
+        case QPieSeries::PiePositionTopRight: {
+            pieRect.setHeight(pieRect.height() / 2);
+            pieRect.setWidth(pieRect.height());
+            pieRect.moveCenter(QPointF((m_rect.center().x() / 2) * 3, m_rect.center().y() / 2));
+            break;
+        }
+        case QPieSeries::PiePositionBottomLeft: {
+            pieRect.setHeight(pieRect.height() / 2);
+            pieRect.setWidth(pieRect.height());
+            pieRect.moveCenter(QPointF(m_rect.center().x() / 2, (m_rect.center().y() / 2) * 3));
+            break;
+        }
+        case QPieSeries::PiePositionBottomRight: {
+            pieRect.setHeight(pieRect.height() / 2);
+            pieRect.setWidth(pieRect.height());
+            pieRect.moveCenter(QPointF((m_rect.center().x() / 2) * 3, (m_rect.center().y() / 2) * 3));
+            break;
+        }
+        default:
+            break;
+    }
+
+    if (m_pieRect != pieRect) {
+        m_pieRect = pieRect;
+        //qDebug() << "PiePresenter::updateGeometry()" << m_pieRect;
+        foreach (PieSlice* s, m_slices.values()) {
+            s->setPieRect(m_pieRect);
+            s->updateGeometry();
+        }
+    }
+}
+
+void PiePresenter::addSlice(QPieSlice* sliceData)
+{
+    //qDebug() << "PiePresenter::addSlice()" << sliceData;
+
+    if (m_slices.keys().contains(sliceData)) {
+        //qWarning() << "PiePresenter::addSlice(): slice already exists!" << sliceData;
+        Q_ASSERT(0);
         return;
     }
 
     // create slice
-    PieSlice *slice = new PieSlice(id, m_series, this);
-    m_slices.insert(id, slice);
+    PieSlice *slice = new PieSlice(this);
+    slice->updateData(sliceData);
+    m_slices.insert(sliceData, slice);
 
-    updateGeometry();
+    // connect signals
+    connect(sliceData, SIGNAL(changed()), slice, SLOT(handleSliceDataChanged()));
+    connect(slice, SIGNAL(clicked()), sliceData, SIGNAL(clicked()));
+    connect(slice, SIGNAL(hoverEnter()), sliceData, SIGNAL(hoverEnter()));
+    connect(slice, SIGNAL(hoverLeave()), sliceData, SIGNAL(hoverLeave()));
 }
 
-void PiePresenter::updateSlice(QPieSliceId id)
+void PiePresenter::deleteSlice(QPieSlice* sliceData)
 {
-    qDebug() << "PiePresenter::updateSlice()" << id;
+    //qDebug() << "PiePresenter::deleteSlice()" << sliceData;
 
-    // TODO: animation
-    if (m_slices.contains(id))
-        m_slices.value(id)->updateData();
+    if (m_slices.contains(sliceData))
+        delete m_slices.take(sliceData);
     else {
-        qWarning() << "PiePresenter::updateSlice(): slice does not exist!" << id;
-        addSlice(id);
+        // nothing to remove
+        Q_ASSERT(0); // TODO: remove before release
     }
-
-    updateGeometry();
-}
-
-void PiePresenter::deleteSlice(QPieSliceId id)
-{
-    qDebug() << "PiePresenter::deleteSlice()" << id;
-
-    // TODO: animation
-    if (m_slices.contains(id))
-        delete m_slices.take(id);
-    else
-        qWarning() << "PiePresenter::deleteSlice(): slice does not exist!" << id;
-
-    updateGeometry();
 }
 
 #include "moc_piepresenter.cpp"
