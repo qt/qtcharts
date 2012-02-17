@@ -13,6 +13,9 @@ public:
 	qreal spanX() const;
 	qreal spanY() const;
 
+	friend bool operator== (const Domain &domain1, const Domain &domain2);
+	friend bool operator!= (const Domain &domain1, const Domain &domain2);
+
 	Domain subDomain(const QRectF& rect, qreal maxWidth, qreal maxHeight) const;
 
 public:
