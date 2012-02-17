@@ -24,8 +24,7 @@ void PieSliceLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem* /*o
     painter->drawPath(m_armPath);
 
     // TODO: do we need a pen for text?
-    QFont font;
-    painter->setFont(font);
+    painter->setFont(m_font);
     painter->drawText(m_textRect.bottomLeft(), m_text);
 
     //qDebug() << "PieSliceLabel::paint" << m_text << m_textRect;
