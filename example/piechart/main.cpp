@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
         qDebug() << s->angle() << s->span() << s->percentage();
 
     QChartView* chartView =  new QChartView(&window);
+    chartView->setRenderHint(QPainter::Antialiasing);
     chartView->addSeries(series);
     chartView->setChartTitle("simple piechart");
     chartView->setChartTheme(QChart::ChartThemeIcy);

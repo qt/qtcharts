@@ -49,7 +49,6 @@ QPainterPath PieSlice::shape() const
 
 void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
-    painter->setRenderHint(QPainter::Antialiasing);
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
     painter->drawPath(m_path);

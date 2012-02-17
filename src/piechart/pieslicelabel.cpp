@@ -18,8 +18,6 @@ PieSliceLabel::PieSliceLabel(QGraphicsItem* parent)
 
 void PieSliceLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
-    painter->setRenderHint(QPainter::Antialiasing);
-
     painter->setPen(m_pen);
     painter->drawPath(m_armPath);
 
