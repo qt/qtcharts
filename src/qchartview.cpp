@@ -11,7 +11,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChartView::QChartView(QWidget *parent) :
 QGraphicsView(parent),
-m_scene(new QGraphicsScene()),
+m_scene(new QGraphicsScene(this)),
 m_chart(new QChart()),
 m_rubberBand(0),
 m_verticalRubberBand(false),

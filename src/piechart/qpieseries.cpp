@@ -59,8 +59,7 @@ QPieSeries::QPieSeries(QObject *parent) :
 
 QPieSeries::~QPieSeries()
 {
-    // slices destroyed by parent object
-    qDebug() << "~QPieSeries";
+
 }
 
 bool QPieSeries::setData(QList<qreal> data)

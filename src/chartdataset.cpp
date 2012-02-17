@@ -29,6 +29,7 @@ void ChartDataSet::addSeries(QChartSeries* series)
 {
     // TODO: we should check the series not already added
     m_chartSeries << series;
+    series->setParent(this); // take ownership
     m_domainIndex = 0;
     m_domains.resize(1);
 
