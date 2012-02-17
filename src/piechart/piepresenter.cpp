@@ -128,6 +128,7 @@ void PiePresenter::addSlice(QPieSlice* sliceData)
 
     // create slice
     PieSlice *slice = new PieSlice(this);
+    slice->setPieRect(m_pieRect);
     slice->updateData(sliceData);
     m_slices.insert(sliceData, slice);
 
