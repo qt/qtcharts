@@ -1,18 +1,18 @@
 #ifndef QBARGROUP_H
 #define QBARGROUP_H
 
-#include "bargroupbase.h"
-#include "barchartseries.h"
+#include "barpresenterbase.h"
+#include "qbarchartseries.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 // Base class for bar groups
 
-class BarGroup : public BarGroupBase
+class BarPresenter : public BarPresenterBase
 {
 public:
-    explicit BarGroup(BarChartModel& model, QGraphicsItem *parent = 0);
+    explicit BarPresenter(BarChartModel& model, QGraphicsItem *parent = 0);
 
 private:
 

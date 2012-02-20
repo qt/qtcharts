@@ -6,19 +6,20 @@ QT += core \
     gui
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
-SOURCES += barchart/barchartseries.cpp \
-    barchart/bargroup.cpp \
+SOURCES += \
     barchart/bar.cpp \
-    barchart/stackedbarchartseries.cpp \
-    barchart/stackedbargroup.cpp \
-    barchart/percentbarchartseries.cpp \
-    barchart/percentbargroup.cpp \
     barchart/barlabel.cpp \
     barchart/barchartmodel.cpp \
     barchart/separator.cpp \
-    barchart/bargroupbase.cpp \
     barchart/qbarset.cpp \
     barchart/qbarcategory.cpp \
+    barchart/qbarchartseries.cpp \
+    barchart/qpercentbarchartseries.cpp \
+    barchart/qstackedbarchartseries.cpp \
+    barchart/barpresenterbase.cpp \
+    barchart/barpresenter.cpp \
+    barchart/stackedbarpresenter.cpp \
+    barchart/percentbarpresenter.cpp \
     linechart/linechartanimationitem.cpp \
     linechart/linechartitem.cpp \
     linechart/qlinechartseries.cpp \
@@ -44,13 +45,13 @@ PRIVATE_HEADERS += linechart/linechartitem_p.h \
     chartpresenter_p.h \
     domain_p.h
 PUBLIC_HEADERS += linechart/qlinechartseries.h \
-    barchart/barchartseries.h \
-    barchart/bargroup.h \
-    barchart/stackedbarchartseries.h \
-    barchart/stackedbargroup.h \
-    barchart/percentbarchartseries.h \
-    barchart/percentbargroup.h \
-    barchart/bargroupbase.h \
+    barchart/qbarchartseries.h \
+    barchart/barpresenter.h \
+    barchart/qstackedbarchartseries.h \
+    barchart/stackedbarpresenter.h \
+    barchart/qpercentbarchartseries.h \
+    barchart/percentbarpresenter.h \
+    barchart/barpresenterbase.h \
     barchart/qbarset.h \
     barchart/qbarcategory.h \
     qchartseries.h \

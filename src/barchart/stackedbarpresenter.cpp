@@ -1,4 +1,4 @@
-#include "stackedbargroup.h"
+#include "stackedbarpresenter.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
@@ -7,12 +7,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-StackedBarGroup::StackedBarGroup(BarChartModel& model, QGraphicsItem *parent) :
-    BarGroupBase(model,parent)
+StackedBarPresenter::StackedBarPresenter(BarChartModel& model, QGraphicsItem *parent) :
+    BarPresenterBase(model,parent)
 {
 }
 
-void StackedBarGroup::layoutChanged()
+void StackedBarPresenter::layoutChanged()
 {
 //    qDebug() << "StackedBarGroup::layoutChanged";
     // Scale bars to new layout

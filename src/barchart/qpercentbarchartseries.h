@@ -1,5 +1,5 @@
-#ifndef STACKEDBARCHARTSERIES_H
-#define STACKEDBARCHARTSERIES_H
+#ifndef PERCENTBARCHARTSERIES_H
+#define PERCENTBARCHARTSERIES_H
 
 #include <QList>
 #include <QAbstractItemModel>
@@ -7,19 +7,19 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class StackedBarGroup;
+class PercentBarPresenter;
 class QBarCategory;
 class QBarSet;
 class BarChartModel;
 
-class QTCOMMERCIALCHART_EXPORT StackedBarChartSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QPercentBarChartSeries : public QChartSeries
 {
     Q_OBJECT
 public:
-    StackedBarChartSeries(QBarCategory *category, QObject* parent=0);
+    QPercentBarChartSeries(QBarCategory *category, QObject* parent=0);
 
-    // from QChartSeries
-    virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeStackedBar; }
+    // from BarChartSeriesBase
+    virtual QChartSeriesType type() const { return QChartSeries::SeriesTypePercentBar; }
 
     void addBarSet(QBarSet *set);       // Takes ownership
     void removeBarSet(QBarSet *set);    // Also deletes the set, if set is owned.
@@ -44,12 +44,15 @@ signals:
 
 public Q_SLOTS:
 
+
 private:
 
-    StackedBarGroup* mStackedBarGroup;
+    PercentBarPresenter* mPercentBarGroup;
     BarChartModel* mModel;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // STACKEDBARCHARTSERIES_H
+
+#endif // PERCENTBARCHARTSERIES_H

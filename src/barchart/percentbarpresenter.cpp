@@ -1,4 +1,4 @@
-#include "percentbargroup.h"
+#include "percentbarpresenter.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
@@ -8,12 +8,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-PercentBarGroup::PercentBarGroup(BarChartModel& model, QGraphicsItem *parent) :
-    BarGroupBase(model, parent)
+PercentBarPresenter::PercentBarPresenter(BarChartModel& model, QGraphicsItem *parent) :
+    BarPresenterBase(model, parent)
 {
 }
 
-void PercentBarGroup::layoutChanged()
+void PercentBarPresenter::layoutChanged()
 {
 //    qDebug() << "PercentBarGroup::layoutChanged";
     // Scale bars to new layout

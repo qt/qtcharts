@@ -7,7 +7,7 @@
 #include <qscatterseries.h>
 #include <qchartview.h>
 #include <qchartaxis.h>
-#include <barchartseries.h>
+#include <qbarchartseries.h>
 #include <qbarcategory.h>
 #include <qbarset.h>
 #include <QListWidget>
@@ -91,7 +91,7 @@ void Widget::refreshChart()
     QBarCategory* category = new QBarCategory;
     for (int i = 0; i < selectedCountriesStrings.size(); i++)
         *category << selectedCountriesStrings[i];
-    BarChartSeries* series0 = new BarChartSeries(category);
+    QBarChartSeries* series0 = new QBarChartSeries(category);
 
     // prepare the selected counries SQL query
     QString countriesQuery = "country IN (";

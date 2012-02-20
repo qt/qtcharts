@@ -1,16 +1,16 @@
 #ifndef STACKEDBARGROUP_H
 #define STACKEDBARGROUP_H
 
-#include "bargroupbase.h"
-#include "stackedbarchartseries.h"
+#include "barpresenterbase.h"
+#include "qstackedbarchartseries.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class StackedBarGroup : public BarGroupBase
+class StackedBarPresenter : public BarPresenterBase
 {
 public:
-    StackedBarGroup(BarChartModel& model, QGraphicsItem *parent = 0);
+    StackedBarPresenter(BarChartModel& model, QGraphicsItem *parent = 0);
 
 private:
     // From BarGroupBase

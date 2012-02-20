@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QStandardItemModel>
-#include <percentbarchartseries.h>
+#include <qpercentbarchartseries.h>
 #include "chartwidget.h"
 #include <qbarcategory.h>
 #include <qbarset.h>
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     QBarCategory *category = new QBarCategory;
     *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
-    PercentBarChartSeries* series0 = new PercentBarChartSeries(category);
+    QPercentBarChartSeries* series0 = new QPercentBarChartSeries(category);
 
     QBarSet *set0 = new QBarSet;
     QBarSet *set1 = new QBarSet;

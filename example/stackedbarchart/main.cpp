@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QStandardItemModel>
-#include <stackedbarchartseries.h>
+#include <qstackedbarchartseries.h>
 #include "chartwidget.h"
 #include <qbarset.h>
 #include <qbarcategory.h>
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     QBarCategory *category = new QBarCategory;
     *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
-    StackedBarChartSeries* series0 = new StackedBarChartSeries(category);
+    QStackedBarChartSeries* series0 = new QStackedBarChartSeries(category);
 
     QBarSet *set0 = new QBarSet;
     QBarSet *set1 = new QBarSet;

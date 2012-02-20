@@ -9,15 +9,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarCategory;
 class QBarSet;
-class BarGroup;
+class BarPresenter;
 class BarChartModel;
 
 // Container for series
-class QTCOMMERCIALCHART_EXPORT BarChartSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QBarChartSeries : public QChartSeries
 {
     Q_OBJECT
 public:
-    BarChartSeries(QBarCategory *category, QObject* parent=0);
+    QBarChartSeries(QBarCategory *category, QObject* parent=0);
 
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }
 
@@ -46,7 +46,7 @@ public Q_SLOTS:
 
 private:
 
-    BarGroup* mBarGroup;
+    BarPresenter* mBarGroup;
     BarChartModel* mModel;
 
 };

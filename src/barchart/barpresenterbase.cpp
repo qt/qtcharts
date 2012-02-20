@@ -1,4 +1,4 @@
-#include "bargroupbase.h"
+#include "barpresenterbase.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
@@ -6,7 +6,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarGroupBase::BarGroupBase(BarChartModel& model, QGraphicsItem *parent)
+BarPresenterBase::BarPresenterBase(BarChartModel& model, QGraphicsItem *parent)
     : ChartItem(parent)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
@@ -17,12 +17,12 @@ BarGroupBase::BarGroupBase(BarChartModel& model, QGraphicsItem *parent)
     dataChanged();
 }
 
-void BarGroupBase::setSeparatorsVisible(bool visible)
+void BarPresenterBase::setSeparatorsVisible(bool visible)
 {
     mSeparatorsVisible = visible;
 }
 
-void BarGroupBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
 //    qDebug() << "BarGroupBase::paint" << childItems().count();
     if (!mLayoutSet) {
@@ -37,12 +37,12 @@ void BarGroupBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 //    }
 }
 
-QRectF BarGroupBase::boundingRect() const
+QRectF BarPresenterBase::boundingRect() const
 {
     return QRectF(0,0,mWidth,mHeight);
 }
 
-void BarGroupBase::setBarWidth( int w )
+void BarPresenterBase::setBarWidth( int w )
 {
     mBarDefaultWidth = w;
 }
@@ -57,7 +57,7 @@ void BarGroupBase::addBrush(QBrush brush)
     mBrushes.append(brush);
 }
 */
-void BarGroupBase::dataChanged()
+void BarPresenterBase::dataChanged()
 {
     // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?
 
@@ -93,13 +93,13 @@ void BarGroupBase::dataChanged()
 
 //handlers
 
-void BarGroupBase::handleModelChanged(int index)
+void BarPresenterBase::handleModelChanged(int index)
 {
 //    qDebug() << "BarGroupBase::handleModelChanged" << index;
     dataChanged();
 }
 
-void BarGroupBase::handleDomainChanged(const Domain& domain)
+void BarPresenterBase::handleDomainChanged(const Domain& domain)
 {
 //    qDebug() << "BarGroupBase::handleDomainChanged";
     // TODO: Figure out the use case for this.
@@ -107,7 +107,7 @@ void BarGroupBase::handleDomainChanged(const Domain& domain)
 //    layoutChanged();
 }
 
-void BarGroupBase::handleGeometryChanged(const QRectF& rect)
+void BarPresenterBase::handleGeometryChanged(const QRectF& rect)
 {
     mWidth = rect.width();
     mHeight = rect.height();
@@ -116,6 +116,6 @@ void BarGroupBase::handleGeometryChanged(const QRectF& rect)
     setPos(rect.topLeft());
 }
 
-#include "moc_bargroupbase.cpp"
+#include "moc_barpresenterbase.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

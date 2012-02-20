@@ -6,9 +6,9 @@
 #include <qlinechartseries.h>
 #include <qbarset.h>
 #include <qbarcategory.h>
-#include <barchartseries.h>
-#include <stackedbarchartseries.h>
-#include <percentbarchartseries.h>
+#include <qbarchartseries.h>
+#include <qstackedbarchartseries.h>
+#include <qpercentbarchartseries.h>
 #include <QPushButton>
 #include <QComboBox>
 #include <QSpinBox>

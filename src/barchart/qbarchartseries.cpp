@@ -1,5 +1,5 @@
 #include <QDebug>
-#include "barchartseries.h"
+#include "qbarchartseries.h"
 #include "qbarcategory.h"
 #include "qbarset.h"
 #include "barchartmodel_p.h"
@@ -7,63 +7,63 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartSeries::BarChartSeries(QBarCategory *category, QObject *parent)
+QBarChartSeries::QBarChartSeries(QBarCategory *category, QObject *parent)
     : QChartSeries(parent)
     ,mModel(new BarChartModel(category, this))
 {
 }
 
-void BarChartSeries::addBarSet(QBarSet *set)
+void QBarChartSeries::addBarSet(QBarSet *set)
 {
     mModel->addBarSet(set);
 }
 
-void BarChartSeries::removeBarSet(QBarSet *set)
+void QBarChartSeries::removeBarSet(QBarSet *set)
 {
     mModel->removeBarSet(set);
 }
 
-int BarChartSeries::countSets()
+int QBarChartSeries::countSets()
 {
     return mModel->countSets();
 }
 
-QBarSet* BarChartSeries::nextSet(bool getFirst)
+QBarSet* QBarChartSeries::nextSet(bool getFirst)
 {
     return mModel->nextSet(getFirst);
 }
 
-int BarChartSeries::countCategories()
+int QBarChartSeries::countCategories()
 {
     return mModel->countCategories();
 }
 
-qreal BarChartSeries::min()
+qreal QBarChartSeries::min()
 {
     return mModel->min();
 }
 
-qreal BarChartSeries::max()
+qreal QBarChartSeries::max()
 {
     return mModel->max();
 }
 
-qreal BarChartSeries::valueAt(int set, int category)
+qreal QBarChartSeries::valueAt(int set, int category)
 {
     return mModel->valueAt(set,category);
 }
 
-qreal BarChartSeries::maxCategorySum()
+qreal QBarChartSeries::maxCategorySum()
 {
     return mModel->maxCategorySum();
 }
 
-BarChartModel& BarChartSeries::model()
+BarChartModel& QBarChartSeries::model()
 {
     return *mModel;
 }
 
 
-#include "moc_barchartseries.cpp"
+#include "moc_qbarchartseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

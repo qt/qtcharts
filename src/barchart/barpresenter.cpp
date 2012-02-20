@@ -1,4 +1,4 @@
-#include "bargroup.h"
+#include "barpresenter.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "qbarset.h"
@@ -6,13 +6,13 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarGroup::BarGroup(BarChartModel& model, QGraphicsItem *parent) :
-    BarGroupBase(model,parent)
+BarPresenter::BarPresenter(BarChartModel& model, QGraphicsItem *parent) :
+    BarPresenterBase(model,parent)
 {
     mBarDefaultWidth = 5;
 }
 
-void BarGroup::layoutChanged()
+void BarPresenter::layoutChanged()
 {
 //    qDebug() << "BarGroup::layoutChanged";
     // Scale bars to new layout

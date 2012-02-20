@@ -4,9 +4,9 @@
 #include "chartdataset_p.h"
 
 //series
-#include "barchartseries.h"
-#include "stackedbarchartseries.h"
-#include "percentbarchartseries.h"
+#include "qbarchartseries.h"
+#include "qstackedbarchartseries.h"
+#include "qpercentbarchartseries.h"
 #include "qlinechartseries.h"
 #include "qscatterseries.h"
 //#include "scatterseries_p.h"

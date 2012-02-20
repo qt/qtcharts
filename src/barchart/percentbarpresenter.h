@@ -3,16 +3,16 @@
 
 #include "chartitem_p.h"
 #include "bar_p.h"
-#include "percentbarchartseries.h"
-#include "bargroupbase.h"
+#include "qpercentbarchartseries.h"
+#include "barpresenterbase.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class PercentBarGroup : public BarGroupBase
+class PercentBarPresenter : public BarPresenterBase
 {
 public:
-    PercentBarGroup(BarChartModel& model, QGraphicsItem *parent = 0);
+    PercentBarPresenter(BarChartModel& model, QGraphicsItem *parent = 0);
 
 private:
 

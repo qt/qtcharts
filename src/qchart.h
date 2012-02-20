@@ -14,7 +14,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class AxisItem;
 class QChartSeries;
 class PlotDomain;
-class BarGroup;
+class BarPresenter;
 class QChartAxis;
 class ChartTheme;
 class ChartItem;

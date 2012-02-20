@@ -4,18 +4,18 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 //series
-#include "barchartseries.h"
-#include "stackedbarchartseries.h"
-#include "percentbarchartseries.h"
+#include "qbarchartseries.h"
+#include "qstackedbarchartseries.h"
+#include "qpercentbarchartseries.h"
 #include "qlinechartseries.h"
 #include "qpieseries.h"
 #include "qscatterseries.h"
 //items
 #include "axisitem_p.h"
-#include "bargroup.h"
-#include "stackedbargroup.h"
+#include "barpresenter.h"
+#include "stackedbarpresenter.h"
 #include "linechartitem_p.h"
-#include "percentbargroup.h"
+#include "percentbarpresenter.h"
 #include "linechartanimationitem_p.h"
 #include "piepresenter.h"
 #include "scatterpresenter_p.h"
@@ -85,8 +85,8 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         }
 
         case QChartSeries::SeriesTypeBar: {
-            BarChartSeries* barSeries = static_cast<BarChartSeries*>(series);
-            BarGroup* item = new BarGroup(barSeries->model(),m_chart);
+            QBarChartSeries* barSeries = static_cast<QBarChartSeries*>(series);
+            BarPresenter* item = new BarPresenter(barSeries->model(),m_chart);
             m_chartTheme->decorate(item,barSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
@@ -98,8 +98,8 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
         case QChartSeries::SeriesTypeStackedBar: {
 
-            StackedBarChartSeries* stackedBarSeries = static_cast<StackedBarChartSeries*>(series);
-            StackedBarGroup* item = new StackedBarGroup(stackedBarSeries->model(),m_chart);
+            QStackedBarChartSeries* stackedBarSeries = static_cast<QStackedBarChartSeries*>(series);
+            StackedBarPresenter* item = new StackedBarPresenter(stackedBarSeries->model(),m_chart);
             m_chartTheme->decorate(item,stackedBarSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
@@ -110,8 +110,8 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
         case QChartSeries::SeriesTypePercentBar: {
 
-            PercentBarChartSeries* percentBarSeries = static_cast<PercentBarChartSeries*>(series);
-            PercentBarGroup* item = new PercentBarGroup(percentBarSeries->model(),m_chart);
+            QPercentBarChartSeries* percentBarSeries = static_cast<QPercentBarChartSeries*>(series);
+            PercentBarPresenter* item = new PercentBarPresenter(percentBarSeries->model(),m_chart);
             m_chartTheme->decorate(item,percentBarSeries ,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(m_dataset,SIGNAL(domainChanged(const Domain&)),item,SLOT(handleDomainChanged(const Domain&)));
