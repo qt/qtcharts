@@ -2,18 +2,16 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Domain::Domain():
-m_minX(0),
-m_maxX(0),
-m_minY(0),
-m_maxY(0)
+Domain::Domain(qreal minX, qreal maxX, qreal minY, qreal maxY):
+m_minX(minX),
+m_maxX(maxX),
+m_minY(minY),
+m_maxY(maxY)
 {
-
 }
 
 Domain::~Domain()
 {
-	// TODO Auto-generated destructor stub
 }
 
 qreal Domain::spanX() const
@@ -42,4 +40,25 @@ Domain Domain::subDomain(const QRectF& rect, qreal maxWidth,qreal maxHeight) con
 
   return domain;
 }
+
+bool operator== (const Domain &domain1, const Domain &domain2)
+{
+    return (domain1.m_maxX == domain2.m_maxX &&
+            domain1.m_maxY == domain2.m_maxY &&
+            domain1.m_minX == domain2.m_minX &&
+            domain1.m_minY == domain2.m_minY);
+}
+
+bool operator!= (const Domain &domain1, const Domain &domain2)
+{
+    return !(domain1 == domain2);
+}
+
+
+QDebug operator<<(QDebug dbg, const Domain &domain)
+{
+    dbg.nospace() << "Domain("<<domain.m_minX<<','<<domain.m_maxX<<','<<domain.m_minY<<','<<domain.m_maxY<<')';
+    return dbg.maybeSpace();
+}
+
 QTCOMMERCIALCHART_END_NAMESPACE

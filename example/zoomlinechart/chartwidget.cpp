@@ -37,7 +37,7 @@ void ChartWidget::mouseReleaseEvent(QMouseEvent *event)
         m_rubberBand.hide();
 
         QRect rect = m_rubberBand.geometry();
-        zoomInToRect(rect);
+        zoomIn(rect);
         event->accept();
     }
 

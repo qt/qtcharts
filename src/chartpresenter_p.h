@@ -26,46 +26,31 @@ public:
     void setMargin(int margin);
     int margin() const;
 
-    void zoomInToRect(const QRectF& rectangle);
-    void zoomIn();
-    void zoomOut();
-    void zoomReset();
+    QRectF geometry() const;
 
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme();
-
-    void setDefaultAxisX(const QChartAxis& axis);
-    void setDefaultAxisY(const QChartAxis& axis);
-    QChartAxis defaultAxisX() const;
-    QChartAxis defaultAxisY() const;
-    QChartAxis axisY(int id) const;
-    int addAxisY(const QChartAxis& axis);
-    void removeAxisY(int id);
 
 private:
     void createConnections();
 
 public slots:
     void handleSeriesAdded(QChartSeries* series);
-    void handleSeriesRemoved(QChartSeries* series){};
+    void handleSeriesRemoved(QChartSeries* series);
+    void handleAxisAdded(QChartAxis* axis);
+    void handleAxisRemoved(QChartAxis* axis);
+    void handleSeriesDomainChanged(QChartSeries* series, const Domain& domain);
+    void handleAxisLabelsChanged(QChartAxis* axis, const QStringList& labels);
     void handleSeriesChanged(QChartSeries* series);
-    //void handleDomainChanged(Domain oldDomain,Domain newDomain);
     void handleGeometryChanged();
 signals:
     void geometryChanged(const QRectF& rect);
 private:
     QMap<QChartSeries*,ChartItem*> m_chartItems;
-    QMap<int,AxisItem*> m_axisItems;
-    QMap<int,QChartAxis> m_axis;
+    QMap<QChartAxis*,AxisItem*> m_axisItems;
     QChart* m_chart;
     ChartDataSet* m_dataset;
-    QVector<Domain> m_domains;
     ChartTheme *m_chartTheme;
-    QChartAxis m_axisX;
-    AxisItem* m_axisXItem;
-    QChartAxis m_axisY;
-    AxisItem* m_axisYItem;
-    int m_domainIndex;
     int m_marginSize;
     QRectF m_rect;
 

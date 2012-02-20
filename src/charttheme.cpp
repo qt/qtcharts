@@ -217,15 +217,13 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
 }
 
 
-void ChartTheme::decorate(QChartAxis& axis,AxisItem* item)
+void ChartTheme::decorate(QChartAxis* axis,AxisItem* item)
 {
     //TODO: dummy defults for now
-
-    axis.setLabelsBrush(Qt::black);
-    axis.setLabelsPen(Qt::NoPen);
-    axis.setShadesPen(Qt::NoPen);
-    axis.setShadesOpacity(0.5);
-    item->handleAxisChanged(axis);
+    axis->setLabelsBrush(Qt::black);
+    axis->setLabelsPen(Qt::NoPen);
+    axis->setShadesPen(Qt::NoPen);
+    axis->setShadesOpacity(0.5);
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -2,6 +2,7 @@
 #include "declarativechart.h"
 #include <qscatterseries.h>
 #include <qlinechartseries.h>
+#include <qpieseries.h>
 #include <cmath>
 #include <QDebug>
 
@@ -59,7 +60,8 @@ void DeclarativeSeries::initSeries()
         case SeriesTypeBar:
             // fallthrough; bar and scatter use the same test data
         case SeriesTypeScatter: {
-            m_series = chart->createSeries((QChartSeries::QChartSeriesType) m_seriesType);
+            m_series = new QScatterSeries();
+            chart->addSeries(m_series);
             QScatterSeries *scatter = qobject_cast<QScatterSeries *>(m_series);
             Q_ASSERT(scatter);
             for (qreal i = 0; i < 100; i += 0.1)
@@ -72,7 +74,8 @@ void DeclarativeSeries::initSeries()
         case SeriesTypePercentBar:
             break;
         case SeriesTypePie: {
-            m_series = chart->createSeries((QChartSeries::QChartSeriesType) m_seriesType);
+            m_series = new QPieSeries();
+            chart->addSeries(m_series);
             QList<qreal> data;
             data << 1.0;
             data << 12.0;

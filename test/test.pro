@@ -1,3 +1,4 @@
 TEMPLATE = subdirs
-SUBDIRS += chartwidgettest \
+SUBDIRS += auto \
+    chartwidgettest \
     qmlchart

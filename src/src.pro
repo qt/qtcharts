@@ -52,6 +52,12 @@ PUBLIC_HEADERS += linechart/qlinechartseries.h \
     barchart/qbarchartseries.h \
     barchart/qstackedbarchartseries.h \
     barchart/qpercentbarchartseries.h \
+    barchart/barpresenter.h \
+    barchart/qstackedbarchartseries.h \
+    barchart/stackedbarpresenter.h \
+    barchart/qpercentbarchartseries.h \
+    barchart/percentbarpresenter.h \
+    barchart/barpresenterbase.h \
     barchart/qbarset.h \
     barchart/qbarcategory.h \
     qchartseries.h \

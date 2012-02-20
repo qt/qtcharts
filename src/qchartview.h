@@ -24,11 +24,8 @@ public:
     //implement from QWidget
     void resizeEvent(QResizeEvent *event);
 
-    void addSeries(QChartSeries* series); // takes ownership
-
-    // Convenience function
-    QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
-
+    void addSeries(QChartSeries* series,QChartAxis* axisY=0);// takes ownership
+    void removeSeries(QChartSeries* series);
     int margin() const;
 
     void setChartTitle(const QString& title);
@@ -36,8 +33,8 @@ public:
     void setChartBackgroundBrush(const QBrush& brush);
     void setChartBackgroundPen(const QPen& pen);
 
-    void zoomInToRect(const QRect& rectangle);
     void zoomIn();
+    void zoomIn(const QRect& rect);
     void zoomOut();
 
     void setRubberBandPolicy(const RubberBandPolicy );
@@ -46,13 +43,8 @@ public:
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme() const;
 
-    void setDefaultAxisX(const QChartAxis& axis);
-    void setDefaultAxisY(const QChartAxis& axis);
-    QChartAxis defaultAxisX() const;
-    QChartAxis defaultAxisY() const;
-    QChartAxis axisY(int id) const;
-    int addAxisY(const QChartAxis& axis);
-    void removeAxisY(int id);
+    QChartAxis* axisX() const;
+    QChartAxis* axisY() const;
 
 protected:
     void mousePressEvent(QMouseEvent *event);

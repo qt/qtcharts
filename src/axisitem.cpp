@@ -9,7 +9,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 AxisItem::AxisItem(AxisType type,QGraphicsItem* parent) :
 ChartItem(parent),
-m_ticks(4),
 m_type(type),
 m_labelsAngle(0),
 m_shadesEnabled(true),
@@ -20,7 +19,6 @@ m_labels(parent)
     //initial initialization
     m_shades.setZValue(0);
     m_grid.setZValue(2);
-    createItems();
 }
 
 AxisItem::~AxisItem()
@@ -32,9 +30,9 @@ QRectF AxisItem::boundingRect() const
     return m_rect;
 }
 
-void AxisItem::createItems()
+void AxisItem::createItems(int count)
 {
-    for (int i = 0; i <= m_ticks; ++i) {
+    for (int i = 0; i < count; ++i) {
            m_grid.addToGroup(new QGraphicsLineItem(this));
            m_labels.addToGroup(new QGraphicsSimpleTextItem(this));
            if(i%2) m_shades.addToGroup(new QGraphicsRectItem(this));
@@ -55,6 +53,8 @@ void AxisItem::clear()
         delete item;
     }
 
+    m_thicksList.clear();
+
 }
 
 void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -62,7 +62,7 @@ void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 }
 
-void AxisItem::updateDomain()
+void AxisItem::updateItem(int count)
 {
 
     QList<QGraphicsItem *> lines = m_grid.childItems();
@@ -73,21 +73,16 @@ void AxisItem::updateDomain()
       {
           case X_AXIS:
           {
-              const qreal deltaX = m_rect.width() / m_ticks;
+              const qreal deltaX = m_rect.width() / (count-1);
 
               m_axis.setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
 
-              for (int i = 0; i <= m_ticks; ++i) {
-
+              for (int i = 0; i < count; ++i) {
                   int x = i * deltaX + m_rect.left();
-
-                  qreal label = m_domain.m_minX + (i * m_domain.spanX()/ m_ticks);
-
                   QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
                   lineItem->setLine(x, m_rect.top(), x, m_rect.bottom());
-
                   QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-                  labelItem->setText(QString::number(label));
+                  labelItem->setText(m_thicksList.at(i));
                   QPointF center = labelItem->boundingRect().center();
                   labelItem->setTransformOriginPoint(center.x(), center.y());
                   labelItem->setPos(x - center.x(), m_rect.bottom() + label_padding);
@@ -103,26 +98,19 @@ void AxisItem::updateDomain()
 
           case Y_AXIS:
           {
-              const qreal deltaY = m_rect.height()/ m_ticks;
+              const qreal deltaY = m_rect.height()/ (count-1);
 
               m_axis.setLine(m_rect.left() , m_rect.top(), m_rect.left(), m_rect.bottom());
 
-              for (int i = 0; i <= m_ticks; ++i) {
-
+              for (int i = 0; i < count; ++i) {
                   int y = i * -deltaY + m_rect.bottom();
-
-                  qreal label = m_domain.m_minY + (i * m_domain.spanY()/ m_ticks);
-
                   QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
                   lineItem->setLine(m_rect.left() , y, m_rect.right(), y);
-
                   QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-                  labelItem->setText(QString::number(label));
+                  labelItem->setText(m_thicksList.at(i));
                   QPointF center = labelItem->boundingRect().center();
                   labelItem->setTransformOriginPoint(center.x(), center.y());
                   labelItem->setPos(m_rect.left() -  labelItem->boundingRect().width() - label_padding , y-center.y());
-
-
                   if(i%2){
                       QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
                       rectItem->setRect(m_rect.left(),y,m_rect.width(),deltaY);
@@ -137,23 +125,23 @@ void AxisItem::updateDomain()
       }
 }
 
-void AxisItem::handleAxisChanged(const QChartAxis& axis)
+void AxisItem::handleAxisUpdate(QChartAxis* axis)
 {
-    if(axis.isAxisVisible()) {
+    if(axis->isAxisVisible()) {
         setAxisOpacity(100);
     }
     else {
         setAxisOpacity(0);
     }
 
-    if(axis.isGridVisible()) {
+    if(axis->isGridVisible()) {
         setGridOpacity(100);
     }
     else {
         setGridOpacity(0);
     }
 
-    if(axis.isLabelsVisible())
+    if(axis->isLabelsVisible())
     {
         setLabelsOpacity(100);
     }
@@ -161,49 +149,48 @@ void AxisItem::handleAxisChanged(const QChartAxis& axis)
         setLabelsOpacity(0);
     }
 
-    if(axis.isShadesVisible()) {
-        setShadesOpacity(axis.shadesOpacity());
+    if(axis->isShadesVisible()) {
+        setShadesOpacity(axis->shadesOpacity());
     }
     else {
         setShadesOpacity(0);
     }
 
-    switch(axis.labelsOrientation())
-    {
-        case QChartAxis::LabelsOrientationHorizontal:
-            setLabelsAngle(0);
-            break;
-        case QChartAxis::LabelsOrientationVertical:
-            setLabelsAngle(90);
-            break;
-        case QChartAxis::LabelsOrientationSlide:
-            setLabelsAngle(-45);
-            break;
-        default:
-            break;
-    }
-
-    setAxisPen(axis.axisPen());
-    setLabelsPen(axis.labelsPen());
-    setLabelsBrush(axis.labelsBrush());
-    setLabelsFont(axis.labelFont());
-    setGridPen(axis.gridPen());
-    setShadesPen(axis.shadesPen());
-    setShadesBrush(axis.shadesBrush());
-
+    setLabelsAngle(axis->labelsAngle());
+    setAxisPen(axis->axisPen());
+    setLabelsPen(axis->labelsPen());
+    setLabelsBrush(axis->labelsBrush());
+    setLabelsFont(axis->labelFont());
+    setGridPen(axis->gridPen());
+    setShadesPen(axis->shadesPen());
+    setShadesBrush(axis->shadesBrush());
 }
 
-void AxisItem::handleDomainChanged(const Domain& domain)
+void AxisItem::handleLabelsChanged(const QStringList& labels)
 {
-    m_domain = domain;
-    updateDomain();
+    m_thicksList=labels;
+    QList<QGraphicsItem*> items = m_labels.childItems();
+    if(items.size()!=m_thicksList.size()){
+       clear();
+       m_thicksList=labels;
+       createItems(m_thicksList.size());
+       items = m_labels.childItems();
+     }
+
+    Q_ASSERT(items.size()==m_thicksList.size());
+
+    int i=0;
+    foreach(QGraphicsItem* item, items){
+        static_cast<QGraphicsSimpleTextItem*>(item)->setText(m_thicksList.at(i));
+        i++;
+    }
     update();
 }
 
 void AxisItem::handleGeometryChanged(const QRectF& rect)
 {
     m_rect = rect;
-    updateDomain();
+    updateItem(m_thicksList.size());
     update();
 }
 
@@ -305,14 +292,6 @@ void AxisItem::setGridPen(const QPen& pen)
     }
 }
 
-void AxisItem::setTicks(int count)
-{
-    if(count!=m_ticks){
-    clear();
-    m_ticks=count;
-    createItems();
-    }
-}
 
 //TODO "nice numbers algorithm"
 #include "moc_axisitem_p.cpp"

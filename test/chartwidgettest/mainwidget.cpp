@@ -232,7 +232,8 @@ void MainWidget::addSeries(QString series, QString data)
             (*scatter) << QPointF(x.at(i), y.at(i));
         m_chartWidget->addSeries(scatter);
     } else if (series == "Pie") {
-        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypePie);
+        newSeries = new QPieSeries();
+        m_chartWidget->addSeries(newSeries);
         Q_ASSERT(newSeries->setData(y));
     } else if (series == "Line") {
         // TODO: adding data to an existing line series does not give any visuals for some reason
@@ -254,7 +255,7 @@ void MainWidget::addSeries(QString series, QString data)
         QBarCategory *category = new QBarCategory;
         *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
-        BarChartSeries* series0 = new BarChartSeries(category, this);
+        QBarChartSeries* series0 = new QBarChartSeries(category, this);
 
         series0->addBarSet(set0);
         series0->addBarSet(set1);
@@ -270,7 +271,7 @@ void MainWidget::addSeries(QString series, QString data)
         QBarCategory *category = new QBarCategory;
         *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
-        StackedBarChartSeries* series0 = new StackedBarChartSeries(category, this);
+        QStackedBarChartSeries* series0 = new QStackedBarChartSeries(category, this);
 
         series0->addBarSet(set0);
         series0->addBarSet(set1);
@@ -286,7 +287,7 @@ void MainWidget::addSeries(QString series, QString data)
         QBarCategory *category = new QBarCategory;
         *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
-        PercentBarChartSeries* series0 = new PercentBarChartSeries(category, this);
+        QPercentBarChartSeries* series0 = new QPercentBarChartSeries(category, this);
 
         series0->addBarSet(set0);
         series0->addBarSet(set1);
