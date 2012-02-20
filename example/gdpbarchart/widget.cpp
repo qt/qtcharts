@@ -21,7 +21,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
-{    
+{
     setGeometry(100, 100, 800, 600);
 
     // right panel layout
@@ -71,10 +71,10 @@ Widget::Widget(QWidget *parent)
     }
 
     // hide axis X labels
-    QChartAxis newAxis = chartArea->defaultAxisX();
-    newAxis.setLabelsVisible(false);
+    QChartAxis* axis = chartArea->axisX();
+    axis->setLabelsVisible(false);
 //    newAxis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);
-    chartArea->setDefaultAxisX(newAxis);
+
 }
 
 Widget::~Widget()
