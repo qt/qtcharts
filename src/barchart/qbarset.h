@@ -7,9 +7,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_EXPORT QBarSet // TODO? : public QObject
+class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 {
-    //Q_OBJECT;
+    Q_OBJECT;
 public:
     QBarSet();
 
@@ -27,12 +27,22 @@ public:
     void setBrush(const QBrush& brush);
     const QBrush& brush() const;
 
+//    void clicked();
+/*
+    void hoverEnter();
+    void hoverLeave();
+*/
+
+public Q_SLOTS:
+    void barClicked();
+
 private:
 
     QString mName;
     QList<qreal> mValues;
     QPen mPen;
     QBrush mBrush;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

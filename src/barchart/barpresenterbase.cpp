@@ -57,10 +57,13 @@ void BarPresenterBase::dataChanged()
     }
 
     // Create new graphic items for bars
-    int totalItems = mModel.countTotalItems();
-    for (int i=0; i<totalItems; i++) {
-        Bar *bar = new Bar(this);
-        childItems().append(bar);
+    for (int s=0; s<mModel.countSets(); s++) {
+        QBarSet *set = mModel.nextSet(0==s);
+        for (int c=0; c<mModel.countCategories(); c++) {
+            Bar *bar = new Bar(this);
+            childItems().append(bar);
+            connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
+        }
     }
 
     int count = mModel.countCategories();

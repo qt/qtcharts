@@ -1,4 +1,5 @@
 #include "qbarset.h"
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -56,8 +57,13 @@ const QBrush& QBarSet::brush() const
     return mBrush;
 }
 
+void QBarSet::barClicked()
+{
+    // Some bar of this set has been clicked
+    // TODO: What happens then?
+    qDebug() << "bar Clicked";
+}
 
 
-//TODO?:
-//#include "moc_qbarset.cpp"
+#include "moc_qbarset.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE
