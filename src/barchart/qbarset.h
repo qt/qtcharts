@@ -9,7 +9,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 {
-    Q_OBJECT;
+    Q_OBJECT
 public:
     QBarSet();
 

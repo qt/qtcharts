@@ -2,6 +2,7 @@
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
+#include "qbarset.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
