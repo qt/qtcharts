@@ -7,6 +7,11 @@
 #include <QResizeEvent>
 #include <QDebug>
 
+/*!
+    \class QChartView
+    \brief Chart widget.
+*/
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChartView::QChartView(QWidget *parent) :
