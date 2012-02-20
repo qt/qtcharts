@@ -71,7 +71,10 @@ void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
             break;
         }
         case QChartSeries::SeriesTypeBar: {
+<<<<<<< HEAD
         qDebug() << "QChartSeries::SeriesTypeBar";
+=======
+>>>>>>> Common naming convention for barcharts
             QBarChartSeries* barSeries = static_cast<QBarChartSeries*>(series);
             qreal x = barSeries->countCategories();
             qreal y = barSeries->max();

@@ -44,7 +44,6 @@ signals:
 public Q_SLOTS:
 
 private:
-
     BarChartModel* mModel;
 };
 
