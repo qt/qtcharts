@@ -54,7 +54,7 @@ Widget::Widget(QWidget *parent)
 
     // connect to the database
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("../examle/gdpbarchart/gdpData");
+    db.setDatabaseName("../example/gdpbarchart/gdpData");
     if(!db.open())
     {
         qDebug() << "could not open database. SQLite db file missing (?)";
