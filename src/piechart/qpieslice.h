@@ -12,6 +12,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString label READ label WRITE setLabel /*NOTIFY dataYChanged*/)
+    Q_PROPERTY(qreal value READ value WRITE setValue /*NOTIFY dataXChanged*/)
 
 public:
     QPieSlice(QObject *parent = 0);

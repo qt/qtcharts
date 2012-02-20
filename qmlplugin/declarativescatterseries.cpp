@@ -2,7 +2,6 @@
 #include "declarativechart.h"
 #include "qchart.h"
 #include "qscatterseries.h"
-#include <cmath>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

@@ -26,12 +26,16 @@ SOURCES += \
     declarativechart.cpp \
     declarativeseries.cpp \
     declarativescatterseries.cpp \
-    scatterelement.cpp
+    scatterelement.cpp \
+    declarativepieseries.cpp \
+    declarativelineseries.cpp
 HEADERS += \
     declarativechart.h \
     declarativeseries.h \
     declarativescatterseries.h \
-    scatterelement.h
+    scatterelement.h \
+    declarativepieseries.h \
+    declarativelineseries.h
 
 TARGETPATH = QtCommercial/Chart
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
@@ -39,6 +43,10 @@ qmldir.files += $$PWD/qmldir
 qmldir.path +=  $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
 
 INSTALLS += target qmldir
+
+
+
+
 
 
 

@@ -20,14 +20,15 @@ Rectangle {
 //    }
 
     Component.onCompleted: {
-//        console.log("Component.onCompleted: " + scatterElement.x);
-//        console.log("Component.onCompleted: " + scatterElement.y);
-//        console.log("Component.onCompleted: " + scatterElement.dataX);
-//        console.log("Component.onCompleted: " + scatterElement.dataY);
+//        console.log("Component.onCompleted: " + ChartPointElement.x);
+//        console.log("Component.onCompleted: " + ChartPointElement.y);
+//        console.log("Component.onCompleted: " + ChartPointElement.dataX);
+//        console.log("Component.onCompleted: " + ChartPointElement.dataY);
         //console.log("Component.onCompleted: " + chartModel.get(0).x);
-        //console.log("Component.onCompleted: " + chartModel.scatterElements);
+        //console.log("Component.onCompleted: " + chartModel.ChartPointElements);
 //        console.log("Component.onCompleted: " + elementt.dataX);
 //        console.log("Component.onCompleted: " + chartModel.get(0).dataX);
+        //ChartPointElement { x: 0.3; y: 0.3 }
     }
 
     Chart {
@@ -36,16 +37,24 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         height: parent.height / 2
-        theme: Chart.ThemeIcy
-//        opacity: 0.3
+        theme: Chart.ThemeVanilla
 
-        Series {
-            seriesType: Series.SeriesTypePie
+        PieSeries {
+            data: [
+                // TODO: "NnElement" matches the naming convention of for example ListModel...
+                // But PieSlice would match the naming of QtCommercial Charts C++ api
+                ChartPieElement { label: "Volkswagen"; value: 13.5 },
+                ChartPieElement { label: "Toyota"; value: 10.9 },
+                ChartPieElement { label: "Ford"; value: 8.6 },
+                ChartPieElement { label: "Skoda"; value: 8.2 },
+                ChartPieElement { label: "Volvo"; value: 6.8 },
+                ChartPieElement { label: "Others"; value: 52.0 }
+            ]
         }
 
-        Series {
-            seriesType: Series.SeriesTypeLine
-        }
+//        Series {
+//            seriesType: Series.SeriesTypeLine
+//        }
         // TODO:
 //        Series {
 //            seriesType: Series.SeriesTypeBar
@@ -61,32 +70,42 @@ Rectangle {
         anchors.right: parent.right
         theme: Chart.ThemeScientific
 
+        LineSeries {
+            data: [
+                ChartPointElement { x: 0.0; y: 0.0 },
+                ChartPointElement { x: 1.1; y: 2.1 },
+                ChartPointElement { x: 2.9; y: 4.9 },
+                ChartPointElement { x: 3.2; y: 3.0 }
+            ]
+        }
+
         ScatterSeries {
             data: [
-                ScatterElement { x: 1.1; y: 2.1 },
-                ScatterElement { x: 1.2; y: 2.0 },
-                ScatterElement { x: 1.4; y: 2.3 }
+                ChartPointElement { x: 1.1; y: 1.1 },
+                ChartPointElement { x: 1.1; y: 1.2 },
+                ChartPointElement { x: 1.17; y: 1.15 }
             ]
         }
         ScatterSeries {
             data: [
-                ScatterElement { x: 1.2; y: 2.2 },
-                ScatterElement { x: 1.3; y: 2.2 },
-                ScatterElement { x: 1.7; y: 2.6 }
+                ChartPointElement { x: 1.5; y: 1.5 },
+                ChartPointElement { x: 1.5; y: 1.6 },
+                ChartPointElement { x: 1.57; y: 1.55 }
             ]
         }
         ScatterSeries {
             data: [
-                ScatterElement { x: 1.3; y: 2.3 },
-                ScatterElement { x: 1.5; y: 2.4 },
-                ScatterElement { x: 2.0; y: 2.9 }
+                ChartPointElement { x: 2.0; y: 2.0 },
+                ChartPointElement { x: 2.0; y: 2.1 },
+                ChartPointElement { x: 2.07; y: 2.05 }
             ]
         }
         ScatterSeries {
+            id: scatter4
             data: [
-                ScatterElement { x: 1.4; y: 2.4 },
-                ScatterElement { x: 1.8; y: 2.7 },
-                ScatterElement { x: 2.5; y: 3.2 }
+                ChartPointElement { x: 2.6; y: 2.6 },
+                ChartPointElement { x: 2.6; y: 2.7 },
+                ChartPointElement { x: 2.67; y: 2.65 }
             ]
         }
     }

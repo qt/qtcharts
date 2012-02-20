@@ -4,6 +4,8 @@
 #include "declarativeseries.h"
 #include "scatterelement.h"
 #include "declarativescatterseries.h"
+#include "declarativelineseries.h"
+#include "declarativepieseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -14,10 +16,15 @@ public:
     virtual void registerTypes(const char *uri)
     {
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCommercial.Chart"));
+
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "Chart");
         qmlRegisterType<DeclarativeSeries>(uri, 1, 0, "Series");
         qmlRegisterType<DeclarativeScatterSeries>(uri, 1, 0, "ScatterSeries");
-        qmlRegisterType<ScatterElement>(uri, 1, 0, "ScatterElement");
+        qmlRegisterType<DeclarativeLineSeries>(uri, 1, 0, "LineSeries");
+        qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
+        qmlRegisterType<QPieSlice>(uri, 1, 0, "ChartPieElement");
+        // TODO: rename ScatterElement class to something like "PointElement"
+        qmlRegisterType<ScatterElement>(uri, 1, 0, "ChartPointElement");
     }
 };
 

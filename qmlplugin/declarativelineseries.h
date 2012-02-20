@@ -1,22 +1,22 @@
-#ifndef DECLARATIVESCATTERSERIES_H
-#define DECLARATIVESCATTERSERIES_H
+#ifndef DECLARATIVELINESERIES_H
+#define DECLARATIVELINESERIES_H
 
 #include "qchartglobal.h"
-#include "scatterelement.h"
+#include "scatterelement.h" // TODO: rename header
 #include <QDeclarativeItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
-class QScatterSeries;
+class QLineChartSeries;
 
-class DeclarativeScatterSeries : public QDeclarativeItem
+class DeclarativeLineSeries : public QDeclarativeItem
 {
     Q_OBJECT
     Q_PROPERTY(QDeclarativeListProperty<ScatterElement> data READ data)
 
 public:
-    explicit DeclarativeScatterSeries(QDeclarativeItem *parent = 0);
+    explicit DeclarativeLineSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<ScatterElement> data();
 
 signals:
@@ -28,14 +28,12 @@ public slots:
 private slots:
     void setParentForSeries();
 
-public:
-    void initSeries();
-
+private:
     QChart *m_chart;
-    QScatterSeries *m_series;
+    QLineChartSeries *m_series;
     QList<ScatterElement *> m_data;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // DECLARATIVESCATTERSERIES_H
+#endif // DECLARATIVELINESERIES_H
