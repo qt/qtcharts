@@ -102,11 +102,13 @@ void LineChartItem::clearView()
 
 void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-	Q_UNUSED(widget);
+    Q_UNUSED(widget);
     Q_UNUSED(option);
+    painter->save();
     painter->setPen(m_pen);
     painter->setClipRect(m_clipRect);
-	painter->drawPath(m_path);
+    painter->drawPath(m_path);
+    painter->restore();
 }
 
 void LineChartItem::calculatePoint(QPointF& point, int index, const QLineChartSeries* series,const QSizeF& size, const Domain& domain) const

@@ -43,12 +43,9 @@ Rectangle {
             seriesType: Series.SeriesTypePie
         }
 
-        // TODO: a bug: drawing order affects the drawing; if you draw chart1 first (by changing the
-        // z-order), then chart2 is not shown at all. By drawing chart2 first, both are visible.
-        // Also, if you don't draw line series on chart1 (only pie), both charts are visible.
-//        Series {
-//            seriesType: Series.SeriesTypeLine
-//        }
+        Series {
+            seriesType: Series.SeriesTypeLine
+        }
         // TODO:
 //        Series {
 //            seriesType: Series.SeriesTypeBar
