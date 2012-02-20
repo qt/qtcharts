@@ -1,3 +1,8 @@
+/*!
+    \class Widget
+    \brief Ui for the application.
+*/
+
 #include "widget.h"
 #include <QGridLayout>
 #include <QPushButton>
@@ -78,6 +83,9 @@ Widget::~Widget()
     db.close();
 }
 
+/*!
+    refreshes the chart
+*/
 void Widget::refreshChart()
 {
     // selected countries items list is not sorted. copy the values to QStringlist and sort them.
