@@ -3,6 +3,7 @@
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
 
+<<<<<<< HEAD
 //series
 #include "qbarchartseries.h"
 #include "qstackedbarchartseries.h"
@@ -11,7 +12,6 @@
 #include "qscatterseries.h"
 //#include "scatterseries_p.h"
 #include "qpieseries.h"
-
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 #include <QDebug>
@@ -28,84 +28,53 @@ m_presenter(new ChartPresenter(this,m_dataset))
 
 QChart::~QChart() {}
 
-void QChart::addSeries(QChartSeries* series)
+void QChart::addSeries(QChartSeries* series,QChartAxis* axisY)
 {
-    m_dataset->addSeries(series);
+    m_dataset->addSeries(series,axisY);
 }
 
-//TODO on review, is it really needed ??
-QChartSeries* QChart::createSeries(QChartSeries::QChartSeriesType type)
+void QChart::removeSeries(QChartSeries* series)
 {
-    QChartSeries *series(0);
-
-    switch (type) {
-        case QChartSeries::SeriesTypeLine: {
-            series = new QLineChartSeries(this);
-            break;
-        }
-        case QChartSeries::SeriesTypeBar: {
-            //series = new BarChartSeries(this);
-            break;
-        }
-        case QChartSeries::SeriesTypeStackedBar: {
-            //series = new StackedBarChartSeries(this);
-            break;
-        }
-        case QChartSeries::SeriesTypePercentBar: {
-            //series = new PercentBarChartSeries(this);
-            break;
-        }
-        case QChartSeries::SeriesTypeScatter: {
-            series = new QScatterSeries(this);
-            break;
-        }
-        case QChartSeries::SeriesTypePie: {
-            series = new QPieSeries(this);
-            break;
-        }
-        default:
-        Q_ASSERT(false);
-        break;
-    }
-
-    addSeries(series);
-    return series;
+    m_dataset->removeSeries(series);
 }
 
 void QChart::setChartBackgroundBrush(const QBrush& brush)
 {
-
-    if(!m_backgroundItem) {
-        m_backgroundItem = new QGraphicsRectItem(this);
-        m_backgroundItem->setZValue(-1);
-    }
-
+    createChartBackgroundItem();
     m_backgroundItem->setBrush(brush);
     m_backgroundItem->update();
 }
 
 void QChart::setChartBackgroundPen(const QPen& pen)
 {
-
-    if(!m_backgroundItem) {
-        m_backgroundItem = new QGraphicsRectItem(this);
-        m_backgroundItem->setZValue(-1);
-    }
-
+    createChartBackgroundItem();
     m_backgroundItem->setPen(pen);
     m_backgroundItem->update();
 }
 
 void QChart::setChartTitle(const QString& title)
 {
-    if(!m_titleItem) m_titleItem = new QGraphicsTextItem(this);
+    createChartTitleItem();
     m_titleItem->setPlainText(title);
 }
 
 void QChart::setChartTitleFont(const QFont& font)
 {
-    if(!m_titleItem) m_titleItem = new QGraphicsTextItem(this);
+    createChartTitleItem();
     m_titleItem->setFont(font);
+}
+
+void QChart::createChartBackgroundItem()
+{
+    if(!m_backgroundItem) {
+        m_backgroundItem = new QGraphicsRectItem(this);
+        m_backgroundItem->setZValue(-1);
+    }
+}
+
+void QChart::createChartTitleItem()
+{
+    if(!m_titleItem) m_titleItem = new QGraphicsTextItem(this);
 }
 
 int QChart::margin() const
@@ -128,59 +97,44 @@ QChart::ChartTheme QChart::chartTheme() const
     return m_presenter->chartTheme();
 }
 
-void QChart::zoomInToRect(const QRectF& rectangle)
-{
-    m_presenter->zoomInToRect(rectangle);
-}
-
 void QChart::zoomIn()
 {
-    m_presenter->zoomIn();
+    if (!m_dataset->nextDomain()) {
+        QRectF rect = m_presenter->geometry();
+        rect.setWidth(rect.width()/2);
+        rect.setHeight(rect.height()/2);
+        rect.moveCenter(m_presenter->geometry().center());
+        zoomIn(rect);
+    }
+}
+
+void QChart::zoomIn(const QRectF& rect)
+{
+    if(!rect.isValid()) return;
+       QRectF r = rect.normalized();
+       int margin = m_presenter->margin();
+       r.translate(-margin, -margin);
+       m_dataset->addDomain(r,m_presenter->geometry());
 }
 
 void QChart::zoomOut()
 {
-    m_presenter->zoomOut();
+    m_dataset->previousDomain();
 }
 
 void QChart::zoomReset()
 {
-    m_presenter->zoomReset();
+    m_dataset->clearDomains();
 }
 
-void QChart::setDefaultAxisX(const QChartAxis& axis)
+QChartAxis* QChart::axisX() const
 {
-    m_presenter->setDefaultAxisX(axis);
+    return m_dataset->axisX();
 }
 
-void QChart::setDefaultAxisY(const QChartAxis& axis)
+QChartAxis* QChart::axisY() const
 {
-    m_presenter->setDefaultAxisY(axis);
-}
-
-QChartAxis QChart::defaultAxisX() const
-{
-    return m_presenter->defaultAxisX();
-}
-
-QChartAxis QChart::defaultAxisY() const
-{
-    return m_presenter->defaultAxisY();
-}
-
-int QChart::addAxisY(const QChartAxis& axis)
-{
-    return m_presenter->addAxisY(axis);
-}
-
-QChartAxis QChart::axisY(int id) const
-{
-    return m_presenter->axisY(id);
-}
-
-void QChart::removeAxisY(int id)
-{
-    m_presenter->removeAxisY(id);
+    return m_dataset->axisY();
 }
 
 void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)

@@ -39,9 +39,6 @@ public:
     void setLabelsAngle(int angle);
     int labelsAngle()const { return m_labelsAngle; }
 
-    void setTicks(int count);
-    int ticks() const { return m_ticks;}
-
     void setShadesBrush(const QBrush& brush);
     void setShadesPen(const QPen& pen);
 
@@ -53,18 +50,16 @@ public:
     void setLabelsFont(const QFont& font);
 
 public slots:
-    void handleAxisChanged(const QChartAxis& axis);
-    void handleDomainChanged(const Domain& domain);
+    void handleAxisUpdate(QChartAxis* axis);
+    void handleLabelsChanged(const QStringList& labels);
     void handleGeometryChanged(const QRectF& size);
 protected:
-    void updateDomain();
+    void updateItem(int count);
 private:
     void clear();
-    void createItems();
+    void createItems(int count);
 private:
     AxisType m_type;
-    int m_ticks;
-    Domain m_domain;
     QRectF m_rect;
     int m_labelsAngle;
     bool m_shadesEnabled;
@@ -72,6 +67,7 @@ private:
     QGraphicsItemGroup m_shades;
     QGraphicsItemGroup m_labels;
     QGraphicsLineItem m_axis;
+    QStringList m_thicksList;
 
 };
 

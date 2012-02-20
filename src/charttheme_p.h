@@ -37,7 +37,7 @@ public:
     void decorate(PercentBarPresenter* item, QPercentBarChartSeries* series,int count);
     void decorate(ScatterPresenter* presenter, QScatterSeries* series, int count);
     void decorate(PiePresenter* item, QPieSeries* series, int count);
-    void decorate(QChartAxis& axis,AxisItem* item);
+    void decorate(QChartAxis* axis,AxisItem* item);
 
 protected:
     QChart::ChartTheme m_id;

@@ -8,15 +8,14 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_EXPORT QChartAxis
+class QTCOMMERCIALCHART_EXPORT QChartAxis : public QObject
 {
+	Q_OBJECT
 public:
-    enum LabelsOrientation{ LabelsOrientationHorizontal, LabelsOrientationVertical , LabelsOrientationSlide };
+    QChartAxis(QObject* parent =0);
+    ~QChartAxis();
 
-    QChartAxis();
-    virtual ~QChartAxis();
-
-    //axis
+    //axis handling
     bool isAxisVisible() const { return m_axisVisible;};
     void setAxisVisible(bool visible);
     void setAxisPen(const QPen& pen);
@@ -24,13 +23,13 @@ public:
     void setAxisBrush(const QBrush& brush);
     QBrush axisBrush() const { return m_axisBrush;};
 
-    //grid
+    //grid handling
     bool isGridVisible() const { return m_gridVisible;};
     void setGridVisible(bool visible);
     void setGridPen(const QPen& pen);
     QPen gridPen() const {return m_gridPen;}
 
-    //labels
+    //labels handling
     bool isLabelsVisible() const { return m_labelsVisible;};
     void setLabelsVisible(bool visible);
     void setLabelsPen(const QPen& pen);
@@ -39,10 +38,10 @@ public:
     QBrush labelsBrush() const { return m_labelsBrush;}
     void setLabelsFont(const QFont& font);
     QFont labelFont() const { return m_labelsFont;}
-    void setLabelsOrientation(LabelsOrientation orientation);
-    LabelsOrientation labelsOrientation() const { return m_labelsOrientation;};
+    void setLabelsAngle(int angle);
+    int labelsAngle() const { return m_labelsAngle;};
 
-    //shades
+    //shades handling
     bool isShadesVisible() const { return m_shadesVisible;};
     void setShadesVisible(bool visible);
     void setShadesPen(const QPen& pen);
@@ -52,10 +51,29 @@ public:
     void setShadesOpacity(qreal opacity);
     qreal shadesOpacity() const { return m_shadesOpacity;}
 
+    //range handling
+    void setMin(qreal min);
+    qreal min() const { return m_min;};
+    void setMax(qreal max);
+    qreal max() const { return m_max;};
+    void setRange(qreal min, qreal max);
 
+    //ticks handling
+    void setTicksCount(int count);
+    int ticksCount() const { return m_ticksCount;}
+    void addAxisTickLabel(qreal value,const QString& label);
+    void removeAxisTickLabel(qreal value);
+    QString axisTickLabel(qreal value) const ;
+    void clearAxisTickLabels();
+
+signals:
+	void minChanged(qreal min);
+	void maxChanged(qreal max);
+//private signal
+	void update(QChartAxis*);
+	void ticksChanged(QChartAxis*);
 
 private:
-
     bool m_axisVisible;
     QPen m_axisPen;
     QBrush m_axisBrush;
@@ -67,15 +85,18 @@ private:
     QPen m_labelsPen;
     QBrush m_labelsBrush;
     QFont m_labelsFont;
+    int m_labelsAngle;
 
     bool m_shadesVisible;
     QPen m_shadesPen;
     QBrush m_shadesBrush;
-
     qreal m_shadesOpacity;
 
+    qreal m_min;
+    qreal m_max;
 
-    LabelsOrientation m_labelsOrientation;
+    int m_ticksCount;
+    QMap<qreal, QString> m_ticks;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

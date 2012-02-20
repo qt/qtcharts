@@ -36,25 +36,19 @@ void QChartView::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
-void QChartView::addSeries(QChartSeries* series)
+void QChartView::addSeries(QChartSeries* series,QChartAxis *axisY)
 {
-    m_chart->addSeries(series);
-}
-
-QChartSeries* QChartView::createSeries(QChartSeries::QChartSeriesType type)
-{
-
-    return m_chart->createSeries(type);
-}
-
-void QChartView::zoomInToRect(const QRect& rectangle)
-{
-    m_chart->zoomInToRect(rectangle);
+    m_chart->addSeries(series,axisY);
 }
 
 void QChartView::zoomIn()
 {
     m_chart->zoomIn();
+}
+
+void QChartView::zoomIn(const QRect& rect)
+{
+    m_chart->zoomIn(rect);
 }
 
 void QChartView::zoomOut()
@@ -167,7 +161,7 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
         if (event->button() == Qt::LeftButton && m_rubberBand->isVisible()) {
             m_rubberBand->hide();
             QRect rect = m_rubberBand->geometry();
-            m_chart->zoomInToRect(rect);
+            m_chart->zoomIn(rect);
             event->accept();
         }
 
@@ -204,38 +198,14 @@ QChart::ChartTheme QChartView::chartTheme() const
     return m_chart->chartTheme();
 }
 
-void QChartView::setDefaultAxisX(const QChartAxis& axis)
+QChartAxis* QChartView::axisX() const
 {
-    m_chart->setDefaultAxisX(axis);
+    return m_chart->axisX();
 }
 
-void QChartView::setDefaultAxisY(const QChartAxis& axis)
+QChartAxis* QChartView::axisY() const
 {
-    m_chart->setDefaultAxisY(axis);
+    return m_chart->axisY();
 }
 
-QChartAxis QChartView::defaultAxisX() const
-{
-    return m_chart->defaultAxisX();
-}
-
-QChartAxis QChartView::defaultAxisY() const
-{
-    return m_chart->defaultAxisY();
-}
-
-int QChartView::addAxisY(const QChartAxis& axis)
-{
-    return m_chart->addAxisY(axis);
-}
-
-QChartAxis QChartView::axisY(int id) const
-{
-    return m_chart->axisY(id);
-}
-
-void QChartView::removeAxisY(int id)
-{
-    m_chart->removeAxisY(id);
-}
 QTCOMMERCIALCHART_END_NAMESPACE

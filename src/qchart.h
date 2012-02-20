@@ -21,11 +21,6 @@ class ChartItem;
 class ChartDataSet;
 class ChartPresenter;
 
-// TODO: We don't need to have QChart tied to QGraphicsItem:
-//class QTCOMMERCIALCHART_EXPORT QChart
-//class QTCOMMERCIALCHART_EXPORT QChartGraphicsItem : public QGraphicsItem {
-// public: QChartGraphicsItem(QChart &chart);
-
 /*!
  * TODO: define the responsibilities
  */
@@ -47,11 +42,8 @@ public:
     QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
-    void addSeries(QChartSeries* series);
-
-    //TODO: QChartSeries* createSeries(QSeriesData *data, QChartSeries::QChartSeriesType type);
-    // TODO: who owns the series now? maybe owned by chart and returned a reference instead...
-    QChartSeries* createSeries(QChartSeries::QChartSeriesType type);
+    void addSeries(QChartSeries* series,QChartAxis *axisY=0);
+    void removeSeries(QChartSeries* series);
 
     void setMargin(int margin);
     int margin() const;
@@ -63,21 +55,20 @@ public:
     void setChartBackgroundBrush(const QBrush& brush);
     void setChartBackgroundPen(const QPen& pen);
 
-    void zoomInToRect(const QRectF& rectangle);
     void zoomIn();
+    void zoomIn(const QRectF& rect);
     void zoomOut();
     void zoomReset();
 
-    void setDefaultAxisX(const QChartAxis& axis);
-    void setDefaultAxisY(const QChartAxis& axis);
-    QChartAxis defaultAxisX() const;
-    QChartAxis defaultAxisY() const;
-    QChartAxis axisY(int id) const;
-    int addAxisY(const QChartAxis& axis);
-    void removeAxisY(int id);
+    QChartAxis* axisX() const;
+    QChartAxis* axisY() const;
 
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
+
+private:
+    inline void createChartBackgroundItem();
+    inline void createChartTitleItem();
 
 private:
     Q_DISABLE_COPY(QChart)
