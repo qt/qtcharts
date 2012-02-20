@@ -39,20 +39,25 @@ int main(int argc, char *argv[])
     chartView->addSeries(series0);
     chartView->addSeries(series1);
 
-
     QLinearGradient backgroundGradient;
     backgroundGradient.setColorAt(0.0, Qt::white);
     backgroundGradient.setColorAt(1.0, QRgb(0xffff80));
     backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
     chartView->setChartBackgroundBrush(backgroundGradient);
 
-    QChartAxis axis = chartView->defaultAxisX();
-    axis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);
-    axis.setGridPen(Qt::DashLine);
+    QChartAxis* axisX = chartView->axisX();
+    axisX->setLabelsAngle(45);
+    axisX->setGridPen(Qt::DashLine);
+    axisX->addAxisTickLabel(0,"low");
+    axisX->addAxisTickLabel(50,"medium");
+    axisX->addAxisTickLabel(100,"High");
 
-    chartView->setDefaultAxisX(axis);
-    axis.setShadesBrush(Qt::yellow);
-    chartView->setDefaultAxisY(axis);
+    QChartAxis* axisY = chartView->axisY();
+    axisY->setLabelsAngle(45);
+    axisY->setShadesBrush(Qt::yellow);
+    axisY->addAxisTickLabel(0,"low");
+    axisY->addAxisTickLabel(50,"medium");
+    axisY->addAxisTickLabel(100,"High");
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);
