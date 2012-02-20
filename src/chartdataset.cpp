@@ -292,7 +292,7 @@ QStringList ChartDataSet::createLabels(QChartAxis* axis,qreal min, qreal max)
 
     QStringList labels;
 
-    int ticks = axis->ticksCount();
+    int ticks = axis->ticksCount()-1;
 
     for(int i=0; i<= ticks; i++){
         qreal value = min + (i * (max - min)/ ticks);

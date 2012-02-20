@@ -51,7 +51,7 @@ public:
 
 public slots:
     void handleAxisUpdate(QChartAxis* axis);
-    void handleLabelsChanged(const QStringList& labels);
+    void handleLabelsChanged(QChartAxis* axis,const QStringList& labels);
     void handleGeometryChanged(const QRectF& size);
 protected:
     void updateItem(int count);

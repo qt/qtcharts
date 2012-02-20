@@ -11,7 +11,7 @@ m_shadesVisible(true),
 m_shadesOpacity(1.0),
 m_min(0),
 m_max(0),
-m_ticksCount(4)
+m_ticksCount(5)
 {
 
 }

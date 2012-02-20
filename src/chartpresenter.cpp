@@ -186,7 +186,7 @@ void ChartPresenter::handleSeriesDomainChanged(QChartSeries* series, const Domai
 
 void ChartPresenter::handleAxisLabelsChanged(QChartAxis* axis,const QStringList& labels)
 {
-    m_axisItems.value(axis)->handleLabelsChanged(labels);
+    m_axisItems.value(axis)->handleLabelsChanged(axis,labels);
 }
 
 void ChartPresenter::setChartTheme(QChart::ChartTheme theme)

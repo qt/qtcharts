@@ -90,7 +90,6 @@ void AxisItem::updateItem(int count)
                   if(i%2){
                       QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
                       rectItem->setRect(x,m_rect.top(),deltaX,m_rect.height());
-                      rectItem->setOpacity( 0.5 );
                   }
               }
           }
@@ -114,7 +113,6 @@ void AxisItem::updateItem(int count)
                   if(i%2){
                       QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
                       rectItem->setRect(m_rect.left(),y,m_rect.width(),deltaY);
-
                   }
               }
           }
@@ -166,7 +164,7 @@ void AxisItem::handleAxisUpdate(QChartAxis* axis)
     setShadesBrush(axis->shadesBrush());
 }
 
-void AxisItem::handleLabelsChanged(const QStringList& labels)
+void AxisItem::handleLabelsChanged(QChartAxis* axis,const QStringList& labels)
 {
     m_thicksList=labels;
     QList<QGraphicsItem*> items = m_labels.childItems();
@@ -175,6 +173,7 @@ void AxisItem::handleLabelsChanged(const QStringList& labels)
        m_thicksList=labels;
        createItems(m_thicksList.size());
        items = m_labels.childItems();
+       handleAxisUpdate(axis);
      }
 
     Q_ASSERT(items.size()==m_thicksList.size());
