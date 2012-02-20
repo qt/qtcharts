@@ -1,6 +1,7 @@
 #include "bargroup.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
+#include "qbarset.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -51,10 +52,7 @@ void BarGroup::layoutChanged()
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setBrush(mBrushes.at(set));
-//            bar->setPen(mModel.barSet(set).pen());
-//            bar->setColor(mColors.at(set));
-//            bar->setPen();
+            bar->setBrush(mModel.setAt(set).brush());
             bar->setPos(xPos, yPos-barHeight); // item*posStep+startPos + set * mBarDefaultWidth, mHeight);
             itemIndex++;
             xPos += mBarDefaultWidth;

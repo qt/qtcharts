@@ -22,6 +22,9 @@ public:
     QBarCategory& category();
     void addBarSet(QBarSet *set);
     void removeBarSet(QBarSet *set);
+    QBarSet* nextSet(bool getFirst);
+
+    QBarSet& setAt(int index);  // Internal
 
     int countSets();            // Number of sets in model
     int countCategories();      // Number of categories
@@ -45,6 +48,8 @@ private:
 
     QList<QBarSet*> mDataModel;
     QBarCategory* mCategory;    // Owned
+
+    int mCurrentSet;
 
 };
 

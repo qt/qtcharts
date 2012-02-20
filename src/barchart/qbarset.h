@@ -21,10 +21,18 @@ public:
     qreal valueAt(int index);                   // for modifying individual values
     void setValue(int index, qreal value);      //
 
+    void setPen(const QPen& pen);
+    const QPen& pen() const;
+
+    void setBrush(const QBrush& brush);
+    const QBrush& brush() const;
+
 private:
 
     QString mName;
     QList<qreal> mValues;
+    QPen mPen;
+    QBrush mBrush;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

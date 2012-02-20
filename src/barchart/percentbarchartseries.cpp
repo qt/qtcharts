@@ -25,6 +25,16 @@ void PercentBarChartSeries::removeBarSet(QBarSet *set)
     mModel->removeBarSet(set);
 }
 
+int PercentBarChartSeries::countSets()
+{
+    return mModel->countSets();
+}
+
+QBarSet* PercentBarChartSeries::nextSet(bool getFirst)
+{
+    return mModel->nextSet(getFirst);
+}
+
 int PercentBarChartSeries::countCategories()
 {
     return mModel->countCategories();

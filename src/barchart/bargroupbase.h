@@ -25,11 +25,9 @@ public:
 
     // TODO: these may change with layout awarness.
     void setBarWidth( int w );
-//    int addColor( QColor color );
-//    void resetColors();
 
-    void resetBrushes();
-    void addBrush(QBrush brush);
+//    void resetBrushes();
+//    void addBrush(QBrush brush);
 
     void setPen(QPen pen);
     QPen pen();
@@ -62,7 +60,7 @@ protected:
     BarChartModel& mModel;
 
     QPen mPen;
-    QList<QBrush> mBrushes;
+//    QList<QBrush> mBrushes;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

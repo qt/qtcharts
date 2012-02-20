@@ -47,21 +47,6 @@ void BarGroupBase::setBarWidth( int w )
     mBarDefaultWidth = w;
 }
 /*
-int BarGroupBase::addColor( QColor color )
-{
-//    qDebug() << "BarGroupBase::addColor";
-    int colorIndex = mColors.count();
-    mColors.append(color);
-    return colorIndex;
-}
-*/
-/*
-void BarGroupBase::resetColors()
-{
-//    qDebug() << "BarGroupBase::resetColors";
-    mColors.clear();
-}
-*/
 void BarGroupBase::resetBrushes()
 {
     mBrushes.clear();
@@ -71,8 +56,7 @@ void BarGroupBase::addBrush(QBrush brush)
 {
     mBrushes.append(brush);
 }
-
-
+*/
 void BarGroupBase::dataChanged()
 {
     // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?

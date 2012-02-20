@@ -21,8 +21,10 @@ public:
 
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }
 
-    void addBarSet(QBarSet *set);       // Takes ownership
-    void removeBarSet(QBarSet *set);    // Also deletes the set, if set is owned.
+    void addBarSet(QBarSet *set);       // Takes ownership of set
+    void removeBarSet(QBarSet *set);    // Removes set, releases ownership.
+    int countSets();
+    QBarSet* nextSet(bool getFirst=false);     // Returns first set, if called with true
 
     //TODO:
     //QList<QString> legend();  // Returns legend of series (ie. names of all sets in series)

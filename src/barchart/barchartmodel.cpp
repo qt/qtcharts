@@ -33,8 +33,28 @@ void BarChartModel::removeBarSet(QBarSet *set)
 {
     if (mDataModel.contains(set)) {
         mDataModel.removeOne(set);
-        delete set;
     }
+}
+
+QBarSet* BarChartModel::nextSet(bool getFirst)
+{
+    if (getFirst) {
+        mCurrentSet = 0;
+    }
+
+    if ((mDataModel.count() <= 0) || (mDataModel.count() <= mCurrentSet)) {
+        return 0;
+    }
+
+    QBarSet* set = mDataModel.at(mCurrentSet);
+    mCurrentSet++;
+    return set;
+}
+
+
+QBarSet& BarChartModel::setAt(int index)
+{
+    return *mDataModel.at(index);
 }
 
 int BarChartModel::countSets()

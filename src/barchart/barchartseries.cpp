@@ -23,6 +23,16 @@ void BarChartSeries::removeBarSet(QBarSet *set)
     mModel->removeBarSet(set);
 }
 
+int BarChartSeries::countSets()
+{
+    return mModel->countSets();
+}
+
+QBarSet* BarChartSeries::nextSet(bool getFirst)
+{
+    return mModel->nextSet(getFirst);
+}
+
 int BarChartSeries::countCategories()
 {
     return mModel->countCategories();

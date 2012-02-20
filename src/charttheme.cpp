@@ -4,6 +4,7 @@
 
 
 //series
+#include "qbarset.h"
 #include "barchartseries.h"
 #include "stackedbarchartseries.h"
 #include "percentbarchartseries.h"
@@ -140,47 +141,23 @@ void ChartTheme::decorate(LineChartItem* item, QLineChartSeries* series,int coun
 
 void ChartTheme::decorate(BarGroup* item, BarChartSeries* series,int count)
 {
-    // TODO: better way to descide series color and remove hard coded colors.
-    item->resetBrushes();
-    for (int i=0; i<m_seriesColor.count(); i++) {
-        QBrush brush(m_seriesColor.at(i));
-        item->addBrush(brush);
+    for (int i=0; i<series->countSets(); i++) {
+        series->nextSet(0==i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
-    item->addBrush(QBrush(QColor(255,0,0,128)));
-    item->addBrush(QBrush(QColor(255,255,0,128)));
-    item->addBrush(QBrush(QColor(0,255,0,128)));
-    item->addBrush(QBrush(QColor(0,0,255,128)));
-    item->addBrush(QBrush(QColor(255,128,0,128)));
 }
 
 void ChartTheme::decorate(StackedBarGroup* item, StackedBarChartSeries* series,int count)
 {
-    // TODO: better way to descide series color and remove hard coded colors.
-    item->resetBrushes();
-    for (int i=0; i<m_seriesColor.count(); i++) {
-        QBrush brush(m_seriesColor.at(i));
-        item->addBrush(brush);
+    for (int i=0; i<series->countSets(); i++) {
+        series->nextSet(0==i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
-    item->addBrush(QBrush(QColor(255,0,0,128)));
-    item->addBrush(QBrush(QColor(255,255,0,128)));
-    item->addBrush(QBrush(QColor(0,255,0,128)));
-    item->addBrush(QBrush(QColor(0,0,255,128)));
-    item->addBrush(QBrush(QColor(255,128,0,128)));
 }
 
 void ChartTheme::decorate(PercentBarGroup* item, PercentBarChartSeries* series,int count)
 {
-    // TODO: better way to descide series color and remove hard coded colors.
-    item->resetBrushes();
-    for (int i=0; i<m_seriesColor.count(); i++) {
-        QBrush brush(m_seriesColor.at(i));
-        item->addBrush(brush);
+    for (int i=0; i<series->countSets(); i++) {
+        series->nextSet(0==i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
-    item->addBrush(QBrush(QColor(255,0,0,128)));
-    item->addBrush(QBrush(QColor(255,255,0,128)));
-    item->addBrush(QBrush(QColor(0,255,0,128)));
-    item->addBrush(QBrush(QColor(0,0,255,128)));
-    item->addBrush(QBrush(QColor(255,128,0,128)));
 }
 
 void ChartTheme::decorate(ScatterPresenter* presenter, QScatterSeries* series, int count)

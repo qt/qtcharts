@@ -2,6 +2,7 @@
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
+#include "qbarset.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -49,9 +50,7 @@ void PercentBarGroup::layoutChanged()
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setBrush(mBrushes.at(set));
-//            bar->setBrush(mBrush);
-//            bar->setColor(mColors.at(set));
+            bar->setBrush(mModel.setAt(set).brush());
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             yPos -= barHeight;
