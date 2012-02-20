@@ -54,4 +54,11 @@ bool operator!= (const Domain &domain1, const Domain &domain2)
     return !(domain1 == domain2);
 }
 
+
+QDebug operator<<(QDebug dbg, const Domain &domain)
+{
+    dbg.nospace() << "Domain("<<domain.m_minX<<','<<domain.m_maxX<<','<<domain.m_minY<<','<<domain.m_maxY<<')';
+    return dbg.maybeSpace();
+}
+
 QTCOMMERCIALCHART_END_NAMESPACE

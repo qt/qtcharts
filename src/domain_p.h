@@ -15,6 +15,7 @@ public:
 
 	friend bool operator== (const Domain &domain1, const Domain &domain2);
 	friend bool operator!= (const Domain &domain1, const Domain &domain2);
+	friend QDebug operator<<(QDebug dbg, const Domain &domain);
 
 	Domain subDomain(const QRectF& rect, qreal maxWidth, qreal maxHeight) const;
 
