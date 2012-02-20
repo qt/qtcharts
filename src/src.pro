@@ -38,6 +38,10 @@ PRIVATE_HEADERS += linechart/linechartitem_p.h \
     barchart/bar_p.h \
     barchart/separator_p.h \
     barchart/barchartmodel_p.h \
+    barchart/barpresenter.h \
+    barchart/stackedbarpresenter.h \
+    barchart/percentbarpresenter.h \
+    barchart/barpresenterbase.h \
     axisitem_p.h \
     chartitem_p.h \
     charttheme_p.h \
@@ -46,12 +50,8 @@ PRIVATE_HEADERS += linechart/linechartitem_p.h \
     domain_p.h
 PUBLIC_HEADERS += linechart/qlinechartseries.h \
     barchart/qbarchartseries.h \
-    barchart/barpresenter.h \
     barchart/qstackedbarchartseries.h \
-    barchart/stackedbarpresenter.h \
     barchart/qpercentbarchartseries.h \
-    barchart/percentbarpresenter.h \
-    barchart/barpresenterbase.h \
     barchart/qbarset.h \
     barchart/qbarcategory.h \
     qchartseries.h \

@@ -1,5 +1,5 @@
-#ifndef PERCENTBARGROUP_H
-#define PERCENTBARGROUP_H
+#ifndef PERCENTBARPRESENTER_H
+#define PERCENTBARPRESENTER_H
 
 #include "chartitem_p.h"
 #include "bar_p.h"
@@ -25,4 +25,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // PERCENTBARGROUP_H
+#endif // PERCENTBARPRESENTER_H

@@ -46,17 +46,7 @@ void BarPresenterBase::setBarWidth( int w )
 {
     mBarDefaultWidth = w;
 }
-/*
-void BarGroupBase::resetBrushes()
-{
-    mBrushes.clear();
-}
 
-void BarGroupBase::addBrush(QBrush brush)
-{
-    mBrushes.append(brush);
-}
-*/
 void BarPresenterBase::dataChanged()
 {
     // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?

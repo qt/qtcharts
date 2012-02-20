@@ -1,5 +1,5 @@
-#ifndef QBARGROUP_H
-#define QBARGROUP_H
+#ifndef BARPRESENTER_H
+#define BARPRESENTER_H
 
 #include "barpresenterbase.h"
 #include "qbarchartseries.h"
@@ -16,7 +16,7 @@ public:
 
 private:
 
-    // From BarGroupBase
+    // From BarPresenterBase
     void layoutChanged();   // layout has changed -> need to recalculate bar sizes
 
 private:
@@ -25,4 +25,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QBARGROUP_H
+#endif // BARPRESENTER_H

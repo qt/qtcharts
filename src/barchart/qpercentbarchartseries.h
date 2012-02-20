@@ -7,7 +7,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class PercentBarPresenter;
 class QBarCategory;
 class QBarSet;
 class BarChartModel;
@@ -47,7 +46,6 @@ public Q_SLOTS:
 
 private:
 
-    PercentBarPresenter* mPercentBarGroup;
     BarChartModel* mModel;
 
 };

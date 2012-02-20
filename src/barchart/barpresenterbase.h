@@ -1,5 +1,5 @@
-#ifndef BARGROUPBASE_H
-#define BARGROUPBASE_H
+#ifndef BARPRESENTERBASE_H
+#define BARPRESENTERBASE_H
 
 #include "chartitem_p.h"
 #include "barchartmodel_p.h"
@@ -26,15 +26,11 @@ public:
     // TODO: these may change with layout awarness.
     void setBarWidth( int w );
 
-//    void resetBrushes();
-//    void addBrush(QBrush brush);
-
     void setPen(QPen pen);
     QPen pen();
 
     void setBrush(QBrush brush);
     QBrush brush();
-
 
     // TODO: Consider the domain for layoutChanged. May be use case, may not be. If it is, then the derived classes need to implement it
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
@@ -60,9 +56,8 @@ protected:
     BarChartModel& mModel;
 
     QPen mPen;
-//    QList<QBrush> mBrushes;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // BARGROUPBASE_H
+#endif // BARPRESENTERBASE_H

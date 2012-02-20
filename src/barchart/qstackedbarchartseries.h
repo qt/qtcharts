@@ -7,7 +7,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class StackedBarPresenter;
 class QBarCategory;
 class QBarSet;
 class BarChartModel;
@@ -46,7 +45,6 @@ public Q_SLOTS:
 
 private:
 
-    StackedBarPresenter* mStackedBarGroup;
     BarChartModel* mModel;
 };
 

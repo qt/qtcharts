@@ -9,7 +9,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarCategory;
 class QBarSet;
-class BarPresenter;
 class BarChartModel;
 
 // Container for series
@@ -46,9 +45,7 @@ public Q_SLOTS:
 
 private:
 
-    BarPresenter* mBarGroup;
     BarChartModel* mModel;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
