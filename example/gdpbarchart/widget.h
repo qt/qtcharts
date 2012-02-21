@@ -19,6 +19,7 @@ public:
 
 public slots:
     void refreshChart();
+    void printChart();
 
 private:
     QChartView* chartArea;

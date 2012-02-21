@@ -16,6 +16,8 @@
 #include <qbarcategory.h>
 #include <qbarset.h>
 #include <QListWidget>
+#include <QPrinter>
+#include <QPrintDialog>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -36,10 +38,14 @@ Widget::Widget(QWidget *parent)
     QPushButton* refreshButton = new QPushButton(tr("Refresh"));
     connect(refreshButton, SIGNAL(clicked()), this, SLOT(refreshChart()));
 
+    QPushButton* printButton = new QPushButton(tr("Print chart"));
+    connect(printButton, SIGNAL(clicked()), this, SLOT(printChart()));
+
     QVBoxLayout* rightPanelLayout = new QVBoxLayout;
     rightPanelLayout->addWidget(countrieslist);
     rightPanelLayout->addWidget(yearslist);
     rightPanelLayout->addWidget(refreshButton);
+    rightPanelLayout->addWidget(printButton);
     rightPanelLayout->setStretch(0, 1);
     rightPanelLayout->setStretch(1, 0);
 
@@ -73,7 +79,7 @@ Widget::Widget(QWidget *parent)
     // hide axis X labels
     QChartAxis* axis = chartArea->axisX();
     axis->setLabelsVisible(false);
-//    newAxis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);
+    //    newAxis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);
 
 }
 
@@ -88,7 +94,7 @@ Widget::~Widget()
 */
 void Widget::refreshChart()
 {
-//    chartArea->
+    //    chartArea->
     // selected countries items list is not sorted. copy the values to QStringlist and sort them.
     QStringList selectedCountriesStrings;
     QList<QListWidgetItem*> selectedCountriesItems = countrieslist->selectedItems();
@@ -126,9 +132,9 @@ void Widget::refreshChart()
     {
         query.exec("SELECT country,gdpvalue FROM gdp2 where year=" + QString("%1").arg(selectedYearsInts[i]) + " AND " + countriesQuery);
         QBarSet* barSet = new QBarSet;
-//        while (query.next()) {
-//            qDebug() << query.value(0).toString() << " : " << query.value(1).toString();
-//        }
+        //        while (query.next()) {
+        //            qDebug() << query.value(0).toString() << " : " << query.value(1).toString();
+        //        }
         query.first();
 
         // the data for some of the coutries for some years might be missing.
@@ -153,4 +159,17 @@ void Widget::refreshChart()
 
     // add the serie to the chart
     chartArea->addSeries(series0);
+}
+
+void Widget::printChart()
+{
+    QPrinter printer;
+//    QPrinter printer(QPrinter::HighResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOrientation(QPrinter::Landscape);
+    printer.setOutputFileName("print.pdf");
+
+    QPainter painter;
+    painter.begin(&printer);
+    chartArea->render(&painter);
 }
