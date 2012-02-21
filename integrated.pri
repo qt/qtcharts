@@ -14,8 +14,6 @@ integrated_build:{
         }
     }
 
-    DESTDIR = $$CHART_BUILD_BIN_DIR
-
     CONFIG(debug, debug|release) {
         LIBS += -lQtCommercialChartd
         #this is ugly hack to work around missing rpath, it simply copies lib

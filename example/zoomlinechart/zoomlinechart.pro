@@ -1,14 +1,7 @@
-!include( ../../common.pri ) {
- error( "Couldn't find the common.pri file!" )
+!include( ../example.pri ) {
+ error( "Couldn't find the example.pri file!" )
 }
-
-!include( ../../integrated.pri ) {
- error( "Couldn't find the integrated.pri file !")
-}
-
-TARGET = zoomLineChart
-TEMPLATE = app
-QT += core gui
+TARGET = zoomlinechart
 HEADERS += chartwidget.h
 SOURCES += main.cpp chartwidget.cpp
 
