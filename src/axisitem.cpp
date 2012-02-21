@@ -1,5 +1,6 @@
 #include "axisitem_p.h"
 #include "qchartaxis.h"
+#include "chartpresenter_p.h"
 #include <QPainter>
 #include <QDebug>
 
@@ -14,11 +15,12 @@ m_labelsAngle(0),
 m_shadesEnabled(true),
 m_grid(parent),
 m_shades(parent),
-m_labels(parent)
+m_labels(parent),
+m_origin(0,0)
 {
     //initial initialization
-    m_shades.setZValue(0);
-    m_grid.setZValue(2);
+    m_shades.setZValue(ChartPresenter::ShadesZValue);
+    m_grid.setZValue(ChartPresenter::GridZValue);
 }
 
 AxisItem::~AxisItem()
@@ -208,7 +210,6 @@ void AxisItem::setGridOpacity(qreal opacity)
 {
     m_grid.setOpacity(opacity);
 }
-
 
 qreal AxisItem::gridOpacity() const
 {

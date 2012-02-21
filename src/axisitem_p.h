@@ -50,9 +50,9 @@ public:
     void setLabelsFont(const QFont& font);
 
 public slots:
-    void handleAxisUpdate(QChartAxis* axis);
-    void handleLabelsChanged(QChartAxis* axis,const QStringList& labels);
-    void handleGeometryChanged(const QRectF& size);
+    void handleAxisUpdate(QChartAxis* axis); //look and feel
+    void handleLabelsChanged(QChartAxis* axis,const QStringList& labels); //labels from dataset
+    void handleGeometryChanged(const QRectF& size); // geometry from presenter
 protected:
     void updateItem(int count);
 private:
@@ -68,6 +68,7 @@ private:
     QGraphicsItemGroup m_labels;
     QGraphicsLineItem m_axis;
     QStringList m_thicksList;
+    QPointF m_origin;
 
 };
 

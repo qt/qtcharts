@@ -63,13 +63,16 @@ void QChart::createChartBackgroundItem()
 {
     if(!m_backgroundItem) {
         m_backgroundItem = new QGraphicsRectItem(this);
-        m_backgroundItem->setZValue(-1);
+        m_backgroundItem->setZValue(ChartPresenter::BackgroundZValue);
     }
 }
 
 void QChart::createChartTitleItem()
 {
-    if(!m_titleItem) m_titleItem = new QGraphicsTextItem(this);
+    if(!m_titleItem) {
+        m_titleItem = new QGraphicsTextItem(this);
+        m_titleItem->setZValue(ChartPresenter::BackgroundZValue);
+    }
 }
 
 int QChart::margin() const

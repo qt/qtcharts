@@ -20,6 +20,8 @@ class ChartPresenter: public QObject
 {
     Q_OBJECT
 public:
+    enum ZValues { BackgroundZValue = -1 , ShadesZValue, GridZValue,  AxisZValue , LineChartZValue };
+
     ChartPresenter(QChart* chart,ChartDataSet *dataset);
     virtual ~ChartPresenter();
 
