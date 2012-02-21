@@ -6,21 +6,44 @@
 #include <QGraphicsSceneResizeEvent>
 #include <QDebug>
 
+/*!
+    \class QChart
+    \brief QtCommercial chart API.
+
+    QChart is a QGraphicsWidget that you can show in a QGraphicsScene. It manages the graphical
+    representation of different types of QChartSeries and other chart related objects like
+    QChartAxis and QChartLegend. If you simply want to show a chart in a layout, you can use the
+    convenience class QChartView instead of QChart.
+*/
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    Constructs a chart object which is a child of parent.
+*/
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
-m_backgroundItem(0),
-m_titleItem(0),
-m_dataset(new ChartDataSet(this)),
-m_presenter(new ChartPresenter(this,m_dataset))
+    m_backgroundItem(0),
+    m_titleItem(0),
+    m_dataset(new ChartDataSet(this)),
+    m_presenter(new ChartPresenter(this,m_dataset))
 {
 }
 
-QChart::~QChart() {}
-
-void QChart::addSeries(QChartSeries* series,QChartAxis* axisY)
+/*!
+    Destroys the object and it's children, like QChartSeries and QChartAxis object added to it.
+*/
+QChart::~QChart()
 {
-    m_dataset->addSeries(series,axisY);
+}
+
+/*!
+    Adds the series and optional y axis onto the chart and takes the ownership of the objects.
+    If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
+    the y axis).
+*/
+void QChart::addSeries(QChartSeries* series, QChartAxis* axisY)
+{
+    m_dataset->addSeries(series, axisY);
 }
 
 void QChart::removeSeries(QChartSeries* series)

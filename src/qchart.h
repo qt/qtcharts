@@ -1,5 +1,5 @@
-#ifndef CHART_H
-#define CHART_H
+#ifndef QCHART_H
+#define QCHART_H
 
 #include <qchartglobal.h>
 #include <qchartseries.h>
@@ -21,9 +21,6 @@ class ChartItem;
 class ChartDataSet;
 class ChartPresenter;
 
-/*!
- * TODO: define the responsibilities
- */
 class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
     Q_OBJECT
@@ -34,7 +31,7 @@ public:
         ChartThemeVanilla,
         ChartThemeIcy,
         ChartThemeGrayscale,
-        ChartThemeScientific,
+        ChartThemeScientific
         //ChartThemeUnnamed1
     };
 
@@ -42,7 +39,7 @@ public:
     QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
-    void addSeries(QChartSeries* series,QChartAxis* axisY=0);// takes series ownership , takes axis ownership
+    void addSeries(QChartSeries* series, QChartAxis* axisY = 0);
     void removeSeries(QChartSeries* series); //returns ownership , deletes axis if no series attached
     void removeAllSeries(); // deletes series and axis
 
