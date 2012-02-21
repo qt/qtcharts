@@ -10,5 +10,5 @@ SUBDIRS += linechart \
            dynamiclinechart \
            axischart \
            multichart \
-           axischart\
-           gdpbarchart
+           gdpbarchart \
+           presenterchart
