@@ -27,8 +27,11 @@ public:
     void setBrush(const QBrush& brush);
     const QBrush& brush() const;
 
+    bool isFloatingValuesVisible();
+
 Q_SIGNALS:
     void clicked();
+    void setFloatingValuesVisible(QBarSet* set);
 /*
     void hoverEnter();
     void hoverLeave();
@@ -36,6 +39,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void barClicked();
+    void toggleFloatingValuesVisible();
 
 private:
 
@@ -44,6 +48,7 @@ private:
     QPen mPen;
     QBrush mBrush;
 
+    bool mFloatingValuesVisible;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

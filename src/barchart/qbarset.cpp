@@ -5,6 +5,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QBarSet::QBarSet()
 {
+    mFloatingValuesVisible = false;
 }
 
 void QBarSet::setName(QString name)
@@ -57,12 +58,29 @@ const QBrush& QBarSet::brush() const
     return mBrush;
 }
 
+bool QBarSet::isFloatingValuesVisible()
+{
+    return mFloatingValuesVisible;
+}
+
 void QBarSet::barClicked()
 {
     qDebug() << "QBarset::barClicked";
     // Some bar of this set has been clicked
     // TODO: What happens then?
     emit clicked();     // Notify that set has been clicked
+}
+
+void QBarSet::toggleFloatingValuesVisible()
+{
+    qDebug() << "QBarset::toggleFloatingValuesVisible";
+    // TODO: toggle vs explicit set?
+    if (mFloatingValuesVisible) {
+        mFloatingValuesVisible=false;
+    } else {
+        mFloatingValuesVisible=true;
+    }
+    emit setFloatingValuesVisible(this);
 }
 
 

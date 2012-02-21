@@ -41,6 +41,9 @@ public:
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
     virtual void layoutChanged() = 0;   // layout has changed -> need to recalculate bar sizes
 
+public Q_SLOTS:
+    void setFloatingValues(QBarSet *set);
+
 protected slots:
     void handleModelChanged(int index);
     void handleDomainChanged(const Domain& domain);

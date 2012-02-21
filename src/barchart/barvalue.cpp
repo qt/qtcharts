@@ -4,8 +4,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarValue::BarValue(QGraphicsItem *parent)
+BarValue::BarValue(QBarSet &set, QGraphicsItem *parent)
     : QGraphicsItem(parent)
+    ,mBarSet(set)
 {
 //    setVisible(false);
 }
@@ -40,6 +41,11 @@ void BarValue::setPos(qreal x, qreal y)
 {
     mXpos = x;
     mYpos = y;
+}
+
+bool BarValue::belongsToSet(QBarSet *set)
+{
+    return (&mBarSet == set);
 }
 
 void BarValue::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

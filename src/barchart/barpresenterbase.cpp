@@ -69,7 +69,7 @@ void BarPresenterBase::dataChanged()
             Bar *bar = new Bar(this);
             childItems().append(bar);
             mBars.append(bar);
-            connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
+            connect(bar,SIGNAL(clicked()),set,SLOT(toggleFloatingValuesVisible()));
         }
     }
 
@@ -93,15 +93,28 @@ void BarPresenterBase::dataChanged()
 
     // Create floating values
     for (int s=0; s<mModel.countSets(); s++) {
+        QBarSet *set = mModel.nextSet(0==s);
         for (int category=0; category<mModel.countCategories(); category++) {
-            BarValue *value = new BarValue(this);
+            BarValue *value = new BarValue(*set, this);
             childItems().append(value);
             mFloatingValues.append(value);
         }
+        connect(set,SIGNAL(setFloatingValuesVisible(QBarSet*)),this,SLOT(setFloatingValues(QBarSet*)));
     }
 
     // TODO: if (autolayout) { layoutChanged() } or something
     mLayoutDirty = true;
+}
+
+void BarPresenterBase::setFloatingValues(QBarSet *set)
+{
+    qDebug() << "BarPresenterBase::setFloatingValues";
+    // TODO: better way to map set to BarValues?
+    for (int i=0; i<mFloatingValues.count(); i++) {
+        if (mFloatingValues.at(i)->belongsToSet(set)) {
+            mFloatingValues.at(i)->setVisible(set->isFloatingValuesVisible());
+        }
+    }
 }
 
 //handlers
