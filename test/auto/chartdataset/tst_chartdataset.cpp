@@ -218,14 +218,16 @@ void tst_ChartDataSet::axisY()
 
 	QVERIFY2(defaultAxisY, "Missing axisY.");
 
-	QLineChartSeries series1;
-	dataSet.addSeries(&series1);
+	QLineChartSeries* series1 = new QLineChartSeries();
+	dataSet.addSeries(series1);
 
-	QLineChartSeries series2;
-	dataSet.addSeries(&series2, axisY);
+	QLineChartSeries* series2 = new QLineChartSeries();
+	dataSet.addSeries(series2, axisY);
 
-	QVERIFY(dataSet.axisY(&series1) == defaultAxisY);
-	QVERIFY(dataSet.axisY(&series2) == axisY);
+	QVERIFY(dataSet.axisY(series1) == defaultAxisY);
+	QVERIFY(dataSet.axisY(series2) == axisY);
+
+
 }
 
 void tst_ChartDataSet::clearDomains_data()
@@ -242,15 +244,15 @@ void tst_ChartDataSet::clearDomains()
 	QFETCH(int, indexCount);
 
 	Domain domain1(0, 100, 0, 100);
-	QLineChartSeries series;
-	series.add(0, 0);
-	series.add(100, 100);
+	QLineChartSeries* series = new QLineChartSeries();
+	series->add(0, 0);
+	series->add(100, 100);
 
 	ChartDataSet dataSet;
 
 	QCOMPARE(dataSet.domainIndex(), 0);
 
-	dataSet.addSeries(&series);
+	dataSet.addSeries(series);
 
 	Domain domain2 = dataSet.domain(dataSet.axisY());
 
@@ -313,15 +315,15 @@ void tst_ChartDataSet::domain()
 	QFETCH(Domain, domain);
 
 	ChartDataSet dataSet;
-	QLineChartSeries series1;
-	series1.add(domain1.m_minX, domain1.m_minY);
-	series1.add(domain1.m_maxX, domain1.m_maxY);
-	QLineChartSeries series2;
-	series2.add(domain2.m_minX, domain2.m_minY);
-	series2.add(domain2.m_maxX, domain2.m_maxY);
-	QLineChartSeries series3;
-	series3.add(domain3.m_minX, domain3.m_minY);
-	series3.add(domain3.m_maxX, domain3.m_maxY);
+	QLineChartSeries* series1 = new QLineChartSeries();
+	series1->add(domain1.m_minX, domain1.m_minY);
+	series1->add(domain1.m_maxX, domain1.m_maxY);
+	QLineChartSeries* series2 = new QLineChartSeries();
+	series2->add(domain2.m_minX, domain2.m_minY);
+	series2->add(domain2.m_maxX, domain2.m_maxY);
+	QLineChartSeries* series3 = new QLineChartSeries();
+	series3->add(domain3.m_minX, domain3.m_minY);
+	series3->add(domain3.m_maxX, domain3.m_maxY);
 
 	QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*)));
 	QSignalSpy spy1(&dataSet,
@@ -332,9 +334,9 @@ void tst_ChartDataSet::domain()
 			SIGNAL(seriesDomainChanged(QChartSeries*, Domain const&)));
 	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QChartSeries*)));
 
-	dataSet.addSeries(&series1);
-	dataSet.addSeries(&series2);
-	dataSet.addSeries(&series3);
+	dataSet.addSeries(series1);
+	dataSet.addSeries(series2);
+	dataSet.addSeries(series3);
 
 	QCOMPARE(dataSet.domainIndex(), 0);
 	QVERIFY2(dataSet.domain(dataSet.axisY()) == domain, "Domain not equal");
@@ -368,11 +370,11 @@ void tst_ChartDataSet::nextpreviousDomain()
 	ChartDataSet dataSet;
 
 	Domain domain1(0, 1000, 0, 1000);
-	QLineChartSeries series;
-	series.add(0, 0);
-	series.add(1000, 1000);
+	QLineChartSeries* series = new QLineChartSeries();
+	series->add(0, 0);
+	series->add(1000, 1000);
 
-	dataSet.addSeries(&series);
+	dataSet.addSeries(series);
 
 	QCOMPARE(dataSet.domainIndex(), 0);
 
