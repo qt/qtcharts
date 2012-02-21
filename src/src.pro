@@ -7,28 +7,28 @@ QT += core \
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
 SOURCES += \
-    qchart.cpp \
     axisitem.cpp \
-    qchartview.cpp \
-    qchartseries.cpp \
-    qchartaxis.cpp \
-    charttheme.cpp \
     chartdataset.cpp \
     chartpresenter.cpp \
-    domain.cpp
+    charttheme.cpp \
+    domain.cpp \
+    qchart.cpp \
+    qchartaxis.cpp \
+    qchartseries.cpp \
+    qchartview.cpp 
 PRIVATE_HEADERS += \
     axisitem_p.h \
-    chartitem_p.h \
-    charttheme_p.h \
     chartdataset_p.h \
+    chartitem_p.h \
     chartpresenter_p.h \
+    charttheme_p.h \
     domain_p.h
 PUBLIC_HEADERS += \
-    qchartseries.h \
     qchart.h \
+    qchartaxis.h \
     qchartglobal.h \
+    qchartseries.h \
     qchartview.h \
-    qchartaxis.h
 
 include(linechart/linechart.pri)   
 include(barchart/barchart.pri)    
