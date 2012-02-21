@@ -1,17 +1,20 @@
 !include( ../../common.pri ) {
     error( "Couldn't find the common.pri file!" )
 }
-!include( ../../integrated.pri ) {
-    error( "Couldn't find the integrated.pri file !")
+
+DESTDIR = $$CHART_BUILD_BIN_DIR
+
+OBJECTS_DIR = $$CHART_BUILD_DIR/bin/$$TARGET
+MOC_DIR = $$CHART_BUILD_DIR/bin/$$TARGET
+UI_DIR = $$CHART_BUILD_DIR/bin/$$TARGET
+RCC_DIR = $$CHART_BUILD_DIR/bin/$$TARGET
+
+integrated_build:{
+    message(Please export QML_IMPORT_PATH=$$CHART_BUILD_LIB_DIR)
 }
 
-integrated_build: {
-    # cannot use integrated build for now; we would need the qml files copied to
-    # charts/bin folder also to make this work. And even in that case I'm not sure if
-    # the chart qml plugin can be found or if it needs to be installed to the qt's plugin
-    # folder always.
-    warning("TODO: Charts qml test app does not work with integrated builds")
-}
+RESOURCES += \
+    resources.qrc
 
 # Add more folders to ship with the application, here
 folder_01.source = qml/qmlchart

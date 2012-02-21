@@ -7,7 +7,7 @@
 
 TEMPLATE = lib
 TARGET = qtcommercialchartqml
-
+DESTDIR = $$CHART_BUILD_PLUGIN_DIR
 CONFIG += qt plugin
 QT += declarative
 
@@ -16,10 +16,10 @@ contains(QT_MAJOR_VERSION, 5) {
     DEFINES += QTQUICK2
 }
 
-OBJECTS_DIR = $$CHART_BUILD_DIR/lib
-MOC_DIR = $$CHART_BUILD_DIR/lib
-UI_DIR = $$CHART_BUILD_DIR/lib
-RCC_DIR = $$CHART_BUILD_DIR/lib
+OBJECTS_DIR = $$CHART_BUILD_DIR/plugin
+MOC_DIR = $$CHART_BUILD_DIR/plugin
+UI_DIR = $$CHART_BUILD_DIR/plugin
+RCC_DIR = $$CHART_BUILD_DIR/plugin
 
 SOURCES += \
     plugin.cpp \
@@ -36,6 +36,8 @@ HEADERS += \
     scatterelement.h \
     declarativepieseries.h \
     declarativelineseries.h
+
+QMAKE_POST_LINK = $$QMAKE_COPY qmldir $$CHART_BUILD_PLUGIN_DIR
 
 TARGETPATH = QtCommercial/Chart
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
