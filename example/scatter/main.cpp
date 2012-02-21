@@ -1,6 +1,5 @@
 #include <QtGui/QApplication>
 #include <QMainWindow>
-#include <cmath>
 #include <qchartglobal.h>
 #include <qchartview.h>
 #include <qscatterseries.h>
@@ -12,7 +11,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     // Create chart widget
-    QChartView *chartWidget = new QChartView();
+    QChartView *chartView = new QChartView();
 
     // Add scatter series with simple test data
     QScatterSeries *scatter = new QScatterSeries();
@@ -23,7 +22,8 @@ int main(int argc, char *argv[])
              << QPointF(2.0, 4.5)
              << QPointF(2.0, 5.5)
              << QPointF(2.5, 5.0);
-    chartWidget->addSeries(scatter);
+    // Chart takes ownership
+    chartView->addSeries(scatter);
 
     // Add another scatter series
     // - more data with random component
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         (*scatter2) << QPointF(i + (qreal)(rand() % 100) / 100.0,
                                i + (qreal)(rand() % 100) / 100.0);
     }
-    chartWidget->addSeries(scatter2);
+    chartView->addSeries(scatter2);
     // Custom pen and brush (not those defined by the chart theme)
     // - uses opaque color
     QColor color("#2685BF");
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     // Use the chart widget as the central widget
     QMainWindow w;
     w.resize(640, 480);
-    w.setCentralWidget(chartWidget);
+    w.setCentralWidget(chartView);
     w.show();
 
     return a.exec();
