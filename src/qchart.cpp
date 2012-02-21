@@ -28,6 +28,11 @@ void QChart::removeSeries(QChartSeries* series)
     m_dataset->removeSeries(series);
 }
 
+void QChart::removeAllSeries()
+{
+    m_dataset->removeAllSeries();
+}
+
 void QChart::setChartBackgroundBrush(const QBrush& brush)
 {
     createChartBackgroundItem();

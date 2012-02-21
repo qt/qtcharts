@@ -24,8 +24,9 @@ public:
     //implement from QWidget
     void resizeEvent(QResizeEvent *event);
 
-    void addSeries(QChartSeries* series,QChartAxis* axisY=0);// takes ownership
-    void removeSeries(QChartSeries* series);
+    void addSeries(QChartSeries* series,QChartAxis* axisY=0);// takes series ownership , takes axis ownership
+    void removeSeries(QChartSeries* series); //returns ownership , deletes axis if no series attached
+    void removeAllSeries(); // deletes series and axis
     int margin() const;
 
     void setChartTitle(const QString& title);

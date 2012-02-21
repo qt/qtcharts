@@ -42,8 +42,9 @@ public:
     QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
-    void addSeries(QChartSeries* series,QChartAxis *axisY=0);
-    void removeSeries(QChartSeries* series);
+    void addSeries(QChartSeries* series,QChartAxis* axisY=0);// takes series ownership , takes axis ownership
+    void removeSeries(QChartSeries* series); //returns ownership , deletes axis if no series attached
+    void removeAllSeries(); // deletes series and axis
 
     void setMargin(int margin);
     int margin() const;

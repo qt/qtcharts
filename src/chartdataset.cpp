@@ -168,14 +168,34 @@ void ChartDataSet::removeSeries(QChartSeries* series)
             emit seriesRemoved(series);
             m_seriesMap.remove(axis,series);
             //remove axis if no longer there
-            if(!m_seriesMap.contains(axis) && axis != m_axisY){
+            if(!m_seriesMap.contains(axis)){
                 emit axisRemoved(axis);
                 m_domainMap.remove(axis);
+                if(axis != m_axisY)
                 delete axis;
             }
+            series->setParent(0);
             break;
         }
     }
+}
+
+void ChartDataSet::removeAllSeries()
+{
+    QList<QChartAxis*> keys = m_seriesMap.uniqueKeys();
+    foreach(QChartAxis* axis , keys) {
+        QList<QChartSeries*> seriesList = m_seriesMap.values(axis);
+        for(int i =0 ; i < seriesList.size();i++ )
+        {
+            emit seriesRemoved(seriesList.at(i));
+            delete(seriesList.at(i));
+        }
+        m_seriesMap.remove(axis);
+        m_domainMap.remove(axis);
+        emit axisRemoved(axis);
+        if(axis != m_axisY) delete axis;
+        }
+    m_domainIndex=0;
 }
 
 bool ChartDataSet::nextDomain()

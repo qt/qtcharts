@@ -51,6 +51,11 @@ void QChartView::removeSeries(QChartSeries* series)
     m_chart->removeSeries(series);
 }
 
+void QChartView::removeAllSeries()
+{
+    m_chart->removeAllSeries();
+}
+
 void QChartView::zoomIn()
 {
     m_chart->zoomIn();
