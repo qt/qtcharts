@@ -1,5 +1,6 @@
 #include "barpresenterbase.h"
 #include "bar_p.h"
+#include "barvalue_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
 #include "qbarset.h"
@@ -12,7 +13,7 @@ BarPresenterBase::BarPresenterBase(BarChartModel& model, QGraphicsItem *parent)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
-    ,mSeparatorsVisible(true)
+    ,mSeparatorsVisible(false)
     ,mModel(model)
 {
     dataChanged();
@@ -59,6 +60,7 @@ void BarPresenterBase::dataChanged()
     mBars.clear();
     mLabels.clear();
     mSeparators.clear();
+    mFloatingValues.clear();
 
     // Create new graphic items for bars
     for (int s=0; s<mModel.countSets(); s++) {
@@ -71,6 +73,7 @@ void BarPresenterBase::dataChanged()
         }
     }
 
+    // Create labels
     int count = mModel.countCategories();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
@@ -79,12 +82,22 @@ void BarPresenterBase::dataChanged()
         mLabels.append(label);
     }
 
+    // Create separators
     count = mModel.countCategories() - 1;   // There is one less separator than columns
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
         childItems().append(sep);
         mSeparators.append(sep);
+    }
+
+    // Create floating values
+    for (int s=0; s<mModel.countSets(); s++) {
+        for (int category=0; category<mModel.countCategories(); category++) {
+            BarValue *value = new BarValue(this);
+            childItems().append(value);
+            mFloatingValues.append(value);
+        }
     }
 
     // TODO: if (autolayout) { layoutChanged() } or something

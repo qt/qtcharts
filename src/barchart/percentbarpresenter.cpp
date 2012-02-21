@@ -1,6 +1,7 @@
 #include "percentbarpresenter.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
+#include "barvalue_p.h"
 #include "separator_p.h"
 #include "qbarset.h"
 #include <QDebug>
@@ -37,10 +38,10 @@ void PercentBarPresenter::layoutChanged()
     qreal tC = count+1;
     qreal xStep = (tW/tC);
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
+    qreal h = mHeight;
 
     for (int category = 0; category < mModel.countCategories(); category++) {
         qreal colSum = mModel.categorySum(category);
-        qreal h = mHeight;
         qreal scale = (h / colSum);
         qreal yPos = h;
         for (int set=0; set < mModel.countSets(); set++) {
@@ -63,14 +64,37 @@ void PercentBarPresenter::layoutChanged()
     }
 
     // Position separators
-    int separatorIndex(0);
     xPos = xStep + xStep/2;
     for (int s=0; s < mModel.countCategories() - 1; s++) {
-        Separator* sep = mSeparators.at(separatorIndex);
+        Separator* sep = mSeparators.at(s);
         sep->setPos(xPos,0);
         sep->setSize(QSizeF(1,mHeight));
         xPos += xStep;
-        separatorIndex++;
+    }
+
+    // Position floating values
+    itemIndex = 0;
+    xPos = ((tW/tC) - mBarDefaultWidth / 2);
+    for (int category=0; category < mModel.countCategories(); category++) {
+        qreal yPos = h;
+        qreal colSum = mModel.categorySum(category);
+        qreal scale = (h / colSum);
+        for (int set=0; set < mModel.countSets(); set++) {
+            qreal barHeight = mModel.valueAt(set,category) * scale;
+            BarValue* value = mFloatingValues.at(itemIndex);
+
+            // TODO: remove hard coding, apply layout
+            value->setPos(xPos + mBarDefaultWidth/2, yPos-barHeight/2);
+            value->setPen(QPen(QColor(255,255,255,255)));
+
+            QString vString(QString::number(mModel.percentageAt(set,category) * 100));
+            vString.append("%");
+            value->setValueString(vString);
+
+            itemIndex++;
+            yPos -= barHeight;
+        }
+        xPos += xStep;
     }
 
     mLayoutDirty = true;

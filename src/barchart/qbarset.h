@@ -27,7 +27,8 @@ public:
     void setBrush(const QBrush& brush);
     const QBrush& brush() const;
 
-//    void clicked();
+Q_SIGNALS:
+    void clicked();
 /*
     void hoverEnter();
     void hoverLeave();

@@ -33,8 +33,9 @@ public:
     qreal max();                // Maximum value of all sets
     qreal min();                // Minimum value of all sets
     qreal valueAt(int set, int category);
+    qreal percentageAt(int set, int category);
 
-    qreal categorySum(int column);
+    qreal categorySum(int category);
     qreal maxCategorySum();     // returns maximum sum of sets in all categories.
 
     QString label(int category);

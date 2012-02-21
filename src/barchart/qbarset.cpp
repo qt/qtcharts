@@ -59,9 +59,10 @@ const QBrush& QBarSet::brush() const
 
 void QBarSet::barClicked()
 {
+    qDebug() << "QBarset::barClicked";
     // Some bar of this set has been clicked
     // TODO: What happens then?
-    qDebug() << "bar Clicked";
+    emit clicked();     // Notify that set has been clicked
 }
 
 

@@ -12,6 +12,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class Bar;
 class BarLabel;
 class Separator;
+class BarValue;
 
 // Common implemantation of different presenters. Not to be instantiated.
 class BarPresenterBase : public QObject, public ChartItem
@@ -62,6 +63,7 @@ protected:
     QList<Bar*> mBars;
     QList<BarLabel*> mLabels;
     QList<Separator*> mSeparators;
+    QList<BarValue*> mFloatingValues;
 
     QPen mPen;
 };
