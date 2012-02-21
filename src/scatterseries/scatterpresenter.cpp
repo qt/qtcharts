@@ -45,13 +45,15 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 {
     // TODO: Optimization: avoid setting on every paint method call?
     // The custom settings in series override those defined by the theme
-    if (m_series->markerPen().color().isValid()) {
+    if (m_series->markerPen().color().isValid())
         painter->setPen(m_series->markerPen());
-        painter->setBrush(m_series->markerBrush());
-    } else {
+    else
         painter->setPen(m_markerPen);
+
+    if (m_series->markerBrush().color().isValid())
+        painter->setBrush(m_series->markerBrush());
+    else
         painter->setBrush(m_markerBrush);
-    }
 
     int shape = m_series->markerShape();
 

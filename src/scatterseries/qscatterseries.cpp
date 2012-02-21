@@ -16,6 +16,20 @@ QScatterSeriesPrivate::QScatterSeriesPrivate() :
 }
 
 /*!
+    \enum QScatterSeries::MarkerShape
+
+    This enum describes the shape used when rendering marker items.
+
+    \value MarkerShapeDefault
+    \value MarkerShapePoint
+    \value MarkerShapeX
+    \value MarkerShapeRectangle
+    \value MarkerShapeTiltedRectangle
+    \value MarkerShapeTriangle
+    \value MarkerShapeCircle
+*/
+
+/*!
     \class QScatterSeries
     \brief QtCommercial Chart series API for showing scatter series.
 
@@ -39,6 +53,10 @@ QScatterSeriesPrivate::QScatterSeriesPrivate() :
 
     \image scatter_example1.jpg
 */
+
+/*!
+    Constructs a series object which is a child of \a parent.
+*/
 QScatterSeries::QScatterSeries(QObject *parent) :
     QChartSeries(parent),
     d(new QScatterSeriesPrivate())
@@ -46,7 +64,7 @@ QScatterSeries::QScatterSeries(QObject *parent) :
 }
 
 /*!
-    Destructor
+    Destroys the object. Note that adding series to QChart transfers the ownership to the chart.
 */
 QScatterSeries::~QScatterSeries()
 {
@@ -55,6 +73,10 @@ QScatterSeries::~QScatterSeries()
 
 /*!
     Add single data point to the series.
+    For example:
+    \code
+    mySeries.addData(QPointF(0.5, 5.0));
+    \endcode
 */
 void QScatterSeries::addData(QPointF value)
 {
@@ -90,7 +112,7 @@ void QScatterSeries::setData(QList<QPointF> data)
 }
 
 /*!
-    returns the current list of data points of the series.
+    Returns the current list of data points of the series.
 */
 QList<QPointF> QScatterSeries::data()
 {
@@ -98,8 +120,20 @@ QList<QPointF> QScatterSeries::data()
 }
 
 /*!
-    Customizes the graphical presentation of the marker items. Replaces the default pen used for
-    drawing a marker item with a user defined pen.
+    Overrides the default pen used for drawing a marker item with a user defined pen. The default
+    pen is defined by chart theme setting.
+
+    For example:
+    \code
+    QPen pen(QColor(0, 255, 0, 80), 3);
+    myScatter->setMarkerPen(pen);
+    \endcode
+
+    Would present your scatter markers with an opaque, uglyish green outlines:
+    \image scatter_example_pen.jpg
+
+    \sa setMarkerBrush()
+    \sa QChart::setTheme()
 */
 void QScatterSeries::setMarkerPen(QPen pen)
 {
@@ -107,28 +141,62 @@ void QScatterSeries::setMarkerPen(QPen pen)
 }
 
 /*!
-
+    Returns the pen used for drawing markers.
 */
 QPen QScatterSeries::markerPen()
 {
     return d->m_markerPen;
 }
 
+/*!
+    Overrides the default brush of the marker items with a user defined brush. The default
+    brush is defined by chart theme setting.
+
+    For example:
+    \code
+    QBrush brush(QColor(255, 0, 0, 100), Qt::SolidPattern);
+    myRandomScatter->setMarkerBrush(brush);
+    \endcode
+
+    Would fill your scatter markers with an opaque red color:
+    \image scatter_example_brush.jpg
+
+    \sa setMarkerPen()
+    \sa QChart::setTheme()
+*/
 void QScatterSeries::setMarkerBrush(QBrush brush)
 {
     d->m_markerBrush = brush;
 }
 
+/*!
+    Returns the brush used for drawing markers.
+*/
 QBrush QScatterSeries::markerBrush()
 {
     return d->m_markerBrush;
 }
 
+/*!
+    Overrides the default shape of the marker items with a user defined shape. The default
+    shape is defined by chart theme setting.
+
+    For example:
+    \code
+    myScatter->setMarkerShape(QScatterSeries::MarkerShapeRectangle);
+    \endcode
+
+    Would make your scatter marker items rectangle:
+    \image scatter_example_shape.jpg
+*/
 void QScatterSeries::setMarkerShape(MarkerShape shape)
 {
     d->m_markerShape = shape;
 }
 
+/*!
+    Returns the shape used for drawing markers.
+*/
 QScatterSeries::MarkerShape QScatterSeries::markerShape()
 {
     return (QScatterSeries::MarkerShape) d->m_markerShape;
