@@ -7,22 +7,6 @@ QT += core \
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
 SOURCES += \
-    barchart/bar.cpp \
-    barchart/barlabel.cpp \
-    barchart/barchartmodel.cpp \
-    barchart/separator.cpp \
-    barchart/qbarset.cpp \
-    barchart/qbarcategory.cpp \
-    barchart/qbarchartseries.cpp \
-    barchart/qpercentbarchartseries.cpp \
-    barchart/qstackedbarchartseries.cpp \
-    barchart/barpresenterbase.cpp \
-    barchart/barpresenter.cpp \
-    barchart/stackedbarpresenter.cpp \
-    barchart/percentbarpresenter.cpp \
-    linechart/linechartanimationitem.cpp \
-    linechart/linechartitem.cpp \
-    linechart/qlinechartseries.cpp \
     qchart.cpp \
     axisitem.cpp \
     qchartview.cpp \
@@ -32,40 +16,22 @@ SOURCES += \
     chartdataset.cpp \
     chartpresenter.cpp \
     domain.cpp
-PRIVATE_HEADERS += linechart/linechartitem_p.h \
-    linechart/linechartanimationitem_p.h \
-    barchart/barlabel_p.h \
-    barchart/bar_p.h \
-    barchart/separator_p.h \
-    barchart/barchartmodel_p.h \
-    barchart/barpresenter.h \
-    barchart/stackedbarpresenter.h \
-    barchart/percentbarpresenter.h \
-    barchart/barpresenterbase.h \
+PRIVATE_HEADERS += \
     axisitem_p.h \
     chartitem_p.h \
     charttheme_p.h \
     chartdataset_p.h \
     chartpresenter_p.h \
     domain_p.h
-PUBLIC_HEADERS += linechart/qlinechartseries.h \
-    barchart/qbarchartseries.h \
-    barchart/qstackedbarchartseries.h \
-    barchart/qpercentbarchartseries.h \
-    barchart/barpresenter.h \
-    barchart/qstackedbarchartseries.h \
-    barchart/stackedbarpresenter.h \
-    barchart/qpercentbarchartseries.h \
-    barchart/percentbarpresenter.h \
-    barchart/barpresenterbase.h \
-    barchart/qbarset.h \
-    barchart/qbarcategory.h \
+PUBLIC_HEADERS += \
     qchartseries.h \
     qchart.h \
     qchartglobal.h \
     qchartview.h \
     qchartaxis.h
-    
+
+include(linechart/linechart.pri)   
+include(barchart/barchart.pri)    
 include(piechart/piechart.pri)
 include(scatterseries/scatter.pri)
 
