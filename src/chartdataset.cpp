@@ -36,12 +36,12 @@ const Domain ChartDataSet::domain(QChartAxis *axisY) const
 void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
 {
     // TODO: we should check the series not already added
-    series->setParent(this); // take ownership
 
     series->setParent(this); // take ownership
     clearDomains();
 
     if(axisY==0) axisY = m_axisY;
+    axisY->setParent(this); // take ownership
 
     QList<QChartSeries*>  seriesList = m_seriesMap.values(axisY);
 
