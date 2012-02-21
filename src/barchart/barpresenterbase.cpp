@@ -63,7 +63,7 @@ void BarPresenterBase::dataChanged()
         for (int c=0; c<mModel.countCategories(); c++) {
             Bar *bar = new Bar(this);
             childItems().append(bar);
-            connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
+            //connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
         }
     }
 
