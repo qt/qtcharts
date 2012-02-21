@@ -84,6 +84,9 @@ void ChartPresenter::handleAxisAdded(QChartAxis* axis)
     }
     QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
     QObject::connect(axis,SIGNAL(update(QChartAxis*)),item,SLOT(handleAxisUpdate(QChartAxis*)));
+
+    item->handleAxisUpdate(axis);
+    item->handleGeometryChanged(m_rect);
     m_chartTheme->decorate(axis,item);
     m_axisItems.insert(axis,item);
 }

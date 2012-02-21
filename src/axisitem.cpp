@@ -172,6 +172,7 @@ void AxisItem::handleLabelsChanged(QChartAxis* axis,const QStringList& labels)
        clear();
        m_thicksList=labels;
        createItems(m_thicksList.size());
+       updateItem(m_thicksList.size());
        items = m_labels.childItems();
        handleAxisUpdate(axis);
      }
