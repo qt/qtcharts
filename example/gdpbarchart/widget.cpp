@@ -22,7 +22,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
 {
-    setGeometry(100, 100, 800, 600);
+    setGeometry(100, 100, 1000, 600);
 
     // right panel layout
     countrieslist = new QListWidget;
@@ -54,7 +54,7 @@ Widget::Widget(QWidget *parent)
 
     // connect to the database
     db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("../example/gdpbarchart/gdpData");
+    db.setDatabaseName("gdpData");
     if(!db.open())
     {
         qDebug() << "could not open database. SQLite db file missing (?)";
