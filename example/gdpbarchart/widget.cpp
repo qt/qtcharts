@@ -88,6 +88,7 @@ Widget::~Widget()
 */
 void Widget::refreshChart()
 {
+//    chartArea->
     // selected countries items list is not sorted. copy the values to QStringlist and sort them.
     QStringList selectedCountriesStrings;
     QList<QListWidgetItem*> selectedCountriesItems = countrieslist->selectedItems();
