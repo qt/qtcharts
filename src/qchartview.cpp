@@ -46,6 +46,11 @@ void QChartView::addSeries(QChartSeries* series,QChartAxis *axisY)
     m_chart->addSeries(series,axisY);
 }
 
+void QChartView::removeSeries(QChartSeries* series)
+{
+    m_chart->removeSeries(series);
+}
+
 void QChartView::zoomIn()
 {
     m_chart->zoomIn();
