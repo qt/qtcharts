@@ -25,9 +25,8 @@ void BarPresenterBase::setSeparatorsVisible(bool visible)
 
 void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-//    qDebug() << "BarGroupBase::paint" << childItems().count();
     if (!mLayoutSet) {
-        qDebug() << "BarGroupBase::paint called without layout set. Aborting.";
+        qDebug() << "BarPresenterBase::paint called without layout set. Aborting.";
         return;
     }
 //    if (mLayoutDirty) {
@@ -51,11 +50,15 @@ void BarPresenterBase::setBarWidth( int w )
 void BarPresenterBase::dataChanged()
 {
     // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?
-
+    qDebug() << "datachanged";
     // Delete old bars
     foreach (QGraphicsItem* item, childItems()) {
         delete item;
     }
+
+    mBars.clear();
+    mLabels.clear();
+    mSeparators.clear();
 
     // Create new graphic items for bars
     for (int s=0; s<mModel.countSets(); s++) {
@@ -63,7 +66,8 @@ void BarPresenterBase::dataChanged()
         for (int c=0; c<mModel.countCategories(); c++) {
             Bar *bar = new Bar(this);
             childItems().append(bar);
-            //connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
+            mBars.append(bar);
+            connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
         }
     }
 
@@ -72,6 +76,7 @@ void BarPresenterBase::dataChanged()
         BarLabel* label = new BarLabel(this);
         label->set(mModel.label(i));
         childItems().append(label);
+        mLabels.append(label);
     }
 
     count = mModel.countCategories() - 1;   // There is one less separator than columns
@@ -79,6 +84,7 @@ void BarPresenterBase::dataChanged()
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
         childItems().append(sep);
+        mSeparators.append(sep);
     }
 
     // TODO: if (autolayout) { layoutChanged() } or something
@@ -89,13 +95,13 @@ void BarPresenterBase::dataChanged()
 
 void BarPresenterBase::handleModelChanged(int index)
 {
-//    qDebug() << "BarGroupBase::handleModelChanged" << index;
+//    qDebug() << "BarPresenterBase::handleModelChanged" << index;
     dataChanged();
 }
 
 void BarPresenterBase::handleDomainChanged(const Domain& domain)
 {
-//    qDebug() << "BarGroupBase::handleDomainChanged";
+//    qDebug() << "BarPresenterBase::handleDomainChanged";
     // TODO: Figure out the use case for this.
     // Affects the size of visible item, so layout is changed.
 //    layoutChanged();

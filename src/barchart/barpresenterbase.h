@@ -9,7 +9,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// Base Class for bar groups. Common implemantation of different groups. Not to be instantiated.
+class Bar;
+class BarLabel;
+class Separator;
+
+// Common implemantation of different presenters. Not to be instantiated.
 class BarPresenterBase : public QObject, public ChartItem
 {
     Q_OBJECT
@@ -51,9 +55,13 @@ protected:
     bool mLayoutSet;    // True, if component has been laid out.
     bool mLayoutDirty;
 
-    QList<QColor> mColors;  // List of colors for series for now
     bool mSeparatorsVisible;
     BarChartModel& mModel;
+
+    // Not owned.
+    QList<Bar*> mBars;
+    QList<BarLabel*> mLabels;
+    QList<Separator*> mSeparators;
 
     QPen mPen;
 };

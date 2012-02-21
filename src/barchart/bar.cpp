@@ -5,8 +5,9 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 Bar::Bar(QGraphicsItem *parent)
-    : ChartItem(parent)
+    : QGraphicsObject(parent)
 {
+    setAcceptedMouseButtons(Qt::LeftButton);
 }
 
 void Bar::setSize(const QSizeF& size)
@@ -18,7 +19,6 @@ void Bar::setSize(const QSizeF& size)
 
 void Bar::resize( qreal w, qreal h )
 {
-//    qDebug() << "bar::resize" << w << h;
     mWidth = w;
     mHeight = h;
 }
@@ -30,7 +30,6 @@ void Bar::setColor( QColor col )
 
 void Bar::setPos(qreal x, qreal y)
 {
- //   qDebug() << "Bar::setpos" << x << y;
     mXpos = x;
     mYpos = y;
 }
@@ -50,10 +49,7 @@ void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     if (0 == mHeight) {
         return;
     }
-    // TODO: accept brush instead of color
     painter->setBrush(mBrush);
-//    QBrush brush(mColor);
-//    painter->setBrush(brush);
 
     // This compensates for rounding errors. drawRect takes ints and cumulative error of pos + size may be over 1.
     int x0 = mXpos;
@@ -71,6 +67,11 @@ QRectF Bar::boundingRect() const
     return r;
 }
 
-//#include "moc_bar_p.cpp"
+void Bar::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
+{
+    emit clicked();
+}
+
+#include "moc_bar_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -1,17 +1,17 @@
 #ifndef BAR_H
 #define BAR_H
 
-#include "chartitem_p.h"
 #include "qchartglobal.h"
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 #include <QPen>
 #include <QBrush>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 // Single bar item of chart
-class Bar : public ChartItem
+class Bar : public QGraphicsObject
 {
+    Q_OBJECT
 public:
     Bar(QGraphicsItem *parent=0);
 
@@ -30,6 +30,10 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     QRectF boundingRect() const;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+
+Q_SIGNALS:
+    void clicked();
 
 private:
 

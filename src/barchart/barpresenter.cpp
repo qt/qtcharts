@@ -14,7 +14,6 @@ BarPresenter::BarPresenter(BarChartModel& model, QGraphicsItem *parent) :
 
 void BarPresenter::layoutChanged()
 {
-//    qDebug() << "BarGroup::layoutChanged";
     // Scale bars to new layout
     // Layout for bars:
     if (mModel.countSets() <= 0) {
@@ -23,7 +22,7 @@ void BarPresenter::layoutChanged()
     }
 
     if (childItems().count() == 0) {
-        qDebug() << "WARNING: BarGroup::layoutChanged called before graphics items are created!";
+        qDebug() << "WARNING: BarPresenter::layoutChanged called before graphics items are created!";
         return;
     }
 
@@ -41,14 +40,14 @@ void BarPresenter::layoutChanged()
 
     // Scaling.
     int itemIndex(0);
-    int labelIndex = itemCount * setCount;
+    int labelIndex(0);
 
     for (int item=0; item < itemCount; item++) {
         qreal xPos = xStepPerSet * item + ((tW + mBarDefaultWidth*setCount)/(itemCount*2));
         qreal yPos = mHeight;
         for (int set = 0; set < setCount; set++) {
             qreal barHeight = mModel.valueAt(set, item) * scale;
-            Bar* bar = reinterpret_cast<Bar*> (childItems().at(itemIndex));
+            Bar* bar = mBars.at(itemIndex);
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
@@ -60,7 +59,7 @@ void BarPresenter::layoutChanged()
 
         // TODO: Layout for labels, remove magic number
         xPos = xStepPerSet * item + ((tW + mBarDefaultWidth*setCount)/(itemCount*2));
-        BarLabel* label = reinterpret_cast<BarLabel*> (childItems().at(labelIndex));
+        BarLabel* label = mLabels.at(labelIndex);
         label->setPos(xPos, mHeight + 20);
         labelIndex++;
     }
