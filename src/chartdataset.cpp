@@ -227,10 +227,13 @@ bool ChartDataSet::previousDomain()
 void ChartDataSet::setDomain(int index)
 {
     QList<QChartAxis*> domainList = m_domainMap.uniqueKeys();
+
+    Domain domain;
+
     foreach (QChartAxis* axis , domainList) {
         int i = m_domainMap.count(axis) - index -1;
         Q_ASSERT(i>=0);
-        Domain domain = m_domainMap.values(axis).at(i);
+        domain = m_domainMap.values(axis).at(i);
         QStringList labels = createLabels(axis,domain.m_minY,domain.m_maxY);
         QList<QChartSeries*> seriesList = m_seriesMap.values(axis);
         foreach(QChartSeries* series, seriesList) {
@@ -239,7 +242,6 @@ void ChartDataSet::setDomain(int index)
         emit axisLabelsChanged(axis,labels);
     }
 
-    Domain domain = m_domainMap.value(axisY());
     QStringList labels = createLabels(axisX(),domain.m_minX,domain.m_maxX);
     emit axisLabelsChanged(axisX(),labels);
 }
