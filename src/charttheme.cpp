@@ -167,12 +167,12 @@ void ChartTheme::decorate(ScatterPresenter* presenter, QScatterSeries* series, i
 
     QColor color = m_seriesColor.at(count % m_seriesColor.size());
     // TODO: define alpha in the theme? or in the series?
-    color.setAlpha(120);
+    //color.setAlpha(120);
 
     QBrush brush(color, Qt::SolidPattern);
     presenter->m_markerBrush = brush;
 
-    QPen pen(brush, 1);
+    QPen pen(brush, 3);
     pen.setColor(color);
     presenter->m_markerPen = pen;
 }

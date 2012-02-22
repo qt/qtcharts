@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     // Create chart widget
     QChartView *chartView = new QChartView();
 
+    //! [1]
     // Add scatter series with simple test data
     QScatterSeries *scatter = new QScatterSeries();
     *scatter << QPointF(0.5, 5.0)
@@ -24,6 +25,7 @@ int main(int argc, char *argv[])
              << QPointF(2.5, 5.0);
     // Chart takes ownership
     chartView->addSeries(scatter);
+    //! [1]
 
     // Add another scatter series
     // - more data with random component

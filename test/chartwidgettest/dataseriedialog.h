@@ -3,7 +3,8 @@
 
 #include <QDialog>
 
-class QComboBox;
+class QGroupBox;
+class QCheckBox;
 
 class DataSerieDialog : public QDialog
 {
@@ -12,14 +13,22 @@ public:
     explicit DataSerieDialog(QString defaultType, QWidget *parent = 0);
 
 signals:
-    void accepted(QString series, QString data);
+    void accepted(QString series, int columnCount, int rowCount, QString dataCharacteristics, bool labelsDefined);
 
 public slots:
     void accept();
 
 private:
-    QComboBox *m_seriesTypeCombo;
-    QComboBox *m_testDataCombo;
+    QGroupBox *seriesTypeSelector();
+    QGroupBox *columnCountSelector();
+    QGroupBox *rowCountSelector();
+    QGroupBox *dataCharacteristicsSelector();
+    QString radioSelection(QGroupBox *groupBox);
+    QGroupBox *m_seriesTypeSelector;
+    QGroupBox *m_columnCountSelector;
+    QGroupBox *m_rowCountSelector;
+    QCheckBox *m_labelsSelector;
+    QGroupBox *m_dataCharacteristicsSelector;
 };
 
 #endif // DATASERIEDIALOG_H

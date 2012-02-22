@@ -63,9 +63,6 @@ MainWidget::MainWidget(QWidget *parent) :
     // Add layouts and the chart widget to the main layout
     mainLayout->addWidget(m_chartWidget, 0, 1, 3, 1);
     setLayout(mainLayout);
-
-    // force an update to test data
-    testDataChanged(0);
 }
 
 // Combo box for selecting the chart's background
@@ -168,140 +165,91 @@ void MainWidget::initPieControls()
 void MainWidget::addSeries()
 {
     DataSerieDialog dialog(m_defaultSeriesName, this);
-    connect(&dialog, SIGNAL(accepted(QString, QString)), this, SLOT(addSeries(QString, QString)));
+    connect(&dialog, SIGNAL(accepted(QString, int, int, QString, bool)),
+            this, SLOT(addSeries(QString, int, int, QString, bool)));
     dialog.exec();
 }
 
-void MainWidget::addSeries(QString series, QString data)
+QList<RealList> MainWidget::generateTestData(int columnCount, int rowCount, QString dataCharacteristics)
 {
-    qDebug() << "addSeries: " << series << " data: " << data;
-    m_defaultSeriesName = series;
+    // TODO: dataCharacteristics
+    QList<RealList> testData;
+    for (int j(0); j < columnCount; j++) {
+        QList <qreal> newColumn;
+        for (int i(0); i < rowCount; i++) {
+            if (dataCharacteristics == "Sin") {
+                newColumn.append(abs(sin(3.14159265358979 / 50 * i) * 100));
+            } else if (dataCharacteristics == "Sin + random") {
+                newColumn.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
+            } else if (dataCharacteristics == "Random") {
+                newColumn.append(rand() % 5);
+            } else if (dataCharacteristics == "Linear") {
+                //newColumn.append(i * (j + 1.0));
+                // TODO: temporary hack to make pie work; prevent zero values:
+                newColumn.append(i * (j + 1.0) + 0.1);
+            } else { // "constant"
+                newColumn.append((j + 1.0));
+            }
+        }
+        testData.append(newColumn);
+    }
+    return testData;
+}
 
-    // TODO: a dedicated data class for storing x and y values
-    QList<qreal> x;
-    QList<qreal> y;
+QStringList MainWidget::generateLabels(int count)
+{
+    QStringList result;
+    for (int i(0); i < count; i++)
+        result.append("label" + QString::number(i));
+    return result;
+}
 
-    QBarSet *set0 = new QBarSet;
-    QBarSet *set1 = new QBarSet;
-    QBarSet *set2 = new QBarSet;
-    QBarSet *set3 = new QBarSet;
-    QBarSet *set4 = new QBarSet;
+void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QString dataCharacteristics, bool labelsEnabled)
+{
+    qDebug() << "addSeries: " << seriesName
+             << " columnCount: " << columnCount
+             << " rowCount: " << rowCount
+             << " dataCharacteristics: " << dataCharacteristics
+             << " labels enabled: " << labelsEnabled;
+    m_defaultSeriesName = seriesName;
 
-    if (data == "linear") {
-        for (int i = 0; i < 20; i++) {
-            x.append(i);
-            y.append(i);
+    QList<RealList> data = generateTestData(columnCount, rowCount, dataCharacteristics);
+
+    // Line series and scatter series use similar data
+    if (seriesName.contains("line", Qt::CaseInsensitive)) {
+        for (int j(0); j < data.count(); j ++) {
+            QList<qreal> column = data.at(j);
+            QLineChartSeries *series = new QLineChartSeries();
+            for (int i(0); i < column.count(); i++) {
+                series->add(i, column.at(i));
+            }
+            m_chartWidget->addSeries(series);
+            setCurrentSeries(series);
         }
-    } else if (data == "linear, 1M") {
-        // 1 million data points from 0.0001 to 100
-        // TODO: What is the requirement? Should we be able to show this kind of data with
-        // reasonable performance, or can we expect the application developer to do "data mining"
-        // for us, so that the count of data points given to QtCommercial Chart is always
-        // reasonable?
-        for (qreal i = 0; i < 100; i += 0.0001) {
-            x.append(i);
-            y.append(20);
+    } else if (seriesName.contains("scatter", Qt::CaseInsensitive)) {
+        for (int j(0); j < data.count(); j++) {
+            QList<qreal> column = data.at(j);
+            QScatterSeries *series = new QScatterSeries();
+            for (int i(0); i < column.count(); i++) {
+               (*series) << QPointF(i, column.at(i));
+            }
+            m_chartWidget->addSeries(series);
+            setCurrentSeries(series);
         }
-    } else if (data == "SIN") {
-        for (int i = 0; i < 100; i++) {
-            x.append(i);
-            y.append(abs(sin(3.14159265358979 / 50 * i) * 100));
+    } else if (seriesName.contains("pie", Qt::CaseInsensitive)) {
+        QStringList labels = generateLabels(rowCount);
+        for (int j(0); j < data.count(); j++) {
+            QPieSeries *series = new QPieSeries();
+            QList<qreal> column = data.at(j);
+            for (int i(0); i < column.count(); i++) {
+                series->add(column.at(i), labels.at(i));
+            }
+            m_chartWidget->addSeries(series);
+            setCurrentSeries(series);
         }
-    } else if (data == "SIN + random") {
-        for (qreal i = 0; i < 100; i += 0.1) {
-            x.append(i + (rand() % 5));
-            y.append(abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5));
-        }
-    } else if (data == "Table, 5 series"){
-         // Create some test data to chart
-        *set0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10 << 11 << 12;
-        *set1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0 << 4 << 2;
-        *set2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1 << 3 << 5;
-        *set3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5 << 2 << 7;
-        *set4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10 << 1 << 6;
-    } else {
-        // TODO: check if data has a valid file name
-        Q_ASSERT(false);
     }
 
-    // TODO: color of the series
-    QChartSeries *newSeries = 0;
-    if (series == "Scatter") {
-        QScatterSeries *scatter = new QScatterSeries();
-        for (int i(0); i < x.count() && i < y.count(); i++)
-            (*scatter) << QPointF(x.at(i), y.at(i));
-        m_chartWidget->addSeries(scatter);
-    } else if (series == "Pie") {
-        newSeries = new QPieSeries();
-        m_chartWidget->addSeries(newSeries);
-        Q_ASSERT(newSeries->setData(y));
-    } else if (series == "Line") {
-        // TODO: adding data to an existing line series does not give any visuals for some reason
-//        newSeries = m_chartWidget->createSeries(QChartSeries::SeriesTypeLine);
-//        QXYChartSeries *lineSeries = static_cast<QXYChartSeries *>(newSeries);
-//        lineSeries->setColor(Qt::blue);
-//        for (int i(0); i < x.count() && i < y.count(); i++) {
-//            lineSeries->add(x.at(i), y.at(i));
-//        }
-        //Q_ASSERT(newSeries->setData(x, y));
-        QLineChartSeries* series0 = new QLineChartSeries();
-        for (int i(0); i < x.count() && i < y.count(); i++)
-            series0->add(x.at(i), y.at(i));
-        m_chartWidget->addSeries(series0);
-        newSeries = series0;
-    } else if (series == "Bar") {
-        qDebug() << "Bar chart series";
-
-        QBarCategory *category = new QBarCategory;
-        *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
-
-        QBarChartSeries* series0 = new QBarChartSeries(category, this);
-
-        series0->addBarSet(set0);
-        series0->addBarSet(set1);
-        series0->addBarSet(set2);
-        series0->addBarSet(set3);
-        series0->addBarSet(set4);
-
-        m_chartWidget->addSeries(series0);
-        newSeries = series0;
-    } else if (series == "StackedBar") {
-        qDebug() << "Stacked bar chart series";
-
-        QBarCategory *category = new QBarCategory;
-        *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
-
-        QStackedBarChartSeries* series0 = new QStackedBarChartSeries(category, this);
-
-        series0->addBarSet(set0);
-        series0->addBarSet(set1);
-        series0->addBarSet(set2);
-        series0->addBarSet(set3);
-        series0->addBarSet(set4);
-
-        m_chartWidget->addSeries(series0);
-        newSeries = series0;
-    } else if (series == "PercentBar") {
-        qDebug() << "Percent bar chart series";
-
-        QBarCategory *category = new QBarCategory;
-        *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
-
-        QPercentBarChartSeries* series0 = new QPercentBarChartSeries(category, this);
-
-        series0->addBarSet(set0);
-        series0->addBarSet(set1);
-        series0->addBarSet(set2);
-        series0->addBarSet(set3);
-        series0->addBarSet(set4);
-
-        m_chartWidget->addSeries(series0);
-        newSeries = series0;
-    } else {
-        qDebug() << "Something weird going on in MainWidget::addSeries";
-    }
-
-    setCurrentSeries(newSeries);
+    // TODO: bar and other...
 }
 
 void MainWidget::setCurrentSeries(QChartSeries *series)
@@ -329,42 +277,6 @@ void MainWidget::setCurrentSeries(QChartSeries *series)
             break;
         }
     }
-}
-
-void MainWidget::testDataChanged(int itemIndex)
-{
-    qDebug() << "testDataChanged: " << itemIndex;
-
-//    switch (itemIndex) {
-//    case 0: {
-//        QList<QChartDataPoint> data;
-//        for (int x = 0; x < 20; x++) {
-//            data.append(QChartDataPoint() << x << x / 2);
-//        }
-//        m_chartWidget->setData(data);
-//        break;
-//    }
-//    case 1: {
-//        QList<QChartDataPoint> data;
-//        for (int x = 0; x < 100; x++) {
-//            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100));
-//        }
-//        m_chartWidget->setData(data);
-//        break;
-//    }
-//    case 2: {
-//        QList<QChartDataPoint> data;
-//        for (int x = 0; x < 1000; x++) {
-//            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
-//            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
-//            data.append(QChartDataPoint() << x - 200 << 2 * (uint(sin(3.14159/50*x)*80) % 100) + (rand() % 100 * 0.2));
-//        }
-//        m_chartWidget->setData(data);
-//        break;
-//    }
-//    default:
-//        break;
-//    }
 }
 
 void MainWidget::backgroundChanged(int itemIndex)

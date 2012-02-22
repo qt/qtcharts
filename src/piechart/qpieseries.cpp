@@ -66,7 +66,7 @@ bool QPieSeries::setData(QList<qreal> data)
 {
     // TODO: remove this function
     QList<QPieSlice*> slices;
-    foreach (int value, data)
+    foreach (qreal value, data)
         slices << new QPieSlice(value, QString::number(value));
     set(slices);
     return true;

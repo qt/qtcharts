@@ -33,6 +33,7 @@ QScatterSeriesPrivate::QScatterSeriesPrivate() :
     \class QScatterSeries
     \brief QtCommercial Chart series API for showing scatter series.
 
+    \snippet ../../example/scatter/main.cpp 1
     Example on how to create a chart with scatter series:
     \code
     #include <qchartglobal.h>

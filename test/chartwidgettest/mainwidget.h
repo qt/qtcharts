@@ -11,6 +11,8 @@ class QGridLayout;
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
+#define RealList QList<qreal>
+
 class MainWidget : public QWidget
 {
     Q_OBJECT
@@ -27,8 +29,7 @@ private:
 
 private slots:
     void addSeries();
-    void addSeries(QString series, QString data);
-    void testDataChanged(int itemIndex);
+    void addSeries(QString series, int columnCount, int rowCount, QString dataCharacteristics, bool labelsEnabled);
     void backgroundChanged(int itemIndex);
     void autoScaleChanged(int value);
     void xMinChanged(int value);
@@ -39,6 +40,8 @@ private slots:
     void changeChartTheme(int themeIndex);
     void setPieSizeFactor(double margin);
     void setPiePosition(int position);
+    QList<RealList> generateTestData(int columnCount, int rowCount, QString dataCharacteristics);
+    QStringList generateLabels(int count);
 
 private:
     QChartView *m_chartWidget;
