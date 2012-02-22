@@ -1,6 +1,5 @@
 TEMPLATE = subdirs
-SUBDIRS += \
-    chartwidgettest \
+SUBDIRS += chartwidgettest \
     qmlchart
 
 !win32:{

@@ -7,6 +7,7 @@
 
 TARGET = chartwidgettest
 TEMPLATE = app
+DESTDIR = $$CHART_BUILD_BIN_DIR
 
 QT += core gui
 contains(QT_MAJOR_VERSION, 5) {
