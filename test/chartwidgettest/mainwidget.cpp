@@ -247,9 +247,61 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             m_chartWidget->addSeries(series);
             setCurrentSeries(series);
         }
+    } else if (seriesName == "Bar") {
+        // TODO: replace QBarCategory with QStringList?
+        QBarCategory *category = new QBarCategory;
+        QStringList labels = generateLabels(rowCount);
+        foreach(QString label, labels)
+            *category << label;
+        QBarChartSeries* series = new QBarChartSeries(category, this);
+
+        for (int j(0); j < data.count(); j++) {
+            QList<qreal> column = data.at(j);
+            QBarSet *set = new QBarSet;
+            for (int i(0); i < column.count(); i++) {
+                *set << column.at(i);
+            }
+            series->addBarSet(set);
+        }
+        m_chartWidget->addSeries(series);
+        setCurrentSeries(series);
+    } else if (seriesName == "Stacked bar") {
+        QBarCategory *category = new QBarCategory;
+        QStringList labels = generateLabels(rowCount);
+        foreach(QString label, labels)
+            *category << label;
+        QStackedBarChartSeries* series = new QStackedBarChartSeries(category, this);
+
+        for (int j(0); j < data.count(); j++) {
+            QList<qreal> column = data.at(j);
+            QBarSet *set = new QBarSet;
+            for (int i(0); i < column.count(); i++) {
+                *set << column.at(i);
+            }
+            series->addBarSet(set);
+        }
+        m_chartWidget->addSeries(series);
+        setCurrentSeries(series);
+    } else if (seriesName == "Percent bar") {
+        QBarCategory *category = new QBarCategory;
+        QStringList labels = generateLabels(rowCount);
+        foreach(QString label, labels)
+            *category << label;
+        QPercentBarChartSeries* series = new QPercentBarChartSeries(category, this);
+
+        for (int j(0); j < data.count(); j++) {
+            QList<qreal> column = data.at(j);
+            QBarSet *set = new QBarSet;
+            for (int i(0); i < column.count(); i++) {
+                *set << column.at(i);
+            }
+            series->addBarSet(set);
+        }
+        m_chartWidget->addSeries(series);
+        setCurrentSeries(series);
     }
 
-    // TODO: bar and other...
+    // TODO: spline and area
 }
 
 void MainWidget::setCurrentSeries(QChartSeries *series)

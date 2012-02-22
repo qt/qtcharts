@@ -40,20 +40,16 @@ QGroupBox *DataSerieDialog::seriesTypeSelector()
 {
     QVBoxLayout *layout = new QVBoxLayout();
 
-    QRadioButton *line = new QRadioButton("&Line");
-    QRadioButton *area = new QRadioButton("&Area");
-    QRadioButton *pie = new QRadioButton("&Pie");
-    QRadioButton *bar = new QRadioButton("&Bar");
-    QRadioButton *scatter = new QRadioButton("&Scatter");
-    QRadioButton *spline = new QRadioButton("Spl&ine");
+    QRadioButton *line = new QRadioButton("Line");
     line->setChecked(true);
-
     layout->addWidget(line);
-    layout->addWidget(area);
-    layout->addWidget(pie);
-    layout->addWidget(bar);
-    layout->addWidget(scatter);
-    layout->addWidget(spline);
+    layout->addWidget(new QRadioButton("Area"));
+    layout->addWidget(new QRadioButton("Pie"));
+    layout->addWidget(new QRadioButton("Bar"));
+    layout->addWidget(new QRadioButton("Stacked bar"));
+    layout->addWidget(new QRadioButton("Percent bar"));
+    layout->addWidget(new QRadioButton("Scatter"));
+    layout->addWidget(new QRadioButton("Spline"));
 
     QGroupBox *groupBox = new QGroupBox("Series type");
     groupBox->setLayout(layout);
