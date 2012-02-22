@@ -1,8 +1,6 @@
 #ifndef BARCHARTSERIES_H
 #define BARCHARTSERIES_H
 
-#include <QList>
-#include <QAbstractItemModel>
 #include "qchartseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

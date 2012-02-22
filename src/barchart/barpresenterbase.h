@@ -15,7 +15,7 @@ class Separator;
 class BarValue;
 
 // Common implemantation of different presenters. Not to be instantiated.
-// TODO: combine this with BarPresenter and derive others from it?
+// TODO: combine this with BarPresenter and derive other presenters from it?
 class BarPresenterBase : public QObject, public ChartItem
 {
     Q_OBJECT
@@ -31,12 +31,6 @@ public:
 
     // TODO: these may change with layout awarness.
     void setBarWidth( int w );
-
-    void setPen(QPen pen);
-    QPen pen();
-
-    void setBrush(QBrush brush);
-    QBrush brush();
 
     // TODO: Consider the domain for layoutChanged. May be use case, may not be. If it is, then the derived classes need to implement it
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
@@ -68,8 +62,6 @@ protected:
     QList<BarLabel*> mLabels;
     QList<Separator*> mSeparators;
     QList<BarValue*> mFloatingValues;
-
-    QPen mPen;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

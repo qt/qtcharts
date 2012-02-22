@@ -28,7 +28,7 @@ void Separator::setSize(const QSizeF &size)
 
 void Separator::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-//    qDebug() << "separator::paint" << boundingRect();
+    // TODO: real pen
     QPen pen(mColor);
     painter->setPen(pen);
     painter->drawLine(mXpos,mYpos,mXpos,mHeight);
