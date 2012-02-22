@@ -65,24 +65,11 @@ bool QBarSet::isFloatingValuesVisible()
 
 void QBarSet::barClicked()
 {
-    qDebug() << "QBarset::barClicked";
+    qDebug() << "QBarset::barClicked" << this;
     // Some bar of this set has been clicked
     // TODO: What happens then?
     emit clicked();     // Notify that set has been clicked
 }
-
-void QBarSet::toggleFloatingValuesVisible()
-{
-    qDebug() << "QBarset::toggleFloatingValuesVisible";
-    // TODO: toggle vs explicit set?
-    if (mFloatingValuesVisible) {
-        mFloatingValuesVisible=false;
-    } else {
-        mFloatingValuesVisible=true;
-    }
-    emit setFloatingValuesVisible(this);
-}
-
 
 #include "moc_qbarset.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -51,10 +51,9 @@ QBarSet* BarChartModel::nextSet(bool getFirst)
     return set;
 }
 
-
-QBarSet& BarChartModel::setAt(int index)
+QBarSet* BarChartModel::setAt(int index)
 {
-    return *mDataModel.at(index);
+    return mDataModel.at(index);
 }
 
 int BarChartModel::countSets()

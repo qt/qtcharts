@@ -2,7 +2,7 @@
 #define BARVALUE_P_H
 
 #include "qchartglobal.h"
-#include <QGraphicsItem>
+#include <QGraphicsObject>
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -12,8 +12,9 @@ class QBarSet;
 // Visual class for floating bar values
 // TODO: fonts, colors etc.
 // By default these are not visible.
-class BarValue : public QGraphicsItem // TODO: public QGraphicsObject for signals?
+class BarValue : public QGraphicsObject
 {
+    Q_OBJECT
 public:
     BarValue(QBarSet &set, QGraphicsItem *parent = 0);
 
@@ -31,6 +32,9 @@ public:
     // From QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
+
+public Q_SLOTS:
+    void toggleVisible();
 
 private:
 
