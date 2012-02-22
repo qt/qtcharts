@@ -62,7 +62,6 @@ private:
     AxisType m_type;
     QRectF m_rect;
     int m_labelsAngle;
-    bool m_shadesEnabled;
     QGraphicsItemGroup m_grid;
     QGraphicsItemGroup m_shades;
     QGraphicsItemGroup m_labels;

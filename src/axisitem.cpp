@@ -12,7 +12,6 @@ AxisItem::AxisItem(AxisType type,QGraphicsItem* parent) :
 ChartItem(parent),
 m_type(type),
 m_labelsAngle(0),
-m_shadesEnabled(true),
 m_grid(parent),
 m_shades(parent),
 m_labels(parent),
