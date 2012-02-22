@@ -12,12 +12,12 @@
 #include <qscatterseries.h>
 #include <qchartview.h>
 #include <qchartaxis.h>
-#include <qbarchartseries.h>
 #include <qbarcategory.h>
 #include <qbarset.h>
 #include <QListWidget>
 #include <QPrinter>
 #include <QPrintDialog>
+#include <QRadioButton>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -27,6 +27,10 @@ Widget::Widget(QWidget *parent)
     setGeometry(100, 100, 1000, 600);
 
     // right panel layout
+    barChartRadioButton = new QRadioButton(tr("Bar chart"));
+    barChartRadioButton->setChecked(true);
+    scatterChartRadioButton = new QRadioButton(tr("Scatter chart"));
+    scatterChartRadioButton->setChecked(false);
     countrieslist = new QListWidget;
     countrieslist->setSelectionMode(QAbstractItemView::MultiSelection);
 
@@ -42,6 +46,8 @@ Widget::Widget(QWidget *parent)
     connect(printButton, SIGNAL(clicked()), this, SLOT(printChart()));
 
     QVBoxLayout* rightPanelLayout = new QVBoxLayout;
+    rightPanelLayout->addWidget(barChartRadioButton);
+    rightPanelLayout->addWidget(scatterChartRadioButton);
     rightPanelLayout->addWidget(countrieslist);
     rightPanelLayout->addWidget(yearslist);
     rightPanelLayout->addWidget(refreshButton);
@@ -78,7 +84,7 @@ Widget::Widget(QWidget *parent)
 
     // hide axis X labels
     QChartAxis* axis = chartArea->axisX();
-    axis->setLabelsVisible(false);
+//    axis->setLabelsVisible(false);
     //    newAxis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);
 
 }
@@ -94,7 +100,8 @@ Widget::~Widget()
 */
 void Widget::refreshChart()
 {
-    //    chartArea->
+    chartArea->removeSeries(series0);
+
     // selected countries items list is not sorted. copy the values to QStringlist and sort them.
     QStringList selectedCountriesStrings;
     QList<QListWidgetItem*> selectedCountriesItems = countrieslist->selectedItems();
@@ -102,69 +109,111 @@ void Widget::refreshChart()
         selectedCountriesStrings.append(selectedCountriesItems[i]->text());
     selectedCountriesStrings.sort();
 
-    // use the sorted selected coutries list to initialize BarCategory
-    QBarCategory* category = new QBarCategory;
-    for (int i = 0; i < selectedCountriesStrings.size(); i++)
-        *category << selectedCountriesStrings[i];
-    QBarChartSeries* series0 = new QBarChartSeries(category);
-
-    // prepare the selected counries SQL query
-    QString countriesQuery = "country IN (";
-    for (int i = 0; i < selectedCountriesStrings.size(); i++)
-    {
-        countriesQuery.append("'" + selectedCountriesStrings[i] + "'");
-        if ( i < selectedCountriesStrings.size() - 1)
-            countriesQuery.append(",");
-        else
-            countriesQuery.append(")");
-    }
-
     QSqlQuery query;
     // selected years items list is not sorted. copy the values to QList<Integer> and sort them.
     QList<int> selectedYearsInts;
     QList<QListWidgetItem*> selectedYearsItems = yearslist->selectedItems();
     for (int i = 0; i < selectedYearsItems.size(); i++)
         selectedYearsInts.append(selectedYearsItems[i]->text().toInt());
-    qSort(selectedYearsInts);
+    qSort(selectedYearsInts.begin(), selectedYearsInts.end(), qGreater<int>());
 
-    // perform a query for each selected year
-    for (int i = 0; i < selectedYearsInts.size(); i++)
+    if (barChartRadioButton->isChecked())
     {
-        query.exec("SELECT country,gdpvalue FROM gdp2 where year=" + QString("%1").arg(selectedYearsInts[i]) + " AND " + countriesQuery);
-        QBarSet* barSet = new QBarSet;
-        //        while (query.next()) {
-        //            qDebug() << query.value(0).toString() << " : " << query.value(1).toString();
-        //        }
-        query.first();
+        // use the sorted selected coutries list to initialize BarCategory
+        QBarCategory* category = new QBarCategory;
+        for (int i = 0; i < selectedCountriesStrings.size(); i++)
+            *category << selectedCountriesStrings[i];
+        series0 = new QBarChartSeries(category);
 
-        // the data for some of the coutries for some years might be missing.
-        // QBarChart needs bars to have same size
-        for (int k = 0; k < selectedCountriesStrings.size(); k++)
+        // prepare the selected counries SQL query
+        QString countriesQuery = "country IN (";
+        for (int i = 0; i < selectedCountriesStrings.size(); i++)
         {
-            if (selectedCountriesStrings[k] == query.value(0).toString())
-            {
-                *barSet << query.value(1).toReal();
-                qDebug() << query.value(0).toString() << query.value(1).toReal() << " : " << QString("%1").arg(selectedYearsInts[i]);
-                query.next();
-            }
+            countriesQuery.append("'" + selectedCountriesStrings[i] + "'");
+            if ( i < selectedCountriesStrings.size() - 1)
+                countriesQuery.append(",");
             else
-            {
-                // data missing, put 0
-                *barSet << 0.0f;
-                qDebug() << "Putting 0 for Bosnia" << " : " << QString("%1").arg(selectedYearsInts[i]);
-            }
+                countriesQuery.append(")");
         }
-        series0->addBarSet(barSet);
-    }
 
-    // add the serie to the chart
-    chartArea->addSeries(series0);
+        // perform a query for each selected year
+        for (int i = 0; i < selectedYearsInts.size(); i++)
+        {
+            query.exec("SELECT country,gdpvalue FROM gdp2 where year=" + QString("%1").arg(selectedYearsInts[i]) + " AND " + countriesQuery);
+            QBarSet* barSet = new QBarSet;
+            //        while (query.next()) {
+            //            qDebug() << query.value(0).toString() << " : " << query.value(1).toString();
+            //        }
+            query.first();
+
+            // the data for some of the coutries for some years might be missing.
+            // QBarChart needs bars to have same size
+            for (int k = 0; k < selectedCountriesStrings.size(); k++)
+            {
+                if (selectedCountriesStrings[k] == query.value(0).toString())
+                {
+                    *barSet << query.value(1).toReal();
+                    qDebug() << query.value(0).toString() << query.value(1).toReal() << " : " << QString("%1").arg(selectedYearsInts[i]);
+                    query.next();
+                }
+                else
+                {
+                    // data missing, put 0
+                    *barSet << 0.0f;
+                    qDebug() << "Putting 0 for Bosnia" << " : " << QString("%1").arg(selectedYearsInts[i]);
+                }
+            }
+            series0->addBarSet(barSet);
+        }
+        // add the serie to the chart
+        chartArea->addSeries(series0);
+
+    }
+    else if (scatterChartRadioButton->isChecked())
+    {
+        QString yearsQuery = "year IN (";
+        for (int i = 0; i < selectedYearsInts.size(); i++)
+        {
+            yearsQuery.append("'" + QString("%1").arg(selectedYearsInts[i]) + "'");
+            if ( i < selectedYearsInts.size() - 1)
+                yearsQuery.append(",");
+            else
+                yearsQuery.append(")");
+        }
+
+        // perform a query for each selected year
+        for (int i = 0; i < selectedCountriesStrings.size(); i++)
+        {
+            query.exec("SELECT year,gdpvalue FROM gdp2 where country='" + selectedCountriesStrings[i] + "' AND " + yearsQuery);
+            query.first();
+
+            QScatterSeries* series = new QScatterSeries;
+            // the data for some of the coutries for some years might be missing.
+            for (int k = 0; k < selectedYearsInts.size(); k++)
+            {
+                if (selectedYearsInts[k] == query.value(0).toInt())
+                {
+                    *series << QPointF(query.value(0).toInt() , query.value(1).toReal());
+                    qDebug() << query.value(0).toString() << query.value(1).toReal() << " : " << QString("%1").arg(selectedYearsInts[k]);
+                    query.next();
+                }
+                else
+                {
+                    // data missing, put 0
+                    *series << QPointF(selectedYearsInts[k] , 0.0f);
+                    qDebug() << "Putting 0 for Bosnia" << " : " << QString("%1").arg(selectedYearsInts[i]) << " " << query.value(0).toInt();
+                }
+            }
+            chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);
+            chartArea->addSeries(series);
+        }
+    }
 }
 
 void Widget::printChart()
 {
     QPrinter printer;
-//    QPrinter printer(QPrinter::HighResolution);
+    //    QPrinter printer(QPrinter::HighResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOrientation(QPrinter::Landscape);
     printer.setOutputFileName("print.pdf");
