@@ -56,6 +56,16 @@ QBarSet* BarChartModel::setAt(int index)
     return mDataModel.at(index);
 }
 
+QList<QString> BarChartModel::legend()
+{
+    QList<QString> legend;
+
+    for (int i=0; i<mDataModel.count(); i++) {
+        legend.append(mDataModel.at(i)->name());
+    }
+    return legend;
+}
+
 int BarChartModel::countSets()
 {
     return mDataModel.count();

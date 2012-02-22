@@ -22,11 +22,15 @@ public:
 
     // Set handling
     void addBarSet(QBarSet *set);       // Takes ownership
-    void removeBarSet(QBarSet *set);    // Also deletes the set, if set is owned.
+    void removeBarSet(QBarSet *set);    // Releases ownership, doesn't delete set
     int countSets();
     QBarSet* nextSet(bool first=false);     // Returns first set, if called with true
 
-    //QList<QString> legend();  // Returns legend of series (ie. names of all sets in series)
+    QList<QString> legend();  // Returns legend of series (ie. names of all sets in series)
+
+    // Disabled by default. Call these to change behavior.
+    void enableFloatingValues(bool enabled=true);
+    void enableHoverNames(bool enabled=true);
 
     // TODO: Functions below this are not part of api and will be moved
     // to private implementation, when we start using it (not part of api)

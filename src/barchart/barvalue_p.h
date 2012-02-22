@@ -27,7 +27,8 @@ public:
     void resize(qreal w, qreal h);
     void setPos(qreal x, qreal y);
 
-    bool belongsToSet(QBarSet *set);
+    // Propably not needed.
+//    bool belongsToSet(QBarSet *set);
 
     // From QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

@@ -8,7 +8,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// Single bar item of chart
+// Single visual bar item of chart
 class Bar : public QGraphicsObject
 {
     Q_OBJECT
@@ -19,11 +19,10 @@ public: // from ChartItem
     void setSize(const QSizeF &size);
 
     // Layout Stuff
-    void resize(qreal w, qreal h);   // Size of bar.
+    void resize(qreal w, qreal h);
     void setPos(qreal x, qreal y);
     void setPen(QPen pen);
     void setBrush(QBrush brush);
-    void setColor( QColor col);     // deprecated
 
 public:
     // From QGraphicsItem
@@ -35,8 +34,8 @@ public:
 
 Q_SIGNALS:
     void clicked();
-    void hoverEntered();
-    void hoverLeaved();
+    void hoverEntered(QGraphicsSceneHoverEvent *event);
+    void hoverLeaved(QGraphicsSceneHoverEvent *event);
 
 private:
 

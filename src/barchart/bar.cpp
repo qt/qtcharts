@@ -8,6 +8,7 @@ Bar::Bar(QGraphicsItem *parent)
     : QGraphicsObject(parent)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
+    setAcceptHoverEvents(true);
 }
 
 void Bar::setSize(const QSizeF& size)
@@ -21,11 +22,6 @@ void Bar::resize( qreal w, qreal h )
 {
     mWidth = w;
     mHeight = h;
-}
-
-void Bar::setColor( QColor col )
-{
-    mColor = col;
 }
 
 void Bar::setPos(qreal x, qreal y)
@@ -72,14 +68,14 @@ void Bar::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
     emit clicked();
 }
 
-void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/)
+void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-    emit hoverEntered();
+    emit hoverEntered(event);
 }
 
-void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
+void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 {
-    emit hoverLeaved();
+    emit hoverLeaved(event);
 }
 
 #include "moc_bar_p.cpp"

@@ -84,11 +84,14 @@ void PercentBarPresenter::layoutChanged()
             BarValue* value = mFloatingValues.at(itemIndex);
 
             // TODO: remove hard coding, apply layout
+            value->resize(100,50);
             value->setPos(xPos, yPos-barHeight/2);
             value->setPen(QPen(QColor(255,255,255,255)));
 
             if (mModel.valueAt(set,category) != 0) {
-                QString vString(QString::number(mModel.percentageAt(set,category) * 100));
+                int p = mModel.percentageAt(set,category) * 100;
+                QString vString(QString::number(p));
+                vString.truncate(3);
                 vString.append("%");
                 value->setValueString(vString);
             } else {

@@ -3,10 +3,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QBarSet::QBarSet(QObject *parent)
+QBarSet::QBarSet(QString name, QObject *parent)
     : QObject(parent)
+    ,mName(name)
+    ,mHoverNamesEnabled(true)       // TODO: these 2 as false by default, when implementation is ready
+    ,mFloatingValuesEnabled(true)
 {
-    mFloatingValuesVisible = false;
 }
 
 void QBarSet::setName(QString name)
@@ -59,9 +61,16 @@ const QBrush& QBarSet::brush() const
     return mBrush;
 }
 
-bool QBarSet::isFloatingValuesVisible()
+void QBarSet::enableFloatingValues(bool enabled)
 {
-    return mFloatingValuesVisible;
+    qDebug() << "QBarSet::enableFloatingValues" << enabled;
+    mFloatingValuesEnabled = enabled;
+}
+
+void QBarSet::enableHoverNames(bool enabled)
+{
+    qDebug() << "QBarSet::enableHoverNames" << enabled;
+    mHoverNamesEnabled = enabled;
 }
 
 void QBarSet::barClicked()
@@ -75,13 +84,17 @@ void QBarSet::barClicked()
 void QBarSet::barHoverEntered()
 {
     qDebug() << "QBarset::barHoverEntered" << this;
-    emit hoverEnter();
+    if (mHoverNamesEnabled) {
+        emit hoverEnter();
+    }
 }
 
 void QBarSet::barHoverLeaved()
 {
     qDebug() << "QBarset::barHoverLeaved" << this;
-    emit hoverLeave();
+    if (mHoverNamesEnabled) {
+        emit hoverLeave();
+    }
 }
 
 #include "moc_qbarset.cpp"

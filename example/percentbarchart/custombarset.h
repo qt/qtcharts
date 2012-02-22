@@ -9,7 +9,7 @@ class CustomBarSet : public QBarSet
 {
     Q_OBJECT
 public:
-    explicit CustomBarSet(QObject *parent = 0);
+    explicit CustomBarSet(QString name, QObject *parent = 0);
     
 signals:
     

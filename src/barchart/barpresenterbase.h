@@ -46,6 +46,9 @@ protected slots:
     void handleDomainChanged(const Domain& domain);
     void handleGeometryChanged(const QRectF& size);
 
+    void barHoverEntered(QGraphicsSceneHoverEvent *event);  // Internal.
+    void barHoverLeaved(QGraphicsSceneHoverEvent *event);
+
 protected:
 
     // TODO: consider these.

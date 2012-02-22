@@ -15,11 +15,15 @@ QStackedBarChartSeries::QStackedBarChartSeries(QBarCategory *category, QObject *
 
 void QStackedBarChartSeries::addBarSet(QBarSet *set)
 {
+    connect(this,SIGNAL(floatingValuesEnabled(bool)),set,SLOT(enableFloatingValues(bool)));
+    connect(this,SIGNAL(hoverNamesEnabled(bool)),set,SLOT(enableHoverNames(bool)));
     mModel->addBarSet(set);
 }
 
 void QStackedBarChartSeries::removeBarSet(QBarSet *set)
 {
+    disconnect(set,SLOT(enableFloatingValues(bool)));
+    disconnect(set,SLOT(enableHoverNames(bool)));
     mModel->removeBarSet(set);
 }
 
@@ -31,6 +35,11 @@ int QStackedBarChartSeries::countSets()
 QBarSet* QStackedBarChartSeries::nextSet(bool getFirst)
 {
     return mModel->nextSet(getFirst);
+}
+
+QList<QString> QStackedBarChartSeries::legend()
+{
+    return mModel->legend();
 }
 
 int QStackedBarChartSeries::countCategories()

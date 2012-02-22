@@ -70,8 +70,9 @@ void BarPresenterBase::dataChanged()
             childItems().append(bar);
             mBars.append(bar);
             connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
-            connect(bar,SIGNAL(hoverEntered()),set,SLOT(barHoverEntered()));
-            connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaved()));
+            // TODO: should the event be passed to set or not?
+            //connect(bar,SIGNAL(hoverEntered(QGraphicsSceneHoverEvent* event)),set,SLOT(barHoverEntered(QGraphicsSceneHoverEvent* event)));
+            //connect(bar,SIGNAL(hoverLeaved(QGraphicsSceneHoverEvent* event)),set,SLOT(barHoverLeaved(QGraphicsSceneHoverEvent *event)));
         }
     }
 
@@ -131,6 +132,17 @@ void BarPresenterBase::handleGeometryChanged(const QRectF& rect)
     layoutChanged();
     mLayoutSet = true;
     setPos(rect.topLeft());
+}
+
+
+void BarPresenterBase::barHoverEntered(QGraphicsSceneHoverEvent *event)
+{
+    //TODO: show tooltip (name of series, where bar belongs...)
+}
+
+void BarPresenterBase::barHoverLeaved(QGraphicsSceneHoverEvent *event)
+{
+    //TODO: hide tooltip (name of series, where bar belongs...)
 }
 
 #include "moc_barpresenterbase.cpp"

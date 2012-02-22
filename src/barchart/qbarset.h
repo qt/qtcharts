@@ -11,7 +11,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 {
     Q_OBJECT
 public:
-    QBarSet(QObject *parent = 0);
+    QBarSet(QString name, QObject *parent = 0);
 
     void setName(QString name);
     QString name();
@@ -19,7 +19,7 @@ public:
 
     int count();                                // count of values in set
     qreal valueAt(int index);                   // for modifying individual values
-    void setValue(int index, qreal value);      //
+    void setValue(int index, qreal value);      // setter for individual value
 
     void setPen(const QPen& pen);
     const QPen& pen() const;
@@ -27,15 +27,18 @@ public:
     void setBrush(const QBrush& brush);
     const QBrush& brush() const;
 
-    bool isFloatingValuesVisible();
-
 Q_SIGNALS:
-    void clicked();
+    void clicked();                 // Clicked and hover signals exposed to user
     void hoverEnter();
     void hoverLeave();
-    void toggleFloatingValues();
+    void toggleFloatingValues();    // Private signal, TODO: move to private impl
 
 public Q_SLOTS:
+    void enableFloatingValues(bool enabled);    // enables floating values on top of bars
+    void enableHoverNames(bool enabled);        // enableHoverEvents would be better name?
+
+    // TODO: these slots belong to private implementation.
+    // These are for single bars to notify set about internal events
     void barClicked();
     void barHoverEntered();
     void barHoverLeaved();
@@ -47,7 +50,9 @@ private:
     QPen mPen;
     QBrush mBrush;
 
-    bool mFloatingValuesVisible;
+    // TODO: to pimpl
+    bool mFloatingValuesEnabled;
+    bool mHoverNamesEnabled;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

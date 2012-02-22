@@ -15,11 +15,15 @@ QPercentBarChartSeries::QPercentBarChartSeries(QBarCategory *category, QObject *
 
 void QPercentBarChartSeries::addBarSet(QBarSet *set)
 {
+    connect(this,SIGNAL(floatingValuesEnabled(bool)),set,SLOT(enableFloatingValues(bool)));
+    connect(this,SIGNAL(hoverNamesEnabled(bool)),set,SLOT(enableHoverNames(bool)));
     mModel->addBarSet(set);
 }
 
 void QPercentBarChartSeries::removeBarSet(QBarSet *set)
 {
+    disconnect(set,SLOT(enableFloatingValues(bool)));
+    disconnect(set,SLOT(enableHoverNames(bool)));
     mModel->removeBarSet(set);
 }
 
@@ -31,6 +35,11 @@ int QPercentBarChartSeries::countSets()
 QBarSet* QPercentBarChartSeries::nextSet(bool getFirst)
 {
     return mModel->nextSet(getFirst);
+}
+
+QList<QString> QPercentBarChartSeries::legend()
+{
+    return mModel->legend();
 }
 
 int QPercentBarChartSeries::countCategories()

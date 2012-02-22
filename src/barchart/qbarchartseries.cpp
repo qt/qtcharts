@@ -15,11 +15,15 @@ QBarChartSeries::QBarChartSeries(QBarCategory *category, QObject *parent)
 
 void QBarChartSeries::addBarSet(QBarSet *set)
 {
+//    connect(this,SIGNAL(floatingValuesEnabled(bool)),set,SLOT(enableFloatingValues(bool)));
+//    connect(this,SIGNAL(hoverNamesEnabled(bool)),set,SLOT(enableHoverNames(bool)));
     mModel->addBarSet(set);
 }
 
 void QBarChartSeries::removeBarSet(QBarSet *set)
 {
+//    disconnect(set,SLOT(enableFloatingValues(bool)));
+//    disconnect(set,SLOT(enableHoverNames(bool)));
     mModel->removeBarSet(set);
 }
 
@@ -31,6 +35,21 @@ int QBarChartSeries::countSets()
 QBarSet* QBarChartSeries::nextSet(bool getFirst)
 {
     return mModel->nextSet(getFirst);
+}
+
+QList<QString> QBarChartSeries::legend()
+{
+    return mModel->legend();
+}
+
+void QBarChartSeries::enableFloatingValues(bool enabled)
+{
+    emit floatingValuesEnabled(enabled);
+}
+
+void QBarChartSeries::enableHoverNames(bool enabled)
+{
+    emit hoverNamesEnabled(enabled);
 }
 
 int QBarChartSeries::countCategories()
