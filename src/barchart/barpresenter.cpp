@@ -52,7 +52,7 @@ void BarPresenter::layoutChanged()
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setBrush(mModel.setAt(set).brush());
+            bar->setBrush(mModel.setAt(set)->brush());
             bar->setPos(xPos, yPos-barHeight); // item*posStep+startPos + set * mBarDefaultWidth, mHeight);
             itemIndex++;
             xPos += mBarDefaultWidth;

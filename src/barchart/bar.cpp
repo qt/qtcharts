@@ -63,7 +63,7 @@ void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
 
 QRectF Bar::boundingRect() const
 {
-    QRectF r(mXpos, mYpos, mXpos + mWidth, mYpos + mHeight);
+    QRectF r(mXpos, mYpos, mWidth, mHeight);
     return r;
 }
 

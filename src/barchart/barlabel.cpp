@@ -29,7 +29,7 @@ void BarLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 QRectF BarLabel::boundingRect() const
 {
-    QRectF r(mXpos, mYpos, mXpos + mSize.width(), mYpos + mSize.height());
+    QRectF r(mXpos, mYpos, mSize.width(), mSize.height());
     return r;
 }
 

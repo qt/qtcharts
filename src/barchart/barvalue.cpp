@@ -5,10 +5,10 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarValue::BarValue(QBarSet &set, QGraphicsItem *parent)
-    : QGraphicsItem(parent)
+    : QGraphicsObject(parent)
     ,mBarSet(set)
 {
-//    setVisible(false);
+    setVisible(false);
 }
 
 void BarValue::setValueString(QString str)
@@ -56,9 +56,14 @@ void BarValue::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 QRectF BarValue::boundingRect() const
 {
-    QRectF r(mXpos, mYpos, mXpos + mWidth, mYpos + mHeight);
+    QRectF r(mXpos, mYpos, mWidth, mHeight);
     return r;
 }
 
+void BarValue::toggleVisible()
+{
+    setVisible(!isVisible());
+}
 
+#include "moc_barvalue_p.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

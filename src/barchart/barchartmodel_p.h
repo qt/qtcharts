@@ -23,8 +23,7 @@ public:
     void addBarSet(QBarSet *set);
     void removeBarSet(QBarSet *set);
     QBarSet* nextSet(bool getFirst);
-
-    QBarSet& setAt(int index);  // Internal
+    QBarSet *setAt(int index);
 
     int countSets();            // Number of sets in model
     int countCategories();      // Number of categories

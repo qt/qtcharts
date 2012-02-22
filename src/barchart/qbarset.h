@@ -31,7 +31,6 @@ public:
 
 Q_SIGNALS:
     void clicked();
-    void setFloatingValuesVisible(QBarSet* set);
 /*
     void hoverEnter();
     void hoverLeave();
@@ -39,7 +38,6 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void barClicked();
-    void toggleFloatingValuesVisible();
 
 private:
 

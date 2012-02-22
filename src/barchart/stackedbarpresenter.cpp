@@ -55,7 +55,7 @@ void StackedBarPresenter::layoutChanged()
             Bar* bar = mBars.at(itemIndex);
 
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setBrush(mModel.setAt(set).brush());
+            bar->setBrush(mModel.setAt(set)->brush());
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             yPos -= barHeight;

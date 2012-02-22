@@ -50,7 +50,7 @@ void PercentBarPresenter::layoutChanged()
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setBrush(mModel.setAt(set).brush());
+            bar->setBrush(mModel.setAt(set)->brush());
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             yPos -= barHeight;
