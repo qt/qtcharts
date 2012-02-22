@@ -14,6 +14,7 @@
     representation of different types of QChartSeries and other chart related objects like
     QChartAxis and QChartLegend. If you simply want to show a chart in a layout, you can use the
     convenience class QChartView instead of QChart.
+    \sa QChartView
 */
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -46,11 +47,22 @@ void QChart::addSeries(QChartSeries* series, QChartAxis* axisY)
     m_dataset->addSeries(series, axisY);
 }
 
+/*!
+    Removes the QChartSeries specified in a perameter from the QChartView.
+    It releses its ownership of the specified QChartSeries object.
+    It does not delete the pointed QChartSeries data object
+    \sa removeSeries(), removeAllSeries()
+*/
 void QChart::removeSeries(QChartSeries* series)
 {
     m_dataset->removeSeries(series);
 }
 
+/*!
+    Removes all the QChartSeries that have been added to the QChartView
+    It also deletes the pointed QChartSeries data objects
+    \sa addSeries(), removeSeries()
+*/
 void QChart::removeAllSeries()
 {
     m_dataset->removeAllSeries();
@@ -70,12 +82,18 @@ void QChart::setChartBackgroundPen(const QPen& pen)
     m_backgroundItem->update();
 }
 
+/*!
+    Sets the title description text that is rendered above the chart.
+*/
 void QChart::setChartTitle(const QString& title)
 {
     createChartTitleItem();
     m_titleItem->setPlainText(title);
 }
 
+/*!
+    Sets the font that is used for rendering the description text that is rendered above the chart.
+*/
 void QChart::setChartTitleFont(const QFont& font)
 {
     createChartTitleItem();

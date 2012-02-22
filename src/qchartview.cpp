@@ -9,7 +9,13 @@
 
 /*!
     \class QChartView
-    \brief Chart widget.
+    \brief Chart widget
+
+    QChartView is a standalone widget that can display charts. It does not require QGraphicsScene to work. It manages the graphical
+    representation of different types of QChartSeries and other chart related objects like
+    QChartAxis and QChartLegend. If you want to display a chart in your existing QGraphicsScene, you can use the QChart class instead.
+
+    \sa QChart
 */
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -41,16 +47,33 @@ void QChartView::resizeEvent(QResizeEvent *event)
     QWidget::resizeEvent(event);
 }
 
+/*!
+    Adds the series and optional y axis onto the chart and takes the ownership of the objects.
+    If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
+    the y axis).
+    \sa removeSeries, removeAllSeries
+*/
 void QChartView::addSeries(QChartSeries* series,QChartAxis *axisY)
 {
     m_chart->addSeries(series,axisY);
 }
 
+/*!
+    Removes the QChartSeries specified in a perameter from the QChartView.
+    It releses its ownership of the specified QChartSeries object.
+    It does not delete the pointed QChartSeries data object
+    \sa removeSeries(), removeAllSeries()
+*/
 void QChartView::removeSeries(QChartSeries* series)
 {
     m_chart->removeSeries(series);
 }
 
+/*!
+    Removes all the QChartSeries that have been added to the QChartView
+    It also deletes the pointed QChartSeries data objects
+    \sa addSeries(), removeSeries()
+*/
 void QChartView::removeAllSeries()
 {
     m_chart->removeAllSeries();
@@ -71,16 +94,25 @@ void QChartView::zoomOut()
     m_chart->zoomOut();
 }
 
+/*!
+    Returns the chart margin, which is the distance between the widget edge and the axis lines or the chart.
+*/
 int QChartView::margin() const
 {
     return m_chart->margin();
 }
 
+/*!
+    Sets the title description text that is rendered above the chart.
+*/
 void QChartView::setChartTitle(const QString& title)
 {
     m_chart->setChartTitle(title);
 }
 
+/*!
+    Sets the font that is used for rendering the description text that is rendered above the chart.
+*/
 void QChartView::setChartTitleFont(const QFont& font)
 {
     m_chart->setChartTitleFont(font);
@@ -213,11 +245,17 @@ QChart::ChartTheme QChartView::chartTheme() const
     return m_chart->chartTheme();
 }
 
+/*!
+    Returns the pointer to the x axis object of the chart
+*/
 QChartAxis* QChartView::axisX() const
 {
     return m_chart->axisX();
 }
 
+/*!
+    Returns the pointer to the y axis object of the chart
+*/
 QChartAxis* QChartView::axisY() const
 {
     return m_chart->axisY();
