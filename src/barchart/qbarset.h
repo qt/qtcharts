@@ -34,13 +34,14 @@ Q_SIGNALS:
     void toggleFloatingValues();    // Private signal, TODO: move to private impl
 
 public Q_SLOTS:
+    // TODO: should these be in series instead?
     void enableFloatingValues(bool enabled);    // enables floating values on top of bars
-    void enableHoverNames(bool enabled);        // enableHoverEvents would be better name?
+    void enableToolTip(bool enabled);           // enables tooltips
 
     // TODO: these slots belong to private implementation.
     // These are for single bars to notify set about internal events
     void barClicked();
-    void barHoverEntered();
+    void barHoverEntered(QPoint pos);
     void barHoverLeaved();
 
 private:

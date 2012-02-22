@@ -34,8 +34,8 @@ public:
 
 Q_SIGNALS:
     void clicked();
-    void hoverEntered(QGraphicsSceneHoverEvent *event);
-    void hoverLeaved(QGraphicsSceneHoverEvent *event);
+    void hoverEntered(QPoint pos);
+    void hoverLeaved();
 
 private:
 

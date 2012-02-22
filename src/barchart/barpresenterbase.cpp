@@ -71,8 +71,8 @@ void BarPresenterBase::dataChanged()
             mBars.append(bar);
             connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
             // TODO: should the event be passed to set or not?
-            //connect(bar,SIGNAL(hoverEntered(QGraphicsSceneHoverEvent* event)),set,SLOT(barHoverEntered(QGraphicsSceneHoverEvent* event)));
-            //connect(bar,SIGNAL(hoverLeaved(QGraphicsSceneHoverEvent* event)),set,SLOT(barHoverLeaved(QGraphicsSceneHoverEvent *event)));
+            connect(bar,SIGNAL(hoverEntered(QPoint)),set,SLOT(barHoverEntered(QPoint)));
+            connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaved()));
         }
     }
 

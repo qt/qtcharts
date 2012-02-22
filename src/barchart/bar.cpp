@@ -1,6 +1,7 @@
 #include "bar_p.h"
 #include <QDebug>
 #include <QPainter>
+#include <QGraphicsSceneEvent>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -70,12 +71,12 @@ void Bar::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
 
 void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-    emit hoverEntered(event);
+    emit hoverEntered(event->lastScreenPos());
 }
 
-void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
+void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
-    emit hoverLeaved(event);
+    emit hoverLeaved();
 }
 
 #include "moc_bar_p.cpp"

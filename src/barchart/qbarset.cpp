@@ -1,5 +1,6 @@
 #include "qbarset.h"
 #include <QDebug>
+#include <QToolTip>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -67,7 +68,7 @@ void QBarSet::enableFloatingValues(bool enabled)
     mFloatingValuesEnabled = enabled;
 }
 
-void QBarSet::enableHoverNames(bool enabled)
+void QBarSet::enableToolTip(bool enabled)
 {
     qDebug() << "QBarSet::enableHoverNames" << enabled;
     mHoverNamesEnabled = enabled;
@@ -81,11 +82,12 @@ void QBarSet::barClicked()
     emit clicked();     // Notify that set has been clicked
 }
 
-void QBarSet::barHoverEntered()
+void QBarSet::barHoverEntered(QPoint pos)
 {
-    qDebug() << "QBarset::barHoverEntered" << this;
+    qDebug() << "QBarset::barHoverEntered" << this << pos;
     if (mHoverNamesEnabled) {
-        emit hoverEnter();
+        QToolTip::showText(pos, mName);
+//        emit hoverEnter();
     }
 }
 
@@ -93,7 +95,7 @@ void QBarSet::barHoverLeaved()
 {
     qDebug() << "QBarset::barHoverLeaved" << this;
     if (mHoverNamesEnabled) {
-        emit hoverLeave();
+//        emit hoverLeave();
     }
 }
 
