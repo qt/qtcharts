@@ -36,6 +36,10 @@ m_horizonalRubberBand(false)
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
+
+/*!
+    Destroys the object and it's children, like QChartSeries and QChartAxis object added to it.
+*/
 QChartView::~QChartView()
 {
 }
@@ -95,7 +99,7 @@ void QChartView::zoomOut()
 }
 
 /*!
-    Returns the chart margin, which is the distance between the widget edge and the axis lines or the chart.
+    Returns the chart margin, which is the distance between the widget edge and the part of the chart where the actual data can be displayed.
 */
 int QChartView::margin() const
 {
@@ -103,7 +107,7 @@ int QChartView::margin() const
 }
 
 /*!
-    Sets the title description text that is rendered above the chart.
+    Sets the chart \a tile. A description text that is rendered above the chart.
 */
 void QChartView::setChartTitle(const QString& title)
 {
@@ -111,17 +115,24 @@ void QChartView::setChartTitle(const QString& title)
 }
 
 /*!
-    Sets the font that is used for rendering the description text that is rendered above the chart.
+    Sets the \a font that is used for rendering the description text that is rendered above the chart.
 */
 void QChartView::setChartTitleFont(const QFont& font)
 {
     m_chart->setChartTitleFont(font);
 }
 
+/*!
+    Sets the \a brush that is used for painting the background of the chart area of the QChartView widget.
+*/
 void QChartView::setChartBackgroundBrush(const QBrush& brush)
 {
     m_chart->setChartBackgroundBrush(brush);
 }
+
+/*!
+    Sets the \a pen that is used for painting the background of the chart area of the QChartView widget.
+*/
 void QChartView::setChartBackgroundPen(const QPen& pen)
 {
     m_chart->setChartBackgroundPen(pen);
@@ -235,11 +246,19 @@ void QChartView::keyPressEvent(QKeyEvent *event)
     }
 }
 
+/*!
+    Sets the \a theme used by the chart for rendering the graphical representation of the data
+    \sa QChart::ChartTheme, chartTheme()
+*/
 void QChartView::setChartTheme(QChart::ChartTheme theme)
 {
     m_chart->setChartTheme(theme);
 }
 
+/*!
+    Returns the theme enum used by the chart.
+    \sa setChartTheme()
+*/
 QChart::ChartTheme QChartView::chartTheme() const
 {
     return m_chart->chartTheme();

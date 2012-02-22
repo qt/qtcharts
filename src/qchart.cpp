@@ -6,6 +6,20 @@
 #include <QGraphicsSceneResizeEvent>
 #include <QDebug>
 
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+/*!
+    \enum QChart::ChartTheme
+
+    This enum describes the theme used by the chart.
+
+    \value ChartThemeDefault
+    \value ChartThemeVanilla
+    \value ChartThemeIcy
+    \value ChartThemeGrayscale
+    \value ChartThemeScientific
+*/
+
 /*!
     \class QChart
     \brief QtCommercial chart API.
@@ -16,8 +30,6 @@
     convenience class QChartView instead of QChart.
     \sa QChartView
 */
-
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     Constructs a chart object which is a child of parent.
@@ -38,7 +50,7 @@ QChart::~QChart()
 }
 
 /*!
-    Adds the series and optional y axis onto the chart and takes the ownership of the objects.
+    Adds the \a series and optional y axis onto the chart and takes the ownership of the objects.
     If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
     the y axis).
 */
@@ -83,7 +95,7 @@ void QChart::setChartBackgroundPen(const QPen& pen)
 }
 
 /*!
-    Sets the title description text that is rendered above the chart.
+    Sets the chart \a title. The description text that is rendered above the chart.
 */
 void QChart::setChartTitle(const QString& title)
 {
@@ -92,7 +104,7 @@ void QChart::setChartTitle(const QString& title)
 }
 
 /*!
-    Sets the font that is used for rendering the description text that is rendered above the chart.
+    Sets the \a font that is used for rendering the description text that is rendered above the chart.
 */
 void QChart::setChartTitleFont(const QFont& font)
 {
@@ -117,21 +129,37 @@ void QChart::createChartTitleItem()
     }
 }
 
+/*!
+    Returns the chart margin, which is the distance between the widget edge and the part of the chart where the actual data can be displayed.
+    \sa setMargin()
+*/
 int QChart::margin() const
 {
     return m_presenter->margin();
 }
 
+/*!
+    Sets the chart \a margin, which is the distance between the widget edge and the part of the chart where the actual data can be displayed.
+    \sa margin()
+*/
 void QChart::setMargin(int margin)
 {
     m_presenter->setMargin(margin);
 }
 
+/*!
+    Sets the \a theme used by the chart for rendering data graphical representation
+    \sa ChartTheme, chartTheme()
+*/
 void QChart::setChartTheme(QChart::ChartTheme theme)
 {
     m_presenter->setChartTheme(theme);
 }
 
+/*!
+    Returns the theme enum used by the chart.
+    \sa ChartTheme, setChartTheme()
+*/
 QChart::ChartTheme QChart::chartTheme() const
 {
     return m_presenter->chartTheme();
@@ -167,11 +195,17 @@ void QChart::zoomReset()
     m_dataset->clearDomains();
 }
 
+/*!
+    Returns the pointer to the x axis object of the chart
+*/
 QChartAxis* QChart::axisX() const
 {
     return m_dataset->axisX();
 }
 
+/*!
+    Returns the pointer to the y axis object of the chart
+*/
 QChartAxis* QChart::axisY() const
 {
     return m_dataset->axisY();
