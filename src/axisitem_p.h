@@ -66,9 +66,8 @@ private:
     QGraphicsItemGroup m_grid;
     QGraphicsItemGroup m_shades;
     QGraphicsItemGroup m_labels;
-    QGraphicsLineItem m_axis;
+    QGraphicsItemGroup m_axis;
     QStringList m_thicksList;
-    QPointF m_origin;
 
 };
 

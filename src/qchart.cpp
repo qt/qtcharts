@@ -86,6 +86,7 @@ void QChart::createChartBackgroundItem()
 {
     if(!m_backgroundItem) {
         m_backgroundItem = new QGraphicsRectItem(this);
+        m_backgroundItem->setPen(Qt::NoPen);
         m_backgroundItem->setZValue(ChartPresenter::BackgroundZValue);
     }
 }
