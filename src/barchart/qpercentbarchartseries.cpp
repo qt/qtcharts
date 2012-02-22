@@ -8,11 +8,11 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QPercentBarChartSeries::QPercentBarChartSeries(QBarCategory *category, QObject *parent)
-    : QChartSeries(parent)
-    ,mModel(new BarChartModel(category, this))
+    : QBarChartSeries(category, parent)
+//    ,mModel(new BarChartModel(category, this))
 {
 }
-
+/*
 void QPercentBarChartSeries::addBarSet(QBarSet *set)
 {
     connect(this,SIGNAL(floatingValuesEnabled(bool)),set,SLOT(enableFloatingValues(bool)));
@@ -71,7 +71,7 @@ BarChartModel& QPercentBarChartSeries::model()
 {
     return *mModel;
 }
-
+*/
 
 #include "moc_qpercentbarchartseries.cpp"
 

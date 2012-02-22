@@ -3,7 +3,7 @@
 
 #include <QList>
 #include <QAbstractItemModel>
-#include "qchartseries.h"
+#include "qbarchartseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -11,7 +11,8 @@ class QBarCategory;
 class QBarSet;
 class BarChartModel;
 
-class QTCOMMERCIALCHART_EXPORT QPercentBarChartSeries : public QChartSeries
+//class QTCOMMERCIALCHART_EXPORT QPercentBarChartSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QPercentBarChartSeries : public QBarChartSeries
 {
     Q_OBJECT
 public:
@@ -19,7 +20,7 @@ public:
 
     // from BarChartSeriesBase
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypePercentBar; }
-
+/*
     void addBarSet(QBarSet *set);       // Takes ownership
     void removeBarSet(QBarSet *set);    // Releases ownership, doesn't delete set
     int countSets();
@@ -49,7 +50,7 @@ public Q_SLOTS:
 
 private:
     BarChartModel* mModel;
-
+*/
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

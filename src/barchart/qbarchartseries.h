@@ -12,7 +12,6 @@ class QBarSet;
 class BarChartModel;
 
 // Container for series
-// TODO: derive Stacked and percent bar charts from this?
 class QTCOMMERCIALCHART_EXPORT QBarChartSeries : public QChartSeries
 {
     Q_OBJECT
@@ -52,7 +51,7 @@ signals:
 
 //public Q_SLOTS:
 
-private:
+protected:
     BarChartModel* mModel;
 
 };

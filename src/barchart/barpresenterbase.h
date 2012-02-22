@@ -15,6 +15,7 @@ class Separator;
 class BarValue;
 
 // Common implemantation of different presenters. Not to be instantiated.
+// TODO: combine this with BarPresenter and derive others from it?
 class BarPresenterBase : public QObject, public ChartItem
 {
     Q_OBJECT
