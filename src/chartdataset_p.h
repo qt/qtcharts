@@ -18,6 +18,7 @@ public:
 
     void addSeries(QChartSeries* series,QChartAxis *axisY = 0);
     void removeSeries(QChartSeries* series);
+    void removeAllSeries();
     void addDomain(const QRectF& rect, const QRectF& viewport);
     bool nextDomain();
     bool previousDomain();

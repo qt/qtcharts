@@ -168,14 +168,34 @@ void ChartDataSet::removeSeries(QChartSeries* series)
             emit seriesRemoved(series);
             m_seriesMap.remove(axis,series);
             //remove axis if no longer there
-            if(!m_seriesMap.contains(axis) && axis != m_axisY){
+            if(!m_seriesMap.contains(axis)){
                 emit axisRemoved(axis);
                 m_domainMap.remove(axis);
+                if(axis != m_axisY)
                 delete axis;
             }
+            series->setParent(0);
             break;
         }
     }
+}
+
+void ChartDataSet::removeAllSeries()
+{
+    QList<QChartAxis*> keys = m_seriesMap.uniqueKeys();
+    foreach(QChartAxis* axis , keys) {
+        QList<QChartSeries*> seriesList = m_seriesMap.values(axis);
+        for(int i =0 ; i < seriesList.size();i++ )
+        {
+            emit seriesRemoved(seriesList.at(i));
+            delete(seriesList.at(i));
+        }
+        m_seriesMap.remove(axis);
+        m_domainMap.remove(axis);
+        emit axisRemoved(axis);
+        if(axis != m_axisY) delete axis;
+        }
+    m_domainIndex=0;
 }
 
 bool ChartDataSet::nextDomain()
@@ -207,10 +227,13 @@ bool ChartDataSet::previousDomain()
 void ChartDataSet::setDomain(int index)
 {
     QList<QChartAxis*> domainList = m_domainMap.uniqueKeys();
+
+    Domain domain;
+
     foreach (QChartAxis* axis , domainList) {
         int i = m_domainMap.count(axis) - index -1;
         Q_ASSERT(i>=0);
-        Domain domain = m_domainMap.values(axis).at(i);
+        domain = m_domainMap.values(axis).at(i);
         QStringList labels = createLabels(axis,domain.m_minY,domain.m_maxY);
         QList<QChartSeries*> seriesList = m_seriesMap.values(axis);
         foreach(QChartSeries* series, seriesList) {
@@ -219,7 +242,6 @@ void ChartDataSet::setDomain(int index)
         emit axisLabelsChanged(axis,labels);
     }
 
-    Domain domain = m_domainMap.value(axisY());
     QStringList labels = createLabels(axisX(),domain.m_minX,domain.m_maxX);
     emit axisLabelsChanged(axisX(),labels);
 }
@@ -254,8 +276,10 @@ void ChartDataSet::addDomain(const QRectF& rect, const QRectF& viewport)
 
     QList<QChartAxis*> domainList = m_domainMap.uniqueKeys();
 
+    Domain domain;
+
     foreach (QChartAxis* axis , domainList){
-        Domain domain(m_domainMap.value(axis).subDomain(rect,viewport.width(),viewport.height()));
+        domain = m_domainMap.value(axis).subDomain(rect,viewport.width(),viewport.height());
         QStringList labels = createLabels(axis,domain.m_minY,domain.m_maxY);
         QList<QChartSeries*> seriesList = m_seriesMap.values(axis);
         foreach(QChartSeries* series, seriesList){
@@ -265,7 +289,6 @@ void ChartDataSet::addDomain(const QRectF& rect, const QRectF& viewport)
         m_domainMap.insert(axis,domain);
     }
 
-    Domain domain = m_domainMap.value(axisY());
     QStringList labels = createLabels(axisX(),domain.m_minX,domain.m_maxX);
     emit axisLabelsChanged(axisX(),labels);
 

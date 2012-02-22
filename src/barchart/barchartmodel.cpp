@@ -134,14 +134,34 @@ qreal BarChartModel::valueAt(int set, int category)
     return mDataModel.at(set)->valueAt(category);
 }
 
-qreal BarChartModel::categorySum(int column)
+qreal BarChartModel::percentageAt(int set, int category)
+{
+    if ((set < 0) || (set >= mDataModel.count())) {
+        // No set, no value.
+        return 0;
+    } else if ((category < 0) || (category >= mDataModel.at(set)->count())) {
+        // No category, no value.
+        return 0;
+    }
+
+    qreal value = mDataModel.at(set)->valueAt(category);
+    qreal total = categorySum(category);
+    if (0 == total) {
+        return 100.0;
+    }
+
+    return value / total;
+}
+
+
+qreal BarChartModel::categorySum(int category)
 {
     qreal sum(0);
-    int count = mDataModel.count(); // Count rows
+    int count = mDataModel.count(); // Count sets
 
-    for (int row = 0; row < count; row++) {
-        if (column < mDataModel.at(row)->count()) {
-            sum += mDataModel.at(row)->valueAt(column);
+    for (int set = 0; set < count; set++) {
+        if (category < mDataModel.at(set)->count()) {
+            sum += mDataModel.at(set)->valueAt(category);
         }
     }
     return sum;

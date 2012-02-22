@@ -43,7 +43,9 @@ m_index(0)
 
 ChartView::~ChartView()
 {
-
+    if(m_series.size()==0) return;
+    removeSeries(m_series.at(m_index));
+    qDeleteAll(m_series);
 }
 
 void ChartView::handleTimeout()

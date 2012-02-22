@@ -1,6 +1,7 @@
 /*!
     \class Widget
     \brief Ui for the application.
+    \internal
 */
 
 #include "widget.h"

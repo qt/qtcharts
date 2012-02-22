@@ -1,5 +1,6 @@
 #include "barpresenterbase.h"
 #include "bar_p.h"
+#include "barvalue_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
 #include "qbarset.h"
@@ -12,7 +13,7 @@ BarPresenterBase::BarPresenterBase(BarChartModel& model, QGraphicsItem *parent)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
-    ,mSeparatorsVisible(true)
+    ,mSeparatorsVisible(false)
     ,mModel(model)
 {
     dataChanged();
@@ -25,9 +26,8 @@ void BarPresenterBase::setSeparatorsVisible(bool visible)
 
 void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-//    qDebug() << "BarGroupBase::paint" << childItems().count();
     if (!mLayoutSet) {
-        qDebug() << "BarGroupBase::paint called without layout set. Aborting.";
+        qDebug() << "BarPresenterBase::paint called without layout set. Aborting.";
         return;
     }
 //    if (mLayoutDirty) {
@@ -51,11 +51,16 @@ void BarPresenterBase::setBarWidth( int w )
 void BarPresenterBase::dataChanged()
 {
     // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?
-
+    qDebug() << "datachanged";
     // Delete old bars
     foreach (QGraphicsItem* item, childItems()) {
         delete item;
     }
+
+    mBars.clear();
+    mLabels.clear();
+    mSeparators.clear();
+    mFloatingValues.clear();
 
     // Create new graphic items for bars
     for (int s=0; s<mModel.countSets(); s++) {
@@ -63,39 +68,66 @@ void BarPresenterBase::dataChanged()
         for (int c=0; c<mModel.countCategories(); c++) {
             Bar *bar = new Bar(this);
             childItems().append(bar);
-            //connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
+            mBars.append(bar);
+            connect(bar,SIGNAL(clicked()),set,SLOT(toggleFloatingValuesVisible()));
         }
     }
 
+    // Create labels
     int count = mModel.countCategories();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
         label->set(mModel.label(i));
         childItems().append(label);
+        mLabels.append(label);
     }
 
+    // Create separators
     count = mModel.countCategories() - 1;   // There is one less separator than columns
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
         childItems().append(sep);
+        mSeparators.append(sep);
+    }
+
+    // Create floating values
+    for (int s=0; s<mModel.countSets(); s++) {
+        QBarSet *set = mModel.nextSet(0==s);
+        for (int category=0; category<mModel.countCategories(); category++) {
+            BarValue *value = new BarValue(*set, this);
+            childItems().append(value);
+            mFloatingValues.append(value);
+        }
+        connect(set,SIGNAL(setFloatingValuesVisible(QBarSet*)),this,SLOT(setFloatingValues(QBarSet*)));
     }
 
     // TODO: if (autolayout) { layoutChanged() } or something
     mLayoutDirty = true;
 }
 
+void BarPresenterBase::setFloatingValues(QBarSet *set)
+{
+    qDebug() << "BarPresenterBase::setFloatingValues";
+    // TODO: better way to map set to BarValues?
+    for (int i=0; i<mFloatingValues.count(); i++) {
+        if (mFloatingValues.at(i)->belongsToSet(set)) {
+            mFloatingValues.at(i)->setVisible(set->isFloatingValuesVisible());
+        }
+    }
+}
+
 //handlers
 
 void BarPresenterBase::handleModelChanged(int index)
 {
-//    qDebug() << "BarGroupBase::handleModelChanged" << index;
+//    qDebug() << "BarPresenterBase::handleModelChanged" << index;
     dataChanged();
 }
 
 void BarPresenterBase::handleDomainChanged(const Domain& domain)
 {
-//    qDebug() << "BarGroupBase::handleDomainChanged";
+//    qDebug() << "BarPresenterBase::handleDomainChanged";
     // TODO: Figure out the use case for this.
     // Affects the size of visible item, so layout is changed.
 //    layoutChanged();

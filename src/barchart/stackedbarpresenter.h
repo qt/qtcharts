@@ -1,5 +1,5 @@
-#ifndef STACKEDBARGROUP_H
-#define STACKEDBARGROUP_H
+#ifndef STACKEDBARPRESENTER_H
+#define STACKEDBARPRESENTER_H
 
 #include "barpresenterbase.h"
 #include "qstackedbarchartseries.h"
@@ -13,7 +13,7 @@ public:
     StackedBarPresenter(BarChartModel& model, QGraphicsItem *parent = 0);
 
 private:
-    // From BarGroupBase
+    // From BarPresenterBase
     void layoutChanged();   // layout has changed -> need to recalculate bar sizes
 
 private:
@@ -23,4 +23,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // STACKEDBARGROUP_H
+#endif // STACKEDBARPRESENTER_H

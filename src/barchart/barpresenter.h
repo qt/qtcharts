@@ -7,8 +7,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// Base class for bar groups
-
+// Presenter for parallel bars. Grouping of bars is done on category basis.
 class BarPresenter : public BarPresenterBase
 {
 public:

@@ -2,8 +2,8 @@ import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
 Rectangle {
-    width: 360
-    height: 360
+    width: parent.width
+    height: parent.height
 
     // Another option for QML data api:
 //    ListModel {

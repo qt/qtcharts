@@ -9,7 +9,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// Base Class for bar groups. Common implemantation of different groups. Not to be instantiated.
+class Bar;
+class BarLabel;
+class Separator;
+class BarValue;
+
+// Common implemantation of different presenters. Not to be instantiated.
 class BarPresenterBase : public QObject, public ChartItem
 {
     Q_OBJECT
@@ -36,6 +41,9 @@ public:
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
     virtual void layoutChanged() = 0;   // layout has changed -> need to recalculate bar sizes
 
+public Q_SLOTS:
+    void setFloatingValues(QBarSet *set);
+
 protected slots:
     void handleModelChanged(int index);
     void handleDomainChanged(const Domain& domain);
@@ -51,9 +59,14 @@ protected:
     bool mLayoutSet;    // True, if component has been laid out.
     bool mLayoutDirty;
 
-    QList<QColor> mColors;  // List of colors for series for now
     bool mSeparatorsVisible;
     BarChartModel& mModel;
+
+    // Not owned.
+    QList<Bar*> mBars;
+    QList<BarLabel*> mLabels;
+    QList<Separator*> mSeparators;
+    QList<BarValue*> mFloatingValues;
 
     QPen mPen;
 };

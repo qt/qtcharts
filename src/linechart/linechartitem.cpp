@@ -15,7 +15,7 @@ m_dirtyData(false),
 m_dirtyGeometry(false),
 m_dirtyDomain(false)
 {
-
+    setZValue(ChartPresenter::LineChartZValue);
 }
 
 QRectF LineChartItem::boundingRect() const

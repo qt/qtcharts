@@ -39,6 +39,8 @@ private slots:
 	void nextpreviousDomain();
 	void removeSeries_data();
 	void removeSeries();
+	void removeAllSeries_data();
+	void removeAllSeries();
 };
 
 void tst_ChartDataSet::initTestCase()
@@ -188,8 +190,6 @@ void tst_ChartDataSet::addSeries()
 		axisYCount+=2;
 	else
 	    axisYCount++;
-
-
 
 	QCOMPARE(spy0.count(), axisYCount);
 	QCOMPARE(spy1.count(), seriesCount*2);
@@ -513,6 +513,10 @@ void tst_ChartDataSet::removeSeries()
 		dataSet.removeSeries(seriesList.at(i));
 	}
 
+    //default axis
+    if (axisYCount == 0)
+        axisYCount++;
+
 	QCOMPARE(spy0.count(), 0);
 	QCOMPARE(spy1.count(), 0);
 	QCOMPARE(spy2.count(), axisYCount);
@@ -521,7 +525,74 @@ void tst_ChartDataSet::removeSeries()
 	QCOMPARE(spy5.count(), seriesCount);
 
 	QCOMPARE(dataSet.domainIndex(), 0);
+
+	qDeleteAll(seriesList);
 }
+
+void tst_ChartDataSet::removeAllSeries_data()
+{
+    QTest::addColumn<int>("seriesCount");
+    QTest::addColumn<int>("axisYCount");
+    QTest::newRow("2 series, default axis") << 2 << 0;
+    QTest::newRow("2 series, 2 new axis") << 2 << 2;
+    QTest::newRow("2 series, 1 new axis") << 2 << 2;
+    QTest::newRow("3 series, 3 new axis") << 3 << 3;
+    QTest::newRow("3 series, 2 new axis") << 3 << 2;
+    QTest::newRow("3 series, 1 new axis") << 3 << 1;
+}
+
+void tst_ChartDataSet::removeAllSeries()
+{
+    QFETCH(int, seriesCount);
+    QFETCH(int, axisYCount);
+
+    ChartDataSet dataSet;
+
+    QList<QChartAxis*> axisList;
+
+    for (int i = 0; i < axisYCount; i++) {
+        QChartAxis* axis = new QChartAxis();
+        axisList << axis;
+    }
+
+    QList<QChartAxis*>::iterator iterator = axisList.begin();
+
+    for (int i = 0; i < seriesCount; i++) {
+        QChartAxis* axisY = 0;
+        QLineChartSeries* series = new QLineChartSeries();
+        if (iterator != axisList.end()) {
+            axisY = *iterator;
+            iterator++;
+        } else if (axisList.count() > 0) {
+            iterator--;
+            axisY = *iterator;
+            iterator++;
+        }
+        dataSet.addSeries(series, axisY);
+    }
+
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisLabelsChanged(QChartAxis*, QStringList const&)));
+    QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
+    QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QChartSeries*)));
+    QSignalSpy spy4(&dataSet, SIGNAL(seriesDomainChanged(QChartSeries*, Domain const&)));
+    QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QChartSeries*)));
+
+    dataSet.removeAllSeries();
+    //default axis
+    if (axisYCount == 0)
+        axisYCount++;
+
+    QCOMPARE(spy0.count(), 0);
+    QCOMPARE(spy1.count(), 0);
+    QCOMPARE(spy2.count(), axisYCount);
+    QCOMPARE(spy3.count(), 0);
+    QCOMPARE(spy4.count(), 0);
+    QCOMPARE(spy5.count(), seriesCount);
+
+    QCOMPARE(dataSet.domainIndex(), 0);
+}
+
 
 QTEST_MAIN(tst_ChartDataSet)
 #include "tst_chartdataset.moc"

@@ -5,6 +5,7 @@ CHART_BUILD_PRIVATE_HEADER_DIR = $$CHART_BUILD_PUBLIC_HEADER_DIR/private
 CHART_BUILD_LIB_DIR = $$PWD/lib
 CHART_BUILD_DIR = $$PWD/build
 CHART_BUILD_BIN_DIR = $$PWD/bin
+CHART_BUILD_PLUGIN_DIR = $$CHART_BUILD_LIB_DIR/QtCommercial/Chart
 
 # hack to fix windows builds
 win32:{
@@ -13,6 +14,7 @@ win32:{
     CHART_BUILD_LIB_DIR = $$replace(CHART_BUILD_LIB_DIR, "/","\\")
     CHART_BUILD_BUILD_DIR = $$replace(CHART_BUILD_BUILD_DIR, "/","\\")
     CHART_BUILD_BIN_DIR = $$replace(CHART_BUILD_BIN_DIR, "/","\\")
+    CHART_BUILD_PLUGIN_DIR = $$replace(CHART_BUILD_PLUGIN_DIR, "/","\\")
 }
 
 mac: {
