@@ -4,7 +4,9 @@
 
 TARGET = barchart
 SOURCES += main.cpp \
-    chartwidget.cpp
+    chartwidget.cpp \
+    custombarset.cpp
 HEADERS += \
-    chartwidget.h
+    chartwidget.h \
+    custombarset.h
 

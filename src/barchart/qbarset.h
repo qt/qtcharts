@@ -1,7 +1,7 @@
 #ifndef QBARSET_H
 #define QBARSET_H
 
-#include "qchartglobal.h"
+#include <qchartglobal.h>
 #include <QPen>
 #include <QBrush>
 
@@ -11,7 +11,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 {
     Q_OBJECT
 public:
-    QBarSet();
+    QBarSet(QObject *parent = 0);
 
     void setName(QString name);
     QString name();
@@ -31,13 +31,14 @@ public:
 
 Q_SIGNALS:
     void clicked();
-/*
     void hoverEnter();
     void hoverLeave();
-*/
+    void toggleFloatingValues();
 
 public Q_SLOTS:
     void barClicked();
+    void barHoverEntered();
+    void barHoverLeaved();
 
 private:
 

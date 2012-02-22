@@ -72,6 +72,16 @@ void Bar::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
     emit clicked();
 }
 
+void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/)
+{
+    emit hoverEntered();
+}
+
+void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
+{
+    emit hoverLeaved();
+}
+
 #include "moc_bar_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

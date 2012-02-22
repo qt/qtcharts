@@ -76,11 +76,14 @@ void BarPresenter::layoutChanged()
 
             // TODO: remove hard coding, apply layout
             value->resize(100,50);
-            value->setPos(xPos + mBarDefaultWidth/2, yPos-barHeight/2);
+            value->setPos(xPos, yPos-barHeight/2);
             value->setPen(QPen(QColor(255,255,255,255)));
 
-            QString vString(QString::number(mModel.valueAt(set,category)));
-            value->setValueString(vString);
+            if (mModel.valueAt(set,category) != 0) {
+                value->setValueString(QString::number(mModel.valueAt(set,category)));
+            } else {
+                value->setValueString(QString(""));
+            }
 
             itemIndex++;
             xPos += mBarDefaultWidth;

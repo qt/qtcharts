@@ -27,13 +27,16 @@ public: // from ChartItem
 
 public:
     // From QGraphicsItem
-
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     QRectF boundingRect() const;
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 Q_SIGNALS:
     void clicked();
+    void hoverEntered();
+    void hoverLeaved();
 
 private:
 

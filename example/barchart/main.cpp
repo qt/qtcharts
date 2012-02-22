@@ -1,10 +1,11 @@
 #include <QApplication>
 #include <QMainWindow>
-#include <QStandardItemModel>
+#include <qchartview.h>
 #include <qbarchartseries.h>
-#include <qbarcategory.h>
 #include <qbarset.h>
-#include "chartwidget.h"
+#include <qbarcategory.h>
+
+#include "custombarset.h"
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -16,13 +17,14 @@ int main(int argc, char *argv[])
     QBarCategory *category = new QBarCategory;
     *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
-    QBarChartSeries* series0 = new QBarChartSeries(category);
+    QBarChartSeries* series= new QBarChartSeries(category);
 
-    QBarSet *set0 = new QBarSet;
-    QBarSet *set1 = new QBarSet;
-    QBarSet *set2 = new QBarSet;
-    QBarSet *set3 = new QBarSet;
-    QBarSet *set4 = new QBarSet;
+    // We use custom set, which connects some signals. Could use QBarSet here if we don't need signals
+    CustomBarSet *set0 = new CustomBarSet;
+    CustomBarSet *set1 = new CustomBarSet;
+    CustomBarSet *set2 = new CustomBarSet;
+    CustomBarSet *set3 = new CustomBarSet;
+    CustomBarSet *set4 = new CustomBarSet;
 
     // Create some test data to chart
     *set0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10 << 11 << 12;
@@ -31,16 +33,18 @@ int main(int argc, char *argv[])
     *set3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5 << 2 << 7;
     *set4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10 << 1 << 6;
 
-    series0->addBarSet(set0);
-    series0->addBarSet(set1);
-    series0->addBarSet(set2);
-    series0->addBarSet(set3);
-    series0->addBarSet(set4);
+    series->addBarSet(set0);
+    series->addBarSet(set1);
+    series->addBarSet(set2);
+    series->addBarSet(set3);
+    series->addBarSet(set4);
 
-    ChartWidget* chartWidget =  new ChartWidget(&window);
-    chartWidget->addSeries(series0);
+    QChartView* chartView =  new QChartView(&window);
+    chartView->addSeries(series);
+    chartView->setChartTitle("simple stacked barchart");
+    chartView->setChartTheme(QChart::ChartThemeIcy);
 
-    window.setCentralWidget(chartWidget);
+    window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
 

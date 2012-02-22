@@ -3,7 +3,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QBarSet::QBarSet()
+QBarSet::QBarSet(QObject *parent)
+    : QObject(parent)
 {
     mFloatingValuesVisible = false;
 }
@@ -69,6 +70,18 @@ void QBarSet::barClicked()
     // Some bar of this set has been clicked
     // TODO: What happens then?
     emit clicked();     // Notify that set has been clicked
+}
+
+void QBarSet::barHoverEntered()
+{
+    qDebug() << "QBarset::barHoverEntered" << this;
+    emit hoverEnter();
+}
+
+void QBarSet::barHoverLeaved()
+{
+    qDebug() << "QBarset::barHoverLeaved" << this;
+    emit hoverLeave();
 }
 
 #include "moc_qbarset.cpp"

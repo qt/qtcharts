@@ -70,6 +70,8 @@ void BarPresenterBase::dataChanged()
             childItems().append(bar);
             mBars.append(bar);
             connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
+            connect(bar,SIGNAL(hoverEntered()),set,SLOT(barHoverEntered()));
+            connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaved()));
         }
     }
 
@@ -98,7 +100,7 @@ void BarPresenterBase::dataChanged()
             BarValue *value = new BarValue(*set, this);
             childItems().append(value);
             mFloatingValues.append(value);
-            connect(set,SIGNAL(clicked()),value,SLOT(toggleVisible()));
+            connect(set,SIGNAL(toggleFloatingValues()),value,SLOT(toggleVisible()));
         }
     }
 

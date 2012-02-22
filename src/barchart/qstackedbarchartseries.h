@@ -20,12 +20,12 @@ public:
     // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeStackedBar; }
 
+    // Set handling
     void addBarSet(QBarSet *set);       // Takes ownership
     void removeBarSet(QBarSet *set);    // Also deletes the set, if set is owned.
     int countSets();
     QBarSet* nextSet(bool first=false);     // Returns first set, if called with true
 
-    //TODO:
     //QList<QString> legend();  // Returns legend of series (ie. names of all sets in series)
 
     // TODO: Functions below this are not part of api and will be moved
