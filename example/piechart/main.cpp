@@ -28,9 +28,9 @@ int main(int argc, char *argv[])
 
     QChartView* chartView =  new QChartView(&window);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->addSeries(series);
-    chartView->setChartTitle("simple piechart");
     chartView->setChartTheme(QChart::ChartThemeIcy);
+    chartView->setChartTitle("Simple piechart");
+    chartView->addSeries(series);
 
     window.setCentralWidget(chartView);
     window.resize(600, 600);

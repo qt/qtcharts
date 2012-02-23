@@ -159,6 +159,21 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             PiePresenter* pie = new PiePresenter(m_chart, s);
             m_chartTheme->decorate(pie, s, m_chartItems.count());
             QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), pie, SLOT(handleGeometryChanged(const QRectF&)));
+
+            // Hide all from background when there is only piechart
+            // TODO: refactor this ugly code... should be one setting for this
+            if (m_chartItems.count() == 0) {
+                m_chart->axisX()->setAxisVisible(false);
+                m_chart->axisY()->setAxisVisible(false);
+                m_chart->axisX()->setGridVisible(false);
+                m_chart->axisY()->setGridVisible(false);
+                m_chart->axisX()->setLabelsVisible(false);
+                m_chart->axisY()->setLabelsVisible(false);
+                m_chart->axisX()->setShadesVisible(false);
+                m_chart->axisY()->setShadesVisible(false);
+                m_chart->setChartBackgroundBrush(Qt::transparent);
+            }
+
             m_chartItems.insert(series, pie);
             break;
         }
