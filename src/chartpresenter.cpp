@@ -83,10 +83,8 @@ void ChartPresenter::handleAxisAdded(QChartAxis* axis)
     if(!m_options.testFlag(QChart::GridAxisAnimations))
     {
         item = new AxisItem(axis==m_dataset->axisX()?AxisItem::X_AXIS : AxisItem::Y_AXIS,m_chart);
-        qDebug()<<"kuku1";
     }else{
         item = new AxisAnimationItem(axis==m_dataset->axisX()?AxisItem::X_AXIS : AxisItem::Y_AXIS,m_chart);
-        qDebug()<<"kuku2";
     }
 
     QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
