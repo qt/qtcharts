@@ -15,7 +15,7 @@ SOURCES += \
     qchart.cpp \
     qchartaxis.cpp \
     qchartseries.cpp \
-    qchartview.cpp 
+    qchartview.cpp   
 PRIVATE_HEADERS += \
     axisitem_p.h \
     chartdataset_p.h \
@@ -34,6 +34,7 @@ include(linechart/linechart.pri)
 include(barchart/barchart.pri)    
 include(piechart/piechart.pri)
 include(scatterseries/scatter.pri)
+include(splinechart/splinechart.pri)
 
 THEMES += themes/chartthemeicy_p.h \
     themes/chartthemegrayscale_p.h \
@@ -88,5 +89,5 @@ unix:QMAKE_DISTCLEAN += -r \
     $$CHART_BUILD_LIB_DIR
 win32:QMAKE_DISTCLEAN += /Q \
     $$CHART_BUILD_HEADER_DIR \
-    $$CHART_BUILD_LIB_DIR
+    $$CHART_BUILD_LIB_DIR   
 

@@ -19,8 +19,8 @@ public:
         SeriesTypeStackedBar,
         SeriesTypePercentBar,
         SeriesTypePie,
-        SeriesTypeScatter
-//        SeriesTypeSpline
+        SeriesTypeScatter,
+        SeriesTypeSpline
     };
 
 protected:

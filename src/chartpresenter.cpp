@@ -10,6 +10,7 @@
 #include "qlinechartseries.h"
 #include "qpieseries.h"
 #include "qscatterseries.h"
+#include "qsplineseries.h"
 //items
 #include "axisitem_p.h"
 #include "barpresenter.h"
@@ -19,6 +20,7 @@
 #include "linechartanimationitem_p.h"
 #include "piepresenter.h"
 #include "scatterpresenter_p.h"
+#include "splinepresenter_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -162,6 +164,11 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             m_chartItems.insert(series, pie);
             break;
         }
+    case QChartSeries::SeriesTypeSpline: {
+        QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(series);
+        SplinePresenter* splinePresenter = new SplinePresenter
+        break;
+    }
         default: {
             qDebug()<< "Series type" << series->type() << "not implemented.";
             break;
