@@ -331,4 +331,20 @@ QChartAxis* QChartView::axisY() const
     return m_chart->axisY();
 }
 
+/*!
+    Sets animation options for the chart
+*/
+void QChartView::setAnimationOptions(QChart::AnimationOptions options)
+{
+    m_chart->setAnimationOptions(options);
+}
+
+/*!
+    Returns animation options for the chart
+*/
+QChart::AnimationOptions QChartView::animationOptions() const
+{
+    return m_chart->animationOptions();
+}
+
 QTCOMMERCIALCHART_END_NAMESPACE

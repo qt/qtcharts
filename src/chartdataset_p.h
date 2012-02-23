@@ -25,6 +25,7 @@ public:
     void clearDomains(int toIndex =0);
     const Domain domain(QChartAxis *axisY) const;
     int domainIndex() const {return m_domainIndex;}
+    void setDomain(int index);
 
     QChartAxis* axisX() const { return m_axisX;};
     QChartAxis* axisY(QChartSeries* series = 0) const;
@@ -43,7 +44,6 @@ private slots:
 	void handleTickChanged(QChartAxis*);
 
 private:
-    void setDomain(int index);
     QStringList createLabels(QChartAxis* axis,qreal min, qreal max);
 
 private:

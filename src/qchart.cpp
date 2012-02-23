@@ -253,6 +253,22 @@ void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
     update();
 }
 
+/*!
+    Sets animation options for the chart
+*/
+void QChart::setAnimationOptions(AnimationOptions options)
+{
+    m_presenter->setAnimationOptions(options);
+}
+
+/*!
+    Returns animation options for the chart
+*/
+QChart::AnimationOptions QChart::animationOptions() const
+{
+    return m_presenter->animationOptions();
+}
+
 #include "moc_qchart.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -33,6 +33,9 @@ public:
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme();
 
+    void setAnimationOptions(QChart::AnimationOptions options);
+    QChart::AnimationOptions animationOptions() const;
+
 private:
     void createConnections();
 
@@ -55,6 +58,7 @@ private:
     ChartTheme *m_chartTheme;
     int m_marginSize;
     QRectF m_rect;
+    QChart::AnimationOptions m_options;
 
 };
 

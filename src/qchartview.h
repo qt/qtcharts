@@ -44,6 +44,9 @@ public:
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme() const;
 
+    void setAnimationOptions(QChart::AnimationOptions options);
+    QChart::AnimationOptions animationOptions() const;
+
     QChartAxis* axisX() const;
     QChartAxis* axisY() const;
 

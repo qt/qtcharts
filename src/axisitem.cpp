@@ -79,6 +79,8 @@ void AxisItem::updateItems(QVector<qreal>& vector)
 
 void AxisItem::handleAxisUpdate(QChartAxis* axis)
 {
+    if(m_layoutVector.count()==0) return;
+
     if(axis->isAxisVisible()) {
         setAxisOpacity(100);
     }
@@ -130,7 +132,7 @@ void AxisItem::handleLabelsChanged(QChartAxis* axis,const QStringList& labels)
     m_thicksList=labels;
     m_layoutVector.resize(m_thicksList.size());
     updateItems(m_layoutVector);
-    handleAxisUpdate(axis);
+    if(diff!=0) handleAxisUpdate(axis);
 }
 
 void AxisItem::handleGeometryChanged(const QRectF& rect)

@@ -25,7 +25,7 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
     Q_OBJECT
 public:
-    enum ChartTheme {        
+    enum ChartTheme {
         ChartThemeDefault,
         ChartThemeVanilla,
         ChartThemeIcy,
@@ -34,6 +34,14 @@ public:
         //ChartThemeUnnamed1
         /*! The default theme follows the GUI style of the Operating System */
     };
+
+    enum  AnimationOption {
+        NoAnimation = 0x0,
+        GridAxisAnimations = 0x1,
+        SeriesAnimations =0x2,
+        AllAnimations = 0x3
+        };
+        Q_DECLARE_FLAGS(AnimationOptions, AnimationOption)
 
 public:
     QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
@@ -52,6 +60,9 @@ public:
     void setChartTitleFont(const QFont& font);
     void setChartBackgroundBrush(const QBrush& brush);
     void setChartBackgroundPen(const QPen& pen);
+
+    void setAnimationOptions(AnimationOptions options);
+    AnimationOptions animationOptions() const;
 
     void zoomIn();
     void zoomIn(const QRectF& rect);
@@ -78,5 +89,7 @@ private:
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(QTCOMMERCIALCHART_NAMESPACE::QChart::AnimationOptions)
 
 #endif

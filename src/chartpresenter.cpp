@@ -12,6 +12,7 @@
 #include "qscatterseries.h"
 //items
 #include "axisitem_p.h"
+#include "axisanimationitem_p.h"
 #include "barpresenter.h"
 #include "stackedbarpresenter.h"
 #include "linechartitem_p.h"
@@ -27,7 +28,8 @@ m_chart(chart),
 m_dataset(dataset),
 m_chartTheme(0),
 m_marginSize(0),
-m_rect(QRectF(QPoint(0,0),m_chart->size()))
+m_rect(QRectF(QPoint(0,0),m_chart->size())),
+m_options(0)
 {
 	createConnections();
     setChartTheme(QChart::ChartThemeDefault);
@@ -75,13 +77,18 @@ void ChartPresenter::setMargin(int margin)
 
 void ChartPresenter::handleAxisAdded(QChartAxis* axis)
 {
+
     AxisItem* item ;
 
-    if(axis==m_dataset->axisX()){
-    item = new AxisItem(AxisItem::X_AXIS,m_chart);
+    if(!m_options.testFlag(QChart::GridAxisAnimations))
+    {
+        item = new AxisItem(axis==m_dataset->axisX()?AxisItem::X_AXIS : AxisItem::Y_AXIS,m_chart);
+        qDebug()<<"kuku1";
     }else{
-    item = new AxisItem(AxisItem::Y_AXIS,m_chart);
+        item = new AxisAnimationItem(axis==m_dataset->axisX()?AxisItem::X_AXIS : AxisItem::Y_AXIS,m_chart);
+        qDebug()<<"kuku2";
     }
+
     QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
     QObject::connect(axis,SIGNAL(update(QChartAxis*)),item,SLOT(handleAxisUpdate(QChartAxis*)));
 
@@ -105,7 +112,12 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
     {
         case QChartSeries::SeriesTypeLine: {
             QLineChartSeries* lineSeries = static_cast<QLineChartSeries*>(series);
-            LineChartItem* item = new LineChartAnimationItem(this,lineSeries,m_chart);
+            LineChartItem* item;
+            if(m_options.testFlag(QChart::SeriesAnimations)){
+                item = new LineChartAnimationItem(this,lineSeries,m_chart);
+            }else{
+                item = new LineChartItem(this,lineSeries,m_chart);
+            }
             m_chartTheme->decorate(item,lineSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(lineSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
@@ -233,6 +245,37 @@ void ChartPresenter::setChartTheme(QChart::ChartTheme theme)
 QChart::ChartTheme ChartPresenter::chartTheme()
 {
     return m_chartTheme->id();
+}
+
+void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
+{
+    if(m_options!=options) {
+
+        m_options=options;
+
+        //recreate elements
+
+        QList<QChartAxis*> axisList = m_axisItems.uniqueKeys();
+        QList<QChartSeries*> seriesList = m_chartItems.uniqueKeys();
+
+        foreach(QChartAxis* axis, axisList) {
+            handleAxisRemoved(axis);
+            handleAxisAdded(axis);
+        }
+        foreach(QChartSeries* series, seriesList) {
+            handleSeriesRemoved(series);
+            handleSeriesAdded(series);
+        }
+
+        //now reintialize view data
+        //TODO: make it more nice
+        m_dataset->setDomain(m_dataset->domainIndex());
+    }
+}
+
+QChart::AnimationOptions ChartPresenter::animationOptions() const
+{
+    return m_options;
 }
 
 
