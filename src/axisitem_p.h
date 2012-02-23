@@ -53,10 +53,12 @@ public slots:
     void handleAxisUpdate(QChartAxis* axis); //look and feel
     void handleLabelsChanged(QChartAxis* axis,const QStringList& labels); //labels from dataset
     void handleGeometryChanged(const QRectF& size); // geometry from presenter
-protected:
-    void updateItem(int count);
+public:
+    virtual void updateItems(QVector<qreal>& points);
+    virtual void calculateLayout(QVector<qreal>& points);
+    virtual void applyLayout(const QVector<qreal>& points);
 private:
-    void clear();
+    void clear(int count);
     void createItems(int count);
 private:
     AxisType m_type;
@@ -67,6 +69,7 @@ private:
     QGraphicsItemGroup m_labels;
     QGraphicsItemGroup m_axis;
     QStringList m_thicksList;
+    QVector<qreal> m_layoutVector;
 
 };
 

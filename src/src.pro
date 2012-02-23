@@ -8,6 +8,7 @@ CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
 SOURCES += \
     axisitem.cpp \
+    axisanimationitem.cpp \
     chartdataset.cpp \
     chartpresenter.cpp \
     charttheme.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
     qchartview.cpp 
 PRIVATE_HEADERS += \
     axisitem_p.h \
+    axisanimationitem_p.h \
     chartdataset_p.h \
     chartitem_p.h \
     chartpresenter_p.h \

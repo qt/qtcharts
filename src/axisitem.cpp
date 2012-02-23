@@ -30,36 +30,33 @@ AxisItem::~AxisItem()
 
 QRectF AxisItem::boundingRect() const
 {
-    return m_rect;
+    return QRectF();
 }
 
 void AxisItem::createItems(int count)
 {
-    m_axis.addToGroup(new QGraphicsLineItem(this));
+    if(m_axis.children().size()==0)
+           m_axis.addToGroup(new QGraphicsLineItem());
     for (int i = 0; i < count; ++i) {
-           m_grid.addToGroup(new QGraphicsLineItem(this));
-           m_labels.addToGroup(new QGraphicsSimpleTextItem(this));
-           if(i%2) m_shades.addToGroup(new QGraphicsRectItem(this));
-           m_axis.addToGroup(new QGraphicsLineItem(this));
+           m_grid.addToGroup(new QGraphicsLineItem());
+           m_labels.addToGroup(new QGraphicsSimpleTextItem());
+           if(m_grid.childItems().size()%2) m_shades.addToGroup(new QGraphicsRectItem());
+           m_axis.addToGroup(new QGraphicsLineItem());
        }
 }
 
-void AxisItem::clear()
+void AxisItem::clear(int count)
 {
-    foreach(QGraphicsItem* item , m_shades.childItems()) {
-        delete item;
-    }
+    QList<QGraphicsItem *> lines = m_grid.childItems();
+    QList<QGraphicsItem *> labels = m_labels.childItems();
+    QList<QGraphicsItem *> shades = m_shades.childItems();
+    QList<QGraphicsItem *> axis = m_axis.childItems();
 
-    foreach(QGraphicsItem* item , m_grid.childItems()) {
-        delete item;
-    }
-
-    foreach(QGraphicsItem* item , m_labels.childItems()) {
-        delete item;
-    }
-
-    foreach(QGraphicsItem* item , m_axis.childItems()) {
-            delete item;
+    for (int i = 0; i < count; ++i) {
+        delete(lines.takeLast());
+        delete(labels.takeLast());
+        if(lines.size()%2) delete(shades.takeLast());
+        delete(axis.takeLast());
     }
 
     m_thicksList.clear();
@@ -68,75 +65,16 @@ void AxisItem::clear()
 
 void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-
+    Q_UNUSED(painter);
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
 }
 
-void AxisItem::updateItem(int count)
+void AxisItem::updateItems(QVector<qreal>& vector)
 {
-    if(count ==0) return;
-
-    QList<QGraphicsItem *> lines = m_grid.childItems();
-    QList<QGraphicsItem *> labels = m_labels.childItems();
-    QList<QGraphicsItem *> shades = m_shades.childItems();
-    QList<QGraphicsItem *> axis = m_axis.childItems();
-
-    switch (m_type)
-      {
-          case X_AXIS:
-          {
-              const qreal deltaX = m_rect.width() / (count-1);
-
-              QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(axis.at(0));
-              lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
-
-              for (int i = 0; i < count; ++i) {
-                  int x = i * deltaX + m_rect.left();
-                  QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
-                  lineItem->setLine(x, m_rect.top(), x, m_rect.bottom());
-                  QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-                  labelItem->setText(m_thicksList.at(i));
-                  QPointF center = labelItem->boundingRect().center();
-                  labelItem->setTransformOriginPoint(center.x(), center.y());
-                  labelItem->setPos(x - center.x(), m_rect.bottom() + label_padding);
-                  if(i%2){
-                      QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
-                      rectItem->setRect(x,m_rect.top(),deltaX,m_rect.height());
-                  }
-                  lineItem =  static_cast<QGraphicsLineItem*>(axis.at(i+1));
-                  lineItem->setLine(x,m_rect.bottom(),x,m_rect.bottom()+5);
-              }
-          }
-          break;
-
-          case Y_AXIS:
-          {
-              const qreal deltaY = m_rect.height()/ (count-1);
-
-              QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(axis.at(0));
-              lineItem->setLine(m_rect.left() , m_rect.top(), m_rect.left(), m_rect.bottom());
-
-              for (int i = 0; i < count; ++i) {
-                  int y = i * -deltaY + m_rect.bottom();
-                  QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
-                  lineItem->setLine(m_rect.left() , y, m_rect.right(), y);
-                  QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-                  labelItem->setText(m_thicksList.at(i));
-                  QPointF center = labelItem->boundingRect().center();
-                  labelItem->setTransformOriginPoint(center.x(), center.y());
-                  labelItem->setPos(m_rect.left() -  labelItem->boundingRect().width() - label_padding , y-center.y());
-                  if(i%2){
-                      QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
-                      rectItem->setRect(m_rect.left(),y,m_rect.width(),deltaY);
-                  }
-                  lineItem =  static_cast<QGraphicsLineItem*>(axis.at(i+1));
-                  lineItem->setLine(m_rect.left()-5,y,m_rect.left(),y);
-              }
-          }
-          break;
-          default:
-          qDebug()<<"Unknown axis type";
-          break;
-      }
+    calculateLayout(vector);
+    if(vector.count()==0) return;
+    applyLayout(vector);
 }
 
 void AxisItem::handleAxisUpdate(QChartAxis* axis)
@@ -182,32 +120,23 @@ void AxisItem::handleAxisUpdate(QChartAxis* axis)
 
 void AxisItem::handleLabelsChanged(QChartAxis* axis,const QStringList& labels)
 {
-    m_thicksList=labels;
-    QList<QGraphicsItem*> items = m_labels.childItems();
-    //if(items.size()!=m_thicksList.size()){
-       clear();
-       m_thicksList=labels;
-       createItems(m_thicksList.size());
-       updateItem(m_thicksList.size());
-       items = m_labels.childItems();
-       handleAxisUpdate(axis);
-    // }
+    int diff = m_thicksList.size() - labels.size();
 
-    Q_ASSERT(items.size()==m_thicksList.size());
-
-    int i=0;
-    foreach(QGraphicsItem* item, items){
-        static_cast<QGraphicsSimpleTextItem*>(item)->setText(m_thicksList.at(i));
-        i++;
+    if(diff>0){
+        clear(diff);
+    }else if(diff<0){
+        createItems(-diff);
     }
-    update();
+    m_thicksList=labels;
+    m_layoutVector.resize(m_thicksList.size());
+    updateItems(m_layoutVector);
+    handleAxisUpdate(axis);
 }
 
 void AxisItem::handleGeometryChanged(const QRectF& rect)
 {
     m_rect = rect;
-    updateItem(m_thicksList.size());
-    update();
+    updateItems(m_layoutVector);
 }
 
 void AxisItem::setAxisOpacity(qreal opacity)
@@ -309,6 +238,94 @@ void AxisItem::setGridPen(const QPen& pen)
     }
 }
 
+void AxisItem::calculateLayout(QVector<qreal>& points)
+{
+    switch (m_type)
+    {
+        case X_AXIS:
+        {
+            const qreal deltaX = m_rect.width()/(m_thicksList.size()-1);
+            for (int i = 0; i < m_thicksList.size(); ++i) {
+                 int x = i * deltaX + m_rect.left();
+                 points[i]=x;
+            }
+        }
+        break;
+        case Y_AXIS:
+        {
+            const qreal deltaY = m_rect.height()/(m_thicksList.size()-1);
+            for (int i = 0; i < m_thicksList.size(); ++i) {
+                 int y = i * -deltaY + m_rect.bottom();
+                 points[i]=y;
+            }
+        }
+        break;
+    }
+}
+
+void AxisItem::applyLayout(const QVector<qreal>& points)
+{
+    Q_ASSERT(points.size() == m_thicksList.size());
+
+    QList<QGraphicsItem *> lines = m_grid.childItems();
+    QList<QGraphicsItem *> labels = m_labels.childItems();
+    QList<QGraphicsItem *> shades = m_shades.childItems();
+    QList<QGraphicsItem *> axis = m_axis.childItems();
+
+    Q_ASSERT(labels.size() == m_thicksList.size());
+
+    switch (m_type)
+         {
+             case X_AXIS:
+             {
+                 QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(axis.at(0));
+                 lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
+
+                 for (int i = 0; i < points.size(); ++i) {
+                     QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
+                     lineItem->setLine(points[i], m_rect.top(), points[i], m_rect.bottom());
+                     QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+                     labelItem->setText(m_thicksList.at(i));
+                     QPointF center = labelItem->boundingRect().center();
+                     labelItem->setTransformOriginPoint(center.x(), center.y());
+                     labelItem->setPos(points[i] - center.x(), m_rect.bottom() + label_padding);
+                     if(i%2){
+                         QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
+                         rectItem->setRect(points[i],m_rect.top(),points[i+1]-points[i],m_rect.height());
+                     }
+                     lineItem =  static_cast<QGraphicsLineItem*>(axis.at(i+1));
+                     lineItem->setLine(points[i],m_rect.bottom(),points[i],m_rect.bottom()+5);
+                 }
+             }
+             break;
+
+             case Y_AXIS:
+             {
+                 QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(axis.at(0));
+                 lineItem->setLine(m_rect.left() , m_rect.top(), m_rect.left(), m_rect.bottom());
+
+                 for (int i = 0; i < points.size(); ++i) {
+                     QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
+                     lineItem->setLine(m_rect.left() , points[i], m_rect.right(), points[i]);
+                     QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+                     labelItem->setText(m_thicksList.at(i));
+                     QPointF center = labelItem->boundingRect().center();
+                     labelItem->setTransformOriginPoint(center.x(), center.y());
+                     labelItem->setPos(m_rect.left() -  labelItem->boundingRect().width() - label_padding , points[i]-center.y());
+                     if(i%2){
+                         QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
+                         rectItem->setRect(m_rect.left(),points[i],m_rect.width(),points[i]-points[i+1]);
+                     }
+                     lineItem =  static_cast<QGraphicsLineItem*>(axis.at(i+1));
+                     lineItem->setLine(m_rect.left()-5,points[i],m_rect.left(),points[i]);
+                 }
+             }
+             break;
+             default:
+             qDebug()<<"Unknown axis type";
+             break;
+         }
+}
 
 //TODO "nice numbers algorithm"
 #include "moc_axisitem_p.cpp"
