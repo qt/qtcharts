@@ -101,7 +101,7 @@ Widget::~Widget()
 */
 void Widget::refreshChart()
 {
-    chartArea->removeSeries(series0);
+    chartArea->removeAllSeries();
 
     // selected countries items list is not sorted. copy the values to QStringlist and sort them.
     QStringList selectedCountriesStrings;
@@ -141,7 +141,7 @@ void Widget::refreshChart()
         for (int i = 0; i < selectedYearsInts.size(); i++)
         {
             query.exec("SELECT country,gdpvalue FROM gdp2 where year=" + QString("%1").arg(selectedYearsInts[i]) + " AND " + countriesQuery);
-            QBarSet* barSet = new QBarSet;
+            QBarSet* barSet = new QBarSet(QString("GDP_%1").arg(selectedYearsInts[i]));
             //        while (query.next()) {
             //            qDebug() << query.value(0).toString() << " : " << query.value(1).toString();
             //        }
@@ -205,9 +205,10 @@ void Widget::refreshChart()
                     qDebug() << "Putting 0 for Bosnia" << " : " << QString("%1").arg(selectedYearsInts[i]) << " " << query.value(0).toInt();
                 }
             }
-            chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);
+//            chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);
             chartArea->addSeries(series);
         }
+        chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);
     }
 }
 

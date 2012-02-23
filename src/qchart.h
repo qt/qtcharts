@@ -25,14 +25,14 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
     Q_OBJECT
 public:
-    enum ChartTheme {
-        /*! The default theme follows the GUI style of the Operating System */
+    enum ChartTheme {        
         ChartThemeDefault,
         ChartThemeVanilla,
         ChartThemeIcy,
         ChartThemeGrayscale,
         ChartThemeScientific
         //ChartThemeUnnamed1
+        /*! The default theme follows the GUI style of the Operating System */
     };
 
 public:

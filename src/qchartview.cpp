@@ -20,6 +20,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    Constructs a chartView object which is a child of a\a parent.
+*/
 QChartView::QChartView(QWidget *parent) :
 QGraphicsView(parent),
 m_scene(new QGraphicsScene(this)),
@@ -52,10 +55,10 @@ void QChartView::resizeEvent(QResizeEvent *event)
 }
 
 /*!
-    Adds the series and optional y axis onto the chart and takes the ownership of the objects.
+    Adds the \a series and optional \a axisY onto the chart and takes the ownership of the objects.
     If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
     the y axis).
-    \sa removeSeries, removeAllSeries
+    \sa removeSeries(), removeAllSeries()
 */
 void QChartView::addSeries(QChartSeries* series,QChartAxis *axisY)
 {
@@ -63,10 +66,10 @@ void QChartView::addSeries(QChartSeries* series,QChartAxis *axisY)
 }
 
 /*!
-    Removes the QChartSeries specified in a perameter from the QChartView.
+    Removes the \a series specified in a perameter from the QChartView.
     It releses its ownership of the specified QChartSeries object.
     It does not delete the pointed QChartSeries data object
-    \sa removeSeries(), removeAllSeries()
+    \sa addSeries(), removeAllSeries()
 */
 void QChartView::removeSeries(QChartSeries* series)
 {
@@ -83,16 +86,25 @@ void QChartView::removeAllSeries()
     m_chart->removeAllSeries();
 }
 
+/*!
+    Zooms in the view by a factor of 2
+*/
 void QChartView::zoomIn()
 {
     m_chart->zoomIn();
 }
 
+/*!
+    Zooms in the view to a maximum level at which \a rect is still fully visible.
+*/
 void QChartView::zoomIn(const QRect& rect)
 {
     m_chart->zoomIn(rect);
 }
 
+/*!
+    Restores the view zoom level to the previous one.
+*/
 void QChartView::zoomOut()
 {
     m_chart->zoomOut();
@@ -107,7 +119,7 @@ int QChartView::margin() const
 }
 
 /*!
-    Sets the chart \a tile. A description text that is rendered above the chart.
+    Sets the chart \a title. A description text that is rendered above the chart.
 */
 void QChartView::setChartTitle(const QString& title)
 {
@@ -138,6 +150,9 @@ void QChartView::setChartBackgroundPen(const QPen& pen)
     m_chart->setChartBackgroundPen(pen);
 }
 
+/*!
+    Sets the RubberBandPlicy to \a policy. Selected policy determines the way zooming is performed.
+*/
 void QChartView::setRubberBandPolicy(const RubberBandPolicy policy)
 {
     switch(policy) {
@@ -167,6 +182,9 @@ void QChartView::setRubberBandPolicy(const RubberBandPolicy policy)
     }
 }
 
+/*!
+    Returns the RubberBandPolicy that is currently being used by the widget.
+*/
 QChartView::RubberBandPolicy QChartView::rubberBandPolicy() const
 {
     if(m_horizonalRubberBand && m_verticalRubberBand) return RectangleRubberBand;
@@ -175,6 +193,10 @@ QChartView::RubberBandPolicy QChartView::rubberBandPolicy() const
     return NoRubberBand;
 }
 
+/*!
+    If Left mouse button is pressed and the RubberBandPolicy is enabled the \a event is accepted and the rubber band is displayed on the screen allowing the user to select the zoom area.
+    If different mouse button is pressed and/or the RubberBandPolicy is disabled then the \a event is not consumed.
+*/
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
     if(m_rubberBand && m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
@@ -188,6 +210,9 @@ void QChartView::mousePressEvent(QMouseEvent *event)
             m_rubberBand->show();
             event->accept();
         }
+    }
+    else {
+        QGraphicsView::mousePressEvent(event);
     }
 }
 
@@ -213,6 +238,10 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+/*!
+    If left mouse button is release and RubberBand is enabled then \a event is accepted and the view is zoomed in to rect specified by RubberBand
+    If it is the right mouse button \a event then RubberBand is dissmissed and zoom is canceled.
+*/
 void QChartView::mouseReleaseEvent(QMouseEvent *event)
 {
     if(m_rubberBand) {

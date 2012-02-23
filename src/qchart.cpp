@@ -32,7 +32,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs a chart object which is a child of parent.
+    Constructs a chart object which is a child of a\a parent.
 */
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
     m_backgroundItem(0),
@@ -50,7 +50,7 @@ QChart::~QChart()
 }
 
 /*!
-    Adds the \a series and optional y axis onto the chart and takes the ownership of the objects.
+    Adds the \a series and optional \a axisY onto the chart and takes the ownership of the objects.
     If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
     the y axis).
 */
@@ -60,10 +60,10 @@ void QChart::addSeries(QChartSeries* series, QChartAxis* axisY)
 }
 
 /*!
-    Removes the QChartSeries specified in a perameter from the QChartView.
+    Removes the \a series specified in a perameter from the QChartView.
     It releses its ownership of the specified QChartSeries object.
     It does not delete the pointed QChartSeries data object
-    \sa removeSeries(), removeAllSeries()
+    \sa addSeries(), removeAllSeries()
 */
 void QChart::removeSeries(QChartSeries* series)
 {
@@ -148,7 +148,7 @@ void QChart::setMargin(int margin)
 }
 
 /*!
-    Sets the \a theme used by the chart for rendering data graphical representation
+    Sets the \a theme used by the chart for rendering the graphical representation of the data
     \sa ChartTheme, chartTheme()
 */
 void QChart::setChartTheme(QChart::ChartTheme theme)
@@ -165,6 +165,9 @@ QChart::ChartTheme QChart::chartTheme() const
     return m_presenter->chartTheme();
 }
 
+/*!
+    Zooms in the view by a factor of 2
+*/
 void QChart::zoomIn()
 {
     if (!m_dataset->nextDomain()) {
@@ -176,6 +179,9 @@ void QChart::zoomIn()
     }
 }
 
+/*!
+    Zooms in the view to a maximum level at which \a rect is still fully visible.
+*/
 void QChart::zoomIn(const QRectF& rect)
 {
     if(!rect.isValid()) return;
@@ -185,6 +191,9 @@ void QChart::zoomIn(const QRectF& rect)
        m_dataset->addDomain(r,m_presenter->geometry());
 }
 
+/*!
+    Restores the view zoom level to the previous one.
+*/
 void QChart::zoomOut()
 {
     m_dataset->previousDomain();
