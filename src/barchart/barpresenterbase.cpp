@@ -15,20 +15,16 @@ BarPresenterBase::BarPresenterBase(QBarChartSeries *series, QGraphicsItem *paren
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
+    ,mSeparatorsEnabled(false)
     ,mSeries(series)
 {
-    connect(series,SIGNAL(floatingValuesEnabled(bool)),this,SLOT(enableFloatingValues(bool)));
-    connect(series,SIGNAL(toolTipEnabled(bool)),this,SLOT(enableToolTip(bool)));
-    connect(series,SIGNAL(separatorsEnabled(bool)),this,SLOT(enableSeparators(bool)));
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
+    connect(series,SIGNAL(separatorsEnabled(bool)),this,SLOT(enableSeparators(bool)));
     dataChanged();
 }
 
 BarPresenterBase::~BarPresenterBase()
 {
-    disconnect(this,SLOT(enableFloatingValues(bool)));
-    disconnect(this,SLOT(enableToolTip(bool)));
-    disconnect(this,SLOT(enableSeparators(bool)));
     disconnect(this,SLOT(showToolTip(QPoint,QString)));
     delete mSeries;
 }
@@ -79,7 +75,6 @@ void BarPresenterBase::dataChanged()
             childItems().append(bar);
             mBars.append(bar);
             connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
-            // TODO: should the event be passed to set or not?
             connect(bar,SIGNAL(hoverEntered(QPoint)),set,SLOT(barHoverEntered(QPoint)));
             connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaved()));
         }
@@ -99,6 +94,7 @@ void BarPresenterBase::dataChanged()
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
+        sep->setVisible(mSeparatorsEnabled);
         childItems().append(sep);
         mSeparators.append(sep);
     }
@@ -143,27 +139,18 @@ void BarPresenterBase::handleGeometryChanged(const QRectF& rect)
     setPos(rect.topLeft());
 }
 
-void BarPresenterBase::enableFloatingValues(bool enabled)
+void BarPresenterBase::showToolTip(QPoint pos, QString tip)
 {
-    mFloatingValuesEnabled = enabled;
-}
-
-void BarPresenterBase::enableToolTip(bool enabled)
-{
-    mToolTipEnabled = enabled;
+    // TODO: cool tooltip instead of default
+    QToolTip::showText(pos,tip);
 }
 
 void BarPresenterBase::enableSeparators(bool enabled)
 {
-    mSeparatorsEnabled = enabled;
-}
-
-void BarPresenterBase::showToolTip(QPoint pos, QString tip)
-{
-    if (mToolTipEnabled) {
-        // TODO: cool tooltip instead of default
-        QToolTip::showText(pos,tip);
+    for (int i=0; i<mSeparators.count(); i++) {
+        mSeparators.at(i)->setVisible(enabled);
     }
+    mSeparatorsEnabled = enabled;
 }
 
 #include "moc_barpresenterbase.cpp"

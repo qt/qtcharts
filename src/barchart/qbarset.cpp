@@ -7,8 +7,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QBarSet::QBarSet(QString name, QObject *parent)
     : QObject(parent)
     ,mName(name)
-    ,mToolTipEnabled(true)       // TODO: these 2 as false by default, when implementation is ready
-    ,mFloatingValuesEnabled(true)
 {
 }
 
@@ -62,24 +60,6 @@ const QBrush& QBarSet::brush() const
     return mBrush;
 }
 
-void QBarSet::enableFloatingValues(bool enabled)
-{
-    qDebug() << "QBarSet::enableFloatingValues";
-    mFloatingValuesEnabled = enabled;
-}
-
-void QBarSet::enableToolTip(bool enabled)
-{
-    qDebug() << "QBarSet::enableToolTip";
-    mToolTipEnabled = enabled;
-}
-
-void QBarSet::enableSeparators(bool enabled)
-{
-    qDebug() << "QBarSet::enableSeparators";
-    mSeparatorsEnabled = enabled;
-}
-
 void QBarSet::barClicked()
 {
 //    qDebug() << "QBarset::barClicked" << this;
@@ -90,10 +70,7 @@ void QBarSet::barClicked()
 
 void QBarSet::barHoverEntered(QPoint pos)
 {
-    if (mToolTipEnabled) {
-        emit showToolTip(pos, mName);
-    }
-    // Emit signal to user of charts
+    emit showToolTip(pos, mName);
     emit hoverEnter(pos);
 }
 

@@ -15,18 +15,11 @@ QBarChartSeries::QBarChartSeries(QBarCategory *category, QObject *parent)
 
 void QBarChartSeries::addBarSet(QBarSet *set)
 {
-    connect(this,SIGNAL(floatingValuesEnabled(bool)),set,SLOT(enableFloatingValues(bool)));
-    connect(this,SIGNAL(separatorsEnabled(bool)),set,SLOT(enableSeparators(bool)));
-    connect(this,SIGNAL(toolTipEnabled(bool)),set,SLOT(enableToolTip(bool)));
-    connect(set,SIGNAL(showToolTip(QPoint,QString)),this,SIGNAL(showToolTip(QPoint,QString)));
     mModel->addBarSet(set);
 }
 
 void QBarChartSeries::removeBarSet(QBarSet *set)
 {
-    disconnect(set,SLOT(enableFloatingValues(bool)));
-    disconnect(set,SLOT(enableSeparators(bool)));
-    disconnect(set,SLOT(enableToolTip(bool)));
     mModel->removeBarSet(set);
 }
 
@@ -57,12 +50,32 @@ QString QBarChartSeries::label(int category)
 
 void QBarChartSeries::enableFloatingValues(bool enabled)
 {
-    emit floatingValuesEnabled(enabled);
+    if (enabled) {
+        for (int i=0; i<mModel->countSets(); i++) {
+            QBarSet *set = mModel->setAt(i);
+            connect(set,SIGNAL(clicked()),set,SIGNAL(toggleFloatingValues()));
+        }
+    } else {
+        for (int i=0; i<mModel->countSets(); i++) {
+            QBarSet *set = mModel->setAt(i);
+            disconnect(set,SIGNAL(clicked()),set,SIGNAL(toggleFloatingValues()));
+        }
+    }
 }
 
 void QBarChartSeries::enableToolTip(bool enabled)
 {
-    emit toolTipEnabled(enabled);
+    if (enabled) {
+        for (int i=0; i<mModel->countSets(); i++) {
+            QBarSet *set = mModel->setAt(i);
+            connect(set,SIGNAL(showToolTip(QPoint,QString)),this,SIGNAL(showToolTip(QPoint,QString)));
+        }
+    } else {
+        for (int i=0; i<mModel->countSets(); i++) {
+            QBarSet *set = mModel->setAt(i);
+            disconnect(set,SIGNAL(showToolTip(QPoint,QString)),this,SIGNAL(showToolTip(QPoint,QString)));
+        }
+    }
 }
 
 void QBarChartSeries::enableSeparators(bool enabled)
@@ -109,7 +122,6 @@ BarChartModel& QBarChartSeries::model()
 {
     return *mModel;
 }
-
 
 #include "moc_qbarchartseries.cpp"
 

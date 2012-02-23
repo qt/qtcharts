@@ -28,22 +28,23 @@ public:
     const QBrush& brush() const;
 
 Q_SIGNALS:
-    void clicked();                 // Clicked and hover signals exposed to user
+    void clicked();                         // Clicked and hover signals exposed to user
     void hoverEnter(QPoint pos);
     void hoverLeave();
-    void toggleFloatingValues();                // Private signal, TODO: move to private impl
-    void showToolTip(QPoint pos, QString tip);  // Private signal, TODO: move to private impl
+
+    // TODO: Expose this to user or not?
+    // TODO: TO PIMPL --->
+    void toggleFloatingValues();
+    void showToolTip(QPoint pos, QString tip);  // Private signal
+    // <--- TO PIMPL
 
 public Q_SLOTS:
-    void enableFloatingValues(bool enabled);    // enables floating values on top of bars
-    void enableToolTip(bool enabled);           // enables tooltips
-    void enableSeparators(bool enabled);        // enables separators between categories
-
-    // TODO: these slots belong to private implementation.
-    // These are for single bars to notify set about internal events
+    // These are for internal communication
+    // TODO: TO PIMPL --->
     void barClicked();
     void barHoverEntered(QPoint pos);
     void barHoverLeaved();
+    // <--- TO PIMPL
 
 private:
 
@@ -52,10 +53,6 @@ private:
     QPen mPen;
     QBrush mBrush;
 
-    // TODO: to pimpl
-    bool mFloatingValuesEnabled;
-    bool mToolTipEnabled;
-    bool mSeparatorsEnabled;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -41,10 +41,8 @@ protected slots:
     void handleGeometryChanged(const QRectF& size);
 
     // Internal slots
-    void enableFloatingValues(bool enabled=true);   // enables floating values on top of bars
-    void enableToolTip(bool enabled=true);          // enables tooltips
-    void enableSeparators(bool enabled=true);       // enables separators between categories
     void showToolTip(QPoint pos, QString tip);      // shows tooltip (if enabled)
+    void enableSeparators(bool enabled);
 
 protected:
 
@@ -56,8 +54,6 @@ protected:
     bool mLayoutSet;    // True, if component has been laid out.
     bool mLayoutDirty;
 
-    bool mFloatingValuesEnabled;
-    bool mToolTipEnabled;
     bool mSeparatorsEnabled;
 
     // Owned

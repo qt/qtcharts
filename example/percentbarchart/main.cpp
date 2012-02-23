@@ -4,8 +4,7 @@
 #include <qpercentbarchartseries.h>
 #include <qbarcategory.h>
 #include <qchartview.h>
-
-#include "custombarset.h"
+#include <qbarset.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -19,12 +18,11 @@ int main(int argc, char *argv[])
 
     QPercentBarChartSeries* series = new QPercentBarChartSeries(category);
 
-    // We use custom set, which connects some signals. Could use QBarSet here if we don't need signals
-    CustomBarSet *set0 = new CustomBarSet("Bub");
-    CustomBarSet *set1 = new CustomBarSet("Bob");
-    CustomBarSet *set2 = new CustomBarSet("Guybrush");
-    CustomBarSet *set3 = new CustomBarSet("Larry");
-    CustomBarSet *set4 = new CustomBarSet("Zak");
+    QBarSet *set0 = new QBarSet("Bub");
+    QBarSet *set1 = new QBarSet("Bob");
+    QBarSet *set2 = new QBarSet("Guybrush");
+    QBarSet *set3 = new QBarSet("Larry");
+    QBarSet *set4 = new QBarSet("Zak");
 
     // Create some test data to chart
     *set0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10 << 11 << 12;
@@ -38,6 +36,9 @@ int main(int argc, char *argv[])
     series->addBarSet(set2);
     series->addBarSet(set3);
     series->addBarSet(set4);
+
+    series->enableToolTip(true);
+    series->enableFloatingValues(true);
 
     QChartView* chartView =  new QChartView(&window);
     chartView->addSeries(series);
