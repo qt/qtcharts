@@ -141,7 +141,8 @@ void Widget::refreshChart()
         for (int i = 0; i < selectedYearsInts.size(); i++)
         {
             query.exec("SELECT country,gdpvalue FROM gdp2 where year=" + QString("%1").arg(selectedYearsInts[i]) + " AND " + countriesQuery);
-            QBarSet* barSet = new QBarSet(QString("GDP_%1").arg(selectedYearsInts[i]));
+            QBarSet* barSet = new QBarSet("Barset" + QString::number(i));
+
             //        while (query.next()) {
             //            qDebug() << query.value(0).toString() << " : " << query.value(1).toString();
             //        }

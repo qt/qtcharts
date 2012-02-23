@@ -247,51 +247,25 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             m_chartWidget->addSeries(series);
             setCurrentSeries(series);
         }
-    } else if (seriesName == "Bar") {
+    } else if (seriesName == "Bar"
+               || seriesName == "Stacked bar"
+               || seriesName == "Percent bar") {
         // TODO: replace QBarCategory with QStringList?
         QBarCategory *category = new QBarCategory;
         QStringList labels = generateLabels(rowCount);
         foreach(QString label, labels)
             *category << label;
-        QBarChartSeries* series = new QBarChartSeries(category, this);
+        QBarChartSeries* series = 0;
+        if (seriesName == "Bar")
+            series = new QBarChartSeries(category, this);
+        else if (seriesName == "Stacked bar")
+            series = new QStackedBarChartSeries(category, this);
+        else
+            series = new QPercentBarChartSeries(category, this);
 
         for (int j(0); j < data.count(); j++) {
             QList<qreal> column = data.at(j);
-            QBarSet *set = new QBarSet;
-            for (int i(0); i < column.count(); i++) {
-                *set << column.at(i);
-            }
-            series->addBarSet(set);
-        }
-        m_chartWidget->addSeries(series);
-        setCurrentSeries(series);
-    } else if (seriesName == "Stacked bar") {
-        QBarCategory *category = new QBarCategory;
-        QStringList labels = generateLabels(rowCount);
-        foreach(QString label, labels)
-            *category << label;
-        QStackedBarChartSeries* series = new QStackedBarChartSeries(category, this);
-
-        for (int j(0); j < data.count(); j++) {
-            QList<qreal> column = data.at(j);
-            QBarSet *set = new QBarSet;
-            for (int i(0); i < column.count(); i++) {
-                *set << column.at(i);
-            }
-            series->addBarSet(set);
-        }
-        m_chartWidget->addSeries(series);
-        setCurrentSeries(series);
-    } else if (seriesName == "Percent bar") {
-        QBarCategory *category = new QBarCategory;
-        QStringList labels = generateLabels(rowCount);
-        foreach(QString label, labels)
-            *category << label;
-        QPercentBarChartSeries* series = new QPercentBarChartSeries(category, this);
-
-        for (int j(0); j < data.count(); j++) {
-            QList<qreal> column = data.at(j);
-            QBarSet *set = new QBarSet;
+            QBarSet *set = new QBarSet("set" + QString::number(j));
             for (int i(0); i < column.count(); i++) {
                 *set << column.at(i);
             }
