@@ -11,9 +11,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-#define PI 3.14159265
-#define EXPLODE_OFFSET 20
-
 QPointF offset(qreal angle, qreal length)
 {
     qreal dx = qSin(angle*(PI/180)) * length;
@@ -25,8 +22,9 @@ PieSlice::PieSlice(QGraphicsItem* parent)
     :QGraphicsObject(parent),
     m_slicelabel(new PieSliceLabel(this)),
     m_angle(0),
-    m_span(0),
-    m_isExploded(false)
+    m_angleSpan(0),
+    m_isExploded(false),
+    m_explodeDistance(0)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::LeftButton);
@@ -76,24 +74,27 @@ void PieSlice::setPieRect(QRectF rect)
 
 void PieSlice::updateGeometry()
 {
+    if (!m_pieRect.isValid() || m_pieRect.isEmpty())
+        return;
+
     prepareGeometryChange();
 
     // calculate center angle
-    qreal centerAngle = m_angle + (m_span/2);
+    qreal centerAngle = m_angle + (m_angleSpan/2);
 
     // adjust rect for exploding
     QRectF rect = m_pieRect;
-    rect.adjust(EXPLODE_OFFSET, EXPLODE_OFFSET, -EXPLODE_OFFSET ,-EXPLODE_OFFSET);
     if (m_isExploded) {
-        QPointF d = offset((centerAngle), EXPLODE_OFFSET);
-        rect.translate(d.x(), d.y());
+        qreal dx = qSin(centerAngle*(PI/180)) * m_explodeDistance;
+        qreal dy = -qCos(centerAngle*(PI/180)) * m_explodeDistance;
+        rect.translate(dx, dy);
     }
 
     // update slice path
     // TODO: draw the shape so that it might have a hole in the center
     QPainterPath path;
     path.moveTo(rect.center());
-    path.arcTo(rect, -m_angle + 90, -m_span);
+    path.arcTo(rect, -m_angle + 90, -m_angleSpan);
     path.closeSubpath();
     m_path = path;
 
@@ -103,15 +104,9 @@ void PieSlice::updateGeometry()
     m_slicelabel->setArmStartPoint(edgeCenter);
     m_slicelabel->setArmAngle(centerAngle);
     m_slicelabel->updateGeometry();
+    m_slicelabel->update();
 
     //qDebug() << "PieSlice::updateGeometry" << m_slicelabel->text() << boundingRect() << m_angle << m_span;
-}
-
-void PieSlice::handleSliceDataChanged()
-{
-    QPieSlice *slice = qobject_cast<QPieSlice*>(sender());
-    Q_ASSERT(slice);
-    updateData(slice);
 }
 
 void PieSlice::updateData(const QPieSlice* sliceData)
@@ -119,8 +114,9 @@ void PieSlice::updateData(const QPieSlice* sliceData)
     // TODO: compare what has changes to avoid unneccesary geometry updates
 
     m_angle = sliceData->angle();
-    m_span = sliceData->span();
+    m_angleSpan = sliceData->angleSpan();
     m_isExploded = sliceData->isExploded();
+    m_explodeDistance = sliceData->explodeDistance(); // TODO: expose to public API
     m_pen = sliceData->pen();
     m_brush = sliceData->brush();
 
@@ -128,11 +124,10 @@ void PieSlice::updateData(const QPieSlice* sliceData)
     m_slicelabel->setText(sliceData->label());
     m_slicelabel->setPen(sliceData->labelPen());
     m_slicelabel->setFont(sliceData->labelFont());
-    m_slicelabel->setArmLength(sliceData->labelArmLenght());
+    m_slicelabel->setArmLength(sliceData->labelArmLength());
 
     updateGeometry();
     update();
-    m_slicelabel->update();
 }
 
 #include "moc_pieslice.cpp"

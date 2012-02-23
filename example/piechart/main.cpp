@@ -26,9 +26,6 @@ int main(int argc, char *argv[])
     series->enableClickExplodes(true);
     series->enableHoverHighlight(true);
 
-    foreach (QPieSlice*s, series->slices())
-        qDebug() << s->angle() << s->span() << s->percentage();
-
     QChartView* chartView =  new QChartView(&window);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->addSeries(series);

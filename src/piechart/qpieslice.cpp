@@ -2,18 +2,20 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-#define DEFAULT_PEN_COLOR        Qt::black
-#define DEFAULT_BRUSH_COLOR      Qt::white
-#define DEFAULT_LABEL_ARM_LENGTH 50
+#define DEFAULT_PEN_COLOR         Qt::black
+#define DEFAULT_BRUSH_COLOR       Qt::white
+#define DEFAULT_LABEL_ARM_LENGTH  50
+#define DEFAULT_EXPOLODE_DISTANCE 20
 
 QPieSlice::QPieSlice(QObject *parent)
     :QObject(parent),
     m_value(0),
     m_isLabelVisible(true),
     m_isExploded(false),
+    m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
     m_percentage(0),
     m_angle(0),
-    m_span(0),
+    m_angleSpan(0),
     m_pen(DEFAULT_PEN_COLOR),
     m_brush(DEFAULT_BRUSH_COLOR),
     m_labelPen(DEFAULT_PEN_COLOR),
@@ -28,9 +30,10 @@ QPieSlice::QPieSlice(qreal value, QString label, bool labelVisible, QObject *par
     m_label(label),
     m_isLabelVisible(labelVisible),
     m_isExploded(false),
+    m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
     m_percentage(0),
     m_angle(0),
-    m_span(0),
+    m_angleSpan(0),
     m_pen(DEFAULT_PEN_COLOR),
     m_brush(DEFAULT_BRUSH_COLOR),
     m_labelPen(DEFAULT_PEN_COLOR),
@@ -64,6 +67,11 @@ bool QPieSlice::isExploded() const
     return m_isExploded;
 }
 
+qreal QPieSlice::explodeDistance() const
+{
+    return m_explodeDistance;
+}
+
 qreal QPieSlice::percentage() const
 {
     return m_percentage;
@@ -74,9 +82,9 @@ qreal QPieSlice::angle() const
     return m_angle;
 }
 
-qreal QPieSlice::span() const
+qreal QPieSlice::angleSpan() const
 {
-    return m_span;
+    return m_angleSpan;
 }
 
 QPen QPieSlice::pen() const
@@ -99,7 +107,7 @@ QFont QPieSlice::labelFont() const
     return m_labelFont;
 }
 
-qreal QPieSlice::labelArmLenght() const
+qreal QPieSlice::labelArmLength() const
 {
     return m_labelArmLength;
 }
@@ -132,6 +140,14 @@ void QPieSlice::setExploded(bool exploded)
 {
     if (m_isExploded != exploded) {
         m_isExploded = exploded;
+        emit changed();
+    }
+}
+
+void QPieSlice::setExplodeDistance(qreal distance)
+{
+    if (m_explodeDistance != distance) {
+        m_explodeDistance = distance;
         emit changed();
     }
 }

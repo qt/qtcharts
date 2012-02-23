@@ -2,6 +2,7 @@
 #include "qpieslice.h"
 #include "piepresenter.h"
 #include "pieslice.h"
+#include <QFontMetrics>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -10,6 +11,12 @@ void QPieSeries::ChangeSet::appendAdded(QPieSlice* slice)
 {
     if (!m_added.contains(slice))
         m_added << slice;
+}
+
+void QPieSeries::ChangeSet::appendAdded(QList<QPieSlice*> slices)
+{
+    foreach (QPieSlice* s, slices)
+        appendAdded(s);
 }
 
 void QPieSeries::ChangeSet::appendChanged(QPieSlice* slice)
@@ -114,7 +121,7 @@ QPieSlice* QPieSeries::add(qreal value, QString name)
 void QPieSeries::remove(QPieSlice* slice)
 {
     if (!m_slices.removeOne(slice)) {
-        Q_ASSERT(0); // TODO: remove before release
+        Q_ASSERT(0); // TODO: how should this be reported?
         return;
     }
 
@@ -263,7 +270,7 @@ void QPieSeries::updateDerivativeData()
         m_total += s->value();
 
     // we must have some values
-    Q_ASSERT(m_total > 0); // TODO
+    Q_ASSERT(m_total > 0); // TODO: is this the correct way to handle this?
 
     // update slice attributes
     qreal sliceAngle = m_pieStartAngle;
@@ -278,8 +285,8 @@ void QPieSeries::updateDerivativeData()
         }
 
         qreal sliceSpan = m_pieSpan * percentage;
-        if (s->m_span != sliceSpan) {
-            s->m_span = sliceSpan;
+        if (s->m_angleSpan != sliceSpan) {
+            s->m_angleSpan = sliceSpan;
             changed = true;
         }
 

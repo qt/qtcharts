@@ -25,18 +25,19 @@ public:
     QString label() const;
     bool isLabelVisible() const;
     bool isExploded() const;
+    qreal explodeDistance() const;
 
     // generated data
     qreal percentage() const;
     qreal angle() const;
-    qreal span() const;
+    qreal angleSpan() const;
 
     // customization
     QPen pen() const;
     QBrush brush() const;
     QPen labelPen() const;
     QFont labelFont() const;
-    qreal labelArmLenght() const;
+    qreal labelArmLength() const;
 
 Q_SIGNALS:
     void clicked();
@@ -51,6 +52,7 @@ public Q_SLOTS:
     void setLabelVisible(bool visible);
     void setValue(qreal value);
     void setExploded(bool exploded);
+    void setExplodeDistance(qreal distance);
 
     // customization
     void setPen(QPen pen);
@@ -59,21 +61,27 @@ public Q_SLOTS:
     void setLabelPen(QPen pen);
     void setLabelArmLength(qreal len);
 
+    // TODO: label position in general
+    // setLabelFlags(inside|outside|labelArmOn|labelArmOff|???)
+    // setLabelOrientation(horizontal|vertical|same as slice center angle|???)
+
 private:
 
     // TODO: use private class
     friend class QPieSeries;
+    friend class PiePresenter;
 
     // data
     qreal m_value;
     QString m_label;
     bool m_isLabelVisible;
     bool m_isExploded;
+    qreal m_explodeDistance;
 
     // generated data
     qreal m_percentage;
     qreal m_angle;
-    qreal m_span;
+    qreal m_angleSpan;
 
     // customization
     QPen m_pen;

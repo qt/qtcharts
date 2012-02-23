@@ -32,6 +32,7 @@ public:
     {
     public:
         void appendAdded(QPieSlice* slice);
+        void appendAdded(QList<QPieSlice*> slices);
         void appendChanged(QPieSlice* slice);
         void appendRemoved(QPieSlice* slice);
 
@@ -67,13 +68,6 @@ public:
 
     QList<QPieSlice*> slices() const { return m_slices; }
 
-    // TODO: find slices?
-    // QList<QPieSlice*> findByValue(qreal value);
-    // ...
-
-    // TODO: sorting slices?
-    // void sort(QPieSeries::SortByValue)
-
     void setSizeFactor(qreal sizeFactor);
     qreal sizeFactor() const { return m_sizeFactor; }
 
@@ -86,6 +80,17 @@ public:
     void enableClickExplodes(bool enable);
     void enableHoverHighlight(bool enable);
 
+    // TODO: find slices?
+    // QList<QPieSlice*> findByValue(qreal value);
+    // ...
+
+    // TODO: sorting slices?
+    // void sort(QPieSeries::SortByValue|label|??)
+
+    // TODO: general graphics customization
+    // setDrawStyle(2d|3d)
+    // setDropShadows(bool)
+
 Q_SIGNALS:
     void changed(const QPieSeries::ChangeSet& changeSet);
     void clicked(QPieSlice* slice);
@@ -94,12 +99,11 @@ Q_SIGNALS:
     void sizeFactorChanged();
     void positionChanged();
 
-private Q_SLOTS: // should be private and not in the interface
+private Q_SLOTS: // TODO: should be private and not visible in the interface at all
     void sliceChanged();
     void sliceClicked();
     void sliceHoverEnter();
     void sliceHoverLeave();
-
     void toggleExploded(QPieSlice* slice);
     void highlightOn(QPieSlice* slice);
     void highlightOff(QPieSlice* slice);

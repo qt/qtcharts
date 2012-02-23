@@ -36,10 +36,12 @@ Q_SIGNALS:
     void hoverLeave();
 
 public Q_SLOTS:
-    void handleSliceDataChanged();
     void setPieRect(QRectF rect);
     void updateGeometry();
     void updateData(const QPieSlice *sliceData);
+
+public:
+    PieSliceLabel* label() { return m_slicelabel; }
 
 private:
     PieSliceLabel* m_slicelabel;
@@ -48,8 +50,10 @@ private:
     QPainterPath m_path;
 
     qreal m_angle;
-    qreal m_span;
+    qreal m_angleSpan;
+
     bool m_isExploded;
+    qreal m_explodeDistance;
 
     QPen m_pen;
     QBrush m_brush;
