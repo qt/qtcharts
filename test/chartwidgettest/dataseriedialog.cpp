@@ -1,7 +1,7 @@
 #include "dataseriedialog.h"
 #include <QDialogButtonBox>
 #include <QGridLayout>
-#include <QCheckbox>
+#include <QCheckBox>
 #include <QPushButton>
 #include <QGroupBox>
 #include <QRadioButton>
