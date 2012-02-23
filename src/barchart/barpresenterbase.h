@@ -2,7 +2,7 @@
 #define BARPRESENTERBASE_H
 
 #include "chartitem_p.h"
-#include "barchartmodel_p.h"
+#include "qbarchartseries.h"
 #include <QPen>
 #include <QBrush>
 #include <QGraphicsItem>
@@ -20,11 +20,10 @@ class BarPresenterBase : public QObject, public ChartItem
 {
     Q_OBJECT
 public:
-    BarPresenterBase(BarChartModel& model, QGraphicsItem *parent = 0);
-    void setSeparatorsVisible(bool visible = true);
+    BarPresenterBase(QBarChartSeries *series, QGraphicsItem *parent = 0);
+    ~BarPresenterBase();
 
 public:
-
     // From QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
@@ -41,8 +40,11 @@ protected slots:
     void handleDomainChanged(const Domain& domain);
     void handleGeometryChanged(const QRectF& size);
 
-    void barHoverEntered(QGraphicsSceneHoverEvent *event);  // Internal.
-    void barHoverLeaved(QGraphicsSceneHoverEvent *event);
+    // Internal slots
+    void enableFloatingValues(bool enabled=true);   // enables floating values on top of bars
+    void enableToolTip(bool enabled=true);          // enables tooltips
+    void enableSeparators(bool enabled=true);       // enables separators between categories
+    void showToolTip(QPoint pos, QString tip);      // shows tooltip (if enabled)
 
 protected:
 
@@ -54,14 +56,19 @@ protected:
     bool mLayoutSet;    // True, if component has been laid out.
     bool mLayoutDirty;
 
-    bool mSeparatorsVisible;
-    BarChartModel& mModel;
+    bool mFloatingValuesEnabled;
+    bool mToolTipEnabled;
+    bool mSeparatorsEnabled;
+
+    // Owned
+    QBarChartSeries* mSeries;
 
     // Not owned.
     QList<Bar*> mBars;
     QList<BarLabel*> mLabels;
     QList<Separator*> mSeparators;
     QList<BarValue*> mFloatingValues;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

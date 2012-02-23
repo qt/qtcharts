@@ -22,19 +22,27 @@ public:
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
     int countSets();
     QBarSet* nextSet(bool getFirst=false);     // Returns first set, if called with true
+    QBarSet *setAt(int index);
 
-    QList<QString> legend();  // Returns legend of series (ie. names of all sets in series)
+    QList<QString> legend();                    // Returns legend of series (ie. names of all sets in series)
+    QString label(int category);
 
+public Q_SLOTS:
     // Disabled by default. Call these to change behavior.
-    void enableFloatingValues(bool enabled=true);
-    void enableHoverNames(bool enabled=true);
+    void enableFloatingValues(bool enabled=true);    // enables floating values on top of bars
+    void enableToolTip(bool enabled=true);           // enables tooltips
+    void enableSeparators(bool enabled=true);        // enables separators between categories
 
+public:
     // TODO: Functions below this are not part of api and will be moved
     // to private implementation, when we start using it (not part of api)
     int countCategories();
     qreal min();
     qreal max();
     qreal valueAt(int set, int category);
+    qreal percentageAt(int set, int category);
+
+    qreal categorySum(int category);
     qreal maxCategorySum();
 
     BarChartModel& model();
@@ -42,12 +50,11 @@ public:
 signals:
     void changed(int index);
 
-    // TODO: these to private implementation.
+    // TODO: internal signals, these to private implementation.
     void floatingValuesEnabled(bool enabled);
-    void hoverNamesEnabled(bool enabled);
-
-
-//public Q_SLOTS:
+    void toolTipEnabled(bool enabled);
+    void separatorsEnabled(bool enabled);
+    void showToolTip(QPoint pos, QString tip);
 
 protected:
     BarChartModel* mModel;

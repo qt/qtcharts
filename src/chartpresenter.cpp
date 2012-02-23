@@ -115,7 +115,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
         case QChartSeries::SeriesTypeBar: {
             QBarChartSeries* barSeries = static_cast<QBarChartSeries*>(series);
-            BarPresenter* item = new BarPresenter(barSeries->model(),m_chart);
+            BarPresenter* item = new BarPresenter(barSeries,m_chart);
             m_chartTheme->decorate(item,barSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(barSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
@@ -127,7 +127,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         case QChartSeries::SeriesTypeStackedBar: {
 
             QStackedBarChartSeries* stackedBarSeries = static_cast<QStackedBarChartSeries*>(series);
-            StackedBarPresenter* item = new StackedBarPresenter(stackedBarSeries->model(),m_chart);
+            StackedBarPresenter* item = new StackedBarPresenter(stackedBarSeries,m_chart);
             m_chartTheme->decorate(item,stackedBarSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(stackedBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
@@ -138,7 +138,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         case QChartSeries::SeriesTypePercentBar: {
 
             QPercentBarChartSeries* percentBarSeries = static_cast<QPercentBarChartSeries*>(series);
-            PercentBarPresenter* item = new PercentBarPresenter(percentBarSeries->model(),m_chart);
+            PercentBarPresenter* item = new PercentBarPresenter(percentBarSeries,m_chart);
             m_chartTheme->decorate(item,percentBarSeries ,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(percentBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));

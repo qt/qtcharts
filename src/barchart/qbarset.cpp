@@ -7,7 +7,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QBarSet::QBarSet(QString name, QObject *parent)
     : QObject(parent)
     ,mName(name)
-    ,mHoverNamesEnabled(true)       // TODO: these 2 as false by default, when implementation is ready
+    ,mToolTipEnabled(true)       // TODO: these 2 as false by default, when implementation is ready
     ,mFloatingValuesEnabled(true)
 {
 }
@@ -64,19 +64,25 @@ const QBrush& QBarSet::brush() const
 
 void QBarSet::enableFloatingValues(bool enabled)
 {
-    qDebug() << "QBarSet::enableFloatingValues" << enabled;
+    qDebug() << "QBarSet::enableFloatingValues";
     mFloatingValuesEnabled = enabled;
 }
 
 void QBarSet::enableToolTip(bool enabled)
 {
-    qDebug() << "QBarSet::enableHoverNames" << enabled;
-    mHoverNamesEnabled = enabled;
+    qDebug() << "QBarSet::enableToolTip";
+    mToolTipEnabled = enabled;
+}
+
+void QBarSet::enableSeparators(bool enabled)
+{
+    qDebug() << "QBarSet::enableSeparators";
+    mSeparatorsEnabled = enabled;
 }
 
 void QBarSet::barClicked()
 {
-    qDebug() << "QBarset::barClicked" << this;
+//    qDebug() << "QBarset::barClicked" << this;
     // Some bar of this set has been clicked
     // TODO: What happens then?
     emit clicked();     // Notify that set has been clicked
@@ -84,19 +90,21 @@ void QBarSet::barClicked()
 
 void QBarSet::barHoverEntered(QPoint pos)
 {
-    qDebug() << "QBarset::barHoverEntered" << this << pos;
-    if (mHoverNamesEnabled) {
-        QToolTip::showText(pos, mName);
-//        emit hoverEnter();
+    if (mToolTipEnabled) {
+        emit showToolTip(pos, mName);
     }
+    // Emit signal to user of charts
+    emit hoverEnter(pos);
 }
 
 void QBarSet::barHoverLeaved()
 {
-    qDebug() << "QBarset::barHoverLeaved" << this;
-    if (mHoverNamesEnabled) {
-//        emit hoverLeave();
-    }
+//    qDebug() << "QBarset::barHoverLeaved" << this;
+//    if (mToolTipEnabled) {
+        // TODO: do what?
+//    }
+    // Emit signal to user of charts
+    emit hoverLeave();
 }
 
 #include "moc_qbarset.cpp"

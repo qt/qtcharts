@@ -7,8 +7,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarPresenter::BarPresenter(BarChartModel& model, QGraphicsItem *parent) :
-    BarPresenterBase(model,parent)
+BarPresenter::BarPresenter(QBarChartSeries *series, QGraphicsItem *parent) :
+    BarPresenterBase(series, parent)
 {
     mBarDefaultWidth = 15;
 }
@@ -17,7 +17,7 @@ void BarPresenter::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
-    if (mModel.countSets() <= 0) {
+    if (mSeries->countSets() <= 0) {
         qDebug() << "No sets in model!";
         return;
     }
@@ -29,12 +29,12 @@ void BarPresenter::layoutChanged()
 
     // TODO: better way to auto-layout?
     // Use reals for accurancy (we might get some compiler warnings... :)
-    int categoryCount = mModel.countCategories();
-    int setCount = mModel.countSets();
+    int categoryCount = mSeries->countCategories();
+    int setCount = mSeries->countSets();
 
     qreal tW = mWidth;
     qreal tH = mHeight;
-    qreal tM = mModel.max();
+    qreal tM = mSeries->max();
     qreal scale = (tH/tM);
     qreal tC = categoryCount+1;
     qreal xStepPerSet = (tW/tC);
@@ -47,13 +47,13 @@ void BarPresenter::layoutChanged()
         qreal xPos = xStepPerSet * category + ((tW + mBarDefaultWidth*setCount)/(categoryCount*2));
         qreal yPos = mHeight;
         for (int set = 0; set < setCount; set++) {
-            qreal barHeight = mModel.valueAt(set, category) * scale;
+            qreal barHeight = mSeries->valueAt(set,category) * scale;
             Bar* bar = mBars.at(itemIndex);
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setBrush(mModel.setAt(set)->brush());
-            bar->setPos(xPos, yPos-barHeight); // item*posStep+startPos + set * mBarDefaultWidth, mHeight);
+            bar->setBrush(mSeries->setAt(set)->brush());
+            bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             xPos += mBarDefaultWidth;
         }
@@ -67,11 +67,11 @@ void BarPresenter::layoutChanged()
 
     // Position floating values
     itemIndex = 0;
-    for (int category=0; category < mModel.countCategories(); category++) {
+    for (int category=0; category < mSeries->countCategories(); category++) {
         qreal xPos = xStepPerSet * category + ((tW + mBarDefaultWidth*setCount)/(categoryCount*2));
         qreal yPos = mHeight;
-        for (int set=0; set < mModel.countSets(); set++) {
-            qreal barHeight = mModel.valueAt(set,category) * scale;
+        for (int set=0; set < mSeries->countSets(); set++) {
+            qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);
 
             // TODO: remove hard coding, apply layout
@@ -79,8 +79,8 @@ void BarPresenter::layoutChanged()
             value->setPos(xPos, yPos-barHeight/2);
             value->setPen(QPen(QColor(255,255,255,255)));
 
-            if (mModel.valueAt(set,category) != 0) {
-                value->setValueString(QString::number(mModel.valueAt(set,category)));
+            if (mSeries->valueAt(set,category) != 0) {
+                value->setValueString(QString::number(mSeries->valueAt(set,category)));
             } else {
                 value->setValueString(QString(""));
             }
@@ -91,5 +91,7 @@ void BarPresenter::layoutChanged()
     }
     mLayoutDirty = true;
 }
+
+#include "moc_barpresenter.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

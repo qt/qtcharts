@@ -15,15 +15,18 @@ QBarChartSeries::QBarChartSeries(QBarCategory *category, QObject *parent)
 
 void QBarChartSeries::addBarSet(QBarSet *set)
 {
-//    connect(this,SIGNAL(floatingValuesEnabled(bool)),set,SLOT(enableFloatingValues(bool)));
-//    connect(this,SIGNAL(hoverNamesEnabled(bool)),set,SLOT(enableHoverNames(bool)));
+    connect(this,SIGNAL(floatingValuesEnabled(bool)),set,SLOT(enableFloatingValues(bool)));
+    connect(this,SIGNAL(separatorsEnabled(bool)),set,SLOT(enableSeparators(bool)));
+    connect(this,SIGNAL(toolTipEnabled(bool)),set,SLOT(enableToolTip(bool)));
+    connect(set,SIGNAL(showToolTip(QPoint,QString)),this,SIGNAL(showToolTip(QPoint,QString)));
     mModel->addBarSet(set);
 }
 
 void QBarChartSeries::removeBarSet(QBarSet *set)
 {
-//    disconnect(set,SLOT(enableFloatingValues(bool)));
-//    disconnect(set,SLOT(enableHoverNames(bool)));
+    disconnect(set,SLOT(enableFloatingValues(bool)));
+    disconnect(set,SLOT(enableSeparators(bool)));
+    disconnect(set,SLOT(enableToolTip(bool)));
     mModel->removeBarSet(set);
 }
 
@@ -37,9 +40,19 @@ QBarSet* QBarChartSeries::nextSet(bool getFirst)
     return mModel->nextSet(getFirst);
 }
 
+QBarSet* QBarChartSeries::setAt(int index)
+{
+    return mModel->setAt(index);
+}
+
 QList<QString> QBarChartSeries::legend()
 {
     return mModel->legend();
+}
+
+QString QBarChartSeries::label(int category)
+{
+    return mModel->label(category);
 }
 
 void QBarChartSeries::enableFloatingValues(bool enabled)
@@ -47,9 +60,14 @@ void QBarChartSeries::enableFloatingValues(bool enabled)
     emit floatingValuesEnabled(enabled);
 }
 
-void QBarChartSeries::enableHoverNames(bool enabled)
+void QBarChartSeries::enableToolTip(bool enabled)
 {
-    emit hoverNamesEnabled(enabled);
+    emit toolTipEnabled(enabled);
+}
+
+void QBarChartSeries::enableSeparators(bool enabled)
+{
+    emit separatorsEnabled(enabled);
 }
 
 int QBarChartSeries::countCategories()
@@ -70,6 +88,16 @@ qreal QBarChartSeries::max()
 qreal QBarChartSeries::valueAt(int set, int category)
 {
     return mModel->valueAt(set,category);
+}
+
+qreal QBarChartSeries::percentageAt(int set, int category)
+{
+    return mModel->percentageAt(set,category);
+}
+
+qreal QBarChartSeries::categorySum(int category)
+{
+    return mModel->categorySum(category);
 }
 
 qreal QBarChartSeries::maxCategorySum()

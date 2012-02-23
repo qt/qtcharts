@@ -4,24 +4,33 @@
 #include "barlabel_p.h"
 #include "separator_p.h"
 #include "qbarset.h"
+#include "qbarchartseries.h"
 #include <QDebug>
+#include <QToolTip>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarPresenterBase::BarPresenterBase(BarChartModel& model, QGraphicsItem *parent)
+BarPresenterBase::BarPresenterBase(QBarChartSeries *series, QGraphicsItem *parent)
     : ChartItem(parent)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
     ,mLayoutDirty(true)
-    ,mSeparatorsVisible(false)
-    ,mModel(model)
+    ,mSeries(series)
 {
+    connect(series,SIGNAL(floatingValuesEnabled(bool)),this,SLOT(enableFloatingValues(bool)));
+    connect(series,SIGNAL(toolTipEnabled(bool)),this,SLOT(enableToolTip(bool)));
+    connect(series,SIGNAL(separatorsEnabled(bool)),this,SLOT(enableSeparators(bool)));
+    connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
     dataChanged();
 }
 
-void BarPresenterBase::setSeparatorsVisible(bool visible)
+BarPresenterBase::~BarPresenterBase()
 {
-    mSeparatorsVisible = visible;
+    disconnect(this,SLOT(enableFloatingValues(bool)));
+    disconnect(this,SLOT(enableToolTip(bool)));
+    disconnect(this,SLOT(enableSeparators(bool)));
+    disconnect(this,SLOT(showToolTip(QPoint,QString)));
+    delete mSeries;
 }
 
 void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -63,9 +72,9 @@ void BarPresenterBase::dataChanged()
     mFloatingValues.clear();
 
     // Create new graphic items for bars
-    for (int c=0; c<mModel.countCategories(); c++) {
-        for (int s=0; s<mModel.countSets(); s++) {
-            QBarSet *set = mModel.setAt(s);
+    for (int c=0; c<mSeries->countCategories(); c++) {
+        for (int s=0; s<mSeries->countSets(); s++) {
+            QBarSet *set = mSeries->setAt(s);
             Bar *bar = new Bar(this);
             childItems().append(bar);
             mBars.append(bar);
@@ -77,16 +86,16 @@ void BarPresenterBase::dataChanged()
     }
 
     // Create labels
-    int count = mModel.countCategories();
+    int count = mSeries->countCategories();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
-        label->set(mModel.label(i));
+        label->set(mSeries->label(i));
         childItems().append(label);
         mLabels.append(label);
     }
 
     // Create separators
-    count = mModel.countCategories() - 1;   // There is one less separator than columns
+    count = mSeries->countCategories() - 1;   // There is one less separator than columns
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
@@ -95,9 +104,9 @@ void BarPresenterBase::dataChanged()
     }
 
     // Create floating values
-    for (int category=0; category<mModel.countCategories(); category++) {
-        for (int s=0; s<mModel.countSets(); s++) {
-            QBarSet *set = mModel.setAt(s);
+    for (int category=0; category<mSeries->countCategories(); category++) {
+        for (int s=0; s<mSeries->countSets(); s++) {
+            QBarSet *set = mSeries->setAt(s);
             BarValue *value = new BarValue(*set, this);
             childItems().append(value);
             mFloatingValues.append(value);
@@ -134,15 +143,27 @@ void BarPresenterBase::handleGeometryChanged(const QRectF& rect)
     setPos(rect.topLeft());
 }
 
-
-void BarPresenterBase::barHoverEntered(QGraphicsSceneHoverEvent *event)
+void BarPresenterBase::enableFloatingValues(bool enabled)
 {
-    //TODO: show tooltip (name of series, where bar belongs...)
+    mFloatingValuesEnabled = enabled;
 }
 
-void BarPresenterBase::barHoverLeaved(QGraphicsSceneHoverEvent *event)
+void BarPresenterBase::enableToolTip(bool enabled)
 {
-    //TODO: hide tooltip (name of series, where bar belongs...)
+    mToolTipEnabled = enabled;
+}
+
+void BarPresenterBase::enableSeparators(bool enabled)
+{
+    mSeparatorsEnabled = enabled;
+}
+
+void BarPresenterBase::showToolTip(QPoint pos, QString tip)
+{
+    if (mToolTipEnabled) {
+        // TODO: cool tooltip instead of default
+        QToolTip::showText(pos,tip);
+    }
 }
 
 #include "moc_barpresenterbase.cpp"

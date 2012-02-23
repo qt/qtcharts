@@ -1,17 +1,20 @@
 #ifndef BARPRESENTER_H
 #define BARPRESENTER_H
 
+#include "qchartglobal.h"
 #include "barpresenterbase.h"
-#include "qbarchartseries.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QBarChartSeries;
+
 // Presenter for parallel bars. Grouping of bars is done on category basis.
 class BarPresenter : public BarPresenterBase
 {
+    Q_OBJECT
 public:
-    explicit BarPresenter(BarChartModel& model, QGraphicsItem *parent = 0);
+    explicit BarPresenter(QBarChartSeries *series, QGraphicsItem *parent = 0);
 
 private:
 

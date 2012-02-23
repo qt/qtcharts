@@ -29,14 +29,15 @@ public:
 
 Q_SIGNALS:
     void clicked();                 // Clicked and hover signals exposed to user
-    void hoverEnter();
+    void hoverEnter(QPoint pos);
     void hoverLeave();
-    void toggleFloatingValues();    // Private signal, TODO: move to private impl
+    void toggleFloatingValues();                // Private signal, TODO: move to private impl
+    void showToolTip(QPoint pos, QString tip);  // Private signal, TODO: move to private impl
 
 public Q_SLOTS:
-    // TODO: should these be in series instead?
     void enableFloatingValues(bool enabled);    // enables floating values on top of bars
     void enableToolTip(bool enabled);           // enables tooltips
+    void enableSeparators(bool enabled);        // enables separators between categories
 
     // TODO: these slots belong to private implementation.
     // These are for single bars to notify set about internal events
@@ -53,7 +54,8 @@ private:
 
     // TODO: to pimpl
     bool mFloatingValuesEnabled;
-    bool mHoverNamesEnabled;
+    bool mToolTipEnabled;
+    bool mSeparatorsEnabled;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

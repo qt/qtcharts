@@ -11,8 +11,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class PercentBarPresenter : public BarPresenterBase
 {
+    Q_OBJECT
 public:
-    PercentBarPresenter(BarChartModel& model, QGraphicsItem *parent = 0);
+    PercentBarPresenter(QBarChartSeries *series, QGraphicsItem *parent = 0);
 
 private:
 

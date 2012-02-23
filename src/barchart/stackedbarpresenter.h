@@ -9,8 +9,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class StackedBarPresenter : public BarPresenterBase
 {
+    Q_OBJECT
 public:
-    StackedBarPresenter(BarChartModel& model, QGraphicsItem *parent = 0);
+    StackedBarPresenter(QBarChartSeries *series, QGraphicsItem *parent = 0);
 
 private:
     // From BarPresenterBase
