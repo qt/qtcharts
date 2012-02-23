@@ -23,6 +23,7 @@ public:
 public: // from ChartItem
     QRectF boundingRect() const { return m_boundingRect; }
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
+    void mousePressEvent (QGraphicsSceneMouseEvent * event);
 
 signals:
 

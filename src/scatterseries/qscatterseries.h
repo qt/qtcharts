@@ -33,28 +33,33 @@ public: // from QChartSeries
     QChartSeriesType type() const { return QChartSeries::SeriesTypeScatter; }
 
 public:
-    // TODO: the name of the function? addPoint? addData? addValue?
     void addData(QPointF value);
+    void addData(QList<QPointF> points);
+    void setData(QList<QPointF> points);
     QScatterSeries& operator << (const QPointF &value);
-    void setData(QList<QPointF> data);
+    QScatterSeries& operator << (QList<QPointF> points);
     QList<QPointF> data();
     //TODO: insertData?
 
-    void setMarkerPen(QPen pen);
     QPen markerPen();
-    void setMarkerBrush(QBrush brush);
     QBrush markerBrush();
-    void setMarkerShape(MarkerShape shape);
     MarkerShape markerShape();
     // TODO: marker size?
 
+public Q_SLOTS:
+    void setMarkerPen(QPen pen);
+    void setMarkerBrush(QBrush brush);
+    void setMarkerShape(MarkerShape shape);
+
 Q_SIGNALS:
-    // TODO: move to PIMPL for simplicity or does the user ever need these signals?
+    void clicked(/* TODO: parameters? */);
+    void hoverEnter(/* TODO: parameters? */);
+    void hoverLeave(/* TODO: parameters? */);
+    // TODO: move to PIMPL for simplicity or does the user ever need changed signals?
     // TODO: more finegrained signaling for performance reasons
     // (check QPieSeries implementation with change sets)
     void changed();
 
-//public Q_SLOTS:
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)
     Q_DISABLE_COPY(QScatterSeries)

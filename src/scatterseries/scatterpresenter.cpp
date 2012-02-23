@@ -134,6 +134,11 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->restore();
 }
 
+void ScatterPresenter::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    qDebug() << "ScatterPresenter::mousePressEvent" << event;
+}
+
 void ScatterPresenter::changeGeometry()
 {
     if (m_boundingRect.isValid()) {
