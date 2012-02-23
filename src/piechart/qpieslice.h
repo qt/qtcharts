@@ -17,7 +17,7 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 
 public:
     QPieSlice(QObject *parent = 0);
-    QPieSlice(qreal value, QString label, bool labelVisible = true, QObject *parent = 0);
+    QPieSlice(qreal value, QString label, bool labelVisible = false, QObject *parent = 0);
     virtual ~QPieSlice();
 
     // data

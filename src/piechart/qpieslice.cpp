@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QPieSlice::QPieSlice(QObject *parent)
     :QObject(parent),
     m_value(0),
-    m_isLabelVisible(true),
+    m_isLabelVisible(false),
     m_isExploded(false),
     m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
     m_percentage(0),

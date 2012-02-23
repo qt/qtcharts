@@ -248,6 +248,7 @@ void QPieSeries::highlightOn(QPieSlice* slice)
     Q_ASSERT(slice);
     QColor c = slice->brush().color().lighter();
     slice->setBrush(c);
+    slice->setLabelVisible(true);
 }
 
 void QPieSeries::highlightOff(QPieSlice* slice)
@@ -255,6 +256,7 @@ void QPieSeries::highlightOff(QPieSlice* slice)
     Q_ASSERT(slice);
     QColor c = slice->brush().color().darker(150);
     slice->setBrush(c);
+    slice->setLabelVisible(false);
 }
 
 void QPieSeries::updateDerivativeData()
