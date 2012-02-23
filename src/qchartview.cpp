@@ -8,10 +8,21 @@
 #include <QDebug>
 
 /*!
-    \class QChartView
-    \brief Chart widget
+    \enum QChartView::RubberBandPolicy
 
-    QChartView is a standalone widget that can display charts. It does not require QGraphicsScene to work. It manages the graphical
+    This enum describes the different types of rubber bands that can be used for zoom rect selection
+
+    \value NoRubberBand
+    \value VerticalRubberBand
+    \value HorizonalRubberBand
+    \value RectangleRubberBand
+*/
+
+/*!
+    \class QChartView
+    \brief Standalone charting widget.
+
+    QChartView is a standalone widget that can display charts. It does not require separate QGraphicsScene to work. It manages the graphical
     representation of different types of QChartSeries and other chart related objects like
     QChartAxis and QChartLegend. If you want to display a chart in your existing QGraphicsScene, you can use the QChart class instead.
 
@@ -47,6 +58,9 @@ QChartView::~QChartView()
 {
 }
 
+/*!
+    Resizes and updates the chart area using the \a event data
+*/
 void QChartView::resizeEvent(QResizeEvent *event)
 {
     m_scene->setSceneRect(0,0,size().width(),size().height());
@@ -195,7 +209,7 @@ QChartView::RubberBandPolicy QChartView::rubberBandPolicy() const
 
 /*!
     If Left mouse button is pressed and the RubberBandPolicy is enabled the \a event is accepted and the rubber band is displayed on the screen allowing the user to select the zoom area.
-    If different mouse button is pressed and/or the RubberBandPolicy is disabled then the \a event is not consumed.
+    If different mouse button is pressed and/or the RubberBandPolicy is disabled then the \a event is passed to QGraphicsView::mousePressEvent() implementation is called.
 */
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
@@ -216,6 +230,10 @@ void QChartView::mousePressEvent(QMouseEvent *event)
     }
 }
 
+/*!
+    If RubberBand rectange specification has been initiated in pressEvent then \a event data is used to update RubberBand geometry.
+    In other case the defualt QGraphicsView::mouseMoveEvent implementation is called.
+*/
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
     if(m_rubberBand && m_rubberBand->isVisible()) {
@@ -260,6 +278,10 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
+/*!
+    Pressing + and - keys performs zoomIn() and zoomOut() respectivly.
+    In other \a event is passed to the QGraphicsView::keyPressEvent() implementation
+*/
 void QChartView::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {

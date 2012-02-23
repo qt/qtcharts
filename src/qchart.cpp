@@ -32,7 +32,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs a chart object which is a child of a\a parent.
+    Constructs a chart object which is a child of a\a parent. Parameter \a wFlags is passed to the QGraphicsWidget constructor.
 */
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
     m_backgroundItem(0),
@@ -80,6 +80,9 @@ void QChart::removeAllSeries()
     m_dataset->removeAllSeries();
 }
 
+/*!
+    Sets the \a brush that is used for painting the background of the chart area.
+*/
 void QChart::setChartBackgroundBrush(const QBrush& brush)
 {
     createChartBackgroundItem();
@@ -87,6 +90,9 @@ void QChart::setChartBackgroundBrush(const QBrush& brush)
     m_backgroundItem->update();
 }
 
+/*!
+    Sets the \a pen that is used for painting the background of the chart area.
+*/
 void QChart::setChartBackgroundPen(const QPen& pen)
 {
     createChartBackgroundItem();
@@ -199,6 +205,9 @@ void QChart::zoomOut()
     m_dataset->previousDomain();
 }
 
+/*!
+    Resets to the default view.
+*/
 void QChart::zoomReset()
 {
     m_dataset->clearDomains();
@@ -220,6 +229,9 @@ QChartAxis* QChart::axisY() const
     return m_dataset->axisY();
 }
 
+/*!
+    Resizes and updates the chart area using the \a event data
+*/
 void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
 {
 
