@@ -21,6 +21,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \enum QChart::AnimationOption
+
+    For enabling/disabling animations. Defaults to NoAnimation.
+
+    \value NoAnimation
+    \value GridAxisAnimations
+    \value SeriesAnimations
+    \value AllAnimations
+*/
+
+/*!
     \class QChart
     \brief QtCommercial chart API.
 
@@ -254,7 +265,7 @@ void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
 }
 
 /*!
-    Sets animation options for the chart
+    Sets animation \a options for the chart
 */
 void QChart::setAnimationOptions(AnimationOptions options)
 {

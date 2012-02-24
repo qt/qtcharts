@@ -332,7 +332,7 @@ QChartAxis* QChartView::axisY() const
 }
 
 /*!
-    Sets animation options for the chart
+    Sets animation \a options for the chart
 */
 void QChartView::setAnimationOptions(QChart::AnimationOptions options)
 {
