@@ -13,8 +13,8 @@ integrated_build:{
 
 CONFIG += ordered
 QMAKE_CXXFLAGS += -g -Wall
-unix:QMAKE_DISTCLEAN += -r build bin 
-win32:QMAKE_DISTCLEAN += /Q build bin 
+unix:QMAKE_DISTCLEAN += -r build bin doc//html 
+win32:QMAKE_DISTCLEAN += /Q build bin doc\html
 
 # install feature file
 feature.path = $$[QT_INSTALL_DATA]/mkspecs/features
@@ -22,6 +22,10 @@ feature.files = $$PWD/features/qtcommercialchart.prf
 INSTALLS += feature
 
 doc.target = doc
-doc.commands = qdoc3 ./doc/qcharts.qdocconf
+win32:{
+    doc.commands = qdoc3 $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
+}else{
+    doc.commands = qdoc3 $$CHART_BUILD_DOC_DIR/qcharts.qdocconf
+}
 doc.depends = FORCE
 QMAKE_EXTRA_TARGETS += doc
