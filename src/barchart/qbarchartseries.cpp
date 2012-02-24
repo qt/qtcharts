@@ -55,6 +55,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     Constructs empty QBarChartSeries. Parameter \a category defines the categories for chart.
+    Takes ownership of \a category.
     QBarChartSeries is QObject which is a child of a \a parent.
 */
 QBarChartSeries::QBarChartSeries(QBarCategory *category, QObject *parent)
@@ -85,6 +86,14 @@ void QBarChartSeries::removeBarSet(QBarSet *set)
 int QBarChartSeries::countSets()
 {
     return mModel->countSets();
+}
+
+/*!
+    Returns number of categories in series
+*/
+int QBarChartSeries::countCategories()
+{
+    return mModel->countCategories();
 }
 
 /*!
@@ -172,14 +181,6 @@ void QBarChartSeries::enableToolTip(bool enabled)
 void QBarChartSeries::enableSeparators(bool enabled)
 {
     emit separatorsEnabled(enabled);
-}
-
-/*!
-    \internal
-*/
-int QBarChartSeries::countCategories()
-{
-    return mModel->countCategories();
 }
 
 /*!

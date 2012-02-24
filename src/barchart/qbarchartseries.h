@@ -21,6 +21,7 @@ public:
     void addBarSet(QBarSet *set);               // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
     int countSets();
+    int countCategories();
     QBarSet* nextSet(bool getFirst=false);      // Returns first set, if called with true
     QBarSet *setAt(int index);
 
@@ -31,7 +32,6 @@ public:
     // to private implementation, when we start using it
     // TODO: TO PIMPL --->
     QString label(int category);
-    int countCategories();
     qreal min();
     qreal max();
     qreal valueAt(int set, int category);
