@@ -28,7 +28,7 @@ protected:
 class AxisAnimator: public QVariantAnimation
 {
 public:
-    AxisAnimator(AxisItem *axis);
+    AxisAnimator(AxisItem *axis,QObject *parent = 0);
     virtual ~AxisAnimator();
 protected:
     virtual QVariant interpolated (const QVariant & from, const QVariant & to, qreal progress ) const;

@@ -23,7 +23,7 @@ void AxisAnimationItem::updateItems(QVector<qreal>& vector1)
     if(vector1.count()==0) return;
     vector0.resize(vector1.size());
 
-    AxisAnimator *animation = new AxisAnimator(this);
+    AxisAnimator *animation = new AxisAnimator(this,this);
     animation->setDuration(duration);
     animation->setEasingCurve(QEasingCurve::InOutBack);
     animation->setKeyValueAt(0.0, qVariantFromValue(vector0));
@@ -36,7 +36,8 @@ void AxisAnimationItem::setLabelsAngle(int angle)
     AxisItem::setLabelsAngle(angle);
 }
 
-AxisAnimator::AxisAnimator(AxisItem *axis): m_axis(axis)
+AxisAnimator::AxisAnimator(AxisItem *axis,QObject *parent): QVariantAnimation(parent),
+    m_axis(axis)
 {
 }
 
