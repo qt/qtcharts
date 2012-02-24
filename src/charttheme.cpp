@@ -57,7 +57,7 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 {
     switch(theme) {
         case QChart::ChartThemeDefault:
-            return new ChartTheme();
+            return new ChartThemeIcy();
         case QChart::ChartThemeVanilla:
             return new ChartThemeVanilla();
         case QChart::ChartThemeIcy:
