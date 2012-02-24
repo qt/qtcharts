@@ -158,6 +158,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         case QChartSeries::SeriesTypeScatter: {
             QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
             ScatterPresenter *scatterPresenter = new ScatterPresenter(scatterSeries, m_chart);
+            QObject::connect(scatterPresenter, SIGNAL(clicked()), scatterSeries, SIGNAL(clicked()));
             QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)),
                              scatterPresenter, SLOT(handleGeometryChanged(const QRectF&)));
             m_chartTheme->decorate(scatterPresenter, scatterSeries, m_chartItems.count());

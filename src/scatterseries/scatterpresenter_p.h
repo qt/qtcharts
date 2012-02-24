@@ -21,11 +21,13 @@ public:
     explicit ScatterPresenter(QScatterSeries *series, QGraphicsObject *parent = 0);
 
 public: // from ChartItem
-    QRectF boundingRect() const { return m_boundingRect; }
+    QRectF boundingRect() const { return m_path.boundingRect(); }
+    QPainterPath shape() const { return m_path; }
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
     void mousePressEvent (QGraphicsSceneMouseEvent * event);
 
-signals:
+Q_SIGNALS:
+    void clicked();
 
 public Q_SLOTS:
     void handleDomainChanged(const Domain& domain);
@@ -37,11 +39,10 @@ public:
 
     QScatterSeries *m_series;
     QRectF m_boundingRect;
-    QList<qreal> m_scenex;
-    QList<qreal> m_sceney;
     Domain m_visibleChartArea;
     QPen m_markerPen;
     QBrush m_markerBrush;
+    QPainterPath m_path;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

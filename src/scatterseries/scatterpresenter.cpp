@@ -3,6 +3,7 @@
 #include <QPen>
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 #include <QTime>
 
@@ -44,52 +45,11 @@ void ScatterPresenter::handleModelChanged()
 
 void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/)
 {
-    // TODO: Optimization: avoid setting on every paint method call?
-    // The custom settings in series override those defined by the theme
-    int shape = m_series->markerShape();
-
     painter->save();
     painter->setClipRect(m_boundingRect);
 
-    // Paint dropshadow
-    QPen dropShadowPen(QColor(0, 0, 0, 70));
-    dropShadowPen.setWidth(3);
-    painter->setPen(dropShadowPen);
-    painter->setBrush(Qt::NoBrush);
-    painter->setRenderHint(QPainter::Antialiasing);
-    for (int i(0); i < m_scenex.count() && i < m_sceney.count(); i++) {
-        if (scene()->width() > m_scenex.at(i) && scene()->height() > m_sceney.at(i))
-            switch (shape) {
-            case QScatterSeries::MarkerShapeDefault:
-                // Fallthrough, defaults to circle
-            case QScatterSeries::MarkerShapeCircle:
-                painter->drawChord(m_scenex.at(i) + 2, m_sceney.at(i) + 2, 9, 9, 0, 5760);
-                break;
-            case QScatterSeries::MarkerShapePoint:
-                //painter->drawPoint(m_scenex.at(i), m_sceney.at(i));
-                break;
-            case QScatterSeries::MarkerShapeRectangle:
-                painter->drawRect(m_scenex.at(i) + 2, m_sceney.at(i) + 2, 8, 8);
-                break;
-            case QScatterSeries::MarkerShapeTiltedRectangle: {
-                // TODO:
-                static const QPointF points[4] = {
-                    QPointF(-1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
-                    QPointF(0.0 + m_scenex.at(i), 1.0 + m_sceney.at(i)),
-                    QPointF(1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
-                    QPointF(0.0 + m_scenex.at(i), -1.0 + m_sceney.at(i))
-                };
-                painter->drawPolygon(points, 4);
-                break;
-            }
-            default:
-                // TODO: implement the rest of the shapes
-                Q_ASSERT(false);
-                break;
-            }
-    }
-
     // Paint the shape
+    // The custom settings in series override those defined by the theme
     QPen pen = m_markerPen;
     if (m_series->markerPen().color().isValid())
         pen = m_series->markerPen();
@@ -98,61 +58,73 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     else
         painter->setBrush(m_markerBrush);
     painter->setPen(pen);
-    painter->setRenderHint(QPainter::Antialiasing, false);
-    for (int i(0); i < m_scenex.count() && i < m_sceney.count(); i++) {
-        if (scene()->width() > m_scenex.at(i) && scene()->height() > m_sceney.at(i))
-            switch (shape) {
-            case QScatterSeries::MarkerShapeDefault:
-                // Fallthrough, defaults to circle
-            case QScatterSeries::MarkerShapeCircle:
-                painter->drawChord(m_scenex.at(i), m_sceney.at(i), 9, 9, 0, 5760);
-                break;
-            case QScatterSeries::MarkerShapePoint:
-                painter->drawPoint(m_scenex.at(i), m_sceney.at(i));
-                break;
-            case QScatterSeries::MarkerShapeRectangle:
-                painter->drawRect(m_scenex.at(i), m_sceney.at(i), 9, 9);
-                break;
-            case QScatterSeries::MarkerShapeTiltedRectangle: {
-                // TODO:
-                static const QPointF points[4] = {
-                    QPointF(-1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
-                    QPointF(0.0 + m_scenex.at(i), 1.0 + m_sceney.at(i)),
-                    QPointF(1.0 + m_scenex.at(i), 0.0 + m_sceney.at(i)),
-                    QPointF(0.0 + m_scenex.at(i), -1.0 + m_sceney.at(i))
-                };
-                painter->drawPolygon(points, 4);
-                break;
-            }
-            default:
-                // TODO: implement the rest of the shapes
-                Q_ASSERT(false);
-                break;
-            }
-    }
+    painter->drawPath(m_path);
+
+    // TODO: how to draw a drop shadow?
+    QPen dropShadowPen(QColor(0, 0, 0, 70));
+    dropShadowPen.setWidth(3);
+    painter->setPen(dropShadowPen);
+    painter->setBrush(Qt::NoBrush);
+    painter->setRenderHint(QPainter::Antialiasing);
+    painter->drawPath(m_path.translated(2, 2));
 
     painter->restore();
 }
 
 void ScatterPresenter::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "ScatterPresenter::mousePressEvent" << event;
+    qDebug() << "ScatterPresenter::mousePressEvent" << event << " cont: "
+        << m_path.contains(event->lastPos());
+
+    if (m_path.contains(event->lastPos()))
+        emit clicked();
 }
 
 void ScatterPresenter::changeGeometry()
 {
     if (m_boundingRect.isValid()) {
-
         prepareGeometryChange();
         qreal scalex = m_boundingRect.width() / m_visibleChartArea.spanX();
         qreal scaley = m_boundingRect.height() / m_visibleChartArea.spanY();
-        m_scenex.clear();
-        m_sceney.clear();
 
-        // Convert relative coordinates to absolute pixel coordinates that can be used for drawing
+        int shape = m_series->markerShape();
+        m_path = QPainterPath();
+
         foreach (QPointF point, m_series->data()) {
-            m_scenex.append(m_boundingRect.left() + point.x() * scalex - m_visibleChartArea.m_minX * scalex);
-            m_sceney.append(m_boundingRect.bottom() - point.y() * scaley + m_visibleChartArea.m_minY * scaley);
+            // Convert relative coordinates to absolute pixel coordinates that can be used for drawing
+            qreal x = m_boundingRect.left() + point.x() * scalex - m_visibleChartArea.m_minX * scalex;
+            qreal y = m_boundingRect.bottom() - point.y() * scaley + m_visibleChartArea.m_minY * scaley;
+
+            if (scene()->width() > x && scene()->height() > y) {
+                switch (shape) {
+                case QScatterSeries::MarkerShapeDefault:
+                    // Fallthrough, defaults to circle
+                case QScatterSeries::MarkerShapeCircle:
+                    m_path.addEllipse(x, y, 9, 9);
+                    break;
+                case QScatterSeries::MarkerShapePoint:
+                    m_path.addEllipse(x, y, 2, 2);
+                    break;
+                case QScatterSeries::MarkerShapeRectangle:
+                    m_path.addRect(x, y, 9, 9);
+                    break;
+                case QScatterSeries::MarkerShapeTiltedRectangle: {
+                    // TODO:
+//                    static const QPointF points[4] = {
+//                        QPointF(-1.0 + x, 0.0 + y),
+//                        QPointF(0.0 + x, 1.0 + y),
+//                        QPointF(1.0 + x, 0.0 + y),
+//                        QPointF(0.0 + x, -1.0 + y)
+//                    };
+                    //m_path.addPolygon(QPolygon(4, &points));
+                    break;
+                }
+                default:
+                    // TODO: implement the rest of the shapes
+                    Q_ASSERT(false);
+                    break;
+                }
+            }
         }
     }
 }
