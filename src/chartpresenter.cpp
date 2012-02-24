@@ -229,8 +229,8 @@ void ChartPresenter::setChartTheme(QChart::ChartTheme theme)
     int index=0;
     while (i.hasNext()) {
         i.next();
-        index++;
         m_chartTheme->decorate(i.value(),i.key(),index);
+        index++;
     }
 
     QMapIterator<QChartAxis*,AxisItem*> j(m_axisItems);

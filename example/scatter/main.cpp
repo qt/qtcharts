@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     //! [1]
     // Create chart view
     QChartView *chartView = new QChartView();
+    chartView->setChartTheme(QChart::ChartThemeIcy);
 
     // Add scatter series with simple test data
     QScatterSeries *scatter = new QScatterSeries();
