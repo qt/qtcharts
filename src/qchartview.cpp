@@ -26,6 +26,18 @@
     representation of different types of QChartSeries and other chart related objects like
     QChartAxis and QChartLegend. If you want to display a chart in your existing QGraphicsScene, you can use the QChart class instead.
 
+    For example, to create an empty chart in a widget based application:
+    \snippet ../example/chartview/main.cpp 1
+    \image chartview_example.jpg
+
+    To add a line series:
+    \snippet ../example/chartview/main.cpp 2
+    \image chartview_example_series.jpg
+
+    To modify the visual appearance of the chart, you can use the pre-defined themes:
+    \snippet ../example/chartview/main.cpp 3
+    \image chartview_example_theme.jpg
+
     \sa QChart
 */
 
