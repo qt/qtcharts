@@ -20,3 +20,8 @@ win32:QMAKE_DISTCLEAN += /Q build bin
 feature.path = $$[QT_INSTALL_DATA]/mkspecs/features
 feature.files = $$PWD/features/qtcommercialchart.prf
 INSTALLS += feature
+
+doc.target = doc
+doc.commands = qdoc3 ./doc/qcharts.qdocconf
+doc.depends = FORCE
+QMAKE_EXTRA_TARGETS += doc
