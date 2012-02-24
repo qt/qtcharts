@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     QBarCategory *category = new QBarCategory;
     *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
+    //! [1]
     QPercentBarChartSeries* series = new QPercentBarChartSeries(category);
 
     QBarSet *set0 = new QBarSet("Bub");
@@ -36,9 +37,10 @@ int main(int argc, char *argv[])
     series->addBarSet(set2);
     series->addBarSet(set3);
     series->addBarSet(set4);
+    //! [1]
 
-    series->enableToolTip(true);
-    series->enableFloatingValues(true);
+    series->enableToolTip();
+    series->enableFloatingValues();
 
     QChartView* chartView =  new QChartView(&window);
     chartView->addSeries(series);

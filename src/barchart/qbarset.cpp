@@ -30,11 +30,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \fn void QBarSet::toggleFloatingValues()
-    \brief INTERNAL
+    \brief \internal
 */
 /*!
     \fn void QBarSet::showToolTip(QPoint pos, QString tip)
-    \brief INTERNAL \a pos \a tip
+    \brief \internal \a pos \a tip
 */
 
 
@@ -129,7 +129,7 @@ const QBrush& QBarSet::brush() const
 }
 
 /*!
-    INTERNAL
+    \internal
 */
 void QBarSet::barClicked()
 {
@@ -140,7 +140,7 @@ void QBarSet::barClicked()
 }
 
 /*!
-    INTERNAL \a pos
+    \internal \a pos
 */
 void QBarSet::barHoverEntered(QPoint pos)
 {
@@ -149,7 +149,7 @@ void QBarSet::barHoverEntered(QPoint pos)
 }
 
 /*!
-    INTERNAL
+    \internal
 */
 void QBarSet::barHoverLeaved()
 {

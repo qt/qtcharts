@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QMainWindow window;
 
+    //! [1]
     QBarCategory *category = new QBarCategory;
     *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
@@ -36,8 +37,9 @@ int main(int argc, char *argv[])
     series->addBarSet(set3);
     series->addBarSet(set4);
 
-    series->enableToolTip(true);
-    series->enableFloatingValues(true);
+    series->enableToolTip();
+    series->enableFloatingValues();
+    //! [1]
 
     QChartView* chartView =  new QChartView(&window);
     chartView->addSeries(series);

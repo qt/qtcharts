@@ -12,12 +12,14 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QMainWindow window;
 
+    //! [1]
     QBarCategory *category = new QBarCategory;
     *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+    //! [1]
 
+    //! [2]
     QBarChartSeries* series= new QBarChartSeries(category);
 
-    // We use custom set, which connects some signals. Could use QBarSet here if we don't need signals
     QBarSet *set0 = new QBarSet("Bub");
     QBarSet *set1 = new QBarSet("Bob");
     QBarSet *set2 = new QBarSet("Guybrush");
@@ -36,9 +38,12 @@ int main(int argc, char *argv[])
     series->addBarSet(set2);
     series->addBarSet(set3);
     series->addBarSet(set4);
+    //! [2]
 
-    series->enableToolTip(true);
-    series->enableFloatingValues(true);
+    //! [3]
+    series->enableToolTip();
+    series->enableFloatingValues();
+    //! [3]
 
     QChartView* chartView =  new QChartView(&window);
     chartView->addSeries(series);
@@ -46,7 +51,7 @@ int main(int argc, char *argv[])
     chartView->setChartTheme(QChart::ChartThemeIcy);
 
     window.setCentralWidget(chartView);
-    window.resize(400, 300);
+    window.resize(600, 300);
     window.show();
 
     return a.exec();
