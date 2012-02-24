@@ -33,14 +33,10 @@
 
     Showing a few more series:
     \snippet ../example/chartview/main.cpp 3
-    \codeline
-    \snippet ../example/chartview/main.cpp 4
-    \codeline
-    \snippet ../example/chartview/main.cpp 5
-
-    And the corresponding results:
     \image chartview_example_pie.jpg
+    \snippet ../example/chartview/main.cpp 4
     \image chartview_example_scatter.jpg
+    \snippet ../example/chartview/main.cpp 5
     \image chartview_example_bar.jpg
 
     If you need to give a more professional touch to your chart you can switch to one of the
