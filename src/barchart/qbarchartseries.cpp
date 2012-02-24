@@ -17,12 +17,20 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \mainclass
 
-    Example on how to add sets to bar chart:
+    Example on how to create category:
+    \snippet ../example/barchart/main.cpp 1
+
+    Example on how to create sets of data:
     \snippet ../example/barchart/main.cpp 2
 
+    Example on how to add sets to bar chart:
+    \snippet ../example/barchart/main.cpp 3
 
     Example on how to enable tooltip and floating values:
-    \snippet ../example/barchart/main.cpp 3
+    \snippet ../example/barchart/main.cpp 4
+
+    Example on how to create view and apply theme:
+    \snippet ../example/barchart/main.cpp 5
 
     \sa QBarCategory, QBarSet, QStackedBarChartSeries, QPercentBarChartSeries
 */
