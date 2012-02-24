@@ -11,8 +11,7 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
 
 DeclarativeChart::ChartTheme DeclarativeChart::theme()
 {
-    if (m_chart)
-        return (ChartTheme) m_chart->chartTheme();
+    return (ChartTheme) m_chart->chartTheme();
 }
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
