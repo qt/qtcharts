@@ -1,27 +1,31 @@
-#include($QTDIR/compat.qdocconf)
-#include($QTDIR/qt-html-templates.qdocconf)
-#include(C:/Qt/QtCommercialSdk/src/qt/480/tools/qdoc3/doc/files/qt.qdocconf)
+include(compat.qdocconf)
+include(macros.qdocconf)
+include(qt-html-templates.qdocconf)
 
 project = QtCommercialCharts
 description = Library for creating charts
 
 sourcedirs = ../src \
-             ../example
+             ../example \
+             ./src
 headerdirs = ../src \
              ../example
 exampledirs = ../src \
               ../example
 
 HTML.templatedir = .
-HTML.stylesheets       = style/offline.css
-HTML.headerstyles      = \
-    "  <link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\" />\n"
+HTML.stylesheets = style/offline.css
+HTML.headerstyles= "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\" />\n"
+HTML.nobreadcrumbs = true
+
 sources.fileextensions = *.cpp *.qdoc *.mm *.qml
 headers.fileextensions = *.h *.ch *.h++ *.hh *.hpp *.hxx
 examples.fileextensions = *.cpp *.h *.js *.xq *.svg *.xml *.ui *.qhp *.qhcp *.qml
 examples.imageextensions = *.png *.jpeg *.jpg *.gif *.mng
+
 imagedirs = ./images
 outputdir = ./html
+
 
 Cpp.ignoretokens        = QTCOMMERCIALCHART_EXPORT \
                           QTCOMMERCIALCHART_END_NAMESPACE \
