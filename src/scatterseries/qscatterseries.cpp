@@ -101,7 +101,7 @@ void QScatterSeries::addData(QPointF value)
 */
 void QScatterSeries::addData(QList<QPointF> points)
 {
-    d->m_data.append(data);
+    d->m_data.append(points);
     emit changed();
 }
 
@@ -135,7 +135,7 @@ QScatterSeries& QScatterSeries::operator << (QList<QPointF> value)
 */
 void QScatterSeries::setData(QList<QPointF> points)
 {
-    d->m_data = data;
+    d->m_data = points;
     emit changed();
 }
 
