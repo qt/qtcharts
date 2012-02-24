@@ -14,6 +14,7 @@ class QSplineSeries : public QChartSeries
     QChartSeriesType type() const { return QChartSeries::SeriesTypeSpline; }
     void addData(QPointF value);
     QSplineSeries& operator << (const QPointF &value);
+    void calculateControlPoints();
 
     signals:
     
@@ -21,6 +22,7 @@ class QSplineSeries : public QChartSeries
 
     private:
     QList<QPointF> m_data;
+    QList<QPointF> m_controlPoints;
     
 };
 
