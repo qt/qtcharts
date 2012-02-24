@@ -4,9 +4,32 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 #define DEFAULT_PEN_COLOR         Qt::black
 #define DEFAULT_BRUSH_COLOR       Qt::white
-#define DEFAULT_LABEL_ARM_LENGTH  50
+#define DEFAULT_LABEL_ARM_LENGTH  40
 #define DEFAULT_EXPOLODE_DISTANCE 20
 
+/*!
+    \class QPieSlice
+    \brief QtCommercial charts pie series API.
+
+*/
+
+/*!
+    \property QPieSlice::label
+
+    Label of the slice.
+*/
+
+/*!
+    \property QPieSlice::value
+
+    Value of the slice.
+*/
+
+/*!
+    Constructs an empty slice with a \a parent.
+    Note that QPieSeries takes ownership of the slice when it is set/added.
+    \sa QPieSeries::set(), QPieSeries::add()
+*/
 QPieSlice::QPieSlice(QObject *parent)
     :QObject(parent),
     m_value(0),
@@ -24,11 +47,16 @@ QPieSlice::QPieSlice(QObject *parent)
 
 }
 
-QPieSlice::QPieSlice(qreal value, QString label, bool labelVisible, QObject *parent)
+/*!
+    Constructs an empty slice with given \a value, \a label and a \a parent.
+    Note that QPieSeries takes ownership of the slice when it is set/added.
+    \sa QPieSeries::set(), QPieSeries::add()
+*/
+QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     :QObject(parent),
     m_value(value),
     m_label(label),
-    m_isLabelVisible(labelVisible),
+    m_isLabelVisible(false),
     m_isExploded(false),
     m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
     m_percentage(0),
@@ -42,76 +70,171 @@ QPieSlice::QPieSlice(qreal value, QString label, bool labelVisible, QObject *par
 
 }
 
+/*!
+    Destroys the slice.
+    User should not delete the slice if it has been added to the series.
+*/
 QPieSlice::~QPieSlice()
 {
 
 }
 
+/*!
+    Gets the value of the slice.
+    Note that all values in the series
+    \sa setValue()
+*/
 qreal QPieSlice::value() const
 {
     return m_value;
 }
 
+/*!
+    Gets the label of the slice.
+    \sa setLabel()
+*/
 QString QPieSlice::label() const
 {
     return m_label;
 }
 
+/*!
+    Returns true if label is set as visible.
+    \sa setLabelVisible()
+*/
 bool QPieSlice::isLabelVisible() const
 {
     return m_isLabelVisible;
 }
 
+/*!
+    Returns true if slice is exloded from the pie.
+    \sa setExploded()
+*/
 bool QPieSlice::isExploded() const
 {
     return m_isExploded;
 }
 
+/*!
+    Returns the explosion distance of the slice.
+    Default value is 20.
+    \sa setExplodeDistance()
+*/
 qreal QPieSlice::explodeDistance() const
 {
     return m_explodeDistance;
 }
 
+/*!
+    Returns the percentage of this slice compared to all slices in the same series.
+    Updated internally after the slice is added to the series.
+*/
 qreal QPieSlice::percentage() const
 {
     return m_percentage;
 }
 
+/*!
+    Returns the starting angle of this slice in the series it belongs to.
+    Updated internally after the slice is added to the series.
+*/
 qreal QPieSlice::angle() const
 {
     return m_angle;
 }
 
+/*!
+    Returns the angle span of this slice in the series it belongs to.
+    Updated internally after the slice is added to the series.
+*/
 qreal QPieSlice::angleSpan() const
 {
     return m_angleSpan;
 }
 
+/*!
+    Returns the pen used to draw this slice.
+    \sa setPen()
+*/
 QPen QPieSlice::pen() const
 {
     return m_pen;
 }
 
+/*!
+    Returns the brush used to draw this slice.
+    \sa setBrush()
+*/
 QBrush QPieSlice::brush() const
 {
     return m_brush;
 }
 
+/*!
+    Returns the pen used to draw label in this slice.
+    \sa setLabelPen()
+*/
 QPen QPieSlice::labelPen() const
 {
     return m_labelPen;
 }
 
+/*!
+    Returns the font used to draw label in this slice.
+    \sa setLabelFont()
+*/
 QFont QPieSlice::labelFont() const
 {
     return m_labelFont;
 }
 
+/*!
+    Returns the label arm lenght used in this slice.
+    Default value is 40 pixels.
+    \sa setLabelArmLength()
+*/
 qreal QPieSlice::labelArmLength() const
 {
     return m_labelArmLength;
 }
 
+/*!
+    \fn void QPieSlice::clicked()
+
+    This signal is emitted when user has clicked the slice.
+
+    \sa QPieSeries::clicked()
+*/
+
+/*!
+    \fn void QPieSlice::hoverEnter()
+
+    This signal is emitted when user has hovered over the slice.
+
+    \sa QPieSeries::hoverEnter()
+*/
+
+/*!
+    \fn void QPieSlice::hoverLeave()
+
+    This signal is emitted when user has hovered away from the slice.
+
+    \sa QPieSeries::hoverLeave()
+*/
+
+/*!
+    \fn void QPieSlice::changed()
+
+    This signal emitted when something has changed in the slice.
+
+    \sa QPieSeries::changed()
+*/
+
+/*!
+    Sets the value of this slice.
+    \sa value()
+*/
 void QPieSlice::setValue(qreal value)
 {
     if (m_value != value) {
@@ -120,6 +243,10 @@ void QPieSlice::setValue(qreal value)
     }
 }
 
+/*!
+    Sets the \a label of the slice.
+    \sa label()
+*/
 void QPieSlice::setLabel(QString label)
 {
     if (m_label != label) {
@@ -128,6 +255,10 @@ void QPieSlice::setLabel(QString label)
     }
 }
 
+/*!
+    Sets the label \a visible in this slice.
+    \sa isLabelVisible(), QPieSeries::setLabelsVisible()
+*/
 void QPieSlice::setLabelVisible(bool visible)
 {
     if (m_isLabelVisible != visible) {
@@ -136,6 +267,10 @@ void QPieSlice::setLabelVisible(bool visible)
     }
 }
 
+/*!
+    Sets this slice \a exploded.
+    \sa isExploded(), setExplodeDistance(), QPieSeries::enableClickExplodes()
+*/
 void QPieSlice::setExploded(bool exploded)
 {
     if (m_isExploded != exploded) {
@@ -144,6 +279,11 @@ void QPieSlice::setExploded(bool exploded)
     }
 }
 
+/*!
+    Sets the explosion \a distance of this slice.
+    It is the distance the slice is moved away from the pie center.
+    \sa explodeDistance(), isExploded(), QPieSeries::enableClickExplodes()
+*/
 void QPieSlice::setExplodeDistance(qreal distance)
 {
     if (m_explodeDistance != distance) {
@@ -152,6 +292,11 @@ void QPieSlice::setExplodeDistance(qreal distance)
     }
 }
 
+/*!
+    Sets the \a pen used to draw this slice.
+    Note that applying a theme will override this.
+    \sa pen()
+*/
 void QPieSlice::setPen(QPen pen)
 {
     if (m_pen != pen) {
@@ -160,6 +305,11 @@ void QPieSlice::setPen(QPen pen)
     }
 }
 
+/*!
+    Sets the \a brush used to draw this slice.
+    Note that applying a theme will override this.
+    \sa brush()
+*/
 void QPieSlice::setBrush(QBrush brush)
 {
     if (m_brush != brush) {
@@ -168,14 +318,11 @@ void QPieSlice::setBrush(QBrush brush)
     }
 }
 
-void QPieSlice::setLabelFont(QFont font)
-{
-    if (m_labelFont != font) {
-        m_labelFont = font;
-        emit changed();
-    }
-}
-
+/*!
+    Sets the \a pen used to draw the label in this slice.
+    Note that applying a theme will override this.
+    \sa labelPen()
+*/
 void QPieSlice::setLabelPen(QPen pen)
 {
     if (m_labelPen != pen) {
@@ -184,10 +331,27 @@ void QPieSlice::setLabelPen(QPen pen)
     }
 }
 
-void QPieSlice::setLabelArmLength(qreal len)
+/*!
+    Sets the \a font used to draw the label in this slice.
+    Note that applying a theme will override this.
+    \sa labelFont()
+*/
+void QPieSlice::setLabelFont(QFont font)
 {
-    if (m_labelArmLength != len) {
-        m_labelArmLength = len;
+    if (m_labelFont != font) {
+        m_labelFont = font;
+        emit changed();
+    }
+}
+
+/*!
+    Sets the label arm \a length used to draw the label in this slice.
+    \sa labelArmLength()
+*/
+void QPieSlice::setLabelArmLength(qreal length)
+{
+    if (m_labelArmLength != length) {
+        m_labelArmLength = length;
         emit changed();
     }
 }

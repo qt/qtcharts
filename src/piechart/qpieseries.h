@@ -31,6 +31,8 @@ public:
     class ChangeSet
     {
     public:
+
+        // TODO: these should not really be exposed to the public API
         void appendAdded(QPieSlice* slice);
         void appendAdded(QList<QPieSlice*> slices);
         void appendChanged(QPieSlice* slice);
@@ -53,7 +55,7 @@ public:
     virtual ~QPieSeries();
 
 public: // from QChartSeries
-    QChartSeriesType type() const { return QChartSeries::SeriesTypePie; }
+    QChartSeriesType type() const;
     virtual bool setData(QList<qreal> data);  // TODO: remove this
 
 public:
@@ -64,17 +66,17 @@ public:
     void remove(QPieSlice* slice);
     void clear();
 
-    int count() const { return m_slices.count(); }
+    int count() const;
 
-    QList<QPieSlice*> slices() const { return m_slices; }
+    QList<QPieSlice*> slices() const;
 
     void setSizeFactor(qreal sizeFactor);
-    qreal sizeFactor() const { return m_sizeFactor; }
+    qreal sizeFactor() const;
 
     void setPosition(PiePosition position);
-    PiePosition position() const { return m_position; }
+    PiePosition position() const;
 
-    void setSpan(qreal startAngle, qreal span);
+    void setSpan(qreal startAngle, qreal angleSpan);
 
     void setLabelsVisible(bool visible);
     void enableClickExplodes(bool enable);
@@ -123,7 +125,7 @@ private:
     PiePosition m_position;
     qreal m_total;
     qreal m_pieStartAngle;
-    qreal m_pieSpan;
+    qreal m_pieAngleSpan;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

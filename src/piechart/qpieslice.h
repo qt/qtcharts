@@ -12,12 +12,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString label READ label WRITE setLabel /*NOTIFY dataYChanged*/)
-    Q_PROPERTY(qreal value READ value WRITE setValue /*NOTIFY dataXChanged*/)
+    Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY changed)
+    Q_PROPERTY(qreal value READ value WRITE setValue NOTIFY changed)
 
 public:
     QPieSlice(QObject *parent = 0);
-    QPieSlice(qreal value, QString label, bool labelVisible = false, QObject *parent = 0);
+    QPieSlice(qreal value, QString label, QObject *parent = 0);
     virtual ~QPieSlice();
 
     // data

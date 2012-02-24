@@ -7,6 +7,24 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \enum QPieSeries::PiePosition
+
+    This enum describes pie position within its bounding rectangle
+
+    \value PiePositionMaximized
+    \value PiePositionTopLeft
+    \value PiePositionTopRight
+    \value PiePositionBottomLeft
+    \value PiePositionBottomRight
+*/
+
+/*!
+    \class QPieSeries
+    \brief QtCommercial charts pie series API.
+
+*/
+
 void QPieSeries::ChangeSet::appendAdded(QPieSlice* slice)
 {
     if (!m_added.contains(slice))
@@ -31,21 +49,37 @@ void QPieSeries::ChangeSet::appendRemoved(QPieSlice* slice)
         m_removed << slice;
 }
 
+/*!
+    Returns a list of slices that have been added to the series.
+    \sa QPieSeries::changed()
+*/
 QList<QPieSlice*> QPieSeries::ChangeSet::added() const
 {
     return m_added;
 }
 
+/*!
+    Returns a list of slices that have been changed in the series.
+    \sa QPieSeries::changed()
+*/
 QList<QPieSlice*> QPieSeries::ChangeSet::changed() const
 {
     return m_changed;
 }
 
+/*!
+    Returns a list of slices that have been removed from the series.
+    \sa QPieSeries::changed()
+*/
 QList<QPieSlice*> QPieSeries::ChangeSet::removed() const
 {
     return m_removed;
 }
 
+
+/*!
+    Returns true if there are no added/changed or removed slices in the change set.
+*/
 bool QPieSeries::ChangeSet::isEmpty() const
 {
     if (m_added.count() || m_changed.count() || m_removed.count())
@@ -53,22 +87,39 @@ bool QPieSeries::ChangeSet::isEmpty() const
     return true;
 }
 
-
+/*!
+    Constructs a series object which is a child of \a parent.
+*/
 QPieSeries::QPieSeries(QObject *parent) :
     QChartSeries(parent),
     m_sizeFactor(1.0),
     m_position(PiePositionMaximized),
     m_pieStartAngle(0),
-    m_pieSpan(360)
+    m_pieAngleSpan(360)
 {
 
 }
 
+/*!
+    Destroys the object. Note that adding series to QChart transfers the ownership to the chart.
+*/
 QPieSeries::~QPieSeries()
 {
 
 }
 
+/*!
+    Returns the type of the series which is always QChartSeries::SeriesTypePie.
+*/
+QChartSeries::QChartSeriesType QPieSeries::type() const
+{
+    return QChartSeries::SeriesTypePie;
+}
+
+/*!
+    Sets an array of values to the series.
+    TO BE REMOVED
+*/
 bool QPieSeries::setData(QList<qreal> data)
 {
     // TODO: remove this function
@@ -79,12 +130,20 @@ bool QPieSeries::setData(QList<qreal> data)
     return true;
 }
 
+/*!
+    Sets an array of \a slices to the series.
+    Slice ownership is passed to the series.
+*/
 void QPieSeries::set(QList<QPieSlice*> slices)
 {
     clear();
     add(slices);
 }
 
+/*!
+    Adds an array of slices to the series.
+    Slice ownership is passed to the series.
+*/
 void QPieSeries::add(QList<QPieSlice*> slices)
 {
     ChangeSet changeSet;
@@ -106,11 +165,20 @@ void QPieSeries::add(QList<QPieSlice*> slices)
     emit changed(changeSet);
 }
 
+/*!
+    Adds a single \a slice to the series.
+    Slice ownership is passed to the series.
+*/
 void QPieSeries::add(QPieSlice* slice)
 {
     add(QList<QPieSlice*>() << slice);
 }
 
+
+/*!
+    Adds a single slice to the series with give \a value and \a name.
+    Slice ownership is passed to the series.
+*/
 QPieSlice* QPieSeries::add(qreal value, QString name)
 {
     QPieSlice* slice = new QPieSlice(value, name);
@@ -118,6 +186,10 @@ QPieSlice* QPieSeries::add(qreal value, QString name)
     return slice;
 }
 
+/*!
+    Removes a single \a slice from the series and deletes the slice.
+    Do not reference this pointer after this call.
+*/
 void QPieSeries::remove(QPieSlice* slice)
 {
     if (!m_slices.removeOne(slice)) {
@@ -135,6 +207,9 @@ void QPieSeries::remove(QPieSlice* slice)
     updateDerivativeData();
 }
 
+/*!
+    Clears all slices from the series.
+*/
 void QPieSeries::clear()
 {
     if (m_slices.count() == 0)
@@ -150,6 +225,28 @@ void QPieSeries::clear()
     updateDerivativeData();
 }
 
+/*!
+    Counts the number of the slices in this series.
+*/
+int QPieSeries::count() const
+{
+    return m_slices.count();
+}
+
+/*!
+    Returns a list of slices that belong to this series.
+*/
+QList<QPieSlice*> QPieSeries::slices() const
+{
+    return m_slices;
+}
+
+/*!
+    Sets the size \a factor of the pie. 1.0 is the default value.
+    Note that the pie will not grow beyond its absolute maximum size.
+    In practice its use is to make the pie appear smaller.
+    \sa sizeFactor()
+*/
 void QPieSeries::setSizeFactor(qreal factor)
 {
     if (factor < 0.0)
@@ -161,6 +258,19 @@ void QPieSeries::setSizeFactor(qreal factor)
     }
 }
 
+/*!
+    Gets the size factor of the pie.
+    \sa setSizeFactor()
+*/
+qreal QPieSeries::sizeFactor() const
+{
+    return m_sizeFactor;
+}
+
+/*!
+    Sets the \a position of the pie within its bounding rectangle.
+    \sa PiePosition, position()
+*/
 void QPieSeries::setPosition(PiePosition position)
 {
     if (m_position != position) {
@@ -169,22 +279,47 @@ void QPieSeries::setPosition(PiePosition position)
     }
 }
 
-void QPieSeries::setSpan(qreal startAngle, qreal span)
+/*!
+    Gets the position of the pie within its bounding rectangle.
+    \sa PiePosition, setPosition()
+*/
+QPieSeries::PiePosition QPieSeries::position() const
+{
+    return m_position;
+}
+
+
+/*!
+    Sets the \a startAngle and \a angleSpan of this series.
+
+    \sa
+*/
+void QPieSeries::setSpan(qreal startAngle, qreal angleSpan)
 {
     if (startAngle >= 0 && startAngle < 360 &&
-        span > 0 && span <= 360) {
+        angleSpan > 0 && angleSpan <= 360) {
         m_pieStartAngle = startAngle;
-        m_pieSpan = span;
+        m_pieAngleSpan = angleSpan;
         updateDerivativeData();
     }
 }
 
+/*!
+    Sets the all the slice labels \a visible or invisible.
+
+    \sa QPieSlice::isLabelVisible(), QPieSlice::setLabelVisible()
+*/
 void QPieSeries::setLabelsVisible(bool visible)
 {
     foreach (QPieSlice* s, m_slices)
         s->setLabelVisible(visible);
 }
 
+/*!
+    Convenience method for exploding a slice when user clicks the pie.
+
+    \sa QPieSlice::isExploded(), QPieSlice::setExploded()
+*/
 void QPieSeries::enableClickExplodes(bool enable)
 {
     if (enable)
@@ -192,6 +327,13 @@ void QPieSeries::enableClickExplodes(bool enable)
     else
         disconnect(this, SLOT(toggleExploded(QPieSlice*)));
 }
+
+/*!
+    Convenience method for highlighting a slice when user hovers over the slice.
+    It changes the slice color to be lighter and shows the label of the slice.
+
+    \sa QPieSlice::isExploded(), QPieSlice::setExploded()
+*/
 
 void QPieSeries::enableHoverHighlight(bool enable)
 {
@@ -203,6 +345,55 @@ void QPieSeries::enableHoverHighlight(bool enable)
         disconnect(this, SLOT(hoverLeave(QPieSlice*)));
     }
 }
+
+/*!
+    \fn void QPieSeries::changed(const QPieSeries::ChangeSet& changeSet)
+
+    This signal emitted when something has changed in the series.
+    The \a changeSet contains the details of which slices have been added, changed or removed.
+
+    \sa QPieSeries::ChangeSet, QPieSlice::changed()
+*/
+
+/*!
+    \fn void QPieSeries::clicked(QPieSlice* slice)
+
+    This signal is emitted when a \a slice has been clicked.
+
+    \sa QPieSlice::clicked()
+*/
+
+/*!
+    \fn void QPieSeries::hoverEnter(QPieSlice* slice)
+
+    This signal is emitted when user has hovered over a \a slice.
+
+    \sa QPieSlice::hoverEnter()
+*/
+
+/*!
+    \fn void QPieSeries::hoverLeave(QPieSlice* slice)
+
+    This signal is emitted when user has hovered away from a \a slice.
+
+    \sa QPieSlice::hoverLeave()
+*/
+
+/*!
+    \fn void QPieSeries::sizeFactorChanged()
+
+    This signal is emitted when size factor has been changed.
+
+    \sa sizeFactor(), setSizeFactor()
+*/
+
+/*!
+    \fn void QPieSeries::positionChanged()
+
+    This signal is emitted when position of the pie has been changed.
+
+    \sa position(), setPosition()
+*/
 
 void QPieSeries::sliceChanged()
 {
@@ -286,7 +477,7 @@ void QPieSeries::updateDerivativeData()
             changed = true;
         }
 
-        qreal sliceSpan = m_pieSpan * percentage;
+        qreal sliceSpan = m_pieAngleSpan * percentage;
         if (s->m_angleSpan != sliceSpan) {
             s->m_angleSpan = sliceSpan;
             changed = true;
