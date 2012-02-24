@@ -25,12 +25,12 @@ public:
     QBarSet *setAt(int index);
 
     QList<QString> legend();                    // Returns legend of series (ie. names of all sets in series)
-    QString label(int category);
 
 public:
     // TODO: Functions below this are not part of api and will be moved
     // to private implementation, when we start using it
     // TODO: TO PIMPL --->
+    QString label(int category);
     int countCategories();
     qreal min();
     qreal max();

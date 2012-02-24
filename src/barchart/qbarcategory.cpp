@@ -4,12 +4,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBarCategory
-    \brief QtCommercial chart API.
+    \brief part of QtCommercial chart API.
 
     QBarCategory is a container for labels of various bar charts. Before the
     bar chart can be constructed, the categories must be defined. This is done by
     creating a QBarCategory class and appending the labels of categories to it.
-    The QBarCategory is then given to QBarSeries class.
+    The QBarCategory is then given to bar chart series class.
+
+    \sa QBarChartSeries, QStackedBarChartSeries, QPercentBarChartSeries
 */
 
 /*!
