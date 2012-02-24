@@ -4,6 +4,9 @@
     \class QChartSeries
     \brief Base class for all QtCommercial Chart series.
     \mainclass
+
+    Usually you use the series type specific inherited classes instead of the base class.
+    \sa QScatterSeries
 */
 
 /*!

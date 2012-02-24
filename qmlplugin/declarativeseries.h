@@ -16,8 +16,8 @@ class DeclarativeSeries : public QDeclarativeItem
 public:
     // TODO: how to re-use the existing enum from QChart?
     enum SeriesType {
-        SeriesTypeInvalid = QChartSeries::SeriesTypeInvalid,
-        SeriesTypeLine,
+        SeriesTypeInvalid = -1,
+        SeriesTypeLine = QChartSeries::SeriesTypeLine,
 //        SeriesTypeArea,
         SeriesTypeBar,
         SeriesTypeStackedBar,

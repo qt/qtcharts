@@ -50,40 +50,19 @@ void DeclarativeSeries::initSeries()
         Q_ASSERT(chart);
 
         switch (m_seriesType) {
-        case SeriesTypeLine: {
-            m_series = new QLineChartSeries(this);
-            for (qreal i(0.0); i < 100.0; i += 1.0)
-                ((QLineChartSeries *)m_series)->add(i, i);
-            chart->addSeries(m_series);
-            break;
-        }
-        case SeriesTypeBar:
-            // fallthrough; bar and scatter use the same test data
-        case SeriesTypeScatter: {
-            m_series = new QScatterSeries();
-            chart->addSeries(m_series);
-            QScatterSeries *scatter = qobject_cast<QScatterSeries *>(m_series);
-            Q_ASSERT(scatter);
-            for (qreal i = 0; i < 100; i += 0.1)
-                scatter->addData(QPointF(i + (rand() % 5),
-                                         abs(sin(3.14159265358979 / 50 * i) * 100) + (rand() % 5)));
-            break;
-        }
-        case SeriesTypeStackedBar:
-            break;
-        case SeriesTypePercentBar:
-            break;
         case SeriesTypePie: {
-            m_series = new QPieSeries();
-            chart->addSeries(m_series);
+            QPieSeries *pieSeries = new QPieSeries();
+            chart->addSeries(pieSeries);
             QList<qreal> data;
             data << 1.0;
             data << 12.0;
             data << 4.0;
-            Q_ASSERT(m_series->setData(data));
+            Q_ASSERT(pieSeries->setData(data));
+            m_series = pieSeries;
             break;
         }
         default:
+            Q_ASSERT(false);
             break;
         }
     }
