@@ -12,34 +12,26 @@ class QTCOMMERCIALCHART_EXPORT QChartSeries : public QObject
     Q_OBJECT
 public:
     enum QChartSeriesType {
-        SeriesTypeInvalid = -1,
         SeriesTypeLine,
-//        SeriesTypeArea,
+        SeriesTypeArea,
         SeriesTypeBar,
         SeriesTypeStackedBar,
         SeriesTypePercentBar,
         SeriesTypePie,
-        SeriesTypeScatter
-//        SeriesTypeSpline
+        SeriesTypeScatter,
+        SeriesTypeSpline
     };
 
 protected:
-    QChartSeries(QObject *parent = 0):QObject(parent){};
+    QChartSeries(QObject *parent = 0) : QObject(parent) {}
 
 public:
-    virtual ~QChartSeries(){};
-
-    // Pure virtual
+    virtual ~QChartSeries() {}
     virtual QChartSeriesType type() const = 0;
-
-    virtual bool setData(QList<qreal> /*data*/) { return false; }
-    virtual bool setData(QList<qreal> /*x*/, QList<qreal> /*y*/){ return false; }
-
-    // Prototype for data model. TODO: remove the other setData methods and use something like this for now?
+    // TODO
     virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif
-
