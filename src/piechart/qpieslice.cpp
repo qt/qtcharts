@@ -9,8 +9,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QPieSlice
-    \brief QtCommercial charts pie series API.
+    \brief Defines a slice a pie series.
 
+    Holds all the data of a single slice in a QPieSeries and provides the means
+    to modify slice data and customize the visual appearance of the slice.
+
+    It also provides the means to customize user interaction with the slice by
+    providing signals for clicking and hover events.
 */
 
 /*!
@@ -27,7 +32,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     Constructs an empty slice with a \a parent.
+
     Note that QPieSeries takes ownership of the slice when it is set/added.
+
     \sa QPieSeries::set(), QPieSeries::add()
 */
 QPieSlice::QPieSlice(QObject *parent)
@@ -128,6 +135,7 @@ qreal QPieSlice::explodeDistance() const
 
 /*!
     Returns the percentage of this slice compared to all slices in the same series.
+
     Updated internally after the slice is added to the series.
 */
 qreal QPieSlice::percentage() const
@@ -137,6 +145,9 @@ qreal QPieSlice::percentage() const
 
 /*!
     Returns the starting angle of this slice in the series it belongs to.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
     Updated internally after the slice is added to the series.
 */
 qreal QPieSlice::angle() const
@@ -146,6 +157,9 @@ qreal QPieSlice::angle() const
 
 /*!
     Returns the angle span of this slice in the series it belongs to.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
     Updated internally after the slice is added to the series.
 */
 qreal QPieSlice::angleSpan() const
