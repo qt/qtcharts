@@ -13,8 +13,8 @@ integrated_build:{
 
 CONFIG += ordered
 QMAKE_CXXFLAGS += -g -Wall
-unix:QMAKE_DISTCLEAN += -r build bin doc//html 
-win32:QMAKE_DISTCLEAN += /Q build bin doc\html
+unix:QMAKE_DISTCLEAN += -r build bin doc/html 
+win32:QMAKE_DISTCLEAN += /Q /s build bin doc\\html
 
 # install feature file
 feature.path = $$[QT_INSTALL_DATA]/mkspecs/features
