@@ -20,7 +20,7 @@
 #include "linechartitem_p.h"
 #include "percentbarpresenter.h"
 #include "scatterpresenter_p.h"
-#include "piepresenter.h"
+#include "piepresenter_p.h"
 
 //themes
 #include "chartthemevanilla_p.h"

@@ -1,8 +1,8 @@
 
-#include "piepresenter.h"
-#include "pieslice.h"
+#include "piepresenter_p.h"
+#include "pieslice_p.h"
 #include "qpieslice.h"
-#include "pieslicelabel.h"
+#include "pieslicelabel_p.h"
 #include "qpieseries.h"
 #include <qmath.h>
 #include <QDebug>
@@ -205,6 +205,6 @@ void PiePresenter::deleteSlice(QPieSlice* sliceData)
     delete m_slices.take(sliceData);
 }
 
-#include "moc_piepresenter.cpp"
+#include "moc_piepresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

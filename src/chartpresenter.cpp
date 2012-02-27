@@ -18,7 +18,7 @@
 #include "linechartitem_p.h"
 #include "percentbarpresenter.h"
 #include "linechartanimationitem_p.h"
-#include "piepresenter.h"
+#include "piepresenter_p.h"
 #include "scatterpresenter_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

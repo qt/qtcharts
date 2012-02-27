@@ -1,6 +1,6 @@
-#include "pieslice.h"
-#include "pieslicelabel.h"
-#include "piepresenter.h"
+#include "pieslice_p.h"
+#include "pieslicelabel_p.h"
+#include "piepresenter_p.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
 #include <QPainter>
@@ -130,6 +130,6 @@ void PieSlice::updateData(const QPieSlice* sliceData)
     update();
 }
 
-#include "moc_pieslice.cpp"
+#include "moc_pieslice_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

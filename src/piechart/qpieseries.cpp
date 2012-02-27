@@ -1,8 +1,5 @@
 #include "qpieseries.h"
 #include "qpieslice.h"
-#include "piepresenter.h"
-#include "pieslice.h"
-#include <QFontMetrics>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
