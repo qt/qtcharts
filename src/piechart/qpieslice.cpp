@@ -35,7 +35,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     Note that QPieSeries takes ownership of the slice when it is set/added.
 
-    \sa QPieSeries::set(), QPieSeries::add()
+    \sa QPieSeries::replace(), QPieSeries::add()
 */
 QPieSlice::QPieSlice(QObject *parent)
     :QObject(parent),
@@ -57,7 +57,7 @@ QPieSlice::QPieSlice(QObject *parent)
 /*!
     Constructs an empty slice with given \a value, \a label and a \a parent.
     Note that QPieSeries takes ownership of the slice when it is set/added.
-    \sa QPieSeries::set(), QPieSeries::add()
+    \sa QPieSeries::replace(), QPieSeries::add()
 */
 QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     :QObject(parent),
