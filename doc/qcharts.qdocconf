@@ -1,6 +1,6 @@
 include(compat.qdocconf)
 include(macros.qdocconf)
-include(qt-html-templates.qdocconf)
+include(qchart-html-template.qdocconf)
 
 project = QtCommercialCharts
 description = Library for creating charts
@@ -10,13 +10,11 @@ sourcedirs = ../src \
              ./src
 headerdirs = ../src \
              ../example
-exampledirs = ../src \
-              ../example
-
-HTML.templatedir = .
-HTML.stylesheets = style/offline.css
-HTML.headerstyles= "<link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\" />\n"
-HTML.nobreadcrumbs = true
+exampledirs = ../ \
+              ../src \
+              ../example 
+              
+excludefiles += ../example/linechart/linechart.pro
 
 sources.fileextensions = *.cpp *.qdoc *.mm *.qml
 headers.fileextensions = *.h *.ch *.h++ *.hh *.hpp *.hxx

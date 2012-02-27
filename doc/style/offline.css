@@ -1,6 +1,11 @@
 @media screen
 {
 
+    .qchart img
+    { 
+     float:left;
+    }
+
 /* basic elements */
     html
     {
@@ -232,25 +237,36 @@
     {
         color: #00732F;
         font-weight: bold;
-        font-size: 130%;
+        font-size: 100%;
+     	text-align: center;
     }
 
     .header .content
     {
-        margin-bottom: 0.5em
+      /*  margin-bottom: 0.5em*/
     }
 
+    .header .content img
+    {
+        display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100px; 
+    }
+		
     .naviNextPrevious
     {
         display: none
     }
     .header .breadcrumb
     {
-        font-size: 90%;
+        font-size: 100%;
         padding: 0.5em 0 0.5em 1em;
         margin: 0;
-        background-color: #fafafa;
-        height: 1.35em;
+        /*background-color: #393735;*/
+	font-weight: bold;
+	background: #ffffff url(../images/bg.png) repeat-x;
+        height: 20px;
         border-bottom: 1px solid #d1d1d1;
     }
 
@@ -268,7 +284,7 @@
     .header .breadcrumb ul li
     {
         float: left;
-        background: url(../images/breadcrumb.png) no-repeat 0 3px;
+        /*background: url(../images/breadcrumb.png) no-repeat 0 3px;*/
         padding-left: 1.5em;
         margin-left: 1.5em;
     }
@@ -280,8 +296,14 @@
 
     .header .breadcrumb ul li a
     {
-        color: #00732F;
+	color: #ffffff;
     }
+
+   .header .breadcrumb ul li a:hover
+    {
+	 color: #00732F;
+         text-decoration: none;
+    } 
 
     .header .breadcrumb ul li.first
     {
@@ -479,7 +501,7 @@
 
     .content .toc h3 {
         border-bottom: 0px;
-        margin-top: 0px;
+        margin-top: 10px;
     }
 
     .content .toc h3 a:hover {

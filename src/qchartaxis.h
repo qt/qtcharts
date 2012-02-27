@@ -20,8 +20,6 @@ public:
     void setAxisVisible(bool visible);
     void setAxisPen(const QPen& pen);
     QPen axisPen() const { return m_axisPen;};
-    void setAxisBrush(const QBrush& brush);
-    QBrush axisBrush() const { return m_axisBrush;};
 
     //grid handling
     bool isGridVisible() const { return m_gridVisible;};
@@ -37,7 +35,7 @@ public:
     void setLabelsBrush(const QBrush& brush);
     QBrush labelsBrush() const { return m_labelsBrush;}
     void setLabelsFont(const QFont& font);
-    QFont labelFont() const { return m_labelsFont;}
+    QFont labelsFont() const { return m_labelsFont;}
     void setLabelsAngle(int angle);
     int labelsAngle() const { return m_labelsAngle;};
 

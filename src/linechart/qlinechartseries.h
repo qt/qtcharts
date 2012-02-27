@@ -19,11 +19,13 @@ public:
 public: // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeLine;}
     int add(qreal x, qreal y);
+    int add(const QPointF& point);
     void set(int index,qreal x,qreal y);
+    void set(int index,const QPointF& point);
     void clear();
 
     void setPen(const QPen& pen);
-    const QPen& pen() const { return m_pen;}
+    QPen pen() const { return m_pen;}
 
     void setPointsVisible(bool visible);
     bool isPointsVisible() const {return m_pointsVisible;}
