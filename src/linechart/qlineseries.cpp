@@ -118,7 +118,7 @@ void QLineSeries::remove(qreal x)
 }
 
 /*!
-  Removes current \a point x value. Note \point y value is ignored.
+  Removes current \a point x value. Note \a point y value is ignored.
 */
 void QLineSeries::remove(const QPointF& point)
 {
