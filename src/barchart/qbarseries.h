@@ -1,5 +1,5 @@
-#ifndef BARCHARTSERIES_H
-#define BARCHARTSERIES_H
+#ifndef BARSERIES_H
+#define BARSERIES_H
 
 #include "qchartseries.h"
 
@@ -10,11 +10,11 @@ class QBarSet;
 class BarChartModel;
 
 // Container for series
-class QTCOMMERCIALCHART_EXPORT QBarChartSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QBarSeries : public QChartSeries
 {
     Q_OBJECT
 public:
-    QBarChartSeries(QBarCategory *category, QObject* parent=0);
+    QBarSeries(QBarCategory *category, QObject* parent=0);
 
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }
 
@@ -63,4 +63,4 @@ protected:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // BARCHARTSERIES_H
+#endif // BARSERIES_H

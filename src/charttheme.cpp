@@ -5,9 +5,9 @@
 
 //series
 #include "qbarset.h"
-#include "qbarchartseries.h"
-#include "qstackedbarchartseries.h"
-#include "qpercentbarchartseries.h"
+#include "qbarseries.h"
+#include "qstackedbarseries.h"
+#include "qpercentbarseries.h"
 #include "qlinechartseries.h"
 #include "qscatterseries.h"
 #include "qpieseries.h"
@@ -91,19 +91,19 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
             break;
         }
         case QChartSeries::SeriesTypeBar: {
-            QBarChartSeries* b = static_cast<QBarChartSeries*>(series);
+            QBarSeries* b = static_cast<QBarSeries*>(series);
             BarPresenter* i = static_cast<BarPresenter*>(item);
             decorate(i,b,count);
             break;
         }
         case QChartSeries::SeriesTypeStackedBar: {
-            QStackedBarChartSeries* s = static_cast<QStackedBarChartSeries*>(series);
+            QStackedBarSeries* s = static_cast<QStackedBarSeries*>(series);
             StackedBarPresenter* i = static_cast<StackedBarPresenter*>(item);
             decorate(i,s,count);
             break;
         }
         case QChartSeries::SeriesTypePercentBar: {
-            QPercentBarChartSeries* s = static_cast<QPercentBarChartSeries*>(series);
+            QPercentBarSeries* s = static_cast<QPercentBarSeries*>(series);
             PercentBarPresenter* i = static_cast<PercentBarPresenter*>(item);
             decorate(i,s,count);
             break;
@@ -141,21 +141,21 @@ void ChartTheme::decorate(LineChartItem* item, QLineChartSeries* series,int coun
     item->setPen(pen);
 }
 
-void ChartTheme::decorate(BarPresenter* item, QBarChartSeries* series,int count)
+void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int count)
 {
     for (int i=0; i<series->countSets(); i++) {
         series->nextSet(0==i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
 }
 
-void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarChartSeries* series,int count)
+void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count)
 {
     for (int i=0; i<series->countSets(); i++) {
         series->nextSet(0==i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
 }
 
-void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarChartSeries* series,int count)
+void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count)
 {
     for (int i=0; i<series->countSets(); i++) {
         series->nextSet(0==i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));

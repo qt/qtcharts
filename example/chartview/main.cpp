@@ -4,7 +4,7 @@
 #include <qchartview.h>
 #include <qlinechartseries.h>
 #include <qscatterseries.h>
-#include <qbarchartseries.h>
+#include <qbarseries.h>
 #include <qbarset.h>
 #include <qbarcategory.h>
 #include <qpieseries.h>
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     *barCategory << "Jan"
                  << "Feb"
                  << "Mar";
-    QBarChartSeries *bar = new QBarChartSeries(barCategory);
+    QBarSeries *bar = new QBarSeries(barCategory);
     QBarSet *barSet = new QBarSet("Sales");
     *barSet << 123.2
             << 301.3

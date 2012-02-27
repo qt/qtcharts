@@ -4,9 +4,9 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 //series
-#include "qbarchartseries.h"
-#include "qstackedbarchartseries.h"
-#include "qpercentbarchartseries.h"
+#include "qbarseries.h"
+#include "qstackedbarseries.h"
+#include "qpercentbarseries.h"
 #include "qlinechartseries.h"
 #include "qpieseries.h"
 #include "qscatterseries.h"
@@ -124,7 +124,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
         }
 
         case QChartSeries::SeriesTypeBar: {
-            QBarChartSeries* barSeries = static_cast<QBarChartSeries*>(series);
+            QBarSeries* barSeries = static_cast<QBarSeries*>(series);
             BarPresenter* item = new BarPresenter(barSeries,m_chart);
             m_chartTheme->decorate(item,barSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
@@ -136,7 +136,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
         case QChartSeries::SeriesTypeStackedBar: {
 
-            QStackedBarChartSeries* stackedBarSeries = static_cast<QStackedBarChartSeries*>(series);
+            QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
             StackedBarPresenter* item = new StackedBarPresenter(stackedBarSeries,m_chart);
             m_chartTheme->decorate(item,stackedBarSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
@@ -147,7 +147,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
 
         case QChartSeries::SeriesTypePercentBar: {
 
-            QPercentBarChartSeries* percentBarSeries = static_cast<QPercentBarChartSeries*>(series);
+            QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
             PercentBarPresenter* item = new PercentBarPresenter(percentBarSeries,m_chart);
             m_chartTheme->decorate(item,percentBarSeries ,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));

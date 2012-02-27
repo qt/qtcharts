@@ -7,14 +7,14 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QBarChartSeries;
+class QBarSeries;
 
 // Presenter for parallel bars. Grouping of bars is done on category basis.
 class BarPresenter : public BarPresenterBase
 {
     Q_OBJECT
 public:
-    explicit BarPresenter(QBarChartSeries *series, QGraphicsItem *parent = 0);
+    explicit BarPresenter(QBarSeries *series, QGraphicsItem *parent = 0);
 
 private:
 

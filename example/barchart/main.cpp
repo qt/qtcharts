@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <qchartview.h>
-#include <qbarchartseries.h>
+#include <qbarseries.h>
 #include <qbarset.h>
 #include <qbarcategory.h>
 
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     //! [3]
     // Create series and add sets to it
-    QBarChartSeries* series= new QBarChartSeries(category);
+    QBarSeries* series= new QBarSeries(category);
 
     series->addBarSet(set0);
     series->addBarSet(set1);

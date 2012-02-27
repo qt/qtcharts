@@ -2,7 +2,7 @@
 #define BARPRESENTERBASE_H
 
 #include "chartitem_p.h"
-#include "qbarchartseries.h"
+#include "qbarseries.h"
 #include <QPen>
 #include <QBrush>
 #include <QGraphicsItem>
@@ -20,7 +20,7 @@ class BarPresenterBase : public QObject, public ChartItem
 {
     Q_OBJECT
 public:
-    BarPresenterBase(QBarChartSeries *series, QGraphicsItem *parent = 0);
+    BarPresenterBase(QBarSeries *series, QGraphicsItem *parent = 0);
     ~BarPresenterBase();
 
 public:
@@ -57,7 +57,7 @@ protected:
     bool mSeparatorsEnabled;
 
     // Owned
-    QBarChartSeries* mSeries;
+    QBarSeries* mSeries;
 
     // Not owned.
     QList<Bar*> mBars;

@@ -9,7 +9,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-PercentBarPresenter::PercentBarPresenter(QBarChartSeries *series, QGraphicsItem *parent) :
+PercentBarPresenter::PercentBarPresenter(QBarSeries *series, QGraphicsItem *parent) :
     BarPresenterBase(series, parent)
 {
 }

@@ -16,7 +16,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Example on how to create a category:
     \snippet ../example/barchart/main.cpp 1
 
-    \sa QBarChartSeries, QStackedBarChartSeries, QPercentBarChartSeries
+    \sa QBarSeries, QStackedBarSeries, QPercentBarSeries
 */
 
 /*!

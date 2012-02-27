@@ -2,7 +2,7 @@
 #define STACKEDBARPRESENTER_H
 
 #include "barpresenterbase.h"
-#include "qstackedbarchartseries.h"
+#include "qstackedbarseries.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -11,7 +11,7 @@ class StackedBarPresenter : public BarPresenterBase
 {
     Q_OBJECT
 public:
-    StackedBarPresenter(QBarChartSeries *series, QGraphicsItem *parent = 0);
+    StackedBarPresenter(QBarSeries *series, QGraphicsItem *parent = 0);
 
 private:
     // From BarPresenterBase

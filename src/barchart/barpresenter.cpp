@@ -7,7 +7,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarPresenter::BarPresenter(QBarChartSeries *series, QGraphicsItem *parent) :
+BarPresenter::BarPresenter(QBarSeries *series, QGraphicsItem *parent) :
     BarPresenterBase(series, parent)
 {
     mBarDefaultWidth = 15;

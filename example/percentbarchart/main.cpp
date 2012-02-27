@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QStandardItemModel>
-#include <qpercentbarchartseries.h>
+#include <qpercentbarseries.h>
 #include <qbarcategory.h>
 #include <qchartview.h>
 #include <qbarset.h>
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     //! [3]
     // Create series and add sets to it
-    QPercentBarChartSeries* series = new QPercentBarChartSeries(category);
+    QPercentBarSeries* series = new QPercentBarSeries(category);
 
     series->addBarSet(set0);
     series->addBarSet(set1);

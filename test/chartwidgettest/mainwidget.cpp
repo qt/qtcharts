@@ -6,9 +6,9 @@
 #include <qlinechartseries.h>
 #include <qbarset.h>
 #include <qbarcategory.h>
-#include <qbarchartseries.h>
-#include <qstackedbarchartseries.h>
-#include <qpercentbarchartseries.h>
+#include <qbarseries.h>
+#include <qstackedbarseries.h>
+#include <qpercentbarseries.h>
 #include <QPushButton>
 #include <QComboBox>
 #include <QSpinBox>
@@ -255,13 +255,13 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         QStringList labels = generateLabels(rowCount);
         foreach(QString label, labels)
             *category << label;
-        QBarChartSeries* series = 0;
+        QBarSeries* series = 0;
         if (seriesName == "Bar")
-            series = new QBarChartSeries(category, this);
+            series = new QBarSeries(category, this);
         else if (seriesName == "Stacked bar")
-            series = new QStackedBarChartSeries(category, this);
+            series = new QStackedBarSeries(category, this);
         else
-            series = new QPercentBarChartSeries(category, this);
+            series = new QPercentBarSeries(category, this);
 
         for (int j(0); j < data.count(); j++) {
             QList<qreal> column = data.at(j);

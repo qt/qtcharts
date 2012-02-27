@@ -4,13 +4,13 @@
 #include "barlabel_p.h"
 #include "separator_p.h"
 #include "qbarset.h"
-#include "qbarchartseries.h"
+#include "qbarseries.h"
 #include <QDebug>
 #include <QToolTip>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarPresenterBase::BarPresenterBase(QBarChartSeries *series, QGraphicsItem *parent)
+BarPresenterBase::BarPresenterBase(QBarSeries *series, QGraphicsItem *parent)
     : ChartItem(parent)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)

@@ -18,7 +18,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Example on how to create sets of data:
     \snippet ../example/barchart/main.cpp 2
 
-    \sa QBarCategory, QBarChartSeries, QStackedBarChartSeries, QPercentBarChartSeries
+    \sa QBarCategory, QBarSeries, QStackedBarSeries, QPercentBarSeries
 */
 
 /*!

@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <qchartview.h>
-#include <qstackedbarchartseries.h>
+#include <qstackedbarseries.h>
 #include <qbarset.h>
 #include <qbarcategory.h>
 
@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 
     //! [3]
     // Create series and add sets to it
-    QStackedBarChartSeries* series = new QStackedBarChartSeries(category);
+    QStackedBarSeries* series = new QStackedBarSeries(category);
 
     series->addBarSet(set0);
     series->addBarSet(set1);

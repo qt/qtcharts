@@ -3,7 +3,7 @@
 
 #include "chartitem_p.h"
 #include "bar_p.h"
-#include "qpercentbarchartseries.h"
+#include "qpercentbarseries.h"
 #include "barpresenterbase.h"
 #include <QGraphicsItem>
 
@@ -13,7 +13,7 @@ class PercentBarPresenter : public BarPresenterBase
 {
     Q_OBJECT
 public:
-    PercentBarPresenter(QBarChartSeries *series, QGraphicsItem *parent = 0);
+    PercentBarPresenter(QBarSeries *series, QGraphicsItem *parent = 0);
 
 private:
 
