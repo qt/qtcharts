@@ -18,13 +18,13 @@
             <li><a href="qbarset.html">QBarSet</a></li>
             <li><a href="qchart.html">QChart</a></li>
             <li><a href="qchartaxis.html">QChartAxis</a></li>
-            <li><a href="qchartseries.html">QChartSeries</a></li>
             <li><a href="qchartview.html">QChartView</a></li>
             <li><a href="qlineseries.html">QLineSeries</a></li>
             <li><a href="qpercentbarseries.html">QPercentBarSeries</a></li>
             <li><a href="qpieseries.html">QPieSeries</a></li>
             <li><a href="qpieslice.html">QPieSlice</a></li>
             <li><a href="qscatterseries.html">QScatterSeries</a></li>
+            <li><a href="qseries.html">QSeries</a></li>
             <li><a href="qstackedbarseries.html">QStackedBarSeries</a></li>
         </ul>
         </td>
