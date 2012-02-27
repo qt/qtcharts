@@ -124,7 +124,7 @@ bool QPieSeries::ChangeSet::isEmpty() const
     Constructs a series object which is a child of \a parent.
 */
 QPieSeries::QPieSeries(QObject *parent) :
-    QChartSeries(parent),
+    QSeries(parent),
     m_sizeFactor(1.0),
     m_position(PiePositionMaximized),
     m_pieStartAngle(0),
@@ -144,9 +144,9 @@ QPieSeries::~QPieSeries()
 /*!
     Returns QChartSeries::SeriesTypePie.
 */
-QChartSeries::QChartSeriesType QPieSeries::type() const
+QSeries::QSeriesType QPieSeries::type() const
 {
-    return QChartSeries::SeriesTypePie;
+    return QSeries::SeriesTypePie;
 }
 
 /*!

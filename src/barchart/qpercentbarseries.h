@@ -11,7 +11,7 @@ class QTCOMMERCIALCHART_EXPORT QPercentBarSeries : public QBarSeries
 public:
     QPercentBarSeries(QBarCategory *category, QObject* parent=0);
 
-    virtual QChartSeriesType type() const { return QChartSeries::SeriesTypePercentBar; }
+    virtual QSeriesType type() const { return QSeries::SeriesTypePercentBar; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

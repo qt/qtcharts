@@ -1,15 +1,15 @@
-#ifndef QLINECHARTSERIES_H_
-#define QLINECHARTSERIES_H_
+#ifndef QLINESERIES_H_
+#define QLINESERIES_H_
 
 #include "qchartglobal.h"
-#include "qchartseries.h"
+#include "qseries.h"
 #include <QDebug>
 #include <QPen>
 #include <QBrush>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_EXPORT QLineSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QLineSeries : public QSeries
 {
     Q_OBJECT
 public:
@@ -17,7 +17,7 @@ public:
     virtual ~QLineSeries();
 
 public: // from QChartSeries
-    virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeLine;}
+    virtual QSeriesType type() const { return QSeries::SeriesTypeLine;}
     void add(qreal x, qreal y);
     void add(const QPointF& point);
     void replace(qreal x,qreal y);

@@ -9,7 +9,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartItem;
-class QChartSeries;
+class QSeries;
 class ChartDataSet;
 //class QChart;
 class Domain;
@@ -40,18 +40,18 @@ private:
     void createConnections();
 
 public slots:
-    void handleSeriesAdded(QChartSeries* series);
-    void handleSeriesRemoved(QChartSeries* series);
+    void handleSeriesAdded(QSeries* series);
+    void handleSeriesRemoved(QSeries* series);
     void handleAxisAdded(QChartAxis* axis);
     void handleAxisRemoved(QChartAxis* axis);
-    void handleSeriesDomainChanged(QChartSeries* series, const Domain& domain);
+    void handleSeriesDomainChanged(QSeries* series, const Domain& domain);
     void handleAxisLabelsChanged(QChartAxis* axis, const QStringList& labels);
-    void handleSeriesChanged(QChartSeries* series);
+    void handleSeriesChanged(QSeries* series);
     void handleGeometryChanged();
 signals:
     void geometryChanged(const QRectF& rect);
 private:
-    QMap<QChartSeries*,ChartItem*> m_chartItems;
+    QMap<QSeries*,ChartItem*> m_chartItems;
     QMap<QChartAxis*,AxisItem*> m_axisItems;
     QChart* m_chart;
     ChartDataSet* m_dataset;

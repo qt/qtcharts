@@ -18,7 +18,7 @@ public slots:
 
 private:
     QTimer m_timer;
-    QList<QChartSeries*> m_series;
+    QList<QSeries*> m_series;
     int m_index;
 };
 

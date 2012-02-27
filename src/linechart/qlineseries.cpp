@@ -28,9 +28,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QChartSeriesType QLineSeries::type() const
+    \fn virtual QSeriesType QLineSeries::type() const
     \brief Returns type of series.
-    \sa QChartSeries, QChartSeriesType
+    \sa QSeries, QSeriesType
 */
 
 /*!
@@ -55,7 +55,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QLineSeries::QLineSeries(QObject* parent):QChartSeries(parent),
+QLineSeries::QLineSeries(QObject* parent):QSeries(parent),
 m_pointsVisible(false)
 {
 }

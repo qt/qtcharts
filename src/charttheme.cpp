@@ -80,35 +80,35 @@ void ChartTheme::decorate(QChart* chart)
     chart->setChartBackgroundBrush(backgroundGradient);
 }
 //TODO helper to by removed later
-void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
+void ChartTheme::decorate(ChartItem* item, QSeries* series,int count)
 {
     switch(series->type())
     {
-        case QChartSeries::SeriesTypeLine: {
+        case QSeries::SeriesTypeLine: {
             QLineSeries* s = static_cast<QLineSeries*>(series);
             LineChartItem* i = static_cast<LineChartItem*>(item);
             decorate(i,s,count);
             break;
         }
-        case QChartSeries::SeriesTypeBar: {
+        case QSeries::SeriesTypeBar: {
             QBarSeries* b = static_cast<QBarSeries*>(series);
             BarPresenter* i = static_cast<BarPresenter*>(item);
             decorate(i,b,count);
             break;
         }
-        case QChartSeries::SeriesTypeStackedBar: {
+        case QSeries::SeriesTypeStackedBar: {
             QStackedBarSeries* s = static_cast<QStackedBarSeries*>(series);
             StackedBarPresenter* i = static_cast<StackedBarPresenter*>(item);
             decorate(i,s,count);
             break;
         }
-        case QChartSeries::SeriesTypePercentBar: {
+        case QSeries::SeriesTypePercentBar: {
             QPercentBarSeries* s = static_cast<QPercentBarSeries*>(series);
             PercentBarPresenter* i = static_cast<PercentBarPresenter*>(item);
             decorate(i,s,count);
             break;
         }
-        case QChartSeries::SeriesTypeScatter: {
+        case QSeries::SeriesTypeScatter: {
             QScatterSeries* s = qobject_cast<QScatterSeries*>(series);
             Q_ASSERT(s);
             ScatterPresenter* i = static_cast<ScatterPresenter*>(item);
@@ -116,7 +116,7 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
             decorate(i, s, count);
             break;
         }
-        case QChartSeries::SeriesTypePie: {
+        case QSeries::SeriesTypePie: {
             QPieSeries* s = static_cast<QPieSeries*>(series);
             PiePresenter* i = static_cast<PiePresenter*>(item);
             decorate(i,s,count);

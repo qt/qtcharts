@@ -43,11 +43,11 @@ ChartPresenter::~ChartPresenter()
 void ChartPresenter::createConnections()
 {
     QObject::connect(m_chart,SIGNAL(geometryChanged()),this,SLOT(handleGeometryChanged()));
-    QObject::connect(m_dataset,SIGNAL(seriesAdded(QChartSeries*)),this,SLOT(handleSeriesAdded(QChartSeries*)));
-    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QChartSeries*)),this,SLOT(handleSeriesRemoved(QChartSeries*)));
+    QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*)),this,SLOT(handleSeriesAdded(QSeries*)));
+    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),this,SLOT(handleSeriesRemoved(QSeries*)));
     QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*)),this,SLOT(handleAxisAdded(QChartAxis*)));
     QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),this,SLOT(handleAxisRemoved(QChartAxis*)));
-    QObject::connect(m_dataset,SIGNAL(seriesDomainChanged(QChartSeries*,const Domain&)),this,SLOT(handleSeriesDomainChanged(QChartSeries*,const Domain&)));
+    QObject::connect(m_dataset,SIGNAL(seriesDomainChanged(QSeries*,const Domain&)),this,SLOT(handleSeriesDomainChanged(QSeries*,const Domain&)));
     QObject::connect(m_dataset,SIGNAL(axisLabelsChanged(QChartAxis*,const QStringList&)),this,SLOT(handleAxisLabelsChanged(QChartAxis*,const QStringList&)));
 }
 
@@ -104,11 +104,11 @@ void ChartPresenter::handleAxisRemoved(QChartAxis* axis)
 }
 
 
-void ChartPresenter::handleSeriesAdded(QChartSeries* series)
+void ChartPresenter::handleSeriesAdded(QSeries* series)
 {
     switch(series->type())
     {
-        case QChartSeries::SeriesTypeLine: {
+        case QSeries::SeriesTypeLine: {
             QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
             LineChartItem* item;
             if(m_options.testFlag(QChart::SeriesAnimations)){
@@ -123,7 +123,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             break;
         }
 
-        case QChartSeries::SeriesTypeBar: {
+        case QSeries::SeriesTypeBar: {
             QBarSeries* barSeries = static_cast<QBarSeries*>(series);
             BarPresenter* item = new BarPresenter(barSeries,m_chart);
             m_chartTheme->decorate(item,barSeries,m_chartItems.count());
@@ -134,7 +134,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             break;
         }
 
-        case QChartSeries::SeriesTypeStackedBar: {
+        case QSeries::SeriesTypeStackedBar: {
 
             QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
             StackedBarPresenter* item = new StackedBarPresenter(stackedBarSeries,m_chart);
@@ -145,7 +145,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             break;
         }
 
-        case QChartSeries::SeriesTypePercentBar: {
+        case QSeries::SeriesTypePercentBar: {
 
             QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
             PercentBarPresenter* item = new PercentBarPresenter(percentBarSeries,m_chart);
@@ -155,7 +155,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             m_chartItems.insert(series,item);
             break;
         }
-        case QChartSeries::SeriesTypeScatter: {
+        case QSeries::SeriesTypeScatter: {
             QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
             ScatterPresenter *scatterPresenter = new ScatterPresenter(scatterSeries, m_chart);
             QObject::connect(scatterPresenter, SIGNAL(clicked()), scatterSeries, SIGNAL(clicked()));
@@ -165,7 +165,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
             m_chartItems.insert(scatterSeries, scatterPresenter);
             break;
         }
-        case QChartSeries::SeriesTypePie: {
+        case QSeries::SeriesTypePie: {
             QPieSeries *s = qobject_cast<QPieSeries *>(series);
             PiePresenter* pie = new PiePresenter(m_chart, s);
             m_chartTheme->decorate(pie, s, m_chartItems.count());
@@ -197,18 +197,18 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
     if(m_rect.isValid()) emit geometryChanged(m_rect);
 }
 
-void ChartPresenter::handleSeriesRemoved(QChartSeries* series)
+void ChartPresenter::handleSeriesRemoved(QSeries* series)
 {
 	ChartItem* item = m_chartItems.take(series);
 	delete item;
 }
 
-void ChartPresenter::handleSeriesChanged(QChartSeries* series)
+void ChartPresenter::handleSeriesChanged(QSeries* series)
 {
     //TODO:
 }
 
-void ChartPresenter::handleSeriesDomainChanged(QChartSeries* series, const Domain& domain)
+void ChartPresenter::handleSeriesDomainChanged(QSeries* series, const Domain& domain)
 {
     m_chartItems.value(series)->handleDomainChanged(domain);
 }
@@ -225,7 +225,7 @@ void ChartPresenter::setChartTheme(QChart::ChartTheme theme)
     m_chartTheme = ChartTheme::createTheme(theme);
 
     m_chartTheme->decorate(m_chart);
-    QMapIterator<QChartSeries*,ChartItem*> i(m_chartItems);
+    QMapIterator<QSeries*,ChartItem*> i(m_chartItems);
 
     int index=0;
     while (i.hasNext()) {
@@ -255,13 +255,13 @@ void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
         //recreate elements
 
         QList<QChartAxis*> axisList = m_axisItems.uniqueKeys();
-        QList<QChartSeries*> seriesList = m_chartItems.uniqueKeys();
+        QList<QSeries*> seriesList = m_chartItems.uniqueKeys();
 
         foreach(QChartAxis* axis, axisList) {
             handleAxisRemoved(axis);
             handleAxisAdded(axis);
         }
-        foreach(QChartSeries* series, seriesList) {
+        foreach(QSeries* series, seriesList) {
             handleSeriesRemoved(series);
             handleSeriesAdded(series);
         }

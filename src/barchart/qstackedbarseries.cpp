@@ -16,9 +16,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QChartSeriesType QStackedBarSeries::type() const
+    \fn virtual QSeriesType QStackedBarSeries::type() const
     \brief Returns type of series.
-    \sa QChartSeries, QChartSeriesType
+    \sa QSeries, QSeriesType
 */
 
 /*!

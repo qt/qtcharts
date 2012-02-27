@@ -75,7 +75,7 @@ void QChartView::resizeEvent(QResizeEvent *event)
     the y axis).
     \sa removeSeries(), removeAllSeries()
 */
-void QChartView::addSeries(QChartSeries* series,QChartAxis *axisY)
+void QChartView::addSeries(QSeries* series,QChartAxis *axisY)
 {
     m_chart->addSeries(series,axisY);
 }
@@ -86,7 +86,7 @@ void QChartView::addSeries(QChartSeries* series,QChartAxis *axisY)
     It does not delete the pointed QChartSeries data object
     \sa addSeries(), removeAllSeries()
 */
-void QChartView::removeSeries(QChartSeries* series)
+void QChartView::removeSeries(QSeries* series)
 {
     m_chart->removeSeries(series);
 }

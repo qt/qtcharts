@@ -21,9 +21,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QChartSeriesType QBarSeries::type() const
+    \fn virtual QSeriesType QBarSeries::type() const
     \brief Returns type of series.
-    \sa QChartSeries, QChartSeriesType
+    \sa QSeries, QSeriesType
 */
 /*!
     \fn void QBarSeries::changed(int index)
@@ -52,7 +52,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     QBarSeries is QObject which is a child of a \a parent.
 */
 QBarSeries::QBarSeries(QBarCategory *category, QObject *parent)
-    : QChartSeries(parent)
+    : QSeries(parent)
     ,mModel(new BarChartModel(category, this))
 {
 }

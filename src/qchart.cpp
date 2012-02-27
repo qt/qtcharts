@@ -65,7 +65,7 @@ QChart::~QChart()
     If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
     the y axis).
 */
-void QChart::addSeries(QChartSeries* series, QChartAxis* axisY)
+void QChart::addSeries(QSeries* series, QChartAxis* axisY)
 {
     m_dataset->addSeries(series, axisY);
 }
@@ -76,7 +76,7 @@ void QChart::addSeries(QChartSeries* series, QChartAxis* axisY)
     It does not delete the pointed QChartSeries data object
     \sa addSeries(), removeAllSeries()
 */
-void QChart::removeSeries(QChartSeries* series)
+void QChart::removeSeries(QSeries* series)
 {
     m_dataset->removeSeries(series);
 }

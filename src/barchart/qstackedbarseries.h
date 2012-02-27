@@ -13,7 +13,7 @@ class QTCOMMERCIALCHART_EXPORT QStackedBarSeries : public QBarSeries
 public:
     QStackedBarSeries(QBarCategory *category, QObject* parent=0);
 
-    virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeStackedBar; }
+    virtual QSeriesType type() const { return QSeries::SeriesTypeStackedBar; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -62,7 +62,7 @@ QScatterSeriesPrivate::QScatterSeriesPrivate() :
     Constructs a series object which is a child of \a parent.
 */
 QScatterSeries::QScatterSeries(QObject *parent) :
-    QChartSeries(parent),
+    QSeries(parent),
     d(new QScatterSeriesPrivate())
 {
 }

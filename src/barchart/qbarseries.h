@@ -1,7 +1,7 @@
 #ifndef BARSERIES_H
 #define BARSERIES_H
 
-#include "qchartseries.h"
+#include "qseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -10,13 +10,13 @@ class QBarSet;
 class BarChartModel;
 
 // Container for series
-class QTCOMMERCIALCHART_EXPORT QBarSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
 {
     Q_OBJECT
 public:
     QBarSeries(QBarCategory *category, QObject* parent=0);
 
-    virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }
+    virtual QSeriesType type() const { return QSeries::SeriesTypeBar; }
 
     void addBarSet(QBarSet *set);               // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set

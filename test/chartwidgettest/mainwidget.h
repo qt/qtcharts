@@ -36,7 +36,7 @@ private slots:
     void xMaxChanged(int value);
     void yMinChanged(int value);
     void yMaxChanged(int value);
-    void setCurrentSeries(QChartSeries *series);
+    void setCurrentSeries(QSeries *series);
     void changeChartTheme(int themeIndex);
     void setPieSizeFactor(double margin);
     void setPiePosition(int position);
@@ -51,7 +51,7 @@ private:
     QSpinBox *m_yMinSpin;
     QSpinBox *m_yMaxSpin;
     QString m_defaultSeriesName;
-    QChartSeries *m_currentSeries;
+    QSeries *m_currentSeries;
     QGridLayout *m_scatterLayout;
     QGridLayout *m_pieLayout;
 };

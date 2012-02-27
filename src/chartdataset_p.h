@@ -1,7 +1,7 @@
 #ifndef CHARTDATASET_P_H_
 #define CHARTDATASET_P_H_
 
-#include "qchartseries.h"
+#include "qseries.h"
 #include "domain_p.h"
 #include <QVector>
 
@@ -16,8 +16,8 @@ public:
     ChartDataSet(QObject* parent=0);
     virtual ~ChartDataSet();
 
-    void addSeries(QChartSeries* series,QChartAxis *axisY = 0);
-    void removeSeries(QChartSeries* series);
+    void addSeries(QSeries* series,QChartAxis *axisY = 0);
+    void removeSeries(QSeries* series);
     void removeAllSeries();
     void addDomain(const QRectF& rect, const QRectF& viewport);
     bool nextDomain();
@@ -28,15 +28,15 @@ public:
     void setDomain(int index);
 
     QChartAxis* axisX() const { return m_axisX;};
-    QChartAxis* axisY(QChartSeries* series = 0) const;
+    QChartAxis* axisY(QSeries* series = 0) const;
 
 signals:
-    void seriesAdded(QChartSeries* series);
-    void seriesRemoved(QChartSeries* series);
+    void seriesAdded(QSeries* series);
+    void seriesRemoved(QSeries* series);
     void axisAdded(QChartAxis* axis);
     void axisRemoved(QChartAxis* axis);
     void axisLabelsChanged(QChartAxis* axis, const QStringList& labels);
-    void seriesDomainChanged(QChartSeries* series,const Domain& domain);
+    void seriesDomainChanged(QSeries* series,const Domain& domain);
 
 private slots:
 	void handleMinChanged(qreal min);
@@ -48,7 +48,7 @@ private:
 
 private:
     QMultiMap<QChartAxis*, Domain> m_domainMap;
-    QMultiMap<QChartAxis*, QChartSeries*> m_seriesMap;
+    QMultiMap<QChartAxis*, QSeries*> m_seriesMap;
     QChartAxis* m_axisX;
     QChartAxis* m_axisY;
     int m_domainIndex;

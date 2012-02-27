@@ -1,14 +1,14 @@
 #ifndef QSCATTERSERIES_H
 #define QSCATTERSERIES_H
 
-#include "qchartseries.h"
+#include "qseries.h"
 #include <QRectF>
 #include <QColor>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QScatterSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QSeries
 {
     Q_OBJECT
 
@@ -30,7 +30,7 @@ public:
     ~QScatterSeries();
 
 public: // from QChartSeries
-    QChartSeriesType type() const { return QChartSeries::SeriesTypeScatter; }
+    QSeriesType type() const { return QSeries::SeriesTypeScatter; }
 
 public:
     void add(qreal x, qreal y);

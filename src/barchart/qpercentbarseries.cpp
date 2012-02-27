@@ -16,9 +16,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QChartSeriesType QPercentBarSeries::type() const
+    \fn virtual QSeriesType QPercentBarSeries::type() const
     \brief Returns type of series.
-    \sa QChartSeries, QChartSeriesType
+    \sa QSeries, QSeriesType
 */
 
 /*!

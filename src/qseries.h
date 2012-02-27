@@ -1,5 +1,5 @@
-#ifndef QCHARTSERIES_H
-#define QCHARTSERIES_H
+#ifndef QSERIES_H
+#define QSERIES_H
 
 #include "qchartglobal.h"
 #include <QObject>
@@ -7,11 +7,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_EXPORT QChartSeries : public QObject
+class QTCOMMERCIALCHART_EXPORT QSeries : public QObject
 {
     Q_OBJECT
 public:
-    enum QChartSeriesType {
+    enum QSeriesType {
         SeriesTypeLine,
         SeriesTypeArea,
         SeriesTypeBar,
@@ -23,11 +23,11 @@ public:
     };
 
 protected:
-    QChartSeries(QObject *parent = 0) : QObject(parent) {}
+    QSeries(QObject *parent = 0) : QObject(parent) {}
 
 public:
-    virtual ~QChartSeries() {}
-    virtual QChartSeriesType type() const = 0;
+    virtual ~QSeries() {}
+    virtual QSeriesType type() const = 0;
     // TODO
     virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
 };

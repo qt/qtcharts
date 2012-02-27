@@ -1,6 +1,5 @@
 #include "mainwidget.h"
 #include "dataseriedialog.h"
-#include "qchartseries.h"
 #include "qpieseries.h"
 #include "qscatterseries.h"
 #include <qlineseries.h>
@@ -281,24 +280,24 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
     // TODO: spline and area
 }
 
-void MainWidget::setCurrentSeries(QChartSeries *series)
+void MainWidget::setCurrentSeries(QSeries *series)
 {
     if (series) {
         m_currentSeries = series;
         switch (m_currentSeries->type()) {
-        case QChartSeries::SeriesTypeLine:
+        case QSeries::SeriesTypeLine:
             break;
-        case QChartSeries::SeriesTypeScatter:
+        case QSeries::SeriesTypeScatter:
             break;
-        case QChartSeries::SeriesTypePie:
+        case QSeries::SeriesTypePie:
             break;
-        case QChartSeries::SeriesTypeBar:
+        case QSeries::SeriesTypeBar:
             qDebug() << "setCurrentSeries (bar)";
             break;
-        case QChartSeries::SeriesTypeStackedBar:
+        case QSeries::SeriesTypeStackedBar:
             qDebug() << "setCurrentSeries (Stackedbar)";
             break;
-        case QChartSeries::SeriesTypePercentBar:
+        case QSeries::SeriesTypePercentBar:
             qDebug() << "setCurrentSeries (Percentbar)";
             break;
         default:
