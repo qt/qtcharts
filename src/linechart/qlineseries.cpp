@@ -3,8 +3,8 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    \class QLineChartSeries
-    \brief The QLineChartSeries class is used for making line charts.
+    \class QLineSeries
+    \brief The QLineSeries class is used for making line charts.
 
     \mainclass
 
@@ -13,7 +13,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 	\image linechart.png
 
-    To create line charts, users need to first QLineChartSeries object.
+    To create line charts, users need to first QLineSeries object.
 
     \snippet ../example/linechart/main.cpp 1
 
@@ -28,26 +28,26 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QChartSeriesType QLineChartSeries::type() const
+    \fn virtual QChartSeriesType QLineSeries::type() const
     \brief Returns type of series.
     \sa QChartSeries, QChartSeriesType
 */
 
 /*!
-   \fn QPen QLineChartSeries::pen() const
+   \fn QPen QLineSeries::pen() const
    \brief  Returns the pen used to draw line for this series.
     \sa setPen()
 */
 
 /*!
-   \fn bool  QLineChartSeries::isPointsVisible() const
+   \fn bool  QLineSeries::isPointsVisible() const
    \brief  Returns if the points are drawn for this series.
     \sa setPointsVisible()
 */
 
 
 /*!
-    \fn void QLineChartSeries::changed(int index)
+    \fn void QLineSeries::changed(int index)
     \brief \internal \a index
 */
 
