@@ -28,7 +28,7 @@ public:
     QPen gridPen() const {return m_gridPen;}
 
     //labels handling
-    bool isLabelsVisible() const { return m_labelsVisible;};
+    bool labelsVisible() const { return m_labelsVisible;};
     void setLabelsVisible(bool visible);
     void setLabelsPen(const QPen& pen);
     QPen labelsPen() const { return m_labelsPen;}
@@ -40,7 +40,7 @@ public:
     int labelsAngle() const { return m_labelsAngle;};
 
     //shades handling
-    bool isShadesVisible() const { return m_shadesVisible;};
+    bool shadesVisible() const { return m_shadesVisible;};
     void setShadesVisible(bool visible);
     void setShadesPen(const QPen& pen);
     QPen shadesPen() const { return m_shadesPen;}
