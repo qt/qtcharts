@@ -153,8 +153,7 @@ QChartSeries::QChartSeriesType QPieSeries::type() const
 }
 
 /*!
-    Sets an array of values to the series.
-    TO BE REMOVED
+    \internal \a data
 */
 bool QPieSeries::setData(QList<qreal> data)
 {
