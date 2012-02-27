@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     // Create chart view
     QChartView *chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setChartTitle("Simple Line Chart");
     // Add series to the chart
     QLineChartSeries *line = new QLineChartSeries();
     line->add(0.0, 0.8);
@@ -27,11 +28,13 @@ int main(int argc, char *argv[])
     chartView->addSeries(line);
     //! [1]
 
+    chartView->setChartTitle("\'Scietific\' theme");
     //! [2]
     // Change theme
     chartView->setChartTheme(QChart::ChartThemeScientific);
     //! [2]
 
+    chartView->setChartTitle("Simple Pie Chart");
     //! [3]
     // Add pie series
     // ...
@@ -41,6 +44,7 @@ int main(int argc, char *argv[])
     chartView->addSeries(pie);
     //! [3]
 
+    chartView->setChartTitle("Simple Scatter Chart");
     //! [4]
     // Add scatter series
     // ...
@@ -52,6 +56,7 @@ int main(int argc, char *argv[])
     chartView->addSeries(scatter);
     //! [4]
 
+    chartView->setChartTitle("Simple Bar Chart");
     //! [5]
     // ...
     // Add bar series
@@ -69,8 +74,9 @@ int main(int argc, char *argv[])
     //! [5]
 
     QMainWindow w;
-    w.resize(380, 250);
+    w.resize(400, 300);
     w.setCentralWidget(chartView);
+    w.setWindowFlags(Qt::FramelessWindowHint);
     w.show();
 
     return a.exec();
