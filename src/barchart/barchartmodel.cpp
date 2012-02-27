@@ -36,24 +36,14 @@ void BarChartModel::removeBarSet(QBarSet *set)
     }
 }
 
-QBarSet* BarChartModel::nextSet(bool getFirst)
-{
-    if (getFirst) {
-        mCurrentSet = 0;
-    }
-
-    if ((mDataModel.count() <= 0) || (mDataModel.count() <= mCurrentSet)) {
-        return 0;
-    }
-
-    QBarSet* set = mDataModel.at(mCurrentSet);
-    mCurrentSet++;
-    return set;
-}
-
 QBarSet* BarChartModel::setAt(int index)
 {
     return mDataModel.at(index);
+}
+
+QList<QBarSet*> BarChartModel::barSets()
+{
+    return mDataModel;
 }
 
 QList<QString> BarChartModel::legend()

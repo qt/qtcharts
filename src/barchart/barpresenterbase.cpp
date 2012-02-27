@@ -70,7 +70,7 @@ void BarPresenterBase::dataChanged()
     // Create new graphic items for bars
     for (int c=0; c<mSeries->countCategories(); c++) {
         for (int s=0; s<mSeries->countSets(); s++) {
-            QBarSet *set = mSeries->setAt(s);
+            QBarSet *set = mSeries->barsetAt(s);
             Bar *bar = new Bar(this);
             childItems().append(bar);
             mBars.append(bar);
@@ -102,7 +102,7 @@ void BarPresenterBase::dataChanged()
     // Create floating values
     for (int category=0; category<mSeries->countCategories(); category++) {
         for (int s=0; s<mSeries->countSets(); s++) {
-            QBarSet *set = mSeries->setAt(s);
+            QBarSet *set = mSeries->barsetAt(s);
             BarValue *value = new BarValue(*set, this);
             childItems().append(value);
             mFloatingValues.append(value);

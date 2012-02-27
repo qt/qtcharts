@@ -22,8 +22,9 @@ public:
     QBarCategory& category();
     void addBarSet(QBarSet *set);
     void removeBarSet(QBarSet *set);
-    QBarSet* nextSet(bool getFirst);
     QBarSet *setAt(int index);
+    QList<QBarSet*> barSets();
+
     QList<QString> legend();
 
     int countSets();            // Number of sets in model

@@ -17,21 +17,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \mainclass
 
-    Example on how to create category:
-    \snippet ../example/barchart/main.cpp 1
-
-    Example on how to create sets of data:
-    \snippet ../example/barchart/main.cpp 2
-
-    Example on how to add sets to bar chart:
-    \snippet ../example/barchart/main.cpp 3
-
-    Example on how to enable tooltip and floating values:
-    \snippet ../example/barchart/main.cpp 4
-
-    Example on how to create view and apply theme:
-    \snippet ../example/barchart/main.cpp 5
-
     \sa QBarCategory, QBarSet, QStackedBarSeries, QPercentBarSeries
 */
 
@@ -105,22 +90,17 @@ int QBarSeries::countCategories()
 }
 
 /*!
-    Simple iterator for set. Returns pointer to next set in series.
-    Returns first set, if parameter \a getFirst is true.
-    If series is empty, returns 0.
-    Returns 0 after last set.
-*/
-QBarSet* QBarSeries::nextSet(bool getFirst)
+    Returns a list of sets in series. Keeps ownership of sets.
+ */
+QList<QBarSet*> QBarSeries::barSets()
 {
-    return mModel->nextSet(getFirst);
+    return mModel->barSets();
 }
 
 /*!
-    Returns set indexed by \a index. Doesn't check for index bounds.
-    Assumes that \a index is between 0 and number of sets. Use countSets() to get valid index bound.
-    \sa countSets()
+    \internal \a index
 */
-QBarSet* QBarSeries::setAt(int index)
+QBarSet* QBarSeries::barsetAt(int index)
 {
     return mModel->setAt(index);
 }
@@ -146,7 +126,7 @@ QString QBarSeries::label(int category)
     Floating values are bar values, that are displayed on top of each bar.
     Calling without parameter \a enabled, enables the floating values
 */
-void QBarSeries::enableFloatingValues(bool enabled)
+void QBarSeries::setFloatingValuesEnabled(bool enabled)
 {
     if (enabled) {
         for (int i=0; i<mModel->countSets(); i++) {
@@ -166,7 +146,7 @@ void QBarSeries::enableFloatingValues(bool enabled)
     Tooltip shows the name of set, when mouse is hovering on top of bar.
     Calling without parameter \a enabled, enables the tooltip
 */
-void QBarSeries::enableToolTip(bool enabled)
+void QBarSeries::setToolTipEnabled(bool enabled)
 {
     if (enabled) {
         for (int i=0; i<mModel->countSets(); i++) {
@@ -186,7 +166,7 @@ void QBarSeries::enableToolTip(bool enabled)
     Separators are visual elements that are drawn between categories.
     Calling without parameter \a enabled, enables the separators
 */
-void QBarSeries::enableSeparators(bool enabled)
+void QBarSeries::setSeparatorsEnabled(bool enabled)
 {
     emit separatorsEnabled(enabled);
 }

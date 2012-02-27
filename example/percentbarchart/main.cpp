@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 
     //! [4]
     // Enable features
-    series->enableToolTip();
+    series->setToolTipEnabled();
     series->enableFloatingValues();
     //! [4]
 
