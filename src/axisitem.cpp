@@ -114,7 +114,7 @@ void AxisItem::handleAxisUpdate(QChartAxis* axis)
     setAxisPen(axis->axisPen());
     setLabelsPen(axis->labelsPen());
     setLabelsBrush(axis->labelsBrush());
-    setLabelsFont(axis->labelFont());
+    setLabelsFont(axis->labelsFont());
     setGridPen(axis->gridPen());
     setShadesPen(axis->shadesPen());
     setShadesBrush(axis->shadesBrush());
