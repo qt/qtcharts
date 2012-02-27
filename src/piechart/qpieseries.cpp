@@ -158,15 +158,15 @@ bool QPieSeries::setData(QList<qreal> data)
     QList<QPieSlice*> slices;
     foreach (qreal value, data)
         slices << new QPieSlice(value, QString::number(value));
-    set(slices);
+    replace(slices);
     return true;
 }
 
 /*!
-    Sets an array of \a slices to the series.
+    Sets an array of \a slices to the series replacing the existing slices.
     Slice ownership is passed to the series.
 */
-void QPieSeries::set(QList<QPieSlice*> slices)
+void QPieSeries::replace(QList<QPieSlice*> slices)
 {
     clear();
     add(slices);

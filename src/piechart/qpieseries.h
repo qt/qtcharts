@@ -59,7 +59,7 @@ public: // from QChartSeries
     virtual bool setData(QList<qreal> data);  // TODO: remove this
 
 public:
-    void set(QList<QPieSlice*> slices);
+    void replace(QList<QPieSlice*> slices);
     void add(QList<QPieSlice*> slices);
     void add(QPieSlice* slice);
     QPieSlice* add(qreal value, QString name);
