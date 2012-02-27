@@ -221,7 +221,7 @@ QChartView::RubberBandPolicy QChartView::rubberBandPolicy() const
 
 /*!
     If Left mouse button is pressed and the RubberBandPolicy is enabled the \a event is accepted and the rubber band is displayed on the screen allowing the user to select the zoom area.
-    If different mouse button is pressed and/or the RubberBandPolicy is disabled then the \a event is passed to QGraphicsView::mousePressEvent() implementation is called.
+    If different mouse button is pressed and/or the RubberBandPolicy is disabled then the \a event is passed to QGraphicsView::mousePressEvent() implementation.
 */
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
