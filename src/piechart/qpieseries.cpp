@@ -353,7 +353,8 @@ void QPieSeries::setLabelsVisible(bool visible)
 }
 
 /*!
-    Convenience method for exploding a slice when user clicks the pie.
+    Convenience method for exploding a slice when user clicks the pie. Set \a enable to true to
+    explode slices by clicking.
 
     \sa QPieSlice::isExploded(), QPieSlice::setExploded(), QPieSlice::setExplodeDistance()
 */
@@ -368,6 +369,7 @@ void QPieSeries::enableClickExplodes(bool enable)
 /*!
     Convenience method for highlighting a slice when user hovers over the slice.
     It changes the slice color to be lighter and shows the label of the slice.
+    Set \a enable to true to highlight a slice when user hovers on top of it.
 
     \sa QPieSlice::isExploded(), QPieSlice::setExploded()
 */
