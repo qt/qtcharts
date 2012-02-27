@@ -9,7 +9,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QPieSlice
-    \brief Defines a slice a pie series.
+    \brief Defines a slice in pie series.
 
     Holds all the data of a single slice in a QPieSeries and provides the means
     to modify slice data and customize the visual appearance of the slice.
