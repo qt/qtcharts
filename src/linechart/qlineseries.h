@@ -30,7 +30,7 @@ public: // from QChartSeries
     QPen pen() const { return m_pen;}
 
     void setPointsVisible(bool visible);
-    bool isPointsVisible() const {return m_pointsVisible;}
+    bool pointsVisible() const {return m_pointsVisible;}
 
     int count() const;
     qreal x(int pos) const;

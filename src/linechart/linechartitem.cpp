@@ -36,7 +36,7 @@ void LineChartItem::addPoints(const QVector<QPointF>& points)
     const QPointF& point =m_data[i];
     QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
     item->setPos(point.x()-1,point.y()-1);;
-    if(!m_clipRect.contains(point) || !m_series->isPointsVisible()) item->setVisible(false);
+    if(!m_clipRect.contains(point) || !m_series->pointsVisible()) item->setVisible(false);
     m_points << item;
     }
 }
@@ -47,7 +47,7 @@ void LineChartItem::addPoint(const QPointF& point)
 	QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
 	m_clipRect.contains(point);
 	item->setPos(point.x()-1,point.y()-1);
-	if(!m_clipRect.contains(point) || !m_series->isPointsVisible()) item->setVisible(false);
+	if(!m_clipRect.contains(point) || !m_series->pointsVisible()) item->setVisible(false);
 	m_points << item;
 }
 
