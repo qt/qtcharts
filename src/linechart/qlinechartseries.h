@@ -18,10 +18,12 @@ public:
 
 public: // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeLine;}
-    int add(qreal x, qreal y);
-    int add(const QPointF& point);
-    void set(int index,qreal x,qreal y);
-    void set(int index,const QPointF& point);
+    void add(qreal x, qreal y);
+    void add(const QPointF& point);
+    void replace(qreal x,qreal y);
+    void replace(const QPointF& point);
+    void remove(qreal x);
+    void remove(const QPointF& point);
     void clear();
 
     void setPen(const QPen& pen);

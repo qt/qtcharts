@@ -44,9 +44,9 @@ public slots:
 
         for (qreal i = 0, x = 0; x <= 2*PI; x+=m_step, i++) {
             fluctuate = qrand() % 100;
-            m_series1->set(i, x, fabs(sin(x)*fluctuate));
+            m_series1->replace(x, fabs(sin(x)*fluctuate));
             fluctuate = qrand() % 100;
-            m_series2->set(i, x, fabs(cos(x)*fluctuate));
+            m_series2->replace(x, fabs(cos(x)*fluctuate));
         }
 
     }

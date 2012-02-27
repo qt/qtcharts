@@ -69,32 +69,29 @@ QLineChartSeries::~QLineChartSeries()
 
 /*!
     Adds data point \a x \a y to the series. Points are connected with lines on the chart.
-    Function returns index, which can be used to modify data.
  */
-int QLineChartSeries::add(qreal x,qreal y)
+void QLineChartSeries::add(qreal x,qreal y)
 {
     m_x<<x;
     m_y<<y;
-    return m_x.size()-1;
 }
 
 /*!
    This is an overloaded function.
    Adds data \a point to the series. Points are connected with lines on the chart.
-   Function returns index, which can be used to modify data.
  */
-int QLineChartSeries::add(const QPointF& point)
+void QLineChartSeries::add(const QPointF& point)
 {
     m_x<<point.x();
     m_y<<point.y();
-    return m_x.size()-1;
 }
 
 /*!
-  Modifies data within \a index, sets new \a x and \a y values.
+  Modifies \a y value for given \a x a value.
 */
-void QLineChartSeries::set(int index,qreal x,qreal y)
+void QLineChartSeries::replace(qreal x,qreal y)
 {
+    int index = m_x.indexOf(x);
     m_x[index]=x;
     m_y[index]=y;
     emit changed(index);
@@ -102,15 +99,31 @@ void QLineChartSeries::set(int index,qreal x,qreal y)
 
 /*!
   This is an overloaded function.
-  Modifies data within \a index, sets new \a point value.
+  Replaces current y value of for given \a point x value with \a point y value.
 */
-void QLineChartSeries::set(int index,const QPointF& point)
+void QLineChartSeries::replace(const QPointF& point)
 {
+    int index = m_x.indexOf(point.x());
     m_x[index]=point.x();
     m_y[index]=point.y();
     emit changed(index);
 }
 
+/*!
+  Removes current \a x and y value.
+*/
+void QLineChartSeries::remove(qreal x)
+{
+
+}
+
+/*!
+  Removes current \a point x value. Note \point y value is ignored.
+*/
+void QLineChartSeries::remove(const QPointF& point)
+{
+
+}
 
 /*!
   Clears all the data.
