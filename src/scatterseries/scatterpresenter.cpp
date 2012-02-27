@@ -4,6 +4,7 @@
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsDropShadowEffect>
 #include <QDebug>
 #include <QTime>
 
@@ -13,8 +14,6 @@ ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *pare
     ChartItem(parent),
     m_series(series),
     m_boundingRect(),
-    //m_markerColor(QColor()),
-//    m_markerColor(QColor(255, 0, 0)),
     m_visibleChartArea()
 {
     if (parent)
@@ -23,6 +22,10 @@ ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *pare
     if (series) {
         connect(series, SIGNAL(changed()), this, SLOT(handleModelChanged()));
     }
+
+    QGraphicsDropShadowEffect *dropShadow = new QGraphicsDropShadowEffect();
+    dropShadow->setOffset(2.0);
+    setGraphicsEffect(dropShadow);
 }
 
 void ScatterPresenter::handleDomainChanged(const Domain& domain)
@@ -59,14 +62,6 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
         painter->setBrush(m_markerBrush);
     painter->setPen(pen);
     painter->drawPath(m_path);
-
-    // TODO: how to draw a drop shadow?
-    QPen dropShadowPen(QColor(0, 0, 0, 70));
-    dropShadowPen.setWidth(3);
-    painter->setPen(dropShadowPen);
-    painter->setBrush(Qt::NoBrush);
-    painter->setRenderHint(QPainter::Antialiasing);
-    painter->drawPath(m_path.translated(2, 2));
 
     painter->restore();
 }
