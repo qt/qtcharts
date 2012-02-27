@@ -7,36 +7,46 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-#define PI 3.14159265358979
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
     QMainWindow window;
 
+//![1]
+
     QLineChartSeries* series0 = new QLineChartSeries();
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
+
     QLineChartSeries* series1 = new QLineChartSeries();
     QPen red(Qt::red);
     red.setWidth(3);
     series1->setPen(red);
+//![1]
 
-    int numPoints = 100;
+//![2]
+    series0->add(0, 6);
+    series0->add(2, 4);
+    series0->add(3, 8);
+    series0->add(7, 4);
+    series0->add(10,5);
 
-    for (int x = 0; x <= numPoints; ++x) {
-    	  series0->add(x, fabs(sin(PI/50*x)*100));
-    	  series1->add(x, fabs(cos(PI/50*x)*100));
-    }
-
+    series1->add(1, 1);
+    series1->add(3, 3);
+    series1->add(7, 6);
+    series1->add(8, 3);
+    series1->add(10,2);
+//![2]
+//![3]
     QChartView* chartView =  new QChartView(&window);
 
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setChartTitle("Basic line chart example");
     chartView->addSeries(series0);
     chartView->addSeries(series1);
+//![3]
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);

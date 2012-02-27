@@ -12,7 +12,9 @@ HTML.scripts     =
 # These also need to be listed in qhp.Qt.extraFiles with the correct
 # directory prefixes.
 
-extraimages.HTML        = qt-logo.png \
+extraimages.HTML        = qt_commercial_logo.png \
+                          digia_logo.png \
+                          qcharts.png \
                           arrow_down.png \
                           breadcrumb.png \
                           bullet_gt.png \
@@ -20,7 +22,10 @@ extraimages.HTML        = qt-logo.png \
                           bullet_sq.png \
                           bullet_up.png \
                           horBar.png \
-                          sprites-combined.png
+                          bg.png
+                         
+                          
+                          
 
 # Include the style sheets and scripts used.
 
@@ -32,3 +37,5 @@ HTML.headerscripts =
 HTML.endheader = \
     "</head>\n" \
     "<body>\n"
+
+HTML.nobreadcrumbs = true

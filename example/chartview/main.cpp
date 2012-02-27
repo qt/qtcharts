@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
     //! [1]
     // Create chart view
     QChartView *chartView = new QChartView();
+    chartView->setRenderHint(QPainter::Antialiasing);
     // Add series to the chart
     QLineChartSeries *line = new QLineChartSeries();
     line->add(0.0, 0.8);
@@ -33,6 +34,7 @@ int main(int argc, char *argv[])
 
     //! [3]
     // Add pie series
+    // ...
     QPieSeries *pie = new QPieSeries();
     pie->add(3.4, "slice1");
     pie->add(6.7, "slice2");
@@ -41,6 +43,7 @@ int main(int argc, char *argv[])
 
     //! [4]
     // Add scatter series
+    // ...
     QScatterSeries *scatter = new QScatterSeries();
     for (qreal x(0); x < 100; x += 0.5) {
         qreal y = rand() % 100;
@@ -50,6 +53,7 @@ int main(int argc, char *argv[])
     //! [4]
 
     //! [5]
+    // ...
     // Add bar series
     QBarCategory *barCategory = new QBarCategory();
     *barCategory << "Jan"
@@ -65,7 +69,7 @@ int main(int argc, char *argv[])
     //! [5]
 
     QMainWindow w;
-    w.resize(350, 250);
+    w.resize(380, 250);
     w.setCentralWidget(chartView);
     w.show();
 
