@@ -9,12 +9,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_EXPORT QLineChartSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QLineSeries : public QChartSeries
 {
     Q_OBJECT
 public:
-    QLineChartSeries(QObject* parent=0);
-    virtual ~QLineChartSeries();
+    QLineSeries(QObject* parent=0);
+    virtual ~QLineSeries();
 
 public: // from QChartSeries
     virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeLine;}
@@ -35,7 +35,7 @@ public: // from QChartSeries
     int count() const;
     qreal x(int pos) const;
     qreal y(int pos) const;
-    friend QDebug operator<< (QDebug d, const QLineChartSeries series);
+    friend QDebug operator<< (QDebug d, const QLineSeries series);
 
 signals:
     void changed(int index);

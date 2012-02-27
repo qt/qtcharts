@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartItem;
 class QChartSeries;
 class LineChartItem;
-class QLineChartSeries;
+class QLineSeries;
 class BarPresenter;
 class QBarSeries;
 class StackedBarPresenter;
@@ -31,10 +31,10 @@ public:
     QChart::ChartTheme id() const {return m_id;}
     void decorate(QChart* chart);
     void decorate(ChartItem* item, QChartSeries* series,int count);
-    void decorate(LineChartItem* item, QLineChartSeries*, int count);
     void decorate(BarPresenter* item, QBarSeries* series,int count);
     void decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count);
     void decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count);
+    void decorate(LineChartItem* item, QLineSeries*, int count);
     void decorate(ScatterPresenter* presenter, QScatterSeries* series, int count);
     void decorate(PiePresenter* item, QPieSeries* series, int count);
     void decorate(QChartAxis* axis,AxisItem* item);

@@ -1,4 +1,4 @@
-#include "qlinechartseries.h"
+#include "qlineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -55,7 +55,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QLineChartSeries::QLineChartSeries(QObject* parent):QChartSeries(parent),
+QLineSeries::QLineSeries(QObject* parent):QChartSeries(parent),
 m_pointsVisible(false)
 {
 }
@@ -63,14 +63,14 @@ m_pointsVisible(false)
     Destroys the object. Series added to QChartView or QChart instances are owned by those,
     and are deleted when mentioned object are destroyed.
 */
-QLineChartSeries::~QLineChartSeries()
+QLineSeries::~QLineSeries()
 {
 }
 
 /*!
     Adds data point \a x \a y to the series. Points are connected with lines on the chart.
  */
-void QLineChartSeries::add(qreal x,qreal y)
+void QLineSeries::add(qreal x,qreal y)
 {
     m_x<<x;
     m_y<<y;
@@ -80,7 +80,7 @@ void QLineChartSeries::add(qreal x,qreal y)
    This is an overloaded function.
    Adds data \a point to the series. Points are connected with lines on the chart.
  */
-void QLineChartSeries::add(const QPointF& point)
+void QLineSeries::add(const QPointF& point)
 {
     m_x<<point.x();
     m_y<<point.y();
@@ -89,7 +89,7 @@ void QLineChartSeries::add(const QPointF& point)
 /*!
   Modifies \a y value for given \a x a value.
 */
-void QLineChartSeries::replace(qreal x,qreal y)
+void QLineSeries::replace(qreal x,qreal y)
 {
     int index = m_x.indexOf(x);
     m_x[index]=x;
@@ -101,7 +101,7 @@ void QLineChartSeries::replace(qreal x,qreal y)
   This is an overloaded function.
   Replaces current y value of for given \a point x value with \a point y value.
 */
-void QLineChartSeries::replace(const QPointF& point)
+void QLineSeries::replace(const QPointF& point)
 {
     int index = m_x.indexOf(point.x());
     m_x[index]=point.x();
@@ -112,7 +112,7 @@ void QLineChartSeries::replace(const QPointF& point)
 /*!
   Removes current \a x and y value.
 */
-void QLineChartSeries::remove(qreal x)
+void QLineSeries::remove(qreal x)
 {
 
 }
@@ -120,7 +120,7 @@ void QLineChartSeries::remove(qreal x)
 /*!
   Removes current \a point x value. Note \point y value is ignored.
 */
-void QLineChartSeries::remove(const QPointF& point)
+void QLineSeries::remove(const QPointF& point)
 {
 
 }
@@ -128,7 +128,7 @@ void QLineChartSeries::remove(const QPointF& point)
 /*!
   Clears all the data.
 */
-void QLineChartSeries::clear()
+void QLineSeries::clear()
 {
     m_x.clear();
     m_y.clear();
@@ -137,7 +137,7 @@ void QLineChartSeries::clear()
 /*!
     \internal \a pos
 */
-qreal QLineChartSeries::x(int pos) const
+qreal QLineSeries::x(int pos) const
 {
    return m_x.at(pos);
 }
@@ -145,7 +145,7 @@ qreal QLineChartSeries::x(int pos) const
 /*!
     \internal \a pos
 */
-qreal QLineChartSeries::y(int pos) const
+qreal QLineSeries::y(int pos) const
 {
    return m_y.at(pos);
 }
@@ -153,7 +153,7 @@ qreal QLineChartSeries::y(int pos) const
 /*!
     Returns number of data points within series.
 */
-int QLineChartSeries::count() const
+int QLineSeries::count() const
 {
 	Q_ASSERT(m_x.size() == m_y.size());
 
@@ -164,7 +164,7 @@ int QLineChartSeries::count() const
 /*!
     Sets \a pen used for drawing given series..
 */
-void QLineChartSeries::setPen(const QPen& pen)
+void QLineSeries::setPen(const QPen& pen)
 {
     m_pen=pen;
 }
@@ -172,12 +172,12 @@ void QLineChartSeries::setPen(const QPen& pen)
 /*!
     Sets if data points are \a visible and should be drawn on line.
 */
-void QLineChartSeries::setPointsVisible(bool visible)
+void QLineSeries::setPointsVisible(bool visible)
 {
     m_pointsVisible=visible;
 }
 
-QDebug operator<< (QDebug debug, const QLineChartSeries series)
+QDebug operator<< (QDebug debug, const QLineSeries series)
 {
 	Q_ASSERT(series.m_x.size() == series.m_y.size());
 
@@ -190,6 +190,6 @@ QDebug operator<< (QDebug debug, const QLineChartSeries series)
 }
 
 
-#include "moc_qlinechartseries.cpp"
+#include "moc_qlineseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

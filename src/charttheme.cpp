@@ -8,7 +8,7 @@
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
-#include "qlinechartseries.h"
+#include "qlineseries.h"
 #include "qscatterseries.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
@@ -85,7 +85,7 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
     switch(series->type())
     {
         case QChartSeries::SeriesTypeLine: {
-            QLineChartSeries* s = static_cast<QLineChartSeries*>(series);
+            QLineSeries* s = static_cast<QLineSeries*>(series);
             LineChartItem* i = static_cast<LineChartItem*>(item);
             decorate(i,s,count);
             break;
@@ -129,7 +129,7 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
 
 }
 
-void ChartTheme::decorate(LineChartItem* item, QLineChartSeries* series,int count)
+void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int count)
 {
     QPen pen;
     if(pen != series->pen()){

@@ -2,7 +2,7 @@
 #include <QMainWindow>
 #include <qchartglobal.h>
 #include <qchartview.h>
-#include <qlinechartseries.h>
+#include <qlineseries.h>
 #include <qscatterseries.h>
 #include <qbarseries.h>
 #include <qbarset.h>
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setChartTitle("Simple Line Chart");
     // Add series to the chart
-    QLineChartSeries *line = new QLineChartSeries();
+    QLineSeries *line = new QLineSeries();
     line->add(0.0, 0.8);
     line->add(1.1, 1.1);
     line->add(2.0, 2.5);

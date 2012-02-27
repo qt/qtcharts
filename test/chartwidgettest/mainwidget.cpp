@@ -3,7 +3,7 @@
 #include "qchartseries.h"
 #include "qpieseries.h"
 #include "qscatterseries.h"
-#include <qlinechartseries.h>
+#include <qlineseries.h>
 #include <qbarset.h>
 #include <qbarcategory.h>
 #include <qbarseries.h>
@@ -219,7 +219,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
     if (seriesName.contains("line", Qt::CaseInsensitive)) {
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
-            QLineChartSeries *series = new QLineChartSeries();
+            QLineSeries *series = new QLineSeries();
             for (int i(0); i < column.count(); i++) {
                 series->add(i, column.at(i));
             }

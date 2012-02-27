@@ -1,7 +1,7 @@
 #include "chartdataset_p.h"
 #include "qchartaxis.h"
 //series
-#include "qlinechartseries.h"
+#include "qlineseries.h"
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
@@ -57,7 +57,7 @@ void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
     {
         case QChartSeries::SeriesTypeLine: {
 
-            QLineChartSeries* xyseries = static_cast<QLineChartSeries*>(series);
+            QLineSeries* xyseries = static_cast<QLineSeries*>(series);
 
             for (int i = 0; i < xyseries->count(); i++)
             {

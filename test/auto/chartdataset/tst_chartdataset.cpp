@@ -1,7 +1,7 @@
 #include <QtTest/QtTest>
 #include <qchartaxis.h>
 #include <qchartseries.h>
-#include <qlinechartseries.h>
+#include <qlineseries.h>
 #include <private/chartdataset_p.h>
 #include <private/domain_p.h>
 
@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 Q_DECLARE_METATYPE(Domain)
 Q_DECLARE_METATYPE(QChartAxis*)
 Q_DECLARE_METATYPE(QChartSeries*)
-Q_DECLARE_METATYPE(QLineChartSeries*)
+Q_DECLARE_METATYPE(QLineSeries*)
 
 class tst_ChartDataSet: public QObject {
 Q_OBJECT
@@ -99,7 +99,7 @@ void tst_ChartDataSet::addDomain()
 	ChartDataSet dataSet;
 
 	Domain domain1(0, 1000, 0, 1000);
-	QLineChartSeries series;
+	QLineSeries series;
 	series.add(0, 0);
 	series.add(1000, 1000);
 
@@ -173,7 +173,7 @@ void tst_ChartDataSet::addSeries()
 
 	for (int i = 0; i < seriesCount; i++) {
 		QChartAxis* axisY = 0;
-		QLineChartSeries* series = new QLineChartSeries();
+		QLineSeries* series = new QLineSeries();
 		if (iterator != axisList.end()) {
 			axisY = *iterator;
 			iterator++;
@@ -218,10 +218,10 @@ void tst_ChartDataSet::axisY()
 
 	QVERIFY2(defaultAxisY, "Missing axisY.");
 
-	QLineChartSeries* series1 = new QLineChartSeries();
+	QLineSeries* series1 = new QLineSeries();
 	dataSet.addSeries(series1);
 
-	QLineChartSeries* series2 = new QLineChartSeries();
+	QLineSeries* series2 = new QLineSeries();
 	dataSet.addSeries(series2, axisY);
 
 	QVERIFY(dataSet.axisY(series1) == defaultAxisY);
@@ -244,7 +244,7 @@ void tst_ChartDataSet::clearDomains()
 	QFETCH(int, indexCount);
 
 	Domain domain1(0, 100, 0, 100);
-	QLineChartSeries* series = new QLineChartSeries();
+	QLineSeries* series = new QLineSeries();
 	series->add(0, 0);
 	series->add(100, 100);
 
@@ -315,13 +315,13 @@ void tst_ChartDataSet::domain()
 	QFETCH(Domain, domain);
 
 	ChartDataSet dataSet;
-	QLineChartSeries* series1 = new QLineChartSeries();
+	QLineSeries* series1 = new QLineSeries();
 	series1->add(domain1.m_minX, domain1.m_minY);
 	series1->add(domain1.m_maxX, domain1.m_maxY);
-	QLineChartSeries* series2 = new QLineChartSeries();
+	QLineSeries* series2 = new QLineSeries();
 	series2->add(domain2.m_minX, domain2.m_minY);
 	series2->add(domain2.m_maxX, domain2.m_maxY);
-	QLineChartSeries* series3 = new QLineChartSeries();
+	QLineSeries* series3 = new QLineSeries();
 	series3->add(domain3.m_minX, domain3.m_minY);
 	series3->add(domain3.m_maxX, domain3.m_maxY);
 
@@ -370,7 +370,7 @@ void tst_ChartDataSet::nextpreviousDomain()
 	ChartDataSet dataSet;
 
 	Domain domain1(0, 1000, 0, 1000);
-	QLineChartSeries* series = new QLineChartSeries();
+	QLineSeries* series = new QLineSeries();
 	series->add(0, 0);
 	series->add(1000, 1000);
 
@@ -487,7 +487,7 @@ void tst_ChartDataSet::removeSeries()
 
 	for (int i = 0; i < seriesCount; i++) {
 		QChartAxis* axisY = 0;
-		QLineChartSeries* series = new QLineChartSeries();
+		QLineSeries* series = new QLineSeries();
 		if (iterator != axisList.end()) {
 			axisY = *iterator;
 			iterator++;
@@ -559,7 +559,7 @@ void tst_ChartDataSet::removeAllSeries()
 
     for (int i = 0; i < seriesCount; i++) {
         QChartAxis* axisY = 0;
-        QLineChartSeries* series = new QLineChartSeries();
+        QLineSeries* series = new QLineSeries();
         if (iterator != axisList.end()) {
             axisY = *iterator;
             iterator++;

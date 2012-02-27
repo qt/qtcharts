@@ -7,7 +7,7 @@
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
-#include "qlinechartseries.h"
+#include "qlineseries.h"
 #include "qpieseries.h"
 #include "qscatterseries.h"
 //items
@@ -109,7 +109,7 @@ void ChartPresenter::handleSeriesAdded(QChartSeries* series)
     switch(series->type())
     {
         case QChartSeries::SeriesTypeLine: {
-            QLineChartSeries* lineSeries = static_cast<QLineChartSeries*>(series);
+            QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
             LineChartItem* item;
             if(m_options.testFlag(QChart::SeriesAnimations)){
                 item = new LineChartAnimationItem(this,lineSeries,m_chart);

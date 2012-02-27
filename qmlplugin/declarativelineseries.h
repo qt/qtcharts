@@ -8,7 +8,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
-class QLineChartSeries;
+class QLineSeries;
 
 class DeclarativeLineSeries : public QDeclarativeItem
 {
@@ -30,7 +30,7 @@ private slots:
 
 private:
     QChart *m_chart;
-    QLineChartSeries *m_series;
+    QLineSeries *m_series;
     QList<ScatterElement *> m_data;
 };
 
