@@ -190,6 +190,10 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
         QColor c = m_seriesColor[i++];
         i = i % m_seriesColor.count();
 
+        // dont use black colors... looks bad
+        if (c == Qt::black)
+            continue;
+
         // by default use the "raw" theme color
         if (!colors.contains(c)) {
             colors << c;
