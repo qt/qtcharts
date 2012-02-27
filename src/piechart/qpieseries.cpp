@@ -116,6 +116,11 @@ bool QPieSeries::ChangeSet::isEmpty() const
 
     Example on how to create a chart with pie series:
     \snippet ../example/piechart/main.cpp 1
+
+    To help with the most common user intercation scenarions there some convenience functions. Specifically
+    exploding and higlighting:
+    \snippet ../example/piechart/main.cpp 2
+
 */
 
 /*!
@@ -172,7 +177,7 @@ void QPieSeries::set(QList<QPieSlice*> slices)
 }
 
 /*!
-    Adds an array of slices to the series.
+    Adds an array of \a slices to the series.
     Slice ownership is passed to the series.
 */
 void QPieSeries::add(QList<QPieSlice*> slices)
@@ -350,7 +355,7 @@ void QPieSeries::setLabelsVisible(bool visible)
 /*!
     Convenience method for exploding a slice when user clicks the pie.
 
-    \sa QPieSlice::isExploded(), QPieSlice::setExploded()
+    \sa QPieSlice::isExploded(), QPieSlice::setExploded(), QPieSlice::setExplodeDistance()
 */
 void QPieSeries::enableClickExplodes(bool enable)
 {

@@ -25,6 +25,11 @@ int main(int argc, char *argv[])
     chartView->addSeries(series);
     //! [1]
 
+    //! [2]
+    series->enableHoverHighlight(true);
+    series->enableClickExplodes(true);
+    //! [2]
+
     window.setCentralWidget(chartView);
     window.resize(600, 600);
     window.show();
