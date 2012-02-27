@@ -270,9 +270,9 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             }
             series->addBarSet(set);
         }
-        series->enableFloatingValues();
+        series->setFloatingValuesEnabled(true);
         series->setToolTipEnabled();
-        series->enableSeparators(false);
+        series->setSeparatorsEnabled(false);
         m_chartWidget->addSeries(series);
         setCurrentSeries(series);
     }
