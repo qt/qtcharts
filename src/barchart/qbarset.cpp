@@ -13,6 +13,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     If set has fewer values than there are categories, then the missing values are assumed to be
     at the end of set. For missing values in middle of a set, numerical value of zero is used.
 
+    \mainclass
+
+    Example on how to create sets of data:
+    \snippet ../example/barchart/main.cpp 2
+
     \sa QBarCategory, QBarChartSeries, QStackedBarChartSeries, QPercentBarChartSeries
 */
 
@@ -30,11 +35,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \fn void QBarSet::toggleFloatingValues()
-    \brief INTERNAL
+    \brief \internal
 */
 /*!
     \fn void QBarSet::showToolTip(QPoint pos, QString tip)
-    \brief INTERNAL \a pos \a tip
+    \brief \internal \a pos \a tip
 */
 
 
@@ -129,7 +134,7 @@ const QBrush& QBarSet::brush() const
 }
 
 /*!
-    INTERNAL
+    \internal
 */
 void QBarSet::barClicked()
 {
@@ -140,7 +145,7 @@ void QBarSet::barClicked()
 }
 
 /*!
-    INTERNAL \a pos
+    \internal \a pos
 */
 void QBarSet::barHoverEntered(QPoint pos)
 {
@@ -149,7 +154,7 @@ void QBarSet::barHoverEntered(QPoint pos)
 }
 
 /*!
-    INTERNAL
+    \internal
 */
 void QBarSet::barHoverLeaved()
 {

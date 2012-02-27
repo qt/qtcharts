@@ -7,42 +7,46 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+
 /*!
-    \enum QPieSeries::PiePosition
+    \class QPieSeries::ChangeSet
+    \brief Defines the changes in the series.
 
-    This enum describes pie position within its bounding rectangle
+    Contains the changes that have occurred in the series. Lists of added, changed and removed slices.
 
-    \value PiePositionMaximized
-    \value PiePositionTopLeft
-    \value PiePositionTopRight
-    \value PiePositionBottomLeft
-    \value PiePositionBottomRight
+    \sa QPieSeries::changed()
 */
 
 /*!
-    \class QPieSeries
-    \brief QtCommercial charts pie series API.
-
+    \internal
 */
-
 void QPieSeries::ChangeSet::appendAdded(QPieSlice* slice)
 {
     if (!m_added.contains(slice))
         m_added << slice;
 }
 
+/*!
+    \internal
+*/
 void QPieSeries::ChangeSet::appendAdded(QList<QPieSlice*> slices)
 {
     foreach (QPieSlice* s, slices)
         appendAdded(s);
 }
 
+/*!
+    \internal
+*/
 void QPieSeries::ChangeSet::appendChanged(QPieSlice* slice)
 {
     if (!m_changed.contains(slice))
         m_changed << slice;
 }
 
+/*!
+    \internal
+*/
 void QPieSeries::ChangeSet::appendRemoved(QPieSlice* slice)
 {
     if (!m_removed.contains(slice))
@@ -88,6 +92,30 @@ bool QPieSeries::ChangeSet::isEmpty() const
 }
 
 /*!
+    \enum QPieSeries::PiePosition
+
+    This enum describes pie position within its bounding rectangle
+
+    \value PiePositionMaximized
+    \value PiePositionTopLeft
+    \value PiePositionTopRight
+    \value PiePositionBottomLeft
+    \value PiePositionBottomRight
+*/
+
+/*!
+    \class QPieSeries
+    \brief Pie series API for QtCommercial Charts
+
+    The pie series defines a pie chart which consists of pie slices which are QPieSlice objects.
+    The slices can have any values as the QPieSeries will calculate its relative value to the sum of all slices.
+    The actual slice size (span) is determined by that relative value.
+
+    By default the pie is defined as full but it can be a partial pie.
+    This can be done by setting a starting angle and angle span to the series.
+*/
+
+/*!
     Constructs a series object which is a child of \a parent.
 */
 QPieSeries::QPieSeries(QObject *parent) :
@@ -109,7 +137,7 @@ QPieSeries::~QPieSeries()
 }
 
 /*!
-    Returns the type of the series which is always QChartSeries::SeriesTypePie.
+    Returns QChartSeries::SeriesTypePie.
 */
 QChartSeries::QChartSeriesType QPieSeries::type() const
 {
@@ -188,6 +216,7 @@ QPieSlice* QPieSeries::add(qreal value, QString name)
 
 /*!
     Removes a single \a slice from the series and deletes the slice.
+
     Do not reference this pointer after this call.
 */
 void QPieSeries::remove(QPieSlice* slice)
@@ -292,7 +321,7 @@ QPieSeries::PiePosition QPieSeries::position() const
 /*!
     Sets the \a startAngle and \a angleSpan of this series.
 
-    \sa
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
 */
 void QPieSeries::setSpan(qreal startAngle, qreal angleSpan)
 {

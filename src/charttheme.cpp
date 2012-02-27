@@ -1,7 +1,7 @@
 #include "charttheme_p.h"
 #include "qchart.h"
 #include "qchartaxis.h"
-
+#include <QTime>
 
 //series
 #include "qbarset.h"
@@ -50,6 +50,8 @@ ChartTheme::ChartTheme(QChart::ChartTheme id)
     m_seriesColor.append(QRgb(0xff707070));
     m_gradientStartColor = QColor(QRgb(0xffffffff));
     m_gradientEndColor = QColor(QRgb(0xffafafaf));
+
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 }
 
 
@@ -57,7 +59,7 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 {
     switch(theme) {
         case QChart::ChartThemeDefault:
-            return new ChartTheme();
+            return new ChartThemeIcy();
         case QChart::ChartThemeVanilla:
             return new ChartThemeVanilla();
         case QChart::ChartThemeIcy:
@@ -188,31 +190,63 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
         QColor c = m_seriesColor[i++];
         i = i % m_seriesColor.count();
 
-        // -1 means achromatic color -> cannot manipulate lightness
-        // TODO: find a better way to randomize lightness
-        if (c.toHsv().hue() == -1)
-            qWarning() << "ChartTheme::decorate() warning: achromatic theme color";
+        // by default use the "raw" theme color
+        if (!colors.contains(c)) {
+            colors << c;
+            continue;
+        }
+        // ...ok we need to generate something that looks like the same color
+        // but different lightness
 
-        // randomize lightness
-        qreal f = 50 + (qrand() % 100); // 50 is 50% darker, 100 is the same, 150 is 50% lighter
-        c = c.lighter(f);
+        int tryCount = 0;
+        while (tryCount++ < 100) {
 
-        // find duplicates
-        bool isUnique = true;
-        foreach (QColor color, colors) {
-            if (c == color)
-                isUnique = false;
+            // find maximum value we can raise the lightness
+            int lMax = 255;
+            if (lMax > 255 - c.red())
+                lMax = 255 - c.red();
+            if (lMax > 255 - c.green())
+                lMax = 255 - c.green();
+            if (lMax > 255 - c.blue())
+                lMax = 255 - c.blue();
+
+            // find maximum value we can make it darker
+            int dMax = 255;
+            if (dMax > c.red())
+                dMax = c.red();
+            if (dMax > c.green())
+                dMax = c.green();
+            if (dMax > c.blue())
+                dMax = c.blue();
+
+            int max = dMax + lMax;
+            if (max == 0) {
+                // no room to make color lighter or darker...
+                qDebug() << "cannot generate a color for pie!";
+                break;
+            }
+
+            // generate random color
+            int r = c.red() - dMax;
+            int g = c.green() - dMax;
+            int b = c.blue() - dMax;
+            int d = qrand() % max;
+            c.setRgb(r+d, g+d, b+d);
+
+            // found a unique color?
+            if (!colors.contains(c))
+                break;
         }
 
-        // add to array if unique
-        //if (isUnique)
-            colors << c;
+        qDebug() << "generated a color for pie" << c;
+        colors << c;
     }
 
     // finally update colors
     foreach (QPieSlice* s, series->slices()) {
-        s->setPen(QPen(Qt::black)); // TODO: get from theme
-        s->setBrush(colors.takeFirst());
+        QColor c = colors.takeFirst();
+        s->setPen(c);
+        s->setBrush(c);
     }
 }
 

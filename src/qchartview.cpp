@@ -22,20 +22,26 @@
     \class QChartView
     \brief Standalone charting widget.
 
-    QChartView is a standalone widget that can display charts. It does not require separate QGraphicsScene to work. It manages the graphical
-    representation of different types of QChartSeries and other chart related objects like
-    QChartAxis and QChartLegend. If you want to display a chart in your existing QGraphicsScene, you can use the QChart class instead.
+    QChartView is a standalone widget that can display charts. It does not require separate
+    QGraphicsScene to work. It manages the graphical representation of different types of
+    QChartSeries and other chart related objects like QChartAxis and QChartLegend. If you want to
+    display a chart in your existing QGraphicsScene, you can use the QChart class instead.
 
-    For example, to create an empty chart in a widget based application:
+    For example, to create a chart with line series using a widget based application:
     \snippet ../example/chartview/main.cpp 1
     \image chartview_example.jpg
 
-    To add a line series:
-    \snippet ../example/chartview/main.cpp 2
-    \image chartview_example_series.jpg
-
-    To modify the visual appearance of the chart, you can use the pre-defined themes:
+    Showing a few more series:
     \snippet ../example/chartview/main.cpp 3
+    \image chartview_example_pie.jpg
+    \snippet ../example/chartview/main.cpp 4
+    \image chartview_example_scatter.jpg
+    \snippet ../example/chartview/main.cpp 5
+    \image chartview_example_bar.jpg
+
+    If you need to give a more professional touch to your chart you can switch to one of the
+    pre-defined themes:
+    \snippet ../example/chartview/main.cpp 2
     \image chartview_example_theme.jpg
 
     \sa QChart

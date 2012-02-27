@@ -3,6 +3,11 @@
 #include <qchartglobal.h>
 #include <qchartview.h>
 #include <qlinechartseries.h>
+#include <qscatterseries.h>
+#include <qbarchartseries.h>
+#include <qbarset.h>
+#include <qbarcategory.h>
+#include <qpieseries.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -13,26 +18,54 @@ int main(int argc, char *argv[])
     //! [1]
     // Create chart view
     QChartView *chartView = new QChartView();
-    chartView->setChartTheme(QChart::ChartThemeIcy);
+    // Add series to the chart
+    QLineChartSeries *line = new QLineChartSeries();
+    line->add(0.0, 0.8);
+    line->add(1.1, 1.1);
+    line->add(2.0, 2.5);
+    chartView->addSeries(line);
     //! [1]
 
     //! [2]
-    // Add series to the chart
-    QLineChartSeries *series = new QLineChartSeries();
-    series->add(0.0, 0.8);
-    series->add(1.1, 1.1);
-    series->add(1.6, 1.8);
-    series->add(2.0, 2.5);
-    chartView->addSeries(series);
+    // Change theme
+    chartView->setChartTheme(QChart::ChartThemeScientific);
     //! [2]
 
     //! [3]
-    // Change theme
-    chartView->setChartTheme(QChart::ChartThemeScientific);
+    // Add pie series
+    QPieSeries *pie = new QPieSeries();
+    pie->add(3.4, "slice1");
+    pie->add(6.7, "slice2");
+    chartView->addSeries(pie);
     //! [3]
 
+    //! [4]
+    // Add scatter series
+    QScatterSeries *scatter = new QScatterSeries();
+    for (qreal x(0); x < 100; x += 0.5) {
+        qreal y = rand() % 100;
+        *(scatter) << QPointF(x, y);
+    }
+    chartView->addSeries(scatter);
+    //! [4]
+
+    //! [5]
+    // Add bar series
+    QBarCategory *barCategory = new QBarCategory();
+    *barCategory << "Jan"
+                 << "Feb"
+                 << "Mar";
+    QBarChartSeries *bar = new QBarChartSeries(barCategory);
+    QBarSet *barSet = new QBarSet("Sales");
+    *barSet << 123.2
+            << 301.3
+            << 285.8;
+    bar->addBarSet(barSet);
+    chartView->addSeries(bar);
+    //! [5]
+
     QMainWindow w;
-    w.resize(640, 480);
+    w.resize(350, 250);
     w.setCentralWidget(chartView);
     w.show();
 

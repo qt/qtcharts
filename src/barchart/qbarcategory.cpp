@@ -11,6 +11,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     creating a QBarCategory class and appending the labels of categories to it.
     The QBarCategory is then given to bar chart series class.
 
+    \mainclass
+
+    Example on how to create a category:
+    \snippet ../example/barchart/main.cpp 1
+
     \sa QBarChartSeries, QStackedBarChartSeries, QPercentBarChartSeries
 */
 

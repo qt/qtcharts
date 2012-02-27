@@ -15,6 +15,23 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     QBarSet data sets. QBarChartSeries groups the data from sets to categories, which are defined
     by QBarCategory class.
 
+    \mainclass
+
+    Example on how to create category:
+    \snippet ../example/barchart/main.cpp 1
+
+    Example on how to create sets of data:
+    \snippet ../example/barchart/main.cpp 2
+
+    Example on how to add sets to bar chart:
+    \snippet ../example/barchart/main.cpp 3
+
+    Example on how to enable tooltip and floating values:
+    \snippet ../example/barchart/main.cpp 4
+
+    Example on how to create view and apply theme:
+    \snippet ../example/barchart/main.cpp 5
+
     \sa QBarCategory, QBarSet, QStackedBarChartSeries, QPercentBarChartSeries
 */
 
@@ -25,28 +42,29 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \fn void QBarChartSeries::changed(int index)
-    \brief INTERNAL \a index
+    \brief \internal \a index
 */
 /*!
     \fn void QBarChartSeries::floatingValuesEnabled(bool enabled)
-    \brief INTERNAL \a enabled
+    \brief \internal \a enabled
 */
 /*!
     \fn void QBarChartSeries::toolTipEnabled(bool enabled)
-    \brief INTERNAL \a enabled
+    \brief \internal \a enabled
 */
 /*!
     \fn void QBarChartSeries::separatorsEnabled(bool enabled)
-    \brief INTERNAL \a enabled
+    \brief \internal \a enabled
 */
 /*!
     \fn void QBarChartSeries::showToolTip(QPoint pos, QString tip)
-    \brief INTERNAL \a pos \a tip
+    \brief \internal \a pos \a tip
 */
 
 /*!
     Constructs empty QBarChartSeries. Parameter \a category defines the categories for chart.
-    QBarChartSeries is QObject which is a child of a\a parent.
+    Takes ownership of \a category.
+    QBarChartSeries is QObject which is a child of a \a parent.
 */
 QBarChartSeries::QBarChartSeries(QBarCategory *category, QObject *parent)
     : QChartSeries(parent)
@@ -79,8 +97,18 @@ int QBarChartSeries::countSets()
 }
 
 /*!
+    Returns number of categories in series
+*/
+int QBarChartSeries::countCategories()
+{
+    return mModel->countCategories();
+}
+
+/*!
     Simple iterator for set. Returns pointer to next set in series.
-    Returns first set, if \a getFirst is true. If series is empty, returns 0.
+    Returns first set, if parameter \a getFirst is true.
+    If series is empty, returns 0.
+    Returns 0 after last set.
 */
 QBarSet* QBarChartSeries::nextSet(bool getFirst)
 {
@@ -106,7 +134,7 @@ QList<QString> QBarChartSeries::legend()
 }
 
 /*!
-    INTERNAL \a category
+    \internal \a category
 */
 QString QBarChartSeries::label(int category)
 {
@@ -164,15 +192,7 @@ void QBarChartSeries::enableSeparators(bool enabled)
 }
 
 /*!
-    INTERNAL
-*/
-int QBarChartSeries::countCategories()
-{
-    return mModel->countCategories();
-}
-
-/*!
-    INTERNAL
+    \internal
 */
 qreal QBarChartSeries::min()
 {
@@ -180,7 +200,7 @@ qreal QBarChartSeries::min()
 }
 
 /*!
-    INTERNAL
+    \internal
 */
 qreal QBarChartSeries::max()
 {
@@ -188,7 +208,7 @@ qreal QBarChartSeries::max()
 }
 
 /*!
-    INTERNAL \a set \a category
+    \internal \a set \a category
 */
 qreal QBarChartSeries::valueAt(int set, int category)
 {
@@ -196,7 +216,7 @@ qreal QBarChartSeries::valueAt(int set, int category)
 }
 
 /*!
-    INTERNAL \a set \a category
+    \internal \a set \a category
 */
 qreal QBarChartSeries::percentageAt(int set, int category)
 {
@@ -204,7 +224,7 @@ qreal QBarChartSeries::percentageAt(int set, int category)
 }
 
 /*!
-    INTERNAL \a category
+    \internal \a category
 */
 qreal QBarChartSeries::categorySum(int category)
 {
@@ -212,7 +232,7 @@ qreal QBarChartSeries::categorySum(int category)
 }
 
 /*!
-    INTERNAL
+    \internal
 */
 qreal QBarChartSeries::maxCategorySum()
 {
@@ -220,7 +240,7 @@ qreal QBarChartSeries::maxCategorySum()
 }
 
 /*!
-    INTERNAL
+    \internal
 */
 BarChartModel& QBarChartSeries::model()
 {
