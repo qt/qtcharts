@@ -25,6 +25,7 @@ ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *pare
 
     QGraphicsDropShadowEffect *dropShadow = new QGraphicsDropShadowEffect();
     dropShadow->setOffset(2.0);
+    dropShadow->setBlurRadius(2.0);
     setGraphicsEffect(dropShadow);
 }
 
@@ -54,10 +55,10 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     // Paint the shape
     // The custom settings in series override those defined by the theme
     QPen pen = m_markerPen;
-    if (m_series->markerPen().color().isValid())
-        pen = m_series->markerPen();
-    if (m_series->markerBrush().color().isValid())
-        painter->setBrush(m_series->markerBrush());
+    if (m_series->pen().color().isValid())
+        pen = m_series->pen();
+    if (m_series->brush().color().isValid())
+        painter->setBrush(m_series->brush());
     else
         painter->setBrush(m_markerBrush);
     painter->setPen(pen);
@@ -82,7 +83,7 @@ void ScatterPresenter::changeGeometry()
         qreal scalex = m_boundingRect.width() / m_visibleChartArea.spanX();
         qreal scaley = m_boundingRect.height() / m_visibleChartArea.spanY();
 
-        int shape = m_series->markerShape();
+        int shape = m_series->shape();
         m_path = QPainterPath();
 
         foreach (QPointF point, m_series->data()) {
@@ -104,14 +105,8 @@ void ScatterPresenter::changeGeometry()
                     m_path.addRect(x, y, 9, 9);
                     break;
                 case QScatterSeries::MarkerShapeTiltedRectangle: {
-                    // TODO:
-//                    static const QPointF points[4] = {
-//                        QPointF(-1.0 + x, 0.0 + y),
-//                        QPointF(0.0 + x, 1.0 + y),
-//                        QPointF(1.0 + x, 0.0 + y),
-//                        QPointF(0.0 + x, -1.0 + y)
-//                    };
-                    //m_path.addPolygon(QPolygon(4, &points));
+                    // TODO: tilt the rectangle
+                    m_path.addRect(x, y, 9, 9);
                     break;
                 }
                 default:

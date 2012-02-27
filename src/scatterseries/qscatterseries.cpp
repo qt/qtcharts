@@ -41,16 +41,6 @@
 */
 
 /*!
-    \fn void QScatterSeries::hoverEnter()
-    \brief TODO
-*/
-
-/*!
-    \fn void QScatterSeries::hoverLeave()
-    \brief TODO
-*/
-
-/*!
     \fn void QScatterSeries::changed()
     \brief TODO
 */
@@ -86,11 +76,18 @@ QScatterSeries::~QScatterSeries()
 }
 
 /*!
-    Add single data point with \a value to the series.
-    For example:
-    \snippet ../example/scatter/main.cpp 2
+    Add single data point with \a x and \a y coordinates to the series.
 */
-void QScatterSeries::addData(QPointF value)
+void QScatterSeries::add(qreal x, qreal y)
+{
+    d->m_data.append(QPointF(x, y));
+    emit changed();
+}
+
+/*!
+    Add single data point with \a value to the series.
+*/
+void QScatterSeries::add(QPointF value)
 {
     d->m_data.append(value);
     emit changed();
@@ -99,7 +96,7 @@ void QScatterSeries::addData(QPointF value)
 /*!
     Add list of \a points to the series.
 */
-void QScatterSeries::addData(QList<QPointF> points)
+void QScatterSeries::add(QList<QPointF> points)
 {
     d->m_data.append(points);
     emit changed();
@@ -107,7 +104,7 @@ void QScatterSeries::addData(QList<QPointF> points)
 
 /*!
     Stream operator for adding a data point with \a value to the series.
-    \sa addData()
+    \sa add()
 
     For example:
     \snippet ../example/scatter/main.cpp 3
@@ -121,7 +118,7 @@ QScatterSeries& QScatterSeries::operator << (const QPointF &value)
 
 /*!
     Stream operator for adding a list of points to the series.
-    \sa addData()
+    \sa add()
 */
 QScatterSeries& QScatterSeries::operator << (QList<QPointF> value)
 {
@@ -158,10 +155,10 @@ QList<QPointF> QScatterSeries::data()
     beatiful markers defined by the chart's theme:
     \image scatter_example_pen.jpg
 
-    \sa setMarkerBrush()
+    \sa setBrush()
     \sa QChart::setChartTheme()
 */
-void QScatterSeries::setMarkerPen(QPen pen)
+void QScatterSeries::setPen(QPen pen)
 {
     d->m_markerPen = pen;
 }
@@ -169,7 +166,7 @@ void QScatterSeries::setMarkerPen(QPen pen)
 /*!
     Returns the pen used for drawing markers.
 */
-QPen QScatterSeries::markerPen()
+QPen QScatterSeries::pen()
 {
     return d->m_markerPen;
 }
@@ -184,10 +181,10 @@ QPen QScatterSeries::markerPen()
     Would fill your scatter markers with an opaque red color:
     \image scatter_example_brush.jpg
 
-    \sa setMarkerPen()
+    \sa setPen()
     \sa QChart::setChartTheme()
 */
-void QScatterSeries::setMarkerBrush(QBrush brush)
+void QScatterSeries::setBrush(QBrush brush)
 {
     d->m_markerBrush = brush;
 }
@@ -195,7 +192,7 @@ void QScatterSeries::setMarkerBrush(QBrush brush)
 /*!
     Returns the brush used for drawing markers.
 */
-QBrush QScatterSeries::markerBrush()
+QBrush QScatterSeries::brush()
 {
     return d->m_markerBrush;
 }
@@ -210,7 +207,7 @@ QBrush QScatterSeries::markerBrush()
     Would make your scatter marker items rectangle:
     \image scatter_example_shape.jpg
 */
-void QScatterSeries::setMarkerShape(MarkerShape shape)
+void QScatterSeries::setShape(MarkerShape shape)
 {
     d->m_markerShape = shape;
 }
@@ -218,7 +215,7 @@ void QScatterSeries::setMarkerShape(MarkerShape shape)
 /*!
     Returns the shape used for drawing markers.
 */
-QScatterSeries::MarkerShape QScatterSeries::markerShape()
+QScatterSeries::MarkerShape QScatterSeries::shape()
 {
     return (QScatterSeries::MarkerShape) d->m_markerShape;
 }

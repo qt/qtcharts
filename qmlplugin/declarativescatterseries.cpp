@@ -59,7 +59,7 @@ void DeclarativeScatterSeries::appendData(QDeclarativeListProperty<ScatterElemen
     if (series) {
         series->m_data.append(element);
         if (series->m_series)
-            series->m_series->addData(QPointF(element->x(), element->y()));
+            series->m_series->add(element->x(), element->y());
     }
 }
 

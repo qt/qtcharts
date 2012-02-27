@@ -27,14 +27,9 @@ int main(int argc, char *argv[])
     chartView->addSeries(scatter);
     //! [1]
 
-    // Add some more data
-    //! [2]
-    scatter->addData(QPointF(2.0, 5.5));
-    //! [2]
-
     // And more
     //! [3]
-    *scatter << QPointF(2.0, 5.5);
+    *scatter << QPointF(2.0, 5.5) << QPointF(2.2, 5.4);
     //! [3]
 
     // Add another scatter series (re-use the previous pointer)
@@ -46,14 +41,14 @@ int main(int argc, char *argv[])
     }
     //! [4]
     QBrush brush(QColor(255, 0, 0, 100), Qt::SolidPattern);
-    scatter->setMarkerBrush(brush);
+    scatter->setBrush(brush);
     //! [4]
     //! [5]
     QPen pen(QColor(0, 255, 0, 80), 3);
-    scatter->setMarkerPen(pen);
+    scatter->setPen(pen);
     //! [5]
     //! [6]
-    scatter->setMarkerShape(QScatterSeries::MarkerShapeRectangle);
+    scatter->setShape(QScatterSeries::MarkerShapeRectangle);
     //! [6]
     chartView->addSeries(scatter);
 
