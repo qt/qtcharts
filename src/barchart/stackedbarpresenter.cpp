@@ -17,13 +17,13 @@ void StackedBarPresenter::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
-    if (mSeries->countSets() <= 0) {
+    if (mSeries->barsetCount() <= 0) {
         qDebug() << "No sets in model!";
         // Nothing to do.
         return;
     }
 
-    if (mSeries->countCategories() == 0) {
+    if (mSeries->categoryCount() == 0) {
         qDebug() << "No categories in model!";
         // Nothing to do
         return;
@@ -44,13 +44,13 @@ void StackedBarPresenter::layoutChanged()
     int itemIndex(0);
     int labelIndex(0);
     qreal tW = mWidth;
-    qreal tC = mSeries->countCategories() + 1;
+    qreal tC = mSeries->categoryCount() + 1;
     qreal xStep = (tW/tC);
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
 
-    for (int category = 0; category < mSeries->countCategories(); category++) {
+    for (int category = 0; category < mSeries->categoryCount(); category++) {
         qreal yPos = h;
-        for (int set=0; set < mSeries->countSets(); set++) {
+        for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set, category) * scale;
             Bar* bar = mBars.at(itemIndex);
 
@@ -70,7 +70,7 @@ void StackedBarPresenter::layoutChanged()
 
     // Position separators
     xPos = xStep + xStep/2;
-    for (int s=0; s < mSeries->countCategories() - 1; s++) {
+    for (int s=0; s < mSeries->categoryCount() - 1; s++) {
         Separator* sep = mSeparators.at(s);
         sep->setPos(xPos,0);
         sep->setSize(QSizeF(1,mHeight));
@@ -80,9 +80,9 @@ void StackedBarPresenter::layoutChanged()
     // Position floating values
     itemIndex = 0;
     xPos = ((tW/tC) - mBarDefaultWidth / 2);
-    for (int category=0; category < mSeries->countCategories(); category++) {
+    for (int category=0; category < mSeries->categoryCount(); category++) {
         qreal yPos = h;
-        for (int set=0; set < mSeries->countSets(); set++) {
+        for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);
 

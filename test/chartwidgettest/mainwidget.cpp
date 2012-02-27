@@ -271,7 +271,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             series->addBarSet(set);
         }
         series->setFloatingValuesEnabled(true);
-        series->setToolTipEnabled();
+        series->setToolTipEnabled(true);
         series->setSeparatorsEnabled(false);
         m_chartWidget->addSeries(series);
         setCurrentSeries(series);

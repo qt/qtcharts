@@ -144,7 +144,7 @@ void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int count)
 void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int count)
 {
     QList<QBarSet*> sets = series->barSets();
-    for (int i=0; i<series->countSets(); i++) {
+    for (int i=0; i<series->barsetCount(); i++) {
         sets.at(i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
 }
@@ -152,7 +152,7 @@ void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int count)
 void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count)
 {
     QList<QBarSet*> sets = series->barSets();
-    for (int i=0; i<series->countSets(); i++) {
+    for (int i=0; i<series->barsetCount(); i++) {
         sets.at(i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
 }
@@ -160,7 +160,7 @@ void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,i
 void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count)
 {
     QList<QBarSet*> sets = series->barSets();
-    for (int i=0; i<series->countSets(); i++) {
+    for (int i=0; i<series->barsetCount(); i++) {
         sets.at(i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
 }

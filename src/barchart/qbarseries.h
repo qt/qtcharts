@@ -20,8 +20,8 @@ public:
 
     void addBarSet(QBarSet *set);               // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
-    int countSets();
-    int countCategories();
+    int barsetCount();
+    int categoryCount();
     QList<QBarSet*> barSets();
 
     QList<QString> legend();                    // Returns legend of series (ie. names of all sets in series)

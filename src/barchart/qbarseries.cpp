@@ -76,7 +76,7 @@ void QBarSeries::removeBarSet(QBarSet *set)
 /*!
     Returns number of sets in series.
 */
-int QBarSeries::countSets()
+int QBarSeries::barsetCount()
 {
     return mModel->countSets();
 }
@@ -84,7 +84,7 @@ int QBarSeries::countSets()
 /*!
     Returns number of categories in series
 */
-int QBarSeries::countCategories()
+int QBarSeries::categoryCount()
 {
     return mModel->countCategories();
 }

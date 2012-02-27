@@ -17,7 +17,7 @@ void BarPresenter::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
-    if (mSeries->countSets() <= 0) {
+    if (mSeries->barsetCount() <= 0) {
         qDebug() << "No sets in model!";
         return;
     }
@@ -29,8 +29,8 @@ void BarPresenter::layoutChanged()
 
     // TODO: better way to auto-layout?
     // Use reals for accurancy (we might get some compiler warnings... :)
-    int categoryCount = mSeries->countCategories();
-    int setCount = mSeries->countSets();
+    int categoryCount = mSeries->categoryCount();
+    int setCount = mSeries->barsetCount();
 
     qreal tW = mWidth;
     qreal tH = mHeight;
@@ -67,10 +67,10 @@ void BarPresenter::layoutChanged()
 
     // Position floating values
     itemIndex = 0;
-    for (int category=0; category < mSeries->countCategories(); category++) {
+    for (int category=0; category < mSeries->categoryCount(); category++) {
         qreal xPos = xStepPerSet * category + ((tW + mBarDefaultWidth*setCount)/(categoryCount*2));
         qreal yPos = mHeight;
-        for (int set=0; set < mSeries->countSets(); set++) {
+        for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);
 
