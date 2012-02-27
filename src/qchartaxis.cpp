@@ -15,9 +15,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+   \fn bool QChartAxis::isAxisVisible() const
+   \brief Returns if axis is visible
+   \sa setAxisVisible()
+*/
+
+/*!
    \fn QPen QChartAxis::axisPen() const
    \brief  Returns pen used to draw axis and ticks.
     \sa setAxisPen()
+*/
+
+
+/*!
+   \fn bool QChartAxis::isGridVisible() const
+   \brief Returns if grid is visible
+   \sa setGridVisible()
 */
 
 /*!
@@ -27,39 +40,83 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+   \fn  bool QChartAxis::isLabelsVisible() const
+   \brief Returns if grid is visible
+   \sa setLabelsVisible()
+*/
+
+/*!
    \fn QPen QChartAxis::labelsPen() const
-   \brief  Returns the pen used to labels.
+   \brief Returns the pen used to labels.
     \sa setLabelsPen()
 */
 
 /*!
    \fn QBrush QChartAxis::labelsBrush() const
-   \brief  Returns brush used to draw labels.
+   \brief Returns brush used to draw labels.
     \sa setLabelsBrush()
 */
 
 /*!
    \fn QFont QChartAxis::labelsFont() const
-   \brief  Returns font used to draw labels.
+   \brief Returns font used to draw labels.
     \sa setLabelsFont()
 */
 
 /*!
    \fn QFont QChartAxis::labelsAngle() const
-   \brief  Returns angle used to draw labels.
+   \brief Returns angle used to draw labels.
     \sa setLabelsAngle()
 */
 
 /*!
+   \fn bool QChartAxis::isShadesVisible() const
+   \brief Returns if shades are visible.
+   \sa setShadesVisible()
+*/
+
+/*!
+  \fn  qreal QChartAxis::shadesOpacity() const
+  \brief Returns opacity of shades.
+ */
+
+/*!
    \fn QPen QChartAxis::shadesPen() const
-   \brief  Returns pen used to draw shades.
+   \brief Returns pen used to draw shades.
     \sa setShadesPen()
 */
 
 /*!
    \fn QBrush QChartAxis::shadesBrush() const
-   \brief  Returns brush used to draw shades.
+   \brief Returns brush used to draw shades.
     \sa setShadesBrush()
+*/
+
+/*!
+   \fn qreal QChartAxis::min() const
+   \brief Returns minimum value on the axis.
+   \sa setMin()
+*/
+
+/*!
+   \fn qreal QChartAxis::max() const
+   \brief Returns maximim value on the axis.
+   \sa setMax()
+*/
+
+/*!
+   \fn void QChartAxis::minChanged(qreal min)
+   \brief Axis emits signal when \a min of axis has changed.
+*/
+
+/*!
+   \fn void QChartAxis::maxChanged(qreal max)
+   \brief Axis emits signal when \a max of axis has changed.
+*/
+/*!
+   \fn int QChartAxis::ticksCount() const
+   \brief Return number of ticks on the axis
+   \sa setTicksCount()
 */
 
 /*!

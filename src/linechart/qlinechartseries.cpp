@@ -40,7 +40,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-   \fn bool isPointsVisible() const
+   \fn bool  QLineChartSeries::isPointsVisible() const
    \brief  Returns if the points are drawn for this series.
     \sa setPointsVisible()
 */
