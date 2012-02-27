@@ -113,6 +113,9 @@ bool QPieSeries::ChangeSet::isEmpty() const
 
     By default the pie is defined as full but it can be a partial pie.
     This can be done by setting a starting angle and angle span to the series.
+
+    Example on how to create a chart with pie series:
+    \snippet ../example/piechart/main.cpp 1
 */
 
 /*!
