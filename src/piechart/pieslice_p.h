@@ -49,7 +49,7 @@ private:
     QRectF m_pieRect;
     QPainterPath m_path;
 
-    qreal m_angle;
+    qreal m_startAngle;
     qreal m_angleSpan;
 
     bool m_isExploded;

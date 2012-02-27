@@ -518,8 +518,8 @@ void QPieSeries::updateDerivativeData()
             changed = true;
         }
 
-        if (s->m_angle != sliceAngle) {
-            s->m_angle = sliceAngle;
+        if (s->m_startAngle != sliceAngle) {
+            s->m_startAngle = sliceAngle;
             changed = true;
         }
         sliceAngle += sliceSpan;

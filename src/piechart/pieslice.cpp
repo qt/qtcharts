@@ -21,7 +21,7 @@ QPointF offset(qreal angle, qreal length)
 PieSlice::PieSlice(QGraphicsItem* parent)
     :QGraphicsObject(parent),
     m_slicelabel(new PieSliceLabel(this)),
-    m_angle(0),
+    m_startAngle(0),
     m_angleSpan(0),
     m_isExploded(false),
     m_explodeDistance(0)
@@ -80,7 +80,7 @@ void PieSlice::updateGeometry()
     prepareGeometryChange();
 
     // calculate center angle
-    qreal centerAngle = m_angle + (m_angleSpan/2);
+    qreal centerAngle = m_startAngle + (m_angleSpan/2);
 
     // adjust rect for exploding
     QRectF rect = m_pieRect;
@@ -94,7 +94,7 @@ void PieSlice::updateGeometry()
     // TODO: draw the shape so that it might have a hole in the center
     QPainterPath path;
     path.moveTo(rect.center());
-    path.arcTo(rect, -m_angle + 90, -m_angleSpan);
+    path.arcTo(rect, -m_startAngle + 90, -m_angleSpan);
     path.closeSubpath();
     m_path = path;
 
@@ -113,8 +113,8 @@ void PieSlice::updateData(const QPieSlice* sliceData)
 {
     // TODO: compare what has changes to avoid unneccesary geometry updates
 
-    m_angle = sliceData->angle();
-    m_angleSpan = sliceData->angleSpan();
+    m_startAngle = sliceData->startAngle();
+    m_angleSpan = sliceData->m_angleSpan;
     m_isExploded = sliceData->isExploded();
     m_explodeDistance = sliceData->explodeDistance(); // TODO: expose to public API
     m_pen = sliceData->pen();

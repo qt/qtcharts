@@ -123,7 +123,7 @@ void PiePresenter::updateGeometry()
     foreach (QPieSlice* s, m_series->m_slices) {
 
         // calculate the farthest point in the slice from the pie center
-        qreal centerAngle = s->angle() + (s->angleSpan() / 2);
+        qreal centerAngle = s->m_startAngle + (s->m_angleSpan / 2);
         qreal len = pieRadius + s->labelArmLength() + s->explodeDistance();
         QPointF dp(qSin(centerAngle*(PI/180)) * len, -qCos(centerAngle*(PI/180)) * len);
         QPointF p = pieRect.center() + dp;

@@ -44,7 +44,7 @@ QPieSlice::QPieSlice(QObject *parent)
     m_isExploded(false),
     m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
     m_percentage(0),
-    m_angle(0),
+    m_startAngle(0),
     m_angleSpan(0),
     m_pen(DEFAULT_PEN_COLOR),
     m_brush(DEFAULT_BRUSH_COLOR),
@@ -67,7 +67,7 @@ QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     m_isExploded(false),
     m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
     m_percentage(0),
-    m_angle(0),
+    m_startAngle(0),
     m_angleSpan(0),
     m_pen(DEFAULT_PEN_COLOR),
     m_brush(DEFAULT_BRUSH_COLOR),
@@ -150,21 +150,21 @@ qreal QPieSlice::percentage() const
 
     Updated internally after the slice is added to the series.
 */
-qreal QPieSlice::angle() const
+qreal QPieSlice::startAngle() const
 {
-    return m_angle;
+    return m_startAngle;
 }
 
 /*!
-    Returns the angle span of this slice in the series it belongs to.
+    Returns the end angle of this slice in the series it belongs to.
 
     Full pie is 360 degrees where 0 degrees is at 12 a'clock.
 
     Updated internally after the slice is added to the series.
 */
-qreal QPieSlice::angleSpan() const
+qreal QPieSlice::endAngle() const
 {
-    return m_angleSpan;
+    return m_startAngle + m_angleSpan;
 }
 
 /*!
