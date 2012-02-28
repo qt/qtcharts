@@ -150,19 +150,6 @@ QSeries::QSeriesType QPieSeries::type() const
 }
 
 /*!
-    \internal \a data
-*/
-bool QPieSeries::setData(QList<qreal> data)
-{
-    // TODO: remove this function
-    QList<QPieSlice*> slices;
-    foreach (qreal value, data)
-        slices << new QPieSlice(value, QString::number(value));
-    replace(slices);
-    return true;
-}
-
-/*!
     Sets an array of \a slices to the series replacing the existing slices.
     Slice ownership is passed to the series.
 */

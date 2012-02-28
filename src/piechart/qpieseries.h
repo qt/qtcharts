@@ -56,7 +56,6 @@ public:
 
 public: // from QChartSeries
     QSeriesType type() const;
-    virtual bool setData(QList<qreal> data);  // TODO: remove this
 
 public:
     void replace(QList<QPieSlice*> slices);
