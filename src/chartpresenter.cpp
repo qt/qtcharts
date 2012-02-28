@@ -118,7 +118,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
             }
             m_chartTheme->decorate(item,lineSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
-            QObject::connect(lineSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
+            QObject::connect(lineSeries,SIGNAL(pointChanged(int)),item,SLOT(handleModelChanged(int)));
             m_chartItems.insert(series,item);
             break;
         }

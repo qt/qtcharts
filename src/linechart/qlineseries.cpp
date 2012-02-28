@@ -43,7 +43,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
 /*!
-    \fn void QLineSeries::changed(int index)
+    \fn void QLineSeries::pointChanged(int index)
+    \brief \internal \a index
+*/
+
+/*!
+    \fn void QLineSeries::pointAdded(int index)
+    \brief \internal \a index
+*/
+
+/*!
+    \fn void QLineSeries::pointRemoved(int index)
     \brief \internal \a index
 */
 
@@ -71,6 +81,7 @@ void QLineSeries::add(qreal x,qreal y)
     Q_ASSERT(m_x.size() == m_y.size());
     m_x<<x;
     m_y<<y;
+    emit pointAdded(m_x.size()-1);
 }
 
 /*!
@@ -79,8 +90,7 @@ void QLineSeries::add(qreal x,qreal y)
  */
 void QLineSeries::add(const QPointF& point)
 {
-    m_x<<point.x();
-    m_y<<point.y();
+    add(point.x(),point.y());
 }
 
 /*!
@@ -91,7 +101,7 @@ void QLineSeries::replace(qreal x,qreal y)
     int index = m_x.indexOf(x);
     m_x[index]=x;
     m_y[index]=y;
-    emit changed(index);
+    emit pointChanged(index);
 }
 
 /*!
@@ -100,10 +110,7 @@ void QLineSeries::replace(qreal x,qreal y)
 */
 void QLineSeries::replace(const QPointF& point)
 {
-    int index = m_x.indexOf(point.x());
-    m_x[index]=point.x();
-    m_y[index]=point.y();
-    emit changed(index);
+   replace(point.x(),point.y());
 }
 
 /*!
@@ -111,7 +118,10 @@ void QLineSeries::replace(const QPointF& point)
 */
 void QLineSeries::remove(qreal x)
 {
-
+    int index = m_x.indexOf(x);
+    m_x.remove(index);
+    m_y.remove(index);
+    emit pointRemoved(index);
 }
 
 /*!
@@ -119,7 +129,7 @@ void QLineSeries::remove(qreal x)
 */
 void QLineSeries::remove(const QPointF& point)
 {
-
+    remove(point.x());
 }
 
 /*!
