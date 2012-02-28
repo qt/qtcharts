@@ -1,5 +1,6 @@
 #include "scatterpresenter_p.h"
 #include "qscatterseries.h"
+#include "chartpresenter_p.h"
 #include <QPen>
 #include <QPainter>
 #include <QGraphicsScene>
@@ -23,10 +24,13 @@ ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *pare
         connect(series, SIGNAL(changed()), this, SLOT(handleModelChanged()));
     }
 
-    QGraphicsDropShadowEffect *dropShadow = new QGraphicsDropShadowEffect();
-    dropShadow->setOffset(2.0);
-    dropShadow->setBlurRadius(2.0);
-    setGraphicsEffect(dropShadow);
+    setZValue(ChartPresenter::ScatterSeriesZValue);
+
+    // TODO: how to draw a drop shadow?
+//    QGraphicsDropShadowEffect *dropShadow = new QGraphicsDropShadowEffect();
+//    dropShadow->setOffset(2.0);
+//    dropShadow->setBlurRadius(2.0);
+//    setGraphicsEffect(dropShadow);
 }
 
 void ScatterPresenter::handleDomainChanged(const Domain& domain)
@@ -52,17 +56,34 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->save();
     painter->setClipRect(m_boundingRect);
 
+    // TODO: how to draw a drop shadow?
+    // Now using a custom implementation for drop shadow instead of QGraphicsDropShadowEffect.
+    // It seems QGraphicsDropShadowEffect is quite heavy, at least on windows without open gl.
+    QPen dropShadowPen(QColor(0, 0, 0, 70));
+    dropShadowPen.setWidth(3);
+    painter->setPen(dropShadowPen);
+    painter->setBrush(dropShadowPen.color());
+//    painter->setRenderHint(QPainter::Antialiasing);
+    painter->drawPath(m_path.translated(2, 2));
+
     // Paint the shape
     // The custom settings in series override those defined by the theme
     QPen pen = m_markerPen;
     if (m_series->pen().color().isValid())
         pen = m_series->pen();
+    painter->setPen(pen);
     if (m_series->brush().color().isValid())
         painter->setBrush(m_series->brush());
     else
         painter->setBrush(m_markerBrush);
-    painter->setPen(pen);
-    painter->drawPath(m_path);
+
+    // If either pen or brush is opaque, we need to draw the polygons one-by-one
+    if (painter->pen().color().alpha() < 255 || painter->brush().color().alpha() < 255) {
+        foreach (QPolygonF pol, m_path.toSubpathPolygons())
+            painter->drawPolygon(pol);
+    } else {
+        painter->drawPath(m_path);
+    }
 
     painter->restore();
 }
@@ -85,6 +106,7 @@ void ScatterPresenter::changeGeometry()
 
         int shape = m_series->shape();
         m_path = QPainterPath();
+        m_path.setFillRule(Qt::WindingFill);
 
         foreach (QPointF point, m_series->data()) {
             // Convert relative coordinates to absolute pixel coordinates that can be used for drawing

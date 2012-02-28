@@ -49,13 +49,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QScatterSeriesPrivate::QScatterSeriesPrivate() :
     m_data(QList<QPointF>()),
-    m_markerPen(QPen()),
-    m_markerBrush(QBrush()),
+    m_markerPen(QPen(QColor::Invalid)),
+    m_markerBrush(QBrush(QColor::Invalid)),
     m_markerShape(QScatterSeries::MarkerShapeDefault)
 {
-    // Initialize pen color to invalid to use a theme color by default
-    m_markerPen.setColor(QColor::Invalid);
-    m_markerBrush.setColor(QColor::Invalid);
 }
 
 /*!
