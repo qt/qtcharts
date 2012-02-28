@@ -15,10 +15,10 @@
 
 //items
 #include "axisitem_p.h"
-#include "barpresenter.h"
-#include "stackedbarpresenter.h"
+#include "barpresenter_p.h"
+#include "stackedbarpresenter_p.h"
+#include "percentbarpresenter_p.h"
 #include "linechartitem_p.h"
-#include "percentbarpresenter.h"
 #include "scatterpresenter_p.h"
 #include "piepresenter_p.h"
 

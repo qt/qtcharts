@@ -1,7 +1,7 @@
 #ifndef STACKEDBARPRESENTER_H
 #define STACKEDBARPRESENTER_H
 
-#include "barpresenterbase.h"
+#include "barpresenterbase_p.h"
 #include "qstackedbarseries.h"
 #include <QGraphicsItem>
 

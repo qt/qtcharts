@@ -2,7 +2,7 @@
 #define BARPRESENTER_H
 
 #include "qchartglobal.h"
-#include "barpresenterbase.h"
+#include "barpresenterbase_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

@@ -1,4 +1,4 @@
-#include "stackedbarpresenter.h"
+#include "stackedbarpresenter_p.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "barvalue_p.h"
@@ -106,6 +106,6 @@ void StackedBarPresenter::layoutChanged()
     mLayoutDirty = true;
 }
 
-#include "moc_stackedbarpresenter.cpp"
+#include "moc_stackedbarpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

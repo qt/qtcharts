@@ -20,11 +20,11 @@ PRIVATE_HEADERS += \
     $$PWD/bar_p.h \
     $$PWD/barchartmodel_p.h \
     $$PWD/barlabel_p.h \
-    $$PWD/barpresenter.h \
-    $$PWD/barpresenterbase.h \
-    $$PWD/percentbarpresenter.h \
+    $$PWD/barpresenter_p.h \
+    $$PWD/barpresenterbase_p.h \
+    $$PWD/percentbarpresenter_p.h \
     $$PWD/separator_p.h \
-    $$PWD/stackedbarpresenter.h \
+    $$PWD/stackedbarpresenter_p.h \
     $$PWD/barvalue_p.h
 
 PUBLIC_HEADERS += \

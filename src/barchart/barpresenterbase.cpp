@@ -1,4 +1,4 @@
-#include "barpresenterbase.h"
+#include "barpresenterbase_p.h"
 #include "bar_p.h"
 #include "barvalue_p.h"
 #include "barlabel_p.h"
@@ -153,6 +153,6 @@ void BarPresenterBase::enableSeparators(bool enabled)
     mSeparatorsEnabled = enabled;
 }
 
-#include "moc_barpresenterbase.cpp"
+#include "moc_barpresenterbase_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

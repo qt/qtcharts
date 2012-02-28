@@ -4,7 +4,7 @@
 #include "chartitem_p.h"
 #include "bar_p.h"
 #include "qpercentbarseries.h"
-#include "barpresenterbase.h"
+#include "barpresenterbase_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

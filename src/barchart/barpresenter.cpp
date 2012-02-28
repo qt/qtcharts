@@ -1,4 +1,4 @@
-#include "barpresenter.h"
+#include "barpresenter_p.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "barvalue_p.h"
@@ -92,6 +92,6 @@ void BarPresenter::layoutChanged()
     mLayoutDirty = true;
 }
 
-#include "moc_barpresenter.cpp"
+#include "moc_barpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -1,4 +1,4 @@
-#include "percentbarpresenter.h"
+#include "percentbarpresenter_p.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "barvalue_p.h"
@@ -107,6 +107,6 @@ void PercentBarPresenter::layoutChanged()
     mLayoutDirty = true;
 }
 
-#include "moc_percentbarpresenter.cpp"
+#include "moc_percentbarpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
