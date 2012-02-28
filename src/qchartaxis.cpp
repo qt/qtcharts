@@ -40,7 +40,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-   \fn  bool QChartAxis::isLabelsVisible() const
+   \fn  bool QChartAxis::labelsVisible() const
    \brief Returns if grid is visible
    \sa setLabelsVisible()
 */
@@ -70,7 +70,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-   \fn bool QChartAxis::isShadesVisible() const
+   \fn bool QChartAxis::shadesVisible() const
    \brief Returns if shades are visible.
    \sa setShadesVisible()
 */

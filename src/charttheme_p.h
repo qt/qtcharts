@@ -8,14 +8,14 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartItem;
-class QChartSeries;
+class QSeries;
 class LineChartItem;
-class QLineChartSeries;
+class QLineSeries;
 class BarPresenter;
-class QBarChartSeries;
+class QBarSeries;
 class StackedBarPresenter;
-class QStackedBarChartSeries;
-class QPercentBarChartSeries;
+class QStackedBarSeries;
+class QPercentBarSeries;
 class PercentBarPresenter;
 class QScatterSeries;
 class ScatterPresenter;
@@ -30,11 +30,11 @@ public:
     static ChartTheme* createTheme(QChart::ChartTheme theme);
     QChart::ChartTheme id() const {return m_id;}
     void decorate(QChart* chart);
-    void decorate(ChartItem* item, QChartSeries* series,int count);
-    void decorate(LineChartItem* item, QLineChartSeries*, int count);
-    void decorate(BarPresenter* item, QBarChartSeries* series,int count);
-    void decorate(StackedBarPresenter* item, QStackedBarChartSeries* series,int count);
-    void decorate(PercentBarPresenter* item, QPercentBarChartSeries* series,int count);
+    void decorate(ChartItem* item, QSeries* series,int count);
+    void decorate(BarPresenter* item, QBarSeries* series,int count);
+    void decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count);
+    void decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count);
+    void decorate(LineChartItem* item, QLineSeries*, int count);
     void decorate(ScatterPresenter* presenter, QScatterSeries* series, int count);
     void decorate(PiePresenter* item, QPieSeries* series, int count);
     void decorate(QChartAxis* axis,AxisItem* item);

@@ -12,6 +12,7 @@ class QGridLayout;
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 #define RealList QList<qreal>
+class DataSerieDialog;
 
 class MainWidget : public QWidget
 {
@@ -25,6 +26,7 @@ private:
     void initBackroundCombo(QGridLayout *grid);
     void initScaleControls(QGridLayout *grid);
     void initThemeCombo(QGridLayout *grid);
+    void initCheckboxes(QGridLayout *grid);
     void initPieControls();
 
 private slots:
@@ -36,7 +38,8 @@ private slots:
     void xMaxChanged(int value);
     void yMinChanged(int value);
     void yMaxChanged(int value);
-    void setCurrentSeries(QChartSeries *series);
+    void antiAliasToggled(bool enabled);
+    void setCurrentSeries(QSeries *series);
     void changeChartTheme(int themeIndex);
     void setPieSizeFactor(double margin);
     void setPiePosition(int position);
@@ -44,14 +47,15 @@ private slots:
     QStringList generateLabels(int count);
 
 private:
-    QChartView *m_chartWidget;
+    DataSerieDialog *m_addSerieDialog;
+    QChartView *m_chartView;
     QCheckBox *m_autoScaleCheck;
     QSpinBox *m_xMinSpin;
     QSpinBox *m_xMaxSpin;
     QSpinBox *m_yMinSpin;
     QSpinBox *m_yMaxSpin;
     QString m_defaultSeriesName;
-    QChartSeries *m_currentSeries;
+    QSeries *m_currentSeries;
     QGridLayout *m_scatterLayout;
     QGridLayout *m_pieLayout;
 };

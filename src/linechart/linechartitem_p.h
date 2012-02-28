@@ -8,14 +8,14 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartPresenter;
-class QLineChartSeries;
+class QLineSeries;
 class LineChartAnimationItem;
 
 class LineChartItem :  public QObject , public ChartItem
 {
      Q_OBJECT
 public:
-    LineChartItem(ChartPresenter* presenter, QLineChartSeries* series,QGraphicsItem *parent = 0);
+    LineChartItem(ChartPresenter* presenter, QLineSeries* series,QGraphicsItem *parent = 0);
     ~ LineChartItem(){};
 
     //from QGraphicsItem
@@ -43,8 +43,8 @@ protected:
     virtual void updateData();
     virtual void updateDomain();
     //refactor
-    void calculatePoint(QPointF& point, int index, const QLineChartSeries* series,const QSizeF& size, const Domain& domain) const;
-    void calculatePoints(QVector<QPointF>& points,QHash<int,int>& hash,const QLineChartSeries* series, const QSizeF& size, const Domain& domain) const;
+    void calculatePoint(QPointF& point, int index, const QLineSeries* series,const QSizeF& size, const Domain& domain) const;
+    void calculatePoints(QVector<QPointF>& points,QHash<int,int>& hash,const QLineSeries* series, const QSizeF& size, const Domain& domain) const;
 
 protected slots:
     void handleModelChanged(int index);
@@ -61,7 +61,7 @@ private:
     QList<QGraphicsItem*> m_points;
     QVector<QPointF> m_data;
     QHash<int,int> m_hash;
-    QLineChartSeries* m_series;
+    QLineSeries* m_series;
     QPen m_pen;
     bool m_dirtyData;
     bool m_dirtyGeometry;

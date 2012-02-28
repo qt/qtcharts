@@ -1,16 +1,16 @@
-#include "barpresenterbase.h"
+#include "barpresenterbase_p.h"
 #include "bar_p.h"
 #include "barvalue_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
 #include "qbarset.h"
-#include "qbarchartseries.h"
+#include "qbarseries.h"
 #include <QDebug>
 #include <QToolTip>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarPresenterBase::BarPresenterBase(QBarChartSeries *series, QGraphicsItem *parent)
+BarPresenterBase::BarPresenterBase(QBarSeries *series, QGraphicsItem *parent)
     : ChartItem(parent)
     ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
@@ -68,9 +68,9 @@ void BarPresenterBase::dataChanged()
     mFloatingValues.clear();
 
     // Create new graphic items for bars
-    for (int c=0; c<mSeries->countCategories(); c++) {
-        for (int s=0; s<mSeries->countSets(); s++) {
-            QBarSet *set = mSeries->setAt(s);
+    for (int c=0; c<mSeries->categoryCount(); c++) {
+        for (int s=0; s<mSeries->barsetCount(); s++) {
+            QBarSet *set = mSeries->barsetAt(s);
             Bar *bar = new Bar(this);
             childItems().append(bar);
             mBars.append(bar);
@@ -81,7 +81,7 @@ void BarPresenterBase::dataChanged()
     }
 
     // Create labels
-    int count = mSeries->countCategories();
+    int count = mSeries->categoryCount();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
         label->set(mSeries->label(i));
@@ -90,7 +90,7 @@ void BarPresenterBase::dataChanged()
     }
 
     // Create separators
-    count = mSeries->countCategories() - 1;   // There is one less separator than columns
+    count = mSeries->categoryCount() - 1;   // There is one less separator than columns
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
@@ -100,9 +100,9 @@ void BarPresenterBase::dataChanged()
     }
 
     // Create floating values
-    for (int category=0; category<mSeries->countCategories(); category++) {
-        for (int s=0; s<mSeries->countSets(); s++) {
-            QBarSet *set = mSeries->setAt(s);
+    for (int category=0; category<mSeries->categoryCount(); category++) {
+        for (int s=0; s<mSeries->barsetCount(); s++) {
+            QBarSet *set = mSeries->barsetAt(s);
             BarValue *value = new BarValue(*set, this);
             childItems().append(value);
             mFloatingValues.append(value);
@@ -153,6 +153,6 @@ void BarPresenterBase::enableSeparators(bool enabled)
     mSeparatorsEnabled = enabled;
 }
 
-#include "moc_barpresenterbase.cpp"
+#include "moc_barpresenterbase_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

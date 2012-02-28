@@ -1,7 +1,7 @@
 #ifndef PIESERIES_H
 #define PIESERIES_H
 
-#include "qchartseries.h"
+#include "qseries.h"
 #include <QObject>
 #include <QRectF>
 #include <QColor>
@@ -15,7 +15,7 @@ class PiePresenter;
 class PieSlice;
 class QPieSlice;
 
-class QTCOMMERCIALCHART_EXPORT QPieSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QPieSeries : public QSeries
 {
     Q_OBJECT
 
@@ -55,11 +55,11 @@ public:
     virtual ~QPieSeries();
 
 public: // from QChartSeries
-    QChartSeriesType type() const;
+    QSeriesType type() const;
     virtual bool setData(QList<qreal> data);  // TODO: remove this
 
 public:
-    void set(QList<QPieSlice*> slices);
+    void replace(QList<QPieSlice*> slices);
     void add(QList<QPieSlice*> slices);
     void add(QPieSlice* slice);
     QPieSlice* add(qreal value, QString name);

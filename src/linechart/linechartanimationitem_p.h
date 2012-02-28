@@ -14,7 +14,7 @@ class LineChartAnimationItem : public LineChartItem {
     Q_PROPERTY(int a_addPoints READ ar_addPoints WRITE aw_addPoints);
    // Q_PROPERTY(QPointF a_setPoint READ ar_setPoint WRITE aw_setPoint);
 public:
-	LineChartAnimationItem(ChartPresenter* presenter, QLineChartSeries *series, QGraphicsItem *parent = 0);
+	LineChartAnimationItem(ChartPresenter* presenter, QLineSeries *series, QGraphicsItem *parent = 0);
 	virtual ~LineChartAnimationItem();
 
 	void addPoints(const QVector<QPointF>& points);

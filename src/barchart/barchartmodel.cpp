@@ -2,26 +2,19 @@
 #include <QVector>
 #include <QDebug>
 #include "barchartmodel_p.h"
-#include "qbarcategory.h"
 #include "qbarset.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartModel::BarChartModel(QBarCategory *category, QObject *parent) :
+BarChartModel::BarChartModel(QStringList categories, QObject *parent) :
     QObject(parent)
-    ,mCategory(category)
+    ,mCategory(categories)
 {
 }
 
-BarChartModel::~BarChartModel()
+QStringList BarChartModel::category()
 {
-    delete mCategory;
-}
-
-
-QBarCategory& BarChartModel::category()
-{
-    return *mCategory;
+    return mCategory;
 }
 
 void BarChartModel::addBarSet(QBarSet *set)
@@ -36,32 +29,25 @@ void BarChartModel::removeBarSet(QBarSet *set)
     }
 }
 
-QBarSet* BarChartModel::nextSet(bool getFirst)
-{
-    if (getFirst) {
-        mCurrentSet = 0;
-    }
-
-    if ((mDataModel.count() <= 0) || (mDataModel.count() <= mCurrentSet)) {
-        return 0;
-    }
-
-    QBarSet* set = mDataModel.at(mCurrentSet);
-    mCurrentSet++;
-    return set;
-}
-
 QBarSet* BarChartModel::setAt(int index)
 {
     return mDataModel.at(index);
 }
 
-QList<QString> BarChartModel::legend()
+QList<QBarSet*> BarChartModel::barSets()
 {
-    QList<QString> legend;
+    return mDataModel;
+}
+
+QList<QSeries::Legend> BarChartModel::legend()
+{
+    QList<QSeries::Legend> legend;
 
     for (int i=0; i<mDataModel.count(); i++) {
-        legend.append(mDataModel.at(i)->name());
+        QSeries::Legend l;
+        l.mName = mDataModel.at(i)->name();
+        l.mPen = mDataModel.at(i)->pen();
+        legend.append(l);
     }
     return legend;
 }
@@ -192,7 +178,7 @@ qreal BarChartModel::maxCategorySum()
 
 QString BarChartModel::label(int category)
 {
-    return mCategory->label(category);
+    return mCategory.at(category);
 }
 
 #include "moc_barchartmodel_p.cpp"

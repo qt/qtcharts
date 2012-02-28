@@ -7,17 +7,21 @@
      <img src="images/qt_commercial_logo.png" alt="qtcommercial"/>
 
      <p>
-     QCharts is a part of Qt Commercial addons package. It provides a set of simple chart components which are available for Qt Commercial customers.
-     It uses Qt Graphics View Framework, therefore charts can be easily integrated 2D modern user interfaces. QCharts can be used as QWidgets, QGraphicsWidget or QML elements.
-     Users can easily create impressive graphs by selecting one of the charts themes. 
+     QCharts is a part of Qt Commercial addons package. It provides a set of easy to use chart
+	 components which are available for Qt Commercial customers. It uses Qt Graphics View
+	 Framework, therefore charts can be easily integrated to modern 2D user interfaces. QCharts can
+	 be used as QWidgets, QGraphicsWidget or QML elements. Users can easily create impressive
+	 graphs by selecting one of the charts themes.
      </p>
+
     <table><tr>
-    <td><img src="images/linechart.png" alt="linechart" /></td>
+    <td><a href="example-linechart.html"><img src="images/linechart.png" alt="linechart" /></a></td>
     <td><img src="images/chartview_example_bar.jpg " alt="barchart" /></td>
-    <td><img src="images/chartview_example_pie.jpg " alt="piechart" /></td>
     </tr>
     <tr>
     <td><img src="images/chartview_example.jpg " alt="linechart" /></td>
+    <td><img src="images/chartview_example_pie.jpg " alt="piechart" /></td>
+    </tr><tr>
     <td><img src="images/chartview_example_scatter.jpg " alt="scatterchart" /></td>
     <td><img src="images/chartview_example_theme.jpg " alt="themechart" /></td>
     </tr>

@@ -2,7 +2,7 @@
 #define QCHART_H
 
 #include <qchartglobal.h>
-#include <qchartseries.h>
+#include <qseries.h>
 #include <QGraphicsWidget>
 #include <QLinearGradient>
 #include <QFont>
@@ -12,7 +12,7 @@ class QGraphicsSceneResizeEvent;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class AxisItem;
-class QChartSeries;
+class QSeries;
 class PlotDomain;
 class BarPresenter;
 class QChartAxis;
@@ -47,8 +47,8 @@ public:
     QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
-    void addSeries(QChartSeries* series, QChartAxis* axisY = 0);
-    void removeSeries(QChartSeries* series); //returns ownership , deletes axis if no series attached
+    void addSeries(QSeries* series, QChartAxis* axisY = 0);
+    void removeSeries(QSeries* series); //returns ownership , deletes axis if no series attached
     void removeAllSeries(); // deletes series and axis
 
     void setMargin(int margin);

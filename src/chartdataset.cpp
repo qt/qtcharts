@@ -1,10 +1,10 @@
 #include "chartdataset_p.h"
 #include "qchartaxis.h"
 //series
-#include "qlinechartseries.h"
-#include "qbarchartseries.h"
-#include "qstackedbarchartseries.h"
-#include "qpercentbarchartseries.h"
+#include "qlineseries.h"
+#include "qbarseries.h"
+#include "qstackedbarseries.h"
+#include "qpercentbarseries.h"
 #include "qpieseries.h"
 #include "qscatterseries.h"
 
@@ -33,7 +33,7 @@ const Domain ChartDataSet::domain(QChartAxis *axisY) const
     return m_domainMap.values(axisY).at(i);
 }
 
-void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
+void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 {
     // TODO: we should check the series not already added
 
@@ -43,7 +43,7 @@ void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
     if(axisY==0) axisY = m_axisY;
     axisY->setParent(this); // take ownership
 
-    QList<QChartSeries*>  seriesList = m_seriesMap.values(axisY);
+    QList<QSeries*>  seriesList = m_seriesMap.values(axisY);
 
     QList<Domain> domainList = m_domainMap.values(axisY);
 
@@ -55,9 +55,9 @@ void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
 
     switch(series->type())
     {
-        case QChartSeries::SeriesTypeLine: {
+        case QSeries::SeriesTypeLine: {
 
-            QLineChartSeries* xyseries = static_cast<QLineChartSeries*>(series);
+            QLineSeries* xyseries = static_cast<QLineSeries*>(series);
 
             for (int i = 0; i < xyseries->count(); i++)
             {
@@ -70,10 +70,10 @@ void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
             }
             break;
         }
-        case QChartSeries::SeriesTypeBar: {
+        case QSeries::SeriesTypeBar: {
         qDebug() << "QChartSeries::SeriesTypeBar";
-            QBarChartSeries* barSeries = static_cast<QBarChartSeries*>(series);
-            qreal x = barSeries->countCategories();
+            QBarSeries* barSeries = static_cast<QBarSeries*>(series);
+            qreal x = barSeries->categoryCount();
             qreal y = barSeries->max();
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = qMin(domain.m_minY,y);
@@ -81,11 +81,11 @@ void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
             domain.m_maxY = qMax(domain.m_maxY,y);
             break;
         }
-        case QChartSeries::SeriesTypeStackedBar: {
+        case QSeries::SeriesTypeStackedBar: {
         qDebug() << "QChartSeries::SeriesTypeStackedBar";
 
-            QStackedBarChartSeries* stackedBarSeries = static_cast<QStackedBarChartSeries*>(series);
-            qreal x = stackedBarSeries->countCategories();
+            QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
+            qreal x = stackedBarSeries->categoryCount();
             qreal y = stackedBarSeries->maxCategorySum();
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = qMin(domain.m_minY,y);
@@ -93,11 +93,11 @@ void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
             domain.m_maxY = qMax(domain.m_maxY,y);
             break;
         }
-        case QChartSeries::SeriesTypePercentBar: {
+        case QSeries::SeriesTypePercentBar: {
         qDebug() << "QChartSeries::SeriesTypePercentBar";
 
-            QPercentBarChartSeries* percentBarSeries = static_cast<QPercentBarChartSeries*>(series);
-            qreal x = percentBarSeries->countCategories();
+            QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
+            qreal x = percentBarSeries->categoryCount();
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = 0;
             domain.m_maxX = qMax(domain.m_maxX,x);
@@ -105,13 +105,13 @@ void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
             break;
         }
 
-        case QChartSeries::SeriesTypePie: {
+        case QSeries::SeriesTypePie: {
             QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
             // TODO: domain stuff
             break;
         }
 
-        case QChartSeries::SeriesTypeScatter: {
+        case QSeries::SeriesTypeScatter: {
             QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
             Q_ASSERT(scatterSeries);
             foreach (QPointF point, scatterSeries->data()) {
@@ -160,7 +160,7 @@ void ChartDataSet::addSeries(QChartSeries* series, QChartAxis *axisY)
 
 }
 
-void ChartDataSet::removeSeries(QChartSeries* series)
+void ChartDataSet::removeSeries(QSeries* series)
 {
     QList<QChartAxis*> keys = m_seriesMap.uniqueKeys();
     foreach(QChartAxis* axis , keys) {
@@ -184,7 +184,7 @@ void ChartDataSet::removeAllSeries()
 {
     QList<QChartAxis*> keys = m_seriesMap.uniqueKeys();
     foreach(QChartAxis* axis , keys) {
-        QList<QChartSeries*> seriesList = m_seriesMap.values(axis);
+        QList<QSeries*> seriesList = m_seriesMap.values(axis);
         for(int i =0 ; i < seriesList.size();i++ )
         {
             emit seriesRemoved(seriesList.at(i));
@@ -228,6 +228,8 @@ void ChartDataSet::setDomain(int index)
 {
     QList<QChartAxis*> domainList = m_domainMap.uniqueKeys();
 
+    if(domainList.count()==0) return;
+
     Domain domain;
 
     foreach (QChartAxis* axis , domainList) {
@@ -235,8 +237,8 @@ void ChartDataSet::setDomain(int index)
         Q_ASSERT(i>=0);
         domain = m_domainMap.values(axis).at(i);
         QStringList labels = createLabels(axis,domain.m_minY,domain.m_maxY);
-        QList<QChartSeries*> seriesList = m_seriesMap.values(axis);
-        foreach(QChartSeries* series, seriesList) {
+        QList<QSeries*> seriesList = m_seriesMap.values(axis);
+        foreach(QSeries* series, seriesList) {
             emit seriesDomainChanged(series,domain);
         }
         emit axisLabelsChanged(axis,labels);
@@ -281,8 +283,8 @@ void ChartDataSet::addDomain(const QRectF& rect, const QRectF& viewport)
     foreach (QChartAxis* axis , domainList){
         domain = m_domainMap.value(axis).subDomain(rect,viewport.width(),viewport.height());
         QStringList labels = createLabels(axis,domain.m_minY,domain.m_maxY);
-        QList<QChartSeries*> seriesList = m_seriesMap.values(axis);
-        foreach(QChartSeries* series, seriesList){
+        QList<QSeries*> seriesList = m_seriesMap.values(axis);
+        foreach(QSeries* series, seriesList){
             emit seriesDomainChanged(series,domain);
         }
         emit axisLabelsChanged(axis,labels);
@@ -295,7 +297,7 @@ void ChartDataSet::addDomain(const QRectF& rect, const QRectF& viewport)
     m_domainIndex++;
 }
 
-QChartAxis* ChartDataSet::axisY(QChartSeries* series) const
+QChartAxis* ChartDataSet::axisY(QSeries* series) const
 {
     if(series == 0) return m_axisY;
 

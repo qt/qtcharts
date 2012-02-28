@@ -1,5 +1,5 @@
 #include "chartview.h"
-#include <qlinechartseries.h>
+#include <qlineseries.h>
 #include <QTime>
 
 ChartView::ChartView(QWidget* parent):QChartView(parent),
@@ -11,15 +11,15 @@ m_index(0)
     QTime now = QTime::currentTime();
     qsrand((uint)now.msec());
 
-    QLineChartSeries* series0 = new QLineChartSeries();
+    QLineSeries* series0 = new QLineSeries();
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
-    QLineChartSeries* series1 = new QLineChartSeries();
+    QLineSeries* series1 = new QLineSeries();
     QPen red(Qt::red);
     red.setWidth(3);
     series1->setPen(red);
-    QLineChartSeries* series2 = new QLineChartSeries();
+    QLineSeries* series2 = new QLineSeries();
     QPen green(Qt::green);
     green.setWidth(3);
     series2->setPen(green);

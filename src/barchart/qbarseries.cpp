@@ -1,6 +1,5 @@
 #include <QDebug>
-#include "qbarchartseries.h"
-#include "qbarcategory.h"
+#include "qbarseries.h"
 #include "qbarset.h"
 #include "barchartmodel_p.h"
 
@@ -8,74 +7,58 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    \class QBarChartSeries
+    \class QBarSeries
     \brief part of QtCommercial chart API.
 
-    QBarChartSeries represents a series of data shown as bars. One QBarChartSeries can contain multible
-    QBarSet data sets. QBarChartSeries groups the data from sets to categories, which are defined
-    by QBarCategory class.
+    QBarSeries represents a series of data shown as bars. One QBarSeries can contain multible
+    QBarSet data sets. QBarSeries groups the data from sets to categories, which are defined
+    by QStringList.
 
     \mainclass
 
-    Example on how to create category:
-    \snippet ../example/barchart/main.cpp 1
-
-    Example on how to create sets of data:
-    \snippet ../example/barchart/main.cpp 2
-
-    Example on how to add sets to bar chart:
-    \snippet ../example/barchart/main.cpp 3
-
-    Example on how to enable tooltip and floating values:
-    \snippet ../example/barchart/main.cpp 4
-
-    Example on how to create view and apply theme:
-    \snippet ../example/barchart/main.cpp 5
-
-    \sa QBarCategory, QBarSet, QStackedBarChartSeries, QPercentBarChartSeries
+    \sa QBarSet, QStackedBarSeries, QPercentBarSeries
 */
 
 /*!
-    \fn virtual QChartSeriesType QBarChartSeries::type() const
+    \fn virtual QSeriesType QBarSeries::type() const
     \brief Returns type of series.
-    \sa QChartSeries, QChartSeriesType
+    \sa QSeries, QSeriesType
 */
 /*!
-    \fn void QBarChartSeries::changed(int index)
+    \fn void QBarSeries::changed(int index)
     \brief \internal \a index
 */
 /*!
-    \fn void QBarChartSeries::floatingValuesEnabled(bool enabled)
+    \fn void QBarSeries::floatingValuesEnabled(bool enabled)
     \brief \internal \a enabled
 */
 /*!
-    \fn void QBarChartSeries::toolTipEnabled(bool enabled)
+    \fn void QBarSeries::toolTipEnabled(bool enabled)
     \brief \internal \a enabled
 */
 /*!
-    \fn void QBarChartSeries::separatorsEnabled(bool enabled)
+    \fn void QBarSeries::separatorsEnabled(bool enabled)
     \brief \internal \a enabled
 */
 /*!
-    \fn void QBarChartSeries::showToolTip(QPoint pos, QString tip)
+    \fn void QBarSeries::showToolTip(QPoint pos, QString tip)
     \brief \internal \a pos \a tip
 */
 
 /*!
-    Constructs empty QBarChartSeries. Parameter \a category defines the categories for chart.
-    Takes ownership of \a category.
-    QBarChartSeries is QObject which is a child of a \a parent.
+    Constructs empty QBarSeries. Parameter \a category defines the categories for chart.
+    QBarSeries is QObject which is a child of a \a parent.
 */
-QBarChartSeries::QBarChartSeries(QBarCategory *category, QObject *parent)
-    : QChartSeries(parent)
-    ,mModel(new BarChartModel(category, this))
+QBarSeries::QBarSeries(QStringList categories, QObject *parent)
+    : QSeries(parent)
+    ,mModel(new BarChartModel(categories, this))
 {
 }
 
 /*!
     Adds a set of bars to series. Takes ownership of \a set
 */
-void QBarChartSeries::addBarSet(QBarSet *set)
+void QBarSeries::addBarSet(QBarSet *set)
 {
     mModel->addBarSet(set);
 }
@@ -83,7 +66,7 @@ void QBarChartSeries::addBarSet(QBarSet *set)
 /*!
     Removes a set of bars from series. Releases ownership of \a set. Doesnt delete \a set.
 */
-void QBarChartSeries::removeBarSet(QBarSet *set)
+void QBarSeries::removeBarSet(QBarSet *set)
 {
     mModel->removeBarSet(set);
 }
@@ -91,7 +74,7 @@ void QBarChartSeries::removeBarSet(QBarSet *set)
 /*!
     Returns number of sets in series.
 */
-int QBarChartSeries::countSets()
+int QBarSeries::barsetCount()
 {
     return mModel->countSets();
 }
@@ -99,36 +82,31 @@ int QBarChartSeries::countSets()
 /*!
     Returns number of categories in series
 */
-int QBarChartSeries::countCategories()
+int QBarSeries::categoryCount()
 {
     return mModel->countCategories();
 }
 
 /*!
-    Simple iterator for set. Returns pointer to next set in series.
-    Returns first set, if parameter \a getFirst is true.
-    If series is empty, returns 0.
-    Returns 0 after last set.
-*/
-QBarSet* QBarChartSeries::nextSet(bool getFirst)
+    Returns a list of sets in series. Keeps ownership of sets.
+ */
+QList<QBarSet*> QBarSeries::barSets()
 {
-    return mModel->nextSet(getFirst);
+    return mModel->barSets();
 }
 
 /*!
-    Returns set indexed by \a index. Doesn't check for index bounds.
-    Assumes that \a index is between 0 and number of sets. Use countSets() to get valid index bound.
-    \sa countSets()
+    \internal \a index
 */
-QBarSet* QBarChartSeries::setAt(int index)
+QBarSet* QBarSeries::barsetAt(int index)
 {
     return mModel->setAt(index);
 }
 
 /*!
-    Returns legend of series. Legend is a list of set names in series.
+    Returns legend of series.
 */
-QList<QString> QBarChartSeries::legend()
+QList<QSeries::Legend> QBarSeries::legend()
 {
     return mModel->legend();
 }
@@ -136,7 +114,7 @@ QList<QString> QBarChartSeries::legend()
 /*!
     \internal \a category
 */
-QString QBarChartSeries::label(int category)
+QString QBarSeries::label(int category)
 {
     return mModel->label(category);
 }
@@ -146,7 +124,7 @@ QString QBarChartSeries::label(int category)
     Floating values are bar values, that are displayed on top of each bar.
     Calling without parameter \a enabled, enables the floating values
 */
-void QBarChartSeries::enableFloatingValues(bool enabled)
+void QBarSeries::setFloatingValuesEnabled(bool enabled)
 {
     if (enabled) {
         for (int i=0; i<mModel->countSets(); i++) {
@@ -166,7 +144,7 @@ void QBarChartSeries::enableFloatingValues(bool enabled)
     Tooltip shows the name of set, when mouse is hovering on top of bar.
     Calling without parameter \a enabled, enables the tooltip
 */
-void QBarChartSeries::enableToolTip(bool enabled)
+void QBarSeries::setToolTipEnabled(bool enabled)
 {
     if (enabled) {
         for (int i=0; i<mModel->countSets(); i++) {
@@ -186,7 +164,7 @@ void QBarChartSeries::enableToolTip(bool enabled)
     Separators are visual elements that are drawn between categories.
     Calling without parameter \a enabled, enables the separators
 */
-void QBarChartSeries::enableSeparators(bool enabled)
+void QBarSeries::setSeparatorsEnabled(bool enabled)
 {
     emit separatorsEnabled(enabled);
 }
@@ -194,7 +172,7 @@ void QBarChartSeries::enableSeparators(bool enabled)
 /*!
     \internal
 */
-qreal QBarChartSeries::min()
+qreal QBarSeries::min()
 {
     return mModel->min();
 }
@@ -202,7 +180,7 @@ qreal QBarChartSeries::min()
 /*!
     \internal
 */
-qreal QBarChartSeries::max()
+qreal QBarSeries::max()
 {
     return mModel->max();
 }
@@ -210,7 +188,7 @@ qreal QBarChartSeries::max()
 /*!
     \internal \a set \a category
 */
-qreal QBarChartSeries::valueAt(int set, int category)
+qreal QBarSeries::valueAt(int set, int category)
 {
     return mModel->valueAt(set,category);
 }
@@ -218,7 +196,7 @@ qreal QBarChartSeries::valueAt(int set, int category)
 /*!
     \internal \a set \a category
 */
-qreal QBarChartSeries::percentageAt(int set, int category)
+qreal QBarSeries::percentageAt(int set, int category)
 {
     return mModel->percentageAt(set,category);
 }
@@ -226,7 +204,7 @@ qreal QBarChartSeries::percentageAt(int set, int category)
 /*!
     \internal \a category
 */
-qreal QBarChartSeries::categorySum(int category)
+qreal QBarSeries::categorySum(int category)
 {
     return mModel->categorySum(category);
 }
@@ -234,7 +212,7 @@ qreal QBarChartSeries::categorySum(int category)
 /*!
     \internal
 */
-qreal QBarChartSeries::maxCategorySum()
+qreal QBarSeries::maxCategorySum()
 {
     return mModel->maxCategorySum();
 }
@@ -242,11 +220,11 @@ qreal QBarChartSeries::maxCategorySum()
 /*!
     \internal
 */
-BarChartModel& QBarChartSeries::model()
+BarChartModel& QBarSeries::model()
 {
     return *mModel;
 }
 
-#include "moc_qbarchartseries.cpp"
+#include "moc_qbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

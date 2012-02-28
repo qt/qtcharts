@@ -1,4 +1,4 @@
-#include "percentbarpresenter.h"
+#include "percentbarpresenter_p.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "barvalue_p.h"
@@ -9,7 +9,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-PercentBarPresenter::PercentBarPresenter(QBarChartSeries *series, QGraphicsItem *parent) :
+PercentBarPresenter::PercentBarPresenter(QBarSeries *series, QGraphicsItem *parent) :
     BarPresenterBase(series, parent)
 {
 }
@@ -18,7 +18,7 @@ void PercentBarPresenter::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
-    if (mSeries->countSets() <= 0) {
+    if (mSeries->barsetCount() <= 0) {
         qDebug() << "No sets in model!";
         // Nothing to do.
         return;
@@ -31,7 +31,7 @@ void PercentBarPresenter::layoutChanged()
 
     // TODO: better way to auto-layout
     // Use reals for accurancy (we might get some compiler warnings... :)
-    int count = mSeries->countCategories();
+    int count = mSeries->categoryCount();
     int itemIndex(0);
     int labelIndex(0);
     qreal tW = mWidth;
@@ -40,17 +40,17 @@ void PercentBarPresenter::layoutChanged()
     qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
     qreal h = mHeight;
 
-    for (int category = 0; category < mSeries->countCategories(); category++) {
+    for (int category = 0; category < mSeries->categoryCount(); category++) {
         qreal colSum = mSeries->categorySum(category);
         qreal scale = (h / colSum);
         qreal yPos = h;
-        for (int set=0; set < mSeries->countSets(); set++) {
+        for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set, category) * scale;
             Bar* bar = mBars.at(itemIndex);
 
             // TODO: width settable per bar?
             bar->resize(mBarDefaultWidth, barHeight);
-            bar->setBrush(mSeries->setAt(set)->brush());
+            bar->setBrush(mSeries->barsetAt(set)->brush());
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             yPos -= barHeight;
@@ -65,7 +65,7 @@ void PercentBarPresenter::layoutChanged()
 
     // Position separators
     xPos = xStep + xStep/2;
-    for (int s=0; s < mSeries->countCategories() - 1; s++) {
+    for (int s=0; s < mSeries->categoryCount() - 1; s++) {
         Separator* sep = mSeparators.at(s);
         sep->setPos(xPos,0);
         sep->setSize(QSizeF(1,mHeight));
@@ -75,11 +75,11 @@ void PercentBarPresenter::layoutChanged()
     // Position floating values
     itemIndex = 0;
     xPos = ((tW/tC) - mBarDefaultWidth / 2);
-    for (int category=0; category < mSeries->countCategories(); category++) {
+    for (int category=0; category < mSeries->categoryCount(); category++) {
         qreal yPos = h;
         qreal colSum = mSeries->categorySum(category);
         qreal scale = (h / colSum);
-        for (int set=0; set < mSeries->countSets(); set++) {
+        for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);
 
@@ -107,6 +107,6 @@ void PercentBarPresenter::layoutChanged()
     mLayoutDirty = true;
 }
 
-#include "moc_percentbarpresenter.cpp"
+#include "moc_percentbarpresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

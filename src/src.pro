@@ -6,8 +6,7 @@ QT += core \
     gui
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
-SOURCES += \
-    axisitem.cpp \
+SOURCES += axisitem.cpp \
     axisanimationitem.cpp \
     chartdataset.cpp \
     chartpresenter.cpp \
@@ -15,28 +14,24 @@ SOURCES += \
     domain.cpp \
     qchart.cpp \
     qchartaxis.cpp \
-    qchartseries.cpp \
-    qchartview.cpp 
-PRIVATE_HEADERS += \
-    axisitem_p.h \
+    qchartview.cpp \
+    qseries.cpp
+PRIVATE_HEADERS += axisitem_p.h \
     axisanimationitem_p.h \
     chartdataset_p.h \
     chartitem_p.h \
     chartpresenter_p.h \
     charttheme_p.h \
     domain_p.h
-PUBLIC_HEADERS += \
-    qchart.h \
+PUBLIC_HEADERS += qchart.h \
     qchartaxis.h \
     qchartglobal.h \
-    qchartseries.h \
-    qchartview.h \
-
-include(linechart/linechart.pri)   
-include(barchart/barchart.pri)    
+    qseries.h \
+    qchartview.h
+include(linechart/linechart.pri)
+include(barchart/barchart.pri)
 include(piechart/piechart.pri)
 include(scatterseries/scatter.pri)
-
 THEMES += themes/chartthemeicy_p.h \
     themes/chartthemegrayscale_p.h \
     themes/chartthemescientific_p.h \
@@ -74,7 +69,8 @@ install_build_private_headers.commands = $$QMAKE_COPY \
     $$CHART_BUILD_PRIVATE_HEADER_DIR
 install_build_private_headers.CONFIG += target_predeps \
     no_link
-QMAKE_EXTRA_COMPILERS += install_build_public_headers install_build_private_headers
+QMAKE_EXTRA_COMPILERS += install_build_public_headers \
+    install_build_private_headers
 chartversion.target = qchartversion_p.h
 chartversion.commands = @echo \
     "build_time" \
@@ -91,4 +87,3 @@ unix:QMAKE_DISTCLEAN += -r \
 win32:QMAKE_DISTCLEAN += /Q \
     $$CHART_BUILD_HEADER_DIR \
     $$CHART_BUILD_LIB_DIR
-

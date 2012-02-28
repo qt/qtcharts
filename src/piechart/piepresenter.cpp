@@ -1,8 +1,8 @@
 
-#include "piepresenter.h"
-#include "pieslice.h"
+#include "piepresenter_p.h"
+#include "pieslice_p.h"
 #include "qpieslice.h"
-#include "pieslicelabel.h"
+#include "pieslicelabel_p.h"
 #include "qpieseries.h"
 #include <qmath.h>
 #include <QDebug>
@@ -123,7 +123,7 @@ void PiePresenter::updateGeometry()
     foreach (QPieSlice* s, m_series->m_slices) {
 
         // calculate the farthest point in the slice from the pie center
-        qreal centerAngle = s->angle() + (s->angleSpan() / 2);
+        qreal centerAngle = s->m_startAngle + (s->m_angleSpan / 2);
         qreal len = pieRadius + s->labelArmLength() + s->explodeDistance();
         QPointF dp(qSin(centerAngle*(PI/180)) * len, -qCos(centerAngle*(PI/180)) * len);
         QPointF p = pieRect.center() + dp;
@@ -205,6 +205,6 @@ void PiePresenter::deleteSlice(QPieSlice* sliceData)
     delete m_slices.take(sliceData);
 }
 
-#include "moc_piepresenter.cpp"
+#include "moc_piepresenter_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

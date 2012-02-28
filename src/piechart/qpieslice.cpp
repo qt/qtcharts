@@ -9,7 +9,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QPieSlice
-    \brief Defines a slice a pie series.
+    \brief Defines a slice in pie series.
 
     Holds all the data of a single slice in a QPieSeries and provides the means
     to modify slice data and customize the visual appearance of the slice.
@@ -35,7 +35,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     Note that QPieSeries takes ownership of the slice when it is set/added.
 
-    \sa QPieSeries::set(), QPieSeries::add()
+    \sa QPieSeries::replace(), QPieSeries::add()
 */
 QPieSlice::QPieSlice(QObject *parent)
     :QObject(parent),
@@ -44,7 +44,7 @@ QPieSlice::QPieSlice(QObject *parent)
     m_isExploded(false),
     m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
     m_percentage(0),
-    m_angle(0),
+    m_startAngle(0),
     m_angleSpan(0),
     m_pen(DEFAULT_PEN_COLOR),
     m_brush(DEFAULT_BRUSH_COLOR),
@@ -57,7 +57,7 @@ QPieSlice::QPieSlice(QObject *parent)
 /*!
     Constructs an empty slice with given \a value, \a label and a \a parent.
     Note that QPieSeries takes ownership of the slice when it is set/added.
-    \sa QPieSeries::set(), QPieSeries::add()
+    \sa QPieSeries::replace(), QPieSeries::add()
 */
 QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     :QObject(parent),
@@ -67,7 +67,7 @@ QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     m_isExploded(false),
     m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
     m_percentage(0),
-    m_angle(0),
+    m_startAngle(0),
     m_angleSpan(0),
     m_pen(DEFAULT_PEN_COLOR),
     m_brush(DEFAULT_BRUSH_COLOR),
@@ -150,21 +150,21 @@ qreal QPieSlice::percentage() const
 
     Updated internally after the slice is added to the series.
 */
-qreal QPieSlice::angle() const
+qreal QPieSlice::startAngle() const
 {
-    return m_angle;
+    return m_startAngle;
 }
 
 /*!
-    Returns the angle span of this slice in the series it belongs to.
+    Returns the end angle of this slice in the series it belongs to.
 
     Full pie is 360 degrees where 0 degrees is at 12 a'clock.
 
     Updated internally after the slice is added to the series.
 */
-qreal QPieSlice::angleSpan() const
+qreal QPieSlice::endAngle() const
 {
-    return m_angleSpan;
+    return m_startAngle + m_angleSpan;
 }
 
 /*!

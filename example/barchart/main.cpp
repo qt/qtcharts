@@ -1,9 +1,9 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <qchartview.h>
-#include <qbarchartseries.h>
+#include <qbarseries.h>
 #include <qbarset.h>
-#include <qbarcategory.h>
+#include <QStringList>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -13,9 +13,9 @@ int main(int argc, char *argv[])
     QMainWindow window;
 
     //! [1]
-    // Create category
-    QBarCategory *category = new QBarCategory;
-    *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+    // Define categories
+    QStringList catecories;
+    catecories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
     //! [1]
 
     //! [2]
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     //! [3]
     // Create series and add sets to it
-    QBarChartSeries* series= new QBarChartSeries(category);
+    QBarSeries* series= new QBarSeries(catecories);
 
     series->addBarSet(set0);
     series->addBarSet(set1);
@@ -47,8 +47,8 @@ int main(int argc, char *argv[])
 
     //! [4]
     // Enable some features
-    series->enableToolTip();
-    series->enableFloatingValues();
+    series->setToolTipEnabled();
+    series->setFloatingValuesEnabled();
     //! [4]
 
     //! [5]

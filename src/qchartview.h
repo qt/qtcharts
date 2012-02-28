@@ -2,7 +2,7 @@
 #define QCHARTWIDGET_H
 
 #include "qchartglobal.h"
-#include "qchartseries.h"
+#include "qseries.h"
 #include "qchart.h"
 #include <QGraphicsView>
 
@@ -24,8 +24,8 @@ public:
     //implement from QWidget
     void resizeEvent(QResizeEvent *event);
 
-    void addSeries(QChartSeries* series,QChartAxis* axisY=0);// takes series ownership , takes axis ownership
-    void removeSeries(QChartSeries* series); //returns ownership , deletes axis if no series attached
+    void addSeries(QSeries* series,QChartAxis* axisY=0);// takes series ownership , takes axis ownership
+    void removeSeries(QSeries* series); //returns ownership , deletes axis if no series attached
     void removeAllSeries(); // deletes series and axis
     int margin() const;
 

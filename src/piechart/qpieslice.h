@@ -29,8 +29,8 @@ public:
 
     // generated data
     qreal percentage() const;
-    qreal angle() const;
-    qreal angleSpan() const;
+    qreal startAngle() const;
+    qreal endAngle() const;
 
     // customization
     QPen pen() const;
@@ -70,6 +70,7 @@ private:
     // TODO: use private class
     friend class QPieSeries;
     friend class PiePresenter;
+    friend class PieSlice;
 
     // data
     qreal m_value;
@@ -80,7 +81,7 @@ private:
 
     // generated data
     qreal m_percentage;
-    qreal m_angle;
+    qreal m_startAngle;
     qreal m_angleSpan;
 
     // customization

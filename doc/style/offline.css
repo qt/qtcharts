@@ -3,10 +3,12 @@
 
     .qchart
     {
-	width: 80%;
+	width:1000px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 50px;
+        max-width:100%;
+	overflow-x: auto;
     }
 
     .qchart img
@@ -16,13 +18,16 @@
 
     .qchart table
     { 
-     	margin-top: 50px;
+      width:1000px;
+      margin-top: 50px;
+      max-width:100%;
     }
 
 /* basic elements */
     html
     {
         color: #000000;
+	min-width: 1000px;
         background: #FFFFFF;
     }
     table

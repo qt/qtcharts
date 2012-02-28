@@ -1,5 +1,5 @@
 #include "linechartitem_p.h"
-#include "qlinechartseries.h"
+#include "qlineseries.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
 
@@ -8,7 +8,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimazie : remove points which are not visible
 
-LineChartItem::LineChartItem(ChartPresenter* presenter, QLineChartSeries* series,QGraphicsItem *parent):ChartItem(parent),
+LineChartItem::LineChartItem(ChartPresenter* presenter, QLineSeries* series,QGraphicsItem *parent):ChartItem(parent),
 m_presenter(presenter),
 m_series(series),
 m_dirtyData(false),
@@ -36,7 +36,7 @@ void LineChartItem::addPoints(const QVector<QPointF>& points)
     const QPointF& point =m_data[i];
     QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
     item->setPos(point.x()-1,point.y()-1);;
-    if(!m_clipRect.contains(point) || !m_series->isPointsVisible()) item->setVisible(false);
+    if(!m_clipRect.contains(point) || !m_series->pointsVisible()) item->setVisible(false);
     m_points << item;
     }
 }
@@ -47,7 +47,7 @@ void LineChartItem::addPoint(const QPointF& point)
 	QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
 	m_clipRect.contains(point);
 	item->setPos(point.x()-1,point.y()-1);
-	if(!m_clipRect.contains(point) || !m_series->isPointsVisible()) item->setVisible(false);
+	if(!m_clipRect.contains(point) || !m_series->pointsVisible()) item->setVisible(false);
 	m_points << item;
 }
 
@@ -111,7 +111,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->restore();
 }
 
-void LineChartItem::calculatePoint(QPointF& point, int index, const QLineChartSeries* series,const QSizeF& size, const Domain& domain) const
+void LineChartItem::calculatePoint(QPointF& point, int index, const QLineSeries* series,const QSizeF& size, const Domain& domain) const
 {
     const qreal deltaX = size.width()/domain.spanX();
     const qreal deltaY = size.height()/domain.spanY();
@@ -122,7 +122,7 @@ void LineChartItem::calculatePoint(QPointF& point, int index, const QLineChartSe
 }
 
 
-void LineChartItem::calculatePoints(QVector<QPointF>& points, QHash<int,int>& hash,const QLineChartSeries* series,const QSizeF& size, const Domain& domain) const
+void LineChartItem::calculatePoints(QVector<QPointF>& points, QHash<int,int>& hash,const QLineSeries* series,const QSizeF& size, const Domain& domain) const
 {
     const qreal deltaX = size.width()/domain.spanX();
     const qreal deltaY = size.height()/domain.spanY();

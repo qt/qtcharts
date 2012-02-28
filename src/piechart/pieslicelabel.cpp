@@ -1,4 +1,4 @@
-#include "pieslicelabel.h"
+#include "pieslicelabel_p.h"
 #include <QPainter>
 #include <qmath.h>
 #include <QGraphicsTextItem>

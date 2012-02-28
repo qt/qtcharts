@@ -3,7 +3,6 @@
 
 #include <QtGui/QWidget>
 #include <qchartview.h>
-#include <qbarchartseries.h>
 #include <QSqlDatabase>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -28,7 +27,6 @@ private:
     QListWidget* countrieslist;
     QListWidget* yearslist;
     QSqlDatabase db;
-//    QBarChartSeries* series0;
     QRadioButton* barChartRadioButton;
     QRadioButton* scatterChartRadioButton;
 };

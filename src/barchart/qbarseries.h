@@ -1,36 +1,35 @@
-#ifndef BARCHARTSERIES_H
-#define BARCHARTSERIES_H
+#ifndef BARSERIES_H
+#define BARSERIES_H
 
-#include "qchartseries.h"
+#include "qseries.h"
+#include <QStringList>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QBarCategory;
 class QBarSet;
 class BarChartModel;
 
 // Container for series
-class QTCOMMERCIALCHART_EXPORT QBarChartSeries : public QChartSeries
+class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
 {
     Q_OBJECT
 public:
-    QBarChartSeries(QBarCategory *category, QObject* parent=0);
+    QBarSeries(QStringList categories, QObject* parent=0);
 
-    virtual QChartSeriesType type() const { return QChartSeries::SeriesTypeBar; }
+    virtual QSeriesType type() const { return QSeries::SeriesTypeBar; }
 
     void addBarSet(QBarSet *set);               // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
-    int countSets();
-    int countCategories();
-    QBarSet* nextSet(bool getFirst=false);      // Returns first set, if called with true
-    QBarSet *setAt(int index);
-
-    QList<QString> legend();                    // Returns legend of series (ie. names of all sets in series)
+    int barsetCount();
+    int categoryCount();
+    QList<QBarSet*> barSets();
+    QList<QSeries::Legend> legend();
 
 public:
     // TODO: Functions below this are not part of api and will be moved
     // to private implementation, when we start using it
     // TODO: TO PIMPL --->
+    QBarSet *barsetAt(int index);
     QString label(int category);
     qreal min();
     qreal max();
@@ -53,9 +52,9 @@ signals:
     // <--- TO PIMPL
 
 public Q_SLOTS:
-    void enableFloatingValues(bool enabled=true);    // enables floating values on top of bars
-    void enableToolTip(bool enabled=true);           // enables tooltips
-    void enableSeparators(bool enabled=true);        // enables separators between categories
+    void setFloatingValuesEnabled(bool enabled=true);    // enables floating values on top of bars
+    void setToolTipEnabled(bool enabled=true);           // enables tooltips
+    void setSeparatorsEnabled(bool enabled=true);        // enables separators between categories
 
 protected:
     BarChartModel* mModel;
@@ -63,4 +62,4 @@ protected:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // BARCHARTSERIES_H
+#endif // BARSERIES_H

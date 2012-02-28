@@ -1,7 +1,7 @@
-#include "qchartseries.h"
+#include "qseries.h"
 
 /*!
-    \class QChartSeries
+    \class QSeries
     \brief Base class for all QtCommercial Chart series.
     \mainclass
 
@@ -10,7 +10,7 @@
 */
 
 /*!
-    \enum QChartSeries::QChartSeriesType
+    \enum QSeries::QSeriesType
 
     The type of the series object.
 
@@ -25,22 +25,22 @@
 */
 
 /*!
-    \fn QChartSeries::QChartSeries(QObject *parent)
+    \fn QSeries::QSeries(QObject *parent)
     \brief Constructs ChartSeries object with \a parent.
 */
 
 /*!
-    \fn QChartSeries::~QChartSeries()
+    \fn QSeries::~QSeries()
     \brief Virtual destructor for the chart series.
 */
 
 /*!
-    \fn QChartSeriesType QChartSeries::type() const
+    \fn QSeriesType QSeries::type() const
     \brief The type of the series.
 */
 
 /*!
-    \fn bool QChartSeries::setModel(QAbstractItemModel *model)
+    \fn bool QSeries::setModel(QAbstractItemModel *model)
     \brief Use the \a model to provide data for the series. The model overrides possible user data
     set with QChartSeries type specific data setters. For example if you call both
     QScatterSeries::addData() and QScatterSeries::setModel, only the data provided by the model is
@@ -48,5 +48,5 @@
 */
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-#include "moc_qchartseries.cpp"
+#include "moc_qseries.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

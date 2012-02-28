@@ -21,11 +21,11 @@ public:
     qreal valueAt(int index);                   // for modifying individual values
     void setValue(int index, qreal value);      // setter for individual value
 
-    void setPen(const QPen& pen);
-    const QPen& pen() const;
+    void setPen(QPen pen);
+    QPen pen();
 
-    void setBrush(const QBrush& brush);
-    const QBrush& brush() const;
+    void setBrush(QBrush brush);
+    QBrush brush();
 
 Q_SIGNALS:
     void clicked();                         // Clicked and hover signals exposed to user

@@ -5,5 +5,22 @@
 
      The example shows how to create simple line chart.
 
-     ...
+    \image linechart.png
+    
+    To create line charts, QLineSeries instance is needed. Here we create two line series and we set the color and width of line.
+
+    \snippet ../example/linechart/main.cpp 1
+
+    We add data to be shown to both series. We can use add() member function or use stream operator.  
+
+    \snippet ../example/linechart/main.cpp 2
+
+    In the end we create QChartView instance, set title, set anti-aliasing and add both series. 
+
+    \snippet ../example/linechart/main.cpp 3
+    
+    Chart is ready to be shown.
+    
+    \snippet ../example/linechart/main.cpp 4 
+    
 */

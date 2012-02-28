@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <qchartview.h>
-#include <qlinechartseries.h>
+#include <qlineseries.h>
 #include <qchart.h>
 #include <cmath>
 #include "wavegenerator.h"
@@ -13,11 +13,11 @@ int main(int argc, char *argv[])
 
     QMainWindow window;
 
-    QLineChartSeries* series0 = new QLineChartSeries();
+    QLineSeries* series0 = new QLineSeries();
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
-    QLineChartSeries* series1 = new QLineChartSeries();
+    QLineSeries* series1 = new QLineSeries();
     QPen red(Qt::red);
     red.setWidth(3);
     series1->setPen(red);

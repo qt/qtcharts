@@ -1,8 +1,5 @@
 #include "qpieseries.h"
 #include "qpieslice.h"
-#include "piepresenter.h"
-#include "pieslice.h"
-#include <QFontMetrics>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -113,13 +110,21 @@ bool QPieSeries::ChangeSet::isEmpty() const
 
     By default the pie is defined as full but it can be a partial pie.
     This can be done by setting a starting angle and angle span to the series.
+
+    Example on how to create a chart with pie series:
+    \snippet ../example/piechart/main.cpp 1
+
+    To help with the most common user intercation scenarions there some convenience functions. Specifically
+    exploding and higlighting:
+    \snippet ../example/piechart/main.cpp 2
+
 */
 
 /*!
     Constructs a series object which is a child of \a parent.
 */
 QPieSeries::QPieSeries(QObject *parent) :
-    QChartSeries(parent),
+    QSeries(parent),
     m_sizeFactor(1.0),
     m_position(PiePositionMaximized),
     m_pieStartAngle(0),
@@ -139,14 +144,13 @@ QPieSeries::~QPieSeries()
 /*!
     Returns QChartSeries::SeriesTypePie.
 */
-QChartSeries::QChartSeriesType QPieSeries::type() const
+QSeries::QSeriesType QPieSeries::type() const
 {
-    return QChartSeries::SeriesTypePie;
+    return QSeries::SeriesTypePie;
 }
 
 /*!
-    Sets an array of values to the series.
-    TO BE REMOVED
+    \internal \a data
 */
 bool QPieSeries::setData(QList<qreal> data)
 {
@@ -154,22 +158,22 @@ bool QPieSeries::setData(QList<qreal> data)
     QList<QPieSlice*> slices;
     foreach (qreal value, data)
         slices << new QPieSlice(value, QString::number(value));
-    set(slices);
+    replace(slices);
     return true;
 }
 
 /*!
-    Sets an array of \a slices to the series.
+    Sets an array of \a slices to the series replacing the existing slices.
     Slice ownership is passed to the series.
 */
-void QPieSeries::set(QList<QPieSlice*> slices)
+void QPieSeries::replace(QList<QPieSlice*> slices)
 {
     clear();
     add(slices);
 }
 
 /*!
-    Adds an array of slices to the series.
+    Adds an array of \a slices to the series.
     Slice ownership is passed to the series.
 */
 void QPieSeries::add(QList<QPieSlice*> slices)
@@ -345,9 +349,10 @@ void QPieSeries::setLabelsVisible(bool visible)
 }
 
 /*!
-    Convenience method for exploding a slice when user clicks the pie.
+    Convenience method for exploding a slice when user clicks the pie. Set \a enable to true to
+    explode slices by clicking.
 
-    \sa QPieSlice::isExploded(), QPieSlice::setExploded()
+    \sa QPieSlice::isExploded(), QPieSlice::setExploded(), QPieSlice::setExplodeDistance()
 */
 void QPieSeries::enableClickExplodes(bool enable)
 {
@@ -360,6 +365,7 @@ void QPieSeries::enableClickExplodes(bool enable)
 /*!
     Convenience method for highlighting a slice when user hovers over the slice.
     It changes the slice color to be lighter and shows the label of the slice.
+    Set \a enable to true to highlight a slice when user hovers on top of it.
 
     \sa QPieSlice::isExploded(), QPieSlice::setExploded()
 */
@@ -512,8 +518,8 @@ void QPieSeries::updateDerivativeData()
             changed = true;
         }
 
-        if (s->m_angle != sliceAngle) {
-            s->m_angle = sliceAngle;
+        if (s->m_startAngle != sliceAngle) {
+            s->m_startAngle = sliceAngle;
             changed = true;
         }
         sliceAngle += sliceSpan;

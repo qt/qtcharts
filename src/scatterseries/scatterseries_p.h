@@ -2,7 +2,7 @@
 #define QSCATTERSERIESPRIVATE_H
 
 #include "qchartglobal.h"
-#include "qchartseries.h"
+#include "qseries.h"
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

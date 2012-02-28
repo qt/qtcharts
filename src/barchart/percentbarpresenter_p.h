@@ -3,8 +3,8 @@
 
 #include "chartitem_p.h"
 #include "bar_p.h"
-#include "qpercentbarchartseries.h"
-#include "barpresenterbase.h"
+#include "qpercentbarseries.h"
+#include "barpresenterbase_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -13,7 +13,7 @@ class PercentBarPresenter : public BarPresenterBase
 {
     Q_OBJECT
 public:
-    PercentBarPresenter(QBarChartSeries *series, QGraphicsItem *parent = 0);
+    PercentBarPresenter(QBarSeries *series, QGraphicsItem *parent = 0);
 
 private:
 

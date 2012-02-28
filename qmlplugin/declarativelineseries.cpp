@@ -1,7 +1,7 @@
 #include "declarativelineseries.h"
 #include "declarativechart.h"
 #include "qchart.h"
-#include "qlinechartseries.h"
+#include "qlineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -23,7 +23,7 @@ void DeclarativeLineSeries::setParentForSeries()
             qDebug() << "creating line series for chart: " << chart;
             Q_ASSERT(chart);
 
-            m_series = new QLineChartSeries();
+            m_series = new QLineSeries();
             Q_ASSERT(m_series);
             for (int i(0); i < m_data.count(); i++) {
                 ScatterElement *element = m_data.at(i);

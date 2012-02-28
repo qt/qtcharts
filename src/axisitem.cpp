@@ -95,7 +95,7 @@ void AxisItem::handleAxisUpdate(QChartAxis* axis)
         setGridOpacity(0);
     }
 
-    if(axis->isLabelsVisible())
+    if(axis->labelsVisible())
     {
         setLabelsOpacity(100);
     }
@@ -103,7 +103,7 @@ void AxisItem::handleAxisUpdate(QChartAxis* axis)
         setLabelsOpacity(0);
     }
 
-    if(axis->isShadesVisible()) {
+    if(axis->shadesVisible()) {
         setShadesOpacity(axis->shadesOpacity());
     }
     else {

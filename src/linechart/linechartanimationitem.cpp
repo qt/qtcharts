@@ -7,7 +7,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 const static int duration = 500;
 
 
-LineChartAnimationItem::LineChartAnimationItem(ChartPresenter* presenter, QLineChartSeries* series,QGraphicsItem *parent):
+LineChartAnimationItem::LineChartAnimationItem(ChartPresenter* presenter, QLineSeries* series,QGraphicsItem *parent):
 LineChartItem(presenter,series,parent)
 {
 

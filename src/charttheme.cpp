@@ -5,22 +5,22 @@
 
 //series
 #include "qbarset.h"
-#include "qbarchartseries.h"
-#include "qstackedbarchartseries.h"
-#include "qpercentbarchartseries.h"
-#include "qlinechartseries.h"
+#include "qbarseries.h"
+#include "qstackedbarseries.h"
+#include "qpercentbarseries.h"
+#include "qlineseries.h"
 #include "qscatterseries.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
 
 //items
 #include "axisitem_p.h"
-#include "barpresenter.h"
-#include "stackedbarpresenter.h"
+#include "barpresenter_p.h"
+#include "stackedbarpresenter_p.h"
+#include "percentbarpresenter_p.h"
 #include "linechartitem_p.h"
-#include "percentbarpresenter.h"
 #include "scatterpresenter_p.h"
-#include "piepresenter.h"
+#include "piepresenter_p.h"
 
 //themes
 #include "chartthemevanilla_p.h"
@@ -80,35 +80,35 @@ void ChartTheme::decorate(QChart* chart)
     chart->setChartBackgroundBrush(backgroundGradient);
 }
 //TODO helper to by removed later
-void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
+void ChartTheme::decorate(ChartItem* item, QSeries* series,int count)
 {
     switch(series->type())
     {
-        case QChartSeries::SeriesTypeLine: {
-            QLineChartSeries* s = static_cast<QLineChartSeries*>(series);
+        case QSeries::SeriesTypeLine: {
+            QLineSeries* s = static_cast<QLineSeries*>(series);
             LineChartItem* i = static_cast<LineChartItem*>(item);
             decorate(i,s,count);
             break;
         }
-        case QChartSeries::SeriesTypeBar: {
-            QBarChartSeries* b = static_cast<QBarChartSeries*>(series);
+        case QSeries::SeriesTypeBar: {
+            QBarSeries* b = static_cast<QBarSeries*>(series);
             BarPresenter* i = static_cast<BarPresenter*>(item);
             decorate(i,b,count);
             break;
         }
-        case QChartSeries::SeriesTypeStackedBar: {
-            QStackedBarChartSeries* s = static_cast<QStackedBarChartSeries*>(series);
+        case QSeries::SeriesTypeStackedBar: {
+            QStackedBarSeries* s = static_cast<QStackedBarSeries*>(series);
             StackedBarPresenter* i = static_cast<StackedBarPresenter*>(item);
             decorate(i,s,count);
             break;
         }
-        case QChartSeries::SeriesTypePercentBar: {
-            QPercentBarChartSeries* s = static_cast<QPercentBarChartSeries*>(series);
+        case QSeries::SeriesTypePercentBar: {
+            QPercentBarSeries* s = static_cast<QPercentBarSeries*>(series);
             PercentBarPresenter* i = static_cast<PercentBarPresenter*>(item);
             decorate(i,s,count);
             break;
         }
-        case QChartSeries::SeriesTypeScatter: {
+        case QSeries::SeriesTypeScatter: {
             QScatterSeries* s = qobject_cast<QScatterSeries*>(series);
             Q_ASSERT(s);
             ScatterPresenter* i = static_cast<ScatterPresenter*>(item);
@@ -116,7 +116,7 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
             decorate(i, s, count);
             break;
         }
-        case QChartSeries::SeriesTypePie: {
+        case QSeries::SeriesTypePie: {
             QPieSeries* s = static_cast<QPieSeries*>(series);
             PiePresenter* i = static_cast<PiePresenter*>(item);
             decorate(i,s,count);
@@ -129,7 +129,7 @@ void ChartTheme::decorate(ChartItem* item, QChartSeries* series,int count)
 
 }
 
-void ChartTheme::decorate(LineChartItem* item, QLineChartSeries* series,int count)
+void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int count)
 {
     QPen pen;
     if(pen != series->pen()){
@@ -141,24 +141,27 @@ void ChartTheme::decorate(LineChartItem* item, QLineChartSeries* series,int coun
     item->setPen(pen);
 }
 
-void ChartTheme::decorate(BarPresenter* item, QBarChartSeries* series,int count)
+void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int count)
 {
-    for (int i=0; i<series->countSets(); i++) {
-        series->nextSet(0==i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
+    QList<QBarSet*> sets = series->barSets();
+    for (int i=0; i<series->barsetCount(); i++) {
+        sets.at(i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
 }
 
-void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarChartSeries* series,int count)
+void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count)
 {
-    for (int i=0; i<series->countSets(); i++) {
-        series->nextSet(0==i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
+    QList<QBarSet*> sets = series->barSets();
+    for (int i=0; i<series->barsetCount(); i++) {
+        sets.at(i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
 }
 
-void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarChartSeries* series,int count)
+void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count)
 {
-    for (int i=0; i<series->countSets(); i++) {
-        series->nextSet(0==i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
+    QList<QBarSet*> sets = series->barSets();
+    for (int i=0; i<series->barsetCount(); i++) {
+        sets.at(i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
     }
 }
 
@@ -189,6 +192,10 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
         // get base color
         QColor c = m_seriesColor[i++];
         i = i % m_seriesColor.count();
+
+        // dont use black colors... looks bad
+        if (c == Qt::black)
+            continue;
 
         // by default use the "raw" theme color
         if (!colors.contains(c)) {

@@ -1,7 +1,6 @@
 #include <QtTest/QtTest>
 #include <qchartaxis.h>
-#include <qchartseries.h>
-#include <qlinechartseries.h>
+#include <qlineseries.h>
 #include <private/chartdataset_p.h>
 #include <private/domain_p.h>
 
@@ -9,8 +8,8 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(Domain)
 Q_DECLARE_METATYPE(QChartAxis*)
-Q_DECLARE_METATYPE(QChartSeries*)
-Q_DECLARE_METATYPE(QLineChartSeries*)
+Q_DECLARE_METATYPE(QSeries*)
+Q_DECLARE_METATYPE(QLineSeries*)
 
 class tst_ChartDataSet: public QObject {
 Q_OBJECT
@@ -47,7 +46,7 @@ void tst_ChartDataSet::initTestCase()
 {
 	qRegisterMetaType<Domain>("Domain");
 	qRegisterMetaType<QChartAxis*>();
-	qRegisterMetaType<QChartSeries*>();
+	qRegisterMetaType<QSeries*>();
 }
 
 void tst_ChartDataSet::cleanupTestCase()
@@ -99,7 +98,7 @@ void tst_ChartDataSet::addDomain()
 	ChartDataSet dataSet;
 
 	Domain domain1(0, 1000, 0, 1000);
-	QLineChartSeries series;
+	QLineSeries series;
 	series.add(0, 0);
 	series.add(1000, 1000);
 
@@ -111,10 +110,10 @@ void tst_ChartDataSet::addDomain()
 	QSignalSpy spy1(&dataSet,
 			SIGNAL(axisLabelsChanged(QChartAxis*, QStringList const&)));
 	QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QChartSeries*)));
+	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QSeries*)));
 	QSignalSpy spy4(&dataSet,
-			SIGNAL(seriesDomainChanged(QChartSeries*, Domain const&)));
-	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QChartSeries*)));
+			SIGNAL(seriesDomainChanged(QSeries*, Domain const&)));
+	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
 	Domain domain2 = dataSet.domain(dataSet.axisY());
 	QVERIFY(domain1 == domain2);
@@ -157,10 +156,10 @@ void tst_ChartDataSet::addSeries()
 	QSignalSpy spy1(&dataSet,
 			SIGNAL(axisLabelsChanged(QChartAxis*, QStringList const&)));
 	QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QChartSeries*)));
+	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QSeries*)));
 	QSignalSpy spy4(&dataSet,
-			SIGNAL(seriesDomainChanged(QChartSeries*, Domain const&)));
-	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QChartSeries*)));
+			SIGNAL(seriesDomainChanged(QSeries*, Domain const&)));
+	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
 	QList<QChartAxis*> axisList;
 
@@ -173,7 +172,7 @@ void tst_ChartDataSet::addSeries()
 
 	for (int i = 0; i < seriesCount; i++) {
 		QChartAxis* axisY = 0;
-		QLineChartSeries* series = new QLineChartSeries();
+		QLineSeries* series = new QLineSeries();
 		if (iterator != axisList.end()) {
 			axisY = *iterator;
 			iterator++;
@@ -218,10 +217,10 @@ void tst_ChartDataSet::axisY()
 
 	QVERIFY2(defaultAxisY, "Missing axisY.");
 
-	QLineChartSeries* series1 = new QLineChartSeries();
+	QLineSeries* series1 = new QLineSeries();
 	dataSet.addSeries(series1);
 
-	QLineChartSeries* series2 = new QLineChartSeries();
+	QLineSeries* series2 = new QLineSeries();
 	dataSet.addSeries(series2, axisY);
 
 	QVERIFY(dataSet.axisY(series1) == defaultAxisY);
@@ -244,7 +243,7 @@ void tst_ChartDataSet::clearDomains()
 	QFETCH(int, indexCount);
 
 	Domain domain1(0, 100, 0, 100);
-	QLineChartSeries* series = new QLineChartSeries();
+	QLineSeries* series = new QLineSeries();
 	series->add(0, 0);
 	series->add(100, 100);
 
@@ -271,10 +270,10 @@ void tst_ChartDataSet::clearDomains()
 	QSignalSpy spy1(&dataSet,
 			SIGNAL(axisLabelsChanged(QChartAxis*, QStringList const&)));
 	QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QChartSeries*)));
+	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QSeries*)));
 	QSignalSpy spy4(&dataSet,
-			SIGNAL(seriesDomainChanged(QChartSeries*, Domain const&)));
-	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QChartSeries*)));
+			SIGNAL(seriesDomainChanged(QSeries*, Domain const&)));
+	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
 	dataSet.clearDomains(indexCount);
 
@@ -315,13 +314,13 @@ void tst_ChartDataSet::domain()
 	QFETCH(Domain, domain);
 
 	ChartDataSet dataSet;
-	QLineChartSeries* series1 = new QLineChartSeries();
+	QLineSeries* series1 = new QLineSeries();
 	series1->add(domain1.m_minX, domain1.m_minY);
 	series1->add(domain1.m_maxX, domain1.m_maxY);
-	QLineChartSeries* series2 = new QLineChartSeries();
+	QLineSeries* series2 = new QLineSeries();
 	series2->add(domain2.m_minX, domain2.m_minY);
 	series2->add(domain2.m_maxX, domain2.m_maxY);
-	QLineChartSeries* series3 = new QLineChartSeries();
+	QLineSeries* series3 = new QLineSeries();
 	series3->add(domain3.m_minX, domain3.m_minY);
 	series3->add(domain3.m_maxX, domain3.m_maxY);
 
@@ -329,10 +328,10 @@ void tst_ChartDataSet::domain()
 	QSignalSpy spy1(&dataSet,
 			SIGNAL(axisLabelsChanged(QChartAxis*, QStringList const&)));
 	QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QChartSeries*)));
+	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QSeries*)));
 	QSignalSpy spy4(&dataSet,
-			SIGNAL(seriesDomainChanged(QChartSeries*, Domain const&)));
-	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QChartSeries*)));
+			SIGNAL(seriesDomainChanged(QSeries*, Domain const&)));
+	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
 	dataSet.addSeries(series1);
 	dataSet.addSeries(series2);
@@ -370,7 +369,7 @@ void tst_ChartDataSet::nextpreviousDomain()
 	ChartDataSet dataSet;
 
 	Domain domain1(0, 1000, 0, 1000);
-	QLineChartSeries* series = new QLineChartSeries();
+	QLineSeries* series = new QLineSeries();
 	series->add(0, 0);
 	series->add(1000, 1000);
 
@@ -406,10 +405,10 @@ void tst_ChartDataSet::nextpreviousDomain()
 	QSignalSpy spy1(&dataSet,
 			SIGNAL(axisLabelsChanged(QChartAxis*, QStringList const&)));
 	QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QChartSeries*)));
+	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QSeries*)));
 	QSignalSpy spy4(&dataSet,
-			SIGNAL(seriesDomainChanged(QChartSeries*, Domain const&)));
-	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QChartSeries*)));
+			SIGNAL(seriesDomainChanged(QSeries*, Domain const&)));
+	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
 	Domain domain;
 
@@ -476,7 +475,7 @@ void tst_ChartDataSet::removeSeries()
 	ChartDataSet dataSet;
 
 	QList<QChartAxis*> axisList;
-	QList<QChartSeries*> seriesList;
+	QList<QSeries*> seriesList;
 
 	for (int i = 0; i < axisYCount; i++) {
 		QChartAxis* axis = new QChartAxis();
@@ -487,7 +486,7 @@ void tst_ChartDataSet::removeSeries()
 
 	for (int i = 0; i < seriesCount; i++) {
 		QChartAxis* axisY = 0;
-		QLineChartSeries* series = new QLineChartSeries();
+		QLineSeries* series = new QLineSeries();
 		if (iterator != axisList.end()) {
 			axisY = *iterator;
 			iterator++;
@@ -504,10 +503,10 @@ void tst_ChartDataSet::removeSeries()
 	QSignalSpy spy1(&dataSet,
 			SIGNAL(axisLabelsChanged(QChartAxis*, QStringList const&)));
 	QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QChartSeries*)));
+	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QSeries*)));
 	QSignalSpy spy4(&dataSet,
-			SIGNAL(seriesDomainChanged(QChartSeries*, Domain const&)));
-	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QChartSeries*)));
+			SIGNAL(seriesDomainChanged(QSeries*, Domain const&)));
+	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
 	for (int i = 0; i < seriesCount; i++) {
 		dataSet.removeSeries(seriesList.at(i));
@@ -559,7 +558,7 @@ void tst_ChartDataSet::removeAllSeries()
 
     for (int i = 0; i < seriesCount; i++) {
         QChartAxis* axisY = 0;
-        QLineChartSeries* series = new QLineChartSeries();
+        QLineSeries* series = new QLineSeries();
         if (iterator != axisList.end()) {
             axisY = *iterator;
             iterator++;
@@ -574,9 +573,9 @@ void tst_ChartDataSet::removeAllSeries()
     QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*)));
     QSignalSpy spy1(&dataSet, SIGNAL(axisLabelsChanged(QChartAxis*, QStringList const&)));
     QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QChartSeries*)));
-    QSignalSpy spy4(&dataSet, SIGNAL(seriesDomainChanged(QChartSeries*, Domain const&)));
-    QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QChartSeries*)));
+    QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QSeries*)));
+    QSignalSpy spy4(&dataSet, SIGNAL(seriesDomainChanged(QSeries*, Domain const&)));
+    QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
     dataSet.removeAllSeries();
     //default axis

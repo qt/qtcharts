@@ -15,10 +15,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \mainclass
 
-    Example on how to create sets of data:
-    \snippet ../example/barchart/main.cpp 2
-
-    \sa QBarCategory, QBarChartSeries, QStackedBarChartSeries, QPercentBarChartSeries
+    \sa QBarSeries, QStackedBarSeries, QPercentBarSeries
 */
 
 /*!
@@ -104,7 +101,7 @@ void QBarSet::setValue(int index, qreal value)
 /*!
     Sets pen for set. Bars of this set are drawn using \a pen
 */
-void QBarSet::setPen(const QPen& pen)
+void QBarSet::setPen(QPen pen)
 {
     mPen = pen;
 }
@@ -112,7 +109,7 @@ void QBarSet::setPen(const QPen& pen)
 /*!
     Returns pen of the set.
 */
-const QPen& QBarSet::pen() const
+QPen QBarSet::pen()
 {
     return mPen;
 }
@@ -120,7 +117,7 @@ const QPen& QBarSet::pen() const
 /*!
     Sets brush for the set. Bars of this set are drawn using \a brush
 */
-void QBarSet::setBrush(const QBrush& brush)
+void QBarSet::setBrush(QBrush brush)
 {
     mBrush = brush;
 }
@@ -128,7 +125,7 @@ void QBarSet::setBrush(const QBrush& brush)
 /*!
     Returns brush of the set.
 */
-const QBrush& QBarSet::brush() const
+QBrush QBarSet::brush()
 {
     return mBrush;
 }

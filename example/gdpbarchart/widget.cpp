@@ -13,12 +13,12 @@
 #include <qscatterseries.h>
 #include <qchartview.h>
 #include <qchartaxis.h>
-#include <qbarcategory.h>
 #include <qbarset.h>
 #include <QListWidget>
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QRadioButton>
+#include <QStringList>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -86,7 +86,7 @@ Widget::Widget(QWidget *parent)
 
     // hide axis X labels
     QChartAxis* axis = chartArea->axisX();
-//    axis->setLabelsVisible(false);
+    //    axis->setLabelsVisible(false);
     //    newAxis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);
 
 }
@@ -102,7 +102,7 @@ Widget::~Widget()
 */
 void Widget::refreshChart()
 {
-    chartArea->removeAllSeries();    
+    chartArea->removeAllSeries();
 
     // selected countries items list is not sorted. copy the values to QStringlist and sort them.
     QStringList selectedCountriesStrings;
@@ -120,12 +120,13 @@ void Widget::refreshChart()
     qSort(selectedYearsInts.begin(), selectedYearsInts.end(), qGreater<int>());
 
     if (barChartRadioButton->isChecked())
-    {        
+    {
         // use the sorted selected coutries list to initialize BarCategory
-        QBarCategory* category = new QBarCategory;
+        QStringList category;
         for (int i = 0; i < selectedCountriesStrings.size(); i++)
-            *category << selectedCountriesStrings[i];
+            category << selectedCountriesStrings[i];
         QBarChartSeries* series0 = new QBarChartSeries(category);
+        series0 = new QBarSeries(category);
 
         // prepare the selected counries SQL query
         QString countriesQuery = "country IN (";
@@ -206,7 +207,7 @@ void Widget::refreshChart()
                     qDebug() << "Putting 0 for the missing data" << " : " << QString("%1").arg(selectedYearsInts[i]) << " " << query.value(0).toInt();
                 }
             }
-//            chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);
+            //            chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);
             chartArea->addSeries(series);
         }
         chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);

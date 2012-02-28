@@ -10,7 +10,7 @@ class DataSerieDialog : public QDialog
 {
     Q_OBJECT
 public:
-    explicit DataSerieDialog(QString defaultType, QWidget *parent = 0);
+    explicit DataSerieDialog(QWidget *parent = 0);
 
 signals:
     void accepted(QString series, int columnCount, int rowCount, QString dataCharacteristics, bool labelsDefined);
@@ -23,6 +23,7 @@ private:
     QGroupBox *columnCountSelector();
     QGroupBox *rowCountSelector();
     QGroupBox *dataCharacteristicsSelector();
+    void selectRadio(QGroupBox *groupBox, int defaultSelection);
     QString radioSelection(QGroupBox *groupBox);
     QGroupBox *m_seriesTypeSelector;
     QGroupBox *m_columnCountSelector;
