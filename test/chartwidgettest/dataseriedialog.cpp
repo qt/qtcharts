@@ -8,7 +8,7 @@
 #include <QLabel>
 #include <QDebug>
 
-DataSerieDialog::DataSerieDialog(QString defaultType, QWidget *parent) :
+DataSerieDialog::DataSerieDialog(QWidget *parent) :
     QDialog(parent)
 {
     QDialogButtonBox *addSeriesBox = new QDialogButtonBox(Qt::Horizontal);
@@ -53,6 +53,7 @@ QGroupBox *DataSerieDialog::seriesTypeSelector()
 
     QGroupBox *groupBox = new QGroupBox("Series type");
     groupBox->setLayout(layout);
+    selectRadio(groupBox, 0);
 
     return groupBox;
 }
@@ -72,6 +73,7 @@ QGroupBox *DataSerieDialog::columnCountSelector()
 
     QGroupBox *groupBox = new QGroupBox("Column count");
     groupBox->setLayout(layout);
+    selectRadio(groupBox, 0);
 
     return groupBox;
 }
@@ -91,6 +93,7 @@ QGroupBox *DataSerieDialog::rowCountSelector()
 
     QGroupBox *groupBox = new QGroupBox("Row count");
     groupBox->setLayout(layout);
+    selectRadio(groupBox, 0);
 
     return groupBox;
 }
@@ -99,9 +102,7 @@ QGroupBox *DataSerieDialog::dataCharacteristicsSelector()
 {
     QVBoxLayout *layout = new QVBoxLayout();
 
-    QRadioButton *radio1 = new QRadioButton("Linear");
-    radio1->setChecked(true);
-    layout->addWidget(radio1);
+    layout->addWidget(new QRadioButton("Linear"));
     layout->addWidget(new QRadioButton("Constant"));
     layout->addWidget(new QRadioButton("Random"));
     layout->addWidget(new QRadioButton("Sin"));
@@ -109,6 +110,7 @@ QGroupBox *DataSerieDialog::dataCharacteristicsSelector()
 
     QGroupBox *groupBox = new QGroupBox("Data Characteristics");
     groupBox->setLayout(layout);
+    selectRadio(groupBox, 0);
 
     return groupBox;
 }
@@ -121,6 +123,24 @@ void DataSerieDialog::accept()
              radioSelection(m_dataCharacteristicsSelector),
              m_labelsSelector->isChecked());
     QDialog::accept();
+}
+
+void DataSerieDialog::selectRadio(QGroupBox *groupBox, int defaultSelection)
+{
+    QVBoxLayout *layout = qobject_cast<QVBoxLayout *>(groupBox->layout());
+    Q_ASSERT(layout);
+    Q_ASSERT(layout->count());
+
+    QLayoutItem *item = 0;
+    if (defaultSelection == -1) {
+        item = layout->itemAt(0);
+    } else if (layout->count() > defaultSelection) {
+        item = layout->itemAt(defaultSelection);
+    }
+    Q_ASSERT(item);
+    QRadioButton *radio = qobject_cast<QRadioButton *>(item->widget());
+    Q_ASSERT(radio);
+    radio->setChecked(true);
 }
 
 QString DataSerieDialog::radioSelection(QGroupBox *groupBox)

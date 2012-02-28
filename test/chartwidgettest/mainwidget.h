@@ -12,6 +12,7 @@ class QGridLayout;
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 #define RealList QList<qreal>
+class DataSerieDialog;
 
 class MainWidget : public QWidget
 {
@@ -44,6 +45,7 @@ private slots:
     QStringList generateLabels(int count);
 
 private:
+    DataSerieDialog *m_addSerieDialog;
     QChartView *m_chartWidget;
     QCheckBox *m_autoScaleCheck;
     QSpinBox *m_xMinSpin;

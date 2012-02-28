@@ -25,7 +25,9 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 MainWidget::MainWidget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent),
+    m_addSerieDialog(0),
+    m_chartWidget(0)
 {
     m_chartWidget = new QChartView(this);
     m_chartWidget->setRubberBandPolicy(QChartView::HorizonalRubberBand);
@@ -163,10 +165,12 @@ void MainWidget::initPieControls()
 
 void MainWidget::addSeries()
 {
-    DataSerieDialog dialog(m_defaultSeriesName, this);
-    connect(&dialog, SIGNAL(accepted(QString, int, int, QString, bool)),
-            this, SLOT(addSeries(QString, int, int, QString, bool)));
-    dialog.exec();
+    if (!m_addSerieDialog) {
+        m_addSerieDialog = new DataSerieDialog(this);
+        connect(m_addSerieDialog, SIGNAL(accepted(QString, int, int, QString, bool)),
+                this, SLOT(addSeries(QString, int, int, QString, bool)));
+    }
+    m_addSerieDialog->exec();
 }
 
 QList<RealList> MainWidget::generateTestData(int columnCount, int rowCount, QString dataCharacteristics)
