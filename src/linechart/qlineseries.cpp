@@ -68,6 +68,7 @@ QLineSeries::~QLineSeries()
  */
 void QLineSeries::add(qreal x,qreal y)
 {
+    Q_ASSERT(m_x.size() == m_y.size());
     m_x<<x;
     m_y<<y;
 }
@@ -183,6 +184,17 @@ QDebug operator<< (QDebug debug, const QLineSeries series)
     debug.nospace() << "(" << series.m_x.at(i) << ','<< series.m_y.at(i) << ") ";
     }
     return debug.space();
+}
+
+/*!
+    Stream operator for adding a data \a point to the series.
+    \sa add()
+*/
+
+QLineSeries& QLineSeries::operator<< (const QPointF &point)
+{
+    add(point);
+    return *this;
 }
 
 

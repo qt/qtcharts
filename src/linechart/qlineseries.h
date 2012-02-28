@@ -35,7 +35,10 @@ public: // from QChartSeries
     int count() const;
     qreal x(int pos) const;
     qreal y(int pos) const;
+
+    QLineSeries& operator << (const QPointF &point);
     friend QDebug operator<< (QDebug d, const QLineSeries series);
+
 
 signals:
     void changed(int index);

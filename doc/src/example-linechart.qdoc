@@ -11,7 +11,7 @@
 
     \snippet ../example/linechart/main.cpp 1
 
-    We add data to be shown to both series. 
+    We add data to be shown to both series. We can use add() member function or use stream operator.  
 
     \snippet ../example/linechart/main.cpp 2
 
