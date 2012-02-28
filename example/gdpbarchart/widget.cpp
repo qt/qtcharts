@@ -35,6 +35,7 @@ Widget::Widget(QWidget *parent)
     countrieslist = new QListWidget;
     countrieslist->setSelectionMode(QAbstractItemView::MultiSelection);
 
+    //list of years widget
     yearslist = new QListWidget;
     yearslist->setSelectionMode(QAbstractItemView::ExtendedSelection);
     for (int i = 1990; i < 2011; i++)
@@ -101,7 +102,7 @@ Widget::~Widget()
 */
 void Widget::refreshChart()
 {
-    chartArea->removeAllSeries();
+    chartArea->removeAllSeries();    
 
     // selected countries items list is not sorted. copy the values to QStringlist and sort them.
     QStringList selectedCountriesStrings;
@@ -111,7 +112,7 @@ void Widget::refreshChart()
     selectedCountriesStrings.sort();
 
     QSqlQuery query;
-    // selected years items list is not sorted. copy the values to QList<Integer> and sort them.
+    // selected years items list is not sorted. copy the values to QList<int> and sort them.
     QList<int> selectedYearsInts;
     QList<QListWidgetItem*> selectedYearsItems = yearslist->selectedItems();
     for (int i = 0; i < selectedYearsItems.size(); i++)
@@ -119,12 +120,12 @@ void Widget::refreshChart()
     qSort(selectedYearsInts.begin(), selectedYearsInts.end(), qGreater<int>());
 
     if (barChartRadioButton->isChecked())
-    {
+    {        
         // use the sorted selected coutries list to initialize BarCategory
         QBarCategory* category = new QBarCategory;
         for (int i = 0; i < selectedCountriesStrings.size(); i++)
             *category << selectedCountriesStrings[i];
-        series0 = new QBarChartSeries(category);
+        QBarChartSeries* series0 = new QBarChartSeries(category);
 
         // prepare the selected counries SQL query
         QString countriesQuery = "country IN (";
@@ -162,14 +163,13 @@ void Widget::refreshChart()
                 {
                     // data missing, put 0
                     *barSet << 0.0f;
-                    qDebug() << "Putting 0 for Bosnia" << " : " << QString("%1").arg(selectedYearsInts[i]);
+                    qDebug() << "Putting 0 for the missing data" << " : " << QString("%1").arg(selectedYearsInts[i]);
                 }
             }
             series0->addBarSet(barSet);
         }
         // add the serie to the chart
         chartArea->addSeries(series0);
-
     }
     else if (scatterChartRadioButton->isChecked())
     {
@@ -183,7 +183,7 @@ void Widget::refreshChart()
                 yearsQuery.append(")");
         }
 
-        // perform a query for each selected year
+        // perform a query for each selected country
         for (int i = 0; i < selectedCountriesStrings.size(); i++)
         {
             query.exec("SELECT year,gdpvalue FROM gdp2 where country='" + selectedCountriesStrings[i] + "' AND " + yearsQuery);
@@ -203,7 +203,7 @@ void Widget::refreshChart()
                 {
                     // data missing, put 0
                     *series << QPointF(selectedYearsInts[k] , 0.0f);
-                    qDebug() << "Putting 0 for Bosnia" << " : " << QString("%1").arg(selectedYearsInts[i]) << " " << query.value(0).toInt();
+                    qDebug() << "Putting 0 for the missing data" << " : " << QString("%1").arg(selectedYearsInts[i]) << " " << query.value(0).toInt();
                 }
             }
 //            chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);

@@ -28,7 +28,7 @@ private:
     QListWidget* countrieslist;
     QListWidget* yearslist;
     QSqlDatabase db;
-    QBarChartSeries* series0;
+//    QBarChartSeries* series0;
     QRadioButton* barChartRadioButton;
     QRadioButton* scatterChartRadioButton;
 };
