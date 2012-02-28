@@ -135,6 +135,7 @@ qreal QPieSlice::explodeDistance() const
 
 /*!
     Returns the percentage of this slice compared to all slices in the same series.
+    The returned value ranges from 0 to 1.0.
 
     Updated internally after the slice is added to the series.
 */
@@ -283,7 +284,7 @@ void QPieSlice::setLabelVisible(bool visible)
 
 /*!
     Sets this slice \a exploded.
-    \sa isExploded(), setExplodeDistance(), QPieSeries::enableClickExplodes()
+    \sa isExploded(), setExplodeDistance(), QPieSeries::setClickExplodes()
 */
 void QPieSlice::setExploded(bool exploded)
 {
@@ -296,7 +297,7 @@ void QPieSlice::setExploded(bool exploded)
 /*!
     Sets the explosion \a distance of this slice.
     It is the distance the slice is moved away from the pie center.
-    \sa explodeDistance(), isExploded(), QPieSeries::enableClickExplodes()
+    \sa explodeDistance(), isExploded(), QPieSeries::setClickExplodes()
 */
 void QPieSlice::setExplodeDistance(qreal distance)
 {
