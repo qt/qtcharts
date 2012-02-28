@@ -13,18 +13,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 	\image linechart.png
 
-    To create line charts, users need to first QLineSeries object.
-
-    \snippet ../example/linechart/main.cpp 1
-
-    Populate with the data
-
-    \snippet ../example/linechart/main.cpp 2
-
-    Add created series objects to QChartView or QChart instance.
-
-    \snippet ../example/linechart/main.cpp 3
-
+	Creating basic line chart is simple:
+	\code
+	QLineSeries* series = new QLineSeries();
+	series->add(0, 6);
+	series->add(2, 4);
+	...
+	chartView->addSeries(series);
+    \endcode
 */
 
 /*!
