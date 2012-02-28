@@ -15,7 +15,7 @@
      </p>
 
     <table><tr>
-    <td><img src="images/linechart.png" alt="linechart" /></td>
+    <td><a href="example-linechart.html"><img src="images/linechart.png" alt="linechart" /></a></td>
     <td><img src="images/chartview_example_bar.jpg " alt="barchart" /></td>
     </tr>
     <tr>
