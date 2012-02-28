@@ -11,8 +11,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QMainWindow window;
-
 //![1]
 
     QLineSeries* series0 = new QLineSeries();
@@ -40,17 +38,20 @@ int main(int argc, char *argv[])
     series1->add(10,2);
 //![2]
 //![3]
+    QMainWindow window;
     QChartView* chartView =  new QChartView(&window);
 
-    chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setChartTitle("Basic line chart example");
+    chartView->setRenderHint(QPainter::Antialiasing);
+
     chartView->addSeries(series0);
     chartView->addSeries(series1);
 //![3]
-
+//![4]
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
+//![4]
 
     return a.exec();
 }
