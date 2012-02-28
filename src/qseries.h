@@ -24,7 +24,7 @@ public:
     };
 
     // Helper class to contain legend and color for it
-    // TODO: This as private class?
+    // TODO: This as private class? Or should we expose this to user of API
     class Legend {
     public:
         QString mName;
@@ -40,6 +40,7 @@ public:
     // TODO
     virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
 
+    // TODO: should this be internal?
     virtual QList<QSeries::Legend> legend() { QList<QSeries::Legend> l; return l; }
 };
 

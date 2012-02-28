@@ -22,7 +22,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QPercentBarSeries. Parameter \a category defines the categories for chart.
+    Constructs empty QPercentBarSeries. Parameter \a categories defines the categories for chart.
     QPercentBarSeries is QObject which is a child of a \a parent.
 */
 QPercentBarSeries::QPercentBarSeries(QStringList categories, QObject *parent)

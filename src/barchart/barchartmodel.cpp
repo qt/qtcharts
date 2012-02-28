@@ -52,28 +52,14 @@ QList<QSeries::Legend> BarChartModel::legend()
     return legend;
 }
 
-int BarChartModel::countSets()
+int BarChartModel::barsetCount()
 {
     return mDataModel.count();
 }
 
-int BarChartModel::countCategories()
+int BarChartModel::categoryCount()
 {
-    int count(0);
-    for (int i=0; i<mDataModel.count(); i++){
-        // TODO: can we assume that all series have same number of values? If not. then which values are empty?
-        int temp = mDataModel.at(i)->count();
-        if (temp > count) {
-            count = temp;
-        }
-    }
-    return count;
-}
-
-int BarChartModel::countTotalItems()
-{
-    int total = mDataModel.count() * countCategories();
-    return total;
+    return mCategory.count();
 }
 
 qreal BarChartModel::min()
@@ -165,7 +151,7 @@ qreal BarChartModel::categorySum(int category)
 qreal BarChartModel::maxCategorySum()
 {
     qreal max = INT_MIN;
-    int count = countCategories();
+    int count = categoryCount();
 
     for (int col=0; col<count; col++) {
         qreal sum = categorySum(col);

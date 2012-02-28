@@ -52,8 +52,10 @@ bool BarValue::belongsToSet(QBarSet *set)
 
 void BarValue::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setPen(mPen);
-    painter->drawText(boundingRect(),mValueString);
+    if (isVisible()) {
+        painter->setPen(mPen);
+        painter->drawText(boundingRect(),mValueString);
+    }
 }
 
 QRectF BarValue::boundingRect() const

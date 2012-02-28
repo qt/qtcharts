@@ -3,6 +3,7 @@
 #include <qchartview.h>
 #include <qbarseries.h>
 #include <qbarset.h>
+#include <qchartaxis.h>
 #include <QStringList>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -14,8 +15,8 @@ int main(int argc, char *argv[])
 
     //! [1]
     // Define categories
-    QStringList catecories;
-    catecories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+    QStringList categories;
+    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     //! [1]
 
     //! [2]
@@ -27,16 +28,16 @@ int main(int argc, char *argv[])
     QBarSet *set3 = new QBarSet("Larry");
     QBarSet *set4 = new QBarSet("Zak");
 
-    *set0 << 1 << 2 << 3 << 4 << 5 << 6 << 7 << 8 << 9 << 10 << 11 << 12;
-    *set1 << 5 << 0 << 0 << 4 << 0 << 7 << 8 << 9 << 9 << 0 << 4 << 2;
-    *set2 << 3 << 5 << 8 << 13 << 8 << 5 << 3 << 2 << 1 << 1 << 3 << 5;
-    *set3 << 5 << 6 << 7 << 3 << 4 << 5 << 8 << 9 << 10 << 5 << 2 << 7;
-    *set4 << 9 << 7 << 5 << 3 << 1 << 2 << 4 << 6 << 8 << 10 << 1 << 6;
+    *set0 << 1 << 2 << 3 << 4 << 5 << 6;
+    *set1 << 5 << 0 << 0 << 4 << 0 << 7;
+    *set2 << 3 << 5 << 8 << 13 << 8 << 5;
+    *set3 << 5 << 6 << 7 << 3 << 4 << 5;
+    *set4 << 9 << 7 << 5 << 3 << 1 << 2;
     //! [2]
 
     //! [3]
     // Create series and add sets to it
-    QBarSeries* series= new QBarSeries(catecories);
+    QBarSeries* series= new QBarSeries(categories);
 
     series->addBarSet(set0);
     series->addBarSet(set1);
@@ -60,8 +61,14 @@ int main(int argc, char *argv[])
     chartView->setChartTheme(QChart::ChartThemeIcy);
     //! [5]
 
+    //! [6]
+    chartView->axisX()->setAxisVisible(false);
+    chartView->axisX()->setGridVisible(false);
+    chartView->axisX()->setLabelsVisible(false);
+    //! [6]
+
     window.setCentralWidget(chartView);
-    window.resize(600, 300);
+    window.resize(400, 300);
     window.show();
 
     return a.exec();

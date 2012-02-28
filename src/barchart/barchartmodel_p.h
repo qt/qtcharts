@@ -27,9 +27,8 @@ public:
 
     QList<QSeries::Legend> legend();
 
-    int countSets();            // Number of sets in model
-    int countCategories();      // Number of categories
-    int countTotalItems();      // Total items in all sets. Includes empty items.
+    int barsetCount();          // Number of sets in model
+    int categoryCount();        // Number of categories
 
     qreal max();                // Maximum value of all sets
     qreal min();                // Minimum value of all sets
