@@ -26,6 +26,11 @@ qreal Domain::spanY() const
 	return m_maxY - m_minY;
 }
 
+bool Domain::isEmpty() const
+{
+    return spanX()==0 || spanY()==0;
+}
+
 Domain Domain::subDomain(const QRectF& rect, qreal maxWidth,qreal maxHeight) const
 {
   Domain domain;
