@@ -19,6 +19,7 @@
 #include <QPrintDialog>
 #include <QRadioButton>
 #include <QStringList>
+#include <qbarseries.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -125,7 +126,7 @@ void Widget::refreshChart()
         QStringList category;
         for (int i = 0; i < selectedCountriesStrings.size(); i++)
             category << selectedCountriesStrings[i];
-        QBarChartSeries* series0 = new QBarChartSeries(category);
+        QBarSeries* series0 = new QBarSeries(category);
         series0 = new QBarSeries(category);
 
         // prepare the selected counries SQL query
