@@ -23,8 +23,7 @@ public:
     int barsetCount();
     int categoryCount();
     QList<QBarSet*> barSets();
-
-    QList<QString> legend();                    // Returns legend of series (ie. names of all sets in series)
+    QList<QSeries::Legend> legend();
 
 public:
     // TODO: Functions below this are not part of api and will be moved

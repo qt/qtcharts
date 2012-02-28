@@ -4,6 +4,7 @@
 #include "qchartglobal.h"
 #include <QObject>
 #include <QAbstractItemModel>
+#include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -22,6 +23,14 @@ public:
         SeriesTypeSpline
     };
 
+    // Helper class to contain legend and color for it
+    // TODO: This as private class?
+    class Legend {
+    public:
+        QString mName;
+        QPen mPen;
+    };
+
 protected:
     QSeries(QObject *parent = 0) : QObject(parent) {}
 
@@ -30,6 +39,8 @@ public:
     virtual QSeriesType type() const = 0;
     // TODO
     virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
+
+    virtual QList<QSeries::Legend> legend() { QList<QSeries::Legend> l; return l; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

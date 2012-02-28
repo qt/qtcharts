@@ -104,9 +104,9 @@ QBarSet* QBarSeries::barsetAt(int index)
 }
 
 /*!
-    Returns legend of series. Legend is a list of set names in series.
+    Returns legend of series.
 */
-QList<QString> QBarSeries::legend()
+QList<QSeries::Legend> QBarSeries::legend()
 {
     return mModel->legend();
 }

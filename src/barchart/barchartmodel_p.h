@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QStringList>
 #include "qchartglobal.h"
+#include <qseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -24,7 +25,7 @@ public:
     QBarSet *setAt(int index);
     QList<QBarSet*> barSets();
 
-    QList<QString> legend();
+    QList<QSeries::Legend> legend();
 
     int countSets();            // Number of sets in model
     int countCategories();      // Number of categories
