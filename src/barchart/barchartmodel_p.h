@@ -2,6 +2,7 @@
 #define BARCHARTMODEL_H
 
 #include <QObject>
+#include <QStringList>
 #include "qchartglobal.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -10,16 +11,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 // TODO: Implement as QAbstractItemModel?
 
 class QBarSet;
-class QBarCategory;
 
 class BarChartModel : public QObject //, public QAbstractItemModel
 {
     Q_OBJECT
 public:
-    explicit BarChartModel(QBarCategory *category, QObject *parent = 0);
-    ~BarChartModel();
+    explicit BarChartModel(QStringList categories, QObject *parent = 0);
 
-    QBarCategory& category();
+    QStringList category();
     void addBarSet(QBarSet *set);
     void removeBarSet(QBarSet *set);
     QBarSet *setAt(int index);
@@ -49,7 +48,7 @@ public slots:
 private:
 
     QList<QBarSet*> mDataModel;
-    QBarCategory* mCategory;    // Owned
+    QStringList mCategory;
 
     int mCurrentSet;
 

@@ -1,6 +1,7 @@
 #ifndef PERCENTBARSERIES_H
 #define PERCENTBARSERIES_H
 
+#include <QStringList>
 #include "qbarseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -9,7 +10,7 @@ class QTCOMMERCIALCHART_EXPORT QPercentBarSeries : public QBarSeries
 {
     Q_OBJECT
 public:
-    QPercentBarSeries(QBarCategory *category, QObject* parent=0);
+    QPercentBarSeries(QStringList categories, QObject* parent=0);
 
     virtual QSeriesType type() const { return QSeries::SeriesTypePercentBar; }
 };

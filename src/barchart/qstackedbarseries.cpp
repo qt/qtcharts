@@ -8,11 +8,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     QStackedBarSeries represents a series of data shown as bars. All bars in same category are
     stacked on top of each other. One QStackedBarSeries can contain multible QBarSet data sets.
-    QStackedBarSeries groups the data from sets to categories, which are defined by QBarCategory class.
+    QStackedBarSeries groups the data from sets to categories, which are defined by QStringList.
 
     \mainclass
 
-    \sa QBarCategory, QBarSet, QPercentBarSeries, QBarSeries
+    \sa QBarSet, QPercentBarSeries, QBarSeries
 */
 
 /*!
@@ -25,8 +25,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QStackedBarSeries. Parameter \a category defines the categories for chart.
     QStackedBarSeries is QObject which is a child of a \a parent.
 */
-QStackedBarSeries::QStackedBarSeries(QBarCategory *category, QObject *parent)
-    : QBarSeries(category, parent)
+QStackedBarSeries::QStackedBarSeries(QStringList categories, QObject *parent)
+    : QBarSeries(categories, parent)
 {
 }
 

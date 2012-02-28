@@ -6,8 +6,8 @@
 #include <qscatterseries.h>
 #include <qbarseries.h>
 #include <qbarset.h>
-#include <qbarcategory.h>
 #include <qpieseries.h>
+#include <QStringList>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
     //! [5]
     // ...
     // Add bar series
-    QBarCategory *barCategory = new QBarCategory();
-    *barCategory << "Jan"
+    QStringList barCategory;
+    barCategory << "Jan"
                  << "Feb"
                  << "Mar";
     QBarSeries *bar = new QBarSeries(barCategory);

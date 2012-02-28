@@ -13,12 +13,12 @@
 #include <qscatterseries.h>
 #include <qchartview.h>
 #include <qchartaxis.h>
-#include <qbarcategory.h>
 #include <qbarset.h>
 #include <QListWidget>
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QRadioButton>
+#include <QStringList>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -121,9 +121,9 @@ void Widget::refreshChart()
     if (barChartRadioButton->isChecked())
     {
         // use the sorted selected coutries list to initialize BarCategory
-        QBarCategory* category = new QBarCategory;
+        QStringList category;
         for (int i = 0; i < selectedCountriesStrings.size(); i++)
-            *category << selectedCountriesStrings[i];
+            category << selectedCountriesStrings[i];
         series0 = new QBarSeries(category);
 
         // prepare the selected counries SQL query

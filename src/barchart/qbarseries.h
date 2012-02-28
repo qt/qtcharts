@@ -2,10 +2,10 @@
 #define BARSERIES_H
 
 #include "qseries.h"
+#include <QStringList>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QBarCategory;
 class QBarSet;
 class BarChartModel;
 
@@ -14,7 +14,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
 {
     Q_OBJECT
 public:
-    QBarSeries(QBarCategory *category, QObject* parent=0);
+    QBarSeries(QStringList categories, QObject* parent=0);
 
     virtual QSeriesType type() const { return QSeries::SeriesTypeBar; }
 

@@ -8,7 +8,6 @@ SOURCES += \
     $$PWD/barpresenter.cpp \
     $$PWD/barpresenterbase.cpp \
     $$PWD/percentbarpresenter.cpp \
-    $$PWD/qbarcategory.cpp \
     $$PWD/qbarseries.cpp \  
     $$PWD/qbarset.cpp \
     $$PWD/qpercentbarseries.cpp \
@@ -29,7 +28,6 @@ PRIVATE_HEADERS += \
     $$PWD/barvalue_p.h
 
 PUBLIC_HEADERS += \
-    $$PWD/qbarcategory.h \
     $$PWD/qbarseries.h \
     $$PWD/qbarset.h \
     $$PWD/qpercentbarseries.h \      

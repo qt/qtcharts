@@ -2,9 +2,9 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 #include <qpercentbarseries.h>
-#include <qbarcategory.h>
 #include <qchartview.h>
 #include <qbarset.h>
+#include <QStringList>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
     QMainWindow window;
 
     //! [1]
-    // Create category
-    QBarCategory *category = new QBarCategory;
-    *category << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+    // Define categories
+    QStringList categories;
+    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "June" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
     //! [1]
 
     //! [2]
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
     //! [3]
     // Create series and add sets to it
-    QPercentBarSeries* series = new QPercentBarSeries(category);
+    QPercentBarSeries* series = new QPercentBarSeries(categories);
 
     series->addBarSet(set0);
     series->addBarSet(set1);

@@ -15,7 +15,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \mainclass
 
-    \sa QBarCategory, QBarSeries, QStackedBarSeries, QPercentBarSeries
+    \sa QBarSeries, QStackedBarSeries, QPercentBarSeries
 */
 
 /*!

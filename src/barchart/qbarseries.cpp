@@ -1,6 +1,5 @@
 #include <QDebug>
 #include "qbarseries.h"
-#include "qbarcategory.h"
 #include "qbarset.h"
 #include "barchartmodel_p.h"
 
@@ -13,11 +12,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     QBarSeries represents a series of data shown as bars. One QBarSeries can contain multible
     QBarSet data sets. QBarSeries groups the data from sets to categories, which are defined
-    by QBarCategory class.
+    by QStringList.
 
     \mainclass
 
-    \sa QBarCategory, QBarSet, QStackedBarSeries, QPercentBarSeries
+    \sa QBarSet, QStackedBarSeries, QPercentBarSeries
 */
 
 /*!
@@ -48,12 +47,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     Constructs empty QBarSeries. Parameter \a category defines the categories for chart.
-    Takes ownership of \a category.
     QBarSeries is QObject which is a child of a \a parent.
 */
-QBarSeries::QBarSeries(QBarCategory *category, QObject *parent)
+QBarSeries::QBarSeries(QStringList categories, QObject *parent)
     : QSeries(parent)
-    ,mModel(new BarChartModel(category, this))
+    ,mModel(new BarChartModel(categories, this))
 {
 }
 

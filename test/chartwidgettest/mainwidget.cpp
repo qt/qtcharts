@@ -4,7 +4,6 @@
 #include "qscatterseries.h"
 #include <qlineseries.h>
 #include <qbarset.h>
-#include <qbarcategory.h>
 #include <qbarseries.h>
 #include <qstackedbarseries.h>
 #include <qpercentbarseries.h>
@@ -253,11 +252,10 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
     } else if (seriesName == "Bar"
                || seriesName == "Stacked bar"
                || seriesName == "Percent bar") {
-        // TODO: replace QBarCategory with QStringList?
-        QBarCategory *category = new QBarCategory;
+        QStringList category;
         QStringList labels = generateLabels(rowCount);
         foreach(QString label, labels)
-            *category << label;
+            category << label;
         QBarSeries* series = 0;
         if (seriesName == "Bar")
             series = new QBarSeries(category, this);

@@ -2,26 +2,19 @@
 #include <QVector>
 #include <QDebug>
 #include "barchartmodel_p.h"
-#include "qbarcategory.h"
 #include "qbarset.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartModel::BarChartModel(QBarCategory *category, QObject *parent) :
+BarChartModel::BarChartModel(QStringList categories, QObject *parent) :
     QObject(parent)
-    ,mCategory(category)
+    ,mCategory(categories)
 {
 }
 
-BarChartModel::~BarChartModel()
+QStringList BarChartModel::category()
 {
-    delete mCategory;
-}
-
-
-QBarCategory& BarChartModel::category()
-{
-    return *mCategory;
+    return mCategory;
 }
 
 void BarChartModel::addBarSet(QBarSet *set)
@@ -182,7 +175,7 @@ qreal BarChartModel::maxCategorySum()
 
 QString BarChartModel::label(int category)
 {
-    return mCategory->label(category);
+    return mCategory.at(category);
 }
 
 #include "moc_barchartmodel_p.cpp"
