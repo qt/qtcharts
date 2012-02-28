@@ -228,6 +228,8 @@ void ChartDataSet::setDomain(int index)
 {
     QList<QChartAxis*> domainList = m_domainMap.uniqueKeys();
 
+    if(domainList.count()==0) return;
+
     Domain domain;
 
     foreach (QChartAxis* axis , domainList) {
