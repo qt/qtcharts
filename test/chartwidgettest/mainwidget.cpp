@@ -26,10 +26,10 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
     m_addSerieDialog(0),
-    m_chartWidget(0)
+    m_chartView(0)
 {
-    m_chartWidget = new QChartView(this);
-    m_chartWidget->setRubberBandPolicy(QChartView::HorizonalRubberBand);
+    m_chartView = new QChartView(this);
+    m_chartView->setRubberBandPolicy(QChartView::HorizonalRubberBand);
 
     // Grid layout for the controls for configuring the chart widget
     QGridLayout *grid = new QGridLayout();
@@ -39,10 +39,8 @@ MainWidget::MainWidget(QWidget *parent) :
     initBackroundCombo(grid);
     initScaleControls(grid);
     initThemeCombo(grid);
-    QCheckBox *zoomCheckBox = new QCheckBox("Drag'n drop Zoom");
-    connect(zoomCheckBox, SIGNAL(toggled(bool)), m_chartWidget, SLOT(setZoomEnabled(bool)));
-    zoomCheckBox->setChecked(true);
-    grid->addWidget(zoomCheckBox, grid->rowCount(), 0);
+    initCheckboxes(grid);
+
     // add row with empty label to make all the other rows static
     grid->addWidget(new QLabel(""), grid->rowCount(), 0);
     grid->setRowStretch(grid->rowCount() - 1, 1);
@@ -61,7 +59,7 @@ MainWidget::MainWidget(QWidget *parent) :
 //    mainLayout->addLayout(m_scatterLayout, 1, 0);
 
     // Add layouts and the chart widget to the main layout
-    mainLayout->addWidget(m_chartWidget, 0, 1, 3, 1);
+    mainLayout->addWidget(m_chartView, 0, 1, 3, 1);
     setLayout(mainLayout);
 }
 
@@ -133,6 +131,26 @@ void MainWidget::initThemeCombo(QGridLayout *grid)
             this, SLOT(changeChartTheme(int)));
     grid->addWidget(new QLabel("Chart theme:"), 8, 0);
     grid->addWidget(chartTheme, 8, 1);
+}
+
+// Different check boxes for customizing chart
+void MainWidget::initCheckboxes(QGridLayout *grid)
+{
+    // TODO: setZoomEnabled slot has been removed from QChartView -> Re-implement zoom on/off
+    QCheckBox *zoomCheckBox = new QCheckBox("Drag'n drop Zoom");
+    connect(zoomCheckBox, SIGNAL(toggled(bool)), m_chartView, SLOT(setZoomEnabled(bool)));
+    zoomCheckBox->setChecked(true);
+    grid->addWidget(zoomCheckBox, grid->rowCount(), 0);
+
+    QCheckBox *aliasCheckBox = new QCheckBox("Anti-alias");
+    connect(aliasCheckBox, SIGNAL(toggled(bool)), this, SLOT(antiAliasToggled(bool)));
+    aliasCheckBox->setChecked(false);
+    grid->addWidget(aliasCheckBox, grid->rowCount(), 0);
+}
+
+void MainWidget::antiAliasToggled(bool enabled)
+{
+    m_chartView->setRenderHint(QPainter::Antialiasing, enabled);
 }
 
 void MainWidget::initPieControls()
@@ -225,7 +243,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             for (int i(0); i < column.count(); i++) {
                 series->add(i, column.at(i));
             }
-            m_chartWidget->addSeries(series);
+            m_chartView->addSeries(series);
             setCurrentSeries(series);
         }
     } else if (seriesName.contains("scatter", Qt::CaseInsensitive)) {
@@ -235,7 +253,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             for (int i(0); i < column.count(); i++) {
                (*series) << QPointF(i, column.at(i));
             }
-            m_chartWidget->addSeries(series);
+            m_chartView->addSeries(series);
             setCurrentSeries(series);
         }
     } else if (seriesName.contains("pie", Qt::CaseInsensitive)) {
@@ -246,7 +264,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             for (int i(0); i < column.count(); i++) {
                 series->add(column.at(i), labels.at(i));
             }
-            m_chartWidget->addSeries(series);
+            m_chartView->addSeries(series);
             setCurrentSeries(series);
         }
     } else if (seriesName == "Bar"
@@ -275,7 +293,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         series->setFloatingValuesEnabled(true);
         series->setToolTipEnabled(true);
         series->setSeparatorsEnabled(false);
-        m_chartWidget->addSeries(series);
+        m_chartView->addSeries(series);
         setCurrentSeries(series);
     }
 
@@ -351,7 +369,7 @@ void MainWidget::yMaxChanged(int value)
 void MainWidget::changeChartTheme(int themeIndex)
 {
     qDebug() << "changeChartTheme: " << themeIndex;
-    m_chartWidget->setChartTheme((QChart::ChartTheme) themeIndex);
+    m_chartView->setChartTheme((QChart::ChartTheme) themeIndex);
     //TODO: remove this hack. This is just to make it so that theme change is seen immediately.
     QSize s = size();
     s.setWidth(s.width()+1);

@@ -26,6 +26,7 @@ private:
     void initBackroundCombo(QGridLayout *grid);
     void initScaleControls(QGridLayout *grid);
     void initThemeCombo(QGridLayout *grid);
+    void initCheckboxes(QGridLayout *grid);
     void initPieControls();
 
 private slots:
@@ -37,6 +38,7 @@ private slots:
     void xMaxChanged(int value);
     void yMinChanged(int value);
     void yMaxChanged(int value);
+    void antiAliasToggled(bool enabled);
     void setCurrentSeries(QSeries *series);
     void changeChartTheme(int themeIndex);
     void setPieSizeFactor(double margin);
@@ -46,7 +48,7 @@ private slots:
 
 private:
     DataSerieDialog *m_addSerieDialog;
-    QChartView *m_chartWidget;
+    QChartView *m_chartView;
     QCheckBox *m_autoScaleCheck;
     QSpinBox *m_xMinSpin;
     QSpinBox *m_xMaxSpin;
