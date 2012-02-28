@@ -17,10 +17,11 @@
     <table><tr>
     <td><img src="images/linechart.png" alt="linechart" /></td>
     <td><img src="images/chartview_example_bar.jpg " alt="barchart" /></td>
-    <td><img src="images/chartview_example_pie.jpg " alt="piechart" /></td>
     </tr>
     <tr>
     <td><img src="images/chartview_example.jpg " alt="linechart" /></td>
+    <td><img src="images/chartview_example_pie.jpg " alt="piechart" /></td>
+    </tr><tr>
     <td><img src="images/chartview_example_scatter.jpg " alt="scatterchart" /></td>
     <td><img src="images/chartview_example_theme.jpg " alt="themechart" /></td>
     </tr>
