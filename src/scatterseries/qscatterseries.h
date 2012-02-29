@@ -17,7 +17,6 @@ public:
         // TODO: to be defined by the graphics design
         // TODO: marker shapes: "x", star, rectangle, tilted rect, triangle, circle, dot
         MarkerShapeDefault = 0,
-        MarkerShapePoint,
         MarkerShapeX,
         MarkerShapeRectangle,
         MarkerShapeTiltedRectangle,
@@ -53,7 +52,8 @@ public:
     void setBrush(QBrush brush);
     MarkerShape shape();
     void setShape(MarkerShape shape);
-    // TODO: marker size?
+    qreal size();
+    void setSize(qreal size);
 
 Q_SIGNALS:
     void clicked(QPointF coordinate);

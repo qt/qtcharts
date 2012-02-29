@@ -14,6 +14,15 @@
     The example code would result the following:
 
     \image scatter_example1.jpg
+
+    To customize the graphical representation of the series, you can modify pen, brush, shape and
+    size of the marker items. For example:
+
+    \snippet ../example/scatter/main.cpp 3
+
+    Would present your scatter markers as big rectangles with opaque, uglyish green outlines and
+    opaque red filling instead of the beatiful markers defined by the chart's theme:
+    \image scatter_example_custom.jpg
 */
 
 /*!
@@ -22,7 +31,6 @@
     This enum describes the shape used when rendering marker items.
 
     \value MarkerShapeDefault
-    \value MarkerShapePoint
     \value MarkerShapeX
     \value MarkerShapeRectangle
     \value MarkerShapeTiltedRectangle
@@ -53,7 +61,8 @@ QScatterSeriesPrivate::QScatterSeriesPrivate() :
     m_data(QList<QPointF>()),
     m_markerPen(QPen(QColor::Invalid)),
     m_markerBrush(QBrush(QColor::Invalid)),
-    m_markerShape(QScatterSeries::MarkerShapeDefault)
+    m_markerShape(QScatterSeries::MarkerShapeDefault),
+    m_markerSize(9.0)
 {
 }
 
@@ -106,7 +115,7 @@ void QScatterSeries::add(QList<QPointF> points)
     \sa add()
 
     For example:
-    \snippet ../example/scatter/main.cpp 3
+    \snippet ../example/scatter/main.cpp 2
 */
 QScatterSeries& QScatterSeries::operator << (const QPointF &value)
 {
@@ -214,13 +223,6 @@ int QScatterSeries::closestPoint(QPointF coordinate)
     Overrides the default pen used for drawing a marker item with a user defined \a pen. The
     default pen is defined by chart theme setting.
 
-    For example:
-    \snippet ../example/scatter/main.cpp 5
-
-    Would present your scatter markers with an opaque, uglyish green outlines instead of the
-    beatiful markers defined by the chart's theme:
-    \image scatter_example_pen.jpg
-
     \sa setBrush()
     \sa QChart::setChartTheme()
 */
@@ -241,12 +243,6 @@ QPen QScatterSeries::pen()
     Overrides the default brush of the marker items with a user defined \a brush. The default brush
     is defined by chart theme setting.
 
-    For example:
-    \snippet ../example/scatter/main.cpp 4
-
-    Would fill your scatter markers with an opaque red color:
-    \image scatter_example_brush.jpg
-
     \sa setPen()
     \sa QChart::setChartTheme()
 */
@@ -266,12 +262,6 @@ QBrush QScatterSeries::brush()
 /*!
     Overrides the default shape of the marker items with a user defined \a shape. The default shape
     is defined by chart theme setting.
-
-    For example:
-    \snippet ../example/scatter/main.cpp 6
-
-    Would make your scatter marker items rectangle:
-    \image scatter_example_shape.jpg
 */
 void QScatterSeries::setShape(MarkerShape shape)
 {
@@ -284,6 +274,23 @@ void QScatterSeries::setShape(MarkerShape shape)
 QScatterSeries::MarkerShape QScatterSeries::shape()
 {
     return (QScatterSeries::MarkerShape) d->m_markerShape;
+}
+
+/*!
+    Returns the size of the marker items.
+*/
+qreal QScatterSeries::size()
+{
+    return d->m_markerSize;
+}
+
+/*!
+    Set the \a size of the marker items. The default size is 9.0.
+*/
+void QScatterSeries::setSize(qreal size)
+{
+    d->m_markerSize = size;
+    emit changed();
 }
 
 #include "moc_qscatterseries.cpp"

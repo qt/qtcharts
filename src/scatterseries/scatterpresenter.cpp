@@ -113,7 +113,7 @@ void ScatterPresenter::changeGeometry()
         int shape = m_series->shape();
         m_path = QPainterPath();
         m_path.setFillRule(Qt::WindingFill);
-        const qreal size(9); // TODO: user defined size?
+        const qreal size = m_series->size();
 
         foreach (QPointF point, m_series->data()) {
             // Convert relative coordinates to absolute pixel coordinates that can be used for drawing
@@ -126,9 +126,6 @@ void ScatterPresenter::changeGeometry()
                     // Fallthrough, defaults to circle
                 case QScatterSeries::MarkerShapeCircle:
                     m_path.addEllipse(x, y, size, size);
-                    break;
-                case QScatterSeries::MarkerShapePoint:
-                    m_path.addEllipse(x, y, 2, 2);
                     break;
                 case QScatterSeries::MarkerShapeRectangle:
                     m_path.addRect(x, y, size, size);

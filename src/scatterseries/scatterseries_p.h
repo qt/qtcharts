@@ -20,6 +20,7 @@ public:
     QPen m_markerPen;
     QBrush m_markerBrush;
     int m_markerShape;
+    qreal m_markerSize;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
