@@ -21,6 +21,8 @@ class QScatterSeries;
 class ScatterPresenter;
 class PiePresenter;
 class QPieSeries;
+class SplinePresenter;
+class QSplineSeries;
 
 class ChartTheme
 {
@@ -38,6 +40,7 @@ public:
     void decorate(ScatterPresenter* presenter, QScatterSeries* series, int count);
     void decorate(PiePresenter* item, QPieSeries* series, int count);
     void decorate(QChartAxis* axis,AxisItem* item);
+    void decorate(SplinePresenter* presenter, QSplineSeries* series, int count);
 
 protected:
     QChart::ChartTheme m_id;

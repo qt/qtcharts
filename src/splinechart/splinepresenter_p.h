@@ -3,6 +3,7 @@
 
 #include "chartitem_p.h"
 #include <QObject>
+#include "qsplineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -10,14 +11,20 @@ class SplinePresenter : public QObject, public ChartItem
 {
     Q_OBJECT
 public:
-    SplinePresenter(QObject *parent = 0);
+    SplinePresenter(QSplineSeries* series, QGraphicsObject *parent = 0);
 
-    void handleGeometryChanged(const QRectF&);
-    void handleDomainChanged(const Domain& domain);
+    QRectF boundingRect() const { return m_boundingRect; }
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     
 signals:
     
 public slots:
+    void handleDomainChanged(const Domain& domain);
+    void handleGeometryChanged(const QRectF& rect);
+
+    private:
+    QSplineSeries* m_series;
+    QRectF m_boundingRect;
     
 };
 

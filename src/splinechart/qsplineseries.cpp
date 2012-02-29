@@ -1,100 +1,110 @@
 #include "qsplineseries.h"
 
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
 QSplineSeries::QSplineSeries(QObject *parent) :
-    QObject(parent)
+    QChartSeries(parent)
 {
 }
 
 QSplineSeries& QSplineSeries::operator << (const QPointF &value)
 {
-    d->m_data.append(value);
-    emit changed();
+//    d->m_data.append(value);
+    m_data.append(value);
+//    emit changed();
     return *this;
 }
 
-void QSplineSeries::GetCurveControlPoints()
-    {
+void QSplineSeries::addData(QPointF value)
+{
+    m_data.append(value);
+}
+
+void QSplineSeries::calculateControlPoints()
+{
+
+    // Based on http://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit
+    // CPOL Licence
+
     int n = m_data.size() - 1;
-        if (n < 1)
-            throw new ArgumentException
-            ("At least two knot points required", "knots");
-        if (n == 1)
-        { // Special case: Bezier curve should be a straight line.
-            firstControlPoints = new Point[1];
-            // 3P1 = 2P0 + P3
-            firstControlPoints[0].X = (2 * knots[0].X + knots[1].X) / 3;
-            firstControlPoints[0].Y = (2 * knots[0].Y + knots[1].Y) / 3;
+    if (n == 1)
+    { // Special case: Bezier curve should be a straight line.
+        //            firstControlPoints = new Point[1];
+        // 3P1 = 2P0 + P3
+        m_controlPoints.append(QPointF((2 * m_data[0].x() + m_data[1].x()) / 3, (2 * m_data[0].y() + m_data[1].y()) / 3));
 
-            secondControlPoints = new Point[1];
-            // P2 = 2P1  P0
-            secondControlPoints[0].X = 2 *
-                firstControlPoints[0].X - knots[0].X;
-            secondControlPoints[0].Y = 2 *
-                firstControlPoints[0].Y - knots[0].Y;
-            return;
-        }
-
-        // Calculate first Bezier control points
-        // Right hand side vector
-        double[] rhs = new double[n];
-
-        // Set right hand side X values
-        for (int i = 1; i < n - 1; ++i)
-            rhs[i] = 4 * knots[i].X + 2 * knots[i + 1].X;
-        rhs[0] = knots[0].X + 2 * knots[1].X;
-        rhs[n - 1] = (8 * knots[n - 1].X + knots[n].X) / 2.0;
-        // Get first control points X-values
-        double[] x = GetFirstControlPoints(rhs);
-
-        // Set right hand side Y values
-        for (int i = 1; i < n - 1; ++i)
-            rhs[i] = 4 * knots[i].Y + 2 * knots[i + 1].Y;
-        rhs[0] = knots[0].Y + 2 * knots[1].Y;
-        rhs[n - 1] = (8 * knots[n - 1].Y + knots[n].Y) / 2.0;
-        // Get first control points Y-values
-        double[] y = GetFirstControlPoints(rhs);
-
-        // Fill output arrays.
-        firstControlPoints = new Point[n];
-        secondControlPoints = new Point[n];
-        for (int i = 0; i < n; ++i)
-        {
-            // First control point
-            firstControlPoints[i] = new Point(x[i], y[i]);
-            // Second control point
-            if (i < n - 1)
-                secondControlPoints[i] = new Point(2 * knots
-                    [i + 1].X - x[i + 1], 2 *
-                    knots[i + 1].Y - y[i + 1]);
-            else
-                secondControlPoints[i] = new Point((knots
-                    [n].X + x[n - 1]) / 2,
-                    (knots[n].Y + y[n - 1]) / 2);
-        }
+        // P2 = 2P1  P0
+        m_controlPoints.append(QPointF(2 * m_controlPoints[0].x() - m_data[0].x(), 2 * m_controlPoints[0].y() - m_data[0].y()));
+        return;
     }
 
-    /// <summary>
-    /// Solves a tridiagonal system for one of coordinates (x or y)
-    /// of first Bezier control points.
-    /// </summary>
-    /// <param name="rhs">Right hand side vector.</param>
-    /// <returns>Solution vector.</returns>
-void GetFirstControlPoints(qreal[] rhs)
+    // Calculate first Bezier control points
+    // Right hand side vector
+    //  Set of equations for P0 to Pn points.
+    //
+    //  |   2   1   0   0   ... 0   0   0   ... 0   0   0   |   |   P1_1    |   |   P0 + 2 * P1             |
+    //  |   1   4   1   0   ... 0   0   0   ... 0   0   0   |   |   P1_2    |   |   4 * P1 + 2 * P2         |
+    //  |   0   1   4   1   ... 0   0   0   ... 0   0   0   |   |   P1_3    |   |   4 * P2 + 2 * P3         |
+    //  |   .   .   .   .   .   .   .   .   .   .   .   .   |   |   ...     |   |   ...                     |
+    //  |   0   0   0   0   ... 1   4   1   ... 0   0   0   | * |   P1_i    | = |   4 * P(i-1) + 2 * Pi     |
+    //  |   .   .   .   .   .   .   .   .   .   .   .   .   |   |   ...     |   |   ...                     |
+    //  |   0   0   0   0   0   0   0   0   ... 1   4   1   |   |   P1_(n-1)|   |   4 * P(n-2) + 2 * P(n-1) |
+    //  |   0   0   0   0   0   0   0   0   ... 0   2   7   |   |   P1_n    |   |   8 * P(n-1) + Pn         |
+    //
+    QList<qreal> rhs;
+    rhs.append(m_data[0].x() + 2 * m_data[1].x());
+
+    // Set right hand side X values
+    for (int i = 1; i < m_data.size() - 1; ++i)
+        rhs.append(4 * m_data[i].x() + 2 * m_data[i + 1].x());
+
+    rhs.append((8 * m_data[n - 1].x() + m_data[n].x()) / 2.0);
+    // Get first control points X-values
+    QList<qreal> x = getFirstControlPoints(rhs);
+    rhs[0] = m_data[0].y() + 2 * m_data[1].y();
+
+    // Set right hand side Y values
+    for (int i = 1; i < m_data.size() - 1; ++i)
+        rhs[i] = 4 * m_data[i].y() + 2 * m_data[i + 1].y();
+
+    rhs[n - 1] = (8 * m_data[n - 1].y() + m_data[n].y()) / 2.0;
+    // Get first control points Y-values
+    QList<qreal> y = getFirstControlPoints(rhs);
+
+    // Fill output arrays.
+    //        firstControlPoints = new Point[n];
+    //        secondControlPoints = new Point[n];
+    for (int i = 0; i < m_data.size(); ++i)
     {
-        int n = rhs.Length;
-        double[] x = new double[n]; // Solution vector.
-        double[] tmp = new double[n]; // Temp workspace.
-
-        double b = 2.0;
-        x[0] = rhs[0] / b;
-        for (int i = 1; i < n; i++) // Decomposition and forward substitution.
-        {
-            tmp[i] = 1 / b;
-            b = (i < n - 1 ? 4.0 : 3.5) - tmp[i];
-            x[i] = (rhs[i] - x[i - 1]) / b;
-        }
-        for (int i = 1; i < n; i++)
-            x[n - i - 1] -= tmp[n - i] * x[n - i]; // Backsubstitution.
-
-        return x;
+        // First control point
+        m_controlPoints.append(QPointF(x[i], y[i]));
+        // Second control point
+        if (i < n - 1)
+            m_controlPoints.append(QPointF(2 * m_data[i + 1].x() - x[i + 1], 2 * m_data[i + 1].y() - y[i + 1]));
+        else
+            m_controlPoints.append(QPointF((m_data[n].x() + x[n - 1]) / 2, (m_data[n].y() + y[n - 1]) / 2));
     }
+}
+
+QList<qreal> QSplineSeries::getFirstControlPoints(QList<qreal> rhs)
+{
+    QList<qreal> x; // Solution vector.
+    QList<qreal> tmp; // Temp workspace.
+
+    qreal b = 2.0;
+    x.append(rhs[0] / b);
+    tmp.append(0);
+    for (int i = 1; i < rhs.size(); i++) // Decomposition and forward substitution.
+    {
+        tmp.append(1 / b);
+        b = (i < rhs.size() - 1 ? 4.0 : 3.5) - tmp[i];
+        x.append((rhs[i] - x[i - 1]) / b);
+    }
+    for (int i = 1; i < rhs.size(); i++)
+        x[rhs.size() - i - 1] -= tmp[rhs.size() - i] * x[rhs.size() - i]; // Backsubstitution.
+
+    return x;
+}
+#include "moc_qsplineseries.cpp"
+
+QTCOMMERCIALCHART_END_NAMESPACE

@@ -1,7 +1,11 @@
 #ifndef QSPLINESERIES_H
 #define QSPLINESERIES_H
 
+#include "qchartglobal.h"
+#include <QtGlobal>
 #include "qchartseries.h"
+#include <QList>
+#include <QPointF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -15,6 +19,12 @@ class QSplineSeries : public QChartSeries
     void addData(QPointF value);
     QSplineSeries& operator << (const QPointF &value);
     void calculateControlPoints();
+    QList<qreal> getFirstControlPoints(QList<qreal> rhs);
+
+    int count() const { return m_data.size(); }
+
+    QPointF at(int index) const { return m_data[index]; }
+    QPointF controlPoint(int index) const { return m_controlPoints[index]; }
 
     signals:
     

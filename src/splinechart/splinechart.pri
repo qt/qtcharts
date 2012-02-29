@@ -3,13 +3,10 @@ DEPENDPATH += $$PWD
 
 SOURCES += \
     $$PWD/qsplineseries.cpp \
-    splinechart/splinepresenter.cpp
+    $$PWD/splinepresenter.cpp
 
-PRIVATE_HEADERS +=
+PRIVATE_HEADERS += \
+    $$PWD/splinepresenter_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qsplineseries.h
-
-HEADERS += \
-    splinechart/qsplineseries.h \
-    splinechart/splinepresenter_p.h

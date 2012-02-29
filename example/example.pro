@@ -11,4 +11,5 @@ SUBDIRS += linechart \
            axischart \
            multichart \
            gdpbarchart \
-           presenterchart
+           presenterchart \
+    splinechart
