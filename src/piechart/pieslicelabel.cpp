@@ -66,7 +66,7 @@ void PieSliceLabel::updateGeometry()
     m_textRect = textRect;
     m_rect = path.boundingRect().united(m_textRect);
 
-    qDebug() << "PieSliceLabel::updateGeometry" << m_text << m_armStartPoint << m_armLength << m_armAngle << m_textRect;
+    //qDebug() << "PieSliceLabel::updateGeometry" << m_text << m_armStartPoint << m_armLength << m_armAngle << m_textRect;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE
