@@ -144,13 +144,27 @@ QList<QPointF> QScatterSeries::data()
 }
 
 /*!
-    Remove the data point at \a pointIndex. Returns true if a point was removed, false if the point
-    at \a pointIndex does not exist on the series.
+    Replaces the point at \a index with \a newPoint. Returns true if \a index is a valid position
+    in the series data, false otherwise.
 */
-bool QScatterSeries::removeAt(int pointIndex)
+bool QScatterSeries::replace(int index, QPointF newPoint)
 {
-    if (pointIndex >=0 && pointIndex < d->m_data.count()) {
-        d->m_data.removeAt(pointIndex);
+    if (index >= 0 && index < d->m_data.count()) {
+        d->m_data.replace(index, newPoint);
+        emit changed();
+        return true;
+    }
+    return false;
+}
+
+/*!
+    Remove the data point at \a index. Returns true if a point was removed, false if the point
+    at \a index does not exist on the series.
+*/
+bool QScatterSeries::removeAt(int index)
+{
+    if (index >=0 && index < d->m_data.count()) {
+        d->m_data.removeAt(index);
         emit changed();
         return true;
     }

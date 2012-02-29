@@ -20,13 +20,15 @@ int main(int argc, char *argv[])
     // Chart takes ownership
     chartView->addSeries(scatter);
     //! [1]
+//    scatter->replace(0, QPointF(0.75, 5.0));
 
     // And more
     //! [3]
     *scatter << QPointF(2.0, 5.5) << QPointF(2.2, 5.4);
     //! [3]
 
-    // Add another scatter series (re-use the previous pointer)
+    // Add another scatter series (re-use the previous pointer because the code used as snippets
+    // in the docs)
     // - more data with random component
     scatter = new QScatterSeries();
     for (qreal i(0.0); i < 20; i += 0.15) {

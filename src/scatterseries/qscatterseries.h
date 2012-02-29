@@ -40,7 +40,8 @@ public:
     QScatterSeries& operator << (const QPointF &value);
     QScatterSeries& operator << (QList<QPointF> points);
     QList<QPointF> data();
-    bool removeAt(int pointIndex);
+    bool replace(int index, QPointF newPoint);
+    bool removeAt(int index);
     int removeAll(QPointF point);
     void clear();
     int closestPoint(QPointF coordinate);
