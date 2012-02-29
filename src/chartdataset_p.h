@@ -39,8 +39,7 @@ signals:
     void seriesDomainChanged(QSeries* series,const Domain& domain);
 
 private slots:
-	void handleMinChanged(qreal min);
-	void handleMaxChanged(qreal max);
+	void handleRangeChanged(QChartAxis*);
 	void handleTickChanged(QChartAxis*);
 
 private:

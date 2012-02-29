@@ -130,6 +130,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QChartAxis::rangeChanged(QChartAxis*)
+    \brief \internal
+*/
+
+/*!
+    \fn void QChartAxis::updateRange(qreal min, qreal max)
+    \brief \internal \a min \a max
+*/
+
+/*!
     Constructs new axis object which is a child of \a parent. Ownership is taken by
     QChatView or QChart when axis added.
 */
@@ -274,25 +284,25 @@ void QChartAxis::setShadesOpacity(qreal opacity)
 }
 
 /*!
-  Sets \a min value on the axis.
+ Sets \a min value on the axis.
  */
 void QChartAxis::setMin(qreal min)
 {
-	if(m_min!=min){
-		m_min=min;
-		emit minChanged(m_min);
-	}
+    if(m_min!=min) {
+        m_min=min;
+        emit rangeChanged(this);
+    }
 }
 
 /*!
-  Sets \a max value on the axis.
+ Sets \a max value on the axis.
  */
 void QChartAxis::setMax(qreal max)
 {
-	if(m_max!=max){
-		m_max=max;
-		emit maxChanged(m_max);
-	}
+    if(m_max!=max) {
+       m_max=max;
+       emit rangeChanged(this);
+    }
 }
 
 /*!
@@ -300,8 +310,22 @@ void QChartAxis::setMax(qreal max)
  */
 void QChartAxis::setRange(qreal min, qreal max)
 {
-	setMin(min);
-	setMax(max);
+    setMin(min);
+    setMax(max);
+}
+
+void QChartAxis::updateRange(qreal min, qreal max)
+{
+    if(m_max!=max){
+        emit maxChanged(max);
+    }
+
+    if(m_min!=min){
+        emit minChanged(min);
+    }
+
+    m_max=max;
+    m_min=min;
 }
 
 /*!

@@ -58,7 +58,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QLineSeries::updated(int index)
+    \fn void QLineSeries::updated()
     \brief \internal
 */
 

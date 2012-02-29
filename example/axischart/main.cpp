@@ -51,6 +51,8 @@ int main(int argc, char *argv[])
     axisX->addAxisTickLabel(0,"low");
     axisX->addAxisTickLabel(50,"medium");
     axisX->addAxisTickLabel(100,"High");
+    axisX->setMin(-10);
+    axisX->setMax(200);
 
     QChartAxis* axisY = chartView->axisY();
     axisY->setLabelsAngle(45);
@@ -58,6 +60,8 @@ int main(int argc, char *argv[])
     axisY->addAxisTickLabel(0,"low");
     axisY->addAxisTickLabel(50,"medium");
     axisY->addAxisTickLabel(100,"High");
+    axisY->setMin(-10);
+    axisY->setMax(200);
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);
