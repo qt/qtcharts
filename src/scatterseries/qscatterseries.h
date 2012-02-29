@@ -17,7 +17,6 @@ public:
         // TODO: to be defined by the graphics design
         // TODO: marker shapes: "x", star, rectangle, tilted rect, triangle, circle, dot
         MarkerShapeDefault = 0,
-        MarkerShapePoint,
         MarkerShapeX,
         MarkerShapeRectangle,
         MarkerShapeTiltedRectangle,
@@ -40,7 +39,12 @@ public:
     QScatterSeries& operator << (const QPointF &value);
     QScatterSeries& operator << (QList<QPointF> points);
     QList<QPointF> data();
-    //TODO: insert, replace, remove, clear...?
+    bool replace(int index, QPointF newPoint);
+    bool removeAt(int index);
+    int removeAll(QPointF point);
+    void clear();
+    int closestPoint(QPointF coordinate);
+    //TODO: insert, replace...?
 
     QPen pen();
     void setPen(QPen pen);
@@ -48,10 +52,11 @@ public:
     void setBrush(QBrush brush);
     MarkerShape shape();
     void setShape(MarkerShape shape);
-    // TODO: marker size?
+    qreal size();
+    void setSize(qreal size);
 
 Q_SIGNALS:
-    void clicked(/* TODO: parameters? */);
+    void clicked(QPointF coordinate);
     // TODO: move to PIMPL for simplicity or does the user ever need changed signals?
     // TODO: more finegrained signaling for performance reasons
     // (check QPieSeries implementation with change sets)

@@ -56,7 +56,6 @@ public:
 
 public: // from QChartSeries
     QSeriesType type() const;
-    virtual bool setData(QList<qreal> data);  // TODO: remove this
 
 public:
     void replace(QList<QPieSlice*> slices);
@@ -67,20 +66,17 @@ public:
     void clear();
 
     int count() const;
-
     QList<QPieSlice*> slices() const;
 
     void setSizeFactor(qreal sizeFactor);
     qreal sizeFactor() const;
-
     void setPosition(PiePosition position);
     PiePosition position() const;
-
     void setSpan(qreal startAngle, qreal angleSpan);
 
-    void setLabelsVisible(bool visible);
-    void enableClickExplodes(bool enable);
-    void enableHoverHighlight(bool enable);
+    void setLabelsVisible(bool visible = true);
+    void setClickExplodes(bool enable = true);
+    void setHoverHighlighting(bool enable = true);
 
     // TODO: find slices?
     // QList<QPieSlice*> findByValue(qreal value);

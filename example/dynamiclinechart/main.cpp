@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
 
     chartView->setViewport( new QGLWidget() );
     chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setAnimationOptions(QChart::AllAnimations);
     chartView->setChartTitle("This is wave generator buahha.");
     chartView->addSeries(series0);
     chartView->addSeries(series1);

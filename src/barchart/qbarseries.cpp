@@ -46,7 +46,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QBarSeries. Parameter \a category defines the categories for chart.
+    Constructs empty QBarSeries. Parameter \a categories defines the categories for chart.
     QBarSeries is QObject which is a child of a \a parent.
 */
 QBarSeries::QBarSeries(QStringList categories, QObject *parent)
@@ -76,7 +76,7 @@ void QBarSeries::removeBarSet(QBarSet *set)
 */
 int QBarSeries::barsetCount()
 {
-    return mModel->countSets();
+    return mModel->barsetCount();
 }
 
 /*!
@@ -84,7 +84,7 @@ int QBarSeries::barsetCount()
 */
 int QBarSeries::categoryCount()
 {
-    return mModel->countCategories();
+    return mModel->categoryCount();
 }
 
 /*!
@@ -127,12 +127,12 @@ QString QBarSeries::label(int category)
 void QBarSeries::setFloatingValuesEnabled(bool enabled)
 {
     if (enabled) {
-        for (int i=0; i<mModel->countSets(); i++) {
+        for (int i=0; i<mModel->barsetCount(); i++) {
             QBarSet *set = mModel->setAt(i);
             connect(set,SIGNAL(clicked()),set,SIGNAL(toggleFloatingValues()));
         }
     } else {
-        for (int i=0; i<mModel->countSets(); i++) {
+        for (int i=0; i<mModel->barsetCount(); i++) {
             QBarSet *set = mModel->setAt(i);
             disconnect(set,SIGNAL(clicked()),set,SIGNAL(toggleFloatingValues()));
         }
@@ -147,12 +147,12 @@ void QBarSeries::setFloatingValuesEnabled(bool enabled)
 void QBarSeries::setToolTipEnabled(bool enabled)
 {
     if (enabled) {
-        for (int i=0; i<mModel->countSets(); i++) {
+        for (int i=0; i<mModel->barsetCount(); i++) {
             QBarSet *set = mModel->setAt(i);
             connect(set,SIGNAL(showToolTip(QPoint,QString)),this,SIGNAL(showToolTip(QPoint,QString)));
         }
     } else {
-        for (int i=0; i<mModel->countSets(); i++) {
+        for (int i=0; i<mModel->barsetCount(); i++) {
             QBarSet *set = mModel->setAt(i);
             disconnect(set,SIGNAL(showToolTip(QPoint,QString)),this,SIGNAL(showToolTip(QPoint,QString)));
         }

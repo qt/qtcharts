@@ -13,49 +13,37 @@ int main(int argc, char *argv[])
     //! [1]
     // Create chart view
     QChartView *chartView = new QChartView();
-    chartView->setChartTheme(QChart::ChartThemeIcy);
-
-    // Add scatter series with simple test data
+    chartView->setRenderHint(QPainter::Antialiasing);
+    // Add scatter series with linear test data with random "noise"
     QScatterSeries *scatter = new QScatterSeries();
-    *scatter << QPointF(0.5, 5.0)
-             << QPointF(1.0, 4.5)
-             << QPointF(1.0, 5.5)
-             << QPointF(1.5, 5.0)
-             << QPointF(2.0, 4.5)
-             << QPointF(2.5, 5.0);
+    for (qreal i(0.0); i < 20; i += 0.5) {
+        qreal x = i + (qreal)(rand() % 100) / 100.0;
+        qreal y = i + (qreal)(rand() % 100) / 100.0;
+        (*scatter) << QPointF(x, y);
+    }
     // Chart takes ownership
     chartView->addSeries(scatter);
     //! [1]
 
     // And more
-    //! [3]
+    //! [2]
     *scatter << QPointF(2.0, 5.5) << QPointF(2.2, 5.4);
-    //! [3]
+    //! [2]
 
-    // Add another scatter series (re-use the previous pointer)
-    // - more data with random component
-    scatter = new QScatterSeries();
-    for (qreal i(0.0); i < 20; i += 0.15) {
-        (*scatter) << QPointF(i + (qreal)(rand() % 100) / 100.0,
-                               i + (qreal)(rand() % 100) / 100.0);
-    }
-    //! [4]
-    QBrush brush(QColor(255, 0, 0, 100), Qt::SolidPattern);
+    //! [3]
+    QBrush brush(QColor(255, 0, 0, 80), Qt::SolidPattern);
     scatter->setBrush(brush);
-    //! [4]
-    //! [5]
-    QPen pen(QColor(0, 255, 0, 80), 3);
+    QPen pen(QColor(0, 255, 0, 60), 3);
     scatter->setPen(pen);
-    //! [5]
-    //! [6]
     scatter->setShape(QScatterSeries::MarkerShapeRectangle);
-    //! [6]
-    chartView->addSeries(scatter);
+    scatter->setSize(25.0);
+    //! [3]
 
     // Use the chart widget as the central widget
     QMainWindow w;
-    w.resize(640, 480);
+    w.resize(400, 300);
     w.setCentralWidget(chartView);
+    w.setWindowFlags(Qt::FramelessWindowHint);
     w.show();
 
     return a.exec();

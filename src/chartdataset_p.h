@@ -35,12 +35,11 @@ signals:
     void seriesRemoved(QSeries* series);
     void axisAdded(QChartAxis* axis);
     void axisRemoved(QChartAxis* axis);
-    void axisLabelsChanged(QChartAxis* axis, const QStringList& labels);
+    void axisRangeChanged(QChartAxis* axis, const QStringList& labels);
     void seriesDomainChanged(QSeries* series,const Domain& domain);
 
 private slots:
-	void handleMinChanged(qreal min);
-	void handleMaxChanged(qreal max);
+	void handleRangeChanged(QChartAxis*);
 	void handleTickChanged(QChartAxis*);
 
 private:

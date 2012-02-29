@@ -64,11 +64,15 @@ public:
     QString axisTickLabel(qreal value) const ;
     void clearAxisTickLabels();
 
+    //internal
+    void updateRange(qreal min, qreal max);
+
 signals:
 	void minChanged(qreal min);
 	void maxChanged(qreal max);
 //private signal
 	void update(QChartAxis*);
+	void rangeChanged(QChartAxis*);
 	void ticksChanged(QChartAxis*);
 
 private:

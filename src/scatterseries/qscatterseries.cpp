@@ -14,6 +14,15 @@
     The example code would result the following:
 
     \image scatter_example1.jpg
+
+    To customize the graphical representation of the series, you can modify pen, brush, shape and
+    size of the marker items. For example:
+
+    \snippet ../example/scatter/main.cpp 3
+
+    Would present your scatter markers as big rectangles with opaque, uglyish green outlines and
+    opaque red filling instead of the beatiful markers defined by the chart's theme:
+    \image scatter_example_custom.jpg
 */
 
 /*!
@@ -22,7 +31,6 @@
     This enum describes the shape used when rendering marker items.
 
     \value MarkerShapeDefault
-    \value MarkerShapePoint
     \value MarkerShapeX
     \value MarkerShapeRectangle
     \value MarkerShapeTiltedRectangle
@@ -36,8 +44,10 @@
 */
 
 /*!
-    \fn void QScatterSeries::clicked()
-    \brief TODO
+    \fn void QScatterSeries::clicked(QPointF coordinate)
+    User clicked the scatter series. Note that the \a coordinate is the chart coordinate that the
+    click occurred on; not necessarily a data point coordinate. To find the corresponding (closest)
+    data point you can use closestPoint().
 */
 
 /*!
@@ -51,7 +61,8 @@ QScatterSeriesPrivate::QScatterSeriesPrivate() :
     m_data(QList<QPointF>()),
     m_markerPen(QPen(QColor::Invalid)),
     m_markerBrush(QBrush(QColor::Invalid)),
-    m_markerShape(QScatterSeries::MarkerShapeDefault)
+    m_markerShape(QScatterSeries::MarkerShapeDefault),
+    m_markerSize(9.0)
 {
 }
 
@@ -104,7 +115,7 @@ void QScatterSeries::add(QList<QPointF> points)
     \sa add()
 
     For example:
-    \snippet ../example/scatter/main.cpp 3
+    \snippet ../example/scatter/main.cpp 2
 */
 QScatterSeries& QScatterSeries::operator << (const QPointF &value)
 {
@@ -142,15 +153,75 @@ QList<QPointF> QScatterSeries::data()
 }
 
 /*!
+    Replaces the point at \a index with \a newPoint. Returns true if \a index is a valid position
+    in the series data, false otherwise.
+*/
+bool QScatterSeries::replace(int index, QPointF newPoint)
+{
+    if (index >= 0 && index < d->m_data.count()) {
+        d->m_data.replace(index, newPoint);
+        emit changed();
+        return true;
+    }
+    return false;
+}
+
+/*!
+    Remove the data point at \a index. Returns true if a point was removed, false if the point
+    at \a index does not exist on the series.
+*/
+bool QScatterSeries::removeAt(int index)
+{
+    if (index >=0 && index < d->m_data.count()) {
+        d->m_data.removeAt(index);
+        emit changed();
+        return true;
+    }
+    return false;
+}
+
+/*!
+    Remove all occurrences of \a point from the series and returns the number of points removed.
+*/
+int QScatterSeries::removeAll(QPointF point)
+{
+    int count = d->m_data.removeAll(point);
+    emit changed();
+    return count;
+}
+
+/*!
+    Remove all data points from the series.
+*/
+void QScatterSeries::clear()
+{
+    d->m_data.clear();
+    emit changed();
+}
+
+/*!
+    Returns the index of the data point that is closest to \a coordinate. If several data points
+    are at the same distance from the \a coordinate, returns the last one. If no points exist,
+    returns -1.
+*/
+int QScatterSeries::closestPoint(QPointF coordinate)
+{
+    qreal distance(-1);
+    int pointIndex(-1);
+    for (int i(0); i < d->m_data.count(); i++) {
+        QPointF dataPoint = d->m_data.at(i);
+        QPointF difference = dataPoint - coordinate;
+        if (i == 0 || difference.manhattanLength() <= distance) {
+            distance = difference.manhattanLength();
+            pointIndex = i;
+        }
+    }
+    return pointIndex;
+}
+
+/*!
     Overrides the default pen used for drawing a marker item with a user defined \a pen. The
     default pen is defined by chart theme setting.
-
-    For example:
-    \snippet ../example/scatter/main.cpp 5
-
-    Would present your scatter markers with an opaque, uglyish green outlines instead of the
-    beatiful markers defined by the chart's theme:
-    \image scatter_example_pen.jpg
 
     \sa setBrush()
     \sa QChart::setChartTheme()
@@ -172,12 +243,6 @@ QPen QScatterSeries::pen()
     Overrides the default brush of the marker items with a user defined \a brush. The default brush
     is defined by chart theme setting.
 
-    For example:
-    \snippet ../example/scatter/main.cpp 4
-
-    Would fill your scatter markers with an opaque red color:
-    \image scatter_example_brush.jpg
-
     \sa setPen()
     \sa QChart::setChartTheme()
 */
@@ -197,12 +262,6 @@ QBrush QScatterSeries::brush()
 /*!
     Overrides the default shape of the marker items with a user defined \a shape. The default shape
     is defined by chart theme setting.
-
-    For example:
-    \snippet ../example/scatter/main.cpp 6
-
-    Would make your scatter marker items rectangle:
-    \image scatter_example_shape.jpg
 */
 void QScatterSeries::setShape(MarkerShape shape)
 {
@@ -215,6 +274,23 @@ void QScatterSeries::setShape(MarkerShape shape)
 QScatterSeries::MarkerShape QScatterSeries::shape()
 {
     return (QScatterSeries::MarkerShape) d->m_markerShape;
+}
+
+/*!
+    Returns the size of the marker items.
+*/
+qreal QScatterSeries::size()
+{
+    return d->m_markerSize;
+}
+
+/*!
+    Set the \a size of the marker items. The default size is 9.0.
+*/
+void QScatterSeries::setSize(qreal size)
+{
+    d->m_markerSize = size;
+    emit changed();
 }
 
 #include "moc_qscatterseries.cpp"

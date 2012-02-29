@@ -35,7 +35,7 @@ public:
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
     virtual void layoutChanged() = 0;   // layout has changed -> need to recalculate bar sizes
 
-protected slots:
+public slots:
     void handleModelChanged(int index);
     void handleDomainChanged(const Domain& domain);
     void handleGeometryChanged(const QRectF& size);

@@ -12,6 +12,7 @@ public:
 
 	qreal spanX() const;
 	qreal spanY() const;
+	bool isEmpty() const;
 
 	friend bool operator== (const Domain &domain1, const Domain &domain2);
 	friend bool operator!= (const Domain &domain1, const Domain &domain2);

@@ -52,8 +52,7 @@ public slots:
     void handleAxisAdded(QChartAxis* axis);
     void handleAxisRemoved(QChartAxis* axis);
     void handleSeriesDomainChanged(QSeries* series, const Domain& domain);
-    void handleAxisLabelsChanged(QChartAxis* axis, const QStringList& labels);
-    void handleSeriesChanged(QSeries* series);
+    void handleAxisRangeChanged(QChartAxis* axis, const QStringList& labels);
     void handleGeometryChanged();
 signals:
     void geometryChanged(const QRectF& rect);

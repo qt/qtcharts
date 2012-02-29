@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
     //! [1]
 
     //! [2]
-    series->enableHoverHighlight(true);
-    series->enableClickExplodes(true);
+    series->setHoverHighlighting();
+    series->setClickExplodes();
     //! [2]
 
     window.setCentralWidget(chartView);

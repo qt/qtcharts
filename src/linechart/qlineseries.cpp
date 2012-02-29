@@ -43,7 +43,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
 /*!
-    \fn void QLineSeries::pointChanged(int index)
+    \fn void QLineSeries::pointReplaced(int index)
     \brief \internal \a index
 */
 
@@ -55,6 +55,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn void QLineSeries::pointRemoved(int index)
     \brief \internal \a index
+*/
+
+/*!
+    \fn void QLineSeries::updated()
+    \brief \internal
 */
 
 /*!
@@ -101,7 +106,7 @@ void QLineSeries::replace(qreal x,qreal y)
     int index = m_x.indexOf(x);
     m_x[index]=x;
     m_y[index]=y;
-    emit pointChanged(index);
+    emit pointReplaced(index);
 }
 
 /*!
@@ -173,7 +178,10 @@ int QLineSeries::count() const
 */
 void QLineSeries::setPen(const QPen& pen)
 {
+    if(pen!=m_pen){
     m_pen=pen;
+    emit updated();
+    }
 }
 
 /*!
@@ -181,7 +189,10 @@ void QLineSeries::setPen(const QPen& pen)
 */
 void QLineSeries::setPointsVisible(bool visible)
 {
+    if(m_pointsVisible!=visible){
     m_pointsVisible=visible;
+    emit updated();
+    }
 }
 
 QDebug operator<< (QDebug debug, const QLineSeries series)

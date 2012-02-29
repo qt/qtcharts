@@ -22,7 +22,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QStackedBarSeries. Parameter \a category defines the categories for chart.
+    Constructs empty QStackedBarSeries. Parameter \a categories defines the categories for chart.
     QStackedBarSeries is QObject which is a child of a \a parent.
 */
 QStackedBarSeries::QStackedBarSeries(QStringList categories, QObject *parent)

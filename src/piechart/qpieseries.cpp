@@ -106,18 +106,13 @@ bool QPieSeries::ChangeSet::isEmpty() const
 
     The pie series defines a pie chart which consists of pie slices which are QPieSlice objects.
     The slices can have any values as the QPieSeries will calculate its relative value to the sum of all slices.
-    The actual slice size (span) is determined by that relative value.
+    The actual slice size is determined by that relative value.
 
-    By default the pie is defined as full but it can be a partial pie.
+    By default the pie is defined as a full pie but it can be a partial pie.
     This can be done by setting a starting angle and angle span to the series.
 
-    Example on how to create a chart with pie series:
-    \snippet ../example/piechart/main.cpp 1
-
-    To help with the most common user intercation scenarions there some convenience functions. Specifically
-    exploding and higlighting:
-    \snippet ../example/piechart/main.cpp 2
-
+    To help with the most common user interaction scenarions there some convenience functions.
+    Like exploding a slice when clicked and higlighting when user hovers over a slice.
 */
 
 /*!
@@ -147,19 +142,6 @@ QPieSeries::~QPieSeries()
 QSeries::QSeriesType QPieSeries::type() const
 {
     return QSeries::SeriesTypePie;
-}
-
-/*!
-    \internal \a data
-*/
-bool QPieSeries::setData(QList<qreal> data)
-{
-    // TODO: remove this function
-    QList<QPieSlice*> slices;
-    foreach (qreal value, data)
-        slices << new QPieSlice(value, QString::number(value));
-    replace(slices);
-    return true;
 }
 
 /*!
@@ -354,7 +336,7 @@ void QPieSeries::setLabelsVisible(bool visible)
 
     \sa QPieSlice::isExploded(), QPieSlice::setExploded(), QPieSlice::setExplodeDistance()
 */
-void QPieSeries::enableClickExplodes(bool enable)
+void QPieSeries::setClickExplodes(bool enable)
 {
     if (enable)
         connect(this, SIGNAL(clicked(QPieSlice*)), this, SLOT(toggleExploded(QPieSlice*)));
@@ -370,7 +352,7 @@ void QPieSeries::enableClickExplodes(bool enable)
     \sa QPieSlice::isExploded(), QPieSlice::setExploded()
 */
 
-void QPieSeries::enableHoverHighlight(bool enable)
+void QPieSeries::setHoverHighlighting(bool enable)
 {
     if (enable) {
         connect(this, SIGNAL(hoverEnter(QPieSlice*)), this, SLOT(highlightOn(QPieSlice*)));

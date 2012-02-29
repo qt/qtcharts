@@ -9,7 +9,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartPresenter;
 class QLineSeries;
-class LineChartAnimationItem;
 
 class LineChartItem :  public QObject , public ChartItem
 {
@@ -24,48 +23,36 @@ public:
     QPainterPath shape() const;
 
     void setPen(const QPen& pen);
-    const Domain& domain() const { return m_domain;}
-
-    virtual void addPoint(const QPointF& );
-    virtual void addPoints(const QVector<QPointF>& points);
-    virtual void removePoint(const QPointF& point);
-    virtual void setPoint(const QPointF& oldPoint, const QPointF& newPoint);
-    virtual void setPoint(int index,const QPointF& point);
     void setPointsVisible(bool visible);
-    void clear();
-    void clearView();
-    int count() const { return m_data.size();}
 
-    const QVector<QPointF>& points(){ return m_data;}
-
-protected:
-    virtual void updateGeometry();
-    virtual void updateData();
-    virtual void updateDomain();
-    //refactor
-    void calculatePoint(QPointF& point, int index, const QLineSeries* series,const QSizeF& size, const Domain& domain) const;
-    void calculatePoints(QVector<QPointF>& points,QHash<int,int>& hash,const QLineSeries* series, const QSizeF& size, const Domain& domain) const;
-
-protected slots:
-    void handleModelChanged(int index);
+public slots:
+    void handlePointAdded(int index);
+    void handlePointRemoved(int index);
+    void handlePointReplaced(int index);
+    void handleUpdated();
     void handleDomainChanged(const Domain& domain);
     void handleGeometryChanged(const QRectF& size);
+
+public:
+    virtual void updateItem(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints);
+    virtual void updateItem(QVector<QPointF>& oldPoints,int index,QPointF& newPoint);
+    void applyGeometry(QVector<QPointF>& points);
+    void createPoints(int count);
+    void clearPoints(int count);
+    QPointF calculateGeometryPoint(int index) const;
+    QVector<QPointF> calculateGeometryPoints() const;
 
 private:
     ChartPresenter* m_presenter;
     QPainterPath m_path;
+    QLineSeries* m_series;
     QSizeF m_size;
     QRectF m_rect;
     QRectF m_clipRect;
     Domain m_domain;
-    QList<QGraphicsItem*> m_points;
-    QVector<QPointF> m_data;
-    QHash<int,int> m_hash;
-    QLineSeries* m_series;
+    QGraphicsItemGroup m_items;
+    QVector<QPointF> m_points;
     QPen m_pen;
-    bool m_dirtyData;
-    bool m_dirtyGeometry;
-    bool m_dirtyDomain;
 
 };
 

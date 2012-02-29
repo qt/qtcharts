@@ -47,6 +47,11 @@
     used by the series. Returns true if the model is valid for the series.
 */
 
+/*!
+    \fn QList<QSeries::Legend> QSeries::legend()
+    \brief Returns the legend of the series. If series is empty, empty list is returned.
+*/
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 #include "moc_qseries.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

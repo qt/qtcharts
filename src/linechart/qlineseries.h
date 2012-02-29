@@ -40,9 +40,10 @@ public: // from QChartSeries
     friend QDebug operator<< (QDebug d, const QLineSeries series);
 
 signals:
-    void pointChanged(int index);
+    void pointReplaced(int index);
     void pointRemoved(int index);
     void pointAdded(int index);
+    void updated();
 
 private:
     QVector<qreal> m_x;
