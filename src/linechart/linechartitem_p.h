@@ -29,7 +29,7 @@ public slots:
     void handlePointAdded(int index);
     void handlePointRemoved(int index);
     void handlePointReplaced(int index);
-    void handleSeriesUpdated();
+    void handleUpdated();
     void handleDomainChanged(const Domain& domain);
     void handleGeometryChanged(const QRectF& size);
 
@@ -45,13 +45,13 @@ public:
 private:
     ChartPresenter* m_presenter;
     QPainterPath m_path;
+    QLineSeries* m_series;
     QSizeF m_size;
     QRectF m_rect;
     QRectF m_clipRect;
     Domain m_domain;
     QGraphicsItemGroup m_items;
     QVector<QPointF> m_points;
-    QLineSeries* m_series;
     QPen m_pen;
 
 };

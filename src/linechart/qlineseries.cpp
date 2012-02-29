@@ -58,6 +58,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QLineSeries::updated(int index)
+    \brief \internal
+*/
+
+/*!
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
@@ -173,7 +178,10 @@ int QLineSeries::count() const
 */
 void QLineSeries::setPen(const QPen& pen)
 {
+    if(pen!=m_pen){
     m_pen=pen;
+    emit updated();
+    }
 }
 
 /*!
@@ -181,7 +189,10 @@ void QLineSeries::setPen(const QPen& pen)
 */
 void QLineSeries::setPointsVisible(bool visible)
 {
+    if(m_pointsVisible!=visible){
     m_pointsVisible=visible;
+    emit updated();
+    }
 }
 
 QDebug operator<< (QDebug debug, const QLineSeries series)

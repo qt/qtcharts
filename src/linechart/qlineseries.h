@@ -43,6 +43,7 @@ signals:
     void pointReplaced(int index);
     void pointRemoved(int index);
     void pointAdded(int index);
+    void updated();
 
 private:
     QVector<qreal> m_x;

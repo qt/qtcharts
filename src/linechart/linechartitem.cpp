@@ -193,10 +193,8 @@ void LineChartItem::handleGeometryChanged(const QRectF& rect)
 	update();
 }
 
-void LineChartItem::handleSeriesUpdated()
+void LineChartItem::handleUpdated()
 {
-    if(m_points.count()==0) return;
-
     m_items.setVisible(m_series->pointsVisible());
     setPen(m_series->pen());
     update();

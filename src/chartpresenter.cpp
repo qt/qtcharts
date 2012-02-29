@@ -121,8 +121,10 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
             QObject::connect(lineSeries,SIGNAL(pointReplaced(int)),item,SLOT(handlePointReplaced(int)));
             QObject::connect(lineSeries,SIGNAL(pointAdded(int)),item,SLOT(handlePointAdded(int)));
             QObject::connect(lineSeries,SIGNAL(pointRemoved(int)),item,SLOT(handlePointRemoved(int)));
+            QObject::connect(lineSeries,SIGNAL(updated()),item,SLOT(handleUpdated()));
             m_chartItems.insert(series,item);
             if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
+            item->handleUpdated();
             break;
         }
 
