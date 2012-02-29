@@ -48,7 +48,7 @@
 */
 
 /*!
-    \fn QList<QSeries::Legend> legend()
+    \fn QList<QSeries::Legend> QSeries::legend()
     \brief Returns the legend of the series. If series is empty, empty list is returned.
 */
 

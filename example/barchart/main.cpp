@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 
     QChartView* chartView =  new QChartView(&window);
     chartView->addSeries(series);
-    chartView->setChartTitle("simple stacked barchart");
+    chartView->setChartTitle("simple barchart");
     chartView->setChartTheme(QChart::ChartThemeIcy);
     //! [5]
 
