@@ -26,6 +26,7 @@ public:
     const Domain domain(QChartAxis *axisY) const;
     int domainIndex() const {return m_domainIndex;}
     void setDomain(int index);
+    void setDomain(int index,QChartAxis* axis);
 
     QChartAxis* axisX() const { return m_axisX;};
     QChartAxis* axisY(QSeries* series = 0) const;
