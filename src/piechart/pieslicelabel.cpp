@@ -45,9 +45,9 @@ void PieSliceLabel::updateGeometry()
     QPointF parm2 = parm1;
     textRect.moveBottomLeft(parm1);
     if (m_armAngle < 180) { // arm swings the other way on the left side
-         parm2 += QPointF(m_textRect.width(), 0);
+         parm2 += QPointF(textRect.width(), 0);
     } else {
-         parm2 += QPointF(-m_textRect.width(),0);
+         parm2 += QPointF(-textRect.width(),0);
          textRect.moveBottomLeft(parm2);
     }
 
@@ -66,7 +66,7 @@ void PieSliceLabel::updateGeometry()
     m_textRect = textRect;
     m_rect = path.boundingRect().united(m_textRect);
 
-    //qDebug() << "PieSliceLabel::updateGeometry" << m_text << m_armStartPoint << m_armLength << m_armAngle << m_textRect;
+    qDebug() << "PieSliceLabel::updateGeometry" << m_text << m_armStartPoint << m_armLength << m_armAngle << m_textRect;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE
