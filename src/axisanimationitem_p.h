@@ -29,7 +29,7 @@ class AxisAnimator: public QVariantAnimation
 {
 public:
     AxisAnimator(AxisItem *axis,QObject *parent = 0);
-    virtual ~AxisAnimator();
+    ~AxisAnimator();
 protected:
     virtual QVariant interpolated (const QVariant & from, const QVariant & to, qreal progress ) const;
     virtual void updateCurrentValue (const QVariant & value );

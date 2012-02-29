@@ -43,7 +43,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
 /*!
-    \fn void QLineSeries::pointChanged(int index)
+    \fn void QLineSeries::pointReplaced(int index)
     \brief \internal \a index
 */
 
@@ -101,7 +101,7 @@ void QLineSeries::replace(qreal x,qreal y)
     int index = m_x.indexOf(x);
     m_x[index]=x;
     m_y[index]=y;
-    emit pointChanged(index);
+    emit pointReplaced(index);
 }
 
 /*!

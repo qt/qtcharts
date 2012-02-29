@@ -118,8 +118,11 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
             }
             m_chartTheme->decorate(item,lineSeries,m_chartItems.count());
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
-            QObject::connect(lineSeries,SIGNAL(pointChanged(int)),item,SLOT(handleModelChanged(int)));
+            QObject::connect(lineSeries,SIGNAL(pointReplaced(int)),item,SLOT(handlePointReplaced(int)));
+            QObject::connect(lineSeries,SIGNAL(pointAdded(int)),item,SLOT(handlePointAdded(int)));
+            QObject::connect(lineSeries,SIGNAL(pointRemoved(int)),item,SLOT(handlePointRemoved(int)));
             m_chartItems.insert(series,item);
+            if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
             break;
         }
 
@@ -131,6 +134,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
             QObject::connect(barSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
             m_chartItems.insert(series,item);
             // m_axisXItem->setVisible(false);
+            if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
             break;
         }
 
@@ -142,6 +146,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(stackedBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
             m_chartItems.insert(series,item);
+            if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
             break;
         }
 
@@ -153,6 +158,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
             QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
             QObject::connect(percentBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
             m_chartItems.insert(series,item);
+            if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
             break;
         }
         case QSeries::SeriesTypeScatter: {
@@ -163,6 +169,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
                              scatterPresenter, SLOT(handleGeometryChanged(const QRectF&)));
             m_chartTheme->decorate(scatterPresenter, scatterSeries, m_chartItems.count());
             m_chartItems.insert(scatterSeries, scatterPresenter);
+            if(m_rect.isValid()) scatterPresenter->handleGeometryChanged(m_rect);
             break;
         }
         case QSeries::SeriesTypePie: {
@@ -186,6 +193,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
             }
 
             m_chartItems.insert(series, pie);
+            pie->handleGeometryChanged(m_rect);
             break;
         }
         default: {
@@ -193,19 +201,12 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
             break;
         }
     }
-
-    if(m_rect.isValid()) emit geometryChanged(m_rect);
 }
 
 void ChartPresenter::handleSeriesRemoved(QSeries* series)
 {
 	ChartItem* item = m_chartItems.take(series);
 	delete item;
-}
-
-void ChartPresenter::handleSeriesChanged(QSeries* series)
-{
-    //TODO:
 }
 
 void ChartPresenter::handleSeriesDomainChanged(QSeries* series, const Domain& domain)

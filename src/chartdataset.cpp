@@ -150,12 +150,11 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
         m_axisXInitialized=true;
     }
 
-
-    emit seriesAdded(series);
     QStringList ylabels = createLabels(axisY,domain.m_minY,domain.m_maxY);
     QStringList xlabels = createLabels(axisX(),domain.m_minX,domain.m_maxX);
     emit axisLabelsChanged(axisY,ylabels);
     emit axisLabelsChanged(axisX(),xlabels);
+    emit seriesAdded(series);
     emit seriesDomainChanged(series,domain);
 
 }

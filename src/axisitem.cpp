@@ -58,9 +58,6 @@ void AxisItem::clear(int count)
         if(lines.size()%2) delete(shades.takeLast());
         delete(axis.takeLast());
     }
-
-    m_thicksList.clear();
-
 }
 
 void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

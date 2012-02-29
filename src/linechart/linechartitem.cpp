@@ -10,10 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 LineChartItem::LineChartItem(ChartPresenter* presenter, QLineSeries* series,QGraphicsItem *parent):ChartItem(parent),
 m_presenter(presenter),
-m_series(series),
-m_dirtyData(false),
-m_dirtyGeometry(false),
-m_dirtyDomain(false)
+m_series(series)
 {
     setZValue(ChartPresenter::LineChartZValue);
 }
@@ -28,76 +25,21 @@ QPainterPath LineChartItem::shape() const
     return m_path;
 }
 
-
-void LineChartItem::addPoints(const QVector<QPointF>& points)
+void LineChartItem::createPoints(int count)
 {
-    m_data = points;
-    for(int i=0; i<m_data.size();i++){
-    const QPointF& point =m_data[i];
-    QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
-    item->setPos(point.x()-1,point.y()-1);;
-    if(!m_clipRect.contains(point) || !m_series->pointsVisible()) item->setVisible(false);
-    m_points << item;
+    for (int i = 0; i < count; ++i) {
+        QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
+        m_items.addToGroup(item);
     }
 }
 
-void LineChartItem::addPoint(const QPointF& point)
+void LineChartItem::clearPoints(int count)
 {
-	m_data << point;
-	QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3,this);
-	m_clipRect.contains(point);
-	item->setPos(point.x()-1,point.y()-1);
-	if(!m_clipRect.contains(point) || !m_series->pointsVisible()) item->setVisible(false);
-	m_points << item;
-}
+    QList<QGraphicsItem *> items = m_items.childItems();
 
-void LineChartItem::removePoint(const QPointF& point)
-{
-    Q_ASSERT(m_data.count() == m_points.count());
-    int index = m_data.lastIndexOf(point,0);
-    m_data.remove(index);
-    delete(m_points.takeAt(index));
-}
-
-void LineChartItem::setPoint(const QPointF& oldPoint,const QPointF& newPoint)
-{
-    Q_ASSERT(m_data.count() == m_points.count());
-    int index = m_data.lastIndexOf(oldPoint,0);
-
-    if(index > -1){
-    m_data.replace(index,newPoint);
-    QGraphicsItem* item = m_points.at(index);
-    item->setPos(newPoint.x()-1,newPoint.y()-1);
+    for (int i = 0; i < count; ++i) {
+        delete(items.takeLast());
     }
-}
-
-void LineChartItem::setPoint(int index,const QPointF& point)
-{
-    Q_ASSERT(m_data.count() == m_points.count());
-    Q_ASSERT(index>=0);
-
-    m_data.replace(index,point);
-    QGraphicsItem* item = m_points.at(index);
-    item->setPos(point.x()-1,point.y()-1);
-}
-
-void LineChartItem::clear()
-{
-	 qDeleteAll(m_points);
-	 m_points.clear();
-	 m_hash.clear();
-	 m_path = QPainterPath();
-	 m_rect = QRect();
-	 m_data.clear();
-}
-
-void LineChartItem::clearView()
-{
-     qDeleteAll(m_points);
-     m_points.clear();
-     m_path = QPainterPath();
-     m_rect = QRect();
-     m_data.clear();
 }
 
 void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -111,58 +53,66 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->restore();
 }
 
-void LineChartItem::calculatePoint(QPointF& point, int index, const QLineSeries* series,const QSizeF& size, const Domain& domain) const
+QPointF LineChartItem::calculatePoint(int index) const
 {
-    const qreal deltaX = size.width()/domain.spanX();
-    const qreal deltaY = size.height()/domain.spanY();
-    qreal x = (series->x(index) - domain.m_minX)* deltaX;
-    qreal y = (series->y(index) - domain.m_minY)*-deltaY + size.height();
-    point.setX(x);
-    point.setY(y);
+    const qreal deltaX = m_size.width()/m_domain.spanX();
+    const qreal deltaY = m_size.height()/m_domain.spanY();
+    qreal x = (m_series->x(index) - m_domain.m_minX)* deltaX;
+    qreal y = (m_series->y(index) - m_domain.m_minY)*-deltaY + m_size.height();
+    return QPointF(x,y);
 }
 
 
-void LineChartItem::calculatePoints(QVector<QPointF>& points, QHash<int,int>& hash,const QLineSeries* series,const QSizeF& size, const Domain& domain) const
+void LineChartItem::calculatePoints(QVector<QPointF>& points, QVector<int>& map) const
 {
-    const qreal deltaX = size.width()/domain.spanX();
-    const qreal deltaY = size.height()/domain.spanY();
+    const qreal deltaX = m_size.width()/m_domain.spanX();
+    const qreal deltaY = m_size.height()/m_domain.spanY();
 
-    for (int i = 0; i < series->count(); ++i) {
-      qreal x = (series->x(i) - domain.m_minX)* deltaX;
-      qreal y = (series->y(i) - domain.m_minY)*-deltaY + size.height();
-      hash[i] = points.size();
+    for (int i = 0; i < m_series->count(); ++i) {
+      qreal x = (m_series->x(i) - m_domain.m_minX)* deltaX;
+      qreal y = (m_series->y(i) - m_domain.m_minY)*-deltaY + m_size.height();
+      map << i;
       points << QPointF(x,y);
     }
 }
 
-void LineChartItem::updateDomain()
+void LineChartItem::updateItem(QVector<QPointF>& points,QVector<int>& map)
 {
-    clear();
-    prepareGeometryChange();
-	calculatePoints(m_data,m_hash,m_series,m_size, m_domain);
-	addPoints(m_data);
+    int diff = m_points.size() - points.size();
+
+    if(diff>0) {
+        clearPoints(diff);
+    }
+    else if(diff<0) {
+        createPoints(-diff);
+    }
+
+	applyGeometry(points);
+	m_points=points;
+	m_map=map;
 }
 
-void LineChartItem::updateData()
+void LineChartItem::applyGeometry(QVector<QPointF>& points)
 {
-    //for now the same
-    updateDomain();
-}
+   if(points.size()==0) return;
 
-void LineChartItem::updateGeometry()
-{
+   QList<QGraphicsItem*> items = m_items.childItems();
 
-   if(m_data.size()==0) return;
-
-   prepareGeometryChange();
    QPainterPath path;
-   const QPointF& point = m_data.at(0);
+   const QPointF& point = points.at(0);
    path.moveTo(point);
+   QGraphicsItem* item = items.at(0);
+   item->setPos(point.x()-1,point.y()-1);
 
-   foreach( const QPointF& point , m_data) {
+   for(int i=1 ; i< points.size();i++) {
+       QGraphicsItem* item = items.at(i);
+       const QPointF& point = points.at(i);
+       item->setPos(point.x()-1,point.y()-1);
+       if(!m_clipRect.contains(point)) item->setVisible(false);
        path.lineTo(point);
    }
 
+   prepareGeometryChange();
    m_path = path;
    m_rect = path.boundingRect();
 }
@@ -174,14 +124,78 @@ void LineChartItem::setPen(const QPen& pen)
 
 //handlers
 
-void LineChartItem::handleModelChanged(int index)
+void LineChartItem::handlePointAdded(int index)
 {
     Q_ASSERT(index<m_series->count());
-    if(m_hash.contains(index)){
-        int i = m_hash.value(index);
-        QPointF point;
-        calculatePoint(point,index,m_series,m_size,m_domain);
-        setPoint(i,point);
+    Q_ASSERT(index>=0);
+
+    if(m_map.contains(index)){
+
+         int i = m_map.indexOf(index);
+
+         QPointF point = calculatePoint(index);
+
+         if(point.isNull()) return;
+
+         QVector<QPointF> points = m_points;
+         points.insert(i,point);
+
+         for(int j=i;j<m_map.count();j++)
+         m_map[j]-=1;
+
+         updateItem(points,m_map);
+
+     }else{
+         //ignore
+         return;
+     }
+     update();
+}
+void LineChartItem::handlePointRemoved(int index)
+{
+    Q_ASSERT(index<m_series->count());
+    Q_ASSERT(index>=0);
+
+    if(m_map.contains(index)){
+
+         int i = m_map.value(index);
+
+         QVector<QPointF> points = m_points;
+         points.remove(i);
+
+         for(int j=i;j<m_map.count();j++)
+         m_map[j]+=1;
+
+         m_map<<
+
+         updateItem(points,m_map);
+
+     }else{
+         //ignore
+         return;
+     }
+     update();
+}
+
+void LineChartItem::handlePointReplaced(int index)
+{
+    Q_ASSERT(index<m_series->count());
+    Q_ASSERT(index>=0);
+
+    if(m_map.contains(index)){
+
+        int i = m_map.indexOf(index);
+
+        QPointF point = calculatePoint(index);
+
+        QVector<QPointF> points = m_points;
+        points.replace(i,point);
+
+        updateItem(points,m_map);
+
+    }else{
+        //ignore
+        return;
     }
     update();
 }
@@ -189,7 +203,12 @@ void LineChartItem::handleModelChanged(int index)
 void LineChartItem::handleDomainChanged(const Domain& domain)
 {
     m_domain = domain;
-    updateDomain();
+    if(m_domain.isEmpty()) return;
+
+    QVector<QPointF> points;
+    QVector<int> map;
+    calculatePoints(points,map);
+    updateItem(points,map);
     update();
 }
 
@@ -198,9 +217,24 @@ void LineChartItem::handleGeometryChanged(const QRectF& rect)
     Q_ASSERT(rect.isValid());
     m_size=rect.size();
     m_clipRect=rect.translated(-rect.topLeft());
-    updateDomain();
-    updateGeometry();
     setPos(rect.topLeft());
+
+    if(m_domain.isEmpty()) return;
+    if(m_points.isEmpty()) return;
+
+    QVector<QPointF> points;
+    QVector<int> map;
+    calculatePoints(points,map);
+    updateItem(points,map);
+    update();
+}
+
+void LineChartItem::handleSeriesUpdated()
+{
+    if(m_points.count()==0) return;
+
+    m_items.setVisible(m_series->pointsVisible());
+    setPen(m_series->pen());
     update();
 }
 
