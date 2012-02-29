@@ -117,7 +117,7 @@ void AxisItem::handleAxisUpdate(QChartAxis* axis)
     setShadesBrush(axis->shadesBrush());
 }
 
-void AxisItem::handleLabelsChanged(QChartAxis* axis,const QStringList& labels)
+void AxisItem::handleRangeChanged(QChartAxis* axis,const QStringList& labels)
 {
     int diff = m_thicksList.size() - labels.size();
 

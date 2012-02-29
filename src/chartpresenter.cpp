@@ -48,7 +48,7 @@ void ChartPresenter::createConnections()
     QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*)),this,SLOT(handleAxisAdded(QChartAxis*)));
     QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),this,SLOT(handleAxisRemoved(QChartAxis*)));
     QObject::connect(m_dataset,SIGNAL(seriesDomainChanged(QSeries*,const Domain&)),this,SLOT(handleSeriesDomainChanged(QSeries*,const Domain&)));
-    QObject::connect(m_dataset,SIGNAL(axisLabelsChanged(QChartAxis*,const QStringList&)),this,SLOT(handleAxisLabelsChanged(QChartAxis*,const QStringList&)));
+    QObject::connect(m_dataset,SIGNAL(axisRangeChanged(QChartAxis*,const QStringList&)),this,SLOT(handleAxisRangeChanged(QChartAxis*,const QStringList&)));
 }
 
 
@@ -217,9 +217,9 @@ void ChartPresenter::handleSeriesDomainChanged(QSeries* series, const Domain& do
     m_chartItems.value(series)->handleDomainChanged(domain);
 }
 
-void ChartPresenter::handleAxisLabelsChanged(QChartAxis* axis,const QStringList& labels)
+void ChartPresenter::handleAxisRangeChanged(QChartAxis* axis,const QStringList& labels)
 {
-    m_axisItems.value(axis)->handleLabelsChanged(axis,labels);
+    m_axisItems.value(axis)->handleRangeChanged(axis,labels);
 }
 
 void ChartPresenter::setChartTheme(QChart::ChartTheme theme)

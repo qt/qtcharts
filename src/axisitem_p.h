@@ -51,7 +51,7 @@ public:
 
 public slots:
     void handleAxisUpdate(QChartAxis* axis); //look and feel
-    void handleLabelsChanged(QChartAxis* axis,const QStringList& labels); //labels from dataset
+    void handleRangeChanged(QChartAxis* axis,const QStringList& labels); //labels from dataset
     void handleGeometryChanged(const QRectF& size); // geometry from presenter
 public:
     virtual void updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout);
