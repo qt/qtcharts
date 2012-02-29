@@ -29,7 +29,7 @@ public Q_SLOTS:
     void updateLabel()
     {
         QString label = m_prefix;
-        label += " - " + QString::number(this->value())+ "e (";
+        label += " " + QString::number(this->value())+ "e (";
         label += QString::number(this->percentage()*100, 'f', 1) + "%)";
         setLabel(label);
     }
@@ -83,34 +83,22 @@ int main(int argc, char *argv[])
 
     QList<QString> months;
     months << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
+    QList<QString> names;
+    names << "Jane" << "John" << "Axel" << "Mary" << "Samantha" << "Bob";
 
-    int max = 1000;
+    foreach (QString name, names) {
+        QPieSeries* series = new QPieSeries(drilldownChart);
+        series->setTitle("Sales by month - " + name);
+        series->setHoverHighlighting();
 
-    QPieSeries* monthSeriesJane = new QPieSeries(drilldownChart);
-    monthSeriesJane->setTitle("Sales by month - Jane");
-    monthSeriesJane->setHoverHighlighting();
-    foreach (QString month, months)
-        *monthSeriesJane << new DrilldownSlice(qrand() % max, month, yearSeries);
+        foreach (QString month, months)
+            *series << new DrilldownSlice(qrand() % 1000, month, yearSeries);
 
-    QPieSeries* monthSeriesJohn = new QPieSeries(drilldownChart);
-    monthSeriesJohn->setTitle("Sales by month - John");
-    monthSeriesJohn->setHoverHighlighting();
-    foreach (QString month, months)
-        *monthSeriesJohn << new DrilldownSlice(qrand() % max, month, yearSeries);
+        QObject::connect(series, SIGNAL(clicked(QPieSlice*)), drilldownChart, SLOT(handleSliceClicked(QPieSlice*)));
 
-    QPieSeries* monthSeriesAxel = new QPieSeries(drilldownChart);
-    monthSeriesAxel->setTitle("Sales by month - Axel");
-    monthSeriesAxel->setHoverHighlighting();
-    foreach (QString month, months)
-        *monthSeriesAxel << new DrilldownSlice(qrand() % max, month, yearSeries);
+        *yearSeries << new DrilldownSlice(series->total(), name, series);
+    }
 
-    *yearSeries << new DrilldownSlice(monthSeriesJane->total(), "Jane", monthSeriesJane);
-    *yearSeries << new DrilldownSlice(monthSeriesJohn->total(), "John", monthSeriesJohn);
-    *yearSeries << new DrilldownSlice(monthSeriesAxel->total(), "Axel", monthSeriesAxel);
-
-    QObject::connect(monthSeriesJane, SIGNAL(clicked(QPieSlice*)), drilldownChart, SLOT(handleSliceClicked(QPieSlice*)));
-    QObject::connect(monthSeriesJohn, SIGNAL(clicked(QPieSlice*)), drilldownChart, SLOT(handleSliceClicked(QPieSlice*)));
-    QObject::connect(monthSeriesAxel, SIGNAL(clicked(QPieSlice*)), drilldownChart, SLOT(handleSliceClicked(QPieSlice*)));
     QObject::connect(yearSeries, SIGNAL(clicked(QPieSlice*)), drilldownChart, SLOT(handleSliceClicked(QPieSlice*)));
 
     drilldownChart->changeSeries(yearSeries);
