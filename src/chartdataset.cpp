@@ -234,13 +234,13 @@ void ChartDataSet::setDomain(int index)
         foreach(QSeries* series, seriesList) {
             emit seriesDomainChanged(series,domain);
         }
-        axis->setRange(domain.m_minY,domain.m_maxY);
+        axis->updateRange(domain.m_minY,domain.m_maxY);
         emit axisRangeChanged(axis,labels);
 
     }
 
     QStringList labels = createLabels(axisX(),domain.m_minX,domain.m_maxX);
-    axisX()->setRange(domain.m_minX,domain.m_maxY);
+    axisX()->updateRange(domain.m_minX,domain.m_maxY);
     emit axisRangeChanged(axisX(),labels);
 }
 
