@@ -67,11 +67,11 @@ void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     Q_UNUSED(widget);
 }
 
-void AxisItem::updateItems(QVector<qreal>& vector)
+void AxisItem::updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout)
 {
-    calculateLayout(vector);
-    if(vector.count()==0) return;
-    applyLayout(vector);
+    if(newLayout.count()==0) return;
+    applyLayout(newLayout);
+    oldLayout=newLayout;
 }
 
 void AxisItem::handleAxisUpdate(QChartAxis* axis)
@@ -127,15 +127,19 @@ void AxisItem::handleLabelsChanged(QChartAxis* axis,const QStringList& labels)
         createItems(-diff);
     }
     m_thicksList=labels;
-    m_layoutVector.resize(m_thicksList.size());
-    updateItems(m_layoutVector);
+    QVector<qreal>  vector = calculateLayout();
+    updateItems(m_layoutVector,vector);
     if(diff!=0) handleAxisUpdate(axis);
 }
 
 void AxisItem::handleGeometryChanged(const QRectF& rect)
 {
     m_rect = rect;
-    updateItems(m_layoutVector);
+
+    if(m_thicksList.size()==0) return;
+
+    QVector<qreal>  vector = calculateLayout();
+    updateItems(m_layoutVector,vector);
 }
 
 void AxisItem::setAxisOpacity(qreal opacity)
@@ -237,8 +241,11 @@ void AxisItem::setGridPen(const QPen& pen)
     }
 }
 
-void AxisItem::calculateLayout(QVector<qreal>& points)
+QVector<qreal> AxisItem::calculateLayout() const
 {
+    QVector<qreal> points;
+    points.resize(m_thicksList.size());
+
     switch (m_type)
     {
         case X_AXIS:
@@ -246,7 +253,7 @@ void AxisItem::calculateLayout(QVector<qreal>& points)
             const qreal deltaX = m_rect.width()/(m_thicksList.size()-1);
             for (int i = 0; i < m_thicksList.size(); ++i) {
                  int x = i * deltaX + m_rect.left();
-                 points[i]=x;
+                 points[i] = x;
             }
         }
         break;
@@ -255,11 +262,12 @@ void AxisItem::calculateLayout(QVector<qreal>& points)
             const qreal deltaY = m_rect.height()/(m_thicksList.size()-1);
             for (int i = 0; i < m_thicksList.size(); ++i) {
                  int y = i * -deltaY + m_rect.bottom();
-                 points[i]=y;
+                 points[i] = y;
             }
         }
         break;
     }
+    return points;
 }
 
 void AxisItem::applyLayout(const QVector<qreal>& points)

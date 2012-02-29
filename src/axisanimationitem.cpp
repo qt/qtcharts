@@ -1,5 +1,5 @@
 #include "axisanimationitem_p.h"
-#include <QPropertyAnimation>
+#include <QTimer>
 
 Q_DECLARE_METATYPE(QVector<qreal>)
 
@@ -8,7 +8,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 const static int duration = 500;
 
 AxisAnimationItem::AxisAnimationItem(AxisType type,QGraphicsItem* parent) :
-AxisItem(type,parent)
+AxisItem(type,parent),
+m_animation(new AxisAnimator(this,this))
 {
 }
 
@@ -16,19 +17,21 @@ AxisAnimationItem::~AxisAnimationItem()
 {
 }
 
-void AxisAnimationItem::updateItems(QVector<qreal>& vector1)
+void AxisAnimationItem::updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout)
 {
-    QVector<qreal> vector0 = vector1;
-    calculateLayout(vector1);
-    if(vector1.count()==0) return;
-    vector0.resize(vector1.size());
+    if(newLayout.count()==0) return;
+    oldLayout.resize(newLayout.size());
 
-    AxisAnimator *animation = new AxisAnimator(this,this);
-    animation->setDuration(duration);
-    animation->setEasingCurve(QEasingCurve::InOutBack);
-    animation->setKeyValueAt(0.0, qVariantFromValue(vector0));
-    animation->setKeyValueAt(1.0, qVariantFromValue(vector1));
-    animation->start(QAbstractAnimation::DeleteWhenStopped);
+    if(m_animation->state()!=QAbstractAnimation::Stopped){
+       m_animation->stop();
+    }
+
+    m_animation->setDuration(duration);
+    m_animation->setEasingCurve(QEasingCurve::InOutBack);
+    m_animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
+    m_animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
+    QTimer::singleShot(0,m_animation,SLOT(start()));
+    oldLayout = newLayout;
 }
 
 void AxisAnimationItem::setLabelsAngle(int angle)

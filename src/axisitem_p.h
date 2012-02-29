@@ -54,9 +54,10 @@ public slots:
     void handleLabelsChanged(QChartAxis* axis,const QStringList& labels); //labels from dataset
     void handleGeometryChanged(const QRectF& size); // geometry from presenter
 public:
-    virtual void updateItems(QVector<qreal>& points);
-    virtual void calculateLayout(QVector<qreal>& points);
-    virtual void applyLayout(const QVector<qreal>& points);
+    virtual void updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout);
+    QVector<qreal> calculateLayout() const;
+    void applyLayout(const QVector<qreal>& points);
+
 private:
     void clear(int count);
     void createItems(int count);

@@ -8,7 +8,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartAxis;
+class AxisAnimator;
 
 class AxisAnimationItem : public AxisItem
 {
@@ -21,8 +21,9 @@ public:
     void setLabelsAngle(int angle);
 
 protected:
-    void updateItems(QVector<qreal>& vector);
-
+    virtual void updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout);
+private:
+    AxisAnimator *m_animation;
 };
 
 class AxisAnimator: public QVariantAnimation
