@@ -34,6 +34,7 @@ public:
 
 Q_SIGNALS:
     void clicked();
+    void rightClicked();
     void hoverEntered(QPoint pos);
     void hoverLeaved();
 
@@ -43,7 +44,6 @@ private:
     qreal mWidth;
     qreal mXpos;
     qreal mYpos;
-    QColor mColor;
 
     QBrush mBrush;
     QPen mPen;

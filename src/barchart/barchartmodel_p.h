@@ -12,6 +12,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 // TODO: Implement as QAbstractItemModel?
 
 class QBarSet;
+class BarCategory;
 
 class BarChartModel : public QObject //, public QAbstractItemModel
 {
@@ -38,7 +39,8 @@ public:
     qreal categorySum(int category);
     qreal maxCategorySum();     // returns maximum sum of sets in all categories.
 
-    QString label(int category);
+    QString categoryName(int category);
+    BarCategory* categoryObject(int category);
 
 signals:
     void modelUpdated();
@@ -49,6 +51,7 @@ private:
 
     QList<QBarSet*> mDataModel;
     QStringList mCategory;
+    QList<BarCategory*> mCategoryObjects;
 
     int mCurrentSet;
 

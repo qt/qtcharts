@@ -133,9 +133,8 @@ QBrush QBarSet::brush()
 /*!
     \internal
 */
-void QBarSet::barClicked()
+void QBarSet::barClickedEvent()
 {
-//    qDebug() << "QBarset::barClicked" << this;
     // Some bar of this set has been clicked
     // TODO: What happens then?
     emit clicked();     // Notify that set has been clicked
@@ -144,7 +143,7 @@ void QBarSet::barClicked()
 /*!
     \internal \a pos
 */
-void QBarSet::barHoverEntered(QPoint pos)
+void QBarSet::barHoverEnterEvent(QPoint pos)
 {
     emit showToolTip(pos, mName);
     emit hoverEnter(pos);
@@ -153,12 +152,8 @@ void QBarSet::barHoverEntered(QPoint pos)
 /*!
     \internal
 */
-void QBarSet::barHoverLeaved()
+void QBarSet::barHoverLeaveEvent()
 {
-//    qDebug() << "QBarset::barHoverLeaved" << this;
-//    if (mToolTipEnabled) {
-        // TODO: do what?
-//    }
     // Emit signal to user of charts
     emit hoverLeave();
 }
