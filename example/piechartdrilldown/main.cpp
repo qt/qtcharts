@@ -31,7 +31,6 @@ public Q_SLOTS:
         QString label = m_prefix;
         label += " - " + QString::number(this->value())+ "e (";
         label += QString::number(this->percentage()*100, 'f', 1) + "%)";
-        qDebug() << "updateLabel" << label;
         setLabel(label);
     }
 
