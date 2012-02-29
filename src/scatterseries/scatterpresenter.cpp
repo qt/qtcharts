@@ -41,8 +41,9 @@ void ScatterPresenter::handleDomainChanged(const Domain& domain)
 
 void ScatterPresenter::handleGeometryChanged(const QRectF& rect)
 {
-    m_boundingRect = rect;
+    m_boundingRect = rect.translated(-rect.topLeft());
     changeGeometry();
+    setPos(rect.topLeft());
 }
 
 void ScatterPresenter::handleModelChanged()
@@ -90,11 +91,16 @@ void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
 void ScatterPresenter::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "ScatterPresenter::mousePressEvent" << event << " cont: "
-        << m_path.contains(event->lastPos());
+    // Empty implementation to grab mouse release events for this item
+    Q_UNUSED(event)
+}
 
-    if (m_path.contains(event->lastPos()))
-        emit clicked();
+void ScatterPresenter::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    QPointF clickedPoint(
+        m_visibleChartArea.m_minX + (event->lastPos().x() / m_boundingRect.width()) * m_visibleChartArea.spanX(),
+        m_visibleChartArea.m_maxY - (event->lastPos().y() / m_boundingRect.height()) * m_visibleChartArea.spanY());
+    emit clicked(clickedPoint);
 }
 
 void ScatterPresenter::changeGeometry()
@@ -107,28 +113,29 @@ void ScatterPresenter::changeGeometry()
         int shape = m_series->shape();
         m_path = QPainterPath();
         m_path.setFillRule(Qt::WindingFill);
+        const qreal size(9); // TODO: user defined size?
 
         foreach (QPointF point, m_series->data()) {
             // Convert relative coordinates to absolute pixel coordinates that can be used for drawing
-            qreal x = m_boundingRect.left() + point.x() * scalex - m_visibleChartArea.m_minX * scalex;
-            qreal y = m_boundingRect.bottom() - point.y() * scaley + m_visibleChartArea.m_minY * scaley;
+            qreal x = point.x() * scalex - m_visibleChartArea.m_minX * scalex - size / 2;
+            qreal y = m_boundingRect.height() - point.y() * scaley + m_visibleChartArea.m_minY * scaley - size / 2;
 
-            if (scene()->width() > x && scene()->height() > y) {
+            if (x < scene()->width() && y < scene()->height()) {
                 switch (shape) {
                 case QScatterSeries::MarkerShapeDefault:
                     // Fallthrough, defaults to circle
                 case QScatterSeries::MarkerShapeCircle:
-                    m_path.addEllipse(x, y, 9, 9);
+                    m_path.addEllipse(x, y, size, size);
                     break;
                 case QScatterSeries::MarkerShapePoint:
                     m_path.addEllipse(x, y, 2, 2);
                     break;
                 case QScatterSeries::MarkerShapeRectangle:
-                    m_path.addRect(x, y, 9, 9);
+                    m_path.addRect(x, y, size, size);
                     break;
                 case QScatterSeries::MarkerShapeTiltedRectangle: {
                     // TODO: tilt the rectangle
-                    m_path.addRect(x, y, 9, 9);
+                    m_path.addRect(x, y, size, size);
                     break;
                 }
                 default:

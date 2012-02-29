@@ -14,15 +14,9 @@ int main(int argc, char *argv[])
     // Create chart view
     QChartView *chartView = new QChartView();
     chartView->setChartTheme(QChart::ChartThemeIcy);
-
     // Add scatter series with simple test data
     QScatterSeries *scatter = new QScatterSeries();
-    *scatter << QPointF(0.5, 5.0)
-             << QPointF(1.0, 4.5)
-             << QPointF(1.0, 5.5)
-             << QPointF(1.5, 5.0)
-             << QPointF(2.0, 4.5)
-             << QPointF(2.5, 5.0);
+    *scatter << QPointF(0.5, 5.0) << QPointF(1.0, 4.5) << QPointF(1.0, 5.5) << QPointF(1.5, 5.0);
     // Chart takes ownership
     chartView->addSeries(scatter);
     //! [1]
@@ -54,8 +48,9 @@ int main(int argc, char *argv[])
 
     // Use the chart widget as the central widget
     QMainWindow w;
-    w.resize(640, 480);
+    w.resize(400, 300);
     w.setCentralWidget(chartView);
+    w.setWindowFlags(Qt::FramelessWindowHint);
     w.show();
 
     return a.exec();

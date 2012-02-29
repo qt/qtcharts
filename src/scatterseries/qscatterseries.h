@@ -40,7 +40,11 @@ public:
     QScatterSeries& operator << (const QPointF &value);
     QScatterSeries& operator << (QList<QPointF> points);
     QList<QPointF> data();
-    //TODO: insert, replace, remove, clear...?
+    bool removeAt(int pointIndex);
+    int removeAll(QPointF point);
+    void clear();
+    int closestPoint(QPointF coordinate);
+    //TODO: insert, replace...?
 
     QPen pen();
     void setPen(QPen pen);
@@ -51,7 +55,7 @@ public:
     // TODO: marker size?
 
 Q_SIGNALS:
-    void clicked(/* TODO: parameters? */);
+    void clicked(QPointF coordinate);
     // TODO: move to PIMPL for simplicity or does the user ever need changed signals?
     // TODO: more finegrained signaling for performance reasons
     // (check QPieSeries implementation with change sets)

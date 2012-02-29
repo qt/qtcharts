@@ -36,8 +36,10 @@
 */
 
 /*!
-    \fn void QScatterSeries::clicked()
-    \brief TODO
+    \fn void QScatterSeries::clicked(QPointF coordinate)
+    User clicked the scatter series. Note that the \a coordinate is the chart coordinate that the
+    click occurred on; not necessarily a data point coordinate. To find the corresponding (closest)
+    data point you can use closestPoint().
 */
 
 /*!
@@ -139,6 +141,59 @@ void QScatterSeries::setData(QList<QPointF> points)
 QList<QPointF> QScatterSeries::data()
 {
     return d->m_data;
+}
+
+/*!
+    Remove the data point at \a pointIndex. Returns true if a point was removed, false if the point
+    at \a pointIndex does not exist on the series.
+*/
+bool QScatterSeries::removeAt(int pointIndex)
+{
+    if (pointIndex >=0 && pointIndex < d->m_data.count()) {
+        d->m_data.removeAt(pointIndex);
+        emit changed();
+        return true;
+    }
+    return false;
+}
+
+/*!
+    Remove all occurrences of \a point from the series and returns the number of points removed.
+*/
+int QScatterSeries::removeAll(QPointF point)
+{
+    int count = d->m_data.removeAll(point);
+    emit changed();
+    return count;
+}
+
+/*!
+    Remove all data points from the series.
+*/
+void QScatterSeries::clear()
+{
+    d->m_data.clear();
+    emit changed();
+}
+
+/*!
+    Returns the index of the data point that is closest to \a coordinate. If several data points
+    are at the same distance from the \a coordinate, returns the last one. If no points exist,
+    returns -1.
+*/
+int QScatterSeries::closestPoint(QPointF coordinate)
+{
+    qreal distance(-1);
+    int pointIndex(-1);
+    for (int i(0); i < d->m_data.count(); i++) {
+        QPointF dataPoint = d->m_data.at(i);
+        QPointF difference = dataPoint - coordinate;
+        if (i == 0 || difference.manhattanLength() <= distance) {
+            distance = difference.manhattanLength();
+            pointIndex = i;
+        }
+    }
+    return pointIndex;
 }
 
 /*!
