@@ -29,22 +29,18 @@ public slots:
     void handlePointAdded(int index);
     void handlePointRemoved(int index);
     void handlePointReplaced(int index);
+    void handleSeriesUpdated();
     void handleDomainChanged(const Domain& domain);
     void handleGeometryChanged(const QRectF& size);
 
-protected:
-    virtual void addPoint(const QPointF& );
-    virtual void addPoints(const QVector<QPointF>& points);
-    virtual void removePoint(const QPointF& point);
-    virtual void replacePoint(const QPointF& oldPoint, const QPointF& newPoint);
-    virtual void replacePoint(int index,const QPointF& point);
-    virtual void updateItem(QVector<QPointF>& points,QVector<int>& map);
-    virtual void applyGeometry(QVector<QPointF>& points);
-
-    void clear();
-
-    QPointF calculatePoint(int index) const;
-    void calculatePoints(QVector<QPointF>& points,QVector<int>& map) const;
+public:
+    virtual void updateItem(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints);
+    virtual void updateItem(QVector<QPointF>& oldPoints,int index,QPointF& newPoint);
+    void applyGeometry(QVector<QPointF>& points);
+    void createPoints(int count);
+    void clearPoints(int count);
+    QPointF calculateGeometryPoint(int index) const;
+    QVector<QPointF> calculateGeometryPoints() const;
 
 private:
     ChartPresenter* m_presenter;
@@ -53,9 +49,8 @@ private:
     QRectF m_rect;
     QRectF m_clipRect;
     Domain m_domain;
-    QList<QGraphicsItem*> m_items;
+    QGraphicsItemGroup m_items;
     QVector<QPointF> m_points;
-    QVector<int> m_map;
     QLineSeries* m_series;
     QPen m_pen;
 

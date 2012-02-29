@@ -4,37 +4,45 @@
 #include "qchartglobal.h"
 #include "linechartitem_p.h"
 #include "domain_p.h"
+#include <QVariantAnimation>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class LineChartItem;
+class LineChartAnimatator;
 
 class LineChartAnimationItem : public LineChartItem {
+
+	Q_OBJECT
 
 public:
 	LineChartAnimationItem(ChartPresenter* presenter, QLineSeries *series, QGraphicsItem *parent = 0);
 	virtual ~LineChartAnimationItem();
 
-	void addPoints(const QVector<QPointF>& points);
-	void replacePoint(int index,const QPointF& point);
+protected:
+    virtual void updateItem(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints);
+    virtual void updateItem(QVector<QPointF>& oldPoints,int index,QPointF& newPoint);
+
+private slots:
+	void startAnimation();
 
 private:
-	QVector<QPointF> m_data;
-	Domain m_domain;
-	int m_addPoints;
-	QPointF m_setPoint;
-	int m_setPoint_index;
+    LineChartAnimatator *m_animation;
+    QVector<QPointF> m_points;
+    bool m_dirty;
 };
 
 class LineChartAnimatator: public QVariantAnimation
 {
-
 public:
-    LineChartAnimatator(LineChartItem *item, int index , QObject *parent = 0 ):m_item(item),m_index(index){};
+    LineChartAnimatator(LineChartAnimationItem *item, QObject *parent = 0 );
+    ~LineChartAnimatator();
 
-    QPointF m_point;
+protected:
+    QVariant interpolated(const QVariant &start, const QVariant & end, qreal progress ) const;
+    void updateCurrentValue (const QVariant & value );
+
+private:
     LineChartAnimationItem* m_item;
-    int m_index;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

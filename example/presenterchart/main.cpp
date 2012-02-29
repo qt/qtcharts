@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     ChartView chartView(&window);
     chartView.setRenderHint(QPainter::Antialiasing);
     chartView.setChartTitle("Three random line charts");
+    chartView.setAnimationOptions(QChart::AllAnimations);
     window.setCentralWidget(&chartView);
     window.resize(400, 300);
     window.show();
