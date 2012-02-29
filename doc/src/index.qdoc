@@ -16,7 +16,11 @@
 
     <table><tr>
     <td><a href="example-linechart.html"><img src="images/linechart.png" alt="linechart" /></a></td>
-    <td><img src="images/chartview_example_bar.jpg " alt="barchart" /></td>
+    <td><a href="example-barchart.html"><img src="images/barchart.png" alt="barchart" /></a></td>
+    </tr>
+    <tr>
+    <td><a href="example-percentbarchart.html"><img src="images/percentbarchart.png" alt="percentbarcchart" /></a></td>
+    <td><a href="example-stackedbarchart.html"><img src="images/stackedbarchart.png" alt="stackedbarchart" /></a></td>
     </tr>
     <tr>
     <td><img src="images/chartview_example.jpg " alt="linechart" /></td>
@@ -24,6 +28,9 @@
     </tr><tr>
     <td><img src="images/chartview_example_scatter.jpg " alt="scatterchart" /></td>
     <td><img src="images/chartview_example_theme.jpg " alt="themechart" /></td>
+    </tr>
+    <tr>
+     <td><img src="images/chartview_example_bar.jpg " alt="barchart" /></td>
     </tr>
     </table> 
      </div>
