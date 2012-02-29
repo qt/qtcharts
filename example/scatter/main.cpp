@@ -14,10 +14,9 @@ int main(int argc, char *argv[])
     // Create chart view
     QChartView *chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setChartTheme(QChart::ChartThemeScientific);
     // Add scatter series with linear test data with random "noise"
     QScatterSeries *scatter = new QScatterSeries();
-    for (qreal i(0.0); i < 20; i += 0.25) {
+    for (qreal i(0.0); i < 20; i += 0.5) {
         qreal x = i + (qreal)(rand() % 100) / 100.0;
         qreal y = i + (qreal)(rand() % 100) / 100.0;
         (*scatter) << QPointF(x, y);
@@ -28,7 +27,7 @@ int main(int argc, char *argv[])
 
     // And more
     //! [2]
-    //*scatter << QPointF(2.0, 5.5) << QPointF(2.2, 5.4);
+    *scatter << QPointF(2.0, 5.5) << QPointF(2.2, 5.4);
     //! [2]
 
     //! [3]
@@ -37,7 +36,7 @@ int main(int argc, char *argv[])
     QPen pen(QColor(0, 255, 0, 60), 3);
     scatter->setPen(pen);
     scatter->setShape(QScatterSeries::MarkerShapeRectangle);
-    scatter->setSize(15.0);
+    scatter->setSize(25.0);
     //! [3]
 
     // Use the chart widget as the central widget
