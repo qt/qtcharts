@@ -188,6 +188,10 @@ void QPieSeries::add(QPieSlice* slice)
     add(QList<QPieSlice*>() << slice);
 }
 
+/*!
+    Adds a single \a slice to the series and returns a reference to the series.
+    Slice ownership is passed to the series.
+*/
 QPieSeries& QPieSeries::operator << (QPieSlice* slice)
 {
     add(slice);
