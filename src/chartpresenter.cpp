@@ -148,7 +148,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
         BarPresenter* item = new BarPresenter(barSeries,m_chart);
         m_chartTheme->decorate(item,barSeries,m_chartItems.count());
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
-        QObject::connect(barSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
+        //            QObject::connect(barSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
         m_chartItems.insert(series,item);
         // m_axisXItem->setVisible(false);
         if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
@@ -161,7 +161,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
         StackedBarPresenter* item = new StackedBarPresenter(stackedBarSeries,m_chart);
         m_chartTheme->decorate(item,stackedBarSeries,m_chartItems.count());
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
-        QObject::connect(stackedBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
+        //            QObject::connect(stackedBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
         m_chartItems.insert(series,item);
         if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
         break;
@@ -173,7 +173,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
         PercentBarPresenter* item = new PercentBarPresenter(percentBarSeries,m_chart);
         m_chartTheme->decorate(item,percentBarSeries ,m_chartItems.count());
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
-        QObject::connect(percentBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
+        //            QObject::connect(percentBarSeries,SIGNAL(changed(int)),item,SLOT(handleModelChanged(int)));
         m_chartItems.insert(series,item);
         if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
         break;
@@ -214,6 +214,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
         pie->handleGeometryChanged(m_rect);
         break;
     }
+
     case QSeries::SeriesTypeSpline: {
         QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(series);
         SplinePresenter* splinePresenter = new SplinePresenter(splineSeries, m_chart);
@@ -226,7 +227,6 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
         qDebug()<< "Series type" << series->type() << "not implemented.";
         break;
     }
-
     }
 }
 

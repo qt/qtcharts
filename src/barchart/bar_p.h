@@ -13,7 +13,7 @@ class Bar : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    Bar(QGraphicsItem *parent=0);
+    Bar(QString category, QGraphicsItem *parent=0);
 
 public: // from ChartItem
     void setSize(const QSizeF &size);
@@ -33,8 +33,8 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 Q_SIGNALS:
-    void clicked();
-    void rightClicked();
+    void clicked(QString category);
+    void rightClicked(QString category);
     void hoverEntered(QPoint pos);
     void hoverLeaved();
 
@@ -48,6 +48,7 @@ private:
     QBrush mBrush;
     QPen mPen;
 
+    QString mCategory;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

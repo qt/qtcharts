@@ -19,21 +19,32 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::clicked()
+    \fn void QBarSet::clicked(QString category)
     \brief signals that set has been clicked
+    Parameter \a category describes on which category was clicked
 */
+
+/*!
+    \fn void QBarSet::rightClicked(QString category)
+    \brief signals that set has been clicked with right mouse button
+    Parameter \a category describes on which category was clicked
+*/
+
 /*!
     \fn void QBarSet::hoverEnter(QPoint pos)
     \brief signals that mouse has entered over the set at position \a pos.
 */
+
 /*!
     \fn void QBarSet::hoverLeave()
     \brief signals that mouse has left from the set.
 */
+
 /*!
     \fn void QBarSet::toggleFloatingValues()
     \brief \internal
 */
+
 /*!
     \fn void QBarSet::showToolTip(QPoint pos, QString tip)
     \brief \internal \a pos \a tip
@@ -130,15 +141,19 @@ QBrush QBarSet::brush()
     return mBrush;
 }
 
-/*!
-    \internal
-*/
-void QBarSet::barClickedEvent()
+/*
+void QBarSet::barClickedEvent(QString category)
 {
     // Some bar of this set has been clicked
     // TODO: What happens then?
-    emit clicked();     // Notify that set has been clicked
+    emit clicked(category);     // Notify that set has been clicked
 }
+
+void QBarSet::barRightClickedEvent(QString category)
+{
+    emit rightClicked(category);
+}
+*/
 
 /*!
     \internal \a pos

@@ -5,8 +5,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Bar::Bar(QGraphicsItem *parent)
+Bar::Bar(QString category, QGraphicsItem *parent)
     : QGraphicsObject(parent)
+    ,mCategory(category)
 {
     setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     setAcceptHoverEvents(true);
@@ -67,9 +68,9 @@ QRectF Bar::boundingRect() const
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton) {
-        emit clicked();
+        emit clicked(mCategory);
     } else if (event->button() == Qt::RightButton) {
-        emit rightClicked();
+        emit rightClicked(mCategory);
     }
 }
 

@@ -2,7 +2,6 @@
 #include "qbarseries.h"
 #include "qbarset.h"
 #include "barchartmodel_p.h"
-#include "barcategory_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -24,22 +23,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Returns type of series.
     \sa QSeries, QSeriesType
 */
-/*!
-    \fn void QBarSeries::changed(int index)
-    \brief \internal \a index
-*/
-/*!
-    \fn void QBarSeries::floatingValuesEnabled(bool enabled)
-    \brief \internal \a enabled
-*/
-/*!
-    \fn void QBarSeries::toolTipEnabled(bool enabled)
-    \brief \internal \a enabled
-*/
-/*!
-    \fn void QBarSeries::separatorsEnabled(bool enabled)
-    \brief \internal \a enabled
-*/
+
 /*!
     \fn void QBarSeries::showToolTip(QPoint pos, QString tip)
     \brief \internal \a pos \a tip
@@ -53,25 +37,29 @@ QBarSeries::QBarSeries(QStringList categories, QObject *parent)
     : QSeries(parent)
     ,mModel(new BarChartModel(categories, this))
 {
-    for (int i=0; i<mModel->categoryCount(); i++) {
-        BarCategory *categoryObject = mModel->categoryObject(i);
-        connect(categoryObject, SIGNAL(rightClicked(QString)), this, SIGNAL(categoryRightClicked(QString)));
-    }
 }
 
 /*!
-    Adds a set of bars to series. Takes ownership of \a set
+    Adds a set of bars to series. Takes ownership of \a set.
+    Connects the clicked(QString) and rightClicked(QString) signals
+    of \a set to this series
 */
 void QBarSeries::addBarSet(QBarSet *set)
 {
     mModel->addBarSet(set);
+    connect(set,SIGNAL(clicked(QString)),this,SLOT(barsetClicked(QString)));
+    connect(set,SIGNAL(rightClicked(QString)),this,SLOT(barsetRightClicked(QString)));
 }
 
 /*!
     Removes a set of bars from series. Releases ownership of \a set. Doesnt delete \a set.
+    Disconnects the clicked(QString) and rightClicked(QString) signals
+    of \a set from this series
 */
 void QBarSeries::removeBarSet(QBarSet *set)
 {
+    disconnect(set,SIGNAL(clicked(QString)),this,SLOT(barsetClicked(QString)));
+    disconnect(set,SIGNAL(rightClicked(QString)),this,SLOT(barsetRightClicked(QString)));
     mModel->removeBarSet(set);
 }
 
@@ -124,26 +112,6 @@ QString QBarSeries::categoryName(int category)
 }
 
 /*!
-    Enables or disables floating values depending on parameter \a enabled.
-    Floating values are bar values, that are displayed on top of each bar.
-    Calling without parameter \a enabled, enables the floating values
-*/
-void QBarSeries::setFloatingValuesEnabled(bool enabled)
-{
-    if (enabled) {
-        for (int i=0; i<mModel->barsetCount(); i++) {
-            QBarSet *set = mModel->setAt(i);
-            connect(set,SIGNAL(clicked()),set,SIGNAL(toggleFloatingValues()));
-        }
-    } else {
-        for (int i=0; i<mModel->barsetCount(); i++) {
-            QBarSet *set = mModel->setAt(i);
-            disconnect(set,SIGNAL(clicked()),set,SIGNAL(toggleFloatingValues()));
-        }
-    }
-}
-
-/*!
     Enables or disables tooltip depending on parameter \a enabled.
     Tooltip shows the name of set, when mouse is hovering on top of bar.
     Calling without parameter \a enabled, enables the tooltip
@@ -170,8 +138,27 @@ void QBarSeries::setToolTipEnabled(bool enabled)
 */
 void QBarSeries::setSeparatorsEnabled(bool enabled)
 {
-    emit separatorsEnabled(enabled);
+    // TODO: toggle
+//    emit separatorsEnabled(enabled);
 }
+
+
+/*!
+    \internal \a category
+*/
+void QBarSeries::barsetClicked(QString category)
+{
+    emit clicked(qobject_cast<QBarSet*>(sender()), category);
+}
+
+/*!
+    \internal \a category
+*/
+void QBarSeries::barsetRightClicked(QString category)
+{
+    emit rightClicked(qobject_cast<QBarSet*>(sender()), category);
+}
+
 
 /*!
     \internal
@@ -228,12 +215,6 @@ BarChartModel& QBarSeries::model()
 {
     return *mModel;
 }
-
-BarCategory* QBarSeries::categoryObject(int category)
-{
-    return mModel->categoryObject(category);
-}
-
 
 #include "moc_qbarseries.cpp"
 

@@ -43,13 +43,6 @@ void BarValue::setPos(qreal x, qreal y)
     mYpos = y;
 }
 
-/*
-bool BarValue::belongsToSet(QBarSet *set)
-{
-    return (&mBarSet == set);
-}
-*/
-
 void BarValue::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (isVisible()) {

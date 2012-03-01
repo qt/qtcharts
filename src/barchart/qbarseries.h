@@ -39,25 +39,26 @@ public:
     qreal categorySum(int category);
     qreal maxCategorySum();
     BarChartModel& model();
-    BarCategory* categoryObject(int category);
     // <--- TO PIMPL
 
 signals:
-    void changed(int index);
-    void categoryRightClicked(QString category);
+    //void changed(int index);
+    void clicked(QBarSet* barset, QString category);        // Up to user of api, what to do with these signals
+    void rightClicked(QBarSet* barset, QString category);
 
     // TODO: internal signals, these to private implementation.
     // TODO: TO PIMPL --->
-    void floatingValuesEnabled(bool enabled);
-    void toolTipEnabled(bool enabled);
-    void separatorsEnabled(bool enabled);
     void showToolTip(QPoint pos, QString tip);
     // <--- TO PIMPL
 
 public Q_SLOTS:
-    void setFloatingValuesEnabled(bool enabled=true);    // enables floating values on top of bars
     void setToolTipEnabled(bool enabled=true);           // enables tooltips
     void setSeparatorsEnabled(bool enabled=true);        // enables separators between categories
+
+    // TODO: TO PIMPL --->
+    void barsetClicked(QString category);
+    void barsetRightClicked(QString category);
+    // <--- TO PIMPL
 
 protected:
     BarChartModel* mModel;
