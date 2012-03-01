@@ -27,10 +27,20 @@ SplineWidget::SplineWidget(QWidget *parent)
 //    series->add(QPointF(750, 180));
 //    series->add(QPointF(800, 170));
 
-    qsrand(time(NULL));
-    for (int i = 0; i < 100; i++)
+//    qsrand(time(NULL));
+//    for (int i = 0; i < 100; i++)
+//    {
+//        series->add(QPointF(i*7, qrand()%600));
+//    }
+    int k = 10;
+    for (int i = 0; i < 25; i++)
     {
-        series->add(QPointF(i*7, qrand()%600));
+        if (k > 60)
+        {
+            k = 10;
+        }
+        series->add(QPointF(i*50, k));
+        k +=10;
     }
 
     series->calculateControlPoints();

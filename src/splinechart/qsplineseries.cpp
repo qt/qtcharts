@@ -55,7 +55,7 @@ void QSplineSeries::calculateControlPoints()
     rhs.append(m_x[0] + 2 * m_x[1]);
 
     // Set right hand side X values
-    for (int i = 1; i < m_x.size() - 1; ++i)
+    for (int i = 1; i < n - 1; ++i)
         rhs.append(4 * m_x[i] + 2 * m_x[i + 1]);
 
     rhs.append((8 * m_x[n - 1] + m_x[n]) / 2.0);
@@ -64,7 +64,7 @@ void QSplineSeries::calculateControlPoints()
     rhs[0] = m_y[0] + 2 * m_y[1];
 
     // Set right hand side Y values
-    for (int i = 1; i < m_y.size() - 1; ++i)
+    for (int i = 1; i < n - 1; ++i)
         rhs[i] = 4 * m_y[i] + 2 * m_y[i + 1];
 
     rhs[n - 1] = (8 * m_y[n - 1] + m_y[n]) / 2.0;
@@ -74,7 +74,7 @@ void QSplineSeries::calculateControlPoints()
     // Fill output arrays.
     //        firstControlPoints = new Point[n];
     //        secondControlPoints = new Point[n];
-    for (int i = 0; i < m_x.size(); ++i)
+    for (int i = 0; i < n; ++i)
     {
         // First control point
         m_controlPoints.append(QPointF(x[i], y[i]));
