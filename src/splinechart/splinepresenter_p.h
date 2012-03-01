@@ -4,27 +4,30 @@
 #include "chartitem_p.h"
 #include <QObject>
 #include "qsplineseries.h"
+#include "linechartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class SplinePresenter : public QObject, public ChartItem
+class SplinePresenter : public LineChartItem
 {
     Q_OBJECT
 public:
     SplinePresenter(QSplineSeries* series, QGraphicsObject *parent = 0);
 
-    QRectF boundingRect() const { return m_boundingRect; }
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void updateGeometry();
+
+//    QRectF boundingRect() const { return m_boundingRect; }
+//    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     
 signals:
     
 public slots:
-    void handleDomainChanged(const Domain& domain);
-    void handleGeometryChanged(const QRectF& rect);
+//    void handleDomainChanged(const Domain& domain);
+//    void handleGeometryChanged(const QRectF& rect);
 
     private:
     QSplineSeries* m_series;
-    QRectF m_boundingRect;
+//    QRectF m_boundingRect;
     
 };
 
