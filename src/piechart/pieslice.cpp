@@ -100,7 +100,7 @@ void PieSlice::updateGeometry()
 
     // update label position
     qreal radius = rect.height() / 2;
-    QPointF edgeCenter = rect.center() + offset(centerAngle, radius + 5);
+    QPointF edgeCenter = rect.center() + offset(centerAngle, radius + PIESLICE_LABEL_GAP);
     m_slicelabel->setArmStartPoint(edgeCenter);
     m_slicelabel->setArmAngle(centerAngle);
     m_slicelabel->updateGeometry();

@@ -123,12 +123,22 @@ void PiePresenter::updateGeometry()
     foreach (QPieSlice* s, m_series->m_slices) {
 
         // calculate the farthest point in the slice from the pie center
+
+        // the arm
         qreal centerAngle = s->m_startAngle + (s->m_angleSpan / 2);
-        qreal len = pieRadius + s->labelArmLength() + s->explodeDistance();
+        qreal len = pieRadius + PIESLICE_LABEL_GAP + s->labelArmLength() + s->explodeDistance();
         QPointF dp(qSin(centerAngle*(PI/180)) * len, -qCos(centerAngle*(PI/180)) * len);
         QPointF p = pieRect.center() + dp;
 
-        // TODO: consider the label text
+        // the label text
+        QFontMetricsF fm(s->labelFont());
+        QRectF labelRect = fm.boundingRect(s->label());
+        if (centerAngle < 90 || centerAngle > 270)
+            p += QPointF(0, -labelRect.height());
+        if (centerAngle < 180)
+            p += QPointF(labelRect.width(), 0);
+        else
+            p += QPointF(-labelRect.width(), 0);
 
         // calculate how much the radius must get smaller to fit that point in the base rectangle
         qreal dt = m_rect.top() - p.y();
