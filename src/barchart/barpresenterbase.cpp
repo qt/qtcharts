@@ -3,6 +3,7 @@
 #include "barvalue_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
+#include "barcategory_p.h"
 #include "qbarset.h"
 #include "qbarseries.h"
 #include <QDebug>
@@ -56,7 +57,7 @@ void BarPresenterBase::setBarWidth( int w )
 void BarPresenterBase::dataChanged()
 {
     // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?
-    qDebug() << "datachanged";
+//    qDebug() << "datachanged";
     // Delete old bars
     foreach (QGraphicsItem* item, childItems()) {
         delete item;
@@ -69,14 +70,16 @@ void BarPresenterBase::dataChanged()
 
     // Create new graphic items for bars
     for (int c=0; c<mSeries->categoryCount(); c++) {
+        BarCategory *category = mSeries->categoryObject(c);
         for (int s=0; s<mSeries->barsetCount(); s++) {
             QBarSet *set = mSeries->barsetAt(s);
             Bar *bar = new Bar(this);
             childItems().append(bar);
             mBars.append(bar);
-            connect(bar,SIGNAL(clicked()),set,SLOT(barClicked()));
-            connect(bar,SIGNAL(hoverEntered(QPoint)),set,SLOT(barHoverEntered(QPoint)));
-            connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaved()));
+            connect(bar,SIGNAL(clicked()),set,SLOT(barClickedEvent()));
+            connect(bar,SIGNAL(rightClicked()),category,SLOT(barRightClickEvent()));
+            connect(bar,SIGNAL(hoverEntered(QPoint)),set,SLOT(barHoverEnterEvent(QPoint)));
+            connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaveEvent()));
         }
     }
 
@@ -84,7 +87,7 @@ void BarPresenterBase::dataChanged()
     int count = mSeries->categoryCount();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
-        label->set(mSeries->label(i));
+        label->set(mSeries->categoryName(i));
         childItems().append(label);
         mLabels.append(label);
     }

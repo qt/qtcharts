@@ -62,6 +62,7 @@ public:
     void add(QList<QPieSlice*> slices);
     void add(QPieSlice* slice);
     QPieSlice* add(qreal value, QString name);
+    QPieSeries& operator << (QPieSlice* slice);
     void remove(QPieSlice* slice);
     void clear();
 
@@ -77,6 +78,8 @@ public:
     void setLabelsVisible(bool visible = true);
     void setClickExplodes(bool enable = true);
     void setHoverHighlighting(bool enable = true);
+
+    qreal total() const;
 
     // TODO: find slices?
     // QList<QPieSlice*> findByValue(qreal value);

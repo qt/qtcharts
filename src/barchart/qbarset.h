@@ -41,9 +41,9 @@ Q_SIGNALS:
 public Q_SLOTS:
     // These are for internal communication
     // TODO: TO PIMPL --->
-    void barClicked();
-    void barHoverEntered(QPoint pos);
-    void barHoverLeaved();
+    void barClickedEvent();
+    void barHoverEnterEvent(QPoint pos);
+    void barHoverLeaveEvent();
     // <--- TO PIMPL
 
 private:

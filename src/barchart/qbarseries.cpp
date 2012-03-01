@@ -2,7 +2,7 @@
 #include "qbarseries.h"
 #include "qbarset.h"
 #include "barchartmodel_p.h"
-
+#include "barcategory_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -53,6 +53,10 @@ QBarSeries::QBarSeries(QStringList categories, QObject *parent)
     : QSeries(parent)
     ,mModel(new BarChartModel(categories, this))
 {
+    for (int i=0; i<mModel->categoryCount(); i++) {
+        BarCategory *categoryObject = mModel->categoryObject(i);
+        connect(categoryObject, SIGNAL(rightClicked(QString)), this, SIGNAL(categoryRightClicked(QString)));
+    }
 }
 
 /*!
@@ -114,9 +118,9 @@ QList<QSeries::Legend> QBarSeries::legend()
 /*!
     \internal \a category
 */
-QString QBarSeries::label(int category)
+QString QBarSeries::categoryName(int category)
 {
-    return mModel->label(category);
+    return mModel->categoryName(category);
 }
 
 /*!
@@ -224,6 +228,12 @@ BarChartModel& QBarSeries::model()
 {
     return *mModel;
 }
+
+BarCategory* QBarSeries::categoryObject(int category)
+{
+    return mModel->categoryObject(category);
+}
+
 
 #include "moc_qbarseries.cpp"
 

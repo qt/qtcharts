@@ -188,6 +188,16 @@ void QPieSeries::add(QPieSlice* slice)
     add(QList<QPieSlice*>() << slice);
 }
 
+/*!
+    Adds a single \a slice to the series and returns a reference to the series.
+    Slice ownership is passed to the series.
+*/
+QPieSeries& QPieSeries::operator << (QPieSlice* slice)
+{
+    add(slice);
+    return *this;
+}
+
 
 /*!
     Adds a single slice to the series with give \a value and \a name.
@@ -348,10 +358,7 @@ void QPieSeries::setClickExplodes(bool enable)
     Convenience method for highlighting a slice when user hovers over the slice.
     It changes the slice color to be lighter and shows the label of the slice.
     Set \a enable to true to highlight a slice when user hovers on top of it.
-
-    \sa QPieSlice::isExploded(), QPieSlice::setExploded()
 */
-
 void QPieSeries::setHoverHighlighting(bool enable)
 {
     if (enable) {
@@ -361,6 +368,16 @@ void QPieSeries::setHoverHighlighting(bool enable)
         disconnect(this, SLOT(hoverEnter(QPieSlice*)));
         disconnect(this, SLOT(hoverLeave(QPieSlice*)));
     }
+}
+
+/*!
+    Returns the sum of all slice values in this series.
+
+    \sa QPieSlice::value(), QPieSlice::setValue()
+*/
+qreal QPieSeries::total() const
+{
+    return m_total;
 }
 
 /*!
@@ -456,7 +473,6 @@ void QPieSeries::highlightOn(QPieSlice* slice)
     Q_ASSERT(slice);
     QColor c = slice->brush().color().lighter();
     slice->setBrush(c);
-    slice->setLabelVisible(true);
 }
 
 void QPieSeries::highlightOff(QPieSlice* slice)
@@ -464,7 +480,6 @@ void QPieSeries::highlightOff(QPieSlice* slice)
     Q_ASSERT(slice);
     QColor c = slice->brush().color().darker(150);
     slice->setBrush(c);
-    slice->setLabelVisible(false);
 }
 
 void QPieSeries::updateDerivativeData()
@@ -480,7 +495,10 @@ void QPieSeries::updateDerivativeData()
         m_total += s->value();
 
     // we must have some values
-    Q_ASSERT(m_total > 0); // TODO: is this the correct way to handle this?
+    if (m_total == 0) {
+        qDebug() << "QPieSeries::updateDerivativeData() total == 0";
+        Q_ASSERT(m_total > 0); // TODO: is this the correct way to handle this?
+    }
 
     // update slice attributes
     qreal sliceAngle = m_pieStartAngle;

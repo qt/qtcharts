@@ -8,6 +8,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarSet;
 class BarChartModel;
+class BarCategory;
 
 // Container for series
 class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
@@ -29,8 +30,8 @@ public:
     // TODO: Functions below this are not part of api and will be moved
     // to private implementation, when we start using it
     // TODO: TO PIMPL --->
-    QBarSet *barsetAt(int index);
-    QString label(int category);
+    QBarSet* barsetAt(int index);
+    QString categoryName(int category);
     qreal min();
     qreal max();
     qreal valueAt(int set, int category);
@@ -38,10 +39,12 @@ public:
     qreal categorySum(int category);
     qreal maxCategorySum();
     BarChartModel& model();
+    BarCategory* categoryObject(int category);
     // <--- TO PIMPL
 
 signals:
     void changed(int index);
+    void categoryRightClicked(QString category);
 
     // TODO: internal signals, these to private implementation.
     // TODO: TO PIMPL --->

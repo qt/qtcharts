@@ -42,6 +42,12 @@ public:
 
     // TODO: should this be internal?
     virtual QList<QSeries::Legend> legend() { QList<QSeries::Legend> l; return l; }
+
+    void setTitle(QString title) { m_title = title; }
+    QString title() { return m_title; }
+
+private:
+    QString m_title;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

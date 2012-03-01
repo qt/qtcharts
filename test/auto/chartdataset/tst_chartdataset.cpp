@@ -135,69 +135,85 @@ void tst_ChartDataSet::addDomain()
 
 void tst_ChartDataSet::addSeries_data()
 {
-	QTest::addColumn<int>("seriesCount");
-	QTest::addColumn<int>("axisYCount");
-	QTest::newRow("2 series, default axis") << 2 << 0;
-	QTest::newRow("2 series, 2 new axis") << 2 << 2;
-	QTest::newRow("2 series, 1 new axis") << 2 << 2;
-	QTest::newRow("3 series, 3 new axis") << 3 << 3;
-	QTest::newRow("3 series, 2 new axis") << 3 << 2;
-	QTest::newRow("3 series, 1 new axis") << 3 << 1;
+	QTest::addColumn<int>("defaultAxisCount");
+    QTest::addColumn<int>("firstAxisCount");
+    QTest::addColumn<int>("secoundAxisCount");
+	QTest::newRow("2 ,1 ,0") << 2 << 1 << 0;
+	QTest::newRow("2 series, 2 new axis") << 2 << 0 << 2;
+	QTest::newRow("2 series, 1 new axis") << 2 << 0 << 2;
+	QTest::newRow("3 series, 3 new axis") << 3 << 0 << 3;
+	QTest::newRow("3 series, 2 new axis") << 3 << 0 << 2;
+	QTest::newRow("3 series, 1 new axis") << 3 << 0 << 1;
+    QTest::newRow("3 series, default + 1 new axis") << 3 << 0 << 1;
 }
 
 void tst_ChartDataSet::addSeries()
 {
-	QFETCH(int, seriesCount);
-	QFETCH(int, axisYCount);
+    QFETCH(int, defaultAxisCount);
+    QFETCH(int, firstAxisCount);
+    QFETCH(int, secoundAxisCount);
 
-	ChartDataSet dataSet;
+    ChartDataSet dataSet;
 
-	QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*)));
-	QSignalSpy spy1(&dataSet,
-			SIGNAL(axisRangeChanged(QChartAxis*, QStringList const&)));
-	QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-	QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QSeries*)));
-	QSignalSpy spy4(&dataSet,
-			SIGNAL(seriesDomainChanged(QSeries*, Domain const&)));
-	QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRangeChanged(QChartAxis*, QStringList const&)));
+    QSignalSpy spy2(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
+    QSignalSpy spy3(&dataSet, SIGNAL(seriesAdded(QSeries*)));
+    QSignalSpy spy4(&dataSet, SIGNAL(seriesDomainChanged(QSeries*, Domain const&)));
+    QSignalSpy spy5(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
-	QList<QChartAxis*> axisList;
+    for (int i = 0; i < defaultAxisCount; i++) {
+        QLineSeries* series = new QLineSeries();
+        dataSet.addSeries(series);
+    }
 
-	for (int i = 0; i < axisYCount; i++) {
-		QChartAxis* axis = new QChartAxis();
-		axisList << axis;
-	}
+    QChartAxis* firstAxis = new QChartAxis();
 
-	QList<QChartAxis*>::iterator iterator = axisList.begin();
+    for (int i = 0; i < firstAxisCount; i++) {
+        QLineSeries* series = new QLineSeries();
+        dataSet.addSeries(series, firstAxis);
+    }
 
-	for (int i = 0; i < seriesCount; i++) {
-		QChartAxis* axisY = 0;
-		QLineSeries* series = new QLineSeries();
-		if (iterator != axisList.end()) {
-			axisY = *iterator;
-			iterator++;
-		} else if (axisList.count() > 0) {
-			iterator--;
-			axisY = *iterator;
-			iterator++;
-		}
-		dataSet.addSeries(series, axisY);
-	}
+    QChartAxis* secoundAxis = new QChartAxis();
 
-	//default axis
-	if (axisYCount == 0)
-		axisYCount+=2;
-	else
-	    axisYCount++;
+    for (int i = 0; i < secoundAxisCount; i++) {
+        QLineSeries* series = new QLineSeries();
+        dataSet.addSeries(series, secoundAxis);
+    }
 
-	QCOMPARE(spy0.count(), axisYCount);
-	QCOMPARE(spy1.count(), seriesCount*2);
-	QCOMPARE(spy2.count(), 0);
-	QCOMPARE(spy3.count(), seriesCount);
-	QCOMPARE(spy4.count(), seriesCount);
-	QCOMPARE(spy5.count(), 0);
+    int axisCount = 1;
 
-	QCOMPARE(dataSet.domainIndex(), 0);
+    if (defaultAxisCount > 0)
+        axisCount++;
+    if (firstAxisCount > 0)
+        axisCount++;
+    if (secoundAxisCount > 0)
+        axisCount++;
+
+    QCOMPARE(spy0.count(), axisCount);
+    QCOMPARE(spy1.count(), (defaultAxisCount + firstAxisCount + secoundAxisCount)*2);
+    QCOMPARE(spy2.count(), 0);
+    QCOMPARE(spy3.count(), defaultAxisCount + firstAxisCount + secoundAxisCount);
+
+    int i = 0;
+    while (defaultAxisCount) {
+        i+=defaultAxisCount;
+        defaultAxisCount--;
+    }
+    int j = 0;
+    while (firstAxisCount>0) {
+        j += firstAxisCount;
+        firstAxisCount--;
+    }
+    int k = 0;
+    while (secoundAxisCount>0) {
+        k += secoundAxisCount;
+        secoundAxisCount--;
+    }
+    QCOMPARE(spy4.count(),i + j + k);
+    QCOMPARE(spy5.count(), 0);
+
+    QCOMPARE(dataSet.domainIndex(), 0);
 }
 
 void tst_ChartDataSet::axisY_data()
@@ -344,7 +360,7 @@ void tst_ChartDataSet::domain()
 	QCOMPARE(spy1.count(), 6);
 	QCOMPARE(spy2.count(), 0);
 	QCOMPARE(spy3.count(), 3);
-	QCOMPARE(spy4.count(), 3);
+	QCOMPARE(spy4.count(), 6);
 	QCOMPARE(spy5.count(), 0);
 }
 

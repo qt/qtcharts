@@ -52,6 +52,20 @@
     \brief Returns the legend of the series. If series is empty, empty list is returned.
 */
 
+/*!
+    \fn void QSeries::setTitle(QString title)
+    \brief Sets a \a title for the series.
+
+    This is not used directly by the chart itself. It is up to the user to use this as for example
+    chart title.
+    \sa QChart::setChartTitle()
+*/
+
+/*!
+    \fn QString QSeries::title()
+    \brief Returns the title of the series.
+*/
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 #include "moc_qseries.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

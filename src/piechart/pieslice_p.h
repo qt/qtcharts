@@ -9,6 +9,8 @@
 #include <QColor>
 #include <QPen>
 
+#define PIESLICE_LABEL_GAP 5
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class PiePresenter;
 class PieSliceLabel;
