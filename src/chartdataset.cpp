@@ -111,17 +111,6 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
         domain.m_maxY = qMax(domain.m_maxY,y);
         break;
     }
-    case QSeries::SeriesTypeBar: {
-        qDebug() << "QChartSeries::SeriesTypeBar";
-        QBarSeries* barSeries = static_cast<QBarSeries*>(series);
-        qreal x = barSeries->categoryCount();
-        qreal y = barSeries->max();
-        domain.m_minX = qMin(domain.m_minX,x);
-        domain.m_minY = qMin(domain.m_minY,y);
-        domain.m_maxX = qMax(domain.m_maxX,x);
-        domain.m_maxY = qMax(domain.m_maxY,y);
-        break;
-    }
     case QSeries::SeriesTypeStackedBar: {
         qDebug() << "QChartSeries::SeriesTypeStackedBar";
 
