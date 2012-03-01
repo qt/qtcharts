@@ -28,20 +28,22 @@ public:
     QBrush brush();
 
 Q_SIGNALS:
-    void clicked();                         // Clicked and hover signals exposed to user
-    void hoverEnter(QPoint pos);
-    void hoverLeave();
+    void clicked(QString category);                         // Clicked and hover signals exposed to user
+    void rightClicked(QString category);
+    void toggleFloatingValues();
 
     // TODO: Expose this to user or not?
     // TODO: TO PIMPL --->
-    void toggleFloatingValues();
+    void hoverEnter(QPoint pos);
+    void hoverLeave();
     void showToolTip(QPoint pos, QString tip);  // Private signal
     // <--- TO PIMPL
 
 public Q_SLOTS:
     // These are for internal communication
     // TODO: TO PIMPL --->
-    void barClickedEvent();
+//    void barClickedEvent(QString category);
+//    void barRightClickedEvent(QString category);
     void barHoverEnterEvent(QPoint pos);
     void barHoverLeaveEvent();
     // <--- TO PIMPL

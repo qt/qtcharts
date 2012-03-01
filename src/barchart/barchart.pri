@@ -14,8 +14,7 @@ SOURCES += \
     $$PWD/qstackedbarseries.cpp \
     $$PWD/separator.cpp \
     $$PWD/stackedbarpresenter.cpp \ 
-    $$PWD/barvalue.cpp \
-    $$PWD/barcategory.cpp
+    $$PWD/barvalue.cpp
  
 PRIVATE_HEADERS += \
     $$PWD/bar_p.h \
@@ -26,8 +25,7 @@ PRIVATE_HEADERS += \
     $$PWD/percentbarpresenter_p.h \
     $$PWD/separator_p.h \
     $$PWD/stackedbarpresenter_p.h \
-    $$PWD/barvalue_p.h \
-    $$PWD/barcategory_p.h
+    $$PWD/barvalue_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qbarseries.h \

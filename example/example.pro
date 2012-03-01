@@ -15,4 +15,5 @@ SUBDIRS += linechart \
            presenterchart \
            chartview \
            scatterinteractions \
-           areachart
+           areachart \
+           stackedbarchartdrilldown

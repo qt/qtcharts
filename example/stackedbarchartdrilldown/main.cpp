@@ -1,8 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
-#include <QStandardItemModel>
-#include <qpercentbarseries.h>
 #include <qchartview.h>
+#include <qstackedbarseries.h>
 #include <qbarset.h>
 #include <qchartaxis.h>
 #include <QStringList>
@@ -14,6 +13,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     QMainWindow window;
 
+    // TODO:
+/*
     //! [1]
     // Define categories
     QStringList categories;
@@ -37,7 +38,7 @@ int main(int argc, char *argv[])
 
     //! [3]
     // Create series and add sets to it
-    QPercentBarSeries* series = new QPercentBarSeries(categories);
+    QStackedBarSeries* series = new QStackedBarSeries(categories);
 
     series->addBarSet(set0);
     series->addBarSet(set1);
@@ -52,10 +53,10 @@ int main(int argc, char *argv[])
 
     // Connect clicked signal of set to toggle floating values of set.
     // Note that we leave QBarset "Zak" unconnected here, so clicking on it doesn't toggle values.
-    QObject::connect(set0,SIGNAL(clicked(QString)),set0,SIGNAL(toggleFloatingValues()));
-    QObject::connect(set1,SIGNAL(clicked(QString)),set1,SIGNAL(toggleFloatingValues()));
-    QObject::connect(set2,SIGNAL(clicked(QString)),set2,SIGNAL(toggleFloatingValues()));
-    QObject::connect(set3,SIGNAL(clicked(QString)),set3,SIGNAL(toggleFloatingValues()));
+    QObject::connect(set0,SIGNAL(clicked(QBarSet*,QString)),set0,SIGNAL(toggleFloatingValues()));
+    QObject::connect(set1,SIGNAL(clicked(QBarSet*,QString)),set1,SIGNAL(toggleFloatingValues()));
+    QObject::connect(set2,SIGNAL(clicked(QBarSet*,QString)),set2,SIGNAL(toggleFloatingValues()));
+    QObject::connect(set3,SIGNAL(clicked(QBarSet*,QString)),set3,SIGNAL(toggleFloatingValues()));
     //! [4]
 
     //! [5]
@@ -63,7 +64,7 @@ int main(int argc, char *argv[])
 
     QChartView* chartView =  new QChartView(&window);
     chartView->addSeries(series);
-    chartView->setChartTitle("simple percent barchart");
+    chartView->setChartTitle("simple stacked barchart");
     chartView->setChartTheme(QChart::ChartThemeIcy);
     //! [5]
 
@@ -76,7 +77,7 @@ int main(int argc, char *argv[])
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
-
+*/
     return a.exec();
 }
 

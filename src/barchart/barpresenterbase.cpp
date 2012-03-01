@@ -3,7 +3,6 @@
 #include "barvalue_p.h"
 #include "barlabel_p.h"
 #include "separator_p.h"
-#include "barcategory_p.h"
 #include "qbarset.h"
 #include "qbarseries.h"
 #include <QDebug>
@@ -20,7 +19,7 @@ BarPresenterBase::BarPresenterBase(QBarSeries *series, QGraphicsItem *parent)
     ,mSeries(series)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
-    connect(series,SIGNAL(separatorsEnabled(bool)),this,SLOT(enableSeparators(bool)));
+//    connect(series,SIGNAL(separatorsEnabled(bool)),this,SLOT(enableSeparators(bool)));
     dataChanged();
 }
 
@@ -70,14 +69,14 @@ void BarPresenterBase::dataChanged()
 
     // Create new graphic items for bars
     for (int c=0; c<mSeries->categoryCount(); c++) {
-        BarCategory *category = mSeries->categoryObject(c);
+        QString category = mSeries->categoryName(c);
         for (int s=0; s<mSeries->barsetCount(); s++) {
             QBarSet *set = mSeries->barsetAt(s);
-            Bar *bar = new Bar(this);
+            Bar *bar = new Bar(category,this);
             childItems().append(bar);
             mBars.append(bar);
-            connect(bar,SIGNAL(clicked()),set,SLOT(barClickedEvent()));
-            connect(bar,SIGNAL(rightClicked()),category,SLOT(barRightClickEvent()));
+            connect(bar,SIGNAL(clicked(QString)),set,SIGNAL(clicked(QString)));
+            connect(bar,SIGNAL(rightClicked(QString)),set,SIGNAL(rightClicked(QString)));
             connect(bar,SIGNAL(hoverEntered(QPoint)),set,SLOT(barHoverEnterEvent(QPoint)));
             connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaveEvent()));
         }

@@ -290,7 +290,8 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             }
             series->addBarSet(set);
         }
-        series->setFloatingValuesEnabled(true);
+        // TODO: new implementation of setFloatingValuesEnabled with signals
+        //series->setFloatingValuesEnabled(true);
         series->setToolTipEnabled(true);
         series->setSeparatorsEnabled(false);
         m_chartView->addSeries(series);
