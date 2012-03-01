@@ -1,0 +1,30 @@
+/*!
+     \example example/areachart
+     \title AreaChart Example
+     \subtitle
+
+     The example shows how to create simple area chart.
+
+    \image areachart.png
+    
+    To create area charts, we need two QLineSeries instances. They are going to define upper and lower boundary of the area. 
+
+    \snippet ../example/areachart/main.cpp 1
+
+    We add data to both series, we use stream operator.  
+
+    \snippet ../example/areachart/main.cpp 2
+
+    Now we create QAreaSeries instance using two line series objects. We set the custom gradient fill and width of the outline. 
+
+    \snippet ../example/areachart/main.cpp 3
+    
+    In the end we create QChartView instance, set title, set anti-aliasing and add area series.  We also set the specific range for axes. 
+    
+    \snippet ../example/areachart/main.cpp 4 
+    
+    Chart is ready to be shown.
+    
+    \snippet ../example/areachart/main.cpp 5 
+    
+*/

@@ -9,6 +9,7 @@
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
 #include "qlineseries.h"
+#include "qareaseries.h"
 #include "qscatterseries.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
@@ -19,6 +20,7 @@
 #include "stackedbarpresenter_p.h"
 #include "percentbarpresenter_p.h"
 #include "linechartitem_p.h"
+#include "areachartitem_p.h"
 #include "scatterpresenter_p.h"
 #include "piepresenter_p.h"
 
@@ -59,7 +61,7 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 {
     switch(theme) {
         case QChart::ChartThemeDefault:
-            return new ChartThemeIcy();
+            return new ChartTheme();
         case QChart::ChartThemeVanilla:
             return new ChartThemeVanilla();
         case QChart::ChartThemeIcy:
@@ -89,6 +91,12 @@ void ChartTheme::decorate(ChartItem* item, QSeries* series,int count)
             LineChartItem* i = static_cast<LineChartItem*>(item);
             decorate(i,s,count);
             break;
+        }
+        case QSeries::SeriesTypeArea: {
+                   QAreaSeries* s = static_cast<QAreaSeries*>(series);
+                   AreaChartItem* i = static_cast<AreaChartItem*>(item);
+                   decorate(i,s,count);
+                   break;
         }
         case QSeries::SeriesTypeBar: {
             QBarSeries* b = static_cast<QBarSeries*>(series);
@@ -128,6 +136,28 @@ void ChartTheme::decorate(ChartItem* item, QSeries* series,int count)
     }
 
 }
+
+void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series,int count)
+{
+    QPen pen;
+    QBrush brush;
+
+    if(pen != series->pen()){
+       item->setPen(series->pen());
+    }else{
+        pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
+        pen.setWidthF(2);
+        item->setPen(pen);
+    }
+
+    if(brush != series->brush()){
+       item->setBrush(series->brush());
+    }else{
+       QBrush brush(m_seriesColor.at(count%m_seriesColor.size()));
+       item->setBrush(brush);
+    }
+}
+
 
 void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int count)
 {

@@ -8,11 +8,13 @@
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
 #include "qlineseries.h"
+#include "qareaseries.h"
 #include "qpieseries.h"
 #include "qscatterseries.h"
 //items
 #include "axisitem_p.h"
 #include "axisanimationitem_p.h"
+#include "areachartitem_p.h"
 #include "barpresenter_p.h"
 #include "stackedbarpresenter_p.h"
 #include "percentbarpresenter_p.h"
@@ -109,6 +111,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
     switch(series->type())
     {
         case QSeries::SeriesTypeLine: {
+
             QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
             LineChartItem* item;
             if(m_options.testFlag(QChart::SeriesAnimations)){
@@ -117,14 +120,24 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
                 item = new LineChartItem(this,lineSeries,m_chart);
             }
             m_chartTheme->decorate(item,lineSeries,m_chartItems.count());
-            QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
-            QObject::connect(lineSeries,SIGNAL(pointReplaced(int)),item,SLOT(handlePointReplaced(int)));
-            QObject::connect(lineSeries,SIGNAL(pointAdded(int)),item,SLOT(handlePointAdded(int)));
-            QObject::connect(lineSeries,SIGNAL(pointRemoved(int)),item,SLOT(handlePointRemoved(int)));
-            QObject::connect(lineSeries,SIGNAL(updated()),item,SLOT(handleUpdated()));
             m_chartItems.insert(series,item);
             if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
-            item->handleUpdated();
+            break;
+        }
+
+        case QSeries::SeriesTypeArea: {
+
+            QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
+            AreaChartItem* item;
+            if(m_options.testFlag(QChart::SeriesAnimations)) {
+                item = new AreaChartItem(this,areaSeries,m_chart);
+            }
+            else {
+                item = new AreaChartItem(this,areaSeries,m_chart);
+            }
+            m_chartTheme->decorate(item,areaSeries,m_chartItems.count());
+            m_chartItems.insert(series,item);
+            if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
             break;
         }
 

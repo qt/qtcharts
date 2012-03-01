@@ -13,6 +13,7 @@
         <tr>
         <td valign="top">
         <ul>
+            <li><a href="qareaseries.html">QAreaSeries</a></li>
             <li><a href="qbarseries.html">QBarSeries</a></li>
             <li><a href="qbarset.html">QBarSet</a></li>
             <li><a href="qchart.html">QChart</a></li>

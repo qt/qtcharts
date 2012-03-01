@@ -21,6 +21,8 @@ class QScatterSeries;
 class ScatterPresenter;
 class PiePresenter;
 class QPieSeries;
+class AreaChartItem;
+class QAreaSeries;
 
 class ChartTheme
 {
@@ -34,7 +36,8 @@ public:
     void decorate(BarPresenter* item, QBarSeries* series,int count);
     void decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count);
     void decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count);
-    void decorate(LineChartItem* item, QLineSeries*, int count);
+    void decorate(LineChartItem* item, QLineSeries* series,int count);
+    void decorate(AreaChartItem* item, QAreaSeries* series,int count);
     void decorate(ScatterPresenter* presenter, QScatterSeries* series, int count);
     void decorate(PiePresenter* item, QPieSeries* series, int count);
     void decorate(QChartAxis* axis,AxisItem* item);

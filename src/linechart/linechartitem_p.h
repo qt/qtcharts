@@ -36,7 +36,7 @@ public slots:
 public:
     virtual void updateItem(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints);
     virtual void updateItem(QVector<QPointF>& oldPoints,int index,QPointF& newPoint);
-    void applyGeometry(QVector<QPointF>& points);
+    virtual void applyGeometry(QVector<QPointF>& points);
     void createPoints(int count);
     void clearPoints(int count);
     QPointF calculateGeometryPoint(int index) const;

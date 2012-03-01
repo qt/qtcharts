@@ -14,4 +14,5 @@ SUBDIRS += linechart \
            gdpbarchart \
            presenterchart \
            chartview \
-           scatterinteractions
+           scatterinteractions \
+           areachart

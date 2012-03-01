@@ -2,6 +2,7 @@
 #include "qchartaxis.h"
 //series
 #include "qlineseries.h"
+#include "qareaseries.h"
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
@@ -57,17 +58,45 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
     {
         case QSeries::SeriesTypeLine: {
 
-            QLineSeries* xyseries = static_cast<QLineSeries*>(series);
+            QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
 
-            for (int i = 0; i < xyseries->count(); i++)
+            for (int i = 0; i < lineSeries->count(); i++)
             {
-                qreal x = xyseries->x(i);
-                qreal y = xyseries->y(i);
+                qreal x = lineSeries->x(i);
+                qreal y = lineSeries->y(i);
                 domain.m_minX = qMin(domain.m_minX,x);
                 domain.m_minY = qMin(domain.m_minY,y);
                 domain.m_maxX = qMax(domain.m_maxX,x);
                 domain.m_maxY = qMax(domain.m_maxY,y);
             }
+            break;
+        }
+        case QSeries::SeriesTypeArea: {
+
+            QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
+
+            QLineSeries* upperSeries = areaSeries->upperSeries();
+            QLineSeries* lowerSeries = areaSeries->lowerSeries();
+
+            for (int i = 0; i <  upperSeries->count(); i++)
+            {
+                qreal x =  upperSeries->x(i);
+                qreal y =  upperSeries->y(i);
+                domain.m_minX = qMin(domain.m_minX,x);
+                domain.m_minY = qMin(domain.m_minY,y);
+                domain.m_maxX = qMax(domain.m_maxX,x);
+                domain.m_maxY = qMax(domain.m_maxY,y);
+            }
+            if(lowerSeries){
+            for (int i = 0; i < lowerSeries->count(); i++)
+            {
+                qreal x = lowerSeries->x(i);
+                qreal y = lowerSeries->y(i);
+                domain.m_minX = qMin(domain.m_minX,x);
+                domain.m_minY = qMin(domain.m_minY,y);
+                domain.m_maxX = qMax(domain.m_maxX,x);
+                domain.m_maxY = qMax(domain.m_maxY,y);
+            }}
             break;
         }
         case QSeries::SeriesTypeBar: {

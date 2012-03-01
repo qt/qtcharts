@@ -15,6 +15,12 @@ m_items(this)
 {
 	//m_items.setZValue(ChartPresenter::LineChartZValue);
     setZValue(ChartPresenter::LineChartZValue);
+
+    QObject::connect(presenter,SIGNAL(geometryChanged(const QRectF&)),this,SLOT(handleGeometryChanged(const QRectF&)));
+    QObject::connect(series,SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
+    QObject::connect(series,SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
+    QObject::connect(series,SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
+    QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
 }
 
 QRectF LineChartItem::boundingRect() const
