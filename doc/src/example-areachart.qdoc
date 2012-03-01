@@ -19,7 +19,7 @@
 
     \snippet ../example/areachart/main.cpp 3
     
-    In the end we create QChartView instance, set title, set anti-aliasing and add area series.  We also set the specific range for axes. 
+    In the end we create QChartView instance, set title, set anti-aliasing and add area series. We also set the specific range for axes. 
     
     \snippet ../example/areachart/main.cpp 4 
     
