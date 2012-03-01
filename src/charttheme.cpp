@@ -12,6 +12,7 @@
 #include "qscatterseries.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
+#include "qsplineseries.h"
 
 //items
 #include "axisitem_p.h"
@@ -20,7 +21,8 @@
 #include "percentbarpresenter_p.h"
 #include "linechartitem_p.h"
 #include "scatterpresenter_p.h"
-#include "piepresenter_p.h"
+#include "piepresenter.h"
+#include "splinepresenter_p.h"
 
 //themes
 #include "chartthemevanilla_p.h"
@@ -265,6 +267,23 @@ void ChartTheme::decorate(QChartAxis* axis,AxisItem* item)
     axis->setLabelsPen(Qt::NoPen);
     axis->setShadesPen(Qt::NoPen);
     axis->setShadesOpacity(0.5);
+}
+
+void ChartTheme::decorate(SplinePresenter* presenter, QSplineSeries* series, int count)
+{
+    Q_ASSERT(presenter);
+    Q_ASSERT(series);
+
+//    QColor color = m_seriesColor.at(count % m_seriesColor.size());
+    // TODO: define alpha in the theme? or in the series?
+    //color.setAlpha(120);
+
+//    QBrush brush(color, Qt::SolidPattern);
+//    presenter->m_markerBrush = brush;
+
+//    QPen pen(brush, 3);
+//    pen.setColor(color);
+//    presenter->m_markerPen = pen;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

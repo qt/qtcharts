@@ -7,14 +7,15 @@
 #include "qpercentbarseries.h"
 #include "qpieseries.h"
 #include "qscatterseries.h"
+#include "qsplineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartDataSet::ChartDataSet(QObject *parent):QObject(parent),
-m_axisX(new QChartAxis(this)),
-m_axisY(new QChartAxis(this)),
-m_domainIndex(0),
-m_axisXInitialized(false)
+    m_axisX(new QChartAxis(this)),
+    m_axisY(new QChartAxis(this)),
+    m_domainIndex(0),
+    m_axisXInitialized(false)
 {
 }
 
@@ -25,11 +26,11 @@ ChartDataSet::~ChartDataSet()
 
 const Domain ChartDataSet::domain(QChartAxis *axisY) const
 {
-	int i = m_domainMap.count(axisY);
-	if(i == 0){
-		return Domain();
-	}
-	i = i - m_domainIndex -1;
+    int i = m_domainMap.count(axisY);
+    if(i == 0){
+        return Domain();
+    }
+    i = i - m_domainIndex -1;
     return m_domainMap.values(axisY).at(i);
 }
 
@@ -55,79 +56,94 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 
     switch(series->type())
     {
-        case QSeries::SeriesTypeLine: {
+    case QSeries::SeriesTypeLine: {
 
-            QLineSeries* xyseries = static_cast<QLineSeries*>(series);
+        QLineSeries* xyseries = static_cast<QLineSeries*>(series);
 
-            for (int i = 0; i < xyseries->count(); i++)
-            {
-                qreal x = xyseries->x(i);
-                qreal y = xyseries->y(i);
-                domain.m_minX = qMin(domain.m_minX,x);
-                domain.m_minY = qMin(domain.m_minY,y);
-                domain.m_maxX = qMax(domain.m_maxX,x);
-                domain.m_maxY = qMax(domain.m_maxY,y);
-            }
-            break;
-        }
-        case QSeries::SeriesTypeBar: {
-        qDebug() << "QChartSeries::SeriesTypeBar";
-            QBarSeries* barSeries = static_cast<QBarSeries*>(series);
-            qreal x = barSeries->categoryCount();
-            qreal y = barSeries->max();
+        for (int i = 0; i < xyseries->count(); i++)
+        {
+            qreal x = xyseries->x(i);
+            qreal y = xyseries->y(i);
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = qMin(domain.m_minY,y);
             domain.m_maxX = qMax(domain.m_maxX,x);
             domain.m_maxY = qMax(domain.m_maxY,y);
-            break;
         }
-        case QSeries::SeriesTypeStackedBar: {
+        break;
+    }
+    case QSeries::SeriesTypeBar: {
+        qDebug() << "QChartSeries::SeriesTypeBar";
+        QBarSeries* barSeries = static_cast<QBarSeries*>(series);
+        qreal x = barSeries->categoryCount();
+        qreal y = barSeries->max();
+        domain.m_minX = qMin(domain.m_minX,x);
+        domain.m_minY = qMin(domain.m_minY,y);
+        domain.m_maxX = qMax(domain.m_maxX,x);
+        domain.m_maxY = qMax(domain.m_maxY,y);
+        break;
+    }
+    case QSeries::SeriesTypeStackedBar: {
         qDebug() << "QChartSeries::SeriesTypeStackedBar";
 
-            QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
-            qreal x = stackedBarSeries->categoryCount();
-            qreal y = stackedBarSeries->maxCategorySum();
+        QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
+        qreal x = stackedBarSeries->categoryCount();
+        qreal y = stackedBarSeries->maxCategorySum();
+        domain.m_minX = qMin(domain.m_minX,x);
+        domain.m_minY = qMin(domain.m_minY,y);
+        domain.m_maxX = qMax(domain.m_maxX,x);
+        domain.m_maxY = qMax(domain.m_maxY,y);
+        break;
+    }
+    case QSeries::SeriesTypePercentBar: {
+        qDebug() << "QChartSeries::SeriesTypePercentBar";
+
+        QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
+        qreal x = percentBarSeries->categoryCount();
+        domain.m_minX = qMin(domain.m_minX,x);
+        domain.m_minY = 0;
+        domain.m_maxX = qMax(domain.m_maxX,x);
+        domain.m_maxY = 100;
+        break;
+    }
+
+    case QSeries::SeriesTypePie: {
+        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+        // TODO: domain stuff
+        break;
+    }
+
+    case QSeries::SeriesTypeScatter: {
+        QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
+        Q_ASSERT(scatterSeries);
+        foreach (QPointF point, scatterSeries->data()) {
+            domain.m_minX = qMin(domain.m_minX, point.x());
+            domain.m_maxX = qMax(domain.m_maxX, point.x());
+            domain.m_minY = qMin(domain.m_minY, point.y());
+            domain.m_maxY = qMax(domain.m_maxY, point.y());
+        }
+        break;
+    }
+
+    case QChartSeries::SeriesTypeSpline: {
+        QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
+
+        for (int i = 0; i < splineSeries->count(); i++)
+        {
+            qreal x = splineSeries->at(i).x();
+            qreal y = splineSeries->at(i).y();
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = qMin(domain.m_minY,y);
             domain.m_maxX = qMax(domain.m_maxX,x);
             domain.m_maxY = qMax(domain.m_maxY,y);
-            break;
         }
-        case QSeries::SeriesTypePercentBar: {
-        qDebug() << "QChartSeries::SeriesTypePercentBar";
+        break;
+    }
 
-            QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
-            qreal x = percentBarSeries->categoryCount();
-            domain.m_minX = qMin(domain.m_minX,x);
-            domain.m_minY = 0;
-            domain.m_maxX = qMax(domain.m_maxX,x);
-            domain.m_maxY = 100;
-            break;
-        }
-
-        case QSeries::SeriesTypePie: {
-            QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-            // TODO: domain stuff
-            break;
-        }
-
-        case QSeries::SeriesTypeScatter: {
-            QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
-            Q_ASSERT(scatterSeries);
-            foreach (QPointF point, scatterSeries->data()) {
-                domain.m_minX = qMin(domain.m_minX, point.x());
-                domain.m_maxX = qMax(domain.m_maxX, point.x());
-                domain.m_minY = qMin(domain.m_minY, point.y());
-                domain.m_maxY = qMax(domain.m_maxY, point.y());
-            }
-            break;
-        }
-
-        default: {
-            qDebug()<<__FUNCTION__<<"type" << series->type()<<"not supported";
-            return;
-            break;
-        }
+    default: {
+        qDebug()<<__FUNCTION__<<"type" << series->type()<<"not supported";
+        return;
+        break;
+    }
 
     }
 
@@ -165,7 +181,7 @@ void ChartDataSet::removeSeries(QSeries* series)
                 emit axisRemoved(axis);
                 m_domainMap.remove(axis);
                 if(axis != m_axisY)
-                delete axis;
+                    delete axis;
             }
             series->setParent(0);
             break;
@@ -187,7 +203,7 @@ void ChartDataSet::removeAllSeries()
         m_domainMap.remove(axis);
         emit axisRemoved(axis);
         if(axis != m_axisY) delete axis;
-        }
+    }
     m_domainIndex=0;
 }
 
@@ -250,13 +266,13 @@ void ChartDataSet::setDomain(int index,QChartAxis* axis)
     Q_ASSERT(i>=0);
     Domain domain = m_domainMap.values(axis).at(i);
     {
-    QStringList labels = createLabels(axis,domain.m_minY,domain.m_maxY);
-    QList<QSeries*> seriesList = m_seriesMap.values(axis);
-    foreach(QSeries* series, seriesList) {
-        emit seriesDomainChanged(series,domain);
-    }
-    axis->updateRange(domain.m_minY,domain.m_maxY);
-    emit axisRangeChanged(axis,labels);
+        QStringList labels = createLabels(axis,domain.m_minY,domain.m_maxY);
+        QList<QSeries*> seriesList = m_seriesMap.values(axis);
+        foreach(QSeries* series, seriesList) {
+            emit seriesDomainChanged(series,domain);
+        }
+        axis->updateRange(domain.m_minY,domain.m_maxY);
+        emit axisRangeChanged(axis,labels);
     }
 
     QStringList labels = createLabels(axisX(),domain.m_minX,domain.m_maxX);
@@ -378,7 +394,7 @@ void ChartDataSet::handleRangeChanged(QChartAxis* axis)
         }
 
         for(int j=domains.size()-1; j>=0;j--)
-        m_domainMap.insert(axis,domains.at(j));
+            m_domainMap.insert(axis,domains.at(j));
 
         setDomain(m_domainIndex,axis);
     }
