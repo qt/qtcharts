@@ -284,7 +284,7 @@ void QPieSlice::setLabelVisible(bool visible)
 
 /*!
     Sets this slice \a exploded.
-    \sa isExploded(), setExplodeDistance(), QPieSeries::setClickExplodes()
+    \sa isExploded(), setExplodeDistance()
 */
 void QPieSlice::setExploded(bool exploded)
 {
@@ -297,7 +297,7 @@ void QPieSlice::setExploded(bool exploded)
 /*!
     Sets the explosion \a distance of this slice.
     It is the distance the slice is moved away from the pie center.
-    \sa explodeDistance(), isExploded(), QPieSeries::setClickExplodes()
+    \sa explodeDistance(), isExploded()
 */
 void QPieSlice::setExplodeDistance(qreal distance)
 {

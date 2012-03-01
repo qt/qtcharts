@@ -110,9 +110,6 @@ bool QPieSeries::ChangeSet::isEmpty() const
 
     By default the pie is defined as a full pie but it can be a partial pie.
     This can be done by setting a starting angle and angle span to the series.
-
-    To help with the most common user interaction scenarions there some convenience functions.
-    Like exploding a slice when clicked and higlighting when user hovers over a slice.
 */
 
 /*!
@@ -341,36 +338,6 @@ void QPieSeries::setLabelsVisible(bool visible)
 }
 
 /*!
-    Convenience method for exploding a slice when user clicks the pie. Set \a enable to true to
-    explode slices by clicking.
-
-    \sa QPieSlice::isExploded(), QPieSlice::setExploded(), QPieSlice::setExplodeDistance()
-*/
-void QPieSeries::setClickExplodes(bool enable)
-{
-    if (enable)
-        connect(this, SIGNAL(clicked(QPieSlice*)), this, SLOT(toggleExploded(QPieSlice*)));
-    else
-        disconnect(this, SLOT(toggleExploded(QPieSlice*)));
-}
-
-/*!
-    Convenience method for highlighting a slice when user hovers over the slice.
-    It changes the slice color to be lighter and shows the label of the slice.
-    Set \a enable to true to highlight a slice when user hovers on top of it.
-*/
-void QPieSeries::setHoverHighlighting(bool enable)
-{
-    if (enable) {
-        connect(this, SIGNAL(hoverEnter(QPieSlice*)), this, SLOT(highlightOn(QPieSlice*)));
-        connect(this, SIGNAL(hoverLeave(QPieSlice*)), this, SLOT(highlightOff(QPieSlice*)));
-    } else {
-        disconnect(this, SLOT(hoverEnter(QPieSlice*)));
-        disconnect(this, SLOT(hoverLeave(QPieSlice*)));
-    }
-}
-
-/*!
     Returns the sum of all slice values in this series.
 
     \sa QPieSlice::value(), QPieSlice::setValue()
@@ -460,26 +427,6 @@ void QPieSeries::sliceHoverLeave()
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
     emit hoverLeave(slice);
-}
-
-void QPieSeries::toggleExploded(QPieSlice* slice)
-{
-    Q_ASSERT(slice);
-    slice->setExploded(!slice->isExploded());
-}
-
-void QPieSeries::highlightOn(QPieSlice* slice)
-{
-    Q_ASSERT(slice);
-    QColor c = slice->brush().color().lighter();
-    slice->setBrush(c);
-}
-
-void QPieSeries::highlightOff(QPieSlice* slice)
-{
-    Q_ASSERT(slice);
-    QColor c = slice->brush().color().darker(150);
-    slice->setBrush(c);
 }
 
 void QPieSeries::updateDerivativeData()

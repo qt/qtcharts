@@ -76,8 +76,6 @@ public:
     void setSpan(qreal startAngle, qreal angleSpan);
 
     void setLabelsVisible(bool visible = true);
-    void setClickExplodes(bool enable = true);
-    void setHoverHighlighting(bool enable = true);
 
     qreal total() const;
 
@@ -105,9 +103,6 @@ private Q_SLOTS: // TODO: should be private and not visible in the interface at 
     void sliceClicked();
     void sliceHoverEnter();
     void sliceHoverLeave();
-    void toggleExploded(QPieSlice* slice);
-    void highlightOn(QPieSlice* slice);
-    void highlightOff(QPieSlice* slice);
 
 private:
     void updateDerivativeData();

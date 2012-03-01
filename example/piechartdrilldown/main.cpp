@@ -79,7 +79,6 @@ int main(int argc, char *argv[])
 
     QPieSeries* yearSeries = new QPieSeries(drilldownChart);
     yearSeries->setTitle("Sales by year - All");
-    yearSeries->setHoverHighlighting();
 
     QList<QString> months;
     months << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
@@ -89,7 +88,6 @@ int main(int argc, char *argv[])
     foreach (QString name, names) {
         QPieSeries* series = new QPieSeries(drilldownChart);
         series->setTitle("Sales by month - " + name);
-        series->setHoverHighlighting();
 
         foreach (QString month, months)
             *series << new DrilldownSlice(qrand() % 1000, month, yearSeries);
