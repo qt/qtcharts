@@ -29,6 +29,7 @@ PUBLIC_HEADERS += qchart.h \
     qseries.h \
     qchartview.h
 include(linechart/linechart.pri)
+include(areachart/areachart.pri)
 include(barchart/barchart.pri)
 include(piechart/piechart.pri)
 include(scatterseries/scatter.pri)

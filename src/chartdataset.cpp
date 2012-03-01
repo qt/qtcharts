@@ -2,6 +2,7 @@
 #include "qchartaxis.h"
 //series
 #include "qlineseries.h"
+#include "qareaseries.h"
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
@@ -38,13 +39,13 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 {
     // TODO: we should check the series not already added
 
-    series->setParent(this); // take ownership
+    series->setParent(this);// take ownership
     clearDomains();
 
     if(axisY==0) axisY = m_axisY;
-    axisY->setParent(this); // take ownership
+    axisY->setParent(this);// take ownership
 
-    QList<QSeries*>  seriesList = m_seriesMap.values(axisY);
+    QList<QSeries*> seriesList = m_seriesMap.values(axisY);
 
     QList<Domain> domainList = m_domainMap.values(axisY);
 
@@ -58,17 +59,56 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
     {
     case QSeries::SeriesTypeLine: {
 
-        QLineSeries* xyseries = static_cast<QLineSeries*>(series);
+        QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
 
-        for (int i = 0; i < xyseries->count(); i++)
+        for (int i = 0; i < lineSeries->count(); i++)
         {
-            qreal x = xyseries->x(i);
-            qreal y = xyseries->y(i);
+            qreal x = lineSeries->x(i);
+            qreal y = lineSeries->y(i);
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = qMin(domain.m_minY,y);
             domain.m_maxX = qMax(domain.m_maxX,x);
             domain.m_maxY = qMax(domain.m_maxY,y);
         }
+        break;
+    }
+    case QSeries::SeriesTypeArea: {
+
+        QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
+
+        QLineSeries* upperSeries = areaSeries->upperSeries();
+        QLineSeries* lowerSeries = areaSeries->lowerSeries();
+
+        for (int i = 0; i <  upperSeries->count(); i++)
+        {
+            qreal x =  upperSeries->x(i);
+            qreal y =  upperSeries->y(i);
+            domain.m_minX = qMin(domain.m_minX,x);
+            domain.m_minY = qMin(domain.m_minY,y);
+            domain.m_maxX = qMax(domain.m_maxX,x);
+            domain.m_maxY = qMax(domain.m_maxY,y);
+        }
+        if(lowerSeries){
+            for (int i = 0; i < lowerSeries->count(); i++)
+            {
+                qreal x = lowerSeries->x(i);
+                qreal y = lowerSeries->y(i);
+                domain.m_minX = qMin(domain.m_minX,x);
+                domain.m_minY = qMin(domain.m_minY,y);
+                domain.m_maxX = qMax(domain.m_maxX,x);
+                domain.m_maxY = qMax(domain.m_maxY,y);
+            }}
+        break;
+    }
+    case QSeries::SeriesTypeBar: {
+        qDebug() << "QChartSeries::SeriesTypeBar";
+        QBarSeries* barSeries = static_cast<QBarSeries*>(series);
+        qreal x = barSeries->categoryCount();
+        qreal y = barSeries->max();
+        domain.m_minX = qMin(domain.m_minX,x);
+        domain.m_minY = qMin(domain.m_minY,y);
+        domain.m_maxX = qMax(domain.m_maxX,x);
+        domain.m_maxY = qMax(domain.m_maxY,y);
         break;
     }
     case QSeries::SeriesTypeBar: {
@@ -173,11 +213,11 @@ void ChartDataSet::removeSeries(QSeries* series)
 {
     QList<QChartAxis*> keys = m_seriesMap.uniqueKeys();
     foreach(QChartAxis* axis , keys) {
-        if(m_seriesMap.contains(axis,series)){
+        if(m_seriesMap.contains(axis,series)) {
             emit seriesRemoved(series);
             m_seriesMap.remove(axis,series);
             //remove axis if no longer there
-            if(!m_seriesMap.contains(axis)){
+            if(!m_seriesMap.contains(axis)) {
                 emit axisRemoved(axis);
                 m_domainMap.remove(axis);
                 if(axis != m_axisY)
@@ -194,7 +234,7 @@ void ChartDataSet::removeAllSeries()
     QList<QChartAxis*> keys = m_seriesMap.uniqueKeys();
     foreach(QChartAxis* axis , keys) {
         QList<QSeries*> seriesList = m_seriesMap.values(axis);
-        for(int i =0 ; i < seriesList.size();i++ )
+        for(int i =0; i < seriesList.size();i++ )
         {
             emit seriesRemoved(seriesList.at(i));
             delete(seriesList.at(i));
@@ -280,7 +320,6 @@ void ChartDataSet::setDomain(int index,QChartAxis* axis)
     emit axisRangeChanged(axisX(),labels);
 }
 
-
 void ChartDataSet::clearDomains(int toIndex)
 {
     Q_ASSERT(toIndex>=0);
@@ -294,10 +333,10 @@ void ChartDataSet::clearDomains(int toIndex)
         QList<Domain> domains = m_domainMap.values(key);
         m_domainMap.remove(key);
         int i = domains.size() - toIndex - 1;
-        while(i--){
+        while(i--) {
             domains.removeFirst();
         }
-        for(int j=domains.size()-1; j>=0 ;j--)
+        for(int j=domains.size()-1; j>=0;j--)
             m_domainMap.insert(key,domains.at(j));
     }
 }
@@ -313,7 +352,7 @@ void ChartDataSet::addDomain(const QRectF& rect, const QRectF& viewport)
 
     Domain domain;
 
-    foreach (QChartAxis* axis , domainList){
+    foreach (QChartAxis* axis , domainList) {
         domain = m_domainMap.value(axis).subDomain(rect,viewport.width(),viewport.height());
         m_domainMap.insert(axis,domain);
     }
@@ -328,7 +367,7 @@ QChartAxis* ChartDataSet::axisY(QSeries* series) const
     QList<QChartAxis*> keys = m_seriesMap.uniqueKeys();
 
     foreach(QChartAxis* axis , keys) {
-        if(m_seriesMap.contains(axis,series)){
+        if(m_seriesMap.contains(axis,series)) {
             return axis;
         }
     }
@@ -343,18 +382,18 @@ QStringList ChartDataSet::createLabels(QChartAxis* axis,qreal min, qreal max)
 
     int ticks = axis->ticksCount()-1;
 
-    for(int i=0; i<= ticks; i++){
+    for(int i=0; i<= ticks; i++) {
         qreal value = min + (i * (max - min)/ ticks);
         QString label = axis->axisTickLabel(value);
-        if(label.isEmpty()){
+        if(label.isEmpty()) {
             labels << QString::number(value);
-        }else{
+        }
+        else {
             labels << label;
         }
     }
     return labels;
 }
-
 
 void ChartDataSet::handleRangeChanged(QChartAxis* axis)
 {
@@ -399,16 +438,16 @@ void ChartDataSet::handleRangeChanged(QChartAxis* axis)
         setDomain(m_domainIndex,axis);
     }
 
-
 }
 
 void ChartDataSet::handleTickChanged(QChartAxis* axis)
 {
-    if(axis==axisX()){
+    if(axis==axisX()) {
         Domain domain = m_domainMap.value(axisY());
         QStringList labels = createLabels(axis,domain.m_minX,domain.m_maxX);
         emit axisRangeChanged(axis,labels);
-    }else{
+    }
+    else {
         Domain domain = m_domainMap.value(axis);
         QStringList labels = createLabels(axis,domain.m_minY,domain.m_maxY);
         emit axisRangeChanged(axis,labels);
