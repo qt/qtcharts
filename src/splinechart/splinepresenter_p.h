@@ -16,6 +16,10 @@ public:
 
     void updateGeometry();
 
+    void applyGeometry(QVector<QPointF>& points);
+
+    QPointF calculateGeometryControlPoint(int index) const;
+
 //    QRectF boundingRect() const { return m_boundingRect; }
 //    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     
@@ -26,7 +30,7 @@ public slots:
 //    void handleGeometryChanged(const QRectF& rect);
 
     private:
-    QSplineSeries* m_series;
+//    QSplineSeries* m_series;
 //    QRectF m_boundingRect;
     
 };

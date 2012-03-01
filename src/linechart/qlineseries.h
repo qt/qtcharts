@@ -12,11 +12,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QLineSeries : public QSeries
 {
     Q_OBJECT
-public:
+    public:
     QLineSeries(QObject* parent=0);
     virtual ~QLineSeries();
 
-public: // from QChartSeries
+    public: // from QChartSeries
     virtual QSeriesType type() const { return QSeries::SeriesTypeLine;}
     void add(qreal x, qreal y);
     void add(const QPointF& point);
@@ -39,15 +39,17 @@ public: // from QChartSeries
     QLineSeries& operator << (const QPointF &point);
     friend QDebug operator<< (QDebug d, const QLineSeries series);
 
-signals:
+    signals:
     void pointReplaced(int index);
     void pointRemoved(int index);
     void pointAdded(int index);
     void updated();
 
-private:
+    protected:
     QVector<qreal> m_x;
     QVector<qreal> m_y;
+
+    private:
     QPen m_pen;
     bool m_pointsVisible;
 };

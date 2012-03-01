@@ -124,13 +124,13 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
         break;
     }
 
-    case QChartSeries::SeriesTypeSpline: {
+    case QSeries::SeriesTypeSpline: {
         QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
 
         for (int i = 0; i < splineSeries->count(); i++)
         {
-            qreal x = splineSeries->at(i).x();
-            qreal y = splineSeries->at(i).y();
+            qreal x = splineSeries->x(i);
+            qreal y = splineSeries->y(i);
             domain.m_minX = qMin(domain.m_minX,x);
             domain.m_minY = qMin(domain.m_minY,y);
             domain.m_maxX = qMax(domain.m_maxX,x);

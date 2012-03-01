@@ -3,27 +3,27 @@
 
 #include "qchartglobal.h"
 #include <QtGlobal>
-#include "qchartseries.h"
+#include "qlineseries.h"
 #include <QList>
 #include <QPointF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QSplineSeries : public QChartSeries
+class QSplineSeries : public QLineSeries
 {
     Q_OBJECT
     public:
 
     QSplineSeries(QObject *parent = 0);
-    QChartSeriesType type() const { return QChartSeries::SeriesTypeSpline; }
-    void addData(QPointF value);
-    QSplineSeries& operator << (const QPointF &value);
+    QSeriesType type() const { return QSeries::SeriesTypeSpline; }
+//    void addData(QPointF value);
+//    QSplineSeries& operator << (const QPointF &value);
     void calculateControlPoints();
     QList<qreal> getFirstControlPoints(QList<qreal> rhs);
 
-    int count() const { return m_data.size(); }
+    int count() const { return m_x.size(); }
 
-    QPointF at(int index) const { return m_data[index]; }
+//    QPointF at(int index) const { return m_data[index]; }
     QPointF controlPoint(int index) const { return m_controlPoints[index]; }
 
     signals:
@@ -31,7 +31,7 @@ class QSplineSeries : public QChartSeries
     public slots:
 
     private:
-    QList<QPointF> m_data;
+//    QList<QPointF> m_data;
     QList<QPointF> m_controlPoints;
     
 };

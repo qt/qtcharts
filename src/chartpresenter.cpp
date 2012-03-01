@@ -62,7 +62,7 @@ QRectF ChartPresenter::geometry() const
 void ChartPresenter::handleGeometryChanged()
 {
     m_rect = QRectF(QPoint(0,0),m_chart->size());
-    //    m_rect.adjust(m_marginSize,m_marginSize, -m_marginSize, -m_marginSize);
+    m_rect.adjust(m_marginSize,m_marginSize, -m_marginSize, -m_marginSize);
     Q_ASSERT(m_rect.isValid());
     emit geometryChanged(m_rect);
 }
@@ -201,7 +201,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
         pie->handleGeometryChanged(m_rect);
         break;
     }
-    case QChartSeries::SeriesTypeSpline: {
+    case QSeries::SeriesTypeSpline: {
         QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(series);
         SplinePresenter* splinePresenter = new SplinePresenter(splineSeries, m_chart);
         QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), splinePresenter, SLOT(handleGeometryChanged(const QRectF&)));

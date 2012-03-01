@@ -4,7 +4,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 SplinePresenter::SplinePresenter(QSplineSeries* series, QGraphicsObject *parent) :
-    LineChartItem(this, parent),m_series(series)//,m_boundingRect()
+    LineChartItem(0, series, parent)//,m_boundingRect()
 {
 //    if (parent)
 //        m_boundingRect = parent->boundingRect();
@@ -22,22 +22,56 @@ SplinePresenter::SplinePresenter(QSplineSeries* series, QGraphicsObject *parent)
 //    //
 //}
 
-void SplinePresenter::updateGeometry()
+QPointF SplinePresenter::calculateGeometryControlPoint(int index) const
 {
+    QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
+    const qreal deltaX = m_size.width()/m_domain.spanX();
+    const qreal deltaY = m_size.height()/m_domain.spanY();
+    qreal x = (splineSeries->controlPoint(index).x() - m_domain.m_minX)* deltaX;
+    qreal y = (splineSeries->controlPoint(index).y() - m_domain.m_minY)*-deltaY + m_size.height();
+    return QPointF(x,y);
+}
 
-   if(m_data.size()==0) return;
+void SplinePresenter::applyGeometry(QVector<QPointF>& points)
+{
+   if(points.size()==0) return;
+
+//   QList<QGraphicsItem*> items = m_items.childItems();
+
+   QPainterPath splinePath;
+   const QPointF& point = points.at(0);
+   splinePath.moveTo(point);
+//   QGraphicsItem* item = items.at(0);
+//   item->setPos(point.x()-1,point.y()-1);
+//   if(!m_clipRect.contains(point)) item->setVisible(false);
+
+   QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
+   for (int i = 0; i < splineSeries->count() - 1; i++)
+       {
+       const QPointF& point = points.at(i + 1);
+//           painter->setPen(Qt::red);
+//           splinePath.cubicTo(qobject_cast<QSplineSeries*>(m_series)->controlPoint(2 * i), qobject_cast<QSplineSeries*>(m_series)->controlPoint(2 * i + 1), QPointF(m_series->x(i + 1), m_series->y(i + 1)));
+       splinePath.cubicTo(calculateGeometryControlPoint(2 * i), calculateGeometryControlPoint(2 * i + 1), point);
+//           painter->drawEllipse(m_series->at(i), 4, 4);
+
+//           painter->setPen(Qt::blue);
+//           painter->drawLine(m_series->at(i), m_series->controlPoint(2 * i));
+//           painter->drawLine(m_series->at(i + 1), m_series->controlPoint(2 * i + 1));
+//           painter->drawEllipse(m_series->controlPoint(2 * i), 4, 4);
+//           painter->drawEllipse(m_series->controlPoint(2 * i + 1), 4, 4);
+       }
+
+//   for(int i=1 ; i< points.size();i++) {
+//       QGraphicsItem* item = items.at(i);
+//       const QPointF& point = points.at(i);
+//       item->setPos(point.x()-1,point.y()-1);
+//       if(!m_clipRect.contains(point)) item->setVisible(false);
+//       path.lineTo(point);
+//   }
 
    prepareGeometryChange();
-   QPainterPath path;
-   const QPointF& point = m_data.at(0);
-   path.moveTo(point);
-
-   foreach( const QPointF& point , m_data) {
-       path.lineTo(point);
-   }
-
-   m_path = path;
-   m_rect = path.boundingRect();
+   m_path = splinePath;
+   m_rect = splinePath.boundingRect();
 }
 
 //void SplinePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

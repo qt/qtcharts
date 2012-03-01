@@ -88,9 +88,4 @@ unix:QMAKE_DISTCLEAN += -r \
     $$CHART_BUILD_LIB_DIR
 win32:QMAKE_DISTCLEAN += /Q \
     $$CHART_BUILD_HEADER_DIR \
-<<<<<<< HEAD
     $$CHART_BUILD_LIB_DIR
-=======
-    $$CHART_BUILD_LIB_DIR   
-
->>>>>>> spline

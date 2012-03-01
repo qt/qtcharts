@@ -21,7 +21,7 @@
 #include "percentbarpresenter_p.h"
 #include "linechartitem_p.h"
 #include "scatterpresenter_p.h"
-#include "piepresenter.h"
+#include "piepresenter_p.h"
 #include "splinepresenter_p.h"
 
 //themes

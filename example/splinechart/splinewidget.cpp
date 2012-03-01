@@ -1,7 +1,7 @@
 #include "splinewidget.h"
 #include "qchartview.h"
 #include "qsplineseries.h"
-#include "qlinechartseries.h"
+#include "qlineseries.h"
 #include <QGridLayout>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -11,23 +11,23 @@ SplineWidget::SplineWidget(QWidget *parent)
 {
     //create QSplineSeries
     QSplineSeries* series = new QSplineSeries(this);
-    series->addData(QPointF(150, 100));
-    series->addData(QPointF(200, 180));
-    series->addData(QPointF(240, 130));
-    series->addData(QPointF(270, 120));
-    series->addData(QPointF(310, 120));
-    series->addData(QPointF(420, 160));
-    series->addData(QPointF(535, 250));
+    series->add(QPointF(150, 100));
+    series->add(QPointF(200, 180));
+    series->add(QPointF(240, 130));
+    series->add(QPointF(270, 120));
+    series->add(QPointF(310, 120));
+    series->add(QPointF(420, 160));
+    series->add(QPointF(535, 250));
 
     series->calculateControlPoints();
 
-    QLineChartSeries* lineSeries = new QLineChartSeries;
-    for (int i = 0; i < series->count() - 1; i++)
-    {
-        lineSeries->add(series->at(i).x(), series->at(i).y());
-        lineSeries->add(series->controlPoint(2*i).x(), series->controlPoint(2*i).y());
-        lineSeries->add(series->controlPoint(2*i + 1).x(), series->controlPoint(2*i + 1).y());
-    }
+//    QLineSeries* lineSeries = new QLineSeries;
+//    for (int i = 0; i < series->count() - 1; i++)
+//    {
+//        lineSeries->add(series->at(i).x(), series->at(i).y());
+//        lineSeries->add(series->controlPoint(2*i).x(), series->controlPoint(2*i).y());
+//        lineSeries->add(series->controlPoint(2*i + 1).x(), series->controlPoint(2*i + 1).y());
+//    }
 
 //    QLineChartSeries* lineSeries2 = new QLineChartSeries;
 //    lineSeries2->add(10, 50);

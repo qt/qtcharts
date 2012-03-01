@@ -36,18 +36,18 @@ public slots:
 public:
     virtual void updateItem(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints);
     virtual void updateItem(QVector<QPointF>& oldPoints,int index,QPointF& newPoint);
-    void applyGeometry(QVector<QPointF>& points);
+    virtual void applyGeometry(QVector<QPointF>& points);
     void createPoints(int count);
     void clearPoints(int count);
     QPointF calculateGeometryPoint(int index) const;
     QVector<QPointF> calculateGeometryPoints() const;
 
-private:
-    ChartPresenter* m_presenter;
+protected:
     QPainterPath m_path;
-    QLineSeries* m_series;
-    QSizeF m_size;
     QRectF m_rect;
+    QLineSeries* m_series;
+    ChartPresenter* m_presenter;
+    QSizeF m_size;    
     QRectF m_clipRect;
     Domain m_domain;
     QGraphicsItemGroup m_items;
