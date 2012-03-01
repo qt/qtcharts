@@ -11,13 +11,27 @@ SplineWidget::SplineWidget(QWidget *parent)
 {
     //create QSplineSeries
     QSplineSeries* series = new QSplineSeries(this);
-    series->add(QPointF(150, 100));
-    series->add(QPointF(200, 180));
-    series->add(QPointF(240, 130));
-    series->add(QPointF(270, 120));
-    series->add(QPointF(310, 120));
-    series->add(QPointF(420, 160));
-    series->add(QPointF(535, 250));
+//    series->add(QPointF(150, 100));
+//    series->add(QPointF(200, 130));
+//    series->add(QPointF(250, 120));
+//    series->add(QPointF(300, 140));
+//    series->add(QPointF(350, 100));
+//    series->add(QPointF(400, 120));
+//    series->add(QPointF(450, 150));
+////    series->add(QPointF(600, 150));
+//    series->add(QPointF(500, 145));
+//    series->add(QPointF(550, 170));
+//    series->add(QPointF(600, 190));
+//    series->add(QPointF(650, 210));
+//    series->add(QPointF(700, 190));
+//    series->add(QPointF(750, 180));
+//    series->add(QPointF(800, 170));
+
+    qsrand(time(NULL));
+    for (int i = 0; i < 100; i++)
+    {
+        series->add(QPointF(i*7, qrand()%600));
+    }
 
     series->calculateControlPoints();
 
