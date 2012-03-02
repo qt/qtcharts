@@ -5,20 +5,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QSplineSeries::QSplineSeries(QObject *parent) :
     QLineSeries(parent)
 {
+    connect(this,SIGNAL(pointAdded(int)), this, SLOT(updateControlPoints()));
+    connect(this,SIGNAL(pointRemoved(int)), this, SLOT(updateControlPoints()));
+    connect(this,SIGNAL(pointReplaced(int)), this, SLOT(updateControlPoints()));
 }
-
-//QSplineSeries& QSplineSeries::operator << (const QPointF &value)
-//{
-////    d->m_data.append(value);
-//    m_data.append(value);
-////    emit changed();
-//    return *this;
-//}
-
-//void QSplineSeries::addData(QPointF value)
-//{
-//    m_data.append(value);
-//}
 
 void QSplineSeries::calculateControlPoints()
 {
@@ -72,8 +62,6 @@ void QSplineSeries::calculateControlPoints()
     QList<qreal> y = getFirstControlPoints(rhs);
 
     // Fill output arrays.
-    //        firstControlPoints = new Point[n];
-    //        secondControlPoints = new Point[n];
     for (int i = 0; i < n; ++i)
     {
         // First control point
@@ -105,6 +93,16 @@ QList<qreal> QSplineSeries::getFirstControlPoints(QList<qreal> rhs)
 
     return x;
 }
+
+void QSplineSeries::updateControlPoints()
+{
+    if(m_x.size() > 1)
+    {
+        m_controlPoints.clear();
+        calculateControlPoints();
+    }
+}
+
 #include "moc_qsplineseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

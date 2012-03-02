@@ -16,22 +16,18 @@ class QSplineSeries : public QLineSeries
 
     QSplineSeries(QObject *parent = 0);
     QSeriesType type() const { return QSeries::SeriesTypeSpline; }
-//    void addData(QPointF value);
-//    QSplineSeries& operator << (const QPointF &value);
+
+    int count() const { return m_x.size(); }
+    QPointF controlPoint(int index) const { return m_controlPoints[index]; }
+
+    private:
     void calculateControlPoints();
     QList<qreal> getFirstControlPoints(QList<qreal> rhs);
 
-    int count() const { return m_x.size(); }
-
-//    QPointF at(int index) const { return m_data[index]; }
-    QPointF controlPoint(int index) const { return m_controlPoints[index]; }
-
-    signals:
-    
-    public slots:
+    private slots:
+    void updateControlPoints();
 
     private:
-//    QList<QPointF> m_data;
     QList<QPointF> m_controlPoints;
     
 };

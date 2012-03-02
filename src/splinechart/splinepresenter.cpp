@@ -6,7 +6,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 SplinePresenter::SplinePresenter(QSplineSeries* series, QGraphicsObject *parent) :
     LineChartItem(0, series, parent)//,m_boundingRect()
 {
-        //
+    //
 }
 
 
@@ -61,11 +61,14 @@ void SplinePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         painter->setPen(Qt::blue);
         //        painter->drawLine(m_series->at(i), m_series->controlPoint(2 * i));
         //        painter->drawLine(m_series->at(i + 1), m_series->controlPoint(2 * i + 1));
-        painter->drawEllipse(calculateGeometryControlPoint(2 * i), 4, 4);
-        painter->drawEllipse(calculateGeometryControlPoint(2 * i + 1), 4, 4);
+        //        painter->drawEllipse(calculateGeometryControlPoint(2 * i), 4, 4);
+        //        painter->drawEllipse(calculateGeometryControlPoint(2 * i + 1), 4, 4);
     }
-    painter->setPen(Qt::red);
-    painter->drawEllipse(m_points[m_points.count() - 1], 4, 4);
+    if (m_points.count() > 0)
+    {
+        painter->setPen(Qt::red);
+        painter->drawEllipse(m_points[m_points.count() - 1], 4, 4);
+    }
     painter->restore();
 }
 
