@@ -1,0 +1,42 @@
+/*!
+     \example example/splinechart
+     \title SplineChart Example
+     \subtitle
+
+     The example shows how to create simple spline chart.   
+
+\image splinechart_example
+    
+    To create spline chart we need to put our data into QSplineSeries. QSplineSeries automatically calculates spline segment control points that are needed to properly draw the spline.
+
+    \snippet ../example/splinechart/splinewidget.cpp 1
+
+    Customize the look of the spline, by setting its pen's color and pen's width 
+
+    \snippet ../example/splinechart/splinewidget.cpp 2
+
+Now lets add some data points to the series.
+	
+	\snippet ../example/splinechart/splinewidget.cpp add points to series
+
+The data series has been populated. To display it on a chart we create QChartView object and add the data series to it. We also set the ranges on both axises, so that our chart is fully visible and there is some excess of space for adding more data points.
+
+    \snippet ../example/splinechart/splinewidget.cpp 3
+    
+    Then we add two buttons for adding and removing data points. Buttons clicked() signals are connected to handler functions. 
+    
+    \snippet ../example/splinechart/splinewidget.cpp 4 
+    
+    In the end we add the chart and the buttons to the widget's layout.
+    
+    \snippet ../example/splinechart/splinewidget.cpp 5 
+
+Here is the handler function for add new data point button:
+
+\snippet ../example/splinechart/splinewidget.cpp add point
+
+And here is one for remove the last data point in the series:
+
+\snippet ../example/splinechart/splinewidget.cpp remove point
+    
+*/
