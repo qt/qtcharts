@@ -15,7 +15,7 @@ class AxisItem : public QObject, public ChartItem
 public:
     enum AxisType{X_AXIS,Y_AXIS};
 
-    AxisItem(AxisType type = X_AXIS,QGraphicsItem* parent = 0);
+    AxisItem(QChartAxis* axis,AxisType type = X_AXIS,QGraphicsItem* parent = 0);
     ~AxisItem();
 
     //from QGraphicsItem
@@ -50,9 +50,10 @@ public:
     void setLabelsFont(const QFont& font);
 
 public slots:
-    void handleAxisUpdate(QChartAxis* axis); //look and feel
-    void handleRangeChanged(QChartAxis* axis,const QStringList& labels); //labels from dataset
-    void handleGeometryChanged(const QRectF& size); // geometry from presenter
+    void handleAxisUpdated();//qchartaxis update calls
+    void handleRangeChanged(qreal min , qreal max); //domain update calls
+    void handleGeometryChanged(const QRectF& size); //geometry update calls
+
 public:
     virtual void updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout);
     QVector<qreal> calculateLayout() const;
@@ -61,7 +62,9 @@ public:
 private:
     void clear(int count);
     void createItems(int count);
+    QStringList createLabels(int ticks, qreal min, qreal max);
 private:
+    QChartAxis* m_chartAxis;
     AxisType m_type;
     QRectF m_rect;
     int m_labelsAngle;

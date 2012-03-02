@@ -1,30 +1,55 @@
 #ifndef DOMAIN_H_
 #define DOMAIN_H_
 #include "qchartglobal.h"
-#include <QRect>
+#include <QRectF>
+#include <QSizeF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class Domain {
+class Domain: public QObject {
+    Q_OBJECT
 public:
-	Domain(qreal minX=0, qreal maxX=0, qreal minY=0, qreal maxY=0);
-	virtual ~Domain();
+    explicit Domain(QObject* object=0);
+    virtual ~Domain();
 
-	qreal spanX() const;
-	qreal spanY() const;
-	bool isEmpty() const;
+    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void setRangeX(qreal min, qreal max);
+    void setRangeY(qreal min, qreal max);
+    void setMinX(qreal min);
+    void setMaxX(qreal max);
+    void setMinY(qreal min);
+    void setMaxY(qreal max);
 
-	friend bool operator== (const Domain &domain1, const Domain &domain2);
-	friend bool operator!= (const Domain &domain1, const Domain &domain2);
-	friend QDebug operator<<(QDebug dbg, const Domain &domain);
+    qreal minX() const {return m_minX;};
+    qreal maxX() const {return m_maxX;};
+    qreal minY() const {return m_minY;};
+    qreal maxY() const {return m_maxY;};
 
-	Domain subDomain(const QRectF& rect, qreal maxWidth, qreal maxHeight) const;
+    qreal spanX() const;
+    qreal spanY() const;
+    bool isEmpty() const;
 
-public:
-	qreal m_minX;
-	qreal m_maxX;
-	qreal m_minY;
-	qreal m_maxY;
+    friend bool operator== (const Domain &domain1, const Domain &domain2);
+    friend bool operator!= (const Domain &domain1, const Domain &domain2);
+    friend QDebug operator<<(QDebug dbg, const Domain &domain);
+
+    void zoomIn(const QRectF& rect, const QSizeF& size);
+    void zoomOut(const QRectF& rect, const QSizeF& size);
+
+signals:
+    void domainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void rangeXChanged(qreal min, qreal max);
+    void rangeYChanged(qreal min, qreal max);
+
+public slots:
+    void handleAxisRangeXChanged(qreal min,qreal max);
+    void handleAxisRangeYChanged(qreal min,qreal max);
+
+private:
+    qreal m_minX;
+    qreal m_maxX;
+    qreal m_minY;
+    qreal m_maxY;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

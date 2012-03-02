@@ -4,7 +4,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 SplinePresenter::SplinePresenter(QSplineSeries* series, QGraphicsObject *parent) :
-    LineChartItem(0, series, parent)//,m_boundingRect()
+    LineChartItem(series, parent)//,m_boundingRect()
 {
     //
 }
@@ -14,10 +14,10 @@ SplinePresenter::SplinePresenter(QSplineSeries* series, QGraphicsObject *parent)
 QPointF SplinePresenter::calculateGeometryControlPoint(int index) const
 {
     QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
-    const qreal deltaX = m_size.width()/m_domain.spanX();
-    const qreal deltaY = m_size.height()/m_domain.spanY();
-    qreal x = (splineSeries->controlPoint(index).x() - m_domain.m_minX)* deltaX;
-    qreal y = (splineSeries->controlPoint(index).y() - m_domain.m_minY)*-deltaY + m_size.height();
+    const qreal deltaX = m_size.width()/(m_maxX-m_minX);
+    const qreal deltaY = m_size.height()/(m_maxY-m_minY);
+    qreal x = (splineSeries->controlPoint(index).x() - m_minX)* deltaX;
+    qreal y = (splineSeries->controlPoint(index).y() - m_minY)*-deltaY + m_size.height();
     return QPointF(x,y);
 }
 

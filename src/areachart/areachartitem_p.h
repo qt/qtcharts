@@ -15,7 +15,7 @@ class AreaChartItem :  public QObject ,public ChartItem
 {
     Q_OBJECT
 public:
-    AreaChartItem(ChartPresenter* presenter, QAreaSeries* areaSeries, QGraphicsItem *parent = 0);
+    AreaChartItem(QAreaSeries* areaSeries, QGraphicsItem *parent = 0);
     ~ AreaChartItem();
 
     //from QGraphicsItem
@@ -29,15 +29,14 @@ public:
     void updatePath();
 public slots:
     void handleUpdated();
-    void handleDomainChanged(const Domain& domain);
+    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF& size);
 
 private:
-    ChartPresenter* m_presenter;
-    QPainterPath m_path;
     QAreaSeries* m_series;
     LineChartItem* m_upper;
     LineChartItem* m_lower;
+    QPainterPath m_path;
     QRectF m_rect;
     QRectF m_clipRect;
     QPen m_pen;
@@ -47,7 +46,7 @@ private:
 class AreaBoundItem : public LineChartItem
 {
 public:
-    AreaBoundItem(AreaChartItem* item,ChartPresenter* presenter, QLineSeries* lineSeries):LineChartItem(presenter,lineSeries),
+    AreaBoundItem(AreaChartItem* item,QLineSeries* lineSeries):LineChartItem(lineSeries),
     m_item(item){};
 
     ~AreaBoundItem(){};

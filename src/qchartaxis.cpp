@@ -113,6 +113,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
    \fn void QChartAxis::maxChanged(qreal max)
    \brief Axis emits signal when \a max of axis has changed.
 */
+
+/*!
+   \fn void QChartAxis::rangeChanged(qreal min, qreal max)
+   \brief Axis emits signal when \a min or \a max of axis has changed.
+*/
+
 /*!
    \fn int QChartAxis::ticksCount() const
    \brief Return number of ticks on the axis
@@ -120,22 +126,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QChartAxis::update(QChartAxis*)
+    \fn void QChartAxis::update()
     \brief \internal
 */
 
 /*!
-    \fn void QChartAxis::ticksChanged(QChartAxis*)
-    \brief \internal
-*/
-
-/*!
-    \fn void QChartAxis::rangeChanged(QChartAxis*)
-    \brief \internal
-*/
-
-/*!
-    \fn void QChartAxis::updateRange(qreal min, qreal max)
+    \fn void QChartAxis::handleAxisRangeChanged(qreal min, qreal max)
     \brief \internal \a min \a max
 */
 
@@ -171,8 +167,10 @@ QChartAxis::~QChartAxis()
  */
 void QChartAxis::setAxisPen(const QPen& pen)
 {
+	if (pen != m_axisPen) {
     m_axisPen=pen;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -180,8 +178,10 @@ void QChartAxis::setAxisPen(const QPen& pen)
  */
 void QChartAxis::setAxisVisible(bool visible)
 {
+	if (m_axisVisible!=visible) {
     m_axisVisible=visible;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -189,8 +189,10 @@ void QChartAxis::setAxisVisible(bool visible)
  */
 void QChartAxis::setGridVisible(bool visible)
 {
+	if (m_gridVisible!=visible) {
     m_gridVisible=visible;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -198,8 +200,10 @@ void QChartAxis::setGridVisible(bool visible)
  */
 void QChartAxis::setGridPen(const QPen& pen)
 {
+	if (m_gridPen!=pen) {
     m_gridPen=pen;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -207,8 +211,10 @@ void QChartAxis::setGridPen(const QPen& pen)
  */
 void QChartAxis::setLabelsVisible(bool visible)
 {
+	if(m_labelsVisible!=visible) {
     m_labelsVisible=visible;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -216,8 +222,10 @@ void QChartAxis::setLabelsVisible(bool visible)
  */
 void QChartAxis::setLabelsPen(const QPen& pen)
 {
+	if(m_labelsPen!=pen) {
     m_labelsPen=pen;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -225,8 +233,10 @@ void QChartAxis::setLabelsPen(const QPen& pen)
  */
 void QChartAxis::setLabelsBrush(const QBrush& brush)
 {
+	if(m_labelsBrush!=brush) {
     m_labelsBrush=brush;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -234,8 +244,10 @@ void QChartAxis::setLabelsBrush(const QBrush& brush)
  */
 void QChartAxis::setLabelsFont(const QFont& font)
 {
+	if(m_labelsFont!=font) {
     m_labelsFont=font;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -243,8 +255,10 @@ void QChartAxis::setLabelsFont(const QFont& font)
  */
 void QChartAxis::setLabelsAngle(int angle)
 {
+	if(m_labelsAngle!=angle) {
 	m_labelsAngle=angle;
-	 emit update(this);
+	emit updated();
+	}
 }
 
 /*!
@@ -252,8 +266,10 @@ void QChartAxis::setLabelsAngle(int angle)
  */
 void QChartAxis::setShadesVisible(bool visible)
 {
+	if(m_shadesVisible!=visible) {
     m_shadesVisible=visible;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -261,8 +277,10 @@ void QChartAxis::setShadesVisible(bool visible)
  */
 void QChartAxis::setShadesPen(const QPen& pen)
 {
-    m_shadesPen=pen;
-    emit update(this);
+	if(m_shadesPen!=pen) {
+	m_shadesPen=pen;
+	emit updated();
+	}
 }
 
 /*!
@@ -270,8 +288,10 @@ void QChartAxis::setShadesPen(const QPen& pen)
  */
 void QChartAxis::setShadesBrush(const QBrush& brush)
 {
+	if(m_shadesBrush!=brush) {
     m_shadesBrush=brush;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -279,8 +299,10 @@ void QChartAxis::setShadesBrush(const QBrush& brush)
  */
 void QChartAxis::setShadesOpacity(qreal opacity)
 {
+	if(m_shadesOpacity!=opacity) {
     m_shadesOpacity=opacity;
-    emit update(this);
+    emit updated();
+	}
 }
 
 /*!
@@ -288,10 +310,7 @@ void QChartAxis::setShadesOpacity(qreal opacity)
  */
 void QChartAxis::setMin(qreal min)
 {
-    if(m_min!=min) {
-        m_min=min;
-        emit rangeChanged(this);
-    }
+	setRange(min,m_max);
 }
 
 /*!
@@ -299,10 +318,7 @@ void QChartAxis::setMin(qreal min)
  */
 void QChartAxis::setMax(qreal max)
 {
-    if(m_max!=max) {
-       m_max=max;
-       emit rangeChanged(this);
-    }
+    setRange(m_min,max);
 }
 
 /*!
@@ -310,22 +326,23 @@ void QChartAxis::setMax(qreal max)
  */
 void QChartAxis::setRange(qreal min, qreal max)
 {
-    setMin(min);
-    setMax(max);
-}
-
-void QChartAxis::updateRange(qreal min, qreal max)
-{
-    if(m_max!=max){
-        emit maxChanged(max);
-    }
-
-    if(m_min!=min){
+	bool changed = false;
+    if(m_min!=min) {
+        m_min=min;
         emit minChanged(min);
     }
 
-    m_max=max;
-    m_min=min;
+    if(m_max!=max) {
+        m_max=max;
+        emit maxChanged(max);
+    }
+
+    if(changed) emit rangeChanged(m_min,m_max);
+}
+
+void QChartAxis::handleAxisRangeChanged(qreal min, qreal max)
+{
+   setRange(min,max);
 }
 
 /*!
@@ -333,8 +350,10 @@ void QChartAxis::updateRange(qreal min, qreal max)
  */
 void QChartAxis::setTicksCount(int count)
 {
+	if(m_ticksCount!=count) {
 	m_ticksCount=count;
-	emit ticksChanged(this);
+	emit updated();
+	}
 }
 
 /*!
@@ -343,7 +362,7 @@ void QChartAxis::setTicksCount(int count)
 void QChartAxis::addAxisTickLabel(qreal value,const QString& label)
 {
 	m_ticks.insert(value,label);
-	emit ticksChanged(this);
+	emit updated();
 }
 
 /*!
@@ -352,7 +371,7 @@ void QChartAxis::addAxisTickLabel(qreal value,const QString& label)
 void QChartAxis::removeAxisTickLabel(qreal value)
 {
 	m_ticks.remove(value);
-	emit ticksChanged(this);
+	emit updated();
 }
 
 /*!
@@ -369,7 +388,7 @@ QString QChartAxis::axisTickLabel(qreal value) const
 void QChartAxis::clearAxisTickLabels()
 {
 	m_ticks.clear();
-	emit ticksChanged(this);
+	emit updated();
 }
 
 #include "moc_qchartaxis.cpp"

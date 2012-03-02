@@ -15,7 +15,7 @@ class LineChartAnimationItem : public LineChartItem {
 	Q_OBJECT
 
 public:
-	LineChartAnimationItem(ChartPresenter* presenter, QLineSeries *series, QGraphicsItem *parent = 0);
+	LineChartAnimationItem(QLineSeries *series, QGraphicsItem *parent = 0);
 	virtual ~LineChartAnimationItem();
 
 protected:

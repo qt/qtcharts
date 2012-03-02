@@ -14,7 +14,7 @@ class LineChartItem :  public QObject , public ChartItem
 {
      Q_OBJECT
 public:
-    LineChartItem(ChartPresenter* presenter, QLineSeries* series,QGraphicsItem *parent = 0);
+    LineChartItem(QLineSeries* series,QGraphicsItem *parent = 0);
     ~ LineChartItem(){};
 
     //from QGraphicsItem
@@ -30,7 +30,7 @@ public slots:
     void handlePointRemoved(int index);
     void handlePointReplaced(int index);
     void handleUpdated();
-    void handleDomainChanged(const Domain& domain);
+    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF& size);
 
 public:
@@ -43,13 +43,15 @@ public:
     QVector<QPointF> calculateGeometryPoints() const;
 
 protected:
+    qreal m_minX;
+    qreal m_maxX;
+    qreal m_minY;
+    qreal m_maxY;
     QPainterPath m_path;
     QRectF m_rect;
     QLineSeries* m_series;
-    ChartPresenter* m_presenter;
-    QSizeF m_size;    
+    QSizeF m_size;
     QRectF m_clipRect;
-    Domain m_domain;
     QGraphicsItemGroup m_items;
     QVector<QPointF> m_points;
     QPen m_pen;

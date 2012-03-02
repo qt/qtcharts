@@ -27,19 +27,23 @@ Q_SIGNALS:
     void clicked(QPointF coordinates);
 
 public Q_SLOTS:
-    void handleDomainChanged(const Domain& domain);
+    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF& rect);
     void handleModelChanged();
 
 public:
     void changeGeometry();
 
+    qreal m_minX;
+    qreal m_maxX;
+    qreal m_minY;
+    qreal m_maxY;
     QScatterSeries *m_series;
     QRectF m_boundingRect;
-    Domain m_visibleChartArea;
     QPen m_markerPen;
     QBrush m_markerBrush;
     QPainterPath m_path;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -13,9 +13,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *parent) :
     ChartItem(parent),
+    m_minX(0),
+    m_maxX(0),
+    m_minY(0),
+    m_maxY(0),
     m_series(series),
-    m_boundingRect(),
-    m_visibleChartArea()
+    m_boundingRect()
 {
     if (parent)
         m_boundingRect = parent->boundingRect();
@@ -33,9 +36,12 @@ ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *pare
 //    setGraphicsEffect(dropShadow);
 }
 
-void ScatterPresenter::handleDomainChanged(const Domain& domain)
+void ScatterPresenter::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
-    m_visibleChartArea = domain;
+    m_minX=minX;
+    m_maxX=maxX;
+    m_minY=minY;
+    m_maxY=maxY;
     changeGeometry();
 }
 
@@ -98,8 +104,8 @@ void ScatterPresenter::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void ScatterPresenter::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     QPointF clickedPoint(
-        m_visibleChartArea.m_minX + (event->lastPos().x() / m_boundingRect.width()) * m_visibleChartArea.spanX(),
-        m_visibleChartArea.m_maxY - (event->lastPos().y() / m_boundingRect.height()) * m_visibleChartArea.spanY());
+        m_minX + (event->lastPos().x() / m_boundingRect.width()) * (m_maxX-m_minX),
+        m_maxY - (event->lastPos().y() / m_boundingRect.height()) * (m_maxY-m_minY));
     emit clicked(clickedPoint);
 }
 
@@ -107,8 +113,8 @@ void ScatterPresenter::changeGeometry()
 {
     if (m_boundingRect.isValid()) {
         prepareGeometryChange();
-        qreal scalex = m_boundingRect.width() / m_visibleChartArea.spanX();
-        qreal scaley = m_boundingRect.height() / m_visibleChartArea.spanY();
+        qreal scalex = m_boundingRect.width() / (m_maxX-m_minX);
+        qreal scaley = m_boundingRect.height() / (m_maxY-m_minY);
 
         int shape = m_series->shape();
         m_path = QPainterPath();
@@ -117,8 +123,8 @@ void ScatterPresenter::changeGeometry()
 
         foreach (QPointF point, m_series->data()) {
             // Convert relative coordinates to absolute pixel coordinates that can be used for drawing
-            qreal x = point.x() * scalex - m_visibleChartArea.m_minX * scalex - size / 2;
-            qreal y = m_boundingRect.height() - point.y() * scaley + m_visibleChartArea.m_minY * scaley - size / 2;
+            qreal x = point.x() * scalex - m_minX * scalex - size / 2;
+            qreal y = m_boundingRect.height() - point.y() * scaley + m_minY * scaley - size / 2;
 
             if (x < scene()->width() && y < scene()->height()) {
                 switch (shape) {

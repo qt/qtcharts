@@ -7,8 +7,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 const static int duration = 500;
 
-AxisAnimationItem::AxisAnimationItem(AxisType type,QGraphicsItem* parent) :
-AxisItem(type,parent),
+AxisAnimationItem::AxisAnimationItem(QChartAxis* axis,AxisType type,QGraphicsItem* parent) :
+AxisItem(axis,type,parent),
 m_animation(new AxisAnimator(this,this))
 {
 }

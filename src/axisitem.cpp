@@ -8,8 +8,9 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-AxisItem::AxisItem(AxisType type,QGraphicsItem* parent) :
+AxisItem::AxisItem(QChartAxis* axis,AxisType type,QGraphicsItem* parent) :
 ChartItem(parent),
+m_chartAxis(axis),
 m_type(type),
 m_labelsAngle(0),
 m_grid(parent),
@@ -22,6 +23,8 @@ m_axis(parent)
     m_shades.setZValue(ChartPresenter::ShadesZValue);
     m_grid.setZValue(ChartPresenter::GridZValue);
     setFlags(QGraphicsItem::ItemHasNoContents);
+
+    QObject::connect(m_chartAxis,SIGNAL(updated()),this,SLOT(handleAxisUpdated()));
 }
 
 AxisItem::~AxisItem()
@@ -74,72 +77,27 @@ void AxisItem::updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout)
     oldLayout=newLayout;
 }
 
-void AxisItem::handleAxisUpdate(QChartAxis* axis)
+QStringList AxisItem::createLabels(int ticks, qreal min, qreal max)
 {
-    if(m_layoutVector.count()==0) return;
 
-    if(axis->isAxisVisible()) {
-        setAxisOpacity(100);
+
+    Q_ASSERT(max>=min);
+
+    QStringList labels;
+
+    //int ticks = axis->ticksCount()-1;
+
+    for(int i=0; i<= ticks; i++) {
+        qreal value = min + (i * (max - min)/ ticks);
+        QString label ;//= axis->axisTickLabel(value);
+        if(label.isEmpty()) {
+            labels << QString::number(value);
+        }
+        else {
+            labels << label;
+        }
     }
-    else {
-        setAxisOpacity(0);
-    }
-
-    if(axis->isGridVisible()) {
-        setGridOpacity(100);
-    }
-    else {
-        setGridOpacity(0);
-    }
-
-    if(axis->labelsVisible())
-    {
-        setLabelsOpacity(100);
-    }
-    else {
-        setLabelsOpacity(0);
-    }
-
-    if(axis->shadesVisible()) {
-        setShadesOpacity(axis->shadesOpacity());
-    }
-    else {
-        setShadesOpacity(0);
-    }
-
-    setLabelsAngle(axis->labelsAngle());
-    setAxisPen(axis->axisPen());
-    setLabelsPen(axis->labelsPen());
-    setLabelsBrush(axis->labelsBrush());
-    setLabelsFont(axis->labelsFont());
-    setGridPen(axis->gridPen());
-    setShadesPen(axis->shadesPen());
-    setShadesBrush(axis->shadesBrush());
-}
-
-void AxisItem::handleRangeChanged(QChartAxis* axis,const QStringList& labels)
-{
-    int diff = m_thicksList.size() - labels.size();
-
-    if(diff>0){
-        clear(diff);
-    }else if(diff<0){
-        createItems(-diff);
-    }
-    m_thicksList=labels;
-    QVector<qreal>  vector = calculateLayout();
-    updateItems(m_layoutVector,vector);
-    if(diff!=0) handleAxisUpdate(axis);
-}
-
-void AxisItem::handleGeometryChanged(const QRectF& rect)
-{
-    m_rect = rect;
-
-    if(m_thicksList.size()==0) return;
-
-    QVector<qreal>  vector = calculateLayout();
-    updateItems(m_layoutVector,vector);
+    return labels;
 }
 
 void AxisItem::setAxisOpacity(qreal opacity)
@@ -332,6 +290,85 @@ void AxisItem::applyLayout(const QVector<qreal>& points)
              qDebug()<<"Unknown axis type";
              break;
          }
+}
+
+//handlers
+
+void AxisItem::handleAxisUpdated()
+{
+    if(m_layoutVector.count()==0) return;
+
+    if(m_chartAxis->isAxisVisible()) {
+        setAxisOpacity(100);
+    }
+    else {
+        setAxisOpacity(0);
+    }
+
+    if(m_chartAxis->isGridVisible()) {
+        setGridOpacity(100);
+    }
+    else {
+        setGridOpacity(0);
+    }
+
+    if(m_chartAxis->labelsVisible())
+    {
+        setLabelsOpacity(100);
+    }
+    else {
+        setLabelsOpacity(0);
+    }
+
+    if(m_chartAxis->shadesVisible()) {
+        setShadesOpacity(m_chartAxis->shadesOpacity());
+    }
+    else {
+        setShadesOpacity(0);
+    }
+
+    setLabelsAngle(m_chartAxis->labelsAngle());
+    setAxisPen(m_chartAxis->axisPen());
+    setLabelsPen(m_chartAxis->labelsPen());
+    setLabelsBrush(m_chartAxis->labelsBrush());
+    setLabelsFont(m_chartAxis->labelsFont());
+    setGridPen(m_chartAxis->gridPen());
+    setShadesPen(m_chartAxis->shadesPen());
+    setShadesBrush(m_chartAxis->shadesBrush());
+}
+
+void AxisItem::handleRangeChanged(qreal min, qreal max)
+{
+    if(min == max) return;
+
+    QStringList labels = createLabels(4,min,max);
+
+    int diff = m_thicksList.size() - labels.size();
+
+    if(diff>0){
+        clear(diff);
+    }else if(diff<0){
+        createItems(-diff);
+    }
+    m_thicksList=labels;
+
+    if(m_rect.isEmpty()) return;
+
+    QVector<qreal>  vector = calculateLayout();
+
+    updateItems(m_layoutVector,vector);
+
+    if(diff!=0) handleAxisUpdated();
+}
+
+void AxisItem::handleGeometryChanged(const QRectF& rect)
+{
+    m_rect = rect;
+
+    if(m_thicksList.size()==0) return;
+
+    QVector<qreal>  vector = calculateLayout();
+    updateItems(m_layoutVector,vector);
 }
 
 //TODO "nice numbers algorithm"

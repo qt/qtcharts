@@ -31,13 +31,13 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_chart(chart),
     m_dataset(dataset),
     m_chartTheme(0),
+    m_zoomIndex(0),
     m_marginSize(0),
     m_rect(QRectF(QPoint(0,0),m_chart->size())),
-    m_options(0)
+    m_options(QChart::NoAnimation)
 {
     createConnections();
     setChartTheme(QChart::ChartThemeDefault);
-
 }
 
 ChartPresenter::~ChartPresenter()
@@ -47,12 +47,10 @@ ChartPresenter::~ChartPresenter()
 void ChartPresenter::createConnections()
 {
     QObject::connect(m_chart,SIGNAL(geometryChanged()),this,SLOT(handleGeometryChanged()));
-    QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*)),this,SLOT(handleSeriesAdded(QSeries*)));
+    QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),this,SLOT(handleSeriesAdded(QSeries*,Domain*)));
     QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),this,SLOT(handleSeriesRemoved(QSeries*)));
-    QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*)),this,SLOT(handleAxisAdded(QChartAxis*)));
+    QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*,Domain*)),this,SLOT(handleAxisAdded(QChartAxis*,Domain*)));
     QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),this,SLOT(handleAxisRemoved(QChartAxis*)));
-    QObject::connect(m_dataset,SIGNAL(seriesDomainChanged(QSeries*,const Domain&)),this,SLOT(handleSeriesDomainChanged(QSeries*,const Domain&)));
-    QObject::connect(m_dataset,SIGNAL(axisRangeChanged(QChartAxis*,const QStringList&)),this,SLOT(handleAxisRangeChanged(QChartAxis*,const QStringList&)));
 }
 
 
@@ -63,8 +61,26 @@ QRectF ChartPresenter::geometry() const
 
 void ChartPresenter::handleGeometryChanged()
 {
-    m_rect = QRectF(QPoint(0,0),m_chart->size());
-    m_rect.adjust(m_marginSize,m_marginSize, -m_marginSize, -m_marginSize);
+    QRectF rect(QPoint(0,0),m_chart->size());
+    rect.adjust(m_marginSize,m_marginSize, -m_marginSize, -m_marginSize);
+
+    //rewrite zoom stack
+    for(int i=0;i<m_zoomStack.count();i++){
+        QRectF r = m_zoomStack[i];
+        qreal w = rect.width()/m_rect.width();
+        qreal h = rect.height()/m_rect.height();
+        QPointF tl = r.topLeft();
+        tl.setX(tl.x()*w);
+        tl.setY(tl.y()*h);
+        QPointF br = r.bottomRight();
+        br.setX(br.x()*w);
+        br.setY(br.y()*h);
+        r.setTopLeft(tl);
+        r.setBottomRight(br);
+        m_zoomStack[i]=r;
+    }
+
+    m_rect = rect;
     Q_ASSERT(m_rect.isValid());
     emit geometryChanged(m_rect);
 }
@@ -79,22 +95,30 @@ void ChartPresenter::setMargin(int margin)
     m_marginSize = margin;
 }
 
-void ChartPresenter::handleAxisAdded(QChartAxis* axis)
+void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
 {
 
     AxisItem* item ;
 
     if(!m_options.testFlag(QChart::GridAxisAnimations))
     {
-        item = new AxisItem(axis==m_dataset->axisX()?AxisItem::X_AXIS : AxisItem::Y_AXIS,m_chart);
+        item = new AxisItem(axis,axis==m_dataset->axisX()?AxisItem::X_AXIS : AxisItem::Y_AXIS,m_chart);
     }else{
-        item = new AxisAnimationItem(axis==m_dataset->axisX()?AxisItem::X_AXIS : AxisItem::Y_AXIS,m_chart);
+        item = new AxisAnimationItem(axis,axis==m_dataset->axisX()?AxisItem::X_AXIS : AxisItem::Y_AXIS,m_chart);
+    }
+    if(axis==m_dataset->axisX()){
+        QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal)),item,SLOT(handleRangeChanged(qreal,qreal)));
+        //initialize
+        item->handleRangeChanged(domain->minX(),domain->maxX());
+    }
+    else{
+        QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal)),item,SLOT(handleRangeChanged(qreal,qreal)));
+        //initialize
+        item->handleRangeChanged(domain->minY(),domain->maxY());
     }
 
     QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
-    QObject::connect(axis,SIGNAL(update(QChartAxis*)),item,SLOT(handleAxisUpdate(QChartAxis*)));
-
-    item->handleAxisUpdate(axis);
+    //initialize
     item->handleGeometryChanged(m_rect);
     m_chartTheme->decorate(axis,item);
     m_axisItems.insert(axis,item);
@@ -108,7 +132,7 @@ void ChartPresenter::handleAxisRemoved(QChartAxis* axis)
 }
 
 
-void ChartPresenter::handleSeriesAdded(QSeries* series)
+void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 {
     switch(series->type())
     {
@@ -117,13 +141,18 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
         QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
         LineChartItem* item;
         if(m_options.testFlag(QChart::SeriesAnimations)){
-            item = new LineChartAnimationItem(this,lineSeries,m_chart);
+            item = new LineChartAnimationItem(lineSeries,m_chart);
         }else{
-            item = new LineChartItem(this,lineSeries,m_chart);
+            item = new LineChartItem(lineSeries,m_chart);
         }
+        QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
+        QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),item,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
+        //initialize
+        item->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());
+        if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
+        //decorate
         m_chartTheme->decorate(item,lineSeries,m_chartItems.count());
         m_chartItems.insert(series,item);
-        if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
         break;
     }
 
@@ -132,14 +161,19 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
         QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
         AreaChartItem* item;
         if(m_options.testFlag(QChart::SeriesAnimations)) {
-            item = new AreaChartItem(this,areaSeries,m_chart);
+            item = new AreaChartItem(areaSeries,m_chart);
         }
         else {
-            item = new AreaChartItem(this,areaSeries,m_chart);
+            item = new AreaChartItem(areaSeries,m_chart);
         }
+        QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
+        QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),item,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
+        //initialize
+         item->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());
+         if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
+         //decorate
         m_chartTheme->decorate(item,areaSeries,m_chartItems.count());
         m_chartItems.insert(series,item);
-        if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
         break;
     }
 
@@ -228,22 +262,14 @@ void ChartPresenter::handleSeriesAdded(QSeries* series)
         break;
     }
     }
+
+    zoomReset();
 }
 
 void ChartPresenter::handleSeriesRemoved(QSeries* series)
 {
     ChartItem* item = m_chartItems.take(series);
     delete item;
-}
-
-void ChartPresenter::handleSeriesDomainChanged(QSeries* series, const Domain& domain)
-{
-    m_chartItems.value(series)->handleDomainChanged(domain);
-}
-
-void ChartPresenter::handleAxisRangeChanged(QChartAxis* axis,const QStringList& labels)
-{
-    m_axisItems.value(axis)->handleRangeChanged(axis,labels);
 }
 
 void ChartPresenter::setChartTheme(QChart::ChartTheme theme)
@@ -281,23 +307,50 @@ void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
         m_options=options;
 
         //recreate elements
-
         QList<QChartAxis*> axisList = m_axisItems.uniqueKeys();
         QList<QSeries*> seriesList = m_chartItems.uniqueKeys();
 
         foreach(QChartAxis* axis, axisList) {
             handleAxisRemoved(axis);
-            handleAxisAdded(axis);
+            handleAxisAdded(axis,m_dataset->domain(axis));
         }
         foreach(QSeries* series, seriesList) {
             handleSeriesRemoved(series);
-            handleSeriesAdded(series);
+            handleSeriesAdded(series,m_dataset->domain(series));
         }
-
-        //now reintialize view data
-        //TODO: make it more nice
-        m_dataset->setDomain(m_dataset->domainIndex());
     }
+}
+
+void ChartPresenter::zoomIn()
+{
+	QRectF rect = geometry();
+	rect.setWidth(rect.width()/2);
+	rect.setHeight(rect.height()/2);
+	rect.moveCenter(geometry().center());
+	zoomIn(rect);
+}
+
+void ChartPresenter::zoomIn(const QRectF& rect)
+{
+	QRectF r = rect.normalized();
+	r.translate(-m_marginSize, -m_marginSize);
+	m_dataset->zoomInDomain(r,geometry().size());
+	m_zoomStack<<r;
+	m_zoomIndex++;
+}
+
+void ChartPresenter::zoomOut()
+{
+	if(m_zoomIndex==0) return;
+	m_dataset->zoomOutDomain(m_zoomStack[m_zoomIndex-1],geometry().size());
+	m_zoomIndex--;
+	m_zoomStack.resize(m_zoomIndex);
+}
+
+void ChartPresenter::zoomReset()
+{
+    m_zoomIndex=0;
+    m_zoomStack.resize(m_zoomIndex);
 }
 
 QChart::AnimationOptions ChartPresenter::animationOptions() const

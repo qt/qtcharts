@@ -1,7 +1,6 @@
 #include "areachartitem_p.h"
 #include "qareaseries.h"
 #include "qlineseries.h"
-#include "chartpresenter_p.h"
 #include <QPainter>
 
 
@@ -9,20 +8,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-AreaChartItem::AreaChartItem(ChartPresenter* presenter, QAreaSeries* areaSeries,QGraphicsItem *parent):ChartItem(parent),
-m_presenter(presenter),
+AreaChartItem::AreaChartItem(QAreaSeries* areaSeries,QGraphicsItem *parent):ChartItem(parent),
 m_series(areaSeries),
 m_upper(0),
 m_lower(0)
 {
     //m_items.setZValue(ChartPresenter::LineChartZValue);
-    m_upper = new AreaBoundItem(this,presenter,m_series->upperSeries());
+    m_upper = new AreaBoundItem(this,m_series->upperSeries());
     if(m_series->lowerSeries()){
-    m_lower = new AreaBoundItem(this,presenter,m_series->lowerSeries());
+    m_lower = new AreaBoundItem(this,m_series->lowerSeries());
     }
-    setZValue(ChartPresenter::LineChartZValue);
 
-    QObject::connect(presenter,SIGNAL(geometryChanged(const QRectF&)),this,SLOT(handleGeometryChanged(const QRectF&)));
     QObject::connect(areaSeries,SIGNAL(updated()),this,SLOT(handleUpdated()));
 
     handleUpdated();
@@ -82,11 +78,11 @@ void AreaChartItem::handleUpdated()
     update();
 }
 
-void AreaChartItem::handleDomainChanged(const Domain& domain)
+void AreaChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
-    m_upper->handleDomainChanged(domain);
+    m_upper->handleDomainChanged(minX,maxX,minY,maxY);
     if(m_lower)
-    m_lower->handleDomainChanged(domain);
+    m_lower->handleDomainChanged(minX,maxX,minY,maxY);
 }
 
 void AreaChartItem::handleGeometryChanged(const QRectF& rect)

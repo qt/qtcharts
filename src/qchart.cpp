@@ -187,13 +187,7 @@ QChart::ChartTheme QChart::chartTheme() const
 */
 void QChart::zoomIn()
 {
-    if (!m_dataset->nextDomain()) {
-        QRectF rect = m_presenter->geometry();
-        rect.setWidth(rect.width()/2);
-        rect.setHeight(rect.height()/2);
-        rect.moveCenter(m_presenter->geometry().center());
-        zoomIn(rect);
-    }
+    m_presenter->zoomIn();
 }
 
 /*!
@@ -201,11 +195,9 @@ void QChart::zoomIn()
 */
 void QChart::zoomIn(const QRectF& rect)
 {
+
     if(!rect.isValid()) return;
-       QRectF r = rect.normalized();
-       int margin = m_presenter->margin();
-       r.translate(-margin, -margin);
-       m_dataset->addDomain(r,m_presenter->geometry());
+    m_presenter->zoomIn(rect);
 }
 
 /*!
@@ -213,7 +205,7 @@ void QChart::zoomIn(const QRectF& rect)
 */
 void QChart::zoomOut()
 {
-    m_dataset->previousDomain();
+    m_presenter->zoomOut();
 }
 
 /*!
@@ -221,7 +213,7 @@ void QChart::zoomOut()
 */
 void QChart::zoomReset()
 {
-    m_dataset->clearDomains();
+    m_presenter->zoomReset();
 }
 
 /*!

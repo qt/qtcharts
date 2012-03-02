@@ -43,26 +43,34 @@ public:
     void setAnimationOptions(QChart::AnimationOptions options);
     QChart::AnimationOptions animationOptions() const;
 
+    void zoomIn();
+    void zoomIn(const QRectF& rect);
+    void zoomOut();
+    void zoomReset();
+
+
 private:
     void createConnections();
 
 public slots:
-    void handleSeriesAdded(QSeries* series);
+    void handleSeriesAdded(QSeries* series,Domain* domain);
     void handleSeriesRemoved(QSeries* series);
-    void handleAxisAdded(QChartAxis* axis);
+    void handleAxisAdded(QChartAxis* axis,Domain* domain);
     void handleAxisRemoved(QChartAxis* axis);
-    void handleSeriesDomainChanged(QSeries* series, const Domain& domain);
-    void handleAxisRangeChanged(QChartAxis* axis, const QStringList& labels);
     void handleGeometryChanged();
+
 signals:
     void geometryChanged(const QRectF& rect);
+
 private:
-    QMap<QSeries*,ChartItem*> m_chartItems;
-    QMap<QChartAxis*,AxisItem*> m_axisItems;
     QChart* m_chart;
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
+    int m_zoomIndex;
     int m_marginSize;
+    QMap<QSeries*,ChartItem*> m_chartItems;
+    QMap<QChartAxis*,AxisItem*> m_axisItems;
+    QVector<QRectF> m_zoomStack;
     QRectF m_rect;
     QChart::AnimationOptions m_options;
 

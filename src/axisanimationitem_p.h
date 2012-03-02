@@ -15,7 +15,7 @@ class AxisAnimationItem : public AxisItem
     Q_OBJECT
 
 public:
-    AxisAnimationItem(AxisType type = X_AXIS,QGraphicsItem* parent = 0);
+    AxisAnimationItem(QChartAxis* axis,AxisType type = X_AXIS,QGraphicsItem* parent = 0);
     ~AxisAnimationItem();
 
     void setLabelsAngle(int angle);
