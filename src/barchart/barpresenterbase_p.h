@@ -21,7 +21,7 @@ class BarPresenterBase : public QObject, public ChartItem
     Q_OBJECT
 public:
     BarPresenterBase(QBarSeries *series, QGraphicsItem *parent = 0);
-    ~BarPresenterBase();
+    virtual ~BarPresenterBase();
 
 public:
     // From QGraphicsItem

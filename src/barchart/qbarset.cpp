@@ -109,6 +109,16 @@ void QBarSet::setValue(int index, qreal value)
     mValues.replace(index,value);
 }
 
+qreal QBarSet::total()
+{
+    qreal total(0);
+    for (int i=0; i<mValues.count(); i++) {
+        total += mValues.at(i);
+    }
+    return total;
+}
+
+
 /*!
     Sets pen for set. Bars of this set are drawn using \a pen
 */

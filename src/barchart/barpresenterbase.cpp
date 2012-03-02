@@ -26,7 +26,6 @@ BarPresenterBase::BarPresenterBase(QBarSeries *series, QGraphicsItem *parent)
 BarPresenterBase::~BarPresenterBase()
 {
     disconnect(this,SLOT(showToolTip(QPoint,QString)));
-    delete mSeries;
 }
 
 void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

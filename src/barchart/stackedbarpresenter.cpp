@@ -13,6 +13,12 @@ StackedBarPresenter::StackedBarPresenter(QBarSeries *series, QGraphicsItem *pare
 {
 }
 
+StackedBarPresenter::~StackedBarPresenter()
+{
+    qDebug() << "StackedBarPresenter deleted";
+}
+
+
 void StackedBarPresenter::layoutChanged()
 {
     // Scale bars to new layout
