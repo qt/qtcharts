@@ -21,10 +21,15 @@ public:
     virtual ~QPieSlice();
 
     // data
+    void setValue(qreal value);
     qreal value() const;
+    void setLabel(QString label);
     QString label() const;
+    void setLabelVisible(bool visible);
     bool isLabelVisible() const;
+    void setExploded(bool exploded);
     bool isExploded() const;
+    void setExplodeDistance(qreal distance);
     qreal explodeDistance() const;
 
     // generated data
@@ -33,37 +38,26 @@ public:
     qreal endAngle() const;
 
     // customization
+    void setPen(QPen pen);
     QPen pen() const;
+    void setBrush(QBrush brush);
     QBrush brush() const;
+    void setLabelPen(QPen pen);
     QPen labelPen() const;
+    void setLabelFont(QFont font);
     QFont labelFont() const;
+    void setLabelArmLength(qreal len);
     qreal labelArmLength() const;
+
+    // TODO: label position in general
+    // setLabelFlags(inside|outside|labelArmOn|labelArmOff|???)
+    // setLabelOrientation(horizontal|vertical|same as slice center angle|???)
 
 Q_SIGNALS:
     void clicked();
     void hoverEnter();
     void hoverLeave();
     void changed();
-
-public Q_SLOTS:
-
-    // data
-    void setLabel(QString label);
-    void setLabelVisible(bool visible);
-    void setValue(qreal value);
-    void setExploded(bool exploded);
-    void setExplodeDistance(qreal distance);
-
-    // customization
-    void setPen(QPen pen);
-    void setBrush(QBrush brush);
-    void setLabelFont(QFont font);
-    void setLabelPen(QPen pen);
-    void setLabelArmLength(qreal len);
-
-    // TODO: label position in general
-    // setLabelFlags(inside|outside|labelArmOn|labelArmOff|???)
-    // setLabelOrientation(horizontal|vertical|same as slice center angle|???)
 
 private:
 

@@ -43,22 +43,29 @@ public Q_SLOTS:
     void updateData(const QPieSlice *sliceData);
 
 public:
-    PieSliceLabel* label() { return m_slicelabel; }
+    static QPainterPath slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, bool exploded, qreal explodeDistance, qreal* centerAngle, QPointF* armStart);
+    static QPainterPath labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF* textStart);
+    static QRectF labelTextRect(QFont font, QString text);
 
 private:
-    PieSliceLabel* m_slicelabel;
-
     QRectF m_pieRect;
-    QPainterPath m_path;
 
+    QPainterPath m_slicePath;
     qreal m_startAngle;
     qreal m_angleSpan;
-
     bool m_isExploded;
     qreal m_explodeDistance;
-
+    bool m_labelVisible;
     QPen m_pen;
     QBrush m_brush;
+
+    QPainterPath m_labelArmPath;
+    qreal m_labelArmLength;
+    QPen m_labelArmPen;
+
+    QRectF m_labelTextRect;
+    QFont m_labelFont;
+    QString m_labelText;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -118,9 +118,10 @@ bool QPieSeries::ChangeSet::isEmpty() const
 QPieSeries::QPieSeries(QObject *parent) :
     QSeries(parent),
     m_sizeFactor(1.0),
-    m_position(PiePositionMaximized),
+    m_position(PiePositionCenter),
+    m_sizePolicy(PieSizePolicyMaximized),
     m_pieStartAngle(0),
-    m_pieAngleSpan(360)
+    m_pieEndAngle(360)
 {
 
 }
@@ -295,6 +296,7 @@ qreal QPieSeries::sizeFactor() const
 */
 void QPieSeries::setPosition(PiePosition position)
 {
+    // TODO: sanity check
     if (m_position != position) {
         m_position = position;
         emit positionChanged();
@@ -310,20 +312,53 @@ QPieSeries::PiePosition QPieSeries::position() const
     return m_position;
 }
 
+/*!
+    Sets the \a sizePolicy of the pie.
+    \sa PieSizePolicy, sizePolicy()
+*/
+void QPieSeries::setSizePolicy(PieSizePolicy sizePolicy)
+{
+    // TODO: sanity check
+    if (m_sizePolicy != sizePolicy) {
+        m_sizePolicy = sizePolicy;
+        emit sizePolicyChanged();
+    }
+}
 
 /*!
-    Sets the \a startAngle and \a angleSpan of this series.
-
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+    Gets the size policy of the pie.
+    \sa PieSizePolicy, setSizePolicy()
 */
-void QPieSeries::setSpan(qreal startAngle, qreal angleSpan)
+QPieSeries::PieSizePolicy QPieSeries::sizePolicy() const
 {
-    if (startAngle >= 0 && startAngle < 360 &&
-        angleSpan > 0 && angleSpan <= 360) {
+    return m_sizePolicy;
+}
+
+
+void QPieSeries::setStartAngle(qreal startAngle)
+{
+    if (startAngle >= 0 && startAngle <= 360 && startAngle != m_pieStartAngle && startAngle <= m_pieEndAngle) {
         m_pieStartAngle = startAngle;
-        m_pieAngleSpan = angleSpan;
         updateDerivativeData();
     }
+}
+
+qreal QPieSeries::startAngle() const
+{
+    return m_pieStartAngle;
+}
+
+void QPieSeries::setEndAngle(qreal endAngle)
+{
+    if (endAngle >= 0 && endAngle <= 360 && endAngle != m_pieEndAngle && endAngle >= m_pieStartAngle) {
+        m_pieEndAngle = endAngle;
+        updateDerivativeData();
+    }
+}
+
+qreal QPieSeries::endAngle() const
+{
+    return m_pieEndAngle;
 }
 
 /*!
@@ -449,6 +484,7 @@ void QPieSeries::updateDerivativeData()
 
     // update slice attributes
     qreal sliceAngle = m_pieStartAngle;
+    qreal pieSpan = m_pieEndAngle - m_pieStartAngle;
     foreach (QPieSlice* s, m_slices) {
 
         bool changed = false;
@@ -459,7 +495,7 @@ void QPieSeries::updateDerivativeData()
             changed = true;
         }
 
-        qreal sliceSpan = m_pieAngleSpan * percentage;
+        qreal sliceSpan = pieSpan * percentage;
         if (s->m_angleSpan != sliceSpan) {
             s->m_angleSpan = sliceSpan;
             changed = true;

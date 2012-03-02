@@ -20,13 +20,27 @@ class QTCOMMERCIALCHART_EXPORT QPieSeries : public QSeries
     Q_OBJECT
 
 public:
-    enum PiePosition {
-        PiePositionMaximized = 0,
-        PiePositionTopLeft,
-        PiePositionTopRight,
-        PiePositionBottomLeft,
-        PiePositionBottomRight
+
+    enum PiePositionFlag {
+        PiePositionLeft = 0x1,
+        PiePositionRight = 0x2,
+        PiePositionHCenter = 0x4,
+        PiePositionTop = 0x10,
+        PiePositionBottom = 0x20,
+        PiePositionVCenter = 0x40,
+        PiePositionCenter = PiePositionHCenter | PiePositionVCenter
     };
+
+    Q_DECLARE_FLAGS(PiePosition, PiePositionFlag)
+
+    enum PieSizePolicyFlag {
+        PieSizePolicyMaximized = 0,
+        PieSizePolicyReserveSpaceForLabels = 0x1,
+        PieSizePolicyReserveSpaceForExploding = 0x2,
+        PieSizePolicyReserveSpaceForAll = PieSizePolicyReserveSpaceForLabels | PieSizePolicyReserveSpaceForExploding
+    };
+
+    Q_DECLARE_FLAGS(PieSizePolicy, PieSizePolicyFlag)
 
     class ChangeSet
     {
@@ -58,26 +72,37 @@ public: // from QChartSeries
     QSeriesType type() const;
 
 public:
-    void replace(QList<QPieSlice*> slices);
-    void add(QList<QPieSlice*> slices);
+
+    // slice setters
     void add(QPieSlice* slice);
-    QPieSlice* add(qreal value, QString name);
-    QPieSeries& operator << (QPieSlice* slice);
+    void add(QList<QPieSlice*> slices);
+    void replace(QList<QPieSlice*> slices);
     void remove(QPieSlice* slice);
     void clear();
 
-    int count() const;
+    // sluce getters
     QList<QPieSlice*> slices() const;
 
-    void setSizeFactor(qreal sizeFactor);
-    qreal sizeFactor() const;
+    // calculated data
+    int count() const;
+    qreal total() const;
+
+    // pie customization
     void setPosition(PiePosition position);
     PiePosition position() const;
-    void setSpan(qreal startAngle, qreal angleSpan);
+    void setSizePolicy(PieSizePolicy policy);
+    PieSizePolicy sizePolicy() const;
+    void setSizeFactor(qreal sizeFactor);
+    qreal sizeFactor() const;
+    void setStartAngle(qreal startAngle);
+    qreal startAngle() const;
+    void setEndAngle(qreal endAngle);
+    qreal endAngle() const;
 
+    // convenience function
+    QPieSeries& operator << (QPieSlice* slice);
+    QPieSlice* add(qreal value, QString name);
     void setLabelsVisible(bool visible = true);
-
-    qreal total() const;
 
     // TODO: find slices?
     // QList<QPieSlice*> findByValue(qreal value);
@@ -88,15 +113,19 @@ public:
 
     // TODO: general graphics customization
     // setDrawStyle(2d|3d)
-    // setDropShadows(bool)
+    // setDropShadows
 
 Q_SIGNALS:
+
     void changed(const QPieSeries::ChangeSet& changeSet);
+
     void clicked(QPieSlice* slice);
     void hoverEnter(QPieSlice* slice);
     void hoverLeave(QPieSlice* slice);
+
     void sizeFactorChanged();
     void positionChanged();
+    void sizePolicyChanged();
 
 private Q_SLOTS: // TODO: should be private and not visible in the interface at all
     void sliceChanged();
@@ -117,9 +146,10 @@ private:
     QList<QPieSlice*> m_slices;
     qreal m_sizeFactor;
     PiePosition m_position;
+    PieSizePolicy m_sizePolicy;
     qreal m_total;
     qreal m_pieStartAngle;
-    qreal m_pieAngleSpan;
+    qreal m_pieEndAngle;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

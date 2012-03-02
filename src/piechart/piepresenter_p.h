@@ -44,6 +44,7 @@ private:
     QPieSeries *m_series;
     QRectF m_rect;
     QRectF m_pieRect;
+    QRectF m_debugRect;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
