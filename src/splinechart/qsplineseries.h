@@ -17,7 +17,7 @@ class QSplineSeries : public QLineSeries
     QSplineSeries(QObject *parent = 0);
     QSeriesType type() const { return QSeries::SeriesTypeSpline; }
 
-    int count() const { return m_x.size(); }
+//    int count() const { return m_x.size(); }
     QPointF controlPoint(int index) const { return m_controlPoints[index]; }
 
     private:

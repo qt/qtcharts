@@ -1,6 +1,29 @@
 #include "qsplineseries.h"
 
+/*!
+    \class QSplineSeries
+    \brief Series type used to store data needed to draw a spline.
+
+    QSplineSeries stores the data points along with the segment control points needed by QPainterPath to draw spline
+    Control points are automatically calculated when data changes. The algorithm computes the points so that the normal spline can be drawn.
+*/
+
+/*!
+  \fn QSeriesType QSplineSeries::type() const
+  Returns the type of the series
+  */
+
+/*!
+  \fn QSeriesType QSplineSeries::controlPoint(int index) const
+  Returns the control point specified by \a index
+  */
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+/*!
+    Constructs empty series object which is a child of \a parent.
+    When series object is added to QChartView or QChart instance then the ownerships is transfered.
+  */
 
 QSplineSeries::QSplineSeries(QObject *parent) :
     QLineSeries(parent)
@@ -10,11 +33,15 @@ QSplineSeries::QSplineSeries(QObject *parent) :
     connect(this,SIGNAL(pointReplaced(int)), this, SLOT(updateControlPoints()));
 }
 
+/*!
+  \internal
+  Calculates control points which are needed by QPainterPath.cubicTo function to draw the cubic Bezier cureve between two points.
+  */
 void QSplineSeries::calculateControlPoints()
 {
 
     // Based on http://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit
-    // CPOL Licence
+    // CPOL License
 
     int n = m_x.size() - 1;
     if (n == 1)
@@ -74,6 +101,9 @@ void QSplineSeries::calculateControlPoints()
     }
 }
 
+/*!
+  \internal
+  */
 QList<qreal> QSplineSeries::getFirstControlPoints(QList<qreal> rhs)
 {
     QList<qreal> x; // Solution vector.
@@ -94,6 +124,10 @@ QList<qreal> QSplineSeries::getFirstControlPoints(QList<qreal> rhs)
     return x;
 }
 
+/*!
+  \internal
+  Updates the control points, besed on currently avaiable knots.
+  */
 void QSplineSeries::updateControlPoints()
 {
     if(m_x.size() > 1)
