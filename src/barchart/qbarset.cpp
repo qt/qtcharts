@@ -141,20 +141,6 @@ QBrush QBarSet::brush()
     return mBrush;
 }
 
-/*
-void QBarSet::barClickedEvent(QString category)
-{
-    // Some bar of this set has been clicked
-    // TODO: What happens then?
-    emit clicked(category);     // Notify that set has been clicked
-}
-
-void QBarSet::barRightClickedEvent(QString category)
-{
-    emit rightClicked(category);
-}
-*/
-
 /*!
     \internal \a pos
 */

@@ -17,9 +17,14 @@ public:
     QString name();
     QBarSet& operator << (const qreal &value);  // appends new value to set
 
+    // TODO: remove indices eventually. Use as internal?
     int count();                                // count of values in set
     qreal valueAt(int index);                   // for modifying individual values
     void setValue(int index, qreal value);      // setter for individual value
+
+    // TODO:
+    //qreal value(QString category);
+    //void setValue(QString category, qreal value);
 
     void setPen(QPen pen);
     QPen pen();
@@ -42,8 +47,6 @@ Q_SIGNALS:
 public Q_SLOTS:
     // These are for internal communication
     // TODO: TO PIMPL --->
-//    void barClickedEvent(QString category);
-//    void barRightClickedEvent(QString category);
     void barHoverEnterEvent(QPoint pos);
     void barHoverLeaveEvent();
     // <--- TO PIMPL
@@ -51,7 +54,8 @@ public Q_SLOTS:
 private:
 
     QString mName;
-    QList<qreal> mValues;
+    QList<qreal> mValues;   // TODO: replace with map (category, value)
+    QMap<QString,qreal> mMappedValues;
     QPen mPen;
     QBrush mBrush;
 

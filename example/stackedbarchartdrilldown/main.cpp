@@ -1,83 +1,129 @@
-#include <QApplication>
+#include <QtGui/QApplication>
 #include <QMainWindow>
+#include <qchartglobal.h>
 #include <qchartview.h>
 #include <qstackedbarseries.h>
 #include <qbarset.h>
 #include <qchartaxis.h>
 #include <QStringList>
+#include <QDebug>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
+
+//! [1]
+class DrilldownBarSeries : public QStackedBarSeries
+{
+    Q_OBJECT
+public:
+    DrilldownBarSeries(QStringList categories, QObject* parent=0) : QStackedBarSeries(categories,parent) {}
+
+/*
+public Q_SLOTS:
+    void handleRightClick(QBarSet *barset, QString category)
+    {
+    }
+*/
+};
+//! [1]
+
+//! [2]
+class DrilldownBarSet : public QBarSet
+{
+    Q_OBJECT
+public:
+    DrilldownBarSet(QString name, DrilldownBarSeries *parent) : QBarSet(name, parent), mSeries(parent) {}
+
+    DrilldownBarSeries* drilldownSeries() { return mSeries; }
+
+private:
+    DrilldownBarSeries* mSeries;
+};
+//! [2]
+
+//! [3]
+class DrilldownChart : public QChartView
+{
+    Q_OBJECT
+public:
+    explicit DrilldownChart(QWidget *parent = 0) : QChartView(parent), m_currentSeries(0) {}
+
+    void changeSeries(QSeries* series)
+    {
+        if (m_currentSeries)
+            removeSeries(m_currentSeries);
+        m_currentSeries = series;
+        addSeries(series);
+        setChartTitle(series->title());
+    }
+
+public Q_SLOTS:
+    void handleRightClick(QBarSet* barset, QString category)
+    {
+        qDebug() << "DrilldownChart::handleRightClick" << barset->name() << category;
+        // TODO: continue from here
+//        DrilldownBarSet* drilldownBarSet = static_cast<DrilldownBarSet*>(barset);
+//        changeSeries(drilldownBarSet->drilldownSeries());
+    }
+
+private:
+    QSeries* m_currentSeries;
+};
+//! [3]
+
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QMainWindow window;
 
-    // TODO:
-/*
+    DrilldownChart* drilldownChart =  new DrilldownChart(&window);
+    drilldownChart->setChartTheme(QChart::ChartThemeIcy);
+
     //! [1]
     // Define categories
-    QStringList categories;
-    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+    QStringList months;
+    months << "Jun" << "Jul" << "Aug" << "Oct";
+    QStringList weeks;
+    weeks << "week 1" << "week 2" << "week 3" << "week 4";
+    QStringList plants;
+    plants << "Habanero" << "Lemon Drop" << "Starfish" << "Aji Amarillo";
     //! [1]
 
-    //! [2]
-    // Create some test sets for chat
-    QBarSet *set0 = new QBarSet("Bub");
-    QBarSet *set1 = new QBarSet("Bob");
-    QBarSet *set2 = new QBarSet("Guybrush");
-    QBarSet *set3 = new QBarSet("Larry");
-    QBarSet *set4 = new QBarSet("Zak");
+    DrilldownBarSeries* seasonSeries = new DrilldownBarSeries(months, drilldownChart);
+    seasonSeries->setTitle("Crop by month - Season");
 
-    *set0 << 1 << 2 << 3 << 4 << 5 << 6;
-    *set1 << 5 << 0 << 0 << 4 << 0 << 7;
-    *set2 << 3 << 5 << 8 << 13 << 8 << 5;
-    *set3 << 5 << 6 << 7 << 3 << 4 << 5;
-    *set4 << 9 << 7 << 5 << 3 << 1 << 2;
-    //! [2]
+    foreach (QString plant, plants) {
+        DrilldownBarSet *seasonCrop = new DrilldownBarSet(plant, seasonSeries);
+        foreach(QString month, months) {
+            DrilldownBarSeries* monthSeries = new DrilldownBarSeries(weeks, drilldownChart);
+            DrilldownBarSet *monthCrop = new DrilldownBarSet(plant, monthSeries);
+            foreach(QString week, weeks) {
+                *monthCrop << (qrand() % 20);
+            }
+            monthSeries->addBarSet(monthCrop);
+            *seasonCrop << monthCrop->valueAt(plants.indexOf(plant));
+        }
 
-    //! [3]
-    // Create series and add sets to it
-    QStackedBarSeries* series = new QStackedBarSeries(categories);
+        // We want floating values!
+        QObject::connect(seasonCrop,SIGNAL(clicked(QString)),seasonCrop,SIGNAL(toggleFloatingValues()));
+        seasonSeries->addBarSet(seasonCrop);
+    }
 
-    series->addBarSet(set0);
-    series->addBarSet(set1);
-    series->addBarSet(set2);
-    series->addBarSet(set3);
-    series->addBarSet(set4);
-    //! [3]
+    QObject::connect(seasonSeries,SIGNAL(rightClicked(QBarSet*,QString)),drilldownChart,SLOT(handleRightClick(QBarSet*,QString)));
 
-    //! [4]
-    // Enable tooltip
-    series->setToolTipEnabled();
+    seasonSeries->setToolTipEnabled(true);
 
-    // Connect clicked signal of set to toggle floating values of set.
-    // Note that we leave QBarset "Zak" unconnected here, so clicking on it doesn't toggle values.
-    QObject::connect(set0,SIGNAL(clicked(QBarSet*,QString)),set0,SIGNAL(toggleFloatingValues()));
-    QObject::connect(set1,SIGNAL(clicked(QBarSet*,QString)),set1,SIGNAL(toggleFloatingValues()));
-    QObject::connect(set2,SIGNAL(clicked(QBarSet*,QString)),set2,SIGNAL(toggleFloatingValues()));
-    QObject::connect(set3,SIGNAL(clicked(QBarSet*,QString)),set3,SIGNAL(toggleFloatingValues()));
-    //! [4]
+    drilldownChart->addSeries(seasonSeries);
 
-    //! [5]
-    // Create view for chart and add series to it. Apply theme.
+    drilldownChart->axisX()->setAxisVisible(false);
+    drilldownChart->axisX()->setGridVisible(false);
+    drilldownChart->axisX()->setLabelsVisible(false);
 
-    QChartView* chartView =  new QChartView(&window);
-    chartView->addSeries(series);
-    chartView->setChartTitle("simple stacked barchart");
-    chartView->setChartTheme(QChart::ChartThemeIcy);
-    //! [5]
-
-    //! [6]
-    chartView->axisX()->setAxisVisible(false);
-    chartView->axisX()->setGridVisible(false);
-    chartView->axisX()->setLabelsVisible(false);
-    //! [6]
-
-    window.setCentralWidget(chartView);
+    window.setCentralWidget(drilldownChart);
     window.resize(400, 300);
     window.show();
-*/
+
     return a.exec();
 }
 
+#include "main.moc"
