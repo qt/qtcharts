@@ -3,80 +3,67 @@
 #include "qlineseries.h"
 #include <QGridLayout>
 #include <QPushButton>
+#include "qchartaxis.h"
+#include <qmath.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 SplineWidget::SplineWidget(QWidget *parent)
     : QWidget(parent)
 {
+    qsrand(time(NULL));
+    //! [1]
     //create QSplineSeries
     series = new QSplineSeries(this);
+    //! [1]
+
+    //! [2]
+    // customize the series presentation settings
+    QPen seriesPen(Qt::blue);
+    seriesPen.setWidth(3);
+    series->setPen(seriesPen);
+    //! [2]
+
+    //! [add points to series]
+    //add data points to the series
     series->add(QPointF(150, 100));
     series->add(QPointF(200, 130));
     series->add(QPointF(250, 120));
     series->add(QPointF(300, 140));
-    series->add(QPointF(350, 100));
-    series->add(QPointF(400, 120));
-    series->add(QPointF(450, 150));
-    //    series->add(QPointF(600, 150));
-    series->add(QPointF(500, 145));
-    series->add(QPointF(550, 170));
-    series->add(QPointF(600, 190));
-    series->add(QPointF(650, 210));
-    series->add(QPointF(700, 190));
-    series->add(QPointF(750, 180));
-    series->add(QPointF(800, 170));
+    series->add(QPointF(350, 160));
+    //! [add points to series]
+//    series->add(QPointF(400, 120));
+//    series->add(QPointF(450, 150));
+//    series->add(QPointF(500, 145));
+//    series->add(QPointF(550, 170));
+//    series->add(QPointF(600, 190));
+//    series->add(QPointF(650, 210));
+//    series->add(QPointF(700, 190));
+//    series->add(QPointF(750, 180));
+//    series->add(QPointF(800, 170));
 
-//    series->calculateControlPoints();
-
-    QSplineSeries* series2 = new QSplineSeries(this);
-    qsrand(time(NULL));
-    //    for (int i = 0; i < 100; i++)
-    //    {
-    //        series2->add(QPointF(i*7, qrand()%600));
-    //    }
-    int k = 10;
-    for (int i = 0; i < 25; i++)
-    {
-        if (k > 60)
-        {
-            k = 10;
-        }
-        series2->add(QPointF(i*50, k));
-        k +=10;
-    }
-
-//    series2->calculateControlPoints();
-
-    //    QLineSeries* lineSeries = new QLineSeries;
-    //    for (int i = 0; i < series->count() - 1; i++)
-    //    {
-    //        lineSeries->add(series->at(i).x(), series->at(i).y());
-    //        lineSeries->add(series->controlPoint(2*i).x(), series->controlPoint(2*i).y());
-    //        lineSeries->add(series->controlPoint(2*i + 1).x(), series->controlPoint(2*i + 1).y());
-    //    }
-
-    //    QLineChartSeries* lineSeries2 = new QLineChartSeries;
-    //    lineSeries2->add(10, 50);
-    //    lineSeries2->add(30, 15);
-    //    lineSeries2->add(60, 40);
-    //    lineSeries2->add(90, 70);
-    //    lineSeries2->add(100, 20);
-
-    //create chart view
+    //! [3]
+    // create chart view
     QChartView* chart = new QChartView;
-    chart->setMinimumSize(800,600);
-    //    chart->setGeometry(50, 50, 400, 300);
     chart->addSeries(series);
-    chart->addSeries(series2);
 
-    //add new item
+    chart->axisX()->setRange(0, 1500);
+    chart->axisY()->setRange(0, 400);
+
+    chart->setMinimumSize(800,600);
+    //! [3]
+
+    //! [4]
+    //add new data point button
     QPushButton* addButton = new QPushButton("Add new point");
     connect(addButton, SIGNAL(clicked()), this, SLOT(addNewPoint()));
 
-    QPushButton* removeButton = new QPushButton("Remove point from the end");
+    // remove the last data point in the series
+    QPushButton* removeButton = new QPushButton("Remove point");
     connect(removeButton, SIGNAL(clicked()), this, SLOT(removePoint()));
+    //! [4]
 
+    //! [5]
     //butttons layout
     QVBoxLayout* buttonsLayout = new QVBoxLayout;
     buttonsLayout->addWidget(addButton);
@@ -87,21 +74,26 @@ SplineWidget::SplineWidget(QWidget *parent)
     mainLayout->addWidget(chart, 1, 0);
     mainLayout->addLayout(buttonsLayout, 1, 1);
     setLayout(mainLayout);
+    //! [5]
 }
 
+//! [add point]
 void SplineWidget::addNewPoint()
 {
     if (series->count() > 0)
-        series->add(QPointF(series->x(series->count() - 1) + 50, series->y(series->count() - 1) - 50 + qrand()%100));
+        series->add(QPointF(series->x(series->count() - 1) + 20 + qrand()%40, qAbs(series->y(series->count() - 1) - 50 + qrand()%100)));
     else
         series->add(QPointF(50, 50 + qrand()%50));
 }
+//! [add point]
 
+//! [remove point]
 void SplineWidget::removePoint()
 {
     if (series->count() > 0)
         series->remove(QPointF(series->x(series->count() - 1), series->y(series->count() - 1)));
 }
+//! [remove point]
 
 SplineWidget::~SplineWidget()
 {

@@ -124,9 +124,9 @@ void QLineSeries::replace(const QPointF& point)
 void QLineSeries::remove(qreal x)
 {
     int index = m_x.indexOf(x);
-    m_x.remove(index);
-    m_y.remove(index);
     emit pointRemoved(index);
+    m_x.remove(index);
+    m_y.remove(index);    
 }
 
 /*!

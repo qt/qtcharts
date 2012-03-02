@@ -87,6 +87,7 @@ Widget::Widget(QWidget *parent)
 
     // hide axis X labels
     QChartAxis* axis = chartArea->axisX();
+//    axis->
     //    axis->setLabelsVisible(false);
     //    newAxis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);
 
@@ -211,7 +212,7 @@ void Widget::refreshChart()
             //            chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);
             chartArea->addSeries(series);
         }
-        chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);
+        chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] - 1, selectedYearsInts[0] + 1);
     }
 }
 

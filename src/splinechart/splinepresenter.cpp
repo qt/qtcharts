@@ -29,8 +29,8 @@ void SplinePresenter::applyGeometry(QVector<QPointF>& points)
     const QPointF& point = points.at(0);
     splinePath.moveTo(point);
 
-    QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
-    for (int i = 0; i < splineSeries->count() - 1; i++)
+//    QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
+    for (int i = 0; i < points.size() - 1; i++)
     {
         const QPointF& point = points.at(i + 1);
         splinePath.cubicTo(calculateGeometryControlPoint(2 * i), calculateGeometryControlPoint(2 * i + 1), point);
@@ -56,7 +56,7 @@ void SplinePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     for (int i = 0; i < splineSeries->count() - 1; i++)
     {
         painter->setPen(Qt::red);
-        painter->drawEllipse(m_points[i], 4, 4);
+        painter->drawEllipse(m_points[i], 2, 2);
 
         painter->setPen(Qt::blue);
         //        painter->drawLine(m_series->at(i), m_series->controlPoint(2 * i));
@@ -67,7 +67,7 @@ void SplinePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     if (m_points.count() > 0)
     {
         painter->setPen(Qt::red);
-        painter->drawEllipse(m_points[m_points.count() - 1], 4, 4);
+        painter->drawEllipse(m_points[m_points.count() - 1], 2, 2);
     }
     painter->restore();
 }

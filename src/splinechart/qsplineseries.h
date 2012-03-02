@@ -20,6 +20,11 @@ class QSplineSeries : public QLineSeries
 //    int count() const { return m_x.size(); }
     QPointF controlPoint(int index) const { return m_controlPoints[index]; }
 
+    // TODO: allow the user to set custom control points
+//    void setCustomControlPoints(QList<QPointsF> controlPoints);
+//    bool calculateControlPointsAutomatically();
+//    void setCalculateControlPointsAutomatically();
+
     private:
     void calculateControlPoints();
     QList<qreal> getFirstControlPoints(QList<qreal> rhs);

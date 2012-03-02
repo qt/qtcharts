@@ -304,6 +304,15 @@ void ChartTheme::decorate(SplinePresenter* presenter, QSplineSeries* series, int
     Q_ASSERT(presenter);
     Q_ASSERT(series);
 
+    QPen pen;
+    if(pen != series->pen()){
+        presenter->setPen(series->pen());
+        return;
+    }
+    pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
+    pen.setWidthF(series->pen().widthF());
+    presenter->setPen(pen);
+
 //    QColor color = m_seriesColor.at(count % m_seriesColor.size());
     // TODO: define alpha in the theme? or in the series?
     //color.setAlpha(120);

@@ -20,6 +20,7 @@
             <li><a href="example-linechart.html">Line Chart example</a></li>
             <li><a href="example-piechart.html">Pie Chart example</a></li>
             <li><a href="example-gdpbarchart.html">GDP Chart example</a></li>
+            <li><a href="example-splinechart.html">Spline Chart example</a></li>
         </ul>
         </td>
         </tr>
