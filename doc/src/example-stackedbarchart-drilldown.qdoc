@@ -27,8 +27,8 @@
     \snippet ../example/stackedbarchartdrilldown/main.cpp 3
     
     To create the drilldown structure, we first create our top level series, which we call seasonSeries. For each month in seasonSeries we create a drilldown series, called weeklySeries which contains more detailed data for that month.
-	In weeklySeries, we use the drilldown handler to bring us back to seasonSeries. To do this, we connect the rightClicked signal from each weeklySeries to the handler in our DrilldownChart.
-	Finally we connect the rightClicked signal to DrilldownChart.
+	In weeklySeries, we use the drilldown handler to bring us back to seasonSeries. To do this we add mapping to the series. The seasonSeries is mapped to weeklySeries for each month. Every weeklySeries is mapped back to the seasonSeries.
+	To make mapping work, we connect the rightClicked signals from our series to the drilldownChart.
 
     \snippet ../example/stackedbarchartdrilldown/main.cpp 4
 
