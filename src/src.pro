@@ -14,6 +14,7 @@ SOURCES += axisitem.cpp \
     domain.cpp \
     qchart.cpp \
     qchartaxis.cpp \
+    qchartaxiscategories.cpp \
     qchartview.cpp \
     qseries.cpp
 PRIVATE_HEADERS += axisitem_p.h \
@@ -25,6 +26,7 @@ PRIVATE_HEADERS += axisitem_p.h \
     domain_p.h
 PUBLIC_HEADERS += qchart.h \
     qchartaxis.h \
+    qchartaxiscategories.h \
     qchartglobal.h \
     qseries.h \
     qchartview.h

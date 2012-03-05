@@ -4,6 +4,7 @@
 #include <qlineseries.h>
 #include <qchart.h>
 #include <qchartaxis.h>
+#include <qchartaxiscategories.h>
 #include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -48,18 +49,24 @@ int main(int argc, char *argv[])
     QChartAxis* axisX = chartView->axisX();
     axisX->setLabelsAngle(45);
     axisX->setGridPen(Qt::DashLine);
-    axisX->addAxisTickLabel(0,"low");
-    axisX->addAxisTickLabel(50,"medium");
-    axisX->addAxisTickLabel(100,"High");
+
+    QChartAxisCategories& categoriesX = axisX->categories();
+    categoriesX.insert(0,"low");
+    categoriesX.insert(50,"medium");
+    categoriesX.insert(100,"High");
+
     axisX->setMin(-10);
     axisX->setMax(200);
 
     QChartAxis* axisY = chartView->axisY();
     axisY->setLabelsAngle(45);
     axisY->setShadesBrush(Qt::yellow);
-    axisY->addAxisTickLabel(0,"low");
-    axisY->addAxisTickLabel(50,"medium");
-    axisY->addAxisTickLabel(100,"High");
+
+    QChartAxisCategories& categoriesY = axisY->categories();
+    categoriesY.insert(0,"low");
+    categoriesY.insert(50,"medium");
+    categoriesY.insert(100,"High");
+
     axisY->setMin(-10);
     axisY->setMax(200);
 

@@ -1,7 +1,7 @@
 #ifndef QCHARTAXIS_H_
 #define QCHARTAXIS_H_
 
-#include <qchartglobal.h>
+#include <qchartaxiscategories.h>
 #include <QPen>
 #include <QFont>
 
@@ -59,19 +59,16 @@ public:
     //ticks handling
     void setTicksCount(int count);
     int ticksCount() const { return m_ticksCount;}
-    void addAxisTickLabel(qreal value,const QString& label);
-    void removeAxisTickLabel(qreal value);
-    QString axisTickLabel(qreal value) const ;
-    void clearAxisTickLabels();
+
+    QChartAxisCategories& categories() { return m_category; }
 
 signals:
 	void minChanged(qreal min);
 	void maxChanged(qreal max);
 	void rangeChanged(qreal min, qreal max);
 
-//intral signal
+//interal signal
 	void updated();
-
 //internal slot
 public slots:
 	void handleAxisRangeChanged(qreal min, qreal max);
@@ -99,7 +96,7 @@ private:
     qreal m_max;
 
     int m_ticksCount;
-    QMap<qreal, QString> m_ticks;
+    QChartAxisCategories m_category;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -362,41 +362,6 @@ void QChartAxis::setTicksCount(int count)
 	}
 }
 
-/*!
-  TODO: refactor me. Sets string \a label for \a value on the axis.
- */
-void QChartAxis::addAxisTickLabel(qreal value,const QString& label)
-{
-	m_ticks.insert(value,label);
-	emit updated();
-}
-
-/*!
-  TODO: refactor me. Removes label for \a value on the axis.
- */
-void QChartAxis::removeAxisTickLabel(qreal value)
-{
-	m_ticks.remove(value);
-	emit updated();
-}
-
-/*!
-  TODO: refactor me. Returns label for \a value on the axis.
- */
-QString QChartAxis::axisTickLabel(qreal value) const
-{
-	return m_ticks.value(value);
-}
-
-/*!
-  TODO: refactor me. Removes all the string labels for on the axis.
- */
-void QChartAxis::clearAxisTickLabels()
-{
-	m_ticks.clear();
-	emit updated();
-}
-
 #include "moc_qchartaxis.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
