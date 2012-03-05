@@ -25,7 +25,6 @@ void SplinePresenter::applyGeometry(QVector<QPointF>& points)
 {
     if(points.size()==0) return;
 
-    qDebug() << "Kueku";
     QPainterPath splinePath;
     const QPointF& point = points.at(0);
     splinePath.moveTo(point);
@@ -36,8 +35,6 @@ void SplinePresenter::applyGeometry(QVector<QPointF>& points)
         const QPointF& point = points.at(i + 1);
         splinePath.cubicTo(calculateGeometryControlPoint(2 * i), calculateGeometryControlPoint(2 * i + 1), point);
     }
-
-
 
     prepareGeometryChange();
     m_path = splinePath;

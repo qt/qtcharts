@@ -11,7 +11,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 SplineWidget::SplineWidget(QWidget *parent)
     : QWidget(parent)
 {
-    qsrand(time(NULL));
+//    qsrand(time(NULL));
     //! [1]
     //create QSplineSeries
     series = new QSplineSeries;
