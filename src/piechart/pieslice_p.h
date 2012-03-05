@@ -38,7 +38,7 @@ Q_SIGNALS:
     void hoverLeave();
 
 public Q_SLOTS:
-    void setPieRect(QRectF rect);
+    void setPieCenterAndRadius(QPointF center, qreal radius);
     void updateGeometry();
     void updateData(const QPieSlice *sliceData);
 
@@ -48,19 +48,20 @@ public:
     static QRectF labelTextRect(QFont font, QString text);
 
 private:
-    QRectF m_pieRect;
+    QPointF m_pieCenter;
+    qreal m_pieRadius;
 
     QPainterPath m_slicePath;
     qreal m_startAngle;
     qreal m_angleSpan;
     bool m_isExploded;
-    qreal m_explodeDistance;
+    qreal m_explodeDistanceFactor;
     bool m_labelVisible;
     QPen m_pen;
     QBrush m_brush;
 
     QPainterPath m_labelArmPath;
-    qreal m_labelArmLength;
+    qreal m_labelArmLengthFactor;
     QPen m_labelArmPen;
 
     QRectF m_labelTextRect;

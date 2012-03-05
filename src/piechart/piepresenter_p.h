@@ -9,8 +9,6 @@ class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class PieSlice;
 
-#define PI 3.14159265 // TODO: is this defined in some header?
-
 class PiePresenter : public QObject, public ChartItem
 {
     Q_OBJECT
@@ -23,9 +21,6 @@ public:
 public: // from QGraphicsItem
     QRectF boundingRect() const { return m_rect; }
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
-
-public:
-    QRectF pieRect() const { return m_pieRect; }
 
 public Q_SLOTS:
     void handleSeriesChanged(const QPieSeries::ChangeSet& changeSet);
@@ -43,7 +38,8 @@ private:
     QHash<QPieSlice*, PieSlice*> m_slices;
     QPieSeries *m_series;
     QRectF m_rect;
-    QRectF m_pieRect;
+    QPointF m_pieCenter;
+    qreal m_pieRadius;
     QRectF m_debugRect;
 };
 

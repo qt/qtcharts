@@ -29,8 +29,8 @@ public:
     bool isLabelVisible() const;
     void setExploded(bool exploded);
     bool isExploded() const;
-    void setExplodeDistance(qreal distance);
-    qreal explodeDistance() const;
+    void setExplodeDistanceFactor(qreal factor);
+    qreal explodeDistanceFactor() const;
 
     // generated data
     qreal percentage() const;
@@ -46,8 +46,8 @@ public:
     QPen labelPen() const;
     void setLabelFont(QFont font);
     QFont labelFont() const;
-    void setLabelArmLength(qreal len);
-    qreal labelArmLength() const;
+    void setLabelArmLengthFactor(qreal factor);
+    qreal labelArmLengthFactor() const;
 
     // TODO: label position in general
     // setLabelFlags(inside|outside|labelArmOn|labelArmOff|???)
@@ -71,7 +71,7 @@ private:
     QString m_label;
     bool m_isLabelVisible;
     bool m_isExploded;
-    qreal m_explodeDistance;
+    qreal m_explodeDistanceFactor;
 
     // generated data
     qreal m_percentage;
@@ -83,7 +83,7 @@ private:
     QBrush m_brush;
     QPen m_labelPen;
     QFont m_labelFont;
-    qreal m_labelArmLength;
+    qreal m_labelArmLengthFactor;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
