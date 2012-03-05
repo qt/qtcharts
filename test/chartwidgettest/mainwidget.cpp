@@ -3,6 +3,7 @@
 #include "qpieseries.h"
 #include "qscatterseries.h"
 #include <qlineseries.h>
+#include "qsplineseries.h"
 #include <qbarset.h>
 #include <qbarseries.h>
 #include <qstackedbarseries.h>
@@ -200,7 +201,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
     QList<RealList> data = generateTestData(columnCount, rowCount, dataCharacteristics);
 
     // Line series and scatter series use similar data
-    if (seriesName.contains("line", Qt::CaseInsensitive)) {
+    if (seriesName.contains("qline", Qt::CaseInsensitive)) {
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
             QLineSeries *series = new QLineSeries();
@@ -215,7 +216,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             QList<qreal> column = data.at(j);
             QScatterSeries *series = new QScatterSeries();
             for (int i(0); i < column.count(); i++) {
-               (*series) << QPointF(i, column.at(i));
+                (*series) << QPointF(i, column.at(i));
             }
             m_chartView->addSeries(series);
             setCurrentSeries(series);
@@ -254,6 +255,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             }
             series->addBarSet(set);
         }
+
         // TODO: new implementation of setFloatingValuesEnabled with signals
         //series->setFloatingValuesEnabled(true);
         series->setToolTipEnabled(true);
@@ -261,8 +263,19 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         m_chartView->addSeries(series);
         setCurrentSeries(series);
     }
+    else if (seriesName.contains("spline", Qt::CaseInsensitive)) {
+        for (int j(0); j < data.count(); j ++) {
+            QList<qreal> column = data.at(j);
+            QSplineSeries *series = new QSplineSeries();
+            for (int i(0); i < column.count(); i++) {
+                series->add(i, column.at(i));
+            }
+            m_chartView->addSeries(series);
+            setCurrentSeries(series);
+        }
 
-    // TODO: spline and area
+        // TODO: area
+    }
 }
 
 void MainWidget::setCurrentSeries(QSeries *series)
@@ -284,6 +297,8 @@ void MainWidget::setCurrentSeries(QSeries *series)
             break;
         case QSeries::SeriesTypePercentBar:
             qDebug() << "setCurrentSeries (Percentbar)";
+            break;
+        case QSeries::SeriesTypeSpline:
             break;
         default:
             Q_ASSERT(false);

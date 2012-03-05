@@ -20,12 +20,7 @@ public:
 
     QPointF calculateGeometryControlPoint(int index) const;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    
-signals:
-    
-public slots:
-    
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);        
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
