@@ -91,6 +91,12 @@ void ChartDataSet::removeSeries(QSeries* series)
     if(i==-1){
         Domain* domain = m_axisDomainMap.take(axis);
         emit axisRemoved(axis);
+        if(axis!=axisY()){
+            if(axis->parent()==this){
+                delete axis;
+                axis=0;
+            }
+        }
         delete domain;
     }
 
@@ -275,7 +281,12 @@ Domain* ChartDataSet::domain(QSeries* series) const
 
 Domain* ChartDataSet::domain(QChartAxis* axis) const
 {
-	return m_axisDomainMap.value(axis);
+    if(axis==axisX()) {
+        return  m_axisDomainMap.value(axisY());
+    }
+    else {
+        return m_axisDomainMap.value(axis);
+    }
 }
 
 QChartAxis* ChartDataSet::axis(QSeries* series) const

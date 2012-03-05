@@ -11,15 +11,15 @@ m_index(0)
     QTime now = QTime::currentTime();
     qsrand((uint)now.msec());
 
-    QLineSeries* series0 = new QLineSeries();
+    QLineSeries* series0 = new QLineSeries(this);
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
-    QLineSeries* series1 = new QLineSeries();
+    QLineSeries* series1 = new QLineSeries(this);
     QPen red(Qt::red);
     red.setWidth(3);
     series1->setPen(red);
-    QLineSeries* series2 = new QLineSeries();
+    QLineSeries* series2 = new QLineSeries(this);
     QPen green(Qt::green);
     green.setWidth(3);
     series2->setPen(green);
