@@ -1,5 +1,6 @@
 #include "scatterpresenter_p.h"
 #include "qscatterseries.h"
+#include "scatterseries_p.h"
 #include "chartpresenter_p.h"
 #include <QPen>
 #include <QPainter>
@@ -20,13 +21,12 @@ ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *pare
     m_series(series),
     m_clippingRect()
 {
-    if (parent)
-        m_clippingRect = parent->boundingRect();
+    Q_ASSERT(parent);
+    Q_ASSERT(series);
 
-    if (series) {
-        connect(series, SIGNAL(changed()), this, SLOT(handleModelChanged()));
-    }
-
+    m_clippingRect = parent->boundingRect();
+    connect(series->d, SIGNAL(changed()), this, SLOT(handleModelChanged()));
+    connect(this, SIGNAL(clicked(QPointF)), series, SIGNAL(clicked(QPointF)));
     setZValue(ChartPresenter::ScatterSeriesZValue);
 
     // TODO: how to draw a drop shadow?
@@ -136,9 +136,19 @@ void ScatterPresenter::changeGeometry()
                 case QScatterSeries::MarkerShapeRectangle:
                     m_path.addRect(x, y, size, size);
                     break;
+                case QScatterSeries::MarkerShapeRoundedRectangle:
+                    m_path.addRoundedRect(x, y, size, size, size / 4.0, size / 4.0);
+                    break;
                 case QScatterSeries::MarkerShapeTiltedRectangle: {
                     // TODO: tilt the rectangle
                     m_path.addRect(x, y, size, size);
+                    break;
+                }
+                case QScatterSeries::MarkerShapeTriangle: {
+                    QPolygonF polygon;
+                    polygon << QPointF(0.0, -size) << QPointF(size / 2.0, 0.0) << QPointF(-size / 2, 0.0);
+                    // TODO: the position is not exactly right...
+                    m_path.addPolygon(polygon.translated(x + size / 2.0, y + size));
                     break;
                 }
                 default:

@@ -19,6 +19,7 @@ public:
         MarkerShapeDefault = 0,
         MarkerShapeX,
         MarkerShapeRectangle,
+        MarkerShapeRoundedRectangle,
         MarkerShapeTiltedRectangle,
         MarkerShapeTriangle,
         MarkerShapeCircle
@@ -46,26 +47,23 @@ public:
     int closestPoint(QPointF coordinate);
     //TODO: insert, replace...?
 
-    QPen pen();
-    void setPen(QPen pen);
-    QBrush brush();
-    void setBrush(QBrush brush);
-    MarkerShape shape();
+    QPen pen() const;
+    void setPen(const QPen &pen);
+    QBrush brush() const;
+    void setBrush(const QBrush &brush);
+    MarkerShape shape() const;
     void setShape(MarkerShape shape);
-    qreal size();
+    qreal size() const;
     void setSize(qreal size);
 
 Q_SIGNALS:
     void clicked(QPointF coordinate);
-    // TODO: move to PIMPL for simplicity or does the user ever need changed signals?
-    // TODO: more finegrained signaling for performance reasons
-    // (check QPieSeries implementation with change sets)
-    void changed();
 
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)
     Q_DISABLE_COPY(QScatterSeries)
-    QScatterSeriesPrivate *const d;
+    friend class ScatterPresenter;
+    QScatterSeriesPrivate *d;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
