@@ -126,7 +126,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QChartAxis::update()
+    \fn void QChartAxis::updated()
     \brief \internal
 */
 
