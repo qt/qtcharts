@@ -326,18 +326,24 @@ void QChartAxis::setMax(qreal max)
  */
 void QChartAxis::setRange(qreal min, qreal max)
 {
+
+
 	bool changed = false;
     if(m_min!=min) {
         m_min=min;
+        changed=true;
         emit minChanged(min);
     }
 
     if(m_max!=max) {
         m_max=max;
+        changed=true;
         emit maxChanged(max);
     }
 
-    if(changed) emit rangeChanged(m_min,m_max);
+    if(changed) {
+        emit rangeChanged(m_min,m_max);
+    }
 }
 
 void QChartAxis::handleAxisRangeChanged(qreal min, qreal max)
