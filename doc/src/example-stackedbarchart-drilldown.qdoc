@@ -1,0 +1,42 @@
+/*!
+    \example example/stackedbarchartdrilldown
+    \title StackedBarChart Drilldown Example
+    \subtitle
+
+    The example shows how to implement drilldown using stacked barchart. In drilldown example we create stacked barchart, which shows the harvest of various chili peppers during season. In season view the harvest is grouped by month. To drill down to weekly view, user clicks selected month with right mouse button. On weekly view, the harvest of clicked month is shown by week. For example purposes each month is 4 weeks long :)
+
+	Season view looks like this:
+	\image stackedbarchart_drilldown_season.png
+
+	Right mouse button clicked on august, shows the harvest from august:
+	\image stackedbarchart_drilldown_august.png
+
+    Here we define a drilldown series, which adds mapping for categories to other drilldown series.
+	Purpose of drilldown series is to contain knowledge of the drilldown structure. The mapDrilldownSeries function maps the category to given series. We can ask the mapping for category with drilldownSeries(QString category) function.
+
+    \snippet ../example/stackedbarchartdrilldown/main.cpp 1
+
+    To enable drilldown we create own view, which implements handler for right click. All QBarSeries derived classes send out rightClicked(QBarSet*, QString) signal when series is clicked with right mouse button. The parameters QBarSet and QString contain the pointer to clicked bar set and name of category, where click occured.
+	
+	In our DrilldownChart we implement handler, which selects the drilldown chart with the category.
+
+    \snippet ../example/stackedbarchartdrilldown/main.cpp 2
+
+    Here we define data, which we use to construct the chart.
+
+    \snippet ../example/stackedbarchartdrilldown/main.cpp 3
+    
+    To create the drilldown structure, we first create our top level series, which we call seasonSeries. For each month in seasonSeries we create a drilldown series, called weeklySeries which contains more detailed data for that month.
+	In weeklySeries, we use the drilldown handler to bring us back to seasonSeries. To do this, we connect the rightClicked signal from each weeklySeries to the handler in our DrilldownChart.
+	Finally we connect the rightClicked signal to DrilldownChart.
+
+    \snippet ../example/stackedbarchartdrilldown/main.cpp 4
+
+    When we have our drilldown structure ready, we can add the data to it. Here we generate random crop for each plant in each week. The monthly crop is calculated from weekly crops. To enable floating values, we connect the clicked signal to toggle the value of corresponding set.
+    
+    \snippet ../example/stackedbarchartdrilldown/main.cpp 5
+
+	Here we set the chart to show top level series initially.
+	
+    \snippet ../example/stackedbarchartdrilldown/main.cpp 6
+*/

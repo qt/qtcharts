@@ -17,14 +17,13 @@ class DrilldownBarSeries : public QStackedBarSeries
 public:
     DrilldownBarSeries(QStringList categories, QObject *parent = 0) : QStackedBarSeries(categories,parent) {}
 
-    void addDrilldownSeries(QString category, DrilldownBarSeries* drilldownSeries)
+    void mapDrilldownSeries(QString category, DrilldownBarSeries* drilldownSeries)
     {
         mDrilldownSeries[category] = drilldownSeries;
     }
 
     DrilldownBarSeries* drilldownSeries(QString category)
     {
-//        qDebug() << "DrilldownBarSeries::drilldownSeries" << category << mDrilldownSeries[category];
         return mDrilldownSeries[category];
     }
 
@@ -53,10 +52,9 @@ public:
     }
 
 public Q_SLOTS:
-    void  handleRightClick(QBarSet *barset, QString category)
+    void handleRightClick(QBarSet *barset, QString category)
     {
-        qDebug() << "DrilldownChart::handleRightClick" << barset->name() << category;
-        // TODO: continue from here
+//        qDebug() << "DrilldownChart::handleRightClick" << barset->name() << category;
         DrilldownBarSeries* series = static_cast<DrilldownBarSeries*> (sender());
         changeSeries(series->drilldownSeries(category));
     }
@@ -77,7 +75,7 @@ int main(int argc, char *argv[])
     //! [3]
     // Define categories
     QStringList months;
-    months << "Jun" << "Jul" << "Aug" << "Sep";
+    months << "May" << "Jun" << "Jul" << "Aug" << "Sep";
     QStringList weeks;
     weeks << "week 1" << "week 2" << "week 3" << "week 4";
     QStringList plants;
@@ -94,17 +92,20 @@ int main(int argc, char *argv[])
 
         // Create drilldown series for every week
         DrilldownBarSeries* weeklySeries = new DrilldownBarSeries(weeks, drilldownChart);
-        seasonSeries->addDrilldownSeries(month, weeklySeries);
+        seasonSeries->mapDrilldownSeries(month, weeklySeries);
 
         // Drilling down from weekly data brings us back to season data.
         foreach (QString week, weeks) {
-            weeklySeries->addDrilldownSeries(week, seasonSeries);
+            weeklySeries->mapDrilldownSeries(week, seasonSeries);
             weeklySeries->setTitle(QString("Crop by week - " + month));
         }
 
         // Use right click signal to implement drilldown
         QObject::connect(weeklySeries,SIGNAL(rightClicked(QBarSet*,QString)),drilldownChart,SLOT(handleRightClick(QBarSet*,QString)));
     }
+
+    // Enable drilldown from season series using right click.
+    QObject::connect(seasonSeries,SIGNAL(rightClicked(QBarSet*,QString)),drilldownChart,SLOT(handleRightClick(QBarSet*,QString)));
     //! [4]
 
     //! [5]
@@ -116,7 +117,7 @@ int main(int argc, char *argv[])
             foreach (QString week, weeks ) {
                 *weeklyCrop << (qrand() % 20);
             }
-            // Get the drilldown series from upper level series and add crop to it.
+            // Get the drilldown series from season series and add crop to it.
             seasonSeries->drilldownSeries(month)->addBarSet(weeklyCrop);
             seasonSeries->drilldownSeries(month)->setToolTipEnabled(true);
             *monthlyCrop << weeklyCrop->total();
@@ -130,12 +131,11 @@ int main(int argc, char *argv[])
 
     seasonSeries->setToolTipEnabled(true);
 
-    // Enable drilldown from season series using right click.
-    QObject::connect(seasonSeries,SIGNAL(rightClicked(QBarSet*,QString)),drilldownChart,SLOT(handleRightClick(QBarSet*,QString)));
-
+    //! [6]
     // Show season series in initial view
     drilldownChart->changeSeries(seasonSeries);
     drilldownChart->setChartTitle(seasonSeries->title());
+    //! [6]
 
     // Disable axis, since they don't really apply to bar chart
     drilldownChart->axisX()->setAxisVisible(false);
