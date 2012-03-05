@@ -21,7 +21,7 @@ QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
     return QPointF(x,y);
 }
 
-void SplineChartItem::applyGeometry(QVector<QPointF>& points)
+void SplineChartItem::setGeometry(QVector<QPointF>& points)
 {
     if(points.size()==0) return;
 

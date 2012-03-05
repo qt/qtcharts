@@ -20,8 +20,12 @@ LineChartAnimationItem::~LineChartAnimationItem()
 {
 }
 
-void LineChartAnimationItem::updateItem(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints)
+void LineChartAnimationItem::updateAllPoints()
 {
+    QVector<QPointF> oldPoints = points();
+    LineChartItem::updateAllPoints();
+    QVector<QPointF> newPoints = points();
+
     if(newPoints.count()==0) return;
     oldPoints.resize(newPoints.size());
 
@@ -35,30 +39,34 @@ void LineChartAnimationItem::updateItem(QVector<QPointF>& oldPoints,QVector<QPoi
     m_animation->setKeyValueAt(1.0, qVariantFromValue(newPoints));
     QTimer::singleShot(0,m_animation,SLOT(start()));
 
-    oldPoints = newPoints;
+
     m_points = newPoints;
     m_dirty=false;
+
 }
 
-void LineChartAnimationItem::updateItem(QVector<QPointF>& oldPoints,int index,QPointF& newPoint)
+void LineChartAnimationItem::updatePoint(int index,QPointF& newPoint)
 {
+
     if(m_animation->state()!=QAbstractAnimation::Stopped){
        m_animation->stop();
        m_dirty=true;
     }
 
     if(m_dirty){
-    	m_points=oldPoints;
+    	m_points=points();
     	m_dirty=false;
     }
 
-    oldPoints.replace(index,newPoint);
+    LineChartItem::updatePoint(index,newPoint);
 
     m_animation->setDuration(duration);
     m_animation->setEasingCurve(QEasingCurve::InOutBack);
     m_animation->setKeyValueAt(0.0, qVariantFromValue(m_points));
-    m_animation->setKeyValueAt(1.0, qVariantFromValue(oldPoints));
+    m_animation->setKeyValueAt(1.0, qVariantFromValue( points()));
+
     QTimer::singleShot(0,this,SLOT(startAnimation()));
+
 
 }
 
@@ -95,7 +103,9 @@ QVariant LineChartAnimatator::interpolated(const QVariant &start, const QVariant
 void LineChartAnimatator::updateCurrentValue (const QVariant & value )
 {
 	QVector<QPointF> vector = qVariantValue<QVector<QPointF> >(value);
-    m_item->applyGeometry(vector);
+	if(state()!=QAbstractAnimation::Stopped){ //workaround
+    m_item->setGeometry(vector);
+	}
 }
 
 #include "moc_linechartanimationitem_p.cpp"

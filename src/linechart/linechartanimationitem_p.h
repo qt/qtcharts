@@ -19,8 +19,8 @@ public:
 	virtual ~LineChartAnimationItem();
 
 protected:
-    virtual void updateItem(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints);
-    virtual void updateItem(QVector<QPointF>& oldPoints,int index,QPointF& newPoint);
+	 virtual void updateAllPoints();
+	 virtual void updatePoint(int index,QPointF& newPoint);
 
 private slots:
 	void startAnimation();

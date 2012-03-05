@@ -16,7 +16,7 @@ public:
 
     void updateGeometry();
 
-    void applyGeometry(QVector<QPointF>& points);
+    void setGeometry(QVector<QPointF>& points);
 
     QPointF calculateGeometryControlPoint(int index) const;
 

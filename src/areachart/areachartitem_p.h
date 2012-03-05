@@ -51,8 +51,8 @@ public:
 
     ~AreaBoundItem(){};
 
-    void applyGeometry(QVector<QPointF>& points){
-        LineChartItem::applyGeometry(points);
+    void setGeometry(QVector<QPointF>& points){
+        LineChartItem::setGeometry(points);
         m_item->updatePath();
     }
 

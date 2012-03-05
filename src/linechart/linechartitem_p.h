@@ -33,14 +33,18 @@ public slots:
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF& size);
 
-public:
-    virtual void updateItem(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints);
-    virtual void updateItem(QVector<QPointF>& oldPoints,int index,QPointF& newPoint);
-    virtual void applyGeometry(QVector<QPointF>& points);
+protected:
+    virtual void updateAllPoints();
+    virtual void updatePoints(QVector<QPointF>& points);
+    virtual void updatePoint(int index,QPointF& newPoint);
+    virtual void setGeometry(QVector<QPointF>& points);
+
+    QVector<QPointF> points() {return m_points;}
     void createPoints(int count);
     void clearPoints(int count);
     QPointF calculateGeometryPoint(int index) const;
     QVector<QPointF> calculateGeometryPoints() const;
+    inline bool isEmpty();
 
 protected:
     qreal m_minX;
@@ -55,6 +59,8 @@ protected:
     QGraphicsItemGroup m_items;
     QVector<QPointF> m_points;
     QPen m_pen;
+
+    friend class LineChartAnimatator;
 
 };
 

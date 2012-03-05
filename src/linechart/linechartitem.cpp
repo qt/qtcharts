@@ -78,19 +78,43 @@ QVector<QPointF> LineChartItem::calculateGeometryPoints() const
     return points;
 }
 
-void LineChartItem::updateItem(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints)
+void LineChartItem::updateAllPoints()
 {
-	applyGeometry(newPoints);
-	oldPoints = newPoints;
+    QVector<QPointF> points = calculateGeometryPoints();
+
+    int diff = m_points.size() - points.size();
+
+    if(diff>0) {
+        clearPoints(diff);
+    }
+    else if(diff<0) {
+        createPoints(-diff);
+    }
+
+	setGeometry(points);
 }
 
-void LineChartItem::updateItem(QVector<QPointF>& oldPoints,int index,QPointF& newPoint)
+void LineChartItem::updatePoints(QVector<QPointF>& points)
 {
-	oldPoints.replace(index,newPoint);
-	applyGeometry(oldPoints);
+    int diff = m_points.size() - points.size();
+
+     if(diff>0) {
+         clearPoints(diff);
+     }
+     else if(diff<0) {
+         createPoints(-diff);
+     }
+
+     setGeometry(points);
 }
 
-void LineChartItem::applyGeometry(QVector<QPointF>& points)
+void LineChartItem::updatePoint(int index,QPointF& newPoint)
+{
+	m_points.replace(index,newPoint);
+	setGeometry(m_points);
+}
+
+void LineChartItem::setGeometry(QVector<QPointF>& points)
 {
    if(points.size()==0) return;
 
@@ -122,6 +146,7 @@ void LineChartItem::applyGeometry(QVector<QPointF>& points)
    prepareGeometryChange();
    m_path = path;
    m_rect = path.boundingRect();
+   m_points = points;
 }
 
 void LineChartItem::setPen(const QPen& pen)
@@ -140,18 +165,20 @@ void LineChartItem::handlePointAdded(int index)
     createPoints(1);
     QVector<QPointF> points = m_points;
     points.insert(index,point);
-    updateItem(m_points,points);
+
+    updatePoints(points);
     update();
 }
 void LineChartItem::handlePointRemoved(int index)
 {
     Q_ASSERT(index<m_series->count());
     Q_ASSERT(index>=0);
+
     QPointF point = calculateGeometryPoint(index);
     clearPoints(1);
     QVector<QPointF> points = m_points;
     points.remove(index);
-    updateItem(m_points,points);
+    updatePoints(points);
     update();
 }
 
@@ -160,7 +187,7 @@ void LineChartItem::handlePointReplaced(int index)
     Q_ASSERT(index<m_series->count());
     Q_ASSERT(index>=0);
     QPointF point = calculateGeometryPoint(index);
-    updateItem(m_points,index,point);
+    updatePoint(index,point);
     update();
 }
 
@@ -171,21 +198,8 @@ void LineChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qrea
     m_minY=minY;
     m_maxY=maxY;
 
-    if( (m_maxX - m_minX) == 0|| (m_maxY - m_minY) == 0) return;
-    if(!m_clipRect.isValid()) return;
-
-    QVector<QPointF> points = calculateGeometryPoints();
-
-    int diff = m_points.size() - points.size();
-
-    if(diff>0) {
-          clearPoints(diff);
-    }
-    else if(diff<0) {
-          createPoints(-diff);
-    }
-
-    updateItem(m_points,points);
+    if(isEmpty()) return;
+    updateAllPoints();
     update();
 }
 
@@ -196,20 +210,8 @@ void LineChartItem::handleGeometryChanged(const QRectF& rect)
 	m_clipRect=rect.translated(-rect.topLeft());
 	setPos(rect.topLeft());
 
-	if( (m_maxX - m_minX) == 0|| (m_maxY - m_minY) == 0) return;
-
-	QVector<QPointF> points = calculateGeometryPoints();
-
-	int diff = m_points.size() - points.size();
-
-	if(diff>0) {
-		clearPoints(diff);
-	}
-	else if(diff<0) {
-		createPoints(-diff);
-	}
-
-	updateItem(m_points,points);
+	if(isEmpty()) return;
+	updateAllPoints();
 	update();
 }
 
@@ -233,6 +235,10 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->restore();
 }
 
+bool LineChartItem::isEmpty()
+{
+   return !m_clipRect.isValid() ||  m_maxX - m_minX == 0 || m_maxY - m_minY ==0 ;
+}
 
 #include "moc_linechartitem_p.cpp"
 
