@@ -51,9 +51,6 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
         QObject::connect(axisY,SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeXChanged(qreal,qreal)));
         QObject::connect(axisX(),SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeYChanged(qreal,qreal)));
         //initialize
-        qDebug()<<axisX()->min()<<axisX()->max();
-        domain->handleAxisRangeYChanged(axisY->min(),axisY->max());
-        domain->handleAxisRangeXChanged(axisX()->min(),axisX()->max());
         m_axisDomainMap.insert(axisY,domain);
         emit axisAdded(axisY,domain);
     }
