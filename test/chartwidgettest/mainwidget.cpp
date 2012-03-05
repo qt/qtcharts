@@ -49,15 +49,6 @@ MainWidget::MainWidget(QWidget *parent) :
     QGridLayout *mainLayout = new QGridLayout();
     mainLayout->addLayout(grid, 0, 0);
 
-    // Init series type specific controls
-    initPieControls();
-    mainLayout->addLayout(m_pieLayout, 2, 0);
-    // Scatter series specific settings
-//    m_scatterLayout = new QGridLayout();
-//    m_scatterLayout->addWidget(new QLabel("scatter"), 0, 0);
-//    m_scatterLayout->setEnabled(false);
-//    mainLayout->addLayout(m_scatterLayout, 1, 0);
-
     // Add layouts and the chart widget to the main layout
     mainLayout->addWidget(m_chartView, 0, 1, 3, 1);
     setLayout(mainLayout);
@@ -151,33 +142,6 @@ void MainWidget::initCheckboxes(QGridLayout *grid)
 void MainWidget::antiAliasToggled(bool enabled)
 {
     m_chartView->setRenderHint(QPainter::Antialiasing, enabled);
-}
-
-void MainWidget::initPieControls()
-{
-    // Pie series specific settings
-    // Pie size factory
-    QDoubleSpinBox *pieSizeSpin = new QDoubleSpinBox();
-    pieSizeSpin->setMinimum(LONG_MIN);
-    pieSizeSpin->setMaximum(LONG_MAX);
-    pieSizeSpin->setValue(1.0);
-    pieSizeSpin->setSingleStep(0.1);
-    connect(pieSizeSpin, SIGNAL(valueChanged(double)), this, SLOT(setPieSizeFactor(double)));
-    // Pie position
-    QComboBox *piePosCombo = new QComboBox(this);
-    piePosCombo->addItem("Maximized");
-    piePosCombo->addItem("Top left");
-    piePosCombo->addItem("Top right");
-    piePosCombo->addItem("Bottom left");
-    piePosCombo->addItem("Bottom right");
-    connect(piePosCombo, SIGNAL(currentIndexChanged(int)),
-            this, SLOT(setPiePosition(int)));
-    m_pieLayout = new QGridLayout();
-    m_pieLayout->setEnabled(false);
-    m_pieLayout->addWidget(new QLabel("Pie size factor"), 0, 0);
-    m_pieLayout->addWidget(pieSizeSpin, 0, 1);
-    m_pieLayout->addWidget(new QLabel("Pie position"), 1, 0);
-    m_pieLayout->addWidget(piePosCombo, 1, 1);
 }
 
 void MainWidget::addSeries()
@@ -375,18 +339,4 @@ void MainWidget::changeChartTheme(int themeIndex)
     QSize s = size();
     s.setWidth(s.width()+1);
     resize(s);
-}
-
-void MainWidget::setPieSizeFactor(double size)
-{
-    QPieSeries *pie = qobject_cast<QPieSeries *>(m_currentSeries);
-    if (pie)
-        pie->setSizeFactor(qreal(size));
-}
-
-void MainWidget::setPiePosition(int position)
-{
-    QPieSeries *pie = qobject_cast<QPieSeries *>(m_currentSeries);
-    if (pie)
-        pie->setPosition((QPieSeries::PiePosition) position);
 }
