@@ -48,8 +48,8 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
     if(!domain) {
         domain = new Domain();
 
-        QObject::connect(axisY,SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeXChanged(qreal,qreal)));
-        QObject::connect(axisX(),SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeYChanged(qreal,qreal)));
+        QObject::connect(axisY,SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeYChanged(qreal,qreal)));
+        QObject::connect(axisX(),SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeXChanged(qreal,qreal)));
         //initialize
         m_axisDomainMap.insert(axisY,domain);
         emit axisAdded(axisY,domain);

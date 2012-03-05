@@ -52,14 +52,17 @@ public:
 public slots:
     void handleAxisUpdated();//qchartaxis update calls
     void handleRangeChanged(qreal min , qreal max); //domain update calls
+    void handleTicksCountChanged(int ticks); //ticks changed
     void handleGeometryChanged(const QRectF& size); //geometry update calls
 
 public:
-    virtual void updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout);
+    virtual void updateItem();
     QVector<qreal> calculateLayout() const;
-    void applyLayout(const QVector<qreal>& points);
+    void setLayout(const QVector<qreal>& points);
+    QVector<qreal> layout() { return m_layoutVector;};
 
 private:
+    inline bool isEmpty();
     void clear(int count);
     void createItems(int count);
     QStringList createLabels(int ticks, qreal min, qreal max);
@@ -74,6 +77,9 @@ private:
     QGraphicsItemGroup m_axis;
     QStringList m_thicksList;
     QVector<qreal> m_layoutVector;
+    qreal m_min;
+    qreal m_max;
+    int m_ticks;
 
 };
 

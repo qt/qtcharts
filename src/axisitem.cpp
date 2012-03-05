@@ -70,11 +70,27 @@ void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     Q_UNUSED(widget);
 }
 
-void AxisItem::updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout)
+void AxisItem::updateItem()
 {
-    if(newLayout.count()==0) return;
-    applyLayout(newLayout);
-    oldLayout=newLayout;
+    QStringList labels = createLabels(m_ticks,m_min,m_max);
+
+    int diff = m_thicksList.size() - labels.size();
+
+    if(diff>0) {
+        clear(diff);
+    }
+    else if(diff<0) {
+        createItems(-diff);
+    }
+
+    if(diff!=0) handleAxisUpdated();
+
+    m_thicksList=labels;
+
+    QVector<qreal> layout = calculateLayout();
+    if(layout.count()==0) return;
+    setLayout(layout);
+
 }
 
 QStringList AxisItem::createLabels(int ticks, qreal min, qreal max)
@@ -228,9 +244,8 @@ QVector<qreal> AxisItem::calculateLayout() const
     return points;
 }
 
-void AxisItem::applyLayout(const QVector<qreal>& points)
+void AxisItem::setLayout(const QVector<qreal>& layout)
 {
-    Q_ASSERT(points.size() == m_thicksList.size());
 
     QList<QGraphicsItem *> lines = m_grid.childItems();
     QList<QGraphicsItem *> labels = m_labels.childItems();
@@ -238,6 +253,7 @@ void AxisItem::applyLayout(const QVector<qreal>& points)
     QList<QGraphicsItem *> axis = m_axis.childItems();
 
     Q_ASSERT(labels.size() == m_thicksList.size());
+    Q_ASSERT(layout.size() == m_thicksList.size());
 
     switch (m_type)
          {
@@ -246,20 +262,20 @@ void AxisItem::applyLayout(const QVector<qreal>& points)
                  QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(axis.at(0));
                  lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
 
-                 for (int i = 0; i < points.size(); ++i) {
+                 for (int i = 0; i < layout.size(); ++i) {
                      QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
-                     lineItem->setLine(points[i], m_rect.top(), points[i], m_rect.bottom());
+                     lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
                      QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
                      labelItem->setText(m_thicksList.at(i));
                      QPointF center = labelItem->boundingRect().center();
                      labelItem->setTransformOriginPoint(center.x(), center.y());
-                     labelItem->setPos(points[i] - center.x(), m_rect.bottom() + label_padding);
+                     labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
                      if(i%2){
                          QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
-                         rectItem->setRect(points[i],m_rect.top(),points[i+1]-points[i],m_rect.height());
+                         rectItem->setRect(layout[i],m_rect.top(),layout[i+1]-layout[i],m_rect.height());
                      }
                      lineItem =  static_cast<QGraphicsLineItem*>(axis.at(i+1));
-                     lineItem->setLine(points[i],m_rect.bottom(),points[i],m_rect.bottom()+5);
+                     lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
                  }
              }
              break;
@@ -269,20 +285,20 @@ void AxisItem::applyLayout(const QVector<qreal>& points)
                  QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(axis.at(0));
                  lineItem->setLine(m_rect.left() , m_rect.top(), m_rect.left(), m_rect.bottom());
 
-                 for (int i = 0; i < points.size(); ++i) {
+                 for (int i = 0; i < layout.size(); ++i) {
                      QGraphicsLineItem *lineItem =  static_cast<QGraphicsLineItem*>(lines.at(i));
-                     lineItem->setLine(m_rect.left() , points[i], m_rect.right(), points[i]);
+                     lineItem->setLine(m_rect.left() , layout[i], m_rect.right(), layout[i]);
                      QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
                      labelItem->setText(m_thicksList.at(i));
                      QPointF center = labelItem->boundingRect().center();
                      labelItem->setTransformOriginPoint(center.x(), center.y());
-                     labelItem->setPos(m_rect.left() -  labelItem->boundingRect().width() - label_padding , points[i]-center.y());
+                     labelItem->setPos(m_rect.left() -  labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
                      if(i%2){
                          QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
-                         rectItem->setRect(m_rect.left(),points[i],m_rect.width(),points[i]-points[i+1]);
+                         rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i]-layout[i+1]);
                      }
                      lineItem =  static_cast<QGraphicsLineItem*>(axis.at(i+1));
-                     lineItem->setLine(m_rect.left()-5,points[i],m_rect.left(),points[i]);
+                     lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
                  }
              }
              break;
@@ -290,13 +306,15 @@ void AxisItem::applyLayout(const QVector<qreal>& points)
              qDebug()<<"Unknown axis type";
              break;
          }
+
+    m_layoutVector=layout;
 }
 
 //handlers
 
 void AxisItem::handleAxisUpdated()
 {
-    if(m_layoutVector.count()==0) return;
+    if(isEmpty()) return;
 
     if(m_chartAxis->isAxisVisible()) {
         setAxisOpacity(100);
@@ -335,40 +353,38 @@ void AxisItem::handleAxisUpdated()
     setGridPen(m_chartAxis->gridPen());
     setShadesPen(m_chartAxis->shadesPen());
     setShadesBrush(m_chartAxis->shadesBrush());
+
 }
 
 void AxisItem::handleRangeChanged(qreal min, qreal max)
 {
-    if(min == max) return;
 
-    QStringList labels = createLabels(4,min,max);
+    m_min = min;
+    m_max = max;
 
-    int diff = m_thicksList.size() - labels.size();
+    if(isEmpty()) return;
+    updateItem();
 
-    if(diff>0){
-        clear(diff);
-    }else if(diff<0){
-        createItems(-diff);
-    }
-    m_thicksList=labels;
+}
 
-    if(m_rect.isEmpty()) return;
+void AxisItem::handleTicksCountChanged(int ticks)
+{
+    m_ticks=ticks;
 
-    QVector<qreal>  vector = calculateLayout();
-
-    updateItems(m_layoutVector,vector);
-
-    if(diff!=0) handleAxisUpdated();
+    if(isEmpty()) return;
+    updateItem();
 }
 
 void AxisItem::handleGeometryChanged(const QRectF& rect)
 {
     m_rect = rect;
+    if(isEmpty()) return;
+    updateItem();
+}
 
-    if(m_thicksList.size()==0) return;
-
-    QVector<qreal>  vector = calculateLayout();
-    updateItems(m_layoutVector,vector);
+bool AxisItem::isEmpty()
+{
+    return m_rect.isEmpty() || m_min==m_max || m_ticks==0;
 }
 
 //TODO "nice numbers algorithm"
