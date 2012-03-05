@@ -217,8 +217,6 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
     case QSeries::SeriesTypeScatter: {
         QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
         ScatterPresenter *scatterPresenter = new ScatterPresenter(scatterSeries, m_chart);
-        QObject::connect(scatterPresenter, SIGNAL(clicked(QPointF)),
-                         scatterSeries, SIGNAL(clicked(QPointF)));
         QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)),
                          scatterPresenter, SLOT(handleGeometryChanged(const QRectF&)));
         QObject::connect(domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),

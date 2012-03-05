@@ -33,6 +33,7 @@
     \value MarkerShapeDefault
     \value MarkerShapeX
     \value MarkerShapeRectangle
+    \value MarkerShapeRoundedRectangle
     \value MarkerShapeTiltedRectangle
     \value MarkerShapeTriangle
     \value MarkerShapeCircle
@@ -50,14 +51,10 @@
     data point you can use closestPoint().
 */
 
-/*!
-    \fn void QScatterSeries::changed()
-    \brief TODO
-*/
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QScatterSeriesPrivate::QScatterSeriesPrivate() :
+QScatterSeriesPrivate::QScatterSeriesPrivate(QObject *parent) :
+    QObject(parent),
     m_data(QList<QPointF>()),
     m_markerPen(QPen(QColor::Invalid)),
     m_markerBrush(QBrush(QColor::Invalid)),
@@ -66,12 +63,19 @@ QScatterSeriesPrivate::QScatterSeriesPrivate() :
 {
 }
 
+void QScatterSeriesPrivate::emitChanged()
+{
+    emit changed();
+}
+
+#include "moc_scatterseries_p.cpp"
+
 /*!
     Constructs a series object which is a child of \a parent.
 */
 QScatterSeries::QScatterSeries(QObject *parent) :
     QSeries(parent),
-    d(new QScatterSeriesPrivate())
+    d(new QScatterSeriesPrivate(this))
 {
 }
 
@@ -89,7 +93,7 @@ QScatterSeries::~QScatterSeries()
 void QScatterSeries::add(qreal x, qreal y)
 {
     d->m_data.append(QPointF(x, y));
-    emit changed();
+    d->emitChanged();
 }
 
 /*!
@@ -98,7 +102,7 @@ void QScatterSeries::add(qreal x, qreal y)
 void QScatterSeries::add(QPointF value)
 {
     d->m_data.append(value);
-    emit changed();
+    d->emitChanged();
 }
 
 /*!
@@ -107,7 +111,7 @@ void QScatterSeries::add(QPointF value)
 void QScatterSeries::add(QList<QPointF> points)
 {
     d->m_data.append(points);
-    emit changed();
+    d->emitChanged();
 }
 
 /*!
@@ -120,7 +124,7 @@ void QScatterSeries::add(QList<QPointF> points)
 QScatterSeries& QScatterSeries::operator << (const QPointF &value)
 {
     d->m_data.append(value);
-    emit changed();
+    d->emitChanged();
     return *this;
 }
 
@@ -131,7 +135,7 @@ QScatterSeries& QScatterSeries::operator << (const QPointF &value)
 QScatterSeries& QScatterSeries::operator << (QList<QPointF> value)
 {
     d->m_data.append(value);
-    emit changed();
+    d->emitChanged();
     return *this;
 }
 
@@ -141,7 +145,7 @@ QScatterSeries& QScatterSeries::operator << (QList<QPointF> value)
 void QScatterSeries::setData(QList<QPointF> points)
 {
     d->m_data = points;
-    emit changed();
+    d->emitChanged();
 }
 
 /*!
@@ -160,7 +164,7 @@ bool QScatterSeries::replace(int index, QPointF newPoint)
 {
     if (index >= 0 && index < d->m_data.count()) {
         d->m_data.replace(index, newPoint);
-        emit changed();
+        d->emitChanged();
         return true;
     }
     return false;
@@ -174,7 +178,7 @@ bool QScatterSeries::removeAt(int index)
 {
     if (index >=0 && index < d->m_data.count()) {
         d->m_data.removeAt(index);
-        emit changed();
+        d->emitChanged();
         return true;
     }
     return false;
@@ -186,7 +190,7 @@ bool QScatterSeries::removeAt(int index)
 int QScatterSeries::removeAll(QPointF point)
 {
     int count = d->m_data.removeAll(point);
-    emit changed();
+    d->emitChanged();
     return count;
 }
 
@@ -196,7 +200,7 @@ int QScatterSeries::removeAll(QPointF point)
 void QScatterSeries::clear()
 {
     d->m_data.clear();
-    emit changed();
+    d->emitChanged();
 }
 
 /*!
@@ -220,23 +224,32 @@ int QScatterSeries::closestPoint(QPointF coordinate)
 }
 
 /*!
+    Returns the pen used for drawing markers.
+*/
+QPen QScatterSeries::pen() const
+{
+    return d->m_markerPen;
+}
+
+/*!
     Overrides the default pen used for drawing a marker item with a user defined \a pen. The
     default pen is defined by chart theme setting.
 
     \sa setBrush()
     \sa QChart::setChartTheme()
 */
-void QScatterSeries::setPen(QPen pen)
+void QScatterSeries::setPen(const QPen &pen)
 {
     d->m_markerPen = pen;
+    d->emitChanged();
 }
 
 /*!
-    Returns the pen used for drawing markers.
+    Returns the brush used for drawing markers.
 */
-QPen QScatterSeries::pen()
+QBrush QScatterSeries::brush() const
 {
-    return d->m_markerPen;
+    return d->m_markerBrush;
 }
 
 /*!
@@ -246,17 +259,18 @@ QPen QScatterSeries::pen()
     \sa setPen()
     \sa QChart::setChartTheme()
 */
-void QScatterSeries::setBrush(QBrush brush)
+void QScatterSeries::setBrush(const QBrush &brush)
 {
     d->m_markerBrush = brush;
+    d->emitChanged();
 }
 
 /*!
-    Returns the brush used for drawing markers.
+    Returns the shape used for drawing markers.
 */
-QBrush QScatterSeries::brush()
+QScatterSeries::MarkerShape QScatterSeries::shape() const
 {
-    return d->m_markerBrush;
+    return (QScatterSeries::MarkerShape) d->m_markerShape;
 }
 
 /*!
@@ -266,20 +280,13 @@ QBrush QScatterSeries::brush()
 void QScatterSeries::setShape(MarkerShape shape)
 {
     d->m_markerShape = shape;
-}
-
-/*!
-    Returns the shape used for drawing markers.
-*/
-QScatterSeries::MarkerShape QScatterSeries::shape()
-{
-    return (QScatterSeries::MarkerShape) d->m_markerShape;
+    d->emitChanged();
 }
 
 /*!
     Returns the size of the marker items.
 */
-qreal QScatterSeries::size()
+qreal QScatterSeries::size() const
 {
     return d->m_markerSize;
 }
@@ -290,7 +297,7 @@ qreal QScatterSeries::size()
 void QScatterSeries::setSize(qreal size)
 {
     d->m_markerSize = size;
-    emit changed();
+    d->emitChanged();
 }
 
 #include "moc_qscatterseries.cpp"

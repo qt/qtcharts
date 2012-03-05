@@ -3,6 +3,7 @@
 
 #include "qchartglobal.h"
 #include "qseries.h"
+#include <QObject>
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -10,10 +11,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
  * The PIMPL class of QScatterSeries.
  */
-class QScatterSeriesPrivate
+class QScatterSeriesPrivate : public QObject
 {
+    Q_OBJECT
+
 public:
-    QScatterSeriesPrivate();
+    QScatterSeriesPrivate(QObject *parent);
+    void emitChanged();
+
+Q_SIGNALS:
+    // TODO: more finegrained signaling for performance reasons
+    // (see for example QPieSeries implementation with change sets)
+    void changed();
 
 public:
     QList<QPointF> m_data;
