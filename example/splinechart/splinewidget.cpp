@@ -14,7 +14,7 @@ SplineWidget::SplineWidget(QWidget *parent)
     qsrand(time(NULL));
     //! [1]
     //create QSplineSeries
-    series = new QSplineSeries(this);
+    series = new QSplineSeries;
     //! [1]
 
     //! [2]
@@ -47,8 +47,15 @@ SplineWidget::SplineWidget(QWidget *parent)
     QChartView* chart = new QChartView;
     chart->addSeries(series);
 
-    chart->axisX()->setRange(0, 1500);
-    chart->axisY()->setRange(0, 400);
+    chart->setChartTitle("Spline chart example");
+
+//    chart->setMinimumSize(800,600);
+//    chart->axisX()->setRange(0, 1500);
+
+//    chart->axisX()->setMax(1500);
+//    chart->axisY()->setRange(0, 400);
+        chart->axisX()->setMax(1500);
+//        chart->
 
     chart->setMinimumSize(800,600);
     //! [3]

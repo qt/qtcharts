@@ -56,7 +56,7 @@ int main(int argc, char *argv[])
     categoriesX.insert(100,"High");
 
     axisX->setMin(-10);
-    axisX->setMax(200);
+    axisX->setMax(2200);
 
     QChartAxis* axisY = chartView->axisY();
     axisY->setLabelsAngle(45);

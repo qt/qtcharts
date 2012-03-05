@@ -53,7 +53,7 @@ void SplinePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->drawPath(m_path);
 
     QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
-    for (int i = 0; i < splineSeries->count() - 1; i++)
+    for (int i = 0; i < m_points.size() - 1; i++)
     {
         painter->setPen(Qt::red);
         painter->drawEllipse(m_points[i], 2, 2);
