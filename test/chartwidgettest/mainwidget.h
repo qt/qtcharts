@@ -27,7 +27,6 @@ private:
     void initScaleControls(QGridLayout *grid);
     void initThemeCombo(QGridLayout *grid);
     void initCheckboxes(QGridLayout *grid);
-    void initPieControls();
 
 private slots:
     void addSeries();
@@ -41,8 +40,6 @@ private slots:
     void antiAliasToggled(bool enabled);
     void setCurrentSeries(QSeries *series);
     void changeChartTheme(int themeIndex);
-    void setPieSizeFactor(double margin);
-    void setPiePosition(int position);
     QList<RealList> generateTestData(int columnCount, int rowCount, QString dataCharacteristics);
     QStringList generateLabels(int count);
 
@@ -57,7 +54,6 @@ private:
     QString m_defaultSeriesName;
     QSeries *m_currentSeries;
     QGridLayout *m_scatterLayout;
-    QGridLayout *m_pieLayout;
 };
 
 #endif // MAINWIDGET_H

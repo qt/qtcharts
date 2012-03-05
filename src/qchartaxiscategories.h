@@ -4,7 +4,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartAxisCategories : public QObject
+class QTCOMMERCIALCHART_EXPORT QChartAxisCategories : public QObject
 {
     Q_OBJECT
 private:

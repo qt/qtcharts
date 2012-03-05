@@ -15,7 +15,6 @@ StackedBarPresenter::StackedBarPresenter(QBarSeries *series, QGraphicsItem *pare
 
 StackedBarPresenter::~StackedBarPresenter()
 {
-    qDebug() << "StackedBarPresenter deleted";
 }
 
 
