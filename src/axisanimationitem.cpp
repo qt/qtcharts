@@ -17,8 +17,12 @@ AxisAnimationItem::~AxisAnimationItem()
 {
 }
 
-void AxisAnimationItem::updateItems(QVector<qreal>& oldLayout,QVector<qreal>& newLayout)
+void AxisAnimationItem::updateItem()
 {
+    QVector<qreal> oldLayout = layout();
+    AxisItem::updateItem();
+    QVector<qreal> newLayout = layout();
+
     if(newLayout.count()==0) return;
     oldLayout.resize(newLayout.size());
 
@@ -31,7 +35,6 @@ void AxisAnimationItem::updateItems(QVector<qreal>& oldLayout,QVector<qreal>& ne
     m_animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
     m_animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
     QTimer::singleShot(0,m_animation,SLOT(start()));
-    oldLayout = newLayout;
 }
 
 void AxisAnimationItem::setLabelsAngle(int angle)
@@ -66,7 +69,7 @@ QVariant AxisAnimator::interpolated(const QVariant &start, const QVariant & end,
 void AxisAnimator::updateCurrentValue (const QVariant & value )
 {
     QVector<qreal> vector = qVariantValue<QVector<qreal> >(value);
-    m_axis->applyLayout(vector);
+    m_axis->setLayout(vector);
 }
 
 #include "moc_axisanimationitem_p.cpp"

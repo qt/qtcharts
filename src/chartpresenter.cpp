@@ -110,11 +110,13 @@ void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
         QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal)),item,SLOT(handleRangeChanged(qreal,qreal)));
         //initialize
         item->handleRangeChanged(domain->minX(),domain->maxX());
+        item->handleTicksCountChanged(4);
     }
     else{
         QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal)),item,SLOT(handleRangeChanged(qreal,qreal)));
         //initialize
         item->handleRangeChanged(domain->minY(),domain->maxY());
+        item->handleTicksCountChanged(4);
     }
 
     QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
