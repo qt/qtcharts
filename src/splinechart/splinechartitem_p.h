@@ -1,5 +1,5 @@
-#ifndef SPLINEPRESENTER_P_H
-#define SPLINEPRESENTER_P_H
+#ifndef SPLINECHARTITEM_P_H
+#define SPLINECHARTITEM_P_H
 
 #include "chartitem_p.h"
 #include <QObject>
@@ -8,11 +8,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class SplinePresenter : public LineChartItem
+class SplineChartItem : public LineChartItem
 {
     Q_OBJECT
 public:
-    SplinePresenter(QSplineSeries* series, QGraphicsObject *parent = 0);
+    SplineChartItem(QSplineSeries* series, QGraphicsObject *parent = 0);
 
     void updateGeometry();
 
@@ -25,4 +25,4 @@ public:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // SPLINEPRESENTER_P_H
+#endif // SPLINECHARTITEM_P_H

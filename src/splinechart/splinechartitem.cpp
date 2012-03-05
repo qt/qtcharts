@@ -1,9 +1,9 @@
-#include "splinepresenter_p.h"
+#include "splinechartitem_p.h"
 #include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-SplinePresenter::SplinePresenter(QSplineSeries* series, QGraphicsObject *parent) :
+SplineChartItem::SplineChartItem(QSplineSeries* series, QGraphicsObject *parent) :
     LineChartItem(series, parent)//,m_boundingRect()
 {
     //
@@ -11,7 +11,7 @@ SplinePresenter::SplinePresenter(QSplineSeries* series, QGraphicsObject *parent)
 
 
 
-QPointF SplinePresenter::calculateGeometryControlPoint(int index) const
+QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 {
     QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
     const qreal deltaX = m_size.width()/(m_maxX-m_minX);
@@ -21,7 +21,7 @@ QPointF SplinePresenter::calculateGeometryControlPoint(int index) const
     return QPointF(x,y);
 }
 
-void SplinePresenter::applyGeometry(QVector<QPointF>& points)
+void SplineChartItem::applyGeometry(QVector<QPointF>& points)
 {
     if(points.size()==0) return;
 
@@ -41,7 +41,7 @@ void SplinePresenter::applyGeometry(QVector<QPointF>& points)
     m_rect = splinePath.boundingRect();
 }
 
-void SplinePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(widget);
     Q_UNUSED(option);
@@ -70,6 +70,6 @@ void SplinePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->restore();
 }
 
-#include "moc_splinepresenter_p.cpp"
+#include "moc_splinechartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -23,7 +23,7 @@
 #include "linechartanimationitem_p.h"
 #include "piepresenter_p.h"
 #include "scatterpresenter_p.h"
-#include "splinepresenter_p.h"
+#include "splinechartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -257,7 +257,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypeSpline: {
         QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(series);
-        SplinePresenter* splinePresenter = new SplinePresenter(splineSeries, m_chart);
+        SplineChartItem* splinePresenter = new SplineChartItem(splineSeries, m_chart);
         QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), splinePresenter, SLOT(handleGeometryChanged(const QRectF&)));
         QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),splinePresenter,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
         //initialize

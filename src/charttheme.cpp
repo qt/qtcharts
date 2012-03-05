@@ -24,7 +24,7 @@
 #include "areachartitem_p.h"
 #include "scatterpresenter_p.h"
 #include "piepresenter_p.h"
-#include "splinepresenter_p.h"
+#include "splinechartitem_p.h"
 
 //themes
 #include "chartthemevanilla_p.h"
@@ -299,19 +299,19 @@ void ChartTheme::decorate(QChartAxis* axis,AxisItem* item)
     axis->setShadesOpacity(0.5);
 }
 
-void ChartTheme::decorate(SplinePresenter* presenter, QSplineSeries* series, int count)
+void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int count)
 {
-    Q_ASSERT(presenter);
+    Q_ASSERT(item);
     Q_ASSERT(series);
 
     QPen pen;
     if(pen != series->pen()){
-        presenter->setPen(series->pen());
+        item->setPen(series->pen());
         return;
     }
     pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
     pen.setWidthF(series->pen().widthF());
-    presenter->setPen(pen);
+    item->setPen(pen);
 
 //    QColor color = m_seriesColor.at(count % m_seriesColor.size());
     // TODO: define alpha in the theme? or in the series?

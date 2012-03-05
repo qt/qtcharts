@@ -21,7 +21,7 @@ class QScatterSeries;
 class ScatterPresenter;
 class PiePresenter;
 class QPieSeries;
-class SplinePresenter;
+class SplineChartItem;
 class QSplineSeries;
 class AreaChartItem;
 class QAreaSeries;
@@ -43,7 +43,7 @@ public:
     void decorate(ScatterPresenter* presenter, QScatterSeries* series, int count);
     void decorate(PiePresenter* item, QPieSeries* series, int count);
     void decorate(QChartAxis* axis,AxisItem* item);
-    void decorate(SplinePresenter* presenter, QSplineSeries* series, int count);
+    void decorate(SplineChartItem* presenter, QSplineSeries* series, int count);
 
 protected:
     QChart::ChartTheme m_id;

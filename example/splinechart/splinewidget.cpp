@@ -48,14 +48,8 @@ SplineWidget::SplineWidget(QWidget *parent)
     chart->addSeries(series);
 
     chart->setChartTitle("Spline chart example");
-
-//    chart->setMinimumSize(800,600);
-//    chart->axisX()->setRange(0, 1500);
-
-//    chart->axisX()->setMax(1500);
-//    chart->axisY()->setRange(0, 400);
-        chart->axisX()->setMax(1500);
-//        chart->
+    chart->axisX()->setMax(1500);
+    chart->axisY()->setMax(500);
 
     chart->setMinimumSize(800,600);
     //! [3]
@@ -88,7 +82,7 @@ SplineWidget::SplineWidget(QWidget *parent)
 void SplineWidget::addNewPoint()
 {
     if (series->count() > 0)
-        series->add(QPointF(series->x(series->count() - 1) + 20 + qrand()%40, qAbs(series->y(series->count() - 1) - 50 + qrand()%100)));
+        series->add(QPointF(series->x(series->count() - 1) + 40 + qrand()%40, qAbs(series->y(series->count() - 1) - 50 + qrand()%100)));
     else
         series->add(QPointF(50, 50 + qrand()%50));
 }
