@@ -4,8 +4,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 #define DEFAULT_PEN_COLOR         Qt::black
 #define DEFAULT_BRUSH_COLOR       Qt::white
-#define DEFAULT_LABEL_ARM_LENGTH  40
-#define DEFAULT_EXPOLODE_DISTANCE 20
+#define DEFAULT_LABEL_ARM_LENGTH_FACTOR  0.15
+#define DEFAULT_EXPOLODE_DISTANCE_FACTOR 0.15
 
 /*!
     \class QPieSlice
@@ -42,14 +42,14 @@ QPieSlice::QPieSlice(QObject *parent)
     m_value(0),
     m_isLabelVisible(false),
     m_isExploded(false),
-    m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
+    m_explodeDistanceFactor(DEFAULT_EXPOLODE_DISTANCE_FACTOR),
     m_percentage(0),
     m_startAngle(0),
     m_angleSpan(0),
     m_pen(DEFAULT_PEN_COLOR),
     m_brush(DEFAULT_BRUSH_COLOR),
     m_labelPen(DEFAULT_PEN_COLOR),
-    m_labelArmLength(DEFAULT_LABEL_ARM_LENGTH)
+    m_labelArmLengthFactor(DEFAULT_LABEL_ARM_LENGTH_FACTOR)
 {
 
 }
@@ -65,14 +65,14 @@ QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     m_label(label),
     m_isLabelVisible(false),
     m_isExploded(false),
-    m_explodeDistance(DEFAULT_EXPOLODE_DISTANCE),
+    m_explodeDistanceFactor(DEFAULT_EXPOLODE_DISTANCE_FACTOR),
     m_percentage(0),
     m_startAngle(0),
     m_angleSpan(0),
     m_pen(DEFAULT_PEN_COLOR),
     m_brush(DEFAULT_BRUSH_COLOR),
     m_labelPen(DEFAULT_PEN_COLOR),
-    m_labelArmLength(DEFAULT_LABEL_ARM_LENGTH)
+    m_labelArmLengthFactor(DEFAULT_LABEL_ARM_LENGTH_FACTOR)
 {
 
 }
@@ -116,7 +116,7 @@ bool QPieSlice::isLabelVisible() const
 
 /*!
     Returns true if slice is exloded from the pie.
-    \sa setExploded()
+    \sa setExploded(), setExplodeDistanceFactor()
 */
 bool QPieSlice::isExploded() const
 {
@@ -124,13 +124,19 @@ bool QPieSlice::isExploded() const
 }
 
 /*!
-    Returns the explosion distance of the slice.
-    Default value is 20.
-    \sa setExplodeDistance()
+    Returns the explode distance factor.
+
+    The factor is relative to pie radius. For example:
+    1.0 means the distance is the same as the radius.
+    0.5 means the distance is half of the radius.
+
+    Default value is 0.15.
+
+    \sa setExplodeDistanceFactor()
 */
-qreal QPieSlice::explodeDistance() const
+qreal QPieSlice::explodeDistanceFactor() const
 {
-    return m_explodeDistance;
+    return m_explodeDistanceFactor;
 }
 
 /*!
@@ -205,13 +211,19 @@ QFont QPieSlice::labelFont() const
 }
 
 /*!
-    Returns the label arm lenght used in this slice.
-    Default value is 40 pixels.
-    \sa setLabelArmLength()
+    Gets the label arm lenght factor.
+
+    The factor is relative to pie radius. For example:
+    1.0 means the length is the same as the radius.
+    0.5 means the length is half of the radius.
+
+    Default value is 0.15
+
+    \sa setLabelArmLengthFactor()
 */
-qreal QPieSlice::labelArmLength() const
+qreal QPieSlice::labelArmLengthFactor() const
 {
-    return m_labelArmLength;
+    return m_labelArmLengthFactor;
 }
 
 /*!
@@ -247,7 +259,7 @@ qreal QPieSlice::labelArmLength() const
 */
 
 /*!
-    Sets the value of this slice.
+    Sets the \a value of this slice.
     \sa value()
 */
 void QPieSlice::setValue(qreal value)
@@ -284,7 +296,7 @@ void QPieSlice::setLabelVisible(bool visible)
 
 /*!
     Sets this slice \a exploded.
-    \sa isExploded(), setExplodeDistance()
+    \sa isExploded(), explodeDistanceFactor()
 */
 void QPieSlice::setExploded(bool exploded)
 {
@@ -295,14 +307,20 @@ void QPieSlice::setExploded(bool exploded)
 }
 
 /*!
-    Sets the explosion \a distance of this slice.
-    It is the distance the slice is moved away from the pie center.
-    \sa explodeDistance(), isExploded()
+    Sets the explode distance \a factor.
+
+    The factor is relative to pie radius. For example:
+    1.0 means the distance is the same as the radius.
+    0.5 means the distance is half of the radius.
+
+    Default value is 0.15
+
+    \sa explodeDistanceFactor()
 */
-void QPieSlice::setExplodeDistance(qreal distance)
+void QPieSlice::setExplodeDistanceFactor(qreal factor)
 {
-    if (m_explodeDistance != distance) {
-        m_explodeDistance = distance;
+    if (m_explodeDistanceFactor != factor) {
+        m_explodeDistanceFactor = factor;
         emit changed();
     }
 }
@@ -360,13 +378,20 @@ void QPieSlice::setLabelFont(QFont font)
 }
 
 /*!
-    Sets the label arm \a length used to draw the label in this slice.
-    \sa labelArmLength()
+    Sets the label arm lenght \a factor.
+
+    The factor is relative to pie radius. For example:
+    1.0 means the length is the same as the radius.
+    0.5 means the length is half of the radius.
+
+    Default value is 0.15
+
+    \sa labelArmLengthFactor()
 */
-void QPieSlice::setLabelArmLength(qreal length)
+void QPieSlice::setLabelArmLengthFactor(qreal factor)
 {
-    if (m_labelArmLength != length) {
-        m_labelArmLength = length;
+    if (m_labelArmLengthFactor != factor) {
+        m_labelArmLengthFactor = factor;
         emit changed();
     }
 }

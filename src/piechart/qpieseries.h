@@ -21,27 +21,6 @@ class QTCOMMERCIALCHART_EXPORT QPieSeries : public QSeries
 
 public:
 
-    enum PiePositionFlag {
-        PiePositionLeft = 0x1,
-        PiePositionRight = 0x2,
-        PiePositionHCenter = 0x4,
-        PiePositionTop = 0x10,
-        PiePositionBottom = 0x20,
-        PiePositionVCenter = 0x40,
-        PiePositionCenter = PiePositionHCenter | PiePositionVCenter
-    };
-
-    Q_DECLARE_FLAGS(PiePosition, PiePositionFlag)
-
-    enum PieSizePolicyFlag {
-        PieSizePolicyMaximized = 0,
-        PieSizePolicyReserveSpaceForLabels = 0x1,
-        PieSizePolicyReserveSpaceForExploding = 0x2,
-        PieSizePolicyReserveSpaceForAll = PieSizePolicyReserveSpaceForLabels | PieSizePolicyReserveSpaceForExploding
-    };
-
-    Q_DECLARE_FLAGS(PieSizePolicy, PieSizePolicyFlag)
-
     class ChangeSet
     {
     public:
@@ -88,10 +67,9 @@ public:
     qreal total() const;
 
     // pie customization
-    void setPosition(PiePosition position);
-    PiePosition position() const;
-    void setSizePolicy(PieSizePolicy policy);
-    PieSizePolicy sizePolicy() const;
+    void setPositionFactors(qreal horizontalFactor, qreal verticalFactor);
+    qreal horizontalPositionFactor() const;
+    qreal verticalPositionFactor() const;
     void setSizeFactor(qreal sizeFactor);
     qreal sizeFactor() const;
     void setStartAngle(qreal startAngle);
@@ -125,7 +103,6 @@ Q_SIGNALS:
 
     void sizeFactorChanged();
     void positionChanged();
-    void sizePolicyChanged();
 
 private Q_SLOTS: // TODO: should be private and not visible in the interface at all
     void sliceChanged();
@@ -144,12 +121,12 @@ private:
     friend class PieSlice;
 
     QList<QPieSlice*> m_slices;
-    qreal m_sizeFactor;
-    PiePosition m_position;
-    PieSizePolicy m_sizePolicy;
-    qreal m_total;
+    qreal m_hPositionFactor;
+    qreal m_vPositionFactor;
+    qreal m_pieSizeFactor;
     qreal m_pieStartAngle;
     qreal m_pieEndAngle;
+    qreal m_total;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

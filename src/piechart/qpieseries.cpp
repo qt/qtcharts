@@ -89,18 +89,6 @@ bool QPieSeries::ChangeSet::isEmpty() const
 }
 
 /*!
-    \enum QPieSeries::PiePosition
-
-    This enum describes pie position within its bounding rectangle
-
-    \value PiePositionMaximized
-    \value PiePositionTopLeft
-    \value PiePositionTopRight
-    \value PiePositionBottomLeft
-    \value PiePositionBottomRight
-*/
-
-/*!
     \class QPieSeries
     \brief Pie series API for QtCommercial Charts
 
@@ -117,11 +105,12 @@ bool QPieSeries::ChangeSet::isEmpty() const
 */
 QPieSeries::QPieSeries(QObject *parent) :
     QSeries(parent),
-    m_sizeFactor(1.0),
-    m_position(PiePositionCenter),
-    m_sizePolicy(PieSizePolicyMaximized),
+    m_hPositionFactor(0.5),
+    m_vPositionFactor(0.5),
+    m_pieSizeFactor(0.7),
     m_pieStartAngle(0),
-    m_pieEndAngle(360)
+    m_pieEndAngle(360),
+    m_total(0)
 {
 
 }
@@ -265,76 +254,109 @@ QList<QPieSlice*> QPieSeries::slices() const
 }
 
 /*!
-    Sets the size \a factor of the pie. 1.0 is the default value.
-    Note that the pie will not grow beyond its absolute maximum size.
-    In practice its use is to make the pie appear smaller.
-    \sa sizeFactor()
+    Sets the center position of the pie by \a horizontalFactor and \a verticalFactor.
+
+    The factors are relative to the chart rectangle where:
+
+    \a horizontalFactor 0.0 means the absolute left.
+    \a horizontalFactor 1.0 means the absolute right.
+    \a verticalFactor 0.0 means the absolute top.
+    \a verticalFactor 1.0 means the absolute bottom.
+
+    By default \a horizontalFactor and \a verticalFactor are 0.5 which puts the pie in the middle of the chart rectangle.
+
+    \sa horizontalPositionFactor(), verticalPositionFactor(), setSizeFactor()
 */
-void QPieSeries::setSizeFactor(qreal factor)
+void QPieSeries::setPositionFactors(qreal horizontalFactor, qreal verticalFactor)
 {
-    if (factor < 0.0)
+    if (horizontalFactor < 0.0 || horizontalFactor > 1.0 || verticalFactor < 0.0 || verticalFactor > 1.0)
         return;
 
-    if (m_sizeFactor != factor) {
-        m_sizeFactor = factor;
+    if (m_hPositionFactor != horizontalFactor || m_vPositionFactor != verticalFactor) {
+        m_hPositionFactor = horizontalFactor;
+        m_vPositionFactor = verticalFactor;
+        emit positionChanged();
+    }
+}
+
+/*!
+    Gets the horizontal position factor of the pie.
+
+    The factors are relative to the chart rectangle where:
+
+    Horizontal factor 0.0 means the absolute left.
+    Horizontal factor 1.0 means the absolute right.
+
+    By default horizontal factor is 0.5 which puts the pie in the horizontal middle of the chart rectangle.
+
+    \sa setPositionFactors(), verticalPositionFactor(), setSizeFactor()
+*/
+qreal QPieSeries::horizontalPositionFactor() const
+{
+    return m_hPositionFactor;
+}
+
+/*!
+    Gets the vertical position factor of the pie.
+
+    The factors are relative to the chart rectangle where:
+
+    Vertical factor 0.0 means the absolute top.
+    Vertical factor 1.0 means the absolute bottom.
+
+    By default vertical factor is 0.5 which puts the pie in the vertical middle of the chart rectangle.
+
+    \sa setPositionFactors(), horizontalPositionFactor(), setSizeFactor()
+*/
+qreal QPieSeries::verticalPositionFactor() const
+{
+    return m_vPositionFactor;
+}
+
+/*!
+    Sets the size \a sizeFactor of the pie.
+
+    The size factor is defined so that the 1.0 is the maximum that can fit the given chart rectangle.
+
+    Default value is 0.7.
+
+    \sa sizeFactor(), setPositionFactors(), verticalPositionFactor(), horizontalPositionFactor()
+*/
+void QPieSeries::setSizeFactor(qreal sizeFactor)
+{
+    if (sizeFactor < 0.0)
+        return;
+
+    if (m_pieSizeFactor != sizeFactor) {
+        m_pieSizeFactor = sizeFactor;
         emit sizeFactorChanged();
     }
 }
 
 /*!
     Gets the size factor of the pie.
-    \sa setSizeFactor()
+
+    The size factor is defined so that the 1.0 is the maximum that can fit the given chart rectangle.
+
+    Default value is 0.7.
+
+    \sa setSizeFactor(), setPositionFactors(), verticalPositionFactor(), horizontalPositionFactor()
 */
 qreal QPieSeries::sizeFactor() const
 {
-    return m_sizeFactor;
+    return m_pieSizeFactor;
 }
+
 
 /*!
-    Sets the \a position of the pie within its bounding rectangle.
-    \sa PiePosition, position()
+    Sets the end angle of the pie.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
+    \a startAngle must be less than end angle. Default value is 0.
+
+    \sa startAngle(), endAngle(), setEndAngle()
 */
-void QPieSeries::setPosition(PiePosition position)
-{
-    // TODO: sanity check
-    if (m_position != position) {
-        m_position = position;
-        emit positionChanged();
-    }
-}
-
-/*!
-    Gets the position of the pie within its bounding rectangle.
-    \sa PiePosition, setPosition()
-*/
-QPieSeries::PiePosition QPieSeries::position() const
-{
-    return m_position;
-}
-
-/*!
-    Sets the \a sizePolicy of the pie.
-    \sa PieSizePolicy, sizePolicy()
-*/
-void QPieSeries::setSizePolicy(PieSizePolicy sizePolicy)
-{
-    // TODO: sanity check
-    if (m_sizePolicy != sizePolicy) {
-        m_sizePolicy = sizePolicy;
-        emit sizePolicyChanged();
-    }
-}
-
-/*!
-    Gets the size policy of the pie.
-    \sa PieSizePolicy, setSizePolicy()
-*/
-QPieSeries::PieSizePolicy QPieSeries::sizePolicy() const
-{
-    return m_sizePolicy;
-}
-
-
 void QPieSeries::setStartAngle(qreal startAngle)
 {
     if (startAngle >= 0 && startAngle <= 360 && startAngle != m_pieStartAngle && startAngle <= m_pieEndAngle) {
@@ -343,11 +365,27 @@ void QPieSeries::setStartAngle(qreal startAngle)
     }
 }
 
+/*!
+    Gets the start angle of the pie.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock. Default value is 360.
+
+    \sa setStartAngle(), endAngle(), setEndAngle()
+*/
 qreal QPieSeries::startAngle() const
 {
     return m_pieStartAngle;
 }
 
+/*!
+    Sets the end angle of the pie.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
+    \a endAngle must be greater than start angle.
+
+    \sa endAngle(), startAngle(), setStartAngle()
+*/
 void QPieSeries::setEndAngle(qreal endAngle)
 {
     if (endAngle >= 0 && endAngle <= 360 && endAngle != m_pieEndAngle && endAngle >= m_pieStartAngle) {
@@ -356,6 +394,13 @@ void QPieSeries::setEndAngle(qreal endAngle)
     }
 }
 
+/*!
+    Returns the end angle of the pie.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
+    \sa setEndAngle(), startAngle(), setStartAngle()
+*/
 qreal QPieSeries::endAngle() const
 {
     return m_pieEndAngle;
@@ -428,7 +473,7 @@ qreal QPieSeries::total() const
 
     This signal is emitted when position of the pie has been changed.
 
-    \sa position(), setPosition()
+    \sa horizontalPositionFactor(), verticalPositionFactor(), setPositionFactors()
 */
 
 void QPieSeries::sliceChanged()

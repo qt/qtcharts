@@ -10,6 +10,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+#define PI 3.14159265 // TODO: is this defined in some header?
+
 QPointF offset(qreal angle, qreal length)
 {
     qreal dx = qSin(angle*(PI/180)) * length;
@@ -19,11 +21,13 @@ QPointF offset(qreal angle, qreal length)
 
 PieSlice::PieSlice(QGraphicsItem* parent)
     :QGraphicsObject(parent),
+    m_pieRadius(0),
     m_startAngle(0),
     m_angleSpan(0),
     m_isExploded(false),
-    m_explodeDistance(0),
-    m_labelVisible(false)
+    m_explodeDistanceFactor(0),
+    m_labelVisible(false),
+    m_labelArmLengthFactor(0)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::LeftButton);
@@ -41,11 +45,15 @@ QRectF PieSlice::boundingRect() const
 
 QPainterPath PieSlice::shape() const
 {
+    // Don't include the label and label arm.
+    // This is used to detect a mouse clicks. We do not want clicks from label.
     return m_slicePath;
 }
 
 void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
+    painter->setClipRect(parentItem()->boundingRect());
+
     painter->save();
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
@@ -78,36 +86,35 @@ void PieSlice::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
     emit clicked();
 }
 
-void PieSlice::setPieRect(QRectF rect)
+void PieSlice::setPieCenterAndRadius(QPointF center, qreal radius)
 {
-    m_pieRect = rect;
+    m_pieCenter = center;
+    m_pieRadius = radius;
 }
 
 void PieSlice::updateGeometry()
 {
-    if (!m_pieRect.isValid() || m_pieRect.isEmpty())
+    if (m_pieRadius <= 0)
         return;
 
     prepareGeometryChange();
 
     // update slice path
-    QPointF center = m_pieRect.center();
-    qreal radius = m_pieRect.height() / 2;
     qreal centerAngle;
     QPointF armStart;
-    m_slicePath = slicePath(center, radius, m_startAngle, m_angleSpan, m_isExploded, m_explodeDistance, &centerAngle, &armStart);
+    m_slicePath = slicePath(m_pieCenter, m_pieRadius, m_startAngle, m_angleSpan, m_isExploded, m_pieRadius * m_explodeDistanceFactor, &centerAngle, &armStart);
 
     // update text rect
     m_labelTextRect = labelTextRect(m_labelFont, m_labelText);
 
     // update label arm path
     QPointF labelTextStart;
-    m_labelArmPath = labelArmPath(armStart, centerAngle, m_labelArmLength, m_labelTextRect.width(), &labelTextStart);
+    m_labelArmPath = labelArmPath(armStart, centerAngle, m_pieRadius * m_labelArmLengthFactor, m_labelTextRect.width(), &labelTextStart);
 
     // update text position
     m_labelTextRect.moveBottomLeft(labelTextStart);
 
-    //qDebug() << "PieSlice::updateGeometry" << m_slicelabel->text() << boundingRect() << m_angle << m_span;
+    //qDebug() << "PieSlice::updateGeometry" << m_labelText << boundingRect() << m_startAngle << m_startAngle + m_angleSpan;
 }
 
 void PieSlice::updateData(const QPieSlice* sliceData)
@@ -117,14 +124,14 @@ void PieSlice::updateData(const QPieSlice* sliceData)
     m_startAngle = sliceData->startAngle();
     m_angleSpan = sliceData->m_angleSpan;
     m_isExploded = sliceData->isExploded();
-    m_explodeDistance = sliceData->explodeDistance();
+    m_explodeDistanceFactor = sliceData->explodeDistanceFactor();
     m_pen = sliceData->pen();
     m_brush = sliceData->brush();
 
     m_labelVisible = sliceData->isLabelVisible();
     m_labelText = sliceData->label();
     m_labelFont = sliceData->labelFont();
-    m_labelArmLength = sliceData->labelArmLength();
+    m_labelArmLengthFactor = sliceData->labelArmLengthFactor();
     m_labelArmPen = sliceData->labelPen();
 
     updateGeometry();

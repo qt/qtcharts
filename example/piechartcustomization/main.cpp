@@ -14,8 +14,6 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-Q_DECLARE_METATYPE(QPieSeries::PiePosition)
-
 class CustomSlice : public QPieSlice
 {
     Q_OBJECT
@@ -52,11 +50,13 @@ class MainWidget : public QWidget
 
 public:
     explicit MainWidget(QWidget* parent = 0)
-        :QWidget(parent)
+        :QWidget(parent),
+        m_slice(0)
     {
         m_chartView =  new QChartView();
         m_chartView->setChartTitle("Piechart customization");
-        //m_chartView->setRenderHint(QPainter::Antialiasing);
+        m_chartView->setRenderHint(QPainter::Antialiasing);
+        m_chartView->setChartTheme(QChart::ChartThemeIcy);
 
         m_series = new QPieSeries();
         *m_series << new CustomSlice(10.0, "Slice 1");
@@ -66,27 +66,23 @@ public:
         *m_series << new CustomSlice(50.0, "Slice 5");
         m_chartView->addSeries(m_series);
 
-        m_vPosition = new QComboBox();
-        m_vPosition->addItem("Top", QPieSeries::PiePositionTop);
-        m_vPosition->addItem("Bottom", QPieSeries::PiePositionBottom);
-        m_vPosition->addItem("Center", QPieSeries::PiePositionVCenter);
+        m_hPosition = new QDoubleSpinBox();
+        m_hPosition->setMinimum(0.0);
+        m_hPosition->setMaximum(1.0);
+        m_hPosition->setSingleStep(0.1);
+        m_hPosition->setValue(m_series->horizontalPositionFactor());
 
-        m_hPosition = new QComboBox();
-        m_hPosition->addItem("Left", QPieSeries::PiePositionLeft);
-        m_hPosition->addItem("Right", QPieSeries::PiePositionRight);
-        m_hPosition->addItem("Center", QPieSeries::PiePositionHCenter);
-
-        m_sizePolicy = new QComboBox();
-        m_sizePolicy->addItem("Maximized", QPieSeries::PieSizePolicyMaximized);
-        m_sizePolicy->addItem("Space for labels", QPieSeries::PieSizePolicyReserveSpaceForLabels);
-        m_sizePolicy->addItem("Space for exploding", QPieSeries::PieSizePolicyReserveSpaceForExploding);
-        m_sizePolicy->addItem("Space for all", QPieSeries::PieSizePolicyReserveSpaceForAll);
+        m_vPosition = new QDoubleSpinBox();
+        m_vPosition->setMinimum(0.0);
+        m_vPosition->setMaximum(1.0);
+        m_vPosition->setSingleStep(0.1);
+        m_vPosition->setValue(m_series->verticalPositionFactor());
 
         m_sizeFactor = new QDoubleSpinBox();
         m_sizeFactor->setMinimum(0.0);
         m_sizeFactor->setMaximum(1.0);
-        m_sizeFactor->setValue(m_series->sizeFactor());
         m_sizeFactor->setSingleStep(0.1);
+        m_sizeFactor->setValue(m_series->sizeFactor());
 
         m_startAngle = new QDoubleSpinBox();
         m_startAngle->setMinimum(0.0);
@@ -101,9 +97,8 @@ public:
         m_endAngle->setSingleStep(1);
 
         QFormLayout* seriesSettingsLayout = new QFormLayout();
-        seriesSettingsLayout->addRow("Vertical position", m_vPosition);
         seriesSettingsLayout->addRow("Horizontal position", m_hPosition);
-        seriesSettingsLayout->addRow("Size policy", m_sizePolicy);
+        seriesSettingsLayout->addRow("Vertical position", m_vPosition);
         seriesSettingsLayout->addRow("Size factor", m_sizeFactor);
         seriesSettingsLayout->addRow("Start angle", m_startAngle);
         seriesSettingsLayout->addRow("End angle", m_endAngle);
@@ -114,13 +109,20 @@ public:
         m_sliceValue = new QDoubleSpinBox();
         m_sliceValue->setMaximum(1000);
         m_sliceLabelVisible = new QCheckBox();
+        m_sliceLabelArmFactor = new QDoubleSpinBox();
+        m_sliceLabelArmFactor->setSingleStep(0.01);
         m_sliceExploded = new QCheckBox();
+        m_sliceExplodedFactor = new QDoubleSpinBox();
+        m_sliceExplodedFactor->setSingleStep(0.01);
 
         QFormLayout* sliceSettingsLayout = new QFormLayout();
         sliceSettingsLayout->addRow("Selected", m_sliceName);
         sliceSettingsLayout->addRow("Value", m_sliceValue);
         sliceSettingsLayout->addRow("Label visible", m_sliceLabelVisible);
+        sliceSettingsLayout->addRow("Label arm length", m_sliceLabelArmFactor);
         sliceSettingsLayout->addRow("Exploded", m_sliceExploded);
+        sliceSettingsLayout->addRow("Explode distance", m_sliceExplodedFactor);
+
         QGroupBox* sliceSettings = new QGroupBox("Slice");
         sliceSettings->setLayout(sliceSettingsLayout);
 
@@ -130,16 +132,17 @@ public:
         baseLayout->addWidget(m_chartView, 0, 1, 2, 1);
         setLayout(baseLayout);
 
-        connect(m_vPosition, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSerieSettings()));
-        connect(m_hPosition, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSerieSettings()));
-        connect(m_sizePolicy, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSerieSettings()));
+        connect(m_vPosition, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
+        connect(m_hPosition, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
         connect(m_sizeFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
         connect(m_startAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
         connect(m_endAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
 
         connect(m_sliceValue, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
         connect(m_sliceLabelVisible, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
+        connect(m_sliceLabelArmFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
         connect(m_sliceExploded, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
+        connect(m_sliceExplodedFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
 
         connect(m_series, SIGNAL(clicked(QPieSlice*)), this, SLOT(handleSliceClicked(QPieSlice*)));
 
@@ -150,12 +153,7 @@ public Q_SLOTS:
 
     void updateSerieSettings()
     {
-        QPieSeries::PiePosition vPos(m_vPosition->itemData(m_vPosition->currentIndex()).toInt());
-        QPieSeries::PiePosition hPos(m_hPosition->itemData(m_hPosition->currentIndex()).toInt());
-        m_series->setPosition(vPos | hPos);
-
-        QPieSeries::PieSizePolicy policy(m_sizePolicy->itemData(m_sizePolicy->currentIndex()).toInt());
-        m_series->setSizePolicy(policy);
+        m_series->setPositionFactors(m_vPosition->value(), m_hPosition->value());
 
         m_series->setSizeFactor(m_sizeFactor->value());
 
@@ -165,9 +163,14 @@ public Q_SLOTS:
 
     void updateSliceSettings()
     {
+        if (!m_slice)
+            return;
+
         m_slice->setValue(m_sliceValue->value());
         m_slice->setLabelVisible(m_sliceLabelVisible->isChecked());
+        m_slice->setLabelArmLengthFactor(m_sliceLabelArmFactor->value());
         m_slice->setExploded(m_sliceExploded->isChecked());
+        m_slice->setExplodeDistanceFactor(m_sliceExplodedFactor->value());
     }
 
     void handleSliceClicked(QPieSlice* slice)
@@ -183,9 +186,17 @@ public Q_SLOTS:
         m_sliceLabelVisible->setChecked(slice->isLabelVisible());
         m_sliceLabelVisible->blockSignals(false);
 
+        m_sliceLabelArmFactor->blockSignals(true);
+        m_sliceLabelArmFactor->setValue(slice->labelArmLengthFactor());
+        m_sliceLabelArmFactor->blockSignals(false);
+
         m_sliceExploded->blockSignals(true);
         m_sliceExploded->setChecked(slice->isExploded());
         m_sliceExploded->blockSignals(false);
+
+        m_sliceExplodedFactor->blockSignals(true);
+        m_sliceExplodedFactor->setValue(slice->explodeDistanceFactor());
+        m_sliceExplodedFactor->blockSignals(false);
     }
 
 private:
@@ -193,9 +204,8 @@ private:
     QPieSeries* m_series;
     QPieSlice* m_slice;
 
-    QComboBox* m_vPosition;
-    QComboBox* m_hPosition;
-    QComboBox* m_sizePolicy;
+    QDoubleSpinBox* m_hPosition;
+    QDoubleSpinBox* m_vPosition;
     QDoubleSpinBox* m_sizeFactor;
     QDoubleSpinBox* m_startAngle;
     QDoubleSpinBox* m_endAngle;
@@ -203,7 +213,9 @@ private:
     QLabel* m_sliceName;
     QDoubleSpinBox* m_sliceValue;
     QCheckBox* m_sliceLabelVisible;
+    QDoubleSpinBox* m_sliceLabelArmFactor;
     QCheckBox* m_sliceExploded;
+    QDoubleSpinBox* m_sliceExplodedFactor;
 };
 
 int main(int argc, char *argv[])
