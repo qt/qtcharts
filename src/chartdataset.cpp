@@ -213,12 +213,20 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
         case QSeries::SeriesTypeScatter: {
             QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
             Q_ASSERT(scatterSeries);
+            qreal minX(domain->minX());
+            qreal minY(domain->minY());
+            qreal maxX(domain->maxX());
+            qreal maxY(domain->maxY());
             foreach (QPointF point, scatterSeries->data()) {
-                domain->setMinX(qMin(domain->minX(), point.x()));
-                domain->setMinY(qMax(domain->maxX(), point.x()));
-                domain->setMaxX(qMin(domain->minY(), point.y()));
-                domain->setMaxY(qMax(domain->maxY(), point.y()));
+                minX = qMin(minX, point.x());
+                minY = qMin(minY, point.y());
+                maxX = qMax(maxX, point.x());
+                maxY = qMax(maxY, point.y());
             }
+            domain->setMinX(minX);
+            domain->setMinY(minY);
+            domain->setMaxX(maxX);
+            domain->setMaxY(maxY);
             break;
         }
 

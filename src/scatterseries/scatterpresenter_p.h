@@ -39,7 +39,7 @@ public:
     qreal m_minY;
     qreal m_maxY;
     QScatterSeries *m_series;
-    QRectF m_boundingRect;
+    QRectF m_clippingRect;
     QPen m_markerPen;
     QBrush m_markerBrush;
     QPainterPath m_path;

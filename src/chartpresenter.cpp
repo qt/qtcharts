@@ -219,9 +219,13 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
                          scatterSeries, SIGNAL(clicked(QPointF)));
         QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)),
                          scatterPresenter, SLOT(handleGeometryChanged(const QRectF&)));
+        QObject::connect(domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),
+                         scatterPresenter, SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
         m_chartTheme->decorate(scatterPresenter, scatterSeries, m_chartItems.count());
         m_chartItems.insert(scatterSeries, scatterPresenter);
-        if(m_rect.isValid()) scatterPresenter->handleGeometryChanged(m_rect);
+        if (m_rect.isValid())
+            scatterPresenter->handleGeometryChanged(m_rect);
+        scatterPresenter->handleDomainChanged(domain->minX(), domain->maxX(), domain->minY(), domain->maxY());
         break;
     }
     case QSeries::SeriesTypePie: {

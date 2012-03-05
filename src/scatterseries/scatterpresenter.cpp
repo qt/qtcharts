@@ -18,10 +18,10 @@ ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *pare
     m_minY(0),
     m_maxY(0),
     m_series(series),
-    m_boundingRect()
+    m_clippingRect()
 {
     if (parent)
-        m_boundingRect = parent->boundingRect();
+        m_clippingRect = parent->boundingRect();
 
     if (series) {
         connect(series, SIGNAL(changed()), this, SLOT(handleModelChanged()));
@@ -38,16 +38,16 @@ ScatterPresenter::ScatterPresenter(QScatterSeries *series, QGraphicsObject *pare
 
 void ScatterPresenter::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
-    m_minX=minX;
-    m_maxX=maxX;
-    m_minY=minY;
-    m_maxY=maxY;
+    m_minX = minX;
+    m_maxX = maxX;
+    m_minY = minY;
+    m_maxY = maxY;
     changeGeometry();
 }
 
 void ScatterPresenter::handleGeometryChanged(const QRectF& rect)
 {
-    m_boundingRect = rect.translated(-rect.topLeft());
+    m_clippingRect = rect.translated(-rect.topLeft());
     changeGeometry();
     setPos(rect.topLeft());
 }
@@ -61,7 +61,7 @@ void ScatterPresenter::handleModelChanged()
 void ScatterPresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem */*option*/, QWidget */*widget*/)
 {
     painter->save();
-    painter->setClipRect(m_boundingRect);
+    painter->setClipRect(m_clippingRect);
 
     // TODO: how to draw a drop shadow?
     // Now using a custom implementation for drop shadow instead of QGraphicsDropShadowEffect.
@@ -104,17 +104,17 @@ void ScatterPresenter::mousePressEvent(QGraphicsSceneMouseEvent *event)
 void ScatterPresenter::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     QPointF clickedPoint(
-        m_minX + (event->lastPos().x() / m_boundingRect.width()) * (m_maxX-m_minX),
-        m_maxY - (event->lastPos().y() / m_boundingRect.height()) * (m_maxY-m_minY));
+        m_minX + (event->lastPos().x() / m_clippingRect.width()) * (m_maxX-m_minX),
+        m_maxY - (event->lastPos().y() / m_clippingRect.height()) * (m_maxY-m_minY));
     emit clicked(clickedPoint);
 }
 
 void ScatterPresenter::changeGeometry()
 {
-    if (m_boundingRect.isValid()) {
+    if (m_clippingRect.isValid()) {
         prepareGeometryChange();
-        qreal scalex = m_boundingRect.width() / (m_maxX-m_minX);
-        qreal scaley = m_boundingRect.height() / (m_maxY-m_minY);
+        qreal scalex = m_clippingRect.width() / (m_maxX - m_minX);
+        qreal scaley = m_clippingRect.height() / (m_maxY - m_minY);
 
         int shape = m_series->shape();
         m_path = QPainterPath();
@@ -124,7 +124,7 @@ void ScatterPresenter::changeGeometry()
         foreach (QPointF point, m_series->data()) {
             // Convert relative coordinates to absolute pixel coordinates that can be used for drawing
             qreal x = point.x() * scalex - m_minX * scalex - size / 2;
-            qreal y = m_boundingRect.height() - point.y() * scaley + m_minY * scaley - size / 2;
+            qreal y = m_clippingRect.height() - point.y() * scaley + m_minY * scaley - size / 2;
 
             if (x < scene()->width() && y < scene()->height()) {
                 switch (shape) {
