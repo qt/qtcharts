@@ -259,6 +259,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(series);
         SplinePresenter* splinePresenter = new SplinePresenter(splineSeries, m_chart);
         QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), splinePresenter, SLOT(handleGeometryChanged(const QRectF&)));
+        QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),splinePresenter,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
         //initialize
         splinePresenter->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());
         m_chartTheme->decorate(splinePresenter, splineSeries, m_chartItems.count());
