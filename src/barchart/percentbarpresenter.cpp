@@ -74,7 +74,7 @@ void PercentBarPresenter::layoutChanged()
 
     // Position floating values
     itemIndex = 0;
-    xPos = ((tW/tC) - mBarWidth / 2);
+    xPos = (tW/tC);
     for (int category=0; category < mSeries->categoryCount(); category++) {
         qreal yPos = h;
         qreal colSum = mSeries->categorySum(category);
