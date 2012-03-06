@@ -1,9 +1,10 @@
 #include "mainwidget.h"
 #include "dataseriedialog.h"
-#include "qpieseries.h"
-#include "qscatterseries.h"
+#include <qpieseries.h>
+#include <qscatterseries.h>
 #include <qlineseries.h>
-#include "qsplineseries.h"
+#include <qareaseries.h>
+#include <qsplineseries.h>
 #include <qbarset.h>
 #include <qbarseries.h>
 #include <qstackedbarseries.h>
@@ -201,7 +202,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
     QList<RealList> data = generateTestData(columnCount, rowCount, dataCharacteristics);
 
     // Line series and scatter series use similar data
-    if (seriesName.contains("qline", Qt::CaseInsensitive)) {
+    if (seriesName == "Line") {
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
             QLineSeries *series = new QLineSeries();
@@ -211,7 +212,19 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             m_chartView->addSeries(series);
             setCurrentSeries(series);
         }
-    } else if (seriesName.contains("scatter", Qt::CaseInsensitive)) {
+    } if (seriesName == "Area") {
+        // TODO: lower series for the area?
+        for (int j(0); j < data.count(); j ++) {
+            QList<qreal> column = data.at(j);
+            QLineSeries *lineSeries = new QLineSeries();
+            for (int i(0); i < column.count(); i++) {
+                lineSeries->add(i, column.at(i));
+            }
+            QAreaSeries *areaSeries = new QAreaSeries(lineSeries);
+            m_chartView->addSeries(areaSeries);
+            setCurrentSeries(areaSeries);
+        }
+    } else if (seriesName == "Scatter") {
         for (int j(0); j < data.count(); j++) {
             QList<qreal> column = data.at(j);
             QScatterSeries *series = new QScatterSeries();
@@ -221,7 +234,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             m_chartView->addSeries(series);
             setCurrentSeries(series);
         }
-    } else if (seriesName.contains("pie", Qt::CaseInsensitive)) {
+    } else if (seriesName == "Pie") {
         QStringList labels = generateLabels(rowCount);
         for (int j(0); j < data.count(); j++) {
             QPieSeries *series = new QPieSeries();
@@ -262,8 +275,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         series->setSeparatorsEnabled(false);
         m_chartView->addSeries(series);
         setCurrentSeries(series);
-    }
-    else if (seriesName.contains("spline", Qt::CaseInsensitive)) {
+    } else if (seriesName == "Spline") {
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
             QSplineSeries *series = new QSplineSeries();
