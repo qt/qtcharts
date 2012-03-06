@@ -66,8 +66,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QLineSeries::QLineSeries(QObject* parent):QXYSeries(parent),
-m_pointsVisible(false)
+QLineSeries::QLineSeries(QObject* parent):QXYSeries(parent)
 {
 }
 /*!
@@ -76,28 +75,6 @@ m_pointsVisible(false)
 */
 QLineSeries::~QLineSeries()
 {
-}
-
-/*!
-    Sets \a pen used for drawing given series..
-*/
-void QLineSeries::setPen(const QPen& pen)
-{
-    if(pen!=m_pen){
-    m_pen=pen;
-    emit updated();
-    }
-}
-
-/*!
-    Sets if data points are \a visible and should be drawn on line.
-*/
-void QLineSeries::setPointsVisible(bool visible)
-{
-    if(m_pointsVisible!=visible){
-    m_pointsVisible=visible;
-    emit updated();
-    }
 }
 
 QDebug operator<< (QDebug debug, const QLineSeries series)

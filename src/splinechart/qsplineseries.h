@@ -3,38 +3,39 @@
 
 #include "qchartglobal.h"
 #include <QtGlobal>
-#include "qlineseries.h"
+#include "qxyseries.h"
 #include <QList>
 #include <QPointF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QSplineSeries : public QLineSeries
+class QTCOMMERCIALCHART_EXPORT QSplineSeries : public QXYSeries
 {
     Q_OBJECT
-    public:
+public:
 
     QSplineSeries(QObject *parent = 0);
-    QSeriesType type() const { return QSeries::SeriesTypeSpline; }
+    QSeriesType type() const {return QSeries::SeriesTypeSpline;}
 
 //    int count() const { return m_x.size(); }
-    QPointF controlPoint(int index) const { return m_controlPoints[index]; }
+    QPointF controlPoint(int index) const {return m_controlPoints[index];}
 
     // TODO: allow the user to set custom control points
 //    void setCustomControlPoints(QList<QPointsF> controlPoints);
 //    bool calculateControlPointsAutomatically();
 //    void setCalculateControlPointsAutomatically();
 
-    private:
+
+private:
     void calculateControlPoints();
     QList<qreal> getFirstControlPoints(QList<qreal> rhs);
 
-    private slots:
+private slots:
     void updateControlPoints();
 
-    private:
+private:
     QList<QPointF> m_controlPoints;
-    
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

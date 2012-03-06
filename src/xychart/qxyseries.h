@@ -31,6 +31,12 @@ public:
 
 	QXYSeries& operator << (const QPointF &point);
 
+	void setPen(const QPen& pen);
+	QPen pen() const {return m_pen;}
+
+	void setPointsVisible(bool visible);
+	bool pointsVisible() const {return m_pointsVisible;}
+
 signals:
 	void updated();
 	void pointReplaced(int index);
@@ -41,6 +47,9 @@ signals:
 protected:
 	QVector<qreal> m_x;
 	QVector<qreal> m_y;
+
+	QPen m_pen;
+	bool m_pointsVisible;
 
 };
 
