@@ -29,17 +29,17 @@ void PercentBarPresenter::layoutChanged()
         return;
     }
 
-    // TODO: better way to auto-layout
-    // Use reals for accurancy (we might get some compiler warnings... :)
-    int count = mSeries->categoryCount();
-    int itemIndex(0);
-    int labelIndex(0);
+    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
     qreal tW = mWidth;
-    qreal tC = count+1;
+    qreal tC = mSeries->categoryCount() + 1;
+    qreal cC = mSeries->categoryCount() * 2 + 1;
+    mBarWidth = tW / cC;
     qreal xStep = (tW/tC);
-    qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
+    qreal xPos = ((tW/tC) - mBarWidth / 2);
     qreal h = mHeight;
 
+    int itemIndex(0);
+    int labelIndex(0);
     for (int category = 0; category < mSeries->categoryCount(); category++) {
         qreal colSum = mSeries->categorySum(category);
         qreal scale = (h / colSum);
@@ -49,7 +49,7 @@ void PercentBarPresenter::layoutChanged()
             Bar* bar = mBars.at(itemIndex);
 
             // TODO: width settable per bar?
-            bar->resize(mBarDefaultWidth, barHeight);
+            bar->resize(mBarWidth, barHeight);
             bar->setBrush(mSeries->barsetAt(set)->brush());
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
@@ -74,7 +74,7 @@ void PercentBarPresenter::layoutChanged()
 
     // Position floating values
     itemIndex = 0;
-    xPos = ((tW/tC) - mBarDefaultWidth / 2);
+    xPos = ((tW/tC) - mBarWidth / 2);
     for (int category=0; category < mSeries->categoryCount(); category++) {
         qreal yPos = h;
         qreal colSum = mSeries->categorySum(category);
@@ -103,8 +103,6 @@ void PercentBarPresenter::layoutChanged()
         }
         xPos += xStep;
     }
-
-    mLayoutDirty = true;
 }
 
 #include "moc_percentbarpresenter_p.cpp"

@@ -20,8 +20,8 @@ public:
     void setValueString(QString str);
     QString valueString();
 
-    void setPen(const QPen& pen);
-    const QPen& pen();
+    void setPen(const QPen pen);
+    QPen pen() const;
 
     void resize(qreal w, qreal h);
     void setPos(qreal x, qreal y);

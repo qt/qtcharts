@@ -122,7 +122,7 @@ qreal QBarSet::total()
 /*!
     Sets pen for set. Bars of this set are drawn using \a pen
 */
-void QBarSet::setPen(QPen pen)
+void QBarSet::setPen(const QPen pen)
 {
     mPen = pen;
 }
@@ -130,7 +130,7 @@ void QBarSet::setPen(QPen pen)
 /*!
     Returns pen of the set.
 */
-QPen QBarSet::pen()
+QPen QBarSet::pen() const
 {
     return mPen;
 }
@@ -138,7 +138,7 @@ QPen QBarSet::pen()
 /*!
     Sets brush for the set. Bars of this set are drawn using \a brush
 */
-void QBarSet::setBrush(QBrush brush)
+void QBarSet::setBrush(const QBrush brush)
 {
     mBrush = brush;
 }
@@ -146,7 +146,7 @@ void QBarSet::setBrush(QBrush brush)
 /*!
     Returns brush of the set.
 */
-QBrush QBarSet::brush()
+QBrush QBarSet::brush() const
 {
     return mBrush;
 }

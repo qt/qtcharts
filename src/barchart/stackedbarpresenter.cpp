@@ -39,27 +39,26 @@ void StackedBarPresenter::layoutChanged()
         return;
     }
 
-    // TODO: better way to auto-layout
-    // Use reals for accurancy (we might get some compiler warnings... :)
-    // TODO: use temp variable for category count...
+    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
     qreal maxSum = mSeries->maxCategorySum();
     qreal h = mHeight;
     qreal scale = (h / maxSum);
+    qreal tW = mWidth;
+    qreal tC = mSeries->categoryCount() + 1;
+    qreal cC = mSeries->categoryCount() * 2 + 1;
+    mBarWidth = tW / cC;
+    qreal xStep = (tW/tC);
+    qreal xPos = ((tW/tC) - mBarWidth / 2);
 
     int itemIndex(0);
     int labelIndex(0);
-    qreal tW = mWidth;
-    qreal tC = mSeries->categoryCount() + 1;
-    qreal xStep = (tW/tC);
-    qreal xPos = ((tW/tC) - mBarDefaultWidth / 2);
-
     for (int category = 0; category < mSeries->categoryCount(); category++) {
         qreal yPos = h;
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set, category) * scale;
             Bar* bar = mBars.at(itemIndex);
 
-            bar->resize(mBarDefaultWidth, barHeight);
+            bar->resize(mBarWidth, barHeight);
             bar->setBrush(mSeries->barsetAt(set)->brush());
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
@@ -84,7 +83,7 @@ void StackedBarPresenter::layoutChanged()
 
     // Position floating values
     itemIndex = 0;
-    xPos = ((tW/tC) - mBarDefaultWidth / 2);
+    xPos = ((tW/tC) - mBarWidth / 2);
     for (int category=0; category < mSeries->categoryCount(); category++) {
         qreal yPos = h;
         for (int set=0; set < mSeries->barsetCount(); set++) {
@@ -107,8 +106,6 @@ void StackedBarPresenter::layoutChanged()
         }
         xPos += xStep;
     }
-
-    mLayoutDirty = true;
 }
 
 #include "moc_stackedbarpresenter_p.cpp"

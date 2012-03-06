@@ -49,17 +49,13 @@ protected:
     // TODO: consider these.
     int mHeight;        // Layout spesific
     int mWidth;
-    int mBarDefaultWidth;
+    qreal mBarWidth;
 
     bool mLayoutSet;    // True, if component has been laid out.
-    bool mLayoutDirty;
-
     bool mSeparatorsEnabled;
 
-    // Owned
-    QBarSeries* mSeries;
-
     // Not owned.
+    QBarSeries* mSeries;
     QList<Bar*> mBars;
     QList<BarLabel*> mLabels;
     QList<Separator*> mSeparators;

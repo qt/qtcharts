@@ -12,14 +12,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarPresenterBase::BarPresenterBase(QBarSeries *series, QGraphicsItem *parent)
     : ChartItem(parent)
-    ,mBarDefaultWidth(20) // TODO: remove hard coding, when we have layout code ready
+    ,mBarWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
-    ,mLayoutDirty(true)
     ,mSeparatorsEnabled(false)
     ,mSeries(series)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
-//    connect(series,SIGNAL(separatorsEnabled(bool)),this,SLOT(enableSeparators(bool)));
     dataChanged();
 }
 
@@ -34,12 +32,9 @@ void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *
         qDebug() << "BarPresenterBase::paint called without layout set. Aborting.";
         return;
     }
-//    if (mLayoutDirty) {
-        // Layout or data has changed. Need to redraw.
-        foreach(QGraphicsItem* i, childItems()) {
-            i->paint(painter,option,widget);
-        }
-//    }
+    foreach(QGraphicsItem* i, childItems()) {
+        i->paint(painter,option,widget);
+    }
 }
 
 QRectF BarPresenterBase::boundingRect() const
@@ -49,13 +44,12 @@ QRectF BarPresenterBase::boundingRect() const
 
 void BarPresenterBase::setBarWidth( int w )
 {
-    mBarDefaultWidth = w;
+    mBarWidth = w;
 }
 
 void BarPresenterBase::dataChanged()
 {
     // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?
-//    qDebug() << "datachanged";
     // Delete old bars
     foreach (QGraphicsItem* item, childItems()) {
         delete item;
@@ -110,9 +104,6 @@ void BarPresenterBase::dataChanged()
             connect(set,SIGNAL(toggleFloatingValues()),value,SLOT(toggleVisible()));
         }
     }
-
-    // TODO: if (autolayout) { layoutChanged() } or something
-    mLayoutDirty = true;
 }
 
 //handlers

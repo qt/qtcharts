@@ -27,11 +27,11 @@ public:
     //qreal value(QString category);
     //void setValue(QString category, qreal value);
 
-    void setPen(QPen pen);
-    QPen pen();
+    void setPen(const QPen pen);
+    QPen pen() const;
 
-    void setBrush(QBrush brush);
-    QBrush brush();
+    void setBrush(const QBrush brush);
+    QBrush brush() const;
 
 Q_SIGNALS:
     void clicked(QString category);                         // Clicked and hover signals exposed to user

@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 BarPresenter::BarPresenter(QBarSeries *series, QGraphicsItem *parent) :
     BarPresenterBase(series, parent)
 {
-    mBarDefaultWidth = 5;
+    mBarWidth = 5;
 }
 
 void BarPresenter::layoutChanged()
@@ -27,8 +27,7 @@ void BarPresenter::layoutChanged()
         return;
     }
 
-    // TODO: better way to auto-layout?
-    // Use reals for accurancy (we might get some compiler warnings... :)
+    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
     int categoryCount = mSeries->categoryCount();
     int setCount = mSeries->barsetCount();
 
@@ -36,39 +35,39 @@ void BarPresenter::layoutChanged()
     qreal tH = mHeight;
     qreal tM = mSeries->max();
     qreal scale = (tH/tM);
-    qreal tC = categoryCount+1;
-    qreal xStepPerSet = (tW/tC);
+    qreal tC = categoryCount + 1;
+    mBarWidth = tW / ((categoryCount * setCount) + tC);
+    qreal xStepPerCategory = (tW/tC) + mBarWidth;
 
-    // Scaling.
     int itemIndex(0);
     int labelIndex(0);
 
     for (int category=0; category < categoryCount; category++) {
-        qreal xPos = xStepPerSet * category + ((tW + mBarDefaultWidth*setCount)/(categoryCount*2));
+        qreal xPos = xStepPerCategory * category;
         qreal yPos = mHeight;
         for (int set = 0; set < setCount; set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             Bar* bar = mBars.at(itemIndex);
 
             // TODO: width settable per bar?
-            bar->resize(mBarDefaultWidth, barHeight);
+            bar->resize(mBarWidth, barHeight);
             bar->setBrush(mSeries->barsetAt(set)->brush());
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
-            xPos += mBarDefaultWidth;
+            xPos += mBarWidth;
         }
 
         // TODO: Layout for labels, remove magic number
-        xPos = xStepPerSet * category + ((tW + mBarDefaultWidth*setCount)/(categoryCount*2));
+        xPos = xStepPerCategory * category + mBarWidth/2;
         BarLabel* label = mLabels.at(labelIndex);
-        label->setPos(xPos, mHeight + 20);
+        label->setPos(xPos, mHeight - 20);
         labelIndex++;
     }
 
     // Position floating values
     itemIndex = 0;
     for (int category=0; category < mSeries->categoryCount(); category++) {
-        qreal xPos = xStepPerSet * category + ((tW + mBarDefaultWidth*setCount)/(categoryCount*2));
+        qreal xPos = xStepPerCategory * category + mBarWidth/2;
         qreal yPos = mHeight;
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
@@ -86,10 +85,9 @@ void BarPresenter::layoutChanged()
             }
 
             itemIndex++;
-            xPos += mBarDefaultWidth;
+            xPos += mBarWidth;
         }
     }
-    mLayoutDirty = true;
 }
 
 #include "moc_barpresenter_p.cpp"

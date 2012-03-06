@@ -21,12 +21,12 @@ QString BarValue::valueString()
     return mValueString;
 }
 
-void BarValue::setPen(const QPen& pen)
+void BarValue::setPen(const QPen pen)
 {
     mPen = pen;
 }
 
-const QPen& BarValue::pen()
+QPen BarValue::pen() const
 {
     return mPen;
 }
