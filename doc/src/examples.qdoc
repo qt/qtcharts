@@ -17,6 +17,7 @@
             <li><a href="example-barchart.html">Bar Chart example</a></li>
             <li><a href="example-stackedbarchart.html">Stacked Bar Chart example</a></li>
             <li><a href="example-percentbarchart.html">Percent Bar Chart example</a></li>
+            <li><a href="example-scatterchart.html">Scatter Chart example</a></li>
             <li><a href="example-stackedbarchartdrilldown.html">Stacked Bar Chart Drilldown example</a></li>
             <li><a href="example-linechart.html">Line Chart example</a></li>
             <li><a href="example-piechart.html">Pie Chart example</a></li>

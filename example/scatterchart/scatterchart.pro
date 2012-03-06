@@ -1,5 +1,5 @@
 !include( ../example.pri ) {
     error( "Couldn't find the example.pri file!" )
 }
-TARGET = scatter
+TARGET = scatterchart
 SOURCES += main.cpp

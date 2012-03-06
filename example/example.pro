@@ -5,7 +5,7 @@ SUBDIRS += linechart \
            barchart \
            stackedbarchart \
            percentbarchart \
-           scatter \
+           scatterchart \
            piechart \
            piechartcustomization \
            piechartdrilldown \
