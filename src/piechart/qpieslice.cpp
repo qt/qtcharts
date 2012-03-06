@@ -46,9 +46,9 @@ QPieSlice::QPieSlice(QObject *parent)
     m_percentage(0),
     m_startAngle(0),
     m_angleSpan(0),
-    m_pen(DEFAULT_PEN_COLOR),
-    m_brush(DEFAULT_BRUSH_COLOR),
-    m_labelPen(DEFAULT_PEN_COLOR),
+    m_slicePen(DEFAULT_PEN_COLOR),
+    m_sliceBrush(DEFAULT_BRUSH_COLOR),
+    m_labelArmPen(DEFAULT_PEN_COLOR),
     m_labelArmLengthFactor(DEFAULT_LABEL_ARM_LENGTH_FACTOR)
 {
 
@@ -69,9 +69,9 @@ QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     m_percentage(0),
     m_startAngle(0),
     m_angleSpan(0),
-    m_pen(DEFAULT_PEN_COLOR),
-    m_brush(DEFAULT_BRUSH_COLOR),
-    m_labelPen(DEFAULT_PEN_COLOR),
+    m_slicePen(DEFAULT_PEN_COLOR),
+    m_sliceBrush(DEFAULT_BRUSH_COLOR),
+    m_labelArmPen(DEFAULT_PEN_COLOR),
     m_labelArmLengthFactor(DEFAULT_LABEL_ARM_LENGTH_FACTOR)
 {
 
@@ -176,29 +176,29 @@ qreal QPieSlice::endAngle() const
 
 /*!
     Returns the pen used to draw this slice.
-    \sa setPen()
+    \sa setSlicePen()
 */
-QPen QPieSlice::pen() const
+QPen QPieSlice::slicePen() const
 {
-    return m_pen;
+    return m_slicePen;
 }
 
 /*!
     Returns the brush used to draw this slice.
-    \sa setBrush()
+    \sa setSliceBrush()
 */
-QBrush QPieSlice::brush() const
+QBrush QPieSlice::sliceBrush() const
 {
-    return m_brush;
+    return m_sliceBrush;
 }
 
 /*!
-    Returns the pen used to draw label in this slice.
-    \sa setLabelPen()
+    Returns the pen used to draw label arm in this slice.
+    \sa setLabelArmPen()
 */
-QPen QPieSlice::labelPen() const
+QPen QPieSlice::labelArmPen() const
 {
-    return m_labelPen;
+    return m_labelArmPen;
 }
 
 /*!
@@ -328,12 +328,12 @@ void QPieSlice::setExplodeDistanceFactor(qreal factor)
 /*!
     Sets the \a pen used to draw this slice.
     Note that applying a theme will override this.
-    \sa pen()
+    \sa slicePen()
 */
-void QPieSlice::setPen(QPen pen)
+void QPieSlice::setSlicePen(const QPen &pen)
 {
-    if (m_pen != pen) {
-        m_pen = pen;
+    if (m_slicePen != pen) {
+        m_slicePen = pen;
         emit changed();
     }
 }
@@ -341,25 +341,25 @@ void QPieSlice::setPen(QPen pen)
 /*!
     Sets the \a brush used to draw this slice.
     Note that applying a theme will override this.
-    \sa brush()
+    \sa sliceBrush()
 */
-void QPieSlice::setBrush(QBrush brush)
+void QPieSlice::setSliceBrush(const QBrush &brush)
 {
-    if (m_brush != brush) {
-        m_brush = brush;
+    if (m_sliceBrush != brush) {
+        m_sliceBrush = brush;
         emit changed();
     }
 }
 
 /*!
-    Sets the \a pen used to draw the label in this slice.
+    Sets the \a pen used to draw the label arm in this slice.
     Note that applying a theme will override this.
-    \sa labelPen()
+    \sa labelArmPen()
 */
-void QPieSlice::setLabelPen(QPen pen)
+void QPieSlice::setLabelArmPen(const QPen &pen)
 {
-    if (m_labelPen != pen) {
-        m_labelPen = pen;
+    if (m_labelArmPen != pen) {
+        m_labelArmPen = pen;
         emit changed();
     }
 }
@@ -369,7 +369,7 @@ void QPieSlice::setLabelPen(QPen pen)
     Note that applying a theme will override this.
     \sa labelFont()
 */
-void QPieSlice::setLabelFont(QFont font)
+void QPieSlice::setLabelFont(const QFont &font)
 {
     if (m_labelFont != font) {
         m_labelFont = font;

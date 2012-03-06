@@ -29,15 +29,15 @@ public Q_SLOTS:
 
     void handleHoverEnter()
     {
-        QBrush brush = this->brush();
+        QBrush brush = this->sliceBrush();
         m_originalBrush = brush;
         brush.setColor(brush.color().lighter());
-        setBrush(brush);
+        setSliceBrush(brush);
     }
 
     void handleHoverLeave()
     {
-        setBrush(m_originalBrush);
+        setSliceBrush(m_originalBrush);
     }
 
 private:

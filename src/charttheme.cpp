@@ -284,8 +284,8 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
     // finally update colors
     foreach (QPieSlice* s, series->slices()) {
         QColor c = colors.takeFirst();
-        s->setPen(c);
-        s->setBrush(c);
+        s->setSlicePen(c);
+        s->setSliceBrush(c);
     }
 }
 

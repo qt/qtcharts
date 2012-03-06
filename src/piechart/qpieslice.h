@@ -38,13 +38,13 @@ public:
     qreal endAngle() const;
 
     // customization
-    void setPen(QPen pen);
-    QPen pen() const;
-    void setBrush(QBrush brush);
-    QBrush brush() const;
-    void setLabelPen(QPen pen);
-    QPen labelPen() const;
-    void setLabelFont(QFont font);
+    void setSlicePen(const QPen &pen);
+    QPen slicePen() const;
+    void setSliceBrush(const QBrush &brush);
+    QBrush sliceBrush() const;
+    void setLabelArmPen(const QPen &pen);
+    QPen labelArmPen() const;
+    void setLabelFont(const QFont &font);
     QFont labelFont() const;
     void setLabelArmLengthFactor(qreal factor);
     qreal labelArmLengthFactor() const;
@@ -79,10 +79,10 @@ private:
     qreal m_angleSpan;
 
     // customization
-    QPen m_pen;
-    QBrush m_brush;
-    QPen m_labelPen;
+    QPen m_slicePen;
+    QBrush m_sliceBrush;
     QFont m_labelFont;
+    QPen m_labelArmPen;
     qreal m_labelArmLengthFactor;
 };
 

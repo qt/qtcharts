@@ -57,8 +57,8 @@ private:
     bool m_isExploded;
     qreal m_explodeDistanceFactor;
     bool m_labelVisible;
-    QPen m_pen;
-    QBrush m_brush;
+    QPen m_slicePen;
+    QBrush m_sliceBrush;
 
     QPainterPath m_labelArmPath;
     qreal m_labelArmLengthFactor;
