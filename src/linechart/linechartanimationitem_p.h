@@ -19,7 +19,7 @@ public:
 	virtual ~LineChartAnimationItem();
 
 protected:
-	 virtual void updateAllPoints();
+	 virtual void updatePoints(QVector<QPointF>& newPoints);
 	 virtual void updatePoint(int index,QPointF& newPoint);
 
 private slots:

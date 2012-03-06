@@ -30,6 +30,7 @@ PUBLIC_HEADERS += qchart.h \
     qchartglobal.h \
     qseries.h \
     qchartview.h
+include(xychart/xychart.pri)
 include(linechart/linechart.pri)
 include(areachart/areachart.pri)
 include(barchart/barchart.pri)

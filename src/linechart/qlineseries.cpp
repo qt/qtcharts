@@ -66,7 +66,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QLineSeries::QLineSeries(QObject* parent):QSeries(parent),
+QLineSeries::QLineSeries(QObject* parent):QXYSeries(parent),
 m_pointsVisible(false)
 {
 }
@@ -76,101 +76,6 @@ m_pointsVisible(false)
 */
 QLineSeries::~QLineSeries()
 {
-}
-
-/*!
-    Adds data point \a x \a y to the series. Points are connected with lines on the chart.
- */
-void QLineSeries::add(qreal x,qreal y)
-{
-    Q_ASSERT(m_x.size() == m_y.size());
-    m_x<<x;
-    m_y<<y;
-    emit pointAdded(m_x.size()-1);
-}
-
-/*!
-   This is an overloaded function.
-   Adds data \a point to the series. Points are connected with lines on the chart.
- */
-void QLineSeries::add(const QPointF& point)
-{
-    add(point.x(),point.y());
-}
-
-/*!
-  Modifies \a y value for given \a x a value.
-*/
-void QLineSeries::replace(qreal x,qreal y)
-{
-    int index = m_x.indexOf(x);
-    m_x[index]=x;
-    m_y[index]=y;
-    emit pointReplaced(index);
-}
-
-/*!
-  This is an overloaded function.
-  Replaces current y value of for given \a point x value with \a point y value.
-*/
-void QLineSeries::replace(const QPointF& point)
-{
-   replace(point.x(),point.y());
-}
-
-/*!
-  Removes current \a x and y value.
-*/
-void QLineSeries::remove(qreal x)
-{
-    int index = m_x.indexOf(x);
-    emit pointRemoved(index);
-    m_x.remove(index);
-    m_y.remove(index);    
-}
-
-/*!
-  Removes current \a point x value. Note \a point y value is ignored.
-*/
-void QLineSeries::remove(const QPointF& point)
-{
-    remove(point.x());
-}
-
-/*!
-  Clears all the data.
-*/
-void QLineSeries::clear()
-{
-    m_x.clear();
-    m_y.clear();
-}
-
-/*!
-    \internal \a pos
-*/
-qreal QLineSeries::x(int pos) const
-{
-   return m_x.at(pos);
-}
-
-/*!
-    \internal \a pos
-*/
-qreal QLineSeries::y(int pos) const
-{
-   return m_y.at(pos);
-}
-
-/*!
-    Returns number of data points within series.
-*/
-int QLineSeries::count() const
-{
-	Q_ASSERT(m_x.size() == m_y.size());
-
-	return m_x.size();
-
 }
 
 /*!
@@ -197,7 +102,7 @@ void QLineSeries::setPointsVisible(bool visible)
 
 QDebug operator<< (QDebug debug, const QLineSeries series)
 {
-	Q_ASSERT(series.m_x.size() == series.m_y.size());
+    Q_ASSERT(series.m_x.size() == series.m_y.size());
 
     int size = series.m_x.size();
 
@@ -206,18 +111,6 @@ QDebug operator<< (QDebug debug, const QLineSeries series)
     }
     return debug.space();
 }
-
-/*!
-    Stream operator for adding a data \a point to the series.
-    \sa add()
-*/
-
-QLineSeries& QLineSeries::operator<< (const QPointF &point)
-{
-    add(point);
-    return *this;
-}
-
 
 #include "moc_qlineseries.cpp"
 

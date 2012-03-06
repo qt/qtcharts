@@ -16,6 +16,6 @@ SUBDIRS += linechart \
            presenterchart \
            chartview \
            scatterinteractions \
-           #splinechart \
+           splinechart \
            areachart \
            stackedbarchartdrilldown

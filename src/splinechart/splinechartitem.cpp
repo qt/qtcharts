@@ -4,21 +4,24 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 SplineChartItem::SplineChartItem(QSplineSeries* series, QGraphicsObject *parent) :
-    LineChartItem(series, parent)//,m_boundingRect()
+XYChartItem(series, parent),
+m_series(series)
 {
-    //
 }
 
+QRectF SplineChartItem::boundingRect() const
+{
+    return m_rect;
+}
 
+QPainterPath SplineChartItem::shape() const
+{
+    return m_path;
+}
 
 QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 {
-    QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
-    const qreal deltaX = m_size.width()/(m_maxX-m_minX);
-    const qreal deltaY = m_size.height()/(m_maxY-m_minY);
-    qreal x = (splineSeries->controlPoint(index).x() - m_minX)* deltaX;
-    qreal y = (splineSeries->controlPoint(index).y() - m_minY)*-deltaY + m_size.height();
-    return QPointF(x,y);
+    return XYChartItem::calculateGeometryPoint(m_series->controlPoint(index));
 }
 
 void SplineChartItem::setGeometry(QVector<QPointF>& points)
@@ -29,7 +32,6 @@ void SplineChartItem::setGeometry(QVector<QPointF>& points)
     const QPointF& point = points.at(0);
     splinePath.moveTo(point);
 
-//    QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
     for (int i = 0; i < points.size() - 1; i++)
     {
         const QPointF& point = points.at(i + 1);
@@ -39,22 +41,29 @@ void SplineChartItem::setGeometry(QVector<QPointF>& points)
     prepareGeometryChange();
     m_path = splinePath;
     m_rect = splinePath.boundingRect();
+    XYChartItem::setGeometry(points);
 }
+
+void SplineChartItem::setPen(const QPen& pen)
+{
+    m_pen = pen;
+}
+
 
 void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(widget);
     Q_UNUSED(option);
     painter->save();
-    painter->setPen(m_pen);
-    painter->setClipRect(m_clipRect);
+    painter->setClipRect(clipRect());
     painter->drawPath(m_path);
 
-    QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(m_series);
-    for (int i = 0; i < m_points.size() - 1; i++)
+    const QVector<QPointF> points =  XYChartItem::points();
+
+    for (int i = 0; i < points.size() - 1; i++)
     {
         painter->setPen(Qt::red);
-        painter->drawEllipse(m_points[i], 2, 2);
+        painter->drawEllipse(points[i], 2, 2);
 
         painter->setPen(Qt::blue);
         //        painter->drawLine(m_series->at(i), m_series->controlPoint(2 * i));
@@ -62,10 +71,10 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
         //        painter->drawEllipse(calculateGeometryControlPoint(2 * i), 4, 4);
         //        painter->drawEllipse(calculateGeometryControlPoint(2 * i + 1), 4, 4);
     }
-    if (m_points.count() > 0)
+    if (points.count() > 0)
     {
         painter->setPen(Qt::red);
-        painter->drawEllipse(m_points[m_points.count() - 1], 2, 2);
+        painter->drawEllipse(points[points.count() - 1], 2, 2);
     }
     painter->restore();
 }

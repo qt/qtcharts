@@ -4,23 +4,35 @@
 #include "chartitem_p.h"
 #include <QObject>
 #include "qsplineseries.h"
-#include "linechartitem_p.h"
+#include "xychartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class SplineChartItem : public LineChartItem
+class SplineChartItem : public XYChartItem
 {
     Q_OBJECT
 public:
     SplineChartItem(QSplineSeries* series, QGraphicsObject *parent = 0);
 
-    void updateGeometry();
+    //from QGraphicsItem
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    QPainterPath shape() const;
 
+    void setPen(const QPen& pen);
+    void setPointsVisible(bool visible);
+
+protected:
     void setGeometry(QVector<QPointF>& points);
 
+private:
     QPointF calculateGeometryControlPoint(int index) const;
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);        
+private:
+    QSplineSeries* m_series;
+    QPainterPath m_path;
+    QRectF m_rect;
+    QPen m_pen;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

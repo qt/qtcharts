@@ -20,11 +20,10 @@ LineChartAnimationItem::~LineChartAnimationItem()
 {
 }
 
-void LineChartAnimationItem::updateAllPoints()
+void LineChartAnimationItem::updatePoints(QVector<QPointF>& newPoints)
 {
     QVector<QPointF> oldPoints = points();
-    LineChartItem::updateAllPoints();
-    QVector<QPointF> newPoints = points();
+    LineChartItem::updatePoints(newPoints);
 
     if(newPoints.count()==0) return;
     oldPoints.resize(newPoints.size());

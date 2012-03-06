@@ -2,7 +2,7 @@
 #define LINECHARTITEM_H
 
 #include "qchartglobal.h"
-#include "chartitem_p.h"
+#include "xychartitem_p.h"
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartPresenter;
 class QLineSeries;
 
-class LineChartItem :  public QObject , public ChartItem
+class LineChartItem :  public XYChartItem
 {
      Q_OBJECT
 public:
@@ -25,39 +25,20 @@ public:
     void setPen(const QPen& pen);
     void setPointsVisible(bool visible);
 
+    void createPoints(int count);
+    void deletePoints(int count);
+
 public slots:
-    void handlePointAdded(int index);
-    void handlePointRemoved(int index);
-    void handlePointReplaced(int index);
     void handleUpdated();
-    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
-    void handleGeometryChanged(const QRectF& size);
 
 protected:
-    virtual void updateAllPoints();
-    virtual void updatePoints(QVector<QPointF>& points);
-    virtual void updatePoint(int index,QPointF& newPoint);
     virtual void setGeometry(QVector<QPointF>& points);
 
-    QVector<QPointF> points() {return m_points;}
-    void createPoints(int count);
-    void clearPoints(int count);
-    QPointF calculateGeometryPoint(int index) const;
-    QVector<QPointF> calculateGeometryPoints() const;
-    inline bool isEmpty();
-
-protected:
-    qreal m_minX;
-    qreal m_maxX;
-    qreal m_minY;
-    qreal m_maxY;
+private:
+    QLineSeries* m_series;
+    QGraphicsItemGroup m_items;
     QPainterPath m_path;
     QRectF m_rect;
-    QLineSeries* m_series;
-    QSizeF m_size;
-    QRectF m_clipRect;
-    QGraphicsItemGroup m_items;
-    QVector<QPointF> m_points;
     QPen m_pen;
 
     friend class LineChartAnimatator;
