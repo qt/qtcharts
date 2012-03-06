@@ -1,0 +1,55 @@
+#ifndef XYCHARTITEM_H
+#define XYCHARTITEM_H
+
+#include "qchartglobal.h"
+#include "chartitem_p.h"
+#include <QPen>
+
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+class ChartPresenter;
+class QXYSeries;
+
+class XYChartItem :  public QObject , public ChartItem
+{
+     Q_OBJECT
+public:
+    XYChartItem(QXYSeries* series,QGraphicsItem *parent = 0);
+    ~ XYChartItem(){};
+
+    QVector<QPointF> points() const {return m_points;}
+    QRectF clipRect() const { return m_clipRect;}
+
+public slots:
+    void handlePointAdded(int index);
+    void handlePointRemoved(int index);
+    void handlePointReplaced(int index);
+    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void handleGeometryChanged(const QRectF& size);
+
+protected:
+    virtual void updatePoints(QVector<QPointF>& points);
+    virtual void updatePoint(int index,QPointF& newPoint);
+    virtual void setGeometry(QVector<QPointF>& points);
+    QPointF calculateGeometryPoint(const QPointF& point) const;
+    QPointF calculateGeometryPoint(int index) const;
+    QVector<QPointF> calculateGeometryPoints() const;
+
+private:
+    inline bool isEmpty();
+
+private:
+    qreal m_minX;
+    qreal m_maxX;
+    qreal m_minY;
+    qreal m_maxY;
+    QXYSeries* m_series;
+    QSizeF m_size;
+    QRectF m_clipRect;
+    QVector<QPointF> m_points;
+
+};
+
+QTCOMMERCIALCHART_END_NAMESPACE
+
+#endif
