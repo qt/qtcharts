@@ -22,7 +22,7 @@
 #include "percentbarpresenter_p.h"
 #include "linechartitem_p.h"
 #include "areachartitem_p.h"
-#include "scatterpresenter_p.h"
+#include "scatterchartitem_p.h"
 #include "piepresenter_p.h"
 #include "splinechartitem_p.h"
 
@@ -121,7 +121,7 @@ void ChartTheme::decorate(ChartItem* item, QSeries* series,int count)
         case QSeries::SeriesTypeScatter: {
             QScatterSeries* s = qobject_cast<QScatterSeries*>(series);
             Q_ASSERT(s);
-            ScatterPresenter* i = static_cast<ScatterPresenter*>(item);
+            ScatterChartItem* i = static_cast<ScatterChartItem*>(item);
             Q_ASSERT(i);
             decorate(i, s, count);
             break;
@@ -197,9 +197,9 @@ void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,i
     }
 }
 
-void ChartTheme::decorate(ScatterPresenter* presenter, QScatterSeries* series, int count)
+void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int count)
 {
-    Q_ASSERT(presenter);
+    Q_ASSERT(item);
     Q_ASSERT(series);
 
     QColor color = m_seriesColor.at(count % m_seriesColor.size());
@@ -207,11 +207,11 @@ void ChartTheme::decorate(ScatterPresenter* presenter, QScatterSeries* series, i
     //color.setAlpha(120);
 
     QBrush brush(color, Qt::SolidPattern);
-    presenter->m_markerBrush = brush;
+    item->setBrush(Qt::blue);
 
     QPen pen(brush, 3);
     pen.setColor(color);
-    presenter->m_markerPen = pen;
+    item->setPen(pen);
 }
 
 void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)

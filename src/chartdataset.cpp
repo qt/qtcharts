@@ -126,14 +126,26 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
 {
     switch(series->type())
     {
-        case QSeries::SeriesTypeLine: {
+        case QSeries::SeriesTypeLine:
+        case QSeries::SeriesTypeSpline:
+        case QSeries::SeriesTypeScatter:
+        {
 
-            QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
+            QXYSeries* xySeries = static_cast<QXYSeries*>(series);
 
-            for (int i = 0; i < lineSeries->count(); i++)
+            qreal minX(domain->minX());
+            qreal minY(domain->minY());
+            qreal maxX(domain->maxX());
+            qreal maxY(domain->maxY());
+
+            for (int i = 0; i < xySeries->count(); i++)
             {
-                qreal x = lineSeries->x(i);
-                qreal y = lineSeries->y(i);
+                qreal x = xySeries->x(i);
+                qreal y = xySeries->y(i);
+                minX = qMin(minX, x);
+                minY = qMin(minY, y);
+                maxX = qMax(maxX, x);
+                maxY = qMax(maxY, y);
                 domain->setMinX(qMin(domain->minX(),x));
                 domain->setMinY(qMin(domain->minY(),y));
                 domain->setMaxX(qMax(domain->maxX(),x));
@@ -210,40 +222,6 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
             break;
         }
 
-        case QSeries::SeriesTypeScatter: {
-            QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
-            Q_ASSERT(scatterSeries);
-            qreal minX(domain->minX());
-            qreal minY(domain->minY());
-            qreal maxX(domain->maxX());
-            qreal maxY(domain->maxY());
-            foreach (QPointF point, scatterSeries->data()) {
-                minX = qMin(minX, point.x());
-                minY = qMin(minY, point.y());
-                maxX = qMax(maxX, point.x());
-                maxY = qMax(maxY, point.y());
-            }
-            domain->setMinX(minX);
-            domain->setMinY(minY);
-            domain->setMaxX(maxX);
-            domain->setMaxY(maxY);
-            break;
-        }
-
-        case QSeries::SeriesTypeSpline: {
-            QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
-
-            for (int i = 0; i < splineSeries->count(); i++)
-            {
-                qreal x = splineSeries->x(i);
-                qreal y = splineSeries->y(i);
-                domain->setMinX(qMin(domain->minX(),x));
-                domain->setMinY(qMin(domain->minY(),y));
-                domain->setMaxX(qMax(domain->maxX(),x));
-                domain->setMaxY(qMax(domain->maxY(),y));
-            }
-            break;
-        }
 
         default: {
             qDebug()<<__FUNCTION__<<"type" << series->type()<<"not supported";

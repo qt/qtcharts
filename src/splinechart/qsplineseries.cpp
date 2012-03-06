@@ -26,7 +26,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   */
 
 QSplineSeries::QSplineSeries(QObject *parent) :
-    QXYSeries(parent)
+    QLineSeries(parent)
 {
     connect(this,SIGNAL(pointAdded(int)), this, SLOT(updateControlPoints()));
     connect(this,SIGNAL(pointRemoved(int)), this, SLOT(updateControlPoints()));

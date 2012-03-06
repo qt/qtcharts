@@ -18,7 +18,7 @@ class QStackedBarSeries;
 class QPercentBarSeries;
 class PercentBarPresenter;
 class QScatterSeries;
-class ScatterPresenter;
+class ScatterChartItem;
 class PiePresenter;
 class QPieSeries;
 class SplineChartItem;
@@ -40,7 +40,7 @@ public:
     void decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count);
     void decorate(LineChartItem* item, QLineSeries* series,int count);
     void decorate(AreaChartItem* item, QAreaSeries* series,int count);
-    void decorate(ScatterPresenter* presenter, QScatterSeries* series, int count);
+    void decorate(ScatterChartItem* presenter, QScatterSeries* series, int count);
     void decorate(PiePresenter* item, QPieSeries* series, int count);
     void decorate(QChartAxis* axis,AxisItem* item);
     void decorate(SplineChartItem* presenter, QSplineSeries* series, int count);

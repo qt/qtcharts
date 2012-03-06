@@ -12,7 +12,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QXYSeries : public QSeries
 {
 	Q_OBJECT
-public:
+protected:
 	QXYSeries(QObject* parent=0);
 	virtual ~QXYSeries();
 
@@ -30,12 +30,18 @@ public:
 	qreal y(int pos) const;
 
 	QXYSeries& operator << (const QPointF &point);
+	/*
+	void add(QList<QPointF> points);
+    void setData(QList<QPointF> points);
+    QScatterSeries& operator << (const QPointF &value);
+    QScatterSeries& operator << (QList<QPointF> points);
+   int removeAll(QPointF point);
+	*/
 
 	void setPen(const QPen& pen);
 	QPen pen() const {return m_pen;}
-
-	void setPointsVisible(bool visible);
-	bool pointsVisible() const {return m_pointsVisible;}
+    void setBrush(const QBrush& pen);
+    QBrush brush() const {return m_brush;}
 
 signals:
 	void updated();
@@ -49,7 +55,7 @@ protected:
 	QVector<qreal> m_y;
 
 	QPen m_pen;
-	bool m_pointsVisible;
+	QBrush m_brush;
 
 };
 

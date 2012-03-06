@@ -3,13 +3,13 @@
 
 #include "qchartglobal.h"
 #include <QtGlobal>
-#include "qxyseries.h"
+#include "qlineseries.h"
 #include <QList>
 #include <QPointF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_EXPORT QSplineSeries : public QXYSeries
+class QTCOMMERCIALCHART_EXPORT QSplineSeries : public QLineSeries
 {
     Q_OBJECT
 public:

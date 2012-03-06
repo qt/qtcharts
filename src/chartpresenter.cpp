@@ -22,7 +22,7 @@
 #include "linechartitem_p.h"
 #include "linechartanimationitem_p.h"
 #include "piepresenter_p.h"
-#include "scatterpresenter_p.h"
+#include "scatterchartitem_p.h"
 #include "splinechartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -216,7 +216,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
     }
     case QSeries::SeriesTypeScatter: {
         QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
-        ScatterPresenter *scatterPresenter = new ScatterPresenter(scatterSeries, m_chart);
+        ScatterChartItem *scatterPresenter = new ScatterChartItem(scatterSeries, m_chart);
         QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)),
                          scatterPresenter, SLOT(handleGeometryChanged(const QRectF&)));
         QObject::connect(domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),

@@ -4,23 +4,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QXYSeries
-    \brief The QXYSeries class is used for making line charts.
-
-    \mainclass
-
-	A line chart is used to show information as a series of data points
-	connected by straight lines.
-
-	\image linechart.png
-
-	Creating basic line chart is simple:
-	\code
-	QXYSeries* series = new QXYSeries();
-	series->add(0, 6);
-	series->add(2, 4);
-	...
-	chartView->addSeries(series);
-    \endcode
+    \brief The QXYSeries class is a base class for line, spline and scatter series.
 */
 
 /*!
@@ -31,16 +15,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
    \fn QPen QXYSeries::pen() const
-   \brief  Returns the pen used to draw line for this series.
+   \brief  Returns the pen used to draw points for this series.
     \sa setPen()
 */
-
-/*!
-   \fn bool  QXYSeries::pointsVisible() const
-   \brief  Returns if the points are drawn for this series.
-    \sa setPointsVisible()
-*/
-
 
 /*!
     \fn void QXYSeries::pointReplaced(int index)
@@ -66,8 +43,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QXYSeries::QXYSeries(QObject* parent):QSeries(parent),
-m_pointsVisible(false)
+QXYSeries::QXYSeries(QObject* parent):QSeries(parent)
 {
 }
 /*!
@@ -174,24 +150,25 @@ int QXYSeries::count() const
 }
 
 /*!
-    Sets \a pen used for drawing given series..
+    Sets \a pen used for points on the chart.
 */
 void QXYSeries::setPen(const QPen& pen)
 {
     if(pen!=m_pen){
-    m_pen=pen;
-    emit updated();
+        m_pen=pen;
+        emit updated();
     }
 }
 
 /*!
-    Sets if data points are \a visible and should be drawn on line.
+    Sets \a brush used for points on the chart.
 */
-void QXYSeries::setPointsVisible(bool visible)
+
+void QXYSeries::setBrush(const QBrush& brush)
 {
-    if(m_pointsVisible!=visible){
-    m_pointsVisible=visible;
-    emit updated();
+    if(brush!=m_brush){
+        m_brush=brush;
+        emit updated();
     }
 }
 

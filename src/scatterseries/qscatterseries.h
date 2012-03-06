@@ -1,14 +1,15 @@
 #ifndef QSCATTERSERIES_H
 #define QSCATTERSERIES_H
 
-#include "qseries.h"
+#include "qchartglobal.h"
+#include "qxyseries.h"
 #include <QRectF>
 #include <QColor>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QScatterSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QSeries
+class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QXYSeries
 {
     Q_OBJECT
 
@@ -33,37 +34,19 @@ public: // from QChartSeries
     QSeriesType type() const { return QSeries::SeriesTypeScatter; }
 
 public:
-    void add(qreal x, qreal y);
-    void add(QPointF value);
-    void add(QList<QPointF> points);
-    void setData(QList<QPointF> points);
-    QScatterSeries& operator << (const QPointF &value);
-    QScatterSeries& operator << (QList<QPointF> points);
-    QList<QPointF> data();
-    bool replace(int index, QPointF newPoint);
-    bool removeAt(int index);
-    int removeAll(QPointF point);
-    void clear();
-    int closestPoint(QPointF coordinate);
-    //TODO: insert, replace...?
+    //int closestPoint(QPointF coordinate);
 
-    QPen pen() const;
-    void setPen(const QPen &pen);
-    QBrush brush() const;
-    void setBrush(const QBrush &brush);
     MarkerShape shape() const;
     void setShape(MarkerShape shape);
     qreal size() const;
     void setSize(qreal size);
 
-Q_SIGNALS:
+signals:
     void clicked(QPointF coordinate);
 
 private:
-    Q_DECLARE_PRIVATE(QScatterSeries)
-    Q_DISABLE_COPY(QScatterSeries)
-    friend class ScatterPresenter;
-    QScatterSeriesPrivate *d;
+    MarkerShape m_shape;
+    qreal m_size;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -14,7 +14,7 @@ class XYChartItem :  public QObject , public ChartItem
 {
      Q_OBJECT
 public:
-    XYChartItem(QXYSeries* series,QGraphicsItem *parent = 0);
+     explicit XYChartItem(QXYSeries* series,QGraphicsItem *parent = 0);
     ~ XYChartItem(){};
 
     QVector<QPointF> points() const {return m_points;}

@@ -27,15 +27,16 @@ int main(int argc, char *argv[])
 
     // And more
     //! [2]
-    *scatter << QPointF(2.0, 5.5) << QPointF(2.2, 5.4);
+   // *scatter << QPointF(2.0, 5.5) << QPointF(2.2, 5.4);
     //! [2]
 
     //! [3]
-    QBrush brush(QColor(255, 0, 0, 80), Qt::SolidPattern);
+    QBrush brush(Qt::red);
     scatter->setBrush(brush);
-    QPen pen(QColor(0, 255, 0, 60), 3);
+    QPen pen(Qt::black);
+    pen.setWidth(3);
     scatter->setPen(pen);
-    scatter->setShape(QScatterSeries::MarkerShapeRectangle);
+    scatter->setShape(QScatterSeries::MarkerShapeCircle);
     scatter->setSize(25.0);
     //! [3]
 
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
     QMainWindow w;
     w.resize(400, 300);
     w.setCentralWidget(chartView);
-    w.setWindowFlags(Qt::FramelessWindowHint);
+   // w.setWindowFlags(Qt::FramelessWindowHint);
     w.show();
 
     return a.exec();

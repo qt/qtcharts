@@ -1,51 +1,50 @@
-#ifndef LINECHARTITEM_H
-#define LINECHARTITEM_H
+#ifndef SCATTERPRESENTER_H
+#define SCATTERPRESENTER_H
 
 #include "qchartglobal.h"
 #include "xychartitem_p.h"
+#include <QObject>
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartPresenter;
-class QLineSeries;
+class QScatterSeries;
 
-class LineChartItem :  public XYChartItem
+class ScatterChartItem : public XYChartItem
 {
-     Q_OBJECT
+    Q_OBJECT
 public:
-     explicit LineChartItem(QLineSeries* series,QGraphicsItem *parent = 0);
-    ~ LineChartItem(){};
+    explicit ScatterChartItem(QScatterSeries *series, QGraphicsObject *parent = 0);
 
+public:
     //from QGraphicsItem
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    QPainterPath shape() const;
 
     void setPen(const QPen& pen);
-    void setPointsVisible(bool visible);
+    void setBrush(const QBrush& brush);
+
+signals:
+    void clicked(QPointF coordinates);
 
 public slots:
     void handleUpdated();
-
-protected:
-    virtual void setGeometry(QVector<QPointF>& points);
 
 private:
     void createPoints(int count);
     void deletePoints(int count);
 
+protected:
+    virtual void setGeometry(QVector<QPointF>& points);
+
 private:
-    QLineSeries* m_series;
+    QScatterSeries *m_series;
     QGraphicsItemGroup m_items;
-    QPainterPath m_path;
+    int m_shape;
+    int m_size;
     QRectF m_rect;
-    QPen m_pen;
-
-    friend class LineChartAnimatator;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif
+#endif // SCATTERPRESENTER_H

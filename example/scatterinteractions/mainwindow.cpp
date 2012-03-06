@@ -40,6 +40,8 @@ MainWindow::~MainWindow()
 void MainWindow::clickPoint(QPointF coordinate)
 {
     // Remove the clicked point from the series and add points to the two other series we have
+    //TODO: fix me
+    /*
     int index = m_scatter->closestPoint(coordinate);
     QPointF point = m_scatter->data().at(index);
     Q_ASSERT(m_scatter->removeAt(index));
@@ -48,4 +50,5 @@ void MainWindow::clickPoint(QPointF coordinate)
     *m_scatter2 << point;
     point.ry() -= 0.25;
     *m_scatter3 << point;
+    */
 }

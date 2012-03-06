@@ -30,44 +30,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-   \fn QPen QLineSeries::pen() const
-   \brief  Returns the pen used to draw line for this series.
-    \sa setPen()
-*/
-
-/*!
-   \fn bool  QLineSeries::pointsVisible() const
+   \fn bool QLineSeries::pointsVisible() const
    \brief  Returns if the points are drawn for this series.
     \sa setPointsVisible()
 */
 
-
 /*!
-    \fn void QLineSeries::pointReplaced(int index)
-    \brief \internal \a index
-*/
-
-/*!
-    \fn void QLineSeries::pointAdded(int index)
-    \brief \internal \a index
-*/
-
-/*!
-    \fn void QLineSeries::pointRemoved(int index)
-    \brief \internal \a index
-*/
-
-/*!
-    \fn void QLineSeries::updated()
-    \brief \internal
+   \fn QPen QLineSeries::linePen() const
+   \brief  Returns the pen used to draw line connecting points.
+    \sa setPen()
 */
 
 /*!
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QLineSeries::QLineSeries(QObject* parent):QXYSeries(parent)
+QLineSeries::QLineSeries(QObject* parent):QXYSeries(parent),
+m_pointsVisible(false)
 {
+
 }
 /*!
     Destroys the object. Series added to QChartView or QChart instances are owned by those,
@@ -76,6 +57,29 @@ QLineSeries::QLineSeries(QObject* parent):QXYSeries(parent)
 QLineSeries::~QLineSeries()
 {
 }
+
+/*!
+    Sets \a pen used for drawing line connecting points.
+*/
+void QLineSeries::setLinePen(const QPen& pen)
+{
+    if(pen!=m_pen){
+    m_pen=pen;
+    emit updated();
+    }
+}
+
+/*!
+    Sets if data points are \a visible and should be drawn on line.
+*/
+void QLineSeries::setPointsVisible(bool visible)
+{
+    if(m_pointsVisible!=visible){
+    m_pointsVisible=visible;
+    emit updated();
+    }
+}
+
 
 QDebug operator<< (QDebug debug, const QLineSeries series)
 {
