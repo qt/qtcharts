@@ -14,7 +14,7 @@ class BarPresenter : public BarPresenterBase
 {
     Q_OBJECT
 public:
-    explicit BarPresenter(QBarSeries *series, QGraphicsItem *parent = 0);
+    explicit BarPresenter(QBarSeries *series, QChart *parent = 0);
 
 private:
 

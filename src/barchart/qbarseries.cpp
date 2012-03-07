@@ -118,6 +118,7 @@ QString QBarSeries::categoryName(int category)
 */
 void QBarSeries::setToolTipEnabled(bool enabled)
 {
+    // TODO: what if we add sets after call to this function? Those sets won't have tooltip enabled.
     if (enabled) {
         for (int i=0; i<mModel->barsetCount(); i++) {
             QBarSet *set = mModel->setAt(i);

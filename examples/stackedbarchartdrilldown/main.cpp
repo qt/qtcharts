@@ -138,9 +138,9 @@ int main(int argc, char *argv[])
     //! [6]
 
     // Disable axis, since they don't really apply to bar chart
-    drilldownChart->axisX()->setAxisVisible(false);
+//    drilldownChart->axisX()->setAxisVisible(false);
     drilldownChart->axisX()->setGridVisible(false);
-    drilldownChart->axisX()->setLabelsVisible(false);
+//    drilldownChart->axisX()->setLabelsVisible(false);
 
     window.setCentralWidget(drilldownChart);
     window.resize(400, 300);

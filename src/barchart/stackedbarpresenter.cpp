@@ -8,7 +8,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-StackedBarPresenter::StackedBarPresenter(QBarSeries *series, QGraphicsItem *parent) :
+StackedBarPresenter::StackedBarPresenter(QBarSeries *series, QChart *parent) :
     BarPresenterBase(series,parent)
 {
 }
@@ -66,8 +66,8 @@ void StackedBarPresenter::layoutChanged()
         }
 
         // TODO: Layout for labels, remove magic number
-        BarLabel* label = mLabels.at(labelIndex);
-        label->setPos(xPos, mHeight + 20);
+//        BarLabel* label = mLabels.at(labelIndex);
+//        label->setPos(xPos, mHeight + 20);
         labelIndex++;
         xPos += xStep;
     }

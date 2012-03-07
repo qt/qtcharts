@@ -13,7 +13,7 @@ class PercentBarPresenter : public BarPresenterBase
 {
     Q_OBJECT
 public:
-    PercentBarPresenter(QBarSeries *series, QGraphicsItem *parent = 0);
+    PercentBarPresenter(QBarSeries *series, QChart *parent = 0);
 
 private:
 

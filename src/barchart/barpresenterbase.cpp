@@ -5,19 +5,23 @@
 #include "separator_p.h"
 #include "qbarset.h"
 #include "qbarseries.h"
+#include "qchart.h"
+#include "qchartaxis.h"
+#include "qchartaxiscategories.h"
 #include <QDebug>
 #include <QToolTip>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarPresenterBase::BarPresenterBase(QBarSeries *series, QGraphicsItem *parent)
+BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent)
     : ChartItem(parent)
-    ,mBarWidth(20) // TODO: remove hard coding, when we have layout code ready
     ,mLayoutSet(false)
     ,mSeparatorsEnabled(false)
     ,mSeries(series)
+    ,mChart(parent)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
+    initAxisLabels();
     dataChanged();
 }
 
@@ -40,11 +44,6 @@ void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 QRectF BarPresenterBase::boundingRect() const
 {
     return QRectF(0,0,mWidth,mHeight);
-}
-
-void BarPresenterBase::setBarWidth( int w )
-{
-    mBarWidth = w;
 }
 
 void BarPresenterBase::dataChanged()
@@ -76,6 +75,7 @@ void BarPresenterBase::dataChanged()
     }
 
     // Create labels
+    /*
     int count = mSeries->categoryCount();
     for (int i=0; i<count; i++) {
         BarLabel* label = new BarLabel(this);
@@ -83,9 +83,10 @@ void BarPresenterBase::dataChanged()
         childItems().append(label);
         mLabels.append(label);
     }
+    */
 
     // Create separators
-    count = mSeries->categoryCount() - 1;   // There is one less separator than columns
+    int count = mSeries->categoryCount() - 1;   // There is one less separator than columns
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
@@ -106,6 +107,31 @@ void BarPresenterBase::dataChanged()
     }
 }
 
+void BarPresenterBase::initAxisLabels()
+{
+    int count = mSeries->categoryCount();
+    if (0 == count) {
+        return;
+    }
+
+    mChart->axisX()->setTicksCount(count);
+
+    qreal min = 0;
+    qreal max = mSeries->categoryCount();
+
+    mChart->axisX()->setMin(min);
+    mChart->axisX()->setMax(max);
+    qreal step = (max-min)/count;
+    QChartAxisCategories& categories = mChart->axisX()->categories();
+    categories.clear();
+    for (int i=0; i<count; i++) {
+        qDebug() << "initAxisLabels" << min << mSeries->categoryName(i);
+        categories.insert(min,mSeries->categoryName(i));
+        min += step;
+    }
+    mChart->axisX()->setLabelsVisible(true);
+}
+
 //handlers
 
 void BarPresenterBase::handleModelChanged(int index)
@@ -116,10 +142,24 @@ void BarPresenterBase::handleModelChanged(int index)
 
 void BarPresenterBase::handleDomainChanged(const Domain& domain)
 {
-//    qDebug() << "BarPresenterBase::handleDomainChanged";
-    // TODO: Figure out the use case for this.
-    // Affects the size of visible item, so layout is changed.
-//    layoutChanged();
+    qDebug() << "BarPresenterBase::handleDomainChanged";
+    /*
+    int count = mSeries->categoryCount();
+    if (0 == count) {
+        return;
+    }
+
+    // Position labels to domain
+    qreal min = domain.minX();
+    qreal max = domain.maxX();
+    qreal step = (max-min)/count;
+    QChartAxisCategories& categories = mChart->axisX()->categories();
+    categories.clear();
+    for (int i=0; i<count; i++) {
+        categories.insert(min,mSeries->categoryName(i));
+        min += step;
+    }
+    */
 }
 
 void BarPresenterBase::handleGeometryChanged(const QRectF& rect)
