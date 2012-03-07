@@ -45,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
     m_pie->add(1.1, "1");
     m_pie->add(2.1, "2");
     m_pie->add(3.0, "3");
-    m_pie->setPositionFactors(0.7, 0.7);
-    m_pie->setSizeFactor(0.5);
+    m_pie->setPiePosition(0.7, 0.7);
+    m_pie->setPieSize(0.5);
     m_chartView->addSeries(m_pie);
 
     connect(&m_timer, SIGNAL(timeout()), this, SLOT(customize()));

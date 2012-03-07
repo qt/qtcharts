@@ -67,15 +67,15 @@ public:
     qreal total() const;
 
     // pie customization
-    void setPositionFactors(qreal horizontalFactor, qreal verticalFactor);
-    qreal horizontalPositionFactor() const;
-    qreal verticalPositionFactor() const;
-    void setSizeFactor(qreal sizeFactor);
-    qreal sizeFactor() const;
-    void setStartAngle(qreal startAngle);
-    qreal startAngle() const;
-    void setEndAngle(qreal endAngle);
-    qreal endAngle() const;
+    void setPiePosition(qreal relativeHorizontalPosition, qreal relativeVerticalPosition);
+    qreal pieHorizontalPosition() const;
+    qreal pieVerticalPosition() const;
+    void setPieSize(qreal relativeSize);
+    qreal pieSize() const;
+    void setPieStartAngle(qreal startAngle);
+    qreal pieStartAngle() const;
+    void setPieEndAngle(qreal endAngle);
+    qreal pieEndAngle() const;
 
     // convenience function
     QPieSeries& operator << (QPieSlice* slice);
@@ -94,15 +94,14 @@ public:
     // setDropShadows
 
 Q_SIGNALS:
-
-    void changed(const QPieSeries::ChangeSet& changeSet);
-
     void clicked(QPieSlice* slice);
     void hoverEnter(QPieSlice* slice);
     void hoverLeave(QPieSlice* slice);
 
-    void sizeFactorChanged();
-    void positionChanged();
+    void pieSizeChanged();
+    void piePositionChanged();
+
+    void changed(const QPieSeries::ChangeSet& changeSet); // TODO: hide this in PIMPL
 
 private Q_SLOTS: // TODO: should be private and not visible in the interface at all
     void sliceChanged();
@@ -121,9 +120,9 @@ private:
     friend class PieSlice;
 
     QList<QPieSlice*> m_slices;
-    qreal m_hPositionFactor;
-    qreal m_vPositionFactor;
-    qreal m_pieSizeFactor;
+    qreal m_pieRelativeHorPos;
+    qreal m_pieRelativeVerPos;
+    qreal m_pieRelativeSize;
     qreal m_pieStartAngle;
     qreal m_pieEndAngle;
     qreal m_total;

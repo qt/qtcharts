@@ -15,8 +15,8 @@ PiePresenter::PiePresenter(QGraphicsItem *parent, QPieSeries *series)
 {
     Q_ASSERT(series);
     connect(series, SIGNAL(changed(const QPieSeries::ChangeSet&)), this, SLOT(handleSeriesChanged(const QPieSeries::ChangeSet&)));
-    connect(series, SIGNAL(sizeFactorChanged()), this, SLOT(updateGeometry()));
-    connect(series, SIGNAL(positionChanged()), this, SLOT(updateGeometry()));
+    connect(series, SIGNAL(piePositionChanged()), this, SLOT(updateGeometry()));
+    connect(series, SIGNAL(pieSizeChanged()), this, SLOT(updateGeometry()));
 
     if (m_series->count()) {
         QPieSeries::ChangeSet changeSet;
@@ -80,8 +80,8 @@ void PiePresenter::updateGeometry()
 
     // find pie center coordinates
     QPointF center;
-    center.setX(m_rect.left() + (m_rect.width() * m_series->m_hPositionFactor));
-    center.setY(m_rect.top() + (m_rect.height() * m_series->m_vPositionFactor));
+    center.setX(m_rect.left() + (m_rect.width() * m_series->pieHorizontalPosition()));
+    center.setY(m_rect.top() + (m_rect.height() * m_series->pieVerticalPosition()));
 
     // find maximum radius for pie
     qreal radius = m_rect.height() / 2;
@@ -89,7 +89,7 @@ void PiePresenter::updateGeometry()
         radius = m_rect.width() / 2;
 
     // apply size factor
-    radius *= m_series->m_pieSizeFactor;
+    radius *= m_series->pieSize();
 
     // update slices
     if (m_pieCenter != center || m_pieRadius != radius) {

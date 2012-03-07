@@ -70,30 +70,30 @@ public:
         m_hPosition->setMinimum(0.0);
         m_hPosition->setMaximum(1.0);
         m_hPosition->setSingleStep(0.1);
-        m_hPosition->setValue(m_series->horizontalPositionFactor());
+        m_hPosition->setValue(m_series->pieHorizontalPosition());
 
         m_vPosition = new QDoubleSpinBox();
         m_vPosition->setMinimum(0.0);
         m_vPosition->setMaximum(1.0);
         m_vPosition->setSingleStep(0.1);
-        m_vPosition->setValue(m_series->verticalPositionFactor());
+        m_vPosition->setValue(m_series->pieVerticalPosition());
 
         m_sizeFactor = new QDoubleSpinBox();
         m_sizeFactor->setMinimum(0.0);
         m_sizeFactor->setMaximum(1.0);
         m_sizeFactor->setSingleStep(0.1);
-        m_sizeFactor->setValue(m_series->sizeFactor());
+        m_sizeFactor->setValue(m_series->pieSize());
 
         m_startAngle = new QDoubleSpinBox();
         m_startAngle->setMinimum(0.0);
         m_startAngle->setMaximum(360);
-        m_startAngle->setValue(m_series->startAngle());
+        m_startAngle->setValue(m_series->pieStartAngle());
         m_startAngle->setSingleStep(1);
 
         m_endAngle = new QDoubleSpinBox();
         m_endAngle->setMinimum(0.0);
         m_endAngle->setMaximum(360);
-        m_endAngle->setValue(m_series->endAngle());
+        m_endAngle->setValue(m_series->pieEndAngle());
         m_endAngle->setSingleStep(1);
 
         QFormLayout* seriesSettingsLayout = new QFormLayout();
@@ -153,12 +153,10 @@ public Q_SLOTS:
 
     void updateSerieSettings()
     {
-        m_series->setPositionFactors(m_vPosition->value(), m_hPosition->value());
-
-        m_series->setSizeFactor(m_sizeFactor->value());
-
-        m_series->setStartAngle(m_startAngle->value());
-        m_series->setEndAngle(m_endAngle->value());
+        m_series->setPiePosition(m_vPosition->value(), m_hPosition->value());
+        m_series->setPieSize(m_sizeFactor->value());
+        m_series->setPieStartAngle(m_startAngle->value());
+        m_series->setPieEndAngle(m_endAngle->value());
     }
 
     void updateSliceSettings()
