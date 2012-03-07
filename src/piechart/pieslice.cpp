@@ -2,6 +2,7 @@
 #include "piepresenter_p.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
+#include "chartpresenter_p.h"
 #include <QPainter>
 #include <QDebug>
 #include <qmath.h>
@@ -31,6 +32,7 @@ PieSlice::PieSlice(QGraphicsItem* parent)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::LeftButton);
+    setZValue(ChartPresenter::PieSeriesZValue);
 }
 
 PieSlice::~PieSlice()

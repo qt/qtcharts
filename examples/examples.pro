@@ -18,4 +18,5 @@ SUBDIRS += linechart \
            scatterinteractions \
            splinechart \
            areachart \
-           stackedbarchartdrilldown
+           stackedbarchartdrilldown \
+           customcolors

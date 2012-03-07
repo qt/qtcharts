@@ -2,6 +2,7 @@
 #include "pieslice_p.h"
 #include "qpieslice.h"
 #include "qpieseries.h"
+#include "chartpresenter_p.h"
 #include <QDebug>
 #include <QPainter>
 
@@ -22,6 +23,9 @@ PiePresenter::PiePresenter(QGraphicsItem *parent, QPieSeries *series)
         changeSet.appendAdded(m_series->m_slices);
         handleSeriesChanged(changeSet);
     }
+
+    // Note: the following does not affect as long as the item does not have anything to paint
+    setZValue(ChartPresenter::PieSeriesZValue);
 }
 
 PiePresenter::~PiePresenter()
