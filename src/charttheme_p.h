@@ -4,6 +4,7 @@
 #include "qchartglobal.h"
 #include "qchart.h"
 #include <QColor>
+#include <QGradientStops>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -45,12 +46,15 @@ public:
     void decorate(QChartAxis* axis,AxisItem* item);
     void decorate(SplineChartItem* presenter, QSplineSeries* series, int count);
 
+public: // utils
+    static QColor colorAt(const QColor &start, const QColor &end, qreal pos);
+    static QColor colorAt(const QGradient &gradient, qreal pos);
+
 protected:
     QChart::ChartTheme m_id;
-    QColor m_gradientStartColor;
-    QColor m_gradientEndColor;
-    QList<QColor> m_seriesColor;
-
+    QList<QColor> m_seriesColors;
+    QList<QGradient> m_seriesGradients;
+    QLinearGradient m_backgroundGradient;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

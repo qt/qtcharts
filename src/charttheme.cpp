@@ -27,6 +27,7 @@
 #include "splinechartitem_p.h"
 
 //themes
+#include "chartthemedefault_p.h"
 #include "chartthemevanilla_p.h"
 #include "chartthemeicy_p.h"
 #include "chartthemegrayscale_p.h"
@@ -35,26 +36,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-/* TODO
-    case QChart::ChartThemeUnnamed1:
-        m_seriesThemes.append(SeriesTheme(QColor(QRgb(0xff3fa9f5)), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(QRgb(0xff7AC943)), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(QRgb(0xffFF931E)), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(QRgb(0xffFF1D25)), 2));
-        m_seriesThemes.append(SeriesTheme(QColor(QRgb(0xffFF7BAC)), 2));
-
-        m_gradientStartColor = QColor(QRgb(0xfff3dc9e));
-        m_gradientEndColor = QColor(QRgb(0xffafafaf));
-*/
-
 ChartTheme::ChartTheme(QChart::ChartTheme id)
 {
     m_id = id;
-    m_seriesColor.append(QRgb(0xff000000));
-    m_seriesColor.append(QRgb(0xff707070));
-    m_gradientStartColor = QColor(QRgb(0xffffffff));
-    m_gradientEndColor = QColor(QRgb(0xffafafaf));
-
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 }
 
@@ -62,8 +46,6 @@ ChartTheme::ChartTheme(QChart::ChartTheme id)
 ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 {
     switch(theme) {
-        case QChart::ChartThemeDefault:
-            return new ChartTheme();
         case QChart::ChartThemeVanilla:
             return new ChartThemeVanilla();
         case QChart::ChartThemeIcy:
@@ -72,16 +54,14 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
             return new ChartThemeGrayscale();
         case QChart::ChartThemeScientific:
             return new ChartThemeScientific();
+        default:
+            return new ChartThemeDefault();
     }
 }
 
 void ChartTheme::decorate(QChart* chart)
 {
-    QLinearGradient backgroundGradient;
-    backgroundGradient.setColorAt(0.0, m_gradientStartColor);
-    backgroundGradient.setColorAt(1.0, m_gradientEndColor);
-    backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
-    chart->setChartBackgroundBrush(backgroundGradient);
+    chart->setChartBackgroundBrush(m_backgroundGradient);
 }
 //TODO helper to by removed later
 void ChartTheme::decorate(ChartItem* item, QSeries* series,int count)
@@ -147,7 +127,7 @@ void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series,int count)
     if(pen != series->pen()){
        item->setPen(series->pen());
     }else{
-        pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
+        pen.setColor(m_seriesColors.at(count%m_seriesColors.size()));
         pen.setWidthF(2);
         item->setPen(pen);
     }
@@ -155,7 +135,7 @@ void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series,int count)
     if(brush != series->brush()){
        item->setBrush(series->brush());
     }else{
-       QBrush brush(m_seriesColor.at(count%m_seriesColor.size()));
+       QBrush brush(m_seriesColors.at(count%m_seriesColors.size()));
        item->setBrush(brush);
     }
 }
@@ -168,7 +148,7 @@ void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int count)
         item->setLinePen(series->pen());
         return;
     }
-    pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
+    pen.setColor(m_seriesColors.at(count%m_seriesColors.size()));
     pen.setWidthF(2);
     item->setLinePen(pen);
 }
@@ -177,7 +157,7 @@ void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int count)
 {
     QList<QBarSet*> sets = series->barSets();
     for (int i=0; i<series->barsetCount(); i++) {
-        sets.at(i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
+        sets.at(i)->setBrush(QBrush(m_seriesColors.at(i%m_seriesColors.count())));
     }
 }
 
@@ -185,7 +165,7 @@ void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,i
 {
     QList<QBarSet*> sets = series->barSets();
     for (int i=0; i<series->barsetCount(); i++) {
-        sets.at(i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
+        sets.at(i)->setBrush(QBrush(m_seriesColors.at(i%m_seriesColors.count())));
     }
 }
 
@@ -193,7 +173,7 @@ void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,i
 {
     QList<QBarSet*> sets = series->barSets();
     for (int i=0; i<series->barsetCount(); i++) {
-        sets.at(i)->setBrush(QBrush(m_seriesColor.at(i%m_seriesColor.count())));
+        sets.at(i)->setBrush(QBrush(m_seriesColors.at(i%m_seriesColors.count())));
     }
 }
 
@@ -202,7 +182,7 @@ void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int co
     Q_ASSERT(item);
     Q_ASSERT(series);
 
-    QColor color = m_seriesColor.at(count % m_seriesColor.size());
+    QColor color = m_seriesColors.at(count % m_seriesColors.size());
     // TODO: define alpha in the theme? or in the series?
     //color.setAlpha(120);
 
@@ -214,70 +194,25 @@ void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int co
     item->setPen(pen);
 }
 
-void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
+void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int count)
 {
     // create a list of slice colors based on current theme
     int i = 0;
     QList<QColor> colors;
+    bool toggle = false;
     while (colors.count() < series->count()) {
 
-        // get base color
-        QColor c = m_seriesColor[i++];
-        i = i % m_seriesColor.count();
+        qreal pos = (qreal) colors.count() / (qreal) series->count();
+        if (toggle)
+            pos += 0.5;
+        toggle = !toggle;
+        if (pos > 1.0)
+            pos = pos - 1.0;
 
-        // dont use black colors... looks bad
-        if (c == Qt::black)
-            continue;
+        //qreal pos = (qreal) (qrand() % series->count()) / (qreal) series->count();
 
-        // by default use the "raw" theme color
-        if (!colors.contains(c)) {
-            colors << c;
-            continue;
-        }
-        // ...ok we need to generate something that looks like the same color
-        // but different lightness
+        QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
 
-        int tryCount = 0;
-        while (tryCount++ < 100) {
-
-            // find maximum value we can raise the lightness
-            int lMax = 255;
-            if (lMax > 255 - c.red())
-                lMax = 255 - c.red();
-            if (lMax > 255 - c.green())
-                lMax = 255 - c.green();
-            if (lMax > 255 - c.blue())
-                lMax = 255 - c.blue();
-
-            // find maximum value we can make it darker
-            int dMax = 255;
-            if (dMax > c.red())
-                dMax = c.red();
-            if (dMax > c.green())
-                dMax = c.green();
-            if (dMax > c.blue())
-                dMax = c.blue();
-
-            int max = dMax + lMax;
-            if (max == 0) {
-                // no room to make color lighter or darker...
-                qDebug() << "cannot generate a color for pie!";
-                break;
-            }
-
-            // generate random color
-            int r = c.red() - dMax;
-            int g = c.green() - dMax;
-            int b = c.blue() - dMax;
-            int d = qrand() % max;
-            c.setRgb(r+d, g+d, b+d);
-
-            // found a unique color?
-            if (!colors.contains(c))
-                break;
-        }
-
-        qDebug() << "generated a color for pie" << c;
         colors << c;
     }
 
@@ -290,7 +225,7 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int /*count*/)
 }
 
 
-void ChartTheme::decorate(QChartAxis* axis,AxisItem* item)
+void ChartTheme::decorate(QChartAxis* axis, AxisItem* item)
 {
     //TODO: dummy defults for now
     axis->setLabelsBrush(Qt::black);
@@ -309,12 +244,12 @@ void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int coun
     if(pen != series->pen()){
         item->setLinePen(series->pen());
     }else{
-        pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
+        pen.setColor(m_seriesColors.at(count%m_seriesColors.size()));
         pen.setWidthF(series->pen().widthF());
         item->setLinePen(series->pen());
     }
 
-//    QColor color = m_seriesColor.at(count % m_seriesColor.size());
+//    QColor color = m_seriesColors.at(count % m_seriesColors.size());
     // TODO: define alpha in the theme? or in the series?
     //color.setAlpha(120);
 
@@ -324,6 +259,60 @@ void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int coun
 //    QPen pen(brush, 3);
 //    pen.setColor(color);
 //    presenter->m_markerPen = pen;
+}
+
+QColor ChartTheme::colorAt(const QColor &start, const QColor &end, qreal pos)
+{
+    Q_ASSERT(pos >=0.0 && pos <= 1.0);
+    qreal r = start.redF() + ((end.redF() - start.redF()) * pos);
+    qreal g = start.greenF() + ((end.greenF() - start.greenF()) * pos);
+    qreal b = start.blueF() + ((end.blueF() - start.blueF()) * pos);
+    QColor c;
+    c.setRgbF(r, g, b);
+    return c;
+}
+
+QColor ChartTheme::colorAt(const QGradient &gradient, qreal pos)
+{
+    Q_ASSERT(pos >=0 && pos <= 1.0);
+
+    // another possibility:
+    // http://stackoverflow.com/questions/3306786/get-intermediate-color-from-a-gradient
+
+    QGradientStops stops = gradient.stops();
+    int count = stops.count();
+
+    // find previous stop relative to position
+    QGradientStop prev = stops.first();
+    for (int i=0; i<count; i++) {
+        QGradientStop stop = stops.at(i);
+        if (pos > stop.first)
+            prev = stop;
+
+        // given position is actually a stop position?
+        if (pos == stop.first) {
+            //qDebug() << "stop color" << pos;
+            return stop.second;
+        }
+    }
+
+    // find next stop relative to position
+    QGradientStop next = stops.last();
+    for (int i=count-1; i>=0; i--) {
+        QGradientStop stop = stops.at(i);
+        if (pos < stop.first)
+            next = stop;
+    }
+
+    //qDebug() << "prev" << prev.first << "pos" << pos << "next" << next.first;
+
+    qreal range = next.first - prev.first;
+    qreal posDelta = pos - prev.first;
+    qreal relativePos = posDelta / range;
+
+    //qDebug() << "range" << range << "posDelta" << posDelta << "relativePos" << relativePos;
+
+    return colorAt(prev.second, next.second, relativePos);
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

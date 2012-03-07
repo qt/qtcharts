@@ -35,7 +35,8 @@ include(piechart/piechart.pri)
 include(scatterseries/scatter.pri)
 include(splinechart/splinechart.pri)
 
-THEMES += themes/chartthemeicy_p.h \
+THEMES += themes/chartthemedefault_p.h \
+    themes/chartthemeicy_p.h \
     themes/chartthemegrayscale_p.h \
     themes/chartthemescientific_p.h \
     themes/chartthemevanilla_p.h

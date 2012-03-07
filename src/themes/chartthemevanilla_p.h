@@ -7,14 +7,37 @@ class ChartThemeVanilla: public ChartTheme
 public:
     ChartThemeVanilla():ChartTheme(QChart::ChartThemeVanilla)
     {
-        m_seriesColor.append(QColor(217, 197, 116));
-        m_seriesColor.append(QColor(214, 168, 150));
-        m_seriesColor.append(QColor(160, 160, 113));
-        m_seriesColor.append(QColor(210, 210, 52));
-        m_seriesColor.append(QColor(136, 114, 58));
+        m_seriesColors << QColor(217, 197, 116);
+        m_seriesColors << QColor(214, 168, 150);
+        m_seriesColors << QColor(160, 160, 113);
+        m_seriesColors << QColor(210, 210, 52);
+        m_seriesColors << QColor(136, 114, 58);
 
-        m_gradientStartColor = QColor(QRgb(0xff9d844d));
-        m_gradientEndColor = QColor(QRgb(0xffafafaf));
+        QLinearGradient g1;
+        g1.setColorAt(0.0, m_seriesColors.at(0));
+        g1.setColorAt(1.0, m_seriesColors.at(1));
+        m_seriesGradients << g1;
+
+        QLinearGradient g2;
+        g2.setColorAt(0.0, m_seriesColors.at(1));
+        g2.setColorAt(1.0, m_seriesColors.at(2));
+        m_seriesGradients << g2;
+
+        QLinearGradient g3;
+        g3.setColorAt(0.0, m_seriesColors.at(2));
+        g3.setColorAt(1.0, m_seriesColors.at(3));
+        m_seriesGradients << g3;
+
+        QLinearGradient g4;
+        g4.setColorAt(0.0, m_seriesColors.at(3));
+        g4.setColorAt(1.0, m_seriesColors.at(4));
+        m_seriesGradients << g4;
+
+        QLinearGradient backgroundGradient;
+        backgroundGradient.setColorAt(0.0, QRgb(0xff9d844d));
+        backgroundGradient.setColorAt(1.0, QRgb(0xffafafaf));
+        backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+        m_backgroundGradient = backgroundGradient;
     }
 };
 
