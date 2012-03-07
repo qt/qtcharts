@@ -34,15 +34,13 @@ public: // from QChartSeries
     QSeriesType type() const { return QSeries::SeriesTypeScatter; }
 
 public:
-    //int closestPoint(QPointF coordinate);
-
     MarkerShape shape() const;
     void setShape(MarkerShape shape);
     qreal size() const;
     void setSize(qreal size);
 
 signals:
-    void clicked(QPointF coordinate);
+    void clicked(const QPointF& point);
 
 private:
     MarkerShape m_shape;

@@ -112,7 +112,7 @@ void QChart::setChartBackgroundPen(const QPen& pen)
 }
 
 /*!
-    Sets the chart \a title. The description text that is rendered above the chart.
+    Sets the chart \a title. The description text that is drawn above the chart.
 */
 void QChart::setChartTitle(const QString& title)
 {
@@ -121,7 +121,7 @@ void QChart::setChartTitle(const QString& title)
 }
 
 /*!
-    Gets the chart \a title. The description text that is rendered above the chart.
+    Returns the chart title. The description text that is drawn above the chart.
 */
 QString QChart::chartTitle() const
 {

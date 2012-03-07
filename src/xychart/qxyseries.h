@@ -19,24 +19,19 @@ protected:
 public:
 	void add(qreal x, qreal y);
 	void add(const QPointF& point);
+    void add(const QList<QPointF> points);
 	void replace(qreal x,qreal y);
 	void replace(const QPointF& point);
 	void remove(qreal x);
 	void remove(const QPointF& point);
-	void clear();
+	void removeAll();
 
 	int count() const;
 	qreal x(int pos) const;
 	qreal y(int pos) const;
 
 	QXYSeries& operator << (const QPointF &point);
-	/*
-	void add(QList<QPointF> points);
-    void setData(QList<QPointF> points);
-    QScatterSeries& operator << (const QPointF &value);
-    QScatterSeries& operator << (QList<QPointF> points);
-   int removeAll(QPointF point);
-	*/
+	QXYSeries& operator << (const QList<QPointF> points);
 
 	void setPen(const QPen& pen);
 	QPen pen() const {return m_pen;}

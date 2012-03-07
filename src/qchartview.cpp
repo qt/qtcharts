@@ -134,7 +134,7 @@ int QChartView::margin() const
 }
 
 /*!
-    Sets the chart \a title. A description text that is rendered above the chart.
+    Sets the chart \a title. A description text that is drawn above the chart.
 */
 void QChartView::setChartTitle(const QString& title)
 {
@@ -142,7 +142,7 @@ void QChartView::setChartTitle(const QString& title)
 }
 
 /*!
-    Returns the chart's title. A description text that is rendered above the chart.
+    Returns the chart's title. A description text that is drawn above the chart.
 */
 QString QChartView::chartTitle() const
 {

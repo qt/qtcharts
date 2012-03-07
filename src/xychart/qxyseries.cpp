@@ -8,12 +8,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QSeriesType QXYSeries::type() const
-    \brief Returns type of series.
-    \sa QSeries, QSeriesType
-*/
-
-/*!
    \fn QPen QXYSeries::pen() const
    \brief  Returns pen used to draw points for series.
     \sa setPen()
@@ -81,6 +75,17 @@ void QXYSeries::add(const QPointF& point)
 }
 
 /*!
+   This is an overloaded function.
+   Adds list of data \a points to the series. Points are connected with lines on the chart.
+ */
+void QXYSeries::add(const QList<QPointF> points)
+{
+    foreach(const QPointF& point , points) {
+        add(point.x(),point.y());
+    }
+}
+
+/*!
   Modifies \a y value for given \a x a value.
 */
 void QXYSeries::replace(qreal x,qreal y)
@@ -120,9 +125,9 @@ void QXYSeries::remove(const QPointF& point)
 }
 
 /*!
-  Clears all the data.
+   Removes all data points from the series.
 */
-void QXYSeries::clear()
+void QXYSeries::removeAll()
 {
     m_x.clear();
     m_y.clear();
@@ -156,7 +161,9 @@ int QXYSeries::count() const
 }
 
 /*!
-    Sets \a pen used for drawing points on the chart.
+    Sets \a pen used for drawing points on the chart. If the pen is not defined, the
+    pen from chart theme is used.
+    \sa QChart::setChartTheme()
 */
 void QXYSeries::setPen(const QPen& pen)
 {
@@ -167,7 +174,9 @@ void QXYSeries::setPen(const QPen& pen)
 }
 
 /*!
-    Sets \a brush used for drawing points on the chart.
+    Sets \a brush used for drawing points on the chart. If the brush is not defined, brush
+    from chart theme setting is used.
+    \sa QChart::setChartTheme()
 */
 
 void QXYSeries::setBrush(const QBrush& brush)
@@ -187,6 +196,18 @@ void QXYSeries::setBrush(const QBrush& brush)
 QXYSeries& QXYSeries::operator<< (const QPointF &point)
 {
     add(point);
+    return *this;
+}
+
+
+/*!
+    Stream operator for adding a list of \a points to the series.
+    \sa add()
+*/
+
+QXYSeries& QXYSeries::operator<< (const QList<QPointF> points)
+{
+    add(points);
     return *this;
 }
 

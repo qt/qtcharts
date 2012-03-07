@@ -3,25 +3,23 @@
 
 /*!
     \class QScatterSeries
-    \brief QtCommercial Chart series API for showing scatter series.
+    \brief The QScatterSeries class is used for making scatter charts.
 
     \mainclass
 
-    Example on how to create a chart with scatter series:
-    \snippet ../example/scatter/main.cpp 1
+    The scatter data is displayed as a collection of points on the chart. Each point determines the position on the horizontal axis
+    and the vertical axis.
 
-    The example code would result the following:
+    \image scatterchart.png
 
-    \image scatter_example1.jpg
-
-    To customize the graphical representation of the series, you can modify pen, brush, shape and
-    size of the marker items. For example:
-
-    \snippet ../example/scatter/main.cpp 3
-
-    Would present your scatter markers as big rectangles with opaque, uglyish green outlines and
-    opaque red filling instead of the beatiful markers defined by the chart's theme:
-    \image scatter_example_custom.jpg
+    Creating basic scatter chart is simple:
+    \code
+    QScatterSeries* series = new QScatterSeries();
+    series->add(0, 6);
+    series->add(2, 4);
+    ...
+    chartView->addSeries(series);
+    \endcode
 */
 
 /*!
@@ -41,13 +39,12 @@
 /*!
     \fn QChartSeriesType QScatterSeries::type() const
     \brief Returns QChartSeries::SeriesTypeScatter.
+    \sa QSeries, QSeriesType
 */
 
 /*!
-    \fn void QScatterSeries::clicked(QPointF coordinate)
-    User clicked the scatter series. Note that the \a coordinate is the chart coordinate that the
-    click occurred on; not necessarily a data point coordinate. To find the corresponding (closest)
-    data point you can use closestPoint().
+    \fn void QScatterSeries::clicked(const QPointF& point)
+    \brief Signal is emitted when user clicks the \a point on scatter chart.
 */
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -68,101 +65,6 @@ QScatterSeries::QScatterSeries(QObject *parent) :
 QScatterSeries::~QScatterSeries()
 {
 }
-
-
-
-/*!
-    Stream operator for adding a data point with \a value to the series.
-    \sa add()
-
-    For example:
-    \snippet ../example/scatter/main.cpp 2
-*/
-
-
-/*!
-    Stream operator for adding a list of points to the series.
-    \sa add()
-*/
-
-
-/*!
-    Replaces the data of the series with the given list of data \a points.
-*/
-
-
-/*!
-    Returns the current list of data points of the series.
-*/
-
-/*!
-    Replaces the point at \a index with \a newPoint. Returns true if \a index is a valid position
-    in the series data, false otherwise.
-*/
-
-
-/*!
-    Remove the data point at \a index. Returns true if a point was removed, false if the point
-    at \a index does not exist on the series.
-*/
-
-
-/*!
-    Remove all occurrences of \a point from the series and returns the number of points removed.
-*/
-
-
-/*!
-    Remove all data points from the series.
-*/
-
-/*!
-    Returns the index of the data point that is closest to \a coordinate. If several data points
-    are at the same distance from the \a coordinate, returns the last one. If no points exist,
-    returns -1.
-
-int QScatterSeries::closestPoint(QPointF coordinate)
-{
-    qreal distance(-1);
-    int pointIndex(-1);
-    for (int i(0); i < d->m_data.count(); i++) {
-        QPointF dataPoint = d->m_data.at(i);
-        QPointF difference = dataPoint - coordinate;
-        if (i == 0 || difference.manhattanLength() <= distance) {
-            distance = difference.manhattanLength();
-            pointIndex = i;
-        }
-    }
-    return pointIndex;
-}
-*/
-
-/*!
-    Returns the pen used for drawing markers.
-*/
-
-
-/*!
-    Overrides the default pen used for drawing a marker item with a user defined \a pen. The
-    default pen is defined by chart theme setting.
-
-    \sa setBrush()
-    \sa QChart::setChartTheme()
-*/
-
-
-/*!
-    Returns the brush used for drawing markers.
-*/
-
-
-/*!
-    Overrides the default brush of the marker items with a user defined \a brush. The default brush
-    is defined by chart theme setting.
-
-    \sa setPen()
-    \sa QChart::setChartTheme()
-*/
 
 /*!
     Returns the shape used for drawing markers.
