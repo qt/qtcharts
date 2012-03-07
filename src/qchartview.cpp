@@ -158,6 +158,22 @@ void QChartView::setChartTitleFont(const QFont& font)
 }
 
 /*!
+    Sets the \a brush used for rendering the title text.
+*/
+void QChartView::setChartTitleBrush(const QBrush &brush)
+{
+    m_chart->setChartTitleBrush(brush);
+}
+
+/*!
+    Returns the brush used for rendering the title text.
+*/
+QBrush QChartView::chartTitleBrush()
+{
+    return m_chart->chartTitleBrush();
+}
+
+/*!
     Sets the \a brush that is used for painting the background of the chart area of the QChartView widget.
 */
 void QChartView::setChartBackgroundBrush(const QBrush& brush)

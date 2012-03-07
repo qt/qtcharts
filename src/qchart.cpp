@@ -140,6 +140,24 @@ void QChart::setChartTitleFont(const QFont& font)
     m_titleItem->setFont(font);
 }
 
+/*!
+    Sets the \a brush used for rendering the title text.
+*/
+void QChart::setChartTitleBrush(const QBrush &brush)
+{
+    createChartTitleItem();
+    m_titleItem->setBrush(brush);
+}
+
+/*!
+    Returns the brush used for rendering the title text.
+*/
+QBrush QChart::chartTitleBrush()
+{
+    createChartTitleItem();
+    return m_titleItem->brush();
+}
+
 void QChart::createChartBackgroundItem()
 {
     if(!m_backgroundItem) {

@@ -15,11 +15,11 @@ MainWindow::MainWindow(QWidget *parent)
     // Here's the set of company's colors used throughout the example
     m_companyColor1 = "#b90020";
     m_companyColor2 = "#6d0013";
-    m_companyColor3 = "#d5d5d5";
+    m_companyColor3 = "#d5d5f5";
     m_companyColor4 = "#fcfcfc";
 
     resize(400, 300);
-    //setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint);
 
     // Create chart view
     m_chartView = new QChartView(this);
@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_scatter->add(m_line->data());
     m_chartView->addSeries(m_scatter);
 
-    // Create pie series using color 2; use different fill styles for each pie slice
+    // Create pie series with different data
     m_pie = new QPieSeries();
     m_pie->add(1.1, "1");
     m_pie->add(2.1, "2");
@@ -69,6 +69,7 @@ void MainWindow::customize()
     chartGradient.setColorAt(1.0, m_companyColor3);
     m_chartView->setChartBackgroundBrush(chartGradient);
     m_chartView->setBackgroundBrush(m_companyColor4);
+    m_chartView->setChartTitleBrush(m_companyColor1);
 
     // Customize chart axis
     QPen color1Pen(m_companyColor1, 4.0);
@@ -84,6 +85,7 @@ void MainWindow::customize()
         m_pie->slices().at(i)->setSliceBrush(QBrush(m_companyColor2, style));
         m_pie->slices().at(i)->setSlicePen(color1Pen);
     }
+
 
     // Calculate new colors to be used on the next update for the series
     m_companyColor1.setRed((m_companyColor1.red() + 25) % 255);
