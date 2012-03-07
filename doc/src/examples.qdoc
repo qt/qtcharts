@@ -23,6 +23,7 @@
             <li><a href="example-splinechart.html">Spline Chart example</a></li>
             <li><a href="example-stackedbarchart.html">Stacked Bar Chart example</a></li>
             <li><a href="example-stackedbarchartdrilldown.html">Stacked Bar Chart Drilldown example</a></li>
+            <li><a href="examples-customcolors.html">Customizing colors example</a></li>
         </ul>
         </td>
         </tr>

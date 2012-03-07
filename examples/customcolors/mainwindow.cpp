@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Here's the set of company's colors used throughout the example
     m_companyColor1 = "#b90020";
     m_companyColor2 = "#6d0013";
-    m_companyColor3 = "#d5d5f5";
+    m_companyColor3 = "#f5d5d5";
     m_companyColor4 = "#fcfcfc";
 
     resize(400, 300);
@@ -61,8 +61,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::customize()
 {
-    // Customize chart background
-    // Use a gradient from color 3 to color 4 for chart background
+    //! [1]
+    // Use a gradient from "color 3" to "color 4" for chart background
     QLinearGradient chartGradient(0, 0, 0, 300);
     chartGradient.setColorAt(0.0, m_companyColor3);
     chartGradient.setColorAt(0.5, m_companyColor4);
@@ -70,22 +70,29 @@ void MainWindow::customize()
     m_chartView->setChartBackgroundBrush(chartGradient);
     m_chartView->setBackgroundBrush(m_companyColor4);
     m_chartView->setChartTitleBrush(m_companyColor1);
+    //! [1]
 
-    // Customize chart axis
+    //! [2]
     QPen color1Pen(m_companyColor1, 4.0);
     m_chartView->axisX()->setAxisPen(color1Pen);
     m_chartView->axisY()->setAxisPen(color1Pen);
+    //! [2]
 
-    // Customize series
+    //! [3]
+    // Customize pen of the line series
     m_line->setPen(color1Pen);
+
+    // Customize pen and brush for the scatter
     m_scatter->setPen(color1Pen);
     m_scatter->setBrush(m_companyColor3);
+
+    // Customize pen and brush for the pie
     for (int i(0); i < m_pie->slices().count(); i++) {
         Qt::BrushStyle style = static_cast<Qt::BrushStyle>(i + 1);
         m_pie->slices().at(i)->setSliceBrush(QBrush(m_companyColor2, style));
         m_pie->slices().at(i)->setSlicePen(color1Pen);
     }
-
+    //! [3]
 
     // Calculate new colors to be used on the next update for the series
     m_companyColor1.setRed((m_companyColor1.red() + 25) % 255);
