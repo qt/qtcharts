@@ -25,6 +25,7 @@ m_axis(parent)
     setFlags(QGraphicsItem::ItemHasNoContents);
 
     QObject::connect(m_chartAxis,SIGNAL(updated()),this,SLOT(handleAxisUpdated()));
+    QObject::connect(m_chartAxis->categories(),SIGNAL(updated()),this,SLOT(handleAxisCategoriesUpdated()));
 }
 
 AxisItem::~AxisItem()
@@ -95,21 +96,19 @@ void AxisItem::updateItem()
 
 QStringList AxisItem::createLabels(int ticks, qreal min, qreal max)
 {
-
-
     Q_ASSERT(max>=min);
 
     QStringList labels;
 
-    //int ticks = axis->ticksCount()-1;
+    QChartAxisCategories* categories = m_chartAxis->categories();
 
     for(int i=0; i<= ticks; i++) {
         qreal value = min + (i * (max - min)/ ticks);
-        QString label ;//= axis->axisTickLabel(value);
-        if(label.isEmpty()) {
+        if(categories->count()==0) {
             labels << QString::number(value);
         }
         else {
+            QString label = categories->label(value);
             labels << label;
         }
     }
@@ -270,7 +269,7 @@ void AxisItem::setLayout(const QVector<qreal>& layout)
                      QPointF center = labelItem->boundingRect().center();
                      labelItem->setTransformOriginPoint(center.x(), center.y());
                      labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
-                     if(i%2){
+                     if(i%2 && i+1 < layout.size()){
                          QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
                          rectItem->setRect(layout[i],m_rect.top(),layout[i+1]-layout[i],m_rect.height());
                      }
@@ -293,7 +292,7 @@ void AxisItem::setLayout(const QVector<qreal>& layout)
                      QPointF center = labelItem->boundingRect().center();
                      labelItem->setTransformOriginPoint(center.x(), center.y());
                      labelItem->setPos(m_rect.left() -  labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
-                     if(i%2){
+                     if(i%2 && i+1 < layout.size()){
                          QGraphicsRectItem *rectItem =  static_cast<QGraphicsRectItem*>(shades.at(i/2));
                          rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i]-layout[i+1]);
                      }
@@ -312,8 +311,21 @@ void AxisItem::setLayout(const QVector<qreal>& layout)
 
 //handlers
 
+void AxisItem::handleAxisCategoriesUpdated()
+{
+   updateItem();
+}
+
 void AxisItem::handleAxisUpdated()
 {
+
+    int count = m_chartAxis->ticksCount();
+
+    if(m_ticks!=count){
+    m_ticks=count;
+    updateItem();
+    }
+
     if(isEmpty()) return;
 
     if(m_chartAxis->isAxisVisible()) {
@@ -365,14 +377,6 @@ void AxisItem::handleRangeChanged(qreal min, qreal max)
     if(isEmpty()) return;
     updateItem();
 
-}
-
-void AxisItem::handleTicksCountChanged(int ticks)
-{
-    m_ticks=ticks;
-
-    if(isEmpty()) return;
-    updateItem();
 }
 
 void AxisItem::handleGeometryChanged(const QRectF& rect)

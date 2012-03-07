@@ -100,21 +100,21 @@ void BarPresenterBase::initAxisLabels()
     if (0 == count) {
         return;
     }
+    count++;
 
     mChart->axisX()->setTicksCount(count);
 
     qreal min = 0;
-    qreal max = mSeries->categoryCount();
+    qreal max = count;
 
     mChart->axisX()->setMin(min);
     mChart->axisX()->setMax(max);
-    qreal step = (max-min)/count;
-    QChartAxisCategories& categories = mChart->axisX()->categories();
-    categories.clear();
-    for (int i=0; i<count; i++) {
-        qDebug() << "initAxisLabels" << min << mSeries->categoryName(i);
-        categories.insert(min,mSeries->categoryName(i));
-        min += step;
+    min++;
+    QChartAxisCategories* categories = mChart->axisX()->categories();
+    categories->clear();
+    for (int i=0; i<count-1; i++) {
+        categories->insert(min,mSeries->categoryName(i));
+        min++;
     }
     mChart->axisX()->setLabelsVisible(true);
 }

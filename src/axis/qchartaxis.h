@@ -60,7 +60,7 @@ public:
     void setTicksCount(int count);
     int ticksCount() const { return m_ticksCount;}
 
-    QChartAxisCategories& categories() { return m_category; }
+    QChartAxisCategories* categories() { return &m_category; }
 
 signals:
 	void minChanged(qreal min);

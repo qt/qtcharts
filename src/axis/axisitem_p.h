@@ -51,8 +51,8 @@ public:
 
 public slots:
     void handleAxisUpdated();//qchartaxis update calls
+    void handleAxisCategoriesUpdated();//qchartaxis update calls
     void handleRangeChanged(qreal min , qreal max); //domain update calls
-    void handleTicksCountChanged(int ticks); //ticks changed
     void handleGeometryChanged(const QRectF& size); //geometry update calls
 
 public:
@@ -66,6 +66,7 @@ private:
     void clear(int count);
     void createItems(int count);
     QStringList createLabels(int ticks, qreal min, qreal max);
+
 private:
     QChartAxis* m_chartAxis;
     AxisType m_type;

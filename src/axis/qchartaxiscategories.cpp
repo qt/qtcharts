@@ -34,6 +34,11 @@ int QChartAxisCategories::count()
     emit updated();
 }
 
+QString QChartAxisCategories::label(qreal value) const
+{
+    return m_map.value(value);
+}
+
 #include "moc_qchartaxiscategories.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

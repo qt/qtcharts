@@ -14,6 +14,7 @@ public:
 
     void insert(qreal value,QString label);
     void remove(qreal value);
+    QString label(qreal value) const;
     void clear();
     int count();
 
