@@ -117,7 +117,18 @@ void QChart::setChartBackgroundPen(const QPen& pen)
 void QChart::setChartTitle(const QString& title)
 {
     createChartTitleItem();
-    m_titleItem->setPlainText(title);
+    m_titleItem->setText(title);
+}
+
+/*!
+    Gets the chart \a title. The description text that is rendered above the chart.
+*/
+QString QChart::chartTitle() const
+{
+    if(m_titleItem)
+    return m_titleItem->text();
+    else
+    return QString();
 }
 
 /*!
@@ -141,7 +152,7 @@ void QChart::createChartBackgroundItem()
 void QChart::createChartTitleItem()
 {
     if(!m_titleItem) {
-        m_titleItem = new QGraphicsTextItem(this);
+        m_titleItem = new QGraphicsSimpleTextItem(this);
         m_titleItem->setZValue(ChartPresenter::BackgroundZValue);
     }
 }

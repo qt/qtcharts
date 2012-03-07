@@ -1,12 +1,16 @@
 #include "splinechartitem_p.h"
+#include "chartpresenter_p.h"
 #include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-SplineChartItem::SplineChartItem(QSplineSeries* series, QGraphicsObject *parent) :
+SplineChartItem::SplineChartItem(QSplineSeries* series, QGraphicsItem *parent) :
 XYChartItem(series, parent),
 m_series(series)
 {
+    setZValue(ChartPresenter::LineChartZValue);
+    QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
+    handleUpdated();
 }
 
 QRectF SplineChartItem::boundingRect() const
@@ -26,6 +30,7 @@ QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 
 void SplineChartItem::setGeometry(QVector<QPointF>& points)
 {
+
     if(points.size()==0) return;
 
     QPainterPath splinePath;
@@ -44,11 +49,22 @@ void SplineChartItem::setGeometry(QVector<QPointF>& points)
     XYChartItem::setGeometry(points);
 }
 
-void SplineChartItem::setPen(const QPen& pen)
+void SplineChartItem::setLinePen(const QPen& pen)
 {
     m_pen = pen;
+    qDebug()<<pen;
 }
 
+//handlers
+
+void SplineChartItem::handleUpdated()
+{
+    //m_items.setVisible(m_series->pointsVisible());
+    setLinePen(m_series->pen());
+    update();
+}
+
+//painter
 
 void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
@@ -56,6 +72,7 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     Q_UNUSED(option);
     painter->save();
     painter->setClipRect(clipRect());
+    painter->setPen(m_pen);
     painter->drawPath(m_path);
 
     const QVector<QPointF> points =  XYChartItem::points();
@@ -78,6 +95,8 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     }
     painter->restore();
 }
+
+
 
 #include "moc_splinechartitem_p.cpp"
 

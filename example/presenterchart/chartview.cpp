@@ -1,10 +1,14 @@
 #include "chartview.h"
 #include <qlineseries.h>
+#include <qscatterseries.h>
+#include <qsplineseries.h>
 #include <QTime>
 
 ChartView::ChartView(QWidget* parent):QChartView(parent),
 m_index(0)
 {
+    setChartTitle("Three random line charts");
+
     QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(handleTimeout()));
     m_timer.setInterval(3000);
 
@@ -15,11 +19,12 @@ m_index(0)
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
-    QLineSeries* series1 = new QLineSeries(this);
+    QScatterSeries* series1 = new QScatterSeries(this);
     QPen red(Qt::red);
     red.setWidth(3);
     series1->setPen(red);
-    QLineSeries* series2 = new QLineSeries(this);
+    series1->setBrush(Qt::white);
+    QSplineSeries* series2 = new QSplineSeries(this);
     QPen green(Qt::green);
     green.setWidth(3);
     series2->setPen(green);
@@ -27,16 +32,21 @@ m_index(0)
     int numPoints = 10;
 
     for (int x = 0; x <= numPoints; ++x) {
-        series0->add(x,  qrand() % 100);
-        series1->add(x,  qrand() % 100);
-        series2->add(x,  qrand() % 100);
+        qreal y = qrand() % 100;
+        series0->add(x,y);
+        series1->add(x,y);
+        series2->add(x,y);
     }
 
-    addSeries(series0);
-
     m_series<<series0;
+    m_titles<<chartTitle()+": LineChart";
     m_series<<series1;
+    m_titles<<chartTitle()+": ScatterChart";
     m_series<<series2;
+    m_titles<<chartTitle()+": SplineChart";
+
+    addSeries(series0);
+    setChartTitle(m_titles.at(0));
 
     m_timer.start();
 }
@@ -56,4 +66,5 @@ void ChartView::handleTimeout()
     m_index++;
     m_index=m_index%m_series.size();
     addSeries(m_series.at(m_index));
+    setChartTitle(m_titles.at(m_index));
 }

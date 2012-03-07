@@ -3,7 +3,8 @@
 
 #include "qchartglobal.h"
 #include "xychartitem_p.h"
-#include <QObject>
+#include "xychartanimationitem_p.h"
+#include <QGraphicsItem>
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -14,7 +15,7 @@ class ScatterChartItem : public XYChartItem
 {
     Q_OBJECT
 public:
-    explicit ScatterChartItem(QScatterSeries *series, QGraphicsObject *parent = 0);
+    explicit ScatterChartItem(QScatterSeries *series, QGraphicsItem *parent = 0);
 
 public:
     //from QGraphicsItem
@@ -43,7 +44,11 @@ private:
     int m_shape;
     int m_size;
     QRectF m_rect;
+
+    template<class,class> friend class XYChartAnimator;
 };
+
+typedef XYChartAnimationItem<ScatterChartItem,QScatterSeries> ScatterChartAnimationItem;
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

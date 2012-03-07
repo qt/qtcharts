@@ -38,7 +38,6 @@ void LineChartAnimationItem::updatePoints(QVector<QPointF>& newPoints)
     m_animation->setKeyValueAt(1.0, qVariantFromValue(newPoints));
     QTimer::singleShot(0,m_animation,SLOT(start()));
 
-
     m_points = newPoints;
     m_dirty=false;
 

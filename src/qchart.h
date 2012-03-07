@@ -57,6 +57,7 @@ public:
     QChart::ChartTheme chartTheme() const;
 
     void setChartTitle(const QString& title);
+    QString chartTitle() const;
     void setChartTitleFont(const QFont& font);
     void setChartBackgroundBrush(const QBrush& brush);
     void setChartBackgroundPen(const QPen& pen);
@@ -82,7 +83,7 @@ private:
 private:
     Q_DISABLE_COPY(QChart)
     QGraphicsRectItem* m_backgroundItem;
-    QGraphicsTextItem* m_titleItem;
+    QGraphicsSimpleTextItem* m_titleItem;
     QRectF m_rect;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;

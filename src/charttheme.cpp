@@ -165,12 +165,12 @@ void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int count)
 {
     QPen pen;
     if(pen != series->pen()){
-        item->setPen(series->pen());
+        item->setLinePen(series->pen());
         return;
     }
     pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
     pen.setWidthF(2);
-    item->setPen(pen);
+    item->setLinePen(pen);
 }
 
 void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int count)
@@ -305,13 +305,14 @@ void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int coun
     Q_ASSERT(series);
 
     QPen pen;
+
     if(pen != series->pen()){
-        item->setPen(series->pen());
-        return;
+        item->setLinePen(series->pen());
+    }else{
+        pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
+        pen.setWidthF(series->pen().widthF());
+        item->setLinePen(series->pen());
     }
-    pen.setColor(m_seriesColor.at(count%m_seriesColor.size()));
-    pen.setWidthF(series->pen().widthF());
-    item->setPen(pen);
 
 //    QColor color = m_seriesColor.at(count % m_seriesColor.size());
     // TODO: define alpha in the theme? or in the series?

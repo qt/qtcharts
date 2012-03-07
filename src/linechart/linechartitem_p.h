@@ -3,6 +3,7 @@
 
 #include "qchartglobal.h"
 #include "xychartitem_p.h"
+#include "xychartanimationitem_p.h"
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -22,7 +23,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
-    void setPen(const QPen& pen);
+    void setLinePen(const QPen& pen);
     void setPointsVisible(bool visible);
 
 public slots:
@@ -42,9 +43,11 @@ private:
     QRectF m_rect;
     QPen m_pen;
 
-    friend class LineChartAnimatator;
+    template<class,class> friend class XYChartAnimator;
 
 };
+
+typedef XYChartAnimationItem<LineChartItem,QLineSeries> LineChartAnimationItem;
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

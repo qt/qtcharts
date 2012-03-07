@@ -6,7 +6,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsObject *parent) :
+ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *parent) :
     XYChartItem(series,parent),
     m_series(series),
     m_items(this),

@@ -93,16 +93,15 @@ void LineChartItem::setGeometry(QVector<QPointF>& points)
     XYChartItem::setGeometry(points);
 }
 
-void LineChartItem::setPen(const QPen& pen)
+void LineChartItem::setLinePen(const QPen& pen)
 {
     m_pen = pen;
 }
 
-
 void LineChartItem::handleUpdated()
 {
     m_items.setVisible(m_series->pointsVisible());
-    setPen(m_series->pen());
+    setLinePen(m_series->pen());
     update();
 }
 

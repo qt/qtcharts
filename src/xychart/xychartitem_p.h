@@ -29,8 +29,9 @@ public slots:
 
 protected:
     virtual void updatePoints(QVector<QPointF>& points);
-    virtual void updatePoint(int index,QPointF& newPoint);
+    virtual void updatePoint(QVector<QPointF>& points);
     virtual void setGeometry(QVector<QPointF>& points);
+
     QPointF calculateGeometryPoint(const QPointF& point) const;
     QPointF calculateGeometryPoint(int index) const;
     QVector<QPointF> calculateGeometryPoints() const;
@@ -47,6 +48,8 @@ private:
     QSizeF m_size;
     QRectF m_clipRect;
     QVector<QPointF> m_points;
+
+    template<class,class> friend class XYChartAnimator;
 
 };
 

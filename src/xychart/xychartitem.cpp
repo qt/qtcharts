@@ -55,16 +55,14 @@ QVector<QPointF> XYChartItem::calculateGeometryPoints() const
     return points;
 }
 
-
 void XYChartItem::updatePoints(QVector<QPointF>& points)
 {
     setGeometry(points);
 }
 
-void XYChartItem::updatePoint(int index,QPointF& newPoint)
+void XYChartItem::updatePoint(QVector<QPointF>& points)
 {
-	m_points.replace(index,newPoint);
-	setGeometry(m_points);
+    setGeometry(points);
 }
 
 void XYChartItem::setGeometry(QVector<QPointF>& points)
@@ -89,7 +87,6 @@ void XYChartItem::handlePointRemoved(int index)
 {
     Q_ASSERT(index<m_series->count());
     Q_ASSERT(index>=0);
-
     QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
     points.remove(index);
@@ -102,7 +99,9 @@ void XYChartItem::handlePointReplaced(int index)
     Q_ASSERT(index<m_series->count());
     Q_ASSERT(index>=0);
     QPointF point = calculateGeometryPoint(index);
-    updatePoint(index,point);
+    QVector<QPointF> points = m_points;
+    m_points.replace(index,point);
+    updatePoint(points);
     update();
 }
 

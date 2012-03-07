@@ -20,7 +20,6 @@
 #include "stackedbarpresenter_p.h"
 #include "percentbarpresenter_p.h"
 #include "linechartitem_p.h"
-#include "linechartanimationitem_p.h"
 #include "piepresenter_p.h"
 #include "scatterchartitem_p.h"
 #include "splinechartitem_p.h"
@@ -143,7 +142,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
         LineChartItem* item;
         if(m_options.testFlag(QChart::SeriesAnimations)){
-            item = new LineChartAnimationItem(lineSeries,m_chart);
+            item = new  LineChartAnimationItem(lineSeries,m_chart);
         }else{
             item = new LineChartItem(lineSeries,m_chart);
         }
@@ -215,19 +214,27 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         break;
     }
     case QSeries::SeriesTypeScatter: {
-        QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
-        ScatterChartItem *scatterPresenter = new ScatterChartItem(scatterSeries, m_chart);
-        QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)),
-                         scatterPresenter, SLOT(handleGeometryChanged(const QRectF&)));
-        QObject::connect(domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),
-                         scatterPresenter, SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
-        m_chartTheme->decorate(scatterPresenter, scatterSeries, m_chartItems.count());
-        m_chartItems.insert(scatterSeries, scatterPresenter);
-        if (m_rect.isValid())
-            scatterPresenter->handleGeometryChanged(m_rect);
-        scatterPresenter->handleDomainChanged(domain->minX(), domain->maxX(), domain->minY(), domain->maxY());
-        break;
-    }
+			QScatterSeries *scatterSeries = qobject_cast<QScatterSeries *>(series);
+			ScatterChartItem *item;
+			if(m_options.testFlag(QChart::SeriesAnimations)) {
+				item = new ScatterChartAnimationItem(scatterSeries,m_chart);
+			} else {
+				item = new ScatterChartItem(scatterSeries, m_chart);
+			}
+			QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)),
+					item, SLOT(handleGeometryChanged(const QRectF&)));
+			QObject::connect(domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),
+					item, SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
+			//initialize
+			if (m_rect.isValid())
+			item->handleGeometryChanged(m_rect);
+			item->handleDomainChanged(domain->minX(), domain->maxX(), domain->minY(), domain->maxY());
+			//decorate
+			m_chartTheme->decorate(item, scatterSeries, m_chartItems.count());
+			m_chartItems.insert(scatterSeries, item);
+
+			break;
+		}
     case QSeries::SeriesTypePie: {
         QPieSeries *s = qobject_cast<QPieSeries *>(series);
         PiePresenter* pie = new PiePresenter(m_chart, s);
@@ -254,16 +261,24 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
     }
 
     case QSeries::SeriesTypeSpline: {
-        QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(series);
-        SplineChartItem* splinePresenter = new SplineChartItem(splineSeries, m_chart);
-        QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), splinePresenter, SLOT(handleGeometryChanged(const QRectF&)));
-        QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),splinePresenter,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
-        //initialize
-        splinePresenter->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());
-        m_chartTheme->decorate(splinePresenter, splineSeries, m_chartItems.count());
-        m_chartItems.insert(splineSeries, splinePresenter);
-        break;
-    }
+
+			QSplineSeries* splineSeries = qobject_cast<QSplineSeries*>(series);
+			SplineChartItem* item;
+			if(m_options.testFlag(QChart::SeriesAnimations)) {
+				item = new SplineChartAnimationItem(splineSeries, m_chart);
+			} else {
+				item = new SplineChartItem(splineSeries, m_chart);
+			}
+			QObject::connect(this, SIGNAL(geometryChanged(const QRectF&)), item, SLOT(handleGeometryChanged(const QRectF&)));
+			QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),item,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
+			//initialize
+			item->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());
+			if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
+			//decorate
+			m_chartTheme->decorate(item, splineSeries, m_chartItems.count());
+			m_chartItems.insert(splineSeries, item);
+			break;
+		}
     default: {
         qDebug()<< "Series type" << series->type() << "not implemented.";
         break;

@@ -142,6 +142,14 @@ void QChartView::setChartTitle(const QString& title)
 }
 
 /*!
+    Gets the chart \a title. A description text that is rendered above the chart.
+*/
+QString QChartView::chartTitle() const
+{
+    return m_chart->chartTitle();
+}
+
+/*!
     Sets the \a font that is used for rendering the description text that is rendered above the chart.
 */
 void QChartView::setChartTitleFont(const QFont& font)
