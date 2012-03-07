@@ -55,7 +55,6 @@ void BarPresenterBase::dataChanged()
     }
 
     mBars.clear();
-    mLabels.clear();
     mSeparators.clear();
     mFloatingValues.clear();
 
@@ -73,17 +72,6 @@ void BarPresenterBase::dataChanged()
             connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaveEvent()));
         }
     }
-
-    // Create labels
-    /*
-    int count = mSeries->categoryCount();
-    for (int i=0; i<count; i++) {
-        BarLabel* label = new BarLabel(this);
-        label->set(mSeries->categoryName(i));
-        childItems().append(label);
-        mLabels.append(label);
-    }
-    */
 
     // Create separators
     int count = mSeries->categoryCount() - 1;   // There is one less separator than columns

@@ -39,7 +39,6 @@ void PercentBarPresenter::layoutChanged()
     qreal h = mHeight;
 
     int itemIndex(0);
-    int labelIndex(0);
     for (int category = 0; category < mSeries->categoryCount(); category++) {
         qreal colSum = mSeries->categorySum(category);
         qreal scale = (h / colSum);
@@ -55,11 +54,6 @@ void PercentBarPresenter::layoutChanged()
             itemIndex++;
             yPos -= barHeight;
         }
-
-        // TODO: Layout for labels, remove magic number
-        BarLabel* label = mLabels.at(labelIndex);
-        label->setPos(xPos, mHeight + 20);
-        labelIndex++;
         xPos += xStep;
     }
 

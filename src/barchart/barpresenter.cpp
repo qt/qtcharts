@@ -39,8 +39,6 @@ void BarPresenter::layoutChanged()
     qreal xStepPerCategory = (tW/tC) + mBarWidth;
 
     int itemIndex(0);
-    int labelIndex(0);
-
     for (int category=0; category < categoryCount; category++) {
         qreal xPos = xStepPerCategory * category;
         qreal yPos = mHeight;
@@ -55,12 +53,6 @@ void BarPresenter::layoutChanged()
             itemIndex++;
             xPos += mBarWidth;
         }
-
-        // TODO: Layout for labels, remove magic number
-        xPos = xStepPerCategory * category + mBarWidth/2;
-        BarLabel* label = mLabels.at(labelIndex);
-        label->setPos(xPos, mHeight - 20);
-        labelIndex++;
     }
 
     // Position floating values

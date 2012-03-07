@@ -10,7 +10,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Bar;
-class BarLabel;
 class Separator;
 class BarValue;
 class QChartAxisCategories;
@@ -59,7 +58,6 @@ protected:
     // Not owned.
     QBarSeries* mSeries;
     QList<Bar*> mBars;
-    QList<BarLabel*> mLabels;
     QList<Separator*> mSeparators;
     QList<BarValue*> mFloatingValues;
     QChart* mChart;

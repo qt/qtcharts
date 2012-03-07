@@ -51,7 +51,6 @@ void StackedBarPresenter::layoutChanged()
     qreal xPos = ((tW/tC) - mBarWidth / 2);
 
     int itemIndex(0);
-    int labelIndex(0);
     for (int category = 0; category < mSeries->categoryCount(); category++) {
         qreal yPos = h;
         for (int set=0; set < mSeries->barsetCount(); set++) {
@@ -64,11 +63,6 @@ void StackedBarPresenter::layoutChanged()
             itemIndex++;
             yPos -= barHeight;
         }
-
-        // TODO: Layout for labels, remove magic number
-//        BarLabel* label = mLabels.at(labelIndex);
-//        label->setPos(xPos, mHeight + 20);
-        labelIndex++;
         xPos += xStep;
     }
 

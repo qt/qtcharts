@@ -4,7 +4,6 @@ DEPENDPATH += $$PWD
 SOURCES += \
     $$PWD/bar.cpp \
     $$PWD/barchartmodel.cpp \
-    $$PWD/barlabel.cpp \
     $$PWD/barpresenter.cpp \
     $$PWD/barpresenterbase.cpp \
     $$PWD/percentbarpresenter.cpp \
@@ -19,7 +18,6 @@ SOURCES += \
 PRIVATE_HEADERS += \
     $$PWD/bar_p.h \
     $$PWD/barchartmodel_p.h \
-    $$PWD/barlabel_p.h \
     $$PWD/barpresenter_p.h \
     $$PWD/barpresenterbase_p.h \
     $$PWD/percentbarpresenter_p.h \
