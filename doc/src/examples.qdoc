@@ -13,16 +13,16 @@
         <tr>
         <td valign="top">
         <ul>
-            <li><a href="example-areachart.html">Area Chart example</a></li>
-            <li><a href="example-barchart.html">Bar Chart example</a></li>
-            <li><a href="example-linechart.html">Line Chart example</a></li>
-            <li><a href="example-percentbarchart.html">Percent Bar Chart example</a></li>
-            <li><a href="example-piechart.html">Pie Chart example</a></li>
-            <li><a href="example-presenterchart.html">Presenter Chart example</a></li>
-            <li><a href="example-scatterchart.html">Scatter Chart example</a></li>
-            <li><a href="example-splinechart.html">Spline Chart example</a></li>
-            <li><a href="example-stackedbarchart.html">Stacked Bar Chart example</a></li>
-            <li><a href="example-stackedbarchartdrilldown.html">Stacked Bar Chart Drilldown example</a></li>
+            <li><a href="examples-areachart.html">Area Chart example</a></li>
+            <li><a href="examples-barchart.html">Bar Chart example</a></li>
+            <li><a href="examples-linechart.html">Line Chart example</a></li>
+            <li><a href="examples-percentbarchart.html">Percent Bar Chart example</a></li>
+            <li><a href="examples-piechart.html">Pie Chart example</a></li>
+            <li><a href="examples-presenterchart.html">Presenter Chart example</a></li>
+            <li><a href="examples-scatterchart.html">Scatter Chart example</a></li>
+            <li><a href="examples-splinechart.html">Spline Chart example</a></li>
+            <li><a href="examples-stackedbarchart.html">Stacked Bar Chart example</a></li>
+            <li><a href="examples-stackedbarchartdrilldown.html">Stacked Bar Chart Drilldown example</a></li>
             <li><a href="examples-customcolors.html">Customizing colors example</a></li>
         </ul>
         </td>
