@@ -1,6 +1,5 @@
 #include "percentbarpresenter_p.h"
 #include "bar_p.h"
-#include "barlabel_p.h"
 #include "barvalue_p.h"
 #include "separator_p.h"
 #include "qbarset.h"
