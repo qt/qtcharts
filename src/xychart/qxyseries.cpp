@@ -15,8 +15,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
    \fn QPen QXYSeries::pen() const
-   \brief  Returns the pen used to draw points for this series.
+   \brief  Returns pen used to draw points for series.
     \sa setPen()
+*/
+
+/*!
+   \fn QBrush QXYSeries::brush() const
+   \brief  Returns brush used to draw points for series.
+    \sa setBrush()
 */
 
 /*!
@@ -150,7 +156,7 @@ int QXYSeries::count() const
 }
 
 /*!
-    Sets \a pen used for points on the chart.
+    Sets \a pen used for drawing points on the chart.
 */
 void QXYSeries::setPen(const QPen& pen)
 {
@@ -161,7 +167,7 @@ void QXYSeries::setPen(const QPen& pen)
 }
 
 /*!
-    Sets \a brush used for points on the chart.
+    Sets \a brush used for drawing points on the chart.
 */
 
 void QXYSeries::setBrush(const QBrush& brush)

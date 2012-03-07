@@ -142,7 +142,7 @@ void QChartView::setChartTitle(const QString& title)
 }
 
 /*!
-    Gets the chart \a title. A description text that is rendered above the chart.
+    Returns the chart's title. A description text that is rendered above the chart.
 */
 QString QChartView::chartTitle() const
 {
