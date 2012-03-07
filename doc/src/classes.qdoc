@@ -3,7 +3,17 @@
     \title QtCommercial Charts API
     \keyword All Classes
 
-
+    Charts API is build on top of Qt Graphics View Framework. Charts can be displayed as QGrsphicsWidget using QChart class. However 
+    there is also convenience class QChartView which is QWidget based. These lets quickly use QCharts as normal Qt widget.
+    Each chart type is represented by QSeries derived class. To create given chart type users have to use instace of releted sereis class and add it to QChart/QChartView instance.
+    \code
+    QLineSeries* series = new QLineSeries();
+    series->add(0, 6);
+    series->add(2, 4);
+    ...
+    chartView->addSeries(series);
+    \endcode
+     
     \image class_diagram.png
     \raw HTML
         <table cellpadding="2" cellspacing="1" border="0" width="100%" class="indextable">
