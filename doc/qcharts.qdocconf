@@ -6,15 +6,15 @@ project = QtCommercialCharts
 description = Library for creating charts
 
 sourcedirs = ../src \
-             ../example \
+             ../examples \
              ./src
 headerdirs = ../src \
-             ../example
+             ../examples
 exampledirs = ../ \
               ../src \
-              ../example 
+              ../examples 
               
-excludefiles += ../example/linechart/linechart.pro
+excludefiles += ../examples/linechart/linechart.pro
 
 sources.fileextensions = *.cpp *.qdoc *.mm *.qml
 headers.fileextensions = *.h *.ch *.h++ *.hh *.hpp *.hxx

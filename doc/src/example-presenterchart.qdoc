@@ -13,25 +13,25 @@
     
     We create simple ChartView class which derives form QChartView. 
     
-    \snippet ../example/presenterchart/chartview.h 1
+    \snippet ../examples/presenterchart/chartview.h 1
     
     Class will implement \c handleTimeout() slot which we are going to use to trigger switching between different chart presentations. 
     Class members \c m_series and \c m_titles are going to store series and related titles. In example we are going to present data as a line chart
     using QLineSeries , as scatter chart using QScatterSeries, and as a spline chart using QSplineSeries. We create needed instances in constructor of ChartView class.
     We set custom line and points colors.
 
-    \snippet ../example/presenterchart/chartview.cpp 1
+    \snippet ../examples/presenterchart/chartview.cpp 1
 
     We add data to all three series. We can use add() member function. If data set is large,it is wiser to use shared data model, as described here.[TODO]  
 
-    \snippet ../example/presenterchart/chartview.cpp 2
+    \snippet ../examples/presenterchart/chartview.cpp 2
 
     In the end we store references all the created series and matching titles. 
 
-    \snippet ../example/presenterchart/chartview.cpp 3
+    \snippet ../examples/presenterchart/chartview.cpp 3
     
     In  \c handleTimeout() slot  we change currently displayed chart by removing previous series and adding next series from the \c m_series list. We also set proper title.
     
-    \snippet ../example/presenterchart/chartview.cpp 4
+    \snippet ../examples/presenterchart/chartview.cpp 4
     
 */
