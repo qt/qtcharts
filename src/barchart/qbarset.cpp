@@ -109,6 +109,9 @@ void QBarSet::setValue(int index, qreal value)
     mValues.replace(index,value);
 }
 
+/*!
+    Returns total sum of all values in barset.
+*/
 qreal QBarSet::total()
 {
     qreal total(0);
@@ -117,7 +120,6 @@ qreal QBarSet::total()
     }
     return total;
 }
-
 
 /*!
     Sets pen for set. Bars of this set are drawn using \a pen

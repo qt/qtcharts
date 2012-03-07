@@ -9,31 +9,31 @@
 	
     First we define categories.
 
-    \snippet ../example/stackedbarchart/main.cpp 1
+    \snippet ../examples/stackedbarchart/main.cpp 1
 
     Data that barchart visualizes, is defined by QBarSet instances. Here we create some sets and append data
 	we want to visulaize to them.
 
-    \snippet ../example/stackedbarchart/main.cpp 2
+    \snippet ../examples/stackedbarchart/main.cpp 2
 
     To combine the sets and categories to a chart, we need to create QBarSeries instance. When creating
 	the QBarSeries, the categories must be known. Sets can be added later. For example purposes the sets
 	are added to series here.
 
-    \snippet ../example/stackedbarchart/main.cpp 3
+    \snippet ../examples/stackedbarchart/main.cpp 3
     
     We want our barchart to behave so, that when mouse is hovered over bar, the name of set which the bar
 	represents is shown as tooltip.
 	Also when we click the bar, floating values for the set are toggled. Floating values are the data values
 	that are drawn on top of bars.
     
-    \snippet ../example/stackedbarchart/main.cpp 4
+    \snippet ../examples/stackedbarchart/main.cpp 4
 
     Here we create the view and add our series to it. Also we set the title and theme we want our chart to use
     
-    \snippet ../example/stackedbarchart/main.cpp 5
+    \snippet ../examples/stackedbarchart/main.cpp 5
 
     For barchart, we don't need X-axis to be visible, so it can be disabled.
     
-    \snippet ../example/stackedbarchart/main.cpp 6
+    \snippet ../examples/stackedbarchart/main.cpp 6
 */
