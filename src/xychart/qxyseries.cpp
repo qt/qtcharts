@@ -161,6 +161,18 @@ int QXYSeries::count() const
 }
 
 /*!
+    Returns the data points of the series.
+*/
+QList<QPointF> QXYSeries::data()
+{
+    QList<QPointF> data;
+    for (int i(0); i < m_x.count() && i < m_y.count(); i++)
+        data.append(QPointF(m_x.at(i), m_y.at(i)));
+    return data;
+}
+
+
+/*!
     Sets \a pen used for drawing points on the chart. If the pen is not defined, the
     pen from chart theme is used.
     \sa QChart::setChartTheme()
