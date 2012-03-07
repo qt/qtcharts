@@ -34,7 +34,8 @@
     <td><img src="images/chartview_example_pie.jpg " alt="piechart" /></td>
     </tr>
     <tr>
-     <td><img src="images/chartview_example.jpg " alt="linechart" /></td>
+    <td><img src="images/chartview_example.jpg " alt="linechart" /></td>
+    <td><a href="example-presenterchart.html"><img src="images/presenterchart_example.png" alt="presenterchart" /></a></td>
     </tr>
     </table> 
      </div>

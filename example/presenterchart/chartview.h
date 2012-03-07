@@ -6,6 +6,7 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
+//![1]
 class ChartView: public QChartView
 {
     Q_OBJECT
@@ -22,5 +23,6 @@ private:
     QStringList m_titles;
     int m_index;
 };
+//![1]
 
 #endif /* CHARTVIEW_H_ */
