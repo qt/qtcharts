@@ -52,7 +52,6 @@ void SplineChartItem::setGeometry(QVector<QPointF>& points)
 void SplineChartItem::setLinePen(const QPen& pen)
 {
     m_pen = pen;
-    qDebug()<<pen;
 }
 
 //handlers
