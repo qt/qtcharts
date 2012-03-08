@@ -39,10 +39,10 @@ public:
         int listCount = 3;
         int valueMax = 100;
         int valueCount = 50;
-        for (int i=0; i<listCount; i++) {
+        for (int i(0); i < listCount; i++) {
             DataList dataList;
-            for (int j=0; j<valueCount; j++) {
-                QPointF value(qrand() % valueMax, qrand() % valueMax);
+            for (int j(0); j < valueCount; j++) {
+                QPointF value(j + (qreal) rand() / (qreal) RAND_MAX, qrand() % valueMax);
                 QString label = QString::number(i) + ":" + QString::number(j);
                 dataList << Data(value, label);
             }
@@ -110,7 +110,7 @@ public:
         for (int i=0; i<m_dataTable.count(); i++) {
             QPieSeries *series = new QPieSeries(chart);
             foreach (Data data, m_dataTable[i])
-                series->add(data.first.x(), data.second);
+                series->add(data.first.y(), data.second);
             qreal hPos = (pieSize / 2) + (i / (qreal) m_dataTable.count());
             series->setPieSize(pieSize);
             series->setPiePosition(hPos, 0.5);
