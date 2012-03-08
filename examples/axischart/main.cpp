@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
     axisX->setLabelsAngle(45);
     axisX->setGridPen(Qt::DashLine);
 
-    QChartAxisCategories *categoriesX = axisX->categories();
+    QChartAxisCategories* categoriesX = axisX->categories();
     categoriesX->insert(0,"low");
     categoriesX->insert(50,"medium");
     categoriesX->insert(100,"High");
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     axisY->setLabelsAngle(45);
     axisY->setShadesBrush(Qt::yellow);
 
-    QChartAxisCategories *categoriesY = axisY->categories();
+    QChartAxisCategories* categoriesY = axisY->categories();
     categoriesY->insert(0,"low");
     categoriesY->insert(50,"medium");
     categoriesY->insert(100,"High");

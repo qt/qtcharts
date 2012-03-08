@@ -17,11 +17,9 @@ AxisAnimationItem::~AxisAnimationItem()
 {
 }
 
-void AxisAnimationItem::updateItem()
+void AxisAnimationItem::updateLayout(QVector<qreal>& newLayout)
 {
     QVector<qreal> oldLayout = layout();
-    AxisItem::updateItem();
-    QVector<qreal> newLayout = layout();
 
     if(newLayout.count()==0) return;
     oldLayout.resize(newLayout.size());

@@ -100,22 +100,23 @@ void BarPresenterBase::initAxisLabels()
     if (0 == count) {
         return;
     }
-    count++;
 
-    mChart->axisX()->setTicksCount(count);
+    mChart->axisX()->setTicksCount(count+2);
 
     qreal min = 0;
-    qreal max = count;
+    qreal max = count+1;
 
     mChart->axisX()->setMin(min);
     mChart->axisX()->setMax(max);
-    min++;
+
     QChartAxisCategories* categories = mChart->axisX()->categories();
     categories->clear();
-    for (int i=0; i<count-1; i++) {
-        categories->insert(min,mSeries->categoryName(i));
-        min++;
+    for (int i=0; i<count; i++) {
+        categories->insert(i+1,mSeries->categoryName(i));
     }
+
+
+
     mChart->axisX()->setLabelsVisible(true);
 }
 

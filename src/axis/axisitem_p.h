@@ -50,22 +50,23 @@ public:
     void setLabelsFont(const QFont& font);
 
 public slots:
-    void handleAxisUpdated();//qchartaxis update calls
-    void handleAxisCategoriesUpdated();//qchartaxis update calls
-    void handleRangeChanged(qreal min , qreal max); //domain update calls
-    void handleGeometryChanged(const QRectF& size); //geometry update calls
+    void handleAxisUpdated();
+    void handleAxisCategoriesUpdated();
+    void handleRangeChanged(qreal min , qreal max);
+    void handleTicksCountChanged(int count);
+    void handleGeometryChanged(const QRectF& size);
 
 public:
-    virtual void updateItem();
-    QVector<qreal> calculateLayout() const;
-    void setLayout(const QVector<qreal>& points);
+    virtual void updateLayout(QVector<qreal>& layout);
+    void setLayout(QVector<qreal>& layout);
     QVector<qreal> layout() { return m_layoutVector;};
 
 private:
     inline bool isEmpty();
-    void clear(int count);
     void createItems(int count);
-    QStringList createLabels(int ticks, qreal min, qreal max);
+    void deleteItems(int count);
+    QVector<qreal> calculateLayout() const;
+    QStringList createLabels(int ticks, qreal min, qreal max) const;
 
 private:
     QChartAxis* m_chartAxis;
@@ -76,11 +77,11 @@ private:
     QGraphicsItemGroup m_shades;
     QGraphicsItemGroup m_labels;
     QGraphicsItemGroup m_axis;
-    QStringList m_thicksList;
+    QStringList m_ticksList;
     QVector<qreal> m_layoutVector;
     qreal m_min;
     qreal m_max;
-    int m_ticks;
+    int m_ticksCount;
 
 };
 

@@ -21,7 +21,8 @@ public:
     void setLabelsAngle(int angle);
 
 protected:
-    virtual void updateItem();
+    virtual void updateLayout(QVector<qreal>& layout);
+
 private:
     AxisAnimator *m_animation;
 };
