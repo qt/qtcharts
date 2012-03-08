@@ -154,6 +154,22 @@ QBrush QBarSet::brush() const
 }
 
 /*!
+    Sets the pen for floating values that are drawn on top of this set
+*/
+void QBarSet::setFloatingValuePen(const QPen pen)
+{
+    mFloatingValuePen = pen;
+}
+
+/*!
+    Returns the pen for floating values that are drawn on top of this set
+*/
+QPen QBarSet::floatingValuePen() const
+{
+    return mFloatingValuePen;
+}
+
+/*!
     \internal \a pos
 */
 void QBarSet::barHoverEnterEvent(QPoint pos)

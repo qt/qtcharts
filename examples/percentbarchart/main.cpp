@@ -56,6 +56,7 @@ int main(int argc, char *argv[])
     QObject::connect(set1,SIGNAL(clicked(QString)),set1,SIGNAL(toggleFloatingValues()));
     QObject::connect(set2,SIGNAL(clicked(QString)),set2,SIGNAL(toggleFloatingValues()));
     QObject::connect(set3,SIGNAL(clicked(QString)),set3,SIGNAL(toggleFloatingValues()));
+    QObject::connect(set4,SIGNAL(clicked(QString)),set4,SIGNAL(toggleFloatingValues()));
     //! [4]
 
     //! [5]

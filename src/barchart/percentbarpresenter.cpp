@@ -76,10 +76,10 @@ void PercentBarPresenter::layoutChanged()
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);
 
-            // TODO: remove hard coding, apply layout
-            value->resize(100,50);
+            QBarSet* barSet = mSeries->barsetAt(set);
+            value->resize(100,50);  // TODO: proper layout for this.
             value->setPos(xPos, yPos-barHeight/2);
-            value->setPen(QPen(QColor(255,255,255,255)));
+            value->setPen(barSet->floatingValuePen());
 
             if (mSeries->valueAt(set,category) != 0) {
                 int p = mSeries->percentageAt(set,category) * 100;

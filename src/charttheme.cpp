@@ -160,6 +160,16 @@ void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int count)
         qreal pos = (qreal) i / (qreal) sets.count();
         QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
         sets.at(i)->setBrush(QBrush(c));
+
+        // Pick label color as far as possible from bar color (within gradient).
+        // 0.3 is magic number that was picked as value that gave enough contrast with icy theme gradient :)
+        // TODO: better picking of label color?
+        if (pos < 0.3) {
+            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1);
+        } else {
+            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0);
+        }
+        sets.at(i)->setFloatingValuePen(QPen(c));
     }
 }
 
@@ -170,6 +180,13 @@ void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,i
         qreal pos = (qreal) i / (qreal) sets.count();
         QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
         sets.at(i)->setBrush(QBrush(c));
+
+        if (pos < 0.3) {
+            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1);
+        } else {
+            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0);
+        }
+        sets.at(i)->setFloatingValuePen(QPen(c));
     }
 }
 
@@ -180,6 +197,13 @@ void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,i
         qreal pos = (qreal) i / (qreal) sets.count();
         QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
         sets.at(i)->setBrush(QBrush(c));
+
+        if (pos < 0.3) {
+            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1);
+        } else {
+            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0);
+        }
+        sets.at(i)->setFloatingValuePen(QPen(c));
     }
 }
 

@@ -33,6 +33,9 @@ public:
     void setBrush(const QBrush brush);
     QBrush brush() const;
 
+    void setFloatingValuePen(const QPen pen);
+    QPen floatingValuePen() const;
+
 Q_SIGNALS:
     void clicked(QString category);                         // Clicked and hover signals exposed to user
     void rightClicked(QString category);
@@ -59,7 +62,7 @@ private:
     QMap<QString,qreal> mMappedValues;
     QPen mPen;
     QBrush mBrush;
-
+    QPen mFloatingValuePen;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
