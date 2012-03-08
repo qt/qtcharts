@@ -17,6 +17,7 @@ public:
 	enum Animation { LineDrawAnimation, MoveDownAnimation, MoveUpAnimation };
     XYChartAnimator(XYChartAnimationItem<T,U> *item, QObject *parent = 0 );
     ~XYChartAnimator();
+    void setAnimationType(Animation type);
 
 protected:
     QVariant interpolated(const QVariant &start, const QVariant & end, qreal progress ) const;
@@ -38,6 +39,12 @@ XYChartAnimator<T,U>::XYChartAnimator(XYChartAnimationItem<T,U> *item , QObject 
 template <class T,class U>
 XYChartAnimator<T,U>::~XYChartAnimator()
 {
+}
+
+template <class T,class U>
+void XYChartAnimator<T,U>::setAnimationType(Animation type)
+{
+    m_type=type;
 }
 
 template <class T, class U>
