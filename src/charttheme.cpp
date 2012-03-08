@@ -156,24 +156,30 @@ void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int count)
 void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int count)
 {
     QList<QBarSet*> sets = series->barSets();
-    for (int i=0; i<series->barsetCount(); i++) {
-        sets.at(i)->setBrush(QBrush(m_seriesColors.at(i%m_seriesColors.count())));
+    for (int i=0; i<sets.count(); i++) {
+        qreal pos = (qreal) i / (qreal) sets.count();
+        QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
+        sets.at(i)->setBrush(QBrush(c));
     }
 }
 
 void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count)
 {
     QList<QBarSet*> sets = series->barSets();
-    for (int i=0; i<series->barsetCount(); i++) {
-        sets.at(i)->setBrush(QBrush(m_seriesColors.at(i%m_seriesColors.count())));
+    for (int i=0; i<sets.count(); i++) {
+        qreal pos = (qreal) i / (qreal) sets.count();
+        QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
+        sets.at(i)->setBrush(QBrush(c));
     }
 }
 
 void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count)
 {
     QList<QBarSet*> sets = series->barSets();
-    for (int i=0; i<series->barsetCount(); i++) {
-        sets.at(i)->setBrush(QBrush(m_seriesColors.at(i%m_seriesColors.count())));
+    for (int i=0; i<sets.count(); i++) {
+        qreal pos = (qreal) i / (qreal) sets.count();
+        QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
+        sets.at(i)->setBrush(QBrush(c));
     }
 }
 
