@@ -20,3 +20,5 @@ SUBDIRS += linechart \
            areachart \
            stackedbarchartdrilldown \
            customcolors
+
+

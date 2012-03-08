@@ -22,7 +22,10 @@ MainWindow::MainWindow(QWidget *parent)
     setWindowFlags(Qt::FramelessWindowHint);
 
     // Create chart view
+    //! [4]
     m_chartView = new QChartView(this);
+    m_chartView->setChartTheme(QChart::ChartThemeScientific);
+    //! [4]
     setCentralWidget(m_chartView);
     m_chartView->setChartTitle("Custom colors example");
     m_chartView->setRenderHint(QPainter::Antialiasing);

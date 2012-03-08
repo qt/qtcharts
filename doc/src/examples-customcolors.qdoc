@@ -3,11 +3,12 @@
     \title CustomColors Example
     \subtitle
 
-    The example shows how to customize different visual elements on a typical chart i.e. customize
-	the following chart:
+    The example shows how to customize different visual elements on a typical chart. The following
+    chart uses a predefined theme:
+    \snippet ../examples/customcolors/mainwindow.cpp 4
     \image custom_colors1.jpg
 
-	to look like this instead:
+    Let's customize it to look like this instead:
     \image custom_colors2.jpg
 
     Customize chart background with the company specific colors:
