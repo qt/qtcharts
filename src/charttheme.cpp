@@ -212,15 +212,12 @@ void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int co
     Q_ASSERT(item);
     Q_ASSERT(series);
 
-    QColor color = m_seriesColors.at(count % m_seriesColors.size());
-    // TODO: define alpha in the theme? or in the series?
-    //color.setAlpha(120);
+    // Use a base color for brush
+    item->setBrush(m_seriesColors.at(count % m_seriesColors.size()));
 
-    QBrush brush(color, Qt::SolidPattern);
-    item->setBrush(Qt::blue);
-
-    QPen pen(brush, 3);
-    pen.setColor(color);
+    // Take pen near from gradient start, effectively using a lighter color for outline
+    QPen pen(QBrush(Qt::SolidPattern), 3);
+    pen.setColor(colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0.1));
     item->setPen(pen);
 }
 
