@@ -49,6 +49,8 @@ public:
     void setLabelsBrush(const QBrush& brush);
     void setLabelsFont(const QFont& font);
 
+    QRectF geometry() const { return m_rect; }
+
 public slots:
     void handleAxisUpdated();
     void handleAxisCategoriesUpdated();

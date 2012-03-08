@@ -19,17 +19,26 @@ AxisAnimationItem::~AxisAnimationItem()
 
 void AxisAnimationItem::updateLayout(QVector<qreal>& newLayout)
 {
+
     QVector<qreal> oldLayout = layout();
 
     if(newLayout.count()==0) return;
+
+    QRectF rect = geometry();
+
     oldLayout.resize(newLayout.size());
+
+    for(int i=0;i<oldLayout.count();i++)
+    {
+        oldLayout[i]= axisType()==X_AXIS?rect.left():rect.top();
+    }
 
     if(m_animation->state()!=QAbstractAnimation::Stopped){
        m_animation->stop();
     }
 
     m_animation->setDuration(duration);
-    m_animation->setEasingCurve(QEasingCurve::InOutBack);
+    m_animation->setEasingCurve(QEasingCurve::OutQuart);
     m_animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
     m_animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
     QTimer::singleShot(0,m_animation,SLOT(start()));
