@@ -205,9 +205,10 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int count)
     // Get color for a slice from a gradient linearly, beginning from the start of the gradient
     for (int i(0); i < series->slices().count(); i++) {
         qreal pos = (qreal) i / (qreal) series->count();
-        QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
-        series->slices().at(i)->setSlicePen(c);
-        series->slices().at(i)->setSliceBrush(c);
+        QColor penColor = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0.1);
+        series->slices().at(i)->setSlicePen(penColor);
+        QColor brushColor = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
+        series->slices().at(i)->setSliceBrush(brushColor);
     }
 }
 
