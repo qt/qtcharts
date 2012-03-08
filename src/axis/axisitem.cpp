@@ -19,7 +19,8 @@ m_labels(parent),
 m_axis(parent),
 m_min(0),
 m_max(0),
-m_ticksCount(0)
+m_ticksCount(0),
+m_zoomFactor(0)
 {
     //initial initialization
     m_axis.setZValue(ChartPresenter::AxisZValue);
@@ -93,8 +94,6 @@ QStringList AxisItem::createLabels(int ticks, qreal min, qreal max) const
             labels << label;
         }
     }
-
-
     return labels;
 }
 
@@ -239,13 +238,17 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 		createItems(-diff);
 	}
 
+	if(diff!=0) handleAxisUpdated();
+
+    QStringList ticksList = createLabels(m_ticksCount,m_min,m_max);
+
 	QList<QGraphicsItem *> lines = m_grid.childItems();
 	QList<QGraphicsItem *> labels = m_labels.childItems();
 	QList<QGraphicsItem *> shades = m_shades.childItems();
 	QList<QGraphicsItem *> axis = m_axis.childItems();
 
-	Q_ASSERT(labels.size() == m_ticksList.size());
-	Q_ASSERT(layout.size() == m_ticksList.size());
+	Q_ASSERT(labels.size() == ticksList.size());
+	Q_ASSERT(layout.size() == ticksList.size());
 
 	switch (m_type)
 	{
@@ -258,7 +261,7 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 				QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
 				lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-				labelItem->setText(m_ticksList.at(i));
+				labelItem->setText(ticksList.at(i));
 				QPointF center = labelItem->boundingRect().center();
 				labelItem->setTransformOriginPoint(center.x(), center.y());
 				labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
@@ -281,7 +284,7 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 				QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
 				lineItem->setLine(m_rect.left() , layout[i], m_rect.right(), layout[i]);
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-				labelItem->setText(m_ticksList.at(i));
+				labelItem->setText(ticksList.at(i));
 				QPointF center = labelItem->boundingRect().center();
 				labelItem->setTransformOriginPoint(center.x(), center.y());
 				labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
@@ -299,7 +302,7 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 		break;
 	}
 
-	if(diff!=0) handleAxisUpdated();
+	//if(diff!=0) handleAxisUpdated();
 	m_layoutVector=layout;
 }
 
@@ -313,7 +316,6 @@ bool AxisItem::isEmpty()
 void AxisItem::handleAxisCategoriesUpdated()
 {
 	if(isEmpty()) return;
-	m_ticksList = createLabels(m_ticksCount,m_min,m_max);
 	updateLayout(m_layoutVector);
 }
 
@@ -323,7 +325,7 @@ void AxisItem::handleAxisUpdated()
     int count = m_chartAxis->ticksCount();
 
     if(m_ticksCount!=count){
-    	handleTicksCountChanged(count);
+    	//handleTicksCountChanged(count);
     }
 
     if(isEmpty()) return;
@@ -373,7 +375,6 @@ void AxisItem::handleTicksCountChanged(int count)
 	m_ticksCount=count;
 
 	if(isEmpty()) return;
-	m_ticksList = createLabels(m_ticksCount,m_min,m_max);
 	QVector<qreal> layout = calculateLayout();
 	updateLayout(layout);
 }
@@ -381,11 +382,25 @@ void AxisItem::handleTicksCountChanged(int count)
 void AxisItem::handleRangeChanged(qreal min, qreal max)
 {
 
+    if(m_min<min || m_max>max){
+        m_zoomFactor = (min + (max-min)/2 - m_min)/(m_max - m_min);
+    }
+    else
+        m_zoomFactor=-1;
+
     m_min = min;
     m_max = max;
 
+    m_ticksCount = qrand()%10;
+
+    while(m_ticksCount<2){
+        m_ticksCount = qrand()%10;
+    }
+
+    qDebug()<<"Warning : This is testing . Simulating new random ticks "<<  m_ticksCount;
+    //m_chartAxis->setTicksCount(m_ticksCount);
+
     if(isEmpty()) return;
-    m_ticksList = createLabels(m_ticksCount,m_min,m_max);
     QVector<qreal> layout = calculateLayout();
     updateLayout(layout);
 
@@ -396,7 +411,6 @@ void AxisItem::handleGeometryChanged(const QRectF& rect)
 
     m_rect = rect;
     if(isEmpty()) return;
-    m_ticksList = createLabels(m_ticksCount,m_min,m_max);
     QVector<qreal> layout = calculateLayout();
     updateLayout(layout);
 }

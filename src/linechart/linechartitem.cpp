@@ -15,7 +15,6 @@ m_items(this)
 	//m_items.setZValue(ChartPresenter::LineChartZValue);
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
-
     handleUpdated();
 }
 

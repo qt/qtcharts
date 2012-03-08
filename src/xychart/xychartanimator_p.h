@@ -84,9 +84,9 @@ QVariant XYChartAnimator<T,U>::interpolated(const QVariant &start, const QVarian
 template <class T, class U>
 void XYChartAnimator<T,U>::updateCurrentValue (const QVariant & value )
 {
-	QVector<QPointF> vector = qVariantValue<QVector<QPointF> >(value);
 	if(state()!=QAbstractAnimation::Stopped){ //workaround
-    m_item->setGeometry(vector);
+	    QVector<QPointF> vector = qVariantValue<QVector<QPointF> >(value);
+	    m_item->setGeometry(vector);
 	}
 }
 

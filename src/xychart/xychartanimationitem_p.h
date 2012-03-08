@@ -51,6 +51,8 @@ void XYChartAnimationItem<T,U>::updatePoints(QVector<QPointF>& newPoints)
     QVector<QPointF> oldPoints = T::points();
 
     if(newPoints.count()==0) return;
+
+    bool empty = oldPoints.count()==0;
     oldPoints.resize(newPoints.size());
 
     if(m_animation->state()!=QAbstractAnimation::Stopped){
@@ -58,8 +60,11 @@ void XYChartAnimationItem<T,U>::updatePoints(QVector<QPointF>& newPoints)
     }
 
     m_animation->setDuration(duration);
-    m_animation->setAnimationType(XYChartAnimator<T,U>::LineDrawAnimation);
-    m_animation->setEasingCurve(QEasingCurve::InOutBack);
+    if(!empty)
+        m_animation->setAnimationType(XYChartAnimator<T,U>::MoveDownAnimation);
+    else
+        m_animation->setAnimationType(XYChartAnimator<T,U>::LineDrawAnimation);
+    m_animation->setEasingCurve(QEasingCurve::OutQuart);
     m_animation->setKeyValueAt(0.0, qVariantFromValue(oldPoints));
     m_animation->setKeyValueAt(1.0, qVariantFromValue(newPoints));
     QTimer::singleShot(0,m_animation,SLOT(start()));
@@ -84,7 +89,7 @@ void XYChartAnimationItem<T,U>::updatePoint(QVector<QPointF>& newPoints)
 
     m_animation->setDuration(duration);
     m_animation->setAnimationType(XYChartAnimator<T,U>::MoveDownAnimation);
-    m_animation->setEasingCurve(QEasingCurve::InOutBack);
+    m_animation->setEasingCurve(QEasingCurve::OutQuart);
     m_animation->setKeyValueAt(0.0, qVariantFromValue(m_points));
     m_animation->setKeyValueAt(1.0, qVariantFromValue(newPoints));
 

@@ -49,7 +49,8 @@ public:
     void setLabelsBrush(const QBrush& brush);
     void setLabelsFont(const QFont& font);
 
-    QRectF geometry() const { return m_rect; }
+    inline QRectF geometry() const { return m_rect; }
+    inline qreal zoomFactor() const { return m_zoomFactor;}
 
 public slots:
     void handleAxisUpdated();
@@ -79,11 +80,11 @@ private:
     QGraphicsItemGroup m_shades;
     QGraphicsItemGroup m_labels;
     QGraphicsItemGroup m_axis;
-    QStringList m_ticksList;
     QVector<qreal> m_layoutVector;
     qreal m_min;
     qreal m_max;
     int m_ticksCount;
+    qreal m_zoomFactor;
 
 };
 
