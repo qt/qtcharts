@@ -39,6 +39,7 @@ public:
     qreal categorySum(int category);
     qreal maxCategorySum();
     BarChartModel& model();
+    bool separatorsVisible();
     // <--- TO PIMPL
 
 signals:
@@ -48,12 +49,13 @@ signals:
 
     // TODO: internal signals, these to private implementation.
     // TODO: TO PIMPL --->
+    void enableSeparators(bool enable);
     void showToolTip(QPoint pos, QString tip);
     // <--- TO PIMPL
 
 public Q_SLOTS:
     void setToolTipEnabled(bool enabled=true);           // enables tooltips
-    void setSeparatorsEnabled(bool enabled=true);        // enables separators between categories
+    void setSeparatorsVisible(bool visible=true);        // enables separators between categories
 
     // TODO: TO PIMPL --->
     void barsetClicked(QString category);
@@ -62,6 +64,7 @@ public Q_SLOTS:
 
 protected:
     BarChartModel* mModel;
+    bool mSeparatorsVisible;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

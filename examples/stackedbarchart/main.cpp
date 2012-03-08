@@ -50,11 +50,11 @@ int main(int argc, char *argv[])
     series->setToolTipEnabled();
 
     // Connect clicked signal of set to toggle floating values of set.
-    // Note that we leave QBarset "Zak" unconnected here, so clicking on it doesn't toggle values.
     QObject::connect(set0,SIGNAL(clicked(QString)),set0,SIGNAL(toggleFloatingValues()));
     QObject::connect(set1,SIGNAL(clicked(QString)),set1,SIGNAL(toggleFloatingValues()));
     QObject::connect(set2,SIGNAL(clicked(QString)),set2,SIGNAL(toggleFloatingValues()));
     QObject::connect(set3,SIGNAL(clicked(QString)),set3,SIGNAL(toggleFloatingValues()));
+    QObject::connect(set4,SIGNAL(clicked(QString)),set4,SIGNAL(toggleFloatingValues()));
     //! [4]
 
     //! [5]
@@ -67,9 +67,7 @@ int main(int argc, char *argv[])
     //! [5]
 
     //! [6]
-    chartView->axisX()->setAxisVisible(false);
     chartView->axisX()->setGridVisible(false);
-    chartView->axisX()->setLabelsVisible(false);
     //! [6]
 
     window.setCentralWidget(chartView);

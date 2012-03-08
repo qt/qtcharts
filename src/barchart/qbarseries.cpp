@@ -137,10 +137,10 @@ void QBarSeries::setToolTipEnabled(bool enabled)
     Separators are visual elements that are drawn between categories.
     Calling without parameter \a enabled, enables the separators
 */
-void QBarSeries::setSeparatorsEnabled(bool enabled)
+void QBarSeries::setSeparatorsVisible(bool visible)
 {
-    // TODO: toggle
-//    emit separatorsEnabled(enabled);
+    mSeparatorsVisible = visible;
+    emit enableSeparators(visible);
 }
 
 
@@ -215,6 +215,11 @@ qreal QBarSeries::maxCategorySum()
 BarChartModel& QBarSeries::model()
 {
     return *mModel;
+}
+
+bool QBarSeries::separatorsVisible()
+{
+    return mSeparatorsVisible;
 }
 
 #include "moc_qbarseries.cpp"

@@ -15,11 +15,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent)
     : ChartItem(parent)
     ,mLayoutSet(false)
-    ,mSeparatorsEnabled(false)
     ,mSeries(series)
     ,mChart(parent)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
+    connect(series,SIGNAL(enableSeparators(bool)),this,SLOT(enableSeparators(bool)));
+    enableSeparators(series->separatorsVisible());
     initAxisLabels();
     dataChanged();
 }
@@ -27,6 +28,7 @@ BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent)
 BarPresenterBase::~BarPresenterBase()
 {
     disconnect(this,SLOT(showToolTip(QPoint,QString)));
+    disconnect(this,SLOT(enableSeparators(bool)));
 }
 
 void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -77,7 +79,7 @@ void BarPresenterBase::dataChanged()
     for (int i=0; i<count; i++) {
         Separator* sep = new Separator(this);
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
-        sep->setVisible(mSeparatorsEnabled);
+        sep->setVisible(mSeries->separatorsVisible());
         childItems().append(sep);
         mSeparators.append(sep);
     }
@@ -170,7 +172,6 @@ void BarPresenterBase::enableSeparators(bool enabled)
     for (int i=0; i<mSeparators.count(); i++) {
         mSeparators.at(i)->setVisible(enabled);
     }
-    mSeparatorsEnabled = enabled;
 }
 
 #include "moc_barpresenterbase_p.cpp"

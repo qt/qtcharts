@@ -53,7 +53,6 @@ protected:
     qreal mBarWidth;
 
     bool mLayoutSet;    // True, if component has been laid out.
-    bool mSeparatorsEnabled;
 
     // Not owned.
     QBarSeries* mSeries;
