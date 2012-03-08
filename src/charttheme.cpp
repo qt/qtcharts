@@ -124,18 +124,18 @@ void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series,int count)
     QPen pen;
     QBrush brush;
 
-    if(pen != series->pen()){
+    if (pen != series->pen()){
        item->setPen(series->pen());
-    }else{
-        pen.setColor(m_seriesColors.at(count%m_seriesColors.size()));
+    } else {
+        pen.setColor(colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1.0));
         pen.setWidthF(2);
         item->setPen(pen);
     }
 
-    if(brush != series->brush()){
+    if (brush != series->brush()) {
        item->setBrush(series->brush());
-    }else{
-       QBrush brush(m_seriesColors.at(count%m_seriesColors.size()));
+    } else {
+       QBrush brush(m_seriesColors.at(count % m_seriesColors.size()));
        item->setBrush(brush);
     }
 }
@@ -217,7 +217,7 @@ void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int co
 
     // Take pen near from gradient start, effectively using a lighter color for outline
     QPen pen(QBrush(Qt::SolidPattern), 3);
-    pen.setColor(colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0.1));
+    pen.setColor(colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1.0));
     item->setPen(pen);
 }
 
