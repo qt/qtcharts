@@ -196,31 +196,12 @@ void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int co
 
 void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int count)
 {
-    // create a list of slice colors based on current theme
-    int i = 0;
-    QList<QColor> colors;
-    bool toggle = false;
-    while (colors.count() < series->count()) {
-
-        qreal pos = (qreal) colors.count() / (qreal) series->count();
-        if (toggle)
-            pos += 0.5;
-        toggle = !toggle;
-        if (pos > 1.0)
-            pos = pos - 1.0;
-
-        //qreal pos = (qreal) (qrand() % series->count()) / (qreal) series->count();
-
+    // Get color for a slice from a gradient linearly, beginning from the start of the gradient
+    for (int i(0); i < series->slices().count(); i++) {
+        qreal pos = (qreal) i / (qreal) series->count();
         QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
-
-        colors << c;
-    }
-
-    // finally update colors
-    foreach (QPieSlice* s, series->slices()) {
-        QColor c = colors.takeFirst();
-        s->setSlicePen(c);
-        s->setSliceBrush(c);
+        series->slices().at(i)->setSlicePen(c);
+        series->slices().at(i)->setSliceBrush(c);
     }
 }
 
@@ -260,6 +241,32 @@ void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int coun
 //    pen.setColor(color);
 //    presenter->m_markerPen = pen;
 }
+
+void ChartTheme::generateSeriesGradients()
+{
+    // Generate gradients in HSV color space
+    foreach (QColor color, m_seriesColors) {
+        QLinearGradient g;
+        qreal h = color.hsvHueF();
+        qreal s = color.hsvSaturationF();
+
+        // TODO: tune the algorithm to give nice results with most base colors defined in
+        // most themes. The rest of the gradients we can define manually in theme specific
+        // implementation.
+        QColor start = color;
+        start.setHsvF(h, 0.05, 0.95);
+        g.setColorAt(0.0, start);
+
+        g.setColorAt(0.5, color);
+
+        QColor end = color;
+        end.setHsvF(h, s, 0.25);
+        g.setColorAt(1.0, end);
+
+        m_seriesGradients << g;
+    }
+}
+
 
 QColor ChartTheme::colorAt(const QColor &start, const QColor &end, qreal pos)
 {

@@ -47,6 +47,7 @@ public:
     void decorate(SplineChartItem* presenter, QSplineSeries* series, int count);
 
 public: // utils
+    void generateSeriesGradients();
     static QColor colorAt(const QColor &start, const QColor &end, qreal pos);
     static QColor colorAt(const QGradient &gradient, qreal pos);
 
@@ -55,6 +56,14 @@ protected:
     QList<QColor> m_seriesColors;
     QList<QGradient> m_seriesGradients;
     QLinearGradient m_backgroundGradient;
+
+    // TODO: Add something like the following to themes:
+//    QPen axisLinePen;
+//    QPen backgroundHorizontalGridPen;
+//    QPen backgroundVerticalGridPen;
+//    // FillAll, FillEverySecondRow, FillEverySecondColumn, FillEverySecondRowAndColumn, FillNone
+//    int backgroundType;
+//    QFont masterFont;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

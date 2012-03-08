@@ -13,25 +13,7 @@ public:
         m_seriesColors << QColor(210, 210, 52);
         m_seriesColors << QColor(136, 114, 58);
 
-        QLinearGradient g1;
-        g1.setColorAt(0.0, m_seriesColors.at(0));
-        g1.setColorAt(1.0, m_seriesColors.at(1));
-        m_seriesGradients << g1;
-
-        QLinearGradient g2;
-        g2.setColorAt(0.0, m_seriesColors.at(1));
-        g2.setColorAt(1.0, m_seriesColors.at(2));
-        m_seriesGradients << g2;
-
-        QLinearGradient g3;
-        g3.setColorAt(0.0, m_seriesColors.at(2));
-        g3.setColorAt(1.0, m_seriesColors.at(3));
-        m_seriesGradients << g3;
-
-        QLinearGradient g4;
-        g4.setColorAt(0.0, m_seriesColors.at(3));
-        g4.setColorAt(1.0, m_seriesColors.at(4));
-        m_seriesGradients << g4;
+        generateSeriesGradients();
 
         QLinearGradient backgroundGradient;
         backgroundGradient.setColorAt(0.0, QRgb(0xff9d844d));

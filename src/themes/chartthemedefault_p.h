@@ -7,13 +7,11 @@ class ChartThemeDefault: public ChartTheme
 public:
     ChartThemeDefault():ChartTheme(QChart::ChartThemeDefault)
     {
-        m_seriesColors << QRgb(0xff000000);
+        // TODO: replace this dummy theme with an actual theme
         m_seriesColors << QRgb(0xff707070);
+        m_seriesColors << QRgb(0xffA0A0A0);
 
-        QLinearGradient g1;
-        g1.setColorAt(0.0, m_seriesColors.at(0));
-        g1.setColorAt(1.0, m_seriesColors.at(1));
-        m_seriesGradients << g1;
+        generateSeriesGradients();
 
         QLinearGradient backgroundGradient;
         backgroundGradient.setColorAt(0.0, QRgb(0xffffffff));
