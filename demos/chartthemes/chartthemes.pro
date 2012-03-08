@@ -1,7 +1,7 @@
-!include( ../examples.pri ) {
+!include( ../demos.pri ) {
  error( "Couldn't find the examples.pri file!" )
 }
-TARGET = piechartcustomization
+TARGET = chartthemes
 SOURCES += main.cpp
 
 

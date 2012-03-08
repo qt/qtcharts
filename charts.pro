@@ -3,7 +3,7 @@
 }
 
 TEMPLATE = subdirs
-SUBDIRS += src examples test qmlplugin
+SUBDIRS += src examples demos test qmlplugin
 
 integrated_build:{
     message('Configured for integrated build')
