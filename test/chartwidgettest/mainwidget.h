@@ -38,7 +38,6 @@ private slots:
     void yMinChanged(int value);
     void yMaxChanged(int value);
     void antiAliasToggled(bool enabled);
-    void setCurrentSeries(QSeries *series);
     void changeChartTheme(int themeIndex);
     QList<RealList> generateTestData(int columnCount, int rowCount, QString dataCharacteristics);
     QStringList generateLabels(int count);
@@ -52,7 +51,6 @@ private:
     QSpinBox *m_yMinSpin;
     QSpinBox *m_yMaxSpin;
     QString m_defaultSeriesName;
-    QSeries *m_currentSeries;
     QGridLayout *m_scatterLayout;
 };
 

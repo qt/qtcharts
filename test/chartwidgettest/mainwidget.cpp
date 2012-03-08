@@ -210,9 +210,8 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
                 series->add(i, column.at(i));
             }
             m_chartView->addSeries(series);
-            setCurrentSeries(series);
         }
-    } if (seriesName == "Area") {
+    } else if (seriesName == "Area") {
         // TODO: lower series for the area?
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
@@ -222,7 +221,6 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             }
             QAreaSeries *areaSeries = new QAreaSeries(lineSeries);
             m_chartView->addSeries(areaSeries);
-            setCurrentSeries(areaSeries);
         }
     } else if (seriesName == "Scatter") {
         for (int j(0); j < data.count(); j++) {
@@ -232,7 +230,6 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
                 (*series) << QPointF(i, column.at(i));
             }
             m_chartView->addSeries(series);
-            setCurrentSeries(series);
         }
     } else if (seriesName == "Pie") {
         QStringList labels = generateLabels(rowCount);
@@ -243,7 +240,6 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
                 series->add(column.at(i), labels.at(i));
             }
             m_chartView->addSeries(series);
-            setCurrentSeries(series);
         }
     } else if (seriesName == "Bar"
                || seriesName == "Stacked bar"
@@ -274,7 +270,6 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         series->setToolTipEnabled(true);
         series->setSeparatorsVisible(false);
         m_chartView->addSeries(series);
-        setCurrentSeries(series);
     } else if (seriesName == "Spline") {
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
@@ -283,38 +278,6 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
                 series->add(i, column.at(i));
             }
             m_chartView->addSeries(series);
-            setCurrentSeries(series);
-        }
-
-        // TODO: area
-    }
-}
-
-void MainWidget::setCurrentSeries(QSeries *series)
-{
-    if (series) {
-        m_currentSeries = series;
-        switch (m_currentSeries->type()) {
-        case QSeries::SeriesTypeLine:
-            break;
-        case QSeries::SeriesTypeScatter:
-            break;
-        case QSeries::SeriesTypePie:
-            break;
-        case QSeries::SeriesTypeBar:
-            qDebug() << "setCurrentSeries (bar)";
-            break;
-        case QSeries::SeriesTypeStackedBar:
-            qDebug() << "setCurrentSeries (Stackedbar)";
-            break;
-        case QSeries::SeriesTypePercentBar:
-            qDebug() << "setCurrentSeries (Percentbar)";
-            break;
-        case QSeries::SeriesTypeSpline:
-            break;
-        default:
-            Q_ASSERT(false);
-            break;
         }
     }
 }
