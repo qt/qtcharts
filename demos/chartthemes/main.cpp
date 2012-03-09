@@ -4,6 +4,8 @@
 #include <qchartview.h>
 #include <qpieseries.h>
 #include <qpieslice.h>
+#include <qbarseries.h>
+#include <qbarset.h>
 #include <QGridLayout>
 #include <QFormLayout>
 #include <QComboBox>
@@ -38,7 +40,7 @@ public:
         // generate random data
         int listCount = 3;
         int valueMax = 100;
-        int valueCount = 50;
+        int valueCount = 21;
         for (int i(0); i < listCount; i++) {
             DataList dataList;
             for (int j(0); j < valueCount; j++) {
@@ -85,6 +87,20 @@ public:
         chart->setChartTitle("bar chart");
         chart->setRenderHint(QPainter::Antialiasing);
         baseLayout->addWidget(chart, 1, 1);
+        {
+            QStringList categories;
+            // TODO: categories
+            for (int i(0); i < valueCount; i++)
+                categories << QString::number(i);
+            QBarSeries* series = new QBarSeries(categories, chart);
+            for (int i(0); i < m_dataTable.count(); i++) {
+                QBarSet *set = new QBarSet("Set" + QString::number(i));
+                foreach (Data data, m_dataTable[i])
+                    *set << data.first.y();
+                series->addBarSet(set);
+            }
+            chart->addSeries(series);
+        }
         m_charts << chart;
 
         // line chart

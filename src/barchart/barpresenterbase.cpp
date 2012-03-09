@@ -12,11 +12,13 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent)
-    : ChartItem(parent)
-    ,mLayoutSet(false)
-    ,mSeries(series)
-    ,mChart(parent)
+BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent) :
+    ChartItem(parent),
+    mLayoutSet(false),
+    mSeries(series),
+    mChart(parent),
+    mWidth(0),
+    mHeight(0)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
     connect(series,SIGNAL(enableSeparators(bool)),this,SLOT(enableSeparators(bool)));
@@ -44,7 +46,7 @@ void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
 QRectF BarPresenterBase::boundingRect() const
 {
-    return QRectF(0,0,mWidth,mHeight);
+    return QRectF(0, 0, mWidth, mHeight);
 }
 
 void BarPresenterBase::dataChanged()

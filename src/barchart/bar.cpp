@@ -6,8 +6,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 Bar::Bar(QString category, QGraphicsItem *parent)
-    : QGraphicsObject(parent)
-    ,mCategory(category)
+    : QGraphicsObject(parent),
+    mCategory(category),
+    mXpos(0),
+    mYpos(0),
+    mWidth(0),
+    mHeight(0)
 {
     setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     setAcceptHoverEvents(true);

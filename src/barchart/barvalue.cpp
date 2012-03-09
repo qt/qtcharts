@@ -5,8 +5,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarValue::BarValue(QBarSet &set, QGraphicsItem *parent)
-    : QGraphicsObject(parent)
-    ,mBarSet(set)
+    : QGraphicsObject(parent),
+    mBarSet(set),
+    mXpos(0),
+    mYpos(0),
+    mWidth(0),
+    mHeight(0)
 {
     setVisible(false);
 }
