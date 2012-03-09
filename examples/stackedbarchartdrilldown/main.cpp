@@ -5,6 +5,7 @@
 #include <qstackedbarseries.h>
 #include <qbarset.h>
 #include <qchartaxis.h>
+#include <qlegend.h>
 #include <QStringList>
 #include <QDebug>
 
@@ -141,6 +142,9 @@ int main(int argc, char *argv[])
 //    drilldownChart->axisX()->setAxisVisible(false);
     drilldownChart->axisX()->setGridVisible(false);
 //    drilldownChart->axisX()->setLabelsVisible(false);
+
+    QLegend* l = drilldownChart->legend();
+    l->handleGeometryChanged(QRectF(20,20,100,100));
 
     window.setCentralWidget(drilldownChart);
     window.resize(400, 300);

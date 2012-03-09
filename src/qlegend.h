@@ -8,8 +8,9 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Domain;
+class LegendMarker;
 
-class QLegend : public QGraphicsObject
+class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsObject
 {
     Q_OBJECT
 public:
@@ -24,11 +25,15 @@ signals:
 public slots:
     void handleSeriesAdded(QSeries* series,Domain* domain);
     void handleSeriesRemoved(QSeries* series);
+    void handleGeometryChanged(const QRectF& size);
 
 private:
+    void dataChanged();
+    void layoutChanged();
 
     QRectF mBoundingRect;
     QList<QSeries*> mSeriesList;
+    QList<LegendMarker*> mMarkers;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -46,7 +46,7 @@ QList<QSeries::LegendEntry> BarChartModel::legendEntries()
     for (int i=0; i<mDataModel.count(); i++) {
         QSeries::LegendEntry l;
         l.mName = mDataModel.at(i)->name();
-        l.mPen = mDataModel.at(i)->pen();
+        l.mBrush = mDataModel.at(i)->brush();
         legend.append(l);
     }
     return legend;

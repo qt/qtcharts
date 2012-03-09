@@ -357,6 +357,15 @@ QChartAxis* QChartView::axisY() const
 }
 
 /*!
+    Returns the pointer to legend object of the chart
+*/
+QLegend* QChartView::legend() const
+{
+    return m_chart->legend();
+}
+
+
+/*!
     Sets animation \a options for the chart
 */
 void QChartView::setAnimationOptions(QChart::AnimationOptions options)

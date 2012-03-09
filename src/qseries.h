@@ -24,11 +24,11 @@ public:
     };
 
     // Helper class to contain legend and color for it
-    // TODO: This as private class? Or should we expose this to user of API
+    // TODO: This is actually quite close to current LegendMarker.. combine them?
     class LegendEntry {
         public:
         QString mName;
-        QPen mPen;
+        QBrush mBrush;
     };
 
 protected:

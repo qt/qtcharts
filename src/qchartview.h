@@ -53,6 +53,8 @@ public:
     QChartAxis* axisX() const;
     QChartAxis* axisY() const;
 
+    QLegend* legend() const;
+
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
