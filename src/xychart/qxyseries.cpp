@@ -45,9 +45,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 QXYSeries::QXYSeries(QObject* parent):QSeries(parent)
 {
-    m_model = 0;
-    m_mapX = 0;
-    m_mapY = 1;
+    m_model = NULL;
+    m_mapX = -1;
+    m_mapY = -1;
+    m_mapOrientation = Qt::Vertical;
+//    m_mapYOrientation = Qt::Vertical;
 }
 /*!
     Destroys the object. Series added to QChartView or QChart instances are owned by those,
@@ -142,8 +144,14 @@ void QXYSeries::removeAll()
 qreal QXYSeries::x(int pos) const
 {
     if (m_model)
-        return m_model->data(m_model->index(pos, m_mapX), Qt::DisplayRole).toDouble();
+        if (m_mapOrientation == Qt::Vertical)
+            // consecutive data is read from model's column
+            return m_model->data(m_model->index(pos, m_mapX), Qt::DisplayRole).toDouble();
+        else
+            // consecutive data is read from model's row
+            return m_model->data(m_model->index(m_mapX, pos), Qt::DisplayRole).toDouble();
     else
+        // model is not specified, return the data from series' internal data store
         return m_x.at(pos);
 }
 
@@ -153,8 +161,14 @@ qreal QXYSeries::x(int pos) const
 qreal QXYSeries::y(int pos) const
 {
     if (m_model)
-        return m_model->data(m_model->index(pos, m_mapY), Qt::DisplayRole).toDouble();
+        if (m_mapOrientation == Qt::Vertical)
+            // consecutive data is read from model's column
+            return m_model->data(m_model->index(pos, m_mapY), Qt::DisplayRole).toDouble();
+        else
+            // consecutive data is read from model's row
+            return m_model->data(m_model->index(m_mapY, pos), Qt::DisplayRole).toDouble();
     else
+        // model is not specified, return the data from series' internal data store
         return m_y.at(pos);
 }
 
@@ -165,10 +179,15 @@ int QXYSeries::count() const
 {
     Q_ASSERT(m_x.size() == m_y.size());
 
-//    int k = m_model->rowCount();
     if (m_model)
-        return m_model->rowCount();
+        if (m_mapOrientation == Qt::Vertical)
+            // data is in a column, so return the number of items in single column
+            return m_model->rowCount();
+        else
+            // data is in a row, so return the number of items in single row
+            m_model->columnCount();
     else
+        // model is not specified, return the number of points in the series internal data store
         return m_x.size();
 }
 
@@ -243,11 +262,24 @@ void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 
 bool QXYSeries::setModel(QAbstractItemModel* model) {
     m_model = model;
-    for (int i = 0; i < m_model->rowCount(); i++)
-        emit pointAdded(i);
+    //    for (int i = 0; i < m_model->rowCount(); i++)
+    //        emit pointAdded(i);
     connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-//        connect(m_model,SIGNAL(), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+    //        connect(m_model,SIGNAL(), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
 }
+
+void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
+{
+    m_mapX = modelX;
+    m_mapY = modelY;
+    m_mapOrientation = orientation;
+}
+
+//void QXYSeries::setModelMappingY(int modelLineIndex, Qt::Orientation orientation)
+//{
+//    m_mapY = modelLineIndex;
+//    m_mapYOrientation = orientation;
+//}
 
 #include "moc_qxyseries.cpp"
 

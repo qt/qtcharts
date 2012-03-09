@@ -42,8 +42,8 @@ public:
     bool setModel(QAbstractItemModel* model);
     QAbstractItemModel* model() {return m_model;}
 
-    void setModelMappingX(int modelColumn) {m_mapX = modelColumn;}
-    void setModelMappingY(int modelColumn) {m_mapY = modelColumn;}
+    void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
+//    void setModelMappingY(int modelLineIndex, Qt::Orientation orientation = Qt::Vertical);
 
     private slots:
         void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
@@ -63,7 +63,9 @@ protected:
 
     QAbstractItemModel* m_model;
     int m_mapX;
+    Qt::Orientation m_mapOrientation;
     int m_mapY;
+//    Qt::Orientation m_mapYOrientation;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -26,6 +26,11 @@ public:
     QList<QBarSet*> barSets();
     QList<QSeries::LegendEntry> legendEntries();
 
+    bool setModel(QAbstractItemModel* model);
+    QAbstractItemModel* modelExt() {return m_model;}
+    void setModelMappingCategories(int modelColumn);
+    void setModelMappingBarRange(int bottomBoundry, int topBoundry);
+
 public:
     // TODO: Functions below this are not part of api and will be moved
     // to private implementation, when we start using it
@@ -65,6 +70,11 @@ public Q_SLOTS:
 protected:
     BarChartModel* mModel;
     bool mSeparatorsVisible;
+
+    QAbstractItemModel* m_model;
+    int m_mapCategories;
+    int m_mapBarBottom;
+    int m_mapBarTop;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -68,7 +68,10 @@ void QBarSeries::removeBarSet(QBarSet *set)
 */
 int QBarSeries::barsetCount()
 {
-    return mModel->barsetCount();
+    if(m_model)
+        return m_mapBarTop - m_mapBarBottom;
+    else
+        return mModel->barsetCount();
 }
 
 /*!
@@ -220,6 +223,21 @@ BarChartModel& QBarSeries::model()
 bool QBarSeries::separatorsVisible()
 {
     return mSeparatorsVisible;
+}
+
+bool QBarSeries::setModel(QAbstractItemModel* model)
+{
+    m_model = model;
+}
+
+void QBarSeries::setModelMappingCategories(int modelColumn)
+{
+    //
+}
+
+void QBarSeries::setModelMappingBarRange(int bottomBoundry, int topBoundry)
+{
+    //
 }
 
 #include "moc_qbarseries.cpp"

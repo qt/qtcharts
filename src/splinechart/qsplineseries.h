@@ -21,6 +21,8 @@ public:
     QPointF controlPoint(int index) const {return m_controlPoints[index];}
     bool setModel(QAbstractItemModel* model);
 
+    void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
+
     // TODO: allow the user to set custom control points
 //    void setCustomControlPoints(QList<QPointsF> controlPoints);
 //    bool calculateControlPointsAutomatically();

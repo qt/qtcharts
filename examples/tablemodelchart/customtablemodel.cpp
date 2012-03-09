@@ -13,6 +13,8 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     m_labels.append("Lemons");
     m_points.append(QPointF(200, 150));
     m_labels.append("Plums");
+    m_points.append(QPointF(225, 75));
+    m_labels.append("Pearls");
 }
 
 int CustomTableModel::rowCount(const QModelIndex & parent) const
@@ -22,7 +24,7 @@ int CustomTableModel::rowCount(const QModelIndex & parent) const
 
 int CustomTableModel::columnCount(const QModelIndex & parent) const
 {
-    return 3;
+    return 2;
 }
 
 QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation, int role ) const
@@ -40,7 +42,8 @@ QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation,
             return "y";
         case 2:
             return "Fruit";
-        default: "What?";
+        default:
+            return "What?";
         }
     }
     else
@@ -105,8 +108,8 @@ bool CustomTableModel::setData ( const QModelIndex & index, const QVariant & val
 
 Qt::ItemFlags CustomTableModel::flags ( const QModelIndex & index ) const
 {
-    if (!index.isValid())
-                return Qt::ItemIsEnabled;
+//    if (!index.isValid())
+//                return Qt::ItemIsEnabled;
         return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
 

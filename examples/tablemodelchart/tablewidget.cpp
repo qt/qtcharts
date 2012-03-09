@@ -26,8 +26,8 @@ TableWidget::TableWidget(QWidget *parent)
 //    QLineSeries* series = new QLineSeries;
     QSplineSeries* series = new QSplineSeries;
     series->setModel(model);
-    series->setModelMappingX(0);
-    series->setModelMappingY(1);
+    series->setModelMapping(0,1, Qt::Vertical);
+//    series->setModelMappingY(1);
 
 //    series->add(QPointF(150, 100));
 //    series->add(QPointF(200, 130));

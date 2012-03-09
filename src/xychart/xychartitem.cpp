@@ -100,8 +100,8 @@ void XYChartItem::handlePointReplaced(int index)
     Q_ASSERT(index>=0);
     QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
-    m_points.replace(index,point);
-    updatePoint(m_points);
+    points.replace(index,point);
+    updatePoint(points);
     update();
 }
 

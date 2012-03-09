@@ -140,6 +140,12 @@ void QSplineSeries::updateControlPoints()
 bool QSplineSeries::setModel(QAbstractItemModel* model)
 {
     QXYSeries::setModel(model);
+//    calculateControlPoints();
+}
+
+void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
+{
+    QLineSeries::setModelMapping(modelX, modelY, orientation);
     calculateControlPoints();
 }
 
