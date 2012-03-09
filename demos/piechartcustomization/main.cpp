@@ -29,15 +29,41 @@ public:
         setWindowFlags(Qt::Tool);
 
         m_colorButton = new QPushButton();
+
         m_widthSpinBox = new QDoubleSpinBox();
+
+        m_styleCombo = new QComboBox();
+        m_styleCombo->addItem("NoPen");
+        m_styleCombo->addItem("SolidLine");
+        m_styleCombo->addItem("DashLine");
+        m_styleCombo->addItem("DotLine");
+        m_styleCombo->addItem("DashDotLine");
+        m_styleCombo->addItem("DashDotDotLine");
+
+        m_capStyleCombo = new QComboBox();
+        m_capStyleCombo->addItem("FlatCap", Qt::FlatCap);
+        m_capStyleCombo->addItem("SquareCap", Qt::SquareCap);
+        m_capStyleCombo->addItem("RoundCap", Qt::RoundCap);
+
+        m_joinStyleCombo = new QComboBox();
+        m_joinStyleCombo->addItem("MiterJoin", Qt::MiterJoin);
+        m_joinStyleCombo->addItem("BevelJoin", Qt::BevelJoin);
+        m_joinStyleCombo->addItem("RoundJoin", Qt::RoundJoin);
+        m_joinStyleCombo->addItem("SvgMiterJoin", Qt::SvgMiterJoin);
 
         QFormLayout *layout = new QFormLayout();
         layout->addRow("Color", m_colorButton);
         layout->addRow("Width", m_widthSpinBox);
+        layout->addRow("Style", m_styleCombo);
+        layout->addRow("Cap style", m_capStyleCombo);
+        layout->addRow("Join style", m_joinStyleCombo);
         setLayout(layout);
 
         connect(m_colorButton, SIGNAL(clicked()), this, SLOT(showColorDialog()));
         connect(m_widthSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateWidth(double)));
+        connect(m_styleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStyle(int)));
+        connect(m_capStyleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateCapStyle(int)));
+        connect(m_joinStyleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateJoinStyle(int)));
     }
 
     void setPen(QPen pen)
@@ -45,6 +71,9 @@ public:
         m_pen = pen;
         m_colorButton->setText(m_pen.color().name());
         m_widthSpinBox->setValue(m_pen.widthF());
+        m_styleCombo->setCurrentIndex(m_pen.style()); // index matches the enum
+        m_capStyleCombo->setCurrentIndex(m_capStyleCombo->findData(m_pen.capStyle()));
+        m_joinStyleCombo->setCurrentIndex(m_joinStyleCombo->findData(m_pen.joinStyle()));
     }
 
     QPen pen() const
@@ -85,10 +114,39 @@ public Q_SLOTS:
         }
     }
 
+    void updateStyle(int style)
+    {
+        if (m_pen.style() != style) {
+            m_pen.setStyle((Qt::PenStyle) style);
+            emit changed();
+        }
+    }
+
+    void updateCapStyle(int index)
+    {
+        Qt::PenCapStyle capStyle = (Qt::PenCapStyle) m_capStyleCombo->itemData(index).toInt();
+        if (m_pen.capStyle() != capStyle) {
+            m_pen.setCapStyle(capStyle);
+            emit changed();
+        }
+    }
+
+    void updateJoinStyle(int index)
+    {
+        Qt::PenJoinStyle joinStyle = (Qt::PenJoinStyle) m_joinStyleCombo->itemData(index).toInt();
+        if (m_pen.joinStyle() != joinStyle) {
+            m_pen.setJoinStyle(joinStyle);
+            emit changed();
+        }
+    }
+
 private:
     QPen m_pen;
     QPushButton *m_colorButton;
     QDoubleSpinBox *m_widthSpinBox;
+    QComboBox *m_styleCombo;
+    QComboBox *m_capStyleCombo;
+    QComboBox *m_joinStyleCombo;
 };
 
 class BrushTool : public QWidget
