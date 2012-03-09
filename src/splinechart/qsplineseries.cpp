@@ -43,15 +43,15 @@ void QSplineSeries::calculateControlPoints()
     // Based on http://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit
     // CPOL License
 
-    int n = m_x.size() - 1;
+    int n = count() - 1;
     if (n == 1)
     { // Special case: Bezier curve should be a straight line.
         //            firstControlPoints = new Point[1];
         // 3P1 = 2P0 + P3
-        m_controlPoints.append(QPointF((2 * m_x[0] + m_x[1]) / 3, (2 * m_y[0] + m_y[1]) / 3));
+        m_controlPoints.append(QPointF((2 * x(0) + x(1)) / 3, (2 * y(0) + y(1)) / 3));
 
         // P2 = 2P1  P0
-        m_controlPoints.append(QPointF(2 * m_controlPoints[0].x() - m_x[0], 2 * m_controlPoints[0].y() - m_y[0]));
+        m_controlPoints.append(QPointF(2 * m_controlPoints[0].x() - x(0), 2 * m_controlPoints[0].y() - y(0)));
         return;
     }
 
@@ -69,35 +69,35 @@ void QSplineSeries::calculateControlPoints()
     //  |   0   0   0   0   0   0   0   0   ... 0   2   7   |   |   P1_n    |   |   8 * P(n-1) + Pn         |
     //
     QList<qreal> rhs;
-    rhs.append(m_x[0] + 2 * m_x[1]);
+    rhs.append(x(0) + 2 * x(1));
 
     // Set right hand side X values
     for (int i = 1; i < n - 1; ++i)
-        rhs.append(4 * m_x[i] + 2 * m_x[i + 1]);
+        rhs.append(4 * x(i) + 2 * x(i + 1));
 
-    rhs.append((8 * m_x[n - 1] + m_x[n]) / 2.0);
+    rhs.append((8 * x(n - 1) + x(n)) / 2.0);
     // Get first control points X-values
-    QList<qreal> x = getFirstControlPoints(rhs);
-    rhs[0] = m_y[0] + 2 * m_y[1];
+    QList<qreal> xControl = getFirstControlPoints(rhs);
+    rhs[0] = y(0) + 2 * y(1);
 
     // Set right hand side Y values
     for (int i = 1; i < n - 1; ++i)
-        rhs[i] = 4 * m_y[i] + 2 * m_y[i + 1];
+        rhs[i] = 4 * y(i) + 2 * y(i + 1);
 
-    rhs[n - 1] = (8 * m_y[n - 1] + m_y[n]) / 2.0;
+    rhs[n - 1] = (8 * y(n - 1) + y(n)) / 2.0;
     // Get first control points Y-values
-    QList<qreal> y = getFirstControlPoints(rhs);
+    QList<qreal> yControl = getFirstControlPoints(rhs);
 
     // Fill output arrays.
     for (int i = 0; i < n; ++i)
     {
         // First control point
-        m_controlPoints.append(QPointF(x[i], y[i]));
+        m_controlPoints.append(QPointF(xControl[i], yControl[i]));
         // Second control point
         if (i < n - 1)
-            m_controlPoints.append(QPointF(2 * m_x[i + 1] - x[i + 1], 2 * m_y[i + 1] - y[i + 1]));
+            m_controlPoints.append(QPointF(2 * x(i + 1) - xControl[i + 1], 2 * y(i + 1) - yControl[i + 1]));
         else
-            m_controlPoints.append(QPointF((m_x[n] + x[n - 1]) / 2, (m_y[n] + y[n - 1]) / 2));
+            m_controlPoints.append(QPointF((x(n) + xControl[n - 1]) / 2, (y(n) + yControl[n - 1]) / 2));
     }
 }
 
@@ -130,11 +130,17 @@ QList<qreal> QSplineSeries::getFirstControlPoints(QList<qreal> rhs)
   */
 void QSplineSeries::updateControlPoints()
 {
-    if(m_x.size() > 1)
+    if(count() > 1)
     {
         m_controlPoints.clear();
         calculateControlPoints();
     }
+}
+
+bool QSplineSeries::setModel(QAbstractItemModel* model)
+{
+    QXYSeries::setModel(model);
+    calculateControlPoints();
 }
 
 #include "moc_qsplineseries.cpp"

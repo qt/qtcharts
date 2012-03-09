@@ -18,6 +18,5 @@ SUBDIRS += linechart \
            splinechart \
            areachart \
            stackedbarchartdrilldown \
-           customcolors
-
-
+           customcolors \
+           tablemodelchart

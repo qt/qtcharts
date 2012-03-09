@@ -101,7 +101,7 @@ void XYChartItem::handlePointReplaced(int index)
     QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
     m_points.replace(index,point);
-    updatePoint(points);
+    updatePoint(m_points);
     update();
 }
 
@@ -125,7 +125,7 @@ void XYChartItem::handleGeometryChanged(const QRectF& rect)
 	m_clipRect=rect.translated(-rect.topLeft());
 	setPos(rect.topLeft());
 
-	if(isEmpty()) return;
+    if(isEmpty()) return;
 	QVector<QPointF> points = calculateGeometryPoints();
 	updatePoints(points);
 	update();

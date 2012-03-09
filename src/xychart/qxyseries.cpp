@@ -45,6 +45,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 QXYSeries::QXYSeries(QObject* parent):QSeries(parent)
 {
+    m_model = 0;
+    m_mapX = 0;
+    m_mapY = 1;
 }
 /*!
     Destroys the object. Series added to QChartView or QChart instances are owned by those,
@@ -102,7 +105,7 @@ void QXYSeries::replace(qreal x,qreal y)
 */
 void QXYSeries::replace(const QPointF& point)
 {
-   replace(point.x(),point.y());
+    replace(point.x(),point.y());
 }
 
 /*!
@@ -138,7 +141,10 @@ void QXYSeries::removeAll()
 */
 qreal QXYSeries::x(int pos) const
 {
-   return m_x.at(pos);
+    if (m_model)
+        return m_model->data(m_model->index(pos, m_mapX), Qt::DisplayRole).toDouble();
+    else
+        return m_x.at(pos);
 }
 
 /*!
@@ -146,7 +152,10 @@ qreal QXYSeries::x(int pos) const
 */
 qreal QXYSeries::y(int pos) const
 {
-   return m_y.at(pos);
+    if (m_model)
+        return m_model->data(m_model->index(pos, m_mapY), Qt::DisplayRole).toDouble();
+    else
+        return m_y.at(pos);
 }
 
 /*!
@@ -154,10 +163,13 @@ qreal QXYSeries::y(int pos) const
 */
 int QXYSeries::count() const
 {
-	Q_ASSERT(m_x.size() == m_y.size());
+    Q_ASSERT(m_x.size() == m_y.size());
 
-	return m_x.size();
-
+//    int k = m_model->rowCount();
+    if (m_model)
+        return m_model->rowCount();
+    else
+        return m_x.size();
 }
 
 /*!
@@ -223,6 +235,19 @@ QXYSeries& QXYSeries::operator<< (const QList<QPointF> points)
     return *this;
 }
 
+
+void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
+{
+    emit pointReplaced(topLeft.row());
+}
+
+bool QXYSeries::setModel(QAbstractItemModel* model) {
+    m_model = model;
+    for (int i = 0; i < m_model->rowCount(); i++)
+        emit pointAdded(i);
+    connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+//        connect(m_model,SIGNAL(), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+}
 
 #include "moc_qxyseries.cpp"
 

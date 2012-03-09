@@ -19,6 +19,7 @@ public:
 
 //    int count() const { return m_x.size(); }
     QPointF controlPoint(int index) const {return m_controlPoints[index];}
+    bool setModel(QAbstractItemModel* model);
 
     // TODO: allow the user to set custom control points
 //    void setCustomControlPoints(QList<QPointsF> controlPoints);
