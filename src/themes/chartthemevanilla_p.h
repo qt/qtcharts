@@ -8,10 +8,10 @@ public:
     ChartThemeVanilla():ChartTheme(QChart::ChartThemeVanilla)
     {
         m_seriesColors << QRgb(0xffd9c574);
-        m_seriesColors << QRgb(0xd6a896);
-        m_seriesColors << QRgb(0xa0a071);
-        m_seriesColors << QRgb(0xd2d234);
-        m_seriesColors << QRgb(0x88723a);
+        m_seriesColors << QRgb(0xffd6a896);
+        m_seriesColors << QRgb(0xffa0a071);
+        m_seriesColors << QRgb(0xffd2d234);
+        m_seriesColors << QRgb(0xff88723a);
 
         generateSeriesGradients();
 

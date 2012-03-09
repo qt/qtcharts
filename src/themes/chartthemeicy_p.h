@@ -7,10 +7,10 @@ class ChartThemeIcy: public ChartTheme
 public:
     ChartThemeIcy():ChartTheme(QChart::ChartThemeIcy)
     {
-        m_seriesColors << QRgb(0xFF0D2673);
-        m_seriesColors << QRgb(0xFF2685BF);
-        m_seriesColors << QRgb(0xFF3DADD9);
-        m_seriesColors << QRgb(0xFF62C3D9);
+        m_seriesColors << QRgb(0xff0d2673);
+        m_seriesColors << QRgb(0xff2685bf);
+        m_seriesColors << QRgb(0xff3dadd9);
+        m_seriesColors << QRgb(0xff62c3d9);
 
         generateSeriesGradients();
 
