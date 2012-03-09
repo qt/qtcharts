@@ -7,16 +7,16 @@ class ChartThemeGrayscale: public ChartTheme
 public:
     ChartThemeGrayscale():ChartTheme(QChart::ChartThemeGrayscale)
     {
-        m_seriesColors << QRgb(0xFF869299);
-        m_seriesColors << QRgb(0xFFA5BDCC);
-        m_seriesColors << QRgb(0xFFE8FFFC);
-        m_seriesColors << QRgb(0xFFCCC2C2);
+        m_seriesColors << QRgb(0xff869299);
+        m_seriesColors << QRgb(0xffa5bdcc);
+        m_seriesColors << QRgb(0xffe8fffc);
+        m_seriesColors << QRgb(0xffccc2c2);
 
         generateSeriesGradients();
 
         QLinearGradient backgroundGradient;
         backgroundGradient.setColorAt(0.0, QRgb(0xffffffff));
-        backgroundGradient.setColorAt(1.0, QRgb(0xffafafaf));
+        backgroundGradient.setColorAt(1.0, QRgb(0xffe0e3e5));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
         m_backgroundGradient = backgroundGradient;
     }
