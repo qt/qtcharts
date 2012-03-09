@@ -13,7 +13,8 @@ SOURCES += \
     domain.cpp \
     qchart.cpp \
     qchartview.cpp \
-    qseries.cpp
+    qseries.cpp \
+    qlegend.cpp
 PRIVATE_HEADERS += \
     chartdataset_p.h \
     chartitem_p.h \
@@ -24,8 +25,9 @@ PUBLIC_HEADERS += \
     qchart.h \
     qchartglobal.h \
     qseries.h \
-    qchartview.h
-    
+    qchartview.h \
+    qlegend.h
+
 include(axis/axis.pri)
 include(xychart/xychart.pri)
 include(linechart/linechart.pri)

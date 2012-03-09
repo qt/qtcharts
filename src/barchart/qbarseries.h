@@ -24,7 +24,7 @@ public:
     int barsetCount();
     int categoryCount();
     QList<QBarSet*> barSets();
-    QList<QSeries::Legend> legend();
+    QList<QSeries::LegendEntry> legendEntries();
 
 public:
     // TODO: Functions below this are not part of api and will be moved

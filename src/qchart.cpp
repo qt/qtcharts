@@ -1,5 +1,6 @@
 #include "qchart.h"
 #include "qchartaxis.h"
+#include "qlegend.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
 #include <QGraphicsScene>
@@ -49,8 +50,11 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     m_backgroundItem(0),
     m_titleItem(0),
     m_dataset(new ChartDataSet(this)),
-    m_presenter(new ChartPresenter(this,m_dataset))
+    m_presenter(new ChartPresenter(this,m_dataset)),
+    m_legend(new QLegend(this)) // TODO: is this the parent we want the legend to have?
 {
+    connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+    connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
 
 /*!
@@ -58,6 +62,8 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
 */
 QChart::~QChart()
 {
+    disconnect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+    disconnect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
 
 /*!
@@ -260,6 +266,15 @@ QChartAxis* QChart::axisY() const
 {
     return m_dataset->axisY();
 }
+
+/*!
+    Returns the legend object of the chart
+*/
+QLegend* QChart::legend() const
+{
+    return m_legend;
+}
+
 
 /*!
     Resizes and updates the chart area using the \a event data

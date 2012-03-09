@@ -20,6 +20,7 @@ class ChartTheme;
 class ChartItem;
 class ChartDataSet;
 class ChartPresenter;
+class QLegend;
 
 class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
@@ -75,6 +76,8 @@ public:
     QChartAxis* axisX() const;
     QChartAxis* axisY() const;
 
+    QLegend* legend() const;
+
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
 
@@ -89,6 +92,7 @@ private:
     QRectF m_rect;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
+    QLegend* m_legend;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

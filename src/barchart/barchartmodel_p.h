@@ -25,7 +25,7 @@ public:
     QBarSet *setAt(int index);
     QList<QBarSet*> barSets();
 
-    QList<QSeries::Legend> legend();
+    QList<QSeries::LegendEntry> legendEntries();
 
     int barsetCount();          // Number of sets in model
     int categoryCount();        // Number of categories

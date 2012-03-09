@@ -98,9 +98,9 @@ QBarSet* QBarSeries::barsetAt(int index)
 /*!
     Returns legend of series.
 */
-QList<QSeries::Legend> QBarSeries::legend()
+QList<QSeries::LegendEntry> QBarSeries::legendEntries()
 {
-    return mModel->legend();
+    return mModel->legendEntries();
 }
 
 /*!
