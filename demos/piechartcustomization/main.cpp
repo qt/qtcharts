@@ -13,8 +13,173 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QColorDialog>
+#include <QFontDialog>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
+
+class PenTool : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit PenTool(QString title, QWidget *parent = 0)
+        :QWidget(parent)
+    {
+        setWindowTitle(title);
+        setWindowFlags(Qt::Tool);
+
+        m_colorButton = new QPushButton();
+        m_widthSpinBox = new QDoubleSpinBox();
+
+        QFormLayout *layout = new QFormLayout();
+        layout->addRow("Color", m_colorButton);
+        layout->addRow("Width", m_widthSpinBox);
+        setLayout(layout);
+
+        connect(m_colorButton, SIGNAL(clicked()), this, SLOT(showColorDialog()));
+        connect(m_widthSpinBox, SIGNAL(valueChanged(double)), this, SLOT(updateWidth(double)));
+    }
+
+    void setPen(QPen pen)
+    {
+        m_pen = pen;
+        m_colorButton->setText(m_pen.color().name());
+        m_widthSpinBox->setValue(m_pen.widthF());
+    }
+
+    QPen pen() const
+    {
+        return m_pen;
+    }
+
+    QString name()
+    {
+        return name(m_pen);
+    }
+
+    static QString name(const QPen &pen)
+    {
+        return pen.color().name() + ":" + QString::number(pen.widthF());
+    }
+
+Q_SIGNALS:
+    void changed();
+
+public Q_SLOTS:
+
+    void showColorDialog()
+    {
+        QColorDialog dialog(m_pen.color());
+        dialog.show();
+        dialog.exec();
+        m_pen.setColor(dialog.selectedColor());
+        m_colorButton->setText(m_pen.color().name());
+        emit changed();
+    }
+
+    void updateWidth(double width)
+    {
+        if (width != m_pen.widthF()) {
+            m_pen.setWidthF(width);
+            emit changed();
+        }
+    }
+
+private:
+    QPen m_pen;
+    QPushButton *m_colorButton;
+    QDoubleSpinBox *m_widthSpinBox;
+};
+
+class BrushTool : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit BrushTool(QString title, QWidget *parent = 0)
+        :QWidget(parent)
+    {
+        setWindowTitle(title);
+        setWindowFlags(Qt::Tool);
+
+        m_colorButton = new QPushButton();
+        m_styleCombo = new QComboBox();
+        m_styleCombo->addItem("Nobrush", Qt::NoBrush);
+        m_styleCombo->addItem("Solidpattern", Qt::SolidPattern);
+        m_styleCombo->addItem("Dense1pattern", Qt::Dense1Pattern);
+        m_styleCombo->addItem("Dense2attern", Qt::Dense2Pattern);
+        m_styleCombo->addItem("Dense3Pattern", Qt::Dense3Pattern);
+        m_styleCombo->addItem("Dense4Pattern", Qt::Dense4Pattern);
+        m_styleCombo->addItem("Dense5Pattern", Qt::Dense5Pattern);
+        m_styleCombo->addItem("Dense6Pattern", Qt::Dense6Pattern);
+        m_styleCombo->addItem("Dense7Pattern", Qt::Dense7Pattern);
+        m_styleCombo->addItem("HorPattern", Qt::HorPattern);
+        m_styleCombo->addItem("VerPattern", Qt::VerPattern);
+        m_styleCombo->addItem("CrossPattern", Qt::CrossPattern);
+        m_styleCombo->addItem("BDiagPattern", Qt::BDiagPattern);
+        m_styleCombo->addItem("FDiagPattern", Qt::FDiagPattern);
+        m_styleCombo->addItem("DiagCrossPattern", Qt::DiagCrossPattern);
+
+        QFormLayout *layout = new QFormLayout();
+        layout->addRow("Color", m_colorButton);
+        layout->addRow("Style", m_styleCombo);
+        setLayout(layout);
+
+        connect(m_colorButton, SIGNAL(clicked()), this, SLOT(showColorDialog()));
+        connect(m_styleCombo, SIGNAL(currentIndexChanged(int)), this, SLOT(updateStyle()));
+    }
+
+    void setBrush(QBrush brush)
+    {
+        m_brush = brush;
+        m_colorButton->setText(m_brush.color().name());
+        m_styleCombo->setCurrentIndex(m_brush.style()); // index matches the enum
+    }
+
+    QBrush brush() const
+    {
+        return m_brush;
+    }
+
+    QString name()
+    {
+        return name(m_brush);
+    }
+
+    static QString name(const QBrush &brush)
+    {
+        return brush.color().name();
+    }
+
+Q_SIGNALS:
+    void changed();
+
+public Q_SLOTS:
+
+    void showColorDialog()
+    {
+        QColorDialog dialog(m_brush.color());
+        dialog.show();
+        dialog.exec();
+        m_brush.setColor(dialog.selectedColor());
+        m_colorButton->setText(m_brush.color().name());
+        emit changed();
+    }
+
+    void updateStyle()
+    {
+        Qt::BrushStyle style = (Qt::BrushStyle) m_styleCombo->itemData(m_styleCombo->currentIndex()).toInt();
+        if (m_brush.style() != style) {
+            m_brush.setStyle(style);
+            emit changed();
+        }
+    }
+
+private:
+    QBrush m_brush;
+    QPushButton *m_colorButton;
+    QComboBox *m_styleCombo;
+};
 
 class CustomSlice : public QPieSlice
 {
@@ -151,29 +316,37 @@ public:
         m_sliceExploded = new QCheckBox();
         m_sliceExplodedFactor = new QDoubleSpinBox();
         m_sliceExplodedFactor->setSingleStep(0.01);
-        m_penWidth = new QDoubleSpinBox();
-        m_penColor = new QPushButton();
-        m_brushColor = new QPushButton();
+        m_pen = new QPushButton();
+        m_penTool = new PenTool("Slice pen", this);
+        m_brush = new QPushButton();
+        m_brushTool = new BrushTool("Slice brush", this);
+        m_font = new QPushButton();
+        m_labelArmPen = new QPushButton();
+        m_labelArmPenTool = new PenTool("Label arm pen", this);
 
         QFormLayout* sliceSettingsLayout = new QFormLayout();
         sliceSettingsLayout->addRow("Selected", m_sliceName);
         sliceSettingsLayout->addRow("Value", m_sliceValue);
-        sliceSettingsLayout->addRow("Pen color", m_penColor);
-        sliceSettingsLayout->addRow("Pen width", m_penWidth);
-        sliceSettingsLayout->addRow("Brush color", m_brushColor);
+        sliceSettingsLayout->addRow("Pen", m_pen);
+        sliceSettingsLayout->addRow("Brush", m_brush);
         sliceSettingsLayout->addRow("Label visible", m_sliceLabelVisible);
+        sliceSettingsLayout->addRow("Label font", m_font);
+        sliceSettingsLayout->addRow("Label arm pen", m_labelArmPen);
         sliceSettingsLayout->addRow("Label arm length", m_sliceLabelArmFactor);
         sliceSettingsLayout->addRow("Exploded", m_sliceExploded);
         sliceSettingsLayout->addRow("Explode distance", m_sliceExplodedFactor);
-
-
         QGroupBox* sliceSettings = new QGroupBox("Slice");
         sliceSettings->setLayout(sliceSettingsLayout);
 
         connect(m_sliceValue, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
-        connect(m_penColor, SIGNAL(clicked()), this, SLOT(showPenColorDialog()));
-        connect(m_penWidth, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
-        connect(m_brushColor, SIGNAL(clicked()), this, SLOT(showBrushColorDialog()));
+        connect(m_pen, SIGNAL(clicked()), m_penTool, SLOT(show()));
+        connect(m_penTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
+        connect(m_brush, SIGNAL(clicked()), m_brushTool, SLOT(show()));
+        connect(m_brushTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
+        connect(m_font, SIGNAL(clicked()), this, SLOT(showFontDialog()));
+        connect(m_labelArmPen, SIGNAL(clicked()), m_labelArmPenTool, SLOT(show()));
+        connect(m_labelArmPenTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
+        connect(m_sliceLabelVisible, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
         connect(m_sliceLabelVisible, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
         connect(m_sliceLabelArmFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
         connect(m_sliceExploded, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
@@ -218,10 +391,10 @@ public Q_SLOTS:
 
         m_slice->setValue(m_sliceValue->value());
 
-        QPen pen = m_slice->slicePen();
-        pen.setWidthF(m_penWidth->value());
-        m_slice->setSlicePen(pen);
+        m_slice->setSlicePen(m_penTool->pen());
+        m_slice->setSliceBrush(m_brushTool->brush());
 
+        m_slice->setLabelArmPen(m_labelArmPenTool->pen());
         m_slice->setLabelVisible(m_sliceLabelVisible->isChecked());
         m_slice->setLabelArmLengthFactor(m_sliceLabelArmFactor->value());
 
@@ -233,67 +406,53 @@ public Q_SLOTS:
     {
         m_slice = static_cast<CustomSlice*>(slice);
 
+        // name
         m_sliceName->setText(slice->label());
 
+        // value
         m_sliceValue->blockSignals(true);
         m_sliceValue->setValue(slice->value());
         m_sliceValue->blockSignals(false);
 
-        m_penColor->setText(m_slice->slicePen().color().name());
+        // pen
+        m_pen->setText(PenTool::name(m_slice->slicePen()));
+        m_penTool->setPen(m_slice->slicePen());
 
-        m_sliceValue->blockSignals(true);
-        m_penWidth->setValue(slice->slicePen().widthF());
-        m_sliceValue->blockSignals(false);
+        // brush
+        m_brush->setText(m_slice->originalBrush().color().name());
+        m_brushTool->setBrush(m_slice->originalBrush());
 
-        m_brushColor->setText(m_slice->originalBrush().color().name());
-
+        // label
+        m_labelArmPen->setText(PenTool::name(m_slice->labelArmPen()));
+        m_labelArmPenTool->setPen(m_slice->labelArmPen());
+        m_font->setText(slice->labelFont().toString());
         m_sliceLabelVisible->blockSignals(true);
         m_sliceLabelVisible->setChecked(slice->isLabelVisible());
         m_sliceLabelVisible->blockSignals(false);
-
         m_sliceLabelArmFactor->blockSignals(true);
         m_sliceLabelArmFactor->setValue(slice->labelArmLengthFactor());
         m_sliceLabelArmFactor->blockSignals(false);
 
+        // exploded
         m_sliceExploded->blockSignals(true);
         m_sliceExploded->setChecked(slice->isExploded());
         m_sliceExploded->blockSignals(false);
-
         m_sliceExplodedFactor->blockSignals(true);
         m_sliceExplodedFactor->setValue(slice->explodeDistanceFactor());
         m_sliceExplodedFactor->blockSignals(false);
     }
 
-    void showBrushColorDialog()
+    void showFontDialog()
     {
         if (!m_slice)
             return;
 
-        QColorDialog dialog(m_slice->originalBrush().color());
+        QFontDialog dialog(m_slice->labelFont());
         dialog.show();
         dialog.exec();
 
-        QBrush brush = m_slice->originalBrush();
-        brush.setColor(dialog.currentColor());
-        m_slice->setSliceBrush(brush);
-
-        m_brushColor->setText(dialog.currentColor().name());
-    }
-
-    void showPenColorDialog()
-    {
-        if (!m_slice)
-            return;
-
-        QColorDialog dialog(m_slice->slicePen().color());
-        dialog.show();
-        dialog.exec();
-
-        QPen pen = m_slice->slicePen();
-        pen.setColor(dialog.currentColor());
-        m_slice->setSlicePen(pen);
-
-        m_penColor->setText(dialog.currentColor().name());
+        m_slice->setLabelFont(dialog.currentFont());
+        m_font->setText(dialog.currentFont().toString());
     }
 
 private:
@@ -316,9 +475,13 @@ private:
     QDoubleSpinBox* m_sliceLabelArmFactor;
     QCheckBox* m_sliceExploded;
     QDoubleSpinBox* m_sliceExplodedFactor;
-    QPushButton *m_brushColor;
-    QPushButton *m_penColor;
-    QDoubleSpinBox* m_penWidth;
+    QPushButton *m_brush;
+    BrushTool *m_brushTool;
+    QPushButton *m_pen;
+    PenTool *m_penTool;
+    QPushButton *m_font;
+    QPushButton *m_labelArmPen;
+    PenTool *m_labelArmPenTool;
 };
 
 int main(int argc, char *argv[])
