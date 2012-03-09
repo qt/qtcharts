@@ -14,7 +14,7 @@ class XYChartItem :  public QObject , public ChartItem
 {
      Q_OBJECT
 public:
-     explicit XYChartItem(QXYSeries* series,QGraphicsItem *parent = 0);
+     explicit XYChartItem(QXYSeries* series, QGraphicsItem *parent = 0);
     ~ XYChartItem(){};
 
     QVector<QPointF> points() const {return m_points;}
@@ -28,15 +28,14 @@ public slots:
     void handleGeometryChanged(const QRectF& size);
 
 protected:
-    virtual void updatePoints(QVector<QPointF>& points);
-    virtual void updatePoint(QVector<QPointF>& points);
     virtual void setGeometry(QVector<QPointF>& points);
-
     QPointF calculateGeometryPoint(const QPointF& point) const;
     QPointF calculateGeometryPoint(int index) const;
     QVector<QPointF> calculateGeometryPoints() const;
 
 private:
+    void updatePoints(QVector<QPointF>& points);
+    void updatePoint(QVector<QPointF>& points);
     inline bool isEmpty();
 
 private:
@@ -49,7 +48,7 @@ private:
     QRectF m_clipRect;
     QVector<QPointF> m_points;
 
-    template<class,class> friend class XYChartAnimator;
+    friend class XYAnimation;
 
 };
 

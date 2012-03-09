@@ -6,9 +6,8 @@ SOURCES += \
     $$PWD/qxyseries.cpp  
     
 PRIVATE_HEADERS += \
-    $$PWD/xychartitem_p.h \
-    $$PWD/xychartanimationitem_p.h \
-    $$PWD/xychartanimator_p.h
+    $$PWD/xychartitem_p.h 
+
     
 PUBLIC_HEADERS += \    
     $$PWD/qxyseries.h  

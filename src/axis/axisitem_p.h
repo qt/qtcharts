@@ -8,6 +8,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChartAxis;
+class ChartPresenter;
 
 class AxisItem : public QObject, public ChartItem
 {
@@ -15,7 +16,7 @@ class AxisItem : public QObject, public ChartItem
 public:
     enum AxisType{X_AXIS,Y_AXIS};
 
-    AxisItem(QChartAxis* axis,AxisType type = X_AXIS,QGraphicsItem* parent = 0);
+    AxisItem(QChartAxis* axis,ChartPresenter* presenter,AxisType type = X_AXIS,QGraphicsItem* parent = 0);
     ~AxisItem();
 
     //from QGraphicsItem
@@ -50,6 +51,7 @@ public:
     void setLabelsFont(const QFont& font);
 
     inline QRectF geometry() const { return m_rect; }
+    inline QVector<qreal> layout() { return m_layoutVector;};
     inline qreal zoomFactor() const { return m_zoomFactor;}
 
 public slots:
@@ -59,19 +61,20 @@ public slots:
     void handleTicksCountChanged(int count);
     void handleGeometryChanged(const QRectF& size);
 
-public:
-    virtual void updateLayout(QVector<qreal>& layout);
-    void setLayout(QVector<qreal>& layout);
-    QVector<qreal> layout() { return m_layoutVector;};
 
 private:
     inline bool isEmpty();
     void createItems(int count);
     void deleteItems(int count);
+
     QVector<qreal> calculateLayout() const;
+    void updateLayout(QVector<qreal>& layout);
+    void setLayout(QVector<qreal>& layout);
+
     QStringList createLabels(int ticks, qreal min, qreal max) const;
 
 private:
+    ChartPresenter* m_presenter;
     QChartAxis* m_chartAxis;
     AxisType m_type;
     QRectF m_rect;
@@ -85,6 +88,8 @@ private:
     qreal m_max;
     int m_ticksCount;
     qreal m_zoomFactor;
+
+    friend class AxisAnimation;
 
 };
 

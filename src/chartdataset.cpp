@@ -146,11 +146,9 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
                 minY = qMin(minY, y);
                 maxX = qMax(maxX, x);
                 maxY = qMax(maxY, y);
-                domain->setMinX(qMin(domain->minX(),x));
-                domain->setMinY(qMin(domain->minY(),y));
-                domain->setMaxX(qMax(domain->maxX(),x));
-                domain->setMaxY(qMax(domain->maxY(),y));
             }
+
+            domain->setRange(minX, maxX,  minY,  maxY);
             break;
         }
         case QSeries::SeriesTypeArea: {

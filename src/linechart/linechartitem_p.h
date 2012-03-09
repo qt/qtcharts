@@ -3,12 +3,10 @@
 
 #include "qchartglobal.h"
 #include "xychartitem_p.h"
-#include "xychartanimationitem_p.h"
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartPresenter;
 class QLineSeries;
 
 class LineChartItem :  public XYChartItem
@@ -43,11 +41,7 @@ private:
     QRectF m_rect;
     QPen m_pen;
 
-    template<class,class> friend class XYChartAnimator;
-
 };
-
-typedef XYChartAnimationItem<LineChartItem,QLineSeries> LineChartAnimationItem;
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

@@ -27,7 +27,8 @@ PUBLIC_HEADERS += \
     qseries.h \
     qchartview.h \
     qlegend.h
-
+    
+include(animations/animations.pri)    
 include(axis/axis.pri)
 include(xychart/xychart.pri)
 include(linechart/linechart.pri)

@@ -1,6 +1,7 @@
 #include "xychartitem_p.h"
 #include "qxyseries.h"
 #include "chartpresenter_p.h"
+#include "chartanimator_p.h"
 #include <QPainter>
 
 
@@ -8,7 +9,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-XYChartItem::XYChartItem(QXYSeries* series,QGraphicsItem *parent):ChartItem(parent),
+XYChartItem::XYChartItem(QXYSeries* series, QGraphicsItem *parent):ChartItem(parent),
 m_minX(0),
 m_maxX(0),
 m_minY(0),
@@ -57,7 +58,11 @@ QVector<QPointF> XYChartItem::calculateGeometryPoints() const
 
 void XYChartItem::updatePoints(QVector<QPointF>& points)
 {
-    setGeometry(points);
+    if(m_animator){
+       m_animator->applyLayout(this,points);
+    }
+       else  setGeometry(points);
+
 }
 
 void XYChartItem::updatePoint(QVector<QPointF>& points)

@@ -1,6 +1,7 @@
 #include "axisitem_p.h"
 #include "qchartaxis.h"
 #include "chartpresenter_p.h"
+#include "chartanimator_p.h"
 #include <QPainter>
 #include <QDebug>
 
@@ -8,8 +9,9 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-AxisItem::AxisItem(QChartAxis* axis,AxisType type,QGraphicsItem* parent) :
+AxisItem::AxisItem(QChartAxis* axis,ChartPresenter* presenter,AxisType type,QGraphicsItem* parent) :
 ChartItem(parent),
+m_presenter(presenter),
 m_chartAxis(axis),
 m_type(type),
 m_labelsAngle(0),
@@ -45,13 +47,14 @@ QRectF AxisItem::boundingRect() const
 
 void AxisItem::createItems(int count)
 {
+
     if(m_axis.children().size()==0)
            m_axis.addToGroup(new QGraphicsLineItem());
     for (int i = 0; i < count; ++i) {
            m_grid.addToGroup(new QGraphicsLineItem());
            m_labels.addToGroup(new QGraphicsSimpleTextItem());
-           if(m_grid.childItems().size()%2) m_shades.addToGroup(new QGraphicsRectItem());
            m_axis.addToGroup(new QGraphicsLineItem());
+          if((m_grid.childItems().size())%2 && m_grid.childItems().size()>2) m_shades.addToGroup(new QGraphicsRectItem());
        }
 }
 
@@ -63,16 +66,19 @@ void AxisItem::deleteItems(int count)
     QList<QGraphicsItem *> axis = m_axis.childItems();
 
     for (int i = 0; i < count; ++i) {
+        if(lines.size()%2 && lines.size()>1) delete(shades.takeLast());
         delete(lines.takeLast());
         delete(labels.takeLast());
-        if(lines.size()%2) delete(shades.takeLast());
         delete(axis.takeLast());
     }
 }
 
 void AxisItem::updateLayout(QVector<qreal>& layout)
 {
-    setLayout(layout);
+    if(m_animator){
+       m_animator->applyLayout(this,layout);
+    }
+    else setLayout(layout);
 }
 
 QStringList AxisItem::createLabels(int ticks, qreal min, qreal max) const
@@ -240,7 +246,7 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 
 	if(diff!=0) handleAxisUpdated();
 
-    QStringList ticksList = createLabels(m_ticksCount,m_min,m_max);
+    QStringList ticksList = createLabels(layout.size(),m_min,m_max);
 
 	QList<QGraphicsItem *> lines = m_grid.childItems();
 	QList<QGraphicsItem *> labels = m_labels.childItems();
@@ -249,6 +255,7 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 
 	Q_ASSERT(labels.size() == ticksList.size());
 	Q_ASSERT(layout.size() == ticksList.size());
+	Q_ASSERT(layout.size() == m_ticksCount);
 
 	switch (m_type)
 	{
@@ -265,7 +272,7 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 				QPointF center = labelItem->boundingRect().center();
 				labelItem->setTransformOriginPoint(center.x(), center.y());
 				labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
-				if(i%2 && i+1 < layout.size()) {
+				if(i%2 && i+1 < layout.size() && i>1) {
 					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2));
 					rectItem->setRect(layout[i],m_rect.top(),layout[i+1]-layout[i],m_rect.height());
 				}
@@ -288,7 +295,7 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 				QPointF center = labelItem->boundingRect().center();
 				labelItem->setTransformOriginPoint(center.x(), center.y());
 				labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
-				if(i%2 && i+1 < layout.size()) {
+				if(i%2 && i+1 < layout.size() && i>1) {
 					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2));
 					rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i]-layout[i+1]);
 				}
@@ -302,7 +309,6 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 		break;
 	}
 
-	//if(diff!=0) handleAxisUpdated();
 	m_layoutVector=layout;
 }
 
@@ -391,6 +397,7 @@ void AxisItem::handleRangeChanged(qreal min, qreal max)
     m_min = min;
     m_max = max;
 
+
     m_ticksCount = qrand()%10;
 
     while(m_ticksCount<2){
@@ -408,7 +415,6 @@ void AxisItem::handleRangeChanged(qreal min, qreal max)
 
 void AxisItem::handleGeometryChanged(const QRectF& rect)
 {
-
     m_rect = rect;
     if(isEmpty()) return;
     QVector<qreal> layout = calculateLayout();

@@ -11,10 +11,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartItem;
 class QSeries;
 class ChartDataSet;
-//class QChart;
 class Domain;
 class AxisItem;
 class ChartTheme;
+class ChartAnimator;
 
 class ChartPresenter: public QObject
 {
@@ -37,6 +37,7 @@ public:
     int margin() const;
 
     QRectF geometry() const;
+    ChartAnimator* animator() const {return m_animator;};
 
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme();
@@ -65,6 +66,7 @@ signals:
 
 private:
     QChart* m_chart;
+    ChartAnimator* m_animator;
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
     int m_zoomIndex;

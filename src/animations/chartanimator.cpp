@@ -1,0 +1,141 @@
+#include "chartanimator_p.h"
+#include "axisanimation_p.h"
+#include "xyanimation_p.h"
+#include "xychartitem_p.h"
+#include <QTimer>
+
+Q_DECLARE_METATYPE(QVector<QPointF>)
+Q_DECLARE_METATYPE(QVector<qreal>)
+
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+const static int duration = 1000;
+
+ChartAnimator::ChartAnimator(QObject *parent):QObject(parent)
+{
+}
+
+ChartAnimator::~ChartAnimator()
+{
+}
+
+void ChartAnimator::addAnimation(AxisItem* item)
+{
+    AxisAnimation* animation = static_cast<AxisAnimation*>(m_animations.value(item));
+
+    if(!animation) {
+        animation = new AxisAnimation(item);
+        m_animations.insert(item,animation);
+    }
+
+    item->setAnimator(this);
+}
+
+void ChartAnimator::addAnimation(XYChartItem*  item)
+{
+    XYAnimation* animation = static_cast<XYAnimation*>(m_animations.value(item));
+
+    if(!animation) {
+        animation = new XYAnimation(item);
+        m_animations.insert(item,animation);
+    }
+
+    item->setAnimator(this);
+}
+
+void ChartAnimator::removeAnimation(ChartItem* item)
+{
+    item->setAnimator(0);
+    m_animations.remove(item);
+}
+
+void ChartAnimator::applyLayout(AxisItem* item , QVector<qreal>& newLayout)
+{
+    AxisAnimation* animation = static_cast<AxisAnimation*>(m_animations.value(item));
+
+    if(!animation) return;
+
+    QVector<qreal> oldLayout = item->layout();
+
+    if(newLayout.count()==0) return;
+
+    if(item->zoomFactor()<0) {
+
+        QRectF rect = item->geometry();
+        oldLayout.resize(newLayout.count());
+
+        for(int i=0,j=oldLayout.count()-1;i<(oldLayout.count()+1)/2;i++,j--)
+        {
+            oldLayout[i]= item->axisType()==AxisItem::X_AXIS?rect.left():rect.bottom();
+            oldLayout[j]= item->axisType()==AxisItem::X_AXIS?rect.right():rect.top();
+        }
+
+    }
+    else {
+
+        int index = qMin(oldLayout.count()*item->zoomFactor(),newLayout.count()-1.0);
+        oldLayout.resize(newLayout.count());
+
+        for(int i=0;i<oldLayout.count();i++)
+        {
+            oldLayout[i]= oldLayout[index]; //axisType()==X_AXIS?rect.center.x():rect.center().y();
+        }
+    }
+
+    if(animation->state()!=QAbstractAnimation::Stopped) {
+        animation->stop();
+    }
+
+    animation->setDuration(duration);
+    animation->setEasingCurve(QEasingCurve::OutQuart);
+    QVariantAnimation::KeyValues value;
+    animation->setKeyValues(value); //workaround for wrong interpolation call
+    animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
+    animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
+
+    QTimer::singleShot(0,animation,SLOT(start()));
+}
+
+void ChartAnimator::applyLayout(XYChartItem* item, QVector<QPointF>& newPoints)
+{
+
+    XYAnimation* animation = static_cast<XYAnimation*>(m_animations.value(item));
+
+    if(!animation) return;
+
+    QVector<QPointF> oldPoints = item->points();
+
+    if(newPoints.count()==0) return;
+
+    bool empty = oldPoints.count()==0;
+    oldPoints.resize(newPoints.size());
+
+    if(animation->state()!=QAbstractAnimation::Stopped) {
+        animation->stop();
+    }
+
+    animation->setDuration(duration);
+    if(!empty)
+    animation->setAnimationType(XYAnimation::MoveDownAnimation);
+    else
+    animation->setAnimationType(XYAnimation::LineDrawAnimation);
+    animation->setEasingCurve(QEasingCurve::OutQuart);
+    animation->setValues(oldPoints,newPoints);
+    QTimer::singleShot(0,animation,SLOT(start()));
+}
+
+void ChartAnimator::updateLayout(XYChartItem* item, QVector<QPointF>& newPoints)
+{
+    XYAnimation* animation = static_cast<XYAnimation*>(m_animations.value(item));
+
+    if(!animation) return;
+
+    animation->setDuration(duration);
+    animation->setAnimationType(XYAnimation::MoveDownAnimation);
+    animation->setEasingCurve(QEasingCurve::OutQuart);
+    animation->updateValues(newPoints);
+
+    QTimer::singleShot(0,animation,SLOT(start()));
+}
+
+QTCOMMERCIALCHART_END_NAMESPACE

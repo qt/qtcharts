@@ -3,7 +3,6 @@
 
 #include "qsplineseries.h"
 #include "xychartitem_p.h"
-#include "xychartanimationitem_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -37,10 +36,7 @@ private:
     QRectF m_rect;
     QPen m_pen;
 
-    template<class,class> friend class XYChartAnimator;
 };
-
-typedef XYChartAnimationItem<SplineChartItem,QSplineSeries> SplineChartAnimationItem;
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

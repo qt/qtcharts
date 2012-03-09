@@ -3,7 +3,6 @@
 
 #include "qchartglobal.h"
 #include "xychartitem_p.h"
-#include "xychartanimationitem_p.h"
 #include <QGraphicsItem>
 #include <QPen>
 
@@ -45,10 +44,7 @@ private:
     int m_size;
     QRectF m_rect;
 
-    template<class,class> friend class XYChartAnimator;
 };
-
-typedef XYChartAnimationItem<ScatterChartItem,QScatterSeries> ScatterChartAnimationItem;
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

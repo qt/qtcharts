@@ -7,7 +7,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartPresenter;
 class QAreaSeries;
 class AreaChartItem;
 
