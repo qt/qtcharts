@@ -62,6 +62,9 @@ public:
 
     QChartAxisCategories* categories() { return &m_category; }
 
+    void show();
+    void hide();
+
 signals:
 	void minChanged(qreal min);
 	void maxChanged(qreal max);

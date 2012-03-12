@@ -362,6 +362,30 @@ void QChartAxis::setTicksCount(int count)
 	}
 }
 
+/*!
+  Sets axis, shades, labels and grid lines to be visible.
+ */
+void QChartAxis::show()
+{
+   m_axisVisible=true;
+   m_gridVisible=true;
+   m_labelsVisible=true;
+   m_shadesVisible=true;
+   emit updated();
+}
+
+/*!
+  Sets axis, shades, labels and grid lines to not be visible.
+ */
+void QChartAxis::hide()
+{
+    m_axisVisible=false;
+    m_gridVisible=false;
+    m_labelsVisible=false;
+    m_shadesVisible=false;
+    emit updated();
+}
+
 #include "moc_qchartaxis.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

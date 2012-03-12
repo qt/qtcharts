@@ -230,14 +230,8 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         // Hide all from background when there is only piechart
         // TODO: refactor this ugly code... should be one setting for this
         if (m_chartItems.count() == 0) {
-            m_chart->axisX()->setAxisVisible(false);
-            m_chart->axisY()->setAxisVisible(false);
-            m_chart->axisX()->setGridVisible(false);
-            m_chart->axisY()->setGridVisible(false);
-            m_chart->axisX()->setLabelsVisible(false);
-            m_chart->axisY()->setLabelsVisible(false);
-            m_chart->axisX()->setShadesVisible(false);
-            m_chart->axisY()->setShadesVisible(false);
+            m_chart->axisX()->hide();
+            m_chart->axisY()->hide();
             m_chart->setChartBackgroundBrush(Qt::transparent);
         }
         item=pie;
