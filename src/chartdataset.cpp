@@ -247,6 +247,17 @@ void ChartDataSet::zoomOutDomain(const QRectF& rect, const QSizeF& size)
     }
 }
 
+int ChartDataSet::seriesCount(QSeries::QSeriesType type)
+{
+    int count=0;
+    QMapIterator<QSeries*, QChartAxis*> i( m_seriesAxisMap);
+    while (i.hasNext()) {
+           i.next();
+           if(i.key()->type()==type) count++;
+    }
+    return count;
+}
+
 QChartAxis* ChartDataSet::axisY(QSeries* series) const
 {
     if(series == 0) return m_axisY;

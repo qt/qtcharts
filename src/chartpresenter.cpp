@@ -145,7 +145,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         if(m_options.testFlag(QChart::SeriesAnimations)) {
         	m_animator->addAnimation(line);
         }
-        m_chartTheme->decorate(line,lineSeries,m_chartItems.count());
+        m_chartTheme->decorate(line,lineSeries,m_dataset->seriesCount(series->type()));
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),line,SLOT(handleGeometryChanged(const QRectF&)));
         QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),line,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
         item = line;
@@ -159,7 +159,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         if(m_options.testFlag(QChart::SeriesAnimations)) {
           //  m_animator->addAnimation(area);
         }
-        m_chartTheme->decorate(area,areaSeries,m_chartItems.count());
+        m_chartTheme->decorate(area,areaSeries,m_dataset->seriesCount(series->type()));
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),area,SLOT(handleGeometryChanged(const QRectF&)));
         QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),area,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
         item=area;
@@ -172,7 +172,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         if(m_options.testFlag(QChart::SeriesAnimations)) {
          //  m_animator->addAnimation(bar);
         }
-        m_chartTheme->decorate(bar,barSeries,m_chartItems.count());
+        m_chartTheme->decorate(bar,barSeries,m_dataset->seriesCount(series->type()));
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),bar,SLOT(handleGeometryChanged(const QRectF&)));
         QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),bar,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
         item=bar;
@@ -185,7 +185,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         if(m_options.testFlag(QChart::SeriesAnimations)) {
          //  m_animator->addAnimation(bar);
         }
-        m_chartTheme->decorate(bar,stackedBarSeries,m_chartItems.count());
+        m_chartTheme->decorate(bar,stackedBarSeries,m_dataset->seriesCount(series->type()));
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),bar,SLOT(handleGeometryChanged(const QRectF&)));
         QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),bar,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
         item=bar;
@@ -198,7 +198,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         if(m_options.testFlag(QChart::SeriesAnimations)) {
          //  m_animator->addAnimation(bar);
         }
-        m_chartTheme->decorate(bar,percentBarSeries ,m_chartItems.count());
+        m_chartTheme->decorate(bar,percentBarSeries ,m_dataset->seriesCount(series->type()));
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),bar,SLOT(handleGeometryChanged(const QRectF&)));
         QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),bar,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
         item=bar;
@@ -211,7 +211,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 		if(m_options.testFlag(QChart::SeriesAnimations)) {
 		    m_animator->addAnimation(scatter);
 		}
-		m_chartTheme->decorate(scatter, scatterSeries, m_chartItems.count());
+		m_chartTheme->decorate(scatter, scatterSeries, m_dataset->seriesCount(series->type()));
 		QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),scatter,SLOT(handleGeometryChanged(const QRectF&)));
 		QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),scatter,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
 		item=scatter;
@@ -224,7 +224,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         if(m_options.testFlag(QChart::SeriesAnimations)) {
            // m_animator->addAnimation(pie);
         }
-        m_chartTheme->decorate(pie, pieSeries, m_chartItems.count());
+        m_chartTheme->decorate(pie, pieSeries, m_dataset->seriesCount(series->type()));
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),pie,SLOT(handleGeometryChanged(const QRectF&)));
         QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),pie,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
         // Hide all from background when there is only piechart
@@ -251,7 +251,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 			if(m_options.testFlag(QChart::SeriesAnimations)) {
 			    m_animator->addAnimation(spline);
 			}
-			m_chartTheme->decorate(spline, splineSeries, m_chartItems.count());
+			m_chartTheme->decorate(spline, splineSeries, m_dataset->seriesCount(series->type()));
 			QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),spline,SLOT(handleGeometryChanged(const QRectF&)));
 			QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),spline,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
 			item=spline;
