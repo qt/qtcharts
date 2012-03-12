@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 
     QChartAxis* axisX = chartView->axisX();
     axisX->setLabelsAngle(45);
-    axisX->setGridPen(Qt::DashLine);
+    axisX->setGridLinePen(Qt::DashLine);
 
     QChartAxisCategories* categoriesX = axisX->categories();
     categoriesX->insert(0,"low");

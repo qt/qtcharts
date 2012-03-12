@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
 
     // Disable axis, since they don't really apply to bar chart
 //    drilldownChart->axisX()->setAxisVisible(false);
-    drilldownChart->axisX()->setGridVisible(false);
+    drilldownChart->axisX()->setGridLineVisible(false);
 //    drilldownChart->axisX()->setLabelsVisible(false);
 
     QLegend* l = drilldownChart->legend();

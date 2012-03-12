@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     //! [5]
 
     //! [6]
-    chartView->axisX()->setGridVisible(false);
+    chartView->axisX()->setGridLineVisible(false);
     //! [6]
 
     window.setCentralWidget(chartView);

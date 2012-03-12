@@ -336,7 +336,7 @@ void AxisItem::handleAxisUpdated()
         setAxisOpacity(0);
     }
 
-    if(m_chartAxis->isGridVisible()) {
+    if(m_chartAxis->isGridLineVisible()) {
         setGridOpacity(100);
     }
     else {
@@ -363,7 +363,7 @@ void AxisItem::handleAxisUpdated()
     setLabelsPen(m_chartAxis->labelsPen());
     setLabelsBrush(m_chartAxis->labelsBrush());
     setLabelsFont(m_chartAxis->labelsFont());
-    setGridPen(m_chartAxis->gridPen());
+    setGridPen(m_chartAxis->gridLinePen());
     setShadesPen(m_chartAxis->shadesPen());
     setShadesBrush(m_chartAxis->shadesBrush());
 

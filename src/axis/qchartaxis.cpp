@@ -28,9 +28,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
 /*!
-   \fn bool QChartAxis::isGridVisible() const
+   \fn bool QChartAxis::isGridLineVisible() const
    \brief Returns if grid is visible
-   \sa setGridVisible()
+   \sa setGridLineVisible()
 */
 
 /*!
@@ -142,7 +142,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QChartAxis::QChartAxis(QObject* parent):QObject(parent),
 m_axisVisible(true),
-m_gridVisible(true),
+m_gridLineVisible(true),
 m_labelsVisible(true),
 m_labelsAngle(0),
 m_shadesVisible(true),
@@ -185,23 +185,23 @@ void QChartAxis::setAxisVisible(bool visible)
 }
 
 /*!
-  Sets if grid is \a visible.
+  Sets if grid line is \a visible.
  */
-void QChartAxis::setGridVisible(bool visible)
+void QChartAxis::setGridLineVisible(bool visible)
 {
-	if (m_gridVisible!=visible) {
-    m_gridVisible=visible;
+	if (m_gridLineVisible!=visible) {
+    m_gridLineVisible=visible;
     emit updated();
 	}
 }
 
 /*!
-  Sets \a pen used to draw grid.
+  Sets \a pen used to draw grid line.
  */
-void QChartAxis::setGridPen(const QPen& pen)
+void QChartAxis::setGridLinePen(const QPen& pen)
 {
-	if (m_gridPen!=pen) {
-    m_gridPen=pen;
+	if (m_gridLinePen!=pen) {
+    m_gridLinePen=pen;
     emit updated();
 	}
 }
@@ -368,7 +368,7 @@ void QChartAxis::setTicksCount(int count)
 void QChartAxis::show()
 {
    m_axisVisible=true;
-   m_gridVisible=true;
+   m_gridLineVisible=true;
    m_labelsVisible=true;
    m_shadesVisible=true;
    emit updated();
@@ -380,7 +380,7 @@ void QChartAxis::show()
 void QChartAxis::hide()
 {
     m_axisVisible=false;
-    m_gridVisible=false;
+    m_gridLineVisible=false;
     m_labelsVisible=false;
     m_shadesVisible=false;
     emit updated();

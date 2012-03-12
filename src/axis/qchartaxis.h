@@ -22,10 +22,10 @@ public:
     QPen axisPen() const { return m_axisPen;};
 
     //grid handling
-    bool isGridVisible() const { return m_gridVisible;};
-    void setGridVisible(bool visible);
-    void setGridPen(const QPen& pen);
-    QPen gridPen() const {return m_gridPen;}
+    bool isGridLineVisible() const { return m_gridLineVisible;};
+    void setGridLineVisible(bool visible);
+    void setGridLinePen(const QPen& pen);
+    QPen gridLinePen() const {return m_gridLinePen;}
 
     //labels handling
     bool labelsVisible() const { return m_labelsVisible;};
@@ -81,8 +81,8 @@ private:
     QPen m_axisPen;
     QBrush m_axisBrush;
 
-    bool m_gridVisible;
-    QPen m_gridPen;
+    bool m_gridLineVisible;
+    QPen m_gridLinePen;
 
     bool m_labelsVisible;
     QPen m_labelsPen;
