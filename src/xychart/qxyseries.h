@@ -22,7 +22,7 @@ public:
     void add(const QList<QPointF> points);
     void replace(qreal x,qreal y);
     void replace(const QPointF& point);
-    void remove(qreal x);
+    void remove(qreal x, qreal y);
     void remove(const QPointF& point);
     void removeAll();
 

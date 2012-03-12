@@ -23,13 +23,16 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *parent
     Q_ASSERT(parent);
     Q_ASSERT(series);
 
-    connect(m_series,SIGNAL(updated()), this, SLOT(handleUpdated()));
+    QObject::connect(m_series,SIGNAL(updated()), this, SLOT(handleUpdated()));
+    QObject::connect(this,SIGNAL(clicked(const QPointF&)), m_series, SIGNAL(clicked(const QPointF&)));
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemHasNoContents);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
 
     handleUpdated();
+
+    m_items.setHandlesChildEvents(false);
 
     // TODO: how to draw a drop shadow?
 //    QGraphicsDropShadowEffect *dropShadow = new QGraphicsDropShadowEffect();
@@ -51,27 +54,23 @@ void ScatterChartItem::createPoints(int count)
         QGraphicsItem *item;
 
         switch (m_shape) {
-                   case QScatterSeries::MarkerShapeDefault:
-                   // Fallthrough, defaults to circle
-                   case QScatterSeries::MarkerShapeCircle:
-                       item = new QGraphicsEllipseItem(0,0,m_size,m_size);
+                   case QScatterSeries::MarkerShapeCircle:{
+                       QGraphicsEllipseItem* i = new QGraphicsEllipseItem(0,0,m_size,m_size);
+                       const QRectF& rect = i->boundingRect();
+                       i->setPos(-rect.width()/2,-rect.height()/2);
+                       item = new Marker(i,this);
                        break;
-                   case QScatterSeries::MarkerShapeRectangle:
-                       item = new QGraphicsRectItem(0,0,m_size,m_size);
+                   }
+                   case QScatterSeries::MarkerShapeRectangle:{
+                       QGraphicsRectItem* i = new QGraphicsRectItem(0,0,m_size,m_size);
+                       i->setPos(-m_size/2,-m_size/2);
+                       item = new Marker(i,this);
                        break;
-                   case QScatterSeries::MarkerShapeRoundedRectangle:
-                       //m_path.addRoundedRect(x, y, size, size, size / 4.0, size / 4.0);
+                   }
+                   default:
+                       qWarning()<<"Unsupported marker type";
                        break;
-                   case QScatterSeries::MarkerShapeTiltedRectangle:
-                       // TODO: tilt the rectangle
-                       //m_path.addRect(x, y, size, size);
-                       //break;
-                   case QScatterSeries::MarkerShapeTriangle:
-                       //QPolygonF polygon;
-                       //polygon << QPointF(0.0, -size) << QPointF(size / 2.0, 0.0) << QPointF(-size / 2, 0.0);
-                       // TODO: the position is not exactly right...
-                       //m_path.addPolygon(polygon.translated(x + size / 2.0, y + size));
-                       break;
+
         }
         m_items.addToGroup(item);
     }
@@ -86,18 +85,10 @@ void ScatterChartItem::deletePoints(int count)
     }
 }
 
-/*
-
-void ScatterChartItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void ScatterChartItem::markerSelected(Marker* marker)
 {
-
-    QPointF clickedPoint(
-        m_minX + (event->lastPos().x() / m_clippingRect.width()) * (m_maxX-m_minX),
-        m_maxY - (event->lastPos().y() / m_clippingRect.height()) * (m_maxY-m_minY));
-    emit clicked(clickedPoint);
-
+    emit clicked(QPointF(m_series->x(marker->index()), m_series->y(marker->index())));
 }
-*/
 
 void ScatterChartItem::setGeometry(QVector<QPointF>& points)
 {
@@ -117,9 +108,10 @@ void ScatterChartItem::setGeometry(QVector<QPointF>& points)
     QList<QGraphicsItem*> items = m_items.childItems();
 
     for(int i=0; i< points.size();i++) {
-        QGraphicsItem* item = items.at(i);
+        Marker* item = static_cast<Marker*>(items.at(i));
         const QPointF& point = points.at(i);
         const QRectF& rect = item->boundingRect();
+        item->setIndex(i);
         item->setPos(point.x()-rect.width()/2,point.y()-rect.height()/2);
         if(!clipRect().contains(point)) {
             item->setVisible(false);
@@ -145,14 +137,14 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 void ScatterChartItem::setPen(const QPen& pen)
 {
     foreach(QGraphicsItem* item , m_items.childItems()) {
-           static_cast<QAbstractGraphicsShapeItem*>(item)->setPen(pen);
+           static_cast<Marker*>(item)->setPen(pen);
     }
 }
 
 void ScatterChartItem::setBrush(const QBrush& brush)
 {
     foreach(QGraphicsItem* item , m_items.childItems()) {
-            static_cast<QAbstractGraphicsShapeItem*>(item)->setBrush(brush);
+            static_cast<Marker*>(item)->setBrush(brush);
      }
 }
 

@@ -15,15 +15,8 @@ class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QXYSeries
 
 public:
     enum MarkerShape {
-        // TODO: to be defined by the graphics design
-        // TODO: marker shapes: "x", star, rectangle, tilted rect, triangle, circle, dot
-        MarkerShapeDefault = 0,
-        MarkerShapeX,
-        MarkerShapeRectangle,
-        MarkerShapeRoundedRectangle,
-        MarkerShapeTiltedRectangle,
-        MarkerShapeTriangle,
-        MarkerShapeCircle
+        MarkerShapeCircle,
+        MarkerShapeRectangle
     };
 
 public:

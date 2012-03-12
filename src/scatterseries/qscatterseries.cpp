@@ -27,13 +27,8 @@
 
     This enum describes the shape used when rendering marker items.
 
-    \value MarkerShapeDefault
-    \value MarkerShapeX
-    \value MarkerShapeRectangle
-    \value MarkerShapeRoundedRectangle
-    \value MarkerShapeTiltedRectangle
-    \value MarkerShapeTriangle
     \value MarkerShapeCircle
+    \value MarkerShapeRectangle
 */
 
 /*!
@@ -54,7 +49,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 QScatterSeries::QScatterSeries(QObject *parent) :
     QXYSeries(parent),
-    m_shape(QScatterSeries::MarkerShapeDefault),
+    m_shape(QScatterSeries::MarkerShapeCircle),
     m_size(9.0)
 {
 }

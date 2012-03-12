@@ -169,13 +169,19 @@ void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int in
     Q_ASSERT(item);
     Q_ASSERT(series);
 
-    // Use a base color for brush
-    item->setBrush(m_seriesColors.at(index % m_seriesColors.size()));
+    QPen pen;
+    QBrush brush;
 
-    // Take pen near from gradient start, effectively using a lighter color for outline
-    QPen pen(QBrush(Qt::SolidPattern), 3);
-    pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
-    item->setPen(pen);
+    if (pen == series->pen()) {
+        pen.setColor(colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1.0));
+        pen.setWidthF(2);
+        series->setPen(pen);
+    }
+
+    if (brush == series->brush()) {
+        QBrush brush(m_seriesColors.at(count % m_seriesColors.size()));
+        series->setBrush(brush);
+    }
 }
 
 void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int index)

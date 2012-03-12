@@ -111,11 +111,16 @@ void QXYSeries::replace(const QPointF& point)
 }
 
 /*!
-  Removes current \a x and y value.
+  Removes current \a x and \a y value.
 */
-void QXYSeries::remove(qreal x)
+void QXYSeries::remove(qreal x,qreal y)
 {
-    int index = m_x.indexOf(x);
+    int index =-1;
+    do{
+        index = m_x.indexOf(x,index+1);
+    }while(index !=-1 && m_y.at(index)!=y);
+
+    if(index==-1) return;
     emit pointRemoved(index);
     m_x.remove(index);
     m_y.remove(index);
@@ -126,7 +131,7 @@ void QXYSeries::remove(qreal x)
 */
 void QXYSeries::remove(const QPointF& point)
 {
-    remove(point.x());
+    remove(point.x(),point.y());
 }
 
 /*!

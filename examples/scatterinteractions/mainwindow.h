@@ -16,7 +16,7 @@ public:
     ~MainWindow();
 
 private Q_SLOTS:
-    void clickPoint(QPointF coordinate);
+    void handleClickedPoint(const QPointF& point);
 
 private:
     QScatterSeries *m_scatter;
