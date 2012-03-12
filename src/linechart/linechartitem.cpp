@@ -12,9 +12,9 @@ LineChartItem::LineChartItem(QLineSeries* series,QGraphicsItem *parent):XYChartI
 m_series(series),
 m_items(this)
 {
-	//m_items.setZValue(ChartPresenter::LineChartZValue);
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
+    QObject::connect(this,SIGNAL(clicked()),series,SIGNAL(clicked()));
     handleUpdated();
 }
 
@@ -115,6 +115,11 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->setClipRect(clipRect());
     painter->drawPath(m_path);
     painter->restore();
+}
+
+void LineChartItem::mousePressEvent( QGraphicsSceneMouseEvent * event )
+{
+    emit clicked();
 }
 
 #include "moc_linechartitem_p.cpp"

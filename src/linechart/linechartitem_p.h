@@ -27,8 +27,12 @@ public:
 public slots:
     void handleUpdated();
 
+signals:
+    void clicked();
+
 protected:
     virtual void setGeometry(QVector<QPointF>& points);
+    void mousePressEvent( QGraphicsSceneMouseEvent * event );
 
 private:
     void createPoints(int count);

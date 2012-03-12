@@ -22,6 +22,9 @@ public:
 	void setPointsVisible(bool visible);
 	bool pointsVisible() const {return m_pointsVisible;}
 
+signals:
+    void clicked();
+
 public: // from QChartSeries
 	virtual QSeriesType type() const {return QSeries::SeriesTypeLine;}
     friend QDebug operator<< (QDebug d, const QLineSeries series);
