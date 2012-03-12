@@ -63,6 +63,7 @@ void ChartTheme::decorate(QChart* chart)
 {
     chart->setChartBackgroundBrush(m_backgroundGradient);
 }
+/*
 //TODO helper to by removed later
 void ChartTheme::decorate(ChartItem* item, QSeries* series,int count)
 {
@@ -118,7 +119,7 @@ void ChartTheme::decorate(ChartItem* item, QSeries* series,int count)
     }
 
 }
-
+*/
 void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series,int count)
 {
     QPen pen;

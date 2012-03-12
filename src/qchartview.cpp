@@ -381,4 +381,9 @@ QChart::AnimationOptions QChartView::animationOptions() const
     return m_chart->animationOptions();
 }
 
+void QChartView::scroll(int dx,int dy)
+{
+	m_chart->scroll(dx,dy);
+}
+
 QTCOMMERCIALCHART_END_NAMESPACE

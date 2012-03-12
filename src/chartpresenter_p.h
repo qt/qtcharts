@@ -49,10 +49,10 @@ public:
     void zoomIn(const QRectF& rect);
     void zoomOut();
     void zoomReset();
-
-
+    void scroll(int dx,int dy);
 private:
     void createConnections();
+    void resetAllElements();
 
 public slots:
     void handleSeriesAdded(QSeries* series,Domain* domain);

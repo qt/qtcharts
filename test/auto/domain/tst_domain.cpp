@@ -95,7 +95,7 @@ void tst_Domain::handleAxisRangeXChanged()
     QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal, qreal)));
     QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal, qreal)));
 
-    domain.handleAxisRangeXChanged(min, max);
+    domain.handleAxisRangeXChanged(min, max,0);
 
     QList<QVariant> arg0 = spy0.first();
     QVERIFY(arg0.at(0).toReal() == min);
@@ -132,7 +132,7 @@ void tst_Domain::handleAxisRangeYChanged()
     QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal, qreal)));
     QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal, qreal)));
 
-    domain.handleAxisRangeYChanged(min, max);
+    domain.handleAxisRangeYChanged(min, max,0);
 
     QList<QVariant> arg0 = spy0.first();
     QVERIFY(arg0.at(2).toReal() == min);

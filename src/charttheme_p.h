@@ -35,7 +35,7 @@ public:
     static ChartTheme* createTheme(QChart::ChartTheme theme);
     QChart::ChartTheme id() const {return m_id;}
     void decorate(QChart* chart);
-    void decorate(ChartItem* item, QSeries* series,int count);
+    //void decorate(ChartItem* item, QSeries* series,int count);
     void decorate(BarPresenter* item, QBarSeries* series,int count);
     void decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count);
     void decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count);

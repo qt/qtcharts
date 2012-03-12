@@ -72,6 +72,7 @@ public:
     void zoomIn(const QRectF& rect);
     void zoomOut();
     void zoomReset();
+    void scroll(int dx,int dy);
 
     QChartAxis* axisX() const;
     QChartAxis* axisY() const;

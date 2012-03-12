@@ -41,6 +41,8 @@ public:
     void zoomIn(const QRect& rect);
     void zoomOut();
 
+    void scroll(int dx,int dy);
+
     void setRubberBandPolicy(const RubberBandPolicy );
     RubberBandPolicy rubberBandPolicy() const;
 

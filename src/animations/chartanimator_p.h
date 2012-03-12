@@ -2,6 +2,7 @@
 #define CHARTANIMATOR_P_H_
 #include "qchartglobal.h"
 #include "chartanimation_p.h"
+#include <QPointF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -13,6 +14,8 @@ class AxisItem;
 class ChartAnimator : public QObject {
 
 public:
+	//TODO: this should be flags in case of two state at the time
+	enum State{ShowState, ScrollUpState, ScrollDownState, ScrollLeftState,ScrollRightState,ZoomInState,ZoomOutState};
     ChartAnimator(QObject *parent = 0);
     virtual ~ChartAnimator();
 
@@ -26,8 +29,12 @@ public:
     void updateLayout(XYChartItem* item, QVector<QPointF>& layout);
     void applyLayout(AxisItem* item, QVector<qreal>& layout);
 
+    void setState(State state,const QPointF& point = QPointF());
+
 private:
      QMap<ChartItem*,ChartAnimation*> m_animations;
+     State m_state;
+     QPointF m_point;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

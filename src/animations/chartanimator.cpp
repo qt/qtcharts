@@ -59,28 +59,60 @@ void ChartAnimator::applyLayout(AxisItem* item , QVector<qreal>& newLayout)
 
     if(newLayout.count()==0) return;
 
-    if(item->zoomFactor()<0) {
+    switch(m_state)
+	{
+    	case ZoomOutState: {
+    			QRectF rect = item->geometry();
+    			oldLayout.resize(newLayout.count());
 
-        QRectF rect = item->geometry();
-        oldLayout.resize(newLayout.count());
+    			for(int i=0,j=oldLayout.count()-1;i<(oldLayout.count()+1)/2;i++,j--)
+    			{
+    				oldLayout[i]= item->axisType()==AxisItem::X_AXIS?rect.left():rect.bottom();
+    				oldLayout[j]= item->axisType()==AxisItem::X_AXIS?rect.right():rect.top();
+    			}
+    		}
+    	break;
+		case ZoomInState: {
+			int index = qMin(oldLayout.count()*(item->axisType()==AxisItem::X_AXIS?m_point.x():(1 -m_point.y())),newLayout.count()-1.0);
+			oldLayout.resize(newLayout.count());
 
-        for(int i=0,j=oldLayout.count()-1;i<(oldLayout.count()+1)/2;i++,j--)
-        {
-            oldLayout[i]= item->axisType()==AxisItem::X_AXIS?rect.left():rect.bottom();
-            oldLayout[j]= item->axisType()==AxisItem::X_AXIS?rect.right():rect.top();
-        }
+			for(int i=0;i<oldLayout.count();i++)
+			{
+				oldLayout[i]= oldLayout[index];
+			}
+		}
+		break;
+		case ScrollDownState:
+		case ScrollRightState: {
+			oldLayout.resize(newLayout.count());
 
-    }
-    else {
+			for(int i=0, j=i+1;i<oldLayout.count()-1;i++,j++)
+			{
+				oldLayout[i]= oldLayout[j];
+			}
+		}
+		break;
+		case ScrollUpState:
+		case ScrollLeftState: {
+			oldLayout.resize(newLayout.count());
 
-        int index = qMin(oldLayout.count()*item->zoomFactor(),newLayout.count()-1.0);
-        oldLayout.resize(newLayout.count());
+			for(int i=oldLayout.count()-1, j=i-1;i>0;i--,j--)
+			{
+				oldLayout[i]= oldLayout[j];
+			}
+		}
+		break;
+		default: {
+			oldLayout.resize(newLayout.count());
+			QRectF rect = item->geometry();
+			for(int i=0, j=oldLayout.count()-1;i<oldLayout.count();i++,j--)
+			{
+				oldLayout[i]= item->axisType()==AxisItem::X_AXIS?rect.left():rect.top();
+			}
+		}
+		break;
+	}
 
-        for(int i=0;i<oldLayout.count();i++)
-        {
-            oldLayout[i]= oldLayout[index]; //axisType()==X_AXIS?rect.center.x():rect.center().y();
-        }
-    }
 
     if(animation->state()!=QAbstractAnimation::Stopped) {
         animation->stop();
@@ -136,6 +168,12 @@ void ChartAnimator::updateLayout(XYChartItem* item, QVector<QPointF>& newPoints)
     animation->updateValues(newPoints);
 
     QTimer::singleShot(0,animation,SLOT(start()));
+}
+
+void ChartAnimator::setState(State state,const QPointF& point)
+{
+	m_state=state;
+	m_point=point;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

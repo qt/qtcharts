@@ -65,7 +65,7 @@ public:
 signals:
 	void minChanged(qreal min);
 	void maxChanged(qreal max);
-	void rangeChanged(qreal min, qreal max);
+	void rangeChanged(qreal min, qreal max,int ticksCount);
 
 //interal signal
 	void updated();

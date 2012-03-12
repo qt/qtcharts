@@ -22,6 +22,7 @@ public:
 
     void zoomInDomain(const QRectF& rect, const QSizeF& size);
     void zoomOutDomain(const QRectF& rect, const QSizeF& size);
+    void scrollDomain(int dx,int dy,const QSizeF& size);
 
     Domain* domain(QSeries* series) const;
     Domain* domain(QChartAxis* axis) const;

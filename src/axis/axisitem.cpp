@@ -21,8 +21,7 @@ m_labels(parent),
 m_axis(parent),
 m_min(0),
 m_max(0),
-m_ticksCount(0),
-m_zoomFactor(0)
+m_ticksCount(0)
 {
     //initial initialization
     m_axis.setZValue(ChartPresenter::AxisZValue);
@@ -328,12 +327,6 @@ void AxisItem::handleAxisCategoriesUpdated()
 void AxisItem::handleAxisUpdated()
 {
 
-    int count = m_chartAxis->ticksCount();
-
-    if(m_ticksCount!=count){
-    	//handleTicksCountChanged(count);
-    }
-
     if(isEmpty()) return;
 
     if(m_chartAxis->isAxisVisible()) {
@@ -376,29 +369,13 @@ void AxisItem::handleAxisUpdated()
 
 }
 
-void AxisItem::handleTicksCountChanged(int count)
+void AxisItem::handleRangeChanged(qreal min, qreal max,int tickCount)
 {
-	m_ticksCount=count;
-
-	if(isEmpty()) return;
-	QVector<qreal> layout = calculateLayout();
-	updateLayout(layout);
-}
-
-void AxisItem::handleRangeChanged(qreal min, qreal max)
-{
-
-    if(m_min<min || m_max>max){
-        m_zoomFactor = (min + (max-min)/2 - m_min)/(m_max - m_min);
-    }
-    else
-        m_zoomFactor=-1;
-
     m_min = min;
     m_max = max;
+    m_ticksCount = tickCount;
 
-
-    m_ticksCount = qrand()%10;
+    /*= qrand()%10;
 
     while(m_ticksCount<2){
         m_ticksCount = qrand()%10;
@@ -406,6 +383,7 @@ void AxisItem::handleRangeChanged(qreal min, qreal max)
 
     qDebug()<<"Warning : This is testing . Simulating new random ticks "<<  m_ticksCount;
     //m_chartAxis->setTicksCount(m_ticksCount);
+*/
 
     if(isEmpty()) return;
     QVector<qreal> layout = calculateLayout();

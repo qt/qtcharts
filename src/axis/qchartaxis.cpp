@@ -342,7 +342,7 @@ void QChartAxis::setRange(qreal min, qreal max)
     }
 
     if(changed) {
-        emit rangeChanged(m_min,m_max);
+        emit rangeChanged(m_min,m_max,m_ticksCount);
     }
 }
 
@@ -357,8 +357,8 @@ void QChartAxis::handleAxisRangeChanged(qreal min, qreal max)
 void QChartAxis::setTicksCount(int count)
 {
 	if(m_ticksCount!=count) {
-	m_ticksCount=count;
-	emit updated();
+		m_ticksCount=count;
+		emit rangeChanged(m_min,m_max,m_ticksCount);
 	}
 }
 

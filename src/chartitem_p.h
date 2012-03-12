@@ -16,7 +16,7 @@ public:
     m_animator(0){};
     //TODO make pure
     virtual void handleGeometryChanged(const QRectF&){};
-    virtual void handleDomainChanged(const Domain& domain){};
+    virtual void handleDomainChanged(qreal,qreal,qreal,qreal){};
 
     void setAnimator(ChartAnimator* animator){
         m_animator=animator;

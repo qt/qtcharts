@@ -6,7 +6,9 @@ Domain::Domain(QObject* parent):QObject(parent),
 m_minX(0),
 m_maxX(0),
 m_minY(0),
-m_maxY(0)
+m_maxY(0),
+m_tickXCount(5),
+m_tickYCount(5)
 {
 }
 
@@ -16,21 +18,28 @@ Domain::~Domain()
 
 void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
+	setRange(minX, maxX, minY, maxY, m_tickXCount, m_tickYCount);
+}
+
+void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY, int tickXCount,int tickYCount)
+{
 	bool changed = false;
 
-	if(m_minX!=minX || m_maxX!=maxX)
+	if(m_minX!=minX || m_maxX!=maxX || m_tickXCount!=tickXCount)
 	{
 		 m_minX=minX;
 		 m_maxX=maxX;
+		 m_tickXCount=tickXCount;
 		 changed=true;
-		 emit rangeXChanged(minX,maxX);
+		 emit rangeXChanged(minX,maxX, m_tickXCount);
 	}
 
-	if(m_minY!=minY || m_maxY!=maxY){
+	if(m_minY!=minY || m_maxY!=maxY || m_tickYCount!=tickYCount){
 		 m_minY=minY;
 		 m_maxY=maxY;
+		 m_tickYCount=tickYCount;
 		 changed=true;
-		 emit rangeYChanged(minY,maxY);
+		 emit rangeYChanged(minY,maxY, m_tickYCount);
 	}
 
   if(changed){
@@ -95,8 +104,8 @@ void Domain::zoomIn(const QRectF& rect, const QSizeF& size)
     m_maxY = m_maxY - dy * rect.top();
 
     emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
-    emit rangeXChanged(m_minX, m_maxX);
-    emit rangeYChanged(m_minY, m_maxY);
+    emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
+    emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
 }
 
 void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
@@ -110,18 +119,37 @@ void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
     m_minY = m_maxY - dy * size.height();
 
     emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
-    emit rangeXChanged(m_minX, m_maxX);
-    emit rangeYChanged(m_minY, m_maxY);
+    emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
+    emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
 }
 
-void Domain::handleAxisRangeXChanged(qreal min,qreal max)
+void Domain::move(int dx,int dy,const QSizeF& size)
 {
-    setRangeX(min,max);
+    qreal x = spanX() / size.width();
+    qreal y = spanY() / size.height();
+
+    if(dx!=0){
+    m_minX = m_minX + x * dx;
+    m_maxX = m_maxX + x * dx;
+    emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
+    }
+    if(dy!=0){
+    m_minY = m_minY + y * dy;
+    m_maxY = m_maxY + y * dy;
+    emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
+    }
+
+    emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
 }
 
-void Domain::handleAxisRangeYChanged(qreal min,qreal max)
+void Domain::handleAxisRangeXChanged(qreal min,qreal max,int tickCount)
 {
-    setRangeY(min,max);
+	 setRange(min,max,m_minY, m_maxY,tickCount,m_tickYCount);
+}
+
+void Domain::handleAxisRangeYChanged(qreal min,qreal max,int tickCount)
+{
+	 setRange(m_minX, m_maxX, min, max,m_tickXCount, tickCount);
 }
 
 bool operator== (const Domain &domain1, const Domain &domain2)

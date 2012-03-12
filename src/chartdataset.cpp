@@ -47,9 +47,8 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 
     if(!domain) {
         domain = new Domain();
-
-        QObject::connect(axisY,SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeYChanged(qreal,qreal)));
-        QObject::connect(axisX(),SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeXChanged(qreal,qreal)));
+        QObject::connect(axisY,SIGNAL(rangeChanged(qreal,qreal,int)),domain,SLOT(handleAxisRangeYChanged(qreal,qreal,int)));
+        QObject::connect(axisX(),SIGNAL(rangeChanged(qreal,qreal,int)),domain,SLOT(handleAxisRangeXChanged(qreal,qreal,int)));
         //initialize
         m_axisDomainMap.insert(axisY,domain);
         emit axisAdded(axisY,domain);
@@ -276,6 +275,15 @@ Domain* ChartDataSet::domain(QChartAxis* axis) const
 QChartAxis* ChartDataSet::axis(QSeries* series) const
 {
 	return m_seriesAxisMap.value(series);
+}
+
+void ChartDataSet::scrollDomain(int dx,int dy,const QSizeF& size)
+{
+	 QMapIterator<QChartAxis*, Domain*> i( m_axisDomainMap);
+	 	while (i.hasNext()) {
+	        i.next();
+	        i.value()->move(dx,dy,size);
+	    }
 }
 
 #include "moc_chartdataset_p.cpp"

@@ -316,6 +316,19 @@ QChart::AnimationOptions QChart::animationOptions() const
     return m_presenter->animationOptions();
 }
 
+void QChart::scroll(int dx,int dy)
+{
+	//temporary
+	if(dx>0)
+	 m_presenter->scroll(m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+	if(dx<0)
+	 m_presenter->scroll(-m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+	if(dy>0)
+	 m_presenter->scroll(0,m_presenter->geometry().width()/(axisY()->ticksCount()-1));
+	if(dy<0)
+	 m_presenter->scroll(0,-m_presenter->geometry().width()/(axisY()->ticksCount()-1));
+}
+
 #include "moc_qchart.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
