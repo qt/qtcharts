@@ -56,7 +56,7 @@ public:
         // TODO: COLOR_WINDOWTEXT for text color?
         // TODO: COLOR_INFOTEXT for tooltip text color?
         // TODO: COLOR_INFOBK for tooltip background color?
-#elif Q_OS_LINUX
+#elif defined(Q_OS_LINUX)
         // TODO: replace this dummy theme with linux specific theme
         m_seriesColors << QRgb(0xff707070);
         m_seriesColors << QRgb(0xffA0A0A0);
