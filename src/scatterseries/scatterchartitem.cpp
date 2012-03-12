@@ -6,6 +6,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+
+
+
+
+
+
 ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *parent) :
     XYChartItem(series,parent),
     m_series(series),
@@ -113,7 +119,8 @@ void ScatterChartItem::setGeometry(QVector<QPointF>& points)
     for(int i=0; i< points.size();i++) {
         QGraphicsItem* item = items.at(i);
         const QPointF& point = points.at(i);
-        item->setPos(point.x()-1,point.y()-1);
+        const QRectF& rect = item->boundingRect();
+        item->setPos(point.x()-rect.width()/2,point.y()-rect.height()/2);
         if(!clipRect().contains(point)) {
             item->setVisible(false);
         }

@@ -3,7 +3,7 @@
 
 #include "qchartglobal.h"
 #include "xychartitem_p.h"
-#include <QGraphicsItem>
+#include <QGraphicsEllipseItem>
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

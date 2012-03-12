@@ -8,17 +8,14 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    resize(400, 300);
-    setWindowFlags(Qt::FramelessWindowHint);
-
     QChartView *chartView = new QChartView(this);
     chartView->setChartTitle("Click to play with points");
     chartView->setRenderHint(QPainter::Antialiasing);
     setCentralWidget(chartView);
 
     m_scatter = new QScatterSeries();
-    for(qreal x(0.5); x <= 5.0; x += 0.5) {
-        for(qreal y(0.5); y <= 5.0; y += 0.5) {
+    for(qreal x(0.5); x <= 4.0; x += 0.5) {
+        for(qreal y(0.5); y <= 4.0; y += 0.5) {
             *m_scatter << QPointF(x, y);
         }
     }
