@@ -7,18 +7,29 @@ class ChartThemeIcy: public ChartTheme
 public:
     ChartThemeIcy():ChartTheme(QChart::ChartThemeIcy)
     {
-        m_seriesColors << QRgb(0xff0d2673);
-        m_seriesColors << QRgb(0xff2685bf);
-        m_seriesColors << QRgb(0xff3dadd9);
-        m_seriesColors << QRgb(0xff62c3d9);
-
+        // Series
+        m_seriesColors << QRgb(0x0d2673);
+        m_seriesColors << QRgb(0x2685bf);
+        m_seriesColors << QRgb(0x3dadd9);
+        m_seriesColors << QRgb(0x62c3d9);
         generateSeriesGradients();
 
+        // Background
         QLinearGradient backgroundGradient;
-        backgroundGradient.setColorAt(0.0, QRgb(0xffebebeb));
-        backgroundGradient.setColorAt(1.0, QRgb(0xfff8f9fb));
+        backgroundGradient.setColorAt(0.0, QRgb(0xebebeb));
+        backgroundGradient.setColorAt(1.0, QRgb(0xf8f9fb));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
         m_backgroundGradient = backgroundGradient;
+
+        // Axes and other
+        m_masterFont = QFont();
+        m_axisLinePen = QPen(QRgb(0x0f0f0f));
+        m_axisLinePen.setWidth(2);
+        m_axisLabelBrush = QBrush(QRgb(0x3f3f3f));
+        m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
+        m_backgroundShadesPen = Qt::NoPen;
+        m_gridLinePen = QPen(QRgb(0x0f0f0f));
+        m_gridLinePen.setWidth(2);
     }
 };
 

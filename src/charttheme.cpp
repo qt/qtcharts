@@ -197,16 +197,6 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int index)
     }
 }
 
-
-void ChartTheme::decorate(QChartAxis* axis, AxisItem* item)
-{
-    //TODO: dummy defults for now
-    axis->setLabelsBrush(Qt::black);
-    axis->setLabelsPen(Qt::NoPen);
-    axis->setShadesPen(Qt::NoPen);
-    axis->setShadesOpacity(0.5);
-}
-
 void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int index)
 {
     Q_ASSERT(item);
@@ -232,6 +222,31 @@ void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int inde
 //    QPen pen(brush, 3);
 //    pen.setColor(color);
 //    presenter->m_markerPen = pen;
+}
+
+void ChartTheme::decorate(QChartAxis* axis, AxisItem* item)
+{
+    Q_ASSERT(axis);
+    Q_ASSERT(item);
+
+    if (axis->isAxisVisible()) {
+        axis->setLabelsBrush(m_axisLabelBrush);
+        axis->setLabelsPen(m_axisLabelPen);
+        // TODO: check the axis type (x or y) should define whether to show the shades or not
+        if (m_backgroundShades == BackgroundShadesBoth
+                || m_backgroundShades == BackgroundShadesVertical /*&& x axis ?*/
+                || m_backgroundShades == BackgroundShadesHorizontal /* && y axis*/) {
+            axis->setShadesPen(m_backgroundShadesPen);
+            axis->setShadesBrush(m_backgroundShadesBrush);
+        } else {
+            // The shades not supposed to be shown for this axis, clear possible brush and pen
+            axis->setShadesPen(Qt::NoPen);
+            axis->setShadesBrush(Qt::NoBrush);
+        }
+        axis->setAxisPen(m_axisLinePen);
+        axis->setGridLinePen(m_gridLinePen);
+        axis->setLabelsFont(m_masterFont);
+    }
 }
 
 void ChartTheme::generateSeriesGradients()

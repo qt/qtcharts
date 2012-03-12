@@ -29,6 +29,14 @@ class QAreaSeries;
 
 class ChartTheme
 {
+public:
+    enum BackgroundShadesMode {
+        BackgroundShadesNone = 0,
+        BackgroundShadesVertical,
+        BackgroundShadesHorizontal,
+        BackgroundShadesBoth
+    };
+
 protected:
     explicit ChartTheme(QChart::ChartTheme id =  QChart::ChartThemeDefault);
 public:
@@ -44,8 +52,8 @@ public:
     void decorate(AreaChartItem* item, QAreaSeries* series, int index);
     void decorate(ScatterChartItem* presenter, QScatterSeries* series, int index);
     void decorate(PiePresenter* item, QPieSeries* series, int index);
-    void decorate(QChartAxis* axis,AxisItem* item);
     void decorate(SplineChartItem* presenter, QSplineSeries* series, int index);
+    void decorate(QChartAxis* axis, AxisItem* item);
 
 public: // utils
     void generateSeriesGradients();
@@ -58,13 +66,14 @@ protected:
     QList<QGradient> m_seriesGradients;
     QLinearGradient m_backgroundGradient;
 
-    // TODO: Add something like the following to themes:
-//    QPen axisLinePen;
-//    QPen backgroundHorizontalGridPen;
-//    QPen backgroundVerticalGridPen;
-//    // FillAll, FillEverySecondRow, FillEverySecondColumn, FillEverySecondRowAndColumn, FillNone
-//    int backgroundType;
-//    QFont masterFont;
+    QFont m_masterFont;
+    QPen m_axisLinePen;
+    QBrush m_axisLabelBrush;
+    QPen m_axisLabelPen;
+    QPen m_backgroundShadesPen;
+    QBrush m_backgroundShadesBrush;
+    BackgroundShadesMode m_backgroundShades;
+    QPen m_gridLinePen;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
