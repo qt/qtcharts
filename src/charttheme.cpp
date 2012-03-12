@@ -63,63 +63,7 @@ void ChartTheme::decorate(QChart* chart)
 {
     chart->setChartBackgroundBrush(m_backgroundGradient);
 }
-/*
-//TODO helper to by removed later
-void ChartTheme::decorate(ChartItem* item, QSeries* series,int count)
-{
-    switch(series->type())
-    {
-        case QSeries::SeriesTypeLine: {
-            QLineSeries* s = static_cast<QLineSeries*>(series);
-            LineChartItem* i = static_cast<LineChartItem*>(item);
-            decorate(i,s,count);
-            break;
-        }
-        case QSeries::SeriesTypeArea: {
-                   QAreaSeries* s = static_cast<QAreaSeries*>(series);
-                   AreaChartItem* i = static_cast<AreaChartItem*>(item);
-                   decorate(i,s,count);
-                   break;
-        }
-        case QSeries::SeriesTypeBar: {
-            QBarSeries* b = static_cast<QBarSeries*>(series);
-            BarPresenter* i = static_cast<BarPresenter*>(item);
-            decorate(i,b,count);
-            break;
-        }
-        case QSeries::SeriesTypeStackedBar: {
-            QStackedBarSeries* s = static_cast<QStackedBarSeries*>(series);
-            StackedBarPresenter* i = static_cast<StackedBarPresenter*>(item);
-            decorate(i,s,count);
-            break;
-        }
-        case QSeries::SeriesTypePercentBar: {
-            QPercentBarSeries* s = static_cast<QPercentBarSeries*>(series);
-            PercentBarPresenter* i = static_cast<PercentBarPresenter*>(item);
-            decorate(i,s,count);
-            break;
-        }
-        case QSeries::SeriesTypeScatter: {
-            QScatterSeries* s = qobject_cast<QScatterSeries*>(series);
-            Q_ASSERT(s);
-            ScatterChartItem* i = static_cast<ScatterChartItem*>(item);
-            Q_ASSERT(i);
-            decorate(i, s, count);
-            break;
-        }
-        case QSeries::SeriesTypePie: {
-            QPieSeries* s = static_cast<QPieSeries*>(series);
-            PiePresenter* i = static_cast<PiePresenter*>(item);
-            decorate(i,s,count);
-            break;
-        }
-        default:
-        qDebug()<<"Wrong item to be decorated by theme";
-        break;
-    }
 
-}
-*/
 void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series,int count)
 {
     QPen pen;

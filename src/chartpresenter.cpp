@@ -283,6 +283,7 @@ void ChartPresenter::setChartTheme(QChart::ChartTheme theme)
 	if(m_chartTheme && m_chartTheme->id() == theme) return;
     delete m_chartTheme;
     m_chartTheme = ChartTheme::createTheme(theme);
+    m_chartTheme->decorate(m_chart);
     resetAllElements();
 }
 
