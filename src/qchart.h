@@ -77,7 +77,7 @@ public:
     QChartAxis* axisX() const;
     QChartAxis* axisY() const;
 
-    QLegend* legend() const;
+    QLegend* legend();
 
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
@@ -85,6 +85,7 @@ protected:
 private:
     inline void createChartBackgroundItem();
     inline void createChartTitleItem();
+    inline void createLegend();
 
 private:
     Q_DISABLE_COPY(QChart)

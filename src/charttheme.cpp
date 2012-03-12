@@ -1,5 +1,6 @@
 #include "charttheme_p.h"
 #include "qchart.h"
+#include "qlegend.h"
 #include "qchartaxis.h"
 #include <QTime>
 
@@ -62,6 +63,11 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 void ChartTheme::decorate(QChart* chart)
 {
     chart->setChartBackgroundBrush(m_backgroundGradient);
+}
+
+void ChartTheme::decorate(QLegend* legend)
+{
+    legend->setBackgroundBrush(m_backgroundGradient);
 }
 
 void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series, int index)

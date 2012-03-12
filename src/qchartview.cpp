@@ -364,7 +364,6 @@ QLegend* QChartView::legend() const
     return m_chart->legend();
 }
 
-
 /*!
     Sets animation \a options for the chart
 */

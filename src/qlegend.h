@@ -20,6 +20,9 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     QRectF boundingRect() const;
 
+    void setBackgroundBrush(const QBrush& brush);
+    QBrush backgroundBrush() const;
+
 signals:
     
 public slots:
@@ -34,6 +37,8 @@ private:
     QRectF mBoundingRect;
     QList<QSeries*> mSeriesList;
     QList<LegendMarker*> mMarkers;
+
+    QBrush mBackgroundBrush;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

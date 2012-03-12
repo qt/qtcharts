@@ -138,13 +138,10 @@ int main(int argc, char *argv[])
     drilldownChart->setChartTitle(seasonSeries->title());
     //! [6]
 
-    // Disable axis, since they don't really apply to bar chart
-//    drilldownChart->axisX()->setAxisVisible(false);
     drilldownChart->axisX()->setGridLineVisible(false);
-//    drilldownChart->axisX()->setLabelsVisible(false);
 
     QLegend* l = drilldownChart->legend();
-    l->handleGeometryChanged(QRectF(20,20,100,100));
+    l->handleGeometryChanged(QRectF(50,270,300,20));
 
     window.setCentralWidget(drilldownChart);
     window.resize(400, 300);

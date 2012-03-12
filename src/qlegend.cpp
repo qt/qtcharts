@@ -22,7 +22,6 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0)
     {
-        qDebug() << "LegendMarker::paint" << mBoundingRect;
         painter->setBrush(mBrush);
         painter->drawRect(mBoundingRect);
     }
@@ -38,23 +37,35 @@ private:
 QLegend::QLegend(QGraphicsItem *parent)
     : QGraphicsObject(parent)
     ,mBoundingRect(0,0,1,1)
+    ,mBackgroundBrush(Qt::darkGray)     // TODO: from theme?
 {
 }
 
 void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    // TODO: layout for text. using marker layout + magic for now.
+    painter->setBrush(mBackgroundBrush);
+    painter->drawRect(mBoundingRect);
+
     foreach(LegendMarker* m, mMarkers) {
         QRectF r = m->boundingRect();
         painter->setPen(m->color());
-        // TODO: r.y + r.height is incorrect. should be r.y. Find the bug, and remove the hack
-        painter->drawText(r.x() + 20, r.y()+r.height(), m->name());
+        painter->drawText(r.x() + 20, r.y() + r.height(), m->name());
     }
 }
 
 QRectF QLegend::boundingRect() const
 {
     return mBoundingRect;
+}
+
+void QLegend::setBackgroundBrush(const QBrush& brush)
+{
+    mBackgroundBrush = brush;
+}
+
+QBrush QLegend::backgroundBrush() const
+{
+    return mBackgroundBrush;
 }
 
 void QLegend::handleSeriesAdded(QSeries* series,Domain* domain)
@@ -91,11 +102,10 @@ void QLegend::dataChanged()
             marker->setBrush(s->legendEntries().at(i).mBrush);
             marker->setName(s->legendEntries().at(i).mName);
             mMarkers.append(marker);
-            childItems().append(marker);
+//            childItems().append(marker);
         }
     }
 }
-
 
 void QLegend::layoutChanged()
 {
@@ -110,14 +120,17 @@ void QLegend::layoutChanged()
 
     // TODO: better layout, this is just concept.
     // Leave some space around markers like this: | x x x x |
-    qreal steps = mMarkers.count() * 2 + 1;
+    qreal steps = mMarkers.count();
 
+    qreal xStep = mBoundingRect.width() / steps;
     qreal yStep = mBoundingRect.height() / steps;
-    qreal x = 0;
-    qreal y = yStep;    // first step is empty
+    qreal x = mBoundingRect.x() + 5;
+    qreal y = mBoundingRect.y() + (mBoundingRect.height() - markerSize.height())/2;
     foreach (LegendMarker* m, mMarkers) {
+        qDebug() << "marker x:" << x;
+        qDebug() << "marker y:" << y;
         m->setBoundingRect(QRectF(x,y,markerSize.width(),markerSize.height()));
-        y += yStep*2;   // 2 steps per marker (marker and empty space)
+        x += xStep;
     }
 }
 

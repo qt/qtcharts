@@ -27,7 +27,8 @@ public:
         AxisZValue,
         LineChartZValue,
         ScatterSeriesZValue,
-        PieSeriesZValue
+        PieSeriesZValue,
+        LegendZValue
     };
 
     ChartPresenter(QChart* chart,ChartDataSet *dataset);
