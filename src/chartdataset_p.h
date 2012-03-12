@@ -25,6 +25,7 @@ public:
     void scrollDomain(int dx,int dy,const QSizeF& size);
 
     int seriesCount(QSeries::QSeriesType type);
+    int seriesIndex(QSeries *series);
 
     Domain* domain(QSeries* series) const;
     Domain* domain(QChartAxis* axis) const;

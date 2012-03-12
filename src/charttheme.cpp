@@ -64,7 +64,7 @@ void ChartTheme::decorate(QChart* chart)
     chart->setChartBackgroundBrush(m_backgroundGradient);
 }
 
-void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series,int count)
+void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series, int index)
 {
     QPen pen;
     QBrush brush;
@@ -72,7 +72,7 @@ void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series,int count)
     if (pen != series->pen()){
        item->setPen(series->pen());
     } else {
-        pen.setColor(colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1.0));
+        pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
         pen.setWidthF(2);
         item->setPen(pen);
     }
@@ -80,106 +80,106 @@ void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series,int count)
     if (brush != series->brush()) {
        item->setBrush(series->brush());
     } else {
-       QBrush brush(m_seriesColors.at(count % m_seriesColors.size()));
+       QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
        item->setBrush(brush);
     }
 }
 
 
-void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int count)
+void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int index)
 {
     QPen pen;
     if(pen != series->pen()){
         item->setLinePen(series->pen());
         return;
     }
-    pen.setColor(m_seriesColors.at(count%m_seriesColors.size()));
+    pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
     pen.setWidthF(2);
     item->setLinePen(pen);
 }
 
-void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int count)
+void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int index)
 {
     QList<QBarSet*> sets = series->barSets();
     for (int i=0; i<sets.count(); i++) {
         qreal pos = 0.5;
         if (sets.count() > 1)
             pos = (qreal) i / (qreal) (sets.count() - 1);
-        QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
+        QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
         sets.at(i)->setBrush(QBrush(c));
 
         // Pick label color as far as possible from bar color (within gradient).
         // 0.3 is magic number that was picked as value that gave enough contrast with icy theme gradient :)
         // TODO: better picking of label color?
         if (pos < 0.3) {
-            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1);
+            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1);
         } else {
-            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0);
+            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0);
         }
         sets.at(i)->setFloatingValuePen(QPen(c));
     }
 }
 
-void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count)
+void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,int index)
 {
     QList<QBarSet*> sets = series->barSets();
     for (int i=0; i<sets.count(); i++) {
         qreal pos = 0.5;
         if (sets.count() > 1)
             pos = (qreal) i / (qreal) (sets.count() - 1);
-        QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
+        QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
         sets.at(i)->setBrush(QBrush(c));
 
         if (pos < 0.3) {
-            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1);
+            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1);
         } else {
-            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0);
+            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0);
         }
         sets.at(i)->setFloatingValuePen(QPen(c));
     }
 }
 
-void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count)
+void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,int index)
 {
     QList<QBarSet*> sets = series->barSets();
     for (int i=0; i<sets.count(); i++) {
         qreal pos = 0.5;
         if (sets.count() > 1)
             pos = (qreal) i / (qreal) (sets.count() - 1);
-        QColor c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
+        QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
         sets.at(i)->setBrush(QBrush(c));
 
         if (pos < 0.3) {
-            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1);
+            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1);
         } else {
-            c = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0);
+            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0);
         }
         sets.at(i)->setFloatingValuePen(QPen(c));
     }
 }
 
-void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int count)
+void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int index)
 {
     Q_ASSERT(item);
     Q_ASSERT(series);
 
     // Use a base color for brush
-    item->setBrush(m_seriesColors.at(count % m_seriesColors.size()));
+    item->setBrush(m_seriesColors.at(index % m_seriesColors.size()));
 
     // Take pen near from gradient start, effectively using a lighter color for outline
     QPen pen(QBrush(Qt::SolidPattern), 3);
-    pen.setColor(colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 1.0));
+    pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
     item->setPen(pen);
 }
 
-void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int count)
+void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int index)
 {
     // Get color for a slice from a gradient linearly, beginning from the start of the gradient
     for (int i(0); i < series->slices().count(); i++) {
         qreal pos = (qreal) i / (qreal) series->count();
-        QColor penColor = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), 0.1);
+        QColor penColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.1);
         series->slices().at(i)->setSlicePen(penColor);
-        QColor brushColor = colorAt(m_seriesGradients.at(count % m_seriesGradients.size()), pos);
+        QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
         series->slices().at(i)->setSliceBrush(brushColor);
     }
 }
@@ -194,7 +194,7 @@ void ChartTheme::decorate(QChartAxis* axis, AxisItem* item)
     axis->setShadesOpacity(0.5);
 }
 
-void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int count)
+void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int index)
 {
     Q_ASSERT(item);
     Q_ASSERT(series);
@@ -204,12 +204,12 @@ void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int coun
     if(pen != series->pen()){
         item->setLinePen(series->pen());
     }else{
-        pen.setColor(m_seriesColors.at(count%m_seriesColors.size()));
+        pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
         pen.setWidthF(series->pen().widthF());
         item->setLinePen(series->pen());
     }
 
-//    QColor color = m_seriesColors.at(count % m_seriesColors.size());
+//    QColor color = m_seriesColors.at(index % m_seriesColors.size());
     // TODO: define alpha in the theme? or in the series?
     //color.setAlpha(120);
 

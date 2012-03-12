@@ -35,16 +35,16 @@ public:
     static ChartTheme* createTheme(QChart::ChartTheme theme);
     QChart::ChartTheme id() const {return m_id;}
     void decorate(QChart* chart);
-    //void decorate(ChartItem* item, QSeries* series,int count);
-    void decorate(BarPresenter* item, QBarSeries* series,int count);
-    void decorate(StackedBarPresenter* item, QStackedBarSeries* series,int count);
-    void decorate(PercentBarPresenter* item, QPercentBarSeries* series,int count);
-    void decorate(LineChartItem* item, QLineSeries* series,int count);
-    void decorate(AreaChartItem* item, QAreaSeries* series,int count);
-    void decorate(ScatterChartItem* presenter, QScatterSeries* series, int count);
-    void decorate(PiePresenter* item, QPieSeries* series, int count);
+    //void decorate(ChartItem* item, QSeries* series,int index);
+    void decorate(BarPresenter* item, QBarSeries* series, int index);
+    void decorate(StackedBarPresenter* item, QStackedBarSeries* series, int index);
+    void decorate(PercentBarPresenter* item, QPercentBarSeries* series, int index);
+    void decorate(LineChartItem* item, QLineSeries* series, int index);
+    void decorate(AreaChartItem* item, QAreaSeries* series, int index);
+    void decorate(ScatterChartItem* presenter, QScatterSeries* series, int index);
+    void decorate(PiePresenter* item, QPieSeries* series, int index);
     void decorate(QChartAxis* axis,AxisItem* item);
-    void decorate(SplineChartItem* presenter, QSplineSeries* series, int count);
+    void decorate(SplineChartItem* presenter, QSplineSeries* series, int index);
 
 public: // utils
     void generateSeriesGradients();

@@ -258,6 +258,19 @@ int ChartDataSet::seriesCount(QSeries::QSeriesType type)
     return count;
 }
 
+int ChartDataSet::seriesIndex(QSeries *series)
+{
+    int count(-1);
+    QMapIterator<QSeries*, QChartAxis*> i(m_seriesAxisMap);
+    while (i.hasNext()) {
+        i.next();
+        count++;
+        if (i.key() == series)
+            return count;
+    }
+    return count;
+}
+
 QChartAxis* ChartDataSet::axisY(QSeries* series) const
 {
     if(series == 0) return m_axisY;
