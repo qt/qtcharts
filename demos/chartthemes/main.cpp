@@ -71,14 +71,16 @@ public:
         chart->setRenderHint(QPainter::Antialiasing);
         baseLayout->addWidget(chart, 1, 0);
         {
-            QLineSeries *series1 = new QLineSeries(chart);
-            foreach (Data data, m_dataTable.first())
-                series1->add(data.first);
-            QLineSeries *series2 = new QLineSeries(chart);
-            foreach (Data data, m_dataTable.last())
-                series2->add(data.first);
-            QAreaSeries *series = new QAreaSeries(series1, series2);
-            chart->addSeries(series);
+            for (int i(0); i < m_dataTable.count(); i++) {
+                QLineSeries *series1 = new QLineSeries(chart);
+                QLineSeries *series2 = new QLineSeries(chart);
+                foreach (Data data, m_dataTable[i]) {
+                    series1->add(data.first);
+                    series2->add(QPointF(data.first.x(), 0.0));
+                }
+                QAreaSeries *area = new QAreaSeries(series1, series2);
+                chart->addSeries(area);
+            }
         }
         m_charts << chart;
 
