@@ -34,9 +34,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-   \fn QPen QChartAxis::gridPen() const
+   \fn QPen QChartAxis::gridLinePen() const
    \brief  Returns pen used to draw grid.
-    \sa setGridPen()
+    \sa setGridLinePen()
 */
 
 /*!

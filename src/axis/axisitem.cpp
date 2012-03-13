@@ -254,7 +254,6 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 
 	Q_ASSERT(labels.size() == ticksList.size());
 	Q_ASSERT(layout.size() == ticksList.size());
-	Q_ASSERT(layout.size() == m_ticksCount);
 
 	switch (m_type)
 	{
@@ -271,9 +270,9 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 				QPointF center = labelItem->boundingRect().center();
 				labelItem->setTransformOriginPoint(center.x(), center.y());
 				labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
-				if(i%2 && i+1 < layout.size() && i>1) {
-					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2));
-					rectItem->setRect(layout[i],m_rect.top(),layout[i+1]-layout[i],m_rect.height());
+				if((i+1)%2 && i>1) {
+					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
+					rectItem->setRect(layout[i-1],m_rect.top(),layout[i]-layout[i-1],m_rect.height());
 				}
 				lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
 				lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
@@ -294,9 +293,9 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 				QPointF center = labelItem->boundingRect().center();
 				labelItem->setTransformOriginPoint(center.x(), center.y());
 				labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
-				if(i%2 && i+1 < layout.size() && i>1) {
-					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2));
-					rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i]-layout[i+1]);
+				if((i+1)%2 && i>1) {
+					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
+					rectItem->setRect(m_rect.left(),layout[i-1],m_rect.width(),layout[i-1]-layout[i]);
 				}
 				lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
 				lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
