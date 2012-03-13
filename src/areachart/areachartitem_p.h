@@ -25,7 +25,6 @@ public:
     LineChartItem* upperLineItem() const { return m_upper ;}
     LineChartItem* lowerLineItem() const { return m_lower ;}
 
-    void setPointsVisible(bool visible);
     void updatePath();
 public slots:
     void handleUpdated();
@@ -39,8 +38,11 @@ private:
     QPainterPath m_path;
     QRectF m_rect;
     QRectF m_clipRect;
-    QPen m_pen;
+    QPen m_linePen;
+    QPen m_pointPen;
     QBrush m_brush;
+    bool m_pointsVisible;
+
 };
 
 class AreaBoundItem : public LineChartItem

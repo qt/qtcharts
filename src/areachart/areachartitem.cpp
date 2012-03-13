@@ -11,7 +11,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 AreaChartItem::AreaChartItem(QAreaSeries* areaSeries,QGraphicsItem *parent):ChartItem(parent),
 m_series(areaSeries),
 m_upper(0),
-m_lower(0)
+m_lower(0),
+m_pointsVisible(false)
 {
     //m_items.setZValue(ChartPresenter::LineChartZValue);
     m_upper = new AreaBoundItem(this,m_series->upperSeries());
@@ -63,8 +64,12 @@ void AreaChartItem::updatePath()
 
 void AreaChartItem::handleUpdated()
 {
-    m_pen = m_series->pen();
+    m_pointsVisible = m_series->pointsVisible();
+    m_linePen = m_series->pen();
     m_brush = m_series->brush();
+    m_pointPen = m_series->pen();
+    m_pointPen.setWidthF(2*m_pointPen.width());
+
     update();
 }
 
@@ -90,10 +95,15 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget);
     Q_UNUSED(option);
     painter->save();
-    painter->setPen(m_pen);
+    painter->setPen(m_linePen);
     painter->setBrush(m_brush);
     painter->setClipRect(m_clipRect);
     painter->drawPath(m_path);
+    if(m_pointsVisible){
+           painter->setPen(m_pointPen);
+           painter->drawPoints(m_upper->points());
+           if(m_lower)  painter->drawPoints(m_lower->points());
+    }
     painter->restore();
 }
 
