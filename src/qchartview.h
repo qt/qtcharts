@@ -2,6 +2,7 @@
 #define QCHARTWIDGET_H
 
 #include "qchartglobal.h"
+#include "qchartaxis.h"
 #include "qseries.h"
 #include "qchart.h"
 #include <QGraphicsView>
