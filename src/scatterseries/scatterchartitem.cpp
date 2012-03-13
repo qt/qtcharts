@@ -92,7 +92,11 @@ void ScatterChartItem::markerSelected(Marker* marker)
 
 void ScatterChartItem::setGeometry(QVector<QPointF>& points)
 {
-    if(points.size()==0) return;
+    if(points.size()==0)
+    {
+        XYChartItem::setGeometry(points);
+        return;
+    }
 
     int diff = XYChartItem::points().size() - points.size();
 

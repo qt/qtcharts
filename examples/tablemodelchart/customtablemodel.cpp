@@ -24,7 +24,7 @@ int CustomTableModel::rowCount(const QModelIndex & parent) const
 
 int CustomTableModel::columnCount(const QModelIndex & parent) const
 {
-    return 2;
+    return 3;
 }
 
 QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation, int role ) const
@@ -116,11 +116,29 @@ Qt::ItemFlags CustomTableModel::flags ( const QModelIndex & index ) const
 bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & parent)
 {
     beginInsertRows(QModelIndex(), row /*dataTable.count()*/, row + count - 1);
-    for (int i = 0; i < count; i++)
+    for (int i = row; i < row + count; i++)
     {
-        m_points.append(QPointF());
-        m_labels.append("");
+        m_points.insert(row, QPointF());
+        m_labels.insert(row,(""));
     }
     endInsertRows();
+    return true;
+}
+
+bool CustomTableModel::removeRows ( int row, int count, const QModelIndex & parent)
+{
+    if (row > this->rowCount() - 1)
+        return false;
+    if (row < 0)
+        row = 0;
+    if (row + count > rowCount())
+        return false;
+    beginRemoveRows(parent, row, row + count - 1);
+    for (int i = row; i < row + count; i++)
+    {
+        m_points.removeAt(row);
+        m_labels.removeAt(row);
+    }
+    endRemoveRows();
     return true;
 }

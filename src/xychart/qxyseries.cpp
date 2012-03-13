@@ -121,9 +121,10 @@ void QXYSeries::remove(qreal x,qreal y)
     }while(index !=-1 && m_y.at(index)!=y);
 
     if(index==-1) return;
-    emit pointRemoved(index);
+
     m_x.remove(index);
     m_y.remove(index);
+    emit pointRemoved(index);
 }
 
 /*!
@@ -265,12 +266,23 @@ void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     emit pointReplaced(topLeft.row());
 }
 
+void QXYSeries::modelDataAdded(QModelIndex parent, int start, int end)
+{
+    emit pointAdded(start);
+}
+
+void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
+{
+    emit pointRemoved(start);
+}
+
 bool QXYSeries::setModel(QAbstractItemModel* model) {
     m_model = model;
     //    for (int i = 0; i < m_model->rowCount(); i++)
     //        emit pointAdded(i);
     connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-    //        connect(m_model,SIGNAL(), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+    connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+    connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
 }
 
 void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)

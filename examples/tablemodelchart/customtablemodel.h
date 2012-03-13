@@ -18,6 +18,7 @@ public:
     bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
     Qt::ItemFlags flags ( const QModelIndex & index ) const;
     bool insertRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
+    bool removeRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
     
     //signals:
     

@@ -3,8 +3,14 @@
 
 #include <QtGui/QWidget>
 #include "qchartview.h"
+#include "qxyseries.h"
 
 QTCOMMERCIALCHART_USE_NAMESPACE
+
+class CustomTableModel;
+class QTableView;
+class QRadioButton;
+//class QSeries;
 
 class TableWidget : public QWidget
 {
@@ -15,9 +21,19 @@ public:
     ~TableWidget();
 
 
+    public slots:
+    void addRow();
+    void removeRow();
+    void updateChartType();
 
     private:
     QChartView* chartView;
+    QXYSeries* series;
+    CustomTableModel* m_model;
+    QTableView* tableView;
+    QRadioButton* lineRadioButton;
+    QRadioButton* splineRadioButton;
+    QRadioButton* scatterRadioButton;
 };
 
 #endif // TABLEWIDGET_H

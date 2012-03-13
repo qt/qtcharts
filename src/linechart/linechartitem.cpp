@@ -31,7 +31,11 @@ QPainterPath LineChartItem::shape() const
 
 void LineChartItem::setGeometry(QVector<QPointF>& points)
 {
-    if(points.size()==0) return;
+    if(points.size()==0)
+    {
+        XYChartItem::setGeometry(points);
+        return;
+    }
 
     QList<QGraphicsItem*> items = m_items.childItems();
 

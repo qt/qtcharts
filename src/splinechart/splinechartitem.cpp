@@ -31,7 +31,11 @@ QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 void SplineChartItem::setGeometry(QVector<QPointF>& points)
 {
 
-    if(points.size()==0) return;
+    if(points.size()==0)
+    {
+        XYChartItem::setGeometry(points);
+        return;
+    }
 
     QPainterPath splinePath;
     const QPointF& point = points.at(0);

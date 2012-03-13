@@ -42,11 +42,13 @@ public:
     bool setModel(QAbstractItemModel* model);
     QAbstractItemModel* model() {return m_model;}
 
-    void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
+    virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
 //    void setModelMappingY(int modelLineIndex, Qt::Orientation orientation = Qt::Vertical);
 
     private slots:
         void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
+        void modelDataAdded(QModelIndex parent, int start, int end);
+        void modelDataRemoved(QModelIndex parent, int start, int end);
 
 signals:
     void updated();
