@@ -40,7 +40,7 @@ integrated_build:{
         # This is a hack to make binaries to use the internal version of the QtCommercial Charts library on OSX
         exists($$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET) {
             QMAKE_POST_LINK+=install_name_tool -change "libQtCommercialChartd.1.dylib" $$CHART_BUILD_LIB_DIR"/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
-            message($$QMAKE_POST_LINK)
+            #message($$QMAKE_POST_LINK)
         }
     }
 
