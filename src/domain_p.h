@@ -13,7 +13,6 @@ public:
     virtual ~Domain();
 
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
-    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCount,int tickYCount);
     void setRangeX(qreal min, qreal max);
     void setRangeY(qreal min, qreal max);
     void setMinX(qreal min);
@@ -48,8 +47,10 @@ signals:
 
 
 public slots:
-	void handleAxisRangeXChanged(qreal min,qreal max,int tickCount);
-	void handleAxisRangeYChanged(qreal min,qreal max,int tickCount);
+    void handleAxisRangeXChanged(qreal min,qreal max);
+    void handleAxisRangeYChanged(qreal min,qreal max);
+    void handleAxisXTicksCountChanged(int tickCount);
+    void handleAxisYTicksCountChanged(int tickCount);
 
 private:
     qreal m_minX;

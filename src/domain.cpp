@@ -18,26 +18,19 @@ Domain::~Domain()
 
 void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
-	setRange(minX, maxX, minY, maxY, m_tickXCount, m_tickYCount);
-}
-
-void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY, int tickXCount,int tickYCount)
-{
 	bool changed = false;
 
-	if(m_minX!=minX || m_maxX!=maxX || m_tickXCount!=tickXCount)
+	if(m_minX!=minX || m_maxX!=maxX)
 	{
 		 m_minX=minX;
 		 m_maxX=maxX;
-		 m_tickXCount=tickXCount;
 		 changed=true;
 		 emit rangeXChanged(minX,maxX, m_tickXCount);
 	}
 
-	if(m_minY!=minY || m_maxY!=maxY || m_tickYCount!=tickYCount){
+	if(m_minY!=minY || m_maxY!=maxY){
 		 m_minY=minY;
 		 m_maxY=maxY;
-		 m_tickYCount=tickYCount;
 		 changed=true;
 		 emit rangeYChanged(minY,maxY, m_tickYCount);
 	}
@@ -142,14 +135,30 @@ void Domain::move(int dx,int dy,const QSizeF& size)
     emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
 }
 
-void Domain::handleAxisRangeXChanged(qreal min,qreal max,int tickCount)
+void Domain::handleAxisRangeXChanged(qreal min,qreal max)
 {
-	 setRange(min,max,m_minY, m_maxY,tickCount,m_tickYCount);
+	 setRange(min,max,m_minY, m_maxY);
 }
 
-void Domain::handleAxisRangeYChanged(qreal min,qreal max,int tickCount)
+void Domain::handleAxisRangeYChanged(qreal min,qreal max)
 {
-	 setRange(m_minX, m_maxX, min, max,m_tickXCount, tickCount);
+	 setRange(m_minX, m_maxX, min, max);
+}
+
+void Domain::handleAxisXTicksCountChanged(int tickCount)
+{
+    if(m_tickXCount!=tickCount){
+        m_tickXCount=tickCount;
+        emit rangeXChanged(m_minX,m_maxX, m_tickXCount);
+    }
+}
+
+void Domain::handleAxisYTicksCountChanged(int tickCount)
+{
+    if(m_tickYCount!=tickCount){
+        m_tickYCount=tickCount;
+        emit rangeYChanged(m_minY,m_maxY, m_tickYCount);
+    }
 }
 
 bool operator== (const Domain &domain1, const Domain &domain2)

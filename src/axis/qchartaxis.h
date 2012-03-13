@@ -68,13 +68,15 @@ public:
 signals:
 	void minChanged(qreal min);
 	void maxChanged(qreal max);
-	void rangeChanged(qreal min, qreal max,int ticksCount);
+	void rangeChanged(qreal min, qreal max);
+	void ticksCountChanged(int count);
 
 //interal signal
 	void updated();
 //internal slot
 public slots:
 	void handleAxisRangeChanged(qreal min, qreal max);
+    void handleAxisTicksChanged(int count);
 
 private:
     bool m_axisVisible;

@@ -342,13 +342,8 @@ void QChartAxis::setRange(qreal min, qreal max)
     }
 
     if(changed) {
-        emit rangeChanged(m_min,m_max,m_ticksCount);
+        emit rangeChanged(m_min,m_max);
     }
-}
-
-void QChartAxis::handleAxisRangeChanged(qreal min, qreal max)
-{
-   setRange(min,max);
 }
 
 /*!
@@ -358,7 +353,7 @@ void QChartAxis::setTicksCount(int count)
 {
 	if(m_ticksCount!=count) {
 		m_ticksCount=count;
-		emit rangeChanged(m_min,m_max,m_ticksCount);
+		emit ticksCountChanged(count);
 	}
 }
 
@@ -384,6 +379,17 @@ void QChartAxis::hide()
     m_labelsVisible=false;
     m_shadesVisible=false;
     emit updated();
+}
+
+void QChartAxis::handleAxisRangeChanged(qreal min, qreal max)
+{
+    qDebug()<<__FUNCTION__<<min<<max;
+   setRange(min,max);
+}
+
+void QChartAxis::handleAxisTicksChanged(int count)
+{
+    setTicksCount(count);
 }
 
 #include "moc_qchartaxis.cpp"

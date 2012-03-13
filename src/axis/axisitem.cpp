@@ -95,6 +95,7 @@ QStringList AxisItem::createLabels(int ticks, qreal min, qreal max) const
             labels << QString::number(value);
         }
         else {
+
             QString label = categories->label(value);
             labels << label;
         }
@@ -370,19 +371,12 @@ void AxisItem::handleAxisUpdated()
 
 void AxisItem::handleRangeChanged(qreal min, qreal max,int tickCount)
 {
+    qDebug()<<min<<max<<tickCount;
+    if(min==max || tickCount<2) return;
+
     m_min = min;
     m_max = max;
-    m_ticksCount = tickCount;
-
-    /*= qrand()%10;
-
-    while(m_ticksCount<2){
-        m_ticksCount = qrand()%10;
-    }
-
-    qDebug()<<"Warning : This is testing . Simulating new random ticks "<<  m_ticksCount;
-    //m_chartAxis->setTicksCount(m_ticksCount);
-*/
+    m_ticksCount= tickCount;
 
     if(isEmpty()) return;
     QVector<qreal> layout = calculateLayout();
