@@ -1,38 +1,13 @@
 #include "qchartglobal.h"
 #include "qlegend.h"
 #include "qseries.h"
+#include "legendmarker_p.h"
 #include <QPainter>
 #include <QPen>
 
+#include <QGraphicsSceneEvent>
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-// TODO: this to legendmarker_p.h header
-class LegendMarker : public QGraphicsItem
-{
-public:
-    LegendMarker(QGraphicsItem *parent = 0) : QGraphicsItem(parent)
-      ,mBoundingRect(0,0,1,1)
-    {}
-
-    void setBoundingRect(const QRectF rect) { mBoundingRect = rect; }
-    void setBrush(const QBrush brush) { mBrush = brush; }
-    void setName(const QString name) { mName = name; }
-    QString name() const { return mName; }
-    QColor color() const { return mBrush.color(); }
-
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0)
-    {
-        painter->setBrush(mBrush);
-        painter->drawRect(mBoundingRect);
-    }
-
-    QRectF boundingRect() const { return mBoundingRect; }
-
-private:
-    QRectF mBoundingRect;
-    QBrush mBrush;
-    QString mName;
-};
 
 QLegend::QLegend(QGraphicsItem *parent)
     : QGraphicsObject(parent)
@@ -49,7 +24,7 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     foreach(LegendMarker* m, mMarkers) {
         QRectF r = m->boundingRect();
         painter->setPen(m->color());
-        painter->drawText(r.x() + 20, r.y() + r.height(), m->name());
+        painter->drawText(r.x() + r.width()*2, r.y() + r.height(), m->name());
     }
 }
 
@@ -90,19 +65,23 @@ void QLegend::handleGeometryChanged(const QRectF& size)
 
 void QLegend::dataChanged()
 {
-    foreach (QGraphicsItem* i, childItems()) {
-        delete i;
+    foreach (LegendMarker* marker, mMarkers) {
+        disconnect(marker,SIGNAL(clicked(QSeries*,QString)),this,SIGNAL(clicked(QSeries*,QString)));
+        disconnect(marker,SIGNAL(rightClicked(QSeries*,QString)),this,SIGNAL(rightClicked(QSeries*,QString)));
+        delete marker;
     }
 
     mMarkers.clear();
 
     foreach (QSeries* s, mSeriesList) {
         for (int i=0; i<s->legendEntries().count(); i++) {
-            LegendMarker *marker = new LegendMarker(this);
+            LegendMarker *marker = new LegendMarker(s, this);
             marker->setBrush(s->legendEntries().at(i).mBrush);
             marker->setName(s->legendEntries().at(i).mName);
             mMarkers.append(marker);
-//            childItems().append(marker);
+            childItems().append(marker);
+            connect(marker,SIGNAL(clicked(QSeries*,QString)),this,SIGNAL(clicked(QSeries*,QString)));
+            connect(marker,SIGNAL(rightClicked(QSeries*,QString)),this,SIGNAL(rightClicked(QSeries*,QString)));
         }
     }
 }

@@ -14,14 +14,16 @@ SOURCES += \
     qchart.cpp \
     qchartview.cpp \
     qseries.cpp \
-    qlegend.cpp
+    qlegend.cpp \
+    legendmarker.cpp
 PRIVATE_HEADERS += \
     chartdataset_p.h \
     chartitem_p.h \
     chartpresenter_p.h \
     charttheme_p.h \
-    domain_p.h
-PUBLIC_HEADERS += \ 
+    domain_p.h \
+    legendmarker_p.h
+PUBLIC_HEADERS += \
     qchart.h \
     qchartglobal.h \
     qseries.h \

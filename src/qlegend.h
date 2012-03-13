@@ -24,7 +24,10 @@ public:
     QBrush backgroundBrush() const;
 
 signals:
-    
+    // for interactions.
+    void clicked(QSeries* series, QString name);
+    void rightClicked(QSeries* series, QString name);
+
 public slots:
     void handleSeriesAdded(QSeries* series,Domain* domain);
     void handleSeriesRemoved(QSeries* series);

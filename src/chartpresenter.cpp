@@ -374,7 +374,7 @@ void ChartPresenter::scroll(int dx,int dy)
 
 	m_dataset->scrollDomain(dx,dy,geometry().size());
 
-	if(m_animator){
+    if(m_animator){
 		m_animator->setState(ChartAnimator::ShowState);
 	}
 }
