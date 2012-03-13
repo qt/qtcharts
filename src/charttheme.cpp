@@ -76,13 +76,13 @@ void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series, int index)
     QPen pen;
     QBrush brush;
 
-    if (pen != series->pen()){
+    if (pen == series->pen()){
         pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
         pen.setWidthF(2);
         series->setPen(pen);
     }
 
-    if (brush != series->brush()) {
+    if (brush == series->brush()) {
        QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
        series->setBrush(brush);
     }
@@ -92,10 +92,7 @@ void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series, int index)
 void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int index)
 {
     QPen pen;
-    if(pen != series->pen()){
-        series->setPen(series->pen());
-        return;
-    }else{
+    if(pen == series->pen()){
         pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
         pen.setWidthF(2);
         series->setPen(pen);

@@ -2,6 +2,7 @@
 #include "axisanimation_p.h"
 #include "xyanimation_p.h"
 #include "xychartitem_p.h"
+#include "areachartitem_p.h"
 #include <QTimer>
 
 Q_DECLARE_METATYPE(QVector<QPointF>)
@@ -21,7 +22,7 @@ ChartAnimator::~ChartAnimator()
 
 void ChartAnimator::addAnimation(AxisItem* item)
 {
-    AxisAnimation* animation = static_cast<AxisAnimation*>(m_animations.value(item));
+    ChartAnimation* animation = m_animations.value(item);
 
     if(!animation) {
         animation = new AxisAnimation(item);
@@ -33,7 +34,7 @@ void ChartAnimator::addAnimation(AxisItem* item)
 
 void ChartAnimator::addAnimation(XYChartItem*  item)
 {
-    XYAnimation* animation = static_cast<XYAnimation*>(m_animations.value(item));
+    ChartAnimation* animation = m_animations.value(item);
 
     if(!animation) {
         animation = new XYAnimation(item);
@@ -53,7 +54,7 @@ void ChartAnimator::applyLayout(AxisItem* item , QVector<qreal>& newLayout)
 {
     AxisAnimation* animation = static_cast<AxisAnimation*>(m_animations.value(item));
 
-    if(!animation) return;
+    Q_ASSERT(animation);
 
     QVector<qreal> oldLayout = item->layout();
 
@@ -133,7 +134,7 @@ void ChartAnimator::applyLayout(XYChartItem* item, QVector<QPointF>& newPoints)
 
     XYAnimation* animation = static_cast<XYAnimation*>(m_animations.value(item));
 
-    if(!animation) return;
+    Q_ASSERT(animation);
 
     QVector<QPointF> oldPoints = item->points();
 
@@ -160,7 +161,7 @@ void ChartAnimator::updateLayout(XYChartItem* item, QVector<QPointF>& newPoints)
 {
     XYAnimation* animation = static_cast<XYAnimation*>(m_animations.value(item));
 
-    if(!animation) return;
+    Q_ASSERT(animation);
 
     animation->setDuration(duration);
     animation->setAnimationType(XYAnimation::MoveDownAnimation);

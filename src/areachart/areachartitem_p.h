@@ -22,6 +22,9 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
+    LineChartItem* upperLineItem() const { return m_upper ;}
+    LineChartItem* lowerLineItem() const { return m_lower ;}
+
     void setPointsVisible(bool visible);
     void updatePath();
 public slots:

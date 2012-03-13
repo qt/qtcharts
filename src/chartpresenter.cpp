@@ -157,7 +157,8 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
         AreaChartItem* area = new AreaChartItem(areaSeries,m_chart);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
-          //  m_animator->addAnimation(area);
+           m_animator->addAnimation(area->upperLineItem());
+           if(areaSeries->lowerSeries())  m_animator->addAnimation(area->lowerLineItem());
         }
         m_chartTheme->decorate(area, areaSeries, m_dataset->seriesIndex(series));
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),area,SLOT(handleGeometryChanged(const QRectF&)));
@@ -267,7 +268,16 @@ void ChartPresenter::handleSeriesRemoved(QSeries* series)
 {
     ChartItem* item = m_chartItems.take(series);
     Q_ASSERT(item);
-    if(m_animator) m_animator->removeAnimation(item);
+    if(m_animator) {
+        //small hack to handle area animations
+        if(series->type()==QSeries::SeriesTypeArea){
+             QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
+             AreaChartItem* area = static_cast<AreaChartItem*>(item);
+             m_animator->removeAnimation(area->upperLineItem());
+             if(areaSeries->lowerSeries())  m_animator->addAnimation(area->lowerLineItem());
+        }else
+        m_animator->removeAnimation(item);
+    }
     delete item;
 }
 

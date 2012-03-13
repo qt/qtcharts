@@ -2,6 +2,7 @@
 #include <qlineseries.h>
 #include <qscatterseries.h>
 #include <qsplineseries.h>
+#include <qareaseries.h>
 #include <QTime>
 
 ChartView::ChartView(QWidget* parent):QChartView(parent),
@@ -30,6 +31,12 @@ m_index(0)
     QPen green(Qt::green);
     green.setWidth(3);
     series2->setPen(green);
+
+    QAreaSeries* series3 = new QAreaSeries(series0);
+    QPen yellow(Qt::black);
+    yellow.setWidth(3);
+    series3->setPen(yellow);
+    series3->setBrush(Qt::yellow);
 //![1]
 
 //![2]
@@ -50,6 +57,8 @@ m_index(0)
     m_titles<<chartTitle()+": ScatterChart";
     m_series<<series2;
     m_titles<<chartTitle()+": SplineChart";
+    m_series<<series3;
+    m_titles<<chartTitle()+": AreaChart";
 //![3]
     addSeries(series0);
     setChartTitle(m_titles.at(0));

@@ -9,6 +9,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartItem;
 class XYChartItem;
 class AxisItem;
+class AreaChartItem;
 
 
 class ChartAnimator : public QObject {
