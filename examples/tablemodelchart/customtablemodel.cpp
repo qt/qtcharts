@@ -115,6 +115,8 @@ Qt::ItemFlags CustomTableModel::flags ( const QModelIndex & index ) const
 
 bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & parent)
 {
+    if (row < 0)
+        row = 0;
     beginInsertRows(QModelIndex(), row /*dataTable.count()*/, row + count - 1);
     for (int i = row; i < row + count; i++)
     {

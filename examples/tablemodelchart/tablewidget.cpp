@@ -13,6 +13,7 @@
 TableWidget::TableWidget(QWidget *parent)
     : QWidget(parent)
 {
+    setGeometry(100, 100, 1000, 600);
     // create simple model for storing data
     // user's table data model
     m_model = new CustomTableModel;
@@ -20,7 +21,7 @@ TableWidget::TableWidget(QWidget *parent)
     tableView->setModel(m_model);
     tableView->setMinimumSize(340, 480);
 //    tableView->setItemDelegate(new QStyledItemDelegate);
-    chartView = new QChartView;
+    chartView = new QChartView(this);
     chartView->setMinimumSize(640, 480);
 
     // create
@@ -37,15 +38,19 @@ TableWidget::TableWidget(QWidget *parent)
 //    chartView->addSeries(series);
 
     // add, remove data buttons
-    QPushButton* addRowButton = new QPushButton("Add row");
-    connect(addRowButton, SIGNAL(clicked()), this, SLOT(addRow()));
+    QPushButton* addRowAboveButton = new QPushButton("Add row above");
+    connect(addRowAboveButton, SIGNAL(clicked()), this, SLOT(addRowAbove()));
+
+    QPushButton* addRowBelowButton = new QPushButton("Add row below");
+    connect(addRowBelowButton, SIGNAL(clicked()), this, SLOT(addRowBelow()));
 
     QPushButton* removeRowButton = new QPushButton("Remove row");
     connect(removeRowButton, SIGNAL(clicked()), this, SLOT(removeRow()));
 
     // buttons layout
     QVBoxLayout* buttonsLayout = new QVBoxLayout;
-    buttonsLayout->addWidget(addRowButton);
+    buttonsLayout->addWidget(addRowAboveButton);
+    buttonsLayout->addWidget(addRowBelowButton);
     buttonsLayout->addWidget(removeRowButton);
     buttonsLayout->addStretch();
 
@@ -74,7 +79,14 @@ TableWidget::TableWidget(QWidget *parent)
     setLayout(mainLayout);    
 }
 
-void TableWidget::addRow()
+void TableWidget::addRowAbove()
+{
+//    m_model->insertRow(m_model->rowCount());
+    m_model->insertRow(tableView->currentIndex().row());
+
+}
+
+void TableWidget::addRowBelow()
 {
 //    m_model->insertRow(m_model->rowCount());
     m_model->insertRow(tableView->currentIndex().row() + 1);

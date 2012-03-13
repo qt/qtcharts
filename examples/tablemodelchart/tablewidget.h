@@ -22,7 +22,8 @@ public:
 
 
     public slots:
-    void addRow();
+    void addRowAbove();
+    void addRowBelow();
     void removeRow();
     void updateChartType();
 
