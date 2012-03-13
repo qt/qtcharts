@@ -90,11 +90,11 @@ void ScatterChartItem::markerSelected(Marker* marker)
     emit clicked(QPointF(m_series->x(marker->index()), m_series->y(marker->index())));
 }
 
-void ScatterChartItem::setGeometry(QVector<QPointF>& points)
+void ScatterChartItem::setLayout(QVector<QPointF>& points)
 {
     if(points.size()==0)
     {
-        XYChartItem::setGeometry(points);
+        XYChartItem::setLayout(points);
         return;
     }
 
@@ -127,7 +127,7 @@ void ScatterChartItem::setGeometry(QVector<QPointF>& points)
 
     prepareGeometryChange();
     m_rect = clipRect();
-    XYChartItem::setGeometry(points);
+    XYChartItem::setLayout(points);
 }
 
 

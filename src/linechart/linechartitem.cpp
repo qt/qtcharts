@@ -29,11 +29,11 @@ QPainterPath LineChartItem::shape() const
     return m_path;
 }
 
-void LineChartItem::setGeometry(QVector<QPointF>& points)
+void LineChartItem::setLayout(QVector<QPointF>& points)
 {
     if(points.size()==0)
     {
-        XYChartItem::setGeometry(points);
+        XYChartItem::setLayout(points);
         return;
     }
 
@@ -49,7 +49,7 @@ void LineChartItem::setGeometry(QVector<QPointF>& points)
     m_path = linePath;
     m_rect = linePath.boundingRect();
 
-    XYChartItem::setGeometry(points);
+    XYChartItem::setLayout(points);
 }
 
 void LineChartItem::handleUpdated()

@@ -28,15 +28,15 @@ public slots:
     void handleGeometryChanged(const QRectF& size);
 
 protected:
-    virtual void setGeometry(QVector<QPointF>& points);
+    virtual void setLayout(QVector<QPointF>& points);
     QPointF calculateGeometryPoint(const QPointF& point) const;
     QPointF calculateGeometryPoint(int index) const;
     QPointF calculateDomainPoint(const QPointF& point) const;
     QVector<QPointF> calculateGeometryPoints() const;
 
 private:
-    void updatePoints(QVector<QPointF>& points);
-    void updatePoint(QVector<QPointF>& points);
+    void applyLayout(QVector<QPointF>& points);
+    void updateLayout(QVector<QPointF>& points);
     inline bool isEmpty();
 
 private:

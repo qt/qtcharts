@@ -25,7 +25,7 @@ public slots:
     void handleUpdated();
 
 protected:
-    void setGeometry(QVector<QPointF>& points);
+    void setLayout(QVector<QPointF>& points);
 
 private:
     QPointF calculateGeometryControlPoint(int index) const;

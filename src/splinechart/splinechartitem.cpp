@@ -28,12 +28,12 @@ QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
     return XYChartItem::calculateGeometryPoint(m_series->controlPoint(index));
 }
 
-void SplineChartItem::setGeometry(QVector<QPointF>& points)
+void SplineChartItem::setLayout(QVector<QPointF>& points)
 {
 
     if(points.size()==0)
     {
-        XYChartItem::setGeometry(points);
+        XYChartItem::setLayout(points);
         return;
     }
 
@@ -50,7 +50,7 @@ void SplineChartItem::setGeometry(QVector<QPointF>& points)
     prepareGeometryChange();
     m_path = splinePath;
     m_rect = splinePath.boundingRect();
-    XYChartItem::setGeometry(points);
+    XYChartItem::setLayout(points);
 }
 
 void SplineChartItem::setLinePen(const QPen& pen)

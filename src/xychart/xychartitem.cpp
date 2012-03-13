@@ -65,21 +65,21 @@ QPointF XYChartItem::calculateDomainPoint(const QPointF& point) const
     return QPointF(x,y);
 }
 
-void XYChartItem::updatePoints(QVector<QPointF>& points)
+void XYChartItem::applyLayout(QVector<QPointF>& points)
 {
     if(m_animator){
        m_animator->applyLayout(this,points);
     }
-       else  setGeometry(points);
+       else setLayout(points);
 
 }
 
-void XYChartItem::updatePoint(QVector<QPointF>& points)
+void XYChartItem::updateLayout(QVector<QPointF>& points)
 {
-    setGeometry(points);
+    setLayout(points);
 }
 
-void XYChartItem::setGeometry(QVector<QPointF>& points)
+void XYChartItem::setLayout(QVector<QPointF>& points)
 {
     m_points = points;
 }
@@ -94,7 +94,7 @@ void XYChartItem::handlePointAdded(int index)
     QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
     points.insert(index,point);
-    updatePoints(points);
+    updateLayout(points);
     update();
 }
 void XYChartItem::handlePointRemoved(int index)
@@ -104,7 +104,7 @@ void XYChartItem::handlePointRemoved(int index)
 //    QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
     points.remove(index);
-    updatePoints(points);
+    updateLayout(points);
     update();
 }
 
@@ -115,7 +115,7 @@ void XYChartItem::handlePointReplaced(int index)
     QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
     points.replace(index,point);
-    updatePoint(points);
+    updateLayout(points);
     update();
 }
 
@@ -128,7 +128,7 @@ void XYChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal 
 
     if(isEmpty()) return;
     QVector<QPointF> points = calculateGeometryPoints();
-    updatePoints(points);
+    applyLayout(points);
     update();
 }
 
@@ -141,7 +141,7 @@ void XYChartItem::handleGeometryChanged(const QRectF& rect)
 
     if(isEmpty()) return;
 	QVector<QPointF> points = calculateGeometryPoints();
-	updatePoints(points);
+	applyLayout(points);
 	update();
 }
 

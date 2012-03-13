@@ -40,16 +40,6 @@ QPainterPath AreaChartItem::shape() const
     return m_path;
 }
 
-void AreaChartItem::setPen(const QPen& pen)
-{
-    m_pen = pen;
-}
-
-void AreaChartItem::setBrush(const QBrush& brush)
-{
-    m_brush = brush;
-}
-
 void AreaChartItem::updatePath()
 {
     QPainterPath path;
@@ -73,8 +63,8 @@ void AreaChartItem::updatePath()
 
 void AreaChartItem::handleUpdated()
 {
-    setPen(m_series->pen());
-    setBrush(m_series->brush());
+    m_pen = m_series->pen();
+    m_brush = m_series->brush();
     update();
 }
 

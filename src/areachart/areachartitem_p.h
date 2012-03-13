@@ -22,8 +22,6 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
-    void setPen(const QPen& pen);
-    void setBrush(const QBrush& brush);
     void setPointsVisible(bool visible);
     void updatePath();
 public slots:
@@ -50,8 +48,8 @@ public:
 
     ~AreaBoundItem(){};
 
-    void setGeometry(QVector<QPointF>& points){
-        LineChartItem::setGeometry(points);
+    void setLayout(QVector<QPointF>& points){
+        LineChartItem::setLayout(points);
         m_item->updatePath();
     }
 

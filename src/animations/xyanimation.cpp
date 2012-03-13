@@ -82,7 +82,7 @@ void XYAnimation::updateCurrentValue (const QVariant & value )
 {
     if(state()!=QAbstractAnimation::Stopped){ //workaround
         QVector<QPointF> vector = qVariantValue<QVector<QPointF> >(value);
-        m_item->setGeometry(vector);
+        m_item->setLayout(vector);
     }
 }
 

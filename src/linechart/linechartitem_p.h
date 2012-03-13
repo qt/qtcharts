@@ -28,7 +28,7 @@ signals:
     void clicked(const QPointF& point);
 
 protected:
-    virtual void setGeometry(QVector<QPointF>& points);
+    void setLayout(QVector<QPointF>& points);
     void mousePressEvent( QGraphicsSceneMouseEvent * event );
 
 private:
