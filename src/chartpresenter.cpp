@@ -118,9 +118,8 @@ void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
     QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
     //initialize
     item->handleGeometryChanged(m_rect);
-    m_chartTheme->decorate(axis,item);
-    m_axisItems.insert(axis,item);
-
+    m_chartTheme->decorate(axis, m_chart);
+    m_axisItems.insert(axis, item);
 }
 
 void ChartPresenter::handleAxisRemoved(QChartAxis* axis)

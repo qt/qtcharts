@@ -28,6 +28,9 @@ public:
         m_axisLabelBrush = QBrush(QRgb(0x3f3f3f));
         m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
         m_backgroundShadesPen = Qt::NoPen;
+//        m_backgroundShadesBrush = QBrush(QColor(0x0f, 0x0f, 0x0f, 0x80));
+        m_backgroundShadesBrush = QBrush(QColor(0xff, 0xad, 0x00, 0x50));
+        m_backgroundShades = BackgroundShadesHorizontal;
         m_gridLinePen = QPen(QRgb(0x0f0f0f));
         m_gridLinePen.setWidth(2);
     }

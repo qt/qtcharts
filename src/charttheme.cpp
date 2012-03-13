@@ -218,18 +218,18 @@ void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int inde
 //    presenter->m_markerPen = pen;
 }
 
-void ChartTheme::decorate(QChartAxis* axis, AxisItem* item)
+void ChartTheme::decorate(QChartAxis* axis, QChart* parent)
 {
     Q_ASSERT(axis);
-    Q_ASSERT(item);
+    Q_ASSERT(parent);
 
     if (axis->isAxisVisible()) {
         axis->setLabelsBrush(m_axisLabelBrush);
         axis->setLabelsPen(m_axisLabelPen);
         // TODO: check the axis type (x or y) should define whether to show the shades or not
         if (m_backgroundShades == BackgroundShadesBoth
-                || m_backgroundShades == BackgroundShadesVertical /*&& x axis ?*/
-                || m_backgroundShades == BackgroundShadesHorizontal /* && y axis*/) {
+                || (m_backgroundShades == BackgroundShadesVertical && parent->axisX() == axis)
+                || (m_backgroundShades == BackgroundShadesHorizontal && parent->axisY() == axis)) {
             axis->setShadesPen(m_backgroundShadesPen);
             axis->setShadesBrush(m_backgroundShadesBrush);
         } else {

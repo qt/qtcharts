@@ -53,7 +53,7 @@ public:
     void decorate(ScatterChartItem* presenter, QScatterSeries* series, int index);
     void decorate(PiePresenter* item, QPieSeries* series, int index);
     void decorate(SplineChartItem* presenter, QSplineSeries* series, int index);
-    void decorate(QChartAxis* axis, AxisItem* item);
+    void decorate(QChartAxis* axis, QChart* parent);
 
 public: // utils
     void generateSeriesGradients();
