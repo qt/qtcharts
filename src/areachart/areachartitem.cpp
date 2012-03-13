@@ -1,6 +1,7 @@
 #include "areachartitem_p.h"
 #include "qareaseries.h"
 #include "qlineseries.h"
+#include "chartpresenter_p.h"
 #include <QPainter>
 
 
@@ -14,7 +15,7 @@ m_upper(0),
 m_lower(0),
 m_pointsVisible(false)
 {
-    //m_items.setZValue(ChartPresenter::LineChartZValue);
+    setZValue(ChartPresenter::LineChartZValue);
     m_upper = new AreaBoundItem(this,m_series->upperSeries());
     if(m_series->lowerSeries()){
     m_lower = new AreaBoundItem(this,m_series->lowerSeries());
