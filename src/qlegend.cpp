@@ -2,6 +2,17 @@
 #include "qlegend.h"
 #include "qseries.h"
 #include "legendmarker_p.h"
+#include "qxyseries.h"
+#include "qlineseries.h"
+#include "qareaseries.h"
+#include "qscatterseries.h"
+#include "qsplineseries.h"
+#include "qbarseries.h"
+#include "qstackedbarseries.h"
+#include "qpercentbarseries.h"
+#include "qbarset.h"
+#include "qpieseries.h"
+#include "qpieslice.h"
 #include <QPainter>
 #include <QPen>
 
@@ -23,7 +34,7 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 
     foreach(LegendMarker* m, mMarkers) {
         QRectF r = m->boundingRect();
-        painter->setPen(m->color());
+        painter->setBrush(m->brush());
         painter->drawText(r.x() + r.width()*2, r.y() + r.height(), m->name());
     }
 }
@@ -46,14 +57,76 @@ QBrush QLegend::backgroundBrush() const
 void QLegend::handleSeriesAdded(QSeries* series,Domain* domain)
 {
     mSeriesList.append(series);
-    dataChanged();
+
+    switch (series->type())
+    {
+    case QSeries::SeriesTypeLine: {
+
+        QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
+        createMarker(lineSeries);
+        break;
+    }
+    case QSeries::SeriesTypeArea: {
+
+        QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
+        createMarker(areaSeries->upperSeries());
+        createMarker(areaSeries->lowerSeries());
+        break;
+    }
+
+    case QSeries::SeriesTypeBar: {
+
+        QBarSeries* barSeries = static_cast<QBarSeries*>(series);
+        createMarkers(barSeries);
+        break;
+    }
+
+    case QSeries::SeriesTypeStackedBar: {
+
+        QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
+        createMarkers(stackedBarSeries);
+        break;
+    }
+
+    case QSeries::SeriesTypePercentBar: {
+
+        QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
+        createMarkers(percentBarSeries);
+        break;
+    }
+
+    case QSeries::SeriesTypeScatter: {
+
+        QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
+        createMarker(scatterSeries);
+        break;
+    }
+
+    case QSeries::SeriesTypePie: {
+
+        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+        createMarkers(pieSeries);
+        break;
+    }
+
+    case QSeries::SeriesTypeSpline: {
+
+        QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
+        break;
+    }
+    default: {
+        qDebug()<< "QLegend::handleSeriesAdded" << series->type() << "not implemented.";
+        break;
+    }
+    }
+
     layoutChanged();
 }
 
 void QLegend::handleSeriesRemoved(QSeries* series)
 {
+    // TODO: delete markers, disconnect.
     mSeriesList.removeOne(series);
-    dataChanged();
     layoutChanged();
 }
 
@@ -63,26 +136,40 @@ void QLegend::handleGeometryChanged(const QRectF& size)
     layoutChanged();
 }
 
-void QLegend::dataChanged()
+void QLegend::createMarker(QXYSeries* series)
 {
-    foreach (LegendMarker* marker, mMarkers) {
-        disconnect(marker,SIGNAL(clicked(QSeries*,QString)),this,SIGNAL(clicked(QSeries*,QString)));
-        disconnect(marker,SIGNAL(rightClicked(QSeries*,QString)),this,SIGNAL(rightClicked(QSeries*,QString)));
-        delete marker;
+    LegendMarker* marker = new LegendMarker(series,this);
+    marker->setName(series->name());
+    marker->setBrush(series->brush());
+    connect(marker,SIGNAL(clicked(QSeries*)),this,SIGNAL(markerClicked(QSeries*)));
+    connect(marker,SIGNAL(rightClicked(QSeries*)),this,SIGNAL(markerRightClicked(QSeries*)));
+    mMarkers.append(marker);
+    childItems().append(marker);
+}
+
+void QLegend::createMarkers(QBarSeries *series)
+{
+    foreach(QBarSet* s, series->barSets()) {
+        LegendMarker* marker = new LegendMarker(series,this);
+        marker->setName(s->name());
+        marker->setBrush(s->brush());
+        connect(marker,SIGNAL(clicked(QBarSet*)),this,SIGNAL(markerClicked(QBarSet*)));
+        connect(marker,SIGNAL(rightClicked(QBarSet*)),this,SIGNAL(markerRightClicked(QBarSet*)));
+        mMarkers.append(marker);
+        childItems().append(marker);
     }
+}
 
-    mMarkers.clear();
-
-    foreach (QSeries* s, mSeriesList) {
-        for (int i=0; i<s->legendEntries().count(); i++) {
-            LegendMarker *marker = new LegendMarker(s, this);
-            marker->setBrush(s->legendEntries().at(i).mBrush);
-            marker->setName(s->legendEntries().at(i).mName);
-            mMarkers.append(marker);
-            childItems().append(marker);
-            connect(marker,SIGNAL(clicked(QSeries*,QString)),this,SIGNAL(clicked(QSeries*,QString)));
-            connect(marker,SIGNAL(rightClicked(QSeries*,QString)),this,SIGNAL(rightClicked(QSeries*,QString)));
-        }
+void QLegend::createMarkers(QPieSeries *series)
+{
+    foreach(QPieSlice* s, series->slices()) {
+        LegendMarker* marker = new LegendMarker(series,this);
+        marker->setName(s->label());
+        marker->setBrush(s->sliceBrush());
+        connect(marker,SIGNAL(clicked(QPieSlice*)),this,SIGNAL(markerClicked(QPieSlice*)));
+        connect(marker,SIGNAL(rightClicked(QPieSlice*)),this,SIGNAL(markerRightClicked(QPieSlice*)));
+        mMarkers.append(marker);
+        childItems().append(marker);
     }
 }
 

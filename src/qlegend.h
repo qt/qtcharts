@@ -9,6 +9,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Domain;
 class LegendMarker;
+class QPieSlice;
+class QXYSeries;
+class QBarSet;
+class QBarSeries;
+class QPieSeries;
 
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsObject
 {
@@ -25,8 +30,12 @@ public:
 
 signals:
     // for interactions.
-    void clicked(QSeries* series, QString name);
-    void rightClicked(QSeries* series, QString name);
+    void clicked(QSeries* series);
+    void rightClicked(QSeries* series);
+    void clicked(QBarSet* barset);
+    void rightClicked(QBarSet* series);
+    void clicked(QPieSlice* slice);
+    void rightClicked(QPieSlice* series);
 
 public slots:
     void handleSeriesAdded(QSeries* series,Domain* domain);
@@ -34,8 +43,13 @@ public slots:
     void handleGeometryChanged(const QRectF& size);
 
 private:
-    void dataChanged();
+    // PIMPL --->
+    void createMarker(QXYSeries* series);
+    void createMarkers(QBarSeries* series);
+    void createMarkers(QPieSeries* series);
     void layoutChanged();
+    // <--- PIMPL
+
 
     QRectF mBoundingRect;
     QList<QSeries*> mSeriesList;

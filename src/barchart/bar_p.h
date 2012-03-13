@@ -40,10 +40,10 @@ Q_SIGNALS:
 
 private:
 
-    qreal mHeight;
-    qreal mWidth;
     qreal mXpos;
     qreal mYpos;
+    qreal mWidth;
+    qreal mHeight;
 
     QBrush mBrush;
     QPen mPen;

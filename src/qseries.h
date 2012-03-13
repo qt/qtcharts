@@ -37,6 +37,7 @@ protected:
 public:
     virtual ~QSeries() {}
     virtual QSeriesType type() const = 0;
+    QString name() { return QString("TODO: Name QSeries"); }
     // TODO
     virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
 
