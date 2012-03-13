@@ -2,6 +2,7 @@
 #include "qlineseries.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
+#include <QGraphicsSceneMouseEvent>
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -10,11 +11,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 LineChartItem::LineChartItem(QLineSeries* series,QGraphicsItem *parent):XYChartItem(series,parent),
 m_series(series),
-m_items(this)
+m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
-    QObject::connect(this,SIGNAL(clicked()),series,SIGNAL(clicked()));
+    QObject::connect(this,SIGNAL(clicked(const QPointF&)),series,SIGNAL(clicked(const QPointF&)));
     handleUpdated();
 }
 
@@ -28,79 +29,31 @@ QPainterPath LineChartItem::shape() const
     return m_path;
 }
 
-void LineChartItem::createPoints(int count)
-{
-    for (int i = 0; i < count; ++i) {
-        QGraphicsRectItem* item = new QGraphicsRectItem(0,0,3,3);
-        m_items.addToGroup(item);
-    }
-}
-
-void LineChartItem::deletePoints(int count)
-{
-    QList<QGraphicsItem *> items = m_items.childItems();
-
-    for (int i = 0; i < count; ++i) {
-        delete(items.takeLast());
-    }
-}
-
 void LineChartItem::setGeometry(QVector<QPointF>& points)
 {
     if(points.size()==0) return;
 
-    int diff =  XYChartItem::points().size() - points.size();
-
-    if(diff>0) {
-        deletePoints(diff);
-    }
-    else if(diff<0) {
-        createPoints(-diff);
-    }
-
     QList<QGraphicsItem*> items = m_items.childItems();
 
-    QPainterPath path;
-    const QPointF& point = points.at(0);
-    path.moveTo(point);
-    QGraphicsItem* item = items.at(0);
-    item->setPos(point.x()-1,point.y()-1);
-    if(!clipRect().contains(point)) {
-        item->setVisible(false);
-    }
-    else {
-        item->setVisible(true);
-    }
+    QPainterPath linePath(points.at(0));
 
     for(int i=1; i< points.size();i++) {
-        QGraphicsItem* item = items.at(i);
-        const QPointF& point = points.at(i);
-        item->setPos(point.x()-1,point.y()-1);
-        if(!clipRect().contains(point)) {
-            item->setVisible(false);
-        }
-        else {
-            item->setVisible(true);
-        }
-        path.lineTo(point);
+        linePath.lineTo(points.at(i));
     }
 
     prepareGeometryChange();
-    m_path = path;
-    m_rect = path.boundingRect();
+    m_path = linePath;
+    m_rect = linePath.boundingRect();
 
     XYChartItem::setGeometry(points);
 }
 
-void LineChartItem::setLinePen(const QPen& pen)
-{
-    m_pen = pen;
-}
-
 void LineChartItem::handleUpdated()
 {
-    m_items.setVisible(m_series->pointsVisible());
-    setLinePen(m_series->pen());
+    m_pointsVisible = m_series->pointsVisible();
+    m_linePen = m_series->pen();
+    m_pointPen = m_series->pen();
+    m_pointPen.setWidthF(2*m_pointPen.width());
     update();
 }
 
@@ -111,15 +64,19 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget);
     Q_UNUSED(option);
     painter->save();
-    painter->setPen(m_pen);
+    painter->setPen(m_linePen);
     painter->setClipRect(clipRect());
     painter->drawPath(m_path);
+    if(m_pointsVisible){
+    	painter->setPen(m_pointPen);
+    	painter->drawPoints(points());
+    }
     painter->restore();
 }
 
 void LineChartItem::mousePressEvent( QGraphicsSceneMouseEvent * event )
 {
-    emit clicked();
+    emit clicked(calculateDomainPoint(event->pos()));
 }
 
 #include "moc_linechartitem_p.cpp"

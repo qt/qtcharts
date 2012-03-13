@@ -31,6 +31,7 @@ protected:
     virtual void setGeometry(QVector<QPointF>& points);
     QPointF calculateGeometryPoint(const QPointF& point) const;
     QPointF calculateGeometryPoint(int index) const;
+    QPointF calculateDomainPoint(const QPointF& point) const;
     QVector<QPointF> calculateGeometryPoints() const;
 
 private:

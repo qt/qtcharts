@@ -21,29 +21,24 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
-    void setLinePen(const QPen& pen);
-    void setPointsVisible(bool visible);
-
 public slots:
     void handleUpdated();
 
 signals:
-    void clicked();
+    void clicked(const QPointF& point);
 
 protected:
     virtual void setGeometry(QVector<QPointF>& points);
     void mousePressEvent( QGraphicsSceneMouseEvent * event );
 
 private:
-    void createPoints(int count);
-    void deletePoints(int count);
-
-private:
     QLineSeries* m_series;
     QGraphicsItemGroup m_items;
     QPainterPath m_path;
     QRectF m_rect;
-    QPen m_pen;
+    QPen m_linePen;
+    QPen m_pointPen;
+    bool m_pointsVisible;
 
 };
 

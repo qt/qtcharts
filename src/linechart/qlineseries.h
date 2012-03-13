@@ -23,7 +23,7 @@ public:
 	bool pointsVisible() const {return m_pointsVisible;}
 
 signals:
-    void clicked();
+    void clicked(const QPointF& point);
 
 public: // from QChartSeries
 	virtual QSeriesType type() const {return QSeries::SeriesTypeLine;}

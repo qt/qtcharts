@@ -56,6 +56,15 @@ QVector<QPointF> XYChartItem::calculateGeometryPoints() const
     return points;
 }
 
+QPointF XYChartItem::calculateDomainPoint(const QPointF& point) const
+{
+    const qreal deltaX = m_size.width()/(m_maxX-m_minX);
+    const qreal deltaY = m_size.height()/(m_maxY-m_minY);
+    qreal x = point.x()/deltaX +m_minX;
+    qreal y = (point.y()-m_size.height())/(-deltaY)+ m_minY;
+    return QPointF(x,y);
+}
+
 void XYChartItem::updatePoints(QVector<QPointF>& points)
 {
     if(m_animator){

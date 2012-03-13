@@ -96,12 +96,13 @@ void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int index)
 {
     QPen pen;
     if(pen != series->pen()){
-        item->setLinePen(series->pen());
+        series->setPen(series->pen());
         return;
+    }else{
+        pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
+        pen.setWidthF(2);
+        series->setPen(pen);
     }
-    pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
-    pen.setWidthF(2);
-    item->setLinePen(pen);
 }
 
 void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int index)
