@@ -68,7 +68,7 @@ void ChartTheme::decorate(QChart* chart)
 
 void ChartTheme::decorate(QLegend* legend)
 {
-    //legend->setBackgroundBrush(m_backgroundGradient);
+    legend->setBackgroundBrush(m_backgroundGradient);
 }
 
 void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series, int index)

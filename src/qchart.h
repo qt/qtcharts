@@ -85,16 +85,15 @@ protected:
 private:
     inline void createChartBackgroundItem();
     inline void createChartTitleItem();
-    inline void createLegend();
 
 private:
     Q_DISABLE_COPY(QChart)
     QGraphicsRectItem* m_backgroundItem;
     QGraphicsSimpleTextItem* m_titleItem;
     QRectF m_rect;
+    QLegend* m_legend;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
-    QLegend* m_legend;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

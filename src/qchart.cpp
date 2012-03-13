@@ -49,12 +49,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
     m_backgroundItem(0),
     m_titleItem(0),
+    m_legend(new QLegend(this)),
     m_dataset(new ChartDataSet(this)),
     m_presenter(new ChartPresenter(this,m_dataset))
 {
-    createLegend();
-//    connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-//    connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
+    connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+    connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
 
 /*!
@@ -62,8 +62,8 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
 */
 QChart::~QChart()
 {
-//    disconnect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-//    disconnect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
+    disconnect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+    disconnect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
 
 /*!
@@ -181,16 +181,6 @@ void QChart::createChartTitleItem()
     }
 }
 
-void QChart::createLegend()
-{
-    // TODO: Why we have null pointer, even if this is created in constructor?
-    if(!m_legend) {
-        m_legend = new QLegend(this);
-        m_legend->setZValue(ChartPresenter::LegendZValue);
-    }
-}
-
-
 /*!
     Returns the chart margin, which is the distance between the widget edge and the part of the chart where the actual data can be displayed.
     \sa setMargin()
@@ -282,7 +272,6 @@ QChartAxis* QChart::axisY() const
 */
 QLegend* QChart::legend()
 {
-    createLegend();
     return m_legend;
 }
 
