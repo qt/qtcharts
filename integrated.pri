@@ -1,5 +1,4 @@
 integrated_build:{
-    message('Running integrated build against local libs...')
     INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR
 
     !win32: {
@@ -39,16 +38,12 @@ integrated_build:{
 
     mac: {
         # This is a hack to make binaries to use the internal version of the QtCommercial Charts library on OSX
-        QMAKE_POST_LINK += install_name_tool -change "libQtCommercialChartd.1.dylib" "@rpath/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR/chartwidgettest.app/Contents/MacOS/chartwidgettest
-        QMAKE_POST_LINK += && install_name_tool -change "libQtCommercialChartd.1.dylib" "@rpath/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR/barchart.app/Contents/MacOS/barchart
-        QMAKE_POST_LINK += && install_name_tool -change "libQtCommercialChartd.1.dylib" "@rpath/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR/colorlineChart.app/Contents/MacOS/colorlineChart
-        QMAKE_POST_LINK += && install_name_tool -change "libQtCommercialChartd.1.dylib" "@rpath/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR/lineChart.app/Contents/MacOS/lineChart
-        QMAKE_POST_LINK += && install_name_tool -change "libQtCommercialChartd.1.dylib" "@rpath/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR/percentbarchart.app/Contents/MacOS/percentbarchart
-        QMAKE_POST_LINK += && install_name_tool -change "libQtCommercialChartd.1.dylib" "@rpath/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR/stackedbarchart.app/Contents/MacOS/stackedbarchart
-        QMAKE_POST_LINK += && install_name_tool -change "libQtCommercialChartd.1.dylib" "@rpath/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR/zoomLineChart.app/Contents/MacOS/zoomLineChart
+        exists($$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET) {
+            QMAKE_POST_LINK+=install_name_tool -change "libQtCommercialChartd.1.dylib" $$CHART_BUILD_LIB_DIR"/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
+            message($$QMAKE_POST_LINK)
+        }
     }
 
 } else {
-    message('Running build aginst system libs...')
     CONFIG+=qtcommercialchart
 }

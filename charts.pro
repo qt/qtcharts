@@ -6,8 +6,9 @@ TEMPLATE = subdirs
 SUBDIRS += src examples demos test qmlplugin
 
 integrated_build:{
-    message('Configured for integrated build')
+    message('Configured for integrated build against local libs...')
 } else {
+    message('Running build aginst system libs...')
     message('Please build example test and qmlplugin after installing library.')
 }
 
