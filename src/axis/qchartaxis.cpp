@@ -383,7 +383,6 @@ void QChartAxis::hide()
 
 void QChartAxis::handleAxisRangeChanged(qreal min, qreal max)
 {
-    qDebug()<<__FUNCTION__<<min<<max;
    setRange(min,max);
 }
 

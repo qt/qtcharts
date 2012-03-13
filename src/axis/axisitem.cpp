@@ -371,7 +371,6 @@ void AxisItem::handleAxisUpdated()
 
 void AxisItem::handleRangeChanged(qreal min, qreal max,int tickCount)
 {
-    qDebug()<<min<<max<<tickCount;
     if(min==max || tickCount<2) return;
 
     m_min = min;
