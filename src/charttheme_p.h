@@ -48,12 +48,12 @@ public:
     void decorate(BarPresenter* item, QBarSeries* series, int index);
     void decorate(StackedBarPresenter* item, QStackedBarSeries* series, int index);
     void decorate(PercentBarPresenter* item, QPercentBarSeries* series, int index);
-    void decorate(LineChartItem* item, QLineSeries* series, int index);
-    void decorate(AreaChartItem* item, QAreaSeries* series, int index);
-    void decorate(ScatterChartItem* presenter, QScatterSeries* series, int index);
+    void decorate(QLineSeries* series, int index);
+    void decorate(QAreaSeries* series, int index);
+    void decorate(QScatterSeries* series, int index);
     void decorate(PiePresenter* item, QPieSeries* series, int index);
-    void decorate(SplineChartItem* presenter, QSplineSeries* series, int index);
-    void decorate(QChartAxis* axis, QChart* parent);
+    void decorate(QSplineSeries* series, int index);
+    void decorate(QChartAxis* axis, bool axisX);
 
 public: // utils
     void generateSeriesGradients();

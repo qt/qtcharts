@@ -71,7 +71,7 @@ void ChartTheme::decorate(QLegend* legend)
     legend->setBackgroundBrush(m_backgroundGradient);
 }
 
-void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series, int index)
+void ChartTheme::decorate(QAreaSeries* series, int index)
 {
     QPen pen;
     QBrush brush;
@@ -89,7 +89,7 @@ void ChartTheme::decorate(AreaChartItem* item, QAreaSeries* series, int index)
 }
 
 
-void ChartTheme::decorate(LineChartItem* item, QLineSeries* series,int index)
+void ChartTheme::decorate(QLineSeries* series,int index)
 {
     QPen pen;
     if(pen == series->pen()){
@@ -159,10 +159,8 @@ void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,i
     }
 }
 
-void ChartTheme::decorate(ScatterChartItem* item, QScatterSeries* series, int index)
+void ChartTheme::decorate(QScatterSeries* series, int index)
 {
-    Q_ASSERT(item);
-    Q_ASSERT(series);
 
     QPen pen;
     QBrush brush;
@@ -191,45 +189,26 @@ void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int index)
     }
 }
 
-void ChartTheme::decorate(SplineChartItem* item, QSplineSeries* series, int index)
+void ChartTheme::decorate(QSplineSeries* series, int index)
 {
-    Q_ASSERT(item);
-    Q_ASSERT(series);
-
     QPen pen;
 
-    if(pen != series->pen()){
-        item->setLinePen(series->pen());
-    }else{
+    if(pen == series->pen()){
         pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
-        pen.setWidthF(series->pen().widthF());
-        item->setLinePen(series->pen());
+        pen.setWidthF(2);
+        series->setPen(pen);
     }
-
-//    QColor color = m_seriesColors.at(index % m_seriesColors.size());
-    // TODO: define alpha in the theme? or in the series?
-    //color.setAlpha(120);
-
-//    QBrush brush(color, Qt::SolidPattern);
-//    presenter->m_markerBrush = brush;
-
-//    QPen pen(brush, 3);
-//    pen.setColor(color);
-//    presenter->m_markerPen = pen;
 }
 
-void ChartTheme::decorate(QChartAxis* axis, QChart* parent)
+void ChartTheme::decorate(QChartAxis* axis,bool axisX)
 {
-    Q_ASSERT(axis);
-    Q_ASSERT(parent);
-
     if (axis->isAxisVisible()) {
         axis->setLabelsBrush(m_axisLabelBrush);
         axis->setLabelsPen(m_axisLabelPen);
         // TODO: check the axis type (x or y) should define whether to show the shades or not
         if (m_backgroundShades == BackgroundShadesBoth
-                || (m_backgroundShades == BackgroundShadesVertical && parent->axisX() == axis)
-                || (m_backgroundShades == BackgroundShadesHorizontal && parent->axisY() == axis)) {
+                || (m_backgroundShades == BackgroundShadesVertical && axisX)
+                || (m_backgroundShades == BackgroundShadesHorizontal && !axisX)) {
             axis->setShadesPen(m_backgroundShadesPen);
             axis->setShadesBrush(m_backgroundShadesBrush);
         } else {

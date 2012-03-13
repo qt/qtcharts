@@ -18,7 +18,6 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
-    void setLinePen(const QPen& pen);
     void setPointsVisible(bool visible);
 
 public slots:

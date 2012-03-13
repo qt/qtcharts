@@ -53,17 +53,12 @@ void SplineChartItem::setLayout(QVector<QPointF>& points)
     XYChartItem::setLayout(points);
 }
 
-void SplineChartItem::setLinePen(const QPen& pen)
-{
-    m_pen = pen;
-}
-
 //handlers
 
 void SplineChartItem::handleUpdated()
 {
     //m_items.setVisible(m_series->pointsVisible());
-    setLinePen(m_series->pen());
+    m_pen = m_series->pen();
     update();
 }
 
