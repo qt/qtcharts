@@ -70,7 +70,7 @@ for(file, PUBLIC_HEADERS) {
     !isEmpty(class){
     class = $$split(class,QTCOMMERCIALCHART_EXPORT)
     class = $$member(class,1)
-    class = $$split(class,':')
+    class = $$split(class,' ')
     class = $$replace(class,' ','')
     class = $$member(class,0)
     command = "echo \"$${LITERAL_HASH}include \\\"$$name\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class" 
