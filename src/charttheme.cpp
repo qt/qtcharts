@@ -24,7 +24,7 @@
 #include "linechartitem_p.h"
 #include "areachartitem_p.h"
 #include "scatterchartitem_p.h"
-#include "piepresenter_p.h"
+#include "piechartitem_p.h"
 #include "splinechartitem_p.h"
 
 //themes
@@ -177,7 +177,7 @@ void ChartTheme::decorate(QScatterSeries* series, int index)
     }
 }
 
-void ChartTheme::decorate(PiePresenter* item, QPieSeries* series, int index)
+void ChartTheme::decorate(PieChartItem* item, QPieSeries* series, int index)
 {
     // Get color for a slice from a gradient linearly, beginning from the start of the gradient
     for (int i(0); i < series->slices().count(); i++) {

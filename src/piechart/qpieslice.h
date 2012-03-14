@@ -63,7 +63,7 @@ private:
 
     // TODO: use private class
     friend class QPieSeries;
-    friend class PiePresenter;
+    friend class PieChartItem;
     friend class PieSlice;
 
     // data

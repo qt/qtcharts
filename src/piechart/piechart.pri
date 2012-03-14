@@ -4,11 +4,11 @@ DEPENDPATH += $$PWD
 SOURCES += \
     $$PWD/qpieseries.cpp \
     $$PWD/pieslice.cpp \
-    $$PWD/piepresenter.cpp \
+    $$PWD/piechartitem.cpp \
     $$PWD/qpieslice.cpp
 
 PRIVATE_HEADERS += \
-    $$PWD/piepresenter_p.h \
+    $$PWD/piechartitem_p.h \
     $$PWD/pieslice_p.h \
 
 PUBLIC_HEADERS += \

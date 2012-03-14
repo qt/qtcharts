@@ -1,4 +1,4 @@
-#include "piepresenter_p.h"
+#include "piechartitem_p.h"
 #include "pieslice_p.h"
 #include "qpieslice.h"
 #include "qpieseries.h"
@@ -9,7 +9,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PiePresenter::PiePresenter(QGraphicsItem *parent, QPieSeries *series)
+PieChartItem::PieChartItem(QGraphicsItem *parent, QPieSeries *series)
     :ChartItem(parent),
     m_series(series)
 {
@@ -20,12 +20,12 @@ PiePresenter::PiePresenter(QGraphicsItem *parent, QPieSeries *series)
     setZValue(ChartPresenter::PieSeriesZValue);
 }
 
-PiePresenter::~PiePresenter()
+PieChartItem::~PieChartItem()
 {
     // slices deleted automatically through QGraphicsItem
 }
 
-void PiePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void PieChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
     // TODO: paint shadows for all components
     // - get paths from items & merge & offset and draw with shadow color?
@@ -33,14 +33,14 @@ void PiePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QW
     //painter->drawRect(m_debugRect);
 }
 
-void PiePresenter::handleSeriesChanged()
+void PieChartItem::handleSeriesChanged()
 {
     QVector<PieSliceLayout> sliceLayout = calculateLayout();
     applyLayout(sliceLayout);
     update();
 }
 
-void PiePresenter::handleSliceChanged()
+void PieChartItem::handleSliceChanged()
 {
     // TODO: optimize don't need to handle all slices
     QVector<PieSliceLayout> sliceLayout = calculateLayout();
@@ -48,12 +48,12 @@ void PiePresenter::handleSliceChanged()
     update();
 }
 
-void PiePresenter::handleDomainChanged(qreal, qreal, qreal, qreal)
+void PieChartItem::handleDomainChanged(qreal, qreal, qreal, qreal)
 {
     // TODO
 }
 
-void PiePresenter::handleGeometryChanged(const QRectF& rect)
+void PieChartItem::handleGeometryChanged(const QRectF& rect)
 {
     prepareGeometryChange();
     m_rect = rect;
@@ -63,7 +63,7 @@ void PiePresenter::handleGeometryChanged(const QRectF& rect)
 }
 
 
-QVector<PieSliceLayout> PiePresenter::calculateLayout()
+QVector<PieSliceLayout> PieChartItem::calculateLayout()
 {
     // find pie center coordinates
     QPointF center;
@@ -92,7 +92,7 @@ QVector<PieSliceLayout> PiePresenter::calculateLayout()
     return layout;
 }
 
-void PiePresenter::applyLayout(const QVector<PieSliceLayout> &layout)
+void PieChartItem::applyLayout(const QVector<PieSliceLayout> &layout)
 {
     //if(m_animator)
     //        m_animator->applyLayout(this,points);
@@ -100,7 +100,7 @@ void PiePresenter::applyLayout(const QVector<PieSliceLayout> &layout)
     setLayout(layout);
 }
 
-void PiePresenter::setLayout(const QVector<PieSliceLayout> &layout)
+void PieChartItem::setLayout(const QVector<PieSliceLayout> &layout)
 {
     foreach (PieSliceLayout l, layout) {
 
@@ -138,6 +138,6 @@ void PiePresenter::setLayout(const QVector<PieSliceLayout> &layout)
     }
 }
 
-#include "moc_piepresenter_p.cpp"
+#include "moc_piechartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

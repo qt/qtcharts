@@ -11,7 +11,7 @@
 
 class QGraphicsObject;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class PiePresenter;
+class PieChartItem;
 class PieSlice;
 class QPieSlice;
 
@@ -112,7 +112,7 @@ private:
     Q_DISABLE_COPY(QPieSeries)
 
     // TODO: use PIML
-    friend class PiePresenter;
+    friend class PieChartItem;
     friend class PieSlice;
 
     QList<QPieSlice*> m_slices;

@@ -20,7 +20,7 @@
 #include "stackedbarpresenter_p.h"
 #include "percentbarpresenter_p.h"
 #include "linechartitem_p.h"
-#include "piepresenter_p.h"
+#include "piechartitem_p.h"
 #include "scatterchartitem_p.h"
 #include "splinechartitem_p.h"
 
@@ -222,7 +222,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypePie: {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        PiePresenter* pie = new PiePresenter(m_chart, pieSeries);
+        PieChartItem* pie = new PieChartItem(m_chart, pieSeries);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
            // m_animator->addAnimation(pie);
         }

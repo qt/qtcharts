@@ -1,5 +1,5 @@
 #include "pieslice_p.h"
-#include "piepresenter_p.h"
+#include "piechartitem_p.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
 #include "chartpresenter_p.h"
