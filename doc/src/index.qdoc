@@ -15,16 +15,16 @@
      </p>
 
     <table><tr>
-    <td><a href="example-linechart.html"><img src="images/linechart.png" alt="linechart" /></a></td>
-    <td><a href="example-areachart.html"><img src="images/areachart.png" alt="areachart" /></a></td>
+    <td><a href="examples-linechart.html"><img src="images/linechart.png" alt="linechart" /></a></td>
+    <td><a href="examples-areachart.html"><img src="images/areachart.png" alt="areachart" /></a></td>
     </tr>
     <tr>
-    <td><a href="example-scatterchart.html"><img src="images/scatterchart.png" alt="scatterchart" /></a></td>
-    <td><a href="example-barchart.html"><img src="images/barchart.png" alt="barchart" /></a></td>
+    <td><a href="examples-scatterchart.html"><img src="images/scatterchart.png" alt="scatterchart" /></a></td>
+    <td><a href="examples-barchart.html"><img src="images/barchart.png" alt="barchart" /></a></td>
     </tr>
     <tr>
-    <td><a href="example-stackedbarchart.html"><img src="images/stackedbarchart.png" alt="stackedbarchart" /></a></td>
-    <td><a href="example-percentbarchart.html"><img src="images/percentbarchart.png" alt="percentbarcchart" /></a></td>
+    <td><a href="examples-stackedbarchart.html"><img src="images/stackedbarchart.png" alt="stackedbarchart" /></a></td>
+    <td><a href="examples-percentbarchart.html"><img src="images/percentbarchart.png" alt="percentbarcchart" /></a></td>
     </tr><tr>
     <td><img src="images/chartview_example_scatter.jpg " alt="scatterchart" /></td>
     <td><img src="images/chartview_example_theme.jpg " alt="themechart" /></td>
@@ -35,7 +35,7 @@
     </tr>
     <tr>
     <td><img src="images/chartview_example.jpg " alt="linechart" /></td>
-    <td><a href="example-presenterchart.html"><img src="images/presenterchart_example.png" alt="presenterchart" /></a></td>
+    <td><a href="examples-presenterchart.html"><img src="images/presenterchart_example.png" alt="presenterchart" /></a></td>
     </tr>
     </table> 
      </div>
