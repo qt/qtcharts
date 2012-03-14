@@ -82,31 +82,15 @@ void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
     switch (mType)
     {
     case LegendMarkerTypeSeries: {
-
-        if (event->button() == Qt::LeftButton) {
-            emit clicked(mSeries);
-        } else if (event->button() == Qt::RightButton) {
-            emit rightClicked(mSeries);
-        }
+        emit clicked(mSeries,event->button());
         break;
     }
     case LegendMarkerTypeBarset: {
-
-        if (event->button() == Qt::LeftButton) {
-            emit clicked(mBarset);
-        } else if (event->button() == Qt::RightButton) {
-            emit rightClicked(mBarset);
-        }
+        emit clicked(mBarset,event->button());
         break;
     }
-
     case LegendMarkerTypePieslice: {
-
-        if (event->button() == Qt::LeftButton) {
-            emit clicked(mPieslice);
-        } else if (event->button() == Qt::RightButton) {
-            emit rightClicked(mPieslice);
-        }
+        emit clicked(mPieslice,event->button());
         break;
         }
     default: {

@@ -141,8 +141,7 @@ void QLegend::createMarker(QXYSeries* series)
     LegendMarker* marker = new LegendMarker(series,this);
     marker->setName(series->name());
     marker->setBrush(series->brush());
-    connect(marker,SIGNAL(clicked(QSeries*)),this,SIGNAL(markerClicked(QSeries*)));
-    connect(marker,SIGNAL(rightClicked(QSeries*)),this,SIGNAL(markerRightClicked(QSeries*)));
+    connect(marker,SIGNAL(clicked(QSeries*,Qt::MouseButton)),this,SIGNAL(clicked(QSeries*,Qt::MouseButton)));
     mMarkers.append(marker);
     childItems().append(marker);
 }
@@ -153,8 +152,7 @@ void QLegend::createMarkers(QBarSeries *series)
         LegendMarker* marker = new LegendMarker(series,this);
         marker->setName(s->name());
         marker->setBrush(s->brush());
-        connect(marker,SIGNAL(clicked(QBarSet*)),this,SIGNAL(markerClicked(QBarSet*)));
-        connect(marker,SIGNAL(rightClicked(QBarSet*)),this,SIGNAL(markerRightClicked(QBarSet*)));
+        connect(marker,SIGNAL(clicked(QBarSet*,Qt::MouseButton)),this,SIGNAL(clicked(QBarSet*,Qt::MouseButton)));
         mMarkers.append(marker);
         childItems().append(marker);
     }
@@ -166,8 +164,7 @@ void QLegend::createMarkers(QPieSeries *series)
         LegendMarker* marker = new LegendMarker(series,this);
         marker->setName(s->label());
         marker->setBrush(s->sliceBrush());
-        connect(marker,SIGNAL(clicked(QPieSlice*)),this,SIGNAL(markerClicked(QPieSlice*)));
-        connect(marker,SIGNAL(rightClicked(QPieSlice*)),this,SIGNAL(markerRightClicked(QPieSlice*)));
+        connect(marker,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)),this,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)));
         mMarkers.append(marker);
         childItems().append(marker);
     }

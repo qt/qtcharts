@@ -43,12 +43,9 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 Q_SIGNALS:
-    void clicked(QSeries* series);
-    void rightClicked(QSeries* series);
-    void clicked(QBarSet* barset);
-    void rightClicked(QBarSet* barset);
-    void clicked(QPieSlice* pieslice);
-    void rightClicked(QPieSlice* pieslice);
+    void clicked(QSeries* series, Qt::MouseButton button);
+    void clicked(QBarSet* barset, Qt::MouseButton button);
+    void clicked(QPieSlice* pieslice, Qt::MouseButton button);
 
 private:
     QRectF mBoundingRect;

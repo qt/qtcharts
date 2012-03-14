@@ -30,12 +30,9 @@ public:
 
 signals:
     // for interactions.
-    void clicked(QSeries* series);
-    void rightClicked(QSeries* series);
-    void clicked(QBarSet* barset);
-    void rightClicked(QBarSet* series);
-    void clicked(QPieSlice* slice);
-    void rightClicked(QPieSlice* series);
+    void clicked(QSeries* series, Qt::MouseButton button);
+    void clicked(QBarSet* barset, Qt::MouseButton button);
+    void clicked(QPieSlice* slice, Qt::MouseButton button);
 
 public slots:
     void handleSeriesAdded(QSeries* series,Domain* domain);
