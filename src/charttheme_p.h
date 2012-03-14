@@ -64,7 +64,7 @@ protected:
     QChart::ChartTheme m_id;
     QList<QColor> m_seriesColors;
     QList<QGradient> m_seriesGradients;
-    QLinearGradient m_backgroundGradient;
+    QLinearGradient m_chartBackgroundGradient;
 
     QFont m_masterFont;
     QPen m_axisLinePen;

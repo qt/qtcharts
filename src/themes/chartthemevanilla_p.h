@@ -20,7 +20,7 @@ public:
         backgroundGradient.setColorAt(0.0, QRgb(0xfbf9f1));
         backgroundGradient.setColorAt(1.0, QRgb(0xf5f0dc));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
-        m_backgroundGradient = backgroundGradient;
+        m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
         m_masterFont = QFont();
@@ -29,6 +29,7 @@ public:
         m_axisLabelBrush = QBrush(QRgb(0xa0a071));
         m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
         m_backgroundShadesPen = Qt::NoPen;
+        m_backgroundShades = BackgroundShadesNone;
         m_gridLinePen = QPen(QRgb(0x0f0f0f));
         m_gridLinePen.setWidth(2);
     }

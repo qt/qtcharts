@@ -1,5 +1,6 @@
 #include "charttheme_p.h"
 #include "qchart.h"
+#include "qchartview.h"
 #include "qlegend.h"
 #include "qchartaxis.h"
 #include <QTime>
@@ -34,6 +35,7 @@
 #include "chartthemegrayscale_p.h"
 #include "chartthemescientific_p.h"
 #include "chartthemebluecerulean_p.h"
+#include "chartthemelight_p.h"
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -58,6 +60,8 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
             return new ChartThemeScientific();
         case QChart::ChartThemeBlueCerulean:
             return new ChartThemeBlueCerulean();
+        case QChart::ChartThemeLight:
+            return new ChartThemeLight();
         default:
             return new ChartThemeDefault();
     }
@@ -65,16 +69,17 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 
 void ChartTheme::decorate(QChart* chart)
 {
-    if (m_backgroundShades == BackgroundShadesNone)
-        chart->setChartBackgroundBrush(m_backgroundGradient);
-    else
+    if (m_backgroundShades == BackgroundShadesNone) {
+        chart->setChartBackgroundBrush(m_chartBackgroundGradient);
+    } else {
         chart->setChartBackgroundBrush(Qt::NoBrush);
+    }
     chart->setChartTitleFont(m_masterFont);
 }
 
 void ChartTheme::decorate(QLegend* legend)
 {
-    legend->setBackgroundBrush(m_backgroundGradient);
+    legend->setBackgroundBrush(m_chartBackgroundGradient);
 }
 
 void ChartTheme::decorate(QAreaSeries* series, int index)
@@ -210,7 +215,6 @@ void ChartTheme::decorate(QChartAxis* axis,bool axisX)
     if (axis->isAxisVisible()) {
         axis->setLabelsBrush(m_axisLabelBrush);
         axis->setLabelsPen(m_axisLabelPen);
-        // TODO: check the axis type (x or y) should define whether to show the shades or not
         if (m_backgroundShades == BackgroundShadesBoth
                 || (m_backgroundShades == BackgroundShadesVertical && axisX)
                 || (m_backgroundShades == BackgroundShadesHorizontal && !axisX)) {

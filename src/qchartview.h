@@ -16,6 +16,8 @@ class QChart;
 
 class QTCOMMERCIALCHART_EXPORT QChartView : public QGraphicsView
 {
+    Q_OBJECT
+
 public:
     enum  RubberBandPolicy { NoRubberBand, VerticalRubberBand, HorizonalRubberBand, RectangleRubberBand };
 
@@ -64,7 +66,6 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
-
 private:
     QGraphicsScene *m_scene;
     QChart* m_chart;
@@ -73,8 +74,6 @@ private:
     bool m_verticalRubberBand;
     bool m_horizonalRubberBand;
     Q_DISABLE_COPY(QChartView)
-
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

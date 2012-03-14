@@ -45,7 +45,9 @@ THEMES += themes/chartthemedefault_p.h \
     themes/chartthemegrayscale_p.h \
     themes/chartthemescientific_p.h \
     themes/chartthemevanilla_p.h \
-    themes/chartthemebluecerulean_p.h
+    themes/chartthemebluecerulean_p.h \
+    themes/chartthemelight_p.h
+
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 HEADERS += $$THEMES

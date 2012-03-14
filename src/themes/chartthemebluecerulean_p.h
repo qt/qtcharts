@@ -13,23 +13,19 @@ public:
         m_seriesColors << QRgb(0x4fbef3);
         generateSeriesGradients();
 
-        // Background
-        QLinearGradient backgroundGradient;
-        backgroundGradient.setColorAt(0.0, QRgb(0x056188));
-        backgroundGradient.setColorAt(1.0, QRgb(0x101a33));
-        backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
-        m_backgroundGradient = backgroundGradient;
+        // No chart background, chart view specifies a background
+        // TODO: what if the chart is drawn on custom graphics scene instead of QChartView?
 
         // Axes and other
         m_masterFont = QFont();
-        m_axisLinePen = QPen(QRgb(0x0f0f0f));
+        m_axisLinePen = QPen(QRgb(0xf7f7ff));
         m_axisLinePen.setWidth(2);
-        m_axisLabelBrush = QBrush(QRgb(0x3f3f3f));
+        m_axisLabelBrush = QBrush(QRgb(0xf7f7ff));
         m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
         m_backgroundShadesPen = Qt::NoPen;
         m_backgroundShades = BackgroundShadesNone;
-        m_gridLinePen = QPen(QRgb(0x0f0f0f));
-        m_gridLinePen.setWidth(2);
+        m_gridLinePen = QPen(QRgb(0xf7f7ff));
+        m_gridLinePen.setWidth(1);
     }
 };
 

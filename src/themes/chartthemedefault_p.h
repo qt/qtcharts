@@ -110,7 +110,7 @@ public:
         backgroundGradient.setColorAt(0.0, QRgb(0xffffff));
         backgroundGradient.setColorAt(1.0, QRgb(0xe9e9e9));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
-        m_backgroundGradient = backgroundGradient;
+        m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
         m_masterFont = QFont();

@@ -36,12 +36,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs a chartView object which is a child of a\a parent.
 */
 QChartView::QChartView(QWidget *parent) :
-QGraphicsView(parent),
-m_scene(new QGraphicsScene(this)),
-m_chart(new QChart()),
-m_rubberBand(0),
-m_verticalRubberBand(false),
-m_horizonalRubberBand(false)
+    QGraphicsView(parent),
+    m_scene(new QGraphicsScene(this)),
+    m_chart(new QChart()),
+    m_rubberBand(0),
+    m_verticalRubberBand(false),
+    m_horizonalRubberBand(false)
 {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -328,6 +328,15 @@ void QChartView::keyPressEvent(QKeyEvent *event)
 */
 void QChartView::setChartTheme(QChart::ChartTheme theme)
 {
+    if (theme == QChart::ChartThemeBlueCerulean) {
+        QLinearGradient backgroundGradient;
+        backgroundGradient.setColorAt(0.0, QRgb(0x056188));
+        backgroundGradient.setColorAt(1.0, QRgb(0x101a33));
+        backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+        setBackgroundBrush(backgroundGradient);
+    } else {
+        setBackgroundBrush(Qt::NoBrush);
+    }
     m_chart->setChartTheme(theme);
 }
 
@@ -384,5 +393,7 @@ void QChartView::scroll(int dx,int dy)
 {
 	m_chart->scroll(dx,dy);
 }
+
+#include "moc_qchartview.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

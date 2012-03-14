@@ -19,7 +19,7 @@ public:
         backgroundGradient.setColorAt(0.0, QRgb(0xfffefc));
         backgroundGradient.setColorAt(1.0, QRgb(0xfffefc));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
-        m_backgroundGradient = backgroundGradient;
+        m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
         m_masterFont = QFont();

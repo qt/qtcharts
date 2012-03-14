@@ -20,6 +20,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \value ChartThemeGrayscale
     \value ChartThemeScientific
     \value ChartThemeBlueCerulean
+    \value ChartThemeLight
     \value ChartThemeCount Not really a theme; the total count of themes.
 */
 

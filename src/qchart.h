@@ -33,6 +33,7 @@ public:
         ChartThemeGrayscale,
         ChartThemeScientific,
         ChartThemeBlueCerulean,
+        ChartThemeLight,
         ChartThemeCount
     };
 
