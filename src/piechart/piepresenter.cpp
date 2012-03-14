@@ -14,15 +14,7 @@ PiePresenter::PiePresenter(QGraphicsItem *parent, QPieSeries *series)
     m_series(series)
 {
     Q_ASSERT(series);
-    connect(series, SIGNAL(changed(const QPieSeries::ChangeSet&)), this, SLOT(handleSeriesChanged(const QPieSeries::ChangeSet&)));
-    connect(series, SIGNAL(piePositionChanged()), this, SLOT(updateGeometry()));
-    connect(series, SIGNAL(pieSizeChanged()), this, SLOT(updateGeometry()));
-
-    if (m_series->count()) {
-        QPieSeries::ChangeSet changeSet;
-        changeSet.appendAdded(m_series->m_slices);
-        handleSeriesChanged(changeSet);
-    }
+    connect(series, SIGNAL(changed()), this, SLOT(handleSeriesChanged()));
 
     // Note: the following does not affect as long as the item does not have anything to paint
     setZValue(ChartPresenter::PieSeriesZValue);
@@ -41,43 +33,38 @@ void PiePresenter::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QW
     //painter->drawRect(m_debugRect);
 }
 
-void PiePresenter::handleSeriesChanged(const QPieSeries::ChangeSet& changeSet)
+void PiePresenter::handleSeriesChanged()
 {
-    //qDebug() << "PiePresenter::handleSeriesChanged()";
-    //qDebug() << "  added  : " << changeSet.added();
-    //qDebug() << "  changed: " << changeSet.changed();
-    //qDebug() << "  removed: " << changeSet.removed();
-
-    foreach (QPieSlice* s, changeSet.added())
-        addSlice(s);
-
-    foreach (QPieSlice* s, changeSet.changed())
-        updateSlice(s);
-
-    foreach (QPieSlice* s, changeSet.removed())
-        deleteSlice(s);
-
-    // every change possibly changes the actual pie size
-    updateGeometry();
+    QVector<PieSliceLayout> sliceLayout = calculateLayout();
+    applyLayout(sliceLayout);
+    update();
 }
 
-void PiePresenter::handleDomainChanged(const Domain& domain)
+void PiePresenter::handleSliceChanged()
+{
+    // TODO: optimize don't need to handle all slices
+    QVector<PieSliceLayout> sliceLayout = calculateLayout();
+    applyLayout(sliceLayout);
+    update();
+}
+
+void PiePresenter::handleDomainChanged(qreal, qreal, qreal, qreal)
 {
     // TODO
 }
 
 void PiePresenter::handleGeometryChanged(const QRectF& rect)
 {
-    m_rect = rect;
     prepareGeometryChange();
-    updateGeometry();
+    m_rect = rect;
+    QVector<PieSliceLayout> sliceLayout = calculateLayout();
+    applyLayout(sliceLayout);
+    update();
 }
 
-void PiePresenter::updateGeometry()
-{
-    if (!m_rect.isValid() || m_rect.isEmpty())
-        return;
 
+QVector<PieSliceLayout> PiePresenter::calculateLayout()
+{
     // find pie center coordinates
     QPointF center;
     center.setX(m_rect.left() + (m_rect.width() * m_series->pieHorizontalPosition()));
@@ -91,66 +78,64 @@ void PiePresenter::updateGeometry()
     // apply size factor
     radius *= m_series->pieSize();
 
-    // update slices
-    if (m_pieCenter != center || m_pieRadius != radius) {
-        m_pieCenter = center;
-        m_pieRadius = radius;
-        //qDebug() << "PiePresenter::updateGeometry()" << m_rect << m_pieCenter << m_pieRadius;
-        foreach (PieSlice* s, m_slices.values()) {
-            s->setPieCenterAndRadius(center, radius);
-            s->updateGeometry();
-            s->update();
+    QVector<PieSliceLayout> layout;
+    foreach (QPieSlice* s, m_series->slices()) {
+        PieSliceLayout sliceLayout;
+        sliceLayout.m_data = s;
+        sliceLayout.m_center = PieSlice::sliceCenter(center, radius, s);
+        sliceLayout.m_radius = radius;
+        sliceLayout.m_startAngle = s->startAngle();
+        sliceLayout.m_angleSpan = s->m_angleSpan;
+        layout << sliceLayout;
+    }
+
+    return layout;
+}
+
+void PiePresenter::applyLayout(const QVector<PieSliceLayout> &layout)
+{
+    //if(m_animator)
+    //        m_animator->applyLayout(this,points);
+    //else
+    setLayout(layout);
+}
+
+void PiePresenter::setLayout(const QVector<PieSliceLayout> &layout)
+{
+    foreach (PieSliceLayout l, layout) {
+
+        // find slice
+        PieSlice *slice = m_slices.value(l.m_data);
+        if (!slice) {
+            // add a new slice
+            slice = new PieSlice(this);
+            m_slices.insert(l.m_data, slice);
+
+            // connect signals
+            connect(l.m_data, SIGNAL(changed()), this, SLOT(handleSliceChanged()));
+            connect(slice, SIGNAL(clicked()), l.m_data, SIGNAL(clicked()));
+            connect(slice, SIGNAL(hoverEnter()), l.m_data, SIGNAL(hoverEnter()));
+            connect(slice, SIGNAL(hoverLeave()), l.m_data, SIGNAL(hoverLeave()));
         }
+
+        // update
+        slice->setLayout(l);
+        slice->updateGeometry();
+        slice->update();
     }
 
-    update();
-}
+    // delete slices
+    foreach (QPieSlice *s, m_slices.keys()) {
 
-void PiePresenter::addSlice(QPieSlice* sliceData)
-{
-    //qDebug() << "PiePresenter::addSlice()" << sliceData;
+        bool found = false;
+        foreach (PieSliceLayout l, layout) {
+            if (l.m_data == s)
+                found = true;
+        }
 
-    if (m_slices.keys().contains(sliceData)) {
-        Q_ASSERT(0); // TODO: how to handle this nicely?
-        return;
+        if (!found)
+            delete m_slices.take(s);
     }
-
-    // create slice
-    PieSlice *slice = new PieSlice(this);
-    slice->setPieCenterAndRadius(m_pieCenter, m_pieRadius);
-    slice->updateData(sliceData);
-    slice->updateGeometry();
-    slice->update();
-    m_slices.insert(sliceData, slice);
-
-    // connect signals
-    connect(slice, SIGNAL(clicked()), sliceData, SIGNAL(clicked()));
-    connect(slice, SIGNAL(hoverEnter()), sliceData, SIGNAL(hoverEnter()));
-    connect(slice, SIGNAL(hoverLeave()), sliceData, SIGNAL(hoverLeave()));
-}
-
-void PiePresenter::updateSlice(QPieSlice* sliceData)
-{
-    //qDebug() << "PiePresenter::updateSlice()" << sliceData;
-
-    if (!m_slices.contains(sliceData)) {
-        Q_ASSERT(0); // TODO: how to handle this nicely?
-        return;
-    }
-
-    m_slices[sliceData]->updateData(sliceData);
-}
-
-void PiePresenter::deleteSlice(QPieSlice* sliceData)
-{
-    //qDebug() << "PiePresenter::deleteSlice()" << sliceData;
-
-    if (!m_slices.contains(sliceData)) {
-        Q_ASSERT(0); // TODO: how to handle this nicely?
-        return;
-    }
-
-    delete m_slices.take(sliceData);
 }
 
 #include "moc_piepresenter_p.cpp"

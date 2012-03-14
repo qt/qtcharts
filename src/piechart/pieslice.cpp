@@ -22,7 +22,6 @@ QPointF offset(qreal angle, qreal length)
 
 PieSlice::PieSlice(QGraphicsItem* parent)
     :QGraphicsObject(parent),
-    m_pieRadius(0),
     m_startAngle(0),
     m_angleSpan(0),
     m_isExploded(false),
@@ -88,15 +87,15 @@ void PieSlice::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
     emit clicked();
 }
 
-void PieSlice::setPieCenterAndRadius(QPointF center, qreal radius)
+void PieSlice::setLayout(PieSliceLayout layout)
 {
-    m_pieCenter = center;
-    m_pieRadius = radius;
+    m_layout = layout;
+    updateData(layout.m_data);
 }
 
 void PieSlice::updateGeometry()
 {
-    if (m_pieRadius <= 0)
+    if (m_layout.m_radius <= 0)
         return;
 
     prepareGeometryChange();
@@ -104,14 +103,14 @@ void PieSlice::updateGeometry()
     // update slice path
     qreal centerAngle;
     QPointF armStart;
-    m_slicePath = slicePath(m_pieCenter, m_pieRadius, m_startAngle, m_angleSpan, m_isExploded, m_pieRadius * m_explodeDistanceFactor, &centerAngle, &armStart);
+    m_slicePath = slicePath(m_layout.m_center, m_layout.m_radius, m_startAngle, m_angleSpan, &centerAngle, &armStart);
 
     // update text rect
     m_labelTextRect = labelTextRect(m_labelFont, m_labelText);
 
     // update label arm path
     QPointF labelTextStart;
-    m_labelArmPath = labelArmPath(armStart, centerAngle, m_pieRadius * m_labelArmLengthFactor, m_labelTextRect.width(), &labelTextStart);
+    m_labelArmPath = labelArmPath(armStart, centerAngle, m_layout.m_radius * m_labelArmLengthFactor, m_labelTextRect.width(), &labelTextStart);
 
     // update text position
     m_labelTextRect.moveBottomLeft(labelTextStart);
@@ -135,25 +134,27 @@ void PieSlice::updateData(const QPieSlice* sliceData)
     m_labelFont = sliceData->labelFont();
     m_labelArmLengthFactor = sliceData->labelArmLengthFactor();
     m_labelArmPen = sliceData->labelArmPen();
-
-    updateGeometry();
-    update();
 }
 
-QPainterPath PieSlice::slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, bool exploded, qreal explodeDistance, qreal* centerAngle, QPointF* armStart)
+QPointF PieSlice::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
+{
+    if (slice->isExploded()) {
+        qreal centerAngle = slice->startAngle() + (slice->m_angleSpan/2);
+        qreal len = radius * slice->explodeDistanceFactor();
+        qreal dx = qSin(centerAngle*(PI/180)) * len;
+        qreal dy = -qCos(centerAngle*(PI/180)) * len;
+        point += QPointF(dx, dy);
+    }
+    return point;
+}
+
+QPainterPath PieSlice::slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal* centerAngle, QPointF* armStart)
 {
     // calculate center angle
     *centerAngle = startAngle + (angleSpan/2);
 
     // calculate slice rectangle
     QRectF rect(center.x()-radius, center.y()-radius, radius*2, radius*2);
-
-    // adjust rect for exploding
-    if (exploded) {
-        qreal dx = qSin(*centerAngle*(PI/180)) * explodeDistance;
-        qreal dy = -qCos(*centerAngle*(PI/180)) * explodeDistance;
-        rect.translate(dx, dy);
-    }
 
     // slice path
     // TODO: draw the shape so that it might have a hole in the center
@@ -164,10 +165,7 @@ QPainterPath PieSlice::slicePath(QPointF center, qreal radius, qreal startAngle,
 
     // calculate label arm start point
     *armStart = center;
-    if (exploded)
-        *armStart += offset(*centerAngle, explodeDistance + radius + PIESLICE_LABEL_GAP);
-    else
-        *armStart += offset(*centerAngle, radius + PIESLICE_LABEL_GAP);
+    *armStart += offset(*centerAngle, radius + PIESLICE_LABEL_GAP);
 
     return path;
 }

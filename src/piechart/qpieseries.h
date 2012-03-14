@@ -97,11 +97,7 @@ Q_SIGNALS:
     void clicked(QPieSlice* slice);
     void hoverEnter(QPieSlice* slice);
     void hoverLeave(QPieSlice* slice);
-
-    void pieSizeChanged();
-    void piePositionChanged();
-
-    void changed(const QPieSeries::ChangeSet& changeSet); // TODO: hide this in PIMPL
+    void changed(); // TODO: hide this in PIMPL
 
 private Q_SLOTS: // TODO: should be private and not visible in the interface at all
     void sliceChanged();

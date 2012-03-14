@@ -1,13 +1,13 @@
 #ifndef PIEPRESENTER_H
 #define PIEPRESENTER_H
 
-#include "chartitem_p.h"
 #include "qpieseries.h"
-#include <QSignalMapper>
+#include "chartitem_p.h"
+#include "pieslice_p.h"
 
 class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class PieSlice;
+class QPieSlice;
 
 class PiePresenter : public QObject, public ChartItem
 {
@@ -23,15 +23,15 @@ public: // from QGraphicsItem
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
 
 public Q_SLOTS:
-    void handleSeriesChanged(const QPieSeries::ChangeSet& changeSet);
-    void handleDomainChanged(const Domain& domain);
+    void handleSeriesChanged();
+    void handleSliceChanged();
+    void handleDomainChanged(qreal, qreal, qreal, qreal);
     void handleGeometryChanged(const QRectF& rect);
-    void updateGeometry();
 
 private:
-    void addSlice(QPieSlice* sliceData);
-    void updateSlice(QPieSlice* sliceData);
-    void deleteSlice(QPieSlice* sliceData);
+    QVector<PieSliceLayout> calculateLayout();
+    void applyLayout(const QVector<PieSliceLayout> &layout);
+    void setLayout(const QVector<PieSliceLayout> &layout);
 
 private:
     friend class PieSlice;

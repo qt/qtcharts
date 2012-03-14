@@ -147,11 +147,9 @@ void QPieSeries::replace(QList<QPieSlice*> slices)
 */
 void QPieSeries::add(QList<QPieSlice*> slices)
 {
-    ChangeSet changeSet;
     foreach (QPieSlice* s, slices) {
         s->setParent(this);
         m_slices << s;
-        changeSet.appendAdded(s);
     }
 
     updateDerivativeData();
@@ -163,7 +161,7 @@ void QPieSeries::add(QList<QPieSlice*> slices)
         connect(s, SIGNAL(hoverLeave()), this, SLOT(sliceHoverLeave()));
     }
 
-    emit changed(changeSet);
+    emit changed();
 }
 
 /*!
@@ -208,15 +206,12 @@ void QPieSeries::remove(QPieSlice* slice)
         Q_ASSERT(0); // TODO: how should this be reported?
         return;
     }
+    emit changed();
 
-    ChangeSet changeSet;
-    changeSet.appendRemoved(slice);
-    emit changed(changeSet);
+    updateDerivativeData();
 
     delete slice;
     slice = NULL;
-
-    updateDerivativeData();
 }
 
 /*!
@@ -227,13 +222,13 @@ void QPieSeries::clear()
     if (m_slices.count() == 0)
         return;
 
-    ChangeSet changeSet;
     foreach (QPieSlice* s, m_slices) {
-        changeSet.appendRemoved(s);
         m_slices.removeOne(s);
         delete s;
     }
-    emit changed(changeSet);
+
+    emit changed();
+
     updateDerivativeData();
 }
 
@@ -276,7 +271,7 @@ void QPieSeries::setPiePosition(qreal relativeHorizontalPosition, qreal relative
     if (m_pieRelativeHorPos != relativeHorizontalPosition || m_pieRelativeVerPos != relativeVerticalPosition) {
         m_pieRelativeHorPos = relativeHorizontalPosition;
         m_pieRelativeVerPos = relativeVerticalPosition;
-        emit piePositionChanged();
+        emit changed();
     }
 }
 
@@ -330,7 +325,7 @@ void QPieSeries::setPieSize(qreal relativeSize)
 
     if (m_pieRelativeSize != relativeSize) {
         m_pieRelativeSize = relativeSize;
-        emit pieSizeChanged();
+        emit changed();
     }
 }
 
@@ -429,10 +424,9 @@ qreal QPieSeries::total() const
 }
 
 /*!
-    \fn void QPieSeries::changed(const QPieSeries::ChangeSet& changeSet)
+    \fn void QPieSeries::changed()
 
     This signal emitted when something has changed in the series.
-    The \a changeSet contains the details of which slices have been added, changed or removed.
 
     \sa QPieSeries::ChangeSet, QPieSlice::changed()
 */
@@ -461,31 +455,10 @@ qreal QPieSeries::total() const
     \sa QPieSlice::hoverLeave()
 */
 
-/*!
-    \fn void QPieSeries::pieSizeChanged()
-
-    This signal is emitted when size factor has been changed.
-
-    \sa pieSize(), setPieSize()
-*/
-
-/*!
-    \fn void QPieSeries::piePositionChanged()
-
-    This signal is emitted when position of the pie has been changed.
-
-    \sa pieHorizontalPosition(), pieVerticalPosition(), setPiePosition()
-*/
-
 void QPieSeries::sliceChanged()
 {
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
-
-    ChangeSet changeSet;
-    changeSet.appendChanged(slice);
-    emit changed(changeSet);
-
     updateDerivativeData();
 }
 
