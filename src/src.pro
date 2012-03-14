@@ -62,6 +62,11 @@ RCC_DIR = $$CHART_BUILD_DIR/lib
 DEFINES += QTCOMMERCIALCHART_LIBRARY
 
 #qt public headers
+!exists($$CHART_BUILD_PUBLIC_HEADER_DIR)
+{
+    system($$QMAKE_MKDIR  $$CHART_BUILD_PUBLIC_HEADER_DIR)
+}
+
 for(file, PUBLIC_HEADERS) {
     name = $$split(file,'/')
     name = $$last(name)
@@ -75,7 +80,7 @@ for(file, PUBLIC_HEADERS) {
     class = $$member(class,0)
     command = "echo \"$${LITERAL_HASH}include \\\"$$name\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class" 
     PUBLIC_QT_HEADERS += $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class
-    NOWARRNIGNS = system($$command)
+    system($$command)
     }
 }
 
