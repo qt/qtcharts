@@ -1,5 +1,7 @@
 #include "qchartglobal.h"
 #include "legendmarker_p.h"
+#include <qpieslice.h>
+#include <qbarset.h>
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 
@@ -113,6 +115,27 @@ void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
     default: {
         break;
         }
+    }
+}
+
+void LegendMarker::changed()
+{
+    switch (mType)
+    {
+    case LegendMarkerTypeSeries: {
+        // TODO:
+        break;
+    }
+    case LegendMarkerTypeBarset: {
+        setBrush(mBarset->brush());
+        setName(mBarset->name());
+        break;
+    }
+    case LegendMarkerTypePieslice: {
+        setBrush(mPieslice->sliceBrush());
+        setName(mPieslice->label());
+        break;
+    }
     }
 }
 

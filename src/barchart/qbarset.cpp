@@ -127,6 +127,7 @@ qreal QBarSet::total()
 void QBarSet::setPen(const QPen pen)
 {
     mPen = pen;
+    emit changed();
 }
 
 /*!
@@ -143,6 +144,7 @@ QPen QBarSet::pen() const
 void QBarSet::setBrush(const QBrush brush)
 {
     mBrush = brush;
+    emit changed();
 }
 
 /*!

@@ -49,6 +49,9 @@ Q_SIGNALS:
     void clicked(QBarSet* barset, Qt::MouseButton button);
     void clicked(QPieSlice* pieslice, Qt::MouseButton button);
 
+public Q_SLOTS:
+    void changed();
+
 private:
     QRectF mBoundingRect;
     QRectF mMarkerBoundingRect;

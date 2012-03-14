@@ -88,16 +88,6 @@ void QLegend::handleGeometryChanged(const QRectF& size)
     layoutChanged();
 }
 
-void QLegend::handleThemeChanged()
-{
-    foreach(QSeries *s, mSeriesList) {
-        deleteMarkers(s);
-    }
-    foreach(QSeries *s, mSeriesList) {
-        createMarkers(s);
-    }
-}
-
 void QLegend::createMarkers(QSeries *series)
 {
     switch (series->type())
@@ -174,6 +164,7 @@ void QLegend::appendMarkers(QBarSeries *series)
         marker->setName(s->name());
         marker->setBrush(s->brush());
         connect(marker,SIGNAL(clicked(QBarSet*,Qt::MouseButton)),this,SIGNAL(clicked(QBarSet*,Qt::MouseButton)));
+        connect(s,SIGNAL(changed()),marker,SLOT(changed()));
         mMarkers.append(marker);
         childItems().append(marker);
     }
@@ -186,6 +177,7 @@ void QLegend::appendMarkers(QPieSeries *series)
         marker->setName(s->label());
         marker->setBrush(s->sliceBrush());
         connect(marker,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)),this,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)));
+        connect(s,SIGNAL(changed()),marker,SLOT(changed()));
         mMarkers.append(marker);
         childItems().append(marker);
     }
