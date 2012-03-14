@@ -28,6 +28,9 @@ public:
     void setBackgroundBrush(const QBrush& brush);
     QBrush backgroundBrush() const;
 
+    QSizeF minimumSize() const;
+    void setMinimumSize(const QSizeF size);
+
 signals:
     // for interactions.
     void clicked(QSeries* series, Qt::MouseButton button);
@@ -54,6 +57,7 @@ private:
     QList<LegendMarker*> mMarkers;
 
     QBrush mBackgroundBrush;
+    QSizeF mMinimumSize;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -24,6 +24,7 @@ QLegend::QLegend(QGraphicsItem *parent)
     : QGraphicsObject(parent)
     ,mBoundingRect(0,0,1,1)
     ,mBackgroundBrush(Qt::darkGray)     // TODO: from theme?
+    ,mMinimumSize(50,20)                // TODO: magic numbers
 {
 }
 
@@ -52,6 +53,16 @@ void QLegend::setBackgroundBrush(const QBrush& brush)
 QBrush QLegend::backgroundBrush() const
 {
     return mBackgroundBrush;
+}
+
+QSizeF QLegend::minimumSize() const
+{
+    return mMinimumSize;
+}
+
+void QLegend::setMinimumSize(const QSizeF size)
+{
+    mMinimumSize = size;
 }
 
 void QLegend::handleSeriesAdded(QSeries* series,Domain* domain)

@@ -41,6 +41,7 @@ public:
     // TODO
     virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
 
+    // TODO: consider this
     virtual QList<QSeries::LegendEntry> legendEntries() { QList<QSeries::LegendEntry> l; return l; }
 
     void setTitle(QString title) { m_title = title; }

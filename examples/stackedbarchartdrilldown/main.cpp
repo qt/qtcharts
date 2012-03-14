@@ -55,7 +55,6 @@ public:
 public Q_SLOTS:
     void handleRightClick(QBarSet *barset, QString category)
     {
-//        qDebug() << "DrilldownChart::handleRightClick" << barset->name() << category;
         DrilldownBarSeries* series = static_cast<DrilldownBarSeries*> (sender());
         changeSeries(series->drilldownSeries(category));
     }
@@ -139,9 +138,6 @@ int main(int argc, char *argv[])
     //! [6]
 
     drilldownChart->axisX()->setGridLineVisible(false);
-
-    QLegend* l = drilldownChart->legend();
-    l->handleGeometryChanged(QRectF(50,270,300,20));
 
     window.setCentralWidget(drilldownChart);
     window.resize(400, 300);
