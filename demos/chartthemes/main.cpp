@@ -40,7 +40,7 @@ public:
         // generate random data
         int listCount = 3;
         int valueMax = 100;
-        int valueCount = 21;
+        int valueCount = 11;
         for (int i(0); i < listCount; i++) {
             DataList dataList;
             for (int j(0); j < valueCount; j++) {
@@ -62,6 +62,7 @@ public:
         m_themeComboBox->addItem("Grayscale", QChart::ChartThemeGrayscale);
         m_themeComboBox->addItem("Scientific", QChart::ChartThemeScientific);
         m_themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
+        m_themeComboBox->addItem("Light", QChart::ChartThemeLight);
         connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this ,SLOT(updateTheme()));
         baseLayout->addWidget(new QLabel("Theme:"), 0, 0);
         baseLayout->addWidget(m_themeComboBox, 0, 1);
