@@ -20,6 +20,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::clicked(const QPointF& point)
+    \brief Signal is emitted when user clicks the \a point on chart.
+*/
+
+/*!
     \fn void QXYSeries::pointReplaced(int index)
     \brief \internal \a index
 */

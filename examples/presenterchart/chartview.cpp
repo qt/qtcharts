@@ -64,9 +64,11 @@ m_index(0)
     addSeries(series0);
     setChartTitle(m_titles.at(0));
 
+//![4]
     foreach (QSeries* series, m_series) {
         QObject::connect(series,SIGNAL(clicked(const QPointF&)),this,SLOT(handlePointClicked(const QPointF&)));
     }
+//![4]
 
     m_timer.start();
 }
@@ -78,7 +80,7 @@ ChartView::~ChartView()
     qDeleteAll(m_series);
 }
 
-//![4]
+//![5]
 void ChartView::handleTimeout()
 {
     if(m_series.size()==0) return;
@@ -88,9 +90,11 @@ void ChartView::handleTimeout()
     addSeries(m_series.at(m_index));
     setChartTitle(m_titles.at(m_index));
 }
-//![4]
+//![5]
 
+//![6]
 void ChartView::handlePointClicked(const QPointF& point)
 {
     setChartTitle(m_titles.at(m_index) + QString(" x: %1 y: %2").arg(point.x()).arg(point.y()));
 }
+//![6]

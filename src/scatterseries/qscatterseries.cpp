@@ -37,11 +37,6 @@
     \sa QSeries, QSeriesType
 */
 
-/*!
-    \fn void QScatterSeries::clicked(const QPointF& point)
-    \brief Signal is emitted when user clicks the \a point on scatter chart.
-*/
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!

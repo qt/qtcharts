@@ -3,26 +3,29 @@
      \title PresenterChart Example
      \subtitle
 
-     The example shows how to create chart which presents the same set of data as line, scatter and spline charts.
-     ChartPresenter will switch between these three chart types every few seconds. 
+     The example shows how to create chart which presents the same set of data as line, scatter, spline and area charts.
+     ChartPresenter will switch between these four chart types every few seconds. 
      Please note this example does not use common data model. A use of common data model is documented here.[TODO]
 
     \image presenterchart1.png
     \image presenterchart2.png
     \image presenterchart3.png
+    \image presenterchart4.png
     
     We create simple ChartView class which derives form QChartView. 
     
     \snippet ../examples/presenterchart/chartview.h 1
     
     Class will implement \c handleTimeout() slot which we are going to use to trigger switching between different chart presentations. 
+    We are also going to provide \c handlePoitClicked() slot which will show clicked point on the chart. 
     Class members \c m_series and \c m_titles are going to store series and related titles. In example we are going to present data as a line chart
-    using QLineSeries , as scatter chart using QScatterSeries, and as a spline chart using QSplineSeries. We create needed instances in constructor of ChartView class.
+    using QLineSeries , as scatter chart using QScatterSeries, as a spline chart using QSplineSeries and a area chart using QAreaSeries. We create needed instances in constructor of ChartView class.
     We set custom line and points colors.
 
     \snippet ../examples/presenterchart/chartview.cpp 1
 
-    We add data to all three series. We can use add() member function. If data set is large,it is wiser to use shared data model, as described here.[TODO]  
+    We add data to three series. Please note area chart is going to use QLineSeries as the upper line. We can use add() member function. If data set is large,
+    it is wiser to use shared data model, as described here.[TODO]  
 
     \snippet ../examples/presenterchart/chartview.cpp 2
 
@@ -30,8 +33,16 @@
 
     \snippet ../examples/presenterchart/chartview.cpp 3
     
-    In  \c handleTimeout() slot  we change currently displayed chart by removing previous series and adding next series from the \c m_series list. We also set proper title.
+    We connect \c clicked() signals from each series with our \c handlePointClciked() slot.
     
     \snippet ../examples/presenterchart/chartview.cpp 4
+    
+    In  \c handleTimeout() slot  we change currently displayed chart by removing previous series and adding next series from the \c m_series list. We also set proper title.
+    
+    \snippet ../examples/presenterchart/chartview.cpp 5
+    
+    In  \c handlePointClciked() slot we set the chart's title to show clicked point x and y coordinates.
+    
+    \snippet ../examples/presenterchart/chartview.cpp 6
     
 */

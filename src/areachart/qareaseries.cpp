@@ -64,6 +64,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QAreaSeries::clicked(const QPointF& point)
+    \brief Signal is emitted when user clicks the \a point on area chart.
+*/
+
+/*!
     \fn void QAreaSeries::updated()
     \brief \internal
 */
