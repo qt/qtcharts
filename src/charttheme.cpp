@@ -192,7 +192,6 @@ void ChartTheme::decorate(PieChartItem* item, QPieSeries* series, int index)
 void ChartTheme::decorate(QSplineSeries* series, int index)
 {
     QPen pen;
-
     if(pen == series->pen()){
         pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
         pen.setWidthF(2);

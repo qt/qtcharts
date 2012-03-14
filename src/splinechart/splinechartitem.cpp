@@ -57,7 +57,6 @@ void SplineChartItem::setLayout(QVector<QPointF>& points)
 
 void SplineChartItem::handleUpdated()
 {
-    //m_items.setVisible(m_series->pointsVisible());
     m_pen = m_series->pen();
     update();
 }
@@ -70,27 +69,28 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     Q_UNUSED(option);
     painter->save();
     painter->setClipRect(clipRect());
-    painter->setPen(m_pen);
+//    painter->setPen(m_pen);
+    painter->setPen(m_series->pen());
     painter->drawPath(m_path);
 
-    const QVector<QPointF> points =  XYChartItem::points();
+//    const QVector<QPointF> points =  XYChartItem::points();
 
-    for (int i = 0; i < points.size() - 1; i++)
-    {
-        painter->setPen(Qt::red);
-        painter->drawEllipse(points[i], 2, 2);
+//    for (int i = 0; i < points.size() - 1; i++)
+//    {
+//        painter->setPen(Qt::red);
+//        painter->drawEllipse(points[i], 2, 2);
 
-        painter->setPen(Qt::blue);
-        //        painter->drawLine(m_series->at(i), m_series->controlPoint(2 * i));
-        //        painter->drawLine(m_series->at(i + 1), m_series->controlPoint(2 * i + 1));
-        //        painter->drawEllipse(calculateGeometryControlPoint(2 * i), 4, 4);
-        //        painter->drawEllipse(calculateGeometryControlPoint(2 * i + 1), 4, 4);
-    }
-    if (points.count() > 0)
-    {
-        painter->setPen(Qt::red);
-        painter->drawEllipse(points[points.count() - 1], 2, 2);
-    }
+//        painter->setPen(Qt::blue);
+//        //        painter->drawLine(m_series->at(i), m_series->controlPoint(2 * i));
+//        //        painter->drawLine(m_series->at(i + 1), m_series->controlPoint(2 * i + 1));
+//        //        painter->drawEllipse(calculateGeometryControlPoint(2 * i), 4, 4);
+//        //        painter->drawEllipse(calculateGeometryControlPoint(2 * i + 1), 4, 4);
+//    }
+//    if (points.count() > 0)
+//    {
+//        painter->setPen(Qt::red);
+//        painter->drawEllipse(points[points.count() - 1], 2, 2);
+//    }
     painter->restore();
 }
 
