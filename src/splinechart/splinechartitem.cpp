@@ -69,8 +69,7 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     Q_UNUSED(option);
     painter->save();
     painter->setClipRect(clipRect());
-//    painter->setPen(m_pen);
-    painter->setPen(m_series->pen());
+    painter->setPen(m_pen);
     painter->drawPath(m_path);
 
 //    const QVector<QPointF> points =  XYChartItem::points();
