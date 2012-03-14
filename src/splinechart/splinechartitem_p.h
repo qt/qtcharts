@@ -31,7 +31,9 @@ private:
     QSplineSeries* m_series;
     QPainterPath m_path;
     QRectF m_rect;
-    QPen m_pen;
+    QPen m_linePen;
+    QPen m_pointPen;
+    bool m_pointsVisible;
 
 };
 

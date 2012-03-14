@@ -6,7 +6,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 SplineChartItem::SplineChartItem(QSplineSeries* series, QGraphicsItem *parent) :
 XYChartItem(series, parent),
-m_series(series)
+m_series(series),
+m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
@@ -57,7 +58,10 @@ void SplineChartItem::setLayout(QVector<QPointF>& points)
 
 void SplineChartItem::handleUpdated()
 {
-    m_pen = m_series->pen();
+    m_pointsVisible = m_series->pointsVisible();
+    m_linePen = m_series->pen();
+    m_pointPen = m_series->pen();
+    m_pointPen.setWidthF(2*m_pointPen.width());
     update();
 }
 
@@ -69,27 +73,12 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     Q_UNUSED(option);
     painter->save();
     painter->setClipRect(clipRect());
-    painter->setPen(m_pen);
+    painter->setPen(m_linePen);
     painter->drawPath(m_path);
-
-//    const QVector<QPointF> points =  XYChartItem::points();
-
-//    for (int i = 0; i < points.size() - 1; i++)
-//    {
-//        painter->setPen(Qt::red);
-//        painter->drawEllipse(points[i], 2, 2);
-
-//        painter->setPen(Qt::blue);
-//        //        painter->drawLine(m_series->at(i), m_series->controlPoint(2 * i));
-//        //        painter->drawLine(m_series->at(i + 1), m_series->controlPoint(2 * i + 1));
-//        //        painter->drawEllipse(calculateGeometryControlPoint(2 * i), 4, 4);
-//        //        painter->drawEllipse(calculateGeometryControlPoint(2 * i + 1), 4, 4);
-//    }
-//    if (points.count() > 0)
-//    {
-//        painter->setPen(Qt::red);
-//        painter->drawEllipse(points[points.count() - 1], 2, 2);
-//    }
+    if(m_pointsVisible){
+           painter->setPen(m_pointPen);
+           painter->drawPoints(points());
+    }
     painter->restore();
 }
 
