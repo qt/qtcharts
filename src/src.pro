@@ -75,7 +75,7 @@ for(file, PUBLIC_HEADERS) {
     class = $$member(class,0)
     command = "echo \"$${LITERAL_HASH}include \\\"$$name\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class" 
     PUBLIC_QT_HEADERS += $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class
-    system($$command)
+    NOWARRNIGNS = system($$command)
     }
 }
 
