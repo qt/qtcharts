@@ -44,6 +44,7 @@ private:
     void createMarker(QXYSeries* series);
     void createMarkers(QBarSeries* series);
     void createMarkers(QPieSeries* series);
+    void deleteMarkers(QSeries* series);
     void layoutChanged();
     // <--- PIMPL
 

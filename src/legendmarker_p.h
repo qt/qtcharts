@@ -24,8 +24,8 @@ class LegendMarker : public QGraphicsObject
 
 public:
     LegendMarker(QSeries* series, QGraphicsItem *parent = 0);
-    LegendMarker(QBarSet* barset, QGraphicsItem *parent = 0);
-    LegendMarker(QPieSlice* pieslice, QGraphicsItem *parent = 0);
+    LegendMarker(QSeries* series, QBarSet* barset, QGraphicsItem *parent = 0);
+    LegendMarker(QSeries* series, QPieSlice* pieslice, QGraphicsItem *parent = 0);
     void setBoundingRect(const QRectF rect);
 
     void setBrush(const QBrush brush);
@@ -33,6 +33,8 @@ public:
 
     void setName(const QString name);
     QString name() const;
+
+    QSeries* series() const;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 

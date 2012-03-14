@@ -113,6 +113,7 @@ void QLegend::handleSeriesAdded(QSeries* series,Domain* domain)
     case QSeries::SeriesTypeSpline: {
 
         QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
+        createMarker(splineSeries);
         break;
     }
     default: {
@@ -126,7 +127,16 @@ void QLegend::handleSeriesAdded(QSeries* series,Domain* domain)
 
 void QLegend::handleSeriesRemoved(QSeries* series)
 {
-    // TODO: delete markers, disconnect.
+    if (series->type() == QSeries::SeriesTypeArea)
+    {
+        // This is special case. Area series has upper and lower series, which each have markers
+        QAreaSeries* s = static_cast<QAreaSeries*> (series);
+        deleteMarkers(s->upperSeries());
+        deleteMarkers(s->lowerSeries());
+    } else {
+        deleteMarkers(series);
+    }
+
     mSeriesList.removeOne(series);
     layoutChanged();
 }
@@ -135,6 +145,17 @@ void QLegend::handleGeometryChanged(const QRectF& size)
 {
     mBoundingRect = size;
     layoutChanged();
+}
+
+void QLegend::deleteMarkers(QSeries *series)
+{
+    // Search all markers that belong to given series and delete them.
+    foreach (LegendMarker *m, mMarkers) {
+        if (m->series() == series) {
+            mMarkers.removeOne(m);
+            delete m;
+        }
+    }
 }
 
 void QLegend::createMarker(QXYSeries* series)
@@ -150,7 +171,7 @@ void QLegend::createMarker(QXYSeries* series)
 void QLegend::createMarkers(QBarSeries *series)
 {
     foreach(QBarSet* s, series->barSets()) {
-        LegendMarker* marker = new LegendMarker(s,this);
+        LegendMarker* marker = new LegendMarker(series,s,this);
         marker->setName(s->name());
         marker->setBrush(s->brush());
         connect(marker,SIGNAL(clicked(QBarSet*,Qt::MouseButton)),this,SIGNAL(clicked(QBarSet*,Qt::MouseButton)));
@@ -162,7 +183,7 @@ void QLegend::createMarkers(QBarSeries *series)
 void QLegend::createMarkers(QPieSeries *series)
 {
     foreach(QPieSlice* s, series->slices()) {
-        LegendMarker* marker = new LegendMarker(s,this);
+        LegendMarker* marker = new LegendMarker(series,s,this);
         marker->setName(s->label());
         marker->setBrush(s->sliceBrush());
         connect(marker,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)),this,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)));
@@ -195,8 +216,6 @@ void QLegend::layoutChanged()
         x += xStep;
     }
 }
-
-
 
 #include "moc_qlegend.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

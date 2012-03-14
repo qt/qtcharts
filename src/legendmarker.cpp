@@ -17,11 +17,11 @@ LegendMarker::LegendMarker(QSeries* series, QGraphicsItem *parent)
         setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     }
 
-LegendMarker::LegendMarker(QBarSet* barset, QGraphicsItem *parent)
+LegendMarker::LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *parent)
     : QGraphicsObject(parent)
     ,mBoundingRect(0,0,1,1)
     ,mName("")
-    ,mSeries(0)
+    ,mSeries(series)
     ,mBarset(barset)
     ,mPieslice(0)
     ,mType(LegendMarkerTypeBarset)
@@ -29,11 +29,11 @@ LegendMarker::LegendMarker(QBarSet* barset, QGraphicsItem *parent)
         setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     }
 
-LegendMarker::LegendMarker(QPieSlice* pieslice, QGraphicsItem *parent)
+LegendMarker::LegendMarker(QSeries *series, QPieSlice *pieslice, QGraphicsItem *parent)
     : QGraphicsObject(parent)
     ,mBoundingRect(0,0,1,1)
     ,mName("")
-    ,mSeries(0)
+    ,mSeries(series)
     ,mBarset(0)
     ,mPieslice(pieslice)
     ,mType(LegendMarkerTypePieslice)
@@ -66,6 +66,11 @@ QString LegendMarker::name() const
     return mName;
 }
 
+QSeries* LegendMarker::series() const
+{
+    return mSeries;
+}
+
 void LegendMarker::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setBrush(mBrush);
@@ -82,17 +87,14 @@ void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
     switch (mType)
     {
     case LegendMarkerTypeSeries: {
-        qDebug() << "LegendMarker::mousePressEvent LegendMarkerTypeSeries" << event;
         emit clicked(mSeries,event->button());
         break;
         }
     case LegendMarkerTypeBarset: {
-        qDebug() << "LegendMarker::mousePressEvent LegendMarkerTypeBarset" << event;
         emit clicked(mBarset,event->button());
         break;
         }
     case LegendMarkerTypePieslice: {
-        qDebug() << "LegendMarker::mousePressEvent LegendMarkerTypePieslice" << event;
         emit clicked(mPieslice,event->button());
         break;
         }
