@@ -149,7 +149,7 @@ void QLegend::createMarker(QXYSeries* series)
 void QLegend::createMarkers(QBarSeries *series)
 {
     foreach(QBarSet* s, series->barSets()) {
-        LegendMarker* marker = new LegendMarker(series,this);
+        LegendMarker* marker = new LegendMarker(s,this);
         marker->setName(s->name());
         marker->setBrush(s->brush());
         connect(marker,SIGNAL(clicked(QBarSet*,Qt::MouseButton)),this,SIGNAL(clicked(QBarSet*,Qt::MouseButton)));
@@ -161,7 +161,7 @@ void QLegend::createMarkers(QBarSeries *series)
 void QLegend::createMarkers(QPieSeries *series)
 {
     foreach(QPieSlice* s, series->slices()) {
-        LegendMarker* marker = new LegendMarker(series,this);
+        LegendMarker* marker = new LegendMarker(s,this);
         marker->setName(s->label());
         marker->setBrush(s->sliceBrush());
         connect(marker,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)),this,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)));

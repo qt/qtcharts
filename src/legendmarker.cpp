@@ -82,22 +82,24 @@ void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
     switch (mType)
     {
     case LegendMarkerTypeSeries: {
+        qDebug() << "LegendMarker::mousePressEvent LegendMarkerTypeSeries" << event;
         emit clicked(mSeries,event->button());
         break;
-    }
+        }
     case LegendMarkerTypeBarset: {
+        qDebug() << "LegendMarker::mousePressEvent LegendMarkerTypeBarset" << event;
         emit clicked(mBarset,event->button());
         break;
-    }
+        }
     case LegendMarkerTypePieslice: {
+        qDebug() << "LegendMarker::mousePressEvent LegendMarkerTypePieslice" << event;
         emit clicked(mPieslice,event->button());
         break;
         }
     default: {
         break;
+        }
     }
-    }
-
 }
 
 #include "moc_legendmarker_p.cpp"
