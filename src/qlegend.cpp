@@ -70,6 +70,7 @@ void QLegend::handleSeriesAdded(QSeries* series,Domain* domain)
 
         QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
         createMarker(areaSeries->upperSeries());
+        if(areaSeries->lowerSeries())
         createMarker(areaSeries->lowerSeries());
         break;
     }
@@ -190,8 +191,6 @@ void QLegend::layoutChanged()
     qreal x = mBoundingRect.x() + 5;
     qreal y = mBoundingRect.y() + (mBoundingRect.height() - markerSize.height())/2;
     foreach (LegendMarker* m, mMarkers) {
-        qDebug() << "marker x:" << x;
-        qDebug() << "marker y:" << y;
         m->setBoundingRect(QRectF(x,y,markerSize.width(),markerSize.height()));
         x += xStep;
     }

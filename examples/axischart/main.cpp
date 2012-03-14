@@ -42,33 +42,36 @@ int main(int argc, char *argv[])
 
     QLinearGradient backgroundGradient;
     backgroundGradient.setColorAt(0.0, Qt::white);
-    backgroundGradient.setColorAt(1.0, QRgb(0xffff80));
+    backgroundGradient.setColorAt(1.0, Qt::white);
     backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
     chartView->setChartBackgroundBrush(backgroundGradient);
 
     QChartAxis* axisX = chartView->axisX();
     axisX->setLabelsAngle(45);
-    axisX->setGridLinePen(Qt::DashLine);
+    axisX->setGridLinePen(red);
+    axisX->setGridLineVisible(false);
+    axisX->setShadesVisible(true);
 
     QChartAxisCategories* categoriesX = axisX->categories();
     categoriesX->insert(0,"low");
     categoriesX->insert(50,"medium");
     categoriesX->insert(100,"High");
 
-    axisX->setMin(-10);
-    axisX->setMax(2200);
+   // axisX->setMin(-10);
+   // axisX->setMax(2200);
 
     QChartAxis* axisY = chartView->axisY();
     axisY->setLabelsAngle(45);
     axisY->setShadesBrush(Qt::yellow);
+    axisY->setGridLineVisible(false);
 
     QChartAxisCategories* categoriesY = axisY->categories();
     categoriesY->insert(0,"low");
     categoriesY->insert(50,"medium");
     categoriesY->insert(100,"High");
 
-    axisY->setMin(-10);
-    axisY->setMax(200);
+   // axisY->setMin(-10);
+   // axisY->setMax(200);
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);
