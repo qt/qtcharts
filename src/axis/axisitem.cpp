@@ -296,7 +296,7 @@ void AxisItem::setLayout(QVector<qreal>& layout)
 				labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
 				if((i+1)%2 && i>1) {
 					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
-					rectItem->setRect(m_rect.left(),layout[i-1],m_rect.width(),layout[i-1]-layout[i]);
+					rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i-1]-layout[i]);
 				}
 				lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
 				lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
