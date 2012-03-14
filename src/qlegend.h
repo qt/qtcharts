@@ -42,11 +42,17 @@ public slots:
     void handleSeriesRemoved(QSeries* series);
     void handleGeometryChanged(const QRectF& size);
 
+    // PIMPL --->
+    // Internal slot. Legend needs to know when theme has changed (or color of some series, if user changes it)
+    void handleThemeChanged();
+    // <--- PIMPL
+
 private:
     // PIMPL --->
-    void createMarker(QXYSeries* series);
-    void createMarkers(QBarSeries* series);
-    void createMarkers(QPieSeries* series);
+    void createMarkers(QSeries* series);
+    void appendMarkers(QXYSeries* series);
+    void appendMarkers(QBarSeries* series);
+    void appendMarkers(QPieSeries* series);
     void deleteMarkers(QSeries* series);
     void layoutChanged();
     // <--- PIMPL
