@@ -40,7 +40,7 @@ void BarPresenter::layoutChanged()
 
     int itemIndex(0);
     for (int category=0; category < categoryCount; category++) {
-        qreal xPos = categoryWidth * category + categoryWidth /2;
+        qreal xPos = categoryWidth * category + categoryWidth /2 + mBarWidth/2;
         qreal yPos = mHeight;
         for (int set = 0; set < setCount; set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
@@ -56,7 +56,7 @@ void BarPresenter::layoutChanged()
     }
 
     // Position separators
-    qreal xPos = categoryWidth + categoryWidth/2 - mBarWidth /2;
+    qreal xPos = categoryWidth + categoryWidth/2;
     for (int s=0; s < mSeparators.count(); s++) {
         Separator* sep = mSeparators.at(s);
         sep->setPos(xPos,0);
@@ -68,7 +68,7 @@ void BarPresenter::layoutChanged()
     // Position floating values
     itemIndex = 0;
     for (int category=0; category < mSeries->categoryCount(); category++) {
-        qreal xPos = categoryWidth * category + categoryWidth/2 + mBarWidth/2;
+        qreal xPos = categoryWidth * category + categoryWidth/2 + mBarWidth;
         qreal yPos = mHeight;
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
