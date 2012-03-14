@@ -85,6 +85,7 @@ protected:
 private:
     inline void createChartBackgroundItem();
     inline void createChartTitleItem();
+    void updateLayout();
 
 private:
     Q_DISABLE_COPY(QChart)

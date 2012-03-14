@@ -124,6 +124,7 @@ void QChart::setChartTitle(const QString& title)
 {
     createChartTitleItem();
     m_titleItem->setText(title);
+    updateLayout();
 }
 
 /*!
@@ -144,6 +145,7 @@ void QChart::setChartTitleFont(const QFont& font)
 {
     createChartTitleItem();
     m_titleItem->setFont(font);
+    updateLayout();
 }
 
 /*!
@@ -153,6 +155,7 @@ void QChart::setChartTitleBrush(const QBrush &brush)
 {
     createChartTitleItem();
     m_titleItem->setBrush(brush);
+    updateLayout();
 }
 
 /*!
@@ -197,6 +200,7 @@ int QChart::margin() const
 void QChart::setMargin(int margin)
 {
     m_presenter->setMargin(margin);
+    updateLayout();
 }
 
 /*!
@@ -282,19 +286,7 @@ void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
 {
 
     m_rect = QRectF(QPoint(0,0),event->newSize());
-    QRectF rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
-
-    // recalculate title position
-    if (m_titleItem) {
-        QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
-        m_titleItem->setPos(center.x(),m_rect.top()/2 + margin()/2);
-    }
-
-    //recalculate background gradient
-    if (m_backgroundItem) {
-        m_backgroundItem->setRect(rect);
-    }
-
+    updateLayout();
     QGraphicsWidget::resizeEvent(event);
     update();
 }
@@ -328,6 +320,23 @@ void QChart::scroll(int dx,int dy)
 	 m_presenter->scroll(0,-m_presenter->geometry().width()/(axisY()->ticksCount()-1));
 }
 
+void QChart::updateLayout()
+{
+    if(!m_rect.isValid()) return;
+
+    QRectF rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
+
+    // recalculate title position
+    if (m_titleItem) {
+        QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
+        m_titleItem->setPos(center.x(),m_rect.top()/2 + margin()/2);
+    }
+
+    //recalculate background gradient
+    if (m_backgroundItem) {
+        m_backgroundItem->setRect(rect);
+    }
+}
 #include "moc_qchart.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

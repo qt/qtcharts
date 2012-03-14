@@ -24,7 +24,6 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *parent
     Q_ASSERT(series);
 
     QObject::connect(m_series,SIGNAL(updated()), this, SLOT(handleUpdated()));
-    QObject::connect(this,SIGNAL(clicked(const QPointF&)), m_series, SIGNAL(clicked(const QPointF&)));
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemHasNoContents);
@@ -87,7 +86,7 @@ void ScatterChartItem::deletePoints(int count)
 
 void ScatterChartItem::markerSelected(Marker* marker)
 {
-    emit clicked(QPointF(m_series->x(marker->index()), m_series->y(marker->index())));
+    emit XYChartItem::clicked(QPointF(m_series->x(marker->index()), m_series->y(marker->index())));
 }
 
 void ScatterChartItem::setLayout(QVector<QPointF>& points)
@@ -174,6 +173,10 @@ void ScatterChartItem::handleUpdated()
     setPen(m_series->pen());
     setBrush(m_series->brush());
 
+}
+
+void ScatterChartItem::mousePressEvent( QGraphicsSceneMouseEvent * event )
+{
 }
 
 #include "moc_scatterchartitem_p.cpp"

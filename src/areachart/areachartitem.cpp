@@ -3,6 +3,7 @@
 #include "qlineseries.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
+#include <QGraphicsSceneMouseEvent>
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -22,6 +23,7 @@ m_pointsVisible(false)
     }
 
     QObject::connect(areaSeries,SIGNAL(updated()),this,SLOT(handleUpdated()));
+    QObject::connect(this,SIGNAL(clicked(const QPointF&)),areaSeries,SIGNAL(clicked(const QPointF&)));
 
     handleUpdated();
 }
@@ -106,6 +108,11 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
            if(m_lower)  painter->drawPoints(m_lower->points());
     }
     painter->restore();
+}
+
+void AreaChartItem::mousePressEvent( QGraphicsSceneMouseEvent * event )
+{
+    emit clicked(m_upper->calculateDomainPoint(event->pos()));
 }
 
 #include "moc_areachartitem_p.cpp"

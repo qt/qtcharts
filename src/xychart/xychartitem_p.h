@@ -27,12 +27,16 @@ public slots:
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF& size);
 
+signals:
+    void clicked(const QPointF& point);
+
 protected:
     virtual void setLayout(QVector<QPointF>& points);
     QPointF calculateGeometryPoint(const QPointF& point) const;
     QPointF calculateGeometryPoint(int index) const;
     QPointF calculateDomainPoint(const QPointF& point) const;
     QVector<QPointF> calculateGeometryPoints() const;
+    void mousePressEvent( QGraphicsSceneMouseEvent * event );
 
 private:
     void applyLayout(QVector<QPointF>& points);
@@ -50,6 +54,7 @@ private:
     QVector<QPointF> m_points;
 
     friend class XYAnimation;
+    friend class AreaChartItem;
 
 };
 

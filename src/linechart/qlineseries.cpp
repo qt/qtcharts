@@ -65,7 +65,7 @@ void QLineSeries::setLinePen(const QPen& pen)
 {
     if(pen!=m_pen){
     m_pen=pen;
-    emit updated();
+    emit QXYSeries::updated();
     }
 }
 
@@ -76,7 +76,7 @@ void QLineSeries::setPointsVisible(bool visible)
 {
     if(m_pointsVisible!=visible){
     m_pointsVisible=visible;
-    emit updated();
+    emit QXYSeries::updated();
     }
 }
 
@@ -92,7 +92,5 @@ QDebug operator<< (QDebug debug, const QLineSeries series)
     }
     return debug.space();
 }
-
-#include "moc_qlineseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

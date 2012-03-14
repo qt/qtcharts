@@ -11,7 +11,6 @@ class QScatterSeriesPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QXYSeries
 {
-    Q_OBJECT
 
 public:
     enum MarkerShape {
@@ -31,9 +30,6 @@ public:
     void setShape(MarkerShape shape);
     qreal size() const;
     void setSize(qreal size);
-
-signals:
-    void clicked(const QPointF& point);
 
 private:
     MarkerShape m_shape;

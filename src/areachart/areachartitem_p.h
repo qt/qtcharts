@@ -26,6 +26,13 @@ public:
     LineChartItem* lowerLineItem() const { return m_lower ;}
 
     void updatePath();
+
+protected:
+    void mousePressEvent( QGraphicsSceneMouseEvent * event );
+
+signals:
+    void clicked(const QPointF& point);
+
 public slots:
     void handleUpdated();
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);

@@ -2,7 +2,6 @@
 #include "qlineseries.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
-#include <QGraphicsSceneMouseEvent>
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -15,7 +14,6 @@ m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
-    QObject::connect(this,SIGNAL(clicked(const QPointF&)),series,SIGNAL(clicked(const QPointF&)));
     handleUpdated();
 }
 
@@ -76,11 +74,6 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     	painter->drawPoints(points());
     }
     painter->restore();
-}
-
-void LineChartItem::mousePressEvent( QGraphicsSceneMouseEvent * event )
-{
-    emit clicked(calculateDomainPoint(event->pos()));
 }
 
 #include "moc_linechartitem_p.cpp"

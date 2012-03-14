@@ -51,6 +51,7 @@ public:
         void modelDataRemoved(QModelIndex parent, int start, int end);
 
 signals:
+    void clicked(const QPointF& point);
     void updated();
     void pointReplaced(int index);
     void pointRemoved(int index);

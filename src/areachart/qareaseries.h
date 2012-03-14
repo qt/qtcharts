@@ -34,6 +34,7 @@ public: // from QChartSeries
 
 signals:
     void updated();
+    void clicked(const QPointF& point);
 
 private:
     QBrush m_brush;

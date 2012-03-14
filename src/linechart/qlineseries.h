@@ -11,7 +11,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QTCOMMERCIALCHART_EXPORT QLineSeries : public QXYSeries
 {
-	Q_OBJECT
 public:
 	QLineSeries(QObject* parent=0);
 	virtual ~QLineSeries();
@@ -21,9 +20,6 @@ public:
 
 	void setPointsVisible(bool visible);
 	bool pointsVisible() const {return m_pointsVisible;}
-
-signals:
-    void clicked(const QPointF& point);
 
 public: // from QChartSeries
 	virtual QSeriesType type() const {return QSeries::SeriesTypeLine;}

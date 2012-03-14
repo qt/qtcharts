@@ -92,7 +92,10 @@ QAreaSeries::~QAreaSeries()
 */
 void QAreaSeries::setPen(const QPen& pen)
 {
-    m_pen=pen;
+    if(m_pen!=pen){
+        m_pen=pen;
+        emit updated();
+    }
 }
 
 /*!
@@ -100,14 +103,20 @@ void QAreaSeries::setPen(const QPen& pen)
 */
 void QAreaSeries::setBrush(const QBrush& brush)
 {
-    m_brush=brush;
+    if(m_brush!=brush){
+        m_brush=brush;
+        emit updated();
+    }
 }
 /*!
     Sets if data points are \a visible and should be drawn on line.
 */
 void QAreaSeries::setPointsVisible(bool visible)
 {
-    m_pointsVisible=visible;
+    if(m_pointsVisible!=visible){
+        m_pointsVisible=visible;
+        emit updated();
+    }
 }
 
 #include "moc_qareaseries.cpp"

@@ -24,12 +24,8 @@ public:
 public slots:
     void handleUpdated();
 
-signals:
-    void clicked(const QPointF& point);
-
 protected:
     void setLayout(QVector<QPointF>& points);
-    void mousePressEvent( QGraphicsSceneMouseEvent * event );
 
 private:
     QLineSeries* m_series;

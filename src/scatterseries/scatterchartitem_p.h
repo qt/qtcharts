@@ -27,9 +27,6 @@ public:
 
     void markerSelected(Marker* item);
 
-signals:
-    void clicked(const QPointF& point);
-
 public slots:
     void handleUpdated();
 
@@ -39,6 +36,7 @@ private:
 
 protected:
     void setLayout(QVector<QPointF>& points);
+    void mousePressEvent( QGraphicsSceneMouseEvent * event );
 
 private:
     QScatterSeries *m_series;

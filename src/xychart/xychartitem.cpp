@@ -3,6 +3,7 @@
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
+#include <QGraphicsSceneMouseEvent>
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -19,7 +20,7 @@ m_series(series)
     QObject::connect(series,SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
     QObject::connect(series,SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
     QObject::connect(series,SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
-
+    QObject::connect(this,SIGNAL(clicked(const QPointF&)),series,SIGNAL(clicked(const QPointF&)));
 }
 
 QPointF XYChartItem::calculateGeometryPoint(const QPointF& point) const
@@ -149,6 +150,11 @@ void XYChartItem::handleGeometryChanged(const QRectF& rect)
 bool XYChartItem::isEmpty()
 {
    return !m_clipRect.isValid() ||  m_maxX - m_minX == 0 || m_maxY - m_minY ==0 ;
+}
+
+void XYChartItem::mousePressEvent( QGraphicsSceneMouseEvent * event )
+{
+    emit clicked(calculateDomainPoint(event->pos()));
 }
 
 #include "moc_xychartitem_p.cpp"

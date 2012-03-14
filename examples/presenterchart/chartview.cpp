@@ -60,8 +60,13 @@ m_index(0)
     m_series<<series3;
     m_titles<<chartTitle()+": AreaChart";
 //![3]
+
     addSeries(series0);
     setChartTitle(m_titles.at(0));
+
+    foreach (QSeries* series, m_series) {
+        QObject::connect(series,SIGNAL(clicked(const QPointF&)),this,SLOT(handlePointClicked(const QPointF&)));
+    }
 
     m_timer.start();
 }
@@ -84,3 +89,8 @@ void ChartView::handleTimeout()
     setChartTitle(m_titles.at(m_index));
 }
 //![4]
+
+void ChartView::handlePointClicked(const QPointF& point)
+{
+    setChartTitle(m_titles.at(m_index) + QString(" x: %1 y: %2").arg(point.x()).arg(point.y()));
+}

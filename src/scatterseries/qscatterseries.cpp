@@ -96,8 +96,4 @@ void QScatterSeries::setSize(qreal size)
     emit updated();
 }
 
-
-
-#include "moc_qscatterseries.cpp"
-
 QTCOMMERCIALCHART_END_NAMESPACE
