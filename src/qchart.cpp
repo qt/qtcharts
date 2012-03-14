@@ -344,11 +344,10 @@ void QChart::updateLayout()
     // TODO: better layout
     if (m_legend) {
         QRectF boundingRect(m_rect.adjusted(margin(),
-                                            rect.height() + margin() + margin()/2 - m_legend->minimumSize().height()/2,
+                                            rect.height() + margin() + margin()/2,
                                             -margin(),
-                                            -margin()/2 + m_legend->minimumSize().height()/2));
+                                            -margin()/2 + m_legend->minimumSize().height()));
         m_legend->handleGeometryChanged(boundingRect);
-        qDebug() << "legend rect:" << m_legend->boundingRect();
     }
 }
 #include "moc_qchart.cpp"

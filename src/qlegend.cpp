@@ -32,12 +32,6 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 {
     painter->setBrush(mBackgroundBrush);
     painter->drawRect(mBoundingRect);
-
-    foreach(LegendMarker* m, mMarkers) {
-        QRectF r = m->boundingRect();
-        painter->setBrush(m->brush());
-        painter->drawText(r.x() + r.width()*2, r.y() + r.height(), m->name());
-    }
 }
 
 QRectF QLegend::boundingRect() const
@@ -211,19 +205,12 @@ void QLegend::layoutChanged()
         return;
     }
 
-    // TODO: marker defined by series.
-    QSizeF markerSize(10,10);
-
-    // TODO: better layout, this is just concept.
-    // Leave some space around markers like this: | x x x x |
     qreal steps = mMarkers.count();
-
     qreal xStep = mBoundingRect.width() / steps;
-    qreal yStep = mBoundingRect.height() / steps;
-    qreal x = mBoundingRect.x() + 5;
-    qreal y = mBoundingRect.y() + (mBoundingRect.height() - markerSize.height())/2;
+    qreal x=mBoundingRect.x();
+    qreal y = mBoundingRect.y() + (mBoundingRect.height()/4);
     foreach (LegendMarker* m, mMarkers) {
-        m->setBoundingRect(QRectF(x,y,markerSize.width(),markerSize.height()));
+        m->setBoundingRect(QRectF(x,y,xStep,mBoundingRect.height()/2));
         x += xStep;
     }
 }

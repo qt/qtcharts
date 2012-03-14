@@ -51,13 +51,15 @@ Q_SIGNALS:
 
 private:
     QRectF mBoundingRect;
+    QRectF mMarkerBoundingRect;
     QBrush mBrush;
-    QString mName;
     QSeries* mSeries;
     QBarSet* mBarset;
     QPieSlice* mPieslice;
 
     LegendMarkerType mType;
+    QGraphicsSimpleTextItem mTextItem;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
