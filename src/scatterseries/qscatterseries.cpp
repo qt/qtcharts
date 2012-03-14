@@ -66,7 +66,7 @@ QScatterSeries::~QScatterSeries()
 */
 QScatterSeries::MarkerShape QScatterSeries::shape() const
 {
-    return (QScatterSeries::MarkerShape) m_shape;
+    return m_shape;
 }
 
 /*!
@@ -75,8 +75,10 @@ QScatterSeries::MarkerShape QScatterSeries::shape() const
 */
 void QScatterSeries::setShape(MarkerShape shape)
 {
-    m_shape = shape;
-    emit updated();
+    if(m_shape!= shape){
+        m_shape=shape;
+        emit QXYSeries::updated();
+    }
 }
 
 /*!
@@ -92,8 +94,10 @@ qreal QScatterSeries::size() const
 */
 void QScatterSeries::setSize(qreal size)
 {
-    m_size = size;
-    emit updated();
+    if(m_size != size){
+        m_size=size;
+        emit updated();
+    }
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE
