@@ -60,12 +60,32 @@ MOC_DIR = $$CHART_BUILD_DIR/lib
 UI_DIR = $$CHART_BUILD_DIR/lib
 RCC_DIR = $$CHART_BUILD_DIR/lib
 DEFINES += QTCOMMERCIALCHART_LIBRARY
+
+#qt public headers
+for(file, PUBLIC_HEADERS) {
+    name = $$split(file,'/')
+    name = $$last(name)
+    class = "$$cat($$file)"
+    class = $$find(class,class) 
+    !isEmpty(class){
+    class = $$split(class,QTCOMMERCIALCHART_EXPORT)
+    class = $$member(class,1)
+    class = $$split(class,':')
+    class = $$replace(class,' ','')
+    class = $$member(class,0)
+    command = "echo \"$${LITERAL_HASH}include \\\"$$name\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class" 
+    PUBLIC_QT_HEADERS += $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class
+    system($$command)
+    }
+}
+
 public_headers.path = $$[QT_INSTALL_HEADERS]/QtCommercialChart
-public_headers.files = $$PUBLIC_HEADERS
+public_headers.files = $$PUBLIC_HEADERS $$PUBLIC_QT_HEADERS
+
 target.path = $$[QT_INSTALL_LIBS]
-INSTALLS += target \
-    public_headers
-install_build_public_headers.name = bild_public_headers
+INSTALLS += target public_headers
+
+install_build_public_headers.name = build_public_headers
 install_build_public_headers.output = $$CHART_BUILD_PUBLIC_HEADER_DIR/${QMAKE_FILE_BASE}.h
 install_build_public_headers.input = PUBLIC_HEADERS
 install_build_public_headers.commands = $$QMAKE_COPY \
@@ -73,7 +93,8 @@ install_build_public_headers.commands = $$QMAKE_COPY \
     $$CHART_BUILD_PUBLIC_HEADER_DIR
 install_build_public_headers.CONFIG += target_predeps \
     no_link
-install_build_private_headers.name = bild_private_headers
+    
+install_build_private_headers.name = buld_private_headers
 install_build_private_headers.output = $$CHART_BUILD_PRIVATE_HEADER_DIR/${QMAKE_FILE_BASE}.h
 install_build_private_headers.input = PRIVATE_HEADERS
 install_build_private_headers.commands = $$QMAKE_COPY \
@@ -81,8 +102,10 @@ install_build_private_headers.commands = $$QMAKE_COPY \
     $$CHART_BUILD_PRIVATE_HEADER_DIR
 install_build_private_headers.CONFIG += target_predeps \
     no_link
+ 
 QMAKE_EXTRA_COMPILERS += install_build_public_headers \
-    install_build_private_headers
+    install_build_private_headers \
+    
 chartversion.target = qchartversion_p.h
 chartversion.commands = @echo \
     "build_time" \
@@ -99,3 +122,4 @@ unix:QMAKE_DISTCLEAN += -r \
 win32:QMAKE_DISTCLEAN += /Q \
     $$CHART_BUILD_HEADER_DIR \
     $$CHART_BUILD_LIB_DIR
+
