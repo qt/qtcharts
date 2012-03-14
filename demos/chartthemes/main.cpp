@@ -61,6 +61,7 @@ public:
         m_themeComboBox->addItem("Icy", QChart::ChartThemeIcy);
         m_themeComboBox->addItem("Grayscale", QChart::ChartThemeGrayscale);
         m_themeComboBox->addItem("Scientific", QChart::ChartThemeScientific);
+        m_themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
         connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this ,SLOT(updateTheme()));
         baseLayout->addWidget(new QLabel("Theme:"), 0, 0);
         baseLayout->addWidget(m_themeComboBox, 0, 1);

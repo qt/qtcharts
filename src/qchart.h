@@ -31,9 +31,9 @@ public:
         ChartThemeVanilla,
         ChartThemeIcy,
         ChartThemeGrayscale,
-        ChartThemeScientific
-        //ChartThemeUnnamed1
-        /*! The default theme follows the GUI style of the Operating System */
+        ChartThemeScientific,
+        ChartThemeBlueCerulean,
+        ChartThemeCount
     };
 
     enum  AnimationOption {

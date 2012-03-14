@@ -33,6 +33,7 @@
 #include "chartthemeicy_p.h"
 #include "chartthemegrayscale_p.h"
 #include "chartthemescientific_p.h"
+#include "chartthemebluecerulean_p.h"
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -55,6 +56,8 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
             return new ChartThemeGrayscale();
         case QChart::ChartThemeScientific:
             return new ChartThemeScientific();
+        case QChart::ChartThemeBlueCerulean:
+            return new ChartThemeBlueCerulean();
         default:
             return new ChartThemeDefault();
     }
@@ -62,7 +65,10 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 
 void ChartTheme::decorate(QChart* chart)
 {
-    chart->setChartBackgroundBrush(m_backgroundGradient);
+    if (m_backgroundShades == BackgroundShadesNone)
+        chart->setChartBackgroundBrush(m_backgroundGradient);
+    else
+        chart->setChartBackgroundBrush(Qt::NoBrush);
     chart->setChartTitleFont(m_masterFont);
 }
 
