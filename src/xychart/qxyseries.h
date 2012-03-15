@@ -64,7 +64,7 @@ protected:
     QPen m_pen;
     QBrush m_brush;
 
-    QAbstractItemModel* m_model;
+//    QAbstractItemModel* m_model;
     int m_mapX;
     Qt::Orientation m_mapOrientation;
     int m_mapY;

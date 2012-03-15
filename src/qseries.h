@@ -32,7 +32,7 @@ public:
     };*/
 
 protected:
-    QSeries(QObject *parent = 0) : QObject(parent) {}
+    QSeries(QObject *parent = 0) : QObject(parent) {m_model = NULL;}
 
 public:
     virtual ~QSeries() {}
@@ -43,6 +43,9 @@ public:
 
     void setTitle(QString title) { m_title = title; }
     QString title() { return m_title; }
+
+protected:
+    QAbstractItemModel* m_model;
 
 private:
     QString m_title;

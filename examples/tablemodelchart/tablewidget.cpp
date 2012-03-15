@@ -58,10 +58,12 @@ TableWidget::TableWidget(QWidget *parent)
     lineRadioButton = new QRadioButton("Line");
     splineRadioButton = new QRadioButton("Spline");
     scatterRadioButton = new QRadioButton("Scatter");
+    pieRadioButton = new QRadioButton("Pie");
 
     connect(lineRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType()));
     connect(splineRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType()));
     connect(scatterRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType()));
+    connect(pieRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType()));
     lineRadioButton->setChecked(true);
 
     // radio buttons layout
@@ -69,6 +71,7 @@ TableWidget::TableWidget(QWidget *parent)
     radioLayout->addWidget(lineRadioButton);
     radioLayout->addWidget(splineRadioButton);
     radioLayout->addWidget(scatterRadioButton);
+    radioLayout->addWidget(pieRadioButton);
 
     // create main layout
     QGridLayout* mainLayout = new QGridLayout;
@@ -107,8 +110,17 @@ void TableWidget::updateChartType()
         series = new QLineSeries;
     else if (splineRadioButton->isChecked())
         series = new QSplineSeries;
-    else
+    else if (scatterRadioButton->isChecked())
         series = new QScatterSeries;
+    else if (pieRadioButton->isChecked())
+    {
+        QPieSeries* pieSeries = new QPieSeries;
+        pieSeries->setModel(m_model);
+        pieSeries->setModelMapping(0,2, Qt::Vertical);
+        pieSeries->setLabelsVisible(true);
+        chartView->addSeries(pieSeries);
+        return;
+    }
 
     series->setModel(m_model);
     series->setModelMapping(0,1, Qt::Vertical);

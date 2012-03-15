@@ -50,7 +50,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 QXYSeries::QXYSeries(QObject* parent):QSeries(parent)
 {
-    m_model = NULL;
     m_mapX = -1;
     m_mapY = -1;
     m_mapOrientation = Qt::Vertical;
@@ -268,7 +267,10 @@ QXYSeries& QXYSeries::operator<< (const QList<QPointF> points)
 
 void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
-    emit pointReplaced(topLeft.row());
+    if (m_mapOrientation == Qt::Vertical)
+        emit pointReplaced(topLeft.row());
+    else
+        emit pointReplaced(topLeft.column());
 }
 
 void QXYSeries::modelDataAdded(QModelIndex parent, int start, int end)

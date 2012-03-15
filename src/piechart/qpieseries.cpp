@@ -265,7 +265,7 @@ QList<QPieSlice*> QPieSeries::slices() const
 void QPieSeries::setPiePosition(qreal relativeHorizontalPosition, qreal relativeVerticalPosition)
 {
     if (relativeHorizontalPosition < 0.0 || relativeHorizontalPosition > 1.0 ||
-        relativeVerticalPosition < 0.0 || relativeVerticalPosition > 1.0)
+            relativeVerticalPosition < 0.0 || relativeVerticalPosition > 1.0)
         return;
 
     if (m_pieRelativeHorPos != relativeHorizontalPosition || m_pieRelativeVerPos != relativeVerticalPosition) {
@@ -529,6 +529,71 @@ void QPieSeries::updateDerivativeData()
         if (changed)
             emit s->changed();
     }
+}
+
+bool QPieSeries::setModel(QAbstractItemModel* model)
+{
+    // disconnect signals from old model
+    if(m_model)
+    {
+        disconnect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), 0, 0);
+        disconnect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), 0, 0);
+        disconnect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), 0, 0);
+    }
+
+    // set new model if not NULL and connect necessary signals from it
+    if(model)
+    {
+        m_model = model;
+        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+        connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    }
+}
+
+void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation)
+{
+    m_mapValues = modelValuesLine;
+    m_mapLabels = modelLabelsLine;
+    m_mapOrientation = orientation;
+
+    if (m_model == NULL)
+        return;
+
+    if (m_mapOrientation == Qt::Vertical)
+        for (int i = 0; i < m_model->rowCount(); i++)
+            add(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
+    else
+        for (int i = 0; i < m_model->columnCount(); i++)
+            add(m_model->data(m_model->index(m_mapValues, i), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(m_mapLabels, i), Qt::DisplayRole).toString());
+
+
+}
+
+void QPieSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
+{
+    if (m_mapOrientation == Qt::Vertical)
+        //        slices().at(topLeft.row())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
+        if (topLeft.column() == m_mapValues)
+            slices().at(topLeft.row())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+        else if (topLeft.column() == m_mapLabels)
+            slices().at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+        else
+            //        slices().at(topLeft.column())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
+            if (topLeft.column() == m_mapValues)
+                slices().at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            else if (topLeft.column() == m_mapLabels)
+                slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+}
+
+void QPieSeries::modelDataAdded(QModelIndex parent, int start, int end)
+{
+    //
+}
+
+void QPieSeries::modelDataRemoved(QModelIndex parent, int start, int end)
+{
+    remove(slices().at(start));
 }
 
 #include "moc_qpieseries.cpp"

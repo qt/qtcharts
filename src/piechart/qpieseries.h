@@ -82,6 +82,10 @@ public:
     QPieSlice* add(qreal value, QString name);
     void setLabelsVisible(bool visible = true);
 
+    // data from model
+    bool setModel(QAbstractItemModel* model);
+    void setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation = Qt::Vertical);
+
     // TODO: find slices?
     // QList<QPieSlice*> findByValue(qreal value);
     // ...
@@ -105,6 +109,11 @@ private Q_SLOTS: // TODO: should be private and not visible in the interface at 
     void sliceHoverEnter();
     void sliceHoverLeave();
 
+    // slots for updating pie when data in model changes
+    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
+    void modelDataAdded(QModelIndex parent, int start, int end);
+    void modelDataRemoved(QModelIndex parent, int start, int end);
+
 private:
     void updateDerivativeData();
 
@@ -122,6 +131,11 @@ private:
     qreal m_pieStartAngle;
     qreal m_pieEndAngle;
     qreal m_total;
+
+    // model map
+    int m_mapValues;
+    int m_mapLabels;
+    Qt::Orientation m_mapOrientation;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
