@@ -26,6 +26,7 @@ QLegend::QLegend(QGraphicsItem *parent)
     ,mBackgroundBrush(Qt::darkGray)     // TODO: from theme?
     ,mMinimumSize(50,20)                // TODO: magic numbers
 {
+    setVisible(false);
 }
 
 void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
