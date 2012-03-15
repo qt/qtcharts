@@ -39,19 +39,6 @@ QList<QBarSet*> BarChartModel::barSets()
     return mDataModel;
 }
 
-QList<QSeries::LegendEntry> BarChartModel::legendEntries()
-{
-    QList<QSeries::LegendEntry> legend;
-
-    for (int i=0; i<mDataModel.count(); i++) {
-        QSeries::LegendEntry l;
-        l.mName = mDataModel.at(i)->name();
-        l.mBrush = mDataModel.at(i)->brush();
-        legend.append(l);
-    }
-    return legend;
-}
-
 int BarChartModel::barsetCount()
 {
     return mDataModel.count();

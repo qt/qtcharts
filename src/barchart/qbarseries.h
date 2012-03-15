@@ -24,7 +24,6 @@ public:
     int barsetCount();
     int categoryCount();
     QList<QBarSet*> barSets();
-    QList<QSeries::LegendEntry> legendEntries();
 
     bool setModel(QAbstractItemModel* model);
     QAbstractItemModel* modelExt() {return m_model;}

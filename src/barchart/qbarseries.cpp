@@ -103,14 +103,6 @@ QBarSet* QBarSeries::barsetAt(int index)
 }
 
 /*!
-    Returns legend of series.
-*/
-QList<QSeries::LegendEntry> QBarSeries::legendEntries()
-{
-    return mModel->legendEntries();
-}
-
-/*!
     \internal \a category
 */
 QString QBarSeries::categoryName(int category)
