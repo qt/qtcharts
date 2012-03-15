@@ -380,10 +380,26 @@ QChart::AnimationOptions QChartView::animationOptions() const
     return m_chart->animationOptions();
 }
 
-void QChartView::scroll(int dx,int dy)
+void QChartView::scrollLeft()
 {
-	m_chart->scroll(dx,dy);
+    m_chart->scrollLeft();
 }
+
+void QChartView::scrollRight()
+{
+    m_chart->scrollRight();
+}
+
+void QChartView::scrollUp()
+{
+    m_chart->scrollUp();
+}
+
+void QChartView::scrollDown()
+{
+    m_chart->scrollDown();
+}
+
 
 #include "moc_qchartview.cpp"
 

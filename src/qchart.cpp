@@ -310,16 +310,21 @@ QChart::AnimationOptions QChart::animationOptions() const
     return m_presenter->animationOptions();
 }
 
-void QChart::scroll(int dx,int dy)
+void QChart::scrollLeft()
 {
-	//temporary
-	if(dx>0)
-	 m_presenter->scroll(m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
-	if(dx<0)
-	 m_presenter->scroll(-m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
-	if(dy>0)
-	 m_presenter->scroll(0,m_presenter->geometry().width()/(axisY()->ticksCount()-1));
-	if(dy<0)
+    m_presenter->scroll(-m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+}
+
+void QChart::scrollRight()
+{
+    m_presenter->scroll(m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+}
+void QChart::scrollUp()
+{
+    m_presenter->scroll(0,m_presenter->geometry().width()/(axisY()->ticksCount()-1));
+}
+void QChart::scrollDown()
+{
 	 m_presenter->scroll(0,-m_presenter->geometry().width()/(axisY()->ticksCount()-1));
 }
 
