@@ -120,8 +120,8 @@ bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & pare
     beginInsertRows(QModelIndex(), row /*dataTable.count()*/, row + count - 1);
     for (int i = row; i < row + count; i++)
     {
-        m_points.insert(row, QPointF());
-        m_labels.insert(row,(""));
+        m_points.insert(row, QPointF(10,20));
+        m_labels.insert(row,("a"));
     }
     endInsertRows();
     return true;

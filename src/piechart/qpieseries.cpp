@@ -195,6 +195,22 @@ QPieSlice* QPieSeries::add(qreal value, QString name)
     return slice;
 }
 
+void QPieSeries::insert(int i, QPieSlice* slice)
+{
+    Q_ASSERT(i <= m_slices.count());
+    slice->setParent(this);
+    m_slices.insert(i, slice);
+
+    updateDerivativeData();
+
+    connect(slice, SIGNAL(changed()), this, SLOT(sliceChanged()));
+    connect(slice, SIGNAL(clicked()), this, SLOT(sliceClicked()));
+    connect(slice, SIGNAL(hoverEnter()), this, SLOT(sliceHoverEnter()));
+    connect(slice, SIGNAL(hoverLeave()), this, SLOT(sliceHoverLeave()));
+
+    emit changed();
+}
+
 /*!
     Removes a single \a slice from the series and deletes the slice.
 
@@ -573,22 +589,39 @@ void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::O
 void QPieSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
     if (m_mapOrientation == Qt::Vertical)
+    {
         //        slices().at(topLeft.row())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
         if (topLeft.column() == m_mapValues)
             slices().at(topLeft.row())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
         else if (topLeft.column() == m_mapLabels)
             slices().at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
-        else
-            //        slices().at(topLeft.column())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
-            if (topLeft.column() == m_mapValues)
-                slices().at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-            else if (topLeft.column() == m_mapLabels)
-                slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+    }
+    else
+    {
+        //        slices().at(topLeft.column())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
+        if (topLeft.column() == m_mapValues)
+            slices().at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+        else if (topLeft.column() == m_mapLabels)
+            slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+    }
 }
 
 void QPieSeries::modelDataAdded(QModelIndex parent, int start, int end)
 {
-    //
+    QPieSlice* newSlice = new QPieSlice;
+    newSlice->setLabelVisible(true);
+    if (m_mapOrientation == Qt::Vertical)
+    {
+        newSlice->setValue(m_model->data(m_model->index(start, m_mapValues), Qt::DisplayRole).toDouble());
+        newSlice->setLabel(m_model->data(m_model->index(start, m_mapLabels), Qt::DisplayRole).toString());
+    }
+    else
+    {
+        newSlice->setValue(m_model->data(m_model->index(m_mapValues, start), Qt::DisplayRole).toDouble());
+        newSlice->setLabel(m_model->data(m_model->index(m_mapLabels, start), Qt::DisplayRole).toString());
+    }
+
+    insert(start, newSlice);
 }
 
 void QPieSeries::modelDataRemoved(QModelIndex parent, int start, int end)

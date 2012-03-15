@@ -55,6 +55,7 @@ public:
     // slice setters
     void add(QPieSlice* slice);
     void add(QList<QPieSlice*> slices);
+    void insert(int i, QPieSlice* slice);
     void replace(QList<QPieSlice*> slices);
     void remove(QPieSlice* slice);
     void clear();
