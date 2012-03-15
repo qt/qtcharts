@@ -4,7 +4,7 @@ DESTDIR = $$CHART_BUILD_LIB_DIR
 TEMPLATE = lib
 QT += core \
     gui
-win32: LIBS += User32.lib
+win32-msvc*: LIBS += User32.lib
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
 SOURCES += \
