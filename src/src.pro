@@ -4,6 +4,7 @@ DESTDIR = $$CHART_BUILD_LIB_DIR
 TEMPLATE = lib
 QT += core \
     gui
+win32: LIBS += User32.lib
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
 SOURCES += \
@@ -79,7 +80,7 @@ for(file, PUBLIC_HEADERS) {
     class = $$split(class,' ')
     class = $$replace(class,' ','')
     class = $$member(class,0)
-    command = "echo \"$${LITERAL_HASH}include \\\"$$name\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class" 
+    command = "echo $${LITERAL_HASH}include \"$$name\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class"
     PUBLIC_QT_HEADERS += $$CHART_BUILD_PUBLIC_HEADER_DIR/$$class
     system($$command)
     }

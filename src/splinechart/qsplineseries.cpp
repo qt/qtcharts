@@ -141,6 +141,7 @@ bool QSplineSeries::setModel(QAbstractItemModel* model)
 {
     QXYSeries::setModel(model);
 //    calculateControlPoints();
+    return true;
 }
 
 void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)

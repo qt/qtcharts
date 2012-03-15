@@ -290,6 +290,7 @@ bool QXYSeries::setModel(QAbstractItemModel* model) {
     connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
     connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
     connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    return true;
 }
 
 void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)

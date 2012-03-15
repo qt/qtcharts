@@ -224,6 +224,7 @@ bool QBarSeries::separatorsVisible()
 bool QBarSeries::setModel(QAbstractItemModel* model)
 {
     m_model = model;
+    return true;
 }
 
 void QBarSeries::setModelMappingCategories(int modelColumn)
