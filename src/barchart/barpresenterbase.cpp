@@ -15,11 +15,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent) :
     ChartItem(parent),
+    mHeight(0),
+    mWidth(0),
     mLayoutSet(false),
     mSeries(series),
-    mChart(parent),
-    mWidth(0),
-    mHeight(0)
+    mChart(parent)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
 //    connect(series,SIGNAL(enableSeparators(bool)),this,SLOT(enableSeparators(bool)));

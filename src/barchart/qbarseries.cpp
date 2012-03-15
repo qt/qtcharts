@@ -39,8 +39,8 @@ QBarSeries::QBarSeries(QStringList categories, QObject *parent)
 {
     m_model = NULL;
     m_mapCategories = -1;
-    m_mapBarBottom - 1;
-    m_mapBarTop - 1;
+    m_mapBarBottom = -1;
+    m_mapBarTop = -1;
 }
 
 /*!

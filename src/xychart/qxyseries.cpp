@@ -189,16 +189,17 @@ int QXYSeries::count() const
 {
     Q_ASSERT(m_x.size() == m_y.size());
 
-    if (m_model)
+    if (m_model) {
         if (m_mapOrientation == Qt::Vertical)
             // data is in a column, so return the number of items in single column
             return m_model->rowCount();
         else
             // data is in a row, so return the number of items in single row
-            m_model->columnCount();
-    else
-        // model is not specified, return the number of points in the series internal data store
-        return m_x.size();
+            return m_model->columnCount();
+    }
+
+    // model is not specified, return the number of points in the series internal data store
+    return m_x.size();
 }
 
 /*!

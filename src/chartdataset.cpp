@@ -218,7 +218,7 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
         }
 
         case QSeries::SeriesTypePie: {
-            QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+            //QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
             // TODO: domain stuff
             break;
         }

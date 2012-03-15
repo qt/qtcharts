@@ -130,3 +130,5 @@ win32:QMAKE_DISTCLEAN += /Q \
     $$CHART_BUILD_HEADER_DIR \
     $$CHART_BUILD_LIB_DIR
 
+# treat warnings as errors
+QMAKE_CXXFLAGS += -Werror

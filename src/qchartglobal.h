@@ -27,6 +27,7 @@
 #include <stdarg.h>
 #include <QDebug>
 
+/*
 static QDebug chartDebug(int numargs,...)
 {
        va_list valist;
@@ -38,4 +39,5 @@ static QDebug chartDebug(int numargs,...)
        va_end(valist);
        return qDebug()<<QString().append(function).append("(").append(file).append(":%1)").arg(line);
 }
+*/
 #endif
