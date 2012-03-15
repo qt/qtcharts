@@ -62,9 +62,10 @@ RCC_DIR = $$CHART_BUILD_DIR/lib
 DEFINES += QTCOMMERCIALCHART_LIBRARY
 
 #qt public headers
+#this is very primitive and lame parser , TODO: make perl script insted
 !exists($$CHART_BUILD_PUBLIC_HEADER_DIR)
 {
-    system($$QMAKE_MKDIR  $$CHART_BUILD_PUBLIC_HEADER_DIR)
+    system($$QMAKE_MKDIR $$CHART_BUILD_PUBLIC_HEADER_DIR)
 }
 
 for(file, PUBLIC_HEADERS) {
