@@ -55,7 +55,8 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant & end, 
 
         case MoveDownAnimation: {
 
-            Q_ASSERT(startVector.count() == endVector.count());
+            if(startVector.count() != endVector.count()) break;
+
             for(int i =0;i< startVector.count();i++) {
                 qreal x = startVector[i].x() + ((endVector[i].x()- startVector[i].x()) * progress);
                 qreal y = startVector[i].y() + ((endVector[i].y()- startVector[i].y()) * progress);
