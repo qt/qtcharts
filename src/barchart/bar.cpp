@@ -48,6 +48,9 @@ void Bar::setBrush(QBrush brush)
 
 void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+
     if (0 == mHeight) {
         return;
     }

@@ -38,7 +38,7 @@ protected:
 
 public slots:
     void handleModelChanged(int index);
-    void handleDomainChanged(const Domain& domain);
+    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF& size);
 
     // Internal slots

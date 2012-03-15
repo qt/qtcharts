@@ -268,6 +268,8 @@ QXYSeries& QXYSeries::operator<< (const QList<QPointF> points)
 
 void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
+    Q_UNUSED(bottomRight)
+
     if (m_mapOrientation == Qt::Vertical)
         emit pointReplaced(topLeft.row());
     else
@@ -276,11 +278,15 @@ void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 
 void QXYSeries::modelDataAdded(QModelIndex parent, int start, int end)
 {
+    Q_UNUSED(parent)
+    Q_UNUSED(end)
     emit pointAdded(start);
 }
 
 void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
 {
+    Q_UNUSED(parent)
+    Q_UNUSED(end)
     emit pointRemoved(start);
 }
 

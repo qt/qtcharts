@@ -104,8 +104,9 @@ public:
 
 protected:
 
-   void mousePressEvent( QGraphicsSceneMouseEvent * event )
+   void mousePressEvent(QGraphicsSceneMouseEvent *event)
    {
+       Q_UNUSED(event)
        m_parent->markerSelected(this);
    }
 

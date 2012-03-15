@@ -110,7 +110,7 @@ void ChartTheme::decorate(QLineSeries* series,int index)
     }
 }
 
-void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int index)
+void ChartTheme::decorate(QBarSeries* series,int index)
 {
     QList<QBarSet*> sets = series->barSets();
     for (int i=0; i<sets.count(); i++) {
@@ -132,7 +132,7 @@ void ChartTheme::decorate(BarPresenter* item, QBarSeries* series,int index)
     }
 }
 
-void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,int index)
+void ChartTheme::decorate(QStackedBarSeries* series,int index)
 {
     QList<QBarSet*> sets = series->barSets();
     for (int i=0; i<sets.count(); i++) {
@@ -151,7 +151,7 @@ void ChartTheme::decorate(StackedBarPresenter* item, QStackedBarSeries* series,i
     }
 }
 
-void ChartTheme::decorate(PercentBarPresenter* item, QPercentBarSeries* series,int index)
+void ChartTheme::decorate(QPercentBarSeries* series,int index)
 {
     QList<QBarSet*> sets = series->barSets();
     for (int i=0; i<sets.count(); i++) {
@@ -188,7 +188,7 @@ void ChartTheme::decorate(QScatterSeries* series, int index)
     }
 }
 
-void ChartTheme::decorate(PieChartItem* item, QPieSeries* series, int index)
+void ChartTheme::decorate(QPieSeries* series, int index)
 {
     // Get color for a slice from a gradient linearly, beginning from the start of the gradient
     for (int i(0); i < series->slices().count(); i++) {

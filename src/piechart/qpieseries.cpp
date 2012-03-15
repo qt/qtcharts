@@ -590,6 +590,8 @@ void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::O
 
 void QPieSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
+    Q_UNUSED(bottomRight)
+
     if (m_mapOrientation == Qt::Vertical)
     {
         //        slices().at(topLeft.row())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
@@ -610,6 +612,9 @@ void QPieSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 
 void QPieSeries::modelDataAdded(QModelIndex parent, int start, int end)
 {
+    Q_UNUSED(parent)
+    Q_UNUSED(end)
+
     QPieSlice* newSlice = new QPieSlice;
     newSlice->setLabelVisible(true);
     if (m_mapOrientation == Qt::Vertical)
@@ -628,6 +633,8 @@ void QPieSeries::modelDataAdded(QModelIndex parent, int start, int end)
 
 void QPieSeries::modelDataRemoved(QModelIndex parent, int start, int end)
 {
+    Q_UNUSED(parent)
+    Q_UNUSED(end)
     remove(slices().at(start));
 }
 

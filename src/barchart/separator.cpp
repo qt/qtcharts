@@ -28,6 +28,9 @@ void Separator::setSize(const QSizeF &size)
 
 void Separator::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+
     if (isVisible()) {
         QPen pen(mColor);
         painter->setPen(pen);

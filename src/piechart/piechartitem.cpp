@@ -27,6 +27,7 @@ PieChartItem::~PieChartItem()
 
 void PieChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
+    Q_UNUSED(painter)
     // TODO: paint shadows for all components
     // - get paths from items & merge & offset and draw with shadow color?
     //painter->setBrush(QBrush(Qt::red));

@@ -395,9 +395,9 @@ void AxisItem::handleGeometryChanged(const QRectF& rect)
 
 void AxisItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(painter);
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
+    Q_UNUSED(painter)
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
 }
 
 //TODO "nice numbers algorithm"

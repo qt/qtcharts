@@ -132,9 +132,9 @@ void ScatterChartItem::setLayout(QVector<QPointF>& points)
 
 void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    Q_UNUSED(painter);
-    Q_UNUSED(option);
-    Q_UNUSED(widget);
+    Q_UNUSED(painter)
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
 }
 
 void ScatterChartItem::setPen(const QPen& pen)
@@ -173,10 +173,6 @@ void ScatterChartItem::handleUpdated()
     setPen(m_series->pen());
     setBrush(m_series->brush());
 
-}
-
-void ScatterChartItem::mousePressEvent( QGraphicsSceneMouseEvent * event )
-{
 }
 
 #include "moc_scatterchartitem_p.cpp"

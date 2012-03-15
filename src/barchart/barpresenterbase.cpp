@@ -129,13 +129,18 @@ void BarPresenterBase::initAxisLabels()
 
 void BarPresenterBase::handleModelChanged(int index)
 {
-//    qDebug() << "BarPresenterBase::handleModelChanged" << index;
+    Q_UNUSED(index)
     dataChanged();
 }
 
-void BarPresenterBase::handleDomainChanged(const Domain& domain)
+void BarPresenterBase::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
-    qDebug() << "BarPresenterBase::handleDomainChanged";
+    // TODO:
+    Q_UNUSED(minX)
+    Q_UNUSED(maxX)
+    Q_UNUSED(minY)
+    Q_UNUSED(maxY)
+
     /*
     int count = mSeries->categoryCount();
     if (0 == count) {

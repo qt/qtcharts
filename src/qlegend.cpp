@@ -31,6 +31,9 @@ QLegend::QLegend(QGraphicsItem *parent)
 
 void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+
     painter->setBrush(mBackgroundBrush);
     painter->drawRect(mBoundingRect);
 }
@@ -60,8 +63,10 @@ void QLegend::setMinimumSize(const QSizeF size)
     mMinimumSize = size;
 }
 
-void QLegend::handleSeriesAdded(QSeries* series,Domain* domain)
+void QLegend::handleSeriesAdded(QSeries* series, Domain* domain)
 {
+    Q_UNUSED(domain)
+
     mSeriesList.append(series);
     createMarkers(series);
     layoutChanged();

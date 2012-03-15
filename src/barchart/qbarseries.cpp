@@ -227,14 +227,14 @@ bool QBarSeries::setModel(QAbstractItemModel* model)
     return true;
 }
 
-void QBarSeries::setModelMappingCategories(int modelColumn)
+// TODO
+void QBarSeries::setModelMappingCategories(int /*modelColumn*/)
 {
-    //
 }
 
-void QBarSeries::setModelMappingBarRange(int bottomBoundry, int topBoundry)
+// TODO
+void QBarSeries::setModelMappingBarRange(int /*bottomBoundry*/, int /*topBoundry*/)
 {
-    //
 }
 
 #include "moc_qbarseries.cpp"

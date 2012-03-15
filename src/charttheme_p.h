@@ -45,13 +45,13 @@ public:
     void decorate(QChart* chart);
     void decorate(QLegend* legend);
     //void decorate(ChartItem* item, QSeries* series,int index);
-    void decorate(BarPresenter* item, QBarSeries* series, int index);
-    void decorate(StackedBarPresenter* item, QStackedBarSeries* series, int index);
-    void decorate(PercentBarPresenter* item, QPercentBarSeries* series, int index);
+    void decorate(QBarSeries* series, int index);
+    void decorate(QStackedBarSeries* series, int index);
+    void decorate(QPercentBarSeries* series, int index);
     void decorate(QLineSeries* series, int index);
     void decorate(QAreaSeries* series, int index);
     void decorate(QScatterSeries* series, int index);
-    void decorate(PieChartItem* item, QPieSeries* series, int index);
+    void decorate(QPieSeries* series, int index);
     void decorate(QSplineSeries* series, int index);
     void decorate(QChartAxis* axis, bool axisX);
 
