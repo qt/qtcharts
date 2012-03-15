@@ -23,14 +23,6 @@ public:
         SeriesTypeSpline
     };
 
-    // Helper class to contain legend and color for it
-    // TODO: This is actually quite close to current LegendMarker.. combine them?
-/*    class LegendEntry {
-        public:
-        QString mName;
-        /QBrush mBrush;
-    };*/
-
 protected:
     QSeries(QObject *parent = 0) : QObject(parent) {m_model = NULL;}
 

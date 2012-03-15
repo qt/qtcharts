@@ -32,7 +32,7 @@ BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent) :
 BarPresenterBase::~BarPresenterBase()
 {
     disconnect(this,SLOT(showToolTip(QPoint,QString)));
-    disconnect(this,SLOT(enableSeparators(bool)));
+//    disconnect(this,SLOT(enableSeparators(bool)));
 }
 
 void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

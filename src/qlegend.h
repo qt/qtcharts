@@ -20,6 +20,11 @@ class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsObject
     Q_OBJECT
 public:
 
+    enum PreferredLayout {
+        PreferredLayoutHorizontal,
+        PreferredLayoutVertical
+    };
+
     explicit QLegend(QGraphicsItem *parent = 0);
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
@@ -28,8 +33,12 @@ public:
     void setBackgroundBrush(const QBrush& brush);
     QBrush backgroundBrush() const;
 
+    void setPreferredLayout(QLegend::PreferredLayout preferred);
+
     QSizeF minimumSize() const;
     void setMinimumSize(const QSizeF size);
+    QSizeF maximumSize() const;
+    void setMaximumSize(const QSizeF size);
 
 signals:
     // for interactions.
@@ -49,7 +58,7 @@ private:
     void appendMarkers(QBarSeries* series);
     void appendMarkers(QPieSeries* series);
     void deleteMarkers(QSeries* series);
-    void layoutChanged();
+    void layoutChanged();    // TODO: rename this to layoutChanged and remove original layoutChanged, when ready
     // <--- PIMPL
 
 
@@ -59,6 +68,8 @@ private:
 
     QBrush mBackgroundBrush;
     QSizeF mMinimumSize;
+    QSizeF mMaximumSize;
+    QLegend::PreferredLayout mPreferredLayout;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

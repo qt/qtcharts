@@ -25,6 +25,8 @@ QLegend::QLegend(QGraphicsItem *parent)
     ,mBoundingRect(0,0,1,1)
     ,mBackgroundBrush(Qt::darkGray)     // TODO: from theme?
     ,mMinimumSize(50,20)                // TODO: magic numbers
+    ,mMaximumSize(150,100)
+    ,mPreferredLayout(QLegend::PreferredLayoutVertical)
 {
     setVisible(false);
 }
@@ -51,6 +53,12 @@ void QLegend::setBackgroundBrush(const QBrush& brush)
 QBrush QLegend::backgroundBrush() const
 {
     return mBackgroundBrush;
+}
+
+void QLegend::setPreferredLayout(QLegend::PreferredLayout preferred)
+{
+    mPreferredLayout = preferred;
+    layoutChanged();
 }
 
 QSizeF QLegend::minimumSize() const
@@ -208,14 +216,45 @@ void QLegend::layoutChanged()
         return;
     }
 
-    qreal steps = mMarkers.count();
-    qreal xStep = mBoundingRect.width() / steps;
-    qreal x=mBoundingRect.x();
-    qreal y = mBoundingRect.y() + (mBoundingRect.height()/4);
-    foreach (LegendMarker* m, mMarkers) {
-        m->setBoundingRect(QRectF(x,y,xStep,mBoundingRect.height()/2));
-        x += xStep;
+    // Limit legend size to maximum.
+    QSizeF size = mBoundingRect.size();
+
+
+    // TODO: grid layout
+    switch (mPreferredLayout)
+    {
+    case QLegend::PreferredLayoutHorizontal: {
+
+        qreal steps = mMarkers.count();
+        qreal xStep = size.width() / (steps+1);
+        qreal x = mBoundingRect.x() + xStep/2;
+        qreal y = mBoundingRect.y();   // Half of legend marker min size
+        foreach (LegendMarker* m, mMarkers) {
+            m->setBoundingRect(QRectF(x,y,xStep,size.height()/2));
+            x += xStep;
+        }
+        break;
     }
+    case QLegend::PreferredLayoutVertical: {
+        // Limit markers to bounding rect size.
+        if (size.width() > mBoundingRect.width()) {
+            size.setWidth(mBoundingRect.width());
+        }
+        qreal steps = mMarkers.count();
+        qreal yStep = size.height() / (steps+1);
+        qreal x = mBoundingRect.x();
+        qreal y = mBoundingRect.y() + yStep/2;
+        foreach (LegendMarker* m, mMarkers) {
+            m->setBoundingRect(QRectF(x,y,size.width(),yStep));
+            y += yStep;
+        }
+        break;
+    }
+    default: {
+        break;
+    }
+    }
+
 }
 
 #include "moc_qlegend.cpp"

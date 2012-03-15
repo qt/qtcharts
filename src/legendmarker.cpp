@@ -2,6 +2,7 @@
 #include "legendmarker_p.h"
 #include <qpieslice.h>
 #include <qbarset.h>
+#include <qxyseries.h>
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 
@@ -58,6 +59,7 @@ void LegendMarker::setBoundingRect(const QRectF rect)
     mMarkerBoundingRect = QRectF(x,y,markerSize.width(),markerSize.height());
 
     mTextItem.setPos(mBoundingRect.x() + markerSize.width() + 10, y );
+    qDebug() << "text item bound:" << mTextItem.boundingRect();
 }
 
 void LegendMarker::setBrush(const QBrush brush)
@@ -126,7 +128,9 @@ void LegendMarker::changed()
     switch (mType)
     {
     case LegendMarkerTypeSeries: {
-        // TODO:
+        QXYSeries* s = static_cast<QXYSeries*> (mSeries);
+        setBrush(s->brush());
+        setName(s->name());
         break;
     }
     case LegendMarkerTypeBarset: {

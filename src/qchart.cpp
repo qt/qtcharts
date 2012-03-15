@@ -352,7 +352,10 @@ void QChart::updateLayout()
                                             rect.height() + margin() + margin()/2,
                                             -margin(),
                                             -margin()/2 + m_legend->minimumSize().height()));
-        m_legend->handleGeometryChanged(boundingRect);
+//        m_legend->handleGeometryChanged(boundingRect);
+        QRectF br(0,0,margin(),m_rect.height());
+        m_legend->handleGeometryChanged(br);
+        m_legend->setPreferredLayout(QLegend::PreferredLayoutVertical);
     }
 }
 #include "moc_qchart.cpp"

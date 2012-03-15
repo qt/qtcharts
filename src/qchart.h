@@ -81,6 +81,7 @@ public:
     QChartAxis* axisX() const;
     QChartAxis* axisY() const;
 
+    // TODO: take (and give) legend instead of this.
     QLegend* legend();
 
 protected:
