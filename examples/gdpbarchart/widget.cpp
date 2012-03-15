@@ -86,7 +86,7 @@ Widget::Widget(QWidget *parent)
     }
 
     // hide axis X labels
-    QChartAxis* axis = chartArea->axisX();
+    //QChartAxis* axis = chartArea->axisX();
 //    axis->
     //    axis->setLabelsVisible(false);
     //    newAxis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);

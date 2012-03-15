@@ -55,6 +55,7 @@ public:
 public Q_SLOTS:
     void handleRightClick(QBarSet *barset, QString category)
     {
+        Q_UNUSED(barset)
         DrilldownBarSeries* series = static_cast<DrilldownBarSeries*> (sender());
         changeSeries(series->drilldownSeries(category));
     }

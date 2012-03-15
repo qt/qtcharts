@@ -19,11 +19,13 @@ CustomTableModel::CustomTableModel(QObject *parent) :
 
 int CustomTableModel::rowCount(const QModelIndex & parent) const
 {
+    Q_UNUSED(parent)
     return m_points.count();
 }
 
 int CustomTableModel::columnCount(const QModelIndex & parent) const
 {
+    Q_UNUSED(parent)
     return 3;
 }
 
@@ -63,7 +65,7 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
         case 2:
             return m_labels[index.row()];
         default:
-            return QVariant();
+            break;
         }
     }
     else if (role == Qt::EditRole)
@@ -77,9 +79,10 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
         case 2:
             return m_labels[index.row()];
         default:
-            return QVariant();
+            break;
         }
     }
+    return QVariant();
 }
 
 bool CustomTableModel::setData ( const QModelIndex & index, const QVariant & value, int role)
@@ -115,6 +118,8 @@ Qt::ItemFlags CustomTableModel::flags ( const QModelIndex & index ) const
 
 bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & parent)
 {
+    Q_UNUSED(parent)
+
     if (row < 0)
         row = 0;
     beginInsertRows(QModelIndex(), row /*dataTable.count()*/, row + count - 1);
