@@ -8,10 +8,7 @@
 ChartView::ChartView(QWidget* parent):QChartView(parent),
 m_index(0)
 {
-    QTime now = QTime::currentTime();
-    qsrand((uint)now.msec());
-    setChartTitle("Three random line charts");
-
+    setChartTitle("Four charts");
     QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(handleTimeout()));
     m_timer.setInterval(3000);
 

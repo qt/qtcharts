@@ -57,16 +57,16 @@ void ChartWidget::keyPressEvent(QKeyEvent *event)
         zoomOut();
         break;
     case Qt::Key_Left:
-        scroll(-10,0);
+        scrollLeft();
         break;
     case Qt::Key_Right:
-        scroll(10,0);
+        scrollRight();
         break;
     case Qt::Key_Up:
-        scroll(0,10);
+        scrollUp();
         break;
     case Qt::Key_Down:
-        scroll(0,-10);
+        scrollDown();
         break;
     default:
         QGraphicsView::keyPressEvent(event);
