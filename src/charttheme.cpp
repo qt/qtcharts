@@ -93,30 +93,20 @@ void ChartTheme::decorate(QLegend* legend)
 
 void ChartTheme::decorate(QAreaSeries* series, int index)
 {
-    QPen pen;
-    QBrush brush;
+    QPen pen(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
+    pen.setWidthF(2);
+    series->setPen(pen);
 
-    if (pen == series->pen()){
-        pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
-        pen.setWidthF(2);
-        series->setPen(pen);
-    }
-
-    if (brush == series->brush()) {
-       QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
-       series->setBrush(brush);
-    }
+    QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
+    series->setBrush(brush);
 }
 
 
 void ChartTheme::decorate(QLineSeries* series,int index)
 {
-    QPen pen;
-    if(pen == series->pen()){
-        pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
-        pen.setWidthF(2);
-        series->setPen(pen);
-    }
+    QPen pen(m_seriesColors.at(index%m_seriesColors.size()));
+    pen.setWidthF(2);
+    series->setPen(pen);
 }
 
 void ChartTheme::decorate(QBarSeries* series,int index)
@@ -181,20 +171,12 @@ void ChartTheme::decorate(QPercentBarSeries* series,int index)
 
 void ChartTheme::decorate(QScatterSeries* series, int index)
 {
+    QPen pen(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
+    pen.setWidthF(2);
+    series->setPen(pen);
 
-    QPen pen;
-    QBrush brush;
-
-    if (pen == series->pen()) {
-        pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
-        pen.setWidthF(2);
-        series->setPen(pen);
-    }
-
-    if (brush == series->brush()) {
-        QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
-        series->setBrush(brush);
-    }
+    QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
+    series->setBrush(brush);
 }
 
 void ChartTheme::decorate(QPieSeries* series, int index)
@@ -211,12 +193,9 @@ void ChartTheme::decorate(QPieSeries* series, int index)
 
 void ChartTheme::decorate(QSplineSeries* series, int index)
 {
-    QPen pen;
-    if(pen == series->pen()){
-        pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
-        pen.setWidthF(2);
-        series->setPen(pen);
-    }
+    QPen pen(m_seriesColors.at(index%m_seriesColors.size()));
+    pen.setWidthF(2);
+    series->setPen(pen);
 }
 
 void ChartTheme::decorate(QChartAxis* axis,bool axisX)
