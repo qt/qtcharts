@@ -328,15 +328,6 @@ void QChartView::keyPressEvent(QKeyEvent *event)
 */
 void QChartView::setChartTheme(QChart::ChartTheme theme)
 {
-    if (theme == QChart::ChartThemeBlueCerulean) {
-        QLinearGradient backgroundGradient;
-        backgroundGradient.setColorAt(0.0, QRgb(0x056188));
-        backgroundGradient.setColorAt(1.0, QRgb(0x101a33));
-        backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
-        setBackgroundBrush(backgroundGradient);
-    } else {
-        setBackgroundBrush(Qt::NoBrush);
-    }
     m_chart->setChartTheme(theme);
 }
 

@@ -13,8 +13,12 @@ public:
         m_seriesColors << QRgb(0x4fbef3);
         generateSeriesGradients();
 
-        // No chart background, chart view specifies a background
-        // TODO: what if the chart is drawn on custom graphics scene instead of QChartView?
+        // Background
+        QLinearGradient backgroundGradient;
+        backgroundGradient.setColorAt(0.0, QRgb(0x056188));
+        backgroundGradient.setColorAt(1.0, QRgb(0x101a33));
+        backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
+        m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
         m_masterFont = QFont();
