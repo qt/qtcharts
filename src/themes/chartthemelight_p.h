@@ -8,9 +8,11 @@ public:
     ChartThemeLight() : ChartTheme(QChart::ChartThemeLight)
     {
         // Series colors
-        m_seriesColors << QRgb(0x1c9dde);
-        m_seriesColors << QRgb(0xf7a015);
-        m_seriesColors << QRgb(0x8dc444);
+        m_seriesColors << QRgb(0x209fdf);
+        m_seriesColors << QRgb(0x99ca53);
+        m_seriesColors << QRgb(0xf6a625);
+        m_seriesColors << QRgb(0x6d5fd5);
+        m_seriesColors << QRgb(0xbf593e);
         generateSeriesGradients();
 
         // Background
@@ -22,13 +24,13 @@ public:
 
         // Axes and other
         m_masterFont = QFont();
-        m_axisLinePen = QPen(QRgb(0x424242));
+        m_axisLinePen = QPen(QRgb(0xe2e2e2));
         m_axisLinePen.setWidth(1);
-        m_axisLabelBrush = QBrush(QRgb(0x424242));
+        m_axisLabelBrush = QBrush(QRgb(0x838383));
         m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
         m_backgroundShadesPen = Qt::NoPen;
         m_backgroundShades = BackgroundShadesNone;
-        m_gridLinePen = QPen(QRgb(0x424242));
+        m_gridLinePen = QPen(QRgb(0xe2e2e2));
         m_gridLinePen.setWidth(1);
     }
 };
