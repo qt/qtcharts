@@ -131,4 +131,8 @@ win32:QMAKE_DISTCLEAN += /Q \
     $$CHART_BUILD_LIB_DIR
 
 # treat warnings as errors
-QMAKE_CXXFLAGS += -Werror
+win32-msvc*: {
+    QMAKE_CXXFLAGS += /WX
+} else {
+    QMAKE_CXXFLAGS += -Werror
+}
