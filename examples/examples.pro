@@ -19,4 +19,5 @@ SUBDIRS += linechart \
            areachart \
            stackedbarchartdrilldown \
            customcolors \
-           tablemodelchart
+           tablemodelchart \
+           ekgchart
