@@ -40,7 +40,15 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartTheme::ChartTheme(QChart::ChartTheme id)
+ChartTheme::ChartTheme(QChart::ChartTheme id) :
+    m_masterFont(QFont()),
+    m_titleBrush(QColor(QRgb(0x000000))),
+    m_axisLinePen(QPen(QRgb(0x000000))),
+    m_axisLabelBrush(QColor(QRgb(0x000000))),
+    m_backgroundShadesPen(Qt::NoPen),
+    m_backgroundShadesBrush(Qt::NoBrush),
+    m_backgroundShades(BackgroundShadesNone),
+    m_gridLinePen(QPen(QRgb(0x000000)))
 {
     m_id = id;
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
@@ -75,6 +83,7 @@ void ChartTheme::decorate(QChart* chart)
         chart->setChartBackgroundBrush(Qt::NoBrush);
     }
     chart->setChartTitleFont(m_masterFont);
+    chart->setChartTitleBrush(m_titleBrush);
 }
 
 void ChartTheme::decorate(QLegend* legend)
@@ -214,7 +223,7 @@ void ChartTheme::decorate(QChartAxis* axis,bool axisX)
 {
     if (axis->isAxisVisible()) {
         axis->setLabelsBrush(m_axisLabelBrush);
-        axis->setLabelsPen(m_axisLabelPen);
+        axis->setLabelsPen(Qt::NoPen); // NoPen for performance reasons
         if (m_backgroundShades == BackgroundShadesBoth
                 || (m_backgroundShades == BackgroundShadesVertical && axisX)
                 || (m_backgroundShades == BackgroundShadesHorizontal && !axisX)) {

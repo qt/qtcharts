@@ -9,7 +9,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartThemeDefault: public ChartTheme
 {
 public:
-    ChartThemeDefault():ChartTheme(QChart::ChartThemeDefault)
+    ChartThemeDefault() : ChartTheme(QChart::ChartThemeDefault)
     {
 #ifdef Q_OS_WIN
         // TODO: use theme specific window frame color as a series base color (it would give more
@@ -63,13 +63,6 @@ public:
                                                   GetGValue(colorWindow),
                                                   GetBValue(colorWindow)));
         // Axes and other
-        m_masterFont = QFont();
-        m_masterFont.setPointSizeF(10.0);
-        m_axisLinePen = QPen(Qt::black);
-        m_axisLinePen.setWidth(2);
-        m_axisLabelBrush = QBrush(Qt::black);
-        m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
-        m_backgroundShadesPen = Qt::NoPen;
         m_backgroundShadesBrush = QBrush(QColor(0xaf, 0xaf, 0xaf, 0x50));
         m_backgroundShades = BackgroundShadesVertical;
 
@@ -88,13 +81,6 @@ public:
         m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_masterFont = QFont();
-        m_masterFont.setPointSizeF(10.0);
-        m_axisLinePen = QPen(Qt::black);
-        m_axisLinePen.setWidth(2);
-        m_axisLabelBrush = QBrush(Qt::black);
-        m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
-        m_backgroundShadesPen = Qt::NoPen;
         m_backgroundShadesBrush = QBrush(QColor(0xaf, 0xaf, 0xaf, 0x50));
         m_backgroundShades = BackgroundShadesVertical;
 
@@ -113,13 +99,6 @@ public:
         m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_masterFont = QFont();
-        m_masterFont.setPointSizeF(10.0);
-        m_axisLinePen = QPen(Qt::black);
-        m_axisLinePen.setWidth(2);
-        m_axisLabelBrush = QBrush(Qt::black);
-        m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
-        m_backgroundShadesPen = Qt::NoPen;
         m_backgroundShadesBrush = QBrush(QColor(0xaf, 0xaf, 0xaf, 0x50));
         m_backgroundShades = BackgroundShadesVertical;
 
@@ -138,13 +117,6 @@ public:
         m_backgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_masterFont = QFont();
-        m_masterFont.setPointSizeF(10.0);
-        m_axisLinePen = QPen(Qt::black);
-        m_axisLinePen.setWidth(2);
-        m_axisLabelBrush = QBrush(Qt::black);
-        m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
-        m_backgroundShadesPen = Qt::NoPen;
         m_backgroundShadesBrush = QBrush(QColor(0xaf, 0xaf, 0xaf, 0x50));
         m_backgroundShades = BackgroundShadesVertical;
 #endif

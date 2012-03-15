@@ -174,6 +174,16 @@ public Q_SLOTS:
         QChart::ChartTheme theme = (QChart::ChartTheme) m_themeComboBox->itemData(m_themeComboBox->currentIndex()).toInt();
         foreach (QChartView *chart, m_charts)
             chart->setChartTheme(theme);
+
+        QPalette pal = window()->palette();
+        if (theme == QChart::ChartThemeBlueCerulean) {
+            pal.setColor(QPalette::Window, QRgb(0x121218));
+            pal.setColor(QPalette::WindowText, QRgb(0xd6d6d6));
+        } else {
+            pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
+            pal.setColor(QPalette::WindowText, QRgb(0x404044));
+        }
+        window()->setPalette(pal);
     }
 
 private:

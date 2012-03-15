@@ -17,19 +17,17 @@ public:
 
         // Background
         QLinearGradient backgroundGradient;
-        backgroundGradient.setColorAt(0.0, QRgb(0xd6d6d6));
+        backgroundGradient.setColorAt(0.0, QRgb(0x2e303a));
         backgroundGradient.setColorAt(1.0, QRgb(0x121218));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
         m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_masterFont = QFont();
+        m_masterFont = QFont("arial");
+        m_titleBrush = QBrush(QRgb(0xffffff));
         m_axisLinePen = QPen(QRgb(0x86878c));
         m_axisLinePen.setWidth(2);
-        m_axisLabelBrush = QBrush(QRgb(0x86878c));
-        m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
-        m_backgroundShadesPen = Qt::NoPen;
-        m_backgroundShades = BackgroundShadesNone;
+        m_axisLabelBrush = QBrush(QRgb(0xffffff));
         m_gridLinePen = QPen(QRgb(0x86878c));
         m_gridLinePen.setWidth(1);
     }

@@ -23,13 +23,10 @@ public:
         m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_masterFont = QFont();
-        m_axisLinePen = QPen(QRgb(0xe2e2e2));
+        m_masterFont = QFont("arial");
+        m_axisLinePen = QPen(0xd6d6d6);
         m_axisLinePen.setWidth(1);
-        m_axisLabelBrush = QBrush(QRgb(0x838383));
-        m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
-        m_backgroundShadesPen = Qt::NoPen;
-        m_backgroundShades = BackgroundShadesNone;
+        m_axisLabelBrush = QBrush(QRgb(0x404044));
         m_gridLinePen = QPen(QRgb(0xe2e2e2));
         m_gridLinePen.setWidth(1);
     }

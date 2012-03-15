@@ -5,7 +5,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartThemeScientific: public ChartTheme
 {
 public:
-    ChartThemeScientific():ChartTheme(QChart::ChartThemeScientific)
+    ChartThemeScientific() : ChartTheme(QChart::ChartThemeScientific)
     {
         // Series
         m_seriesColors << QRgb(0xFFAD00);
@@ -22,13 +22,9 @@ public:
         m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_masterFont = QFont();
         m_axisLinePen = QPen(QRgb(0x0f0f0f));
         m_axisLinePen.setWidth(2);
         m_axisLabelBrush = QBrush(QRgb(0x3f3f3f));
-        m_axisLabelPen = Qt::NoPen; // NoPen for performance reasons
-        m_backgroundShadesPen = Qt::NoPen;
-//        m_backgroundShadesBrush = QBrush(QColor(0x0f, 0x0f, 0x0f, 0x80));
         m_backgroundShadesBrush = QBrush(QColor(0xff, 0xad, 0x00, 0x50));
         m_backgroundShades = BackgroundShadesHorizontal;
         m_gridLinePen = QPen(QRgb(0x0f0f0f));
