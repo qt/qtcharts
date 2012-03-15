@@ -172,7 +172,6 @@ void ScatterChartItem::handleUpdated()
 
     setPen(m_series->pen());
     setBrush(m_series->brush());
-
 }
 
 #include "moc_scatterchartitem_p.cpp"

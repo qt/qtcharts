@@ -36,7 +36,6 @@ private:
 
 protected:
     void setLayout(QVector<QPointF>& points);
-    void mousePressEvent( QGraphicsSceneMouseEvent * event );
 
 private:
     QScatterSeries *m_series;
