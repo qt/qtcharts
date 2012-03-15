@@ -7,6 +7,7 @@
 #include "qchart.h"
 #include "qchartaxis.h"
 #include "qchartaxiscategories.h"
+#include "chartpresenter_p.h"
 #include <QDebug>
 #include <QToolTip>
 
@@ -23,6 +24,7 @@ BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent) :
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
 //    connect(series,SIGNAL(enableSeparators(bool)),this,SLOT(enableSeparators(bool)));
 //    enableSeparators(series->separatorsVisible());
+    setZValue(ChartPresenter::BarSeriesZValue);
     initAxisLabels();
     dataChanged();
 }

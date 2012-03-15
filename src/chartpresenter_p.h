@@ -26,6 +26,7 @@ public:
         GridZValue,
         AxisZValue,
         LineChartZValue,
+        BarSeriesZValue,
         ScatterSeriesZValue,
         PieSeriesZValue,
         LegendZValue
