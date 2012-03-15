@@ -55,7 +55,7 @@ void PercentBarPresenter::layoutChanged()
         }
         xPos += xStep;
     }
-
+/*
     // Position separators
     xPos = xStep + xStep/2;
     for (int s=0; s < mSeries->categoryCount() - 1; s++) {
@@ -64,7 +64,7 @@ void PercentBarPresenter::layoutChanged()
         sep->setSize(QSizeF(1,mHeight));
         xPos += xStep;
     }
-
+*/
     // Position floating values
     itemIndex = 0;
     xPos = (tW/tC);

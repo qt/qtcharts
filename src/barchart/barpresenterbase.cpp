@@ -21,8 +21,8 @@ BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent) :
     mHeight(0)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
-    connect(series,SIGNAL(enableSeparators(bool)),this,SLOT(enableSeparators(bool)));
-    enableSeparators(series->separatorsVisible());
+//    connect(series,SIGNAL(enableSeparators(bool)),this,SLOT(enableSeparators(bool)));
+//    enableSeparators(series->separatorsVisible());
     initAxisLabels();
     dataChanged();
 }
@@ -58,7 +58,7 @@ void BarPresenterBase::dataChanged()
     }
 
     mBars.clear();
-    mSeparators.clear();
+//    mSeparators.clear();
     mFloatingValues.clear();
 
     // Create new graphic items for bars
@@ -75,7 +75,7 @@ void BarPresenterBase::dataChanged()
             connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaveEvent()));
         }
     }
-
+/*
     // Create separators
     int count = mSeries->categoryCount() - 1;   // There is one less separator than columns
     for (int i=0; i<count; i++) {
@@ -84,7 +84,7 @@ void BarPresenterBase::dataChanged()
         childItems().append(sep);
         mSeparators.append(sep);
     }
-
+*/
     // Create floating values
     for (int category=0; category<mSeries->categoryCount(); category++) {
         for (int s=0; s<mSeries->barsetCount(); s++) {
@@ -168,12 +168,14 @@ void BarPresenterBase::showToolTip(QPoint pos, QString tip)
     QToolTip::showText(pos,tip);
 }
 
+/*
 void BarPresenterBase::enableSeparators(bool enabled)
 {
     for (int i=0; i<mSeparators.count(); i++) {
         mSeparators.at(i)->setVisible(enabled);
     }
 }
+*/
 
 #include "moc_barpresenterbase_p.cpp"
 

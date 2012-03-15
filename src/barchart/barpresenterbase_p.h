@@ -43,7 +43,7 @@ public slots:
 
     // Internal slots
     void showToolTip(QPoint pos, QString tip);      // shows tooltip (if enabled)
-    void enableSeparators(bool enabled);
+//    void enableSeparators(bool enabled);
 
 protected:
 
@@ -57,7 +57,7 @@ protected:
     // Not owned.
     QBarSeries* mSeries;
     QList<Bar*> mBars;
-    QList<Separator*> mSeparators;
+//    QList<Separator*> mSeparators;
     QList<BarValue*> mFloatingValues;
     QChart* mChart;
 };

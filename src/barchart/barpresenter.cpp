@@ -54,7 +54,7 @@ void BarPresenter::layoutChanged()
             xPos += mBarWidth;
         }
     }
-
+/*
     // Position separators
     qreal xPos = categoryWidth + categoryWidth/2;
     for (int s=0; s < mSeparators.count(); s++) {
@@ -64,7 +64,7 @@ void BarPresenter::layoutChanged()
         sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
         xPos += categoryWidth;
     }
-
+*/
     // Position floating values
     itemIndex = 0;
     for (int category=0; category < mSeries->categoryCount(); category++) {
