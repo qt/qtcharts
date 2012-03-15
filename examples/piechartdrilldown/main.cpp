@@ -47,6 +47,8 @@ public:
 
     void changeSeries(QSeries* series)
     {
+        // NOTE: if the series is owned by the chart it will be deleted
+        // here the "window" owns the series...
         if (m_currentSeries)
             removeSeries(m_currentSeries);
         m_currentSeries = series;
@@ -77,7 +79,7 @@ int main(int argc, char *argv[])
     drilldownChart->setRenderHint(QPainter::Antialiasing);
     drilldownChart->setChartTheme(QChart::ChartThemeVanilla);
 
-    QPieSeries* yearSeries = new QPieSeries(drilldownChart);
+    QPieSeries* yearSeries = new QPieSeries(&window);
     yearSeries->setTitle("Sales by year - All");
 
     QList<QString> months;
@@ -86,7 +88,7 @@ int main(int argc, char *argv[])
     names << "Jane" << "John" << "Axel" << "Mary" << "Samantha" << "Bob";
 
     foreach (QString name, names) {
-        QPieSeries* series = new QPieSeries(drilldownChart);
+        QPieSeries* series = new QPieSeries(&window);
         series->setTitle("Sales by month - " + name);
 
         foreach (QString month, months)
@@ -102,7 +104,7 @@ int main(int argc, char *argv[])
     drilldownChart->changeSeries(yearSeries);
 
     window.setCentralWidget(drilldownChart);
-    window.resize(600, 600);
+    window.resize(800, 600);
     window.show();
 
     return a.exec();
