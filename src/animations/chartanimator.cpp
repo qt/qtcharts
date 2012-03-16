@@ -90,7 +90,7 @@ void ChartAnimator::removeAnimation(ChartItem* item)
     m_animations.remove(item);
 }
 
-void ChartAnimator::applyLayout(AxisItem* item , QVector<qreal>& newLayout)
+void ChartAnimator::updateLayout(AxisItem* item , QVector<qreal>& newLayout)
 {
     AxisAnimation* animation = static_cast<AxisAnimation*>(m_animations.value(item));
 

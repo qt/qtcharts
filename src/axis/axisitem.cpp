@@ -75,7 +75,7 @@ void AxisItem::deleteItems(int count)
 void AxisItem::updateLayout(QVector<qreal>& layout)
 {
     if(m_animator){
-       m_animator->applyLayout(this,layout);
+       m_animator->updateLayout(this,layout);
     }
     else setLayout(layout);
 }
