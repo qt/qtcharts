@@ -20,4 +20,4 @@ SUBDIRS += linechart \
            stackedbarchartdrilldown \
            customcolors \
            tablemodelchart \
-           #ekgchart
+           ekgchart
