@@ -1,7 +1,7 @@
 #include "chartwidget.h"
 #include <QApplication>
 #include <QMainWindow>
-#include <qlineseries.h>
+#include <QLineSeries>
 #include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE

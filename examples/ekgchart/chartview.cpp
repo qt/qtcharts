@@ -29,7 +29,7 @@ m_y(1)
     m_series0->add(m_x,m_y);
     m_series1->add(m_x,m_y);
 
-    setChartTitle("Simple EKG exmaple");
+    setChartTitle("Simple EKG example");
     addSeries(m_series0);
     addSeries(m_series1);
     axisY()->setRange(-5,5);

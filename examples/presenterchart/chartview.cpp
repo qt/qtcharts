@@ -1,14 +1,14 @@
 #include "chartview.h"
-#include <qlineseries.h>
-#include <qscatterseries.h>
-#include <qsplineseries.h>
-#include <qareaseries.h>
+#include <QLineSeries>
+#include <QScatterSeries>
+#include <QSplineSeries>
+#include <QAreaSeries>
 #include <QTime>
 
 ChartView::ChartView(QWidget* parent):QChartView(parent),
 m_index(0)
 {
-    setChartTitle("Four charts");
+    setChartTitle("Charts presenter");
     QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(handleTimeout()));
     m_timer.setInterval(3000);
 

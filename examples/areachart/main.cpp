@@ -1,10 +1,8 @@
 #include <QApplication>
 #include <QMainWindow>
-#include <qchartview.h>
-#include <qlineseries.h>
-#include <qareaseries.h>
-#include <qchart.h>
-#include <qchartaxis.h>
+#include <QChartView>
+#include <QLineSeries>
+#include <QAreaSeries>
 #include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -42,7 +40,7 @@ int main(int argc, char *argv[])
     QMainWindow window;
     QChartView* chartView =  new QChartView(&window);
 
-    chartView->setChartTitle("Basic area chart example");
+    chartView->setChartTitle("Simple area chart example");
     chartView->setRenderHint(QPainter::Antialiasing);
 
     chartView->addSeries(series);

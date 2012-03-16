@@ -1,8 +1,7 @@
 #include <QApplication>
 #include <QMainWindow>
-#include <qchartview.h>
-#include <qlineseries.h>
-#include <qchart.h>
+#include <QChartView>
+#include <QLineSeries>
 #include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE

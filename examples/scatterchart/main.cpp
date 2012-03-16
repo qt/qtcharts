@@ -1,8 +1,7 @@
 #include <QtGui/QApplication>
 #include <QMainWindow>
-#include <qchartglobal.h>
-#include <qchartview.h>
-#include <qscatterseries.h>
+#include <QChartView>
+#include <QScatterSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -36,7 +35,7 @@ int main(int argc, char *argv[])
     QMainWindow window;
     QChartView *chartView = new QChartView(&window);
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setChartTitle("Basic scatter chart example");
+    chartView->setChartTitle("Simple scatter chart example");
     chartView->addSeries(scatter);
 //! [3]
 

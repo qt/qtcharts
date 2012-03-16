@@ -1,7 +1,7 @@
 #ifndef CHARTVIEW_H_
 #define CHARTVIEW_H_
 
-#include <qchartview.h>
+#include <QChartView>
 #include <QTimer>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
