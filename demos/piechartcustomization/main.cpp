@@ -287,6 +287,7 @@ public:
         // create chart
         m_chartView =  new QChartView();
         m_chartView->setChartTitle("Piechart customization");
+        m_chartView->setAnimationOptions(QChart::AllAnimations);
 
         // create series
         m_series = new QPieSeries();
@@ -349,12 +350,15 @@ public:
         m_endAngle->setValue(m_series->pieEndAngle());
         m_endAngle->setSingleStep(1);
 
+        QPushButton *addSlice = new QPushButton("Add slice");
+
         QFormLayout* seriesSettingsLayout = new QFormLayout();
         seriesSettingsLayout->addRow("Horizontal position", m_hPosition);
         seriesSettingsLayout->addRow("Vertical position", m_vPosition);
         seriesSettingsLayout->addRow("Size factor", m_sizeFactor);
         seriesSettingsLayout->addRow("Start angle", m_startAngle);
         seriesSettingsLayout->addRow("End angle", m_endAngle);
+        seriesSettingsLayout->addRow(addSlice);
         QGroupBox* seriesSettings = new QGroupBox("Series");
         seriesSettings->setLayout(seriesSettingsLayout);
 
@@ -363,6 +367,7 @@ public:
         connect(m_sizeFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
         connect(m_startAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
         connect(m_endAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
+        connect(addSlice, SIGNAL(clicked()), this, SLOT(addSlice()));
 
         // slice settings
         m_sliceName = new QLabel("<click a slice>");
@@ -381,6 +386,7 @@ public:
         m_font = new QPushButton();
         m_labelArmPen = new QPushButton();
         m_labelArmPenTool = new PenTool("Label arm pen", this);
+        QPushButton *removeSlice = new QPushButton("Remove slice");
 
         QFormLayout* sliceSettingsLayout = new QFormLayout();
         sliceSettingsLayout->addRow("Selected", m_sliceName);
@@ -393,6 +399,7 @@ public:
         sliceSettingsLayout->addRow("Label arm length", m_sliceLabelArmFactor);
         sliceSettingsLayout->addRow("Exploded", m_sliceExploded);
         sliceSettingsLayout->addRow("Explode distance", m_sliceExplodedFactor);
+        sliceSettingsLayout->addRow(removeSlice);
         QGroupBox* sliceSettings = new QGroupBox("Slice");
         sliceSettings->setLayout(sliceSettingsLayout);
 
@@ -409,6 +416,7 @@ public:
         connect(m_sliceLabelArmFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
         connect(m_sliceExploded, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
         connect(m_sliceExplodedFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
+        connect(removeSlice, SIGNAL(clicked()), this, SLOT(removeSlice()));
 
         // create main layout
         QVBoxLayout *settingsLayout = new QVBoxLayout();
@@ -511,6 +519,20 @@ public Q_SLOTS:
 
         m_slice->setLabelFont(dialog.currentFont());
         m_font->setText(dialog.currentFont().toString());
+    }
+
+    void addSlice()
+    {
+        *m_series << new CustomSlice(10.0, "Slice " + QString::number(m_series->count()));
+    }
+
+    void removeSlice()
+    {
+        if (!m_slice)
+            return;
+
+        m_series->remove(m_slice);
+        m_slice = 0;
     }
 
 private:

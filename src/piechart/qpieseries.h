@@ -124,6 +124,7 @@ private:
     // TODO: use PIML
     friend class PieChartItem;
     friend class PieSlice;
+    friend class QPieSlice;
 
     QList<QPieSlice*> m_slices;
     qreal m_pieRelativeHorPos;

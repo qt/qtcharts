@@ -3,6 +3,7 @@
 #include "qpieslice.h"
 #include "qpieseries.h"
 #include "chartpresenter_p.h"
+#include "chartanimator_p.h"
 #include <QDebug>
 #include <QPainter>
 
@@ -36,16 +37,24 @@ void PieChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QW
 
 void PieChartItem::handleSeriesChanged()
 {
-    QVector<PieSliceLayout> sliceLayout = calculateLayout();
-    applyLayout(sliceLayout);
+    QVector<PieSliceLayout> layout = calculateLayout();
+    applyLayout(layout);
     update();
 }
 
 void PieChartItem::handleSliceChanged()
 {
-    // TODO: optimize don't need to handle all slices
-    QVector<PieSliceLayout> sliceLayout = calculateLayout();
-    applyLayout(sliceLayout);
+    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    Q_ASSERT(m_slices.contains(slice));
+
+    //qDebug() << "PieChartItem::handleSliceChanged" << slice->label();
+
+    // TODO: Optimize. No need to calculate everything.
+    QVector<PieSliceLayout> layout = calculateLayout();
+    foreach (PieSliceLayout sl, layout) {
+        if (sl.m_data == slice)
+            updateLayout(sl);
+    }
     update();
 }
 
@@ -93,15 +102,23 @@ QVector<PieSliceLayout> PieChartItem::calculateLayout()
     return layout;
 }
 
-void PieChartItem::applyLayout(const QVector<PieSliceLayout> &layout)
+void PieChartItem::applyLayout(QVector<PieSliceLayout> &layout)
 {
-    //if(m_animator)
-    //        m_animator->applyLayout(this,points);
-    //else
-    setLayout(layout);
+    if (m_animator)
+        m_animator->applyLayout(this, layout);
+    else
+        setLayout(layout);
 }
 
-void PieChartItem::setLayout(const QVector<PieSliceLayout> &layout)
+void PieChartItem::updateLayout(PieSliceLayout &layout)
+{
+    if (m_animator)
+        m_animator->updateLayout(this, layout);
+    else
+        setLayout(layout);
+}
+
+void PieChartItem::setLayout(QVector<PieSliceLayout> &layout)
 {
     foreach (PieSliceLayout l, layout) {
 
@@ -135,8 +152,32 @@ void PieChartItem::setLayout(const QVector<PieSliceLayout> &layout)
         }
 
         if (!found)
-            delete m_slices.take(s);
+            destroySlice(s);
     }
+}
+
+void PieChartItem::setLayout(PieSliceLayout &layout)
+{
+    // find slice
+    PieSlice *slice = m_slices.value(layout.m_data);
+    if (!slice) {
+        slice = new PieSlice(this);
+        m_slices.insert(layout.m_data, slice);
+        connect(layout.m_data, SIGNAL(changed()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(clicked()), layout.m_data, SIGNAL(clicked()));
+        connect(slice, SIGNAL(hoverEnter()), layout.m_data, SIGNAL(hoverEnter()));
+        connect(slice, SIGNAL(hoverLeave()), layout.m_data, SIGNAL(hoverLeave()));
+    }
+    slice->setLayout(layout);
+    if (m_series->m_slices.contains(layout.m_data)) // Slice has been deleted if not found. Animations ongoing...
+        slice->updateData(layout.m_data);
+    slice->updateGeometry();
+    slice->update();
+}
+
+void PieChartItem::destroySlice(QPieSlice *slice)
+{
+    delete m_slices.take(slice);
 }
 
 #include "moc_piechartitem_p.cpp"

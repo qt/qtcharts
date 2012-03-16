@@ -22,8 +22,6 @@ QPointF offset(qreal angle, qreal length)
 
 PieSlice::PieSlice(QGraphicsItem* parent)
     :QGraphicsObject(parent),
-    m_startAngle(0),
-    m_angleSpan(0),
     m_isExploded(false),
     m_explodeDistanceFactor(0),
     m_labelVisible(false),
@@ -41,7 +39,7 @@ PieSlice::~PieSlice()
 
 QRectF PieSlice::boundingRect() const
 {
-    return m_slicePath.boundingRect();
+    return m_slicePath.boundingRect().united(m_labelTextRect);
 }
 
 QPainterPath PieSlice::shape() const
@@ -90,7 +88,6 @@ void PieSlice::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
 void PieSlice::setLayout(PieSliceLayout layout)
 {
     m_layout = layout;
-    updateData(layout.m_data);
 }
 
 void PieSlice::updateGeometry()
@@ -103,7 +100,7 @@ void PieSlice::updateGeometry()
     // update slice path
     qreal centerAngle;
     QPointF armStart;
-    m_slicePath = slicePath(m_layout.m_center, m_layout.m_radius, m_startAngle, m_angleSpan, &centerAngle, &armStart);
+    m_slicePath = slicePath(m_layout.m_center, m_layout.m_radius, m_layout.m_startAngle, m_layout.m_angleSpan, &centerAngle, &armStart);
 
     // update text rect
     m_labelTextRect = labelTextRect(m_labelFont, m_labelText);
@@ -122,8 +119,6 @@ void PieSlice::updateData(const QPieSlice* sliceData)
 {
     // TODO: compare what has changes to avoid unneccesary geometry updates
 
-    m_startAngle = sliceData->startAngle();
-    m_angleSpan = sliceData->m_angleSpan;
     m_isExploded = sliceData->isExploded();
     m_explodeDistanceFactor = sliceData->explodeDistanceFactor();
     m_slicePen = sliceData->slicePen();

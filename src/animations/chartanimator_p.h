@@ -2,6 +2,7 @@
 #define CHARTANIMATOR_P_H_
 #include "qchartglobal.h"
 #include "chartanimation_p.h"
+#include "piechartitem_p.h"
 #include <QPointF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -22,6 +23,7 @@ public:
 
     void addAnimation(AxisItem* item);
     void addAnimation(XYChartItem* item);
+    void addAnimation(PieChartItem* item);
 
     void removeAnimation(ChartItem* item);
 
@@ -29,6 +31,9 @@ public:
     void applyLayout(XYChartItem* item, QVector<QPointF>& layout);
     void updateLayout(XYChartItem* item, QVector<QPointF>& layout);
     void applyLayout(AxisItem* item, QVector<qreal>& layout);
+
+    void applyLayout(PieChartItem* item, QVector<PieSliceLayout> &layout);
+    void updateLayout(PieChartItem* item, PieSliceLayout &layout);
 
     void setState(State state,const QPointF& point = QPointF());
 

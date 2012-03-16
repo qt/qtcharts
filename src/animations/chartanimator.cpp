@@ -2,6 +2,7 @@
 #include "axisanimation_p.h"
 #include "xyanimation_p.h"
 #include "xychartitem_p.h"
+#include "pieanimation_p.h"
 #include "areachartitem_p.h"
 #include <QTimer>
 
@@ -38,6 +39,18 @@ void ChartAnimator::addAnimation(XYChartItem*  item)
 
     if(!animation) {
         animation = new XYAnimation(item);
+        m_animations.insert(item,animation);
+    }
+
+    item->setAnimator(this);
+}
+
+void ChartAnimator::addAnimation(PieChartItem* item)
+{
+    ChartAnimation* animation = m_animations.value(item);
+
+    if(!animation) {
+        animation = new PieAnimation(item);
         m_animations.insert(item,animation);
     }
 
@@ -169,6 +182,20 @@ void ChartAnimator::updateLayout(XYChartItem* item, QVector<QPointF>& newPoints)
     animation->updateValues(newPoints);
 
     QTimer::singleShot(0,animation,SLOT(start()));
+}
+
+void ChartAnimator::applyLayout(PieChartItem* item, QVector<PieSliceLayout> &layout)
+{
+    PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
+    Q_ASSERT(animation);
+    animation->setValues(layout);
+}
+
+void ChartAnimator::updateLayout(PieChartItem* item, PieSliceLayout &layout)
+{
+    PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
+    Q_ASSERT(animation);
+    animation->updateValue(layout);
 }
 
 void ChartAnimator::setState(State state,const QPointF& point)

@@ -28,10 +28,13 @@ public Q_SLOTS:
     void handleDomainChanged(qreal, qreal, qreal, qreal);
     void handleGeometryChanged(const QRectF& rect);
 
-private:
+public:
     QVector<PieSliceLayout> calculateLayout();
-    void applyLayout(const QVector<PieSliceLayout> &layout);
-    void setLayout(const QVector<PieSliceLayout> &layout);
+    void applyLayout(QVector<PieSliceLayout> &layout);
+    void updateLayout(PieSliceLayout &layout);
+    void setLayout(QVector<PieSliceLayout> &layout);
+    void setLayout(PieSliceLayout &layout);
+    void destroySlice(QPieSlice *slice);
 
 private:
     friend class PieSlice;

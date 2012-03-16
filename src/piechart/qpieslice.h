@@ -8,6 +8,7 @@
 #include <QFont>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class QPieSeries;
 
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
@@ -29,8 +30,6 @@ public:
     bool isLabelVisible() const;
     void setExploded(bool exploded);
     bool isExploded() const;
-    void setExplodeDistanceFactor(qreal factor);
-    qreal explodeDistanceFactor() const;
 
     // generated data
     qreal percentage() const;
@@ -48,10 +47,8 @@ public:
     QFont labelFont() const;
     void setLabelArmLengthFactor(qreal factor);
     qreal labelArmLengthFactor() const;
-
-    // TODO: label position in general
-    // setLabelFlags(inside|outside|labelArmOn|labelArmOff|???)
-    // setLabelOrientation(horizontal|vertical|same as slice center angle|???)
+    void setExplodeDistanceFactor(qreal factor);
+    qreal explodeDistanceFactor() const;
 
 Q_SIGNALS:
     void clicked();

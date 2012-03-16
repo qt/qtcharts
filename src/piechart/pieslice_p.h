@@ -19,7 +19,7 @@ class QPieSlice;
 class PieSliceLayout
 {
 public:
-    QPieSlice* m_data;
+    QPieSlice* m_data; // TODO: get rid of this
     QPointF m_center;
     qreal m_radius;
     qreal m_startAngle;
@@ -60,8 +60,6 @@ private:
     PieSliceLayout m_layout;
 
     QPainterPath m_slicePath;
-    qreal m_startAngle;
-    qreal m_angleSpan;
     bool m_isExploded;
     qreal m_explodeDistanceFactor;
     bool m_labelVisible;

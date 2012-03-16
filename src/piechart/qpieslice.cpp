@@ -1,4 +1,5 @@
 #include "qpieslice.h"
+#include "qpieseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -266,7 +267,12 @@ void QPieSlice::setValue(qreal value)
 {
     if (m_value != value) {
         m_value = value;
-        emit changed();
+
+        QPieSeries *series = qobject_cast<QPieSeries*>(parent());
+        if (series)
+            series->updateDerivativeData(); // will emit changed()
+        else
+            emit changed();
     }
 }
 

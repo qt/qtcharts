@@ -224,7 +224,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
         PieChartItem* pie = new PieChartItem(m_chart, pieSeries);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
-           // m_animator->addAnimation(pie);
+            m_animator->addAnimation(pie);
         }
         m_chartTheme->decorate(pieSeries, m_dataset->seriesIndex(series));
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),pie,SLOT(handleGeometryChanged(const QRectF&)));

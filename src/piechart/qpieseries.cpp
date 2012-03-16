@@ -511,6 +511,8 @@ void QPieSeries::updateDerivativeData()
     foreach (QPieSlice* s, m_slices)
         m_total += s->value();
 
+    // TODO: emit totalChanged?
+
     // we must have some values
     if (m_total == 0) {
         qDebug() << "QPieSeries::updateDerivativeData() total == 0";
@@ -520,31 +522,35 @@ void QPieSeries::updateDerivativeData()
     // update slice attributes
     qreal sliceAngle = m_pieStartAngle;
     qreal pieSpan = m_pieEndAngle - m_pieStartAngle;
+    QVector<QPieSlice*> changed;
     foreach (QPieSlice* s, m_slices) {
 
-        bool changed = false;
+        bool isChanged = false;
 
         qreal percentage = s->value() / m_total;
         if (s->m_percentage != percentage) {
             s->m_percentage = percentage;
-            changed = true;
+            isChanged = true;
         }
 
         qreal sliceSpan = pieSpan * percentage;
         if (s->m_angleSpan != sliceSpan) {
             s->m_angleSpan = sliceSpan;
-            changed = true;
+            isChanged = true;
         }
 
         if (s->m_startAngle != sliceAngle) {
             s->m_startAngle = sliceAngle;
-            changed = true;
+            isChanged = true;
         }
         sliceAngle += sliceSpan;
 
-        if (changed)
-            emit s->changed();
+        if (isChanged)
+            changed << s;
     }
+
+    foreach (QPieSlice* s, changed)
+        emit s->changed();
 }
 
 bool QPieSeries::setModel(QAbstractItemModel* model)
