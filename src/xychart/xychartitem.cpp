@@ -87,7 +87,6 @@ void XYChartItem::handlePointAdded(int index)
 {
     Q_ASSERT(index<m_series->count());
     Q_ASSERT(index>=0);
-    qDebug()<<__FUNCTION__<<index;
     QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
     points.insert(index,point);

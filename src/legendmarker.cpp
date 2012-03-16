@@ -59,7 +59,6 @@ void LegendMarker::setBoundingRect(const QRectF rect)
     mMarkerBoundingRect = QRectF(x,y,markerSize.width(),markerSize.height());
 
     mTextItem.setPos(mBoundingRect.x() + markerSize.width() + 10, y );
-    qDebug() << "text item bound:" << mTextItem.boundingRect();
 }
 
 void LegendMarker::setBrush(const QBrush brush)
