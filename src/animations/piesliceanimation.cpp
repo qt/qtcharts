@@ -1,4 +1,4 @@
-#include "PieSliceAnimation_p.h"
+#include "piesliceanimation_p.h"
 #include "piechartitem_p.h"
 #include "qpieslice.h"
 

@@ -1,4 +1,4 @@
-#include "PieAnimation_p.h"
+#include "pieanimation_p.h"
 #include "piesliceanimation_p.h"
 #include "piechartitem_p.h"
 #include <QParallelAnimationGroup>
