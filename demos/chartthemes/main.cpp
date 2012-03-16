@@ -54,7 +54,7 @@ public:
         // create layout
         QGridLayout* baseLayout = new QGridLayout();
 
-        // theme combo
+        // settings layout
         m_themeComboBox = new QComboBox();
         m_themeComboBox->addItem("Default", QChart::ChartThemeDefault);
         m_themeComboBox->addItem("Vanilla", QChart::ChartThemeVanilla);
@@ -64,13 +64,21 @@ public:
         m_themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
         m_themeComboBox->addItem("Light", QChart::ChartThemeLight);
         connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this ,SLOT(updateTheme()));
-        baseLayout->addWidget(new QLabel("Theme:"), 0, 0);
-        baseLayout->addWidget(m_themeComboBox, 0, 1);
+        QCheckBox *antialiasCheckBox = new QCheckBox("Anti aliasing");
+        connect(antialiasCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateAntialiasing(bool)));
+        QCheckBox *animatedCheckBox = new QCheckBox("Animated");
+        connect(animatedCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateAnimations(bool)));
+        QHBoxLayout *settingsLayout = new QHBoxLayout();
+        settingsLayout->addWidget(new QLabel("Theme:"));
+        settingsLayout->addWidget(m_themeComboBox);
+        settingsLayout->addWidget(antialiasCheckBox);
+        settingsLayout->addWidget(animatedCheckBox);
+        settingsLayout->addStretch();
+        baseLayout->addLayout(settingsLayout, 0, 0, 1, 3);
 
         // area chart
         QChartView *chart = new QChartView();
         chart->setChartTitle("Area chart");
-        chart->setRenderHint(QPainter::Antialiasing);
         baseLayout->addWidget(chart, 1, 0);
         {
             for (int i(0); i < m_dataTable.count(); i++) {
@@ -89,7 +97,6 @@ public:
         // bar chart
         chart = new QChartView();
         chart->setChartTitle("bar chart");
-        chart->setRenderHint(QPainter::Antialiasing);
         baseLayout->addWidget(chart, 1, 1);
         {
             QStringList categories;
@@ -110,7 +117,6 @@ public:
         // line chart
         chart = new QChartView();
         chart->setChartTitle("line chart");
-        chart->setRenderHint(QPainter::Antialiasing);
         baseLayout->addWidget(chart, 1, 2);
         foreach (DataList list, m_dataTable) {
             QLineSeries *series = new QLineSeries(chart);
@@ -123,9 +129,7 @@ public:
         // pie chart
         chart = new QChartView();
         chart->setChartTitle("pie chart");
-        chart->setRenderHint(QPainter::Antialiasing);
         baseLayout->addWidget(chart, 2, 0);
-
         qreal pieSize = 1.0 / m_dataTable.count();
         for (int i=0; i<m_dataTable.count(); i++) {
             QPieSeries *series = new QPieSeries(chart);
@@ -141,7 +145,6 @@ public:
         // spine chart
         chart = new QChartView();
         chart->setChartTitle("spline chart");
-        chart->setRenderHint(QPainter::Antialiasing);
         baseLayout->addWidget(chart, 2, 1);
         foreach (DataList list, m_dataTable) {
             QSplineSeries *series = new QSplineSeries(chart);
@@ -154,7 +157,6 @@ public:
         // scatter chart
         chart = new QChartView();
         chart->setChartTitle("scatter chart");
-        chart->setRenderHint(QPainter::Antialiasing);
         baseLayout->addWidget(chart, 2, 2);
         foreach (DataList list, m_dataTable) {
             QScatterSeries *series = new QScatterSeries(chart);
@@ -184,6 +186,22 @@ public Q_SLOTS:
             pal.setColor(QPalette::WindowText, QRgb(0x404044));
         }
         window()->setPalette(pal);
+    }
+
+    void updateAntialiasing(bool enabled)
+    {
+        foreach (QChartView *chart, m_charts)
+            chart->setRenderHint(QPainter::Antialiasing, enabled);
+    }
+
+    void updateAnimations(bool animated)
+    {
+        QChart::AnimationOptions options = QChart::NoAnimation;
+        if (animated)
+            options = QChart::AllAnimations;
+
+        foreach (QChartView *chart, m_charts)
+            chart->setAnimationOptions(options);
     }
 
 private:
