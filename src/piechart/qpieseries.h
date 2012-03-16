@@ -3,45 +3,13 @@
 
 #include "qseries.h"
 #include <QObject>
-#include <QRectF>
-#include <QColor>
-#include <QPen>
-#include <QBrush>
-#include <QSignalMapper>
 
-class QGraphicsObject;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class PieChartItem;
-class PieSlice;
 class QPieSlice;
 
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QSeries
 {
     Q_OBJECT
-
-public:
-
-    class ChangeSet
-    {
-    public:
-
-        // TODO: these should not really be exposed to the public API
-        void appendAdded(QPieSlice* slice);
-        void appendAdded(QList<QPieSlice*> slices);
-        void appendChanged(QPieSlice* slice);
-        void appendRemoved(QPieSlice* slice);
-
-        QList<QPieSlice*> added() const;
-        QList<QPieSlice*> changed() const;
-        QList<QPieSlice*> removed() const;
-
-        bool isEmpty() const;
-
-    private:
-        QList<QPieSlice*> m_added;
-        QList<QPieSlice*> m_changed;
-        QList<QPieSlice*> m_removed;
-    };
 
 public:
     QPieSeries(QObject *parent = 0);
