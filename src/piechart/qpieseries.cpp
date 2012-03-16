@@ -77,7 +77,7 @@ void QPieSeries::add(QList<QPieSlice*> slices)
         connect(s, SIGNAL(hoverLeave()), this, SLOT(sliceHoverLeave()));
     }
 
-    emit changed();
+    emit added(slices);
 }
 
 /*!
@@ -124,7 +124,7 @@ void QPieSeries::insert(int i, QPieSlice* slice)
     connect(slice, SIGNAL(hoverEnter()), this, SLOT(sliceHoverEnter()));
     connect(slice, SIGNAL(hoverLeave()), this, SLOT(sliceHoverLeave()));
 
-    emit changed();
+    emit added(QList<QPieSlice*>() << slice);
 }
 
 /*!
@@ -138,9 +138,10 @@ void QPieSeries::remove(QPieSlice* slice)
         Q_ASSERT(0); // TODO: how should this be reported?
         return;
     }
-    emit changed();
 
     updateDerivativeData();
+
+    emit removed(QList<QPieSlice*>() << slice);
 
     delete slice;
     slice = NULL;
@@ -154,14 +155,15 @@ void QPieSeries::clear()
     if (m_slices.count() == 0)
         return;
 
+    QList<QPieSlice*> slices = m_slices;
     foreach (QPieSlice* s, m_slices) {
         m_slices.removeOne(s);
         delete s;
     }
 
-    emit changed();
-
     updateDerivativeData();
+
+    emit removed(slices);
 }
 
 /*!
@@ -170,6 +172,14 @@ void QPieSeries::clear()
 int QPieSeries::count() const
 {
     return m_slices.count();
+}
+
+/*!
+    Returns true is the series is empty.
+*/
+bool QPieSeries::isEmpty() const
+{
+    return m_slices.isEmpty();
 }
 
 /*!
@@ -203,7 +213,7 @@ void QPieSeries::setPiePosition(qreal relativeHorizontalPosition, qreal relative
     if (m_pieRelativeHorPos != relativeHorizontalPosition || m_pieRelativeVerPos != relativeVerticalPosition) {
         m_pieRelativeHorPos = relativeHorizontalPosition;
         m_pieRelativeVerPos = relativeVerticalPosition;
-        emit changed();
+        emit piePositionChanged();
     }
 }
 
@@ -257,7 +267,7 @@ void QPieSeries::setPieSize(qreal relativeSize)
 
     if (m_pieRelativeSize != relativeSize) {
         m_pieRelativeSize = relativeSize;
-        emit changed();
+        emit pieSizeChanged();
     }
 }
 
@@ -427,13 +437,9 @@ void QPieSeries::updateDerivativeData()
     foreach (QPieSlice* s, m_slices)
         m_total += s->value();
 
-    // TODO: emit totalChanged?
-
-    // we must have some values
-    if (m_total == 0) {
-        qDebug() << "QPieSeries::updateDerivativeData() total == 0";
-        Q_ASSERT(m_total > 0); // TODO: is this the correct way to handle this?
-    }
+    // nothing to show..
+    if (m_total == 0)
+        return;
 
     // update slice attributes
     qreal sliceAngle = m_pieStartAngle;
@@ -465,6 +471,7 @@ void QPieSeries::updateDerivativeData()
             changed << s;
     }
 
+    // emit signals
     foreach (QPieSlice* s, changed)
         emit s->changed();
 }

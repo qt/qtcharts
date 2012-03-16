@@ -23,12 +23,17 @@ public: // from QGraphicsItem
     void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
 
 public Q_SLOTS:
-    void handleSeriesChanged();
+    void initialize();
+    void handleSlicesAdded(QList<QPieSlice*> slices);
+    void handleSlicesRemoved(QList<QPieSlice*> slices);
+    void handlePieLayoutChanged();
     void handleSliceChanged();
     void handleDomainChanged(qreal, qreal, qreal, qreal);
     void handleGeometryChanged(const QRectF& rect);
 
 public:
+    void calculatePieLayout();
+    PieSliceLayout calculateSliceLayout(QPieSlice *slice);
     QVector<PieSliceLayout> calculateLayout();
     void applyLayout(QVector<PieSliceLayout> &layout);
     void updateLayout(PieSliceLayout &layout);

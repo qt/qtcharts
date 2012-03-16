@@ -184,11 +184,25 @@ void ChartAnimator::updateLayout(XYChartItem* item, QVector<QPointF>& newPoints)
     QTimer::singleShot(0,animation,SLOT(start()));
 }
 
-void ChartAnimator::applyLayout(PieChartItem* item, QVector<PieSliceLayout> &layout)
+void ChartAnimator::addAnimation(PieChartItem* item, QPieSlice *slice, PieSliceLayout &layout)
 {
     PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
     Q_ASSERT(animation);
-    animation->setValues(layout);
+    animation->addSlice(slice, layout);
+}
+
+void ChartAnimator::removeAnimation(PieChartItem* item, QPieSlice *slice)
+{
+    PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
+    Q_ASSERT(animation);
+    animation->removeSlice(slice);
+}
+
+void ChartAnimator::updateLayout(PieChartItem* item, QVector<PieSliceLayout> &layout)
+{
+    PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
+    Q_ASSERT(animation);
+    animation->updateValues(layout);
 }
 
 void ChartAnimator::updateLayout(PieChartItem* item, PieSliceLayout &layout)

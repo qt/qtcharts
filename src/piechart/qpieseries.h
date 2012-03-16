@@ -33,6 +33,7 @@ public:
 
     // calculated data
     int count() const;
+    bool isEmpty() const;
     qreal total() const;
 
     // pie customization
@@ -70,7 +71,12 @@ Q_SIGNALS:
     void clicked(QPieSlice* slice);
     void hoverEnter(QPieSlice* slice);
     void hoverLeave(QPieSlice* slice);
-    void changed(); // TODO: hide this in PIMPL
+
+    // TODO: hide these in PIMPL
+    void added(QList<QPieSlice*> slices);
+    void removed(QList<QPieSlice*> slices);
+    void piePositionChanged();
+    void pieSizeChanged();
 
 private Q_SLOTS: // TODO: should be private and not visible in the interface at all
     void sliceChanged();

@@ -32,7 +32,9 @@ public:
     void updateLayout(XYChartItem* item, QVector<QPointF>& layout);
     void applyLayout(AxisItem* item, QVector<qreal>& layout);
 
-    void applyLayout(PieChartItem* item, QVector<PieSliceLayout> &layout);
+    void addAnimation(PieChartItem* item, QPieSlice *slice, PieSliceLayout &layout);
+    void removeAnimation(PieChartItem* item, QPieSlice *slice);
+    void updateLayout(PieChartItem* item, QVector<PieSliceLayout> &layout);
     void updateLayout(PieChartItem* item, PieSliceLayout &layout);
 
     void setState(State state,const QPointF& point = QPointF());

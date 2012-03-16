@@ -16,53 +16,10 @@ PieAnimation::~PieAnimation()
 {
 }
 
-void PieAnimation::setValues(QVector<PieSliceLayout>& newValues)
+void PieAnimation::updateValues(QVector<PieSliceLayout>& newValues)
 {
-    PieSliceAnimation *animation = 0;
-
-    foreach (PieSliceLayout endLayout, newValues) {
-        animation = m_animations.value(endLayout.m_data);
-        if (animation) {
-            // existing slice
-            animation->stop();
-            animation->updateValue(endLayout);
-        } else {
-            // new slice
-            animation = new PieSliceAnimation(m_item);
-            m_animations.insert(endLayout.m_data, animation);
-            PieSliceLayout startLayout = endLayout;
-            startLayout.m_radius = 0;
-            //startLayout.m_startAngle = 0;
-            //startLayout.m_angleSpan = 0;
-            animation->setValue(startLayout, endLayout);
-        }
-        animation->setDuration(1000);
-        animation->setEasingCurve(QEasingCurve::OutQuart);
-        QTimer::singleShot(0, animation, SLOT(start())); // TODO: use sequential animation?
-    }
-
-    foreach (QPieSlice *s, m_animations.keys()) {
-        bool isFound = false;
-        foreach (PieSliceLayout layout, newValues) {
-            if (s == layout.m_data)
-                isFound = true;
-        }
-        if (!isFound) {
-            // slice has been deleted
-            animation = m_animations.value(s);
-            animation->stop();
-            PieSliceLayout endLayout = m_animations.value(s)->currentSliceValue();
-            endLayout.m_radius = 0;
-            // TODO: find the actual angle where this slice disappears
-            endLayout.m_startAngle = endLayout.m_startAngle + endLayout.m_angleSpan;
-            endLayout.m_angleSpan = 0;
-            animation->updateValue(endLayout);
-            animation->setDuration(1000);
-            animation->setEasingCurve(QEasingCurve::OutQuart);
-            connect(animation, SIGNAL(finished()), this, SLOT(destroySliceAnimationComplete()));
-            QTimer::singleShot(0, animation, SLOT(start()));
-        }
-    }
+    foreach (PieSliceLayout endLayout, newValues)
+        updateValue(endLayout);
 }
 
 void PieAnimation::updateValue(PieSliceLayout& endLayout)
@@ -70,9 +27,47 @@ void PieAnimation::updateValue(PieSliceLayout& endLayout)
     PieSliceAnimation *animation = m_animations.value(endLayout.m_data);
     Q_ASSERT(animation);
     animation->stop();
+
     animation->updateValue(endLayout);
     animation->setDuration(1000);
     animation->setEasingCurve(QEasingCurve::OutQuart);
+
+    QTimer::singleShot(0, animation, SLOT(start()));
+}
+
+void PieAnimation::addSlice(QPieSlice *slice, PieSliceLayout endLayout)
+{
+    PieSliceAnimation *animation = new PieSliceAnimation(m_item);
+    m_animations.insert(slice, animation);
+
+    PieSliceLayout startLayout = endLayout;
+    startLayout.m_radius = 0;
+    startLayout.m_startAngle = endLayout.m_startAngle + (endLayout.m_angleSpan/2);
+    startLayout.m_angleSpan = 0;
+    animation->setValue(startLayout, endLayout);
+
+    animation->setDuration(1000);
+    animation->setEasingCurve(QEasingCurve::OutQuart);
+    QTimer::singleShot(0, animation, SLOT(start()));
+}
+
+void PieAnimation::removeSlice(QPieSlice *slice)
+{
+    PieSliceAnimation *animation = m_animations.value(slice);
+    Q_ASSERT(animation);
+    animation->stop();
+
+    PieSliceLayout endLayout = animation->currentSliceValue();
+    endLayout.m_radius = 0;
+    // TODO: find the actual angle where this slice disappears
+    endLayout.m_startAngle = endLayout.m_startAngle + endLayout.m_angleSpan;
+    endLayout.m_angleSpan = 0;
+
+    animation->updateValue(endLayout);
+    animation->setDuration(1000);
+    animation->setEasingCurve(QEasingCurve::OutQuart);
+
+    connect(animation, SIGNAL(finished()), this, SLOT(destroySliceAnimationComplete()));
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 

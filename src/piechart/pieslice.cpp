@@ -39,7 +39,7 @@ PieSlice::~PieSlice()
 
 QRectF PieSlice::boundingRect() const
 {
-    return m_slicePath.boundingRect().united(m_labelTextRect);
+    return m_boundingRect;
 }
 
 QPainterPath PieSlice::shape() const
@@ -112,7 +112,8 @@ void PieSlice::updateGeometry()
     // update text position
     m_labelTextRect.moveBottomLeft(labelTextStart);
 
-    //qDebug() << "PieSlice::updateGeometry" << m_labelText << boundingRect() << m_startAngle << m_startAngle + m_angleSpan;
+    // update bounding rect
+    m_boundingRect = m_slicePath.boundingRect().united(m_labelArmPath.boundingRect()).united(m_labelTextRect);
 }
 
 void PieSlice::updateData(const QPieSlice* sliceData)

@@ -58,6 +58,7 @@ public:
 
 private:
     PieSliceLayout m_layout;
+    QRectF m_boundingRect;
 
     QPainterPath m_slicePath;
     bool m_isExploded;

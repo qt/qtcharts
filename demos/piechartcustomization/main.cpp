@@ -351,6 +351,7 @@ public:
         m_endAngle->setSingleStep(1);
 
         QPushButton *addSlice = new QPushButton("Add slice");
+        QPushButton *insertSlice = new QPushButton("Insert slice");
 
         QFormLayout* seriesSettingsLayout = new QFormLayout();
         seriesSettingsLayout->addRow("Horizontal position", m_hPosition);
@@ -359,6 +360,7 @@ public:
         seriesSettingsLayout->addRow("Start angle", m_startAngle);
         seriesSettingsLayout->addRow("End angle", m_endAngle);
         seriesSettingsLayout->addRow(addSlice);
+        seriesSettingsLayout->addRow(insertSlice);
         QGroupBox* seriesSettings = new QGroupBox("Series");
         seriesSettings->setLayout(seriesSettingsLayout);
 
@@ -368,6 +370,7 @@ public:
         connect(m_startAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
         connect(m_endAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
         connect(addSlice, SIGNAL(clicked()), this, SLOT(addSlice()));
+        connect(insertSlice, SIGNAL(clicked()), this, SLOT(insertSlice()));
 
         // slice settings
         m_sliceName = new QLabel("<click a slice>");
@@ -524,6 +527,16 @@ public Q_SLOTS:
     void addSlice()
     {
         *m_series << new CustomSlice(10.0, "Slice " + QString::number(m_series->count()));
+    }
+
+    void insertSlice()
+    {
+        if (!m_slice)
+            return;
+
+        int i = m_series->slices().indexOf(m_slice);
+
+        m_series->insert(i, new CustomSlice(10.0, "Slice " + QString::number(m_series->count())));
     }
 
     void removeSlice()
