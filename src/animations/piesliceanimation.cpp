@@ -70,8 +70,9 @@ QVariant PieSliceAnimation::interpolated(const QVariant &start, const QVariant &
 
 void PieSliceAnimation::updateCurrentValue(const QVariant &value)
 {
+    PieSliceLayout layout = qVariantValue<PieSliceLayout>(value);
     if (state() != QAbstractAnimation::Stopped) //workaround
-        m_item->setLayout(qVariantValue<PieSliceLayout>(value));
+        m_item->setLayout(layout);
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE
