@@ -115,6 +115,21 @@ void QXYSeries::replace(const QPointF& point)
 }
 
 /*!
+  Removes first \a x value and related y value.
+*/
+void QXYSeries::remove(qreal x)
+{
+    int index = m_x.indexOf(x);
+
+    if(index==-1) return;
+
+    m_x.remove(index);
+    m_y.remove(index);
+
+    emit pointRemoved(index);
+}
+
+/*!
   Removes current \a x and \a y value.
 */
 void QXYSeries::remove(qreal x,qreal y)

@@ -6,7 +6,9 @@ SOURCES += \
     $$PWD/chartanimator.cpp \
     $$PWD/xyanimation.cpp \
     $$PWD/pieanimation.cpp \
-    $$PWD/piesliceanimation.cpp
+    $$PWD/piesliceanimation.cpp \
+    $$PWD/splineanimation.cpp
+
 
 PRIVATE_HEADERS += \
     $$PWD/axisanimation_p.h \
@@ -14,4 +16,5 @@ PRIVATE_HEADERS += \
     $$PWD/chartanimation_p.h \
     $$PWD/xyanimation_p.h \
     $$PWD/pieanimation_p.h \
-    $$PWD/piesliceanimation_p.h
+    $$PWD/piesliceanimation_p.h \
+    $$PWD/splineanimation_p.h

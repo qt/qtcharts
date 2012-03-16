@@ -32,6 +32,7 @@ signals:
 
 protected:
     virtual void setLayout(QVector<QPointF>& points);
+    virtual void updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index = 0);
     QPointF calculateGeometryPoint(const QPointF& point) const;
     QPointF calculateGeometryPoint(int index) const;
     QPointF calculateDomainPoint(const QPointF& point) const;
@@ -39,8 +40,6 @@ protected:
     void mousePressEvent( QGraphicsSceneMouseEvent * event );
 
 private:
-    void applyLayout(QVector<QPointF>& points);
-    void updateLayout(QVector<QPointF>& points);
     inline bool isEmpty();
 
 private:

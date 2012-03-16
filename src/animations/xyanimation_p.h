@@ -13,19 +13,15 @@ public:
 	enum Animation { LineDrawAnimation, MoveDownAnimation, MoveUpAnimation };
     XYAnimation(XYChartItem *item);
     ~XYAnimation();
-    void setAnimationType(Animation type);
-    void setValues(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints);
-    void updateValues(QVector<QPointF>& newPoints);
+    void setValues(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index);
 
 protected:
     QVariant interpolated(const QVariant &start, const QVariant & end, qreal progress ) const;
     void updateCurrentValue (const QVariant & value );
-    void updateState ( QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
 
 private:
     XYChartItem *m_item;
-    Animation m_type;
-    QVector<QPointF> m_points;
+    QVector<QPointF> m_oldPoints;
     bool m_dirty;
 };
 

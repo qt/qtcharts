@@ -8,10 +8,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartItem;
-class XYChartItem;
 class AxisItem;
 class AreaChartItem;
-
+class SplineChartItem;
+class ScatterChartItem;
+class LineChartItem;
+class XYChartItem;
 
 class ChartAnimator : public QObject {
 
@@ -22,14 +24,15 @@ public:
     virtual ~ChartAnimator();
 
     void addAnimation(AxisItem* item);
-    void addAnimation(XYChartItem* item);
     void addAnimation(PieChartItem* item);
-
+    void addAnimation(ScatterChartItem* item);
+    void addAnimation(LineChartItem* item);
+    void addAnimation(SplineChartItem* item);
     void removeAnimation(ChartItem* item);
 
     void animationStarted();
-    void applyLayout(XYChartItem* item, QVector<QPointF>& layout);
-    void updateLayout(XYChartItem* item, QVector<QPointF>& layout);
+    void updateLayout(XYChartItem* item, QVector<QPointF>& oldLayout,QVector<QPointF>& newLayout,int index);
+    void updateLayout(SplineChartItem* item,  QVector<QPointF>& oldPoints , QVector<QPointF>& newPoints, QVector<QPointF>& oldControlPoints, QVector<QPointF>& newContorlPoints,int index);
     void applyLayout(AxisItem* item, QVector<qreal>& layout);
 
     void addAnimation(PieChartItem* item, QPieSlice *slice, PieSliceLayout &layout);

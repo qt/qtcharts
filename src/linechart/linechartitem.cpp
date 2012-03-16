@@ -48,6 +48,7 @@ void LineChartItem::setLayout(QVector<QPointF>& points)
     m_rect = linePath.boundingRect();
 
     XYChartItem::setLayout(points);
+
 }
 
 void LineChartItem::handleUpdated()

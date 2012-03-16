@@ -12,7 +12,7 @@ m_y(1)
     setChartTitle("Three random line charts");
 
     QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(handleTimeout()));
-    m_timer.setInterval(1000);
+    m_timer.setInterval(3000);
 
     m_series0 = new QLineSeries(this);
     QPen blue(Qt::blue);
@@ -49,5 +49,10 @@ void ChartView::handleTimeout()
     m_y = qrand() % 5 - 2.5;
     m_series0->add(m_x,m_y);
     m_series1->add(m_x,m_y);
+    if(m_x>=10)
+    {
+        m_series0->remove(m_x-10);
+        m_series1->remove(m_x-10);
+    }
     scrollRight();
 }

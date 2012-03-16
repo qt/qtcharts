@@ -5,6 +5,7 @@
 #include "xychartitem_p.h"
 #include <QGraphicsItem>
 
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class SplineChartItem : public XYChartItem
@@ -22,7 +23,8 @@ public slots:
     void handleUpdated();
 
 protected:
-    void setLayout(QVector<QPointF>& points);
+    void setLayout(QVector<QPointF>& points,QVector<QPointF>& controlPoints);
+    void updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index);
 
 private:
     QPointF calculateGeometryControlPoint(int index) const;
@@ -34,7 +36,9 @@ private:
     QPen m_linePen;
     QPen m_pointPen;
     bool m_pointsVisible;
+    QVector<QPointF> m_controlPoints;
 
+    friend class SplineAnimation;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

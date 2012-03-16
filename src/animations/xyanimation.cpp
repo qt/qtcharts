@@ -7,7 +7,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 XYAnimation::XYAnimation(XYChartItem *item):ChartAnimation(item),
     m_item(item),
-    m_type(MoveDownAnimation),
     m_dirty(false)
 {
 }
@@ -16,33 +15,31 @@ XYAnimation::~XYAnimation()
 {
 }
 
-void XYAnimation::setAnimationType(Animation type)
+void XYAnimation::setValues(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index)
 {
-    m_type=type;
-}
 
-void XYAnimation::setValues(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints)
-{
-    setKeyValueAt(0.0, qVariantFromValue(oldPoints));
-    setKeyValueAt(1.0, qVariantFromValue(newPoints));
-    m_points = newPoints;
-    m_dirty=false;
-}
+    int x = oldPoints.count();
+    int y = newPoints.count();
 
-void XYAnimation::updateValues(QVector<QPointF>& newPoints)
-{
-    if(state()!=QAbstractAnimation::Stopped) {
-        stop();
-        m_dirty=true;
-    }
-
-    if(m_dirty) {
-        m_points=newPoints;
+    if(x!=y && abs(x-y)!=1) {
+        m_oldPoints = newPoints;
+        oldPoints.resize(newPoints.size());
+        setKeyValueAt(0.0, qVariantFromValue(oldPoints));
+        setKeyValueAt(1.0, qVariantFromValue(newPoints));
         m_dirty=false;
     }
-
-    setKeyValueAt(0.0, qVariantFromValue(m_points));
-    setKeyValueAt(1.0, qVariantFromValue(newPoints));
+    else {
+        if(m_dirty) {
+            m_oldPoints = oldPoints;
+            m_dirty=false;
+        }
+        oldPoints = newPoints;
+        if (y<x) (m_oldPoints.remove(index)); //remove
+        if (y>x) (m_oldPoints.insert(index,x>0?m_oldPoints[index-1]:newPoints[index])); //add
+        setKeyValueAt(0.0, qVariantFromValue(m_oldPoints));
+        setKeyValueAt(1.0, qVariantFromValue(newPoints));
+        Q_ASSERT(m_oldPoints.count() == newPoints.count());
+    }
 }
 
 QVariant XYAnimation::interpolated(const QVariant &start, const QVariant & end, qreal progress ) const
@@ -82,16 +79,10 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant & end, 
 void XYAnimation::updateCurrentValue (const QVariant & value )
 {
     if(state()!=QAbstractAnimation::Stopped){ //workaround
+        m_dirty=true;
         QVector<QPointF> vector = qVariantValue<QVector<QPointF> >(value);
         m_item->setLayout(vector);
     }
-}
-
-void XYAnimation::updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState)
-{
-    Q_UNUSED(oldState)
-    if (newState==QAbstractAnimation::Running)  m_dirty=true;
-    QVariantAnimation::updateState(newState,oldState);
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

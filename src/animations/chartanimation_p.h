@@ -9,7 +9,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartAnimation: public QVariantAnimation
 {
 public:
-    ChartAnimation(QObject* parent=0):QVariantAnimation(parent){};
+    enum Animation { LineDrawAnimation, MoveDownAnimation, MoveUpAnimation };
+    ChartAnimation(QObject* parent=0):QVariantAnimation(parent),m_type(MoveDownAnimation){};
+    void setAnimationType(Animation type){
+        m_type=type;
+    }
+protected:
+    Animation m_type;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

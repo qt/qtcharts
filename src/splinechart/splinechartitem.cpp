@@ -1,5 +1,6 @@
 #include "splinechartitem_p.h"
 #include "chartpresenter_p.h"
+#include "chartanimator_p.h"
 #include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -24,34 +25,59 @@ QPainterPath SplineChartItem::shape() const
     return m_path;
 }
 
+void SplineChartItem::updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index)
+{
+    QVector<QPointF> controlPoints;
+
+    controlPoints.resize(newPoints.count()*2-2);
+
+    for (int i = 0; i < newPoints.size() - 1; i++)
+    {
+        controlPoints[2*i] = calculateGeometryControlPoint(2 * i);
+        controlPoints[2 * i + 1] = calculateGeometryControlPoint(2 * i + 1);
+    }
+
+    if(controlPoints.count()<2) {
+        setLayout(newPoints,controlPoints);
+        return;
+    }
+
+    if(m_animator){
+       m_animator->updateLayout(this,oldPoints,newPoints,m_controlPoints,controlPoints,index);
+    }else{
+       setLayout(newPoints,controlPoints);
+    }
+}
+
 QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 {
     return XYChartItem::calculateGeometryPoint(m_series->controlPoint(index));
 }
 
-void SplineChartItem::setLayout(QVector<QPointF>& points)
+void SplineChartItem::setLayout(QVector<QPointF>& points,QVector<QPointF>& controlPoints)
 {
-
-    if(points.size()==0)
+    if(points.size()<2 || controlPoints.size()<2)
     {
         XYChartItem::setLayout(points);
+        m_controlPoints=controlPoints;
         return;
     }
 
-    QPainterPath splinePath;
-    const QPointF& point = points.at(0);
-    splinePath.moveTo(point);
+    Q_ASSERT(points.count()*2-2 == controlPoints.count());
+
+    QPainterPath splinePath(points.at(0));
 
     for (int i = 0; i < points.size() - 1; i++)
     {
         const QPointF& point = points.at(i + 1);
-        splinePath.cubicTo(calculateGeometryControlPoint(2 * i), calculateGeometryControlPoint(2 * i + 1), point);
+        splinePath.cubicTo(controlPoints[2*i],controlPoints[2 * i + 1],point);
     }
 
     prepareGeometryChange();
     m_path = splinePath;
     m_rect = splinePath.boundingRect();
     XYChartItem::setLayout(points);
+    m_controlPoints=controlPoints;
 }
 
 //handlers

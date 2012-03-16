@@ -66,23 +66,19 @@ QPointF XYChartItem::calculateDomainPoint(const QPointF& point) const
     return QPointF(x,y);
 }
 
-void XYChartItem::applyLayout(QVector<QPointF>& points)
+void XYChartItem::updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index)
 {
     if(m_animator){
-       m_animator->applyLayout(this,points);
+       m_animator->updateLayout(this,oldPoints,newPoints,index);
+    }else{
+        setLayout(newPoints);
     }
-       else setLayout(points);
-
-}
-
-void XYChartItem::updateLayout(QVector<QPointF>& points)
-{
-    setLayout(points);
 }
 
 void XYChartItem::setLayout(QVector<QPointF>& points)
 {
     m_points = points;
+    update();
 }
 
 //handlers
@@ -91,11 +87,11 @@ void XYChartItem::handlePointAdded(int index)
 {
     Q_ASSERT(index<m_series->count());
     Q_ASSERT(index>=0);
-
+    qDebug()<<__FUNCTION__<<index;
     QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
-    points.insert(index-1,point);
-    updateLayout(points);
+    points.insert(index,point);
+    updateLayout(m_points,points,index);
     update();
 }
 void XYChartItem::handlePointRemoved(int index)
@@ -104,7 +100,7 @@ void XYChartItem::handlePointRemoved(int index)
     Q_ASSERT(index>=0);
     QVector<QPointF> points = m_points;
     points.remove(index);
-    updateLayout(points);
+    updateLayout(m_points,points,index);
     update();
 }
 
@@ -115,7 +111,7 @@ void XYChartItem::handlePointReplaced(int index)
     QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
     points.replace(index,point);
-    updateLayout(points);
+    updateLayout(m_points,points,index);
     update();
 }
 
@@ -128,7 +124,7 @@ void XYChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal 
 
     if(isEmpty()) return;
     QVector<QPointF> points = calculateGeometryPoints();
-    applyLayout(points);
+    updateLayout(m_points,points);
     update();
 }
 
@@ -141,7 +137,7 @@ void XYChartItem::handleGeometryChanged(const QRectF& rect)
 
     if(isEmpty()) return;
 	QVector<QPointF> points = calculateGeometryPoints();
-	applyLayout(points);
+	updateLayout(m_points,points);
 	update();
 }
 
