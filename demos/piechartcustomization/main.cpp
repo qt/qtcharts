@@ -456,7 +456,7 @@ public Q_SLOTS:
 
     void updateSerieSettings()
     {
-        m_series->setPiePosition(m_vPosition->value(), m_hPosition->value());
+        m_series->setPiePosition(m_hPosition->value(), m_vPosition->value());
         m_series->setPieSize(m_sizeFactor->value());
         m_series->setPieStartAngle(m_startAngle->value());
         m_series->setPieEndAngle(m_endAngle->value());
