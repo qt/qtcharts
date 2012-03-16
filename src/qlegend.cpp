@@ -97,11 +97,14 @@ void QLegend::handleSeriesAdded(QSeries* series, Domain* domain)
 
     mSeriesList.append(series);
     createMarkers(series);
+    connectSeries(series);
     layoutChanged();
 }
 
 void QLegend::handleSeriesRemoved(QSeries* series)
 {
+    disconnectSeries(series);
+
     if (series->type() == QSeries::SeriesTypeArea)
     {
         // This is special case. Area series has upper and lower series, which each have markers
@@ -114,6 +117,122 @@ void QLegend::handleSeriesRemoved(QSeries* series)
 
     mSeriesList.removeOne(series);
     layoutChanged();
+}
+
+void QLegend::handleAdded(QList<QPieSlice*> slices)
+{
+    QPieSeries* series = static_cast<QPieSeries*> (sender());
+    foreach(QPieSlice* s, slices) {
+        LegendMarker* marker = new LegendMarker(series,s,this);
+        marker->setName(s->label());
+        marker->setBrush(s->sliceBrush());
+        connect(marker,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)),this,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)));
+        connect(s,SIGNAL(changed()),marker,SLOT(changed()));
+        connect(s,SIGNAL(destroyed()),marker,SLOT(deleteLater()));
+        mMarkers.append(marker);
+        childItems().append(marker);
+    }
+    layoutChanged();
+}
+
+void QLegend::handleMarkerDestroyed()
+{
+    // TODO: what if more than one markers are destroyed and we update layout after first one?
+    LegendMarker* m = static_cast<LegendMarker*> (sender());
+    mMarkers.removeOne(m);
+    layoutChanged();
+}
+
+void QLegend::connectSeries(QSeries *series)
+{
+    // Connect relevant signals from series
+    switch (series->type())
+    {
+    case QSeries::SeriesTypeLine: {
+//        QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypeArea: {
+//        QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypeBar: {
+//        QBarSeries* barSeries = static_cast<QBarSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypeStackedBar: {
+//        QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypePercentBar: {
+//        QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypeScatter: {
+//        QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
+        break;
+    }
+    case QSeries::SeriesTypePie: {
+        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+        connect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleAdded(QList<QPieSlice*>)));
+//        connect(pieSeries,SIGNAL(removed(QList<QPieSlice*>)),this,SLOT(handleRemoved(QList<QPieSlice*>)));
+        break;
+    }
+    case QSeries::SeriesTypeSpline: {
+//        QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
+        break;
+    }
+    default: {
+        qDebug()<< "QLegend::connectSeries" << series->type() << "not implemented.";
+        break;
+    }
+    }
+}
+
+void QLegend::disconnectSeries(QSeries *series)
+{
+    // Connect relevant signals from series
+    switch (series->type())
+    {
+    case QSeries::SeriesTypeLine: {
+//        QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypeArea: {
+//        QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypeBar: {
+//        QBarSeries* barSeries = static_cast<QBarSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypeStackedBar: {
+//        QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypePercentBar: {
+//        QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
+        break;
+    }
+    case QSeries::SeriesTypeScatter: {
+//        QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
+        break;
+    }
+    case QSeries::SeriesTypePie: {
+        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+        disconnect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleAdded(QList<QPieSlice*>)));
+//        disconnect(pieSeries,SIGNAL(removed(QList<QPieSlice*>)),this,SLOT(handleRemoved(QList<QPieSlice*>)));
+        break;
+    }
+    case QSeries::SeriesTypeSpline: {
+//        QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
+        break;
+    }
+    default: {
+        qDebug()<< "QLegend::disconnectSeries" << series->type() << "not implemented.";
+        break;
+    }
+    }
 }
 
 void QLegend::createMarkers(QSeries *series)
@@ -181,6 +300,7 @@ void QLegend::appendMarkers(QXYSeries* series)
     marker->setName(series->name());
     marker->setBrush(series->brush());
     connect(marker,SIGNAL(clicked(QSeries*,Qt::MouseButton)),this,SIGNAL(clicked(QSeries*,Qt::MouseButton)));
+    connect(marker,SIGNAL(destroyed()),this,SLOT(handleMarkerDestroyed()));
     mMarkers.append(marker);
     childItems().append(marker);
 }
@@ -193,6 +313,7 @@ void QLegend::appendMarkers(QBarSeries *series)
         marker->setBrush(s->brush());
         connect(marker,SIGNAL(clicked(QBarSet*,Qt::MouseButton)),this,SIGNAL(clicked(QBarSet*,Qt::MouseButton)));
         connect(s,SIGNAL(changed()),marker,SLOT(changed()));
+        connect(marker,SIGNAL(destroyed()),this,SLOT(handleMarkerDestroyed()));
         mMarkers.append(marker);
         childItems().append(marker);
     }
@@ -206,6 +327,8 @@ void QLegend::appendMarkers(QPieSeries *series)
         marker->setBrush(s->sliceBrush());
         connect(marker,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)),this,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)));
         connect(s,SIGNAL(changed()),marker,SLOT(changed()));
+        connect(s,SIGNAL(destroyed()),marker,SLOT(deleteLater()));
+        connect(marker,SIGNAL(destroyed()),this,SLOT(handleMarkerDestroyed()));
         mMarkers.append(marker);
         childItems().append(marker);
     }

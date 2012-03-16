@@ -50,15 +50,20 @@ signals:
 public slots:
     void handleSeriesAdded(QSeries* series,Domain* domain);
     void handleSeriesRemoved(QSeries* series);
+    void handleAdded(QList<QPieSlice*> slices);
+//    void handleRemoved(QList<QPieSlice*> slices);
+    void handleMarkerDestroyed();
 
 private:
     // PIMPL --->
+    void connectSeries(QSeries* series);
+    void disconnectSeries(QSeries* series);
     void createMarkers(QSeries* series);
     void appendMarkers(QXYSeries* series);      // All line series are derived from QXYSeries, so this works for now
     void appendMarkers(QBarSeries* series);
     void appendMarkers(QPieSeries* series);
     void deleteMarkers(QSeries* series);
-    void layoutChanged();    // TODO: rename this to layoutChanged and remove original layoutChanged, when ready
+    void layoutChanged();
     // <--- PIMPL
 
 
