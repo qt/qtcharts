@@ -541,7 +541,15 @@ void QPieSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     {
         //        slices().at(topLeft.row())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
         if (topLeft.column() == m_mapValues)
-            slices().at(topLeft.row())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            if (m_mapValues == m_mapLabels)
+            {
+                slices().at(topLeft.row())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+                slices().at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+            }
+            else
+            {
+                slices().at(topLeft.row())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            }
         else if (topLeft.column() == m_mapLabels)
             slices().at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
     }
@@ -549,7 +557,15 @@ void QPieSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     {
         //        slices().at(topLeft.column())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
         if (topLeft.row() == m_mapValues)
-            slices().at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            if (m_mapValues == m_mapLabels)
+            {
+                slices().at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+                slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+            }
+            else
+            {
+                slices().at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            }
         else if (topLeft.row() == m_mapLabels)
             slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
     }
