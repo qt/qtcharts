@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include "qchartaxis.h"
 #include <qmath.h>
+#include <QTime>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -12,6 +13,7 @@ SplineWidget::SplineWidget(QWidget *parent)
     : QWidget(parent)
 {
 //    qsrand(time(NULL));
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
     //! [1]
     //create QSplineSeries
     series = new QSplineSeries(this);

@@ -107,6 +107,7 @@ qreal QBarSet::valueAt(int index)
 void QBarSet::setValue(int index, qreal value)
 {
     mValues.replace(index,value);
+    emit changed();
 }
 
 /*!

@@ -27,8 +27,7 @@ public:
 
     bool setModel(QAbstractItemModel* model);
     QAbstractItemModel* modelExt() {return m_model;}
-    void setModelMappingCategories(int modelColumn);
-    void setModelMappingBarRange(int bottomBoundry, int topBoundry);
+    void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
 
 public:
     // TODO: Functions below this are not part of api and will be moved
@@ -66,6 +65,13 @@ public Q_SLOTS:
     void barsetRightClicked(QString category);
     // <--- TO PIMPL
 
+private Q_SLOTS:
+    // slots for updating bars when data in model changes
+    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
+    void modelDataAdded(QModelIndex parent, int start, int end);
+    void modelDataRemoved(QModelIndex parent, int start, int end);
+    void barsetChanged();
+
 protected:
     BarChartModel* mModel;
     bool mSeparatorsVisible;
@@ -74,6 +80,7 @@ protected:
     int m_mapCategories;
     int m_mapBarBottom;
     int m_mapBarTop;
+    Qt::Orientation m_mapOrientation;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

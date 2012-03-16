@@ -53,7 +53,7 @@ QXYSeries::QXYSeries(QObject* parent):QSeries(parent)
     m_mapX = -1;
     m_mapY = -1;
     m_mapOrientation = Qt::Vertical;
-//    m_mapYOrientation = Qt::Vertical;
+    //    m_mapYOrientation = Qt::Vertical;
 }
 /*!
     Destroys the object. Series added to QChartView or QChart instances are owned by those,
@@ -306,20 +306,48 @@ void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
 }
 
 bool QXYSeries::setModel(QAbstractItemModel* model) {
-    m_model = model;
-    //    for (int i = 0; i < m_model->rowCount(); i++)
-    //        emit pointAdded(i);
-    connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-    connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-    connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    return true;
+
+    // disconnect signals from old model
+    if(m_model)
+    {
+        disconnect(m_model, 0, this, 0);
+        m_mapX = -1;
+        m_mapY = -1;
+        m_mapOrientation = Qt::Vertical;
+    }
+
+    // set new model
+    if(model)
+    {
+        m_model = model;
+        return true;
+    }
+    else
+    {
+        m_model = NULL;
+        return false;
+    }
 }
 
 void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
 {
+    if (m_model == NULL)
+        return;
     m_mapX = modelX;
     m_mapY = modelY;
     m_mapOrientation = orientation;
+    if (m_mapOrientation == Qt::Vertical)
+    {
+        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+        connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    }
+    else
+    {
+        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+        connect(m_model,SIGNAL(columnsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    }
 }
 
 //void QXYSeries::setModelMappingY(int modelLineIndex, Qt::Orientation orientation)

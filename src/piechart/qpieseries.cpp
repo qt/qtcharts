@@ -481,32 +481,48 @@ bool QPieSeries::setModel(QAbstractItemModel* model)
     // disconnect signals from old model
     if(m_model)
     {
-        disconnect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), 0, 0);
-        disconnect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), 0, 0);
-        disconnect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), 0, 0);
+        disconnect(m_model, 0, this, 0);
+        m_mapValues = -1;
+        m_mapLabels = -1;
+        m_mapOrientation = Qt::Vertical;
     }
 
-    // set new model if not NULL and connect necessary signals from it
+    // set new model
     if(model)
     {
         m_model = model;
-        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+        return true;
     }
-
-    return true;
+    else
+    {
+        m_model = NULL;
+        return false;
+    }
 }
 
 void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation)
 {
+    if (m_model == NULL)
+        return;
     m_mapValues = modelValuesLine;
     m_mapLabels = modelLabelsLine;
     m_mapOrientation = orientation;
 
-    if (m_model == NULL)
-        return;
+    // connect the signals
+    if (m_mapOrientation == Qt::Vertical)
+    {
+        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+        connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    }
+    else
+    {
+        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+        connect(m_model,SIGNAL(columnsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    }
 
+    // create the initial slices set
     if (m_mapOrientation == Qt::Vertical)
         for (int i = 0; i < m_model->rowCount(); i++)
             add(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
@@ -532,9 +548,9 @@ void QPieSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     else
     {
         //        slices().at(topLeft.column())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
-        if (topLeft.column() == m_mapValues)
+        if (topLeft.row() == m_mapValues)
             slices().at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-        else if (topLeft.column() == m_mapLabels)
+        else if (topLeft.row() == m_mapLabels)
             slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
     }
 }

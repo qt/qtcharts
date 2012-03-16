@@ -24,6 +24,7 @@ public:
     
     //public slots:
 private:
+    QList<QVector<qreal>* > m_data;
     QList<QPointF> m_points;
     QStringList m_labels;
 

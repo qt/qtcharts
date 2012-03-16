@@ -36,6 +36,8 @@ public:
     QRadioButton* splineRadioButton;
     QRadioButton* scatterRadioButton;
     QRadioButton* pieRadioButton;
+    QRadioButton* areaRadioButton;
+    QRadioButton* barRadioButton;
 };
 
 #endif // TABLEWIDGET_H
