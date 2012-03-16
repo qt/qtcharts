@@ -35,10 +35,11 @@ public:
 
     void setPreferredLayout(QLegend::PreferredLayout preferred);
 
-    QSizeF minimumSize() const;
-    void setMinimumSize(const QSizeF size);
     QSizeF maximumSize() const;
     void setMaximumSize(const QSizeF size);
+
+    void setSize(const QSizeF size);
+    void setPos(const QPointF &pos);
 
 signals:
     // for interactions.
@@ -49,12 +50,11 @@ signals:
 public slots:
     void handleSeriesAdded(QSeries* series,Domain* domain);
     void handleSeriesRemoved(QSeries* series);
-    void handleGeometryChanged(const QRectF& size);
 
 private:
     // PIMPL --->
     void createMarkers(QSeries* series);
-    void appendMarkers(QXYSeries* series);
+    void appendMarkers(QXYSeries* series);      // All line series are derived from QXYSeries, so this works for now
     void appendMarkers(QBarSeries* series);
     void appendMarkers(QPieSeries* series);
     void deleteMarkers(QSeries* series);
@@ -62,13 +62,16 @@ private:
     // <--- PIMPL
 
 
-    QRectF mBoundingRect;
+//    QRectF mBoundingRect;
+    QPointF mPos;
+    QSizeF mSize;
+    QSizeF mMinimumSize;
+    QSizeF mMaximumSize;
+
     QList<QSeries*> mSeriesList;
     QList<LegendMarker*> mMarkers;
 
     QBrush mBackgroundBrush;
-    QSizeF mMinimumSize;
-    QSizeF mMaximumSize;
     QLegend::PreferredLayout mPreferredLayout;
 };
 

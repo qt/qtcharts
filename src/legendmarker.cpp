@@ -5,13 +5,16 @@
 #include <qxyseries.h>
 #include <QPainter>
 #include <QGraphicsSceneEvent>
+#include <QGraphicsSimpleTextItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 LegendMarker::LegendMarker(QSeries* series, QGraphicsItem *parent)
     : QGraphicsObject(parent)
-    ,mBoundingRect(0,0,1,1)
-    ,mMarkerBoundingRect(0,0,1,1)
+    ,mPos(0,0)
+    ,mSize(0,0)
+    ,mBoundingRect(0,0,0,0)
+    ,mMarkerBoundingRect(0,0,0,0)
     ,mSeries(series)
     ,mBarset(0)
     ,mPieslice(0)
@@ -23,8 +26,10 @@ LegendMarker::LegendMarker(QSeries* series, QGraphicsItem *parent)
 
 LegendMarker::LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *parent)
     : QGraphicsObject(parent)
-    ,mBoundingRect(0,0,1,1)
-    ,mMarkerBoundingRect(0,0,1,1)
+    ,mPos(0,0)
+    ,mSize(0,0)
+    ,mBoundingRect(0,0,0,0)
+    ,mMarkerBoundingRect(0,0,0,0)
     ,mSeries(series)
     ,mBarset(barset)
     ,mPieslice(0)
@@ -36,8 +41,10 @@ LegendMarker::LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *pare
 
 LegendMarker::LegendMarker(QSeries *series, QPieSlice *pieslice, QGraphicsItem *parent)
     : QGraphicsObject(parent)
-    ,mBoundingRect(0,0,1,1)
-    ,mMarkerBoundingRect(0,0,1,1)
+    ,mPos(0,0)
+    ,mSize(0,0)
+    ,mBoundingRect(0,0,0,0)
+    ,mMarkerBoundingRect(0,0,0,0)
     ,mSeries(series)
     ,mBarset(0)
     ,mPieslice(pieslice)
@@ -47,18 +54,10 @@ LegendMarker::LegendMarker(QSeries *series, QPieSlice *pieslice, QGraphicsItem *
         setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     }
 
-void LegendMarker::setBoundingRect(const QRectF rect)
+void LegendMarker::setPos(qreal x, qreal y)
 {
-    mBoundingRect = rect;
-    // Calculate Marker pos
-
-    // TODO: remove hard coding. 5 is marigin around marker
-    QSizeF markerSize(10,10);
-    qreal x = mBoundingRect.x() + 5;
-    qreal y = mBoundingRect.y() + (mBoundingRect.height() - markerSize.height())/2;
-    mMarkerBoundingRect = QRectF(x,y,markerSize.width(),markerSize.height());
-
-    mTextItem.setPos(mBoundingRect.x() + markerSize.width() + 10, y );
+    mPos = QPointF(x,y);
+    layoutChanged();
 }
 
 void LegendMarker::setBrush(const QBrush brush)
@@ -74,6 +73,7 @@ QBrush LegendMarker::brush() const
 void LegendMarker::setName(const QString name)
 {
     mTextItem.setText(name);
+    layoutChanged();
 }
 
 QString LegendMarker::name() const
@@ -98,6 +98,21 @@ void LegendMarker::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 QRectF LegendMarker::boundingRect() const
 {
     return mBoundingRect;
+}
+
+void LegendMarker::layoutChanged()
+{
+    QSizeF markerSize(10,10);
+    qreal margin = 2;
+
+    mSize.setHeight(markerSize.height() + 2 * margin);
+    mSize.setWidth(mTextItem.boundingRect().width() + markerSize.width() + 3 * margin);
+
+    mBoundingRect = QRectF(mPos.x(),mPos.y(),mSize.width(),mSize.height());
+
+    mMarkerBoundingRect = QRectF(mPos.x() + margin, mPos.y() + margin, markerSize.width(),markerSize.height());
+
+    mTextItem.setPos(mPos.x() + markerSize.width() + 2 * margin, mPos.y() + margin );
 }
 
 void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)

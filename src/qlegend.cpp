@@ -13,6 +13,7 @@
 #include "qbarset.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
+#include "chartpresenter_p.h"
 #include <QPainter>
 #include <QPen>
 
@@ -22,13 +23,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QLegend::QLegend(QGraphicsItem *parent)
     : QGraphicsObject(parent)
-    ,mBoundingRect(0,0,1,1)
-    ,mBackgroundBrush(Qt::darkGray)     // TODO: from theme?
+    ,mPos(0,0)
+    ,mSize(0,0)
     ,mMinimumSize(50,20)                // TODO: magic numbers
     ,mMaximumSize(150,100)
+    ,mBackgroundBrush(Qt::darkGray)     // TODO: from theme?
     ,mPreferredLayout(QLegend::PreferredLayoutVertical)
 {
-    setVisible(false);
+//    setVisible(false);
+    setZValue(ChartPresenter::LegendZValue);
 }
 
 void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -36,13 +39,14 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
+    painter->setOpacity(0.5);
     painter->setBrush(mBackgroundBrush);
-    painter->drawRect(mBoundingRect);
+    painter->drawRect(boundingRect());
 }
 
 QRectF QLegend::boundingRect() const
 {
-    return mBoundingRect;
+    return QRectF(mPos,mSize);
 }
 
 void QLegend::setBackgroundBrush(const QBrush& brush)
@@ -61,14 +65,30 @@ void QLegend::setPreferredLayout(QLegend::PreferredLayout preferred)
     layoutChanged();
 }
 
-QSizeF QLegend::minimumSize() const
+QSizeF QLegend::maximumSize() const
 {
-    return mMinimumSize;
+    return mMaximumSize;
 }
 
-void QLegend::setMinimumSize(const QSizeF size)
+void QLegend::setMaximumSize(const QSizeF size)
 {
-    mMinimumSize = size;
+    mMaximumSize = size;
+}
+
+void QLegend::setSize(const QSizeF size)
+{
+    mSize = size;
+    if (mSize.width() > mMaximumSize.width()) {
+        mSize.setWidth(mMaximumSize.width());
+    }
+    if (mSize.height() > mMaximumSize.height()) {
+        mSize.setHeight(mMaximumSize.height());
+    }
+}
+
+void QLegend::setPos(const QPointF &pos)
+{
+    mPos = pos;
 }
 
 void QLegend::handleSeriesAdded(QSeries* series, Domain* domain)
@@ -93,12 +113,6 @@ void QLegend::handleSeriesRemoved(QSeries* series)
     }
 
     mSeriesList.removeOne(series);
-    layoutChanged();
-}
-
-void QLegend::handleGeometryChanged(const QRectF& size)
-{
-    mBoundingRect = size;
     layoutChanged();
 }
 
@@ -216,38 +230,103 @@ void QLegend::layoutChanged()
         return;
     }
 
-    // Limit legend size to maximum.
-    QSizeF size = mBoundingRect.size();
+    // Find out widest item.
+    qreal itemMaxWidth = 0;
+    qreal itemMaxHeight = 0;
+    foreach (LegendMarker* m, mMarkers) {
+        if (m->boundingRect().width() > itemMaxWidth) {
+            itemMaxWidth = m->boundingRect().width();
+        }
+        if (m->boundingRect().height() > itemMaxHeight) {
+            itemMaxHeight = m->boundingRect().height();
+        }
+    }
 
+    int maxHorizontalItems = boundingRect().width() / itemMaxWidth;
+    int maxVerticalItems = boundingRect().height() / itemMaxHeight;
 
-    // TODO: grid layout
+    if (mMarkers.count() > maxHorizontalItems * maxVerticalItems) {
+        // TODO: overlapping layout
+        qDebug() << "Warning. Not enough space to layout all legend items properly.";
+    }
+
+    qreal margin = 5;
+    qreal totalWidth = 0;
+    qreal totalHeight = 0;
     switch (mPreferredLayout)
     {
     case QLegend::PreferredLayoutHorizontal: {
-
-        qreal steps = mMarkers.count();
-        qreal xStep = size.width() / (steps+1);
-        qreal x = mBoundingRect.x() + xStep/2;
-        qreal y = mBoundingRect.y();   // Half of legend marker min size
-        foreach (LegendMarker* m, mMarkers) {
-            m->setBoundingRect(QRectF(x,y,xStep,size.height()/2));
-            x += xStep;
+        /*
+        qreal xStep = mMaximumSize.width() / (mMarkers.count()+1);
+        if (xStep > itemMaxWidth) {
+            xStep = itemMaxWidth;
         }
+        qreal yStep = mMaximumSize.height() / (mMarkers.count()+1);
+        if (yStep > itemMaxHeight) {
+            yStep = itemMaxHeight;
+        }*/
+        qreal xStep = itemMaxWidth;
+        qreal yStep = itemMaxHeight;
+        qreal x = mPos.x() + margin;
+        qreal y = mPos.y() + margin;
+        int row = 1;
+        int column = 0;
+        int maxRows = 1;
+        int maxColumns = 1;
+        foreach (LegendMarker* m, mMarkers) {
+            maxRows = row;
+            m->setPos(x,y);
+            x += xStep;
+            column++;
+            if (column > maxColumns) {
+                maxColumns = column;
+            }
+            if ((x + itemMaxWidth + margin*2) > (mPos.x() + mMaximumSize.width())) {
+                x = mPos.x() + margin;
+                y += yStep;
+                row++;
+                column = 0;
+            }
+        }
+        totalWidth = maxColumns * itemMaxWidth + margin * 2;
+        totalHeight = maxRows * itemMaxHeight + margin * 2;
         break;
     }
     case QLegend::PreferredLayoutVertical: {
-        // Limit markers to bounding rect size.
-        if (size.width() > mBoundingRect.width()) {
-            size.setWidth(mBoundingRect.width());
+        /*
+        qreal xStep = mMaximumSize.width() / (mMarkers.count()+1);
+        if (xStep > itemMaxWidth) {
+            xStep = itemMaxWidth;
         }
-        qreal steps = mMarkers.count();
-        qreal yStep = size.height() / (steps+1);
-        qreal x = mBoundingRect.x();
-        qreal y = mBoundingRect.y() + yStep/2;
+        qreal yStep = mMaximumSize.height() / (mMarkers.count()+1);
+        if (yStep > itemMaxHeight) {
+            yStep = itemMaxHeight;
+        }*/
+        qreal xStep = itemMaxWidth;
+        qreal yStep = itemMaxHeight;
+        qreal x = mPos.x() + margin;
+        qreal y = mPos.y() + margin;
+        int row = 0;
+        int column = 1;
+        int maxRows = 1;
+        int maxColumns = 1;
         foreach (LegendMarker* m, mMarkers) {
-            m->setBoundingRect(QRectF(x,y,size.width(),yStep));
+            maxColumns = column;
+            m->setPos(x,y);
             y += yStep;
+            row++;
+            if (row > maxRows) {
+                maxRows = row;
+            }
+            if ((y + itemMaxHeight + margin*2) > (mPos.y() + mMaximumSize.height())) {
+                y = mPos.y() + margin;
+                x += xStep;
+                column++;
+                row = 0;
+            }
         }
+        totalWidth = maxColumns * itemMaxWidth + margin * 2;
+        totalHeight = maxRows * itemMaxHeight + margin * 2;
         break;
     }
     default: {
@@ -255,6 +334,8 @@ void QLegend::layoutChanged()
     }
     }
 
+    mSize.setWidth(totalWidth);
+    mSize.setHeight(totalHeight);
 }
 
 #include "moc_qlegend.cpp"

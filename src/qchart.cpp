@@ -346,16 +346,10 @@ void QChart::updateLayout()
     }
 
     // recalculate legend position
-    // TODO: better layout
     if (m_legend) {
-        QRectF boundingRect(m_rect.adjusted(margin(),
-                                            rect.height() + margin() + margin()/2,
-                                            -margin(),
-                                            -margin()/2 + m_legend->minimumSize().height()));
-//        m_legend->handleGeometryChanged(boundingRect);
-        QRectF br(0,0,margin(),m_rect.height());
-        m_legend->handleGeometryChanged(br);
-        m_legend->setPreferredLayout(QLegend::PreferredLayoutVertical);
+        m_legend->setMaximumSize(rect.size());
+        m_legend->setPos(rect.topLeft());
+        m_legend->setPreferredLayout(QLegend::PreferredLayoutHorizontal);
     }
 }
 #include "moc_qchart.cpp"

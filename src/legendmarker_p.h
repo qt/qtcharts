@@ -4,6 +4,7 @@
 #include "qchartglobal.h"
 #include <QGraphicsObject>
 #include <QBrush>
+#include <QGraphicsSimpleTextItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -26,7 +27,8 @@ public:
     LegendMarker(QSeries* series, QGraphicsItem *parent = 0);
     LegendMarker(QSeries* series, QBarSet* barset, QGraphicsItem *parent = 0);
     LegendMarker(QSeries* series, QPieSlice* pieslice, QGraphicsItem *parent = 0);
-    void setBoundingRect(const QRectF rect);
+
+    void setPos(qreal x, qreal y);
 
     void setBrush(const QBrush brush);
     QBrush brush() const;
@@ -39,6 +41,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
     QRectF boundingRect() const;
+
+    void layoutChanged();
 
 public:
     // From QGraphicsObject
@@ -53,6 +57,8 @@ public Q_SLOTS:
     void changed();
 
 private:
+    QPointF mPos;
+    QSize mSize;
     QRectF mBoundingRect;
     QRectF mMarkerBoundingRect;
     QBrush mBrush;
