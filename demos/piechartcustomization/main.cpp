@@ -309,15 +309,19 @@ public:
         m_themeComboBox->addItem("Scientific", QChart::ChartThemeScientific);
 
         m_aaCheckBox = new QCheckBox();
+        m_animationsCheckBox = new QCheckBox();
+        m_animationsCheckBox->setCheckState(Qt::Checked);
 
         QFormLayout* chartSettingsLayout = new QFormLayout();
         chartSettingsLayout->addRow("Theme", m_themeComboBox);
         chartSettingsLayout->addRow("Antialiasing", m_aaCheckBox);
+        chartSettingsLayout->addRow("Animations", m_animationsCheckBox);
         QGroupBox* chartSettings = new QGroupBox("Chart");
         chartSettings->setLayout(chartSettingsLayout);
 
         connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this ,SLOT(updateChartSettings()));
         connect(m_aaCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateChartSettings()));
+        connect(m_animationsCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateChartSettings()));
 
         // series settings
         m_hPosition = new QDoubleSpinBox();
@@ -443,6 +447,11 @@ public Q_SLOTS:
         QChart::ChartTheme theme = (QChart::ChartTheme) m_themeComboBox->itemData(m_themeComboBox->currentIndex()).toInt();
         m_chartView->setChartTheme(theme);
         m_chartView->setRenderHint(QPainter::Antialiasing, m_aaCheckBox->isChecked());
+
+        if (m_animationsCheckBox->checkState() == Qt::Checked)
+            m_chartView->setAnimationOptions(QChart::AllAnimations);
+        else
+            m_chartView->setAnimationOptions(QChart::NoAnimation);
     }
 
     void updateSerieSettings()
@@ -551,6 +560,7 @@ public Q_SLOTS:
 private:
     QComboBox *m_themeComboBox;
     QCheckBox *m_aaCheckBox;
+    QCheckBox *m_animationsCheckBox;
 
     QChartView* m_chartView;
     QPieSeries* m_series;
