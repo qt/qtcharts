@@ -47,6 +47,8 @@ void PieChartItem::initialize()
 
 void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 {
+    bool isEmpty = m_slices.isEmpty();
+
     foreach (QPieSlice *s, slices) {
         PieSlice* slice = new PieSlice(this);
         m_slices.insert(s, slice);
@@ -58,7 +60,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         PieSliceLayout layout = calculateSliceLayout(s);
 
         if (m_animator)
-            m_animator->addAnimation(this, s, layout);
+            m_animator->addAnimation(this, s, layout, isEmpty);
         else
             setLayout(s, layout);
     }

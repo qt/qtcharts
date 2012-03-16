@@ -224,11 +224,11 @@ void ChartAnimator::updateLayout(XYChartItem* item,  QVector<QPointF>& oldPoints
     QTimer::singleShot(0,animation,SLOT(start()));
 }
 
-void ChartAnimator::addAnimation(PieChartItem* item, QPieSlice *slice, const PieSliceLayout &layout)
+void ChartAnimator::addAnimation(PieChartItem* item, QPieSlice *slice, const PieSliceLayout &layout, bool isEmpty)
 {
     PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
     Q_ASSERT(animation);
-    animation->addSlice(slice, layout);
+    animation->addSlice(slice, layout, isEmpty);
 }
 
 void ChartAnimator::removeAnimation(PieChartItem* item, QPieSlice *slice)

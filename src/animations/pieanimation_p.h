@@ -18,7 +18,7 @@ public:
     ~PieAnimation();
     void updateValues(const PieLayout &newValues);
     void updateValue(QPieSlice *slice, const PieSliceLayout &newValue);
-    void addSlice(QPieSlice *slice, const PieSliceLayout &endLayout);
+    void addSlice(QPieSlice *slice, const PieSliceLayout &endLayout, bool isEmpty);
     void removeSlice(QPieSlice *slice);
 
 public: // from QVariantAnimation
