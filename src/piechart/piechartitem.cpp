@@ -60,7 +60,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         if (m_animator)
             m_animator->addAnimation(this, s, layout);
         else
-            setLayout(layout);
+            setLayout(s, layout);
     }
 }
 
@@ -76,7 +76,7 @@ void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
 
 void PieChartItem::handlePieLayoutChanged()
 {
-    QVector<PieSliceLayout> layout = calculateLayout();
+    PieLayout layout = calculateLayout();
     applyLayout(layout);
     update();
 }
@@ -86,7 +86,7 @@ void PieChartItem::handleSliceChanged()
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
     PieSliceLayout layout = calculateSliceLayout(slice);
-    updateLayout(layout);
+    updateLayout(slice, layout);
     update();
 }
 
@@ -120,7 +120,6 @@ void PieChartItem::calculatePieLayout()
 PieSliceLayout PieChartItem::calculateSliceLayout(QPieSlice *slice)
 {
     PieSliceLayout sliceLayout;
-    sliceLayout.m_data = slice;
     sliceLayout.m_center = PieSlice::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceLayout.m_radius = m_pieRadius;
     sliceLayout.m_startAngle = slice->startAngle();
@@ -128,18 +127,18 @@ PieSliceLayout PieChartItem::calculateSliceLayout(QPieSlice *slice)
     return sliceLayout;
 }
 
-QVector<PieSliceLayout> PieChartItem::calculateLayout()
+PieLayout PieChartItem::calculateLayout()
 {
     calculatePieLayout();
-    QVector<PieSliceLayout> layout;
+    PieLayout  layout;
     foreach (QPieSlice* s, m_series->slices()) {
         if (m_slices.contains(s)) // calculate layout only for those slices that are already visible
-            layout << calculateSliceLayout(s);
+            layout.insert(s, calculateSliceLayout(s));
     }
     return layout;
 }
 
-void PieChartItem::applyLayout(QVector<PieSliceLayout> &layout)
+void PieChartItem::applyLayout(const PieLayout &layout)
 {
     if (m_animator)
         m_animator->updateLayout(this, layout);
@@ -147,36 +146,36 @@ void PieChartItem::applyLayout(QVector<PieSliceLayout> &layout)
         setLayout(layout);
 }
 
-void PieChartItem::updateLayout(PieSliceLayout &layout)
+void PieChartItem::updateLayout(QPieSlice *slice, const PieSliceLayout &layout)
 {
     if (m_animator)
-        m_animator->updateLayout(this, layout);
+        m_animator->updateLayout(this, slice, layout);
     else
-        setLayout(layout);
+        setLayout(slice, layout);
 }
 
-void PieChartItem::setLayout(QVector<PieSliceLayout> &layout)
+void PieChartItem::setLayout(const PieLayout &layout)
 {
-    foreach (PieSliceLayout l, layout) {
-        PieSlice *slice = m_slices.value(l.m_data);
-        Q_ASSERT(slice);
-        slice->setLayout(l);
-        slice->updateData(l.m_data);
-        slice->updateGeometry();
-        slice->update();
+    foreach (QPieSlice *slice, layout.keys()) {
+        PieSlice *s = m_slices.value(slice);
+        Q_ASSERT(s);
+        s->setLayout(layout.value(slice));
+        s->updateData(slice);
+        s->updateGeometry();
+        s->update();
     }
 }
 
-void PieChartItem::setLayout(PieSliceLayout &layout)
+void PieChartItem::setLayout(QPieSlice *slice, const PieSliceLayout &layout)
 {
     // find slice
-    PieSlice *slice = m_slices.value(layout.m_data);
-    Q_ASSERT(slice);
-    slice->setLayout(layout);
-    if (m_series->m_slices.contains(layout.m_data)) // Slice has been deleted if not found. Animations ongoing...
-        slice->updateData(layout.m_data);
-    slice->updateGeometry();
-    slice->update();
+    PieSlice *s = m_slices.value(slice);
+    Q_ASSERT(s);
+    s->setLayout(layout);
+    if (m_series->m_slices.contains(slice)) // Slice has been deleted if not found. Animations ongoing...
+        s->updateData(slice);
+    s->updateGeometry();
+    s->update();
 }
 
 void PieChartItem::destroySlice(QPieSlice *slice)

@@ -224,7 +224,7 @@ void ChartAnimator::updateLayout(XYChartItem* item,  QVector<QPointF>& oldPoints
     QTimer::singleShot(0,animation,SLOT(start()));
 }
 
-void ChartAnimator::addAnimation(PieChartItem* item, QPieSlice *slice, PieSliceLayout &layout)
+void ChartAnimator::addAnimation(PieChartItem* item, QPieSlice *slice, const PieSliceLayout &layout)
 {
     PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
     Q_ASSERT(animation);
@@ -238,18 +238,18 @@ void ChartAnimator::removeAnimation(PieChartItem* item, QPieSlice *slice)
     animation->removeSlice(slice);
 }
 
-void ChartAnimator::updateLayout(PieChartItem* item, QVector<PieSliceLayout> &layout)
+void ChartAnimator::updateLayout(PieChartItem* item, const PieLayout &layout)
 {
     PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
     Q_ASSERT(animation);
     animation->updateValues(layout);
 }
 
-void ChartAnimator::updateLayout(PieChartItem* item, PieSliceLayout &layout)
+void ChartAnimator::updateLayout(PieChartItem* item, QPieSlice *slice, const PieSliceLayout &layout)
 {
     PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
     Q_ASSERT(animation);
-    animation->updateValue(layout);
+    animation->updateValue(slice, layout);
 }
 
 void ChartAnimator::setState(State state,const QPointF& point)

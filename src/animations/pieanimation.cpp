@@ -16,15 +16,15 @@ PieAnimation::~PieAnimation()
 {
 }
 
-void PieAnimation::updateValues(QVector<PieSliceLayout>& newValues)
+void PieAnimation::updateValues(const PieLayout &newValues)
 {
-    foreach (PieSliceLayout endLayout, newValues)
-        updateValue(endLayout);
+    foreach (QPieSlice* s, newValues.keys())
+        updateValue(s, newValues.value(s));
 }
 
-void PieAnimation::updateValue(PieSliceLayout& endLayout)
+void PieAnimation::updateValue(QPieSlice *slice, const PieSliceLayout &endLayout)
 {
-    PieSliceAnimation *animation = m_animations.value(endLayout.m_data);
+    PieSliceAnimation *animation = m_animations.value(slice);
     Q_ASSERT(animation);
     animation->stop();
 
@@ -35,9 +35,9 @@ void PieAnimation::updateValue(PieSliceLayout& endLayout)
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-void PieAnimation::addSlice(QPieSlice *slice, PieSliceLayout endLayout)
+void PieAnimation::addSlice(QPieSlice *slice, const PieSliceLayout &endLayout)
 {
-    PieSliceAnimation *animation = new PieSliceAnimation(m_item);
+    PieSliceAnimation *animation = new PieSliceAnimation(m_item, slice);
     m_animations.insert(slice, animation);
 
     PieSliceLayout startLayout = endLayout;

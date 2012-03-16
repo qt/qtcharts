@@ -7,14 +7,15 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class PieChartItem;
+class QPieSlice;
 
 class PieSliceAnimation : public QVariantAnimation
 {
 public:
-    PieSliceAnimation(PieChartItem *item);
+    PieSliceAnimation(PieChartItem *item, QPieSlice *slice);
     ~PieSliceAnimation();
-    void setValue(PieSliceLayout& startValue, PieSliceLayout& endValue);
-    void updateValue(PieSliceLayout& endValue);
+    void setValue(const PieSliceLayout &startValue, const PieSliceLayout &endValue);
+    void updateValue(const PieSliceLayout &endValue);
     PieSliceLayout currentSliceValue();
 
 protected:
@@ -23,6 +24,7 @@ protected:
 
 private:
     PieChartItem *m_item;
+    QPieSlice *m_slice;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

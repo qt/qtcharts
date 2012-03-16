@@ -16,9 +16,9 @@ class PieAnimation : public ChartAnimation
 public:
     PieAnimation(PieChartItem *item);
     ~PieAnimation();
-    void updateValues(QVector<PieSliceLayout>& newValues);
-    void updateValue(PieSliceLayout& newValue);
-    void addSlice(QPieSlice *slice, PieSliceLayout endLayout);
+    void updateValues(const PieLayout &newValues);
+    void updateValue(QPieSlice *slice, const PieSliceLayout &newValue);
+    void addSlice(QPieSlice *slice, const PieSliceLayout &endLayout);
     void removeSlice(QPieSlice *slice);
 
 public: // from QVariantAnimation

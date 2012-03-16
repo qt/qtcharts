@@ -19,7 +19,6 @@ class QPieSlice;
 class PieSliceLayout
 {
 public:
-    QPieSlice* m_data; // TODO: get rid of this
     QPointF m_center;
     qreal m_radius;
     qreal m_startAngle;

@@ -18,9 +18,10 @@ QPointF linearPos(QPointF start, QPointF end, qreal pos)
     return QPointF(x, y);
 }
 
-PieSliceAnimation::PieSliceAnimation(PieChartItem *item)
+PieSliceAnimation::PieSliceAnimation(PieChartItem *item, QPieSlice *slice)
     :QVariantAnimation(item),
-    m_item(item)
+    m_item(item),
+    m_slice(slice)
 {
 }
 
@@ -28,7 +29,7 @@ PieSliceAnimation::~PieSliceAnimation()
 {
 }
 
-void PieSliceAnimation::setValue(PieSliceLayout& startValue, PieSliceLayout& endValue)
+void PieSliceAnimation::setValue(const PieSliceLayout &startValue, const PieSliceLayout &endValue)
 {
     if (state() != QAbstractAnimation::Stopped)
         stop();
@@ -37,12 +38,10 @@ void PieSliceAnimation::setValue(PieSliceLayout& startValue, PieSliceLayout& end
     setKeyValueAt(1.0, qVariantFromValue(endValue));
 }
 
-void PieSliceAnimation::updateValue(PieSliceLayout& endValue)
+void PieSliceAnimation::updateValue(const PieSliceLayout &endValue)
 {
     if (state() != QAbstractAnimation::Stopped)
         stop();
-
-    //qDebug() << "PieSliceAnimation::updateValue()" << endValue.m_data->label() << currentSliceValue().m_startAngle << endValue.m_startAngle;
 
     setKeyValueAt(0.0, qVariantFromValue(currentSliceValue()));
     setKeyValueAt(1.0, qVariantFromValue(endValue));
@@ -72,7 +71,7 @@ void PieSliceAnimation::updateCurrentValue(const QVariant &value)
 {
     PieSliceLayout layout = qVariantValue<PieSliceLayout>(value);
     if (state() != QAbstractAnimation::Stopped) //workaround
-        m_item->setLayout(layout);
+        m_item->setLayout(m_slice, layout);
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

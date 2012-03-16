@@ -9,6 +9,8 @@ class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSlice;
 
+typedef QHash<QPieSlice*, PieSliceLayout> PieLayout;
+
 class PieChartItem : public QObject, public ChartItem
 {
     Q_OBJECT
@@ -34,11 +36,11 @@ public Q_SLOTS:
 public:
     void calculatePieLayout();
     PieSliceLayout calculateSliceLayout(QPieSlice *slice);
-    QVector<PieSliceLayout> calculateLayout();
-    void applyLayout(QVector<PieSliceLayout> &layout);
-    void updateLayout(PieSliceLayout &layout);
-    void setLayout(QVector<PieSliceLayout> &layout);
-    void setLayout(PieSliceLayout &layout);
+    PieLayout calculateLayout();
+    void applyLayout(const PieLayout &layout);
+    void updateLayout(QPieSlice *slice, const PieSliceLayout &layout);
+    void setLayout(const PieLayout &layout);
+    void setLayout(QPieSlice *slice, const PieSliceLayout &layout);
     void destroySlice(QPieSlice *slice);
 
 private:
