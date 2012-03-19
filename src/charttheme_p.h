@@ -42,18 +42,18 @@ protected:
 public:
     static ChartTheme* createTheme(QChart::ChartTheme theme);
     QChart::ChartTheme id() const {return m_id;}
-    void decorate(QChart* chart);
-    void decorate(QLegend* legend);
+    void decorate(QChart* chart,bool force = true);
+    void decorate(QLegend* legend,bool force = true);
     //void decorate(ChartItem* item, QSeries* series,int index);
-    void decorate(QBarSeries* series, int index);
-    void decorate(QStackedBarSeries* series, int index);
-    void decorate(QPercentBarSeries* series, int index);
-    void decorate(QLineSeries* series, int index);
-    void decorate(QAreaSeries* series, int index);
-    void decorate(QScatterSeries* series, int index);
-    void decorate(QPieSeries* series, int index);
-    void decorate(QSplineSeries* series, int index);
-    void decorate(QChartAxis* axis, bool axisX);
+    void decorate(QBarSeries* series, int index,bool force = true);
+    void decorate(QStackedBarSeries* series, int index,bool force = true);
+    void decorate(QPercentBarSeries* series, int index,bool force = true);
+    void decorate(QLineSeries* series, int index,bool force = true);
+    void decorate(QAreaSeries* series, int index,bool force = true);
+    void decorate(QScatterSeries* series, int index,bool force = true);
+    void decorate(QPieSeries* series, int index,bool force = true);
+    void decorate(QSplineSeries* series, int index,bool force = true);
+    void decorate(QChartAxis* axis, bool axisX,bool force = true);
 
 public: // utils
     void generateSeriesGradients();

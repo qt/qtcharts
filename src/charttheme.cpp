@@ -75,82 +75,110 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
     }
 }
 
-void ChartTheme::decorate(QChart* chart)
-{
-    if (m_backgroundShades == BackgroundShadesNone) {
-        chart->setChartBackgroundBrush(m_chartBackgroundGradient);
-    } else {
-        chart->setChartBackgroundBrush(Qt::NoBrush);
-    }
-    chart->setChartTitleFont(m_masterFont);
-    chart->setChartTitleBrush(m_titleBrush);
-}
-
-void ChartTheme::decorate(QLegend* legend)
-{
-    legend->setBackgroundBrush(m_chartBackgroundGradient);
-}
-
-void ChartTheme::decorate(QAreaSeries* series, int index)
+void ChartTheme::decorate(QChart* chart,bool force)
 {
     QPen pen;
     QBrush brush;
 
-    if (pen == series->pen()){
+    if(brush == chart->backgroundBrush() || force)
+    {
+        if (m_backgroundShades == BackgroundShadesNone) {
+            chart->setBackgroundBrush(m_chartBackgroundGradient);
+        }
+        else {
+            chart->setBackgroundBrush(Qt::NoBrush);
+        }
+    }
+    chart->setTitleFont(m_masterFont);
+    chart->setTitleBrush(m_titleBrush);
+}
+
+void ChartTheme::decorate(QLegend* legend,bool force)
+{
+    QPen pen;
+    QBrush brush;
+
+    if (pen == legend->pen() || force){
+        //TODO:: legend->setPen();
+    }
+
+
+    if (brush == legend->brush() || force) {
+        legend->setBrush(m_chartBackgroundGradient);
+    }
+}
+
+void ChartTheme::decorate(QAreaSeries* series, int index,bool force)
+{
+    QPen pen;
+    QBrush brush;
+
+    if (pen == series->pen() || force){
         pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
         pen.setWidthF(2);
         series->setPen(pen);
     }
 
-    if (brush == series->brush()) {
+    if (brush == series->brush() || force) {
        QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
        series->setBrush(brush);
     }
 }
 
 
-void ChartTheme::decorate(QLineSeries* series,int index)
+void ChartTheme::decorate(QLineSeries* series,int index,bool force)
 {
     QPen pen;
-    if(pen == series->pen()){
+    if(pen == series->pen() || force ){
         pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
         pen.setWidthF(2);
         series->setPen(pen);
     }
 }
 
-void ChartTheme::decorate(QBarSeries* series,int index)
+void ChartTheme::decorate(QBarSeries* series,int index,bool force)
 {
+    QBrush brush;
     QList<QBarSet*> sets = series->barSets();
+
     for (int i=0; i<sets.count(); i++) {
         qreal pos = 0.5;
         if (sets.count() > 1)
             pos = (qreal) i / (qreal) (sets.count() - 1);
+
+        if(brush == sets.at(i)->brush() || force ){
         QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
         sets.at(i)->setBrush(QBrush(c));
-
+        }
         // Pick label color as far as possible from bar color (within gradient).
         // 0.3 is magic number that was picked as value that gave enough contrast with icy theme gradient :)
         // TODO: better picking of label color?
+        QColor c;
+
         if (pos < 0.3) {
             c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1);
         } else {
             c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0);
         }
         sets.at(i)->setFloatingValuePen(QPen(c));
+
     }
 }
 
-void ChartTheme::decorate(QStackedBarSeries* series,int index)
+void ChartTheme::decorate(QStackedBarSeries* series,int index,bool force)
 {
+    QBrush brush;
     QList<QBarSet*> sets = series->barSets();
+
     for (int i=0; i<sets.count(); i++) {
         qreal pos = 0.5;
         if (sets.count() > 1)
             pos = (qreal) i / (qreal) (sets.count() - 1);
+        if(brush == sets.at(i)->brush() || force){
         QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
         sets.at(i)->setBrush(QBrush(c));
-
+        }
+        QColor c;
         if (pos < 0.3) {
             c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1);
         } else {
@@ -160,16 +188,21 @@ void ChartTheme::decorate(QStackedBarSeries* series,int index)
     }
 }
 
-void ChartTheme::decorate(QPercentBarSeries* series,int index)
+void ChartTheme::decorate(QPercentBarSeries* series,int index,bool force)
 {
+    QBrush brush;
     QList<QBarSet*> sets = series->barSets();
+
     for (int i=0; i<sets.count(); i++) {
         qreal pos = 0.5;
         if (sets.count() > 1)
             pos = (qreal) i / (qreal) (sets.count() - 1);
+
+        if(brush == sets.at(i)->brush() || force){
         QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
         sets.at(i)->setBrush(QBrush(c));
-
+        }
+        QColor c;
         if (pos < 0.3) {
             c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1);
         } else {
@@ -179,64 +212,99 @@ void ChartTheme::decorate(QPercentBarSeries* series,int index)
     }
 }
 
-void ChartTheme::decorate(QScatterSeries* series, int index)
+void ChartTheme::decorate(QScatterSeries* series, int index,bool force)
 {
 
     QPen pen;
     QBrush brush;
 
-    if (pen == series->pen()) {
+    if (pen == series->pen() || force) {
         pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
         pen.setWidthF(2);
         series->setPen(pen);
     }
 
-    if (brush == series->brush()) {
+    if (brush == series->brush() || force) {
         QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
         series->setBrush(brush);
     }
 }
 
-void ChartTheme::decorate(QPieSeries* series, int index)
+void ChartTheme::decorate(QPieSeries* series, int index, bool force)
 {
     // Get color for a slice from a gradient linearly, beginning from the start of the gradient
+
+    QPen pen;
+    QBrush brush;
+
     for (int i(0); i < series->slices().count(); i++) {
         qreal pos = (qreal) i / (qreal) series->count();
+        if( pen == series->slices().at(i)->slicePen() || force){
         QColor penColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.1);
         series->slices().at(i)->setSlicePen(penColor);
+        }
+        if( brush == series->slices().at(i)->sliceBrush() || force){
         QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
         series->slices().at(i)->setSliceBrush(brushColor);
+        }
     }
 }
 
-void ChartTheme::decorate(QSplineSeries* series, int index)
+void ChartTheme::decorate(QSplineSeries* series, int index, bool force)
 {
     QPen pen;
-    if(pen == series->pen()){
+    if(pen == series->pen() || force){
         pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
         pen.setWidthF(2);
         series->setPen(pen);
     }
 }
 
-void ChartTheme::decorate(QChartAxis* axis,bool axisX)
+void ChartTheme::decorate(QChartAxis* axis,bool axisX, bool force)
 {
+    QPen pen;
+    QBrush brush;
+    QFont font;
+
     if (axis->isAxisVisible()) {
-        axis->setLabelsBrush(m_axisLabelBrush);
-        axis->setLabelsPen(Qt::NoPen); // NoPen for performance reasons
-        if (m_backgroundShades == BackgroundShadesBoth
-                || (m_backgroundShades == BackgroundShadesVertical && axisX)
-                || (m_backgroundShades == BackgroundShadesHorizontal && !axisX)) {
-            axis->setShadesPen(m_backgroundShadesPen);
-            axis->setShadesBrush(m_backgroundShadesBrush);
-        } else {
-            // The shades not supposed to be shown for this axis, clear possible brush and pen
-            axis->setShadesPen(Qt::NoPen);
-            axis->setShadesBrush(Qt::NoBrush);
+
+        if(brush == axis->labelsBrush() || force){
+            axis->setLabelsBrush(m_axisLabelBrush);
         }
-        axis->setAxisPen(m_axisLinePen);
-        axis->setGridLinePen(m_gridLinePen);
-        axis->setLabelsFont(m_masterFont);
+        if(pen == axis->labelsPen() || force){
+            axis->setLabelsPen(Qt::NoPen); // NoPen for performance reasons
+        }
+
+
+       if (axis->shadesVisible() || force) {
+
+         if(brush == axis->shadesBrush() || force){
+             axis->setShadesBrush(m_backgroundShadesBrush);
+         }
+
+         if(pen == axis->shadesPen() || force){
+             axis->setShadesPen(m_backgroundShadesPen);
+         }
+
+         if(force && (m_backgroundShades == BackgroundShadesBoth
+                         || (m_backgroundShades == BackgroundShadesVertical && axisX)
+                         || (m_backgroundShades == BackgroundShadesHorizontal && !axisX))){
+             axis->setShadesVisible(true);
+
+         }
+       }
+
+        if(pen == axis->axisPen() || force){
+            axis->setAxisPen(m_axisLinePen);
+        }
+
+        if(pen == axis->gridLinePen() || force){
+            axis->setGridLinePen(m_gridLinePen);
+        }
+
+        if(font == axis->labelsFont() || force){
+            axis->setLabelsFont(m_masterFont);
+        }
     }
 }
 

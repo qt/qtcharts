@@ -30,8 +30,11 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     QRectF boundingRect() const;
 
-    void setBackgroundBrush(const QBrush& brush);
-    QBrush backgroundBrush() const;
+    void setBrush(const QBrush& brush);
+    QBrush brush() const;
+
+    void setPen(const QPen& pen);
+    QPen pen() const;
 
     void setPreferredLayout(QLegend::PreferredLayout preferred);
 
@@ -74,7 +77,8 @@ private:
 //    QList<QSeries*> mSeriesList;
     QList<LegendMarker*> mMarkers;
 
-    QBrush mBackgroundBrush;
+    QBrush m_brush;
+    QPen m_pen;
     QLegend::PreferredLayout mPreferredLayout;
 };
 

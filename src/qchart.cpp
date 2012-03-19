@@ -104,27 +104,39 @@ void QChart::removeAllSeries()
 /*!
     Sets the \a brush that is used for painting the background of the chart area.
 */
-void QChart::setChartBackgroundBrush(const QBrush& brush)
+void QChart::setBackgroundBrush(const QBrush& brush)
 {
     createChartBackgroundItem();
     m_backgroundItem->setBrush(brush);
     m_backgroundItem->update();
 }
 
+QBrush QChart::backgroundBrush() const
+{
+    if(!m_backgroundItem) return QBrush();
+    return m_backgroundItem->brush();
+}
+
 /*!
     Sets the \a pen that is used for painting the background of the chart area.
 */
-void QChart::setChartBackgroundPen(const QPen& pen)
+void QChart::setBackgroundPen(const QPen& pen)
 {
     createChartBackgroundItem();
     m_backgroundItem->setPen(pen);
     m_backgroundItem->update();
 }
 
+QPen QChart::backgroundPen() const
+{
+    if(!m_backgroundItem) return QPen();
+    return m_backgroundItem->pen();
+}
+
 /*!
     Sets the chart \a title. The description text that is drawn above the chart.
 */
-void QChart::setChartTitle(const QString& title)
+void QChart::setTitle(const QString& title)
 {
     createChartTitleItem();
     m_titleItem->setText(title);
@@ -134,7 +146,7 @@ void QChart::setChartTitle(const QString& title)
 /*!
     Returns the chart title. The description text that is drawn above the chart.
 */
-QString QChart::chartTitle() const
+QString QChart::title() const
 {
     if(m_titleItem)
     return m_titleItem->text();
@@ -145,7 +157,7 @@ QString QChart::chartTitle() const
 /*!
     Sets the \a font that is used for rendering the description text that is rendered above the chart.
 */
-void QChart::setChartTitleFont(const QFont& font)
+void QChart::setTitleFont(const QFont& font)
 {
     createChartTitleItem();
     m_titleItem->setFont(font);
@@ -155,7 +167,7 @@ void QChart::setChartTitleFont(const QFont& font)
 /*!
     Sets the \a brush used for rendering the title text.
 */
-void QChart::setChartTitleBrush(const QBrush &brush)
+void QChart::setTitleBrush(const QBrush &brush)
 {
     createChartTitleItem();
     m_titleItem->setBrush(brush);
@@ -165,9 +177,9 @@ void QChart::setChartTitleBrush(const QBrush &brush)
 /*!
     Returns the brush used for rendering the title text.
 */
-QBrush QChart::chartTitleBrush()
+QBrush QChart::titleBrush() const
 {
-    createChartTitleItem();
+    if(!m_titleItem) return QBrush();
     return m_titleItem->brush();
 }
 
@@ -364,6 +376,19 @@ void QChart::setBackgroundDiameter(int diameter)
     m_backgroundItem->setDimeter(diameter);
     m_backgroundItem->update();
 }
+
+void QChart::setBackgroundVisible(bool visible)
+{
+    createChartBackgroundItem();
+    m_backgroundItem->setVisible(visible);
+}
+
+bool QChart::isBackgroundVisible() const
+{
+    if(!m_backgroundItem) return false;
+    return m_backgroundItem->isVisible();
+}
+
 
 #include "moc_qchart.cpp"
 

@@ -129,7 +129,7 @@ void QChartView::zoomOut()
 */
 void QChartView::setChartTitle(const QString& title)
 {
-    m_chart->setChartTitle(title);
+    m_chart->setTitle(title);
 }
 
 /*!
@@ -137,7 +137,7 @@ void QChartView::setChartTitle(const QString& title)
 */
 QString QChartView::chartTitle() const
 {
-    return m_chart->chartTitle();
+    return m_chart->title();
 }
 
 /*!
@@ -145,7 +145,7 @@ QString QChartView::chartTitle() const
 */
 void QChartView::setChartTitleFont(const QFont& font)
 {
-    m_chart->setChartTitleFont(font);
+    m_chart->setTitleFont(font);
 }
 
 /*!
@@ -153,7 +153,7 @@ void QChartView::setChartTitleFont(const QFont& font)
 */
 void QChartView::setChartTitleBrush(const QBrush &brush)
 {
-    m_chart->setChartTitleBrush(brush);
+    m_chart->setTitleBrush(brush);
 }
 
 /*!
@@ -161,7 +161,7 @@ void QChartView::setChartTitleBrush(const QBrush &brush)
 */
 QBrush QChartView::chartTitleBrush()
 {
-    return m_chart->chartTitleBrush();
+    return m_chart->titleBrush();
 }
 
 /*!
@@ -169,7 +169,7 @@ QBrush QChartView::chartTitleBrush()
 */
 void QChartView::setChartBackgroundBrush(const QBrush& brush)
 {
-    m_chart->setChartBackgroundBrush(brush);
+    m_chart->setBackgroundBrush(brush);
 }
 
 /*!
@@ -177,7 +177,7 @@ void QChartView::setChartBackgroundBrush(const QBrush& brush)
 */
 void QChartView::setChartBackgroundPen(const QPen& pen)
 {
-    m_chart->setChartBackgroundPen(pen);
+    m_chart->setBackgroundPen(pen);
 }
 
 /*!

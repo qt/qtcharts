@@ -27,7 +27,7 @@ QLegend::QLegend(QGraphicsItem *parent)
     ,mSize(0,0)
     ,mMinimumSize(50,20)                // TODO: magic numbers
     ,mMaximumSize(150,100)
-    ,mBackgroundBrush(Qt::darkGray)     // TODO: from theme?
+    ,m_brush(Qt::darkGray)     // TODO: from theme?
     ,mPreferredLayout(QLegend::PreferredLayoutVertical)
 {
 //    setVisible(false);
@@ -40,7 +40,8 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     Q_UNUSED(widget)
 
     painter->setOpacity(0.5);
-    painter->setBrush(mBackgroundBrush);
+    painter->setPen(m_pen);
+    painter->setBrush(m_brush);
     painter->drawRect(boundingRect());
 }
 
@@ -49,14 +50,30 @@ QRectF QLegend::boundingRect() const
     return QRectF(mPos,mSize);
 }
 
-void QLegend::setBackgroundBrush(const QBrush& brush)
+void QLegend::setBrush(const QBrush& brush)
 {
-    mBackgroundBrush = brush;
+    if(m_brush!=brush){
+        m_brush = brush;
+        update();
+    }
 }
 
-QBrush QLegend::backgroundBrush() const
+QBrush QLegend::brush() const
 {
-    return mBackgroundBrush;
+    return m_brush;
+}
+
+void QLegend::setPen(const QPen& pen)
+{
+    if(m_pen!=pen){
+        m_pen = pen;
+        update();
+    }
+}
+
+QPen QLegend::pen() const
+{
+    return m_pen;
 }
 
 void QLegend::setPreferredLayout(QLegend::PreferredLayout preferred)

@@ -58,13 +58,19 @@ public:
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme() const;
 
-    void setChartTitle(const QString& title);
-    QString chartTitle() const;
-    void setChartTitleFont(const QFont& font);
-    void setChartTitleBrush(const QBrush &brush);
-    QBrush chartTitleBrush();
-    void setChartBackgroundBrush(const QBrush& brush);
-    void setChartBackgroundPen(const QPen& pen);
+    void setTitle(const QString& title);
+    QString title() const;
+    void setTitleFont(const QFont& font);
+    QFont titleFont() const;
+    void setTitleBrush(const QBrush &brush);
+    QBrush titleBrush() const;
+    void setBackgroundBrush(const QBrush& brush);
+    QBrush backgroundBrush() const;
+    void setBackgroundPen(const QPen& pen);
+    QPen backgroundPen() const;
+
+    void setBackgroundVisible(bool visible);
+    bool isBackgroundVisible() const;
 
     void setAnimationOptions(AnimationOptions options);
     AnimationOptions animationOptions() const;

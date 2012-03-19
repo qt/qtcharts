@@ -41,7 +41,7 @@ public:
     QRectF geometry() const;
     ChartAnimator* animator() const {return m_animator;};
 
-    void setChartTheme(QChart::ChartTheme theme);
+    void setChartTheme(QChart::ChartTheme theme,bool force = true);
     QChart::ChartTheme chartTheme();
 
     void setAnimationOptions(QChart::AnimationOptions options);
@@ -77,6 +77,7 @@ private:
     QVector<QRectF> m_zoomStack;
     QRectF m_rect;
     QChart::AnimationOptions m_options;
+    bool m_themeForce;
 
 };
 

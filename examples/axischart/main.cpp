@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
     QChartAxis* axisY = chartView->axisY();
     axisY->setLabelsAngle(45);
     axisY->setShadesBrush(Qt::yellow);
+    axisY->setShadesVisible(true);
     axisY->setGridLineVisible(false);
 
     QChartAxisCategories* categoriesY = axisY->categories();
