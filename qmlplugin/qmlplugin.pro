@@ -1,3 +1,8 @@
+TEMPLATE = lib
+TARGET = qtcommercialchartqml
+CONFIG += qt plugin
+QT += declarative
+
 !include( ../common.pri ) {
     error( "Couldn't find the common.pri file!" )
 }
@@ -5,12 +10,7 @@
     error( "Couldn't find the integrated.pri file !")
 }
 
-TEMPLATE = lib
-TARGET = qtcommercialchartqml
 DESTDIR = $$CHART_BUILD_PLUGIN_DIR
-CONFIG += qt plugin
-QT += declarative
-
 contains(QT_MAJOR_VERSION, 5) {
     # TODO: QtQuick2 not supported by the implementation currently
     DEFINES += QTQUICK2
@@ -34,8 +34,6 @@ HEADERS += \
     scatterelement.h \
     declarativepieseries.h \
     declarativelineseries.h
-
-QMAKE_POST_LINK = $$QMAKE_COPY qmldir $$CHART_BUILD_PLUGIN_DIR
 
 TARGETPATH = QtCommercial/Chart
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH

@@ -37,13 +37,26 @@ integrated_build:{
     }
 
     mac: {
+        CHARTS_LIB_NAME = libQtCommercialChart.1.dylib
+        CONFIG(debug, debug|release) {
+            CHARTS_LIB_NAME = libQtCommercialChartd.1.dylib
+        }
+
         # This is a hack to make binaries to use the internal version of the QtCommercial Charts library on OSX
         exists($$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET) {
-            QMAKE_POST_LINK+=install_name_tool -change "libQtCommercialChartd.1.dylib" $$CHART_BUILD_LIB_DIR"/libQtCommercialChartd.dylib" $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
+            QMAKE_POST_LINK += install_name_tool -change $$CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$CHARTS_LIB_NAME $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
             #message($$QMAKE_POST_LINK)
+        }
+
+        # Hack to make qml plugins available as internal build versions and to make the plugins use
+        # the internal version of the QtCommercial Charts library on OSX
+        exists($$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib") {
+            QMAKE_POST_LINK += "$$QMAKE_COPY qmldir $$CHART_BUILD_PLUGIN_DIR &"
+            QMAKE_POST_LINK += "install_name_tool -change $$CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$CHARTS_LIB_NAME $$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib""
+#            message($$QMAKE_POST_LINK)
         }
     }
 
 } else {
-    CONFIG+=qtcommercialchart
+    CONFIG += qtcommercialchart
 }
