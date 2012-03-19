@@ -8,7 +8,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarPresenter::BarPresenter(QBarSeries *series, QChart *parent) :
     BarPresenterBase(series, parent)
-{
+{    
+    connect(series, SIGNAL(updatedBars()), this, SLOT(layoutChanged()));
 }
 
 void BarPresenter::layoutChanged()
@@ -78,6 +79,7 @@ void BarPresenter::layoutChanged()
             xPos += mBarWidth;
         }
     }
+    update();
 }
 
 #include "moc_barpresenter_p.cpp"

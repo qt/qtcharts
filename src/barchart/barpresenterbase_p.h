@@ -30,6 +30,7 @@ public:
 
     // TODO: Consider the domain for layoutChanged. May be use case, may not be. If it is, then the derived classes need to implement it
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
+private slots:
     virtual void layoutChanged() = 0;   // layout has changed -> need to recalculate bar sizes
 
 protected:

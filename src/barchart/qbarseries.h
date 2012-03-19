@@ -49,6 +49,9 @@ signals:
     void clicked(QBarSet* barset, QString category);        // Up to user of api, what to do with these signals
     void rightClicked(QBarSet* barset, QString category);
 
+    //
+    void updatedBars();
+
     // TODO: internal signals, these to private implementation.
     // TODO: TO PIMPL --->
     void showToolTip(QPoint pos, QString tip);
@@ -72,7 +75,7 @@ private Q_SLOTS:
 protected:
     BarChartModel* mModel;
 
-    QAbstractItemModel* m_model;
+//    QAbstractItemModel* m_model;
     int m_mapCategories;
     int m_mapBarBottom;
     int m_mapBarTop;

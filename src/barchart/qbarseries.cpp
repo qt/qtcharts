@@ -54,7 +54,7 @@ void QBarSeries::addBarSet(QBarSet *set)
     mModel->addBarSet(set);
     connect(set,SIGNAL(clicked(QString)),this,SLOT(barsetClicked(QString)));
     connect(set,SIGNAL(rightClicked(QString)),this,SLOT(barsetRightClicked(QString)));
-    connect(set, SIGNAL(changed()), this, SLOT(barsetChanged()));
+    connect(set, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
 }
 
 /*!
@@ -323,7 +323,7 @@ void QBarSeries::modelDataRemoved(QModelIndex /*parent*/, int /*start*/, int /*e
 
 void QBarSeries::barsetChanged()
 {
-//    mModel->
+    emit updatedBars();
 }
 
 #include "moc_qbarseries.cpp"

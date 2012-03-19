@@ -194,7 +194,7 @@ void TableWidget::updateChartType()
         // pie 1
         QPieSeries* pieSeries = new QPieSeries;
         pieSeries->setModel(m_model);
-        pieSeries->setModelMapping(0,0, Qt::Horizontal);
+        pieSeries->setModelMapping(0,0, Qt::Vertical);
         pieSeries->setLabelsVisible(true);
         pieSeries->setPieSize(0.4);
         pieSeries->setPiePosition(0.2, 0.35);
@@ -203,7 +203,7 @@ void TableWidget::updateChartType()
         // pie 2
         pieSeries = new QPieSeries;
         pieSeries->setModel(m_model);
-        pieSeries->setModelMapping(1,1, Qt::Horizontal);
+        pieSeries->setModelMapping(1,1, Qt::Vertical);
         pieSeries->setLabelsVisible(true);
         pieSeries->setPieSize(0.4);
         pieSeries->setPiePosition(0.8, 0.35);
@@ -212,7 +212,7 @@ void TableWidget::updateChartType()
         // pie 3
         pieSeries = new QPieSeries;
         pieSeries->setModel(m_model);
-        pieSeries->setModelMapping(2,2, Qt::Horizontal);
+        pieSeries->setModelMapping(2,2, Qt::Vertical);
         pieSeries->setLabelsVisible(true);
         pieSeries->setPieSize(0.4);
         pieSeries->setPiePosition(0.5, 0.65);

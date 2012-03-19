@@ -82,6 +82,7 @@ QString QBarSet::name()
 QBarSet& QBarSet::operator << (const qreal &value)
 {
     mValues.append(value);
+    emit structureChanged();
     return *this;
 }
 
@@ -107,7 +108,7 @@ qreal QBarSet::valueAt(int index)
 void QBarSet::setValue(int index, qreal value)
 {
     mValues.replace(index,value);
-    emit changed();
+    emit valueChanged();
 }
 
 /*!
@@ -128,7 +129,7 @@ qreal QBarSet::total()
 void QBarSet::setPen(const QPen pen)
 {
     mPen = pen;
-    emit changed();
+    emit valueChanged();
 }
 
 /*!
@@ -145,7 +146,7 @@ QPen QBarSet::pen() const
 void QBarSet::setBrush(const QBrush brush)
 {
     mBrush = brush;
-    emit changed();
+    emit valueChanged();
 }
 
 /*!

@@ -43,7 +43,8 @@ Q_SIGNALS:
 
     // TODO: Expose this to user or not?
     // TODO: TO PIMPL --->
-    void changed();
+    void structureChanged();
+    void valueChanged();
     void hoverEnter(QPoint pos);
     void hoverLeave();
     void showToolTip(QPoint pos, QString tip);  // Private signal
