@@ -4,6 +4,7 @@
 #include "scatterelement.h"
 #include "declarativescatterseries.h"
 #include "declarativelineseries.h"
+#include "declarativebarseries.h"
 #include "declarativepieseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -19,6 +20,7 @@ public:
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "Chart");
         qmlRegisterType<DeclarativeScatterSeries>(uri, 1, 0, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries>(uri, 1, 0, "LineSeries");
+        qmlRegisterType<DeclarativeBarSeries>(uri, 1, 0, "BarSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
         qmlRegisterType<QPieSlice>(uri, 1, 0, "ChartPieElement");
         // TODO: rename ScatterElement class to something like "PointElement"

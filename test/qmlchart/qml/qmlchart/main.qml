@@ -20,16 +20,12 @@ Rectangle {
 //    }
 
     Component.onCompleted: {
-//        console.log("Component.onCompleted: " + ChartPointElement.x);
-//        console.log("Component.onCompleted: " + ChartPointElement.y);
-//        console.log("Component.onCompleted: " + ChartPointElement.dataX);
-//        console.log("Component.onCompleted: " + ChartPointElement.dataY);
-        //console.log("Component.onCompleted: " + chartModel.get(0).x);
-        //console.log("Component.onCompleted: " + chartModel.ChartPointElements);
-//        console.log("Component.onCompleted: " + elementt.dataX);
 //        console.log("Component.onCompleted: " + chartModel.get(0).dataX);
-        //ChartPointElement { x: 0.3; y: 0.3 }
     }
+
+//    ChartModel {
+//        id: dynamicData
+//    }
 
     Chart {
         id: chart1
@@ -37,27 +33,22 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         height: parent.height / 2
-        theme: Chart.ThemeVanilla
+        theme: Chart.ThemeBlueCerulean
 
-        PieSeries {
-            data: [
-                // TODO: "NnElement" matches the naming convention of for example ListModel...
-                // But PieSlice would match the naming of QtCommercial Charts C++ api
-                ChartPieElement { label: "Volkswagen"; value: 13.5 },
-                ChartPieElement { label: "Toyota"; value: 10.9 },
-                ChartPieElement { label: "Ford"; value: 8.6 },
-                ChartPieElement { label: "Skoda"; value: 8.2 },
-                ChartPieElement { label: "Volvo"; value: 6.8 },
-                ChartPieElement { label: "Others"; value: 52.0 }
-            ]
+        BarSeries {
         }
 
-//        Series {
-//            seriesType: Series.SeriesTypeLine
-//        }
-        // TODO:
-//        Series {
-//            seriesType: Series.SeriesTypeBar
+//        PieSeries {
+//            data: [
+//                // TODO: "NnElement" matches the naming convention of for example ListModel...
+//                // But PieSlice would match the naming of QtCommercial Charts C++ api
+//                ChartPieElement { label: "Volkswagen"; value: 13.5 },
+//                ChartPieElement { label: "Toyota"; value: 10.9 },
+//                ChartPieElement { label: "Ford"; value: 8.6 },
+//                ChartPieElement { label: "Skoda"; value: 8.2 },
+//                ChartPieElement { label: "Volvo"; value: 6.8 },
+//                ChartPieElement { label: "Others"; value: 52.0 }
+//            ]
 //        }
     }
 
@@ -101,7 +92,6 @@ Rectangle {
             ]
         }
         ScatterSeries {
-            id: scatter4
             data: [
                 ChartPointElement { x: 2.6; y: 2.6 },
                 ChartPointElement { x: 2.6; y: 2.7 },

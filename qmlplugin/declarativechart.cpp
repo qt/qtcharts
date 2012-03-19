@@ -1,4 +1,5 @@
 #include "declarativechart.h"
+#include <QPainter>s
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -16,11 +17,22 @@ DeclarativeChart::ChartTheme DeclarativeChart::theme()
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
+    Q_UNUSED(oldGeometry)
+
     if (newGeometry.isValid()) {
         if (newGeometry.width() > 0 && newGeometry.height() > 0) {
             m_chart->resize(newGeometry.width(), newGeometry.height());
         }
     }
+}
+
+void DeclarativeChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+
+    // TODO: optimized?
+    painter->setRenderHint(QPainter::Antialiasing, true);
 }
 
 #include "moc_declarativechart.cpp"
