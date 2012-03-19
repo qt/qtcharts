@@ -278,21 +278,6 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
     if (m_mapOrientation == Qt::Vertical)
     {
         QStringList categories;
-        for (int k = 0; k < m_model->columnCount(); k++)
-            categories << m_model->data(m_model->index(m_mapCategories, k), Qt::DisplayRole).toString();
-        mModel = new BarChartModel(categories, this);
-
-        for (int i = m_mapBarBottom; i <= m_mapBarTop; i++)
-        {
-            QBarSet* barSet = new QBarSet(QString("Row: %1").arg(i + 1));
-            for(int m = 0; m < m_model->columnCount(); m++)
-                *barSet << m_model->data(m_model->index(i, m), Qt::DisplayRole).toDouble();
-            addBarSet(barSet);
-        }
-    }
-    else
-    {
-        QStringList categories;
         for (int k = 0; k < m_model->rowCount(); k++)
             categories << m_model->data(m_model->index(k, m_mapCategories), Qt::DisplayRole).toString();
         mModel = new BarChartModel(categories, this);
@@ -305,6 +290,21 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
             addBarSet(barSet);
         }
     }
+    else
+    {
+        QStringList categories;
+        for (int k = 0; k < m_model->columnCount(); k++)
+            categories << m_model->data(m_model->index(m_mapCategories, k), Qt::DisplayRole).toString();
+        mModel = new BarChartModel(categories, this);
+
+        for (int i = m_mapBarBottom; i <= m_mapBarTop; i++)
+        {
+            QBarSet* barSet = new QBarSet(QString("Row: %1").arg(i + 1));
+            for(int m = 0; m < m_model->columnCount(); m++)
+                *barSet << m_model->data(m_model->index(i, m), Qt::DisplayRole).toDouble();
+            addBarSet(barSet);
+        }
+    }
 }
 
 void QBarSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
@@ -314,14 +314,14 @@ void QBarSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     if (m_mapOrientation == Qt::Vertical)
     {
         if (topLeft.column() >= m_mapBarBottom && topLeft.column() <= m_mapBarTop)
-            barsetAt(topLeft.row())->setValue(topLeft.column(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            barsetAt(topLeft.column() - m_mapBarBottom)->setValue(topLeft.row(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
 //        else if (topLeft.column() == m_mapCategories)
 //            slices().at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
     }
     else
     {
         if (topLeft.row() >= m_mapBarBottom && topLeft.row() <= m_mapBarTop)
-            barsetAt(topLeft.column())->setValue(topLeft.row(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            barsetAt(topLeft.row() - m_mapBarBottom)->setValue(topLeft.column(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
 //        else if (topLeft.row() == m_mapCategories)
 //            slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
     }
