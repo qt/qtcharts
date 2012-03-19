@@ -281,7 +281,7 @@ void ChartTheme::generateSeriesGradients()
         // most themes. The rest of the gradients we can define manually in theme specific
         // implementation.
         QColor start = color;
-        start.setHsvF(h, 0.05, 0.95);
+        start.setHsvF(h, 0.0, 1.0);
         g.setColorAt(0.0, start);
 
         g.setColorAt(0.5, color);
