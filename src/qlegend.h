@@ -51,7 +51,7 @@ public slots:
     void handleSeriesAdded(QSeries* series,Domain* domain);
     void handleSeriesRemoved(QSeries* series);
     void handleAdded(QList<QPieSlice*> slices);
-//    void handleRemoved(QList<QPieSlice*> slices);
+    void handleRemoved(QList<QPieSlice*> slices);
     void handleMarkerDestroyed();
 
 private:
@@ -66,14 +66,12 @@ private:
     void layoutChanged();
     // <--- PIMPL
 
-
-//    QRectF mBoundingRect;
     QPointF mPos;
     QSizeF mSize;
     QSizeF mMinimumSize;
     QSizeF mMaximumSize;
 
-    QList<QSeries*> mSeriesList;
+//    QList<QSeries*> mSeriesList;
     QList<LegendMarker*> mMarkers;
 
     QBrush mBackgroundBrush;

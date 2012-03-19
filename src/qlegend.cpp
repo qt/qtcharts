@@ -95,7 +95,7 @@ void QLegend::handleSeriesAdded(QSeries* series, Domain* domain)
 {
     Q_UNUSED(domain)
 
-    mSeriesList.append(series);
+//    mSeriesList.append(series);
     createMarkers(series);
     connectSeries(series);
     layoutChanged();
@@ -115,7 +115,7 @@ void QLegend::handleSeriesRemoved(QSeries* series)
         deleteMarkers(series);
     }
 
-    mSeriesList.removeOne(series);
+//    mSeriesList.removeOne(series);
     layoutChanged();
 }
 
@@ -129,11 +129,19 @@ void QLegend::handleAdded(QList<QPieSlice*> slices)
         connect(marker,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)),this,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)));
         connect(s,SIGNAL(changed()),marker,SLOT(changed()));
         connect(s,SIGNAL(destroyed()),marker,SLOT(deleteLater()));
+        connect(marker,SIGNAL(destroyed()),this,SLOT(handleMarkerDestroyed()));
         mMarkers.append(marker);
         childItems().append(marker);
     }
     layoutChanged();
 }
+
+void QLegend::handleRemoved(QList<QPieSlice *> slices)
+{
+    // Propably no need to listen for this, since removed slices are deleted and we listen destroyed signal
+//    qDebug() << "QLegend::handleRemoved(QList<QPieSlice*> slices) count:" << slices.count();
+}
+
 
 void QLegend::handleMarkerDestroyed()
 {
@@ -348,6 +356,7 @@ void QLegend::deleteMarkers(QSeries *series)
 void QLegend::layoutChanged()
 {
     // Calculate layout for markers and text
+    qDebug() << "Marker count:" << mMarkers.count();
     if (mMarkers.count() <= 0) {
         // Nothing to do
         return;

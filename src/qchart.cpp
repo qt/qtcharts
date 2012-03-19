@@ -68,8 +68,6 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
 */
 QChart::~QChart()
 {
-    disconnect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-    disconnect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
 
 /*!
