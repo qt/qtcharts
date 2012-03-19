@@ -57,12 +57,15 @@ public:
         // settings layout
         m_themeComboBox = new QComboBox();
         m_themeComboBox->addItem("Default", QChart::ChartThemeDefault);
+        m_themeComboBox->addItem("Light", QChart::ChartThemeLight);
+        m_themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
+        m_themeComboBox->addItem("Dark", QChart::ChartThemeDark);
+        m_themeComboBox->addItem("Brown Sand", QChart::ChartThemeBrownSand);
+        m_themeComboBox->addItem("Blue NCS", QChart::ChartThemeBlueNcs);
         m_themeComboBox->addItem("Vanilla", QChart::ChartThemeVanilla);
         m_themeComboBox->addItem("Icy", QChart::ChartThemeIcy);
         m_themeComboBox->addItem("Grayscale", QChart::ChartThemeGrayscale);
         m_themeComboBox->addItem("Scientific", QChart::ChartThemeScientific);
-        m_themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
-        m_themeComboBox->addItem("Light", QChart::ChartThemeLight);
         connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this ,SLOT(updateTheme()));
         QCheckBox *antialiasCheckBox = new QCheckBox("Anti aliasing");
         connect(antialiasCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateAntialiasing(bool)));
@@ -178,9 +181,21 @@ public Q_SLOTS:
             chart->setChartTheme(theme);
 
         QPalette pal = window()->palette();
-        if (theme == QChart::ChartThemeBlueCerulean) {
+        if (theme == QChart::ChartThemeLight) {
+            pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
+            pal.setColor(QPalette::WindowText, QRgb(0x404044));
+        } else if (theme == QChart::ChartThemeDark) {
             pal.setColor(QPalette::Window, QRgb(0x121218));
             pal.setColor(QPalette::WindowText, QRgb(0xd6d6d6));
+        } else if (theme == QChart::ChartThemeBlueCerulean) {
+            pal.setColor(QPalette::Window, QRgb(0x40434a));
+            pal.setColor(QPalette::WindowText, QRgb(0xd6d6d6));
+        } else if (theme == QChart::ChartThemeBrownSand) {
+            pal.setColor(QPalette::Window, QRgb(0x9e8965));
+            pal.setColor(QPalette::WindowText, QRgb(0x404044));
+        } else if (theme == QChart::ChartThemeBlueNcs) {
+            pal.setColor(QPalette::Window, QRgb(0x018bba));
+            pal.setColor(QPalette::WindowText, QRgb(0x404044));
         } else {
             pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
             pal.setColor(QPalette::WindowText, QRgb(0x404044));

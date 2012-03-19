@@ -30,13 +30,15 @@
 
 //themes
 #include "chartthemedefault_p.h"
+#include "chartthemelight_p.h"
+#include "chartthemebluecerulean_p.h"
+#include "chartthemedark_p.h"
+#include "chartthemebrownsand_p.h"
+#include "chartthemebluencs_p.h"
 #include "chartthemevanilla_p.h"
 #include "chartthemeicy_p.h"
 #include "chartthemegrayscale_p.h"
 #include "chartthemescientific_p.h"
-#include "chartthemebluecerulean_p.h"
-#include "chartthemelight_p.h"
-
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -58,6 +60,16 @@ ChartTheme::ChartTheme(QChart::ChartTheme id) :
 ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 {
     switch(theme) {
+        case QChart::ChartThemeLight:
+            return new ChartThemeLight();
+        case QChart::ChartThemeBlueCerulean:
+            return new ChartThemeBlueCerulean();
+        case QChart::ChartThemeDark:
+            return new ChartThemeDark();
+        case QChart::ChartThemeBrownSand:
+            return new ChartThemeBrownSand();
+        case QChart::ChartThemeBlueNcs:
+            return new ChartThemeBlueNcs();
         case QChart::ChartThemeVanilla:
             return new ChartThemeVanilla();
         case QChart::ChartThemeIcy:
@@ -66,10 +78,6 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
             return new ChartThemeGrayscale();
         case QChart::ChartThemeScientific:
             return new ChartThemeScientific();
-        case QChart::ChartThemeBlueCerulean:
-            return new ChartThemeBlueCerulean();
-        case QChart::ChartThemeLight:
-            return new ChartThemeLight();
         default:
             return new ChartThemeDefault();
     }

@@ -18,12 +18,15 @@ class DeclarativeChart : public QDeclarativeItem
 public:
     enum ChartTheme {
         ThemeDefault,
+        ThemeLight,
+        ThemeBlueCerulean,
+        ThemeDark,
+        ThemeBrownSand,
+        ThemeBlueNcs,
         ThemeVanilla,
         ThemeIcy,
         ThemeGrayscale,
-        ThemeScientific,
-        ThemeBlueCerulean,
-        ThemeLight
+        ThemeScientific
     };
     DeclarativeChart(QDeclarativeItem *parent = 0);
 
