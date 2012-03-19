@@ -72,7 +72,6 @@ private:
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
     int m_zoomIndex;
-    int m_marginSize;
     QMap<QSeries*,ChartItem*> m_chartItems;
     QMap<QChartAxis*,AxisItem*> m_axisItems;
     QVector<QRectF> m_zoomStack;

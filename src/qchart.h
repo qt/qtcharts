@@ -21,6 +21,8 @@ class ChartItem;
 class ChartDataSet;
 class ChartPresenter;
 class QLegend;
+class ChartBackground;
+
 
 class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
@@ -53,8 +55,6 @@ public:
     void removeSeries(QSeries* series); //returns ownership , deletes axis if no series attached
     void removeAllSeries(); // deletes series and axis
 
-    void setMargin(int margin);
-    int margin() const;
     void setChartTheme(QChart::ChartTheme theme);
     QChart::ChartTheme chartTheme() const;
 
@@ -84,22 +84,30 @@ public:
     // TODO: take (and give) legend instead of this.
     QLegend* legend();
 
+
+    int padding() const;
+
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
 
 private:
     inline void createChartBackgroundItem();
     inline void createChartTitleItem();
+    void setPadding(int padding);
+    void setBackgroundPadding(int padding);
+    void setBackgroundDiameter(int diameter);
     void updateLayout();
 
 private:
     Q_DISABLE_COPY(QChart)
-    QGraphicsRectItem* m_backgroundItem;
+    ChartBackground* m_backgroundItem;
     QGraphicsSimpleTextItem* m_titleItem;
     QRectF m_rect;
     QLegend* m_legend;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
+    int m_padding;
+    int m_backgroundPadding;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

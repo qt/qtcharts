@@ -3,6 +3,7 @@
 #include "qlegend.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
+#include "chartbackground_p.h"
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 #include <QDebug>
@@ -54,7 +55,9 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     m_titleItem(0),
     m_legend(new QLegend(this)),
     m_dataset(new ChartDataSet(this)),
-    m_presenter(new ChartPresenter(this,m_dataset))
+    m_presenter(new ChartPresenter(this,m_dataset)),
+    m_padding(50),
+    m_backgroundPadding(10)
 {
     connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
     connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
@@ -173,7 +176,7 @@ QBrush QChart::chartTitleBrush()
 void QChart::createChartBackgroundItem()
 {
     if(!m_backgroundItem) {
-        m_backgroundItem = new QGraphicsRectItem(this);
+        m_backgroundItem = new ChartBackground(this);
         m_backgroundItem->setPen(Qt::NoPen);
         m_backgroundItem->setZValue(ChartPresenter::BackgroundZValue);
     }
@@ -185,25 +188,6 @@ void QChart::createChartTitleItem()
         m_titleItem = new QGraphicsSimpleTextItem(this);
         m_titleItem->setZValue(ChartPresenter::BackgroundZValue);
     }
-}
-
-/*!
-    Returns the chart margin, which is the distance between the widget edge and the part of the chart where the actual data can be displayed.
-    \sa setMargin()
-*/
-int QChart::margin() const
-{
-    return m_presenter->margin();
-}
-
-/*!
-    Sets the chart \a margin, which is the distance between the widget edge and the part of the chart where the actual data can be displayed.
-    \sa margin()
-*/
-void QChart::setMargin(int margin)
-{
-    m_presenter->setMargin(margin);
-    updateLayout();
 }
 
 /*!
@@ -332,17 +316,17 @@ void QChart::updateLayout()
 {
     if(!m_rect.isValid()) return;
 
-    QRectF rect = m_rect.adjusted(margin(),margin(), -margin(), -margin());
+    QRectF rect = m_rect.adjusted(m_padding,m_padding, -m_padding, -m_padding);
 
     // recalculate title position
     if (m_titleItem) {
         QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
-        m_titleItem->setPos(center.x(),m_rect.top()/2 + margin()/2);
+        m_titleItem->setPos(center.x(),m_rect.top()/2 + m_padding/2);
     }
 
     //recalculate background gradient
     if (m_backgroundItem) {
-        m_backgroundItem->setRect(rect);
+        m_backgroundItem->setRect(m_rect.adjusted(m_backgroundPadding,m_backgroundPadding, -m_backgroundPadding, -m_backgroundPadding));
     }
 
     // recalculate legend position
@@ -352,6 +336,37 @@ void QChart::updateLayout()
         m_legend->setPreferredLayout(QLegend::PreferredLayoutHorizontal);
     }
 }
+
+
+int QChart::padding() const
+{
+    return m_padding;
+}
+
+void QChart::setPadding(int padding)
+{
+    if(m_padding==padding){
+    m_padding = padding;
+    m_presenter->handleGeometryChanged();
+    updateLayout();
+    }
+}
+
+void QChart::setBackgroundPadding(int padding)
+{
+    if(m_backgroundPadding!=padding){
+    m_backgroundPadding = padding;
+    updateLayout();
+    }
+}
+
+void QChart::setBackgroundDiameter(int diameter)
+{
+    createChartBackgroundItem();
+    m_backgroundItem->setDimeter(diameter);
+    m_backgroundItem->update();
+}
+
 #include "moc_qchart.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

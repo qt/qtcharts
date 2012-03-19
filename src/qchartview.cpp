@@ -46,7 +46,6 @@ QChartView::QChartView(QWidget *parent) :
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setScene(m_scene);
-    m_chart->setMargin(50);
     m_scene->addItem(m_chart);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
@@ -123,14 +122,6 @@ void QChartView::zoomIn(const QRect& rect)
 void QChartView::zoomOut()
 {
     m_chart->zoomOut();
-}
-
-/*!
-    Returns the chart margin, which is the distance between the widget edge and the part of the chart where the actual data can be displayed.
-*/
-int QChartView::margin() const
-{
-    return m_chart->margin();
 }
 
 /*!
@@ -240,8 +231,8 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 {
     if(m_rubberBand && m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
 
-        int margin = m_chart->margin();
-        QRect rect(margin, margin, width() - 2 * margin, height() - 2 * margin);
+        int padding = m_chart->padding();
+        QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
 
         if (rect.contains(event->pos())) {
             m_rubberBandOrigin = event->pos();
@@ -262,8 +253,8 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
     if(m_rubberBand && m_rubberBand->isVisible()) {
-        int margin = m_chart->margin();
-        QRect rect(margin, margin, width() - 2 * margin, height() - 2 * margin);
+        int padding = m_chart->padding();
+        QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
         int width = event->pos().x() - m_rubberBandOrigin.x();
         int height = event->pos().y() - m_rubberBandOrigin.y();
         if(!m_verticalRubberBand) {

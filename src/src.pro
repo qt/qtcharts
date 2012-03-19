@@ -16,20 +16,22 @@ SOURCES += \
     qchartview.cpp \
     qseries.cpp \
     qlegend.cpp \
-    legendmarker.cpp
+    legendmarker.cpp \
+    chartbackground.cpp
 PRIVATE_HEADERS += \
     chartdataset_p.h \
     chartitem_p.h \
     chartpresenter_p.h \
     charttheme_p.h \
     domain_p.h \
-    legendmarker_p.h
+    legendmarker_p.h \
+    chartbackground_p.h
 PUBLIC_HEADERS += \
     qchart.h \
     qchartglobal.h \
     qseries.h \
     qchartview.h \
-    qlegend.h
+    qlegend.h 
     
 include(animations/animations.pri)    
 include(axis/axis.pri)

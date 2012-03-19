@@ -30,7 +30,6 @@ public:
     void addSeries(QSeries* series,QChartAxis* axisY=0);// takes series ownership , takes axis ownership
     void removeSeries(QSeries* series); //returns ownership , deletes axis if no series attached
     void removeAllSeries(); // deletes series and axis
-    int margin() const;
 
     void setChartTitle(const QString& title);
     QString chartTitle() const;

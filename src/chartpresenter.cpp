@@ -32,7 +32,6 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_dataset(dataset),
     m_chartTheme(0),
     m_zoomIndex(0),
-    m_marginSize(0),
     m_rect(QRectF(QPoint(0,0),m_chart->size())),
     m_options(QChart::NoAnimation)
 {
@@ -63,7 +62,7 @@ QRectF ChartPresenter::geometry() const
 void ChartPresenter::handleGeometryChanged()
 {
     QRectF rect(QPoint(0,0),m_chart->size());
-    rect.adjust(m_marginSize,m_marginSize, -m_marginSize, -m_marginSize);
+    rect.adjust(m_chart->padding(),m_chart->padding(), -m_chart->padding(), -m_chart->padding());
 
     //rewrite zoom stack
     for(int i=0;i<m_zoomStack.count();i++){
@@ -84,16 +83,6 @@ void ChartPresenter::handleGeometryChanged()
     m_rect = rect;
     Q_ASSERT(m_rect.isValid());
     emit geometryChanged(m_rect);
-}
-
-int ChartPresenter::margin() const
-{
-    return m_marginSize;
-}
-
-void ChartPresenter::setMargin(int margin)
-{
-    m_marginSize = margin;
 }
 
 void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
@@ -339,7 +328,7 @@ void ChartPresenter::zoomIn()
 void ChartPresenter::zoomIn(const QRectF& rect)
 {
 	QRectF r = rect.normalized();
-	r.translate(-m_marginSize, -m_marginSize);
+	r.translate(-m_chart->padding(), -m_chart->padding());
 	if(m_animator) {
 
 		QPointF point(r.center().x()/geometry().width(),r.center().y()/geometry().height());
