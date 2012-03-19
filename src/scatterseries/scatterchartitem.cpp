@@ -6,18 +6,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-
-
-
-
-
-
 ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *parent) :
     XYChartItem(series,parent),
     m_series(series),
     m_items(this),
     m_shape(QScatterSeries::MarkerShapeRectangle),
-    m_size(10)
+    m_size(15)
 
 {
     Q_ASSERT(parent);

@@ -122,7 +122,7 @@ void ChartTheme::decorate(QAreaSeries* series, int index,bool force)
     QBrush brush;
 
     if (pen == series->pen() || force){
-        pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
+        pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0));
         pen.setWidthF(2);
         series->setPen(pen);
     }
@@ -144,90 +144,43 @@ void ChartTheme::decorate(QLineSeries* series,int index,bool force)
     }
 }
 
-void ChartTheme::decorate(QBarSeries* series,int index,bool force)
+void ChartTheme::decorate(QBarSeries* series, int index, bool force)
 {
     QBrush brush;
+    QPen pen;
     QList<QBarSet*> sets = series->barSets();
 
-    for (int i=0; i<sets.count(); i++) {
+    for (int i(0); i < sets.count(); i++) {
         qreal pos = 0.5;
         if (sets.count() > 1)
             pos = (qreal) i / (qreal) (sets.count() - 1);
 
-        if(brush == sets.at(i)->brush() || force ){
-        QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
-        sets.at(i)->setBrush(QBrush(c));
+        if (brush == sets.at(i)->brush() || force ) {
+            QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
+            sets.at(i)->setBrush(QBrush(c));
         }
-        // Pick label color as far as possible from bar color (within gradient).
-        // 0.3 is magic number that was picked as value that gave enough contrast with icy theme gradient :)
-        // TODO: better picking of label color?
-        QColor c;
 
-        if (pos < 0.3) {
-            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1);
-        } else {
-            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0);
+        // Pick label color from the opposite end of the gradient.
+        // 0.3 as a boundary seems to work well.
+        if (pos < 0.3)
+            sets.at(i)->setFloatingValuePen(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1));
+        else
+            sets.at(i)->setFloatingValuePen(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0));
+
+        if (pen == sets.at(i)->pen() || force) {
+            QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0);
+            sets.at(i)->setPen(c);
         }
-        sets.at(i)->setFloatingValuePen(QPen(c));
-
-    }
-}
-
-void ChartTheme::decorate(QStackedBarSeries* series,int index,bool force)
-{
-    QBrush brush;
-    QList<QBarSet*> sets = series->barSets();
-
-    for (int i=0; i<sets.count(); i++) {
-        qreal pos = 0.5;
-        if (sets.count() > 1)
-            pos = (qreal) i / (qreal) (sets.count() - 1);
-        if(brush == sets.at(i)->brush() || force){
-        QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
-        sets.at(i)->setBrush(QBrush(c));
-        }
-        QColor c;
-        if (pos < 0.3) {
-            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1);
-        } else {
-            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0);
-        }
-        sets.at(i)->setFloatingValuePen(QPen(c));
-    }
-}
-
-void ChartTheme::decorate(QPercentBarSeries* series,int index,bool force)
-{
-    QBrush brush;
-    QList<QBarSet*> sets = series->barSets();
-
-    for (int i=0; i<sets.count(); i++) {
-        qreal pos = 0.5;
-        if (sets.count() > 1)
-            pos = (qreal) i / (qreal) (sets.count() - 1);
-
-        if(brush == sets.at(i)->brush() || force){
-        QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
-        sets.at(i)->setBrush(QBrush(c));
-        }
-        QColor c;
-        if (pos < 0.3) {
-            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1);
-        } else {
-            c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0);
-        }
-        sets.at(i)->setFloatingValuePen(QPen(c));
     }
 }
 
 void ChartTheme::decorate(QScatterSeries* series, int index,bool force)
 {
-
     QPen pen;
     QBrush brush;
 
     if (pen == series->pen() || force) {
-        pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1.0));
+        pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0));
         pen.setWidthF(2);
         series->setPen(pen);
     }
@@ -240,20 +193,20 @@ void ChartTheme::decorate(QScatterSeries* series, int index,bool force)
 
 void ChartTheme::decorate(QPieSeries* series, int index, bool force)
 {
-    // Get color for a slice from a gradient linearly, beginning from the start of the gradient
-
     QPen pen;
     QBrush brush;
 
     for (int i(0); i < series->slices().count(); i++) {
-        qreal pos = (qreal) i / (qreal) series->count();
-        if( pen == series->slices().at(i)->slicePen() || force){
-        QColor penColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.1);
-        series->slices().at(i)->setSlicePen(penColor);
+        if (pen == series->slices().at(i)->slicePen() || force) {
+            QColor penColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0);
+            series->slices().at(i)->setSlicePen(penColor);
         }
-        if( brush == series->slices().at(i)->sliceBrush() || force){
-        QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
-        series->slices().at(i)->setSliceBrush(brushColor);
+
+        // Get color for a slice from a gradient linearly, beginning from the start of the gradient
+        qreal pos = (qreal) i / (qreal) series->count();
+        if (brush == series->slices().at(i)->sliceBrush() || force) {
+            QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
+            series->slices().at(i)->setSliceBrush(brushColor);
         }
     }
 }

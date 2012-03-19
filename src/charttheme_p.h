@@ -44,10 +44,7 @@ public:
     QChart::ChartTheme id() const {return m_id;}
     void decorate(QChart* chart,bool force = true);
     void decorate(QLegend* legend,bool force = true);
-    //void decorate(ChartItem* item, QSeries* series,int index);
     void decorate(QBarSeries* series, int index,bool force = true);
-    void decorate(QStackedBarSeries* series, int index,bool force = true);
-    void decorate(QPercentBarSeries* series, int index,bool force = true);
     void decorate(QLineSeries* series, int index,bool force = true);
     void decorate(QAreaSeries* series, int index,bool force = true);
     void decorate(QScatterSeries* series, int index,bool force = true);

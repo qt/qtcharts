@@ -48,6 +48,7 @@ void PercentBarPresenter::layoutChanged()
 
             // TODO: width settable per bar?
             bar->resize(mBarWidth, barHeight);
+            bar->setPen(mSeries->barsetAt(set)->pen());
             bar->setBrush(mSeries->barsetAt(set)->brush());
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;

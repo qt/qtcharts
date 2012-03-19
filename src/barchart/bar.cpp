@@ -11,6 +11,8 @@ Bar::Bar(QString category, QGraphicsItem *parent)
     mYpos(0),
     mWidth(0),
     mHeight(0),
+    mBrush(QBrush()),
+    mPen(QPen()),
     mCategory(category)
 {
     setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
@@ -54,6 +56,7 @@ void Bar::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidg
     if (0 == mHeight) {
         return;
     }
+    painter->setPen(mPen);
     painter->setBrush(mBrush);
 
     // This compensates for rounding errors. drawRect takes ints and cumulative error of pos + size may be over 1.
