@@ -48,11 +48,6 @@
 */
 
 /*!
-    \fn QList<QSeries::Legend> QSeries::legend()
-    \brief Returns the legend of the series. If series is empty, empty list is returned.
-*/
-
-/*!
     \fn void QSeries::setTitle(QString title)
     \brief Sets a \a title for the series.
 

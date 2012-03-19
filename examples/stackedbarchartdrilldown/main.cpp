@@ -5,7 +5,6 @@
 #include <qstackedbarseries.h>
 #include <qbarset.h>
 #include <qchartaxis.h>
-#include <qlegend.h>
 #include <QStringList>
 #include <QDebug>
 

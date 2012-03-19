@@ -30,7 +30,7 @@ QLegend::QLegend(QGraphicsItem *parent)
     ,m_brush(Qt::darkGray)     // TODO: from theme?
     ,mPreferredLayout(QLegend::PreferredLayoutVertical)
 {
-//    setVisible(false);
+    setVisible(false);
     setZValue(ChartPresenter::LegendZValue);
 }
 
@@ -90,6 +90,7 @@ QSizeF QLegend::maximumSize() const
 void QLegend::setMaximumSize(const QSizeF size)
 {
     mMaximumSize = size;
+    layoutChanged();
 }
 
 void QLegend::setSize(const QSizeF size)
@@ -106,13 +107,13 @@ void QLegend::setSize(const QSizeF size)
 void QLegend::setPos(const QPointF &pos)
 {
     mPos = pos;
+    layoutChanged();
 }
 
 void QLegend::handleSeriesAdded(QSeries* series, Domain* domain)
 {
     Q_UNUSED(domain)
 
-//    mSeriesList.append(series);
     createMarkers(series);
     connectSeries(series);
     layoutChanged();
@@ -132,7 +133,6 @@ void QLegend::handleSeriesRemoved(QSeries* series)
         deleteMarkers(series);
     }
 
-//    mSeriesList.removeOne(series);
     layoutChanged();
 }
 
@@ -374,7 +374,6 @@ void QLegend::deleteMarkers(QSeries *series)
 void QLegend::layoutChanged()
 {
     // Calculate layout for markers and text
-    qDebug() << "Marker count:" << mMarkers.count();
     if (mMarkers.count() <= 0) {
         // Nothing to do
         return;

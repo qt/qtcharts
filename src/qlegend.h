@@ -74,7 +74,6 @@ private:
     QSizeF mMinimumSize;
     QSizeF mMaximumSize;
 
-//    QList<QSeries*> mSeriesList;
     QList<LegendMarker*> mMarkers;
 
     QBrush m_brush;

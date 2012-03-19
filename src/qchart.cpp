@@ -269,9 +269,9 @@ QChartAxis* QChart::axisY() const
 }
 
 /*!
-    Returns the legend object of the chart
+    Returns the legend object of the chart. Ownership stays in chart.
 */
-QLegend* QChart::legend()
+QLegend* QChart::legend() const
 {
     return m_legend;
 }
@@ -341,9 +341,10 @@ void QChart::updateLayout()
 
     // recalculate legend position
     if (m_legend) {
-        m_legend->setMaximumSize(rect.size());
-        m_legend->setPos(rect.topLeft());
-        m_legend->setPreferredLayout(QLegend::PreferredLayoutHorizontal);
+        if (m_legend->parentObject() == this) {
+            m_legend->setMaximumSize(rect.size());
+            m_legend->setPos(rect.topLeft());
+        }
     }
 }
 

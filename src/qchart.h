@@ -90,9 +90,7 @@ public:
     QChartAxis* axisX() const;
     QChartAxis* axisY() const;
 
-    // TODO: take (and give) legend instead of this.
-    QLegend* legend();
-
+    QLegend* legend() const;
 
     int padding() const;
 
