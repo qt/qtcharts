@@ -224,7 +224,6 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         if (m_chartItems.count() == 0) {
             m_chart->axisX()->hide();
             m_chart->axisY()->hide();
-            m_chart->setBackgroundVisible(false);
         }
         item=pie;
         break;
