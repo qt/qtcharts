@@ -11,8 +11,7 @@ void ChartWidget::mousePressEvent(QMouseEvent *event)
 {
     if(event->button()!=Qt::LeftButton) return;
 
-    int margin = this->margin();
-
+    int margin = 25;
     QRect rect(margin,margin,width()-2*margin,height()-2*margin);
 
     m_origin = event->pos();
