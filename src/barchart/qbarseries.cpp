@@ -133,17 +133,6 @@ void QBarSeries::setToolTipEnabled(bool enabled)
     }
 }
 
-/*!
-    Enables or disables separators depending on parameter \a enabled.
-    Separators are visual elements that are drawn between categories.
-    Calling without parameter \a enabled, enables the separators
-*/
-void QBarSeries::setSeparatorsVisible(bool visible)
-{
-    mSeparatorsVisible = visible;
-    emit enableSeparators(visible);
-}
-
 
 /*!
     \internal \a category
@@ -216,11 +205,6 @@ qreal QBarSeries::maxCategorySum()
 BarChartModel& QBarSeries::model()
 {
     return *mModel;
-}
-
-bool QBarSeries::separatorsVisible()
-{
-    return mSeparatorsVisible;
 }
 
 bool QBarSeries::setModel(QAbstractItemModel* model)

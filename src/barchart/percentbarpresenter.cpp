@@ -1,7 +1,6 @@
 #include "percentbarpresenter_p.h"
 #include "bar_p.h"
 #include "barvalue_p.h"
-#include "separator_p.h"
 #include "qbarset.h"
 #include <QDebug>
 
@@ -56,16 +55,7 @@ void PercentBarPresenter::layoutChanged()
         }
         xPos += xStep;
     }
-/*
-    // Position separators
-    xPos = xStep + xStep/2;
-    for (int s=0; s < mSeries->categoryCount() - 1; s++) {
-        Separator* sep = mSeparators.at(s);
-        sep->setPos(xPos,0);
-        sep->setSize(QSizeF(1,mHeight));
-        xPos += xStep;
-    }
-*/
+
     // Position floating values
     itemIndex = 0;
     xPos = (tW/tC);

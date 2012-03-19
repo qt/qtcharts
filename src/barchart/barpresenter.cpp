@@ -1,7 +1,6 @@
 #include "barpresenter_p.h"
 #include "bar_p.h"
 #include "barvalue_p.h"
-#include "separator_p.h"
 #include "qbarset.h"
 #include <QDebug>
 
@@ -54,17 +53,7 @@ void BarPresenter::layoutChanged()
             xPos += mBarWidth;
         }
     }
-/*
-    // Position separators
-    qreal xPos = categoryWidth + categoryWidth/2;
-    for (int s=0; s < mSeparators.count(); s++) {
-        Separator* sep = mSeparators.at(s);
-        sep->setPos(xPos,0);
-        sep->setSize(QSizeF(1,mHeight));
-        sep->setColor(QColor(255,0,0,255));     // TODO: color for separations from theme
-        xPos += categoryWidth;
-    }
-*/
+
     // Position floating values
     itemIndex = 0;
     for (int category=0; category < mSeries->categoryCount(); category++) {

@@ -49,7 +49,6 @@ int main(int argc, char *argv[])
     //! [4]
     // Enable tooltip
     series->setToolTipEnabled();
-    series->setSeparatorsVisible(true);
 
     // Connect clicked signal of set to toggle floating values of set.
     QObject::connect(set0,SIGNAL(clicked(QString)),set0,SIGNAL(toggleFloatingValues()));

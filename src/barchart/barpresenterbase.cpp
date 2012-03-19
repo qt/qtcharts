@@ -1,7 +1,6 @@
 #include "barpresenterbase_p.h"
 #include "bar_p.h"
 #include "barvalue_p.h"
-#include "separator_p.h"
 #include "qbarset.h"
 #include "qbarseries.h"
 #include "qchart.h"
@@ -22,8 +21,6 @@ BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent) :
     mChart(parent)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
-//    connect(series,SIGNAL(enableSeparators(bool)),this,SLOT(enableSeparators(bool)));
-//    enableSeparators(series->separatorsVisible());
     setZValue(ChartPresenter::BarSeriesZValue);
     initAxisLabels();
     dataChanged();
@@ -32,7 +29,6 @@ BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent) :
 BarPresenterBase::~BarPresenterBase()
 {
     disconnect(this,SLOT(showToolTip(QPoint,QString)));
-//    disconnect(this,SLOT(enableSeparators(bool)));
 }
 
 void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -60,7 +56,6 @@ void BarPresenterBase::dataChanged()
     }
 
     mBars.clear();
-//    mSeparators.clear();
     mFloatingValues.clear();
 
     // Create new graphic items for bars
@@ -77,16 +72,7 @@ void BarPresenterBase::dataChanged()
             connect(bar,SIGNAL(hoverLeaved()),set,SLOT(barHoverLeaveEvent()));
         }
     }
-/*
-    // Create separators
-    int count = mSeries->categoryCount() - 1;   // There is one less separator than columns
-    for (int i=0; i<count; i++) {
-        Separator* sep = new Separator(this);
-        sep->setVisible(mSeries->separatorsVisible());
-        childItems().append(sep);
-        mSeparators.append(sep);
-    }
-*/
+
     // Create floating values
     for (int category=0; category<mSeries->categoryCount(); category++) {
         for (int s=0; s<mSeries->barsetCount(); s++) {
@@ -174,15 +160,6 @@ void BarPresenterBase::showToolTip(QPoint pos, QString tip)
     // TODO: cool tooltip instead of default
     QToolTip::showText(pos,tip);
 }
-
-/*
-void BarPresenterBase::enableSeparators(bool enabled)
-{
-    for (int i=0; i<mSeparators.count(); i++) {
-        mSeparators.at(i)->setVisible(enabled);
-    }
-}
-*/
 
 #include "moc_barpresenterbase_p.cpp"
 

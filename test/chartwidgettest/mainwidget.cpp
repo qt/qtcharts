@@ -268,7 +268,6 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         // TODO: new implementation of setFloatingValuesEnabled with signals
         //series->setFloatingValuesEnabled(true);
         series->setToolTipEnabled(true);
-        series->setSeparatorsVisible(false);
         m_chartView->addSeries(series);
     } else if (seriesName == "Spline") {
         for (int j(0); j < data.count(); j ++) {
