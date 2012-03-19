@@ -155,6 +155,7 @@ void QLegend::handleAdded(QList<QPieSlice*> slices)
 
 void QLegend::handleRemoved(QList<QPieSlice *> slices)
 {
+    Q_UNUSED(slices)
     // Propably no need to listen for this, since removed slices are deleted and we listen destroyed signal
 //    qDebug() << "QLegend::handleRemoved(QList<QPieSlice*> slices) count:" << slices.count();
 }
