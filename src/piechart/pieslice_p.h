@@ -4,6 +4,7 @@
 #include "qchartglobal.h"
 #include "charttheme_p.h"
 #include "qpieseries.h"
+#include "qpiesliceprivate_p.h"
 #include <QGraphicsItem>
 #include <QRectF>
 #include <QColor>
@@ -15,27 +16,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class PieChartItem;
 class PieSliceLabel;
 class QPieSlice;
-
-class PieSliceData
-{
-public:
-    QPointF m_center;
-    qreal m_radius;
-    qreal m_startAngle;
-    qreal m_angleSpan;
-
-    QPen m_pen;
-    QBrush m_brush;
-
-    bool m_isExploded;
-    qreal m_explodeDistanceFactor;
-
-    bool m_labelVisible;
-    QString m_labelText;
-    QFont m_labelFont;
-    qreal m_labelArmLengthFactor;
-    QPen m_labelArmPen;
-};
 
 class PieSlice : public QGraphicsObject
 {

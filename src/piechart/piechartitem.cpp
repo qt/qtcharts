@@ -1,6 +1,7 @@
 #include "piechartitem_p.h"
 #include "pieslice_p.h"
 #include "qpieslice.h"
+#include "qpiesliceprivate_p.h"
 #include "qpieseries.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
@@ -44,7 +45,7 @@ void PieChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QW
 
 void PieChartItem::initialize()
 {
-    handleSlicesAdded(m_series->m_slices);
+    handleSlicesAdded(m_series->slices());
 }
 
 void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
@@ -127,28 +128,10 @@ void PieChartItem::calculatePieLayout()
 
 PieSliceData PieChartItem::sliceData(QPieSlice *slice)
 {
-    PieSliceData sliceData;
-
-    // TODO:
-    // sliceData = slice->m_data;
-
+    PieSliceData sliceData = slice->d_ptr->m_data;
     sliceData.m_center = PieSlice::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
-    sliceData.m_startAngle = slice->startAngle();
-    sliceData.m_angleSpan = slice->m_angleSpan;
-
-    sliceData.m_pen = slice->m_slicePen;
-    sliceData.m_brush = slice->m_sliceBrush;
-
-    sliceData.m_isExploded = slice->isExploded();
-    sliceData.m_explodeDistanceFactor = slice->explodeDistanceFactor();
-
-    sliceData.m_labelVisible = slice->isLabelVisible();
-    sliceData.m_labelText = slice->label();
-    sliceData.m_labelFont = slice->labelFont();
-    sliceData.m_labelArmLengthFactor = slice->labelArmLengthFactor();
-    sliceData.m_labelArmPen = slice->labelArmPen();
-
+    sliceData.m_angleSpan = slice->endAngle() - slice->startAngle();
     return sliceData;
 }
 

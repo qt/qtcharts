@@ -10,6 +10,8 @@ SOURCES += \
 PRIVATE_HEADERS += \
     $$PWD/piechartitem_p.h \
     $$PWD/pieslice_p.h \
+    $$PWD/qpiesliceprivate_p.h \
+    $$PWD/qpieseriesprivate_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qpieseries.h \

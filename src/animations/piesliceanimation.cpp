@@ -90,8 +90,8 @@ QVariant PieSliceAnimation::interpolated(const QVariant &start, const QVariant &
     result.m_radius = linearPos(startValue.m_radius, endValue.m_radius, progress);
     result.m_startAngle = linearPos(startValue.m_startAngle, endValue.m_startAngle, progress);
     result.m_angleSpan = linearPos(startValue.m_angleSpan, endValue.m_angleSpan, progress);
-    result.m_pen = linearPos(startValue.m_pen, endValue.m_pen, progress);
-    result.m_brush = linearPos(startValue.m_brush, endValue.m_brush, progress);
+    result.m_slicePen = linearPos(startValue.m_slicePen, endValue.m_slicePen, progress);
+    result.m_sliceBrush = linearPos(startValue.m_sliceBrush, endValue.m_sliceBrush, progress);
 
     return qVariantFromValue(result);
 }

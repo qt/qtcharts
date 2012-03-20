@@ -1,8 +1,180 @@
 #include "qpieseries.h"
-#include "qpieslice.h"
+#include "qpiesliceprivate_p.h"
+#include "qpieseriesprivate_p.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent)
+    :QObject(parent),
+    q_ptr(parent),
+    m_pieRelativeHorPos(0.5),
+    m_pieRelativeVerPos(0.5),
+    m_pieRelativeSize(0.7),
+    m_pieStartAngle(0),
+    m_pieEndAngle(360),
+    m_total(0)
+{
+
+}
+
+QPieSeriesPrivate::~QPieSeriesPrivate()
+{
+
+}
+
+void QPieSeriesPrivate::updateDerivativeData()
+{
+    m_total = 0;
+
+    // nothing to do?
+    if (m_slices.count() == 0)
+        return;
+
+    // calculate total
+    foreach (QPieSlice* s, m_slices)
+        m_total += s->value();
+
+    // nothing to show..
+    if (m_total == 0)
+        return;
+
+    // update slice attributes
+    qreal sliceAngle = m_pieStartAngle;
+    qreal pieSpan = m_pieEndAngle - m_pieStartAngle;
+    QVector<QPieSlice*> changed;
+    foreach (QPieSlice* s, m_slices) {
+
+        bool isChanged = false;
+
+        qreal percentage = s->value() / m_total;
+        if (s->d_ptr->m_data.m_percentage != percentage) {
+            s->d_ptr->m_data.m_percentage = percentage;
+            isChanged = true;
+        }
+
+        qreal sliceSpan = pieSpan * percentage;
+        if (s->d_ptr->m_data.m_angleSpan != sliceSpan) {
+            s->d_ptr->m_data.m_angleSpan = sliceSpan;
+            isChanged = true;
+        }
+
+        if (s->d_ptr->m_data.m_startAngle != sliceAngle) {
+            s->d_ptr->m_data.m_startAngle = sliceAngle;
+            isChanged = true;
+        }
+        sliceAngle += sliceSpan;
+
+        if (isChanged)
+            changed << s;
+    }
+
+    // emit signals
+    foreach (QPieSlice* s, changed)
+        emit s->changed();
+}
+
+void QPieSeriesPrivate::sliceChanged()
+{
+    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    Q_ASSERT(m_slices.contains(slice));
+    updateDerivativeData();
+}
+
+void QPieSeriesPrivate::sliceClicked()
+{
+    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    Q_ASSERT(m_slices.contains(slice));
+    Q_Q(QPieSeries);
+    emit q->clicked(slice);
+}
+
+void QPieSeriesPrivate::sliceHoverEnter()
+{
+    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    Q_ASSERT(m_slices.contains(slice));
+    Q_Q(QPieSeries);
+    emit q->hoverEnter(slice);
+}
+
+void QPieSeriesPrivate::sliceHoverLeave()
+{
+    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    Q_ASSERT(m_slices.contains(slice));
+    Q_Q(QPieSeries);
+    emit q->hoverLeave(slice);
+}
+
+void QPieSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
+{
+    Q_UNUSED(bottomRight)
+    Q_Q(QPieSeries);
+
+    if (m_mapOrientation == Qt::Vertical)
+    {
+        //        slices().at(topLeft.row())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
+        if (topLeft.column() == m_mapValues)
+            if (m_mapValues == m_mapLabels)
+            {
+                m_slices.at(topLeft.row())->setValue(q->m_model->data(topLeft, Qt::DisplayRole).toDouble());
+                m_slices.at(topLeft.row())->setLabel(q->m_model->data(topLeft, Qt::DisplayRole).toString());
+            }
+            else
+            {
+                m_slices.at(topLeft.row())->setValue(q->m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            }
+        else if (topLeft.column() == m_mapLabels)
+            m_slices.at(topLeft.row())->setLabel(q->m_model->data(topLeft, Qt::DisplayRole).toString());
+    }
+    else
+    {
+        //        slices().at(topLeft.column())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
+        if (topLeft.row() == m_mapValues)
+            if (m_mapValues == m_mapLabels)
+            {
+                m_slices.at(topLeft.column())->setValue(q->m_model->data(topLeft, Qt::DisplayRole).toDouble());
+                m_slices.at(topLeft.column())->setLabel(q->m_model->data(topLeft, Qt::DisplayRole).toString());
+            }
+            else
+            {
+                m_slices.at(topLeft.column())->setValue(q->m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            }
+        else if (topLeft.row() == m_mapLabels)
+            m_slices.at(topLeft.column())->setLabel(q->m_model->data(topLeft, Qt::DisplayRole).toString());
+    }
+}
+
+void QPieSeriesPrivate::modelDataAdded(QModelIndex parent, int start, int end)
+{
+    Q_UNUSED(parent)
+    Q_UNUSED(end)
+    Q_Q(QPieSeries);
+
+    QPieSlice* newSlice = new QPieSlice;
+    newSlice->setLabelVisible(true);
+    if (m_mapOrientation == Qt::Vertical)
+    {
+        newSlice->setValue(q->m_model->data(q->m_model->index(start, m_mapValues), Qt::DisplayRole).toDouble());
+        newSlice->setLabel(q->m_model->data(q->m_model->index(start, m_mapLabels), Qt::DisplayRole).toString());
+    }
+    else
+    {
+        newSlice->setValue(q->m_model->data(q->m_model->index(m_mapValues, start), Qt::DisplayRole).toDouble());
+        newSlice->setLabel(q->m_model->data(q->m_model->index(m_mapLabels, start), Qt::DisplayRole).toString());
+    }
+
+    q->insert(start, newSlice);
+}
+
+void QPieSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
+{
+    Q_UNUSED(parent)
+    Q_UNUSED(end)
+    Q_Q(QPieSeries);
+    q->remove(m_slices.at(start));
+}
+
+
 
 /*!
     \class QPieSeries
@@ -21,12 +193,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 QPieSeries::QPieSeries(QObject *parent) :
     QSeries(parent),
-    m_pieRelativeHorPos(0.5),
-    m_pieRelativeVerPos(0.5),
-    m_pieRelativeSize(0.7),
-    m_pieStartAngle(0),
-    m_pieEndAngle(360),
-    m_total(0)
+    d_ptr(new QPieSeriesPrivate(this))
 {
 
 }
@@ -36,7 +203,7 @@ QPieSeries::QPieSeries(QObject *parent) :
 */
 QPieSeries::~QPieSeries()
 {
-
+    // NOTE: d_prt destroyed by QObject
 }
 
 /*!
@@ -63,18 +230,20 @@ void QPieSeries::replace(QList<QPieSlice*> slices)
 */
 void QPieSeries::add(QList<QPieSlice*> slices)
 {
+    Q_D(QPieSeries);
+
     foreach (QPieSlice* s, slices) {
         s->setParent(this);
-        m_slices << s;
+        d->m_slices << s;
     }
 
-    updateDerivativeData();
+    d->updateDerivativeData();
 
     foreach (QPieSlice* s, slices) {
-        connect(s, SIGNAL(changed()), this, SLOT(sliceChanged()));
-        connect(s, SIGNAL(clicked()), this, SLOT(sliceClicked()));
-        connect(s, SIGNAL(hoverEnter()), this, SLOT(sliceHoverEnter()));
-        connect(s, SIGNAL(hoverLeave()), this, SLOT(sliceHoverLeave()));
+        connect(s, SIGNAL(changed()), d, SLOT(sliceChanged()));
+        connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
+        connect(s, SIGNAL(hoverEnter()), d, SLOT(sliceHoverEnter()));
+        connect(s, SIGNAL(hoverLeave()), d, SLOT(sliceHoverLeave()));
     }
 
     emit added(slices);
@@ -113,16 +282,17 @@ QPieSlice* QPieSeries::add(qreal value, QString name)
 
 void QPieSeries::insert(int i, QPieSlice* slice)
 {
-    Q_ASSERT(i <= m_slices.count());
+    Q_D(QPieSeries);
+    Q_ASSERT(i <= d->m_slices.count());
     slice->setParent(this);
-    m_slices.insert(i, slice);
+    d->m_slices.insert(i, slice);
 
-    updateDerivativeData();
+    d->updateDerivativeData();
 
-    connect(slice, SIGNAL(changed()), this, SLOT(sliceChanged()));
-    connect(slice, SIGNAL(clicked()), this, SLOT(sliceClicked()));
-    connect(slice, SIGNAL(hoverEnter()), this, SLOT(sliceHoverEnter()));
-    connect(slice, SIGNAL(hoverLeave()), this, SLOT(sliceHoverLeave()));
+    connect(slice, SIGNAL(changed()), d, SLOT(sliceChanged()));
+    connect(slice, SIGNAL(clicked()), d, SLOT(sliceClicked()));
+    connect(slice, SIGNAL(hoverEnter()), d, SLOT(sliceHoverEnter()));
+    connect(slice, SIGNAL(hoverLeave()), d, SLOT(sliceHoverLeave()));
 
     emit added(QList<QPieSlice*>() << slice);
 }
@@ -134,12 +304,13 @@ void QPieSeries::insert(int i, QPieSlice* slice)
 */
 void QPieSeries::remove(QPieSlice* slice)
 {
-    if (!m_slices.removeOne(slice)) {
+    Q_D(QPieSeries);
+    if (!d->m_slices.removeOne(slice)) {
         Q_ASSERT(0); // TODO: how should this be reported?
         return;
     }
 
-    updateDerivativeData();
+    d->updateDerivativeData();
 
     emit removed(QList<QPieSlice*>() << slice);
 
@@ -152,16 +323,17 @@ void QPieSeries::remove(QPieSlice* slice)
 */
 void QPieSeries::clear()
 {
-    if (m_slices.count() == 0)
+    Q_D(QPieSeries);
+    if (d->m_slices.count() == 0)
         return;
 
-    QList<QPieSlice*> slices = m_slices;
-    foreach (QPieSlice* s, m_slices) {
-        m_slices.removeOne(s);
+    QList<QPieSlice*> slices = d->m_slices;
+    foreach (QPieSlice* s, d->m_slices) {
+        d->m_slices.removeOne(s);
         delete s;
     }
 
-    updateDerivativeData();
+    d->updateDerivativeData();
 
     emit removed(slices);
 }
@@ -171,7 +343,8 @@ void QPieSeries::clear()
 */
 int QPieSeries::count() const
 {
-    return m_slices.count();
+    Q_D(const QPieSeries);
+    return d->m_slices.count();
 }
 
 /*!
@@ -179,7 +352,8 @@ int QPieSeries::count() const
 */
 bool QPieSeries::isEmpty() const
 {
-    return m_slices.isEmpty();
+    Q_D(const QPieSeries);
+    return d->m_slices.isEmpty();
 }
 
 /*!
@@ -187,7 +361,8 @@ bool QPieSeries::isEmpty() const
 */
 QList<QPieSlice*> QPieSeries::slices() const
 {
-    return m_slices;
+    Q_D(const QPieSeries);
+    return d->m_slices;
 }
 
 /*!
@@ -206,13 +381,14 @@ QList<QPieSlice*> QPieSeries::slices() const
 */
 void QPieSeries::setPiePosition(qreal relativeHorizontalPosition, qreal relativeVerticalPosition)
 {
+    Q_D(QPieSeries);
     if (relativeHorizontalPosition < 0.0 || relativeHorizontalPosition > 1.0 ||
             relativeVerticalPosition < 0.0 || relativeVerticalPosition > 1.0)
         return;
 
-    if (m_pieRelativeHorPos != relativeHorizontalPosition || m_pieRelativeVerPos != relativeVerticalPosition) {
-        m_pieRelativeHorPos = relativeHorizontalPosition;
-        m_pieRelativeVerPos = relativeVerticalPosition;
+    if (d->m_pieRelativeHorPos != relativeHorizontalPosition || d->m_pieRelativeVerPos != relativeVerticalPosition) {
+        d->m_pieRelativeHorPos = relativeHorizontalPosition;
+        d->m_pieRelativeVerPos = relativeVerticalPosition;
         emit piePositionChanged();
     }
 }
@@ -231,7 +407,8 @@ void QPieSeries::setPiePosition(qreal relativeHorizontalPosition, qreal relative
 */
 qreal QPieSeries::pieHorizontalPosition() const
 {
-    return m_pieRelativeHorPos;
+    Q_D(const QPieSeries);
+    return d->m_pieRelativeHorPos;
 }
 
 /*!
@@ -248,7 +425,8 @@ qreal QPieSeries::pieHorizontalPosition() const
 */
 qreal QPieSeries::pieVerticalPosition() const
 {
-    return m_pieRelativeVerPos;
+    Q_D(const QPieSeries);
+    return d->m_pieRelativeVerPos;
 }
 
 /*!
@@ -262,11 +440,12 @@ qreal QPieSeries::pieVerticalPosition() const
 */
 void QPieSeries::setPieSize(qreal relativeSize)
 {
+    Q_D(QPieSeries);
     if (relativeSize < 0.0 || relativeSize > 1.0)
         return;
 
-    if (m_pieRelativeSize != relativeSize) {
-        m_pieRelativeSize = relativeSize;
+    if (d->m_pieRelativeSize != relativeSize) {
+        d->m_pieRelativeSize = relativeSize;
         emit pieSizeChanged();
     }
 }
@@ -282,7 +461,8 @@ void QPieSeries::setPieSize(qreal relativeSize)
 */
 qreal QPieSeries::pieSize() const
 {
-    return m_pieRelativeSize;
+    Q_D(const QPieSeries);
+    return d->m_pieRelativeSize;
 }
 
 
@@ -297,9 +477,10 @@ qreal QPieSeries::pieSize() const
 */
 void QPieSeries::setPieStartAngle(qreal angle)
 {
-    if (angle >= 0 && angle <= 360 && angle != m_pieStartAngle && angle <= m_pieEndAngle) {
-        m_pieStartAngle = angle;
-        updateDerivativeData();
+    Q_D(QPieSeries);
+    if (angle >= 0 && angle <= 360 && angle != d->m_pieStartAngle && angle <= d->m_pieEndAngle) {
+        d->m_pieStartAngle = angle;
+        d->updateDerivativeData();
     }
 }
 
@@ -312,7 +493,8 @@ void QPieSeries::setPieStartAngle(qreal angle)
 */
 qreal QPieSeries::pieStartAngle() const
 {
-    return m_pieStartAngle;
+    Q_D(const QPieSeries);
+    return d->m_pieStartAngle;
 }
 
 /*!
@@ -326,9 +508,10 @@ qreal QPieSeries::pieStartAngle() const
 */
 void QPieSeries::setPieEndAngle(qreal angle)
 {
-    if (angle >= 0 && angle <= 360 && angle != m_pieEndAngle && angle >= m_pieStartAngle) {
-        m_pieEndAngle = angle;
-        updateDerivativeData();
+    Q_D(QPieSeries);
+    if (angle >= 0 && angle <= 360 && angle != d->m_pieEndAngle && angle >= d->m_pieStartAngle) {
+        d->m_pieEndAngle = angle;
+        d->updateDerivativeData();
     }
 }
 
@@ -341,7 +524,8 @@ void QPieSeries::setPieEndAngle(qreal angle)
 */
 qreal QPieSeries::pieEndAngle() const
 {
-    return m_pieEndAngle;
+    Q_D(const QPieSeries);
+    return d->m_pieEndAngle;
 }
 
 /*!
@@ -351,7 +535,8 @@ qreal QPieSeries::pieEndAngle() const
 */
 void QPieSeries::setLabelsVisible(bool visible)
 {
-    foreach (QPieSlice* s, m_slices)
+    Q_D(QPieSeries);
+    foreach (QPieSlice* s, d->m_slices)
         s->setLabelVisible(visible);
 }
 
@@ -362,16 +547,9 @@ void QPieSeries::setLabelsVisible(bool visible)
 */
 qreal QPieSeries::total() const
 {
-    return m_total;
+    Q_D(const QPieSeries);
+    return d->m_total;
 }
-
-/*!
-    \fn void QPieSeries::changed()
-
-    This signal emitted when something has changed in the series.
-
-    \sa QPieSeries::ChangeSet, QPieSlice::changed()
-*/
 
 /*!
     \fn void QPieSeries::clicked(QPieSlice* slice)
@@ -397,94 +575,19 @@ qreal QPieSeries::total() const
     \sa QPieSlice::hoverLeave()
 */
 
-void QPieSeries::sliceChanged()
-{
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
-    Q_ASSERT(m_slices.contains(slice));
-    updateDerivativeData();
-}
 
-void QPieSeries::sliceClicked()
-{
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
-    Q_ASSERT(m_slices.contains(slice));
-    emit clicked(slice);
-}
 
-void QPieSeries::sliceHoverEnter()
-{
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
-    Q_ASSERT(m_slices.contains(slice));
-    emit hoverEnter(slice);
-}
-
-void QPieSeries::sliceHoverLeave()
-{
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
-    Q_ASSERT(m_slices.contains(slice));
-    emit hoverLeave(slice);
-}
-
-void QPieSeries::updateDerivativeData()
-{
-    m_total = 0;
-
-    // nothing to do?
-    if (m_slices.count() == 0)
-        return;
-
-    // calculate total
-    foreach (QPieSlice* s, m_slices)
-        m_total += s->value();
-
-    // nothing to show..
-    if (m_total == 0)
-        return;
-
-    // update slice attributes
-    qreal sliceAngle = m_pieStartAngle;
-    qreal pieSpan = m_pieEndAngle - m_pieStartAngle;
-    QVector<QPieSlice*> changed;
-    foreach (QPieSlice* s, m_slices) {
-
-        bool isChanged = false;
-
-        qreal percentage = s->value() / m_total;
-        if (s->m_percentage != percentage) {
-            s->m_percentage = percentage;
-            isChanged = true;
-        }
-
-        qreal sliceSpan = pieSpan * percentage;
-        if (s->m_angleSpan != sliceSpan) {
-            s->m_angleSpan = sliceSpan;
-            isChanged = true;
-        }
-
-        if (s->m_startAngle != sliceAngle) {
-            s->m_startAngle = sliceAngle;
-            isChanged = true;
-        }
-        sliceAngle += sliceSpan;
-
-        if (isChanged)
-            changed << s;
-    }
-
-    // emit signals
-    foreach (QPieSlice* s, changed)
-        emit s->changed();
-}
 
 bool QPieSeries::setModel(QAbstractItemModel* model)
 {
+    Q_D(QPieSeries);
     // disconnect signals from old model
     if(m_model)
     {
         disconnect(m_model, 0, this, 0);
-        m_mapValues = -1;
-        m_mapLabels = -1;
-        m_mapOrientation = Qt::Vertical;
+        d->m_mapValues = -1;
+        d->m_mapLabels = -1;
+        d->m_mapOrientation = Qt::Vertical;
     }
 
     // set new model
@@ -502,103 +605,37 @@ bool QPieSeries::setModel(QAbstractItemModel* model)
 
 void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation)
 {
+    Q_D(QPieSeries);
+
     if (m_model == NULL)
         return;
-    m_mapValues = modelValuesLine;
-    m_mapLabels = modelLabelsLine;
-    m_mapOrientation = orientation;
+
+    d->m_mapValues = modelValuesLine;
+    d->m_mapLabels = modelLabelsLine;
+    d->m_mapOrientation = orientation;
 
     // connect the signals
-    if (m_mapOrientation == Qt::Vertical)
-    {
-        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    }
-    else
-    {
-        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(m_model,SIGNAL(columnsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    if (d->m_mapOrientation == Qt::Vertical) {
+        connect(m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+        connect(m_model, SIGNAL(rowsInserted(QModelIndex, int, int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    } else {
+        connect(m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+        connect(m_model, SIGNAL(columnsInserted(QModelIndex, int, int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
     }
 
     // create the initial slices set
-    if (m_mapOrientation == Qt::Vertical)
+    if (d->m_mapOrientation == Qt::Vertical) {
         for (int i = 0; i < m_model->rowCount(); i++)
-            add(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
-    else
+            add(m_model->data(m_model->index(i, d->m_mapValues), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(i, d->m_mapLabels), Qt::DisplayRole).toString());
+    } else {
         for (int i = 0; i < m_model->columnCount(); i++)
-            add(m_model->data(m_model->index(m_mapValues, i), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(m_mapLabels, i), Qt::DisplayRole).toString());
-
-
-}
-
-void QPieSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
-{
-    Q_UNUSED(bottomRight)
-
-    if (m_mapOrientation == Qt::Vertical)
-    {
-        //        slices().at(topLeft.row())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
-        if (topLeft.column() == m_mapValues)
-            if (m_mapValues == m_mapLabels)
-            {
-                slices().at(topLeft.row())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-                slices().at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
-            }
-            else
-            {
-                slices().at(topLeft.row())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-            }
-        else if (topLeft.column() == m_mapLabels)
-            slices().at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+            add(m_model->data(m_model->index(d->m_mapValues, i), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(d->m_mapLabels, i), Qt::DisplayRole).toString());
     }
-    else
-    {
-        //        slices().at(topLeft.column())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
-        if (topLeft.row() == m_mapValues)
-            if (m_mapValues == m_mapLabels)
-            {
-                slices().at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-                slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
-            }
-            else
-            {
-                slices().at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-            }
-        else if (topLeft.row() == m_mapLabels)
-            slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
-    }
-}
-
-void QPieSeries::modelDataAdded(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent)
-    Q_UNUSED(end)
-
-    QPieSlice* newSlice = new QPieSlice;
-    newSlice->setLabelVisible(true);
-    if (m_mapOrientation == Qt::Vertical)
-    {
-        newSlice->setValue(m_model->data(m_model->index(start, m_mapValues), Qt::DisplayRole).toDouble());
-        newSlice->setLabel(m_model->data(m_model->index(start, m_mapLabels), Qt::DisplayRole).toString());
-    }
-    else
-    {
-        newSlice->setValue(m_model->data(m_model->index(m_mapValues, start), Qt::DisplayRole).toDouble());
-        newSlice->setLabel(m_model->data(m_model->index(m_mapLabels, start), Qt::DisplayRole).toString());
-    }
-
-    insert(start, newSlice);
-}
-
-void QPieSeries::modelDataRemoved(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent)
-    Q_UNUSED(end)
-    remove(slices().at(start));
 }
 
 #include "moc_qpieseries.cpp"
+#include "moc_qpieseriesprivate_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

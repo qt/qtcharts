@@ -1,12 +1,9 @@
 #include "qpieslice.h"
+#include "qpiesliceprivate_p.h"
 #include "qpieseries.h"
+#include "qpieseriesprivate_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-#define DEFAULT_PEN_COLOR         Qt::black
-#define DEFAULT_BRUSH_COLOR       Qt::white
-#define DEFAULT_LABEL_ARM_LENGTH_FACTOR  0.15
-#define DEFAULT_EXPOLODE_DISTANCE_FACTOR 0.15
 
 /*!
     \class QPieSlice
@@ -40,17 +37,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 QPieSlice::QPieSlice(QObject *parent)
     :QObject(parent),
-    m_value(0),
-    m_isLabelVisible(false),
-    m_isExploded(false),
-    m_explodeDistanceFactor(DEFAULT_EXPOLODE_DISTANCE_FACTOR),
-    m_percentage(0),
-    m_startAngle(0),
-    m_angleSpan(0),
-    m_slicePen(DEFAULT_PEN_COLOR),
-    m_sliceBrush(DEFAULT_BRUSH_COLOR),
-    m_labelArmPen(DEFAULT_PEN_COLOR),
-    m_labelArmLengthFactor(DEFAULT_LABEL_ARM_LENGTH_FACTOR)
+    d_ptr(new QPieSlicePrivate(this))
 {
 
 }
@@ -62,20 +49,11 @@ QPieSlice::QPieSlice(QObject *parent)
 */
 QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     :QObject(parent),
-    m_value(value),
-    m_label(label),
-    m_isLabelVisible(false),
-    m_isExploded(false),
-    m_explodeDistanceFactor(DEFAULT_EXPOLODE_DISTANCE_FACTOR),
-    m_percentage(0),
-    m_startAngle(0),
-    m_angleSpan(0),
-    m_slicePen(DEFAULT_PEN_COLOR),
-    m_sliceBrush(DEFAULT_BRUSH_COLOR),
-    m_labelArmPen(DEFAULT_PEN_COLOR),
-    m_labelArmLengthFactor(DEFAULT_LABEL_ARM_LENGTH_FACTOR)
+    d_ptr(new QPieSlicePrivate(this))
 {
-
+    Q_D(QPieSlice);
+    d->m_data.m_value = value;
+    d->m_data.m_labelText = label;
 }
 
 /*!
@@ -84,7 +62,7 @@ QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
 */
 QPieSlice::~QPieSlice()
 {
-
+    delete d_ptr;
 }
 
 /*!
@@ -94,7 +72,8 @@ QPieSlice::~QPieSlice()
 */
 qreal QPieSlice::value() const
 {
-    return m_value;
+    Q_D(const QPieSlice);
+    return d->m_data.m_value;
 }
 
 /*!
@@ -103,7 +82,8 @@ qreal QPieSlice::value() const
 */
 QString QPieSlice::label() const
 {
-    return m_label;
+    Q_D(const QPieSlice);
+    return d->m_data.m_labelText;
 }
 
 /*!
@@ -112,7 +92,8 @@ QString QPieSlice::label() const
 */
 bool QPieSlice::isLabelVisible() const
 {
-    return m_isLabelVisible;
+    Q_D(const QPieSlice);
+    return d->m_data.m_labelVisible;
 }
 
 /*!
@@ -121,7 +102,8 @@ bool QPieSlice::isLabelVisible() const
 */
 bool QPieSlice::isExploded() const
 {
-    return m_isExploded;
+    Q_D(const QPieSlice);
+    return d->m_data.m_isExploded;
 }
 
 /*!
@@ -137,7 +119,8 @@ bool QPieSlice::isExploded() const
 */
 qreal QPieSlice::explodeDistanceFactor() const
 {
-    return m_explodeDistanceFactor;
+    Q_D(const QPieSlice);
+    return d->m_data.m_explodeDistanceFactor;
 }
 
 /*!
@@ -148,7 +131,8 @@ qreal QPieSlice::explodeDistanceFactor() const
 */
 qreal QPieSlice::percentage() const
 {
-    return m_percentage;
+    Q_D(const QPieSlice);
+    return d->m_data.m_percentage;
 }
 
 /*!
@@ -160,7 +144,8 @@ qreal QPieSlice::percentage() const
 */
 qreal QPieSlice::startAngle() const
 {
-    return m_startAngle;
+    Q_D(const QPieSlice);
+    return d->m_data.m_startAngle;
 }
 
 /*!
@@ -172,7 +157,8 @@ qreal QPieSlice::startAngle() const
 */
 qreal QPieSlice::endAngle() const
 {
-    return m_startAngle + m_angleSpan;
+    Q_D(const QPieSlice);
+    return d->m_data.m_startAngle + d->m_data.m_angleSpan;
 }
 
 /*!
@@ -181,7 +167,8 @@ qreal QPieSlice::endAngle() const
 */
 QPen QPieSlice::slicePen() const
 {
-    return m_slicePen;
+    Q_D(const QPieSlice);
+    return d->m_data.m_slicePen;
 }
 
 /*!
@@ -190,7 +177,8 @@ QPen QPieSlice::slicePen() const
 */
 QBrush QPieSlice::sliceBrush() const
 {
-    return m_sliceBrush;
+    Q_D(const QPieSlice);
+    return d->m_data.m_sliceBrush;
 }
 
 /*!
@@ -199,7 +187,8 @@ QBrush QPieSlice::sliceBrush() const
 */
 QPen QPieSlice::labelArmPen() const
 {
-    return m_labelArmPen;
+    Q_D(const QPieSlice);
+    return d->m_data.m_labelArmPen;
 }
 
 /*!
@@ -208,7 +197,8 @@ QPen QPieSlice::labelArmPen() const
 */
 QFont QPieSlice::labelFont() const
 {
-    return m_labelFont;
+    Q_D(const QPieSlice);
+    return d->m_data.m_labelFont;
 }
 
 /*!
@@ -224,7 +214,8 @@ QFont QPieSlice::labelFont() const
 */
 qreal QPieSlice::labelArmLengthFactor() const
 {
-    return m_labelArmLengthFactor;
+    Q_D(const QPieSlice);
+    return d->m_data.m_labelArmLengthFactor;
 }
 
 /*!
@@ -265,12 +256,13 @@ qreal QPieSlice::labelArmLengthFactor() const
 */
 void QPieSlice::setValue(qreal value)
 {
-    if (m_value != value) {
-        m_value = value;
+    Q_D(QPieSlice);
+    if (d->m_data.m_value != value) {
+        d->m_data.m_value = value;
 
         QPieSeries *series = qobject_cast<QPieSeries*>(parent());
         if (series)
-            series->updateDerivativeData(); // will emit changed()
+            series->d_ptr->updateDerivativeData(); // will emit changed()
         else
             emit changed();
     }
@@ -282,8 +274,9 @@ void QPieSlice::setValue(qreal value)
 */
 void QPieSlice::setLabel(QString label)
 {
-    if (m_label != label) {
-        m_label = label;
+    Q_D(QPieSlice);
+    if (d->m_data.m_labelText != label) {
+        d->m_data.m_labelText = label;
         emit changed();
     }
 }
@@ -294,8 +287,9 @@ void QPieSlice::setLabel(QString label)
 */
 void QPieSlice::setLabelVisible(bool visible)
 {
-    if (m_isLabelVisible != visible) {
-        m_isLabelVisible = visible;
+    Q_D(QPieSlice);
+    if (d->m_data.m_labelVisible != visible) {
+        d->m_data.m_labelVisible = visible;
         emit changed();
     }
 }
@@ -306,8 +300,9 @@ void QPieSlice::setLabelVisible(bool visible)
 */
 void QPieSlice::setExploded(bool exploded)
 {
-    if (m_isExploded != exploded) {
-        m_isExploded = exploded;
+    Q_D(QPieSlice);
+    if (d->m_data.m_isExploded != exploded) {
+        d->m_data.m_isExploded = exploded;
         emit changed();
     }
 }
@@ -325,8 +320,9 @@ void QPieSlice::setExploded(bool exploded)
 */
 void QPieSlice::setExplodeDistanceFactor(qreal factor)
 {
-    if (m_explodeDistanceFactor != factor) {
-        m_explodeDistanceFactor = factor;
+    Q_D(QPieSlice);
+    if (d->m_data.m_explodeDistanceFactor != factor) {
+        d->m_data.m_explodeDistanceFactor = factor;
         emit changed();
     }
 }
@@ -338,8 +334,9 @@ void QPieSlice::setExplodeDistanceFactor(qreal factor)
 */
 void QPieSlice::setSlicePen(const QPen &pen)
 {
-    if (m_slicePen != pen) {
-        m_slicePen = pen;
+    Q_D(QPieSlice);
+    if (d->m_data.m_slicePen != pen) {
+        d->m_data.m_slicePen = pen;
         emit changed();
     }
 }
@@ -351,8 +348,9 @@ void QPieSlice::setSlicePen(const QPen &pen)
 */
 void QPieSlice::setSliceBrush(const QBrush &brush)
 {
-    if (m_sliceBrush != brush) {
-        m_sliceBrush = brush;
+    Q_D(QPieSlice);
+    if (d->m_data.m_sliceBrush != brush) {
+        d->m_data.m_sliceBrush = brush;
         emit changed();
     }
 }
@@ -364,8 +362,9 @@ void QPieSlice::setSliceBrush(const QBrush &brush)
 */
 void QPieSlice::setLabelArmPen(const QPen &pen)
 {
-    if (m_labelArmPen != pen) {
-        m_labelArmPen = pen;
+    Q_D(QPieSlice);
+    if (d->m_data.m_labelArmPen != pen) {
+        d->m_data.m_labelArmPen = pen;
         emit changed();
     }
 }
@@ -377,8 +376,9 @@ void QPieSlice::setLabelArmPen(const QPen &pen)
 */
 void QPieSlice::setLabelFont(const QFont &font)
 {
-    if (m_labelFont != font) {
-        m_labelFont = font;
+    Q_D(QPieSlice);
+    if (d->m_data.m_labelFont != font) {
+        d->m_data.m_labelFont = font;
         emit changed();
     }
 }
@@ -396,8 +396,9 @@ void QPieSlice::setLabelFont(const QFont &font)
 */
 void QPieSlice::setLabelArmLengthFactor(qreal factor)
 {
-    if (m_labelArmLengthFactor != factor) {
-        m_labelArmLengthFactor = factor;
+    Q_D(QPieSlice);
+    if (d->m_data.m_labelArmLengthFactor != factor) {
+        d->m_data.m_labelArmLengthFactor = factor;
         emit changed();
     }
 }

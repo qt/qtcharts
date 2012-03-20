@@ -50,8 +50,8 @@ void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option
     painter->setClipRect(parentItem()->boundingRect());
 
     painter->save();
-    painter->setPen(m_data.m_pen);
-    painter->setBrush(m_data.m_brush);
+    painter->setPen(m_data.m_slicePen);
+    painter->setBrush(m_data.m_sliceBrush);
     painter->drawPath(m_slicePath);
     painter->restore();
 
@@ -115,7 +115,7 @@ void PieSlice::updateGeometry()
 QPointF PieSlice::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
 {
     if (slice->isExploded()) {
-        qreal centerAngle = slice->startAngle() + (slice->m_angleSpan/2);
+        qreal centerAngle = slice->startAngle() + ((slice->endAngle() - slice->startAngle())/2);
         qreal len = radius * slice->explodeDistanceFactor();
         qreal dx = qSin(centerAngle*(PI/180)) * len;
         qreal dy = -qCos(centerAngle*(PI/180)) * len;

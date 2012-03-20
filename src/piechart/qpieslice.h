@@ -8,7 +8,9 @@
 #include <QFont>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class QPieSeries;
+class QPieSlicePrivate;
+class QPieSeriesPrivate;
+class PieChartItem;
 
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
@@ -57,30 +59,11 @@ Q_SIGNALS:
     void changed();
 
 private:
-
-    // TODO: use private class
-    friend class QPieSeries;
-    friend class PieChartItem;
-    friend class PieSlice;
-
-    // data
-    qreal m_value;
-    QString m_label;
-    bool m_isLabelVisible;
-    bool m_isExploded;
-    qreal m_explodeDistanceFactor;
-
-    // generated data
-    qreal m_percentage;
-    qreal m_startAngle;
-    qreal m_angleSpan;
-
-    // customization
-    QPen m_slicePen;
-    QBrush m_sliceBrush;
-    QFont m_labelFont;
-    QPen m_labelArmPen;
-    qreal m_labelArmLengthFactor;
+    friend class QPieSeriesPrivate; // TODO: get rid of this
+    friend class PieChartItem; // TODO: get rid of this
+    QPieSlicePrivate * const d_ptr;
+    Q_DECLARE_PRIVATE(QPieSlice)
+    Q_DISABLE_COPY(QPieSlice)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
