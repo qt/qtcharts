@@ -43,6 +43,7 @@ QChartView::QChartView(QWidget *parent) :
     m_verticalRubberBand(false),
     m_horizonalRubberBand(false)
 {
+    setBackgroundRole(QPalette::Window);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setScene(m_scene);
