@@ -61,12 +61,12 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         connect(slice, SIGNAL(hoverEnter()), s, SIGNAL(hoverEnter()));
         connect(slice, SIGNAL(hoverLeave()), s, SIGNAL(hoverLeave()));
 
-        PieSliceLayout layout = calculateSliceLayout(s);
+        PieSliceData data = sliceData(s);
 
         if (m_animator)
-            m_animator->addAnimation(this, s, layout, isEmpty);
+            m_animator->addAnimation(this, s, data, isEmpty);
         else
-            setLayout(s, layout);
+            setLayout(s, data);
     }
 }
 
@@ -93,8 +93,8 @@ void PieChartItem::handleSliceChanged()
 {
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
-    PieSliceLayout layout = calculateSliceLayout(slice);
-    updateLayout(slice, layout);
+    PieSliceData data = sliceData(slice);
+    updateLayout(slice, data);
     update();
 }
 
@@ -125,25 +125,40 @@ void PieChartItem::calculatePieLayout()
     m_pieRadius *= m_series->pieSize();
 }
 
-PieSliceLayout PieChartItem::calculateSliceLayout(QPieSlice *slice)
+PieSliceData PieChartItem::sliceData(QPieSlice *slice)
 {
-    PieSliceLayout sliceLayout;
-    sliceLayout.m_center = PieSlice::sliceCenter(m_pieCenter, m_pieRadius, slice);
-    sliceLayout.m_radius = m_pieRadius;
-    sliceLayout.m_startAngle = slice->startAngle();
-    sliceLayout.m_angleSpan = slice->m_angleSpan;
-    sliceLayout.m_pen = slice->m_slicePen;
-    sliceLayout.m_brush = slice->m_sliceBrush;
-    return sliceLayout;
+    PieSliceData sliceData;
+
+    // TODO:
+    // sliceData = slice->m_data;
+
+    sliceData.m_center = PieSlice::sliceCenter(m_pieCenter, m_pieRadius, slice);
+    sliceData.m_radius = m_pieRadius;
+    sliceData.m_startAngle = slice->startAngle();
+    sliceData.m_angleSpan = slice->m_angleSpan;
+
+    sliceData.m_pen = slice->m_slicePen;
+    sliceData.m_brush = slice->m_sliceBrush;
+
+    sliceData.m_isExploded = slice->isExploded();
+    sliceData.m_explodeDistanceFactor = slice->explodeDistanceFactor();
+
+    sliceData.m_labelVisible = slice->isLabelVisible();
+    sliceData.m_labelText = slice->label();
+    sliceData.m_labelFont = slice->labelFont();
+    sliceData.m_labelArmLengthFactor = slice->labelArmLengthFactor();
+    sliceData.m_labelArmPen = slice->labelArmPen();
+
+    return sliceData;
 }
 
 PieLayout PieChartItem::calculateLayout()
 {
     calculatePieLayout();
-    PieLayout  layout;
+    PieLayout layout;
     foreach (QPieSlice* s, m_series->slices()) {
         if (m_slices.contains(s)) // calculate layout only for those slices that are already visible
-            layout.insert(s, calculateSliceLayout(s));
+            layout.insert(s, sliceData(s));
     }
     return layout;
 }
@@ -156,12 +171,12 @@ void PieChartItem::applyLayout(const PieLayout &layout)
         setLayout(layout);
 }
 
-void PieChartItem::updateLayout(QPieSlice *slice, const PieSliceLayout &layout)
+void PieChartItem::updateLayout(QPieSlice *slice, const PieSliceData &sliceData)
 {
     if (m_animator)
-        m_animator->updateLayout(this, slice, layout);
+        m_animator->updateLayout(this, slice, sliceData);
     else
-        setLayout(slice, layout);
+        setLayout(slice, sliceData);
 }
 
 void PieChartItem::setLayout(const PieLayout &layout)
@@ -169,21 +184,18 @@ void PieChartItem::setLayout(const PieLayout &layout)
     foreach (QPieSlice *slice, layout.keys()) {
         PieSlice *s = m_slices.value(slice);
         Q_ASSERT(s);
-        s->setLayout(layout.value(slice));
-        s->updateData(slice);
+        s->setSliceData(layout.value(slice));
         s->updateGeometry();
         s->update();
     }
 }
 
-void PieChartItem::setLayout(QPieSlice *slice, const PieSliceLayout &layout)
+void PieChartItem::setLayout(QPieSlice *slice, const PieSliceData &sliceData)
 {
     // find slice
     PieSlice *s = m_slices.value(slice);
     Q_ASSERT(s);
-    s->setLayout(layout);
-    if (m_series->m_slices.contains(slice)) // Slice has been deleted if not found. Animations ongoing...
-        s->updateData(slice);
+    s->setSliceData(sliceData);
     s->updateGeometry();
     s->update();
 }

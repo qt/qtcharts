@@ -22,32 +22,32 @@ void PieAnimation::updateValues(const PieLayout &newValues)
         updateValue(s, newValues.value(s));
 }
 
-void PieAnimation::updateValue(QPieSlice *slice, const PieSliceLayout &endLayout)
+void PieAnimation::updateValue(QPieSlice *slice, const PieSliceData &sliceData)
 {
     PieSliceAnimation *animation = m_animations.value(slice);
     Q_ASSERT(animation);
     animation->stop();
 
-    animation->updateValue(endLayout);
+    animation->updateValue(sliceData);
     animation->setDuration(1000);
     animation->setEasingCurve(QEasingCurve::OutQuart);
 
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-void PieAnimation::addSlice(QPieSlice *slice, const PieSliceLayout &endLayout, bool isEmpty)
+void PieAnimation::addSlice(QPieSlice *slice, const PieSliceData &sliceData, bool isEmpty)
 {
     PieSliceAnimation *animation = new PieSliceAnimation(m_item, slice);
     m_animations.insert(slice, animation);
 
-    PieSliceLayout startLayout = endLayout;
-    startLayout.m_radius = 0;
+    PieSliceData startValue = sliceData;
+    startValue.m_radius = 0;
     if (isEmpty)
-        startLayout.m_startAngle = 0;
+        startValue.m_startAngle = 0;
     else
-        startLayout.m_startAngle = endLayout.m_startAngle + (endLayout.m_angleSpan/2);
-    startLayout.m_angleSpan = 0;
-    animation->setValue(startLayout, endLayout);
+        startValue.m_startAngle = sliceData.m_startAngle + (sliceData.m_angleSpan/2);
+    startValue.m_angleSpan = 0;
+    animation->setValue(startValue, sliceData);
 
     animation->setDuration(1000);
     animation->setEasingCurve(QEasingCurve::OutQuart);
@@ -60,13 +60,13 @@ void PieAnimation::removeSlice(QPieSlice *slice)
     Q_ASSERT(animation);
     animation->stop();
 
-    PieSliceLayout endLayout = animation->currentSliceValue();
-    endLayout.m_radius = 0;
+    PieSliceData endValue = animation->currentSliceValue();
+    endValue.m_radius = 0;
     // TODO: find the actual angle where this slice disappears
-    endLayout.m_startAngle = endLayout.m_startAngle + endLayout.m_angleSpan;
-    endLayout.m_angleSpan = 0;
+    endValue.m_startAngle = endValue.m_startAngle + endValue.m_angleSpan;
+    endValue.m_angleSpan = 0;
 
-    animation->updateValue(endLayout);
+    animation->updateValue(endValue);
     animation->setDuration(1000);
     animation->setEasingCurve(QEasingCurve::OutQuart);
 

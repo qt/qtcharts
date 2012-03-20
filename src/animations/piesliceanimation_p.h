@@ -14,9 +14,9 @@ class PieSliceAnimation : public QVariantAnimation
 public:
     PieSliceAnimation(PieChartItem *item, QPieSlice *slice);
     ~PieSliceAnimation();
-    void setValue(const PieSliceLayout &startValue, const PieSliceLayout &endValue);
-    void updateValue(const PieSliceLayout &endValue);
-    PieSliceLayout currentSliceValue();
+    void setValue(const PieSliceData &startValue, const PieSliceData &endValue);
+    void updateValue(const PieSliceData &endValue);
+    PieSliceData currentSliceValue();
 
 protected:
     QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const;
@@ -25,7 +25,7 @@ protected:
 private:
     PieChartItem *m_item;
     QPieSlice *m_slice;
-    PieSliceLayout m_currentValue;
+    PieSliceData m_currentValue;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

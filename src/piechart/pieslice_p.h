@@ -16,15 +16,25 @@ class PieChartItem;
 class PieSliceLabel;
 class QPieSlice;
 
-class PieSliceLayout
+class PieSliceData
 {
 public:
     QPointF m_center;
     qreal m_radius;
     qreal m_startAngle;
     qreal m_angleSpan;
+
     QPen m_pen;
     QBrush m_brush;
+
+    bool m_isExploded;
+    qreal m_explodeDistanceFactor;
+
+    bool m_labelVisible;
+    QString m_labelText;
+    QFont m_labelFont;
+    qreal m_labelArmLengthFactor;
+    QPen m_labelArmPen;
 };
 
 class PieSlice : public QGraphicsObject
@@ -49,30 +59,19 @@ Q_SIGNALS:
     void hoverLeave();
 
 public:
-    void setLayout(PieSliceLayout layout);
+    void setSliceData(PieSliceData sliceData);
     void updateGeometry();
-    void updateData(const QPieSlice *sliceData);
     static QPointF sliceCenter(QPointF point, qreal radius, QPieSlice *slice);
     static QPainterPath slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal* centerAngle, QPointF* armStart);
     static QPainterPath labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF* textStart);
     static QRectF labelTextRect(QFont font, QString text);
 
 private:
-    PieSliceLayout m_layout;
+    PieSliceData m_data;
     QRectF m_boundingRect;
-
     QPainterPath m_slicePath;
-    bool m_isExploded;
-    qreal m_explodeDistanceFactor;
-    bool m_labelVisible;
-
     QPainterPath m_labelArmPath;
-    qreal m_labelArmLengthFactor;
-    QPen m_labelArmPen;
-
     QRectF m_labelTextRect;
-    QFont m_labelFont;
-    QString m_labelText;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

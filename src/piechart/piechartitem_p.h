@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSlice;
 class ChartPresenter;
 
-typedef QHash<QPieSlice*, PieSliceLayout> PieLayout;
+typedef QHash<QPieSlice*, PieSliceData> PieLayout;
 
 class PieChartItem : public QObject, public ChartItem
 {
@@ -36,12 +36,12 @@ public Q_SLOTS:
 
 public:
     void calculatePieLayout();
-    PieSliceLayout calculateSliceLayout(QPieSlice *slice);
+    PieSliceData sliceData(QPieSlice *slice);
     PieLayout calculateLayout();
     void applyLayout(const PieLayout &layout);
-    void updateLayout(QPieSlice *slice, const PieSliceLayout &layout);
+    void updateLayout(QPieSlice *slice, const PieSliceData &sliceData);
     void setLayout(const PieLayout &layout);
-    void setLayout(QPieSlice *slice, const PieSliceLayout &layout);
+    void setLayout(QPieSlice *slice, const PieSliceData &sliceData);
     void destroySlice(QPieSlice *slice);
 
 private:

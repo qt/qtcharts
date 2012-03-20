@@ -2,7 +2,7 @@
 #include "piechartitem_p.h"
 #include "qpieslice.h"
 
-Q_DECLARE_METATYPE(QtCommercialChart::PieSliceLayout)
+Q_DECLARE_METATYPE(QtCommercialChart::PieSliceData)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -49,7 +49,7 @@ PieSliceAnimation::~PieSliceAnimation()
 {
 }
 
-void PieSliceAnimation::setValue(const PieSliceLayout &startValue, const PieSliceLayout &endValue)
+void PieSliceAnimation::setValue(const PieSliceData &startValue, const PieSliceData &endValue)
 {
     if (state() != QAbstractAnimation::Stopped)
         stop();
@@ -60,7 +60,7 @@ void PieSliceAnimation::setValue(const PieSliceLayout &startValue, const PieSlic
     setKeyValueAt(1.0, qVariantFromValue(endValue));
 }
 
-void PieSliceAnimation::updateValue(const PieSliceLayout &endValue)
+void PieSliceAnimation::updateValue(const PieSliceData &endValue)
 {
     if (state() != QAbstractAnimation::Stopped)
         stop();
@@ -69,7 +69,7 @@ void PieSliceAnimation::updateValue(const PieSliceLayout &endValue)
     setKeyValueAt(1.0, qVariantFromValue(endValue));
 }
 
-PieSliceLayout PieSliceAnimation::currentSliceValue()
+PieSliceData PieSliceAnimation::currentSliceValue()
 {
     // NOTE:
     // We must use an internal current value because QVariantAnimation::currentValue() is updated
@@ -81,10 +81,10 @@ PieSliceLayout PieSliceAnimation::currentSliceValue()
 
 QVariant PieSliceAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
 {
-    PieSliceLayout startValue = qVariantValue<PieSliceLayout>(start);
-    PieSliceLayout endValue = qVariantValue<PieSliceLayout>(end);
+    PieSliceData startValue = qVariantValue<PieSliceData>(start);
+    PieSliceData endValue = qVariantValue<PieSliceData>(end);
 
-    PieSliceLayout result;
+    PieSliceData result;
     result = endValue;
     result.m_center = linearPos(startValue.m_center, endValue.m_center, progress);
     result.m_radius = linearPos(startValue.m_radius, endValue.m_radius, progress);
@@ -99,7 +99,7 @@ QVariant PieSliceAnimation::interpolated(const QVariant &start, const QVariant &
 void PieSliceAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped) { //workaround
-        m_currentValue = qVariantValue<PieSliceLayout>(value);
+        m_currentValue = qVariantValue<PieSliceData>(value);
         m_item->setLayout(m_slice, m_currentValue);
     }
 }

@@ -21,11 +21,7 @@ QPointF offset(qreal angle, qreal length)
 }
 
 PieSlice::PieSlice(QGraphicsItem* parent)
-    :QGraphicsObject(parent),
-    m_isExploded(false),
-    m_explodeDistanceFactor(0),
-    m_labelVisible(false),
-    m_labelArmLengthFactor(0)
+    :QGraphicsObject(parent)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::LeftButton);
@@ -54,19 +50,19 @@ void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option
     painter->setClipRect(parentItem()->boundingRect());
 
     painter->save();
-    painter->setPen(m_layout.m_pen);
-    painter->setBrush(m_layout.m_brush);
+    painter->setPen(m_data.m_pen);
+    painter->setBrush(m_data.m_brush);
     painter->drawPath(m_slicePath);
     painter->restore();
 
-    if (m_labelVisible) {
+    if (m_data.m_labelVisible) {
         painter->save();
-        painter->setPen(m_labelArmPen);
+        painter->setPen(m_data.m_labelArmPen);
         painter->drawPath(m_labelArmPath);
         painter->restore();
 
-        painter->setFont(m_labelFont);
-        painter->drawText(m_labelTextRect.bottomLeft(), m_labelText);
+        painter->setFont(m_data.m_labelFont);
+        painter->drawText(m_labelTextRect.bottomLeft(), m_data.m_labelText);
     }
 }
 
@@ -85,14 +81,14 @@ void PieSlice::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
     emit clicked();
 }
 
-void PieSlice::setLayout(PieSliceLayout layout)
+void PieSlice::setSliceData(PieSliceData sliceData)
 {
-    m_layout = layout;
+    m_data = sliceData;
 }
 
 void PieSlice::updateGeometry()
 {
-    if (m_layout.m_radius <= 0)
+    if (m_data.m_radius <= 0)
         return;
 
     prepareGeometryChange();
@@ -100,34 +96,20 @@ void PieSlice::updateGeometry()
     // update slice path
     qreal centerAngle;
     QPointF armStart;
-    m_slicePath = slicePath(m_layout.m_center, m_layout.m_radius, m_layout.m_startAngle, m_layout.m_angleSpan, &centerAngle, &armStart);
+    m_slicePath = slicePath(m_data.m_center, m_data.m_radius, m_data.m_startAngle, m_data.m_angleSpan, &centerAngle, &armStart);
 
     // update text rect
-    m_labelTextRect = labelTextRect(m_labelFont, m_labelText);
+    m_labelTextRect = labelTextRect(m_data.m_labelFont, m_data.m_labelText);
 
     // update label arm path
     QPointF labelTextStart;
-    m_labelArmPath = labelArmPath(armStart, centerAngle, m_layout.m_radius * m_labelArmLengthFactor, m_labelTextRect.width(), &labelTextStart);
+    m_labelArmPath = labelArmPath(armStart, centerAngle, m_data.m_radius * m_data.m_labelArmLengthFactor, m_labelTextRect.width(), &labelTextStart);
 
     // update text position
     m_labelTextRect.moveBottomLeft(labelTextStart);
 
     // update bounding rect
     m_boundingRect = m_slicePath.boundingRect().united(m_labelArmPath.boundingRect()).united(m_labelTextRect);
-}
-
-void PieSlice::updateData(const QPieSlice* sliceData)
-{
-    // TODO: compare what has changes to avoid unneccesary geometry updates
-
-    m_isExploded = sliceData->isExploded();
-    m_explodeDistanceFactor = sliceData->explodeDistanceFactor();
-
-    m_labelVisible = sliceData->isLabelVisible();
-    m_labelText = sliceData->label();
-    m_labelFont = sliceData->labelFont();
-    m_labelArmLengthFactor = sliceData->labelArmLengthFactor();
-    m_labelArmPen = sliceData->labelArmPen();
 }
 
 QPointF PieSlice::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
