@@ -1,5 +1,5 @@
 #include "declarativechart.h"
-#include <QPainter>s
+#include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
