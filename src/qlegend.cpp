@@ -338,7 +338,7 @@ void QLegend::appendMarkers(QBarSeries *series)
         marker->setName(s->name());
         marker->setBrush(s->brush());
         connect(marker,SIGNAL(clicked(QBarSet*,Qt::MouseButton)),this,SIGNAL(clicked(QBarSet*,Qt::MouseButton)));
-        connect(s,SIGNAL(changed()),marker,SLOT(changed()));
+        connect(s,SIGNAL(valueChanged()),marker,SLOT(changed()));
         connect(marker,SIGNAL(destroyed()),this,SLOT(handleMarkerDestroyed()));
         mMarkers.append(marker);
         childItems().append(marker);
@@ -396,7 +396,7 @@ void QLegend::layoutChanged()
 
     if (mMarkers.count() > maxHorizontalItems * maxVerticalItems) {
         // TODO: overlapping layout
-        qDebug() << "Warning. Not enough space to layout all legend items properly.";
+        //qDebug() << "Warning. Not enough space to layout all legend items properly.";
     }
 
     qreal margin = 5;
