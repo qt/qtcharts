@@ -23,6 +23,7 @@ public:
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
     void insertBarSet(int i, QBarSet *set);
     void insertCategory(int i, QString category);
+    void removeCategory(int i);
     int barsetCount();
     int categoryCount();
     QList<QBarSet*> barSets();

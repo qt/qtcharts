@@ -80,6 +80,11 @@ void QBarSeries::insertCategory(int i, QString category)
     mModel->insertCategory(i, category);
 }
 
+void QBarSeries::removeCategory(int i)
+{
+    mModel->removeCategory(i);
+}
+
 /*!
     Returns number of sets in series.
 */
@@ -343,9 +348,14 @@ void QBarSeries::modelDataAdded(QModelIndex /*parent*/, int start, int /*end*/)
     emit restructuredBar(1);
 }
 
-void QBarSeries::modelDataRemoved(QModelIndex /*parent*/, int /*start*/, int /*end*/)
+void QBarSeries::modelDataRemoved(QModelIndex /*parent*/, int start, int /*end*/)
 {
-    //
+    removeCategory(start);
+    for (int i = 0; i <= m_mapBarTop - m_mapBarBottom; i++)
+    {
+        barsetAt(i)->removeValue(start);
+    }
+    emit restructuredBar(1);
 }
 
 void QBarSeries::barsetChanged()

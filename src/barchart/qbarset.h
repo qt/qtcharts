@@ -17,6 +17,7 @@ public:
     QString name();
     QBarSet& operator << (const qreal &value);  // appends new value to set
     void insertValue(int i, qreal value);
+    void removeValue(int i);
 
     // TODO: remove indices eventually. Use as internal?
     int count();                                // count of values in set

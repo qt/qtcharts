@@ -91,6 +91,11 @@ void QBarSet::insertValue(int i, qreal value)
     mValues.insert(i, value);
 }
 
+void QBarSet::removeValue(int i)
+{
+    mValues.removeAt(i);
+}
+
 /*!
     Returns count of values in set.
 */
