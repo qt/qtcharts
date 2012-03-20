@@ -16,9 +16,9 @@
 //items
 #include "axisitem_p.h"
 #include "areachartitem_p.h"
-#include "barpresenter_p.h"
-#include "stackedbarpresenter_p.h"
-#include "percentbarpresenter_p.h"
+#include "barchartitem_p.h"
+#include "stackedbarchartitem_p.h"
+#include "percentbarchartitem_p.h"
 #include "linechartitem_p.h"
 #include "piechartitem_p.h"
 #include "scatterchartitem_p.h"
@@ -160,7 +160,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypeBar: {
         QBarSeries* barSeries = static_cast<QBarSeries*>(series);
-        BarPresenter* bar = new BarPresenter(barSeries,m_chart);
+        BarChartItem* bar = new BarChartItem(barSeries,m_chart);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
          //  m_animator->addAnimation(bar);
         }
@@ -173,7 +173,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypeStackedBar: {
         QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
-        StackedBarPresenter* bar = new StackedBarPresenter(stackedBarSeries,m_chart);
+        StackedBarChartItem* bar = new StackedBarChartItem(stackedBarSeries,m_chart);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
          //  m_animator->addAnimation(bar);
         }
@@ -186,7 +186,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypePercentBar: {
         QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
-        PercentBarPresenter* bar = new PercentBarPresenter(percentBarSeries,m_chart);
+        PercentBarChartItem* bar = new PercentBarChartItem(percentBarSeries,m_chart);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
          //  m_animator->addAnimation(bar);
         }

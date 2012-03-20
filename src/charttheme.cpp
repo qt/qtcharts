@@ -19,9 +19,9 @@
 
 //items
 #include "axisitem_p.h"
-#include "barpresenter_p.h"
-#include "stackedbarpresenter_p.h"
-#include "percentbarpresenter_p.h"
+#include "barchartitem_p.h"
+#include "stackedbarchartitem_p.h"
+#include "percentbarchartitem_p.h"
 #include "linechartitem_p.h"
 #include "areachartitem_p.h"
 #include "scatterchartitem_p.h"

@@ -1,5 +1,5 @@
-#ifndef BARPRESENTERBASE_H
-#define BARPRESENTERBASE_H
+#ifndef BARCHARTITEM_H
+#define BARCHARTITEM_H
 
 #include "chartitem_p.h"
 #include "qbarseries.h"
@@ -14,14 +14,13 @@ class BarValue;
 class QChartAxisCategories;
 class QChart;
 
-// Common implemantation of different presenters. Not to be instantiated.
-// TODO: combine this with BarPresenter and derive other presenters from it?
-class BarPresenterBase : public QObject, public ChartItem
+// Common implemantation of different presenters.
+class BarChartItem : public QObject, public ChartItem
 {
     Q_OBJECT
 public:
-    BarPresenterBase(QBarSeries *series, QChart *parent = 0);
-    virtual ~BarPresenterBase();
+    BarChartItem(QBarSeries *series, QChart *parent = 0);
+    virtual ~BarChartItem();
 
 public:
     // From QGraphicsItem
@@ -31,7 +30,7 @@ public:
     // TODO: Consider the domain for layoutChanged. May be use case, may not be. If it is, then the derived classes need to implement it
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
 private slots:
-    virtual void layoutChanged() = 0;   // layout has changed -> need to recalculate bar sizes
+    virtual void layoutChanged();   // layout has changed -> need to recalculate bar sizes
 
 protected:
     void initAxisLabels();
@@ -62,4 +61,4 @@ protected:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // BARPRESENTERBASE_H
+#endif // BARCHARTITEM_H

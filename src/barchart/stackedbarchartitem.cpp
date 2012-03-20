@@ -1,4 +1,4 @@
-#include "barpresenter_p.h"
+#include "stackedbarchartitem_p.h"
 #include "bar_p.h"
 #include "barvalue_p.h"
 #include "qbarset.h"
@@ -6,62 +6,70 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarPresenter::BarPresenter(QBarSeries *series, QChart *parent) :
-    BarPresenterBase(series, parent)
-{    
-    connect(series, SIGNAL(updatedBars()), this, SLOT(layoutChanged()));
-    connect(series, SIGNAL(restructuredBar(int)), this, SLOT(handleModelChanged(int)));
+StackedBarChartItem::StackedBarChartItem(QBarSeries *series, QChart *parent) :
+    BarChartItem(series,parent)
+{
 }
 
-void BarPresenter::layoutChanged()
+StackedBarChartItem::~StackedBarChartItem()
+{
+}
+
+
+void StackedBarChartItem::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
     if (mSeries->barsetCount() <= 0) {
         qDebug() << "No sets in model!";
+        // Nothing to do.
+        return;
+    }
+
+    if (mSeries->categoryCount() == 0) {
+        qDebug() << "No categories in model!";
+        // Nothing to do
         return;
     }
 
     if (childItems().count() == 0) {
-        qDebug() << "WARNING: BarPresenter::layoutChanged called before graphics items are created!";
+        qDebug() << "WARNING: StackedBarChartItem::layoutChanged called before graphics items are created!";
         return;
     }
 
     // Use temporary qreals for accurancy (we might get some compiler warnings... :)
-    int categoryCount = mSeries->categoryCount();
-    int setCount = mSeries->barsetCount();
-
+    qreal maxSum = mSeries->maxCategorySum();
+    qreal h = mHeight;
+    qreal scale = (h / maxSum);
     qreal tW = mWidth;
-    qreal tH = mHeight;
-    qreal tM = mSeries->max();
-    qreal scale = (tH/tM);
-    qreal tC = categoryCount + 1;
-    qreal categoryWidth = tW/tC;
-    mBarWidth = categoryWidth / (setCount+1);
+    qreal tC = mSeries->categoryCount() + 1;
+    qreal cC = mSeries->categoryCount() * 2 + 1;
+    mBarWidth = tW / cC;
+    qreal xStep = (tW/tC);
+    qreal xPos = ((tW/tC) - mBarWidth / 2);
 
     int itemIndex(0);
-    for (int category=0; category < categoryCount; category++) {
-        qreal xPos = categoryWidth * category + categoryWidth /2 + mBarWidth/2;
-        qreal yPos = mHeight;
-        for (int set = 0; set < setCount; set++) {
-            qreal barHeight = mSeries->valueAt(set,category) * scale;
+    for (int category = 0; category < mSeries->categoryCount(); category++) {
+        qreal yPos = h;
+        for (int set=0; set < mSeries->barsetCount(); set++) {
+            qreal barHeight = mSeries->valueAt(set, category) * scale;
             Bar* bar = mBars.at(itemIndex);
 
-            // TODO: width settable per bar?
             bar->resize(mBarWidth, barHeight);
             bar->setPen(mSeries->barsetAt(set)->pen());
             bar->setBrush(mSeries->barsetAt(set)->brush());
             bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
-            xPos += mBarWidth;
+            yPos -= barHeight;
         }
+        xPos += xStep;
     }
 
     // Position floating values
     itemIndex = 0;
+    xPos = (tW/tC);
     for (int category=0; category < mSeries->categoryCount(); category++) {
-        qreal xPos = categoryWidth * category + categoryWidth/2 + mBarWidth;
-        qreal yPos = mHeight;
+        qreal yPos = h;
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);
@@ -78,12 +86,12 @@ void BarPresenter::layoutChanged()
             }
 
             itemIndex++;
-            xPos += mBarWidth;
+            yPos -= barHeight;
         }
+        xPos += xStep;
     }
-    update();
 }
 
-#include "moc_barpresenter_p.cpp"
+#include "moc_stackedbarchartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

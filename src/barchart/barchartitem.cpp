@@ -1,4 +1,4 @@
-#include "barpresenterbase_p.h"
+#include "barchartitem_p.h"
 #include "bar_p.h"
 #include "barvalue_p.h"
 #include "qbarset.h"
@@ -12,7 +12,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent) :
+BarChartItem::BarChartItem(QBarSeries *series, QChart *parent) :
     ChartItem(parent),
     mHeight(0),
     mWidth(0),
@@ -21,20 +21,21 @@ BarPresenterBase::BarPresenterBase(QBarSeries *series, QChart *parent) :
     mChart(parent)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
+    connect(series, SIGNAL(updatedBars()), this, SLOT(layoutChanged()));
     setZValue(ChartPresenter::BarSeriesZValue);
     initAxisLabels();
     dataChanged();
 }
 
-BarPresenterBase::~BarPresenterBase()
+BarChartItem::~BarChartItem()
 {
     disconnect(this,SLOT(showToolTip(QPoint,QString)));
 }
 
-void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void BarChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     if (!mLayoutSet) {
-        qDebug() << "BarPresenterBase::paint called without layout set. Aborting.";
+        qDebug() << "BarChartItem::paint called without layout set. Aborting.";
         return;
     }
     foreach(QGraphicsItem* i, childItems()) {
@@ -42,12 +43,12 @@ void BarPresenterBase::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     }
 }
 
-QRectF BarPresenterBase::boundingRect() const
+QRectF BarChartItem::boundingRect() const
 {
     return QRectF(0, 0, mWidth, mHeight);
 }
 
-void BarPresenterBase::dataChanged()
+void BarChartItem::dataChanged()
 {
     // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?
     // Delete old bars
@@ -85,7 +86,79 @@ void BarPresenterBase::dataChanged()
     }
 }
 
-void BarPresenterBase::initAxisLabels()
+void BarChartItem::layoutChanged()
+{
+    // Scale bars to new layout
+    // Layout for bars:
+    if (mSeries->barsetCount() <= 0) {
+        qDebug() << "No sets in model!";
+        return;
+    }
+
+    if (childItems().count() == 0) {
+        qDebug() << "WARNING: BarChartitem::layoutChanged called before graphics items are created!";
+        return;
+    }
+
+    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
+    int categoryCount = mSeries->categoryCount();
+    int setCount = mSeries->barsetCount();
+
+    qreal tW = mWidth;
+    qreal tH = mHeight;
+    qreal tM = mSeries->max();
+    qreal scale = (tH/tM);
+    qreal tC = categoryCount + 1;
+    qreal categoryWidth = tW/tC;
+    mBarWidth = categoryWidth / (setCount+1);
+
+    int itemIndex(0);
+    for (int category=0; category < categoryCount; category++) {
+        qreal xPos = categoryWidth * category + categoryWidth /2 + mBarWidth/2;
+        qreal yPos = mHeight;
+        for (int set = 0; set < setCount; set++) {
+            qreal barHeight = mSeries->valueAt(set,category) * scale;
+            Bar* bar = mBars.at(itemIndex);
+
+            // TODO: width settable per bar?
+            bar->resize(mBarWidth, barHeight);
+            bar->setPen(mSeries->barsetAt(set)->pen());
+            bar->setBrush(mSeries->barsetAt(set)->brush());
+            bar->setPos(xPos, yPos-barHeight);
+            itemIndex++;
+            xPos += mBarWidth;
+        }
+    }
+
+    // Position floating values
+    itemIndex = 0;
+    for (int category=0; category < mSeries->categoryCount(); category++) {
+        qreal xPos = categoryWidth * category + categoryWidth/2 + mBarWidth;
+        qreal yPos = mHeight;
+        for (int set=0; set < mSeries->barsetCount(); set++) {
+            qreal barHeight = mSeries->valueAt(set,category) * scale;
+            BarValue* value = mFloatingValues.at(itemIndex);
+
+            QBarSet* barSet = mSeries->barsetAt(set);
+            value->resize(100,50);  // TODO: proper layout for this.
+            value->setPos(xPos, yPos-barHeight/2);
+            value->setPen(barSet->floatingValuePen());
+
+            if (mSeries->valueAt(set,category) != 0) {
+                value->setValueString(QString::number(mSeries->valueAt(set,category)));
+            } else {
+                value->setValueString(QString(""));
+            }
+
+            itemIndex++;
+            xPos += mBarWidth;
+        }
+    }
+    update();
+}
+
+
+void BarChartItem::initAxisLabels()
 {
     int count = mSeries->categoryCount();
     if (0 == count) {
@@ -113,13 +186,13 @@ void BarPresenterBase::initAxisLabels()
 
 //handlers
 
-void BarPresenterBase::handleModelChanged(int index)
+void BarChartItem::handleModelChanged(int index)
 {
     Q_UNUSED(index)
     dataChanged();
 }
 
-void BarPresenterBase::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
+void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
     // TODO:
     Q_UNUSED(minX)
@@ -146,7 +219,7 @@ void BarPresenterBase::handleDomainChanged(qreal minX, qreal maxX, qreal minY, q
     */
 }
 
-void BarPresenterBase::handleGeometryChanged(const QRectF& rect)
+void BarChartItem::handleGeometryChanged(const QRectF& rect)
 {
     mWidth = rect.width();
     mHeight = rect.height();
@@ -155,12 +228,12 @@ void BarPresenterBase::handleGeometryChanged(const QRectF& rect)
     setPos(rect.topLeft());
 }
 
-void BarPresenterBase::showToolTip(QPoint pos, QString tip)
+void BarChartItem::showToolTip(QPoint pos, QString tip)
 {
     // TODO: cool tooltip instead of default
     QToolTip::showText(pos,tip);
 }
 
-#include "moc_barpresenterbase_p.cpp"
+#include "moc_barchartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

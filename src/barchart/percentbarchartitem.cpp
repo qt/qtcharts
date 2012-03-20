@@ -1,4 +1,4 @@
-#include "percentbarpresenter_p.h"
+#include "percentbarchartitem_p.h"
 #include "bar_p.h"
 #include "barvalue_p.h"
 #include "qbarset.h"
@@ -7,12 +7,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-PercentBarPresenter::PercentBarPresenter(QBarSeries *series, QChart *parent) :
-    BarPresenterBase(series, parent)
+PercentBarChartItem::PercentBarChartItem(QBarSeries *series, QChart *parent) :
+    BarChartItem(series, parent)
 {
 }
 
-void PercentBarPresenter::layoutChanged()
+void PercentBarChartItem::layoutChanged()
 {
     // Scale bars to new layout
     // Layout for bars:
@@ -23,7 +23,7 @@ void PercentBarPresenter::layoutChanged()
     }
 
     if (childItems().count() == 0) {
-        qDebug() << "WARNING: PercentBarPresenter::layoutChanged called before graphics items are created!";
+        qDebug() << "WARNING: PercentBarChartItem::layoutChanged called before graphics items are created!";
         return;
     }
 
@@ -89,6 +89,6 @@ void PercentBarPresenter::layoutChanged()
     }
 }
 
-#include "moc_percentbarpresenter_p.cpp"
+#include "moc_percentbarchartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
