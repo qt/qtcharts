@@ -16,7 +16,7 @@ public:
         generateSeriesGradients();
 
         // Background
-        QLinearGradient backgroundGradient;
+        QLinearGradient backgroundGradient(0.5, 0.0, 0.5, 1.0);
         backgroundGradient.setColorAt(0.0, QRgb(0x2e303a));
         backgroundGradient.setColorAt(1.0, QRgb(0x121218));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
