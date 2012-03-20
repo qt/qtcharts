@@ -25,6 +25,7 @@ protected:
 private:
     PieChartItem *m_item;
     QPieSlice *m_slice;
+    PieSliceLayout m_currentValue;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

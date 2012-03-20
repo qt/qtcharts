@@ -23,6 +23,8 @@ public:
     qreal m_radius;
     qreal m_startAngle;
     qreal m_angleSpan;
+    QPen m_pen;
+    QBrush m_brush;
 };
 
 class PieSlice : public QGraphicsObject
@@ -63,8 +65,6 @@ private:
     bool m_isExploded;
     qreal m_explodeDistanceFactor;
     bool m_labelVisible;
-    QPen m_slicePen;
-    QBrush m_sliceBrush;
 
     QPainterPath m_labelArmPath;
     qreal m_labelArmLengthFactor;

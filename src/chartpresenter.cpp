@@ -212,7 +212,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypePie: {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        PieChartItem* pie = new PieChartItem(m_chart, pieSeries);
+        PieChartItem* pie = new PieChartItem(pieSeries, this, m_chart);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
             m_animator->addAnimation(pie);
         }

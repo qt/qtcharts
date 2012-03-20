@@ -3,6 +3,7 @@
 #include "qpieslice.h"
 #include "qpieseries.h"
 #include "chartpresenter_p.h"
+#include "chartdataset_p.h"
 #include "chartanimator_p.h"
 #include <QDebug>
 #include <QPainter>
@@ -10,9 +11,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PieChartItem::PieChartItem(QGraphicsItem *parent, QPieSeries *series)
+PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter *presenter, QGraphicsItem *parent)
     :ChartItem(parent),
-    m_series(series)
+    m_series(series),
+    m_presenter(presenter)
 {
     Q_ASSERT(series);
     connect(series, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
@@ -49,6 +51,8 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 {
     bool isEmpty = m_slices.isEmpty();
 
+    m_presenter->theme()->decorate(m_series, m_presenter->dataSet()->seriesIndex(m_series));
+
     foreach (QPieSlice *s, slices) {
         PieSlice* slice = new PieSlice(this);
         m_slices.insert(s, slice);
@@ -68,6 +72,8 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 
 void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
 {
+    m_presenter->theme()->decorate(m_series, m_presenter->dataSet()->seriesIndex(m_series));
+
     foreach (QPieSlice *s, slices) {
         if (m_animator)
             m_animator->removeAnimation(this, s);
@@ -126,6 +132,8 @@ PieSliceLayout PieChartItem::calculateSliceLayout(QPieSlice *slice)
     sliceLayout.m_radius = m_pieRadius;
     sliceLayout.m_startAngle = slice->startAngle();
     sliceLayout.m_angleSpan = slice->m_angleSpan;
+    sliceLayout.m_pen = slice->m_slicePen;
+    sliceLayout.m_brush = slice->m_sliceBrush;
     return sliceLayout;
 }
 

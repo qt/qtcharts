@@ -8,6 +8,7 @@
 class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSlice;
+class ChartPresenter;
 
 typedef QHash<QPieSlice*, PieSliceLayout> PieLayout;
 
@@ -17,7 +18,7 @@ class PieChartItem : public QObject, public ChartItem
 
 public:
     // TODO: use a generic data class instead of x and y
-    PieChartItem(QGraphicsItem *parent, QPieSeries *series);
+    PieChartItem(QPieSeries *series, ChartPresenter *presenter, QGraphicsItem *parent);
     ~PieChartItem();
 
 public: // from QGraphicsItem
@@ -50,7 +51,7 @@ private:
     QRectF m_rect;
     QPointF m_pieCenter;
     qreal m_pieRadius;
-    QRectF m_debugRect;
+    ChartPresenter *m_presenter;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

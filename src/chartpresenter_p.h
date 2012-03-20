@@ -39,7 +39,10 @@ public:
     int margin() const;
 
     QRectF geometry() const;
-    ChartAnimator* animator() const {return m_animator;};
+
+    ChartAnimator* animator() const {return m_animator;}
+    ChartTheme *theme() { return m_chartTheme; }
+    ChartDataSet *dataSet() { return m_dataset; }
 
     void setChartTheme(QChart::ChartTheme theme,bool force = true);
     QChart::ChartTheme chartTheme();
@@ -52,6 +55,7 @@ public:
     void zoomOut();
     void zoomReset();
     void scroll(int dx,int dy);
+
 private:
     void createConnections();
     void resetAllElements();

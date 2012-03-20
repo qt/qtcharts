@@ -54,8 +54,8 @@ void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option
     painter->setClipRect(parentItem()->boundingRect());
 
     painter->save();
-    painter->setPen(m_slicePen);
-    painter->setBrush(m_sliceBrush);
+    painter->setPen(m_layout.m_pen);
+    painter->setBrush(m_layout.m_brush);
     painter->drawPath(m_slicePath);
     painter->restore();
 
@@ -122,8 +122,6 @@ void PieSlice::updateData(const QPieSlice* sliceData)
 
     m_isExploded = sliceData->isExploded();
     m_explodeDistanceFactor = sliceData->explodeDistanceFactor();
-    m_slicePen = sliceData->slicePen();
-    m_sliceBrush = sliceData->sliceBrush();
 
     m_labelVisible = sliceData->isLabelVisible();
     m_labelText = sliceData->label();
