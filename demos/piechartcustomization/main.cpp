@@ -303,6 +303,11 @@ public:
         // chart settings
         m_themeComboBox = new QComboBox();
         m_themeComboBox->addItem("Default", QChart::ChartThemeDefault);
+        m_themeComboBox->addItem("Light", QChart::ChartThemeLight);
+        m_themeComboBox->addItem("BlueCerulean", QChart::ChartThemeBlueCerulean);
+        m_themeComboBox->addItem("Dark", QChart::ChartThemeDark);
+        m_themeComboBox->addItem("BrownSand", QChart::ChartThemeBrownSand);
+        m_themeComboBox->addItem("BlueNcs", QChart::ChartThemeBlueNcs);
         m_themeComboBox->addItem("Vanilla", QChart::ChartThemeVanilla);
         m_themeComboBox->addItem("Icy", QChart::ChartThemeIcy);
         m_themeComboBox->addItem("Grayscale", QChart::ChartThemeGrayscale);
