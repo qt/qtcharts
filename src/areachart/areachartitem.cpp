@@ -10,16 +10,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-AreaChartItem::AreaChartItem(QAreaSeries* areaSeries,QGraphicsItem *parent):ChartItem(parent),
+AreaChartItem::AreaChartItem(QAreaSeries* areaSeries,ChartPresenter *presenter):Chart(presenter),QGraphicsItem(presenter->rootItem()),
 m_series(areaSeries),
 m_upper(0),
 m_lower(0),
 m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
-    m_upper = new AreaBoundItem(this,m_series->upperSeries());
+    m_upper = new AreaBoundItem(this,m_series->upperSeries(),presenter);
     if(m_series->lowerSeries()){
-    m_lower = new AreaBoundItem(this,m_series->lowerSeries());
+    m_lower = new AreaBoundItem(this,m_series->lowerSeries(),presenter);
     }
 
     QObject::connect(areaSeries,SIGNAL(updated()),this,SLOT(handleUpdated()));

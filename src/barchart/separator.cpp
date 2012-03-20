@@ -5,7 +5,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 Separator::Separator(QGraphicsItem *parent)
-    : ChartItem(parent)
+    : QGraphicsItem(parent)
 {
 }
 

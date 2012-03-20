@@ -13,13 +13,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartItem::BarChartItem(QBarSeries *series, QChart *parent) :
-    ChartItem(parent),
+BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
+    ChartItem(presenter),
     mHeight(0),
     mWidth(0),
     mLayoutSet(false),
-    mSeries(series),
-    mChart(parent)
+    mSeries(series)
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
     connect(series, SIGNAL(updatedBars()), this, SLOT(layoutChanged()));

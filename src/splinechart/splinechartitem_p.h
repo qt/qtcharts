@@ -12,7 +12,7 @@ class SplineChartItem : public XYChartItem
 {
     Q_OBJECT
 public:
-    SplineChartItem(QSplineSeries* series, QGraphicsItem *parent = 0);
+    SplineChartItem(QSplineSeries* series, ChartPresenter *presenter);
 
     //from QGraphicsItem
     QRectF boundingRect() const;

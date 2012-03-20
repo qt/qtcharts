@@ -12,10 +12,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter *presenter, QGraphicsItem *parent)
-    :ChartItem(parent),
-    m_series(series),
-    m_presenter(presenter)
+PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
+    :ChartItem(presenter),
+    m_series(series)
 {
     Q_ASSERT(series);
     connect(series, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
@@ -52,7 +51,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 {
     bool isEmpty = m_slices.isEmpty();
 
-    m_presenter->theme()->decorate(m_series, m_presenter->dataSet()->seriesIndex(m_series));
+    presenter()->theme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
 
     foreach (QPieSlice *s, slices) {
         PieSliceItem* item = new PieSliceItem(this);
@@ -73,11 +72,11 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 
 void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
 {
-    m_presenter->theme()->decorate(m_series, m_presenter->dataSet()->seriesIndex(m_series));
+    presenter()->theme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
 
     foreach (QPieSlice *s, slices) {
-        if (m_animator)
-            m_animator->removeAnimation(this, s);
+        if (animator())
+            animator()->removeAnimation(this, s);
         else
             destroySlice(s);
     }
@@ -148,8 +147,8 @@ PieLayout PieChartItem::calculateLayout()
 
 void PieChartItem::applyLayout(const PieLayout &layout)
 {
-    if (m_animator)
-        m_animator->updateLayout(this, layout);
+    if (animator())
+        animator()->updateLayout(this, layout);
     else
         setLayout(layout);
 }

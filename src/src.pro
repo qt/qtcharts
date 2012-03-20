@@ -17,7 +17,8 @@ SOURCES += \
     qseries.cpp \
     qlegend.cpp \
     legendmarker.cpp \
-    chartbackground.cpp
+    chartbackground.cpp \
+    chart.cpp
 PRIVATE_HEADERS += \
     chartdataset_p.h \
     chartitem_p.h \
@@ -25,7 +26,8 @@ PRIVATE_HEADERS += \
     charttheme_p.h \
     domain_p.h \
     legendmarker_p.h \
-    chartbackground_p.h
+    chartbackground_p.h \
+    chart_p.h
 PUBLIC_HEADERS += \
     qchart.h \
     qchartglobal.h \

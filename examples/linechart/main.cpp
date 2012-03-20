@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //![1]
-
     QLineSeries* series0 = new QLineSeries();
     QPen blue(Qt::blue);
     blue.setWidth(3);

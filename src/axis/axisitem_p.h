@@ -2,7 +2,7 @@
 #define AXISITEM_H_
 
 #include "domain_p.h"
-#include "chartitem_p.h"
+#include "chart_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -10,18 +10,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChartAxis;
 class ChartPresenter;
 
-class AxisItem : public QObject, public ChartItem
+class Axis : public Chart
 {
     Q_OBJECT
 public:
     enum AxisType{X_AXIS,Y_AXIS};
 
-    AxisItem(QChartAxis* axis,ChartPresenter* presenter,AxisType type = X_AXIS,QGraphicsItem* parent = 0);
-    ~AxisItem();
-
-    //from QGraphicsItem
-    QRectF boundingRect() const;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    Axis(QChartAxis* axis,ChartPresenter* presenter,AxisType type = X_AXIS);
+    ~Axis();
 
     AxisType axisType() const {return m_type;};
 
@@ -70,9 +66,9 @@ private:
     void setLayout(QVector<qreal>& layout);
 
     QStringList createLabels(int ticks, qreal min, qreal max) const;
+    void axisSelected();
 
 private:
-    ChartPresenter* m_presenter;
     QChartAxis* m_chartAxis;
     AxisType m_type;
     QRectF m_rect;
@@ -88,6 +84,36 @@ private:
     qreal m_zoomFactor;
 
     friend class AxisAnimation;
+    friend class AxisItem;
+
+};
+
+class AxisItem: public QGraphicsLineItem
+{
+public:
+
+    AxisItem(Axis* axis,QGraphicsItem* parent=0):QGraphicsLineItem(parent),m_axis(axis){};
+
+protected:
+   void mousePressEvent(QGraphicsSceneMouseEvent *event)
+   {
+       Q_UNUSED(event)
+       m_axis->axisSelected();
+   }
+
+   QRectF boundingRect() const
+   {
+       return QGraphicsLineItem::boundingRect().adjusted(0,0,m_axis->axisType()!=Axis::X_AXIS?10:0,m_axis->axisType()!=Axis::Y_AXIS?10:0);
+   }
+
+   QPainterPath shape() const
+   {
+       QPainterPath path;
+       path.addRect(boundingRect());
+       return path;
+   }
+private:
+   Axis* m_axis;
 
 };
 

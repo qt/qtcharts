@@ -69,7 +69,7 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant & end, 
         }
             break;
         default:
-            qWarning()<<"Unknow type of animation";
+            qWarning()<<"Unknown type of animation";
             break;
     }
 

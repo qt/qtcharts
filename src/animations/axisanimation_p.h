@@ -10,13 +10,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class AxisAnimation: public ChartAnimation
 {
 public:
-    AxisAnimation(AxisItem *axis);
+    AxisAnimation(Axis *axis);
     ~AxisAnimation();
 protected:
     virtual QVariant interpolated (const QVariant & from, const QVariant & to, qreal progress ) const;
     virtual void updateCurrentValue (const QVariant & value );
 private:
-    AxisItem* m_axis;
+    Axis* m_axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

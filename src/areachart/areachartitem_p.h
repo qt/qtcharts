@@ -10,11 +10,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QAreaSeries;
 class AreaChartItem;
 
-class AreaChartItem :  public QObject ,public ChartItem
+class AreaChartItem : public Chart, public QGraphicsItem
 {
     Q_OBJECT
 public:
-    AreaChartItem(QAreaSeries* areaSeries, QGraphicsItem *parent = 0);
+    AreaChartItem(QAreaSeries* areaSeries, ChartPresenter *presenter);
     ~ AreaChartItem();
 
     //from QGraphicsItem
@@ -55,7 +55,7 @@ private:
 class AreaBoundItem : public LineChartItem
 {
 public:
-    AreaBoundItem(AreaChartItem* item,QLineSeries* lineSeries):LineChartItem(lineSeries),
+    AreaBoundItem(AreaChartItem* item,QLineSeries* lineSeries,ChartPresenter *presenter):LineChartItem(lineSeries,presenter),
     m_item(item){};
 
     ~AreaBoundItem(){};

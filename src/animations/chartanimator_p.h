@@ -9,7 +9,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartItem;
-class AxisItem;
+class Axis;
 class AreaChartItem;
 class SplineChartItem;
 class ScatterChartItem;
@@ -19,23 +19,24 @@ class XYChartItem;
 class ChartAnimator : public QObject {
 
 public:
-	//TODO: this should be flags in case of two state at the time
 	enum State{ShowState, ScrollUpState, ScrollDownState, ScrollLeftState,ScrollRightState,ZoomInState,ZoomOutState};
+	Q_DECLARE_FLAGS(States, State);
+
     ChartAnimator(QObject *parent = 0);
     virtual ~ChartAnimator();
 
-    void addAnimation(AxisItem* item);
+    void addAnimation(Axis* item);
     void addAnimation(PieChartItem* item);
     void addAnimation(ScatterChartItem* item);
     void addAnimation(LineChartItem* item);
     void addAnimation(SplineChartItem* item);
     void addAnimation(BarChartItem* item);
-    void removeAnimation(ChartItem* item);
+    void removeAnimation(Chart* item);
 
     void animationStarted();
     void updateLayout(XYChartItem* item, QVector<QPointF>& oldLayout,QVector<QPointF>& newLayout,int index);
     void updateLayout(SplineChartItem* item,  QVector<QPointF>& oldPoints , QVector<QPointF>& newPoints, QVector<QPointF>& oldControlPoints, QVector<QPointF>& newContorlPoints,int index);
-    void updateLayout(AxisItem* item, QVector<qreal>& layout);
+    void updateLayout(Axis* item, QVector<qreal>& layout);
 
     void addAnimation(PieChartItem* item, QPieSlice *slice, const PieSliceData &sliceData, bool isEmpty);
     void removeAnimation(PieChartItem* item, QPieSlice *slice);
@@ -47,7 +48,7 @@ public:
     void setState(State state,const QPointF& point = QPointF());
 
 private:
-     QMap<ChartItem*,ChartAnimation*> m_animations;
+     QMap<Chart*,ChartAnimation*> m_animations;
      State m_state;
      QPointF m_point;
 };

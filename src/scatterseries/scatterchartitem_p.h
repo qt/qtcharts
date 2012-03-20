@@ -15,7 +15,7 @@ class ScatterChartItem : public XYChartItem
 {
     Q_OBJECT
 public:
-    explicit ScatterChartItem(QScatterSeries *series, QGraphicsItem *parent = 0);
+    explicit ScatterChartItem(QScatterSeries *series, ChartPresenter *presenter);
 
 public:
     //from QGraphicsItem

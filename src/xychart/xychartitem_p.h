@@ -10,15 +10,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartPresenter;
 class QXYSeries;
 
-class XYChartItem :  public QObject , public ChartItem
+class XYChartItem :  public ChartItem
 {
      Q_OBJECT
 public:
-     explicit XYChartItem(QXYSeries* series, QGraphicsItem *parent = 0);
+     explicit XYChartItem(QXYSeries* series, ChartPresenter *presenter);
     ~ XYChartItem(){};
 
     QVector<QPointF> points() const {return m_points;}
     QRectF clipRect() const { return m_clipRect;}
+
 
 public slots:
     void handlePointAdded(int index);
@@ -31,8 +32,10 @@ signals:
     void clicked(const QPointF& point);
 
 protected:
+
     virtual void setLayout(QVector<QPointF>& points);
     virtual void updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index = 0);
+
     QPointF calculateGeometryPoint(const QPointF& point) const;
     QPointF calculateGeometryPoint(int index) const;
     QPointF calculateDomainPoint(const QPointF& point) const;

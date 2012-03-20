@@ -20,8 +20,11 @@ class BarChartItem : public QObject, public ChartItem
 {
     Q_OBJECT
 public:
-    BarChartItem(QBarSeries *series, QChart *parent = 0);
+    BarChartItem(QBarSeries *series, ChartPresenter *presenter);
     virtual ~BarChartItem();
+
+// Common implemantation of different presenters. Not to be instantiated.
+// TODO: combine this with BarPresenter and derive other presenters from it?
 
 public:
     // From QGraphicsItem
@@ -68,7 +71,6 @@ protected:
     QBarSeries* mSeries;
     QList<Bar*> mBars;
     QList<BarValue*> mFloatingValues;
-    QChart* mChart;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

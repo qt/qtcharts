@@ -5,8 +5,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-SplineChartItem::SplineChartItem(QSplineSeries* series, QGraphicsItem *parent) :
-XYChartItem(series, parent),
+SplineChartItem::SplineChartItem(QSplineSeries* series, ChartPresenter *presenter) :
+XYChartItem(series, presenter),
 m_series(series),
 m_pointsVisible(false)
 {
@@ -42,8 +42,8 @@ void SplineChartItem::updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>&
         return;
     }
 
-    if(m_animator){
-       m_animator->updateLayout(this,oldPoints,newPoints,m_controlPoints,controlPoints,index);
+    if(animator()){
+       animator()->updateLayout(this,oldPoints,newPoints,m_controlPoints,controlPoints,index);
     }else{
        setLayout(newPoints,controlPoints);
     }

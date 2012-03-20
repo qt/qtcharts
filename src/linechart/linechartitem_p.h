@@ -8,12 +8,13 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QLineSeries;
+class ChartPresenter;
 
 class LineChartItem :  public XYChartItem
 {
      Q_OBJECT
 public:
-     explicit LineChartItem(QLineSeries* series,QGraphicsItem *parent = 0);
+     explicit LineChartItem(QLineSeries* series,ChartPresenter *presenter);
     ~ LineChartItem(){};
 
     //from QGraphicsItem

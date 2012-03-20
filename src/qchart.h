@@ -11,7 +11,7 @@ class QGraphicsSceneResizeEvent;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class AxisItem;
+class Axis;
 class QSeries;
 class PlotDomain;
 class BarChartItem;

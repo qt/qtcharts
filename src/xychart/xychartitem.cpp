@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-XYChartItem::XYChartItem(QXYSeries* series, QGraphicsItem *parent):ChartItem(parent),
+XYChartItem::XYChartItem(QXYSeries* series, ChartPresenter *presenter):ChartItem(presenter),
 m_minX(0),
 m_maxX(0),
 m_minY(0),
@@ -68,8 +68,8 @@ QPointF XYChartItem::calculateDomainPoint(const QPointF& point) const
 
 void XYChartItem::updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index)
 {
-    if(m_animator){
-       m_animator->updateLayout(this,oldPoints,newPoints,index);
+    if(animator()){
+       animator()->updateLayout(this,oldPoints,newPoints,index);
     }else{
         setLayout(newPoints);
     }

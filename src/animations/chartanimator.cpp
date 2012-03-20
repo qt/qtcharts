@@ -26,7 +26,7 @@ ChartAnimator::~ChartAnimator()
 {
 }
 
-void ChartAnimator::addAnimation(AxisItem* item)
+void ChartAnimator::addAnimation(Axis* item)
 {
     ChartAnimation* animation = m_animations.value(item);
 
@@ -99,13 +99,13 @@ void ChartAnimator::addAnimation(BarChartItem* item)
 }
 
 
-void ChartAnimator::removeAnimation(ChartItem* item)
+void ChartAnimator::removeAnimation(Chart* item)
 {
     item->setAnimator(0);
     m_animations.remove(item);
 }
 
-void ChartAnimator::updateLayout(AxisItem* item , QVector<qreal>& newLayout)
+void ChartAnimator::updateLayout(Axis* item , QVector<qreal>& newLayout)
 {
     AxisAnimation* animation = static_cast<AxisAnimation*>(m_animations.value(item));
 
@@ -123,13 +123,13 @@ void ChartAnimator::updateLayout(AxisItem* item , QVector<qreal>& newLayout)
 
     			for(int i=0,j=oldLayout.count()-1;i<(oldLayout.count()+1)/2;i++,j--)
     			{
-    				oldLayout[i]= item->axisType()==AxisItem::X_AXIS?rect.left():rect.bottom();
-    				oldLayout[j]= item->axisType()==AxisItem::X_AXIS?rect.right():rect.top();
+    				oldLayout[i]= item->axisType()==Axis::X_AXIS?rect.left():rect.bottom();
+    				oldLayout[j]= item->axisType()==Axis::X_AXIS?rect.right():rect.top();
     			}
     		}
     	break;
 		case ZoomInState: {
-			int index = qMin(oldLayout.count()*(item->axisType()==AxisItem::X_AXIS?m_point.x():(1 -m_point.y())),newLayout.count()-1.0);
+			int index = qMin(oldLayout.count()*(item->axisType()==Axis::X_AXIS?m_point.x():(1 -m_point.y())),newLayout.count()-1.0);
 			oldLayout.resize(newLayout.count());
 
 			for(int i=0;i<oldLayout.count();i++)
@@ -163,7 +163,7 @@ void ChartAnimator::updateLayout(AxisItem* item , QVector<qreal>& newLayout)
 			QRectF rect = item->geometry();
 			for(int i=0, j=oldLayout.count()-1;i<oldLayout.count();i++,j--)
 			{
-				oldLayout[i]= item->axisType()==AxisItem::X_AXIS?rect.left():rect.top();
+				oldLayout[i]= item->axisType()==Axis::X_AXIS?rect.left():rect.top();
 			}
 		}
 		break;

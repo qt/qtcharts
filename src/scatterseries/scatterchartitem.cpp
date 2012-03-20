@@ -6,17 +6,14 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem *parent) :
-    XYChartItem(series,parent),
+ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *presenter) :
+    XYChartItem(series,presenter),
     m_series(series),
     m_items(this),
     m_shape(QScatterSeries::MarkerShapeRectangle),
     m_size(15)
 
 {
-    Q_ASSERT(parent);
-    Q_ASSERT(series);
-
     QObject::connect(m_series,SIGNAL(updated()), this, SLOT(handleUpdated()));
 
     setZValue(ChartPresenter::ScatterSeriesZValue);

@@ -8,7 +8,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-LineChartItem::LineChartItem(QLineSeries* series,QGraphicsItem *parent):XYChartItem(series,parent),
+LineChartItem::LineChartItem(QLineSeries* series,ChartPresenter *presenter):XYChartItem(series,presenter),
 m_series(series),
 m_pointsVisible(false)
 {

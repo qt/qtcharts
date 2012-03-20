@@ -88,7 +88,7 @@ void ChartPresenter::handleGeometryChanged()
 
 void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
 {
-    AxisItem* item = new AxisItem(axis,this,axis==m_dataset->axisX()?AxisItem::X_AXIS : AxisItem::Y_AXIS,m_chart);
+    Axis* item = new Axis(axis,this,axis==m_dataset->axisX()?Axis::X_AXIS : Axis::Y_AXIS);
 
     if(m_options.testFlag(QChart::GridAxisAnimations)){
         m_animator->addAnimation(item);
@@ -116,7 +116,7 @@ void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
 
 void ChartPresenter::handleAxisRemoved(QChartAxis* axis)
 {
-    AxisItem* item = m_axisItems.take(axis);
+    Axis* item = m_axisItems.take(axis);
     Q_ASSERT(item);
     if(m_animator) m_animator->removeAnimation(item);
     delete item;
@@ -125,14 +125,14 @@ void ChartPresenter::handleAxisRemoved(QChartAxis* axis)
 
 void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 {
-	ChartItem *item = 0 ;
+	Chart *item = 0 ;
 
     switch(series->type())
     {
     case QSeries::SeriesTypeLine: {
 
         QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
-        LineChartItem* line = new LineChartItem(lineSeries,m_chart);
+        LineChartItem* line = new LineChartItem(lineSeries,this);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
         	m_animator->addAnimation(line);
         }
@@ -146,7 +146,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
     case QSeries::SeriesTypeArea: {
 
         QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
-        AreaChartItem* area = new AreaChartItem(areaSeries,m_chart);
+        AreaChartItem* area = new AreaChartItem(areaSeries,this);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
             m_animator->addAnimation(area->upperLineItem());
             if(areaSeries->lowerSeries())  m_animator->addAnimation(area->lowerLineItem());
@@ -160,7 +160,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypeBar: {
         QBarSeries* barSeries = static_cast<QBarSeries*>(series);
-        BarChartItem* bar = new BarChartItem(barSeries,m_chart);
+        BarChartItem* bar = new BarChartItem(barSeries,this);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
             m_animator->addAnimation(bar);
         }
@@ -173,7 +173,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypeStackedBar: {
         QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
-        StackedBarChartItem* bar = new StackedBarChartItem(stackedBarSeries,m_chart);
+        StackedBarChartItem* bar = new StackedBarChartItem(stackedBarSeries,this);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
             m_animator->addAnimation(bar);
         }
@@ -186,7 +186,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypePercentBar: {
         QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
-        PercentBarChartItem* bar = new PercentBarChartItem(percentBarSeries,m_chart);
+        PercentBarChartItem* bar = new PercentBarChartItem(percentBarSeries,this);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
             m_animator->addAnimation(bar);
         }
@@ -199,7 +199,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypeScatter: {
     	QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
-            ScatterChartItem *scatter = new ScatterChartItem(scatterSeries, m_chart);
+            ScatterChartItem *scatter = new ScatterChartItem(scatterSeries,this);
             if(m_options.testFlag(QChart::SeriesAnimations)) {
                 m_animator->addAnimation(scatter);
             }
@@ -212,7 +212,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypePie: {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        PieChartItem* pie = new PieChartItem(pieSeries, this, m_chart);
+        PieChartItem* pie = new PieChartItem(pieSeries, this);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
             m_animator->addAnimation(pie);
         }
@@ -231,7 +231,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     case QSeries::SeriesTypeSpline: {
         QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
-        SplineChartItem* spline  = new SplineChartItem(splineSeries, m_chart);
+        SplineChartItem* spline  = new SplineChartItem(splineSeries, this);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
             m_animator->addAnimation(spline);
         }
@@ -256,7 +256,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
 void ChartPresenter::handleSeriesRemoved(QSeries* series)
 {
-    ChartItem* item = m_chartItems.take(series);
+    Chart* item = m_chartItems.take(series);
     Q_ASSERT(item);
     if(m_animator) {
         //small hack to handle area animations

@@ -8,11 +8,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartItem;
+class Chart;
 class QSeries;
 class ChartDataSet;
 class Domain;
-class AxisItem;
+class Axis;
 class ChartTheme;
 class ChartAnimator;
 
@@ -50,6 +50,8 @@ public:
     void setAnimationOptions(QChart::AnimationOptions options);
     QChart::AnimationOptions animationOptions() const;
 
+    QGraphicsItem* rootItem() const {return m_chart;};
+
     void zoomIn();
     void zoomIn(const QRectF& rect);
     void zoomOut();
@@ -76,8 +78,8 @@ private:
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
     int m_zoomIndex;
-    QMap<QSeries*,ChartItem*> m_chartItems;
-    QMap<QChartAxis*,AxisItem*> m_axisItems;
+    QMap<QSeries*,Chart*> m_chartItems;
+    QMap<QChartAxis*,Axis*> m_axisItems;
     QVector<QRectF> m_zoomStack;
     QRectF m_rect;
     QChart::AnimationOptions m_options;

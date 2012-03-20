@@ -6,8 +6,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-StackedBarChartItem::StackedBarChartItem(QBarSeries *series, QChart *parent) :
-    BarChartItem(series,parent)
+StackedBarChartItem::StackedBarChartItem(QBarSeries *series, ChartPresenter *presenter) :
+    BarChartItem(series,presenter)
 {
 }
 
