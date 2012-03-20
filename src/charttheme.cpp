@@ -150,19 +150,32 @@ void ChartTheme::decorate(QBarSeries* series, int index, bool force)
     QPen pen;
     QList<QBarSet*> sets = series->barSets();
 
-    for (int i(0); i < sets.count(); i++) {
-        qreal pos = 0.5;
-        if (sets.count() > 1)
-            pos = (qreal) i / (qreal) (sets.count() - 1);
+    qreal takeAtPos = 0.5;
+    qreal step = 0.2;
+    if (sets.count() > 1 ) {
+        step = 1.0 / (qreal) sets.count();
+        if (sets.count() % m_seriesGradients.count())
+            step *= m_seriesGradients.count();
+        else
+            step *= (m_seriesGradients.count() - 1);
+    }
 
-        if (brush == sets.at(i)->brush() || force ) {
-            QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
-            sets.at(i)->setBrush(QBrush(c));
+    for (int i(0); i < sets.count(); i++) {
+        int colorIndex = (index + i) % m_seriesGradients.count();
+        if (i > 0 && i % m_seriesGradients.count() == 0) {
+            // There is no dedicated base color for each sets, generate more colors
+            takeAtPos += step;
+            if (takeAtPos == 1.0)
+                takeAtPos += step;
+            takeAtPos -= (int) takeAtPos;
         }
+        qDebug() << "pos:" << takeAtPos;
+        if (brush == sets.at(i)->brush() || force )
+            sets.at(i)->setBrush(colorAt(m_seriesGradients.at(colorIndex), takeAtPos));
 
         // Pick label color from the opposite end of the gradient.
         // 0.3 as a boundary seems to work well.
-        if (pos < 0.3)
+        if (takeAtPos < 0.3)
             sets.at(i)->setFloatingValuePen(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1));
         else
             sets.at(i)->setFloatingValuePen(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0));
@@ -203,7 +216,7 @@ void ChartTheme::decorate(QPieSeries* series, int index, bool force)
         }
 
         // Get color for a slice from a gradient linearly, beginning from the start of the gradient
-        qreal pos = (qreal) i / (qreal) series->count();
+        qreal pos = (qreal) (i + 1) / (qreal) series->count();
         if (brush == series->slices().at(i)->sliceBrush() || force) {
             QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
             series->slices().at(i)->setSliceBrush(brushColor);

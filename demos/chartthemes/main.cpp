@@ -4,7 +4,9 @@
 #include <qchartview.h>
 #include <qpieseries.h>
 #include <qpieslice.h>
+#include <qbarseries.h>
 #include <qpercentbarseries.h>
+#include <qstackedbarseries.h>
 #include <qbarset.h>
 #include <QGridLayout>
 #include <QFormLayout>
@@ -106,7 +108,9 @@ public:
             // TODO: categories
             for (int i(0); i < valueCount; i++)
                 categories << QString::number(i);
-            QPercentBarSeries* series = new QPercentBarSeries(categories, chart);
+//            QBarSeries* series = new QBarSeries(categories, chart);
+//            QPercentBarSeries* series = new QPercentBarSeries(categories, chart);
+            QStackedBarSeries* series = new QStackedBarSeries(categories, chart);
             for (int i(0); i < m_dataTable.count(); i++) {
                 QBarSet *set = new QBarSet("Set" + QString::number(i));
                 foreach (Data data, m_dataTable[i])
