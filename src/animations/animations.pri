@@ -7,7 +7,9 @@ SOURCES += \
     $$PWD/xyanimation.cpp \
     $$PWD/pieanimation.cpp \
     $$PWD/piesliceanimation.cpp \
-    $$PWD/splineanimation.cpp
+    $$PWD/splineanimation.cpp \
+    $$PWD/baranimation.cpp
+
 
 
 PRIVATE_HEADERS += \
@@ -17,4 +19,6 @@ PRIVATE_HEADERS += \
     $$PWD/xyanimation_p.h \
     $$PWD/pieanimation_p.h \
     $$PWD/piesliceanimation_p.h \
-    $$PWD/splineanimation_p.h
+    $$PWD/splineanimation_p.h \
+    $$PWD/baranimation_p.h
+

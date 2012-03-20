@@ -3,6 +3,7 @@
 #include "qchartglobal.h"
 #include "chartanimation_p.h"
 #include "piechartitem_p.h"
+#include "barchartitem_p.h"
 #include <QPointF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -28,6 +29,7 @@ public:
     void addAnimation(ScatterChartItem* item);
     void addAnimation(LineChartItem* item);
     void addAnimation(SplineChartItem* item);
+    void addAnimation(BarChartItem* item);
     void removeAnimation(ChartItem* item);
 
     void animationStarted();
@@ -39,6 +41,8 @@ public:
     void removeAnimation(PieChartItem* item, QPieSlice *slice);
     void updateLayout(PieChartItem* item, const PieLayout &layout);
     void updateLayout(PieChartItem* item, QPieSlice *slice, const PieSliceData &sliceData);
+
+    void updateLayout(BarChartItem* item, const BarLayout &layout);
 
     void setState(State state,const QPointF& point = QPointF());
 

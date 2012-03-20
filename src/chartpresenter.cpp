@@ -162,7 +162,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         QBarSeries* barSeries = static_cast<QBarSeries*>(series);
         BarChartItem* bar = new BarChartItem(barSeries,m_chart);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
-         //  m_animator->addAnimation(bar);
+            m_animator->addAnimation(bar);
         }
         m_chartTheme->decorate(barSeries, m_dataset->seriesIndex(barSeries),m_themeForce);
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),bar,SLOT(handleGeometryChanged(const QRectF&)));
@@ -175,7 +175,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
         StackedBarChartItem* bar = new StackedBarChartItem(stackedBarSeries,m_chart);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
-         //  m_animator->addAnimation(bar);
+            m_animator->addAnimation(bar);
         }
         m_chartTheme->decorate(stackedBarSeries, m_dataset->seriesIndex(stackedBarSeries),m_themeForce);
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),bar,SLOT(handleGeometryChanged(const QRectF&)));
@@ -188,7 +188,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
         QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
         PercentBarChartItem* bar = new PercentBarChartItem(percentBarSeries,m_chart);
         if(m_options.testFlag(QChart::SeriesAnimations)) {
-         //  m_animator->addAnimation(bar);
+            m_animator->addAnimation(bar);
         }
         m_chartTheme->decorate(percentBarSeries, m_dataset->seriesIndex(percentBarSeries),m_themeForce);
         QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),bar,SLOT(handleGeometryChanged(const QRectF&)));

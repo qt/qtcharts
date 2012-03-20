@@ -7,6 +7,7 @@
 #include "qchartaxis.h"
 #include "qchartaxiscategories.h"
 #include "chartpresenter_p.h"
+#include "chartanimator_p.h"
 #include <QDebug>
 #include <QToolTip>
 
@@ -22,6 +23,8 @@ BarChartItem::BarChartItem(QBarSeries *series, QChart *parent) :
 {
     connect(series,SIGNAL(showToolTip(QPoint,QString)),this,SLOT(showToolTip(QPoint,QString)));
     connect(series, SIGNAL(updatedBars()), this, SLOT(layoutChanged()));
+//TODO:  connect(series,SIGNAL("position or size has changed"), this, SLOT(handleLayoutChanged()));
+    connect(series, SIGNAL(restructuredBar(int)), this, SLOT(handleModelChanged(int)));
     setZValue(ChartPresenter::BarSeriesZValue);
     initAxisLabels();
     dataChanged();
@@ -157,6 +160,31 @@ void BarChartItem::layoutChanged()
     update();
 }
 
+BarLayout BarChartItem::calculateLayout()
+{
+    BarLayout layout;
+    foreach(Bar* bar, mBars) {
+        layout.insert(bar,bar->boundingRect().size());
+    }
+
+    return layout;
+}
+
+void BarChartItem::applyLayout(const BarLayout &layout)
+{
+    if (m_animator)
+        m_animator->updateLayout(this, layout);
+    else
+        setLayout(layout);
+}
+
+void BarChartItem::setLayout(const BarLayout &layout)
+{
+    foreach (Bar *bar, layout.keys()) {
+        bar->setSize(layout.value(bar));
+    }
+    update();
+}
 
 void BarChartItem::initAxisLabels()
 {
@@ -227,6 +255,14 @@ void BarChartItem::handleGeometryChanged(const QRectF& rect)
     mLayoutSet = true;
     setPos(rect.topLeft());
 }
+
+void BarChartItem::handleLayoutChanged()
+{
+    BarLayout layout = calculateLayout();
+    applyLayout(layout);
+    update();
+}
+
 
 void BarChartItem::showToolTip(QPoint pos, QString tip)
 {

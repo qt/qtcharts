@@ -14,7 +14,8 @@ class BarValue;
 class QChartAxisCategories;
 class QChart;
 
-// Common implemantation of different presenters.
+typedef QHash<Bar*, QSizeF> BarLayout;
+
 class BarChartItem : public QObject, public ChartItem
 {
     Q_OBJECT
@@ -32,6 +33,11 @@ public:
 private slots:
     virtual void layoutChanged();   // layout has changed -> need to recalculate bar sizes
 
+public:
+    BarLayout calculateLayout();
+    void applyLayout(const BarLayout &layout);
+    void setLayout(const BarLayout &layout);
+
 protected:
     void initAxisLabels();
 
@@ -39,6 +45,7 @@ public slots:
     void handleModelChanged(int index);
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF& size);
+    void handleLayoutChanged();
 
     // Internal slots
     void showToolTip(QPoint pos, QString tip);      // shows tooltip (if enabled)

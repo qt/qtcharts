@@ -4,6 +4,8 @@
 #include "splineanimation_p.h"
 #include "xychartitem_p.h"
 #include "pieanimation_p.h"
+#include "baranimation_p.h"
+#include "barchartitem_p.h"
 #include "areachartitem_p.h"
 #include "splinechartitem_p.h"
 #include "scatterchartitem_p.h"
@@ -83,6 +85,19 @@ void ChartAnimator::addAnimation(PieChartItem* item)
 
     item->setAnimator(this);
 }
+
+void ChartAnimator::addAnimation(BarChartItem* item)
+{
+    ChartAnimation* animation = m_animations.value(item);
+
+    if(!animation) {
+        animation = new BarAnimation(item);
+        m_animations.insert(item,animation);
+    }
+
+    item->setAnimator(this);
+}
+
 
 void ChartAnimator::removeAnimation(ChartItem* item)
 {
@@ -251,6 +266,15 @@ void ChartAnimator::updateLayout(PieChartItem* item, QPieSlice *slice, const Pie
     Q_ASSERT(animation);
     animation->updateValue(slice, sliceData);
 }
+
+void ChartAnimator::updateLayout(BarChartItem* item, const BarLayout &layout)
+{
+    qDebug() << "ChartAnimator::updateLayout";
+    BarAnimation* animation = static_cast<BarAnimation*>(m_animations.value(item));
+    Q_ASSERT(animation);
+    animation->updateValues(layout);
+}
+
 
 void ChartAnimator::setState(State state,const QPointF& point)
 {
