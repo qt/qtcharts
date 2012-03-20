@@ -29,6 +29,16 @@ void BarChartModel::removeBarSet(QBarSet *set)
     }
 }
 
+void BarChartModel::insertBarSet(int i, QBarSet *set)
+{
+    mDataModel.insert(i, set);
+}
+
+void BarChartModel::insertCategory(int i, QString category)
+{
+    mCategory.insert(i, category);
+}
+
 QBarSet* BarChartModel::setAt(int index)
 {
     return mDataModel.at(index);

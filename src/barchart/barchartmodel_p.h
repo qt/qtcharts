@@ -22,6 +22,8 @@ public:
     QStringList category();
     void addBarSet(QBarSet *set);
     void removeBarSet(QBarSet *set);
+    void insertBarSet(int i, QBarSet *set);
+    void insertCategory(int i, QString category);
     QBarSet *setAt(int index);
     QList<QBarSet*> barSets();
 

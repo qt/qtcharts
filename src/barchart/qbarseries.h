@@ -21,6 +21,8 @@ public:
 
     void addBarSet(QBarSet *set);               // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
+    void insertBarSet(int i, QBarSet *set);
+    void insertCategory(int i, QString category);
     int barsetCount();
     int categoryCount();
     QList<QBarSet*> barSets();
@@ -51,6 +53,7 @@ signals:
 
     //
     void updatedBars();
+    void restructuredBar(int);
 
     // TODO: internal signals, these to private implementation.
     // TODO: TO PIMPL --->

@@ -10,6 +10,7 @@ BarPresenter::BarPresenter(QBarSeries *series, QChart *parent) :
     BarPresenterBase(series, parent)
 {    
     connect(series, SIGNAL(updatedBars()), this, SLOT(layoutChanged()));
+    connect(series, SIGNAL(restructuredBar(int)), this, SLOT(handleModelChanged(int)));
 }
 
 void BarPresenter::layoutChanged()

@@ -69,15 +69,26 @@ void QBarSeries::removeBarSet(QBarSet *set)
     mModel->removeBarSet(set);
 }
 
+void QBarSeries::insertBarSet(int i, QBarSet *set)
+{
+    mModel->insertBarSet(i, set);
+    //    emit barsetChanged();
+}
+
+void QBarSeries::insertCategory(int i, QString category)
+{
+    mModel->insertCategory(i, category);
+}
+
 /*!
     Returns number of sets in series.
 */
 int QBarSeries::barsetCount()
 {
-//    if(m_model)
-//        return m_mapBarTop - m_mapBarBottom;
-//    else
-        return mModel->barsetCount();
+    //    if(m_model)
+    //        return m_mapBarTop - m_mapBarBottom;
+    //    else
+    return mModel->barsetCount();
 }
 
 /*!
@@ -299,21 +310,37 @@ void QBarSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     {
         if (topLeft.column() >= m_mapBarBottom && topLeft.column() <= m_mapBarTop)
             barsetAt(topLeft.column() - m_mapBarBottom)->setValue(topLeft.row(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
-//        else if (topLeft.column() == m_mapCategories)
-//            slices().at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+        //        else if (topLeft.column() == m_mapCategories)
+        //            slices().at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
     }
     else
     {
         if (topLeft.row() >= m_mapBarBottom && topLeft.row() <= m_mapBarTop)
             barsetAt(topLeft.row() - m_mapBarBottom)->setValue(topLeft.column(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
-//        else if (topLeft.row() == m_mapCategories)
-//            slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+        //        else if (topLeft.row() == m_mapCategories)
+        //            slices().at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
     }
 }
 
-void QBarSeries::modelDataAdded(QModelIndex /*parent*/, int /*start*/, int /*end*/)
+void QBarSeries::modelDataAdded(QModelIndex /*parent*/, int start, int /*end*/)
 {
-    //
+    if (m_mapOrientation == Qt::Vertical)
+    {
+        insertCategory(start, QString("Row: %1").arg(start + 1));
+        for (int i = 0; i <= m_mapBarTop - m_mapBarBottom; i++)
+        {
+            barsetAt(i)->insertValue(start, m_model->data(m_model->index(start, i), Qt::DisplayRole).toDouble());
+        }
+    }
+    else
+    {
+        insertCategory(start, QString("Column: %1").arg(start + 1));
+        for (int i = 0; i <= m_mapBarTop - m_mapBarBottom; i++)
+        {
+            barsetAt(i)->insertValue(start, m_model->data(m_model->index(i, start), Qt::DisplayRole).toDouble());
+        }
+    }
+    emit restructuredBar(1);
 }
 
 void QBarSeries::modelDataRemoved(QModelIndex /*parent*/, int /*start*/, int /*end*/)

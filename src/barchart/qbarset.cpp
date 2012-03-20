@@ -86,6 +86,11 @@ QBarSet& QBarSet::operator << (const qreal &value)
     return *this;
 }
 
+void QBarSet::insertValue(int i, qreal value)
+{
+    mValues.insert(i, value);
+}
+
 /*!
     Returns count of values in set.
 */
