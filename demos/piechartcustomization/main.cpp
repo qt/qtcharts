@@ -535,7 +535,7 @@ public Q_SLOTS:
 
     void addSlice()
     {
-        *m_series << new CustomSlice(10.0, "Slice " + QString::number(m_series->count()));
+        *m_series << new CustomSlice(10.0, "Slice " + QString::number(m_series->count()+1));
     }
 
     void insertSlice()
@@ -545,7 +545,7 @@ public Q_SLOTS:
 
         int i = m_series->slices().indexOf(m_slice);
 
-        m_series->insert(i, new CustomSlice(10.0, "Slice " + QString::number(m_series->count())));
+        m_series->insert(i, new CustomSlice(10.0, "Slice " + QString::number(m_series->count()+1)));
     }
 
     void removeSlice()
