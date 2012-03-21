@@ -48,19 +48,19 @@ void QPieSeriesPrivate::updateDerivativeData()
         bool isChanged = false;
 
         qreal percentage = s->value() / m_total;
-        if (s->d_ptr->m_data.m_percentage != percentage) {
-            s->d_ptr->m_data.m_percentage = percentage;
+        if (s->data_ptr()->m_data.m_percentage != percentage) {
+            s->data_ptr()->m_data.m_percentage = percentage;
             isChanged = true;
         }
 
         qreal sliceSpan = pieSpan * percentage;
-        if (s->d_ptr->m_data.m_angleSpan != sliceSpan) {
-            s->d_ptr->m_data.m_angleSpan = sliceSpan;
+        if (s->data_ptr()->m_data.m_angleSpan != sliceSpan) {
+            s->data_ptr()->m_data.m_angleSpan = sliceSpan;
             isChanged = true;
         }
 
-        if (s->d_ptr->m_data.m_startAngle != sliceAngle) {
-            s->d_ptr->m_data.m_startAngle = sliceAngle;
+        if (s->data_ptr()->m_data.m_startAngle != sliceAngle) {
+            s->data_ptr()->m_data.m_startAngle = sliceAngle;
             isChanged = true;
         }
         sliceAngle += sliceSpan;
@@ -71,7 +71,7 @@ void QPieSeriesPrivate::updateDerivativeData()
 
     // emit signals
     foreach (QPieSlice* s, changed)
-        emit s->changed();
+        emit s->data_ptr()->changed();
 }
 
 void QPieSeriesPrivate::sliceChanged()

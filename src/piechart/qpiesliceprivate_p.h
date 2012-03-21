@@ -6,16 +6,27 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QPieSlicePrivate
+class QPieSlicePrivate : public QObject
 {
+    Q_OBJECT
     Q_DECLARE_PUBLIC(QPieSlice)
 
 public:
-    QPieSlicePrivate(QPieSlice *parent):q_ptr(parent) {}
+    QPieSlicePrivate(QPieSlice *parent)
+        :QObject(parent),
+        q_ptr(parent)
+    {
+        connect(this, SIGNAL(changed()), q_ptr, SIGNAL(changed()));
+    }
+
     ~QPieSlicePrivate() {}
 
-    QPieSlice * const q_ptr;
+Q_SIGNALS:
+    void changed();
 
+public:
+    friend class QPieSeriesPrivate;
+    QPieSlice * const q_ptr;
     PieSliceData m_data;
 };
 

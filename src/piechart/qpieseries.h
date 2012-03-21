@@ -66,10 +66,13 @@ Q_SIGNALS:
     void pieSizeChanged();
 
 private:
-    friend class QPieSlice;
     QPieSeriesPrivate * const d_ptr;
     Q_DECLARE_PRIVATE(QPieSeries)
     Q_DISABLE_COPY(QPieSeries)
+
+public:
+    typedef QPieSeriesPrivate * const DataPtr;
+    inline DataPtr &data_ptr() { return d_ptr; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -262,7 +262,7 @@ void QPieSlice::setValue(qreal value)
 
         QPieSeries *series = qobject_cast<QPieSeries*>(parent());
         if (series)
-            series->d_ptr->updateDerivativeData(); // will emit changed()
+            series->data_ptr()->updateDerivativeData(); // will emit changed()
         else
             emit changed();
     }
@@ -404,5 +404,6 @@ void QPieSlice::setLabelArmLengthFactor(qreal factor)
 }
 
 #include "moc_qpieslice.cpp"
+#include "moc_qpiesliceprivate_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

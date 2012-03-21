@@ -9,8 +9,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSlicePrivate;
-class QPieSeriesPrivate;
-class PieChartItem;
 
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
@@ -59,11 +57,13 @@ Q_SIGNALS:
     void changed();
 
 private:
-    friend class QPieSeriesPrivate; // TODO: get rid of this
-    friend class PieChartItem; // TODO: get rid of this
     QPieSlicePrivate * const d_ptr;
     Q_DECLARE_PRIVATE(QPieSlice)
     Q_DISABLE_COPY(QPieSlice)
+
+public:
+    typedef QPieSlicePrivate * const DataPtr;
+    inline DataPtr &data_ptr() { return d_ptr; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

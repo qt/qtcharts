@@ -128,7 +128,7 @@ void PieChartItem::calculatePieLayout()
 
 PieSliceData PieChartItem::sliceData(QPieSlice *slice)
 {
-    PieSliceData sliceData = slice->d_ptr->m_data;
+    PieSliceData sliceData = slice->data_ptr()->m_data;
     sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
     sliceData.m_angleSpan = slice->endAngle() - slice->startAngle();
