@@ -50,8 +50,8 @@ signals:
     void rangeYChanged(qreal min, qreal max, int tickYCount);
 
 public slots:
-    void handleAxisXChanged(qreal min,qreal max,int tickXCount,QChartAxis::LabelsSelection mode);
-    void handleAxisYChanged(qreal min,qreal max,int tickYCount,QChartAxis::LabelsSelection mode);
+    void handleAxisXChanged(qreal min,qreal max,int tickXCount = 5,QChartAxis::LabelsSelection mode = QChartAxis::NativeLabelsSelection);
+    void handleAxisYChanged(qreal min,qreal max,int tickYCount = 5,QChartAxis::LabelsSelection mode = QChartAxis::NativeLabelsSelection);
 
 private:
     void niceNumbers(qreal &min, qreal &max, int &ticksCount);

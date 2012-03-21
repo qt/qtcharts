@@ -18,8 +18,6 @@ public:
     BarAnimation(BarChartItem *item);
     ~BarAnimation();
 
-    void updateValues(const QVector<QRectF>& layout);
-
 public: // from QVariantAnimation
     virtual QVariant interpolated (const QVariant & from, const QVariant & to, qreal progress ) const;
     virtual void updateCurrentValue (const QVariant & value );

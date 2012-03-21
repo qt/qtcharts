@@ -1,5 +1,6 @@
 #include <QtTest/QtTest>
 #include <private/domain_p.h>
+#include <qchartaxis.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -95,7 +96,7 @@ void tst_Domain::handleAxisRangeXChanged()
     QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal, qreal)));
     QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal, qreal)));
 
-    domain.handleAxisRangeXChanged(min, max);
+    domain.handleAxisXChanged(min, max);
 
     QList<QVariant> arg0 = spy0.first();
     QVERIFY(arg0.at(0).toReal() == min);
@@ -132,7 +133,7 @@ void tst_Domain::handleAxisRangeYChanged()
     QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal, qreal)));
     QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal, qreal)));
 
-    domain.handleAxisRangeYChanged(min, max);
+    domain.handleAxisYChanged(min, max,5);
 
     QList<QVariant> arg0 = spy0.first();
     QVERIFY(arg0.at(2).toReal() == min);

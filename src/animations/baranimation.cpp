@@ -19,13 +19,6 @@ BarAnimation::~BarAnimation()
 {
 }
 
-void BarAnimation::updateValues(const QVector<QRectF>& layout)
-{
-    // TODO?:
-//    qDebug() << "BarAnimation::updateValues" << layout.count();
-}
-
-
 QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
     QVector<QRectF> startVector = qVariantValue<QVector<QRectF> > (from);
