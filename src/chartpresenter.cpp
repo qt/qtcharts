@@ -31,7 +31,6 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_animator(0),
     m_dataset(dataset),
     m_chartTheme(0),
-    m_zoomIndex(0),
     m_rect(QRectF(QPoint(0,0),m_chart->size())),
     m_options(QChart::NoAnimation),
     m_themeForce(false)
@@ -66,6 +65,7 @@ void ChartPresenter::handleGeometryChanged()
     rect.adjust(m_chart->padding(),m_chart->padding(), -m_chart->padding(), -m_chart->padding());
 
     //rewrite zoom stack
+    /*
     for(int i=0;i<m_zoomStack.count();i++){
         QRectF r = m_zoomStack[i];
         qreal w = rect.width()/m_rect.width();
@@ -80,7 +80,7 @@ void ChartPresenter::handleGeometryChanged()
         r.setBottomRight(br);
         m_zoomStack[i]=r;
     }
-
+    */
     m_rect = rect;
     Q_ASSERT(m_rect.isValid());
     emit geometryChanged(m_rect);
@@ -251,7 +251,6 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
     item->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());
     if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
     m_chartItems.insert(series,item);
-    zoomReset();
 }
 
 void ChartPresenter::handleSeriesRemoved(QSeries* series)
@@ -336,8 +335,6 @@ void ChartPresenter::zoomIn(const QRectF& rect)
 		m_animator->setState(ChartAnimator::ZoomInState,point);
 	}
 	m_dataset->zoomInDomain(r,geometry().size());
-	m_zoomStack<<r;
-	m_zoomIndex++;
 	if(m_animator) {
 		m_animator->setState(ChartAnimator::ShowState);
 	}
@@ -345,23 +342,20 @@ void ChartPresenter::zoomIn(const QRectF& rect)
 
 void ChartPresenter::zoomOut()
 {
-	if(m_zoomIndex==0) return;
 	if(m_animator)
 	{
 		m_animator->setState(ChartAnimator::ZoomOutState);
 	}
-	m_dataset->zoomOutDomain(m_zoomStack[m_zoomIndex-1],geometry().size());
-	m_zoomIndex--;
-	m_zoomStack.resize(m_zoomIndex);
+
+	QSizeF size = geometry().size();
+	QRectF rect = geometry();
+	rect.translate(-m_chart->padding(), -m_chart->padding());
+	m_dataset->zoomOutDomain(rect.adjusted(size.width()/4,size.height()/4,-size.width()/4,-size.height()/4),size);
+    //m_dataset->zoomOutDomain(m_zoomStack[m_zoomIndex-1],geometry().size());
+
 	if(m_animator){
 			m_animator->setState(ChartAnimator::ShowState);
 	}
-}
-
-void ChartPresenter::zoomReset()
-{
-    m_zoomIndex=0;
-    m_zoomStack.resize(m_zoomIndex);
 }
 
 void ChartPresenter::scroll(int dx,int dy)

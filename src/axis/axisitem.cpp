@@ -4,6 +4,7 @@
 #include "chartanimator_p.h"
 #include <QPainter>
 #include <QDebug>
+#include <cmath>
 
 static int label_padding = 5;
 
@@ -78,16 +79,18 @@ void Axis::updateLayout(QVector<qreal>& layout)
 QStringList Axis::createLabels(int ticks, qreal min, qreal max) const
 {
     Q_ASSERT(max>=min);
-    Q_ASSERT(ticks>0);
+    Q_ASSERT(ticks>1);
 
     QStringList labels;
+
+    int n =  qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
 
     QChartAxisCategories* categories = m_chartAxis->categories();
 
     for(int i=0; i< ticks; i++) {
         qreal value = min + (i * (max - min)/ (ticks-1));
         if(categories->count()==0) {
-            labels << QString::number(value);
+            labels << QString::number(value,'f',n);
         }
         else {
 

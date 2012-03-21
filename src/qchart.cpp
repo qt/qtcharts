@@ -245,14 +245,6 @@ void QChart::zoomOut()
 }
 
 /*!
-    Resets to the default view.
-*/
-void QChart::zoomReset()
-{
-    m_presenter->zoomReset();
-}
-
-/*!
     Returns the pointer to the x axis object of the chart
 */
 QChartAxis* QChart::axisX() const

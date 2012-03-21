@@ -289,8 +289,10 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
             event->accept();
         }
 
-        if(event->button()==Qt::RightButton)
-        m_chart->zoomReset();
+        if(event->button()==Qt::RightButton){
+            m_chart->zoomOut();
+            event->accept();
+        }
     }
     else {
         QGraphicsView::mouseReleaseEvent(event);

@@ -55,7 +55,6 @@ public:
     void zoomIn();
     void zoomIn(const QRectF& rect);
     void zoomOut();
-    void zoomReset();
     void scroll(int dx,int dy);
 
 private:
@@ -77,10 +76,8 @@ private:
     ChartAnimator* m_animator;
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
-    int m_zoomIndex;
     QMap<QSeries*,Chart*> m_chartItems;
     QMap<QChartAxis*,Axis*> m_axisItems;
-    QVector<QRectF> m_zoomStack;
     QRectF m_rect;
     QChart::AnimationOptions m_options;
     bool m_themeForce;

@@ -1,4 +1,5 @@
 #include "domain_p.h"
+#include <cmath>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -8,7 +9,8 @@ m_maxX(0),
 m_minY(0),
 m_maxY(0),
 m_tickXCount(5),
-m_tickYCount(5)
+m_tickYCount(5),
+m_selection(QChartAxis::NativeLabelsSelection)
 {
 }
 
@@ -18,55 +20,83 @@ Domain::~Domain()
 
 void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
-	bool changed = false;
-
-	if(m_minX!=minX || m_maxX!=maxX)
-	{
-		 m_minX=minX;
-		 m_maxX=maxX;
-		 changed=true;
-		 emit rangeXChanged(minX,maxX, m_tickXCount);
-	}
-
-	if(m_minY!=minY || m_maxY!=maxY){
-		 m_minY=minY;
-		 m_maxY=maxY;
-		 changed=true;
-		 emit rangeYChanged(minY,maxY, m_tickYCount);
-	}
-
-  if(changed){
-    emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
-  }
+    setRange(minX, maxX, minY, maxY,m_tickXCount,m_tickYCount);
 }
+
+void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCount,int tickYCount)
+{
+    bool domainChanged = false;
+    bool tickXChanged = false;
+    bool tickYChanged = false;
+
+    if(m_tickXCount!=tickXCount) {
+        m_tickXCount=tickXCount;
+        tickXChanged=true;
+    }
+
+    if(m_tickXCount!=tickYCount) {
+        m_tickXCount=tickYCount;
+        tickYChanged=true;
+    }
+
+    if(m_minX!=minX || m_maxX!=maxX) {
+        niceNumbers(minX, maxX, m_tickXCount);
+        m_minX=minX;
+        m_maxX=maxX;
+        domainChanged=true;
+        tickXChanged=false;
+        emit rangeXChanged(minX,maxX, m_tickXCount);
+    }
+
+    if(m_minY!=minY || m_maxY!=maxY) {
+        niceNumbers(minY, maxY, m_tickYCount);
+        m_minY=minY;
+        m_maxY=maxY;
+        domainChanged=true;
+        tickYChanged=false;
+        emit rangeYChanged(minY,maxY, m_tickYCount);
+    }
+
+    if(domainChanged) {
+        emit this->domainChanged(m_minX, m_maxX, m_minY, m_maxY);
+    }
+
+    if(tickXChanged) {
+        emit rangeXChanged(minX,maxX, m_tickXCount);
+    }
+
+    if(tickYChanged) {
+        emit rangeYChanged(minY,maxY, m_tickYCount);
+    }
+}
+
 void Domain::setRangeX(qreal min, qreal max)
 {
     setRange(min,max,m_minY, m_maxY);
 }
 void Domain::setRangeY(qreal min, qreal max)
 {
-	setRange(m_minX, m_maxX, min, max);
+    setRange(m_minX, m_maxX, min, max);
 }
 
 void Domain::setMinX(qreal min)
 {
-	setRange(min, m_maxX, m_minY, m_maxY);
+    setRange(min, m_maxX, m_minY, m_maxY);
 }
 
 void Domain::setMaxX(qreal max)
 {
-	setRange(m_minX, max, m_minY, m_maxY);
+    setRange(m_minX, max, m_minY, m_maxY);
 }
 
 void Domain::setMinY(qreal min)
 {
-	setRange(m_minX, m_maxX, min, m_maxY);
+    setRange(m_minX, m_maxX, min, m_maxY);
 }
 
 void Domain::setMaxY(qreal max)
 {
     setRange(m_minX, m_maxX, m_minY, max);
-
 }
 
 qreal Domain::spanX() const
@@ -96,6 +126,9 @@ void Domain::zoomIn(const QRectF& rect, const QSizeF& size)
     m_minY = m_maxY - dy * rect.bottom();
     m_maxY = m_maxY - dy * rect.top();
 
+    niceNumbers(m_minX, m_maxX, m_tickXCount);
+    niceNumbers(m_minY, m_maxY, m_tickYCount);
+
     emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
     emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
     emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
@@ -111,6 +144,9 @@ void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
     m_maxY = m_minY + dy * rect.bottom();
     m_minY = m_maxY - dy * size.height();
 
+    niceNumbers(m_minX, m_maxX, m_tickXCount);
+    niceNumbers(m_minY, m_maxY, m_tickYCount);
+
     emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
     emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
     emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
@@ -121,44 +157,71 @@ void Domain::move(int dx,int dy,const QSizeF& size)
     qreal x = spanX() / size.width();
     qreal y = spanY() / size.height();
 
-    if(dx!=0){
-    m_minX = m_minX + x * dx;
-    m_maxX = m_maxX + x * dx;
-    emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
+    if(dx!=0) {
+        m_minX = m_minX + x * dx;
+        m_maxX = m_maxX + x * dx;
+        emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
     }
-    if(dy!=0){
-    m_minY = m_minY + y * dy;
-    m_maxY = m_maxY + y * dy;
-    emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
+    if(dy!=0) {
+        m_minY = m_minY + y * dy;
+        m_maxY = m_maxY + y * dy;
+        emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
     }
 
     emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
 }
 
-void Domain::handleAxisRangeXChanged(qreal min,qreal max)
+void Domain::handleAxisXChanged(qreal min,qreal max,int tickXCount,QChartAxis::LabelsSelection mode)
 {
-	 setRange(min,max,m_minY, m_maxY);
+    m_selection=mode;
+    setRange(min,max,m_minY, m_maxY,tickXCount,m_tickYCount);
 }
 
-void Domain::handleAxisRangeYChanged(qreal min,qreal max)
+void Domain::handleAxisYChanged(qreal min,qreal max,int tickYCount,QChartAxis::LabelsSelection mode)
 {
-	 setRange(m_minX, m_maxX, min, max);
+    m_selection=mode;
+    setRange(m_minX, m_maxX, min, max,m_tickXCount,tickYCount);
 }
 
-void Domain::handleAxisXTicksCountChanged(int tickCount)
+//algorithm defined by Paul S.Heckbert GraphicalGems I
+
+void Domain::niceNumbers(qreal &min, qreal &max, int &ticksCount)
 {
-    if(m_tickXCount!=tickCount){
-        m_tickXCount=tickCount;
-        emit rangeXChanged(m_minX,m_maxX, m_tickXCount);
+    if(m_selection!=QChartAxis::NativeLabelsSelection)
+    looseNiceNumbers(min,max,ticksCount);
+}
+
+void Domain::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount)
+{
+    qreal range = niceNumber(max-min,true); //range with ceiling
+    qreal step = niceNumber(range/(ticksCount-1),false);
+    min = floor(min/step);
+    max = ceil(max/step);
+    ticksCount = int(max-min) +1;
+    min*=step;
+    max*=step;
+}
+
+//nice numbers can be expressed as form of 1*10^n, 2* 10^n or 5*10^n
+
+qreal Domain::niceNumber(qreal x,bool ceiling)
+{
+    qreal z = pow(10,floor(log10(x))); //find corresponding number of the form of 10^n than is smaller than x
+    qreal q = x/z;//q<10 && q>=1;
+
+    if(ceiling) {
+        if(q <= 1.0) q=1;
+        else if(q <= 2.0) q=2;
+        else if(q <= 5.0) q=5;
+        else q=10;
     }
-}
-
-void Domain::handleAxisYTicksCountChanged(int tickCount)
-{
-    if(m_tickYCount!=tickCount){
-        m_tickYCount=tickCount;
-        emit rangeYChanged(m_minY,m_maxY, m_tickYCount);
+    else {
+        if(q < 1.5) q=1;
+        else if(q < 3.0) q=2;
+        else if(q < 7.0) q=5;
+        else q=10;
     }
+    return q*z;
 }
 
 bool operator== (const Domain &domain1, const Domain &domain2)

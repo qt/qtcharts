@@ -149,7 +149,8 @@ m_shadesVisible(false),
 m_shadesOpacity(1.0),
 m_min(0),
 m_max(0),
-m_ticksCount(5)
+m_ticksCount(5),
+m_selection(NativeLabelsSelection)
 {
 
 }
@@ -343,6 +344,7 @@ void QChartAxis::setRange(qreal min, qreal max)
 
     if(changed) {
         emit rangeChanged(m_min,m_max);
+        emit this->changed(m_min, m_max, m_ticksCount, m_selection);
     }
 }
 
@@ -354,6 +356,7 @@ void QChartAxis::setTicksCount(int count)
 	if(m_ticksCount!=count) {
 		m_ticksCount=count;
 		emit ticksCountChanged(count);
+		emit changed(m_min, m_max, m_ticksCount, m_selection);
 	}
 }
 
@@ -381,14 +384,18 @@ void QChartAxis::hide()
     emit updated();
 }
 
-void QChartAxis::handleAxisRangeChanged(qreal min, qreal max)
+void QChartAxis::handleAxisRangeChanged(qreal min, qreal max,int count)
 {
    setRange(min,max);
+   setTicksCount(count);
 }
 
-void QChartAxis::handleAxisTicksChanged(int count)
+void QChartAxis::setLabelsSelectionMode(LabelsSelection mode)
 {
-    setTicksCount(count);
+    if(m_selection!=mode){
+        m_selection=mode;
+        emit changed(m_min, m_max, m_ticksCount, m_selection);
+    }
 }
 
 #include "moc_qchartaxis.cpp"

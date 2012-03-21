@@ -47,12 +47,10 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 
     if(!domain) {
         domain = new Domain();
-        QObject::connect(axisY,SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeYChanged(qreal,qreal)));
-        QObject::connect(axisX(),SIGNAL(rangeChanged(qreal,qreal)),domain,SLOT(handleAxisRangeXChanged(qreal,qreal)));
-        QObject::connect(axisY,SIGNAL(ticksCountChanged(int)),domain,SLOT(handleAxisYTicksCountChanged(int)));
-        QObject::connect(axisX(),SIGNAL(ticksCountChanged(int)),domain,SLOT(handleAxisXTicksCountChanged(int)));
-        QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axisY,SLOT(handleAxisRangeChanged(qreal,qreal)));
-        QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),axisX(),SLOT(handleAxisRangeChanged(qreal,qreal)));
+        QObject::connect(axisY,SIGNAL(changed(qreal,qreal,int,QChartAxis::LabelsSelection)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,QChartAxis::LabelsSelection)));
+        QObject::connect(axisX(),SIGNAL(changed(qreal,qreal,int,QChartAxis::LabelsSelection)),domain,SLOT(handleAxisXChanged(qreal,qreal,int,QChartAxis::LabelsSelection)));
+        QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axisY,SLOT(handleAxisRangeChanged(qreal,qreal,int)));
+        QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),axisX(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
         //initialize
         m_axisDomainMap.insert(axisY,domain);
         emit axisAdded(axisY,domain);

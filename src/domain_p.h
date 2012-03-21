@@ -1,6 +1,7 @@
 #ifndef DOMAIN_H_
 #define DOMAIN_H_
 #include "qchartglobal.h"
+#include "qchartaxis.h"
 #include <QRectF>
 #include <QSizeF>
 
@@ -13,6 +14,7 @@ public:
     virtual ~Domain();
 
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY, int tickXCount, int tickYCount);
     void setRangeX(qreal min, qreal max);
     void setRangeY(qreal min, qreal max);
     void setMinX(qreal min);
@@ -45,12 +47,14 @@ signals:
     void rangeXChanged(qreal min, qreal max, int tickXCount);
     void rangeYChanged(qreal min, qreal max, int tickYCount);
 
-
 public slots:
-    void handleAxisRangeXChanged(qreal min,qreal max);
-    void handleAxisRangeYChanged(qreal min,qreal max);
-    void handleAxisXTicksCountChanged(int tickCount);
-    void handleAxisYTicksCountChanged(int tickCount);
+    void handleAxisXChanged(qreal min,qreal max,int tickXCount,QChartAxis::LabelsSelection mode);
+    void handleAxisYChanged(qreal min,qreal max,int tickYCount,QChartAxis::LabelsSelection mode);
+
+private:
+    void niceNumbers(qreal &min, qreal &max, int &ticksCount);
+    void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount);
+    qreal niceNumber(qreal x,bool celing);
 
 private:
     qreal m_minX;
@@ -59,6 +63,7 @@ private:
     qreal m_maxY;
     int m_tickXCount;
     int m_tickYCount;
+    QChartAxis::LabelsSelection m_selection;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

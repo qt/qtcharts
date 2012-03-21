@@ -81,7 +81,6 @@ public:
     void zoomIn();
     void zoomIn(const QRectF& rect);
     void zoomOut();
-    void zoomReset();
     void scrollLeft();
     void scrollRight();
     void scrollUp();
