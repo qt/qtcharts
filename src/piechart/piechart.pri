@@ -8,6 +8,7 @@ SOURCES += \
     $$PWD/qpieslice.cpp
 
 PRIVATE_HEADERS += \
+    $$PWD/pieslicedata_p.h \
     $$PWD/piechartitem_p.h \
     $$PWD/piesliceitem_p.h \
     $$PWD/qpiesliceprivate_p.h \
