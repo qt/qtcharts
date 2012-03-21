@@ -3,6 +3,7 @@
 
 #include "qchartglobal.h"
 #include <QObject>
+#include <QRect>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

@@ -191,8 +191,11 @@ QVector<QRectF> BarChartItem::calculateLayout()
     int categoryCount = mSeries->categoryCount();
     int setCount = mSeries->barsetCount();
 
-    qreal tW = mWidth;
-    qreal tH = mHeight;
+//    qreal tW = mWidth;
+//    qreal tH = mHeight;
+    qreal width = geometry().width();
+    qreal height = geometry().height();
+
     qreal tM = mSeries->max();
 
     // Domain:
@@ -200,20 +203,20 @@ QVector<QRectF> BarChartItem::calculateLayout()
         tM = mDomainMaxY;
     }
 
-    qreal scale = (tH/tM);
+    qreal scale = (height/tM);
     qreal tC = categoryCount + 1;
-    qreal categoryWidth = tW/tC;
-    mBarWidth = categoryWidth / (setCount+1);
+    qreal categoryWidth = width/tC;
+    qreal barWidth = categoryWidth / (setCount+1);
 
     int itemIndex(0);
     for (int category=0; category < categoryCount; category++) {
-        qreal xPos = categoryWidth * category + categoryWidth /2 + mBarWidth/2;
-        qreal yPos = mHeight;
+        qreal xPos = categoryWidth * category + categoryWidth /2 + barWidth/2;
+        qreal yPos = height;
         for (int set = 0; set < setCount; set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             Bar* bar = mBars.at(itemIndex);
 
-            QRectF rect(xPos,yPos-barHeight,mBarWidth,barHeight);
+            QRectF rect(xPos,yPos-barHeight,barWidth,barHeight);
             //layout.insert(bar,rect);
             layout.append(rect);
             // TODO: width settable per bar?
@@ -223,15 +226,15 @@ QVector<QRectF> BarChartItem::calculateLayout()
             bar->setBrush(mSeries->barsetAt(set)->brush());
 //            bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
-            xPos += mBarWidth;
+            xPos += barWidth;
         }
     }
 
     // Position floating values
     itemIndex = 0;
     for (int category=0; category < mSeries->categoryCount(); category++) {
-        qreal xPos = categoryWidth * category + categoryWidth/2 + mBarWidth;
-        qreal yPos = mHeight;
+        qreal xPos = categoryWidth * category + categoryWidth/2 + barWidth;
+        qreal yPos = height;
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);
@@ -248,7 +251,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
             }
 
             itemIndex++;
-            xPos += mBarWidth;
+            xPos += barWidth;
         }
     }
 
@@ -329,7 +332,7 @@ void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal
 void BarChartItem::handleGeometryChanged(const QRectF& rect)
 {
     m_rect=rect;
-    layoutChanged();
+    handleLayoutChanged();
     mLayoutSet = true;
     setPos(rect.topLeft());
 }
