@@ -27,28 +27,29 @@ void PercentBarChartItem::layoutChanged()
     }
 
     // Use temporary qreals for accurancy (we might get some compiler warnings... :)
-    qreal tW = mWidth;
-    qreal tC = mSeries->categoryCount() + 1;
-    qreal cC = mSeries->categoryCount() * 2 + 1;
-    mBarWidth = tW / cC;
-    qreal xStep = (tW/tC);
-    qreal xPos = ((tW/tC) - mBarWidth / 2);
-    qreal h = mHeight;
+    qreal width = geometry().width();
+    qreal height = geometry().height();
+
+    qreal categoryCount = mSeries->categoryCount();
+    qreal barWidth = width / (mSeries->categoryCount() * 2);
+    qreal xStep = width/categoryCount;
+    qreal xPos =  xStep/2 - barWidth / 2;
 
     int itemIndex(0);
-    for (int category = 0; category < mSeries->categoryCount(); category++) {
+    for (int category = 0; category < categoryCount ; category++) {
         qreal colSum = mSeries->categorySum(category);
-        qreal scale = (h / colSum);
-        qreal yPos = h;
+        qreal scale = (height / colSum);
+        qreal yPos = height;
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set, category) * scale;
             Bar* bar = mBars.at(itemIndex);
 
             // TODO: width settable per bar?
-            bar->resize(mBarWidth, barHeight);
+
             bar->setPen(mSeries->barsetAt(set)->pen());
+            bar->setRect(xPos, yPos-barHeight,barWidth, barHeight);
             bar->setBrush(mSeries->barsetAt(set)->brush());
-            bar->setPos(xPos, yPos-barHeight);
+
             itemIndex++;
             yPos -= barHeight;
         }
@@ -57,11 +58,11 @@ void PercentBarChartItem::layoutChanged()
 
     // Position floating values
     itemIndex = 0;
-    xPos = (tW/tC);
+    xPos = (width/categoryCount);
     for (int category=0; category < mSeries->categoryCount(); category++) {
-        qreal yPos = h;
+        qreal yPos = height;
         qreal colSum = mSeries->categorySum(category);
-        qreal scale = (h / colSum);
+        qreal scale = (height / colSum);
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);

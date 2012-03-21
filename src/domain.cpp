@@ -35,7 +35,7 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCo
     }
 
     if(m_tickXCount!=tickYCount) {
-        m_tickXCount=tickYCount;
+        m_tickYCount=tickYCount;
         tickYChanged=true;
     }
 
@@ -74,9 +74,20 @@ void Domain::setRangeX(qreal min, qreal max)
 {
     setRange(min,max,m_minY, m_maxY);
 }
+
+void Domain::setRangeX(qreal min, qreal max, int tickCount)
+{
+    setRange(min,max,m_minY, m_maxY,tickCount,m_tickYCount);
+}
+
 void Domain::setRangeY(qreal min, qreal max)
 {
     setRange(m_minX, m_maxX, min, max);
+}
+
+void Domain::setRangeY(qreal min, qreal max,int tickCount)
+{
+    setRange(m_minX, m_maxX, min, max,m_tickXCount,tickCount);
 }
 
 void Domain::setMinX(qreal min)
@@ -239,7 +250,7 @@ bool operator!= (const Domain &domain1, const Domain &domain2)
 
 QDebug operator<<(QDebug dbg, const Domain &domain)
 {
-    dbg.nospace() << "Domain("<<domain.m_minX<<','<<domain.m_maxX<<','<<domain.m_minY<<','<<domain.m_maxY<<')';
+    dbg.nospace() << "Domain("<<domain.m_minX<<','<<domain.m_maxX<<','<<domain.m_minY<<','<<domain.m_maxY<<')' << domain.m_tickXCount << "," << domain.m_tickYCount ;
     return dbg.maybeSpace();
 }
 

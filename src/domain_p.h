@@ -16,7 +16,9 @@ public:
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY, int tickXCount, int tickYCount);
     void setRangeX(qreal min, qreal max);
+    void setRangeX(qreal min, qreal max, int tickCount);
     void setRangeY(qreal min, qreal max);
+    void setRangeY(qreal min, qreal max, int tickCount);
     void setMinX(qreal min);
     void setMaxX(qreal max);
     void setMinY(qreal min);

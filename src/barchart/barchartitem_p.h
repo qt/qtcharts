@@ -14,9 +14,9 @@ class BarValue;
 class QChartAxisCategories;
 class QChart;
 
-typedef QHash<Bar*, QSizeF> BarLayout;
+typedef QHash<Bar*, QRectF> BarLayout;
 
-class BarChartItem : public QObject, public ChartItem
+class BarChartItem : public ChartItem
 {
     Q_OBJECT
 public:
@@ -41,6 +41,8 @@ public:
     void applyLayout(const BarLayout &layout);
     void setLayout(const BarLayout &layout);
 
+    QRectF geometry() const { return m_rect;}
+
 protected:
     void initAxisLabels();
 
@@ -56,15 +58,12 @@ public slots:
 protected:
 
     // TODO: consider these.
-    int mHeight;        // Layout spesific
-    int mWidth;
-    qreal mBarWidth;
-
     qreal mDomainMinX;
     qreal mDomainMaxX;
     qreal mDomainMinY;
     qreal mDomainMaxY;
 
+    QRectF m_rect;
     bool mLayoutSet;    // True, if component has been laid out.
 
     // Not owned.

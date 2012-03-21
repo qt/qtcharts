@@ -63,8 +63,8 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 
         PieSliceData data = sliceData(s);
 
-        if (m_animator)
-            m_animator->addAnimation(this, s, data, isEmpty);
+        if (animator())
+            animator()->addAnimation(this, s, data, isEmpty);
         else
             setLayout(s, data);
     }
@@ -155,8 +155,8 @@ void PieChartItem::applyLayout(const PieLayout &layout)
 
 void PieChartItem::updateLayout(QPieSlice *slice, const PieSliceData &sliceData)
 {
-    if (m_animator)
-        m_animator->updateLayout(this, slice, sliceData);
+    if (animator())
+        animator()->updateLayout(this, slice, sliceData);
     else
         setLayout(slice, sliceData);
 }

@@ -12,7 +12,7 @@ class PercentBarChartItem : public BarChartItem
 {
     Q_OBJECT
 public:
-    PercentBarChartItem(QBarSeries *series, QChart *parent = 0);
+    PercentBarChartItem(QBarSeries *series, ChartPresenter *presenter);
 
 private:
 

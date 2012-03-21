@@ -38,32 +38,31 @@ void StackedBarChartItem::layoutChanged()
     }
 
     // Use temporary qreals for accurancy (we might get some compiler warnings... :)
+
     qreal maxSum = mSeries->maxCategorySum();
     // Domain:
     if (mDomainMaxY > maxSum) {
         maxSum = mDomainMaxY;
     }
 
-    qreal h = mHeight;
-    qreal scale = (h / maxSum);
-    qreal tW = mWidth;
-    qreal tC = mSeries->categoryCount() + 1;
-    qreal cC = mSeries->categoryCount() * 2 + 1;
-    mBarWidth = tW / cC;
-    qreal xStep = (tW/tC);
-    qreal xPos = ((tW/tC) - mBarWidth / 2);
+    qreal height = geometry().height();
+    qreal width = geometry().width();
+    qreal scale = (height /  mSeries->maxCategorySum());
+    qreal categotyCount = mSeries->categoryCount();
+    qreal barWidth = width / (categotyCount *2);
+    qreal xStep = width/categotyCount;
+    qreal xPos = xStep/2 - barWidth/2;
+
 
     int itemIndex(0);
-    for (int category = 0; category < mSeries->categoryCount(); category++) {
-        qreal yPos = h;
+    for (int category = 0; category < categotyCount; category++) {
+        qreal yPos = height;
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set, category) * scale;
             Bar* bar = mBars.at(itemIndex);
-
-            bar->resize(mBarWidth, barHeight);
             bar->setPen(mSeries->barsetAt(set)->pen());
             bar->setBrush(mSeries->barsetAt(set)->brush());
-            bar->setPos(xPos, yPos-barHeight);
+            bar->setRect(xPos, yPos-barHeight,barWidth, barHeight);
             itemIndex++;
             yPos -= barHeight;
         }
@@ -72,9 +71,9 @@ void StackedBarChartItem::layoutChanged()
 
     // Position floating values
     itemIndex = 0;
-    xPos = (tW/tC);
+    xPos = (width/categotyCount);
     for (int category=0; category < mSeries->categoryCount(); category++) {
-        qreal yPos = h;
+        qreal yPos = height;
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);

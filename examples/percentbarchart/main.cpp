@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     //! [5]
 
     //! [6]
-    chartView->axisX()->setAxisVisible(false);
+    //chartView->axisX()->setAxisVisible(false);
     chartView->axisX()->setGridLineVisible(false);
     chartView->axisX()->setLabelsVisible(false);
     //! [6]

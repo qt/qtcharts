@@ -11,7 +11,7 @@ class StackedBarChartItem : public BarChartItem
 {
     Q_OBJECT
 public:
-    StackedBarChartItem(QBarSeries *series, QChart *parent = 0);
+    StackedBarChartItem(QBarSeries *series, ChartPresenter *presenter);
     ~StackedBarChartItem();
 
 private:

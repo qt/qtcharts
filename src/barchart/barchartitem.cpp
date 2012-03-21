@@ -8,6 +8,7 @@
 #include "qchartaxiscategories.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
+#include "chartdataset_p.h"
 #include <QDebug>
 #include <QToolTip>
 
@@ -15,8 +16,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
     ChartItem(presenter),
-    mHeight(0),
-    mWidth(0),
     mLayoutSet(false),
     mSeries(series)
 {
@@ -47,7 +46,7 @@ void BarChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 
 QRectF BarChartItem::boundingRect() const
 {
-    return QRectF(0, 0, mWidth, mHeight);
+    return m_rect;
 }
 
 void BarChartItem::dataChanged()
@@ -102,47 +101,46 @@ void BarChartItem::layoutChanged()
         return;
     }
 
-    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
-    int categoryCount = mSeries->categoryCount();
-    int setCount = mSeries->barsetCount();
 
-    qreal tW = mWidth;
-    qreal tH = mHeight;
-    qreal tM = mSeries->max();
+    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
+    qreal categoryCount = mSeries->categoryCount();
+    qreal setCount = mSeries->barsetCount();
+    qreal max = mSeries->max();
 
     // Domain:
-    if (mDomainMaxY > tM) {
-        tM = mDomainMaxY;
-    }
+       if (mDomainMaxY > max) {
+           max = mDomainMaxY;
+       }
 
-    qreal scale = (tH/tM);
-    qreal tC = categoryCount + 1;
-    qreal categoryWidth = tW/tC;
-    mBarWidth = categoryWidth / (setCount+1);
+    qreal width = geometry().width();
+    qreal height = geometry().height();
+    qreal scale = (height/max);
+    qreal categoryWidth = width/categoryCount;
+    qreal barWidth = categoryWidth / (setCount+1);
 
     int itemIndex(0);
     for (int category=0; category < categoryCount; category++) {
-        qreal xPos = categoryWidth * category + categoryWidth /2 + mBarWidth/2;
-        qreal yPos = mHeight;
+        qreal xPos = categoryWidth * category  + barWidth/2;
+        qreal yPos = height;
         for (int set = 0; set < setCount; set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             Bar* bar = mBars.at(itemIndex);
 
             // TODO: width settable per bar?
-            bar->resize(mBarWidth, barHeight);
+            bar->setRect(xPos, yPos-barHeight,barWidth, barHeight);
             bar->setPen(mSeries->barsetAt(set)->pen());
             bar->setBrush(mSeries->barsetAt(set)->brush());
-            bar->setPos(xPos, yPos-barHeight);
+
             itemIndex++;
-            xPos += mBarWidth;
+            xPos += barWidth;
         }
     }
 
     // Position floating values
     itemIndex = 0;
     for (int category=0; category < mSeries->categoryCount(); category++) {
-        qreal xPos = categoryWidth * category + categoryWidth/2 + mBarWidth;
-        qreal yPos = mHeight;
+        qreal xPos = categoryWidth * category + categoryWidth/2 + barWidth;
+        qreal yPos = height;
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set,category) * scale;
             BarValue* value = mFloatingValues.at(itemIndex);
@@ -159,7 +157,7 @@ void BarChartItem::layoutChanged()
             }
 
             itemIndex++;
-            xPos += mBarWidth;
+            xPos += barWidth;
         }
     }
     update();
@@ -169,7 +167,7 @@ BarLayout BarChartItem::calculateLayout()
 {
     BarLayout layout;
     foreach(Bar* bar, mBars) {
-        layout.insert(bar,bar->boundingRect().size());
+        layout.insert(bar,bar->boundingRect());
     }
 
     return layout;
@@ -177,8 +175,8 @@ BarLayout BarChartItem::calculateLayout()
 
 void BarChartItem::applyLayout(const BarLayout &layout)
 {
-    if (m_animator)
-        m_animator->updateLayout(this, layout);
+    if (animator())
+        animator()->updateLayout(this, layout);
     else
         setLayout(layout);
 }
@@ -186,7 +184,7 @@ void BarChartItem::applyLayout(const BarLayout &layout)
 void BarChartItem::setLayout(const BarLayout &layout)
 {
     foreach (Bar *bar, layout.keys()) {
-        bar->setSize(layout.value(bar));
+        bar->setRect(layout.value(bar));
     }
     update();
 }
@@ -198,23 +196,12 @@ void BarChartItem::initAxisLabels()
         return;
     }
 
-    mChart->axisX()->setTicksCount(count+2);
+    Domain* domain = presenter()->dataSet()->domain(mSeries);
 
     qreal min = 0;
     qreal max = count+1;
 
-    mChart->axisX()->setMin(min);
-    mChart->axisX()->setMax(max);
-
-    QChartAxisCategories* categories = mChart->axisX()->categories();
-    categories->clear();
-    for (int i=0; i<count; i++) {
-        categories->insert(i+1,mSeries->categoryName(i));
-    }
-
-
-
-    mChart->axisX()->setLabelsVisible(true);
+    domain->setRangeX(min,max,count+1);
 }
 
 //handlers
@@ -254,8 +241,7 @@ void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal
 
 void BarChartItem::handleGeometryChanged(const QRectF& rect)
 {
-    mWidth = rect.width();
-    mHeight = rect.height();
+    m_rect=rect;
     layoutChanged();
     mLayoutSet = true;
     setPos(rect.topLeft());

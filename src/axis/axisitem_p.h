@@ -103,15 +103,17 @@ protected:
 
    QRectF boundingRect() const
    {
-       return QGraphicsLineItem::boundingRect().adjusted(0,0,m_axis->axisType()!=Axis::X_AXIS?10:0,m_axis->axisType()!=Axis::Y_AXIS?10:0);
+      return shape().boundingRect();
    }
 
    QPainterPath shape() const
    {
-       QPainterPath path;
-       path.addRect(boundingRect());
+       QPainterPath path = QGraphicsLineItem::shape();
+       QRectF rect = path.boundingRect();
+       path.addRect(rect.adjusted(0,0,m_axis->axisType()!=Axis::X_AXIS?8:0,m_axis->axisType()!=Axis::Y_AXIS?8:0));
        return path;
    }
+
 private:
    Axis* m_axis;
 
