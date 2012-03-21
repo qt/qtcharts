@@ -73,10 +73,10 @@ private:
     AxisType m_type;
     QRectF m_rect;
     int m_labelsAngle;
-    QGraphicsItemGroup m_grid;
-    QGraphicsItemGroup m_shades;
-    QGraphicsItemGroup m_labels;
-    QGraphicsItemGroup m_axis;
+    QGraphicsItemGroup *m_grid;
+    QGraphicsItemGroup *m_shades;
+    QGraphicsItemGroup *m_labels;
+    QGraphicsItemGroup *m_axis;
     QVector<qreal> m_layoutVector;
     qreal m_min;
     qreal m_max;
