@@ -57,6 +57,11 @@ protected:
     int mWidth;
     qreal mBarWidth;
 
+    qreal mDomainMinX;
+    qreal mDomainMaxX;
+    qreal mDomainMinY;
+    qreal mDomainMaxY;
+
     bool mLayoutSet;    // True, if component has been laid out.
 
     // Not owned.

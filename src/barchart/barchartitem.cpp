@@ -110,6 +110,12 @@ void BarChartItem::layoutChanged()
     qreal tW = mWidth;
     qreal tH = mHeight;
     qreal tM = mSeries->max();
+
+    // Domain:
+    if (mDomainMaxY > tM) {
+        tM = mDomainMaxY;
+    }
+
     qreal scale = (tH/tM);
     qreal tC = categoryCount + 1;
     qreal categoryWidth = tW/tC;
@@ -222,11 +228,11 @@ void BarChartItem::handleModelChanged(int index)
 
 void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
-    // TODO:
-    Q_UNUSED(minX)
-    Q_UNUSED(maxX)
-    Q_UNUSED(minY)
-    Q_UNUSED(maxY)
+    mDomainMinX = minX;
+    mDomainMaxX = maxX;
+    mDomainMinY = minY;
+    mDomainMaxY = maxY;
+    layoutChanged();
 
     /*
     int count = mSeries->categoryCount();

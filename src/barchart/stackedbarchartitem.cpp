@@ -39,6 +39,11 @@ void StackedBarChartItem::layoutChanged()
 
     // Use temporary qreals for accurancy (we might get some compiler warnings... :)
     qreal maxSum = mSeries->maxCategorySum();
+    // Domain:
+    if (mDomainMaxY > maxSum) {
+        maxSum = mDomainMaxY;
+    }
+
     qreal h = mHeight;
     qreal scale = (h / maxSum);
     qreal tW = mWidth;
