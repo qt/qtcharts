@@ -17,7 +17,7 @@ BarAnimation::~BarAnimation()
 {
 }
 
-void BarAnimation::updateValues(const BarLayout& layout)
+void BarAnimation::updateValues(const BarLayout& /*layout*/)
 {
     // TODO:
     qDebug() << "BarAnimation::updateValues";
