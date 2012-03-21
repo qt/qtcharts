@@ -14,7 +14,7 @@ class BarValue;
 class QChartAxisCategories;
 class QChart;
 
-typedef QHash<Bar*, QRectF> BarLayout;
+//typedef QVector<QRectF> BarLayout;
 
 class BarChartItem : public ChartItem
 {
@@ -34,12 +34,13 @@ public:
     // TODO: Consider the domain for layoutChanged. May be use case, may not be. If it is, then the derived classes need to implement it
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
 private slots:
-    virtual void layoutChanged();   // layout has changed -> need to recalculate bar sizes
+    //virtual void layoutChanged();   // layout has changed -> need to recalculate bar sizes
 
 public:
-    BarLayout calculateLayout();
-    void applyLayout(const BarLayout &layout);
-    void setLayout(const BarLayout &layout);
+    QVector<QRectF> calculateLayout();
+    void applyLayout(const QVector<QRectF> &layout);
+    void setLayout(const QVector<QRectF> &layout);
+    void updateLayout(const QVector<QRectF> &layout);
 
     QRectF geometry() const { return m_rect;}
 
@@ -65,6 +66,7 @@ protected:
 
     QRectF m_rect;
     bool mLayoutSet;    // True, if component has been laid out.
+    QVector<QRectF> mLayout;
 
     // Not owned.
     QBarSeries* mSeries;

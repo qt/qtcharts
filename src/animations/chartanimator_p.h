@@ -43,7 +43,7 @@ public:
     void updateLayout(PieChartItem* item, const PieLayout &layout);
     void updateLayout(PieChartItem* item, QPieSlice *slice, const PieSliceData &sliceData);
 
-    void updateLayout(BarChartItem* item, const BarLayout &layout);
+    void updateLayout(BarChartItem* item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
 
     void setState(State state,const QPointF& point = QPointF());
 

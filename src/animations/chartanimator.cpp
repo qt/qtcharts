@@ -13,6 +13,7 @@
 
 Q_DECLARE_METATYPE(QVector<QPointF>)
 Q_DECLARE_METATYPE(QVector<qreal>)
+Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -267,12 +268,16 @@ void ChartAnimator::updateLayout(PieChartItem* item, QPieSlice *slice, const Pie
     animation->updateValue(slice, sliceData);
 }
 
-void ChartAnimator::updateLayout(BarChartItem* item, const BarLayout &layout)
+void ChartAnimator::updateLayout(BarChartItem* item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
 {
     qDebug() << "ChartAnimator::updateLayout";
     BarAnimation* animation = static_cast<BarAnimation*>(m_animations.value(item));
     Q_ASSERT(animation);
-    animation->updateValues(layout);
+//    animation->updateValues(layout);
+    animation->setDuration(duration);
+    animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
+    animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
+    QTimer::singleShot(0,animation,SLOT(start()));
 }
 
 

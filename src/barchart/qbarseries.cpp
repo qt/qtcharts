@@ -51,10 +51,12 @@ QBarSeries::QBarSeries(QStringList categories, QObject *parent)
 */
 void QBarSeries::addBarSet(QBarSet *set)
 {
+    qDebug() << "add bar set";
     mModel->addBarSet(set);
     connect(set,SIGNAL(clicked(QString)),this,SLOT(barsetClicked(QString)));
     connect(set,SIGNAL(rightClicked(QString)),this,SLOT(barsetRightClicked(QString)));
     connect(set, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
+    emit updatedBars();
 }
 
 /*!
@@ -67,6 +69,7 @@ void QBarSeries::removeBarSet(QBarSet *set)
     disconnect(set,SIGNAL(clicked(QString)),this,SLOT(barsetClicked(QString)));
     disconnect(set,SIGNAL(rightClicked(QString)),this,SLOT(barsetRightClicked(QString)));
     mModel->removeBarSet(set);
+    emit updatedBars();
 }
 
 void QBarSeries::insertBarSet(int i, QBarSet *set)

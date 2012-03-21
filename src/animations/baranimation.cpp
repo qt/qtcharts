@@ -3,7 +3,9 @@
 #include <QParallelAnimationGroup>
 #include <QTimer>
 
-Q_DECLARE_METATYPE(QVector<QSizeF>)
+Q_DECLARE_METATYPE(QVector<QRectF>)
+//Q_DECLARE_METATYPE(BarLayout)     // TODO?
+
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -17,31 +19,35 @@ BarAnimation::~BarAnimation()
 {
 }
 
-void BarAnimation::updateValues(const BarLayout& /*layout*/)
+void BarAnimation::updateValues(const QVector<QRectF>& layout)
 {
-    // TODO:
-    qDebug() << "BarAnimation::updateValues";
+    // TODO?:
+//    qDebug() << "BarAnimation::updateValues" << layout.count();
 }
 
 
 QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
-    QVector<QSizeF> startVector = qVariantValue<QVector<QSizeF> > (from);
-    QVector<QSizeF> endVector = qVariantValue<QVector<QSizeF> > (to);
-    QVector<QSizeF> result;
+    QVector<QRectF> startVector = qVariantValue<QVector<QRectF> > (from);
+    QVector<QRectF> endVector = qVariantValue<QVector<QRectF> > (to);
+    QVector<QRectF> result;
 
     Q_ASSERT(startVector.count() == endVector.count()) ;
 
     for(int i =0 ;i< startVector.count();i++){
-           QSizeF value = startVector[i] + ((endVector[i]- endVector[i]) * progress);
-           result << value;
+        //QRectF value = startVector[i] + ((endVector[i] - startVector[i]) * progress);
+        QPointF topLeft = startVector[i].topLeft() + ((endVector[i].topLeft() - startVector[i].topLeft()) * progress);
+        QSizeF size = startVector[i].size() + ((endVector[i].size() - startVector[i].size()) * progress);
+        QRectF value(topLeft,size);
+        result << value;
     }
     return qVariantFromValue(result);
 }
 
-void BarAnimation::updateCurrentValue(const QVariant &)
+void BarAnimation::updateCurrentValue(const QVariant &value)
 {
-    // TODO?
+    QVector<QRectF> layout = qVariantValue<QVector<QRectF> >(value);
+    m_item->setLayout(layout);
 }
 
 #include "moc_baranimation_p.cpp"
