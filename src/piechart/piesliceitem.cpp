@@ -1,4 +1,4 @@
-#include "pieslice_p.h"
+#include "piesliceitem_p.h"
 #include "piechartitem_p.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
@@ -20,7 +20,7 @@ QPointF offset(qreal angle, qreal length)
     return QPointF(dx, -dy);
 }
 
-PieSlice::PieSlice(QGraphicsItem* parent)
+PieSliceItem::PieSliceItem(QGraphicsItem* parent)
     :QGraphicsObject(parent)
 {
     setAcceptHoverEvents(true);
@@ -28,24 +28,24 @@ PieSlice::PieSlice(QGraphicsItem* parent)
     setZValue(ChartPresenter::PieSeriesZValue);
 }
 
-PieSlice::~PieSlice()
+PieSliceItem::~PieSliceItem()
 {
 
 }
 
-QRectF PieSlice::boundingRect() const
+QRectF PieSliceItem::boundingRect() const
 {
     return m_boundingRect;
 }
 
-QPainterPath PieSlice::shape() const
+QPainterPath PieSliceItem::shape() const
 {
     // Don't include the label and label arm.
     // This is used to detect a mouse clicks. We do not want clicks from label.
     return m_slicePath;
 }
 
-void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
+void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
     painter->setClipRect(parentItem()->boundingRect());
 
@@ -66,27 +66,27 @@ void PieSlice::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option
     }
 }
 
-void PieSlice::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/)
+void PieSliceItem::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
     emit hoverEnter();
 }
 
-void PieSlice::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
+void PieSliceItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
     emit hoverLeave();
 }
 
-void PieSlice::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
+void PieSliceItem::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
 {
     emit clicked();
 }
 
-void PieSlice::setSliceData(PieSliceData sliceData)
+void PieSliceItem::setSliceData(PieSliceData sliceData)
 {
     m_data = sliceData;
 }
 
-void PieSlice::updateGeometry()
+void PieSliceItem::updateGeometry()
 {
     if (m_data.m_radius <= 0)
         return;
@@ -112,7 +112,7 @@ void PieSlice::updateGeometry()
     m_boundingRect = m_slicePath.boundingRect().united(m_labelArmPath.boundingRect()).united(m_labelTextRect);
 }
 
-QPointF PieSlice::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
+QPointF PieSliceItem::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
 {
     if (slice->isExploded()) {
         qreal centerAngle = slice->startAngle() + ((slice->endAngle() - slice->startAngle())/2);
@@ -124,7 +124,7 @@ QPointF PieSlice::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
     return point;
 }
 
-QPainterPath PieSlice::slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal* centerAngle, QPointF* armStart)
+QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal* centerAngle, QPointF* armStart)
 {
     // calculate center angle
     *centerAngle = startAngle + (angleSpan/2);
@@ -146,7 +146,7 @@ QPainterPath PieSlice::slicePath(QPointF center, qreal radius, qreal startAngle,
     return path;
 }
 
-QPainterPath PieSlice::labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF* textStart)
+QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF* textStart)
 {
     qreal dx = qSin(angle*(PI/180)) * length;
     qreal dy = -qCos(angle*(PI/180)) * length;
@@ -173,12 +173,12 @@ QPainterPath PieSlice::labelArmPath(QPointF start, qreal angle, qreal length, qr
     return path;
 }
 
-QRectF PieSlice::labelTextRect(QFont font, QString text)
+QRectF PieSliceItem::labelTextRect(QFont font, QString text)
 {
     QFontMetricsF fm(font);
     return fm.boundingRect(text);
 }
 
-#include "moc_pieslice_p.cpp"
+#include "moc_piesliceitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -1,5 +1,5 @@
 #include "piechartitem_p.h"
-#include "pieslice_p.h"
+#include "piesliceitem_p.h"
 #include "qpieslice.h"
 #include "qpiesliceprivate_p.h"
 #include "qpieseries.h"
@@ -55,12 +55,12 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
     m_presenter->theme()->decorate(m_series, m_presenter->dataSet()->seriesIndex(m_series));
 
     foreach (QPieSlice *s, slices) {
-        PieSlice* slice = new PieSlice(this);
-        m_slices.insert(s, slice);
+        PieSliceItem* item = new PieSliceItem(this);
+        m_slices.insert(s, item);
         connect(s, SIGNAL(changed()), this, SLOT(handleSliceChanged()));
-        connect(slice, SIGNAL(clicked()), s, SIGNAL(clicked()));
-        connect(slice, SIGNAL(hoverEnter()), s, SIGNAL(hoverEnter()));
-        connect(slice, SIGNAL(hoverLeave()), s, SIGNAL(hoverLeave()));
+        connect(item, SIGNAL(clicked()), s, SIGNAL(clicked()));
+        connect(item, SIGNAL(hoverEnter()), s, SIGNAL(hoverEnter()));
+        connect(item, SIGNAL(hoverLeave()), s, SIGNAL(hoverLeave()));
 
         PieSliceData data = sliceData(s);
 
@@ -129,7 +129,7 @@ void PieChartItem::calculatePieLayout()
 PieSliceData PieChartItem::sliceData(QPieSlice *slice)
 {
     PieSliceData sliceData = slice->d_ptr->m_data;
-    sliceData.m_center = PieSlice::sliceCenter(m_pieCenter, m_pieRadius, slice);
+    sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
     sliceData.m_angleSpan = slice->endAngle() - slice->startAngle();
     return sliceData;
@@ -165,22 +165,22 @@ void PieChartItem::updateLayout(QPieSlice *slice, const PieSliceData &sliceData)
 void PieChartItem::setLayout(const PieLayout &layout)
 {
     foreach (QPieSlice *slice, layout.keys()) {
-        PieSlice *s = m_slices.value(slice);
-        Q_ASSERT(s);
-        s->setSliceData(layout.value(slice));
-        s->updateGeometry();
-        s->update();
+        PieSliceItem *item = m_slices.value(slice);
+        Q_ASSERT(item);
+        item->setSliceData(layout.value(slice));
+        item->updateGeometry();
+        item->update();
     }
 }
 
 void PieChartItem::setLayout(QPieSlice *slice, const PieSliceData &sliceData)
 {
     // find slice
-    PieSlice *s = m_slices.value(slice);
-    Q_ASSERT(s);
-    s->setSliceData(sliceData);
-    s->updateGeometry();
-    s->update();
+    PieSliceItem *item = m_slices.value(slice);
+    Q_ASSERT(item);
+    item->setSliceData(sliceData);
+    item->updateGeometry();
+    item->update();
 }
 
 void PieChartItem::destroySlice(QPieSlice *slice)

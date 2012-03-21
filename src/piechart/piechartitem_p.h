@@ -3,7 +3,7 @@
 
 #include "qpieseries.h"
 #include "chartitem_p.h"
-#include "pieslice_p.h"
+#include "piesliceitem_p.h"
 
 class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -45,8 +45,8 @@ public:
     void destroySlice(QPieSlice *slice);
 
 private:
-    friend class PieSlice;
-    QHash<QPieSlice*, PieSlice*> m_slices;
+    friend class PieSliceItem;
+    QHash<QPieSlice*, PieSliceItem*> m_slices;
     QPieSeries *m_series;
     QRectF m_rect;
     QPointF m_pieCenter;

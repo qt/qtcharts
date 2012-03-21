@@ -1,5 +1,5 @@
-#ifndef PIESLICE_H
-#define PIESLICE_H
+#ifndef PIESLICEITEM_H
+#define PIESLICEITEM_H
 
 #include "qchartglobal.h"
 #include "charttheme_p.h"
@@ -17,13 +17,13 @@ class PieChartItem;
 class PieSliceLabel;
 class QPieSlice;
 
-class PieSlice : public QGraphicsObject
+class PieSliceItem : public QGraphicsObject
 {
     Q_OBJECT
 
 public:
-    PieSlice(QGraphicsItem* parent = 0);
-    ~PieSlice();
+    PieSliceItem(QGraphicsItem* parent = 0);
+    ~PieSliceItem();
 
 public: // from QGraphicsItem
     QRectF boundingRect() const;
@@ -56,4 +56,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // PIESLICE_H
+#endif // PIESLICEITEM_H
