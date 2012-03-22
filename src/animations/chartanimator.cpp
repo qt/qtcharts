@@ -273,7 +273,6 @@ void ChartAnimator::updateLayout(BarChartItem* item, const QVector<QRectF> &oldL
     qDebug() << "ChartAnimator::updateLayout";
     BarAnimation* animation = static_cast<BarAnimation*>(m_animations.value(item));
     Q_ASSERT(animation);
-//    animation->updateValues(layout);
     animation->setDuration(duration);
     animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
     animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));

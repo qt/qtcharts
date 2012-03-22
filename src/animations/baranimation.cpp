@@ -28,9 +28,13 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
     Q_ASSERT(startVector.count() == endVector.count()) ;
 
     for(int i =0 ;i< startVector.count();i++){
-        //QRectF value = startVector[i] + ((endVector[i] - startVector[i]) * progress);
-        QPointF topLeft = startVector[i].topLeft() + ((endVector[i].topLeft() - startVector[i].topLeft()) * progress);
-        QSizeF size = startVector[i].size() + ((endVector[i].size() - startVector[i].size()) * progress);
+        qreal w = endVector[i].width();
+        qreal h = startVector[i].height() + ((endVector[i].height() - startVector[i].height()) * progress);
+        qreal x = endVector[i].topLeft().x();
+        qreal y = endVector[i].topLeft().y() + endVector[i].height() - h;
+
+        QPointF topLeft(x,y);
+        QSizeF size(w,h);
         QRectF value(topLeft,size);
         result << value;
     }
