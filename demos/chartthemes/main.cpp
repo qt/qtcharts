@@ -47,7 +47,7 @@ public:
             DataList dataList;
             for (int j(0); j < valueCount; j++) {
                 QPointF value(j + (qreal) rand() / (qreal) RAND_MAX, qrand() % valueMax);
-                QString label = QString::number(i) + ":" + QString::number(j);
+                QString label = "Item " + QString::number(i) + ":" + QString::number(j);
                 dataList << Data(value, label);
             }
             m_dataTable << dataList;
@@ -138,8 +138,13 @@ public:
         qreal pieSize = 1.0 / m_dataTable.count();
         for (int i=0; i<m_dataTable.count(); i++) {
             QPieSeries *series = new QPieSeries(chart);
-            foreach (Data data, m_dataTable[i])
-                series->add(data.first.y(), data.second);
+            foreach (Data data, m_dataTable[i]) {
+                QPieSlice *slice = series->add(data.first.y(), data.second);
+                if (data == m_dataTable[i].first()) {
+                    slice->setLabelVisible();
+                    slice->setExploded();
+                }
+            }
             qreal hPos = (pieSize / 2) + (i / (qreal) m_dataTable.count());
             series->setPieSize(pieSize);
             series->setPiePosition(hPos, 0.5);
