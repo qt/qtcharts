@@ -55,7 +55,7 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
     painter->drawPath(m_slicePath);
     painter->restore();
 
-    if (m_data.m_labelVisible) {
+    if (m_data.m_isLabelVisible) {
         painter->save();
         painter->setPen(m_data.m_labelArmPen);
         painter->drawPath(m_labelArmPath);

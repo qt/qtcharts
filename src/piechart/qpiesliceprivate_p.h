@@ -26,6 +26,7 @@ Q_SIGNALS:
 
 public:
     friend class QPieSeriesPrivate;
+    friend class ChartTheme;
     QPieSlice * const q_ptr;
     PieSliceData m_data;
 };

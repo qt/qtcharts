@@ -93,7 +93,7 @@ QString QPieSlice::label() const
 bool QPieSlice::isLabelVisible() const
 {
     Q_D(const QPieSlice);
-    return d->m_data.m_labelVisible;
+    return d->m_data.m_isLabelVisible;
 }
 
 /*!
@@ -202,7 +202,7 @@ QFont QPieSlice::labelFont() const
 }
 
 /*!
-    Gets the label arm lenght factor.
+    Gets the label arm length factor.
 
     The factor is relative to pie radius. For example:
     1.0 means the length is the same as the radius.
@@ -288,8 +288,8 @@ void QPieSlice::setLabel(QString label)
 void QPieSlice::setLabelVisible(bool visible)
 {
     Q_D(QPieSlice);
-    if (d->m_data.m_labelVisible != visible) {
-        d->m_data.m_labelVisible = visible;
+    if (d->m_data.m_isLabelVisible != visible) {
+        d->m_data.m_isLabelVisible = visible;
         emit changed();
     }
 }
@@ -337,6 +337,7 @@ void QPieSlice::setSlicePen(const QPen &pen)
     Q_D(QPieSlice);
     if (d->m_data.m_slicePen != pen) {
         d->m_data.m_slicePen = pen;
+        d->m_data.m_slicePen.setThemed(false);
         emit changed();
     }
 }
@@ -351,6 +352,7 @@ void QPieSlice::setSliceBrush(const QBrush &brush)
     Q_D(QPieSlice);
     if (d->m_data.m_sliceBrush != brush) {
         d->m_data.m_sliceBrush = brush;
+        d->m_data.m_sliceBrush.setThemed(false);
         emit changed();
     }
 }
@@ -365,6 +367,7 @@ void QPieSlice::setLabelArmPen(const QPen &pen)
     Q_D(QPieSlice);
     if (d->m_data.m_labelArmPen != pen) {
         d->m_data.m_labelArmPen = pen;
+        d->m_data.m_labelArmPen.setThemed(false);
         emit changed();
     }
 }
@@ -379,12 +382,13 @@ void QPieSlice::setLabelFont(const QFont &font)
     Q_D(QPieSlice);
     if (d->m_data.m_labelFont != font) {
         d->m_data.m_labelFont = font;
+        d->m_data.m_labelFont.setThemed(false);
         emit changed();
     }
 }
 
 /*!
-    Sets the label arm lenght \a factor.
+    Sets the label arm length \a factor.
 
     The factor is relative to pie radius. For example:
     1.0 means the length is the same as the radius.

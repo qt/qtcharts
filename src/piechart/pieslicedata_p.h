@@ -4,8 +4,36 @@
 #include <qchartglobal.h>
 #include <QPen>
 #include <QBrush>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+template <class T>
+class Themed : public T
+{
+public:
+    Themed():m_isThemed(true) {}
+
+    inline T &operator=(const T &other) { return T::operator =(other); }
+
+    inline bool operator!=(const T &other) { return T::operator !=(other); }
+    inline bool operator!=(const Themed &other)
+    {
+        if (T::operator !=(other))
+            return true;
+
+        if (m_isThemed != other.m_isThemed)
+            return true;
+
+        return false;
+    }
+
+    inline void setThemed(bool state) { m_isThemed = state; }
+    inline bool isThemed() const { return m_isThemed; }
+
+private:
+    bool m_isThemed;
+};
 
 class PieSliceData
 {
@@ -13,28 +41,62 @@ public:
     PieSliceData()
     {
         m_value = 0;
-        m_percentage = 0;
-        m_startAngle = 0;
-        m_angleSpan = 0;
+
         m_isExploded = false;
         m_explodeDistanceFactor = 0.15;
-        m_labelVisible = false;
+
+        m_isLabelVisible = false;
         m_labelArmLengthFactor = 0.15;
+
+        m_percentage = 0;
+        m_radius = 0;
+        m_startAngle = 0;
+        m_angleSpan = 0;
+    }
+
+    bool operator!=(const PieSliceData &other)
+    {
+        if (m_value != other.m_value)
+            return true;
+
+        if (m_slicePen != other.m_slicePen ||
+            m_sliceBrush != other.m_sliceBrush)
+            return true;
+
+        if (m_isExploded != other.m_isExploded ||
+            m_explodeDistanceFactor != other.m_explodeDistanceFactor)
+            return true;
+
+        if (m_isLabelVisible != other.m_isLabelVisible ||
+            m_labelText != other.m_labelText ||
+            m_labelFont != other.m_labelFont ||
+            m_labelArmLengthFactor != other.m_labelArmLengthFactor ||
+            m_labelArmPen != other.m_labelArmPen)
+            return true;
+
+        if (m_percentage != other.m_percentage ||
+            m_center != other.m_center ||
+            m_radius != other.m_radius ||
+            m_startAngle != other.m_startAngle ||
+            m_angleSpan != other.m_angleSpan)
+            return true;
+
+        return false;
     }
 
     qreal m_value;
 
-    QPen m_slicePen;
-    QBrush m_sliceBrush;
+    Themed<QPen> m_slicePen;
+    Themed<QBrush> m_sliceBrush;
 
     bool m_isExploded;
     qreal m_explodeDistanceFactor;
 
-    bool m_labelVisible;
+    bool m_isLabelVisible;
     QString m_labelText;
-    QFont m_labelFont;
+    Themed<QFont> m_labelFont;
     qreal m_labelArmLengthFactor;
-    QPen m_labelArmPen;
+    Themed<QPen> m_labelArmPen;
 
     qreal m_percentage;
     QPointF m_center;

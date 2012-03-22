@@ -206,20 +206,30 @@ void ChartTheme::decorate(QScatterSeries* series, int index,bool force)
 
 void ChartTheme::decorate(QPieSeries* series, int index, bool force)
 {
-    QPen pen;
-    QBrush brush;
-
     for (int i(0); i < series->slices().count(); i++) {
-        if (pen == series->slices().at(i)->slicePen() || force) {
-            QColor penColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0);
-            series->slices().at(i)->setSlicePen(penColor);
-        }
+
+        QColor penColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0);
 
         // Get color for a slice from a gradient linearly, beginning from the start of the gradient
         qreal pos = (qreal) (i + 1) / (qreal) series->count();
-        if (brush == series->slices().at(i)->sliceBrush() || force) {
-            QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
-            series->slices().at(i)->setSliceBrush(brushColor);
+        QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
+
+        QPieSlice::DataPtr s = series->slices().at(i)->data_ptr();
+        PieSliceData data = s->m_data;
+
+        if (data.m_slicePen.isThemed() || force) {
+            data.m_slicePen = penColor;
+            data.m_slicePen.setThemed(true);
+        }
+
+        if (data.m_sliceBrush.isThemed() || force) {
+            data.m_sliceBrush = brushColor;
+            data.m_sliceBrush.setThemed(true);
+        }
+
+        if (s->m_data != data) {
+            s->m_data = data;
+            emit s->changed();
         }
     }
 }

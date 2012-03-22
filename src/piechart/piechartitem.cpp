@@ -51,7 +51,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 {
     bool isEmpty = m_slices.isEmpty();
 
-    presenter()->theme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
+    presenter()->theme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series), false);
 
     foreach (QPieSlice *s, slices) {
         PieSliceItem* item = new PieSliceItem(this);
@@ -72,7 +72,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 
 void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
 {
-    presenter()->theme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
+    presenter()->theme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series), false);
 
     foreach (QPieSlice *s, slices) {
         if (animator())
@@ -130,7 +130,6 @@ PieSliceData PieChartItem::sliceData(QPieSlice *slice)
     PieSliceData sliceData = slice->data_ptr()->m_data;
     sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
-    sliceData.m_angleSpan = slice->endAngle() - slice->startAngle();
     return sliceData;
 }
 
