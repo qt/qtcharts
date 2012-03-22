@@ -47,8 +47,8 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 
     if(!domain) {
         domain = new Domain();
-        QObject::connect(axisY,SIGNAL(changed(qreal,qreal,int,QChartAxis::LabelsSelection)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,QChartAxis::LabelsSelection)));
-        QObject::connect(axisX(),SIGNAL(changed(qreal,qreal,int,QChartAxis::LabelsSelection)),domain,SLOT(handleAxisXChanged(qreal,qreal,int,QChartAxis::LabelsSelection)));
+        QObject::connect(axisY,SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,bool)));
+        QObject::connect(axisX(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisXChanged(qreal,qreal,int,bool)));
         QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axisY,SLOT(handleAxisRangeChanged(qreal,qreal,int)));
         QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),axisX(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
         //initialize
