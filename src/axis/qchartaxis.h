@@ -12,7 +12,6 @@ class QTCOMMERCIALCHART_EXPORT QChartAxis : public QObject
 {
 	Q_OBJECT
 public:
-	enum LabelsSelection{ NativeLabelsSelection, LooseLabelsSelection};
 
     QChartAxis(QObject* parent =0);
     ~QChartAxis();
@@ -62,8 +61,8 @@ public:
     void setTicksCount(int count);
     int ticksCount() const { return m_ticksCount;}
 
-    void setLabelsSelectionMode(LabelsSelection mode);
-    LabelsSelection labelsSelectionMode() const { return m_selection;}
+    void setNiceNumbers(bool enabled);
+    bool niceNumbers() const { return m_niceNumbers;}
 
     QChartAxisCategories* categories() { return &m_category; }
 
@@ -78,7 +77,7 @@ signals:
 
 //interal signal
 	void updated();
-	void changed(qreal min, qreal max, int tickCount,QChartAxis::LabelsSelection mode);
+	void changed(qreal min, qreal max, int tickCount,bool niceNumbers);
 //internal slot
 public slots:
 	void handleAxisRangeChanged(qreal min, qreal max,int count);
@@ -108,7 +107,7 @@ private:
     int m_ticksCount;
     QChartAxisCategories m_category;
 
-    LabelsSelection m_selection;
+    bool m_niceNumbers;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

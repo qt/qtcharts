@@ -150,7 +150,7 @@ m_shadesOpacity(1.0),
 m_min(0),
 m_max(0),
 m_ticksCount(5),
-m_selection(NativeLabelsSelection)
+m_niceNumbers(false)
 {
 
 }
@@ -344,7 +344,7 @@ void QChartAxis::setRange(qreal min, qreal max)
 
     if(changed) {
         emit rangeChanged(m_min,m_max);
-        emit this->changed(m_min, m_max, m_ticksCount, m_selection);
+        emit this->changed(m_min, m_max, m_ticksCount, m_niceNumbers);
     }
 }
 
@@ -356,7 +356,7 @@ void QChartAxis::setTicksCount(int count)
 	if(m_ticksCount!=count) {
 		m_ticksCount=count;
 		emit ticksCountChanged(count);
-		emit changed(m_min, m_max, m_ticksCount, m_selection);
+		emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
 	}
 }
 
@@ -390,11 +390,11 @@ void QChartAxis::handleAxisRangeChanged(qreal min, qreal max,int count)
    setTicksCount(count);
 }
 
-void QChartAxis::setLabelsSelectionMode(LabelsSelection mode)
+void QChartAxis::setNiceNumbers(bool enabled)
 {
-    if(m_selection!=mode){
-        m_selection=mode;
-        emit changed(m_min, m_max, m_ticksCount, m_selection);
+    if(m_niceNumbers!=enabled){
+        m_niceNumbers=enabled;
+        emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
     }
 }
 

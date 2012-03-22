@@ -10,7 +10,7 @@ m_minY(0),
 m_maxY(0),
 m_tickXCount(5),
 m_tickYCount(5),
-m_selection(QChartAxis::NativeLabelsSelection)
+m_niceNumbers(false)
 {
 }
 
@@ -40,7 +40,7 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCo
     }
 
     if(m_minX!=minX || m_maxX!=maxX) {
-        niceNumbers(minX, maxX, m_tickXCount);
+        if(m_niceNumbers) looseNiceNumbers(minX, maxX, m_tickXCount);
         m_minX=minX;
         m_maxX=maxX;
         domainChanged=true;
@@ -49,7 +49,7 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCo
     }
 
     if(m_minY!=minY || m_maxY!=maxY) {
-        niceNumbers(minY, maxY, m_tickYCount);
+        if(m_niceNumbers) looseNiceNumbers(minY, maxY, m_tickYCount);
         m_minY=minY;
         m_maxY=maxY;
         domainChanged=true;
@@ -137,8 +137,10 @@ void Domain::zoomIn(const QRectF& rect, const QSizeF& size)
     m_minY = m_maxY - dy * rect.bottom();
     m_maxY = m_maxY - dy * rect.top();
 
-    niceNumbers(m_minX, m_maxX, m_tickXCount);
-    niceNumbers(m_minY, m_maxY, m_tickYCount);
+    if(m_niceNumbers) {
+        looseNiceNumbers(m_minX, m_maxX, m_tickXCount);
+        looseNiceNumbers(m_minY, m_maxY, m_tickYCount);
+    }
 
     emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
     emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
@@ -155,8 +157,10 @@ void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
     m_maxY = m_minY + dy * rect.bottom();
     m_minY = m_maxY - dy * size.height();
 
-    niceNumbers(m_minX, m_maxX, m_tickXCount);
-    niceNumbers(m_minY, m_maxY, m_tickYCount);
+    if(m_niceNumbers) {
+        looseNiceNumbers(m_minX, m_maxX, m_tickXCount);
+        looseNiceNumbers(m_minY, m_maxY, m_tickYCount);
+    }
 
     emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
     emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
@@ -182,25 +186,19 @@ void Domain::move(int dx,int dy,const QSizeF& size)
     emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
 }
 
-void Domain::handleAxisXChanged(qreal min,qreal max,int tickXCount,QChartAxis::LabelsSelection mode)
+void Domain::handleAxisXChanged(qreal min,qreal max,int tickXCount,bool niceNumbers)
 {
-    m_selection=mode;
+    m_niceNumbers=niceNumbers;
     setRange(min,max,m_minY, m_maxY,tickXCount,m_tickYCount);
 }
 
-void Domain::handleAxisYChanged(qreal min,qreal max,int tickYCount,QChartAxis::LabelsSelection mode)
+void Domain::handleAxisYChanged(qreal min,qreal max,int tickYCount,bool niceNumbers)
 {
-    m_selection=mode;
+    m_niceNumbers=niceNumbers;
     setRange(m_minX, m_maxX, min, max,m_tickXCount,tickYCount);
 }
 
 //algorithm defined by Paul S.Heckbert GraphicalGems I
-
-void Domain::niceNumbers(qreal &min, qreal &max, int &ticksCount)
-{
-    if(m_selection!=QChartAxis::NativeLabelsSelection)
-    looseNiceNumbers(min,max,ticksCount);
-}
 
 void Domain::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount)
 {
