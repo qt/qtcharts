@@ -1,9 +1,9 @@
 #ifndef QSPLINESERIES_H
 #define QSPLINESERIES_H
 
-#include "qchartglobal.h"
+#include <qchartglobal.h>
 #include <QtGlobal>
-#include "qlineseries.h"
+#include <qlineseries.h>
 #include <QList>
 #include <QPointF>
 

@@ -1,8 +1,8 @@
 #ifndef QSCATTERSERIES_H
 #define QSCATTERSERIES_H
 
-#include "qchartglobal.h"
-#include "qxyseries.h"
+#include <qchartglobal.h>
+#include <qxyseries.h>
 #include <QRectF>
 #include <QColor>
 

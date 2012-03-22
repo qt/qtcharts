@@ -1,8 +1,8 @@
 #ifndef QCHARTAXIS_H_
 #define QCHARTAXIS_H_
 
-#include "qchartglobal.h"
-#include "qchartaxiscategories.h"
+#include <qchartglobal.h>
+#include <qchartaxiscategories.h>
 #include <QPen>
 #include <QFont>
 

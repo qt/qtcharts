@@ -1,7 +1,7 @@
 #ifndef BARSERIES_H
 #define BARSERIES_H
 
-#include "qseries.h"
+#include <qseries.h>
 #include <QStringList>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

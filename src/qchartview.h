@@ -1,10 +1,10 @@
 #ifndef QCHARTWIDGET_H
 #define QCHARTWIDGET_H
 
-#include "qchartglobal.h"
-#include "qchartaxis.h"
-#include "qseries.h"
-#include "qchart.h"
+#include <qchartglobal.h>
+#include <qchartaxis.h>
+#include <qseries.h>
+#include <qchart.h>
 #include <QGraphicsView>
 
 class QGraphicsScene;

@@ -1,7 +1,7 @@
 #ifndef QSERIES_H
 #define QSERIES_H
 
-#include "qchartglobal.h"
+#include <qchartglobal.h>
 #include <QObject>
 #include <QAbstractItemModel>
 #include <QPen>

@@ -2,7 +2,7 @@
 #define PERCENTBARSERIES_H
 
 #include <QStringList>
-#include "qbarseries.h"
+#include <qbarseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

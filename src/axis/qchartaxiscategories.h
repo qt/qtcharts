@@ -1,6 +1,6 @@
 #ifndef QCHARTAXISCATEGORIES_H_
 #define QCHARTAXISCATEGORIES_H_
-#include "qchartglobal.h"
+#include <qchartglobal.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

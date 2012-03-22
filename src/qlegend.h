@@ -1,8 +1,8 @@
 #ifndef QLEGEND_H
 #define QLEGEND_H
 
-#include "qchartglobal.h"
-#include "qseries.h"
+#include <qchartglobal.h>
+#include <qseries.h>
 #include <QGraphicsObject>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

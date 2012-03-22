@@ -1,8 +1,8 @@
 #ifndef QLINESERIES_H_
 #define QLINESERIES_H_
 
-#include "qchartglobal.h"
-#include "qxyseries.h"
+#include <qchartglobal.h>
+#include <qxyseries.h>
 #include <QDebug>
 #include <QPen>
 #include <QBrush>
