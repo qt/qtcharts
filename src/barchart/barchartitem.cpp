@@ -234,7 +234,6 @@ void BarChartItem::handleGeometryChanged(const QRectF& rect)
 
 void BarChartItem::handleLayoutChanged()
 {
-    qDebug() << "BarChartItem::handleLayoutChanged";
     QVector<QRectF> layout = calculateLayout();
     applyLayout(layout);
     update();

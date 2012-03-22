@@ -181,7 +181,6 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
             break;
         }
         case QSeries::SeriesTypeBar: {
-            qDebug() << "QChartSeries::SeriesTypeBar";
             QBarSeries* barSeries = static_cast<QBarSeries*>(series);
             qreal x = barSeries->categoryCount();
             qreal y = barSeries->max();
@@ -192,8 +191,6 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
             break;
         }
         case QSeries::SeriesTypeStackedBar: {
-            qDebug() << "QChartSeries::SeriesTypeStackedBar";
-
             QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
             qreal x = stackedBarSeries->categoryCount();
             qreal y = stackedBarSeries->maxCategorySum();
@@ -204,8 +201,6 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
             break;
         }
         case QSeries::SeriesTypePercentBar: {
-            qDebug() << "QChartSeries::SeriesTypePercentBar";
-
             QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
             qreal x = percentBarSeries->categoryCount();
             domain->setMinX(qMin(domain->minX(),x));

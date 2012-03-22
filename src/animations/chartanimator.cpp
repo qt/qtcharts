@@ -270,7 +270,6 @@ void ChartAnimator::updateLayout(PieChartItem* item, QPieSlice *slice, const Pie
 
 void ChartAnimator::updateLayout(BarChartItem* item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
 {
-    qDebug() << "ChartAnimator::updateLayout";
     BarAnimation* animation = static_cast<BarAnimation*>(m_animations.value(item));
     Q_ASSERT(animation);
     animation->setDuration(duration);

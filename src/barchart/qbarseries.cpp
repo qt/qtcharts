@@ -51,7 +51,6 @@ QBarSeries::QBarSeries(QStringList categories, QObject *parent)
 */
 void QBarSeries::addBarSet(QBarSet *set)
 {
-    qDebug() << "add bar set";
     mModel->addBarSet(set);
     connect(set,SIGNAL(clicked(QString)),this,SLOT(barsetClicked(QString)));
     connect(set,SIGNAL(rightClicked(QString)),this,SLOT(barsetRightClicked(QString)));
