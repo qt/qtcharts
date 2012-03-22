@@ -76,8 +76,7 @@ void QPieSeriesPrivate::updateDerivativeData()
 
 void QPieSeriesPrivate::sliceChanged()
 {
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
-    Q_ASSERT(m_slices.contains(slice));
+    Q_ASSERT(m_slices.contains(qobject_cast<QPieSlice *>(sender())));
     updateDerivativeData();
 }
 

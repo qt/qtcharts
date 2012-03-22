@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-AreaChartItem::AreaChartItem(QAreaSeries* areaSeries,ChartPresenter *presenter):Chart(presenter),QGraphicsItem(presenter->rootItem()),
+AreaChartItem::AreaChartItem(QAreaSeries* areaSeries,ChartPresenter *presenter):ChartItem(presenter),
 m_series(areaSeries),
 m_upper(0),
 m_lower(0),
@@ -99,8 +99,12 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(option)
 
     painter->save();
-    painter->setPen(m_linePen);
-    painter->setBrush(m_brush);
+    QPen pen;
+    pen.setCosmetic(false);
+    pen.setWidth(4);
+    pen.setColor(qRgb(200,0,250));
+    painter->setPen(pen);
+    //painter->setBrush(m_brush);
     painter->setClipRect(m_clipRect);
     painter->drawPath(m_path);
     if(m_pointsVisible){

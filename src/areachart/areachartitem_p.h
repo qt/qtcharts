@@ -10,7 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QAreaSeries;
 class AreaChartItem;
 
-class AreaChartItem : public Chart, public QGraphicsItem
+class AreaChartItem : public ChartItem
 {
     Q_OBJECT
 public:

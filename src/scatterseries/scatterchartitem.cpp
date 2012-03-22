@@ -41,7 +41,7 @@ void ScatterChartItem::createPoints(int count)
 {
     for (int i = 0; i < count; ++i) {
 
-        QGraphicsItem *item;
+        QGraphicsItem *item = 0;
 
         switch (m_shape) {
                    case QScatterSeries::MarkerShapeCircle:{
