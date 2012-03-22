@@ -99,7 +99,7 @@ public:
 
         // bar chart
         chart = new QChartView();
-        chart->setChartTitle("bar chart");
+        chart->setChartTitle("Bar chart");
         baseLayout->addWidget(chart, 1, 1);
         {
             QStringList categories;
@@ -121,7 +121,7 @@ public:
 
         // line chart
         chart = new QChartView();
-        chart->setChartTitle("line chart");
+        chart->setChartTitle("Line chart");
         baseLayout->addWidget(chart, 1, 2);
         foreach (DataList list, m_dataTable) {
             QLineSeries *series = new QLineSeries(chart);
@@ -133,7 +133,8 @@ public:
 
         // pie chart
         chart = new QChartView();
-        chart->setChartTitle("pie chart");
+        chart->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored); // funny things happen if the pie slice labels no not fit the screen...
+        chart->setChartTitle("Pie chart");
         baseLayout->addWidget(chart, 2, 0);
         qreal pieSize = 1.0 / m_dataTable.count();
         for (int i=0; i<m_dataTable.count(); i++) {
@@ -154,7 +155,7 @@ public:
 
         // spine chart
         chart = new QChartView();
-        chart->setChartTitle("spline chart");
+        chart->setChartTitle("Spline chart");
         baseLayout->addWidget(chart, 2, 1);
         foreach (DataList list, m_dataTable) {
             QSplineSeries *series = new QSplineSeries(chart);
@@ -166,7 +167,7 @@ public:
 
         // scatter chart
         chart = new QChartView();
-        chart->setChartTitle("scatter chart");
+        chart->setChartTitle("Scatter chart");
         baseLayout->addWidget(chart, 2, 2);
         foreach (DataList list, m_dataTable) {
             QScatterSeries *series = new QScatterSeries(chart);
