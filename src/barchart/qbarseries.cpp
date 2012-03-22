@@ -33,7 +33,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QBarSeries. Parameter \a categories defines the categories for chart.
     QBarSeries is QObject which is a child of a \a parent.
 */
-QBarSeries::QBarSeries(QStringList categories, QObject *parent)
+QBarSeries::QBarSeries(QBarCategories categories, QObject *parent)
     : QSeries(parent)
     ,mModel(new BarChartModel(categories, this))
 {
@@ -363,6 +363,16 @@ void QBarSeries::modelDataRemoved(QModelIndex /*parent*/, int start, int /*end*/
 void QBarSeries::barsetChanged()
 {
     emit updatedBars();
+}
+
+QBarCategories QBarSeries::categories() const
+{
+    QBarCategories categories;
+    int count = mModel->categoryCount();
+    for (int i=1; i<=count; i++) {
+          categories.insert(i, mModel->categoryName(i-1));
+    }
+    return categories;
 }
 
 #include "moc_qbarseries.cpp"

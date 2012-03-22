@@ -6,7 +6,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-typedef QStringList QBarCategory;
+typedef QStringList QBarCategories;
 
 class QBarSet;
 class BarChartModel;
@@ -29,6 +29,8 @@ public:
     int barsetCount();
     int categoryCount();
     QList<QBarSet*> barSets();
+    QBarCategories categories() const;
+
 
     bool setModel(QAbstractItemModel* model);
     QAbstractItemModel* modelExt() {return m_model;}

@@ -240,12 +240,9 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain)
 
 void ChartDataSet::setupCategories(QBarSeries* series)
 {
-   int count = series->categoryCount();
    QChartAxisCategories* categories = axisX()->categories();
    categories->clear();
-   for (int i=1; i<=count; i++) {
-       categories->insert(i,series->categoryName(i-1));
-   }
+   categories->insert(series->categories());
 }
 
 void ChartDataSet::zoomInDomain(const QRectF& rect, const QSizeF& size)

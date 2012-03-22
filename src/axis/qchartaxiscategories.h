@@ -14,7 +14,7 @@ private:
 public:
     ~QChartAxisCategories();
 
-    void insert(QBarCategory& category);
+    void insert(const QBarCategories& category);
     void insert(qreal value,QString label);
     void remove(qreal value);
     QString label(qreal value) const;
