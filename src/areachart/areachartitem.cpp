@@ -17,9 +17,9 @@ m_lower(0),
 m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
-    m_upper = new AreaBoundItem(this,m_series->upperSeries(),presenter);
+    m_upper = new AreaBoundItem(this,m_series->upperSeries());
     if(m_series->lowerSeries()){
-    m_lower = new AreaBoundItem(this,m_series->lowerSeries(),presenter);
+    m_lower = new AreaBoundItem(this,m_series->lowerSeries());
     }
 
     QObject::connect(areaSeries,SIGNAL(updated()),this,SLOT(handleUpdated()));
@@ -48,7 +48,8 @@ void AreaChartItem::updatePath()
 {
     QPainterPath path;
 
-    path.connectPath(m_upper->shape());
+    path = m_upper->shape();
+
     if(m_lower){
     path.connectPath(m_lower->shape().toReversed());
     }
@@ -99,12 +100,8 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(option)
 
     painter->save();
-    QPen pen;
-    pen.setCosmetic(false);
-    pen.setWidth(4);
-    pen.setColor(qRgb(200,0,250));
-    painter->setPen(pen);
-    //painter->setBrush(m_brush);
+    painter->setPen(m_linePen);
+    painter->setBrush(m_brush);
     painter->setClipRect(m_clipRect);
     painter->drawPath(m_path);
     if(m_pointsVisible){
