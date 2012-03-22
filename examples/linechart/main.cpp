@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
     QMainWindow window;
     QChartView* chartView =  new QChartView(&window);
 
-    chartView->setChartTitle("Basic line chart example");
+    chartView->setChartTitle("Simple line chart");
     chartView->setRenderHint(QPainter::Antialiasing);
 
     chartView->addSeries(series0);
