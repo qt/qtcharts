@@ -68,6 +68,9 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
 */
 QChart::~QChart()
 {
+    //delete first presenter , since this is a root of all the graphical items
+    delete m_presenter;
+    m_presenter=0;
 }
 
 /*!
