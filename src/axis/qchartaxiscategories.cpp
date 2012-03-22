@@ -13,6 +13,16 @@ QChartAxisCategories::~QChartAxisCategories()
     // TODO Auto-generated destructor stub
 }
 
+void QChartAxisCategories::insert(QBarCategory& category)
+{
+    int i=1;
+    foreach(QString string , category){
+        m_map.insert(i,string);
+        i++;
+    }
+    emit updated();
+}
+
 void QChartAxisCategories::insert(qreal value,QString label)
 {
     m_map.insert(value,label);

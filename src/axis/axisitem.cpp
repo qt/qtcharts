@@ -76,29 +76,31 @@ void Axis::updateLayout(QVector<qreal>& layout)
     else setLayout(layout);
 }
 
-QStringList Axis::createLabels(int ticks, qreal min, qreal max) const
+bool Axis::createLabels(QStringList& labels,qreal min, qreal max,int ticks) const
 {
     Q_ASSERT(max>=min);
     Q_ASSERT(ticks>1);
 
-    QStringList labels;
-
-    int n =  qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
-
     QChartAxisCategories* categories = m_chartAxis->categories();
 
-    for(int i=0; i< ticks; i++) {
-        qreal value = min + (i * (max - min)/ (ticks-1));
-        if(categories->count()==0) {
+    bool category = categories->count()>0;
+
+    if(!category) {
+        int n = qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
+        for(int i=0; i< ticks; i++) {
+            qreal value = min + (i * (max - min)/ (ticks-1));
             labels << QString::number(value,'f',n);
         }
-        else {
-
+    }
+    else {
+        for(int i=0; i< ticks; i++) {
+            int value = ceil(min + (i * (max - min)/ (ticks-1)));
             QString label = categories->label(value);
             labels << label;
         }
     }
-    return labels;
+
+    return category;
 }
 
 void Axis::setAxisOpacity(qreal opacity)
@@ -244,7 +246,9 @@ void Axis::setLayout(QVector<qreal>& layout)
 
 	if(diff!=0) handleAxisUpdated();
 
-    QStringList ticksList = createLabels(layout.size(),m_min,m_max);
+	QStringList ticksList;
+
+    bool categories = createLabels(ticksList,m_min,m_max,layout.size());
 
 	QList<QGraphicsItem *> lines = m_grid.childItems();
 	QList<QGraphicsItem *> labels = m_labels.childItems();
@@ -265,10 +269,19 @@ void Axis::setLayout(QVector<qreal>& layout)
 				QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
 				lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-				labelItem->setText(ticksList.at(i));
-				QPointF center = labelItem->boundingRect().center();
-				labelItem->setTransformOriginPoint(center.x(), center.y());
-				labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
+
+				if(!categories){
+				    labelItem->setText(ticksList.at(i));
+				    QPointF center = labelItem->boundingRect().center();
+				    labelItem->setTransformOriginPoint(center.x(), center.y());
+				    labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
+				}else if(i>0){
+				    labelItem->setText(ticksList.at(i));
+				    QPointF center = labelItem->boundingRect().center();
+				    labelItem->setTransformOriginPoint(center.x(), center.y());
+				    labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
+				}
+
 				if((i+1)%2 && i>1) {
 					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
 					rectItem->setRect(layout[i-1],m_rect.top(),layout[i]-layout[i-1],m_rect.height());

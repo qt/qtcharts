@@ -65,7 +65,7 @@ private:
     void updateLayout(QVector<qreal>& layout);
     void setLayout(QVector<qreal>& layout);
 
-    QStringList createLabels(int ticks, qreal min, qreal max) const;
+    bool createLabels(QStringList& labels,qreal min, qreal max,int ticks) const;
     void axisSelected();
 
 private:

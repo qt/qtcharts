@@ -1,6 +1,8 @@
 #ifndef QCHARTAXISCATEGORIES_H_
 #define QCHARTAXISCATEGORIES_H_
+
 #include <qchartglobal.h>
+#include <qbarseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -12,6 +14,7 @@ private:
 public:
     ~QChartAxisCategories();
 
+    void insert(QBarCategory& category);
     void insert(qreal value,QString label);
     void remove(qreal value);
     QString label(qreal value) const;

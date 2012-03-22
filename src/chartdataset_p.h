@@ -8,6 +8,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChartAxis;
+class QBarSeries;
 
 class ChartDataSet : public QObject
 {
@@ -42,7 +43,8 @@ signals:
 
 private:
     QStringList createLabels(QChartAxis* axis,qreal min, qreal max);
-    void calculateDomain(QSeries* series,Domain* domain) const;
+    void calculateDomain(QSeries* series,Domain* domain);
+    void setupCategories(QBarSeries* series);
 
 private:
     QMap<QSeries*, QChartAxis*> m_seriesAxisMap;

@@ -6,6 +6,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+typedef QStringList QBarCategory;
+
 class QBarSet;
 class BarChartModel;
 class BarCategory;

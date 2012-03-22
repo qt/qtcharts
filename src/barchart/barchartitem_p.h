@@ -43,9 +43,6 @@ public:
 
     QRectF geometry() const { return m_rect;}
 
-protected:
-    void initAxisLabels();
-
 public slots:
     void handleModelChanged(int index);
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);

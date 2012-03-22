@@ -24,7 +24,6 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
 //TODO:  connect(series,SIGNAL("position or size has changed"), this, SLOT(handleLayoutChanged()));
     connect(series, SIGNAL(restructuredBar(int)), this, SLOT(handleModelChanged(int)));
     setZValue(ChartPresenter::BarSeriesZValue);
-    initAxisLabels();
     dataChanged();
 }
 
@@ -174,21 +173,6 @@ void BarChartItem::setLayout(const QVector<QRectF> &layout)
     update();
 }
 
-void BarChartItem::initAxisLabels()
-{
-    int count = mSeries->categoryCount();
-    if (0 == count) {
-        return;
-    }
-
-    Domain* domain = presenter()->dataSet()->domain(mSeries);
-
-    qreal min = 0;
-    qreal max = count+1;
-
-    domain->setRangeX(min,max,count+1);
-}
-
 //handlers
 
 void BarChartItem::handleModelChanged(int index)
@@ -204,24 +188,6 @@ void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal
     mDomainMinY = minY;
     mDomainMaxY = maxY;
     handleLayoutChanged();
-
-    /*
-    int count = mSeries->categoryCount();
-    if (0 == count) {
-        return;
-    }
-
-    // Position labels to domain
-    qreal min = domain.minX();
-    qreal max = domain.maxX();
-    qreal step = (max-min)/count;
-    QChartAxisCategories& categories = mChart->axisX()->categories();
-    categories.clear();
-    for (int i=0; i<count; i++) {
-        categories.insert(min,mSeries->categoryName(i));
-        min += step;
-    }
-    */
 }
 
 void BarChartItem::handleGeometryChanged(const QRectF& rect)

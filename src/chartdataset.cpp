@@ -123,8 +123,16 @@ void ChartDataSet::removeAllSeries()
 }
 
 //to be removed with PIMPL
-void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
+void ChartDataSet::calculateDomain(QSeries* series,Domain* domain)
 {
+    qreal minX(domain->minX());
+    qreal minY(domain->minY());
+    qreal maxX(domain->maxX());
+    qreal maxY(domain->maxY());
+    int tickXCount(domain->tickXCount());
+    int tickYCount(domain->tickYCount());
+
+
     switch(series->type())
     {
         case QSeries::SeriesTypeLine:
@@ -133,11 +141,6 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
         {
 
             QXYSeries* xySeries = static_cast<QXYSeries*>(series);
-
-            qreal minX(domain->minX());
-            qreal minY(domain->minY());
-            qreal maxX(domain->maxX());
-            qreal maxY(domain->maxY());
 
             for (int i = 0; i < xySeries->count(); i++)
             {
@@ -148,14 +151,11 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
                 maxX = qMax(maxX, x);
                 maxY = qMax(maxY, y);
             }
-
-            domain->setRange(minX, maxX,  minY,  maxY);
             break;
         }
         case QSeries::SeriesTypeArea: {
 
             QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
-
             QLineSeries* upperSeries = areaSeries->upperSeries();
             QLineSeries* lowerSeries = areaSeries->lowerSeries();
 
@@ -163,50 +163,58 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
             {
                 qreal x = upperSeries->x(i);
                 qreal y = upperSeries->y(i);
-                domain->setMinX(qMin(domain->minX(),x));
-                domain->setMinY(qMin(domain->minY(),y));
-                domain->setMaxX(qMax(domain->maxX(),x));
-                domain->setMaxY(qMax(domain->maxY(),y));
+                minX = qMin(minX, x);
+                minY = qMin(minY, y);
+                maxX = qMax(maxX, x);
+                maxY = qMax(maxY, y);
             }
             if(lowerSeries) {
                 for (int i = 0; i < lowerSeries->count(); i++)
                 {
                     qreal x = lowerSeries->x(i);
                     qreal y = lowerSeries->y(i);
-                    domain->setMinX(qMin(domain->minX(),x));
-                    domain->setMinY(qMin(domain->minY(),y));
-                    domain->setMaxX(qMax(domain->maxX(),x));
-                    domain->setMaxY(qMax(domain->maxY(),y));
+                    minX = qMin(minX, x);
+                    minY = qMin(minY, y);
+                    maxX = qMax(maxX, x);
+                    maxY = qMax(maxY, y);
                 }}
             break;
         }
         case QSeries::SeriesTypeBar: {
+
             QBarSeries* barSeries = static_cast<QBarSeries*>(series);
             qreal x = barSeries->categoryCount();
             qreal y = barSeries->max();
-            domain->setMinX(qMin(domain->minX(),x));
-            domain->setMinY(qMin(domain->minY(),y));
-            domain->setMaxX(qMax(domain->maxX(),x));
-            domain->setMaxY(qMax(domain->maxY(),y));
+            minX = qMin(minX, x);
+            minY = qMin(minY, y);
+            maxX = qMax(maxX, x);
+            maxY = qMax(maxY, y);
+            tickXCount = x+1;
+            setupCategories(barSeries);
             break;
         }
         case QSeries::SeriesTypeStackedBar: {
+
             QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
             qreal x = stackedBarSeries->categoryCount();
             qreal y = stackedBarSeries->maxCategorySum();
-            domain->setMinX(qMin(domain->minX(),x));
-            domain->setMinY(qMin(domain->minY(),y));
-            domain->setMaxX(qMax(domain->maxX(),x));
-            domain->setMaxY(qMax(domain->maxY(),y));
+            minX = qMin(minX, x);
+            minY = qMin(minY, y);
+            maxX = qMax(maxX, x);
+            maxY = qMax(maxY, y);
+            tickXCount = x+1;
+            setupCategories(stackedBarSeries);
             break;
         }
         case QSeries::SeriesTypePercentBar: {
+
             QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
             qreal x = percentBarSeries->categoryCount();
-            domain->setMinX(qMin(domain->minX(),x));
-            domain->setMinY(0);
-            domain->setMaxX(qMax(domain->maxX(),x));
-            domain->setMaxY(100);
+            minX = qMin(minX, x);
+            maxX = qMax(maxX, x);
+            minY = 0;
+            maxY = 100;
+            setupCategories(percentBarSeries);
             break;
         }
 
@@ -224,6 +232,20 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain) const
         }
 
     }
+
+    domain->setRangeX(minX,maxX,tickXCount);
+    domain->setRangeY(minY,maxY,tickYCount);
+}
+
+
+void ChartDataSet::setupCategories(QBarSeries* series)
+{
+   int count = series->categoryCount();
+   QChartAxisCategories* categories = axisX()->categories();
+   categories->clear();
+   for (int i=1; i<=count; i++) {
+       categories->insert(i,series->categoryName(i-1));
+   }
 }
 
 void ChartDataSet::zoomInDomain(const QRectF& rect, const QSizeF& size)

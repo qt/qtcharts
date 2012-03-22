@@ -24,11 +24,11 @@ public:
         BackgroundZValue = -1,
         ShadesZValue,
         GridZValue,
-        AxisZValue,
         LineChartZValue,
         BarSeriesZValue,
         ScatterSeriesZValue,
         PieSeriesZValue,
+        AxisZValue,
         LegendZValue
     };
 
