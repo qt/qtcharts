@@ -11,20 +11,9 @@ PercentBarChartItem::PercentBarChartItem(QBarSeries *series, ChartPresenter* pre
 {
 }
 
-void PercentBarChartItem::layoutChanged()
+QVector<QRectF> PercentBarChartItem::calculateLayout()
 {
-    // Scale bars to new layout
-    // Layout for bars:
-    if (mSeries->barsetCount() <= 0) {
-        qDebug() << "No sets in model!";
-        // Nothing to do.
-        return;
-    }
-
-    if (childItems().count() == 0) {
-        qDebug() << "WARNING: PercentBarChartItem::layoutChanged called before graphics items are created!";
-        return;
-    }
+    QVector<QRectF> layout;
 
     // Use temporary qreals for accurancy (we might get some compiler warnings... :)
     qreal width = geometry().width();
@@ -43,13 +32,10 @@ void PercentBarChartItem::layoutChanged()
         for (int set=0; set < mSeries->barsetCount(); set++) {
             qreal barHeight = mSeries->valueAt(set, category) * scale;
             Bar* bar = mBars.at(itemIndex);
-
-            // TODO: width settable per bar?
-
             bar->setPen(mSeries->barsetAt(set)->pen());
-            bar->setRect(xPos, yPos-barHeight,barWidth, barHeight);
             bar->setBrush(mSeries->barsetAt(set)->brush());
-
+            QRectF rect(xPos, yPos-barHeight,barWidth, barHeight);
+            layout.append(rect);
             itemIndex++;
             yPos -= barHeight;
         }
@@ -87,6 +73,7 @@ void PercentBarChartItem::layoutChanged()
         }
         xPos += xStep;
     }
+    return layout;
 }
 
 #include "moc_percentbarchartitem_p.cpp"

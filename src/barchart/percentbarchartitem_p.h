@@ -15,8 +15,7 @@ public:
     PercentBarChartItem(QBarSeries *series, ChartPresenter *presenter);
 
 private:
-
-    void layoutChanged();   // layout has changed -> need to recalculate bar sizes
+    virtual QVector<QRectF> calculateLayout();
 
 private:
 

@@ -34,10 +34,9 @@ public:
     // TODO: Consider the domain for layoutChanged. May be use case, may not be. If it is, then the derived classes need to implement it
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
 private slots:
-    //virtual void layoutChanged();   // layout has changed -> need to recalculate bar sizes
 
 public:
-    QVector<QRectF> calculateLayout();
+    virtual QVector<QRectF> calculateLayout();
     void applyLayout(const QVector<QRectF> &layout);
     void setLayout(const QVector<QRectF> &layout);
     void updateLayout(const QVector<QRectF> &layout);

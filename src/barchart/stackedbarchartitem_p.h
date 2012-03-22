@@ -16,7 +16,7 @@ public:
 
 private:
     // From BarChartItem
-    void layoutChanged();   // layout has changed -> need to recalculate bar sizes
+    virtual QVector<QRectF> calculateLayout();
 
 private:
 

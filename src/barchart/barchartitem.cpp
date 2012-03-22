@@ -88,103 +88,8 @@ void BarChartItem::dataChanged()
         }
     }
 }
-/*
-void BarChartItem::layoutChanged()
-{
-    qDebug() << "Deprecated BarChartItem::layoutChanged called. aborting";
-    return;
-    // Scale bars to new layout
-    // Layout for bars:
-    if (mSeries->barsetCount() <= 0) {
-        qDebug() << "No sets in model!";
-        return;
-    }
-
-    if (childItems().count() == 0) {
-        qDebug() << "WARNING: BarChartitem::layoutChanged called before graphics items are created!";
-        return;
-    }
-
-
-    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
-    qreal categoryCount = mSeries->categoryCount();
-    qreal setCount = mSeries->barsetCount();
-    qreal max = mSeries->max();
-
-    // Domain:
-       if (mDomainMaxY > max) {
-           max = mDomainMaxY;
-       }
-
-    qreal width = geometry().width();
-    qreal height = geometry().height();
-    qreal scale = (height/max);
-    qreal categoryWidth = width/categoryCount;
-    qreal barWidth = categoryWidth / (setCount+1);
-
-    BarLayout layout;
-
-    int itemIndex(0);
-    for (int category=0; category < categoryCount; category++) {
-        qreal xPos = categoryWidth * category  + barWidth/2;
-        qreal yPos = height;
-        for (int set = 0; set < setCount; set++) {
-            qreal barHeight = mSeries->valueAt(set,category) * scale;
-            Bar* bar = mBars.at(itemIndex);
-
-            QRectF rect(xPos,yPos-barHeight,mBarWidth,barHeight);
-            layout.insert(bar,rect);
-            // TODO: width settable per bar?
-            bar->setRect(xPos, yPos-barHeight,barWidth, barHeight);
-            bar->setPen(mSeries->barsetAt(set)->pen());
-            bar->setBrush(mSeries->barsetAt(set)->brush());
-
-//            bar->resize(mBarWidth, barHeight);
-//            layout.insert(bar,QSizeF(mBarWidth,barHeight));
-            bar->setPen(mSeries->barsetAt(set)->pen());
-            bar->setBrush(mSeries->barsetAt(set)->brush());
-//            bar->setPos(xPos, yPos-barHeight);
-            itemIndex++;
-            xPos += barWidth;
-        }
-    }
-
-    // Position floating values
-    itemIndex = 0;
-    for (int category=0; category < mSeries->categoryCount(); category++) {
-        qreal xPos = categoryWidth * category + categoryWidth/2 + barWidth;
-        qreal yPos = height;
-        for (int set=0; set < mSeries->barsetCount(); set++) {
-            qreal barHeight = mSeries->valueAt(set,category) * scale;
-            BarValue* value = mFloatingValues.at(itemIndex);
-
-            QBarSet* barSet = mSeries->barsetAt(set);
-            value->resize(100,50);  // TODO: proper layout for this.
-            value->setPos(xPos, yPos-barHeight/2);
-            value->setPen(barSet->floatingValuePen());
-
-            if (mSeries->valueAt(set,category) != 0) {
-                value->setValueString(QString::number(mSeries->valueAt(set,category)));
-            } else {
-                value->setValueString(QString(""));
-            }
-
-            itemIndex++;
-            xPos += barWidth;
-        }
-    }
-//    update();
-}
-*/
 QVector<QRectF> BarChartItem::calculateLayout()
 {
-//    layoutChanged();
-/*
-    BarLayout layout;
-    foreach(Bar* bar, mBars) {
-        layout.insert(bar,bar->boundingRect());
-    }
-*/
     QVector<QRectF> layout;
 
     // Use temporary qreals for accurancy (we might get some compiler warnings... :)
@@ -214,14 +119,9 @@ QVector<QRectF> BarChartItem::calculateLayout()
             Bar* bar = mBars.at(itemIndex);
 
             QRectF rect(xPos,yPos-barHeight,barWidth,barHeight);
-            //layout.insert(bar,rect);
             layout.append(rect);
-            // TODO: width settable per bar?
-//            bar->resize(mBarWidth, barHeight);
-//            layout.insert(bar,QSizeF(mBarWidth,barHeight));
             bar->setPen(mSeries->barsetAt(set)->pen());
             bar->setBrush(mSeries->barsetAt(set)->brush());
-//            bar->setPos(xPos, yPos-barHeight);
             itemIndex++;
             xPos += barWidth;
         }
@@ -268,8 +168,6 @@ void BarChartItem::setLayout(const QVector<QRectF> &layout)
     mLayout = layout;
 
     for (int i=0; i<mBars.count(); i++) {
-        //mBars.at(i)->setSize(layout.at(i).size());
-        //mBars.at(i)->setPos(layout.at(i).topLeft());
         mBars.at(i)->setRect(layout.at(i));
     }
 
