@@ -45,7 +45,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QScatterSeries::QScatterSeries(QObject *parent) :
     QXYSeries(parent),
     m_shape(QScatterSeries::MarkerShapeCircle),
-    m_size(9.0)
+    m_size(15.0)
 {
 }
 
