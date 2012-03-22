@@ -115,11 +115,13 @@ void MainWidget::initThemeCombo(QGridLayout *grid)
 {
     QComboBox *chartTheme = new QComboBox();
     chartTheme->addItem("Default");
-    chartTheme->addItem("Vanilla");
+    chartTheme->addItem("Light");
+    chartTheme->addItem("Blue Cerulean");
+    chartTheme->addItem("Dark");
+    chartTheme->addItem("Brown Sand");
+    chartTheme->addItem("Blue NCS");
     chartTheme->addItem("Icy");
-    chartTheme->addItem("Grayscale");
     chartTheme->addItem("Scientific");
-    chartTheme->addItem("Unnamed1");
     connect(chartTheme, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeChartTheme(int)));
     grid->addWidget(new QLabel("Chart theme:"), 8, 0);

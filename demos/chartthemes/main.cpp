@@ -64,9 +64,7 @@ public:
         m_themeComboBox->addItem("Dark", QChart::ChartThemeDark);
         m_themeComboBox->addItem("Brown Sand", QChart::ChartThemeBrownSand);
         m_themeComboBox->addItem("Blue NCS", QChart::ChartThemeBlueNcs);
-        m_themeComboBox->addItem("Vanilla", QChart::ChartThemeVanilla);
         m_themeComboBox->addItem("Icy", QChart::ChartThemeIcy);
-        m_themeComboBox->addItem("Grayscale", QChart::ChartThemeGrayscale);
         m_themeComboBox->addItem("Scientific", QChart::ChartThemeScientific);
         connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this ,SLOT(updateTheme()));
         QCheckBox *antialiasCheckBox = new QCheckBox("Anti aliasing");

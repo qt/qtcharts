@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
 
     DrilldownChart* drilldownChart =  new DrilldownChart(&window);
     drilldownChart->setRenderHint(QPainter::Antialiasing);
-    drilldownChart->setChartTheme(QChart::ChartThemeVanilla);
+    drilldownChart->setChartTheme(QChart::ChartThemeLight);
     drilldownChart->setAnimationOptions(QChart::AllAnimations);
 
     QPieSeries* yearSeries = new QPieSeries(&window);

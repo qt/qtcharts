@@ -35,9 +35,7 @@
 #include "chartthemedark_p.h"
 #include "chartthemebrownsand_p.h"
 #include "chartthemebluencs_p.h"
-#include "chartthemevanilla_p.h"
 #include "chartthemeicy_p.h"
-#include "chartthemegrayscale_p.h"
 #include "chartthemescientific_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -70,12 +68,8 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
             return new ChartThemeBrownSand();
         case QChart::ChartThemeBlueNcs:
             return new ChartThemeBlueNcs();
-        case QChart::ChartThemeVanilla:
-            return new ChartThemeVanilla();
         case QChart::ChartThemeIcy:
             return new ChartThemeIcy();
-        case QChart::ChartThemeGrayscale:
-            return new ChartThemeGrayscale();
         case QChart::ChartThemeScientific:
             return new ChartThemeScientific();
         default:

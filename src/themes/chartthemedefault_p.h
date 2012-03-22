@@ -63,8 +63,13 @@ public:
                                                   GetGValue(colorWindow),
                                                   GetBValue(colorWindow)));
         // Axes and other
-        m_backgroundShadesBrush = QBrush(QColor(0xaf, 0xaf, 0xaf, 0x50));
-        m_backgroundShades = BackgroundShadesVertical;
+        m_masterFont = QFont("arial");
+        m_axisLinePen = QPen(0xd6d6d6);
+        m_axisLinePen.setWidth(1);
+        m_axisLabelBrush = QBrush(QRgb(0x404044));
+        m_gridLinePen = QPen(QRgb(0xe2e2e2));
+        m_gridLinePen.setWidth(1);
+        m_backgroundShades = BackgroundShadesNone;
 
 #elif defined(Q_OS_LINUX)
         // TODO: replace this dummy theme with linux specific theme
@@ -74,15 +79,21 @@ public:
         m_seriesColors << QRgb(0xfc5751);
         generateSeriesGradients();
 
+        // Background
         QLinearGradient backgroundGradient;
         backgroundGradient.setColorAt(0.0, QRgb(0xffffff));
-        backgroundGradient.setColorAt(1.0, QRgb(0xe9e9e9));
+        backgroundGradient.setColorAt(1.0, QRgb(0xffffff));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
         m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_backgroundShadesBrush = QBrush(QColor(0xaf, 0xaf, 0xaf, 0x50));
-        m_backgroundShades = BackgroundShadesVertical;
+        m_masterFont = QFont("arial");
+        m_axisLinePen = QPen(0xd6d6d6);
+        m_axisLinePen.setWidth(1);
+        m_axisLabelBrush = QBrush(QRgb(0x404044));
+        m_gridLinePen = QPen(QRgb(0xe2e2e2));
+        m_gridLinePen.setWidth(1);
+        m_backgroundShades = BackgroundShadesNone;
 
 #elif defined(Q_OS_MAC)
         // TODO: replace this dummy theme with OSX specific theme
@@ -92,15 +103,21 @@ public:
         m_seriesColors << QRgb(0xfc5751);
         generateSeriesGradients();
 
+        // Background
         QLinearGradient backgroundGradient;
         backgroundGradient.setColorAt(0.0, QRgb(0xffffff));
-        backgroundGradient.setColorAt(1.0, QRgb(0xe9e9e9));
+        backgroundGradient.setColorAt(1.0, QRgb(0xffffff));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
         m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_backgroundShadesBrush = QBrush(QColor(0xaf, 0xaf, 0xaf, 0x50));
-        m_backgroundShades = BackgroundShadesVertical;
+        m_masterFont = QFont("arial");
+        m_axisLinePen = QPen(0xd6d6d6);
+        m_axisLinePen.setWidth(1);
+        m_axisLabelBrush = QBrush(QRgb(0x404044));
+        m_gridLinePen = QPen(QRgb(0xe2e2e2));
+        m_gridLinePen.setWidth(1);
+        m_backgroundShades = BackgroundShadesNone;
 
 #else
         // TODO: replace this dummy theme with generic (not OS specific) theme
@@ -110,15 +127,21 @@ public:
         m_seriesColors << QRgb(0xfc5751);
         generateSeriesGradients();
 
+        // Background
         QLinearGradient backgroundGradient;
         backgroundGradient.setColorAt(0.0, QRgb(0xffffff));
-        backgroundGradient.setColorAt(1.0, QRgb(0xafafaf));
+        backgroundGradient.setColorAt(1.0, QRgb(0xffffff));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
-        m_backgroundGradient = backgroundGradient;
+        m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_backgroundShadesBrush = QBrush(QColor(0xaf, 0xaf, 0xaf, 0x50));
-        m_backgroundShades = BackgroundShadesVertical;
+        m_masterFont = QFont("arial");
+        m_axisLinePen = QPen(0xd6d6d6);
+        m_axisLinePen.setWidth(1);
+        m_axisLabelBrush = QBrush(QRgb(0x404044));
+        m_gridLinePen = QPen(QRgb(0xe2e2e2));
+        m_gridLinePen.setWidth(1);
+        m_backgroundShades = BackgroundShadesNone;
 #endif
     }
 };

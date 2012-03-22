@@ -308,9 +308,7 @@ public:
         m_themeComboBox->addItem("Dark", QChart::ChartThemeDark);
         m_themeComboBox->addItem("BrownSand", QChart::ChartThemeBrownSand);
         m_themeComboBox->addItem("BlueNcs", QChart::ChartThemeBlueNcs);
-        m_themeComboBox->addItem("Vanilla", QChart::ChartThemeVanilla);
         m_themeComboBox->addItem("Icy", QChart::ChartThemeIcy);
-        m_themeComboBox->addItem("Grayscale", QChart::ChartThemeGrayscale);
         m_themeComboBox->addItem("Scientific", QChart::ChartThemeScientific);
 
         m_aaCheckBox = new QCheckBox();

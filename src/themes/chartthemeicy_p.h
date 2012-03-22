@@ -27,6 +27,7 @@ public:
         m_axisLabelBrush = QBrush(QRgb(0x3f3f3f));
         m_gridLinePen = QPen(QRgb(0x0f0f0f));
         m_gridLinePen.setWidth(2);
+        m_backgroundShades = BackgroundShadesNone;
     }
 };
 

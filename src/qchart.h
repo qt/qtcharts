@@ -35,9 +35,7 @@ public:
         ChartThemeDark,
         ChartThemeBrownSand,
         ChartThemeBlueNcs,
-        ChartThemeVanilla,
         ChartThemeIcy,
-        ChartThemeGrayscale,
         ChartThemeScientific,
         ChartThemeCount
     };

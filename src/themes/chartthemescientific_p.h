@@ -25,10 +25,10 @@ public:
         m_axisLinePen = QPen(QRgb(0x0f0f0f));
         m_axisLinePen.setWidth(2);
         m_axisLabelBrush = QBrush(QRgb(0x3f3f3f));
-        m_backgroundShadesBrush = QBrush(QColor(0xff, 0xad, 0x00, 0x50));
-        m_backgroundShades = BackgroundShadesHorizontal;
         m_gridLinePen = QPen(QRgb(0x0f0f0f));
         m_gridLinePen.setWidth(2);
+        m_backgroundShadesBrush = QBrush(QColor(0xff, 0xad, 0x00, 0x50));
+        m_backgroundShades = BackgroundShadesHorizontal;
     }
 };
 
