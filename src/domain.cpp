@@ -34,7 +34,7 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCo
         tickXChanged=true;
     }
 
-    if(m_tickXCount!=tickYCount) {
+    if(m_tickYCount!=tickYCount) {
         m_tickYCount=tickYCount;
         tickYChanged=true;
     }
