@@ -17,6 +17,7 @@ public:
     void insert(const QBarCategories& category);
     void insert(qreal value,QString label);
     void remove(qreal value);
+    QList<qreal> values() const;
     QString label(qreal value) const;
     void clear();
     int count();

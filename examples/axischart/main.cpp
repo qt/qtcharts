@@ -5,11 +5,8 @@
 #include <qchart.h>
 #include <qchartaxis.h>
 #include <qchartaxiscategories.h>
-#include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
-
-#define PI 3.14159265358979
 
 int main(int argc, char *argv[])
 {
@@ -21,24 +18,14 @@ int main(int argc, char *argv[])
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
-    QLineSeries* series1 = new QLineSeries();
-    QPen red(Qt::red);
-    red.setWidth(3);
-    series1->setPen(red);
 
-    int numPoints = 100;
-
-    for (int x = 0; x <= numPoints; ++x) {
-    	  series0->add(x, fabs(sin(PI/50*x)*100));
-    	  series1->add(x, fabs(cos(PI/50*x)*100));
-    }
+    *series0 << QPointF(0, 6) << QPointF(2, 4) << QPointF(3, 8) << QPointF(7, 4) << QPointF(10,5);
 
     QChartView* chartView =  new QChartView(&window);
 
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->setChartTitle("This is custom axis chart example");
+    chartView->setChartTitle("Simple axis example");
     chartView->addSeries(series0);
-    chartView->addSeries(series1);
 
     QLinearGradient backgroundGradient;
     backgroundGradient.setColorAt(0.0, Qt::white);
@@ -47,32 +34,30 @@ int main(int argc, char *argv[])
     chartView->setChartBackgroundBrush(backgroundGradient);
 
     QChartAxis* axisX = chartView->axisX();
-    axisX->setLabelsAngle(45);
-    axisX->setGridLinePen(red);
-    axisX->setGridLineVisible(false);
-    axisX->setShadesVisible(true);
-
-    QChartAxisCategories* categoriesX = axisX->categories();
-    categoriesX->insert(0,"low");
-    categoriesX->insert(50,"medium");
-    categoriesX->insert(100,"High");
-
-   // axisX->setMin(-10);
-   // axisX->setMax(2200);
+    axisX->setRange(0,10);
+    axisX->setTicksCount(4);
+    axisX->setGridLineVisible(true);
+    axisX->setShadesVisible(false);
 
     QChartAxis* axisY = chartView->axisY();
+    axisY->setRange(0,10);
     axisY->setLabelsAngle(45);
-    axisY->setShadesBrush(Qt::yellow);
-    axisY->setShadesVisible(true);
+    axisY->setTicksCount(4);
+    axisY->setShadesPen(Qt::NoPen);
+    axisY->setShadesOpacity(0.5);
+    axisY->setShadesBrush(Qt::blue);
     axisY->setGridLineVisible(false);
+    axisY->setShadesVisible(true);
+
+    QChartAxisCategories* categoriesX = axisX->categories();
+    categoriesX->insert(1,"low");
+    categoriesX->insert(5,"optimal");
+    categoriesX->insert(10,"high");
 
     QChartAxisCategories* categoriesY = axisY->categories();
-    categoriesY->insert(0,"low");
-    categoriesY->insert(50,"medium");
-    categoriesY->insert(100,"High");
-
-   // axisY->setMin(-10);
-   // axisY->setMax(200);
+    categoriesY->insert(1,"slow");
+    categoriesY->insert(5,"med");
+    categoriesY->insert(10,"fast");
 
     window.setCentralWidget(chartView);
     window.resize(400, 300);

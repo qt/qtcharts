@@ -93,8 +93,15 @@ bool Axis::createLabels(QStringList& labels,qreal min, qreal max,int ticks) cons
         }
     }
     else {
+        QList<qreal> values = categories->values();
         for(int i=0; i< ticks; i++) {
-            int value = ceil(min + (i * (max - min)/ (ticks-1)));
+            qreal value = (min + (i * (max - min)/ (ticks-1)));
+            int j=0;
+            for(; j<values.count(); j++){
+                if (values.at(j) > value) break;
+            }
+            if(j!=0) value=values.at(j-1);
+
             QString label = categories->label(value);
             labels << label;
         }
@@ -269,7 +276,6 @@ void Axis::setLayout(QVector<qreal>& layout)
 				QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
 				lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-
 				if(!categories){
 				    labelItem->setText(ticksList.at(i));
 				    QPointF center = labelItem->boundingRect().center();
@@ -301,10 +307,19 @@ void Axis::setLayout(QVector<qreal>& layout)
 				QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
 				lineItem->setLine(m_rect.left() , layout[i], m_rect.right(), layout[i]);
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-				labelItem->setText(ticksList.at(i));
-				QPointF center = labelItem->boundingRect().center();
-				labelItem->setTransformOriginPoint(center.x(), center.y());
-				labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
+
+				if(!categories){
+				    labelItem->setText(ticksList.at(i));
+				    QPointF center = labelItem->boundingRect().center();
+				    labelItem->setTransformOriginPoint(center.x(), center.y());
+				    labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
+				} else if(i>0){
+				    labelItem->setText(ticksList.at(i));
+				    QPointF center = labelItem->boundingRect().center();
+				    labelItem->setTransformOriginPoint(center.x(), center.y());
+				    labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i] - (layout[i] - layout[i-1])/2 -center.y());
+				}
+
 				if((i+1)%2 && i>1) {
 					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
 					rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i-1]-layout[i]);

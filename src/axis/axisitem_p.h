@@ -1,7 +1,6 @@
 #ifndef AXISITEM_H_
 #define AXISITEM_H_
 
-#include "domain_p.h"
 #include "chart_p.h"
 #include <QGraphicsItem>
 

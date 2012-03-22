@@ -28,20 +28,28 @@ void QChartAxisCategories::insert(qreal value,QString label)
     m_map.insert(value,label);
     emit updated();
 }
+
 void QChartAxisCategories::remove(qreal value)
 {
     m_map.remove(value);
     emit updated();
 }
+
 void QChartAxisCategories::clear()
 {
     m_map.clear();
     emit updated();
 }
+
 int QChartAxisCategories::count()
 {
     return m_map.count();
     emit updated();
+}
+
+QList<qreal> QChartAxisCategories::values() const
+{
+    return m_map.keys();
 }
 
 QString QChartAxisCategories::label(qreal value) const
