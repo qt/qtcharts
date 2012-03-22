@@ -26,9 +26,9 @@ public:
     qreal value() const;
     void setLabel(QString label);
     QString label() const;
-    void setLabelVisible(bool visible);
+    void setLabelVisible(bool visible = true);
     bool isLabelVisible() const;
-    void setExploded(bool exploded);
+    void setExploded(bool exploded = true);
     bool isExploded() const;
 
     // generated data
