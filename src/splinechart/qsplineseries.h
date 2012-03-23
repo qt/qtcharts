@@ -22,6 +22,7 @@ public:
     bool setModel(QAbstractItemModel* model);
 
     void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
+    void setModelMappingShift(int first, int count);
 
     // TODO: allow the user to set custom control points
 //    void setCustomControlPoints(QList<QPointsF> controlPoints);

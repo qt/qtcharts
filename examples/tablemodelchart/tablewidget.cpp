@@ -126,6 +126,7 @@ void TableWidget::updateChartType()
         series = new QLineSeries;
         series->setModel(m_model);
         series->setModelMapping(0,1, Qt::Vertical);
+        series->setModelMappingShift(1, 4);
 //        series->setModelMapping(0,1, Qt::Horizontal);
         chartView->addSeries(series);
 
@@ -136,19 +137,20 @@ void TableWidget::updateChartType()
 //        series->setModelMapping(2,3, Qt::Horizontal);
         chartView->addSeries(series);
 
-        // series 3
-        series = new QLineSeries;
-        series->setModel(m_model);
-        series->setModelMapping(4,5, Qt::Vertical);
-//        series->setModelMapping(4,5, Qt::Horizontal);
-        chartView->addSeries(series);
+//        // series 3
+//        series = new QLineSeries;
+//        series->setModel(m_model);
+//        series->setModelMapping(4,5, Qt::Vertical);
+////        series->setModelMapping(4,5, Qt::Horizontal);
+//        chartView->addSeries(series);
     }
     else if (splineRadioButton->isChecked())
     {
         // series 1
         series = new QSplineSeries;
-        series->setModel(m_model);
-        series->setModelMapping(0,1, Qt::Vertical);
+        series->setModel(m_model);        
+        series->setModelMapping(0,1, Qt::Vertical);        
+        series->setModelMappingShift(1, 4);
 //        series->setModelMapping(0,1, Qt::Horizontal);
         chartView->addSeries(series);
 

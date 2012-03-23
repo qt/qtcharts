@@ -35,6 +35,7 @@ public:
     bool setModel(QAbstractItemModel* model);
     QAbstractItemModel* modelExt() {return m_model;}
     void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
+    void setModelMappingShift(int first, int count);
 
 public:
     // TODO: Functions below this are not part of api and will be moved
@@ -87,6 +88,8 @@ protected:
     int m_mapCategories;
     int m_mapBarBottom;
     int m_mapBarTop;
+    int m_mapFirst;
+    int m_mapCount;
     Qt::Orientation m_mapOrientation;
 };
 

@@ -147,6 +147,12 @@ bool QSplineSeries::setModel(QAbstractItemModel* model)
 void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
 {
     QLineSeries::setModelMapping(modelX, modelY, orientation);
+//    calculateControlPoints();
+}
+
+void QSplineSeries::setModelMappingShift(int first, int count)
+{
+    QLineSeries::setModelMappingShift(first, count);
     calculateControlPoints();
 }
 

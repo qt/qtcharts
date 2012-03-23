@@ -44,11 +44,13 @@ public:
     QAbstractItemModel* model() {return m_model;}
 
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
-//    void setModelMappingY(int modelLineIndex, Qt::Orientation orientation = Qt::Vertical);
+    virtual void setModelMappingShift(int first, int count = 0);
 
     private slots:
         void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
+        void modelDataAboutToBeAdded(QModelIndex parent, int start, int end);
         void modelDataAdded(QModelIndex parent, int start, int end);
+        void modelDataAboutToBeRemoved(QModelIndex parent, int start, int end);
         void modelDataRemoved(QModelIndex parent, int start, int end);
 
 signals:
@@ -65,11 +67,13 @@ protected:
     QPen m_pen;
     QBrush m_brush;
 
-//    QAbstractItemModel* m_model;
-    int m_mapX;
-    Qt::Orientation m_mapOrientation;
+    int m_mapX;    
     int m_mapY;
-//    Qt::Orientation m_mapYOrientation;
+    int m_mapFirst;
+    int m_mapCount;
+    bool m_mapLimited;
+    Qt::Orientation m_mapOrientation;
+    int tempItemsRemoved;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

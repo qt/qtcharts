@@ -1,21 +1,24 @@
 #include "customtablemodel.h"
 #include <QVector>
+#include <QTime>
 
 CustomTableModel::CustomTableModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
-//    m_points.append(QPointF(10, 50));
-//    m_labels.append("Apples");
-//    m_points.append(QPointF(60, 70));
-//    m_labels.append("Oranges");
-//    m_points.append(QPointF(110, 50));
-//    m_labels.append("Bananas");
-//    m_points.append(QPointF(140, 40));
-//    m_labels.append("Lemons");
-//    m_points.append(QPointF(200, 150));
-//    m_labels.append("Plums");
-//    m_points.append(QPointF(225, 75));
+    //    m_points.append(QPointF(10, 50));
+    //    m_labels.append("Apples");
+    //    m_points.append(QPointF(60, 70));
+    //    m_labels.append("Oranges");
+    //    m_points.append(QPointF(110, 50));
+    //    m_labels.append("Bananas");
+    //    m_points.append(QPointF(140, 40));
+    //    m_labels.append("Lemons");
+    //    m_points.append(QPointF(200, 150));
+    //    m_labels.append("Plums");
+    //    m_points.append(QPointF(225, 75));
     //    m_labels.append("Pearls");
+
+    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
     // m_data
     for (int i = 0; i < 6; i++)
@@ -168,10 +171,17 @@ bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & pare
                         dataVec->replace(k, m_data[row - 1]->at(k) + qrand()%qMax(1, difference));
                     }
                     else
-                        dataVec->replace(k, qrand()%20);
+                        dataVec->replace(k, qrand()%40 + 10);
                 }
                 else
-                    dataVec->replace(k, m_data[row - 1]->at(k) + qrand()%20);
+                    if (row - 1 >= 0)
+                    {
+                        dataVec->replace(k, m_data[row - 1]->at(k) + qrand()%40 + 10);
+                    }
+                    else
+                    {
+                        dataVec->replace(k, qrand()%40 + 10);
+                    }
             }
             else
                 dataVec->replace(k, qrand()%100);
@@ -193,7 +203,7 @@ bool CustomTableModel::removeRows ( int row, int count, const QModelIndex & pare
     beginRemoveRows(parent, row, row + count - 1);
     for (int i = row; i < row + count; i++)
     {
-//        m_points.removeAt(row);
+        //        m_points.removeAt(row);
         QVector<qreal>* item = m_data.at(row);
         m_data.removeAt(row);
         delete item;
