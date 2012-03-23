@@ -1,13 +1,6 @@
-!include( ../../common.pri ) {
+!include( ../test.pri ) {
     error( "Couldn't find the common.pri file!" )
 }
-
-DESTDIR = $$CHART_BUILD_BIN_DIR
-
-OBJECTS_DIR = $$CHART_BUILD_DIR/bin/$$TARGET
-MOC_DIR = $$CHART_BUILD_DIR/bin/$$TARGET
-UI_DIR = $$CHART_BUILD_DIR/bin/$$TARGET
-RCC_DIR = $$CHART_BUILD_DIR/bin/$$TARGET
 
 integrated_build:{
     message(Please export QML_IMPORT_PATH=$$CHART_BUILD_LIB_DIR)

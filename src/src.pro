@@ -8,32 +8,32 @@ win32-msvc*: LIBS += User32.lib
 CONFIG += debug_and_release
 CONFIG(debug, debug|release):TARGET = QtCommercialChartd
 SOURCES += \
-    chartdataset.cpp \
-    chartpresenter.cpp \
-    charttheme.cpp \
-    domain.cpp \
-    qchart.cpp \
-    qchartview.cpp \
-    qseries.cpp \
-    qlegend.cpp \
-    legendmarker.cpp \
-    chartbackground.cpp \
-    chart.cpp
+    $$PWD/chartdataset.cpp \
+    $$PWD/chartpresenter.cpp \
+    $$PWD/charttheme.cpp \
+    $$PWD/domain.cpp \
+    $$PWD/qchart.cpp \
+    $$PWD/qchartview.cpp \
+    $$PWD/qseries.cpp \
+    $$PWD/qlegend.cpp \
+    $$PWD/legendmarker.cpp \
+    $$PWD/chartbackground.cpp \
+    $$PWD/chart.cpp
 PRIVATE_HEADERS += \
-    chartdataset_p.h \
-    chartitem_p.h \
-    chartpresenter_p.h \
-    charttheme_p.h \
-    domain_p.h \
-    legendmarker_p.h \
-    chartbackground_p.h \
-    chart_p.h
+    $$PWD/chartdataset_p.h \
+    $$PWD/chartitem_p.h \
+    $$PWD/chartpresenter_p.h \
+    $$PWD/charttheme_p.h \
+    $$PWD/domain_p.h \
+    $$PWD/legendmarker_p.h \
+    $$PWD/chartbackground_p.h \
+    $$PWD/chart_p.h
 PUBLIC_HEADERS += \
-    qchart.h \
-    qchartglobal.h \
-    qseries.h \
-    qchartview.h \
-    qlegend.h 
+    $$PWD/qchart.h \
+    $$PWD/qchartglobal.h \
+    $$PWD/qseries.h \
+    $$PWD/qchartview.h \
+    $$PWD/qlegend.h 
     
 include(animations/animations.pri)    
 include(axis/axis.pri)
@@ -44,15 +44,8 @@ include(barchart/barchart.pri)
 include(piechart/piechart.pri)
 include(scatterseries/scatter.pri)
 include(splinechart/splinechart.pri)
+include(themes/themes.pri)
 
-THEMES += themes/chartthemedefault_p.h \
-    themes/chartthemelight_p.h \
-    themes/chartthemebluecerulean_p.h \
-    themes/chartthemedark_p.h \
-    themes/chartthemebrownsand_p.h \
-    themes/chartthemebluencs_p.h \
-    themes/chartthemeicy_p.h \
-    themes/chartthemescientific_p.h
 
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS

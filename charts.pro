@@ -28,5 +28,7 @@ win32:{
 }else{
     doc.commands = qdoc3 $$CHART_BUILD_DOC_DIR/qcharts.qdocconf
 }
+
 doc.depends = FORCE
-QMAKE_EXTRA_TARGETS += doc
+QMAKE_EXTRA_TARGETS += docs
+

@@ -1,12 +1,27 @@
 CONFIG+=integrated_build #remove if you want to build against installed libs
 
-CHART_BUILD_PUBLIC_HEADER_DIR = $$PWD/include
+SHADOW = $$find(PWD, $${OUT_PWD})
+
+unix:isEmpty(SHADOW){
+    search = "$$PWD:::"
+    temp = $$split(search,"/")    
+    temp = $$last(temp)
+    path = $$replace(search,$$temp,'')
+    temp = $$split(OUT_PWD,$$path)
+    temp = $$split(temp,'/')
+    temp = $$first(temp)
+    path = "$${path}$${temp}"
+    SHADOW=$$path    
+}
+
+CHART_BUILD_PUBLIC_HEADER_DIR = $$SHADOW/include
 CHART_BUILD_PRIVATE_HEADER_DIR = $$CHART_BUILD_PUBLIC_HEADER_DIR/private
-CHART_BUILD_LIB_DIR = $$PWD/lib
-CHART_BUILD_DIR = $$PWD/build
-CHART_BUILD_BIN_DIR = $$PWD/bin
+CHART_BUILD_LIB_DIR = $$SHADOW/lib
+CHART_BUILD_DIR = $$SHADOW/build
+CHART_BUILD_BIN_DIR = $$SHADOW/bin
 CHART_BUILD_PLUGIN_DIR = $$CHART_BUILD_LIB_DIR/QtCommercial/Chart
-CHART_BUILD_DOC_DIR = $$PWD/doc
+CHART_BUILD_DOC_DIR = $$SHADOW/doc
+
 
 # hack to fix windows builds
 win32:{

@@ -10,5 +10,5 @@ HEADERS  += widget.h
 
 !mac {
     # TODO: QMAKE_POST_LINK does not work on mac; how to copy the data file?
-    QMAKE_POST_LINK += $$QMAKE_COPY gdpData $$CHART_BUILD_BIN_DIR
+    QMAKE_POST_LINK += $$QMAKE_COPY $$PWD/gdpData $$CHART_BUILD_BIN_DIR
 }
