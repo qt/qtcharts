@@ -221,6 +221,16 @@ void ChartTheme::decorate(QPieSeries* series, int index, bool force)
             data.m_sliceBrush.setThemed(true);
         }
 
+        if (data.m_labelPen.isThemed() || force) {
+            data.m_labelPen = QPen(m_titleBrush.color());
+            data.m_labelPen.setThemed(true);
+        }
+
+        if (data.m_labelFont.isThemed() || force) {
+            data.m_labelFont = m_masterFont;
+            data.m_labelFont.setThemed(true);
+        }
+
         if (s->m_data != data) {
             s->m_data = data;
             emit s->changed();

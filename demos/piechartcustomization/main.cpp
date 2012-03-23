@@ -296,6 +296,7 @@ public:
         *m_series << new CustomSlice(30.0, "Slice 3");
         *m_series << new CustomSlice(40.0, "Slice 4");
         *m_series << new CustomSlice(50.0, "Slice 5");
+        m_series->setLabelsVisible();
         m_chartView->addSeries(m_series);
 
         connect(m_series, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), this, SLOT(handleSliceClicked(QPieSlice*, Qt::MouseButtons)));
@@ -394,8 +395,8 @@ public:
         m_brush = new QPushButton();
         m_brushTool = new BrushTool("Slice brush", this);
         m_font = new QPushButton();
-        m_labelArmPen = new QPushButton();
-        m_labelArmPenTool = new PenTool("Label arm pen", this);
+        m_labelPen = new QPushButton();
+        m_labelPenTool = new PenTool("Label pen", this);
         QPushButton *removeSlice = new QPushButton("Remove slice");
 
         QFormLayout* sliceSettingsLayout = new QFormLayout();
@@ -405,7 +406,7 @@ public:
         sliceSettingsLayout->addRow("Brush", m_brush);
         sliceSettingsLayout->addRow("Label visible", m_sliceLabelVisible);
         sliceSettingsLayout->addRow("Label font", m_font);
-        sliceSettingsLayout->addRow("Label arm pen", m_labelArmPen);
+        sliceSettingsLayout->addRow("Label pen", m_labelPen);
         sliceSettingsLayout->addRow("Label arm length", m_sliceLabelArmFactor);
         sliceSettingsLayout->addRow("Exploded", m_sliceExploded);
         sliceSettingsLayout->addRow("Explode distance", m_sliceExplodedFactor);
@@ -419,8 +420,8 @@ public:
         connect(m_brush, SIGNAL(clicked()), m_brushTool, SLOT(show()));
         connect(m_brushTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
         connect(m_font, SIGNAL(clicked()), this, SLOT(showFontDialog()));
-        connect(m_labelArmPen, SIGNAL(clicked()), m_labelArmPenTool, SLOT(show()));
-        connect(m_labelArmPenTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
+        connect(m_labelPen, SIGNAL(clicked()), m_labelPenTool, SLOT(show()));
+        connect(m_labelPenTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
         connect(m_sliceLabelVisible, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
         connect(m_sliceLabelVisible, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
         connect(m_sliceLabelArmFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
@@ -475,7 +476,7 @@ public Q_SLOTS:
         m_slice->setSlicePen(m_penTool->pen());
         m_slice->setSliceBrush(m_brushTool->brush());
 
-        m_slice->setLabelArmPen(m_labelArmPenTool->pen());
+        m_slice->setLabelPen(m_labelPenTool->pen());
         m_slice->setLabelVisible(m_sliceLabelVisible->isChecked());
         m_slice->setLabelArmLengthFactor(m_sliceLabelArmFactor->value());
 
@@ -506,8 +507,8 @@ public Q_SLOTS:
         m_brushTool->setBrush(m_slice->originalBrush());
 
         // label
-        m_labelArmPen->setText(PenTool::name(m_slice->labelArmPen()));
-        m_labelArmPenTool->setPen(m_slice->labelArmPen());
+        m_labelPen->setText(PenTool::name(m_slice->labelPen()));
+        m_labelPenTool->setPen(m_slice->labelPen());
         m_font->setText(slice->labelFont().toString());
         m_sliceLabelVisible->blockSignals(true);
         m_sliceLabelVisible->setChecked(slice->isLabelVisible());
@@ -588,8 +589,8 @@ private:
     QPushButton *m_pen;
     PenTool *m_penTool;
     QPushButton *m_font;
-    QPushButton *m_labelArmPen;
-    PenTool *m_labelArmPenTool;
+    QPushButton *m_labelPen;
+    PenTool *m_labelPenTool;
 };
 
 int main(int argc, char *argv[])

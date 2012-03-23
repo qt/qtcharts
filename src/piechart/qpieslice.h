@@ -41,8 +41,8 @@ public:
     QPen slicePen() const;
     void setSliceBrush(const QBrush &brush);
     QBrush sliceBrush() const;
-    void setLabelArmPen(const QPen &pen);
-    QPen labelArmPen() const;
+    void setLabelPen(const QPen &pen);
+    QPen labelPen() const;
     void setLabelFont(const QFont &font);
     QFont labelFont() const;
     void setLabelArmLengthFactor(qreal factor);

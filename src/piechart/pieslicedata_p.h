@@ -71,7 +71,7 @@ public:
             m_labelText != other.m_labelText ||
             m_labelFont != other.m_labelFont ||
             m_labelArmLengthFactor != other.m_labelArmLengthFactor ||
-            m_labelArmPen != other.m_labelArmPen)
+            m_labelPen != other.m_labelPen)
             return true;
 
         if (m_percentage != other.m_percentage ||
@@ -96,7 +96,7 @@ public:
     QString m_labelText;
     Themed<QFont> m_labelFont;
     qreal m_labelArmLengthFactor;
-    Themed<QPen> m_labelArmPen;
+    Themed<QPen> m_labelPen;
 
     qreal m_percentage;
     QPointF m_center;

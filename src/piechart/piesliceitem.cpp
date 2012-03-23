@@ -56,11 +56,9 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
     painter->restore();
 
     if (m_data.m_isLabelVisible) {
-        painter->save();
-        painter->setPen(m_data.m_labelArmPen);
+        painter->setPen(m_data.m_labelPen);
         painter->drawPath(m_labelArmPath);
-        painter->restore();
-
+		// the pen color will affect the font color as well
         painter->setFont(m_data.m_labelFont);
         painter->drawText(m_labelTextRect.bottomLeft(), m_data.m_labelText);
     }
