@@ -14,6 +14,8 @@ int main(int argc, char *argv[])
     QMainWindow window;
 
     QChartView* chartView =  new QChartView(&window);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setChartTitle("Simple pie chart");
 
     //! [1]
     QPieSeries *series = new QPieSeries();
@@ -22,8 +24,17 @@ int main(int argc, char *argv[])
     series->add(3, "Slice 3");
     series->add(4, "Slice 4");
     series->add(5, "Slice 5");
-    chartView->addSeries(series);
     //! [1]
+
+    //! [2]
+    QPieSlice *slice = series->slices().first();
+    slice->setExploded();
+    slice->setLabelVisible();
+    slice->setSlicePen(QPen(Qt::darkGreen, 2));
+    slice->setSliceBrush(Qt::green);
+    //! [2]
+
+    chartView->addSeries(series);
 
     window.setCentralWidget(chartView);
     window.resize(600, 600);
