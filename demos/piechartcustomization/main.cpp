@@ -298,7 +298,7 @@ public:
         *m_series << new CustomSlice(50.0, "Slice 5");
         m_chartView->addSeries(m_series);
 
-        connect(m_series, SIGNAL(clicked(QPieSlice*)), this, SLOT(handleSliceClicked(QPieSlice*)));
+        connect(m_series, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), this, SLOT(handleSliceClicked(QPieSlice*, Qt::MouseButtons)));
 
         // chart settings
         m_themeComboBox = new QComboBox();
@@ -483,8 +483,10 @@ public Q_SLOTS:
         m_slice->setExplodeDistanceFactor(m_sliceExplodedFactor->value());
     }
 
-    void handleSliceClicked(QPieSlice* slice)
+    void handleSliceClicked(QPieSlice* slice, Qt::MouseButtons buttons)
     {
+        Q_UNUSED(buttons);
+
         m_slice = static_cast<CustomSlice*>(slice);
 
         // name

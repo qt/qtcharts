@@ -57,7 +57,7 @@ public:
     void setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation = Qt::Vertical);
 
 Q_SIGNALS:
-    void clicked(QPieSlice* slice);
+    void clicked(QPieSlice* slice, Qt::MouseButtons buttons);
     void hoverEnter(QPieSlice* slice);
     void hoverLeave(QPieSlice* slice);
     void added(QList<QPieSlice*> slices);

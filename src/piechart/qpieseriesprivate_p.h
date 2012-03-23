@@ -16,9 +16,9 @@ public:
 
     void updateDerivativeData();
 
-public Q_SLOTS: // TODO: should be private and not visible in the interface at all
+public Q_SLOTS:
     void sliceChanged();
-    void sliceClicked();
+    void sliceClicked(Qt::MouseButtons buttons);
     void sliceHoverEnter();
     void sliceHoverLeave();
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);

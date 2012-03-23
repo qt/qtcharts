@@ -80,12 +80,12 @@ void QPieSeriesPrivate::sliceChanged()
     updateDerivativeData();
 }
 
-void QPieSeriesPrivate::sliceClicked()
+void QPieSeriesPrivate::sliceClicked(Qt::MouseButtons buttons)
 {
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
     Q_Q(QPieSeries);
-    emit q->clicked(slice);
+    emit q->clicked(slice, buttons);
 }
 
 void QPieSeriesPrivate::sliceHoverEnter()
@@ -240,7 +240,7 @@ void QPieSeries::add(QList<QPieSlice*> slices)
 
     foreach (QPieSlice* s, slices) {
         connect(s, SIGNAL(changed()), d, SLOT(sliceChanged()));
-        connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
+        connect(s, SIGNAL(clicked(Qt::MouseButtons)), d, SLOT(sliceClicked(Qt::MouseButtons)));
         connect(s, SIGNAL(hoverEnter()), d, SLOT(sliceHoverEnter()));
         connect(s, SIGNAL(hoverLeave()), d, SLOT(sliceHoverLeave()));
     }

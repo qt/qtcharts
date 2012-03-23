@@ -51,7 +51,7 @@ public:
     qreal explodeDistanceFactor() const;
 
 Q_SIGNALS:
-    void clicked();
+    void clicked(Qt::MouseButtons buttons);
     void hoverEnter();
     void hoverLeave();
     void changed();

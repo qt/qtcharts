@@ -34,7 +34,7 @@ public: // from QGraphicsItem
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 Q_SIGNALS:
-    void clicked();
+    void clicked(Qt::MouseButtons buttons);
     void hoverEnter();
     void hoverLeave();
 

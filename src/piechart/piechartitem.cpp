@@ -57,7 +57,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         PieSliceItem* item = new PieSliceItem(this);
         m_slices.insert(s, item);
         connect(s, SIGNAL(changed()), this, SLOT(handleSliceChanged()));
-        connect(item, SIGNAL(clicked()), s, SIGNAL(clicked()));
+        connect(item, SIGNAL(clicked(Qt::MouseButtons)), s, SIGNAL(clicked(Qt::MouseButtons)));
         connect(item, SIGNAL(hoverEnter()), s, SIGNAL(hoverEnter()));
         connect(item, SIGNAL(hoverLeave()), s, SIGNAL(hoverLeave()));
 

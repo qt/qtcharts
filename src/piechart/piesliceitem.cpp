@@ -24,7 +24,7 @@ PieSliceItem::PieSliceItem(QGraphicsItem* parent)
     :QGraphicsObject(parent)
 {
     setAcceptHoverEvents(true);
-    setAcceptedMouseButtons(Qt::LeftButton);
+    setAcceptedMouseButtons(Qt::MouseButtonMask);
     setZValue(ChartPresenter::PieSeriesZValue);
 }
 
@@ -76,9 +76,9 @@ void PieSliceItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
     emit hoverLeave();
 }
 
-void PieSliceItem::mousePressEvent(QGraphicsSceneMouseEvent* /*event*/)
+void PieSliceItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit clicked();
+    emit clicked(event->buttons());
 }
 
 void PieSliceItem::setSliceData(PieSliceData sliceData)
