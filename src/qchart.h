@@ -101,6 +101,7 @@ private:
     void setBackgroundPadding(int padding);
     void setBackgroundDiameter(int diameter);
     void updateLayout();
+    void updateLegendLayout();
 
 private:
     Q_DISABLE_COPY(QChart)

@@ -337,10 +337,42 @@ void QChart::updateLayout()
     // recalculate legend position
     if (m_legend) {
         if (m_legend->parentObject() == this) {
-            m_legend->setMaximumSize(rect.size());
-            m_legend->setPos(rect.topLeft());
+            updateLegendLayout();
         }
     }
+}
+
+void QChart::updateLegendLayout()
+{
+    QRectF plotRect = m_rect.adjusted(m_padding,m_padding, -m_padding, -m_padding);
+    QRectF legendRect;
+
+    switch (m_legend->preferredLayout())
+    {
+    case QLegend::PreferredLayoutTop:{
+        legendRect = m_rect.adjusted(m_padding,0,-m_padding,-m_padding - plotRect.height());
+        break;
+    }
+    case QLegend::PreferredLayoutBottom: {
+        legendRect = m_rect.adjusted(m_padding,m_padding + plotRect.height(),-m_padding,0);
+        break;
+    }
+    case QLegend::PreferredLayoutLeft: {
+        legendRect = m_rect.adjusted(0,m_padding,-m_padding - plotRect.width(),-m_padding);
+        break;
+    }
+    case QLegend::PreferredLayoutRight: {
+        legendRect = m_rect.adjusted(m_padding + plotRect.width(),m_padding,0,-m_padding);
+        break;
+    }
+    default: {
+        legendRect = plotRect;
+        break;
+    }
+    }
+
+    m_legend->setMaximumSize(legendRect.size());
+    m_legend->setPos(legendRect.topLeft());
 }
 
 

@@ -14,6 +14,7 @@ class QXYSeries;
 class QBarSet;
 class QBarSeries;
 class QPieSeries;
+class LegendScrollButton;
 
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsObject
 {
@@ -21,8 +22,10 @@ class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsObject
 public:
 
     enum PreferredLayout {
-        PreferredLayoutHorizontal,
-        PreferredLayoutVertical
+        PreferredLayoutTop,
+        PreferredLayoutBottom,
+        PreferredLayoutLeft,
+        PreferredLayoutRight,
     };
 
     explicit QLegend(QGraphicsItem *parent = 0);
@@ -37,6 +40,7 @@ public:
     QPen pen() const;
 
     void setPreferredLayout(QLegend::PreferredLayout preferred);
+    QLegend::PreferredLayout preferredLayout() const;
 
     QSizeF maximumSize() const;
     void setMaximumSize(const QSizeF size);
@@ -56,6 +60,7 @@ public slots:
     void handleAdded(QList<QPieSlice*> slices);
     void handleRemoved(QList<QPieSlice*> slices);
     void handleMarkerDestroyed();
+    void handleScrollButtonClicked(QGraphicsSceneMouseEvent* event);
 
 private:
     // PIMPL --->
@@ -66,8 +71,13 @@ private:
     void appendMarkers(QBarSeries* series);
     void appendMarkers(QPieSeries* series);
     void deleteMarkers(QSeries* series);
-    void layoutChanged();
-    // <--- PIMPL
+//    void layoutChanged();   // This tries to fit all items to legend
+    void updateLayout();    // New version of layout. Fits items only to row or column and adds scrollbars.
+    void rescaleScrollButtons(const QSize& size);
+    QSizeF maximumMarkerSize();
+    void checkMarkerBounds();
+    bool scrollButtonsVisible();
+//    void updateScrollButtonsLayout();
 
     QPointF mPos;
     QSizeF mSize;
@@ -79,6 +89,16 @@ private:
     QBrush m_brush;
     QPen m_pen;
     QLegend::PreferredLayout mPreferredLayout;
+
+    int mFirstMarker;
+
+    LegendScrollButton* mScrollButtonLeft;
+    LegendScrollButton* mScrollButtonRight;
+    LegendScrollButton* mScrollButtonUp;
+    LegendScrollButton* mScrollButtonDown;
+
+    qreal mMargin;
+    // <--- PIMPL
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
