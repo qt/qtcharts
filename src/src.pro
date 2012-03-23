@@ -62,9 +62,15 @@ DEFINES += QTCOMMERCIALCHART_LIBRARY
 
 #qt public headers
 #this is very primitive and lame parser , TODO: make perl script insted
-!exists($$CHART_BUILD_PUBLIC_HEADER_DIR)
+!exists($$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal)
 {
     system($$QMAKE_MKDIR $$CHART_BUILD_PUBLIC_HEADER_DIR)
+     win32:{
+        command = "echo $${LITERAL_HASH}include \"qchartglobal.h\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal"
+    }else{
+        command = "echo \"$${LITERAL_HASH}include \\\"qchartglobal.h\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal"
+    } 
+    system($$command)
 }
 
 for(file, PUBLIC_HEADERS) {

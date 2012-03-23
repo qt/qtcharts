@@ -9,6 +9,9 @@ SOURCES += main.cpp\
 HEADERS  += widget.h
 
 !mac {
+    DIR = $$PWD
+    
+    win32:{DIR = $$replace(DIR, "/","\\")}
     # TODO: QMAKE_POST_LINK does not work on mac; how to copy the data file?
-    QMAKE_POST_LINK += $$QMAKE_COPY $$PWD/gdpData $$CHART_BUILD_BIN_DIR
+    QMAKE_POST_LINK += $$QMAKE_COPY $$DIR/gdpData $$CHART_BUILD_BIN_DIR
 }

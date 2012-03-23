@@ -1,9 +1,7 @@
 CONFIG+=integrated_build #remove if you want to build against installed libs
 
-SHADOW = $$find(OUT_PWD,$$PWD)
-
-unix:isEmpty(SHADOW){
-    search = "$$PWD:::"
+!contains($${PWD}, $${OUT_PWD}){
+   search = "$$PWD:::"
     temp = $$split(search,"/")    
     temp = $$last(temp)
     path = $$replace(search,$$temp,'')
@@ -12,6 +10,8 @@ unix:isEmpty(SHADOW){
     temp = $$first(temp)
     path = "$${path}$${temp}"
     SHADOW=$$path    
+}else{
+    SHADOW=$$PWD
 }
 
 CHART_BUILD_PUBLIC_HEADER_DIR = $$SHADOW/include
