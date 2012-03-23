@@ -121,11 +121,21 @@ install_build_private_headers.CONFIG += target_predeps \
 QMAKE_EXTRA_COMPILERS += install_build_public_headers \
     install_build_private_headers \
     
+
 chartversion.target = qchartversion_p.h
-chartversion.commands = @echo \
-    "build_time" \
-    > \
-    $$chartversion.target;
+unix:{
+    chartversion.commands = @echo \
+        "const char *buildTime = \\\"`date +'%y%m%d%H%M'`\\\" \\; \
+         const char *gitHead = \\\"`git rev-parse HEAD`\\\" \\; " \
+        > \
+        $$chartversion.target;
+}else{
+    chartversion.commands = @echo \
+        "const char *buildTime = \"%date%_%time%\" ; \
+         const char *gitHead = \"unknown\" ; " \
+        > \
+        $$chartversion.target
+}
 chartversion.depends = $$HEADERS \
     $$SOURCES
 PRE_TARGETDEPS += qchartversion_p.h

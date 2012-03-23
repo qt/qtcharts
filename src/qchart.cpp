@@ -6,7 +6,6 @@
 #include "chartbackground_p.h"
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
