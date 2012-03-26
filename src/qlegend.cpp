@@ -23,6 +23,20 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
+    \class QLegend
+    \brief part of QtCommercial chart API.
+
+    QLegend is a graphical object, whics displays legend of the chart. Legend state is updated by QChart, when
+    series have been changed. By default, legend is drawn by QChart, but user can set a new parent to legend and
+    handle the drawing manually.
+    User isn't supposed to create or delete legend objects, but can reference it via QChart class.
+
+    \mainclass
+
+    \sa QChart, QSeries
+*/
+
+/*!
     \enum QLegend::PreferredLayout
 
     This enum describes the possible position for legend inside chart.
@@ -35,17 +49,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
 /*!
-    \fn void clicked(QSeries* series, Qt::MouseButton button)
+    \fn void QLegend::clicked(QSeries* series, Qt::MouseButton button)
     \brief Notifies when series has been clicked on legend \a series \a button
 */
 
 /*!
-    \fn void clicked(QBarSet* barset, Qt::MouseButton button);
+    \fn void QLegend::clicked(QBarSet* barset, Qt::MouseButton button)
     \brief Notifies when barset has been clicked on legend \a barset \a button
 */
 
 /*!
-    \fn void clicked(QPieSlice* slice, Qt::MouseButton button);
+    \fn void QLegend::clicked(QPieSlice* slice, Qt::MouseButton button)
     \brief Notifies when pie slice has been clicked on legend \a slice \a button
 */
 
@@ -141,7 +155,7 @@ QPen QLegend::pen() const
 
 /*!
     Sets the \a preferred layout for legend. Legend tries to paint itself on the defined position in chart.
-    sa \QLegend::PreferredLayout
+    \sa QLegend::PreferredLayout
 */
 void QLegend::setPreferredLayout(QLegend::PreferredLayout preferred)
 {

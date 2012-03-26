@@ -87,7 +87,9 @@ public:
     QChartAxis* axisX() const;
     QChartAxis* axisY() const;
 
-    QLegend* legend() const;
+    QLegend& legend() const;
+    QLegend* takeLegend();
+    void giveLegend(QLegend* legend);
 
     int padding() const;
 

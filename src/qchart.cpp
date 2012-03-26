@@ -266,9 +266,39 @@ QChartAxis* QChart::axisY() const
 /*!
     Returns the legend object of the chart. Ownership stays in chart.
 */
-QLegend* QChart::legend() const
+QLegend& QChart::legend() const
 {
-    return m_legend;
+    return *m_legend;
+}
+
+/*!
+    Gives ownership of legend to user.
+*/
+QLegend* QChart::takeLegend()
+{
+    QLegend* l = m_legend;
+    m_legend = 0;
+    return l;
+}
+
+/*!
+    Gives ownership of legend back to chart. QChart takes ownership of \a legend and deletes existing one
+*/
+void QChart::giveLegend(QLegend* legend)
+{
+    if (m_legend) {
+        // Should not happen.
+        qDebug() << "Warning! Giving more than one legend to chart."
+        delete m_legend;
+    }
+
+    m_legend = legend;
+
+    // Reconnect legend, in case not already connected.
+    disconnect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+    disconnect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
+    connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+    connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
 
 /*!
