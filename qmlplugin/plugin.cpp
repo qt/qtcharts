@@ -2,8 +2,9 @@
 #include <QtDeclarative/qdeclarative.h>
 #include "declarativechart.h"
 #include "declarativexypoint.h"
-#include "declarativescatterseries.h"
 #include "declarativelineseries.h"
+#include "declarativesplineseries.h"
+#include "declarativescatterseries.h"
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
 
@@ -21,6 +22,7 @@ public:
         qmlRegisterType<DeclarativeXyPoint>(uri, 1, 0, "XyPoint");
         qmlRegisterType<DeclarativeScatterSeries>(uri, 1, 0, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries>(uri, 1, 0, "LineSeries");
+        qmlRegisterType<DeclarativeSplineSeries>(uri, 1, 0, "SplineSeries");
         qmlRegisterType<DeclarativeBarSeries>(uri, 1, 0, "BarSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
         qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
