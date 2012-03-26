@@ -10,6 +10,11 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     setFlag(QGraphicsItem::ItemHasNoContents, false);
 }
 
+DeclarativeChart::~DeclarativeChart()
+{
+    delete m_chart;
+}
+
 DeclarativeChart::ChartTheme DeclarativeChart::theme()
 {
     return (ChartTheme) m_chart->chartTheme();

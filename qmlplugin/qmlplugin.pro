@@ -25,17 +25,19 @@ SOURCES += \
     plugin.cpp \
     declarativechart.cpp \
     declarativescatterseries.cpp \
-    scatterelement.cpp \
+    declarativexypoint.cpp \
     declarativepieseries.cpp \
     declarativelineseries.cpp \
-    declarativebarseries.cpp
+    declarativebarseries.cpp \
+    declarativetablemodel.cpp
 HEADERS += \
     declarativechart.h \
     declarativescatterseries.h \
-    scatterelement.h \
+    declarativexypoint.h \
     declarativepieseries.h \
     declarativelineseries.h \
-    declarativebarseries.h
+    declarativebarseries.h \
+    declarativetablemodel.h
 
 TARGETPATH = QtCommercial/Chart
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH

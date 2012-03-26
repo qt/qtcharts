@@ -2,7 +2,6 @@
 #define DECLARATIVEBARSERIES_H
 
 #include "qchartglobal.h"
-#include "scatterelement.h" // TODO: rename header
 #include <QDeclarativeItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

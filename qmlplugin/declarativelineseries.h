@@ -2,7 +2,7 @@
 #define DECLARATIVELINESERIES_H
 
 #include "qchartglobal.h"
-#include "scatterelement.h" // TODO: rename header
+#include "declarativexypoint.h"
 #include <QDeclarativeItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -13,17 +13,17 @@ class QLineSeries;
 class DeclarativeLineSeries : public QDeclarativeItem
 {
     Q_OBJECT
-    Q_PROPERTY(QDeclarativeListProperty<ScatterElement> data READ data)
+    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> data READ data)
 
 public:
     explicit DeclarativeLineSeries(QDeclarativeItem *parent = 0);
-    QDeclarativeListProperty<ScatterElement> data();
+    QDeclarativeListProperty<DeclarativeXyPoint> data();
 
 signals:
 
 public slots:
-    static void appendData(QDeclarativeListProperty<ScatterElement> *list,
-                           ScatterElement *element);
+    static void appendData(QDeclarativeListProperty<DeclarativeXyPoint> *list,
+                           DeclarativeXyPoint *element);
 
 private slots:
     void setParentForSeries();
@@ -31,7 +31,7 @@ private slots:
 private:
     QChart *m_chart;
     QLineSeries *m_series;
-    QList<ScatterElement *> m_data;
+    QList<DeclarativeXyPoint *> m_data;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

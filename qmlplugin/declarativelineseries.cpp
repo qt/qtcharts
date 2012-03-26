@@ -26,7 +26,7 @@ void DeclarativeLineSeries::setParentForSeries()
             m_series = new QLineSeries();
             Q_ASSERT(m_series);
             for (int i(0); i < m_data.count(); i++) {
-                ScatterElement *element = m_data.at(i);
+                DeclarativeXyPoint *element = m_data.at(i);
                 m_series->add(element->x(), element->y());
             }
             chart->addSeries(m_series);
@@ -34,13 +34,13 @@ void DeclarativeLineSeries::setParentForSeries()
     }
 }
 
-QDeclarativeListProperty<ScatterElement> DeclarativeLineSeries::data()
+QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeLineSeries::data()
 {
-    return QDeclarativeListProperty<ScatterElement>(this, 0, &DeclarativeLineSeries::appendData);
+    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeLineSeries::appendData);
 }
 
-void DeclarativeLineSeries::appendData(QDeclarativeListProperty<ScatterElement> *list,
-                                       ScatterElement *element)
+void DeclarativeLineSeries::appendData(QDeclarativeListProperty<DeclarativeXyPoint> *list,
+                                       DeclarativeXyPoint *element)
 {
     DeclarativeLineSeries *series = qobject_cast<DeclarativeLineSeries *>(list->object);
     if (series) {

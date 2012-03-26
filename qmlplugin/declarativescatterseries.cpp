@@ -1,5 +1,6 @@
 #include "declarativescatterseries.h"
 #include "declarativechart.h"
+#include "declarativetablemodel.h"
 #include "qchart.h"
 #include "qscatterseries.h"
 
@@ -8,47 +9,51 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativeScatterSeries::DeclarativeScatterSeries(QDeclarativeItem *parent) :
     QDeclarativeItem(parent),
     m_chart(0),
-    m_series(0)
+    m_series(0),
+    m_model(0),
+    m_xColumn(0),
+    m_yColumn(1)
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
-    connect(this, SIGNAL(parentChanged()),
-            this, SLOT(setParentForSeries()));
 }
 
-void DeclarativeScatterSeries::setParentForSeries()
+DeclarativeScatterSeries::~DeclarativeScatterSeries()
 {
-    if (!m_series)
-        initSeries();
 }
 
-void DeclarativeScatterSeries::initSeries()
+void DeclarativeScatterSeries::componentComplete()
 {
     Q_ASSERT(!m_series);
     DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(parent());
 
     if (declarativeChart) {
-        QChart *chart = qobject_cast<QChart *>(declarativeChart->m_chart);
-        qDebug() << "creating scatter series for chart: " << chart;
-        Q_ASSERT(chart);
+        m_chart = qobject_cast<QChart *>(declarativeChart->m_chart);
+        qDebug() << "creating scatter series for chart: " << m_chart;
+        Q_ASSERT(m_chart);
 
         m_series = new QScatterSeries();
-        Q_ASSERT(m_series);
+//        if (!m_model)
+//            m_model = new DeclarativeTableModel();
+        if (m_model) {
+            m_series->setModel(m_model);
+            m_series->setModelMapping(m_xColumn, m_yColumn);
+        }
         for (int i(0); i < m_data.count(); i++) {
-            ScatterElement *element = m_data.at(i);
+            DeclarativeXyPoint *element = m_data.at(i);
             *m_series << QPointF(element->x(), element->y());
         }
-        chart->addSeries(m_series);
+        m_chart->addSeries(m_series);
     }
 }
 
-QDeclarativeListProperty<ScatterElement> DeclarativeScatterSeries::data()
+QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeScatterSeries::data()
 {
-    return QDeclarativeListProperty<ScatterElement>(this, 0,
+    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0,
                                                     &DeclarativeScatterSeries::appendData);
 }
 
-void DeclarativeScatterSeries::appendData(QDeclarativeListProperty<ScatterElement> *list,
-                                          ScatterElement *element)
+void DeclarativeScatterSeries::appendData(QDeclarativeListProperty<DeclarativeXyPoint> *list,
+                                          DeclarativeXyPoint *element)
 {
     DeclarativeScatterSeries *series = qobject_cast<DeclarativeScatterSeries *>(list->object);
     qDebug() << "appendData: " << series;
@@ -61,6 +66,41 @@ void DeclarativeScatterSeries::appendData(QDeclarativeListProperty<ScatterElemen
         if (series->m_series)
             series->m_series->add(element->x(), element->y());
     }
+}
+
+DeclarativeTableModel *DeclarativeScatterSeries::model()
+{
+    if (m_series)
+        return (DeclarativeTableModel *) m_series->model();
+    else
+        return m_model;
+}
+
+void DeclarativeScatterSeries::setModel(DeclarativeTableModel *model)
+{
+    m_model = model;
+    if (m_chart && m_series) {
+        // Hack: remove and add the series to force an update for the chart range
+        m_chart->removeSeries(m_series);
+        m_series = new QScatterSeries();
+        m_series->setModel(m_model);
+        m_series->setModelMapping(m_xColumn, m_yColumn);
+        m_chart->addSeries(m_series);
+    }
+}
+
+void DeclarativeScatterSeries::setXColumn(int xColumn)
+{
+    m_xColumn = xColumn;
+    if (m_series && m_series->model())
+        m_series->setModelMapping(m_xColumn, m_yColumn);
+}
+
+void DeclarativeScatterSeries::setYColumn(int yColumn)
+{
+    m_yColumn = yColumn;
+    if (m_series && m_series->model())
+        m_series->setModelMapping(m_xColumn, m_yColumn);
 }
 
 #include "moc_declarativescatterseries.cpp"

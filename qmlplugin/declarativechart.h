@@ -27,6 +27,7 @@ public:
         ThemeScientific
     };
     DeclarativeChart(QDeclarativeItem *parent = 0);
+    ~DeclarativeChart();
 
 public: // From QDeclarativeItem/QGraphicsItem
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
