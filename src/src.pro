@@ -125,7 +125,7 @@ QMAKE_EXTRA_COMPILERS += install_build_public_headers \
     install_build_private_headers \
     
 
-chartversion.target = qchartversion_p.h
+chartversion.target = $$PWD/qchartversion_p.h
 unix:{
     chartversion.commands = @echo \
         "const char *buildTime = \\\"`date +'%y%m%d%H%M'`\\\" \\; \
@@ -141,8 +141,8 @@ unix:{
 }
 chartversion.depends = $$HEADERS \
     $$SOURCES
-PRE_TARGETDEPS += qchartversion_p.h
-QMAKE_CLEAN += qchartversion_p.h
+PRE_TARGETDEPS += $$PWD/qchartversion_p.h
+QMAKE_CLEAN += $$PWD/qchartversion_p.h
 QMAKE_EXTRA_TARGETS += chartversion
 unix:QMAKE_DISTCLEAN += -r \
     $$CHART_BUILD_HEADER_DIR \
