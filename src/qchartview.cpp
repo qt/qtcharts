@@ -356,9 +356,19 @@ QChartAxis* QChartView::axisY() const
 /*!
     Returns the pointer to legend object of the chart
 */
-QLegend* QChartView::legend() const
+QLegend& QChartView::legend() const
 {
     return m_chart->legend();
+}
+
+QLegend* QChartView::takeLegend()
+{
+    return m_chart->takeLegend();
+}
+
+void QChartView::giveLegend(QLegend* legend)
+{
+    m_chart->giveLegend(legend);
 }
 
 /*!

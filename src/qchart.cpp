@@ -288,7 +288,7 @@ void QChart::giveLegend(QLegend* legend)
 {
     if (m_legend) {
         // Should not happen.
-        qDebug() << "Warning! Giving more than one legend to chart."
+        qDebug() << "Warning! Giving more than one legend to chart.";
         delete m_legend;
     }
 
