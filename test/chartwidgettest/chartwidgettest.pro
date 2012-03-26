@@ -2,7 +2,6 @@
     error( "Couldn't find the test.pri file!" )
 }
 
-TARGET = chartwidgettest
 TEMPLATE = app
 
 QT += core gui
