@@ -29,7 +29,8 @@ PRIVATE_HEADERS += \
     $$PWD/legendmarker_p.h \
     $$PWD/legendscrollbutton_p.h \
     $$PWD/chartbackground_p.h \
-    $$PWD/chart_p.h
+    $$PWD/chart_p.h \
+    $$PWD/chartconfig_p.h
 PUBLIC_HEADERS += \
     $$PWD/qchart.h \
     $$PWD/qchartglobal.h \

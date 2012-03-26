@@ -1,5 +1,5 @@
 #include "chartbackground_p.h"
-#include "qchartversion_p.h"
+#include "chartconfig_p.h"
 #include <QPen>
 #include <QBrush>
 #include <QPainter>
@@ -9,10 +9,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 ChartBackground::ChartBackground(QGraphicsItem* parent):QGraphicsRectItem(parent),
 m_diameter(15)
 {
-#ifndef QT_NO_DEBUG
-    qDebug()<<"buildTime" <<buildTime;
-    qDebug()<<"gitHead" << gitHead;
-#endif
 }
 
 ChartBackground::~ChartBackground()
@@ -34,7 +30,7 @@ void ChartBackground::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
    QString build("build %1");
    font.setPointSize(6);
    painter->setFont(font);
-   painter->drawText(rect().bottomLeft(),build.arg(buildTime));
+   painter->drawText(rect().bottomLeft(),build.arg(ChartConfig::instance()->compilationTime()));
 #endif
    painter->restore();
 }
