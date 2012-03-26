@@ -22,13 +22,12 @@ feature.path = $$[QT_INSTALL_DATA]/mkspecs/features
 feature.files = $$PWD/features/qtcommercialchart.prf
 INSTALLS += feature
 
-doc.target = doc
+docs.target = docs
 win32:{
-    doc.commands = qdoc3 $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
+    docs.commands = qdoc3 $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
 }else{
-    doc.commands = qdoc3 $$CHART_BUILD_DOC_DIR/qcharts.qdocconf
+    docs.commands = qdoc3 $$CHART_BUILD_DOC_DIR/qcharts.qdocconf
 }
-
-doc.depends = FORCE
+docs.depends = FORCE
 QMAKE_EXTRA_TARGETS += docs
 
