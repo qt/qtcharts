@@ -35,6 +35,10 @@ Rectangle {
         theme: Chart.ThemeBlueCerulean
 
         BarSeries {
+            barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
+//            data: [
+//                BarSet { }
+//            ]
         }
 
 //        PieSeries {
@@ -56,7 +60,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        theme: Chart.ThemeScientific
+        theme: Chart.ThemeBrownSand
 
         LineSeries {
             data: [
@@ -67,34 +71,34 @@ Rectangle {
             ]
         }
 
-//        ScatterSeries {
-//            id: scatter
-//            data: [
-//                XyPoint { x: 1.1; y: 1.1 },
-//                XyPoint { x: 1.1; y: 1.2 },
-//                XyPoint { x: 1.17; y: 1.15 }
-//            ]
-//        }
-//        ScatterSeries {
-//            data: [
-//                XyPoint { x: 1.5; y: 1.5 },
-//                XyPoint { x: 1.5; y: 1.6 },
-//                XyPoint { x: 1.57; y: 1.55 }
-//            ]
-//        }
-//        ScatterSeries {
-//            data: [
-//                XyPoint { x: 2.0; y: 2.0 },
-//                XyPoint { x: 2.0; y: 2.1 },
-//                XyPoint { x: 2.07; y: 2.05 }
-//            ]
-//        }
-//        ScatterSeries {
-//            data: [
-//                XyPoint { x: 2.6; y: 2.6 },
-//                XyPoint { x: 2.6; y: 2.7 },
-//                XyPoint { x: 2.67; y: 2.65 }
-//            ]
-//        }
+        ScatterSeries {
+            id: scatter
+            points: [
+                XyPoint { x: 1.1; y: 1.1 },
+                XyPoint { x: 1.1; y: 1.2 },
+                XyPoint { x: 1.17; y: 1.15 }
+            ]
+        }
+        ScatterSeries {
+            points: [
+                XyPoint { x: 1.5; y: 1.5 },
+                XyPoint { x: 1.5; y: 1.6 },
+                XyPoint { x: 1.57; y: 1.55 }
+            ]
+        }
+        ScatterSeries {
+            points: [
+                XyPoint { x: 2.0; y: 2.0 },
+                XyPoint { x: 2.0; y: 2.1 },
+                XyPoint { x: 2.07; y: 2.05 }
+            ]
+        }
+        ScatterSeries {
+            points: [
+                XyPoint { x: 2.6; y: 2.6 },
+                XyPoint { x: 2.6; y: 2.7 },
+                XyPoint { x: 2.67; y: 2.65 }
+            ]
+        }
     }
 }

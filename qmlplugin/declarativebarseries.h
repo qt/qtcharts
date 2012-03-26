@@ -12,20 +12,26 @@ class QBarSeries;
 class DeclarativeBarSeries : public QDeclarativeItem
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
 
 public:
     explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
+
+public: // from QDeclarativeParserStatus
+    void componentComplete();
+
+public:
+    void setBarCategories(QStringList categories);
+    QStringList barCategories();
 
 signals:
 
 public slots:
 
-private slots:
-    void setParentForSeries();
-
-private:
+public:
     QChart *m_chart;
     QBarSeries *m_series;
+    QStringList m_categories;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

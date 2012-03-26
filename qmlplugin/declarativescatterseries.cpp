@@ -28,31 +28,31 @@ void DeclarativeScatterSeries::componentComplete()
         Q_ASSERT(m_chart);
 
         m_series = new QScatterSeries();
-        for (int i(0); i < m_data.count(); i++) {
-            DeclarativeXyPoint *element = m_data.at(i);
+        for (int i(0); i < m_points.count(); i++) {
+            DeclarativeXyPoint *element = m_points.at(i);
             *m_series << QPointF(element->x(), element->y());
         }
         m_chart->addSeries(m_series);
     }
 }
 
-QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeScatterSeries::data()
+QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeScatterSeries::points()
 {
     return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0,
-                                                    &DeclarativeScatterSeries::appendData);
+                                                    &DeclarativeScatterSeries::appendPoints);
 }
 
-void DeclarativeScatterSeries::appendData(QDeclarativeListProperty<DeclarativeXyPoint> *list,
+void DeclarativeScatterSeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
                                           DeclarativeXyPoint *element)
 {
     DeclarativeScatterSeries *series = qobject_cast<DeclarativeScatterSeries *>(list->object);
-    qDebug() << "appendData: " << series;
-    qDebug() << "appendData: " << element;
-    qDebug() << "appendData: " << element->x();
-    qDebug() << "appendData: " << element->y();
-    qDebug() << "appendData: " << series->m_series;
+    qDebug() << "appendPoints: " << series;
+    qDebug() << "appendPoints: " << element;
+    qDebug() << "appendPoints: " << element->x();
+    qDebug() << "appendPoints: " << element->y();
+    qDebug() << "appendPoints: " << series->m_series;
     if (series) {
-        series->m_data.append(element);
+        series->m_points.append(element);
         if (series->m_series)
             series->m_series->add(element->x(), element->y());
     }
