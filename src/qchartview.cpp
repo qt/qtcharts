@@ -361,11 +361,17 @@ QLegend& QChartView::legend() const
     return m_chart->legend();
 }
 
+/*!
+    Gives ownership of legend to user.
+*/
 QLegend* QChartView::takeLegend()
 {
     return m_chart->takeLegend();
 }
 
+/*!
+    Gives ownership of legend back to chart. QChart takes ownership of \a legend and deletes existing one
+*/
 void QChartView::giveLegend(QLegend* legend)
 {
     m_chart->giveLegend(legend);
