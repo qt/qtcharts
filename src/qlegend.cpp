@@ -22,6 +22,36 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \enum QLegend::PreferredLayout
+
+    This enum describes the possible position for legend inside chart.
+
+    \value PreferredLayoutTop
+    \value PreferredLayoutBottom
+    \value PreferredLayoutLeft
+    \value PreferredLayoutRight
+*/
+
+
+/*!
+    \fn void clicked(QSeries* series, Qt::MouseButton button)
+    \brief Notifies when series has been clicked on legend \a series \a button
+*/
+
+/*!
+    \fn void clicked(QBarSet* barset, Qt::MouseButton button);
+    \brief Notifies when barset has been clicked on legend \a barset \a button
+*/
+
+/*!
+    \fn void clicked(QPieSlice* slice, Qt::MouseButton button);
+    \brief Notifies when pie slice has been clicked on legend \a slice \a button
+*/
+
+/*!
+    Constructs the legend object and sets the parent to \a parent
+*/
 QLegend::QLegend(QGraphicsItem *parent)
     : QGraphicsObject(parent)
     ,mPos(0,0)
@@ -48,22 +78,31 @@ QLegend::QLegend(QGraphicsItem *parent)
     setZValue(ChartPresenter::LegendZValue);
 }
 
+/*!
+    Paints the legend to given \a painter. Paremeters \a option and \a widget arent used.
+*/
 void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    painter->setOpacity(0.8);
+    painter->setOpacity(opacity());
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
     painter->drawRect(boundingRect());
 }
 
+/*!
+    Bounding rect of legend.
+*/
 QRectF QLegend::boundingRect() const
 {
     return QRectF(mPos,mSize);
 }
 
+/*!
+    Sets the \a brush of legend. Brush affects the background of legend.
+*/
 void QLegend::setBrush(const QBrush& brush)
 {
     if(m_brush!=brush){
@@ -72,11 +111,17 @@ void QLegend::setBrush(const QBrush& brush)
     }
 }
 
+/*!
+    Returns the brush used by legend.
+*/
 QBrush QLegend::brush() const
 {
     return m_brush;
 }
 
+/*!
+    Sets the \a pen of legend. Pen affects the legend borders.
+*/
 void QLegend::setPen(const QPen& pen)
 {
     if(m_pen!=pen){
@@ -85,33 +130,63 @@ void QLegend::setPen(const QPen& pen)
     }
 }
 
+/*!
+    Returns the pen used by legend
+*/
+
 QPen QLegend::pen() const
 {
     return m_pen;
 }
 
+/*!
+    Sets the \a preferred layout for legend. Legend tries to paint itself on the defined position in chart.
+    sa \QLegend::PreferredLayout
+*/
 void QLegend::setPreferredLayout(QLegend::PreferredLayout preferred)
 {
     mPreferredLayout = preferred;
     updateLayout();
 }
 
+/*!
+    Returns the preferred layout for legend
+*/
 QLegend::PreferredLayout QLegend::preferredLayout() const
 {
     return mPreferredLayout;
 }
 
+/*!
+    Returns the maximum size of legend.
+*/
 QSizeF QLegend::maximumSize() const
 {
     return mMaximumSize;
 }
 
+/*!
+    Sets the maximum \a size for legend. The legend can't grow bigger than this size. If there are
+    more series than legend can fit to this size, scroll buttons are displayed.
+*/
 void QLegend::setMaximumSize(const QSizeF size)
 {
     mMaximumSize = size;
     updateLayout();
 }
 
+/*!
+    Returns the current size of legend.
+*/
+QSizeF QLegend::size() const
+{
+    return mSize;
+}
+
+/*!
+    Sets the \a size of legend. If size is bigger than maximum size of legend, the legend is resized to the maximum size.
+    \sa setMmaximumSize()
+*/
 void QLegend::setSize(const QSizeF size)
 {
     mSize = size;
@@ -123,12 +198,18 @@ void QLegend::setSize(const QSizeF size)
     }
 }
 
+/*!
+    Sets position of legend to \a pos
+*/
 void QLegend::setPos(const QPointF &pos)
 {
     mPos = pos;
     updateLayout();
 }
 
+/*!
+    \internal \a series \a domain Should be called when series is added to chart.
+*/
 void QLegend::handleSeriesAdded(QSeries* series, Domain* domain)
 {
     Q_UNUSED(domain)
@@ -138,6 +219,9 @@ void QLegend::handleSeriesAdded(QSeries* series, Domain* domain)
     updateLayout();
 }
 
+/*!
+    \internal \a series Should be called when series is removed from chart.
+*/
 void QLegend::handleSeriesRemoved(QSeries* series)
 {
     disconnectSeries(series);
@@ -155,6 +239,9 @@ void QLegend::handleSeriesRemoved(QSeries* series)
     updateLayout();
 }
 
+/*!
+    \internal \a slices Should be called when slices are added to pie chart.
+*/
 void QLegend::handleAdded(QList<QPieSlice*> slices)
 {
     QPieSeries* series = static_cast<QPieSeries*> (sender());
@@ -172,6 +259,10 @@ void QLegend::handleAdded(QList<QPieSlice*> slices)
     updateLayout();
 }
 
+/*!
+    \internal \a slices Should be called when slices are removed from pie chart. Currently unused,
+    because removed slices are also deleted and we listen destroyed signal
+*/
 void QLegend::handleRemoved(QList<QPieSlice *> slices)
 {
     Q_UNUSED(slices)
@@ -180,6 +271,9 @@ void QLegend::handleRemoved(QList<QPieSlice *> slices)
 }
 
 
+/*!
+    \internal Notifies legend that some marker has been removed. Sent by legend markers when destroyed
+*/
 void QLegend::handleMarkerDestroyed()
 {
     // TODO: what if more than one markers are destroyed and we update layout after first one?
@@ -188,11 +282,13 @@ void QLegend::handleMarkerDestroyed()
     updateLayout();
 }
 
+/*!
+    \internal \a event Handles clicked signals from scroll buttons
+*/
 void QLegend::handleScrollButtonClicked(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event);    // Maybe later somethin happens with right click...
+    Q_UNUSED(event);    // Maybe later something happens with right click...
 
-    // TODO: detect sender object. scroll to appropiate direction.
     LegendScrollButton* scrollButton = static_cast<LegendScrollButton*> (sender());
     Q_ASSERT(scrollButton);
 
@@ -201,13 +297,13 @@ void QLegend::handleScrollButtonClicked(QGraphicsSceneMouseEvent *event)
     case LegendScrollButton::ScrollButtonIdUp: {
         // Lower limit is same in these cases
         mFirstMarker--;
-        checkMarkerBounds();
+        checkFirstMarkerBounds();
         break;
     }
     case LegendScrollButton::ScrollButtonIdRight:
     case LegendScrollButton::ScrollButtonIdDown: {
         mFirstMarker++;
-        checkMarkerBounds();
+        checkFirstMarkerBounds();
         break;
     }
     default: {
@@ -217,6 +313,10 @@ void QLegend::handleScrollButtonClicked(QGraphicsSceneMouseEvent *event)
     updateLayout();
 }
 
+/*!
+    \internal Connects the \a series to legend. Legend listens changes in series, for example pie slices added / removed.
+    Not all series notify about events
+*/
 void QLegend::connectSeries(QSeries *series)
 {
     // Connect relevant signals from series
@@ -263,6 +363,9 @@ void QLegend::connectSeries(QSeries *series)
     }
 }
 
+/*!
+    \internal Disconnects \a series from legend. No more status updates from series to legend.
+*/
 void QLegend::disconnectSeries(QSeries *series)
 {
     // Connect relevant signals from series
@@ -309,6 +412,11 @@ void QLegend::disconnectSeries(QSeries *series)
     }
 }
 
+/*!
+    \internal Creates new markers for \a series. Marker contains the colored rectangle and series name.
+    With pie chart, created markers depend on pie slices.
+    With bar chart, created markers depend on bar sets.
+*/
 void QLegend::createMarkers(QSeries *series)
 {
     switch (series->type())
@@ -368,10 +476,14 @@ void QLegend::createMarkers(QSeries *series)
     }
 }
 
+/*!
+    \internal Helper function. Appends markers from \a series to legend.
+*/
 void QLegend::appendMarkers(QXYSeries* series)
 {
     LegendMarker* marker = new LegendMarker(series,this);
     marker->setName(series->name());
+    marker->setPen(series->pen());
     marker->setBrush(series->brush());
     connect(marker,SIGNAL(clicked(QSeries*,Qt::MouseButton)),this,SIGNAL(clicked(QSeries*,Qt::MouseButton)));
     connect(marker,SIGNAL(destroyed()),this,SLOT(handleMarkerDestroyed()));
@@ -379,11 +491,15 @@ void QLegend::appendMarkers(QXYSeries* series)
     childItems().append(marker);
 }
 
+/*!
+    \internal Helper function. Appends markers from  \a series to legend.
+*/
 void QLegend::appendMarkers(QBarSeries *series)
 {
     foreach(QBarSet* s, series->barSets()) {
         LegendMarker* marker = new LegendMarker(series,s,this);
         marker->setName(s->name());
+        marker->setPen(s->pen());
         marker->setBrush(s->brush());
         connect(marker,SIGNAL(clicked(QBarSet*,Qt::MouseButton)),this,SIGNAL(clicked(QBarSet*,Qt::MouseButton)));
         connect(s,SIGNAL(valueChanged()),marker,SLOT(changed()));
@@ -393,11 +509,15 @@ void QLegend::appendMarkers(QBarSeries *series)
     }
 }
 
+/*!
+    \internal Helper function. Appends markers from  \a series to legend.
+*/
 void QLegend::appendMarkers(QPieSeries *series)
 {
     foreach(QPieSlice* s, series->slices()) {
         LegendMarker* marker = new LegendMarker(series,s,this);
         marker->setName(s->label());
+        marker->setPen(s->slicePen());
         marker->setBrush(s->sliceBrush());
         connect(marker,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)),this,SIGNAL(clicked(QPieSlice*,Qt::MouseButton)));
         connect(s,SIGNAL(changed()),marker,SLOT(changed()));
@@ -408,6 +528,9 @@ void QLegend::appendMarkers(QPieSeries *series)
     }
 }
 
+/*!
+    \internal Deletes all markers that are created from \a series
+*/
 void QLegend::deleteMarkers(QSeries *series)
 {
     // Search all markers that belong to given series and delete them.
@@ -419,6 +542,11 @@ void QLegend::deleteMarkers(QSeries *series)
     }
 }
 
+/*!
+    \internal Updates layout of legend. Tries to fit as many markers as possible up to the maximum size of legend.
+    If items don't fit, sets the visibility of scroll buttons accordingly.
+    Causes legend to be resized.
+*/
 void QLegend::updateLayout()
 {
     // Calculate layout for markers and text
@@ -426,13 +554,14 @@ void QLegend::updateLayout()
         // Nothing to do
         return;
     }
-    checkMarkerBounds();
 
     // Find out widest item.
     QSizeF markerMaxSize = maximumMarkerSize();
+    checkFirstMarkerBounds();
 
     // Use max height as scroll button size
     rescaleScrollButtons(QSize(markerMaxSize.height() ,markerMaxSize.height()));
+
 
     qreal totalWidth = 0;
     qreal totalHeight = 0;
@@ -447,15 +576,15 @@ void QLegend::updateLayout()
         qreal y = mPos.y() + mMargin;
         int column = 0;
         int maxColumns = 1;
-        qreal scrollButtonPadding = 0;
+        qreal scrollButtonWidth = 0;
 
         // Set correct visibility for scroll scrollbuttons
         if (scrollButtonsVisible()) {
             mScrollButtonLeft->setVisible(true);
             mScrollButtonRight->setVisible(true);
             totalWidth += (mScrollButtonLeft->boundingRect().width() + mMargin) * 2;   // scrollbuttons visible, so add their width to total width
-            x += mScrollButtonLeft->boundingRect().width() + mMargin;                  // start position changes by scrollbutton width
-            scrollButtonPadding = mScrollButtonLeft->boundingRect().width();
+            scrollButtonWidth = mScrollButtonLeft->boundingRect().width() + mMargin;
+            x += scrollButtonWidth;                  // start position changes by scrollbutton width
         } else {
             mScrollButtonLeft->setVisible(false);
             mScrollButtonRight->setVisible(false);
@@ -469,7 +598,7 @@ void QLegend::updateLayout()
                 // Markers before first are not visible.
                 m->setVisible(false);
             } else {
-                if ((x + xStep + scrollButtonPadding) > (mPos.x() + mMaximumSize.width())) {
+                if ((x + xStep + scrollButtonWidth + mMargin) > (mPos.x() + mMaximumSize.width())) {
                     // This marker would go outside legend rect.
                     m->setVisible(false);
                 } else {
@@ -499,15 +628,15 @@ void QLegend::updateLayout()
         qreal y = mPos.y() + mMargin;
         int row = 1;
         int maxRows = 1;
-        qreal scrollButtonPadding = 0;
+        qreal scrollButtonHeight = 0;
 
         // Set correct visibility for scroll scrollbuttons
         if (scrollButtonsVisible()) {
             mScrollButtonUp->setVisible(true);
             mScrollButtonDown->setVisible(true);
             totalHeight += (mScrollButtonUp->boundingRect().height() + mMargin) * 2;   // scrollbuttons visible, so add their height to total height
-            y += mScrollButtonUp->boundingRect().height() + mMargin;                  // start position changes by scrollbutton height
-            scrollButtonPadding = mScrollButtonUp->boundingRect().height();
+            scrollButtonHeight = mScrollButtonUp->boundingRect().height();
+            y += scrollButtonHeight + mMargin;                                         // start position changes by scrollbutton height
         } else {
             mScrollButtonUp->setVisible(false);
             mScrollButtonDown->setVisible(false);
@@ -521,7 +650,7 @@ void QLegend::updateLayout()
                 // Markers before first are not visible.
                 m->setVisible(false);
             } else {
-                if ((y + yStep + scrollButtonPadding) > (mPos.y() + mMaximumSize.height())) {
+                if ((y + yStep + scrollButtonHeight) > (mPos.y() + mMaximumSize.height())) {
                     // This marker would go outside legend rect.
                     m->setVisible(false);
                 } else {
@@ -539,38 +668,7 @@ void QLegend::updateLayout()
         mScrollButtonDown->setPos(mPos.x() + mMargin, y + mMargin);
 
         totalWidth += markerMaxSize.width() + mMargin * 2;
-        totalHeight = maxRows * markerMaxSize.height() + mMargin * 4 + scrollButtonPadding; // TODO: check this
-
-        /*
-        qreal yStep = markerMaxSize.height();
-        qreal x = mPos.x() + mMargin;
-        qreal y = mPos.y() + mMargin;
-        int row = 0;
-        int maxRows = 1;
-        int maxColumns = 1;
-        for (int i=0; i<mMarkers.count(); i++) {
-            LegendMarker* m = mMarkers.at(i);
-            if (i<mFirstMarker) {
-                // Markers before first are not visible.
-                m->setVisible(false);
-            } else {
-                if ((y + markerMaxSize.height() + mMargin*2) > (mPos.y() + mMaximumSize.height())) {
-                    // This marker would go outside legend rect.
-                    m->setVisible(false);
-                } else {
-                    // This marker is ok
-                    m->setVisible(true);
-                    maxRows = row;
-                    m->setPos(x,y);
-                    y += yStep;
-                    row++;
-                }
-            }
-            maxRows = row;
-        }
-        totalWidth = maxColumns * markerMaxSize.width() + mMargin * 2;
-        totalHeight = maxRows * markerMaxSize.height() + mMargin * 2;
-        */
+        totalHeight = maxRows * markerMaxSize.height() + mMargin * 4 + scrollButtonHeight; // TODO: check this
         break;
     }
     default: {
@@ -584,6 +682,9 @@ void QLegend::updateLayout()
     update();
 }
 
+/*!
+    \internal Sets the size of scroll buttons to \a size
+*/
 void QLegend::rescaleScrollButtons(const QSize &size)
 {
     QPolygonF left;
@@ -601,6 +702,9 @@ void QLegend::rescaleScrollButtons(const QSize &size)
     mScrollButtonDown->setPolygon(down);
 }
 
+/*!
+    \internal Finds out maximum size of single marker. Marker sizes depend on series names.
+*/
 QSizeF QLegend::maximumMarkerSize()
 {
     QSizeF max(0,0);
@@ -615,13 +719,17 @@ QSizeF QLegend::maximumMarkerSize()
     return max;
 }
 
-void QLegend::checkMarkerBounds()
+/*!
+    \internal Checks that first marker is in acceptable bounds. Bounds range from 0 to (maximum number of markers - visible markers)
+    If scrollbuttons are visible, they affect the number of visible markers.
+*/
+void QLegend::checkFirstMarkerBounds()
 {
     if ((mPreferredLayout == QLegend::PreferredLayoutLeft) || (mPreferredLayout == QLegend::PreferredLayoutRight)) {
-        // Bounds limited by height
+        // Bounds limited by height.
         int max;
         if (scrollButtonsVisible()) {
-            max = (mMaximumSize.height() - mScrollButtonLeft->boundingRect().height() * 2 - mMargin*2) / maximumMarkerSize().height();
+            max = (mMaximumSize.height() - mScrollButtonLeft->boundingRect().height() * 2 - mMargin*4) / maximumMarkerSize().height();
         } else {
             max = mMaximumSize.height() / maximumMarkerSize().height();
         }
@@ -633,7 +741,7 @@ void QLegend::checkMarkerBounds()
         // Bounds limited by width
         int max;
         if (scrollButtonsVisible()) {
-            max = (mMaximumSize.width() - mScrollButtonLeft->boundingRect().width() * 2 - mMargin*2) / maximumMarkerSize().width();
+            max = (mMaximumSize.width() - mScrollButtonLeft->boundingRect().width() * 2 - mMargin*4) / maximumMarkerSize().width();
         } else {
             max = mMaximumSize.width() / maximumMarkerSize().width();
         }
@@ -648,13 +756,19 @@ void QLegend::checkMarkerBounds()
     }
 }
 
+/*!
+    \internal Helper function. Visibility of scroll buttons isn't quite obvious, so helper function clarifies the logic.
+*/
 bool QLegend::scrollButtonsVisible()
 {
     // Just a helper to clarify, what the magic below means :)
     if ((mPreferredLayout == QLegend::PreferredLayoutTop) || (mPreferredLayout == QLegend::PreferredLayoutBottom)) {
-        return (maximumMarkerSize().width() * mMarkers.count() + mMargin * 3 > mMaximumSize.width());
+        return (maximumMarkerSize().width() * mMarkers.count() + mMargin * 2 > mMaximumSize.width());
+    } else if ((mPreferredLayout == QLegend::PreferredLayoutLeft) || (mPreferredLayout == QLegend::PreferredLayoutRight)) {
+        return (maximumMarkerSize().height() * mMarkers.count() + mMargin * 2 > mMaximumSize.height());
     }
-    return (maximumMarkerSize().height() * mMarkers.count() + mMargin * 3 > mMaximumSize.height());
+
+    return (maximumMarkerSize().height() * mMarkers.count() + mMargin * 2 > mMaximumSize.height());
 }
 
 #include "moc_qlegend.cpp"

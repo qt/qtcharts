@@ -60,6 +60,16 @@ void LegendMarker::setPos(qreal x, qreal y)
     layoutChanged();
 }
 
+void LegendMarker::setPen(const QPen pen)
+{
+    mPen = pen;
+}
+
+QPen LegendMarker::pen() const
+{
+    return mPen;
+}
+
 void LegendMarker::setBrush(const QBrush brush)
 {
     mBrush = brush;
@@ -91,6 +101,7 @@ void LegendMarker::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
+    painter->setPen(mPen);
     painter->setBrush(mBrush);
     painter->drawRect(mMarkerBoundingRect);
 }
@@ -112,7 +123,7 @@ void LegendMarker::layoutChanged()
 
     mMarkerBoundingRect = QRectF(mPos.x() + margin, mPos.y() + margin, markerSize.width(),markerSize.height());
 
-    mTextItem.setPos(mPos.x() + markerSize.width() + 2 * margin, mPos.y() + margin );
+    mTextItem.setPos(mPos.x() + markerSize.width() + 2 * margin, mPos.y() + margin);
 }
 
 void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -45,6 +45,7 @@ public:
     QSizeF maximumSize() const;
     void setMaximumSize(const QSizeF size);
 
+    QSizeF size() const;
     void setSize(const QSizeF size);
     void setPos(const QPointF &pos);
 
@@ -55,12 +56,14 @@ signals:
     void clicked(QPieSlice* slice, Qt::MouseButton button);
 
 public slots:
+    // PIMPL --->
     void handleSeriesAdded(QSeries* series,Domain* domain);
     void handleSeriesRemoved(QSeries* series);
     void handleAdded(QList<QPieSlice*> slices);
     void handleRemoved(QList<QPieSlice*> slices);
     void handleMarkerDestroyed();
     void handleScrollButtonClicked(QGraphicsSceneMouseEvent* event);
+    // PIMPL <---
 
 private:
     // PIMPL --->
@@ -71,13 +74,11 @@ private:
     void appendMarkers(QBarSeries* series);
     void appendMarkers(QPieSeries* series);
     void deleteMarkers(QSeries* series);
-//    void layoutChanged();   // This tries to fit all items to legend
-    void updateLayout();    // New version of layout. Fits items only to row or column and adds scrollbars.
+    void updateLayout();
     void rescaleScrollButtons(const QSize& size);
     QSizeF maximumMarkerSize();
-    void checkMarkerBounds();
+    void checkFirstMarkerBounds();
     bool scrollButtonsVisible();
-//    void updateScrollButtonsLayout();
 
     QPointF mPos;
     QSizeF mSize;

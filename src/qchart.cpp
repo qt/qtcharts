@@ -350,19 +350,20 @@ void QChart::updateLegendLayout()
     switch (m_legend->preferredLayout())
     {
     case QLegend::PreferredLayoutTop:{
-        legendRect = m_rect.adjusted(m_padding,0,-m_padding,-m_padding - plotRect.height());
+//        legendRect = plotRect.adjusted(m_padding,0,-m_padding,-m_padding - plotRect.height());
+        legendRect = plotRect.adjusted(0,0,0,-m_padding - plotRect.height());
         break;
     }
     case QLegend::PreferredLayoutBottom: {
-        legendRect = m_rect.adjusted(m_padding,m_padding + plotRect.height(),-m_padding,0);
+        legendRect = plotRect.adjusted(m_padding,m_padding + plotRect.height(),-m_padding,0);
         break;
     }
     case QLegend::PreferredLayoutLeft: {
-        legendRect = m_rect.adjusted(0,m_padding,-m_padding - plotRect.width(),-m_padding);
+        legendRect = plotRect.adjusted(0,m_padding,-m_padding - plotRect.width(),-m_padding);
         break;
     }
     case QLegend::PreferredLayoutRight: {
-        legendRect = m_rect.adjusted(m_padding + plotRect.width(),m_padding,0,-m_padding);
+        legendRect = plotRect.adjusted(m_padding + plotRect.width(),m_padding,0,-m_padding);
         break;
     }
     default: {
