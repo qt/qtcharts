@@ -48,17 +48,18 @@
 */
 
 /*!
-    \fn void QSeries::setTitle(QString title)
-    \brief Sets a \a title for the series.
+    \fn void QSeries::setName(QString name)
+    \brief Sets a \a name for the series.
 
-    This is not used directly by the chart itself. It is up to the user to use this as for example
-    chart title.
-    \sa QChart::setChartTitle()
+    The name of a series is shown in the legend for QXYSeries.
+    \sa QChart::setTitle()
+    \sa QPieSlice::setName()
+    \sa QBarSet::setName()
 */
 
 /*!
-    \fn QString QSeries::title()
-    \brief Returns the title of the series.
+    \fn QString QSeries::name()
+    \brief Returns the name of the series.
 */
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

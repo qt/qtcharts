@@ -29,18 +29,16 @@ protected:
 public:
     virtual ~QSeries() {}
     virtual QSeriesType type() const = 0;
-    QString name() { return QString("TODO: Name QSeries"); }
     // TODO
     virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
-
-    void setTitle(QString title) { m_title = title; }
-    QString title() { return m_title; }
+    void setName(QString name) { m_name = name; }
+    QString name() { return m_name; }
 
 protected:
     QAbstractItemModel* m_model;
 
 private:
-    QString m_title;
+    QString m_name;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
