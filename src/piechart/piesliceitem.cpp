@@ -107,7 +107,10 @@ void PieSliceItem::updateGeometry()
     m_labelTextRect.moveBottomLeft(labelTextStart);
 
     // update bounding rect
-    m_boundingRect = m_slicePath.boundingRect().united(m_labelArmPath.boundingRect()).united(m_labelTextRect);
+    if (m_data.m_isLabelVisible)
+        m_boundingRect = m_slicePath.boundingRect().united(m_labelArmPath.boundingRect()).united(m_labelTextRect);
+    else
+        m_boundingRect = m_slicePath.boundingRect();
 }
 
 QPointF PieSliceItem::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
