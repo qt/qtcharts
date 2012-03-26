@@ -20,47 +20,11 @@ Rectangle {
 //    }
 
     Component.onCompleted: {
-        console.log("model: " + myModel);
 //        console.log("model:" + myModel.item(0));
 //        myModel.insert(1, {"time":1.4; "speed":41.1 });
 //        scatter.appendData();
     }
 
-    ListModel {
-        ListElement {
-            time: 0.0
-            speed: 45.2
-        }
-    }
-    ChartTableModel {
-        id: myModel
-
-//        ListElement {
-//            time: 0.0
-//            speed: 45.2
-//        }
-//        ListElement {
-//            time: 0.5
-//            speed: 48.9
-//        }
-//        ListElement {
-//            time: 1.1
-//            speed: 42.6
-//        }
-
-//        ChartTableElement {
-//            time: 0.0
-//            speed: 45.2
-//        }
-//        ChartTableElement {
-//            time: 0.5
-//            speed: 48.9
-//        }
-//        ChartTableElement {
-//            time: 1.1
-//            speed: 42.6
-//        }
-    }
 
     Chart {
         id: chart1
@@ -70,13 +34,7 @@ Rectangle {
         height: parent.height / 2
         theme: Chart.ThemeBlueCerulean
 
-//        BarSeries {
-//        }
-
-        ScatterSeries {
-            model: myModel
-//            xColumn: time
-//            yColumn: speed
+        BarSeries {
         }
 
 //        PieSeries {

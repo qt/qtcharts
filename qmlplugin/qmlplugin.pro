@@ -28,16 +28,14 @@ SOURCES += \
     declarativexypoint.cpp \
     declarativepieseries.cpp \
     declarativelineseries.cpp \
-    declarativebarseries.cpp \
-    declarativetablemodel.cpp
+    declarativebarseries.cpp
 HEADERS += \
     declarativechart.h \
     declarativescatterseries.h \
     declarativexypoint.h \
     declarativepieseries.h \
     declarativelineseries.h \
-    declarativebarseries.h \
-    declarativetablemodel.h
+    declarativebarseries.h
 
 TARGETPATH = QtCommercial/Chart
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
