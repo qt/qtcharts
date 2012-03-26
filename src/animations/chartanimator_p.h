@@ -20,7 +20,6 @@ class ChartAnimator : public QObject {
 
 public:
 	enum State{ShowState, ScrollUpState, ScrollDownState, ScrollLeftState,ScrollRightState,ZoomInState,ZoomOutState};
-	Q_DECLARE_FLAGS(States, State);
 
     ChartAnimator(QObject *parent = 0);
     virtual ~ChartAnimator();

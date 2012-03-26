@@ -19,7 +19,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 const static int duration = 1000;
 
-ChartAnimator::ChartAnimator(QObject *parent):QObject(parent)
+ChartAnimator::ChartAnimator(QObject *parent):QObject(parent),m_state(ShowState)
 {
 }
 
