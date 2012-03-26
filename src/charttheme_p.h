@@ -64,6 +64,7 @@ protected:
     QLinearGradient m_chartBackgroundGradient;
 
     QFont m_masterFont;
+    QFont m_labelFont;
     QBrush m_titleBrush;
     QPen m_axisLinePen;
     QBrush m_axisLabelBrush;

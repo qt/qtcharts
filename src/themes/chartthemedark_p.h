@@ -23,7 +23,6 @@ public:
         m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_masterFont = QFont("arial");
         m_titleBrush = QBrush(QRgb(0xffffff));
         m_axisLinePen = QPen(QRgb(0x86878c));
         m_axisLinePen.setWidth(2);

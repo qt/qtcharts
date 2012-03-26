@@ -41,7 +41,8 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartTheme::ChartTheme(QChart::ChartTheme id) :
-    m_masterFont(QFont()),
+    m_masterFont(QFont("arial", 12)),
+    m_labelFont(QFont("arial", 10)),
     m_titleBrush(QColor(QRgb(0x000000))),
     m_axisLinePen(QPen(QRgb(0x000000))),
     m_axisLabelBrush(QColor(QRgb(0x000000))),
@@ -227,7 +228,7 @@ void ChartTheme::decorate(QPieSeries* series, int index, bool force)
         }
 
         if (data.m_labelFont.isThemed() || force) {
-            data.m_labelFont = m_masterFont;
+            data.m_labelFont = m_labelFont;
             data.m_labelFont.setThemed(true);
         }
 
@@ -291,7 +292,7 @@ void ChartTheme::decorate(QChartAxis* axis,bool axisX, bool force)
         }
 
         if(font == axis->labelsFont() || force){
-            axis->setLabelsFont(m_masterFont);
+            axis->setLabelsFont(m_labelFont);
         }
     }
 }
