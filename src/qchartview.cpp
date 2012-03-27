@@ -65,11 +65,8 @@ QChartView::~QChartView()
 */
 void QChartView::resizeEvent(QResizeEvent *event)
 {
-    // If the scene rect is the size of the view, you will get scrolling effect at least on OSX;
-    // i.e. you are able to move the chart inside the view a couple of pixels by mouse flicking
-    m_scene->setSceneRect(0, 0, size().width() - 2, size().height() - 2);
     m_chart->resize(size());
-    QWidget::resizeEvent(event);
+    QGraphicsView::resizeEvent(event);
 }
 
 /*!
