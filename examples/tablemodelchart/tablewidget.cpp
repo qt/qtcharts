@@ -11,6 +11,7 @@
 #include "qbarseries.h"
 #include <QPushButton>
 #include <QRadioButton>
+#include <QSpinBox>
 #include <QTime>
 
 TableWidget::TableWidget(QWidget *parent)
@@ -53,8 +54,13 @@ TableWidget::TableWidget(QWidget *parent)
     QPushButton* removeRowButton = new QPushButton("Remove row");
     connect(removeRowButton, SIGNAL(clicked()), this, SLOT(removeRow()));
 
+    linesCountSpinBox = new QSpinBox;
+    linesCountSpinBox->setRange(1, 10);
+    linesCountSpinBox->setValue(1);
+
     // buttons layout
     QVBoxLayout* buttonsLayout = new QVBoxLayout;
+    buttonsLayout->addWidget(linesCountSpinBox);
     buttonsLayout->addWidget(addRowAboveButton);
     buttonsLayout->addWidget(addRowBelowButton);
     buttonsLayout->addWidget(removeRowButton);
@@ -99,21 +105,24 @@ TableWidget::TableWidget(QWidget *parent)
 void TableWidget::addRowAbove()
 {
 //    m_model->insertRow(m_model->rowCount());
-    m_model->insertRow(tableView->currentIndex().row());
+//    m_model->insertRow(tableView->currentIndex().row());
+    m_model->insertRows(tableView->currentIndex().row(), linesCountSpinBox->value());
 
 }
 
 void TableWidget::addRowBelow()
 {
 //    m_model->insertRow(m_model->rowCount());
-    m_model->insertRow(tableView->currentIndex().row() + 1);
+//    m_model->insertRow(tableView->currentIndex().row() + 1);
+    m_model->insertRows(tableView->currentIndex().row() + 1, linesCountSpinBox->value());
 
 }
 
 void TableWidget::removeRow()
 {
 //    m_model->removeRow(m_model->rowCount() - 1);
-    m_model->removeRow(tableView->currentIndex().row());
+//    m_model->removeRow(tableView->currentIndex().row());
+    m_model->removeRows(tableView->currentIndex().row(), qMin(m_model->rowCount() - tableView->currentIndex().row(), linesCountSpinBox->value()));
 }
 
 void TableWidget::updateChartType()
@@ -122,21 +131,46 @@ void TableWidget::updateChartType()
 
     if (lineRadioButton->isChecked())
     {
+        QPen pen;
+        pen.setWidth(2);
+
+        QColor seriesColor("#8FBC8F");
+
         // series 1
         series = new QLineSeries;
         series->setModel(m_model);
         series->setModelMapping(0,1, Qt::Vertical);
         series->setModelMappingShift(1, 4);
 //        series->setModelMapping(0,1, Qt::Horizontal);
+
+        pen.setColor(seriesColor);
+        series->setPen(pen);
         chartView->addSeries(series);
+        for (int i = 1; i <=4; i++)
+        {
+            m_model->setData(m_model->index(i, 0), seriesColor  , Qt::BackgroundRole);
+            m_model->setData(m_model->index(i, 1), seriesColor  , Qt::BackgroundRole);
+        }
+//        tableView->setsetStyleSheet("QTableView { border: 2px solid red }");
+
+        seriesColor = QColor("#1E90FF");
 
         // series 2
         series = new QLineSeries;
         series->setModel(m_model);
         series->setModelMapping(2,3, Qt::Vertical);
 //        series->setModelMapping(2,3, Qt::Horizontal);
+        pen.setColor(seriesColor);
+        series->setPen(pen);
         chartView->addSeries(series);
 
+        chartView->axisX()->setRange(0, 500);
+
+        for (int i = 0; i < m_model->rowCount(); i++)
+        {
+            m_model->setData(m_model->index(i, 2), seriesColor  , Qt::BackgroundRole);
+            m_model->setData(m_model->index(i, 3), seriesColor  , Qt::BackgroundRole);
+        }
 //        // series 3
 //        series = new QLineSeries;
 //        series->setModel(m_model);
@@ -158,6 +192,7 @@ void TableWidget::updateChartType()
         series = new QSplineSeries;
         series->setModel(m_model);
         series->setModelMapping(2,3, Qt::Vertical);
+        series->setModelMappingShift(0, 0);
 //        series->setModelMapping(2,3, Qt::Horizontal);
         chartView->addSeries(series);
 
@@ -165,6 +200,7 @@ void TableWidget::updateChartType()
         series = new QSplineSeries;
         series->setModel(m_model);
         series->setModelMapping(4,5, Qt::Vertical);
+        series->setModelMappingShift(0, 0);
 //        series->setModelMapping(4,5, Qt::Horizontal);
         chartView->addSeries(series);
     }

@@ -330,8 +330,10 @@ void QXYSeries::modelDataAboutToBeAdded(QModelIndex parent, int start, int end)
             // check how many mapped items there is currently (before new items are added)
             // if the number of items currently is equal the m_mapCount then some needs to be removed from xychartitem
             // internal storage before new ones can be added
+
+            int itemsToRemove = qMin(count() - (start - m_mapFirst), end - start + 1);
             if (m_mapCount == count())
-                for (int i = 0; i < qMin(count(), end - start + 1); i++)
+                for (int i = 0; i < itemsToRemove; i++)
                     emit pointRemoved(count() - 1 - i);
         }
     }
@@ -359,7 +361,7 @@ void QXYSeries::modelDataAdded(QModelIndex parent, int start, int end)
             // the added data is in the mapped area or before it
             // update needed
             if (count() > 0)
-                for (int i = 0; i < qMin(m_mapCount, end - start + 1); i++)
+                for (int i = 0; i < qMin(m_mapCount - (start - m_mapFirst), end - start + 1); i++)
                     emit pointAdded(qMax(start + i - m_mapFirst, 0));
         }
     }
@@ -386,12 +388,12 @@ void QXYSeries::modelDataAboutToBeRemoved(QModelIndex parent, int start, int end
         {
             // the removed data is in the mapped area or before it
             // update needed
-            int itemsToRemove = qMin(count(), end - start + 1);
-            tempItemsRemoved = itemsToRemove;
-            int z = count();
-            z = z;
-            //            if (itemsToRemove > 0)
-            //            {
+
+            // check how many items need to be removed from the xychartitem storage
+            // the number equals the number of items that are removed and that lay before
+            // or in the mapped area. Items that lay beyond the map do not count
+            // the max is the current number of items in storage (count())
+            int itemsToRemove = qMin(count(), qMin(end, m_mapFirst + m_mapCount - 1) - start + 1);
             for (int i = 0; i < itemsToRemove; i++)
                 emit pointRemoved(qMax(start - m_mapFirst, 0));
         }
@@ -419,29 +421,29 @@ void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
             // therefore it has no relevance
             return;
         else
-        {
-            // if there are excess items available (below the map) use them to repopulate mapped area
+        {   
+            // if the current items count in the whole model is bigger than the index of the last item
+            // that was removed than it means there are some extra items available
             int extraItemsAvailable = 0;
             if (m_mapOrientation == Qt::Vertical)
             {
-                extraItemsAvailable = qMax(m_model->rowCount() - m_mapFirst, 0);
+                extraItemsAvailable = qMax(m_model->rowCount() - end, 0);
             }
             else
             {
-                extraItemsAvailable = qMax(m_model->columnCount() - m_mapFirst, 0);
+                extraItemsAvailable = qMax(m_model->columnCount() - end, 0);
             }
 
-            //            int extraItemsNeeded = qMin(extraItemsAvailable, tempItemsRemoved);
-            for (int k = 0; k < tempItemsRemoved; k++)
-                if (start - m_mapFirst + k < extraItemsAvailable)
-                {
-                        emit pointAdded(count() - m_mapFirst + k);
-                }
+            // if there are excess items available (below the mapped area) use them to repopulate mapped area
+            int removedItemsCount = qMin(count(), qMin(end, m_mapFirst + m_mapCount - 1) - qMax(start, m_mapFirst) + 1);
+            int toBeAdded = qMin(extraItemsAvailable, removedItemsCount);
+            for (int k = 0; k < toBeAdded; k++)
+                emit pointAdded(qMax(start - m_mapFirst, m_mapFirst) + k);
         }
     }
     else
     {
-        //        emit pointRemoved(qMax(start - m_mapFirst, 0));
+        // data was removed from XYSeries interal storage. Nothing more to do
     }
 }
 

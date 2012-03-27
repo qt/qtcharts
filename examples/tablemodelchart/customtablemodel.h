@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 #include <QPointF>
 #include <QStringList>
+#include <QColor>
 
 class CustomTableModel : public QAbstractTableModel
 {
@@ -25,6 +26,7 @@ public:
     //public slots:
 private:
     QList<QVector<qreal>* > m_data;
+    QList<QVector<QColor>* > m_rowsColors;
     QList<QPointF> m_points;
     QStringList m_labels;
 

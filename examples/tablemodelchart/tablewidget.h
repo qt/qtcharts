@@ -10,6 +10,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 class CustomTableModel;
 class QTableView;
 class QRadioButton;
+class QSpinBox;
 //class QSeries;
 
 class TableWidget : public QWidget
@@ -38,6 +39,7 @@ public:
     QRadioButton* pieRadioButton;
     QRadioButton* areaRadioButton;
     QRadioButton* barRadioButton;
+    QSpinBox* linesCountSpinBox;
 };
 
 #endif // TABLEWIDGET_H

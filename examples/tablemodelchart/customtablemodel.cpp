@@ -24,13 +24,18 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     for (int i = 0; i < 6; i++)
     {
         QVector<qreal>* dataVec = new QVector<qreal>(6);
+        QVector<QColor>* colorVec = new QVector<QColor>(6);
         for (int k = 0; k < dataVec->size(); k++)
+        {
             if (k%2 == 0)
                 dataVec->replace(k, i * 50 + qrand()%20);
             else
                 dataVec->replace(k, qrand()%100);
+            colorVec->replace(k, QColor(Qt::white));
+        }
         m_data.append(dataVec);
         m_labels.append(QString("Row: %1").arg((i + 1)));
+        m_rowsColors.append(colorVec);
     }
 }
 
@@ -110,6 +115,10 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
             break;
         }
     }
+    else if (role == Qt::BackgroundRole)
+        {
+            return m_rowsColors[index.row()]->at(index.column());
+        }
     return QVariant();
 }
 
@@ -137,6 +146,11 @@ bool CustomTableModel::setData ( const QModelIndex & index, const QVariant & val
         emit dataChanged(index, index);
         return true;
     }
+    else if (role == Qt::BackgroundRole)
+        {
+            m_rowsColors[index.row()]->replace(index.column(), value.value<QColor>());
+            return true;
+        }
     return false;
 }
 
@@ -157,36 +171,43 @@ bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & pare
     for (int i = row; i < row + count; i++)
     {
         //        m_points.insert(row, QPointF(10,20));
-        QVector<qreal>* dataVec = new QVector<qreal>(6);
+        QVector<qreal>* dataVec = new QVector<qreal>(6);        
+        QVector<QColor>* colorVec = new QVector<QColor>(6);
         for (int k = 0; k < dataVec->size(); k++)
+        {
             if (k%2 == 0)
                 //                dataVec->replace(k, i * 50 + qrand()%20);
             {
                 int difference = 0;
-                if (row < m_data.size())
+                if (i < m_data.size())
                 {
-                    if (row - 1 >= 0)
+                    if (i - 1 >= 0)
                     {
-                        difference = (int)(qAbs(m_data[row]->at(k) - m_data[row - 1]->at(k)));
-                        dataVec->replace(k, m_data[row - 1]->at(k) + qrand()%qMax(1, difference));
+                        difference = (int)((qAbs(m_data[i]->at(k) - m_data[row - 1]->at(k)))/count);
+                        dataVec->replace(k, m_data[i - 1]->at(k) + qrand()%qMax(1, difference));
                     }
                     else
                         dataVec->replace(k, qrand()%40 + 10);
                 }
                 else
-                    if (row - 1 >= 0)
+                {
+                    if (i - 1 >= 0)
                     {
-                        dataVec->replace(k, m_data[row - 1]->at(k) + qrand()%40 + 10);
+                        dataVec->replace(k, m_data[i - 1]->at(k) + qrand()%40 + 10);
                     }
                     else
                     {
                         dataVec->replace(k, qrand()%40 + 10);
                     }
+                }
             }
             else
                 dataVec->replace(k, qrand()%100);
-        m_data.insert(row, dataVec);
-        m_labels.insert(row,(QString("Row: %1").arg(row + 1)));
+            colorVec->replace(k, QColor(Qt::white));
+        }
+        m_data.insert(i, dataVec);
+        m_labels.insert(i,(QString("Row: %1").arg(i + 1)));
+        m_rowsColors.insert(i, colorVec);
     }
     endInsertRows();
     return true;
