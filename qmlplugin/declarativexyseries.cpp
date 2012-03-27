@@ -1,4 +1,5 @@
-#include "DeclarativeXySeries.h"
+//#include "DeclarativeXySeries.h"
+#include "declarativexyseries.h"
 #include "declarativechart.h"
 #include "qchart.h"
 #include "qxyseries.h"
