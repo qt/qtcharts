@@ -48,7 +48,7 @@ public:
             removeSeries(m_currentSeries);
         m_currentSeries = series;
         addSeries(series);
-        setChartTitle(series->title());
+        setChartTitle(series->name());
     }
 
 public Q_SLOTS:
@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
     //! [4]
     // Create drilldown structure
     DrilldownBarSeries* seasonSeries = new DrilldownBarSeries(months, drilldownChart);
-    seasonSeries->setTitle("Crop by month - Season");
+    seasonSeries->setName("Crop by month - Season");
 
     // Each month in season series has drilldown series for weekly data
     foreach (QString month, months) {
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
         // Drilling down from weekly data brings us back to season data.
         foreach (QString week, weeks) {
             weeklySeries->mapDrilldownSeries(week, seasonSeries);
-            weeklySeries->setTitle(QString("Crop by week - " + month));
+            weeklySeries->setName(QString("Crop by week - " + month));
         }
 
         // Use right click signal to implement drilldown
@@ -134,7 +134,7 @@ int main(int argc, char *argv[])
     //! [6]
     // Show season series in initial view
     drilldownChart->changeSeries(seasonSeries);
-    drilldownChart->setChartTitle(seasonSeries->title());
+    drilldownChart->setChartTitle(seasonSeries->name());
     //! [6]
 
     drilldownChart->axisX()->setGridLineVisible(false);

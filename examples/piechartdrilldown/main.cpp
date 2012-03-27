@@ -53,7 +53,7 @@ public:
             removeSeries(m_currentSeries);
         m_currentSeries = series;
         addSeries(series);
-        setChartTitle(series->title());
+        setChartTitle(series->name());
     }
 
 public Q_SLOTS:
@@ -81,7 +81,7 @@ int main(int argc, char *argv[])
     drilldownChart->setAnimationOptions(QChart::AllAnimations);
 
     QPieSeries* yearSeries = new QPieSeries(&window);
-    yearSeries->setTitle("Sales by year - All");
+    yearSeries->setName("Sales by year - All");
 
     QList<QString> months;
     months << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
@@ -90,7 +90,7 @@ int main(int argc, char *argv[])
 
     foreach (QString name, names) {
         QPieSeries* series = new QPieSeries(&window);
-        series->setTitle("Sales by month - " + name);
+        series->setName("Sales by month - " + name);
 
         foreach (QString month, months)
             *series << new DrilldownSlice(qrand() % 1000, month, yearSeries);
