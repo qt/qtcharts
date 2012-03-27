@@ -1,23 +1,32 @@
 TEMPLATE = subdirs
-SUBDIRS += linechart \
-           zoomlinechart \
-           colorlinechart \
-           barchart \
-           stackedbarchart \
-           percentbarchart \
-           scatterchart \
-           piechart \
-           piechartdrilldown \
-           dynamiclinechart \
-           axischart \
-           multichart \
-           gdpbarchart \
-           presenterchart \
-           chartview \
-           scatterinteractions \
-           splinechart \
+SUBDIRS += \
            areachart \
-           stackedbarchartdrilldown \
-           customcolors \
-           tablemodelchart \
-           ekgchart
+           #axischart \
+           barchart \
+           #chartview \
+           colorlinechart \
+           #customcolors \
+           #dynamiclinechart \
+           #ekgchart \
+           #gdpbarchart \
+           linechart \
+           #multichart \
+           percentbarchart \
+           piechart \
+           #piechartdrilldown \
+           #presenterchart \
+           scatterchart \
+           #scatterinteractions \
+           #splinechart \
+           stackedbarchart \
+           #stackedbarchartdrilldown \
+           #tablemodelchart \
+           zoomlinechart
+          
+          
+          
+          
+          
+          
+          
+          

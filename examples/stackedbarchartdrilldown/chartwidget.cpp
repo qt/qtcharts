@@ -1,6 +1,6 @@
 #include "chartwidget.h"
 
-ChartWidget::ChartWidget(QWidget *parent) :
+ChartView::ChartView(QWidget *parent) :
     QChartView(parent)
 {
 }

@@ -6,11 +6,11 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 
-class ChartWidget : public QChartView
+class ChartView : public QChartView
 {
     Q_OBJECT
 public:
-    explicit ChartWidget(QWidget *parent = 0);
+    explicit ChartView(QWidget *parent = 0);
     
 signals:
     

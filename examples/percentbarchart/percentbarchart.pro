@@ -3,8 +3,5 @@
 }
 
 TARGET = percentbarchart
-SOURCES += main.cpp \
-    chartwidget.cpp
-HEADERS += \
-    chartwidget.h
+SOURCES += main.cpp
 

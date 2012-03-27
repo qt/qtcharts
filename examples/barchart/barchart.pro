@@ -3,8 +3,5 @@
 }
 
 TARGET = barchart
-SOURCES += main.cpp \
-    chartwidget.cpp
-HEADERS += \
-    chartwidget.h
+SOURCES += main.cpp 
 
