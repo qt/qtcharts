@@ -285,9 +285,9 @@ public:
         m_slice(0)
     {
         // create chart
-        m_chartView =  new QChartView();
-        m_chartView->setChartTitle("Piechart customization");
-        m_chartView->setAnimationOptions(QChart::AllAnimations);
+        m_chartView = new QChartView(new QChart());
+        m_chartView->chart()->setTitle("Piechart customization");
+        m_chartView->chart()->setAnimationOptions(QChart::AllAnimations);
 
         // create series
         m_series = new QPieSeries();
@@ -297,7 +297,7 @@ public:
         *m_series << new CustomSlice(40.0, "Slice 4");
         *m_series << new CustomSlice(50.0, "Slice 5");
         m_series->setLabelsVisible();
-        m_chartView->addSeries(m_series);
+        m_chartView->chart()->addSeries(m_series);
 
         connect(m_series, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), this, SLOT(handleSliceClicked(QPieSlice*, Qt::MouseButtons)));
 
@@ -449,13 +449,13 @@ public Q_SLOTS:
     void updateChartSettings()
     {
         QChart::ChartTheme theme = (QChart::ChartTheme) m_themeComboBox->itemData(m_themeComboBox->currentIndex()).toInt();
-        m_chartView->setChartTheme(theme);
+        m_chartView->chart()->setTheme(theme);
         m_chartView->setRenderHint(QPainter::Antialiasing, m_aaCheckBox->isChecked());
 
         if (m_animationsCheckBox->checkState() == Qt::Checked)
-            m_chartView->setAnimationOptions(QChart::AllAnimations);
+            m_chartView->chart()->setAnimationOptions(QChart::AllAnimations);
         else
-            m_chartView->setAnimationOptions(QChart::NoAnimation);
+            m_chartView->chart()->setAnimationOptions(QChart::NoAnimation);
     }
 
     void updateSerieSettings()
