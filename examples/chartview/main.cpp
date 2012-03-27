@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     chartView->setChartTitle("\'Scietific\' theme");
     //! [2]
     // Change theme
-    chartView->setChartTheme(QChart::ChartThemeScientific);
+    chartView->setChartTheme(QChart::ChartThemeHighContrast);
     //! [2]
 
     chartView->setChartTitle("Simple Pie Chart");

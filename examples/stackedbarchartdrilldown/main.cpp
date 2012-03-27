@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     QMainWindow window;
 
     DrilldownChart* drilldownChart =  new DrilldownChart(&window);
-    drilldownChart->setChartTheme(QChart::ChartThemeIcy);
+    drilldownChart->setChartTheme(QChart::ChartThemeBlueIcy);
 
     //! [3]
     // Define categories

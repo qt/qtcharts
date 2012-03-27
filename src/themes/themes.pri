@@ -8,5 +8,5 @@ THEMES += \
     $$PWD/chartthemedark_p.h \
     $$PWD/chartthemebrownsand_p.h \
     $$PWD/chartthemebluencs_p.h \
-    $$PWD/chartthemeicy_p.h \
-    $$PWD/chartthemescientific_p.h
+    $$PWD/chartthemehighcontrast_p.h \
+    $$PWD/chartthemeblueicy_p.h

@@ -120,8 +120,8 @@ void MainWidget::initThemeCombo(QGridLayout *grid)
     chartTheme->addItem("Dark");
     chartTheme->addItem("Brown Sand");
     chartTheme->addItem("Blue NCS");
-    chartTheme->addItem("Icy");
-    chartTheme->addItem("Scientific");
+    chartTheme->addItem("High Contrast");
+    chartTheme->addItem("Blue Icy");
     connect(chartTheme, SIGNAL(currentIndexChanged(int)),
             this, SLOT(changeChartTheme(int)));
     grid->addWidget(new QLabel("Chart theme:"), 8, 0);

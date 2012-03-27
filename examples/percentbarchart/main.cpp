@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
     series->addBarSet(set2);
     series->addBarSet(set3);
     series->addBarSet(set4);
-//! [3]
+//![3]
 //![4]
     QChart* chart = new QChart();
     chart->addSeries(series);

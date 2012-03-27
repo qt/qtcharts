@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Create chart view
     //! [4]
     m_chartView = new QChartView(this);
-    m_chartView->setChartTheme(QChart::ChartThemeScientific);
+    m_chartView->setChartTheme(QChart::ChartThemeHighContrast);
     //! [4]
     setCentralWidget(m_chartView);
     m_chartView->setChartTitle("Custom colors example");

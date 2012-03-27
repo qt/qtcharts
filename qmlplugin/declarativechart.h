@@ -23,8 +23,8 @@ public:
         ThemeDark,
         ThemeBrownSand,
         ThemeBlueNcs,
-        ThemeIcy,
-        ThemeScientific
+        ThemeHighContrast,
+        ThemeBlueIcy
     };
     DeclarativeChart(QDeclarativeItem *parent = 0);
     ~DeclarativeChart();

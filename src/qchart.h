@@ -44,8 +44,8 @@ public:
         ChartThemeDark,
         ChartThemeBrownSand,
         ChartThemeBlueNcs,
-        ChartThemeIcy,
-        ChartThemeScientific,
+        ChartThemeHighContrast,
+        ChartThemeBlueIcy,
         ChartThemeCount
     };
 

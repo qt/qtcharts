@@ -35,8 +35,8 @@
 #include "chartthemedark_p.h"
 #include "chartthemebrownsand_p.h"
 #include "chartthemebluencs_p.h"
-#include "chartthemeicy_p.h"
-#include "chartthemescientific_p.h"
+#include "chartthemehighcontrast_p.h"
+#include "chartthemeblueicy_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -69,10 +69,10 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
             return new ChartThemeBrownSand();
         case QChart::ChartThemeBlueNcs:
             return new ChartThemeBlueNcs();
-        case QChart::ChartThemeIcy:
-            return new ChartThemeIcy();
-        case QChart::ChartThemeScientific:
-            return new ChartThemeScientific();
+        case QChart::ChartThemeHighContrast:
+            return new ChartThemeHighContrast();
+        case QChart::ChartThemeBlueIcy:
+            return new ChartThemeBlueIcy();
         default:
             return new ChartThemeDefault();
     }
@@ -80,18 +80,10 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 
 void ChartTheme::decorate(QChart* chart,bool force)
 {
-    QPen pen;
     QBrush brush;
 
     if(brush == chart->backgroundBrush() || force)
-    {
-        if (m_backgroundShades == BackgroundShadesNone) {
-            chart->setBackgroundBrush(m_chartBackgroundGradient);
-        }
-        else {
-            chart->setBackgroundBrush(Qt::NoBrush);
-        }
-    }
+        chart->setBackgroundBrush(m_chartBackgroundGradient);
     chart->setTitleFont(m_masterFont);
     chart->setTitleBrush(m_titleBrush);
 }

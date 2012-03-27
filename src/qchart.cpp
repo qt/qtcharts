@@ -36,8 +36,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  \value ChartThemeDark
  \value ChartThemeBrownSand
  \value ChartThemeBlueNcs
- \value ChartThemeIcy
- \value ChartThemeScientific
+ \value ChartThemeHighContrast
+ \value ChartThemeBlueIcy
  \value ChartThemeCount Not really a theme; the total count of themes.
  */
 
