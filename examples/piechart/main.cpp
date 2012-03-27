@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
     QPieSlice *slice = series->slices().first();
     slice->setExploded();
     slice->setLabelVisible();
-    slice->setSlicePen(QPen(Qt::darkGreen, 2));
-    slice->setSliceBrush(Qt::green);
+    slice->setPen(QPen(Qt::darkGreen, 2));
+    slice->setBrush(Qt::green);
 //![2]
 //![3]
     QChart* chart = new QChart();

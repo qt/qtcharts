@@ -165,7 +165,7 @@ qreal QPieSlice::endAngle() const
     Returns the pen used to draw this slice.
     \sa setSlicePen()
 */
-QPen QPieSlice::slicePen() const
+QPen QPieSlice::pen() const
 {
     Q_D(const QPieSlice);
     return d->m_data.m_slicePen;
@@ -175,7 +175,7 @@ QPen QPieSlice::slicePen() const
     Returns the brush used to draw this slice.
     \sa setSliceBrush()
 */
-QBrush QPieSlice::sliceBrush() const
+QBrush QPieSlice::brush() const
 {
     Q_D(const QPieSlice);
     return d->m_data.m_sliceBrush;
@@ -332,7 +332,7 @@ void QPieSlice::setExplodeDistanceFactor(qreal factor)
     Note that applying a theme will override this.
     \sa slicePen()
 */
-void QPieSlice::setSlicePen(const QPen &pen)
+void QPieSlice::setPen(const QPen &pen)
 {
     Q_D(QPieSlice);
     if (d->m_data.m_slicePen != pen) {
@@ -347,7 +347,7 @@ void QPieSlice::setSlicePen(const QPen &pen)
     Note that applying a theme will override this.
     \sa sliceBrush()
 */
-void QPieSlice::setSliceBrush(const QBrush &brush)
+void QPieSlice::setBrush(const QBrush &brush)
 {
     Q_D(QPieSlice);
     if (d->m_data.m_sliceBrush != brush) {

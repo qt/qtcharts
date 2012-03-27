@@ -260,15 +260,15 @@ public Q_SLOTS:
 
     void handleHoverEnter()
     {
-        QBrush brush = this->sliceBrush();
+        QBrush brush = this->brush();
         m_originalBrush = brush;
         brush.setColor(brush.color().lighter());
-        setSliceBrush(brush);
+        setBrush(brush);
     }
 
     void handleHoverLeave()
     {
-        setSliceBrush(m_originalBrush);
+        setBrush(m_originalBrush);
     }
 
 private:
@@ -473,8 +473,8 @@ public Q_SLOTS:
 
         m_slice->setValue(m_sliceValue->value());
 
-        m_slice->setSlicePen(m_penTool->pen());
-        m_slice->setSliceBrush(m_brushTool->brush());
+        m_slice->setPen(m_penTool->pen());
+        m_slice->setBrush(m_brushTool->brush());
 
         m_slice->setLabelPen(m_labelPenTool->pen());
         m_slice->setLabelVisible(m_sliceLabelVisible->isChecked());
@@ -499,8 +499,8 @@ public Q_SLOTS:
         m_sliceValue->blockSignals(false);
 
         // pen
-        m_pen->setText(PenTool::name(m_slice->slicePen()));
-        m_penTool->setPen(m_slice->slicePen());
+        m_pen->setText(PenTool::name(m_slice->pen()));
+        m_penTool->setPen(m_slice->pen());
 
         // brush
         m_brush->setText(m_slice->originalBrush().color().name());

@@ -92,8 +92,8 @@ void MainWindow::customize()
     // Customize pen and brush for the pie
     for (int i(0); i < m_pie->slices().count(); i++) {
         Qt::BrushStyle style = static_cast<Qt::BrushStyle>(i + 1);
-        m_pie->slices().at(i)->setSliceBrush(QBrush(m_companyColor2, style));
-        m_pie->slices().at(i)->setSlicePen(color1Pen);
+        m_pie->slices().at(i)->setBrush(QBrush(m_companyColor2, style));
+        m_pie->slices().at(i)->setPen(color1Pen);
     }
     //! [3]
 

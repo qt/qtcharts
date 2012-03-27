@@ -37,10 +37,10 @@ public:
     qreal endAngle() const;
 
     // customization
-    void setSlicePen(const QPen &pen);
-    QPen slicePen() const;
-    void setSliceBrush(const QBrush &brush);
-    QBrush sliceBrush() const;
+    void setPen(const QPen &pen);
+    QPen pen() const;
+    void setBrush(const QBrush &brush);
+    QBrush brush() const;
     void setLabelPen(const QPen &pen);
     QPen labelPen() const;
     void setLabelFont(const QFont &font);

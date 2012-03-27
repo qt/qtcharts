@@ -266,7 +266,7 @@ void QLegend::handleAdded(QList<QPieSlice *> slices)
     foreach(QPieSlice* s, slices) {
         LegendMarker* marker = new LegendMarker(series, s, this);
         marker->setName(s->label());
-        marker->setBrush(s->sliceBrush());
+        marker->setBrush(s->brush());
         connect(marker, SIGNAL(clicked(QPieSlice*,Qt::MouseButton)),
                 this, SIGNAL(clicked(QPieSlice*,Qt::MouseButton)));
         connect(s, SIGNAL(changed()), marker, SLOT(changed()));
@@ -537,8 +537,8 @@ void QLegend::appendMarkers(QPieSeries *series)
     foreach(QPieSlice* s, series->slices()) {
         LegendMarker* marker = new LegendMarker(series, s, this);
         marker->setName(s->label());
-        marker->setPen(s->slicePen());
-        marker->setBrush(s->sliceBrush());
+        marker->setPen(s->pen());
+        marker->setBrush(s->brush());
         connect(marker, SIGNAL(clicked(QPieSlice *, Qt::MouseButton)),
                 this, SIGNAL(clicked(QPieSlice *, Qt::MouseButton)));
         connect(s, SIGNAL(changed()), marker, SLOT(changed()));

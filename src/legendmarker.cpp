@@ -164,7 +164,7 @@ void LegendMarker::changed()
         break;
     }
     case LegendMarkerTypePieslice: {
-        setBrush(mPieslice->sliceBrush());
+        setBrush(mPieslice->brush());
         setName(mPieslice->label());
         break;
     }
