@@ -19,7 +19,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 const static int duration = 1000;
 
-ChartAnimator::ChartAnimator(QObject *parent):QObject(parent),m_state(ShowState)
+ChartAnimator::ChartAnimator(QObject *parent):QObject(parent),
+    m_state(ShowState)
 {
 }
 
@@ -27,153 +28,143 @@ ChartAnimator::~ChartAnimator()
 {
 }
 
-void ChartAnimator::addAnimation(Axis* item)
+void ChartAnimator::addAnimation(Axis *item)
 {
-    ChartAnimation* animation = m_animations.value(item);
+    ChartAnimation *animation = m_animations.value(item);
 
-    if(!animation) {
+    if (!animation) {
         animation = new AxisAnimation(item);
-        m_animations.insert(item,animation);
+        m_animations.insert(item, animation);
     }
 
     item->setAnimator(this);
 }
 
-void ChartAnimator::addAnimation(SplineChartItem*  item)
+void ChartAnimator::addAnimation(SplineChartItem *item)
 {
-    ChartAnimation* animation = m_animations.value(item);
+    ChartAnimation *animation = m_animations.value(item);
 
-    if(!animation) {
+    if (!animation) {
         animation = new SplineAnimation(item);
-        m_animations.insert(item,animation);
+        m_animations.insert(item, animation);
     }
 
     item->setAnimator(this);
 }
 
-void ChartAnimator::addAnimation(ScatterChartItem* item)
+void ChartAnimator::addAnimation(ScatterChartItem *item)
 {
-    ChartAnimation* animation = m_animations.value(item);
+    ChartAnimation *animation = m_animations.value(item);
 
-    if(!animation) {
+    if (!animation) {
         animation = new XYAnimation(item);
-        m_animations.insert(item,animation);
+        m_animations.insert(item, animation);
     }
 
     item->setAnimator(this);
 }
 
-void ChartAnimator::addAnimation(LineChartItem*  item)
+void ChartAnimator::addAnimation(LineChartItem *item)
 {
-    ChartAnimation* animation = m_animations.value(item);
+    ChartAnimation *animation = m_animations.value(item);
 
-    if(!animation) {
+    if (!animation) {
         animation = new XYAnimation(item);
-        m_animations.insert(item,animation);
+        m_animations.insert(item, animation);
     }
 
     item->setAnimator(this);
 }
 
-void ChartAnimator::addAnimation(PieChartItem* item)
+void ChartAnimator::addAnimation(PieChartItem *item)
 {
-    ChartAnimation* animation = m_animations.value(item);
+    ChartAnimation *animation = m_animations.value(item);
 
-    if(!animation) {
+    if (!animation) {
         animation = new PieAnimation(item);
-        m_animations.insert(item,animation);
+        m_animations.insert(item, animation);
     }
 
     item->setAnimator(this);
 }
 
-void ChartAnimator::addAnimation(BarChartItem* item)
+void ChartAnimator::addAnimation(BarChartItem *item)
 {
-    ChartAnimation* animation = m_animations.value(item);
+    ChartAnimation *animation = m_animations.value(item);
 
-    if(!animation) {
+    if (!animation) {
         animation = new BarAnimation(item);
-        m_animations.insert(item,animation);
+        m_animations.insert(item, animation);
     }
 
     item->setAnimator(this);
 }
 
 
-void ChartAnimator::removeAnimation(Chart* item)
+void ChartAnimator::removeAnimation(Chart *item)
 {
     item->setAnimator(0);
     m_animations.remove(item);
 }
 
-void ChartAnimator::updateLayout(Axis* item , QVector<qreal>& newLayout)
+void ChartAnimator::updateLayout(Axis *item , QVector<qreal> &newLayout)
 {
-    AxisAnimation* animation = static_cast<AxisAnimation*>(m_animations.value(item));
+    AxisAnimation *animation = static_cast<AxisAnimation*>(m_animations.value(item));
 
     Q_ASSERT(animation);
 
     QVector<qreal> oldLayout = item->layout();
 
-    if(newLayout.count()==0) return;
+    if (newLayout.count() == 0)
+        return;
 
-    switch(m_state)
-	{
-    	case ZoomOutState: {
-    			QRectF rect = item->geometry();
-    			oldLayout.resize(newLayout.count());
+    switch (m_state) {
+    case ZoomOutState: {
+        QRectF rect = item->geometry();
+        oldLayout.resize(newLayout.count());
 
-    			for(int i=0,j=oldLayout.count()-1;i<(oldLayout.count()+1)/2;i++,j--)
-    			{
-    				oldLayout[i]= item->axisType()==Axis::X_AXIS?rect.left():rect.bottom();
-    				oldLayout[j]= item->axisType()==Axis::X_AXIS?rect.right():rect.top();
-    			}
-    		}
-    	break;
-		case ZoomInState: {
-			int index = qMin(oldLayout.count()*(item->axisType()==Axis::X_AXIS?m_point.x():(1 -m_point.y())),newLayout.count()-1.0);
-			oldLayout.resize(newLayout.count());
-
-			for(int i=0;i<oldLayout.count();i++)
-			{
-				oldLayout[i]= oldLayout[index];
-			}
-		}
-		break;
-		case ScrollDownState:
-		case ScrollRightState: {
-			oldLayout.resize(newLayout.count());
-
-			for(int i=0, j=i+1;i<oldLayout.count()-1;i++,j++)
-			{
-				oldLayout[i]= oldLayout[j];
-			}
-		}
-		break;
-		case ScrollUpState:
-		case ScrollLeftState: {
-			oldLayout.resize(newLayout.count());
-
-			for(int i=oldLayout.count()-1, j=i-1;i>0;i--,j--)
-			{
-				oldLayout[i]= oldLayout[j];
-			}
-		}
-		break;
-		default: {
-			oldLayout.resize(newLayout.count());
-			QRectF rect = item->geometry();
-			for(int i=0, j=oldLayout.count()-1;i<oldLayout.count();i++,j--)
-			{
-				oldLayout[i]= item->axisType()==Axis::X_AXIS?rect.left():rect.top();
-			}
-		}
-		break;
-	}
-
-
-    if(animation->state()!=QAbstractAnimation::Stopped) {
-        animation->stop();
+        for(int i = 0, j = oldLayout.count() - 1; i < (oldLayout.count() + 1) / 2; i++, j--) {
+            oldLayout[i] = item->axisType() == Axis::X_AXIS ? rect.left() : rect.bottom();
+            oldLayout[j] = item->axisType() == Axis::X_AXIS ? rect.right() : rect.top();
+        }
     }
+        break;
+    case ZoomInState: {
+        int index = qMin(oldLayout.count() * (item->axisType() == Axis::X_AXIS ? m_point.x() : (1 - m_point.y())), newLayout.count() - 1.0);
+        oldLayout.resize(newLayout.count());
+
+        for(int i = 0; i < oldLayout.count(); i++)
+            oldLayout[i]= oldLayout[index];
+    }
+        break;
+    case ScrollDownState:
+    case ScrollRightState: {
+        oldLayout.resize(newLayout.count());
+
+        for(int i = 0, j = i + 1; i < oldLayout.count() - 1; i++, j++)
+            oldLayout[i]= oldLayout[j];
+    }
+        break;
+    case ScrollUpState:
+    case ScrollLeftState: {
+        oldLayout.resize(newLayout.count());
+
+        for(int i = oldLayout.count() - 1, j = i - 1; i > 0; i--, j--)
+            oldLayout[i]= oldLayout[j];
+    }
+        break;
+    default: {
+        oldLayout.resize(newLayout.count());
+        QRectF rect = item->geometry();
+        for(int i = 0, j = oldLayout.count() - 1; i < oldLayout.count(); i++, j--)
+            oldLayout[i] = item->axisType() == Axis::X_AXIS ? rect.left() : rect.top();
+    }
+        break;
+    }
+
+
+    if (animation->state() != QAbstractAnimation::Stopped)
+        animation->stop();
 
     animation->setDuration(duration);
     animation->setEasingCurve(QEasingCurve::OutQuart);
@@ -182,107 +173,107 @@ void ChartAnimator::updateLayout(Axis* item , QVector<qreal>& newLayout)
     animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
     animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
 
-    QTimer::singleShot(0,animation,SLOT(start()));
+    QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-void ChartAnimator::updateLayout(SplineChartItem* item, QVector<QPointF>& oldPoints ,QVector<QPointF>& newPoints, QVector<QPointF>& oldControlPoints, QVector<QPointF>& newControlPoints,int index)
+void ChartAnimator::updateLayout(SplineChartItem *item, QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldControlPoints, QVector<QPointF> &newControlPoints, int index)
 {
-    SplineAnimation* animation = static_cast<SplineAnimation*>(m_animations.value(item));
+    SplineAnimation *animation = static_cast<SplineAnimation *>(m_animations.value(item));
 
     Q_ASSERT(animation);
 
-    if(newPoints.count()<2 || newControlPoints.count()<2) return;
+    if (newPoints.count() < 2 || newControlPoints.count() < 2)
+        return;
 
-    bool empty = oldPoints.count()==0;
-
-
-    if(animation->state()!=QAbstractAnimation::Stopped) {
-         animation->stop();
-    }
-
-    animation->setDuration(duration);
-    if(!empty)
-    animation->setAnimationType(ChartAnimation::MoveDownAnimation);
-    else
-    animation->setAnimationType(ChartAnimation::LineDrawAnimation);
-
-    animation->setEasingCurve(QEasingCurve::OutQuart);
-    animation->setValues(oldPoints,newPoints,oldControlPoints,newControlPoints,index);
-
-    QTimer::singleShot(0,animation,SLOT(start()));
-}
+    bool empty = oldPoints.count() == 0;
 
 
-void ChartAnimator::updateLayout(XYChartItem* item,  QVector<QPointF>& oldPoints , QVector<QPointF>& newPoints, int index)
-{
-    XYAnimation* animation = static_cast<XYAnimation*>(m_animations.value(item));
-
-    Q_ASSERT(animation);
-
-    if(newPoints.count()==0) return;
-
-    bool empty = oldPoints.count()==0;
-
-
-    if(animation->state()!=QAbstractAnimation::Stopped) {
+    if (animation->state() != QAbstractAnimation::Stopped)
         animation->stop();
-    }
 
     animation->setDuration(duration);
-    if(!empty)
-    animation->setAnimationType(ChartAnimation::MoveDownAnimation);
+    if (!empty)
+        animation->setAnimationType(ChartAnimation::MoveDownAnimation);
     else
-    animation->setAnimationType(ChartAnimation::LineDrawAnimation);
+        animation->setAnimationType(ChartAnimation::LineDrawAnimation);
 
     animation->setEasingCurve(QEasingCurve::OutQuart);
-    animation->setValues(oldPoints,newPoints,index);
+    animation->setValues(oldPoints, newPoints, oldControlPoints, newControlPoints, index);
 
-    QTimer::singleShot(0,animation,SLOT(start()));
+    QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-void ChartAnimator::addAnimation(PieChartItem* item, QPieSlice *slice, const PieSliceData &sliceData, bool isEmpty)
+
+void ChartAnimator::updateLayout(XYChartItem *item, QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index)
 {
-    PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
+    XYAnimation *animation = static_cast<XYAnimation *>(m_animations.value(item));
+
+    Q_ASSERT(animation);
+
+    if (newPoints.count() == 0)
+        return;
+
+    bool empty = oldPoints.count() == 0;
+
+
+    if (animation->state() != QAbstractAnimation::Stopped)
+        animation->stop();
+
+    animation->setDuration(duration);
+    if (!empty)
+        animation->setAnimationType(ChartAnimation::MoveDownAnimation);
+    else
+        animation->setAnimationType(ChartAnimation::LineDrawAnimation);
+
+    animation->setEasingCurve(QEasingCurve::OutQuart);
+    animation->setValues(oldPoints, newPoints, index);
+
+    QTimer::singleShot(0, animation, SLOT(start()));
+}
+
+void ChartAnimator::addAnimation(PieChartItem *item, QPieSlice *slice, const PieSliceData &sliceData, bool isEmpty)
+{
+    PieAnimation *animation = static_cast<PieAnimation *>(m_animations.value(item));
     Q_ASSERT(animation);
     animation->addSlice(slice, sliceData, isEmpty);
 }
 
-void ChartAnimator::removeAnimation(PieChartItem* item, QPieSlice *slice)
+void ChartAnimator::removeAnimation(PieChartItem *item, QPieSlice *slice)
 {
-    PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
+    PieAnimation *animation = static_cast<PieAnimation *>(m_animations.value(item));
     Q_ASSERT(animation);
     animation->removeSlice(slice);
 }
 
-void ChartAnimator::updateLayout(PieChartItem* item, const PieLayout &layout)
+void ChartAnimator::updateLayout(PieChartItem *item, const PieLayout &layout)
 {
-    PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
+    PieAnimation *animation = static_cast<PieAnimation *>(m_animations.value(item));
     Q_ASSERT(animation);
     animation->updateValues(layout);
 }
 
-void ChartAnimator::updateLayout(PieChartItem* item, QPieSlice *slice, const PieSliceData &sliceData)
+void ChartAnimator::updateLayout(PieChartItem *item, QPieSlice *slice, const PieSliceData &sliceData)
 {
-    PieAnimation* animation = static_cast<PieAnimation*>(m_animations.value(item));
+    PieAnimation *animation = static_cast<PieAnimation *>(m_animations.value(item));
     Q_ASSERT(animation);
     animation->updateValue(slice, sliceData);
 }
 
-void ChartAnimator::updateLayout(BarChartItem* item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
+void ChartAnimator::updateLayout(BarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
 {
-    BarAnimation* animation = static_cast<BarAnimation*>(m_animations.value(item));
+    BarAnimation *animation = static_cast<BarAnimation *>(m_animations.value(item));
     Q_ASSERT(animation);
     animation->setDuration(duration);
     animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
     animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
-    QTimer::singleShot(0,animation,SLOT(start()));
+    QTimer::singleShot(0, animation, SLOT(start()));
 }
 
 
-void ChartAnimator::setState(State state,const QPointF& point)
+void ChartAnimator::setState(State state, const QPointF &point)
 {
-	m_state=state;
-	m_point=point;
+    m_state = state;
+    m_point = point;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

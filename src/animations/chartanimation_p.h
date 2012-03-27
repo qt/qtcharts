@@ -10,7 +10,7 @@ class ChartAnimation: public QVariantAnimation
 {
 public:
     enum Animation { LineDrawAnimation, MoveDownAnimation, MoveUpAnimation };
-    ChartAnimation(QObject* parent=0):QVariantAnimation(parent),m_type(MoveDownAnimation){};
+    ChartAnimation(QObject* parent=0):QVariantAnimation(parent), m_type(MoveDownAnimation){}
     void setAnimationType(Animation type){
         m_type=type;
     }

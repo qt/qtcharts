@@ -18,7 +18,7 @@ PieAnimation::~PieAnimation()
 
 void PieAnimation::updateValues(const PieLayout &newValues)
 {
-    foreach (QPieSlice* s, newValues.keys())
+    foreach (QPieSlice *s, newValues.keys())
         updateValue(s, newValues.value(s));
 }
 
@@ -45,7 +45,7 @@ void PieAnimation::addSlice(QPieSlice *slice, const PieSliceData &sliceData, boo
     if (isEmpty)
         startValue.m_startAngle = 0;
     else
-        startValue.m_startAngle = sliceData.m_startAngle + (sliceData.m_angleSpan/2);
+        startValue.m_startAngle = sliceData.m_startAngle + (sliceData.m_angleSpan / 2);
     startValue.m_angleSpan = 0;
     animation->setValue(startValue, sliceData);
 
@@ -81,7 +81,7 @@ void PieAnimation::updateCurrentValue(const QVariant &)
 
 void PieAnimation::destroySliceAnimationComplete()
 {
-    PieSliceAnimation *animation = static_cast<PieSliceAnimation*>(sender());
+    PieSliceAnimation *animation = static_cast<PieSliceAnimation *>(sender());
     QPieSlice *slice = m_animations.key(animation);
     m_item->destroySlice(slice);
     delete m_animations.take(slice);

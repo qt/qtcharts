@@ -21,13 +21,13 @@ BarAnimation::~BarAnimation()
 
 QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
-    QVector<QRectF> startVector = qVariantValue<QVector<QRectF> > (from);
-    QVector<QRectF> endVector = qVariantValue<QVector<QRectF> > (to);
+    QVector<QRectF> startVector = qVariantValue<QVector<QRectF> >(from);
+    QVector<QRectF> endVector = qVariantValue<QVector<QRectF> >(to);
     QVector<QRectF> result;
 
     Q_ASSERT(startVector.count() == endVector.count()) ;
 
-    for(int i =0 ;i< startVector.count();i++){
+    for(int i = 0; i < startVector.count(); i++) {
         qreal w = endVector[i].width();
         qreal h = startVector[i].height() + ((endVector[i].height() - startVector[i].height()) * progress);
         qreal x = endVector[i].topLeft().x();

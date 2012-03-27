@@ -15,7 +15,7 @@ AxisAnimation::~AxisAnimation()
 {
 }
 
-QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant & end, qreal progress ) const
+QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress ) const
 {
     QVector<qreal> startVector = qVariantValue<QVector<qreal> >(start);
     QVector<qreal> endVecotr = qVariantValue<QVector<qreal> >(end);
@@ -23,7 +23,7 @@ QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant & end
 
     Q_ASSERT(startVector.count() == endVecotr.count()) ;
 
-    for(int i =0 ;i< startVector.count();i++){
+    for(int i = 0; i < startVector.count(); i++){
            qreal value = startVector[i] + ((endVecotr[i]- startVector[i]) * progress);//qBound(0.0, progress, 1.0));
            result << value;
     }
@@ -31,12 +31,12 @@ QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant & end
 }
 
 
-void AxisAnimation::updateCurrentValue (const QVariant & value )
+void AxisAnimation::updateCurrentValue (const QVariant &value )
 {
-    if(state()!=QAbstractAnimation::Stopped)//workaround
+    if (state() != QAbstractAnimation::Stopped)//workaround
     {
         QVector<qreal> vector = qVariantValue<QVector<qreal> >(value);
-        Q_ASSERT(vector.count()!=0);
+        Q_ASSERT(vector.count() != 0);
         m_axis->setLayout(vector);
     }
 

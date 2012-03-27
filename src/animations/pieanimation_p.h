@@ -29,7 +29,7 @@ public Q_SLOTS:
 
 private:
     PieChartItem *m_item;
-    QHash<QPieSlice*, PieSliceAnimation*> m_animations;
+    QHash<QPieSlice *, PieSliceAnimation *> m_animations;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

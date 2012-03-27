@@ -19,14 +19,14 @@ public:
     ~BarAnimation();
 
 public: // from QVariantAnimation
-    virtual QVariant interpolated (const QVariant & from, const QVariant & to, qreal progress ) const;
-    virtual void updateCurrentValue (const QVariant & value );
+    virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
+    virtual void updateCurrentValue(const QVariant &value);
 
 public Q_SLOTS:
 
 private:
     BarChartItem *m_item;
-    QHash<QBarSet*, BarSetAnimation*> m_animations;
+    QHash<QBarSet *, BarSetAnimation *> m_animations;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

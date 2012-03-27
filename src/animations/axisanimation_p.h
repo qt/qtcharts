@@ -13,10 +13,10 @@ public:
     AxisAnimation(Axis *axis);
     ~AxisAnimation();
 protected:
-    virtual QVariant interpolated (const QVariant & from, const QVariant & to, qreal progress ) const;
-    virtual void updateCurrentValue (const QVariant & value );
+    virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress ) const;
+    virtual void updateCurrentValue(const QVariant &value );
 private:
-    Axis* m_axis;
+    Axis *m_axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
