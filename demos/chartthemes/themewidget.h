@@ -65,7 +65,7 @@ public:
     explicit ThemeWidget(QWidget *parent = 0);
     ~ThemeWidget();
 
-public slots:
+private slots:
     void updateUI();
 
 private:
