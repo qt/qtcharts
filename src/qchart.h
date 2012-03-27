@@ -1,3 +1,23 @@
+/****************************************************************************
+**
+** Copyright (C) 2012 Digia Plc
+** All rights reserved.
+** For any questions to Digia, please use contact form at http://qt.digia.com
+**
+** This file is part of the Qt Commercial Charts Add-on.
+**
+** $QT_BEGIN_LICENSE$
+** Licensees holding valid Qt Commercial licenses may use this file in
+** accordance with the Qt Commercial License Agreement provided with the
+** Software or, alternatively, in accordance with the terms contained in
+** a written agreement between you and Digia.
+**
+** If you have questions regarding the use of this file, please use
+** contact form at http://qt.digia.com
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
 #ifndef QCHART_H
 #define QCHART_H
 
@@ -8,7 +28,6 @@ class QGraphicsSceneResizeEvent;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class Axis;
 class QSeries;
 class QChartAxis;
 class QLegend;
@@ -30,13 +49,14 @@ public:
         ChartThemeCount
     };
 
-    enum  AnimationOption {
+    enum AnimationOption {
         NoAnimation = 0x0,
         GridAxisAnimations = 0x1,
         SeriesAnimations =0x2,
         AllAnimations = 0x3
-        };
-        Q_DECLARE_FLAGS(AnimationOptions, AnimationOption)
+    };
+
+    Q_DECLARE_FLAGS(AnimationOptions, AnimationOption)
 
 public:
     QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
@@ -81,20 +101,12 @@ public:
     QLegend* takeLegend();
     void giveLegend(QLegend* legend);
 
-    int padding() const;
-
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
 
 protected:
     QScopedPointer<QChartPrivate> d_ptr;
-
-private:
-    void setPadding(int padding);
-    void setBackgroundPadding(int padding);
-    void setBackgroundDiameter(int diameter);
-
-private:
+    friend class QChartView;
     Q_DISABLE_COPY(QChart);
 };
 

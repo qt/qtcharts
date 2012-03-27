@@ -49,7 +49,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
 d_ptr(new QChartPrivate(this))
 {
-
     d_ptr->m_legend = new QLegend(this);
     d_ptr->m_dataset = new ChartDataSet(this);
     d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
@@ -111,7 +110,7 @@ void QChart::setBackgroundBrush(const QBrush& brush)
 
 QBrush QChart::backgroundBrush() const
 {
-    if(!d_ptr->m_backgroundItem) return QBrush();
+    if (!d_ptr->m_backgroundItem) return QBrush();
     return (d_ptr->m_backgroundItem)->brush();
 }
 
@@ -127,7 +126,7 @@ void QChart::setBackgroundPen(const QPen& pen)
 
 QPen QChart::backgroundPen() const
 {
-    if(!d_ptr->m_backgroundItem) return QPen();
+    if (!d_ptr->m_backgroundItem) return QPen();
     return d_ptr->m_backgroundItem->pen();
 }
 
@@ -146,7 +145,7 @@ void QChart::setTitle(const QString& title)
  */
 QString QChart::title() const
 {
-    if(d_ptr->m_titleItem)
+    if (d_ptr->m_titleItem)
     return d_ptr->m_titleItem->text();
     else
     return QString();
@@ -177,7 +176,7 @@ void QChart::setTitleBrush(const QBrush &brush)
  */
 QBrush QChart::titleBrush() const
 {
-    if(!d_ptr->m_titleItem) return QBrush();
+    if (!d_ptr->m_titleItem) return QBrush();
     return d_ptr->m_titleItem->brush();
 }
 
@@ -212,7 +211,7 @@ void QChart::zoomIn()
  */
 void QChart::zoomIn(const QRectF& rect)
 {
-    if(!rect.isValid()) return;
+    if (!rect.isValid()) return;
     d_ptr->m_presenter->zoomIn(rect);
 }
 
@@ -325,35 +324,6 @@ void QChart::scrollDown()
     d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
 }
 
-void QChart::setPadding(int padding)
-{
-    if(d_ptr->m_padding==padding) {
-        d_ptr->m_padding = padding;
-        d_ptr->m_presenter->handleGeometryChanged();
-        d_ptr->updateLayout();
-    }
-}
-
-int QChart::padding() const
-{
-    return d_ptr->m_padding;
-}
-
-void QChart::setBackgroundPadding(int padding)
-{
-    if(d_ptr->m_backgroundPadding!=padding) {
-        d_ptr->m_backgroundPadding = padding;
-        d_ptr->updateLayout();
-    }
-}
-
-void QChart::setBackgroundDiameter(int diameter)
-{
-    d_ptr->createChartBackgroundItem();
-    d_ptr->m_backgroundItem->setDimeter(diameter);
-    d_ptr->m_backgroundItem->update();
-}
-
 void QChart::setBackgroundVisible(bool visible)
 {
     d_ptr->createChartBackgroundItem();
@@ -362,7 +332,7 @@ void QChart::setBackgroundVisible(bool visible)
 
 bool QChart::isBackgroundVisible() const
 {
-    if(!d_ptr->m_backgroundItem) return false;
+    if (!d_ptr->m_backgroundItem) return false;
     return d_ptr->m_backgroundItem->isVisible();
 }
 
@@ -374,9 +344,7 @@ m_backgroundItem(0),
 m_titleItem(0),
 m_legend(0),
 m_dataset(0),
-m_presenter(0),
-m_padding(50),
-m_backgroundPadding(10)
+m_presenter(0)
 {
 
 }
@@ -388,7 +356,7 @@ QChartPrivate::~QChartPrivate()
 
 void QChartPrivate::createChartBackgroundItem()
 {
-    if(!m_backgroundItem) {
+    if (!m_backgroundItem) {
         m_backgroundItem = new ChartBackground(q_ptr);
         m_backgroundItem->setPen(Qt::NoPen);
         m_backgroundItem->setZValue(ChartPresenter::BackgroundZValue);
@@ -397,7 +365,7 @@ void QChartPrivate::createChartBackgroundItem()
 
 void QChartPrivate::createChartTitleItem()
 {
-    if(!m_titleItem) {
+    if (!m_titleItem) {
         m_titleItem = new QGraphicsSimpleTextItem(q_ptr);
         m_titleItem->setZValue(ChartPresenter::BackgroundZValue);
     }
@@ -405,26 +373,27 @@ void QChartPrivate::createChartTitleItem()
 
 void QChartPrivate::updateLegendLayout()
 {
-    QRectF plotRect = m_rect.adjusted(m_padding,m_padding, -m_padding, -m_padding);
+    int padding = m_presenter->padding();
+    QRectF plotRect = m_rect.adjusted(padding,padding,-padding,-padding);
     QRectF legendRect;
 
     switch (m_legend->preferredLayout())
     {
         case QLegend::PreferredLayoutTop: {
             //        legendRect = plotRect.adjusted(m_padding,0,-m_padding,-m_padding - plotRect.height());
-            legendRect = plotRect.adjusted(0,0,0,-m_padding - plotRect.height());
+            legendRect = plotRect.adjusted(0,0,0,-padding - plotRect.height());
             break;
         }
         case QLegend::PreferredLayoutBottom: {
-            legendRect = plotRect.adjusted(m_padding,m_padding + plotRect.height(),-m_padding,0);
+            legendRect = plotRect.adjusted(padding,padding + plotRect.height(),-padding,0);
             break;
         }
         case QLegend::PreferredLayoutLeft: {
-            legendRect = plotRect.adjusted(0,m_padding,-m_padding - plotRect.width(),-m_padding);
+            legendRect = plotRect.adjusted(0,padding,-padding - plotRect.width(),-padding);
             break;
         }
         case QLegend::PreferredLayoutRight: {
-            legendRect = plotRect.adjusted(m_padding + plotRect.width(),m_padding,0,-m_padding);
+            legendRect = plotRect.adjusted(padding + plotRect.width(),padding,0,-padding);
             break;
         }
         default: {
@@ -439,19 +408,22 @@ void QChartPrivate::updateLegendLayout()
 
 void QChartPrivate::updateLayout()
 {
-    if(!m_rect.isValid()) return;
+    if (!m_rect.isValid()) return;
 
-    QRectF rect = m_rect.adjusted(m_padding,m_padding, -m_padding, -m_padding);
+    int padding = m_presenter->padding();
+    int backgroundPadding = m_presenter->backgroundPadding();
+
+    QRectF rect = m_rect.adjusted(padding,padding,-padding,-padding);
 
     // recalculate title position
     if (m_titleItem) {
         QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
-        m_titleItem->setPos(center.x(),m_rect.top()/2 + m_padding/2);
+        m_titleItem->setPos(center.x(),m_rect.top()/2 + padding/2);
     }
 
     //recalculate background gradient
     if (m_backgroundItem) {
-        m_backgroundItem->setRect(m_rect.adjusted(m_backgroundPadding,m_backgroundPadding, -m_backgroundPadding, -m_backgroundPadding));
+        m_backgroundItem->setRect(m_rect.adjusted(backgroundPadding,backgroundPadding, -backgroundPadding, -backgroundPadding));
     }
 
     // recalculate legend position

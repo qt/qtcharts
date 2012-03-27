@@ -35,22 +35,19 @@ public:
     ChartPresenter(QChart* chart,ChartDataSet *dataset);
     virtual ~ChartPresenter();
 
-    void setMargin(int margin);
-    int margin() const;
-
-    QRectF geometry() const;
-
-    ChartAnimator* animator() const {return m_animator;}
-    ChartTheme *chartTheme() { return m_chartTheme; }
-    ChartDataSet *dataSet() { return m_dataset; }
+    int padding() const { return m_padding; }
+    int backgroundPadding() const { return m_backgroundPadding; }
+    QRectF geometry() const { return m_rect; }
+    ChartAnimator* animator() const { return m_animator; }
+    ChartTheme *chartTheme() const { return m_chartTheme; }
+    ChartDataSet *dataSet() const { return m_dataset; }
+    QGraphicsItem* rootItem() const { return m_chart; }
 
     void setTheme(QChart::ChartTheme theme,bool force = true);
     QChart::ChartTheme theme();
 
     void setAnimationOptions(QChart::AnimationOptions options);
     QChart::AnimationOptions animationOptions() const;
-
-    QGraphicsItem* rootItem() const {return m_chart;};
 
     void zoomIn();
     void zoomIn(const QRectF& rect);
@@ -81,6 +78,8 @@ private:
     QRectF m_rect;
     QChart::AnimationOptions m_options;
     bool m_themeForce;
+    int m_padding;
+    int m_backgroundPadding;
 
 };
 

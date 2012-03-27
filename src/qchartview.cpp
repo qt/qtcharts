@@ -1,11 +1,11 @@
 #include "qchartview.h"
 #include "qchart.h"
+#include "qchart_p.h"
 #include "qchartaxis.h"
 #include <QGraphicsView>
 #include <QGraphicsScene>
 #include <QRubberBand>
 #include <QResizeEvent>
-#include <QDebug>
 
 /*!
     \enum QChartView::RubberBandPolicy
@@ -232,7 +232,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 {
     if(m_rubberBand && m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
 
-        int padding = m_chart->padding();
+        int padding = m_chart->d_ptr->m_presenter->padding();
         QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
 
         if (rect.contains(event->pos())) {
@@ -254,7 +254,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
     if(m_rubberBand && m_rubberBand->isVisible()) {
-        int padding = m_chart->padding();
+        int padding = m_chart->d_ptr->m_presenter->padding();
         QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
         int width = event->pos().x() - m_rubberBandOrigin.x();
         int height = event->pos().y() - m_rubberBandOrigin.y();

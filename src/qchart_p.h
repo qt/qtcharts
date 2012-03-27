@@ -30,8 +30,6 @@ public:
     QLegend* m_legend;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
-    int m_padding;
-    int m_backgroundPadding;
 
     Q_DECLARE_PUBLIC(QChart);
 };

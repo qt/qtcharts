@@ -33,7 +33,9 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_chartTheme(0),
     m_rect(QRectF(QPoint(0,0),m_chart->size())),
     m_options(QChart::NoAnimation),
-    m_themeForce(false)
+    m_themeForce(false),
+    m_padding(50),
+    m_backgroundPadding(10)
 {
     createConnections();
     setTheme(QChart::ChartThemeDefault,false);
@@ -53,16 +55,10 @@ void ChartPresenter::createConnections()
     QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),this,SLOT(handleAxisRemoved(QChartAxis*)));
 }
 
-
-QRectF ChartPresenter::geometry() const
-{
-    return m_rect;
-}
-
 void ChartPresenter::handleGeometryChanged()
 {
     QRectF rect(QPoint(0,0),m_chart->size());
-    rect.adjust(m_chart->padding(),m_chart->padding(), -m_chart->padding(), -m_chart->padding());
+    rect.adjust(m_padding,m_padding,-m_padding,-m_padding);
 
     //rewrite zoom stack
     /*
@@ -328,7 +324,7 @@ void ChartPresenter::zoomIn()
 void ChartPresenter::zoomIn(const QRectF& rect)
 {
 	QRectF r = rect.normalized();
-	r.translate(-m_chart->padding(), -m_chart->padding());
+	r.translate(-m_padding, -m_padding);
 	if(m_animator) {
 
 		QPointF point(r.center().x()/geometry().width(),r.center().y()/geometry().height());
@@ -349,7 +345,7 @@ void ChartPresenter::zoomOut()
 
 	QSizeF size = geometry().size();
 	QRectF rect = geometry();
-	rect.translate(-m_chart->padding(), -m_chart->padding());
+	rect.translate(-m_padding, -m_padding);
 	m_dataset->zoomOutDomain(rect.adjusted(size.width()/4,size.height()/4,-size.width()/4,-size.height()/4),size);
     //m_dataset->zoomOutDomain(m_zoomStack[m_zoomIndex-1],geometry().size());
 
