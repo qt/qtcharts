@@ -54,7 +54,7 @@ include(themes/themes.pri)
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 HEADERS += $$THEMES
-INCLUDEPATH += ../include
+INCLUDEPATH += ../include .
     
 OBJECTS_DIR = $$CHART_BUILD_DIR/lib
 MOC_DIR = $$CHART_BUILD_DIR/lib

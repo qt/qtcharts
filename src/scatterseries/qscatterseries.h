@@ -3,8 +3,6 @@
 
 #include <qchartglobal.h>
 #include <qxyseries.h>
-#include <QRectF>
-#include <QColor>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QScatterSeriesPrivate;
