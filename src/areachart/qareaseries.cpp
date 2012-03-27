@@ -97,8 +97,8 @@ QAreaSeries::~QAreaSeries()
 */
 void QAreaSeries::setPen(const QPen& pen)
 {
-    if(m_pen!=pen){
-        m_pen=pen;
+    if (m_pen != pen) {
+        m_pen = pen;
         emit updated();
     }
 }
@@ -106,10 +106,10 @@ void QAreaSeries::setPen(const QPen& pen)
 /*!
     Sets \a brush used for filling the area.
 */
-void QAreaSeries::setBrush(const QBrush& brush)
+void QAreaSeries::setBrush(const QBrush &brush)
 {
-    if(m_brush!=brush){
-        m_brush=brush;
+    if (m_brush != brush) {
+        m_brush = brush;
         emit updated();
     }
 }
@@ -118,8 +118,8 @@ void QAreaSeries::setBrush(const QBrush& brush)
 */
 void QAreaSeries::setPointsVisible(bool visible)
 {
-    if(m_pointsVisible!=visible){
-        m_pointsVisible=visible;
+    if (m_pointsVisible != visible) {
+        m_pointsVisible = visible;
         emit updated();
     }
 }

@@ -45,8 +45,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QLineSeries::QLineSeries(QObject* parent):QXYSeries(parent),
-m_pointsVisible(false)
+QLineSeries::QLineSeries(QObject *parent) : QXYSeries(parent),
+    m_pointsVisible(false)
 {
 
 }
@@ -61,11 +61,11 @@ QLineSeries::~QLineSeries()
 /*!
     Sets \a pen used for drawing line connecting points.
 */
-void QLineSeries::setLinePen(const QPen& pen)
+void QLineSeries::setLinePen(const QPen &pen)
 {
-    if(pen!=m_pen){
-    m_pen=pen;
-    emit QXYSeries::updated();
+    if (pen != m_pen){
+        m_pen = pen;
+        emit QXYSeries::updated();
     }
 }
 
@@ -74,9 +74,9 @@ void QLineSeries::setLinePen(const QPen& pen)
 */
 void QLineSeries::setPointsVisible(bool visible)
 {
-    if(m_pointsVisible!=visible){
-    m_pointsVisible=visible;
-    emit QXYSeries::updated();
+    if (m_pointsVisible != visible){
+        m_pointsVisible = visible;
+        emit QXYSeries::updated();
     }
 }
 
@@ -87,8 +87,8 @@ QDebug operator<< (QDebug debug, const QLineSeries series)
 
     int size = series.m_x.size();
 
-    for (int i=0;i<size;i++) {
-    debug.nospace() << "(" << series.m_x.at(i) << ','<< series.m_y.at(i) << ") ";
+    for (int i=0; i<size; i++) {
+        debug.nospace() << "(" << series.m_x.at(i) << ','<< series.m_y.at(i) << ") ";
     }
     return debug.space();
 }

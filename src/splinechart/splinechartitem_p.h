@@ -3,8 +3,6 @@
 
 #include "qsplineseries.h"
 #include "xychartitem_p.h"
-#include <QGraphicsItem>
-
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -12,7 +10,7 @@ class SplineChartItem : public XYChartItem
 {
     Q_OBJECT
 public:
-    SplineChartItem(QSplineSeries* series, ChartPresenter *presenter);
+    SplineChartItem(QSplineSeries *series, ChartPresenter *presenter);
 
     //from QGraphicsItem
     QRectF boundingRect() const;
@@ -23,8 +21,8 @@ public slots:
     void handleUpdated();
 
 protected:
-    void setLayout(QVector<QPointF>& points,QVector<QPointF>& controlPoints);
-    void updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index);
+    void setLayout(QVector<QPointF> &points,QVector<QPointF> &controlPoints);
+    void updateLayout(QVector<QPointF> &oldPoints,QVector<QPointF> &newPoints,int index);
 
 private:
     QPointF calculateGeometryControlPoint(int index) const;

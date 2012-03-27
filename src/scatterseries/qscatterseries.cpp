@@ -70,8 +70,8 @@ QScatterSeries::MarkerShape QScatterSeries::shape() const
 */
 void QScatterSeries::setShape(MarkerShape shape)
 {
-    if(m_shape!= shape){
-        m_shape=shape;
+    if (m_shape != shape) {
+        m_shape = shape;
         emit QXYSeries::updated();
     }
 }
@@ -89,8 +89,8 @@ qreal QScatterSeries::size() const
 */
 void QScatterSeries::setSize(qreal size)
 {
-    if(m_size != size){
-        m_size=size;
+    if (m_size != size) {
+        m_size = size;
         emit updated();
     }
 }

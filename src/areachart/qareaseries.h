@@ -3,7 +3,6 @@
 
 #include <qchartglobal.h>
 #include <qseries.h>
-#include <QDebug>
 #include <QPen>
 #include <QBrush>
 
@@ -14,7 +13,7 @@ class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QSeries
 {
     Q_OBJECT
 public:
-    QAreaSeries(QLineSeries* upperSeries,QLineSeries* lowerSeries=0);
+    QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries=0);
     virtual ~QAreaSeries();
 
 public: // from QChartSeries
@@ -23,10 +22,10 @@ public: // from QChartSeries
     QLineSeries* upperSeries() const { return m_upperSeries;}
     QLineSeries* lowerSeries() const { return m_lowerSeries;}
 
-    void setPen(const QPen& pen);
+    void setPen(const QPen &pen);
     QPen pen() const { return m_pen;}
 
-    void setBrush(const QBrush& brush);
+    void setBrush(const QBrush &brush);
     QBrush brush() const { return m_brush;}
 
     void setPointsVisible(bool visible);
@@ -38,7 +37,7 @@ public: // from QChartSeries
 
 signals:
     void updated();
-    void clicked(const QPointF& point);
+    void clicked(const QPointF &point);
 
 private:
     QBrush m_brush;

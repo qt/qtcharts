@@ -5,10 +5,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-SplineChartItem::SplineChartItem(QSplineSeries* series, ChartPresenter *presenter) :
-XYChartItem(series, presenter),
-m_series(series),
-m_pointsVisible(false)
+SplineChartItem::SplineChartItem(QSplineSeries *series, ChartPresenter *presenter) :
+    XYChartItem(series, presenter),
+    m_series(series),
+    m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
@@ -25,26 +25,25 @@ QPainterPath SplineChartItem::shape() const
     return m_path;
 }
 
-void SplineChartItem::updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index)
+void SplineChartItem::updateLayout(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index)
 {
     QVector<QPointF> controlPoints;
 
     controlPoints.resize(newPoints.count()*2-2);
 
-    for (int i = 0; i < newPoints.size() - 1; i++)
-    {
+    for (int i = 0; i < newPoints.size() - 1; i++) {
         controlPoints[2*i] = calculateGeometryControlPoint(2 * i);
         controlPoints[2 * i + 1] = calculateGeometryControlPoint(2 * i + 1);
     }
 
-    if(controlPoints.count()<2) {
+    if (controlPoints.count()<2) {
         setLayout(newPoints,controlPoints);
         return;
     }
 
-    if(animator()){
+    if (animator()) {
        animator()->updateLayout(this,oldPoints,newPoints,m_controlPoints,controlPoints,index);
-    }else{
+    } else {
        setLayout(newPoints,controlPoints);
     }
 }
@@ -54,10 +53,9 @@ QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
     return XYChartItem::calculateGeometryPoint(m_series->controlPoint(index));
 }
 
-void SplineChartItem::setLayout(QVector<QPointF>& points,QVector<QPointF>& controlPoints)
+void SplineChartItem::setLayout(QVector<QPointF> &points, QVector<QPointF> &controlPoints)
 {
-    if(points.size()<2 || controlPoints.size()<2)
-    {
+    if ((points.size()<2) || (controlPoints.size()<2)) {
         XYChartItem::setLayout(points);
         m_controlPoints=controlPoints;
         return;
@@ -67,8 +65,7 @@ void SplineChartItem::setLayout(QVector<QPointF>& points,QVector<QPointF>& contr
 
     QPainterPath splinePath(points.at(0));
 
-    for (int i = 0; i < points.size() - 1; i++)
-    {
+    for (int i = 0; i < points.size() - 1; i++) {
         const QPointF& point = points.at(i + 1);
         splinePath.cubicTo(controlPoints[2*i],controlPoints[2 * i + 1],point);
     }
@@ -102,9 +99,9 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->setClipRect(clipRect());
     painter->setPen(m_linePen);
     painter->drawPath(m_path);
-    if(m_pointsVisible){
-           painter->setPen(m_pointPen);
-           painter->drawPoints(points());
+    if (m_pointsVisible) {
+        painter->setPen(m_pointPen);
+        painter->drawPoints(points());
     }
     painter->restore();
 }

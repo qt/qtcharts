@@ -75,7 +75,7 @@ void ScatterChartItem::deletePoints(int count)
     }
 }
 
-void ScatterChartItem::markerSelected(Marker* marker)
+void ScatterChartItem::markerSelected(Marker *marker)
 {
     emit XYChartItem::clicked(QPointF(m_series->x(marker->index()), m_series->y(marker->index())));
 }

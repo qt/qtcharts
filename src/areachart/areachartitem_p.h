@@ -14,7 +14,7 @@ class AreaChartItem : public ChartItem
 {
     Q_OBJECT
 public:
-    AreaChartItem(QAreaSeries* areaSeries, ChartPresenter *presenter);
+    AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter);
     ~ AreaChartItem();
 
     //from QGraphicsItem
@@ -28,15 +28,15 @@ public:
     void updatePath();
 
 protected:
-    void mousePressEvent( QGraphicsSceneMouseEvent * event );
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 signals:
-    void clicked(const QPointF& point);
+    void clicked(const QPointF &point);
 
 public slots:
     void handleUpdated();
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
-    void handleGeometryChanged(const QRectF& size);
+    void handleGeometryChanged(const QRectF &size);
 
 private:
     QAreaSeries* m_series;
@@ -55,13 +55,13 @@ private:
 class AreaBoundItem : public LineChartItem
 {
 public:
-    AreaBoundItem(AreaChartItem* item,QLineSeries* lineSeries):LineChartItem(lineSeries,0),
+    AreaBoundItem(AreaChartItem *item,QLineSeries *lineSeries):LineChartItem(lineSeries,0),
     m_item(item){
     };
 
     ~AreaBoundItem(){};
 
-    void setLayout(QVector<QPointF>& points){
+    void setLayout(QVector<QPointF> &points){
         LineChartItem::setLayout(points);
         m_item->updatePath();
     }

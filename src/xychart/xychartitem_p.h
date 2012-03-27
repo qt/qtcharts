@@ -14,8 +14,8 @@ class XYChartItem :  public ChartItem
 {
      Q_OBJECT
 public:
-     explicit XYChartItem(QXYSeries* series, ChartPresenter *presenter);
-    ~ XYChartItem(){};
+     explicit XYChartItem(QXYSeries *series, ChartPresenter *presenter);
+    ~XYChartItem(){};
 
     QVector<QPointF> points() const {return m_points;}
     QRectF clipRect() const { return m_clipRect;}
@@ -26,21 +26,21 @@ public slots:
     void handlePointRemoved(int index);
     void handlePointReplaced(int index);
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
-    void handleGeometryChanged(const QRectF& size);
+    void handleGeometryChanged(const QRectF &size);
 
 signals:
     void clicked(const QPointF& point);
 
 protected:
 
-    virtual void setLayout(QVector<QPointF>& points);
-    virtual void updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index = 0);
+    virtual void setLayout(QVector<QPointF> &points);
+    virtual void updateLayout(QVector<QPointF> &oldPoints,QVector<QPointF> &newPoints,int index = 0);
 
-    QPointF calculateGeometryPoint(const QPointF& point) const;
+    QPointF calculateGeometryPoint(const QPointF &point) const;
     QPointF calculateGeometryPoint(int index) const;
-    QPointF calculateDomainPoint(const QPointF& point) const;
+    QPointF calculateDomainPoint(const QPointF &point) const;
     QVector<QPointF> calculateGeometryPoints() const;
-    void mousePressEvent( QGraphicsSceneMouseEvent * event );
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     inline bool isEmpty();

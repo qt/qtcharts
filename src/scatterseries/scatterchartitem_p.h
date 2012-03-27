@@ -22,10 +22,10 @@ public:
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
-    void setPen(const QPen& pen);
-    void setBrush(const QBrush& brush);
+    void setPen(const QPen &pen);
+    void setBrush(const QBrush &brush);
 
-    void markerSelected(Marker* item);
+    void markerSelected(Marker *item);
 
 public slots:
     void handleUpdated();
@@ -35,7 +35,7 @@ private:
     void deletePoints(int count);
 
 protected:
-    void setLayout(QVector<QPointF>& points);
+    void setLayout(QVector<QPointF> &points);
 
 private:
     QScatterSeries *m_series;
@@ -52,7 +52,7 @@ class Marker: public QAbstractGraphicsShapeItem
 
 public:
 
-   Marker(QAbstractGraphicsShapeItem* item , ScatterChartItem* parent):QAbstractGraphicsShapeItem(0),m_item(item),m_parent(parent)
+   Marker(QAbstractGraphicsShapeItem *item , ScatterChartItem *parent) : QAbstractGraphicsShapeItem(0) ,m_item(item), m_parent(parent)
    {
    };
 
@@ -86,12 +86,12 @@ public:
        return m_item->contains(point);
    }
 
-   void setPen(const QPen& pen)
+   void setPen(const QPen &pen)
    {
        m_item->setPen(pen);
    }
 
-   void setBrush(const QBrush& brush)
+   void setBrush(const QBrush &brush)
    {
        m_item->setBrush(brush);
    }

@@ -3,7 +3,6 @@
 
 #include <qchartglobal.h>
 #include <qseries.h>
-#include <QDebug>
 #include <QPen>
 #include <QBrush>
 
@@ -13,18 +12,18 @@ class QTCOMMERCIALCHART_EXPORT QXYSeries : public QSeries
 {
     Q_OBJECT
 protected:
-    QXYSeries(QObject* parent=0);
+    QXYSeries(QObject *parent=0);
     virtual ~QXYSeries();
 
 public:
     void add(qreal x, qreal y);
-    void add(const QPointF& point);
+    void add(const QPointF &point);
     void add(const QList<QPointF> points);
     void replace(qreal x,qreal y);
-    void replace(const QPointF& point);
+    void replace(const QPointF &point);
     void remove(qreal x);
     void remove(qreal x, qreal y);
-    void remove(const QPointF& point);
+    void remove(const QPointF &point);
     void removeAll();
 
     int count() const;
@@ -35,12 +34,12 @@ public:
     QXYSeries& operator << (const QPointF &point);
     QXYSeries& operator << (const QList<QPointF> points);
 
-    void setPen(const QPen& pen);
+    void setPen(const QPen &pen);
     QPen pen() const {return m_pen;}
-    void setBrush(const QBrush& pen);
+    void setBrush(const QBrush &pen);
     QBrush brush() const {return m_brush;}
 
-    bool setModel(QAbstractItemModel* model);
+    bool setModel(QAbstractItemModel *model);
     QAbstractItemModel* model() {return m_model;}
 
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
@@ -54,7 +53,7 @@ public:
         void modelDataRemoved(QModelIndex parent, int start, int end);
 
 signals:
-    void clicked(const QPointF& point);
+    void clicked(const QPointF &point);
     void updated();
     void pointReplaced(int index);
     void pointRemoved(int index);

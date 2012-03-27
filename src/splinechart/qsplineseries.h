@@ -2,10 +2,10 @@
 #define QSPLINESERIES_H
 
 #include <qchartglobal.h>
-#include <QtGlobal>
 #include <qlineseries.h>
 #include <QList>
 #include <QPointF>
+#include <QtGlobal>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -19,7 +19,7 @@ public:
 
 //    int count() const { return m_x.size(); }
     QPointF controlPoint(int index) const {return m_controlPoints[index];}
-    bool setModel(QAbstractItemModel* model);
+    bool setModel(QAbstractItemModel *model);
 
     void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     void setModelMappingShift(int first, int count);

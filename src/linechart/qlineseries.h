@@ -3,20 +3,18 @@
 
 #include <qchartglobal.h>
 #include <qxyseries.h>
-#include <QDebug>
 #include <QPen>
-#include <QBrush>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QTCOMMERCIALCHART_EXPORT QLineSeries : public QXYSeries
 {
 public:
-	QLineSeries(QObject* parent=0);
+    QLineSeries(QObject *parent=0);
 	virtual ~QLineSeries();
 
-	void setLinePen(const QPen& pen);
-	QPen linePen() const {return m_pen;}
+    void setLinePen(const QPen &pen);
+    QPen linePen() const {return m_pen;}
 
 	void setPointsVisible(bool visible);
 	bool pointsVisible() const {return m_pointsVisible;}

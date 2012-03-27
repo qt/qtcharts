@@ -89,8 +89,7 @@ void QSplineSeries::calculateControlPoints()
     QList<qreal> yControl = getFirstControlPoints(rhs);
 
     // Fill output arrays.
-    for (int i = 0; i < n; ++i)
-    {
+    for (int i = 0; i < n; ++i) {
         // First control point
         m_controlPoints.append(QPointF(xControl[i], yControl[i]));
         // Second control point
@@ -112,8 +111,8 @@ QList<qreal> QSplineSeries::getFirstControlPoints(QList<qreal> rhs)
     qreal b = 2.0;
     x.append(rhs[0] / b);
     tmp.append(0);
-    for (int i = 1; i < rhs.size(); i++) // Decomposition and forward substitution.
-    {
+    for (int i = 1; i < rhs.size(); i++) {
+        // Decomposition and forward substitution.
         tmp.append(1 / b);
         b = (i < rhs.size() - 1 ? 4.0 : 3.5) - tmp[i];
         x.append((rhs[i] - x[i - 1]) / b);
@@ -130,8 +129,7 @@ QList<qreal> QSplineSeries::getFirstControlPoints(QList<qreal> rhs)
   */
 void QSplineSeries::updateControlPoints()
 {
-    if(count() > 1)
-    {
+    if (count() > 1) {
         m_controlPoints.clear();
         calculateControlPoints();
     }

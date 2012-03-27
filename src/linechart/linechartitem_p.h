@@ -14,8 +14,8 @@ class LineChartItem :  public XYChartItem
 {
      Q_OBJECT
 public:
-     explicit LineChartItem(QLineSeries* series,ChartPresenter *presenter);
-    ~ LineChartItem(){};
+     explicit LineChartItem(QLineSeries *series,ChartPresenter *presenter);
+    ~LineChartItem() {};
 
     //from QGraphicsItem
     QRectF boundingRect() const;

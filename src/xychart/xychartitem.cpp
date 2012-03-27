@@ -10,20 +10,20 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-XYChartItem::XYChartItem(QXYSeries* series, ChartPresenter *presenter):ChartItem(presenter),
-m_minX(0),
-m_maxX(0),
-m_minY(0),
-m_maxY(0),
-m_series(series)
+XYChartItem::XYChartItem(QXYSeries *series, ChartPresenter *presenter):ChartItem(presenter),
+    m_minX(0),
+    m_maxX(0),
+    m_minY(0),
+    m_maxY(0),
+    m_series(series)
 {
-    QObject::connect(series,SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
-    QObject::connect(series,SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
-    QObject::connect(series,SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
-    QObject::connect(this,SIGNAL(clicked(const QPointF&)),series,SIGNAL(clicked(const QPointF&)));
+    connect(series,SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
+    connect(series,SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
+    connect(series,SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
+    connect(this,SIGNAL(clicked(const QPointF&)),series,SIGNAL(clicked(const QPointF&)));
 }
 
-QPointF XYChartItem::calculateGeometryPoint(const QPointF& point) const
+QPointF XYChartItem::calculateGeometryPoint(const QPointF &point) const
 {
     const qreal deltaX = m_size.width()/(m_maxX-m_minX);
     const qreal deltaY = m_size.height()/(m_maxY-m_minY);
@@ -50,14 +50,14 @@ QVector<QPointF> XYChartItem::calculateGeometryPoints() const
     QVector<QPointF> points;
     points.reserve(m_series->count());
     for (int i = 0; i < m_series->count(); ++i) {
-      qreal x = (m_series->x(i) - m_minX)* deltaX;
-      qreal y = (m_series->y(i) - m_minY)*-deltaY + m_size.height();
-      points << QPointF(x,y);
+        qreal x = (m_series->x(i) - m_minX)* deltaX;
+        qreal y = (m_series->y(i) - m_minY)*-deltaY + m_size.height();
+        points << QPointF(x,y);
     }
     return points;
 }
 
-QPointF XYChartItem::calculateDomainPoint(const QPointF& point) const
+QPointF XYChartItem::calculateDomainPoint(const QPointF &point) const
 {
     const qreal deltaX = m_size.width()/(m_maxX-m_minX);
     const qreal deltaY = m_size.height()/(m_maxY-m_minY);
@@ -66,16 +66,16 @@ QPointF XYChartItem::calculateDomainPoint(const QPointF& point) const
     return QPointF(x,y);
 }
 
-void XYChartItem::updateLayout(QVector<QPointF>& oldPoints,QVector<QPointF>& newPoints,int index)
+void XYChartItem::updateLayout(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index)
 {
-    if(animator()){
-       animator()->updateLayout(this,oldPoints,newPoints,index);
-    }else{
+    if (animator()) {
+        animator()->updateLayout(this,oldPoints,newPoints,index);
+    } else {
         setLayout(newPoints);
     }
 }
 
-void XYChartItem::setLayout(QVector<QPointF>& points)
+void XYChartItem::setLayout(QVector<QPointF> &points)
 {
     m_points = points;
     update();
@@ -121,20 +121,20 @@ void XYChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal 
     m_minY=minY;
     m_maxY=maxY;
 
-    if(isEmpty()) return;
+    if (isEmpty()) return;
     QVector<QPointF> points = calculateGeometryPoints();
     updateLayout(m_points,points);
     update();
 }
 
-void XYChartItem::handleGeometryChanged(const QRectF& rect)
+void XYChartItem::handleGeometryChanged(const QRectF &rect)
 {
 	Q_ASSERT(rect.isValid());
 	m_size=rect.size();
 	m_clipRect=rect.translated(-rect.topLeft());
 	setPos(rect.topLeft());
 
-    if(isEmpty()) return;
+    if (isEmpty()) return;
 	QVector<QPointF> points = calculateGeometryPoints();
 	updateLayout(m_points,points);
 	update();
@@ -146,7 +146,7 @@ bool XYChartItem::isEmpty()
    return !m_clipRect.isValid() ||  m_maxX - m_minX == 0 || m_maxY - m_minY ==0 ;
 }
 
-void XYChartItem::mousePressEvent( QGraphicsSceneMouseEvent * event )
+void XYChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit clicked(calculateDomainPoint(event->pos()));
 }
