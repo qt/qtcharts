@@ -1,7 +1,15 @@
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the QtCommercial Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
 #ifndef QCHART_P_H
 #define QCHART_P_H
 
-#include "private/qgraphicswidget_p.h"
 #include "qchartaxis.h"
 #include "qlegend.h"
 #include "chartpresenter_p.h"
@@ -12,9 +20,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
 
-class QChartPrivate
+struct QChartPrivate
 {
-public:
     QChartPrivate(QChart *parent);
     ~QChartPrivate();
 
@@ -30,8 +37,6 @@ public:
     QLegend* m_legend;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
-
-    Q_DECLARE_PUBLIC(QChart);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

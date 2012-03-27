@@ -59,7 +59,7 @@ public:
     Q_DECLARE_FLAGS(AnimationOptions, AnimationOption)
 
 public:
-    QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    explicit QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
     void addSeries(QSeries *series, QChartAxis *axisY = 0);

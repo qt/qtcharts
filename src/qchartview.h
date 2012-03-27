@@ -1,10 +1,29 @@
-#ifndef QCHARTWIDGET_H
-#define QCHARTWIDGET_H
+/****************************************************************************
+**
+** Copyright (C) 2012 Digia Plc
+** All rights reserved.
+** For any questions to Digia, please use contact form at http://qt.digia.com
+**
+** This file is part of the Qt Commercial Charts Add-on.
+**
+** $QT_BEGIN_LICENSE$
+** Licensees holding valid Qt Commercial licenses may use this file in
+** accordance with the Qt Commercial License Agreement provided with the
+** Software or, alternatively, in accordance with the terms contained in
+** a written agreement between you and Digia.
+**
+** If you have questions regarding the use of this file, please use
+** contact form at http://qt.digia.com
+** $QT_END_LICENSE$
+**
+****************************************************************************/
 
-#include <qchartglobal.h>
-#include <qchartaxis.h>
-#include <qseries.h>
-#include <qchart.h>
+#ifndef QCHARTVIEW_H
+#define QCHARTVIEW_H
+
+#include <QChartAxis>
+#include <QSeries>
+#include <QChart>
 #include <QGraphicsView>
 
 class QGraphicsScene;
@@ -12,70 +31,39 @@ class QRubberBand;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChart;
+class QChartViewPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QChartView : public QGraphicsView
 {
     Q_OBJECT
 
 public:
-    enum  RubberBandPolicy { NoRubberBand, VerticalRubberBand, HorizonalRubberBand, RectangleRubberBand };
 
-    explicit QChartView(QWidget *parent = 0);
+    enum  RubberBand{
+        NoRubberBand = 0x0,
+        VerticalRubberBand = 0x1,
+        HorizonalRubberBand = 0x2,
+        RectangleRubberBand = 0x3
+    };
+
+    Q_DECLARE_FLAGS(RubberBands, RubberBand)
+
+    explicit QChartView(QChart *chart,QWidget *parent = 0);
     ~QChartView();
 
-    //implement from QWidget
-    void resizeEvent(QResizeEvent *event);
-
-    void addSeries(QSeries* series,QChartAxis* axisY=0);// takes series ownership , takes axis ownership
-    void removeSeries(QSeries* series); //returns ownership , deletes axis if no series attached
-    void removeAllSeries(); // deletes series and axis
-
-    void setChartTitle(const QString& title);
-    QString chartTitle() const;
-    void setChartTitleFont(const QFont& font);
-    void setChartTitleBrush(const QBrush &brush);
-    QBrush chartTitleBrush();
-    void setChartBackgroundBrush(const QBrush& brush);
-    void setChartBackgroundPen(const QPen& pen);
-
-    void zoomIn();
-    void zoomIn(const QRect& rect);
-    void zoomOut();
-    void scrollLeft();
-    void scrollRight();
-    void scrollUp();
-    void scrollDown();
-
-    void setRubberBandPolicy(const RubberBandPolicy );
-    RubberBandPolicy rubberBandPolicy() const;
-
-    void setChartTheme(QChart::ChartTheme theme);
-    QChart::ChartTheme chartTheme() const;
-
-    void setAnimationOptions(QChart::AnimationOptions options);
-    QChart::AnimationOptions animationOptions() const;
-
-    QChartAxis* axisX() const;
-    QChartAxis* axisY() const;
-
-    QLegend &legend() const;
-    QLegend* takeLegend();
-    void giveLegend(QLegend* legend);
+    void setRubberBand(const RubberBands& rubberBands);
+    RubberBands rubberBand() const;
+    QChart* chart() const;
 
 protected:
+    void resizeEvent(QResizeEvent *event);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
-private:
-    QGraphicsScene *m_scene;
-    QChart* m_chart;
-    QPoint m_rubberBandOrigin;
-    QRubberBand* m_rubberBand;
-    bool m_verticalRubberBand;
-    bool m_horizonalRubberBand;
+protected:
+    QScopedPointer<QChartViewPrivate> d_ptr;
     Q_DISABLE_COPY(QChartView)
 };
 

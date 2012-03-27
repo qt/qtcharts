@@ -1,11 +1,29 @@
+/****************************************************************************
+**
+** Copyright (C) 2012 Digia Plc
+** All rights reserved.
+** For any questions to Digia, please use contact form at http://qt.digia.com
+**
+** This file is part of the Qt Commercial Charts Add-on.
+**
+** $QT_BEGIN_LICENSE$
+** Licensees holding valid Qt Commercial licenses may use this file in
+** accordance with the Qt Commercial License Agreement provided with the
+** Software or, alternatively, in accordance with the terms contained in
+** a written agreement between you and Digia.
+**
+** If you have questions regarding the use of this file, please use
+** contact form at http://qt.digia.com
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
 #include "qchartview.h"
-#include "qchart.h"
 #include "qchart_p.h"
-#include "qchartaxis.h"
-#include <QGraphicsView>
+#include "qchartview_p.h"
 #include <QGraphicsScene>
 #include <QRubberBand>
-#include <QResizeEvent>
+
 
 /*!
     \enum QChartView::RubberBandPolicy
@@ -35,20 +53,20 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs a chartView object which is a child of a\a parent.
 */
-QChartView::QChartView(QWidget *parent) :
+QChartView::QChartView(QChart *chart,QWidget *parent) :
     QGraphicsView(parent),
-    m_scene(new QGraphicsScene(this)),
-    m_chart(new QChart()),
-    m_rubberBand(0),
-    m_verticalRubberBand(false),
-    m_horizonalRubberBand(false)
+    d_ptr(new QChartViewPrivate())
 {
+    d_ptr->m_scene = new QGraphicsScene(this);
+    d_ptr->m_chart = chart;
+    d_ptr->m_presenter = chart->d_ptr->m_presenter;
+
     setFrameShape(QFrame::NoFrame);
     setBackgroundRole(QPalette::Window);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setScene(m_scene);
-    m_scene->addItem(m_chart);
+    setScene(d_ptr->m_scene);
+    d_ptr->m_scene->addItem(chart);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 }
 
@@ -60,168 +78,36 @@ QChartView::~QChartView()
 {
 }
 
-/*!
-    Resizes and updates the chart area using the \a event data
-*/
-void QChartView::resizeEvent(QResizeEvent *event)
+QChart* QChartView::chart() const
 {
-    m_chart->resize(size());
-    QGraphicsView::resizeEvent(event);
-}
-
-/*!
-    Adds the \a series and optional \a axisY onto the chart and takes the ownership of the objects.
-    If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
-    the y axis).
-    \sa removeSeries(), removeAllSeries()
-*/
-void QChartView::addSeries(QSeries* series,QChartAxis *axisY)
-{
-    m_chart->addSeries(series,axisY);
-}
-
-/*!
-    Removes the \a series specified in a perameter from the QChartView.
-    It releses its ownership of the specified QChartSeries object.
-    It does not delete the pointed QChartSeries data object
-    \sa addSeries(), removeAllSeries()
-*/
-void QChartView::removeSeries(QSeries* series)
-{
-    m_chart->removeSeries(series);
-}
-
-/*!
-    Removes all the QChartSeries that have been added to the QChartView
-    It also deletes the pointed QChartSeries data objects
-    \sa addSeries(), removeSeries()
-*/
-void QChartView::removeAllSeries()
-{
-    m_chart->removeAllSeries();
-}
-
-/*!
-    Zooms in the view by a factor of 2
-*/
-void QChartView::zoomIn()
-{
-    m_chart->zoomIn();
-}
-
-/*!
-    Zooms in the view to a maximum level at which \a rect is still fully visible.
-*/
-void QChartView::zoomIn(const QRect& rect)
-{
-    m_chart->zoomIn(rect);
-}
-
-/*!
-    Restores the view zoom level to the previous one.
-*/
-void QChartView::zoomOut()
-{
-    m_chart->zoomOut();
-}
-
-/*!
-    Sets the chart \a title. A description text that is drawn above the chart.
-*/
-void QChartView::setChartTitle(const QString& title)
-{
-    m_chart->setTitle(title);
-}
-
-/*!
-    Returns the chart's title. A description text that is drawn above the chart.
-*/
-QString QChartView::chartTitle() const
-{
-    return m_chart->title();
-}
-
-/*!
-    Sets the \a font that is used for rendering the description text that is rendered above the chart.
-*/
-void QChartView::setChartTitleFont(const QFont& font)
-{
-    m_chart->setTitleFont(font);
-}
-
-/*!
-    Sets the \a brush used for rendering the title text.
-*/
-void QChartView::setChartTitleBrush(const QBrush &brush)
-{
-    m_chart->setTitleBrush(brush);
-}
-
-/*!
-    Returns the brush used for rendering the title text.
-*/
-QBrush QChartView::chartTitleBrush()
-{
-    return m_chart->titleBrush();
-}
-
-/*!
-    Sets the \a brush that is used for painting the background of the chart area of the QChartView widget.
-*/
-void QChartView::setChartBackgroundBrush(const QBrush& brush)
-{
-    m_chart->setBackgroundBrush(brush);
-}
-
-/*!
-    Sets the \a pen that is used for painting the background of the chart area of the QChartView widget.
-*/
-void QChartView::setChartBackgroundPen(const QPen& pen)
-{
-    m_chart->setBackgroundPen(pen);
+    return d_ptr->m_chart;
 }
 
 /*!
     Sets the RubberBandPlicy to \a policy. Selected policy determines the way zooming is performed.
 */
-void QChartView::setRubberBandPolicy(const RubberBandPolicy policy)
+void QChartView::setRubberBand(const RubberBands& rubberBand)
 {
-    switch(policy) {
-        case VerticalRubberBand:
-        m_verticalRubberBand = true;
-        m_horizonalRubberBand = false;
-        break;
-        case HorizonalRubberBand:
-        m_verticalRubberBand = false;
-        m_horizonalRubberBand = true;
-        break;
-        case RectangleRubberBand:
-        m_verticalRubberBand = true;
-        m_horizonalRubberBand = true;
-        break;
-        case NoRubberBand:
-        default:
-        delete m_rubberBand;
-        m_rubberBand=0;
-        m_horizonalRubberBand = false;
-        m_verticalRubberBand = false;
+    d_ptr->m_rubberBandFlags=rubberBand;
+
+    if (!d_ptr->m_rubberBandFlags) {
+        delete d_ptr->m_rubberBand;
+        d_ptr->m_rubberBand=0;
         return;
     }
-    if(!m_rubberBand) {
-        m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
-        m_rubberBand->setEnabled(true);
+
+    if (!d_ptr->m_rubberBand) {
+        d_ptr->m_rubberBand = new QRubberBand(QRubberBand::Rectangle, this);
+        d_ptr->m_rubberBand->setEnabled(true);
     }
 }
 
 /*!
     Returns the RubberBandPolicy that is currently being used by the widget.
 */
-QChartView::RubberBandPolicy QChartView::rubberBandPolicy() const
+QChartView::RubberBands QChartView::rubberBand() const
 {
-    if(m_horizonalRubberBand && m_verticalRubberBand) return RectangleRubberBand;
-    if(m_horizonalRubberBand) return HorizonalRubberBand;
-    if(m_verticalRubberBand) return VerticalRubberBand;
-    return NoRubberBand;
+    return d_ptr->m_rubberBandFlags;
 }
 
 /*!
@@ -230,15 +116,15 @@ QChartView::RubberBandPolicy QChartView::rubberBandPolicy() const
 */
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
-    if(m_rubberBand && m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
+    if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
 
-        int padding = m_chart->d_ptr->m_presenter->padding();
+        int padding = d_ptr->m_presenter->padding();
         QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
 
         if (rect.contains(event->pos())) {
-            m_rubberBandOrigin = event->pos();
-            m_rubberBand->setGeometry(QRect(m_rubberBandOrigin, QSize()));
-            m_rubberBand->show();
+            d_ptr->m_rubberBandOrigin = event->pos();
+            d_ptr->m_rubberBand->setGeometry(QRect(d_ptr->m_rubberBandOrigin, QSize()));
+            d_ptr->m_rubberBand->show();
             event->accept();
         }
     }
@@ -253,20 +139,20 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 */
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
-    if(m_rubberBand && m_rubberBand->isVisible()) {
-        int padding = m_chart->d_ptr->m_presenter->padding();
+    if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
+        int padding = d_ptr->m_presenter->padding();
         QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
-        int width = event->pos().x() - m_rubberBandOrigin.x();
-        int height = event->pos().y() - m_rubberBandOrigin.y();
-        if(!m_verticalRubberBand) {
-            m_rubberBandOrigin.setY(rect.top());
+        int width = event->pos().x() - d_ptr->m_rubberBandOrigin.x();
+        int height = event->pos().y() - d_ptr->m_rubberBandOrigin.y();
+        if (!d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)) {
+            d_ptr->m_rubberBandOrigin.setY(rect.top());
             height = rect.height();
         }
-        if(!m_horizonalRubberBand) {
-            m_rubberBandOrigin.setX(rect.left());
+        if (!d_ptr->m_rubberBandFlags.testFlag(HorizonalRubberBand)) {
+            d_ptr->m_rubberBandOrigin.setX(rect.left());
             width= rect.width();
         }
-        m_rubberBand->setGeometry(QRect(m_rubberBandOrigin.x(),m_rubberBandOrigin.y(), width,height).normalized());
+        d_ptr->m_rubberBand->setGeometry(QRect(d_ptr->m_rubberBandOrigin.x(),d_ptr->m_rubberBandOrigin.y(), width,height).normalized());
     }
     else {
         QGraphicsView::mouseMoveEvent(event);
@@ -279,16 +165,16 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
 */
 void QChartView::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(m_rubberBand) {
-        if (event->button() == Qt::LeftButton && m_rubberBand->isVisible()) {
-            m_rubberBand->hide();
-            QRect rect = m_rubberBand->geometry();
-            m_chart->zoomIn(rect);
+    if(d_ptr->m_rubberBand) {
+        if (event->button() == Qt::LeftButton && d_ptr->m_rubberBand->isVisible()) {
+            d_ptr->m_rubberBand->hide();
+            QRect rect = d_ptr->m_rubberBand->geometry();
+            d_ptr->m_chart->zoomIn(rect);
             event->accept();
         }
 
         if(event->button()==Qt::RightButton){
-            m_chart->zoomOut();
+            d_ptr->m_chart->zoomOut();
             event->accept();
         }
     }
@@ -305,10 +191,10 @@ void QChartView::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
         case Qt::Key_Plus:
-        zoomIn();
+        d_ptr->m_chart->zoomIn();
         break;
         case Qt::Key_Minus:
-        zoomOut();
+        d_ptr->m_chart->zoomOut();
         break;
         default:
         QGraphicsView::keyPressEvent(event);
@@ -317,99 +203,30 @@ void QChartView::keyPressEvent(QKeyEvent *event)
 }
 
 /*!
-    Sets the \a theme used by the chart for rendering the graphical representation of the data
-    \sa QChart::ChartTheme, chartTheme()
+    Resizes and updates the chart area using the \a event data
 */
-void QChartView::setChartTheme(QChart::ChartTheme theme)
+void QChartView::resizeEvent(QResizeEvent *event)
 {
-    m_chart->setTheme(theme);
+    d_ptr->m_chart->resize(size());
+    QGraphicsView::resizeEvent(event);
 }
 
-/*!
-    Returns the theme enum used by the chart.
-    \sa setChartTheme()
-*/
-QChart::ChartTheme QChartView::chartTheme() const
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QChartViewPrivate::QChartViewPrivate():
+m_scene(0),
+m_chart(0),
+m_presenter(0),
+m_rubberBand(0),
+m_rubberBandFlags(QChartView::NoRubberBand)
 {
-    return m_chart->theme();
+
 }
 
-/*!
-    Returns the pointer to the x axis object of the chart
-*/
-QChartAxis* QChartView::axisX() const
+QChartViewPrivate::~QChartViewPrivate()
 {
-    return m_chart->axisX();
-}
 
-/*!
-    Returns the pointer to the y axis object of the chart
-*/
-QChartAxis* QChartView::axisY() const
-{
-    return m_chart->axisY();
 }
-
-/*!
-    Returns the pointer to legend object of the chart
-*/
-QLegend& QChartView::legend() const
-{
-    return m_chart->legend();
-}
-
-/*!
-    Gives ownership of legend to user.
-*/
-QLegend* QChartView::takeLegend()
-{
-    return m_chart->takeLegend();
-}
-
-/*!
-    Gives ownership of legend back to chart. QChart takes ownership of \a legend and deletes existing one
-*/
-void QChartView::giveLegend(QLegend* legend)
-{
-    m_chart->giveLegend(legend);
-}
-
-/*!
-    Sets animation \a options for the chart
-*/
-void QChartView::setAnimationOptions(QChart::AnimationOptions options)
-{
-    m_chart->setAnimationOptions(options);
-}
-
-/*!
-    Returns animation options for the chart
-*/
-QChart::AnimationOptions QChartView::animationOptions() const
-{
-    return m_chart->animationOptions();
-}
-
-void QChartView::scrollLeft()
-{
-    m_chart->scrollLeft();
-}
-
-void QChartView::scrollRight()
-{
-    m_chart->scrollRight();
-}
-
-void QChartView::scrollUp()
-{
-    m_chart->scrollUp();
-}
-
-void QChartView::scrollDown()
-{
-    m_chart->scrollDown();
-}
-
 
 #include "moc_qchartview.cpp"
 

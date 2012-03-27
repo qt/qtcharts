@@ -31,7 +31,8 @@ PRIVATE_HEADERS += \
     $$PWD/chartbackground_p.h \
     $$PWD/chart_p.h \
     $$PWD/chartconfig_p.h \
-    $$PWD/qchart_p.h
+    $$PWD/qchart_p.h \
+    $$PWD/qchartview_p.h
 PUBLIC_HEADERS += \
     $$PWD/qchart.h \
     $$PWD/qchartglobal.h \
