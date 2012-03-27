@@ -54,7 +54,7 @@ void BarValue::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
     if (isVisible()) {
         painter->setPen(mPen);
-        painter->drawText(boundingRect(),mValueString);
+        painter->drawText(boundingRect(), mValueString);
     }
 }
 

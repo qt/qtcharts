@@ -35,7 +35,7 @@ public Q_SLOTS:
 
 private:
 
-    QBarSet& mBarSet;
+    QBarSet &mBarSet;
     QPen mPen;
     QString mValueString;
 

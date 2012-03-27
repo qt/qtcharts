@@ -11,7 +11,7 @@ class Bar : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    Bar(QString category, QGraphicsItem *parent=0);
+    Bar(QString category, QGraphicsItem *parent = 0);
 
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

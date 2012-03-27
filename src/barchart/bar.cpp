@@ -9,11 +9,11 @@ Bar::Bar(QString category, QGraphicsItem *parent)
     : QGraphicsRectItem(parent),
     mCategory(category)
 {
-    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
+    setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setAcceptHoverEvents(true);
 }
 
-void Bar::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         emit clicked(mCategory);
@@ -22,13 +22,14 @@ void Bar::mousePressEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     emit hoverEntered(event->lastScreenPos());
 }
 
-void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
+void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
+    Q_UNUSED(event)
     emit hoverLeaved();
 }
 

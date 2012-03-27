@@ -71,13 +71,12 @@ qreal BarChartModel::min()
     // This is slower since they are checked every time, even if data is same since previous call.
     qreal min = INT_MAX;
 
-    for (int i=0; i <mDataModel.count(); i++) {
+    for (int i = 0; i < mDataModel.count(); i++) {
         int itemCount = mDataModel.at(i)->count();
-        for (int j=0; j<itemCount; j++) {
+        for (int j = 0; j < itemCount; j++) {
             qreal temp = mDataModel.at(i)->valueAt(j);
-            if (temp < min) {
+            if (temp < min)
                 min = temp;
-            }
         }
     }
     return min;
@@ -91,13 +90,12 @@ qreal BarChartModel::max()
     // This is slower since they are checked every time, even if data is same since previous call.
     qreal max = INT_MIN;
 
-    for (int i=0; i <mDataModel.count(); i++) {
+    for (int i = 0; i < mDataModel.count(); i++) {
         int itemCount = mDataModel.at(i)->count();
-        for (int j=0; j<itemCount; j++) {
+        for (int j = 0; j < itemCount; j++) {
             qreal temp = mDataModel.at(i)->valueAt(j);
-            if (temp > max) {
+            if (temp > max)
                 max = temp;
-            }
         }
     }
 
@@ -129,9 +127,8 @@ qreal BarChartModel::percentageAt(int set, int category)
 
     qreal value = mDataModel.at(set)->valueAt(category);
     qreal total = categorySum(category);
-    if (0 == total) {
+    if (0 == total)
         return 100.0;
-    }
 
     return value / total;
 }
@@ -143,9 +140,8 @@ qreal BarChartModel::categorySum(int category)
     int count = mDataModel.count(); // Count sets
 
     for (int set = 0; set < count; set++) {
-        if (category < mDataModel.at(set)->count()) {
+        if (category < mDataModel.at(set)->count())
             sum += mDataModel.at(set)->valueAt(category);
-        }
     }
     return sum;
 }
@@ -155,11 +151,10 @@ qreal BarChartModel::maxCategorySum()
     qreal max = INT_MIN;
     int count = categoryCount();
 
-    for (int col=0; col<count; col++) {
+    for (int col = 0; col < count; col++) {
         qreal sum = categorySum(col);
-        if (sum > max) {
+        if (sum > max)
             max = sum;
-        }
     }
     return max;
 }

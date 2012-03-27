@@ -127,7 +127,7 @@ void QBarSet::setValue(int index, qreal value)
 qreal QBarSet::total()
 {
     qreal total(0);
-    for (int i=0; i<mValues.count(); i++) {
+    for (int i=0; i < mValues.count(); i++) {
         total += mValues.at(i);
     }
     return total;
@@ -202,4 +202,5 @@ void QBarSet::barHoverLeaveEvent()
 }
 
 #include "moc_qbarset.cpp"
+
 QTCOMMERCIALCHART_END_NAMESPACE

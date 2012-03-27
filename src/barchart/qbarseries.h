@@ -17,7 +17,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
 {
     Q_OBJECT
 public:
-    QBarSeries(QStringList categories, QObject* parent=0);
+    QBarSeries(QStringList categories, QObject *parent = 0);
 
     virtual QSeriesType type() const { return QSeries::SeriesTypeBar; }
 
@@ -31,9 +31,8 @@ public:
     QList<QBarSet*> barSets();
     QBarCategories categories() const;
 
-
-    bool setModel(QAbstractItemModel* model);
-    QAbstractItemModel* modelExt() {return m_model;}
+    bool setModel(QAbstractItemModel *model);
+    QAbstractItemModel *modelExt() { return m_model; }
     void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
     void setModelMappingShift(int first, int count);
 
@@ -54,8 +53,8 @@ public:
 
 signals:
     //void changed(int index);
-    void clicked(QBarSet* barset, QString category);        // Up to user of api, what to do with these signals
-    void rightClicked(QBarSet* barset, QString category);
+    void clicked(QBarSet *barset, QString category);        // Up to user of api, what to do with these signals
+    void rightClicked(QBarSet *barset, QString category);
 
     //
     void updatedBars();
@@ -67,7 +66,7 @@ signals:
     // <--- TO PIMPL
 
 public Q_SLOTS:
-    void setToolTipEnabled(bool enabled=true);           // enables tooltips
+    void setToolTipEnabled(bool enabled = true);           // enables tooltips
 
     // TODO: TO PIMPL --->
     void barsetClicked(QString category);
@@ -82,7 +81,7 @@ private Q_SLOTS:
     void barsetChanged();
 
 protected:
-    BarChartModel* mModel;
+    BarChartModel *mModel;
 
 //    QAbstractItemModel* m_model;
     int m_mapCategories;

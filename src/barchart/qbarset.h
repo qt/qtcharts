@@ -63,7 +63,7 @@ private:
 
     QString mName;
     QList<qreal> mValues;   // TODO: replace with map (category, value)
-    QMap<QString,qreal> mMappedValues;
+    QMap<QString, qreal> mMappedValues;
     QPen mPen;
     QBrush mBrush;
     QPen mFloatingValuePen;

@@ -26,7 +26,7 @@ public:
     void insertCategory(int i, QString category);
     void removeCategory(int i);
     QBarSet *setAt(int index);
-    QList<QBarSet*> barSets();
+    QList<QBarSet *> barSets();
 
     int barsetCount();          // Number of sets in model
     int categoryCount();        // Number of categories
@@ -48,11 +48,9 @@ public slots:
     
 private:
 
-    QList<QBarSet*> mDataModel;
+    QList<QBarSet *> mDataModel;
     QStringList mCategory;
-
     int mCurrentSet;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

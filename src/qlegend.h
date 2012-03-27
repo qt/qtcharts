@@ -25,7 +25,7 @@ public:
         PreferredLayoutTop,
         PreferredLayoutBottom,
         PreferredLayoutLeft,
-        PreferredLayoutRight,
+        PreferredLayoutRight
     };
 
     explicit QLegend(QGraphicsItem *parent = 0);
@@ -33,10 +33,10 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     QRectF boundingRect() const;
 
-    void setBrush(const QBrush& brush);
+    void setBrush(const QBrush &brush);
     QBrush brush() const;
 
-    void setPen(const QPen& pen);
+    void setPen(const QPen &pen);
     QPen pen() const;
 
     void setPreferredLayout(QLegend::PreferredLayout preferred);
@@ -51,31 +51,31 @@ public:
 
 signals:
     // for interactions.
-    void clicked(QSeries* series, Qt::MouseButton button);
-    void clicked(QBarSet* barset, Qt::MouseButton button);
-    void clicked(QPieSlice* slice, Qt::MouseButton button);
+    void clicked(QSeries *series, Qt::MouseButton button);
+    void clicked(QBarSet *barset, Qt::MouseButton button);
+    void clicked(QPieSlice *slice, Qt::MouseButton button);
 
 public slots:
     // PIMPL --->
-    void handleSeriesAdded(QSeries* series,Domain* domain);
-    void handleSeriesRemoved(QSeries* series);
-    void handleAdded(QList<QPieSlice*> slices);
-    void handleRemoved(QList<QPieSlice*> slices);
+    void handleSeriesAdded(QSeries *series, Domain *domain);
+    void handleSeriesRemoved(QSeries *series);
+    void handleAdded(QList<QPieSlice *> slices);
+    void handleRemoved(QList<QPieSlice *> slices);
     void handleMarkerDestroyed();
-    void handleScrollButtonClicked(QGraphicsSceneMouseEvent* event);
+    void handleScrollButtonClicked(QGraphicsSceneMouseEvent *event);
     // PIMPL <---
 
 private:
     // PIMPL --->
-    void connectSeries(QSeries* series);
-    void disconnectSeries(QSeries* series);
-    void createMarkers(QSeries* series);
-    void appendMarkers(QXYSeries* series);      // All line series are derived from QXYSeries, so this works for now
-    void appendMarkers(QBarSeries* series);
-    void appendMarkers(QPieSeries* series);
-    void deleteMarkers(QSeries* series);
+    void connectSeries(QSeries *series);
+    void disconnectSeries(QSeries *series);
+    void createMarkers(QSeries *series);
+    void appendMarkers(QXYSeries *series);      // All line series are derived from QXYSeries, so this works for now
+    void appendMarkers(QBarSeries *series);
+    void appendMarkers(QPieSeries *series);
+    void deleteMarkers(QSeries *series);
     void updateLayout();
-    void rescaleScrollButtons(const QSize& size);
+    void rescaleScrollButtons(const QSize &size);
     QSizeF maximumMarkerSize();
     void checkFirstMarkerBounds();
     bool scrollButtonsVisible();
@@ -85,7 +85,7 @@ private:
     QSizeF mMinimumSize;
     QSizeF mMaximumSize;
 
-    QList<LegendMarker*> mMarkers;
+    QList<LegendMarker *> mMarkers;
 
     QBrush m_brush;
     QPen m_pen;
@@ -93,10 +93,10 @@ private:
 
     int mFirstMarker;
 
-    LegendScrollButton* mScrollButtonLeft;
-    LegendScrollButton* mScrollButtonRight;
-    LegendScrollButton* mScrollButtonUp;
-    LegendScrollButton* mScrollButtonDown;
+    LegendScrollButton *mScrollButtonLeft;
+    LegendScrollButton *mScrollButtonRight;
+    LegendScrollButton *mScrollButtonUp;
+    LegendScrollButton *mScrollButtonDown;
 
     qreal mMargin;
     // <--- PIMPL

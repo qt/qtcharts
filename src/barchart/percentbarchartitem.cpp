@@ -6,7 +6,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PercentBarChartItem::PercentBarChartItem(QBarSeries *series, ChartPresenter* presenter) :
+PercentBarChartItem::PercentBarChartItem(QBarSeries *series, ChartPresenter *presenter) :
     BarChartItem(series, presenter)
 {
 }
@@ -21,11 +21,11 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
 
     qreal categoryCount = mSeries->categoryCount();
     qreal barWidth = width / (mSeries->categoryCount() * 2);
-    qreal xStep = width/categoryCount;
-    qreal xPos =  xStep/2 - barWidth / 2;
+    qreal xStep = width / categoryCount;
+    qreal xPos =  xStep / 2 - barWidth / 2;
 
     int itemIndex(0);
-    for (int category = 0; category < categoryCount ; category++) {
+    for (int category = 0; category < categoryCount; category++) {
         qreal colSum = mSeries->categorySum(category);
         qreal scale = (height / colSum);
         qreal yPos = height;
@@ -34,7 +34,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             Bar* bar = mBars.at(itemIndex);
             bar->setPen(mSeries->barsetAt(set)->pen());
             bar->setBrush(mSeries->barsetAt(set)->brush());
-            QRectF rect(xPos, yPos-barHeight,barWidth, barHeight);
+            QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
             layout.append(rect);
             itemIndex++;
             yPos -= barHeight;
@@ -54,8 +54,8 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             BarValue* value = mFloatingValues.at(itemIndex);
 
             QBarSet* barSet = mSeries->barsetAt(set);
-            value->resize(100,50);  // TODO: proper layout for this.
-            value->setPos(xPos, yPos-barHeight/2);
+            value->resize(100, 50);  // TODO: proper layout for this.
+            value->setPos(xPos, yPos-barHeight / 2);
             value->setPen(barSet->floatingValuePen());
 
             if (mSeries->valueAt(set,category) != 0) {

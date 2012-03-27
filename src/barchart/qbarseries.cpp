@@ -54,8 +54,8 @@ QBarSeries::QBarSeries(QBarCategories categories, QObject *parent)
 void QBarSeries::addBarSet(QBarSet *set)
 {
     mModel->addBarSet(set);
-    connect(set,SIGNAL(clicked(QString)),this,SLOT(barsetClicked(QString)));
-    connect(set,SIGNAL(rightClicked(QString)),this,SLOT(barsetRightClicked(QString)));
+    connect(set, SIGNAL(clicked(QString)), this, SLOT(barsetClicked(QString)));
+    connect(set, SIGNAL(rightClicked(QString)), this, SLOT(barsetRightClicked(QString)));
     connect(set, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
     emit updatedBars();
 }
@@ -67,8 +67,8 @@ void QBarSeries::addBarSet(QBarSet *set)
 */
 void QBarSeries::removeBarSet(QBarSet *set)
 {
-    disconnect(set,SIGNAL(clicked(QString)),this,SLOT(barsetClicked(QString)));
-    disconnect(set,SIGNAL(rightClicked(QString)),this,SLOT(barsetRightClicked(QString)));
+    disconnect(set, SIGNAL(clicked(QString)), this, SLOT(barsetClicked(QString)));
+    disconnect(set, SIGNAL(rightClicked(QString)), this, SLOT(barsetRightClicked(QString)));
     mModel->removeBarSet(set);
     emit updatedBars();
 }
@@ -143,12 +143,12 @@ void QBarSeries::setToolTipEnabled(bool enabled)
     if (enabled) {
         for (int i=0; i<mModel->barsetCount(); i++) {
             QBarSet *set = mModel->setAt(i);
-            connect(set,SIGNAL(showToolTip(QPoint,QString)),this,SIGNAL(showToolTip(QPoint,QString)));
+            connect(set, SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
         }
     } else {
         for (int i=0; i<mModel->barsetCount(); i++) {
             QBarSet *set = mModel->setAt(i);
-            disconnect(set,SIGNAL(showToolTip(QPoint,QString)),this,SIGNAL(showToolTip(QPoint,QString)));
+            disconnect(set, SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
         }
     }
 }
@@ -192,7 +192,7 @@ qreal QBarSeries::max()
 */
 qreal QBarSeries::valueAt(int set, int category)
 {
-    return mModel->valueAt(set,category);
+    return mModel->valueAt(set, category);
 }
 
 /*!
@@ -200,7 +200,7 @@ qreal QBarSeries::valueAt(int set, int category)
 */
 qreal QBarSeries::percentageAt(int set, int category)
 {
-    return mModel->percentageAt(set,category);
+    return mModel->percentageAt(set, category);
 }
 
 /*!
@@ -227,7 +227,7 @@ BarChartModel& QBarSeries::model()
     return *mModel;
 }
 
-bool QBarSeries::setModel(QAbstractItemModel* model)
+bool QBarSeries::setModel(QAbstractItemModel *model)
 {
     // disconnect signals from old model
     if(m_model)
@@ -259,6 +259,7 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
 {
     if (m_model == NULL)
         return;
+
     m_mapCategories = categories;
     m_mapBarBottom = bottomBoundry;
     m_mapBarTop = topBoundry;
@@ -266,48 +267,46 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
     m_mapOrientation = orientation;
 
     // connect the signals
-    if (m_mapOrientation == Qt::Vertical)
-    {
+    if (m_mapOrientation == Qt::Vertical) {
         m_mapCount = m_model->rowCount() - m_mapFirst;
-        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    }
-    else
-    {
+        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+                this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+        connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)),
+                this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)),
+                this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    } else {
         m_mapCount = m_model->columnCount() - m_mapFirst;
-        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(m_model,SIGNAL(columnsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+        connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+                this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
+        connect(m_model,SIGNAL(columnsInserted(QModelIndex, int, int)),
+                this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)),
+                this, SLOT(modelDataRemoved(QModelIndex,int,int)));
     }
 
 
     // create the initial bars
     delete mModel;
-    if (m_mapOrientation == Qt::Vertical)
-    {
+    if (m_mapOrientation == Qt::Vertical) {
         QStringList categories;
         for (int k = m_mapFirst; k < m_mapFirst + m_mapCount; k++)
             categories << m_model->data(m_model->index(k, m_mapCategories), Qt::DisplayRole).toString();
         mModel = new BarChartModel(categories, this);
 
-        for (int i = m_mapBarBottom; i <= m_mapBarTop; i++)
-        {
+        for (int i = m_mapBarBottom; i <= m_mapBarTop; i++) {
             QBarSet* barSet = new QBarSet(QString("Column: %1").arg(i + 1));
             for(int m = m_mapFirst; m < m_mapFirst + m_mapCount; m++)
                 *barSet << m_model->data(m_model->index(m, i), Qt::DisplayRole).toDouble();
             addBarSet(barSet);
         }
-    }
-    else
-    {
+    } else {
         QStringList categories;
         for (int k = m_mapFirst; k < m_mapFirst + m_mapCount; k++)
             categories << m_model->data(m_model->index(m_mapCategories, k), Qt::DisplayRole).toString();
         mModel = new BarChartModel(categories, this);
 
-        for (int i = m_mapBarBottom; i <= m_mapBarTop; i++)
-        {
+        for (int i = m_mapBarBottom; i <= m_mapBarTop; i++) {
             QBarSet* barSet = new QBarSet(QString("Row: %1").arg(i + 1));
             for(int m = m_mapFirst; m < m_mapFirst + m_mapCount; m++)
                 *barSet << m_model->data(m_model->index(i, m), Qt::DisplayRole).toDouble();
@@ -342,27 +341,25 @@ void QBarSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 
 void QBarSeries::modelDataAdded(QModelIndex /*parent*/, int start, int /*end*/)
 {
-    if (m_mapOrientation == Qt::Vertical)
-    {
+    if (m_mapOrientation == Qt::Vertical) {
         insertCategory(start - m_mapFirst, QString("Row: %1").arg(start + 1));
-        for (int i = 0; i <= m_mapBarTop - m_mapBarBottom; i++)
-        {
+        for (int i = 0; i <= m_mapBarTop - m_mapBarBottom; i++) {
             barsetAt(i)->insertValue(start - m_mapFirst, m_model->data(m_model->index(start, i), Qt::DisplayRole).toDouble());
         }
-    }
-    else
-    {
+    } else {
         insertCategory(start - m_mapFirst, QString("Column: %1").arg(start + 1));
-        for (int i = 0; i <= m_mapBarTop - m_mapBarBottom; i++)
-        {
+        for (int i = 0; i <= m_mapBarTop - m_mapBarBottom; i++) {
             barsetAt(i)->insertValue(start - m_mapFirst, m_model->data(m_model->index(i, start), Qt::DisplayRole).toDouble());
         }
     }
     emit restructuredBar(1);
 }
 
-void QBarSeries::modelDataRemoved(QModelIndex /*parent*/, int start, int /*end*/)
+void QBarSeries::modelDataRemoved(QModelIndex parent, int start, int end)
 {
+    Q_UNUSED(parent)
+    Q_UNUSED(end)
+
     removeCategory(start - m_mapFirst);
     for (int i = 0; i <= m_mapBarTop - m_mapBarBottom; i++)
     {
@@ -380,8 +377,8 @@ QBarCategories QBarSeries::categories() const
 {
     QBarCategories categories;
     int count = mModel->categoryCount();
-    for (int i=1; i<=count; i++) {
-          categories.insert(i, mModel->categoryName(i-1));
+    for (int i=1; i <= count; i++) {
+          categories.insert(i, mModel->categoryName(i - 1));
     }
     return categories;
 }
