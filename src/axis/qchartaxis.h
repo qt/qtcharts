@@ -13,29 +13,29 @@ class QTCOMMERCIALCHART_EXPORT QChartAxis : public QObject
 	Q_OBJECT
 public:
 
-    QChartAxis(QObject* parent =0);
+    QChartAxis(QObject *parent =0);
     ~QChartAxis();
 
     //axis handling
     bool isAxisVisible() const { return m_axisVisible;};
     void setAxisVisible(bool visible);
-    void setAxisPen(const QPen& pen);
+    void setAxisPen(const QPen &pen);
     QPen axisPen() const { return m_axisPen;};
 
     //grid handling
     bool isGridLineVisible() const { return m_gridLineVisible;};
     void setGridLineVisible(bool visible);
-    void setGridLinePen(const QPen& pen);
+    void setGridLinePen(const QPen &pen);
     QPen gridLinePen() const {return m_gridLinePen;}
 
     //labels handling
     bool labelsVisible() const { return m_labelsVisible;};
     void setLabelsVisible(bool visible);
-    void setLabelsPen(const QPen& pen);
+    void setLabelsPen(const QPen &pen);
     QPen labelsPen() const { return m_labelsPen;}
-    void setLabelsBrush(const QBrush& brush);
+    void setLabelsBrush(const QBrush &brush);
     QBrush labelsBrush() const { return m_labelsBrush;}
-    void setLabelsFont(const QFont& font);
+    void setLabelsFont(const QFont &font);
     QFont labelsFont() const { return m_labelsFont;}
     void setLabelsAngle(int angle);
     int labelsAngle() const { return m_labelsAngle;};
@@ -43,9 +43,9 @@ public:
     //shades handling
     bool shadesVisible() const { return m_shadesVisible;};
     void setShadesVisible(bool visible);
-    void setShadesPen(const QPen& pen);
+    void setShadesPen(const QPen &pen);
     QPen shadesPen() const { return m_shadesPen;}
-    void setShadesBrush(const QBrush& brush);
+    void setShadesBrush(const QBrush &brush);
     QBrush shadesBrush() const { return m_shadesBrush;}
     void setShadesOpacity(qreal opacity);
     qreal shadesOpacity() const { return m_shadesOpacity;}
