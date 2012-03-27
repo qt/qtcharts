@@ -39,19 +39,57 @@
  **
  ****************************************************************************/
 
-#include "themewidget.h"
-#include <QApplication>
-#include <QMainWindow>
+#ifndef THEMEWINDOW_H_
+#define THEMEWINDOW_H_
+#include <QWidget>
+#include <QChartGlobal>
 
-int main(int argc, char *argv[])
+class QComboBox;
+class QCheckBox;
+
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class QChartView;
+class QChart;
+QTCOMMERCIALCHART_END_NAMESPACE
+
+typedef QPair<QPointF, QString> Data;
+typedef QList<Data> DataList;
+typedef QList<DataList> DataTable;
+
+QTCOMMERCIALCHART_USE_NAMESPACE
+
+class ThemeWidget: public QWidget
 {
-    QApplication a(argc, argv);
-    QMainWindow window;
-    ThemeWidget* widget = new ThemeWidget();
-    window.setCentralWidget(widget);
-    window.resize(900, 600);
-    window.show();
-    return a.exec();
-}
+    Q_OBJECT
+public:
+    explicit ThemeWidget(QWidget *parent = 0);
+    ~ThemeWidget();
 
-#include "main.moc"
+public slots:
+    void updateUI();
+
+private:
+    DataTable generateRandomData(int listCount,int valueMax,int valueCount) const;
+    QComboBox* createThemeBox() const;
+    QComboBox* createAnimationBox() const;
+    void connectSignals();
+    QChart* createAreaChart() const;
+    QChart* createBarChart(int valueCount) const;
+    QChart* createPieChart() const;
+    QChart* createLineChart() const;
+    QChart* createSplineChart() const;
+    QChart* createScatterChart() const;
+
+private:
+    int m_listCount;
+    int m_valueMax;
+    int m_valueCount;
+    QList<QChartView*> m_charts;
+    DataTable m_dataTable;
+
+    QComboBox *m_themeComboBox;
+    QCheckBox *m_antialiasCheckBox;
+    QComboBox *m_animatedComboBox;
+};
+
+#endif /* THEMEWINDOW_H_ */
