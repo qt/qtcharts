@@ -41,11 +41,11 @@ public:
     QRectF geometry() const;
 
     ChartAnimator* animator() const {return m_animator;}
-    ChartTheme *theme() { return m_chartTheme; }
+    ChartTheme *chartTheme() { return m_chartTheme; }
     ChartDataSet *dataSet() { return m_dataset; }
 
-    void setChartTheme(QChart::ChartTheme theme,bool force = true);
-    QChart::ChartTheme chartTheme();
+    void setTheme(QChart::ChartTheme theme,bool force = true);
+    QChart::ChartTheme theme();
 
     void setAnimationOptions(QChart::AnimationOptions options);
     QChart::AnimationOptions animationOptions() const;

@@ -34,7 +34,7 @@ public: // From QDeclarativeItem/QGraphicsItem
     void paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
 public:
-    void setTheme(ChartTheme theme) {m_chart->setChartTheme((QChart::ChartTheme) theme);}
+    void setTheme(ChartTheme theme) {m_chart->setTheme((QChart::ChartTheme) theme);}
     ChartTheme theme();
 
 public:

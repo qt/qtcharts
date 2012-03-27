@@ -36,7 +36,7 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_themeForce(false)
 {
     createConnections();
-    setChartTheme(QChart::ChartThemeDefault,false);
+    setTheme(QChart::ChartThemeDefault,false);
 }
 
 ChartPresenter::~ChartPresenter()
@@ -270,7 +270,7 @@ void ChartPresenter::handleSeriesRemoved(QSeries* series)
     delete item;
 }
 
-void ChartPresenter::setChartTheme(QChart::ChartTheme theme,bool force)
+void ChartPresenter::setTheme(QChart::ChartTheme theme,bool force)
 {
 	if(m_chartTheme && m_chartTheme->id() == theme) return;
     delete m_chartTheme;
@@ -281,7 +281,7 @@ void ChartPresenter::setChartTheme(QChart::ChartTheme theme,bool force)
     resetAllElements();
 }
 
-QChart::ChartTheme ChartPresenter::chartTheme()
+QChart::ChartTheme ChartPresenter::theme()
 {
     return m_chartTheme->id();
 }

@@ -30,7 +30,8 @@ PRIVATE_HEADERS += \
     $$PWD/legendscrollbutton_p.h \
     $$PWD/chartbackground_p.h \
     $$PWD/chart_p.h \
-    $$PWD/chartconfig_p.h
+    $$PWD/chartconfig_p.h \
+    $$PWD/qchart_p.h
 PUBLIC_HEADERS += \
     $$PWD/qchart.h \
     $$PWD/qchartglobal.h \
@@ -53,10 +54,8 @@ include(themes/themes.pri)
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 HEADERS += $$THEMES
-INCLUDEPATH += linechart \
-    barchart \
-    themes \
-    .
+INCLUDEPATH += ../include
+    
 OBJECTS_DIR = $$CHART_BUILD_DIR/lib
 MOC_DIR = $$CHART_BUILD_DIR/lib
 UI_DIR = $$CHART_BUILD_DIR/lib

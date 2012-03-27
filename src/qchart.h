@@ -1,11 +1,8 @@
 #ifndef QCHART_H
 #define QCHART_H
 
-#include <qchartglobal.h>
-#include <qseries.h>
+#include <QSeries>
 #include <QGraphicsWidget>
-#include <QLinearGradient>
-#include <QFont>
 
 class QGraphicsSceneResizeEvent;
 
@@ -13,16 +10,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Axis;
 class QSeries;
-class PlotDomain;
-class BarChartItem;
 class QChartAxis;
-class ChartTheme;
-class ChartItem;
-class ChartDataSet;
-class ChartPresenter;
 class QLegend;
-class ChartBackground;
-
+class QChartPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
@@ -52,12 +42,12 @@ public:
     QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
-    void addSeries(QSeries* series, QChartAxis* axisY = 0);
-    void removeSeries(QSeries* series); //returns ownership , deletes axis if no series attached
-    void removeAllSeries(); // deletes series and axis
+    void addSeries(QSeries *series, QChartAxis *axisY = 0);
+    void removeSeries(QSeries *series);
+    void removeAllSeries();
 
-    void setChartTheme(QChart::ChartTheme theme);
-    QChart::ChartTheme chartTheme() const;
+    void setTheme(QChart::ChartTheme theme);
+    QChart::ChartTheme theme() const;
 
     void setTitle(const QString& title);
     QString title() const;
@@ -96,25 +86,16 @@ public:
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
 
+protected:
+    QScopedPointer<QChartPrivate> d_ptr;
+
 private:
-    inline void createChartBackgroundItem();
-    inline void createChartTitleItem();
     void setPadding(int padding);
     void setBackgroundPadding(int padding);
     void setBackgroundDiameter(int diameter);
-    void updateLayout();
-    void updateLegendLayout();
 
 private:
-    Q_DISABLE_COPY(QChart)
-    ChartBackground* m_backgroundItem;
-    QGraphicsSimpleTextItem* m_titleItem;
-    QRectF m_rect;
-    QLegend* m_legend;
-    ChartDataSet *m_dataset;
-    ChartPresenter *m_presenter;
-    int m_padding;
-    int m_backgroundPadding;
+    Q_DISABLE_COPY(QChart);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

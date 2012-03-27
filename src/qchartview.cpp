@@ -322,7 +322,7 @@ void QChartView::keyPressEvent(QKeyEvent *event)
 */
 void QChartView::setChartTheme(QChart::ChartTheme theme)
 {
-    m_chart->setChartTheme(theme);
+    m_chart->setTheme(theme);
 }
 
 /*!
@@ -331,7 +331,7 @@ void QChartView::setChartTheme(QChart::ChartTheme theme)
 */
 QChart::ChartTheme QChartView::chartTheme() const
 {
-    return m_chart->chartTheme();
+    return m_chart->theme();
 }
 
 /*!
