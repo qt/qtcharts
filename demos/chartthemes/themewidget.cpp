@@ -109,7 +109,7 @@ ThemeWidget::ThemeWidget(QWidget* parent) :
     baseLayout->addWidget(chartView, 2, 1);
     m_charts << chartView;
 
-    chartView = new QChartView(createSplineChart());
+    chartView = new QChartView(createScatterChart());
     baseLayout->addWidget(chartView, 2, 2);
     m_charts << chartView;
 
