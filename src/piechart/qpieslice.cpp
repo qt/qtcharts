@@ -257,7 +257,7 @@ qreal QPieSlice::labelArmLengthFactor() const
 void QPieSlice::setValue(qreal value)
 {
     Q_D(QPieSlice);
-    if (d->m_data.m_value != value) {
+    if (!qFuzzyIsNull(d->m_data.m_value - value)) {
         d->m_data.m_value = value;
 
         QPieSeries *series = qobject_cast<QPieSeries*>(parent());
@@ -321,7 +321,7 @@ void QPieSlice::setExploded(bool exploded)
 void QPieSlice::setExplodeDistanceFactor(qreal factor)
 {
     Q_D(QPieSlice);
-    if (d->m_data.m_explodeDistanceFactor != factor) {
+    if (!qFuzzyIsNull(d->m_data.m_explodeDistanceFactor - factor)) {
         d->m_data.m_explodeDistanceFactor = factor;
         emit changed();
     }
@@ -401,7 +401,7 @@ void QPieSlice::setLabelFont(const QFont &font)
 void QPieSlice::setLabelArmLengthFactor(qreal factor)
 {
     Q_D(QPieSlice);
-    if (d->m_data.m_labelArmLengthFactor != factor) {
+    if (!qFuzzyIsNull(d->m_data.m_labelArmLengthFactor - factor)) {
         d->m_data.m_labelArmLengthFactor = factor;
         emit changed();
     }

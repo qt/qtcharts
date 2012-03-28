@@ -64,21 +64,21 @@ public:
             return true;
 
         if (m_isExploded != other.m_isExploded ||
-            m_explodeDistanceFactor != other.m_explodeDistanceFactor)
+            !qFuzzyIsNull(m_explodeDistanceFactor - other.m_explodeDistanceFactor))
             return true;
 
         if (m_isLabelVisible != other.m_isLabelVisible ||
             m_labelText != other.m_labelText ||
             m_labelFont != other.m_labelFont ||
-            m_labelArmLengthFactor != other.m_labelArmLengthFactor ||
+            !qFuzzyIsNull(m_labelArmLengthFactor - other.m_labelArmLengthFactor) ||
             m_labelPen != other.m_labelPen)
             return true;
 
-        if (m_percentage != other.m_percentage ||
+        if (!qFuzzyIsNull(m_percentage - other.m_percentage) ||
             m_center != other.m_center ||
-            m_radius != other.m_radius ||
-            m_startAngle != other.m_startAngle ||
-            m_angleSpan != other.m_angleSpan)
+            !qFuzzyIsNull(m_radius - other.m_radius) ||
+            !qFuzzyIsNull(m_startAngle - other.m_startAngle) ||
+            !qFuzzyIsNull(m_angleSpan - other.m_angleSpan))
             return true;
 
         return false;

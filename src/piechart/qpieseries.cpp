@@ -36,7 +36,7 @@ void QPieSeriesPrivate::updateDerivativeData()
         m_total += s->value();
 
     // nothing to show..
-    if (m_total == 0)
+    if (qFuzzyIsNull(m_total))
         return;
 
     // update slice attributes
@@ -45,28 +45,16 @@ void QPieSeriesPrivate::updateDerivativeData()
     QVector<QPieSlice*> changed;
     foreach (QPieSlice* s, m_slices) {
 
-        bool isChanged = false;
+        PieSliceData data = s->data_ptr()->m_data;
+        data.m_percentage = s->value() / m_total;
+        data.m_angleSpan = pieSpan * data.m_percentage;
+        data.m_startAngle = sliceAngle;
+        sliceAngle += data.m_angleSpan;
 
-        qreal percentage = s->value() / m_total;
-        if (s->data_ptr()->m_data.m_percentage != percentage) {
-            s->data_ptr()->m_data.m_percentage = percentage;
-            isChanged = true;
-        }
-
-        qreal sliceSpan = pieSpan * percentage;
-        if (s->data_ptr()->m_data.m_angleSpan != sliceSpan) {
-            s->data_ptr()->m_data.m_angleSpan = sliceSpan;
-            isChanged = true;
-        }
-
-        if (s->data_ptr()->m_data.m_startAngle != sliceAngle) {
-            s->data_ptr()->m_data.m_startAngle = sliceAngle;
-            isChanged = true;
-        }
-        sliceAngle += sliceSpan;
-
-        if (isChanged)
+        if (s->data_ptr()->m_data != data) {
+            s->data_ptr()->m_data = data;
             changed << s;
+        }
     }
 
     // emit signals
@@ -385,7 +373,8 @@ void QPieSeries::setPiePosition(qreal relativeHorizontalPosition, qreal relative
             relativeVerticalPosition < 0.0 || relativeVerticalPosition > 1.0)
         return;
 
-    if (d->m_pieRelativeHorPos != relativeHorizontalPosition || d->m_pieRelativeVerPos != relativeVerticalPosition) {
+    if (!qFuzzyIsNull(d->m_pieRelativeHorPos - relativeHorizontalPosition) ||
+        !qFuzzyIsNull(d->m_pieRelativeVerPos - relativeVerticalPosition)) {
         d->m_pieRelativeHorPos = relativeHorizontalPosition;
         d->m_pieRelativeVerPos = relativeVerticalPosition;
         emit piePositionChanged();
@@ -443,7 +432,7 @@ void QPieSeries::setPieSize(qreal relativeSize)
     if (relativeSize < 0.0 || relativeSize > 1.0)
         return;
 
-    if (d->m_pieRelativeSize != relativeSize) {
+    if (!qFuzzyIsNull(d->m_pieRelativeSize- relativeSize)) {
         d->m_pieRelativeSize = relativeSize;
         emit pieSizeChanged();
     }
@@ -477,7 +466,11 @@ qreal QPieSeries::pieSize() const
 void QPieSeries::setPieStartAngle(qreal angle)
 {
     Q_D(QPieSeries);
-    if (angle >= 0 && angle <= 360 && angle != d->m_pieStartAngle && angle <= d->m_pieEndAngle) {
+
+    if (angle < 0 || angle > 360 || angle > d->m_pieEndAngle)
+        return;
+
+    if (!qFuzzyIsNull(angle - d->m_pieStartAngle)) {
         d->m_pieStartAngle = angle;
         d->updateDerivativeData();
     }
@@ -508,7 +501,11 @@ qreal QPieSeries::pieStartAngle() const
 void QPieSeries::setPieEndAngle(qreal angle)
 {
     Q_D(QPieSeries);
-    if (angle >= 0 && angle <= 360 && angle != d->m_pieEndAngle && angle >= d->m_pieStartAngle) {
+
+    if (angle < 0 || angle > 360 || angle < d->m_pieStartAngle)
+        return;
+
+    if (!qFuzzyIsNull(angle - d->m_pieEndAngle)) {
         d->m_pieEndAngle = angle;
         d->updateDerivativeData();
     }
