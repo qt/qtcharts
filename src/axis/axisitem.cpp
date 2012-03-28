@@ -152,7 +152,7 @@ qreal Axis::shadesOpacity() const
 void Axis::setLabelsAngle(int angle)
 {
     foreach(QGraphicsItem* item , m_labels.childItems()) {
-          QPointF center = item->boundingRect().center();
+          //QPointF center = item->boundingRect().center();
           item->setRotation(angle);
     }
 
