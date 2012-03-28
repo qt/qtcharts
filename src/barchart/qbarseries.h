@@ -81,7 +81,7 @@ private Q_SLOTS:
     void barsetChanged();
 
 protected:
-    BarChartModel *mModel;
+    BarChartModel *m_Model;
 
 //    QAbstractItemModel* m_model;
     int m_mapCategories;

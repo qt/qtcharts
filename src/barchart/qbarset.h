@@ -61,12 +61,12 @@ public Q_SLOTS:
 
 private:
 
-    QString mName;
-    QList<qreal> mValues;   // TODO: replace with map (category, value)
-    QMap<QString, qreal> mMappedValues;
-    QPen mPen;
-    QBrush mBrush;
-    QPen mFloatingValuePen;
+    QString m_Name;
+    QList<qreal> m_Values;   // TODO: replace with map (category, value)
+    QMap<QString, qreal> m_MappedValues;
+    QPen m_Pen;
+    QBrush m_Brush;
+    QPen m_FloatingValuePen;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

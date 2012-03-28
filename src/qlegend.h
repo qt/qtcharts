@@ -2,8 +2,9 @@
 #define QLEGEND_H
 
 #include <qchartglobal.h>
-#include <qseries.h>
 #include <QGraphicsObject>
+#include <QPen>
+#include <QBrush>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -15,6 +16,7 @@ class QBarSet;
 class QBarSeries;
 class QPieSeries;
 class LegendScrollButton;
+class QSeries;
 
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsObject
 {
@@ -80,25 +82,25 @@ private:
     void checkFirstMarkerBounds();
     bool scrollButtonsVisible();
 
-    QPointF mPos;
-    QSizeF mSize;
-    QSizeF mMinimumSize;
-    QSizeF mMaximumSize;
+    QPointF m_Pos;
+    QSizeF m_Size;
+    QSizeF m_MinimumSize;
+    QSizeF m_MaximumSize;
 
-    QList<LegendMarker *> mMarkers;
+    QList<LegendMarker *> m_Markers;
 
     QBrush m_brush;
     QPen m_pen;
-    QLegend::PreferredLayout mPreferredLayout;
+    QLegend::PreferredLayout m_PreferredLayout;
 
     int mFirstMarker;
 
-    LegendScrollButton *mScrollButtonLeft;
-    LegendScrollButton *mScrollButtonRight;
-    LegendScrollButton *mScrollButtonUp;
-    LegendScrollButton *mScrollButtonDown;
+    LegendScrollButton *m_ScrollButtonLeft;
+    LegendScrollButton *m_ScrollButtonRight;
+    LegendScrollButton *m_ScrollButtonUp;
+    LegendScrollButton *m_ScrollButtonDown;
 
-    qreal mMargin;
+    qreal m_Margin;
     // <--- PIMPL
 };
 

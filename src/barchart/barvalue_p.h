@@ -35,14 +35,14 @@ public Q_SLOTS:
 
 private:
 
-    QBarSet &mBarSet;
-    QPen mPen;
-    QString mValueString;
+    QBarSet &m_BarSet;
+    QPen m_Pen;
+    QString m_ValueString;
 
-    qreal mXpos;
-    qreal mYpos;
-    qreal mWidth;
-    qreal mHeight;
+    qreal m_Xpos;
+    qreal m_Ypos;
+    qreal m_Width;
+    qreal m_Height;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

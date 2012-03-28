@@ -33,9 +33,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QBarSeries. Parameter \a categories defines the categories for chart.
     QBarSeries is QObject which is a child of a \a parent.
 */
-QBarSeries::QBarSeries(QBarCategories categories, QObject *parent)
-    : QSeries(parent)
-    ,mModel(new BarChartModel(categories, this))
+QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) : QSeries(parent),
+    m_Model(new BarChartModel(categories, this))
 {
     m_model = NULL;
     m_mapCategories = -1;
@@ -53,7 +52,7 @@ QBarSeries::QBarSeries(QBarCategories categories, QObject *parent)
 */
 void QBarSeries::addBarSet(QBarSet *set)
 {
-    mModel->addBarSet(set);
+    m_Model->addBarSet(set);
     connect(set, SIGNAL(clicked(QString)), this, SLOT(barsetClicked(QString)));
     connect(set, SIGNAL(rightClicked(QString)), this, SLOT(barsetRightClicked(QString)));
     connect(set, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
@@ -69,24 +68,24 @@ void QBarSeries::removeBarSet(QBarSet *set)
 {
     disconnect(set, SIGNAL(clicked(QString)), this, SLOT(barsetClicked(QString)));
     disconnect(set, SIGNAL(rightClicked(QString)), this, SLOT(barsetRightClicked(QString)));
-    mModel->removeBarSet(set);
+    m_Model->removeBarSet(set);
     emit updatedBars();
 }
 
 void QBarSeries::insertBarSet(int i, QBarSet *set)
 {
-    mModel->insertBarSet(i, set);
+    m_Model->insertBarSet(i, set);
     //    emit barsetChanged();
 }
 
 void QBarSeries::insertCategory(int i, QString category)
 {
-    mModel->insertCategory(i, category);
+    m_Model->insertCategory(i, category);
 }
 
 void QBarSeries::removeCategory(int i)
 {
-    mModel->removeCategory(i);
+    m_Model->removeCategory(i);
 }
 
 /*!
@@ -97,7 +96,7 @@ int QBarSeries::barsetCount()
     //    if(m_model)
     //        return m_mapBarTop - m_mapBarBottom;
     //    else
-    return mModel->barsetCount();
+    return m_Model->barsetCount();
 }
 
 /*!
@@ -105,7 +104,7 @@ int QBarSeries::barsetCount()
 */
 int QBarSeries::categoryCount()
 {
-    return mModel->categoryCount();
+    return m_Model->categoryCount();
 }
 
 /*!
@@ -113,7 +112,7 @@ int QBarSeries::categoryCount()
  */
 QList<QBarSet*> QBarSeries::barSets()
 {
-    return mModel->barSets();
+    return m_Model->barSets();
 }
 
 /*!
@@ -121,7 +120,7 @@ QList<QBarSet*> QBarSeries::barSets()
 */
 QBarSet* QBarSeries::barsetAt(int index)
 {
-    return mModel->setAt(index);
+    return m_Model->setAt(index);
 }
 
 /*!
@@ -129,7 +128,7 @@ QBarSet* QBarSeries::barsetAt(int index)
 */
 QString QBarSeries::categoryName(int category)
 {
-    return mModel->categoryName(category);
+    return m_Model->categoryName(category);
 }
 
 /*!
@@ -141,13 +140,13 @@ void QBarSeries::setToolTipEnabled(bool enabled)
 {
     // TODO: what if we add sets after call to this function? Those sets won't have tooltip enabled.
     if (enabled) {
-        for (int i=0; i<mModel->barsetCount(); i++) {
-            QBarSet *set = mModel->setAt(i);
+        for (int i=0; i<m_Model->barsetCount(); i++) {
+            QBarSet *set = m_Model->setAt(i);
             connect(set, SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
         }
     } else {
-        for (int i=0; i<mModel->barsetCount(); i++) {
-            QBarSet *set = mModel->setAt(i);
+        for (int i=0; i<m_Model->barsetCount(); i++) {
+            QBarSet *set = m_Model->setAt(i);
             disconnect(set, SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
         }
     }
@@ -176,7 +175,7 @@ void QBarSeries::barsetRightClicked(QString category)
 */
 qreal QBarSeries::min()
 {
-    return mModel->min();
+    return m_Model->min();
 }
 
 /*!
@@ -184,7 +183,7 @@ qreal QBarSeries::min()
 */
 qreal QBarSeries::max()
 {
-    return mModel->max();
+    return m_Model->max();
 }
 
 /*!
@@ -192,7 +191,7 @@ qreal QBarSeries::max()
 */
 qreal QBarSeries::valueAt(int set, int category)
 {
-    return mModel->valueAt(set, category);
+    return m_Model->valueAt(set, category);
 }
 
 /*!
@@ -200,7 +199,7 @@ qreal QBarSeries::valueAt(int set, int category)
 */
 qreal QBarSeries::percentageAt(int set, int category)
 {
-    return mModel->percentageAt(set, category);
+    return m_Model->percentageAt(set, category);
 }
 
 /*!
@@ -208,7 +207,7 @@ qreal QBarSeries::percentageAt(int set, int category)
 */
 qreal QBarSeries::categorySum(int category)
 {
-    return mModel->categorySum(category);
+    return m_Model->categorySum(category);
 }
 
 /*!
@@ -216,7 +215,7 @@ qreal QBarSeries::categorySum(int category)
 */
 qreal QBarSeries::maxCategorySum()
 {
-    return mModel->maxCategorySum();
+    return m_Model->maxCategorySum();
 }
 
 /*!
@@ -224,7 +223,7 @@ qreal QBarSeries::maxCategorySum()
 */
 BarChartModel& QBarSeries::model()
 {
-    return *mModel;
+    return *m_Model;
 }
 
 bool QBarSeries::setModel(QAbstractItemModel *model)
@@ -287,12 +286,12 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
 
 
     // create the initial bars
-    delete mModel;
+    delete m_Model;
     if (m_mapOrientation == Qt::Vertical) {
         QStringList categories;
         for (int k = m_mapFirst; k < m_mapFirst + m_mapCount; k++)
             categories << m_model->data(m_model->index(k, m_mapCategories), Qt::DisplayRole).toString();
-        mModel = new BarChartModel(categories, this);
+        m_Model = new BarChartModel(categories, this);
 
         for (int i = m_mapBarBottom; i <= m_mapBarTop; i++) {
             QBarSet* barSet = new QBarSet(QString("Column: %1").arg(i + 1));
@@ -304,7 +303,7 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
         QStringList categories;
         for (int k = m_mapFirst; k < m_mapFirst + m_mapCount; k++)
             categories << m_model->data(m_model->index(m_mapCategories, k), Qt::DisplayRole).toString();
-        mModel = new BarChartModel(categories, this);
+        m_Model = new BarChartModel(categories, this);
 
         for (int i = m_mapBarBottom; i <= m_mapBarTop; i++) {
             QBarSet* barSet = new QBarSet(QString("Row: %1").arg(i + 1));
@@ -376,9 +375,9 @@ void QBarSeries::barsetChanged()
 QBarCategories QBarSeries::categories() const
 {
     QBarCategories categories;
-    int count = mModel->categoryCount();
+    int count = m_Model->categoryCount();
     for (int i=1; i <= count; i++) {
-          categories.insert(i, mModel->categoryName(i - 1));
+          categories.insert(i, m_Model->categoryName(i - 1));
     }
     return categories;
 }

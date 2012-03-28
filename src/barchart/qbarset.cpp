@@ -56,7 +56,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 QBarSet::QBarSet(QString name, QObject *parent)
     : QObject(parent)
-    ,mName(name)
+    ,m_Name(name)
 {
 }
 
@@ -65,7 +65,7 @@ QBarSet::QBarSet(QString name, QObject *parent)
 */
 void QBarSet::setName(QString name)
 {
-    mName = name;
+    m_Name = name;
 }
 
 /*!
@@ -73,7 +73,7 @@ void QBarSet::setName(QString name)
 */
 QString QBarSet::name()
 {
-    return mName;
+    return m_Name;
 }
 
 /*!
@@ -81,19 +81,19 @@ QString QBarSet::name()
 */
 QBarSet& QBarSet::operator << (const qreal &value)
 {
-    mValues.append(value);
+    m_Values.append(value);
     emit structureChanged();
     return *this;
 }
 
 void QBarSet::insertValue(int i, qreal value)
 {
-    mValues.insert(i, value);
+    m_Values.insert(i, value);
 }
 
 void QBarSet::removeValue(int i)
 {
-    mValues.removeAt(i);
+    m_Values.removeAt(i);
 }
 
 /*!
@@ -101,7 +101,7 @@ void QBarSet::removeValue(int i)
 */
 int QBarSet::count()
 {
-    return mValues.count();
+    return m_Values.count();
 }
 
 /*!
@@ -109,7 +109,7 @@ int QBarSet::count()
 */
 qreal QBarSet::valueAt(int index)
 {
-    return mValues.at(index);
+    return m_Values.at(index);
 }
 
 /*!
@@ -117,7 +117,7 @@ qreal QBarSet::valueAt(int index)
 */
 void QBarSet::setValue(int index, qreal value)
 {
-    mValues.replace(index,value);
+    m_Values.replace(index,value);
     emit valueChanged();
 }
 
@@ -127,8 +127,8 @@ void QBarSet::setValue(int index, qreal value)
 qreal QBarSet::total()
 {
     qreal total(0);
-    for (int i=0; i < mValues.count(); i++) {
-        total += mValues.at(i);
+    for (int i=0; i < m_Values.count(); i++) {
+        total += m_Values.at(i);
     }
     return total;
 }
@@ -138,7 +138,7 @@ qreal QBarSet::total()
 */
 void QBarSet::setPen(const QPen pen)
 {
-    mPen = pen;
+    m_Pen = pen;
     emit valueChanged();
 }
 
@@ -147,7 +147,7 @@ void QBarSet::setPen(const QPen pen)
 */
 QPen QBarSet::pen() const
 {
-    return mPen;
+    return m_Pen;
 }
 
 /*!
@@ -155,7 +155,7 @@ QPen QBarSet::pen() const
 */
 void QBarSet::setBrush(const QBrush brush)
 {
-    mBrush = brush;
+    m_Brush = brush;
     emit valueChanged();
 }
 
@@ -164,7 +164,7 @@ void QBarSet::setBrush(const QBrush brush)
 */
 QBrush QBarSet::brush() const
 {
-    return mBrush;
+    return m_Brush;
 }
 
 /*!
@@ -172,7 +172,7 @@ QBrush QBarSet::brush() const
 */
 void QBarSet::setFloatingValuePen(const QPen pen)
 {
-    mFloatingValuePen = pen;
+    m_FloatingValuePen = pen;
 }
 
 /*!
@@ -180,7 +180,7 @@ void QBarSet::setFloatingValuePen(const QPen pen)
 */
 QPen QBarSet::floatingValuePen() const
 {
-    return mFloatingValuePen;
+    return m_FloatingValuePen;
 }
 
 /*!
@@ -188,7 +188,7 @@ QPen QBarSet::floatingValuePen() const
 */
 void QBarSet::barHoverEnterEvent(QPoint pos)
 {
-    emit showToolTip(pos, mName);
+    emit showToolTip(pos, m_Name);
     emit hoverEnter(pos);
 }
 

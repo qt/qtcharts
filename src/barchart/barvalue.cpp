@@ -6,45 +6,45 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarValue::BarValue(QBarSet &set, QGraphicsItem *parent)
     : QGraphicsObject(parent),
-    mBarSet(set),
-    mXpos(0),
-    mYpos(0),
-    mWidth(0),
-    mHeight(0)
+    m_BarSet(set),
+    m_Xpos(0),
+    m_Ypos(0),
+    m_Width(0),
+    m_Height(0)
 {
     setVisible(false);
 }
 
 void BarValue::setValueString(QString str)
 {
-    mValueString = str;
+    m_ValueString = str;
 }
 
 QString BarValue::valueString()
 {
-    return mValueString;
+    return m_ValueString;
 }
 
 void BarValue::setPen(const QPen pen)
 {
-    mPen = pen;
+    m_Pen = pen;
 }
 
 QPen BarValue::pen() const
 {
-    return mPen;
+    return m_Pen;
 }
 
 void BarValue::resize(qreal w, qreal h)
 {
-    mWidth = w;
-    mHeight = h;
+    m_Width = w;
+    m_Height = h;
 }
 
 void BarValue::setPos(qreal x, qreal y)
 {
-    mXpos = x;
-    mYpos = y;
+    m_Xpos = x;
+    m_Ypos = y;
 }
 
 void BarValue::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -53,14 +53,14 @@ void BarValue::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
     Q_UNUSED(widget)
 
     if (isVisible()) {
-        painter->setPen(mPen);
-        painter->drawText(boundingRect(), mValueString);
+        painter->setPen(m_Pen);
+        painter->drawText(boundingRect(), m_ValueString);
     }
 }
 
 QRectF BarValue::boundingRect() const
 {
-    QRectF r(mXpos, mYpos, mWidth, mHeight);
+    QRectF r(m_Xpos, m_Ypos, m_Width, m_Height);
     return r;
 }
 

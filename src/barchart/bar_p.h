@@ -25,7 +25,7 @@ Q_SIGNALS:
     void hoverLeaved();
 
 private:
-    QString mCategory;
+    QString m_Category;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
