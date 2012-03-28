@@ -140,17 +140,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     QChatView or QChart when axis added.
 */
 
-QChartAxis::QChartAxis(QObject* parent):QObject(parent),
-m_axisVisible(true),
-m_gridLineVisible(true),
-m_labelsVisible(true),
-m_labelsAngle(0),
-m_shadesVisible(false),
-m_shadesOpacity(1.0),
-m_min(0),
-m_max(0),
-m_ticksCount(5),
-m_niceNumbers(false)
+QChartAxis::QChartAxis(QObject *parent) : QObject(parent),
+    m_axisVisible(true),
+    m_gridLineVisible(true),
+    m_labelsVisible(true),
+    m_labelsAngle(0),
+    m_shadesVisible(false),
+    m_shadesOpacity(1.0),
+    m_min(0),
+    m_max(0),
+    m_ticksCount(5),
+    m_niceNumbers(false)
 {
 
 }
@@ -166,11 +166,11 @@ QChartAxis::~QChartAxis()
 /*!
   Sets \a pen used to draw axis line and ticks.
  */
-void QChartAxis::setAxisPen(const QPen& pen)
+void QChartAxis::setAxisPen(const QPen &pen)
 {
 	if (pen != m_axisPen) {
-    m_axisPen=pen;
-    emit updated();
+        m_axisPen = pen;
+        emit updated();
 	}
 }
 
@@ -179,9 +179,9 @@ void QChartAxis::setAxisPen(const QPen& pen)
  */
 void QChartAxis::setAxisVisible(bool visible)
 {
-	if (m_axisVisible!=visible) {
-    m_axisVisible=visible;
-    emit updated();
+    if (m_axisVisible != visible) {
+        m_axisVisible = visible;
+        emit updated();
 	}
 }
 
@@ -190,20 +190,20 @@ void QChartAxis::setAxisVisible(bool visible)
  */
 void QChartAxis::setGridLineVisible(bool visible)
 {
-	if (m_gridLineVisible!=visible) {
-    m_gridLineVisible=visible;
-    emit updated();
+    if (m_gridLineVisible != visible) {
+        m_gridLineVisible = visible;
+        emit updated();
 	}
 }
 
 /*!
   Sets \a pen used to draw grid line.
  */
-void QChartAxis::setGridLinePen(const QPen& pen)
+void QChartAxis::setGridLinePen(const QPen &pen)
 {
-	if (m_gridLinePen!=pen) {
-    m_gridLinePen=pen;
-    emit updated();
+    if (m_gridLinePen != pen) {
+        m_gridLinePen = pen;
+        emit updated();
 	}
 }
 
@@ -212,42 +212,42 @@ void QChartAxis::setGridLinePen(const QPen& pen)
  */
 void QChartAxis::setLabelsVisible(bool visible)
 {
-	if(m_labelsVisible!=visible) {
-    m_labelsVisible=visible;
-    emit updated();
+    if (m_labelsVisible != visible) {
+        m_labelsVisible = visible;
+        emit updated();
 	}
 }
 
 /*!
   Sets \a pen used to draw labels.
  */
-void QChartAxis::setLabelsPen(const QPen& pen)
+void QChartAxis::setLabelsPen(const QPen &pen)
 {
-	if(m_labelsPen!=pen) {
-    m_labelsPen=pen;
-    emit updated();
+    if (m_labelsPen != pen) {
+        m_labelsPen = pen;
+        emit updated();
 	}
 }
 
 /*!
   Sets \a brush used to draw labels.
  */
-void QChartAxis::setLabelsBrush(const QBrush& brush)
+void QChartAxis::setLabelsBrush(const QBrush &brush)
 {
-	if(m_labelsBrush!=brush) {
-    m_labelsBrush=brush;
-    emit updated();
+    if (m_labelsBrush != brush) {
+        m_labelsBrush = brush;
+        emit updated();
 	}
 }
 
 /*!
   Sets \a font used to draw labels.
  */
-void QChartAxis::setLabelsFont(const QFont& font)
+void QChartAxis::setLabelsFont(const QFont &font)
 {
-	if(m_labelsFont!=font) {
-    m_labelsFont=font;
-    emit updated();
+    if (m_labelsFont != font) {
+        m_labelsFont = font;
+        emit updated();
 	}
 }
 
@@ -256,9 +256,9 @@ void QChartAxis::setLabelsFont(const QFont& font)
  */
 void QChartAxis::setLabelsAngle(int angle)
 {
-	if(m_labelsAngle!=angle) {
-	m_labelsAngle=angle;
-	emit updated();
+    if (m_labelsAngle != angle) {
+        m_labelsAngle = angle;
+        emit updated();
 	}
 }
 
@@ -267,31 +267,31 @@ void QChartAxis::setLabelsAngle(int angle)
  */
 void QChartAxis::setShadesVisible(bool visible)
 {
-	if(m_shadesVisible!=visible) {
-    m_shadesVisible=visible;
-    emit updated();
+    if (m_shadesVisible != visible) {
+        m_shadesVisible = visible;
+        emit updated();
 	}
 }
 
 /*!
   Sets \a pen used to draw shades.
  */
-void QChartAxis::setShadesPen(const QPen& pen)
+void QChartAxis::setShadesPen(const QPen &pen)
 {
-	if(m_shadesPen!=pen) {
-	m_shadesPen=pen;
-	emit updated();
+    if (m_shadesPen != pen) {
+        m_shadesPen = pen;
+        emit updated();
 	}
 }
 
 /*!
   Sets \a brush used to draw shades.
  */
-void QChartAxis::setShadesBrush(const QBrush& brush)
+void QChartAxis::setShadesBrush(const QBrush &brush)
 {
-	if(m_shadesBrush!=brush) {
-    m_shadesBrush=brush;
-    emit updated();
+    if (m_shadesBrush != brush) {
+        m_shadesBrush = brush;
+        emit updated();
 	}
 }
 
@@ -300,7 +300,7 @@ void QChartAxis::setShadesBrush(const QBrush& brush)
  */
 void QChartAxis::setShadesOpacity(qreal opacity)
 {
-	if(m_shadesOpacity!=opacity) {
+    if (m_shadesOpacity != opacity) {
     m_shadesOpacity=opacity;
     emit updated();
 	}
@@ -327,22 +327,20 @@ void QChartAxis::setMax(qreal max)
  */
 void QChartAxis::setRange(qreal min, qreal max)
 {
-
-
 	bool changed = false;
-    if(m_min!=min) {
-        m_min=min;
-        changed=true;
+    if (m_min != min) {
+        m_min = min;
+        changed = true;
         emit minChanged(min);
     }
 
-    if(m_max!=max) {
-        m_max=max;
-        changed=true;
+    if (m_max != max) {
+        m_max = max;
+        changed = true;
         emit maxChanged(max);
     }
 
-    if(changed) {
+    if (changed) {
         emit rangeChanged(m_min,m_max);
         emit this->changed(m_min, m_max, m_ticksCount, m_niceNumbers);
     }
@@ -353,8 +351,8 @@ void QChartAxis::setRange(qreal min, qreal max)
  */
 void QChartAxis::setTicksCount(int count)
 {
-	if(m_ticksCount!=count) {
-		m_ticksCount=count;
+    if (m_ticksCount != count) {
+        m_ticksCount = count;
 		emit ticksCountChanged(count);
 		emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
 	}
@@ -377,10 +375,10 @@ void QChartAxis::show()
  */
 void QChartAxis::hide()
 {
-    m_axisVisible=false;
-    m_gridLineVisible=false;
-    m_labelsVisible=false;
-    m_shadesVisible=false;
+    m_axisVisible = false;
+    m_gridLineVisible = false;
+    m_labelsVisible = false;
+    m_shadesVisible = false;
     emit updated();
 }
 
@@ -392,8 +390,8 @@ void QChartAxis::handleAxisRangeChanged(qreal min, qreal max,int count)
 
 void QChartAxis::setNiceNumbers(bool enabled)
 {
-    if(m_niceNumbers!=enabled){
-        m_niceNumbers=enabled;
+    if (m_niceNumbers != enabled){
+        m_niceNumbers = enabled;
         emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
     }
 }

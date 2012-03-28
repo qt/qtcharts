@@ -10,7 +10,7 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Axis::Axis(QChartAxis* axis,ChartPresenter* presenter,AxisType type) : Chart(presenter),
+Axis::Axis(QChartAxis *axis,ChartPresenter *presenter,AxisType type) : Chart(presenter),
     m_chartAxis(axis),
     m_type(type),
     m_labelsAngle(0),
@@ -42,13 +42,13 @@ Axis::~Axis()
 void Axis::createItems(int count)
 {
 
-    if (m_axis.children().size()==0)
+    if (m_axis.children().size() == 0)
         m_axis.addToGroup(new AxisItem(this));
     for (int i = 0; i < count; ++i) {
         m_grid.addToGroup(new QGraphicsLineItem());
         m_labels.addToGroup(new QGraphicsSimpleTextItem());
         m_axis.addToGroup(new QGraphicsLineItem());
-        if((m_grid.childItems().size())%2 && m_grid.childItems().size()>2) m_shades.addToGroup(new QGraphicsRectItem());
+        if ((m_grid.childItems().size())%2 && m_grid.childItems().size()>2) m_shades.addToGroup(new QGraphicsRectItem());
        }
 }
 
@@ -67,7 +67,7 @@ void Axis::deleteItems(int count)
     }
 }
 
-void Axis::updateLayout(QVector<qreal>& layout)
+void Axis::updateLayout(QVector<qreal> &layout)
 {
     if (animator()) {
         animator()->updateLayout(this,layout);
@@ -76,7 +76,7 @@ void Axis::updateLayout(QVector<qreal>& layout)
     }
 }
 
-bool Axis::createLabels(QStringList& labels,qreal min, qreal max,int ticks) const
+bool Axis::createLabels(QStringList &labels,qreal min, qreal max,int ticks) const
 {
     Q_ASSERT(max>=min);
     Q_ASSERT(ticks>1);
@@ -87,7 +87,7 @@ bool Axis::createLabels(QStringList& labels,qreal min, qreal max,int ticks) cons
 
     if (!category) {
         int n = qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
-        for(int i=0; i< ticks; i++) {
+        for (int i=0; i< ticks; i++) {
             qreal value = min + (i * (max - min)/ (ticks-1));
             labels << QString::number(value,'f',n);
         }
@@ -239,18 +239,17 @@ QVector<qreal> Axis::calculateLayout() const
     return points;
 }
 
-void Axis::setLayout(QVector<qreal>& layout)
+void Axis::setLayout(QVector<qreal> &layout)
 {
 	int diff = m_layoutVector.size() - layout.size();
 
     if (diff>0) {
 		deleteItems(diff);
-	}
-	else if(diff<0) {
+    } else if (diff<0) {
 		createItems(-diff);
 	}
 
-	if(diff!=0) handleAxisUpdated();
+    if( diff!=0) handleAxisUpdated();
 
 	QStringList ticksList;
 
@@ -275,19 +274,19 @@ void Axis::setLayout(QVector<qreal>& layout)
 				QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
 				lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-				if(!categories){
+                if (!categories) {
 				    labelItem->setText(ticksList.at(i));
 				    QPointF center = labelItem->boundingRect().center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
 				    labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
-				}else if(i>0){
+                } else if(i>0) {
 				    labelItem->setText(ticksList.at(i));
 				    QPointF center = labelItem->boundingRect().center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
 				    labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
 				}
 
-				if((i+1)%2 && i>1) {
+                if ((i+1)%2 && i>1) {
 					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
 					rectItem->setRect(layout[i-1],m_rect.top(),layout[i]-layout[i-1],m_rect.height());
 				}
@@ -307,19 +306,19 @@ void Axis::setLayout(QVector<qreal>& layout)
 				lineItem->setLine(m_rect.left() , layout[i], m_rect.right(), layout[i]);
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
 
-				if(!categories){
+                if (!categories) {
 				    labelItem->setText(ticksList.at(i));
 				    QPointF center = labelItem->boundingRect().center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
 				    labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
-				} else if(i>0){
+                } else if (i>0) {
 				    labelItem->setText(ticksList.at(i));
 				    QPointF center = labelItem->boundingRect().center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
 				    labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i] - (layout[i] - layout[i-1])/2 -center.y());
 				}
 
-				if((i+1)%2 && i>1) {
+                if ((i+1)%2 && i>1) {
 					QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
 					rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i-1]-layout[i]);
 				}
@@ -329,7 +328,7 @@ void Axis::setLayout(QVector<qreal>& layout)
 		}
 		break;
 		default:
-		qDebug()<<"Unknown axis type";
+        qDebug()<<"Unknown axis type";
 		break;
 	}
 
@@ -345,7 +344,7 @@ bool Axis::isEmpty()
 
 void Axis::handleAxisCategoriesUpdated()
 {
-	if(isEmpty()) return;
+    if (isEmpty()) return;
 	updateLayout(m_layoutVector);
 }
 
@@ -360,13 +359,13 @@ void Axis::handleAxisUpdated()
         setAxisOpacity(0);
     }
 
-    if(m_chartAxis->isGridLineVisible()) {
+    if (m_chartAxis->isGridLineVisible()) {
         setGridOpacity(100);
     } else {
         setGridOpacity(0);
     }
 
-    if(m_chartAxis->labelsVisible()) {
+    if (m_chartAxis->labelsVisible()) {
         setLabelsOpacity(100);
     } else {
         setLabelsOpacity(0);
@@ -391,7 +390,7 @@ void Axis::handleAxisUpdated()
 
 void Axis::handleRangeChanged(qreal min, qreal max,int tickCount)
 {
-    if(min==max || tickCount<2) return;
+    if (min==max || tickCount<2) return;
 
     m_min = min;
     m_max = max;
@@ -403,7 +402,7 @@ void Axis::handleRangeChanged(qreal min, qreal max,int tickCount)
 
 }
 
-void Axis::handleGeometryChanged(const QRectF& rect)
+void Axis::handleGeometryChanged(const QRectF &rect)
 {
     m_rect = rect;
     if (isEmpty()) return;

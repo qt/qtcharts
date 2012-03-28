@@ -13,10 +13,10 @@ QChartAxisCategories::~QChartAxisCategories()
     // TODO Auto-generated destructor stub
 }
 
-void QChartAxisCategories::insert(const QBarCategories& categories)
+void QChartAxisCategories::insert(const QBarCategories &categories)
 {
     int i=1;
-    foreach(QString string , categories){
+    foreach (QString string , categories) {
         m_map.insert(i,string);
         i++;
     }
