@@ -1,11 +1,9 @@
 TEMPLATE = subdirs
 SUBDIRS += \
            areachart \
-           #axischart \
            barchart \
            #chartview \
-           colorlinechart \
-           #customcolors \
+           customchart \
            #dynamiclinechart \
            #ekgchart \
            #gdpbarchart \

@@ -52,7 +52,7 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
-    QPen blue(Qt::blue);
+    QPen blue(Qt::yellow);
     blue.setWidth(3);
     series->setPen(blue);
 //![1]
@@ -62,34 +62,63 @@ int main(int argc, char *argv[])
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Custom colors example");
+    chart->setTitle("Simple customchart example");
 //![3]
 //![4]
     QFont font;
     font.setPixelSize(18);
     chart->setTitleFont(font);
-    chart->setTitleBrush(Qt::red);
+    chart->setTitleBrush(Qt::yellow);
 
     QLinearGradient backgroundGradient;
-    backgroundGradient.setColorAt(0.0, Qt::lightGray);
-    backgroundGradient.setColorAt(1.0, Qt::white);
+    backgroundGradient.setStart(QPointF(0,0));
+    backgroundGradient.setFinalStop(QPointF(0,1));
+    backgroundGradient.setColorAt(0.0, 0x3cc63c);
+    backgroundGradient.setColorAt(1.0, 0x26f626);
     backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
     chart->setBackgroundBrush(backgroundGradient);
-
-    QPen black(Qt::black);
-    chart->axisX()->setGridLinePen(black);
-    chart->axisX()->setAxisPen(black);
-    chart->axisY()->setGridLinePen(black);
-    chart->axisY()->setAxisPen(black);
 //![4]
 //![5]
+    QPen black(Qt::black);
+    QChartAxis* axisX = chart->axisX();
+    QChartAxis* axisY = chart->axisY();
+
+    axisX->setAxisPen(black);
+    axisY->setAxisPen(black);
+    axisX->setGridLineVisible(false);
+    axisY->setGridLineVisible(false);
+
+    axisY->setShadesPen(Qt::NoPen);
+    axisY->setShadesOpacity(0.5);
+    axisY->setShadesBrush(Qt::white);
+    axisY->setShadesVisible(true);
+//![5]
+//![6]
+    QChartAxisCategories* categoriesX = chart->axisX()->categories();
+    categoriesX->insert(1,"low");
+    categoriesX->insert(5,"optimal");
+    categoriesX->insert(10,"high");
+
+    QChartAxisCategories* categoriesY = chart->axisY()->categories();
+    categoriesY->insert(1,"slow");
+    categoriesY->insert(5,"med");
+    categoriesY->insert(10,"fast");
+//![6]
+//![7]
+    axisX->setRange(0,10);
+    axisX->setTicksCount(4);
+    axisY->setRange(0,10);
+    axisY->setTicksCount(4);
+//![7]
+//![8]
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-//![5]
+//![8]
+//![9]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
-//![5]
+//![9]
     return a.exec();
 }

@@ -2,7 +2,7 @@
  error( "Couldn't find the examples.pri file!" )
 }
 
-TARGET = colorlinechart
+TARGET = customechart
 SOURCES += main.cpp
 
 
