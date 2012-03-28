@@ -29,13 +29,13 @@ public:
     //qreal value(QString category);
     //void setValue(QString category, qreal value);
 
-    void setPen(const QPen pen);
+    void setPen(const QPen &pen);
     QPen pen() const;
 
-    void setBrush(const QBrush brush);
+    void setBrush(const QBrush &brush);
     QBrush brush() const;
 
-    void setFloatingValuePen(const QPen pen);
+    void setFloatingValuePen(const QPen &pen);
     QPen floatingValuePen() const;
 
 Q_SIGNALS:
@@ -61,12 +61,12 @@ public Q_SLOTS:
 
 private:
 
-    QString m_Name;
-    QList<qreal> m_Values;   // TODO: replace with map (category, value)
-    QMap<QString, qreal> m_MappedValues;
-    QPen m_Pen;
-    QBrush m_Brush;
-    QPen m_FloatingValuePen;
+    QString m_name;
+    QList<qreal> m_values;   // TODO: replace with map (category, value)
+    QMap<QString, qreal> m_mappedValues;
+    QPen m_pen;
+    QBrush m_brush;
+    QPen m_floatingValuePen;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

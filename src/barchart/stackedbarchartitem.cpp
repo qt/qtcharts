@@ -20,16 +20,16 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     QVector<QRectF> layout;
     // Use temporary qreals for accurancy (we might get some compiler warnings... :)
 
-    qreal maxSum = m_Series->maxCategorySum();
+    qreal maxSum = m_series->maxCategorySum();
     // Domain:
-    if (m_DomainMaxY > maxSum) {
-        maxSum = m_DomainMaxY;
+    if (m_domainMaxY > maxSum) {
+        maxSum = m_domainMaxY;
     }
 
     qreal height = geometry().height();
     qreal width = geometry().width();
-    qreal scale = (height /  m_Series->maxCategorySum());
-    qreal categotyCount = m_Series->categoryCount();
+    qreal scale = (height /  m_series->maxCategorySum());
+    qreal categotyCount = m_series->categoryCount();
     qreal barWidth = width / (categotyCount * 2);
     qreal xStep = width / categotyCount;
     qreal xPos = xStep / 2 - barWidth / 2;
@@ -37,11 +37,11 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     int itemIndex(0);
     for (int category = 0; category < categotyCount; category++) {
         qreal yPos = height;
-        for (int set=0; set < m_Series->barsetCount(); set++) {
-            qreal barHeight = m_Series->valueAt(set, category) * scale;
-            Bar* bar = m_Bars.at(itemIndex);
-            bar->setPen(m_Series->barsetAt(set)->pen());
-            bar->setBrush(m_Series->barsetAt(set)->brush());
+        for (int set=0; set < m_series->barsetCount(); set++) {
+            qreal barHeight = m_series->valueAt(set, category) * scale;
+            Bar* bar = m_bars.at(itemIndex);
+            bar->setPen(m_series->barsetAt(set)->pen());
+            bar->setBrush(m_series->barsetAt(set)->brush());
             QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
             layout.append(rect);
             itemIndex++;
@@ -53,19 +53,19 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     // Position floating values
     itemIndex = 0;
     xPos = (width/categotyCount);
-    for (int category=0; category < m_Series->categoryCount(); category++) {
+    for (int category=0; category < m_series->categoryCount(); category++) {
         qreal yPos = height;
-        for (int set=0; set < m_Series->barsetCount(); set++) {
-            qreal barHeight = m_Series->valueAt(set, category) * scale;
-            BarValue* value = m_FloatingValues.at(itemIndex);
+        for (int set=0; set < m_series->barsetCount(); set++) {
+            qreal barHeight = m_series->valueAt(set, category) * scale;
+            BarValue* value = m_floatingValues.at(itemIndex);
 
-            QBarSet* barSet = m_Series->barsetAt(set);
+            QBarSet* barSet = m_series->barsetAt(set);
             value->resize(100, 50);  // TODO: proper layout for this.
             value->setPos(xPos, yPos-barHeight / 2);
             value->setPen(barSet->floatingValuePen());
 
-            if (m_Series->valueAt(set, category) != 0) {
-                value->setValueString(QString::number(m_Series->valueAt(set,category)));
+            if (m_series->valueAt(set, category) != 0) {
+                value->setValueString(QString::number(m_series->valueAt(set,category)));
             } else {
                 value->setValueString(QString(""));
             }

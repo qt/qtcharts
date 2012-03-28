@@ -48,8 +48,8 @@ public slots:
     
 private:
 
-    QList<QBarSet *> m_DataModel;
-    QStringList m_Category;
+    QList<QBarSet *> m_dataModel;
+    QStringList m_category;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

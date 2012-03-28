@@ -56,7 +56,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 QBarSet::QBarSet(QString name, QObject *parent)
     : QObject(parent)
-    ,m_Name(name)
+    ,m_name(name)
 {
 }
 
@@ -65,7 +65,7 @@ QBarSet::QBarSet(QString name, QObject *parent)
 */
 void QBarSet::setName(QString name)
 {
-    m_Name = name;
+    m_name = name;
 }
 
 /*!
@@ -73,7 +73,7 @@ void QBarSet::setName(QString name)
 */
 QString QBarSet::name()
 {
-    return m_Name;
+    return m_name;
 }
 
 /*!
@@ -81,19 +81,19 @@ QString QBarSet::name()
 */
 QBarSet& QBarSet::operator << (const qreal &value)
 {
-    m_Values.append(value);
+    m_values.append(value);
     emit structureChanged();
     return *this;
 }
 
 void QBarSet::insertValue(int i, qreal value)
 {
-    m_Values.insert(i, value);
+    m_values.insert(i, value);
 }
 
 void QBarSet::removeValue(int i)
 {
-    m_Values.removeAt(i);
+    m_values.removeAt(i);
 }
 
 /*!
@@ -101,7 +101,7 @@ void QBarSet::removeValue(int i)
 */
 int QBarSet::count()
 {
-    return m_Values.count();
+    return m_values.count();
 }
 
 /*!
@@ -109,7 +109,7 @@ int QBarSet::count()
 */
 qreal QBarSet::valueAt(int index)
 {
-    return m_Values.at(index);
+    return m_values.at(index);
 }
 
 /*!
@@ -117,7 +117,7 @@ qreal QBarSet::valueAt(int index)
 */
 void QBarSet::setValue(int index, qreal value)
 {
-    m_Values.replace(index,value);
+    m_values.replace(index,value);
     emit valueChanged();
 }
 
@@ -127,8 +127,8 @@ void QBarSet::setValue(int index, qreal value)
 qreal QBarSet::total()
 {
     qreal total(0);
-    for (int i=0; i < m_Values.count(); i++) {
-        total += m_Values.at(i);
+    for (int i=0; i < m_values.count(); i++) {
+        total += m_values.at(i);
     }
     return total;
 }
@@ -136,9 +136,9 @@ qreal QBarSet::total()
 /*!
     Sets pen for set. Bars of this set are drawn using \a pen
 */
-void QBarSet::setPen(const QPen pen)
+void QBarSet::setPen(const QPen &pen)
 {
-    m_Pen = pen;
+    m_pen = pen;
     emit valueChanged();
 }
 
@@ -147,15 +147,15 @@ void QBarSet::setPen(const QPen pen)
 */
 QPen QBarSet::pen() const
 {
-    return m_Pen;
+    return m_pen;
 }
 
 /*!
     Sets brush for the set. Bars of this set are drawn using \a brush
 */
-void QBarSet::setBrush(const QBrush brush)
+void QBarSet::setBrush(const QBrush &brush)
 {
-    m_Brush = brush;
+    m_brush = brush;
     emit valueChanged();
 }
 
@@ -164,15 +164,15 @@ void QBarSet::setBrush(const QBrush brush)
 */
 QBrush QBarSet::brush() const
 {
-    return m_Brush;
+    return m_brush;
 }
 
 /*!
     Sets the pen for floating values that are drawn on top of this set
 */
-void QBarSet::setFloatingValuePen(const QPen pen)
+void QBarSet::setFloatingValuePen(const QPen &pen)
 {
-    m_FloatingValuePen = pen;
+    m_floatingValuePen = pen;
 }
 
 /*!
@@ -180,7 +180,7 @@ void QBarSet::setFloatingValuePen(const QPen pen)
 */
 QPen QBarSet::floatingValuePen() const
 {
-    return m_FloatingValuePen;
+    return m_floatingValuePen;
 }
 
 /*!
@@ -188,7 +188,7 @@ QPen QBarSet::floatingValuePen() const
 */
 void QBarSet::barHoverEnterEvent(QPoint pos)
 {
-    emit showToolTip(pos, m_Name);
+    emit showToolTip(pos, m_name);
     emit hoverEnter(pos);
 }
 

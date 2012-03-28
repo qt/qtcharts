@@ -55,19 +55,19 @@ public slots:
 protected:
 
     // TODO: consider these.
-    qreal m_DomainMinX;
-    qreal m_DomainMaxX;
-    qreal m_DomainMinY;
-    qreal m_DomainMaxY;
+    qreal m_domainMinX;
+    qreal m_domainMaxX;
+    qreal m_domainMinY;
+    qreal m_domainMaxY;
 
     QRectF m_rect;
-    bool m_LayoutSet;    // True, if component has been laid out.
-    QVector<QRectF> m_Layout;
+    bool m_layoutSet;    // True, if component has been laid out.
+    QVector<QRectF> m_layout;
 
     // Not owned.
-    QBarSeries *m_Series;
-    QList<Bar *> m_Bars;
-    QList<BarValue *> m_FloatingValues;
+    QBarSeries *m_series;
+    QList<Bar *> m_bars;
+    QList<BarValue *> m_floatingValues;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
