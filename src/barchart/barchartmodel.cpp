@@ -126,8 +126,8 @@ qreal BarChartModel::percentageAt(int set, int category)
 
     qreal value = m_dataModel.at(set)->valueAt(category);
     qreal total = categorySum(category);
-    if (0 == total)
-        return 100.0;
+    if ( qFuzzyCompare(total, 0) )
+        return 0;
 
     return value / total;
 }

@@ -36,7 +36,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) : QSeries(parent),
     m_internalModel(new BarChartModel(categories, this))
 {
-    m_model = NULL;
+    m_model = 0;
     m_mapCategories = -1;
     m_mapBarBottom = -1;
     m_mapBarTop = -1;
@@ -248,7 +248,7 @@ bool QBarSeries::setModel(QAbstractItemModel *model)
     }
     else
     {
-        m_model = NULL;
+        m_model = 0;
         return false;
     }
 }
@@ -256,7 +256,7 @@ bool QBarSeries::setModel(QAbstractItemModel *model)
 // TODO
 void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation)
 {
-    if (m_model == NULL)
+    if (!m_model)
         return;
 
     m_mapCategories = categories;
