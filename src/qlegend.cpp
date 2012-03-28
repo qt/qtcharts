@@ -37,14 +37,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \enum QLegend::PreferredLayout
+    \enum QLegend::Layout
 
     This enum describes the possible position for legend inside chart.
 
-    \value PreferredLayoutTop
-    \value PreferredLayoutBottom
-    \value PreferredLayoutLeft
-    \value PreferredLayoutRight
+    \value LayoutTop
+    \value LayoutBottom
+    \value LayoutLeft
+    \value LayoutRight
 */
 
 
@@ -67,27 +67,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs the legend object and sets the parent to \a parent
 */
 QLegend::QLegend(QGraphicsItem *parent) : QGraphicsObject(parent),
-    m_Pos(0,0),
-    m_Size(0,0),
-    m_MinimumSize(50,20),                // TODO: magic numbers
-    m_MaximumSize(150,100),
+    m_pos(0,0),
+    m_size(0,0),
+    m_minimumSize(50,20),                // TODO: magic numbers
+    m_maximumSize(150,100),
     m_brush(Qt::darkGray),       // TODO: from theme?
-    m_PreferredLayout(QLegend::PreferredLayoutTop),
+    m_alignment(QLegend::LayoutTop),
     mFirstMarker(0),
-    m_Margin(5)
+    m_margin(5)
 {
-    m_ScrollButtonLeft = new LegendScrollButton(LegendScrollButton::ScrollButtonIdLeft, this);
-    m_ScrollButtonRight = new LegendScrollButton(LegendScrollButton::ScrollButtonIdRight, this);
-    m_ScrollButtonUp = new LegendScrollButton(LegendScrollButton::ScrollButtonIdUp, this);
-    m_ScrollButtonDown = new LegendScrollButton(LegendScrollButton::ScrollButtonIdDown, this);
+    m_scrollButtonLeft = new LegendScrollButton(LegendScrollButton::ScrollButtonIdLeft, this);
+    m_scrollButtonRight = new LegendScrollButton(LegendScrollButton::ScrollButtonIdRight, this);
+    m_scrollButtonUp = new LegendScrollButton(LegendScrollButton::ScrollButtonIdUp, this);
+    m_scrollButtonDown = new LegendScrollButton(LegendScrollButton::ScrollButtonIdDown, this);
 
-    connect(m_ScrollButtonLeft, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
+    connect(m_scrollButtonLeft, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
             this, SLOT(handleScrollButtonClicked(QGraphicsSceneMouseEvent*)));
-    connect(m_ScrollButtonRight, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
+    connect(m_scrollButtonRight, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
             this, SLOT(handleScrollButtonClicked(QGraphicsSceneMouseEvent*)));
-    connect(m_ScrollButtonUp, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
+    connect(m_scrollButtonUp, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
             this, SLOT(handleScrollButtonClicked(QGraphicsSceneMouseEvent*)));
-    connect(m_ScrollButtonDown, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
+    connect(m_scrollButtonDown, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
             this, SLOT(handleScrollButtonClicked(QGraphicsSceneMouseEvent*)));
 
     setZValue(ChartPresenter::LegendZValue);
@@ -112,7 +112,7 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 */
 QRectF QLegend::boundingRect() const
 {
-    return QRectF(m_Pos,m_Size);
+    return QRectF(m_pos,m_size);
 }
 
 /*!
@@ -156,20 +156,20 @@ QPen QLegend::pen() const
 
 /*!
     Sets the \a preferred layout for legend. Legend tries to paint itself on the defined position in chart.
-    \sa QLegend::PreferredLayout
+    \sa QLegend::Layout
 */
-void QLegend::setPreferredLayout(QLegend::PreferredLayout preferred)
+void QLegend::setAlignmnent(QLegend::Layout alignment)
 {
-    m_PreferredLayout = preferred;
+    m_alignment = alignment;
     updateLayout();
 }
 
 /*!
     Returns the preferred layout for legend
 */
-QLegend::PreferredLayout QLegend::preferredLayout() const
+QLegend::Layout QLegend::alignment() const
 {
-    return m_PreferredLayout;
+    return m_alignment;
 }
 
 /*!
@@ -177,7 +177,7 @@ QLegend::PreferredLayout QLegend::preferredLayout() const
 */
 QSizeF QLegend::maximumSize() const
 {
-    return m_MaximumSize;
+    return m_maximumSize;
 }
 
 /*!
@@ -186,7 +186,7 @@ QSizeF QLegend::maximumSize() const
 */
 void QLegend::setMaximumSize(const QSizeF size)
 {
-    m_MaximumSize = size;
+    m_maximumSize = size;
     updateLayout();
 }
 
@@ -195,7 +195,7 @@ void QLegend::setMaximumSize(const QSizeF size)
 */
 QSizeF QLegend::size() const
 {
-    return m_Size;
+    return m_size;
 }
 
 /*!
@@ -204,12 +204,12 @@ QSizeF QLegend::size() const
 */
 void QLegend::setSize(const QSizeF size)
 {
-    m_Size = size;
-    if (m_Size.width() > m_MaximumSize.width()) {
-        m_Size.setWidth(m_MaximumSize.width());
+    m_size = size;
+    if (m_size.width() > m_maximumSize.width()) {
+        m_size.setWidth(m_maximumSize.width());
     }
-    if (m_Size.height() > m_MaximumSize.height()) {
-        m_Size.setHeight(m_MaximumSize.height());
+    if (m_size.height() > m_maximumSize.height()) {
+        m_size.setHeight(m_maximumSize.height());
     }
 }
 
@@ -218,7 +218,7 @@ void QLegend::setSize(const QSizeF size)
 */
 void QLegend::setPos(const QPointF &pos)
 {
-    m_Pos = pos;
+    m_pos = pos;
     updateLayout();
 }
 
@@ -241,8 +241,7 @@ void QLegend::handleSeriesRemoved(QSeries *series)
 {
     disconnectSeries(series);
 
-    if (series->type() == QSeries::SeriesTypeArea)
-    {
+    if (series->type() == QSeries::SeriesTypeArea) {
         // This is special case. Area series has upper and lower series, which each have markers
         QAreaSeries* s = static_cast<QAreaSeries *> (series);
         deleteMarkers(s->upperSeries());
@@ -269,7 +268,7 @@ void QLegend::handleAdded(QList<QPieSlice *> slices)
         connect(s, SIGNAL(changed()), marker, SLOT(changed()));
         connect(s, SIGNAL(destroyed()), marker, SLOT(deleteLater()));
         connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
-        m_Markers.append(marker);
+        m_markers.append(marker);
         childItems().append(marker);
     }
     updateLayout();
@@ -290,9 +289,8 @@ void QLegend::handleRemoved(QList<QPieSlice *> slices)
 */
 void QLegend::handleMarkerDestroyed()
 {
-    // TODO: what if more than one markers are destroyed and we update layout after first one?
     LegendMarker* m = static_cast<LegendMarker *> (sender());
-    m_Markers.removeOne(m);
+    m_markers.removeOne(m);
     updateLayout();
 }
 
@@ -333,47 +331,11 @@ void QLegend::handleScrollButtonClicked(QGraphicsSceneMouseEvent *event)
 */
 void QLegend::connectSeries(QSeries *series)
 {
-    // Connect relevant signals from series
-    switch (series->type())
-    {
-    case QSeries::SeriesTypeLine: {
-//        QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypeArea: {
-//        QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypeBar: {
-//        QBarSeries* barSeries = static_cast<QBarSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypeStackedBar: {
-//        QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypePercentBar: {
-//        QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypeScatter: {
-//        QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
-        break;
-    }
-    case QSeries::SeriesTypePie: {
+    // Connect relevant signals from series. Currently only pie series has interesting signals
+    // TODO: bar chart may have
+    if  (series->type() == QSeries::SeriesTypePie) {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
         connect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleAdded(QList<QPieSlice*>)));
-//        connect(pieSeries,SIGNAL(removed(QList<QPieSlice*>)),this,SLOT(handleRemoved(QList<QPieSlice*>)));
-        break;
-    }
-    case QSeries::SeriesTypeSpline: {
-//        QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
-        break;
-    }
-    default: {
-        qWarning() << "QLegend::connectSeries" << series->type() << "not implemented.";
-        break;
-    }
     }
 }
 
@@ -382,47 +344,9 @@ void QLegend::connectSeries(QSeries *series)
 */
 void QLegend::disconnectSeries(QSeries *series)
 {
-    // Connect relevant signals from series
-    switch (series->type())
-    {
-    case QSeries::SeriesTypeLine: {
-//        QLineSeries* lineSeries = static_cast<QLineSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypeArea: {
-//        QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypeBar: {
-//        QBarSeries* barSeries = static_cast<QBarSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypeStackedBar: {
-//        QStackedBarSeries* stackedBarSeries = static_cast<QStackedBarSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypePercentBar: {
-//        QPercentBarSeries* percentBarSeries = static_cast<QPercentBarSeries*>(series);
-        break;
-    }
-    case QSeries::SeriesTypeScatter: {
-//        QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
-        break;
-    }
-    case QSeries::SeriesTypePie: {
+    if (series->type() == QSeries::SeriesTypePie) {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
         disconnect(pieSeries, SIGNAL(added(QList<QPieSlice *>)), this, SLOT(handleAdded(QList<QPieSlice *>)));
-//        disconnect(pieSeries,SIGNAL(removed(QList<QPieSlice*>)),this,SLOT(handleRemoved(QList<QPieSlice*>)));
-        break;
-    }
-    case QSeries::SeriesTypeSpline: {
-//        QSplineSeries* splineSeries = static_cast<QSplineSeries*>(series);
-        break;
-    }
-    default: {
-        qWarning()<< "QLegend::disconnectSeries" << series->type() << "not implemented.";
-        break;
-    }
     }
 }
 
@@ -447,44 +371,38 @@ void QLegend::createMarkers(QSeries *series)
             appendMarkers(areaSeries->lowerSeries());
         break;
     }
-
     case QSeries::SeriesTypeBar: {
         QBarSeries *barSeries = static_cast<QBarSeries *>(series);
         appendMarkers(barSeries);
         break;
     }
-
     case QSeries::SeriesTypeStackedBar: {
         QStackedBarSeries *stackedBarSeries = static_cast<QStackedBarSeries *>(series);
         appendMarkers(stackedBarSeries);
         break;
     }
-
     case QSeries::SeriesTypePercentBar: {
         QPercentBarSeries *percentBarSeries = static_cast<QPercentBarSeries *>(series);
         appendMarkers(percentBarSeries);
         break;
     }
-
     case QSeries::SeriesTypeScatter: {
         QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
         appendMarkers(scatterSeries);
         break;
     }
-
     case QSeries::SeriesTypePie: {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
         appendMarkers(pieSeries);
         break;
     }
-
     case QSeries::SeriesTypeSpline: {
         QSplineSeries *splineSeries = static_cast<QSplineSeries *>(series);
         appendMarkers(splineSeries);
         break;
     }
     default: {
-        qWarning()<< "QLegend::createMarkers" << series->type() << "not implemented.";
+        qWarning()<< "QLegend::createMarkers" << series->type() << "unknown series type.";
         break;
     }
     }
@@ -501,7 +419,7 @@ void QLegend::appendMarkers(QXYSeries* series)
     marker->setBrush(series->brush());
     connect(marker, SIGNAL(clicked(QSeries *, Qt::MouseButton)), this, SIGNAL(clicked(QSeries *, Qt::MouseButton)));
     connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
-    m_Markers.append(marker);
+    m_markers.append(marker);
     childItems().append(marker);
 }
 
@@ -519,7 +437,7 @@ void QLegend::appendMarkers(QBarSeries *series)
                 this, SIGNAL(clicked(QBarSet *, Qt::MouseButton)));
         connect(s, SIGNAL(valueChanged()), marker, SLOT(changed()));
         connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
-        m_Markers.append(marker);
+        m_markers.append(marker);
         childItems().append(marker);
     }
 }
@@ -539,7 +457,7 @@ void QLegend::appendMarkers(QPieSeries *series)
         connect(s, SIGNAL(changed()), marker, SLOT(changed()));
         connect(s, SIGNAL(destroyed()), marker, SLOT(deleteLater()));
         connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
-        m_Markers.append(marker);
+        m_markers.append(marker);
         childItems().append(marker);
     }
 }
@@ -550,9 +468,9 @@ void QLegend::appendMarkers(QPieSeries *series)
 void QLegend::deleteMarkers(QSeries *series)
 {
     // Search all markers that belong to given series and delete them.
-    foreach (LegendMarker *m, m_Markers) {
+    foreach (LegendMarker *m, m_markers) {
         if (m->series() == series) {
-            m_Markers.removeOne(m);
+            m_markers.removeOne(m);
             delete m;
         }
     }
@@ -566,7 +484,7 @@ void QLegend::deleteMarkers(QSeries *series)
 void QLegend::updateLayout()
 {
     // Calculate layout for markers and text
-    if (m_Markers.count() <= 0) {
+    if (m_markers.count() <= 0) {
         // Nothing to do
         return;
     }
@@ -580,42 +498,42 @@ void QLegend::updateLayout()
 
     qreal totalWidth = 0;
     qreal totalHeight = 0;
-    switch (m_PreferredLayout)
+    switch (m_alignment)
     {
     // Both cases organise items horizontally
-    case QLegend::PreferredLayoutBottom:
-    case QLegend::PreferredLayoutTop: {
+    case QLegend::LayoutBottom:
+    case QLegend::LayoutTop: {
 
         qreal xStep = markerMaxSize.width();
-        qreal x = m_Pos.x() + m_Margin;
-        qreal y = m_Pos.y() + m_Margin;
+        qreal x = m_pos.x() + m_margin;
+        qreal y = m_pos.y() + m_margin;
         int column = 0;
         int maxColumns = 1;
         qreal scrollButtonWidth = 0;
 
         // Set correct visibility for scroll scrollbuttons
         if (scrollButtonsVisible()) {
-            m_ScrollButtonLeft->setVisible(true);
-            m_ScrollButtonRight->setVisible(true);
+            m_scrollButtonLeft->setVisible(true);
+            m_scrollButtonRight->setVisible(true);
             // scrollbuttons visible, so add their width to total width
-            totalWidth += (m_ScrollButtonLeft->boundingRect().width() + m_Margin) * 2;
-            scrollButtonWidth = m_ScrollButtonLeft->boundingRect().width() + m_Margin;
+            totalWidth += (m_scrollButtonLeft->boundingRect().width() + m_margin) * 2;
+            scrollButtonWidth = m_scrollButtonLeft->boundingRect().width() + m_margin;
             // start position changes by scrollbutton width
             x += scrollButtonWidth;
         } else {
-            m_ScrollButtonLeft->setVisible(false);
-            m_ScrollButtonRight->setVisible(false);
+            m_scrollButtonLeft->setVisible(false);
+            m_scrollButtonRight->setVisible(false);
         }
-        m_ScrollButtonUp->setVisible(false);
-        m_ScrollButtonDown->setVisible(false);
+        m_scrollButtonUp->setVisible(false);
+        m_scrollButtonDown->setVisible(false);
 
-        for (int i=0; i < m_Markers.count(); i++) {
-            LegendMarker *m = m_Markers.at(i);
+        for (int i=0; i < m_markers.count(); i++) {
+            LegendMarker *m = m_markers.at(i);
             if (i < mFirstMarker) {
                 // Markers before first are not visible.
                 m->setVisible(false);
             } else {
-                if ((x + xStep + scrollButtonWidth + m_Margin) > (m_Pos.x() + m_MaximumSize.width())) {
+                if ((x + xStep + scrollButtonWidth + m_margin) > (m_pos.x() + m_maximumSize.width())) {
                     // This marker would go outside legend rect.
                     m->setVisible(false);
                 } else {
@@ -629,45 +547,45 @@ void QLegend::updateLayout()
             maxColumns = column;
         }
 
-        m_ScrollButtonLeft->setPos(m_Pos.x() + m_Margin, y);
-        m_ScrollButtonRight->setPos(x + m_Margin, y);
+        m_scrollButtonLeft->setPos(m_pos.x() + m_margin, y);
+        m_scrollButtonRight->setPos(x + m_margin, y);
 
-        totalWidth += maxColumns * markerMaxSize.width() + m_Margin * 2;
-        totalHeight = markerMaxSize.height() + m_Margin * 2;
+        totalWidth += maxColumns * markerMaxSize.width() + m_margin * 2;
+        totalHeight = markerMaxSize.height() + m_margin * 2;
 
         break;
     }
     // Both cases organize items vertically
-    case QLegend::PreferredLayoutLeft:
-    case QLegend::PreferredLayoutRight: {
+    case QLegend::LayoutLeft:
+    case QLegend::LayoutRight: {
         qreal yStep = markerMaxSize.height();
-        qreal x = m_Pos.x() + m_Margin;
-        qreal y = m_Pos.y() + m_Margin;
+        qreal x = m_pos.x() + m_margin;
+        qreal y = m_pos.y() + m_margin;
         int row = 1;
         int maxRows = 1;
         qreal scrollButtonHeight = 0;
 
         // Set correct visibility for scroll scrollbuttons
         if (scrollButtonsVisible()) {
-            m_ScrollButtonUp->setVisible(true);
-            m_ScrollButtonDown->setVisible(true);
-            totalHeight += (m_ScrollButtonUp->boundingRect().height() + m_Margin) * 2;   // scrollbuttons visible, so add their height to total height
-            scrollButtonHeight = m_ScrollButtonUp->boundingRect().height();
-            y += scrollButtonHeight + m_Margin;                                         // start position changes by scrollbutton height
+            m_scrollButtonUp->setVisible(true);
+            m_scrollButtonDown->setVisible(true);
+            totalHeight += (m_scrollButtonUp->boundingRect().height() + m_margin) * 2;   // scrollbuttons visible, so add their height to total height
+            scrollButtonHeight = m_scrollButtonUp->boundingRect().height();
+            y += scrollButtonHeight + m_margin;                                         // start position changes by scrollbutton height
         } else {
-            m_ScrollButtonUp->setVisible(false);
-            m_ScrollButtonDown->setVisible(false);
+            m_scrollButtonUp->setVisible(false);
+            m_scrollButtonDown->setVisible(false);
         }
-        m_ScrollButtonLeft->setVisible(false);
-        m_ScrollButtonRight->setVisible(false);
+        m_scrollButtonLeft->setVisible(false);
+        m_scrollButtonRight->setVisible(false);
 
-        for (int i=0; i < m_Markers.count(); i++) {
-            LegendMarker* m = m_Markers.at(i);
+        for (int i=0; i < m_markers.count(); i++) {
+            LegendMarker* m = m_markers.at(i);
             if (i < mFirstMarker) {
                 // Markers before first are not visible.
                 m->setVisible(false);
             } else {
-                if ((y + yStep + scrollButtonHeight) > (m_Pos.y() + m_MaximumSize.height())) {
+                if ((y + yStep + scrollButtonHeight) > (m_pos.y() + m_maximumSize.height())) {
                     // This marker would go outside legend rect.
                     m->setVisible(false);
                 } else {
@@ -681,11 +599,11 @@ void QLegend::updateLayout()
             maxRows = row;
         }
 
-        m_ScrollButtonUp->setPos(m_Pos.x() + m_Margin, m_Pos.y() + m_Margin);
-        m_ScrollButtonDown->setPos(m_Pos.x() + m_Margin, y + m_Margin);
+        m_scrollButtonUp->setPos(m_pos.x() + m_margin, m_pos.y() + m_margin);
+        m_scrollButtonDown->setPos(m_pos.x() + m_margin, y + m_margin);
 
-        totalWidth += markerMaxSize.width() + m_Margin * 2;
-        totalHeight = maxRows * markerMaxSize.height() + m_Margin * 4 + scrollButtonHeight; // TODO: check this
+        totalWidth += markerMaxSize.width() + m_margin * 2;
+        totalHeight = maxRows * markerMaxSize.height() + m_margin * 4 + scrollButtonHeight; // TODO: check this
         break;
     }
     default: {
@@ -693,8 +611,8 @@ void QLegend::updateLayout()
     }
     }
 
-    m_Size.setWidth(totalWidth);
-    m_Size.setHeight(totalHeight);
+    m_size.setWidth(totalWidth);
+    m_size.setHeight(totalHeight);
 
     update();
 }
@@ -713,10 +631,10 @@ void QLegend::rescaleScrollButtons(const QSize &size)
     QPolygonF down;
     down << QPointF(0, 0) << QPointF(size.width() / 2, size.height()) << QPointF(size.width(), 0);
 
-    m_ScrollButtonLeft->setPolygon(left);
-    m_ScrollButtonRight->setPolygon(right);
-    m_ScrollButtonUp->setPolygon(up);
-    m_ScrollButtonDown->setPolygon(down);
+    m_scrollButtonLeft->setPolygon(left);
+    m_scrollButtonRight->setPolygon(right);
+    m_scrollButtonUp->setPolygon(up);
+    m_scrollButtonDown->setPolygon(down);
 }
 
 /*!
@@ -725,7 +643,7 @@ void QLegend::rescaleScrollButtons(const QSize &size)
 QSizeF QLegend::maximumMarkerSize()
 {
     QSizeF max(0,0);
-    foreach (LegendMarker* m, m_Markers) {
+    foreach (LegendMarker* m, m_markers) {
         if (m->boundingRect().width() > max.width())
             max.setWidth(m->boundingRect().width());
         if (m->boundingRect().height() > max.height())
@@ -740,28 +658,28 @@ QSizeF QLegend::maximumMarkerSize()
 */
 void QLegend::checkFirstMarkerBounds()
 {
-    if ((m_PreferredLayout == QLegend::PreferredLayoutLeft) || (m_PreferredLayout == QLegend::PreferredLayoutRight)) {
+    if ((m_alignment == QLegend::LayoutLeft) || (m_alignment == QLegend::LayoutRight)) {
         // Bounds limited by height.
         int max;
         if (scrollButtonsVisible()) {
-            max = (m_MaximumSize.height() - m_ScrollButtonLeft->boundingRect().height() * 2 - m_Margin * 4) / maximumMarkerSize().height();
+            max = (m_maximumSize.height() - m_scrollButtonLeft->boundingRect().height() * 2 - m_margin * 4) / maximumMarkerSize().height();
         } else {
-            max = m_MaximumSize.height() / maximumMarkerSize().height();
+            max = m_maximumSize.height() / maximumMarkerSize().height();
         }
 
-        if (mFirstMarker > m_Markers.count() - max)
-            mFirstMarker = m_Markers.count() - max;
+        if (mFirstMarker > m_markers.count() - max)
+            mFirstMarker = m_markers.count() - max;
     } else {
         // Bounds limited by width
         int max;
         if (scrollButtonsVisible()) {
-            max = (m_MaximumSize.width() - m_ScrollButtonLeft->boundingRect().width() * 2 - m_Margin*4) / maximumMarkerSize().width();
+            max = (m_maximumSize.width() - m_scrollButtonLeft->boundingRect().width() * 2 - m_margin*4) / maximumMarkerSize().width();
         } else {
-            max = m_MaximumSize.width() / maximumMarkerSize().width();
+            max = m_maximumSize.width() / maximumMarkerSize().width();
         }
 
-        if (mFirstMarker > m_Markers.count() - max)
-            mFirstMarker = m_Markers.count() - max;
+        if (mFirstMarker > m_markers.count() - max)
+            mFirstMarker = m_markers.count() - max;
     }
 
     if (mFirstMarker < 0)
@@ -774,13 +692,13 @@ void QLegend::checkFirstMarkerBounds()
 bool QLegend::scrollButtonsVisible()
 {
     // Just a helper to clarify, what the magic below means :)
-    if ((m_PreferredLayout == QLegend::PreferredLayoutTop) || (m_PreferredLayout == QLegend::PreferredLayoutBottom)) {
-        return (maximumMarkerSize().width() * m_Markers.count() + m_Margin * 2 > m_MaximumSize.width());
-    } else if ((m_PreferredLayout == QLegend::PreferredLayoutLeft) || (m_PreferredLayout == QLegend::PreferredLayoutRight)) {
-        return (maximumMarkerSize().height() * m_Markers.count() + m_Margin * 2 > m_MaximumSize.height());
+    if ((m_alignment == QLegend::LayoutTop) || (m_alignment == QLegend::LayoutBottom)) {
+        return (maximumMarkerSize().width() * m_markers.count() + m_margin * 2 > m_maximumSize.width());
+    } else if ((m_alignment == QLegend::LayoutLeft) || (m_alignment == QLegend::LayoutRight)) {
+        return (maximumMarkerSize().height() * m_markers.count() + m_margin * 2 > m_maximumSize.height());
     }
 
-    return (maximumMarkerSize().height() * m_Markers.count() + m_Margin * 2 > m_MaximumSize.height());
+    return (maximumMarkerSize().height() * m_markers.count() + m_margin * 2 > m_maximumSize.height());
 }
 
 #include "moc_qlegend.cpp"

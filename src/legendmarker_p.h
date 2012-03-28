@@ -25,16 +25,16 @@ class LegendMarker : public QGraphicsObject
     };
 
 public:
-    LegendMarker(QSeries* series, QGraphicsItem *parent = 0);
-    LegendMarker(QSeries* series, QBarSet* barset, QGraphicsItem *parent = 0);
-    LegendMarker(QSeries* series, QPieSlice* pieslice, QGraphicsItem *parent = 0);
+    LegendMarker(QSeries *series, QGraphicsItem *parent = 0);
+    LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *parent = 0);
+    LegendMarker(QSeries *series, QPieSlice *pieslice, QGraphicsItem *parent = 0);
 
     void setPos(qreal x, qreal y);
 
-    void setPen(const QPen pen);
+    void setPen(const QPen &pen);
     QPen pen() const;
 
-    void setBrush(const QBrush brush);
+    void setBrush(const QBrush &brush);
     QBrush brush() const;
 
     void setName(const QString name);
@@ -53,9 +53,9 @@ public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 Q_SIGNALS:
-    void clicked(QSeries* series, Qt::MouseButton button);
-    void clicked(QBarSet* barset, Qt::MouseButton button);
-    void clicked(QPieSlice* pieslice, Qt::MouseButton button);
+    void clicked(QSeries *series, Qt::MouseButton button);
+    void clicked(QBarSet *barset, Qt::MouseButton button);
+    void clicked(QPieSlice *pieslice, Qt::MouseButton button);
 
 public Q_SLOTS:
     void changed();
@@ -68,9 +68,9 @@ private:
     QBrush mBrush;
     QPen mPen;
 
-    QSeries* mSeries;
-    QBarSet* mBarset;
-    QPieSlice* mPieslice;
+    QSeries *mSeries;
+    QBarSet *mBarset;
+    QPieSlice *mPieslice;
 
     LegendMarkerType mType;
     QGraphicsSimpleTextItem mTextItem;

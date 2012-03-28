@@ -59,17 +59,6 @@ QLineSeries::~QLineSeries()
 }
 
 /*!
-    Sets \a pen used for drawing line connecting points.
-*/
-void QLineSeries::setLinePen(const QPen &pen)
-{
-    if (pen != m_pen){
-        m_pen = pen;
-        emit QXYSeries::updated();
-    }
-}
-
-/*!
     Sets if data points are \a visible and should be drawn on line.
 */
 void QLineSeries::setPointsVisible(bool visible)

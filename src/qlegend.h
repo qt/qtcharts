@@ -18,16 +18,18 @@ class QPieSeries;
 class LegendScrollButton;
 class QSeries;
 
+// TODO: This as widget
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsObject
 {
     Q_OBJECT
 public:
 
-    enum PreferredLayout {
-        PreferredLayoutTop,
-        PreferredLayoutBottom,
-        PreferredLayoutLeft,
-        PreferredLayoutRight
+    // We only support these alignments (for now)
+    enum Layout {
+        LayoutTop = Qt::AlignTop,
+        LayoutBottom = Qt::AlignBottom,
+        LayoutLeft = Qt::AlignLeft,
+        LayoutRight = Qt::AlignRight
     };
 
     explicit QLegend(QGraphicsItem *parent = 0);
@@ -41,8 +43,8 @@ public:
     void setPen(const QPen &pen);
     QPen pen() const;
 
-    void setPreferredLayout(QLegend::PreferredLayout preferred);
-    QLegend::PreferredLayout preferredLayout() const;
+    void setAlignmnent(QLegend::Layout alignment);
+    QLegend::Layout alignment() const;
 
     QSizeF maximumSize() const;
     void setMaximumSize(const QSizeF size);
@@ -82,25 +84,25 @@ private:
     void checkFirstMarkerBounds();
     bool scrollButtonsVisible();
 
-    QPointF m_Pos;
-    QSizeF m_Size;
-    QSizeF m_MinimumSize;
-    QSizeF m_MaximumSize;
+    QPointF m_pos;
+    QSizeF m_size;
+    QSizeF m_minimumSize;
+    QSizeF m_maximumSize;
 
-    QList<LegendMarker *> m_Markers;
+    QList<LegendMarker *> m_markers;
 
     QBrush m_brush;
     QPen m_pen;
-    QLegend::PreferredLayout m_PreferredLayout;
+    QLegend::Layout m_alignment;
 
     int mFirstMarker;
 
-    LegendScrollButton *m_ScrollButtonLeft;
-    LegendScrollButton *m_ScrollButtonRight;
-    LegendScrollButton *m_ScrollButtonUp;
-    LegendScrollButton *m_ScrollButtonDown;
+    LegendScrollButton *m_scrollButtonLeft;
+    LegendScrollButton *m_scrollButtonRight;
+    LegendScrollButton *m_scrollButtonUp;
+    LegendScrollButton *m_scrollButtonDown;
 
-    qreal m_Margin;
+    qreal m_margin;
     // <--- PIMPL
 };
 

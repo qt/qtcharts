@@ -397,22 +397,22 @@ void QChartPrivate::updateLegendLayout()
     QRectF plotRect = m_rect.adjusted(padding,padding,-padding,-padding);
     QRectF legendRect;
 
-    switch (m_legend->preferredLayout())
+    switch (m_legend->alignment())
     {
-        case QLegend::PreferredLayoutTop: {
+        case QLegend::LayoutTop: {
             //        legendRect = plotRect.adjusted(m_padding,0,-m_padding,-m_padding - plotRect.height());
             legendRect = plotRect.adjusted(0,0,0,-padding - plotRect.height());
             break;
         }
-        case QLegend::PreferredLayoutBottom: {
+        case QLegend::LayoutBottom: {
             legendRect = plotRect.adjusted(padding,padding + plotRect.height(),-padding,0);
             break;
         }
-        case QLegend::PreferredLayoutLeft: {
+        case QLegend::LayoutLeft: {
             legendRect = plotRect.adjusted(0,padding,-padding - plotRect.width(),-padding);
             break;
         }
-        case QLegend::PreferredLayoutRight: {
+        case QLegend::LayoutRight: {
             legendRect = plotRect.adjusted(padding + plotRect.width(),padding,0,-padding);
             break;
         }

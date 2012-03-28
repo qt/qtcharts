@@ -9,50 +9,47 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-LegendMarker::LegendMarker(QSeries* series, QGraphicsItem *parent)
-    : QGraphicsObject(parent)
-    ,mPos(0,0)
-    ,mSize(0,0)
-    ,mBoundingRect(0,0,0,0)
-    ,mMarkerBoundingRect(0,0,0,0)
-    ,mSeries(series)
-    ,mBarset(0)
-    ,mPieslice(0)
-    ,mType(LegendMarkerTypeSeries)
-    ,mTextItem(new QGraphicsSimpleTextItem(this))
-    {
-        setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
-    }
+LegendMarker::LegendMarker(QSeries *series, QGraphicsItem *parent) : QGraphicsObject(parent),
+    mPos(0,0),
+    mSize(0,0),
+    mBoundingRect(0,0,0,0),
+    mMarkerBoundingRect(0,0,0,0),
+    mSeries(series),
+    mBarset(0),
+    mPieslice(0),
+    mType(LegendMarkerTypeSeries),
+    mTextItem(new QGraphicsSimpleTextItem(this))
+{
+    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
+}
 
-LegendMarker::LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *parent)
-    : QGraphicsObject(parent)
-    ,mPos(0,0)
-    ,mSize(0,0)
-    ,mBoundingRect(0,0,0,0)
-    ,mMarkerBoundingRect(0,0,0,0)
-    ,mSeries(series)
-    ,mBarset(barset)
-    ,mPieslice(0)
-    ,mType(LegendMarkerTypeBarset)
-    ,mTextItem(new QGraphicsSimpleTextItem(this))
-    {
-        setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
-    }
+LegendMarker::LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *parent) : QGraphicsObject(parent),
+    mPos(0,0),
+    mSize(0,0),
+    mBoundingRect(0,0,0,0),
+    mMarkerBoundingRect(0,0,0,0),
+    mSeries(series),
+    mBarset(barset),
+    mPieslice(0),
+    mType(LegendMarkerTypeBarset),
+    mTextItem(new QGraphicsSimpleTextItem(this))
+{
+    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
+}
 
-LegendMarker::LegendMarker(QSeries *series, QPieSlice *pieslice, QGraphicsItem *parent)
-    : QGraphicsObject(parent)
-    ,mPos(0,0)
-    ,mSize(0,0)
-    ,mBoundingRect(0,0,0,0)
-    ,mMarkerBoundingRect(0,0,0,0)
-    ,mSeries(series)
-    ,mBarset(0)
-    ,mPieslice(pieslice)
-    ,mType(LegendMarkerTypePieslice)
-    ,mTextItem(new QGraphicsSimpleTextItem(this))
-    {
-        setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
-    }
+LegendMarker::LegendMarker(QSeries *series, QPieSlice *pieslice, QGraphicsItem *parent) : QGraphicsObject(parent),
+    mPos(0,0),
+    mSize(0,0),
+    mBoundingRect(0,0,0,0),
+    mMarkerBoundingRect(0,0,0,0),
+    mSeries(series),
+    mBarset(0),
+    mPieslice(pieslice),
+    mType(LegendMarkerTypePieslice),
+    mTextItem(new QGraphicsSimpleTextItem(this))
+{
+    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
+}
 
 void LegendMarker::setPos(qreal x, qreal y)
 {
@@ -60,7 +57,7 @@ void LegendMarker::setPos(qreal x, qreal y)
     layoutChanged();
 }
 
-void LegendMarker::setPen(const QPen pen)
+void LegendMarker::setPen(const QPen &pen)
 {
     mPen = pen;
 }
@@ -70,7 +67,7 @@ QPen LegendMarker::pen() const
     return mPen;
 }
 
-void LegendMarker::setBrush(const QBrush brush)
+void LegendMarker::setBrush(const QBrush &brush)
 {
     mBrush = brush;
 }

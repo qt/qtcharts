@@ -81,7 +81,7 @@ private Q_SLOTS:
     void barsetChanged();
 
 protected:
-    BarChartModel *m_internalModel;
+    BarChartModel *m_internalModel;     // TODO: this may change... current "2 models" situation doesn't look good.
 
     QAbstractItemModel* m_model;
     int m_mapCategories;
