@@ -15,7 +15,7 @@ class AreaChartItem : public ChartItem
     Q_OBJECT
 public:
     AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter);
-    ~ AreaChartItem();
+    ~AreaChartItem();
 
     //from QGraphicsItem
     QRectF boundingRect() const;
@@ -56,7 +56,7 @@ class AreaBoundItem : public LineChartItem
 {
 public:
     AreaBoundItem(AreaChartItem *item,QLineSeries *lineSeries) : LineChartItem(lineSeries, 0), m_item(item) {}
-    ~AreaBoundItem(){}
+    ~AreaBoundItem() {}
 
     void setLayout(QVector<QPointF> &points) {
         LineChartItem::setLayout(points);
@@ -65,7 +65,6 @@ public:
 
 private:
     AreaChartItem* m_item;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

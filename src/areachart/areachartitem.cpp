@@ -10,7 +10,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-AreaChartItem::AreaChartItem(QAreaSeries *areaSeries,ChartPresenter *presenter) : ChartItem(presenter),
+AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
+    : ChartItem(presenter),
     m_series(areaSeries),
     m_upper(0),
     m_lower(0),
@@ -18,9 +19,8 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries,ChartPresenter *presenter) 
 {
     setZValue(ChartPresenter::LineChartZValue);
     m_upper = new AreaBoundItem(this,m_series->upperSeries());
-    if (m_series->lowerSeries()) {
+    if (m_series->lowerSeries())
         m_lower = new AreaBoundItem(this,m_series->lowerSeries());
-    }
 
     connect(areaSeries,SIGNAL(updated()),this,SLOT(handleUpdated()));
     connect(this,SIGNAL(clicked(const QPointF&)),areaSeries,SIGNAL(clicked(const QPointF&)));
@@ -32,7 +32,7 @@ AreaChartItem::~AreaChartItem()
 {
     delete m_upper;
     delete m_lower;
-};
+}
 
 QRectF AreaChartItem::boundingRect() const
 {
@@ -60,8 +60,8 @@ void AreaChartItem::updatePath()
     }
     path.closeSubpath();
     prepareGeometryChange();
-    m_path=path;
-    m_rect=path.boundingRect();
+    m_path = path;
+    m_rect = path.boundingRect();
     update();
 }
 
@@ -71,7 +71,7 @@ void AreaChartItem::handleUpdated()
     m_linePen = m_series->pen();
     m_brush = m_series->brush();
     m_pointPen = m_series->pen();
-    m_pointPen.setWidthF(2*m_pointPen.width());
+    m_pointPen.setWidthF(2 * m_pointPen.width());
 
     update();
 }
@@ -91,7 +91,6 @@ void AreaChartItem::handleGeometryChanged(const QRectF &rect)
     if (m_lower)
         m_lower->handleGeometryChanged(rect);
 }
-//painter
 
 void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {

@@ -12,7 +12,7 @@ class QTCOMMERCIALCHART_EXPORT QXYSeries : public QSeries
 {
     Q_OBJECT
 protected:
-    QXYSeries(QObject *parent=0);
+    QXYSeries(QObject *parent = 0);
     virtual ~QXYSeries();
 
 public:
@@ -36,21 +36,21 @@ public:
 
     void setPen(const QPen &pen);
     QPen pen() const {return m_pen;}
-    void setBrush(const QBrush &pen);
+    void setBrush(const QBrush &brush);
     QBrush brush() const {return m_brush;}
 
     bool setModel(QAbstractItemModel *model);
-    QAbstractItemModel* model() {return m_model;}
+    QAbstractItemModel* model() { return m_model; }
 
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     virtual void setModelMappingShift(int first, int count = 0);
 
-    private slots:
-        void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-        void modelDataAboutToBeAdded(QModelIndex parent, int start, int end);
-        void modelDataAdded(QModelIndex parent, int start, int end);
-        void modelDataAboutToBeRemoved(QModelIndex parent, int start, int end);
-        void modelDataRemoved(QModelIndex parent, int start, int end);
+private slots:
+    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
+    void modelDataAboutToBeAdded(QModelIndex parent, int start, int end);
+    void modelDataAdded(QModelIndex parent, int start, int end);
+    void modelDataAboutToBeRemoved(QModelIndex parent, int start, int end);
+    void modelDataRemoved(QModelIndex parent, int start, int end);
 
 signals:
     void clicked(const QPointF &point);

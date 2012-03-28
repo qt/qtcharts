@@ -78,12 +78,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     upperSeries line and \a lowerSeries line.  If no \a lowerSeries is passed to constructor, area is specified by axis x (y=0) instead.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QAreaSeries::QAreaSeries(QLineSeries* upperSeries,QLineSeries* lowerSeries):QSeries(upperSeries),
-m_upperSeries(upperSeries),
-m_lowerSeries(lowerSeries),
-m_pointsVisible(false)
+QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
+    : QSeries(upperSeries),
+    m_upperSeries(upperSeries),
+    m_lowerSeries(lowerSeries),
+    m_pointsVisible(false)
 {
 }
+
 /*!
     Destroys the object. Series added to QChartView or QChart instances are owned by those,
     and are deleted when mentioned object are destroyed.
@@ -95,7 +97,7 @@ QAreaSeries::~QAreaSeries()
 /*!
     Sets \a pen used for drawing area outline.
 */
-void QAreaSeries::setPen(const QPen& pen)
+void QAreaSeries::setPen(const QPen &pen)
 {
     if (m_pen != pen) {
         m_pen = pen;
