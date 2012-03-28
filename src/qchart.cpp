@@ -400,7 +400,6 @@ void QChartPrivate::updateLegendLayout()
     switch (m_legend->alignment())
     {
         case QLegend::LayoutTop: {
-            //        legendRect = plotRect.adjusted(m_padding,0,-m_padding,-m_padding - plotRect.height());
             legendRect = plotRect.adjusted(0,0,0,-padding - plotRect.height());
             break;
         }
@@ -432,8 +431,6 @@ void QChartPrivate::updateLayout()
 
     int padding = m_presenter->padding();
     int backgroundPadding = m_presenter->backgroundPadding();
-
-    //QRectF rect = m_rect.adjusted(padding,padding,-padding,-padding);
 
     // recalculate title position
     if (m_titleItem) {
