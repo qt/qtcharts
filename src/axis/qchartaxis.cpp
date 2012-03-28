@@ -328,13 +328,13 @@ void QChartAxis::setMax(qreal max)
 void QChartAxis::setRange(qreal min, qreal max)
 {
 	bool changed = false;
-    if (m_min != min) {
+    if (!qFuzzyIsNull(m_min - min)) {
         m_min = min;
         changed = true;
         emit minChanged(min);
     }
 
-    if (m_max != max) {
+    if (!qFuzzyIsNull(m_max - max)) {
         m_max = max;
         changed = true;
         emit maxChanged(max);

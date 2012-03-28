@@ -58,7 +58,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             value->setPos(xPos, yPos-barHeight / 2);
             value->setPen(barSet->floatingValuePen());
 
-            if (m_series->valueAt(set,category) != 0) {
+            if (!qFuzzyIsNull(m_series->valueAt(set,category))) {
                 int p = m_series->percentageAt(set,category) * 100;
                 QString vString(QString::number(p));
                 vString.truncate(3);

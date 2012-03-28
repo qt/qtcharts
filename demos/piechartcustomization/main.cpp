@@ -108,7 +108,7 @@ public Q_SLOTS:
 
     void updateWidth(double width)
     {
-        if (width != m_pen.widthF()) {
+        if (!qFuzzyIsNull(width - m_pen.widthF())) {
             m_pen.setWidthF(width);
             emit changed();
         }

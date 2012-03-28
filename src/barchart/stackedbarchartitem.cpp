@@ -64,7 +64,7 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             value->setPos(xPos, yPos-barHeight / 2);
             value->setPen(barSet->floatingValuePen());
 
-            if (m_series->valueAt(set, category) != 0) {
+            if (!qFuzzyIsNull(m_series->valueAt(set, category))) {
                 value->setValueString(QString::number(m_series->valueAt(set,category)));
             } else {
                 value->setValueString(QString(""));

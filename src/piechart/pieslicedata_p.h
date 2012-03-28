@@ -56,7 +56,7 @@ public:
 
     bool operator!=(const PieSliceData &other)
     {
-        if (m_value != other.m_value)
+        if (!qFuzzyIsNull(m_value - other.m_value))
             return true;
 
         if (m_slicePen != other.m_slicePen ||

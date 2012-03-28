@@ -89,7 +89,7 @@ qreal QScatterSeries::size() const
 */
 void QScatterSeries::setSize(qreal size)
 {
-    if (m_size != size) {
+    if (!qFuzzyIsNull(m_size - size)) {
         m_size = size;
         emit updated();
     }

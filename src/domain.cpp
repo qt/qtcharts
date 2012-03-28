@@ -39,7 +39,7 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCo
         tickYChanged=true;
     }
 
-    if(m_minX!=minX || m_maxX!=maxX) {
+    if (!qFuzzyIsNull(m_minX - minX) || !qFuzzyIsNull(m_maxX - maxX)) {
         if(m_niceNumbers) looseNiceNumbers(minX, maxX, m_tickXCount);
         m_minX=minX;
         m_maxX=maxX;
@@ -48,7 +48,7 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCo
         emit rangeXChanged(minX,maxX, m_tickXCount);
     }
 
-    if(m_minY!=minY || m_maxY!=maxY) {
+    if (!qFuzzyIsNull(m_minY - minY) || !qFuzzyIsNull(m_maxY - maxY)) {
         if(m_niceNumbers) looseNiceNumbers(minY, maxY, m_tickYCount);
         m_minY=minY;
         m_maxY=maxY;
@@ -124,7 +124,7 @@ qreal Domain::spanY() const
 
 bool Domain::isEmpty() const
 {
-    return spanX()==0 || spanY()==0;
+    return qFuzzyIsNull(spanX()) || qFuzzyIsNull(spanY());
 }
 
 void Domain::zoomIn(const QRectF& rect, const QSizeF& size)
@@ -235,10 +235,10 @@ qreal Domain::niceNumber(qreal x,bool ceiling)
 
 bool operator== (const Domain &domain1, const Domain &domain2)
 {
-    return (domain1.m_maxX == domain2.m_maxX &&
-        domain1.m_maxY == domain2.m_maxY &&
-        domain1.m_minX == domain2.m_minX &&
-        domain1.m_minY == domain2.m_minY);
+    return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX) &&
+        qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY) &&
+        qFuzzyIsNull(domain1.m_minX - domain2.m_minX) &&
+        qFuzzyIsNull(domain1.m_minY - domain2.m_minY));
 }
 
 bool operator!= (const Domain &domain1, const Domain &domain2)

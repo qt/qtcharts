@@ -99,12 +99,12 @@ void tst_Domain::handleAxisRangeXChanged()
     domain.handleAxisXChanged(min, max);
 
     QList<QVariant> arg0 = spy0.first();
-    QVERIFY(arg0.at(0).toReal() == min);
-    QVERIFY(arg0.at(1).toReal() == max);
+    QVERIFY(qFuzzyIsNull(arg0.at(0).toReal() - min));
+    QVERIFY(qFuzzyIsNull(arg0.at(1).toReal() - max));
 
     QList<QVariant> arg1 = spy1.first();
-    QVERIFY(arg1.at(0).toReal() == min);
-    QVERIFY(arg1.at(1).toReal() == max);
+    QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
+    QVERIFY(qFuzzyIsNull(arg1.at(1).toReal() - max));
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);
@@ -136,12 +136,12 @@ void tst_Domain::handleAxisRangeYChanged()
     domain.handleAxisYChanged(min, max,5);
 
     QList<QVariant> arg0 = spy0.first();
-    QVERIFY(arg0.at(2).toReal() == min);
-    QVERIFY(arg0.at(3).toReal() == max);
+    QVERIFY(qFuzzyIsNull(arg0.at(2).toReal() - min));
+    QVERIFY(qFuzzyIsNull(arg0.at(3).toReal() - max));
 
     QList<QVariant> arg1 = spy2.first();
-    QVERIFY(arg1.at(0).toReal() == min);
-    QVERIFY(arg1.at(1).toReal() == max);
+    QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
+    QVERIFY(qFuzzyIsNull(arg1.at(1).toReal() - max));
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 0);
@@ -415,12 +415,12 @@ void tst_Domain::setRangeX()
 	domain.setRangeX(min, max);
 
 	QList<QVariant> arg0 = spy0.first();
-	QVERIFY(arg0.at(0).toReal() == min);
-	QVERIFY(arg0.at(1).toReal() == max);
+    QVERIFY(qFuzzyIsNull(arg0.at(0).toReal() - min));
+    QVERIFY(qFuzzyIsNull(arg0.at(1).toReal() - max));
 
 	QList<QVariant> arg1 = spy1.first();
-	QVERIFY(arg1.at(0).toReal() == min);
-	QVERIFY(arg1.at(1).toReal() == max);
+    QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
+    QVERIFY(qFuzzyIsNull(arg1.at(1).toReal() - max));
 
 	QCOMPARE(spy0.count(), 1);
 	QCOMPARE(spy1.count(), 1);
@@ -450,12 +450,12 @@ void tst_Domain::setRangeY()
 	domain.setRangeY(min, max);
 
 	QList<QVariant> arg0 = spy0.first();
-	QVERIFY(arg0.at(2).toReal() == min);
-	QVERIFY(arg0.at(3).toReal() == max);
+    QVERIFY(qFuzzyIsNull(arg0.at(2).toReal() - min));
+    QVERIFY(qFuzzyIsNull(arg0.at(3).toReal() - max));
 
 	QList<QVariant> arg1 = spy2.first();
-	QVERIFY(arg1.at(0).toReal() == min);
-	QVERIFY(arg1.at(1).toReal() == max);
+    QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
+    QVERIFY(qFuzzyIsNull(arg1.at(1).toReal() - max));
 
 	QCOMPARE(spy0.count(), 1);
 	QCOMPARE(spy1.count(), 0);

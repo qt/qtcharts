@@ -143,7 +143,7 @@ void XYChartItem::handleGeometryChanged(const QRectF &rect)
 
 bool XYChartItem::isEmpty()
 {
-   return !m_clipRect.isValid() ||  m_maxX - m_minX == 0 || m_maxY - m_minY ==0 ;
+   return !m_clipRect.isValid() || qFuzzyIsNull(m_maxX - m_minX) || qFuzzyIsNull(m_maxY - m_minY);
 }
 
 void XYChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -337,7 +337,7 @@ void Axis::setLayout(QVector<qreal> &layout)
 
 bool Axis::isEmpty()
 {
-    return m_rect.isEmpty() || m_min==m_max || m_ticksCount==0;
+    return m_rect.isEmpty() || qFuzzyIsNull(m_min - m_max) || m_ticksCount==0;
 }
 
 //handlers
@@ -390,7 +390,8 @@ void Axis::handleAxisUpdated()
 
 void Axis::handleRangeChanged(qreal min, qreal max,int tickCount)
 {
-    if (min==max || tickCount<2) return;
+    if (qFuzzyIsNull(min - max) || tickCount < 2)
+        return;
 
     m_min = min;
     m_max = max;
