@@ -107,7 +107,7 @@ protected:
 protected:
     QScopedPointer<QChartPrivate> d_ptr;
     friend class QChartView;
-    Q_DISABLE_COPY(QChart);
+    Q_DISABLE_COPY(QChart)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -13,14 +13,14 @@ class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QSeries
 {
     Q_OBJECT
 public:
-    QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries=0);
+    QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries = 0);
     virtual ~QAreaSeries();
 
 public: // from QChartSeries
-    virtual QSeriesType type() const { return QSeries::SeriesTypeArea;}
+    virtual QSeriesType type() const { return QSeries::SeriesTypeArea; }
 
-    QLineSeries* upperSeries() const { return m_upperSeries;}
-    QLineSeries* lowerSeries() const { return m_lowerSeries;}
+    QLineSeries* upperSeries() const { return m_upperSeries; }
+    QLineSeries* lowerSeries() const { return m_lowerSeries; }
 
     void setPen(const QPen &pen);
     QPen pen() const { return m_pen;}
@@ -29,7 +29,7 @@ public: // from QChartSeries
     QBrush brush() const { return m_brush;}
 
     void setPointsVisible(bool visible);
-    bool pointsVisible() const {return m_pointsVisible;}
+    bool pointsVisible() const { return m_pointsVisible; }
 
 //    bool setModel(QAbstractItemModel* model);
 //    void setModelMappingUpper(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);

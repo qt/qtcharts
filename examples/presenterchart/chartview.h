@@ -11,7 +11,7 @@ class ChartView: public QChartView
 {
     Q_OBJECT
 public:
-    ChartView(QWidget* parent=0);
+    ChartView(QWidget* parent = 0);
     virtual ~ChartView();
 
 public slots:

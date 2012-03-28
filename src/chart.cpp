@@ -8,7 +8,7 @@ Chart::Chart(ChartPresenter *presenter):QObject(presenter),
     m_animator(0),
     m_presenter(presenter)
 {
-};
+}
 
 void Chart::setAnimator(ChartAnimator* animator)
 {

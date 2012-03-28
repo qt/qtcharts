@@ -23,10 +23,10 @@ public:
     void setMinY(qreal min);
     void setMaxY(qreal max);
 
-    qreal minX() const {return m_minX;};
-    qreal maxX() const {return m_maxX;};
-    qreal minY() const {return m_minY;};
-    qreal maxY() const {return m_maxY;};
+    qreal minX() const { return m_minX; }
+    qreal maxX() const { return m_maxX; }
+    qreal minY() const { return m_minY; }
+    qreal maxY() const { return m_maxY; }
 
     qreal spanX() const;
     qreal spanY() const;

@@ -32,7 +32,7 @@ public:
     Domain* domain(QChartAxis* axis) const;
     QChartAxis* axis(QSeries* series) const;
 
-    QChartAxis* axisX() const { return m_axisX;};
+    QChartAxis* axisX() const { return m_axisX; }
     QChartAxis* axisY(QSeries* series = 0) const;
 
 signals:

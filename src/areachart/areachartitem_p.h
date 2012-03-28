@@ -22,8 +22,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
-    LineChartItem* upperLineItem() const { return m_upper ;}
-    LineChartItem* lowerLineItem() const { return m_lower ;}
+    LineChartItem* upperLineItem() const { return m_upper; }
+    LineChartItem* lowerLineItem() const { return m_lower; }
 
     void updatePath();
 
@@ -55,13 +55,10 @@ private:
 class AreaBoundItem : public LineChartItem
 {
 public:
-    AreaBoundItem(AreaChartItem *item,QLineSeries *lineSeries):LineChartItem(lineSeries,0),
-    m_item(item){
-    };
+    AreaBoundItem(AreaChartItem *item,QLineSeries *lineSeries) : LineChartItem(lineSeries, 0), m_item(item) {}
+    ~AreaBoundItem(){}
 
-    ~AreaBoundItem(){};
-
-    void setLayout(QVector<QPointF> &points){
+    void setLayout(QVector<QPointF> &points) {
         LineChartItem::setLayout(points);
         m_item->updatePath();
     }

@@ -17,44 +17,44 @@ public:
     ~QChartAxis();
 
     //axis handling
-    bool isAxisVisible() const { return m_axisVisible;};
+    bool isAxisVisible() const { return m_axisVisible; }
     void setAxisVisible(bool visible);
     void setAxisPen(const QPen &pen);
-    QPen axisPen() const { return m_axisPen;};
+    QPen axisPen() const { return m_axisPen; }
 
     //grid handling
-    bool isGridLineVisible() const { return m_gridLineVisible;};
+    bool isGridLineVisible() const { return m_gridLineVisible; }
     void setGridLineVisible(bool visible);
     void setGridLinePen(const QPen &pen);
-    QPen gridLinePen() const {return m_gridLinePen;}
+    QPen gridLinePen() const { return m_gridLinePen; }
 
     //labels handling
-    bool labelsVisible() const { return m_labelsVisible;};
+    bool labelsVisible() const { return m_labelsVisible; }
     void setLabelsVisible(bool visible);
     void setLabelsPen(const QPen &pen);
     QPen labelsPen() const { return m_labelsPen;}
     void setLabelsBrush(const QBrush &brush);
-    QBrush labelsBrush() const { return m_labelsBrush;}
+    QBrush labelsBrush() const { return m_labelsBrush; }
     void setLabelsFont(const QFont &font);
-    QFont labelsFont() const { return m_labelsFont;}
+    QFont labelsFont() const { return m_labelsFont; }
     void setLabelsAngle(int angle);
-    int labelsAngle() const { return m_labelsAngle;};
+    int labelsAngle() const { return m_labelsAngle; }
 
     //shades handling
-    bool shadesVisible() const { return m_shadesVisible;};
+    bool shadesVisible() const { return m_shadesVisible; }
     void setShadesVisible(bool visible);
     void setShadesPen(const QPen &pen);
-    QPen shadesPen() const { return m_shadesPen;}
+    QPen shadesPen() const { return m_shadesPen; }
     void setShadesBrush(const QBrush &brush);
-    QBrush shadesBrush() const { return m_shadesBrush;}
+    QBrush shadesBrush() const { return m_shadesBrush; }
     void setShadesOpacity(qreal opacity);
-    qreal shadesOpacity() const { return m_shadesOpacity;}
+    qreal shadesOpacity() const { return m_shadesOpacity; }
 
     //range handling
     void setMin(qreal min);
-    qreal min() const { return m_min;};
+    qreal min() const { return m_min; }
     void setMax(qreal max);
-    qreal max() const { return m_max;};
+    qreal max() const { return m_max; }
     void setRange(qreal min, qreal max);
 
     //ticks handling

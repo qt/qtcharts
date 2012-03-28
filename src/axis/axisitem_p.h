@@ -18,7 +18,7 @@ public:
     Axis(QChartAxis *axis, ChartPresenter *presenter, AxisType type = X_AXIS);
     ~Axis();
 
-    AxisType axisType() const {return m_type;};
+    AxisType axisType() const { return m_type; }
 
     void setAxisOpacity(qreal opacity);
     qreal axisOpacity() const;
@@ -46,7 +46,7 @@ public:
     void setLabelsFont(const QFont &font);
 
     inline QRectF geometry() const { return m_rect; }
-    inline QVector<qreal> layout() { return m_layoutVector;};
+    inline QVector<qreal> layout() { return m_layoutVector; }
 
 public slots:
     void handleAxisUpdated();
@@ -91,7 +91,7 @@ class AxisItem: public QGraphicsLineItem
 {
 public:
 
-    AxisItem(Axis *axis, QGraphicsItem *parent=0) : QGraphicsLineItem(parent), m_axis(axis) {};
+    AxisItem(Axis *axis, QGraphicsItem *parent = 0) : QGraphicsLineItem(parent), m_axis(axis) {}
 
 protected:
    void mousePressEvent(QGraphicsSceneMouseEvent *event)
