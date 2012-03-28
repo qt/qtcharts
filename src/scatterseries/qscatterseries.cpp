@@ -105,7 +105,7 @@ qreal QScatterSeries::size() const
 }
 
 /*!
-    Set the \a size of the marker items. The default size is 9.0.
+    Set the \a size of the marker items. The default size is 15.
 */
 void QScatterSeries::setSize(qreal size)
 {
