@@ -433,7 +433,7 @@ void QChartPrivate::updateLayout()
     int padding = m_presenter->padding();
     int backgroundPadding = m_presenter->backgroundPadding();
 
-    QRectF rect = m_rect.adjusted(padding,padding,-padding,-padding);
+    //QRectF rect = m_rect.adjusted(padding,padding,-padding,-padding);
 
     // recalculate title position
     if (m_titleItem) {
