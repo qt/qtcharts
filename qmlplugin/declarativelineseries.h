@@ -17,13 +17,10 @@ public:
     explicit DeclarativeLineSeries(QObject *parent = 0);
 
 public:
-    void seriesComplete();
-    QObject *seriesObject();
-
-public:
+    void componentComplete();
     QDeclarativeListProperty<DeclarativeXyPoint> points();
 
-public slots:
+public Q_SLOTS:
     static void appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
                              DeclarativeXyPoint *element);
 };

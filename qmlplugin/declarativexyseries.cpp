@@ -16,16 +16,6 @@ void DeclarativeXySeries::classBegin()
 {
 }
 
-void DeclarativeXySeries::componentComplete()
-{
-    seriesComplete();
-}
-
-QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeXySeries::points()
-{
-    return QDeclarativeListProperty<DeclarativeXyPoint>(seriesObject(), 0, &DeclarativeXySeries::appendPoints);
-}
-
 void DeclarativeXySeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
                                           DeclarativeXyPoint *element)
 {

@@ -10,7 +10,7 @@ DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
 {
 }
 
-void DeclarativeLineSeries::seriesComplete()
+void DeclarativeLineSeries::componentComplete()
 {
     DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(parent());
 
@@ -21,14 +21,9 @@ void DeclarativeLineSeries::seriesComplete()
     }
 }
 
-QObject *DeclarativeLineSeries::seriesObject()
-{
-    return this;
-}
-
 QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeLineSeries::points()
 {
-    return DeclarativeXySeries::points();
+    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXySeries::appendPoints);
 }
 
 void DeclarativeLineSeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,

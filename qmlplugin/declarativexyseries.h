@@ -19,19 +19,15 @@ public:
     ~DeclarativeXySeries();
 
 public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
+    virtual void classBegin();
+    virtual void componentComplete() = 0;
 
 public:
-    QDeclarativeListProperty<DeclarativeXyPoint> points();
+    virtual QDeclarativeListProperty<DeclarativeXyPoint> points() = 0;
 
 public Q_SLOTS:
     static void appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
                              DeclarativeXyPoint *element);
-
-protected:
-    virtual void seriesComplete() = 0;
-    virtual QObject *seriesObject() = 0;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
