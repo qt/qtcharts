@@ -61,19 +61,19 @@ public Q_SLOTS:
     void changed();
 
 private:
-    QPointF mPos;
-    QSize mSize;
-    QRectF mBoundingRect;
-    QRectF mMarkerBoundingRect;
-    QBrush mBrush;
-    QPen mPen;
+    QPointF m_pos;
+    QSize m_size;
+    QRectF m_boundingRect;
+    QRectF m_markerBoundingRect;
+    QBrush m_brush;
+    QPen m_pen;
 
-    QSeries *mSeries;
-    QBarSet *mBarset;
-    QPieSlice *mPieslice;
+    QSeries *m_series;
+    QBarSet *m_barset;
+    QPieSlice *m_pieslice;
 
-    LegendMarkerType mType;
-    QGraphicsSimpleTextItem mTextItem;
+    LegendMarkerType m_type;
+    QGraphicsSimpleTextItem *m_textItem;
 
 };
 

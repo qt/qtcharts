@@ -5,14 +5,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 LegendScrollButton::LegendScrollButton(ScrollButtonId id, QGraphicsItem *parent)
     : QGraphicsPolygonItem(parent)
-    ,mId(id)
+    ,m_id(id)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
 }
 
 LegendScrollButton::ScrollButtonId LegendScrollButton::id()
 {
-    return mId;
+    return m_id;
 }
 
 void LegendScrollButton::mousePressEvent(QGraphicsSceneMouseEvent *event)

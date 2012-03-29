@@ -30,7 +30,7 @@ public Q_SLOTS:
 
 private:
 
-    ScrollButtonId mId;
+    ScrollButtonId m_id;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
