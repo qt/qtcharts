@@ -18,6 +18,9 @@
 **
 ****************************************************************************/
 
+#ifndef CHARTTHEMEHIGHCONTRAST_P_H
+#define CHARTTHEMEHIGHCONTRAST_P_H
+
 #include "charttheme_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -55,3 +58,5 @@ public:
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
+
+#endif

@@ -18,6 +18,9 @@
 **
 ****************************************************************************/
 
+#ifndef CHARTTHEMEDEFAULT_P_H
+#define CHARTTHEMEDEFAULT_P_H
+
 #include "charttheme_p.h"
 #ifdef Q_OS_WIN
 #include <windows.h>
@@ -163,3 +166,5 @@ public:
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
+
+#endif
