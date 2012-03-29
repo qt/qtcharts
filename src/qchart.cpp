@@ -73,8 +73,7 @@ d_ptr(new QChartPrivate(this))
     d_ptr->m_legend = new QLegend(this);
     d_ptr->m_dataset = new ChartDataSet(this);
     d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
-    int padding = d_ptr->m_presenter->padding();
-    setMinimumSize(3*padding,3*padding);
+    setMinimumSize(d_ptr->m_padding.left() * 3, d_ptr->m_padding.top() * 3);
     connect(d_ptr->m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),d_ptr->m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
     connect(d_ptr->m_dataset,SIGNAL(seriesRemoved(QSeries*)),d_ptr->m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
@@ -269,6 +268,12 @@ QLegend* QChart::legend() const
     return d_ptr->m_legend;
 }
 
+QRectF QChart::padding() const
+{
+    return d_ptr->m_padding;
+}
+
+
 /*!
  Resizes and updates the chart area using the \a event data
  */
@@ -336,7 +341,8 @@ m_backgroundItem(0),
 m_titleItem(0),
 m_legend(0),
 m_dataset(0),
-m_presenter(0)
+m_presenter(0),
+m_padding(QRectF(50,50,50,50))
 {
 
 }
@@ -365,10 +371,65 @@ void QChartPrivate::createChartTitleItem()
 
 void QChartPrivate::updateLegendLayout()
 {
-    int padding = m_presenter->padding();
-    QRectF plotRect = m_rect.adjusted(padding,padding,-padding,-padding);
+    //int legendPadding = m_chart->legend()->padding();
+    int legendPadding = 30;
+    QRectF rect = m_rect;
+
+    if ((m_legend->attachedToChart()) && (m_legend->isVisible())) {
+
+        // Reserve some space for legend
+        switch (m_legend->alignment()) {
+        case QLegend::AlignmentTop: {
+            rect.adjust(m_padding.left(),
+                        m_padding.top() + legendPadding,
+                        -m_padding.right(),
+                        -m_padding.bottom());
+            break;
+        }
+        case QLegend::AlignmentBottom: {
+            rect.adjust(m_padding.left(),
+                        m_padding.top(),
+                        -m_padding.right(),
+                        -m_padding.bottom() - legendPadding);
+            break;
+        }
+        case QLegend::AlignmentLeft: {
+            rect.adjust(m_padding.left() + legendPadding,
+                        m_padding.top(),
+                        -m_padding.right(),
+                        -m_padding.bottom());
+            break;
+        }
+        case QLegend::AlignmentRight: {
+            rect.adjust(m_padding.left(),
+                        m_padding.top(),
+                        -m_padding.right() - legendPadding,
+                        -m_padding.bottom());
+            break;
+        }
+        default: {
+            rect.adjust(m_padding.left(),
+                        m_padding.top(),
+                        -m_padding.right(),
+                        -m_padding.bottom());
+            break;
+        }
+        }
+    } else {
+
+        rect.adjust(m_padding.left(),
+                    m_padding.top(),
+                    -m_padding.right(),
+                    -m_padding.bottom());
+    }
+
+    QRectF plotRect = m_rect.adjusted(m_padding.left()
+                                      ,m_padding.top()
+                                      ,-m_padding.right()
+                                      ,-m_padding.bottom());
     QRectF legendRect;
 
+    int padding = 0; // TODO: fix this
     switch (m_legend->alignment())
     {
         case QLegend::AlignmentTop: {
@@ -406,7 +467,6 @@ void QChartPrivate::updateLegendLayout()
         pos.setY(pos.y() + height/2);
     }
 
-    qDebug() << "lenged topleft:" << pos;
     m_legend->setPos(pos);
 }
 
@@ -414,7 +474,7 @@ void QChartPrivate::updateLayout()
 {
     if (!m_rect.isValid()) return;
 
-    int padding = m_presenter->padding();
+    int padding = m_padding.top();
     int backgroundPadding = m_presenter->backgroundPadding();
 
     // recalculate title position

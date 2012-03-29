@@ -55,7 +55,6 @@ public:
     ChartPresenter(QChart* chart,ChartDataSet *dataset);
     virtual ~ChartPresenter();
 
-    int padding() const { return m_padding; }
     int backgroundPadding() const { return m_backgroundPadding; }
     QRectF geometry() const { return m_rect; }
     ChartAnimator* animator() const { return m_animator; }
@@ -98,7 +97,6 @@ private:
     QRectF m_rect;
     QChart::AnimationOptions m_options;
     bool m_themeForce;
-    int m_padding;
     int m_backgroundPadding;
 
 };

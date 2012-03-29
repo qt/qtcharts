@@ -95,7 +95,8 @@ QLegend::QLegend(QChart *chart):QGraphicsWidget(chart),
     m_brush(Qt::darkGray),              // TODO: default should come from theme
     m_alignment(QLegend::AlignmentTop),
     mFirstMarker(0),
-    m_attachedToChart(true)
+    m_attachedToChart(true),
+    m_chart(chart)
 {
     m_scrollButtonLeft = new LegendScrollButton(LegendScrollButton::ScrollButtonIdLeft, this);
     m_scrollButtonRight = new LegendScrollButton(LegendScrollButton::ScrollButtonIdRight, this);
@@ -169,16 +170,19 @@ QPen QLegend::pen() const
     Sets the \a preferred layout for legend. Legend tries to paint itself on the defined position in chart.
     \sa QLegend::Layout
 */
-void QLegend::setAlignmnent(QLegend::Alignment alignment)
+void QLegend::setAlignmnent(QLegend::Alignments alignment)
 {
-    m_alignment = alignment;
-    updateLayout();
+//    if (!m_attachedToChart) {
+        m_alignment = alignment;
+        updateLayout();
+        m_chart->resize(m_chart->size());
+//    }
 }
 
 /*!
     Returns the preferred layout for legend
 */
-QLegend::Alignment QLegend::alignment() const
+QLegend::Alignments QLegend::alignment() const
 {
     return m_alignment;
 }

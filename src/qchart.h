@@ -99,6 +99,8 @@ public:
 
     QLegend* legend() const;
 
+    QRectF padding() const;
+
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
 

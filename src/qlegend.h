@@ -52,6 +52,9 @@ public:
         AlignmentLeft = Qt::AlignLeft,
         AlignmentRight = Qt::AlignRight
     };
+
+    Q_DECLARE_FLAGS(Alignments, Alignment)
+
 private:
     explicit QLegend(QChart *chart);
 
@@ -65,8 +68,8 @@ public:
     void setPen(const QPen &pen);
     QPen pen() const;
 
-    void setAlignmnent(QLegend::Alignment alignment);
-    QLegend::Alignment alignment() const;
+    void setAlignmnent(QLegend::Alignments alignment);
+    QLegend::Alignments alignment() const;
 
     QSizeF maximumSize() const;
     void setMaximumSize(const QSizeF size);
@@ -86,6 +89,7 @@ Q_SIGNALS:
     void clicked(QSeries *series, Qt::MouseButton button);
     void clicked(QBarSet *barset, Qt::MouseButton button);
     void clicked(QPieSlice *slice, Qt::MouseButton button);
+    void legendGeometryChanged();
 
 public Q_SLOTS:
     // PIMPL --->
@@ -120,7 +124,7 @@ private:
 
     QBrush m_brush;
     QPen m_pen;
-    QLegend::Alignment m_alignment;
+    QLegend::Alignments m_alignment;
 
     int mFirstMarker;
 
@@ -131,6 +135,7 @@ private:
 
     bool m_attachedToChart;
 
+    QChart *m_chart;
     friend class QChart;
     // <--- PIMPL
 };

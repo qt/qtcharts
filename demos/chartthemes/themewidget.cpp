@@ -50,6 +50,7 @@
 #include <QSplineSeries>
 #include <QScatterSeries>
 #include <QAreaSeries>
+#include <QLegend>
 #include <QGridLayout>
 #include <QFormLayout>
 #include <QComboBox>
@@ -67,7 +68,9 @@ ThemeWidget::ThemeWidget(QWidget* parent) :
     m_dataTable(generateRandomData(m_listCount,m_valueMax,m_valueCount)),
     m_themeComboBox(createThemeBox()),
     m_antialiasCheckBox(new QCheckBox("Anti aliasing")),
-    m_animatedComboBox(createAnimationBox())
+    m_animatedComboBox(createAnimationBox()),
+    m_legendComboBox(createLegendBox())
+
 {
 
     connectSignals();
@@ -78,6 +81,7 @@ ThemeWidget::ThemeWidget(QWidget* parent) :
     settingsLayout->addWidget(m_themeComboBox);
     settingsLayout->addWidget(new QLabel("Animation:"));
     settingsLayout->addWidget(m_animatedComboBox);
+    settingsLayout->addWidget(m_legendComboBox);
     settingsLayout->addWidget(m_antialiasCheckBox);
     settingsLayout->addStretch();
     baseLayout->addLayout(settingsLayout, 0, 0, 1, 3);
@@ -123,6 +127,7 @@ void ThemeWidget::connectSignals()
     connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     connect(m_animatedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
+    connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
 }
 
 DataTable ThemeWidget::generateRandomData(int listCount,int valueMax,int valueCount) const
@@ -170,6 +175,16 @@ QComboBox* ThemeWidget::createAnimationBox() const
     animationComboBox->addItem("Series Animations", QChart::SeriesAnimations);
     animationComboBox->addItem("All Animations", QChart::AllAnimations);
     return animationComboBox;
+}
+
+QComboBox* ThemeWidget::createLegendBox() const
+{
+    QComboBox* legendComboBox = new QComboBox();
+    legendComboBox->addItem("Legend Top", QLegend::AlignmentTop);
+    legendComboBox->addItem("Legend Bottom", QLegend::AlignmentBottom);
+    legendComboBox->addItem("Legend Left", QLegend::AlignmentLeft);
+    legendComboBox->addItem("Legend Right", QLegend::AlignmentRight);
+    return legendComboBox;
 }
 
 QChart* ThemeWidget::createAreaChart() const
@@ -341,6 +356,12 @@ void ThemeWidget::updateUI()
     if (m_charts.at(0)->chart()->animationOptions() != options) {
         foreach (QChartView *chartView, m_charts)
             chartView->chart()->setAnimationOptions(options);
+    }
+
+    QLegend::Alignments alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
+    foreach (QChartView *chartView, m_charts) {
+        qDebug() << alignment;
+        chartView->chart()->legend()->setAlignmnent(alignment);
     }
 }
 

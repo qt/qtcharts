@@ -70,6 +70,7 @@ private:
     DataTable generateRandomData(int listCount,int valueMax,int valueCount) const;
     QComboBox* createThemeBox() const;
     QComboBox* createAnimationBox() const;
+    QComboBox* createLegendBox() const;
     void connectSignals();
     QChart* createAreaChart() const;
     QChart* createBarChart(int valueCount) const;
@@ -88,6 +89,7 @@ private:
     QComboBox *m_themeComboBox;
     QCheckBox *m_antialiasCheckBox;
     QComboBox *m_animatedComboBox;
+    QComboBox *m_legendComboBox;
 };
 
 #endif /* THEMEWINDOW_H_ */

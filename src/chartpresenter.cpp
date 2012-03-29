@@ -19,7 +19,6 @@
 ****************************************************************************/
 
 #include "qchart.h"
-#include "qlegend.h"
 #include "qchartaxis.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
@@ -55,7 +54,6 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_rect(QRectF(QPoint(0,0),m_chart->size())),
     m_options(QChart::NoAnimation),
     m_themeForce(false),
-    m_padding(50),
     m_backgroundPadding(10)
 {
     createConnections();
@@ -79,55 +77,8 @@ void ChartPresenter::createConnections()
 void ChartPresenter::handleGeometryChanged()
 {
     QRectF rect(QPoint(0,0),m_chart->size());
-    QLegend* legend = m_chart->legend();
-    if ((legend->attachedToChart()) && (legend->isVisible())) {
-
-        // Reserve some space for legend
-        switch (m_chart->legend()->alignment()) {
-        case QLegend::AlignmentTop: {
-            rect.adjust(m_padding,
-                        m_padding + legend->size().height(),
-                        -m_padding,
-                        -m_padding);
-            break;
-        }
-        case QLegend::AlignmentBottom: {
-            rect.adjust(m_padding,
-                        m_padding,
-                        -m_padding,
-                        -m_padding - legend->size().height());
-            break;
-        }
-        case QLegend::AlignmentLeft: {
-            rect.adjust(m_padding + legend->size().width(),
-                        m_padding,
-                        -m_padding,
-                        -m_padding);
-            break;
-        }
-        case QLegend::AlignmentRight: {
-            rect.adjust(m_padding,
-                        m_padding,
-                        -m_padding - legend->size().width(),
-                        -m_padding);
-            break;
-        }
-        default: {
-            rect.adjust(m_padding,
-                        m_padding,
-                        -m_padding,
-                        -m_padding);
-            break;
-        }
-        }
-    } else {
-
-        // Legend is detached, or not visible
-        rect.adjust(m_padding,
-                    m_padding,
-                    -m_padding,
-                    -m_padding);
-    }
+    QRectF padding = m_chart->padding();
+    rect.adjust(padding.left(), padding.top(), -padding.right(), -padding.bottom());
 
     //rewrite zoom stack
     /*
@@ -393,7 +344,7 @@ void ChartPresenter::zoomIn()
 void ChartPresenter::zoomIn(const QRectF& rect)
 {
 	QRectF r = rect.normalized();
-	r.translate(-m_padding, -m_padding);
+    r.translate(-m_chart->padding().topLeft());
 	if(m_animator) {
 
 		QPointF point(r.center().x()/geometry().width(),r.center().y()/geometry().height());
@@ -414,8 +365,8 @@ void ChartPresenter::zoomOut()
 
 	QSizeF size = geometry().size();
 	QRectF rect = geometry();
-	rect.translate(-m_padding, -m_padding);
-	m_dataset->zoomOutDomain(rect.adjusted(size.width()/4,size.height()/4,-size.width()/4,-size.height()/4),size);
+    rect.translate(-m_chart->padding().topLeft());
+    m_dataset->zoomOutDomain(rect.adjusted(size.width()/4,size.height()/4,-size.width()/4,-size.height()/4),size);
     //m_dataset->zoomOutDomain(m_zoomStack[m_zoomIndex-1],geometry().size());
 
 	if(m_animator){
