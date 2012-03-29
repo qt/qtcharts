@@ -268,7 +268,7 @@ QLegend* QChart::legend() const
     return d_ptr->m_legend;
 }
 
-QRectF QChart::padding() const
+QRect QChart::padding() const
 {
     return d_ptr->m_padding;
 }
@@ -342,7 +342,7 @@ m_titleItem(0),
 m_legend(0),
 m_dataset(0),
 m_presenter(0),
-m_padding(QRectF(50,50,50,50))
+m_padding(QRect(50,50,0,0))
 {
 
 }

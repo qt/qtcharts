@@ -99,14 +99,13 @@ public:
 
     QLegend* legend() const;
 
-    QRectF padding() const;
+    QRect padding() const;
 
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
 
 protected:
     QScopedPointer<QChartPrivate> d_ptr;
-    friend class QChartView;
     friend class QLegend;
     Q_DISABLE_COPY(QChart)
 };

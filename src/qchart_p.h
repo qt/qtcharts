@@ -57,7 +57,7 @@ struct QChartPrivate
     QLegend* m_legend;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
-    QRectF m_padding;
+    QRect m_padding;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

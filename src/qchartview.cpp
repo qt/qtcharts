@@ -59,7 +59,6 @@ QChartView::QChartView(QChart *chart,QWidget *parent) :
 {
     d_ptr->m_scene = new QGraphicsScene(this);
     d_ptr->m_chart = chart;
-    d_ptr->m_presenter = chart->d_ptr->m_presenter;
     setFrameShape(QFrame::NoFrame);
     setBackgroundRole(QPalette::Window);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -190,14 +189,26 @@ void QChartView::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
         case Qt::Key_Plus:
-        d_ptr->m_chart->zoomIn();
-        break;
+            d_ptr->m_chart->zoomIn();
+            break;
         case Qt::Key_Minus:
-        d_ptr->m_chart->zoomOut();
-        break;
+            d_ptr->m_chart->zoomOut();
+            break;
+        case Qt::Key_Left:
+            d_ptr->m_chart->scrollLeft();
+            break;
+        case Qt::Key_Right:
+            d_ptr->m_chart->scrollRight();
+            break;
+        case Qt::Key_Up:
+            d_ptr->m_chart->scrollUp();
+            break;
+        case Qt::Key_Down:
+            d_ptr->m_chart->scrollDown();
+            break;
         default:
-        QGraphicsView::keyPressEvent(event);
-        break;
+            QGraphicsView::keyPressEvent(event);
+            break;
     }
 }
 
