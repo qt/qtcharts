@@ -60,7 +60,6 @@ QChartView::QChartView(QChart *chart,QWidget *parent) :
     d_ptr->m_scene = new QGraphicsScene(this);
     d_ptr->m_chart = chart;
     d_ptr->m_presenter = chart->d_ptr->m_presenter;
-
     setFrameShape(QFrame::NoFrame);
     setBackgroundRole(QPalette::Window);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -207,8 +206,9 @@ void QChartView::keyPressEvent(QKeyEvent *event)
 */
 void QChartView::resizeEvent(QResizeEvent *event)
 {
-    d_ptr->m_chart->resize(size());
     QGraphicsView::resizeEvent(event);
+    d_ptr->m_chart->resize(size());
+    setSceneRect(d_ptr->m_chart->geometry());
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

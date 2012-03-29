@@ -69,10 +69,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
 d_ptr(new QChartPrivate(this))
 {
+    //setMinimumSize(200,200);
     d_ptr->m_legend = new QLegend(this);
     d_ptr->m_dataset = new ChartDataSet(this);
     d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
-
+    int padding = d_ptr->m_presenter->padding();
+    setMinimumSize(3*padding,3*padding);
     connect(d_ptr->m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),d_ptr->m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
     connect(d_ptr->m_dataset,SIGNAL(seriesRemoved(QSeries*)),d_ptr->m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
