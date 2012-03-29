@@ -2,7 +2,7 @@
  error( "Couldn't find the examples.pri file!" )
 }
 
-TARGET = customechart
+TARGET = customchart
 SOURCES += main.cpp
 
 
