@@ -25,13 +25,13 @@ public: // from QDeclarativeParserStatus
 public:
     QDeclarativeListProperty<DeclarativeXyPoint> points();
 
-signals:
+Q_SIGNALS:
 
-public slots:
+public Q_SLOTS:
     static void appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
                            DeclarativeXyPoint *element);
 
-private slots:
+private Q_SLOTS:
 
 public:
     QSeries::QSeriesType m_seriesType;

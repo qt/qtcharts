@@ -34,7 +34,7 @@ private:
     void calculateControlPoints();
     QList<qreal> getFirstControlPoints(QList<qreal> rhs);
 
-private slots:
+private Q_SLOTS:
     void updateControlPoints();
 
 private:

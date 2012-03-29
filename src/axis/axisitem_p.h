@@ -48,7 +48,7 @@ public:
     inline QRectF geometry() const { return m_rect; }
     inline QVector<qreal> layout() { return m_layoutVector; }
 
-public slots:
+public Q_SLOTS:
     void handleAxisUpdated();
     void handleAxisCategoriesUpdated();
     void handleRangeChanged(qreal min , qreal max,int tickCount);

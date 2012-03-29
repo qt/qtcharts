@@ -30,10 +30,10 @@ public:
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
-signals:
+Q_SIGNALS:
     void clicked(const QPointF &point);
 
-public slots:
+public Q_SLOTS:
     void handleUpdated();
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF &size);

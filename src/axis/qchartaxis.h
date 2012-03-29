@@ -69,7 +69,7 @@ public:
     void show();
     void hide();
 
-signals:
+Q_SIGNALS:
 	void minChanged(qreal min);
 	void maxChanged(qreal max);
 	void rangeChanged(qreal min, qreal max);
@@ -79,7 +79,7 @@ signals:
 	void updated();
 	void changed(qreal min, qreal max, int tickCount,bool niceNumbers);
 //internal slot
-public slots:
+public Q_SLOTS:
 	void handleAxisRangeChanged(qreal min, qreal max,int count);
 
 private:

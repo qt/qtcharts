@@ -43,12 +43,12 @@ public:
     void zoomOut(const QRectF& rect, const QSizeF& size);
     void move(int dx,int dy,const QSizeF& size);
 
-signals:
+Q_SIGNALS:
     void domainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void rangeXChanged(qreal min, qreal max, int tickXCount);
     void rangeYChanged(qreal min, qreal max, int tickYCount);
 
-public slots:
+public Q_SLOTS:
     void handleAxisXChanged(qreal min,qreal max,int tickXCount = 5,bool niceNumbers = false);
     void handleAxisYChanged(qreal min,qreal max,int tickYCount = 5,bool niceNumbers = false);
 

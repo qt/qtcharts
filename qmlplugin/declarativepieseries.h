@@ -19,13 +19,13 @@ public:
     explicit DeclarativePieSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<QPieSlice> data();
 
-signals:
+Q_SIGNALS:
 
-public slots:
+public Q_SLOTS:
     static void appendData(QDeclarativeListProperty<QPieSlice> *list,
                            QPieSlice *element);
 
-private slots:
+private Q_SLOTS:
     void setParentForSeries();
 
 private:

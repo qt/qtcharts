@@ -24,9 +24,9 @@ public:
     void setBarCategories(QStringList categories);
     QStringList barCategories();
 
-signals:
+Q_SIGNALS:
 
-public slots:
+public Q_SLOTS:
 
 public:
     QChart *m_chart;

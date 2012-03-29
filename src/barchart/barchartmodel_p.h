@@ -41,10 +41,10 @@ public:
 
     QString categoryName(int category);
 
-signals:
+Q_SIGNALS:
     void modelUpdated();
 
-public slots:
+public Q_SLOTS:
     
 private:
 

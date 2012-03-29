@@ -23,7 +23,7 @@ public:
     int count();
 
 //internal signal
-signals:
+Q_SIGNALS:
     void updated();
 
 private:

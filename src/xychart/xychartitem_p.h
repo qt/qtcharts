@@ -21,14 +21,14 @@ public:
     QRectF clipRect() const { return m_clipRect;}
 
 
-public slots:
+public Q_SLOTS:
     void handlePointAdded(int index);
     void handlePointRemoved(int index);
     void handlePointReplaced(int index);
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF &size);
 
-signals:
+Q_SIGNALS:
     void clicked(const QPointF& point);
 
 protected:

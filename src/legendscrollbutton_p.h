@@ -23,10 +23,10 @@ public:
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
-signals:
+Q_SIGNALS:
     void clicked(QGraphicsSceneMouseEvent* event);
     
-public slots:
+public Q_SLOTS:
 
 private:
 

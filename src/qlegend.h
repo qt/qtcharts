@@ -53,13 +53,13 @@ public:
     void setSize(const QSizeF size);
     void setPos(const QPointF &pos);
 
-signals:
+Q_SIGNALS:
     // for interactions.
     void clicked(QSeries *series, Qt::MouseButton button);
     void clicked(QBarSet *barset, Qt::MouseButton button);
     void clicked(QPieSlice *slice, Qt::MouseButton button);
 
-public slots:
+public Q_SLOTS:
     // PIMPL --->
     void handleSeriesAdded(QSeries *series, Domain *domain);
     void handleSeriesRemoved(QSeries *series);

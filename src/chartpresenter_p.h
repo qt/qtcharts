@@ -58,14 +58,14 @@ private:
     void createConnections();
     void resetAllElements();
 
-public slots:
+public Q_SLOTS:
     void handleSeriesAdded(QSeries* series,Domain* domain);
     void handleSeriesRemoved(QSeries* series);
     void handleAxisAdded(QChartAxis* axis,Domain* domain);
     void handleAxisRemoved(QChartAxis* axis);
     void handleGeometryChanged();
 
-signals:
+Q_SIGNALS:
     void geometryChanged(const QRectF& rect);
 
 private:

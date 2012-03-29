@@ -51,7 +51,7 @@ public:
     BarChartModel& model();
     // <--- TO PIMPL
 
-signals:
+Q_SIGNALS:
     //void changed(int index);
     void clicked(QBarSet *barset, QString category);        // Up to user of api, what to do with these signals
     void rightClicked(QBarSet *barset, QString category);

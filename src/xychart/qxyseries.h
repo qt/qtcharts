@@ -45,14 +45,14 @@ public:
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     virtual void setModelMappingShift(int first, int count = 0);
 
-private slots:
+private Q_SLOTS:
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
     void modelDataAboutToBeAdded(QModelIndex parent, int start, int end);
     void modelDataAdded(QModelIndex parent, int start, int end);
     void modelDataAboutToBeRemoved(QModelIndex parent, int start, int end);
     void modelDataRemoved(QModelIndex parent, int start, int end);
 
-signals:
+Q_SIGNALS:
     void clicked(const QPointF &point);
     void updated();
     void pointReplaced(int index);

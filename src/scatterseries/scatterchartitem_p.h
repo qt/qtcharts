@@ -27,7 +27,7 @@ public:
 
     void markerSelected(Marker *item);
 
-public slots:
+public Q_SLOTS:
     void handleUpdated();
 
 private:

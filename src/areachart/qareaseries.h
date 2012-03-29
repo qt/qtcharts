@@ -35,7 +35,7 @@ public: // from QChartSeries
 //    void setModelMappingUpper(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
 //    void setModelMappingLower(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
 
-signals:
+Q_SIGNALS:
     void updated();
     void clicked(const QPointF &point);
 
