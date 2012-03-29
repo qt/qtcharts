@@ -36,9 +36,9 @@ protected:
     virtual ~QXYSeries();
 
 public:
-    void add(qreal x, qreal y);
-    void add(const QPointF &point);
-    void add(const QList<QPointF> points);
+    void append(qreal x, qreal y);
+    void append(const QPointF &point);
+    void append(const QList<QPointF> points);
     void replace(qreal x,qreal y);
     void replace(const QPointF &point);
     void remove(qreal x);

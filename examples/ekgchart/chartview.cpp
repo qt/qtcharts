@@ -25,8 +25,8 @@ m_y(1)
     green.setWidth(3);
     m_series1->setPen(green);
 
-    m_series0->add(m_x,m_y);
-    m_series1->add(m_x,m_y);
+    m_series0->append(m_x,m_y);
+    m_series1->append(m_x,m_y);
 
     setChartTitle("Simple EKG chart");
     addSeries(m_series0);
@@ -46,8 +46,8 @@ void ChartView::handleTimeout()
 {
     m_x+=m_step;
     m_y = qrand() % 5 - 2.5;
-    m_series0->add(m_x,m_y);
-    m_series1->add(m_x,m_y);
+    m_series0->append(m_x,m_y);
+    m_series1->append(m_x,m_y);
     if(m_x>=10)
     {
         m_series0->remove(m_x-10);

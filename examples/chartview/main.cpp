@@ -22,9 +22,9 @@ int main(int argc, char *argv[])
     chartView->setChartTitle("Simple Line Chart");
     // Add series to the chart
     QLineSeries *line = new QLineSeries();
-    line->add(0.0, 0.8);
-    line->add(1.1, 1.1);
-    line->add(2.0, 2.5);
+    line->append(0.0, 0.8);
+    line->append(1.1, 1.1);
+    line->append(2.0, 2.5);
     chartView->addSeries(line);
     //! [1]
 
@@ -39,8 +39,8 @@ int main(int argc, char *argv[])
     // Add pie series
     // ...
     QPieSeries *pie = new QPieSeries();
-    pie->add(3.4, "slice1");
-    pie->add(6.7, "slice2");
+    pie->append(3.4, "slice1");
+    pie->append(6.7, "slice2");
     chartView->addSeries(pie);
     //! [3]
 

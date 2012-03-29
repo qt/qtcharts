@@ -89,7 +89,7 @@ QXYSeries::~QXYSeries()
 /*!
     Adds data point \a x \a y to the series. Points are connected with lines on the chart.
  */
-void QXYSeries::add(qreal x,qreal y)
+void QXYSeries::append(qreal x,qreal y)
 {
     Q_ASSERT(m_x.size() == m_y.size());
     m_x<<x;
@@ -101,19 +101,19 @@ void QXYSeries::add(qreal x,qreal y)
    This is an overloaded function.
    Adds data \a point to the series. Points are connected with lines on the chart.
  */
-void QXYSeries::add(const QPointF &point)
+void QXYSeries::append(const QPointF &point)
 {
-    add(point.x(),point.y());
+    append(point.x(),point.y());
 }
 
 /*!
    This is an overloaded function.
    Adds list of data \a points to the series. Points are connected with lines on the chart.
  */
-void QXYSeries::add(const QList<QPointF> points)
+void QXYSeries::append(const QList<QPointF> points)
 {
     foreach(const QPointF& point , points) {
-        add(point.x(),point.y());
+        append(point.x(),point.y());
     }
 }
 
@@ -293,24 +293,24 @@ void QXYSeries::setBrush(const QBrush &brush)
 
 /*!
     Stream operator for adding a data \a point to the series.
-    \sa add()
+    \sa append()
 */
 
 QXYSeries& QXYSeries::operator<< (const QPointF &point)
 {
-    add(point);
+    append(point);
     return *this;
 }
 
 
 /*!
     Stream operator for adding a list of \a points to the series.
-    \sa add()
+    \sa append()
 */
 
 QXYSeries& QXYSeries::operator<< (const QList<QPointF> points)
 {
-    add(points);
+    append(points);
     return *this;
 }
 

@@ -35,7 +35,7 @@ void DeclarativePieSeries::appendSlice(QDeclarativeListProperty<QPieSlice> *list
 {
     DeclarativePieSeries *series = qobject_cast<DeclarativePieSeries *>(list->object);
     if (series)
-        series->add(slice->value(), slice->label());
+        series->append(slice->value(), slice->label());
 }
 
 #include "moc_declarativepieseries.cpp"

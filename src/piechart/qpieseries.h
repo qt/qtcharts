@@ -41,8 +41,8 @@ public: // from QChartSeries
 public:
 
     // slice setters
-    void add(QPieSlice* slice);
-    void add(QList<QPieSlice*> slices);
+    void append(QPieSlice* slice);
+    void append(QList<QPieSlice*> slices);
     void insert(int i, QPieSlice* slice);
     void replace(QList<QPieSlice*> slices);
     void remove(QPieSlice* slice);
@@ -69,7 +69,7 @@ public:
 
     // convenience function
     QPieSeries& operator << (QPieSlice* slice);
-    QPieSlice* add(qreal value, QString name);
+    QPieSlice* append(qreal value, QString name);
     void setLabelsVisible(bool visible = true);
 
     // data from model

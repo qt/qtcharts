@@ -21,7 +21,7 @@ void DeclarativeXySeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoi
 {
     QXYSeries *series = qobject_cast<QXYSeries *>(list->object);
     if (series)
-        series->add(QPointF(element->x(), element->y()));
+        series->append(QPointF(element->x(), element->y()));
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

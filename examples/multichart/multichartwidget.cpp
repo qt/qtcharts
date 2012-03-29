@@ -16,8 +16,8 @@ MultiChartWidget::MultiChartWidget(QWidget *parent) :
     QChartView *chartView1 = new QChartView();
     l->addWidget(chartView1);
     QPieSeries *pie = new QPieSeries();
-    pie->add(1.1, "label1");
-    pie->add(1.2, "label2");
+    pie->append(1.1, "label1");
+    pie->append(1.2, "label2");
     chartView1->addSeries(pie);
 
     // Create chart 2 and add a simple scatter series onto it

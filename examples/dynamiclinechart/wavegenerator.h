@@ -27,8 +27,8 @@ public:
         int fluctuate = 100;
 
         for (qreal x = 0; x <= 2*PI; x+=m_step) {
-              series1->add(x, fabs(sin(x)*fluctuate));
-              series2->add(x, fabs(cos(x)*fluctuate));
+              series1->append(x, fabs(sin(x)*fluctuate));
+              series2->append(x, fabs(cos(x)*fluctuate));
         }
 
         QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(update()));

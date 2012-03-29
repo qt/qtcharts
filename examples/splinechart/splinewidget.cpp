@@ -28,31 +28,31 @@ SplineWidget::SplineWidget(QWidget *parent)
 
     //! [add points to series]
     //add data points to the series
-    series->add(QPointF(150, 100));
-    series->add(QPointF(200, 130));
-    series->add(QPointF(250, 120));
-    series->add(QPointF(300, 140));
-    series->add(QPointF(350, 160));
+    series->append(QPointF(150, 100));
+    series->append(QPointF(200, 130));
+    series->append(QPointF(250, 120));
+    series->append(QPointF(300, 140));
+    series->append(QPointF(350, 160));
     //! [add points to series]
 
     QSplineSeries* series2 = new QSplineSeries;
 
-    series2->add(QPointF(400, 120));
-    series2->add(QPointF(450, 150));
-    series2->add(QPointF(500, 145));
-    series2->add(QPointF(550, 170));
+    series2->append(QPointF(400, 120));
+    series2->append(QPointF(450, 150));
+    series2->append(QPointF(500, 145));
+    series2->append(QPointF(550, 170));
 
-//    series->add(QPointF(600, 190));
-//    series->add(QPointF(650, 210));
-//    series->add(QPointF(700, 190));
-//    series->add(QPointF(750, 180));
-//    series->add(QPointF(800, 170));
+//    series->append(QPointF(600, 190));
+//    series->append(QPointF(650, 210));
+//    series->append(QPointF(700, 190));
+//    series->append(QPointF(750, 180));
+//    series->append(QPointF(800, 170));
     QSplineSeries* series3 = new QSplineSeries;
-        series3->add(QPointF(600, 190));
-        series3->add(QPointF(650, 210));
-        series3->add(QPointF(700, 190));
-        series3->add(QPointF(750, 180));
-        series3->add(QPointF(800, 170));
+        series3->append(QPointF(600, 190));
+        series3->append(QPointF(650, 210));
+        series3->append(QPointF(700, 190));
+        series3->append(QPointF(750, 180));
+        series3->append(QPointF(800, 170));
 
     //! [3]
     // create chart view
@@ -96,9 +96,9 @@ SplineWidget::SplineWidget(QWidget *parent)
 void SplineWidget::addNewPoint()
 {
     if (series->count() > 0)
-        series->add(QPointF(series->x(series->count() - 1) + 40 + qrand()%40, qAbs(series->y(series->count() - 1) - 50 + qrand()%100)));
+        series->append(QPointF(series->x(series->count() - 1) + 40 + qrand()%40, qAbs(series->y(series->count() - 1) - 50 + qrand()%100)));
     else
-        series->add(QPointF(50, 50 + qrand()%50));
+        series->append(QPointF(50, 50 + qrand()%50));
 }
 //! [add point]
 

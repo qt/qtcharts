@@ -36,8 +36,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 	Creating basic line chart is simple:
 	\code
 	QLineSeries* series = new QLineSeries();
-	series->add(0, 6);
-	series->add(2, 4);
+    series->append(0, 6);
+    series->append(2, 4);
 	...
 	chartView->addSeries(series);
     \endcode

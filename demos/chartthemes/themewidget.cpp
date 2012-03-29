@@ -184,8 +184,8 @@ QChart* ThemeWidget::createAreaChart() const
             QLineSeries *series1 = new QLineSeries(chart);
             QLineSeries *series2 = new QLineSeries(chart);
             foreach (Data data, m_dataTable[i]) {
-                series1->add(data.first);
-                series2->add(QPointF(data.first.x(), 0.0));
+                series1->append(data.first);
+                series2->append(QPointF(data.first.x(), 0.0));
             }
             QAreaSeries *area = new QAreaSeries(series1, series2);
             area->setName(name + QString::number(nameIndex));
@@ -230,7 +230,7 @@ QChart* ThemeWidget::createLineChart() const
     foreach (DataList list, m_dataTable) {
         QLineSeries *series = new QLineSeries(chart);
         foreach (Data data, list)
-            series->add(data.first);
+            series->append(data.first);
         series->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(series);
@@ -247,7 +247,7 @@ QChart* ThemeWidget::createPieChart() const
     for (int i = 0; i < m_dataTable.count(); i++) {
         QPieSeries *series = new QPieSeries(chart);
         foreach (Data data, m_dataTable[i]) {
-            QPieSlice *slice = series->add(data.first.y(), data.second);
+            QPieSlice *slice = series->append(data.first.y(), data.second);
             if (data == m_dataTable[i].first()) {
                 slice->setLabelVisible();
                 slice->setExploded();
@@ -271,7 +271,7 @@ QChart* ThemeWidget::createSplineChart() const
     foreach (DataList list, m_dataTable) {
         QSplineSeries *series = new QSplineSeries(chart);
         foreach (Data data, list)
-            series->add(data.first);
+            series->append(data.first);
         series->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(series);
@@ -288,7 +288,7 @@ QChart* ThemeWidget::createScatterChart() const
     foreach (DataList list, m_dataTable) {
         QScatterSeries *series = new QScatterSeries(chart);
         foreach (Data data, list)
-            series->add(data.first);
+            series->append(data.first);
         series->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(series);

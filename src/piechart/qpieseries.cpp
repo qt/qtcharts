@@ -228,14 +228,14 @@ QSeries::QSeriesType QPieSeries::type() const
 void QPieSeries::replace(QList<QPieSlice*> slices)
 {
     clear();
-    add(slices);
+    append(slices);
 }
 
 /*!
     Adds an array of \a slices to the series.
     Slice ownership is passed to the series.
 */
-void QPieSeries::add(QList<QPieSlice*> slices)
+void QPieSeries::append(QList<QPieSlice*> slices)
 {
     Q_D(QPieSeries);
 
@@ -260,9 +260,9 @@ void QPieSeries::add(QList<QPieSlice*> slices)
     Adds a single \a slice to the series.
     Slice ownership is passed to the series.
 */
-void QPieSeries::add(QPieSlice* slice)
+void QPieSeries::append(QPieSlice* slice)
 {
-    add(QList<QPieSlice*>() << slice);
+    append(QList<QPieSlice*>() << slice);
 }
 
 /*!
@@ -271,7 +271,7 @@ void QPieSeries::add(QPieSlice* slice)
 */
 QPieSeries& QPieSeries::operator << (QPieSlice* slice)
 {
-    add(slice);
+    append(slice);
     return *this;
 }
 
@@ -280,10 +280,10 @@ QPieSeries& QPieSeries::operator << (QPieSlice* slice)
     Adds a single slice to the series with give \a value and \a name.
     Slice ownership is passed to the series.
 */
-QPieSlice* QPieSeries::add(qreal value, QString name)
+QPieSlice* QPieSeries::append(qreal value, QString name)
 {
     QPieSlice* slice = new QPieSlice(value, name);
-    add(slice);
+    append(slice);
     return slice;
 }
 
@@ -644,10 +644,10 @@ void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::O
     // create the initial slices set
     if (d->m_mapOrientation == Qt::Vertical) {
         for (int i = 0; i < m_model->rowCount(); i++)
-            add(m_model->data(m_model->index(i, d->m_mapValues), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(i, d->m_mapLabels), Qt::DisplayRole).toString());
+            append(m_model->data(m_model->index(i, d->m_mapValues), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(i, d->m_mapLabels), Qt::DisplayRole).toString());
     } else {
         for (int i = 0; i < m_model->columnCount(); i++)
-            add(m_model->data(m_model->index(d->m_mapValues, i), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(d->m_mapLabels, i), Qt::DisplayRole).toString());
+            append(m_model->data(m_model->index(d->m_mapValues, i), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(d->m_mapLabels, i), Qt::DisplayRole).toString());
     }
 }
 

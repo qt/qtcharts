@@ -67,11 +67,11 @@ int main(int argc, char *argv[])
 //![1]
 
 //![2]
-    series0->add(0, 6);
-    series0->add(2, 4);
-    series0->add(3, 8);
-    series0->add(7, 4);
-    series0->add(10, 5);
+    series0->append(0, 6);
+    series0->append(2, 4);
+    series0->append(3, 8);
+    series0->append(7, 4);
+    series0->append(10, 5);
 
     *series1 << QPointF(1, 1) << QPointF(3, 3) << QPointF(7, 6) << QPointF(8, 3) << QPointF(10, 2);
 //![2]

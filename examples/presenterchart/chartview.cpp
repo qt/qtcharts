@@ -41,9 +41,9 @@ m_index(0)
 
     for (int x = 0; x <= numPoints; ++x) {
         qreal y = qrand() % 100;
-        series0->add(x,y);
-        series1->add(x,y);
-        series2->add(x,y);
+        series0->append(x,y);
+        series1->append(x,y);
+        series2->append(x,y);
     }
 //![2]
 

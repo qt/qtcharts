@@ -35,8 +35,8 @@
     Creating basic scatter chart is simple:
     \code
     QScatterSeries* series = new QScatterSeries();
-    series->add(0, 6);
-    series->add(2, 4);
+    series->append(0, 6);
+    series->append(2, 4);
     ...
     chartView->addSeries(series);
     \endcode
