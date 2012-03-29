@@ -40,18 +40,17 @@ class LegendScrollButton;
 class QSeries;
 class QChart;
 
-// TODO: This as widget
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
     Q_OBJECT
 public:
 
     // We only support these alignments (for now)
-    enum Layout {
-        LayoutTop = Qt::AlignTop,
-        LayoutBottom = Qt::AlignBottom,
-        LayoutLeft = Qt::AlignLeft,
-        LayoutRight = Qt::AlignRight
+    enum Alignment {
+        AlignmentTop = Qt::AlignTop,
+        AlignmentBottom = Qt::AlignBottom,
+        AlignmentLeft = Qt::AlignLeft,
+        AlignmentRight = Qt::AlignRight
     };
 private:
     explicit QLegend(QChart *chart);
@@ -66,8 +65,8 @@ public:
     void setPen(const QPen &pen);
     QPen pen() const;
 
-    void setAlignmnent(QLegend::Layout alignment);
-    QLegend::Layout alignment() const;
+    void setAlignmnent(QLegend::Alignment alignment);
+    QLegend::Alignment alignment() const;
 
     QSizeF maximumSize() const;
     void setMaximumSize(const QSizeF size);
@@ -77,6 +76,10 @@ public:
     void setPos(const QPointF &pos);
 
     void scrollButtonClicked(LegendScrollButton *scrollButton);
+
+    void detachFromChart();
+    void attachToChart();
+    bool attachedToChart();
 
 Q_SIGNALS:
     // for interactions.
@@ -117,7 +120,7 @@ private:
 
     QBrush m_brush;
     QPen m_pen;
-    QLegend::Layout m_alignment;
+    QLegend::Alignment m_alignment;
 
     int mFirstMarker;
 
@@ -125,6 +128,8 @@ private:
     LegendScrollButton *m_scrollButtonRight;
     LegendScrollButton *m_scrollButtonUp;
     LegendScrollButton *m_scrollButtonDown;
+
+    bool m_attachedToChart;
 
     friend class QChart;
     // <--- PIMPL

@@ -79,10 +79,55 @@ void ChartPresenter::createConnections()
 void ChartPresenter::handleGeometryChanged()
 {
     QRectF rect(QPoint(0,0),m_chart->size());
-    rect.adjust(m_padding,
-                m_padding + m_chart->legend()->size().height(),
-                -m_padding,
-                -m_padding);
+    QLegend* legend = m_chart->legend();
+    if ((legend->attachedToChart()) && (legend->isVisible())) {
+
+        // Reserve some space for legend
+        switch (m_chart->legend()->alignment()) {
+        case QLegend::AlignmentTop: {
+            rect.adjust(m_padding,
+                        m_padding + legend->size().height(),
+                        -m_padding,
+                        -m_padding);
+            break;
+        }
+        case QLegend::AlignmentBottom: {
+            rect.adjust(m_padding,
+                        m_padding,
+                        -m_padding,
+                        -m_padding - legend->size().height());
+            break;
+        }
+        case QLegend::AlignmentLeft: {
+            rect.adjust(m_padding + legend->size().width(),
+                        m_padding,
+                        -m_padding,
+                        -m_padding);
+            break;
+        }
+        case QLegend::AlignmentRight: {
+            rect.adjust(m_padding,
+                        m_padding,
+                        -m_padding - legend->size().width(),
+                        -m_padding);
+            break;
+        }
+        default: {
+            rect.adjust(m_padding,
+                        m_padding,
+                        -m_padding,
+                        -m_padding);
+            break;
+        }
+        }
+    } else {
+
+        // Legend is detached, or not visible
+        rect.adjust(m_padding,
+                    m_padding,
+                    -m_padding,
+                    -m_padding);
+    }
 
     //rewrite zoom stack
     /*

@@ -93,8 +93,9 @@ QLegend::QLegend(QChart *chart):QGraphicsWidget(chart),
     m_maximumSize(150,100),
     m_size(m_minimumSize),
     m_brush(Qt::darkGray),              // TODO: default should come from theme
-    m_alignment(QLegend::LayoutTop),
-    mFirstMarker(0)
+    m_alignment(QLegend::AlignmentRight),
+    mFirstMarker(0),
+    m_attachedToChart(true)
 {
     m_scrollButtonLeft = new LegendScrollButton(LegendScrollButton::ScrollButtonIdLeft, this);
     m_scrollButtonRight = new LegendScrollButton(LegendScrollButton::ScrollButtonIdRight, this);
@@ -168,7 +169,7 @@ QPen QLegend::pen() const
     Sets the \a preferred layout for legend. Legend tries to paint itself on the defined position in chart.
     \sa QLegend::Layout
 */
-void QLegend::setAlignmnent(QLegend::Layout alignment)
+void QLegend::setAlignmnent(QLegend::Alignment alignment)
 {
     m_alignment = alignment;
     updateLayout();
@@ -177,7 +178,7 @@ void QLegend::setAlignmnent(QLegend::Layout alignment)
 /*!
     Returns the preferred layout for legend
 */
-QLegend::Layout QLegend::alignment() const
+QLegend::Alignment QLegend::alignment() const
 {
     return m_alignment;
 }
@@ -389,6 +390,30 @@ void QLegend::scrollButtonClicked(LegendScrollButton *scrollButton)
 }
 
 /*!
+    Detaches the legend from chart. Chart won't change layout of the legend.
+*/
+void QLegend::detachFromChart()
+{
+    m_attachedToChart = false;
+}
+
+/*!
+    Attaches the legend to chart. Chart may change layout of the legend.
+*/
+void QLegend::attachToChart()
+{
+    m_attachedToChart = true;
+}
+
+/*!
+    Returns true, if legend is attached to chart.
+*/
+bool QLegend::attachedToChart()
+{
+    return m_attachedToChart;
+}
+
+/*!
     \internal Helper function. Appends markers from \a series to legend.
 */
 void QLegend::appendMarkers(QAreaSeries* series)
@@ -498,8 +523,8 @@ void QLegend::updateLayout()
     switch (m_alignment)
     {
     // Both cases organise items horizontally
-    case QLegend::LayoutBottom:
-    case QLegend::LayoutTop: {
+    case QLegend::AlignmentBottom:
+    case QLegend::AlignmentTop: {
 
         qreal xStep = markerMaxSize.width();
         qreal x = m_pos.x() + m_margin;
@@ -553,8 +578,8 @@ void QLegend::updateLayout()
         break;
     }
     // Both cases organize items vertically
-    case QLegend::LayoutLeft:
-    case QLegend::LayoutRight: {
+    case QLegend::AlignmentLeft:
+    case QLegend::AlignmentRight: {
         qreal yStep = markerMaxSize.height();
         qreal x = m_pos.x() + m_margin;
         qreal y = m_pos.y() + m_margin;
@@ -655,7 +680,7 @@ QSizeF QLegend::maximumMarkerSize()
 */
 void QLegend::checkFirstMarkerBounds()
 {
-    if ((m_alignment == QLegend::LayoutLeft) || (m_alignment == QLegend::LayoutRight)) {
+    if ((m_alignment == QLegend::AlignmentLeft) || (m_alignment == QLegend::AlignmentRight)) {
         // Bounds limited by height.
         int max;
         if (scrollButtonsVisible()) {
@@ -689,9 +714,9 @@ void QLegend::checkFirstMarkerBounds()
 bool QLegend::scrollButtonsVisible()
 {
     // Just a helper to clarify, what the magic below means :)
-    if ((m_alignment == QLegend::LayoutTop) || (m_alignment == QLegend::LayoutBottom)) {
+    if ((m_alignment == QLegend::AlignmentTop) || (m_alignment == QLegend::AlignmentBottom)) {
         return (maximumMarkerSize().width() * m_markers.count() + m_margin * 2 > m_maximumSize.width());
-    } else if ((m_alignment == QLegend::LayoutLeft) || (m_alignment == QLegend::LayoutRight)) {
+    } else if ((m_alignment == QLegend::AlignmentLeft) || (m_alignment == QLegend::AlignmentRight)) {
         return (maximumMarkerSize().height() * m_markers.count() + m_margin * 2 > m_maximumSize.height());
     }
 

@@ -371,20 +371,20 @@ void QChartPrivate::updateLegendLayout()
 
     switch (m_legend->alignment())
     {
-        case QLegend::LayoutTop: {
-            legendRect = plotRect.adjusted(0,0,0,-padding - plotRect.height());
+        case QLegend::AlignmentTop: {
+            legendRect = m_rect.adjusted(0,0,0,-padding - plotRect.height());
             break;
         }
-        case QLegend::LayoutBottom: {
-            legendRect = plotRect.adjusted(padding,padding + plotRect.height(),-padding,0);
+        case QLegend::AlignmentBottom: {
+            legendRect = m_rect.adjusted(padding,padding + plotRect.height(),-padding,0);
             break;
         }
-        case QLegend::LayoutLeft: {
-            legendRect = plotRect.adjusted(0,padding,-padding - plotRect.width(),-padding);
+        case QLegend::AlignmentLeft: {
+            legendRect = m_rect.adjusted(0,padding,-padding - plotRect.width(),-padding);
             break;
         }
-        case QLegend::LayoutRight: {
-            legendRect = plotRect.adjusted(padding + plotRect.width(),padding,0,-padding);
+        case QLegend::AlignmentRight: {
+            legendRect = m_rect.adjusted(padding + plotRect.width(),padding,0,-padding);
             break;
         }
         default: {
@@ -405,6 +405,8 @@ void QChartPrivate::updateLegendLayout()
     if (height > 0) {
         pos.setY(pos.y() + height/2);
     }
+
+    qDebug() << "lenged topleft:" << pos;
     m_legend->setPos(pos);
 }
 
@@ -428,7 +430,7 @@ void QChartPrivate::updateLayout()
 
     // recalculate legend position
     if (m_legend) {
-        if (m_legend->parentObject() == q_ptr) {
+        if ((m_legend->attachedToChart()) && (m_legend->parentObject() == q_ptr)) {
             updateLegendLayout();
         }
     }
