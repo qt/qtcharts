@@ -149,13 +149,10 @@ void tst_QChartView::rubberBand()
     QChartAxis* axisX = m_view->chart()->axisX();
     QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal, qreal)));
 
-
     QTest::qWaitForWindowShown(m_view);
     QTest::mouseMove(m_view->viewport(),  QPoint(minX, minY) + padding.topLeft());
-
     QTest::mousePress(m_view->viewport(), Qt::LeftButton, 0,  QPoint(minX, minY) + padding.topLeft());
     QTest::mouseMove(m_view->viewport(), QPoint(maxX, maxY) + padding.topLeft());
-
     QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, 0, QPoint(maxX, maxY)+ padding.topLeft());
 
     QCOMPARE(spy0.count(), Xcount);
