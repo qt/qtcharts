@@ -32,7 +32,7 @@ public:
     // TODO
     virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
     void setName(QString name) { m_name = name; }
-    QString name() { return m_name; }
+    QString name() const { return m_name; }
 
 protected:
     QAbstractItemModel* m_model;
