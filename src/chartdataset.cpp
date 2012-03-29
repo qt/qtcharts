@@ -66,7 +66,7 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
     Domain* domain = m_axisDomainMap.value(axisY);
 
     if(!domain) {
-        domain = new Domain();
+        domain = new Domain(axisY);
         QObject::connect(axisY,SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,bool)));
         QObject::connect(axisX(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisXChanged(qreal,qreal,int,bool)));
         QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axisY,SLOT(handleAxisRangeChanged(qreal,qreal,int)));
