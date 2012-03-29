@@ -14,20 +14,20 @@ Axis::Axis(QChartAxis *axis,ChartPresenter *presenter,AxisType type) : Chart(pre
     m_chartAxis(axis),
     m_type(type),
     m_labelsAngle(0),
-    m_grid(presenter->rootItem()),
-    m_shades(presenter->rootItem()),
-    m_labels(presenter->rootItem()),
-    m_axis(presenter->rootItem()),
+    m_grid(new QGraphicsItemGroup(presenter->rootItem())),
+    m_shades(new QGraphicsItemGroup(presenter->rootItem())),
+    m_labels(new QGraphicsItemGroup(presenter->rootItem())),
+    m_axis(new QGraphicsItemGroup(presenter->rootItem())),
     m_min(0),
     m_max(0),
     m_ticksCount(0)
 {
     //initial initialization
-    m_axis.setZValue(ChartPresenter::AxisZValue);
-    m_axis.setHandlesChildEvents(false);
+    m_axis->setZValue(ChartPresenter::AxisZValue);
+    m_axis->setHandlesChildEvents(false);
 
-    m_shades.setZValue(ChartPresenter::ShadesZValue);
-    m_grid.setZValue(ChartPresenter::GridZValue);
+    m_shades->setZValue(ChartPresenter::ShadesZValue);
+    m_grid->setZValue(ChartPresenter::GridZValue);
 
     connect(m_chartAxis,SIGNAL(updated()),this,SLOT(handleAxisUpdated()));
     connect(m_chartAxis->categories(),SIGNAL(updated()),this,SLOT(handleAxisCategoriesUpdated()));
@@ -42,22 +42,22 @@ Axis::~Axis()
 void Axis::createItems(int count)
 {
 
-    if (m_axis.children().size() == 0)
-        m_axis.addToGroup(new AxisItem(this));
+    if (m_axis->children().size() == 0)
+        m_axis->addToGroup(new AxisItem(this));
     for (int i = 0; i < count; ++i) {
-        m_grid.addToGroup(new QGraphicsLineItem());
-        m_labels.addToGroup(new QGraphicsSimpleTextItem());
-        m_axis.addToGroup(new QGraphicsLineItem());
-        if ((m_grid.childItems().size())%2 && m_grid.childItems().size()>2) m_shades.addToGroup(new QGraphicsRectItem());
+        m_grid->addToGroup(new QGraphicsLineItem());
+        m_labels->addToGroup(new QGraphicsSimpleTextItem());
+        m_axis->addToGroup(new QGraphicsLineItem());
+        if ((m_grid->childItems().size())%2 && m_grid->childItems().size()>2) m_shades->addToGroup(new QGraphicsRectItem());
        }
 }
 
 void Axis::deleteItems(int count)
 {
-    QList<QGraphicsItem *> lines = m_grid.childItems();
-    QList<QGraphicsItem *> labels = m_labels.childItems();
-    QList<QGraphicsItem *> shades = m_shades.childItems();
-    QList<QGraphicsItem *> axis = m_axis.childItems();
+    QList<QGraphicsItem *> lines = m_grid->childItems();
+    QList<QGraphicsItem *> labels = m_labels->childItems();
+    QList<QGraphicsItem *> shades = m_shades->childItems();
+    QList<QGraphicsItem *> axis = m_axis->childItems();
 
     for (int i = 0; i < count; ++i) {
         if (lines.size()%2 && lines.size() > 1) delete(shades.takeLast());
@@ -111,47 +111,47 @@ bool Axis::createLabels(QStringList &labels,qreal min, qreal max,int ticks) cons
 
 void Axis::setAxisOpacity(qreal opacity)
 {
-    m_axis.setOpacity(opacity);
+    m_axis->setOpacity(opacity);
 }
 
 qreal Axis::axisOpacity() const
 {
-    return m_axis.opacity();
+    return m_axis->opacity();
 }
 
 void Axis::setGridOpacity(qreal opacity)
 {
-    m_grid.setOpacity(opacity);
+    m_grid->setOpacity(opacity);
 }
 
 qreal Axis::gridOpacity() const
 {
-    return m_grid.opacity();
+    return m_grid->opacity();
 }
 
 void Axis::setLabelsOpacity(qreal opacity)
 {
-    m_labels.setOpacity(opacity);
+    m_labels->setOpacity(opacity);
 }
 
 qreal Axis::labelsOpacity() const
 {
-    return m_labels.opacity();
+    return m_labels->opacity();
 }
 
 void Axis::setShadesOpacity(qreal opacity)
 {
-    m_shades.setOpacity(opacity);
+    m_shades->setOpacity(opacity);
 }
 
 qreal Axis::shadesOpacity() const
 {
-    return m_shades.opacity();
+    return m_shades->opacity();
 }
 
 void Axis::setLabelsAngle(int angle)
 {
-    foreach(QGraphicsItem* item , m_labels.childItems()) {
+    foreach(QGraphicsItem* item , m_labels->childItems()) {
           item->setRotation(angle);
     }
 
@@ -160,49 +160,49 @@ void Axis::setLabelsAngle(int angle)
 
 void Axis::setLabelsPen(const QPen &pen)
 {
-    foreach(QGraphicsItem* item , m_labels.childItems()) {
+    foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setPen(pen);
     }
 }
 
 void Axis::setLabelsBrush(const QBrush &brush)
 {
-    foreach(QGraphicsItem* item , m_labels.childItems()) {
+    foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setBrush(brush);
     }
 }
 
 void Axis::setLabelsFont(const QFont &font)
 {
-    foreach(QGraphicsItem* item , m_labels.childItems()) {
+    foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setFont(font);
     }
 }
 
 void Axis::setShadesBrush(const QBrush &brush)
 {
-    foreach(QGraphicsItem* item , m_shades.childItems()) {
+    foreach(QGraphicsItem* item , m_shades->childItems()) {
         static_cast<QGraphicsRectItem*>(item)->setBrush(brush);
     }
 }
 
 void Axis::setShadesPen(const QPen &pen)
 {
-    foreach(QGraphicsItem* item , m_shades.childItems()) {
+    foreach(QGraphicsItem* item , m_shades->childItems()) {
         static_cast<QGraphicsRectItem*>(item)->setPen(pen);
     }
 }
 
 void Axis::setAxisPen(const QPen &pen)
 {
-    foreach(QGraphicsItem* item , m_axis.childItems()) {
+    foreach(QGraphicsItem* item , m_axis->childItems()) {
            static_cast<QGraphicsLineItem*>(item)->setPen(pen);
     }
 }
 
 void Axis::setGridPen(const QPen &pen)
 {
-    foreach(QGraphicsItem* item , m_grid.childItems()) {
+    foreach(QGraphicsItem* item , m_grid->childItems()) {
         static_cast<QGraphicsLineItem*>(item)->setPen(pen);
     }
 }
@@ -254,10 +254,10 @@ void Axis::setLayout(QVector<qreal> &layout)
 
     bool categories = createLabels(ticksList,m_min,m_max,layout.size());
 
-	QList<QGraphicsItem *> lines = m_grid.childItems();
-	QList<QGraphicsItem *> labels = m_labels.childItems();
-	QList<QGraphicsItem *> shades = m_shades.childItems();
-	QList<QGraphicsItem *> axis = m_axis.childItems();
+    QList<QGraphicsItem *> lines = m_grid->childItems();
+    QList<QGraphicsItem *> labels = m_labels->childItems();
+    QList<QGraphicsItem *> shades = m_shades->childItems();
+    QList<QGraphicsItem *> axis = m_axis->childItems();
 
 	Q_ASSERT(labels.size() == ticksList.size());
 	Q_ASSERT(layout.size() == ticksList.size());
