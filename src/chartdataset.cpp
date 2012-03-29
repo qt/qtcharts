@@ -248,7 +248,6 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain)
         default: {
             qDebug()<<__FUNCTION__<<"type" << series->type()<<"not supported";
             return;
-            break;
         }
 
     }

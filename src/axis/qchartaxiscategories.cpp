@@ -44,7 +44,6 @@ void QChartAxisCategories::clear()
 int QChartAxisCategories::count()
 {
     return m_map.count();
-    emit updated();
 }
 
 QList<qreal> QChartAxisCategories::values() const

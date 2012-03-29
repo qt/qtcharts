@@ -52,7 +52,7 @@ class Marker: public QAbstractGraphicsShapeItem
 
 public:
 
-   Marker(QAbstractGraphicsShapeItem *item , ScatterChartItem *parent) : QAbstractGraphicsShapeItem(0) ,m_item(item), m_parent(parent)
+   Marker(QAbstractGraphicsShapeItem *item , ScatterChartItem *parent) : QAbstractGraphicsShapeItem(0) ,m_item(item), m_parent(parent), m_index(-1)
    {
    };
 
