@@ -3,10 +3,11 @@
 
 #include "qchartglobal.h"
 #include <QObject>
+#include <QPointF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeXyPoint : public QObject
+class DeclarativeXyPoint : public QObject, public QPointF
 {
     Q_OBJECT
     Q_PROPERTY(qreal x READ x WRITE setX /*NOTIFY dataXChanged*/)
@@ -14,15 +15,6 @@ class DeclarativeXyPoint : public QObject
 
 public:
     explicit DeclarativeXyPoint(QObject *parent = 0);
-
-    void setX(qreal x) {m_x = x;}
-    qreal x() {return m_x;}
-    void setY(qreal y) {m_y = y;}
-    qreal y() {return m_y;}
-
-public:
-    qreal m_x;
-    qreal m_y;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -47,9 +47,8 @@ QPainterPath PieSliceItem::shape() const
 
 void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
 {
-    painter->setClipRect(parentItem()->boundingRect());
-
     painter->save();
+    painter->setClipRect(parentItem()->boundingRect());
     painter->setPen(m_data.m_slicePen);
     painter->setBrush(m_data.m_sliceBrush);
     painter->drawPath(m_slicePath);

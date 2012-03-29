@@ -1,16 +1,15 @@
-#include "declarativelineseries.h"
+#include "declarativesplineseries.h"
 #include "declarativechart.h"
 #include "qchart.h"
-#include "qlineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
-    QLineSeries(parent)
+DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
+    QSplineSeries(parent)
 {
 }
 
-void DeclarativeLineSeries::seriesComplete()
+void DeclarativeSplineSeries::seriesComplete()
 {
     DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(parent());
 
@@ -21,22 +20,22 @@ void DeclarativeLineSeries::seriesComplete()
     }
 }
 
-QObject *DeclarativeLineSeries::seriesObject()
+QObject *DeclarativeSplineSeries::seriesObject()
 {
     return this;
 }
 
-QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeLineSeries::points()
+QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeSplineSeries::points()
 {
     return DeclarativeXySeries::points();
 }
 
-void DeclarativeLineSeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
+void DeclarativeSplineSeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
                        DeclarativeXyPoint *element)
 {
     DeclarativeXySeries::appendPoints(list, element);
 }
 
-#include "moc_declarativelineseries.cpp"
+#include "moc_declarativesplineseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

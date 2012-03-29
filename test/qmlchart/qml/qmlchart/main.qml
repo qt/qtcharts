@@ -23,6 +23,8 @@ Rectangle {
 //        console.log("model:" + myModel.item(0));
 //        myModel.insert(1, {"time":1.4; "speed":41.1 });
 //        scatter.appendData();
+//        chart1.theme = Chart.ThemeHighContrast;
+//        chart2.theme = Chart.ThemeHighContrast;
     }
 
 
@@ -36,21 +38,18 @@ Rectangle {
 
         BarSeries {
             barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
-//            data: [
-//                BarSet { }
-//            ]
         }
 
-//        PieSeries {
-//            data: [
-//                PieSlice { label: "Volkswagen"; value: 13.5 },
-//                PieSlice { label: "Toyota"; value: 10.9 },
-//                PieSlice { label: "Ford"; value: 8.6 },
-//                PieSlice { label: "Skoda"; value: 8.2 },
-//                PieSlice { label: "Volvo"; value: 6.8 },
-//                PieSlice { label: "Others"; value: 52.0 }
-//            ]
-//        }
+        PieSeries {
+            slices: [
+                PieSlice { label: "Volkswagen"; value: 13.5 },
+                PieSlice { label: "Toyota"; value: 10.9 },
+                PieSlice { label: "Ford"; value: 8.6 },
+                PieSlice { label: "Skoda"; value: 8.2 },
+                PieSlice { label: "Volvo"; value: 6.8 },
+                PieSlice { label: "Others"; value: 52.0 }
+            ]
+        }
     }
 
 
@@ -72,13 +71,13 @@ Rectangle {
         }
 
         SplineSeries {
-            id: scatter
             points: [
                 XyPoint { x: 0.0; y: 0.3 },
                 XyPoint { x: 1.1; y: 3.2 },
                 XyPoint { x: 4.17; y: 3.15 }
             ]
         }
+
         ScatterSeries {
             points: [
                 XyPoint { x: 1.5; y: 1.5 },

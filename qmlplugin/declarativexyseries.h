@@ -3,41 +3,35 @@
 
 #include "qchartglobal.h"
 #include "declarativexypoint.h"
-#include "qxyseries.h"
-#include <QDeclarativeItem>
+#include <QDeclarativeParserStatus>
+#include <QDeclarativeListProperty>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
 
-class DeclarativeXySeries : public QDeclarativeItem
+class DeclarativeXySeries : public QDeclarativeParserStatus
 {
-    Q_OBJECT
-    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> points READ points)
+    Q_INTERFACES(QDeclarativeParserStatus)
 
 public:
-    explicit DeclarativeXySeries(QSeries::QSeriesType type, QDeclarativeItem *parent = 0);
+    explicit DeclarativeXySeries();
     ~DeclarativeXySeries();
 
 public: // from QDeclarativeParserStatus
+    void classBegin();
     void componentComplete();
 
 public:
     QDeclarativeListProperty<DeclarativeXyPoint> points();
 
-Q_SIGNALS:
-
 public Q_SLOTS:
     static void appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                           DeclarativeXyPoint *element);
+                             DeclarativeXyPoint *element);
 
-private Q_SLOTS:
-
-public:
-    QSeries::QSeriesType m_seriesType;
-    QChart *m_chart;
-    QXYSeries *m_series;
-    QList<DeclarativeXyPoint *> m_points;
+protected:
+    virtual void seriesComplete() = 0;
+    virtual QObject *seriesObject() = 0;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

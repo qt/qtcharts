@@ -2,17 +2,30 @@
 #define DECLARATIVESCATTERSERIES_H
 
 #include "qchartglobal.h"
+#include "qscatterseries.h"
 #include "declarativexyseries.h"
-#include <QDeclarativeItem>
+#include <QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeScatterSeries : public DeclarativeXySeries
+class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeries
 {
     Q_OBJECT
+    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> points READ points)
 
 public:
-    explicit DeclarativeScatterSeries(QDeclarativeItem *parent = 0);
+    explicit DeclarativeScatterSeries(QObject *parent = 0);
+
+public:
+    void seriesComplete();
+    QObject *seriesObject();
+
+public:
+    QDeclarativeListProperty<DeclarativeXyPoint> points();
+
+public slots:
+    static void appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
+                             DeclarativeXyPoint *element);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
