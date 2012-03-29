@@ -273,12 +273,12 @@ void Axis::setLayout(QVector<qreal> &layout)
 				QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
 				lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-                if (!categories) {
+                if (!categories || i<1) {
 				    labelItem->setText(ticksList.at(i));
 				    QPointF center = labelItem->boundingRect().center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
 				    labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
-                } else if(i>0) {
+                } else {
 				    labelItem->setText(ticksList.at(i));
 				    QPointF center = labelItem->boundingRect().center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
@@ -305,12 +305,12 @@ void Axis::setLayout(QVector<qreal> &layout)
 				lineItem->setLine(m_rect.left() , layout[i], m_rect.right(), layout[i]);
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
 
-                if (!categories) {
+                if (!categories || i<1) {
 				    labelItem->setText(ticksList.at(i));
 				    QPointF center = labelItem->boundingRect().center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
 				    labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
-                } else if (i>0) {
+                } else {
 				    labelItem->setText(ticksList.at(i));
 				    QPointF center = labelItem->boundingRect().center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
