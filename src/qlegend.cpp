@@ -72,7 +72,7 @@ QLegend::QLegend(QGraphicsItem *parent) : QGraphicsObject(parent),
     m_minimumSize(50,20),                // TODO: magic numbers
     m_maximumSize(150,100),
     m_size(m_minimumSize),
-    m_brush(Qt::darkGray),
+    m_brush(Qt::darkGray),              // TODO: default should come from theme
     m_alignment(QLegend::LayoutTop),
     mFirstMarker(0)
 {
@@ -104,7 +104,7 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->setOpacity(opacity());
     painter->setPen(m_pen);
     painter->setBrush(m_brush);
-    painter->drawRect(boundingRect());
+//    painter->drawRect(boundingRect());
 }
 
 /*!
