@@ -16,7 +16,7 @@ QStringList BarChartModel::category()
     return m_category;
 }
 
-void BarChartModel::addBarSet(QBarSet *set)
+void BarChartModel::appendBarSet(QBarSet *set)
 {
     m_dataModel.append(set);
 }
@@ -43,27 +43,27 @@ void BarChartModel::removeCategory(int i)
     m_category.removeAt(i);
 }
 
-QBarSet* BarChartModel::setAt(int index)
+QBarSet* BarChartModel::barsetAt(int index) const
 {
     return m_dataModel.at(index);
 }
 
-QList<QBarSet*> BarChartModel::barSets()
+QList<QBarSet*> BarChartModel::barSets() const
 {
     return m_dataModel;
 }
 
-int BarChartModel::barsetCount()
+int BarChartModel::barsetCount() const
 {
     return m_dataModel.count();
 }
 
-int BarChartModel::categoryCount()
+int BarChartModel::categoryCount() const
 {
     return m_category.count();
 }
 
-qreal BarChartModel::min()
+qreal BarChartModel::min() const
 {
     Q_ASSERT(m_dataModel.count() > 0);
     // TODO: make min and max members and update them when data changes.
@@ -81,7 +81,7 @@ qreal BarChartModel::min()
     return min;
 }
 
-qreal BarChartModel::max()
+qreal BarChartModel::max() const
 {
     Q_ASSERT(m_dataModel.count() > 0);
 
@@ -101,7 +101,7 @@ qreal BarChartModel::max()
     return max;
 }
 
-qreal BarChartModel::valueAt(int set, int category)
+qreal BarChartModel::valueAt(int set, int category) const
 {
     if ((set < 0) || (set >= m_dataModel.count())) {
         // No set, no value.
@@ -114,7 +114,7 @@ qreal BarChartModel::valueAt(int set, int category)
     return m_dataModel.at(set)->valueAt(category);
 }
 
-qreal BarChartModel::percentageAt(int set, int category)
+qreal BarChartModel::percentageAt(int set, int category) const
 {
     if ((set < 0) || (set >= m_dataModel.count())) {
         // No set, no value.
@@ -133,7 +133,7 @@ qreal BarChartModel::percentageAt(int set, int category)
 }
 
 
-qreal BarChartModel::categorySum(int category)
+qreal BarChartModel::categorySum(int category) const
 {
     qreal sum(0);
     int count = m_dataModel.count(); // Count sets
@@ -145,7 +145,7 @@ qreal BarChartModel::categorySum(int category)
     return sum;
 }
 
-qreal BarChartModel::maxCategorySum()
+qreal BarChartModel::maxCategorySum() const
 {
     qreal max = INT_MIN;
     int count = categoryCount();

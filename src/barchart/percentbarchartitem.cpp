@@ -63,9 +63,9 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
                 QString vString(QString::number(p));
                 vString.truncate(3);
                 vString.append("%");
-                value->setValueString(vString);
+                value->setText(vString);
             } else {
-                value->setValueString(QString(""));
+                value->setText(QString(""));
             }
 
             itemIndex++;

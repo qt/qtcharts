@@ -71,7 +71,7 @@ void QBarSet::setName(QString name)
 /*!
     Returns name of the set.
 */
-QString QBarSet::name()
+QString QBarSet::name() const
 {
     return m_name;
 }
@@ -99,7 +99,7 @@ void QBarSet::removeValue(int i)
 /*!
     Returns count of values in set.
 */
-int QBarSet::count()
+int QBarSet::count() const
 {
     return m_values.count();
 }
@@ -107,7 +107,7 @@ int QBarSet::count()
 /*!
     Returns value of set indexed by \a index
 */
-qreal QBarSet::valueAt(int index)
+qreal QBarSet::valueAt(int index) const
 {
     return m_values.at(index);
 }
@@ -124,7 +124,7 @@ void QBarSet::setValue(int index, qreal value)
 /*!
     Returns total sum of all values in barset.
 */
-qreal QBarSet::total()
+qreal QBarSet::total() const
 {
     qreal total(0);
     for (int i=0; i < m_values.count(); i++) {

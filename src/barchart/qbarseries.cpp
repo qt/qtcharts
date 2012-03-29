@@ -50,9 +50,9 @@ QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) : QSeries(par
     Connects the clicked(QString) and rightClicked(QString) signals
     of \a set to this series
 */
-void QBarSeries::addBarSet(QBarSet *set)
+void QBarSeries::appendBarSet(QBarSet *set)
 {
-    m_internalModel->addBarSet(set);
+    m_internalModel->appendBarSet(set);
     connect(set, SIGNAL(clicked(QString)), this, SLOT(barsetClicked(QString)));
     connect(set, SIGNAL(rightClicked(QString)), this, SLOT(barsetRightClicked(QString)));
     connect(set, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
@@ -91,7 +91,7 @@ void QBarSeries::removeCategory(int i)
 /*!
     Returns number of sets in series.
 */
-int QBarSeries::barsetCount()
+int QBarSeries::barsetCount() const
 {
     //    if(m_model)
     //        return m_mapBarTop - m_mapBarBottom;
@@ -102,7 +102,7 @@ int QBarSeries::barsetCount()
 /*!
     Returns number of categories in series
 */
-int QBarSeries::categoryCount()
+int QBarSeries::categoryCount() const
 {
     return m_internalModel->categoryCount();
 }
@@ -110,7 +110,7 @@ int QBarSeries::categoryCount()
 /*!
     Returns a list of sets in series. Keeps ownership of sets.
  */
-QList<QBarSet*> QBarSeries::barSets()
+QList<QBarSet*> QBarSeries::barSets() const
 {
     return m_internalModel->barSets();
 }
@@ -120,7 +120,7 @@ QList<QBarSet*> QBarSeries::barSets()
 */
 QBarSet* QBarSeries::barsetAt(int index)
 {
-    return m_internalModel->setAt(index);
+    return m_internalModel->barsetAt(index);
 }
 
 /*!
@@ -141,12 +141,12 @@ void QBarSeries::setToolTipEnabled(bool enabled)
     // TODO: what if we add sets after call to this function? Those sets won't have tooltip enabled.
     if (enabled) {
         for (int i=0; i<m_internalModel->barsetCount(); i++) {
-            QBarSet *set = m_internalModel->setAt(i);
+            QBarSet *set = m_internalModel->barsetAt(i);
             connect(set, SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
         }
     } else {
         for (int i=0; i<m_internalModel->barsetCount(); i++) {
-            QBarSet *set = m_internalModel->setAt(i);
+            QBarSet *set = m_internalModel->barsetAt(i);
             disconnect(set, SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
         }
     }
@@ -297,7 +297,7 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
             QBarSet* barSet = new QBarSet(QString("Column: %1").arg(i + 1));
             for(int m = m_mapFirst; m < m_mapFirst + m_mapCount; m++)
                 *barSet << m_model->data(m_model->index(m, i), Qt::DisplayRole).toDouble();
-            addBarSet(barSet);
+            appendBarSet(barSet);
         }
     } else {
         QStringList categories;
@@ -309,7 +309,7 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
             QBarSet* barSet = new QBarSet(QString("Row: %1").arg(i + 1));
             for(int m = m_mapFirst; m < m_mapFirst + m_mapCount; m++)
                 *barSet << m_model->data(m_model->index(i, m), Qt::DisplayRole).toDouble();
-            addBarSet(barSet);
+            appendBarSet(barSet);
         }
     }
 }

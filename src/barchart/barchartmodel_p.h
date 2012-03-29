@@ -20,24 +20,24 @@ public:
     explicit BarChartModel(QStringList categories, QObject *parent = 0);
 
     QStringList category();
-    void addBarSet(QBarSet *set);
+    void appendBarSet(QBarSet *set);
     void removeBarSet(QBarSet *set);
     void insertBarSet(int i, QBarSet *set);
     void insertCategory(int i, QString category);
     void removeCategory(int i);
-    QBarSet *setAt(int index);
-    QList<QBarSet *> barSets();
+    QBarSet *barsetAt(int index) const;
+    QList<QBarSet *> barSets() const;
 
-    int barsetCount();          // Number of sets in model
-    int categoryCount();        // Number of categories
+    int barsetCount() const;          // Number of sets in model
+    int categoryCount() const;        // Number of categories
 
-    qreal max();                // Maximum value of all sets
-    qreal min();                // Minimum value of all sets
-    qreal valueAt(int set, int category);
-    qreal percentageAt(int set, int category);
+    qreal max() const;                // Maximum value of all sets
+    qreal min() const;                // Minimum value of all sets
+    qreal valueAt(int set, int category) const;
+    qreal percentageAt(int set, int category) const;
 
-    qreal categorySum(int category);
-    qreal maxCategorySum();     // returns maximum sum of sets in all categories.
+    qreal categorySum(int category) const;
+    qreal maxCategorySum() const;     // returns maximum sum of sets in all categories.
 
     QString categoryName(int category);
 

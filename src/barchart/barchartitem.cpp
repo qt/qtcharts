@@ -140,9 +140,9 @@ QVector<QRectF> BarChartItem::calculateLayout()
             value->setPen(barSet->floatingValuePen());
 
             if (!qFuzzyIsNull(m_series->valueAt(set,category))) {
-                value->setValueString(QString::number(m_series->valueAt(set, category)));
+                value->setText(QString::number(m_series->valueAt(set, category)));
             } else {
-                value->setValueString(QString(""));
+                value->setText(QString(""));
             }
 
             itemIndex++;

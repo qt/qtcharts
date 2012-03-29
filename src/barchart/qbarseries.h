@@ -21,14 +21,14 @@ public:
 
     virtual QSeriesType type() const { return QSeries::SeriesTypeBar; }
 
-    void addBarSet(QBarSet *set);               // Takes ownership of set
+    void appendBarSet(QBarSet *set);               // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
     void insertBarSet(int i, QBarSet *set);
     void insertCategory(int i, QString category);
     void removeCategory(int i);
-    int barsetCount();
-    int categoryCount();
-    QList<QBarSet*> barSets();
+    int barsetCount() const;
+    int categoryCount() const;
+    QList<QBarSet*> barSets() const;
     QBarCategories categories() const;
 
     bool setModel(QAbstractItemModel *model);

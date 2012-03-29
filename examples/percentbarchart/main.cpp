@@ -69,11 +69,11 @@ int main(int argc, char *argv[])
 //![2]
 //![3]
     QPercentBarSeries* series = new QPercentBarSeries(categories);
-    series->addBarSet(set0);
-    series->addBarSet(set1);
-    series->addBarSet(set2);
-    series->addBarSet(set3);
-    series->addBarSet(set4);
+    series->appendBarSet(set0);
+    series->appendBarSet(set1);
+    series->appendBarSet(set2);
+    series->appendBarSet(set3);
+    series->appendBarSet(set4);
 //![3]
 //![4]
     QChart* chart = new QChart();

@@ -14,16 +14,16 @@ public:
     QBarSet(QString name, QObject *parent = 0);
 
     void setName(QString name);
-    QString name();
+    QString name() const;
     QBarSet& operator << (const qreal &value);  // appends new value to set
     void insertValue(int i, qreal value);
     void removeValue(int i);
 
     // TODO: remove indices eventually. Use as internal?
-    int count();                                // count of values in set
-    qreal valueAt(int index);                   // for modifying individual values
+    int count() const;                          // count of values in set
+    qreal valueAt(int index) const;                   // for modifying individual values
     void setValue(int index, qreal value);      // setter for individual value
-    qreal total();                              // total values in the set
+    qreal total() const;                              // total values in the set
 
     // TODO:
     //qreal value(QString category);

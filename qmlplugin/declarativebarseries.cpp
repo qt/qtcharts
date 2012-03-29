@@ -36,9 +36,9 @@ void DeclarativeBarSeries::componentComplete()
             *set1 << 5 << 0 << 0 << 4 << 0 << 7;
             *set2 << 3 << 5 << 8 << 13 << 8 << 5;
 
-            m_series->addBarSet(set0);
-            m_series->addBarSet(set1);
-            m_series->addBarSet(set2);
+            m_series->appendBarSet(set0);
+            m_series->appendBarSet(set1);
+            m_series->appendBarSet(set2);
 
             chart->addSeries(m_series);
         }

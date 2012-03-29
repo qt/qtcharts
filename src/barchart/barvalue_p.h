@@ -17,10 +17,10 @@ class BarValue : public QGraphicsObject
 public:
     BarValue(QBarSet &set, QGraphicsItem *parent = 0);
 
-    void setValueString(QString str);
-    QString valueString();
+    void setText(QString str);
+    QString text() const;
 
-    void setPen(const QPen pen);
+    void setPen(const QPen &pen);
     QPen pen() const;
 
     void resize(qreal w, qreal h);

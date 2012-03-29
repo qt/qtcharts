@@ -211,7 +211,7 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
             QBarSet *set = new QBarSet("Set" + QString::number(i));
             foreach (Data data, m_dataTable[i])
                 *set << data.first.y();
-            series->addBarSet(set);
+            series->appendBarSet(set);
         }
         chart->addSeries(series);
     }

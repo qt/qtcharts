@@ -15,17 +15,17 @@ BarValue::BarValue(QBarSet &set, QGraphicsItem *parent)
     setVisible(false);
 }
 
-void BarValue::setValueString(QString str)
+void BarValue::setText(QString str)
 {
     m_valueString = str;
 }
 
-QString BarValue::valueString()
+QString BarValue::text() const
 {
     return m_valueString;
 }
 
-void BarValue::setPen(const QPen pen)
+void BarValue::setPen(const QPen &pen)
 {
     m_pen = pen;
 }
