@@ -39,11 +39,11 @@ private:
     QString m_prefix;
 };
 
-class DrilldownChart : public QChartView
+class DrilldownChart : public QChart
 {
     Q_OBJECT
 public:
-    explicit DrilldownChart(QWidget *parent = 0):QChartView(parent), m_currentSeries(0) {}
+    explicit DrilldownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0):QChart(parent, wFlags), m_currentSeries(0) {}
 
     void changeSeries(QSeries* series)
     {
@@ -53,7 +53,7 @@ public:
             removeSeries(m_currentSeries);
         m_currentSeries = series;
         addSeries(series);
-        setChartTitle(series->name());
+        setTitle(series->name());
     }
 
 public Q_SLOTS:
@@ -75,9 +75,8 @@ int main(int argc, char *argv[])
 
     QMainWindow window;
 
-    DrilldownChart* drilldownChart =  new DrilldownChart(&window);
-    drilldownChart->setRenderHint(QPainter::Antialiasing);
-    drilldownChart->setChartTheme(QChart::ChartThemeLight);
+    DrilldownChart* drilldownChart =  new DrilldownChart();
+    drilldownChart->setTheme(QChart::ChartThemeLight);
     drilldownChart->setAnimationOptions(QChart::AllAnimations);
 
     QPieSeries* yearSeries = new QPieSeries(&window);
@@ -104,7 +103,9 @@ int main(int argc, char *argv[])
 
     drilldownChart->changeSeries(yearSeries);
 
-    window.setCentralWidget(drilldownChart);
+    QChartView* chartView = new QChartView(drilldownChart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    window.setCentralWidget(chartView);
     window.resize(800, 600);
     window.show();
 
