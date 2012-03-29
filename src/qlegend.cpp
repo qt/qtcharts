@@ -66,7 +66,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs the legend object and sets the parent to \a parent
 */
-QLegend::QLegend(QChart *chart):QGraphicsWidget(chart->d_ptr->m_presenter->rootItem()),
+QLegend::QLegend(QChart *chart):QGraphicsWidget(chart),
     m_margin(5),
     m_pos(0,0),
     m_minimumSize(50,20),                // TODO: magic numbers

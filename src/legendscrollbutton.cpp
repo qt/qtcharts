@@ -23,7 +23,6 @@ void LegendScrollButton::mousePressEvent(QGraphicsSceneMouseEvent *event)
     m_ledgend->scrollButtonClicked(this);
 }
 
-#include "moc_legendscrollbutton_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
