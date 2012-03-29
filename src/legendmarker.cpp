@@ -169,27 +169,30 @@ void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void LegendMarker::changed()
 {
+    setPen(Qt::NoPen);
     switch (m_series->type()) {
     case QSeries::SeriesTypeArea: {
         QAreaSeries* s = static_cast<QAreaSeries*> (m_series);
-        setPen(s->pen());
         setBrush(s->brush());
         setName(s->name());
         break;
     }
     case QSeries::SeriesTypeLine:
-    case QSeries::SeriesTypeScatter:
     case QSeries::SeriesTypeSpline: {
         QXYSeries* s = static_cast<QXYSeries*> (m_series);
-        setPen(s->pen());
-        setBrush(s->brush());
+        setBrush(QBrush(s->pen().color(),Qt::SolidPattern));
         setName(s->name());
         break;
         }
+    case QSeries::SeriesTypeScatter: {
+        QXYSeries* s = static_cast<QXYSeries*> (m_series);
+        setBrush(s->brush());
+        setName(s->name());
+        break;
+    }
     case QSeries::SeriesTypeBar:
     case QSeries::SeriesTypeStackedBar:
     case QSeries::SeriesTypePercentBar: {
-        setPen(m_barset->pen());
         setBrush(m_barset->brush());
         setName(m_barset->name());
         break;
@@ -200,6 +203,7 @@ void LegendMarker::changed()
         break;
         }
     default: {
+        setBrush(Qt::NoBrush);
         break;
         }
     }

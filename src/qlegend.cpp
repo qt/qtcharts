@@ -93,7 +93,7 @@ QLegend::QLegend(QChart *chart):QGraphicsWidget(chart),
     m_maximumSize(150,100),
     m_size(m_minimumSize),
     m_brush(Qt::darkGray),              // TODO: default should come from theme
-    m_alignment(QLegend::AlignmentRight),
+    m_alignment(QLegend::AlignmentTop),
     mFirstMarker(0),
     m_attachedToChart(true)
 {
@@ -419,12 +419,10 @@ bool QLegend::attachedToChart()
 void QLegend::appendMarkers(QAreaSeries* series)
 {
     LegendMarker* marker = new LegendMarker(series,this);
-    marker->setName(series->name());
-    marker->setPen(series->pen());
-    marker->setBrush(series->brush());
     connect(marker, SIGNAL(clicked(QSeries *, Qt::MouseButton)), this, SIGNAL(clicked(QSeries *, Qt::MouseButton)));
     connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
     connect(series,SIGNAL(updated()),marker,SLOT(changed()));
+    marker->changed();
     m_markers.append(marker);
     childItems().append(marker);
 }
@@ -435,12 +433,10 @@ void QLegend::appendMarkers(QAreaSeries* series)
 void QLegend::appendMarkers(QXYSeries* series)
 {
     LegendMarker* marker = new LegendMarker(series,this);
-    marker->setName(series->name());
-    marker->setPen(series->pen());
-    marker->setBrush(series->brush());
     connect(marker, SIGNAL(clicked(QSeries *, Qt::MouseButton)), this, SIGNAL(clicked(QSeries *, Qt::MouseButton)));
     connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
     connect(series,SIGNAL(updated()),marker,SLOT(changed()));
+    marker->changed();
     m_markers.append(marker);
     childItems().append(marker);
 }
@@ -452,13 +448,11 @@ void QLegend::appendMarkers(QBarSeries *series)
 {
     foreach(QBarSet* set, series->barSets()) {
         LegendMarker* marker = new LegendMarker(series, set, this);
-        marker->setName(set->name());
-        marker->setPen(set->pen());
-        marker->setBrush(set->brush());
         connect(marker, SIGNAL(clicked(QBarSet *, Qt::MouseButton)),
                 this, SIGNAL(clicked(QBarSet *, Qt::MouseButton)));
         connect(set, SIGNAL(valueChanged()), marker, SLOT(changed()));
         connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
+        marker->changed();
         m_markers.append(marker);
         childItems().append(marker);
     }
@@ -471,14 +465,12 @@ void QLegend::appendMarkers(QPieSeries *series)
 {
     foreach(QPieSlice* slice, series->slices()) {
         LegendMarker* marker = new LegendMarker(series, slice, this);
-        marker->setName(slice->label());
-        marker->setPen(slice->pen());
-        marker->setBrush(slice->brush());
         connect(marker, SIGNAL(clicked(QPieSlice *, Qt::MouseButton)),
                 this, SIGNAL(clicked(QPieSlice *, Qt::MouseButton)));
         connect(slice, SIGNAL(changed()), marker, SLOT(changed()));
         connect(slice, SIGNAL(destroyed()), marker, SLOT(deleteLater()));
         connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
+        marker->changed();
         m_markers.append(marker);
         childItems().append(marker);
     }

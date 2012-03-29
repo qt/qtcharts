@@ -372,7 +372,7 @@ void QChartPrivate::updateLegendLayout()
     switch (m_legend->alignment())
     {
         case QLegend::AlignmentTop: {
-            legendRect = m_rect.adjusted(0,0,0,-padding - plotRect.height());
+            legendRect = m_rect.adjusted(0,padding,0,-padding - plotRect.height());
             break;
         }
         case QLegend::AlignmentBottom: {
