@@ -151,11 +151,13 @@ void LegendMarker::changed()
     {
     case LegendMarkerTypeSeries: {
         QXYSeries* s = static_cast<QXYSeries*> (m_series);
+        setPen(s->pen());
         setBrush(s->brush());
         setName(s->name());
         break;
     }
     case LegendMarkerTypeBarset: {
+        setPen(m_barset->pen());
         setBrush(m_barset->brush());
         setName(m_barset->name());
         break;

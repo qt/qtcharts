@@ -180,9 +180,14 @@ QChart* ThemeWidget::createAreaChart() const
     QChart *chart = new QChart();
     chart->setTitle("Area chart");
     {
+        QString name("Series ");
+        int nameIndex = 0;
         for (int i(0); i < m_dataTable.count(); i++) {
             QLineSeries *series1 = new QLineSeries(chart);
             QLineSeries *series2 = new QLineSeries(chart);
+            series1->setName(name + QString::number(nameIndex) + QString(" lo"));
+            series2->setName(name + QString::number(nameIndex) + QString(" hi"));
+            nameIndex++;
             foreach (Data data, m_dataTable[i]) {
                 series1->add(data.first);
                 series2->add(QPointF(data.first.x(), 0.0));
@@ -223,10 +228,14 @@ QChart* ThemeWidget::createLineChart() const
     // line chart
     QChart* chart = new QChart();
     chart->setTitle("Line chart");
+    QString name("Series ");
+    int nameIndex = 0;
     foreach (DataList list, m_dataTable) {
         QLineSeries *series = new QLineSeries(chart);
         foreach (Data data, list)
             series->add(data.first);
+        series->setName(name + QString::number(nameIndex));
+        nameIndex++;
         chart->addSeries(series);
     }
     return chart;
@@ -260,10 +269,14 @@ QChart* ThemeWidget::createSplineChart() const
 { // spine chart
     QChart* chart = new QChart();
     chart->setTitle("Spline chart");
+    QString name("Series ");
+    int nameIndex = 0;
     foreach (DataList list, m_dataTable) {
         QSplineSeries *series = new QSplineSeries(chart);
         foreach (Data data, list)
             series->add(data.first);
+        series->setName(name + QString::number(nameIndex));
+        nameIndex++;
         chart->addSeries(series);
     }
     return chart;
@@ -273,10 +286,14 @@ QChart* ThemeWidget::createScatterChart() const
 { // scatter chart
     QChart* chart = new QChart();
     chart->setTitle("Scatter chart");
+    QString name("Series ");
+    int nameIndex = 0;
     foreach (DataList list, m_dataTable) {
         QScatterSeries *series = new QScatterSeries(chart);
         foreach (Data data, list)
             series->add(data.first);
+        series->setName(name + QString::number(nameIndex));
+        nameIndex++;
         chart->addSeries(series);
     }
     return chart;

@@ -428,14 +428,14 @@ void QLegend::appendMarkers(QXYSeries* series)
 */
 void QLegend::appendMarkers(QBarSeries *series)
 {
-    foreach(QBarSet* s, series->barSets()) {
-        LegendMarker* marker = new LegendMarker(series, s, this);
-        marker->setName(s->name());
-        marker->setPen(s->pen());
-        marker->setBrush(s->brush());
+    foreach(QBarSet* set, series->barSets()) {
+        LegendMarker* marker = new LegendMarker(series, set, this);
+        marker->setName(set->name());
+        marker->setPen(set->pen());
+        marker->setBrush(set->brush());
         connect(marker, SIGNAL(clicked(QBarSet *, Qt::MouseButton)),
                 this, SIGNAL(clicked(QBarSet *, Qt::MouseButton)));
-        connect(s, SIGNAL(valueChanged()), marker, SLOT(changed()));
+        connect(set, SIGNAL(valueChanged()), marker, SLOT(changed()));
         connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
         m_markers.append(marker);
         childItems().append(marker);
@@ -447,15 +447,15 @@ void QLegend::appendMarkers(QBarSeries *series)
 */
 void QLegend::appendMarkers(QPieSeries *series)
 {
-    foreach(QPieSlice* s, series->slices()) {
-        LegendMarker* marker = new LegendMarker(series, s, this);
-        marker->setName(s->label());
-        marker->setPen(s->pen());
-        marker->setBrush(s->brush());
+    foreach(QPieSlice* slice, series->slices()) {
+        LegendMarker* marker = new LegendMarker(series, slice, this);
+        marker->setName(slice->label());
+        marker->setPen(slice->pen());
+        marker->setBrush(slice->brush());
         connect(marker, SIGNAL(clicked(QPieSlice *, Qt::MouseButton)),
                 this, SIGNAL(clicked(QPieSlice *, Qt::MouseButton)));
-        connect(s, SIGNAL(changed()), marker, SLOT(changed()));
-        connect(s, SIGNAL(destroyed()), marker, SLOT(deleteLater()));
+        connect(slice, SIGNAL(changed()), marker, SLOT(changed()));
+        connect(slice, SIGNAL(destroyed()), marker, SLOT(deleteLater()));
         connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
         m_markers.append(marker);
         childItems().append(marker);
