@@ -105,6 +105,7 @@ protected:
 protected:
     QScopedPointer<QChartPrivate> d_ptr;
     friend class QChartView;
+    friend class QLegend;
     Q_DISABLE_COPY(QChart)
 };
 

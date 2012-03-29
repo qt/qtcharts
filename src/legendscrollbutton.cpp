@@ -1,11 +1,13 @@
 #include "legendscrollbutton_p.h"
+#include "qlegend.h"
 #include <QGraphicsSceneEvent>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-LegendScrollButton::LegendScrollButton(ScrollButtonId id, QGraphicsItem *parent)
-    : QGraphicsPolygonItem(parent)
-    ,m_id(id)
+LegendScrollButton::LegendScrollButton(ScrollButtonId id, QLegend *legend)
+    : QGraphicsPolygonItem(legend),
+    m_id(id),
+    m_ledgend(legend)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
 }
@@ -17,7 +19,8 @@ LegendScrollButton::ScrollButtonId LegendScrollButton::id()
 
 void LegendScrollButton::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit clicked(event);
+    Q_UNUSED(event);
+    m_ledgend->scrollButtonClicked(this);
 }
 
 #include "moc_legendscrollbutton_p.cpp"

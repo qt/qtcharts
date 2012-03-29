@@ -1,8 +1,8 @@
 #ifndef QLEGEND_H
 #define QLEGEND_H
 
-#include <qchartglobal.h>
-#include <QGraphicsObject>
+#include <QChartGlobal>
+#include <QGraphicsWidget>
 #include <QPen>
 #include <QBrush>
 
@@ -17,9 +17,10 @@ class QBarSeries;
 class QPieSeries;
 class LegendScrollButton;
 class QSeries;
+class QChart;
 
 // TODO: This as widget
-class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsObject
+class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
     Q_OBJECT
 public:
@@ -31,9 +32,10 @@ public:
         LayoutLeft = Qt::AlignLeft,
         LayoutRight = Qt::AlignRight
     };
+private:
+    explicit QLegend(QChart *chart);
 
-    explicit QLegend(QGraphicsItem *parent = 0);
-
+public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     QRectF boundingRect() const;
 
@@ -53,6 +55,8 @@ public:
     void setSize(const QSizeF size);
     void setPos(const QPointF &pos);
 
+    void scrollButtonClicked(LegendScrollButton *scrollButton);
+
 Q_SIGNALS:
     // for interactions.
     void clicked(QSeries *series, Qt::MouseButton button);
@@ -66,7 +70,7 @@ public Q_SLOTS:
     void handleAdded(QList<QPieSlice *> slices);
     void handleRemoved(QList<QPieSlice *> slices);
     void handleMarkerDestroyed();
-    void handleScrollButtonClicked(QGraphicsSceneMouseEvent *event);
+
     // PIMPL <---
 
 private:
@@ -103,6 +107,7 @@ private:
     LegendScrollButton *m_scrollButtonUp;
     LegendScrollButton *m_scrollButtonDown;
 
+    friend class QChart;
     // <--- PIMPL
 };
 

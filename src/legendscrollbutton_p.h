@@ -7,9 +7,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class LegendScrollButton : public QObject, public QGraphicsPolygonItem
+class QLegend;
+
+class LegendScrollButton : public QGraphicsPolygonItem
 {
-    Q_OBJECT
 public:
     enum ScrollButtonId {
         ScrollButtonIdLeft,
@@ -18,19 +19,14 @@ public:
         ScrollButtonIdDown
     };
 
-    explicit LegendScrollButton(ScrollButtonId id, QGraphicsItem *parent = 0);
+    explicit LegendScrollButton(ScrollButtonId id, QLegend *legend);
     ScrollButtonId id();
 
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
-Q_SIGNALS:
-    void clicked(QGraphicsSceneMouseEvent* event);
-    
-public Q_SLOTS:
-
 private:
-
     ScrollButtonId m_id;
+    QLegend *m_ledgend;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

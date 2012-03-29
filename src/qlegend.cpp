@@ -1,5 +1,5 @@
-#include "qchartglobal.h"
 #include "qlegend.h"
+#include "qchart_p.h"
 #include "qseries.h"
 #include "legendmarker_p.h"
 #include "legendscrollbutton_p.h"
@@ -66,7 +66,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs the legend object and sets the parent to \a parent
 */
-QLegend::QLegend(QGraphicsItem *parent) : QGraphicsObject(parent),
+QLegend::QLegend(QChart *chart):QGraphicsWidget(chart->d_ptr->m_presenter->rootItem()),
     m_margin(5),
     m_pos(0,0),
     m_minimumSize(50,20),                // TODO: magic numbers
@@ -80,16 +80,6 @@ QLegend::QLegend(QGraphicsItem *parent) : QGraphicsObject(parent),
     m_scrollButtonRight = new LegendScrollButton(LegendScrollButton::ScrollButtonIdRight, this);
     m_scrollButtonUp = new LegendScrollButton(LegendScrollButton::ScrollButtonIdUp, this);
     m_scrollButtonDown = new LegendScrollButton(LegendScrollButton::ScrollButtonIdDown, this);
-
-    connect(m_scrollButtonLeft, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
-            this, SLOT(handleScrollButtonClicked(QGraphicsSceneMouseEvent*)));
-    connect(m_scrollButtonRight, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
-            this, SLOT(handleScrollButtonClicked(QGraphicsSceneMouseEvent*)));
-    connect(m_scrollButtonUp, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
-            this, SLOT(handleScrollButtonClicked(QGraphicsSceneMouseEvent*)));
-    connect(m_scrollButtonDown, SIGNAL(clicked(QGraphicsSceneMouseEvent*)),
-            this, SLOT(handleScrollButtonClicked(QGraphicsSceneMouseEvent*)));
-
     setZValue(ChartPresenter::LegendZValue);
 }
 
@@ -297,12 +287,9 @@ void QLegend::handleMarkerDestroyed()
 /*!
     \internal \a event Handles clicked signals from scroll buttons
 */
-void QLegend::handleScrollButtonClicked(QGraphicsSceneMouseEvent *event)
+void QLegend::scrollButtonClicked(LegendScrollButton *scrollButton)
 {
-    Q_UNUSED(event);    // Maybe later something happens with right click...
-
-    LegendScrollButton* scrollButton = static_cast<LegendScrollButton *> (sender());
-    Q_ASSERT(scrollButton);
+     Q_ASSERT(scrollButton);
 
     switch (scrollButton->id()) {
     case LegendScrollButton::ScrollButtonIdLeft:
