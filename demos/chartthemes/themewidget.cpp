@@ -185,14 +185,13 @@ QChart* ThemeWidget::createAreaChart() const
         for (int i(0); i < m_dataTable.count(); i++) {
             QLineSeries *series1 = new QLineSeries(chart);
             QLineSeries *series2 = new QLineSeries(chart);
-            series1->setName(name + QString::number(nameIndex) + QString(" lo"));
-            series2->setName(name + QString::number(nameIndex) + QString(" hi"));
-            nameIndex++;
             foreach (Data data, m_dataTable[i]) {
                 series1->add(data.first);
                 series2->add(QPointF(data.first.x(), 0.0));
             }
             QAreaSeries *area = new QAreaSeries(series1, series2);
+            area->setName(name + QString::number(nameIndex));
+            nameIndex++;
             chart->addSeries(area);
         }
     }

@@ -219,8 +219,55 @@ void QLegend::handleSeriesAdded(QSeries *series, Domain *domain)
 {
     Q_UNUSED(domain)
 
-    createMarkers(series);
-    connectSeries(series);
+    switch (series->type())
+    {
+    case QSeries::SeriesTypeLine: {
+        QLineSeries *lineSeries = static_cast<QLineSeries *>(series);
+        appendMarkers(lineSeries);
+        break;
+    }
+    case QSeries::SeriesTypeArea: {
+        QAreaSeries *areaSeries = static_cast<QAreaSeries *>(series);
+        appendMarkers(areaSeries);
+        break;
+    }
+    case QSeries::SeriesTypeBar: {
+        QBarSeries *barSeries = static_cast<QBarSeries *>(series);
+        appendMarkers(barSeries);
+        break;
+    }
+    case QSeries::SeriesTypeStackedBar: {
+        QStackedBarSeries *stackedBarSeries = static_cast<QStackedBarSeries *>(series);
+        appendMarkers(stackedBarSeries);
+        break;
+    }
+    case QSeries::SeriesTypePercentBar: {
+        QPercentBarSeries *percentBarSeries = static_cast<QPercentBarSeries *>(series);
+        appendMarkers(percentBarSeries);
+        break;
+    }
+    case QSeries::SeriesTypeScatter: {
+        QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
+        appendMarkers(scatterSeries);
+        break;
+    }
+    case QSeries::SeriesTypePie: {
+        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+        appendMarkers(pieSeries);
+        connect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleAdded(QList<QPieSlice*>)));
+        break;
+    }
+    case QSeries::SeriesTypeSpline: {
+        QSplineSeries *splineSeries = static_cast<QSplineSeries *>(series);
+        appendMarkers(splineSeries);
+        break;
+    }
+    default: {
+        qWarning()<< "QLegend::handleSeriesAdded" << series->type() << "unknown series type.";
+        break;
+    }
+    }
+
     updateLayout();
 }
 
@@ -229,15 +276,24 @@ void QLegend::handleSeriesAdded(QSeries *series, Domain *domain)
 */
 void QLegend::handleSeriesRemoved(QSeries *series)
 {
-    disconnectSeries(series);
-
-    if (series->type() == QSeries::SeriesTypeArea) {
-        // This is special case. Area series has upper and lower series, which each have markers
-        QAreaSeries* s = static_cast<QAreaSeries *> (series);
-        deleteMarkers(s->upperSeries());
-        deleteMarkers(s->lowerSeries());
-    } else {
+    switch (series->type())
+    {
+    case QSeries::SeriesTypeArea: {
+        QAreaSeries *areaSeries = static_cast<QAreaSeries *>(series);
+        deleteMarkers(areaSeries);
+        break;
+    }
+    case QSeries::SeriesTypePie: {
+        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+        disconnect(pieSeries, SIGNAL(added(QList<QPieSlice *>)), this, SLOT(handleAdded(QList<QPieSlice *>)));
         deleteMarkers(series);
+        break;
+    }
+    default: {
+        // All other types
+        deleteMarkers(series);
+        break;
+    }
     }
 
     updateLayout();
@@ -313,86 +369,19 @@ void QLegend::scrollButtonClicked(LegendScrollButton *scrollButton)
 }
 
 /*!
-    \internal Connects the \a series to legend. Legend listens changes in series, for example pie slices added / removed.
-    Not all series notify about events
+    \internal Helper function. Appends markers from \a series to legend.
 */
-void QLegend::connectSeries(QSeries *series)
+void QLegend::appendMarkers(QAreaSeries* series)
 {
-    // Connect relevant signals from series. Currently only pie series has interesting signals
-    // TODO: bar chart may have
-    if  (series->type() == QSeries::SeriesTypePie) {
-        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        connect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleAdded(QList<QPieSlice*>)));
-    }
-}
-
-/*!
-    \internal Disconnects \a series from legend. No more status updates from series to legend.
-*/
-void QLegend::disconnectSeries(QSeries *series)
-{
-    if (series->type() == QSeries::SeriesTypePie) {
-        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        disconnect(pieSeries, SIGNAL(added(QList<QPieSlice *>)), this, SLOT(handleAdded(QList<QPieSlice *>)));
-    }
-}
-
-/*!
-    \internal Creates new markers for \a series. Marker contains the colored rectangle and series name.
-    With pie chart, created markers depend on pie slices.
-    With bar chart, created markers depend on bar sets.
-*/
-void QLegend::createMarkers(QSeries *series)
-{
-    switch (series->type())
-    {
-    case QSeries::SeriesTypeLine: {
-        QLineSeries *lineSeries = static_cast<QLineSeries *>(series);
-        appendMarkers(lineSeries);
-        break;
-    }
-    case QSeries::SeriesTypeArea: {
-        QAreaSeries *areaSeries = static_cast<QAreaSeries *>(series);
-        appendMarkers(areaSeries->upperSeries());
-        if(areaSeries->lowerSeries())
-            appendMarkers(areaSeries->lowerSeries());
-        break;
-    }
-    case QSeries::SeriesTypeBar: {
-        QBarSeries *barSeries = static_cast<QBarSeries *>(series);
-        appendMarkers(barSeries);
-        break;
-    }
-    case QSeries::SeriesTypeStackedBar: {
-        QStackedBarSeries *stackedBarSeries = static_cast<QStackedBarSeries *>(series);
-        appendMarkers(stackedBarSeries);
-        break;
-    }
-    case QSeries::SeriesTypePercentBar: {
-        QPercentBarSeries *percentBarSeries = static_cast<QPercentBarSeries *>(series);
-        appendMarkers(percentBarSeries);
-        break;
-    }
-    case QSeries::SeriesTypeScatter: {
-        QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
-        appendMarkers(scatterSeries);
-        break;
-    }
-    case QSeries::SeriesTypePie: {
-        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        appendMarkers(pieSeries);
-        break;
-    }
-    case QSeries::SeriesTypeSpline: {
-        QSplineSeries *splineSeries = static_cast<QSplineSeries *>(series);
-        appendMarkers(splineSeries);
-        break;
-    }
-    default: {
-        qWarning()<< "QLegend::createMarkers" << series->type() << "unknown series type.";
-        break;
-    }
-    }
+    LegendMarker* marker = new LegendMarker(series,this);
+    marker->setName(series->name());
+    marker->setPen(series->pen());
+    marker->setBrush(series->brush());
+    connect(marker, SIGNAL(clicked(QSeries *, Qt::MouseButton)), this, SIGNAL(clicked(QSeries *, Qt::MouseButton)));
+    connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
+    connect(series,SIGNAL(updated()),marker,SLOT(changed()));
+    m_markers.append(marker);
+    childItems().append(marker);
 }
 
 /*!
@@ -406,12 +395,13 @@ void QLegend::appendMarkers(QXYSeries* series)
     marker->setBrush(series->brush());
     connect(marker, SIGNAL(clicked(QSeries *, Qt::MouseButton)), this, SIGNAL(clicked(QSeries *, Qt::MouseButton)));
     connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
+    connect(series,SIGNAL(updated()),marker,SLOT(changed()));
     m_markers.append(marker);
     childItems().append(marker);
 }
 
 /*!
-    \internal Helper function. Appends markers from  \a series to legend.
+    \internal Helper function. Appends markers from \a series to legend.
 */
 void QLegend::appendMarkers(QBarSeries *series)
 {
@@ -430,7 +420,7 @@ void QLegend::appendMarkers(QBarSeries *series)
 }
 
 /*!
-    \internal Helper function. Appends markers from  \a series to legend.
+    \internal Helper function. Appends markers from \a series to legend.
 */
 void QLegend::appendMarkers(QPieSeries *series)
 {

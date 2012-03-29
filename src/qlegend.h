@@ -15,6 +15,7 @@ class QXYSeries;
 class QBarSet;
 class QBarSeries;
 class QPieSeries;
+class QAreaSeries;
 class LegendScrollButton;
 class QSeries;
 class QChart;
@@ -75,10 +76,8 @@ public Q_SLOTS:
 
 private:
     // PIMPL --->
-    void connectSeries(QSeries *series);
-    void disconnectSeries(QSeries *series);
-    void createMarkers(QSeries *series);
-    void appendMarkers(QXYSeries *series);      // All line series are derived from QXYSeries, so this works for now
+    void appendMarkers(QAreaSeries *series);
+    void appendMarkers(QXYSeries *series);
     void appendMarkers(QBarSeries *series);
     void appendMarkers(QPieSeries *series);
     void deleteMarkers(QSeries *series);

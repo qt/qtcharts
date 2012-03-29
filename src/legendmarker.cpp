@@ -3,6 +3,7 @@
 #include <qpieslice.h>
 #include <qbarset.h>
 #include <qxyseries.h>
+#include <qareaseries.h>
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsSimpleTextItem>
@@ -17,7 +18,6 @@ LegendMarker::LegendMarker(QSeries *series, QGraphicsItem *parent) : QGraphicsOb
     m_series(series),
     m_barset(0),
     m_pieslice(0),
-    m_type(LegendMarkerTypeSeries),
     m_textItem(new QGraphicsSimpleTextItem(this))
 {
     setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
@@ -31,7 +31,6 @@ LegendMarker::LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *pare
     m_series(series),
     m_barset(barset),
     m_pieslice(0),
-    m_type(LegendMarkerTypeBarset),
     m_textItem(new QGraphicsSimpleTextItem(this))
 {
     setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
@@ -45,7 +44,6 @@ LegendMarker::LegendMarker(QSeries *series, QPieSlice *pieslice, QGraphicsItem *
     m_series(series),
     m_barset(0),
     m_pieslice(pieslice),
-    m_type(LegendMarkerTypePieslice),
     m_textItem(new QGraphicsSimpleTextItem(this))
 {
     setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
@@ -125,17 +123,21 @@ void LegendMarker::layoutChanged()
 
 void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    switch (m_type)
-    {
-    case LegendMarkerTypeSeries: {
+    switch (m_series->type()) {
+    case QSeries::SeriesTypeLine:
+    case QSeries::SeriesTypeArea:
+    case QSeries::SeriesTypeScatter:
+    case QSeries::SeriesTypeSpline: {
         emit clicked(m_series,event->button());
         break;
         }
-    case LegendMarkerTypeBarset: {
+    case QSeries::SeriesTypeBar:
+    case QSeries::SeriesTypeStackedBar:
+    case QSeries::SeriesTypePercentBar: {
         emit clicked(m_barset,event->button());
         break;
         }
-    case LegendMarkerTypePieslice: {
+    case QSeries::SeriesTypePie: {
         emit clicked(m_pieslice,event->button());
         break;
         }
@@ -147,26 +149,39 @@ void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void LegendMarker::changed()
 {
-    switch (m_type)
-    {
-    case LegendMarkerTypeSeries: {
-        QXYSeries* s = static_cast<QXYSeries*> (m_series);
+    switch (m_series->type()) {
+    case QSeries::SeriesTypeArea: {
+        QAreaSeries* s = static_cast<QAreaSeries*> (m_series);
         setPen(s->pen());
         setBrush(s->brush());
         setName(s->name());
         break;
     }
-    case LegendMarkerTypeBarset: {
+    case QSeries::SeriesTypeLine:
+    case QSeries::SeriesTypeScatter:
+    case QSeries::SeriesTypeSpline: {
+        QXYSeries* s = static_cast<QXYSeries*> (m_series);
+        setPen(s->pen());
+        setBrush(s->brush());
+        setName(s->name());
+        break;
+        }
+    case QSeries::SeriesTypeBar:
+    case QSeries::SeriesTypeStackedBar:
+    case QSeries::SeriesTypePercentBar: {
         setPen(m_barset->pen());
         setBrush(m_barset->brush());
         setName(m_barset->name());
         break;
-    }
-    case LegendMarkerTypePieslice: {
+        }
+    case QSeries::SeriesTypePie: {
         setBrush(m_pieslice->brush());
         setName(m_pieslice->label());
         break;
-    }
+        }
+    default: {
+        break;
+        }
     }
 }
 

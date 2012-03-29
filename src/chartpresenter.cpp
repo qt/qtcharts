@@ -58,7 +58,6 @@ void ChartPresenter::createConnections()
 
 void ChartPresenter::handleGeometryChanged()
 {
-    qDebug() << "legend h:" << m_chart->legend()->size().height();
     QRectF rect(QPoint(0,0),m_chart->size());
     rect.adjust(m_padding,
                 m_padding + m_chart->legend()->size().height(),

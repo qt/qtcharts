@@ -18,12 +18,6 @@ class LegendMarker : public QGraphicsObject
 {
     Q_OBJECT
 
-    enum LegendMarkerType {
-        LegendMarkerTypeSeries,
-        LegendMarkerTypeBarset,
-        LegendMarkerTypePieslice
-    };
-
 public:
     LegendMarker(QSeries *series, QGraphicsItem *parent = 0);
     LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *parent = 0);
@@ -72,7 +66,6 @@ private:
     QBarSet *m_barset;
     QPieSlice *m_pieslice;
 
-    LegendMarkerType m_type;
     QGraphicsSimpleTextItem *m_textItem;
 
 };
