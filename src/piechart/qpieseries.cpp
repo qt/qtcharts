@@ -33,7 +33,10 @@ QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent)
     m_pieRelativeSize(0.7),
     m_pieStartAngle(0),
     m_pieEndAngle(360),
-    m_total(0)
+    m_total(0),
+    m_mapValues(0),
+    m_mapLabels(0),
+    m_mapOrientation(Qt::Horizontal)
 {
 
 }
