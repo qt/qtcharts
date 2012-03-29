@@ -35,8 +35,6 @@
  ** OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE."
  ** $QT_END_LICENSE$
  **
- ** Copyright (c) 2011 Nokia Corporation and/or its subsidiary(-ies).
- **
  ****************************************************************************/
 
 #include <QtGui/QApplication>
