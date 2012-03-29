@@ -67,14 +67,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs the legend object and sets the parent to \a parent
 */
 QLegend::QLegend(QGraphicsItem *parent) : QGraphicsObject(parent),
+    m_margin(5),
     m_pos(0,0),
-    m_size(0,0),
     m_minimumSize(50,20),                // TODO: magic numbers
     m_maximumSize(150,100),
-    m_brush(Qt::darkGray),       // TODO: from theme?
+    m_size(m_minimumSize),
+    m_brush(Qt::darkGray),
     m_alignment(QLegend::LayoutTop),
-    mFirstMarker(0),
-    m_margin(5)
+    mFirstMarker(0)
 {
     m_scrollButtonLeft = new LegendScrollButton(LegendScrollButton::ScrollButtonIdLeft, this);
     m_scrollButtonRight = new LegendScrollButton(LegendScrollButton::ScrollButtonIdRight, this);

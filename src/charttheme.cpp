@@ -94,7 +94,7 @@ void ChartTheme::decorate(QLegend* legend,bool force)
     QBrush brush;
 
     if (pen == legend->pen() || force){
-        //TODO:: legend->setPen();
+        legend->setPen(Qt::NoPen);
     }
 
 

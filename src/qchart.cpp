@@ -264,39 +264,9 @@ QChartAxis* QChart::axisY() const
 /*!
  Returns the legend object of the chart. Ownership stays in chart.
  */
-QLegend& QChart::legend() const
+QLegend* QChart::legend() const
 {
-    return *d_ptr->m_legend;
-}
-
-/*!
- Gives ownership of legend to user.
- */
-QLegend* QChart::takeLegend()
-{
-    QLegend* l = d_ptr->m_legend;
-    d_ptr->m_legend = 0;
-    return l;
-}
-
-/*!
- Gives ownership of legend back to chart. QChart takes ownership of \a legend and deletes existing one
- */
-void QChart::giveLegend(QLegend *legend)
-{
-    if (d_ptr->m_legend) {
-        // Should not happen.
-        qDebug() << "Warning! Giving more than one legend to chart.";
-        delete d_ptr->m_legend;
-    }
-
-    d_ptr->m_legend = legend;
-
-    // Reconnect legend, in case not already connected.
-    disconnect(d_ptr->m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),d_ptr->m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-    disconnect(d_ptr->m_dataset,SIGNAL(seriesRemoved(QSeries*)),d_ptr->m_legend,SLOT(handleSeriesRemoved(QSeries*)));
-    connect(d_ptr->m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),d_ptr->m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-    connect(d_ptr->m_dataset,SIGNAL(seriesRemoved(QSeries*)),d_ptr->m_legend,SLOT(handleSeriesRemoved(QSeries*)));
+    return d_ptr->m_legend;
 }
 
 /*!
@@ -424,7 +394,18 @@ void QChartPrivate::updateLegendLayout()
     }
 
     m_legend->setMaximumSize(legendRect.size());
-    m_legend->setPos(legendRect.topLeft());
+
+    qreal width = legendRect.width() - m_legend->size().width();
+    qreal height = legendRect.height() - m_legend->size().height();
+
+    QPointF pos = legendRect.topLeft();
+    if (width > 0) {
+        pos.setX(pos.x() + width/2);
+    }
+    if (height > 0) {
+        pos.setY(pos.y() + height/2);
+    }
+    m_legend->setPos(pos);
 }
 
 void QChartPrivate::updateLayout()

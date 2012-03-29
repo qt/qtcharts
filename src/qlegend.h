@@ -84,10 +84,11 @@ private:
     void checkFirstMarkerBounds();
     bool scrollButtonsVisible();
 
+    qreal m_margin;
     QPointF m_pos;
-    QSizeF m_size;
     QSizeF m_minimumSize;
     QSizeF m_maximumSize;
+    QSizeF m_size;
 
     QList<LegendMarker *> m_markers;
 
@@ -102,7 +103,6 @@ private:
     LegendScrollButton *m_scrollButtonUp;
     LegendScrollButton *m_scrollButtonDown;
 
-    qreal m_margin;
     // <--- PIMPL
 };
 

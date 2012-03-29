@@ -75,9 +75,9 @@ public:
     QFont titleFont() const;
     void setTitleBrush(const QBrush &brush);
     QBrush titleBrush() const;
-    void setBackgroundBrush(const QBrush& brush);
+    void setBackgroundBrush(const QBrush &brush);
     QBrush backgroundBrush() const;
-    void setBackgroundPen(const QPen& pen);
+    void setBackgroundPen(const QPen &pen);
     QPen backgroundPen() const;
 
     void setBackgroundVisible(bool visible);
@@ -87,7 +87,7 @@ public:
     AnimationOptions animationOptions() const;
 
     void zoomIn();
-    void zoomIn(const QRectF& rect);
+    void zoomIn(const QRectF &rect);
     void zoomOut();
     void scrollLeft();
     void scrollRight();
@@ -97,9 +97,7 @@ public:
     QChartAxis* axisX() const;
     QChartAxis* axisY() const;
 
-    QLegend& legend() const;
-    QLegend* takeLegend();
-    void giveLegend(QLegend* legend);
+    QLegend* legend() const;
 
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);

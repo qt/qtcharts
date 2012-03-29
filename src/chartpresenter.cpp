@@ -1,4 +1,5 @@
 #include "qchart.h"
+#include "qlegend.h"
 #include "qchartaxis.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
@@ -57,8 +58,12 @@ void ChartPresenter::createConnections()
 
 void ChartPresenter::handleGeometryChanged()
 {
+    qDebug() << "legend h:" << m_chart->legend()->size().height();
     QRectF rect(QPoint(0,0),m_chart->size());
-    rect.adjust(m_padding,m_padding,-m_padding,-m_padding);
+    rect.adjust(m_padding,
+                m_padding + m_chart->legend()->size().height(),
+                -m_padding,
+                -m_padding);
 
     //rewrite zoom stack
     /*
@@ -273,7 +278,7 @@ void ChartPresenter::setTheme(QChart::ChartTheme theme,bool force)
     m_themeForce = force;
     m_chartTheme = ChartTheme::createTheme(theme);
     m_chartTheme->decorate(m_chart,m_themeForce);
-    m_chartTheme->decorate(&m_chart->legend(),m_themeForce);
+    m_chartTheme->decorate(m_chart->legend(),m_themeForce);
     resetAllElements();
 }
 
