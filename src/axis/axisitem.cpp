@@ -107,6 +107,7 @@ bool Axis::createLabels(QStringList &labels,qreal min, qreal max,int ticks) cons
 
     if (!category) {
         int n = qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
+        n++;
         for (int i=0; i< ticks; i++) {
             qreal value = min + (i * (max - min)/ (ticks-1));
             labels << QString::number(value,'f',n);
