@@ -156,15 +156,15 @@ QVector<QRectF> BarChartItem::calculateLayout()
             BarValue* value = m_floatingValues.at(itemIndex);
 
             QBarSet* barSet = m_series->barsetAt(set);
-            value->resize(100, 50);  // TODO: proper layout for this.
-            value->setPos(xPos, yPos-barHeight / 2);
-            value->setPen(barSet->floatingValuePen());
 
             if (!qFuzzyIsNull(m_series->valueAt(set,category))) {
                 value->setText(QString::number(m_series->valueAt(set, category)));
             } else {
                 value->setText(QString(""));
             }
+
+            value->setPos(xPos, yPos-barHeight / 2);
+            value->setPen(barSet->floatingValuePen());
 
             itemIndex++;
             xPos += barWidth;
@@ -223,7 +223,6 @@ void BarChartItem::handleLayoutChanged()
     applyLayout(layout);
     update();
 }
-
 
 void BarChartItem::showToolTip(QPoint pos, QString tip)
 {

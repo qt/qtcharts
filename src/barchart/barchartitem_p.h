@@ -25,7 +25,6 @@
 #include "qbarseries.h"
 #include <QPen>
 #include <QBrush>
-#include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

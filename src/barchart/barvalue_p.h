@@ -24,6 +24,7 @@
 #include "qchartglobal.h"
 #include <QGraphicsObject>
 #include <QPen>
+class QGraphicsSimpleTextItem;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -43,7 +44,9 @@ public:
     void setPen(const QPen &pen);
     QPen pen() const;
 
-    void resize(qreal w, qreal h);
+    void setFont(const QFont &font);
+    QFont font() const;
+
     void setPos(qreal x, qreal y);
 
     // From QGraphicsItem
@@ -56,13 +59,7 @@ public Q_SLOTS:
 private:
 
     QBarSet &m_barSet;
-    QPen m_pen;
-    QString m_valueString;
-
-    qreal m_xPos;
-    qreal m_yPos;
-    qreal m_width;
-    qreal m_height;
+    QGraphicsSimpleTextItem *m_textItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

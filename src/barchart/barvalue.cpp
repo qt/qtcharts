@@ -21,71 +21,66 @@
 #include "barvalue_p.h"
 #include <QPainter>
 #include <QPen>
+#include <QGraphicsSimpleTextItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarValue::BarValue(QBarSet &set, QGraphicsItem *parent)
-    : QGraphicsObject(parent),
+BarValue::BarValue(QBarSet &set, QGraphicsItem *parent) : QGraphicsObject(parent),
     m_barSet(set),
-    m_xPos(0),
-    m_yPos(0),
-    m_width(0),
-    m_height(0)
+    m_textItem(new QGraphicsSimpleTextItem(this))
 {
     setVisible(false);
 }
 
 void BarValue::setText(QString str)
 {
-    m_valueString = str;
+    m_textItem->setText(str);
 }
 
 QString BarValue::text() const
 {
-    return m_valueString;
+    return m_textItem->text();
 }
 
 void BarValue::setPen(const QPen &pen)
 {
-    m_pen = pen;
+    m_textItem->setPen(pen);
 }
 
 QPen BarValue::pen() const
 {
-    return m_pen;
+    return m_textItem->pen();
 }
 
-void BarValue::resize(qreal w, qreal h)
+void BarValue::setFont(const QFont &font)
 {
-    m_width = w;
-    m_height = h;
+    m_textItem->setFont(font);
+}
+
+QFont BarValue::font() const
+{
+    return m_textItem->font();
 }
 
 void BarValue::setPos(qreal x, qreal y)
 {
-    m_xPos = x;
-    m_yPos = y;
+    m_textItem->setPos(x,y);
 }
 
 void BarValue::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
-
-    if (isVisible()) {
-        painter->setPen(m_pen);
-        painter->drawText(boundingRect(), m_valueString);
-    }
 }
 
 QRectF BarValue::boundingRect() const
 {
-    QRectF r(m_xPos, m_yPos, m_width, m_height);
-    return r;
+    return m_textItem->boundingRect();
 }
 
 void BarValue::toggleVisible()
 {
+    qDebug() << "toggle visible";
     setVisible(!isVisible());
 }
 
