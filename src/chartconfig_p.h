@@ -22,7 +22,15 @@
 #define CHARTCONFIG_H_
 
 #include "qchartglobal.h"
+#ifdef Q_CC_MSVC
+// There is a problem with jom.exe currently. It does not seem to understand QMAKE_EXTRA_TARGETS properly.
+// This is the case at least with shadow builds.
+// http://qt-project.org/wiki/jom
+const char *buildTime = __DATE__;
+const char *gitHead = "unknown";
+#else
 #include "qchartversion_p.h"
+#endif
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
