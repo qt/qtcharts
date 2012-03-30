@@ -142,7 +142,6 @@ unix:{
 chartversion.depends = $$HEADERS \
     $$SOURCES
 PRE_TARGETDEPS += $$PWD/qchartversion_p.h
-QMAKE_CLEAN += $$PWD/qchartversion_p.h
 QMAKE_EXTRA_TARGETS += chartversion
 unix:QMAKE_DISTCLEAN += -r \
     $$CHART_BUILD_HEADER_DIR \
