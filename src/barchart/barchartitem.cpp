@@ -41,7 +41,6 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
 {
     connect(series, SIGNAL(showToolTip(QPoint,QString)), this, SLOT(showToolTip(QPoint,QString)));
     connect(series, SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
-//TODO:  connect(series,SIGNAL("position or size has changed"), this, SLOT(handleLayoutChanged()));
     connect(series, SIGNAL(restructuredBar(int)), this, SLOT(handleModelChanged(int)));
     setZValue(ChartPresenter::BarSeriesZValue);
     dataChanged();
@@ -76,7 +75,7 @@ void BarChartItem::dataChanged()
         delete item;
 
     m_bars.clear();
-    m_floatingValues.clear();
+    m_values.clear();
     m_layout.clear();
 
     // Create new graphic items for bars
@@ -100,8 +99,8 @@ void BarChartItem::dataChanged()
             QBarSet *set = m_series->barsetAt(s);
             BarValue *value = new BarValue(*set, this);
             childItems().append(value);
-            m_floatingValues.append(value);
-            connect(set, SIGNAL(toggleFloatingValues()), value, SLOT(toggleVisible()));
+            m_values.append(value);
+            connect(set,SIGNAL(valuesVisibleChanged(bool)),value,SLOT(valuesVisibleChanged(bool)));
         }
     }
 }
@@ -152,7 +151,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
         qreal yPos = height;
         for (int set=0; set < m_series->barsetCount(); set++) {
             qreal barHeight = m_series->valueAt(set, category) * scale;
-            BarValue* value = m_floatingValues.at(itemIndex);
+            BarValue* value = m_values.at(itemIndex);
 
             QBarSet* barSet = m_series->barsetAt(set);
 

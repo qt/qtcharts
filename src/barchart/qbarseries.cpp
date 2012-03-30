@@ -391,6 +391,14 @@ QBarCategories QBarSeries::categories() const
     return categories;
 }
 
+void QBarSeries::setValuesVisible(bool visible)
+{
+    foreach (QBarSet* s, barSets()) {
+        s->setValuesVisible(visible);
+    }
+}
+
+
 #include "moc_qbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

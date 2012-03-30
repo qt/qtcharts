@@ -71,7 +71,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
         qreal scale = (height / colSum);
         for (int set=0; set < m_series->barsetCount(); set++) {
             qreal barHeight = m_series->valueAt(set,category) * scale;
-            BarValue* value = m_floatingValues.at(itemIndex);
+            BarValue* value = m_values.at(itemIndex);
 
             QBarSet* barSet = m_series->barsetAt(set);
 

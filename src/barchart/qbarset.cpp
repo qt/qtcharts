@@ -199,6 +199,14 @@ QPen QBarSet::floatingValuePen() const
 }
 
 /*!
+    Sets the visibility of barset values to \a visible
+*/
+void QBarSet::setValuesVisible(bool visible)
+{
+    emit valuesVisibleChanged(visible);
+}
+
+/*!
     \internal \a pos
 */
 void QBarSet::barHoverEnterEvent(QPoint pos)

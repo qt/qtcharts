@@ -51,6 +51,8 @@ public:
     QList<QBarSet*> barSets() const;
     QBarCategories categories() const;
 
+    void setValuesVisible(bool visible = true);
+
     bool setModel(QAbstractItemModel *model);
     QAbstractItemModel *modelExt() { return m_model; }
     void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);

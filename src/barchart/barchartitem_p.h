@@ -84,7 +84,7 @@ protected:
     // Not owned.
     QBarSeries *m_series;
     QList<Bar *> m_bars;
-    QList<BarValue *> m_floatingValues;
+    QList<BarValue *> m_values;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

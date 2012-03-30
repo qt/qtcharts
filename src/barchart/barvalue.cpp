@@ -29,6 +29,7 @@ BarValue::BarValue(QBarSet &set, QGraphicsItem *parent) : QGraphicsObject(parent
     m_barSet(set),
     m_textItem(new QGraphicsSimpleTextItem(this))
 {
+//    connect(&set,SIGNAL(valuesVisibleChanged(bool)),value,SLOT(valuesVisibleChanged(bool)));
     setVisible(false);
 }
 
@@ -78,10 +79,9 @@ QRectF BarValue::boundingRect() const
     return m_textItem->boundingRect();
 }
 
-void BarValue::toggleVisible()
+void BarValue::valuesVisibleChanged(bool visible)
 {
-    qDebug() << "toggle visible";
-    setVisible(!isVisible());
+    setVisible(visible);
 }
 
 #include "moc_barvalue_p.cpp"

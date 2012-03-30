@@ -54,7 +54,7 @@ public:
     QRectF boundingRect() const;
 
 public Q_SLOTS:
-    void toggleVisible();
+    void valuesVisibleChanged(bool visible);
 
 private:
 

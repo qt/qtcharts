@@ -58,17 +58,18 @@ public:
     void setFloatingValuePen(const QPen &pen);
     QPen floatingValuePen() const;
 
+    void setValuesVisible(bool visible = true);
+
 Q_SIGNALS:
     void clicked(QString category, Qt::MouseButtons button);                         // Clicked and hover signals exposed to user
-    void toggleFloatingValues();
 
-    // TODO: Expose this to user or not?
     // TODO: TO PIMPL --->
     void structureChanged();
     void valueChanged();
     void hoverEnter(QPoint pos);
     void hoverLeave();
     void showToolTip(QPoint pos, QString tip);  // Private signal
+    void valuesVisibleChanged(bool visible);
     // <--- TO PIMPL
 
 public Q_SLOTS:
