@@ -59,8 +59,7 @@ public:
     QPen floatingValuePen() const;
 
 Q_SIGNALS:
-    void clicked(QString category);                         // Clicked and hover signals exposed to user
-    void rightClicked(QString category);
+    void clicked(QString category, Qt::MouseButtons button);                         // Clicked and hover signals exposed to user
     void toggleFloatingValues();
 
     // TODO: Expose this to user or not?

@@ -72,9 +72,7 @@ public:
     // <--- TO PIMPL
 
 Q_SIGNALS:
-    //void changed(int index);
-    void clicked(QBarSet *barset, QString category);        // Up to user of api, what to do with these signals
-    void rightClicked(QBarSet *barset, QString category);
+    void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);        // Up to user of api, what to do with these signals
 
     //
     void updatedBars();
@@ -89,8 +87,7 @@ public Q_SLOTS:
     void setToolTipEnabled(bool enabled = true);           // enables tooltips
 
     // TODO: TO PIMPL --->
-    void barsetClicked(QString category);
-    void barsetRightClicked(QString category);
+    void barsetClicked(QString category, Qt::MouseButtons button);
     // <--- TO PIMPL
 
 private Q_SLOTS:

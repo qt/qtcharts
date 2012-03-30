@@ -39,8 +39,7 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 Q_SIGNALS:
-    void clicked(QString category);
-    void rightClicked(QString category);
+    void clicked(QString category, Qt::MouseButtons button);
     void hoverEntered(QPoint pos);
     void hoverLeaved();
 

@@ -87,8 +87,7 @@ void BarChartItem::dataChanged()
             Bar *bar = new Bar(category,this);
             childItems().append(bar);
             m_bars.append(bar);
-            connect(bar, SIGNAL(clicked(QString)), set, SIGNAL(clicked(QString)));
-            connect(bar, SIGNAL(rightClicked(QString)), set, SIGNAL(rightClicked(QString)));
+            connect(bar, SIGNAL(clicked(QString,Qt::MouseButtons)), set, SIGNAL(clicked(QString,Qt::MouseButtons)));
             connect(bar, SIGNAL(hoverEntered(QPoint)), set, SLOT(barHoverEnterEvent(QPoint)));
             connect(bar, SIGNAL(hoverLeaved()), set, SLOT(barHoverLeaveEvent()));
             m_layout.append(QRectF(0, 0, 0, 0));

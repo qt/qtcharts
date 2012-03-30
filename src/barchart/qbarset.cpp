@@ -39,15 +39,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::clicked(QString category)
+    \fn void QBarSet::clicked(QString category, Qt::MouseButtons button)
     \brief signals that set has been clicked
     Parameter \a category describes on which category was clicked
-*/
-
-/*!
-    \fn void QBarSet::rightClicked(QString category)
-    \brief signals that set has been clicked with right mouse button
-    Parameter \a category describes on which category was clicked
+    Parameter \a button mouse button
 */
 
 /*!

@@ -35,11 +35,7 @@ Bar::Bar(QString category, QGraphicsItem *parent)
 
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton) {
-        emit clicked(m_category);
-    } else if (event->button() == Qt::RightButton) {
-        emit rightClicked(m_category);
-    }
+    emit clicked(m_category, event->button());
 }
 
 void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)

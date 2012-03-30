@@ -67,27 +67,25 @@ QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) : QSeries(par
 
 /*!
     Adds a set of bars to series. Takes ownership of \a set.
-    Connects the clicked(QString) and rightClicked(QString) signals
+    Connects the clicked(QString, Qt::MouseButtons) signal
     of \a set to this series
 */
 void QBarSeries::appendBarSet(QBarSet *set)
 {
     m_internalModel->appendBarSet(set);
-    connect(set, SIGNAL(clicked(QString)), this, SLOT(barsetClicked(QString)));
-    connect(set, SIGNAL(rightClicked(QString)), this, SLOT(barsetRightClicked(QString)));
+    connect(set, SIGNAL(clicked(QString,Qt::MouseButtons)), this, SLOT(barsetClicked(QString,Qt::MouseButtons)));
     connect(set, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
     emit updatedBars();
 }
 
 /*!
     Removes a set of bars from series. Releases ownership of \a set. Doesnt delete \a set.
-    Disconnects the clicked(QString) and rightClicked(QString) signals
+    Disconnects the clicked(QString, Qt::MouseButtons) signal
     of \a set from this series
 */
 void QBarSeries::removeBarSet(QBarSet *set)
 {
-    disconnect(set, SIGNAL(clicked(QString)), this, SLOT(barsetClicked(QString)));
-    disconnect(set, SIGNAL(rightClicked(QString)), this, SLOT(barsetRightClicked(QString)));
+    disconnect(set, SIGNAL(clicked(QString,Qt::MouseButtons)), this, SLOT(barsetClicked(QString,Qt::MouseButtons)));
     m_internalModel->removeBarSet(set);
     emit updatedBars();
 }
@@ -176,19 +174,10 @@ void QBarSeries::setToolTipEnabled(bool enabled)
 /*!
     \internal \a category
 */
-void QBarSeries::barsetClicked(QString category)
+void QBarSeries::barsetClicked(QString category, Qt::MouseButtons button)
 {
-    emit clicked(qobject_cast<QBarSet*>(sender()), category);
+    emit clicked(qobject_cast<QBarSet*>(sender()), category, button);
 }
-
-/*!
-    \internal \a category
-*/
-void QBarSeries::barsetRightClicked(QString category)
-{
-    emit rightClicked(qobject_cast<QBarSet*>(sender()), category);
-}
-
 
 /*!
     \internal
