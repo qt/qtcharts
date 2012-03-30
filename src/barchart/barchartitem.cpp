@@ -106,6 +106,7 @@ void BarChartItem::dataChanged()
         }
     }
 }
+
 QVector<QRectF> BarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;

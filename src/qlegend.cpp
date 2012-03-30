@@ -507,121 +507,20 @@ void QLegend::updateLayout()
         return;
     }
 
-    // Find out widest item.
-    QSizeF markerMaxSize = maximumMarkerSize();
     checkFirstMarkerBounds();
 
-    // Use max height as scroll button size
-    rescaleScrollButtons(QSize(markerMaxSize.height() ,markerMaxSize.height()));
-
-    qreal totalWidth = 0;
-    qreal totalHeight = 0;
     switch (m_alignment)
     {
     // Both cases organise items horizontally
     case QLegend::AlignmentBottom:
     case QLegend::AlignmentTop: {
-
-        qreal xStep = markerMaxSize.width();
-        qreal x = m_pos.x() + m_margin;
-        qreal y = m_pos.y() + m_margin;
-        int column = 0;
-        int maxColumns = 1;
-        qreal scrollButtonWidth = 0;
-
-        // Set correct visibility for scroll scrollbuttons
-        if (scrollButtonsVisible()) {
-            m_scrollButtonLeft->setVisible(true);
-            m_scrollButtonRight->setVisible(true);
-            // scrollbuttons visible, so add their width to total width
-            totalWidth += (m_scrollButtonLeft->boundingRect().width() + m_margin) * 2;
-            scrollButtonWidth = m_scrollButtonLeft->boundingRect().width() + m_margin;
-            // start position changes by scrollbutton width
-            x += scrollButtonWidth;
-        } else {
-            m_scrollButtonLeft->setVisible(false);
-            m_scrollButtonRight->setVisible(false);
-        }
-        m_scrollButtonUp->setVisible(false);
-        m_scrollButtonDown->setVisible(false);
-
-        for (int i=0; i < m_markers.count(); i++) {
-            LegendMarker *m = m_markers.at(i);
-            if (i < mFirstMarker) {
-                // Markers before first are not visible.
-                m->setVisible(false);
-            } else {
-                if ((x + xStep + scrollButtonWidth + m_margin) > (m_pos.x() + m_maximumSize.width())) {
-                    // This marker would go outside legend rect.
-                    m->setVisible(false);
-                } else {
-                    // This marker is ok
-                    m->setVisible(true);
-                    m->setPos(x, y);
-                    x += xStep;
-                    column++;
-                }
-            }
-            maxColumns = column;
-        }
-
-        m_scrollButtonLeft->setPos(m_pos.x() + m_margin, y);
-        m_scrollButtonRight->setPos(x + m_margin, y);
-
-        totalWidth += maxColumns * markerMaxSize.width() + m_margin * 2;
-        totalHeight = markerMaxSize.height() + m_margin * 2;
-
+        layoutHorizontal();
         break;
     }
     // Both cases organize items vertically
     case QLegend::AlignmentLeft:
     case QLegend::AlignmentRight: {
-        qreal yStep = markerMaxSize.height();
-        qreal x = m_pos.x() + m_margin;
-        qreal y = m_pos.y() + m_margin;
-        int row = 1;
-        int maxRows = 1;
-        qreal scrollButtonHeight = 0;
-
-        // Set correct visibility for scroll scrollbuttons
-        if (scrollButtonsVisible()) {
-            m_scrollButtonUp->setVisible(true);
-            m_scrollButtonDown->setVisible(true);
-            totalHeight += (m_scrollButtonUp->boundingRect().height() + m_margin) * 2;   // scrollbuttons visible, so add their height to total height
-            scrollButtonHeight = m_scrollButtonUp->boundingRect().height();
-            y += scrollButtonHeight + m_margin;                                         // start position changes by scrollbutton height
-        } else {
-            m_scrollButtonUp->setVisible(false);
-            m_scrollButtonDown->setVisible(false);
-        }
-        m_scrollButtonLeft->setVisible(false);
-        m_scrollButtonRight->setVisible(false);
-
-        for (int i=0; i < m_markers.count(); i++) {
-            LegendMarker* m = m_markers.at(i);
-            if (i < mFirstMarker) {
-                // Markers before first are not visible.
-                m->setVisible(false);
-            } else {
-                if ((y + yStep + scrollButtonHeight) > (m_pos.y() + m_maximumSize.height())) {
-                    // This marker would go outside legend rect.
-                    m->setVisible(false);
-                } else {
-                    // This marker is ok
-                    m->setVisible(true);
-                    m->setPos(x, y);
-                    y += yStep;
-                    row++;
-                }
-            }
-            maxRows = row;
-        }
-
-        m_scrollButtonUp->setPos(m_pos.x() + m_margin, m_pos.y() + m_margin);
-        m_scrollButtonDown->setPos(m_pos.x() + m_margin, y + m_margin);
-
-        totalWidth += markerMaxSize.width() + m_margin * 2;
-        totalHeight = maxRows * markerMaxSize.height() + m_margin * 4 + scrollButtonHeight; // TODO: check this
+        layoutVertical();
         break;
     }
     default: {
@@ -629,10 +528,138 @@ void QLegend::updateLayout()
     }
     }
 
+}
+
+/*!
+    \internal Organizes markers horizontally.
+    Causes legend to be resized.
+*/
+void QLegend::layoutHorizontal()
+{
+    // Find out widest item.
+    QSizeF markerMaxSize = maximumMarkerSize();
+    // Use max height as scroll button size
+    rescaleScrollButtons(QSize(markerMaxSize.height() ,markerMaxSize.height()));
+
+    qreal totalWidth = 0;
+    qreal totalHeight = 0;
+
+    qreal xStep = markerMaxSize.width();
+    qreal x = m_pos.x() + m_margin;
+    qreal y = m_pos.y() + m_margin;
+    int column = 0;
+    int maxColumns = 1;
+    qreal scrollButtonWidth = 0;
+
+    // Set correct visibility for scroll scrollbuttons
+    if (scrollButtonsVisible()) {
+        m_scrollButtonLeft->setVisible(true);
+        m_scrollButtonRight->setVisible(true);
+        // scrollbuttons visible, so add their width to total width
+        totalWidth += (m_scrollButtonLeft->boundingRect().width() + m_margin) * 2;
+        scrollButtonWidth = m_scrollButtonLeft->boundingRect().width() + m_margin;
+        // start position changes by scrollbutton width
+        x += scrollButtonWidth;
+    } else {
+        m_scrollButtonLeft->setVisible(false);
+        m_scrollButtonRight->setVisible(false);
+    }
+    m_scrollButtonUp->setVisible(false);
+    m_scrollButtonDown->setVisible(false);
+
+    for (int i=0; i < m_markers.count(); i++) {
+        LegendMarker *m = m_markers.at(i);
+        if (i < mFirstMarker) {
+            // Markers before first are not visible.
+            m->setVisible(false);
+        } else {
+            if ((x + xStep + scrollButtonWidth + m_margin) > (m_pos.x() + m_maximumSize.width())) {
+                // This marker would go outside legend rect.
+                m->setVisible(false);
+            } else {
+                // This marker is ok
+                m->setVisible(true);
+                m->setPos(x, y);
+                x += xStep;
+                column++;
+            }
+        }
+        maxColumns = column;
+    }
+
+    m_scrollButtonLeft->setPos(m_pos.x() + m_margin, y);
+    m_scrollButtonRight->setPos(x + m_margin, y);
+
+    totalWidth += maxColumns * markerMaxSize.width() + m_margin * 2;
+    totalHeight = markerMaxSize.height() + m_margin * 2;
+
     m_size.setWidth(totalWidth);
     m_size.setHeight(totalHeight);
+}
 
-    update();
+/*!
+    \internal Organizes markers vertically.
+    Causes legend to be resized.
+*/
+void QLegend::layoutVertical()
+{
+    // Find out widest item.
+    QSizeF markerMaxSize = maximumMarkerSize();
+    // Use max height as scroll button size
+    rescaleScrollButtons(QSize(markerMaxSize.height() ,markerMaxSize.height()));
+
+    qreal totalWidth = 0;
+    qreal totalHeight = 0;
+
+    qreal yStep = markerMaxSize.height();
+    qreal x = m_pos.x() + m_margin;
+    qreal y = m_pos.y() + m_margin;
+    int row = 1;
+    int maxRows = 1;
+    qreal scrollButtonHeight = 0;
+
+    // Set correct visibility for scroll scrollbuttons
+    if (scrollButtonsVisible()) {
+        m_scrollButtonUp->setVisible(true);
+        m_scrollButtonDown->setVisible(true);
+        totalHeight += (m_scrollButtonUp->boundingRect().height() + m_margin) * 2;   // scrollbuttons visible, so add their height to total height
+        scrollButtonHeight = m_scrollButtonUp->boundingRect().height();
+        y += scrollButtonHeight + m_margin;                                         // start position changes by scrollbutton height
+    } else {
+        m_scrollButtonUp->setVisible(false);
+        m_scrollButtonDown->setVisible(false);
+    }
+    m_scrollButtonLeft->setVisible(false);
+    m_scrollButtonRight->setVisible(false);
+
+    for (int i=0; i < m_markers.count(); i++) {
+        LegendMarker* m = m_markers.at(i);
+        if (i < mFirstMarker) {
+            // Markers before first are not visible.
+            m->setVisible(false);
+        } else {
+            if ((y + yStep + scrollButtonHeight) > (m_pos.y() + m_maximumSize.height())) {
+                // This marker would go outside legend rect.
+                m->setVisible(false);
+            } else {
+                // This marker is ok
+                m->setVisible(true);
+                m->setPos(x, y);
+                y += yStep;
+                row++;
+            }
+        }
+        maxRows = row;
+    }
+
+    m_scrollButtonUp->setPos(m_pos.x() + m_margin, m_pos.y() + m_margin);
+    m_scrollButtonDown->setPos(m_pos.x() + m_margin, y + m_margin);
+
+    totalWidth += markerMaxSize.width() + m_margin * 2;
+    totalHeight = maxRows * markerMaxSize.height() + m_margin * 4 + scrollButtonHeight; // TODO: check this
+
+    m_size.setWidth(totalWidth);
+    m_size.setHeight(totalHeight);
 }
 
 /*!

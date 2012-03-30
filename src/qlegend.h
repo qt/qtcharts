@@ -109,6 +109,8 @@ private:
     void appendMarkers(QPieSeries *series);
     void deleteMarkers(QSeries *series);
     void updateLayout();
+    void layoutHorizontal();
+    void layoutVertical();
     void rescaleScrollButtons(const QSize &size);
     QSizeF maximumMarkerSize();
     void checkFirstMarkerBounds();
