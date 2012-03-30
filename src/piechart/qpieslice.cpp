@@ -183,7 +183,7 @@ qreal QPieSlice::endAngle() const
 
 /*!
     Returns the pen used to draw this slice.
-    \sa setSlicePen()
+    \sa setPen()
 */
 QPen QPieSlice::pen() const
 {
@@ -193,7 +193,7 @@ QPen QPieSlice::pen() const
 
 /*!
     Returns the brush used to draw this slice.
-    \sa setSliceBrush()
+    \sa setBrush()
 */
 QBrush QPieSlice::brush() const
 {
@@ -203,7 +203,7 @@ QBrush QPieSlice::brush() const
 
 /*!
     Returns the pen used to draw the label in this slice.
-    \sa setLabelArmPen()
+    \sa setLabelPen()
 */
 QPen QPieSlice::labelPen() const
 {
@@ -239,7 +239,7 @@ qreal QPieSlice::labelArmLengthFactor() const
 }
 
 /*!
-    \fn void QPieSlice::clicked()
+    \fn void QPieSlice::clicked(Qt::MouseButtons buttons)
 
     This signal is emitted when user has clicked the slice.
 
@@ -350,7 +350,7 @@ void QPieSlice::setExplodeDistanceFactor(qreal factor)
 /*!
     Sets the \a pen used to draw this slice.
     Note that applying a theme will override this.
-    \sa slicePen()
+    \sa pen()
 */
 void QPieSlice::setPen(const QPen &pen)
 {
@@ -365,7 +365,7 @@ void QPieSlice::setPen(const QPen &pen)
 /*!
     Sets the \a brush used to draw this slice.
     Note that applying a theme will override this.
-    \sa sliceBrush()
+    \sa brush()
 */
 void QPieSlice::setBrush(const QBrush &brush)
 {
@@ -380,7 +380,7 @@ void QPieSlice::setBrush(const QBrush &brush)
 /*!
     Sets the \a pen used to draw the label in this slice.
     Note that applying a theme will override this.
-    \sa labelArmPen()
+    \sa labelPen()
 */
 void QPieSlice::setLabelPen(const QPen &pen)
 {

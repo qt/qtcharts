@@ -280,7 +280,7 @@ QPieSeries& QPieSeries::operator << (QPieSlice* slice)
 
 
 /*!
-    Adds a single slice to the series with give \a value and \a name.
+    Appends a single slice to the series with give \a value and \a name.
     Slice ownership is passed to the series.
 */
 QPieSlice* QPieSeries::append(qreal value, QString name)
@@ -290,12 +290,16 @@ QPieSlice* QPieSeries::append(qreal value, QString name)
     return slice;
 }
 
-void QPieSeries::insert(int i, QPieSlice* slice)
+/*!
+    Inserts a single \a slice to the series before the slice at \a index position.
+    Slice ownership is passed to the series.
+*/
+void QPieSeries::insert(int index, QPieSlice* slice)
 {
     Q_D(QPieSeries);
-    Q_ASSERT(i <= d->m_slices.count());
+    Q_ASSERT(index <= d->m_slices.count());
     slice->setParent(this);
-    d->m_slices.insert(i, slice);
+    d->m_slices.insert(index, slice);
 
     d->updateDerivativeData();
 
@@ -571,9 +575,9 @@ qreal QPieSeries::total() const
 }
 
 /*!
-    \fn void QPieSeries::clicked(QPieSlice* slice)
+    \fn void QPieSeries::clicked(QPieSlice* slice, Qt::MouseButtons buttons)
 
-    This signal is emitted when a \a slice has been clicked.
+    This signal is emitted when a \a slice has been clicked with mouse \a buttons.
 
     \sa QPieSlice::clicked()
 */
@@ -594,8 +598,37 @@ qreal QPieSeries::total() const
     \sa QPieSlice::hoverLeave()
 */
 
+/*!
+    \fn void QPieSeries::added(QList<QPieSlice*> slices)
 
+    This signal is emitted when \a slices has been added to the series.
 
+    \sa append(), insert()
+*/
+
+/*!
+    \fn void QPieSeries::removed(QList<QPieSlice*> slices)
+
+    This signal is emitted when \a slices has been removed from the series.
+
+    \sa remove(), clear()
+*/
+
+/*!
+    \fn void QPieSeries::piePositionChanged()
+
+    This signal is emitted when pie position has changed.
+
+    \sa setPiePosition(), pieVerticalPosition(), pieHorizontalPosition()
+*/
+
+/*!
+    \fn void QPieSeries::pieSizeChanged()
+
+    This signal is emitted when pie size has changed.
+
+    \sa pieSize(), setPieSize()
+*/
 
 bool QPieSeries::setModel(QAbstractItemModel* model)
 {

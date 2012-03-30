@@ -43,7 +43,7 @@ public:
     // slice setters
     void append(QPieSlice* slice);
     void append(QList<QPieSlice*> slices);
-    void insert(int i, QPieSlice* slice);
+    void insert(int index, QPieSlice* slice);
     void replace(QList<QPieSlice*> slices);
     void remove(QPieSlice* slice);
     void clear();

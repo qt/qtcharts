@@ -73,7 +73,7 @@
 
     The name of a series is shown in the legend for QXYSeries.
     \sa QChart::setTitle()
-    \sa QPieSlice::setName()
+    \sa QPieSlice::setLabel()
     \sa QBarSet::setName()
 */
 
