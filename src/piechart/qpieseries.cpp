@@ -305,7 +305,7 @@ void QPieSeries::insert(int index, QPieSlice* slice)
     d->updateDerivativeData();
 
     connect(slice, SIGNAL(changed()), d, SLOT(sliceChanged()));
-    connect(slice, SIGNAL(clicked()), d, SLOT(sliceClicked()));
+    connect(slice, SIGNAL(clicked(Qt::MouseButtons)), d, SLOT(sliceClicked(Qt::MouseButtons)));
     connect(slice, SIGNAL(hoverEnter()), d, SLOT(sliceHoverEnter()));
     connect(slice, SIGNAL(hoverLeave()), d, SLOT(sliceHoverLeave()));
 
