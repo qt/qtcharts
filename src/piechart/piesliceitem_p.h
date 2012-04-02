@@ -24,7 +24,7 @@
 #include "qchartglobal.h"
 #include "charttheme_p.h"
 #include "qpieseries.h"
-#include "qpiesliceprivate_p.h"
+#include "pieslicedata_p.h"
 #include <QGraphicsItem>
 #include <QRectF>
 #include <QColor>

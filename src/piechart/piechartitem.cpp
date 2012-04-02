@@ -21,7 +21,6 @@
 #include "piechartitem_p.h"
 #include "piesliceitem_p.h"
 #include "qpieslice.h"
-#include "qpiesliceprivate_p.h"
 #include "qpieseries.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
@@ -147,7 +146,8 @@ void PieChartItem::calculatePieLayout()
 
 PieSliceData PieChartItem::sliceData(QPieSlice *slice)
 {
-    PieSliceData sliceData = slice->data_ptr()->m_data;
+	// TODO: This function is kid of useless now. Refactor.
+    PieSliceData sliceData = *slice->data_ptr();
     sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
     return sliceData;

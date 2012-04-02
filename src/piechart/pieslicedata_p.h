@@ -21,7 +21,8 @@
 #ifndef PIESLICEDATA_P_H
 #define PIESLICEDATA_P_H
 
-#include <qchartglobal.h>
+#include "qchartglobal.h"
+#include "qpieslice.h"
 #include <QPen>
 #include <QBrush>
 #include <QDebug>
@@ -102,6 +103,11 @@ public:
             return true;
 
         return false;
+    }
+
+    void emitChangedSignal(QPieSlice *s)
+    {
+        emit s->changed();
     }
 
     qreal m_value;

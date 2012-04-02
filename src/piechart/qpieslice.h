@@ -28,7 +28,7 @@
 #include <QFont>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class QPieSlicePrivate;
+class PieSliceData;
 
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
@@ -77,13 +77,13 @@ Q_SIGNALS:
     void changed();
 
 private:
-    QPieSlicePrivate * const d_ptr;
-    Q_DECLARE_PRIVATE(QPieSlice)
+    friend class PieSliceData;
+    PieSliceData * const d;
     Q_DISABLE_COPY(QPieSlice)
 
 public:
-    typedef QPieSlicePrivate * const DataPtr;
-    inline DataPtr &data_ptr() { return d_ptr; }
+    typedef PieSliceData * const DataPtr;
+    inline DataPtr &data_ptr() { return d; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -19,8 +19,9 @@
 ****************************************************************************/
 
 #include "qpieseries.h"
-#include "qpiesliceprivate_p.h"
 #include "qpieseriesprivate_p.h"
+#include "qpieslice.h"
+#include "pieslicedata_p.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -68,21 +69,21 @@ void QPieSeriesPrivate::updateDerivativeData()
     QVector<QPieSlice*> changed;
     foreach (QPieSlice* s, m_slices) {
 
-        PieSliceData data = s->data_ptr()->m_data;
+        PieSliceData data = *s->data_ptr();
         data.m_percentage = s->value() / m_total;
         data.m_angleSpan = pieSpan * data.m_percentage;
         data.m_startAngle = sliceAngle;
         sliceAngle += data.m_angleSpan;
 
-        if (s->data_ptr()->m_data != data) {
-            s->data_ptr()->m_data = data;
+        if (*s->data_ptr() != data) {
+            *s->data_ptr() = data;
             changed << s;
         }
     }
 
     // emit signals
     foreach (QPieSlice* s, changed)
-        emit s->data_ptr()->changed();
+        s->data_ptr()->emitChangedSignal(s);
 }
 
 void QPieSeriesPrivate::sliceChanged()
