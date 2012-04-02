@@ -44,7 +44,7 @@ public:
     };
 
 protected:
-    QSeries(QObject *parent = 0) : QObject(parent) {m_model = NULL;}
+    QSeries(QObject *parent = 0) : QObject(parent) {m_model = 0;}
 
 public:
     virtual ~QSeries() {}

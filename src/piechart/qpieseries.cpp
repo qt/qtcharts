@@ -330,7 +330,7 @@ void QPieSeries::remove(QPieSlice* slice)
     emit removed(QList<QPieSlice*>() << slice);
 
     delete slice;
-    slice = NULL;
+    slice = 0;
 }
 
 /*!
@@ -651,7 +651,7 @@ bool QPieSeries::setModel(QAbstractItemModel* model)
     }
     else
     {
-        m_model = NULL;
+        m_model = 0;
         return false;
     }
 }
@@ -660,7 +660,7 @@ void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::O
 {
     Q_D(QPieSeries);
 
-    if (m_model == NULL)
+    if (m_model == 0)
         return;
 
     d->m_mapValues = modelValuesLine;
