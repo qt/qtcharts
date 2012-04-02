@@ -1,8 +1,9 @@
 #ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
-#include <qchartglobal.h>
-#include <qchartview.h>
+#include "qchartglobal.h"
+#include "qchart.h"
+#include "qchartview.h"
 #include <QWidget>
 
 class QSpinBox;
@@ -44,6 +45,7 @@ private slots:
 
 private:
     DataSerieDialog *m_addSerieDialog;
+    QChart *m_chart;
     QChartView *m_chartView;
     QCheckBox *m_autoScaleCheck;
     QSpinBox *m_xMinSpin;

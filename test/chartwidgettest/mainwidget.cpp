@@ -1,8 +1,9 @@
 #include "mainwidget.h"
 #include "dataseriedialog.h"
-#include <qpieseries.h>
-#include <qscatterseries.h>
-#include <qlineseries.h>
+#include "qchartview.h"
+#include "qpieseries.h"
+#include "qscatterseries.h"
+#include "qlineseries.h"
 #include <qareaseries.h>
 #include <qsplineseries.h>
 #include <qbarset.h>
@@ -28,10 +29,9 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
     m_addSerieDialog(0),
-    m_chartView(0)
+    m_chart(0)
 {
-    m_chartView = new QChartView(this);
-    m_chartView->setRubberBandPolicy(QChartView::HorizonalRubberBand);
+    m_chart = new QChart();
 
     // Grid layout for the controls for configuring the chart widget
     QGridLayout *grid = new QGridLayout();
@@ -47,11 +47,13 @@ MainWidget::MainWidget(QWidget *parent) :
     grid->addWidget(new QLabel(""), grid->rowCount(), 0);
     grid->setRowStretch(grid->rowCount() - 1, 1);
 
+    // Create chart view with the chart
+    m_chartView = new QChartView(m_chart, this);
+    m_chartView->setRubberBand(QChartView::HorizonalRubberBand);
+
     // Another grid layout as a main layout
     QGridLayout *mainLayout = new QGridLayout();
     mainLayout->addLayout(grid, 0, 0);
-
-    // Add layouts and the chart widget to the main layout
     mainLayout->addWidget(m_chartView, 0, 1, 3, 1);
     setLayout(mainLayout);
 }
@@ -133,7 +135,7 @@ void MainWidget::initCheckboxes(QGridLayout *grid)
 {
     // TODO: setZoomEnabled slot has been removed from QChartView -> Re-implement zoom on/off
     QCheckBox *zoomCheckBox = new QCheckBox("Drag'n drop Zoom");
-    connect(zoomCheckBox, SIGNAL(toggled(bool)), m_chartView, SLOT(setZoomEnabled(bool)));
+//    connect(zoomCheckBox, SIGNAL(toggled(bool)), m_chartView, SLOT(setZoomEnabled(bool)));
     zoomCheckBox->setChecked(true);
     grid->addWidget(zoomCheckBox, grid->rowCount(), 0);
 
@@ -208,40 +210,36 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
             QLineSeries *series = new QLineSeries();
-            for (int i(0); i < column.count(); i++) {
-                series->add(i, column.at(i));
-            }
-            m_chartView->addSeries(series);
+            for (int i(0); i < column.count(); i++)
+                series->append(i, column.at(i));
+            m_chart->addSeries(series);
         }
     } else if (seriesName == "Area") {
         // TODO: lower series for the area?
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
             QLineSeries *lineSeries = new QLineSeries();
-            for (int i(0); i < column.count(); i++) {
-                lineSeries->add(i, column.at(i));
-            }
+            for (int i(0); i < column.count(); i++)
+                lineSeries->append(i, column.at(i));
             QAreaSeries *areaSeries = new QAreaSeries(lineSeries);
-            m_chartView->addSeries(areaSeries);
+            m_chart->addSeries(areaSeries);
         }
     } else if (seriesName == "Scatter") {
         for (int j(0); j < data.count(); j++) {
             QList<qreal> column = data.at(j);
             QScatterSeries *series = new QScatterSeries();
-            for (int i(0); i < column.count(); i++) {
-                (*series) << QPointF(i, column.at(i));
-            }
-            m_chartView->addSeries(series);
+            for (int i(0); i < column.count(); i++)
+                series->append(i, column.at(i));
+            m_chart->addSeries(series);
         }
     } else if (seriesName == "Pie") {
         QStringList labels = generateLabels(rowCount);
         for (int j(0); j < data.count(); j++) {
             QPieSeries *series = new QPieSeries();
             QList<qreal> column = data.at(j);
-            for (int i(0); i < column.count(); i++) {
-                series->add(column.at(i), labels.at(i));
-            }
-            m_chartView->addSeries(series);
+            for (int i(0); i < column.count(); i++)
+                series->append(column.at(i), labels.at(i));
+            m_chart->addSeries(series);
         }
     } else if (seriesName == "Bar"
                || seriesName == "Stacked bar"
@@ -261,24 +259,22 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         for (int j(0); j < data.count(); j++) {
             QList<qreal> column = data.at(j);
             QBarSet *set = new QBarSet("set" + QString::number(j));
-            for (int i(0); i < column.count(); i++) {
+            for (int i(0); i < column.count(); i++)
                 *set << column.at(i);
-            }
-            series->addBarSet(set);
+            series->appendBarSet(set);
         }
 
         // TODO: new implementation of setFloatingValuesEnabled with signals
         //series->setFloatingValuesEnabled(true);
         series->setToolTipEnabled(true);
-        m_chartView->addSeries(series);
+        m_chart->addSeries(series);
     } else if (seriesName == "Spline") {
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
             QSplineSeries *series = new QSplineSeries();
-            for (int i(0); i < column.count(); i++) {
-                series->add(i, column.at(i));
-            }
-            m_chartView->addSeries(series);
+            for (int i(0); i < column.count(); i++)
+                series->append(i, column.at(i));
+            m_chart->addSeries(series);
         }
     }
 }
@@ -325,7 +321,7 @@ void MainWidget::yMaxChanged(int value)
 void MainWidget::changeChartTheme(int themeIndex)
 {
     qDebug() << "changeChartTheme: " << themeIndex;
-    m_chartView->setChartTheme((QChart::ChartTheme) themeIndex);
+    m_chart->setTheme((QChart::ChartTheme) themeIndex);
     //TODO: remove this hack. This is just to make it so that theme change is seen immediately.
     QSize s = size();
     s.setWidth(s.width()+1);
