@@ -22,7 +22,7 @@
 #include "piechartitem_p.h"
 #include "qpieslice.h"
 
-Q_DECLARE_METATYPE(QtCommercialChart::PieSliceData)
+Q_DECLARE_METATYPE(QTCOMMERCIALCHART_NAMESPACE::PieSliceData)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
