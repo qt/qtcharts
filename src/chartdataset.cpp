@@ -88,7 +88,7 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 void ChartDataSet::removeSeries(QSeries* series)
 {
     int index = seriesIndex(series);
-    if (!index < 0) {
+    if (index < 0) {
         qWarning() << "Can not remove series. Series not found on the chart.";
         return;
     }
