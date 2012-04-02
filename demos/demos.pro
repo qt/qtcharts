@@ -1,3 +1,4 @@
 TEMPLATE = subdirs
 SUBDIRS += chartthemes \
-           piechartcustomization
+           piechartcustomization \
+           gdpbarchart

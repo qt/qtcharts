@@ -6,7 +6,6 @@ SUBDIRS += \
            customchart \
            #dynamiclinechart \
            #ekgchart \
-           gdpbarchart \
            linechart \
            #multichart \
            percentbarchart \
