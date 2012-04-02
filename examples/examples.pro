@@ -16,7 +16,7 @@ SUBDIRS += \
            #scatterinteractions \
            #splinechart \
            stackedbarchart \
-           #stackedbarchartdrilldown \
+           stackedbarchartdrilldown \
            #tablemodelchart \
            zoomlinechart
           
