@@ -322,8 +322,4 @@ void MainWidget::changeChartTheme(int themeIndex)
 {
     qDebug() << "changeChartTheme: " << themeIndex;
     m_chart->setTheme((QChart::ChartTheme) themeIndex);
-    //TODO: remove this hack. This is just to make it so that theme change is seen immediately.
-    QSize s = size();
-    s.setWidth(s.width()+1);
-    resize(s);
 }
