@@ -110,6 +110,12 @@ public:
         emit s->changed();
     }
 
+    static PieSliceData &data(QPieSlice *slice)
+    {
+        Q_ASSERT(slice);
+        return *slice->d;
+    }
+
     qreal m_value;
 
     Themed<QPen> m_slicePen;

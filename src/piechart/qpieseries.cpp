@@ -69,21 +69,21 @@ void QPieSeriesPrivate::updateDerivativeData()
     QVector<QPieSlice*> changed;
     foreach (QPieSlice* s, m_slices) {
 
-        PieSliceData data = *s->data_ptr();
+        PieSliceData data = PieSliceData::data(s);
         data.m_percentage = s->value() / m_total;
         data.m_angleSpan = pieSpan * data.m_percentage;
         data.m_startAngle = sliceAngle;
         sliceAngle += data.m_angleSpan;
 
-        if (*s->data_ptr() != data) {
-            *s->data_ptr() = data;
+        if (PieSliceData::data(s) != data) {
+            PieSliceData::data(s) = data;
             changed << s;
         }
     }
 
     // emit signals
     foreach (QPieSlice* s, changed)
-        s->data_ptr()->emitChangedSignal(s);
+        PieSliceData::data(s).emitChangedSignal(s);
 }
 
 void QPieSeriesPrivate::sliceChanged()

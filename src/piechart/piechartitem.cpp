@@ -147,7 +147,7 @@ void PieChartItem::calculatePieLayout()
 PieSliceData PieChartItem::sliceData(QPieSlice *slice)
 {
 	// TODO: This function is kid of useless now. Refactor.
-    PieSliceData sliceData = *slice->data_ptr();
+    PieSliceData sliceData = PieSliceData::data(slice);
     sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
     return sliceData;

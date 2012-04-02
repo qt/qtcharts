@@ -223,7 +223,7 @@ void ChartTheme::decorate(QPieSeries* series, int index, bool force)
         QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
 
         QPieSlice *s = series->slices().at(i);
-        PieSliceData data = *s->data_ptr();
+        PieSliceData data = PieSliceData::data(s);
 
         if (data.m_slicePen.isThemed() || force) {
             data.m_slicePen = penColor;
@@ -245,9 +245,9 @@ void ChartTheme::decorate(QPieSeries* series, int index, bool force)
             data.m_labelFont.setThemed(true);
         }
 
-        if (*s->data_ptr() != data) {
-            *s->data_ptr() = data;
-            emit s->data_ptr()->emitChangedSignal(s);
+        if (PieSliceData::data(s) != data) {
+            PieSliceData::data(s) = data;
+            emit PieSliceData::data(s).emitChangedSignal(s);
         }
     }
 }

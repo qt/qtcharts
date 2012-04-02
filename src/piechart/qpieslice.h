@@ -80,10 +80,6 @@ private:
     friend class PieSliceData;
     PieSliceData * const d;
     Q_DISABLE_COPY(QPieSlice)
-
-public:
-    typedef PieSliceData * const DataPtr;
-    inline DataPtr &data_ptr() { return d; }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
