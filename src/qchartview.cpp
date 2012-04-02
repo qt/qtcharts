@@ -116,7 +116,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 {
     if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
 
-        int padding = d_ptr->m_chart->padding().top();
+        int padding = d_ptr->m_chart->margins().top();
         QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
 
         if (rect.contains(event->pos())) {
@@ -138,7 +138,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
     if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
-        int padding = d_ptr->m_chart->padding().top();
+        int padding = d_ptr->m_chart->margins().top();
         QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
         int width = event->pos().x() - d_ptr->m_rubberBandOrigin.x();
         int height = event->pos().y() - d_ptr->m_rubberBandOrigin.y();

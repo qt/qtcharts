@@ -60,6 +60,7 @@ ThemeWidget::ThemeWidget(QWidget* parent) :
     settingsLayout->addWidget(m_themeComboBox);
     settingsLayout->addWidget(new QLabel("Animation:"));
     settingsLayout->addWidget(m_animatedComboBox);
+    settingsLayout->addWidget(new QLabel("Legend:"));
     settingsLayout->addWidget(m_legendComboBox);
     settingsLayout->addWidget(m_antialiasCheckBox);
     settingsLayout->addStretch();
@@ -98,6 +99,7 @@ ThemeWidget::ThemeWidget(QWidget* parent) :
 
     // Set defaults
     m_antialiasCheckBox->setChecked(true);
+    updateUI();
 }
 
 ThemeWidget::~ThemeWidget()
@@ -164,7 +166,7 @@ QComboBox* ThemeWidget::createAnimationBox() const
 QComboBox* ThemeWidget::createLegendBox() const
 {
     QComboBox* legendComboBox = new QComboBox();
-    legendComboBox->addItem("Legend None", -1);
+    legendComboBox->addItem("No Legend ", 0);
     legendComboBox->addItem("Legend Top", QLegend::AlignmentTop);
     legendComboBox->addItem("Legend Bottom", QLegend::AlignmentBottom);
     legendComboBox->addItem("Legend Left", QLegend::AlignmentLeft);
@@ -355,17 +357,17 @@ void ThemeWidget::updateUI()
             chartView->chart()->setAnimationOptions(options);
     }
 
-    int alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
-    if (alignment == -1) {
+    QLegend::Alignments alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
+
+    if (!alignment) {
         foreach (QChartView *chartView, m_charts) {
-            chartView->chart()->legend()->setVisible(false);
-        }
-    } else {
-        QLegend::Alignments legendAlignment(alignment);
-        foreach (QChartView *chartView, m_charts) {
-            chartView->chart()->legend()->setAlignmnent(legendAlignment);
-            chartView->chart()->legend()->setVisible(true);
+            chartView->chart()->legend()->hide();
         }
     }
+    else
+        foreach (QChartView *chartView, m_charts) {
+            chartView->chart()->legend()->setAlignmnent(alignment);
+            chartView->chart()->legend()->show();
+        }
 }
 

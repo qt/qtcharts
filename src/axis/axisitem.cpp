@@ -283,6 +283,9 @@ void Axis::setLayout(QVector<qreal> &layout)
 	Q_ASSERT(labels.size() == ticksList.size());
 	Q_ASSERT(layout.size() == ticksList.size());
 
+	qreal minWidth = 0;
+	qreal minHeight = 0;
+
 	switch (m_type)
 	{
 		case X_AXIS:
@@ -296,12 +299,18 @@ void Axis::setLayout(QVector<qreal> &layout)
 				QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
                 if (!categories || i<1) {
 				    labelItem->setText(ticksList.at(i));
-				    QPointF center = labelItem->boundingRect().center();
+				    const QRectF& rect = labelItem->boundingRect();
+				    minWidth+=rect.width();
+				    minHeight=qMax(rect.height(),minHeight);
+				    QPointF center = rect.center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
 				    labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
                 } else {
 				    labelItem->setText(ticksList.at(i));
-				    QPointF center = labelItem->boundingRect().center();
+			        const QRectF& rect = labelItem->boundingRect();
+			        minWidth+=rect.width();
+			        minHeight=qMax(rect.height()+label_padding,minHeight);
+				    QPointF center = rect.center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
 				    labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
 				}
@@ -313,6 +322,7 @@ void Axis::setLayout(QVector<qreal> &layout)
 				lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
 				lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
 			}
+
 		}
 		break;
 
@@ -328,14 +338,20 @@ void Axis::setLayout(QVector<qreal> &layout)
 
                 if (!categories || i<1) {
 				    labelItem->setText(ticksList.at(i));
-				    QPointF center = labelItem->boundingRect().center();
+				    const QRectF& rect = labelItem->boundingRect();
+				    minWidth=qMax(rect.width()+label_padding,minWidth);
+				    minHeight+=rect.height();
+				    QPointF center = rect.center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
-				    labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i]-center.y());
+				    labelItem->setPos(m_rect.left() - rect.width() - label_padding , layout[i]-center.y());
                 } else {
 				    labelItem->setText(ticksList.at(i));
-				    QPointF center = labelItem->boundingRect().center();
+				    const QRectF& rect = labelItem->boundingRect();
+				    minWidth=qMax(rect.width(),minWidth);
+				    minHeight+=rect.height();
+				    QPointF center = rect.center();
 				    labelItem->setTransformOriginPoint(center.x(), center.y());
-				    labelItem->setPos(m_rect.left() - labelItem->boundingRect().width() - label_padding , layout[i] - (layout[i] - layout[i-1])/2 -center.y());
+				    labelItem->setPos(m_rect.left() - rect.width() - label_padding , layout[i] - (layout[i] - layout[i-1])/2 -center.y());
 				}
 
                 if ((i+1)%2 && i>1) {
@@ -352,7 +368,11 @@ void Axis::setLayout(QVector<qreal> &layout)
 		break;
 	}
 
-	m_layoutVector=layout;
+    m_layoutVector=layout;
+
+    presenter()->setMinimumMarginWidth(this,minWidth);
+    presenter()->setMinimumMarginHeight(this,minHeight);
+
 }
 
 bool Axis::isEmpty()
@@ -425,10 +445,13 @@ void Axis::handleRangeChanged(qreal min, qreal max,int tickCount)
 
 void Axis::handleGeometryChanged(const QRectF &rect)
 {
-    m_rect = rect;
-    if (isEmpty()) return;
-    QVector<qreal> layout = calculateLayout();
-    updateLayout(layout);
+    if(m_rect != rect)
+    {
+        m_rect = rect;
+        if (isEmpty()) return;
+        QVector<qreal> layout = calculateLayout();
+        updateLayout(layout);
+    }
 }
 
 void Axis::axisSelected()

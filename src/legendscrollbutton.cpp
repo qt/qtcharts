@@ -40,7 +40,7 @@ LegendScrollButton::ScrollButtonId LegendScrollButton::id()
 void LegendScrollButton::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
-    m_ledgend->scrollButtonClicked(this);
+    //m_ledgend->scrollButtonClicked(this);
 }
 
 

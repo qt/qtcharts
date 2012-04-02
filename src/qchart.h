@@ -99,8 +99,7 @@ public:
     QChartAxis* axisY() const;
 
     QLegend* legend() const;
-
-    QRect padding() const;
+    QRect margins() const;
 
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
@@ -108,6 +107,7 @@ protected:
 protected:
     QScopedPointer<QChartPrivate> d_ptr;
     friend class QLegend;
+    friend class ChartPresenter;
     Q_DISABLE_COPY(QChart)
 };
 

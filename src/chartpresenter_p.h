@@ -22,6 +22,7 @@
 #define CHARTPRESENTER_H_
 
 #include "qchartglobal.h"
+#include "chartbackground_p.h" //TODO fix me
 #include "qchart.h" //becouse of QChart::ChartThemeId //TODO
 #include "qchartaxis.h"
 #include <QRectF>
@@ -55,8 +56,6 @@ public:
     ChartPresenter(QChart* chart,ChartDataSet *dataset);
     virtual ~ChartPresenter();
 
-    int backgroundPadding() const { return m_backgroundPadding; }
-    QRectF geometry() const { return m_rect; }
     ChartAnimator* animator() const { return m_animator; }
     ChartTheme *chartTheme() const { return m_chartTheme; }
     ChartDataSet *dataSet() const { return m_dataset; }
@@ -73,19 +72,31 @@ public:
     void zoomOut();
     void scroll(int dx,int dy);
 
-private:
+    void setGeometry(const QRectF& rect);
+    QRectF chartGeometry() const { return m_chartRect; }
+
+    void setMinimumMarginHeight(Axis* axis, qreal height);
+    void setMinimumMarginWidth(Axis* axis, qreal width);
+    qreal minimumLeftMargin() const { return m_minLeftMargin; }
+    qreal minimumBottomMargin() const { return m_minBottomMargin; }
+
+public: //TODO: fix me
     void createConnections();
     void resetAllElements();
+    void createChartBackgroundItem();
+    void createChartTitleItem();
+    QRect margins() const { return m_chartMargins;}
 
 public Q_SLOTS:
     void handleSeriesAdded(QSeries* series,Domain* domain);
     void handleSeriesRemoved(QSeries* series);
     void handleAxisAdded(QChartAxis* axis,Domain* domain);
     void handleAxisRemoved(QChartAxis* axis);
-    void handleGeometryChanged();
+    void updateLayout();
 
 Q_SIGNALS:
     void geometryChanged(const QRectF& rect);
+
 
 private:
     QChart* m_chart;
@@ -95,9 +106,19 @@ private:
     QMap<QSeries*,Chart*> m_chartItems;
     QMap<QChartAxis*,Axis*> m_axisItems;
     QRectF m_rect;
+    QRectF m_chartRect;
     QChart::AnimationOptions m_options;
     bool m_themeForce;
-    int m_backgroundPadding;
+    qreal m_minLeftMargin;
+    qreal m_minBottomMargin;
+public: //TODO: fixme
+    ChartBackground* m_backgroundItem;
+    QGraphicsSimpleTextItem* m_titleItem;
+    int m_marginBig;
+    int m_marginSmall;
+    int m_marginTiny;
+    QRect m_chartMargins;
+    QRect m_legendMargins;
 
 };
 

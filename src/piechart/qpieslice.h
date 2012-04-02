@@ -75,6 +75,7 @@ Q_SIGNALS:
     void hoverEnter();
     void hoverLeave();
     void changed();
+    void selected();
 
 private:
     friend class PieSliceData;

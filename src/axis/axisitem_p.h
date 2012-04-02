@@ -21,6 +21,7 @@
 #ifndef AXISITEM_H_
 #define AXISITEM_H_
 
+#include "qchartglobal.h"
 #include "chart_p.h"
 #include <QGraphicsItem>
 
@@ -100,7 +101,6 @@ private:
     qreal m_min;
     qreal m_max;
     int m_ticksCount;
-    qreal m_zoomFactor;
 
     friend class AxisAnimation;
     friend class AxisItem;

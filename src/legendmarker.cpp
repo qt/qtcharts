@@ -1,25 +1,27 @@
 /****************************************************************************
-**
-** Copyright (C) 2012 Digia Plc
-** All rights reserved.
-** For any questions to Digia, please use contact form at http://qt.digia.com
-**
-** This file is part of the Qt Commercial Charts Add-on.
-**
-** $QT_BEGIN_LICENSE$
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Digia.
-**
-** If you have questions regarding the use of this file, please use
-** contact form at http://qt.digia.com
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+ **
+ ** Copyright (C) 2012 Digia Plc
+ ** All rights reserved.
+ ** For any questions to Digia, please use contact form at http://qt.digia.com
+ **
+ ** This file is part of the Qt Commercial Charts Add-on.
+ **
+ ** $QT_BEGIN_LICENSE$
+ ** Licensees holding valid Qt Commercial licenses may use this file in
+ ** accordance with the Qt Commercial License Agreement provided with the
+ ** Software or, alternatively, in accordance with the terms contained in
+ ** a written agreement between you and Digia.
+ **
+ ** If you have questions regarding the use of this file, please use
+ ** contact form at http://qt.digia.com
+ ** $QT_END_LICENSE$
+ **
+ ****************************************************************************/
 
-#include "qchartglobal.h"
 #include "legendmarker_p.h"
+#include "qlegend.h"
+#include "qbarseries.h"
+#include "qpieseries.h"
 #include <qpieslice.h>
 #include <qbarset.h>
 #include <qxyseries.h>
@@ -30,95 +32,61 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-LegendMarker::LegendMarker(QSeries *series, QGraphicsItem *parent) : QGraphicsObject(parent),
-    m_pos(0,0),
-    m_size(0,0),
-    m_boundingRect(0,0,0,0),
-    m_markerBoundingRect(0,0,0,0),
-    m_series(series),
-    m_barset(0),
-    m_pieslice(0),
-    m_textItem(new QGraphicsSimpleTextItem(this))
+LegendMarker::LegendMarker(QSeries* series,QLegend *legend) : QGraphicsObject(legend),
+m_series(series),
+m_markerRect(0,0,10.0,10.0),
+m_boundingRect(0,0,0,0),
+m_legend(legend),
+m_textItem(new QGraphicsSimpleTextItem(this)),
+m_rectItem(new QGraphicsRectItem(this))
 {
-    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
-}
-
-LegendMarker::LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *parent) : QGraphicsObject(parent),
-    m_pos(0,0),
-    m_size(0,0),
-    m_boundingRect(0,0,0,0),
-    m_markerBoundingRect(0,0,0,0),
-    m_series(series),
-    m_barset(barset),
-    m_pieslice(0),
-    m_textItem(new QGraphicsSimpleTextItem(this))
-{
-    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
-}
-
-LegendMarker::LegendMarker(QSeries *series, QPieSlice *pieslice, QGraphicsItem *parent) : QGraphicsObject(parent),
-    m_pos(0,0),
-    m_size(0,0),
-    m_boundingRect(0,0,0,0),
-    m_markerBoundingRect(0,0,0,0),
-    m_series(series),
-    m_barset(0),
-    m_pieslice(pieslice),
-    m_textItem(new QGraphicsSimpleTextItem(this))
-{
-    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
-}
-
-void LegendMarker::setPos(qreal x, qreal y)
-{
-    m_pos = QPointF(x,y);
-    layoutChanged();
+    //setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
+    m_rectItem->setRect(m_markerRect);
+    updateLayout();
 }
 
 void LegendMarker::setPen(const QPen &pen)
 {
-    m_pen = pen;
+    m_textItem->setPen(pen);
+    updateLayout();
 }
 
 QPen LegendMarker::pen() const
 {
-    return m_pen;
+    return m_textItem->pen();
 }
 
 void LegendMarker::setBrush(const QBrush &brush)
 {
-    m_brush = brush;
+    m_rectItem->setBrush(brush);
 }
 
 QBrush LegendMarker::brush() const
 {
-    return m_brush;
+    return m_rectItem->brush();
 }
 
-void LegendMarker::setName(const QString name)
+void LegendMarker::setLabel(const QString name)
 {
     m_textItem->setText(name);
-    layoutChanged();
+    updateLayout();
 }
 
-QString LegendMarker::name() const
+void LegendMarker::setSize(const QSize& size)
+{
+    m_markerRect = QRectF(0,0,size.width(),size.height());
+}
+
+QString LegendMarker::label() const
 {
     return m_textItem->text();
-}
-
-QSeries* LegendMarker::series() const
-{
-    return m_series;
 }
 
 void LegendMarker::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
-
-    painter->setPen(m_pen);
-    painter->setBrush(m_brush);
-    painter->drawRect(m_markerBoundingRect);
+    Q_UNUSED(painter)
 }
 
 QRectF LegendMarker::boundingRect() const
@@ -126,86 +94,96 @@ QRectF LegendMarker::boundingRect() const
     return m_boundingRect;
 }
 
-void LegendMarker::layoutChanged()
+void LegendMarker::updateLayout()
 {
-    QSizeF markerSize(10,10);
-    qreal margin = 2;
 
-    m_size.setHeight(markerSize.height() + 2 * margin);
-    m_size.setWidth(m_textItem->boundingRect().width() + markerSize.width() + 3 * margin);
+    static const qreal margin = 2;
+    static const qreal space = 4;
 
-    m_boundingRect = QRectF(m_pos.x(),m_pos.y(),m_size.width(),m_size.height());
+    const QRectF& textRect = m_textItem->boundingRect();
+    prepareGeometryChange();
+    m_boundingRect = QRectF(0,0,m_markerRect.width() + 2*margin + space + textRect.width(),qMax(m_markerRect.height()+2*margin,textRect.height()+2*margin));
+    m_textItem->setPos(m_markerRect.width() + space + margin,m_boundingRect.height()/2 - textRect.height()/2);
+    m_rectItem->setPos(margin,m_boundingRect.height()/2 - m_markerRect.height()/2);
 
-    m_markerBoundingRect = QRectF(m_pos.x() + margin, m_pos.y() + margin, markerSize.width(),markerSize.height());
-
-    m_textItem->setPos(m_pos.x() + markerSize.width() + 2 * margin, m_pos.y() + margin);
 }
 
 void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    switch (m_series->type()) {
-    case QSeries::SeriesTypeLine:
-    case QSeries::SeriesTypeArea:
-    case QSeries::SeriesTypeScatter:
-    case QSeries::SeriesTypeSpline: {
-        emit clicked(m_series,event->button());
-        break;
-        }
-    case QSeries::SeriesTypeBar:
-    case QSeries::SeriesTypeStackedBar:
-    case QSeries::SeriesTypePercentBar: {
-        emit clicked(m_barset,event->button());
-        break;
-        }
-    case QSeries::SeriesTypePie: {
-        emit clicked(m_pieslice,event->button());
-        break;
-        }
-    default: {
-        break;
-        }
-    }
+    QGraphicsObject::mousePressEvent(event);
+    emit selected();
 }
 
-void LegendMarker::changed()
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+AreaLegendMarker::AreaLegendMarker(QAreaSeries *series,QLegend *legend) : LegendMarker(series,legend),
+m_series(series)
 {
-    setPen(Qt::NoPen);
-    switch (m_series->type()) {
-    case QSeries::SeriesTypeArea: {
-        QAreaSeries* s = static_cast<QAreaSeries*> (m_series);
-        setBrush(s->brush());
-        setName(s->name());
-        break;
+    QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
+    QObject::connect(series,SIGNAL(updated()), this, SLOT(updated()));
+    updated();
+}
+
+void AreaLegendMarker::updated()
+{
+    setBrush(m_series->brush());
+    setLabel(m_series->name());
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+BarLegendMarker::BarLegendMarker(QBarSeries *series,QBarSet *barset, QLegend *legend) : LegendMarker(series,legend),
+m_barset(barset)
+{
+    QObject::connect(this, SIGNAL(selected()),series, SIGNAL(selected()));
+    QObject::connect(barset, SIGNAL(valueChanged()), this, SLOT(updated()));
+    updated();
+}
+
+void BarLegendMarker::updated()
+{
+    setBrush(m_barset->brush());
+    setLabel(m_barset->name());
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+PieLegendMarker::PieLegendMarker(QPieSeries* series,QPieSlice *pieslice, QLegend *legend) : LegendMarker(series,legend),
+m_pieslice(pieslice)
+{
+    QObject::connect(this, SIGNAL(selected()),pieslice, SIGNAL(selected()));
+    QObject::connect(pieslice, SIGNAL(changed()), this, SLOT(updated()));
+    QObject::connect(pieslice, SIGNAL(destroyed()), this, SLOT(deleteLater())); //TODO:checkthis
+    updated();
+}
+
+void PieLegendMarker::updated()
+{
+    setBrush(m_pieslice->brush());
+    setLabel(m_pieslice->label());
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+XYLegendMarker::XYLegendMarker(QXYSeries *series, QLegend *legend) : LegendMarker(series,legend),
+m_series(series)
+{
+    QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
+    QObject::connect(series,SIGNAL(updated()), this, SLOT(updated()));
+    updated();
+}
+
+void XYLegendMarker::updated()
+{
+    setLabel(m_series->name());
+
+    if(m_series->type()== QSeries::SeriesTypeScatter)
+    {
+        setBrush(m_series->brush());
+
     }
-    case QSeries::SeriesTypeLine:
-    case QSeries::SeriesTypeSpline: {
-        QXYSeries* s = static_cast<QXYSeries*> (m_series);
-        setBrush(QBrush(s->pen().color(),Qt::SolidPattern));
-        setName(s->name());
-        break;
-        }
-    case QSeries::SeriesTypeScatter: {
-        QXYSeries* s = static_cast<QXYSeries*> (m_series);
-        setBrush(s->brush());
-        setName(s->name());
-        break;
-    }
-    case QSeries::SeriesTypeBar:
-    case QSeries::SeriesTypeStackedBar:
-    case QSeries::SeriesTypePercentBar: {
-        setBrush(m_barset->brush());
-        setName(m_barset->name());
-        break;
-        }
-    case QSeries::SeriesTypePie: {
-        setBrush(m_pieslice->brush());
-        setName(m_pieslice->label());
-        break;
-        }
-    default: {
-        setBrush(Qt::NoBrush);
-        break;
-        }
+    else {
+        setBrush(QBrush(m_series->pen().color()));
     }
 }
 

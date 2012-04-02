@@ -30,64 +30,98 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QSeries;
+class QAreaSeries;
+class QXYSeries;
 class QBarSet;
+class QBarSeries;
 class QPieSlice;
+class QLegend;
+class QPieSeries;
 
-// TODO: split this to 3 different markers for series, barset and pieslice. Current implementation is easier to misuse...
 class LegendMarker : public QGraphicsObject
 {
     Q_OBJECT
 
 public:
-    LegendMarker(QSeries *series, QGraphicsItem *parent = 0);
-    LegendMarker(QSeries *series, QBarSet *barset, QGraphicsItem *parent = 0);
-    LegendMarker(QSeries *series, QPieSlice *pieslice, QGraphicsItem *parent = 0);
-
-    void setPos(qreal x, qreal y);
+    explicit LegendMarker(QSeries* m_series,QLegend *parent);
 
     void setPen(const QPen &pen);
     QPen pen() const;
-
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
-    void setName(const QString name);
-    QString name() const;
+    void setSize(const QSize& size);
 
-    QSeries* series() const;
+    void setLabel(const QString label);
+    QString label() const;
+
+    QSeries* series() const { return m_series;}
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
     QRectF boundingRect() const;
 
-    void layoutChanged();
+    void updateLayout();
 
-public:
+protected:
     // From QGraphicsObject
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 Q_SIGNALS:
-    void clicked(QSeries *series, Qt::MouseButton button);
-    void clicked(QBarSet *barset, Qt::MouseButton button);
-    void clicked(QPieSlice *pieslice, Qt::MouseButton button);
+    void selected();
 
 public Q_SLOTS:
-    void changed();
+    virtual void updated() = 0;
 
-private:
-    QPointF m_pos;
-    QSize m_size;
+protected:
+    QSeries* m_series;
+    QRectF m_markerRect;
     QRectF m_boundingRect;
-    QRectF m_markerBoundingRect;
-    QBrush m_brush;
-    QPen m_pen;
-
-    QSeries *m_series;
-    QBarSet *m_barset;
-    QPieSlice *m_pieslice;
-
+    QLegend* m_legend;
     QGraphicsSimpleTextItem *m_textItem;
+    QGraphicsRectItem *m_rectItem;
 
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class XYLegendMarker : public LegendMarker
+{
+public:
+    XYLegendMarker(QXYSeries *series, QLegend *legend);
+protected:
+    void updated();
+private:
+    QXYSeries *m_series;
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class AreaLegendMarker : public LegendMarker
+{
+public:
+    AreaLegendMarker(QAreaSeries *series, QLegend *legend);
+protected:
+    void updated();
+private:
+    QAreaSeries *m_series;
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class BarLegendMarker : public LegendMarker
+{
+public:
+    BarLegendMarker(QBarSeries *barseires, QBarSet *barset,QLegend *legend);
+protected:
+    void updated();
+private:
+    QBarSet *m_barset;
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class PieLegendMarker : public LegendMarker
+{
+public:
+    PieLegendMarker(QPieSeries *pieSeries, QPieSlice *pieslice, QLegend *legend);
+protected:
+    void updated();
+private:
+    QPieSlice *m_pieslice;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

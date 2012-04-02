@@ -131,7 +131,7 @@ void tst_QChartView::rubberBand()
     QFETCH(int, maxY);
 
     m_view->setRubberBand(rubberBand);
-    QRect padding = m_view->chart()->padding();
+    QRect padding = m_view->chart()->margins();
     QCOMPARE(m_view->rubberBand(), rubberBand);
 
     QLineSeries* line = new QLineSeries();
@@ -186,7 +186,7 @@ void tst_QChartView::keys()
     QFETCH(int, Xcount);
     QFETCH(int, Ycount);
 
-    QRect padding = m_view->chart()->padding();
+    QRect padding = m_view->chart()->margins();
 
     QLineSeries* line = new QLineSeries();
     *line << QPointF(0, 0) << QPointF(100, 100);

@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "qchart.h"
+#include "qchart_p.h"
 #include "qchartaxis.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
@@ -51,10 +52,17 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_animator(0),
     m_dataset(dataset),
     m_chartTheme(0),
-    m_rect(QRectF(QPoint(0,0),m_chart->size())),
+    m_chartRect(QRectF(QPoint(0,0),m_chart->size())),
     m_options(QChart::NoAnimation),
     m_themeForce(false),
-    m_backgroundPadding(10)
+    m_minLeftMargin(0),
+    m_minBottomMargin(0),
+    m_backgroundItem(0),
+    m_titleItem(0),
+    m_marginBig(60),
+    m_marginSmall(20),
+    m_marginTiny(10),
+    m_chartMargins(QRect(m_marginBig,m_marginBig,0,0))
 {
     createConnections();
     setTheme(QChart::ChartThemeLight, false);
@@ -67,39 +75,65 @@ ChartPresenter::~ChartPresenter()
 
 void ChartPresenter::createConnections()
 {
-    QObject::connect(m_chart,SIGNAL(geometryChanged()),this,SLOT(handleGeometryChanged()));
     QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),this,SLOT(handleSeriesAdded(QSeries*,Domain*)));
     QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),this,SLOT(handleSeriesRemoved(QSeries*)));
     QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*,Domain*)),this,SLOT(handleAxisAdded(QChartAxis*,Domain*)));
     QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),this,SLOT(handleAxisRemoved(QChartAxis*)));
 }
 
-void ChartPresenter::handleGeometryChanged()
+void ChartPresenter::setGeometry(const QRectF& rect)
 {
-    QRectF rect(QPoint(0,0),m_chart->size());
-    QRectF padding = m_chart->padding();
-    rect.adjust(padding.left(), padding.top(), -padding.right(), -padding.bottom());
-
-    //rewrite zoom stack
-    /*
-    for(int i=0;i<m_zoomStack.count();i++){
-        QRectF r = m_zoomStack[i];
-        qreal w = rect.width()/m_rect.width();
-        qreal h = rect.height()/m_rect.height();
-        QPointF tl = r.topLeft();
-        tl.setX(tl.x()*w);
-        tl.setY(tl.y()*h);
-        QPointF br = r.bottomRight();
-        br.setX(br.x()*w);
-        br.setY(br.y()*h);
-        r.setTopLeft(tl);
-        r.setBottomRight(br);
-        m_zoomStack[i]=r;
-    }
-    */
     m_rect = rect;
     Q_ASSERT(m_rect.isValid());
-    emit geometryChanged(m_rect);
+    updateLayout();
+}
+
+void ChartPresenter::setMinimumMarginWidth(Axis* axis, qreal width)
+{
+    switch(axis->axisType()){
+        case Axis::X_AXIS:
+        {
+            if(width>m_chartRect.width()+ m_chartMargins.left()) {
+                m_minLeftMargin= width - m_chartRect.width();
+                updateLayout();
+            }
+            break;
+        }
+        case Axis::Y_AXIS:
+        {
+
+            if(m_minLeftMargin!=width){
+                m_minLeftMargin= width;
+                updateLayout();
+            }
+            break;
+        }
+
+    }
+}
+
+void ChartPresenter::setMinimumMarginHeight(Axis* axis, qreal height)
+{
+    switch(axis->axisType()){
+        case Axis::X_AXIS:
+        {
+            if(m_minBottomMargin!=height) {
+                m_minBottomMargin= height;
+                updateLayout();
+            }
+            break;
+        }
+        case Axis::Y_AXIS:
+        {
+
+            if(height>m_chartMargins.bottom()+m_chartRect.height()){
+                m_minBottomMargin= height - m_chartRect.height();
+               updateLayout();
+            }
+            break;
+        }
+
+    }
 }
 
 void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
@@ -126,7 +160,7 @@ void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
 
     QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
     //initialize
-    item->handleGeometryChanged(m_rect);
+    item->handleGeometryChanged(m_chartRect);
     m_axisItems.insert(axis, item);
 }
 
@@ -265,7 +299,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 
     //initialize
     item->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());
-    if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
+    if(m_chartRect.isValid()) item->handleGeometryChanged(m_chartRect);
     m_chartItems.insert(series,item);
 }
 
@@ -334,23 +368,23 @@ void ChartPresenter::resetAllElements()
 
 void ChartPresenter::zoomIn()
 {
-	QRectF rect = geometry();
+	QRectF rect = chartGeometry();
 	rect.setWidth(rect.width()/2);
 	rect.setHeight(rect.height()/2);
-	rect.moveCenter(geometry().center());
+	rect.moveCenter(chartGeometry().center());
 	zoomIn(rect);
 }
 
 void ChartPresenter::zoomIn(const QRectF& rect)
 {
 	QRectF r = rect.normalized();
-    r.translate(-m_chart->padding().topLeft());
+    r.translate(-m_chartMargins.topLeft());
 	if(m_animator) {
 
-		QPointF point(r.center().x()/geometry().width(),r.center().y()/geometry().height());
+		QPointF point(r.center().x()/chartGeometry().width(),r.center().y()/chartGeometry().height());
 		m_animator->setState(ChartAnimator::ZoomInState,point);
 	}
-	m_dataset->zoomInDomain(r,geometry().size());
+	m_dataset->zoomInDomain(r,chartGeometry().size());
 	if(m_animator) {
 		m_animator->setState(ChartAnimator::ShowState);
 	}
@@ -363,9 +397,9 @@ void ChartPresenter::zoomOut()
 		m_animator->setState(ChartAnimator::ZoomOutState);
 	}
 
-	QSizeF size = geometry().size();
-	QRectF rect = geometry();
-    rect.translate(-m_chart->padding().topLeft());
+	QSizeF size = chartGeometry().size();
+	QRectF rect = chartGeometry();
+    rect.translate(-m_chartMargins.topLeft());
     m_dataset->zoomOutDomain(rect.adjusted(size.width()/4,size.height()/4,-size.width()/4,-size.height()/4),size);
     //m_dataset->zoomOutDomain(m_zoomStack[m_zoomIndex-1],geometry().size());
 
@@ -383,7 +417,7 @@ void ChartPresenter::scroll(int dx,int dy)
 		if(dy>0) m_animator->setState(ChartAnimator::ScrollDownState,QPointF());
 	}
 
-	m_dataset->scrollDomain(dx,dy,geometry().size());
+	m_dataset->scrollDomain(dx,dy,chartGeometry().size());
 
     if(m_animator){
 		m_animator->setState(ChartAnimator::ShowState);
@@ -395,6 +429,104 @@ QChart::AnimationOptions ChartPresenter::animationOptions() const
     return m_options;
 }
 
+void ChartPresenter::updateLayout()
+{
+    if (!m_rect.isValid()) return;
+
+    // recalculate title size
+
+    QSize titleSize;
+    int titlePadding=0;
+
+    if (m_titleItem) {
+        titleSize= m_titleItem->boundingRect().size().toSize();
+    }
+
+    //defaults
+    m_chartMargins = QRect(QPoint(m_minLeftMargin>m_marginBig?m_minLeftMargin:m_marginBig,m_marginBig),QPoint(m_marginBig,m_minBottomMargin>m_marginBig?m_minBottomMargin:m_marginBig));
+    titlePadding = m_chartMargins.top()/2;
+
+    QLegend* legend = m_chart->d_ptr->m_legend;
+
+    // recalculate legend position
+    if (legend->isAttachedToChart() && legend->isEnabled()) {
+
+        QRect legendRect;
+
+        // Reserve some space for legend
+        switch (legend->alignment()) {
+
+            case QLegend::AlignmentTop: {
+                int ledgendSize = legend->minHeight();
+                int topPadding = 2*m_marginTiny + titleSize.height() + ledgendSize + m_marginTiny;
+                m_chartMargins = QRect(QPoint(m_chartMargins.left(),topPadding),QPoint(m_chartMargins.right(),m_chartMargins.bottom()));
+                m_legendMargins = QRect(QPoint(m_chartMargins.left(),topPadding - (ledgendSize + m_marginTiny)),QPoint(m_chartMargins.right(),m_rect.height()-topPadding + m_marginTiny));
+                titlePadding = m_marginTiny + m_marginTiny;
+                break;
+            }
+            case QLegend::AlignmentBottom: {
+                int ledgendSize = legend->minHeight();
+                int bottomPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny + m_minBottomMargin;
+                m_chartMargins = QRect(QPoint(m_chartMargins.left(),m_chartMargins.top()),QPoint(m_chartMargins.right(),bottomPadding));
+                m_legendMargins = QRect(QPoint(m_chartMargins.left(),m_rect.height()-bottomPadding + m_marginTiny + m_minBottomMargin),QPoint(m_chartMargins.right(),m_marginTiny + m_marginSmall));
+                titlePadding = m_chartMargins.top()/2;
+                break;
+            }
+            case QLegend::AlignmentLeft: {
+                int ledgendSize = legend->minWidht();
+                int leftPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny + m_minLeftMargin;
+                m_chartMargins = QRect(QPoint(leftPadding,m_chartMargins.top()),QPoint(m_chartMargins.right(),m_chartMargins.bottom()));
+                m_legendMargins = QRect(QPoint(m_marginTiny + m_marginSmall,m_chartMargins.top()),QPoint(m_rect.width()-leftPadding + m_marginTiny + m_minLeftMargin,m_chartMargins.bottom()));
+                titlePadding = m_chartMargins.top()/2;
+                break;
+            }
+            case QLegend::AlignmentRight: {
+                int ledgendSize = legend->minWidht();
+                int rightPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny;
+                m_chartMargins = QRect(QPoint(m_chartMargins.left(),m_chartMargins.top()),QPoint(rightPadding,m_chartMargins.bottom()));
+                m_legendMargins = QRect(QPoint(m_rect.width()- rightPadding+ m_marginTiny ,m_chartMargins.top()),QPoint(m_marginTiny + m_marginSmall,m_chartMargins.bottom()));
+                titlePadding = m_chartMargins.top()/2;
+                break;
+            }
+            default: {
+                break;
+            }
+        }
+    }
+
+    // recalculate title position
+    if (m_titleItem) {
+        QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
+        m_titleItem->setPos(center.x(),titlePadding);
+    }
+
+    //recalculate background gradient
+    if (m_backgroundItem) {
+        m_backgroundItem->setRect(m_rect.adjusted(m_marginTiny,m_marginTiny, -m_marginTiny, -m_marginTiny));
+    }
+
+   m_chartRect = m_rect.adjusted(m_chartMargins.left(),m_chartMargins.top(),-m_chartMargins.right(),-m_chartMargins.bottom());
+
+   emit geometryChanged(m_chartRect);
+   legend->setGeometry(m_rect.adjusted(m_legendMargins.left(),m_legendMargins.top(),-m_legendMargins.right(),-m_legendMargins.bottom()));
+}
+
+void ChartPresenter::createChartBackgroundItem()
+{
+    if (!m_backgroundItem) {
+        m_backgroundItem = new ChartBackground(rootItem());
+        m_backgroundItem->setPen(Qt::NoPen);
+        m_backgroundItem->setZValue(ChartPresenter::BackgroundZValue);
+    }
+}
+
+void ChartPresenter::createChartTitleItem()
+{
+    if (!m_titleItem) {
+        m_titleItem = new QGraphicsSimpleTextItem(rootItem());
+        m_titleItem->setZValue(ChartPresenter::BackgroundZValue);
+    }
+}
 
 #include "moc_chartpresenter_p.cpp"
 

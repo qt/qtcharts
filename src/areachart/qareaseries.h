@@ -58,6 +58,7 @@ public: // from QChartSeries
 Q_SIGNALS:
     void updated();
     void clicked(const QPointF &point);
+    void selected();
 
 private:
     QBrush m_brush;

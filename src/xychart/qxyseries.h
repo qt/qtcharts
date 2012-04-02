@@ -75,6 +75,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
     void clicked(const QPointF &point);
+    void selected();
     void updated();
     void pointReplaced(int index);
     void pointRemoved(int index);
@@ -87,7 +88,7 @@ protected:
     QPen m_pen;
     QBrush m_brush;
 
-    int m_mapX;    
+    int m_mapX;
     int m_mapY;
     int m_mapFirst;
     int m_mapCount;

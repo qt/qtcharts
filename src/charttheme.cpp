@@ -176,7 +176,6 @@ void ChartTheme::decorate(QBarSeries* series, int index, bool force)
                 takeAtPos += step;
             takeAtPos -= (int) takeAtPos;
         }
-        qDebug() << "pos:" << takeAtPos;
         if (brush == sets.at(i)->brush() || force )
             sets.at(i)->setBrush(colorAt(m_seriesGradients.at(colorIndex), takeAtPos));
 

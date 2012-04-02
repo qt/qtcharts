@@ -39,6 +39,7 @@ class QAreaSeries;
 class LegendScrollButton;
 class QSeries;
 class QChart;
+class Scroller;
 
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
@@ -71,25 +72,27 @@ public:
     void setAlignmnent(QLegend::Alignments alignment);
     QLegend::Alignments alignment() const;
 
-    QSizeF maximumSize() const;
-    void setMaximumSize(const QSizeF size);
-
-    QSizeF size() const;
-    void setSize(const QSizeF size);
-    void setPos(const QPointF &pos);
-
-    void scrollButtonClicked(LegendScrollButton *scrollButton);
 
     void detachFromChart();
     void attachToChart();
-    bool attachedToChart();
+    bool isAttachedToChart();
 
-Q_SIGNALS:
-    // for interactions.
-    void clicked(QSeries *series, Qt::MouseButton button);
-    void clicked(QBarSet *barset, Qt::MouseButton button);
-    void clicked(QPieSlice *slice, Qt::MouseButton button);
-    void legendGeometryChanged();
+    qreal minWidht() const { return m_minWidth;}
+    qreal minHeight() const { return m_minHeight;}
+
+    void setBackgroundVisible(bool visible);
+    bool isBackgroundVisible() const;
+
+    void setOffset(const QPointF& point);
+    QPointF offset() const;
+
+protected:
+    void resizeEvent(QGraphicsSceneResizeEvent *event);
+    void hideEvent(QHideEvent *event);
+    void showEvent(QShowEvent *event);
+    void mousePressEvent(QGraphicsSceneMouseEvent* event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 
 public Q_SLOTS:
     // PIMPL --->
@@ -108,36 +111,39 @@ private:
     void appendMarkers(QBarSeries *series);
     void appendMarkers(QPieSeries *series);
     void deleteMarkers(QSeries *series);
+
+
+
+
+private Q_SLOTS:
     void updateLayout();
-    void layoutHorizontal();
-    void layoutVertical();
-    void rescaleScrollButtons(const QSize &size);
-    QSizeF maximumMarkerSize();
-    void checkFirstMarkerBounds();
-    bool scrollButtonsVisible();
+    void scroll();
 
+private:
     qreal m_margin;
-    QPointF m_pos;
-    QSizeF m_minimumSize;
-    QSizeF m_maximumSize;
-    QSizeF m_size;
 
-    QList<LegendMarker *> m_markers;
+    QRectF m_rect;
+    qreal m_offsetX;
+    qreal m_offsetY;
+
+    //QList<LegendMarker *> m_markers;
 
     QBrush m_brush;
     QPen m_pen;
     QLegend::Alignments m_alignment;
+    QGraphicsItemGroup* m_markers;
 
-    int mFirstMarker;
-
-    LegendScrollButton *m_scrollButtonLeft;
-    LegendScrollButton *m_scrollButtonRight;
-    LegendScrollButton *m_scrollButtonUp;
-    LegendScrollButton *m_scrollButtonDown;
 
     bool m_attachedToChart;
 
     QChart *m_chart;
+    qreal m_minWidth;
+    qreal m_minHeight;
+    qreal m_width;
+    qreal m_height;
+    bool m_visible;
+    bool m_dirty;
+    Scroller* m_scroller;
     friend class QChart;
     // <--- PIMPL
 };

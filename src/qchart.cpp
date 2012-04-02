@@ -66,13 +66,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  Constructs a chart object which is a child of a\a parent. Parameter \a wFlags is passed to the QGraphicsWidget constructor.
  */
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
-d_ptr(new QChartPrivate(this))
+d_ptr(new QChartPrivate())
 {
-    //setMinimumSize(200,200);
     d_ptr->m_legend = new QLegend(this);
     d_ptr->m_dataset = new ChartDataSet(this);
     d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
-    setMinimumSize(d_ptr->m_padding.left() * 3, d_ptr->m_padding.top() * 3);
+    d_ptr->m_presenter->setTheme(QChart::ChartThemeDefault,false);
+    //TODO:fix me setMinimumSize(d_ptr->m_padding.left() * 3, d_ptr->m_padding.top() * 3);
     connect(d_ptr->m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),d_ptr->m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
     connect(d_ptr->m_dataset,SIGNAL(seriesRemoved(QSeries*)),d_ptr->m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
@@ -123,15 +123,15 @@ void QChart::removeAllSeries()
  */
 void QChart::setBackgroundBrush(const QBrush& brush)
 {
-    d_ptr->createChartBackgroundItem();
-    d_ptr->m_backgroundItem->setBrush(brush);
-    d_ptr->m_backgroundItem->update();
+    d_ptr->m_presenter->createChartBackgroundItem();
+    d_ptr->m_presenter->m_backgroundItem->setBrush(brush);
+    d_ptr->m_presenter->m_backgroundItem->update();
 }
 
 QBrush QChart::backgroundBrush() const
 {
-    if (!d_ptr->m_backgroundItem) return QBrush();
-    return (d_ptr->m_backgroundItem)->brush();
+    if (!d_ptr->m_presenter->m_backgroundItem) return QBrush();
+    return (d_ptr->m_presenter->m_backgroundItem)->brush();
 }
 
 /*!
@@ -139,15 +139,15 @@ QBrush QChart::backgroundBrush() const
  */
 void QChart::setBackgroundPen(const QPen& pen)
 {
-    d_ptr->createChartBackgroundItem();
-    d_ptr->m_backgroundItem->setPen(pen);
-    d_ptr->m_backgroundItem->update();
+    d_ptr->m_presenter->createChartBackgroundItem();
+    d_ptr->m_presenter->m_backgroundItem->setPen(pen);
+    d_ptr->m_presenter->m_backgroundItem->update();
 }
 
 QPen QChart::backgroundPen() const
 {
-    if (!d_ptr->m_backgroundItem) return QPen();
-    return d_ptr->m_backgroundItem->pen();
+    if (!d_ptr->m_presenter->m_backgroundItem) return QPen();
+    return d_ptr->m_presenter->m_backgroundItem->pen();
 }
 
 /*!
@@ -155,9 +155,9 @@ QPen QChart::backgroundPen() const
  */
 void QChart::setTitle(const QString& title)
 {
-    d_ptr->createChartTitleItem();
-    d_ptr->m_titleItem->setText(title);
-    d_ptr->updateLayout();
+    d_ptr->m_presenter->createChartTitleItem();
+    d_ptr->m_presenter->m_titleItem->setText(title);
+    d_ptr->m_presenter->updateLayout();
 }
 
 /*!
@@ -165,8 +165,8 @@ void QChart::setTitle(const QString& title)
  */
 QString QChart::title() const
 {
-    if (d_ptr->m_titleItem)
-    return d_ptr->m_titleItem->text();
+    if (d_ptr->m_presenter->m_titleItem)
+    return d_ptr->m_presenter->m_titleItem->text();
     else
     return QString();
 }
@@ -176,9 +176,9 @@ QString QChart::title() const
  */
 void QChart::setTitleFont(const QFont& font)
 {
-    d_ptr->createChartTitleItem();
-    d_ptr->m_titleItem->setFont(font);
-    d_ptr->updateLayout();
+    d_ptr->m_presenter->createChartTitleItem();
+    d_ptr->m_presenter->m_titleItem->setFont(font);
+    d_ptr->m_presenter->updateLayout();
 }
 
 /*!
@@ -186,9 +186,9 @@ void QChart::setTitleFont(const QFont& font)
  */
 void QChart::setTitleBrush(const QBrush &brush)
 {
-    d_ptr->createChartTitleItem();
-    d_ptr->m_titleItem->setBrush(brush);
-    d_ptr->updateLayout();
+    d_ptr->m_presenter->createChartTitleItem();
+    d_ptr->m_presenter->m_titleItem->setBrush(brush);
+    d_ptr->m_presenter->updateLayout();
 }
 
 /*!
@@ -196,8 +196,8 @@ void QChart::setTitleBrush(const QBrush &brush)
  */
 QBrush QChart::titleBrush() const
 {
-    if (!d_ptr->m_titleItem) return QBrush();
-    return d_ptr->m_titleItem->brush();
+    if (!d_ptr->m_presenter->m_titleItem) return QBrush();
+    return d_ptr->m_presenter->m_titleItem->brush();
 }
 
 /*!
@@ -267,9 +267,9 @@ QLegend* QChart::legend() const
     return d_ptr->m_legend;
 }
 
-QRect QChart::padding() const
+QRect QChart::margins() const
 {
-    return d_ptr->m_padding;
+    return d_ptr->m_presenter->margins();
 }
 
 
@@ -279,9 +279,8 @@ QRect QChart::padding() const
 void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
 {
     d_ptr->m_rect = QRectF(QPoint(0,0),event->newSize());
-    d_ptr->updateLayout();
     QGraphicsWidget::resizeEvent(event);
-    update();
+    d_ptr->m_presenter->setGeometry(d_ptr->m_rect);
 }
 
 /*!
@@ -302,46 +301,42 @@ QChart::AnimationOptions QChart::animationOptions() const
 
 void QChart::scrollLeft()
 {
-    d_ptr->m_presenter->scroll(-d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+    d_ptr->m_presenter->scroll(-d_ptr->m_presenter->chartGeometry().width()/(axisX()->ticksCount()-1),0);
 }
 
 void QChart::scrollRight()
 {
-    d_ptr->m_presenter->scroll(d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+    d_ptr->m_presenter->scroll(d_ptr->m_presenter->chartGeometry().width()/(axisX()->ticksCount()-1),0);
 }
 
 void QChart::scrollUp()
 {
-    d_ptr->m_presenter->scroll(0,d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
+    d_ptr->m_presenter->scroll(0,d_ptr->m_presenter->chartGeometry().width()/(axisY()->ticksCount()-1));
 }
 
 void QChart::scrollDown()
 {
-    d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
+    d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->chartGeometry().width()/(axisY()->ticksCount()-1));
 }
 
 void QChart::setBackgroundVisible(bool visible)
 {
-    d_ptr->createChartBackgroundItem();
-    d_ptr->m_backgroundItem->setVisible(visible);
+    d_ptr->m_presenter->createChartBackgroundItem();
+    d_ptr->m_presenter->m_backgroundItem->setVisible(visible);
 }
 
 bool QChart::isBackgroundVisible() const
 {
-    if (!d_ptr->m_backgroundItem) return false;
-    return d_ptr->m_backgroundItem->isVisible();
+    if (!d_ptr->m_presenter->m_backgroundItem) return false;
+    return d_ptr->m_presenter->m_backgroundItem->isVisible();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QChartPrivate::QChartPrivate(QChart *parent):
-q_ptr(parent),
-m_backgroundItem(0),
-m_titleItem(0),
+QChartPrivate::QChartPrivate():
 m_legend(0),
 m_dataset(0),
-m_presenter(0),
-m_padding(QRect(50,50,0,0))
+m_presenter(0)
 {
 
 }
@@ -349,150 +344,6 @@ m_padding(QRect(50,50,0,0))
 QChartPrivate::~QChartPrivate()
 {
 
-}
-
-void QChartPrivate::createChartBackgroundItem()
-{
-    if (!m_backgroundItem) {
-        m_backgroundItem = new ChartBackground(q_ptr);
-        m_backgroundItem->setPen(Qt::NoPen);
-        m_backgroundItem->setZValue(ChartPresenter::BackgroundZValue);
-    }
-}
-
-void QChartPrivate::createChartTitleItem()
-{
-    if (!m_titleItem) {
-        m_titleItem = new QGraphicsSimpleTextItem(q_ptr);
-        m_titleItem->setZValue(ChartPresenter::BackgroundZValue);
-    }
-}
-
-void QChartPrivate::updateLegendLayout()
-{
-    //int legendPadding = m_chart->legend()->padding();
-    int legendPadding = 30;
-    QRectF rect = m_rect;
-
-    if ((m_legend->attachedToChart()) && (m_legend->isVisible())) {
-
-        // Reserve some space for legend
-        switch (m_legend->alignment()) {
-        case QLegend::AlignmentTop: {
-            rect.adjust(m_padding.left(),
-                        m_padding.top() + legendPadding,
-                        -m_padding.right(),
-                        -m_padding.bottom());
-            break;
-        }
-        case QLegend::AlignmentBottom: {
-            rect.adjust(m_padding.left(),
-                        m_padding.top(),
-                        -m_padding.right(),
-                        -m_padding.bottom() - legendPadding);
-            break;
-        }
-        case QLegend::AlignmentLeft: {
-            rect.adjust(m_padding.left() + legendPadding,
-                        m_padding.top(),
-                        -m_padding.right(),
-                        -m_padding.bottom());
-            break;
-        }
-        case QLegend::AlignmentRight: {
-            rect.adjust(m_padding.left(),
-                        m_padding.top(),
-                        -m_padding.right() - legendPadding,
-                        -m_padding.bottom());
-            break;
-        }
-        default: {
-            rect.adjust(m_padding.left(),
-                        m_padding.top(),
-                        -m_padding.right(),
-                        -m_padding.bottom());
-            break;
-        }
-        }
-    } else {
-
-        rect.adjust(m_padding.left(),
-                    m_padding.top(),
-                    -m_padding.right(),
-                    -m_padding.bottom());
-    }
-
-    QRectF plotRect = m_rect.adjusted(m_padding.left()
-                                      ,m_padding.top()
-                                      ,-m_padding.right()
-                                      ,-m_padding.bottom());
-    QRectF legendRect;
-
-    int padding = 0; // TODO: fix this
-    switch (m_legend->alignment())
-    {
-        case QLegend::AlignmentTop: {
-            legendRect = m_rect.adjusted(0,padding,0,-padding - plotRect.height());
-            break;
-        }
-        case QLegend::AlignmentBottom: {
-            legendRect = m_rect.adjusted(padding,padding + plotRect.height(),-padding,0);
-            break;
-        }
-        case QLegend::AlignmentLeft: {
-            legendRect = m_rect.adjusted(0,padding,-padding - plotRect.width(),-padding);
-            break;
-        }
-        case QLegend::AlignmentRight: {
-            legendRect = m_rect.adjusted(padding + plotRect.width(),padding,0,-padding);
-            break;
-        }
-        default: {
-            legendRect = plotRect;
-            break;
-        }
-    }
-
-    m_legend->setMaximumSize(legendRect.size());
-
-    qreal width = legendRect.width() - m_legend->size().width();
-    qreal height = legendRect.height() - m_legend->size().height();
-
-    QPointF pos = legendRect.topLeft();
-    if (width > 0) {
-        pos.setX(pos.x() + width/2);
-    }
-    if (height > 0) {
-        pos.setY(pos.y() + height/2);
-    }
-
-    m_legend->setPos(pos);
-}
-
-void QChartPrivate::updateLayout()
-{
-    if (!m_rect.isValid()) return;
-
-    int padding = m_padding.top();
-    int backgroundPadding = m_presenter->backgroundPadding();
-
-    // recalculate title position
-    if (m_titleItem) {
-        QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
-        m_titleItem->setPos(center.x(),m_rect.top()/2 + padding/2);
-    }
-
-    //recalculate background gradient
-    if (m_backgroundItem) {
-        m_backgroundItem->setRect(m_rect.adjusted(backgroundPadding,backgroundPadding, -backgroundPadding, -backgroundPadding));
-    }
-
-    // recalculate legend position
-    if (m_legend) {
-        if ((m_legend->attachedToChart()) && (m_legend->parentObject() == q_ptr)) {
-            updateLegendLayout();
-        }
-    }
 }
 
 #include "moc_qchart.cpp"

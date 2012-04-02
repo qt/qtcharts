@@ -78,7 +78,7 @@ public:
 
 Q_SIGNALS:
     void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);        // Up to user of api, what to do with these signals
-
+    void selected();
     //
     void updatedBars();
     void restructuredBars();
