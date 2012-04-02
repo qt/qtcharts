@@ -56,8 +56,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::setValuesVisible(bool visible = true)
-    \brief Sets visibility of bar values. Values are visible, if parameter \a visible is true
+    \fn void QBarSet::setLabelssVisible(bool visible = true)
+    \brief Sets visibility of bar labels. If \a visible is true, labels are drawn on top of barsets.
 */
 
 /*!
@@ -72,6 +72,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QBarSet::QBarSet(QString name, QObject *parent)
     : QObject(parent)
     ,m_name(name)
+    ,m_labelsVisible(false)
 {
 }
 
@@ -183,27 +184,71 @@ QBrush QBarSet::brush() const
 }
 
 /*!
-    Sets the pen for values that are drawn on top of this set
+    Sets pen of the values that are drawn on top of this barset
 */
-void QBarSet::setValuePen(const QPen &pen)
+void QBarSet::setLabelPen(const QPen &pen)
 {
-    m_valuePen = pen;
+    m_labelPen = pen;
+    emit valueChanged();
+}
+
+/*!
+    Returns pen of the values that are drawn on top of this barset
+*/
+QPen QBarSet::labelPen() const
+{
+    return m_labelPen;
+}
+
+/*!
+    Sets brush of the values that are drawn on top of this barset
+*/
+void QBarSet::setLabelBrush(const QBrush &brush)
+{
+    m_labelBrush = brush;
+    emit valueChanged();
+}
+
+/*!
+    Returns brush of the values that are drawn on top of this barset
+*/
+QBrush QBarSet::labelBrush() const
+{
+    return m_labelBrush;
+}
+
+/*!
+    Sets the pen for values that are drawn on top of this barset
+*/
+void QBarSet::setLabelFont(const QFont &font)
+{
+    m_labelFont = font;
+    emit valueChanged();
 }
 
 /*!
     Returns the pen for values that are drawn on top of this set
 */
-QPen QBarSet::valuePen() const
+QFont QBarSet::labelFont() const
 {
-    return m_valuePen;
+    return m_labelFont;
 }
 
 /*!
     Sets the visibility of barset values to \a visible
 */
-void QBarSet::setValuesVisible(bool visible)
+void QBarSet::setLabelsVisible(bool visible)
 {
-    emit valuesVisibleChanged(visible);
+    m_labelsVisible = visible;
+    emit labelsVisibleChanged(visible);
+}
+
+/*!
+    Returns the visibility of values
+*/
+bool QBarSet::labelsVisible() const
+{
+    return m_labelsVisible;
 }
 
 /*!

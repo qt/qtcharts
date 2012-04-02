@@ -20,7 +20,7 @@
 
 #include "barchartitem_p.h"
 #include "bar_p.h"
-#include "barvalue_p.h"
+#include "barlabel_p.h"
 #include "qbarset.h"
 #include "qbarseries.h"
 #include "qchart.h"
@@ -75,7 +75,7 @@ void BarChartItem::dataChanged()
         delete item;
 
     m_bars.clear();
-    m_values.clear();
+    m_labels.clear();
     m_layout.clear();
 
     // Create new graphic items for bars
@@ -93,14 +93,14 @@ void BarChartItem::dataChanged()
         }
     }
 
-    // Create value items
+    // Create labels
     for (int category = 0; category < m_series->categoryCount(); category++) {
         for (int s = 0; s < m_series->barsetCount(); s++) {
             QBarSet *set = m_series->barsetAt(s);
-            BarValue *value = new BarValue(*set, this);
+            BarLabel *value = new BarLabel(*set, this);
             childItems().append(value);
-            m_values.append(value);
-            connect(set,SIGNAL(valuesVisibleChanged(bool)),value,SLOT(valuesVisibleChanged(bool)));
+            m_labels.append(value);
+            connect(set,SIGNAL(labelsVisibleChanged(bool)),value,SLOT(labelsVisibleChanged(bool)));
         }
     }
 }
@@ -142,17 +142,17 @@ QVector<QRectF> BarChartItem::calculateLayout()
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
 
-            BarValue* value = m_values.at(itemIndex);
+            BarLabel* label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(barSet->valueAt(category))) {
-                value->setText(QString::number(barSet->valueAt(category)));
+                label->setText(QString::number(barSet->valueAt(category)));
             } else {
-                value->setText(QString(""));
+                label->setText(QString(""));
             }
 
-            value->setPos(xPos + (rect.width()/2 - value->boundingRect().width()/2)
-                          ,yPos - barHeight/2 - value->boundingRect().height()/2);
-            value->setPen(barSet->valuePen());
+            label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
+                          ,yPos - barHeight/2 - label->boundingRect().height()/2);
+//            value->setFont(barSet->valueFont());
 
             itemIndex++;
             xPos += barWidth;

@@ -51,7 +51,7 @@ public:
     QList<QBarSet*> barSets() const;
     QBarCategories categories() const;
 
-    void setValuesVisible(bool visible = true);
+    void setLabelsVisible(bool visible = true);
 
     bool setModel(QAbstractItemModel *model);
     QAbstractItemModel *modelExt() { return m_model; }

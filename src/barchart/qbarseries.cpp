@@ -391,10 +391,10 @@ QBarCategories QBarSeries::categories() const
     return categories;
 }
 
-void QBarSeries::setValuesVisible(bool visible)
+void QBarSeries::setLabelsVisible(bool visible)
 {
     foreach (QBarSet* s, barSets()) {
-        s->setValuesVisible(visible);
+        s->setLabelsVisible(visible);
     }
 }
 

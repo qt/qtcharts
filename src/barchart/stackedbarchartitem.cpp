@@ -20,7 +20,7 @@
 
 #include "stackedbarchartitem_p.h"
 #include "bar_p.h"
-#include "barvalue_p.h"
+#include "barlabel_p.h"
 #include "qbarset.h"
 #include <QDebug>
 
@@ -60,25 +60,24 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
         for (int set=0; set < m_series->barsetCount(); set++) {
             QBarSet* barSet = m_series->barsetAt(set);
 
-            qreal barHeight = barSet->valueAt(category) * scale; //m_series->valueAt(set, category) * scale;
+            qreal barHeight = barSet->valueAt(category) * scale;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
             QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
             layout.append(rect);
 
-            BarValue* value = m_values.at(itemIndex);
+            BarLabel* label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(barSet->valueAt(category))) {
-                value->setText(QString::number(barSet->valueAt(category)));
+                label->setText(QString::number(barSet->valueAt(category)));
             } else {
-                value->setText(QString(""));
+                label->setText(QString(""));
             }
 
-            value->setPos(xPos + (rect.width()/2 - value->boundingRect().width()/2)
-                          ,yPos - barHeight/2 - value->boundingRect().height()/2);
-            value->setPen(barSet->valuePen());
-
+            label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
+                          ,yPos - barHeight/2 - label->boundingRect().height()/2);
+//            value->setFont(barSet->valueFont());
             itemIndex++;
             yPos -= barHeight;
         }

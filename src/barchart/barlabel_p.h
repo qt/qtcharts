@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef BARVALUE_P_H
-#define BARVALUE_P_H
+#ifndef BARLABEL_P_H
+#define BARLABEL_P_H
 
 #include "qchartglobal.h"
 #include <QGraphicsObject>
@@ -32,17 +32,20 @@ class QBarSet;
 
 // Visual class for bar values
 // By default these are not visible.
-class BarValue : public QGraphicsObject
+class BarLabel : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    BarValue(QBarSet &set, QGraphicsItem *parent = 0);
+    BarLabel(QBarSet &barSet, QGraphicsItem *parent = 0);
 
     void setText(QString str);
     QString text() const;
 
     void setPen(const QPen &pen);
     QPen pen() const;
+
+    void setBrush(const QBrush &brush);
+    QBrush brush() const;
 
     void setFont(const QFont &font);
     QFont font() const;
@@ -54,7 +57,7 @@ public:
     QRectF boundingRect() const;
 
 public Q_SLOTS:
-    void valuesVisibleChanged(bool visible);
+    void labelsVisibleChanged(bool visible);
 
 private:
 
@@ -64,4 +67,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // BARVALUE_P_H
+#endif // BARLABEL_P_H

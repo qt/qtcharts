@@ -18,73 +18,87 @@
 **
 ****************************************************************************/
 
-#include "barvalue_p.h"
+#include "barlabel_p.h"
+#include "chartpresenter_p.h"
+#include <QBarSet>
 #include <QPainter>
 #include <QPen>
 #include <QGraphicsSimpleTextItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarValue::BarValue(QBarSet &set, QGraphicsItem *parent) : QGraphicsObject(parent),
-    m_barSet(set),
+BarLabel::BarLabel(QBarSet &barSet, QGraphicsItem *parent) : QGraphicsObject(parent),
+    m_barSet(barSet),
     m_textItem(new QGraphicsSimpleTextItem(this))
 {
-//    connect(&set,SIGNAL(valuesVisibleChanged(bool)),value,SLOT(valuesVisibleChanged(bool)));
-    setVisible(false);
+//    connect(&set,SIGNAL(labelsVisibleChanged(bool)),value,SLOT(labelsVisibleChanged(bool)));
+    setZValue(ChartPresenter::BarSeriesZValue + 1);
+    setVisible(barSet.labelsVisible());
+    setPen(Qt::NoPen);
+    setBrush(Qt::SolidPattern);
 }
 
-void BarValue::setText(QString str)
+void BarLabel::setText(QString str)
 {
     m_textItem->setText(str);
 }
 
-QString BarValue::text() const
+QString BarLabel::text() const
 {
     return m_textItem->text();
 }
 
-void BarValue::setPen(const QPen &pen)
+void BarLabel::setPen(const QPen &pen)
 {
     m_textItem->setPen(pen);
 }
 
-QPen BarValue::pen() const
+QPen BarLabel::pen() const
 {
     return m_textItem->pen();
 }
 
-void BarValue::setFont(const QFont &font)
+void BarLabel::setBrush(const QBrush &brush)
+{
+    m_textItem->setBrush(brush);
+}
+
+QBrush BarLabel::brush() const
+{
+    return m_textItem->brush();
+}
+
+void BarLabel::setFont(const QFont &font)
 {
     m_textItem->setFont(font);
 }
 
-QFont BarValue::font() const
+QFont BarLabel::font() const
 {
     return m_textItem->font();
 }
 
-void BarValue::setPos(qreal x, qreal y)
+void BarLabel::setPos(qreal x, qreal y)
 {
     m_textItem->setPos(x,y);
 }
 
-void BarValue::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+void BarLabel::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(painter)
     Q_UNUSED(option)
     Q_UNUSED(widget)
 }
 
-QRectF BarValue::boundingRect() const
+QRectF BarLabel::boundingRect() const
 {
     return m_textItem->boundingRect();
 }
 
-void BarValue::valuesVisibleChanged(bool visible)
+void BarLabel::labelsVisibleChanged(bool visible)
 {
-    qDebug() << "BarValue visiblle changed:" <<visible;
     setVisible(visible);
 }
 
-#include "moc_barvalue_p.cpp"
+#include "moc_barlabel_p.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -183,9 +183,9 @@ void ChartTheme::decorate(QBarSeries* series, int index, bool force)
         // Pick label color from the opposite end of the gradient.
         // 0.3 as a boundary seems to work well.
         if (takeAtPos < 0.3)
-            sets.at(i)->setValuePen(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1));
+            sets.at(i)->setLabelBrush(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1));
         else
-            sets.at(i)->setValuePen(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0));
+            sets.at(i)->setLabelBrush(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0));
 
         if (pen == sets.at(i)->pen() || force) {
             QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0);

@@ -360,7 +360,6 @@ void ThemeWidget::updateUI()
 
     QLegend::Alignments alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
     foreach (QChartView *chartView, m_charts) {
-        qDebug() << alignment;
         chartView->chart()->legend()->setAlignmnent(alignment);
     }
 }

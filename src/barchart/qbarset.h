@@ -24,6 +24,7 @@
 #include <qchartglobal.h>
 #include <QPen>
 #include <QBrush>
+#include <QFont>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -55,10 +56,17 @@ public:
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
-    void setValuePen(const QPen &pen);
-    QPen valuePen() const;
+    void setLabelPen(const QPen &pen);
+    QPen labelPen() const;
 
-    void setValuesVisible(bool visible = true);
+    void setLabelBrush(const QBrush &brush);
+    QBrush labelBrush() const;
+
+    void setLabelFont(const QFont &font);
+    QFont labelFont() const;
+
+    void setLabelsVisible(bool visible = true);
+    bool labelsVisible() const;
 
 Q_SIGNALS:
     void clicked(QString category, Qt::MouseButtons button);                         // Clicked and hover signals exposed to user
@@ -69,7 +77,7 @@ Q_SIGNALS:
     void hoverEnter(QPoint pos);
     void hoverLeave();
     void showToolTip(QPoint pos, QString tip);  // Private signal
-    void valuesVisibleChanged(bool visible);
+    void labelsVisibleChanged(bool visible);
     // <--- TO PIMPL
 
 public Q_SLOTS:
@@ -86,7 +94,10 @@ private:
     QMap<QString, qreal> m_mappedValues;
     QPen m_pen;
     QBrush m_brush;
-    QPen m_valuePen;
+    QPen m_labelPen;
+    QBrush m_labelBrush;
+    QFont m_labelFont;
+    bool m_labelsVisible;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
