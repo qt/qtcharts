@@ -52,8 +52,6 @@ private Q_SLOTS:
 	void removeAllSeries();
 	void axisY_data();
 	void axisY();
-    void seriesCount_data();
-	void seriesCount();
     void seriesIndex_data();
 	void seriesIndex();
 	void domain_data();
@@ -259,40 +257,6 @@ void tst_ChartDataSet::axisY()
     QVERIFY(dataSet.axisY(series1) == axis1);
     QVERIFY(dataSet.axisY(series2) == axis2);
 
-}
-
-void tst_ChartDataSet::seriesCount_data()
-{
-    addSeries_data();
-}
-
-void tst_ChartDataSet::seriesCount()
-{
-    QFETCH(QLineSeries*, series0);
-    QFETCH(QChartAxis*, axis0);
-    QFETCH(QLineSeries*, series1);
-    QFETCH(QChartAxis*, axis1);
-    QFETCH(QLineSeries*, series2);
-    QFETCH(QChartAxis*, axis2);
-    QFETCH(int, axisCount);
-    Q_UNUSED(axisCount);
-
-    ChartDataSet dataSet;
-
-    dataSet.addSeries(series0, axis0);
-    dataSet.addSeries(series1, axis1);
-    dataSet.addSeries(series2, axis2);
-
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*,Domain*)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
-
-    QCOMPARE(dataSet.seriesCount(series0->type()),3);
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
 }
 
 void tst_ChartDataSet::seriesIndex_data()
