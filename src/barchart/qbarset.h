@@ -55,8 +55,8 @@ public:
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
-    void setFloatingValuePen(const QPen &pen);
-    QPen floatingValuePen() const;
+    void setValuePen(const QPen &pen);
+    QPen valuePen() const;
 
     void setValuesVisible(bool visible = true);
 
@@ -86,7 +86,7 @@ private:
     QMap<QString, qreal> m_mappedValues;
     QPen m_pen;
     QBrush m_brush;
-    QPen m_floatingValuePen;
+    QPen m_valuePen;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

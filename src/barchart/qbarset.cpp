@@ -56,8 +56,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::toggleFloatingValues()
-    \brief \internal
+    \fn void QBarSet::setValuesVisible(bool visible = true)
+    \brief Sets visibility of bar values. Values are visible, if parameter \a visible is true
 */
 
 /*!
@@ -183,19 +183,19 @@ QBrush QBarSet::brush() const
 }
 
 /*!
-    Sets the pen for floating values that are drawn on top of this set
+    Sets the pen for values that are drawn on top of this set
 */
-void QBarSet::setFloatingValuePen(const QPen &pen)
+void QBarSet::setValuePen(const QPen &pen)
 {
-    m_floatingValuePen = pen;
+    m_valuePen = pen;
 }
 
 /*!
-    Returns the pen for floating values that are drawn on top of this set
+    Returns the pen for values that are drawn on top of this set
 */
-QPen QBarSet::floatingValuePen() const
+QPen QBarSet::valuePen() const
 {
-    return m_floatingValuePen;
+    return m_valuePen;
 }
 
 /*!

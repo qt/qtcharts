@@ -50,30 +50,15 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
         qreal scale = (height / colSum);
         qreal yPos = height;
         for (int set=0; set < m_series->barsetCount(); set++) {
-            qreal barHeight = m_series->valueAt(set, category) * scale;
+            QBarSet* barSet = m_series->barsetAt(set);
+            qreal barHeight = barSet->valueAt(category) * scale;
             Bar* bar = m_bars.at(itemIndex);
-            bar->setPen(m_series->barsetAt(set)->pen());
-            bar->setBrush(m_series->barsetAt(set)->brush());
+            bar->setPen(barSet->pen());
+            bar->setBrush(barSet->brush());
             QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
             layout.append(rect);
-            itemIndex++;
-            yPos -= barHeight;
-        }
-        xPos += xStep;
-    }
 
-    // Position floating values
-    itemIndex = 0;
-    xPos = (width/categoryCount);
-    for (int category=0; category < m_series->categoryCount(); category++) {
-        qreal yPos = height;
-        qreal colSum = m_series->categorySum(category);
-        qreal scale = (height / colSum);
-        for (int set=0; set < m_series->barsetCount(); set++) {
-            qreal barHeight = m_series->valueAt(set,category) * scale;
             BarValue* value = m_values.at(itemIndex);
-
-            QBarSet* barSet = m_series->barsetAt(set);
 
             if (!qFuzzyIsNull(m_series->valueAt(set,category))) {
                 int p = m_series->percentageAt(set,category) * 100;
@@ -85,9 +70,9 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
                 value->setText(QString(""));
             }
 
-            value->setPos(xPos, yPos-barHeight / 2);
-            value->setPen(barSet->floatingValuePen());
-
+            value->setPos(xPos + (rect.width()/2 - value->boundingRect().width()/2)
+                          ,yPos - barHeight/2 - value->boundingRect().height()/2);
+            value->setPen(barSet->valuePen());
             itemIndex++;
             yPos -= barHeight;
         }

@@ -58,43 +58,33 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     for (int category = 0; category < categotyCount; category++) {
         qreal yPos = height;
         for (int set=0; set < m_series->barsetCount(); set++) {
-            qreal barHeight = m_series->valueAt(set, category) * scale;
-            Bar* bar = m_bars.at(itemIndex);
-            bar->setPen(m_series->barsetAt(set)->pen());
-            bar->setBrush(m_series->barsetAt(set)->brush());
-            QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
-            layout.append(rect);
-            itemIndex++;
-            yPos -= barHeight;
-        }
-        xPos += xStep;
-    }
-
-    // Position floating values
-    itemIndex = 0;
-    xPos = (width/categotyCount);
-    for (int category=0; category < m_series->categoryCount(); category++) {
-        qreal yPos = height;
-        for (int set=0; set < m_series->barsetCount(); set++) {
-            qreal barHeight = m_series->valueAt(set, category) * scale;
-            BarValue* value = m_values.at(itemIndex);
-
             QBarSet* barSet = m_series->barsetAt(set);
 
-            if (!qFuzzyIsNull(m_series->valueAt(set, category))) {
-                value->setText(QString::number(m_series->valueAt(set,category)));
+            qreal barHeight = barSet->valueAt(category) * scale; //m_series->valueAt(set, category) * scale;
+            Bar* bar = m_bars.at(itemIndex);
+            bar->setPen(barSet->pen());
+            bar->setBrush(barSet->brush());
+            QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
+            layout.append(rect);
+
+            BarValue* value = m_values.at(itemIndex);
+
+            if (!qFuzzyIsNull(barSet->valueAt(category))) {
+                value->setText(QString::number(barSet->valueAt(category)));
             } else {
                 value->setText(QString(""));
             }
 
-            value->setPos(xPos, yPos-barHeight / 2);
-            value->setPen(barSet->floatingValuePen());
+            value->setPos(xPos + (rect.width()/2 - value->boundingRect().width()/2)
+                          ,yPos - barHeight/2 - value->boundingRect().height()/2);
+            value->setPen(barSet->valuePen());
 
             itemIndex++;
             yPos -= barHeight;
         }
         xPos += xStep;
     }
+
     return layout;
 }
 

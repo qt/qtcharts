@@ -82,6 +82,7 @@ QRectF BarValue::boundingRect() const
 
 void BarValue::valuesVisibleChanged(bool visible)
 {
+    qDebug() << "BarValue visiblle changed:" <<visible;
     setVisible(visible);
 }
 

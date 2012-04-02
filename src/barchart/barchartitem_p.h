@@ -42,9 +42,6 @@ public:
     BarChartItem(QBarSeries *series, ChartPresenter *presenter);
     virtual ~BarChartItem();
 
-// Common implemantation of different presenters. Not to be instantiated.
-// TODO: combine this with BarPresenter and derive other presenters from it?
-
 public:
     // From QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

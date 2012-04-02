@@ -30,7 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarSet;
 
-// Visual class for floating bar values
+// Visual class for bar values
 // By default these are not visible.
 class BarValue : public QGraphicsObject
 {
