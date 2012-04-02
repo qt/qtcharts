@@ -5,21 +5,22 @@
 */
 
 #include "widget.h"
+
+#include <QChart>
+#include <QScatterSeries>
+#include <QChartAxis>
+#include <QBarset>
+#include <QBarSeries>
+
 #include <QGridLayout>
 #include <QPushButton>
 #include <QLabel>
-
-#include <QSqlQuery>
-#include <qscatterseries.h>
-#include <qchartview.h>
-#include <qchartaxis.h>
-#include <qbarset.h>
 #include <QListWidget>
 #include <QPrinter>
 #include <QPrintDialog>
 #include <QRadioButton>
 #include <QStringList>
-#include <qbarseries.h>
+#include <QSqlQuery>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -58,11 +59,13 @@ Widget::Widget(QWidget *parent)
     rightPanelLayout->setStretch(0, 1);
     rightPanelLayout->setStretch(1, 0);
 
+    QChart *chart = new QChart();
+    chart->setTitle("GDP by country");
+
     // main layout
-    chartArea = new QChartView(this);
-    chartArea->setChartTitle("GDP by country");
+    chartView = new QChartView(chart);
     QGridLayout* mainLayout = new QGridLayout;
-    mainLayout->addWidget(chartArea, 0, 0);
+    mainLayout->addWidget(chartView, 0, 0);
     mainLayout->addLayout(rightPanelLayout, 0, 1);
     mainLayout->setColumnStretch(0,1);
     setLayout(mainLayout);
@@ -104,7 +107,7 @@ Widget::~Widget()
 */
 void Widget::refreshChart()
 {
-    chartArea->removeAllSeries();
+    chartView->chart()->removeAllSeries();
 
     // selected countries items list is not sorted. copy the values to QStringlist and sort them.
     QStringList selectedCountriesStrings;
@@ -169,10 +172,10 @@ void Widget::refreshChart()
                     qDebug() << "Putting 0 for the missing data" << " : " << QString("%1").arg(selectedYearsInts[i]);
                 }
             }
-            series0->addBarSet(barSet);
+            series0->appendBarSet(barSet);
         }
         // add the serie to the chart
-        chartArea->addSeries(series0);
+        chartView->chart()->addSeries(series0);
     }
     else if (scatterChartRadioButton->isChecked())
     {
@@ -210,9 +213,9 @@ void Widget::refreshChart()
                 }
             }
             //            chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] + 1, selectedYearsInts[0] - 1);
-            chartArea->addSeries(series);
+            chartView->chart()->addSeries(series);
         }
-        chartArea->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] - 1, selectedYearsInts[0] + 1);
+        chartView->chart()->axisX()->setRange(selectedYearsInts[selectedYearsInts.size() - 1] - 1, selectedYearsInts[0] + 1);
     }
 }
 
@@ -226,5 +229,5 @@ void Widget::printChart()
 
     QPainter painter;
     painter.begin(&printer);
-    chartArea->render(&painter);
+    chartView->render(&painter);
 }

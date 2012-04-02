@@ -2,7 +2,7 @@
 #define WIDGET_H
 
 #include <QtGui/QWidget>
-#include <qchartview.h>
+#include <QChartview>
 #include <QSqlDatabase>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -23,7 +23,7 @@ public slots:
     void printChart();
 
 private:
-    QChartView* chartArea;
+    QChartView* chartView;
     QListWidget* countrieslist;
     QListWidget* yearslist;
     QSqlDatabase db;
