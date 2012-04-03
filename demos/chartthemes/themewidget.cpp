@@ -184,17 +184,15 @@ QChart* ThemeWidget::createAreaChart() const
     int nameIndex = 0;
 
     // The lower series initialized to zero values
-    QLineSeries *lowerSeries = new QLineSeries(chart);
-    {
-        for (int i(0); i < m_valueCount; i++)
-            lowerSeries->append(QPointF(i, 0.0));
-    }
-
+    QLineSeries *lowerSeries = 0;
     for (int i(0); i < m_dataTable.count(); i++) {
         QLineSeries *upperSeries = new QLineSeries(chart);
         for (int j(0); j < m_dataTable[i].count(); j++) {
             Data data = m_dataTable[i].at(j);
-            upperSeries->append(QPointF(j, lowerSeries->y(i) + data.first.y()));
+            if (lowerSeries)
+                upperSeries->append(QPointF(j, lowerSeries->y(i) + data.first.y()));
+            else
+                upperSeries->append(QPointF(j, data.first.y()));
         }
         QAreaSeries *area = new QAreaSeries(upperSeries, lowerSeries);
         area->setName(name + QString::number(nameIndex));
