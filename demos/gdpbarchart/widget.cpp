@@ -23,7 +23,8 @@
 #include <QChart>
 #include <QScatterSeries>
 #include <QChartAxis>
-#include <QBarset>
+//#include <QBarset>
+#include <qbarset.h>
 #include <QBarSeries>
 
 #include <QGridLayout>
