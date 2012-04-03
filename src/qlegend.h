@@ -117,7 +117,6 @@ private:
 
 private Q_SLOTS:
     void updateLayout();
-    void scroll();
 
 private:
     qreal m_margin;

@@ -71,7 +71,7 @@ d_ptr(new QChartPrivate())
     d_ptr->m_legend = new QLegend(this);
     d_ptr->m_dataset = new ChartDataSet(this);
     d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
-    d_ptr->m_presenter->setTheme(QChart::ChartThemeDefault,false);
+    d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);
     //TODO:fix me setMinimumSize(d_ptr->m_padding.left() * 3, d_ptr->m_padding.top() * 3);
     connect(d_ptr->m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),d_ptr->m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
     connect(d_ptr->m_dataset,SIGNAL(seriesRemoved(QSeries*)),d_ptr->m_legend,SLOT(handleSeriesRemoved(QSeries*)));

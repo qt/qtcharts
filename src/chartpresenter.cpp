@@ -65,7 +65,6 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_chartMargins(QRect(m_marginBig,m_marginBig,0,0))
 {
     createConnections();
-    setTheme(QChart::ChartThemeLight, false);
 }
 
 ChartPresenter::~ChartPresenter()
