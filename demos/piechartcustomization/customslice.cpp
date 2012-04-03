@@ -18,17 +18,33 @@
 **
 ****************************************************************************/
 
-#include "mainwidget.h"
-#include <QtGui/QApplication>
-#include <QMainWindow>
+#include "customslice.h"
 
-int main(int argc, char *argv[])
+QTCOMMERCIALCHART_USE_NAMESPACE
+
+CustomSlice::CustomSlice(qreal value, QString label)
+    :QPieSlice(value, label)
 {
-    QApplication a(argc, argv);
-    QMainWindow window;
-    MainWidget widget;
-    window.setCentralWidget(&widget);
-    window.resize(900, 600);
-    window.show();
-    return a.exec();
+    connect(this, SIGNAL(hoverEnter()), this, SLOT(handleHoverEnter()));
+    connect(this, SIGNAL(hoverLeave()), this, SLOT(handleHoverLeave()));
 }
+
+QBrush CustomSlice::originalBrush()
+{
+    return m_originalBrush;
+}
+
+void CustomSlice::handleHoverEnter()
+{
+    QBrush brush = this->brush();
+    m_originalBrush = brush;
+    brush.setColor(brush.color().lighter());
+    setBrush(brush);
+}
+
+void CustomSlice::handleHoverLeave()
+{
+    setBrush(m_originalBrush);
+}
+
+#include "moc_customslice.cpp"

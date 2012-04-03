@@ -17,18 +17,37 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#ifndef BRUSHTOOL_H
+#define BRUSHTOOL_H
 
-#include "mainwidget.h"
-#include <QtGui/QApplication>
-#include <QMainWindow>
+#include <QWidget>
+#include <QBrush>
 
-int main(int argc, char *argv[])
+class QPushButton;
+class QComboBox;
+
+class BrushTool : public QWidget
 {
-    QApplication a(argc, argv);
-    QMainWindow window;
-    MainWidget widget;
-    window.setCentralWidget(&widget);
-    window.resize(900, 600);
-    window.show();
-    return a.exec();
-}
+    Q_OBJECT
+
+public:
+    explicit BrushTool(QString title, QWidget *parent = 0);
+    void setBrush(QBrush brush);
+    QBrush brush() const;
+    QString name();
+    static QString name(const QBrush &brush);
+
+Q_SIGNALS:
+    void changed();
+
+public Q_SLOTS:
+    void showColorDialog();
+    void updateStyle();
+
+private:
+    QBrush m_brush;
+    QPushButton *m_colorButton;
+    QComboBox *m_styleCombo;
+};
+
+#endif // BRUSHTOOL_H

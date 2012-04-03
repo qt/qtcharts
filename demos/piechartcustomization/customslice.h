@@ -17,18 +17,29 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#ifndef CUSTOMSLICE_H
+#define CUSTOMSLICE_H
 
-#include "mainwidget.h"
-#include <QtGui/QApplication>
-#include <QMainWindow>
+#include <QPieSlice>
 
-int main(int argc, char *argv[])
+QTCOMMERCIALCHART_USE_NAMESPACE
+
+class CustomSlice : public QPieSlice
 {
-    QApplication a(argc, argv);
-    QMainWindow window;
-    MainWidget widget;
-    window.setCentralWidget(&widget);
-    window.resize(900, 600);
-    window.show();
-    return a.exec();
-}
+    Q_OBJECT
+
+public:
+    CustomSlice(qreal value, QString label);
+
+public:
+    QBrush originalBrush();
+
+public Q_SLOTS:
+    void handleHoverEnter();
+    void handleHoverLeave();
+
+private:
+    QBrush m_originalBrush;
+};
+
+#endif // CUSTOMSLICE_H
