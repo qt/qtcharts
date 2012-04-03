@@ -166,6 +166,7 @@ QComboBox* ThemeWidget::createAnimationBox() const
 QComboBox* ThemeWidget::createLegendBox() const
 {
     QComboBox* legendComboBox = new QComboBox();
+    legendComboBox->addItem("Legend None", -1);
     legendComboBox->addItem("Legend Top", QLegend::AlignmentTop);
     legendComboBox->addItem("Legend Bottom", QLegend::AlignmentBottom);
     legendComboBox->addItem("Legend Left", QLegend::AlignmentLeft);
@@ -356,9 +357,17 @@ void ThemeWidget::updateUI()
             chartView->chart()->setAnimationOptions(options);
     }
 
-    QLegend::Alignments alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
-    foreach (QChartView *chartView, m_charts) {
-        chartView->chart()->legend()->setAlignmnent(alignment);
+    int alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
+    if (alignment == -1) {
+        foreach (QChartView *chartView, m_charts) {
+            chartView->chart()->legend()->setVisible(false);
+        }
+    } else {
+        QLegend::Alignments legendAlignment(alignment);
+        foreach (QChartView *chartView, m_charts) {
+            chartView->chart()->legend()->setAlignmnent(legendAlignment);
+            chartView->chart()->legend()->setVisible(true);
+        }
     }
 }
 
