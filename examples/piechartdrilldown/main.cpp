@@ -20,11 +20,10 @@
 
 #include <QtGui/QApplication>
 #include <QMainWindow>
-#include <qchartglobal.h>
-#include <qchartview.h>
-#include <qpieseries.h>
-#include <qpieslice.h>
 #include <QTime>
+#include <QChartView>
+#include <QPieSeries>
+#include <QPieSlice>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

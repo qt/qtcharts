@@ -20,13 +20,9 @@
 
 #include <QtGui/QApplication>
 #include <QMainWindow>
-#include <qchartglobal.h>
-#include <qchartview.h>
-#include <qstackedbarseries.h>
-#include <qbarset.h>
-#include <qchartaxis.h>
-#include <QStringList>
-#include <QDebug>
+#include <QChartView>
+#include <QStackedBarSeries>
+#include <QBarSet>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -35,7 +31,11 @@ class DrilldownBarSeries : public QStackedBarSeries
 {
     Q_OBJECT
 public:
-    DrilldownBarSeries(QStringList categories, QObject *parent = 0) : QStackedBarSeries(categories,parent) {}
+    DrilldownBarSeries(QStringList categories, QObject *parent = 0)
+        :QStackedBarSeries(categories, parent)
+    {
+
+    }
 
     void mapDrilldownSeries(QString category, DrilldownBarSeries* drilldownSeries)
     {
@@ -47,10 +47,7 @@ public:
         return mDrilldownSeries[category];
     }
 
-public Q_SLOTS:
-
 private:
-
     QMap<QString, DrilldownBarSeries*> mDrilldownSeries;
 };
 //! [1]
@@ -60,7 +57,12 @@ class DrilldownChart : public QChart
 {
     Q_OBJECT
 public:
-    explicit DrilldownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0) : QChart(parent, wFlags), m_currentSeries(0) {}
+    explicit DrilldownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0)
+        :QChart(parent, wFlags),
+        m_currentSeries(0)
+    {
+
+    }
 
     void changeSeries(QSeries* series)
     {
@@ -75,6 +77,7 @@ public Q_SLOTS:
     void handleClicked(QBarSet *barset, QString category, Qt::MouseButtons button)
     {
         Q_UNUSED(barset)
+        Q_UNUSED(button)
         DrilldownBarSeries* series = static_cast<DrilldownBarSeries*> (sender());
         changeSeries(series->drilldownSeries(category));
     }

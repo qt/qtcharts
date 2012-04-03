@@ -19,13 +19,11 @@
 ****************************************************************************/
 
 #include "splinewidget.h"
-#include "qchartview.h"
-#include "qlineseries.h"
 #include <QGridLayout>
 #include <QPushButton>
-#include "qchartaxis.h"
-#include <qmath.h>
 #include <QTime>
+#include <QChartView>
+#include <QSplineSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
