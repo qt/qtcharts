@@ -18,12 +18,11 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTVIEW_H_
-#define CHARTVIEW_H_
+#ifndef CHART_H_
+#define CHART_H_
 
-#include <QChartView>
+#include <QChart>
 #include <QTimer>
-
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QSplineSeries;
@@ -33,12 +32,12 @@ QTCOMMERCIALCHART_END_NAMESPACE
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 //![1]
-class ChartView: public QChartView
+class Chart: public QChart
 {
     Q_OBJECT
 public:
-    ChartView(QWidget* parent = 0);
-    virtual ~ChartView();
+    Chart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    virtual ~Chart();
 
 public slots:
     void handleTimeout();
@@ -54,4 +53,4 @@ private:
 };
 //![1]
 
-#endif /* CHARTVIEW_H_ */
+#endif /* CHART_H_ */

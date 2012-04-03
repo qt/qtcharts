@@ -2,5 +2,5 @@
  error( "Couldn't find the examples.pri file!" )
 }
 TARGET = ekgchart
-HEADERS += chartview.h
-SOURCES += main.cpp chartview.cpp
+HEADERS += chart.h
+SOURCES += main.cpp chart.cpp

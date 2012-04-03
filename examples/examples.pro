@@ -5,7 +5,7 @@ SUBDIRS += \
            #chartview \
            customchart \
            #dynamiclinechart \
-           #ekgchart \
+           ekgchart \
            linechart \
            #multichart \
            percentbarchart \

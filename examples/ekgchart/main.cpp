@@ -18,17 +18,22 @@
 **
 ****************************************************************************/
 
-#include "chartview.h"
+#include "chart.h"
+#include <QChartView>
 #include <QApplication>
 #include <QMainWindow>
+
+QTCOMMERCIALCHART_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QMainWindow window;
-    ChartView chartView(&window);
+    Chart *chart = new Chart;
+    chart->setTitle("Simple EKG chart");
+    chart->setAnimationOptions(QChart::AllAnimations);
+    QChartView chartView(chart);
     chartView.setRenderHint(QPainter::Antialiasing);
-    chartView.setAnimationOptions(QChart::AllAnimations);
     window.setCentralWidget(&chartView);
     window.resize(400, 300);
     window.show();
