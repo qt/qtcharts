@@ -29,8 +29,8 @@
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include "chartdataset_p.h"
-#include <QDebug>
 #include <QToolTip>
+#include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -49,6 +49,7 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
 BarChartItem::~BarChartItem()
 {
     disconnect(this,SLOT(showToolTip(QPoint,QString)));
+    deleteItems();
 }
 
 void BarChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -58,21 +59,25 @@ void BarChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
         return;
     }
 
-    foreach(QGraphicsItem* i, childItems())
-        i->paint(painter,option,widget);
+    painter->save();
+    painter->setClipRect(m_clipRect);
+    foreach (Bar *bar, m_bars)
+        bar->paint(painter,option,widget);
+    foreach (BarLabel* label, m_labels)
+        label->paint(painter,option,widget);
+    painter->restore();
 }
 
 QRectF BarChartItem::boundingRect() const
 {
-    return m_rect;
+    return m_rect.translated(-m_rect.topLeft());
+//    return m_rect;
 }
 
 void BarChartItem::dataChanged()
 {
     // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?
-    // Delete old bars
-    foreach (QGraphicsItem *item, childItems())
-        delete item;
+    deleteItems();
 
     m_bars.clear();
     m_labels.clear();
@@ -83,8 +88,7 @@ void BarChartItem::dataChanged()
         QString category = m_series->categoryName(c);
         for (int s = 0; s < m_series->barsetCount(); s++) {
             QBarSet *set = m_series->barsetAt(s);
-            Bar *bar = new Bar(category,this);
-            childItems().append(bar);
+            Bar *bar = new Bar(category,0);     // Null parent is best :)
             m_bars.append(bar);
             connect(bar, SIGNAL(clicked(QString,Qt::MouseButtons)), set, SIGNAL(clicked(QString,Qt::MouseButtons)));
             connect(bar, SIGNAL(hoverEntered(QPoint)), set, SLOT(barHoverEnterEvent(QPoint)));
@@ -97,8 +101,7 @@ void BarChartItem::dataChanged()
     for (int category = 0; category < m_series->categoryCount(); category++) {
         for (int s = 0; s < m_series->barsetCount(); s++) {
             QBarSet *set = m_series->barsetAt(s);
-            BarLabel *value = new BarLabel(*set, this);
-            childItems().append(value);
+            BarLabel *value = new BarLabel(*set, 0);
             m_labels.append(value);
             connect(set,SIGNAL(labelsVisibleChanged(bool)),value,SLOT(labelsVisibleChanged(bool)));
         }
@@ -152,7 +155,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
 
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
                           ,yPos - barHeight/2 - label->boundingRect().height()/2);
-//            value->setFont(barSet->valueFont());
+            label->setFont(barSet->labelFont());
 
             itemIndex++;
             xPos += barWidth;
@@ -179,6 +182,14 @@ void BarChartItem::setLayout(const QVector<QRectF> &layout)
     update();
 }
 
+void BarChartItem::deleteItems()
+{
+    foreach (Bar *bar, m_bars)
+        delete bar;
+    foreach (BarLabel* label, m_labels)
+        delete label;
+}
+
 //handlers
 
 void BarChartItem::handleModelChanged(int index)
@@ -198,6 +209,7 @@ void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal
 
 void BarChartItem::handleGeometryChanged(const QRectF &rect)
 {
+    m_clipRect = rect.translated(-rect.topLeft());
     m_rect = rect;
     handleLayoutChanged();
     m_layoutSet = true;

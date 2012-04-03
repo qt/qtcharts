@@ -22,7 +22,6 @@
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "qbarset.h"
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -31,24 +30,16 @@ StackedBarChartItem::StackedBarChartItem(QBarSeries *series, ChartPresenter *pre
 {
 }
 
-StackedBarChartItem::~StackedBarChartItem()
-{
-}
-
 QVector<QRectF> StackedBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
-    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
+    // Use temporary qreals for accurancy
 
-    qreal maxSum = m_series->maxCategorySum();
     // Domain:
-    if (m_domainMaxY > maxSum) {
-        maxSum = m_domainMaxY;
-    }
-
+    qreal range = m_domainMaxY - m_domainMinY;
     qreal height = geometry().height();
     qreal width = geometry().width();
-    qreal scale = (height /  m_series->maxCategorySum());
+    qreal scale = (height / range);
     qreal categotyCount = m_series->categoryCount();
     qreal barWidth = width / (categotyCount * 2);
     qreal xStep = width / categotyCount;
@@ -56,7 +47,7 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
 
     int itemIndex(0);
     for (int category = 0; category < categotyCount; category++) {
-        qreal yPos = height;
+        qreal yPos = height + scale * m_domainMinY;
         for (int set=0; set < m_series->barsetCount(); set++) {
             QBarSet* barSet = m_series->barsetAt(set);
 
@@ -77,7 +68,7 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
 
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
                           ,yPos - barHeight/2 - label->boundingRect().height()/2);
-//            value->setFont(barSet->valueFont());
+            label->setFont(barSet->labelFont());
             itemIndex++;
             yPos -= barHeight;
         }

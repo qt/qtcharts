@@ -184,7 +184,7 @@ QBrush QBarSet::brush() const
 }
 
 /*!
-    Sets pen of the values that are drawn on top of this barset
+    Sets \a pen of the values that are drawn on top of this barset
 */
 void QBarSet::setLabelPen(const QPen &pen)
 {
@@ -201,7 +201,7 @@ QPen QBarSet::labelPen() const
 }
 
 /*!
-    Sets brush of the values that are drawn on top of this barset
+    Sets \a brush of the values that are drawn on top of this barset
 */
 void QBarSet::setLabelBrush(const QBrush &brush)
 {
@@ -218,7 +218,7 @@ QBrush QBarSet::labelBrush() const
 }
 
 /*!
-    Sets the pen for values that are drawn on top of this barset
+    Sets the \a font for values that are drawn on top of this barset
 */
 void QBarSet::setLabelFont(const QFont &font)
 {

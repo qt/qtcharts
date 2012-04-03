@@ -22,7 +22,6 @@
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "qbarset.h"
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -35,7 +34,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
 
-    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
+    // Use temporary qreals for accurancy
     qreal width = geometry().width();
     qreal height = geometry().height();
 
@@ -72,7 +71,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
 
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
                           ,yPos - barHeight/2 - label->boundingRect().height()/2);
-//            value->setFont(barSet->valueFont());
+            label->setFont(barSet->labelFont());
             itemIndex++;
             yPos -= barHeight;
         }

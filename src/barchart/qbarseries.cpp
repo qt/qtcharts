@@ -391,6 +391,9 @@ QBarCategories QBarSeries::categories() const
     return categories;
 }
 
+/*!
+    Sets the visibility of labels in series to \a visible
+*/
 void QBarSeries::setLabelsVisible(bool visible)
 {
     foreach (QBarSet* s, barSets()) {

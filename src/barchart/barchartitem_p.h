@@ -57,6 +57,9 @@ public:
 
     QRectF geometry() const { return m_rect;}
 
+private:
+    void deleteItems();
+
 public Q_SLOTS:
     void handleModelChanged(int index);
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
@@ -75,6 +78,7 @@ protected:
     qreal m_domainMaxY;
 
     QRectF m_rect;
+    QRectF m_clipRect;
     bool m_layoutSet;    // True, if component has been laid out.
     QVector<QRectF> m_layout;
 
