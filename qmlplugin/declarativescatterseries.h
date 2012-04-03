@@ -37,7 +37,7 @@ public:
     explicit DeclarativeScatterSeries(QObject *parent = 0);
 
 public:
-    void componentComplete();
+    QSeries *series();
     QDeclarativeListProperty<DeclarativeXyPoint> points();
 };
 

@@ -102,6 +102,7 @@ void ScatterChartItem::markerSelected(Marker *marker)
 
 void ScatterChartItem::setLayout(QVector<QPointF>& points)
 {
+//    qDebug() << "scatter: " << points.count();
     if(points.size()==0)
     {
         XYChartItem::setLayout(points);
@@ -120,8 +121,10 @@ void ScatterChartItem::setLayout(QVector<QPointF>& points)
     if(diff!=0) handleUpdated();
 
     QList<QGraphicsItem*> items = m_items.childItems();
+//    qDebug() << "items count" << items.count();
 
-    for(int i=0; i< points.size();i++) {
+    for (int i = 0; i < points.size() && i < items.count(); i++) {
+        Q_ASSERT(i < items.count());
         Marker* item = static_cast<Marker*>(items.at(i));
         const QPointF& point = points.at(i);
         const QRectF& rect = item->boundingRect();

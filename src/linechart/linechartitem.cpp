@@ -49,6 +49,8 @@ QPainterPath LineChartItem::shape() const
 
 void LineChartItem::setLayout(QVector<QPointF>& points)
 {
+//    qDebug() << "line: " << points.count();
+
     if(points.size()==0)
     {
         XYChartItem::setLayout(points);
@@ -68,7 +70,6 @@ void LineChartItem::setLayout(QVector<QPointF>& points)
     m_rect = linePath.boundingRect();
 
     XYChartItem::setLayout(points);
-
 }
 
 void LineChartItem::handleUpdated()

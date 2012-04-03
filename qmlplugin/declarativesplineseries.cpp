@@ -29,15 +29,9 @@ DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
 {
 }
 
-void DeclarativeSplineSeries::componentComplete()
+QSeries *DeclarativeSplineSeries::series()
 {
-    DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(parent());
-
-    if (declarativeChart) {
-        QChart *chart = qobject_cast<QChart *>(declarativeChart->m_chart);
-        Q_ASSERT(chart);
-        chart->addSeries(this);
-    }
+    return this;
 }
 
 QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeSplineSeries::points()

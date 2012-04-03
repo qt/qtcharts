@@ -30,16 +30,9 @@ DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
 {
 }
 
-void DeclarativeScatterSeries::componentComplete()
+QSeries *DeclarativeScatterSeries::series()
 {
-    DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(parent());
-
-    if (declarativeChart) {
-        QChart *chart = qobject_cast<QChart *>(declarativeChart->m_chart);
-        Q_ASSERT(chart);
-        qDebug() << "chart:" << chart;
-        chart->addSeries(this);
-    }
+    return this;
 }
 
 QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeScatterSeries::points()

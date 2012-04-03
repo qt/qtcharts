@@ -90,13 +90,13 @@ Rectangle {
             ]
         }
 
-        SplineSeries {
-            points: [
-                XyPoint { x: 0.0; y: 0.3 },
-                XyPoint { x: 1.1; y: 3.2 },
-                XyPoint { x: 4.17; y: 3.15 }
-            ]
-        }
+//        SplineSeries {
+//            points: [
+//                XyPoint { x: 0.0; y: 0.3 },
+//                XyPoint { x: 1.1; y: 3.2 },
+//                XyPoint { x: 4.17; y: 3.15 }
+//            ]
+//        }
 
         ScatterSeries {
             points: [
@@ -105,19 +105,19 @@ Rectangle {
                 XyPoint { x: 1.57; y: 1.55 }
             ]
         }
-        ScatterSeries {
-            points: [
-                XyPoint { x: 2.0; y: 2.0 },
-                XyPoint { x: 2.0; y: 2.1 },
-                XyPoint { x: 2.07; y: 2.05 }
-            ]
-        }
-        ScatterSeries {
-            points: [
-                XyPoint { x: 2.6; y: 2.6 },
-                XyPoint { x: 2.6; y: 2.7 },
-                XyPoint { x: 2.67; y: 2.65 }
-            ]
-        }
+//        ScatterSeries {
+//            points: [
+//                XyPoint { x: 2.0; y: 2.0 },
+//                XyPoint { x: 2.0; y: 2.1 },
+//                XyPoint { x: 2.07; y: 2.05 }
+//            ]
+//        }
+//        ScatterSeries {
+//            points: [
+//                XyPoint { x: 2.6; y: 2.6 },
+//                XyPoint { x: 2.6; y: 2.7 },
+//                XyPoint { x: 2.67; y: 2.65 }
+//            ]
+//        }
     }
 }

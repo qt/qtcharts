@@ -21,6 +21,8 @@
 //#include "DeclarativeXySeries.h"
 #include "declarativexyseries.h"
 #include "qxyseries.h"
+#include "declarativechart.h"
+#include <QObject>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -36,12 +38,26 @@ void DeclarativeXySeries::classBegin()
 {
 }
 
+void DeclarativeXySeries::componentComplete()
+{
+    QSeries *thisObj = reinterpret_cast<QSeries *>(series());
+//    QSeries *thisObj = qobject_cast<QSeries *>(this);
+//    Q_ASSERT(thisObj);
+    DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(thisObj->parent());
+
+    if (declarativeChart) {
+        QChart *chart = qobject_cast<QChart *>(declarativeChart->m_chart);
+        Q_ASSERT(chart);
+        chart->addSeries(thisObj);
+    }
+}
+
 void DeclarativeXySeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
                                           DeclarativeXyPoint *element)
 {
     QXYSeries *series = qobject_cast<QXYSeries *>(list->object);
     if (series)
-        series->append(QPointF(element->x(), element->y()));
+        series->append(element->x(), element->y());
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE
