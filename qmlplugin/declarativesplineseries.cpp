@@ -45,12 +45,6 @@ QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeSplineSeries::points()
     return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXySeries::appendPoints);
 }
 
-void DeclarativeSplineSeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                       DeclarativeXyPoint *element)
-{
-    DeclarativeXySeries::appendPoints(list, element);
-}
-
 #include "moc_declarativesplineseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

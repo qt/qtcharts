@@ -39,10 +39,6 @@ public:
 public:
     void componentComplete();
     QDeclarativeListProperty<DeclarativeXyPoint> points();
-
-public Q_SLOTS:
-    static void appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                             DeclarativeXyPoint *element);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
