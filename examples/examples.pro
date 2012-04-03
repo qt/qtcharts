@@ -17,7 +17,7 @@ SUBDIRS += \
            splinechart \
            stackedbarchart \
            stackedbarchartdrilldown \
-           #tablemodelchart \
+           tablemodelchart \
            zoomlinechart
           
           

@@ -105,21 +105,40 @@ void XYChartItem::setLayout(QVector<QPointF> &points)
 
 void XYChartItem::handlePointAdded(int index)
 {
-    Q_ASSERT(index<m_series->count());
-    Q_ASSERT(index>=0);
-    QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
-    points.insert(index,point);
-    updateLayout(m_points,points,index);
+    QPointF point;
+    if (m_series->model()) {
+        point = calculateGeometryPoint(index - m_series->mapFirst());
+        points.insert(index - m_series->mapFirst(), point);
+        updateLayout(m_points, points, index - m_series->mapFirst());
+    }
+    else {
+        // this checks do not work correctly if model is set
+        Q_ASSERT(index<m_series->count());
+        Q_ASSERT(index>=0);
+        point = calculateGeometryPoint(index);
+        points.insert(index, point);
+        updateLayout(m_points, points, index);
+    }
     update();
 }
 void XYChartItem::handlePointRemoved(int index)
-{
-    Q_ASSERT(index<m_series->count() + 1);
-    Q_ASSERT(index>=0);
+{    
     QVector<QPointF> points = m_points;
-    points.remove(index);
-    updateLayout(m_points,points,index);
+    if (m_series->model()) {
+        if (index < m_series->mapFirst())
+            points.remove(0);
+        else
+            points.remove(index - m_series->mapFirst());
+        updateLayout(m_points, points, index - m_series->mapFirst());
+    }
+    else {
+        // this checks do not work correctly if model is set
+        Q_ASSERT(index<m_series->count() + 1);
+        Q_ASSERT(index>=0);
+        points.remove(index);
+        updateLayout(m_points, points, index);
+    }
     update();
 }
 
@@ -149,21 +168,21 @@ void XYChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal 
 
 void XYChartItem::handleGeometryChanged(const QRectF &rect)
 {
-	Q_ASSERT(rect.isValid());
-	m_size=rect.size();
-	m_clipRect=rect.translated(-rect.topLeft());
-	setPos(rect.topLeft());
+    Q_ASSERT(rect.isValid());
+    m_size=rect.size();
+    m_clipRect=rect.translated(-rect.topLeft());
+    setPos(rect.topLeft());
 
     if (isEmpty()) return;
-	QVector<QPointF> points = calculateGeometryPoints();
-	updateLayout(m_points,points);
-	update();
+    QVector<QPointF> points = calculateGeometryPoints();
+    updateLayout(m_points,points);
+    update();
 }
 
 
 bool XYChartItem::isEmpty()
 {
-   return !m_clipRect.isValid() || qFuzzyIsNull(m_maxX - m_minX) || qFuzzyIsNull(m_maxY - m_minY);
+    return !m_clipRect.isValid() || qFuzzyIsNull(m_maxX - m_minX) || qFuzzyIsNull(m_maxY - m_minY);
 }
 
 void XYChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -345,10 +345,10 @@ void QXYSeries::modelDataAboutToBeAdded(QModelIndex parent, int start, int end)
             // if the number of items currently is equal the m_mapCount then some needs to be removed from xychartitem
             // internal storage before new ones can be added
 
-            int itemsToRemove = qMin(count() - (start - m_mapFirst), end - start + 1);
+            int itemsToRemove = qMin(count() - qMax(start - m_mapFirst, 0), end - start + 1);
             if (m_mapCount == count()) {
                 for (int i = 0; i < itemsToRemove; i++)
-                    emit pointRemoved(count() - 1 - i);
+                    emit pointRemoved(qMin(end, count()) - i);
             }
         }
     } else {
@@ -372,14 +372,16 @@ void QXYSeries::modelDataAdded(QModelIndex parent, int start, int end)
             // the added data is in the mapped area or before it
             // update needed
             if (count() > 0) {
-                for (int i = 0; i < qMin(m_mapCount - (start - m_mapFirst), end - start + 1); i++)
-                    emit pointAdded(qMax(start + i - m_mapFirst, 0));
+                int toBeAdded = qMin(m_mapCount - (start - m_mapFirst), end - start + 1);
+                for (int i = 0; i < toBeAdded; i++)
+                    if (start + i >= m_mapFirst)
+                        emit pointAdded(start + i);
             }
         }
     } else {
         // map is not limited (it included all the items starting from m_mapFirst till the end of model)
         for (int i = 0; i < end - start + 1; i++)
-            emit pointAdded(qMax(start + i - m_mapFirst, 0));
+            emit pointAdded(start + i);
     }
 }
 
@@ -403,12 +405,12 @@ void QXYSeries::modelDataAboutToBeRemoved(QModelIndex parent, int start, int end
             // the max is the current number of items in storage (count())
             int itemsToRemove = qMin(count(), qMin(end, m_mapFirst + m_mapCount - 1) - start + 1);
             for (int i = 0; i < itemsToRemove; i++)
-                emit pointRemoved(qMax(start - m_mapFirst, 0));
+                emit pointRemoved(start);
         }
     } else {
         // map is not limited (it included all the items starting from m_mapFirst till the end of model)
         for (int i = 0; i < end - start + 1; i++)
-            emit pointRemoved(qMax(start - m_mapFirst, 0));
+            emit pointRemoved(start);
     }
 }
 
@@ -428,18 +430,22 @@ void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
         } else {
             // if the current items count in the whole model is bigger than the index of the last item
             // that was removed than it means there are some extra items available
+
+            int removedItemsCount = qMin(count(), qMin(end, m_mapFirst + m_mapCount - 1) - start + 1);
             int extraItemsAvailable = 0;
             if (m_mapOrientation == Qt::Vertical) {
-                extraItemsAvailable = qMax(m_model->rowCount() - end, 0);
+//                int temp1 = m_model->rowCount();
+//                int temp2 = (end - start + 1);
+//                int temp3 = qMax(end + 1, m_mapFirst + m_mapCount);
+                extraItemsAvailable = qMax(m_model->rowCount() + (end - start + 1) - qMax(end + 1, m_mapFirst + m_mapCount), 0);
             } else {
-                extraItemsAvailable = qMax(m_model->columnCount() - end, 0);
+                extraItemsAvailable = qMax(m_model->columnCount() + (end - start + 1) - qMax(end + 1, m_mapFirst + m_mapCount), 0);
             }
 
             // if there are excess items available (below the mapped area) use them to repopulate mapped area
-            int removedItemsCount = qMin(count(), qMin(end, m_mapFirst + m_mapCount - 1) - qMax(start, m_mapFirst) + 1);
             int toBeAdded = qMin(extraItemsAvailable, removedItemsCount);
             for (int k = 0; k < toBeAdded; k++)
-                emit pointAdded(qMax(start - m_mapFirst, m_mapFirst) + k);
+                emit pointAdded(m_mapFirst + m_mapCount - removedItemsCount + k);
         }
     } else {
         // data was removed from XYSeries interal storage. Nothing more to do

@@ -49,17 +49,18 @@ public:
     void updateChartType();
 
     private:
-    QChartView* chartView;
-    QXYSeries* series;
+    QChartView* m_chartView;
+    QChart* m_chart;
+    QXYSeries* m_series;
     CustomTableModel* m_model;
-    QTableView* tableView;
-    QRadioButton* lineRadioButton;
-    QRadioButton* splineRadioButton;
-    QRadioButton* scatterRadioButton;
-    QRadioButton* pieRadioButton;
-    QRadioButton* areaRadioButton;
-    QRadioButton* barRadioButton;
-    QSpinBox* linesCountSpinBox;
+    QTableView* m_tableView;
+    QRadioButton* m_lineRadioButton;
+    QRadioButton* m_splineRadioButton;
+    QRadioButton* m_scatterRadioButton;
+    QRadioButton* m_pieRadioButton;
+    QRadioButton* m_areaRadioButton;
+    QRadioButton* m_barRadioButton;
+    QSpinBox* m_linesCountSpinBox;
 };
 
 #endif // TABLEWIDGET_H

@@ -98,7 +98,7 @@ QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation,
         }
     }
     else
-        return QString("%1").arg(section + 1);
+        return QString("%1").arg(section /*+ 1*/);
 }
 
 QVariant CustomTableModel::data(const QModelIndex & index, int role) const
@@ -203,7 +203,10 @@ bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & pare
                 {
                     if (i - 1 >= 0)
                     {
-                        difference = (int)((qAbs(m_data[i]->at(k) - m_data[row - 1]->at(k)))/count);
+                        if (row > 0)
+                            difference = (int)((qAbs(m_data[i]->at(k) - m_data[row - 1]->at(k)))/count);
+                        else
+                            difference = (int)((qAbs(m_data[i]->at(k)/count)));
                         dataVec->replace(k, m_data[i - 1]->at(k) + qrand()%qMax(1, difference));
                     }
                     else
