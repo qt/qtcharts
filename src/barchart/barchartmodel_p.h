@@ -57,6 +57,7 @@ public:
     qreal percentageAt(int set, int category) const;
 
     qreal categorySum(int category) const;
+    qreal absoluteCategorySum(int category) const;
     qreal maxCategorySum() const;     // returns maximum sum of sets in all categories.
 
     QString categoryName(int category);

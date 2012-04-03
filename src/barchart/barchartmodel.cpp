@@ -152,7 +152,6 @@ qreal BarChartModel::percentageAt(int set, int category) const
     return value / total;
 }
 
-
 qreal BarChartModel::categorySum(int category) const
 {
     qreal sum(0);
@@ -161,6 +160,18 @@ qreal BarChartModel::categorySum(int category) const
     for (int set = 0; set < count; set++) {
         if (category < m_dataModel.at(set)->count())
             sum += m_dataModel.at(set)->valueAt(category);
+    }
+    return sum;
+}
+
+qreal BarChartModel::absoluteCategorySum(int category) const
+{
+    qreal sum(0);
+    int count = m_dataModel.count(); // Count sets
+
+    for (int set = 0; set < count; set++) {
+        if (category < m_dataModel.at(set)->count())
+            sum += qAbs(m_dataModel.at(set)->valueAt(category));
     }
     return sum;
 }

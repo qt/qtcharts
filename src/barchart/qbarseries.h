@@ -41,8 +41,10 @@ public:
 
     virtual QSeriesType type() const { return QSeries::SeriesTypeBar; }
 
-    void appendBarSet(QBarSet *set);               // Takes ownership of set
+    void appendBarSet(QBarSet *set);            // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
+    void appendBarSets(QList<QBarSet* > sets);
+    void removeBarSets(QList<QBarSet* > sets);
     void insertBarSet(int i, QBarSet *set);
     void insertCategory(int i, QString category);
     void removeCategory(int i);
@@ -69,6 +71,7 @@ public:
     qreal valueAt(int set, int category);
     qreal percentageAt(int set, int category);
     qreal categorySum(int category);
+    qreal absoluteCategorySum(int category);
     qreal maxCategorySum();
     BarChartModel& model();
     // <--- TO PIMPL
@@ -78,7 +81,7 @@ Q_SIGNALS:
 
     //
     void updatedBars();
-    void restructuredBar(int);
+    void restructuredBars();
 
     // TODO: internal signals, these to private implementation.
     // TODO: TO PIMPL --->

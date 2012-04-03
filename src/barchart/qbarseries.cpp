@@ -75,7 +75,7 @@ void QBarSeries::appendBarSet(QBarSet *set)
     m_internalModel->appendBarSet(set);
     connect(set, SIGNAL(clicked(QString,Qt::MouseButtons)), this, SLOT(barsetClicked(QString,Qt::MouseButtons)));
     connect(set, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
-    emit updatedBars();
+    emit restructuredBars();
 }
 
 /*!
@@ -87,7 +87,36 @@ void QBarSeries::removeBarSet(QBarSet *set)
 {
     disconnect(set, SIGNAL(clicked(QString,Qt::MouseButtons)), this, SLOT(barsetClicked(QString,Qt::MouseButtons)));
     m_internalModel->removeBarSet(set);
-    emit updatedBars();
+    emit restructuredBars();
+}
+
+/*!
+    Adds a list of barsets to series. Takes ownership of \a sets.
+    Connects the clicked(QString, Qt::MouseButtons) signals
+    of \a sets to this series
+*/
+void QBarSeries::appendBarSets(QList<QBarSet* > sets)
+{
+    foreach (QBarSet* barset, sets) {
+        m_internalModel->appendBarSet(barset);
+        connect(barset, SIGNAL(clicked(QString,Qt::MouseButtons)), this, SLOT(barsetClicked(QString,Qt::MouseButtons)));
+        connect(barset, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
+    }
+    emit restructuredBars();
+}
+
+/*!
+    Removes a list of barsets from series. Releases ownership of \a set. Doesnt delete \a sets.
+    Disconnects the clicked(QString, Qt::MouseButtons) signal
+    of \a sets from this series
+*/
+void QBarSeries::removeBarSets(QList<QBarSet* > sets)
+{
+    foreach (QBarSet* barset, sets) {
+        disconnect(barset, SIGNAL(clicked(QString,Qt::MouseButtons)), this, SLOT(barsetClicked(QString,Qt::MouseButtons)));
+        m_internalModel->removeBarSet(barset);
+    }
+    emit restructuredBars();
 }
 
 void QBarSeries::insertBarSet(int i, QBarSet *set)
@@ -217,6 +246,14 @@ qreal QBarSeries::percentageAt(int set, int category)
 qreal QBarSeries::categorySum(int category)
 {
     return m_internalModel->categorySum(category);
+}
+
+/*!
+    \internal \a category
+*/
+qreal QBarSeries::absoluteCategorySum(int category)
+{
+    return m_internalModel->absoluteCategorySum(category);
 }
 
 /*!
@@ -360,7 +397,7 @@ void QBarSeries::modelDataAdded(QModelIndex /*parent*/, int start, int /*end*/)
             barsetAt(i)->insertValue(start - m_mapFirst, m_model->data(m_model->index(i, start), Qt::DisplayRole).toDouble());
         }
     }
-    emit restructuredBar(1);
+    emit restructuredBars();
 }
 
 void QBarSeries::modelDataRemoved(QModelIndex parent, int start, int end)
@@ -373,7 +410,7 @@ void QBarSeries::modelDataRemoved(QModelIndex parent, int start, int end)
     {
         barsetAt(i)->removeValue(start - m_mapFirst);
     }
-    emit restructuredBar(1);
+    emit restructuredBars();
 }
 
 void QBarSeries::barsetChanged()

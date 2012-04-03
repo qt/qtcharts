@@ -41,7 +41,7 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
 {
     connect(series, SIGNAL(showToolTip(QPoint,QString)), this, SLOT(showToolTip(QPoint,QString)));
     connect(series, SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
-    connect(series, SIGNAL(restructuredBar(int)), this, SLOT(handleModelChanged(int)));
+    connect(series, SIGNAL(restructuredBars()), this, SLOT(handleModelChanged()));
     setZValue(ChartPresenter::BarSeriesZValue);
     dataChanged();
 }
@@ -112,28 +112,22 @@ QVector<QRectF> BarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
 
-    // Use temporary qreals for accurancy (we might get some compiler warnings... :)
+    // Use temporary qreals for accurancy
     qreal categoryCount = m_series->categoryCount();
     qreal setCount = m_series->barsetCount();
 
+    // Domain:
     qreal width = geometry().width();
     qreal height = geometry().height();
-
-    qreal max = m_series->max();
-
-    // Domain:
-    if (m_domainMaxY > max) {
-        max = m_domainMaxY;
-    }
-
-    qreal scale = (height / max);
+    qreal range = m_domainMaxY - m_domainMinY;
+    qreal scale = (height / range);
     qreal categoryWidth = width / categoryCount;
     qreal barWidth = categoryWidth / (setCount+1);
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
         qreal xPos = categoryWidth * category + barWidth / 2;
-        qreal yPos = height;
+        qreal yPos = height + scale * m_domainMinY;
         for (int set = 0; set < setCount; set++) {
             QBarSet* barSet = m_series->barsetAt(set);
 
@@ -209,6 +203,7 @@ void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal
 
 void BarChartItem::handleGeometryChanged(const QRectF &rect)
 {
+    prepareGeometryChange();
     m_clipRect = rect.translated(-rect.topLeft());
     m_rect = rect;
     handleLayoutChanged();
@@ -218,6 +213,10 @@ void BarChartItem::handleGeometryChanged(const QRectF &rect)
 
 void BarChartItem::handleLayoutChanged()
 {
+    if ((m_rect.width() <= 0) || (m_rect.height() <= 0)) {
+        // rect size zero.
+        return;
+    }
     QVector<QRectF> layout = calculateLayout();
     applyLayout(layout);
     update();

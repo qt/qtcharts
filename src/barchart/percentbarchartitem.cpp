@@ -22,6 +22,7 @@
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "qbarset.h"
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -43,14 +44,17 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
     qreal xStep = width / categoryCount;
     qreal xPos =  xStep / 2 - barWidth / 2;
 
+    qreal range = m_domainMaxY - m_domainMinY;
+    qreal domainScale = (height / range);
+
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
         qreal colSum = m_series->categorySum(category);
-        qreal scale = (height / colSum);
-        qreal yPos = height;
+        qreal percentage = (100 / colSum);
+        qreal yPos = height + domainScale * m_domainMinY;
         for (int set=0; set < m_series->barsetCount(); set++) {
             QBarSet* barSet = m_series->barsetAt(set);
-            qreal barHeight = barSet->valueAt(category) * scale;
+            qreal barHeight = barSet->valueAt(category) * percentage * domainScale;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
