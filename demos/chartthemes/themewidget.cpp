@@ -48,10 +48,9 @@ ThemeWidget::ThemeWidget(QWidget* parent) :
     m_valueCount(7),
     m_dataTable(generateRandomData(m_listCount,m_valueMax,m_valueCount)),
     m_themeComboBox(createThemeBox()),
-    m_antialiasCheckBox(new QCheckBox("Anti aliasing")),
+    m_antialiasCheckBox(new QCheckBox("Anti-aliasing")),
     m_animatedComboBox(createAnimationBox()),
     m_legendComboBox(createLegendBox())
-
 {
     connectSignals();
     // create layout
@@ -141,7 +140,6 @@ QComboBox* ThemeWidget::createThemeBox() const
 {
     // settings layout
     QComboBox* themeComboBox = new QComboBox();
-    themeComboBox->addItem("Default", QChart::ChartThemeDefault);
     themeComboBox->addItem("Light", QChart::ChartThemeLight);
     themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
     themeComboBox->addItem("Dark", QChart::ChartThemeDark);

@@ -58,7 +58,7 @@ public:
     };
 
 protected:
-    explicit ChartTheme(QChart::ChartTheme id =  QChart::ChartThemeDefault);
+    explicit ChartTheme(QChart::ChartTheme id = QChart::ChartThemeLight);
 public:
     static ChartTheme* createTheme(QChart::ChartTheme theme);
     QChart::ChartTheme id() const {return m_id;}

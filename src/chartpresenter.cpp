@@ -57,7 +57,7 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_backgroundPadding(10)
 {
     createConnections();
-    setTheme(QChart::ChartThemeDefault,false);
+    setTheme(QChart::ChartThemeLight, false);
 }
 
 ChartPresenter::~ChartPresenter()

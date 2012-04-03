@@ -57,7 +57,6 @@ MainWidget::MainWidget(QWidget* parent)
 
     // chart settings
     m_themeComboBox = new QComboBox();
-    m_themeComboBox->addItem("Default", QChart::ChartThemeDefault);
     m_themeComboBox->addItem("Light", QChart::ChartThemeLight);
     m_themeComboBox->addItem("BlueCerulean", QChart::ChartThemeBlueCerulean);
     m_themeComboBox->addItem("Dark", QChart::ChartThemeDark);

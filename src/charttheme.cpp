@@ -49,7 +49,7 @@
 #include "splinechartitem_p.h"
 
 //themes
-#include "chartthemedefault_p.h"
+#include "chartthemesystem_p.h"
 #include "chartthemelight_p.h"
 #include "chartthemebluecerulean_p.h"
 #include "chartthemedark_p.h"
@@ -61,7 +61,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartTheme::ChartTheme(QChart::ChartTheme id) :
-    m_masterFont(QFont("arial", 12)),
+    m_masterFont(QFont("arial", 14)),
     m_labelFont(QFont("arial", 10)),
     m_titleBrush(QColor(QRgb(0x000000))),
     m_axisLinePen(QPen(QRgb(0x000000))),
@@ -94,7 +94,7 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
         case QChart::ChartThemeBlueIcy:
             return new ChartThemeBlueIcy();
         default:
-            return new ChartThemeDefault();
+            return new ChartThemeSystem();
     }
 }
 

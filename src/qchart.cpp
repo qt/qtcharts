@@ -30,8 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
  This enum describes the theme used by the chart.
 
- \value ChartThemeDefault Follows the GUI style of the Operating System
- \value ChartThemeLight
+ \value ChartThemeLight The default theme
  \value ChartThemeBlueCerulean
  \value ChartThemeDark
  \value ChartThemeBrownSand

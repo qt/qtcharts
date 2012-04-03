@@ -40,8 +40,7 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 
 public:
     enum ChartTheme {
-        ChartThemeDefault,
-        ChartThemeLight,
+        ChartThemeLight = 0,
         ChartThemeBlueCerulean,
         ChartThemeDark,
         ChartThemeBrownSand,
