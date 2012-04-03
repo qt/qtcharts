@@ -76,12 +76,12 @@ SplineWidget::SplineWidget(QWidget *parent)
 
     //! [3]
     // create chart view
-    QChartView* chart = new QChartView;
+    QChart* chart = new QChart;
     chart->addSeries(series);
     chart->addSeries(series2);
     chart->addSeries(series3);
 
-    chart->setChartTitle("Spline chart example");
+    chart->setTitle("Spline chart example");
     chart->axisX()->setMax(1500);
     chart->axisY()->setMax(500);
 
@@ -106,7 +106,8 @@ SplineWidget::SplineWidget(QWidget *parent)
     buttonsLayout->addStretch();
 
     QGridLayout* mainLayout = new QGridLayout;
-    mainLayout->addWidget(chart, 1, 0);
+    QChartView *chartView = new QChartView(chart);
+    mainLayout->addWidget(chartView, 1, 0);
     mainLayout->addLayout(buttonsLayout, 1, 1);
     setLayout(mainLayout);
     //! [5]

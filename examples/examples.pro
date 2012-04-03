@@ -14,7 +14,7 @@ SUBDIRS += \
            #presenterchart \
            scatterchart \
            scatterinteractions \
-           #splinechart \
+           splinechart \
            stackedbarchart \
            stackedbarchartdrilldown \
            #tablemodelchart \
