@@ -20,6 +20,7 @@
 
 #include <QtDeclarative/qdeclarativeextensionplugin.h>
 #include <QtDeclarative/qdeclarative.h>
+#include "qchart.h"
 #include "declarativechart.h"
 #include "declarativexypoint.h"
 #include "declarativelineseries.h"

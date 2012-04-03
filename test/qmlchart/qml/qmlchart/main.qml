@@ -54,7 +54,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         height: parent.height / 2
-        theme: Chart.ThemeBlueCerulean
+        theme: Chart.ChartThemeBlueCerulean
 
         BarSeries {
             barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
@@ -79,7 +79,7 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        theme: Chart.ThemeBrownSand
+        theme: Chart.ChartThemeHighContrast
 
         LineSeries {
             points: [

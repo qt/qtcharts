@@ -36,6 +36,8 @@ struct QChartPrivate;
 class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
     Q_OBJECT
+    Q_ENUMS(ChartTheme)
+
 public:
     enum ChartTheme {
         ChartThemeDefault,

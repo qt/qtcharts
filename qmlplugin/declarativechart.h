@@ -32,20 +32,9 @@ class DeclarativeChart : public QDeclarativeItem
 //class DeclarativeChart : public QQuickPaintedItem, public Chart
 {
     Q_OBJECT
-    Q_ENUMS(ChartTheme)
-    Q_PROPERTY(ChartTheme theme READ theme WRITE setTheme)
+    Q_PROPERTY(QChart::ChartTheme theme READ theme WRITE setTheme)
 
 public:
-    enum ChartTheme {
-        ThemeDefault,
-        ThemeLight,
-        ThemeBlueCerulean,
-        ThemeDark,
-        ThemeBrownSand,
-        ThemeBlueNcs,
-        ThemeHighContrast,
-        ThemeBlueIcy
-    };
     DeclarativeChart(QDeclarativeItem *parent = 0);
     ~DeclarativeChart();
 
@@ -54,8 +43,8 @@ public: // From QDeclarativeItem/QGraphicsItem
     void paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
 public:
-    void setTheme(ChartTheme theme) {m_chart->setTheme((QChart::ChartTheme) theme);}
-    ChartTheme theme();
+    void setTheme(QChart::ChartTheme theme) {m_chart->setTheme(theme);}
+    QChart::ChartTheme theme();
 
 public:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support

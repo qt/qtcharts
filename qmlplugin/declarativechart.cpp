@@ -35,9 +35,9 @@ DeclarativeChart::~DeclarativeChart()
     delete m_chart;
 }
 
-DeclarativeChart::ChartTheme DeclarativeChart::theme()
+QChart::ChartTheme DeclarativeChart::theme()
 {
-    return (ChartTheme) m_chart->theme();
+    return m_chart->theme();
 }
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
