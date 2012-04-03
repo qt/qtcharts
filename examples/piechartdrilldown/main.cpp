@@ -18,73 +18,15 @@
 **
 ****************************************************************************/
 
+#include "drilldownchart.h"
+#include "drilldownslice.h"
 #include <QtGui/QApplication>
 #include <QMainWindow>
 #include <QTime>
 #include <QChartView>
 #include <QPieSeries>
-#include <QPieSlice>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
-
-class DrilldownSlice : public QPieSlice
-{
-    Q_OBJECT
-
-public:
-    DrilldownSlice(qreal value, QString prefix, QSeries* drilldownSeries)
-        :m_drilldownSeries(drilldownSeries),
-        m_prefix(prefix)
-    {
-        setValue(value);
-        setLabelVisible(true);
-        updateLabel();
-        connect(this, SIGNAL(changed()), this, SLOT(updateLabel()));
-    }
-
-    QSeries* drilldownSeries() const { return m_drilldownSeries; }
-
-public Q_SLOTS:
-    void updateLabel()
-    {
-        QString label = m_prefix;
-        label += " " + QString::number(this->value())+ "e (";
-        label += QString::number(this->percentage()*100, 'f', 1) + "%)";
-        setLabel(label);
-    }
-
-private:
-    QSeries* m_drilldownSeries;
-    QString m_prefix;
-};
-
-class DrilldownChart : public QChart
-{
-    Q_OBJECT
-public:
-    explicit DrilldownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0):QChart(parent, wFlags), m_currentSeries(0) {}
-
-    void changeSeries(QSeries* series)
-    {
-        // NOTE: if the series is owned by the chart it will be deleted
-        // here the "window" owns the series...
-        if (m_currentSeries)
-            removeSeries(m_currentSeries);
-        m_currentSeries = series;
-        addSeries(series);
-        setTitle(series->name());
-    }
-
-public Q_SLOTS:
-    void handleSliceClicked(QPieSlice* slice)
-    {
-        DrilldownSlice* drilldownSlice = static_cast<DrilldownSlice*>(slice);
-        changeSeries(drilldownSlice->drilldownSeries());
-    }
-
-private:
-    QSeries* m_currentSeries;
-};
 
 int main(int argc, char *argv[])
 {
@@ -94,9 +36,9 @@ int main(int argc, char *argv[])
 
     QMainWindow window;
 
-    DrilldownChart* drilldownChart =  new DrilldownChart();
-    drilldownChart->setTheme(QChart::ChartThemeLight);
-    drilldownChart->setAnimationOptions(QChart::AllAnimations);
+    DrilldownChart* chart = new DrilldownChart();
+    chart->setTheme(QChart::ChartThemeLight);
+    chart->setAnimationOptions(QChart::AllAnimations);
 
     QPieSeries* yearSeries = new QPieSeries(&window);
     yearSeries->setName("Sales by year - All");
@@ -113,16 +55,16 @@ int main(int argc, char *argv[])
         foreach (QString month, months)
             *series << new DrilldownSlice(qrand() % 1000, month, yearSeries);
 
-        QObject::connect(series, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), drilldownChart, SLOT(handleSliceClicked(QPieSlice*)));
+        QObject::connect(series, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), chart, SLOT(handleSliceClicked(QPieSlice*)));
 
         *yearSeries << new DrilldownSlice(series->total(), name, series);
     }
 
-    QObject::connect(yearSeries, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), drilldownChart, SLOT(handleSliceClicked(QPieSlice*)));
+    QObject::connect(yearSeries, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), chart, SLOT(handleSliceClicked(QPieSlice*)));
 
-    drilldownChart->changeSeries(yearSeries);
+    chart->changeSeries(yearSeries);
 
-    QChartView* chartView = new QChartView(drilldownChart);
+    QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     window.setCentralWidget(chartView);
     window.resize(800, 600);
@@ -130,5 +72,3 @@ int main(int argc, char *argv[])
 
     return a.exec();
 }
-
-#include "main.moc"
