@@ -28,6 +28,7 @@ SOURCES += \
     declarativexypoint.cpp \
     declarativelineseries.cpp \
     declarativesplineseries.cpp \
+    declarativeareaseries.cpp \
     declarativescatterseries.cpp \
     declarativepieseries.cpp \
     declarativebarseries.cpp
@@ -37,6 +38,7 @@ HEADERS += \
     declarativexypoint.h \
     declarativelineseries.h \
     declarativesplineseries.h \
+    declarativeareaseries.h \
     declarativescatterseries.h \
     declarativepieseries.h \
     declarativebarseries.h

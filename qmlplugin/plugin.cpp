@@ -25,6 +25,7 @@
 #include "declarativexypoint.h"
 #include "declarativelineseries.h"
 #include "declarativesplineseries.h"
+#include "declarativeareaseries.h"
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
@@ -44,6 +45,7 @@ public:
         qmlRegisterType<DeclarativeScatterSeries>(uri, 1, 0, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries>(uri, 1, 0, "LineSeries");
         qmlRegisterType<DeclarativeSplineSeries>(uri, 1, 0, "SplineSeries");
+        qmlRegisterType<DeclarativeAreaSeries>(uri, 1, 0, "AreaSeries");
         qmlRegisterType<DeclarativeBarSeries>(uri, 1, 0, "BarSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
         qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
