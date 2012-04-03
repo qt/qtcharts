@@ -34,7 +34,6 @@
 #include "qpieseries.h"
 #include "qpieslice.h"
 #include "chartpresenter_p.h"
-#include "scroller_p.h"
 #include <QPainter>
 #include <QPen>
 #include <QTimer>

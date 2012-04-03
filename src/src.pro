@@ -17,7 +17,6 @@ SOURCES += \
     $$PWD/qseries.cpp \
     $$PWD/qlegend.cpp \
     $$PWD/legendmarker.cpp \
-    $$PWD/legendscrollbutton.cpp \
     $$PWD/chartbackground.cpp \
     $$PWD/chart.cpp \
     $$PWD/scroller.cpp
@@ -28,7 +27,6 @@ PRIVATE_HEADERS += \
     $$PWD/charttheme_p.h \
     $$PWD/domain_p.h \
     $$PWD/legendmarker_p.h \
-    $$PWD/legendscrollbutton_p.h \
     $$PWD/chartbackground_p.h \
     $$PWD/chart_p.h \
     $$PWD/chartconfig_p.h \

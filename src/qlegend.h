@@ -25,7 +25,7 @@
 #include <QGraphicsWidget>
 #include <QPen>
 #include <QBrush>
-#include "scroller_p.h"
+#include "private/scroller_p.h" //TODO fixme
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
