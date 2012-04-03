@@ -44,8 +44,8 @@
 ThemeWidget::ThemeWidget(QWidget* parent) :
     QWidget(parent),
     m_listCount(3),
-    m_valueMax(100),
-    m_valueCount(11),
+    m_valueMax(10),
+    m_valueCount(7),
     m_dataTable(generateRandomData(m_listCount,m_valueMax,m_valueCount)),
     m_themeComboBox(createThemeBox()),
     m_antialiasCheckBox(new QCheckBox("Anti aliasing")),
@@ -53,7 +53,6 @@ ThemeWidget::ThemeWidget(QWidget* parent) :
     m_legendComboBox(createLegendBox())
 
 {
-
     connectSignals();
     // create layout
     QGridLayout* baseLayout = new QGridLayout();
@@ -97,6 +96,9 @@ ThemeWidget::ThemeWidget(QWidget* parent) :
     m_charts << chartView;
 
     setLayout(baseLayout);
+
+    // Set defaults
+    m_antialiasCheckBox->setChecked(true);
 }
 
 ThemeWidget::~ThemeWidget()
@@ -121,8 +123,11 @@ DataTable ThemeWidget::generateRandomData(int listCount,int valueMax,int valueCo
     // generate random data
     for (int i(0); i < listCount; i++) {
         DataList dataList;
+        qreal yValue(0);
         for (int j(0); j < valueCount; j++) {
-            QPointF value(j + (qreal) rand() / (qreal) RAND_MAX, qrand() % valueMax);
+            yValue = yValue + (qreal) (qrand() % valueMax) / (qreal) valueCount;
+            QPointF value((j + (qreal) rand() / (qreal) RAND_MAX) * ((qreal) m_valueMax / (qreal) valueCount),
+                          yValue);
             QString label = "Item " + QString::number(i) + ":" + QString::number(j);
             dataList << Data(value, label);
         }
@@ -172,22 +177,30 @@ QChart* ThemeWidget::createAreaChart() const
 {
     // area chart
     QChart *chart = new QChart();
+    chart->axisX()->setNiceNumbers(true);
+    chart->axisY()->setNiceNumbers(true);
     chart->setTitle("Area chart");
+    QString name("Series ");
+    int nameIndex = 0;
+
+    // The lower series initialized to zero values
+    QLineSeries *lowerSeries = new QLineSeries(chart);
     {
-        QString name("Series ");
-        int nameIndex = 0;
-        for (int i(0); i < m_dataTable.count(); i++) {
-            QLineSeries *series1 = new QLineSeries(chart);
-            QLineSeries *series2 = new QLineSeries(chart);
-            foreach (Data data, m_dataTable[i]) {
-                series1->append(data.first);
-                series2->append(QPointF(data.first.x(), 0.0));
-            }
-            QAreaSeries *area = new QAreaSeries(series1, series2);
-            area->setName(name + QString::number(nameIndex));
-            nameIndex++;
-            chart->addSeries(area);
+        for (int i(0); i < m_valueCount; i++)
+            lowerSeries->append(QPointF(i, 0.0));
+    }
+
+    for (int i(0); i < m_dataTable.count(); i++) {
+        QLineSeries *upperSeries = new QLineSeries(chart);
+        for (int j(0); j < m_dataTable[i].count(); j++) {
+            Data data = m_dataTable[i].at(j);
+            upperSeries->append(QPointF(j, lowerSeries->y(i) + data.first.y()));
         }
+        QAreaSeries *area = new QAreaSeries(upperSeries, lowerSeries);
+        area->setName(name + QString::number(nameIndex));
+        nameIndex++;
+        chart->addSeries(area);
+        lowerSeries = upperSeries;
     }
     return chart;
 }
@@ -196,23 +209,23 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
 {
     // bar chart
     QChart* chart = new QChart();
+    chart->axisX()->setNiceNumbers(true);
+    chart->axisY()->setNiceNumbers(true);
     chart->setTitle("Bar chart");
-    {
-        QBarCategories categories;
-        // TODO: categories
-        for (int i(0); i < valueCount; i++)
-            categories << QString::number(i);
+    QBarCategories categories;
+    // TODO: categories
+    for (int i(0); i < valueCount; i++)
+        categories << QString::number(i);
 //            QBarSeries* series = new QBarSeries(categories, chart);
 //            QPercentBarSeries* series = new QPercentBarSeries(categories, chart);
-        QStackedBarSeries* series = new QStackedBarSeries(categories, chart);
-        for (int i(0); i < m_dataTable.count(); i++) {
-            QBarSet *set = new QBarSet("Set" + QString::number(i));
-            foreach (Data data, m_dataTable[i])
-                *set << data.first.y();
-            series->appendBarSet(set);
-        }
-        chart->addSeries(series);
+    QStackedBarSeries* series = new QStackedBarSeries(categories, chart);
+    for (int i(0); i < m_dataTable.count(); i++) {
+        QBarSet *set = new QBarSet("Set" + QString::number(i));
+        foreach (Data data, m_dataTable[i])
+            *set << data.first.y();
+        series->appendBarSet(set);
     }
+    chart->addSeries(series);
     return chart;
 }
 
@@ -220,6 +233,8 @@ QChart* ThemeWidget::createLineChart() const
 {
     // line chart
     QChart* chart = new QChart();
+    chart->axisX()->setNiceNumbers(true);
+    chart->axisY()->setNiceNumbers(true);
     chart->setTitle("Line chart");
     QString name("Series ");
     int nameIndex = 0;
@@ -261,6 +276,8 @@ QChart* ThemeWidget::createPieChart() const
 QChart* ThemeWidget::createSplineChart() const
 { // spine chart
     QChart* chart = new QChart();
+    chart->axisX()->setNiceNumbers(true);
+    chart->axisY()->setNiceNumbers(true);
     chart->setTitle("Spline chart");
     QString name("Series ");
     int nameIndex = 0;
@@ -278,6 +295,8 @@ QChart* ThemeWidget::createSplineChart() const
 QChart* ThemeWidget::createScatterChart() const
 { // scatter chart
     QChart* chart = new QChart();
+    chart->axisX()->setNiceNumbers(true);
+    chart->axisY()->setNiceNumbers(true);
     chart->setTitle("Scatter chart");
     QString name("Series ");
     int nameIndex = 0;
