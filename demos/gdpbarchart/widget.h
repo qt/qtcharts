@@ -22,8 +22,7 @@
 #define WIDGET_H
 
 #include <QtGui/QWidget>
-//#include <QChartview>
-#include <qchartview.h>
+#include <QChartView>
 #include <QSqlDatabase>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
