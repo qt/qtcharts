@@ -37,7 +37,6 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *prese
     QObject::connect(m_series,SIGNAL(updated()), this, SLOT(handleUpdated()));
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
-    setFlags(QGraphicsItem::ItemHasNoContents);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
 
     handleUpdated();
