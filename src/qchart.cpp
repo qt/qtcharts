@@ -68,7 +68,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
 d_ptr(new QChartPrivate())
 {
-    d_ptr->m_legend = new QLegend(this);
+    d_ptr->m_legend = new  ScrolledQLegend(this);
     d_ptr->m_dataset = new ChartDataSet(this);
     d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
     d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);

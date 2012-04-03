@@ -102,8 +102,7 @@ QLegend::QLegend(QChart *chart):QGraphicsWidget(chart),
     m_width(0),
     m_height(0),
     m_visible(false),
-    m_dirty(false),
-    m_scroller(new Scroller(this))
+    m_dirty(false)
 {
     setZValue(ChartPresenter::LegendZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
@@ -540,22 +539,6 @@ void QLegend::showEvent(QShowEvent *event)
     QGraphicsWidget::showEvent(event);
     setEnabled(true);
     updateLayout();
-}
-
-void QLegend::mousePressEvent(QGraphicsSceneMouseEvent* event)
-{
-    //Q_UNUSED(event);
-    m_scroller->mousePressEvent(event);
-}
-void QLegend::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
-{
-    //Q_UNUSED(event);
-    m_scroller->mouseMoveEvent(event);
-}
-void QLegend::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
-{
-    //Q_UNUSED(event);
-    m_scroller->mouseReleaseEvent(event);
 }
 
 #include "moc_qlegend.cpp"

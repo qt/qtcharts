@@ -25,6 +25,7 @@
 #include <QGraphicsWidget>
 #include <QPen>
 #include <QBrush>
+#include "scroller_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -39,7 +40,6 @@ class QAreaSeries;
 class LegendScrollButton;
 class QSeries;
 class QChart;
-class Scroller;
 
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
@@ -90,9 +90,6 @@ protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
-    void mousePressEvent(QGraphicsSceneMouseEvent* event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 
 public Q_SLOTS:
     // PIMPL --->
@@ -142,9 +139,39 @@ private:
     qreal m_height;
     bool m_visible;
     bool m_dirty;
-    Scroller* m_scroller;
-    friend class QChart;
+    friend class ScrolledQLegend;
     // <--- PIMPL
+};
+
+class ScrolledQLegend: public QLegend, public Scroller
+{
+
+public:
+    ScrolledQLegend(QChart *chart):QLegend(chart)
+    {
+    }
+
+    void setOffset(const QPointF& point)
+    {
+        QLegend::setOffset(point);
+    }
+    QPointF offset() const
+    {
+        return QLegend::offset();
+    }
+
+    void mousePressEvent(QGraphicsSceneMouseEvent* event){
+        Scroller::mousePressEvent(event);
+        //QLegend::mousePressEvent(event);
+    }
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event){
+        Scroller::mouseMoveEvent(event);
+        //QLegend::mouseMoveEvent(event);
+    }
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event){
+        Scroller::mouseReleaseEvent(event);
+        //QLegend::mouseReleaseEvent(event);
+    }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

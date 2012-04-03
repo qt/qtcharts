@@ -24,12 +24,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Scroller::Scroller(QLegend* legend):
+Scroller::Scroller():
 m_ticker(this),
 m_state(Idle),
 m_moveThreshold(10),
-m_timeTreshold(50),
-m_legend(legend)
+m_timeTreshold(50)
 {
 
 }
@@ -218,16 +217,6 @@ void Scroller::calculateSpeed(const QPointF& position)
             m_fraction.setY(1);
         }
     }
-}
-
-void Scroller::setOffset(const QPointF& point)
-{
-    m_legend->setOffset(point);
-}
-
-QPointF Scroller::offset() const
-{
-    return m_legend->offset();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

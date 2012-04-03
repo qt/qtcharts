@@ -67,11 +67,11 @@ public:
         Stop
     };
 
-    explicit Scroller(QLegend* legend);
+    Scroller();
     virtual ~Scroller();
 
-    virtual void setOffset(const QPointF& point);
-    virtual QPointF offset() const;
+    virtual void setOffset(const QPointF& point) = 0;
+    virtual QPointF offset() const = 0;
 
 public:
     void scrollTick();
@@ -97,7 +97,6 @@ private:
     QPointF m_fraction;
     int m_moveThreshold;
     int m_timeTreshold;
-    QLegend* m_legend;
 
 
 };
