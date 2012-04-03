@@ -24,7 +24,9 @@
 #include <QAbstractTableModel>
 #include <QPointF>
 #include <QStringList>
-#include <QColor>
+//#include <QColor>
+#include <QHash>
+#include <QRect>
 
 class CustomTableModel : public QAbstractTableModel
 {
@@ -40,13 +42,18 @@ public:
     Qt::ItemFlags flags ( const QModelIndex & index ) const;
     bool insertRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
     bool removeRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
+
+    void addMapping(QString color, QRect area);
+    void addMapping(QString color, int left, int top, int right, int bottom);
+    void clearMapping() { m_mapping.clear(); }
     
     //signals:
     
     //public slots:
 private:
-    QList<QVector<qreal>* > m_data;
-    QList<QVector<QColor>* > m_rowsColors;
+    QList<QVector<qreal> * > m_data;
+//    QList<QVector<QColor> * > m_rowsColors;
+    QHash<QString, QRect> m_mapping;
     QList<QPointF> m_points;
     QStringList m_labels;
 

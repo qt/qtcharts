@@ -21,6 +21,8 @@
 #include "customtablemodel.h"
 #include <QVector>
 #include <QTime>
+#include <QRect>
+#include <QColor>
 
 CustomTableModel::CustomTableModel(QObject *parent) :
     QAbstractTableModel(parent)
@@ -44,18 +46,18 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     for (int i = 0; i < 6; i++)
     {
         QVector<qreal>* dataVec = new QVector<qreal>(6);
-        QVector<QColor>* colorVec = new QVector<QColor>(6);
+//        QVector<QColor>* colorVec = new QVector<QColor>(6);
         for (int k = 0; k < dataVec->size(); k++)
         {
             if (k%2 == 0)
                 dataVec->replace(k, i * 50 + qrand()%20);
             else
                 dataVec->replace(k, qrand()%100);
-            colorVec->replace(k, QColor(Qt::white));
+//            colorVec->replace(k, QColor(Qt::white));
         }
         m_data.append(dataVec);
         m_labels.append(QString("Row: %1").arg((i + 1)));
-        m_rowsColors.append(colorVec);
+//        m_rowsColors.append(colorVec);
     }
 }
 
@@ -137,7 +139,13 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
     }
     else if (role == Qt::BackgroundRole)
         {
-            return m_rowsColors[index.row()]->at(index.column());
+            QRect rect;
+            foreach(rect, m_mapping)
+                if(rect.contains(index.column(), index.row()))
+                    return QColor(m_mapping.key(rect));
+
+            // cell not mapped return white color
+            return QColor(Qt::white);
         }
     return QVariant();
 }
@@ -166,11 +174,11 @@ bool CustomTableModel::setData ( const QModelIndex & index, const QVariant & val
         emit dataChanged(index, index);
         return true;
     }
-    else if (role == Qt::BackgroundRole)
-        {
-            m_rowsColors[index.row()]->replace(index.column(), value.value<QColor>());
-            return true;
-        }
+//    else if (role == Qt::BackgroundRole)
+//        {
+//            m_rowsColors[index.row()]->replace(index.column(), value.value<QColor>());
+//            return true;
+//        }
     return false;
 }
 
@@ -230,7 +238,7 @@ bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & pare
         }
         m_data.insert(i, dataVec);
         m_labels.insert(i,(QString("Row: %1").arg(i + 1)));
-        m_rowsColors.insert(i, colorVec);
+//        m_rowsColors.insert(i, colorVec);
     }
     endInsertRows();
     return true;
@@ -255,4 +263,14 @@ bool CustomTableModel::removeRows ( int row, int count, const QModelIndex & pare
     }
     endRemoveRows();
     return true;
+}
+
+void CustomTableModel::addMapping(QString color, QRect area)
+{
+    m_mapping.insert(color, area);
+}
+
+void CustomTableModel::addMapping(QString color, int left, int top, int right, int bottom)
+{
+    addMapping(color, QRect(QPoint(left, top), QPoint(right, bottom)));
 }
