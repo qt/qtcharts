@@ -396,6 +396,7 @@ void QPieSlice::setLabelArmLengthFactor(qreal factor)
     }
 }
 
-#include "moc_qpieslice.cpp"
-
 QTCOMMERCIALCHART_END_NAMESPACE
+
+QTCOMMERCIALCHART_USE_NAMESPACE
+#include "moc_qpieslice.cpp"
