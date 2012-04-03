@@ -2,12 +2,9 @@ TEMPLATE = subdirs
 SUBDIRS += \
            areachart \
            barchart \
-           #chartview \
            customchart \
-           #dynamiclinechart \
            ekgchart \
            linechart \
-           #multichart \
            percentbarchart \
            piechart \
            piechartdrilldown \
