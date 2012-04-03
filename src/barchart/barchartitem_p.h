@@ -57,9 +57,6 @@ public:
 
     QRectF geometry() const { return m_rect;}
 
-private:
-    void deleteItems();
-
 public Q_SLOTS:
     void handleModelChanged(int index);
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
