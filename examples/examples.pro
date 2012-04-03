@@ -13,7 +13,7 @@ SUBDIRS += \
            piechartdrilldown \
            #presenterchart \
            scatterchart \
-           #scatterinteractions \
+           scatterinteractions \
            #splinechart \
            stackedbarchart \
            stackedbarchartdrilldown \
