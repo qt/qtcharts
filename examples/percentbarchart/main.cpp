@@ -29,10 +29,12 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
 //![1]
     QBarCategories categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
 //![1]
+
 //![2]
     QBarSet *set0 = new QBarSet("Jane");
     QBarSet *set1 = new QBarSet("John");
@@ -46,6 +48,7 @@ int main(int argc, char *argv[])
     *set3 << 5 << 6 << 7 << 3 << 4 << 5;
     *set4 << 9 << 7 << 5 << 3 << 1 << 2;
 //![2]
+
 //![3]
     QPercentBarSeries* series = new QPercentBarSeries(categories);
     series->appendBarSet(set0);
@@ -54,21 +57,25 @@ int main(int argc, char *argv[])
     series->appendBarSet(set3);
     series->appendBarSet(set4);
 //![3]
+
 //![4]
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple precentbarchart example");
 //![4]
+
 //![5]
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![5]
+
 //![6]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
 //![6]
+
     return a.exec();
 }
 

@@ -35,14 +35,17 @@ int main(int argc, char *argv[])
     blue.setWidth(3);
     series->setPen(blue);
 //![1]
+
 //![2]
     *series << QPointF(0, 6) << QPointF(2, 4) << QPointF(3, 8) << QPointF(7, 4) << QPointF(10,5);
 //![2]
+
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple customchart example");
 //![3]
+
 //![4]
     QFont font;
     font.setPixelSize(18);
@@ -57,6 +60,7 @@ int main(int argc, char *argv[])
     backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
     chart->setBackgroundBrush(backgroundGradient);
 //![4]
+
 //![5]
     QPen black(Qt::black);
     QChartAxis* axisX = chart->axisX();
@@ -72,6 +76,7 @@ int main(int argc, char *argv[])
     axisY->setShadesBrush(Qt::white);
     axisY->setShadesVisible(true);
 //![5]
+
 //![6]
     QChartAxisCategories* categoriesX = chart->axisX()->categories();
     categoriesX->insert(1,"low");
@@ -83,21 +88,25 @@ int main(int argc, char *argv[])
     categoriesY->insert(5,"med");
     categoriesY->insert(10,"fast");
 //![6]
+
 //![7]
     axisX->setRange(0,10);
     axisX->setTicksCount(4);
     axisY->setRange(0,10);
     axisY->setTicksCount(4);
 //![7]
+
 //![8]
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![8]
+
 //![9]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
 //![9]
+
     return a.exec();
 }

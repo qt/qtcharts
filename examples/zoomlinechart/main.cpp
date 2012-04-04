@@ -40,10 +40,12 @@ int main(int argc, char *argv[])
     red.setWidth(3);
     series1->setPen(red);
 //![1]
+
 //![2]
     *series0 << QPointF(0, 6) << QPointF(2, 4) << QPointF(3, 8) << QPointF(7, 4) << QPointF(10, 5);
     *series1 << QPointF(1, 1) << QPointF(3, 3) << QPointF(7, 6) << QPointF(8, 3) << QPointF(10, 2);
 //![2]
+
 //![3]
     QChart* chart = new QChart();
 
@@ -52,15 +54,18 @@ int main(int argc, char *argv[])
     chart->setTitle("Zoom in/out chart example");
     chart->setAnimationOptions(QChart::AllAnimations);
 //![3]
+
 //![4]
      ChartView* chartView = new ChartView(chart);
      chartView->setRenderHint(QPainter::Antialiasing);
 //![4]
+
 //![5]
      QMainWindow window;
      window.setCentralWidget(chartView);
      window.resize(400, 300);
      window.show();
 //![5]
+
     return a.exec();
 }

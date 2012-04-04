@@ -29,6 +29,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
 //![1]
     QLineSeries* series0 = new QLineSeries();
     QLineSeries* series1 = new QLineSeries();
@@ -40,6 +41,7 @@ int main(int argc, char *argv[])
     *series1 << QPointF(1, 3) << QPointF(3, 4) << QPointF(7, 3) << QPointF(8, 2) << QPointF(12, 3)
         << QPointF(16, 4) << QPointF(18, 3);
 //![2]
+
 //![3]
     QAreaSeries* series = new QAreaSeries(series0, series1);
     QPen pen(0x059605);
@@ -52,6 +54,7 @@ int main(int argc, char *argv[])
     gradient.setCoordinateMode(QGradient::ObjectBoundingMode);
     series->setBrush(gradient);
 //![3]
+
 //![4]
     QChart* chart = new QChart();
     chart->addSeries(series);
@@ -59,15 +62,18 @@ int main(int argc, char *argv[])
     chart->axisX()->setRange(0, 20);
     chart->axisY()->setRange(0, 10);
 //![4]
+
 //![5]
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![5]
+
 //![6]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
 //![6]
+
     return a.exec();
 }

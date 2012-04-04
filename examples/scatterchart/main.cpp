@@ -28,6 +28,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
 //![1]
     QPen pen(Qt::black);
     pen.setWidth(2);
@@ -56,6 +57,7 @@ int main(int argc, char *argv[])
 
     *series1 << QPointF(1, 1) << QPointF(3, 3) << QPointF(7, 6) << QPointF(8, 3) << QPointF(10, 2);
 //![2]
+
 //![3]
     QChart* chart = new QChart();
 
@@ -63,15 +65,18 @@ int main(int argc, char *argv[])
     chart->addSeries(series1);
     chart->setTitle("Simple scatterchart example");
 //![3]
+
 //![4]
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![4]
+
 //![5]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
 //![5]
+
     return a.exec();
 }
