@@ -236,6 +236,7 @@ void ChartDataSet::calculateDomain(QSeries* series,Domain* domain)
             maxX = qMax(maxX, x);
             minY = 0;
             maxY = 100;
+            tickXCount = x+1;
             setupCategories(percentBarSeries);
             break;
         }
