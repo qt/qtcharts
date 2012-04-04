@@ -22,6 +22,7 @@
 #include "qbarseries.h"
 #include "qbarset.h"
 #include "barchartmodel_p.h"
+#include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

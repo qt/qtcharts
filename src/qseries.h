@@ -23,8 +23,11 @@
 
 #include <qchartglobal.h>
 #include <QObject>
-#include <QAbstractItemModel>
+//#include <QAbstractItemModel>
 #include <QPen>
+
+class QAbstractItemModel;
+class QModelIndex;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

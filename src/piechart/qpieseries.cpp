@@ -22,6 +22,7 @@
 #include "qpieseriesprivate_p.h"
 #include "qpieslice.h"
 #include "pieslicedata_p.h"
+#include <QAbstractItemModel>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

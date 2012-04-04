@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "qxyseries.h"
+#include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
