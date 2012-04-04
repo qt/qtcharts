@@ -273,9 +273,9 @@ QChartAxis* QChart::axisX() const
 /*!
  Returns the pointer to the y axis object of the chart
  */
-QChartAxis* QChart::axisY() const
+QChartAxis* QChart::axisY(QSeries* series) const
 {
-    return d_ptr->m_dataset->axisY();
+    return d_ptr->m_dataset->axisY(series);
 }
 
 /*!

@@ -22,6 +22,7 @@
 #define QCHART_H
 
 #include <QSeries>
+#include <QLegend>
 #include <QGraphicsWidget>
 
 class QGraphicsSceneResizeEvent;
@@ -97,7 +98,7 @@ public:
     void scrollDown();
 
     QChartAxis* axisX() const;
-    QChartAxis* axisY() const;
+    QChartAxis* axisY(QSeries* series = 0) const;
 
     QLegend* legend() const;
     QRectF margins() const;
