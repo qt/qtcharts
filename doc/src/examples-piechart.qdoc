@@ -1,9 +1,7 @@
 /*!
      \example examples/piechart
-     \title LineChart Example
+     \title Piechart Example
      \subtitle
 
-     The example shows how to create simple pie chart.
-
-     ...
+     The example shows how to create simple pie chart and do some customizations to a pie slice.
 */

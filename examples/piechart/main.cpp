@@ -46,20 +46,24 @@ int main(int argc, char *argv[])
     slice->setPen(QPen(Qt::darkGreen, 2));
     slice->setBrush(Qt::green);
 //![2]
+
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple piechart example");
 //![3]
+
 //![4]
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![4]
+
 //![5]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
 //![5]
+
     return a.exec();
 }

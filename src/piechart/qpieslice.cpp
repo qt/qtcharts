@@ -250,8 +250,6 @@ qreal QPieSlice::labelArmLengthFactor() const
     \fn void QPieSlice::changed()
 
     This signal emitted when something has changed in the slice.
-
-    \sa QPieSeries::changed()
 */
 
 /*!
