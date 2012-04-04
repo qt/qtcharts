@@ -62,7 +62,6 @@ public:
     QBrush brush() const {return m_brush;}
 
     bool setModel(QAbstractItemModel *model);
-//    QAbstractItemModel* model() const { return m_model; }
 
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     virtual void setModelMappingRange(int first, int count = 0);

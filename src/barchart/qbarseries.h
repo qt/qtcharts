@@ -58,7 +58,6 @@ public:
     void setLabelsVisible(bool visible = true);
 
     bool setModel(QAbstractItemModel *model);
-//    QAbstractItemModel *modelExt() { return m_model; }
     void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
     void setModelMappingShift(int first, int count);
 

@@ -54,6 +54,7 @@ public:
     // TODO
     virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
     QAbstractItemModel* model() const { return m_model; }
+
     void setName(QString name) { m_name = name; }
     QString name() const { return m_name; }
 

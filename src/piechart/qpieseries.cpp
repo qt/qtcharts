@@ -630,6 +630,10 @@ qreal QPieSeries::total() const
     \sa pieSize(), setPieSize()
 */
 
+/*!
+     \fn bool QPieSeries::setModel(QAbstractItemModel *model)
+     Sets the \a model to be used as a data source
+ */
 bool QPieSeries::setModel(QAbstractItemModel* model)
 {
     Q_D(QPieSeries);

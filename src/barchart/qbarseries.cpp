@@ -274,6 +274,10 @@ BarChartModel& QBarSeries::modelInternal()
     return *m_internalModel;
 }
 
+/*!
+     \fn bool QBarSeries::setModel(QAbstractItemModel *model)
+     Sets the \a model to be used as a data source
+ */
 bool QBarSeries::setModel(QAbstractItemModel *model)
 {
     // disconnect signals from old model
