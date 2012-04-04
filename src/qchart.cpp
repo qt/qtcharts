@@ -122,6 +122,7 @@ void QChart::removeAllSeries()
  */
 void QChart::setBackgroundBrush(const QBrush& brush)
 {
+    //TODO: refactor me
     d_ptr->m_presenter->createChartBackgroundItem();
     d_ptr->m_presenter->m_backgroundItem->setBrush(brush);
     d_ptr->m_presenter->m_backgroundItem->update();
@@ -129,6 +130,7 @@ void QChart::setBackgroundBrush(const QBrush& brush)
 
 QBrush QChart::backgroundBrush() const
 {
+    //TODO: refactor me
     if (!d_ptr->m_presenter->m_backgroundItem) return QBrush();
     return (d_ptr->m_presenter->m_backgroundItem)->brush();
 }
@@ -138,6 +140,7 @@ QBrush QChart::backgroundBrush() const
  */
 void QChart::setBackgroundPen(const QPen& pen)
 {
+    //TODO: refactor me
     d_ptr->m_presenter->createChartBackgroundItem();
     d_ptr->m_presenter->m_backgroundItem->setPen(pen);
     d_ptr->m_presenter->m_backgroundItem->update();
@@ -145,6 +148,7 @@ void QChart::setBackgroundPen(const QPen& pen)
 
 QPen QChart::backgroundPen() const
 {
+    //TODO: refactor me
     if (!d_ptr->m_presenter->m_backgroundItem) return QPen();
     return d_ptr->m_presenter->m_backgroundItem->pen();
 }
@@ -154,6 +158,7 @@ QPen QChart::backgroundPen() const
  */
 void QChart::setTitle(const QString& title)
 {
+    //TODO: refactor me
     d_ptr->m_presenter->createChartTitleItem();
     d_ptr->m_presenter->m_titleItem->setText(title);
     d_ptr->m_presenter->updateLayout();
@@ -164,6 +169,7 @@ void QChart::setTitle(const QString& title)
  */
 QString QChart::title() const
 {
+    //TODO: refactor me
     if (d_ptr->m_presenter->m_titleItem)
     return d_ptr->m_presenter->m_titleItem->text();
     else
@@ -175,6 +181,7 @@ QString QChart::title() const
  */
 void QChart::setTitleFont(const QFont& font)
 {
+    //TODO: refactor me
     d_ptr->m_presenter->createChartTitleItem();
     d_ptr->m_presenter->m_titleItem->setFont(font);
     d_ptr->m_presenter->updateLayout();
@@ -185,6 +192,7 @@ void QChart::setTitleFont(const QFont& font)
  */
 void QChart::setTitleBrush(const QBrush &brush)
 {
+    //TODO: refactor me
     d_ptr->m_presenter->createChartTitleItem();
     d_ptr->m_presenter->m_titleItem->setBrush(brush);
     d_ptr->m_presenter->updateLayout();
@@ -195,6 +203,7 @@ void QChart::setTitleBrush(const QBrush &brush)
  */
 QBrush QChart::titleBrush() const
 {
+    //TODO: refactor me
     if (!d_ptr->m_presenter->m_titleItem) return QBrush();
     return d_ptr->m_presenter->m_titleItem->brush();
 }
@@ -320,12 +329,14 @@ void QChart::scrollDown()
 
 void QChart::setBackgroundVisible(bool visible)
 {
+    //TODO: refactor me
     d_ptr->m_presenter->createChartBackgroundItem();
     d_ptr->m_presenter->m_backgroundItem->setVisible(visible);
 }
 
 bool QChart::isBackgroundVisible() const
 {
+    //TODO: refactor me
     if (!d_ptr->m_presenter->m_backgroundItem) return false;
     return d_ptr->m_presenter->m_backgroundItem->isVisible();
 }
