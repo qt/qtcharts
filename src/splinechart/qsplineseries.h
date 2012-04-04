@@ -41,7 +41,7 @@ public:
     bool setModel(QAbstractItemModel *model);
 
     void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
-    void setModelMappingShift(int first, int count);
+    void setModelMappingRange(int first, int count);
 
 private:
     void calculateControlPoints();

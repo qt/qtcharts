@@ -168,9 +168,9 @@ void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orie
 //    calculateControlPoints();
 }
 
-void QSplineSeries::setModelMappingShift(int first, int count)
+void QSplineSeries::setModelMappingRange(int first, int count)
 {
-    QLineSeries::setModelMappingShift(first, count);
+    QLineSeries::setModelMappingRange(first, count);
     calculateControlPoints();
 }
 

@@ -496,7 +496,7 @@ void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientat
     }
 }
 
-void QXYSeries::setModelMappingShift(int first, int count)
+void QXYSeries::setModelMappingRange(int first, int count)
 {
     m_mapFirst = first;
     if (count == 0) {
