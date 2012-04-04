@@ -63,7 +63,7 @@ public:
     QAbstractItemModel* model() const { return m_model; }
 
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
-    virtual void setModelMappingShift(int first, int count = 0);
+    virtual void setModelMappingRange(int first, int count = 0);
     int mapFirst() const { return m_mapFirst; }
 
 private Q_SLOTS:

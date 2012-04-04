@@ -51,10 +51,6 @@ public: // from QChartSeries
     void setPointsVisible(bool visible);
     bool pointsVisible() const { return m_pointsVisible; }
 
-//    bool setModel(QAbstractItemModel* model);
-//    void setModelMappingUpper(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
-//    void setModelMappingLower(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
-
 Q_SIGNALS:
     void updated();
     void clicked(const QPointF &point);

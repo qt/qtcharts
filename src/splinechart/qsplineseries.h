@@ -37,18 +37,11 @@ public:
     QSplineSeries(QObject *parent = 0);
     QSeriesType type() const {return QSeries::SeriesTypeSpline;}
 
-//    int count() const { return m_x.size(); }
     QPointF controlPoint(int index) const {return m_controlPoints[index];}
     bool setModel(QAbstractItemModel *model);
 
     void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     void setModelMappingShift(int first, int count);
-
-    // TODO: allow the user to set custom control points
-//    void setCustomControlPoints(QList<QPointsF> controlPoints);
-//    bool calculateControlPointsAutomatically();
-//    void setCalculateControlPointsAutomatically();
-
 
 private:
     void calculateControlPoints();

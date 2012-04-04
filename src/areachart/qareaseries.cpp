@@ -146,25 +146,6 @@ void QAreaSeries::setPointsVisible(bool visible)
     }
 }
 
-//bool QAreaSeries::setModel(QAbstractItemModel* model)
-//{
-//    m_upperSeries->setModel(model);
-//    if (m_lowerSeries)
-//        m_lowerSeries->setModel(model);
-//    return true;
-//}
-
-//void QAreaSeries::setModelMappingUpper(int modelX, int modelY, Qt::Orientation orientation)
-//{
-//    m_upperSeries->setModelMapping(modelX, modelY, orientation);
-//}
-
-//void QAreaSeries::setModelMappingLower(int modelX, int modelY, Qt::Orientation orientation)
-//{
-//    if (m_lowerSeries)
-//        m_lowerSeries->setModelMapping(modelX, modelY, orientation);
-//}
-
 #include "moc_qareaseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
