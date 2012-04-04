@@ -26,7 +26,7 @@
 #include <QTime>
 
 ChartView::ChartView(QChart* chart,QWidget* parent):QChartView(chart,parent),
-m_index(0),m_chart(chart)
+m_index(-1),m_chart(chart)
 {
     m_chart->setTitle("Charts presenter");
     QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(handleTimeout()));
@@ -78,15 +78,12 @@ m_index(0),m_chart(chart)
     m_titles<< m_chart->title()+": AreaChart";
 //![3]
 
-    m_chart->addSeries(series0);
-    m_chart->setTitle(m_titles.at(0));
-
 //![4]
     foreach (QSeries* series, m_series) {
         QObject::connect(series,SIGNAL(clicked(const QPointF&)),this,SLOT(handlePointClicked(const QPointF&)));
     }
 //![4]
-
+    QTimer::singleShot(0,this,SLOT(handleTimeout()));
     m_timer.start();
 }
 
@@ -101,6 +98,7 @@ ChartView::~ChartView()
 void ChartView::handleTimeout()
 {
     if(m_series.size()==0) return;
+    if(m_index>=0)
     m_chart->removeSeries(m_series.at(m_index));
     m_index++;
     m_index=m_index%m_series.size();
