@@ -72,12 +72,11 @@ public:
     void setAlignmnent(QLegend::Alignments alignment);
     QLegend::Alignments alignment() const;
 
-
     void detachFromChart();
     void attachToChart();
     bool isAttachedToChart();
 
-    qreal minWidht() const { return m_minWidth;}
+    qreal minWidth() const { return m_minWidth;}
     qreal minHeight() const { return m_minHeight;}
 
     void setBackgroundVisible(bool visible = true);

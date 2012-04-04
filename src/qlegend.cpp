@@ -57,30 +57,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \enum QLegend::Layout
+    \enum QLegend::Alignment
 
     This enum describes the possible position for legend inside chart.
 
-    \value LayoutTop
-    \value LayoutBottom
-    \value LayoutLeft
-    \value LayoutRight
-*/
-
-
-/*!
-    \fn void QLegend::clicked(QSeries* series, Qt::MouseButton button)
-    \brief Notifies when series has been clicked on legend \a series \a button
+    \value AlignmentTop
+    \value AlignmentBottom
+    \value AlignmentLeft
+    \value AlignmentRight
 */
 
 /*!
-    \fn void QLegend::clicked(QBarSet* barset, Qt::MouseButton button)
-    \brief Notifies when barset has been clicked on legend \a barset \a button
+    \fn qreal QLegend::minWidth() const
+    Returns minimum width of the legend
 */
 
 /*!
-    \fn void QLegend::clicked(QPieSlice* slice, Qt::MouseButton button)
-    \brief Notifies when pie slice has been clicked on legend \a slice \a button
+    \fn qreal QLegend::minHeight() const
+    Returns minimum height of the legend
 */
 
 /*!
@@ -172,8 +166,8 @@ QPen QLegend::pen() const
 }
 
 /*!
-    Sets the \a preferred layout for legend. Legend tries to paint itself on the defined position in chart.
-    \sa QLegend::Layout
+    Sets the \a alignment for legend. Legend tries to paint itself on the defined position in chart.
+    \sa QLegend::Alignment
 */
 void QLegend::setAlignmnent(QLegend::Alignments alignment)
 {
@@ -481,6 +475,9 @@ void QLegend::updateLayout()
     m_chart->d_ptr->m_presenter->updateLayout(); //TODO fixme;
 }
 
+/*!
+    Sets the visibility of legend background to \a visible
+*/
 void QLegend::setBackgroundVisible(bool visible)
 {
     if(m_backgroundVisible!=visible)
@@ -490,11 +487,17 @@ void QLegend::setBackgroundVisible(bool visible)
     }
 }
 
+/*!
+    Returns the visibility of legend background
+*/
 bool QLegend::isBackgroundVisible() const
 {
    return m_backgroundVisible;
 }
 
+/*!
+    \internal \a event see QGraphicsWidget for details
+*/
 void QLegend::resizeEvent(QGraphicsSceneResizeEvent *event)
 {
     const QRectF& rect = QRectF(QPoint(0,0),event->newSize());
@@ -505,6 +508,9 @@ void QLegend::resizeEvent(QGraphicsSceneResizeEvent *event)
     }
 }
 
+/*!
+    \internal \a event see QGraphicsWidget for details
+*/
 void QLegend::hideEvent(QHideEvent *event)
 {
     QGraphicsWidget::hideEvent(event);
@@ -512,6 +518,9 @@ void QLegend::hideEvent(QHideEvent *event)
     updateLayout();
 }
 
+/*!
+    \internal \a event see QGraphicsWidget for details
+*/
 void QLegend::showEvent(QShowEvent *event)
 {
     QGraphicsWidget::showEvent(event);

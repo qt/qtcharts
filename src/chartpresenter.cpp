@@ -463,7 +463,7 @@ void ChartPresenter::updateLayout()
                 break;
             }
             case QLegend::AlignmentLeft: {
-                int ledgendSize = legend->minWidht();
+                int ledgendSize = legend->minWidth();
                 int leftPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny + m_minLeftMargin;
                 m_chartMargins = QRect(QPoint(leftPadding,m_chartMargins.top()),QPoint(m_chartMargins.right(),m_chartMargins.bottom()));
                 m_legendMargins = QRect(QPoint(m_marginTiny + m_marginSmall,m_chartMargins.top()),QPoint(m_rect.width()-leftPadding + m_marginTiny + m_minLeftMargin,m_chartMargins.bottom()));
@@ -471,7 +471,7 @@ void ChartPresenter::updateLayout()
                 break;
             }
             case QLegend::AlignmentRight: {
-                int ledgendSize = legend->minWidht();
+                int ledgendSize = legend->minWidth();
                 int rightPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny;
                 m_chartMargins = QRect(QPoint(m_chartMargins.left(),m_chartMargins.top()),QPoint(rightPadding,m_chartMargins.bottom()));
                 m_legendMargins = QRect(QPoint(m_rect.width()- rightPadding+ m_marginTiny ,m_chartMargins.top()),QPoint(m_marginTiny + m_marginSmall,m_chartMargins.bottom()));
