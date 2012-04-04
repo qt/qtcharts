@@ -290,7 +290,6 @@ void QLegend::handleAdded(QList<QPieSlice *> slices)
     QPieSeries* series = static_cast<QPieSeries *> (sender());
     foreach(QPieSlice* slice, slices) {
         PieLegendMarker* marker = new PieLegendMarker(series,slice, this);
-        connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
         m_markers->addToGroup(marker);
     }
     updateLayout();
@@ -303,17 +302,6 @@ void QLegend::handleAdded(QList<QPieSlice *> slices)
 void QLegend::handleRemoved(QList<QPieSlice *> slices)
 {
     Q_UNUSED(slices)
-}
-
-
-/*!
-    \internal Notifies legend that some marker has been removed. Sent by legend markers when destroyed
-*/
-void QLegend::handleMarkerDestroyed()
-{
-    LegendMarker* m = static_cast<LegendMarker *> (sender());
-    delete m;
-   // updateLayout();
 }
 
 /*!
@@ -346,7 +334,6 @@ bool QLegend::isAttachedToChart()
 void QLegend::appendMarkers(QAreaSeries* series)
 {
     AreaLegendMarker* marker = new AreaLegendMarker(series,this);
-    connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
     m_markers->addToGroup(marker);
 }
 
@@ -356,7 +343,6 @@ void QLegend::appendMarkers(QAreaSeries* series)
 void QLegend::appendMarkers(QXYSeries* series)
 {
     XYLegendMarker* marker = new XYLegendMarker(series,this);
-    connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
     m_markers->addToGroup(marker);
 }
 
@@ -367,7 +353,6 @@ void QLegend::appendMarkers(QBarSeries *series)
 {
     foreach(QBarSet* set, series->barSets()) {
         BarLegendMarker* marker = new BarLegendMarker(series,set, this);
-        connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
         m_markers->addToGroup(marker);
     }
 }
@@ -379,7 +364,6 @@ void QLegend::appendMarkers(QPieSeries *series)
 {
     foreach(QPieSlice* slice, series->slices()) {
         PieLegendMarker* marker = new PieLegendMarker(series,slice, this);
-        connect(marker, SIGNAL(destroyed()), this, SLOT(handleMarkerDestroyed()));
         m_markers->addToGroup(marker);
     }
 }
@@ -393,8 +377,8 @@ void QLegend::deleteMarkers(QSeries *series)
 
     QList<QGraphicsItem *> items = m_markers->childItems();
 
-    foreach (QGraphicsItem *m, items) {
-        LegendMarker *marker = static_cast<LegendMarker*>(m);
+    foreach (QGraphicsItem *markers, items) {
+        LegendMarker *marker = static_cast<LegendMarker*>(markers);
         if (marker->series() == series) {
             delete marker;
         }

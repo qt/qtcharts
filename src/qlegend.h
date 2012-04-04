@@ -97,8 +97,6 @@ public Q_SLOTS:
     void handleSeriesRemoved(QSeries *series);
     void handleAdded(QList<QPieSlice *> slices);
     void handleRemoved(QList<QPieSlice *> slices);
-    void handleMarkerDestroyed();
-
     // PIMPL <---
 
 private:
