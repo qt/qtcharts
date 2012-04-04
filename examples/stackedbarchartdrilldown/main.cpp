@@ -23,6 +23,7 @@
 #include <QChartView>
 #include <QStackedBarSeries>
 #include <QBarSet>
+#include <QLegend>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -158,6 +159,8 @@ int main(int argc, char *argv[])
     //! [6]
 
     drilldownChart->axisX()->setGridLineVisible(false);
+    drilldownChart->legend()->setVisible(true);
+    drilldownChart->legend()->setAlignmnent(QLegend::AlignmentBottom);
 
     QChartView *chartView = new QChartView(drilldownChart);
     window.setCentralWidget(chartView);

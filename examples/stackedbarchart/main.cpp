@@ -23,6 +23,7 @@
 #include <QChartView>
 #include <QStackedBarSeries>
 #include <QBarSet>
+#include <QLegend>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -65,16 +66,21 @@ int main(int argc, char *argv[])
 //![4]
 
 //![5]
-    QChartView* chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignmnent(QLegend::AlignmentBottom);
 //![5]
 
 //![6]
+    QChartView* chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+//![6]
+
+//![7]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
-//![6]
+//![7]
 
     return a.exec();
 }
