@@ -24,6 +24,8 @@
 #include <qseries.h>
 #include <QStringList>
 
+class QModelIndex;
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 typedef QStringList QBarCategories;
@@ -56,7 +58,7 @@ public:
     void setLabelsVisible(bool visible = true);
 
     bool setModel(QAbstractItemModel *model);
-    QAbstractItemModel *modelExt() { return m_model; }
+//    QAbstractItemModel *modelExt() { return m_model; }
     void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
     void setModelMappingShift(int first, int count);
 
@@ -73,7 +75,7 @@ public:
     qreal categorySum(int category);
     qreal absoluteCategorySum(int category);
     qreal maxCategorySum();
-    BarChartModel& model();
+    BarChartModel& modelInternal();
     // <--- TO PIMPL
 
 Q_SIGNALS:
@@ -105,7 +107,7 @@ private Q_SLOTS:
 protected:
     BarChartModel *m_internalModel;     // TODO: this may change... current "2 models" situation doesn't look good.
 
-    QAbstractItemModel* m_model;
+//    QAbstractItemModel* m_model;
     int m_mapCategories;
     int m_mapBarBottom;
     int m_mapBarTop;

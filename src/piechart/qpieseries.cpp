@@ -124,7 +124,6 @@ void QPieSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRigh
 
     if (m_mapOrientation == Qt::Vertical)
     {
-        //        slices().at(topLeft.row())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
         if (topLeft.column() == m_mapValues)
             if (m_mapValues == m_mapLabels)
             {
@@ -140,7 +139,6 @@ void QPieSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRigh
     }
     else
     {
-        //        slices().at(topLeft.column())->setValue(m_model->data(m_model->index(topLeft.row(), topLeft.column()), Qt::DisplayRole).toDouble());
         if (topLeft.row() == m_mapValues)
             if (m_mapValues == m_mapLabels)
             {

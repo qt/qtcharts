@@ -64,6 +64,7 @@ TableWidget::TableWidget(QWidget *parent)
     QPushButton* removeRowButton = new QPushButton("Remove row");
     connect(removeRowButton, SIGNAL(clicked()), this, SLOT(removeRow()));
 
+    // spin box for setting number of affected items (add, remove)
     m_linesCountSpinBox = new QSpinBox;
     m_linesCountSpinBox->setRange(1, 10);
     m_linesCountSpinBox->setValue(1);

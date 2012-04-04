@@ -23,6 +23,8 @@
 
 #include "qpieseries.h"
 
+class QModelIndex;
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QPieSeriesPrivate : public QObject

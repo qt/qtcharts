@@ -23,6 +23,7 @@
 #include "qbarset.h"
 #include "barchartmodel_p.h"
 #include <QAbstractItemModel>
+#include <QModelIndex>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -268,7 +269,7 @@ qreal QBarSeries::maxCategorySum()
 /*!
     \internal
 */
-BarChartModel& QBarSeries::model()
+BarChartModel& QBarSeries::modelInternal()
 {
     return *m_internalModel;
 }

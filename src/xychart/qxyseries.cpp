@@ -315,7 +315,9 @@ QXYSeries& QXYSeries::operator<< (const QList<QPointF> points)
     return *this;
 }
 
-
+/*!
+   \internal
+ */
 void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
     Q_UNUSED(bottomRight)
@@ -329,6 +331,9 @@ void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     }
 }
 
+/*!
+   \internal
+ */
 void QXYSeries::modelDataAboutToBeAdded(QModelIndex parent, int start, int end)
 {
     Q_UNUSED(parent)
@@ -359,6 +364,9 @@ void QXYSeries::modelDataAboutToBeAdded(QModelIndex parent, int start, int end)
     }
 }
 
+/*!
+   \internal
+ */
 void QXYSeries::modelDataAdded(QModelIndex parent, int start, int end)
 {
     Q_UNUSED(parent)
@@ -386,6 +394,9 @@ void QXYSeries::modelDataAdded(QModelIndex parent, int start, int end)
     }
 }
 
+/*!
+   \internal
+ */
 void QXYSeries::modelDataAboutToBeRemoved(QModelIndex parent, int start, int end)
 {
     Q_UNUSED(parent)
@@ -415,6 +426,9 @@ void QXYSeries::modelDataAboutToBeRemoved(QModelIndex parent, int start, int end
     }
 }
 
+/*!
+   \internal
+ */
 void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
 {
     Q_UNUSED(parent)
@@ -450,6 +464,15 @@ void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
     }
 }
 
+/*!
+    \fn QAbstractItemModel* QXYSeries::model()
+    Returns the model from which the series takes its data.
+ */
+
+/*!
+     \fn bool QXYSeries::setModel(QAbstractItemModel *model)
+     Sets the \a model to be used as a data source
+ */
 bool QXYSeries::setModel(QAbstractItemModel *model) {
 
     // disconnect signals from old model
