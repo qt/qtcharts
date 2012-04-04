@@ -107,7 +107,7 @@ void ScatterChartItem::setLayout(QVector<QPointF>& points)
         return;
     }
 
-    int diff = XYChartItem::points().size() - points.size();
+    int diff = m_items.childItems().size() - points.size();
 
     if(diff>0) {
         deletePoints(diff);

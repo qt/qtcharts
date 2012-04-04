@@ -247,6 +247,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
     }
 
     case QSeries::SeriesTypeScatter: {
+
     	QScatterSeries *scatterSeries = static_cast<QScatterSeries *>(series);
             ScatterChartItem *scatter = new ScatterChartItem(scatterSeries,this);
             if(m_options.testFlag(QChart::SeriesAnimations)) {
@@ -343,7 +344,6 @@ void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
 
         if(m_options!=QChart::NoAnimation && !m_animator) {
             m_animator= new ChartAnimator(this);
-
         }
         resetAllElements();
     }
@@ -504,9 +504,13 @@ void ChartPresenter::updateLayout()
         m_backgroundItem->setRect(m_rect.adjusted(m_marginTiny,m_marginTiny, -m_marginTiny, -m_marginTiny));
     }
 
-   m_chartRect = m_rect.adjusted(m_chartMargins.left(),m_chartMargins.top(),-m_chartMargins.right(),-m_chartMargins.bottom());
+    QRectF chartRect = m_rect.adjusted(m_chartMargins.left(),m_chartMargins.top(),-m_chartMargins.right(),-m_chartMargins.bottom());
 
-   emit geometryChanged(m_chartRect);
+   if(m_chartRect!=chartRect){
+       m_chartRect=chartRect;
+       emit geometryChanged(m_chartRect);
+   }
+
    legend->setGeometry(m_rect.adjusted(m_legendMargins.left(),m_legendMargins.top(),-m_legendMargins.right(),-m_legendMargins.bottom()));
 }
 
