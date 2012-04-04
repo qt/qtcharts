@@ -34,11 +34,11 @@ int main(int argc, char *argv[])
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
 //![1]
 //![2]
-    QBarSet *set0 = new QBarSet("Bub");
-    QBarSet *set1 = new QBarSet("Bob");
-    QBarSet *set2 = new QBarSet("Guybrush");
-    QBarSet *set3 = new QBarSet("Larry");
-    QBarSet *set4 = new QBarSet("Zak");
+    QBarSet *set0 = new QBarSet("Jane");
+    QBarSet *set1 = new QBarSet("John");
+    QBarSet *set2 = new QBarSet("Axel");
+    QBarSet *set3 = new QBarSet("Mary");
+    QBarSet *set4 = new QBarSet("Samantha");
 
     *set0 << 1 << 2 << 3 << 4 << 5 << 6;
     *set1 << 5 << 0 << 0 << 4 << 0 << 7;
