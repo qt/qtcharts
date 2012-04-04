@@ -94,6 +94,7 @@ QChart::~QChart()
  */
 void QChart::addSeries(QSeries* series, QChartAxis* axisY)
 {
+    Q_ASSERT(series);
     d_ptr->m_dataset->addSeries(series, axisY);
 }
 
@@ -105,6 +106,7 @@ void QChart::addSeries(QSeries* series, QChartAxis* axisY)
  */
 void QChart::removeSeries(QSeries* series)
 {
+    Q_ASSERT(series);
     d_ptr->m_dataset->removeSeries(series);
 }
 
@@ -172,9 +174,9 @@ QString QChart::title() const
 {
     //TODO: refactor me
     if (d_ptr->m_presenter->m_titleItem)
-    return d_ptr->m_presenter->m_titleItem->text();
+        return d_ptr->m_presenter->m_titleItem->text();
     else
-    return QString();
+        return QString();
 }
 
 /*!
@@ -186,6 +188,14 @@ void QChart::setTitleFont(const QFont& font)
     d_ptr->m_presenter->createChartTitleItem();
     d_ptr->m_presenter->m_titleItem->setFont(font);
     d_ptr->m_presenter->updateLayout();
+}
+
+QFont QChart::titleFont() const
+{
+    if (d_ptr->m_presenter->m_titleItem)
+        return d_ptr->m_presenter->m_titleItem->font();
+    else
+        return QFont();
 }
 
 /*!

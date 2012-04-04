@@ -57,6 +57,7 @@ QChartView::QChartView(QChart *chart,QWidget *parent) :
     QGraphicsView(parent),
     d_ptr(new QChartViewPrivate())
 {
+    Q_ASSERT(chart);
     d_ptr->m_scene = new QGraphicsScene(this);
     d_ptr->m_chart = chart;
     setFrameShape(QFrame::NoFrame);
