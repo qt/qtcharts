@@ -8,7 +8,7 @@ SUBDIRS += \
            percentbarchart \
            piechart \
            piechartdrilldown \
-           #presenterchart \
+           presenterchart \
            scatterchart \
            scatterinteractions \
            splinechart \

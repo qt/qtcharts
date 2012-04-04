@@ -26,9 +26,10 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QMainWindow window;
-    ChartView chartView(&window);
+    QChart* chart = new QChart();
+    ChartView chartView(chart,&window);
     chartView.setRenderHint(QPainter::Antialiasing);
-    chartView.setAnimationOptions(QChart::AllAnimations);
+    chart->setAnimationOptions(QChart::AllAnimations);
     window.setCentralWidget(&chartView);
     window.resize(400, 300);
     window.show();

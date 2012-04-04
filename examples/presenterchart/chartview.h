@@ -31,7 +31,7 @@ class ChartView: public QChartView
 {
     Q_OBJECT
 public:
-    ChartView(QWidget* parent = 0);
+    ChartView(QChart* chart,QWidget* parent = 0);
     virtual ~ChartView();
 
 public slots:
@@ -43,6 +43,7 @@ private:
     QList<QSeries*> m_series;
     QStringList m_titles;
     int m_index;
+    QChart *m_chart;
 };
 //![1]
 

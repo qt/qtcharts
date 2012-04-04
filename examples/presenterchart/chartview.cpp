@@ -25,10 +25,10 @@
 #include <QAreaSeries>
 #include <QTime>
 
-ChartView::ChartView(QWidget* parent):QChartView(parent),
-m_index(0)
+ChartView::ChartView(QChart* chart,QWidget* parent):QChartView(chart,parent),
+m_index(0),m_chart(chart)
 {
-    setChartTitle("Charts presenter");
+    m_chart->setTitle("Charts presenter");
     QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(handleTimeout()));
     m_timer.setInterval(3000);
 
@@ -69,17 +69,17 @@ m_index(0)
 
 //![3]
     m_series<<series0;
-    m_titles<<chartTitle()+": LineChart";
+    m_titles<< m_chart->title()+": LineChart";
     m_series<<series1;
-    m_titles<<chartTitle()+": ScatterChart";
+    m_titles<< m_chart->title()+": ScatterChart";
     m_series<<series2;
-    m_titles<<chartTitle()+": SplineChart";
+    m_titles<< m_chart->title()+": SplineChart";
     m_series<<series3;
-    m_titles<<chartTitle()+": AreaChart";
+    m_titles<< m_chart->title()+": AreaChart";
 //![3]
 
-    addSeries(series0);
-    setChartTitle(m_titles.at(0));
+    m_chart->addSeries(series0);
+    m_chart->setTitle(m_titles.at(0));
 
 //![4]
     foreach (QSeries* series, m_series) {
@@ -93,7 +93,7 @@ m_index(0)
 ChartView::~ChartView()
 {
     if(m_series.size()==0) return;
-    removeSeries(m_series.at(m_index));
+    m_chart->removeSeries(m_series.at(m_index));
     qDeleteAll(m_series);
 }
 
@@ -101,17 +101,17 @@ ChartView::~ChartView()
 void ChartView::handleTimeout()
 {
     if(m_series.size()==0) return;
-    removeSeries(m_series.at(m_index));
+    m_chart->removeSeries(m_series.at(m_index));
     m_index++;
     m_index=m_index%m_series.size();
-    addSeries(m_series.at(m_index));
-    setChartTitle(m_titles.at(m_index));
+    m_chart->addSeries(m_series.at(m_index));
+    m_chart->setTitle(m_titles.at(m_index));
 }
 //![5]
 
 //![6]
 void ChartView::handlePointClicked(const QPointF& point)
 {
-    setChartTitle(m_titles.at(m_index) + QString(" x: %1 y: %2").arg(point.x()).arg(point.y()));
+    m_chart->setTitle(m_titles.at(m_index) + QString(" x: %1 y: %2").arg(point.x()).arg(point.y()));
 }
 //![6]
