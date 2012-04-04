@@ -27,7 +27,7 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
       m_chart(new QChart(this))
 {
-//    m_chart->setAnimationOptions(QChart::SeriesAnimations);
+    m_chart->setAnimationOptions(QChart::SeriesAnimations);
     setFlag(QGraphicsItem::ItemHasNoContents, false);
 }
 

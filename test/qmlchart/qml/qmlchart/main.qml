@@ -100,6 +100,7 @@ Rectangle {
             points: [
                 XyPoint { x: 0.0; y: 0.3 },
                 XyPoint { x: 1.1; y: 3.2 },
+                XyPoint { x: 2.17; y: 2.15 },
                 XyPoint { x: 4.17; y: 3.15 }
             ]
         }

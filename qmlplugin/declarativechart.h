@@ -27,6 +27,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+// TODO: Derive from QChart for easier definition of properties?
 class DeclarativeChart : public QDeclarativeItem
 // TODO: for QTQUICK2: extend QQuickPainterItem instead
 //class DeclarativeChart : public QQuickPaintedItem, public Chart
