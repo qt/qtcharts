@@ -32,15 +32,15 @@ int main(int argc, char *argv[])
 
 //![1]
     QPieSeries *series = new QPieSeries();
-    series->append(1, "Slice 1");
-    series->append(2, "Slice 2");
-    series->append(3, "Slice 3");
-    series->append(4, "Slice 4");
-    series->append(5, "Slice 5");
+    series->append(1, "Jane");
+    series->append(2, "Joe");
+    series->append(3, "Andy");
+    series->append(4, "Barbara");
+    series->append(5, "Axel");
 //![1]
 
 //![2]
-    QPieSlice *slice = series->slices().first();
+    QPieSlice *slice = series->slices().at(1);
     slice->setExploded();
     slice->setLabelVisible();
     slice->setPen(QPen(Qt::darkGreen, 2));

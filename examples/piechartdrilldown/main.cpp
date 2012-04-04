@@ -24,6 +24,7 @@
 #include <QMainWindow>
 #include <QTime>
 #include <QChartView>
+#include <QLegend>
 #include <QPieSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -39,6 +40,8 @@ int main(int argc, char *argv[])
     DrilldownChart* chart = new DrilldownChart();
     chart->setTheme(QChart::ChartThemeLight);
     chart->setAnimationOptions(QChart::AllAnimations);
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignmnent(QLegend::AlignmentRight);
 
     QPieSeries* yearSeries = new QPieSeries(&window);
     yearSeries->setName("Sales by year - All");

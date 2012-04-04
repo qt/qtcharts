@@ -45,7 +45,10 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
 
     // Note: the following does not affect as long as the item does not have anything to paint
     setZValue(ChartPresenter::PieSeriesZValue);
-    setFlags(QGraphicsItem::ItemClipsChildrenToShape);
+	
+	// If enabled slice boundingrect() is called instead of shape().
+	// And this causes severe issues with mouse click & hover decection.
+    //setFlags(QGraphicsItem::ItemClipsChildrenToShape); 
 }
 
 PieChartItem::~PieChartItem()

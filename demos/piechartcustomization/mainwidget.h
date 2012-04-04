@@ -53,7 +53,7 @@ public Q_SLOTS:
     void updateSliceSettings();
     void handleSliceClicked(QPieSlice* slice, Qt::MouseButtons buttons);
     void showFontDialog();
-    void addSlice();
+    void appendSlice();
     void insertSlice();
     void removeSlice();
 

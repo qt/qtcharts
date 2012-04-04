@@ -39,6 +39,8 @@ public:
 
 public Q_SLOTS:
     void updateLabel();
+    void showHighlight();
+    void hideHighlight();
 
 private:
     QSeries* m_drilldownSeries;

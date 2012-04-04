@@ -111,7 +111,7 @@ MainWidget::MainWidget(QWidget* parent)
     m_endAngle->setValue(m_series->pieEndAngle());
     m_endAngle->setSingleStep(1);
 
-    QPushButton *addSlice = new QPushButton("Add slice");
+    QPushButton *appendSlice = new QPushButton("Append slice");
     QPushButton *insertSlice = new QPushButton("Insert slice");
 
     QFormLayout* seriesSettingsLayout = new QFormLayout();
@@ -120,7 +120,7 @@ MainWidget::MainWidget(QWidget* parent)
     seriesSettingsLayout->addRow("Size factor", m_sizeFactor);
     seriesSettingsLayout->addRow("Start angle", m_startAngle);
     seriesSettingsLayout->addRow("End angle", m_endAngle);
-    seriesSettingsLayout->addRow(addSlice);
+    seriesSettingsLayout->addRow(appendSlice);
     seriesSettingsLayout->addRow(insertSlice);
     QGroupBox* seriesSettings = new QGroupBox("Series");
     seriesSettings->setLayout(seriesSettingsLayout);
@@ -130,7 +130,7 @@ MainWidget::MainWidget(QWidget* parent)
     connect(m_sizeFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
     connect(m_startAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
     connect(m_endAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
-    connect(addSlice, SIGNAL(clicked()), this, SLOT(addSlice()));
+    connect(appendSlice, SIGNAL(clicked()), this, SLOT(appendSlice()));
     connect(insertSlice, SIGNAL(clicked()), this, SLOT(insertSlice()));
 
     // slice settings
@@ -295,7 +295,7 @@ void MainWidget::showFontDialog()
     m_font->setText(dialog.currentFont().toString());
 }
 
-void MainWidget::addSlice()
+void MainWidget::appendSlice()
 {
     *m_series << new CustomSlice(10.0, "Slice " + QString::number(m_series->count()+1));
 }
@@ -314,6 +314,8 @@ void MainWidget::removeSlice()
 {
     if (!m_slice)
         return;
+
+    m_sliceName->setText("<click a slice>");
 
     m_series->remove(m_slice);
     m_slice = 0;

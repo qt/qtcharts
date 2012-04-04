@@ -27,9 +27,10 @@ DrilldownSlice::DrilldownSlice(qreal value, QString prefix, QSeries* drilldownSe
     m_prefix(prefix)
 {
     setValue(value);
-    setLabelVisible(true);
     updateLabel();
     connect(this, SIGNAL(changed()), this, SLOT(updateLabel()));
+    connect(this, SIGNAL(hoverEnter()), this, SLOT(showHighlight()));
+    connect(this, SIGNAL(hoverLeave()), this, SLOT(hideHighlight()));
 }
 
 DrilldownSlice::~DrilldownSlice()
@@ -45,12 +46,24 @@ QSeries* DrilldownSlice::drilldownSeries() const
 void DrilldownSlice::updateLabel()
 {
     QString label = m_prefix;
-    label += " ";
+    label += " $";
     label += QString::number(this->value());
-    label += "e, ";
+    label += ", ";
     label += QString::number(this->percentage()*100, 'f', 1);
     label += "%";
     setLabel(label);
+}
+
+void DrilldownSlice::showHighlight()
+{
+    setExploded();
+    setLabelVisible();
+}
+
+void DrilldownSlice::hideHighlight()
+{
+    setExploded(false);
+    setLabelVisible(false);
 }
 
 #include "moc_drilldownslice.cpp"
