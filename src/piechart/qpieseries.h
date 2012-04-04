@@ -30,6 +30,11 @@ class QPieSlice;
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QSeries
 {
     Q_OBJECT
+    Q_PROPERTY(qreal horizontalPosition READ horizontalPosition WRITE setHorizontalPosition)
+    Q_PROPERTY(qreal verticalPosition READ verticalPosition WRITE setVerticalPosition)
+    Q_PROPERTY(qreal size READ pieSize WRITE setPieSize)
+    Q_PROPERTY(qreal startAngle READ pieStartAngle WRITE setPieStartAngle)
+    Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle)
 
 public:
     QPieSeries(QObject *parent = 0);
@@ -57,9 +62,10 @@ public:
     qreal total() const;
 
     // pie customization
-    void setPiePosition(qreal relativeHorizontalPosition, qreal relativeVerticalPosition);
-    qreal pieHorizontalPosition() const;
-    qreal pieVerticalPosition() const;
+    void setHorizontalPosition(qreal relativePosition);
+    qreal horizontalPosition() const;
+    void setVerticalPosition(qreal relativePosition);
+    qreal verticalPosition() const;
     void setPieSize(qreal relativeSize);
     qreal pieSize() const;
     void setPieStartAngle(qreal startAngle);

@@ -265,7 +265,8 @@ QChart* ThemeWidget::createPieChart() const
         }
         qreal hPos = (pieSize / 2) + (i / (qreal) m_dataTable.count());
         series->setPieSize(pieSize);
-        series->setPiePosition(hPos, 0.5);
+        series->setHorizontalPosition(hPos);
+        series->setVerticalPosition(0.5);
         chart->addSeries(series);
     }
 

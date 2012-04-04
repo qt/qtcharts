@@ -58,16 +58,20 @@ Rectangle {
 
         BarSeries {
             barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
+            // TBD: data
         }
 
         PieSeries {
+            horizontalPosition: 0.2
+            verticalPosition: 0.3
+            size: 0.4
+            endAngle: 0.52 * 360 // The share of "others" is 52%
             slices: [
                 PieSlice { label: "Volkswagen"; value: 13.5 },
                 PieSlice { label: "Toyota"; value: 10.9 },
                 PieSlice { label: "Ford"; value: 8.6 },
                 PieSlice { label: "Skoda"; value: 8.2 },
-                PieSlice { label: "Volvo"; value: 6.8 },
-                PieSlice { label: "Others"; value: 52.0 }
+                PieSlice { label: "Volvo"; value: 6.8 }
             ]
         }
     }
@@ -82,6 +86,7 @@ Rectangle {
         theme: Chart.ChartThemeBrownSand
 
         LineSeries {
+            name: "Line"
             points: [
                 XyPoint { x: 0.0; y: 0.0 },
                 XyPoint { x: 1.1; y: 2.1 },
@@ -91,6 +96,7 @@ Rectangle {
         }
 
         SplineSeries {
+            name: "Spline"
             points: [
                 XyPoint { x: 0.0; y: 0.3 },
                 XyPoint { x: 1.1; y: 3.2 },
@@ -99,6 +105,7 @@ Rectangle {
         }
 
         AreaSeries {
+            name: "Area"
             points: [
                 XyPoint { x: 0.0; y: 1.1 },
                 XyPoint { x: 2.5; y: 3.6 },
@@ -112,6 +119,7 @@ Rectangle {
         }
 
         ScatterSeries {
+            name: "Scatter1"
             points: [
                 XyPoint { x: 1.5; y: 1.5 },
                 XyPoint { x: 1.5; y: 1.6 },
@@ -119,6 +127,7 @@ Rectangle {
             ]
         }
         ScatterSeries {
+            name: "Scatter2"
             points: [
                 XyPoint { x: 2.0; y: 2.0 },
                 XyPoint { x: 2.0; y: 2.1 },
@@ -126,6 +135,7 @@ Rectangle {
             ]
         }
         ScatterSeries {
+            name: "Scatter3"
             points: [
                 XyPoint { x: 2.6; y: 2.6 },
                 XyPoint { x: 2.6; y: 2.7 },

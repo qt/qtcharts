@@ -46,6 +46,7 @@ public Q_SLOTS:
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
     void modelDataAdded(QModelIndex parent, int start, int end);
     void modelDataRemoved(QModelIndex parent, int start, int end);
+    bool setRealValue(qreal &value, qreal newValue, qreal max, qreal min = 0.0);
 
 public:
     QPieSeries * const q_ptr;

@@ -82,6 +82,5 @@
     \brief Returns the name of the series.
 */
 
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_USE_NAMESPACE
 #include "moc_qseries.cpp"
-QTCOMMERCIALCHART_END_NAMESPACE

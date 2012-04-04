@@ -85,13 +85,13 @@ MainWidget::MainWidget(QWidget* parent)
     m_hPosition->setMinimum(0.0);
     m_hPosition->setMaximum(1.0);
     m_hPosition->setSingleStep(0.1);
-    m_hPosition->setValue(m_series->pieHorizontalPosition());
+    m_hPosition->setValue(m_series->horizontalPosition());
 
     m_vPosition = new QDoubleSpinBox();
     m_vPosition->setMinimum(0.0);
     m_vPosition->setMaximum(1.0);
     m_vPosition->setSingleStep(0.1);
-    m_vPosition->setValue(m_series->pieVerticalPosition());
+    m_vPosition->setValue(m_series->verticalPosition());
 
     m_sizeFactor = new QDoubleSpinBox();
     m_sizeFactor->setMinimum(0.0);
@@ -215,7 +215,8 @@ void MainWidget::updateChartSettings()
 
 void MainWidget::updateSerieSettings()
 {
-    m_series->setPiePosition(m_hPosition->value(), m_vPosition->value());
+    m_series->setHorizontalPosition(m_hPosition->value());
+    m_series->setVerticalPosition(m_vPosition->value());
     m_series->setPieSize(m_sizeFactor->value());
     m_series->setPieStartAngle(m_startAngle->value());
     m_series->setPieEndAngle(m_endAngle->value());

@@ -40,7 +40,6 @@ void DeclarativePieSeries::componentComplete()
     if (declarativeChart) {
         QChart *chart = qobject_cast<QChart *>(declarativeChart->m_chart);
         Q_ASSERT(chart);
-        qDebug() << "parent for pie:" << chart;
         chart->addSeries(this);
     }
 }

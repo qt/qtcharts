@@ -184,6 +184,32 @@ void QPieSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
     q->remove(m_slices.at(start));
 }
 
+bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qreal min)
+{
+    // Remove rounding errors
+    qreal roundedValue = newValue;
+    if (qFuzzyIsNull(min) && qFuzzyIsNull(newValue))
+        roundedValue = 0.0;
+    else if (qFuzzyCompare(newValue, max))
+        roundedValue = max;
+    else if (qFuzzyCompare(newValue, min))
+        roundedValue = min;
+
+    // Check if the position is valid after removing the rounding errors
+    if (roundedValue < min || roundedValue > max) {
+        qWarning("QPieSeries: Illegal value");
+        return false;
+    }
+
+    if (!qFuzzyIsNull(value - roundedValue)) {
+        value = roundedValue;
+        return true;
+    }
+
+    // The change was so small it is considered a rounding error
+    return false;
+}
+
 
 
 /*!
@@ -380,32 +406,31 @@ QList<QPieSlice*> QPieSeries::slices() const
 }
 
 /*!
-    Sets the center position of the pie by \a relativeHorizontalPosition and \a relativeVerticalPosition.
+    Sets the horizontal center position of the pie to \relativePosition. If \relativePosition is
+    set to  0.0 the pie is drawn on the left side of the chart and if it's set to 1.0 the pie is
+    drawn on right side of the chart. The default value 0.5 puts the pie in the middle.
 
-    The factors are relative to the chart rectangle where:
-
-    \a relativeHorizontalPosition 0.0 means the absolute left.
-    \a relativeHorizontalPosition 1.0 means the absolute right.
-    \a relativeVerticalPosition 0.0 means the absolute top.
-    \a relativeVerticalPosition 1.0 means the absolute bottom.
-
-    By default both values are 0.5 which puts the pie in the middle of the chart rectangle.
-
-    \sa pieHorizontalPosition(), pieVerticalPosition(), setPieSize()
+    \sa setHorizontalPosition(), setPieSize()
 */
-void QPieSeries::setPiePosition(qreal relativeHorizontalPosition, qreal relativeVerticalPosition)
+void QPieSeries::setHorizontalPosition(qreal relativePosition)
 {
     Q_D(QPieSeries);
-    if (relativeHorizontalPosition < 0.0 || relativeHorizontalPosition > 1.0 ||
-            relativeVerticalPosition < 0.0 || relativeVerticalPosition > 1.0)
-        return;
-
-    if (!qFuzzyIsNull(d->m_pieRelativeHorPos - relativeHorizontalPosition) ||
-        !qFuzzyIsNull(d->m_pieRelativeVerPos - relativeVerticalPosition)) {
-        d->m_pieRelativeHorPos = relativeHorizontalPosition;
-        d->m_pieRelativeVerPos = relativeVerticalPosition;
+    if (d->setRealValue(d->m_pieRelativeHorPos, relativePosition, 1.0))
         emit piePositionChanged();
-    }
+}
+
+/*!
+    Sets the vertical center position of the pie to \relativePosition. If \relativePosition is
+    set to  0.0 the pie is drawn on the top of the chart and if it's set to 1.0 the pie is drawn
+    on bottom of the chart. The default value 0.5 puts the pie in the middle.
+
+    \sa setVerticalPosition(), setPieSize()
+*/
+void QPieSeries::setVerticalPosition(qreal relativePosition)
+{
+    Q_D(QPieSeries);
+    if (d->setRealValue(d->m_pieRelativeVerPos, relativePosition, 1.0))
+        emit piePositionChanged();
 }
 
 /*!
@@ -418,9 +443,9 @@ void QPieSeries::setPiePosition(qreal relativeHorizontalPosition, qreal relative
 
     By default it is 0.5 which puts the pie in the horizontal middle of the chart rectangle.
 
-    \sa setPiePosition(), pieVerticalPosition(), setPieSize()
+    \sa verticalPosition(), setPieSize()
 */
-qreal QPieSeries::pieHorizontalPosition() const
+qreal QPieSeries::horizontalPosition() const
 {
     Q_D(const QPieSeries);
     return d->m_pieRelativeHorPos;
@@ -436,9 +461,9 @@ qreal QPieSeries::pieHorizontalPosition() const
 
     By default it is 0.5 which puts the pie in the vertical middle of the chart rectangle.
 
-    \sa setPiePosition(), pieHorizontalPosition(), setPieSize()
+    \sa horizontalPosition(), setPieSize()
 */
-qreal QPieSeries::pieVerticalPosition() const
+qreal QPieSeries::verticalPosition() const
 {
     Q_D(const QPieSeries);
     return d->m_pieRelativeVerPos;
@@ -456,13 +481,8 @@ qreal QPieSeries::pieVerticalPosition() const
 void QPieSeries::setPieSize(qreal relativeSize)
 {
     Q_D(QPieSeries);
-    if (relativeSize < 0.0 || relativeSize > 1.0)
-        return;
-
-    if (!qFuzzyIsNull(d->m_pieRelativeSize- relativeSize)) {
-        d->m_pieRelativeSize = relativeSize;
+    if (d->setRealValue(d->m_pieRelativeSize, relativeSize, 1.0))
         emit pieSizeChanged();
-    }
 }
 
 /*!
@@ -493,14 +513,8 @@ qreal QPieSeries::pieSize() const
 void QPieSeries::setPieStartAngle(qreal angle)
 {
     Q_D(QPieSeries);
-
-    if (angle < 0 || angle > 360 || angle > d->m_pieEndAngle)
-        return;
-
-    if (!qFuzzyIsNull(angle - d->m_pieStartAngle)) {
-        d->m_pieStartAngle = angle;
+    if (d->setRealValue(d->m_pieStartAngle, angle, d->m_pieEndAngle))
         d->updateDerivativeData();
-    }
 }
 
 /*!
@@ -529,13 +543,8 @@ void QPieSeries::setPieEndAngle(qreal angle)
 {
     Q_D(QPieSeries);
 
-    if (angle < 0 || angle > 360 || angle < d->m_pieStartAngle)
-        return;
-
-    if (!qFuzzyIsNull(angle - d->m_pieEndAngle)) {
-        d->m_pieEndAngle = angle;
+    if (d->setRealValue(d->m_pieEndAngle, angle, 360.0, d->m_pieStartAngle))
         d->updateDerivativeData();
-    }
 }
 
 /*!

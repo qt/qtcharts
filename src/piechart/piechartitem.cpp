@@ -133,8 +133,8 @@ void PieChartItem::handleGeometryChanged(const QRectF& rect)
 void PieChartItem::calculatePieLayout()
 {
     // find pie center coordinates
-    m_pieCenter.setX(m_rect.left() + (m_rect.width() * m_series->pieHorizontalPosition()));
-    m_pieCenter.setY(m_rect.top() + (m_rect.height() * m_series->pieVerticalPosition()));
+    m_pieCenter.setX(m_rect.left() + (m_rect.width() * m_series->horizontalPosition()));
+    m_pieCenter.setY(m_rect.top() + (m_rect.height() * m_series->verticalPosition()));
 
     // find maximum radius for pie
     m_pieRadius = m_rect.height() / 2;
