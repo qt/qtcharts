@@ -106,11 +106,6 @@ private:
     void appendMarkers(QBarSeries *series);
     void appendMarkers(QPieSeries *series);
     void deleteMarkers(QSeries *series);
-
-
-
-
-private Q_SLOTS:
     void updateLayout();
 
 private:
@@ -136,7 +131,6 @@ private:
     qreal m_width;
     qreal m_height;
     bool m_visible;
-    bool m_dirty;
     friend class ScrolledQLegend;
     // <--- PIMPL
 };

@@ -81,7 +81,6 @@ public:
     qreal minimumBottomMargin() const { return m_minBottomMargin; }
 
 public: //TODO: fix me
-    void createConnections();
     void resetAllElements();
     void createChartBackgroundItem();
     void createChartTitleItem();

@@ -64,20 +64,11 @@ ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(char
     m_marginTiny(10),
     m_chartMargins(QRect(m_marginBig,m_marginBig,0,0))
 {
-    createConnections();
 }
 
 ChartPresenter::~ChartPresenter()
 {
 	delete m_chartTheme;
-}
-
-void ChartPresenter::createConnections()
-{
-    QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),this,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),this,SLOT(handleSeriesRemoved(QSeries*)));
-    QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*,Domain*)),this,SLOT(handleAxisAdded(QChartAxis*,Domain*)));
-    QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),this,SLOT(handleAxisRemoved(QChartAxis*)));
 }
 
 void ChartPresenter::setGeometry(const QRectF& rect)
@@ -506,12 +497,14 @@ void ChartPresenter::updateLayout()
 
     QRectF chartRect = m_rect.adjusted(m_chartMargins.left(),m_chartMargins.top(),-m_chartMargins.right(),-m_chartMargins.bottom());
 
+    legend->setGeometry(m_rect.adjusted(m_legendMargins.left(),m_legendMargins.top(),-m_legendMargins.right(),-m_legendMargins.bottom()));
+
    if(m_chartRect!=chartRect){
        m_chartRect=chartRect;
        emit geometryChanged(m_chartRect);
    }
 
-   legend->setGeometry(m_rect.adjusted(m_legendMargins.left(),m_legendMargins.top(),-m_legendMargins.right(),-m_legendMargins.bottom()));
+
 }
 
 void ChartPresenter::createChartBackgroundItem()

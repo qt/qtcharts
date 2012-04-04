@@ -100,8 +100,7 @@ QLegend::QLegend(QChart *chart):QGraphicsWidget(chart),
     m_minHeight(0),
     m_width(0),
     m_height(0),
-    m_visible(false),
-    m_dirty(false)
+    m_visible(false)
 {
     setZValue(ChartPresenter::LegendZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
@@ -247,11 +246,7 @@ void QLegend::handleSeriesAdded(QSeries *series, Domain *domain)
     }
     }
 
-   // wait for all series added
-   if(!m_dirty){
-	   QTimer::singleShot(0,this,SLOT(updateLayout()));
-	   m_dirty=true;
-   }
+    updateLayout();
 }
 
 /*!
@@ -428,7 +423,6 @@ QPointF QLegend::offset() const
 // this function runs first to set min max values
 void QLegend::updateLayout()
 {
-	m_dirty=false;
 	m_offsetX=0;
     QList<QGraphicsItem *> items = m_markers->childItems();
 

@@ -72,9 +72,8 @@ d_ptr(new QChartPrivate())
     d_ptr->m_dataset = new ChartDataSet(this);
     d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
     d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);
+    d_ptr->createConnections();
     //TODO:fix me setMinimumSize(d_ptr->m_padding.left() * 3, d_ptr->m_padding.top() * 3);
-    connect(d_ptr->m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),d_ptr->m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-    connect(d_ptr->m_dataset,SIGNAL(seriesRemoved(QSeries*)),d_ptr->m_legend,SLOT(handleSeriesRemoved(QSeries*)));
 }
 
 /*!
@@ -344,6 +343,16 @@ m_presenter(0)
 QChartPrivate::~QChartPrivate()
 {
 
+}
+
+void QChartPrivate::createConnections()
+{
+   QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+   QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
+   QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_presenter,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+   QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_presenter,SLOT(handleSeriesRemoved(QSeries*)));
+   QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QChartAxis*,Domain*)));
+   QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),m_presenter,SLOT(handleAxisRemoved(QChartAxis*)));
 }
 
 #include "moc_qchart.cpp"

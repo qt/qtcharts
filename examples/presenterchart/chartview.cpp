@@ -83,8 +83,8 @@ m_index(-1),m_chart(chart)
         QObject::connect(series,SIGNAL(clicked(const QPointF&)),this,SLOT(handlePointClicked(const QPointF&)));
     }
 //![4]
-    QTimer::singleShot(0,this,SLOT(handleTimeout()));
     m_timer.start();
+    handleTimeout();
 }
 
 ChartView::~ChartView()

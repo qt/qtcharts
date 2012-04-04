@@ -47,6 +47,8 @@ struct QChartPrivate
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
 
+    void createConnections();
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
