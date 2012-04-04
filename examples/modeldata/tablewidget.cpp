@@ -38,13 +38,12 @@ TableWidget::TableWidget(QWidget *parent)
     // create table view and add model to it
     QTableView *tableView = new QTableView;
     tableView->setModel(model);
-    tableView->setMinimumWidth(200);
-//    tableView->setMaximumWidth(200);
-    //    m_tableView->resizeColumnsToContents();
-    tableView->setColumnWidth(0, 50);
-    tableView->setColumnWidth(1, 50);
-    tableView->setColumnWidth(2, 50);
-    tableView->setColumnWidth(3, 50);
+//    tableView->
+//    tableView->setMinimumWidth(200);
+    tableView->setColumnWidth(0, 56);
+    tableView->setColumnWidth(1, 56);
+    tableView->setColumnWidth(2, 56);
+    tableView->setColumnWidth(3, 56);
 
     QChart *m_chart = new QChart;
     m_chart->setAnimationOptions(QChart::AllAnimations);
@@ -75,13 +74,11 @@ TableWidget::TableWidget(QWidget *parent)
     seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
     model->addMapping(seriesColorHex, QRect(2, 0, 2, model->rowCount()));
 
-//    m_chart->axisX()->setRange(0, 800);
-//    m_chart->axisY()->setRange(0, 120);
-
     // create main layout
     QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addWidget(tableView, 1, 0);
     mainLayout->addWidget(m_chartView, 1, 1);
     mainLayout->setColumnStretch(1, 1);
+    mainLayout->setColumnStretch(0, 0);
     setLayout(mainLayout);
 }

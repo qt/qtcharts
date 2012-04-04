@@ -118,8 +118,3 @@ void CustomTableModel::addMapping(QString color, QRect area)
 {
     m_mapping.insertMulti(color, area);
 }
-
-void CustomTableModel::addMapping(QString color, int left, int top, int right, int bottom)
-{
-    addMapping(color, QRect(QPoint(left, top), QPoint(right, bottom)));
-}

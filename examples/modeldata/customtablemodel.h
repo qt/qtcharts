@@ -22,9 +22,6 @@
 #define XYPOINTSMODEL_H
 
 #include <QAbstractTableModel>
-#include <QPointF>
-#include <QStringList>
-//#include <QColor>
 #include <QHash>
 #include <QRect>
 
@@ -42,7 +39,6 @@ public:
     Qt::ItemFlags flags ( const QModelIndex & index ) const;
 
     void addMapping(QString color, QRect area);
-    void addMapping(QString color, int left, int top, int right, int bottom);
     void clearMapping() { m_mapping.clear(); }
 
 private:
