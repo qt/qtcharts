@@ -261,7 +261,8 @@ void TableWidget::updateChartType(bool toggle)
             pieSeries->setModelMapping(0,0, Qt::Vertical);
             pieSeries->setLabelsVisible(true);
             pieSeries->setPieSize(0.4);
-            pieSeries->setPiePosition(0.2, 0.35);
+            pieSeries->setHorizontalPosition(0.2);
+            pieSeries->setVerticalPosition(0.35);
 
             m_chart->addSeries(pieSeries);
             seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
@@ -273,7 +274,8 @@ void TableWidget::updateChartType(bool toggle)
             pieSeries->setModelMapping(1,1, Qt::Vertical);
             pieSeries->setLabelsVisible(true);
             pieSeries->setPieSize(0.4);
-            pieSeries->setPiePosition(0.8, 0.35);
+            pieSeries->setHorizontalPosition(0.8);
+            pieSeries->setVerticalPosition(0.35);
             m_chart->addSeries(pieSeries);
             seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(1, 0, 1, 1000));
@@ -284,7 +286,8 @@ void TableWidget::updateChartType(bool toggle)
             pieSeries->setModelMapping(2,2, Qt::Vertical);
             pieSeries->setLabelsVisible(true);
             pieSeries->setPieSize(0.4);
-            pieSeries->setPiePosition(0.5, 0.65);
+            pieSeries->setHorizontalPosition(0.5);
+            pieSeries->setVerticalPosition(0.65);
             m_chart->addSeries(pieSeries);
             seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(2, 0, 1, 1000));

@@ -22,33 +22,30 @@ import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
 Rectangle {
-    width: parent.width
-    height: parent.height
-    property int __viewNumber: 0
+    anchors.fill: parent
 
-    Timer {
-        id: timer
-        running: true
-        repeat: true
-        interval: 5000
-        triggeredOnStart: true
-        onTriggered: {
-            loader.source = "View" + (__viewNumber % 3 + 1) + ".qml";
-            __viewNumber++;
+    Chart {
+        anchors.fill: parent
+        theme: Chart.ChartThemeBrownSand
+
+        LineSeries {
+            name: "Line"
+            points: [
+                XyPoint { x: 0.0; y: 0.0 },
+                XyPoint { x: 1.1; y: 2.1 },
+                XyPoint { x: 2.9; y: 4.9 },
+                XyPoint { x: 3.2; y: 3.0 }
+            ]
         }
-    }
 
-    Loader {
-        id: loader
-        anchors.fill: parent
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            timer.restart();
-            loader.source = "View" + (__viewNumber % 3 + 1) + ".qml";
-            __viewNumber++;
+        SplineSeries {
+            name: "Spline"
+            points: [
+                XyPoint { x: 0.0; y: 0.3 },
+                XyPoint { x: 1.1; y: 3.2 },
+                XyPoint { x: 2.17; y: 2.15 },
+                XyPoint { x: 4.17; y: 3.15 }
+            ]
         }
     }
 }
