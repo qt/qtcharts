@@ -100,10 +100,11 @@ QLegend::QLegend(QChart *chart):QGraphicsWidget(chart),
     m_minHeight(0),
     m_width(0),
     m_height(0),
-    m_visible(false)
+    m_backgroundVisible(false)
 {
     setZValue(ChartPresenter::LegendZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
+    setVisible(false);  // By default legend is invisible
 }
 
 /*!
@@ -114,7 +115,7 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 {
 	Q_UNUSED(option)
 	Q_UNUSED(widget)
-	if(!m_visible) return;
+    if(!m_backgroundVisible) return;
 
     painter->setOpacity(opacity());
     painter->setPen(m_pen);
@@ -482,16 +483,16 @@ void QLegend::updateLayout()
 
 void QLegend::setBackgroundVisible(bool visible)
 {
-    if(m_visible!=visible)
+    if(m_backgroundVisible!=visible)
     {
-    	m_visible=visible;
+        m_backgroundVisible=visible;
     	update();
     }
 }
 
 bool QLegend::isBackgroundVisible() const
 {
-   return m_visible;
+   return m_backgroundVisible;
 }
 
 void QLegend::resizeEvent(QGraphicsSceneResizeEvent *event)

@@ -80,7 +80,7 @@ public:
     qreal minWidht() const { return m_minWidth;}
     qreal minHeight() const { return m_minHeight;}
 
-    void setBackgroundVisible(bool visible);
+    void setBackgroundVisible(bool visible = true);
     bool isBackgroundVisible() const;
 
     void setOffset(const QPointF& point);
@@ -130,7 +130,7 @@ private:
     qreal m_minHeight;
     qreal m_width;
     qreal m_height;
-    bool m_visible;
+    bool m_backgroundVisible;
     friend class ScrolledQLegend;
     // <--- PIMPL
 };
