@@ -22,6 +22,7 @@
 #include <QtTest/QtTest>
 #include <qchartview.h>
 #include <qlineseries.h>
+#include <qlegend.h>
 #include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -68,6 +69,7 @@ void tst_QChartView::cleanupTestCase()
 void tst_QChartView::init()
 {
     m_view = new QChartView(new QChart());
+    m_view->chart()->legend()->setVisible(false);
 }
 
 void tst_QChartView::cleanup()
@@ -131,7 +133,7 @@ void tst_QChartView::rubberBand()
     QFETCH(int, maxY);
 
     m_view->setRubberBand(rubberBand);
-    QRect padding = m_view->chart()->margins();
+    QRectF padding = m_view->chart()->margins();
     QCOMPARE(m_view->rubberBand(), rubberBand);
 
     QLineSeries* line = new QLineSeries();
@@ -150,10 +152,11 @@ void tst_QChartView::rubberBand()
     QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal, qreal)));
 
     QTest::qWaitForWindowShown(m_view);
-    QTest::mouseMove(m_view->viewport(),  QPoint(minX, minY) + padding.topLeft());
-    QTest::mousePress(m_view->viewport(), Qt::LeftButton, 0,  QPoint(minX, minY) + padding.topLeft());
-    QTest::mouseMove(m_view->viewport(), QPoint(maxX, maxY) + padding.topLeft());
-    QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, 0, QPoint(maxX, maxY)+ padding.topLeft());
+    QTest::mouseMove(m_view->viewport(),  QPoint(minX, minY) + padding.topLeft().toPoint());
+    QTest::mousePress(m_view->viewport(), Qt::LeftButton, 0,  QPoint(minX, minY) + padding.topLeft().toPoint());
+    QTest::mouseMove(m_view->viewport(), QPoint(maxX, maxY) + padding.topLeft().toPoint());
+    QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, 0, QPoint(maxX, maxY)+ padding.topLeft().toPoint());
+
 
     QCOMPARE(spy0.count(), Xcount);
     QCOMPARE(spy1.count(), Ycount);
@@ -186,7 +189,7 @@ void tst_QChartView::keys()
     QFETCH(int, Xcount);
     QFETCH(int, Ycount);
 
-    QRect padding = m_view->chart()->margins();
+    QRectF padding = m_view->chart()->margins();
 
     QLineSeries* line = new QLineSeries();
     *line << QPointF(0, 0) << QPointF(100, 100);

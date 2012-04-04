@@ -138,8 +138,9 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
     if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
-        int padding = d_ptr->m_chart->margins().top();
-        QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
+        QRectF margins = d_ptr->m_chart->margins();
+        QRectF geometry = d_ptr->m_chart->geometry();
+        QRectF rect =geometry.adjusted(margins.left(),margins.top(),-margins.right(),-margins.bottom());
         int width = event->pos().x() - d_ptr->m_rubberBandOrigin.x();
         int height = event->pos().y() - d_ptr->m_rubberBandOrigin.y();
         if (!d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)) {

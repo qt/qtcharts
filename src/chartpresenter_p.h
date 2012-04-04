@@ -84,7 +84,7 @@ public: //TODO: fix me
     void resetAllElements();
     void createChartBackgroundItem();
     void createChartTitleItem();
-    QRect margins() const { return m_chartMargins;}
+    QRectF margins() const { return m_chartMargins;}
 
 public Q_SLOTS:
     void handleSeriesAdded(QSeries* series,Domain* domain);
@@ -116,8 +116,8 @@ public: //TODO: fixme
     int m_marginBig;
     int m_marginSmall;
     int m_marginTiny;
-    QRect m_chartMargins;
-    QRect m_legendMargins;
+    QRectF m_chartMargins;
+    QRectF m_legendMargins;
 
 };
 

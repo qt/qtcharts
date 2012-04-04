@@ -275,7 +275,7 @@ QLegend* QChart::legend() const
     return d_ptr->m_legend;
 }
 
-QRect QChart::margins() const
+QRectF QChart::margins() const
 {
     return d_ptr->m_presenter->margins();
 }

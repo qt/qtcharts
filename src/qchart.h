@@ -76,6 +76,7 @@ public:
     QFont titleFont() const;
     void setTitleBrush(const QBrush &brush);
     QBrush titleBrush() const;
+
     void setBackgroundBrush(const QBrush &brush);
     QBrush backgroundBrush() const;
     void setBackgroundPen(const QPen &pen);
@@ -99,7 +100,7 @@ public:
     QChartAxis* axisY() const;
 
     QLegend* legend() const;
-    QRect margins() const;
+    QRectF margins() const;
 
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
