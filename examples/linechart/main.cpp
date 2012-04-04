@@ -29,31 +29,22 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 //![1]
-    QLineSeries* series0 = new QLineSeries();
-    QPen blue(Qt::blue);
-    blue.setWidth(3);
-    series0->setPen(blue);
-
-    QLineSeries* series1 = new QLineSeries();
+    QLineSeries* series = new QLineSeries();
     QPen red(Qt::red);
     red.setWidth(3);
-    series1->setPen(red);
+    series->setPen(red);
 //![1]
-
 //![2]
-    series0->append(0, 6);
-    series0->append(2, 4);
-    series0->append(3, 8);
-    series0->append(7, 4);
-    series0->append(10, 5);
-
-    *series1 << QPointF(1, 1) << QPointF(3, 3) << QPointF(7, 6) << QPointF(8, 3) << QPointF(10, 2);
+    series->append(0, 6);
+    series->append(2, 4);
+    series->append(3, 8);
+    series->append(7, 4);
+    series->append(10, 5);
+    *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
 //![2]
 //![3]
     QChart* chart = new QChart();
-
-    chart->addSeries(series0);
-    chart->addSeries(series1);
+    chart->addSeries(series);
     chart->setTitle("Simple line chart example");
 //![3]
 //![4]
