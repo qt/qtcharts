@@ -169,9 +169,8 @@ void BarChartItem::setLayout(const QVector<QRectF> &layout)
 }
 //handlers
 
-void BarChartItem::handleModelChanged(int index)
+void BarChartItem::handleModelChanged()
 {
-    Q_UNUSED(index)
     dataChanged();
 }
 
