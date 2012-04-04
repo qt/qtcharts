@@ -434,9 +434,6 @@ void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
             int removedItemsCount = qMin(count(), qMin(end, m_mapFirst + m_mapCount - 1) - start + 1);
             int extraItemsAvailable = 0;
             if (m_mapOrientation == Qt::Vertical) {
-//                int temp1 = m_model->rowCount();
-//                int temp2 = (end - start + 1);
-//                int temp3 = qMax(end + 1, m_mapFirst + m_mapCount);
                 extraItemsAvailable = qMax(m_model->rowCount() + (end - start + 1) - qMax(end + 1, m_mapFirst + m_mapCount), 0);
             } else {
                 extraItemsAvailable = qMax(m_model->columnCount() + (end - start + 1) - qMax(end + 1, m_mapFirst + m_mapCount), 0);
@@ -484,14 +481,12 @@ void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientat
     m_mapFirst = 0;
     m_mapOrientation = orientation;
     if (m_mapOrientation == Qt::Vertical) {
-        //        m_mapCount = m_model->rowCount();
         connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
         connect(m_model,SIGNAL(rowsAboutToBeInserted(QModelIndex, int, int)), this, SLOT(modelDataAboutToBeAdded(QModelIndex,int,int)));
         connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
         connect(m_model, SIGNAL(rowsAboutToBeRemoved(QModelIndex, int, int)), this, SLOT(modelDataAboutToBeRemoved(QModelIndex,int,int)));
         connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
     } else {
-        //        m_mapCount = m_model->columnCount();
         connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
         connect(m_model,SIGNAL(columnsAboutToBeInserted(QModelIndex, int, int)), this, SLOT(modelDataAboutToBeAdded(QModelIndex,int,int)));
         connect(m_model,SIGNAL(columnsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));

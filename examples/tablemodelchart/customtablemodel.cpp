@@ -267,7 +267,7 @@ bool CustomTableModel::removeRows ( int row, int count, const QModelIndex & pare
 
 void CustomTableModel::addMapping(QString color, QRect area)
 {
-    m_mapping.insert(color, area);
+    m_mapping.insertMulti(color, area);
 }
 
 void CustomTableModel::addMapping(QString color, int left, int top, int right, int bottom)

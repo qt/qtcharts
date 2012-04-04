@@ -46,7 +46,7 @@ TableWidget::TableWidget(QWidget *parent)
     m_model = new CustomTableModel;
     m_tableView = new QTableView;
     m_tableView->setModel(m_model);
-    m_tableView->setMinimumHeight(240);
+    m_tableView->setMinimumHeight(300);
     //    tableView->setMinimumSize(340, 480);
     //    tableView->setItemDelegate(new QStyledItemDelegate);
     m_chart = new QChart;
@@ -140,10 +140,6 @@ void TableWidget::updateChartType()
 
     if (m_lineRadioButton->isChecked())
     {
-
-        m_chart->axisX()->setRange(0, 500);
-        m_chart->axisY()->setRange(0, 120);
-
         // series 1
         m_series = new QLineSeries;
         m_series->setModel(m_model);
@@ -276,11 +272,15 @@ void TableWidget::updateChartType()
         QLineSeries* upperLineSeries = new QLineSeries;
         upperLineSeries->setModel(m_model);
         upperLineSeries->setModelMapping(0, 1, Qt::Vertical);
+        upperLineSeries->setModelMappingShift(1, 5);
         QLineSeries* lowerLineSeries = new QLineSeries;
         lowerLineSeries->setModel(m_model);
         lowerLineSeries->setModelMapping(2, 3, Qt::Vertical);
         QAreaSeries* areaSeries = new QAreaSeries(upperLineSeries, lowerLineSeries);
         m_chart->addSeries(areaSeries);
+        seriesColorHex = "#" + QString::number(areaSeries->brush().color().rgb(), 16).right(6).toUpper();
+        m_model->addMapping(seriesColorHex, QRect(0, 1, 2, 5));
+        m_model->addMapping(seriesColorHex, QRect(2, 0, 2, 1000));
     }
     else if (m_barRadioButton->isChecked())
     {
@@ -294,6 +294,10 @@ void TableWidget::updateChartType()
             m_model->addMapping(seriesColorHex, QRect(2 + i, 0, 1, 1000));
         }
     }
+
+
+    m_chart->axisX()->setRange(0, 500);
+    m_chart->axisY()->setRange(0, 120);
 
     // repaint table view colors
     m_tableView->repaint();
