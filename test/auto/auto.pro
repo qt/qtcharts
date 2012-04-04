@@ -1,2 +1,2 @@
 TEMPLATE = subdirs
-SUBDIRS += chartdataset domain qchartview
+SUBDIRS += chartdataset domain qchartview qchart

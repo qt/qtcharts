@@ -22,7 +22,6 @@
 #include <QtTest/QtTest>
 #include <qchartview.h>
 #include <qlineseries.h>
-#include <qlegend.h>
 #include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
