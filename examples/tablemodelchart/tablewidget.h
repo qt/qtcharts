@@ -46,7 +46,7 @@ public:
     void addRowAbove();
     void addRowBelow();
     void removeRow();
-    void updateChartType();
+    void updateChartType(bool toggle);
 
     private:
     QChartView* m_chartView;
