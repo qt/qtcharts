@@ -208,13 +208,23 @@ void Domain::move(int dx,int dy,const QSizeF& size)
 
 void Domain::handleAxisXChanged(qreal min,qreal max,int tickXCount,bool niceNumbers)
 {
-    m_niceNumbers=niceNumbers;
+    if (niceNumbers && m_niceNumbers != niceNumbers) {
+        m_niceNumbers = niceNumbers;
+        //force recalculation
+        m_minX = 0;
+        m_maxX = 0;
+    }
     setRange(min,max,m_minY, m_maxY,tickXCount,m_tickYCount);
 }
 
 void Domain::handleAxisYChanged(qreal min,qreal max,int tickYCount,bool niceNumbers)
 {
-    m_niceNumbers=niceNumbers;
+    if (niceNumbers && m_niceNumbers != niceNumbers) {
+        m_niceNumbers = niceNumbers;
+        //force recalculation
+        m_minY = 0;
+        m_maxY = 0;
+    }
     setRange(m_minX, m_maxX, min, max,m_tickXCount,tickYCount);
 }
 
