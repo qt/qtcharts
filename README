@@ -1,0 +1,61 @@
+--------------------------------
+Commercial Charts Add-on Preview
+--------------------------------
+
+
+Whats in Qt Commercial Charts
+=============================
+
+Directory structure:
+
+src/
+    Source code of the Qt Commercial Charts
+qmlplugin/
+	QML bindings for the charts
+examples/
+    Some examples of using Qt Commercial Charts
+demos/
+    More versatile example applications showing how to customize charts, 
+	combine several chart types and implement interaction in charts
+doc/
+    Documentation
+Licensing/
+	Licensing infromation
+
+	
+Building 
+========
+
+qmake
+make (linux), mingw32-make (Windows with MinGw) or nmake (Visual Studio)
+
+If you want to install the libraries to your Qt library directory use:
+make install
+
+
+Documentation
+=============
+
+The documentation can be generated with "make docs".  It will be placed
+into "doc/html" in the build directory.
+
+KNOWN ISSUES
+============
+- General
+    * The preview version of Qt Commercial Charts is still under development 
+      and thus should not be used in e.g. product development
+	* The Charts API might change between the Preview and first official release
+	* Some areas will be refactored before the first official release
+	* Qt Designer plugin is missing
+	
+- QML Bindings
+	* The QML Bindings are still under development and to be concidered as early preview
+	
+- Model based
+
+- Bar Chart
+
+- Pie Chart
+	* Slice labels drawn on top of the label arm
+
+- Line Chart
