@@ -484,6 +484,13 @@ void ChartPresenter::updateLayout()
         }
     }
 
+    if(m_rect.width()<2*(m_chartMargins.top()+m_chartMargins.bottom()) || m_rect.height()< 2*(m_chartMargins.top() + m_chartMargins.bottom()))
+    {
+        m_chart->setMinimumSize(2*(m_chartMargins.top()+m_chartMargins.bottom()),2*(m_chartMargins.top() + m_chartMargins.bottom()));
+        return;
+    }
+
+
     // recalculate title position
     if (m_titleItem) {
         QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
@@ -494,6 +501,7 @@ void ChartPresenter::updateLayout()
     if (m_backgroundItem) {
         m_backgroundItem->setRect(m_rect.adjusted(m_marginTiny,m_marginTiny, -m_marginTiny, -m_marginTiny));
     }
+
 
     QRectF chartRect = m_rect.adjusted(m_chartMargins.left(),m_chartMargins.top(),-m_chartMargins.right(),-m_chartMargins.bottom());
 

@@ -224,6 +224,7 @@ void QChartView::resizeEvent(QResizeEvent *event)
 {
     QGraphicsView::resizeEvent(event);
     d_ptr->m_chart->resize(size());
+    setMinimumSize(d_ptr->m_chart->minimumSize().toSize());
     setSceneRect(d_ptr->m_chart->geometry());
 }
 
