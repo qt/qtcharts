@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "qareaseries.h"
+#include "qareaseries_p.h"
 #include "qlineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -99,10 +100,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
 QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
-    : QSeries(upperSeries),
-    m_upperSeries(upperSeries),
-    m_lowerSeries(lowerSeries),
-    m_pointsVisible(false)
+    : QSeries(*new QAreaSeriesPrivate(upperSeries,lowerSeries,this),upperSeries)
 {
 }
 
@@ -114,15 +112,40 @@ QAreaSeries::~QAreaSeries()
 {
 }
 
+
+QSeries::QSeriesType QAreaSeries::type() const
+{
+    return QSeries::SeriesTypeArea;
+}
+
+QLineSeries* QAreaSeries::upperSeries() const
+{
+    Q_D(const QAreaSeries);
+    return d->m_upperSeries;
+}
+
+QLineSeries* QAreaSeries::lowerSeries() const
+{
+    Q_D(const QAreaSeries);
+    return d->m_lowerSeries;
+}
+
 /*!
     Sets \a pen used for drawing area outline.
 */
 void QAreaSeries::setPen(const QPen &pen)
 {
-    if (m_pen != pen) {
-        m_pen = pen;
-        emit updated();
+    Q_D(QAreaSeries);
+    if (d->m_pen != pen) {
+        d->m_pen = pen;
+        emit d->updated();
     }
+}
+
+QPen  QAreaSeries::pen() const
+{
+    Q_D(const QAreaSeries);
+    return d->m_pen;
 }
 
 /*!
@@ -130,22 +153,59 @@ void QAreaSeries::setPen(const QPen &pen)
 */
 void QAreaSeries::setBrush(const QBrush &brush)
 {
-    if (m_brush != brush) {
-        m_brush = brush;
-        emit updated();
+    Q_D(QAreaSeries);
+    if (d->m_brush != brush) {
+        d->m_brush = brush;
+        emit d->updated();
     }
+}
+
+QBrush QAreaSeries::brush() const
+{
+    Q_D(const QAreaSeries);
+    return d->m_brush;
 }
 /*!
     Sets if data points are \a visible and should be drawn on line.
 */
 void QAreaSeries::setPointsVisible(bool visible)
 {
-    if (m_pointsVisible != visible) {
-        m_pointsVisible = visible;
-        emit updated();
+    Q_D(QAreaSeries);
+    if (d->m_pointsVisible != visible) {
+        d->m_pointsVisible = visible;
+        emit d->updated();
     }
 }
 
+bool QAreaSeries::pointsVisible() const
+{
+    Q_D(const QAreaSeries);
+    return d->m_pointsVisible;
+}
+
+bool QAreaSeries::setModel(QAbstractItemModel* model)
+{
+    Q_UNUSED(model);
+    qWarning()<<"Not implemented";
+    return false;
+}
+
+QAbstractItemModel* QAreaSeries::model() const
+{
+    return 0;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries,QAreaSeries* q):QSeriesPrivate(q),
+  m_upperSeries(upperSeries),
+  m_lowerSeries(lowerSeries),
+  m_pointsVisible(false)
+{
+
+};
+
 #include "moc_qareaseries.cpp"
+#include "moc_qareaseries_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

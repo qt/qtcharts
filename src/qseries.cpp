@@ -19,6 +19,9 @@
 ****************************************************************************/
 
 #include "qseries.h"
+#include "qseries_p.h"
+
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QSeries
@@ -93,5 +96,55 @@
     \sa setName()
 */
 
-QTCOMMERCIALCHART_USE_NAMESPACE
+QSeries::QSeries(QObject *parent) : QObject(parent),
+d_ptr(new QSeriesPrivate(this))
+{
+
+}
+
+QSeries::QSeries(QSeriesPrivate &d,QObject *parent) : QObject(parent),
+d_ptr(&d)
+{
+
+}
+
+QSeries::~QSeries()
+{
+
+}
+
+QAbstractItemModel* QSeries::model() const
+{
+    return d_ptr->m_model;
+}
+
+void QSeries::setName(const QString& name)
+{
+    d_ptr->m_name = name;
+}
+
+QString QSeries::name() const
+{
+    return d_ptr->m_name;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+QSeriesPrivate::QSeriesPrivate(QSeries* q): q_ptr(q),m_model(0)
+{
+
+}
+
+QSeriesPrivate::~QSeriesPrivate()
+{
+
+}
+
+
+
+
 #include "moc_qseries.cpp"
+
+QTCOMMERCIALCHART_END_NAMESPACE
+
+

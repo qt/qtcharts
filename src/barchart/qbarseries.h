@@ -42,7 +42,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
 public:
     QBarSeries(QStringList categories, QObject *parent = 0);
 
-    virtual QSeriesType type() const { return QSeries::SeriesTypeBar; }
+    QSeries::QSeriesType type() const;
 
     void appendBarSet(QBarSet *set);            // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
@@ -104,7 +104,6 @@ private Q_SLOTS:
     void barsetChanged();
 
 protected:
-    QBarSeriesPrivate * const d_ptr;
     Q_DECLARE_PRIVATE(QBarSeries)
     Q_DISABLE_COPY(QBarSeries)
 

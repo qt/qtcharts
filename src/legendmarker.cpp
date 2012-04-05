@@ -19,13 +19,15 @@
  ****************************************************************************/
 
 #include "legendmarker_p.h"
+#include "qxyseries.h"
+#include "qxyseries_p.h"
 #include "qlegend.h"
 #include "qbarseries.h"
 #include "qpieseries.h"
-#include <qpieslice.h>
-#include <qbarset.h>
-#include <qxyseries.h>
-#include <qareaseries.h>
+#include "qpieslice.h"
+#include "qbarset.h"
+#include "qareaseries.h"
+#include "qareaseries_p.h"
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsSimpleTextItem>
@@ -120,7 +122,7 @@ AreaLegendMarker::AreaLegendMarker(QAreaSeries *series,QLegend *legend) : Legend
 m_series(series)
 {
     QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
-    QObject::connect(series,SIGNAL(updated()), this, SLOT(updated()));
+    QObject::connect(series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
     updated();
 }
 
@@ -169,7 +171,7 @@ XYLegendMarker::XYLegendMarker(QXYSeries *series, QLegend *legend) : LegendMarke
 m_series(series)
 {
     QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
-    QObject::connect(series,SIGNAL(updated()), this, SLOT(updated()));
+    QObject::connect(series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
     updated();
 }
 

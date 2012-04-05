@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "qsplineseries.h"
+#include "qsplineseries_p.h"
 
 /*!
     \class QSplineSeries
@@ -46,32 +47,57 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   */
 
 QSplineSeries::QSplineSeries(QObject *parent) :
-    QLineSeries(parent)
+    QLineSeries(*new QSplineSeriesPrivate(this),parent)
 {
-    connect(this,SIGNAL(pointAdded(int)), this, SLOT(updateControlPoints()));
-    connect(this,SIGNAL(pointRemoved(int)), this, SLOT(updateControlPoints()));
-    connect(this,SIGNAL(pointReplaced(int)), this, SLOT(updateControlPoints()));
 }
+
+QSeries::QSeriesType QSplineSeries::type() const
+{
+    return QSeries::SeriesTypeSpline;
+}
+
+QPointF QSplineSeries::controlPoint(int index) const
+{
+    Q_D(const QSplineSeries);
+    return d->m_controlPoints[index];
+}
+
+void QSplineSeries::setModelMappingRange(int first, int count)
+{
+    Q_D(QSplineSeries);
+    QLineSeries::setModelMappingRange(first, count);
+    d->calculateControlPoints();
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(q)
+{
+    QObject::connect(this,SIGNAL(pointAdded(int)), this, SLOT(updateControlPoints()));
+    QObject::connect(this,SIGNAL(pointRemoved(int)), this, SLOT(updateControlPoints()));
+    QObject::connect(this,SIGNAL(pointReplaced(int)), this, SLOT(updateControlPoints()));
+};
 
 /*!
   \internal
   Calculates control points which are needed by QPainterPath.cubicTo function to draw the cubic Bezier cureve between two points.
   */
-void QSplineSeries::calculateControlPoints()
+void QSplineSeriesPrivate::calculateControlPoints()
 {
 
+    Q_Q(QSplineSeries);
     // Based on http://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit
     // CPOL License
 
-    int n = count() - 1;
+    int n = q->count() - 1;
     if (n == 1)
     { // Special case: Bezier curve should be a straight line.
         //            firstControlPoints = new Point[1];
         // 3P1 = 2P0 + P3
-        m_controlPoints.append(QPointF((2 * x(0) + x(1)) / 3, (2 * y(0) + y(1)) / 3));
+        m_controlPoints.append(QPointF((2 * q->x(0) + q->x(1)) / 3, (2 * q->y(0) + q->y(1)) / 3));
 
         // P2 = 2P1  P0
-        m_controlPoints.append(QPointF(2 * m_controlPoints[0].x() - x(0), 2 * m_controlPoints[0].y() - y(0)));
+        m_controlPoints.append(QPointF(2 * m_controlPoints[0].x() - q->x(0), 2 * m_controlPoints[0].y() - q->y(0)));
         return;
     }
 
@@ -89,22 +115,22 @@ void QSplineSeries::calculateControlPoints()
     //  |   0   0   0   0   0   0   0   0   ... 0   2   7   |   |   P1_n    |   |   8 * P(n-1) + Pn         |
     //
     QList<qreal> rhs;
-    rhs.append(x(0) + 2 * x(1));
+    rhs.append(q->x(0) + 2 * q->x(1));
 
     // Set right hand side X values
     for (int i = 1; i < n - 1; ++i)
-        rhs.append(4 * x(i) + 2 * x(i + 1));
+        rhs.append(4 * q->x(i) + 2 * q->x(i + 1));
 
-    rhs.append((8 * x(n - 1) + x(n)) / 2.0);
+    rhs.append((8 * q->x(n - 1) + q->x(n)) / 2.0);
     // Get first control points X-values
     QList<qreal> xControl = getFirstControlPoints(rhs);
-    rhs[0] = y(0) + 2 * y(1);
+    rhs[0] = q->y(0) + 2 * q->y(1);
 
     // Set right hand side Y values
     for (int i = 1; i < n - 1; ++i)
-        rhs[i] = 4 * y(i) + 2 * y(i + 1);
+        rhs[i] = 4 * q->y(i) + 2 * q->y(i + 1);
 
-    rhs[n - 1] = (8 * y(n - 1) + y(n)) / 2.0;
+    rhs[n - 1] = (8 * q->y(n - 1) + q->y(n)) / 2.0;
     // Get first control points Y-values
     QList<qreal> yControl = getFirstControlPoints(rhs);
 
@@ -114,16 +140,16 @@ void QSplineSeries::calculateControlPoints()
         m_controlPoints.append(QPointF(xControl[i], yControl[i]));
         // Second control point
         if (i < n - 1)
-            m_controlPoints.append(QPointF(2 * x(i + 1) - xControl[i + 1], 2 * y(i + 1) - yControl[i + 1]));
+            m_controlPoints.append(QPointF(2 * q->x(i + 1) - xControl[i + 1], 2 * q->y(i + 1) - yControl[i + 1]));
         else
-            m_controlPoints.append(QPointF((x(n) + xControl[n - 1]) / 2, (y(n) + yControl[n - 1]) / 2));
+            m_controlPoints.append(QPointF((q->x(n) + xControl[n - 1]) / 2, (q->y(n) + yControl[n - 1]) / 2));
     }
 }
 
 /*!
   \internal
   */
-QList<qreal> QSplineSeries::getFirstControlPoints(QList<qreal> rhs)
+QList<qreal> QSplineSeriesPrivate::getFirstControlPoints(QList<qreal> rhs)
 {
     QList<qreal> x; // Solution vector.
     QList<qreal> tmp; // Temp workspace.
@@ -147,9 +173,10 @@ QList<qreal> QSplineSeries::getFirstControlPoints(QList<qreal> rhs)
   \internal
   Updates the control points, besed on currently avaiable knots.
   */
-void QSplineSeries::updateControlPoints()
+void QSplineSeriesPrivate::updateControlPoints()
 {
-    if (count() > 1) {
+    Q_Q(QSplineSeries);
+    if (q->count() > 1) {
         m_controlPoints.clear();
         calculateControlPoints();
     }
@@ -187,12 +214,8 @@ void QSplineSeries::updateControlPoints()
      then all the items following \a first item in a model are used.
      \sa setModel(), setModelMapping()
  */
-void QSplineSeries::setModelMappingRange(int first, int count)
-{
-    QLineSeries::setModelMappingRange(first, count);
-    calculateControlPoints();
-}
 
 #include "moc_qsplineseries.cpp"
+#include "moc_qsplineseries_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -29,10 +29,13 @@ class QAbstractItemModel;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QSeriesPrivate;
+
 class QTCOMMERCIALCHART_EXPORT QSeries : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName)
+    Q_ENUMS(QSeriesType)
 
 public:
     enum QSeriesType {
@@ -47,23 +50,20 @@ public:
     };
 
 protected:
-    QSeries(QObject *parent = 0) : QObject(parent) {m_model = 0;}
+    QSeries(QObject *parent = 0);
+    QSeries(QSeriesPrivate &d,QObject *parent = 0);
 
 public:
-    virtual ~QSeries() {}
+    ~QSeries();
     virtual QSeriesType type() const = 0;
     // TODO
-    virtual bool setModel(QAbstractItemModel* /*model*/) { return false; }
-    QAbstractItemModel* model() const { return m_model; }
-
-    void setName(QString name) { m_name = name; }
-    QString name() const { return m_name; }
+    virtual bool setModel(QAbstractItemModel* model) = 0;
+    QAbstractItemModel* model() const;
+    void setName(const QString& name);
+    QString name() const;
 
 protected:
-    QAbstractItemModel* m_model;
-
-private:
-    QString m_name;
+    QScopedPointer<QSeriesPrivate> d_ptr;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

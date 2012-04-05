@@ -20,6 +20,7 @@
 
 #include "scatterchartitem_p.h"
 #include "qscatterseries.h"
+#include "qscatterseries_p.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
 #include <QGraphicsScene>
@@ -34,7 +35,7 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *prese
     m_size(15)
 
 {
-    QObject::connect(m_series,SIGNAL(updated()), this, SLOT(handleUpdated()));
+    QObject::connect(m_series->d_func(),SIGNAL(updated()), this, SLOT(handleUpdated()));
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);

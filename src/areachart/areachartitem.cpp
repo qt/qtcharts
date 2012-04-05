@@ -20,6 +20,7 @@
 
 #include "areachartitem_p.h"
 #include "qareaseries.h"
+#include "qareaseries_p.h"
 #include "qlineseries.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
@@ -42,7 +43,7 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
     if (m_series->lowerSeries())
         m_lower = new AreaBoundItem(this,m_series->lowerSeries());
 
-    connect(areaSeries,SIGNAL(updated()),this,SLOT(handleUpdated()));
+    connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
     connect(this,SIGNAL(clicked(const QPointF&)),areaSeries,SIGNAL(clicked(const QPointF&)));
 
     handleUpdated();

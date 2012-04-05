@@ -50,6 +50,11 @@ QStackedBarSeries::QStackedBarSeries(QStringList categories, QObject *parent)
 {
 }
 
+QSeries::QSeriesType QStackedBarSeries::type() const
+{
+    return QSeries::SeriesTypeStackedBar;
+}
+
 #include "moc_qstackedbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

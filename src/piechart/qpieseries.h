@@ -92,7 +92,6 @@ Q_SIGNALS:
     void pieSizeChanged();
 
 private:
-    QPieSeriesPrivate * const d_ptr;
     Q_DECLARE_PRIVATE(QPieSeries)
     Q_DISABLE_COPY(QPieSeries)
 };

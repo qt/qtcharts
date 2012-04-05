@@ -18,19 +18,19 @@
 **
 ****************************************************************************/
 
-#ifndef QPIESERIESPRIVATE_P_H
-#define QPIESERIESPRIVATE_P_H
+#ifndef QPIESERIES_P_H
+#define QPIESERIES_P_H
 
 #include "qpieseries.h"
+#include "qseries_p.h"
 
 class QModelIndex;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QPieSeriesPrivate : public QObject
+class QPieSeriesPrivate : public QSeriesPrivate
 {
     Q_OBJECT
-    Q_DECLARE_PUBLIC(QPieSeries)
 
 public:
     QPieSeriesPrivate(QPieSeries *parent);
@@ -49,8 +49,6 @@ public Q_SLOTS:
     bool setRealValue(qreal &value, qreal newValue, qreal max, qreal min = 0.0);
 
 public:
-    QPieSeries * const q_ptr;
-
     QList<QPieSlice*> m_slices;
     qreal m_pieRelativeHorPos;
     qreal m_pieRelativeVerPos;
@@ -63,8 +61,10 @@ public:
     int m_mapValues;
     int m_mapLabels;
     Qt::Orientation m_mapOrientation;
+private:
+    Q_DECLARE_PUBLIC(QPieSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QPIESERIESPRIVATE_P_H
+#endif // QPIESERIES_P_H

@@ -20,8 +20,8 @@ PRIVATE_HEADERS += \
     $$PWD/percentbarchartitem_p.h \
     $$PWD/stackedbarchartitem_p.h \
     $$PWD/barlabel_p.h \
-    $$PWD/qbarsetprivate_p.h \
-    $$PWD/qbarseriesprivate_p.h
+    $$PWD/qbarset_p.h \
+    $$PWD/qbarseries_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qbarseries.h \

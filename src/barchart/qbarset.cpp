@@ -19,156 +19,10 @@
 ****************************************************************************/
 
 #include "qbarset.h"
-#include "qbarsetprivate_p.h"
-//#include <QDebug>
+#include "qbarset_p.h"
 #include <QToolTip>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-
-QBarSetPrivate::QBarSetPrivate(QString name, QBarSet *parent) : QObject(parent),
-    q_ptr(parent),
-    m_name(name),
-    m_labelsVisible(false)
-{
-
-}
-
-QBarSetPrivate::~QBarSetPrivate()
-{
-
-}
-
-void QBarSetPrivate::setName(QString name)
-{
-    m_name = name;
-}
-
-QString QBarSetPrivate::name() const
-{
-    return m_name;
-}
-
-QBarSetPrivate& QBarSetPrivate::operator << (const qreal &value)
-{
-    m_values.append(value);
-    emit structureChanged();
-    return *this;
-}
-
-void QBarSetPrivate::insertValue(int i, qreal value)
-{
-    m_values.insert(i, value);
-}
-
-void QBarSetPrivate::removeValue(int i)
-{
-    m_values.removeAt(i);
-}
-
-int QBarSetPrivate::count() const
-{
-    return m_values.count();
-}
-
-qreal QBarSetPrivate::valueAt(int index) const
-{
-    return m_values.at(index);
-}
-
-void QBarSetPrivate::setValue(int index, qreal value)
-{
-    m_values.replace(index,value);
-    emit valueChanged();
-}
-
-qreal QBarSetPrivate::sum() const
-{
-    qreal sum(0);
-    for (int i=0; i < m_values.count(); i++) {
-        sum += m_values.at(i);
-    }
-    return sum;
-}
-
-void QBarSetPrivate::setPen(const QPen &pen)
-{
-    m_pen = pen;
-    emit valueChanged();
-}
-
-QPen QBarSetPrivate::pen() const
-{
-    return m_pen;
-}
-
-void QBarSetPrivate::setBrush(const QBrush &brush)
-{
-    m_brush = brush;
-    emit valueChanged();
-}
-
-QBrush QBarSetPrivate::brush() const
-{
-    return m_brush;
-}
-
-void QBarSetPrivate::setLabelPen(const QPen &pen)
-{
-    m_labelPen = pen;
-    emit valueChanged();
-}
-
-QPen QBarSetPrivate::labelPen() const
-{
-    return m_labelPen;
-}
-
-void QBarSetPrivate::setLabelBrush(const QBrush &brush)
-{
-    m_labelBrush = brush;
-    emit valueChanged();
-}
-
-QBrush QBarSetPrivate::labelBrush() const
-{
-    return m_labelBrush;
-}
-
-void QBarSetPrivate::setLabelFont(const QFont &font)
-{
-    m_labelFont = font;
-    emit valueChanged();
-}
-
-QFont QBarSetPrivate::labelFont() const
-{
-    return m_labelFont;
-}
-
-void QBarSetPrivate::setLabelsVisible(bool visible)
-{
-    m_labelsVisible = visible;
-    emit labelsVisibleChanged(visible);
-}
-
-bool QBarSetPrivate::labelsVisible() const
-{
-    return m_labelsVisible;
-}
-
-void QBarSetPrivate::barHoverEnterEvent(QPoint pos)
-{
-    emit showToolTip(pos, m_name);
-    emit hoverEnter(pos);
-}
-
-void QBarSetPrivate::barHoverLeaveEvent()
-{
-    // Emit signal to user of charts
-    emit hoverLeave();
-}
-
 
 /*!
     \class QBarSet
@@ -223,8 +77,7 @@ QBarSet::QBarSet(QString name, QObject *parent)
 */
 void QBarSet::setName(QString name)
 {
-    Q_D(QBarSet);
-    d->setName(name);
+    d_ptr->m_name = name;
 }
 
 /*!
@@ -232,8 +85,7 @@ void QBarSet::setName(QString name)
 */
 QString QBarSet::name() const
 {
-    Q_D(const QBarSet);
-    return d->name();
+    return d_ptr->m_name;
 }
 
 /*!
@@ -241,13 +93,9 @@ QString QBarSet::name() const
 */
 QBarSet& QBarSet::operator << (const qreal &value)
 {
-    Q_D(QBarSet);
-    d->operator <<(value);
+    d_ptr->m_values.append(value);
+    emit d_ptr->structureChanged();
     return *this;
-
-//    m_values.append(value);
-//    emit structureChanged();
-//    return *this;
 }
 
 /*!
@@ -257,9 +105,7 @@ QBarSet& QBarSet::operator << (const qreal &value)
 */
 void QBarSet::insertValue(int i, qreal value)
 {
-    Q_D(QBarSet);
-    d->insertValue(i,value);
-//    m_values.insert(i, value);
+    d_ptr->m_values.insert(i, value);
 }
 
 /*!
@@ -268,9 +114,7 @@ void QBarSet::insertValue(int i, qreal value)
 */
 void QBarSet::removeValue(int i)
 {
-    Q_D(QBarSet);
-    d->removeValue(i);
-//    m_values.removeAt(i);
+    d_ptr->m_values.removeAt(i);
 }
 
 /*!
@@ -278,9 +122,7 @@ void QBarSet::removeValue(int i)
 */
 int QBarSet::count() const
 {
-    Q_D(const QBarSet);
-    return d->count();
-//    return m_values.count();
+    return d_ptr->m_values.count();
 }
 
 /*!
@@ -288,9 +130,7 @@ int QBarSet::count() const
 */
 qreal QBarSet::valueAt(int index) const
 {
-    Q_D(const QBarSet);
-    return d->valueAt(index);
-//    return m_values.at(index);
+    return d_ptr->m_values.at(index);
 }
 
 /*!
@@ -298,10 +138,8 @@ qreal QBarSet::valueAt(int index) const
 */
 void QBarSet::setValue(int index, qreal value)
 {
-    Q_D(QBarSet);
-    d->setValue(index,value);
-//    m_values.replace(index,value);
-//    emit valueChanged();
+    d_ptr->m_values.replace(index,value);
+    emit d_ptr->valueChanged();
 }
 
 /*!
@@ -309,15 +147,11 @@ void QBarSet::setValue(int index, qreal value)
 */
 qreal QBarSet::sum() const
 {
-    Q_D(const QBarSet);
-    return d->sum();
-/*
     qreal total(0);
-    for (int i=0; i < m_values.count(); i++) {
-        total += m_values.at(i);
+    for (int i=0; i < d_ptr->m_values.count(); i++) {
+        total += d_ptr->m_values.at(i);
     }
     return total;
-*/
 }
 
 /*!
@@ -325,10 +159,10 @@ qreal QBarSet::sum() const
 */
 void QBarSet::setPen(const QPen &pen)
 {
-    Q_D(QBarSet);
-    d->setPen(pen);
-//    m_pen = pen;
-//    emit valueChanged();
+      if(d_ptr->m_pen!=pen){
+          d_ptr->m_pen = pen;
+          emit d_ptr->valueChanged();
+      }
 }
 
 /*!
@@ -336,9 +170,7 @@ void QBarSet::setPen(const QPen &pen)
 */
 QPen QBarSet::pen() const
 {
-    Q_D(const QBarSet);
-    return d->pen();
-//    return m_pen;
+    return d_ptr->m_pen;
 }
 
 /*!
@@ -346,10 +178,10 @@ QPen QBarSet::pen() const
 */
 void QBarSet::setBrush(const QBrush &brush)
 {
-    Q_D(QBarSet);
-    d->setBrush(brush);
-//    m_brush = brush;
-//    emit valueChanged();
+    if(d_ptr->m_brush!=brush){
+      d_ptr->m_brush = brush;
+      emit d_ptr->valueChanged();
+    }
 }
 
 /*!
@@ -357,9 +189,7 @@ void QBarSet::setBrush(const QBrush &brush)
 */
 QBrush QBarSet::brush() const
 {
-    Q_D(const QBarSet);
-    return d->brush();
-//    return m_brush;
+    return d_ptr->m_brush;
 }
 
 /*!
@@ -367,10 +197,10 @@ QBrush QBarSet::brush() const
 */
 void QBarSet::setLabelPen(const QPen &pen)
 {
-    Q_D(QBarSet);
-    d->setLabelPen(pen);
-//    m_labelPen = pen;
-//    emit valueChanged();
+    if(d_ptr->m_labelPen!=pen){
+        d_ptr->m_labelPen = pen;
+        emit d_ptr->valueChanged();
+    }
 }
 
 /*!
@@ -378,9 +208,7 @@ void QBarSet::setLabelPen(const QPen &pen)
 */
 QPen QBarSet::labelPen() const
 {
-    Q_D(const QBarSet);
-    return d->labelPen();
-//    return m_labelPen;
+    return d_ptr->m_labelPen;
 }
 
 /*!
@@ -388,10 +216,10 @@ QPen QBarSet::labelPen() const
 */
 void QBarSet::setLabelBrush(const QBrush &brush)
 {
-    Q_D(QBarSet);
-    d->setLabelBrush(brush);
-//    m_labelBrush = brush;
-//    emit valueChanged();
+    if(d_ptr->m_labelBrush!=brush){
+        d_ptr->m_labelBrush = brush;
+        emit d_ptr->valueChanged();
+    }
 }
 
 /*!
@@ -399,9 +227,7 @@ void QBarSet::setLabelBrush(const QBrush &brush)
 */
 QBrush QBarSet::labelBrush() const
 {
-    Q_D(const QBarSet);
-    return d->labelBrush();
-//    return m_labelBrush;
+    return d_ptr->m_labelBrush;
 }
 
 /*!
@@ -409,10 +235,11 @@ QBrush QBarSet::labelBrush() const
 */
 void QBarSet::setLabelFont(const QFont &font)
 {
-    Q_D(QBarSet);
-    d->setLabelFont(font);
-//    m_labelFont = font;
-//    emit valueChanged();
+    if(d_ptr->m_labelFont!=font) {
+        d_ptr->m_labelFont = font;
+        emit d_ptr->valueChanged();
+    }
+
 }
 
 /*!
@@ -420,9 +247,7 @@ void QBarSet::setLabelFont(const QFont &font)
 */
 QFont QBarSet::labelFont() const
 {
-    Q_D(const QBarSet);
-    return d->labelFont();
-//    return m_labelFont;
+    return d_ptr->m_labelFont;
 }
 
 /*!
@@ -431,10 +256,10 @@ QFont QBarSet::labelFont() const
 
 void QBarSet::setLabelsVisible(bool visible)
 {
-    Q_D(QBarSet);
-    d->setLabelsVisible(visible);
-//    m_labelsVisible = visible;
-//    emit labelsVisibleChanged(visible);
+    if(d_ptr->m_labelsVisible!=visible) {
+        d_ptr->m_labelsVisible = visible;
+        emit d_ptr->labelsVisibleChanged(visible);
+    }
 }
 
 /*!
@@ -442,9 +267,7 @@ void QBarSet::setLabelsVisible(bool visible)
 */
 bool QBarSet::labelsVisible() const
 {
-    Q_D(const QBarSet);
-    return d->labelsVisible();
-//    return m_labelsVisible;
+    return d_ptr->m_labelsVisible;
 }
 
 /*
@@ -461,7 +284,38 @@ void QBarSet::barHoverLeaveEvent()
     emit hoverLeave();
 }
 */
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QBarSetPrivate::QBarSetPrivate(QString name, QBarSet *parent) : QObject(parent),
+    q_ptr(parent),
+    m_name(name),
+    m_labelsVisible(false)
+{
+
+}
+
+QBarSetPrivate::~QBarSetPrivate()
+{
+
+}
+
+
+//TODO: fixme , refactor it and get rid of it
+void QBarSetPrivate::barHoverEnterEvent(QPoint pos)
+{
+    emit showToolTip(pos, m_name);
+    emit hoverEnter(pos);
+}
+
+//TODO: fixme , refactor it and get rid of it
+void QBarSetPrivate::barHoverLeaveEvent()
+{
+    // Emit signal to user of charts
+    emit hoverLeave();
+}
+
 #include "moc_qbarset.cpp"
-#include "moc_qbarsetprivate_p.cpp"
+#include "moc_qbarset_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

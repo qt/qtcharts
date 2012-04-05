@@ -29,30 +29,23 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QSplineSeriesPrivate;
+
 class QTCOMMERCIALCHART_EXPORT QSplineSeries : public QLineSeries
 {
     Q_OBJECT
 public:
 
     QSplineSeries(QObject *parent = 0);
-    QSeriesType type() const {return QSeries::SeriesTypeSpline;}
+    QSeries::QSeriesType type() const;
 
-    QPointF controlPoint(int index) const {return m_controlPoints[index];}
-//    bool setModel(QAbstractItemModel *model);
-
-//    void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
+    QPointF controlPoint(int index) const;
     void setModelMappingRange(int first, int count);
 
 private:
-    void calculateControlPoints();
-    QList<qreal> getFirstControlPoints(QList<qreal> rhs);
-
-private Q_SLOTS:
-    void updateControlPoints();
-
-private:
-    QList<QPointF> m_controlPoints;
-
+    Q_DECLARE_PRIVATE(QSplineSeries);
+    Q_DISABLE_COPY(QSplineSeries);
+    friend class SplineChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -20,6 +20,7 @@
 
 #include "xychartitem_p.h"
 #include "qxyseries.h"
+#include "qxyseries_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
@@ -37,9 +38,9 @@ XYChartItem::XYChartItem(QXYSeries *series, ChartPresenter *presenter):ChartItem
     m_maxY(0),
     m_series(series)
 {
-    connect(series,SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
-    connect(series,SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
-    connect(series,SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
+    connect(series->d_func(),SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
+    connect(series->d_func(),SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
+    connect(series->d_func(),SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
     connect(this,SIGNAL(clicked(const QPointF&)),series,SIGNAL(clicked(const QPointF&)));
 }
 
@@ -123,7 +124,7 @@ void XYChartItem::handlePointAdded(int index)
     update();
 }
 void XYChartItem::handlePointRemoved(int index)
-{    
+{
     QVector<QPointF> points = m_points;
     if (m_series->model()) {
         if (index < m_series->mapFirst())

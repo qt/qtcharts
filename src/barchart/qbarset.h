@@ -32,6 +32,7 @@ class QBarSetPrivate;
 class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 {
     Q_OBJECT
+
 public:
     QBarSet(QString name, QObject *parent = 0);
 
@@ -66,37 +67,11 @@ public:
 Q_SIGNALS:
     void clicked(QString category, Qt::MouseButtons button);                         // Clicked and hover signals exposed to user
 
-    // TODO: TO PIMPL --->
-//    void structureChanged();
-//    void valueChanged();
-//    void hoverEnter(QPoint pos);
-//    void hoverLeave();
-//    void showToolTip(QPoint pos, QString tip);  // Private signal
-//    void labelsVisibleChanged(bool visible);
-    // <--- TO PIMPL
-
-public Q_SLOTS:
-    // These are for internal communication
-    // TODO: TO PIMPL --->
-//    void barHoverEnterEvent(QPoint pos);
-//    void barHoverLeaveEvent();
-    // <--- TO PIMPL
-
 private:
-    QBarSetPrivate * const d_ptr;
-    Q_DECLARE_PRIVATE(QBarSet)
+    QScopedPointer<QBarSetPrivate> d_ptr;
     Q_DISABLE_COPY(QBarSet)
-/*
-    QString m_name;
-    QList<qreal> m_values;   // TODO: replace with map (category, value)
-    QMap<QString, qreal> m_mappedValues;
-    QPen m_pen;
-    QBrush m_brush;
-    QPen m_labelPen;
-    QBrush m_labelBrush;
-    QFont m_labelFont;
-    bool m_labelsVisible;
-*/
+    friend class QBarSeries;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

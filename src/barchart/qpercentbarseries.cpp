@@ -50,6 +50,11 @@ QPercentBarSeries::QPercentBarSeries(QStringList categories, QObject *parent)
 {
 }
 
+QSeries::QSeriesType QPercentBarSeries::type() const
+{
+    return QSeries::SeriesTypePercentBar;
+}
+
 #include "moc_qpercentbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -20,6 +20,7 @@
 
 #include "linechartitem_p.h"
 #include "qlineseries.h"
+#include "qlineseries_p.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
 
@@ -33,7 +34,7 @@ m_series(series),
 m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
-    QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
+    QObject::connect(series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
     handleUpdated();
 }
 

@@ -30,12 +30,15 @@ class QModelIndex;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QXYSeriesPrivate;
+
 class QTCOMMERCIALCHART_EXPORT QXYSeries : public QSeries
 {
     Q_OBJECT
 protected:
-    QXYSeries(QObject *parent = 0);
-    virtual ~QXYSeries();
+    explicit QXYSeries(QObject *parent = 0);
+    explicit QXYSeries(QXYSeriesPrivate &d,QObject *parent = 0);
+    ~QXYSeries();
 
 public:
     void append(qreal x, qreal y);
@@ -57,16 +60,20 @@ public:
     QXYSeries& operator << (const QList<QPointF> points);
 
     void setPen(const QPen &pen);
-    QPen pen() const {return m_pen;}
+    QPen pen() const;
+
     void setBrush(const QBrush &brush);
-    QBrush brush() const {return m_brush;}
+    QBrush brush() const;
+
+    void setPointsVisible(bool visible);
+    bool pointsVisible() const;
 
     bool setModel(QAbstractItemModel *model);
 
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     virtual void setModelMappingRange(int first, int count = 0);
-    int mapFirst() const { return m_mapFirst; }
-    int mapCount() const { return m_mapCount; }
+    int mapFirst() const;
+    int mapCount() const;
 
 private Q_SLOTS:
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
@@ -78,25 +85,12 @@ private Q_SLOTS:
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void selected();
-    void updated();
-    void pointReplaced(int index);
-    void pointRemoved(int index);
-    void pointAdded(int index);
 
-protected:
-    QVector<qreal> m_x;
-    QVector<qreal> m_y;
-
-    QPen m_pen;
-    QBrush m_brush;
-
-    int m_mapX;
-    int m_mapY;
-    int m_mapFirst;
-    int m_mapCount;
-    bool m_mapLimited;
-    Qt::Orientation m_mapOrientation;
-    int tempItemsRemoved;
+private:
+    Q_DECLARE_PRIVATE(QXYSeries);
+    Q_DISABLE_COPY(QXYSeries);
+    friend class XYLegendMarker;
+    friend class XYChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "qscatterseries.h"
-#include "qchart.h"
+#include "qscatterseries_p.h"
 
 /*!
     \class QScatterSeries
@@ -62,10 +62,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs a series object which is a child of \a parent.
 */
-QScatterSeries::QScatterSeries(QObject *parent) :
-    QXYSeries(parent),
-    m_shape(QScatterSeries::MarkerShapeCircle),
-    m_size(15.0)
+QScatterSeries::QScatterSeries(QObject *parent) : QXYSeries(*new QScatterSeriesPrivate(this),parent)
 {
 }
 
@@ -76,12 +73,18 @@ QScatterSeries::~QScatterSeries()
 {
 }
 
+QSeries::QSeriesType QScatterSeries::type() const
+{
+    return QSeries::SeriesTypeScatter;
+}
+
 /*!
     Returns the shape used for drawing markers.
 */
 QScatterSeries::MarkerShape QScatterSeries::shape() const
 {
-    return m_shape;
+    Q_D(const QScatterSeries);
+    return d->m_shape;
 }
 
 /*!
@@ -90,9 +93,10 @@ QScatterSeries::MarkerShape QScatterSeries::shape() const
 */
 void QScatterSeries::setShape(MarkerShape shape)
 {
-    if (m_shape != shape) {
-        m_shape = shape;
-        emit QXYSeries::updated();
+    Q_D(QScatterSeries);
+    if (d->m_shape != shape) {
+        d->m_shape = shape;
+        emit d->updated();
     }
 }
 
@@ -101,7 +105,8 @@ void QScatterSeries::setShape(MarkerShape shape)
 */
 qreal QScatterSeries::size() const
 {
-    return m_size;
+    Q_D(const QScatterSeries);
+    return d->m_size;
 }
 
 /*!
@@ -109,10 +114,22 @@ qreal QScatterSeries::size() const
 */
 void QScatterSeries::setSize(qreal size)
 {
-    if (!qFuzzyIsNull(m_size - size)) {
-        m_size = size;
-        emit updated();
+    Q_D(QScatterSeries);
+
+    if (!qFuzzyIsNull(d->m_size - size)) {
+        d->m_size = size;
+        emit d->updated();
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries* q):QXYSeriesPrivate(q),
+   m_shape(QScatterSeries::MarkerShapeCircle),
+   m_size(15.0)
+{
+
+};
+
 
 QTCOMMERCIALCHART_END_NAMESPACE

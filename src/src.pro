@@ -32,7 +32,8 @@ PRIVATE_HEADERS += \
     $$PWD/chartconfig_p.h \
     $$PWD/qchart_p.h \
     $$PWD/qchartview_p.h \
-    $$PWD/scroller_p.h
+    $$PWD/scroller_p.h \
+    $$PWD/qseries_p.h
 PUBLIC_HEADERS += \
     $$PWD/qchart.h \
     $$PWD/qchartglobal.h \

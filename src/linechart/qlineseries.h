@@ -27,20 +27,23 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QLineSeriesPrivate;
+
 class QTCOMMERCIALCHART_EXPORT QLineSeries : public QXYSeries
 {
 public:
-    QLineSeries(QObject *parent=0);
-	virtual ~QLineSeries();
+    explicit QLineSeries(QObject *parent=0);
+	~QLineSeries();
 
-	void setPointsVisible(bool visible);
-	bool pointsVisible() const {return m_pointsVisible;}
+	QSeries::QSeriesType type() const;
 
-public: // from QChartSeries
-	virtual QSeriesType type() const {return QSeries::SeriesTypeLine;}
-    friend QDebug operator<< (QDebug d, const QLineSeries series);
+protected:
+	QLineSeries(QLineSeriesPrivate &d,QObject *parent = 0);
+
 private:
-    bool m_pointsVisible;
+    Q_DECLARE_PRIVATE(QLineSeries);
+    Q_DISABLE_COPY(QLineSeries);
+    friend class LineChartItem;
 
 };
 

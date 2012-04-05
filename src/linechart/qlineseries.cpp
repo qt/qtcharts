@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "qlineseries.h"
+#include "qlineseries_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -59,8 +60,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QLineSeries::QLineSeries(QObject *parent) : QXYSeries(parent),
-    m_pointsVisible(false)
+QLineSeries::QLineSeries(QObject *parent) : QXYSeries(*new QLineSeriesPrivate(this),parent)
+{
+
+}
+
+QLineSeries::QLineSeries(QLineSeriesPrivate &d,QObject *parent) : QXYSeries (d,parent)
 {
 
 }
@@ -72,28 +77,28 @@ QLineSeries::~QLineSeries()
 {
 }
 
-/*!
-    Sets if data points are \a visible and should be drawn on line.
-*/
-void QLineSeries::setPointsVisible(bool visible)
+QSeries::QSeriesType QLineSeries::type() const
 {
-    if (m_pointsVisible != visible){
-        m_pointsVisible = visible;
-        emit QXYSeries::updated();
-    }
+    return QSeries::SeriesTypeLine;
 }
 
-
+/*
 QDebug operator<< (QDebug debug, const QLineSeries series)
 {
-    Q_ASSERT(series.m_x.size() == series.m_y.size());
-
-    int size = series.m_x.size();
-
+    Q_ASSERT(series.d_func()->m_x.size() == series.d_func()->m_y.size());
+    int size = series.d_func()->m_x.size();
     for (int i=0; i<size; i++) {
-        debug.nospace() << "(" << series.m_x.at(i) << ','<< series.m_y.at(i) << ") ";
+        debug.nospace() << "(" << series.d_func()->m_x.at(i) << ','<< series.d_func()->m_y.at(i) << ") ";
     }
     return debug.space();
 }
+*/
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries* q):QXYSeriesPrivate(q)
+{
+
+};
 
 QTCOMMERCIALCHART_END_NAMESPACE

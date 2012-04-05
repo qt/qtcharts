@@ -28,6 +28,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QLineSeries;
+class QAreaSeriesPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QSeries
 {
@@ -36,32 +37,33 @@ public:
     QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries = 0);
     virtual ~QAreaSeries();
 
-public: // from QChartSeries
-    virtual QSeriesType type() const { return QSeries::SeriesTypeArea; }
+public:
+    QSeries::QSeriesType type() const;
 
-    QLineSeries* upperSeries() const { return m_upperSeries; }
-    QLineSeries* lowerSeries() const { return m_lowerSeries; }
+    QLineSeries* upperSeries() const;
+    QLineSeries* lowerSeries() const;
 
     void setPen(const QPen &pen);
-    QPen pen() const { return m_pen;}
+    QPen pen() const;
 
     void setBrush(const QBrush &brush);
-    QBrush brush() const { return m_brush;}
+    QBrush brush() const;
 
     void setPointsVisible(bool visible);
-    bool pointsVisible() const { return m_pointsVisible; }
+    bool pointsVisible() const;
+
+    bool setModel(QAbstractItemModel* model);
+    QAbstractItemModel* model() const;
 
 Q_SIGNALS:
-    void updated();
     void clicked(const QPointF &point);
     void selected();
 
 private:
-    QBrush m_brush;
-    QPen m_pen;
-    QLineSeries* m_upperSeries;
-    QLineSeries* m_lowerSeries;
-    bool m_pointsVisible;
+    Q_DECLARE_PRIVATE(QAreaSeries);
+    Q_DISABLE_COPY(QAreaSeries);
+    friend class AreaLegendMarker;
+    friend class AreaChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "splinechartitem_p.h"
+#include "qsplineseries_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
@@ -31,7 +32,7 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, ChartPresenter *presente
     m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
-    QObject::connect(series,SIGNAL(updated()),this,SLOT(handleUpdated()));
+    QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
     handleUpdated();
 }
 

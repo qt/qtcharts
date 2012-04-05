@@ -18,43 +18,39 @@
 **
 ****************************************************************************/
 
-#ifndef QSCATTERSERIES_H
-#define QSCATTERSERIES_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the QtCommercial Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
 
-#include <qchartglobal.h>
-#include <qxyseries.h>
+#ifndef QSPLINESERIES_P_H_
+#define QSPLINESERIES_P_H_
+
+#include "qlineseries_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QScatterSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QXYSeries
+class QSplineSeriesPrivate: public QLineSeriesPrivate
 {
-
+    Q_OBJECT
 public:
-    enum MarkerShape {
-        MarkerShapeCircle,
-        MarkerShapeRectangle
-    };
+    QSplineSeriesPrivate(QSplineSeries* q);
+    void calculateControlPoints();
+    QList<qreal> getFirstControlPoints(QList<qreal> rhs);
 
+public Q_SLOTS:
+    void updateControlPoints();
 public:
-    explicit QScatterSeries(QObject *parent = 0);
-    ~QScatterSeries();
-
-    QSeries::QSeriesType type() const;
-
-    MarkerShape shape() const;
-    void setShape(MarkerShape shape);
-    qreal size() const;
-    void setSize(qreal size);
-
+    QList<QPointF> m_controlPoints;
 private:
-    Q_DECLARE_PRIVATE(QScatterSeries);
-    Q_DISABLE_COPY(QScatterSeries);
-    friend class ScatterChartItem;
-
+    Q_DECLARE_PUBLIC(QSplineSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QSCATTERSERIES_H
+#endif
