@@ -25,45 +25,103 @@ Rectangle {
     anchors.fill: parent
 
     Chart {
+        title: "NHL All-Star Team Players"
         anchors.fill: parent
         theme: Chart.ChartThemeHighContrast
 
         AreaSeries {
-            name: "Area"
+            name: "Finnish"
             points: [
-                XyPoint { x: 0.0; y: 1.1 },
-                XyPoint { x: 2.5; y: 3.6 },
-                XyPoint { x: 3.57; y: 2.55 }
+                XyPoint { x: 0; y: 0 },
+                XyPoint { x: 1; y: 0 },
+                XyPoint { x: 2; y: 0 },
+                XyPoint { x: 3; y: 0 },
+                XyPoint { x: 4; y: 0 },
+                XyPoint { x: 5; y: 0 },
+                XyPoint { x: 6; y: 1 },
+                XyPoint { x: 7; y: 0 },
+                XyPoint { x: 8; y: 0 },
+                XyPoint { x: 9; y: 0 },
+                XyPoint { x: 10; y: 0 },
+                XyPoint { x: 11; y: 1 }
             ]
             lowerPoints: [
-                XyPoint { x: 0.0; y: 0.0 },
-                XyPoint { x: 2.5; y: 0.0 },
-                XyPoint { x: 3.57; y: 0.0 }
+                XyPoint { x: 0; y: 0 },
+                XyPoint { x: 1; y: 0 },
+                XyPoint { x: 2; y: 0 },
+                XyPoint { x: 3; y: 0 },
+                XyPoint { x: 4; y: 0 },
+                XyPoint { x: 5; y: 0 },
+                XyPoint { x: 6; y: 0 },
+                XyPoint { x: 7; y: 0 },
+                XyPoint { x: 8; y: 0 },
+                XyPoint { x: 9; y: 0 },
+                XyPoint { x: 10; y: 0 },
+                XyPoint { x: 11; y: 0 }
             ]
         }
 
-        ScatterSeries {
-            name: "Scatter1"
+        AreaSeries {
+            name: "Russian"
             points: [
-                XyPoint { x: 1.5; y: 1.5 },
-                XyPoint { x: 1.5; y: 1.6 },
-                XyPoint { x: 1.57; y: 1.55 }
+                XyPoint { x: 0; y: 1 },
+                XyPoint { x: 1; y: 1 },
+                XyPoint { x: 2; y: 1 },
+                XyPoint { x: 3; y: 1 },
+                XyPoint { x: 4; y: 1 },
+                XyPoint { x: 5; y: 0 },
+                XyPoint { x: 6; y: 1 },
+                XyPoint { x: 7; y: 1 },
+                XyPoint { x: 8; y: 4 },
+                XyPoint { x: 9; y: 3 },
+                XyPoint { x: 10; y: 2 },
+                XyPoint { x: 11; y: 1 }
+            ]
+            lowerPoints: [
+                XyPoint { x: 0; y: 0 },
+                XyPoint { x: 1; y: 0 },
+                XyPoint { x: 2; y: 0 },
+                XyPoint { x: 3; y: 0 },
+                XyPoint { x: 4; y: 0 },
+                XyPoint { x: 5; y: 0 },
+                XyPoint { x: 6; y: 0 },
+                XyPoint { x: 7; y: 0 },
+                XyPoint { x: 8; y: 0 },
+                XyPoint { x: 9; y: 0 },
+                XyPoint { x: 10; y: 0 },
+                XyPoint { x: 11; y: 0 }
             ]
         }
-        ScatterSeries {
-            name: "Scatter2"
+
+        AreaSeries {
+            name: "Swedish"
             points: [
-                XyPoint { x: 2.0; y: 2.0 },
-                XyPoint { x: 2.0; y: 2.1 },
-                XyPoint { x: 2.07; y: 2.05 }
+                XyPoint { x: 0; y: 1 },
+                XyPoint { x: 1; y: 1 },
+                XyPoint { x: 2; y: 3 },
+                XyPoint { x: 3; y: 3 },
+                XyPoint { x: 4; y: 2 },
+                XyPoint { x: 5; y: 0 },
+                XyPoint { x: 6; y: 2 },
+                XyPoint { x: 7; y: 1 },
+                XyPoint { x: 8; y: 2 },
+                XyPoint { x: 9; y: 1 },
+                XyPoint { x: 10; y: 3 },
+                XyPoint { x: 11; y: 3 }
             ]
-        }
-        ScatterSeries {
-            name: "Scatter3"
-            points: [
-                XyPoint { x: 2.6; y: 2.6 },
-                XyPoint { x: 2.6; y: 2.7 },
-                XyPoint { x: 2.67; y: 2.65 }
+            lowerPoints: [
+                XyPoint { x: 0; y: 0 },
+                XyPoint { x: 1; y: 0 },
+                XyPoint { x: 2; y: 0 },
+                XyPoint { x: 3; y: 0 },
+                XyPoint { x: 4; y: 0 },
+                XyPoint { x: 5; y: 0 },
+                XyPoint { x: 6; y: 0 },
+                XyPoint { x: 7; y: 0 },
+                XyPoint { x: 8; y: 0 },
+                XyPoint { x: 9; y: 0 },
+                XyPoint { x: 10; y: 0 },
+                XyPoint { x: 11; y: 0 }
             ]
         }
     }
