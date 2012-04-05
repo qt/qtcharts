@@ -478,11 +478,6 @@ void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
 }
 
 /*!
-    \fn QAbstractItemModel* QXYSeries::model()
-    Returns the model from which the series takes its data.
- */
-
-/*!
      \fn bool QXYSeries::setModel(QAbstractItemModel *model)
      Sets the \a model to be used as a data source
      \sa setModelMapping(), setModelMappingRange()

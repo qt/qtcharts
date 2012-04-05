@@ -68,6 +68,11 @@
 */
 
 /*!
+    \property QString QSeries::name
+    \brief name of the series property
+*/
+
+/*!
     \fn void QSeries::setName(QString name)
     \brief Sets a \a name for the series.
 
@@ -78,8 +83,9 @@
 */
 
 /*!
-    \fn QString QSeries::name()
+    \fn QString QSeries::name() const
     \brief Returns the name of the series.
+    \sa setName()
 */
 
 QTCOMMERCIALCHART_USE_NAMESPACE

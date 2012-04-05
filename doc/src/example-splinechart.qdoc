@@ -11,19 +11,19 @@
 
     \snippet ../examples/splinechart/main.cpp 1
 
-Now lets add some data points to the series.
+Now let's add some data points to the series.
 	
-	\snippet ../examples/splinechart/main.cpp 3
+	\snippet ../examples/splinechart/main.cpp 2
 
 The data series has been populated. To display it on a chart we create QChart object and add the data series to it. We also set the title and the values range on y axis, so that our chart is better visible.
 
-    \snippet ../examples/splinechart/main.cpp 4
+    \snippet ../examples/splinechart/main.cpp 3
     
 Then we create a QChartView object with QChart as a parameter. This way we don't need to create QGraphicsView scene ourselves. We also set the Antialiasing on to have the rendered lines look nicer.
     
-    \snippet ../examples/splinechart/main.cpp 5 
+    \snippet ../examples/splinechart/main.cpp 4 
     
     In the end we set the QChartView  as the windows's central widget.
     
-    \snippet ../examples/splinechart/main.cpp 6     
+    \snippet ../examples/splinechart/main.cpp 5     
 */

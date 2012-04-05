@@ -56,11 +56,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::setLabelssVisible(bool visible = true)
-    \brief Sets visibility of bar labels. If \a visible is true, labels are drawn on top of barsets.
-*/
-
-/*!
     \fn void QBarSet::showToolTip(QPoint pos, QString tip)
     \brief \internal \a pos \a tip
 */
@@ -244,8 +239,9 @@ QFont QBarSet::labelFont() const
 }
 
 /*!
-    Sets the visibility of barset values to \a visible
+    Sets visibility of bar labels. If \a visible is true, labels are drawn on top of barsets.
 */
+
 void QBarSet::setLabelsVisible(bool visible)
 {
     m_labelsVisible = visible;

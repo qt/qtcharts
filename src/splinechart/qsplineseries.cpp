@@ -155,7 +155,7 @@ void QSplineSeries::updateControlPoints()
     }
 }
 
-/*!
+/*//!
      \fn bool QSplineSeries::setModel(QAbstractItemModel *model)
      Sets the \a model to be used as a data source
      \sa setModelMapping(), setModelMappingRange()
@@ -167,8 +167,8 @@ void QSplineSeries::updateControlPoints()
 //    return true;
 //}
 
-/*!
-     \fn bool QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
+/*//!
+     \fn bool QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
      Sets the \a modelX to be used as a data source for x coordinate and \a modelY to be used
      as a data source for y coordinate. The \a orientation paramater specifies whether the data
      is in columns or in rows.
