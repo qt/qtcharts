@@ -41,14 +41,10 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
     connect(series, SIGNAL(piePositionChanged()), this, SLOT(handlePieLayoutChanged()));
     connect(series, SIGNAL(pieSizeChanged()), this, SLOT(handlePieLayoutChanged()));
 
-    QTimer::singleShot(0, this, SLOT(initialize()));
+    QTimer::singleShot(0, this, SLOT(initialize())); // TODO: get rid of this
 
     // Note: the following does not affect as long as the item does not have anything to paint
     setZValue(ChartPresenter::PieSeriesZValue);
-	
-	// If enabled slice boundingrect() is called instead of shape().
-	// And this causes severe issues with mouse click & hover decection.
-    //setFlags(QGraphicsItem::ItemClipsChildrenToShape); 
 }
 
 PieChartItem::~PieChartItem()
