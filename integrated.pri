@@ -60,12 +60,12 @@ integrated_build:{
         }
         !isEmpty (BIN_TARGET_PATH) {
             QMAKE_POST_LINK += install_name_tool -change $$CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$CHARTS_LIB_NAME $$BIN_TARGET_PATH
-            message($$QMAKE_POST_LINK)
+#            message($$QMAKE_POST_LINK)
         } else {
             # Hack to make qml plugins available as internal build versions
             exists($$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib") {
                 QMAKE_POST_LINK += "& $$QMAKE_COPY qmldir $$CHART_BUILD_PLUGIN_DIR"
-                message($$QMAKE_POST_LINK)
+#                message($$QMAKE_POST_LINK)
             }
         }
     }
