@@ -296,7 +296,7 @@ QPieSeries::QPieSeries(QObject *parent) :
 }
 
 /*!
-    Destroys the object. Note that adding series to QChart transfers the ownership to the chart.
+    Destroys the series and its slices.
 */
 QPieSeries::~QPieSeries()
 {
@@ -322,7 +322,7 @@ void QPieSeries::replace(QList<QPieSlice*> slices)
 }
 
 /*!
-    Adds an array of \a slices to the series.
+    Appends an array of \a slices to the series.
     Slice ownership is passed to the series.
 */
 void QPieSeries::append(QList<QPieSlice*> slices)
@@ -347,7 +347,7 @@ void QPieSeries::append(QList<QPieSlice*> slices)
 }
 
 /*!
-    Adds a single \a slice to the series.
+    Appends a single \a slice to the series.
     Slice ownership is passed to the series.
 */
 void QPieSeries::append(QPieSlice* slice)
@@ -356,7 +356,7 @@ void QPieSeries::append(QPieSlice* slice)
 }
 
 /*!
-    Adds a single \a slice to the series and returns a reference to the series.
+    Appends a single \a slice to the series and returns a reference to the series.
     Slice ownership is passed to the series.
 */
 QPieSeries& QPieSeries::operator << (QPieSlice* slice)
@@ -440,7 +440,7 @@ void QPieSeries::clear()
 }
 
 /*!
-    Counts the number of the slices in this series.
+    returns the number of the slices in this series.
 */
 int QPieSeries::count() const
 {
