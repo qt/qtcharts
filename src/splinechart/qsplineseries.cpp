@@ -155,19 +155,38 @@ void QSplineSeries::updateControlPoints()
     }
 }
 
-bool QSplineSeries::setModel(QAbstractItemModel* model)
-{
-    QXYSeries::setModel(model);
-//    calculateControlPoints();
-    return true;
-}
+/*!
+     \fn bool QSplineSeries::setModel(QAbstractItemModel *model)
+     Sets the \a model to be used as a data source
+     \sa setModelMapping(), setModelMappingRange()
+ */
+//bool QSplineSeries::setModel(QAbstractItemModel* model)
+//{
+//    QXYSeries::setModel(model);
+////    calculateControlPoints();
+//    return true;
+//}
 
-void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
-{
-    QLineSeries::setModelMapping(modelX, modelY, orientation);
-//    calculateControlPoints();
-}
+/*!
+     \fn bool QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
+     Sets the \a modelX to be used as a data source for x coordinate and \a modelY to be used
+     as a data source for y coordinate. The \a orientation paramater specifies whether the data
+     is in columns or in rows.
+ */
+//void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
+//{
+//    QLineSeries::setModelMapping(modelX, modelY, orientation);
+////    calculateControlPoints();
+//}
 
+/*!
+     \fn bool QSplineSeries::setModelMappingRange(int first, int count)
+     Allows limiting the model mapping.
+     Parameter \a first specifies which element of the model should be used as a first one of the series.
+     Parameter \a count specifies how many elements should be mapped. If count is not specified (defaults to -1)
+     then all the items following \a first item in a model are used.
+     \sa setModel(), setModelMapping()
+ */
 void QSplineSeries::setModelMappingRange(int first, int count)
 {
     QLineSeries::setModelMappingRange(first, count);

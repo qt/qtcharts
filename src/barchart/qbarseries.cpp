@@ -305,7 +305,14 @@ bool QBarSeries::setModel(QAbstractItemModel *model)
     }
 }
 
-// TODO
+/*!
+     \fn bool QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation)
+     Sets column/row specified by \a categories to be used as a list of bar series categories.
+     Parameter \a bottomBoundry indicates the column/row where the first bar set is located in the model.
+     Parameter \a topBoundry indicates the column/row where the last bar set is located in the model.
+     All the columns/rows inbetween those two values are also used as data for bar sets.
+     The \a orientation paramater specifies whether the data is in columns or in rows.
+ */
 void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation)
 {
     if (!m_model)
@@ -336,7 +343,6 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
                 this, SLOT(modelDataRemoved(QModelIndex,int,int)));
     }
 
-
     // create the initial bars
     delete m_internalModel;
     if (m_mapOrientation == Qt::Vertical) {
@@ -366,12 +372,9 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundry, int topBound
     }
 }
 
-void QBarSeries::setModelMappingShift(int first, int count)
-{
-    m_mapFirst = first;
-    m_mapCount = count;
-}
-
+/*!
+    \internal
+*/
 void QBarSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
     Q_UNUSED(bottomRight)
@@ -390,6 +393,9 @@ void QBarSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     }
 }
 
+/*!
+    \internal
+*/
 void QBarSeries::modelDataAdded(QModelIndex /*parent*/, int start, int /*end*/)
 {
     if (m_mapOrientation == Qt::Vertical) {
@@ -406,6 +412,9 @@ void QBarSeries::modelDataAdded(QModelIndex /*parent*/, int start, int /*end*/)
     emit restructuredBars();
 }
 
+/*!
+    \internal
+*/
 void QBarSeries::modelDataRemoved(QModelIndex parent, int start, int end)
 {
     Q_UNUSED(parent)

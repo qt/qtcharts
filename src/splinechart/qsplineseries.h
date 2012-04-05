@@ -38,9 +38,9 @@ public:
     QSeriesType type() const {return QSeries::SeriesTypeSpline;}
 
     QPointF controlPoint(int index) const {return m_controlPoints[index];}
-    bool setModel(QAbstractItemModel *model);
+//    bool setModel(QAbstractItemModel *model);
 
-    void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
+//    void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     void setModelMappingRange(int first, int count);
 
 private:

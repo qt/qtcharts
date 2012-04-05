@@ -38,8 +38,6 @@ TableWidget::TableWidget(QWidget *parent)
     // create table view and add model to it
     QTableView *tableView = new QTableView;
     tableView->setModel(model);
-//    tableView->
-//    tableView->setMinimumWidth(200);
     tableView->setColumnWidth(0, 56);
     tableView->setColumnWidth(1, 56);
     tableView->setColumnWidth(2, 56);

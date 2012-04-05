@@ -66,6 +66,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn int QXYSeries::mapFirst() const
+    Returns the index of the model's item that is used as a first one for the series.
+    \sa mapCount()
+*/
+
+/*!
+    \fn int QXYSeries::mapCount() const
+    Returns the number of the items that are taken from the model.
+    If -1 it means all the items of the model following the first one are used.
+    \sa mapFirst()
+*/
+
+/*!
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
@@ -472,6 +485,7 @@ void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
 /*!
      \fn bool QXYSeries::setModel(QAbstractItemModel *model)
      Sets the \a model to be used as a data source
+     \sa setModelMapping(), setModelMappingRange()
  */
 bool QXYSeries::setModel(QAbstractItemModel *model) {
 
@@ -496,6 +510,13 @@ bool QXYSeries::setModel(QAbstractItemModel *model) {
     }
 }
 
+/*!
+     \fn bool QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
+     Sets the \a modelX to be used as a data source for x coordinate and \a modelY to be used
+     as a data source for y coordinate. The \a orientation paramater specifies whether the data
+     is in columns or in rows.
+     \sa setModel(), setModelMappingRange()
+ */
 void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
 {
     if (m_model == 0)
@@ -519,6 +540,14 @@ void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientat
     }
 }
 
+/*!
+     \fn bool QXYSeries::setModelMappingRange(int first, int count)
+     Allows limiting the model mapping.
+     Parameter \a first specifies which element of the model should be used as a first one of the series.
+     Parameter \a count specifies how many elements should be mapped. If count is not specified (defaults to -1)
+     then all the items following \a first item in a model are used.
+     \sa setModel(), setModelMapping()
+ */
 void QXYSeries::setModelMappingRange(int first, int count)
 {
     m_mapFirst = first;

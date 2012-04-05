@@ -66,6 +66,7 @@ public:
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     virtual void setModelMappingRange(int first, int count = 0);
     int mapFirst() const { return m_mapFirst; }
+    int mapCount() const { return m_mapCount; }
 
 private Q_SLOTS:
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);

@@ -668,6 +668,13 @@ bool QPieSeries::setModel(QAbstractItemModel* model)
     }
 }
 
+/*!
+     \fn bool QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation)
+     Sets column/row specified by \a modelValuesLine to be used as a list of pie slice values for the pie.
+     Parameter \a modelValuesLine indicates the column/row where the values for the pie slices are located in the model.
+     Parameter \a modelLabelsLine indicates the column/row where the labels for the pie slices are located in the model.
+     The \a orientation paramater specifies whether the data is in columns or in rows.
+ */
 void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation)
 {
     Q_D(QPieSeries);
