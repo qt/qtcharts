@@ -1,0 +1,7 @@
+/*!
+     \example demos/gdpbarchart
+     \title GDP bar chart demo
+     \subtitle
+
+     This demo shows how to read Gross domestic product (GDP) data from a sql database and show it in a bar or scatter chart.
+*/

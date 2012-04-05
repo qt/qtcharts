@@ -13,22 +13,22 @@
         <tr>
         <td valign="top">
         <ul>
-            <li><a href="examples-areachart.html">Area chart example</a></li>
-            <li><a href="examples-barchart.html">Bar chart example</a></li>
-            <li><a href="examples-customchart.html">Custom chart example</a></li>
-            <li><a href="examples-ekgchart.html">EKG chart example</a></li>
-            <li><a href="examples-linechart.html">Bar chart example</a></li>
-            <li><a href="examples-modeldata.html">Model data example</a></li>
-            <li><a href="examples-percentbarchart.html">Percent bar chart example</a></li>
-            <li><a href="examples-piechart.html">Pie chart example</a></li>
-            <li><a href="examples-piechartdrilldown.html">Pie chart drilldown example</a></li>
-            <li><a href="examples-presenterchart.html">Presenter chart example</a></li>
-            <li><a href="examples-scatterchart.html">Scatter chart example</a></li>
-            <li><a href="examples-scatterinteractions.html">Scatter interactions example</a></li>
-            <li><a href="examples-splinechart.html">Spline chart example</a></li>
-            <li><a href="examples-stackedbarchart.html">Stacked bar chart example</a></li>
-            <li><a href="examples-stackedbarchartdrilldown.html">Stacked bar chart drilldown example</a></li>
-            <li><a href="examples-zoomlinechart.html">Zoom line example</a></li>
+            <li><a href="examples-areachart.html">Area chart</a></li>
+            <li><a href="examples-barchart.html">Bar chart</a></li>
+            <li><a href="examples-customchart.html">Custom chart</a></li>
+            <li><a href="examples-ekgchart.html">EKG chart</a></li>
+            <li><a href="examples-linechart.html">Bar chart</a></li>
+            <li><a href="examples-modeldata.html">Model data</a></li>
+            <li><a href="examples-percentbarchart.html">Percent bar chart</a></li>
+            <li><a href="examples-piechart.html">Pie chart</a></li>
+            <li><a href="examples-piechartdrilldown.html">Pie chart drilldown</a></li>
+            <li><a href="examples-presenterchart.html">Presenter chart</a></li>
+            <li><a href="examples-scatterchart.html">Scatter chart</a></li>
+            <li><a href="examples-scatterinteractions.html">Scatter interactions</a></li>
+            <li><a href="examples-splinechart.html">Spline chart</a></li>
+            <li><a href="examples-stackedbarchart.html">Stacked bar chart</a></li>
+            <li><a href="examples-stackedbarchartdrilldown.html">Stacked bar chart drilldown</a></li>
+            <li><a href="examples-zoomlinechart.html">Zoom line</a></li>
         </ul>
         </td>
         </tr>
