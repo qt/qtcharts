@@ -47,8 +47,7 @@ public:
         ChartThemeBrownSand,
         ChartThemeBlueNcs,
         ChartThemeHighContrast,
-        ChartThemeBlueIcy,
-        ChartThemeCount
+        ChartThemeBlueIcy
     };
 
     enum AnimationOption {
