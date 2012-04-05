@@ -116,9 +116,9 @@ void tst_QChartView::rubberBand_data()
     QTest::addColumn<int>("minY");
     QTest::addColumn<int>("maxY");
 
-    QTest::newRow("HorizonalRubberBand") << QChartView::RubberBands(QChartView::HorizonalRubberBand) << 0 << 1 << 10 << 90 << 0<< 100;
-    QTest::newRow("VerticalRubberBand") <<  QChartView::RubberBands(QChartView::VerticalRubberBand) << 1 << 0 << 0 << 100 << 10<< 90;
-    QTest::newRow("RectangleRubberBand") <<  QChartView::RubberBands(QChartView::RectangleRubberBand) << 1 << 1 <<10 << 90 << 10<< 90;
+    QTest::newRow("HorizonalRubberBand") << QChartView::RubberBands(QChartView::HorizonalRubberBand) << 0 << 1 << 20 << 180 << 0<< 200;
+    QTest::newRow("VerticalRubberBand") <<  QChartView::RubberBands(QChartView::VerticalRubberBand) << 1 << 0 << 0 << 200 << 20<< 180;
+    QTest::newRow("RectangleRubberBand") <<  QChartView::RubberBands(QChartView::RectangleRubberBand) << 1 << 1 <<20 << 180 << 20<< 180;
 }
 
 void tst_QChartView::rubberBand()
@@ -136,10 +136,10 @@ void tst_QChartView::rubberBand()
     QCOMPARE(m_view->rubberBand(), rubberBand);
 
     QLineSeries* line = new QLineSeries();
-    *line << QPointF(0, 0) << QPointF(100, 100);
+    *line << QPointF(0, 0) << QPointF(200, 200);
 
     m_view->chart()->addSeries(line);
-    m_view->resize(100 + padding.left() + padding.right(), 100 +  padding.top()+ padding.bottom());
+    m_view->resize(200 + padding.left() + padding.right(), 200 +  padding.top()+ padding.bottom());
     m_view->show();
 
     //this is hack since view does not get events otherwise

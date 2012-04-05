@@ -13,6 +13,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QChartAxis*)
 Q_DECLARE_METATYPE(QSeries*)
+Q_DECLARE_METATYPE(QChart::AnimationOption)
 
 class tst_QChart : public QObject
 {
@@ -58,8 +59,6 @@ private slots:
     void scrollRight();
     void scrollUp_data();
     void scrollUp();
-    void setAnimationOptions_data();
-    void setAnimationOptions();
     void setBackgroundBrush_data();
     void setBackgroundBrush();
     void setBackgroundPen_data();
@@ -88,6 +87,9 @@ private slots:
     void zoomOut();
 
 private:
+    void createTestData();
+
+private:
     QChartView* m_view;
     QChart* m_chart;
 };
@@ -106,7 +108,15 @@ void tst_QChart::init()
 {
     m_view = new QChartView(new QChart());
     m_chart = m_view->chart();
+}
 
+void tst_QChart::createTestData()
+{
+    QLineSeries* series0 = new QLineSeries(this);
+    *series0 << QPointF(0, 0) << QPointF(100, 100);
+    m_chart->addSeries(series0);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
 }
 
 void tst_QChart::cleanup()
@@ -190,31 +200,29 @@ void tst_QChart::addSeries()
 {
     QFETCH(QSeries*, series);
     QFETCH(QChartAxis*, axis);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
-    m_chart->addSeries(series,axis);
+    //m_chart->addSeries(series,axis);
     QCOMPARE(m_chart->axisY(series),axis);
 }
 
-Q_DECLARE_METATYPE(QChart::AnimationOptions)
 void tst_QChart::animationOptions_data()
 {
-#if 0
-    QTest::addColumn<QChart::AnimationOptions>("animationOptions");
-    QTest::newRow("null") << QChart::AnimationOptions();
-#endif
+    QTest::addColumn<QChart::AnimationOption>("animationOptions");
+    QTest::newRow("AllAnimations") << QChart::AllAnimations;
+    QTest::newRow("NoAnimation") << QChart::NoAnimation;
+    QTest::newRow("GridAxisAnimations") << QChart::GridAxisAnimations;
+    QTest::newRow("SeriesAnimations") << QChart::SeriesAnimations;
 }
 
-// public QChart::AnimationOptions animationOptions() const
 void tst_QChart::animationOptions()
 {
-#if 0
-    QFETCH(QChart::AnimationOptions, animationOptions);
+    createTestData();
+    QFETCH(QChart::AnimationOption, animationOptions);
+    m_chart->setAnimationOptions(animationOptions);
+    QCOMPARE(m_chart->animationOptions(), animationOptions);
 
-    SubQChart chart;
-
-    QCOMPARE(chart.animationOptions(), animationOptions);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
 }
 
 void tst_QChart::axisX_data()
@@ -480,27 +488,6 @@ void tst_QChart::scrollUp()
     SubQChart chart;
 
     chart.scrollUp();
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QChart::setAnimationOptions_data()
-{
-#if 0
-    QTest::addColumn<QChart::AnimationOptions>("options");
-    QTest::newRow("null") << QChart::AnimationOptions();
-#endif
-}
-
-// public void setAnimationOptions(QChart::AnimationOptions options)
-void tst_QChart::setAnimationOptions()
-{
-#if 0
-    QFETCH(QChart::AnimationOptions, options);
-
-    SubQChart chart;
-
-    chart.setAnimationOptions(options);
 #endif
     QSKIP("Test is not implemented.", SkipAll);
 }
