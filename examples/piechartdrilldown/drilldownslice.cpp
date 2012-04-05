@@ -28,6 +28,7 @@ DrilldownSlice::DrilldownSlice(qreal value, QString prefix, QSeries* drilldownSe
 {
     setValue(value);
     updateLabel();
+    setLabelFont(QFont("Arial", 8));
     connect(this, SIGNAL(changed()), this, SLOT(updateLabel()));
     connect(this, SIGNAL(hoverEnter()), this, SLOT(showHighlight()));
     connect(this, SIGNAL(hoverLeave()), this, SLOT(hideHighlight()));

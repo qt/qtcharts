@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     QList<QString> months;
     months << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
     QList<QString> names;
-    names << "Jane" << "John" << "Axel" << "Mary" << "Samantha" << "Bob";
+    names << "Jane" << "John" << "Axel" << "Mary" << "Susan" << "Bob";
 
     foreach (QString name, names) {
         QPieSeries* series = new QPieSeries(&window);
@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     window.setCentralWidget(chartView);
-    window.resize(800, 600);
+    window.resize(800, 500);
     window.show();
 
     return a.exec();
