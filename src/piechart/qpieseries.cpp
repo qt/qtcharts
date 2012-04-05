@@ -226,40 +226,63 @@ bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qr
 
 /*!
     \property QPieSeries::horizontalPosition
-    \brief Pie horizontal position property
+    \brief Defines the horizontal position of the pie.
 
-    By default horizontal position is 0.5 (center).
+    The value is a relative value to the chart rectangle where:
+
+    \list
+    \o 0.0 is the absolute left.
+    \o 1.0 is the absolute right.
+    \endlist
+
+    Default value is 0.5 (center).
 */
 
 /*!
     \property QPieSeries::verticalPosition
-    \brief Pie vertical position property
+    \brief Defines the vertical position of the pie.
 
-    By default vertical position is 0.5 (center)
+    The value is a relative value to the chart rectangle where:
+
+    \list
+    \o 0.0 is the absolute top.
+    \o 1.0 is the absolute bottom.
+    \endlist
+
+    Default value is 0.5 (center).
 */
 
 /*!
     \property QPieSeries::size
-    \brief Pie size property
+    \brief Defines the pie size.
 
-    By default size is 0.7.
+    The value is a relative value to the chart rectangle where:
+
+    \list
+    \o 0.0 is the minumum size (pie not drawn).
+    \o 1.0 is the maximum size that can fit the chart.
+    \endlist
+
+    Default value is 0.7.
 */
 
 /*!
     \property QPieSeries::startAngle
-    \brief Pie start angle.
+    \brief Defines the starting angle of the pie.
 
-    Starting angle of the pie. Default is 0.
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
+    Default is value is 0.
 */
-
 
 /*!
     \property QPieSeries::endAngle
-    \brief Pie end angle.
+    \brief Defines the ending angle of the pie.
 
-    Ending angle of the pie. Default is 360.
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
+    Default is value is 360.
 */
-
 
 
 /*!
@@ -443,13 +466,6 @@ QList<QPieSlice*> QPieSeries::slices() const
     return d->m_slices;
 }
 
-/*!
-    Sets the horizontal center position of the pie to \a relativePosition. If \a relativePosition is
-    set to  0.0 the pie is drawn on the left side of the chart and if it's set to 1.0 the pie is
-    drawn on right side of the chart. The default value 0.5 puts the pie in the middle.
-
-    \sa setHorizontalPosition(), setPieSize()
-*/
 void QPieSeries::setHorizontalPosition(qreal relativePosition)
 {
     Q_D(QPieSeries);
@@ -457,13 +473,6 @@ void QPieSeries::setHorizontalPosition(qreal relativePosition)
         emit piePositionChanged();
 }
 
-/*!
-    Sets the vertical center position of the pie to \a relativePosition. If \a relativePosition is
-    set to 0.0 the pie is drawn on the top of the chart and if it's set to 1.0 the pie is drawn
-    on bottom of the chart. The default value 0.5 puts the pie in the middle.
-
-    \sa verticalPosition(), setPieSize()
-*/
 void QPieSeries::setVerticalPosition(qreal relativePosition)
 {
     Q_D(QPieSeries);
@@ -471,51 +480,18 @@ void QPieSeries::setVerticalPosition(qreal relativePosition)
         emit piePositionChanged();
 }
 
-/*!
-    Gets the horizontal position of the pie.
-
-    The returned value is relative to the chart rectangle where:
-
-    0.0 means the absolute left.
-    1.0 means the absolute right.
-
-    By default it is 0.5 which puts the pie in the horizontal middle of the chart rectangle.
-
-    \sa verticalPosition(), setPieSize()
-*/
 qreal QPieSeries::horizontalPosition() const
 {
     Q_D(const QPieSeries);
     return d->m_pieRelativeHorPos;
 }
 
-/*!
-    Gets the vertical position position of the pie.
-
-    The returned value is relative to the chart rectangle where:
-
-    0.0 means the absolute top.
-    1.0 means the absolute bottom.
-
-    By default it is 0.5 which puts the pie in the vertical middle of the chart rectangle.
-
-    \sa horizontalPosition(), setPieSize()
-*/
 qreal QPieSeries::verticalPosition() const
 {
     Q_D(const QPieSeries);
     return d->m_pieRelativeVerPos;
 }
 
-/*!
-    Sets the relative size of the pie.
-
-    The \a relativeSize is defined so that the 1.0 is the maximum that can fit the given chart rectangle.
-
-    Default value is 0.7.
-
-    \sa pieSize(), verticalPosition(), horizontalPosition()
-*/
 void QPieSeries::setPieSize(qreal relativeSize)
 {
     Q_D(QPieSeries);
@@ -523,15 +499,6 @@ void QPieSeries::setPieSize(qreal relativeSize)
         emit pieSizeChanged();
 }
 
-/*!
-    Gets the relative size of the pie.
-
-    The size is defined so that the 1.0 is the maximum that can fit the given chart rectangle.
-
-    Default value is 0.7.
-
-    \sa setPieSize(), setPiePosition(), pieVerticalPosition(), pieHorizontalPosition()
-*/
 qreal QPieSeries::pieSize() const
 {
     Q_D(const QPieSeries);
@@ -539,15 +506,6 @@ qreal QPieSeries::pieSize() const
 }
 
 
-/*!
-    Sets the end angle of the pie.
-
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
-
-    \a angle must be less than pie end angle. Default value is 0.
-
-    \sa pieStartAngle(), pieEndAngle(), setPieEndAngle()
-*/
 void QPieSeries::setPieStartAngle(qreal angle)
 {
     Q_D(QPieSeries);
@@ -555,13 +513,6 @@ void QPieSeries::setPieStartAngle(qreal angle)
         d->updateDerivativeData();
 }
 
-/*!
-    Gets the start angle of the pie.
-
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock. Default value is 360.
-
-    \sa setPieStartAngle(), pieEndAngle(), setPieEndAngle()
-*/
 qreal QPieSeries::pieStartAngle() const
 {
     Q_D(const QPieSeries);

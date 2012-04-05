@@ -254,6 +254,12 @@ qreal QPieSlice::labelArmLengthFactor() const
 */
 
 /*!
+    \fn void QPieSlice::selected()
+
+    This signal emitted when this slice has been clicked in the legend.
+*/
+
+/*!
     Sets the \a value of this slice.
     \sa value()
 */
