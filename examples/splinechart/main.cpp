@@ -34,9 +34,9 @@ int main(int argc, char *argv[])
     //![1]
 
     //![2]
-    QPen red(Qt::red);
-    red.setWidth(3);
-    series->setPen(red);
+//    QPen red(Qt::red);
+//    red.setWidth(3);
+//    series->setPen(red);
     //![2]
 
     //![3]

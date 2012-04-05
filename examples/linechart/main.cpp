@@ -31,9 +31,6 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
-    QPen red(Qt::red);
-    red.setWidth(3);
-    series->setPen(red);
 //![1]
 
 //![2]
