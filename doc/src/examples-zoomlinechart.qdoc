@@ -1,0 +1,7 @@
+/*!
+    \example examples/zoomlinechart
+    \title Zoom line example
+    \subtitle
+
+    The example shows how to create your own custom zooming effect with QRubberBand.
+*/

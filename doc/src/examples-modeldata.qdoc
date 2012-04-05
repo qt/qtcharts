@@ -1,0 +1,7 @@
+/*!
+     \example examples/modeldata
+     \title Model data example
+     \subtitle
+
+     This example shows how to use QAbstractItemModel derived model as the data for the series.
+*/

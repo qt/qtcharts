@@ -30,12 +30,16 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
+//! [1]
     QApplication a(argc, argv);
     QMainWindow window;
+//! [1]
 
+//! [2]
     DrilldownChart* drilldownChart =  new DrilldownChart();
     drilldownChart->setTheme(QChart::ChartThemeBlueIcy);
     drilldownChart->setAnimationOptions(QChart::SeriesAnimations);
+//! [2]
 
 //! [3]
     // Define categories

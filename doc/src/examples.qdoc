@@ -15,16 +15,20 @@
         <ul>
             <li><a href="examples-areachart.html">Area chart example</a></li>
             <li><a href="examples-barchart.html">Bar chart example</a></li>
-            <li><a href="examples-linechart.html">Line chart example</a></li>
+            <li><a href="examples-customchart.html">Custom chart example</a></li>
+            <li><a href="examples-ekgchart.html">EKG chart example</a></li>
+            <li><a href="examples-linechart.html">Bar chart example</a></li>
+            <li><a href="examples-modeldata.html">Model data example</a></li>
             <li><a href="examples-percentbarchart.html">Percent bar chart example</a></li>
             <li><a href="examples-piechart.html">Pie chart example</a></li>
             <li><a href="examples-piechartdrilldown.html">Pie chart drilldown example</a></li>
             <li><a href="examples-presenterchart.html">Presenter chart example</a></li>
             <li><a href="examples-scatterchart.html">Scatter chart example</a></li>
+            <li><a href="examples-scatterinteractions.html">Scatter interactions example</a></li>
             <li><a href="examples-splinechart.html">Spline chart example</a></li>
             <li><a href="examples-stackedbarchart.html">Stacked bar chart example</a></li>
             <li><a href="examples-stackedbarchartdrilldown.html">Stacked bar chart drilldown example</a></li>
-            <li><a href="examples-customcolors.html">Customizing colors example</a></li>
+            <li><a href="examples-zoomlinechart.html">Zoom line example</a></li>
         </ul>
         </td>
         </tr>
