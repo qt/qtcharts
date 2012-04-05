@@ -203,7 +203,7 @@ void tst_QChart::addSeries()
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
-    //m_chart->addSeries(series,axis);
+    m_chart->addSeries(series,axis);
     QCOMPARE(m_chart->axisY(series),axis);
 }
 
@@ -222,7 +222,6 @@ void tst_QChart::animationOptions()
     QFETCH(QChart::AnimationOption, animationOptions);
     m_chart->setAnimationOptions(animationOptions);
     QCOMPARE(m_chart->animationOptions(), animationOptions);
-
 }
 
 void tst_QChart::axisX_data()

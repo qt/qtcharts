@@ -103,8 +103,7 @@ qreal BarChartModel::min() const
 
 qreal BarChartModel::max() const
 {
-    Q_ASSERT(m_dataModel.count() > 0);
-
+    if (m_dataModel.count() == 0) return 0;
     // TODO: make min and max members and update them when data changes.
     // This is slower since they are checked every time, even if data is same since previous call.
     qreal max = INT_MIN;
