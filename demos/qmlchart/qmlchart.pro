@@ -1,5 +1,5 @@
-!include( ../test.pri ) {
-    error( "Couldn't find the common.pri file!" )
+!include( ../demos.pri ) {
+    error( "Couldn't find the demos.pri file!" )
 }
 
 integrated_build:{
@@ -46,7 +46,3 @@ SOURCES += main.cpp
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 qtcAddDeployment()
-
-#HEADERS += \
-#    chart.h
-

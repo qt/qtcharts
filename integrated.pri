@@ -42,31 +42,31 @@ integrated_build:{
         CONFIG(debug, debug|release) {
             CHARTS_LIB_NAME = libQtCommercialChartd.1.dylib
         }
-        TARGET_PATH = ""
+        BIN_TARGET_PATH = ""
         exists ($$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET) {
-            TARGET_PATH = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
+            BIN_TARGET_PATH = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
         }
         exists ($$CHART_BUILD_BIN_DIR"/test/"$$TARGET".app/Contents/MacOS/"$$TARGET) {
             # Executable in test folder
-            TARGET_PATH = $$CHART_BUILD_BIN_DIR"/test/"$$TARGET".app/Contents/MacOS/"$$TARGET
+            BIN_TARGET_PATH = $$CHART_BUILD_BIN_DIR"/test/"$$TARGET".app/Contents/MacOS/"$$TARGET
         }
         exists ($$CHART_BUILD_BIN_DIR"/test/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET) {
             # Executable in test folder with custom target "tst_NNN"
-            TARGET_PATH = $$CHART_BUILD_BIN_DIR"/test/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET
+            BIN_TARGET_PATH = $$CHART_BUILD_BIN_DIR"/test/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET
         }
         exists($$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib") {
             # Plugin
-            TARGET_PATH = $$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib"
+            BIN_TARGET_PATH = $$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib"
         }
-        !isEmpty (TARGET_PATH) {
-            QMAKE_POST_LINK += install_name_tool -change $$CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$CHARTS_LIB_NAME $$TARGET_PATH
-            #message($$QMAKE_POST_LINK)
-        }
-
-        # Hack to make qml plugins available as internal build versions
-        exists($$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib") {
-            QMAKE_POST_LINK += "& $$QMAKE_COPY qmldir $$CHART_BUILD_PLUGIN_DIR"
-            #message($$QMAKE_POST_LINK)
+        !isEmpty (BIN_TARGET_PATH) {
+            QMAKE_POST_LINK += install_name_tool -change $$CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$CHARTS_LIB_NAME $$BIN_TARGET_PATH
+            message($$QMAKE_POST_LINK)
+        } else {
+            # Hack to make qml plugins available as internal build versions
+            exists($$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib") {
+                QMAKE_POST_LINK += "& $$QMAKE_COPY qmldir $$CHART_BUILD_PLUGIN_DIR"
+                message($$QMAKE_POST_LINK)
+            }
         }
     }
 

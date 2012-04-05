@@ -1,8 +1,7 @@
 TEMPLATE = subdirs
 SUBDIRS += \ 
     chartwidgettest \
-    wavechart \
-    qmlchart
+    wavechart
 
 !win32:{
     SUBDIRS += auto
