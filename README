@@ -48,8 +48,10 @@ KNOWN ISSUES
     * Some areas will be refactored before the first official release
     * Qt Designer plugin is missing
 
-- QML Bindings
-    * The QML Bindings are still under development and to be concidered as early preview
+- QML API
+    * The QML Bindings are still under development and to be considered as early preview
+    * Windows: You need to copy qmldir file to the qmlplugin installation folder; it is
+      not copied during build
 
 - Model based
 
