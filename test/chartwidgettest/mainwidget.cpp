@@ -230,6 +230,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         for (int j(0); j < data.count(); j ++) {
             QList<qreal> column = data.at(j);
             QLineSeries *series = new QLineSeries();
+            series->setName("line" + QString::number(j));
             for (int i(0); i < column.count(); i++)
                 series->append(i, column.at(i));
             m_chart->addSeries(series);
@@ -242,12 +243,14 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             for (int i(0); i < column.count(); i++)
                 lineSeries->append(i, column.at(i));
             QAreaSeries *areaSeries = new QAreaSeries(lineSeries);
+            areaSeries->setName("area" + QString::number(j));
             m_chart->addSeries(areaSeries);
         }
     } else if (seriesName == "Scatter") {
         for (int j(0); j < data.count(); j++) {
             QList<qreal> column = data.at(j);
             QScatterSeries *series = new QScatterSeries();
+            series->setName("scatter" + QString::number(j));
             for (int i(0); i < column.count(); i++)
                 series->append(i, column.at(i));
             m_chart->addSeries(series);
