@@ -46,3 +46,5 @@ void DrilldownChart::handleClicked(QBarSet *barset, QString category, Qt::MouseB
     DrilldownBarSeries* series = static_cast<DrilldownBarSeries*> (sender());
     changeSeries(series->drilldownSeries(category));
 }
+
+#include "moc_drilldownchart.cpp"
