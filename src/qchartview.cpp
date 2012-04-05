@@ -77,13 +77,16 @@ QChartView::~QChartView()
 {
 }
 
+/*!
+    Returns the pointer to the associated chart
+*/
 QChart* QChartView::chart() const
 {
     return d_ptr->m_chart;
 }
 
 /*!
-    Sets the RubberBandPlicy to \a policy. Selected policy determines the way zooming is performed.
+    Sets the RubberBandPlicy to \a rubberBand. Selected policy determines the way zooming is performed.
 */
 void QChartView::setRubberBand(const RubberBands& rubberBand)
 {

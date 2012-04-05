@@ -628,7 +628,7 @@ qreal QPieSeries::total() const
 
     This signal is emitted when pie position has changed.
 
-    \sa setPiePosition(), pieVerticalPosition(), pieHorizontalPosition()
+    \sa verticalPosition(), setVerticalPosition(), horizontalPosition(), setHorizontalPosition()
 */
 
 /*!

@@ -280,7 +280,7 @@ QList<QPointF> QXYSeries::data()
 /*!
     Sets \a pen used for drawing points on the chart. If the pen is not defined, the
     pen from chart theme is used.
-    \sa QChart::setChartTheme()
+    \sa QChart::setTheme()
 */
 void QXYSeries::setPen(const QPen &pen)
 {
@@ -293,9 +293,8 @@ void QXYSeries::setPen(const QPen &pen)
 /*!
     Sets \a brush used for drawing points on the chart. If the brush is not defined, brush
     from chart theme setting is used.
-    \sa QChart::setChartTheme()
+    \sa QChart::setTheme()
 */
-
 void QXYSeries::setBrush(const QBrush &brush)
 {
     if (brush != m_brush) {
@@ -309,7 +308,6 @@ void QXYSeries::setBrush(const QBrush &brush)
     Stream operator for adding a data \a point to the series.
     \sa append()
 */
-
 QXYSeries& QXYSeries::operator<< (const QPointF &point)
 {
     append(point);

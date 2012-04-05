@@ -221,7 +221,7 @@ QBrush QChart::titleBrush() const
 
 /*!
  Sets the \a theme used by the chart for rendering the graphical representation of the data
- \sa ChartTheme, chartTheme()
+ \sa theme()
  */
 void QChart::setTheme(QChart::ChartTheme theme)
 {
@@ -230,7 +230,7 @@ void QChart::setTheme(QChart::ChartTheme theme)
 
 /*!
  Returns the theme enum used by the chart.
- \sa ChartTheme, setChartTheme()
+ \sa ChartTheme, setTheme()
  */
 QChart::ChartTheme QChart::theme() const
 {
