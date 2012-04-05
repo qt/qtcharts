@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
             // Get the drilldown series from season series and add crop to it.
             seasonSeries->drilldownSeries(month)->appendBarSet(weeklyCrop);
             seasonSeries->drilldownSeries(month)->setToolTipEnabled(true);
-            *monthlyCrop << weeklyCrop->total();
+            *monthlyCrop << weeklyCrop->sum();
         }
         seasonSeries->appendBarSet(monthlyCrop);
     }

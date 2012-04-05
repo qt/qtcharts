@@ -1,28 +1,9 @@
-/****************************************************************************
-**
-** Copyright (C) 2012 Digia Plc
-** All rights reserved.
-** For any questions to Digia, please use contact form at http://qt.digia.com
-**
-** This file is part of the Qt Commercial Charts Add-on.
-**
-** $QT_BEGIN_LICENSE$
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Digia.
-**
-** If you have questions regarding the use of this file, please use
-** contact form at http://qt.digia.com
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+#ifndef QBARSERIESPRIVATE_P_H
+#define QBARSERIESPRIVATE_P_H
 
-#ifndef BARSERIES_H
-#define BARSERIES_H
-
-#include <qseries.h>
+#include "qbarseries.h"
 #include <QStringList>
+#include <QSeries>
 
 class QModelIndex;
 
@@ -30,19 +11,20 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 typedef QStringList QBarCategories;
 
+class QBarSeries;
 class QBarSet;
 class BarChartModel;
 class BarCategory;
-class QBarSeriesPrivate;
 
 // Container for series
-class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
+class QBarSeriesPrivate : public QObject
 {
     Q_OBJECT
+    Q_DECLARE_PUBLIC(QBarSeries)
 public:
-    QBarSeries(QStringList categories, QObject *parent = 0);
+    QBarSeriesPrivate(QStringList categories, QBarSeries *parent);
 
-    virtual QSeriesType type() const { return QSeries::SeriesTypeBar; }
+    virtual QSeries::QSeriesType type() const { return QSeries::SeriesTypeBar; }
 
     void appendBarSet(QBarSet *set);            // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
@@ -59,12 +41,8 @@ public:
     void setLabelsVisible(bool visible = true);
 
     bool setModel(QAbstractItemModel *model);
-    void setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
+    void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
 
-public:
-    // TODO: Functions below this are not part of api and will be moved
-    // to private implementation, when we start using it
-    // TODO: TO PIMPL --->
     QBarSet* barsetAt(int index);
     QString categoryName(int category);
     qreal min();
@@ -75,26 +53,23 @@ public:
     qreal absoluteCategorySum(int category);
     qreal maxCategorySum();
     BarChartModel& modelInternal();
-    // <--- TO PIMPL
+
+    static QBarSeriesPrivate &data(QBarSeries *barseries)
+    {
+        Q_ASSERT(barseries);
+        return *barseries->d_ptr;
+    }
 
 Q_SIGNALS:
     void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);        // Up to user of api, what to do with these signals
     void selected();
-    //
     void updatedBars();
     void restructuredBars();
-
-    // TODO: internal signals, these to private implementation.
-    // TODO: TO PIMPL --->
-//    void showToolTip(QPoint pos, QString tip);
-    // <--- TO PIMPL
+    void showToolTip(QPoint pos, QString tip);
 
 public Q_SLOTS:
     void setToolTipEnabled(bool enabled = true);           // enables tooltips
-
-    // TODO: TO PIMPL --->
     void barsetClicked(QString category, Qt::MouseButtons button);
-    // <--- TO PIMPL
 
 private Q_SLOTS:
     // slots for updating bars when data in model changes
@@ -104,23 +79,18 @@ private Q_SLOTS:
     void barsetChanged();
 
 protected:
-    QBarSeriesPrivate * const d_ptr;
-    Q_DECLARE_PRIVATE(QBarSeries)
-    Q_DISABLE_COPY(QBarSeries)
+    QBarSeries * const q_ptr;
 
-/*
     BarChartModel *m_internalModel;     // TODO: this may change... current "2 models" situation doesn't look good.
-
-//    QAbstractItemModel* m_model;
+    QAbstractItemModel* m_model;
     int m_mapCategories;
     int m_mapBarBottom;
     int m_mapBarTop;
     int m_mapFirst;
     int m_mapCount;
     Qt::Orientation m_mapOrientation;
-*/
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // BARSERIES_H
+#endif // QBARSERIESPRIVATE_P_H

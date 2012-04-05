@@ -27,6 +27,7 @@
 #include <QFont>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class QBarSetPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 {
@@ -39,16 +40,10 @@ public:
     QBarSet& operator << (const qreal &value);  // appends new value to set
     void insertValue(int i, qreal value);
     void removeValue(int i);
-
-    // TODO: remove indices eventually. Use as internal?
     int count() const;                          // count of values in set
-    qreal valueAt(int index) const;                   // for modifying individual values
+    qreal valueAt(int index) const;             // for modifying individual values
     void setValue(int index, qreal value);      // setter for individual value
-    qreal total() const;                              // total values in the set
-
-    // TODO:
-    //qreal value(QString category);
-    //void setValue(QString category, qreal value);
+    qreal sum() const;                          // sum of all values in the set
 
     void setPen(const QPen &pen);
     QPen pen() const;
@@ -72,23 +67,26 @@ Q_SIGNALS:
     void clicked(QString category, Qt::MouseButtons button);                         // Clicked and hover signals exposed to user
 
     // TODO: TO PIMPL --->
-    void structureChanged();
-    void valueChanged();
-    void hoverEnter(QPoint pos);
-    void hoverLeave();
-    void showToolTip(QPoint pos, QString tip);  // Private signal
-    void labelsVisibleChanged(bool visible);
+//    void structureChanged();
+//    void valueChanged();
+//    void hoverEnter(QPoint pos);
+//    void hoverLeave();
+//    void showToolTip(QPoint pos, QString tip);  // Private signal
+//    void labelsVisibleChanged(bool visible);
     // <--- TO PIMPL
 
 public Q_SLOTS:
     // These are for internal communication
     // TODO: TO PIMPL --->
-    void barHoverEnterEvent(QPoint pos);
-    void barHoverLeaveEvent();
+//    void barHoverEnterEvent(QPoint pos);
+//    void barHoverLeaveEvent();
     // <--- TO PIMPL
 
 private:
-
+    QBarSetPrivate * const d_ptr;
+    Q_DECLARE_PRIVATE(QBarSet)
+    Q_DISABLE_COPY(QBarSet)
+/*
     QString m_name;
     QList<qreal> m_values;   // TODO: replace with map (category, value)
     QMap<QString, qreal> m_mappedValues;
@@ -98,6 +96,7 @@ private:
     QBrush m_labelBrush;
     QFont m_labelFont;
     bool m_labelsVisible;
+*/
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
