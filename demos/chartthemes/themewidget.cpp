@@ -367,7 +367,7 @@ void ThemeWidget::updateUI()
     }
     else
         foreach (QChartView *chartView, m_charts) {
-            chartView->chart()->legend()->setAlignmnent(alignment);
+            chartView->chart()->legend()->setAlignment(alignment);
             chartView->chart()->legend()->show();
         }
 }

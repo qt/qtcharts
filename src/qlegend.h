@@ -69,7 +69,7 @@ public:
     void setPen(const QPen &pen);
     QPen pen() const;
 
-    void setAlignmnent(QLegend::Alignments alignment);
+    void setAlignment(QLegend::Alignments alignment);
     QLegend::Alignments alignment() const;
 
     void detachFromChart();

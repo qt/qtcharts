@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 
 //![5]
     chart->legend()->setVisible(true);
-    chart->legend()->setAlignmnent(QLegend::AlignmentBottom);
+    chart->legend()->setAlignment(QLegend::AlignmentBottom);
 //![5]
 
 //![6]

@@ -169,7 +169,7 @@ QPen QLegend::pen() const
     Sets the \a alignment for legend. Legend tries to paint itself on the defined position in chart.
     \sa QLegend::Alignment
 */
-void QLegend::setAlignmnent(QLegend::Alignments alignment)
+void QLegend::setAlignment(QLegend::Alignments alignment)
 {
     if(m_alignment!=alignment && m_attachedToChart) {
         m_alignment = alignment;
