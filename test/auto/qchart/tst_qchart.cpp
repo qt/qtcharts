@@ -14,6 +14,9 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 Q_DECLARE_METATYPE(QChartAxis*)
 Q_DECLARE_METATYPE(QSeries*)
 Q_DECLARE_METATYPE(QChart::AnimationOption)
+Q_DECLARE_METATYPE(QBrush)
+Q_DECLARE_METATYPE(QPen)
+Q_DECLARE_METATYPE(QChart::ChartTheme)
 
 class tst_QChart : public QObject
 {
@@ -59,20 +62,6 @@ private slots:
     void scrollRight();
     void scrollUp_data();
     void scrollUp();
-    void setBackgroundBrush_data();
-    void setBackgroundBrush();
-    void setBackgroundPen_data();
-    void setBackgroundPen();
-    void setBackgroundVisible_data();
-    void setBackgroundVisible();
-    void setTheme_data();
-    void setTheme();
-    void setTitle_data();
-    void setTitle();
-    void setTitleBrush_data();
-    void setTitleBrush();
-    void setTitleFont_data();
-    void setTitleFont();
     void theme_data();
     void theme();
     void title_data();
@@ -147,15 +136,19 @@ void tst_QChart::qchart()
     QVERIFY(m_chart->margins().left()>0);
     QVERIFY(m_chart->margins().right()>0);
     QVERIFY(m_chart->margins().bottom()>0);
+
+    QCOMPARE(m_chart->theme(), QChart::ChartThemeLight);
+    QCOMPARE(m_chart->title(), QString());
+
+    //QCOMPARE(m_chart->titleBrush(),QBrush());
+    //QCOMPARE(m_chart->titleFont(),QFont());
+
     m_chart->removeAllSeries();
     m_chart->scrollDown();
     m_chart->scrollLeft();
     m_chart->scrollRight();
     m_chart->scrollUp();
-    QCOMPARE(m_chart->theme(), QChart::ChartThemeLight);
-    QCOMPARE(m_chart->title(), QString());
-    QCOMPARE(m_chart->titleBrush(),QBrush());
-    QCOMPARE(m_chart->titleFont(),QFont());
+
     m_chart->zoomIn();
     m_chart->zoomIn(QRectF());
     m_chart->zoomOut();
@@ -226,88 +219,90 @@ void tst_QChart::animationOptions()
 
 void tst_QChart::axisX_data()
 {
-#if 0
-    QTest::addColumn<QChartAxis*>("axisX");
-    QTest::newRow("null") << QChartAxis*();
-#endif
+
 }
 
-// public QChartAxis* axisX() const
 void tst_QChart::axisX()
 {
-#if 0
-    QFETCH(QChartAxis*, axisX);
-
-    SubQChart chart;
-
-    QCOMPARE(chart.axisX(), axisX);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QVERIFY(m_chart->axisX());
+    QChartAxis* axis = m_chart->axisX();
+    createTestData();
+    //it should be the same axis
+    QCOMPARE(axis,m_chart->axisX());
 }
 
 void tst_QChart::axisY_data()
 {
-#if 0
-    QTest::addColumn<QChartAxis*>("axisY");
-    QTest::newRow("null") << QChartAxis*();
-#endif
+    QTest::addColumn<QChartAxis*>("axis0");
+    QTest::addColumn<QChartAxis*>("axis1");
+    QTest::addColumn<QChartAxis*>("axis2");
+    QTest::newRow("1 defualt, 2 optional") << (QChartAxis*)0 << new QChartAxis() << new QChartAxis();
+    QTest::newRow("3 optional") << new QChartAxis() << new QChartAxis() << new QChartAxis();
 }
 
-// public QChartAxis* axisY() const
+
 void tst_QChart::axisY()
 {
-#if 0
-    QFETCH(QChartAxis*, axisY);
+    QFETCH(QChartAxis*, axis0);
+    QFETCH(QChartAxis*, axis1);
+    QFETCH(QChartAxis*, axis2);
 
-    SubQChart chart;
+    QChartAxis* defaultAxisY = m_chart->axisY();
 
-    QCOMPARE(chart.axisY(), axisY);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QVERIFY2(defaultAxisY, "Missing axisY.");
+
+    QLineSeries* series0 = new QLineSeries();
+    m_chart->addSeries(series0, axis0);
+
+    QLineSeries* series1 = new QLineSeries();
+    m_chart->addSeries(series1, axis1);
+
+    QLineSeries* series2 = new QLineSeries();
+    m_chart->addSeries(series2, axis2);
+
+    if (!axis0)
+        axis0 = defaultAxisY;
+    if (!axis1)
+        axis1 = defaultAxisY;
+    if (!axis2)
+        axis2 = defaultAxisY;
+
+    QVERIFY(m_chart->axisY(series0) == axis0);
+    QVERIFY(m_chart->axisY(series1) == axis1);
+    QVERIFY(m_chart->axisY(series2) == axis2);
 }
 
-Q_DECLARE_METATYPE(QBrush)
 void tst_QChart::backgroundBrush_data()
 {
-#if 0
     QTest::addColumn<QBrush>("backgroundBrush");
     QTest::newRow("null") << QBrush();
-#endif
+    QTest::newRow("blue") << QBrush(Qt::blue);
+    QTest::newRow("white") << QBrush(Qt::white);
+    QTest::newRow("black") << QBrush(Qt::black);
 }
 
-// public QBrush backgroundBrush() const
 void tst_QChart::backgroundBrush()
 {
-#if 0
     QFETCH(QBrush, backgroundBrush);
-
-    SubQChart chart;
-
-    QCOMPARE(chart.backgroundBrush(), backgroundBrush);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    m_chart->setBackgroundBrush(backgroundBrush);
+    QCOMPARE(m_chart->backgroundBrush(), backgroundBrush);
 }
 
-Q_DECLARE_METATYPE(QPen)
 void tst_QChart::backgroundPen_data()
 {
-#if 0
     QTest::addColumn<QPen>("backgroundPen");
     QTest::newRow("null") << QPen();
-#endif
+    QTest::newRow("blue") << QPen(Qt::blue);
+    QTest::newRow("white") << QPen(Qt::white);
+    QTest::newRow("black") << QPen(Qt::black);
 }
 
-// public QPen backgroundPen() const
+
 void tst_QChart::backgroundPen()
 {
-#if 0
     QFETCH(QPen, backgroundPen);
-
-    SubQChart chart;
-
-    QCOMPARE(chart.backgroundPen(), backgroundPen);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    m_chart->setBackgroundPen(backgroundPen);
+    QCOMPARE(m_chart->backgroundPen(), backgroundPen);
 }
 
 void tst_QChart::isBackgroundVisible_data()
@@ -317,343 +312,157 @@ void tst_QChart::isBackgroundVisible_data()
     QTest::newRow("false") << false;
 }
 
-// public bool isBackgroundVisible() const
 void tst_QChart::isBackgroundVisible()
 {
-#if 0
     QFETCH(bool, isBackgroundVisible);
+    m_chart->setBackgroundVisible(isBackgroundVisible);
+    QCOMPARE(m_chart->isBackgroundVisible(), isBackgroundVisible);
 
-    SubQChart chart;
-
-    QCOMPARE(chart.isBackgroundVisible(), isBackgroundVisible);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
 }
 
-Q_DECLARE_METATYPE(QLegend*)
 void tst_QChart::legend_data()
 {
-#if 0
-    QTest::addColumn<QLegend*>("legend");
-    QTest::newRow("null") << QLegend*();
-#endif
+
 }
 
-// public QLegend* legend() const
 void tst_QChart::legend()
 {
-#if 0
-    QFETCH(QLegend*, legend);
-
-    SubQChart chart;
-
-    QCOMPARE(chart.legend(), legend);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QVERIFY(m_chart->legend());
 }
 
 void tst_QChart::margins_data()
 {
-    QTest::addColumn<QRectF>("margins");
-    QTest::newRow("null") << QRectF();
+
 }
 
-// public QRectF margins() const
 void tst_QChart::margins()
-{
-#if 0
-    QFETCH(QRectF, margins);
+{QTest::addColumn<int>("seriesCount");
+QTest::newRow("0") << 0;
+QTest::newRow("-1") << -1;
+    createTestData();
+    QRectF rect = m_chart->geometry();
 
-    SubQChart chart;
+    QVERIFY(m_chart->margins().top()+m_chart->margins().bottom() < rect.height());
+    QVERIFY(m_chart->margins().left()+m_chart->margins().right() < rect.width());
 
-    QCOMPARE(chart.margins(), margins);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
 }
 
 void tst_QChart::removeAllSeries_data()
 {
-    QTest::addColumn<int>("foo");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+
 }
 
-// public void removeAllSeries()
 void tst_QChart::removeAllSeries()
 {
-#if 0
-    QFETCH(int, foo);
+    QLineSeries* series0 = new QLineSeries(this);
+    QLineSeries* series1 = new QLineSeries(this);
+    QLineSeries* series2 = new QLineSeries(this);
 
-    SubQChart chart;
+    m_chart->addSeries(series0);
+    m_chart->addSeries(series1);
+    m_chart->addSeries(series2);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
 
-    chart.removeAllSeries();
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QVERIFY(m_chart->axisY(series0)!=0);
+    QVERIFY(m_chart->axisY(series1)!=0);
+    QVERIFY(m_chart->axisY(series2)!=0);
+
+    m_chart->removeAllSeries();
+
+    QVERIFY(m_chart->axisY(series0)==0);
+    QVERIFY(m_chart->axisY(series1)==0);
+    QVERIFY(m_chart->axisY(series2)==0);
 }
 
 void tst_QChart::removeSeries_data()
 {
-    QTest::addColumn<int>("seriesCount");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+    addSeries_data();
 }
 
-// public void removeSeries(QSeries* series)
 void tst_QChart::removeSeries()
 {
-#if 0
-    QFETCH(int, seriesCount);
-
-    SubQChart chart;
-
-    chart.removeSeries(series);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QFETCH(QSeries*, series);
+    QFETCH(QChartAxis*, axis);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    if(!axis) axis = m_chart->axisY();
+    m_chart->addSeries(series,axis);
+    QCOMPARE(m_chart->axisY(series),axis);
+    m_chart->removeSeries(series);
+    QVERIFY(m_chart->axisY(series)==0);
 }
 
 void tst_QChart::scrollDown_data()
 {
-    QTest::addColumn<int>("foo");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+
 }
 
-// public void scrollDown()
 void tst_QChart::scrollDown()
 {
-#if 0
-    QFETCH(int, foo);
-
-    SubQChart chart;
-
-    chart.scrollDown();
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    createTestData();
+    qreal min = m_chart->axisY()->min();
+    m_chart->scrollDown();
+    QVERIFY(m_chart->axisY()->min()<min);
 }
 
 void tst_QChart::scrollLeft_data()
 {
-    QTest::addColumn<int>("foo");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+
 }
 
-// public void scrollLeft()
 void tst_QChart::scrollLeft()
 {
-#if 0
-    QFETCH(int, foo);
-
-    SubQChart chart;
-
-    chart.scrollLeft();
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    createTestData();
+    qreal min = m_chart->axisX()->min();
+    m_chart->scrollLeft();
+    QVERIFY(m_chart->axisX()->min()<min);
 }
 
 void tst_QChart::scrollRight_data()
 {
-    QTest::addColumn<int>("foo");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+
 }
 
-// public void scrollRight()
 void tst_QChart::scrollRight()
 {
-#if 0
-    QFETCH(int, foo);
-
-    SubQChart chart;
-
-    chart.scrollRight();
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    createTestData();
+    qreal min = m_chart->axisX()->min();
+    m_chart->scrollRight();
+    QVERIFY(m_chart->axisX()->min()>min);
 }
 
 void tst_QChart::scrollUp_data()
 {
-    QTest::addColumn<int>("foo");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+
 }
 
-// public void scrollUp()
 void tst_QChart::scrollUp()
 {
-#if 0
-    QFETCH(int, foo);
-
-    SubQChart chart;
-
-    chart.scrollUp();
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QChart::setBackgroundBrush_data()
-{
-#if 0
-    QTest::addColumn<QBrush>("brush");
-    QTest::newRow("null") << QBrush();
-#endif
-}
-
-// public void setBackgroundBrush(QBrush const& brush)
-void tst_QChart::setBackgroundBrush()
-{
-#if 0
-    QFETCH(QBrush, brush);
-
-    SubQChart chart;
-
-    chart.setBackgroundBrush(brush);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QChart::setBackgroundPen_data()
-{
-#if 0
-    QTest::addColumn<QPen>("pen");
-    QTest::newRow("null") << QPen();
-#endif
-}
-
-// public void setBackgroundPen(QPen const& pen)
-void tst_QChart::setBackgroundPen()
-{
-#if 0
-    QFETCH(QPen, pen);
-
-    SubQChart chart;
-
-    chart.setBackgroundPen(pen);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QChart::setBackgroundVisible_data()
-{
-    QTest::addColumn<bool>("visible");
-    QTest::newRow("true") << true;
-    QTest::newRow("false") << false;
-}
-
-// public void setBackgroundVisible(bool visible)
-void tst_QChart::setBackgroundVisible()
-{
-#if 0
-    QFETCH(bool, visible);
-
-    SubQChart chart;
-
-    chart.setBackgroundVisible(visible);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-Q_DECLARE_METATYPE(QChart::ChartTheme)
-void tst_QChart::setTheme_data()
-{
-#if 0
-    QTest::addColumn<QChart::ChartTheme>("theme");
-    QTest::newRow("null") << QChart::ChartTheme();
-#endif
-}
-
-// public void setTheme(QChart::ChartTheme theme)
-void tst_QChart::setTheme()
-{
-#if 0
-    QFETCH(QChart::ChartTheme, theme);
-
-    SubQChart chart;
-
-    chart.setTheme(theme);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QChart::setTitle_data()
-{
-    QTest::addColumn<QString>("title");
-    QTest::newRow("null") << QString();
-    QTest::newRow("foo") << QString("foo");
-}
-
-// public void setTitle(QString const& title)
-void tst_QChart::setTitle()
-{
-#if 0
-    QFETCH(QString, title);
-
-    SubQChart chart;
-
-    chart.setTitle(title);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QChart::setTitleBrush_data()
-{
-#if 0
-    QTest::addColumn<QBrush>("brush");
-    QTest::newRow("null") << QBrush();
-#endif
-}
-
-// public void setTitleBrush(QBrush const& brush)
-void tst_QChart::setTitleBrush()
-{
-#if 0
-    QFETCH(QBrush, brush);
-
-    SubQChart chart;
-
-    chart.setTitleBrush(brush);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QChart::setTitleFont_data()
-{
-    QTest::addColumn<QFont>("font");
-    QTest::newRow("null") << QFont();
-}
-
-// public void setTitleFont(QFont const& font)
-void tst_QChart::setTitleFont()
-{
-#if 0
-    QFETCH(QFont, font);
-
-    SubQChart chart;
-
-    chart.setTitleFont(font);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    createTestData();
+    qreal min = m_chart->axisY()->min();
+    m_chart->scrollUp();
+    QVERIFY(m_chart->axisY()->min()>min);
 }
 
 void tst_QChart::theme_data()
 {
-#if 0
     QTest::addColumn<QChart::ChartTheme>("theme");
-    QTest::newRow("null") << QChart::ChartTheme();
-#endif
+    QTest::newRow("ChartThemeBlueCerulean") << QChart::ChartThemeBlueCerulean;
+    QTest::newRow("ChartThemeBlueIcy") << QChart::ChartThemeBlueIcy;
+    QTest::newRow("ChartThemeBlueNcs") << QChart::ChartThemeBlueNcs;
+    QTest::newRow("ChartThemeBrownSand") << QChart::ChartThemeBrownSand;
+    QTest::newRow("ChartThemeDark") << QChart::ChartThemeDark;
+    QTest::newRow("hartThemeHighContrast") << QChart::ChartThemeHighContrast;
+    QTest::newRow("ChartThemeLight") << QChart::ChartThemeLight;
 }
 
-// public QChart::ChartTheme theme() const
 void tst_QChart::theme()
 {
-#if 0
     QFETCH(QChart::ChartTheme, theme);
-
-    SubQChart chart;
-
-    QCOMPARE(chart.theme(), theme);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    createTestData();
+    m_chart->setTheme(theme);
+    QVERIFY(m_chart->theme()==theme);
 }
 
 void tst_QChart::title_data()
@@ -663,97 +472,97 @@ void tst_QChart::title_data()
     QTest::newRow("foo") << QString("foo");
 }
 
-// public QString title() const
 void tst_QChart::title()
 {
-#if 0
     QFETCH(QString, title);
-
-    SubQChart chart;
-
-    QCOMPARE(chart.title(), title);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    m_chart->setTitle(title);
+    QCOMPARE(m_chart->title(), title);
 }
 
 void tst_QChart::titleBrush_data()
 {
-#if 0
     QTest::addColumn<QBrush>("titleBrush");
     QTest::newRow("null") << QBrush();
-#endif
+    QTest::newRow("blue") << QBrush(Qt::blue);
+    QTest::newRow("white") << QBrush(Qt::white);
+    QTest::newRow("black") << QBrush(Qt::black);
 }
 
-// public QBrush titleBrush() const
 void tst_QChart::titleBrush()
 {
-#if 0
     QFETCH(QBrush, titleBrush);
-
-    SubQChart chart;
-
-    QCOMPARE(chart.titleBrush(), titleBrush);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    m_chart->setTitleBrush(titleBrush);
+    QCOMPARE(m_chart->titleBrush(), titleBrush);
 }
 
 void tst_QChart::titleFont_data()
 {
     QTest::addColumn<QFont>("titleFont");
     QTest::newRow("null") << QFont();
+    QTest::newRow("courier") << QFont("Courier", 8, QFont::Bold, true);
 }
 
-// public QFont titleFont() const
 void tst_QChart::titleFont()
 {
-#if 0
     QFETCH(QFont, titleFont);
-
-    SubQChart chart;
-
-    QCOMPARE(chart.titleFont(), titleFont);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    m_chart->setTitleFont(titleFont);
+    QCOMPARE(m_chart->titleFont(), titleFont);
 }
 
 void tst_QChart::zoomIn_data()
 {
-    QTest::addColumn<int>("foo");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+    QTest::addColumn<QRectF>("rect");
+    QTest::newRow("null") << QRectF();
+    QTest::newRow("100x100") << QRectF(10,10,100,100);
+    QTest::newRow("200x200") << QRectF(10,10,200,200);
 }
 
-// public void zoomIn()
+
 void tst_QChart::zoomIn()
 {
-#if 0
-    QFETCH(int, foo);
-
-    SubQChart chart;
-
-    chart.zoomIn();
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QFETCH(QRectF, rect);
+    createTestData();
+    QRectF marigns = m_chart->margins();
+    rect.adjust(marigns.left(),marigns.top(),-marigns.right(),-marigns.bottom());
+    qreal minX = m_chart->axisX()->min();
+    qreal minY = m_chart->axisY()->min();
+    qreal maxX = m_chart->axisX()->max();
+    qreal maxY = m_chart->axisY()->max();
+    m_chart->zoomIn(rect);
+    if(rect.isValid()){
+        QVERIFY(minX<m_chart->axisX()->min());
+        QVERIFY(maxX>m_chart->axisX()->max());
+        QVERIFY(minY<m_chart->axisY()->min());
+        QVERIFY(maxY>m_chart->axisY()->max());
+    }
 }
 
 void tst_QChart::zoomOut_data()
 {
-    QTest::addColumn<int>("foo");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+
 }
 
-// public void zoomOut()
 void tst_QChart::zoomOut()
 {
-#if 0
-    QFETCH(int, foo);
+    createTestData();
+    qreal minX = m_chart->axisX()->min();
+    qreal minY = m_chart->axisY()->min();
+    qreal maxX = m_chart->axisX()->max();
+    qreal maxY = m_chart->axisY()->max();
 
-    SubQChart chart;
+    m_chart->zoomIn();
 
-    chart.zoomOut();
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QVERIFY(minX<m_chart->axisX()->min());
+    QVERIFY(maxX>m_chart->axisX()->max());
+    QVERIFY(minY<m_chart->axisY()->min());
+    QVERIFY(maxY>m_chart->axisY()->max());
+
+    m_chart->zoomOut();
+
+    QVERIFY(minX==m_chart->axisX()->min());
+    QVERIFY(maxX==m_chart->axisX()->max());
+    QVERIFY(minY==m_chart->axisY()->min());
+    QVERIFY(maxY==m_chart->axisY()->max());
 }
 
 QTEST_MAIN(tst_QChart)
