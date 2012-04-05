@@ -26,7 +26,7 @@
 
 
 /*!
-    \enum QChartView::RubberBandPolicy
+    \enum QChartView::RubberBand
 
     This enum describes the different types of rubber bands that can be used for zoom rect selection
 

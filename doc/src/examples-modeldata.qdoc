@@ -4,4 +4,53 @@
      \subtitle
 
      This example shows how to use QAbstractItemModel derived model as the data for the series.
+
+     \image modeldata.png
+
+     Let's start by creating an instance of CustomTableModel class.
+     CustomTableModel class is derived from QAbstractTableModel and it was created for the purpose of this example.
+     The constructor of this class populates the internal data store of the model with the data that is good for our chart example.
+
+     \snippet ../examples/modeldata/tablewidget.cpp 1
+
+     We now have a model with data that we would like to display both on the chart and in a QTableView.
+     First, we create QTableView and tell it use the model as a data source.
+
+     \snippet ../examples/modeldata/tablewidget.cpp 2
+
+     Now we need QChart instance to display the same data on the chart.
+     We also enable animations. It makes it easier to see how modifying the model's data affect the chart.
+
+     \snippet ../examples/modeldata/tablewidget.cpp 3
+
+     Then let's create two QLineSeries and tell them to use the data from the model.
+     First line of the code below creates new line series. Line number two sets the model as the data source for the series.
+     Third line specifies that x coordinates are taken from the model's column(Qt::Vertical) with index 0 and the y coordinates are taken from the model's column with index 1.
+     Finally the series is added to the chart.
+
+     \snippet ../examples/modeldata/tablewidget.cpp 4
+
+     To show in QTableView which data coresponds with which series this example uses table coloring.
+     When series is added to the chart it is assigned a color beased on the currently selected theme.
+     Code below extracts that color from the series and uses it to create colored QTableView.
+     Coloring of the view is not a part of the QChart functionality.
+
+     \snippet ../examples/modeldata/tablewidget.cpp 5
+
+     The same operations are done with second series. Notice that for this series different columns of the same model are mapped.
+
+     \snippet ../examples/modeldata/tablewidget.cpp 6
+
+     \snippet ../examples/modeldata/tablewidget.cpp 7
+
+     To avoid setting up the QGraphicsScene we use QChartView class that does it for us. QChart object pointer is used as a parameter of the QChartView constructor.
+     To make the render look nicer Antialiasing is turned on and the minimum size of the chart is set.
+
+     \snippet ../examples/modeldata/tablewidget.cpp 8
+
+     Finally we place both widgets in a layout and use the layout as the application layout.
+
+     \snippet ../examples/modeldata/tablewidget.cpp 9
+
+     Application is ready. Try modifying the data in the table view and see how it affects the chart.
 */

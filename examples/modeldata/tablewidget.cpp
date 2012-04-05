@@ -33,50 +33,69 @@ TableWidget::TableWidget(QWidget *parent)
 {
     // create simple model for storing data
     // user's table data model
+    //! [1]
     CustomTableModel *model = new CustomTableModel;
+    //! [1]
 
+    //! [2]
     // create table view and add model to it
     QTableView *tableView = new QTableView;
     tableView->setModel(model);
+    //! [2]
     tableView->setColumnWidth(0, 56);
     tableView->setColumnWidth(1, 56);
     tableView->setColumnWidth(2, 56);
     tableView->setColumnWidth(3, 56);
 
-    QChart *m_chart = new QChart;
-    m_chart->setAnimationOptions(QChart::AllAnimations);
-    QChartView *m_chartView = new QChartView(m_chart);
-    m_chartView->setRenderHint(QPainter::Antialiasing);
-    m_chartView->setMinimumSize(640, 480);
+    //! [3]
+    QChart *chart = new QChart;
+    chart->setAnimationOptions(QChart::AllAnimations);
+    //! [3]
 
+    // series 1
+    //! [4]
+    QLineSeries *series = new QLineSeries;
+    series->setModel(model);
+    series->setModelMapping(0, 1, Qt::Vertical);
+    chart->addSeries(series);
+    //! [4]
+
+    //! [5]
     // for storing color hex from the series
     QString seriesColorHex = "#000000";
 
-    // series 1
-    QLineSeries *m_series = new QLineSeries;
-    m_series->setModel(model);
-    m_series->setModelMapping(0, 1, Qt::Vertical);
-    m_chart->addSeries(m_series);
-
     // get the color of the series and use it for showing the mapped area
-    seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
+    seriesColorHex = "#" + QString::number(series->pen().color().rgb(), 16).right(6).toUpper();
     model->addMapping(seriesColorHex, QRect(0, 0, 2, model->rowCount()));
+    //! [5]
 
     // series 2
-    m_series = new QLineSeries;
-    m_series->setModel(model);
-    m_series->setModelMapping(2,3, Qt::Vertical);
-    m_chart->addSeries(m_series);
+    //! [6]
+    series = new QLineSeries;
+    series->setModel(model);
+    series->setModelMapping(2,3, Qt::Vertical);
+    chart->addSeries(series);
+    //! [6]
 
+    //! [7]
     // get the color of the series and use it for showing the mapped area
-    seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
+    seriesColorHex = "#" + QString::number(series->pen().color().rgb(), 16).right(6).toUpper();
     model->addMapping(seriesColorHex, QRect(2, 0, 2, model->rowCount()));
+    //! [7]
 
+    //! [8]
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->setMinimumSize(640, 480);
+    //! [8]
+
+    //! [9]
     // create main layout
     QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addWidget(tableView, 1, 0);
-    mainLayout->addWidget(m_chartView, 1, 1);
+    mainLayout->addWidget(chartView, 1, 1);
     mainLayout->setColumnStretch(1, 1);
     mainLayout->setColumnStretch(0, 0);
     setLayout(mainLayout);
+    //! [9]
 }

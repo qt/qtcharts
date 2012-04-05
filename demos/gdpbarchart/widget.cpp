@@ -25,6 +25,7 @@
 #include <QChartAxis>
 #include <QBarSet>
 #include <QBarSeries>
+#include <QLegend>
 
 #include <QGridLayout>
 #include <QPushButton>
@@ -60,7 +61,7 @@ Widget::Widget(QWidget *parent)
     QPushButton* refreshButton = new QPushButton(tr("Refresh"));
     connect(refreshButton, SIGNAL(clicked()), this, SLOT(refreshChart()));
 
-    QPushButton* printButton = new QPushButton(tr("Print chart"));
+    QPushButton* printButton = new QPushButton(tr("Print to pdf"));
     connect(printButton, SIGNAL(clicked()), this, SLOT(printChart()));
 
     QVBoxLayout* rightPanelLayout = new QVBoxLayout;
@@ -75,6 +76,7 @@ Widget::Widget(QWidget *parent)
 
     QChart *chart = new QChart();
     chart->setTitle("GDP by country");
+    chart->legend()->setVisible(true);
 
     // main layout
     chartView = new QChartView(chart);
@@ -101,13 +103,6 @@ Widget::Widget(QWidget *parent)
     while (query.next()) {
         countrieslist->addItem(query.value(0).toString());
     }
-
-    // hide axis X labels
-    //QChartAxis* axis = chartArea->axisX();
-//    axis->
-    //    axis->setLabelsVisible(false);
-    //    newAxis.setLabelsOrientation(QChartAxis::LabelsOrientationSlide);
-
 }
 
 Widget::~Widget()
@@ -136,7 +131,7 @@ void Widget::refreshChart()
     QList<QListWidgetItem*> selectedYearsItems = yearslist->selectedItems();
     for (int i = 0; i < selectedYearsItems.size(); i++)
         selectedYearsInts.append(selectedYearsItems[i]->text().toInt());
-    qSort(selectedYearsInts.begin(), selectedYearsInts.end(), qGreater<int>());
+    qSort(selectedYearsInts.begin(), selectedYearsInts.end());
 
     if (barChartRadioButton->isChecked())
     {
@@ -162,7 +157,7 @@ void Widget::refreshChart()
         for (int i = 0; i < selectedYearsInts.size(); i++)
         {
             query.exec("SELECT country,gdpvalue FROM gdp2 where year=" + QString("%1").arg(selectedYearsInts[i]) + " AND " + countriesQuery);
-            QBarSet* barSet = new QBarSet("Barset" + QString::number(i));
+            QBarSet* barSet = new QBarSet(QString::number(selectedYearsInts[i]));
 
             //        while (query.next()) {
             //            qDebug() << query.value(0).toString() << " : " << query.value(1).toString();
@@ -210,6 +205,7 @@ void Widget::refreshChart()
             query.first();
 
             QScatterSeries* series = new QScatterSeries;
+            series->setName(selectedCountriesStrings[i]);
             // the data for some of the coutries for some years might be missing.
             for (int k = 0; k < selectedYearsInts.size(); k++)
             {

@@ -73,7 +73,7 @@
 */
 
 /*!
-    \property QString QSeries::name
+    \property QSeries::name
     \brief name of the series property
 */
 

@@ -151,11 +151,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QChartAxis::handleAxisRangeChanged(qreal min, qreal max)
-    \brief \internal \a min \a max
-*/
-
-/*!
     Constructs new axis object which is a child of \a parent. Ownership is taken by
     QChatView or QChart when axis added.
 */
@@ -402,6 +397,9 @@ void QChartAxis::hide()
     emit updated();
 }
 
+/*!
+    \internal
+ */
 void QChartAxis::handleAxisRangeChanged(qreal min, qreal max,int count)
 {
    setRange(min,max);

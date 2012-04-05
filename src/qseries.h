@@ -23,7 +23,6 @@
 
 #include <qchartglobal.h>
 #include <QObject>
-//#include <QAbstractItemModel>
 #include <QPen>
 
 class QAbstractItemModel;
