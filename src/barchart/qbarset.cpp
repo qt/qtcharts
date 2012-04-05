@@ -102,11 +102,20 @@ QBarSet& QBarSet::operator << (const qreal &value)
     return *this;
 }
 
+/*!
+    Inserts new \a value on the \a i position.
+    The value that is currently at this postion is moved to postion i + 1
+    \sa removeValue()
+*/
 void QBarSet::insertValue(int i, qreal value)
 {
     m_values.insert(i, value);
 }
 
+/*!
+    Removes the value specified by \a i
+    \sa insertValue()
+*/
 void QBarSet::removeValue(int i)
 {
     m_values.removeAt(i);

@@ -108,7 +108,7 @@ void QBarSeries::appendBarSets(QList<QBarSet* > sets)
 }
 
 /*!
-    Removes a list of barsets from series. Releases ownership of \a set. Doesnt delete \a sets.
+    Removes a list of barsets from series. Releases ownership of \a sets. Doesnt delete \a sets.
     Disconnects the clicked(QString, Qt::MouseButtons) signal
     of \a sets from this series
 */
@@ -121,17 +121,30 @@ void QBarSeries::removeBarSets(QList<QBarSet* > sets)
     emit restructuredBars();
 }
 
+/*!
+    Inserts new \a set on the \a i position.
+    The barset that is currently at this postion is moved to postion i + 1
+*/
 void QBarSeries::insertBarSet(int i, QBarSet *set)
 {
     m_internalModel->insertBarSet(i, set);
     //    emit barsetChanged();
 }
 
+/*!
+    Inserts new \a category on the \a i position.
+    The category that is currently at this postion is moved to postion i + 1
+    \sa removeCategory()
+*/
 void QBarSeries::insertCategory(int i, QString category)
 {
     m_internalModel->insertCategory(i, category);
 }
 
+/*!
+    Removes the category specified by \a i
+    \sa insertCategory()
+*/
 void QBarSeries::removeCategory(int i)
 {
     m_internalModel->removeCategory(i);

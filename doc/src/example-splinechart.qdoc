@@ -9,34 +9,25 @@
     
     To create spline chart we need to put our data into QSplineSeries. QSplineSeries automatically calculates spline segment control points that are needed to properly draw the spline.
 
-    \snippet ../examples/splinechart/splinewidget.cpp 1
+    \snippet ../examples/splinechart/main.cpp 1
 
     Customize the look of the spline, by setting its pen's color and pen's width 
 
-    \snippet ../examples/splinechart/splinewidget.cpp 2
+    \snippet ../examples/splinechart/main.cpp 2
 
 Now lets add some data points to the series.
 	
-	\snippet ../examples/splinechart/splinewidget.cpp add points to series
+	\snippet ../examples/splinechart/main.cpp 3
 
-The data series has been populated. To display it on a chart we create QChartView object and add the data series to it. We also set the ranges on both axises, so that our chart is fully visible and there is some excess of space for adding more data points.
+The data series has been populated. To display it on a chart we create QChart object and add the data series to it. We also set the title and the values range on y axis, so that our chart is better visible.
 
-    \snippet ../examples/splinechart/splinewidget.cpp 3
+    \snippet ../examples/splinechart/main.cpp 4
     
-    Then we add two buttons for adding and removing data points. Buttons clicked() signals are connected to handler functions. 
+Then we created a QChartView object with QChart as a parameter. This way we don't need to create QGraphicsView scene ourselves. We also set the Antialiasing on to have the rendered lines look nicer.
     
-    \snippet ../examples/splinechart/splinewidget.cpp 4 
+    \snippet ../examples/splinechart/main.cpp 5 
     
-    In the end we add the chart and the buttons to the widget's layout.
+    In the end we set the QChartView  as the windows's central widget.
     
-    \snippet ../examples/splinechart/splinewidget.cpp 5 
-
-Here is the handler function for add new data point button:
-
-\snippet ../examples/splinechart/splinewidget.cpp add point
-
-And here is one for remove the last data point in the series:
-
-\snippet ../examples/splinechart/splinewidget.cpp remove point
-    
+    \snippet ../examples/splinechart/main.cpp 6     
 */
