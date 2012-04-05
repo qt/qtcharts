@@ -52,6 +52,8 @@ private Q_SLOTS:
 	void removeAllSeries();
 	void axisY_data();
 	void axisY();
+    void seriesCount_data();
+	void seriesCount();
     void seriesIndex_data();
 	void seriesIndex();
 	void domain_data();
@@ -95,6 +97,8 @@ void tst_ChartDataSet::chartdataset()
 	//check if not dangling pointer
 	dataSet.axisX()->objectName();
 	dataSet.axisY()->objectName();
+	QLineSeries* series = new QLineSeries(this);
+	QCOMPARE(dataSet.seriesIndex(series),-1);
 }
 
 void tst_ChartDataSet::addSeries_data()
@@ -259,12 +263,12 @@ void tst_ChartDataSet::axisY()
 
 }
 
-void tst_ChartDataSet::seriesIndex_data()
+void tst_ChartDataSet::seriesCount_data()
 {
     addSeries_data();
 }
 
-void tst_ChartDataSet::seriesIndex()
+void tst_ChartDataSet::seriesCount()
 {
     QFETCH(QLineSeries*, series0);
     QFETCH(QChartAxis*, axis0);
@@ -286,18 +290,98 @@ void tst_ChartDataSet::seriesIndex()
     QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
     QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
-    int i0 = dataSet.seriesIndex(series0);
-    int i1 = dataSet.seriesIndex(series1);
-    int i2 = dataSet.seriesIndex(series2);
+    QCOMPARE(dataSet.seriesCount(series0->type()),3);
+    QCOMPARE(spy0.count(), 0);
+    QCOMPARE(spy1.count(), 0);
+    QCOMPARE(spy2.count(), 0);
+    QCOMPARE(spy3.count(), 0);
+}
 
-    QVERIFY(i1!=i2);
-    QVERIFY(i0!=i2);
-    QVERIFY(i0!=i1);
+void tst_ChartDataSet::seriesIndex_data()
+{
+    addSeries_data();
+}
+
+void tst_ChartDataSet::seriesIndex()
+{
+    //TODO: rewrite this series_index_data to match better
+
+    QFETCH(QLineSeries*, series0);
+    QFETCH(QChartAxis*, axis0);
+    QFETCH(QLineSeries*, series1);
+    QFETCH(QChartAxis*, axis1);
+    QFETCH(QLineSeries*, series2);
+    QFETCH(QChartAxis*, axis2);
+    QFETCH(int, axisCount);
+    Q_UNUSED(axisCount);
+
+    ChartDataSet dataSet;
+
+    dataSet.addSeries(series0, axis0);
+    dataSet.addSeries(series1, axis1);
+    dataSet.addSeries(series2, axis2);
+
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*,Domain*)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
+    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
+    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
+
+    QCOMPARE(dataSet.seriesIndex(series0),0);
+    QCOMPARE(dataSet.seriesIndex(series1),1);
+    QCOMPARE(dataSet.seriesIndex(series2),2);
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
+
+    dataSet.removeSeries(series0);
+    dataSet.removeSeries(series1);
+    dataSet.removeSeries(series2);
+
+    QCOMPARE(dataSet.seriesIndex(series0),-1);
+    QCOMPARE(dataSet.seriesIndex(series1),-1);
+    QCOMPARE(dataSet.seriesIndex(series2),-1);
+
+    dataSet.addSeries(series0, axis0);
+    dataSet.addSeries(series1, axis1);
+    dataSet.addSeries(series2, axis2);
+
+    QCOMPARE(dataSet.seriesIndex(series0),0);
+    QCOMPARE(dataSet.seriesIndex(series1),1);
+    QCOMPARE(dataSet.seriesIndex(series2),2);
+
+    dataSet.removeSeries(series1);
+
+    QCOMPARE(dataSet.seriesIndex(series0),0);
+    QCOMPARE(dataSet.seriesIndex(series1),-1);
+    QCOMPARE(dataSet.seriesIndex(series2),2);
+
+    dataSet.addSeries(series1, axis1);
+    QCOMPARE(dataSet.seriesIndex(series0),0);
+    QCOMPARE(dataSet.seriesIndex(series1),1);
+    QCOMPARE(dataSet.seriesIndex(series2),2);
+
+    dataSet.removeSeries(series2);
+    QCOMPARE(dataSet.seriesIndex(series0),0);
+    QCOMPARE(dataSet.seriesIndex(series1),1);
+    QCOMPARE(dataSet.seriesIndex(series2),-1);
+
+    dataSet.removeSeries(series0);
+    QCOMPARE(dataSet.seriesIndex(series0),-1);
+    QCOMPARE(dataSet.seriesIndex(series1),1);
+    QCOMPARE(dataSet.seriesIndex(series2),-1);
+
+    dataSet.addSeries(series2);
+    QCOMPARE(dataSet.seriesIndex(series0),-1);
+    QCOMPARE(dataSet.seriesIndex(series1),1);
+    QCOMPARE(dataSet.seriesIndex(series2),0);
+
+    dataSet.addSeries(series0);
+    QCOMPARE(dataSet.seriesIndex(series0),2);
+    QCOMPARE(dataSet.seriesIndex(series1),1);
+    QCOMPARE(dataSet.seriesIndex(series2),0);
+
 }
 
 void tst_ChartDataSet::domain_data()

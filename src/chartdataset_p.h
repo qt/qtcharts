@@ -54,7 +54,8 @@ public:
     void zoomOutDomain(const QRectF& rect, const QSizeF& size);
     void scrollDomain(int dx,int dy,const QSizeF& size);
 
-    int seriesIndex(QSeries *series) const;
+    int seriesCount(QSeries::QSeriesType type);
+    int seriesIndex(QSeries *series);
 
     Domain* domain(QSeries* series) const;
     Domain* domain(QChartAxis* axis) const;
@@ -74,8 +75,9 @@ private:
     void setupCategories(QBarSeries* series);
 
 private:
-    QList<QPair<QSeries*, QChartAxis*> > m_seriesAxisList;
+    QMap<QSeries*, QChartAxis*> m_seriesAxisMap;
     QMap<QChartAxis*, Domain*> m_axisDomainMap;
+    QMap<int,QSeries*> m_indexSeriesMap;
     QChartAxis* m_axisX;
     QChartAxis* m_axisY;
 
