@@ -225,11 +225,41 @@ bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qr
 */
 
 /*!
-    \property qreal QPieSeries::horizontalPosition
-    \brief Pie horizontal postion property
+    \property QPieSeries::horizontalPosition
+    \brief Pie horizontal position property
 
-    By default horizontal postion is 0
+    By default horizontal position is 0.5 (center).
 */
+
+/*!
+    \property QPieSeries::verticalPosition
+    \brief Pie vertical position property
+
+    By default vertical position is 0.5 (center)
+*/
+
+/*!
+    \property QPieSeries::size
+    \brief Pie size property
+
+    By default size is 0.7.
+*/
+
+/*!
+    \property QPieSeries::startAngle
+    \brief Pie start angle.
+
+    Starting angle of the pie. Default is 0.
+*/
+
+
+/*!
+    \property QPieSeries::endAngle
+    \brief Pie end angle.
+
+    Ending angle of the pie. Default is 360.
+*/
+
 
 
 /*!
@@ -429,10 +459,10 @@ void QPieSeries::setHorizontalPosition(qreal relativePosition)
 
 /*!
     Sets the vertical center position of the pie to \a relativePosition. If \a relativePosition is
-    set to  0.0 the pie is drawn on the top of the chart and if it's set to 1.0 the pie is drawn
+    set to 0.0 the pie is drawn on the top of the chart and if it's set to 1.0 the pie is drawn
     on bottom of the chart. The default value 0.5 puts the pie in the middle.
 
-    \sa setVerticalPosition(), setPieSize()
+    \sa verticalPosition(), setPieSize()
 */
 void QPieSeries::setVerticalPosition(qreal relativePosition)
 {
@@ -484,7 +514,7 @@ qreal QPieSeries::verticalPosition() const
 
     Default value is 0.7.
 
-    \sa pieSize(), setPiePosition(), pieVerticalPosition(), pieHorizontalPosition()
+    \sa pieSize(), verticalPosition(), horizontalPosition()
 */
 void QPieSeries::setPieSize(qreal relativeSize)
 {
