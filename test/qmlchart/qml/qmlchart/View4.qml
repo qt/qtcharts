@@ -25,27 +25,33 @@ Rectangle {
     anchors.fill: parent
 
     Chart {
-        title: "Car brand shares in Finland"
+        title: "Scatters"
         anchors.fill: parent
-        theme: Chart.ChartThemeLight
+        theme: Chart.ChartThemeBlueCerulean
 
-        PieSeries {
-            horizontalPosition: 0.2
-            verticalPosition: 0.3
-            size: 0.4
-            slices: [
-                PieSlice { label: "Volkswagen"; value: 13.5 },
-                PieSlice { label: "Toyota"; value: 10.9 },
-                PieSlice { label: "Ford"; value: 8.6 },
-                PieSlice { label: "Skoda"; value: 8.2 },
-                PieSlice { label: "Volvo"; value: 6.8 },
-                PieSlice { label: "Others"; value: 52.0 }
+        ScatterSeries {
+            id: scatter1
+            name: "Scatter1"
+            points: [
+                XyPoint { x: 1.5; y: 1.5 },
+                XyPoint { x: 1.5; y: 1.6 },
+                XyPoint { x: 1.57; y: 1.55 },
+                XyPoint { x: 1.8; y: 1.8 },
+                XyPoint { x: 1.9; y: 1.6 },
+                XyPoint { x: 2.1; y: 1.3 },
+                XyPoint { x: 2.5; y: 2.1 }
             ]
         }
-
-        BarSeries {
-            barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
-            // data implementation missing
+        ScatterSeries {
+            name: "Scatter2"
+            points: [
+                XyPoint { x: 2.0; y: 2.0 },
+                XyPoint { x: 2.0; y: 2.1 },
+                XyPoint { x: 2.07; y: 2.05 },
+                XyPoint { x: 2.2; y: 2.9 },
+                XyPoint { x: 2.4; y: 2.7 },
+                XyPoint { x: 2.67; y: 2.65 }
+            ]
         }
     }
 }

@@ -31,9 +31,8 @@ Rectangle {
         running: true
         repeat: true
         interval: 5000
-        triggeredOnStart: true
+        triggeredOnStart: false
         onTriggered: {
-            loader.source = "View" + (__viewNumber % 3 + 1) + ".qml";
             __viewNumber++;
         }
     }
@@ -41,13 +40,13 @@ Rectangle {
     Loader {
         id: loader
         anchors.fill: parent
+        source: "View" + (__viewNumber % 4 + 1) + ".qml";
     }
 
     MouseArea {
         anchors.fill: parent
         onClicked: {
             timer.restart();
-            loader.source = "View" + (__viewNumber % 3 + 1) + ".qml";
             __viewNumber++;
         }
     }

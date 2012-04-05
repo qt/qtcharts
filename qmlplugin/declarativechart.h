@@ -34,6 +34,7 @@ class DeclarativeChart : public QDeclarativeItem
 {
     Q_OBJECT
     Q_PROPERTY(QChart::ChartTheme theme READ theme WRITE setTheme)
+    Q_PROPERTY(QString title READ title WRITE setTitle)
 
 public:
     DeclarativeChart(QDeclarativeItem *parent = 0);
@@ -46,6 +47,8 @@ public: // From QDeclarativeItem/QGraphicsItem
 public:
     void setTheme(QChart::ChartTheme theme) {m_chart->setTheme(theme);}
     QChart::ChartTheme theme();
+    void setTitle(QString title) {m_chart->setTitle(title);}
+    QString title() { return m_chart->title();}
 
 public:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support

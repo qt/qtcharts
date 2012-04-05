@@ -53,7 +53,7 @@ void DeclarativeBarSeries::componentComplete()
             QBarSet *set2 = new QBarSet("Guybrush");
 
             *set0 << 1 << 2 << 3 << 4 << 5 << 6;
-            *set1 << 5 << 0 << 0 << 4 << 0 << 7;
+            *set1 << 5 << 1 << 2 << 4 << 1 << 7;
             *set2 << 3 << 5 << 8 << 13 << 8 << 5;
 
             m_series->appendBarSet(set0);
