@@ -66,7 +66,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  Constructs a chart object which is a child of a\a parent. Parameter \a wFlags is passed to the QGraphicsWidget constructor.
  */
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
-d_ptr(new QChartPrivate())
+    d_ptr(new QChartPrivate())
 {
     d_ptr->m_legend = new  ScrolledQLegend(this);
     d_ptr->m_legend->setVisible(false);
@@ -131,6 +131,9 @@ void QChart::setBackgroundBrush(const QBrush& brush)
     d_ptr->m_presenter->m_backgroundItem->update();
 }
 
+/*!
+    Gets the brush that is used for painting the background of the chart area.
+ */
 QBrush QChart::backgroundBrush() const
 {
     //TODO: refactor me
@@ -149,6 +152,9 @@ void QChart::setBackgroundPen(const QPen& pen)
     d_ptr->m_presenter->m_backgroundItem->update();
 }
 
+/*!
+    Gets the pen that is used for painting the background of the chart area.
+ */
 QPen QChart::backgroundPen() const
 {
     //TODO: refactor me
@@ -180,7 +186,7 @@ QString QChart::title() const
 }
 
 /*!
- Sets the \a font that is used for rendering the description text that is rendered above the chart.
+ Sets the \a font that is used for drawing the chart description text that is rendered above the chart.
  */
 void QChart::setTitleFont(const QFont& font)
 {
@@ -190,6 +196,9 @@ void QChart::setTitleFont(const QFont& font)
     d_ptr->m_presenter->updateLayout();
 }
 
+/*!
+    Gets the font that is used for drawing the chart description text that is rendered above the chart.
+ */
 QFont QChart::titleFont() const
 {
     if (d_ptr->m_presenter->m_titleItem)
@@ -271,7 +280,8 @@ QChartAxis* QChart::axisX() const
 }
 
 /*!
- Returns the pointer to the y axis object of the chart
+ Returns the pointer to the y axis object of the \a series
+ If no \a series is provided then default Y axis of the chart is returned.
  */
 QChartAxis* QChart::axisY(QSeries* series) const
 {
@@ -286,6 +296,10 @@ QLegend* QChart::legend() const
     return d_ptr->m_legend;
 }
 
+/*!
+    Returns the rect that contains information about margins (distance between chart widget edge and axes).
+    Individual margins can be obtained by calling left, top, right, bottom on the returned rect.
+ */
 QRectF QChart::margins() const
 {
     return d_ptr->m_presenter->margins();
@@ -318,26 +332,41 @@ QChart::AnimationOptions QChart::animationOptions() const
     return d_ptr->m_presenter->animationOptions();
 }
 
+/*!
+    Scrolls the visible area of the chart to the left by the distance between two x axis ticks
+ */
 void QChart::scrollLeft()
 {
     d_ptr->m_presenter->scroll(-d_ptr->m_presenter->chartGeometry().width()/(axisX()->ticksCount()-1),0);
 }
 
+/*!
+    Scrolls the visible area of the chart to the right by the distance between two x axis ticks
+ */
 void QChart::scrollRight()
 {
     d_ptr->m_presenter->scroll(d_ptr->m_presenter->chartGeometry().width()/(axisX()->ticksCount()-1),0);
 }
 
+/*!
+    Scrolls the visible area of the chart up by the distance between two y axis ticks
+ */
 void QChart::scrollUp()
 {
     d_ptr->m_presenter->scroll(0,d_ptr->m_presenter->chartGeometry().width()/(axisY()->ticksCount()-1));
 }
 
+/*!
+    Scrolls the visible area of the chart down by the distance between two y axis ticks
+ */
 void QChart::scrollDown()
 {
     d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->chartGeometry().width()/(axisY()->ticksCount()-1));
 }
 
+/*!
+    Sets the chart background visibility state to \a visible
+ */
 void QChart::setBackgroundVisible(bool visible)
 {
     //TODO: refactor me
@@ -345,6 +374,9 @@ void QChart::setBackgroundVisible(bool visible)
     d_ptr->m_presenter->m_backgroundItem->setVisible(visible);
 }
 
+/*!
+    Returns the chart's background visibility state
+ */
 bool QChart::isBackgroundVisible() const
 {
     //TODO: refactor me
@@ -355,9 +387,9 @@ bool QChart::isBackgroundVisible() const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QChartPrivate::QChartPrivate():
-m_legend(0),
-m_dataset(0),
-m_presenter(0)
+    m_legend(0),
+    m_dataset(0),
+    m_presenter(0)
 {
 
 }
@@ -369,12 +401,12 @@ QChartPrivate::~QChartPrivate()
 
 void QChartPrivate::createConnections()
 {
-   QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-   QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
-   QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_presenter,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-   QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_presenter,SLOT(handleSeriesRemoved(QSeries*)));
-   QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QChartAxis*,Domain*)));
-   QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),m_presenter,SLOT(handleAxisRemoved(QChartAxis*)));
+    QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
+    QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_presenter,SLOT(handleSeriesAdded(QSeries*,Domain*)));
+    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_presenter,SLOT(handleSeriesRemoved(QSeries*)));
+    QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QChartAxis*,Domain*)));
+    QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),m_presenter,SLOT(handleAxisRemoved(QChartAxis*)));
 }
 
 #include "moc_qchart.cpp"

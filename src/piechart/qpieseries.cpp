@@ -225,6 +225,14 @@ bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qr
 */
 
 /*!
+    \property qreal QPieSeries::horizontalPosition
+    \brief Pie horizontal postion property
+
+    By default horizontal postion is 0
+*/
+
+
+/*!
     Constructs a series object which is a child of \a parent.
 */
 QPieSeries::QPieSeries(QObject *parent) :
@@ -406,7 +414,7 @@ QList<QPieSlice*> QPieSeries::slices() const
 }
 
 /*!
-    Sets the horizontal center position of the pie to \relativePosition. If \relativePosition is
+    Sets the horizontal center position of the pie to \a relativePosition. If \a relativePosition is
     set to  0.0 the pie is drawn on the left side of the chart and if it's set to 1.0 the pie is
     drawn on right side of the chart. The default value 0.5 puts the pie in the middle.
 
@@ -420,7 +428,7 @@ void QPieSeries::setHorizontalPosition(qreal relativePosition)
 }
 
 /*!
-    Sets the vertical center position of the pie to \relativePosition. If \relativePosition is
+    Sets the vertical center position of the pie to \a relativePosition. If \a relativePosition is
     set to  0.0 the pie is drawn on the top of the chart and if it's set to 1.0 the pie is drawn
     on bottom of the chart. The default value 0.5 puts the pie in the middle.
 

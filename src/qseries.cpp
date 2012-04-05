@@ -68,6 +68,11 @@
 */
 
 /*!
+    \fn QAbstractItemModel* QSeries::model() const
+    \brief Returns the pointer to the model that is used as the series data source
+*/
+
+/*!
     \property QString QSeries::name
     \brief name of the series property
 */

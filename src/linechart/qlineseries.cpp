@@ -56,12 +56,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-   \fn QPen QLineSeries::linePen() const
-   \brief  Returns the pen used to draw line connecting points.
-    \sa setPen()
-*/
-
-/*!
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */

@@ -226,6 +226,7 @@ qreal QPieSlice::labelArmLengthFactor() const
     \fn void QPieSlice::clicked(Qt::MouseButtons buttons)
 
     This signal is emitted when user has clicked the slice.
+    Parameter \a buttons hold the information about the clicked mouse buttons.
 
     \sa QPieSeries::clicked()
 */
