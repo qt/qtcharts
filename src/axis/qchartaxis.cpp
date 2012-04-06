@@ -151,6 +151,28 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void changed(qreal min, qreal max, int tickCount,bool niceNumbers)
+    \brief \internal
+*/
+
+/*!
+    \fn bool QChartAxis::niceNumbers() const
+    \brief Returns whether nice numbers are enabled or not.
+*/
+
+/*!
+    \fn QChartAxisCategories* categories()
+    \brief Returns pointer to the list of categories which correspond to the values on the axis.
+*/
+
+/*!
+    \fn void ticksCountChanged(int count)
+    \brief Emits the new \a count of ticks on the axis
+    Signal is emitted when the number of the ticks on the axis has been changed to a different value.
+    Parementer count\a count is the new number of ticks on the axis.
+*/
+
+/*!
     Constructs new axis object which is a child of \a parent. Ownership is taken by
     QChatView or QChart when axis added.
 */
@@ -406,10 +428,13 @@ void QChartAxis::handleAxisRangeChanged(qreal min, qreal max,int count)
    setTicksCount(count);
 }
 
-void QChartAxis::setNiceNumbers(bool enabled)
+/*!
+    Sets the nice numbers state to \a enable
+*/
+void QChartAxis::setNiceNumbers(bool enable)
 {
-    if (m_niceNumbers != enabled){
-        m_niceNumbers = enabled;
+    if (m_niceNumbers != enable){
+        m_niceNumbers = enable;
         emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
     }
 }

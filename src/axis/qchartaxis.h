@@ -81,7 +81,7 @@ public:
     void setTicksCount(int count);
     int ticksCount() const { return m_ticksCount;}
 
-    void setNiceNumbers(bool enabled);
+    void setNiceNumbers(bool enable);
     bool niceNumbers() const { return m_niceNumbers;}
 
     QChartAxisCategories* categories() { return &m_category; }
