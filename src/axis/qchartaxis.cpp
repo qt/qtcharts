@@ -151,7 +151,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void changed(qreal min, qreal max, int tickCount,bool niceNumbers)
+    \fn void QChartAxis::changed(qreal min, qreal max, int tickCount,bool niceNumbers)
     \brief \internal
 */
 
@@ -161,12 +161,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QChartAxisCategories* categories()
+    \fn QChartAxisCategories* QChartAxis::categories()
     \brief Returns pointer to the list of categories which correspond to the values on the axis.
 */
 
 /*!
-    \fn void ticksCountChanged(int count)
+    \fn void QChartAxis::ticksCountChanged(int count)
     \brief Emits the new \a count of ticks on the axis
     Signal is emitted when the number of the ticks on the axis has been changed to a different value.
     Parementer count\a count is the new number of ticks on the axis.
