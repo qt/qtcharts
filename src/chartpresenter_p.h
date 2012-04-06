@@ -107,7 +107,6 @@ private:
     QRectF m_rect;
     QRectF m_chartRect;
     QChart::AnimationOptions m_options;
-    bool m_themeForce;
     qreal m_minLeftMargin;
     qreal m_minBottomMargin;
 public: //TODO: fixme

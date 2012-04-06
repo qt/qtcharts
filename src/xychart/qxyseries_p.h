@@ -43,12 +43,15 @@ class QXYSeriesPrivate: public QSeriesPrivate
 public:
     QXYSeriesPrivate(QXYSeries* q);
 
+    void scaleDomain(Domain& domain);
+
 Q_SIGNALS:
     void updated();
     void pointReplaced(int index);
     void pointRemoved(int index);
     void pointAdded(int index);
-public:
+
+protected:
     QVector<qreal> m_x;
     QVector<qreal> m_y;
 
@@ -64,8 +67,10 @@ public:
     int tempItemsRemoved;
     bool m_pointsVisible;
 
+private:
+    Q_DECLARE_PUBLIC(QXYSeries);
     friend class QScatterSeries;
-    friend class QXYSeries;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

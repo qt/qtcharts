@@ -19,6 +19,12 @@
 ****************************************************************************/
 
 #include "qpercentbarseries.h"
+#include "qpercentbarseries_p.h"
+#include "percentbarchartitem_p.h"
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
+#include "chartanimator_p.h"
+
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -45,14 +51,55 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QPercentBarSeries. Parameter \a categories defines the categories for chart.
     QPercentBarSeries is QObject which is a child of a \a parent.
 */
-QPercentBarSeries::QPercentBarSeries(QStringList categories, QObject *parent)
-    : QBarSeries(categories, parent)
+QPercentBarSeries::QPercentBarSeries(QBarCategories categories, QObject *parent)
+    : QBarSeries(*new QPercentBarSeriesPrivate(categories,this), parent)
 {
 }
 
 QSeries::QSeriesType QPercentBarSeries::type() const
 {
     return QSeries::SeriesTypePercentBar;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QPercentBarSeriesPrivate::QPercentBarSeriesPrivate(QBarCategories categories, QPercentBarSeries *q) : QBarSeriesPrivate(categories,q)
+{
+
+}
+
+void QPercentBarSeriesPrivate::scaleDomain(Domain& domain)
+{
+    Q_Q(QPercentBarSeries);
+    qreal minX(domain.minX());
+    qreal minY(domain.minY());
+    qreal maxX(domain.maxX());
+    qreal maxY(domain.maxY());
+    int tickXCount(domain.tickXCount());
+    int tickYCount(domain.tickYCount());
+
+    qreal x = q->categoryCount();
+    minX = qMin(minX, x);
+    maxX = qMax(maxX, x);
+    minY = 0;
+    maxY = 100;
+    tickXCount = x+1;
+
+    domain.setRangeX(minX,maxX,tickXCount);
+    domain.setRangeY(minY,maxY,tickYCount);
+}
+
+
+Chart* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+{
+    Q_Q(QPercentBarSeries);
+
+    PercentBarChartItem* bar = new PercentBarChartItem(q,presenter);
+    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+        presenter->animator()->addAnimation(bar);
+    }
+    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
+    return bar;
 }
 
 #include "moc_qpercentbarseries.cpp"

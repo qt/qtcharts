@@ -36,7 +36,6 @@ class QTCOMMERCIALCHART_EXPORT QXYSeries : public QSeries
 {
     Q_OBJECT
 protected:
-    explicit QXYSeries(QObject *parent = 0);
     explicit QXYSeries(QXYSeriesPrivate &d,QObject *parent = 0);
     ~QXYSeries();
 

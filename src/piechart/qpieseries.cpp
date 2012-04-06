@@ -22,6 +22,9 @@
 #include "qpieseries_p.h"
 #include "qpieslice.h"
 #include "pieslicedata_p.h"
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
+#include "chartanimator_p.h"
 #include <QAbstractItemModel>
 #include <QDebug>
 
@@ -694,6 +697,24 @@ bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qr
     return false;
 }
 
+void QPieSeriesPrivate::scaleDomain(Domain& domain)
+{
+    Q_UNUSED(domain);
+#ifndef QT_NO_DEBUG
+    qWarning() << __FILE__<<__FUNCTION__<<"not implemented";
+#endif
+}
+
+Chart* QPieSeriesPrivate::createGraphics(ChartPresenter* presenter)
+{
+    Q_Q(QPieSeries);
+    PieChartItem* pie = new PieChartItem(q,presenter);
+    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+        presenter->animator()->addAnimation(pie);
+    }
+    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
+    return pie;
+}
 
 #include "moc_qpieseries.cpp"
 #include "moc_qpieseries_p.cpp"

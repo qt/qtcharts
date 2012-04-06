@@ -21,6 +21,11 @@
 #include "qareaseries.h"
 #include "qareaseries_p.h"
 #include "qlineseries.h"
+#include "areachartitem_p.h"
+#include "domain_p.h"
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
+#include "chartanimator_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -204,6 +209,57 @@ QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lo
 {
 
 };
+
+void QAreaSeriesPrivate::scaleDomain(Domain& domain)
+{
+    Q_Q(QAreaSeries);
+
+    qreal minX(domain.minX());
+    qreal minY(domain.minY());
+    qreal maxX(domain.maxX());
+    qreal maxY(domain.maxY());
+    int tickXCount(domain.tickXCount());
+    int tickYCount(domain.tickYCount());
+
+    QLineSeries* upperSeries = q->upperSeries();
+    QLineSeries* lowerSeries = q->lowerSeries();
+
+    for (int i = 0; i < upperSeries->count(); i++)
+    {
+        qreal x = upperSeries->x(i);
+        qreal y = upperSeries->y(i);
+        minX = qMin(minX, x);
+        minY = qMin(minY, y);
+        maxX = qMax(maxX, x);
+        maxY = qMax(maxY, y);
+    }
+    if(lowerSeries) {
+        for (int i = 0; i < lowerSeries->count(); i++)
+        {
+            qreal x = lowerSeries->x(i);
+            qreal y = lowerSeries->y(i);
+            minX = qMin(minX, x);
+            minY = qMin(minY, y);
+            maxX = qMax(maxX, x);
+            maxY = qMax(maxY, y);
+        }}
+
+    domain.setRangeX(minX,maxX,tickXCount);
+    domain.setRangeY(minY,maxY,tickYCount);
+}
+
+Chart* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)
+{
+    Q_Q(QAreaSeries);
+
+    AreaChartItem* area = new AreaChartItem(q,presenter);
+    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+        presenter->animator()->addAnimation(area->upperLineItem());
+        if(q->lowerSeries())  presenter->animator()->addAnimation(area->lowerLineItem());
+    }
+    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
+    return area;
+}
 
 #include "moc_qareaseries.cpp"
 #include "moc_qareaseries_p.cpp"

@@ -20,6 +20,10 @@
 
 #include "qlineseries.h"
 #include "qlineseries_p.h"
+#include "linechartitem_p.h"
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
+#include "chartanimator_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -100,5 +104,16 @@ QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries* q):QXYSeriesPrivate(q)
 {
 
 };
+
+Chart* QLineSeriesPrivate::createGraphics(ChartPresenter* presenter)
+{
+    Q_Q(QLineSeries);
+    LineChartItem* line = new LineChartItem(q,presenter);
+    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+        presenter->animator()->addAnimation(line);
+    }
+    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
+    return line;
+}
 
 QTCOMMERCIALCHART_END_NAMESPACE

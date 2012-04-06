@@ -40,7 +40,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
 {
     Q_OBJECT
 public:
-    QBarSeries(QStringList categories, QObject *parent = 0);
+    QBarSeries(QBarCategories categories, QObject *parent = 0);
 
     QSeries::QSeriesType type() const;
 
@@ -76,6 +76,9 @@ public:
     qreal maxCategorySum();
     BarChartModel& modelInternal();
     // <--- TO PIMPL
+
+protected:
+    explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);
 
 Q_SIGNALS:
     void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);        // Up to user of api, what to do with these signals

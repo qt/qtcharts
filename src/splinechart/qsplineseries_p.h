@@ -39,6 +39,7 @@ class QSplineSeriesPrivate: public QLineSeriesPrivate
 {
     Q_OBJECT
 public:
+    Chart* createGraphics(ChartPresenter* presenter);
     QSplineSeriesPrivate(QSplineSeries* q);
     void calculateControlPoints();
     QList<qreal> getFirstControlPoints(QList<qreal> rhs);

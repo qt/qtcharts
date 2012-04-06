@@ -96,12 +96,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa setName()
 */
 
-QSeries::QSeries(QObject *parent) : QObject(parent),
-d_ptr(new QSeriesPrivate(this))
-{
-
-}
-
 QSeries::QSeries(QSeriesPrivate &d,QObject *parent) : QObject(parent),
 d_ptr(&d)
 {

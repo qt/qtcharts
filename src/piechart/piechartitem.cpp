@@ -70,7 +70,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 {
     bool isEmpty = m_slices.isEmpty();
 
-    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series), false);
+    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
 
     foreach (QPieSlice *s, slices) {
         PieSliceItem* item = new PieSliceItem(this);
@@ -91,7 +91,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 
 void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
 {
-    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series), false);
+    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
 
     foreach (QPieSlice *s, slices) {
         if (animator())

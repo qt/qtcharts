@@ -20,6 +20,10 @@
 
 #include "qsplineseries.h"
 #include "qsplineseries_p.h"
+#include "splinechartitem_p.h"
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
+#include "chartanimator_p.h"
 
 /*!
     \class QSplineSeries
@@ -214,6 +218,17 @@ void QSplineSeriesPrivate::updateControlPoints()
      then all the items following \a first item in a model are used.
      \sa setModel(), setModelMapping()
  */
+
+Chart* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)
+{
+    Q_Q(QSplineSeries);
+    SplineChartItem* spline  = new SplineChartItem(q,presenter);
+    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+        presenter->animator()->addAnimation(spline);
+    }
+    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
+    return spline;
+}
 
 #include "moc_qsplineseries.cpp"
 #include "moc_qsplineseries_p.cpp"

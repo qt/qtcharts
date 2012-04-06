@@ -43,17 +43,20 @@ class QAreaSeriesPrivate: public QSeriesPrivate
 public:
     QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries,QAreaSeries* q);
 
+    void scaleDomain(Domain& domain);
+    Chart* createGraphics(ChartPresenter* presenter);
+
 Q_SIGNALS:
     void updated();
 
-public:
+protected:
     QBrush m_brush;
     QPen m_pen;
     QLineSeries* m_upperSeries;
     QLineSeries* m_lowerSeries;
     bool m_pointsVisible;
-
-    friend class QAreaSeries;
+private:
+    Q_DECLARE_PUBLIC(QAreaSeries);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

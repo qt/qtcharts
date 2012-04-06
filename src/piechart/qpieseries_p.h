@@ -36,6 +36,9 @@ public:
     QPieSeriesPrivate(QPieSeries *parent);
     ~QPieSeriesPrivate();
 
+    void scaleDomain(Domain& domain);
+    Chart* createGraphics(ChartPresenter* presenter);
+
     void updateDerivativeData();
 
 public Q_SLOTS:

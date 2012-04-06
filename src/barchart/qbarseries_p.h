@@ -17,6 +17,9 @@ class QBarSeriesPrivate : public QSeriesPrivate
 public:
     QBarSeriesPrivate(QBarCategories categories, QBarSeries *parent);
 
+    void scaleDomain(Domain& domain);
+    Chart* createGraphics(ChartPresenter* presenter);
+
     bool setModel(QAbstractItemModel *model);
     void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
 

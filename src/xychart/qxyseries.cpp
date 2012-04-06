@@ -20,6 +20,7 @@
 
 #include "qxyseries.h"
 #include "qxyseries_p.h"
+#include "domain_p.h"
 #include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -83,11 +84,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
-QXYSeries::QXYSeries(QObject *parent):QSeries(*new QXYSeriesPrivate(this),parent)
-{
-
-}
-
 QXYSeries::QXYSeries(QXYSeriesPrivate &d,QObject *parent):QSeries(d,parent)
 {
 
@@ -624,6 +620,30 @@ m_mapOrientation( Qt::Vertical),
 m_pointsVisible(false)
 {
 
+}
+
+void QXYSeriesPrivate::scaleDomain(Domain& domain)
+{
+    qreal minX(domain.minX());
+    qreal minY(domain.minY());
+    qreal maxX(domain.maxX());
+    qreal maxY(domain.maxY());
+    int tickXCount(domain.tickXCount());
+    int tickYCount(domain.tickYCount());
+
+    Q_Q(QXYSeries);
+    for (int i = 0; i < q->count(); i++)
+    {
+        qreal x = q->x(i);
+        qreal y = q->y(i);
+        minX = qMin(minX, x);
+        minY = qMin(minY, y);
+        maxX = qMax(maxX, x);
+        maxY = qMax(maxY, y);
+    }
+
+    domain.setRangeX(minX,maxX,tickXCount);
+    domain.setRangeY(minY,maxY,tickYCount);
 }
 
 #include "moc_qxyseries.cpp"

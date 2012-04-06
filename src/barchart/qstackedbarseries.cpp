@@ -19,6 +19,11 @@
 ****************************************************************************/
 
 #include "qstackedbarseries.h"
+#include "qstackedbarseries_p.h"
+#include "stackedbarchartitem_p.h"
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
+#include "chartanimator_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -45,14 +50,56 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QStackedBarSeries. Parameter \a categories defines the categories for chart.
     QStackedBarSeries is QObject which is a child of a \a parent.
 */
-QStackedBarSeries::QStackedBarSeries(QStringList categories, QObject *parent)
-    : QBarSeries(categories, parent)
+QStackedBarSeries::QStackedBarSeries(QBarCategories categories, QObject *parent)
+    : QBarSeries(*new QStackedBarSeriesPrivate(categories,this), parent)
 {
 }
 
 QSeries::QSeriesType QStackedBarSeries::type() const
 {
     return QSeries::SeriesTypeStackedBar;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QBarCategories categories, QStackedBarSeries *q) : QBarSeriesPrivate(categories,q)
+{
+
+}
+
+void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
+{
+    Q_Q(QStackedBarSeries);
+    qreal minX(domain.minX());
+    qreal minY(domain.minY());
+    qreal maxX(domain.maxX());
+    qreal maxY(domain.maxY());
+    int tickXCount(domain.tickXCount());
+    int tickYCount(domain.tickYCount());
+
+    qreal x = q->categoryCount();
+    qreal y = q->maxCategorySum();
+    minX = qMin(minX, x);
+    minY = qMin(minY, y);
+    maxX = qMax(maxX, x);
+    maxY = qMax(maxY, y);
+    tickXCount = x+1;
+
+    domain.setRangeX(minX,maxX,tickXCount);
+    domain.setRangeY(minY,maxY,tickYCount);
+}
+
+
+Chart* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+{
+    Q_Q(QStackedBarSeries);
+
+    StackedBarChartItem* bar = new StackedBarChartItem(q,presenter);
+    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+        presenter->animator()->addAnimation(bar);
+    }
+    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
+    return bar;
 }
 
 #include "moc_qstackedbarseries.cpp"

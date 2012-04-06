@@ -36,13 +36,25 @@ class QAbstractItemModel;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-struct QSeriesPrivate : public QObject
+class Domain;
+class ChartPresenter;
+class Chart;
+
+class QSeriesPrivate : public QObject
 {
+public:
     QSeriesPrivate(QSeries *q);
-    virtual ~QSeriesPrivate();
+    ~QSeriesPrivate();
+
+    virtual void scaleDomain(Domain& domain) = 0;
+    virtual Chart* createGraphics(ChartPresenter* presenter) = 0;
+
+protected:
     QSeries *q_ptr;
-    QAbstractItemModel* m_model;
+    QAbstractItemModel *m_model;
     QString m_name;
+
+    friend class QSeries;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

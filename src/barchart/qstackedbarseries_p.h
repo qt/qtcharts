@@ -27,22 +27,24 @@
 //
 // We mean it.
 
-#ifndef QLINESERIES_P_H_
-#define QLINESERIES_P_H_
+#ifndef QSTACKEDBARSERIES_P_H_
+#define QSTACKEDBARSERIES_P_H_
 
-#include "qxyseries_p.h"
+#include "qbarseries_p.h"
+#include "domain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-class QLineSeriesPrivate: public QXYSeriesPrivate
+class QStackedBarSeriesPrivate: public QBarSeriesPrivate
 {
 public:
-    QLineSeriesPrivate(QLineSeries* q);
+    QStackedBarSeriesPrivate(QBarCategories categories,QStackedBarSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
-private:
-    Q_DECLARE_PUBLIC(QLineSeries);
+    void scaleDomain(Domain& domain);
 
+private:
+    Q_DECLARE_PUBLIC(QStackedBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -23,6 +23,10 @@
 #include "qbarset.h"
 #include "qbarset_p.h"
 #include "barchartmodel_p.h"
+#include "domain_p.h"
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
+#include "chartanimator_p.h"
 
 #include <QAbstractItemModel>
 #include <QModelIndex>
@@ -59,6 +63,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) : QSeries(*new QBarSeriesPrivate(categories, this),parent)
+{
+
+}
+
+QBarSeries::QBarSeries(QBarSeriesPrivate &d,QObject *parent) : QSeries(d,parent)
 {
 
 }
@@ -759,6 +768,41 @@ void QBarSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
 void QBarSeriesPrivate::barsetChanged()
 {
     emit updatedBars();
+}
+
+void QBarSeriesPrivate::scaleDomain(Domain& domain)
+{
+    Q_Q(QBarSeries);
+    qreal minX(domain.minX());
+    qreal minY(domain.minY());
+    qreal maxX(domain.maxX());
+    qreal maxY(domain.maxY());
+    int tickXCount(domain.tickXCount());
+    int tickYCount(domain.tickYCount());
+
+    qreal x = q->categoryCount();
+    qreal y = q->max();
+    minX = qMin(minX, x);
+    minY = qMin(minY, y);
+    maxX = qMax(maxX, x);
+    maxY = qMax(maxY, y);
+    tickXCount = x+1;
+
+    domain.setRangeX(minX,maxX,tickXCount);
+    domain.setRangeY(minY,maxY,tickYCount);
+}
+
+Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+{
+    Q_Q(QBarSeries);
+
+    BarChartItem* bar = new BarChartItem(q,presenter);
+    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+        presenter->animator()->addAnimation(bar);
+    }
+    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
+    return bar;
+
 }
 
 #include "moc_qbarseries.cpp"

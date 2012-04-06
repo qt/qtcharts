@@ -34,12 +34,16 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-struct QScatterSeriesPrivate: public QXYSeriesPrivate
+class QScatterSeriesPrivate: public QXYSeriesPrivate
 {
+public:
     QScatterSeriesPrivate(QScatterSeries* q);
+    Chart* createGraphics(ChartPresenter* presenter);
 
+private:
     QScatterSeries::MarkerShape m_shape;
     qreal m_size;
+    Q_DECLARE_PUBLIC(QScatterSeries);
 
 };
 

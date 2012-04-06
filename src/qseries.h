@@ -50,7 +50,6 @@ public:
     };
 
 protected:
-    QSeries(QObject *parent = 0);
     QSeries(QSeriesPrivate &d,QObject *parent = 0);
 
 public:
@@ -64,6 +63,8 @@ public:
 
 protected:
     QScopedPointer<QSeriesPrivate> d_ptr;
+    friend class ChartDataSet;
+    friend class ChartPresenter;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

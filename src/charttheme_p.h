@@ -62,15 +62,17 @@ protected:
 public:
     static ChartTheme* createTheme(QChart::ChartTheme theme);
     QChart::ChartTheme id() const {return m_id;}
-    void decorate(QChart* chart,bool force = true);
-    void decorate(QLegend* legend,bool force = true);
-    void decorate(QBarSeries* series, int index,bool force = true);
-    void decorate(QLineSeries* series, int index,bool force = true);
-    void decorate(QAreaSeries* series, int index,bool force = true);
-    void decorate(QScatterSeries* series, int index,bool force = true);
-    void decorate(QPieSeries* series, int index,bool force = true);
-    void decorate(QSplineSeries* series, int index,bool force = true);
-    void decorate(QChartAxis* axis, bool axisX,bool force = true);
+    void decorate(QChart* chart);
+    void decorate(QLegend* legend);
+    void decorate(QBarSeries* series, int index);
+    void decorate(QLineSeries* series, int index);
+    void decorate(QAreaSeries* series, int index);
+    void decorate(QScatterSeries* series, int index);
+    void decorate(QPieSeries* series, int index);
+    void decorate(QSplineSeries* series, int index);
+    void decorate(QChartAxis* axis, bool axisX);
+    void setForced(bool enabled);
+    bool isForced() { return m_force; }
 
 public: // utils
     void generateSeriesGradients();
@@ -92,6 +94,7 @@ protected:
     QBrush m_backgroundShadesBrush;
     BackgroundShadesMode m_backgroundShades;
     QPen m_gridLinePen;
+    bool m_force;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

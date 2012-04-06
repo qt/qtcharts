@@ -20,6 +20,10 @@
 
 #include "qscatterseries.h"
 #include "qscatterseries_p.h"
+#include "scatterchartitem_p.h"
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
+#include "chartanimator_p.h"
 
 /*!
     \class QScatterSeries
@@ -130,6 +134,17 @@ QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries* q):QXYSeriesPrivate
 {
 
 };
+
+Chart* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
+{
+    Q_Q(QScatterSeries);
+    ScatterChartItem *scatter = new ScatterChartItem(q,presenter);
+    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+        presenter->animator()->addAnimation(scatter);
+    }
+    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
+    return scatter;
+}
 
 
 QTCOMMERCIALCHART_END_NAMESPACE

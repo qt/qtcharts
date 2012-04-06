@@ -30,7 +30,7 @@ class QTCOMMERCIALCHART_EXPORT QPercentBarSeries : public QBarSeries
 {
     Q_OBJECT
 public:
-    QPercentBarSeries(QStringList categories, QObject *parent = 0);
+    QPercentBarSeries(QBarCategories categories, QObject *parent = 0);
     QSeries::QSeriesType type() const;
 };
 
