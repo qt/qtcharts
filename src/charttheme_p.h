@@ -60,17 +60,17 @@ public:
 protected:
     explicit ChartTheme(QChart::ChartTheme id = QChart::ChartThemeLight);
 public:
-    static ChartTheme* createTheme(QChart::ChartTheme theme);
+    static ChartTheme *createTheme(QChart::ChartTheme theme);
     QChart::ChartTheme id() const {return m_id;}
-    void decorate(QChart* chart);
-    void decorate(QLegend* legend);
-    void decorate(QBarSeries* series, int index);
-    void decorate(QLineSeries* series, int index);
-    void decorate(QAreaSeries* series, int index);
-    void decorate(QScatterSeries* series, int index);
-    void decorate(QPieSeries* series, int index);
-    void decorate(QSplineSeries* series, int index);
-    void decorate(QChartAxis* axis, bool axisX);
+    void decorate(QChart *chart);
+    void decorate(QLegend *legend);
+    void decorate(QBarSeries *series, int index);
+    void decorate(QLineSeries *series, int index);
+    void decorate(QAreaSeries *series, int index);
+    void decorate(QScatterSeries *series, int index);
+    void decorate(QPieSeries *series, int index);
+    void decorate(QSplineSeries *series, int index);
+    void decorate(QChartAxis *axis, bool axisX);
     void setForced(bool enabled);
     bool isForced() { return m_force; }
 

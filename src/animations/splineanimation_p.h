@@ -33,7 +33,7 @@ class SplineAnimation : public ChartAnimation
 {
 public:
 
-    SplineAnimation(SplineChartItem* item);
+    SplineAnimation(SplineChartItem *item);
     ~SplineAnimation();
     void setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldContorlPoints, QVector<QPointF> &newControlPoints, int index);
 

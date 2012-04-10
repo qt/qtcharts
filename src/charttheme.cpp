@@ -99,7 +99,7 @@ ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
     }
 }
 
-void ChartTheme::decorate(QChart* chart)
+void ChartTheme::decorate(QChart *chart)
 {
     QBrush brush;
 
@@ -109,7 +109,7 @@ void ChartTheme::decorate(QChart* chart)
     chart->setTitleBrush(m_titleBrush);
 }
 
-void ChartTheme::decorate(QLegend* legend)
+void ChartTheme::decorate(QLegend *legend)
 {
     QPen pen;
     QBrush brush;
@@ -124,7 +124,7 @@ void ChartTheme::decorate(QLegend* legend)
     }
 }
 
-void ChartTheme::decorate(QAreaSeries* series, int index)
+void ChartTheme::decorate(QAreaSeries *series, int index)
 {
     QPen pen;
     QBrush brush;
@@ -142,7 +142,7 @@ void ChartTheme::decorate(QAreaSeries* series, int index)
 }
 
 
-void ChartTheme::decorate(QLineSeries* series,int index)
+void ChartTheme::decorate(QLineSeries *series,int index)
 {
     QPen pen;
     if(pen == series->pen() ||  m_force ){
@@ -152,11 +152,11 @@ void ChartTheme::decorate(QLineSeries* series,int index)
     }
 }
 
-void ChartTheme::decorate(QBarSeries* series, int index)
+void ChartTheme::decorate(QBarSeries *series, int index)
 {
     QBrush brush;
     QPen pen;
-    QList<QBarSet*> sets = series->barSets();
+    QList<QBarSet *> sets = series->barSets();
 
     qreal takeAtPos = 0.5;
     qreal step = 0.2;
@@ -194,7 +194,7 @@ void ChartTheme::decorate(QBarSeries* series, int index)
     }
 }
 
-void ChartTheme::decorate(QScatterSeries* series, int index)
+void ChartTheme::decorate(QScatterSeries *series, int index)
 {
     QPen pen;
     QBrush brush;
@@ -211,7 +211,7 @@ void ChartTheme::decorate(QScatterSeries* series, int index)
     }
 }
 
-void ChartTheme::decorate(QPieSeries* series, int index)
+void ChartTheme::decorate(QPieSeries *series, int index)
 {
 
     for (int i(0); i < series->slices().count(); i++) {
@@ -252,7 +252,7 @@ void ChartTheme::decorate(QPieSeries* series, int index)
     }
 }
 
-void ChartTheme::decorate(QSplineSeries* series, int index)
+void ChartTheme::decorate(QSplineSeries *series, int index)
 {
     QPen pen;
     if(pen == series->pen() ||  m_force){
@@ -262,7 +262,7 @@ void ChartTheme::decorate(QSplineSeries* series, int index)
     }
 }
 
-void ChartTheme::decorate(QChartAxis* axis,bool axisX)
+void ChartTheme::decorate(QChartAxis *axis,bool axisX)
 {
     QPen pen;
     QBrush brush;
@@ -338,7 +338,7 @@ void ChartTheme::generateSeriesGradients()
 
 QColor ChartTheme::colorAt(const QColor &start, const QColor &end, qreal pos)
 {
-    Q_ASSERT(pos >=0.0 && pos <= 1.0);
+    Q_ASSERT(pos >= 0.0 && pos <= 1.0);
     qreal r = start.redF() + ((end.redF() - start.redF()) * pos);
     qreal g = start.greenF() + ((end.greenF() - start.greenF()) * pos);
     qreal b = start.blueF() + ((end.blueF() - start.blueF()) * pos);
@@ -349,7 +349,7 @@ QColor ChartTheme::colorAt(const QColor &start, const QColor &end, qreal pos)
 
 QColor ChartTheme::colorAt(const QGradient &gradient, qreal pos)
 {
-    Q_ASSERT(pos >=0 && pos <= 1.0);
+    Q_ASSERT(pos >= 0 && pos <= 1.0);
 
     // another possibility:
     // http://stackoverflow.com/questions/3306786/get-intermediate-color-from-a-gradient
@@ -359,7 +359,7 @@ QColor ChartTheme::colorAt(const QGradient &gradient, qreal pos)
 
     // find previous stop relative to position
     QGradientStop prev = stops.first();
-    for (int i=0; i<count; i++) {
+    for (int i = 0; i < count; i++) {
         QGradientStop stop = stops.at(i);
         if (pos > stop.first)
             prev = stop;
@@ -373,7 +373,7 @@ QColor ChartTheme::colorAt(const QGradient &gradient, qreal pos)
 
     // find next stop relative to position
     QGradientStop next = stops.last();
-    for (int i=count-1; i>=0; i--) {
+    for (int i = count - 1; i >= 0; i--) {
         QGradientStop stop = stops.at(i);
         if (pos < stop.first)
             next = stop;
