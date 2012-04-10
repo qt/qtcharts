@@ -3,7 +3,7 @@ SUBDIRS += \
     chartwidgettest \
     wavechart \
     gdpbarchart \
-    tablechartmodel
+    tablemodelchart
 
 !win32:{
     SUBDIRS += auto
