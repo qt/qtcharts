@@ -15,8 +15,6 @@ SOURCES += \
     $$PWD/qchart.cpp \
     $$PWD/qchartview.cpp \
     $$PWD/qseries.cpp \
-    $$PWD/qlegend.cpp \
-    $$PWD/legendmarker.cpp \
     $$PWD/chartbackground.cpp \
     $$PWD/chart.cpp \
     $$PWD/scroller.cpp
@@ -26,34 +24,30 @@ PRIVATE_HEADERS += \
     $$PWD/chartpresenter_p.h \
     $$PWD/charttheme_p.h \
     $$PWD/domain_p.h \
-    $$PWD/legendmarker_p.h \
     $$PWD/chartbackground_p.h \
     $$PWD/chart_p.h \
     $$PWD/chartconfig_p.h \
     $$PWD/qchart_p.h \
     $$PWD/qchartview_p.h \
     $$PWD/scroller_p.h \
-    $$PWD/qseries_p.h \
-    $$PWD/qlegend_p.h \
-    $$PWD/legendscroller_p.h
+    $$PWD/qseries_p.h 
 PUBLIC_HEADERS += \
     $$PWD/qchart.h \
     $$PWD/qchartglobal.h \
     $$PWD/qseries.h \
-    $$PWD/qchartview.h \
-    $$PWD/qlegend.h 
+    $$PWD/qchartview.h
     
-include(animations/animations.pri)    
+include(animations/animations.pri)
+include(areachart/areachart.pri)    
 include(axis/axis.pri)
-include(xychart/xychart.pri)
-include(linechart/linechart.pri)
-include(areachart/areachart.pri)
 include(barchart/barchart.pri)
+include(legend/legend.pri)
+include(linechart/linechart.pri)
 include(piechart/piechart.pri)
 include(scatterseries/scatter.pri)
 include(splinechart/splinechart.pri)
 include(themes/themes.pri)
-
+include(xychart/xychart.pri)
 
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
