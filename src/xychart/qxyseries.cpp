@@ -47,22 +47,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QXYSeries::pointReplaced(int index)
+    \fn void QXYSeriesPrivate::pointReplaced(int index)
     \brief \internal \a index
 */
 
 /*!
-    \fn void QXYSeries::pointAdded(int index)
+    \fn void QXYSeriesPrivate::pointAdded(int index)
     \brief \internal \a index
 */
 
 /*!
-    \fn void QXYSeries::pointRemoved(int index)
+    \fn void QXYSeriesPrivate::pointRemoved(int index)
     \brief \internal \a index
 */
 
 /*!
-    \fn void QXYSeries::updated()
+    \fn void QXYSeriesPrivate::updated()
     \brief \internal
 */
 

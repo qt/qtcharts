@@ -1,7 +1,8 @@
 TEMPLATE = subdirs
 SUBDIRS += \ 
     chartwidgettest \
-    wavechart
+    wavechart \
+    gdpbarchart
 
 !win32:{
     SUBDIRS += auto

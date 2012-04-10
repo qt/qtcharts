@@ -90,7 +90,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QAreaSeries::updated()
+    \fn void QAreaSeriesPrivate::updated()
     \brief \internal
 */
 

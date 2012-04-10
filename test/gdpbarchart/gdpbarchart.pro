@@ -1,4 +1,6 @@
-!include( ../demos.pri ):error( "Couldn't find the demos.pri file!" )
+!include( ../test.pri ) {
+    error( "Couldn't find the test.pri file!" )
+}
 
 QT+= sql
 TARGET = gdpbarchart

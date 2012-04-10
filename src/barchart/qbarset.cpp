@@ -56,7 +56,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::showToolTip(QPoint pos, QString tip)
+    \fn void QBarSetPrivate::showToolTip(QPoint pos, QString tip)
     \brief \internal \a pos \a tip
 */
 

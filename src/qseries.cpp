@@ -81,7 +81,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QSeries::setName(QString name)
+    \fn void QSeries::setName(const QString& name)
     \brief Sets a \a name for the series.
 
     The name of a series is shown in the legend for QXYSeries.
