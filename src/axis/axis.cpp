@@ -20,6 +20,8 @@
 
 #include "axis_p.h"
 #include "qchartaxis.h"
+#include "qchartaxis_p.h"
+#include "qchartaxiscategories_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
@@ -48,8 +50,8 @@ Axis::Axis(QChartAxis *axis,ChartPresenter *presenter,AxisType type) : Chart(pre
     m_shades->setZValue(ChartPresenter::ShadesZValue);
     m_grid->setZValue(ChartPresenter::GridZValue);
 
-    connect(m_chartAxis,SIGNAL(updated()),this,SLOT(handleAxisUpdated()));
-    connect(m_chartAxis->categories(),SIGNAL(updated()),this,SLOT(handleAxisCategoriesUpdated()));
+    QObject::connect(m_chartAxis->d_ptr.data(),SIGNAL(updated()),this,SLOT(handleAxisUpdated()));
+    QObject::connect(m_chartAxis->categories()->d_ptr.data(),SIGNAL(updated()),this,SLOT(handleAxisCategoriesUpdated()));
 
     handleAxisUpdated();
 }
@@ -455,10 +457,9 @@ void Axis::handleGeometryChanged(const QRectF &rect)
 
 void Axis::axisSelected()
 {
-    qDebug()<<"TODO axis clicked";
+    qDebug()<<"TODO: axis clicked";
 }
 
-//TODO "nice numbers algorithm"
 #include "moc_axis_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "qchartaxis.h"
+#include "qchartaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -178,16 +179,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 QChartAxis::QChartAxis(QObject *parent) : QObject(parent),
-    m_axisVisible(true),
-    m_gridLineVisible(true),
-    m_labelsVisible(true),
-    m_labelsAngle(0),
-    m_shadesVisible(false),
-    m_shadesOpacity(1.0),
-    m_min(0),
-    m_max(0),
-    m_ticksCount(5),
-    m_niceNumbers(false)
+d_ptr(new QChartAxisPrivate(this))
 {
 
 }
@@ -205,10 +197,15 @@ QChartAxis::~QChartAxis()
  */
 void QChartAxis::setAxisPen(const QPen &pen)
 {
-	if (pen != m_axisPen) {
-        m_axisPen = pen;
-        emit updated();
+	if (d_ptr->m_axisPen!=pen) {
+	    d_ptr->m_axisPen = pen;
+        emit d_ptr->updated();
 	}
+}
+
+QPen QChartAxis::axisPen() const
+{
+    return d_ptr->m_axisPen;
 }
 
 /*!
@@ -216,10 +213,15 @@ void QChartAxis::setAxisPen(const QPen &pen)
  */
 void QChartAxis::setAxisVisible(bool visible)
 {
-    if (m_axisVisible != visible) {
-        m_axisVisible = visible;
-        emit updated();
+    if (d_ptr->m_axisVisible != visible) {
+        d_ptr->m_axisVisible = visible;
+        emit d_ptr->updated();
 	}
+}
+
+bool QChartAxis::isAxisVisible() const
+{
+    return d_ptr->m_axisVisible;
 }
 
 /*!
@@ -227,21 +229,30 @@ void QChartAxis::setAxisVisible(bool visible)
  */
 void QChartAxis::setGridLineVisible(bool visible)
 {
-    if (m_gridLineVisible != visible) {
-        m_gridLineVisible = visible;
-        emit updated();
+    if (d_ptr->m_gridLineVisible != visible) {
+        d_ptr->m_gridLineVisible = visible;
+        emit d_ptr->updated();
 	}
 }
 
+bool QChartAxis::isGridLineVisible() const
+{
+    return d_ptr->m_gridLineVisible;
+}
 /*!
   Sets \a pen used to draw grid line.
  */
 void QChartAxis::setGridLinePen(const QPen &pen)
 {
-    if (m_gridLinePen != pen) {
-        m_gridLinePen = pen;
-        emit updated();
+    if (d_ptr->m_gridLinePen != pen) {
+        d_ptr->m_gridLinePen = pen;
+        emit d_ptr->updated();
 	}
+}
+
+QPen QChartAxis::gridLinePen() const
+{
+    return d_ptr->m_gridLinePen;
 }
 
 /*!
@@ -249,21 +260,30 @@ void QChartAxis::setGridLinePen(const QPen &pen)
  */
 void QChartAxis::setLabelsVisible(bool visible)
 {
-    if (m_labelsVisible != visible) {
-        m_labelsVisible = visible;
-        emit updated();
+    if (d_ptr->m_labelsVisible != visible) {
+        d_ptr->m_labelsVisible = visible;
+        emit d_ptr->updated();
 	}
 }
 
+bool QChartAxis::labelsVisible() const
+{
+    return d_ptr->m_labelsVisible;
+}
 /*!
   Sets \a pen used to draw labels.
  */
 void QChartAxis::setLabelsPen(const QPen &pen)
 {
-    if (m_labelsPen != pen) {
-        m_labelsPen = pen;
-        emit updated();
+    if (d_ptr->m_labelsPen != pen) {
+        d_ptr->m_labelsPen = pen;
+        emit d_ptr->updated();
 	}
+}
+
+QPen QChartAxis::labelsPen() const
+{
+    return d_ptr->m_labelsPen;
 }
 
 /*!
@@ -271,10 +291,15 @@ void QChartAxis::setLabelsPen(const QPen &pen)
  */
 void QChartAxis::setLabelsBrush(const QBrush &brush)
 {
-    if (m_labelsBrush != brush) {
-        m_labelsBrush = brush;
-        emit updated();
+    if (d_ptr->m_labelsBrush != brush) {
+        d_ptr->m_labelsBrush = brush;
+        emit d_ptr->updated();
 	}
+}
+
+QBrush  QChartAxis::labelsBrush() const
+{
+    return d_ptr->m_labelsBrush;
 }
 
 /*!
@@ -282,10 +307,15 @@ void QChartAxis::setLabelsBrush(const QBrush &brush)
  */
 void QChartAxis::setLabelsFont(const QFont &font)
 {
-    if (m_labelsFont != font) {
-        m_labelsFont = font;
-        emit updated();
+    if (d_ptr->m_labelsFont != font) {
+        d_ptr->m_labelsFont = font;
+        emit d_ptr->updated();
 	}
+}
+
+QFont QChartAxis::labelsFont() const
+{
+    return d_ptr->m_labelsFont;
 }
 
 /*!
@@ -293,10 +323,15 @@ void QChartAxis::setLabelsFont(const QFont &font)
  */
 void QChartAxis::setLabelsAngle(int angle)
 {
-    if (m_labelsAngle != angle) {
-        m_labelsAngle = angle;
-        emit updated();
+    if (d_ptr->m_labelsAngle != angle) {
+        d_ptr->m_labelsAngle = angle;
+        emit d_ptr->updated();
 	}
+}
+
+int QChartAxis::labelsAngle() const
+{
+    return d_ptr->m_labelsAngle;
 }
 
 /*!
@@ -304,10 +339,15 @@ void QChartAxis::setLabelsAngle(int angle)
  */
 void QChartAxis::setShadesVisible(bool visible)
 {
-    if (m_shadesVisible != visible) {
-        m_shadesVisible = visible;
-        emit updated();
+    if (d_ptr->m_shadesVisible != visible) {
+        d_ptr->m_shadesVisible = visible;
+        emit d_ptr->updated();
 	}
+}
+
+bool QChartAxis::shadesVisible() const
+{
+    return d_ptr->m_shadesVisible;
 }
 
 /*!
@@ -315,10 +355,15 @@ void QChartAxis::setShadesVisible(bool visible)
  */
 void QChartAxis::setShadesPen(const QPen &pen)
 {
-    if (m_shadesPen != pen) {
-        m_shadesPen = pen;
-        emit updated();
+    if (d_ptr->m_shadesPen != pen) {
+        d_ptr->m_shadesPen = pen;
+        emit d_ptr->updated();
 	}
+}
+
+QPen QChartAxis::shadesPen() const
+{
+    return d_ptr->m_shadesPen;
 }
 
 /*!
@@ -326,10 +371,15 @@ void QChartAxis::setShadesPen(const QPen &pen)
  */
 void QChartAxis::setShadesBrush(const QBrush &brush)
 {
-    if (m_shadesBrush != brush) {
-        m_shadesBrush = brush;
-        emit updated();
+    if (d_ptr->m_shadesBrush != brush) {
+        d_ptr->m_shadesBrush = brush;
+        emit d_ptr->updated();
 	}
+}
+
+QBrush QChartAxis::shadesBrush() const
+{
+    return d_ptr->m_shadesBrush;
 }
 
 /*!
@@ -337,10 +387,15 @@ void QChartAxis::setShadesBrush(const QBrush &brush)
  */
 void QChartAxis::setShadesOpacity(qreal opacity)
 {
-    if (m_shadesOpacity != opacity) {
-    m_shadesOpacity=opacity;
-    emit updated();
+    if (d_ptr->m_shadesOpacity != opacity) {
+        d_ptr->m_shadesOpacity=opacity;
+        emit d_ptr->updated();
 	}
+}
+
+qreal QChartAxis::shadesOpacity() const
+{
+    return d_ptr->m_shadesOpacity;
 }
 
 /*!
@@ -348,7 +403,12 @@ void QChartAxis::setShadesOpacity(qreal opacity)
  */
 void QChartAxis::setMin(qreal min)
 {
-	setRange(min,m_max);
+	setRange(min,d_ptr->m_max);
+}
+
+qreal QChartAxis::min() const
+{
+    return d_ptr->m_min;
 }
 
 /*!
@@ -356,7 +416,12 @@ void QChartAxis::setMin(qreal min)
  */
 void QChartAxis::setMax(qreal max)
 {
-    setRange(m_min,max);
+    setRange(d_ptr->m_min,max);
+}
+
+qreal QChartAxis::max() const
+{
+    return d_ptr->m_max;
 }
 
 /*!
@@ -365,21 +430,21 @@ void QChartAxis::setMax(qreal max)
 void QChartAxis::setRange(qreal min, qreal max)
 {
 	bool changed = false;
-    if (!qFuzzyIsNull(m_min - min)) {
-        m_min = min;
+    if (!qFuzzyIsNull(d_ptr->m_min - min)) {
+        d_ptr->m_min = min;
         changed = true;
         emit minChanged(min);
     }
 
-    if (!qFuzzyIsNull(m_max - max)) {
-        m_max = max;
+    if (!qFuzzyIsNull(d_ptr->m_max - max)) {
+        d_ptr->m_max = max;
         changed = true;
         emit maxChanged(max);
     }
 
     if (changed) {
-        emit rangeChanged(m_min,m_max);
-        emit this->changed(m_min, m_max, m_ticksCount, m_niceNumbers);
+        emit rangeChanged(d_ptr->m_min,d_ptr->m_max);
+        emit d_ptr->changed(d_ptr->m_min, d_ptr->m_max, d_ptr->m_ticksCount, d_ptr->m_niceNumbers);
     }
 }
 
@@ -388,11 +453,16 @@ void QChartAxis::setRange(qreal min, qreal max)
  */
 void QChartAxis::setTicksCount(int count)
 {
-    if (m_ticksCount != count) {
-        m_ticksCount = count;
+    if (d_ptr->m_ticksCount != count) {
+        d_ptr->m_ticksCount = count;
 		emit ticksCountChanged(count);
-		emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
+		emit d_ptr->changed(d_ptr->m_min, d_ptr->m_max, d_ptr->m_ticksCount, d_ptr->m_niceNumbers);
 	}
+}
+
+int QChartAxis::ticksCount() const
+{
+    return d_ptr->m_ticksCount;
 }
 
 /*!
@@ -400,11 +470,11 @@ void QChartAxis::setTicksCount(int count)
  */
 void QChartAxis::show()
 {
-   m_axisVisible=true;
-   m_gridLineVisible=true;
-   m_labelsVisible=true;
-   m_shadesVisible=true;
-   emit updated();
+    d_ptr->m_axisVisible=true;
+    d_ptr->m_gridLineVisible=true;
+    d_ptr->m_labelsVisible=true;
+    d_ptr->m_shadesVisible=true;
+    emit d_ptr->updated();
 }
 
 /*!
@@ -412,20 +482,11 @@ void QChartAxis::show()
  */
 void QChartAxis::hide()
 {
-    m_axisVisible = false;
-    m_gridLineVisible = false;
-    m_labelsVisible = false;
-    m_shadesVisible = false;
-    emit updated();
-}
-
-/*!
-    \internal
- */
-void QChartAxis::handleAxisRangeChanged(qreal min, qreal max,int count)
-{
-   setRange(min,max);
-   setTicksCount(count);
+    d_ptr->m_axisVisible = false;
+    d_ptr->m_gridLineVisible = false;
+    d_ptr->m_labelsVisible = false;
+    d_ptr->m_shadesVisible = false;
+    emit d_ptr->updated();
 }
 
 /*!
@@ -433,12 +494,52 @@ void QChartAxis::handleAxisRangeChanged(qreal min, qreal max,int count)
 */
 void QChartAxis::setNiceNumbers(bool enable)
 {
-    if (m_niceNumbers != enable){
-        m_niceNumbers = enable;
-        emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
+    if (d_ptr->m_niceNumbers != enable){
+        d_ptr->m_niceNumbers = enable;
+        emit d_ptr->changed(d_ptr->m_min, d_ptr->m_max, d_ptr->m_ticksCount, d_ptr->m_niceNumbers);
     }
 }
 
+bool  QChartAxis::niceNumbers() const
+{
+    return d_ptr->m_niceNumbers;
+}
+
+QChartAxisCategories* QChartAxis::categories()
+{
+    return &d_ptr->m_category;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QChartAxisPrivate::QChartAxisPrivate(QChartAxis* q):
+q_ptr(q),
+m_axisVisible(true),
+m_gridLineVisible(true),
+m_labelsVisible(true),
+m_labelsAngle(0),
+m_shadesVisible(false),
+m_shadesOpacity(1.0),
+m_min(0),
+m_max(0),
+m_ticksCount(5),
+m_niceNumbers(false)
+{
+
+}
+
+QChartAxisPrivate::~QChartAxisPrivate()
+{
+
+}
+
+void QChartAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
+{
+   q_ptr->setRange(min,max);
+   q_ptr->setTicksCount(count);
+}
+
 #include "moc_qchartaxis.cpp"
+#include "moc_qchartaxis_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

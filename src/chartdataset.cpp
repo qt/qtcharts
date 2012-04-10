@@ -20,16 +20,12 @@
 
 #include "chartdataset_p.h"
 #include "qchartaxis.h"
-//series
+#include "qchartaxis_p.h"
 #include "qseries_p.h"
-#include "qlineseries.h"
-#include "qareaseries.h"
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
 #include "qpieseries.h"
-#include "qscatterseries.h"
-#include "qsplineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -68,10 +64,10 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 
     if(!domain) {
         domain = new Domain(axisY);
-        QObject::connect(axisY,SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,bool)));
-        QObject::connect(axisX(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisXChanged(qreal,qreal,int,bool)));
-        QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axisY,SLOT(handleAxisRangeChanged(qreal,qreal,int)));
-        QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),axisX(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
+        QObject::connect(axisY->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,bool)));
+        QObject::connect(axisX()->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisXChanged(qreal,qreal,int,bool)));
+        QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axisY->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
+        QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),axisX()->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
         //initialize
         m_axisDomainMap.insert(axisY,domain);
         emit axisAdded(axisY,domain);

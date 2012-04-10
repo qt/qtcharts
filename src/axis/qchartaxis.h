@@ -28,6 +28,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QChartAxisPrivate;
+
 class QTCOMMERCIALCHART_EXPORT QChartAxis : public QObject
 {
 	Q_OBJECT
@@ -37,54 +39,54 @@ public:
     ~QChartAxis();
 
     //axis handling
-    bool isAxisVisible() const { return m_axisVisible; }
+    bool isAxisVisible() const;
     void setAxisVisible(bool visible);
     void setAxisPen(const QPen &pen);
-    QPen axisPen() const { return m_axisPen; }
+    QPen axisPen() const;
 
     //grid handling
-    bool isGridLineVisible() const { return m_gridLineVisible; }
+    bool isGridLineVisible() const;
     void setGridLineVisible(bool visible);
     void setGridLinePen(const QPen &pen);
-    QPen gridLinePen() const { return m_gridLinePen; }
+    QPen gridLinePen() const;
 
     //labels handling
-    bool labelsVisible() const { return m_labelsVisible; }
+    bool labelsVisible() const;
     void setLabelsVisible(bool visible);
     void setLabelsPen(const QPen &pen);
-    QPen labelsPen() const { return m_labelsPen;}
+    QPen labelsPen() const;
     void setLabelsBrush(const QBrush &brush);
-    QBrush labelsBrush() const { return m_labelsBrush; }
+    QBrush labelsBrush() const;
     void setLabelsFont(const QFont &font);
-    QFont labelsFont() const { return m_labelsFont; }
+    QFont labelsFont() const;
     void setLabelsAngle(int angle);
-    int labelsAngle() const { return m_labelsAngle; }
+    int labelsAngle() const;
 
     //shades handling
-    bool shadesVisible() const { return m_shadesVisible; }
+    bool shadesVisible() const;
     void setShadesVisible(bool visible);
     void setShadesPen(const QPen &pen);
-    QPen shadesPen() const { return m_shadesPen; }
+    QPen shadesPen() const;
     void setShadesBrush(const QBrush &brush);
-    QBrush shadesBrush() const { return m_shadesBrush; }
+    QBrush shadesBrush() const;
     void setShadesOpacity(qreal opacity);
-    qreal shadesOpacity() const { return m_shadesOpacity; }
+    qreal shadesOpacity() const;
 
     //range handling
     void setMin(qreal min);
-    qreal min() const { return m_min; }
+    qreal min() const;
     void setMax(qreal max);
-    qreal max() const { return m_max; }
+    qreal max() const;
     void setRange(qreal min, qreal max);
 
     //ticks handling
     void setTicksCount(int count);
-    int ticksCount() const { return m_ticksCount;}
+    int ticksCount() const;
 
     void setNiceNumbers(bool enable);
-    bool niceNumbers() const { return m_niceNumbers;}
+    bool niceNumbers() const;
 
-    QChartAxisCategories* categories() { return &m_category; }
+    QChartAxisCategories* categories();
 
     void show();
     void hide();
@@ -95,39 +97,11 @@ Q_SIGNALS:
 	void rangeChanged(qreal min, qreal max);
 	void ticksCountChanged(int count);
 
-//interal signal
-	void updated();
-	void changed(qreal min, qreal max, int tickCount,bool niceNumbers);
-//internal slot
-public Q_SLOTS:
-	void handleAxisRangeChanged(qreal min, qreal max,int count);
-
 private:
-    bool m_axisVisible;
-    QPen m_axisPen;
-    QBrush m_axisBrush;
-
-    bool m_gridLineVisible;
-    QPen m_gridLinePen;
-
-    bool m_labelsVisible;
-    QPen m_labelsPen;
-    QBrush m_labelsBrush;
-    QFont m_labelsFont;
-    int m_labelsAngle;
-
-    bool m_shadesVisible;
-    QPen m_shadesPen;
-    QBrush m_shadesBrush;
-    qreal m_shadesOpacity;
-
-    qreal m_min;
-    qreal m_max;
-
-    int m_ticksCount;
-    QChartAxisCategories m_category;
-
-    bool m_niceNumbers;
+	QScopedPointer<QChartAxisPrivate> d_ptr;
+    Q_DISABLE_COPY(QChartAxis);
+    friend class ChartDataSet;
+    friend class Axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
