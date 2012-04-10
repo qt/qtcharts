@@ -41,6 +41,7 @@ public Q_SLOTS:
     void handleUpdated();
 
 protected:
+    void setLayout(QVector<QPointF> &points);
     void setLayout(QVector<QPointF> &points,QVector<QPointF> &controlPoints);
     void updateLayout(QVector<QPointF> &oldPoints,QVector<QPointF> &newPoints,int index);
 
