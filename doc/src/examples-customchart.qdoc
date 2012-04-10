@@ -1,7 +1,26 @@
 /*!
-     \example examples/customchart
-     \title Custom chart example
-     \subtitle
+    \example examples/customchart
+    \title Custom chart example
+    \subtitle
 
-     This example shows how to customize the appearance of the whole chart.
+    This example shows how to customize the appearance of the different elements on a chart.
+    \image custom_chart.png
+
+    We begin by creating a simple line series and a chart object.
+    \snippet ../examples/customchart/main.cpp 1
+
+    Let the customization begin. First we customize the series and the chart's title and background.
+    \snippet ../examples/customchart/main.cpp 2
+
+    Then we customize the axes.
+    \snippet ../examples/customchart/main.cpp 3
+
+    And the axis label values and ranges.
+    \snippet ../examples/customchart/main.cpp 4
+
+    Finally we create a view containing the chart.
+    \snippet ../examples/customchart/main.cpp 5
+
+    Now we are ready to show the chart on a main window.
+    \snippet ../examples/customchart/main.cpp 6
 */

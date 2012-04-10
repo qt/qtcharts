@@ -31,53 +31,64 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
-    QPen blue(Qt::yellow);
-    blue.setWidth(3);
-    series->setPen(blue);
+    *series << QPointF(0, 6) << QPointF(2, 4) << QPointF(3, 8) << QPointF(7, 4) << QPointF(10,5);
+    QChart* chart = new QChart();
+    chart->addSeries(series);
 //![1]
 
 //![2]
-    *series << QPointF(0, 6) << QPointF(2, 4) << QPointF(3, 8) << QPointF(7, 4) << QPointF(10,5);
-//![2]
+    // Customize series
+    QPen pen(QRgb(0xfdb157));
+    pen.setWidth(5);
+    series->setPen(pen);
 
-//![3]
-    QChart* chart = new QChart();
-    chart->addSeries(series);
-    chart->setTitle("Simple customchart example");
-//![3]
-
-//![4]
+    // Customize chart title
     QFont font;
     font.setPixelSize(18);
     chart->setTitleFont(font);
-    chart->setTitleBrush(Qt::yellow);
+    chart->setTitleBrush(QBrush(Qt::white));
+    chart->setTitle("Customchart example");
 
+    // Customize chart background
     QLinearGradient backgroundGradient;
     backgroundGradient.setStart(QPointF(0,0));
     backgroundGradient.setFinalStop(QPointF(0,1));
-    backgroundGradient.setColorAt(0.0, 0x3cc63c);
-    backgroundGradient.setColorAt(1.0, 0x26f626);
+    backgroundGradient.setColorAt(0.0, QRgb(0xd2d0d1));
+    backgroundGradient.setColorAt(1.0, QRgb(0x4c4547));
     backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
     chart->setBackgroundBrush(backgroundGradient);
-//![4]
+//![2]
 
-//![5]
-    QPen black(Qt::black);
+//![3]
     QChartAxis* axisX = chart->axisX();
     QChartAxis* axisY = chart->axisY();
 
-    axisX->setAxisPen(black);
-    axisY->setAxisPen(black);
+    // Customize axis label font
+    QFont labelsFont;
+    labelsFont.setPixelSize(12);
+    axisX->setLabelsFont(labelsFont);
+    axisY->setLabelsFont(labelsFont);
+
+    // Customize axis colors
+    QPen axisPen(QRgb(0xd18952));
+    axisPen.setWidth(2);
+    axisX->setAxisPen(axisPen);
+    axisY->setAxisPen(axisPen);
+
+    // Customize axis label colors
+    QBrush axisBrush(Qt::white);
+    axisX->setLabelsBrush(axisBrush);
+    axisY->setLabelsBrush(axisBrush);
+
+    // Customize grid lines and shades
     axisX->setGridLineVisible(false);
     axisY->setGridLineVisible(false);
-
     axisY->setShadesPen(Qt::NoPen);
-    axisY->setShadesOpacity(0.5);
-    axisY->setShadesBrush(Qt::white);
+    axisY->setShadesBrush(QBrush(QRgb(0xa5a2a3)));
     axisY->setShadesVisible(true);
-//![5]
+//![3]
 
-//![6]
+//![4]
     QChartAxisCategories* categoriesX = chart->axisX()->categories();
     categoriesX->insert(1,"low");
     categoriesX->insert(5,"optimal");
@@ -87,26 +98,24 @@ int main(int argc, char *argv[])
     categoriesY->insert(1,"slow");
     categoriesY->insert(5,"med");
     categoriesY->insert(10,"fast");
-//![6]
 
-//![7]
     axisX->setRange(0,10);
     axisX->setTicksCount(4);
     axisY->setRange(0,10);
     axisY->setTicksCount(4);
-//![7]
+//![4]
 
-//![8]
+//![5]
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
-//![8]
+//![5]
 
-//![9]
+//![6]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
-//![9]
+//![6]
 
     return a.exec();
 }
