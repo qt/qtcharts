@@ -107,7 +107,7 @@ private:
 class BarLegendMarker : public LegendMarker
 {
 public:
-    BarLegendMarker(QBarSeries *barseires, QBarSet *barset,QLegend *legend);
+    BarLegendMarker(QBarSeries *barseries, QBarSet *barset,QLegend *legend);
 protected:
     void updated();
 private:

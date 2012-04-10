@@ -26,6 +26,7 @@
 #include "qpieseries.h"
 #include "qpieslice.h"
 #include "qbarset.h"
+#include "qbarset_p.h"
 #include "qareaseries.h"
 #include "qareaseries_p.h"
 #include <QPainter>
@@ -134,11 +135,11 @@ void AreaLegendMarker::updated()
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-BarLegendMarker::BarLegendMarker(QBarSeries *series,QBarSet *barset, QLegend *legend) : LegendMarker(series,legend),
+BarLegendMarker::BarLegendMarker(QBarSeries *barseries,QBarSet *barset, QLegend *legend) : LegendMarker(barseries,legend),
 m_barset(barset)
 {
-    QObject::connect(this, SIGNAL(selected()),series, SIGNAL(selected()));
-    QObject::connect(barset, SIGNAL(valueChanged()), this, SLOT(updated()));
+    QObject::connect(this, SIGNAL(selected()),barseries, SIGNAL(selected()));
+    QObject::connect(barset->d_ptr.data(), SIGNAL(valueChanged()), this, SLOT(updated()));
     updated();
 }
 
