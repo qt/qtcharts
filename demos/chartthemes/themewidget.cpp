@@ -129,7 +129,7 @@ DataTable ThemeWidget::generateRandomData(int listCount,int valueMax,int valueCo
             yValue = yValue + (qreal) (qrand() % valueMax) / (qreal) valueCount;
             QPointF value((j + (qreal) rand() / (qreal) RAND_MAX) * ((qreal) m_valueMax / (qreal) valueCount),
                           yValue);
-            QString label = "Item " + QString::number(i) + ":" + QString::number(j);
+            QString label = "Slice " + QString::number(i) + ":" + QString::number(j);
             dataList << Data(value, label);
         }
         dataTable << dataList;
@@ -219,7 +219,7 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
 //            QPercentBarSeries* series = new QPercentBarSeries(categories, chart);
     QStackedBarSeries* series = new QStackedBarSeries(categories, chart);
     for (int i(0); i < m_dataTable.count(); i++) {
-        QBarSet *set = new QBarSet("Set" + QString::number(i));
+        QBarSet *set = new QBarSet("Bar set " + QString::number(i));
         foreach (Data data, m_dataTable[i])
             *set << data.first.y();
         series->appendBarSet(set);
