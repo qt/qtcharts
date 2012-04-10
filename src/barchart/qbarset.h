@@ -35,6 +35,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 
 public:
     QBarSet(QString name, QObject *parent = 0);
+    virtual ~QBarSet();
 
     void setName(QString name);
     QString name() const;

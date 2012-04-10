@@ -108,7 +108,6 @@ private Q_SLOTS:
 
 protected:
     Q_DECLARE_PRIVATE(QBarSeries)
-    Q_DISABLE_COPY(QBarSeries)
 
 /*
     BarChartModel *m_internalModel;     // TODO: this may change... current "2 models" situation doesn't look good.

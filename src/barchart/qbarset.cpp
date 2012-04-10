@@ -72,6 +72,11 @@ QBarSet::QBarSet(QString name, QObject *parent)
 {
 }
 
+QBarSet::~QBarSet()
+{
+
+}
+
 /*!
     Sets new \a name for set.
 */
