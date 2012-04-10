@@ -14,7 +14,6 @@
         <td valign="top">
         <ul>
             <li><a href="demos-chartthemes.html">Chart themes</a></li>
-            <li><a href="demos-gdpbarchart.html">GDP bar chart</a></li>
             <li><a href="demos-piechartcustomization.html">Pie chart customization</a></li>
         </ul>
         </td>

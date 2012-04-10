@@ -658,7 +658,7 @@ void QBarSeriesPrivate::setModelMapping(int categories, int bottomBoundry, int t
 {
     Q_Q(QBarSeries);
 
-    if (!m_model)
+    if (m_model == 0)
         return;
 
     m_mapCategories = categories;
