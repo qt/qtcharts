@@ -24,6 +24,7 @@
 #include "qbarset_p.h"
 #include "barchartmodel_p.h"
 #include "domain_p.h"
+#include "legendmarker_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
@@ -803,6 +804,18 @@ Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
 
+}
+
+QList<LegendMarker*> QBarSeriesPrivate::createLegendMarker(QLegend* legend)
+{
+    Q_Q(QBarSeries);
+    QList<LegendMarker*> markers;
+    foreach(QBarSet* set, q->barSets()) {
+        BarLegendMarker* marker = new BarLegendMarker(q,set,legend);
+        markers << marker;
+    }
+
+    return markers;
 }
 
 #include "moc_qbarseries.cpp"

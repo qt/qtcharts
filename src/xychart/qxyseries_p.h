@@ -44,6 +44,7 @@ public:
     QXYSeriesPrivate(QXYSeries* q);
 
     void scaleDomain(Domain& domain);
+    QList<LegendMarker*> createLegendMarker(QLegend* legend);
 
 Q_SIGNALS:
     void updated();

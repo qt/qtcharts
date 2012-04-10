@@ -19,6 +19,7 @@ public:
 
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter* presenter);
+    QList<LegendMarker*> createLegendMarker(QLegend* legend);
 
     bool setModel(QAbstractItemModel *model);
     void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);

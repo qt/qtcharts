@@ -25,6 +25,7 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
+#include "legendmarker_p.h"
 #include <QAbstractItemModel>
 #include <QDebug>
 
@@ -714,6 +715,17 @@ Chart* QPieSeriesPrivate::createGraphics(ChartPresenter* presenter)
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return pie;
+}
+
+QList<LegendMarker*> QPieSeriesPrivate::createLegendMarker(QLegend* legend)
+{
+    Q_Q(QPieSeries);
+    QList<LegendMarker*> markers;
+    foreach(QPieSlice* slice, q->slices()) {
+        PieLegendMarker* marker = new PieLegendMarker(q,slice,legend);
+        markers << marker;
+    }
+    return markers;
 }
 
 #include "moc_qpieseries.cpp"

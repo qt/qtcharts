@@ -20,6 +20,8 @@
 
 #include "qchart.h"
 #include "qchart_p.h"
+#include "legendscroller_p.h"
+#include "qlegend_p.h"
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 
@@ -67,12 +69,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
     d_ptr(new QChartPrivate())
 {
-    d_ptr->m_legend = new  ScrolledQLegend(this);
-    d_ptr->m_legend->setVisible(false);
     d_ptr->m_dataset = new ChartDataSet(this);
     d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
-    d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);
     d_ptr->createConnections();
+    d_ptr->m_legend = new LegendScroller(this);
+  //  d_ptr->m_legend->setVisible(false);
+    d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);
+
     //TODO:fix me setMinimumSize(d_ptr->m_padding.left() * 3, d_ptr->m_padding.top() * 3);
 }
 
@@ -400,8 +403,7 @@ QChartPrivate::~QChartPrivate()
 
 void QChartPrivate::createConnections()
 {
-    QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_legend,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_legend,SLOT(handleSeriesRemoved(QSeries*)));
+
     QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_presenter,SLOT(handleSeriesAdded(QSeries*,Domain*)));
     QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_presenter,SLOT(handleSeriesRemoved(QSeries*)));
     QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QChartAxis*,Domain*)));

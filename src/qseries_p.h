@@ -39,6 +39,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class Domain;
 class ChartPresenter;
 class Chart;
+class LegendMarker;
+class QLegend;
 
 class QSeriesPrivate : public QObject
 {
@@ -48,6 +50,7 @@ public:
 
     virtual void scaleDomain(Domain& domain) = 0;
     virtual Chart* createGraphics(ChartPresenter* presenter) = 0;
+    virtual QList<LegendMarker*> createLegendMarker(QLegend* legend) = 0;
 
 protected:
     QSeries *q_ptr;

@@ -27,37 +27,48 @@
 //
 // We mean it.
 
-#ifndef QAREASERIES_P_H_
-#define QAREASERIES_P_H_
+#ifndef QLEGEND_P_H_
+#define QLEGEND_P_H_
 
-#include "qseries_p.h"
+#include "qlegend.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAreaSeries;
+class ChartPresenter;
 
-class QAreaSeriesPrivate: public QSeriesPrivate
+class QLegendPrivate : public QObject
 {
     Q_OBJECT
-
 public:
-    QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries,QAreaSeries* q);
+    QLegendPrivate(ChartPresenter *chart,QLegend *q);
+    ~QLegendPrivate();
 
-    void scaleDomain(Domain& domain);
-    Chart* createGraphics(ChartPresenter* presenter);
-    QList<LegendMarker*> createLegendMarker(QLegend* legend);
+    void setOffset(qreal x, qreal y);
+    void updateLayout();
 
-Q_SIGNALS:
-    void updated();
+public Q_SLOTS:
+    void handleSeriesAdded(QSeries *series, Domain *domain);
+    void handleSeriesRemoved(QSeries *series);
 
-protected:
+private:
+    QLegend *q_ptr;
+    ChartPresenter *m_presenter;
+    QGraphicsItemGroup* m_markers;
+    QLegend::Alignments m_alignment;
     QBrush m_brush;
     QPen m_pen;
-    QLineSeries* m_upperSeries;
-    QLineSeries* m_lowerSeries;
-    bool m_pointsVisible;
-private:
-    Q_DECLARE_PUBLIC(QAreaSeries);
+    QRectF m_rect;
+    qreal m_offsetX;
+    qreal m_offsetY;
+    qreal m_minWidth;
+    qreal m_minHeight;
+    qreal m_width;
+    qreal m_height;
+    bool m_attachedToChart;
+    bool m_backgroundVisible;
+
+friend class QLegend;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

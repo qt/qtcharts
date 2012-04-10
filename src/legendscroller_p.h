@@ -27,37 +27,44 @@
 //
 // We mean it.
 
-#ifndef QAREASERIES_P_H_
-#define QAREASERIES_P_H_
 
-#include "qseries_p.h"
+#ifndef LEGENDSCROLLER_P_H_
+#define LEGENDSCROLLER_P_H_
+
+#include "qlegend.h"
+#include "scroller_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAreaSeries;
-
-class QAreaSeriesPrivate: public QSeriesPrivate
+class LegendScroller: public QLegend, public Scroller
 {
-    Q_OBJECT
 
 public:
-    QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries,QAreaSeries* q);
+    LegendScroller(QChart *chart):QLegend(chart)
+    {
+    }
 
-    void scaleDomain(Domain& domain);
-    Chart* createGraphics(ChartPresenter* presenter);
-    QList<LegendMarker*> createLegendMarker(QLegend* legend);
+    void setOffset(const QPointF& point)
+    {
+        QLegend::setOffset(point);
+    }
+    QPointF offset() const
+    {
+        return QLegend::offset();
+    }
 
-Q_SIGNALS:
-    void updated();
-
-protected:
-    QBrush m_brush;
-    QPen m_pen;
-    QLineSeries* m_upperSeries;
-    QLineSeries* m_lowerSeries;
-    bool m_pointsVisible;
-private:
-    Q_DECLARE_PUBLIC(QAreaSeries);
+    void mousePressEvent(QGraphicsSceneMouseEvent* event){
+        Scroller::mousePressEvent(event);
+        //QLegend::mousePressEvent(event);
+    }
+    void mouseMoveEvent(QGraphicsSceneMouseEvent* event){
+        Scroller::mouseMoveEvent(event);
+        //QLegend::mouseMoveEvent(event);
+    }
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event){
+        Scroller::mouseReleaseEvent(event);
+        //QLegend::mouseReleaseEvent(event);
+    }
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

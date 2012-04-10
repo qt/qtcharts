@@ -65,6 +65,7 @@ protected:
     QScopedPointer<QSeriesPrivate> d_ptr;
     friend class ChartDataSet;
     friend class ChartPresenter;
+    friend class QLegendPrivate;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

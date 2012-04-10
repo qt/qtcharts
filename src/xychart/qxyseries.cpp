@@ -21,6 +21,7 @@
 #include "qxyseries.h"
 #include "qxyseries_p.h"
 #include "domain_p.h"
+#include "legendmarker_p.h"
 #include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -644,6 +645,13 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
 
     domain.setRangeX(minX,maxX,tickXCount);
     domain.setRangeY(minY,maxY,tickYCount);
+}
+
+QList<LegendMarker*> QXYSeriesPrivate::createLegendMarker(QLegend* legend)
+{
+    Q_Q(QXYSeries);
+    QList<LegendMarker*> list;
+    return list << new XYLegendMarker(q,legend);
 }
 
 #include "moc_qxyseries.cpp"

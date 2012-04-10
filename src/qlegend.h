@@ -25,7 +25,6 @@
 #include <QGraphicsWidget>
 #include <QPen>
 #include <QBrush>
-#include "private/scroller_p.h" //TODO fixme
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -39,7 +38,9 @@ class QPieSeries;
 class QAreaSeries;
 class LegendScrollButton;
 class QSeries;
+
 class QChart;
+class QLegendPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
@@ -60,6 +61,8 @@ private:
     explicit QLegend(QChart *chart);
 
 public:
+    ~QLegend();
+
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     QRectF boundingRect() const;
 
@@ -76,8 +79,8 @@ public:
     void attachToChart();
     bool isAttachedToChart();
 
-    qreal minWidth() const { return m_minWidth;}
-    qreal minHeight() const { return m_minHeight;}
+    qreal minWidth() const;
+    qreal minHeight() const;
 
     void setBackgroundVisible(bool visible = true);
     bool isBackgroundVisible() const;
@@ -90,79 +93,10 @@ protected:
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
 
-public Q_SLOTS:
-    // PIMPL --->
-    void handleSeriesAdded(QSeries *series, Domain *domain);
-    void handleSeriesRemoved(QSeries *series);
-    void handleAdded(QList<QPieSlice *> slices);
-    void handleRemoved(QList<QPieSlice *> slices);
-    // PIMPL <---
-
 private:
-    // PIMPL --->
-    void appendMarkers(QAreaSeries *series);
-    void appendMarkers(QXYSeries *series);
-    void appendMarkers(QBarSeries *series);
-    void appendMarkers(QPieSeries *series);
-    void deleteMarkers(QSeries *series);
-    void updateLayout();
-
-private:
-    qreal m_margin;
-
-    QRectF m_rect;
-    qreal m_offsetX;
-    qreal m_offsetY;
-
-    //QList<LegendMarker *> m_markers;
-
-    QBrush m_brush;
-    QPen m_pen;
-    QLegend::Alignments m_alignment;
-    QGraphicsItemGroup* m_markers;
-
-
-    bool m_attachedToChart;
-
-    QChart *m_chart;
-    qreal m_minWidth;
-    qreal m_minHeight;
-    qreal m_width;
-    qreal m_height;
-    bool m_backgroundVisible;
-    friend class ScrolledQLegend;
-    // <--- PIMPL
-};
-
-class ScrolledQLegend: public QLegend, public Scroller
-{
-
-public:
-    ScrolledQLegend(QChart *chart):QLegend(chart)
-    {
-    }
-
-    void setOffset(const QPointF& point)
-    {
-        QLegend::setOffset(point);
-    }
-    QPointF offset() const
-    {
-        return QLegend::offset();
-    }
-
-    void mousePressEvent(QGraphicsSceneMouseEvent* event){
-        Scroller::mousePressEvent(event);
-        //QLegend::mousePressEvent(event);
-    }
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event){
-        Scroller::mouseMoveEvent(event);
-        //QLegend::mouseMoveEvent(event);
-    }
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event){
-        Scroller::mouseReleaseEvent(event);
-        //QLegend::mouseReleaseEvent(event);
-    }
+    QScopedPointer<QLegendPrivate> d_ptr;
+    Q_DISABLE_COPY(QLegend);
+    friend class LegendScroller;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
