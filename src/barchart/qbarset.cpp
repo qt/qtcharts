@@ -67,8 +67,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QBarSet::QBarSet(QString name, QObject *parent)
     : QObject(parent)
     ,d_ptr(new QBarSetPrivate(name,this))
-//    ,m_name(name)
-//    ,m_labelsVisible(false)
 {
 }
 

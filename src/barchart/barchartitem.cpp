@@ -82,9 +82,10 @@ void BarChartItem::dataChanged()
         QString category = m_series->d_func()->categoryName(c);
         for (int s = 0; s < m_series->barsetCount(); s++) {
             QBarSet *set = m_series->d_func()->barsetAt(s);
-            Bar *bar = new Bar(category,this);
+            Bar *bar = new Bar(set,category,this);
             m_bars.append(bar);
             connect(bar, SIGNAL(clicked(QString,Qt::MouseButtons)), set, SIGNAL(clicked(QString,Qt::MouseButtons)));
+            connect(bar, SIGNAL(clicked(QBarSet*,QString,Qt::MouseButtons)), m_series, SIGNAL(clicked(QBarSet*,QString,Qt::MouseButtons)));
             connect(bar, SIGNAL(hoverEntered(QPoint)), set->d_ptr.data(), SLOT(barHoverEnterEvent(QPoint)));
             connect(bar, SIGNAL(hoverLeaved()), set->d_ptr.data(), SLOT(barHoverLeaveEvent()));
             m_layout.append(QRectF(0, 0, 0, 0));
@@ -97,7 +98,7 @@ void BarChartItem::dataChanged()
             QBarSet *set = m_series->d_func()->barsetAt(s);
             BarLabel *value = new BarLabel(*set, this);
             m_labels.append(value);
-            connect(set,SIGNAL(labelsVisibleChanged(bool)),value,SLOT(labelsVisibleChanged(bool)));
+            connect(set->d_ptr.data(),SIGNAL(labelsVisibleChanged(bool)),value,SLOT(labelsVisibleChanged(bool)));
         }
     }
 }

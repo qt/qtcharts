@@ -25,9 +25,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Bar::Bar(QString category, QGraphicsItem *parent)
-    : QGraphicsRectItem(parent),
-    m_category(category)
+Bar::Bar(QBarSet *barset, QString category, QGraphicsItem *parent) : QGraphicsRectItem(parent),
+    m_category(category),
+    m_barset(barset)
 {
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setAcceptHoverEvents(true);
@@ -36,6 +36,7 @@ Bar::Bar(QString category, QGraphicsItem *parent)
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit clicked(m_category, event->button());
+    emit clicked(m_barset, m_category, event->button());
 }
 
 void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)

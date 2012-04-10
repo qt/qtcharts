@@ -87,7 +87,6 @@ void QBarSeries::appendBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
     d->m_internalModel->appendBarSet(set);
-    QObject::connect(set->d_ptr.data(), SIGNAL(clicked(QString,Qt::MouseButtons)), d, SLOT(barsetClicked(QString,Qt::MouseButtons)));
     QObject::connect(set->d_ptr.data(), SIGNAL(valueChanged()), d, SLOT(barsetChanged()));
     emit d->restructuredBars();
 }
@@ -100,7 +99,6 @@ void QBarSeries::appendBarSet(QBarSet *set)
 void QBarSeries::removeBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
-    QObject::disconnect(set->d_ptr.data(), SIGNAL(clicked(QString,Qt::MouseButtons)), d, SLOT(barsetClicked(QString,Qt::MouseButtons)));
     d->m_internalModel->removeBarSet(set);
     emit d->restructuredBars();
 }
@@ -115,7 +113,6 @@ void QBarSeries::appendBarSets(QList<QBarSet* > sets)
     Q_D(QBarSeries);
     foreach (QBarSet* barset, sets) {
         d->m_internalModel->appendBarSet(barset);
-        QObject::connect(barset, SIGNAL(clicked(QString,Qt::MouseButtons)), this, SLOT(barsetClicked(QString,Qt::MouseButtons)));
         QObject::connect(barset, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
     }
     emit d->restructuredBars();
@@ -132,7 +129,6 @@ void QBarSeries::removeBarSets(QList<QBarSet* > sets)
     Q_D(QBarSeries);
 
     foreach (QBarSet* barset, sets) {
-        QObject::disconnect(barset, SIGNAL(clicked(QString,Qt::MouseButtons)), this, SLOT(barsetClicked(QString,Qt::MouseButtons)));
         d->m_internalModel->removeBarSet(barset);
     }
     emit d->restructuredBars();
@@ -285,19 +281,14 @@ void QBarSeriesPrivate::setToolTipEnabled(bool enabled)
     if (enabled) {
         for (int i=0; i<m_internalModel->barsetCount(); i++) {
             QBarSet *set = m_internalModel->barsetAt(i);
-            connect(set, SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
+            connect(set->d_ptr.data(), SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
         }
     } else {
         for (int i=0; i<m_internalModel->barsetCount(); i++) {
             QBarSet *set = m_internalModel->barsetAt(i);
-            disconnect(set, SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
+            disconnect(set->d_ptr.data(), SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
         }
     }
-}
-
-void QBarSeriesPrivate::barsetClicked(QString category, Qt::MouseButtons button)
-{
-    emit clicked(qobject_cast<QBarSet*>(sender()), category, button);
 }
 
 qreal QBarSeriesPrivate::min()

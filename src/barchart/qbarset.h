@@ -74,6 +74,7 @@ private:
     friend class QBarSeries;
     friend class BarLegendMarker;
     friend class BarChartItem;
+    friend class QBarSeriesPrivate;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

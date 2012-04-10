@@ -36,7 +36,7 @@ public:
     BarChartModel& modelInternal();
 
 Q_SIGNALS:
-    void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);        // Up to user of api, what to do with these signals
+    void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);
     void selected();
     void updatedBars();
     void restructuredBars();
@@ -44,7 +44,6 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void setToolTipEnabled(bool enabled = true);           // enables tooltips
-    void barsetClicked(QString category, Qt::MouseButtons button);
 
 private Q_SLOTS:
     // slots for updating bars when data in model changes

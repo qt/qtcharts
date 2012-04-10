@@ -26,12 +26,14 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QBarSet;
+
 // Single visual bar item of chart
 class Bar : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    Bar(QString category, QGraphicsItem *parent = 0);
+    Bar(QBarSet *barset, QString category, QGraphicsItem *parent = 0);
 
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -40,11 +42,13 @@ public:
 
 Q_SIGNALS:
     void clicked(QString category, Qt::MouseButtons button);
+    void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);
     void hoverEntered(QPoint pos);
     void hoverLeaved();
 
 private:
     QString m_category;
+    QBarSet *m_barset;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
