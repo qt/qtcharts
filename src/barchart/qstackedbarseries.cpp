@@ -21,6 +21,7 @@
 #include "qstackedbarseries.h"
 #include "qstackedbarseries_p.h"
 #include "stackedbarchartitem_p.h"
+#include "barchartmodel_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
@@ -69,7 +70,6 @@ QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QBarCategories categories, QS
 
 void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
 {
-    Q_Q(QStackedBarSeries);
     qreal minX(domain.minX());
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
@@ -77,8 +77,8 @@ void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    qreal x = q->categoryCount();
-    qreal y = q->maxCategorySum();
+    qreal x = m_internalModel->categoryCount();
+    qreal y = maxCategorySum();
     minX = qMin(minX, x);
     minY = qMin(minY, y);
     maxX = qMax(maxX, x);

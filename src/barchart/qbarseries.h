@@ -61,65 +61,21 @@ public:
     bool setModel(QAbstractItemModel *model);
     void setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
 
-public:
-    // TODO: Functions below this are not part of api and will be moved
-    // to private implementation, when we start using it
-    // TODO: TO PIMPL --->
-    QBarSet* barsetAt(int index);
-    QString categoryName(int category);
-    qreal min();
-    qreal max();
-    qreal valueAt(int set, int category);
-    qreal percentageAt(int set, int category);
-    qreal categorySum(int category);
-    qreal absoluteCategorySum(int category);
-    qreal maxCategorySum();
-    BarChartModel& modelInternal();
-    // <--- TO PIMPL
-
 protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);
 
 Q_SIGNALS:
-    void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);        // Up to user of api, what to do with these signals
+    void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);
     void selected();
-    //
-    void updatedBars();
-    void restructuredBars();
-
-    // TODO: internal signals, these to private implementation.
-    // TODO: TO PIMPL --->
-//    void showToolTip(QPoint pos, QString tip);
-    // <--- TO PIMPL
 
 public Q_SLOTS:
     void setToolTipEnabled(bool enabled = true);           // enables tooltips
 
-    // TODO: TO PIMPL --->
-    void barsetClicked(QString category, Qt::MouseButtons button);
-    // <--- TO PIMPL
-
-private Q_SLOTS:
-    // slots for updating bars when data in model changes
-    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-    void modelDataAdded(QModelIndex parent, int start, int end);
-    void modelDataRemoved(QModelIndex parent, int start, int end);
-    void barsetChanged();
-
 protected:
     Q_DECLARE_PRIVATE(QBarSeries)
-
-/*
-    BarChartModel *m_internalModel;     // TODO: this may change... current "2 models" situation doesn't look good.
-
-//    QAbstractItemModel* m_model;
-    int m_mapCategories;
-    int m_mapBarBottom;
-    int m_mapBarTop;
-    int m_mapFirst;
-    int m_mapCount;
-    Qt::Orientation m_mapOrientation;
-*/
+    friend class BarChartItem;
+    friend class PercentBarChartItem;
+    friend class StackedBarChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

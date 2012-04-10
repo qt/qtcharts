@@ -21,6 +21,8 @@
 #include "stackedbarchartitem_p.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
+#include "qbarset_p.h"
+#include "qbarseries_p.h"
 #include "qbarset.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -49,7 +51,7 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     for (int category = 0; category < categotyCount; category++) {
         qreal yPos = height + scale * m_domainMinY;
         for (int set=0; set < m_series->barsetCount(); set++) {
-            QBarSet* barSet = m_series->barsetAt(set);
+            QBarSet* barSet = m_series->d_func()->barsetAt(set);
 
             qreal barHeight = barSet->valueAt(category) * scale;
             Bar* bar = m_bars.at(itemIndex);

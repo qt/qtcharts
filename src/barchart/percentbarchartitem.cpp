@@ -21,6 +21,7 @@
 #include "percentbarchartitem_p.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
+#include "qbarseries_p.h"
 #include "qbarset.h"
 #include <QDebug>
 
@@ -49,11 +50,11 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal colSum = m_series->categorySum(category);
+        qreal colSum = m_series->d_func()->categorySum(category);
         qreal percentage = (100 / colSum);
         qreal yPos = height + domainScale * m_domainMinY;
         for (int set=0; set < m_series->barsetCount(); set++) {
-            QBarSet* barSet = m_series->barsetAt(set);
+            QBarSet* barSet = m_series->d_func()->barsetAt(set);
             qreal barHeight = barSet->valueAt(category) * percentage * domainScale;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->pen());
@@ -63,8 +64,8 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
 
             BarLabel* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(m_series->valueAt(set,category))) {
-                int p = m_series->percentageAt(set,category) * 100;
+            if (!qFuzzyIsNull(m_series->d_func()->valueAt(set,category))) {
+                int p = m_series->d_func()->percentageAt(set,category) * 100;
                 QString vString(QString::number(p));
                 vString.truncate(3);
                 vString.append("%");

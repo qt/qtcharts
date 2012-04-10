@@ -73,6 +73,7 @@ private:
     Q_DISABLE_COPY(QBarSet)
     friend class QBarSeries;
     friend class BarLegendMarker;
+    friend class BarChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

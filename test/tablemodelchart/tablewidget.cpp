@@ -314,8 +314,9 @@ void TableWidget::updateChartType(bool toggle)
             barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
             barSeries->setToolTipEnabled(true);
             m_chart->addSeries(barSeries);
-            for (int i = 0; i < barSeries->barsetCount(); i++) {
-                seriesColorHex = "#" + QString::number(barSeries->barsetAt(i)->brush().color().rgb(), 16).right(6).toUpper();
+            QList<QBarSet*> barsets = barSeries->barSets();
+            for (int i = 0; i < barsets.count(); i++) {
+                seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
                 m_model->addMapping(seriesColorHex, QRect(2 + i, 0, 1, 1000));
             }
         }

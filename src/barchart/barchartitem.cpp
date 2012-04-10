@@ -22,7 +22,9 @@
 #include "bar_p.h"
 #include "barlabel_p.h"
 #include "qbarset.h"
+#include "qbarset_p.h"
 #include "qbarseries.h"
+#include "qbarseries_p.h"
 #include "qchart.h"
 #include "qchartaxis.h"
 #include "qchartaxiscategories.h"
@@ -40,9 +42,9 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
     m_series(series)
 {
     setFlag(ItemClipsChildrenToShape);
-    connect(series, SIGNAL(showToolTip(QPoint,QString)), this, SLOT(showToolTip(QPoint,QString)));
-    connect(series, SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
-    connect(series, SIGNAL(restructuredBars()), this, SLOT(handleModelChanged()));
+    connect(series->d_func(), SIGNAL(showToolTip(QPoint,QString)), this, SLOT(showToolTip(QPoint,QString)));
+    connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
+    connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleModelChanged()));
     setZValue(ChartPresenter::BarSeriesZValue);
     dataChanged();
 }
@@ -77,14 +79,14 @@ void BarChartItem::dataChanged()
 
     // Create new graphic items for bars
     for (int c = 0; c < m_series->categoryCount(); c++) {
-        QString category = m_series->categoryName(c);
+        QString category = m_series->d_func()->categoryName(c);
         for (int s = 0; s < m_series->barsetCount(); s++) {
-            QBarSet *set = m_series->barsetAt(s);
+            QBarSet *set = m_series->d_func()->barsetAt(s);
             Bar *bar = new Bar(category,this);
             m_bars.append(bar);
             connect(bar, SIGNAL(clicked(QString,Qt::MouseButtons)), set, SIGNAL(clicked(QString,Qt::MouseButtons)));
-            connect(bar, SIGNAL(hoverEntered(QPoint)), set, SLOT(barHoverEnterEvent(QPoint)));
-            connect(bar, SIGNAL(hoverLeaved()), set, SLOT(barHoverLeaveEvent()));
+            connect(bar, SIGNAL(hoverEntered(QPoint)), set->d_ptr.data(), SLOT(barHoverEnterEvent(QPoint)));
+            connect(bar, SIGNAL(hoverLeaved()), set->d_ptr.data(), SLOT(barHoverLeaveEvent()));
             m_layout.append(QRectF(0, 0, 0, 0));
         }
     }
@@ -92,7 +94,7 @@ void BarChartItem::dataChanged()
     // Create labels
     for (int category = 0; category < m_series->categoryCount(); category++) {
         for (int s = 0; s < m_series->barsetCount(); s++) {
-            QBarSet *set = m_series->barsetAt(s);
+            QBarSet *set = m_series->d_func()->barsetAt(s);
             BarLabel *value = new BarLabel(*set, this);
             m_labels.append(value);
             connect(set,SIGNAL(labelsVisibleChanged(bool)),value,SLOT(labelsVisibleChanged(bool)));
@@ -121,7 +123,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
         qreal xPos = categoryWidth * category + barWidth / 2;
         qreal yPos = height + scale * m_domainMinY;
         for (int set = 0; set < setCount; set++) {
-            QBarSet* barSet = m_series->barsetAt(set);
+            QBarSet* barSet = m_series->d_func()->barsetAt(set);
 
             qreal barHeight = barSet->valueAt(category) * scale;
             Bar* bar = m_bars.at(itemIndex);
