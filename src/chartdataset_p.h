@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef CHARTDATASET_P_H_
-#define CHARTDATASET_P_H_
+#ifndef CHARTDATASET_P_H
+#define CHARTDATASET_P_H
 
 #include "qseries.h"
 #include "domain_p.h"

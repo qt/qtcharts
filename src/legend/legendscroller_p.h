@@ -28,8 +28,8 @@
 // We mean it.
 
 
-#ifndef LEGENDSCROLLER_P_H_
-#define LEGENDSCROLLER_P_H_
+#ifndef LEGENDSCROLLER_P_H
+#define LEGENDSCROLLER_P_H
 
 #include "qlegend.h"
 #include "scroller_p.h"

@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
+#include "barchartmodel_p.h"
+#include "qbarset.h"
 #include <limits.h>
 #include <QVector>
 #include <QDebug>
-#include "barchartmodel_p.h"
-#include "qbarset.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

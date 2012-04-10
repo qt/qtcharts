@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef SCATTERPRESENTER_H
-#define SCATTERPRESENTER_H
+#ifndef SCATTERCHARTITEM_H
+#define SCATTERCHARTITEM_H
 
 #include "qchartglobal.h"
 #include "xychartitem_p.h"

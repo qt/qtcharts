@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QPERCENTBARSERIES_P_H_
-#define QPERCENTBARSERIES_P_H_
+#ifndef QPERCENTBARSERIES_P_H
+#define QPERCENTBARSERIES_P_H
 
 #include "qbarseries_p.h"
 #include "domain_p.h"

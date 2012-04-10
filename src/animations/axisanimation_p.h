@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef AXISANIMATIONITEM_H_
-#define AXISANIMATIONITEM_H_
+#ifndef AXISANIMATION_H
+#define AXISANIMATION_H
 
 #include "axis_p.h"
 #include "chartanimation_p.h"

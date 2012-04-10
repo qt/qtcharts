@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef SCROLLER_P_H_
-#define SCROLLER_P_H_
+#ifndef SCROLLER_P_H
+#define SCROLLER_P_H
 
 #include "qchartglobal.h"
 #include <QBasicTimer>

@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTPRESENTER_H_
-#define CHARTPRESENTER_H_
+#ifndef CHARTPRESENTER_H
+#define CHARTPRESENTER_H
 
 #include "qchartglobal.h"
 #include "chartbackground_p.h" //TODO fix me

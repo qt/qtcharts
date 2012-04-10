@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHART_H_
-#define CHART_H_
+#ifndef CHART_H
+#define CHART_H
 
 #include "qchartglobal.h"
 #include <QRect>

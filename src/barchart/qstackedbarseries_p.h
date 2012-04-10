@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QSTACKEDBARSERIES_P_H_
-#define QSTACKEDBARSERIES_P_H_
+#ifndef QSTACKEDBARSERIES_P_H
+#define QSTACKEDBARSERIES_P_H
 
 #include "qbarseries_p.h"
 #include "domain_p.h"

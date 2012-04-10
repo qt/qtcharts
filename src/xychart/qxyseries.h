@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef QXYSERIES_H_
-#define QXYSERIES_H_
+#ifndef QXYSERIES_H
+#define QXYSERIES_H
 
 #include <qchartglobal.h>
 #include <qseries.h>

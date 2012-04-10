@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef DOMAIN_H_
-#define DOMAIN_H_
+#ifndef DOMAIN_H
+#define DOMAIN_H
 #include "qchartglobal.h"
 #include <QRectF>
 #include <QSizeF>

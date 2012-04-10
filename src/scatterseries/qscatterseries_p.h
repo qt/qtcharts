@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QSCATTERSERIES_P_H_
-#define QSCATTERSERIES_P_H_
+#ifndef QSCATTERSERIES_P_H
+#define QSCATTERSERIES_P_H
 
 #include "qxyseries_p.h"
 

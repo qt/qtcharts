@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QCHARTAXIS_P_H_
-#define QCHARTAXIS_P_H_
+#ifndef QCHARTAXIS_P_H
+#define QCHARTAXIS_P_H
 
 #include "qchartaxis.h"
 

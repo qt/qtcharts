@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef SPLINEANIMATION_P_H_
-#define SPLINEANIMATION_P_H_
+#ifndef SPLINEANIMATION_P_H
+#define SPLINEANIMATION_P_H
 #include "chartanimation_p.h"
 #include <QPointF>
 

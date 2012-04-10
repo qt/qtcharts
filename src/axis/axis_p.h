@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef AXISITEM_H_
-#define AXISITEM_H_
+#ifndef AXIS_H
+#define AXIS_H
 
 #include "qchartglobal.h"
 #include "chart_p.h"

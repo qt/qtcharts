@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTBACKGROUND_H_
-#define CHARTBACKGROUND_H_
+#ifndef CHARTBACKGROUND_H
+#define CHARTBACKGROUND_H
 
 #include "qchartglobal.h"
 #include <QGraphicsRectItem>

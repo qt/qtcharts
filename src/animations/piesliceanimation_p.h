@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef PIESLICEANIMATION_P_H_
-#define PIESLICEANIMATION_P_H_
+#ifndef PIESLICEANIMATION_P_H
+#define PIESLICEANIMATION_P_H
 
 #include "piechartitem_p.h"
 #include <QVariantAnimation>

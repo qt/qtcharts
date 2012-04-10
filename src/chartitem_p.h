@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTITEM_H_
-#define CHARTITEM_H_
+#ifndef CHARTITEM_H
+#define CHARTITEM_H
 
 #include "chart_p.h"
 #include "chartpresenter_p.h"

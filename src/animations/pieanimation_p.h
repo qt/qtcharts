@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef PIEANIMATION_P_H_
-#define PIEANIMATION_P_H_
+#ifndef PIEANIMATION_P_H
+#define PIEANIMATION_P_H
 
 #include "chartanimation_p.h"
 #include "piechartitem_p.h"

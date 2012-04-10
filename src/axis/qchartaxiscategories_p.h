@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QCHARTAXISCATEGORIES_P_H_
-#define QCHARTAXISCATEGORIES_P_H_
+#ifndef QCHARTAXISCATEGORIES_P_H
+#define QCHARTAXISCATEGORIES_P_H
 
 #include "qchartaxiscategories.h"
 

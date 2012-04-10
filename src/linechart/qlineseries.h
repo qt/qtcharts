@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef QLINESERIES_H_
-#define QLINESERIES_H_
+#ifndef QLINESERIES_H
+#define QLINESERIES_H
 
 #include <qchartglobal.h>
 #include <qxyseries.h>
@@ -33,12 +33,12 @@ class QTCOMMERCIALCHART_EXPORT QLineSeries : public QXYSeries
 {
 public:
     explicit QLineSeries(QObject *parent=0);
-	~QLineSeries();
+    ~QLineSeries();
 
-	QSeries::QSeriesType type() const;
+    QSeries::QSeriesType type() const;
 
 protected:
-	QLineSeries(QLineSeriesPrivate &d,QObject *parent = 0);
+    QLineSeries(QLineSeriesPrivate &d,QObject *parent = 0);
 
 private:
     Q_DECLARE_PRIVATE(QLineSeries);

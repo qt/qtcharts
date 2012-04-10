@@ -33,6 +33,7 @@
 #include "qchartview.h"
 
 class QGraphicsScene;
+class ChartPresenter;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

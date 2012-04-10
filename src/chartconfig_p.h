@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTCONFIG_H_
-#define CHARTCONFIG_H_
+#ifndef CHARTCONFIG_H
+#define CHARTCONFIG_H
 
 #include "qchartglobal.h"
 #ifdef Q_CC_MSVC

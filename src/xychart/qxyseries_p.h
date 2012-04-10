@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QXYSERIES_P_H_
-#define QXYSERIES_P_H_
+#ifndef QXYSERIES_P_H
+#define QXYSERIES_P_H
 
 #include "qseries_p.h"
 

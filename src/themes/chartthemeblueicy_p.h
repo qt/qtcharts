@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTTHEMEBLUECEICY_P_H
-#define CHARTTHEMEBLUECEICY_P_H
+#ifndef CHARTTHEMEBLUEICY_P_H
+#define CHARTTHEMEBLUEICY_P_H
 
 #include "charttheme_p.h"
 

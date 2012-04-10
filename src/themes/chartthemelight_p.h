@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTTHEMEHIGHLIGHT_P_H
-#define CHARTTHEMEHIGHLIGHT_P_H
+#ifndef CHARTTHEMELIGHT_P_H
+#define CHARTTHEMELIGHT_P_H
 
 #include "charttheme_p.h"
 

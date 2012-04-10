@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTANIMATION_H_
-#define CHARTANIMATION_H_
+#ifndef CHARTANIMATION_H
+#define CHARTANIMATION_H
 
 #include "qchartglobal.h"
 #include <QVariantAnimation>

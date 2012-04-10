@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QLEGEND_P_H_
-#define QLEGEND_P_H_
+#ifndef QLEGEND_P_H
+#define QLEGEND_P_H
 
 #include "qlegend.h"
 

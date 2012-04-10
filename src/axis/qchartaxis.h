@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef QCHARTAXIS_H_
-#define QCHARTAXIS_H_
+#ifndef QCHARTAXIS_H
+#define QCHARTAXIS_H
 
 #include <qchartglobal.h>
 #include <qchartaxiscategories.h>

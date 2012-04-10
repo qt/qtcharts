@@ -18,8 +18,9 @@
 **
 ****************************************************************************/
 
-#ifndef XYCHARTANIMATION_P_H_
-#define XYCHARTANIMATION_P_H_
+#ifndef XYANIMATION_P_H
+#define XYANIMATION_P_H
+
 #include "chartanimation_p.h"
 #include <QPointF>
 

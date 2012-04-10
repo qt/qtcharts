@@ -18,8 +18,9 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTANIMATOR_P_H_
-#define CHARTANIMATOR_P_H_
+#ifndef CHARTANIMATOR_P_H
+#define CHARTANIMATOR_P_H
+
 #include "qchartglobal.h"
 #include "chartanimation_p.h"
 #include "piechartitem_p.h"

@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef BARANIMATION_P_H_
-#define BARANIMATION_P_H_
+#ifndef BARANIMATION_P_H
+#define BARANIMATION_P_H
 
 #include "chartanimation_p.h"
 #include "barchartitem_p.h"
