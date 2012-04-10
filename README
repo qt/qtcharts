@@ -47,11 +47,14 @@ KNOWN ISSUES
     * The Charts API might change between the Preview and first official release
     * Some areas will be refactored before the first official release
     * Qt Designer plugin is missing
+	* Enable/disable tooltip is missing from the API
 
 - QML API
     * The QML Bindings are still under development and to be considered as early preview
-    * Windows: You need to copy qmldir file to the qmlplugin installation folder; it is
-      not copied during build
+	* All the current QML APIs are shown in qmlchart demo app
+    * If doing a developer build (not installing into your Qt instance) you
+	  need to copy qmldir file to the qmlplugin installation folder; it is not
+	  copied during build.
 
 - Model based
 
