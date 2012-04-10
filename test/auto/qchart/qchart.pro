@@ -1,4 +1,4 @@
-!include( ../../test.pri ) {
- error( "Couldn't find the test.pri file!" )
+!include( ../auto.pri ) {
+    error( "Couldn't find the auto.pri file!" )
 }
 SOURCES += tst_qchart.cpp
