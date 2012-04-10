@@ -27,7 +27,7 @@
 #include "chartanimator_p.h"
 #include "qseries_p.h"
 #include "qareaseries.h"
-#include "axisitem_p.h"
+#include "axis_p.h"
 #include "areachartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

@@ -38,7 +38,7 @@
 #include "qsplineseries.h"
 
 //items
-#include "axisitem_p.h"
+#include "axis_p.h"
 #include "barchartitem_p.h"
 #include "stackedbarchartitem_p.h"
 #include "percentbarchartitem_p.h"

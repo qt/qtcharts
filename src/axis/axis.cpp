@@ -18,12 +18,11 @@
 **
 ****************************************************************************/
 
-#include "axisitem_p.h"
+#include "axis_p.h"
 #include "qchartaxis.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
-#include <QDebug>
 #include <cmath>
 
 static int label_padding = 5;
@@ -460,6 +459,6 @@ void Axis::axisSelected()
 }
 
 //TODO "nice numbers algorithm"
-#include "moc_axisitem_p.cpp"
+#include "moc_axis_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
