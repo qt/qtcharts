@@ -73,10 +73,7 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
     d_ptr->createConnections();
     d_ptr->m_legend = new LegendScroller(this);
-  //  d_ptr->m_legend->setVisible(false);
     d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);
-
-    //TODO:fix me setMinimumSize(d_ptr->m_padding.left() * 3, d_ptr->m_padding.top() * 3);
 }
 
 /*!

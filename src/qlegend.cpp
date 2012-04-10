@@ -90,7 +90,7 @@ d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,this))
     setZValue(ChartPresenter::LegendZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     setEnabled(false); // By default legend is disabled
-
+    setVisible(false);
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),d_ptr.data(),SLOT(handleSeriesAdded(QSeries*,Domain*)));
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QSeries*)),d_ptr.data(),SLOT(handleSeriesRemoved(QSeries*)));
 }
@@ -404,6 +404,13 @@ void QLegendPrivate::handleSeriesAdded(QSeries *series, Domain *domain)
     foreach(LegendMarker* marker , markers)
         m_markers->addToGroup(marker);
 
+    if(series->type()==QSeries::SeriesTypePie)
+    {
+        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+        QObject::connect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
+        QObject::connect(pieSeries,SIGNAL(removed(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
+    }
+
     updateLayout();
 }
 
@@ -412,14 +419,30 @@ void QLegendPrivate::handleSeriesRemoved(QSeries *series)
 
     QList<QGraphicsItem *> items = m_markers->childItems();
 
-     foreach (QGraphicsItem *markers, items) {
-         LegendMarker *marker = static_cast<LegendMarker*>(markers);
-         if (marker->series() == series) {
-             delete marker;
-         }
-     }
+    foreach (QGraphicsItem *markers, items) {
+        LegendMarker *marker = static_cast<LegendMarker*>(markers);
+        if (marker->series() == series) {
+            delete marker;
+        }
+    }
+
+    if(series->type()==QSeries::SeriesTypePie)
+    {
+        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
+        QObject::disconnect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
+        QObject::disconnect(pieSeries,SIGNAL(removed(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
+    }
 
     updateLayout();
+}
+
+void QLegendPrivate::handleUpdateSeries()
+{
+    //TODO: reimplement to be optimal
+    QSeries* series = qobject_cast<QSeries *> (sender());
+    Q_ASSERT(series);
+    handleSeriesRemoved(series);
+    handleSeriesAdded(series,0);
 }
 
 #include "moc_qlegend.cpp"

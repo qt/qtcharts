@@ -156,7 +156,6 @@ m_pieslice(pieslice)
 {
     QObject::connect(this, SIGNAL(selected()),pieslice, SIGNAL(selected()));
     QObject::connect(pieslice, SIGNAL(changed()), this, SLOT(updated()));
-    QObject::connect(pieslice, SIGNAL(destroyed()), this, SLOT(deleteLater())); //TODO:checkthis
     updated();
 }
 

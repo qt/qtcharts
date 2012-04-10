@@ -49,6 +49,7 @@ public:
 public Q_SLOTS:
     void handleSeriesAdded(QSeries *series, Domain *domain);
     void handleSeriesRemoved(QSeries *series);
+    void handleUpdateSeries(); //TODO remove this function
 
 private:
     QLegend *q_ptr;
