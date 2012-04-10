@@ -4,4 +4,19 @@
     \subtitle
 
     The example shows how to create your own custom zooming effect with QRubberBand.
+    \image example_zoomlinechart1.png
+    \image example_zoomlinechart2.png
+
+    Let's first create a line series with some example data.
+    \snippet ../examples/zoomlinechart/main.cpp 1
+
+    Then we create a custom chart view by deriving from QChartView:
+    \snippet ../examples/zoomlinechart/chartview.h 1
+
+    We override mouse and key event handling
+    \snippet ../examples/zoomlinechart/chartview.h 2
+
+    Then we implement a custom logic for mouse and key events. For example pressing '+' key will zoom in and pressing
+    the '-' key will zoom out.
+    \snippet ../examples/zoomlinechart/chartview.cpp 1
 */

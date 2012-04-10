@@ -30,42 +30,27 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //![1]
-    QLineSeries* series0 = new QLineSeries();
-    QPen blue(Qt::blue);
-    blue.setWidth(3);
-    series0->setPen(blue);
-
-    QLineSeries* series1 = new QLineSeries();
-    QPen red(Qt::red);
-    red.setWidth(3);
-    series1->setPen(red);
+    QLineSeries* series = new QLineSeries();
+    qreal yValue = 0.0;
+    for (int i(0); i < 500; i++) {
+        yValue = yValue + (qreal) (qrand() % 10) / 500.0;
+        QPointF value((i + (qreal) rand() / (qreal) RAND_MAX) * (10.0 / 500.0), yValue);
+        *series << value;
+    }
 //![1]
 
-//![2]
-    *series0 << QPointF(0, 6) << QPointF(2, 4) << QPointF(3, 8) << QPointF(7, 4) << QPointF(10, 5);
-    *series1 << QPointF(1, 1) << QPointF(3, 3) << QPointF(7, 6) << QPointF(8, 3) << QPointF(10, 2);
-//![2]
-
-//![3]
     QChart* chart = new QChart();
-
-    chart->addSeries(series0);
-    chart->addSeries(series1);
-    chart->setTitle("Zoom in/out chart example");
+    chart->addSeries(series);
+    chart->setTitle("Zoom in/out example");
     chart->setAnimationOptions(QChart::AllAnimations);
-//![3]
 
-//![4]
-     ChartView* chartView = new ChartView(chart);
-     chartView->setRenderHint(QPainter::Antialiasing);
-//![4]
+    ChartView* chartView = new ChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
 
-//![5]
-     QMainWindow window;
-     window.setCentralWidget(chartView);
-     window.resize(400, 300);
-     window.show();
-//![5]
+    QMainWindow window;
+    window.setCentralWidget(chartView);
+    window.resize(400, 300);
+    window.show();
 
     return a.exec();
 }

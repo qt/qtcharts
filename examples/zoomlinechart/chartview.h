@@ -25,23 +25,25 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
+//![1]
 class ChartView : public QChartView
+//![1]
 {
 public:
     ChartView(QChart *chart, QWidget *parent = 0);
 
+//![2]
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void keyPressEvent(QKeyEvent *event);
+//![2]
 
 private:
-    bool rubberBandIsShown;
     QRubberBand m_rubberBand;
     QPoint m_origin;
     QChart* m_chart;
-
 };
 
 #endif

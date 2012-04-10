@@ -59,6 +59,7 @@ void ChartView::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
+//![1]
 void ChartView::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
@@ -68,6 +69,7 @@ void ChartView::keyPressEvent(QKeyEvent *event)
     case Qt::Key_Minus:
         m_chart->zoomOut();
         break;
+//![1]
     case Qt::Key_Left:
         m_chart->scrollLeft();
         break;
