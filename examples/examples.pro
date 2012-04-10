@@ -14,7 +14,6 @@ SUBDIRS += \
            splinechart \
            stackedbarchart \
            stackedbarchartdrilldown \
-           tablemodelchart \
            zoomlinechart \
            modeldata
           

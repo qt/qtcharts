@@ -110,8 +110,14 @@ void XYChartItem::handlePointAdded(int index)
     QPointF point;
     if (m_series->model()) {
         point = calculateGeometryPoint(index - m_series->mapFirst());
-        points.insert(index - m_series->mapFirst(), point);
-        updateLayout(m_points, points, index - m_series->mapFirst());
+        if (index < m_series->mapFirst()) {
+            points.insert(0, point);
+            updateLayout(m_points, points, 0);
+        }
+        else {
+            points.insert(index - m_series->mapFirst(), point);
+            updateLayout(m_points, points, index - m_series->mapFirst());
+        }
     }
     else {
         // this checks do not work correctly if model is set

@@ -49,7 +49,7 @@ private:
     QPointF calculateGeometryControlPoint(int index) const;
 
 private:
-    QSplineSeries* m_series;
+    QSplineSeries *m_series;
     QPainterPath m_path;
     QRectF m_rect;
     QPen m_linePen;

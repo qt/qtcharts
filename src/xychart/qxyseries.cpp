@@ -380,7 +380,7 @@ void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     } else {
         if (topLeft.column() >= d->m_mapFirst && (!d->m_mapLimited || topLeft.column() < d->m_mapFirst + d->m_mapCount))
             emit d->pointReplaced(topLeft.column() - d->m_mapFirst);
-    }
+    }    
 }
 
 /*!
