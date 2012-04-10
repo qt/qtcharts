@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 
         QObject::connect(series, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), chart, SLOT(handleSliceClicked(QPieSlice*)));
 
-        *yearSeries << new DrilldownSlice(series->total(), name, series);
+        *yearSeries << new DrilldownSlice(series->sum(), name, series);
     }
 
     QObject::connect(yearSeries, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), chart, SLOT(handleSliceClicked(QPieSlice*)));

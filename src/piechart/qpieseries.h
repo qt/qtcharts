@@ -59,7 +59,7 @@ public:
     // calculated data
     int count() const;
     bool isEmpty() const;
-    qreal total() const;
+    qreal sum() const;
 
     // pie customization
     void setHorizontalPosition(qreal relativePosition);

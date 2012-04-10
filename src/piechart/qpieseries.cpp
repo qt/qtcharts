@@ -380,10 +380,10 @@ void QPieSeries::setLabelsVisible(bool visible)
 
     \sa QPieSlice::value(), QPieSlice::setValue()
 */
-qreal QPieSeries::total() const
+qreal QPieSeries::sum() const
 {
     Q_D(const QPieSeries);
-    return d->m_total;
+    return d->m_sum;
 }
 
 /*!
@@ -520,7 +520,7 @@ QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent)
     m_pieRelativeSize(0.7),
     m_pieStartAngle(0),
     m_pieEndAngle(360),
-    m_total(0),
+    m_sum(0),
     m_mapValues(0),
     m_mapLabels(0),
     m_mapOrientation(Qt::Horizontal)
@@ -535,18 +535,18 @@ QPieSeriesPrivate::~QPieSeriesPrivate()
 
 void QPieSeriesPrivate::updateDerivativeData()
 {
-    m_total = 0;
+    m_sum = 0;
 
     // nothing to do?
     if (m_slices.count() == 0)
         return;
 
-    // calculate total
+    // calculate sum of all slices
     foreach (QPieSlice* s, m_slices)
-        m_total += s->value();
+        m_sum += s->value();
 
     // nothing to show..
-    if (qFuzzyIsNull(m_total))
+    if (qFuzzyIsNull(m_sum))
         return;
 
     // update slice attributes
@@ -556,7 +556,7 @@ void QPieSeriesPrivate::updateDerivativeData()
     foreach (QPieSlice* s, m_slices) {
 
         PieSliceData data = PieSliceData::data(s);
-        data.m_percentage = s->value() / m_total;
+        data.m_percentage = s->value() / m_sum;
         data.m_angleSpan = pieSpan * data.m_percentage;
         data.m_startAngle = sliceAngle;
         sliceAngle += data.m_angleSpan;

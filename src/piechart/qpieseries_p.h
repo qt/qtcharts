@@ -55,7 +55,7 @@ public:
     qreal m_pieRelativeSize;
     qreal m_pieStartAngle;
     qreal m_pieEndAngle;
-    qreal m_total;
+    qreal m_sum;
 
     // model map
     int m_mapValues;
