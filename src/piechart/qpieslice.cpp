@@ -27,11 +27,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \class QPieSlice
     \brief Defines a slice in pie series.
 
-    Holds all the data of a single slice in a QPieSeries and provides the means
-    to modify slice data and customize the visual appearance of the slice.
+    This object defines the properties of a single slice in a QPieSeries.
 
-    It also provides the means to customize user interaction with the slice by
-    providing signals for clicking and hover events.
+    In addition to the obvious value and label properties the user can also control
+    the visual appearance of a slice. By modifying the visual appearance also means that
+    the user is overriding the default appearance set by the theme. Even if the theme is
+    changed users settings will persist.
+
+    To enable user interaction customization with the slices some basic signals
+    are provided about clicking and hovering.
 */
 
 /*!
@@ -44,14 +48,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \property QPieSlice::value
 
     Value of the slice.
+
+    \sa percentage(), QPieSeries::sum()
 */
 
 /*!
     Constructs an empty slice with a \a parent.
 
-    Note that QPieSeries takes ownership of the slice when it is set/added.
-
-    \sa QPieSeries::replace(), QPieSeries::append()
+    \sa QPieSeries::append(), QPieSeries::insert(), QPieSeries::replace()
 */
 QPieSlice::QPieSlice(QObject *parent)
     :QObject(parent),
@@ -62,8 +66,7 @@ QPieSlice::QPieSlice(QObject *parent)
 
 /*!
     Constructs an empty slice with given \a value, \a label and a \a parent.
-    Note that QPieSeries takes ownership of the slice when it is set/added.
-    \sa QPieSeries::replace(), QPieSeries::append()
+    \sa QPieSeries::append(), QPieSeries::insert(), QPieSeries::replace()
 */
 QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     :QObject(parent),
@@ -112,7 +115,7 @@ bool QPieSlice::isLabelVisible() const
 
 /*!
     Returns true if slice is exloded from the pie.
-    \sa setExploded(), setExplodeDistanceFactor()
+    \sa setExploded(), explodeDistanceFactor(), setExplodeDistanceFactor()
 */
 bool QPieSlice::isExploded() const
 {
@@ -128,7 +131,7 @@ bool QPieSlice::isExploded() const
 
     Default value is 0.15.
 
-    \sa setExplodeDistanceFactor()
+    \sa setExplodeDistanceFactor(), isExploded(), setExploded()
 */
 qreal QPieSlice::explodeDistanceFactor() const
 {
@@ -136,10 +139,12 @@ qreal QPieSlice::explodeDistanceFactor() const
 }
 
 /*!
-    Returns the percentage of this slice compared to all slices in the same series.
+    Returns the percentage of this slice compared to the sum of all slices in the same series.
     The returned value ranges from 0 to 1.0.
 
     Updated internally after the slice is added to the series.
+
+    \sa QPieSeries::sum()
 */
 qreal QPieSlice::percentage() const
 {
@@ -296,8 +301,11 @@ void QPieSlice::setLabelVisible(bool visible)
 }
 
 /*!
-    Sets this slice \a exploded.
-    \sa isExploded(), explodeDistanceFactor()
+    Sets this slices \a exploded state.
+
+    If the slice is exploded it is moved away from the pie center. The distance is defined by the explode distance factor.
+
+    \sa isExploded(), explodeDistanceFactor(), setExplodeDistanceFactor()
 */
 void QPieSlice::setExploded(bool exploded)
 {
@@ -316,7 +324,7 @@ void QPieSlice::setExploded(bool exploded)
 
     Default value is 0.15
 
-    \sa explodeDistanceFactor()
+    \sa explodeDistanceFactor(), isExploded(), setExploded()
 */
 void QPieSlice::setExplodeDistanceFactor(qreal factor)
 {
@@ -328,7 +336,9 @@ void QPieSlice::setExplodeDistanceFactor(qreal factor)
 
 /*!
     Sets the \a pen used to draw this slice.
-    Note that applying a theme will override this.
+
+    Overrides the pen set by the theme.
+
     \sa pen()
 */
 void QPieSlice::setPen(const QPen &pen)
@@ -342,7 +352,9 @@ void QPieSlice::setPen(const QPen &pen)
 
 /*!
     Sets the \a brush used to draw this slice.
-    Note that applying a theme will override this.
+
+    Overrides the brush set by the theme.
+
     \sa brush()
 */
 void QPieSlice::setBrush(const QBrush &brush)
@@ -356,7 +368,9 @@ void QPieSlice::setBrush(const QBrush &brush)
 
 /*!
     Sets the \a pen used to draw the label in this slice.
-    Note that applying a theme will override this.
+
+    Overrides the pen set by the theme.
+
     \sa labelPen()
 */
 void QPieSlice::setLabelPen(const QPen &pen)
@@ -370,7 +384,9 @@ void QPieSlice::setLabelPen(const QPen &pen)
 
 /*!
     Sets the \a font used to draw the label in this slice.
-    Note that applying a theme will override this.
+
+    Overrides the font set by the theme.
+
     \sa labelFont()
 */
 void QPieSlice::setLabelFont(const QFont &font)

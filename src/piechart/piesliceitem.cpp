@@ -86,12 +86,12 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
 
 void PieSliceItem::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
-    emit hoverEnter();
+    emit hoverEnter(); // TODO: refactor emit hover(somebooleanvalue)
 }
 
 void PieSliceItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
-    emit hoverLeave();
+    emit hoverLeave(); // TODO: refactor emit hover(somebooleanvalue)
 }
 
 void PieSliceItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

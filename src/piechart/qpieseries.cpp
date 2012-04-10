@@ -35,12 +35,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \class QPieSeries
     \brief Pie series API for QtCommercial Charts
 
-    The pie series defines a pie chart which consists of pie slices which are QPieSlice objects.
+    The pie series defines a pie chart which consists of pie slices which are defined as QPieSlice objects.
     The slices can have any values as the QPieSeries will calculate its relative value to the sum of all slices.
     The actual slice size is determined by that relative value.
 
-    By default the pie is defined as a full pie but it can be a partial pie.
+    Pie size and position on the chart is controlled by using relative values which range from 0.0 to 1.0
+    These relate to the actual chart rectangle.
+
+    By default the pie is defined as a full pie but it can also be a partial pie.
     This can be done by setting a starting angle and angle span to the series.
+    Full pie is 360 degrees where 0 is at 12 a'clock.
 */
 
 /*!
@@ -219,7 +223,7 @@ void QPieSeries::insert(int index, QPieSlice* slice)
 /*!
     Removes a single \a slice from the series and deletes the slice.
 
-    Do not reference this pointer after this call.
+    Do not reference the pointer after this call.
 */
 void QPieSeries::remove(QPieSlice* slice)
 {
@@ -382,7 +386,7 @@ void QPieSeries::setLabelsVisible(bool visible)
 /*!
     Returns the sum of all slice values in this series.
 
-    \sa QPieSlice::value(), QPieSlice::setValue()
+    \sa QPieSlice::value(), QPieSlice::setValue(), QPieSlice::percentage()
 */
 qreal QPieSeries::sum() const
 {
