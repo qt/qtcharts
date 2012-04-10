@@ -26,12 +26,17 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QStackedBarSeriesPrivate;
+
 class QTCOMMERCIALCHART_EXPORT QStackedBarSeries : public QBarSeries
 {
     Q_OBJECT
 public:
     QStackedBarSeries(QBarCategories categories, QObject *parent = 0);
     QSeries::QSeriesType type() const;
+private:
+    Q_DECLARE_PRIVATE(QStackedBarSeries)
+    Q_DISABLE_COPY(QStackedBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

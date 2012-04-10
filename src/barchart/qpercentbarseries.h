@@ -26,12 +26,17 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QPercentBarSeriesPrivate;
+
 class QTCOMMERCIALCHART_EXPORT QPercentBarSeries : public QBarSeries
 {
     Q_OBJECT
 public:
     QPercentBarSeries(QBarCategories categories, QObject *parent = 0);
     QSeries::QSeriesType type() const;
+private:
+    Q_DECLARE_PRIVATE(QPercentBarSeries)
+    Q_DISABLE_COPY(QPercentBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
