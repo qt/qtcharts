@@ -41,7 +41,7 @@ XYChartItem::XYChartItem(QXYSeries *series, ChartPresenter *presenter):ChartItem
     connect(series->d_func(),SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
     connect(series->d_func(),SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
     connect(series->d_func(),SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
-    connect(this,SIGNAL(clicked(const QPointF&)),series,SIGNAL(clicked(const QPointF&)));
+    connect(this,SIGNAL(clicked(QPointF)),series,SIGNAL(clicked(QPointF)));
 }
 
 QPointF XYChartItem::calculateGeometryPoint(const QPointF &point) const

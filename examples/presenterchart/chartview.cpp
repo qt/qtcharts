@@ -80,7 +80,7 @@ m_index(-1),m_chart(chart)
 
 //![4]
     foreach (QSeries* series, m_series) {
-        QObject::connect(series,SIGNAL(clicked(const QPointF&)),this,SLOT(handlePointClicked(const QPointF&)));
+        QObject::connect(series,SIGNAL(clicked(QPointF)),this,SLOT(handlePointClicked(QPointF)));
     }
 //![4]
     m_timer.start();

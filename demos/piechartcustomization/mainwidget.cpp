@@ -53,7 +53,7 @@ MainWidget::MainWidget(QWidget* parent)
     m_series->setLabelsVisible();
     chart->addSeries(m_series);
 
-    connect(m_series, SIGNAL(clicked(QPieSlice*, Qt::MouseButtons)), this, SLOT(handleSliceClicked(QPieSlice*, Qt::MouseButtons)));
+    connect(m_series, SIGNAL(clicked(QPieSlice*,Qt::MouseButtons)), this, SLOT(handleSliceClicked(QPieSlice*,Qt::MouseButtons)));
 
     // chart settings
     m_themeComboBox = new QComboBox();

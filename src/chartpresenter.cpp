@@ -132,7 +132,7 @@ void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
         item->handleRangeChanged(domain->minY(),domain->maxY(),domain->tickYCount());
     }
 
-    QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
+    QObject::connect(this,SIGNAL(geometryChanged(QRectF)),item,SLOT(handleGeometryChanged(QRectF)));
     //initialize
     item->handleGeometryChanged(m_chartRect);
     m_axisItems.insert(axis, item);
@@ -151,7 +151,7 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
 {
 	Chart *item = series->d_ptr->createGraphics(this);
 	Q_ASSERT(item);
-	QObject::connect(this,SIGNAL(geometryChanged(const QRectF&)),item,SLOT(handleGeometryChanged(const QRectF&)));
+	QObject::connect(this,SIGNAL(geometryChanged(QRectF)),item,SLOT(handleGeometryChanged(QRectF)));
 	QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),item,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
 	  //initialize
 	item->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());

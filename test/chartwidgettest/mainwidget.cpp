@@ -174,8 +174,8 @@ void MainWidget::addSeries()
 {
     if (!m_addSerieDialog) {
         m_addSerieDialog = new DataSerieDialog(this);
-        connect(m_addSerieDialog, SIGNAL(accepted(QString, int, int, QString, bool)),
-                this, SLOT(addSeries(QString, int, int, QString, bool)));
+        connect(m_addSerieDialog, SIGNAL(accepted(QString,int,int,QString,bool)),
+                this, SLOT(addSeries(QString,int,int,QString,bool)));
     }
     m_addSerieDialog->exec();
 }

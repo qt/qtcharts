@@ -109,8 +109,8 @@ private:
 
 class AxisItem: public QGraphicsLineItem
 {
-public:
 
+public:
     AxisItem(Axis *axis, QGraphicsItem *parent = 0) : QGraphicsLineItem(parent), m_axis(axis) {}
 
 protected:

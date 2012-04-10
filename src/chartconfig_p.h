@@ -68,6 +68,6 @@ private:
 
 ChartConfig* ChartConfig::m_instance=0;
 
-#endif
-
 QTCOMMERCIALCHART_END_NAMESPACE
+
+#endif

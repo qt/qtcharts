@@ -40,7 +40,7 @@ MainWindow::MainWindow(QWidget *parent)
     chart->axisX()->setRange(0, 4.5);
     chart->axisY()->setRange(0, 4.5);
 
-    connect(m_scatter, SIGNAL(clicked(const QPointF&)), this, SLOT(handleClickedPoint(const QPointF&)));
+    connect(m_scatter, SIGNAL(clicked(QPointF)), this, SLOT(handleClickedPoint(QPointF)));
 
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);

@@ -384,18 +384,18 @@ void QBarSeriesPrivate::setModelMapping(int categories, int bottomBoundry, int t
     if (m_mapOrientation == Qt::Vertical) {
         m_mapCount = m_model->rowCount() - m_mapFirst;
         connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-                this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(m_model,SIGNAL(rowsInserted(QModelIndex, int, int)),
+                this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+        connect(m_model,SIGNAL(rowsInserted(QModelIndex,int,int)),
                 this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)),
+        connect(m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)),
                 this, SLOT(modelDataRemoved(QModelIndex,int,int)));
     } else {
         m_mapCount = m_model->columnCount() - m_mapFirst;
         connect(m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)),
-                this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(m_model,SIGNAL(columnsInserted(QModelIndex, int, int)),
+                this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+        connect(m_model,SIGNAL(columnsInserted(QModelIndex,int,int)),
                 this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)),
+        connect(m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)),
                 this, SLOT(modelDataRemoved(QModelIndex,int,int)));
     }
 

@@ -499,13 +499,13 @@ void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::O
 
     // connect the signals
     if (d->m_mapOrientation == Qt::Vertical) {
-        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(d->m_model, SIGNAL(rowsInserted(QModelIndex, int, int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+        connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
     } else {
-        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(d->m_model, SIGNAL(columnsInserted(QModelIndex, int, int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+        connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
     }
 
     // create the initial slices set

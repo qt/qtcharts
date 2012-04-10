@@ -146,9 +146,9 @@ void tst_QChartView::rubberBand()
     m_view->setMouseTracking(true);
 
     QChartAxis* axisY = m_view->chart()->axisY();
-    QSignalSpy spy0(axisY, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy0(axisY, SIGNAL(rangeChanged(qreal,qreal)));
     QChartAxis* axisX = m_view->chart()->axisX();
-    QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal,qreal)));
 
     QTest::qWaitForWindowShown(m_view);
     QTest::qWait(500);
@@ -198,9 +198,9 @@ void tst_QChartView::keys()
     m_view->show();
 
     QChartAxis* axisY = m_view->chart()->axisY();
-    QSignalSpy spy0(axisY, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy0(axisY, SIGNAL(rangeChanged(qreal,qreal)));
     QChartAxis* axisX = m_view->chart()->axisX();
-    QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal,qreal)));
 
     QTest::keyPress(m_view, key);
     QTest::keyRelease(m_view, key);

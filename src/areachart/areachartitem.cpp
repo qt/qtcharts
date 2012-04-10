@@ -44,7 +44,7 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
         m_lower = new AreaBoundItem(this,m_series->lowerSeries());
 
     connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
-    connect(this,SIGNAL(clicked(const QPointF&)),areaSeries,SIGNAL(clicked(const QPointF&)));
+    connect(this,SIGNAL(clicked(QPointF)),areaSeries,SIGNAL(clicked(QPointF)));
 
     handleUpdated();
 }

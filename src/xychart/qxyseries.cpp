@@ -563,17 +563,17 @@ void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientat
     d->m_mapFirst = 0;
     d->m_mapOrientation = orientation;
     if (d->m_mapOrientation == Qt::Vertical) {
-        connect(d->m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(d->m_model,SIGNAL(rowsAboutToBeInserted(QModelIndex, int, int)), this, SLOT(modelDataAboutToBeAdded(QModelIndex,int,int)));
-        connect(d->m_model,SIGNAL(rowsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(rowsAboutToBeRemoved(QModelIndex, int, int)), this, SLOT(modelDataAboutToBeRemoved(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+        connect(d->m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+        connect(d->m_model,SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)), this, SLOT(modelDataAboutToBeAdded(QModelIndex,int,int)));
+        connect(d->m_model,SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)), this, SLOT(modelDataAboutToBeRemoved(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
     } else {
-        connect(d->m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex, QModelIndex)));
-        connect(d->m_model,SIGNAL(columnsAboutToBeInserted(QModelIndex, int, int)), this, SLOT(modelDataAboutToBeAdded(QModelIndex,int,int)));
-        connect(d->m_model,SIGNAL(columnsInserted(QModelIndex, int, int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(columnsAboutToBeRemoved(QModelIndex, int, int)), this, SLOT(modelDataAboutToBeRemoved(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex, int, int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+        connect(d->m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+        connect(d->m_model,SIGNAL(columnsAboutToBeInserted(QModelIndex,int,int)), this, SLOT(modelDataAboutToBeAdded(QModelIndex,int,int)));
+        connect(d->m_model,SIGNAL(columnsInserted(QModelIndex,int,int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(columnsAboutToBeRemoved(QModelIndex,int,int)), this, SLOT(modelDataAboutToBeRemoved(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
     }
 }
 
