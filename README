@@ -56,6 +56,7 @@ KNOWN ISSUES
 - Model based
 
 - Bar Chart
+    * Modifying bar categories is not possible
 
 - Pie Chart
     * Slice labels drawn on top of the label arm
