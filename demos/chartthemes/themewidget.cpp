@@ -176,16 +176,15 @@ QComboBox* ThemeWidget::createLegendBox() const
 
 QChart* ThemeWidget::createAreaChart() const
 {
-    // area chart
     QChart *chart = new QChart();
     chart->axisX()->setNiceNumbers(true);
     chart->axisY()->setNiceNumbers(true);
     chart->setTitle("Area chart");
-    QString name("Series ");
-    int nameIndex = 0;
 
     // The lower series initialized to zero values
     QLineSeries *lowerSeries = 0;
+    QString name("Series ");
+    int nameIndex = 0;
     for (int i(0); i < m_dataTable.count(); i++) {
         QLineSeries *upperSeries = new QLineSeries(chart);
         for (int j(0); j < m_dataTable[i].count(); j++) {
@@ -201,22 +200,21 @@ QChart* ThemeWidget::createAreaChart() const
         chart->addSeries(area);
         lowerSeries = upperSeries;
     }
+
     return chart;
 }
 
 QChart* ThemeWidget::createBarChart(int valueCount) const
 {
-    // bar chart
     QChart* chart = new QChart();
     chart->axisX()->setNiceNumbers(true);
     chart->axisY()->setNiceNumbers(true);
     chart->setTitle("Bar chart");
+
     QBarCategories categories;
-    // TODO: categories
     for (int i(0); i < valueCount; i++)
         categories << QString::number(i);
-//            QBarSeries* series = new QBarSeries(categories, chart);
-//            QPercentBarSeries* series = new QPercentBarSeries(categories, chart);
+
     QStackedBarSeries* series = new QStackedBarSeries(categories, chart);
     for (int i(0); i < m_dataTable.count(); i++) {
         QBarSet *set = new QBarSet("Bar set " + QString::number(i));
@@ -225,16 +223,17 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
         series->appendBarSet(set);
     }
     chart->addSeries(series);
+
     return chart;
 }
 
 QChart* ThemeWidget::createLineChart() const
 {
-    // line chart
     QChart* chart = new QChart();
     chart->axisX()->setNiceNumbers(true);
     chart->axisY()->setNiceNumbers(true);
     chart->setTitle("Line chart");
+
     QString name("Series ");
     int nameIndex = 0;
     foreach (DataList list, m_dataTable) {
@@ -245,14 +244,15 @@ QChart* ThemeWidget::createLineChart() const
         nameIndex++;
         chart->addSeries(series);
     }
+
     return chart;
 }
 
 QChart* ThemeWidget::createPieChart() const
 {
-    // pie chart
     QChart* chart = new QChart();
     chart->setTitle("Pie chart");
+
     qreal pieSize = 1.0 / m_dataTable.count();
     for (int i = 0; i < m_dataTable.count(); i++) {
         QPieSeries *series = new QPieSeries(chart);
@@ -364,11 +364,11 @@ void ThemeWidget::updateUI()
         foreach (QChartView *chartView, m_charts) {
             chartView->chart()->legend()->hide();
         }
-    }
-    else
+    } else {
         foreach (QChartView *chartView, m_charts) {
             chartView->chart()->legend()->setAlignment(alignment);
             chartView->chart()->legend()->show();
         }
+    }
 }
 

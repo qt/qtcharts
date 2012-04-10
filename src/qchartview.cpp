@@ -187,37 +187,6 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
 }
 
 /*!
-    Pressing + and - keys performs zoomIn() and zoomOut() respectivly.
-    In other \a event is passed to the QGraphicsView::keyPressEvent() implementation
-*/
-void QChartView::keyPressEvent(QKeyEvent *event)
-{
-    switch (event->key()) {
-        case Qt::Key_Plus:
-            d_ptr->m_chart->zoomIn();
-            break;
-        case Qt::Key_Minus:
-            d_ptr->m_chart->zoomOut();
-            break;
-        case Qt::Key_Left:
-            d_ptr->m_chart->scrollLeft();
-            break;
-        case Qt::Key_Right:
-            d_ptr->m_chart->scrollRight();
-            break;
-        case Qt::Key_Up:
-            d_ptr->m_chart->scrollUp();
-            break;
-        case Qt::Key_Down:
-            d_ptr->m_chart->scrollDown();
-            break;
-        default:
-            QGraphicsView::keyPressEvent(event);
-            break;
-    }
-}
-
-/*!
     Resizes and updates the chart area using the \a event data
 */
 void QChartView::resizeEvent(QResizeEvent *event)
