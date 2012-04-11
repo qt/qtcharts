@@ -70,7 +70,7 @@ void tst_ChartDataSet::initTestCase()
 {
     qRegisterMetaType<Domain*>();
 	qRegisterMetaType<QChartAxis*>();
-	qRegisterMetaType<QSeries*>();
+    qRegisterMetaType<QAbstractSeries*>();
 }
 
 void tst_ChartDataSet::cleanupTestCase()
