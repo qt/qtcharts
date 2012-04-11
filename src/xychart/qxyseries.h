@@ -68,18 +68,10 @@ public:
     bool pointsVisible() const;
 
     bool setModel(QAbstractItemModel *model);
-
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
-    virtual void setModelMappingRange(int first, int count = 0);
-    int mapFirst() const;
-    int mapCount() const;
 
 private Q_SLOTS:
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-    void modelDataAboutToBeAdded(QModelIndex parent, int start, int end);
-    void modelDataAdded(QModelIndex parent, int start, int end);
-    void modelDataAboutToBeRemoved(QModelIndex parent, int start, int end);
-    void modelDataRemoved(QModelIndex parent, int start, int end);
 
 Q_SIGNALS:
     void clicked(const QPointF &point);

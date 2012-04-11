@@ -76,19 +76,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn int QXYSeries::mapFirst() const
-    Returns the index of the model's item that is used as a first one for the series.
-    \sa mapCount()
-*/
-
-/*!
-    \fn int QXYSeries::mapCount() const
-    Returns the number of the items that are taken from the model.
-    If -1 it means all the items of the model following the first one are used.
-    \sa mapFirst()
-*/
-
-/*!
     \internal
 
     Constructs empty series object which is a child of \a parent.
@@ -220,10 +207,10 @@ qreal QXYSeries::x(int pos) const
     if (d->m_model) {
         if (d->m_mapOrientation == Qt::Vertical)
             // consecutive data is read from model's column
-            return d->m_model->data(d->m_model->index(pos + d->m_mapFirst, d->m_mapX), Qt::DisplayRole).toDouble();
+            return d->m_model->data(d->m_model->index(pos, d->m_mapX), Qt::DisplayRole).toDouble();
         else
             // consecutive data is read from model's row
-            return d->m_model->data(d->m_model->index(d->m_mapX, pos + d->m_mapFirst), Qt::DisplayRole).toDouble();
+            return d->m_model->data(d->m_model->index(d->m_mapX, pos), Qt::DisplayRole).toDouble();
     } else {
         // model is not specified, return the data from series' internal data store
         return d->m_x.at(pos);
@@ -239,10 +226,10 @@ qreal QXYSeries::y(int pos) const
     if (d->m_model) {
         if (d->m_mapOrientation == Qt::Vertical)
             // consecutive data is read from model's column
-            return d->m_model->data(d->m_model->index(pos + d->m_mapFirst, d->m_mapY), Qt::DisplayRole).toDouble();
+            return d->m_model->data(d->m_model->index(pos, d->m_mapY), Qt::DisplayRole).toDouble();
         else
             // consecutive data is read from model's row
-            return d->m_model->data(d->m_model->index(d->m_mapY, pos + d->m_mapFirst), Qt::DisplayRole).toDouble();
+            return d->m_model->data(d->m_model->index(d->m_mapY, pos), Qt::DisplayRole).toDouble();
     } else {
         // model is not specified, return the data from series' internal data store
         return d->m_y.at(pos);
@@ -260,19 +247,11 @@ int QXYSeries::count() const
 
     if (d->m_model) {
         if (d->m_mapOrientation == Qt::Vertical) {
-            // data is in a column. Return the number of mapped items if the model's column have enough items
-            // or the number of items that can be mapped
-            if (d->m_mapLimited)
-                return qMin(d->m_mapCount, qMax(d->m_model->rowCount() - d->m_mapFirst, 0));
-            else
-                return qMax(d->m_model->rowCount() - d->m_mapFirst, 0);
+            // data is in a column. Return the number of mapped items
+            return d->m_model->rowCount();
         } else {
-            // data is in a row. Return the number of mapped items if the model's row have enough items
-            // or the number of items that can be mapped
-            if (d->m_mapLimited)
-                return qMin(d->m_mapCount, qMax(d->m_model->columnCount() - d->m_mapFirst, 0));
-            else
-                return qMax(d->m_model->columnCount() - d->m_mapFirst, 0);
+            // data is in a row. Return the number of mapped items
+            return d->m_model->columnCount();
         }
     }
 
@@ -386,145 +365,11 @@ void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
     Q_UNUSED(bottomRight)
     Q_D(QXYSeries);
     if (d->m_mapOrientation == Qt::Vertical) {
-        if (topLeft.row() >= d->m_mapFirst && (!d->m_mapLimited || topLeft.row() < d->m_mapFirst + d->m_mapCount))
-            emit d->pointReplaced(topLeft.row() - d->m_mapFirst);
+        if (topLeft.column() == d->m_mapX || topLeft.column() == d->m_mapY)
+            emit d->pointReplaced(topLeft.row());
     } else {
-        if (topLeft.column() >= d->m_mapFirst && (!d->m_mapLimited || topLeft.column() < d->m_mapFirst + d->m_mapCount))
-            emit d->pointReplaced(topLeft.column() - d->m_mapFirst);
-    }    
-}
-
-/*!
-   \internal
- */
-void QXYSeries::modelDataAboutToBeAdded(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent)
-    //    Q_UNUSED(end)
-    Q_D(QXYSeries);
-    if (d->m_mapLimited) {
-        if (start >= d->m_mapFirst + d->m_mapCount) {
-            // the added data is below mapped area
-            // therefore it has no relevance
-            return;
-        } else {
-            // the added data is in the mapped area or before it and update is needed
-
-            // check how many mapped items there is currently (before new items are added)
-            // if the number of items currently is equal the m_mapCount then some needs to be removed from xychartitem
-            // internal storage before new ones can be added
-
-            int itemsToRemove = qMin(count() - qMax(start - d->m_mapFirst, 0), end - start + 1);
-            if (d->m_mapCount == count()) {
-                for (int i = 0; i < itemsToRemove; i++)
-                    emit d->pointRemoved(qMin(end, count()) - i);
-            }
-        }
-    } else {
-        // map is not limited (it includes all the items starting from m_mapFirst till the end of model)
-        // nothing to do
-        //        emit pointAdded(qMax(start - m_mapFirst, 0));
-    }
-}
-
-/*!
-   \internal
- */
-void QXYSeries::modelDataAdded(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent)
-    //    Q_UNUSED(end)
-    Q_D(QXYSeries);
-    if (d->m_mapLimited) {
-        if (start >= d->m_mapFirst + d->m_mapCount) {
-            // the added data is below mapped area
-            // therefore it has no relevance
-            return;
-        } else {
-            // the added data is in the mapped area or before it
-            // update needed
-            if (count() > 0) {
-                int toBeAdded = qMin(d->m_mapCount - (start - d->m_mapFirst), end - start + 1);
-                for (int i = 0; i < toBeAdded; i++)
-                    if (start + i >= d->m_mapFirst)
-                        emit d->pointAdded(start + i);
-            }
-        }
-    } else {
-        // map is not limited (it included all the items starting from m_mapFirst till the end of model)
-        for (int i = 0; i < end - start + 1; i++)
-            emit d->pointAdded(start + i);
-    }
-}
-
-/*!
-   \internal
- */
-void QXYSeries::modelDataAboutToBeRemoved(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent)
-    //    Q_UNUSED(end)
-    Q_D(QXYSeries);
-    if (d->m_mapLimited) {
-        if (start >= d->m_mapFirst + d->m_mapCount) {
-            // the removed data is below mapped area
-            // therefore it has no relevance
-            return;
-        } else {
-            // the removed data is in the mapped area or before it
-            // update needed
-
-            // check how many items need to be removed from the xychartitem storage
-            // the number equals the number of items that are removed and that lay before
-            // or in the mapped area. Items that lay beyond the map do not count
-            // the max is the current number of items in storage (count())
-            int itemsToRemove = qMin(count(), qMin(end, d->m_mapFirst + d->m_mapCount - 1) - start + 1);
-            for (int i = 0; i < itemsToRemove; i++)
-                emit d->pointRemoved(start);
-        }
-    } else {
-        // map is not limited (it included all the items starting from m_mapFirst till the end of model)
-        for (int i = 0; i < end - start + 1; i++)
-            emit d->pointRemoved(start);
-    }
-}
-
-/*!
-   \internal
- */
-void QXYSeries::modelDataRemoved(QModelIndex parent, int start, int end)
-{
-
-    Q_UNUSED(parent)
-    Q_UNUSED(end)
-    Q_D(QXYSeries);
-    // how many items there were before data was removed
-    //    int oldCount = count() - 1;
-
-    if (d->m_mapLimited) {
-        if (start >= d->m_mapFirst + d->m_mapCount) {
-            // the removed data is below mapped area
-            // therefore it has no relevance
-            return;
-        } else {
-            // if the current items count in the whole model is bigger than the index of the last item
-            // that was removed than it means there are some extra items available
-
-            int removedItemsCount = qMin(count(), qMin(end, d->m_mapFirst + d->m_mapCount - 1) - start + 1);
-            int extraItemsAvailable = 0;
-            if (d->m_mapOrientation == Qt::Vertical) {
-                extraItemsAvailable = qMax(d->m_model->rowCount() + (end - start + 1) - qMax(end + 1, d->m_mapFirst + d->m_mapCount), 0);
-            } else {
-                extraItemsAvailable = qMax(d->m_model->columnCount() + (end - start + 1) - qMax(end + 1, d->m_mapFirst + d->m_mapCount), 0);
-            }
-
-            // if there are excess items available (below the mapped area) use them to repopulate mapped area
-            int toBeAdded = qMin(extraItemsAvailable, removedItemsCount);
-            for (int k = 0; k < toBeAdded; k++)
-                emit d->pointAdded(d->m_mapFirst + d->m_mapCount - removedItemsCount + k);
-        }
-    } else {
-        // data was removed from XYSeries interal storage. Nothing more to do
+        if (topLeft.row() == d->m_mapX || topLeft.row() == d->m_mapY)
+            emit d->pointReplaced(topLeft.column());
     }
 }
 
@@ -541,9 +386,6 @@ bool QXYSeries::setModel(QAbstractItemModel *model)
         QObject::disconnect(d->m_model, 0, this, 0);
         d->m_mapX = -1;
         d->m_mapY = -1;
-        d->m_mapFirst = 0;
-        d->m_mapCount = 0;
-        d->m_mapLimited = false;
         d->m_mapOrientation = Qt::Vertical;
     }
 
@@ -571,63 +413,16 @@ void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientat
         return;
     d->m_mapX = modelX;
     d->m_mapY = modelY;
-    d->m_mapFirst = 0;
     d->m_mapOrientation = orientation;
-    if (d->m_mapOrientation == Qt::Vertical) {
-        connect(d->m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
-        connect(d->m_model,SIGNAL(rowsAboutToBeInserted(QModelIndex,int,int)), this, SLOT(modelDataAboutToBeAdded(QModelIndex,int,int)));
-        connect(d->m_model,SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(rowsAboutToBeRemoved(QModelIndex,int,int)), this, SLOT(modelDataAboutToBeRemoved(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    } else {
-        connect(d->m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
-        connect(d->m_model,SIGNAL(columnsAboutToBeInserted(QModelIndex,int,int)), this, SLOT(modelDataAboutToBeAdded(QModelIndex,int,int)));
-        connect(d->m_model,SIGNAL(columnsInserted(QModelIndex,int,int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(columnsAboutToBeRemoved(QModelIndex,int,int)), this, SLOT(modelDataAboutToBeRemoved(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    }
-}
-
-/*!
-     \fn bool QXYSeries::setModelMappingRange(int first, int count)
-     Allows limiting the model mapping.
-     Parameter \a first specifies which element of the model should be used as a first one of the series.
-     Parameter \a count specifies how many elements should be mapped. If count is not specified (defaults to -1)
-     then all the items following \a first item in a model are used.
-     \sa setModel(), setModelMapping()
- */
-void QXYSeries::setModelMappingRange(int first, int count)
-{
-    Q_D(QXYSeries);
-    d->m_mapFirst = first;
-    if (count == 0) {
-        d->m_mapLimited = false;
-    } else {
-        d->m_mapCount = count;
-        d->m_mapLimited = true;
-    }
-}
-
-int QXYSeries::mapFirst() const
-{
-    Q_D(const QXYSeries);
-    return d->m_mapFirst;
-}
-
-int QXYSeries::mapCount() const
-{
-    Q_D(const QXYSeries);
-    return d->m_mapCount;
+    connect(d->m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
 QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q) : QAbstractSeriesPrivate(q),
     m_mapX(-1),
     m_mapY(-1),
-    m_mapFirst(0),
-    m_mapCount(0),
-    m_mapLimited(false),
     m_mapOrientation( Qt::Vertical),
     m_pointsVisible(false)
 {

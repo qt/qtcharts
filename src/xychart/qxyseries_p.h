@@ -61,11 +61,7 @@ protected:
 
     int m_mapX;
     int m_mapY;
-    int m_mapFirst;
-    int m_mapCount;
-    bool m_mapLimited;
     Qt::Orientation m_mapOrientation;
-    int tempItemsRemoved;
     bool m_pointsVisible;
 
 private:

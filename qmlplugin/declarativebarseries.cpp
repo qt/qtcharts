@@ -65,18 +65,18 @@ void DeclarativeBarSeries::componentComplete()
     }
 }
 
-void DeclarativeBarSeries::setBarCategories(QStringList categories)
+void DeclarativeBarSeries::setBarCategories(QStringList /*categories*/)
 {
-    m_categories = categories;
-    if (m_series) {
-        // Replace categories of the QBarSeries with the new categories
-        for (int i(0); i < m_categories.count(); i++) {
-            if (m_series->categories().at(i) != m_categories.at(i))
-                m_series->insertCategory(m_series->categoryCount(), m_categories.at(i));
-        }
-        while (m_series->categoryCount() > m_categories.count())
-            m_series->removeCategory(m_series->categoryCount() - 1);
-    }
+//    m_categories = categories;
+//    if (m_series) {
+//        // Replace categories of the QBarSeries with the new categories
+//        for (int i(0); i < m_categories.count(); i++) {
+//            if (m_series->categories().at(i) != m_categories.at(i))
+//                m_series->insertCategory(m_series->categoryCount(), m_categories.at(i));
+//        }
+//        while (m_series->categoryCount() > m_categories.count())
+//            m_series->removeCategory(m_series->categoryCount() - 1);
+//    }
 }
 
 QStringList DeclarativeBarSeries::barCategories()

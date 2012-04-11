@@ -66,13 +66,6 @@ QPointF QSplineSeries::controlPoint(int index) const
     return d->m_controlPoints[index];
 }
 
-void QSplineSeries::setModelMappingRange(int first, int count)
-{
-    Q_D(QSplineSeries);
-    QLineSeries::setModelMappingRange(first, count);
-    d->calculateControlPoints();
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(q)
@@ -185,30 +178,6 @@ void QSplineSeriesPrivate::updateControlPoints()
         calculateControlPoints();
     }
 }
-
-/*//!
-     \fn bool QSplineSeries::setModel(QAbstractItemModel *model)
-     Sets the \a model to be used as a data source
-     \sa setModelMapping(), setModelMappingRange()
- */
-//bool QSplineSeries::setModel(QAbstractItemModel* model)
-//{
-//    QXYSeries::setModel(model);
-////    calculateControlPoints();
-//    return true;
-//}
-
-/*//!
-     \fn bool QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
-     Sets the \a modelX to be used as a data source for x coordinate and \a modelY to be used
-     as a data source for y coordinate. The \a orientation parameter specifies whether the data
-     is in columns or in rows.
- */
-//void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
-//{
-//    QLineSeries::setModelMapping(modelX, modelY, orientation);
-////    calculateControlPoints();
-//}
 
 /*!
      \fn bool QSplineSeries::setModelMappingRange(int first, int count)

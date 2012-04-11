@@ -166,7 +166,7 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QLineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(0,1, Qt::Vertical);
-            m_series->setModelMappingRange(1, 4);
+//            m_series->setModelMappingRange(1, 4);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(0, 1, 2, 4));
@@ -183,7 +183,7 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QLineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(4,5, Qt::Vertical);
-            m_series->setModelMappingRange(2, 0);
+//            m_series->setModelMappingRange(2, 0);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(4, 2, 2, 1000));
@@ -194,7 +194,7 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QSplineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(0,1, Qt::Vertical);
-            m_series->setModelMappingRange(1, 4);
+//            m_series->setModelMappingRange(1, 4);
             //        series->setModelMapping(0,1, Qt::Horizontal);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
@@ -204,7 +204,7 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QSplineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(2,3, Qt::Vertical);
-            m_series->setModelMappingRange(0, 0);
+//            m_series->setModelMappingRange(0, 0);
             //        series->setModelMapping(2,3, Qt::Horizontal);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
@@ -214,7 +214,7 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QSplineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(4,5, Qt::Vertical);
-            m_series->setModelMappingRange(2, 0);
+//            m_series->setModelMappingRange(2, 0);
             //        series->setModelMapping(4,5, Qt::Horizontal);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
@@ -226,7 +226,7 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QScatterSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(0,1, Qt::Vertical);
-            m_series->setModelMappingRange(2, 0);
+//            m_series->setModelMappingRange(2, 0);
             //        series->setModelMapping(0,1, Qt::Horizontal);
             m_chart->addSeries(m_series);
 
@@ -237,7 +237,7 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QScatterSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(2,3, Qt::Vertical);
-            m_series->setModelMappingRange(1, 6);
+//            m_series->setModelMappingRange(1, 6);
             //        series->setModelMapping(2,3, Qt::Horizontal);
             m_chart->addSeries(m_series);
 
@@ -297,7 +297,7 @@ void TableWidget::updateChartType(bool toggle)
             QLineSeries* upperLineSeries = new QLineSeries;
             upperLineSeries->setModel(m_model);
             upperLineSeries->setModelMapping(0, 1, Qt::Vertical);
-            upperLineSeries->setModelMappingRange(1, 5);
+//            upperLineSeries->setModelMappingRange(1, 5);
             QLineSeries* lowerLineSeries = new QLineSeries;
             lowerLineSeries->setModel(m_model);
             lowerLineSeries->setModelMapping(2, 3, Qt::Vertical);

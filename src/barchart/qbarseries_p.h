@@ -44,8 +44,6 @@ Q_SIGNALS:
 private Q_SLOTS:
     // slots for updating bars when data in model changes
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-    void modelDataAdded(QModelIndex parent, int start, int end);
-    void modelDataRemoved(QModelIndex parent, int start, int end);
     void barsetChanged();
 
 protected:
@@ -54,8 +52,6 @@ protected:
     int m_mapCategories;
     int m_mapBarBottom;
     int m_mapBarTop;
-    int m_mapFirst;
-    int m_mapCount;
     Qt::Orientation m_mapOrientation;
 private:
     Q_DECLARE_PUBLIC(QBarSeries)

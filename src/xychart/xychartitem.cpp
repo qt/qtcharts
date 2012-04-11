@@ -108,44 +108,20 @@ void XYChartItem::handlePointAdded(int index)
 {
     QVector<QPointF> points = m_points;
     QPointF point;
-    if (m_series->model()) {
-        point = calculateGeometryPoint(index - m_series->mapFirst());
-        if (index < m_series->mapFirst()) {
-            points.insert(0, point);
-            updateLayout(m_points, points, 0);
-        }
-        else {
-            points.insert(index - m_series->mapFirst(), point);
-            updateLayout(m_points, points, index - m_series->mapFirst());
-        }
-    }
-    else {
-        // this checks do not work correctly if model is set
-        Q_ASSERT(index<m_series->count());
-        Q_ASSERT(index>=0);
-        point = calculateGeometryPoint(index);
-        points.insert(index, point);
-        updateLayout(m_points, points, index);
-    }
+    Q_ASSERT(index<m_series->count());
+    Q_ASSERT(index>=0);
+    point = calculateGeometryPoint(index);
+    points.insert(index, point);
+    updateLayout(m_points, points, index);
     update();
 }
 void XYChartItem::handlePointRemoved(int index)
 {
     QVector<QPointF> points = m_points;
-    if (m_series->model()) {
-        if (index < m_series->mapFirst())
-            points.remove(0);
-        else
-            points.remove(index - m_series->mapFirst());
-        updateLayout(m_points, points, index - m_series->mapFirst());
-    }
-    else {
-        // this checks do not work correctly if model is set
-        Q_ASSERT(index<m_series->count() + 1);
-        Q_ASSERT(index>=0);
-        points.remove(index);
-        updateLayout(m_points, points, index);
-    }
+    Q_ASSERT(index<m_series->count() + 1);
+    Q_ASSERT(index>=0);
+    points.remove(index);
+    updateLayout(m_points, points, index);
     update();
 }
 

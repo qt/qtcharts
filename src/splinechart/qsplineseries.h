@@ -40,7 +40,6 @@ public:
     QAbstractSeries::QSeriesType type() const;
 
     QPointF controlPoint(int index) const;
-    void setModelMappingRange(int first, int count);
 
 private:
     Q_DECLARE_PRIVATE(QSplineSeries);
