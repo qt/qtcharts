@@ -60,7 +60,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs QBarSet with a name of \a name and with parent of \a parent
 */
-QBarSet::QBarSet(QString name, QObject *parent)
+QBarSet::QBarSet(const QString name, QObject *parent)
     : QObject(parent)
     ,d_ptr(new QBarSetPrivate(name,this))
 {
@@ -77,7 +77,7 @@ QBarSet::~QBarSet()
 /*!
     Sets new \a name for set.
 */
-void QBarSet::setName(QString name)
+void QBarSet::setName(const QString name)
 {
     d_ptr->m_name = name;
 }
@@ -93,30 +93,63 @@ QString QBarSet::name() const
 /*!
     Appends new value \a value to the end of set.
 */
-QBarSet& QBarSet::operator << (const qreal &value)
+void QBarSet::append(const qreal value)
 {
     d_ptr->m_values.append(value);
     emit d_ptr->structureChanged();
+}
+
+/*!
+    Appends new value \a value to the end of set.
+*/
+QBarSet& QBarSet::operator << (const qreal &value)
+{
+    append(value);
     return *this;
 }
 
 /*!
-    Inserts new \a value on the \a i position.
-    The value that is currently at this postion is moved to postion i + 1
-    \sa removeValue()
+    Inserts new \a value on the \a index position.
+    The value that is currently at this postion is moved to postion index + 1
+    \sa remove()
 */
-void QBarSet::insertValue(int i, qreal value)
+void QBarSet::insert(const int index, const qreal value)
 {
-    d_ptr->m_values.insert(i, value);
+    d_ptr->m_values.insert(index, value);
 }
 
 /*!
-    Removes the value specified by \a i
-    \sa insertValue()
+    Removes the value specified by \a index
+    \sa insert()
 */
-void QBarSet::removeValue(int i)
+void QBarSet::remove(const int index)
 {
-    d_ptr->m_values.removeAt(i);
+    d_ptr->m_values.removeAt(index);
+}
+
+/*!
+    Sets a new value \a value to set, indexed by \a index
+*/
+void QBarSet::replace(const int index, const qreal value)
+{
+    d_ptr->m_values.replace(index,value);
+    emit d_ptr->valueChanged();
+}
+
+/*!
+    Returns value of set indexed by \a index
+*/
+qreal QBarSet::at(const int index) const
+{
+    return d_ptr->m_values.at(index);
+}
+
+/*!
+    Returns value of set indexed by \a index
+*/
+qreal QBarSet::operator [] (int index) const
+{
+    return d_ptr->m_values.at(index);
 }
 
 /*!
@@ -125,23 +158,6 @@ void QBarSet::removeValue(int i)
 int QBarSet::count() const
 {
     return d_ptr->m_values.count();
-}
-
-/*!
-    Returns value of set indexed by \a index
-*/
-qreal QBarSet::valueAt(int index) const
-{
-    return d_ptr->m_values.at(index);
-}
-
-/*!
-    Sets a new value \a value to set, indexed by \a index
-*/
-void QBarSet::setValue(int index, qreal value)
-{
-    d_ptr->m_values.replace(index,value);
-    emit d_ptr->valueChanged();
 }
 
 /*!
@@ -274,7 +290,7 @@ bool QBarSet::labelsVisible() const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarSetPrivate::QBarSetPrivate(QString name, QBarSet *parent) : QObject(parent),
+QBarSetPrivate::QBarSetPrivate(const QString name, QBarSet *parent) : QObject(parent),
     q_ptr(parent),
     m_name(name),
     m_labelsVisible(false)

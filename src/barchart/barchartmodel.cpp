@@ -93,7 +93,7 @@ qreal BarChartModel::min() const
     for (int i = 0; i < m_dataModel.count(); i++) {
         int itemCount = m_dataModel.at(i)->count();
         for (int j = 0; j < itemCount; j++) {
-            qreal temp = m_dataModel.at(i)->valueAt(j);
+            qreal temp = m_dataModel.at(i)->at(j);
             if (temp < min)
                 min = temp;
         }
@@ -111,7 +111,7 @@ qreal BarChartModel::max() const
     for (int i = 0; i < m_dataModel.count(); i++) {
         int itemCount = m_dataModel.at(i)->count();
         for (int j = 0; j < itemCount; j++) {
-            qreal temp = m_dataModel.at(i)->valueAt(j);
+            qreal temp = m_dataModel.at(i)->at(j);
             if (temp > max)
                 max = temp;
         }
@@ -130,7 +130,7 @@ qreal BarChartModel::valueAt(int set, int category) const
         return 0;
     }
 
-    return m_dataModel.at(set)->valueAt(category);
+    return m_dataModel.at(set)->at(category);
 }
 
 qreal BarChartModel::percentageAt(int set, int category) const
@@ -143,7 +143,7 @@ qreal BarChartModel::percentageAt(int set, int category) const
         return 0;
     }
 
-    qreal value = m_dataModel.at(set)->valueAt(category);
+    qreal value = m_dataModel.at(set)->at(category);
     qreal total = categorySum(category);
     if ( qFuzzyCompare(total, 0) )
         return 0;
@@ -158,7 +158,7 @@ qreal BarChartModel::categorySum(int category) const
 
     for (int set = 0; set < count; set++) {
         if (category < m_dataModel.at(set)->count())
-            sum += m_dataModel.at(set)->valueAt(category);
+            sum += m_dataModel.at(set)->at(category);
     }
     return sum;
 }
@@ -170,7 +170,7 @@ qreal BarChartModel::absoluteCategorySum(int category) const
 
     for (int set = 0; set < count; set++) {
         if (category < m_dataModel.at(set)->count())
-            sum += qAbs(m_dataModel.at(set)->valueAt(category));
+            sum += qAbs(m_dataModel.at(set)->at(category));
     }
     return sum;
 }

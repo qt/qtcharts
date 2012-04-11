@@ -10,7 +10,7 @@ class QBarSetPrivate : public QObject
     Q_OBJECT
 
 public:
-    QBarSetPrivate(QString name, QBarSet *parent);
+    QBarSetPrivate(const QString name, QBarSet *parent);
     ~QBarSetPrivate();
 
 Q_SIGNALS:

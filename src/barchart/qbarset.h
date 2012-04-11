@@ -34,18 +34,20 @@ class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
     Q_OBJECT
 
 public:
-    explicit QBarSet(QString name, QObject *parent = 0);
+    explicit QBarSet(const QString name, QObject *parent = 0);
     virtual ~QBarSet();
 
-    void setName(QString name);
+    void setName(const QString name);
     QString name() const;
-    QBarSet& operator << (const qreal &value);  // appends new value to set
-    void insertValue(int i, qreal value);
-    void removeValue(int i);
-    int count() const;                          // count of values in set
-    qreal valueAt(int index) const;             // for modifying individual values
-    void setValue(int index, qreal value);      // setter for individual value
-    qreal sum() const;                          // sum of all values in the set
+    void append(const qreal value);
+    QBarSet& operator << (const qreal &value);
+    void insert(const int index, const qreal value);
+    void remove(const int index);
+    void replace(const int index, const qreal value);
+    qreal at(const int index) const;
+    qreal operator [] (int index) const;
+    int count() const;
+    qreal sum() const;
 
     void setPen(const QPen &pen);
     QPen pen() const;

@@ -387,13 +387,13 @@ void QBarSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRigh
     {
         // model update is relevant to BarSeries if the change was made to the part of the model that was mapped to BarSeries
         if (topLeft.column() >= m_mapBarBottom && topLeft.column() <= m_mapBarTop)
-            barsetAt(topLeft.column() - m_mapBarBottom)->setValue(topLeft.row(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            barsetAt(topLeft.column() - m_mapBarBottom)->replace(topLeft.row(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
     }
     else
     {
         // model update is relevant to BarSeries if the change was made to the part of the model that was mapped to BarSeries
         if (topLeft.row() >= m_mapBarBottom && topLeft.row() <= m_mapBarTop)
-            barsetAt(topLeft.row() - m_mapBarBottom)->setValue(topLeft.column(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            barsetAt(topLeft.row() - m_mapBarBottom)->replace(topLeft.column(), m_model->data(topLeft, Qt::DisplayRole).toDouble());
     }
 }
 

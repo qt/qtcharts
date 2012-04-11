@@ -122,7 +122,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
         for (int set = 0; set < setCount; set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
 
-            qreal barHeight = barSet->valueAt(category) * scale;
+            qreal barHeight = barSet->at(category) * scale;
             Bar* bar = m_bars.at(itemIndex);
 
             QRectF rect(xPos, yPos - barHeight, barWidth, barHeight);
@@ -132,8 +132,8 @@ QVector<QRectF> BarChartItem::calculateLayout()
 
             BarLabel* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(barSet->valueAt(category))) {
-                label->setText(QString::number(barSet->valueAt(category)));
+            if (!qFuzzyIsNull(barSet->at(category))) {
+                label->setText(QString::number(barSet->at(category)));
             } else {
                 label->setText(QString(""));
             }

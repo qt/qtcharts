@@ -55,7 +55,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
         qreal yPos = height + domainScale * m_domainMinY + geometry().topLeft().y();
         for (int set=0; set < m_series->barsetCount(); set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
-            qreal barHeight = barSet->valueAt(category) * percentage * domainScale;
+            qreal barHeight = barSet->at(category) * percentage * domainScale;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
