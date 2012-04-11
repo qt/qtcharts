@@ -68,12 +68,28 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QBarSeries::hovered(QBarSet* barset, bool status)
+
+    The signal is emitted if mouse is hovered on top of series.
+    Parameter \a barset is the pointer of barset, where hover happened.
+    Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
+*/
+
+/*!
     Constructs empty QBarSeries. Parameter \a categories defines the categories for chart.
     QBarSeries is QObject which is a child of a \a parent.
 */
 QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) :
     QSeries(*new QBarSeriesPrivate(categories, this),parent)
 {
+}
+
+/*!
+    Destructs barseries and owned barsets.
+*/
+QBarSeries::~QBarSeries()
+{
+    // NOTE: d_ptr destroyed by QObject
 }
 
 /*!
@@ -84,6 +100,9 @@ QBarSeries::QBarSeries(QBarSeriesPrivate &d, QObject *parent) :
 {
 }
 
+/*!
+    Returns the type of series. Derived classes override this.
+*/
 QSeries::QSeriesType QBarSeries::type() const
 {
     return QSeries::SeriesTypeBar;

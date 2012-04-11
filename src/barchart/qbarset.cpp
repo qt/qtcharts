@@ -45,8 +45,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QBarSet::selected()
+    \brief signals that set has been selected
+*/
+
+/*!
     \fn void QBarSet::hovered(bool status)
     \brief signals that mouse has hovered over the set. If \a status is true, then mouse was entered. If \a status is false, then mouse was left.
+
+    The signal is emitted if mouse is hovered on top of set
+    Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
 */
 
 /*!
@@ -58,9 +66,12 @@ QBarSet::QBarSet(QString name, QObject *parent)
 {
 }
 
+/*!
+    Destroys the barset
+*/
 QBarSet::~QBarSet()
 {
-
+    // NOTE: d_ptr destroyed by QObject
 }
 
 /*!
