@@ -58,7 +58,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn virtual QSeriesType QAreaSeries::type() const
     \brief Returns type of series.
-    \sa QSeries, QSeriesType
+    \sa QAbstractSeries, QSeriesType
 */
 
 /*!
@@ -113,7 +113,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     When series object is added to QChartView or QChart instance ownerships is transferred.
 */
 QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
-    : QSeries(*new QAreaSeriesPrivate(upperSeries,lowerSeries,this),upperSeries)
+    : QAbstractSeries(*new QAreaSeriesPrivate(upperSeries,lowerSeries,this),upperSeries)
 {
 }
 
@@ -126,9 +126,9 @@ QAreaSeries::~QAreaSeries()
 }
 
 
-QSeries::QSeriesType QAreaSeries::type() const
+QAbstractSeries::QSeriesType QAreaSeries::type() const
 {
-    return QSeries::SeriesTypeArea;
+    return QAbstractSeries::SeriesTypeArea;
 }
 
 QLineSeries* QAreaSeries::upperSeries() const
@@ -211,7 +211,7 @@ QAbstractItemModel* QAreaSeries::model() const
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries,QAreaSeries* q) :
-    QSeriesPrivate(q),
+    QAbstractSeriesPrivate(q),
     m_upperSeries(upperSeries),
     m_lowerSeries(lowerSeries),
     m_pointsVisible(false)

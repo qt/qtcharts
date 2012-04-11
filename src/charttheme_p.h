@@ -29,7 +29,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartItem;
-class QSeries;
 class LineChartItem;
 class QLineSeries;
 class BarChartItem;

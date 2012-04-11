@@ -29,7 +29,7 @@ DrilldownChart::DrilldownChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 {
 }
 
-void DrilldownChart::changeSeries(QSeries* series)
+void DrilldownChart::changeSeries(QAbstractSeries *series)
 {
     if (m_currentSeries)
         removeSeries(m_currentSeries);

@@ -30,7 +30,7 @@
 #ifndef CHARTDATASET_P_H
 #define CHARTDATASET_P_H
 
-#include "qseries.h"
+#include "qabstractseries.h"
 #include "domain_p.h"
 #include <QVector>
 
@@ -46,38 +46,38 @@ public:
     ChartDataSet(QObject* parent=0);
     virtual ~ChartDataSet();
 
-    void addSeries(QSeries* series,QChartAxis *axisY = 0);
-    QChartAxis* removeSeries(QSeries* series);
+    void addSeries(QAbstractSeries* series,QChartAxis *axisY = 0);
+    QChartAxis* removeSeries(QAbstractSeries* series);
     void removeAllSeries();
 
     void zoomInDomain(const QRectF& rect, const QSizeF& size);
     void zoomOutDomain(const QRectF& rect, const QSizeF& size);
     void scrollDomain(int dx,int dy,const QSizeF& size);
 
-    int seriesCount(QSeries::QSeriesType type);
-    int seriesIndex(QSeries *series);
+    int seriesCount(QAbstractSeries::QSeriesType type);
+    int seriesIndex(QAbstractSeries *series);
 
-    Domain* domain(QSeries* series) const;
+    Domain* domain(QAbstractSeries* series) const;
     Domain* domain(QChartAxis* axis) const;
 
     QChartAxis* axisX() const { return m_axisX; }
-    QChartAxis* axisY(QSeries* series = 0) const;
+    QChartAxis* axisY(QAbstractSeries *series = 0) const;
 
 Q_SIGNALS:
-    void seriesAdded(QSeries* series,Domain* domain);
-    void seriesRemoved(QSeries* series);
+    void seriesAdded(QAbstractSeries* series, Domain* domain);
+    void seriesRemoved(QAbstractSeries* series);
     void axisAdded(QChartAxis* axis,Domain* domain);
     void axisRemoved(QChartAxis* axis);
 
 private:
     QStringList createLabels(QChartAxis* axis,qreal min, qreal max);
-    void calculateDomain(QSeries* series,Domain* domain);
+    void calculateDomain(QAbstractSeries* series,Domain* domain);
     void setupCategories(QBarSeries* series);
 
 private:
-    QMap<QSeries*, QChartAxis*> m_seriesAxisMap;
-    QMap<QChartAxis*, Domain*> m_axisDomainMap;
-    QMap<int,QSeries*> m_indexSeriesMap;
+    QMap<QAbstractSeries *, QChartAxis *> m_seriesAxisMap;
+    QMap<QChartAxis*, Domain *> m_axisDomainMap;
+    QMap<int, QAbstractSeries *> m_indexSeriesMap;
     QChartAxis* m_axisX;
     QChartAxis* m_axisY;
 

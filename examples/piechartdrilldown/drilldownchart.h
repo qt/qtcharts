@@ -23,7 +23,7 @@
 #include <QChart>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class QSeries;
+class QAbstractSeries;
 class QPieSlice;
 QTCOMMERCIALCHART_END_NAMESPACE
 
@@ -35,13 +35,13 @@ class DrilldownChart : public QChart
 public:
     explicit DrilldownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~DrilldownChart();
-    void changeSeries(QSeries* series);
+    void changeSeries(QAbstractSeries* series);
 
 public Q_SLOTS:
     void handleSliceClicked(QPieSlice* slice);
 
 private:
-    QSeries* m_currentSeries;
+    QAbstractSeries* m_currentSeries;
 };
 
 #endif // DRILLDOWNCHART_H

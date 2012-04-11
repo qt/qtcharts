@@ -14,7 +14,7 @@ SOURCES += \
     $$PWD/domain.cpp \
     $$PWD/qchart.cpp \
     $$PWD/qchartview.cpp \
-    $$PWD/qseries.cpp \
+    $$PWD/qabstractseries.cpp \
     $$PWD/chartbackground.cpp \
     $$PWD/chart.cpp \
     $$PWD/scroller.cpp
@@ -30,11 +30,11 @@ PRIVATE_HEADERS += \
     $$PWD/qchart_p.h \
     $$PWD/qchartview_p.h \
     $$PWD/scroller_p.h \
-    $$PWD/qseries_p.h 
+    $$PWD/qabstractseries_p.h
 PUBLIC_HEADERS += \
     $$PWD/qchart.h \
     $$PWD/qchartglobal.h \
-    $$PWD/qseries.h \
+    $$PWD/qabstractseries.h \
     $$PWD/qchartview.h
     
 include(animations/animations.pri)

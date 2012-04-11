@@ -21,7 +21,7 @@
 #ifndef QCHART_H
 #define QCHART_H
 
-#include <QSeries>
+#include <QAbstractSeries>
 #include <QLegend>
 #include <QGraphicsWidget>
 
@@ -29,7 +29,7 @@ class QGraphicsSceneResizeEvent;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QSeries;
+class QAbstractSeries;
 class QChartAxis;
 class QLegend;
 struct QChartPrivate;
@@ -63,8 +63,8 @@ public:
     explicit QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
-    void addSeries(QSeries *series, QChartAxis *axisY = 0);
-    void removeSeries(QSeries *series);
+    void addSeries(QAbstractSeries *series, QChartAxis *axisY = 0);
+    void removeSeries(QAbstractSeries *series);
     void removeAllSeries();
 
     void setTheme(QChart::ChartTheme theme);
@@ -97,7 +97,7 @@ public:
     void scrollDown();
 
     QChartAxis* axisX() const;
-    QChartAxis* axisY(QSeries* series = 0) const;
+    QChartAxis* axisY(QAbstractSeries* series = 0) const;
 
     QLegend* legend() const;
     QRectF margins() const;

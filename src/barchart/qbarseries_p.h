@@ -2,16 +2,16 @@
 #define QBARSERIES_P_H
 
 #include "qbarseries.h"
-#include "qseries_p.h"
+#include "qabstractseries_p.h"
 #include <QStringList>
-#include <QSeries>
+#include <QAbstractSeries>
 
 class QModelIndex;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 // Container for series
-class QBarSeriesPrivate : public QSeriesPrivate
+class QBarSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 public:

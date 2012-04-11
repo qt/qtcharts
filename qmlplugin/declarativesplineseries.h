@@ -37,7 +37,7 @@ public:
     explicit DeclarativeSplineSeries(QObject *parent = 0);
 
 public:
-    QSeries *series();
+    QAbstractSeries *series();
     QDeclarativeListProperty<DeclarativeXyPoint> points();
 };
 

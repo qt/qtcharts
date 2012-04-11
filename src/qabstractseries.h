@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef QSERIES_H
-#define QSERIES_H
+#ifndef QABSTRACTSERIES_H
+#define QABSTRACTSERIES_H
 
 #include <qchartglobal.h>
 #include <QObject>
@@ -29,9 +29,9 @@ class QAbstractItemModel;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QSeriesPrivate;
+class QAbstractSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QSeries : public QObject
+class QTCOMMERCIALCHART_EXPORT QAbstractSeries : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName)
@@ -50,10 +50,10 @@ public:
     };
 
 protected:
-    QSeries(QSeriesPrivate &d, QObject *parent = 0);
+    QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent = 0);
 
 public:
-    ~QSeries();
+    ~QAbstractSeries();
     virtual QSeriesType type() const = 0;
     virtual bool setModel(QAbstractItemModel* model) = 0;
     QAbstractItemModel* model() const;
@@ -61,7 +61,7 @@ public:
     QString name() const;
 
 protected:
-    QScopedPointer<QSeriesPrivate> d_ptr;
+    QScopedPointer<QAbstractSeriesPrivate> d_ptr;
     friend class ChartDataSet;
     friend class ChartPresenter;
     friend class QLegendPrivate;

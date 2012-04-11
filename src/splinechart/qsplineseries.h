@@ -37,7 +37,7 @@ class QTCOMMERCIALCHART_EXPORT QSplineSeries : public QLineSeries
 public:
 
     explicit QSplineSeries(QObject *parent = 0);
-    QSeries::QSeriesType type() const;
+    QAbstractSeries::QSeriesType type() const;
 
     QPointF controlPoint(int index) const;
     void setModelMappingRange(int first, int count);

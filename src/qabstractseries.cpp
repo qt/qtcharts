@@ -18,13 +18,13 @@
 **
 ****************************************************************************/
 
-#include "qseries.h"
-#include "qseries_p.h"
+#include "qabstractseries.h"
+#include "qabstractseries_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    \class QSeries
+    \class QAbstractSeries
     \brief Base class for all QtCommercial Chart series.
     \mainclass
 
@@ -34,7 +34,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \enum QSeries::QSeriesType
+    \enum QAbstractSeries::QSeriesType
 
     The type of the series object.
 
@@ -49,12 +49,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QSeriesType QSeries::type() const
+    \fn QSeriesType QAbstractSeries::type() const
     \brief The type of the series.
 */
 
 /*!
-    \fn bool QSeries::setModel(QAbstractItemModel *model)
+    \fn bool QAbstractSeries::setModel(QAbstractItemModel *model)
     \brief Use the \a model to provide data for the series. The model overrides possible user data
     set with QChartSeries type specific data setters. For example if you call both
     QScatterSeries::addData() and QScatterSeries::setModel, only the data provided by the model is
@@ -62,12 +62,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QSeries::name
+    \property QAbstractSeries::name
     \brief name of the series property
 */
 
 /*!
-    \fn void QSeries::setName(const QString& name)
+    \fn void QAbstractSeries::setName(const QString& name)
     \brief Sets a \a name for the series.
 
     The name of a series is shown in the legend for QXYSeries.
@@ -80,7 +80,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \internal
     \brief Constructs ChartSeries object with \a parent.
 */
-QSeries::QSeries(QSeriesPrivate &d, QObject *parent) :
+QAbstractSeries::QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent) :
     QObject(parent),
     d_ptr(&d)
 {
@@ -89,19 +89,19 @@ QSeries::QSeries(QSeriesPrivate &d, QObject *parent) :
 /*!
     \brief Virtual destructor for the chart series.
 */
-QSeries::~QSeries()
+QAbstractSeries::~QAbstractSeries()
 {
 }
 
 /*!
     \brief Returns the pointer to the model that is used as the series data source
 */
-QAbstractItemModel* QSeries::model() const
+QAbstractItemModel* QAbstractSeries::model() const
 {
     return d_ptr->m_model;
 }
 
-void QSeries::setName(const QString& name)
+void QAbstractSeries::setName(const QString& name)
 {
     d_ptr->m_name = name;
 }
@@ -110,23 +110,23 @@ void QSeries::setName(const QString& name)
     \brief Returns the name of the series.
     \sa setName()
 */
-QString QSeries::name() const
+QString QAbstractSeries::name() const
 {
     return d_ptr->m_name;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-QSeriesPrivate::QSeriesPrivate(QSeries* q): q_ptr(q),m_model(0)
+QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q): q_ptr(q),m_model(0)
 {
 }
 
-QSeriesPrivate::~QSeriesPrivate()
+QAbstractSeriesPrivate::~QAbstractSeriesPrivate()
 {
 }
 
-#include "moc_qseries.cpp"
-#include "moc_qseries_p.cpp"
+#include "moc_qabstractseries.cpp"
+#include "moc_qabstractseries_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

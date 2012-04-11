@@ -33,13 +33,13 @@ class DrilldownChart : public QChart
 public:
     explicit DrilldownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
 
-    void changeSeries(QSeries* series);
+    void changeSeries(QAbstractSeries *series);
 
 public Q_SLOTS:
     void handleClicked(QBarSet *barset, QString category, Qt::MouseButtons button);
 
 private:
-    QSeries* m_currentSeries;
+    QAbstractSeries* m_currentSeries;
 };
 //! [2]
 

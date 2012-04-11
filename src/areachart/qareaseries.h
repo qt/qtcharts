@@ -22,7 +22,7 @@
 #define QAREASERIES_H
 
 #include <qchartglobal.h>
-#include <qseries.h>
+#include <qabstractseries.h>
 #include <QPen>
 #include <QBrush>
 
@@ -30,7 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QLineSeries;
 class QAreaSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QSeries
+class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QAbstractSeries
 {
     Q_OBJECT
 public:
@@ -38,7 +38,7 @@ public:
     ~QAreaSeries();
 
 public:
-    QSeries::QSeriesType type() const;
+    QAbstractSeries::QSeriesType type() const;
 
     QLineSeries* upperSeries() const;
     QLineSeries* lowerSeries() const;

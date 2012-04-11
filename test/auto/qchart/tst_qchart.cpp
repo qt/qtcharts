@@ -11,8 +11,8 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-Q_DECLARE_METATYPE(QChartAxis*)
-Q_DECLARE_METATYPE(QSeries*)
+Q_DECLARE_METATYPE(QChartAxis *)
+Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QChart::AnimationOption)
 Q_DECLARE_METATYPE(QBrush)
 Q_DECLARE_METATYPE(QPen)
@@ -156,17 +156,17 @@ void tst_QChart::qchart()
 
 void tst_QChart::addSeries_data()
 {
-    QTest::addColumn<QSeries*>("series");
-    QTest::addColumn<QChartAxis*>("axis");
+    QTest::addColumn<QAbstractSeries *>("series");
+    QTest::addColumn<QChartAxis *>("axis");
 
-    QSeries* series0 = new QLineSeries(this);
-    QSeries* series1 = new QAreaSeries(static_cast<QLineSeries*>(series0));
-    QSeries* series2 = new QScatterSeries(this);
-    QSeries* series3 = new QSplineSeries(this);
-    QSeries* series4 = new QPieSeries(this);
-    QSeries* series5 = new QBarSeries(QBarCategories(),this);
-    QSeries* series6 = new QPercentBarSeries(QBarCategories(),this);
-    QSeries* series7 = new QStackedBarSeries(QBarCategories(),this);
+    QAbstractSeries* series0 = new QLineSeries(this);
+    QAbstractSeries* series1 = new QAreaSeries(static_cast<QLineSeries*>(series0));
+    QAbstractSeries* series2 = new QScatterSeries(this);
+    QAbstractSeries* series3 = new QSplineSeries(this);
+    QAbstractSeries* series4 = new QPieSeries(this);
+    QAbstractSeries* series5 = new QBarSeries(QBarCategories(),this);
+    QAbstractSeries* series6 = new QPercentBarSeries(QBarCategories(),this);
+    QAbstractSeries* series7 = new QStackedBarSeries(QBarCategories(),this);
 
     QChartAxis* axis = new QChartAxis(this);
 
@@ -191,8 +191,8 @@ void tst_QChart::addSeries_data()
 
 void tst_QChart::addSeries()
 {
-    QFETCH(QSeries*, series);
-    QFETCH(QChartAxis*, axis);
+    QFETCH(QAbstractSeries *, series);
+    QFETCH(QChartAxis *, axis);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
@@ -384,8 +384,8 @@ void tst_QChart::removeSeries_data()
 
 void tst_QChart::removeSeries()
 {
-    QFETCH(QSeries*, series);
-    QFETCH(QChartAxis*, axis);
+    QFETCH(QAbstractSeries *, series);
+    QFETCH(QChartAxis *, axis);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();

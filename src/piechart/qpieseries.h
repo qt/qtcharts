@@ -21,13 +21,13 @@
 #ifndef PIESERIES_H
 #define PIESERIES_H
 
-#include <qseries.h>
+#include <qabstractseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSeriesPrivate;
 class QPieSlice;
 
-class QTCOMMERCIALCHART_EXPORT QPieSeries : public QSeries
+class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(qreal horizontalPosition READ horizontalPosition WRITE setHorizontalPosition)

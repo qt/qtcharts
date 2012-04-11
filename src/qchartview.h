@@ -22,7 +22,7 @@
 #define QCHARTVIEW_H
 
 #include <QChartAxis>
-#include <QSeries>
+#include <QAbstractSeries>
 #include <QChart>
 #include <QGraphicsView>
 

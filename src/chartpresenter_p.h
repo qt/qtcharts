@@ -30,7 +30,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Chart;
-class QSeries;
+class QAbstractSeries;
 class ChartDataSet;
 class Domain;
 class Axis;
@@ -87,8 +87,8 @@ public: //TODO: fix me
     QRectF margins() const { return m_chartMargins;}
 
 public Q_SLOTS:
-    void handleSeriesAdded(QSeries* series,Domain* domain);
-    void handleSeriesRemoved(QSeries* series);
+    void handleSeriesAdded(QAbstractSeries* series,Domain* domain);
+    void handleSeriesRemoved(QAbstractSeries* series);
     void handleAxisAdded(QChartAxis* axis,Domain* domain);
     void handleAxisRemoved(QChartAxis* axis);
     void updateLayout();
@@ -102,8 +102,8 @@ private:
     ChartAnimator* m_animator;
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
-    QMap<QSeries*,Chart*> m_chartItems;
-    QMap<QChartAxis*,Axis*> m_axisItems;
+    QMap<QAbstractSeries *, Chart *> m_chartItems;
+    QMap<QChartAxis *, Axis *> m_axisItems;
     QRectF m_rect;
     QRectF m_chartRect;
     QChart::AnimationOptions m_options;

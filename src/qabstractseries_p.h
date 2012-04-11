@@ -27,10 +27,10 @@
 //
 // We mean it.
 
-#ifndef QSERIES_P_H
-#define QSERIES_P_H
+#ifndef QABSTRACTSERIES_P_H
+#define QABSTRACTSERIES_P_H
 
-#include "qseries.h"
+#include "qabstractseries.h"
 
 class QAbstractItemModel;
 
@@ -42,23 +42,23 @@ class Chart;
 class LegendMarker;
 class QLegend;
 
-class QSeriesPrivate : public QObject
+class QAbstractSeriesPrivate : public QObject
 {
     Q_OBJECT
 public:
-    QSeriesPrivate(QSeries *q);
-    ~QSeriesPrivate();
+    QAbstractSeriesPrivate(QAbstractSeries *q);
+    ~QAbstractSeriesPrivate();
 
     virtual void scaleDomain(Domain& domain) = 0;
     virtual Chart* createGraphics(ChartPresenter* presenter) = 0;
     virtual QList<LegendMarker*> createLegendMarker(QLegend* legend) = 0;
 
 protected:
-    QSeries *q_ptr;
+    QAbstractSeries *q_ptr;
     QAbstractItemModel *m_model;
     QString m_name;
 
-    friend class QSeries;
+    friend class QAbstractSeries;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

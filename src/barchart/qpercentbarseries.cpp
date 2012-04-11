@@ -44,7 +44,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn virtual QSeriesType QPercentBarSeries::type() const
     \brief Returns type of series.
-    \sa QSeries, QSeriesType
+    \sa QAbstractSeries, QSeriesType
 */
 
 /*!
@@ -56,9 +56,9 @@ QPercentBarSeries::QPercentBarSeries(QBarCategories categories, QObject *parent)
 {
 }
 
-QSeries::QSeriesType QPercentBarSeries::type() const
+QAbstractSeries::QSeriesType QPercentBarSeries::type() const
 {
-    return QSeries::SeriesTypePercentBar;
+    return QAbstractSeries::SeriesTypePercentBar;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

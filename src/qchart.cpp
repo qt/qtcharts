@@ -91,7 +91,7 @@ QChart::~QChart()
  If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
  the y axis).
  */
-void QChart::addSeries(QSeries* series, QChartAxis* axisY)
+void QChart::addSeries(QAbstractSeries *series, QChartAxis *axisY)
 {
     Q_ASSERT(series);
     d_ptr->m_dataset->addSeries(series, axisY);
@@ -103,7 +103,7 @@ void QChart::addSeries(QSeries* series, QChartAxis* axisY)
  It does not delete the pointed QChartSeries data object
  \sa addSeries(), removeAllSeries()
  */
-void QChart::removeSeries(QSeries* series)
+void QChart::removeSeries(QAbstractSeries *series)
 {
     Q_ASSERT(series);
     d_ptr->m_dataset->removeSeries(series);
@@ -282,7 +282,7 @@ QChartAxis* QChart::axisX() const
  Returns the pointer to the y axis object of the \a series
  If no \a series is provided then default Y axis of the chart is returned.
  */
-QChartAxis* QChart::axisY(QSeries* series) const
+QChartAxis* QChart::axisY(QAbstractSeries *series) const
 {
     return d_ptr->m_dataset->axisY(series);
 }
@@ -401,8 +401,8 @@ QChartPrivate::~QChartPrivate()
 void QChartPrivate::createConnections()
 {
 
-    QObject::connect(m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),m_presenter,SLOT(handleSeriesAdded(QSeries*,Domain*)));
-    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QSeries*)),m_presenter,SLOT(handleSeriesRemoved(QSeries*)));
+    QObject::connect(m_dataset,SIGNAL(seriesAdded(QAbstractSeries *, Domain *)),m_presenter,SLOT(handleSeriesAdded(QAbstractSeries *, Domain *)));
+    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QAbstractSeries *)),m_presenter,SLOT(handleSeriesRemoved(QAbstractSeries *)));
     QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QChartAxis*,Domain*)));
     QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),m_presenter,SLOT(handleAxisRemoved(QChartAxis*)));
 }

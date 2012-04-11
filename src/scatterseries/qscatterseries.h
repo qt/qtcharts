@@ -41,7 +41,7 @@ public:
     explicit QScatterSeries(QObject *parent = 0);
     ~QScatterSeries();
 
-    QSeries::QSeriesType type() const;
+    QAbstractSeries::QSeriesType type() const;
 
     MarkerShape shape() const;
     void setShape(MarkerShape shape);

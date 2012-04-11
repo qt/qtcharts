@@ -55,9 +55,9 @@ QSplineSeries::QSplineSeries(QObject *parent) :
 {
 }
 
-QSeries::QSeriesType QSplineSeries::type() const
+QAbstractSeries::QSeriesType QSplineSeries::type() const
 {
-    return QSeries::SeriesTypeSpline;
+    return QAbstractSeries::SeriesTypeSpline;
 }
 
 QPointF QSplineSeries::controlPoint(int index) const

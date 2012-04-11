@@ -21,7 +21,7 @@
 #ifndef BARSERIES_H
 #define BARSERIES_H
 
-#include <qseries.h>
+#include <qabstractseries.h>
 #include <QStringList>
 
 class QModelIndex;
@@ -36,14 +36,14 @@ class BarCategory;
 class QBarSeriesPrivate;
 
 // Container for series
-class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
+class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
 {
     Q_OBJECT
 public:
     explicit QBarSeries(QBarCategories categories, QObject *parent = 0);
     virtual ~QBarSeries();
 
-    QSeries::QSeriesType type() const;
+    QAbstractSeries::QSeriesType type() const;
 
     void appendBarSet(QBarSet *set);            // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set

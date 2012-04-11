@@ -35,6 +35,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartPresenter;
+class QAbstractSeries;
 
 class QLegendPrivate : public QObject
 {
@@ -47,8 +48,8 @@ public:
     void updateLayout();
 
 public Q_SLOTS:
-    void handleSeriesAdded(QSeries *series, Domain *domain);
-    void handleSeriesRemoved(QSeries *series);
+    void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
+    void handleSeriesRemoved(QAbstractSeries *series);
     void handleUpdateSeries(); //TODO remove this function
 
 private:

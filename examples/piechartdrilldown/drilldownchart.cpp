@@ -34,7 +34,7 @@ DrilldownChart::~DrilldownChart()
 
 }
 
-void DrilldownChart::changeSeries(QSeries* series)
+void DrilldownChart::changeSeries(QAbstractSeries* series)
 {
     // NOTE: if the series is owned by the chart it will be deleted
     // here the "window" owns the series...

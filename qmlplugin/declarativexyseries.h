@@ -29,7 +29,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
-class QSeries;
+class QAbstractSeries;
 
 class DeclarativeXySeries : public QDeclarativeParserStatus
 {
@@ -44,7 +44,7 @@ public: // from QDeclarativeParserStatus
     virtual void componentComplete();
 
 public:
-    virtual QSeries *series() = 0;
+    virtual QAbstractSeries *series() = 0;
     virtual QDeclarativeListProperty<DeclarativeXyPoint> points() = 0;
 
 public Q_SLOTS:

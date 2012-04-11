@@ -35,7 +35,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-LegendMarker::LegendMarker(QSeries* series,QLegend *legend) : QGraphicsObject(legend),
+LegendMarker::LegendMarker(QAbstractSeries *series, QLegend *legend) : QGraphicsObject(legend),
 m_series(series),
 m_markerRect(0,0,10.0,10.0),
 m_boundingRect(0,0,0,0),
@@ -179,7 +179,7 @@ void XYLegendMarker::updated()
 {
     setLabel(m_series->name());
 
-    if(m_series->type()== QSeries::SeriesTypeScatter)
+    if(m_series->type()== QAbstractSeries::SeriesTypeScatter)
     {
         setBrush(m_series->brush());
 

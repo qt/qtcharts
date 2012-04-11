@@ -20,8 +20,8 @@
 
 #include "qlegend.h"
 #include "qlegend_p.h"
-#include "qseries.h"
-#include "qseries_p.h"
+#include "qabstractseries.h"
+#include "qabstractseries_p.h"
 #include "qchart_p.h"
 
 #include "legendmarker_p.h"
@@ -56,7 +56,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
  \mainclass
 
- \sa QChart, QSeries
+ \sa QChart, QAbstractSeries
  */
 
 /*!
@@ -91,8 +91,8 @@ d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,this))
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     setEnabled(false); // By default legend is disabled
     setVisible(false);
-    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesAdded(QSeries*,Domain*)),d_ptr.data(),SLOT(handleSeriesAdded(QSeries*,Domain*)));
-    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QSeries*)),d_ptr.data(),SLOT(handleSeriesRemoved(QSeries*)));
+    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesAdded(QAbstractSeries *, Domain *)),d_ptr.data(),SLOT(handleSeriesAdded(QAbstractSeries *,Domain*)));
+    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries *)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries *)));
 }
 
 QLegend::~QLegend()
@@ -396,7 +396,7 @@ void QLegendPrivate::updateLayout()
     m_presenter->updateLayout();
 }
 
-void QLegendPrivate::handleSeriesAdded(QSeries *series, Domain *domain)
+void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 {
     Q_UNUSED(domain)
 
@@ -404,7 +404,7 @@ void QLegendPrivate::handleSeriesAdded(QSeries *series, Domain *domain)
     foreach(LegendMarker* marker , markers)
         m_markers->addToGroup(marker);
 
-    if(series->type()==QSeries::SeriesTypePie)
+    if(series->type() == QAbstractSeries::SeriesTypePie)
     {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
         QObject::connect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
@@ -414,7 +414,7 @@ void QLegendPrivate::handleSeriesAdded(QSeries *series, Domain *domain)
     updateLayout();
 }
 
-void QLegendPrivate::handleSeriesRemoved(QSeries *series)
+void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 {
 
     QList<QGraphicsItem *> items = m_markers->childItems();
@@ -426,7 +426,7 @@ void QLegendPrivate::handleSeriesRemoved(QSeries *series)
         }
     }
 
-    if(series->type()==QSeries::SeriesTypePie)
+    if(series->type() == QAbstractSeries::SeriesTypePie)
     {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
         QObject::disconnect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
@@ -439,7 +439,7 @@ void QLegendPrivate::handleSeriesRemoved(QSeries *series)
 void QLegendPrivate::handleUpdateSeries()
 {
     //TODO: reimplement to be optimal
-    QSeries* series = qobject_cast<QSeries *> (sender());
+    QAbstractSeries* series = qobject_cast<QAbstractSeries *> (sender());
     Q_ASSERT(series);
     handleSeriesRemoved(series);
     handleSeriesAdded(series,0);

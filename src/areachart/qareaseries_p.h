@@ -30,13 +30,13 @@
 #ifndef QAREASERIES_P_H
 #define QAREASERIES_P_H
 
-#include "qseries_p.h"
+#include "qabstractseries_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAreaSeries;
 
-class QAreaSeriesPrivate: public QSeriesPrivate
+class QAreaSeriesPrivate: public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

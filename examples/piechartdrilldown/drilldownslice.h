@@ -23,7 +23,7 @@
 #include <QPieSlice>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class QSeries;
+class QAbstractSeries;
 QTCOMMERCIALCHART_END_NAMESPACE
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -33,9 +33,9 @@ class DrilldownSlice : public QPieSlice
     Q_OBJECT
 
 public:
-    DrilldownSlice(qreal value, QString prefix, QSeries* drilldownSeries);
+    DrilldownSlice(qreal value, QString prefix, QAbstractSeries* drilldownSeries);
     virtual ~DrilldownSlice();
-    QSeries* drilldownSeries() const;
+    QAbstractSeries* drilldownSeries() const;
 
 public Q_SLOTS:
     void updateLabel();
@@ -43,7 +43,7 @@ public Q_SLOTS:
     void hideHighlight();
 
 private:
-    QSeries* m_drilldownSeries;
+    QAbstractSeries* m_drilldownSeries;
     QString m_prefix;
 };
 

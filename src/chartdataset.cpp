@@ -21,7 +21,7 @@
 #include "chartdataset_p.h"
 #include "qchartaxis.h"
 #include "qchartaxis_p.h"
-#include "qseries_p.h"
+#include "qabstractseries_p.h"
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
@@ -41,7 +41,7 @@ ChartDataSet::~ChartDataSet()
 {
 }
 
-void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
+void ChartDataSet::addSeries(QAbstractSeries* series, QChartAxis *axisY)
 {
     if(axisY==0) axisY = m_axisY;
 
@@ -75,21 +75,21 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 
     series->d_ptr->scaleDomain(*domain);
 
-    if(series->type() == QSeries::SeriesTypeBar || series->type() == QSeries::SeriesTypeStackedBar || series->type() == QSeries::SeriesTypePercentBar)
-    {
+    if(series->type() == QAbstractSeries::SeriesTypeBar
+            || series->type() == QAbstractSeries::SeriesTypeStackedBar
+            || series->type() == QAbstractSeries::SeriesTypePercentBar) {
         QBarSeries* barSeries = static_cast<QBarSeries*>(series);
         setupCategories(barSeries);
     }
 
-    if (series->type()== QSeries::SeriesTypePie &&  m_seriesAxisMap.count()==0)
-    {
+    if (series->type()== QAbstractSeries::SeriesTypePie && m_seriesAxisMap.count() == 0) {
         axisX()->hide();
         this->axisY()->hide();
     }
 
     m_seriesAxisMap.insert(series,axisY);
 
-    QMapIterator<int, QSeries*> i(m_indexSeriesMap);
+    QMapIterator<int, QAbstractSeries*> i(m_indexSeriesMap);
 
     int key=0;
     while (i.hasNext()) {
@@ -106,7 +106,7 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 
 }
 
-QChartAxis* ChartDataSet::removeSeries(QSeries* series)
+QChartAxis* ChartDataSet::removeSeries(QAbstractSeries* series)
 {
     QChartAxis* axis = m_seriesAxisMap.value(series);
 
@@ -148,9 +148,9 @@ QChartAxis* ChartDataSet::removeSeries(QSeries* series)
 
 void ChartDataSet::removeAllSeries()
 {
-    QList<QSeries*> series =  m_seriesAxisMap.keys();
+    QList<QAbstractSeries*> series =  m_seriesAxisMap.keys();
     QList<QChartAxis*> axes;
-    foreach(QSeries* s , series) {
+    foreach(QAbstractSeries *s , series) {
         QChartAxis* axis  = removeSeries(s);
         if(axis==axisY()) continue;
         int i = axes.indexOf(axis);
@@ -191,10 +191,10 @@ void ChartDataSet::zoomOutDomain(const QRectF& rect, const QSizeF& size)
     }
 }
 
-int ChartDataSet::seriesCount(QSeries::QSeriesType type)
+int ChartDataSet::seriesCount(QAbstractSeries::QSeriesType type)
 {
     int count=0;
-    QMapIterator<QSeries*, QChartAxis*> i(m_seriesAxisMap);
+    QMapIterator<QAbstractSeries*, QChartAxis*> i(m_seriesAxisMap);
     while (i.hasNext()) {
            i.next();
            if(i.key()->type()==type) count++;
@@ -202,9 +202,9 @@ int ChartDataSet::seriesCount(QSeries::QSeriesType type)
     return count;
 }
 
-int ChartDataSet::seriesIndex(QSeries *series)
+int ChartDataSet::seriesIndex(QAbstractSeries *series)
 {
-    QMapIterator<int, QSeries*> i(m_indexSeriesMap);
+    QMapIterator<int, QAbstractSeries*> i(m_indexSeriesMap);
     while (i.hasNext()) {
         i.next();
         if (i.value() == series)
@@ -213,13 +213,13 @@ int ChartDataSet::seriesIndex(QSeries *series)
     return -1;
 }
 
-QChartAxis* ChartDataSet::axisY(QSeries* series) const
+QChartAxis* ChartDataSet::axisY(QAbstractSeries *series) const
 {
     if(series == 0) return m_axisY;
     return m_seriesAxisMap.value(series);
 }
 
-Domain* ChartDataSet::domain(QSeries* series) const
+Domain* ChartDataSet::domain(QAbstractSeries *series) const
 {
 	QChartAxis* axis = m_seriesAxisMap.value(series);
 	if(axis){

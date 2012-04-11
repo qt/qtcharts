@@ -24,7 +24,7 @@
 #include <QObject>
 #include <QStringList>
 #include "qchartglobal.h"
-#include <qseries.h>
+#include <qabstractseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

@@ -112,7 +112,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs a series object which is a child of \a parent.
 */
 QPieSeries::QPieSeries(QObject *parent) :
-    QSeries(*new QPieSeriesPrivate(this),parent)
+    QAbstractSeries(*new QPieSeriesPrivate(this),parent)
 {
 
 }
@@ -128,9 +128,9 @@ QPieSeries::~QPieSeries()
 /*!
     Returns QChartSeries::SeriesTypePie.
 */
-QSeries::QSeriesType QPieSeries::type() const
+QAbstractSeries::QSeriesType QPieSeries::type() const
 {
-    return QSeries::SeriesTypePie;
+    return QAbstractSeries::SeriesTypePie;
 }
 
 /*!
@@ -521,8 +521,8 @@ void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::O
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent)
-    :QSeriesPrivate(parent),
+QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent) :
+    QAbstractSeriesPrivate(parent),
     m_pieRelativeHorPos(0.5),
     m_pieRelativeVerPos(0.5),
     m_pieRelativeSize(0.7),

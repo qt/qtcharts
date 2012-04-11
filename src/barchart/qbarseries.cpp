@@ -74,7 +74,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     QBarSeries is QObject which is a child of a \a parent.
 */
 QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) :
-    QSeries(*new QBarSeriesPrivate(categories, this),parent)
+    QAbstractSeries(*new QBarSeriesPrivate(categories, this),parent)
 {
 }
 
@@ -90,16 +90,16 @@ QBarSeries::~QBarSeries()
     \internal
 */
 QBarSeries::QBarSeries(QBarSeriesPrivate &d, QObject *parent) :
-    QSeries(d,parent)
+    QAbstractSeries(d,parent)
 {
 }
 
 /*!
     Returns the type of series. Derived classes override this.
 */
-QSeries::QSeriesType QBarSeries::type() const
+QAbstractSeries::QSeriesType QBarSeries::type() const
 {
-    return QSeries::SeriesTypeBar;
+    return QAbstractSeries::SeriesTypeBar;
 }
 
 /*!
@@ -269,7 +269,8 @@ void QBarSeries::setLabelsVisible(bool visible)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarSeriesPrivate::QBarSeriesPrivate(QBarCategories categories, QBarSeries *q) : QSeriesPrivate(q),
+QBarSeriesPrivate::QBarSeriesPrivate(QBarCategories categories, QBarSeries *q) :
+    QAbstractSeriesPrivate(q),
     m_internalModel(new BarChartModel(categories,this)),
     m_model(0),
     m_mapCategories(-1),

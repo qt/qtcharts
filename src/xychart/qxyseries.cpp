@@ -94,7 +94,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transferred.
 */
-QXYSeries::QXYSeries(QXYSeriesPrivate &d,QObject *parent):QSeries(d,parent)
+QXYSeries::QXYSeries(QXYSeriesPrivate &d,QObject *parent) : QAbstractSeries(d, parent)
 {
 
 }
@@ -622,16 +622,15 @@ int QXYSeries::mapCount() const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q): QSeriesPrivate(q),
-m_mapX(-1),
-m_mapY(-1),
-m_mapFirst(0),
-m_mapCount(0),
-m_mapLimited(false),
-m_mapOrientation( Qt::Vertical),
-m_pointsVisible(false)
+QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q) : QAbstractSeriesPrivate(q),
+    m_mapX(-1),
+    m_mapY(-1),
+    m_mapFirst(0),
+    m_mapCount(0),
+    m_mapLimited(false),
+    m_mapOrientation( Qt::Vertical),
+    m_pointsVisible(false)
 {
-
 }
 
 void QXYSeriesPrivate::scaleDomain(Domain& domain)

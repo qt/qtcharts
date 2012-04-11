@@ -79,7 +79,7 @@ m_index(-1),m_chart(chart)
 //![3]
 
 //![4]
-    foreach (QSeries* series, m_series) {
+    foreach (QAbstractSeries* series, m_series) {
         QObject::connect(series,SIGNAL(clicked(QPointF)),this,SLOT(handlePointClicked(QPointF)));
     }
 //![4]

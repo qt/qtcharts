@@ -40,7 +40,7 @@ public slots:
 
 private:
     QTimer m_timer;
-    QList<QSeries*> m_series;
+    QList<QAbstractSeries *> m_series;
     QStringList m_titles;
     int m_index;
     QChart *m_chart;

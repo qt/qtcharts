@@ -30,13 +30,13 @@
 #ifndef QXYSERIES_P_H
 #define QXYSERIES_P_H
 
-#include "qseries_p.h"
+#include "qabstractseries_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYSeries;
 
-class QXYSeriesPrivate: public QSeriesPrivate
+class QXYSeriesPrivate: public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

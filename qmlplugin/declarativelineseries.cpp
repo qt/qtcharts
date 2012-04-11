@@ -30,7 +30,7 @@ DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
 {
 }
 
-QSeries *DeclarativeLineSeries::series()
+QAbstractSeries *DeclarativeLineSeries::series()
 {
     return this;
 }

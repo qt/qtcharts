@@ -37,8 +37,6 @@ class QBarSeries;
 class QPieSeries;
 class QAreaSeries;
 class LegendScrollButton;
-class QSeries;
-
 class QChart;
 class QLegendPrivate;
 

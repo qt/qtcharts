@@ -22,13 +22,13 @@
 #define QPIESERIES_P_H
 
 #include "qpieseries.h"
-#include "qseries_p.h"
+#include "qabstractseries_p.h"
 
 class QModelIndex;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QPieSeriesPrivate : public QSeriesPrivate
+class QPieSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 

@@ -26,10 +26,10 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-Q_DECLARE_METATYPE(Domain*)
-Q_DECLARE_METATYPE(QChartAxis*)
-Q_DECLARE_METATYPE(QSeries*)
-Q_DECLARE_METATYPE(QLineSeries*)
+Q_DECLARE_METATYPE(Domain *)
+Q_DECLARE_METATYPE(QChartAxis *)
+Q_DECLARE_METATYPE(QAbstractSeries *)
+Q_DECLARE_METATYPE(QLineSeries *)
 
 class tst_ChartDataSet: public QObject {
 
@@ -138,8 +138,8 @@ void tst_ChartDataSet::addSeries()
 
     QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*,Domain*)));
     QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
+    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *,Domain*)));
+    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
     dataSet.addSeries(series0,axis0);
     dataSet.addSeries(series1,axis1);
@@ -180,10 +180,10 @@ void tst_ChartDataSet::removeSeries()
     dataSet.addSeries(series1,axis1);
     dataSet.addSeries(series2,axis2);
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*,Domain*)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis *, Domain *)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis *)));
+    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
+    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
     dataSet.removeSeries(series0);
     dataSet.removeSeries(series1);
@@ -217,10 +217,10 @@ void tst_ChartDataSet::removeAllSeries()
     dataSet.addSeries(series1, axis1);
     dataSet.addSeries(series2, axis2);
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*,Domain*)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis *, Domain *)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis *)));
+    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
+    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
     dataSet.removeAllSeries();
 
@@ -293,10 +293,10 @@ void tst_ChartDataSet::seriesCount()
     dataSet.addSeries(series1, axis1);
     dataSet.addSeries(series2, axis2);
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*,Domain*)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis *, Domain *)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis *)));
+    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
+    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
     QCOMPARE(dataSet.seriesCount(series0->type()),3);
     QCOMPARE(spy0.count(), 0);
@@ -422,10 +422,10 @@ void tst_ChartDataSet::domain()
     dataSet.addSeries(series1, axis1);
     dataSet.addSeries(series2, axis2);
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*,Domain*)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis *, Domain *)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis *)));
+    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
+    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
     QVERIFY(dataSet.domain(axis0)==dataSet.domain(series0));
     QVERIFY(dataSet.domain(axis1)==dataSet.domain(series1));

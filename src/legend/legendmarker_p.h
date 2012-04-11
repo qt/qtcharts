@@ -29,7 +29,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QSeries;
+class QAbstractSeries;
 class QAreaSeries;
 class QXYSeries;
 class QBarSet;
@@ -43,7 +43,7 @@ class LegendMarker : public QGraphicsObject
     Q_OBJECT
 
 public:
-    explicit LegendMarker(QSeries* m_series,QLegend *parent);
+    explicit LegendMarker(QAbstractSeries *m_series, QLegend *parent);
 
     void setPen(const QPen &pen);
     QPen pen() const;
@@ -55,7 +55,7 @@ public:
     void setLabel(const QString label);
     QString label() const;
 
-    QSeries* series() const { return m_series;}
+    QAbstractSeries *series() const { return m_series;}
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
@@ -74,7 +74,7 @@ public Q_SLOTS:
     virtual void updated() = 0;
 
 protected:
-    QSeries* m_series;
+    QAbstractSeries *m_series;
     QRectF m_markerRect;
     QRectF m_boundingRect;
     QLegend* m_legend;

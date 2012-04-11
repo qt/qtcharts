@@ -39,7 +39,7 @@ void DeclarativeXySeries::classBegin()
 
 void DeclarativeXySeries::componentComplete()
 {
-    QSeries *thisObj = reinterpret_cast<QSeries *>(series());
+    QAbstractSeries *thisObj = reinterpret_cast<QAbstractSeries *>(series());
     DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(thisObj->parent());
 
     if (declarativeChart) {

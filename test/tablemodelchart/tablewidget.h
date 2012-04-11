@@ -31,7 +31,6 @@ class CustomTableModel;
 class QTableView;
 class QRadioButton;
 class QSpinBox;
-//class QSeries;
 
 class TableWidget : public QWidget
 {

@@ -44,7 +44,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn virtual QSeriesType QStackedBarSeries::type() const
     \brief Returns type of series.
-    \sa QSeries, QSeriesType
+    \sa QSeriesType
 */
 
 /*!
@@ -56,9 +56,9 @@ QStackedBarSeries::QStackedBarSeries(QBarCategories categories, QObject *parent)
 {
 }
 
-QSeries::QSeriesType QStackedBarSeries::type() const
+QAbstractSeries::QSeriesType QStackedBarSeries::type() const
 {
-    return QSeries::SeriesTypeStackedBar;
+    return QAbstractSeries::SeriesTypeStackedBar;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

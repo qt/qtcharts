@@ -24,7 +24,7 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
-#include "qseries_p.h"
+#include "qabstractseries_p.h"
 #include "qareaseries.h"
 #include "axis_p.h"
 #include "areachartitem_p.h"
@@ -146,7 +146,7 @@ void ChartPresenter::handleAxisRemoved(QChartAxis* axis)
 }
 
 
-void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
+void ChartPresenter::handleSeriesAdded(QAbstractSeries* series,Domain* domain)
 {
     Chart *item = series->d_ptr->createGraphics(this);
     Q_ASSERT(item);
@@ -158,13 +158,13 @@ void ChartPresenter::handleSeriesAdded(QSeries* series,Domain* domain)
     m_chartItems.insert(series,item);
 }
 
-void ChartPresenter::handleSeriesRemoved(QSeries* series)
+void ChartPresenter::handleSeriesRemoved(QAbstractSeries* series)
 {
     Chart* item = m_chartItems.take(series);
     Q_ASSERT(item);
     if(m_animator) {
         //small hack to handle area animations
-        if(series->type()==QSeries::SeriesTypeArea){
+        if(series->type() == QAbstractSeries::SeriesTypeArea){
             QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
             AreaChartItem* area = static_cast<AreaChartItem*>(item);
             m_animator->removeAnimation(area->upperLineItem());
@@ -207,14 +207,14 @@ void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
 
 void ChartPresenter::resetAllElements()
 {
-    QList<QChartAxis*> axisList = m_axisItems.uniqueKeys();
-    QList<QSeries*> seriesList = m_chartItems.uniqueKeys();
+    QList<QChartAxis *> axisList = m_axisItems.uniqueKeys();
+    QList<QAbstractSeries *> seriesList = m_chartItems.uniqueKeys();
 
-    foreach(QChartAxis* axis, axisList) {
+    foreach(QChartAxis *axis, axisList) {
         handleAxisRemoved(axis);
         handleAxisAdded(axis,m_dataset->domain(axis));
     }
-    foreach(QSeries* series, seriesList) {
+    foreach(QAbstractSeries *series, seriesList) {
         handleSeriesRemoved(series);
         handleSeriesAdded(series,m_dataset->domain(series));
     }

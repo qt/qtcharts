@@ -30,7 +30,7 @@ DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
 {
 }
 
-QSeries *DeclarativeAreaSeries::series()
+QAbstractSeries *DeclarativeAreaSeries::series()
 {
     return this;
 }

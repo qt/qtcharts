@@ -30,7 +30,7 @@ DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
 {
 }
 
-QSeries *DeclarativeScatterSeries::series()
+QAbstractSeries *DeclarativeScatterSeries::series()
 {
     return this;
 }

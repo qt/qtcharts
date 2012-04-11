@@ -29,7 +29,7 @@ DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
 {
 }
 
-QSeries *DeclarativeSplineSeries::series()
+QAbstractSeries *DeclarativeSplineSeries::series()
 {
     return this;
 }

@@ -22,7 +22,7 @@
 #define QXYSERIES_H
 
 #include <qchartglobal.h>
-#include <qseries.h>
+#include <qabstractseries.h>
 #include <QPen>
 #include <QBrush>
 
@@ -32,7 +32,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QXYSeries : public QSeries
+class QTCOMMERCIALCHART_EXPORT QXYSeries : public QAbstractSeries
 {
     Q_OBJECT
 protected:
