@@ -32,7 +32,7 @@ class QLineSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QLineSeries : public QXYSeries
 {
 public:
-    explicit QLineSeries(QObject *parent=0);
+    explicit QLineSeries(QObject *parent = 0);
     ~QLineSeries();
 
     QSeries::QSeriesType type() const;

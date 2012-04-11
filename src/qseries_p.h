@@ -44,6 +44,7 @@ class QLegend;
 
 class QSeriesPrivate : public QObject
 {
+    Q_OBJECT
 public:
     QSeriesPrivate(QSeries *q);
     ~QSeriesPrivate();

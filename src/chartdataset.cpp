@@ -52,13 +52,8 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
         return;
     }
 
-    if(!series->parent()){
-       series->setParent(this); // take ownership
-    };
-
-    if(!axisY->parent()){
-       axisY->setParent(this); // take ownership
-    }
+    series->setParent(this); // take ownership
+    axisY->setParent(this); // take ownership
 
     Domain* domain = m_axisDomainMap.value(axisY);
 
@@ -111,26 +106,23 @@ void ChartDataSet::addSeries(QSeries* series, QChartAxis *axisY)
 
 }
 
-void ChartDataSet::removeSeries(QSeries* series)
+QChartAxis* ChartDataSet::removeSeries(QSeries* series)
 {
-
     QChartAxis* axis = m_seriesAxisMap.value(series);
 
     if(!axis){
         qWarning()<<"Can not remove series. Series not found on the chart.";
-        return;
+        return 0;
     }
+
     emit seriesRemoved(series);
+
     m_seriesAxisMap.remove(series);
     int key = seriesIndex(series);
     Q_ASSERT(key!=-1);
 
     m_indexSeriesMap.remove(key);
-
-    if(series->parent()==this){
-        delete series;
-        series=0;
-    }
+    series->setParent(0);
 
     QList<QChartAxis*> axes =  m_seriesAxisMap.values();
 
@@ -140,10 +132,7 @@ void ChartDataSet::removeSeries(QSeries* series)
         Domain* domain = m_axisDomainMap.take(axis);
         emit axisRemoved(axis);
         if(axis!=axisY()){
-            if(axis->parent()==this){
-                delete axis;
-                axis=0;
-            }
+            axis->setParent(0);
         }
         delete domain;
     }
@@ -153,20 +142,28 @@ void ChartDataSet::removeSeries(QSeries* series)
         m_axisXInitialized=false;
         emit axisRemoved(axisX());
     }
+
+    return axis;
 }
 
 void ChartDataSet::removeAllSeries()
 {
-
     QList<QSeries*> series =  m_seriesAxisMap.keys();
-
+    QList<QChartAxis*> axes;
     foreach(QSeries* s , series) {
-        removeSeries(s);
+        QChartAxis* axis  = removeSeries(s);
+        if(axis==axisY()) continue;
+        int i = axes.indexOf(axis);
+        if(i==-1){
+            axes<<axis;
+        }
     }
 
     Q_ASSERT(m_seriesAxisMap.count()==0);
     Q_ASSERT(m_axisDomainMap.count()==0);
 
+    qDeleteAll(series);
+    qDeleteAll(axes);
 }
 
 void ChartDataSet::setupCategories(QBarSeries* series)

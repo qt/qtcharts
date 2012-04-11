@@ -37,8 +37,9 @@ class ScatterChartItem;
 class LineChartItem;
 class XYChartItem;
 
-class ChartAnimator : public QObject {
-
+class ChartAnimator : public QObject
+{
+    Q_OBJECT
 public:
     enum State{ShowState, ScrollUpState, ScrollDownState, ScrollLeftState, ScrollRightState, ZoomInState, ZoomOutState};
 

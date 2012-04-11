@@ -16,7 +16,7 @@
 
     \snippet ../examples/stackedbarchartdrilldown/main.cpp 1
 
-    To enable drilldown we create own view, which implements handler for right click. All QBarSeries derived classes send out rightClicked(QBarSet*, QString) signal when series is clicked with right mouse button. The parameters QBarSet and QString contain the pointer to clicked bar set and name of category, where click occured.
+    To enable drilldown we create own view, which implements handler for right click. All QBarSeries derived classes send out rightClicked(QBarSet*, QString) signal when series is clicked with right mouse button. The parameters QBarSet and QString contain the pointer to clicked bar set and name of category, where click occurred.
 
     In our DrilldownChart we implement handler, which selects the drilldown chart with the category.
 

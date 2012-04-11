@@ -37,7 +37,7 @@ QChartAxisCategories::~QChartAxisCategories()
 void QChartAxisCategories::insert(const QBarCategories &categories)
 {
     int i=1;
-    foreach (QString string , categories) {
+    foreach (const QString& string , categories) {
         d_ptr->m_map.insert(i,string);
         i++;
     }

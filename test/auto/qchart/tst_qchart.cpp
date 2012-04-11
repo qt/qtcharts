@@ -198,6 +198,8 @@ void tst_QChart::addSeries()
     if(!axis) axis = m_chart->axisY();
     m_chart->addSeries(series,axis);
     QCOMPARE(m_chart->axisY(series),axis);
+    m_chart->removeSeries(series);
+
 }
 
 void tst_QChart::animationOptions_data()

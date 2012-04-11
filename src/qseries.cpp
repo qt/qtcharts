@@ -126,6 +126,7 @@ QSeriesPrivate::~QSeriesPrivate()
 }
 
 #include "moc_qseries.cpp"
+#include "moc_qseries_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

@@ -143,7 +143,7 @@ void ChartAnimator::updateLayout(Axis *item , QVector<qreal> &newLayout)
         QRectF rect = item->geometry();
         oldLayout.resize(newLayout.count());
 
-        for(int i = 0, j = oldLayout.count() - 1; i < (oldLayout.count() + 1) / 2; i++, j--) {
+        for(int i = 0, j = oldLayout.count() - 1; i < (oldLayout.count() + 1) / 2; ++i, --j) {
             oldLayout[i] = item->axisType() == Axis::X_AXIS ? rect.left() : rect.bottom();
             oldLayout[j] = item->axisType() == Axis::X_AXIS ? rect.right() : rect.top();
         }
@@ -161,7 +161,7 @@ void ChartAnimator::updateLayout(Axis *item , QVector<qreal> &newLayout)
     case ScrollRightState: {
         oldLayout.resize(newLayout.count());
 
-        for(int i = 0, j = i + 1; i < oldLayout.count() - 1; i++, j++)
+        for(int i = 0, j = i + 1; i < oldLayout.count() - 1; ++i, ++j)
             oldLayout[i]= oldLayout[j];
     }
         break;
@@ -169,14 +169,14 @@ void ChartAnimator::updateLayout(Axis *item , QVector<qreal> &newLayout)
     case ScrollLeftState: {
         oldLayout.resize(newLayout.count());
 
-        for(int i = oldLayout.count() - 1, j = i - 1; i > 0; i--, j--)
+        for(int i = oldLayout.count() - 1, j = i - 1; i > 0; --i, --j)
             oldLayout[i]= oldLayout[j];
     }
         break;
     default: {
         oldLayout.resize(newLayout.count());
         QRectF rect = item->geometry();
-        for(int i = 0, j = oldLayout.count() - 1; i < oldLayout.count(); i++, j--)
+        for(int i = 0, j = oldLayout.count() - 1; i < oldLayout.count(); ++i, --j)
             oldLayout[i] = item->axisType() == Axis::X_AXIS ? rect.left() : rect.top();
     }
         break;
@@ -295,5 +295,7 @@ void ChartAnimator::setState(State state, const QPointF &point)
     m_state = state;
     m_point = point;
 }
+
+#include "moc_chartanimator_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -245,4 +245,6 @@ void ScrollTicker::timerEvent(QTimerEvent *event)
     m_scroller->scrollTick();
 }
 
+#include "moc_scroller_p.cpp"
+
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -313,7 +313,7 @@ void ChartTheme::decorate(QChartAxis *axis,bool axisX)
 void ChartTheme::generateSeriesGradients()
 {
     // Generate gradients in HSV color space
-    foreach (QColor color, m_seriesColors) {
+    foreach (const QColor& color, m_seriesColors) {
         QLinearGradient g;
         qreal h = color.hsvHueF();
         qreal s = color.hsvSaturationF();

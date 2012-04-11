@@ -82,7 +82,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the minumum size (pie not drawn).
+    \o 0.0 is the minimum size (pie not drawn).
     \o 1.0 is the maximum size that can fit the chart.
     \endlist
 
@@ -484,7 +484,7 @@ bool QPieSeries::setModel(QAbstractItemModel* model)
      Sets column/row specified by \a modelValuesLine to be used as a list of pie slice values for the pie.
      Parameter \a modelValuesLine indicates the column/row where the values for the pie slices are located in the model.
      Parameter \a modelLabelsLine indicates the column/row where the labels for the pie slices are located in the model.
-     The \a orientation paramater specifies whether the data is in columns or in rows.
+     The \a orientation parameter specifies whether the data is in columns or in rows.
  */
 void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation)
 {

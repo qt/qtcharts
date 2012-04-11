@@ -110,7 +110,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs area series object which is a child of \a upperSeries. Area will be spanned between \a
     upperSeries line and \a lowerSeries line.  If no \a lowerSeries is passed to constructor, area is specified by axis x (y=0) instead.
-    When series object is added to QChartView or QChart instance ownerships is transfered.
+    When series object is added to QChartView or QChart instance ownerships is transferred.
 */
 QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
     : QSeries(*new QAreaSeriesPrivate(upperSeries,lowerSeries,this),upperSeries)

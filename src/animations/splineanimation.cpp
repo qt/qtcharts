@@ -118,7 +118,7 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
         break;
     case LineDrawAnimation:{
         Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
-        int count = endPair.first.count()* qBound(0.0, progress, 1.0);
+        int count = endPair.first.count()* qBound(qreal(0), progress, qreal(1));
         for(int i = 0; i < count; i++) {
             result.first << endPair.first[i];
             if(i + 1 == count)

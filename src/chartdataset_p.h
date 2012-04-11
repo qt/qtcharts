@@ -47,7 +47,7 @@ public:
     virtual ~ChartDataSet();
 
     void addSeries(QSeries* series,QChartAxis *axisY = 0);
-    void removeSeries(QSeries* series);
+    QChartAxis* removeSeries(QSeries* series);
     void removeAllSeries();
 
     void zoomInDomain(const QRectF& rect, const QSizeF& size);

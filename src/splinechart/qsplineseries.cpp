@@ -47,7 +47,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     Constructs empty series object which is a child of \a parent.
-    When series object is added to QChartView or QChart instance then the ownerships is transfered.
+    When series object is added to QChartView or QChart instance then the ownerships is transferred.
   */
 
 QSplineSeries::QSplineSeries(QObject *parent) :
@@ -201,7 +201,7 @@ void QSplineSeriesPrivate::updateControlPoints()
 /*//!
      \fn bool QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
      Sets the \a modelX to be used as a data source for x coordinate and \a modelY to be used
-     as a data source for y coordinate. The \a orientation paramater specifies whether the data
+     as a data source for y coordinate. The \a orientation parameter specifies whether the data
      is in columns or in rows.
  */
 //void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)

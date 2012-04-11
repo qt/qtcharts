@@ -92,7 +92,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \internal
 
     Constructs empty series object which is a child of \a parent.
-    When series object is added to QChartView or QChart instance ownerships is transfered.
+    When series object is added to QChartView or QChart instance ownerships is transferred.
 */
 QXYSeries::QXYSeries(QXYSeriesPrivate &d,QObject *parent):QSeries(d,parent)
 {
@@ -560,7 +560,7 @@ bool QXYSeries::setModel(QAbstractItemModel *model)
 /*!
      \fn bool QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
      Sets the \a modelX to be used as a data source for x coordinate and \a modelY to be used
-     as a data source for y coordinate. The \a orientation paramater specifies whether the data
+     as a data source for y coordinate. The \a orientation parameter specifies whether the data
      is in columns or in rows.
      \sa setModel(), setModelMappingRange()
  */

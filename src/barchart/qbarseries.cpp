@@ -38,7 +38,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \class QBarSeries
     \brief part of QtCommercial chart API.
 
-    QBarSeries represents a series of data shown as bars. One QBarSeries can contain multible
+    QBarSeries represents a series of data shown as bars. One QBarSeries can contain multiple
     QBarSet data sets. QBarSeries groups the data from sets to categories, which are defined
     by QStringList.
 
@@ -103,7 +103,7 @@ void QBarSeries::appendBarSet(QBarSet *set)
 }
 
 /*!
-    Removes a set of bars from series. Releases ownership of \a set. Doesnt delete \a set.
+    Removes a set of bars from series. Releases ownership of \a set. Doesn't delete \a set.
     Disconnects the clicked(QString, Qt::MouseButtons) signal
     of \a set from this series
 */
@@ -131,7 +131,7 @@ void QBarSeries::appendBarSets(QList<QBarSet* > sets)
 }
 
 /*!
-    Removes a list of barsets from series. Releases ownership of \a sets. Doesnt delete \a sets.
+    Removes a list of barsets from series. Releases ownership of \a sets. Doesn't delete \a sets.
     Disconnects the clicked(QString, Qt::MouseButtons) signal
     of \a sets from this series
 */
@@ -231,7 +231,7 @@ bool QBarSeries::setModel(QAbstractItemModel *model)
      Parameter \a bottomBoundry indicates the column/row where the first bar set is located in the model.
      Parameter \a topBoundry indicates the column/row where the last bar set is located in the model.
      All the columns/rows inbetween those two values are also used as data for bar sets.
-     The \a orientation paramater specifies whether the data is in columns or in rows.
+     The \a orientation parameter specifies whether the data is in columns or in rows.
  */
 void QBarSeries::setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation)
 {

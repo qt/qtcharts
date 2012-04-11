@@ -315,7 +315,7 @@ void QLegendPrivate::setOffset(qreal x, qreal y)
             if(m_width<=m_rect.width()) return;
 
             if (x != m_offsetX) {
-                m_offsetX = qBound(0.0, x, m_width - m_rect.width());
+                m_offsetX = qBound(qreal(0), x, m_width - m_rect.width());
                 m_markers->setPos(-m_offsetX,m_rect.top());
             }
             break;
@@ -326,7 +326,7 @@ void QLegendPrivate::setOffset(qreal x, qreal y)
             if(m_height<=m_rect.height()) return;
 
             if (y != m_offsetY) {
-                m_offsetY = qBound(0.0, y, m_height - m_rect.height());
+                m_offsetY = qBound(qreal(0), y, m_height - m_rect.height());
                 m_markers->setPos(m_rect.left(),-m_offsetY);
             }
             break;

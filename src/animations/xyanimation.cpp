@@ -85,7 +85,7 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, q
     }
         break;
     case LineDrawAnimation: {
-        for(int i = 0; i < endVector.count() * qBound(0.0, progress, 1.0); i++)
+        for(int i = 0; i < endVector.count() * qBound(qreal(0), progress, qreal(1)); i++)
             result << endVector[i];
     }
         break;
