@@ -62,9 +62,9 @@ public:
     void setSliceData(PieSliceData sliceData);
     void updateGeometry();
     static QPointF sliceCenter(QPointF point, qreal radius, QPieSlice *slice);
-    static QPainterPath slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal* centerAngle, QPointF* armStart);
-    static QPainterPath labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF* textStart);
-    static QRectF labelTextRect(QFont font, QString text);
+    QPainterPath slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal *centerAngle, QPointF *armStart);
+    QPainterPath labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF *textStart);
+    QRectF labelTextRect(QFont font, QString text);
 
 private:
     PieSliceData m_data;

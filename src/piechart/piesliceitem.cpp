@@ -145,7 +145,7 @@ QPointF PieSliceItem::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
     return point;
 }
 
-QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal* centerAngle, QPointF* armStart)
+QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal *centerAngle, QPointF* armStart)
 {
     // calculate center angle
     *centerAngle = startAngle + (angleSpan/2);
@@ -167,12 +167,20 @@ QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAn
     return path;
 }
 
-QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF* textStart)
+QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF *textStart)
 {
+    // prevent label arm pointing straight down because it will look bad
+    if (angle < 180 && angle > 170)
+        angle = 170;
+    if (angle > 180 && angle < 190)
+        angle = 190;
+
+    // line from slice to label
     qreal dx = qSin(angle*(PI/180)) * length;
     qreal dy = -qCos(angle*(PI/180)) * length;
     QPointF parm1 = start + QPointF(dx, dy);
 
+    // line to underline the label
     QPointF parm2 = parm1;
     if (angle < 180) { // arm swings the other way on the left side
          parm2 += QPointF(textWidth, 0);
@@ -184,7 +192,7 @@ QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length
     }
 
     // elevate the text position a bit so that it does not hit the line
-    *textStart += QPointF(0, -5);
+    *textStart += QPointF(0, -3);
 
     QPainterPath path;
     path.moveTo(start);
