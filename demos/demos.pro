@@ -1,4 +1,5 @@
 TEMPLATE = subdirs
 SUBDIRS += chartthemes \
            piechartcustomization \
-           qmlchart
+           qmlchart \
+           dynamicspline
