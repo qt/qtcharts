@@ -66,6 +66,21 @@ QPointF QSplineSeries::controlPoint(int index) const
     return d->m_controlPoints[index];
 }
 
+/*!
+     \fn bool QSplineSeries::setModelMappingRange(int first, int count)
+     Allows limiting the model mapping.
+     Parameter \a first specifies which element of the model should be used as a first one of the series.
+     Parameter \a count specifies how many elements should be mapped. If count is not specified (defaults to -1)
+     then all the items following \a first item in a model are used.
+     \sa setModel(), setModelMapping()
+ */
+void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
+{
+    Q_D(QSplineSeries);
+    QXYSeries::setModelMapping(modelX, modelY, orientation);
+    d->calculateControlPoints();
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(q)
@@ -178,15 +193,6 @@ void QSplineSeriesPrivate::updateControlPoints()
         calculateControlPoints();
     }
 }
-
-/*!
-     \fn bool QSplineSeries::setModelMappingRange(int first, int count)
-     Allows limiting the model mapping.
-     Parameter \a first specifies which element of the model should be used as a first one of the series.
-     Parameter \a count specifies how many elements should be mapped. If count is not specified (defaults to -1)
-     then all the items following \a first item in a model are used.
-     \sa setModel(), setModelMapping()
- */
 
 Chart* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {

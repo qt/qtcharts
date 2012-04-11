@@ -41,6 +41,8 @@ public:
 
     QPointF controlPoint(int index) const;
 
+    void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
+
 private:
     Q_DECLARE_PRIVATE(QSplineSeries);
     Q_DISABLE_COPY(QSplineSeries);
