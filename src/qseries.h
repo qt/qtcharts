@@ -50,12 +50,11 @@ public:
     };
 
 protected:
-    QSeries(QSeriesPrivate &d,QObject *parent = 0);
+    QSeries(QSeriesPrivate &d, QObject *parent = 0);
 
 public:
     ~QSeries();
     virtual QSeriesType type() const = 0;
-    // TODO
     virtual bool setModel(QAbstractItemModel* model) = 0;
     QAbstractItemModel* model() const;
     void setName(const QString& name);

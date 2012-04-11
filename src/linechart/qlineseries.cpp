@@ -55,12 +55,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-   \fn bool QLineSeries::pointsVisible() const
-   \brief  Returns if the points are drawn for this series.
-    \sa setPointsVisible()
-*/
-
-/*!
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
@@ -69,6 +63,9 @@ QLineSeries::QLineSeries(QObject *parent) : QXYSeries(*new QLineSeriesPrivate(th
 
 }
 
+/*!
+    \internal
+*/
 QLineSeries::QLineSeries(QLineSeriesPrivate &d,QObject *parent) : QXYSeries (d,parent)
 {
 

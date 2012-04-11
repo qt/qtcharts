@@ -54,23 +54,34 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::showToolTip(QPoint pos, QString tip)
-    \brief \internal \a pos \a tip
+    \fn void QBarSeries::clicked(QBarSet *barset, QString category, Qt::MouseButtons button)
+
+    The signal is emitted if the user clicks with a mouse \a button on top of QBarSet \a barset of category \a category
+    contained by the series.
+*/
+
+/*!
+    \fn void QBarSeries::selected()
+
+    The signal is emitted if the user selects/deselects the series. The logic for storing selections should be
+    implemented by the user of QBarSeries API.
 */
 
 /*!
     Constructs empty QBarSeries. Parameter \a categories defines the categories for chart.
     QBarSeries is QObject which is a child of a \a parent.
 */
-
-QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) : QSeries(*new QBarSeriesPrivate(categories, this),parent)
+QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) :
+    QSeries(*new QBarSeriesPrivate(categories, this),parent)
 {
-
 }
 
-QBarSeries::QBarSeries(QBarSeriesPrivate &d,QObject *parent) : QSeries(d,parent)
+/*!
+    \internal
+*/
+QBarSeries::QBarSeries(QBarSeriesPrivate &d, QObject *parent) :
+    QSeries(d,parent)
 {
-
 }
 
 QSeries::QSeriesType QBarSeries::type() const
@@ -228,6 +239,9 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundary, int topBoun
     d->setModelMapping(categories,bottomBoundary,topBoundary,orientation);
 }
 
+/*!
+    Returns the bar categories of the series.
+*/
 QBarCategories QBarSeries::categories() const
 {
     Q_D(const QBarSeries);

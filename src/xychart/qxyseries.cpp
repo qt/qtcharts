@@ -49,6 +49,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::selected()
+
+    The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
+    implemented by the user of QXYSeries API.
+*/
+
+/*!
     \fn void QXYSeriesPrivate::pointReplaced(int index)
     \brief \internal \a index
 */
@@ -82,6 +89,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \internal
+
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transfered.
 */
@@ -337,7 +346,9 @@ void QXYSeries::setPointsVisible(bool visible)
     }
 }
 
-
+/*!
+    Returns true if drawing the data points of the series is enabled.
+*/
 bool QXYSeries::pointsVisible() const
 {
     Q_D(const QXYSeries);

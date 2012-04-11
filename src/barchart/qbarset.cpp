@@ -46,22 +46,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::hoverEnter(QPoint pos)
-    \brief signals that mouse has entered over the set at position \a pos.
-*/
-
-/*!
-    \fn void QBarSet::hoverLeave()
-    \brief signals that mouse has left from the set.
-*/
-
-/*!
-    \fn void QBarSetPrivate::showToolTip(QPoint pos, QString tip)
-    \brief \internal \a pos \a tip
-*/
-
-
-/*!
     Constructs QBarSet with a name of \a name and with parent of \a parent
 */
 QBarSet::QBarSet(QString name, QObject *parent)

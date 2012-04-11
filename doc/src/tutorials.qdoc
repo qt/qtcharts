@@ -3,24 +3,4 @@
     \title Tutorials
     \keyword Tutorials
     
-    For example, to create a chart with line series using a widget based application:
-    \snippet ../examples/chartview/main.cpp 1
-    \image chartview_example.jpg
-
-    To replace the line series with a pie series you use the dedicated QPieSeries class:
-    \snippet ../examples/chartview/main.cpp 3
-    \image chartview_example_pie.jpg
-
-	To use a scatter series you use QScatterSeries class:
-    \snippet ../examples/chartview/main.cpp 4
-    \image chartview_example_scatter.jpg
-
-	And to show a bar series you use one of the bar series classes, for example QBarChartSeries:
-    \snippet ../examples/chartview/main.cpp 5
-    \image chartview_example_bar.jpg
-
-    If you need to give a more professional touch to your chart you can switch from the default
-	theme to one of the other themes:
-    \snippet ../examples/chartview/main.cpp 2
-    \image chartview_example_theme.jpg
 */

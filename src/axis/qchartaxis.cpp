@@ -147,16 +147,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QChartAxis::updated()
-    \brief \internal
-*/
-
-/*!
-    \fn void QChartAxis::changed(qreal min, qreal max, int tickCount,bool niceNumbers)
-    \brief \internal
-*/
-
-/*!
     \fn bool QChartAxis::niceNumbers() const
     \brief Returns whether nice numbers are enabled or not.
 */

@@ -29,7 +29,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     Usually you use the series type specific inherited classes instead of the base class.
-    \sa QScatterSeries
+    \sa QXYSeries, QLineSeries, QSplineSeries, QScatterSeries, QAreaSeries, QBarSeries, QStackedBarSeries,
+    QPercentBarSeries, QPieSeries
 */
 
 /*!
@@ -48,16 +49,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QSeries::QSeries(QObject *parent)
-    \brief Constructs ChartSeries object with \a parent.
-*/
-
-/*!
-    \fn QSeries::~QSeries()
-    \brief Virtual destructor for the chart series.
-*/
-
-/*!
     \fn QSeriesType QSeries::type() const
     \brief The type of the series.
 */
@@ -68,11 +59,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     set with QChartSeries type specific data setters. For example if you call both
     QScatterSeries::addData() and QScatterSeries::setModel, only the data provided by the model is
     used by the series. Returns true if the model is valid for the series.
-*/
-
-/*!
-    \fn QAbstractItemModel* QSeries::model() const
-    \brief Returns the pointer to the model that is used as the series data source
 */
 
 /*!
@@ -91,22 +77,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QString QSeries::name() const
-    \brief Returns the name of the series.
-    \sa setName()
+    \internal
+    \brief Constructs ChartSeries object with \a parent.
 */
-
-QSeries::QSeries(QSeriesPrivate &d,QObject *parent) : QObject(parent),
-d_ptr(&d)
+QSeries::QSeries(QSeriesPrivate &d, QObject *parent) :
+    QObject(parent),
+    d_ptr(&d)
 {
-
 }
 
+/*!
+    \brief Virtual destructor for the chart series.
+*/
 QSeries::~QSeries()
 {
-
 }
 
+/*!
+    \brief Returns the pointer to the model that is used as the series data source
+*/
 QAbstractItemModel* QSeries::model() const
 {
     return d_ptr->m_model;
@@ -117,6 +106,10 @@ void QSeries::setName(const QString& name)
     d_ptr->m_name = name;
 }
 
+/*!
+    \brief Returns the name of the series.
+    \sa setName()
+*/
 QString QSeries::name() const
 {
     return d_ptr->m_name;
@@ -126,16 +119,11 @@ QString QSeries::name() const
 
 QSeriesPrivate::QSeriesPrivate(QSeries* q): q_ptr(q),m_model(0)
 {
-
 }
 
 QSeriesPrivate::~QSeriesPrivate()
 {
-
 }
-
-
-
 
 #include "moc_qseries.cpp"
 

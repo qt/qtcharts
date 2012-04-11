@@ -96,6 +96,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QAreaSeries::selected()
+
+    The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
+    implemented by the user of QAreaSeries API.
+*/
+
+/*!
     \fn void QAreaSeriesPrivate::updated()
     \brief \internal
 */
@@ -203,13 +210,13 @@ QAbstractItemModel* QAreaSeries::model() const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries,QAreaSeries* q):QSeriesPrivate(q),
-  m_upperSeries(upperSeries),
-  m_lowerSeries(lowerSeries),
-  m_pointsVisible(false)
+QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries,QAreaSeries* q) :
+    QSeriesPrivate(q),
+    m_upperSeries(upperSeries),
+    m_lowerSeries(lowerSeries),
+    m_pointsVisible(false)
 {
-
-};
+}
 
 void QAreaSeriesPrivate::scaleDomain(Domain& domain)
 {
