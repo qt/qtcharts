@@ -41,13 +41,15 @@ void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 
 void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit hoverEntered(event->lastScreenPos());
+    emit hovered(true);
+    emit hovered(m_barset, true);
 }
 
 void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
-    emit hoverLeaved();
+    emit hovered(false);
+    emit hovered(m_barset, false);
 }
 
 #include "moc_bar_p.cpp"

@@ -67,9 +67,7 @@ protected:
 Q_SIGNALS:
     void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);
     void selected();
-
-public Q_SLOTS:
-    void setToolTipEnabled(bool enabled = true);           // enables tooltips
+    void hovered(QBarSet* barset, bool status);
 
 protected:
     Q_DECLARE_PRIVATE(QBarSeries)

@@ -205,17 +205,6 @@ QList<QBarSet*> QBarSeries::barSets() const
 }
 
 /*!
-    Enables or disables tooltip depending on parameter \a enabled.
-    Tooltip shows the name of set, when mouse is hovering on top of bar.
-    Calling without parameter \a enabled, enables the tooltip
-*/
-void QBarSeries::setToolTipEnabled(bool enabled)
-{
-    Q_D(QBarSeries);
-    d->setToolTipEnabled(enabled);
-}
-
-/*!
      \fn bool QBarSeries::setModel(QAbstractItemModel *model)
      Sets the \a model to be used as a data source
  */
@@ -287,22 +276,6 @@ QBarSet* QBarSeriesPrivate::barsetAt(int index)
 QString QBarSeriesPrivate::categoryName(int category)
 {
     return m_internalModel->categoryName(category);
-}
-
-void QBarSeriesPrivate::setToolTipEnabled(bool enabled)
-{
-    // TODO: what if we add sets after call to this function? Those sets won't have tooltip enabled.
-    if (enabled) {
-        for (int i=0; i<m_internalModel->barsetCount(); i++) {
-            QBarSet *set = m_internalModel->barsetAt(i);
-            connect(set->d_ptr.data(), SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
-        }
-    } else {
-        for (int i=0; i<m_internalModel->barsetCount(); i++) {
-            QBarSet *set = m_internalModel->barsetAt(i);
-            disconnect(set->d_ptr.data(), SIGNAL(showToolTip(QPoint,QString)), this, SIGNAL(showToolTip(QPoint,QString)));
-        }
-    }
 }
 
 qreal QBarSeriesPrivate::min()

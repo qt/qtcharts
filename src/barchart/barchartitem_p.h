@@ -63,9 +63,6 @@ public Q_SLOTS:
     void handleGeometryChanged(const QRectF &size);
     void handleLayoutChanged();
 
-    // Internal slots
-    void showToolTip(QPoint pos, QString tip);      // shows tooltip (if enabled)
-
 protected:
 
     // TODO: consider these.

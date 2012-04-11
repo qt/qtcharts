@@ -40,10 +40,6 @@ Q_SIGNALS:
     void selected();
     void updatedBars();
     void restructuredBars();
-    void showToolTip(QPoint pos, QString tip);
-
-public Q_SLOTS:
-    void setToolTipEnabled(bool enabled = true);           // enables tooltips
 
 private Q_SLOTS:
     // slots for updating bars when data in model changes

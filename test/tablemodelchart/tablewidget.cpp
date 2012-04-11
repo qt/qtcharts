@@ -312,7 +312,6 @@ void TableWidget::updateChartType(bool toggle)
             QBarSeries* barSeries = new QBarSeries(QStringList());
             barSeries->setModel(m_model);
             barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
-            barSeries->setToolTipEnabled(true);
             m_chart->addSeries(barSeries);
             QList<QBarSet*> barsets = barSeries->barSets();
             for (int i = 0; i < barsets.count(); i++) {

@@ -66,7 +66,9 @@ public:
     bool labelsVisible() const;
 
 Q_SIGNALS:
-    void clicked(QString category, Qt::MouseButtons button);                         // Clicked and hover signals exposed to user
+    void clicked(QString category, Qt::MouseButtons button);
+    void selected();
+    void hovered(bool status);
 
 private:
     QScopedPointer<QBarSetPrivate> d_ptr;

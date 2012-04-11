@@ -17,14 +17,7 @@ Q_SIGNALS:
     void clicked(QString category, Qt::MouseButtons button);
     void structureChanged();
     void valueChanged();
-    void hoverEnter(QPoint pos);
-    void hoverLeave();
-    void showToolTip(QPoint pos, QString tip);
     void labelsVisibleChanged(bool visible);
-
-public Q_SLOTS:
-    void barHoverEnterEvent(QPoint pos);
-    void barHoverLeaveEvent();
 
 public:
     QBarSet * const q_ptr;

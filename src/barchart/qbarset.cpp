@@ -20,7 +20,6 @@
 
 #include "qbarset.h"
 #include "qbarset_p.h"
-#include <QToolTip>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -43,6 +42,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief signals that set has been clicked
     Parameter \a category describes on which category was clicked
     Parameter \a button mouse button
+*/
+
+/*!
+    \fn void QBarSet::hovered(bool status)
+    \brief signals that mouse has hovered over the set. If \a status is true, then mouse was entered. If \a status is false, then mouse was left.
 */
 
 /*!
@@ -257,21 +261,6 @@ bool QBarSet::labelsVisible() const
     return d_ptr->m_labelsVisible;
 }
 
-/*
-void QBarSet::barHoverEnterEvent(QPoint pos)
-{
-    emit showToolTip(pos, m_name);
-    emit hoverEnter(pos);
-}
-*/
-/*
-void QBarSet::barHoverLeaveEvent()
-{
-    // Emit signal to user of charts
-    emit hoverLeave();
-}
-*/
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QBarSetPrivate::QBarSetPrivate(QString name, QBarSet *parent) : QObject(parent),
@@ -286,22 +275,6 @@ QBarSetPrivate::~QBarSetPrivate()
 {
 
 }
-
-
-//TODO: fixme , refactor it and get rid of it
-void QBarSetPrivate::barHoverEnterEvent(QPoint pos)
-{
-    emit showToolTip(pos, m_name);
-    emit hoverEnter(pos);
-}
-
-//TODO: fixme , refactor it and get rid of it
-void QBarSetPrivate::barHoverLeaveEvent()
-{
-    // Emit signal to user of charts
-    emit hoverLeave();
-}
-
 #include "moc_qbarset.cpp"
 #include "moc_qbarset_p.cpp"
 

@@ -43,8 +43,8 @@ public:
 Q_SIGNALS:
     void clicked(QString category, Qt::MouseButtons button);
     void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);
-    void hoverEntered(QPoint pos);
-    void hoverLeaved();
+    void hovered(bool status);
+    void hovered(QBarSet *barset, bool status);
 
 private:
     QString m_category;

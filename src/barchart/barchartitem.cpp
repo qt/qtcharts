@@ -31,7 +31,6 @@
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include "chartdataset_p.h"
-#include <QToolTip>
 #include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -42,7 +41,6 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
     m_series(series)
 {
     setFlag(ItemClipsChildrenToShape);
-    connect(series->d_func(), SIGNAL(showToolTip(QPoint,QString)), this, SLOT(showToolTip(QPoint,QString)));
     connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleModelChanged()));
     setZValue(ChartPresenter::BarSeriesZValue);
@@ -51,7 +49,6 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
 
 BarChartItem::~BarChartItem()
 {
-    disconnect(this,SLOT(showToolTip(QPoint,QString)));
 }
 
 void BarChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -68,7 +65,6 @@ QRectF BarChartItem::boundingRect() const
 
 void BarChartItem::dataChanged()
 {
-    // TODO: performance optimizations. Do we really need to delete and create items every time data is changed or can we reuse them?
     foreach(QGraphicsItem *item, childItems()) {
         delete item;
     }
@@ -86,8 +82,8 @@ void BarChartItem::dataChanged()
             m_bars.append(bar);
             connect(bar, SIGNAL(clicked(QString,Qt::MouseButtons)), set, SIGNAL(clicked(QString,Qt::MouseButtons)));
             connect(bar, SIGNAL(clicked(QBarSet*,QString,Qt::MouseButtons)), m_series, SIGNAL(clicked(QBarSet*,QString,Qt::MouseButtons)));
-            connect(bar, SIGNAL(hoverEntered(QPoint)), set->d_ptr.data(), SLOT(barHoverEnterEvent(QPoint)));
-            connect(bar, SIGNAL(hoverLeaved()), set->d_ptr.data(), SLOT(barHoverLeaveEvent()));
+            connect(bar, SIGNAL(hovered(bool)), set, SIGNAL(hovered(bool)));
+            connect(bar, SIGNAL(hovered(QBarSet*,bool)), m_series, SIGNAL(hovered(QBarSet*,bool)));
             m_layout.append(QRectF(0, 0, 0, 0));
         }
     }
@@ -205,12 +201,6 @@ void BarChartItem::handleLayoutChanged()
     QVector<QRectF> layout = calculateLayout();
     applyLayout(layout);
     update();
-}
-
-void BarChartItem::showToolTip(QPoint pos, QString tip)
-{
-    // TODO: cool tooltip instead of default
-    QToolTip::showText(pos, tip);
 }
 
 #include "moc_barchartitem_p.cpp"
