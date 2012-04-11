@@ -3,7 +3,7 @@ SUBDIRS += \
            areachart \
            barchart \
            customchart \
-           ekgchart \
+           dynamicspline \
            linechart \
            percentbarchart \
            piechart \

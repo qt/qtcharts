@@ -18,24 +18,37 @@
 **
 ****************************************************************************/
 
-#include "chart.h"
-#include <QChartView>
-#include <QApplication>
-#include <QMainWindow>
+#ifndef CHART_H_
+#define CHART_H_
+
+#include <QChart>
+#include <QTimer>
+
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class QSplineSeries;
+QTCOMMERCIALCHART_END_NAMESPACE
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-int main(int argc, char *argv[])
+//![1]
+class Chart: public QChart
 {
-    QApplication a(argc, argv);
-    QMainWindow window;
-    Chart *chart = new Chart;
-    chart->setTitle("Simple EKG chart");
-    chart->setAnimationOptions(QChart::AllAnimations);
-    QChartView chartView(chart);
-    chartView.setRenderHint(QPainter::Antialiasing);
-    window.setCentralWidget(&chartView);
-    window.resize(400, 300);
-    window.show();
-    return a.exec();
-}
+    Q_OBJECT
+public:
+    Chart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    virtual ~Chart();
+
+public slots:
+    void handleTimeout();
+
+private:
+    QTimer m_timer;
+    QSplineSeries* m_series;
+    QStringList m_titles;
+    qreal m_step;
+    qreal m_x;
+    qreal m_y;
+};
+//![1]
+
+#endif /* CHART_H_ */

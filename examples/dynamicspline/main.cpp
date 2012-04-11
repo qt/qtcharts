@@ -18,39 +18,24 @@
 **
 ****************************************************************************/
 
-#ifndef CHART_H_
-#define CHART_H_
-
-#include <QChart>
-#include <QTimer>
-
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
-class QSplineSeries;
-class QLineSeries;
-QTCOMMERCIALCHART_END_NAMESPACE
+#include "chart.h"
+#include <QChartView>
+#include <QApplication>
+#include <QMainWindow>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-//![1]
-class Chart: public QChart
+int main(int argc, char *argv[])
 {
-    Q_OBJECT
-public:
-    Chart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
-    virtual ~Chart();
-
-public slots:
-    void handleTimeout();
-
-private:
-    QTimer m_timer;
-    QLineSeries* m_series0;
-    QSplineSeries* m_series1;
-    QStringList m_titles;
-    qreal m_step;
-    qreal m_x;
-    qreal m_y;
-};
-//![1]
-
-#endif /* CHART_H_ */
+    QApplication a(argc, argv);
+    QMainWindow window;
+    Chart *chart = new Chart;
+    chart->setTitle("Dynamic spline chart");
+    chart->setAnimationOptions(QChart::AllAnimations);
+    QChartView chartView(chart);
+    chartView.setRenderHint(QPainter::Antialiasing);
+    window.setCentralWidget(&chartView);
+    window.resize(400, 300);
+    window.show();
+    return a.exec();
+}
