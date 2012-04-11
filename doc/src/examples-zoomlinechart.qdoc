@@ -4,8 +4,8 @@
     \subtitle
 
     The example shows how to create your own custom zooming effect with QRubberBand.
-    \image example_zoomlinechart1.png
-    \image example_zoomlinechart2.png
+    \image examples_zoomlinechart1.png
+    \image examples_zoomlinechart2.png
 
     Let's first create a line series with some example data.
     \snippet ../examples/zoomlinechart/main.cpp 1

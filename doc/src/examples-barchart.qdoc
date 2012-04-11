@@ -5,14 +5,14 @@
 
     The example shows how to create simple bar chart. Barchart shows the data in sets as separate bars, which are grouped in categories.
 
-	\image barchart.png
+    \image examples_barchart.png
 	
     First we define categories.
 
     \snippet ../examples/barchart/main.cpp 1
 
     Data that barchart visualizes, is defined by QBarSet instances. Here we create some sets and append data
-	we want to visulaize to them.
+    we want to visualize to them.
 
     \snippet ../examples/barchart/main.cpp 2
 
@@ -22,18 +22,19 @@
 
     \snippet ../examples/barchart/main.cpp 3
     
-    We want our barchart to behave so, that when mouse is hovered over bar, the name of set which the bar
-	represents is shown as tooltip.
-	Also when we click the bar, floating values for the set are toggled. Floating values are the data values
-	that are drawn on top of bars.
-    
+    Then we create a chart and add the series to it.
+
     \snippet ../examples/barchart/main.cpp 4
 
-    Here we create the view and add our series to it. Also we set the title and theme we want our chart to use
-    
+    And we also want to show the legend, so that the data is easier to read.
+
     \snippet ../examples/barchart/main.cpp 5
 
-    For barchart, we don't need X-axis to be visible, so it can be disabled.
-    
+    Finally we add the chart onto a view.
+
     \snippet ../examples/barchart/main.cpp 6
+
+    And it is ready to be shown in a window.
+
+    \snippet ../examples/percentbarchart/main.cpp 7
 */
