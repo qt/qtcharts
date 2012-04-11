@@ -45,11 +45,11 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     qreal categotyCount = m_series->categoryCount();
     qreal barWidth = width / (categotyCount * 2);
     qreal xStep = width / categotyCount;
-    qreal xPos = xStep / 2 - barWidth / 2;
+    qreal xPos = xStep / 2 - barWidth / 2 + geometry().topLeft().x();
 
     int itemIndex(0);
     for (int category = 0; category < categotyCount; category++) {
-        qreal yPos = height + scale * m_domainMinY;
+        qreal yPos = height + scale * m_domainMinY + geometry().topLeft().y();
         for (int set=0; set < m_series->barsetCount(); set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
 

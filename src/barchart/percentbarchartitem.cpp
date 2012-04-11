@@ -43,7 +43,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
     qreal categoryCount = m_series->categoryCount();
     qreal barWidth = width / (m_series->categoryCount() * 2);
     qreal xStep = width / categoryCount;
-    qreal xPos =  xStep / 2 - barWidth / 2;
+    qreal xPos =  xStep / 2 - barWidth / 2 + geometry().topLeft().x();
 
     qreal range = m_domainMaxY - m_domainMinY;
     qreal domainScale = (height / range);
@@ -52,7 +52,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
     for (int category = 0; category < categoryCount; category++) {
         qreal colSum = m_series->d_func()->categorySum(category);
         qreal percentage = (100 / colSum);
-        qreal yPos = height + domainScale * m_domainMinY;
+        qreal yPos = height + domainScale * m_domainMinY + geometry().topLeft().y();
         for (int set=0; set < m_series->barsetCount(); set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
             qreal barHeight = barSet->valueAt(category) * percentage * domainScale;

@@ -60,7 +60,7 @@ void BarChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 
 QRectF BarChartItem::boundingRect() const
 {
-    return m_rect.translated(-m_rect.topLeft());
+    return m_rect;
 }
 
 void BarChartItem::dataChanged()
@@ -117,8 +117,8 @@ QVector<QRectF> BarChartItem::calculateLayout()
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal xPos = categoryWidth * category + barWidth / 2;
-        qreal yPos = height + scale * m_domainMinY;
+        qreal xPos = categoryWidth * category + barWidth / 2 + geometry().topLeft().x();
+        qreal yPos = height + scale * m_domainMinY + geometry().topLeft().y();
         for (int set = 0; set < setCount; set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
 
@@ -185,11 +185,9 @@ void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal
 void BarChartItem::handleGeometryChanged(const QRectF &rect)
 {
     prepareGeometryChange();
-    m_clipRect = rect.translated(-rect.topLeft());
     m_rect = rect;
     handleLayoutChanged();
     m_layoutSet = true;
-    setPos(rect.topLeft());
 }
 
 void BarChartItem::handleLayoutChanged()
