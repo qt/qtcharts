@@ -376,7 +376,7 @@ void QXYSeries::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 /*!
      \fn bool QXYSeries::setModel(QAbstractItemModel *model)
      Sets the \a model to be used as a data source
-     \sa setModelMapping(), setModelMappingRange()
+     \sa setModelMapping()
  */
 bool QXYSeries::setModel(QAbstractItemModel *model)
 {
@@ -404,7 +404,7 @@ bool QXYSeries::setModel(QAbstractItemModel *model)
      Sets the \a modelX to be used as a data source for x coordinate and \a modelY to be used
      as a data source for y coordinate. The \a orientation parameter specifies whether the data
      is in columns or in rows.
-     \sa setModel(), setModelMappingRange()
+     \sa setModel()
  */
 void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
 {

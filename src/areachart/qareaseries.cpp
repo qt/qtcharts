@@ -196,6 +196,10 @@ bool QAreaSeries::pointsVisible() const
     return d->m_pointsVisible;
 }
 
+/*!
+    Does nothing at present. Paremeter \a model is not used. Always returns false.
+    To set the model for area series set the models for upperSeries, lowerSeries
+ */
 bool QAreaSeries::setModel(QAbstractItemModel* model)
 {
     Q_UNUSED(model);
@@ -203,6 +207,10 @@ bool QAreaSeries::setModel(QAbstractItemModel* model)
     return false;
 }
 
+/*!
+    Does nothing at present. Always returns 0;
+    To get the model set for area series call upperSeries->model(), lowerSeries->model()
+ */
 QAbstractItemModel* QAreaSeries::model() const
 {
     return 0;
