@@ -36,7 +36,7 @@ class BarLabel : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    BarLabel(QBarSet &barSet, QGraphicsItem *parent = 0);
+    explicit BarLabel(QBarSet &barSet, QGraphicsItem *parent = 0);
 
     void setText(QString str);
     QString text() const;

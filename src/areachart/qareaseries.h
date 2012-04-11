@@ -34,8 +34,8 @@ class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QSeries
 {
     Q_OBJECT
 public:
-    QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries = 0);
-    virtual ~QAreaSeries();
+    explicit QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries = 0);
+    ~QAreaSeries();
 
 public:
     QSeries::QSeriesType type() const;

@@ -37,7 +37,7 @@ class QTCOMMERCIALCHART_EXPORT QPieSeries : public QSeries
     Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle)
 
 public:
-    QPieSeries(QObject *parent = 0);
+    explicit QPieSeries(QObject *parent = 0);
     virtual ~QPieSeries();
 
 public: // from QChartSeries

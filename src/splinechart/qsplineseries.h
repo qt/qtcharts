@@ -36,7 +36,7 @@ class QTCOMMERCIALCHART_EXPORT QSplineSeries : public QLineSeries
     Q_OBJECT
 public:
 
-    QSplineSeries(QObject *parent = 0);
+    explicit QSplineSeries(QObject *parent = 0);
     QSeries::QSeriesType type() const;
 
     QPointF controlPoint(int index) const;

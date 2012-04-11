@@ -111,7 +111,7 @@ class AxisItem: public QGraphicsLineItem
 {
 
 public:
-    AxisItem(Axis *axis, QGraphicsItem *parent = 0) : QGraphicsLineItem(parent), m_axis(axis) {}
+    explicit AxisItem(Axis *axis, QGraphicsItem *parent = 0) : QGraphicsLineItem(parent), m_axis(axis) {}
 
 protected:
    void mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -45,7 +45,7 @@ class QLegend;
 class ScrollTicker : public QObject
 {
 public:
-    ScrollTicker(Scroller *scroller,QObject *parent=0);
+    explicit ScrollTicker(Scroller *scroller,QObject *parent = 0);
     void start(int interval);
     void stop();
 protected:

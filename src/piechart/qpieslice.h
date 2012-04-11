@@ -37,7 +37,7 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
     Q_PROPERTY(qreal value READ value WRITE setValue NOTIFY changed)
 
 public:
-    QPieSlice(QObject *parent = 0);
+    explicit QPieSlice(QObject *parent = 0);
     QPieSlice(qreal value, QString label, QObject *parent = 0);
     virtual ~QPieSlice();
 

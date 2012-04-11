@@ -40,7 +40,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QSeries
 {
     Q_OBJECT
 public:
-    QBarSeries(QBarCategories categories, QObject *parent = 0);
+    explicit QBarSeries(QBarCategories categories, QObject *parent = 0);
 
     QSeries::QSeriesType type() const;
 
