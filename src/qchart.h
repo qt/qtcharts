@@ -82,7 +82,7 @@ public:
     void setBackgroundPen(const QPen &pen);
     QPen backgroundPen() const;
 
-    void setBackgroundVisible(bool visible);
+    void setBackgroundVisible(bool visible = true);
     bool isBackgroundVisible() const;
 
     void setAnimationOptions(AnimationOptions options);

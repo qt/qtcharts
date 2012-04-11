@@ -147,11 +147,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn bool QChartAxis::niceNumbers() const
-    \brief Returns whether nice numbers are enabled or not.
-*/
-
-/*!
     \fn QChartAxisCategories* QChartAxis::categories()
     \brief Returns pointer to the list of categories which correspond to the values on the axis.
 */
@@ -482,7 +477,7 @@ void QChartAxis::hide()
 /*!
     Sets the nice numbers state to \a enable
 */
-void QChartAxis::setNiceNumbers(bool enable)
+void QChartAxis::setNiceNumbersEnabled(bool enable)
 {
     if (d_ptr->m_niceNumbers != enable){
         d_ptr->m_niceNumbers = enable;
@@ -490,7 +485,10 @@ void QChartAxis::setNiceNumbers(bool enable)
     }
 }
 
-bool  QChartAxis::niceNumbers() const
+/*!
+    Returns whether nice numbers are enabled or not.
+*/
+bool  QChartAxis::niceNumbersEnabled() const
 {
     return d_ptr->m_niceNumbers;
 }

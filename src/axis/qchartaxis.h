@@ -40,19 +40,19 @@ public:
 
     //axis handling
     bool isAxisVisible() const;
-    void setAxisVisible(bool visible);
+    void setAxisVisible(bool visible = true);
     void setAxisPen(const QPen &pen);
     QPen axisPen() const;
 
     //grid handling
     bool isGridLineVisible() const;
-    void setGridLineVisible(bool visible);
+    void setGridLineVisible(bool visible = true);
     void setGridLinePen(const QPen &pen);
     QPen gridLinePen() const;
 
     //labels handling
     bool labelsVisible() const;
-    void setLabelsVisible(bool visible);
+    void setLabelsVisible(bool visible = true);
     void setLabelsPen(const QPen &pen);
     QPen labelsPen() const;
     void setLabelsBrush(const QBrush &brush);
@@ -64,7 +64,7 @@ public:
 
     //shades handling
     bool shadesVisible() const;
-    void setShadesVisible(bool visible);
+    void setShadesVisible(bool visible = true);
     void setShadesPen(const QPen &pen);
     QPen shadesPen() const;
     void setShadesBrush(const QBrush &brush);
@@ -83,8 +83,8 @@ public:
     void setTicksCount(int count);
     int ticksCount() const;
 
-    void setNiceNumbers(bool enable);
-    bool niceNumbers() const;
+    void setNiceNumbersEnabled(bool enable = true);
+    bool niceNumbersEnabled() const;
 
     QChartAxisCategories* categories();
 

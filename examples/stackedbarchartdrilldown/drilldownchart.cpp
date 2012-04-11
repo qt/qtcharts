@@ -36,7 +36,7 @@ void DrilldownChart::changeSeries(QSeries* series)
     m_currentSeries = series;
     addSeries(series);
     setTitle(series->name());
-    axisY()->setNiceNumbers(true);
+    axisY()->setNiceNumbersEnabled(true);
 }
 
 void DrilldownChart::handleClicked(QBarSet *barset, QString category, Qt::MouseButtons button)

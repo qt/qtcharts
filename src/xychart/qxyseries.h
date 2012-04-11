@@ -64,7 +64,7 @@ public:
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
-    void setPointsVisible(bool visible);
+    void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
     bool setModel(QAbstractItemModel *model);

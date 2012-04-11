@@ -177,8 +177,8 @@ QComboBox* ThemeWidget::createLegendBox() const
 QChart* ThemeWidget::createAreaChart() const
 {
     QChart *chart = new QChart();
-    chart->axisX()->setNiceNumbers(true);
-    chart->axisY()->setNiceNumbers(true);
+    chart->axisX()->setNiceNumbersEnabled(true);
+    chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Area chart");
 
     // The lower series initialized to zero values
@@ -207,8 +207,8 @@ QChart* ThemeWidget::createAreaChart() const
 QChart* ThemeWidget::createBarChart(int valueCount) const
 {
     QChart* chart = new QChart();
-    chart->axisX()->setNiceNumbers(true);
-    chart->axisY()->setNiceNumbers(true);
+    chart->axisX()->setNiceNumbersEnabled(true);
+    chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Bar chart");
 
     QBarCategories categories;
@@ -230,8 +230,8 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
 QChart* ThemeWidget::createLineChart() const
 {
     QChart* chart = new QChart();
-    chart->axisX()->setNiceNumbers(true);
-    chart->axisY()->setNiceNumbers(true);
+    chart->axisX()->setNiceNumbersEnabled(true);
+    chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Line chart");
 
     QString name("Series ");
@@ -276,8 +276,8 @@ QChart* ThemeWidget::createPieChart() const
 QChart* ThemeWidget::createSplineChart() const
 { // spine chart
     QChart* chart = new QChart();
-    chart->axisX()->setNiceNumbers(true);
-    chart->axisY()->setNiceNumbers(true);
+    chart->axisX()->setNiceNumbersEnabled(true);
+    chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Spline chart");
     QString name("Series ");
     int nameIndex = 0;
@@ -295,8 +295,8 @@ QChart* ThemeWidget::createSplineChart() const
 QChart* ThemeWidget::createScatterChart() const
 { // scatter chart
     QChart* chart = new QChart();
-    chart->axisX()->setNiceNumbers(true);
-    chart->axisY()->setNiceNumbers(true);
+    chart->axisX()->setNiceNumbersEnabled(true);
+    chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Scatter chart");
     QString name("Series ");
     int nameIndex = 0;
