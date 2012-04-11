@@ -1,16 +1,17 @@
 /*!
-     \example examples/presenterchart
-     \title PresenterChart Example
-     \subtitle
+    \example examples/presenterchart
+    \title PresenterChart Example
+    \subtitle
 
-     The example shows how to create chart which presents the same set of data as line, scatter, spline and area charts.
-     ChartPresenter will switch between these four chart types every few seconds. 
-     Please note this example does not use common data model. A use of common data model is documented here.[TODO]
+    The example shows how to create chart which presents the same set of data as line, scatter, spline and area charts.
+    ChartPresenter will switch between these four chart types every few seconds. Note: You can also use the
+    QAbstractItemModel related APIs to pass data for the different series types. See the \l {Model data example} for
+    more details.
 
-    \image presenterchart1.png
-    \image presenterchart2.png
-    \image presenterchart3.png
-    \image presenterchart4.png
+    \image examples_presenterchart1.png
+    \image examples_presenterchart2.png
+    \image examples_presenterchart3.png
+    \image examples_presenterchart4.png
     
     We create simple ChartView class which derives form QChartView. 
     
@@ -24,8 +25,7 @@
 
     \snippet ../examples/presenterchart/chartview.cpp 1
 
-    We add data to three series. Please note area chart is going to use QLineSeries as the upper line. We can use add() member function. If data set is large,
-    it is wiser to use shared data model, as described here.[TODO]  
+    We add data to three series. Please note area chart is going to use QLineSeries as the upper line. We can use add() member function.
 
     \snippet ../examples/presenterchart/chartview.cpp 2
 
