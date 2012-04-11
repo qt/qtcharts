@@ -4,7 +4,7 @@
     \subtitle
 
     This example shows how to customize the appearance of the different elements on a chart.
-    \image custom_chart.png
+    \image examples_customchart.png
 
     We begin by creating a simple line series and a chart object.
     \snippet ../examples/customchart/main.cpp 1

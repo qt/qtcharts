@@ -14,32 +14,31 @@
 	 graphs by selecting one of the charts themes.
      </p>
 
-    <table><tr>
-    <td><a href="examples-linechart.html"><img src="images/linechart.png" alt="linechart" /></a></td>
-    <td><a href="examples-areachart.html"><img src="images/areachart.png" alt="areachart" /></a></td>
-    </tr>
-    <tr>
-    <td><a href="examples-scatterchart.html"><img src="images/scatterchart.png" alt="scatterchart" /></a></td>
-    <td><a href="examples-barchart.html"><img src="images/barchart.png" alt="barchart" /></a></td>
-    </tr>
-    <tr>
-    <td><a href="examples-stackedbarchart.html"><img src="images/stackedbarchart.png" alt="stackedbarchart" /></a></td>
-    <td><a href="examples-percentbarchart.html"><img src="images/percentbarchart.png" alt="percentbarcchart" /></a></td>
-    </tr><tr>
-    <td><img src="images/chartview_example_scatter.jpg " alt="scatterchart" /></td>
-    <td><img src="images/chartview_example_theme.jpg " alt="themechart" /></td>
-    </tr>
-    <tr>
-    <td><img src="images/chartview_example_bar.jpg " alt="barchart" /></td>
-    <td><img src="images/chartview_example_pie.jpg " alt="piechart" /></td>
-    </tr>
-    <tr>
-    <td><img src="images/chartview_example.jpg " alt="linechart" /></td>
-    <td><a href="examples-presenterchart.html"><img src="images/presenterchart_example.png" alt="presenterchart" /></a></td>
-    </tr>
-    </table> 
-     </div>
+    <table>
+        <tr>
+            <td><a href="examples-linechart.html"><img src="images/examples_linechart.png" alt="linechart" /></a></td>
+            <td><a href="examples-areachart.html"><img src="images/examples_areachart.png" alt="areachart" /></a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-scatterchart.html"><img src="images/examples_scatterchart.png" alt="scatterchart" /></a></td>
+            <td><a href="examples-barchart.html"><img src="images/examples_barchart.png" alt="barchart" /></a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-stackedbarchart.html"><img src="images/examples_stackedbarchart.png" alt="stackedbarchart" /></a></td>
+            <td><a href="examples-percentbarchart.html"><img src="images/examples_percentbarchart.png" alt="percentbarcchart" /></a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-splinechart.html"><img src="images/examples_splinechart.png" alt="linechart" /></a></td>
+            <td><a href="examples-piechart.html"><img src="images/examples_piechart.png" alt="piechart" /></a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-customchart.html"><img src="images/examples_customchart.png" alt="customerchart" /></a></td>
+            <td><a href="examples-zoomlinechart.html"><img src="images/examples_zoomlinechart2.png" alt="zoomlinechart" /></a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-chartthemes.html"><img src="images/demo_chartthemes_small.png" alt="charttheme" /></a></td>
+        </tr>
+    </table>
+    </div>
 	\endraw
-	
-	 
 */
