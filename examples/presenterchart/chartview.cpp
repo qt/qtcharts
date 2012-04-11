@@ -33,18 +33,18 @@ m_index(-1),m_chart(chart)
     m_timer.setInterval(3000);
 
 //![1]
-    QLineSeries* series0 = new QLineSeries(this);
+    QLineSeries* series0 = new QLineSeries();
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
 
-    QScatterSeries* series1 = new QScatterSeries(this);
+    QScatterSeries* series1 = new QScatterSeries();
     QPen red(Qt::red);
     red.setWidth(3);
     series1->setPen(red);
     series1->setBrush(Qt::white);
 
-    QSplineSeries* series2 = new QSplineSeries(this);
+    QSplineSeries* series2 = new QSplineSeries();
     QPen green(Qt::green);
     green.setWidth(3);
     series2->setPen(green);
@@ -91,6 +91,7 @@ ChartView::~ChartView()
 {
     if(m_series.size()==0) return;
     m_chart->removeSeries(m_series.at(m_index));
+    m_series.removeLast();  //remove QAreaSeries instance since they will be deleted when QLineSeries instance is gone
     qDeleteAll(m_series);
 }
 
