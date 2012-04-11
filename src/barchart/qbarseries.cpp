@@ -48,12 +48,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QSeriesType QBarSeries::type() const
-    \brief Returns type of series.
-    \sa QSeries, QSeriesType
-*/
-
-/*!
     \fn void QBarSeries::clicked(QBarSet *barset, QString category, Qt::MouseButtons button)
 
     The signal is emitted if the user clicks with a mouse \a button on top of QBarSet \a barset of category \a category
