@@ -51,6 +51,7 @@ TableWidget::TableWidget(QWidget *parent)
     //    tableView->setMinimumSize(340, 480);
     //    tableView->setItemDelegate(new QStyledItemDelegate);
     m_chart = new QChart;
+    m_chart->legend()->setVisible(true);
     m_chartView = new QChartView(m_chart);
     m_chartView->setRenderHint(QPainter::Antialiasing);
     m_chartView->setMinimumSize(640, 480);
@@ -139,7 +140,9 @@ void TableWidget::updateChartType(bool toggle)
     // this if is needed, so that the function is only called once.
     // For the radioButton that was enabled.
     if (toggle) {
-        m_chart->removeAllSeries();
+        m_chart->removeAllSeries();        
+        m_chart->axisX()->setNiceNumbersEnabled(false);
+        m_chart->axisY()->setNiceNumbersEnabled(false);
 
         // renable axes of the chart (pie hides them)
         // x axis
@@ -321,8 +324,10 @@ void TableWidget::updateChartType(bool toggle)
         }
 
 
-        m_chart->axisX()->setRange(0, 500);
+        if (!m_barRadioButton->isChecked())
+            m_chart->axisX()->setRange(0, 500);
         m_chart->axisY()->setRange(0, 120);
+        m_chart->legend()->setVisible(true);
 
         // repaint table view colors
         m_tableView->repaint();

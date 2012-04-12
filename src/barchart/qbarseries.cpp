@@ -224,7 +224,6 @@ void QBarSeries::setLabelsVisible(bool visible)
 QBarSeriesPrivate::QBarSeriesPrivate(QBarCategories categories, QBarSeries *q) :
     QAbstractSeriesPrivate(q),
     m_categories(categories),
-    m_model(0),
     m_mapCategories(-1),
     m_mapBarBottom(-1),
     m_mapBarTop(-1),
@@ -394,7 +393,7 @@ void QBarSeriesPrivate::setModelMapping(int categories, int bottomBoundry, int t
         }
 
         for (int i = m_mapBarBottom; i <= m_mapBarTop; i++) {
-            QBarSet* barSet = new QBarSet(QString("Column: %1").arg(i + 1));
+            QBarSet* barSet = new QBarSet(m_model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString());
             for(int m = 0; m < m_model->rowCount(); m++)
                 *barSet << m_model->data(m_model->index(m, i), Qt::DisplayRole).toDouble();
             q->appendBarSet(barSet);
@@ -405,7 +404,7 @@ void QBarSeriesPrivate::setModelMapping(int categories, int bottomBoundry, int t
         }
 
         for (int i = m_mapBarBottom; i <= m_mapBarTop; i++) {
-            QBarSet* barSet = new QBarSet(QString("Row: %1").arg(i + 1));
+            QBarSet* barSet = new QBarSet(m_model->headerData(i, Qt::Vertical, Qt::DisplayRole).toString());
             for(int m = 0; m < m_model->columnCount(); m++)
                 *barSet << m_model->data(m_model->index(i, m), Qt::DisplayRole).toDouble();
             q->appendBarSet(barSet);

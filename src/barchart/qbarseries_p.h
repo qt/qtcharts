@@ -48,7 +48,6 @@ protected:
     QList<QBarSet *> m_barSets;
     QBarCategories m_categories;
 
-    QAbstractItemModel* m_model;
     int m_mapCategories;
     int m_mapBarBottom;
     int m_mapBarTop;
