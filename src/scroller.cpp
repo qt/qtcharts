@@ -21,6 +21,7 @@
 #include "scroller_p.h"
 #include "qlegend.h"
 #include <QGraphicsSceneMouseEvent>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

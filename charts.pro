@@ -1,15 +1,20 @@
-!include(common.pri) {
-    error('missing common.pri')
+!include(config.pri) {
+    error('Missing config.pri')
 }
 
 TEMPLATE = subdirs
-SUBDIRS += src qmlplugin examples demos test
+SUBDIRS = src qmlplugin examples demos test
 
-integrated_build:{
-    message('Configured for integrated build against local libs...')
+local_build:{
+    message('Configured for local build against local libs...')
+    message('You can run "make" to build qchart library, examples and demos...')
 } else {
     message('Running build aginst system libs...')
-    message('Please build example test and qmlplugin after installing library.')
+    message('Bulding only charts library...')
+    message('You can run "make install" to build and install charts.')
+    message('Afterwards you can run "cd examples; qmake ; make " to build examples.')
+    message('Run qmake CONFIG+=local_build' to build everything at once.)
+    SUBDIRS = src
 }
 
 CONFIG += ordered

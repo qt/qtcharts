@@ -27,7 +27,6 @@
 #include "chartanimator_p.h"
 #include "legendmarker_p.h"
 #include <QAbstractItemModel>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

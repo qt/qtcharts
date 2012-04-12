@@ -20,6 +20,7 @@
 
 #include "xyanimation_p.h"
 #include "xychartitem_p.h"
+#include <QDebug>
 
 Q_DECLARE_METATYPE(QVector<QPointF>)
 

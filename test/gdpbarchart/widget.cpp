@@ -36,6 +36,7 @@
 #include <QRadioButton>
 #include <QStringList>
 #include <QSqlQuery>
+#include <QDebug>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

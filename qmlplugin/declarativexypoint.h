@@ -24,6 +24,7 @@
 #include "qchartglobal.h"
 #include <QObject>
 #include <QPointF>
+#include <QTextStream>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

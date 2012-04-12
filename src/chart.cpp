@@ -20,6 +20,7 @@
 
 #include "chart_p.h"
 #include "chartpresenter_p.h"
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

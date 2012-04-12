@@ -1,4 +1,4 @@
-integrated_build:{
+local_build:{
     INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR
 
     !win32: {

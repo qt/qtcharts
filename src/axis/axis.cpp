@@ -25,6 +25,7 @@
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
+#include <QDebug>
 #include <cmath>
 
 static int label_padding = 5;
@@ -365,7 +366,7 @@ void Axis::setLayout(QVector<qreal> &layout)
 		}
 		break;
 		default:
-        qDebug()<<"Unknown axis type";
+		    qWarning()<<"Unknown axis type";
 		break;
 	}
 

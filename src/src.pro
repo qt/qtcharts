@@ -1,4 +1,4 @@
-!include( ../common.pri ):error( Couldn't find the common.pri file! )
+!include( ../config.pri ):error( Couldn't find the config.pri file! )
 TARGET = QtCommercialChart
 DESTDIR = $$CHART_BUILD_LIB_DIR
 TEMPLATE = lib
@@ -70,6 +70,7 @@ DEFINES += QTCOMMERCIALCHART_LIBRARY
     }else{
         command = "echo \"$${LITERAL_HASH}include \\\"qchartglobal.h\\\"\" > $$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal"
     } 
+    PUBLIC_QT_HEADERS += $$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal
     system($$command)
 }
 
@@ -121,19 +122,20 @@ install_build_private_headers.CONFIG += target_predeps \
 QMAKE_EXTRA_COMPILERS += install_build_public_headers \
     install_build_private_headers \
     
+# There is a problem with jom.exe currently. It does not seem to understand QMAKE_EXTRA_TARGETS properly.
+# This is the case at least with shadow builds.
+# http://qt-project.org/wiki/jom
 
-!win32-msvc*: {
-
-    # There is a problem with jom.exe currently. It does not seem to understand QMAKE_EXTRA_TARGETS properly.
-    # This is the case at least with shadow builds.
-    # http://qt-project.org/wiki/jom
-
+developer_build:!win32-msvc*:{
     chartversion.target = $$PWD/qchartversion_p.h
 
     unix:{
         chartversion.commands = @echo \
-            "const char *buildTime = \\\"`date +'%y%m%d%H%M'`\\\" \\; \
-             const char *gitHead = \\\"`git rev-parse HEAD`\\\" \\; " \
+            \" $${LITERAL_HASH}ifndef QCHARTVERSION_P_H\\n\
+            $${LITERAL_HASH}define QCHARTVERSION_P_H\\n\
+            const char *buildTime = \\\"`date +'%y%m%d%H%M'`\\\" ; \\n\
+            const char *gitHead = \\\"`git rev-parse HEAD`\\\" ; \\n \ 
+            $${LITERAL_HASH}endif \"  \
             > \
             $$chartversion.target;
     }else{
@@ -147,7 +149,7 @@ QMAKE_EXTRA_COMPILERS += install_build_public_headers \
     chartversion.depends = $$HEADERS \
         $$SOURCES
 
-    PRE_TARGETDEPS += $$PWD/qchartversion_p.h
+    PRE_TARGETDEPS += $$chartversion.target
     QMAKE_CLEAN += $$PWD/qchartversion_p.h
     QMAKE_EXTRA_TARGETS += chartversion
 }

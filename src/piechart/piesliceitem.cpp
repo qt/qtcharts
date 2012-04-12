@@ -24,7 +24,6 @@
 #include "qpieslice.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
-#include <QDebug>
 #include <qmath.h>
 #include <QGraphicsSceneEvent>
 #include <QTime>

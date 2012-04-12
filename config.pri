@@ -1,7 +1,7 @@
-CONFIG+=integrated_build #remove if you want to build against installed libs
 
+#check if shadow build
 !contains($${PWD}, $${OUT_PWD}){
-   search = "$$PWD:::"
+    search = "$$PWD:::"
     temp = $$split(search,"/")    
     temp = $$last(temp)
     path = $$replace(search,$$temp,'')
@@ -9,7 +9,8 @@ CONFIG+=integrated_build #remove if you want to build against installed libs
     temp = $$split(temp,'/')
     temp = $$first(temp)
     path = "$${path}$${temp}"
-    SHADOW=$$path    
+    SHADOW=$$path   
+    CONFIG-=developer_build 
 }else{
     SHADOW=$$PWD
 }
@@ -42,3 +43,5 @@ mac: {
     QMAKE_CXXFLAGS *= -mmacosx-version-min=10.5
     QMAKE_LFLAGS *= -mmacosx-version-min=10.5
 }
+
+developer_build: DEFINES+=DEVELOPER_BUILD

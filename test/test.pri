@@ -1,8 +1,8 @@
-!include( ../common.pri ) {
-    error( "Couldn't find the common.pri file!" )
+!include( ../config.pri ) {
+    error( "Couldn't find the config.pri file!" )
 }
-!include( ../integrated.pri ) {
-    error( "Couldn't find the integrated.pri file !")
+!include( ../build.pri ) {
+    error( "Couldn't find the build.pri file !")
 }
 
 TEMPLATE = app

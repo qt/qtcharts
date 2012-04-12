@@ -31,6 +31,7 @@
 #define QCHARTAXISCATEGORIES_P_H
 
 #include "qchartaxiscategories.h"
+#include <QMap>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

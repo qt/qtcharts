@@ -2,6 +2,7 @@
 #define QBARSET_P_H
 
 #include "qbarset.h"
+#include <QMap>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

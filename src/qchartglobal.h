@@ -42,13 +42,14 @@
 # define QTCOMMERCIALCHART_USE_NAMESPACE
 #endif
 
-#define CHART_DEBUG chartDebug(3,__LINE__,__FILE__,__FUNCTION__);
+#if defined(DEVELOPER_BUILD) && !defined(QT_NO_DEBUG)
+#define CHART_DEBUG chartDebug(3,__LINE__,__FILE__,__FUNCTION__)
+
 
 #include <stdarg.h>
 #include <QDebug>
 
-/*
-static QDebug chartDebug(int numargs,...)
+static inline QDebug chartDebug(int numargs,...)
 {
        va_list valist;
        va_start(valist,numargs);
@@ -59,5 +60,5 @@ static QDebug chartDebug(int numargs,...)
        va_end(valist);
        return qDebug()<<QString().append(function).append("(").append(file).append(":%1)").arg(line);
 }
-*/
+#endif
 #endif

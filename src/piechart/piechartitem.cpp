@@ -25,7 +25,6 @@
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
 #include "chartanimator_p.h"
-#include <QDebug>
 #include <QPainter>
 #include <QTimer>
 

@@ -22,16 +22,20 @@
 #define CHARTCONFIG_H
 
 #include "qchartglobal.h"
+
 #ifdef Q_CC_MSVC
 // There is a problem with jom.exe currently. It does not seem to understand QMAKE_EXTRA_TARGETS properly.
 // This is the case at least with shadow builds.
 // http://qt-project.org/wiki/jom
-const char *buildTime = __DATE__;
+#undef DEVELOPER_BUILD
+#endif
+
+#ifndef DEVELOPER_BUILD
+const char *buildTime =  __TIME__" "__DATE__;
 const char *gitHead = "unknown";
 #else
 #include "qchartversion_p.h"
 #endif
-
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -39,7 +43,7 @@ class ChartConfig {
 
 private:
     ChartConfig(){
-    #ifndef QT_NO_DEBUG
+    #if defined(DEVELOPMENT_BUILD) && !defined(QT_NO_DEBUG)
         qDebug()<<"buildTime" << buildTime;
         qDebug()<<"gitHead" << gitHead;
     #endif

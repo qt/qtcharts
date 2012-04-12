@@ -23,6 +23,7 @@
 #include "qchartglobal.h"
 #include <QRectF>
 #include <QSizeF>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

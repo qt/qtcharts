@@ -3,11 +3,11 @@ TARGET = qtcommercialchartqml
 CONFIG += qt plugin
 QT += declarative
 
-!include( ../common.pri ) {
+!include( ../config.pri ) {
     error( "Couldn't find the common.pri file!" )
 }
-!include( ../integrated.pri ) {
-    error( "Couldn't find the integrated.pri file !")
+!include( ../build.pri ) {
+    error( "Couldn't find the build.pri file !")
 }
 
 DESTDIR = $$CHART_BUILD_PLUGIN_DIR

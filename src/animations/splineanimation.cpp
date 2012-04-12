@@ -20,6 +20,7 @@
 
 #include "splineanimation_p.h"
 #include "splinechartitem_p.h"
+#include <QDebug>
 
 Q_DECLARE_METATYPE(QVector<QPointF>)
 Q_DECLARE_METATYPE(SplineVector)

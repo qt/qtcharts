@@ -24,6 +24,7 @@
 #include "chartpresenter_p.h"
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

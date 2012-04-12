@@ -25,7 +25,6 @@
 #include "qpieslice.h"
 #include <QPen>
 #include <QBrush>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
