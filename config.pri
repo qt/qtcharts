@@ -45,6 +45,8 @@ mac: {
     # it should probably define the minimum OSX version to be 10.5...
     QMAKE_CXXFLAGS *= -mmacosx-version-min=10.5
     QMAKE_LFLAGS *= -mmacosx-version-min=10.5
+
+    CHART_BUILD_LIB_DIR = $$CHART_BUILD_BIN_DIR
 }
 
 ##################### DEVELOPMENT BUILD ###################################################
@@ -78,8 +80,7 @@ development_build: {
       win32: LIBRARY_NAME = $$join(LIBRARY_NAME,,,d)
     } 
        
-    LIBS += -l$$LIBRARY_NAME
-    
+    LIBS += -l$$LIBRARY_NAME    
 
     mac: {
         # This is a hack to make binaries to use the internal version of the QtCommercial Charts library on OSX
@@ -109,7 +110,5 @@ development_build: {
     }
 
 } else {
-
-    CONFIG += qtcommercialchart
- 
+    CONFIG += qtcommercialchart 
 }

@@ -48,5 +48,4 @@ INSTALLS += target qmldir
 
 FILE = $$PWD/qmldir
 win32:{FILE = $$replace(FILE, "/","\\")}
-mac: QMAKE_POST_LINK += " & "
 QMAKE_POST_LINK += $$QMAKE_COPY $$FILE $$CHART_BUILD_PLUGIN_DIR
