@@ -47,7 +47,6 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
 
-    // TODO: Consider the domain for layoutChanged. May be use case, may not be. If it is, then the derived classes need to implement it
     virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
 
     virtual QVector<QRectF> calculateLayout();
@@ -65,7 +64,6 @@ public Q_SLOTS:
 
 protected:
 
-    // TODO: consider these.
     qreal m_domainMinX;
     qreal m_domainMaxX;
     qreal m_domainMinY;

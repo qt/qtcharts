@@ -31,7 +31,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 typedef QStringList QBarCategories;
 
 class QBarSet;
-class BarChartModel;
 class BarCategory;
 class QBarSeriesPrivate;
 

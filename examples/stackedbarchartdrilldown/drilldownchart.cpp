@@ -31,8 +31,9 @@ DrilldownChart::DrilldownChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 
 void DrilldownChart::changeSeries(QAbstractSeries *series)
 {
-    if (m_currentSeries)
+    if (m_currentSeries) {
         removeSeries(m_currentSeries);
+    }
     m_currentSeries = series;
     addSeries(series);
     setTitle(series->name());

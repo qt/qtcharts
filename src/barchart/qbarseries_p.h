@@ -33,7 +33,6 @@ public:
     qreal categorySum(int category);
     qreal absoluteCategorySum(int category);
     qreal maxCategorySum();
-    BarChartModel& modelInternal();
 
 Q_SIGNALS:
     void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);
@@ -47,7 +46,9 @@ private Q_SLOTS:
     void barsetChanged();
 
 protected:
-    BarChartModel *m_internalModel;     // TODO: this may change... current "2 models" situation doesn't look good.
+    QList<QBarSet *> m_barSets;
+    QBarCategories m_categories;
+
     QAbstractItemModel* m_model;
     int m_mapCategories;
     int m_mapBarBottom;

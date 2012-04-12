@@ -22,7 +22,6 @@
 #include "qbarseries_p.h"
 #include "qbarset.h"
 #include "qbarset_p.h"
-#include "barchartmodel_p.h"
 #include "domain_p.h"
 #include "legendmarker_p.h"
 #include "chartdataset_p.h"
@@ -112,7 +111,7 @@ QAbstractSeries::QSeriesType QBarSeries::type() const
 void QBarSeries::appendBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
-    d->m_internalModel->appendBarSet(set);
+    d->m_barSets.append(set);
     QObject::connect(set->d_ptr.data(), SIGNAL(valueChanged()), d, SLOT(barsetChanged()));
     emit d->restructuredBars();
 }
@@ -125,8 +124,10 @@ void QBarSeries::appendBarSet(QBarSet *set)
 void QBarSeries::removeBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
-    d->m_internalModel->removeBarSet(set);
-    emit d->restructuredBars();
+    if (d->m_barSets.contains(set)) {
+        d->m_barSets.removeOne(set);
+        emit d->restructuredBars();
+    }
 }
 
 /*!
@@ -138,11 +139,10 @@ void QBarSeries::appendBarSets(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
     foreach (QBarSet* barset, sets) {
-        d->m_internalModel->appendBarSet(barset);
+        d->m_barSets.append(barset);
         QObject::connect(barset, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
     }
     emit d->restructuredBars();
-
 }
 
 /*!
@@ -155,7 +155,9 @@ void QBarSeries::removeBarSets(QList<QBarSet* > sets)
     Q_D(QBarSeries);
 
     foreach (QBarSet* barset, sets) {
-        d->m_internalModel->removeBarSet(barset);
+        if (d->m_barSets.contains(barset)) {
+            d->m_barSets.removeOne(barset);
+        }
     }
     emit d->restructuredBars();
 }
@@ -167,7 +169,7 @@ void QBarSeries::removeBarSets(QList<QBarSet* > sets)
 void QBarSeries::insertBarSet(int i, QBarSet *set)
 {
     Q_D(QBarSeries);
-    d->m_internalModel->insertBarSet(i, set);
+    d->m_barSets.insert(i,set);
     emit d->barsetChanged();
 }
 
@@ -177,7 +179,7 @@ void QBarSeries::insertBarSet(int i, QBarSet *set)
 int QBarSeries::barsetCount() const
 {
     Q_D(const QBarSeries);
-    return d->m_internalModel->barsetCount();
+    return d->m_barSets.count();
 }
 
 /*!
@@ -186,7 +188,7 @@ int QBarSeries::barsetCount() const
 int QBarSeries::categoryCount() const
 {
     Q_D(const QBarSeries);
-    return d->m_internalModel->categoryCount();
+    return d->m_categories.count();
 }
 
 /*!
@@ -195,7 +197,7 @@ int QBarSeries::categoryCount() const
 QList<QBarSet*> QBarSeries::barSets() const
 {
     Q_D(const QBarSeries);
-    return d->m_internalModel->barSets();
+    return d->m_barSets;
 }
 
 /*!
@@ -228,14 +230,7 @@ void QBarSeries::setModelMapping(int categories, int bottomBoundary, int topBoun
 QBarCategories QBarSeries::categories() const
 {
     Q_D(const QBarSeries);
-
-    QBarCategories categories;
-    int count = d->m_internalModel->categoryCount();
-    for (int i=1; i <= count; i++) {
-        categories.insert(i, d->m_internalModel->categoryName(i - 1));
-    }
-    return categories;
-
+    return d->m_categories;
 }
 
 /*!
@@ -252,7 +247,7 @@ void QBarSeries::setLabelsVisible(bool visible)
 
 QBarSeriesPrivate::QBarSeriesPrivate(QBarCategories categories, QBarSeries *q) :
     QAbstractSeriesPrivate(q),
-    m_internalModel(new BarChartModel(categories,this)),
+    m_categories(categories),
     m_model(0),
     m_mapCategories(-1),
     m_mapBarBottom(-1),
@@ -263,52 +258,115 @@ QBarSeriesPrivate::QBarSeriesPrivate(QBarCategories categories, QBarSeries *q) :
 
 QBarSet* QBarSeriesPrivate::barsetAt(int index)
 {
-    return m_internalModel->barsetAt(index);
+    return m_barSets.at(index);
 }
 
 QString QBarSeriesPrivate::categoryName(int category)
 {
-    return m_internalModel->categoryName(category);
+    return m_categories.at(category);
 }
 
 qreal QBarSeriesPrivate::min()
 {
-    return m_internalModel->min();
+    if (m_barSets.count() <= 0) {
+        return 0;
+    }
+    qreal min = INT_MAX;
+
+    for (int i = 0; i < m_barSets.count(); i++) {
+        int categoryCount = m_barSets.at(i)->count();
+        for (int j = 0; j < categoryCount; j++) {
+            qreal temp = m_barSets.at(i)->at(j);
+            if (temp < min)
+                min = temp;
+        }
+    }
+    return min;
 }
 
 qreal QBarSeriesPrivate::max()
 {
-    return m_internalModel->max();
+    if (m_barSets.count() <= 0) {
+        return 0;
+    }
+    qreal max = INT_MIN;
+
+    for (int i = 0; i < m_barSets.count(); i++) {
+        int categoryCount = m_barSets.at(i)->count();
+        for (int j = 0; j < categoryCount; j++) {
+            qreal temp = m_barSets.at(i)->at(j);
+            if (temp > max)
+                max = temp;
+        }
+    }
+
+    return max;
 }
 
 qreal QBarSeriesPrivate::valueAt(int set, int category)
 {
-    return m_internalModel->valueAt(set, category);
+    if ((set < 0) || (set >= m_barSets.count())) {
+        // No set, no value.
+        return 0;
+    } else if ((category < 0) || (category >= m_barSets.at(set)->count())) {
+        // No category, no value.
+        return 0;
+    }
+
+    return m_barSets.at(set)->at(category);
 }
 
 qreal QBarSeriesPrivate::percentageAt(int set, int category)
 {
-    return m_internalModel->percentageAt(set, category);
+    if ((set < 0) || (set >= m_barSets.count())) {
+        // No set, no value.
+        return 0;
+    } else if ((category < 0) || (category >= m_barSets.at(set)->count())) {
+        // No category, no value.
+        return 0;
+    }
+
+    qreal value = m_barSets.at(set)->at(category);
+    qreal sum = categorySum(category);
+    if ( qFuzzyIsNull(sum) ) {
+        return 0;
+    }
+
+    return value / sum;
 }
 
 qreal QBarSeriesPrivate::categorySum(int category)
 {
-    return m_internalModel->categorySum(category);
+    qreal sum(0);
+    int count = m_barSets.count(); // Count sets
+    for (int set = 0; set < count; set++) {
+        if (category < m_barSets.at(set)->count())
+            sum += m_barSets.at(set)->at(category);
+    }
+    return sum;
 }
 
 qreal QBarSeriesPrivate::absoluteCategorySum(int category)
 {
-    return m_internalModel->absoluteCategorySum(category);
+    qreal sum(0);
+    int count = m_barSets.count(); // Count sets
+    for (int set = 0; set < count; set++) {
+        if (category < m_barSets.at(set)->count())
+            sum += qAbs(m_barSets.at(set)->at(category));
+    }
+    return sum;
 }
 
 qreal QBarSeriesPrivate::maxCategorySum()
 {
-    return m_internalModel->maxCategorySum();
-}
-
-BarChartModel& QBarSeriesPrivate::modelInternal()
-{
-    return *m_internalModel;
+    qreal max = INT_MIN;
+    int count = m_categories.count();
+    for (int i = 0; i < count; i++) {
+        qreal sum = categorySum(i);
+        if (sum > max)
+            max = sum;
+    }
+    return max;
 }
 
 bool QBarSeriesPrivate::setModel(QAbstractItemModel *model)
@@ -353,12 +411,11 @@ void QBarSeriesPrivate::setModelMapping(int categories, int bottomBoundry, int t
             this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
 
     // create the initial bars
-    delete m_internalModel;
+    m_categories.clear();
     if (m_mapOrientation == Qt::Vertical) {
-        QStringList categories;
-        for (int k = 0; k < m_model->rowCount(); k++)
-            categories << m_model->data(m_model->index(k, m_mapCategories), Qt::DisplayRole).toString();
-        m_internalModel = new BarChartModel(categories, this);
+        for (int k = 0; k < m_model->rowCount(); k++) {
+            m_categories << m_model->data(m_model->index(k, m_mapCategories), Qt::DisplayRole).toString();
+        }
 
         for (int i = m_mapBarBottom; i <= m_mapBarTop; i++) {
             QBarSet* barSet = new QBarSet(QString("Column: %1").arg(i + 1));
@@ -367,10 +424,9 @@ void QBarSeriesPrivate::setModelMapping(int categories, int bottomBoundry, int t
             q->appendBarSet(barSet);
         }
     } else {
-        QStringList categories;
-        for (int k = 0; k < m_model->columnCount(); k++)
-            categories << m_model->data(m_model->index(m_mapCategories, k), Qt::DisplayRole).toString();
-        m_internalModel = new BarChartModel(categories, this);
+        for (int k = 0; k < m_model->columnCount(); k++) {
+            m_categories << m_model->data(m_model->index(m_mapCategories, k), Qt::DisplayRole).toString();
+        }
 
         for (int i = m_mapBarBottom; i <= m_mapBarTop; i++) {
             QBarSet* barSet = new QBarSet(QString("Row: %1").arg(i + 1));
@@ -413,7 +469,7 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    qreal x = m_internalModel->categoryCount();
+    qreal x = m_categories.count();
     qreal y = max();
     minX = qMin(minX, x);
     minY = qMin(minY, y);

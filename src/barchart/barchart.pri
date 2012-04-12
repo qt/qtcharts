@@ -3,7 +3,6 @@ DEPENDPATH += $$PWD
 
 SOURCES += \
     $$PWD/bar.cpp \
-    $$PWD/barchartmodel.cpp \
     $$PWD/barchartitem.cpp \
     $$PWD/percentbarchartitem.cpp \
     $$PWD/qbarseries.cpp \  
@@ -15,7 +14,6 @@ SOURCES += \
  
 PRIVATE_HEADERS += \
     $$PWD/bar_p.h \
-    $$PWD/barchartmodel_p.h \
     $$PWD/barchartitem_p.h \
     $$PWD/percentbarchartitem_p.h \
     $$PWD/stackedbarchartitem_p.h \
