@@ -22,7 +22,7 @@
 #define QAXIS_H
 
 #include <qchartglobal.h>
-#include <qchartaxiscategories.h>
+#include <qaxiscategories.h>
 #include <QPen>
 #include <QFont>
 
@@ -86,7 +86,7 @@ public:
     void setNiceNumbersEnabled(bool enable = true);
     bool niceNumbersEnabled() const;
 
-    QChartAxisCategories* categories();
+    QAxisCategories* categories();
 
     void show();
     void hide();

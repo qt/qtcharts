@@ -18,39 +18,40 @@
 **
 ****************************************************************************/
 
-#ifndef QCHARTAXISCATEGORIES_H
-#define QCHARTAXISCATEGORIES_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the QtCommercial Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
 
-#include <qchartglobal.h>
-#include <qbarseries.h>
+#ifndef QAXISCATEGORIES_P_H
+#define QAXISCATEGORIES_P_H
+
+#include "qaxiscategories.h"
+#include <QMap>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartAxisCategoriesPrivate;
-
-class QTCOMMERCIALCHART_EXPORT QChartAxisCategories : public QObject
+class QAxisCategoriesPrivate : public QObject
 {
     Q_OBJECT
-private:
-    QChartAxisCategories();
 public:
-    ~QChartAxisCategories();
+    QAxisCategoriesPrivate(QAxisCategories *q);
+    ~QAxisCategoriesPrivate();
 
-    void insert(const QBarCategories &category);
-    void insert(qreal value,QString label);
-    void remove(qreal value);
-    QList<qreal> values() const;
-    QString label(qreal value) const;
-    void clear();
-    int count();
+Q_SIGNALS:
+    void updated();
 
 private:
-    QScopedPointer<QChartAxisCategoriesPrivate> d_ptr;
-    friend class QAxisPrivate;
-    friend class ChartAxis;
-};
+    QAxisCategories *q_ptr;
+    QMap<qreal,QString> m_map;
+    friend class QAxisCategories;
 
+};
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* QCHARTAXISCATEGORIES_H_ */
+#endif

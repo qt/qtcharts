@@ -73,7 +73,7 @@ private:
     qreal m_max;
 
     int m_ticksCount;
-    QChartAxisCategories m_category;
+    QAxisCategories m_category;
 
     bool m_niceNumbers;
 

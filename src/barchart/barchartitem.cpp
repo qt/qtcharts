@@ -26,8 +26,6 @@
 #include "qbarseries.h"
 #include "qbarseries_p.h"
 #include "qchart.h"
-//#include "qchartaxis.h"
-#include "qchartaxiscategories.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include "chartdataset_p.h"

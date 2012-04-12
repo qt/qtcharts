@@ -21,7 +21,7 @@
 #include "chartaxis_p.h"
 #include "qaxis.h"
 #include "qaxis_p.h"
-#include "qchartaxiscategories_p.h"
+#include "qaxiscategories_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
@@ -103,7 +103,7 @@ bool ChartAxis::createLabels(QStringList &labels,qreal min, qreal max,int ticks)
     Q_ASSERT(max>=min);
     Q_ASSERT(ticks>1);
 
-    QChartAxisCategories* categories = m_chartAxis->categories();
+    QAxisCategories* categories = m_chartAxis->categories();
 
     bool category = categories->count()>0;
 

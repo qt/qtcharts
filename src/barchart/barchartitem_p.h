@@ -30,7 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Bar;
 class BarLabel;
-class QChartAxisCategories;
+class QAxisCategories;
 class QChart;
 
 //typedef QVector<QRectF> BarLayout;

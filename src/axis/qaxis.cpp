@@ -493,7 +493,7 @@ bool  QAxis::niceNumbersEnabled() const
     return d_ptr->m_niceNumbers;
 }
 
-QChartAxisCategories* QAxis::categories()
+QAxisCategories* QAxis::categories()
 {
     return &d_ptr->m_category;
 }

@@ -108,7 +108,7 @@ development_build: {
         }
     }
 
-}else {
+} else {
 
     CONFIG += qtcommercialchart
  

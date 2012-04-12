@@ -168,7 +168,7 @@ void ChartDataSet::removeAllSeries()
 
 void ChartDataSet::setupCategories(QBarSeries* series)
 {
-   QChartAxisCategories* categories = axisX()->categories();
+   QAxisCategories* categories = axisX()->categories();
    categories->clear();
    categories->insert(series->categories());
 }

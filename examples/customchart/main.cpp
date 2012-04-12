@@ -89,12 +89,12 @@ int main(int argc, char *argv[])
 //![3]
 
 //![4]
-    QChartAxisCategories* categoriesX = chart->axisX()->categories();
+    QAxisCategories* categoriesX = chart->axisX()->categories();
     categoriesX->insert(1,"low");
     categoriesX->insert(5,"optimal");
     categoriesX->insert(10,"high");
 
-    QChartAxisCategories* categoriesY = chart->axisY()->categories();
+    QAxisCategories* categoriesY = chart->axisY()->categories();
     categoriesY->insert(1,"slow");
     categoriesY->insert(5,"med");
     categoriesY->insert(10,"fast");

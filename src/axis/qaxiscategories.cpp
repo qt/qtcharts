@@ -18,23 +18,23 @@
 **
 ****************************************************************************/
 
-#include "qchartaxiscategories.h"
-#include "qchartaxiscategories_p.h"
+#include "qaxiscategories.h"
+#include "qaxiscategories_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QChartAxisCategories::QChartAxisCategories():
-d_ptr(new QChartAxisCategoriesPrivate(this))
+QAxisCategories::QAxisCategories():
+d_ptr(new QAxisCategoriesPrivate(this))
 {
 
 }
 
-QChartAxisCategories::~QChartAxisCategories()
+QAxisCategories::~QAxisCategories()
 {
 
 }
 
-void QChartAxisCategories::insert(const QBarCategories &categories)
+void QAxisCategories::insert(const QBarCategories &categories)
 {
     int i=1;
     foreach (const QString& string , categories) {
@@ -44,53 +44,53 @@ void QChartAxisCategories::insert(const QBarCategories &categories)
     emit d_ptr->updated();
 }
 
-void QChartAxisCategories::insert(qreal value,QString label)
+void QAxisCategories::insert(qreal value,QString label)
 {
     d_ptr->m_map.insert(value,label);
     emit d_ptr->updated();
 }
 
-void QChartAxisCategories::remove(qreal value)
+void QAxisCategories::remove(qreal value)
 {
     d_ptr->m_map.remove(value);
     emit d_ptr->updated();
 }
 
-void QChartAxisCategories::clear()
+void QAxisCategories::clear()
 {
     d_ptr->m_map.clear();
     emit d_ptr->updated();
 }
 
-int QChartAxisCategories::count()
+int QAxisCategories::count()
 {
     return d_ptr->m_map.count();
 }
 
-QList<qreal> QChartAxisCategories::values() const
+QList<qreal> QAxisCategories::values() const
 {
     return d_ptr->m_map.keys();
 }
 
-QString QChartAxisCategories::label(qreal value) const
+QString QAxisCategories::label(qreal value) const
 {
     return d_ptr->m_map.value(value);
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QChartAxisCategoriesPrivate::QChartAxisCategoriesPrivate(QChartAxisCategories *q):
+QAxisCategoriesPrivate::QAxisCategoriesPrivate(QAxisCategories *q):
 q_ptr(q)
 {
 
 }
 
-QChartAxisCategoriesPrivate::~QChartAxisCategoriesPrivate()
+QAxisCategoriesPrivate::~QAxisCategoriesPrivate()
 {
 
 }
 
-#include "moc_qchartaxiscategories.cpp"
-#include "moc_qchartaxiscategories_p.cpp"
+#include "moc_qaxiscategories.cpp"
+#include "moc_qaxiscategories_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
