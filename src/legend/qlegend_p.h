@@ -50,7 +50,7 @@ public:
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
     void handleSeriesRemoved(QAbstractSeries *series);
-    void handleUpdateSeries(); //TODO remove this function
+    void handleUpdatePieSeries(); //TODO remove this function
 
 private:
     QLegend *q_ptr;

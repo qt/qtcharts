@@ -53,7 +53,7 @@ MainWidget::MainWidget(QWidget* parent)
     m_series->setLabelsVisible();
     chart->addSeries(m_series);
 
-    connect(m_series, SIGNAL(clicked(QPieSlice*,Qt::MouseButtons)), this, SLOT(handleSliceClicked(QPieSlice*,Qt::MouseButtons)));
+    connect(m_series, SIGNAL(clicked(QPieSlice*)), this, SLOT(handleSliceClicked(QPieSlice*)));
 
     // chart settings
     m_themeComboBox = new QComboBox();
@@ -69,16 +69,20 @@ MainWidget::MainWidget(QWidget* parent)
     m_animationsCheckBox = new QCheckBox();
     m_animationsCheckBox->setCheckState(Qt::Checked);
 
+    m_legendCheckBox = new QCheckBox();
+
     QFormLayout* chartSettingsLayout = new QFormLayout();
     chartSettingsLayout->addRow("Theme", m_themeComboBox);
     chartSettingsLayout->addRow("Antialiasing", m_aaCheckBox);
     chartSettingsLayout->addRow("Animations", m_animationsCheckBox);
+    chartSettingsLayout->addRow("Legend", m_legendCheckBox);
     QGroupBox* chartSettings = new QGroupBox("Chart");
     chartSettings->setLayout(chartSettingsLayout);
 
     connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this ,SLOT(updateChartSettings()));
     connect(m_aaCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateChartSettings()));
     connect(m_animationsCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateChartSettings()));
+    connect(m_legendCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateChartSettings()));
 
     // series settings
     m_hPosition = new QDoubleSpinBox();
@@ -211,6 +215,11 @@ void MainWidget::updateChartSettings()
         m_chartView->chart()->setAnimationOptions(QChart::AllAnimations);
     else
         m_chartView->chart()->setAnimationOptions(QChart::NoAnimation);
+
+    if (m_legendCheckBox->checkState() == Qt::Checked)
+        m_chartView->chart()->legend()->show();
+    else
+        m_chartView->chart()->legend()->hide();
 }
 
 void MainWidget::updateSerieSettings()
@@ -240,10 +249,8 @@ void MainWidget::updateSliceSettings()
     m_slice->setExplodeDistanceFactor(m_sliceExplodedFactor->value());
 }
 
-void MainWidget::handleSliceClicked(QPieSlice* slice, Qt::MouseButtons buttons)
+void MainWidget::handleSliceClicked(QPieSlice* slice)
 {
-    Q_UNUSED(buttons);
-
     m_slice = static_cast<CustomSlice*>(slice);
 
     // name

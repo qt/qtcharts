@@ -51,7 +51,7 @@ public Q_SLOTS:
     void updateChartSettings();
     void updateSerieSettings();
     void updateSliceSettings();
-    void handleSliceClicked(QPieSlice* slice, Qt::MouseButtons buttons);
+    void handleSliceClicked(QPieSlice* slice);
     void showFontDialog();
     void appendSlice();
     void insertSlice();
@@ -61,6 +61,7 @@ private:
     QComboBox *m_themeComboBox;
     QCheckBox *m_aaCheckBox;
     QCheckBox *m_animationsCheckBox;
+    QCheckBox *m_legendCheckBox;
 
     QChartView* m_chartView;
     QPieSeries* m_series;

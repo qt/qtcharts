@@ -35,6 +35,7 @@
 #include "qpercentbarseries.h"
 #include "qbarset.h"
 #include "qpieseries.h"
+#include "qpieseries_p.h"
 #include "qpieslice.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
@@ -416,8 +417,9 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     if(series->type() == QAbstractSeries::SeriesTypePie)
     {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        QObject::connect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
-        QObject::connect(pieSeries,SIGNAL(removed(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
+        QPieSeriesPrivate *d = QPieSeriesPrivate::seriesData(*pieSeries);
+        QObject::connect(d, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
+        QObject::connect(d, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
     }
 
     updateLayout();
@@ -438,20 +440,21 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
     if(series->type() == QAbstractSeries::SeriesTypePie)
     {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        QObject::disconnect(pieSeries,SIGNAL(added(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
-        QObject::disconnect(pieSeries,SIGNAL(removed(QList<QPieSlice*>)),this,SLOT(handleUpdateSeries()));
+        QPieSeriesPrivate *d = QPieSeriesPrivate::seriesData(*pieSeries);
+        QObject::disconnect(d, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
+        QObject::disconnect(d, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
     }
 
     updateLayout();
 }
 
-void QLegendPrivate::handleUpdateSeries()
+void QLegendPrivate::handleUpdatePieSeries()
 {
     //TODO: reimplement to be optimal
-    QAbstractSeries* series = qobject_cast<QAbstractSeries *> (sender());
-    Q_ASSERT(series);
-    handleSeriesRemoved(series);
-    handleSeriesAdded(series,0);
+    QPieSeriesPrivate* d = qobject_cast<QPieSeriesPrivate *> (sender());
+    Q_ASSERT(d->q_func());
+    handleSeriesRemoved(d->q_func());
+    handleSeriesAdded(d->q_func(), 0);
 }
 
 #include "moc_qlegend.cpp"

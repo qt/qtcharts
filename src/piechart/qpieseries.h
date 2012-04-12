@@ -40,56 +40,44 @@ public:
     explicit QPieSeries(QObject *parent = 0);
     virtual ~QPieSeries();
 
-public: // from QChartSeries
     QSeriesType type() const;
 
-public:
-
-    // slice setters
     void append(QPieSlice* slice);
     void append(QList<QPieSlice*> slices);
+    QPieSeries& operator << (QPieSlice* slice);
+    QPieSlice* append(qreal value, QString name);
     void insert(int index, QPieSlice* slice);
     void replace(QList<QPieSlice*> slices);
     void remove(QPieSlice* slice);
     void clear();
 
-    // slice getters
     QList<QPieSlice*> slices() const;
-
-    // calculated data
     int count() const;
     bool isEmpty() const;
+
     qreal sum() const;
 
-    // pie customization
     void setHorizontalPosition(qreal relativePosition);
     qreal horizontalPosition() const;
     void setVerticalPosition(qreal relativePosition);
     qreal verticalPosition() const;
+
     void setPieSize(qreal relativeSize);
     qreal pieSize() const;
+
     void setPieStartAngle(qreal startAngle);
     qreal pieStartAngle() const;
     void setPieEndAngle(qreal endAngle);
     qreal pieEndAngle() const;
 
-    // convenience function
-    QPieSeries& operator << (QPieSlice* slice);
-    QPieSlice* append(qreal value, QString name);
     void setLabelsVisible(bool visible = true);
 
-    // data from model
     bool setModel(QAbstractItemModel* model);
     void setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation = Qt::Vertical);
 
 Q_SIGNALS:
-    void clicked(QPieSlice* slice, Qt::MouseButtons buttons);
-    void hoverEnter(QPieSlice* slice);
-    void hoverLeave(QPieSlice* slice);
-    void added(QList<QPieSlice*> slices);
-    void removed(QList<QPieSlice*> slices);
-    void piePositionChanged();
-    void pieSizeChanged();
+    void clicked(QPieSlice* slice);
+    void hovered(QPieSlice* slice, bool state);
 
 private:
     Q_DECLARE_PRIVATE(QPieSeries)

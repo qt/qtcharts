@@ -228,40 +228,27 @@ qreal QPieSlice::labelArmLengthFactor() const
 }
 
 /*!
-    \fn void QPieSlice::clicked(Qt::MouseButtons buttons)
+    \fn void QPieSlice::clicked()
 
     This signal is emitted when user has clicked the slice.
-    Parameter \a buttons hold the information about the clicked mouse buttons.
 
     \sa QPieSeries::clicked()
 */
 
 /*!
-    \fn void QPieSlice::hoverEnter()
+    \fn void QPieSlice::hovered(bool state)
 
-    This signal is emitted when user has hovered over the slice.
+    This signal is emitted when user has hovered over or away from the slice.
 
-    \sa QPieSeries::hoverEnter()
-*/
+    \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
 
-/*!
-    \fn void QPieSlice::hoverLeave()
-
-    This signal is emitted when user has hovered away from the slice.
-
-    \sa QPieSeries::hoverLeave()
+    \sa QPieSeries::hovered()
 */
 
 /*!
     \fn void QPieSlice::changed()
 
     This signal emitted when something has changed in the slice.
-*/
-
-/*!
-    \fn void QPieSlice::selected()
-
-    This signal emitted when this slice has been clicked in the legend.
 */
 
 /*!

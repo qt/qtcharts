@@ -30,8 +30,7 @@ DrilldownSlice::DrilldownSlice(qreal value, QString prefix, QAbstractSeries* dri
     updateLabel();
     setLabelFont(QFont("Arial", 8));
     connect(this, SIGNAL(changed()), this, SLOT(updateLabel()));
-    connect(this, SIGNAL(hoverEnter()), this, SLOT(showHighlight()));
-    connect(this, SIGNAL(hoverLeave()), this, SLOT(hideHighlight()));
+    connect(this, SIGNAL(hovered(bool)), this, SLOT(showHighlight(bool)));
 }
 
 DrilldownSlice::~DrilldownSlice()
@@ -55,16 +54,10 @@ void DrilldownSlice::updateLabel()
     setLabel(label);
 }
 
-void DrilldownSlice::showHighlight()
+void DrilldownSlice::showHighlight(bool show)
 {
-    setExploded();
-    setLabelVisible();
-}
-
-void DrilldownSlice::hideHighlight()
-{
-    setExploded(false);
-    setLabelVisible(false);
+    setExploded(show);
+    setLabelVisible(show);
 }
 
 #include "moc_drilldownslice.cpp"

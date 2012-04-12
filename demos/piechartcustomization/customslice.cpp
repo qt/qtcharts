@@ -25,8 +25,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 CustomSlice::CustomSlice(qreal value, QString label)
     :QPieSlice(value, label)
 {
-    connect(this, SIGNAL(hoverEnter()), this, SLOT(handleHoverEnter()));
-    connect(this, SIGNAL(hoverLeave()), this, SLOT(handleHoverLeave()));
+    connect(this, SIGNAL(hovered(bool)), this, SLOT(showHighlight(bool)));
 }
 
 QBrush CustomSlice::originalBrush()
@@ -34,17 +33,16 @@ QBrush CustomSlice::originalBrush()
     return m_originalBrush;
 }
 
-void CustomSlice::handleHoverEnter()
+void CustomSlice::showHighlight(bool show)
 {
-    QBrush brush = this->brush();
-    m_originalBrush = brush;
-    brush.setColor(brush.color().lighter());
-    setBrush(brush);
-}
-
-void CustomSlice::handleHoverLeave()
-{
-    setBrush(m_originalBrush);
+    if (show) {
+        QBrush brush = this->brush();
+        m_originalBrush = brush;
+        brush.setColor(brush.color().lighter());
+        setBrush(brush);
+    } else {
+        setBrush(m_originalBrush);
+    }
 }
 
 #include "moc_customslice.cpp"

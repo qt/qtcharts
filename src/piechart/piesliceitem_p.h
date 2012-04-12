@@ -55,8 +55,7 @@ public: // from QGraphicsItem
 
 Q_SIGNALS:
     void clicked(Qt::MouseButtons buttons);
-    void hoverEnter();
-    void hoverLeave();
+    void hovered(bool state);
 
 public:
     void setSliceData(PieSliceData sliceData);

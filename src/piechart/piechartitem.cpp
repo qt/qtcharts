@@ -22,6 +22,7 @@
 #include "piesliceitem_p.h"
 #include "qpieslice.h"
 #include "qpieseries.h"
+#include "qpieseries_p.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
 #include "chartanimator_p.h"
@@ -35,10 +36,12 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
     m_series(series)
 {
     Q_ASSERT(series);
-    connect(series, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
-    connect(series, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleSlicesRemoved(QList<QPieSlice*>)));
-    connect(series, SIGNAL(piePositionChanged()), this, SLOT(handlePieLayoutChanged()));
-    connect(series, SIGNAL(pieSizeChanged()), this, SLOT(handlePieLayoutChanged()));
+
+    QPieSeriesPrivate *d = QPieSeriesPrivate::seriesData(*series);
+    connect(d, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
+    connect(d, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleSlicesRemoved(QList<QPieSlice*>)));
+    connect(d, SIGNAL(piePositionChanged()), this, SLOT(handlePieLayoutChanged()));
+    connect(d, SIGNAL(pieSizeChanged()), this, SLOT(handlePieLayoutChanged()));
 
     QTimer::singleShot(0, this, SLOT(initialize())); // TODO: get rid of this
 
@@ -75,9 +78,8 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         PieSliceItem* item = new PieSliceItem(this);
         m_slices.insert(s, item);
         connect(s, SIGNAL(changed()), this, SLOT(handleSliceChanged()));
-        connect(item, SIGNAL(clicked(Qt::MouseButtons)), s, SIGNAL(clicked(Qt::MouseButtons)));
-        connect(item, SIGNAL(hoverEnter()), s, SIGNAL(hoverEnter()));
-        connect(item, SIGNAL(hoverLeave()), s, SIGNAL(hoverLeave()));
+        connect(item, SIGNAL(clicked(Qt::MouseButtons)), s, SIGNAL(clicked()));
+        connect(item, SIGNAL(hovered(bool)), s, SIGNAL(hovered(bool)));
 
         PieSliceData data = sliceData(s);
 

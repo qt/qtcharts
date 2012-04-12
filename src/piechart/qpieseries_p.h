@@ -27,6 +27,7 @@
 class QModelIndex;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class QLegendPrivate;
 
 class QPieSeriesPrivate : public QAbstractSeriesPrivate
 {
@@ -37,16 +38,23 @@ public:
     ~QPieSeriesPrivate();
 
     void scaleDomain(Domain& domain);
-    Chart* createGraphics(ChartPresenter* presenter);
-    QList<LegendMarker*> createLegendMarker(QLegend* legend);
+    Chart* createGraphics(ChartPresenter *presenter);
+    QList<LegendMarker*> createLegendMarker(QLegend *legend);
 
     void updateDerivativeData();
 
+    static QPieSeriesPrivate* seriesData(QPieSeries &series);
+
+Q_SIGNALS:
+    void added(QList<QPieSlice*> slices);
+    void removed(QList<QPieSlice*> slices);
+    void piePositionChanged();
+    void pieSizeChanged();
+
 public Q_SLOTS:
     void sliceChanged();
-    void sliceClicked(Qt::MouseButtons buttons);
-    void sliceHoverEnter();
-    void sliceHoverLeave();
+    void sliceClicked();
+    void sliceHovered(bool state);
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
     void modelDataAdded(QModelIndex parent, int start, int end);
     void modelDataRemoved(QModelIndex parent, int start, int end);
@@ -65,7 +73,9 @@ public:
     int m_mapValues;
     int m_mapLabels;
     Qt::Orientation m_mapOrientation;
+
 private:
+    friend class QLegendPrivate;
     Q_DECLARE_PUBLIC(QPieSeries)
 };
 

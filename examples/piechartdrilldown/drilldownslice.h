@@ -39,8 +39,7 @@ public:
 
 public Q_SLOTS:
     void updateLabel();
-    void showHighlight();
-    void hideHighlight();
+    void showHighlight(bool show);
 
 private:
     QAbstractSeries* m_drilldownSeries;

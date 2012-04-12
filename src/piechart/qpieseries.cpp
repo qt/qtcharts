@@ -162,12 +162,11 @@ void QPieSeries::append(QList<QPieSlice*> slices)
 
     foreach (QPieSlice* s, slices) {
         connect(s, SIGNAL(changed()), d, SLOT(sliceChanged()));
-        connect(s, SIGNAL(clicked(Qt::MouseButtons)), d, SLOT(sliceClicked(Qt::MouseButtons)));
-        connect(s, SIGNAL(hoverEnter()), d, SLOT(sliceHoverEnter()));
-        connect(s, SIGNAL(hoverLeave()), d, SLOT(sliceHoverLeave()));
+        connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
+        connect(s, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
     }
 
-    emit added(slices);
+    emit d->added(slices);
 }
 
 /*!
@@ -215,11 +214,10 @@ void QPieSeries::insert(int index, QPieSlice* slice)
     d->updateDerivativeData();
 
     connect(slice, SIGNAL(changed()), d, SLOT(sliceChanged()));
-    connect(slice, SIGNAL(clicked(Qt::MouseButtons)), d, SLOT(sliceClicked(Qt::MouseButtons)));
-    connect(slice, SIGNAL(hoverEnter()), d, SLOT(sliceHoverEnter()));
-    connect(slice, SIGNAL(hoverLeave()), d, SLOT(sliceHoverLeave()));
+    connect(slice, SIGNAL(clicked()), d, SLOT(sliceClicked()));
+    connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
 
-    emit added(QList<QPieSlice*>() << slice);
+    emit d->added(QList<QPieSlice*>() << slice);
 }
 
 /*!
@@ -237,7 +235,7 @@ void QPieSeries::remove(QPieSlice* slice)
 
     d->updateDerivativeData();
 
-    emit removed(QList<QPieSlice*>() << slice);
+    emit d->removed(QList<QPieSlice*>() << slice);
 
     delete slice;
     slice = 0;
@@ -260,7 +258,7 @@ void QPieSeries::clear()
 
     d->updateDerivativeData();
 
-    emit removed(slices);
+    emit d->removed(slices);
 }
 
 /*!
@@ -294,14 +292,14 @@ void QPieSeries::setHorizontalPosition(qreal relativePosition)
 {
     Q_D(QPieSeries);
     if (d->setRealValue(d->m_pieRelativeHorPos, relativePosition, 1.0))
-        emit piePositionChanged();
+        emit d->piePositionChanged();
 }
 
 void QPieSeries::setVerticalPosition(qreal relativePosition)
 {
     Q_D(QPieSeries);
     if (d->setRealValue(d->m_pieRelativeVerPos, relativePosition, 1.0))
-        emit piePositionChanged();
+        emit d->piePositionChanged();
 }
 
 qreal QPieSeries::horizontalPosition() const
@@ -320,7 +318,7 @@ void QPieSeries::setPieSize(qreal relativeSize)
 {
     Q_D(QPieSeries);
     if (d->setRealValue(d->m_pieRelativeSize, relativeSize, 1.0))
-        emit pieSizeChanged();
+        emit d->pieSizeChanged();
 }
 
 qreal QPieSeries::pieSize() const
@@ -397,59 +395,21 @@ qreal QPieSeries::sum() const
 }
 
 /*!
-    \fn void QPieSeries::clicked(QPieSlice* slice, Qt::MouseButtons buttons)
+    \fn void QPieSeries::clicked(QPieSlice* slice)
 
-    This signal is emitted when a \a slice has been clicked with mouse \a buttons.
+    This signal is emitted when a \a slice has been clicked.
 
     \sa QPieSlice::clicked()
 */
 
 /*!
-    \fn void QPieSeries::hoverEnter(QPieSlice* slice)
+    \fn void QPieSeries::hovered(QPieSlice* slice, bool state)
 
-    This signal is emitted when user has hovered over a \a slice.
+    This signal is emitted when user has hovered over or away from the \a slice.
 
-    \sa QPieSlice::hoverEnter()
-*/
+    \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
 
-/*!
-    \fn void QPieSeries::hoverLeave(QPieSlice* slice)
-
-    This signal is emitted when user has hovered away from a \a slice.
-
-    \sa QPieSlice::hoverLeave()
-*/
-
-/*!
-    \fn void QPieSeries::added(QList<QPieSlice*> slices)
-
-    This signal is emitted when \a slices has been added to the series.
-
-    \sa append(), insert()
-*/
-
-/*!
-    \fn void QPieSeries::removed(QList<QPieSlice*> slices)
-
-    This signal is emitted when \a slices has been removed from the series.
-
-    \sa remove(), clear()
-*/
-
-/*!
-    \fn void QPieSeries::piePositionChanged()
-
-    This signal is emitted when pie position has changed.
-
-    \sa verticalPosition(), setVerticalPosition(), horizontalPosition(), setHorizontalPosition()
-*/
-
-/*!
-    \fn void QPieSeries::pieSizeChanged()
-
-    This signal is emitted when pie size has changed.
-
-    \sa pieSize(), setPieSize()
+    \sa QPieSlice::hovered()
 */
 
 /*!
@@ -582,34 +542,31 @@ void QPieSeriesPrivate::updateDerivativeData()
         PieSliceData::data(s).emitChangedSignal(s);
 }
 
+QPieSeriesPrivate* QPieSeriesPrivate::seriesData(QPieSeries &series)
+{
+    return series.d_func();
+}
+
 void QPieSeriesPrivate::sliceChanged()
 {
     Q_ASSERT(m_slices.contains(qobject_cast<QPieSlice *>(sender())));
     updateDerivativeData();
 }
 
-void QPieSeriesPrivate::sliceClicked(Qt::MouseButtons buttons)
+void QPieSeriesPrivate::sliceClicked()
 {
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
     Q_Q(QPieSeries);
-    emit q->clicked(slice, buttons);
+    emit q->clicked(slice);
 }
 
-void QPieSeriesPrivate::sliceHoverEnter()
+void QPieSeriesPrivate::sliceHovered(bool state)
 {
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
     Q_Q(QPieSeries);
-    emit q->hoverEnter(slice);
-}
-
-void QPieSeriesPrivate::sliceHoverLeave()
-{
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
-    Q_ASSERT(m_slices.contains(slice));
-    Q_Q(QPieSeries);
-    emit q->hoverLeave(slice);
+    emit q->hovered(slice, state);
 }
 
 void QPieSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)

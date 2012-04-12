@@ -35,8 +35,7 @@ public:
     QBrush originalBrush();
 
 public Q_SLOTS:
-    void handleHoverEnter();
-    void handleHoverLeave();
+    void showHighlight(bool show);
 
 private:
     QBrush m_originalBrush;
