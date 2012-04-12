@@ -6,11 +6,6 @@ TEMPLATE = lib
 QT = core gui
 
 win32-msvc*: LIBS += User32.lib
-
-CONFIG(debug, debug|release) {
-     mac: TARGET = $$join(TARGET,,,_debug)
-     win32: TARGET = $$join(TARGET,,d)
-}
  
 LIBS -= -l$$LIBRARY_NAME
  
