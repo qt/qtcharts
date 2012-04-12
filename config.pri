@@ -47,5 +47,5 @@ mac: {
 development_build: {
     DEFINES+=DEVELOPMENT_BUILD
     CONFIG+=local_build
-    CONFIG+=debug
+    CONFIG+=debug_and_release
 }
