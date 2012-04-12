@@ -29,6 +29,7 @@ ChartView::ChartView(QChart* chart,QWidget* parent):QChartView(chart,parent),
 m_index(-1),m_chart(chart)
 {
     m_chart->setTitle("Charts presenter");
+    m_chart->setBackgroundDropShadowEnabled(false);
     QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(handleTimeout()));
     m_timer.setInterval(3000);
 
@@ -78,11 +79,6 @@ m_index(-1),m_chart(chart)
     m_titles<< m_chart->title()+": AreaChart";
 //![3]
 
-//![4]
-    foreach (QAbstractSeries* series, m_series) {
-        QObject::connect(series,SIGNAL(clicked(QPointF)),this,SLOT(handlePointClicked(QPointF)));
-    }
-//![4]
     m_timer.start();
     handleTimeout();
 }
@@ -95,7 +91,7 @@ ChartView::~ChartView()
     qDeleteAll(m_series);
 }
 
-//![5]
+//![4]
 void ChartView::handleTimeout()
 {
     if(m_series.size()==0) return;
@@ -106,11 +102,4 @@ void ChartView::handleTimeout()
     m_chart->addSeries(m_series.at(m_index));
     m_chart->setTitle(m_titles.at(m_index));
 }
-//![5]
-
-//![6]
-void ChartView::handlePointClicked(const QPointF& point)
-{
-    m_chart->setTitle(m_titles.at(m_index) + QString(" x: %1 y: %2").arg(point.x()).arg(point.y()));
-}
-//![6]
+//![4]

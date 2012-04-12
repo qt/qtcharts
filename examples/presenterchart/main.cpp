@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
     chart->axisY()->setNiceNumbersEnabled(true);
     ChartView chartView(chart,&window);
     chartView.setRenderHint(QPainter::Antialiasing);
-    chart->setAnimationOptions(QChart::AllAnimations);
+    chart->setAnimationOptions(QChart::SeriesAnimations);
     window.setCentralWidget(&chartView);
     window.resize(400, 300);
     window.show();

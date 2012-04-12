@@ -36,7 +36,6 @@ public:
 
 public slots:
     void handleTimeout();
-    void handlePointClicked(const QPointF& point);
 
 private:
     QTimer m_timer;
