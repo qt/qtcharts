@@ -1,11 +1,5 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2012-03-08T14:30:24
-#
-#-------------------------------------------------
-
 !include( ../examples.pri ) {
- error( "Couldn't find the examples.pri file!" )
+    error( "Couldn't find the examples.pri file!" )
 }
 
 QT       += core gui
@@ -20,3 +14,5 @@ SOURCES += main.cpp\
 
 HEADERS  += tablewidget.h \
     customtablemodel.h
+
+mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_EXAMPLES_BIN_DIR"

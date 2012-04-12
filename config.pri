@@ -83,30 +83,18 @@ development_build: {
     LIBS += -l$$LIBRARY_NAME    
 
     mac: {
-        # This is a hack to make binaries to use the internal version of the QtCommercial Charts library on OSX
-        CHARTS_LIB_NAME = libQtCommercialChart.1.dylib
+        # This is a hack; we define variables for easier install_name_tool calls from project files of OSX executables/libraries
+        # install_name_tool is used to update the dependencies to chart library to match the local build folder
+        MAC_CHARTS_LIB_NAME = "lib"$$LIBRARY_NAME".1.dylib"
         CONFIG(debug, debug|release) {
-            CHARTS_LIB_NAME = libQtCommercialChartd.1.dylib
+            MAC_CHARTS_LIB_NAME = "lib"$$LIBRARY_NAME".1.dylib"
         }
-        BIN_TARGET_PATH = ""
-        exists ($$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET) {
-            BIN_TARGET_PATH = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
-        }
-        exists ($$CHART_BUILD_BIN_DIR"/test/"$$TARGET".app/Contents/MacOS/"$$TARGET) {
-            # Executable in test folder
-            BIN_TARGET_PATH = $$CHART_BUILD_BIN_DIR"/test/"$$TARGET".app/Contents/MacOS/"$$TARGET
-        }
-        exists ($$CHART_BUILD_BIN_DIR"/test/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET) {
-            # Executable in test folder with custom target "tst_NNN"
-            BIN_TARGET_PATH = $$CHART_BUILD_BIN_DIR"/test/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET
-        }
-        exists($$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib") {
-            # Plugin
-            BIN_TARGET_PATH = $$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib"
-        }
-        !isEmpty (BIN_TARGET_PATH) {
-            QMAKE_POST_LINK += install_name_tool -change $$CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$CHARTS_LIB_NAME $$BIN_TARGET_PATH
-        }
+        MAC_POST_LINK_PREFIX = install_name_tool -change $$MAC_CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$MAC_CHARTS_LIB_NAME
+        MAC_DEMOS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
+        MAC_EXAMPLES_BIN_DIR = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
+        MAC_TESTS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/test/"$$TARGET".app/Contents/MacOS/"$$TARGET
+        MAC_AUTOTESTS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/test/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET
+        MAC_PLUGINS_BIN_DIR = $$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib"
     }
 
 } else {

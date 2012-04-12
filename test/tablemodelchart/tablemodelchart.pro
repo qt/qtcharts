@@ -14,3 +14,5 @@ SOURCES += main.cpp\
 
 HEADERS  += tablewidget.h \
     customtablemodel.h
+
+mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_TESTS_BIN_DIR"

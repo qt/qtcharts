@@ -1,5 +1,6 @@
+CURRENTLY_BUILDING_COMPONENTS = "examples"
 !include( ../config.pri ) {
- error( "Couldn't find the config.pri file!" )
+    error( "Couldn't find the config.pri file!" )
 }
 
 TEMPLATE = subdirs
@@ -18,12 +19,4 @@ SUBDIRS += \
            stackedbarchart \
            stackedbarchartdrilldown \
            zoomlinechart \
-           modeldata
-          
-          
-          
-          
-          
-          
-          
-          
+           modeldata          

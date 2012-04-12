@@ -1,3 +1,4 @@
+CURRENTLY_BUILDING_COMPONENTS = "qmlplugin"
 TEMPLATE = lib
 TARGET = qtcommercialchartqml
 CONFIG += qt plugin
@@ -49,3 +50,4 @@ INSTALLS += target qmldir
 FILE = $$PWD/qmldir
 win32:{FILE = $$replace(FILE, "/","\\")}
 QMAKE_POST_LINK += $$QMAKE_COPY $$FILE $$CHART_BUILD_PLUGIN_DIR
+mac: QMAKE_POST_LINK += " & $$MAC_POST_LINK_PREFIX $$MAC_PLUGINS_BIN_DIR"

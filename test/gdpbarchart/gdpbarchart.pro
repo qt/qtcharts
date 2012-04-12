@@ -16,3 +16,5 @@ HEADERS  += widget.h
     # TODO: QMAKE_POST_LINK does not work on mac; how to copy the data file?
     QMAKE_POST_LINK += $$QMAKE_COPY $$FILE $$CHART_BUILD_BIN_DIR
 }
+
+mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_TESTS_BIN_DIR"

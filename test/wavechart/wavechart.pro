@@ -6,5 +6,4 @@ TARGET = wavechart
 SOURCES += main.cpp wavechart.cpp
 HEADERS += wavechart.h
 
-
-
+mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_TESTS_BIN_DIR"
