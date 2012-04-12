@@ -379,8 +379,24 @@ void QChart::setBackgroundVisible(bool visible)
 bool QChart::isBackgroundVisible() const
 {
     //TODO: refactor me
-    if (!d_ptr->m_presenter->m_backgroundItem) return false;
+    if (!d_ptr->m_presenter->m_backgroundItem)
+        return false;
+
     return d_ptr->m_presenter->m_backgroundItem->isVisible();
+}
+
+void QChart::setBackgroundDropShadowEnabled(bool enabled)
+{
+    d_ptr->m_presenter->createChartBackgroundItem();
+    d_ptr->m_presenter->m_backgroundItem->setDropShadowEnabled(enabled);
+}
+
+bool QChart::isBackgroundDropShadowEnabled() const
+{
+    if (!d_ptr->m_presenter->m_backgroundItem)
+        return false;
+
+    return d_ptr->m_presenter->m_backgroundItem->isDropShadowEnabled();
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -44,6 +44,7 @@ public:
         backgroundGradient.setColorAt(1.0, QRgb(0xffffff));
         backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);
         m_chartBackgroundGradient = backgroundGradient;
+        m_backgroundDropShadowEnabled = true;
 
         // Axes and other
         m_axisLinePen = QPen(0xd6d6d6);

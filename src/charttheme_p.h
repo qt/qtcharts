@@ -92,6 +92,7 @@ protected:
     QPen m_backgroundShadesPen;
     QBrush m_backgroundShadesBrush;
     BackgroundShadesMode m_backgroundShades;
+    bool m_backgroundDropShadowEnabled;
     QPen m_gridLinePen;
     bool m_force;
 };

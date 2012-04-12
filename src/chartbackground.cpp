@@ -23,17 +23,35 @@
 #include <QPen>
 #include <QBrush>
 #include <QPainter>
+#include <QGraphicsDropShadowEffect>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartBackground::ChartBackground(QGraphicsItem* parent):QGraphicsRectItem(parent),
-m_diameter(15)
+ChartBackground::ChartBackground(QGraphicsItem* parent) :
+    QGraphicsRectItem(parent),
+    m_diameter(15),
+    m_dropShadow(0)
 {
 }
 
 ChartBackground::~ChartBackground()
 {
 
+}
+
+void ChartBackground::setDropShadowEnabled(bool enabled)
+{
+    if (enabled) {
+        if (!m_dropShadow) {
+            m_dropShadow = new QGraphicsDropShadowEffect();
+            m_dropShadow->setBlurRadius(10);
+            m_dropShadow->setOffset(5, 5);
+            setGraphicsEffect(m_dropShadow);
+        }
+    } else {
+        delete m_dropShadow;
+        m_dropShadow = 0;
+    }
 }
 
 void ChartBackground::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

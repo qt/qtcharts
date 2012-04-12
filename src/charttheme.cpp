@@ -20,6 +20,7 @@
 
 #include "charttheme_p.h"
 #include "qchart.h"
+#include "qchart_p.h"
 #include "qchartview.h"
 #include "qlegend.h"
 #include "qchartaxis.h"
@@ -69,6 +70,7 @@ ChartTheme::ChartTheme(QChart::ChartTheme id) :
     m_backgroundShadesPen(Qt::NoPen),
     m_backgroundShadesBrush(Qt::NoBrush),
     m_backgroundShades(BackgroundShadesNone),
+    m_backgroundDropShadowEnabled(false),
     m_gridLinePen(QPen(QRgb(0x000000))),
     m_force(false)
 {
@@ -107,6 +109,7 @@ void ChartTheme::decorate(QChart *chart)
         chart->setBackgroundBrush(m_chartBackgroundGradient);
     chart->setTitleFont(m_masterFont);
     chart->setTitleBrush(m_titleBrush);
+    chart->setBackgroundDropShadowEnabled(m_backgroundDropShadowEnabled);
 }
 
 void ChartTheme::decorate(QLegend *legend)
@@ -117,7 +120,6 @@ void ChartTheme::decorate(QLegend *legend)
     if (pen == legend->pen() ||  m_force){
         legend->setPen(Qt::NoPen);
     }
-
 
     if (brush == legend->brush() ||  m_force) {
         legend->setBrush(m_chartBackgroundGradient);
