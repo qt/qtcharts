@@ -25,7 +25,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QAxis
-    \brief The QChartAxis class is used for manipulating chart's axis
+    \brief The QAxis class is used for manipulating chart's axis
     and for adding optional axes to the chart.
     \mainclass
 
@@ -160,7 +160,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     Constructs new axis object which is a child of \a parent. Ownership is taken by
-    QChatView or QChart when axis added.
+    QChart when axis added.
 */
 
 QAxis::QAxis(QObject *parent) : QObject(parent),

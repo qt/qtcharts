@@ -41,7 +41,7 @@
 
     QChartView is a standalone widget that can display charts. It does not require separate
     QGraphicsScene to work. It manages the graphical representation of different types of
-    QChartSeries and other chart related objects like QChartAxis and QChartLegend. If you want to
+    series and other chart related objects like QAxis and QLegend. If you want to
     display a chart in your existing QGraphicsScene, you can use the QChart class instead.
 
     \sa QChart
@@ -70,7 +70,7 @@ QChartView::QChartView(QChart *chart,QWidget *parent) :
 
 
 /*!
-    Destroys the object and it's children, like QChartSeries and QChartAxis object added to it.
+    Destroys the object and it's children, like series and axis objects added to it.
 */
 QChartView::~QChartView()
 {

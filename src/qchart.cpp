@@ -59,8 +59,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  \brief QtCommercial chart API.
 
  QChart is a QGraphicsWidget that you can show in a QGraphicsScene. It manages the graphical
- representation of different types of QChartSeries and other chart related objects like
- QChartAxis and QChartLegend. If you simply want to show a chart in a layout, you can use the
+ representation of different types of series and other chart related objects like
+ QAxis and QLegend. If you simply want to show a chart in a layout, you can use the
  convenience class QChartView instead of QChart.
  \sa QChartView
  */
@@ -79,7 +79,7 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
 }
 
 /*!
- Destroys the object and it's children, like QChartSeries and QChartAxis object added to it.
+ Destroys the object and it's children, like series and axis objects added to it.
  */
 QChart::~QChart()
 {
