@@ -34,7 +34,7 @@
     The scatter data is displayed as a collection of points on the chart. Each point determines the position on the horizontal axis
     and the vertical axis.
 
-    \image scatterchart.png
+    \image examples_scatterchart.png
 
     Creating basic scatter chart is simple:
     \code
@@ -42,7 +42,7 @@
     series->append(0, 6);
     series->append(2, 4);
     ...
-    chartView->addSeries(series);
+    chart->addSeries(series);
     \endcode
 */
 

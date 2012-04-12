@@ -36,15 +36,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 	A line chart is used to show information as a series of data points
 	connected by straight lines.
 
-	\image linechart.png
+    \image examples_linechart.png
 
 	Creating basic line chart is simple:
 	\code
-	QLineSeries* series = new QLineSeries();
+    QLineSeries* series = new QLineSeries();
     series->append(0, 6);
     series->append(2, 4);
-	...
-	chartView->addSeries(series);
+    ...
+    chart->addSeries(series);
     \endcode
 */
 

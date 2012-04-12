@@ -46,18 +46,19 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
- \class QLegend
- \brief part of QtCommercial chart API.
+    \class QLegend
+    \brief part of QtCommercial chart API.
+    \mainclass
 
- QLegend is a graphical object, whics displays legend of the chart. Legend state is updated by QChart, when
- series have been changed. By default, legend is drawn by QChart, but user can set a new parent to legend and
- handle the drawing manually.
- User isn't supposed to create or delete legend objects, but can reference it via QChart class.
+    QLegend is a graphical object, whics displays legend of the chart. Legend state is updated by QChart, when
+    series have been changed. By default, legend is drawn by QChart, but user can set a new parent to legend and
+    handle the drawing manually.
+    User isn't supposed to create or delete legend objects, but can reference it via QChart class.
 
- \mainclass
+    \image examples_percentbarchart_legend.png
 
- \sa QChart, QAbstractSeries
- */
+    \sa QChart
+*/
 
 /*!
  \enum QLegend::Alignment

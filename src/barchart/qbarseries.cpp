@@ -37,12 +37,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \class QBarSeries
     \brief part of QtCommercial chart API.
+    \mainclass
 
     QBarSeries represents a series of data shown as bars. One QBarSeries can contain multiple
     QBarSet data sets. QBarSeries groups the data from sets to categories, which are defined
     by QStringList.
 
-    \mainclass
+    See the \l {BarChart Example} {bar chart example} to learn how to create a simple bar chart.
+    \image examples_barchart.png
 
     \sa QBarSet, QStackedBarSeries, QPercentBarSeries
 */

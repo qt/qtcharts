@@ -42,17 +42,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 	In that case QAreaSeries should be initiated with two QLineSerie instances. Please note terms "upper" and "lower" boundary can be misleading in cases
 	where "lower" boundary had bigger values than the "upper" one, however the main point that area between these two boundary lines will be filled.
 
-	\image areachart.png
-
-	Creating basic area chart is simple:
-	\code
-	QLineSeries* lineSeries = new QLineSeries();
-    series->append(0, 6);
-    series->append(2, 4);
-	QAreaSeries* areaSeries = new QAreaSeries(lineSeries);
-	...
-	chartView->addSeries(areaSeries);
-    \endcode
+    See the \l {AreaChart Example} {area chart example} to learn how to create a simple area chart.
+    \image examples_areachart.png
 */
 
 /*!

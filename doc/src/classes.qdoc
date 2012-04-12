@@ -49,7 +49,7 @@
             <li><a href="qpieseries.html">QPieSeries</a></li>
             <li><a href="qpieslice.html">QPieSlice</a></li>
             <li><a href="qscatterseries.html">QScatterSeries</a></li>
-            <li><a href="qseries.html">QSeries</a></li>
+            <li><a href="qabstractseries.html">QAbstractSeries</a></li>
             <li><a href="qsplineseries.html">QSplineSeries</a></li>
             <li><a href="qstackedbarseries.html">QStackedBarSeries</a></li>
             <li><a href="qxyseries.html">QXYSeries</a></li>

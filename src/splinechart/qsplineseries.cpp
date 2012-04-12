@@ -31,6 +31,17 @@
 
     QSplineSeries stores the data points along with the segment control points needed by QPainterPath to draw spline
     Control points are automatically calculated when data changes. The algorithm computes the points so that the normal spline can be drawn.
+
+    \image examples_splinechart.png
+
+    Creating basic spline chart is simple:
+    \code
+    QSplineSeries* series = new QSplineSeries();
+    series->append(0, 6);
+    series->append(2, 4);
+    ...
+    chart->addSeries(series);
+    \endcode
 */
 
 /*!

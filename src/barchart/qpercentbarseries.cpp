@@ -31,12 +31,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \class QPercentBarSeries
     \brief part of QtCommercial chart API.
+    \mainclass
 
     QPercentBarSeries represents a series of data shown as bars. Each bar of QBarSet is shown as percentage
     of all bars in category. One QPercentBarSeries can contain multiple QBarSet data sets.
     QBarSeries groups the data from sets to categories, which are defined by QStringList.
 
-    \mainclass
+    See the \l {PercentbarChart Example} {percent bar chart example} to learn how to create a percent bar chart.
+    \image examples_percentbarchart.png
 
     \sa QBarSet, QStackedBarSeries, QBarSeries
 */

@@ -31,12 +31,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \class QStackedBarSeries
     \brief part of QtCommercial chart API.
+    \mainclass
 
     QStackedBarSeries represents a series of data shown as bars. All bars in same category are
     stacked on top of each other. One QStackedBarSeries can contain multiple QBarSet data sets.
     QStackedBarSeries groups the data from sets to categories, which are defined by QStringList.
 
-    \mainclass
+    See the \l {StackedbarChart Example} {stacked bar chart example} to learn how to create a stacked bar chart.
+    \image examples_stackedbarchart.png
 
     \sa QBarSet, QPercentBarSeries, QBarSeries
 */
