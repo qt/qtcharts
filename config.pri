@@ -74,11 +74,12 @@ development_build: {
     }
 
     CONFIG(debug, debug|release) {
-      mac: LIBRARY_NAME = $$join(LIBRARY_NAME,,,_debug)
-      win32: LIBRARY_NAME = $$join(LIBRARY_NAME,,,d)
+      mac: LIBRARY = $$join(LIBRARY_NAME,,,_debug)
+      win32: LIBRARY = $$join(LIBRARY_NAME,,,d)
+      linux: LIBRARY = $$LIBRARY_NAME
     } 
        
-    LIBS += -l$$LIBRARY_NAME
+    LIBS += -l$$LIBRARY
     
 
     mac: {
