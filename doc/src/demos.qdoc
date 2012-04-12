@@ -16,9 +16,11 @@
             <li><a href="demos-chartthemes.html">Chart themes</a></li>
             <li><a href="demos-piechartcustomization.html">Pie chart customization</a></li>
             <li><a href="demos-dynamicspline.html">Dynamic spline chart</a></li>
+            <li><a href="demos-qmlchart.html">Qml chart</a></li>
         </ul>
         </td>
         </tr>
         </table>
     \endraw
 */
+
