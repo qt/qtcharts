@@ -93,8 +93,8 @@ d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,this))
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     setEnabled(false); // By default legend is disabled
     setVisible(false);
-    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesAdded(QAbstractSeries *, Domain *)),d_ptr.data(),SLOT(handleSeriesAdded(QAbstractSeries *,Domain*)));
-    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries *)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries *)));
+    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesAdded(QAbstractSeries*,Domain*)),d_ptr.data(),SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
+    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries*)));
 }
 
 /*!

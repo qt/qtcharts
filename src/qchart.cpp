@@ -424,9 +424,8 @@ QChartPrivate::~QChartPrivate()
 
 void QChartPrivate::createConnections()
 {
-
-    QObject::connect(m_dataset,SIGNAL(seriesAdded(QAbstractSeries *, Domain *)),m_presenter,SLOT(handleSeriesAdded(QAbstractSeries *, Domain *)));
-    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QAbstractSeries *)),m_presenter,SLOT(handleSeriesRemoved(QAbstractSeries *)));
+    QObject::connect(m_dataset,SIGNAL(seriesAdded(QAbstractSeries*,Domain*)),m_presenter,SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
+    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),m_presenter,SLOT(handleSeriesRemoved(QAbstractSeries*)));
     QObject::connect(m_dataset,SIGNAL(axisAdded(QAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QAxis*,Domain*)));
     QObject::connect(m_dataset,SIGNAL(axisRemoved(QAxis*)),m_presenter,SLOT(handleAxisRemoved(QAxis*)));
 }
