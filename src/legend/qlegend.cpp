@@ -96,9 +96,11 @@ d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,this))
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries *)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries *)));
 }
 
+/*!
+    Destroys the legend object. Legend is always owned by a QChart, so an application should never call this.
+*/
 QLegend::~QLegend()
 {
-
 }
 
 /*!
@@ -209,11 +211,17 @@ bool QLegend::isAttachedToChart()
     return d_ptr->m_attachedToChart;
 }
 
+/*!
+    Sets the legend's scrolling offset to value defined by \a point.
+*/
 void QLegend::setOffset(const QPointF& point)
 {
     d_ptr->setOffset(point.x(),point.y());
 }
 
+/*!
+    Returns the legend's scrolling offset.
+*/
 QPointF QLegend::offset() const
 {
     return QPointF(d_ptr->m_offsetX,d_ptr->m_offsetY);

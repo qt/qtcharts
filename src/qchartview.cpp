@@ -50,7 +50,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    Constructs a chartView object which is a child of a\a parent.
+    Constructs a chartView object with parent \a parent to display a \a chart.
 */
 QChartView::QChartView(QChart *chart,QWidget *parent) :
     QGraphicsView(parent),

@@ -385,12 +385,18 @@ bool QChart::isBackgroundVisible() const
     return d_ptr->m_presenter->m_backgroundItem->isVisible();
 }
 
+/*!
+    Sets the background drop shadow effect state to \a enabled.
+*/
 void QChart::setBackgroundDropShadowEnabled(bool enabled)
 {
     d_ptr->m_presenter->createChartBackgroundItem();
     d_ptr->m_presenter->m_backgroundItem->setDropShadowEnabled(enabled);
 }
 
+/*!
+    Returns true if the drop shadow effect is enabled for the chart background.
+*/
 bool QChart::isBackgroundDropShadowEnabled() const
 {
     if (!d_ptr->m_presenter->m_backgroundItem)

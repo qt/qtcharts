@@ -78,12 +78,10 @@ QPointF QSplineSeries::controlPoint(int index) const
 }
 
 /*!
-     \fn bool QSplineSeries::setModelMappingRange(int first, int count)
-     Allows limiting the model mapping.
-     Parameter \a first specifies which element of the model should be used as a first one of the series.
-     Parameter \a count specifies how many elements should be mapped. If count is not specified (defaults to -1)
-     then all the items following \a first item in a model are used.
-     \sa setModel(), setModelMapping()
+     Sets the \a modelX to be used as a data source for x coordinate and \a modelY to be used
+     as a data source for y coordinate. The \a orientation parameter specifies whether the data
+     is in columns or in rows.
+     \sa setModel()
  */
 void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
 {
