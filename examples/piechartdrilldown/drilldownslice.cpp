@@ -56,7 +56,6 @@ void DrilldownSlice::updateLabel()
 
 void DrilldownSlice::showHighlight(bool show)
 {
-    setExploded(show);
     setLabelVisible(show);
 }
 
