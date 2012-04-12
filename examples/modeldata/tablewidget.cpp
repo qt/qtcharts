@@ -25,6 +25,7 @@
 #include <QChart>
 #include <QChartView>
 #include <QLineSeries>
+#include <QHeaderView>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -41,11 +42,9 @@ TableWidget::TableWidget(QWidget *parent)
     // create table view and add model to it
     QTableView *tableView = new QTableView;
     tableView->setModel(model);
+    tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
     //! [2]
-    tableView->setColumnWidth(0, 56);
-    tableView->setColumnWidth(1, 56);
-    tableView->setColumnWidth(2, 56);
-    tableView->setColumnWidth(3, 56);
 
     //! [3]
     QChart *chart = new QChart;

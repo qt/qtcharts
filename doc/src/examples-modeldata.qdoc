@@ -5,7 +5,7 @@
 
      This example shows how to use QAbstractItemModel derived model as the data for the series.
 
-     \image modeldata.png
+     \image examples_modeldata.png
 
      Let's start by creating an instance of CustomTableModel class.
      CustomTableModel class is derived from QAbstractTableModel and it was created for the purpose of this example.
@@ -14,7 +14,7 @@
      \snippet ../examples/modeldata/tablewidget.cpp 1
 
      We now have a model with data that we would like to display both on the chart and in a QTableView.
-     First, we create QTableView and tell it use the model as a data source.
+     First, we create QTableView and tell it use the model as a data source. To make the data cells fill the table view we also change headers resize mode.
 
      \snippet ../examples/modeldata/tablewidget.cpp 2
 
