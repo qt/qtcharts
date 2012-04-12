@@ -68,8 +68,7 @@ public:
     bool labelsVisible() const;
 
 Q_SIGNALS:
-    void clicked(QString category, Qt::MouseButtons button);
-    void selected();
+    void clicked(QString category);
     void hovered(bool status);
 
 private:

@@ -40,7 +40,7 @@ void DrilldownChart::changeSeries(QAbstractSeries *series)
     axisY()->setNiceNumbersEnabled(true);
 }
 
-void DrilldownChart::handleClicked(QBarSet *barset, QString category, Qt::MouseButtons button)
+void DrilldownChart::handleClicked(QBarSet *barset, QString category)
 {
     Q_UNUSED(barset)
     Q_UNUSED(button)

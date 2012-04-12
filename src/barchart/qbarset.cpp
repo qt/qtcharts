@@ -38,15 +38,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::clicked(QString category, Qt::MouseButtons button)
+    \fn void QBarSet::clicked(QString category)
     \brief signals that set has been clicked
     Parameter \a category describes on which category was clicked
-    Parameter \a button mouse button
-*/
-
-/*!
-    \fn void QBarSet::selected()
-    \brief signals that set has been selected
 */
 
 /*!
@@ -96,7 +90,7 @@ QString QBarSet::name() const
 void QBarSet::append(const qreal value)
 {
     d_ptr->m_values.append(value);
-    emit d_ptr->structureChanged();
+    emit d_ptr->restructuredBars();
 }
 
 /*!
@@ -116,6 +110,7 @@ QBarSet& QBarSet::operator << (const qreal &value)
 void QBarSet::insert(const int index, const qreal value)
 {
     d_ptr->m_values.insert(index, value);
+    emit d_ptr->updatedBars();
 }
 
 /*!
@@ -125,6 +120,7 @@ void QBarSet::insert(const int index, const qreal value)
 void QBarSet::remove(const int index)
 {
     d_ptr->m_values.removeAt(index);
+    emit d_ptr->updatedBars();
 }
 
 /*!
@@ -133,7 +129,7 @@ void QBarSet::remove(const int index)
 void QBarSet::replace(const int index, const qreal value)
 {
     d_ptr->m_values.replace(index,value);
-    emit d_ptr->valueChanged();
+    emit d_ptr->updatedBars();
 }
 
 /*!
@@ -179,7 +175,7 @@ void QBarSet::setPen(const QPen &pen)
 {
       if(d_ptr->m_pen!=pen){
           d_ptr->m_pen = pen;
-          emit d_ptr->valueChanged();
+          emit d_ptr->updatedBars();
       }
 }
 
@@ -198,7 +194,7 @@ void QBarSet::setBrush(const QBrush &brush)
 {
     if(d_ptr->m_brush!=brush){
       d_ptr->m_brush = brush;
-      emit d_ptr->valueChanged();
+      emit d_ptr->updatedBars();
     }
 }
 
@@ -217,7 +213,7 @@ void QBarSet::setLabelPen(const QPen &pen)
 {
     if(d_ptr->m_labelPen!=pen){
         d_ptr->m_labelPen = pen;
-        emit d_ptr->valueChanged();
+        emit d_ptr->updatedBars();
     }
 }
 
@@ -236,7 +232,7 @@ void QBarSet::setLabelBrush(const QBrush &brush)
 {
     if(d_ptr->m_labelBrush!=brush){
         d_ptr->m_labelBrush = brush;
-        emit d_ptr->valueChanged();
+        emit d_ptr->updatedBars();
     }
 }
 
@@ -255,7 +251,7 @@ void QBarSet::setLabelFont(const QFont &font)
 {
     if(d_ptr->m_labelFont!=font) {
         d_ptr->m_labelFont = font;
-        emit d_ptr->valueChanged();
+        emit d_ptr->updatedBars();
     }
 
 }

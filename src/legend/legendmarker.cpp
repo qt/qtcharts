@@ -139,7 +139,7 @@ BarLegendMarker::BarLegendMarker(QBarSeries *barseries,QBarSet *barset, QLegend 
 m_barset(barset)
 {
     QObject::connect(this, SIGNAL(selected()),barseries, SIGNAL(selected()));
-    QObject::connect(barset->d_ptr.data(), SIGNAL(valueChanged()), this, SLOT(updated()));
+    QObject::connect(barset->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(updated()));
     updated();
 }
 

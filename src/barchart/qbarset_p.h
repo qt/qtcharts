@@ -15,9 +15,9 @@ public:
     ~QBarSetPrivate();
 
 Q_SIGNALS:
-    void clicked(QString category, Qt::MouseButtons button);
-    void structureChanged();
-    void valueChanged();
+    void clicked(QString category);
+    void restructuredBars();
+    void updatedBars();
     void labelsVisibleChanged(bool visible);
 
 public:

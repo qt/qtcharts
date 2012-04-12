@@ -41,8 +41,8 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 Q_SIGNALS:
-    void clicked(QString category, Qt::MouseButtons button);
-    void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);
+    void clicked(QString category);
+    void clicked(QBarSet *barset, QString category);
     void hovered(bool status);
     void hovered(QBarSet *barset, bool status);
 

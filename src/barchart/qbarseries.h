@@ -62,8 +62,7 @@ protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);
 
 Q_SIGNALS:
-    void clicked(QBarSet *barset, QString category, Qt::MouseButtons button);
-    void selected();
+    void clicked(QBarSet *barset, QString category);
     void hovered(QBarSet* barset, bool status);
 
 protected:

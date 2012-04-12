@@ -36,7 +36,7 @@ public:
     void changeSeries(QAbstractSeries *series);
 
 public Q_SLOTS:
-    void handleClicked(QBarSet *barset, QString category, Qt::MouseButtons button);
+    void handleClicked(QBarSet *barset, QString category);
 
 private:
     QAbstractSeries* m_currentSeries;

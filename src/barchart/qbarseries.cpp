@@ -49,17 +49,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::clicked(QBarSet *barset, QString category, Qt::MouseButtons button)
+    \fn void QBarSeries::clicked(QBarSet *barset, QString category)
 
-    The signal is emitted if the user clicks with a mouse \a button on top of QBarSet \a barset of category \a category
+    The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset of category \a category
     contained by the series.
-*/
-
-/*!
-    \fn void QBarSeries::selected()
-
-    The signal is emitted if the user selects/deselects the series. The logic for storing selections should be
-    implemented by the user of QBarSeries API.
 */
 
 /*!
@@ -105,58 +98,52 @@ QAbstractSeries::QSeriesType QBarSeries::type() const
 
 /*!
     Adds a set of bars to series. Takes ownership of \a set.
-    Connects the clicked(QString, Qt::MouseButtons) signal
-    of \a set to this series
 */
 void QBarSeries::appendBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
     d->m_barSets.append(set);
-    QObject::connect(set->d_ptr.data(), SIGNAL(valueChanged()), d, SLOT(barsetChanged()));
+    QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
     emit d->restructuredBars();
 }
 
 /*!
     Removes a set of bars from series. Releases ownership of \a set. Doesn't delete \a set.
-    Disconnects the clicked(QString, Qt::MouseButtons) signal
-    of \a set from this series
 */
 void QBarSeries::removeBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
     if (d->m_barSets.contains(set)) {
         d->m_barSets.removeOne(set);
+        QObject::disconnect(set, SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
         emit d->restructuredBars();
     }
 }
 
 /*!
     Adds a list of barsets to series. Takes ownership of \a sets.
-    Connects the clicked(QString, Qt::MouseButtons) signals
-    of \a sets to this series
 */
 void QBarSeries::appendBarSets(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
-    foreach (QBarSet* barset, sets) {
-        d->m_barSets.append(barset);
-        QObject::connect(barset, SIGNAL(valueChanged()), this, SLOT(barsetChanged()));
+    foreach (QBarSet* set, sets) {
+        d->m_barSets.append(set);
+        QObject::connect(set, SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
     }
     emit d->restructuredBars();
 }
 
 /*!
     Removes a list of barsets from series. Releases ownership of \a sets. Doesn't delete \a sets.
-    Disconnects the clicked(QString, Qt::MouseButtons) signal
-    of \a sets from this series
 */
 void QBarSeries::removeBarSets(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
 
-    foreach (QBarSet* barset, sets) {
-        if (d->m_barSets.contains(barset)) {
-            d->m_barSets.removeOne(barset);
+    foreach (QBarSet* set, sets) {
+        if (d->m_barSets.contains(set)) {
+            d->m_barSets.removeOne(set);
+            QObject::disconnect(set, SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
         }
     }
     emit d->restructuredBars();
