@@ -136,16 +136,6 @@ QAbstractSeries::QSeriesType QPieSeries::type() const
 }
 
 /*!
-    Sets an array of \a slices to the series replacing the existing slices.
-    Slice ownership is passed to the series.
-*/
-void QPieSeries::replace(QList<QPieSlice*> slices)
-{
-    clear();
-    append(slices);
-}
-
-/*!
     Appends an array of \a slices to the series.
     Slice ownership is passed to the series.
 */

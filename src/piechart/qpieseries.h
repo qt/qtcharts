@@ -47,7 +47,6 @@ public:
     QPieSeries& operator << (QPieSlice* slice);
     QPieSlice* append(qreal value, QString name);
     void insert(int index, QPieSlice* slice);
-    void replace(QList<QPieSlice*> slices);
     void remove(QPieSlice* slice);
     void clear();
 

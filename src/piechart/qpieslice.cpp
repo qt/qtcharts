@@ -55,7 +55,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs an empty slice with a \a parent.
 
-    \sa QPieSeries::append(), QPieSeries::insert(), QPieSeries::replace()
+    \sa QPieSeries::append(), QPieSeries::insert()
 */
 QPieSlice::QPieSlice(QObject *parent)
     :QObject(parent),
@@ -66,7 +66,7 @@ QPieSlice::QPieSlice(QObject *parent)
 
 /*!
     Constructs an empty slice with given \a value, \a label and a \a parent.
-    \sa QPieSeries::append(), QPieSeries::insert(), QPieSeries::replace()
+    \sa QPieSeries::append(), QPieSeries::insert()
 */
 QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
     :QObject(parent),
