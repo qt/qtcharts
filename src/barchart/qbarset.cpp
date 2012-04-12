@@ -291,13 +291,12 @@ QBarSetPrivate::QBarSetPrivate(const QString name, QBarSet *parent) : QObject(pa
     m_name(name),
     m_labelsVisible(false)
 {
-
 }
 
 QBarSetPrivate::~QBarSetPrivate()
 {
-
 }
+
 #include "moc_qbarset.cpp"
 #include "moc_qbarset_p.cpp"
 
