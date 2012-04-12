@@ -5,6 +5,8 @@
 TEMPLATE = subdirs
 SUBDIRS = src qmlplugin examples demos test
 
+development_build: message('Development build')
+
 local_build:{
     message('Configured for local build against local libs...')
     message('You can run "make" to build qchart library, examples and demos...')

@@ -27,10 +27,10 @@
 // There is a problem with jom.exe currently. It does not seem to understand QMAKE_EXTRA_TARGETS properly.
 // This is the case at least with shadow builds.
 // http://qt-project.org/wiki/jom
-#undef DEVELOPER_BUILD
+#undef DEVELOPMENT_BUILD
 #endif
 
-#ifndef DEVELOPER_BUILD
+#ifndef DEVELOPMENT_BUILD
 const char *buildTime =  __TIME__" "__DATE__;
 const char *gitHead = "unknown";
 #else

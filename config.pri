@@ -10,9 +10,9 @@
     temp = $$first(temp)
     path = "$${path}$${temp}"
     SHADOW=$$path   
-    CONFIG-=developer_build 
 }else{
     SHADOW=$$PWD
+    CONFIG-=development_build 
 }
 
 CHART_BUILD_PUBLIC_HEADER_DIR = $$SHADOW/include
@@ -44,4 +44,7 @@ mac: {
     QMAKE_LFLAGS *= -mmacosx-version-min=10.5
 }
 
-developer_build: DEFINES+=DEVELOPER_BUILD
+development_build: {
+    DEFINES+=DEVELOPMENT_BUILD
+    CONFIG+=local_build
+}

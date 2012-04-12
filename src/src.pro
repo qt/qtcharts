@@ -126,7 +126,7 @@ QMAKE_EXTRA_COMPILERS += install_build_public_headers \
 # This is the case at least with shadow builds.
 # http://qt-project.org/wiki/jom
 
-developer_build:!win32-msvc*:{
+development_build:!win32-msvc*:{
     chartversion.target = $$PWD/qchartversion_p.h
 
     unix:{

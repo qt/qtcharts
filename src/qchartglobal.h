@@ -42,7 +42,7 @@
 # define QTCOMMERCIALCHART_USE_NAMESPACE
 #endif
 
-#if defined(DEVELOPER_BUILD) && !defined(QT_NO_DEBUG)
+#if defined(DEVELOPMENT_BUILD) && !defined(QT_NO_DEBUG)
 #define CHART_DEBUG chartDebug(3,__LINE__,__FILE__,__FUNCTION__)
 
 
