@@ -106,10 +106,10 @@ void XYChartItem::setLayout(QVector<QPointF> &points)
 
 void XYChartItem::handlePointAdded(int index)
 {
-    QVector<QPointF> points = m_points;
-    QPointF point;
     Q_ASSERT(index<m_series->count());
     Q_ASSERT(index>=0);
+    QVector<QPointF> points = m_points;
+    QPointF point;
     point = calculateGeometryPoint(index);
     points.insert(index, point);
     updateLayout(m_points, points, index);
@@ -117,9 +117,9 @@ void XYChartItem::handlePointAdded(int index)
 }
 void XYChartItem::handlePointRemoved(int index)
 {
-    QVector<QPointF> points = m_points;
     Q_ASSERT(index<m_series->count() + 1);
     Q_ASSERT(index>=0);
+    QVector<QPointF> points = m_points;
     points.remove(index);
     updateLayout(m_points, points, index);
     update();

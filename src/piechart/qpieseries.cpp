@@ -450,15 +450,8 @@ void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::O
     d->m_mapOrientation = orientation;
 
     // connect the signals
-    if (d->m_mapOrientation == Qt::Vertical) {
-        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
-        connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    } else {
-        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
-        connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    }
+    connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+
 
     // create the initial slices set
     if (d->m_mapOrientation == Qt::Vertical) {
@@ -483,7 +476,7 @@ QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent) :
     m_sum(0),
     m_mapValues(0),
     m_mapLabels(0),
-    m_mapOrientation(Qt::Horizontal)
+    m_mapOrientation(Qt::Vertical)
 {
 
 }
@@ -593,36 +586,6 @@ void QPieSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRigh
         else if (topLeft.row() == m_mapLabels)
             m_slices.at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
     }
-}
-
-void QPieSeriesPrivate::modelDataAdded(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent)
-    Q_UNUSED(end)
-    Q_Q(QPieSeries);
-
-    QPieSlice* newSlice = new QPieSlice;
-    newSlice->setLabelVisible(true);
-    if (m_mapOrientation == Qt::Vertical)
-    {
-        newSlice->setValue(m_model->data(m_model->index(start, m_mapValues), Qt::DisplayRole).toDouble());
-        newSlice->setLabel(m_model->data(m_model->index(start, m_mapLabels), Qt::DisplayRole).toString());
-    }
-    else
-    {
-        newSlice->setValue(m_model->data(m_model->index(m_mapValues, start), Qt::DisplayRole).toDouble());
-        newSlice->setLabel(m_model->data(m_model->index(m_mapLabels, start), Qt::DisplayRole).toString());
-    }
-
-    q->insert(start, newSlice);
-}
-
-void QPieSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent)
-    Q_UNUSED(end)
-    Q_Q(QPieSeries);
-    q->remove(m_slices.at(start));
 }
 
 bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qreal min)
