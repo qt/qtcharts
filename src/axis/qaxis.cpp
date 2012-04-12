@@ -24,7 +24,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    \class QChartAxis
+    \class QAxis
     \brief The QChartAxis class is used for manipulating chart's axis
     and for adding optional axes to the chart.
     \mainclass
