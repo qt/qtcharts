@@ -7,4 +7,4 @@ SOURCES += main.cpp
 
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 
-mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_DEMOS_BIN_DIR"
+!system:mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_DEMOS_BIN_DIR"

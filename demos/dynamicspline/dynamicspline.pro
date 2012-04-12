@@ -3,4 +3,4 @@ TARGET = dynamicspline
 HEADERS += chart.h
 SOURCES += main.cpp chart.cpp
 
-mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_DEMOS_BIN_DIR"
+!system:mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_DEMOS_BIN_DIR"
