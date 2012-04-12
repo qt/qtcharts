@@ -4,10 +4,7 @@ CONFIG += qt plugin
 QT += declarative
 
 !include( ../config.pri ) {
-    error( "Couldn't find the common.pri file!" )
-}
-!include( ../build.pri ) {
-    error( "Couldn't find the build.pri file !")
+    error( "Couldn't find the config.pri file!" )
 }
 
 DESTDIR = $$CHART_BUILD_PLUGIN_DIR
@@ -47,5 +44,17 @@ TARGETPATH = QtCommercial/Chart
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
 qmldir.files += $$PWD/qmldir
 qmldir.path +=  $$[QT_INSTALL_IMPORTS]/$$TARGETPATH
-
 INSTALLS += target qmldir
+
+!mac {
+    FILE = $$PWD/qmldir
+    win32:{FILE = $$replace(FILE, "/","\\")}
+    QMAKE_POST_LINK += $$QMAKE_COPY $$FILE $$CHART_BUILD_PLUGIN_DIR
+}else{
+     # Hack to make qml plugins available as internal build versions
+    exists($$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib") {
+    QMAKE_POST_LINK += " & $$QMAKE_COPY qmldir $$CHART_BUILD_PLUGIN_DIR"
+    }
+}
+
+

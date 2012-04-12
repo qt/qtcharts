@@ -1,12 +1,19 @@
 !include( ../config.pri ):error( Couldn't find the config.pri file! )
-TARGET = QtCommercialChart
+
+TARGET = $$LIBRARY_NAME
 DESTDIR = $$CHART_BUILD_LIB_DIR
 TEMPLATE = lib
-QT += core \
-    gui
+QT = core gui
+
 win32-msvc*: LIBS += User32.lib
-CONFIG += debug_and_release
-CONFIG(debug, debug|release):TARGET = QtCommercialChartd
+
+CONFIG(debug, debug|release) {
+     mac: TARGET = $$join(TARGET,,,_debug)
+     win32: TARGET = $$join(TARGET,,d)
+}
+ 
+LIBS -= -l$$LIBRARY_NAME
+ 
 SOURCES += \
     $$PWD/chartdataset.cpp \
     $$PWD/chartpresenter.cpp \

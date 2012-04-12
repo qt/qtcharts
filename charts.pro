@@ -7,15 +7,14 @@ SUBDIRS = src qmlplugin examples demos test
 
 development_build: message('Development build')
 
-local_build:{
+!system_build:{
     message('Configured for local build against local libs...')
-    message('You can run "make" to build qchart library, examples and demos...')
+    message('You can run "make" to build qchart library, examples, demos and plugin...')
+    message('You can run "make install" to install qchart in qt sdk...')
 } else {
     message('Running build aginst system libs...')
     message('Building only charts library...')
-    message('You can run "make install" to build and install charts.')
     message('Afterwards you can run "cd examples; qmake ; make " to build examples.')
-    message('Run qmake CONFIG+=local_build' to build everything at once.)
     SUBDIRS = src
 }
 

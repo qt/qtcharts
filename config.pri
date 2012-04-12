@@ -1,5 +1,8 @@
 
-#check if shadow build
+LIBRARY_NAME = QtCommercialChart
+
+##################### SHADOW CONFIG #################################################
+
 !contains($${PWD}, $${OUT_PWD}){
     search = "$$PWD:::"
     temp = $$split(search,"/")    
@@ -15,24 +18,24 @@
     CONFIG-=development_build 
 }
 
+##################### BUILD PATHS ##################################################
+
 CHART_BUILD_PUBLIC_HEADER_DIR = $$SHADOW/include
 CHART_BUILD_PRIVATE_HEADER_DIR = $$CHART_BUILD_PUBLIC_HEADER_DIR/private
 CHART_BUILD_LIB_DIR = $$SHADOW/lib
 CHART_BUILD_DIR = $$SHADOW/build
 CHART_BUILD_BIN_DIR = $$SHADOW/bin
-CHART_BUILD_PLUGIN_DIR = $$CHART_BUILD_LIB_DIR/QtCommercial/Chart
+CHART_BUILD_PLUGIN_DIR = $$CHART_BUILD_BIN_DIR/QtCommercial/Chart
 CHART_BUILD_DOC_DIR = $$SHADOW/doc
 
-
-# hack to fix windows builds
 win32:{
     CHART_BUILD_PUBLIC_HEADER_DIR = $$replace(CHART_BUILD_PUBLIC_HEADER_DIR, "/","\\")
     CHART_BUILD_PRIVATE_HEADER_DIR = $$replace(CHART_BUILD_PRIVATE_HEADER_DIR, "/","\\")
-    CHART_BUILD_LIB_DIR = $$replace(CHART_BUILD_LIB_DIR, "/","\\")
     CHART_BUILD_BUILD_DIR = $$replace(CHART_BUILD_BUILD_DIR, "/","\\")
     CHART_BUILD_BIN_DIR = $$replace(CHART_BUILD_BIN_DIR, "/","\\")
     CHART_BUILD_PLUGIN_DIR = $$replace(CHART_BUILD_PLUGIN_DIR, "/","\\")
     CHART_BUILD_DOC_DIR = $$replace(CHART_BUILD_DOC_DIR, "/","\\")
+    CHART_BUILD_LIB_DIR = CHART_BUILD_BIN_DIR
 }
 
 mac: {
@@ -44,8 +47,69 @@ mac: {
     QMAKE_LFLAGS *= -mmacosx-version-min=10.5
 }
 
+##################### DEVELOPMENT BUILD ###################################################
+
 development_build: {
     DEFINES+=DEVELOPMENT_BUILD
-    CONFIG+=local_build
     CONFIG+=debug_and_release
+}
+
+
+##################### BUILD CONFIG ########################################################
+
+!system_build:{
+
+    INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR
+
+    !win32: {
+        LIBS += -L $$CHART_BUILD_LIB_DIR -Wl,-rpath,$$CHART_BUILD_LIB_DIR
+    }else{
+        win32-msvc*: {
+            # hack fix for error:
+            #   "LINK : fatal error LNK1146: no argument specified with option '/LIBPATH:'"
+            QMAKE_LIBDIR += $$CHART_BUILD_LIB_DIR
+        }else{
+            LIBS += -L $$CHART_BUILD_LIB_DIR
+        }
+    }
+
+    CONFIG(debug, debug|release) {
+      mac: LIBRARY_NAME = $$join(LIBRARY_NAME,,,_debug)
+      win32: LIBRARY_NAME = $$join(LIBRARY_NAME,,,d)
+    } 
+       
+    LIBS += -l$$LIBRARY_NAME
+    
+
+    mac: {
+        # This is a hack to make binaries to use the internal version of the QtCommercial Charts library on OSX
+        CHARTS_LIB_NAME = libQtCommercialChart.1.dylib
+        CONFIG(debug, debug|release) {
+            CHARTS_LIB_NAME = libQtCommercialChartd.1.dylib
+        }
+        BIN_TARGET_PATH = ""
+        exists ($$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET) {
+            BIN_TARGET_PATH = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
+        }
+        exists ($$CHART_BUILD_BIN_DIR"/test/"$$TARGET".app/Contents/MacOS/"$$TARGET) {
+            # Executable in test folder
+            BIN_TARGET_PATH = $$CHART_BUILD_BIN_DIR"/test/"$$TARGET".app/Contents/MacOS/"$$TARGET
+        }
+        exists ($$CHART_BUILD_BIN_DIR"/test/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET) {
+            # Executable in test folder with custom target "tst_NNN"
+            BIN_TARGET_PATH = $$CHART_BUILD_BIN_DIR"/test/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET
+        }
+        exists($$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib") {
+            # Plugin
+            BIN_TARGET_PATH = $$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib"
+        }
+        !isEmpty (BIN_TARGET_PATH) {
+            QMAKE_POST_LINK += install_name_tool -change $$CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$CHARTS_LIB_NAME $$BIN_TARGET_PATH
+        }
+    }
+
+}else {
+
+    CONFIG += qtcommercialchart
+ 
 }
