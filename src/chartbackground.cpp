@@ -44,8 +44,16 @@ void ChartBackground::setDropShadowEnabled(bool enabled)
     if (enabled) {
         if (!m_dropShadow) {
             m_dropShadow = new QGraphicsDropShadowEffect();
+#ifdef Q_OS_MAC
+            m_dropShadow->setBlurRadius(15);
+            m_dropShadow->setOffset(0, 0);
+#elif defined(Q_OS_WIN)
+            m_dropShadow->setBlurRadius(10);
+            m_dropShadow->setOffset(0, 0);
+#else
             m_dropShadow->setBlurRadius(10);
             m_dropShadow->setOffset(5, 5);
+#endif
             setGraphicsEffect(m_dropShadow);
         }
     } else {
