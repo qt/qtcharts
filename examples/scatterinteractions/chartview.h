@@ -18,40 +18,29 @@
 **
 ****************************************************************************/
 
-#include "mainwindow.h"
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
+
+#include <QChartGlobal>
 #include <QChartView>
+#include <QScatterSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+class ChartView : public QChartView
 {
-    QChart *chart = new QChart();
-    chart->setTitle("Click to remove scatter point");
+    Q_OBJECT
 
-    m_scatter = new QScatterSeries();
-    for(qreal x(0.5); x <= 4.0; x += 0.5) {
-        for(qreal y(0.5); y <= 4.0; y += 0.5) {
-            *m_scatter << QPointF(x, y);
-        }
-    }
+public:
+    ChartView(QWidget *parent = 0);
+    ~ChartView();
 
-    chart->addSeries(m_scatter);
-    chart->axisX()->setRange(0, 4.5);
-    chart->axisY()->setRange(0, 4.5);
+private Q_SLOTS:
+    void handleClickedPoint(const QPointF& point);
 
-    connect(m_scatter, SIGNAL(clicked(QPointF)), this, SLOT(handleClickedPoint(QPointF)));
+private:
+    QScatterSeries *m_scatter;
+    QScatterSeries *m_scatter2;
+};
 
-    QChartView *chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    setCentralWidget(chartView);
-}
-
-MainWindow::~MainWindow()
-{
-}
-
-void MainWindow::handleClickedPoint(const QPointF& point)
-{
-    m_scatter->remove(point);
-}
+#endif // MAINWINDOW_H

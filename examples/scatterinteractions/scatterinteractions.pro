@@ -3,6 +3,7 @@
 }
 
 TARGET = scatterinteractions
-SOURCES += main.cpp\
-        mainwindow.cpp
-HEADERS  += mainwindow.h
+SOURCES += main.cpp \
+    chartview.cpp
+HEADERS  += \
+    chartview.h

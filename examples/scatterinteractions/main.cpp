@@ -19,14 +19,17 @@
 ****************************************************************************/
 
 #include <QtGui/QApplication>
-#include "mainwindow.h"
+#include <QMainWindow>
+#include "chartview.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow w;
-    w.resize(400, 300);
-    w.show();
+    QMainWindow window;
+    ChartView chartView(&window);
+    window.setCentralWidget(&chartView);
+    window.resize(400, 300);
+    window.show();
 
     return a.exec();
 }
