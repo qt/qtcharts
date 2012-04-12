@@ -35,6 +35,7 @@ Bar::Bar(QBarSet *barset, QString category, QGraphicsItem *parent) : QGraphicsRe
 
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event)
     emit clicked(m_category);
     emit clicked(m_barset, m_category);
 }

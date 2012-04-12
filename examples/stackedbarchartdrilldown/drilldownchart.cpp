@@ -31,9 +31,8 @@ DrilldownChart::DrilldownChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 
 void DrilldownChart::changeSeries(QAbstractSeries *series)
 {
-    if (m_currentSeries) {
+    if (m_currentSeries)
         removeSeries(m_currentSeries);
-    }
     m_currentSeries = series;
     addSeries(series);
     setTitle(series->name());
@@ -43,7 +42,6 @@ void DrilldownChart::changeSeries(QAbstractSeries *series)
 void DrilldownChart::handleClicked(QBarSet *barset, QString category)
 {
     Q_UNUSED(barset)
-    Q_UNUSED(button)
     DrilldownBarSeries* series = static_cast<DrilldownBarSeries*> (sender());
     changeSeries(series->drilldownSeries(category));
 }
