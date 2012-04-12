@@ -26,7 +26,7 @@ Q_DECLARE_METATYPE(QVector<qreal>)
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-AxisAnimation::AxisAnimation(Axis *axis): ChartAnimation(axis),
+AxisAnimation::AxisAnimation(ChartAxis *axis): ChartAnimation(axis),
     m_axis(axis)
 {
 }

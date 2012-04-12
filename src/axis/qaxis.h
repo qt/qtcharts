@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef QCHARTAXIS_H
-#define QCHARTAXIS_H
+#ifndef QAXIS_H
+#define QAXIS_H
 
 #include <qchartglobal.h>
 #include <qchartaxiscategories.h>
@@ -28,15 +28,15 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartAxisPrivate;
+class QAxisPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QChartAxis : public QObject
+class QTCOMMERCIALCHART_EXPORT QAxis : public QObject
 {
 	Q_OBJECT
 public:
 
-    QChartAxis(QObject *parent =0);
-    ~QChartAxis();
+    QAxis(QObject *parent =0);
+    ~QAxis();
 
     //axis handling
     bool isAxisVisible() const;
@@ -98,10 +98,10 @@ Q_SIGNALS:
 	void ticksCountChanged(int count);
 
 private:
-	QScopedPointer<QChartAxisPrivate> d_ptr;
-    Q_DISABLE_COPY(QChartAxis);
+	QScopedPointer<QAxisPrivate> d_ptr;
+    Q_DISABLE_COPY(QAxis);
     friend class ChartDataSet;
-    friend class Axis;
+    friend class ChartAxis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

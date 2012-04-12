@@ -21,7 +21,7 @@
 #ifndef QCHARTVIEW_H
 #define QCHARTVIEW_H
 
-#include <QChartAxis>
+#include <QAxis>
 #include <QAbstractSeries>
 #include <QChart>
 #include <QGraphicsView>

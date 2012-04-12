@@ -20,14 +20,15 @@
 #include "chartpresenter_p.h"
 #include "qchart.h"
 #include "qchart_p.h"
-#include "qchartaxis.h"
+#include "qaxis.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
 #include "qabstractseries_p.h"
 #include "qareaseries.h"
-#include "axis_p.h"
+#include "chartaxis_p.h"
 #include "areachartitem_p.h"
+#include "chartbackground_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -61,10 +62,10 @@ void ChartPresenter::setGeometry(const QRectF& rect)
     updateLayout();
 }
 
-void ChartPresenter::setMinimumMarginWidth(Axis* axis, qreal width)
+void ChartPresenter::setMinimumMarginWidth(ChartAxis* axis, qreal width)
 {
     switch(axis->axisType()){
-    case Axis::X_AXIS:
+    case ChartAxis::X_AXIS:
     {
         if(width>m_chartRect.width()+ m_chartMargins.left()) {
             m_minLeftMargin= width - m_chartRect.width();
@@ -72,7 +73,7 @@ void ChartPresenter::setMinimumMarginWidth(Axis* axis, qreal width)
         }
         break;
     }
-    case Axis::Y_AXIS:
+    case ChartAxis::Y_AXIS:
     {
 
         if(m_minLeftMargin!=width){
@@ -85,10 +86,10 @@ void ChartPresenter::setMinimumMarginWidth(Axis* axis, qreal width)
     }
 }
 
-void ChartPresenter::setMinimumMarginHeight(Axis* axis, qreal height)
+void ChartPresenter::setMinimumMarginHeight(ChartAxis* axis, qreal height)
 {
     switch(axis->axisType()){
-    case Axis::X_AXIS:
+    case ChartAxis::X_AXIS:
     {
         if(m_minBottomMargin!=height) {
             m_minBottomMargin= height;
@@ -96,7 +97,7 @@ void ChartPresenter::setMinimumMarginHeight(Axis* axis, qreal height)
         }
         break;
     }
-    case Axis::Y_AXIS:
+    case ChartAxis::Y_AXIS:
     {
 
         if(height>m_chartMargins.bottom()+m_chartRect.height()){
@@ -109,9 +110,9 @@ void ChartPresenter::setMinimumMarginHeight(Axis* axis, qreal height)
     }
 }
 
-void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
+void ChartPresenter::handleAxisAdded(QAxis* axis,Domain* domain)
 {
-    Axis* item = new Axis(axis,this,axis==m_dataset->axisX()?Axis::X_AXIS : Axis::Y_AXIS);
+    ChartAxis* item = new ChartAxis(axis,this,axis==m_dataset->axisX()?ChartAxis::X_AXIS : ChartAxis::Y_AXIS);
 
     if(m_options.testFlag(QChart::GridAxisAnimations)){
         m_animator->addAnimation(item);
@@ -137,9 +138,9 @@ void ChartPresenter::handleAxisAdded(QChartAxis* axis,Domain* domain)
     m_axisItems.insert(axis, item);
 }
 
-void ChartPresenter::handleAxisRemoved(QChartAxis* axis)
+void ChartPresenter::handleAxisRemoved(QAxis* axis)
 {
-    Axis* item = m_axisItems.take(axis);
+    ChartAxis* item = m_axisItems.take(axis);
     Q_ASSERT(item);
     if(m_animator) m_animator->removeAnimation(item);
     delete item;
@@ -207,10 +208,10 @@ void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
 
 void ChartPresenter::resetAllElements()
 {
-    QList<QChartAxis *> axisList = m_axisItems.uniqueKeys();
+    QList<QAxis *> axisList = m_axisItems.uniqueKeys();
     QList<QAbstractSeries *> seriesList = m_chartItems.uniqueKeys();
 
-    foreach(QChartAxis *axis, axisList) {
+    foreach(QAxis *axis, axisList) {
         handleAxisRemoved(axis);
         handleAxisAdded(axis,m_dataset->domain(axis));
     }

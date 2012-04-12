@@ -27,19 +27,19 @@
 //
 // We mean it.
 
-#ifndef QCHARTAXIS_P_H
-#define QCHARTAXIS_P_H
+#ifndef QAXIS_P_H
+#define QAXIS_P_H
 
-#include "qchartaxis.h"
+#include "qaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartAxisPrivate : public QObject
+class QAxisPrivate : public QObject
 {
     Q_OBJECT
 public:
-    QChartAxisPrivate(QChartAxis *q);
-    ~QChartAxisPrivate();
+    QAxisPrivate(QAxis *q);
+    ~QAxisPrivate();
 
 Q_SIGNALS:
     void updated();
@@ -49,7 +49,7 @@ public Q_SLOTS:
     void handleAxisRangeChanged(qreal min, qreal max,int count);
 
 private:
-    QChartAxis *q_ptr;
+    QAxis *q_ptr;
 
     bool m_axisVisible;
     QPen m_axisPen;
@@ -77,7 +77,7 @@ private:
 
     bool m_niceNumbers;
 
-    friend class QChartAxis;
+    friend class QAxis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

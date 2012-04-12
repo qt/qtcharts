@@ -22,9 +22,7 @@
 #define CHARTPRESENTER_H
 
 #include "qchartglobal.h"
-#include "chartbackground_p.h" //TODO fix me
 #include "qchart.h" //becouse of QChart::ChartThemeId //TODO
-#include "qchartaxis.h"
 #include <QRectF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -33,9 +31,10 @@ class Chart;
 class QAbstractSeries;
 class ChartDataSet;
 class Domain;
-class Axis;
+class ChartAxis;
 class ChartTheme;
 class ChartAnimator;
+class ChartBackground;
 
 class ChartPresenter: public QObject
 {
@@ -75,8 +74,8 @@ public:
     void setGeometry(const QRectF& rect);
     QRectF chartGeometry() const { return m_chartRect; }
 
-    void setMinimumMarginHeight(Axis* axis, qreal height);
-    void setMinimumMarginWidth(Axis* axis, qreal width);
+    void setMinimumMarginHeight(ChartAxis* axis, qreal height);
+    void setMinimumMarginWidth(ChartAxis* axis, qreal width);
     qreal minimumLeftMargin() const { return m_minLeftMargin; }
     qreal minimumBottomMargin() const { return m_minBottomMargin; }
 
@@ -89,8 +88,8 @@ public: //TODO: fix me
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries* series,Domain* domain);
     void handleSeriesRemoved(QAbstractSeries* series);
-    void handleAxisAdded(QChartAxis* axis,Domain* domain);
-    void handleAxisRemoved(QChartAxis* axis);
+    void handleAxisAdded(QAxis* axis,Domain* domain);
+    void handleAxisRemoved(QAxis* axis);
     void updateLayout();
 
 Q_SIGNALS:
@@ -103,7 +102,7 @@ private:
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
     QMap<QAbstractSeries *, Chart *> m_chartItems;
-    QMap<QChartAxis *, Axis *> m_axisItems;
+    QMap<QAxis *, ChartAxis *> m_axisItems;
     QRectF m_rect;
     QRectF m_chartRect;
     QChart::AnimationOptions m_options;

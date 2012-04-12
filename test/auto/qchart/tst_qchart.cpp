@@ -11,7 +11,7 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-Q_DECLARE_METATYPE(QChartAxis *)
+Q_DECLARE_METATYPE(QAxis *)
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QChart::AnimationOption)
 Q_DECLARE_METATYPE(QBrush)
@@ -157,7 +157,7 @@ void tst_QChart::qchart()
 void tst_QChart::addSeries_data()
 {
     QTest::addColumn<QAbstractSeries *>("series");
-    QTest::addColumn<QChartAxis *>("axis");
+    QTest::addColumn<QAxis *>("axis");
 
     QAbstractSeries* series0 = new QLineSeries(this);
     QAbstractSeries* series1 = new QAreaSeries(static_cast<QLineSeries*>(series0));
@@ -168,23 +168,23 @@ void tst_QChart::addSeries_data()
     QAbstractSeries* series6 = new QPercentBarSeries(QBarCategories(),this);
     QAbstractSeries* series7 = new QStackedBarSeries(QBarCategories(),this);
 
-    QChartAxis* axis = new QChartAxis(this);
+    QAxis* axis = new QAxis(this);
 
-    QTest::newRow("default axis: lineSeries") << series0 << (QChartAxis*) 0;
+    QTest::newRow("default axis: lineSeries") << series0 << (QAxis*) 0;
     QTest::newRow("axis0: lineSeries") << series0 << axis;
-    QTest::newRow("default axis: areaSeries") << series1 << (QChartAxis*) 0;
+    QTest::newRow("default axis: areaSeries") << series1 << (QAxis*) 0;
     QTest::newRow("axis: areaSeries") << series1 << axis;
-    QTest::newRow("default axis: scatterSeries") << series2 << (QChartAxis*) 0;
+    QTest::newRow("default axis: scatterSeries") << series2 << (QAxis*) 0;
     QTest::newRow("axis1: scatterSeries") << series2 << axis;
-    QTest::newRow("default axis: splineSeries") << series3 << (QChartAxis*) 0;
+    QTest::newRow("default axis: splineSeries") << series3 << (QAxis*) 0;
     QTest::newRow("axis: splineSeries") << series3 << axis;
-    QTest::newRow("default axis: pieSeries") << series4 << (QChartAxis*) 0;
+    QTest::newRow("default axis: pieSeries") << series4 << (QAxis*) 0;
     QTest::newRow("axis: pieSeries") << series4 << axis;
-    QTest::newRow("default axis: barSeries") << series5 << (QChartAxis*) 0;
+    QTest::newRow("default axis: barSeries") << series5 << (QAxis*) 0;
     QTest::newRow("axis: barSeries") << series5 << axis;
-    QTest::newRow("default axis: percentBarSeries") << series6 << (QChartAxis*) 0;
+    QTest::newRow("default axis: percentBarSeries") << series6 << (QAxis*) 0;
     QTest::newRow("axis: barSeries") << series6 << axis;
-    QTest::newRow("default axis: stackedBarSeries") << series7 << (QChartAxis*) 0;
+    QTest::newRow("default axis: stackedBarSeries") << series7 << (QAxis*) 0;
     QTest::newRow("axis: barSeries") << series7 << axis;
 
 }
@@ -192,7 +192,7 @@ void tst_QChart::addSeries_data()
 void tst_QChart::addSeries()
 {
     QFETCH(QAbstractSeries *, series);
-    QFETCH(QChartAxis *, axis);
+    QFETCH(QAxis *, axis);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
@@ -227,7 +227,7 @@ void tst_QChart::axisX_data()
 void tst_QChart::axisX()
 {
     QVERIFY(m_chart->axisX());
-    QChartAxis* axis = m_chart->axisX();
+    QAxis* axis = m_chart->axisX();
     createTestData();
     //it should be the same axis
     QCOMPARE(axis,m_chart->axisX());
@@ -235,21 +235,21 @@ void tst_QChart::axisX()
 
 void tst_QChart::axisY_data()
 {
-    QTest::addColumn<QChartAxis*>("axis0");
-    QTest::addColumn<QChartAxis*>("axis1");
-    QTest::addColumn<QChartAxis*>("axis2");
-    QTest::newRow("1 defualt, 2 optional") << (QChartAxis*)0 << new QChartAxis() << new QChartAxis();
-    QTest::newRow("3 optional") << new QChartAxis() << new QChartAxis() << new QChartAxis();
+    QTest::addColumn<QAxis*>("axis0");
+    QTest::addColumn<QAxis*>("axis1");
+    QTest::addColumn<QAxis*>("axis2");
+    QTest::newRow("1 defualt, 2 optional") << (QAxis*)0 << new QAxis() << new QAxis();
+    QTest::newRow("3 optional") << new QAxis() << new QAxis() << new QAxis();
 }
 
 
 void tst_QChart::axisY()
 {
-    QFETCH(QChartAxis*, axis0);
-    QFETCH(QChartAxis*, axis1);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis0);
+    QFETCH(QAxis*, axis1);
+    QFETCH(QAxis*, axis2);
 
-    QChartAxis* defaultAxisY = m_chart->axisY();
+    QAxis* defaultAxisY = m_chart->axisY();
 
     QVERIFY2(defaultAxisY, "Missing axisY.");
 
@@ -385,7 +385,7 @@ void tst_QChart::removeSeries_data()
 void tst_QChart::removeSeries()
 {
     QFETCH(QAbstractSeries *, series);
-    QFETCH(QChartAxis *, axis);
+    QFETCH(QAxis *, axis);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();

@@ -60,8 +60,8 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QChartAxis* axisX = chart->axisX();
-    QChartAxis* axisY = chart->axisY();
+    QAxis* axisX = chart->axisX();
+    QAxis* axisY = chart->axisY();
 
     // Customize axis label font
     QFont labelsFont;

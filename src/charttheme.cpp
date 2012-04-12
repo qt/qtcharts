@@ -23,7 +23,7 @@
 #include "qchart_p.h"
 #include "qchartview.h"
 #include "qlegend.h"
-#include "qchartaxis.h"
+#include "qaxis.h"
 #include <QTime>
 
 //series
@@ -39,7 +39,7 @@
 #include "qsplineseries.h"
 
 //items
-#include "axis_p.h"
+#include "chartaxis_p.h"
 #include "barchartitem_p.h"
 #include "stackedbarchartitem_p.h"
 #include "percentbarchartitem_p.h"
@@ -264,7 +264,7 @@ void ChartTheme::decorate(QSplineSeries *series, int index)
     }
 }
 
-void ChartTheme::decorate(QChartAxis *axis,bool axisX)
+void ChartTheme::decorate(QAxis *axis,bool axisX)
 {
     QPen pen;
     QBrush brush;

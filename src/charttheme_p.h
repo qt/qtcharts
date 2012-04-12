@@ -69,7 +69,7 @@ public:
     void decorate(QScatterSeries *series, int index);
     void decorate(QPieSeries *series, int index);
     void decorate(QSplineSeries *series, int index);
-    void decorate(QChartAxis *axis, bool axisX);
+    void decorate(QAxis *axis, bool axisX);
     void setForced(bool enabled);
     bool isForced() { return m_force; }
 

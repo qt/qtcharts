@@ -21,7 +21,7 @@
 #ifndef AXISANIMATION_H
 #define AXISANIMATION_H
 
-#include "axis_p.h"
+#include "chartaxis_p.h"
 #include "chartanimation_p.h"
 
 
@@ -30,13 +30,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class AxisAnimation: public ChartAnimation
 {
 public:
-    AxisAnimation(Axis *axis);
+    AxisAnimation(ChartAxis *axis);
     ~AxisAnimation();
 protected:
     QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress ) const;
     void updateCurrentValue(const QVariant &value );
 private:
-    Axis *m_axis;
+    ChartAxis *m_axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

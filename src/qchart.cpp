@@ -22,6 +22,8 @@
 #include "qchart_p.h"
 #include "legendscroller_p.h"
 #include "qlegend_p.h"
+#include "chartbackground_p.h"
+#include "qaxis.h"
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 
@@ -91,7 +93,7 @@ QChart::~QChart()
  If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
  the y axis).
  */
-void QChart::addSeries(QAbstractSeries *series, QChartAxis *axisY)
+void QChart::addSeries(QAbstractSeries *series, QAxis *axisY)
 {
     Q_ASSERT(series);
     d_ptr->m_dataset->addSeries(series, axisY);
@@ -273,7 +275,7 @@ void QChart::zoomOut()
 /*!
  Returns the pointer to the x axis object of the chart
  */
-QChartAxis* QChart::axisX() const
+QAxis* QChart::axisX() const
 {
     return d_ptr->m_dataset->axisX();
 }
@@ -282,7 +284,7 @@ QChartAxis* QChart::axisX() const
  Returns the pointer to the y axis object of the \a series
  If no \a series is provided then default Y axis of the chart is returned.
  */
-QChartAxis* QChart::axisY(QAbstractSeries *series) const
+QAxis* QChart::axisY(QAbstractSeries *series) const
 {
     return d_ptr->m_dataset->axisY(series);
 }
@@ -425,8 +427,8 @@ void QChartPrivate::createConnections()
 
     QObject::connect(m_dataset,SIGNAL(seriesAdded(QAbstractSeries *, Domain *)),m_presenter,SLOT(handleSeriesAdded(QAbstractSeries *, Domain *)));
     QObject::connect(m_dataset,SIGNAL(seriesRemoved(QAbstractSeries *)),m_presenter,SLOT(handleSeriesRemoved(QAbstractSeries *)));
-    QObject::connect(m_dataset,SIGNAL(axisAdded(QChartAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QChartAxis*,Domain*)));
-    QObject::connect(m_dataset,SIGNAL(axisRemoved(QChartAxis*)),m_presenter,SLOT(handleAxisRemoved(QChartAxis*)));
+    QObject::connect(m_dataset,SIGNAL(axisAdded(QAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QAxis*,Domain*)));
+    QObject::connect(m_dataset,SIGNAL(axisRemoved(QAxis*)),m_presenter,SLOT(handleAxisRemoved(QAxis*)));
 }
 
 #include "moc_qchart.cpp"

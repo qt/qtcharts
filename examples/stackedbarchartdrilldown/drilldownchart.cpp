@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "drilldownchart.h"
-#include <QChartAxis>
+#include <QAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

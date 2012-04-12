@@ -36,7 +36,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartAxis;
+class QAxis;
 class QBarSeries;
 
 class ChartDataSet : public QObject
@@ -46,8 +46,8 @@ public:
     ChartDataSet(QObject* parent=0);
     virtual ~ChartDataSet();
 
-    void addSeries(QAbstractSeries* series,QChartAxis *axisY = 0);
-    QChartAxis* removeSeries(QAbstractSeries* series);
+    void addSeries(QAbstractSeries* series,QAxis *axisY = 0);
+    QAxis* removeSeries(QAbstractSeries* series);
     void removeAllSeries();
 
     void zoomInDomain(const QRectF& rect, const QSizeF& size);
@@ -58,28 +58,28 @@ public:
     int seriesIndex(QAbstractSeries *series);
 
     Domain* domain(QAbstractSeries* series) const;
-    Domain* domain(QChartAxis* axis) const;
+    Domain* domain(QAxis* axis) const;
 
-    QChartAxis* axisX() const { return m_axisX; }
-    QChartAxis* axisY(QAbstractSeries *series = 0) const;
+    QAxis* axisX() const { return m_axisX; }
+    QAxis* axisY(QAbstractSeries *series = 0) const;
 
 Q_SIGNALS:
     void seriesAdded(QAbstractSeries* series, Domain* domain);
     void seriesRemoved(QAbstractSeries* series);
-    void axisAdded(QChartAxis* axis,Domain* domain);
-    void axisRemoved(QChartAxis* axis);
+    void axisAdded(QAxis* axis,Domain* domain);
+    void axisRemoved(QAxis* axis);
 
 private:
-    QStringList createLabels(QChartAxis* axis,qreal min, qreal max);
+    QStringList createLabels(QAxis* axis,qreal min, qreal max);
     void calculateDomain(QAbstractSeries* series,Domain* domain);
     void setupCategories(QBarSeries* series);
 
 private:
-    QMap<QAbstractSeries *, QChartAxis *> m_seriesAxisMap;
-    QMap<QChartAxis*, Domain *> m_axisDomainMap;
+    QMap<QAbstractSeries *, QAxis *> m_seriesAxisMap;
+    QMap<QAxis*, Domain *> m_axisDomainMap;
     QMap<int, QAbstractSeries *> m_indexSeriesMap;
-    QChartAxis* m_axisX;
-    QChartAxis* m_axisY;
+    QAxis* m_axisX;
+    QAxis* m_axisY;
 
     int m_domainIndex;
     bool m_axisXInitialized;

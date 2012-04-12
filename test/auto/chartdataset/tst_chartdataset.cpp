@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qchartaxis.h>
+#include <qaxis.h>
 #include <qlineseries.h>
 #include <private/chartdataset_p.h>
 #include <private/domain_p.h>
@@ -27,7 +27,7 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(Domain *)
-Q_DECLARE_METATYPE(QChartAxis *)
+Q_DECLARE_METATYPE(QAxis *)
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QLineSeries *)
 
@@ -69,7 +69,7 @@ private Q_SLOTS:
 void tst_ChartDataSet::initTestCase()
 {
     qRegisterMetaType<Domain*>();
-	qRegisterMetaType<QChartAxis*>();
+	qRegisterMetaType<QAxis*>();
     qRegisterMetaType<QAbstractSeries*>();
 }
 
@@ -104,40 +104,40 @@ void tst_ChartDataSet::chartdataset()
 void tst_ChartDataSet::addSeries_data()
 {
 	QTest::addColumn<QLineSeries*>("series0");
-    QTest::addColumn<QChartAxis*>("axis0");
+    QTest::addColumn<QAxis*>("axis0");
     QTest::addColumn<QLineSeries*>("series1");
-    QTest::addColumn<QChartAxis*>("axis1");
+    QTest::addColumn<QAxis*>("axis1");
     QTest::addColumn<QLineSeries*>("series2");
-    QTest::addColumn<QChartAxis*>("axis2");
+    QTest::addColumn<QAxis*>("axis2");
     QTest::addColumn<int>("axisCount");
 
     QLineSeries* series0 = new QLineSeries(this);
     QLineSeries* series1 = new QLineSeries(this);
     QLineSeries* series2 = new QLineSeries(this);
 
-    QChartAxis* axis0 = new QChartAxis(this);
-    QChartAxis* axis1 = new QChartAxis(this);
-    QChartAxis* axis2 = new QChartAxis(this);
+    QAxis* axis0 = new QAxis(this);
+    QAxis* axis1 = new QAxis(this);
+    QAxis* axis2 = new QAxis(this);
 
-	QTest::newRow("default axis Y: series0,series1,series2") << series0 << (QChartAxis*)0 << series1 << (QChartAxis*)0  << series2 << (QChartAxis*)0 << 2;
-	QTest::newRow("default axis Y: series0, axis 0: series1,series2") << series0 << (QChartAxis*)0 << series1 << axis0 << series2 << axis0 << 3;
+	QTest::newRow("default axis Y: series0,series1,series2") << series0 << (QAxis*)0 << series1 << (QAxis*)0  << series2 << (QAxis*)0 << 2;
+	QTest::newRow("default axis Y: series0, axis 0: series1,series2") << series0 << (QAxis*)0 << series1 << axis0 << series2 << axis0 << 3;
 	QTest::newRow("axis0: series0, axis1: series1, axis2: series2") << series0 << axis0 << series1 << axis1 << series2 << axis2 << 4;
 }
 
 void tst_ChartDataSet::addSeries()
 {
     QFETCH(QLineSeries*, series0);
-    QFETCH(QChartAxis*, axis0);
+    QFETCH(QAxis*, axis0);
     QFETCH(QLineSeries*, series1);
-    QFETCH(QChartAxis*, axis1);
+    QFETCH(QAxis*, axis1);
     QFETCH(QLineSeries*, series2);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
 
     ChartDataSet dataSet;
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*,Domain*)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis*,Domain*)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis*)));
     QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *,Domain*)));
     QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
@@ -167,11 +167,11 @@ void tst_ChartDataSet::removeSeries_data()
 void tst_ChartDataSet::removeSeries()
 {
     QFETCH(QLineSeries*, series0);
-    QFETCH(QChartAxis*, axis0);
+    QFETCH(QAxis*, axis0);
     QFETCH(QLineSeries*, series1);
-    QFETCH(QChartAxis*, axis1);
+    QFETCH(QAxis*, axis1);
     QFETCH(QLineSeries*, series2);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
 
     ChartDataSet dataSet;
@@ -180,8 +180,8 @@ void tst_ChartDataSet::removeSeries()
     dataSet.addSeries(series1,axis1);
     dataSet.addSeries(series2,axis2);
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis *, Domain *)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis *)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis *, Domain *)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis *)));
     QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
     QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
@@ -206,9 +206,9 @@ void tst_ChartDataSet::removeAllSeries()
     QLineSeries* series1 = new QLineSeries(this);
     QLineSeries* series2 = new QLineSeries(this);
 
-    QChartAxis* axis0 = new QChartAxis(this);
-    QChartAxis* axis1 = new QChartAxis(this);
-    QChartAxis* axis2 = new QChartAxis(this);
+    QAxis* axis0 = new QAxis(this);
+    QAxis* axis1 = new QAxis(this);
+    QAxis* axis2 = new QAxis(this);
 
 
     ChartDataSet dataSet;
@@ -217,8 +217,8 @@ void tst_ChartDataSet::removeAllSeries()
     dataSet.addSeries(series1, axis1);
     dataSet.addSeries(series2, axis2);
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis *, Domain *)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis *)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis *, Domain *)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis *)));
     QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
     QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
@@ -233,22 +233,22 @@ void tst_ChartDataSet::removeAllSeries()
 
 void tst_ChartDataSet::axisY_data()
 {
-    QTest::addColumn<QChartAxis*>("axis0");
-    QTest::addColumn<QChartAxis*>("axis1");
-    QTest::addColumn<QChartAxis*>("axis2");
-    QTest::newRow("1 defualt, 2 optional") << (QChartAxis*)0 << new QChartAxis() << new QChartAxis();
-    QTest::newRow("3 optional") << new QChartAxis() << new QChartAxis() << new QChartAxis();
+    QTest::addColumn<QAxis*>("axis0");
+    QTest::addColumn<QAxis*>("axis1");
+    QTest::addColumn<QAxis*>("axis2");
+    QTest::newRow("1 defualt, 2 optional") << (QAxis*)0 << new QAxis() << new QAxis();
+    QTest::newRow("3 optional") << new QAxis() << new QAxis() << new QAxis();
 }
 
 void tst_ChartDataSet::axisY()
 {
-    QFETCH(QChartAxis*, axis0);
-    QFETCH(QChartAxis*, axis1);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis0);
+    QFETCH(QAxis*, axis1);
+    QFETCH(QAxis*, axis2);
 
     ChartDataSet dataSet;
 
-    QChartAxis* defaultAxisY = dataSet.axisY();
+    QAxis* defaultAxisY = dataSet.axisY();
 
     QVERIFY2(defaultAxisY, "Missing axisY.");
 
@@ -279,11 +279,11 @@ void tst_ChartDataSet::seriesCount_data()
 void tst_ChartDataSet::seriesCount()
 {
     QFETCH(QLineSeries*, series0);
-    QFETCH(QChartAxis*, axis0);
+    QFETCH(QAxis*, axis0);
     QFETCH(QLineSeries*, series1);
-    QFETCH(QChartAxis*, axis1);
+    QFETCH(QAxis*, axis1);
     QFETCH(QLineSeries*, series2);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
     Q_UNUSED(axisCount);
 
@@ -293,8 +293,8 @@ void tst_ChartDataSet::seriesCount()
     dataSet.addSeries(series1, axis1);
     dataSet.addSeries(series2, axis2);
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis *, Domain *)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis *)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis *, Domain *)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis *)));
     QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
     QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
@@ -319,11 +319,11 @@ void tst_ChartDataSet::seriesIndex()
     //TODO: rewrite this series_index_data to match better
 
     QFETCH(QLineSeries*, series0);
-    QFETCH(QChartAxis*, axis0);
+    QFETCH(QAxis*, axis0);
     QFETCH(QLineSeries*, series1);
-    QFETCH(QChartAxis*, axis1);
+    QFETCH(QAxis*, axis1);
     QFETCH(QLineSeries*, series2);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
     Q_UNUSED(axisCount);
 
@@ -333,8 +333,8 @@ void tst_ChartDataSet::seriesIndex()
     dataSet.addSeries(series1, axis1);
     dataSet.addSeries(series2, axis2);
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis*,Domain*)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis*)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis*,Domain*)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis*)));
     QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
     QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
 
@@ -408,11 +408,11 @@ void tst_ChartDataSet::domain_data()
 void tst_ChartDataSet::domain()
 {
     QFETCH(QLineSeries*, series0);
-    QFETCH(QChartAxis*, axis0);
+    QFETCH(QAxis*, axis0);
     QFETCH(QLineSeries*, series1);
-    QFETCH(QChartAxis*, axis1);
+    QFETCH(QAxis*, axis1);
     QFETCH(QLineSeries*, series2);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
     Q_UNUSED(axisCount);
 
@@ -422,8 +422,8 @@ void tst_ChartDataSet::domain()
     dataSet.addSeries(series1, axis1);
     dataSet.addSeries(series2, axis2);
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QChartAxis *, Domain *)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QChartAxis *)));
+    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis *, Domain *)));
+    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis *)));
     QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
     QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
@@ -448,11 +448,11 @@ void tst_ChartDataSet::zoomInDomain_data()
 void tst_ChartDataSet::zoomInDomain()
 {
     QFETCH(QLineSeries*, series0);
-    QFETCH(QChartAxis*, axis0);
+    QFETCH(QAxis*, axis0);
     QFETCH(QLineSeries*, series1);
-    QFETCH(QChartAxis*, axis1);
+    QFETCH(QAxis*, axis1);
     QFETCH(QLineSeries*, series2);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
 
     Q_UNUSED(axisCount);
@@ -489,11 +489,11 @@ void tst_ChartDataSet::zoomOutDomain_data()
 void tst_ChartDataSet::zoomOutDomain()
 {
     QFETCH(QLineSeries*, series0);
-    QFETCH(QChartAxis*, axis0);
+    QFETCH(QAxis*, axis0);
     QFETCH(QLineSeries*, series1);
-    QFETCH(QChartAxis*, axis1);
+    QFETCH(QAxis*, axis1);
     QFETCH(QLineSeries*, series2);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
 
     Q_UNUSED(axisCount);
@@ -531,11 +531,11 @@ void tst_ChartDataSet::scrollDomain_data()
 void tst_ChartDataSet::scrollDomain()
 {
     QFETCH(QLineSeries*, series0);
-    QFETCH(QChartAxis*, axis0);
+    QFETCH(QAxis*, axis0);
     QFETCH(QLineSeries*, series1);
-    QFETCH(QChartAxis*, axis1);
+    QFETCH(QAxis*, axis1);
     QFETCH(QLineSeries*, series2);
-    QFETCH(QChartAxis*, axis2);
+    QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
 
     Q_UNUSED(axisCount);

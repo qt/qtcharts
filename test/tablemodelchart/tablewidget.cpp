@@ -143,7 +143,7 @@ void TableWidget::updateChartType(bool toggle)
 
         // renable axes of the chart (pie hides them)
         // x axis
-        QChartAxis *axis = m_chart->axisX();
+        QAxis *axis = m_chart->axisX();
         axis->setAxisVisible(true);
         axis->setGridLineVisible(true);
         axis->setLabelsVisible(true);
@@ -332,5 +332,5 @@ void TableWidget::updateChartType(bool toggle)
 
 TableWidget::~TableWidget()
 {
-    
+
 }

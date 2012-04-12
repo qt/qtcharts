@@ -22,7 +22,7 @@
 
 #include <QChart>
 #include <QScatterSeries>
-#include <QChartAxis>
+#include <QAxis>
 #include <QBarSet>
 #include <QBarSeries>
 #include <QLegend>

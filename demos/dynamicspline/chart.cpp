@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "chart.h"
-#include <QChartAxis>
+#include <QAxis>
 #include <QSplineSeries>
 #include <QTime>
 

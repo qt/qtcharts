@@ -27,17 +27,17 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChartAxis;
+class QAxis;
 class ChartPresenter;
 
-class Axis : public Chart
+class ChartAxis : public Chart
 {
     Q_OBJECT
 public:
     enum AxisType{X_AXIS,Y_AXIS};
 
-    Axis(QChartAxis *axis, ChartPresenter *presenter, AxisType type = X_AXIS);
-    ~Axis();
+    ChartAxis(QAxis *axis, ChartPresenter *presenter, AxisType type = X_AXIS);
+    ~ChartAxis();
 
     AxisType axisType() const { return m_type; }
 
@@ -89,7 +89,7 @@ private:
     void axisSelected();
 
 private:
-    QChartAxis* m_chartAxis;
+    QAxis* m_chartAxis;
     AxisType m_type;
     QRectF m_rect;
     int m_labelsAngle;
@@ -111,7 +111,7 @@ class AxisItem: public QGraphicsLineItem
 {
 
 public:
-    explicit AxisItem(Axis *axis, QGraphicsItem *parent = 0) : QGraphicsLineItem(parent), m_axis(axis) {}
+    explicit AxisItem(ChartAxis *axis, QGraphicsItem *parent = 0) : QGraphicsLineItem(parent), m_axis(axis) {}
 
 protected:
    void mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -129,12 +129,12 @@ protected:
    {
        QPainterPath path = QGraphicsLineItem::shape();
        QRectF rect = path.boundingRect();
-       path.addRect(rect.adjusted(0,0,m_axis->axisType()!=Axis::X_AXIS?8:0,m_axis->axisType()!=Axis::Y_AXIS?8:0));
+       path.addRect(rect.adjusted(0,0,m_axis->axisType()!=ChartAxis::X_AXIS?8:0,m_axis->axisType()!=ChartAxis::Y_AXIS?8:0));
        return path;
    }
 
 private:
-   Axis* m_axis;
+   ChartAxis* m_axis;
 
 };
 

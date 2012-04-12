@@ -20,7 +20,7 @@
 
 #include <QtTest/QtTest>
 #include <private/domain_p.h>
-#include <qchartaxis.h>
+#include <qaxis.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

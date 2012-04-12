@@ -46,8 +46,8 @@ public:
 
 private:
     QScopedPointer<QChartAxisCategoriesPrivate> d_ptr;
-    friend class QChartAxisPrivate;
-    friend class Axis;
+    friend class QAxisPrivate;
+    friend class ChartAxis;
 };
 
 

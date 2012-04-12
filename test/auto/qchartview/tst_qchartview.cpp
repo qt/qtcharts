@@ -145,9 +145,9 @@ void tst_QChartView::rubberBand()
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(true);
 
-    QChartAxis* axisY = m_view->chart()->axisY();
+    QAxis* axisY = m_view->chart()->axisY();
     QSignalSpy spy0(axisY, SIGNAL(rangeChanged(qreal,qreal)));
-    QChartAxis* axisX = m_view->chart()->axisX();
+    QAxis* axisX = m_view->chart()->axisX();
     QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal,qreal)));
 
     QTest::qWaitForWindowShown(m_view);
@@ -197,9 +197,9 @@ void tst_QChartView::keys()
     m_view->resize(100 + padding.left() + padding.right(), 100 +  padding.top()+ padding.bottom());
     m_view->show();
 
-    QChartAxis* axisY = m_view->chart()->axisY();
+    QAxis* axisY = m_view->chart()->axisY();
     QSignalSpy spy0(axisY, SIGNAL(rangeChanged(qreal,qreal)));
-    QChartAxis* axisX = m_view->chart()->axisX();
+    QAxis* axisX = m_view->chart()->axisX();
     QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal,qreal)));
 
     QTest::keyPress(m_view, key);

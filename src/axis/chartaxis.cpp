@@ -18,9 +18,9 @@
 **
 ****************************************************************************/
 
-#include "axis_p.h"
-#include "qchartaxis.h"
-#include "qchartaxis_p.h"
+#include "chartaxis_p.h"
+#include "qaxis.h"
+#include "qaxis_p.h"
 #include "qchartaxiscategories_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
@@ -32,7 +32,7 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Axis::Axis(QChartAxis *axis,ChartPresenter *presenter,AxisType type) : Chart(presenter),
+ChartAxis::ChartAxis(QAxis *axis,ChartPresenter *presenter,AxisType type) : Chart(presenter),
     m_chartAxis(axis),
     m_type(type),
     m_labelsAngle(0),
@@ -57,11 +57,11 @@ Axis::Axis(QChartAxis *axis,ChartPresenter *presenter,AxisType type) : Chart(pre
     handleAxisUpdated();
 }
 
-Axis::~Axis()
+ChartAxis::~ChartAxis()
 {
 }
 
-void Axis::createItems(int count)
+void ChartAxis::createItems(int count)
 {
 
     if (m_axis->children().size() == 0)
@@ -74,7 +74,7 @@ void Axis::createItems(int count)
        }
 }
 
-void Axis::deleteItems(int count)
+void ChartAxis::deleteItems(int count)
 {
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
@@ -89,7 +89,7 @@ void Axis::deleteItems(int count)
     }
 }
 
-void Axis::updateLayout(QVector<qreal> &layout)
+void ChartAxis::updateLayout(QVector<qreal> &layout)
 {
     if (animator()) {
         animator()->updateLayout(this,layout);
@@ -98,7 +98,7 @@ void Axis::updateLayout(QVector<qreal> &layout)
     }
 }
 
-bool Axis::createLabels(QStringList &labels,qreal min, qreal max,int ticks) const
+bool ChartAxis::createLabels(QStringList &labels,qreal min, qreal max,int ticks) const
 {
     Q_ASSERT(max>=min);
     Q_ASSERT(ticks>1);
@@ -132,47 +132,47 @@ bool Axis::createLabels(QStringList &labels,qreal min, qreal max,int ticks) cons
     return category;
 }
 
-void Axis::setAxisOpacity(qreal opacity)
+void ChartAxis::setAxisOpacity(qreal opacity)
 {
     m_axis->setOpacity(opacity);
 }
 
-qreal Axis::axisOpacity() const
+qreal ChartAxis::axisOpacity() const
 {
     return m_axis->opacity();
 }
 
-void Axis::setGridOpacity(qreal opacity)
+void ChartAxis::setGridOpacity(qreal opacity)
 {
     m_grid->setOpacity(opacity);
 }
 
-qreal Axis::gridOpacity() const
+qreal ChartAxis::gridOpacity() const
 {
     return m_grid->opacity();
 }
 
-void Axis::setLabelsOpacity(qreal opacity)
+void ChartAxis::setLabelsOpacity(qreal opacity)
 {
     m_labels->setOpacity(opacity);
 }
 
-qreal Axis::labelsOpacity() const
+qreal ChartAxis::labelsOpacity() const
 {
     return m_labels->opacity();
 }
 
-void Axis::setShadesOpacity(qreal opacity)
+void ChartAxis::setShadesOpacity(qreal opacity)
 {
     m_shades->setOpacity(opacity);
 }
 
-qreal Axis::shadesOpacity() const
+qreal ChartAxis::shadesOpacity() const
 {
     return m_shades->opacity();
 }
 
-void Axis::setLabelsAngle(int angle)
+void ChartAxis::setLabelsAngle(int angle)
 {
     foreach(QGraphicsItem* item , m_labels->childItems()) {
           item->setRotation(angle);
@@ -181,56 +181,56 @@ void Axis::setLabelsAngle(int angle)
     m_labelsAngle=angle;
 }
 
-void Axis::setLabelsPen(const QPen &pen)
+void ChartAxis::setLabelsPen(const QPen &pen)
 {
     foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setPen(pen);
     }
 }
 
-void Axis::setLabelsBrush(const QBrush &brush)
+void ChartAxis::setLabelsBrush(const QBrush &brush)
 {
     foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setBrush(brush);
     }
 }
 
-void Axis::setLabelsFont(const QFont &font)
+void ChartAxis::setLabelsFont(const QFont &font)
 {
     foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setFont(font);
     }
 }
 
-void Axis::setShadesBrush(const QBrush &brush)
+void ChartAxis::setShadesBrush(const QBrush &brush)
 {
     foreach(QGraphicsItem* item , m_shades->childItems()) {
         static_cast<QGraphicsRectItem*>(item)->setBrush(brush);
     }
 }
 
-void Axis::setShadesPen(const QPen &pen)
+void ChartAxis::setShadesPen(const QPen &pen)
 {
     foreach(QGraphicsItem* item , m_shades->childItems()) {
         static_cast<QGraphicsRectItem*>(item)->setPen(pen);
     }
 }
 
-void Axis::setAxisPen(const QPen &pen)
+void ChartAxis::setAxisPen(const QPen &pen)
 {
     foreach(QGraphicsItem* item , m_axis->childItems()) {
            static_cast<QGraphicsLineItem*>(item)->setPen(pen);
     }
 }
 
-void Axis::setGridPen(const QPen &pen)
+void ChartAxis::setGridPen(const QPen &pen)
 {
     foreach(QGraphicsItem* item , m_grid->childItems()) {
         static_cast<QGraphicsLineItem*>(item)->setPen(pen);
     }
 }
 
-QVector<qreal> Axis::calculateLayout() const
+QVector<qreal> ChartAxis::calculateLayout() const
 {
     Q_ASSERT(m_ticksCount>=2);
 
@@ -261,7 +261,7 @@ QVector<qreal> Axis::calculateLayout() const
     return points;
 }
 
-void Axis::setLayout(QVector<qreal> &layout)
+void ChartAxis::setLayout(QVector<qreal> &layout)
 {
 	int diff = m_layoutVector.size() - layout.size();
 
@@ -377,20 +377,20 @@ void Axis::setLayout(QVector<qreal> &layout)
 
 }
 
-bool Axis::isEmpty()
+bool ChartAxis::isEmpty()
 {
     return m_rect.isEmpty() || qFuzzyIsNull(m_min - m_max) || m_ticksCount==0;
 }
 
 //handlers
 
-void Axis::handleAxisCategoriesUpdated()
+void ChartAxis::handleAxisCategoriesUpdated()
 {
     if (isEmpty()) return;
 	updateLayout(m_layoutVector);
 }
 
-void Axis::handleAxisUpdated()
+void ChartAxis::handleAxisUpdated()
 {
 
     if (isEmpty()) return;
@@ -430,7 +430,7 @@ void Axis::handleAxisUpdated()
 
 }
 
-void Axis::handleRangeChanged(qreal min, qreal max,int tickCount)
+void ChartAxis::handleRangeChanged(qreal min, qreal max,int tickCount)
 {
     if (qFuzzyIsNull(min - max) || tickCount < 2)
         return;
@@ -445,7 +445,7 @@ void Axis::handleRangeChanged(qreal min, qreal max,int tickCount)
 
 }
 
-void Axis::handleGeometryChanged(const QRectF &rect)
+void ChartAxis::handleGeometryChanged(const QRectF &rect)
 {
     if(m_rect != rect)
     {
@@ -456,11 +456,11 @@ void Axis::handleGeometryChanged(const QRectF &rect)
     }
 }
 
-void Axis::axisSelected()
+void ChartAxis::axisSelected()
 {
     qDebug()<<"TODO: axis clicked";
 }
 
-#include "moc_axis_p.cpp"
+#include "moc_chartaxis_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
