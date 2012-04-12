@@ -10,7 +10,7 @@ local_build:{
     message('You can run "make" to build qchart library, examples and demos...')
 } else {
     message('Running build aginst system libs...')
-    message('Bulding only charts library...')
+    message('Building only charts library...')
     message('You can run "make install" to build and install charts.')
     message('Afterwards you can run "cd examples; qmake ; make " to build examples.')
     message('Run qmake CONFIG+=local_build' to build everything at once.)
