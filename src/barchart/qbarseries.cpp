@@ -163,17 +163,6 @@ void QBarSeries::removeBarSets(QList<QBarSet* > sets)
 }
 
 /*!
-    Inserts new \a set on the \a i position.
-    The barset that is currently at this postion is moved to postion i + 1
-*/
-void QBarSeries::insertBarSet(int i, QBarSet *set)
-{
-    Q_D(QBarSeries);
-    d->m_barSets.insert(i,set);
-    emit d->barsetChanged();
-}
-
-/*!
     Returns number of sets in series.
 */
 int QBarSeries::barsetCount() const

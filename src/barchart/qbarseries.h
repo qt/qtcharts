@@ -48,7 +48,6 @@ public:
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
     void appendBarSets(QList<QBarSet* > sets);
     void removeBarSets(QList<QBarSet* > sets);
-    void insertBarSet(int i, QBarSet *set);
     int barsetCount() const;
     int categoryCount() const;
     QList<QBarSet*> barSets() const;
