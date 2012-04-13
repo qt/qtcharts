@@ -70,7 +70,6 @@ public:
     // model map
     int m_mapValues;
     int m_mapLabels;
-    Qt::Orientation m_mapOrientation;
 
 private:
     friend class QLegendPrivate;

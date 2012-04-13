@@ -226,8 +226,7 @@ QBarSeriesPrivate::QBarSeriesPrivate(QBarCategories categories, QBarSeries *q) :
     m_categories(categories),
     m_mapCategories(-1),
     m_mapBarBottom(-1),
-    m_mapBarTop(-1),
-    m_mapOrientation(Qt::Vertical)
+    m_mapBarTop(-1)
 {
 }
 

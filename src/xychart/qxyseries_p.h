@@ -70,7 +70,6 @@ protected:
 
     int m_mapX;
     int m_mapY;
-    Qt::Orientation m_mapOrientation;
     bool m_pointsVisible;
 
 private:

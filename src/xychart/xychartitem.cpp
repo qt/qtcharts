@@ -25,6 +25,7 @@
 #include "chartanimator_p.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
+#include <QAbstractItemModel>
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -189,6 +190,67 @@ void XYChartItem::handlePointsRemoved(int start, int end)
 {
     Q_UNUSED(start)
     Q_UNUSED(end)
+    if (m_series->model() == 0) {
+        for (int i = end; i >= start; i--)
+            handlePointRemoved(i);
+    } else {
+        // series uses model as a data source
+        int first = m_series->mapFirst();
+        int count = m_series->mapCount();
+        int removedCount = end - start + 1;
+        if (count != -1 && start >= first + count) {
+            return;
+        }
+
+        // removing items from unlimited map
+        else if (count == -1 && start >= first) {
+            for (int i = end; i >= start; i--)
+                handlePointRemoved(i - first);
+        } else if (count == - 1 && start < first) {
+            // not all removed items
+            for (int i = first + removedCount - 1; i >= first; i--)
+                handlePointRemoved(i - first);
+        }
+
+        // removing items from limited map
+        else if (start >= first) {
+            //
+            int lastExisting = qMin(first + m_points.size() - 1, end);
+            for (int i = lastExisting; i >= start; i--) {
+                handlePointRemoved(i - first);
+            }
+
+            // the map is limited, so after removing the items some new items may have fall into the map
+            int itemsAvailable;
+            if (m_series->mapOrientation() == Qt::Vertical)
+                itemsAvailable = m_series->model()->rowCount() - first - m_points.size();
+            else
+                itemsAvailable = m_series->model()->columnCount() - first - m_points.size();
+            int toBeAdded = qMin(itemsAvailable, count - m_points.size());
+            int currentSize = m_points.size();
+            if (itemsAvailable > 0)
+                for (int i = m_points.size(); i < currentSize + toBeAdded; i++)
+                    handlePointAdded(i);
+        } else {
+            // TODO:
+            int toRemove = qMin(m_points.size() - 1, removedCount);
+            for (int i = first; i < first + toRemove; i++)
+                handlePointRemoved(0);
+
+            // the map is limited, so after removing the items some new items may have fall into the map
+            int itemsAvailable;
+            if (m_series->mapOrientation() == Qt::Vertical)
+                itemsAvailable = m_series->model()->rowCount() - first - m_points.size();
+            else
+                itemsAvailable = m_series->model()->columnCount() - first - m_points.size();
+            int toBeAdded = qMin(itemsAvailable, count - m_points.size());
+            int currentSize = m_points.size();
+            if (itemsAvailable > 0)
+                for (int i = m_points.size(); i < currentSize + toBeAdded; i++)
+                    handlePointAdded(i);
+        }
+    }
+
 }
 
 void XYChartItem::handlePointReplaced(int index)

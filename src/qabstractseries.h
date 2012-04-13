@@ -59,6 +59,7 @@ public:
     QAbstractItemModel* model() const;
     int mapFirst() const;
     int mapCount() const;
+    int mapOrientation() const;
     void setName(const QString& name);
     QString name() const;
 

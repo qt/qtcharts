@@ -475,8 +475,7 @@ QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent) :
     m_pieEndAngle(360),
     m_sum(0),
     m_mapValues(0),
-    m_mapLabels(0),
-    m_mapOrientation(Qt::Vertical)
+    m_mapLabels(0)
 {
 
 }

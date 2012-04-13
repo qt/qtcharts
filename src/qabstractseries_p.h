@@ -58,6 +58,7 @@ protected:
     QAbstractItemModel *m_model;
     int m_mapFirst;
     int m_mapCount;
+    Qt::Orientation m_mapOrientation;
     QString m_name;
 
     friend class QAbstractSeries;

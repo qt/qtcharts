@@ -51,7 +51,6 @@ protected:
     int m_mapCategories;
     int m_mapBarBottom;
     int m_mapBarTop;
-    Qt::Orientation m_mapOrientation;
 private:
     Q_DECLARE_PUBLIC(QBarSeries)
 };

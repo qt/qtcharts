@@ -430,7 +430,6 @@ void QXYSeries::setModelMappingRange(int first, int count)
 QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q) : QAbstractSeriesPrivate(q),
     m_mapX(-1),
     m_mapY(-1),
-    m_mapOrientation( Qt::Vertical),
     m_pointsVisible(false)
 {
 }
