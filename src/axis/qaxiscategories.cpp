@@ -23,6 +23,16 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \class QAxisCategories
+    \brief The QAxisCategoriess class is used for manipulating axis's categories.
+    \mainclass
+
+    Each axis can have categories instead of numerical representation. The typical use case
+    is bar chart, where categories are always show on X axis.
+*/
+
+
 QAxisCategories::QAxisCategories():
 d_ptr(new QAxisCategoriesPrivate(this))
 {
@@ -34,6 +44,9 @@ QAxisCategories::~QAxisCategories()
 
 }
 
+/*!
+  Inserts bar \a categories.
+ */
 void QAxisCategories::insert(const QBarCategories &categories)
 {
     int i=1;
@@ -44,34 +57,52 @@ void QAxisCategories::insert(const QBarCategories &categories)
     emit d_ptr->updated();
 }
 
+/*!
+  Inserts category, instead of \a value on axis a \a label will be shown.
+ */
 void QAxisCategories::insert(qreal value,QString label)
 {
     d_ptr->m_map.insert(value,label);
     emit d_ptr->updated();
 }
 
+/*!
+  Removes category for \a value.
+ */
 void QAxisCategories::remove(qreal value)
 {
     d_ptr->m_map.remove(value);
     emit d_ptr->updated();
 }
 
+/*!
+  Removes all categories.
+ */
 void QAxisCategories::clear()
 {
     d_ptr->m_map.clear();
     emit d_ptr->updated();
 }
 
+/*!
+  Returns number of categories.
+ */
 int QAxisCategories::count()
 {
     return d_ptr->m_map.count();
 }
 
+/*!
+  Returns all values of categories.
+ */
 QList<qreal> QAxisCategories::values() const
 {
     return d_ptr->m_map.keys();
 }
 
+/*!
+  Returns label for given \a value.
+ */
 QString QAxisCategories::label(qreal value) const
 {
     return d_ptr->m_map.value(value);
