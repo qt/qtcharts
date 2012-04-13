@@ -141,9 +141,9 @@ QMAKE_EXTRA_COMPILERS += install_build_public_headers \
     
 
 win32:{
-   bintarget.files = ..\\lib\\*.dll ..\\lib\\*.pdb
+   bintarget.files = $$CHART_BUILD_LIB_DIR\\*.dll $$CHART_BUILD_LIB_DIR\\*.pdb
    bintarget.path = $$[QT_INSTALL_BINS]
-   libtarget.files = ..\\lib\\*.a ..\\lib\\*.prl ..\\lib\\*.lib
+   libtarget.files = $$CHART_BUILD_LIB_DIR\\*.a $$CHART_BUILD_LIB_DIR\\*.prl $$CHART_BUILD_LIB_DIR\\*.lib
    libtarget.path = $$[QT_INSTALL_LIBS]
    DLLDESTDIR = $$CHART_BUILD_BIN_DIR
    INSTALLS += bintarget libtarget
