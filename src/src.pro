@@ -139,18 +139,18 @@ install_build_private_headers.CONFIG += target_predeps \
 QMAKE_EXTRA_COMPILERS += install_build_public_headers \
     install_build_private_headers \
     
-target.path=$$[QT_INSTALL_LIBS]
-INSTALLS += target
 
 win32:{
-   dlltarget.commands = $(COPY_FILE) $(DESTDIR_TARGET) $$[QT_INSTALL_BINS]
+   bintarget.files = ..\\lib\\*.dll ..\\lib\\*.pdb
+   bintarget.path = $$[QT_INSTALL_BINS]
+   libtarget.files = ..\\lib\\*.a ..\\lib\\*.prl ..\\lib\\*.lib
+   libtarget.path = $$[QT_INSTALL_LIBS]
    DLLDESTDIR = $$CHART_BUILD_BIN_DIR
-   dlltarget.path=$$[QT_INSTALL_BINS]
-   target.files = ..\\lib\\*.a ..\\lib\\*.prl
-   INSTALLS += dlltarget
-}    
-    
-    
+   INSTALLS += bintarget libtarget
+}else{
+   target.path=$$[QT_INSTALL_LIBS]
+   INSTALLS += target
+}
 ################################ DEVELOPMENT BUILD ##########################################    
 # There is a problem with jom.exe currently. It does not seem to understand QMAKE_EXTRA_TARGETS properly.
 # This is the case at least with shadow builds.
