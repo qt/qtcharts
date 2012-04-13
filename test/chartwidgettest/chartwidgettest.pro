@@ -17,4 +17,4 @@ HEADERS += \
     mainwidget.h \
     dataseriedialog.h
 
-!system:mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_TESTS_BIN_DIR"
+!system_build:mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_TESTS_BIN_DIR"

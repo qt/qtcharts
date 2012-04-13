@@ -9,4 +9,4 @@ HEADERS = themewidget.h
 #    CHARTS_LIB_NAME = "lib"$$LIBRARY_NAME".1.dylib"
 #}
 
-!system:mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_DEMOS_BIN_DIR"
+!system_build:mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_DEMOS_BIN_DIR"
