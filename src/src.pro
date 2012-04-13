@@ -7,7 +7,7 @@ DESTDIR = $$CHART_BUILD_LIB_DIR
 TEMPLATE = lib
 QT = core gui
 DEFINES += QTCOMMERCIALCHART_LIBRARY
-win32:CONFIG+=create_prl
+win32:CONFIG += create_prl
 # treat warnings as errors
 win32-msvc*: {
     QMAKE_CXXFLAGS += /WX
@@ -146,7 +146,7 @@ win32:{
    dlltarget.commands = $(COPY_FILE) $(DESTDIR_TARGET) $$[QT_INSTALL_BINS]
    DLLDESTDIR = $$CHART_BUILD_BIN_DIR
    dlltarget.path=$$[QT_INSTALL_BINS]
-   target.files= ..\\lib\\*.a ..\\lib\\*.prl
+   target.files = ..\\lib\\*.a ..\\lib\\*.prl
    INSTALLS += dlltarget
 }    
     
