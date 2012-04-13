@@ -100,12 +100,14 @@ for(file, PUBLIC_HEADERS) {
 public_headers.path = $$[QT_INSTALL_HEADERS]/QtCommercialChart
 public_headers.files = $$PUBLIC_HEADERS $$PUBLIC_QT_HEADERS
 
-win32:{
-    target.path = $$[QT_INSTALL_BINS]
-}else{
-    target.path = $$[QT_INSTALL_LIBS]
+dlltarget.commands = $(COPY_FILE) $(DESTDIR_TARGET) $$[QT_INSTALL_BINS]
+
+win32 {
+   dlltarget.path=$$[QT_INSTALL_BINS]
+   INSTALLS += dlltarget
 }
 
+target.path=$$[QT_INSTALL_LIBS]
 INSTALLS += target public_headers
 
 install_build_public_headers.name = build_public_headers
