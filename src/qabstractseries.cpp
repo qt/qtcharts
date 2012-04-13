@@ -101,6 +101,15 @@ QAbstractItemModel* QAbstractSeries::model() const
     return d_ptr->m_model;
 }
 
+int QAbstractSeries::mapFirst() const
+{
+    return d_ptr->m_mapFirst;
+}
+int QAbstractSeries::mapCount() const
+{
+    return d_ptr->m_mapCount;
+}
+
 void QAbstractSeries::setName(const QString& name)
 {
     d_ptr->m_name = name;
@@ -117,7 +126,11 @@ QString QAbstractSeries::name() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q): q_ptr(q),m_model(0)
+QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q):
+    q_ptr(q),
+    m_model(0),
+    m_mapFirst(0),
+    m_mapCount(-1)
 {
 }
 

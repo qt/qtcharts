@@ -52,6 +52,7 @@ TableWidget::TableWidget(QWidget *parent)
     //    tableView->setItemDelegate(new QStyledItemDelegate);
     m_chart = new QChart;
     m_chart->legend()->setVisible(true);
+//    m_chart->setAnimationOptions(QChart::SeriesAnimations);
     m_chartView = new QChartView(m_chart);
     m_chartView->setRenderHint(QPainter::Antialiasing);
     m_chartView->setMinimumSize(640, 480);
@@ -169,10 +170,10 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QLineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(0,1, Qt::Vertical);
-//            m_series->setModelMappingRange(1, 4);
+            m_series->setModelMappingRange(4, 4);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 1, 2, 4));
+            m_model->addMapping(seriesColorHex, QRect(0, 4, 2, 4));
 
             // series 2
             m_series = new QLineSeries;
@@ -186,7 +187,7 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QLineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(4,5, Qt::Vertical);
-//            m_series->setModelMappingRange(2, 0);
+            m_series->setModelMappingRange(2, -1);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(4, 2, 2, 1000));

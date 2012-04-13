@@ -40,7 +40,9 @@ XYChartItem::XYChartItem(QXYSeries *series, ChartPresenter *presenter):ChartItem
 {
     connect(series->d_func(),SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
     connect(series->d_func(),SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
+    connect(series->d_func(),SIGNAL(pointsAdded(int, int)),this,SLOT(handlePointsAdded(int, int)));
     connect(series->d_func(),SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
+    connect(series->d_func(),SIGNAL(pointsRemoved(int, int)),this,SLOT(handlePointsRemoved(int, int)));
     connect(this,SIGNAL(clicked(QPointF)),series,SIGNAL(clicked(QPointF)));
 }
 
@@ -106,8 +108,10 @@ void XYChartItem::setLayout(QVector<QPointF> &points)
 
 void XYChartItem::handlePointAdded(int index)
 {
-    Q_ASSERT(index<m_series->count());
-    Q_ASSERT(index>=0);
+    if (m_series->model() == 0) {
+        Q_ASSERT(index<m_series->count());
+        Q_ASSERT(index>=0);
+    }
     QVector<QPointF> points = m_points;
     QPointF point;
     point = calculateGeometryPoint(index);
@@ -115,14 +119,76 @@ void XYChartItem::handlePointAdded(int index)
     updateLayout(m_points, points, index);
     update();
 }
+
+void XYChartItem::handlePointsAdded(int start, int end)
+{
+    if (m_series->model() == 0) {
+        for (int i = start; i <= end; i++)
+            handlePointAdded(i);
+    } else {
+        // series uses model as a data source
+        int first = m_series->mapFirst();
+        int count = m_series->mapCount();
+        int addedCount = end - start + 1;
+        if (count != -1 && start >= first + count) {
+            return;
+        }
+
+        // adding items to unlimited map
+        else if (count == -1 && start >= first) {
+            for (int i = start; i <= end; i++)
+                handlePointAdded(i - first);
+        } else if (count == - 1 && start < first) {
+            // not all newly added items
+            for (int i = first; i < first + addedCount; i++)
+                handlePointAdded(i - first);
+        }
+        // commented out code below does the same thing, but its more confusing.
+        //        } else if (count == -1) {
+        //            int begin = qMax(start, first);
+        //            for (int i = begin; i < begin + (end - start + 1); i++)
+        //                handlePointAdded(i - first);
+        //        }
+
+        // adding items to limited map
+        else if (start >= first) {
+            // remove the items that will no longer fit into the map
+            // int toRemove = addedCount - (count - points().size());
+            for (int i = start; i <= end; i++) {
+                handlePointAdded(i - first);
+            }
+            if (m_points.size() > count)
+                for (int i = m_points.size() - 1; i >= count; i--)
+                    handlePointRemoved(i);
+            //            update();
+        } else {
+            //
+            for (int i = first; i < first + addedCount; i++) {
+                handlePointAdded(i - first);
+            }
+            if (m_points.size() > count)
+                for (int i = m_points.size() - 1; i >= count; i--)
+                    handlePointRemoved(i);
+        }
+    }
+}
+
 void XYChartItem::handlePointRemoved(int index)
 {
-    Q_ASSERT(index<m_series->count() + 1);
-    Q_ASSERT(index>=0);
+    if (m_series->model() == 0) {
+        Q_ASSERT(index<m_series->count() + 1);
+        Q_ASSERT(index>=0);
+    }
     QVector<QPointF> points = m_points;
     points.remove(index);
     updateLayout(m_points, points, index);
     update();
+}
+
+void XYChartItem::handlePointsRemoved(int start, int end)
+{
+    Q_UNUSED(start)
+    Q_UNUSED(end)
 }
 
 void XYChartItem::handlePointReplaced(int index)

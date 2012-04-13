@@ -57,6 +57,8 @@ public:
     virtual QSeriesType type() const = 0;
     virtual bool setModel(QAbstractItemModel* model) = 0;
     QAbstractItemModel* model() const;
+    int mapFirst() const;
+    int mapCount() const;
     void setName(const QString& name);
     QString name() const;
 

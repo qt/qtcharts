@@ -56,6 +56,8 @@ public:
 protected:
     QAbstractSeries *q_ptr;
     QAbstractItemModel *m_model;
+    int m_mapFirst;
+    int m_mapCount;
     QString m_name;
 
     friend class QAbstractSeries;
