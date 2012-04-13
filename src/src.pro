@@ -1,13 +1,27 @@
 !include( ../config.pri ):error( Couldn't find the config.pri file! )
 
+############################# BUILD CONFIG ######################################
+
 TARGET = $$LIBRARY_NAME
 DESTDIR = $$CHART_BUILD_LIB_DIR
 TEMPLATE = lib
 QT = core gui
+DEFINES += QTCOMMERCIALCHART_LIBRARY
+win32:CONFIG+=create_prl
+# treat warnings as errors
+win32-msvc*: {
+    QMAKE_CXXFLAGS += /WX
+} else {
+    QMAKE_CXXFLAGS += -Werror
+}
+
+############################# DEPEDENCES ########################################
 
 win32-msvc*: LIBS += User32.lib
- 
 LIBS -= -l$$LIBRARY_NAME
+INCLUDEPATH += ../include .
+
+############################# SOURCES ##########################################
  
 SOURCES += \
     $$PWD/chartdataset.cpp \
@@ -54,15 +68,16 @@ include(xychart/xychart.pri)
 HEADERS += $$PUBLIC_HEADERS
 HEADERS += $$PRIVATE_HEADERS
 HEADERS += $$THEMES
-INCLUDEPATH += ../include .
+
+############################# BUILD PATH ##########################################
     
 OBJECTS_DIR = $$CHART_BUILD_DIR/lib
 MOC_DIR = $$CHART_BUILD_DIR/lib
 UI_DIR = $$CHART_BUILD_DIR/lib
 RCC_DIR = $$CHART_BUILD_DIR/lib
-DEFINES += QTCOMMERCIALCHART_LIBRARY
 
-#qt public headers
+############################# PUBLIC HEADERS GENERTOR ##########################################
+
 #this is very primitive and lame parser , TODO: make perl script insted
 !exists($$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal)
 {
@@ -97,18 +112,11 @@ for(file, PUBLIC_HEADERS) {
     }
 }
 
+############################# INSTALLERS ##########################################
+
 public_headers.path = $$[QT_INSTALL_HEADERS]/QtCommercialChart
 public_headers.files = $$PUBLIC_HEADERS $$PUBLIC_QT_HEADERS
-
-dlltarget.commands = $(COPY_FILE) $(DESTDIR_TARGET) $$[QT_INSTALL_BINS]
-
-win32 {
-   dlltarget.path=$$[QT_INSTALL_BINS]
-   INSTALLS += dlltarget
-}
-
-target.path=$$[QT_INSTALL_LIBS]
-INSTALLS += target public_headers
+INSTALLS += public_headers
 
 install_build_public_headers.name = build_public_headers
 install_build_public_headers.output = $$CHART_BUILD_PUBLIC_HEADER_DIR/${QMAKE_FILE_BASE}.h
@@ -131,6 +139,19 @@ install_build_private_headers.CONFIG += target_predeps \
 QMAKE_EXTRA_COMPILERS += install_build_public_headers \
     install_build_private_headers \
     
+target.path=$$[QT_INSTALL_LIBS]
+INSTALLS += target
+
+win32:{
+   dlltarget.commands = $(COPY_FILE) $(DESTDIR_TARGET) $$[QT_INSTALL_BINS]
+   DLLDESTDIR = $$CHART_BUILD_BIN_DIR
+   dlltarget.path=$$[QT_INSTALL_BINS]
+   target.files= ..\\lib\\*.a ..\\lib\\*.prl
+   INSTALLS += dlltarget
+}    
+    
+    
+################################ DEVELOPMENT BUILD ##########################################    
 # There is a problem with jom.exe currently. It does not seem to understand QMAKE_EXTRA_TARGETS properly.
 # This is the case at least with shadow builds.
 # http://qt-project.org/wiki/jom
@@ -163,6 +184,8 @@ development_build:!win32-msvc*:{
     QMAKE_EXTRA_TARGETS += chartversion
 }
 
+############################### CLEAN ###########################################
+
 unix:QMAKE_DISTCLEAN += -r \
     $$CHART_BUILD_HEADER_DIR \
     $$CHART_BUILD_LIB_DIR
@@ -170,9 +193,3 @@ win32:QMAKE_DISTCLEAN += /Q \
     $$CHART_BUILD_HEADER_DIR \
     $$CHART_BUILD_LIB_DIR
 
-# treat warnings as errors
-win32-msvc*: {
-    QMAKE_CXXFLAGS += /WX
-} else {
-    QMAKE_CXXFLAGS += -Werror
-}
