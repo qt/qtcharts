@@ -73,6 +73,7 @@ public:
 
     bool setModel(QAbstractItemModel* model);
     void setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation = Qt::Vertical);
+    void setModelMappingRange(int first, int count = -1);
 
 Q_SIGNALS:
     void clicked(QPieSlice* slice);

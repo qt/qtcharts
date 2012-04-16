@@ -220,7 +220,7 @@ void XYChartItem::handlePointsRemoved(int start, int end)
                 handlePointRemoved(i - first);
             }
 
-            // the map is limited, so after removing the items some new items may have fall into the map
+            // the map is limited, so after removing the items some new items may have fall within the mapped area
             int itemsAvailable;
             if (m_series->mapOrientation() == Qt::Vertical)
                 itemsAvailable = m_series->model()->rowCount() - first - m_points.size();
@@ -232,7 +232,7 @@ void XYChartItem::handlePointsRemoved(int start, int end)
                 for (int i = m_points.size(); i < currentSize + toBeAdded; i++)
                     handlePointAdded(i);
         } else {
-            // TODO:
+            // first removed item lays before the mapped area
             int toRemove = qMin(m_points.size() - 1, removedCount);
             for (int i = first; i < first + toRemove; i++)
                 handlePointRemoved(0);

@@ -45,7 +45,7 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
     QVector<QRectF> endVector = qVariantValue<QVector<QRectF> >(to);
     QVector<QRectF> result;
 
-    Q_ASSERT(startVector.count() == endVector.count()) ;
+    Q_ASSERT(startVector.count() == endVector.count());
 
     for(int i = 0; i < startVector.count(); i++) {
         qreal w = endVector[i].width();

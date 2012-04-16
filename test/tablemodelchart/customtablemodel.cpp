@@ -43,7 +43,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
     // m_data
-    for (int i = 0; i < 6; i++)
+    for (int i = 0; i < 8; i++)
     {
         QVector<qreal>* dataVec = new QVector<qreal>(6);
 //        QVector<QColor>* colorVec = new QVector<QColor>(6);

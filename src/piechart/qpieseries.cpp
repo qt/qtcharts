@@ -449,18 +449,26 @@ void QPieSeries::setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::O
     d->m_mapLabels = modelLabelsLine;
     d->m_mapOrientation = orientation;
 
-    // connect the signals
-    connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+    d->initializePieFromModel();
+    //    // connect the signals
+    //    connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
 
 
-    // create the initial slices set
-    if (d->m_mapOrientation == Qt::Vertical) {
-        for (int i = 0; i < d->m_model->rowCount(); i++)
-            append(d->m_model->data(d->m_model->index(i, d->m_mapValues), Qt::DisplayRole).toDouble(), d->m_model->data(d->m_model->index(i, d->m_mapLabels), Qt::DisplayRole).toString());
-    } else {
-        for (int i = 0; i < d->m_model->columnCount(); i++)
-            append(d->m_model->data(d->m_model->index(d->m_mapValues, i), Qt::DisplayRole).toDouble(), d->m_model->data(d->m_model->index(d->m_mapLabels, i), Qt::DisplayRole).toString());
-    }
+    //    // create the initial slices set
+    //    if (d->m_mapOrientation == Qt::Vertical) {
+    //        for (int i = 0; i < d->m_model->rowCount(); i++)
+    //            append(d->m_model->data(d->m_model->index(i, d->m_mapValues), Qt::DisplayRole).toDouble(), d->m_model->data(d->m_model->index(i, d->m_mapLabels), Qt::DisplayRole).toString());
+    //    } else {
+    //        for (int i = 0; i < d->m_model->columnCount(); i++)
+    //            append(d->m_model->data(d->m_model->index(d->m_mapValues, i), Qt::DisplayRole).toDouble(), d->m_model->data(d->m_model->index(d->m_mapLabels, i), Qt::DisplayRole).toString());
+    //    }
+}
+
+void QPieSeries::setModelMappingRange(int first, int count)
+{
+    Q_D(QPieSeries);
+    d->m_mapFirst = first;
+    d->m_mapCount = count;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -553,37 +561,243 @@ void QPieSeriesPrivate::sliceHovered(bool state)
 
 void QPieSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
-    Q_UNUSED(bottomRight)
-
-    if (m_mapOrientation == Qt::Vertical)
-    {
-        if (topLeft.column() == m_mapValues)
-            if (m_mapValues == m_mapLabels)
+    for (int row = topLeft.row(); row <= bottomRight.row(); row++) {
+        for (int column = topLeft.column(); column <= bottomRight.column(); column++) {
+            if (m_mapOrientation == Qt::Vertical)
             {
-                m_slices.at(topLeft.row())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-                m_slices.at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+                if ( topLeft.row() >= m_mapFirst && (m_mapCount == - 1 || topLeft.row() < m_mapFirst + m_mapCount)) {
+                    if (topLeft.column() == m_mapValues)
+                        m_slices.at(topLeft.row() - m_mapFirst)->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+                    if (topLeft.column() == m_mapLabels)
+                        m_slices.at(topLeft.row() - m_mapFirst)->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+                }
             }
             else
             {
-                m_slices.at(topLeft.row())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+                if (topLeft.column() >= m_mapFirst && (m_mapCount == - 1 || topLeft.column() < m_mapFirst + m_mapCount)) {
+                    if (topLeft.row() == m_mapValues)
+                        m_slices.at(topLeft.column() - m_mapFirst)->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+                    if (topLeft.row() == m_mapLabels)
+                        m_slices.at(topLeft.column() - m_mapFirst)->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+                }
             }
-        else if (topLeft.column() == m_mapLabels)
-            m_slices.at(topLeft.row())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+        }
     }
-    else
-    {
-        if (topLeft.row() == m_mapValues)
-            if (m_mapValues == m_mapLabels)
-            {
-                m_slices.at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-                m_slices.at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+}
+
+
+void QPieSeriesPrivate::modelDataAdded(QModelIndex parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    Q_Q(QPieSeries);
+    // series uses model as a data sourceupda
+    int addedCount = end - start + 1;
+    if (m_mapCount != -1 && start >= m_mapFirst + m_mapCount) {
+        return;
+    } else {
+        int first = qMax(start, m_mapFirst);
+        int last = qMin(first + addedCount - 1, end);
+        for (int i = first; i <= last; i++) {
+            QPieSlice *slice = new QPieSlice;
+            if (m_mapOrientation == Qt::Vertical) {
+                slice->setValue(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble());
+                slice->setLabel(m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
+            } else {
+                slice->setValue(m_model->data(m_model->index(m_mapValues, i), Qt::DisplayRole).toDouble());
+                slice->setLabel(m_model->data(m_model->index(m_mapLabels, i), Qt::DisplayRole).toString());
             }
-            else
-            {
-                m_slices.at(topLeft.column())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
+            slice->setLabelVisible();
+            q->insert(i - m_mapFirst, slice);
+        }
+        if (m_mapCount != -1 && m_slices.size() > m_mapCount)
+            for (int i = m_slices.size() - 1; i >= m_mapCount; i--)
+                q->remove(q->slices().at(i));
+    }
+
+    //    // adding items to unlimited map
+    //    else if (m_mapCount == -1 && start >= m_mapFirst) {
+    //        for (int i = start; i <= end; i++) {
+    //            QPieSlice *slice = new QPieSlice;
+    //            slice->setValue(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble());
+    //            slice->setLabel(m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
+    //            slice->setLabelVisible(true);
+    //            q->insert(i - m_mapFirst, slice);
+    //            //            handlePointAdded(i - first);
+    //        }
+    //    } else if (m_mapCount == - 1 && start < m_mapFirst) {
+    //        // not all newly added items
+    //        for (int i = m_mapFirst; i < m_mapFirst + addedCount; i++) {
+    //            QPieSlice *slice = new QPieSlice;
+    //            slice->setValue(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble());
+    //            slice->setLabel(m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
+    //            slice->setLabelVisible(true);
+    //            q->insert(i - m_mapFirst, slice);
+    //            //            handlePointAdded(i - first);
+    //        }
+    //    }
+
+    //    // adding items to limited map
+    //    else if (start >= m_mapFirst) {
+    //        // remove the items that will no longer fit into the map
+    //        // int toRemove = addedCount - (count - points().size());
+    //        for (int i = start; i <= end; i++) {
+    //            QPieSlice *slice = new QPieSlice;
+    //            slice->setValue(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble());
+    //            slice->setLabel(m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
+    //            slice->setLabelVisible(true);
+    //            q->insert(i - m_mapFirst, slice);
+    //        }
+    //        if (m_slices.size() > m_mapCount)
+    //            for (int i = m_slices.size() - 1; i >= m_mapCount; i--)
+    //                q->remove(q->slices().at(i));
+    //        //                handlePointRemoved(i);
+    //        //            update();
+    //    } else {
+    //        //
+    //        for (int i = m_mapFirst; i < m_mapFirst + addedCount; i++) {
+    //            QPieSlice *slice = new QPieSlice;
+    //            slice->setValue(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble());
+    //            slice->setLabel(m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
+    //            slice->setLabelVisible(true);
+    //            q->insert(i - m_mapFirst, slice);
+    //            //            handlePointAdded(i - first);
+    //        }
+    //        if (m_slices.size() > m_mapCount)
+    //            for (int i = m_slices.size() - 1; i >= m_mapCount; i--)
+    //                q->remove(q->slices().at(i));
+    //        //                handlePointRemoved(i);
+    //    }
+}
+
+void QPieSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    Q_Q(QPieSeries);
+    int removedCount = end - start + 1;
+    if (m_mapCount != -1 && start >= m_mapFirst + m_mapCount) {
+        return;
+    }
+
+//    else if (m_mapCount == -1) {
+//        int first = qMax(start, m_mapFirst);
+//        int last = qMax(end, m_mapFirst + removedCount - 1);
+//        for (int i = last; i >= first; i--)
+//            q->remove(q->slices().at(i - m_mapFirst));
+//    }
+//    else {
+//        int toRemove = qMin(m_slices.size() - 1, removedCount);
+//        int first = qMax(start, m_mapFirst);
+//        int last = qMax(end, m_mapFirst + toRemove - 1);
+
+//    }
+
+    // removing items from unlimited map
+    else if (m_mapCount == -1 && start >= m_mapFirst) {
+        for (int i = end; i >= start; i--)
+            q->remove(q->slices().at(i - m_mapFirst));
+        //            handlePointRemoved(i - m_mapFirst);
+    } else if (m_mapCount == - 1 && start < m_mapFirst) {
+        // not all removed items
+        for (int i = m_mapFirst + removedCount - 1; i >= m_mapFirst; i--)
+            q->remove(q->slices().at(i - m_mapFirst));
+        //            handlePointRemoved(i - m_mapFirst);
+    }
+
+    // removing items from limited map
+    else if (start >= m_mapFirst) {
+        //
+//        int sizeAfter = m_slices.size();
+        int lastExisting = qMin(m_mapFirst + m_slices.size() - 1, end);
+        for (int i = lastExisting; i >= start; i--) {
+            q->remove(q->slices().at(i - m_mapFirst));
+//            sizeAfter--;
+            //            handlePointRemoved(i - m_mapFirst);
+        }
+
+        // the map is limited, so after removing the items some new items may have fall within the mapped area
+        int itemsAvailable;
+        if (m_mapOrientation == Qt::Vertical)
+            itemsAvailable = m_model->rowCount() - m_mapFirst - m_slices.size();
+        else
+            itemsAvailable = m_model->columnCount() - m_mapFirst - m_slices.size();
+        int toBeAdded = qMin(itemsAvailable, m_mapCount - m_slices.size());
+        int currentSize = m_slices.size();
+        if (itemsAvailable > 0)
+            for (int i = m_slices.size() + m_mapFirst; i < currentSize + toBeAdded + m_mapFirst; i++) {
+                //                handlePointAdded(i);
+                QPieSlice *slice = new QPieSlice;
+                slice->setValue(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble());
+                slice->setLabel(m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
+                slice->setLabelVisible(true);
+                q->insert(i - m_mapFirst, slice);
             }
-        else if (topLeft.row() == m_mapLabels)
-            m_slices.at(topLeft.column())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
+
+        //        for (int i = lastExisting; i >= start; i--) {
+        //            q->remove(q->slices().at(i - m_mapFirst));
+        ////            sizeAfter--;
+        ////            handlePointRemoved(i - m_mapFirst);
+        //        }
+    } else {
+        // first remove item lays before the mapped area
+        int toRemove = qMin(m_slices.size(), removedCount);
+        for (int i = m_mapFirst; i < m_mapFirst + toRemove; i++)
+            q->remove(q->slices().at(0));
+        //            handlePointRemoved(0);
+
+        // the map is limited, so after removing the items some new items may have fall into the map
+        int itemsAvailable;
+        if (m_mapOrientation == Qt::Vertical)
+            itemsAvailable = m_model->rowCount() - m_mapFirst - m_slices.size();
+        else
+            itemsAvailable = m_model->columnCount() - m_mapFirst - m_slices.size();
+        int toBeAdded = qMin(itemsAvailable, m_mapCount - m_slices.size());
+        int currentSize = m_slices.size();
+        if (itemsAvailable > 0)
+            for (int i = m_slices.size(); i < currentSize + toBeAdded; i++) {
+                QPieSlice *slice = new QPieSlice;
+                slice->setValue(m_model->data(m_model->index(i + m_mapFirst, m_mapValues), Qt::DisplayRole).toDouble());
+                slice->setLabel(m_model->data(m_model->index(i + m_mapFirst, m_mapLabels), Qt::DisplayRole).toString());
+                slice->setLabelVisible(true);
+                q->insert(i, slice);
+                //                handlePointAdded(i);
+            }
+    }
+
+}
+
+void QPieSeriesPrivate::initializePieFromModel()
+{
+    Q_Q(QPieSeries);
+    // clear current content
+    q->clear();
+
+    // connect the signals
+    connect(m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+    if (m_mapOrientation == Qt::Vertical) {
+        connect(m_model,SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    } else {
+        connect(m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
+        connect(m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
+    }
+
+    // create the initial slices set
+    if (m_mapOrientation == Qt::Vertical) {
+        int sliceCount = 0;
+        if(m_mapCount == -1)
+            sliceCount = m_model->rowCount() - m_mapFirst;
+        else
+            sliceCount = qMin(m_mapCount, m_model->rowCount() - m_mapFirst);
+        for (int i = m_mapFirst; i < m_mapFirst + sliceCount; i++)
+            q->append(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
+    } else {
+        int sliceCount = 0;
+        if(m_mapCount == -1)
+            sliceCount = m_model->columnCount() - m_mapFirst;
+        else
+            sliceCount = qMin(m_mapCount, m_model->columnCount() - m_mapFirst);
+        for (int i = m_mapFirst; i < m_mapFirst + sliceCount; i++)
+            q->append(m_model->data(m_model->index(m_mapValues, i), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(m_mapLabels, i), Qt::DisplayRole).toString());
     }
 }
 

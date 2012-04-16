@@ -57,6 +57,7 @@ public:
 
     bool setModel(QAbstractItemModel *model);
     void setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
+    void setModelMappingRange(int first, int count = -1);
 
 protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);

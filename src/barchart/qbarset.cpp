@@ -110,7 +110,7 @@ QBarSet& QBarSet::operator << (const qreal &value)
 void QBarSet::insert(const int index, const qreal value)
 {
     d_ptr->m_values.insert(index, value);
-    emit d_ptr->updatedBars();
+//    emit d_ptr->updatedBars();
 }
 
 /*!
@@ -120,7 +120,7 @@ void QBarSet::insert(const int index, const qreal value)
 void QBarSet::remove(const int index)
 {
     d_ptr->m_values.removeAt(index);
-    emit d_ptr->updatedBars();
+//    emit d_ptr->updatedBars();
 }
 
 /*!

@@ -22,15 +22,17 @@
 #define TABLEWIDGET_H
 
 #include <QtGui/QWidget>
+//#include <QChartGlobal>
 #include "qchartview.h"
-#include "qxyseries.h"
-
-QTCOMMERCIALCHART_USE_NAMESPACE
+//#include "qxyseries.h"
+//#include <QPieSeries>
 
 class CustomTableModel;
 class QTableView;
 class QRadioButton;
 class QSpinBox;
+
+QTCOMMERCIALCHART_USE_NAMESPACE
 
 class TableWidget : public QWidget
 {
@@ -46,6 +48,7 @@ public:
     void addRowBelow();
     void removeRow();
     void updateChartType(bool toggle);
+    void testPie();
 
     private:
     QChartView* m_chartView;
@@ -60,6 +63,7 @@ public:
     QRadioButton* m_areaRadioButton;
     QRadioButton* m_barRadioButton;
     QSpinBox* m_linesCountSpinBox;
+    QPieSeries* specialPie;
 };
 
 #endif // TABLEWIDGET_H
