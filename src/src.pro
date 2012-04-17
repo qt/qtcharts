@@ -12,7 +12,11 @@ win32:CONFIG += create_prl
 win32-msvc*: {
     QMAKE_CXXFLAGS += /WX
 } else {
-    QMAKE_CXXFLAGS += -Werror -fvisibility=hidden -fvisibility-inlines-hidden
+    QMAKE_CXXFLAGS += -Werror 
+}
+
+unix:{
+  QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
 }
 
 ############################# DEPEDENCES ########################################
