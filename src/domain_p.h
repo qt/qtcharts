@@ -27,7 +27,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class Domain: public QObject {
+class QTCOMMERCIALCHART_AUTOTEST_EXPORT Domain: public QObject {
     Q_OBJECT
 public:
     explicit Domain(QObject* object=0);

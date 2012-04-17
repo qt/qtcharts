@@ -39,7 +39,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QAxis;
 class QBarSeries;
 
-class ChartDataSet : public QObject
+class QTCOMMERCIALCHART_AUTOTEST_EXPORT ChartDataSet : public QObject
 {
     Q_OBJECT
 public:

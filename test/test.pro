@@ -4,11 +4,8 @@
 
 TEMPLATE = subdirs
 SUBDIRS += \ 
+    auto \
     chartwidgettest \
     wavechart \
     gdpbarchart \
     tablemodelchart
-
-!win32:{
-    SUBDIRS += auto
-}

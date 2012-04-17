@@ -100,3 +100,10 @@ development_build: {
 } else {
     CONFIG += qtcommercialchart 
 }
+
+##################### UNIT TESTS ##############################################################
+
+CONFIG(debug, debug|release) {
+    CONFIG+=test_private
+    DEFINES+=BUILD_PRIVATE_UNIT_TESTS
+}
