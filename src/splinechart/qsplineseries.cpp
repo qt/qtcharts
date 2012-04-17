@@ -100,24 +100,19 @@ QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(
 };
 
 /*!
-  \internal
   Calculates control points which are needed by QPainterPath.cubicTo function to draw the cubic Bezier cureve between two points.
   */
 void QSplineSeriesPrivate::calculateControlPoints()
 {
 
     Q_Q(QSplineSeries);
-    // Based on http://www.codeproject.com/Articles/31859/Draw-a-Smooth-Curve-through-a-Set-of-2D-Points-wit
-    // CPOL License
 
     int n = q->count() - 1;
-    if (n == 1)
-    { // Special case: Bezier curve should be a straight line.
-        //            firstControlPoints = new Point[1];
-        // 3P1 = 2P0 + P3
-        m_controlPoints.append(QPointF((2 * q->x(0) + q->x(1)) / 3, (2 * q->y(0) + q->y(1)) / 3));
 
-        // P2 = 2P1  P0
+    if (n == 1)
+    {
+        //for n==1
+        m_controlPoints.append(QPointF((2 * q->x(0) + q->x(1)) / 3, (2 * q->y(0) + q->y(1)) / 3));
         m_controlPoints.append(QPointF(2 * m_controlPoints[0].x() - q->x(0), 2 * m_controlPoints[0].y() - q->y(0)));
         return;
     }
@@ -135,31 +130,31 @@ void QSplineSeriesPrivate::calculateControlPoints()
     //  |   0   0   0   0   0   0   0   0   ... 1   4   1   |   |   P1_(n-1)|   |   4 * P(n-2) + 2 * P(n-1) |
     //  |   0   0   0   0   0   0   0   0   ... 0   2   7   |   |   P1_n    |   |   8 * P(n-1) + Pn         |
     //
-    QList<qreal> rhs;
-    rhs.append(q->x(0) + 2 * q->x(1));
+    QList<qreal> points;
 
-    // Set right hand side X values
+    points.append(q->x(0) + 2 * q->x(1));
+
+
     for (int i = 1; i < n - 1; ++i)
-        rhs.append(4 * q->x(i) + 2 * q->x(i + 1));
+        points.append(4 * q->x(i) + 2 * q->x(i + 1));
 
-    rhs.append((8 * q->x(n - 1) + q->x(n)) / 2.0);
-    // Get first control points X-values
-    QList<qreal> xControl = getFirstControlPoints(rhs);
-    rhs[0] = q->y(0) + 2 * q->y(1);
+    points.append((8 * q->x(n - 1) + q->x(n)) / 2.0);
 
-    // Set right hand side Y values
-    for (int i = 1; i < n - 1; ++i)
-        rhs[i] = 4 * q->y(i) + 2 * q->y(i + 1);
+    QList<qreal> xControl = firstControlPoints(points);
+    points[0] = q->y(0) + 2 * q->y(1);
 
-    rhs[n - 1] = (8 * q->y(n - 1) + q->y(n)) / 2.0;
-    // Get first control points Y-values
-    QList<qreal> yControl = getFirstControlPoints(rhs);
+    for (int i = 1; i < n - 1; ++i) {
+        points[i] = 4 * q->y(i) + 2 * q->y(i + 1);
+    }
 
-    // Fill output arrays.
+    points[n - 1] = (8 * q->y(n - 1) + q->y(n)) / 2.0;
+
+    QList<qreal> yControl = firstControlPoints(points);
+
     for (int i = 0; i < n; ++i) {
-        // First control point
+
         m_controlPoints.append(QPointF(xControl[i], yControl[i]));
-        // Second control point
+
         if (i < n - 1)
             m_controlPoints.append(QPointF(2 * q->x(i + 1) - xControl[i + 1], 2 * q->y(i + 1) - yControl[i + 1]));
         else
@@ -167,31 +162,26 @@ void QSplineSeriesPrivate::calculateControlPoints()
     }
 }
 
-/*!
-  \internal
-  */
-QList<qreal> QSplineSeriesPrivate::getFirstControlPoints(QList<qreal> rhs)
+QList<qreal> QSplineSeriesPrivate::firstControlPoints(QList<qreal> list)
 {
-    QList<qreal> x; // Solution vector.
-    QList<qreal> tmp; // Temp workspace.
+    QList<qreal> result;
+    QList<qreal> temp;
 
     qreal b = 2.0;
-    x.append(rhs[0] / b);
-    tmp.append(0);
-    for (int i = 1; i < rhs.size(); i++) {
-        // Decomposition and forward substitution.
-        tmp.append(1 / b);
-        b = (i < rhs.size() - 1 ? 4.0 : 3.5) - tmp[i];
-        x.append((rhs[i] - x[i - 1]) / b);
+    result.append(list[0] / b);
+    temp.append(0);
+    for (int i = 1; i < list.size(); i++) {
+        temp.append(1 / b);
+        b = (i < list.size() - 1 ? 4.0 : 3.5) - temp[i];
+        result.append((list[i] - result[i - 1]) / b);
     }
-    for (int i = 1; i < rhs.size(); i++)
-        x[rhs.size() - i - 1] -= tmp[rhs.size() - i] * x[rhs.size() - i]; // Backsubstitution.
+    for (int i = 1; i < list.size(); i++)
+        result[list.size() - i - 1] -= temp[list.size() - i] * result[list.size() - i];
 
-    return x;
+    return result;
 }
 
 /*!
-  \internal
   Updates the control points, besed on currently avaiable knots.
   */
 void QSplineSeriesPrivate::updateControlPoints()

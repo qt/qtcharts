@@ -139,9 +139,9 @@ void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
                 m_state = Idle;
             }
             else {
-                m_speed /= 4;
+                m_speed /= 3.75;
                 m_state = Scroll;
-                m_ticker.start(20);
+                m_ticker.start(25);
             }
             event->accept();
             break;

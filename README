@@ -2,7 +2,6 @@
 Commercial Charts Add-on Preview
 --------------------------------
 
-
 Whats in Qt Commercial Charts
 =============================
 
@@ -19,19 +18,25 @@ demos/
     combine several chart types and implement interaction in charts
 doc/
     Documentation
-Licensing/
+licenses/
     Licensing infromation
 
-
-Building 
+Building
 ========
 
-qmake
-make (linux), mingw32-make (Windows with MinGw) or nmake (Visual Studio)
+Configure project with qmake:
+    qmake CONFIG+=release
+
+Build poject with make:
+    (Linux) make
+    (Windows with MinGw) mingw32-make
+    (Visual Studio) namke
 
 If you want to install the libraries to your Qt library directory use:
-make install
+    make install
 
+If you want to uninstall the libraries
+    make uninstall
 
 Documentation
 =============
@@ -41,27 +46,15 @@ into "doc/html" in the build directory.
 
 KNOWN ISSUES
 ============
-- General
-    * The preview version of Qt Commercial Charts is still under development 
+ * The preview version of Qt Commercial Charts is still under development
       and thus should not be used in e.g. product development
-    * The Charts API might change between the Preview and first official release
-    * Some areas will be refactored before the first official release
-    * Qt Designer plugin is missing
-	* Enable/disable tooltip is missing from the API
-
-- QML API
-    * The QML Bindings are still under development and to be considered as early preview
-	* All the current QML APIs are shown in qmlchart demo app
-    * If doing a developer build (not installing into your Qt instance) you
-	  need to copy qmldir file to the qmlplugin installation folder; it is not
-	  copied during build.
-
-- Model based
-
-- Bar Chart
-    * Modifying bar categories is not possible
-
-- Pie Chart
-    * Slice labels drawn on top of the label arm
-
-- Line Chart
+ * The Charts API might change between the Preview and first official release
+ * Some areas will be refactored before the first official release
+ * Qt Designer plugin is missing
+ * Enable/disable tooltip is missing from the API
+ * Mutliple axis are not suported at the moment.
+ * Logartmic, polar axis are not supported at the moment.
+ * Getting data from QAbstractItemModel is not feature complete.
+ * Interlnal layout hadnling is not working properly.
+ * The QML Bindings are still under development and to be considered as early draft
+ * All the current QML APIs are shown in qmlchart demo app

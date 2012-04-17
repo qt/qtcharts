@@ -42,7 +42,7 @@ public:
     Chart* createGraphics(ChartPresenter* presenter);
     QSplineSeriesPrivate(QSplineSeries* q);
     void calculateControlPoints();
-    QList<qreal> getFirstControlPoints(QList<qreal> rhs);
+    QList<qreal> firstControlPoints(QList<qreal> rhs);
 
 public Q_SLOTS:
     void updateControlPoints();
