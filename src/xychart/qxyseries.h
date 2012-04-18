@@ -42,21 +42,18 @@ protected:
 public:
     void append(qreal x, qreal y);
     void append(const QPointF &point);
-    void append(const QList<QPointF> points);
-    void replace(qreal x,qreal y);
-    void replace(const QPointF &point);
-    void remove(qreal x);
+    void append(const QList<QPointF> &points);
+    void replace(qreal oldX,qreal oldY,qreal newX,qreal newY);
+    void replace(const QPointF &oldPoint,const QPointF &newPoint);
     void remove(qreal x, qreal y);
     void remove(const QPointF &point);
     void removeAll();
 
     int count() const;
-    qreal x(int pos) const;
-    qreal y(int pos) const;
-    QList<QPointF> data();
+    QList<QPointF> points() const;
 
     QXYSeries& operator << (const QPointF &point);
-    QXYSeries& operator << (const QList<QPointF> points);
+    QXYSeries& operator << (const QList<QPointF> &points);
 
     void setPen(const QPen &pen);
     QPen pen() const;

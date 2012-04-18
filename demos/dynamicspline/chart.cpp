@@ -57,9 +57,10 @@ Chart::~Chart()
 void Chart::handleTimeout()
 {
     m_x += m_step;
+    qreal y = m_y;
     m_y = qrand() % 5 - 2.5;
     m_series->append(m_x, m_y);
     if (m_x >= 10)
-        m_series->remove(m_x - 10);
+        m_series->remove(m_x - 10,y);
     scrollRight();
 }

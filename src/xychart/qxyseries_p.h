@@ -62,8 +62,7 @@ Q_SIGNALS:
 
 
 protected:
-    QVector<qreal> m_x;
-    QVector<qreal> m_y;
+    QVector<QPointF> m_points;
 
     QPen m_pen;
     QBrush m_brush;

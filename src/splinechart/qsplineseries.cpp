@@ -105,15 +105,15 @@ QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(
 void QSplineSeriesPrivate::calculateControlPoints()
 {
 
-    Q_Q(QSplineSeries);
-
-    int n = q->count() - 1;
+    int n = m_points.count() - 1;
 
     if (n == 1)
     {
         //for n==1
-        m_controlPoints.append(QPointF((2 * q->x(0) + q->x(1)) / 3, (2 * q->y(0) + q->y(1)) / 3));
-        m_controlPoints.append(QPointF(2 * m_controlPoints[0].x() - q->x(0), 2 * m_controlPoints[0].y() - q->y(0)));
+        m_controlPoints[0].setX((2 * m_points[0].x() + m_points[1].x()) / 3);
+        m_controlPoints[0].setY((2 * m_points[0].y() + m_points[1].y()) / 3);
+        m_controlPoints[1].setX(2 * m_controlPoints[0].x() - m_points[0].x());
+        m_controlPoints[1].setY(2 * m_controlPoints[0].y() - m_points[0].y());
         return;
     }
 
@@ -130,53 +130,68 @@ void QSplineSeriesPrivate::calculateControlPoints()
     //  |   0   0   0   0   0   0   0   0   ... 1   4   1   |   |   P1_(n-1)|   |   4 * P(n-2) + 2 * P(n-1) |
     //  |   0   0   0   0   0   0   0   0   ... 0   2   7   |   |   P1_n    |   |   8 * P(n-1) + Pn         |
     //
-    QList<qreal> points;
+    QVector<qreal> vector;
+    vector.resize(n);
 
-    points.append(q->x(0) + 2 * q->x(1));
+    vector[0] = m_points[0].x() + 2 * m_points[1].x();
 
 
-    for (int i = 1; i < n - 1; ++i)
-        points.append(4 * q->x(i) + 2 * q->x(i + 1));
-
-    points.append((8 * q->x(n - 1) + q->x(n)) / 2.0);
-
-    QList<qreal> xControl = firstControlPoints(points);
-    points[0] = q->y(0) + 2 * q->y(1);
-
-    for (int i = 1; i < n - 1; ++i) {
-        points[i] = 4 * q->y(i) + 2 * q->y(i + 1);
+    for (int i = 1; i < n - 1; ++i){
+        vector[i] = 4 * m_points[i].x() + 2 * m_points[i + 1].x();
     }
 
-    points[n - 1] = (8 * q->y(n - 1) + q->y(n)) / 2.0;
+    vector[n - 1] = (8 * m_points[n-1].x() + m_points[n].x()) / 2.0;
 
-    QList<qreal> yControl = firstControlPoints(points);
+    QVector<qreal> xControl = firstControlPoints(vector);
 
-    for (int i = 0; i < n; ++i) {
+    vector[0] = m_points[0].y() + 2 * m_points[1].y();
 
-        m_controlPoints.append(QPointF(xControl[i], yControl[i]));
+    for (int i = 1; i < n - 1; ++i) {
+        vector[i] = 4 * m_points[i].y() + 2 * m_points[i + 1].y();
+    }
 
-        if (i < n - 1)
-            m_controlPoints.append(QPointF(2 * q->x(i + 1) - xControl[i + 1], 2 * q->y(i + 1) - yControl[i + 1]));
-        else
-            m_controlPoints.append(QPointF((q->x(n) + xControl[n - 1]) / 2, (q->y(n) + yControl[n - 1]) / 2));
+    vector[n - 1] = (8 * m_points[n-1].y() + m_points[n].y()) / 2.0;
+
+    QVector<qreal> yControl = firstControlPoints(vector);
+
+    for (int i = 0,j =0; i < n; ++i, ++j) {
+
+        m_controlPoints[j].setX(xControl[i]);
+        m_controlPoints[j].setY(yControl[i]);
+
+        j++;
+
+        if (i < n - 1){
+            m_controlPoints[j].setX(2 * m_points[i+1].x() - xControl[i + 1]);
+            m_controlPoints[j].setY(2 * m_points[i+1].y() - yControl[i + 1]);
+        }else{
+            m_controlPoints[j].setX((m_points[n].x() + xControl[n - 1]) / 2);
+            m_controlPoints[j].setY((m_points[n].y() + yControl[n - 1]) / 2);
+        }
     }
 }
 
-QList<qreal> QSplineSeriesPrivate::firstControlPoints(QList<qreal> list)
+QVector<qreal> QSplineSeriesPrivate::firstControlPoints(const QVector<qreal>& vector)
 {
-    QList<qreal> result;
-    QList<qreal> temp;
+    QVector<qreal> result;
+
+    int count = vector.count();
+    result.resize(count);
+    result[0] = vector[0] / 2.0;
+
+    QVector<qreal> temp;
+    temp.resize(count);
+    temp[0] = 0;
 
     qreal b = 2.0;
-    result.append(list[0] / b);
-    temp.append(0);
-    for (int i = 1; i < list.size(); i++) {
-        temp.append(1 / b);
-        b = (i < list.size() - 1 ? 4.0 : 3.5) - temp[i];
-        result.append((list[i] - result[i - 1]) / b);
+
+    for (int i = 1; i < count; i++) {
+        temp[i] = 1 / b;
+        b = (i < count - 1 ? 4.0 : 3.5) - temp[i];
+        result[i]=(vector[i] - result[i - 1]) / b;
     }
-    for (int i = 1; i < list.size(); i++)
-        result[list.size() - i - 1] -= temp[list.size() - i] * result[list.size() - i];
+    for (int i = 1; i < count; i++)
+        result[count - i - 1] -= temp[count - i] * result[count - i];
 
     return result;
 }
@@ -186,9 +201,8 @@ QList<qreal> QSplineSeriesPrivate::firstControlPoints(QList<qreal> list)
   */
 void QSplineSeriesPrivate::updateControlPoints()
 {
-    Q_Q(QSplineSeries);
-    if (q->count() > 1) {
-        m_controlPoints.clear();
+    if (m_points.count() > 1) {
+        m_controlPoints.resize(2*m_points.count()-2);
         calculateControlPoints();
     }
 }

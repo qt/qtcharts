@@ -189,9 +189,10 @@ QChart* ThemeWidget::createAreaChart() const
         QLineSeries *upperSeries = new QLineSeries(chart);
         for (int j(0); j < m_dataTable[i].count(); j++) {
             Data data = m_dataTable[i].at(j);
-            if (lowerSeries)
-                upperSeries->append(QPointF(j, lowerSeries->y(i) + data.first.y()));
-            else
+            if (lowerSeries){
+                const QList<QPointF>& points = lowerSeries->points();
+                upperSeries->append(QPointF(j, points[i].y() + data.first.y()));
+            }else
                 upperSeries->append(QPointF(j, data.first.y()));
         }
         QAreaSeries *area = new QAreaSeries(upperSeries, lowerSeries);

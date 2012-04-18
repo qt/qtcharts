@@ -231,20 +231,25 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
     QLineSeries* upperSeries = q->upperSeries();
     QLineSeries* lowerSeries = q->lowerSeries();
 
-    for (int i = 0; i < upperSeries->count(); i++)
+    const QList<QPointF>& points = upperSeries->points();
+
+    for (int i = 0; i < points.count(); i++)
     {
-        qreal x = upperSeries->x(i);
-        qreal y = upperSeries->y(i);
+        qreal x = points[i].x();
+        qreal y = points[i].y();
         minX = qMin(minX, x);
         minY = qMin(minY, y);
         maxX = qMax(maxX, x);
         maxY = qMax(maxY, y);
     }
     if(lowerSeries) {
-        for (int i = 0; i < lowerSeries->count(); i++)
+
+        const QList<QPointF>& points = upperSeries->points();
+
+        for (int i = 0; i < points.count(); i++)
         {
-            qreal x = lowerSeries->x(i);
-            qreal y = lowerSeries->y(i);
+            qreal x = points[i].x();
+            qreal y = points[i].y();
             minX = qMin(minX, x);
             minY = qMin(minY, y);
             maxX = qMax(maxX, x);

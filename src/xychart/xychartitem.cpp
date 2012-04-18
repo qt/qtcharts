@@ -61,8 +61,9 @@ QPointF XYChartItem::calculateGeometryPoint(int index) const
 {
     const qreal deltaX = m_size.width()/(m_maxX-m_minX);
     const qreal deltaY = m_size.height()/(m_maxY-m_minY);
-    qreal x = (m_series->x(index) - m_minX)* deltaX;
-    qreal y = (m_series->y(index) - m_minY)*-deltaY + m_size.height();
+    const QList<QPointF>& vector = m_series->points();
+    qreal x = (vector[index].x() - m_minX)* deltaX;
+    qreal y = (vector[index].y() - m_minY)*-deltaY + m_size.height();
     return QPointF(x,y);
 }
 
@@ -71,14 +72,16 @@ QVector<QPointF> XYChartItem::calculateGeometryPoints() const
     const qreal deltaX = m_size.width()/(m_maxX-m_minX);
     const qreal deltaY = m_size.height()/(m_maxY-m_minY);
 
-    QVector<QPointF> points;
-    points.reserve(m_series->count());
+    QVector<QPointF> result;
+    result.resize(m_series->count());
+    const QList<QPointF>& vector = m_series->points();
     for (int i = 0; i < m_series->count(); ++i) {
-        qreal x = (m_series->x(i) - m_minX)* deltaX;
-        qreal y = (m_series->y(i) - m_minY)*-deltaY + m_size.height();
-        points << QPointF(x,y);
+        qreal x = (vector[i].x() - m_minX)* deltaX;
+        qreal y = (vector[i].y() - m_minY)*-deltaY + m_size.height();
+        result[i].setX(x);
+        result[i].setY(y);
     }
-    return points;
+    return result;
 }
 
 QPointF XYChartItem::calculateDomainPoint(const QPointF &point) const

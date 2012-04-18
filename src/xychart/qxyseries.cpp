@@ -98,11 +98,7 @@ QXYSeries::~QXYSeries()
  */
 void QXYSeries::append(qreal x,qreal y)
 {
-    Q_D(QXYSeries);
-    Q_ASSERT(d->m_x.size() == d->m_y.size());
-    d->m_x<<x;
-    d->m_y<<y;
-    emit d->pointAdded(d->m_x.size()-1);
+    append(QPointF(x,y));
 }
 
 /*!
@@ -111,55 +107,35 @@ void QXYSeries::append(qreal x,qreal y)
  */
 void QXYSeries::append(const QPointF &point)
 {
-    append(point.x(),point.y());
+    Q_D(QXYSeries);
+    d->m_points<<point;
+    emit d->pointAdded(d->m_points.count()-1);
 }
 
 /*!
    This is an overloaded function.
    Adds list of data \a points to the series. Points are connected with lines on the chart.
  */
-void QXYSeries::append(const QList<QPointF> points)
+void QXYSeries::append(const QList<QPointF> &points)
 {
     foreach(const QPointF& point , points) {
-        append(point.x(),point.y());
+        append(point);
     }
 }
 
-/*!
-  Modifies \a y value for given \a x a value.
-*/
-void QXYSeries::replace(qreal x,qreal y)
+
+void QXYSeries::replace(qreal oldX,qreal oldY,qreal newX,qreal newY)
+{
+    replace(QPointF(oldX,oldY),QPointF(newX,newY));
+}
+
+void QXYSeries::replace(const QPointF &oldPoint,const QPointF &newPoint)
 {
     Q_D(QXYSeries);
-    int index = d->m_x.indexOf(x);
-    d->m_x[index] = x;
-    d->m_y[index] = y;
+    int index = d->m_points.indexOf(oldPoint);
+    if(index==1) return;
+    d->m_points[index] = newPoint;
     emit d->pointReplaced(index);
-}
-
-/*!
-  This is an overloaded function.
-  Replaces current y value of for given \a point x value with \a point y value.
-*/
-void QXYSeries::replace(const QPointF &point)
-{
-    replace(point.x(),point.y());
-}
-
-/*!
-  Removes first \a x value and related y value.
-*/
-void QXYSeries::remove(qreal x)
-{
-    Q_D(QXYSeries);
-    int index = d->m_x.indexOf(x);
-
-    if (index == -1) return;
-
-    d->m_x.remove(index);
-    d->m_y.remove(index);
-
-    emit d->pointRemoved(index);
 }
 
 /*!
@@ -167,17 +143,7 @@ void QXYSeries::remove(qreal x)
 */
 void QXYSeries::remove(qreal x,qreal y)
 {
-    Q_D(QXYSeries);
-    int index =-1;
-    do {
-        index = d->m_x.indexOf(x,index+1);
-    } while (index !=-1 && d->m_y.at(index)!=y);
-
-    if (index==-1) return;
-
-    d->m_x.remove(index);
-    d->m_y.remove(index);
-    emit d->pointRemoved(index);
+    remove(QPointF(x,y));
 }
 
 /*!
@@ -185,7 +151,11 @@ void QXYSeries::remove(qreal x,qreal y)
 */
 void QXYSeries::remove(const QPointF &point)
 {
-    remove(point.x(),point.y());
+    Q_D(QXYSeries);
+    int index = d->m_points.indexOf(point);
+    if(index==1) return;
+    d->m_points.remove(index);
+    emit d->pointRemoved(index);
 }
 
 /*!
@@ -194,45 +164,41 @@ void QXYSeries::remove(const QPointF &point)
 void QXYSeries::removeAll()
 {
     Q_D(QXYSeries);
-    d->m_x.clear();
-    d->m_y.clear();
-}
-
-/*!
-    \internal \a pos
-*/
-qreal QXYSeries::x(int pos) const
-{
-    Q_D(const QXYSeries);
-    if (d->m_model) {
-        if (d->m_mapOrientation == Qt::Vertical)
-            // consecutive data is read from model's column
-            return d->m_model->data(d->m_model->index(pos + d->m_mapFirst, d->m_mapX), Qt::DisplayRole).toDouble();
-        else
-            // consecutive data is read from model's row
-            return d->m_model->data(d->m_model->index(d->m_mapX, pos + d->m_mapFirst), Qt::DisplayRole).toDouble();
-    } else {
-        // model is not specified, return the data from series' internal data store
-        return d->m_x.at(pos);
+    foreach(const QPointF& point, d->m_points) {
+          remove(point);
     }
 }
 
 /*!
     \internal \a pos
 */
-qreal QXYSeries::y(int pos) const
+QList<QPointF> QXYSeries::points() const
 {
     Q_D(const QXYSeries);
     if (d->m_model) {
-        if (d->m_mapOrientation == Qt::Vertical)
+        QList<QPointF> result;
+        if (d->m_mapOrientation == Qt::Vertical){
             // consecutive data is read from model's column
-            return d->m_model->data(d->m_model->index(pos + d->m_mapFirst, d->m_mapY), Qt::DisplayRole).toDouble();
-        else
+
+            for(int i = d->m_mapFirst; i< d->m_mapFirst + count(); ++i) {
+                qreal x =  d->m_model->data(d->m_model->index(i, d->m_mapX), Qt::DisplayRole).toReal();
+                qreal y =  d->m_model->data(d->m_model->index(i, d->m_mapY), Qt::DisplayRole).toReal();
+                result << QPointF(x,y);
+            }
+            return result;
+        }
+        else{
             // consecutive data is read from model's row
-            return d->m_model->data(d->m_model->index(d->m_mapY, pos + d->m_mapFirst), Qt::DisplayRole).toDouble();
+            for(int i = d->m_mapFirst; i<  d->m_mapFirst + count(); ++i) {
+                 qreal x =  d->m_model->data(d->m_model->index(d->m_mapX, i), Qt::DisplayRole).toReal();
+                 qreal y =  d->m_model->data(d->m_model->index(d->m_mapY, i), Qt::DisplayRole).toReal();
+                 result << QPointF(x,y);
+            }
+            return result;
+        }
     } else {
         // model is not specified, return the data from series' internal data store
-        return d->m_y.at(pos);
+        return d->m_points.toList();
     }
 }
 
@@ -242,8 +208,6 @@ qreal QXYSeries::y(int pos) const
 int QXYSeries::count() const
 {
     Q_D(const QXYSeries);
-
-    Q_ASSERT(d->m_x.size() == d->m_y.size());
 
     if (d->m_model) {
         if (d->m_mapOrientation == Qt::Vertical) {
@@ -264,19 +228,7 @@ int QXYSeries::count() const
     }
 
     // model is not specified, return the number of points in the series internal data store
-    return d->m_x.size();
-}
-
-/*!
-    Returns the data points of the series.
-*/
-QList<QPointF> QXYSeries::data()
-{
-    Q_D(QXYSeries);
-    QList<QPointF> data;
-    for (int i(0); i < d->m_x.count() && i < d->m_y.count(); i++)
-        data.append(QPointF(d->m_x.at(i), d->m_y.at(i)));
-    return data;
+    return d->m_points.count();
 }
 
 
@@ -359,7 +311,7 @@ QXYSeries& QXYSeries::operator<< (const QPointF &point)
     \sa append()
 */
 
-QXYSeries& QXYSeries::operator<< (const QList<QPointF> points)
+QXYSeries& QXYSeries::operator<< (const QList<QPointF>& points)
 {
     append(points);
     return *this;
@@ -443,11 +395,11 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    Q_Q(QXYSeries);
-    for (int i = 0; i < q->count(); i++)
+    for (int i = 0; i < m_points.count(); i++)
     {
-        qreal x = q->x(i);
-        qreal y = q->y(i);
+
+        qreal x = m_points[i].x();
+        qreal y = m_points[i].y();
         minX = qMin(minX, x);
         minY = qMin(minY, y);
         maxX = qMax(maxX, x);

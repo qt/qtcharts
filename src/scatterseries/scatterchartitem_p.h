@@ -72,7 +72,7 @@ class Marker: public QAbstractGraphicsShapeItem
 
 public:
 
-   Marker(QAbstractGraphicsShapeItem *item , ScatterChartItem *parent) : QAbstractGraphicsShapeItem(0) ,m_item(item), m_parent(parent), m_index(-1)
+   Marker(QAbstractGraphicsShapeItem *item , ScatterChartItem *parent) : QAbstractGraphicsShapeItem(0) ,m_item(item), m_parent(parent)
    {
    }
 
@@ -81,14 +81,14 @@ public:
        delete m_item;
    }
 
-   void setIndex(int index)
+   void setPoint(const QPointF& point)
    {
-       m_index=index;
+       m_point=point;
    }
 
-   int index() const
+   QPointF point() const
    {
-       return m_index;
+       return m_point;
    }
 
    QPainterPath shape() const
@@ -132,7 +132,7 @@ protected:
 private:
    QAbstractGraphicsShapeItem* m_item;
    ScatterChartItem* m_parent;
-   int m_index;
+   QPointF m_point;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

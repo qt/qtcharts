@@ -41,13 +41,16 @@ class QSplineSeriesPrivate: public QLineSeriesPrivate
 public:
     Chart* createGraphics(ChartPresenter* presenter);
     QSplineSeriesPrivate(QSplineSeries* q);
-    void calculateControlPoints();
-    QList<qreal> firstControlPoints(QList<qreal> rhs);
 
 public Q_SLOTS:
     void updateControlPoints();
+
+private:
+    void calculateControlPoints();
+    QVector<qreal> firstControlPoints(const QVector<qreal>& vector);
+
 public:
-    QList<QPointF> m_controlPoints;
+    QVector<QPointF> m_controlPoints;
 private:
     Q_DECLARE_PUBLIC(QSplineSeries)
 };

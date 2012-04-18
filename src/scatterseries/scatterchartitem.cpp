@@ -98,7 +98,7 @@ void ScatterChartItem::deletePoints(int count)
 
 void ScatterChartItem::markerSelected(Marker *marker)
 {
-    emit XYChartItem::clicked(QPointF(m_series->x(marker->index()), m_series->y(marker->index())));
+    emit XYChartItem::clicked(marker->point());
 }
 
 void ScatterChartItem::setLayout(QVector<QPointF>& points)
@@ -126,7 +126,7 @@ void ScatterChartItem::setLayout(QVector<QPointF>& points)
         Marker* item = static_cast<Marker*>(items.at(i));
         const QPointF& point = points.at(i);
         const QRectF& rect = item->boundingRect();
-        item->setIndex(i);
+        item->setPoint(point);
         item->setPos(point.x()-rect.width()/2,point.y()-rect.height()/2);
         if(!clipRect().contains(point)) {
             item->setVisible(false);
