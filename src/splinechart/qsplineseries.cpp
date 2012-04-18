@@ -87,7 +87,7 @@ void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orie
 {
     Q_D(QSplineSeries);
     QXYSeries::setModelMapping(modelX, modelY, orientation);
-    d->calculateControlPoints();
+    d->updateControlPoints();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -104,16 +104,19 @@ QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(
   */
 void QSplineSeriesPrivate::calculateControlPoints()
 {
+    Q_Q(QSplineSeries);
 
-    int n = m_points.count() - 1;
+    const QList<QPointF>& points = q->points();
+
+    int n = points.count() - 1;
 
     if (n == 1)
     {
         //for n==1
-        m_controlPoints[0].setX((2 * m_points[0].x() + m_points[1].x()) / 3);
-        m_controlPoints[0].setY((2 * m_points[0].y() + m_points[1].y()) / 3);
-        m_controlPoints[1].setX(2 * m_controlPoints[0].x() - m_points[0].x());
-        m_controlPoints[1].setY(2 * m_controlPoints[0].y() - m_points[0].y());
+        m_controlPoints[0].setX((2 * points[0].x() + points[1].x()) / 3);
+        m_controlPoints[0].setY((2 * points[0].y() + points[1].y()) / 3);
+        m_controlPoints[1].setX(2 * m_controlPoints[0].x() - points[0].x());
+        m_controlPoints[1].setY(2 * m_controlPoints[0].y() - points[0].y());
         return;
     }
 
@@ -133,24 +136,24 @@ void QSplineSeriesPrivate::calculateControlPoints()
     QVector<qreal> vector;
     vector.resize(n);
 
-    vector[0] = m_points[0].x() + 2 * m_points[1].x();
+    vector[0] = points[0].x() + 2 * points[1].x();
 
 
     for (int i = 1; i < n - 1; ++i){
-        vector[i] = 4 * m_points[i].x() + 2 * m_points[i + 1].x();
+        vector[i] = 4 * points[i].x() + 2 * points[i + 1].x();
     }
 
-    vector[n - 1] = (8 * m_points[n-1].x() + m_points[n].x()) / 2.0;
+    vector[n - 1] = (8 * points[n-1].x() + points[n].x()) / 2.0;
 
     QVector<qreal> xControl = firstControlPoints(vector);
 
-    vector[0] = m_points[0].y() + 2 * m_points[1].y();
+    vector[0] = points[0].y() + 2 * points[1].y();
 
     for (int i = 1; i < n - 1; ++i) {
-        vector[i] = 4 * m_points[i].y() + 2 * m_points[i + 1].y();
+        vector[i] = 4 * points[i].y() + 2 * points[i + 1].y();
     }
 
-    vector[n - 1] = (8 * m_points[n-1].y() + m_points[n].y()) / 2.0;
+    vector[n - 1] = (8 * points[n-1].y() + points[n].y()) / 2.0;
 
     QVector<qreal> yControl = firstControlPoints(vector);
 
@@ -162,11 +165,11 @@ void QSplineSeriesPrivate::calculateControlPoints()
         j++;
 
         if (i < n - 1){
-            m_controlPoints[j].setX(2 * m_points[i+1].x() - xControl[i + 1]);
-            m_controlPoints[j].setY(2 * m_points[i+1].y() - yControl[i + 1]);
+            m_controlPoints[j].setX(2 * points[i+1].x() - xControl[i + 1]);
+            m_controlPoints[j].setY(2 * points[i+1].y() - yControl[i + 1]);
         }else{
-            m_controlPoints[j].setX((m_points[n].x() + xControl[n - 1]) / 2);
-            m_controlPoints[j].setY((m_points[n].y() + yControl[n - 1]) / 2);
+            m_controlPoints[j].setX((points[n].x() + xControl[n - 1]) / 2);
+            m_controlPoints[j].setY((points[n].y() + yControl[n - 1]) / 2);
         }
     }
 }
@@ -201,8 +204,9 @@ QVector<qreal> QSplineSeriesPrivate::firstControlPoints(const QVector<qreal>& ve
   */
 void QSplineSeriesPrivate::updateControlPoints()
 {
-    if (m_points.count() > 1) {
-        m_controlPoints.resize(2*m_points.count()-2);
+    Q_Q(QSplineSeries);
+    if (q->count() > 1) {
+        m_controlPoints.resize(2*q->count()-2);
         calculateControlPoints();
     }
 }

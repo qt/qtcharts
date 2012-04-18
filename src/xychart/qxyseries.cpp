@@ -395,11 +395,13 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    for (int i = 0; i < m_points.count(); i++)
-    {
+    Q_Q(QXYSeries);
 
-        qreal x = m_points[i].x();
-        qreal y = m_points[i].y();
+    const QList<QPointF>& points = q->points();
+    for (int i = 0; i < points.count(); i++)
+    {
+        qreal x = points[i].x();
+        qreal y = points[i].y();
         minX = qMin(minX, x);
         minY = qMin(minY, y);
         maxX = qMax(maxX, x);

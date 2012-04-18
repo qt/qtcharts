@@ -273,7 +273,6 @@ void XYChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal 
     m_maxX=maxX;
     m_minY=minY;
     m_maxY=maxY;
-
     if (isEmpty()) return;
     QVector<QPointF> points = calculateGeometryPoints();
     updateLayout(m_points,points);

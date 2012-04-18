@@ -244,7 +244,7 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
     }
     if(lowerSeries) {
 
-        const QList<QPointF>& points = upperSeries->points();
+        const QList<QPointF>& points = lowerSeries->points();
 
         for (int i = 0; i < points.count(); i++)
         {
