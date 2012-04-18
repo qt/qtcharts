@@ -20,7 +20,6 @@
 
 #include "piesliceanimation_p.h"
 #include "piechartitem_p.h"
-#include "qpieslice.h"
 
 Q_DECLARE_METATYPE(QTCOMMERCIALCHART_NAMESPACE::PieSliceData)
 
@@ -58,10 +57,9 @@ QBrush linearPos(QBrush start, QBrush end, qreal pos)
     return end;
 }
 
-PieSliceAnimation::PieSliceAnimation(PieChartItem *item, QPieSlice *slice)
-    :QVariantAnimation(item),
-    m_item(item),
-    m_slice(slice)
+PieSliceAnimation::PieSliceAnimation(PieSliceItem *sliceItem)
+    :QVariantAnimation(sliceItem),
+    m_sliceItem(sliceItem)
 {
 }
 
@@ -120,7 +118,9 @@ void PieSliceAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped) { //workaround
         m_currentValue = qVariantValue<PieSliceData>(value);
-        m_item->setLayout(m_slice, m_currentValue);
+        m_sliceItem->setSliceData(m_currentValue);
+        m_sliceItem->updateGeometry();
+        m_sliceItem->update();
     }
 }
 

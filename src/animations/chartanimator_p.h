@@ -59,10 +59,10 @@ public:
     void updateLayout(SplineChartItem *item, QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldControlPoints, QVector<QPointF> &newContorlPoints, int index);
     void updateLayout(ChartAxis *item, QVector<qreal> &layout);
 
-    void addAnimation(PieChartItem *item, QPieSlice *slice, const PieSliceData &sliceData, bool isEmpty);
-    void removeAnimation(PieChartItem *item, QPieSlice *slice);
+    void addAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData, bool isEmpty);
+    void removeAnimation(PieChartItem *item, PieSliceItem *sliceItem);
     void updateLayout(PieChartItem *item, const PieLayout &layout);
-    void updateLayout(PieChartItem *item, QPieSlice *slice, const PieSliceData &sliceData);
+    void updateLayout(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData);
 
     void updateLayout(BarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
 

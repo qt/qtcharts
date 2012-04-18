@@ -21,18 +21,17 @@
 #ifndef PIESLICEANIMATION_P_H
 #define PIESLICEANIMATION_P_H
 
-#include "piechartitem_p.h"
 #include <QVariantAnimation>
+#include "piesliceitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class PieChartItem;
-class QPieSlice;
 
 class PieSliceAnimation : public QVariantAnimation
 {
 public:
-    PieSliceAnimation(PieChartItem *item, QPieSlice *slice);
+    PieSliceAnimation(PieSliceItem *sliceItem);
     ~PieSliceAnimation();
     void setValue(const PieSliceData &startValue, const PieSliceData &endValue);
     void updateValue(const PieSliceData &endValue);
@@ -43,8 +42,7 @@ protected:
     void updateCurrentValue(const QVariant &value);
 
 private:
-    PieChartItem *m_item;
-    QPieSlice *m_slice;
+    PieSliceItem *m_sliceItem;
     PieSliceData m_currentValue;
 };
 

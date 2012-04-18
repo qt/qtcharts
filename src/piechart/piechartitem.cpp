@@ -84,9 +84,9 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         PieSliceData data = sliceData(s);
 
         if (animator())
-            animator()->addAnimation(this, s, data, isEmpty);
+            animator()->addAnimation(this, item, data, isEmpty);
         else
-            setLayout(s, data);
+            setLayout(item, data);
     }
 }
 
@@ -94,11 +94,16 @@ void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
 {
     presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
 
-    foreach (QPieSlice *s, slices) {
+    foreach (QPieSlice *slice, slices) {
+
+        PieSliceItem *item = m_slices.value(slice);
+        Q_ASSERT(item);
+        m_slices.remove(slice);
+
         if (animator())
-            animator()->removeAnimation(this, s);
+            animator()->removeAnimation(this, item); // animator deletes the PieSliceItem
         else
-            destroySlice(s);
+            delete item;
     }
 }
 
@@ -114,7 +119,7 @@ void PieChartItem::handleSliceChanged()
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
     PieSliceData data = sliceData(slice);
-    updateLayout(slice, data);
+    updateLayout(m_slices.value(slice), data);
     update();
 }
 
@@ -160,7 +165,7 @@ PieLayout PieChartItem::calculateLayout()
     PieLayout layout;
     foreach (QPieSlice* s, m_series->slices()) {
         if (m_slices.contains(s)) // calculate layout only for those slices that are already visible
-            layout.insert(s, sliceData(s));
+            layout.insert(m_slices.value(s), sliceData(s));
     }
     return layout;
 }
@@ -173,38 +178,29 @@ void PieChartItem::applyLayout(const PieLayout &layout)
         setLayout(layout);
 }
 
-void PieChartItem::updateLayout(QPieSlice *slice, const PieSliceData &sliceData)
+void PieChartItem::updateLayout(PieSliceItem *sliceItem, const PieSliceData &sliceData)
 {
     if (animator())
-        animator()->updateLayout(this, slice, sliceData);
+        animator()->updateLayout(this, sliceItem, sliceData);
     else
-        setLayout(slice, sliceData);
+        setLayout(sliceItem, sliceData);
 }
 
 void PieChartItem::setLayout(const PieLayout &layout)
 {
-    foreach (QPieSlice *slice, layout.keys()) {
-        PieSliceItem *item = m_slices.value(slice);
-        Q_ASSERT(item);
-        item->setSliceData(layout.value(slice));
+    foreach (PieSliceItem *item, layout.keys()) {
+        item->setSliceData(layout.value(item));
         item->updateGeometry();
         item->update();
     }
 }
 
-void PieChartItem::setLayout(QPieSlice *slice, const PieSliceData &sliceData)
+void PieChartItem::setLayout(PieSliceItem *sliceItem, const PieSliceData &sliceData)
 {
-    // find slice
-    PieSliceItem *item = m_slices.value(slice);
-    Q_ASSERT(item);
-    item->setSliceData(sliceData);
-    item->updateGeometry();
-    item->update();
-}
-
-void PieChartItem::destroySlice(QPieSlice *slice)
-{
-    delete m_slices.take(slice);
+    Q_ASSERT(sliceItem);
+    sliceItem->setSliceData(sliceData);
+    sliceItem->updateGeometry();
+    sliceItem->update();
 }
 
 #include "moc_piechartitem_p.cpp"

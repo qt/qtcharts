@@ -37,19 +37,16 @@ public:
     PieAnimation(PieChartItem *item);
     ~PieAnimation();
     void updateValues(const PieLayout &newValues);
-    void updateValue(QPieSlice *slice, const PieSliceData &newValue);
-    void addSlice(QPieSlice *slice, const PieSliceData &endValue, bool isEmpty);
-    void removeSlice(QPieSlice *slice);
+    void updateValue(PieSliceItem *sliceItem, const PieSliceData &newValue);
+    void addSlice(PieSliceItem *sliceItem, const PieSliceData &endValue, bool isEmpty);
+    void removeSlice(PieSliceItem *sliceItem);
 
 public: // from QVariantAnimation
     void updateCurrentValue(const QVariant &value);
 
-public Q_SLOTS:
-    void destroySliceAnimationComplete();
-
 private:
     PieChartItem *m_item;
-    QHash<QPieSlice *, PieSliceAnimation *> m_animations;
+    QHash<PieSliceItem *, PieSliceAnimation *> m_animations;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

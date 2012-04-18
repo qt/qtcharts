@@ -38,13 +38,13 @@ PieAnimation::~PieAnimation()
 
 void PieAnimation::updateValues(const PieLayout &newValues)
 {
-    foreach (QPieSlice *s, newValues.keys())
+    foreach (PieSliceItem *s, newValues.keys())
         updateValue(s, newValues.value(s));
 }
 
-void PieAnimation::updateValue(QPieSlice *slice, const PieSliceData &sliceData)
+void PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &sliceData)
 {
-    PieSliceAnimation *animation = m_animations.value(slice);
+    PieSliceAnimation *animation = m_animations.value(sliceItem);
     Q_ASSERT(animation);
     animation->stop();
 
@@ -55,10 +55,10 @@ void PieAnimation::updateValue(QPieSlice *slice, const PieSliceData &sliceData)
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-void PieAnimation::addSlice(QPieSlice *slice, const PieSliceData &sliceData, bool isEmpty)
+void PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceData, bool isEmpty)
 {
-    PieSliceAnimation *animation = new PieSliceAnimation(m_item, slice);
-    m_animations.insert(slice, animation);
+    PieSliceAnimation *animation = new PieSliceAnimation(sliceItem);
+    m_animations.insert(sliceItem, animation);
 
     PieSliceData startValue = sliceData;
     startValue.m_radius = 0;
@@ -74,15 +74,14 @@ void PieAnimation::addSlice(QPieSlice *slice, const PieSliceData &sliceData, boo
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-void PieAnimation::removeSlice(QPieSlice *slice)
+void PieAnimation::removeSlice(PieSliceItem *sliceItem)
 {
-    PieSliceAnimation *animation = m_animations.value(slice);
+    PieSliceAnimation *animation = m_animations.value(sliceItem);
     Q_ASSERT(animation);
     animation->stop();
 
     PieSliceData endValue = animation->currentSliceValue();
     endValue.m_radius = 0;
-    // TODO: find the actual angle where this slice disappears
     endValue.m_startAngle = endValue.m_startAngle + endValue.m_angleSpan;
     endValue.m_angleSpan = 0;
 
@@ -90,21 +89,16 @@ void PieAnimation::removeSlice(QPieSlice *slice)
     animation->setDuration(1000);
     animation->setEasingCurve(QEasingCurve::OutQuart);
 
-    connect(animation, SIGNAL(finished()), this, SLOT(destroySliceAnimationComplete()));
+    // PieSliceItem is the parent of PieSliceAnimation so the animation will be deleted as well..
+    connect(animation, SIGNAL(finished()), sliceItem, SLOT(deleteLater()));
+    m_animations.remove(sliceItem);
+
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
 void PieAnimation::updateCurrentValue(const QVariant &)
 {
     // nothing to do...
-}
-
-void PieAnimation::destroySliceAnimationComplete()
-{
-    PieSliceAnimation *animation = static_cast<PieSliceAnimation *>(sender());
-    QPieSlice *slice = m_animations.key(animation);
-    m_item->destroySlice(slice);
-    delete m_animations.take(slice);
 }
 
 #include "moc_pieanimation_p.cpp"
