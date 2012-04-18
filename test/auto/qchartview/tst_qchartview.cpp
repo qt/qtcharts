@@ -48,8 +48,6 @@ private Q_SLOTS:
     void chart();
     void rubberBand_data();
     void rubberBand();
-    void keys_data();
-    void keys();
 
 private:
     QChartView* m_view;
@@ -151,7 +149,6 @@ void tst_QChartView::rubberBand()
     QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal,qreal)));
 
     QTest::qWaitForWindowShown(m_view);
-    QTest::qWait(500);
     QTest::mouseMove(m_view->viewport(),  QPoint(minX, minY) + padding.topLeft().toPoint());
     QTest::mousePress(m_view->viewport(), Qt::LeftButton, 0,  QPoint(minX, minY) + padding.topLeft().toPoint());
     QTest::mouseMove(m_view->viewport(), QPoint(maxX, maxY) + padding.topLeft().toPoint());
@@ -167,52 +164,6 @@ void tst_QChartView::rubberBand()
     QVERIFY(axisX->max() - maxX < 1);
     QVERIFY(axisY->min() - minY < 1);
     QVERIFY(axisY->max() - maxY < 1);
-}
-
-void tst_QChartView::keys_data()
-{
-    /*
-    QTest::addColumn<Qt::Key>("key");
-    QTest::addColumn<int>("Xcount");
-    QTest::addColumn<int>("Ycount");
-    QTest::newRow("Qt::Key_Plus") << Qt::Key_Plus << 1 << 1;
-    QTest::newRow("Qt::Key_Minus") << Qt::Key_Minus << 1 << 1;
-    QTest::newRow("Qt::Key_Up") << Qt::Key_Up << 0 << 1;
-    QTest::newRow("Qt::Key_Down") << Qt::Key_Down << 0 << 1;
-    QTest::newRow("Qt::Key_Left") << Qt::Key_Left << 1 << 0;
-    QTest::newRow("Qt::Key_Right") << Qt::Key_Right << 1 << 0;
-    */
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QChartView::keys()
-{
-    /*
-    QFETCH(Qt::Key,key);
-    QFETCH(int, Xcount);
-    QFETCH(int, Ycount);
-
-    QRectF padding = m_view->chart()->margins();
-
-    QLineSeries* line = new QLineSeries();
-    *line << QPointF(0, 0) << QPointF(100, 100);
-
-    m_view->chart()->addSeries(line);
-    m_view->resize(100 + padding.left() + padding.right(), 100 +  padding.top()+ padding.bottom());
-    m_view->show();
-
-    QAxis* axisY = m_view->chart()->axisY();
-    QSignalSpy spy0(axisY, SIGNAL(rangeChanged(qreal,qreal)));
-    QAxis* axisX = m_view->chart()->axisX();
-    QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal,qreal)));
-
-    QTest::keyPress(m_view, key);
-    QTest::keyRelease(m_view, key);
-
-    QCOMPARE(spy0.count(), Ycount);
-    QCOMPARE(spy1.count(), Xcount);
-    */
-
 }
 
 QTEST_MAIN(tst_QChartView)
