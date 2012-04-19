@@ -263,10 +263,8 @@ qreal Domain::niceNumber(qreal x,bool ceiling)
     return q*z;
 }
 
-#ifdef __GNUC__
-QTCOMMERCIALCHART_AUTOTEST_EXPORT
-#endif
-bool operator== (const Domain &domain1, const Domain &domain2)
+
+bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2)
 {
     return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX) &&
         qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY) &&
@@ -274,18 +272,14 @@ bool operator== (const Domain &domain1, const Domain &domain2)
         qFuzzyIsNull(domain1.m_minY - domain2.m_minY));
 }
 
-#ifdef __GNUC__
-QTCOMMERCIALCHART_AUTOTEST_EXPORT
-#endif
-bool operator!= (const Domain &domain1, const Domain &domain2)
+
+bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const Domain &domain1, const Domain &domain2)
 {
     return !(domain1 == domain2);
 }
 
-#ifdef __GNUC__
-QTCOMMERCIALCHART_AUTOTEST_EXPORT
-#endif
-QDebug operator<<(QDebug dbg, const Domain &domain)
+
+QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const Domain &domain)
 {
     dbg.nospace() << "Domain("<<domain.m_minX<<','<<domain.m_maxX<<','<<domain.m_minY<<','<<domain.m_maxY<<')' << domain.m_tickXCount << "," << domain.m_tickYCount ;
     return dbg.maybeSpace();
