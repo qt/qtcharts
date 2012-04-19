@@ -1,5 +1,28 @@
+/****************************************************************************
+**
+** Copyright (C) 2012 Digia Plc
+** All rights reserved.
+** For any questions to Digia, please use contact form at http://qt.digia.com
+**
+** This file is part of the Qt Commercial Charts Add-on.
+**
+** $QT_BEGIN_LICENSE$
+** Licensees holding valid Qt Commercial licenses may use this file in
+** accordance with the Qt Commercial License Agreement provided with the
+** Software or, alternatively, in accordance with the terms contained in
+** a written agreement between you and Digia.
+**
+** If you have questions regarding the use of this file, please use
+** contact form at http://qt.digia.com
+** $QT_END_LICENSE$
+**
+****************************************************************************/
+
 #include <QtTest/QtTest>
 #include <qlineseries.h>
+#include <qchartview.h>
+
+Q_DECLARE_METATYPE(QList<QPointF>)
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -14,8 +37,8 @@ public slots:
     void cleanup();
 
 private slots:
-    void qxyseries_data();
-    void qxyseries();
+    void qlineseries_data();
+    void qlineseries();
 
     void append_data();
     void append();
@@ -55,80 +78,67 @@ private slots:
     void clicked();
     void selected_data();
     void selected();
+
+private:
+    QChartView* m_view;
+    QChart* m_chart;
 };
 
-// Subclass that exposes the protected functions.
-class SubQXYSeries : public QLineSeries
-{
-public:
-    void call_clicked(QPointF const& point)
-        { return SubQXYSeries::clicked(point); }
-
-    void call_selected()
-        { return SubQXYSeries::selected(); }
-
-};
-
-// This will be called before the first test function is executed.
-// It is only called once.
 void tst_QLineSeries::initTestCase()
 {
+    m_view = new QChartView(new QChart());
+    m_chart = m_view->chart();
 }
 
-// This will be called after the last test function is executed.
-// It is only called once.
 void tst_QLineSeries::cleanupTestCase()
 {
 }
 
-// This will be called before each test function is executed.
 void tst_QLineSeries::init()
 {
 }
 
-// This will be called after every test function.
 void tst_QLineSeries::cleanup()
 {
+    delete m_view;
+    m_view = 0;
+    m_chart = 0;
 }
 
-void tst_QLineSeries::qxyseries_data()
+void tst_QLineSeries::qlineseries_data()
 {
 }
 
-void tst_QLineSeries::qxyseries()
+void tst_QLineSeries::qlineseries()
 {
-    SubQXYSeries series;
-#if 0
-    series.append(QList<QPointF> const);
-    series.append(qreal, qreal);
-    series.append(QPointF());
-    QCOMPARE(series.brush(), QBrush);
-    QCOMPARE(series.count(), -1);
-    QCOMPARE(series.data(), QList<QPointF>());
-    QCOMPARE(series.operator<<(QList<QPointF> const), QXYSeries&);
-    QCOMPARE(series.operator<<(QPointF()), QXYSeries&);
-    QCOMPARE(series.pen(), QPen);
+    QLineSeries series;
+
+    QCOMPARE(series.count(),0);
+    QCOMPARE(series.brush(), QBrush());
+    QCOMPARE(series.points(), QList<QPointF>());
+    QCOMPARE(series.pen(), QPen());
     QCOMPARE(series.pointsVisible(), false);
-    series.remove(qreal, qreal);
+
+    series.append(QList<QPointF>());
+    series.append(0.0,0.0);
+    series.append(QPointF());
+
+    series.remove(0.0,0.0);
     series.remove(QPointF());
-    series.remove(qreal);
     series.removeAll();
-    series.replace(QPointF());
-    series.replace(qreal, qreal);
+
+    series.replace(QPointF(),QPointF());
+    series.replace(0,0,0,0);
     series.setBrush(QBrush());
+
     QCOMPARE(series.setModel((QAbstractItemModel*)0), false);
-    series.setModelMapping(-1, -1, Qt::Orientation);
+
+    series.setModelMapping(-1, -1, Qt::Orientation(0));
+
     series.setPen(QPen());
     series.setPointsVisible(false);
-    QCOMPARE(series.x(-1), qreal);
-    QCOMPARE(series.y(-1), qreal);
-    series.call_clicked(QPointF());
-    series.call_selected();
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
 }
 
-Q_DECLARE_METATYPE(QList<QPointF>)
 void tst_QLineSeries::append_data()
 {
 #if 0

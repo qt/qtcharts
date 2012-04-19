@@ -133,7 +133,7 @@ void QXYSeries::replace(const QPointF &oldPoint,const QPointF &newPoint)
 {
     Q_D(QXYSeries);
     int index = d->m_points.indexOf(oldPoint);
-    if(index==1) return;
+    if(index==-1) return;
     d->m_points[index] = newPoint;
     emit d->pointReplaced(index);
 }
@@ -153,7 +153,7 @@ void QXYSeries::remove(const QPointF &point)
 {
     Q_D(QXYSeries);
     int index = d->m_points.indexOf(point);
-    if(index==1) return;
+    if(index==-1) return;
     d->m_points.remove(index);
     emit d->pointRemoved(index);
 }

@@ -18,7 +18,6 @@
 **
 ****************************************************************************/
 
-
 #include <QtTest/QtTest>
 #include <qchartview.h>
 #include <qlineseries.h>
