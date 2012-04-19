@@ -129,52 +129,68 @@ void XYChartItem::handlePointsAdded(int start, int end)
     if (m_series->model() == 0) {
         for (int i = start; i <= end; i++)
             handlePointAdded(i);
+    } else if (m_series->mapCount() != -1 && start >= m_series->mapFirst() + m_series->mapCount()) {
+        return;
     } else {
-        // series uses model as a data source
-        int first = m_series->mapFirst();
-        int count = m_series->mapCount();
         int addedCount = end - start + 1;
-        if (count != -1 && start >= first + count) {
-            return;
+        if (m_series->mapCount() != -1 && addedCount > m_series->mapCount())
+            addedCount = m_series->mapCount();
+        int first = qMax(start, m_series->mapFirst());
+        int last = qMin(first + addedCount - 1, m_series->mapOrientation() == Qt::Vertical ? m_series->model()->rowCount() - 1 : m_series->model()->columnCount() - 1);
+        for (int i = first; i <= last; i++) {
+            handlePointAdded(i - m_series->mapFirst());
         }
-
-        // adding items to unlimited map
-        else if (count == -1 && start >= first) {
-            for (int i = start; i <= end; i++)
-                handlePointAdded(i - first);
-        } else if (count == - 1 && start < first) {
-            // not all newly added items
-            for (int i = first; i < first + addedCount; i++)
-                handlePointAdded(i - first);
-        }
-        // commented out code below does the same thing, but its more confusing.
-        //        } else if (count == -1) {
-        //            int begin = qMax(start, first);
-        //            for (int i = begin; i < begin + (end - start + 1); i++)
-        //                handlePointAdded(i - first);
-        //        }
-
-        // adding items to limited map
-        else if (start >= first) {
-            // remove the items that will no longer fit into the map
-            // int toRemove = addedCount - (count - points().size());
-            for (int i = start; i <= end; i++) {
-                handlePointAdded(i - first);
-            }
-            if (m_points.size() > count)
-                for (int i = m_points.size() - 1; i >= count; i--)
-                    handlePointRemoved(i);
-            //            update();
-        } else {
-            //
-            for (int i = first; i < first + addedCount; i++) {
-                handlePointAdded(i - first);
-            }
-            if (m_points.size() > count)
-                for (int i = m_points.size() - 1; i >= count; i--)
-                    handlePointRemoved(i);
-        }
+        if (m_series->mapCount() != -1 && m_points.size() > m_series->mapCount())
+            for (int i = m_points.size() - 1; i >= m_series->mapCount(); i--)
+                handlePointRemoved(i);
     }
+
+    //    else {
+    //        // series uses model as a data source
+    //        int first = m_series->mapFirst();
+    //        int count = m_series->mapCount();
+    //        int addedCount = end - start + 1;
+    //        if (count != -1 && start >= first + count) {
+    //            return;
+    //        }
+
+    //        // adding items to unlimited map
+    //        else if (count == -1 && start >= first) {
+    //            for (int i = start; i <= end; i++)
+    //                handlePointAdded(i - first);
+    //        } else if (count == - 1 && start < first) {
+    //            // not all newly added items
+    //            for (int i = first; i < first + addedCount; i++)
+    //                handlePointAdded(i - first);
+    //        }
+    //        // commented out code below does the same thing, but its more confusing.
+    //        //        } else if (count == -1) {
+    //        //            int begin = qMax(start, first);
+    //        //            for (int i = begin; i < begin + (end - start + 1); i++)
+    //        //                handlePointAdded(i - first);
+    //        //        }
+
+    //        // adding items to limited map
+    //        else if (start >= first) {
+    //            // remove the items that will no longer fit into the map
+    //            // int toRemove = addedCount - (count - points().size());
+    //            for (int i = start; i <= end; i++) {
+    //                handlePointAdded(i - first);
+    //            }
+    //            if (m_points.size() > count)
+    //                for (int i = m_points.size() - 1; i >= count; i--)
+    //                    handlePointRemoved(i);
+    //            //            update();
+    //        } else {
+    //            //
+    //            for (int i = first; i < first + addedCount; i++) {
+    //                handlePointAdded(i - first);
+    //            }
+    //            if (m_points.size() > count)
+    //                for (int i = m_points.size() - 1; i >= count; i--)
+    //                    handlePointRemoved(i);
+    //        }
+    //    }
 }
 
 void XYChartItem::handlePointRemoved(int index)
@@ -211,7 +227,8 @@ void XYChartItem::handlePointsRemoved(int start, int end)
                 handlePointRemoved(i - first);
         } else if (count == - 1 && start < first) {
             // not all removed items
-            for (int i = first + removedCount - 1; i >= first; i--)
+            int lastExisting = qMin(first + m_points.size() - 1, first + removedCount - 1);
+            for (int i = lastExisting; i >= first; i--)
                 handlePointRemoved(i - first);
         }
 

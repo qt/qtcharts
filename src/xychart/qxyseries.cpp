@@ -174,6 +174,7 @@ void QXYSeries::removeAll()
 */
 QList<QPointF> QXYSeries::points() const
 {
+//    Q_ASSERT(false);
     Q_D(const QXYSeries);
     if (d->m_model) {
         QList<QPointF> result;

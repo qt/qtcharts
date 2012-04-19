@@ -591,12 +591,14 @@ void QPieSeriesPrivate::modelDataAdded(QModelIndex parent, int start, int end)
     Q_UNUSED(parent);
     Q_Q(QPieSeries);
     // series uses model as a data sourceupda
-    int addedCount = end - start + 1;
     if (m_mapCount != -1 && start >= m_mapFirst + m_mapCount) {
         return;
     } else {
+        int addedCount = end - start + 1;
+        if (m_mapCount != -1 && addedCount > m_mapCount)
+            addedCount = m_mapCount;
         int first = qMax(start, m_mapFirst);
-        int last = qMin(first + addedCount - 1, end);
+        int last = qMin(first + addedCount - 1, m_mapOrientation == Qt::Vertical ? m_model->rowCount() - 1 : m_model->columnCount() - 1);
         for (int i = first; i <= last; i++) {
             QPieSlice *slice = new QPieSlice;
             if (m_mapOrientation == Qt::Vertical) {
@@ -679,17 +681,21 @@ void QPieSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
     }
 
 //    else if (m_mapCount == -1) {
+//        // first find how many items can actually be removed
+//        int toRemove = qMin(m_slices.size(), removedCount);
+//        // get the index of the first item that will be removed.
 //        int first = qMax(start, m_mapFirst);
-//        int last = qMax(end, m_mapFirst + removedCount - 1);
-//        for (int i = last; i >= first; i--)
+//        // get the index of the last item that will be removed.
+//        int last = first + toRemove;
+//        for (int i = last - 1; i >= first; i--)
 //            q->remove(q->slices().at(i - m_mapFirst));
 //    }
-//    else {
-//        int toRemove = qMin(m_slices.size() - 1, removedCount);
-//        int first = qMax(start, m_mapFirst);
-//        int last = qMax(end, m_mapFirst + toRemove - 1);
+    //    else {
+    //        int toRemove = qMin(m_slices.size() - 1, removedCount);
+    //        int first = qMax(start, m_mapFirst);
+    //        int last = qMax(end, m_mapFirst + toRemove - 1);
 
-//    }
+    //    }
 
     // removing items from unlimited map
     else if (m_mapCount == -1 && start >= m_mapFirst) {
@@ -698,7 +704,8 @@ void QPieSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
         //            handlePointRemoved(i - m_mapFirst);
     } else if (m_mapCount == - 1 && start < m_mapFirst) {
         // not all removed items
-        for (int i = m_mapFirst + removedCount - 1; i >= m_mapFirst; i--)
+        int lastExisting = qMin(m_mapFirst + m_slices.size() - 1, m_mapFirst + removedCount - 1);
+        for (int i = lastExisting; i >= m_mapFirst; i--)
             q->remove(q->slices().at(i - m_mapFirst));
         //            handlePointRemoved(i - m_mapFirst);
     }
@@ -706,11 +713,11 @@ void QPieSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
     // removing items from limited map
     else if (start >= m_mapFirst) {
         //
-//        int sizeAfter = m_slices.size();
+        //        int sizeAfter = m_slices.size();
         int lastExisting = qMin(m_mapFirst + m_slices.size() - 1, end);
         for (int i = lastExisting; i >= start; i--) {
             q->remove(q->slices().at(i - m_mapFirst));
-//            sizeAfter--;
+            //            sizeAfter--;
             //            handlePointRemoved(i - m_mapFirst);
         }
 
