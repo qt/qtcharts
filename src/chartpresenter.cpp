@@ -218,6 +218,8 @@ void ChartPresenter::resetAllElements()
     foreach(QAbstractSeries *series, seriesList) {
         handleSeriesRemoved(series);
         handleSeriesAdded(series,m_dataset->domain(series));
+//        m_dataset->removeSeries(series);
+//        m_dataset->addSeries(series);
     }
 }
 

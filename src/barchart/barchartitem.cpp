@@ -94,7 +94,10 @@ void BarChartItem::dataChanged()
             m_labels.append(value);
             connect(set->d_ptr.data(),SIGNAL(labelsVisibleChanged(bool)),value,SLOT(labelsVisibleChanged(bool)));
         }
-    }
+    }     
+
+    // TODO: Is this the right place to call it?
+//    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
 }
 
 QVector<QRectF> BarChartItem::calculateLayout()
@@ -168,7 +171,8 @@ void BarChartItem::setLayout(const QVector<QRectF> &layout)
 
 void BarChartItem::handleModelChanged()
 {
-    dataChanged();
+//    dataChanged();
+    presenter()->resetAllElements();
 }
 
 void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)

@@ -39,7 +39,8 @@
 #include <QTime>
 
 TableWidget::TableWidget(QWidget *parent)
-    : QWidget(parent),specialPie(0)
+    : QWidget(parent)
+//      specialPie(0)
 {
     setGeometry(1900, 100, 1000, 600);
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
@@ -53,7 +54,7 @@ TableWidget::TableWidget(QWidget *parent)
     //    tableView->setItemDelegate(new QStyledItemDelegate);
     m_chart = new QChart;
     m_chart->legend()->setVisible(true);
-//    m_chart->setAnimationOptions(QChart::SeriesAnimations);
+    m_chart->setAnimationOptions(QChart::SeriesAnimations);
     m_chartView = new QChartView(m_chart);
     m_chartView->setRenderHint(QPainter::Antialiasing);
     m_chartView->setMinimumSize(640, 480);
@@ -147,7 +148,7 @@ void TableWidget::updateChartType(bool toggle)
     // this if is needed, so that the function is only called once.
     // For the radioButton that was enabled.
     if (toggle) {
-        specialPie = 0;
+//        specialPie = 0;
         m_chart->removeAllSeries();
         m_chart->axisX()->setNiceNumbersEnabled(false);
         m_chart->axisY()->setNiceNumbersEnabled(false);
@@ -299,25 +300,25 @@ void TableWidget::updateChartType(bool toggle)
             pieSeries->setModelMapping(2,2, Qt::Vertical);
             pieSeries->setLabelsVisible(true);
             pieSeries->setPieSize(0.35);
-            pieSeries->setHorizontalPosition(0.2);
+            pieSeries->setHorizontalPosition(0.5);
             pieSeries->setVerticalPosition(0.75);
             m_chart->addSeries(pieSeries);
             seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(2, 0, 1, 1000));
 
-            // special pie
-            specialPie = new QPieSeries;
-            specialPie->append(17, "1");
-            specialPie->append(45, "2");
-            specialPie->append(77, "3");
-            specialPie->append(37, "4");
-            specialPie->append(27, "5");
-            specialPie->append(47, "6");
-            specialPie->setPieSize(0.35);
-            specialPie->setHorizontalPosition(0.8);
-            specialPie->setVerticalPosition(0.75);
-            specialPie->setLabelsVisible(true);
-            m_chart->addSeries(specialPie);
+//            // special pie
+//            specialPie = new QPieSeries;
+//            specialPie->append(17, "1");
+//            specialPie->append(45, "2");
+//            specialPie->append(77, "3");
+//            specialPie->append(37, "4");
+//            specialPie->append(27, "5");
+//            specialPie->append(47, "6");
+//            specialPie->setPieSize(0.35);
+//            specialPie->setHorizontalPosition(0.8);
+//            specialPie->setVerticalPosition(0.75);
+//            specialPie->setLabelsVisible(true);
+//            m_chart->addSeries(specialPie);
         }
         else if (m_areaRadioButton->isChecked())
         {
@@ -362,11 +363,11 @@ void TableWidget::updateChartType(bool toggle)
 
 void TableWidget::testPie()
 {
-    if (specialPie) {
-        specialPie->remove(specialPie->slices().at(2));
-        //    specialPie->insert(4, new QPieSlice(45, "Hello"));//specialPie->slices.at(2));
-        specialPie->append(4, "heloo");
-    }
+//    if (specialPie) {
+//        specialPie->remove(specialPie->slices().at(2));
+//        //    specialPie->insert(4, new QPieSlice(45, "Hello"));//specialPie->slices.at(2));
+//        specialPie->append(4, "heloo");
+//    }
 }
 
 TableWidget::~TableWidget()

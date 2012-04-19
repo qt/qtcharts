@@ -63,7 +63,7 @@ public:
     QRadioButton* m_areaRadioButton;
     QRadioButton* m_barRadioButton;
     QSpinBox* m_linesCountSpinBox;
-    QPieSeries* specialPie;
+//    QPieSeries* specialPie;
 };
 
 #endif // TABLEWIDGET_H

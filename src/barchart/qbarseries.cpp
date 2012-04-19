@@ -559,7 +559,7 @@ void QBarSeriesPrivate::initializeDataFromModel()
     // create the initial bars
     m_categories.clear();
     m_barSets.clear();
-    emit restructuredBars();
+//    emit restructuredBars();
     if (m_mapOrientation == Qt::Vertical) {
         int rowCount = 0;
         if(m_mapCount == -1)
@@ -594,7 +594,7 @@ void QBarSeriesPrivate::initializeDataFromModel()
         }
     }
     emit restructuredBars();
-    emit updatedBars();
+//    emit updatedBars();
 }
 
 void QBarSeriesPrivate::insertCategory(int index, const QString category)
