@@ -39,6 +39,7 @@ ChartDataSet::ChartDataSet(QObject *parent):QObject(parent),
 
 ChartDataSet::~ChartDataSet()
 {
+    removeAllSeries();
 }
 
 void ChartDataSet::addSeries(QAbstractSeries* series, QAxis *axisY)
@@ -102,6 +103,8 @@ void ChartDataSet::addSeries(QAbstractSeries* series, QAxis *axisY)
 
     m_indexSeriesMap.insert(key,series);
 
+    series->d_ptr->m_dataset=this;
+
     emit seriesAdded(series,domain);
 
 }
@@ -123,6 +126,7 @@ QAxis* ChartDataSet::removeSeries(QAbstractSeries* series)
 
     m_indexSeriesMap.remove(key);
     series->setParent(0);
+    series->d_ptr->m_dataset=0;
 
     QList<QAxis*> axes =  m_seriesAxisMap.values();
 

@@ -30,6 +30,7 @@ class QAbstractItemModel;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAbstractSeriesPrivate;
+class QChart;
 
 class QTCOMMERCIALCHART_EXPORT QAbstractSeries : public QObject
 {
@@ -62,6 +63,7 @@ public:
     int mapOrientation() const;
     void setName(const QString& name);
     QString name() const;
+    QChart* chart() const;
 
 protected:
     QScopedPointer<QAbstractSeriesPrivate> d_ptr;

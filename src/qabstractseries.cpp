@@ -20,6 +20,7 @@
 
 #include "qabstractseries.h"
 #include "qabstractseries_p.h"
+#include "chartdataset_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -91,6 +92,9 @@ QAbstractSeries::QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent) :
 */
 QAbstractSeries::~QAbstractSeries()
 {
+    if(d_ptr->m_dataset){
+        d_ptr->m_dataset->removeSeries(this);
+    }
 }
 
 /*!
@@ -135,6 +139,7 @@ QString QAbstractSeries::name() const
 QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q):
     q_ptr(q),
     m_model(0),
+    m_dataset(0),
     m_mapFirst(0),
     m_mapCount(-1),
     m_mapOrientation(Qt::Vertical)

@@ -41,6 +41,7 @@ class ChartPresenter;
 class Chart;
 class LegendMarker;
 class QLegend;
+class ChartDataSet;
 
 class QAbstractSeriesPrivate : public QObject
 {
@@ -56,12 +57,14 @@ public:
 protected:
     QAbstractSeries *q_ptr;
     QAbstractItemModel *m_model;
+    ChartDataSet *m_dataset;
     int m_mapFirst;
     int m_mapCount;
     Qt::Orientation m_mapOrientation;
     QString m_name;
 
     friend class QAbstractSeries;
+    friend class ChartDataSet;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
