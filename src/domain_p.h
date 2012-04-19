@@ -56,9 +56,9 @@ public:
     int tickXCount() const {return m_tickXCount;}
     int tickYCount() const {return m_tickYCount;}
 
-    friend bool operator== (const Domain &domain1, const Domain &domain2);
-    friend bool operator!= (const Domain &domain1, const Domain &domain2);
-    friend QDebug operator<<(QDebug dbg, const Domain &domain);
+    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2);
+    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const Domain &domain1, const Domain &domain2);
+    friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const Domain &domain);
 
     void zoomIn(const QRectF& rect, const QSizeF& size);
     void zoomOut(const QRectF& rect, const QSizeF& size);
