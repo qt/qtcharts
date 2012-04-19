@@ -92,9 +92,7 @@ QAbstractSeries::QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent) :
 */
 QAbstractSeries::~QAbstractSeries()
 {
-    if(d_ptr->m_dataset){
-        d_ptr->m_dataset->removeSeries(this);
-    }
+    if(d_ptr->m_dataset) qFatal("Still binded series detected !");
 }
 
 /*!

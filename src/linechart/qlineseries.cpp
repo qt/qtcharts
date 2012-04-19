@@ -76,6 +76,10 @@ QLineSeries::QLineSeries(QLineSeriesPrivate &d,QObject *parent) : QXYSeries (d,p
 */
 QLineSeries::~QLineSeries()
 {
+    Q_D(QLineSeries);
+    if(d->m_dataset){
+           d->m_dataset->removeSeries(this);
+    }
 }
 
 QAbstractSeries::QSeriesType QLineSeries::type() const
