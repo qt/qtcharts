@@ -32,6 +32,7 @@
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsSimpleTextItem>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -114,7 +115,7 @@ void LegendMarker::updateLayout()
 void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
-    emit selected();
+    qDebug()<<"Not implemented"; //TODO: selected signal removed for now
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +123,7 @@ void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
 AreaLegendMarker::AreaLegendMarker(QAreaSeries *series,QLegend *legend) : LegendMarker(series,legend),
 m_series(series)
 {
-    QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
+    //QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
     QObject::connect(series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
     updated();
 }
@@ -138,7 +139,7 @@ void AreaLegendMarker::updated()
 BarLegendMarker::BarLegendMarker(QBarSeries *barseries,QBarSet *barset, QLegend *legend) : LegendMarker(barseries,legend),
 m_barset(barset)
 {
-    QObject::connect(this, SIGNAL(selected()),barset->d_ptr.data(), SIGNAL(selected()));
+    //QObject::connect(this, SIGNAL(selected()),barset->d_ptr.data(), SIGNAL(selected()));
     QObject::connect(barset->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(updated()));
     updated();
 }
@@ -154,7 +155,7 @@ void BarLegendMarker::updated()
 PieLegendMarker::PieLegendMarker(QPieSeries* series,QPieSlice *pieslice, QLegend *legend) : LegendMarker(series,legend),
 m_pieslice(pieslice)
 {
-    QObject::connect(this, SIGNAL(selected()),pieslice, SIGNAL(clicked()));
+    //QObject::connect(this, SIGNAL(selected()),pieslice, SIGNAL(clicked()));
     QObject::connect(pieslice, SIGNAL(changed()), this, SLOT(updated()));
     updated();
 }
@@ -170,7 +171,7 @@ void PieLegendMarker::updated()
 XYLegendMarker::XYLegendMarker(QXYSeries *series, QLegend *legend) : LegendMarker(series,legend),
 m_series(series)
 {
-    QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
+    //QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
     QObject::connect(series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
     updated();
 }

@@ -48,12 +48,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Signal is emitted when user clicks the \a point on chart.
 */
 
-/*!
-    \fn void QXYSeries::selected()
-
-    The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
-    implemented by the user of QXYSeries API.
-*/
 
 /*!
     \fn void QXYSeriesPrivate::pointReplaced(int index)

@@ -68,12 +68,8 @@ public:
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     void setModelMappingRange(int first, int count = -1);
 
-//private Q_SLOTS:
-//    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-
 Q_SIGNALS:
     void clicked(const QPointF &point);
-    void selected();
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries);

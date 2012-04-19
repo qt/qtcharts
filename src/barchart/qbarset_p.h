@@ -16,7 +16,6 @@ public:
 
 Q_SIGNALS:
     void clicked(QString category);
-    void selected();
     void restructuredBars();
     void updatedBars();
     void labelsVisibleChanged(bool visible);

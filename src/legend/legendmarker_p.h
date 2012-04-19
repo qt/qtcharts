@@ -67,9 +67,6 @@ protected:
     // From QGraphicsObject
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
-Q_SIGNALS:
-    void selected();
-
 public Q_SLOTS:
     virtual void updated() = 0;
 
