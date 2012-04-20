@@ -393,6 +393,15 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
     Q_Q(QXYSeries);
 
     const QList<QPointF>& points = q->points();
+
+    if(points.isEmpty()){
+        minX=0.0;
+        minY=0.0;
+        maxX=1.0;
+        maxY=1.0;
+    }
+
+
     for (int i = 0; i < points.count(); i++)
     {
         qreal x = points[i].x();
