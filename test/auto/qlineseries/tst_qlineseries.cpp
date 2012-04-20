@@ -70,6 +70,8 @@ class tst_QLineSeries : public QObject
     void setModel();
     void setModelMapping_data();
     void setModelMapping();
+    void setModelMappingRange_data();
+    void setModelMappingRange();
     private:
     void append_data();
     void count_data();
@@ -397,26 +399,29 @@ void tst_QLineSeries::replace()
 
 void tst_QLineSeries::setModel_data()
 {
-//    QTest::addColumn<QStandardItemModel *>("model");
-//    QTest::addColumn<QStandardItemModel *>("expected");
+    //    QTest::addColumn<QStandardItemModel *>("model");
+    //    QTest::addColumn<QStandardItemModel *>("expected");
 
-//    QTest::newRow("null") << 0 << 0;
-//    QTest::newRow("QStandardItemModel") << new QStandardItemModel() << new QStandardItemModel();
+    //    QTest::newRow("null") << 0 << 0;
+    //    QTest::newRow("QStandardItemModel") << new QStandardItemModel() << new QStandardItemModel();
 }
 
 void tst_QLineSeries::setModel()
 {
-//    QFETCH(QStandardItemModel *, model);
-//    QFETCH(QStandardItemModel *, expected);
+    //    QFETCH(QStandardItemModel *, model);
+    //    QFETCH(QStandardItemModel *, expected);
 
-//    QLineSeries series;
-//    series.setModel(model);
+    QLineSeries series;
+    series.setModel(0);
+    QVERIFY2(series.model() == 0, "Model should be unset");
 
-//    QCOMPARE(series.model(), expected);
+    QStandardItemModel *stdModel = new QStandardItemModel();
+    series.setModel(stdModel);
+    QVERIFY2((series.model()) == stdModel, "Model should be stdModel");
 
-//    // unset the model
-//    series.setModel(0);
-//    QCOMPARE(series.model(), 0);
+    // unset the model
+    series.setModel(0);
+    QVERIFY2(series.model() == 0, "Model should be unset");
 
 }
 
@@ -461,6 +466,65 @@ void tst_QLineSeries::setModelMapping()
     QCOMPARE(series.mapX(), -1);
     QCOMPARE(series.mapY(), -1);
     QVERIFY2(series.mapOrientation() == Qt::Vertical, "The orientation by default should be Qt::Vertical");
+}
+
+void tst_QLineSeries::setModelMappingRange_data()
+{
+    QTest::addColumn<int>("first");
+    QTest::addColumn<int>("count");
+    QTest::newRow("first: 0, count: unlimited") << 0 << -1;
+    QTest::newRow("first: 0, count: 5") << 0 << 5;
+    QTest::newRow("first: 3, count: unlimited") << 3 << -1;
+    QTest::newRow("first: 3, count: 5") << 3 << 5;
+    QTest::newRow("first: -3, count: 5") << -3 << 5;
+    QTest::newRow("first: 3, count: -5") << 3 << -5;
+    QTest::newRow("first: -3, count: -5") << 3 << -5;
+    QTest::newRow("first: -3, count: 0") << -3 << 0;
+    QTest::newRow("first: 0, count: -5") << 0 << -5;
+    QTest::newRow("first: 0, count: 0") << 0 << 0;
+}
+
+void tst_QLineSeries::setModelMappingRange()
+{
+    QFETCH(int, first);
+    QFETCH(int, count);
+    QLineSeries series;
+
+    QStandardItemModel *model = new QStandardItemModel(0, 3);
+    series.setModel(model);
+    series.setModelMapping(0, 1);
+    series.setModelMappingRange(first, count);
+
+    QCOMPARE(series.mapFirst(), qMax(first, 0)); // regardles of what value was used to set the range, first should not be less than 0
+    QCOMPARE(series.mapCount(), qMax(count, -1)); // regardles of what value was used to set the range, first should not be less than 0
+    QVERIFY2(series.count() == 0, "No rows in the model, count should be 0");
+
+    for (int row = 0; row < 3; ++row) {
+        for (int column = 0; column < 3; column++) {
+            QStandardItem *item = new QStandardItem(row * column);
+            model->setItem(row, column, item);
+        }
+    }
+    if (qMax(count, -1) != -1)
+        QVERIFY2(series.count() == qMin(model->rowCount() - qMax(first, 0), qMax(count, -1)), "Count should be the number of items in a model after first item, but not more than count and not less than 0");
+    else
+        QVERIFY2(series.count() == model->rowCount() - qMax(first, 0), "Count should be the number of items in a model after first item, but not less then 0");
+
+    // let's add few more rows to the model
+    for (int row = 0; row < 10; ++row) {
+        QList<QStandardItem *> newRow;
+        for (int column = 0; column < 3; column++) {
+            newRow.append(new QStandardItem(row * column));
+        }
+        model->appendRow(newRow);
+    }
+    if (qMax(count, -1) != -1)
+        QVERIFY2(series.count() == qMin(model->rowCount() - qMax(first, 0), qMax(count, -1)), "Count should be the number of items in a model after first item, but not more than count, but not more than count and not less than 0");
+    else
+        QVERIFY2(series.count() == model->rowCount() - qMax(first, 0), "Count should be the number of items in a model after first item, but not less then 0");
+
+
+
 }
 
 QTEST_MAIN(tst_QLineSeries)

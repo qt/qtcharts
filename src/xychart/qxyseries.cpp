@@ -367,8 +367,8 @@ void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientat
 void QXYSeries::setModelMappingRange(int first, int count)
 {
     Q_D(QXYSeries);
-    d->m_mapFirst = first;
-    d->m_mapCount = count;
+    d->m_mapFirst = qMax(first, 0);
+    d->m_mapCount = qMax(count, -1);
 }
 
 int QXYSeries::mapX() const
