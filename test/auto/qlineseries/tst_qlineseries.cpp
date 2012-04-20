@@ -21,6 +21,7 @@
 #include <QtTest/QtTest>
 #include <qlineseries.h>
 #include <qchartview.h>
+#include <QStandardItemModel>
 
 Q_DECLARE_METATYPE(QList<QPointF>)
 
@@ -423,32 +424,44 @@ void tst_QLineSeries::setModel()
 Q_DECLARE_METATYPE(Qt::Orientation)
 void tst_QLineSeries::setModelMapping_data()
 {
-#if 0
     QTest::addColumn<int>("modelX");
     QTest::addColumn<int>("modelY");
     QTest::addColumn<Qt::Orientation>("orientation");
-    QTest::newRow("null") << 0 << 0 << Qt::Orientation();
-#endif
+    QTest::newRow("different x and y, vertical") << 0 << 1 << Qt::Vertical;
+    QTest::newRow("same x and y, vertical") << 0 << 0 << Qt::Vertical;
+    QTest::newRow("invalid x, corrent y, vertical") << -1 << 1 << Qt::Vertical;
+
+    QTest::newRow("different x and y, horizontal") << 0 << 1 << Qt::Horizontal;
+    QTest::newRow("same x and y, horizontal") << 0 << 0 << Qt::Horizontal;
+    QTest::newRow("invalid x, corrent y, horizontal") << -1 << 1 << Qt::Horizontal;
 }
 
 void tst_QLineSeries::setModelMapping()
 {
-#if 0
     QFETCH(int, modelX);
     QFETCH(int, modelY);
     QFETCH(Qt::Orientation, orientation);
 
-    SubQXYSeries series;
+    QLineSeries series;
 
-    QSignalSpy spy0(&series, SIGNAL(clicked(QPointF const&)));
-    QSignalSpy spy1(&series, SIGNAL(selected()));
-
+    // model has not been set so setting mapping should do nothing
     series.setModelMapping(modelX, modelY, orientation);
+    QCOMPARE(series.mapX(), -1);
+    QCOMPARE(series.mapY(), -1);
+    QVERIFY2(series.mapOrientation() == Qt::Vertical, "The orientation by default should be Qt::Vertical");
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    // now let us set the model
+    series.setModel(new QStandardItemModel());
+    series.setModelMapping(modelX, modelY, orientation);
+    QCOMPARE(series.mapX(), modelX);
+    QCOMPARE(series.mapY(), modelY);
+    QVERIFY2(series.mapOrientation() == orientation, "not good");
+
+    // now let us remove the model, the values should go back to default ones.
+    series.setModel(0);
+    QCOMPARE(series.mapX(), -1);
+    QCOMPARE(series.mapY(), -1);
+    QVERIFY2(series.mapOrientation() == Qt::Vertical, "The orientation by default should be Qt::Vertical");
 }
 
 QTEST_MAIN(tst_QLineSeries)
