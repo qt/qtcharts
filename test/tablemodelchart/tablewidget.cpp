@@ -54,7 +54,7 @@ TableWidget::TableWidget(QWidget *parent)
     //    tableView->setItemDelegate(new QStyledItemDelegate);
     m_chart = new QChart;
     m_chart->legend()->setVisible(true);
-//    m_chart->setAnimationOptions(QChart::SeriesAnimations);
+    m_chart->setAnimationOptions(QChart::SeriesAnimations);
     m_chartView = new QChartView(m_chart);
     m_chartView->setRenderHint(QPainter::Antialiasing);
     m_chartView->setMinimumSize(640, 480);

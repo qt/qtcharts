@@ -176,9 +176,10 @@ void XYChartItem::handlePointsRemoved(int start, int end)
             int toRemove = qMin(m_points.size(), removedCount);     // first find how many items can actually be removed
             int first = qMax(start, mapFirst);    // get the index of the first item that will be removed.
             int last = qMin(first + toRemove - 1, m_points.size() + mapFirst - 1);    // get the index of the last item that will be removed.
-            for (int i = last; i >= first; i--)
+            for (int i = last; i >= first; i--) {
                 handlePointRemoved(i - mapFirst);
 
+            }
             if (mapCount != -1) {
                 int itemsAvailable;     // check how many are available to be added
                 if (m_series->mapOrientation() == Qt::Vertical)

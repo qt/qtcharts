@@ -24,6 +24,7 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
+#include <QAbstractItemModel>
 
 /*!
     \class QSplineSeries
@@ -209,6 +210,18 @@ void QSplineSeriesPrivate::updateControlPoints()
         m_controlPoints.resize(2*q->count()-2);
         calculateControlPoints();
     }
+}
+
+void QSplineSeriesPrivate::modelDataAdded(QModelIndex parent, int start, int end)
+{
+    updateControlPoints();
+    QXYSeriesPrivate::modelDataAdded(parent, start, end);
+}
+
+void QSplineSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
+{
+    updateControlPoints();
+    QXYSeriesPrivate::modelDataRemoved(parent, start, end);
 }
 
 Chart* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)

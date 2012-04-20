@@ -45,6 +45,10 @@ public:
 public Q_SLOTS:
     void updateControlPoints();
 
+protected Q_SLOTS:
+    void modelDataAdded(QModelIndex parent, int start, int end);
+    void modelDataRemoved(QModelIndex parent, int start, int end);
+
 private:
     void calculateControlPoints();
     QVector<qreal> firstControlPoints(const QVector<qreal>& vector);

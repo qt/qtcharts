@@ -31,13 +31,13 @@ class tst_QLineSeries : public QObject
 {
     Q_OBJECT
 
-public slots:
+    public slots:
     void initTestCase();
     void cleanupTestCase();
     void init();
     void cleanup();
 
-private slots:
+    private slots:
     void qlineseries_data();
     void qlineseries();
     void append_raw_data();
@@ -70,12 +70,12 @@ private slots:
     void setModel();
     void setModelMapping_data();
     void setModelMapping();
-private:
+    private:
     void append_data();
     void count_data();
     void pointsVisible_data();
 
-private:
+    private:
     QChartView* m_view;
     QChart* m_chart;
     QLineSeries* m_series;
@@ -91,9 +91,9 @@ void tst_QLineSeries::cleanupTestCase()
 
 void tst_QLineSeries::init()
 {
-     m_view = new QChartView(new QChart());
-     m_chart = m_view->chart();
-     m_series = new QLineSeries();
+    m_view = new QChartView(new QChart());
+    m_chart = m_view->chart();
+    m_series = new QLineSeries();
 }
 
 void tst_QLineSeries::cleanup()
@@ -397,28 +397,27 @@ void tst_QLineSeries::replace()
 
 void tst_QLineSeries::setModel_data()
 {
-    QTest::addColumn<int>("modelCount");
-    QTest::addColumn<bool>("setModel");
-    QTest::newRow("null") << 0 << false;
+    QTest::addColumn<QStandardItemModel *>("model");
+    QTest::addColumn<QStandardItemModel *>("expected");
+
+    QTest::newRow("null") << 0 << 0;
+    QTest::newRow("QStandardItemModel") << new QStandardItemModel() << new QStandardItemModel();
 }
 
 void tst_QLineSeries::setModel()
 {
-#if 0
-    QFETCH(int, modelCount);
-    QFETCH(bool, setModel);
+    QFETCH(QStandardItemModel *, model);
+    QFETCH(QStandardItemModel *, expected);
 
-    SubQXYSeries series;
+    QLineSeries series;
+    series.setModel(model);
 
-    QSignalSpy spy0(&series, SIGNAL(clicked(QPointF const&)));
-    QSignalSpy spy1(&series, SIGNAL(selected()));
+    QCOMPARE(series.model(), expected);
 
-    QCOMPARE(series.setModel(model), setModel);
+    // unset the model
+    series.setModel(0);
+    QCOMPARE(series.model(), 0);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
 }
 
 Q_DECLARE_METATYPE(Qt::Orientation)

@@ -47,7 +47,7 @@ QPainterPath SplineChartItem::shape() const
 }
 
 void SplineChartItem::updateLayout(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index)
-{
+{    
     QVector<QPointF> controlPoints;
 
     controlPoints.resize(newPoints.count()*2-2);

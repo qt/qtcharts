@@ -67,6 +67,8 @@ public:
     bool setModel(QAbstractItemModel *model);
     virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
     void setModelMappingRange(int first, int count = -1);
+    int mapX() const;
+    int mapY() const;
 
 Q_SIGNALS:
     void clicked(const QPointF &point);

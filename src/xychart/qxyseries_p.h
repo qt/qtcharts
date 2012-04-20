@@ -46,10 +46,10 @@ public:
     void scaleDomain(Domain& domain);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
 
-private Q_SLOTS:
+protected Q_SLOTS:
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-    void modelDataAdded(QModelIndex parent, int start, int end);
-    void modelDataRemoved(QModelIndex parent, int start, int end);
+    virtual void modelDataAdded(QModelIndex parent, int start, int end);
+    virtual void modelDataRemoved(QModelIndex parent, int start, int end);
 
 Q_SIGNALS:
     void updated();

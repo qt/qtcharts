@@ -159,7 +159,7 @@ void QXYSeries::removeAll()
 {
     Q_D(QXYSeries);
     foreach(const QPointF& point, d->m_points) {
-          remove(point);
+        remove(point);
     }
 }
 
@@ -168,7 +168,7 @@ void QXYSeries::removeAll()
 */
 QList<QPointF> QXYSeries::points() const
 {
-//    Q_ASSERT(false);
+    //    Q_ASSERT(false);
     Q_D(const QXYSeries);
     if (d->m_model) {
         QList<QPointF> result;
@@ -185,9 +185,9 @@ QList<QPointF> QXYSeries::points() const
         else{
             // consecutive data is read from model's row
             for(int i = d->m_mapFirst; i<  d->m_mapFirst + count(); ++i) {
-                 qreal x =  d->m_model->data(d->m_model->index(d->m_mapX, i), Qt::DisplayRole).toReal();
-                 qreal y =  d->m_model->data(d->m_model->index(d->m_mapY, i), Qt::DisplayRole).toReal();
-                 result << QPointF(x,y);
+                qreal x =  d->m_model->data(d->m_model->index(d->m_mapX, i), Qt::DisplayRole).toReal();
+                qreal y =  d->m_model->data(d->m_model->index(d->m_mapY, i), Qt::DisplayRole).toReal();
+                result << QPointF(x,y);
             }
             return result;
         }
@@ -369,6 +369,19 @@ void QXYSeries::setModelMappingRange(int first, int count)
     Q_D(QXYSeries);
     d->m_mapFirst = first;
     d->m_mapCount = count;
+}
+
+int QXYSeries::mapX() const
+{
+    Q_D(const QXYSeries);
+    return d->m_mapX;
+}
+
+int QXYSeries::mapY() const
+{
+    Q_D(const QXYSeries);
+    return d->m_mapY;
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
