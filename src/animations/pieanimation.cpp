@@ -78,6 +78,7 @@ void PieAnimation::removeSlice(PieSliceItem *sliceItem)
     endValue.m_radius = 0;
     endValue.m_startAngle = endValue.m_startAngle + endValue.m_angleSpan;
     endValue.m_angleSpan = 0;
+    endValue.m_isLabelVisible = false;
 
     animation->updateValue(endValue);
     animation->setDuration(1000);
