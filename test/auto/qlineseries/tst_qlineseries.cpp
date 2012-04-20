@@ -397,26 +397,26 @@ void tst_QLineSeries::replace()
 
 void tst_QLineSeries::setModel_data()
 {
-    QTest::addColumn<QStandardItemModel *>("model");
-    QTest::addColumn<QStandardItemModel *>("expected");
+//    QTest::addColumn<QStandardItemModel *>("model");
+//    QTest::addColumn<QStandardItemModel *>("expected");
 
-    QTest::newRow("null") << 0 << 0;
-    QTest::newRow("QStandardItemModel") << new QStandardItemModel() << new QStandardItemModel();
+//    QTest::newRow("null") << 0 << 0;
+//    QTest::newRow("QStandardItemModel") << new QStandardItemModel() << new QStandardItemModel();
 }
 
 void tst_QLineSeries::setModel()
 {
-    QFETCH(QStandardItemModel *, model);
-    QFETCH(QStandardItemModel *, expected);
+//    QFETCH(QStandardItemModel *, model);
+//    QFETCH(QStandardItemModel *, expected);
 
-    QLineSeries series;
-    series.setModel(model);
+//    QLineSeries series;
+//    series.setModel(model);
 
-    QCOMPARE(series.model(), expected);
+//    QCOMPARE(series.model(), expected);
 
-    // unset the model
-    series.setModel(0);
-    QCOMPARE(series.model(), 0);
+//    // unset the model
+//    series.setModel(0);
+//    QCOMPARE(series.model(), 0);
 
 }
 
