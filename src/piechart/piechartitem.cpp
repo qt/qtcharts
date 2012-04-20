@@ -40,8 +40,8 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
     QPieSeriesPrivate *d = QPieSeriesPrivate::seriesData(*series);
     connect(d, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
     connect(d, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleSlicesRemoved(QList<QPieSlice*>)));
-    connect(d, SIGNAL(piePositionChanged()), this, SLOT(handlePieLayoutChanged()));
-    connect(d, SIGNAL(pieSizeChanged()), this, SLOT(handlePieLayoutChanged()));
+    connect(d, SIGNAL(piePositionChanged()), this, SLOT(updateLayout()));
+    connect(d, SIGNAL(pieSizeChanged()), this, SLOT(updateLayout()));
 
     QTimer::singleShot(0, this, SLOT(initialize())); // TODO: get rid of this
 
@@ -54,13 +54,11 @@ PieChartItem::~PieChartItem()
     // slices deleted automatically through QGraphicsItem
 }
 
-void PieChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
+void PieChartItem::handleGeometryChanged(const QRectF& rect)
 {
-    Q_UNUSED(painter)
-    // TODO: paint shadows for all components
-    // - get paths from items & merge & offset and draw with shadow color?
-    //painter->setBrush(QBrush(Qt::red));
-    //painter->drawRect(m_debugRect);
+    prepareGeometryChange();
+    m_rect = rect;
+    updateLayout();
 }
 
 void PieChartItem::initialize()
@@ -68,74 +66,7 @@ void PieChartItem::initialize()
     handleSlicesAdded(m_series->slices());
 }
 
-void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
-{
-    bool isEmpty = m_slices.isEmpty();
-
-    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
-
-    foreach (QPieSlice *s, slices) {
-        PieSliceItem* item = new PieSliceItem(this);
-        m_slices.insert(s, item);
-        connect(s, SIGNAL(changed()), this, SLOT(handleSliceChanged()));
-        connect(item, SIGNAL(clicked(Qt::MouseButtons)), s, SIGNAL(clicked()));
-        connect(item, SIGNAL(hovered(bool)), s, SIGNAL(hovered(bool)));
-
-        PieSliceData data = sliceData(s);
-
-        if (animator())
-            animator()->addAnimation(this, item, data, isEmpty);
-        else
-            setLayout(item, data);
-    }
-}
-
-void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
-{
-    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
-
-    foreach (QPieSlice *slice, slices) {
-
-        PieSliceItem *item = m_slices.value(slice);
-        Q_ASSERT(item);
-        m_slices.remove(slice);
-
-        if (animator())
-            animator()->removeAnimation(this, item); // animator deletes the PieSliceItem
-        else
-            delete item;
-    }
-}
-
-void PieChartItem::handlePieLayoutChanged()
-{
-    PieLayout layout = calculateLayout();
-    applyLayout(layout);
-    update();
-}
-
-void PieChartItem::handleSliceChanged()
-{
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
-    Q_ASSERT(m_slices.contains(slice));
-    PieSliceData data = sliceData(slice);
-    updateLayout(m_slices.value(slice), data);
-    update();
-}
-
-void PieChartItem::handleDomainChanged(qreal, qreal, qreal, qreal)
-{
-    // TODO
-}
-
-void PieChartItem::handleGeometryChanged(const QRectF& rect)
-{
-    prepareGeometryChange();
-    m_rect = rect;
-    handlePieLayoutChanged();
-}
-
-void PieChartItem::calculatePieLayout()
+void PieChartItem::updateLayout()
 {
     // find pie center coordinates
     m_pieCenter.setX(m_rect.left() + (m_rect.width() * m_series->horizontalPosition()));
@@ -148,59 +79,80 @@ void PieChartItem::calculatePieLayout()
 
     // apply size factor
     m_pieRadius *= m_series->pieSize();
+
+    // set layouts for existing slice items
+    foreach (QPieSlice* slice, m_series->slices()) {
+        PieSliceItem *sliceItem = m_sliceItems.value(slice);
+        if (sliceItem) {
+            PieSliceData sliceData = updateSliceGeometry(slice);
+            if (animator())
+                animator()->updateAnimation(this, sliceItem, sliceData);
+            else
+                sliceItem->setLayout(sliceData);
+        }
+    }
+
+    update();
 }
 
-PieSliceData PieChartItem::sliceData(QPieSlice *slice)
+void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 {
-	// TODO: This function is kid of useless now. Refactor.
-    PieSliceData sliceData = PieSliceData::data(slice);
+    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
+
+    bool startupAnimation = m_sliceItems.isEmpty();
+
+    foreach (QPieSlice *slice, slices) {
+        PieSliceItem* sliceItem = new PieSliceItem(this);
+        m_sliceItems.insert(slice, sliceItem);
+        connect(slice, SIGNAL(changed()), this, SLOT(handleSliceChanged()));
+        connect(sliceItem, SIGNAL(clicked(Qt::MouseButtons)), slice, SIGNAL(clicked()));
+        connect(sliceItem, SIGNAL(hovered(bool)), slice, SIGNAL(hovered(bool)));
+
+        PieSliceData sliceData = updateSliceGeometry(slice);
+        if (animator())
+            animator()->addAnimation(this, sliceItem, sliceData, startupAnimation);
+        else
+            sliceItem->setLayout(sliceData);
+    }
+}
+
+void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
+{
+    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
+
+    foreach (QPieSlice *slice, slices) {
+        PieSliceItem *sliceItem = m_sliceItems.value(slice);
+        Q_ASSERT(sliceItem);
+        m_sliceItems.remove(slice);
+
+        if (animator())
+            animator()->removeAnimation(this, sliceItem); // animator deletes the PieSliceItem
+        else
+            delete sliceItem;
+    }
+}
+
+void PieChartItem::handleSliceChanged()
+{
+    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    Q_ASSERT(m_sliceItems.contains(slice));
+
+    PieSliceItem *sliceItem = m_sliceItems.value(slice);
+    PieSliceData sliceData = updateSliceGeometry(slice);
+    if (animator())
+        animator()->updateAnimation(this, sliceItem, sliceData);
+    else
+        sliceItem->setLayout(sliceData);
+
+    update();
+}
+
+PieSliceData PieChartItem::updateSliceGeometry(QPieSlice *slice)
+{
+    PieSliceData &sliceData = PieSliceData::data(slice);
     sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
     return sliceData;
-}
-
-PieLayout PieChartItem::calculateLayout()
-{
-    calculatePieLayout();
-    PieLayout layout;
-    foreach (QPieSlice* s, m_series->slices()) {
-        if (m_slices.contains(s)) // calculate layout only for those slices that are already visible
-            layout.insert(m_slices.value(s), sliceData(s));
-    }
-    return layout;
-}
-
-void PieChartItem::applyLayout(const PieLayout &layout)
-{
-    if (animator())
-        animator()->updateLayout(this, layout);
-    else
-        setLayout(layout);
-}
-
-void PieChartItem::updateLayout(PieSliceItem *sliceItem, const PieSliceData &sliceData)
-{
-    if (animator())
-        animator()->updateLayout(this, sliceItem, sliceData);
-    else
-        setLayout(sliceItem, sliceData);
-}
-
-void PieChartItem::setLayout(const PieLayout &layout)
-{
-    foreach (PieSliceItem *item, layout.keys()) {
-        item->setSliceData(layout.value(item));
-        item->updateGeometry();
-        item->update();
-    }
-}
-
-void PieChartItem::setLayout(PieSliceItem *sliceItem, const PieSliceData &sliceData)
-{
-    Q_ASSERT(sliceItem);
-    sliceItem->setSliceData(sliceData);
-    sliceItem->updateGeometry();
-    sliceItem->update();
 }
 
 #include "moc_piechartitem_p.cpp"

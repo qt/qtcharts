@@ -61,8 +61,7 @@ public:
 
     void addAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData, bool isEmpty);
     void removeAnimation(PieChartItem *item, PieSliceItem *sliceItem);
-    void updateLayout(PieChartItem *item, const PieLayout &layout);
-    void updateLayout(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData);
+    void updateAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData);
 
     void updateLayout(BarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
 

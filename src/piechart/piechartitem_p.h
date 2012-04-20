@@ -30,42 +30,37 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSlice;
 class ChartPresenter;
 
-typedef QHash<PieSliceItem*, PieSliceData> PieLayout;
-
 class PieChartItem : public ChartItem
 {
     Q_OBJECT
 
 public:
-    // TODO: use a generic data class instead of x and y
-    PieChartItem(QPieSeries *series, ChartPresenter *presenter);
+    explicit PieChartItem(QPieSeries *series, ChartPresenter *presenter);
     ~PieChartItem();
 
-public: // from QGraphicsItem
+    // from QGraphicsItem
     QRectF boundingRect() const { return m_rect; }
-    void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *);
+    void paint(QPainter *, const QStyleOptionGraphicsItem *, QWidget *) {}
 
 public Q_SLOTS:
+    // from Chart
+    virtual void handleGeometryChanged(const QRectF &rect);
+    // TODO: Do we have actual need for these at all? What is the use case for pie?
+    //virtual void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    //virtual void rangeXChanged(qreal min, qreal max, int tickXCount);
+    //virtual void rangeYChanged(qreal min, qreal max, int tickYCount);
+
     void initialize();
+    void updateLayout();
     void handleSlicesAdded(QList<QPieSlice*> slices);
     void handleSlicesRemoved(QList<QPieSlice*> slices);
-    void handlePieLayoutChanged();
     void handleSliceChanged();
-    void handleDomainChanged(qreal, qreal, qreal, qreal);
-    void handleGeometryChanged(const QRectF& rect);
-
-public:
-    void calculatePieLayout();
-    PieSliceData sliceData(QPieSlice *slice);
-    PieLayout calculateLayout();
-    void applyLayout(const PieLayout &layout);
-    void updateLayout(PieSliceItem *sliceItem, const PieSliceData &sliceData);
-    void setLayout(const PieLayout &layout);
-    void setLayout(PieSliceItem *sliceItem, const PieSliceData &sliceData);
 
 private:
-    friend class PieSliceItem;
-    QHash<QPieSlice*, PieSliceItem*> m_slices;
+    PieSliceData updateSliceGeometry(QPieSlice *slice);
+
+private:
+    QHash<QPieSlice*, PieSliceItem*> m_sliceItems;
     QPieSeries *m_series;
     QRectF m_rect;
     QPointF m_pieCenter;

@@ -251,11 +251,11 @@ void ChartAnimator::updateLayout(XYChartItem *item, QVector<QPointF> &oldPoints,
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-void ChartAnimator::addAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData, bool isEmpty)
+void ChartAnimator::addAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData, bool startupAnimation)
 {
     PieAnimation *animation = static_cast<PieAnimation *>(m_animations.value(item));
     Q_ASSERT(animation);
-    animation->addSlice(sliceItem, sliceData, isEmpty);
+    animation->addSlice(sliceItem, sliceData, startupAnimation);
 }
 
 void ChartAnimator::removeAnimation(PieChartItem *item, PieSliceItem *sliceItem)
@@ -265,14 +265,7 @@ void ChartAnimator::removeAnimation(PieChartItem *item, PieSliceItem *sliceItem)
     animation->removeSlice(sliceItem);
 }
 
-void ChartAnimator::updateLayout(PieChartItem *item, const PieLayout &layout)
-{
-    PieAnimation *animation = static_cast<PieAnimation *>(m_animations.value(item));
-    Q_ASSERT(animation);
-    animation->updateValues(layout);
-}
-
-void ChartAnimator::updateLayout(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData)
+void ChartAnimator::updateAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData)
 {
     PieAnimation *animation = static_cast<PieAnimation *>(m_animations.value(item));
     Q_ASSERT(animation);

@@ -118,9 +118,7 @@ void PieSliceAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped) { //workaround
         m_currentValue = qVariantValue<PieSliceData>(value);
-        m_sliceItem->setSliceData(m_currentValue);
-        m_sliceItem->updateGeometry();
-        m_sliceItem->update();
+        m_sliceItem->setLayout(m_currentValue);
     }
 }
 

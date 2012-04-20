@@ -36,12 +36,6 @@ PieAnimation::~PieAnimation()
 {
 }
 
-void PieAnimation::updateValues(const PieLayout &newValues)
-{
-    foreach (PieSliceItem *s, newValues.keys())
-        updateValue(s, newValues.value(s));
-}
-
 void PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &sliceData)
 {
     PieSliceAnimation *animation = m_animations.value(sliceItem);
@@ -55,14 +49,14 @@ void PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &slic
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-void PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceData, bool isEmpty)
+void PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceData, bool startupAnimation)
 {
     PieSliceAnimation *animation = new PieSliceAnimation(sliceItem);
     m_animations.insert(sliceItem, animation);
 
     PieSliceData startValue = sliceData;
     startValue.m_radius = 0;
-    if (isEmpty)
+    if (startupAnimation)
         startValue.m_startAngle = 0;
     else
         startValue.m_startAngle = sliceData.m_startAngle + (sliceData.m_angleSpan / 2);

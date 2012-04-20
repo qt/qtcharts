@@ -45,7 +45,7 @@ public:
     PieSliceItem(QGraphicsItem* parent = 0);
     ~PieSliceItem();
 
-public: // from QGraphicsItem
+    // from QGraphicsItem
     QRectF boundingRect() const;
     QPainterPath shape() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -53,14 +53,15 @@ public: // from QGraphicsItem
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
+    void setLayout(const PieSliceData &sliceData);
+    static QPointF sliceCenter(QPointF point, qreal radius, QPieSlice *slice);
+
 Q_SIGNALS:
     void clicked(Qt::MouseButtons buttons);
     void hovered(bool state);
 
-public:
-    void setSliceData(PieSliceData sliceData);
+private:
     void updateGeometry();
-    static QPointF sliceCenter(QPointF point, qreal radius, QPieSlice *slice);
     QPainterPath slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal *centerAngle, QPointF *armStart);
     QPainterPath labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF *textStart);
     QRectF labelTextRect(QFont font, QString text);

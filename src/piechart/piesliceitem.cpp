@@ -98,9 +98,11 @@ void PieSliceItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     emit clicked(event->buttons());
 }
 
-void PieSliceItem::setSliceData(PieSliceData sliceData)
+void PieSliceItem::setLayout(const PieSliceData &sliceData)
 {
     m_data = sliceData;
+    updateGeometry();
+    update();
 }
 
 void PieSliceItem::updateGeometry()
