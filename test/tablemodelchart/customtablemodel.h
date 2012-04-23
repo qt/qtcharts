@@ -42,6 +42,8 @@ public:
     Qt::ItemFlags flags ( const QModelIndex & index ) const;
     bool insertRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
     bool removeRows ( int row, int count, const QModelIndex & parent = QModelIndex() );
+    bool insertColumns ( int column, int count, const QModelIndex & parent = QModelIndex() );
+    bool removeColumns ( int column, int count, const QModelIndex & parent = QModelIndex() );
 
     void addMapping(QString color, QRect area);
     void addMapping(QString color, int left, int top, int right, int bottom);
@@ -52,10 +54,11 @@ public:
     //public slots:
 private:
     QList<QVector<qreal> * > m_data;
-//    QList<QVector<QColor> * > m_rowsColors;
     QHash<QString, QRect> m_mapping;
     QList<QPointF> m_points;
-    QStringList m_labels;
+    QStringList m_labels;    
+    int m_columnCount;
+    int m_rowCount;
 
     
 };

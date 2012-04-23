@@ -47,6 +47,8 @@ public:
     void addRowAbove();
     void addRowBelow();
     void removeRow();
+    void addColumnRight();
+    void removeColumn();
     void updateChartType(bool toggle);
     void testPie();
 

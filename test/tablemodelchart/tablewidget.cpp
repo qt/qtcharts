@@ -69,6 +69,12 @@ TableWidget::TableWidget(QWidget *parent)
     QPushButton* removeRowButton = new QPushButton("Remove row");
     connect(removeRowButton, SIGNAL(clicked()), this, SLOT(removeRow()));
 
+    QPushButton* addColumnRightButton = new QPushButton("Add column on the right");
+    connect(addColumnRightButton, SIGNAL(clicked()), this, SLOT(addColumnRight()));
+
+    QPushButton* removeColumnButton = new QPushButton("Remove column");
+    connect(removeColumnButton, SIGNAL(clicked()), this, SLOT(removeColumn()));
+
     QPushButton* specialPieButton = new QPushButton("Test pie");
     connect(specialPieButton, SIGNAL(clicked()), this, SLOT(testPie()));
 
@@ -87,6 +93,8 @@ TableWidget::TableWidget(QWidget *parent)
     buttonsLayout->addWidget(addRowAboveButton);
     buttonsLayout->addWidget(addRowBelowButton);
     buttonsLayout->addWidget(removeRowButton);
+    buttonsLayout->addWidget(addColumnRightButton);
+    buttonsLayout->addWidget(removeColumnButton);
     buttonsLayout->addWidget(specialPieButton);
     buttonsLayout->addStretch();
 
@@ -141,6 +149,16 @@ void TableWidget::addRowBelow()
 void TableWidget::removeRow()
 {
     m_model->removeRows(m_tableView->currentIndex().row(), qMin(m_model->rowCount() - m_tableView->currentIndex().row(), m_linesCountSpinBox->value()));
+}
+
+void TableWidget::addColumnRight()
+{
+    m_model->insertColumns(m_tableView->currentIndex().column() + 1, m_linesCountSpinBox->value());
+}
+
+void TableWidget::removeColumn()
+{
+    m_model->removeColumns(m_tableView->currentIndex().column(), qMin(m_model->columnCount() - m_tableView->currentIndex().column(), m_linesCountSpinBox->value()));
 }
 
 void TableWidget::updateChartType(bool toggle)

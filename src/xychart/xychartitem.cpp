@@ -135,11 +135,13 @@ void XYChartItem::handlePointsAdded(int start, int end)
         int addedCount = end - start + 1;
         if (m_series->mapCount() != -1 && addedCount > m_series->mapCount())
             addedCount = m_series->mapCount();
-        int first = qMax(start, m_series->mapFirst());
-        int last = qMin(first + addedCount - 1, m_series->count() + m_series->mapFirst() - 1);
+        int first = qMax(start, m_series->mapFirst());  // get the index of the first item that will be added
+        int last = qMin(first + addedCount - 1, m_series->count() + m_series->mapFirst() - 1);  // get the index of the last item that will be added
         for (int i = first; i <= last; i++) {
-            handlePointAdded(i - m_series->mapFirst());
+            handlePointAdded(i - m_series->mapFirst());            
         }
+        // the map is limited therefore the items that are now outside the map
+        // need to be removed from the drawn points
         if (m_series->mapCount() != -1 && m_points.size() > m_series->mapCount())
             for (int i = m_points.size() - 1; i >= m_series->mapCount(); i--)
                 handlePointRemoved(i);

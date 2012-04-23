@@ -325,6 +325,8 @@ bool QXYSeries::setModel(QAbstractItemModel *model)
         QObject::disconnect(d->m_model, 0, this, 0);
         d->m_mapX = -1;
         d->m_mapY = -1;
+        d->m_mapFirst = 0;
+        d->m_mapCount = -1;
         d->m_mapOrientation = Qt::Vertical;
     }
 

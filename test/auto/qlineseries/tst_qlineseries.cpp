@@ -72,6 +72,8 @@ class tst_QLineSeries : public QObject
     void setModelMapping();
     void setModelMappingRange_data();
     void setModelMappingRange();
+    void modelUpdated();
+    void modelUpdatedCustomMapping();
     private:
     void append_data();
     void count_data();
@@ -490,7 +492,7 @@ void tst_QLineSeries::setModelMappingRange()
     QFETCH(int, count);
     QLineSeries series;
 
-    QStandardItemModel *model = new QStandardItemModel(0, 3);
+    QStandardItemModel *model = new QStandardItemModel(0, 2);
     series.setModel(model);
     series.setModelMapping(0, 1);
     series.setModelMappingRange(first, count);
@@ -500,7 +502,7 @@ void tst_QLineSeries::setModelMappingRange()
     QVERIFY2(series.count() == 0, "No rows in the model, count should be 0");
 
     for (int row = 0; row < 3; ++row) {
-        for (int column = 0; column < 3; column++) {
+        for (int column = 0; column < 2; column++) {
             QStandardItem *item = new QStandardItem(row * column);
             model->setItem(row, column, item);
         }
@@ -513,7 +515,7 @@ void tst_QLineSeries::setModelMappingRange()
     // let's add few more rows to the model
     for (int row = 0; row < 10; ++row) {
         QList<QStandardItem *> newRow;
-        for (int column = 0; column < 3; column++) {
+        for (int column = 0; column < 2; column++) {
             newRow.append(new QStandardItem(row * column));
         }
         model->appendRow(newRow);
@@ -523,8 +525,52 @@ void tst_QLineSeries::setModelMappingRange()
     else
         QVERIFY2(series.count() == model->rowCount() - qMax(first, 0), "Count should be the number of items in a model after first item, but not less then 0");
 
+    // unset the model, values should be default
+    series.setModel(0);
+    QCOMPARE(series.mapFirst(), 0);
+    QCOMPARE(series.mapCount(), -1);
+    QVERIFY2(series.count() == 0, "No rows in the model, count should be 0");
+}
 
+void tst_QLineSeries::modelUpdated()
+{
+    QStandardItemModel *model = new QStandardItemModel;
+    for (int row = 0; row < 10; ++row) {
+        QList<QStandardItem *> newRow;
+        for (int column = 0; column < 2; column++) {
+            newRow.append(new QStandardItem(row * column));
+        }
+        model->appendRow(newRow);
+    }
 
+    QLineSeries series;
+    series.setModel(model);
+    series.setModelMapping(0, 1);
+
+    model->setData(model->index(3, 1), 34);
+    // check that the update data is correctly taken from the model
+    QVERIFY(qFuzzyCompare(series.points().at(3).y(), 34));
+}
+
+void tst_QLineSeries::modelUpdatedCustomMapping()
+{
+
+    QStandardItemModel *model = new QStandardItemModel;
+    for (int row = 0; row < 10; ++row) {
+        QList<QStandardItem *> newRow;
+        for (int column = 0; column < 2; column++) {
+            newRow.append(new QStandardItem(row * column));
+        }
+        model->appendRow(newRow);
+    }
+
+    QLineSeries series;
+    series.setModel(model);
+    series.setModelMapping(0, 1);
+    series.setModelMappingRange(3, 4);
+
+    model->setData(model->index(3, 1), 34);
+    QVERIFY(qFuzzyCompare(series.points().at(0).y(), 34));
 }
 
 QTEST_MAIN(tst_QLineSeries)

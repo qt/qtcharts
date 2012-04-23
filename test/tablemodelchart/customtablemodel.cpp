@@ -27,52 +27,37 @@
 CustomTableModel::CustomTableModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
-    //    m_points.append(QPointF(10, 50));
-    //    m_labels.append("Apples");
-    //    m_points.append(QPointF(60, 70));
-    //    m_labels.append("Oranges");
-    //    m_points.append(QPointF(110, 50));
-    //    m_labels.append("Bananas");
-    //    m_points.append(QPointF(140, 40));
-    //    m_labels.append("Lemons");
-    //    m_points.append(QPointF(200, 150));
-    //    m_labels.append("Plums");
-    //    m_points.append(QPointF(225, 75));
-    //    m_labels.append("Pearls");
-
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
+    m_columnCount = 6;
+    m_rowCount = 8;
+
     // m_data
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < m_rowCount; i++)
     {
-        QVector<qreal>* dataVec = new QVector<qreal>(6);
-//        QVector<QColor>* colorVec = new QVector<QColor>(6);
+        QVector<qreal>* dataVec = new QVector<qreal>(m_columnCount);
         for (int k = 0; k < dataVec->size(); k++)
         {
             if (k%2 == 0)
                 dataVec->replace(k, i * 50 + qrand()%20);
             else
                 dataVec->replace(k, qrand()%100);
-//            colorVec->replace(k, QColor(Qt::white));
         }
         m_data.append(dataVec);
         m_labels.append(QString("Row: %1").arg((i + 1)));
-//        m_rowsColors.append(colorVec);
     }
 }
 
 int CustomTableModel::rowCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent)
-    //    return m_points.count();
     return m_data.count();
 }
 
 int CustomTableModel::columnCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent)
-    //    return 3;
-    return 6;
+    return m_columnCount;
 }
 
 QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation, int role ) const
@@ -84,19 +69,13 @@ QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation,
     {
         switch(section)
         {
-        //        case 0:
-        //            return "x";
-        //        case 1:
-        //            return "y";
-        //        case 2:
-        case 6:
-            return "Fruit";
+        //        case 6:
+        //            return "Fruit";
         default:
             if (section%2 == 0)
                 return "x";
             else
                 return "y";
-            //            return "What?";
         }
     }
     else
@@ -109,13 +88,8 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
     {
         switch(index.column())
         {
-        //        case 0:
-        //            return m_points[index.row()].x();
-        //        case 1:
-        //            return m_points[index.row()].y();
-        //        case 2:
-        case 6:
-            return m_labels[index.row()];
+        //        case 6:
+        //            return m_labels[index.row()];
         default:
             return m_data[index.row()]->at(index.column());
             break;
@@ -125,28 +99,23 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
     {
         switch(index.column())
         {
-        //        case 0:
-        //            return m_points[index.row()].x();
-        //        case 1:
-        //            return m_points[index.row()].y();
-        //        case 2:
-        case 6:
-            return m_labels[index.row()];
+        //        case 6:
+        //            return m_labels[index.row()];
         default:
             return m_data[index.row()]->at(index.column());
             break;
         }
     }
     else if (role == Qt::BackgroundRole)
-        {
-            QRect rect;
-            foreach(rect, m_mapping)
-                if(rect.contains(index.column(), index.row()))
-                    return QColor(m_mapping.key(rect));
+    {
+        QRect rect;
+        foreach(rect, m_mapping)
+            if(rect.contains(index.column(), index.row()))
+                return QColor(m_mapping.key(rect));
 
-            // cell not mapped return white color
-            return QColor(Qt::white);
-        }
+        // cell not mapped return white color
+        return QColor(Qt::white);
+    }
     return QVariant();
 }
 
@@ -156,36 +125,21 @@ bool CustomTableModel::setData ( const QModelIndex & index, const QVariant & val
     {
         switch(index.column())
         {
-        //        case 0:
-        //            m_points[index.row()].setX(value.toDouble());
+        //        case 6:
+        //            m_labels.replace(index.row(), value.toString());
         //            break;
-        //        case 1:
-        //            m_points[index.row()].setY(value.toDouble());
-        //            break;
-        //        case 2:
-        case 6:
-            m_labels.replace(index.row(), value.toString());
-            break;
         default:
             m_data[index.row()]->replace(index.column(), value.toDouble());
             break;
-            //            return false;
         }
         emit dataChanged(index, index);
         return true;
     }
-//    else if (role == Qt::BackgroundRole)
-//        {
-//            m_rowsColors[index.row()]->replace(index.column(), value.value<QColor>());
-//            return true;
-//        }
     return false;
 }
 
 Qt::ItemFlags CustomTableModel::flags ( const QModelIndex & index ) const
 {
-    //    if (!index.isValid())
-    //                return Qt::ItemIsEnabled;
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
 
@@ -199,8 +153,8 @@ bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & pare
     for (int i = row; i < row + count; i++)
     {
         //        m_points.insert(row, QPointF(10,20));
-        QVector<qreal>* dataVec = new QVector<qreal>(6);        
-        QVector<QColor>* colorVec = new QVector<QColor>(6);
+        QVector<qreal>* dataVec = new QVector<qreal>(m_columnCount);
+        QVector<QColor>* colorVec = new QVector<QColor>(m_columnCount);
         for (int k = 0; k < dataVec->size(); k++)
         {
             if (k%2 == 0)
@@ -238,7 +192,6 @@ bool CustomTableModel::insertRows ( int row, int count, const QModelIndex & pare
         }
         m_data.insert(i, dataVec);
         m_labels.insert(i,(QString("Row: %1").arg(i + 1)));
-//        m_rowsColors.insert(i, colorVec);
     }
     endInsertRows();
     return true;
@@ -255,13 +208,46 @@ bool CustomTableModel::removeRows ( int row, int count, const QModelIndex & pare
     beginRemoveRows(parent, row, row + count - 1);
     for (int i = row; i < row + count; i++)
     {
-        //        m_points.removeAt(row);
         QVector<qreal>* item = m_data.at(row);
         m_data.removeAt(row);
         delete item;
         m_labels.removeAt(row);
     }
     endRemoveRows();
+    return true;
+}
+
+bool CustomTableModel::insertColumns ( int column, int count, const QModelIndex & parent)
+{
+    if (column < 0)
+        column = 0;
+    beginInsertColumns(parent, column, column + count - 1);
+    m_columnCount += count;
+    for (int i = column; i < column + count; i++)
+        for (int k = 0; k < rowCount(); k++)
+            if (k - 1 >= 0) {
+                m_data[k]->insert(i, m_data[k - 1]->at(i) + qrand()%40 + 10);
+            } else {
+                m_data[k]->insert(i, qrand()%40);
+            }
+    endInsertColumns();
+    return true;
+}
+
+bool CustomTableModel::removeColumns ( int column, int count, const QModelIndex & parent)
+{
+    if (column > columnCount() - 1)
+        return false;
+    if (column < 0)
+        column = 0;
+    if (column + count > columnCount())
+        return false;
+    beginRemoveColumns(parent, column, column + count -1);
+    m_columnCount -= count;
+    for (int i = column; i < column + count; i++)
+        for (int k = 0; k < rowCount(); k++)
+            m_data[k]->remove(column);
+    endRemoveColumns();
     return true;
 }
 

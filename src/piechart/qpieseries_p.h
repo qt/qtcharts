@@ -56,10 +56,16 @@ public Q_SLOTS:
     void sliceClicked();
     void sliceHovered(bool state);
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-    void modelDataAdded(QModelIndex parent, int start, int end);
-    void modelDataRemoved(QModelIndex parent, int start, int end);
-    void initializePieFromModel();
+    void modelRowsAdded(QModelIndex parent, int start, int end);
+    void modelRowsRemoved(QModelIndex parent, int start, int end);
+    void modelColumnsAdded(QModelIndex parent, int start, int end);
+    void modelColumnsRemoved(QModelIndex parent, int start, int end);
     bool setRealValue(qreal &value, qreal newValue, qreal max, qreal min = 0.0);
+
+private:
+    void initializePieFromModel();
+    void insertData(int start, int end);
+    void removeData(int start, int end);
 
 public:
     QList<QPieSlice*> m_slices;

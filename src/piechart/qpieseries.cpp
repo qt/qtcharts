@@ -422,6 +422,11 @@ bool QPieSeries::setModel(QAbstractItemModel* model)
     if(model)
     {
         d->m_model = model;
+        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+        connect(d->m_model,SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelRowsAdded(QModelIndex,int,int)));
+        connect(d->m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
         return true;
     }
     else
@@ -586,11 +591,45 @@ void QPieSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRigh
 }
 
 
-void QPieSeriesPrivate::modelDataAdded(QModelIndex parent, int start, int end)
+void QPieSeriesPrivate::modelRowsAdded(QModelIndex parent, int start, int end)
 {
     Q_UNUSED(parent);
+    if (m_mapOrientation == Qt::Vertical)
+        insertData(start, end);
+    else if (start <= m_mapValues || start <= m_mapLabels) // if the changes affect the map - reinitialize the pie
+        initializePieFromModel();
+}
+
+void QPieSeriesPrivate::modelRowsRemoved(QModelIndex parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    if (m_mapOrientation == Qt::Vertical)
+        removeData(start, end);
+    else if (start <= m_mapValues || start <= m_mapLabels) // if the changes affect the map - reinitialize the pie
+        initializePieFromModel();
+}
+
+void QPieSeriesPrivate::modelColumnsAdded(QModelIndex parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    if (m_mapOrientation == Qt::Horizontal)
+        insertData(start, end);
+    else if (start <= m_mapValues || start <= m_mapLabels) // if the changes affect the map - reinitialize the pie
+        initializePieFromModel();
+}
+
+void QPieSeriesPrivate::modelColumnsRemoved(QModelIndex parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    if (m_mapOrientation == Qt::Horizontal)
+        removeData(start, end);
+    else if (start <= m_mapValues || start <= m_mapLabels) // if the changes affect the map - reinitialize the pie
+        initializePieFromModel();
+}
+
+void QPieSeriesPrivate::insertData(int start, int end)
+{
     Q_Q(QPieSeries);
-    // series uses model as a data sourceupda
     if (m_mapCount != -1 && start >= m_mapFirst + m_mapCount) {
         return;
     } else {
@@ -617,9 +656,8 @@ void QPieSeriesPrivate::modelDataAdded(QModelIndex parent, int start, int end)
     }
 }
 
-void QPieSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
+void QPieSeriesPrivate::removeData(int start, int end)
 {
-    Q_UNUSED(parent);
     Q_Q(QPieSeries);
     int removedCount = end - start + 1;
     if (m_mapCount != -1 && start >= m_mapFirst + m_mapCount) {
@@ -662,16 +700,6 @@ void QPieSeriesPrivate::initializePieFromModel()
     // clear current content
     q->clear();
 
-    // connect the signals
-    connect(m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), this, SLOT(modelUpdated(QModelIndex,QModelIndex)));
-    if (m_mapOrientation == Qt::Vertical) {
-        connect(m_model,SIGNAL(rowsInserted(QModelIndex,int,int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    } else {
-        connect(m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), this, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), this, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    }
-
     // create the initial slices set
     if (m_mapOrientation == Qt::Vertical) {
         int sliceCount = 0;
@@ -690,6 +718,7 @@ void QPieSeriesPrivate::initializePieFromModel()
         for (int i = m_mapFirst; i < m_mapFirst + sliceCount; i++)
             q->append(m_model->data(m_model->index(m_mapValues, i), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(m_mapLabels, i), Qt::DisplayRole).toString());
     }
+    q->setLabelsVisible(true);
 }
 
 bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qreal min)
