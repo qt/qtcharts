@@ -74,8 +74,8 @@ public Q_SLOTS:
     void handleAxisYChanged(qreal min,qreal max,int tickYCount = 5,bool niceNumbers = false);
 
 private:
-    void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount);
-    qreal niceNumber(qreal x,bool celing);
+    void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const;
+    qreal niceNumber(qreal x,bool celing) const;
 
 private:
     qreal m_minX;
@@ -84,7 +84,8 @@ private:
     qreal m_maxY;
     int m_tickXCount;
     int m_tickYCount;
-    bool m_niceNumbers;
+    bool m_niceXNumbers;
+    bool m_niceYNumbers;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

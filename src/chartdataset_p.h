@@ -63,6 +63,8 @@ public:
     QAxis* axisX() const { return m_axisX; }
     QAxis* axisY(QAbstractSeries *series = 0) const;
 
+    QList<QAbstractSeries*> series() const;
+
 Q_SIGNALS:
     void seriesAdded(QAbstractSeries* series, Domain* domain);
     void seriesRemoved(QAbstractSeries* series);
@@ -83,6 +85,7 @@ private:
 
     int m_domainIndex;
     bool m_axisXInitialized;
+    bool m_axisYInitialized;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

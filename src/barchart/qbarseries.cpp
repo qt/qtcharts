@@ -631,8 +631,7 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     maxY = qMax(maxY, y);
     tickXCount = x+1;
 
-    domain.setRangeX(minX,maxX,tickXCount);
-    domain.setRangeY(minY,maxY,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
 }
 
 Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)

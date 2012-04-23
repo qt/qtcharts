@@ -30,7 +30,8 @@ m_minY(0),
 m_maxY(0),
 m_tickXCount(5),
 m_tickYCount(5),
-m_niceNumbers(false)
+m_niceXNumbers(false),
+m_niceYNumbers(false)
 {
 }
 
@@ -45,47 +46,42 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 
 void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCount,int tickYCount)
 {
-    bool domainChanged = false;
-    bool tickXChanged = false;
-    bool tickYChanged = false;
+    bool axisXChanged = false;
+    bool axisYChanged = false;
 
     if(m_tickXCount!=tickXCount) {
         m_tickXCount=tickXCount;
-        tickXChanged=true;
+        axisXChanged=true;
     }
 
     if(m_tickYCount!=tickYCount) {
         m_tickYCount=tickYCount;
-        tickYChanged=true;
+        axisYChanged=true;
     }
 
     if (!qFuzzyIsNull(m_minX - minX) || !qFuzzyIsNull(m_maxX - maxX)) {
-        if(m_niceNumbers) looseNiceNumbers(minX, maxX, m_tickXCount);
+        if(m_niceXNumbers) looseNiceNumbers(minX, maxX, m_tickXCount);
         m_minX=minX;
         m_maxX=maxX;
-        domainChanged=true;
-        tickXChanged=false;
-        emit rangeXChanged(minX,maxX, m_tickXCount);
+        axisXChanged=true;
     }
 
     if (!qFuzzyIsNull(m_minY - minY) || !qFuzzyIsNull(m_maxY - maxY)) {
-        if(m_niceNumbers) looseNiceNumbers(minY, maxY, m_tickYCount);
+        if(m_niceYNumbers) looseNiceNumbers(minY, maxY, m_tickYCount);
         m_minY=minY;
         m_maxY=maxY;
-        domainChanged=true;
-        tickYChanged=false;
-        emit rangeYChanged(minY,maxY, m_tickYCount);
+        axisYChanged=true;
     }
 
-    if(domainChanged) {
+    if(axisXChanged || axisYChanged) {
         emit this->domainChanged(m_minX, m_maxX, m_minY, m_maxY);
     }
 
-    if(tickXChanged) {
+    if(axisXChanged) {
         emit rangeXChanged(minX,maxX, m_tickXCount);
     }
 
-    if(tickYChanged) {
+    if(axisYChanged) {
         emit rangeYChanged(minY,maxY, m_tickYCount);
     }
 }
@@ -152,19 +148,26 @@ void Domain::zoomIn(const QRectF& rect, const QSizeF& size)
     qreal dx = spanX() / size.width();
     qreal dy = spanY() / size.height();
 
-    m_maxX = m_minX + dx * rect.right();
-    m_minX = m_minX + dx * rect.left();
-    m_minY = m_maxY - dy * rect.bottom();
-    m_maxY = m_maxY - dy * rect.top();
+    qreal maxX = m_maxX;
+    qreal minX = m_minX;
+    qreal minY = m_minY;
+    qreal maxY = m_maxY;
 
-    if(m_niceNumbers) {
-        looseNiceNumbers(m_minX, m_maxX, m_tickXCount);
-        looseNiceNumbers(m_minY, m_maxY, m_tickYCount);
+    maxX = minX + dx * rect.right();
+    minX = minX + dx * rect.left();
+    minY = maxY - dy * rect.bottom();
+    maxY = maxY - dy * rect.top();
+
+    int tickXCount = m_tickXCount;
+    int tickYCount = m_tickYCount;
+
+    if(m_niceXNumbers) {
+        looseNiceNumbers(minX, maxX, tickXCount);
     }
-
-    emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
-    emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
-    emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
+    if(m_niceYNumbers) {
+        looseNiceNumbers(minY, maxY, tickYCount);
+    }
+    setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
 }
 
 void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
@@ -172,19 +175,26 @@ void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
     qreal dx = spanX() / rect.width();
     qreal dy = spanY() / rect.height();
 
-    m_minX = m_maxX - dx * rect.right();
-    m_maxX = m_minX + dx * size.width();
-    m_maxY = m_minY + dy * rect.bottom();
-    m_minY = m_maxY - dy * size.height();
+    qreal maxX = m_maxX;
+    qreal minX = m_minX;
+    qreal minY = m_minY;
+    qreal maxY = m_maxY;
 
-    if(m_niceNumbers) {
-        looseNiceNumbers(m_minX, m_maxX, m_tickXCount);
-        looseNiceNumbers(m_minY, m_maxY, m_tickYCount);
+    minX = maxX - dx * rect.right();
+    maxX = minX + dx * size.width();
+    maxY = minY + dy * rect.bottom();
+    minY = maxY - dy * size.height();
+
+    int tickXCount = m_tickXCount;
+    int tickYCount = m_tickYCount;
+
+    if(m_niceXNumbers) {
+        looseNiceNumbers(minX, maxX, tickXCount);
     }
-
-    emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
-    emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
-    emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
+    if(m_niceYNumbers) {
+        looseNiceNumbers(minY, maxY, tickYCount);
+    }
+    setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
 }
 
 void Domain::move(int dx,int dy,const QSizeF& size)
@@ -192,24 +202,26 @@ void Domain::move(int dx,int dy,const QSizeF& size)
     qreal x = spanX() / size.width();
     qreal y = spanY() / size.height();
 
+    qreal maxX = m_maxX;
+    qreal minX = m_minX;
+    qreal minY = m_minY;
+    qreal maxY = m_maxY;
+
     if(dx!=0) {
-        m_minX = m_minX + x * dx;
-        m_maxX = m_maxX + x * dx;
-        emit rangeXChanged(m_minX, m_maxX, m_tickXCount);
+        minX = minX + x * dx;
+        maxX = maxX + x * dx;
     }
     if(dy!=0) {
-        m_minY = m_minY + y * dy;
-        m_maxY = m_maxY + y * dy;
-        emit rangeYChanged(m_minY, m_maxY, m_tickYCount);
+        minY = minY + y * dy;
+        maxY = maxY + y * dy;
     }
-
-    emit domainChanged(m_minX, m_maxX, m_minY, m_maxY);
+    setRange(minX,maxX,minY,maxY);
 }
 
 void Domain::handleAxisXChanged(qreal min,qreal max,int tickXCount,bool niceNumbers)
 {
-    if (niceNumbers && m_niceNumbers != niceNumbers) {
-        m_niceNumbers = niceNumbers;
+    if (m_niceXNumbers != niceNumbers) {
+        m_niceXNumbers = niceNumbers;
         //force recalculation
         m_minX = 0;
         m_maxX = 0;
@@ -219,8 +231,8 @@ void Domain::handleAxisXChanged(qreal min,qreal max,int tickXCount,bool niceNumb
 
 void Domain::handleAxisYChanged(qreal min,qreal max,int tickYCount,bool niceNumbers)
 {
-    if (niceNumbers && m_niceNumbers != niceNumbers) {
-        m_niceNumbers = niceNumbers;
+    if (m_niceYNumbers != niceNumbers) {
+        m_niceYNumbers = niceNumbers;
         //force recalculation
         m_minY = 0;
         m_maxY = 0;
@@ -230,7 +242,7 @@ void Domain::handleAxisYChanged(qreal min,qreal max,int tickYCount,bool niceNumb
 
 //algorithm defined by Paul S.Heckbert GraphicalGems I
 
-void Domain::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount)
+void Domain::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const
 {
     qreal range = niceNumber(max-min,true); //range with ceiling
     qreal step = niceNumber(range/(ticksCount-1),false);
@@ -243,7 +255,7 @@ void Domain::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount)
 
 //nice numbers can be expressed as form of 1*10^n, 2* 10^n or 5*10^n
 
-qreal Domain::niceNumber(qreal x,bool ceiling)
+qreal Domain::niceNumber(qreal x,bool ceiling) const
 {
     qreal z = pow(10,floor(log10(x))); //find corresponding number of the form of 10^n than is smaller than x
     qreal q = x/z;//q<10 && q>=1;

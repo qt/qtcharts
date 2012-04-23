@@ -256,8 +256,7 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
             maxY = qMax(maxY, y);
         }}
 
-    domain.setRangeX(minX,maxX,tickXCount);
-    domain.setRangeY(minY,maxY,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
 }
 
 Chart* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)

@@ -87,8 +87,7 @@ void QPercentBarSeriesPrivate::scaleDomain(Domain& domain)
     maxY = 100;
     tickXCount = x+1;
 
-    domain.setRangeX(minX,maxX,tickXCount);
-    domain.setRangeY(minY,maxY,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
 }
 
 

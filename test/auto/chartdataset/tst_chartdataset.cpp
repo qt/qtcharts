@@ -64,6 +64,8 @@ private Q_SLOTS:
     void zoomOutDomain();
     void scrollDomain_data();
     void scrollDomain();
+private:
+    ChartDataSet* m_dataset;
 };
 
 void tst_ChartDataSet::initTestCase()
@@ -79,10 +81,17 @@ void tst_ChartDataSet::cleanupTestCase()
 
 void tst_ChartDataSet::init()
 {
+    m_dataset = new ChartDataSet();
 }
+
 
 void tst_ChartDataSet::cleanup()
 {
+    QList<QAbstractSeries*> series = m_dataset->series();
+    foreach(QAbstractSeries* serie, series)
+    {
+        m_dataset->removeSeries(serie);
+    }
 }
 
 void tst_ChartDataSet::chartdataset_data()
@@ -91,14 +100,13 @@ void tst_ChartDataSet::chartdataset_data()
 
 void tst_ChartDataSet::chartdataset()
 {
-	ChartDataSet dataSet;
-	QVERIFY2(dataSet.axisX(), "Missing axisX.");
-	QVERIFY2(dataSet.axisY(), "Missing axisY.");
+	QVERIFY2(m_dataset->axisX(), "Missing axisX.");
+	QVERIFY2(m_dataset->axisY(), "Missing axisY.");
 	//check if not dangling pointer
-	dataSet.axisX()->objectName();
-	dataSet.axisY()->objectName();
+	m_dataset->axisX()->objectName();
+	m_dataset->axisY()->objectName();
 	QLineSeries* series = new QLineSeries(this);
-	QCOMPARE(dataSet.seriesIndex(series),-1);
+	QCOMPARE(m_dataset->seriesIndex(series),-1);
 }
 
 void tst_ChartDataSet::addSeries_data()
@@ -120,7 +128,7 @@ void tst_ChartDataSet::addSeries_data()
     QAxis* axis2 = new QAxis(this);
 
 	QTest::newRow("default axis Y: series0,series1,series2") << series0 << (QAxis*)0 << series1 << (QAxis*)0  << series2 << (QAxis*)0 << 2;
-	QTest::newRow("default axis Y: series0, axis 0: series1,series2") << series0 << (QAxis*)0 << series1 << axis0 << series2 << axis0 << 3;
+	QTest::newRow("default axis Y: series0, axis0: series1,series2") << series0 << (QAxis*)0 << series1 << axis0 << series2 << axis0 << 3;
 	QTest::newRow("axis0: series0, axis1: series1, axis2: series2") << series0 << axis0 << series1 << axis1 << series2 << axis2 << 4;
 }
 
@@ -134,29 +142,27 @@ void tst_ChartDataSet::addSeries()
     QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
 
-    ChartDataSet dataSet;
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAxis*,Domain*)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAxis*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries *,Domain*)));
+    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis*,Domain*)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis*)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *,Domain*)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
-
-    dataSet.addSeries(series0,axis0);
-    dataSet.addSeries(series1,axis1);
-    dataSet.addSeries(series2,axis2);
+    m_dataset->addSeries(series0,axis0);
+    m_dataset->addSeries(series1,axis1);
+    m_dataset->addSeries(series2,axis2);
 
     QCOMPARE(spy0.count(), axisCount);
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 3);
     QCOMPARE(spy3.count(), 0);
 
-    if(axis0==0) axis0 = dataSet.axisY();
-    if(axis1==0) axis1 = dataSet.axisY();
-    if(axis2==0) axis2 = dataSet.axisY();
+    if(axis0==0) axis0 = m_dataset->axisY();
+    if(axis1==0) axis1 = m_dataset->axisY();
+    if(axis2==0) axis2 = m_dataset->axisY();
 
-    QVERIFY(axis0 == dataSet.removeSeries(series0));
-    QVERIFY(axis1 == dataSet.removeSeries(series1));
-    QVERIFY(axis2 == dataSet.removeSeries(series2));
+    QVERIFY(axis0 == m_dataset->removeSeries(series0));
+    QVERIFY(axis1 == m_dataset->removeSeries(series1));
+    QVERIFY(axis2 == m_dataset->removeSeries(series2));
 }
 
 void tst_ChartDataSet::removeSeries_data()
@@ -174,20 +180,18 @@ void tst_ChartDataSet::removeSeries()
     QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
 
-    ChartDataSet dataSet;
+    m_dataset->addSeries(series0,axis0);
+    m_dataset->addSeries(series1,axis1);
+    m_dataset->addSeries(series2,axis2);
 
-    dataSet.addSeries(series0,axis0);
-    dataSet.addSeries(series1,axis1);
-    dataSet.addSeries(series2,axis2);
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAxis *, Domain *)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAxis *)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
+    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis *, Domain *)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis *)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
-
-    dataSet.removeSeries(series0);
-    dataSet.removeSeries(series1);
-    dataSet.removeSeries(series2);
+    m_dataset->removeSeries(series0);
+    m_dataset->removeSeries(series1);
+    m_dataset->removeSeries(series2);
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), axisCount);
@@ -210,19 +214,16 @@ void tst_ChartDataSet::removeAllSeries()
     QAxis* axis1 = new QAxis(this);
     QAxis* axis2 = new QAxis(this);
 
+    m_dataset->addSeries(series0, axis0);
+    m_dataset->addSeries(series1, axis1);
+    m_dataset->addSeries(series2, axis2);
 
-    ChartDataSet dataSet;
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAxis *, Domain *)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAxis *)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
+    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
-    dataSet.addSeries(series0, axis0);
-    dataSet.addSeries(series1, axis1);
-    dataSet.addSeries(series2, axis2);
-
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis *, Domain *)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis *)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
-
-    dataSet.removeAllSeries();
+    m_dataset->removeAllSeries();
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 4);
@@ -246,28 +247,26 @@ void tst_ChartDataSet::axisY()
     QFETCH(QAxis*, axis1);
     QFETCH(QAxis*, axis2);
 
-    ChartDataSet dataSet;
-
-    QAxis* defaultAxisY = dataSet.axisY();
+    QAxis* defaultAxisY = m_dataset->axisY();
 
     QVERIFY2(defaultAxisY, "Missing axisY.");
 
     QLineSeries* series0 = new QLineSeries();
-    dataSet.addSeries(series0,axis0);
+    m_dataset->addSeries(series0,axis0);
 
     QLineSeries* series1 = new QLineSeries();
-    dataSet.addSeries(series1,axis1);
+    m_dataset->addSeries(series1,axis1);
 
     QLineSeries* series2 = new QLineSeries();
-    dataSet.addSeries(series2,axis2);
+    m_dataset->addSeries(series2,axis2);
 
     if(!axis0) axis0=defaultAxisY ;
     if(!axis1) axis1=defaultAxisY ;
     if(!axis2) axis2=defaultAxisY ;
 
-    QVERIFY(dataSet.axisY(series0) == axis0);
-    QVERIFY(dataSet.axisY(series1) == axis1);
-    QVERIFY(dataSet.axisY(series2) == axis2);
+    QVERIFY(m_dataset->axisY(series0) == axis0);
+    QVERIFY(m_dataset->axisY(series1) == axis1);
+    QVERIFY(m_dataset->axisY(series2) == axis2);
 
 }
 
@@ -287,26 +286,20 @@ void tst_ChartDataSet::seriesCount()
     QFETCH(int, axisCount);
     Q_UNUSED(axisCount);
 
-    ChartDataSet dataSet;
+    m_dataset->addSeries(series0, axis0);
+    m_dataset->addSeries(series1, axis1);
+    m_dataset->addSeries(series2, axis2);
 
-    dataSet.addSeries(series0, axis0);
-    dataSet.addSeries(series1, axis1);
-    dataSet.addSeries(series2, axis2);
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAxis *, Domain *)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAxis *)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
+    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis *, Domain *)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis *)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
-
-    QCOMPARE(dataSet.seriesCount(series0->type()),3);
+    QCOMPARE(m_dataset->seriesCount(series0->type()),3);
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
-
-    dataSet.removeSeries(series0);
-    dataSet.removeSeries(series1);
-    dataSet.removeSeries(series2);
 }
 
 void tst_ChartDataSet::seriesIndex_data()
@@ -327,77 +320,70 @@ void tst_ChartDataSet::seriesIndex()
     QFETCH(int, axisCount);
     Q_UNUSED(axisCount);
 
-    ChartDataSet dataSet;
+    m_dataset->addSeries(series0, axis0);
+    m_dataset->addSeries(series1, axis1);
+    m_dataset->addSeries(series2, axis2);
 
-    dataSet.addSeries(series0, axis0);
-    dataSet.addSeries(series1, axis1);
-    dataSet.addSeries(series2, axis2);
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAxis*,Domain*)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAxis*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
+    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis*,Domain*)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis*)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QSeries*,Domain*)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QSeries*)));
-
-    QCOMPARE(dataSet.seriesIndex(series0),0);
-    QCOMPARE(dataSet.seriesIndex(series1),1);
-    QCOMPARE(dataSet.seriesIndex(series2),2);
+    QCOMPARE(m_dataset->seriesIndex(series0),0);
+    QCOMPARE(m_dataset->seriesIndex(series1),1);
+    QCOMPARE(m_dataset->seriesIndex(series2),2);
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
 
-    dataSet.removeSeries(series0);
-    dataSet.removeSeries(series1);
-    dataSet.removeSeries(series2);
+    m_dataset->removeSeries(series0);
+    m_dataset->removeSeries(series1);
+    m_dataset->removeSeries(series2);
 
-    QCOMPARE(dataSet.seriesIndex(series0),-1);
-    QCOMPARE(dataSet.seriesIndex(series1),-1);
-    QCOMPARE(dataSet.seriesIndex(series2),-1);
+    QCOMPARE(m_dataset->seriesIndex(series0),-1);
+    QCOMPARE(m_dataset->seriesIndex(series1),-1);
+    QCOMPARE(m_dataset->seriesIndex(series2),-1);
 
-    dataSet.addSeries(series0, axis0);
-    dataSet.addSeries(series1, axis1);
-    dataSet.addSeries(series2, axis2);
+    m_dataset->addSeries(series0, axis0);
+    m_dataset->addSeries(series1, axis1);
+    m_dataset->addSeries(series2, axis2);
 
-    QCOMPARE(dataSet.seriesIndex(series0),0);
-    QCOMPARE(dataSet.seriesIndex(series1),1);
-    QCOMPARE(dataSet.seriesIndex(series2),2);
+    QCOMPARE(m_dataset->seriesIndex(series0),0);
+    QCOMPARE(m_dataset->seriesIndex(series1),1);
+    QCOMPARE(m_dataset->seriesIndex(series2),2);
 
-    dataSet.removeSeries(series1);
+    m_dataset->removeSeries(series1);
 
-    QCOMPARE(dataSet.seriesIndex(series0),0);
-    QCOMPARE(dataSet.seriesIndex(series1),-1);
-    QCOMPARE(dataSet.seriesIndex(series2),2);
+    QCOMPARE(m_dataset->seriesIndex(series0),0);
+    QCOMPARE(m_dataset->seriesIndex(series1),-1);
+    QCOMPARE(m_dataset->seriesIndex(series2),2);
 
-    dataSet.addSeries(series1, axis1);
-    QCOMPARE(dataSet.seriesIndex(series0),0);
-    QCOMPARE(dataSet.seriesIndex(series1),1);
-    QCOMPARE(dataSet.seriesIndex(series2),2);
+    m_dataset->addSeries(series1, axis1);
+    QCOMPARE(m_dataset->seriesIndex(series0),0);
+    QCOMPARE(m_dataset->seriesIndex(series1),1);
+    QCOMPARE(m_dataset->seriesIndex(series2),2);
 
-    dataSet.removeSeries(series2);
-    QCOMPARE(dataSet.seriesIndex(series0),0);
-    QCOMPARE(dataSet.seriesIndex(series1),1);
-    QCOMPARE(dataSet.seriesIndex(series2),-1);
+    m_dataset->removeSeries(series2);
+    QCOMPARE(m_dataset->seriesIndex(series0),0);
+    QCOMPARE(m_dataset->seriesIndex(series1),1);
+    QCOMPARE(m_dataset->seriesIndex(series2),-1);
 
-    dataSet.removeSeries(series0);
-    QCOMPARE(dataSet.seriesIndex(series0),-1);
-    QCOMPARE(dataSet.seriesIndex(series1),1);
-    QCOMPARE(dataSet.seriesIndex(series2),-1);
+    m_dataset->removeSeries(series0);
+    QCOMPARE(m_dataset->seriesIndex(series0),-1);
+    QCOMPARE(m_dataset->seriesIndex(series1),1);
+    QCOMPARE(m_dataset->seriesIndex(series2),-1);
 
-    dataSet.addSeries(series2);
-    QCOMPARE(dataSet.seriesIndex(series0),-1);
-    QCOMPARE(dataSet.seriesIndex(series1),1);
-    QCOMPARE(dataSet.seriesIndex(series2),0);
+    m_dataset->addSeries(series2);
+    QCOMPARE(m_dataset->seriesIndex(series0),-1);
+    QCOMPARE(m_dataset->seriesIndex(series1),1);
+    QCOMPARE(m_dataset->seriesIndex(series2),0);
 
-    dataSet.addSeries(series0);
-    QCOMPARE(dataSet.seriesIndex(series0),2);
-    QCOMPARE(dataSet.seriesIndex(series1),1);
-    QCOMPARE(dataSet.seriesIndex(series2),0);
-
-    dataSet.removeSeries(series0);
-    dataSet.removeSeries(series1);
-    dataSet.removeSeries(series2);
-
+    m_dataset->addSeries(series0);
+    QCOMPARE(m_dataset->seriesIndex(series0),2);
+    QCOMPARE(m_dataset->seriesIndex(series1),1);
+    QCOMPARE(m_dataset->seriesIndex(series2),0);
 }
 
 void tst_ChartDataSet::domain_data()
@@ -416,28 +402,22 @@ void tst_ChartDataSet::domain()
     QFETCH(int, axisCount);
     Q_UNUSED(axisCount);
 
-    ChartDataSet dataSet;
+    m_dataset->addSeries(series0, axis0);
+    m_dataset->addSeries(series1, axis1);
+    m_dataset->addSeries(series2, axis2);
 
-    dataSet.addSeries(series0, axis0);
-    dataSet.addSeries(series1, axis1);
-    dataSet.addSeries(series2, axis2);
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAxis *, Domain *)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAxis *)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
+    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
-    QSignalSpy spy0(&dataSet, SIGNAL(axisAdded(QAxis *, Domain *)));
-    QSignalSpy spy1(&dataSet, SIGNAL(axisRemoved(QAxis *)));
-    QSignalSpy spy2(&dataSet, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
-    QSignalSpy spy3(&dataSet, SIGNAL(seriesRemoved(QAbstractSeries *)));
-
-    QVERIFY(dataSet.domain(axis0)==dataSet.domain(series0));
-    QVERIFY(dataSet.domain(axis1)==dataSet.domain(series1));
-    QVERIFY(dataSet.domain(axis2)==dataSet.domain(series2));
+    QVERIFY(m_dataset->domain(axis0)==m_dataset->domain(series0));
+    QVERIFY(m_dataset->domain(axis1)==m_dataset->domain(series1));
+    QVERIFY(m_dataset->domain(axis2)==m_dataset->domain(series2));
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
-
-    dataSet.removeSeries(series0);
-    dataSet.removeSeries(series1);
-    dataSet.removeSeries(series2);
 }
 
 void tst_ChartDataSet::zoomInDomain_data()
@@ -454,31 +434,25 @@ void tst_ChartDataSet::zoomInDomain()
     QFETCH(QLineSeries*, series2);
     QFETCH(QAxis*, axis2);
     QFETCH(int, axisCount);
-
     Q_UNUSED(axisCount);
-    ChartDataSet dataSet;
 
-    dataSet.addSeries(series0, axis0);
-    dataSet.addSeries(series1, axis1);
-    dataSet.addSeries(series2, axis2);
+    m_dataset->addSeries(series0, axis0);
+    m_dataset->addSeries(series1, axis1);
+    m_dataset->addSeries(series2, axis2);
 
-    Domain* domain0 = dataSet.domain(series0);
-    Domain* domain1 = dataSet.domain(series1);
-    Domain* domain2 = dataSet.domain(series2);
+    Domain* domain0 = m_dataset->domain(series0);
+    Domain* domain1 = m_dataset->domain(series1);
+    Domain* domain2 = m_dataset->domain(series2);
 
     QSignalSpy spy0(domain0, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
     QSignalSpy spy1(domain1, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
     QSignalSpy spy2(domain2, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
 
-    dataSet.zoomInDomain(QRect(0,0,100,100),QSize(1000,1000));
+    m_dataset->zoomInDomain(QRect(0,0,100,100),QSize(1000,1000));
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
-
-    dataSet.removeSeries(series0);
-    dataSet.removeSeries(series1);
-    dataSet.removeSeries(series2);
 }
 
 void tst_ChartDataSet::zoomOutDomain_data()
@@ -498,29 +472,23 @@ void tst_ChartDataSet::zoomOutDomain()
 
     Q_UNUSED(axisCount);
 
-    ChartDataSet dataSet;
+    m_dataset->addSeries(series0, axis0);
+    m_dataset->addSeries(series1, axis1);
+    m_dataset->addSeries(series2, axis2);
 
-    dataSet.addSeries(series0, axis0);
-    dataSet.addSeries(series1, axis1);
-    dataSet.addSeries(series2, axis2);
-
-    Domain* domain0 = dataSet.domain(series0);
-    Domain* domain1 = dataSet.domain(series1);
-    Domain* domain2 = dataSet.domain(series2);
+    Domain* domain0 = m_dataset->domain(series0);
+    Domain* domain1 = m_dataset->domain(series1);
+    Domain* domain2 = m_dataset->domain(series2);
 
     QSignalSpy spy0(domain0, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
     QSignalSpy spy1(domain1, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
     QSignalSpy spy2(domain2, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
 
-    dataSet.zoomOutDomain(QRect(0,0,100,100),QSize(1000,1000));
+    m_dataset->zoomOutDomain(QRect(0,0,100,100),QSize(1000,1000));
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
-
-    dataSet.removeSeries(series0);
-    dataSet.removeSeries(series1);
-    dataSet.removeSeries(series2);
 }
 
 void tst_ChartDataSet::scrollDomain_data()
@@ -540,29 +508,23 @@ void tst_ChartDataSet::scrollDomain()
 
     Q_UNUSED(axisCount);
 
-    ChartDataSet dataSet;
+    m_dataset->addSeries(series0, axis0);
+    m_dataset->addSeries(series1, axis1);
+    m_dataset->addSeries(series2, axis2);
 
-    dataSet.addSeries(series0, axis0);
-    dataSet.addSeries(series1, axis1);
-    dataSet.addSeries(series2, axis2);
-
-    Domain* domain0 = dataSet.domain(series0);
-    Domain* domain1 = dataSet.domain(series1);
-    Domain* domain2 = dataSet.domain(series2);
+    Domain* domain0 = m_dataset->domain(series0);
+    Domain* domain1 = m_dataset->domain(series1);
+    Domain* domain2 = m_dataset->domain(series2);
 
     QSignalSpy spy0(domain0, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
     QSignalSpy spy1(domain1, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
     QSignalSpy spy2(domain2, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
 
-    dataSet.scrollDomain(10,10,QSize(1000,1000));
+    m_dataset->scrollDomain(10,10,QSize(1000,1000));
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
-
-    dataSet.removeSeries(series0);
-    dataSet.removeSeries(series1);
-    dataSet.removeSeries(series2);
 }
 
 QTEST_MAIN(tst_ChartDataSet)
