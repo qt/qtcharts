@@ -72,6 +72,7 @@ private:
     QPainterPath m_slicePath;
     QPainterPath m_labelArmPath;
     QRectF m_labelTextRect;
+    bool m_hovered;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

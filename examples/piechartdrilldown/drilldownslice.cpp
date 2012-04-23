@@ -57,6 +57,7 @@ void DrilldownSlice::updateLabel()
 void DrilldownSlice::showHighlight(bool show)
 {
     setLabelVisible(show);
+    setExploded(show);
 }
 
 #include "moc_drilldownslice.cpp"

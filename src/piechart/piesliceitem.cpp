@@ -40,7 +40,8 @@ QPointF offset(qreal angle, qreal length)
 }
 
 PieSliceItem::PieSliceItem(QGraphicsItem* parent)
-    :QGraphicsObject(parent)
+    :QGraphicsObject(parent),
+    m_hovered(false)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::MouseButtonMask);
@@ -49,7 +50,10 @@ PieSliceItem::PieSliceItem(QGraphicsItem* parent)
 
 PieSliceItem::~PieSliceItem()
 {
-
+    // If user is hovering over the slice and it gets destroyed we do
+    // not get a hover leave event. So we must emit the signal here.
+    if (m_hovered)
+        emit hovered(false);
 }
 
 QRectF PieSliceItem::boundingRect() const
@@ -85,11 +89,13 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
 
 void PieSliceItem::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
+    m_hovered = true;
     emit hovered(true);
 }
 
 void PieSliceItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
 {
+    m_hovered = false;
     emit hovered(false);
 }
 
