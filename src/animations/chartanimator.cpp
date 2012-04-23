@@ -37,8 +37,6 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-const static int duration = 1000;
-
 ChartAnimator::ChartAnimator(QObject *parent):QObject(parent),
     m_state(ShowState)
 {
@@ -186,7 +184,7 @@ void ChartAnimator::updateLayout(ChartAxis *item , QVector<qreal> &newLayout)
     if (animation->state() != QAbstractAnimation::Stopped)
         animation->stop();
 
-    animation->setDuration(duration);
+    animation->setDuration(ChartAnimationDuration);
     animation->setEasingCurve(QEasingCurve::OutQuart);
     QVariantAnimation::KeyValues value;
     animation->setKeyValues(value); //workaround for wrong interpolation call
@@ -211,7 +209,7 @@ void ChartAnimator::updateLayout(SplineChartItem *item, QVector<QPointF> &oldPoi
     if (animation->state() != QAbstractAnimation::Stopped)
         animation->stop();
 
-    animation->setDuration(duration);
+    animation->setDuration(ChartAnimationDuration);
     if (!empty)
         animation->setAnimationType(ChartAnimation::MoveDownAnimation);
     else
@@ -239,7 +237,7 @@ void ChartAnimator::updateLayout(XYChartItem *item, QVector<QPointF> &oldPoints,
     if (animation->state() != QAbstractAnimation::Stopped)
         animation->stop();
 
-    animation->setDuration(duration);
+    animation->setDuration(ChartAnimationDuration);
     if (!empty)
         animation->setAnimationType(ChartAnimation::MoveDownAnimation);
     else
@@ -276,7 +274,7 @@ void ChartAnimator::updateLayout(BarChartItem *item, const QVector<QRectF> &oldL
 {
     BarAnimation *animation = static_cast<BarAnimation *>(m_animations.value(item));
     Q_ASSERT(animation);
-    animation->setDuration(duration);
+    animation->setDuration(ChartAnimationDuration);
     animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
     animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
     QTimer::singleShot(0, animation, SLOT(start()));

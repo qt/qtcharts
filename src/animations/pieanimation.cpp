@@ -21,7 +21,6 @@
 #include "pieanimation_p.h"
 #include "piesliceanimation_p.h"
 #include "piechartitem_p.h"
-#include <QParallelAnimationGroup>
 #include <QTimer>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -43,7 +42,7 @@ void PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &slic
     animation->stop();
 
     animation->updateValue(sliceData);
-    animation->setDuration(1000);
+    animation->setDuration(ChartAnimationDuration);
     animation->setEasingCurve(QEasingCurve::OutQuart);
 
     QTimer::singleShot(0, animation, SLOT(start()));
@@ -63,7 +62,7 @@ void PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceDa
     startValue.m_angleSpan = 0;
     animation->setValue(startValue, sliceData);
 
-    animation->setDuration(1000);
+    animation->setDuration(ChartAnimationDuration);
     animation->setEasingCurve(QEasingCurve::OutQuart);
     QTimer::singleShot(0, animation, SLOT(start()));
 }
@@ -81,7 +80,7 @@ void PieAnimation::removeSlice(PieSliceItem *sliceItem)
     endValue.m_isLabelVisible = false;
 
     animation->updateValue(endValue);
-    animation->setDuration(1000);
+    animation->setDuration(ChartAnimationDuration);
     animation->setEasingCurve(QEasingCurve::OutQuart);
 
     // PieSliceItem is the parent of PieSliceAnimation so the animation will be deleted as well..

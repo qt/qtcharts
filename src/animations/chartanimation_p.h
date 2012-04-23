@@ -26,6 +26,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+const static int ChartAnimationDuration = 1000;
+
 class ChartAnimation: public QVariantAnimation
 {
 public:
