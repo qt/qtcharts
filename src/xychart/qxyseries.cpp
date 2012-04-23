@@ -416,7 +416,6 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
         maxY=1.0;
     }
 
-
     for (int i = 0; i < points.count(); i++)
     {
         qreal x = points[i].x();

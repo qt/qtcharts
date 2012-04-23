@@ -23,6 +23,7 @@
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -47,10 +48,12 @@ QPainterPath SplineChartItem::shape() const
 }
 
 void SplineChartItem::updateLayout(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index)
-{    
+{
     QVector<QPointF> controlPoints;
 
-    controlPoints.resize(newPoints.count()*2-2);
+    if(newPoints.count()>=2){
+        controlPoints.resize(newPoints.count()*2-2);
+    }
 
     for (int i = 0; i < newPoints.size() - 1; i++) {
         controlPoints[2*i] = calculateGeometryControlPoint(2 * i);
@@ -102,6 +105,7 @@ void SplineChartItem::setLayout(QVector<QPointF> &points, QVector<QPointF> &cont
     m_rect = splinePath.boundingRect();
     XYChartItem::setLayout(points);
     m_controlPoints=controlPoints;
+
 }
 
 //handlers
@@ -121,7 +125,7 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 {
     Q_UNUSED(widget)
     Q_UNUSED(option)
-
+    qDebug()<<__FUNCTION__;
     painter->save();
     painter->setClipRect(clipRect());
     painter->setPen(m_linePen);

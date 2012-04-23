@@ -67,6 +67,14 @@ QSplineSeries::QSplineSeries(QObject *parent) :
 {
 }
 
+QSplineSeries::~QSplineSeries()
+{
+    Q_D(QSplineSeries);
+    if(d->m_dataset){
+           d->m_dataset->removeSeries(this);
+    }
+}
+
 QAbstractSeries::QSeriesType QSplineSeries::type() const
 {
     return QAbstractSeries::SeriesTypeSpline;

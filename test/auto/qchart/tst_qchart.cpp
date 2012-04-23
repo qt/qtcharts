@@ -319,7 +319,6 @@ void tst_QChart::isBackgroundVisible()
     QFETCH(bool, isBackgroundVisible);
     m_chart->setBackgroundVisible(isBackgroundVisible);
     QCOMPARE(m_chart->isBackgroundVisible(), isBackgroundVisible);
-
 }
 
 void tst_QChart::legend_data()
@@ -338,15 +337,12 @@ void tst_QChart::margins_data()
 }
 
 void tst_QChart::margins()
-{QTest::addColumn<int>("seriesCount");
-QTest::newRow("0") << 0;
-QTest::newRow("-1") << -1;
+{
     createTestData();
     QRectF rect = m_chart->geometry();
 
     QVERIFY(m_chart->margins().top()+m_chart->margins().bottom() < rect.height());
     QVERIFY(m_chart->margins().left()+m_chart->margins().right() < rect.width());
-
 }
 
 void tst_QChart::removeAllSeries_data()

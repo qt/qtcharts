@@ -236,6 +236,7 @@ void ChartPresenter::zoomIn(const QRectF& rect)
 {
     QRectF r = rect.normalized();
     r.translate(-m_chartMargins.topLeft());
+    if(!r.isValid()) return;
     if(m_animator) {
 
         QPointF point(r.center().x()/chartGeometry().width(),r.center().y()/chartGeometry().height());
@@ -257,6 +258,7 @@ void ChartPresenter::zoomOut()
     QSizeF size = chartGeometry().size();
     QRectF rect = chartGeometry();
     rect.translate(-m_chartMargins.topLeft());
+    if(!rect.isValid()) return;
     m_dataset->zoomOutDomain(rect.adjusted(size.width()/4,size.height()/4,-size.width()/4,-size.height()/4),size);
     //m_dataset->zoomOutDomain(m_zoomStack[m_zoomIndex-1],geometry().size());
 
