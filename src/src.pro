@@ -64,7 +64,7 @@ include(barchart/barchart.pri)
 include(legend/legend.pri)
 include(linechart/linechart.pri)
 include(piechart/piechart.pri)
-include(scatterseries/scatter.pri)
+include(scatterchart/scatter.pri)
 include(splinechart/splinechart.pri)
 include(themes/themes.pri)
 include(xychart/xychart.pri)
@@ -207,4 +207,30 @@ unix:QMAKE_DISTCLEAN += -r \
 win32:QMAKE_DISTCLEAN += /Q \
     $$CHART_BUILD_HEADER_DIR \
     $$CHART_BUILD_LIB_DIR
+
+############################## COVERAGE #########################################
+
+coverage:{
+
+QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
+QMAKE_LDFLAGS += -fprofile-arcs -ftest-coverage
+
+LIBS += -lgcov
+CONFIG += debug
+
+QMAKE_CLEAN += $$OBJECTS_DIR/*.gcda $$OBJECTS_DIR/*.gcno $$PWD/*.gcov ../coverage/*.info
+QMAKE_EXTRA_TARGETS += preparecoverage gencoverage
+
+preparecoverage.target = prepare_coverage
+preparecoverage.depends = all
+preparecoverage.commands =  lcov --directory $$OBJECTS_DIR --zerocounters ;\
+                            lcov -i -d $$OBJECTS_DIR -c -o ../coverage/base.info -b $$PWD;
+
+gencoverage.target = gen_coverage
+gencoverage.depends = all
+gencoverage.commands = lcov -d $$OBJECTS_DIR -c -o ../coverage/src.info -b $$PWD;\
+                       lcov -e ../coverage/base.info $$PWD/* $$PWD/animations/* $$PWD/areachart/* $$PWD/axis/* $$PWD/barchart/* $$PWD/legend/* $$PWD/linechart/* $$PWD/piechart/* $$PWD/scatterchart/* $$PWD/splinechart/* $$PWD/themes/* $$PWD/xychart/* -o ../coverage/base.info;\
+                       lcov -e ../coverage/src.info $$PWD/* $$PWD/animations/* $$PWD/areachart/* $$PWD/axis/* $$PWD/barchart/* $$PWD/legend/* $$PWD/linechart/* $$PWD/piechart/* $$PWD/scatterchart/* $$PWD/splinechart/* $$PWD/themes/* $$PWD/xychart/* -o ../coverage/src.info;\
+                       lcov -a ../coverage/base.info -a ../coverage/src.info -o ../coverage/coverage.info;
+}
 

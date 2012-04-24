@@ -37,3 +37,25 @@ win32:{
 docs.depends = FORCE
 QMAKE_EXTRA_TARGETS += docs
 
+coverage:{
+    
+    CONFIG+=debug
+    QMAKE_DISTCLEAN += -r ./coverage
+    QMAKE_CLEAN += build/*.gcda build/*.gcno
+    QMAKE_EXTRA_TARGETS +=  buildcoverage runcoverage gencoverage
+    
+    buildcoverage.target = build_coverage
+    buildcoverage.depends = all
+    buildcoverage.commands = mkdir -p ./coverage; \
+                             make -C src prepare_coverage;
+
+    runcoverage.target = run_coverage
+    runcoverage.depends = buildcoverage
+    runcoverage.commands = for f in `ls ./bin/test/tst_*` ; do echo "processing \$\$f test..."; \$\$f >> unit.log; done ;
+
+    gencoverage.target = gen_coverage
+    gencoverage.depends = runcoverage
+    gencoverage.commands =  make -C src gen_coverage; \
+                            genhtml  -o ./coverage ./coverage/coverage.info --prefix $$PWD
+}
+
