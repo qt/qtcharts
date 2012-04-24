@@ -185,6 +185,11 @@ void ChartPresenter::setTheme(QChart::ChartTheme theme,bool force)
     m_chartTheme->decorate(m_chart);
     m_chartTheme->decorate(m_chart->legend());
     resetAllElements();
+
+    // We do not want "force" to stay on.
+    // Bar/pie are calling decorate when adding/removing slices/bars which means
+    // that to preserve users colors "force" must not be on.
+    m_chartTheme->setForced(false);
 }
 
 QChart::ChartTheme ChartPresenter::theme()
