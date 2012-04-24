@@ -30,7 +30,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
     m_columnCount = 6;
-    m_rowCount = 8;
+    m_rowCount = 9;
 
     // m_data
     for (int i = 0; i < m_rowCount; i++)

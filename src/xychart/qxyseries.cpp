@@ -380,6 +380,7 @@ void QXYSeries::setModelMappingRange(int first, int count)
     Q_D(QXYSeries);
     d->m_mapFirst = qMax(first, 0);
     d->m_mapCount = qMax(count, -1);
+    emit d->reinitialized();
 }
 
 int QXYSeries::mapX() const

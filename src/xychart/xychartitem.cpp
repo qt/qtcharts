@@ -139,7 +139,7 @@ void XYChartItem::handlePointsAdded(int start, int end)
         int first = qMax(start, m_series->mapFirst());  // get the index of the first item that will be added
         int last = qMin(first + addedCount - 1, m_series->count() + m_series->mapFirst() - 1);  // get the index of the last item that will be added
         for (int i = first; i <= last; i++) {
-            handlePointAdded(i - m_series->mapFirst());            
+            handlePointAdded(i - m_series->mapFirst());
         }
         // the map is limited therefore the items that are now outside the map
         // need to be removed from the drawn points
@@ -179,9 +179,17 @@ void XYChartItem::handlePointsRemoved(int start, int end)
             int toRemove = qMin(m_points.size(), removedCount);     // first find how many items can actually be removed
             int first = qMax(start, mapFirst);    // get the index of the first item that will be removed.
             int last = qMin(first + toRemove - 1, m_points.size() + mapFirst - 1);    // get the index of the last item that will be removed.
-            for (int i = last; i >= first; i--) {
-                handlePointRemoved(i - mapFirst);
+            if (last - first == 0) {
+                for (int i = last; i >= first; i--) {
+                    handlePointRemoved(i - mapFirst);
 
+                }
+            } else {
+                QVector<QPointF> points = m_points;
+                for (int i = last; i >= first; i--)
+                    points.remove(i - mapFirst);
+                setLayout(points);
+                update();
             }
             if (mapCount != -1) {
                 int itemsAvailable;     // check how many are available to be added

@@ -40,7 +40,7 @@
 
 TableWidget::TableWidget(QWidget *parent)
     : QWidget(parent)
-//      specialPie(0)
+    //      specialPie(0)
 {
     setGeometry(1900, 100, 1000, 600);
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
@@ -50,11 +50,9 @@ TableWidget::TableWidget(QWidget *parent)
     m_tableView = new QTableView;
     m_tableView->setModel(m_model);
     m_tableView->setMinimumHeight(300);
-    //    tableView->setMinimumSize(340, 480);
-    //    tableView->setItemDelegate(new QStyledItemDelegate);
     m_chart = new QChart;
     m_chart->legend()->setVisible(true);
-    m_chart->setAnimationOptions(QChart::SeriesAnimations);
+        m_chart->setAnimationOptions(QChart::SeriesAnimations);
     m_chartView = new QChartView(m_chart);
     m_chartView->setRenderHint(QPainter::Antialiasing);
     m_chartView->setMinimumSize(640, 480);
@@ -69,7 +67,7 @@ TableWidget::TableWidget(QWidget *parent)
     QPushButton* removeRowButton = new QPushButton("Remove row");
     connect(removeRowButton, SIGNAL(clicked()), this, SLOT(removeRow()));
 
-    QPushButton* addColumnRightButton = new QPushButton("Add column on the right");
+    QPushButton* addColumnRightButton = new QPushButton("Add column to the right");
     connect(addColumnRightButton, SIGNAL(clicked()), this, SLOT(addColumnRight()));
 
     QPushButton* removeColumnButton = new QPushButton("Remove column");
@@ -95,7 +93,7 @@ TableWidget::TableWidget(QWidget *parent)
     buttonsLayout->addWidget(removeRowButton);
     buttonsLayout->addWidget(addColumnRightButton);
     buttonsLayout->addWidget(removeColumnButton);
-    buttonsLayout->addWidget(specialPieButton);
+//    buttonsLayout->addWidget(specialPieButton);
     buttonsLayout->addStretch();
 
     // chart type radio buttons
@@ -166,7 +164,7 @@ void TableWidget::updateChartType(bool toggle)
     // this if is needed, so that the function is only called once.
     // For the radioButton that was enabled.
     if (toggle) {
-//        specialPie = 0;
+        //        specialPie = 0;
         m_chart->removeAllSeries();
         m_chart->axisX()->setNiceNumbersEnabled(false);
         m_chart->axisY()->setNiceNumbersEnabled(false);
@@ -196,10 +194,10 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QLineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(0,1, Qt::Vertical);
-            m_series->setModelMappingRange(4, 4);
+            m_series->setModelMappingRange(3, 4);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 4, 2, 4));
+            m_model->addMapping(seriesColorHex, QRect(0, 3, 2, 4));
 
             // series 2
             m_series = new QLineSeries;
@@ -228,23 +226,23 @@ void TableWidget::updateChartType(bool toggle)
             //        series->setModelMapping(0,1, Qt::Horizontal);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 1, 2, 4));
+            m_model->addMapping(seriesColorHex, QRect(0, 0, 2, 1000));
 
             // series 2
             m_series = new QSplineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(2,3, Qt::Vertical);
-            //            m_series->setModelMappingRange(0, 0);
+            m_series->setModelMappingRange(2, 4);
             //        series->setModelMapping(2,3, Qt::Horizontal);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(2, 0, 2, 1000));
+            m_model->addMapping(seriesColorHex, QRect(2, 2, 2, 4));
 
             // series 3
             m_series = new QSplineSeries;
             m_series->setModel(m_model);
             m_series->setModelMapping(4,5, Qt::Vertical);
-            //            m_series->setModelMappingRange(2, 0);
+            m_series->setModelMappingRange(2, -1);
             //        series->setModelMapping(4,5, Qt::Horizontal);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
@@ -324,19 +322,19 @@ void TableWidget::updateChartType(bool toggle)
             seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(2, 0, 1, 1000));
 
-//            // special pie
-//            specialPie = new QPieSeries;
-//            specialPie->append(17, "1");
-//            specialPie->append(45, "2");
-//            specialPie->append(77, "3");
-//            specialPie->append(37, "4");
-//            specialPie->append(27, "5");
-//            specialPie->append(47, "6");
-//            specialPie->setPieSize(0.35);
-//            specialPie->setHorizontalPosition(0.8);
-//            specialPie->setVerticalPosition(0.75);
-//            specialPie->setLabelsVisible(true);
-//            m_chart->addSeries(specialPie);
+            //            // special pie
+            //            specialPie = new QPieSeries;
+            //            specialPie->append(17, "1");
+            //            specialPie->append(45, "2");
+            //            specialPie->append(77, "3");
+            //            specialPie->append(37, "4");
+            //            specialPie->append(27, "5");
+            //            specialPie->append(47, "6");
+            //            specialPie->setPieSize(0.35);
+            //            specialPie->setHorizontalPosition(0.8);
+            //            specialPie->setVerticalPosition(0.75);
+            //            specialPie->setLabelsVisible(true);
+            //            m_chart->addSeries(specialPie);
         }
         else if (m_areaRadioButton->isChecked())
         {
@@ -357,7 +355,7 @@ void TableWidget::updateChartType(bool toggle)
         {
             QBarSeries* barSeries = new QBarSeries(QStringList());
             barSeries->setModel(m_model);
-//            barSeries->setModelMappingRange(2, 5);
+            //            barSeries->setModelMappingRange(2, 5);
             barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
             m_chart->addSeries(barSeries);
             QList<QBarSet*> barsets = barSeries->barSets();
@@ -382,11 +380,12 @@ void TableWidget::updateChartType(bool toggle)
 
 void TableWidget::testPie()
 {
-//    if (specialPie) {
-//        specialPie->remove(specialPie->slices().at(2));
-//        //    specialPie->insert(4, new QPieSlice(45, "Hello"));//specialPie->slices.at(2));
-//        specialPie->append(4, "heloo");
-//    }
+    m_tableView->setColumnWidth(10, 250);
+    //    if (specialPie) {
+    //        specialPie->remove(specialPie->slices().at(2));
+    //        //    specialPie->insert(4, new QPieSlice(45, "Hello"));//specialPie->slices.at(2));
+    //        specialPie->append(4, "heloo");
+    //    }
 }
 
 TableWidget::~TableWidget()

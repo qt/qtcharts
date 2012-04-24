@@ -99,6 +99,14 @@ void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orie
     d->updateControlPoints();
 }
 
+void QSplineSeries::setModelMappingRange(int first, int count)
+{
+    Q_D(QSplineSeries);
+    QXYSeries::setModelMappingRange(first, count);
+    d->updateControlPoints();
+
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(q)
