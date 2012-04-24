@@ -144,6 +144,7 @@ void QPieSeries::append(QList<QPieSlice*> slices)
     Q_D(QPieSeries);
 
     foreach (QPieSlice* s, slices) {
+        Q_ASSERT(!d->m_slices.contains(s)); // cannot add same slice twice
         s->setParent(this);
         d->m_slices << s;
     }
@@ -198,6 +199,7 @@ void QPieSeries::insert(int index, QPieSlice* slice)
 {
     Q_D(QPieSeries);
     Q_ASSERT(index <= d->m_slices.count());
+    Q_ASSERT(!d->m_slices.contains(slice)); // cannot add same slice twice
     slice->setParent(this);
     d->m_slices.insert(index, slice);
 
