@@ -115,10 +115,10 @@ TableWidget::TableWidget(QWidget *parent)
     // radio buttons layout
     QVBoxLayout* radioLayout = new QVBoxLayout;
     radioLayout->addWidget(m_lineRadioButton);
-    radioLayout->addWidget(m_splineRadioButton);
-    radioLayout->addWidget(m_scatterRadioButton);
+//    radioLayout->addWidget(m_splineRadioButton);
+//    radioLayout->addWidget(m_scatterRadioButton);
     radioLayout->addWidget(m_pieRadioButton);
-    radioLayout->addWidget(m_areaRadioButton);
+//    radioLayout->addWidget(m_areaRadioButton);
     radioLayout->addWidget(m_barRadioButton);
     radioLayout->addStretch();
 
@@ -190,6 +190,8 @@ void TableWidget::updateChartType(bool toggle)
 
         if (m_lineRadioButton->isChecked())
         {
+            m_chart->setAnimationOptions(QChart::NoAnimation);
+
             // series 1
             m_series = new QLineSeries;
             m_series->setModel(m_model);
@@ -218,6 +220,8 @@ void TableWidget::updateChartType(bool toggle)
         }
         else if (m_splineRadioButton->isChecked())
         {
+            m_chart->setAnimationOptions(QChart::NoAnimation);
+
             // series 1
             m_series = new QSplineSeries;
             m_series->setModel(m_model);
@@ -250,6 +254,8 @@ void TableWidget::updateChartType(bool toggle)
         }
         else if (m_scatterRadioButton->isChecked())
         {
+            m_chart->setAnimationOptions(QChart::NoAnimation);
+
             // series 1
             m_series = new QScatterSeries;
             m_series->setModel(m_model);
@@ -283,6 +289,8 @@ void TableWidget::updateChartType(bool toggle)
         }
         else if (m_pieRadioButton->isChecked())
         {
+            m_chart->setAnimationOptions(QChart::SeriesAnimations);
+
             // pie 1
             QPieSeries* pieSeries = new QPieSeries;
             pieSeries->setModel(m_model);
@@ -338,6 +346,8 @@ void TableWidget::updateChartType(bool toggle)
         }
         else if (m_areaRadioButton->isChecked())
         {
+            m_chart->setAnimationOptions(QChart::NoAnimation);
+
             QLineSeries* upperLineSeries = new QLineSeries;
             upperLineSeries->setModel(m_model);
             upperLineSeries->setModelMapping(0, 1, Qt::Vertical);
@@ -353,6 +363,8 @@ void TableWidget::updateChartType(bool toggle)
         }
         else if (m_barRadioButton->isChecked())
         {
+            m_chart->setAnimationOptions(QChart::SeriesAnimations);
+
             QBarSeries* barSeries = new QBarSeries(QStringList());
             barSeries->setModel(m_model);
             //            barSeries->setModelMappingRange(2, 5);
