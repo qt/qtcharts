@@ -36,6 +36,17 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(QChart::ChartTheme theme READ theme WRITE setTheme)
     Q_PROPERTY(QChart::AnimationOption animationOptions READ animationOptions WRITE setAnimationOptions)
     Q_PROPERTY(QString title READ title WRITE setTitle)
+    Q_PROPERTY(ChartLegend legend READ legend WRITE setLegend)
+    Q_ENUMS(ChartLegend)
+
+public:
+    enum ChartLegend {
+        LegendDisabled = 0,
+        LegendTop,
+        LegendBottom,
+        LegendLeft,
+        LegendRight
+    };
 
 public:
     DeclarativeChart(QDeclarativeItem *parent = 0);
@@ -52,11 +63,14 @@ public:
     QChart::AnimationOption animationOptions();
     void setTitle(QString title) {m_chart->setTitle(title);}
     QString title() { return m_chart->title();}
+    void setLegend(ChartLegend legend);
+    ChartLegend legend();
 
 public:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;
+    ChartLegend m_legend;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

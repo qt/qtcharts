@@ -28,6 +28,7 @@ Rectangle {
         title: "Car brand shares in Finland"
         anchors.fill: parent
         theme: Chart.ChartThemeLight
+        legend: Chart.LegendBottom
 
         PieSeries {
             horizontalPosition: 0.2

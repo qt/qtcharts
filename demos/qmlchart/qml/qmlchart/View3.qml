@@ -28,6 +28,7 @@ Rectangle {
         title: "NHL All-Star Team Players"
         anchors.fill: parent
         theme: Chart.ChartThemeHighContrast
+        legend: Chart.LegendTop
 
         AreaSeries {
             name: "Finnish"

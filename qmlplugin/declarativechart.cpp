@@ -25,7 +25,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
-      m_chart(new QChart(this))
+      m_chart(new QChart(this)),
+      m_legend(LegendDisabled)
 {
     m_chart->setAnimationOptions(QChart::SeriesAnimations);
     setFlag(QGraphicsItem::ItemHasNoContents, false);
@@ -71,6 +72,42 @@ QChart::AnimationOption DeclarativeChart::animationOptions()
         return QChart::SeriesAnimations;
     else
         return QChart::NoAnimation;
+}
+
+void DeclarativeChart::setLegend(ChartLegend legend)
+{
+    if (legend != m_legend) {
+        m_legend = legend;
+        switch (m_legend) {
+        case LegendDisabled:
+            m_chart->legend()->setVisible(false);
+            break;
+        case LegendTop:
+            m_chart->legend()->setVisible(true);
+            m_chart->legend()->setAlignment(QLegend::AlignmentTop);
+            break;
+        case LegendBottom:
+            m_chart->legend()->setVisible(true);
+            m_chart->legend()->setAlignment(QLegend::AlignmentBottom);
+            break;
+        case LegendLeft:
+            m_chart->legend()->setVisible(true);
+            m_chart->legend()->setAlignment(QLegend::AlignmentLeft);
+            break;
+        case LegendRight:
+            m_chart->legend()->setVisible(true);
+            m_chart->legend()->setAlignment(QLegend::AlignmentRight);
+            break;
+        default:
+            m_chart->legend()->setVisible(false);
+            break;
+        }
+    }
+}
+
+DeclarativeChart::ChartLegend DeclarativeChart::legend()
+{
+    return m_legend;
 }
 
 #include "moc_declarativechart.cpp"
