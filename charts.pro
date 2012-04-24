@@ -37,13 +37,11 @@ win32:{
 docs.depends = FORCE
 QMAKE_EXTRA_TARGETS += docs
 
-coverage:{
-    
-    CONFIG+=debug
+unix:coverage:{
     QMAKE_DISTCLEAN += -r ./coverage
     QMAKE_CLEAN += build/*.gcda build/*.gcno
     QMAKE_EXTRA_TARGETS +=  buildcoverage runcoverage gencoverage
-    
+
     buildcoverage.target = build_coverage
     buildcoverage.depends = all
     buildcoverage.commands = mkdir -p ./coverage; \

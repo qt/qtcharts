@@ -210,13 +210,12 @@ win32:QMAKE_DISTCLEAN += /Q \
 
 ############################## COVERAGE #########################################
 
-coverage:{
+unix:coverage:{
 
 QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
 QMAKE_LDFLAGS += -fprofile-arcs -ftest-coverage
 
 LIBS += -lgcov
-CONFIG += debug
 
 QMAKE_CLEAN += $$OBJECTS_DIR/*.gcda $$OBJECTS_DIR/*.gcno $$PWD/*.gcov ../coverage/*.info
 QMAKE_EXTRA_TARGETS += preparecoverage gencoverage

@@ -1,5 +1,6 @@
 
 LIBRARY_NAME = QtCommercialChart
+coverage: CONFIG+=debug
 
 ##################### SHADOW CONFIG #################################################
 
@@ -107,3 +108,4 @@ CONFIG(debug, debug|release) {
     CONFIG+=test_private
     DEFINES+=BUILD_PRIVATE_UNIT_TESTS
 }
+
