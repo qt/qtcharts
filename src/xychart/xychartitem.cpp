@@ -44,6 +44,7 @@ XYChartItem::XYChartItem(QXYSeries *series, ChartPresenter *presenter):ChartItem
     connect(series->d_func(),SIGNAL(pointsAdded(int, int)),this,SLOT(handlePointsAdded(int, int)));
     connect(series->d_func(),SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
     connect(series->d_func(),SIGNAL(pointsRemoved(int, int)),this,SLOT(handlePointsRemoved(int, int)));
+    connect(series->d_func(),SIGNAL(reinitialized()),this,SLOT(handleReinitialized()));
     connect(this,SIGNAL(clicked(QPointF)),series,SIGNAL(clicked(QPointF)));
 }
 
@@ -208,6 +209,16 @@ void XYChartItem::handlePointReplaced(int index)
     QVector<QPointF> points = m_points;
     points.replace(index,point);
     updateLayout(m_points,points,index);
+    update();
+}
+
+void XYChartItem::handleReinitialized()
+{
+    QVector<QPointF> points = calculateGeometryPoints();
+    if (points.isEmpty())
+        setLayout(points);
+    else
+        updateLayout(m_points,points);
     update();
 }
 

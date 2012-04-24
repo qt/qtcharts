@@ -220,16 +220,28 @@ void QSplineSeriesPrivate::updateControlPoints()
     }
 }
 
-void QSplineSeriesPrivate::modelDataAdded(QModelIndex parent, int start, int end)
+void QSplineSeriesPrivate::modelRowsAdded(QModelIndex parent, int start, int end)
 {
     updateControlPoints();
-    QXYSeriesPrivate::modelDataAdded(parent, start, end);
+    QXYSeriesPrivate::modelRowsAdded(parent, start, end);
 }
 
-void QSplineSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
+void QSplineSeriesPrivate::modelRowsRemoved(QModelIndex parent, int start, int end)
 {
     updateControlPoints();
-    QXYSeriesPrivate::modelDataRemoved(parent, start, end);
+    QXYSeriesPrivate::modelRowsRemoved(parent, start, end);
+}
+
+void QSplineSeriesPrivate::modelColumnsAdded(QModelIndex parent, int start, int end)
+{
+    updateControlPoints();
+    QXYSeriesPrivate::modelColumnsAdded(parent, start, end);
+}
+
+void QSplineSeriesPrivate::modelColumnsRemoved(QModelIndex parent, int start, int end)
+{
+    updateControlPoints();
+    QXYSeriesPrivate::modelColumnsRemoved(parent, start, end);
 }
 
 Chart* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)

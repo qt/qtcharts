@@ -46,8 +46,10 @@ public Q_SLOTS:
     void updateControlPoints();
 
 protected Q_SLOTS:
-    void modelDataAdded(QModelIndex parent, int start, int end);
-    void modelDataRemoved(QModelIndex parent, int start, int end);
+    void modelRowsAdded(QModelIndex parent, int start, int end);
+    void modelRowsRemoved(QModelIndex parent, int start, int end);
+    void modelColumnsAdded(QModelIndex parent, int start, int end);
+    void modelColumnsRemoved(QModelIndex parent, int start, int end);
 
 private:
     void calculateControlPoints();

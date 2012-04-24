@@ -52,6 +52,7 @@ void LineChartItem::setLayout(QVector<QPointF>& points)
 {
     if(points.size()==0)
     {
+        m_path = QPainterPath();
         XYChartItem::setLayout(points);
         return;
     }

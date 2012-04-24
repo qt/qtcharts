@@ -105,6 +105,7 @@ void ScatterChartItem::setLayout(QVector<QPointF>& points)
 {
     if(points.size()==0)
     {
+        deletePoints(m_items.childItems().count());
         XYChartItem::setLayout(points);
         return;
     }

@@ -48,8 +48,14 @@ public:
 
 protected Q_SLOTS:
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-    virtual void modelDataAdded(QModelIndex parent, int start, int end);
-    virtual void modelDataRemoved(QModelIndex parent, int start, int end);
+    virtual void modelRowsAdded(QModelIndex parent, int start, int end);
+    virtual void modelRowsRemoved(QModelIndex parent, int start, int end);
+    virtual void modelColumnsAdded(QModelIndex parent, int start, int end);
+    virtual void modelColumnsRemoved(QModelIndex parent, int start, int end);
+
+private:
+    void insertData(int start, int end);
+    void removeData(int start, int end);
 
 Q_SIGNALS:
     void updated();
@@ -58,8 +64,7 @@ Q_SIGNALS:
     void pointsRemoved(int start, int end);
     void pointAdded(int index);
     void pointsAdded(int start, int end);
-
-
+    void reinitialized();
 
 protected:
     QVector<QPointF> m_points;

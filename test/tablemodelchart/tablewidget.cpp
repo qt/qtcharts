@@ -368,9 +368,10 @@ void TableWidget::updateChartType(bool toggle)
         }
 
 
-        if (!m_barRadioButton->isChecked())
+        if (!m_barRadioButton->isChecked()) {
             m_chart->axisX()->setRange(0, 500);
-        //        m_chart->axisY()->setRange(0, 120);
+            m_chart->axisY()->setRange(0, 220);
+        }
         m_chart->legend()->setVisible(true);
 
         // repaint table view colors

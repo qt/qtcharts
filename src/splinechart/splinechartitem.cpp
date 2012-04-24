@@ -80,12 +80,16 @@ QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 void SplineChartItem::setLayout(QVector<QPointF> &points)
 {
     // Dummy implementation because of a bug in Clang compiler
+    if (points.size() < 2) {
+        m_path = QPainterPath();
+    }
     XYChartItem::setLayout(points);
 }
 
 void SplineChartItem::setLayout(QVector<QPointF> &points, QVector<QPointF> &controlPoints)
 {
     if ((points.size()<2) || (controlPoints.size()<2)) {
+        m_path = QPainterPath();
         XYChartItem::setLayout(points);
         m_controlPoints=controlPoints;
         return;

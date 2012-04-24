@@ -174,6 +174,8 @@ QList<QPointF> QXYSeries::points() const
         QList<QPointF> result;
         if (d->m_mapOrientation == Qt::Vertical){
             // consecutive data is read from model's column
+            if (d->m_mapX >= d->m_model->columnCount() || d->m_mapY >= d->m_model->columnCount())
+                return result;   // mapped columns are not existing
 
             for(int i = d->m_mapFirst; i< d->m_mapFirst + count(); ++i) {
                 qreal x =  d->m_model->data(d->m_model->index(i, d->m_mapX), Qt::DisplayRole).toReal();
@@ -184,6 +186,9 @@ QList<QPointF> QXYSeries::points() const
         }
         else{
             // consecutive data is read from model's row
+            if (d->m_mapX >= d->m_model->rowCount() || d->m_mapY >= d->m_model->rowCount())
+                return result;   // mapped rows are not existing
+
             for(int i = d->m_mapFirst; i<  d->m_mapFirst + count(); ++i) {
                 qreal x =  d->m_model->data(d->m_model->index(d->m_mapX, i), Qt::DisplayRole).toReal();
                 qreal y =  d->m_model->data(d->m_model->index(d->m_mapY, i), Qt::DisplayRole).toReal();
@@ -208,14 +213,18 @@ int QXYSeries::count() const
         if (d->m_mapOrientation == Qt::Vertical) {
             // data is in a column. Return the number of mapped items if the model's column have enough items
             // or the number of items that can be mapped
-            if (d->m_mapCount != -1)
+            if (d->m_mapX >= d->m_model->columnCount() || d->m_mapY >= d->m_model->columnCount())
+                return 0;   // mapped columns are not existing
+            else if (d->m_mapCount != -1)
                 return qMin(d->m_mapCount, qMax(d->m_model->rowCount() - d->m_mapFirst, 0));
             else
                 return qMax(d->m_model->rowCount() - d->m_mapFirst, 0);
         } else {
             // data is in a row. Return the number of mapped items if the model's row have enough items
             // or the number of items that can be mapped
-            if (d->m_mapCount != -1)
+            if (d->m_mapX >= d->m_model->rowCount() || d->m_mapY >= d->m_model->rowCount())
+                return 0;   // mapped rows are not existing
+            else if (d->m_mapCount != -1)
                 return qMin(d->m_mapCount, qMax(d->m_model->columnCount() - d->m_mapFirst, 0));
             else
                 return qMax(d->m_model->columnCount() - d->m_mapFirst, 0);
@@ -357,13 +366,13 @@ void QXYSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientat
 
     // connect the signals from the model
     connect(d->m_model,SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
-    if (d->m_mapOrientation == Qt::Vertical) {
-        connect(d->m_model,SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    } else {
-        connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelDataAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelDataRemoved(QModelIndex,int,int)));
-    }
+//    if (d->m_mapOrientation == Qt::Vertical) {
+        connect(d->m_model,SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelRowsAdded(QModelIndex,int,int)));
+        connect(d->m_model,SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
+//    } else {
+        connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
+        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
+//    }
 }
 
 void QXYSeries::setModelMappingRange(int first, int count)
@@ -426,7 +435,7 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
         maxY = qMax(maxY, y);
     }
 
-   domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
 }
 
 QList<LegendMarker*> QXYSeriesPrivate::createLegendMarker(QLegend* legend)
@@ -456,16 +465,40 @@ void QXYSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight
 }
 
 
-void QXYSeriesPrivate::modelDataAdded(QModelIndex parent, int start, int end)
+void QXYSeriesPrivate::modelRowsAdded(QModelIndex parent, int start, int end)
 {
     Q_UNUSED(parent);
-    emit pointsAdded(start, end);
+    if (m_mapOrientation == Qt::Vertical)
+        emit pointsAdded(start, end);
+    else if (start <= m_mapX || start <= m_mapY)
+        emit reinitialized();
 }
 
-void QXYSeriesPrivate::modelDataRemoved(QModelIndex parent, int start, int end)
+void QXYSeriesPrivate::modelRowsRemoved(QModelIndex parent, int start, int end)
 {
     Q_UNUSED(parent);
-    emit pointsRemoved(start, end);
+    if (m_mapOrientation == Qt::Vertical)
+        emit pointsRemoved(start, end);
+    else if (start <= m_mapX || start <= m_mapY)
+        emit reinitialized();
+}
+
+void QXYSeriesPrivate::modelColumnsAdded(QModelIndex parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    if (m_mapOrientation == Qt::Horizontal)
+        emit pointsAdded(start, end);
+    else if (start <= m_mapX || start <= m_mapY)
+        emit reinitialized();
+}
+
+void QXYSeriesPrivate::modelColumnsRemoved(QModelIndex parent, int start, int end)
+{
+    Q_UNUSED(parent);
+    if (m_mapOrientation == Qt::Horizontal)
+        emit pointsRemoved(start, end);
+    else if (start <= m_mapX || start <= m_mapY)
+        emit reinitialized();
 }
 
 #include "moc_qxyseries.cpp"
