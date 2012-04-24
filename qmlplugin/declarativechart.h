@@ -34,6 +34,7 @@ class DeclarativeChart : public QDeclarativeItem
 {
     Q_OBJECT
     Q_PROPERTY(QChart::ChartTheme theme READ theme WRITE setTheme)
+    Q_PROPERTY(QChart::AnimationOption animationOptions READ animationOptions WRITE setAnimationOptions)
     Q_PROPERTY(QString title READ title WRITE setTitle)
 
 public:
@@ -46,7 +47,9 @@ public: // From QDeclarativeItem/QGraphicsItem
 
 public:
     void setTheme(QChart::ChartTheme theme) {m_chart->setTheme(theme);}
-    QChart::ChartTheme theme();
+    QChart::ChartTheme theme() {return m_chart->theme();}
+    void setAnimationOptions(QChart::AnimationOption animations);
+    QChart::AnimationOption animationOptions();
     void setTitle(QString title) {m_chart->setTitle(title);}
     QString title() { return m_chart->title();}
 

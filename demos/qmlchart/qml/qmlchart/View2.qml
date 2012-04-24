@@ -28,6 +28,7 @@ Rectangle {
         title: "Line&Spline"
         anchors.fill: parent
         theme: Chart.ChartThemeBrownSand
+        animationOptions: Chart.NoAnimation
 
         LineSeries {
             name: "Line"

@@ -38,6 +38,7 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
     Q_OBJECT
     Q_ENUMS(ChartTheme)
+    Q_ENUMS(AnimationOption)
 
 public:
     enum ChartTheme {

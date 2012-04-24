@@ -36,11 +36,6 @@ DeclarativeChart::~DeclarativeChart()
     delete m_chart;
 }
 
-QChart::ChartTheme DeclarativeChart::theme()
-{
-    return m_chart->theme();
-}
-
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
     Q_UNUSED(oldGeometry)
@@ -59,6 +54,23 @@ void DeclarativeChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
     // TODO: optimized?
     painter->setRenderHint(QPainter::Antialiasing, true);
+}
+
+void DeclarativeChart::setAnimationOptions(QChart::AnimationOption animations)
+{
+    m_chart->setAnimationOptions(animations);
+}
+
+QChart::AnimationOption DeclarativeChart::animationOptions()
+{
+    if (m_chart->animationOptions().testFlag(QChart::AllAnimations))
+        return QChart::AllAnimations;
+    else if (m_chart->animationOptions().testFlag(QChart::GridAxisAnimations))
+        return QChart::GridAxisAnimations;
+    else if (m_chart->animationOptions().testFlag(QChart::SeriesAnimations))
+        return QChart::SeriesAnimations;
+    else
+        return QChart::NoAnimation;
 }
 
 #include "moc_declarativechart.cpp"
