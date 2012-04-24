@@ -29,8 +29,18 @@ CustomTableModel::CustomTableModel(QObject *parent) :
 {
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
-    m_columnCount = 6;
+    m_columnCount = 3;
     m_rowCount = 9;
+
+    m_labels.append("Apples");
+    m_labels.append("Oranges");
+    m_labels.append("Pears");
+    m_labels.append("Peaches");
+    m_labels.append("Coconuts");
+    m_labels.append("Bananas");
+    m_labels.append("Kiwis");
+    m_labels.append("Grapes");
+    m_labels.append("Plums");
 
     // m_data
     for (int i = 0; i < m_rowCount; i++)
@@ -44,7 +54,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
                 dataVec->replace(k, qrand()%100);
         }
         m_data.append(dataVec);
-        m_labels.append(QString("Row: %1").arg((i + 1)));
+        //        m_labels.append(QString("Row: %1").arg((i + 1)));
     }
 }
 
@@ -69,8 +79,12 @@ QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation,
     {
         switch(section)
         {
-        //        case 6:
-        //            return "Fruit";
+        case 0:
+            return "Fruit";
+        case 1:
+            return "Count";
+        case 2:
+            return "Ordered";
         default:
             if (section%2 == 0)
                 return "x";
@@ -88,8 +102,8 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
     {
         switch(index.column())
         {
-        //        case 6:
-        //            return m_labels[index.row()];
+        case 0:
+            return m_labels[index.row()];
         default:
             return m_data[index.row()]->at(index.column());
             break;
@@ -99,8 +113,8 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
     {
         switch(index.column())
         {
-        //        case 6:
-        //            return m_labels[index.row()];
+        case 0:
+            return m_labels[index.row()];
         default:
             return m_data[index.row()]->at(index.column());
             break;
@@ -125,9 +139,9 @@ bool CustomTableModel::setData ( const QModelIndex & index, const QVariant & val
     {
         switch(index.column())
         {
-        //        case 6:
-        //            m_labels.replace(index.row(), value.toString());
-        //            break;
+        case 0:
+            m_labels.replace(index.row(), value.toString());
+            break;
         default:
             m_data[index.row()]->replace(index.column(), value.toDouble());
             break;

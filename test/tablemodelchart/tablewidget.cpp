@@ -37,6 +37,7 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QTime>
+#include <QHeaderView>
 
 TableWidget::TableWidget(QWidget *parent)
     : QWidget(parent)
@@ -49,7 +50,10 @@ TableWidget::TableWidget(QWidget *parent)
     m_model = new CustomTableModel;
     m_tableView = new QTableView;
     m_tableView->setModel(m_model);
-    m_tableView->setMinimumHeight(300);
+//    m_tableView->setMinimumHeight(300);
+    m_tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    m_tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+
     m_chart = new QChart;
     m_chart->legend()->setVisible(true);
         m_chart->setAnimationOptions(QChart::SeriesAnimations);
@@ -86,13 +90,13 @@ TableWidget::TableWidget(QWidget *parent)
 
     // buttons layout
     QVBoxLayout* buttonsLayout = new QVBoxLayout;
-    buttonsLayout->addWidget(spinBoxLabel);
-    buttonsLayout->addWidget(m_linesCountSpinBox);
-    buttonsLayout->addWidget(addRowAboveButton);
+//    buttonsLayout->addWidget(spinBoxLabel);
+//    buttonsLayout->addWidget(m_linesCountSpinBox);
+//    buttonsLayout->addWidget(addRowAboveButton);
     buttonsLayout->addWidget(addRowBelowButton);
     buttonsLayout->addWidget(removeRowButton);
-    buttonsLayout->addWidget(addColumnRightButton);
-    buttonsLayout->addWidget(removeColumnButton);
+//    buttonsLayout->addWidget(addColumnRightButton);
+//    buttonsLayout->addWidget(removeColumnButton);
 //    buttonsLayout->addWidget(specialPieButton);
     buttonsLayout->addStretch();
 
@@ -110,7 +114,7 @@ TableWidget::TableWidget(QWidget *parent)
     connect(m_pieRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
     connect(m_areaRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
     connect(m_barRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
-    m_lineRadioButton->setChecked(true);
+    m_pieRadioButton->setChecked(true);
 
     // radio buttons layout
     QVBoxLayout* radioLayout = new QVBoxLayout;
@@ -124,10 +128,10 @@ TableWidget::TableWidget(QWidget *parent)
 
     // create main layout
     QGridLayout* mainLayout = new QGridLayout;
-    mainLayout->addLayout(buttonsLayout, 1, 1);
-    mainLayout->addLayout(radioLayout, 2, 1);
+    mainLayout->addLayout(buttonsLayout, 2, 0);
+//    mainLayout->addLayout(radioLayout, 2, 1);
     mainLayout->addWidget(m_tableView, 1, 0);
-    mainLayout->addWidget(m_chartView, 2, 0);
+    mainLayout->addWidget(m_chartView, 1, 1, 2, 1);
     setLayout(mainLayout);
     m_lineRadioButton->setFocus();
 }
@@ -294,41 +298,42 @@ void TableWidget::updateChartType(bool toggle)
             // pie 1
             QPieSeries* pieSeries = new QPieSeries;
             pieSeries->setModel(m_model);
-            pieSeries->setModelMappingRange(3, 3);
-            pieSeries->setModelMapping(0,0, Qt::Vertical);
+            pieSeries->setModelMappingRange(2, 5);
+            pieSeries->setModelMapping(1, 0, Qt::Vertical);
             pieSeries->setLabelsVisible(true);
-            pieSeries->setPieSize(0.35);
-            pieSeries->setHorizontalPosition(0.2);
-            pieSeries->setVerticalPosition(0.3);
+            pieSeries->setPieSize(0.75);
+//            pieSeries->setHorizontalPosition(0.2);
+//            pieSeries->setVerticalPosition(0.3);
 
             m_chart->addSeries(pieSeries);
             seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 3, 1, 3));
+            m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 5));
 
-            // pie 2
-            pieSeries = new QPieSeries;
-            pieSeries->setModel(m_model);
-            pieSeries->setModelMappingRange(2, -1);
-            pieSeries->setModelMapping(1,1, Qt::Vertical);
-            pieSeries->setLabelsVisible(true);
-            pieSeries->setPieSize(0.35);
-            pieSeries->setHorizontalPosition(0.8);
-            pieSeries->setVerticalPosition(0.3);
-            m_chart->addSeries(pieSeries);
-            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(1, 2, 1, 1000));
+//            // pie 2
+//            pieSeries = new QPieSeries;
+//            pieSeries->setModel(m_model);
 
-            // pie 3
-            pieSeries = new QPieSeries;
-            pieSeries->setModel(m_model);
-            pieSeries->setModelMapping(2,2, Qt::Vertical);
-            pieSeries->setLabelsVisible(true);
-            pieSeries->setPieSize(0.35);
-            pieSeries->setHorizontalPosition(0.5);
-            pieSeries->setVerticalPosition(0.75);
-            m_chart->addSeries(pieSeries);
-            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(2, 0, 1, 1000));
+//            pieSeries->setModelMapping(1,1, Qt::Vertical);
+//            pieSeries->setModelMappingRange(2, -1);
+//            pieSeries->setLabelsVisible(true);
+//            pieSeries->setPieSize(0.35);
+//            pieSeries->setHorizontalPosition(0.8);
+//            pieSeries->setVerticalPosition(0.3);
+//            m_chart->addSeries(pieSeries);
+//            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
+//            m_model->addMapping(seriesColorHex, QRect(1, 2, 1, 1000));
+
+//            // pie 3
+//            pieSeries = new QPieSeries;
+//            pieSeries->setModel(m_model);
+//            pieSeries->setModelMapping(2,2, Qt::Vertical);
+//            pieSeries->setLabelsVisible(true);
+//            pieSeries->setPieSize(0.35);
+//            pieSeries->setHorizontalPosition(0.5);
+//            pieSeries->setVerticalPosition(0.75);
+//            m_chart->addSeries(pieSeries);
+//            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
+//            m_model->addMapping(seriesColorHex, QRect(2, 0, 1, 1000));
 
             //            // special pie
             //            specialPie = new QPieSeries;
