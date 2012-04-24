@@ -701,7 +701,10 @@ void QPieSeriesPrivate::initializePieFromModel()
     q->clear();
 
     // create the initial slices set
-    if (m_mapOrientation == Qt::Vertical) {
+    if (m_mapOrientation == Qt::Vertical) {        
+        if (m_mapValues >= m_model->columnCount() || m_mapLabels >= m_model->columnCount())
+            return;   // mapped columns are not existing
+
         int sliceCount = 0;
         if(m_mapCount == -1)
             sliceCount = m_model->rowCount() - m_mapFirst;
@@ -710,6 +713,9 @@ void QPieSeriesPrivate::initializePieFromModel()
         for (int i = m_mapFirst; i < m_mapFirst + sliceCount; i++)
             q->append(m_model->data(m_model->index(i, m_mapValues), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(i, m_mapLabels), Qt::DisplayRole).toString());
     } else {
+        if (m_mapValues >= m_model->rowCount() || m_mapLabels >= m_model->rowCount())
+            return;   // mapped columns are not existing
+
         int sliceCount = 0;
         if(m_mapCount == -1)
             sliceCount = m_model->columnCount() - m_mapFirst;
