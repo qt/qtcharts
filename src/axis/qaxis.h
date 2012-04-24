@@ -33,6 +33,8 @@ class QAxisPrivate;
 class QTCOMMERCIALCHART_EXPORT QAxis : public QObject
 {
 	Q_OBJECT
+    Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible)
+
 public:
 
     QAxis(QObject *parent =0);

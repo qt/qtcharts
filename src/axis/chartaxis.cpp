@@ -322,7 +322,7 @@ void ChartAxis::setLayout(QVector<qreal> &layout)
 					rectItem->setRect(layout[i-1],m_rect.top(),layout[i]-layout[i-1],m_rect.height());
 				}
 				lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-				lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
+                lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
 			}
 
 		}
@@ -361,7 +361,7 @@ void ChartAxis::setLayout(QVector<qreal> &layout)
 					rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i-1]-layout[i]);
 				}
 				lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-				lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
+                lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
 			}
 		}
 		break;

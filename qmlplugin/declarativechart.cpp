@@ -28,7 +28,6 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
       m_chart(new QChart(this)),
       m_legend(LegendDisabled)
 {
-    m_chart->setAnimationOptions(QChart::SeriesAnimations);
     setFlag(QGraphicsItem::ItemHasNoContents, false);
 }
 

@@ -50,7 +50,7 @@ void DeclarativeXySeries::componentComplete()
 }
 
 void DeclarativeXySeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                                          DeclarativeXyPoint *element)
+                                       DeclarativeXyPoint *element)
 {
     QXYSeries *series = qobject_cast<QXYSeries *>(list->object);
     if (series)

@@ -22,6 +22,7 @@
 #include <QtDeclarative/qdeclarative.h>
 #include "qchart.h"
 #include "declarativechart.h"
+#include "declarativeaxis.h"
 #include "declarativexypoint.h"
 #include "declarativelineseries.h"
 #include "declarativesplineseries.h"
@@ -41,6 +42,7 @@ public:
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCommercial.Chart"));
 
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "Chart");
+        qmlRegisterType<DeclarativeAxis>(uri, 1, 0, "Axis");
         qmlRegisterType<DeclarativeXyPoint>(uri, 1, 0, "XyPoint");
         qmlRegisterType<DeclarativeScatterSeries>(uri, 1, 0, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries>(uri, 1, 0, "LineSeries");

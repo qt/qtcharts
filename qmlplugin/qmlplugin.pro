@@ -21,8 +21,9 @@ RCC_DIR = $$CHART_BUILD_DIR/plugin
 SOURCES += \
     plugin.cpp \
     declarativechart.cpp \
-    declarativexyseries.cpp \
+    declarativeaxis.cpp \
     declarativexypoint.cpp \
+    declarativexyseries.cpp \
     declarativelineseries.cpp \
     declarativesplineseries.cpp \
     declarativeareaseries.cpp \
@@ -31,8 +32,9 @@ SOURCES += \
     declarativebarseries.cpp
 HEADERS += \
     declarativechart.h \
-    declarativexyseries.h \
+    declarativeaxis.h \
     declarativexypoint.h \
+    declarativexyseries.h \
     declarativelineseries.h \
     declarativesplineseries.h \
     declarativeareaseries.h \
