@@ -210,6 +210,7 @@ doc-build
 .metadata
 build/*
 bin/*
+coverage/*
 
 # Symbian build system generated files
 # ---------------------
@@ -254,9 +255,6 @@ Info.plist
 qtc-debugging-helper
 qtc-qmldump
 qtc-qmldbg
-src/corelib/lib
-src/network/lib
-src/xml/lib/
 
 .pc/
 
