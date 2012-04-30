@@ -62,10 +62,18 @@ class tst_QLineSeries : public QObject
     void remove_chart();
     void remove_chart_animation_data();
     void remove_chart_animation();
-    void removeAll_data();
-    void removeAll();
-    void replace_data();
-    void replace();
+    void removeAll_raw_data();
+    void removeAll_raw();
+    void removeAll_chart_data();
+    void removeAll_chart();
+    void removeAll_chart_animation_data();
+    void removeAll_chart_animation();
+    void replace_raw_data();
+    void replace_raw();
+    void replace_chart_data();
+    void replace_chart();
+    void replace_chart_animation_data();
+    void replace_chart_animation();
     void setModel_data();
     void setModel();
     void setModelMapping_data();
@@ -194,8 +202,9 @@ void tst_QLineSeries::append_chart()
 {
     m_view->show();
     m_chart->addSeries(m_series);
-    append_raw();
     QTest::qWaitForWindowShown(m_view);
+    append_raw();
+
 }
 
 void tst_QLineSeries::append_chart_animation_data()
@@ -336,8 +345,8 @@ void tst_QLineSeries::remove_chart()
 {
     m_view->show();
     m_chart->addSeries(m_series);
-    remove_raw();
     QTest::qWaitForWindowShown(m_view);
+    remove_raw();
 }
 
 void tst_QLineSeries::remove_chart_animation_data()
@@ -352,67 +361,111 @@ void tst_QLineSeries::remove_chart_animation()
 }
 
 
-void tst_QLineSeries::removeAll_data()
+void tst_QLineSeries::removeAll_raw_data()
 {
     append_data();
 }
 
-void tst_QLineSeries::removeAll()
+void tst_QLineSeries::removeAll_raw()
 {
-#if 0
-    QFETCH(int, foo);
-
-    SubQXYSeries series;
-
-    QSignalSpy spy0(&series, SIGNAL(clicked(QPointF const&)));
-    QSignalSpy spy1(&series, SIGNAL(selected()));
-
-    series.removeAll();
-
+    QFETCH(QList<QPointF>, points);
+    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    m_series->append(points);
     QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QCOMPARE(m_series->points(), points);
+    QTest::qWait(200);
+    m_series->removeAll();
+    QTest::qWait(200);
+    QCOMPARE(spy0.count(), 0);
+    QCOMPARE(m_series->points().count(), 0);
 }
 
-void tst_QLineSeries::replace_data()
+void tst_QLineSeries::removeAll_chart_data()
 {
-    QTest::addColumn<QPointF>("point");
-    QTest::newRow("null") << QPointF();
+    append_data();
 }
 
-void tst_QLineSeries::replace()
+void tst_QLineSeries::removeAll_chart()
 {
-#if 0
-    QFETCH(QPointF, point);
+    m_view->show();
+    m_chart->addSeries(m_series);
+    QTest::qWaitForWindowShown(m_view);
+    removeAll_raw();
+}
 
-    SubQXYSeries series;
+void tst_QLineSeries::removeAll_chart_animation_data()
+{
+    append_data();
+}
 
-    QSignalSpy spy0(&series, SIGNAL(clicked(QPointF const&)));
-    QSignalSpy spy1(&series, SIGNAL(selected()));
+void tst_QLineSeries::removeAll_chart_animation()
+{
+    m_chart->setAnimationOptions(QChart::AllAnimations);
+    removeAll_chart();
+}
 
-    series.replace(point);
+void tst_QLineSeries::replace_raw_data()
+{
+    append_data();
+}
 
+void tst_QLineSeries::replace_raw()
+{
+    QFETCH(QList<QPointF>, points);
+    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    m_series->append(points);
     QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QCOMPARE(m_series->points(), points);
+    QTest::qWait(200);
+
+    foreach(const QPointF& point,points)
+    {
+           m_series->replace(point.x(),point.y(),point.x(),0);
+           QTest::qWait(200);
+    }
+
+    QList<QPointF> newPoints = m_series->points();
+
+    QCOMPARE(newPoints.count(), points.count());
+
+    for(int i =0 ; i<points.count() ; ++i) {
+        QCOMPARE(points[i].x(), newPoints[i].x());
+        QCOMPARE(newPoints[i].y(), 0.0);
+    }
+}
+
+
+void tst_QLineSeries::replace_chart_data()
+{
+    append_data();
+}
+
+void tst_QLineSeries::replace_chart()
+{
+    m_view->show();
+    m_chart->addSeries(m_series);
+    QTest::qWaitForWindowShown(m_view);
+    replace_raw();
+}
+
+void tst_QLineSeries::replace_chart_animation_data()
+{
+    append_data();
+}
+
+void tst_QLineSeries::replace_chart_animation()
+{
+    m_chart->setAnimationOptions(QChart::AllAnimations);
+    replace_chart();
 }
 
 void tst_QLineSeries::setModel_data()
 {
-    //    QTest::addColumn<QStandardItemModel *>("model");
-    //    QTest::addColumn<QStandardItemModel *>("expected");
 
-    //    QTest::newRow("null") << 0 << 0;
-    //    QTest::newRow("QStandardItemModel") << new QStandardItemModel() << new QStandardItemModel();
 }
 
 void tst_QLineSeries::setModel()
 {
-    //    QFETCH(QStandardItemModel *, model);
-    //    QFETCH(QStandardItemModel *, expected);
-
     QLineSeries series;
     series.setModel(0);
     QVERIFY2(series.model() == 0, "Model should be unset");
