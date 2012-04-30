@@ -56,9 +56,6 @@ private slots:
     void count();
     void sum_data();
     void sum();
-
-private:
-
 private:
     QBarSet* m_barset;
 };
@@ -96,24 +93,28 @@ void tst_QBarSet::qbarset()
 
 void tst_QBarSet::name_data()
 {
-    QTest::addColumn<QString> ("names");
-    QTest::newRow("name0, name1") << QString("name0") << QString("name1");
+    QTest::addColumn<QString> ("name");
+    QTest::addColumn<QString> ("result");
+    QTest::newRow("name0") << QString("name0") << QString("name0");
+    QTest::newRow("name1") << QString("name1") << QString("name1");
 }
 
 void tst_QBarSet::name()
 {
-    QFETCH(QString, names);
+    QFETCH(QString, name);
+    QFETCH(QString, result);
 
-    m_barset->setName(names);
-    QCOMPARE(m_barset->name(), names);
+    m_barset->setName(name);
+    QCOMPARE(m_barset->name(), result);
 }
 
 void tst_QBarSet::append_data()
 {
-//    QTest::addColumn<QList<qreal> >("values");
-//    QTest::newRow("0.0 1.0 2.0 3.0 4.0") << (QList<qreal>(0.0) << qreal(1.0) << qreal(2.0) << qreal(3.0) << qreal(4.0));
     QTest::addColumn<int> ("count");
-    QTest::newRow("0 1 2 3 4") << 0 << 1 << 2 << 3 << 4;
+    QTest::newRow("0") << 0;
+    QTest::newRow("5") << 5;
+    QTest::newRow("100") << 100;
+    QTest::newRow("1000") << 1000;
 }
 
 void tst_QBarSet::append()
@@ -165,7 +166,6 @@ void tst_QBarSet::appendOperator()
 
 void tst_QBarSet::insert_data()
 {
-    // TODO?
 }
 
 void tst_QBarSet::insert()
@@ -176,25 +176,24 @@ void tst_QBarSet::insert()
     m_barset->insert(0, 1.0);       // 1.0
     QCOMPARE(m_barset->at(0), 1.0);
     QCOMPARE(m_barset->count(), 1);
-    QCOMPARE(m_barset->sum(), 1.0);
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 1.0));
 
     m_barset->insert(0, 2.0);       // 2.0 1.0
     QCOMPARE(m_barset->at(0), 2.0);
     QCOMPARE(m_barset->at(1), 1.0);
     QCOMPARE(m_barset->count(), 2);
-    QCOMPARE(m_barset->sum(), 3.0);
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 3.0));
 
     m_barset->insert(1, 3.0);       // 2.0 3.0 1.0
     QCOMPARE(m_barset->at(1), 3.0);
     QCOMPARE(m_barset->at(0), 2.0);
     QCOMPARE(m_barset->at(2), 1.0);
     QCOMPARE(m_barset->count(), 3);
-    QCOMPARE(m_barset->sum(), 6.0);
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 6.0));
 }
 
 void tst_QBarSet::remove_data()
 {
-    // TODO?
 }
 
 void tst_QBarSet::remove()
@@ -329,15 +328,14 @@ void tst_QBarSet::sum()
     QVERIFY(qFuzzyIsNull(m_barset->sum()));
 
     m_barset->append(1.0);
-    QCOMPARE(m_barset->sum(),1.0);
+    QVERIFY(qFuzzyCompare(m_barset->sum(),1.0));
     m_barset->append(2.0);
-    QCOMPARE(m_barset->sum(),3.0);
+    QVERIFY(qFuzzyCompare(m_barset->sum(),3.0));
     m_barset->append(3.0);
-    QCOMPARE(m_barset->sum(),6.0);
+    QVERIFY(qFuzzyCompare(m_barset->sum(),6.0));
     m_barset->append(4.0);
-    QCOMPARE(m_barset->sum(),10.0);
+    QVERIFY(qFuzzyCompare(m_barset->sum(),10.0));
 }
-
 
 QTEST_MAIN(tst_QBarSet)
 
