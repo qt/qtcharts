@@ -18,7 +18,7 @@ while ($testapp = readdir TESTAPPDIR) {
                 $cmd_postfix = substr($cmd_postfix, 0, rindex($cmd_postfix, ".app"));
             }
             # Generate path for test results
-            my $test_result_path = "test_results/$testapp.xml";
+            my $test_result_path = "test-reports/$testapp.xml";
             mkdir dirname($test_result_path);
             # Execute the actual auto test
             executeTestApp("$test_path$testapp$cmd_postfix", "-xunitxml -o $test_result_path");
