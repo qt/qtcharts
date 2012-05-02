@@ -42,12 +42,12 @@ public:
 
     QSeriesType type() const;
 
-    void append(QPieSlice* slice);
-    void append(QList<QPieSlice*> slices);
+    bool append(QPieSlice* slice);
+    bool append(QList<QPieSlice*> slices);
     QPieSeries& operator << (QPieSlice* slice);
     QPieSlice* append(qreal value, QString name);
-    void insert(int index, QPieSlice* slice);
-    void remove(QPieSlice* slice);
+    bool insert(int index, QPieSlice* slice);
+    bool remove(QPieSlice* slice);
     void clear();
 
     QList<QPieSlice*> slices() const;

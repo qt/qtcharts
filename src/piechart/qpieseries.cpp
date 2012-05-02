@@ -139,12 +139,19 @@ QAbstractSeries::QSeriesType QPieSeries::type() const
     Appends an array of \a slices to the series.
     Slice ownership is passed to the series.
 */
-void QPieSeries::append(QList<QPieSlice*> slices)
+bool QPieSeries::append(QList<QPieSlice*> slices)
 {
     Q_D(QPieSeries);
 
+    if (slices.count() == 0)
+        return false;
+
     foreach (QPieSlice* s, slices) {
-        Q_ASSERT(!d->m_slices.contains(s)); // cannot add same slice twice
+        if (!s || d->m_slices.contains(s))
+            return false;
+    }
+
+    foreach (QPieSlice* s, slices) {
         s->setParent(this);
         d->m_slices << s;
     }
@@ -158,15 +165,17 @@ void QPieSeries::append(QList<QPieSlice*> slices)
     }
 
     emit d->added(slices);
+
+    return true;
 }
 
 /*!
     Appends a single \a slice to the series.
     Slice ownership is passed to the series.
 */
-void QPieSeries::append(QPieSlice* slice)
+bool QPieSeries::append(QPieSlice* slice)
 {
-    append(QList<QPieSlice*>() << slice);
+    return append(QList<QPieSlice*>() << slice);
 }
 
 /*!
@@ -195,11 +204,16 @@ QPieSlice* QPieSeries::append(qreal value, QString name)
     Inserts a single \a slice to the series before the slice at \a index position.
     Slice ownership is passed to the series.
 */
-void QPieSeries::insert(int index, QPieSlice* slice)
+bool QPieSeries::insert(int index, QPieSlice* slice)
 {
     Q_D(QPieSeries);
-    Q_ASSERT(index <= d->m_slices.count());
-    Q_ASSERT(!d->m_slices.contains(slice)); // cannot add same slice twice
+
+    if (index < 0 || index > d->m_slices.count())
+        return false;
+
+    if (!slice || d->m_slices.contains(slice))
+        return false;
+
     slice->setParent(this);
     d->m_slices.insert(index, slice);
 
@@ -210,6 +224,8 @@ void QPieSeries::insert(int index, QPieSlice* slice)
     connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
 
     emit d->added(QList<QPieSlice*>() << slice);
+
+    return true;
 }
 
 /*!
@@ -217,13 +233,12 @@ void QPieSeries::insert(int index, QPieSlice* slice)
 
     Do not reference the pointer after this call.
 */
-void QPieSeries::remove(QPieSlice* slice)
+bool QPieSeries::remove(QPieSlice* slice)
 {
     Q_D(QPieSeries);
-    if (!d->m_slices.removeOne(slice)) {
-        Q_ASSERT(0); // TODO: how should this be reported?
-        return;
-    }
+
+    if (!d->m_slices.removeOne(slice))
+        return false;
 
     d->updateDerivativeData();
 
@@ -231,6 +246,8 @@ void QPieSeries::remove(QPieSlice* slice)
 
     delete slice;
     slice = 0;
+
+    return true;
 }
 
 /*!
