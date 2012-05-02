@@ -115,7 +115,7 @@ void QBarSeries::removeBarSet(QBarSet *set)
     Q_D(QBarSeries);
     if (d->m_barSets.contains(set)) {
         d->m_barSets.removeOne(set);
-        QObject::disconnect(set, SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+        QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
         emit d->restructuredBars();
     }
 }
@@ -128,7 +128,7 @@ void QBarSeries::appendBarSets(QList<QBarSet* > sets)
     Q_D(QBarSeries);
     foreach (QBarSet* set, sets) {
         d->m_barSets.append(set);
-        QObject::connect(set, SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+        QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
     }
     emit d->restructuredBars();
 }
@@ -143,7 +143,7 @@ void QBarSeries::removeBarSets(QList<QBarSet* > sets)
     foreach (QBarSet* set, sets) {
         if (d->m_barSets.contains(set)) {
             d->m_barSets.removeOne(set);
-            QObject::disconnect(set, SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+            QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
         }
     }
     emit d->restructuredBars();
