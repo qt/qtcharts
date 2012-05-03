@@ -557,17 +557,27 @@ void tst_QChart::zoomOut()
 
     m_chart->zoomIn();
 
-    QVERIFY(minX<m_chart->axisX()->min());
-    QVERIFY(maxX>m_chart->axisX()->max());
-    QVERIFY(minY<m_chart->axisY()->min());
-    QVERIFY(maxY>m_chart->axisY()->max());
+    QVERIFY(minX < m_chart->axisX()->min());
+    QVERIFY(maxX > m_chart->axisX()->max());
+    QVERIFY(minY < m_chart->axisY()->min());
+    QVERIFY(maxY > m_chart->axisY()->max());
 
     m_chart->zoomOut();
 
-    QVERIFY(minX==m_chart->axisX()->min());
-    QVERIFY(maxX==m_chart->axisX()->max());
-    QVERIFY(minY==m_chart->axisY()->min());
-    QVERIFY(maxY==m_chart->axisY()->max());
+    // min x may be a zero value
+    if (qFuzzyIsNull(minX))
+        QVERIFY(qFuzzyIsNull(m_chart->axisX()->min()));
+    else
+        QCOMPARE(minX, m_chart->axisX()->min());
+
+    // min y may be a zero value
+    if (qFuzzyIsNull(minY))
+        QVERIFY(qFuzzyIsNull(m_chart->axisY()->min()));
+    else
+        QCOMPARE(minY, m_chart->axisY()->min());
+
+    QVERIFY(maxX == m_chart->axisX()->max());
+    QVERIFY(maxY == m_chart->axisY()->max());
 }
 
 QTEST_MAIN(tst_QChart)
