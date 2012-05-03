@@ -91,7 +91,7 @@ QBarSeries::QBarSeries(QBarSeriesPrivate &d, QObject *parent) :
 /*!
     Returns the type of series. Derived classes override this.
 */
-QAbstractSeries::QSeriesType QBarSeries::type() const
+QAbstractSeries::SeriesType QBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeBar;
 }

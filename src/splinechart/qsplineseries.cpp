@@ -75,7 +75,7 @@ QSplineSeries::~QSplineSeries()
     }
 }
 
-QAbstractSeries::QSeriesType QSplineSeries::type() const
+QAbstractSeries::SeriesType QSplineSeries::type() const
 {
     return QAbstractSeries::SeriesTypeSpline;
 }

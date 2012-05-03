@@ -49,9 +49,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QSeriesType QLineSeries::type() const
+    \fn virtual SeriesType QLineSeries::type() const
     \brief Returns type of series.
-    \sa QAbstractSeries, QSeriesType
+    \sa QAbstractSeries, SeriesType
 */
 
 /*!
@@ -82,7 +82,7 @@ QLineSeries::~QLineSeries()
     }
 }
 
-QAbstractSeries::QSeriesType QLineSeries::type() const
+QAbstractSeries::SeriesType QLineSeries::type() const
 {
     return QAbstractSeries::SeriesTypeLine;
 }

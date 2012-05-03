@@ -36,10 +36,10 @@ class QTCOMMERCIALCHART_EXPORT QAbstractSeries : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName)
-    Q_ENUMS(QSeriesType)
+    Q_ENUMS(SeriesType)
 
 public:
-    enum QSeriesType {
+    enum SeriesType {
         SeriesTypeLine,
         SeriesTypeArea,
         SeriesTypeBar,
@@ -55,7 +55,7 @@ protected:
 
 public:
     ~QAbstractSeries();
-    virtual QSeriesType type() const = 0;
+    virtual SeriesType type() const = 0;
     virtual bool setModel(QAbstractItemModel* model) = 0;
     QAbstractItemModel* model() const;
     int mapFirst() const;

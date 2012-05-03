@@ -407,6 +407,11 @@ bool QChart::isBackgroundDropShadowEnabled() const
     return d_ptr->m_presenter->m_backgroundItem->isDropShadowEnabled();
 }
 
+QList<QAbstractSeries*> QChart::series() const
+{
+    return d_ptr->m_dataset->series();
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QChartPrivate::QChartPrivate():

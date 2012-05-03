@@ -57,7 +57,7 @@ QStackedBarSeries::QStackedBarSeries(QBarCategories categories, QObject *parent)
 {
 }
 
-QAbstractSeries::QSeriesType QStackedBarSeries::type() const
+QAbstractSeries::SeriesType QStackedBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeStackedBar;
 }

@@ -117,7 +117,7 @@ QAreaSeries::~QAreaSeries()
 }
 
 
-QAbstractSeries::QSeriesType QAreaSeries::type() const
+QAbstractSeries::SeriesType QAreaSeries::type() const
 {
     return QAbstractSeries::SeriesTypeArea;
 }

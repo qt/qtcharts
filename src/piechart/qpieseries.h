@@ -40,7 +40,7 @@ public:
     explicit QPieSeries(QObject *parent = 0);
     virtual ~QPieSeries();
 
-    QSeriesType type() const;
+    QAbstractSeries::SeriesType type() const;
 
     bool append(QPieSlice* slice);
     bool append(QList<QPieSlice*> slices);

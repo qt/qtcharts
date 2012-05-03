@@ -58,7 +58,7 @@
 /*!
     \fn QChartSeriesType QScatterSeries::type() const
     \brief Returns QChartSeries::SeriesTypeScatter.
-    \sa QAbstractSeries, QSeriesType
+    \sa QAbstractSeries, SeriesType
 */
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -77,7 +77,7 @@ QScatterSeries::~QScatterSeries()
 {
 }
 
-QAbstractSeries::QSeriesType QScatterSeries::type() const
+QAbstractSeries::SeriesType QScatterSeries::type() const
 {
     return QAbstractSeries::SeriesTypeScatter;
 }

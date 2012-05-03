@@ -58,7 +58,7 @@ QPercentBarSeries::QPercentBarSeries(QBarCategories categories, QObject *parent)
 {
 }
 
-QAbstractSeries::QSeriesType QPercentBarSeries::type() const
+QAbstractSeries::SeriesType QPercentBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypePercentBar;
 }

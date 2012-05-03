@@ -54,7 +54,7 @@ public:
     void zoomOutDomain(const QRectF& rect, const QSizeF& size);
     void scrollDomain(int dx,int dy,const QSizeF& size);
 
-    int seriesCount(QAbstractSeries::QSeriesType type);
+    int seriesCount(QAbstractSeries::SeriesType type);
     int seriesIndex(QAbstractSeries *series);
 
     Domain* domain(QAbstractSeries* series) const;

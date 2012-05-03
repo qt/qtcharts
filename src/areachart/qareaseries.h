@@ -38,7 +38,7 @@ public:
     ~QAreaSeries();
 
 public:
-    QAbstractSeries::QSeriesType type() const;
+    QAbstractSeries::SeriesType type() const;
 
     QLineSeries* upperSeries() const;
     QLineSeries* lowerSeries() const;

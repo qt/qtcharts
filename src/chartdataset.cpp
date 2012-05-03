@@ -220,7 +220,7 @@ void ChartDataSet::zoomOutDomain(const QRectF& rect, const QSizeF& size)
     domain->zoomOut(rect,size);
 }
 
-int ChartDataSet::seriesCount(QAbstractSeries::QSeriesType type)
+int ChartDataSet::seriesCount(QAbstractSeries::SeriesType type)
 {
     int count=0;
     QMapIterator<QAbstractSeries*, QAxis*> i(m_seriesAxisMap);

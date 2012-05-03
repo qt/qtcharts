@@ -38,7 +38,7 @@ public:
 
     explicit QSplineSeries(QObject *parent = 0);
     ~QSplineSeries();
-    QAbstractSeries::QSeriesType type() const;
+    QAbstractSeries::SeriesType type() const;
 
     QPointF controlPoint(int index) const;
 

@@ -33,7 +33,7 @@ class QTCOMMERCIALCHART_EXPORT QStackedBarSeries : public QBarSeries
     Q_OBJECT
 public:
     explicit QStackedBarSeries(QBarCategories categories, QObject *parent = 0);
-    QAbstractSeries::QSeriesType type() const;
+    QAbstractSeries::SeriesType type() const;
 private:
     Q_DECLARE_PRIVATE(QStackedBarSeries)
     Q_DISABLE_COPY(QStackedBarSeries)

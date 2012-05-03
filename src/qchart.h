@@ -67,6 +67,7 @@ public:
     void addSeries(QAbstractSeries *series, QAxis *axisY = 0);
     void removeSeries(QAbstractSeries *series);
     void removeAllSeries();
+    QList<QAbstractSeries*> series() const;
 
     void setTheme(QChart::ChartTheme theme);
     QChart::ChartTheme theme() const;

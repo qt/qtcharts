@@ -42,7 +42,7 @@ public:
     explicit QBarSeries(QBarCategories categories, QObject *parent = 0);
     virtual ~QBarSeries();
 
-    QAbstractSeries::QSeriesType type() const;
+    QAbstractSeries::SeriesType type() const;
 
     void appendBarSet(QBarSet *set);            // Takes ownership of set
     void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set

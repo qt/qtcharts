@@ -35,7 +35,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \enum QAbstractSeries::QSeriesType
+    \enum QAbstractSeries::SeriesType
 
     The type of the series object.
 

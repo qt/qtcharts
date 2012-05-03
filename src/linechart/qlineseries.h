@@ -35,7 +35,7 @@ public:
     explicit QLineSeries(QObject *parent = 0);
     ~QLineSeries();
 
-    QAbstractSeries::QSeriesType type() const;
+    QAbstractSeries::SeriesType type() const;
 
 protected:
     QLineSeries(QLineSeriesPrivate &d,QObject *parent = 0);

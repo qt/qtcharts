@@ -130,7 +130,7 @@ QPieSeries::~QPieSeries()
 /*!
     Returns QChartSeries::SeriesTypePie.
 */
-QAbstractSeries::QSeriesType QPieSeries::type() const
+QAbstractSeries::SeriesType QPieSeries::type() const
 {
     return QAbstractSeries::SeriesTypePie;
 }
@@ -721,7 +721,7 @@ void QPieSeriesPrivate::initializePieFromModel()
     q->clear();
 
     // create the initial slices set
-    if (m_mapOrientation == Qt::Vertical) {        
+    if (m_mapOrientation == Qt::Vertical) {
         if (m_mapValues >= m_model->columnCount() || m_mapLabels >= m_model->columnCount())
             return;   // mapped columns are not existing
 
