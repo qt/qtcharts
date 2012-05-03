@@ -36,7 +36,7 @@ struct QChartViewPrivate;
 class QTCOMMERCIALCHART_EXPORT QChartView : public QGraphicsView
 {
     Q_OBJECT
-
+    Q_ENUMS(RubberBand)
 public:
 
     enum  RubberBand{
