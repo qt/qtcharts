@@ -29,7 +29,7 @@
         const int waitStep(30); \
         /* always wait before comparing to catch possible extra signals */ \
         QTest::qWait(waitStep); \
-        for (int time(0); actual != expected && time < timeout; time += waitStep) \
+        for (int time(0); (actual != expected) && (time < timeout); time += waitStep) \
             QTest::qWait(waitStep); \
         QCOMPARE(actual, expected); \
     } while (0); \

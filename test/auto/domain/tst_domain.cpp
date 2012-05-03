@@ -597,7 +597,6 @@ void tst_Domain::zoom()
     TRY_COMPARE(spy0.count(), 6);
     TRY_COMPARE(spy1.count(), 6);
     TRY_COMPARE(spy2.count(), 6);
-
 }
 
 void tst_Domain::move_data()
@@ -633,8 +632,8 @@ void tst_Domain::move()
 
     QCOMPARE(domain == result, true);
     TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), dx!=0?1:0);
-    TRY_COMPARE(spy2.count(), dy!=0?1:0);
+    TRY_COMPARE(spy1.count(), (dx != 0 ? 1 : 0));
+    TRY_COMPARE(spy2.count(), (dy != 0 ? 1 : 0));
 }
 
 void tst_Domain::handleAxisXChanged_data()
