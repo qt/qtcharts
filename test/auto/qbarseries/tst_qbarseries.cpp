@@ -20,7 +20,7 @@
 
 #include <QtTest/QtTest>
 #include <qbarseries.h>
-#include <qbarset>
+#include <qbarset.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
