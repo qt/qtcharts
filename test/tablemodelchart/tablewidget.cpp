@@ -370,7 +370,8 @@ void TableWidget::updateChartType(bool toggle)
         {
             m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
-            QBarSeries* barSeries = new QBarSeries(QStringList());
+            QBarSeries* barSeries = new QBarSeries();
+            barSeries->setCategories(QStringList());
             barSeries->setModel(m_model);
             //            barSeries->setModelMappingRange(2, 5);
             barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
