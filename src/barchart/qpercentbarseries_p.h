@@ -39,7 +39,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPercentBarSeriesPrivate: public QBarSeriesPrivate
 {
 public:
-    QPercentBarSeriesPrivate(QBarCategories categories,QPercentBarSeries* q);
+    QPercentBarSeriesPrivate(/*QBarCategories categories,*/QPercentBarSeries* q);
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter* presenter);
 

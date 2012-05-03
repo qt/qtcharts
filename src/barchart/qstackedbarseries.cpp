@@ -52,8 +52,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QStackedBarSeries. Parameter \a categories defines the categories for chart.
     QStackedBarSeries is QObject which is a child of a \a parent.
 */
-QStackedBarSeries::QStackedBarSeries(QBarCategories categories, QObject *parent)
-    : QBarSeries(*new QStackedBarSeriesPrivate(categories,this), parent)
+QStackedBarSeries::QStackedBarSeries(/*QBarCategories categories,*/ QObject *parent)
+    : QBarSeries(*new QStackedBarSeriesPrivate(/*categories,*/this), parent)
 {
 }
 
@@ -64,7 +64,7 @@ QAbstractSeries::SeriesType QStackedBarSeries::type() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QBarCategories categories, QStackedBarSeries *q) : QBarSeriesPrivate(categories,q)
+QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(/*QBarCategories categories,*/ QStackedBarSeries *q) : QBarSeriesPrivate(/*categories,*/q)
 {
 
 }

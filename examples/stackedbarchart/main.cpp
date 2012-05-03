@@ -51,7 +51,8 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QStackedBarSeries* series = new QStackedBarSeries(categories);
+    QStackedBarSeries* series = new QStackedBarSeries();
+    series->setCategories(categories);
     series->appendBarSet(set0);
     series->appendBarSet(set1);
     series->appendBarSet(set2);

@@ -50,7 +50,9 @@ void DeclarativeBarSeries::setBarCategories(QStringList categories)
         QChart *chart = qobject_cast<QChart *>(declarativeChart->m_chart);
         Q_ASSERT(chart);
 
-        m_series = new QBarSeries(m_categories);
+//        m_series = new QBarSeries(m_categories);
+        m_series = new QBarSeries();
+        m_series->setCategories(m_categories);
 
         // TODO: use data from model
         QBarSet *set0 = new QBarSet("Bub");

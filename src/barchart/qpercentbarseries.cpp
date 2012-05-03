@@ -53,8 +53,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QPercentBarSeries. Parameter \a categories defines the categories for chart.
     QPercentBarSeries is QObject which is a child of a \a parent.
 */
-QPercentBarSeries::QPercentBarSeries(QBarCategories categories, QObject *parent)
-    : QBarSeries(*new QPercentBarSeriesPrivate(categories,this), parent)
+QPercentBarSeries::QPercentBarSeries(/*QBarCategories categories,*/ QObject *parent)
+    : QBarSeries(*new QPercentBarSeriesPrivate(/*categories,*/this), parent)
 {
 }
 
@@ -65,7 +65,7 @@ QAbstractSeries::SeriesType QPercentBarSeries::type() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QPercentBarSeriesPrivate::QPercentBarSeriesPrivate(QBarCategories categories, QPercentBarSeries *q) : QBarSeriesPrivate(categories,q)
+QPercentBarSeriesPrivate::QPercentBarSeriesPrivate(/*QBarCategories categories,*/ QPercentBarSeries *q) : QBarSeriesPrivate(/*categories,*/q)
 {
 
 }

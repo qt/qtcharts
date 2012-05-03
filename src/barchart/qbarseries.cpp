@@ -67,8 +67,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QBarSeries. Parameter \a categories defines the categories for chart.
     QBarSeries is QObject which is a child of a \a parent.
 */
-QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) :
-    QAbstractSeries(*new QBarSeriesPrivate(categories, this),parent)
+QBarSeries::QBarSeries(/*QBarCategories categories,*/ QObject *parent) :
+    QAbstractSeries(*new QBarSeriesPrivate(/*categories,*/ this),parent)
 {
 }
 
@@ -94,6 +94,13 @@ QBarSeries::QBarSeries(QBarSeriesPrivate &d, QObject *parent) :
 QAbstractSeries::SeriesType QBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeBar;
+}
+
+void QBarSeries::setCategories(QBarCategories categories)
+{
+    Q_D(QBarSeries);
+    d->setCategories(categories);
+    emit d->categoriesUpdated();
 }
 
 /*!
@@ -227,14 +234,20 @@ void QBarSeries::setLabelsVisible(bool visible)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarSeriesPrivate::QBarSeriesPrivate(QBarCategories categories, QBarSeries *q) :
+QBarSeriesPrivate::QBarSeriesPrivate(/*QBarCategories categories,*/ QBarSeries *q) :
     QAbstractSeriesPrivate(q),
-    m_categories(categories),
+//    m_categories(categories),
     m_mapCategories(-1),
     m_mapBarBottom(-1),
     m_mapBarTop(-1)
 {
 }
+
+void QBarSeriesPrivate::setCategories(QBarCategories categories)
+{
+    m_categories = categories;
+}
+
 
 QBarSet* QBarSeriesPrivate::barsetAt(int index)
 {

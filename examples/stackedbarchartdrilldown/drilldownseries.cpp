@@ -23,8 +23,9 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 DrilldownBarSeries::DrilldownBarSeries(QStringList categories, QObject *parent)
-    : QStackedBarSeries(categories, parent)
+    : QStackedBarSeries(parent)
 {
+    setCategories(categories);
 }
 
 void DrilldownBarSeries::mapDrilldownSeries(QString category, DrilldownBarSeries* drilldownSeries)

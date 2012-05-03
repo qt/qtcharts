@@ -78,8 +78,10 @@ void tst_QBarSeries::cleanupTestCase()
 void tst_QBarSeries::init()
 {
     m_categories << "category0" << "category1" << "category2";
-    m_barseries = new QBarSeries(m_categories);
-    m_barseries_with_sets = new QBarSeries(m_categories);
+    m_barseries = new QBarSeries();
+    m_barseries->setCategories(m_categories);
+    m_barseries_with_sets = new QBarSeries();
+    m_barseries_with_sets->setCategories(m_categories);
 
     for (int i=0; i<5; i++) {
         m_testSets.append(new QBarSet("testset"));
@@ -113,8 +115,9 @@ void tst_QBarSeries::qbarseries_data()
 void tst_QBarSeries::qbarseries()
 {
     QFETCH(QBarCategories, categories);
-    QBarSeries *barseries = new QBarSeries(categories);
+    QBarSeries *barseries = new QBarSeries();
     QVERIFY(barseries != 0);
+    barseries->setCategories(categories);
     QBarCategories verifyCategories = barseries->categories();
 
     QVERIFY(verifyCategories.count() == categories.count());

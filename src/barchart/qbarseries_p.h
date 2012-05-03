@@ -15,7 +15,8 @@ class QBarSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 public:
-    QBarSeriesPrivate(QBarCategories categories, QBarSeries *parent);
+    QBarSeriesPrivate(/*QBarCategories categories,*/ QBarSeries *parent);
+    void setCategories(QBarCategories categories);
 
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter* presenter);
