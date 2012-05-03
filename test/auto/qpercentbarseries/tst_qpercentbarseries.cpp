@@ -19,12 +19,12 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qbarseries.h>
+#include <qpercentbarseries.h>
 #include <qbarset.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-class tst_QBarSeries : public QObject
+class tst_QPercentBarSeries : public QObject
 {
     Q_OBJECT
 
@@ -35,8 +35,8 @@ public slots:
     void cleanup();
 
 private slots:
-    void qbarseries_data();
-    void qbarseries();
+    void qpercentbarseries_data();
+    void qpercentbarseries();
     void type_data();
     void type();
     void setCategories_data();
@@ -61,28 +61,28 @@ private slots:
     void setLabelsVisible();
 
 private:
-    QBarSeries* m_barseries;
-    QBarSeries* m_barseries_with_sets;
+    QPercentBarSeries* m_barseries;
+    QPercentBarSeries* m_barseries_with_sets;
 
     QList<QBarSet*> m_testSets;
 
     QBarCategories m_categories;
 };
 
-void tst_QBarSeries::initTestCase()
+void tst_QPercentBarSeries::initTestCase()
 {
 }
 
-void tst_QBarSeries::cleanupTestCase()
+void tst_QPercentBarSeries::cleanupTestCase()
 {
 }
 
-void tst_QBarSeries::init()
+void tst_QPercentBarSeries::init()
 {
     m_categories << "category0" << "category1" << "category2";
-    m_barseries = new QBarSeries();
+    m_barseries = new QPercentBarSeries();
     m_barseries->setCategories(m_categories);
-    m_barseries_with_sets = new QBarSeries();
+    m_barseries_with_sets = new QPercentBarSeries();
     m_barseries_with_sets->setCategories(m_categories);
 
     for (int i=0; i<5; i++) {
@@ -91,7 +91,7 @@ void tst_QBarSeries::init()
     }
 }
 
-void tst_QBarSeries::cleanup()
+void tst_QPercentBarSeries::cleanup()
 {
     foreach(QBarSet* s, m_testSets) {
         m_barseries_with_sets->removeBarSet(s);
@@ -106,7 +106,7 @@ void tst_QBarSeries::cleanup()
     m_categories.clear();
 }
 
-void tst_QBarSeries::qbarseries_data()
+void tst_QPercentBarSeries::qpercentbarseries_data()
 {
     QTest::addColumn<QBarCategories> ("categories");
     QBarCategories c;
@@ -114,10 +114,10 @@ void tst_QBarSeries::qbarseries_data()
     QTest::newRow("categories") << c;
 }
 
-void tst_QBarSeries::qbarseries()
+void tst_QPercentBarSeries::qpercentbarseries()
 {
     QFETCH(QBarCategories, categories);
-    QBarSeries *barseries = new QBarSeries();
+    QPercentBarSeries *barseries = new QPercentBarSeries();
     QVERIFY(barseries != 0);
     barseries->setCategories(categories);
     QBarCategories verifyCategories = barseries->categories();
@@ -128,17 +128,17 @@ void tst_QBarSeries::qbarseries()
     }
 }
 
-void tst_QBarSeries::type_data()
+void tst_QPercentBarSeries::type_data()
 {
 
 }
 
-void tst_QBarSeries::type()
+void tst_QPercentBarSeries::type()
 {
-    QVERIFY(m_barseries->type() == QAbstractSeries::SeriesTypeBar);
+    QVERIFY(m_barseries->type() == QAbstractSeries::SeriesTypePercentBar);
 }
 
-void tst_QBarSeries::setCategories_data()
+void tst_QPercentBarSeries::setCategories_data()
 {
     QTest::addColumn<QBarCategories> ("categories");
     QBarCategories categories;
@@ -146,7 +146,7 @@ void tst_QBarSeries::setCategories_data()
     QTest::newRow("cat") << categories;
 }
 
-void tst_QBarSeries::setCategories()
+void tst_QPercentBarSeries::setCategories()
 {
     QVERIFY(m_barseries->categories().count() == m_categories.count());
 
@@ -159,11 +159,11 @@ void tst_QBarSeries::setCategories()
     }
 }
 
-void tst_QBarSeries::appendBarSet_data()
+void tst_QPercentBarSeries::appendBarSet_data()
 {
 }
 
-void tst_QBarSeries::appendBarSet()
+void tst_QPercentBarSeries::appendBarSet()
 {
     QVERIFY(m_barseries->barsetCount() == 0);
 
@@ -178,11 +178,11 @@ void tst_QBarSeries::appendBarSet()
     QVERIFY(m_barseries->barsetCount() == 2);
 }
 
-void tst_QBarSeries::removeBarSet_data()
+void tst_QPercentBarSeries::removeBarSet_data()
 {
 }
 
-void tst_QBarSeries::removeBarSet()
+void tst_QPercentBarSeries::removeBarSet()
 {
     int count = m_testSets.count();
     QVERIFY(m_barseries_with_sets->barsetCount() == count);
@@ -207,12 +207,12 @@ void tst_QBarSeries::removeBarSet()
     QVERIFY(m_barseries_with_sets->barsetCount() == 0);
 }
 
-void tst_QBarSeries::appendBarSets_data()
+void tst_QPercentBarSeries::appendBarSets_data()
 {
 
 }
 
-void tst_QBarSeries::appendBarSets()
+void tst_QPercentBarSeries::appendBarSets()
 {
     int count = 5;
     QVERIFY(m_barseries->barsetCount() == 0);
@@ -226,12 +226,12 @@ void tst_QBarSeries::appendBarSets()
     QVERIFY(m_barseries->barsetCount() == count);
 }
 
-void tst_QBarSeries::removeBarSets_data()
+void tst_QPercentBarSeries::removeBarSets_data()
 {
 
 }
 
-void tst_QBarSeries::removeBarSets()
+void tst_QPercentBarSeries::removeBarSets()
 {
     int count = m_testSets.count();
     QVERIFY(m_barseries_with_sets->barsetCount() == count);
@@ -254,34 +254,34 @@ void tst_QBarSeries::removeBarSets()
     QVERIFY(m_barseries_with_sets->barsetCount() == 0);
 }
 
-void tst_QBarSeries::barsetCount_data()
+void tst_QPercentBarSeries::barsetCount_data()
 {
 
 }
 
-void tst_QBarSeries::barsetCount()
+void tst_QPercentBarSeries::barsetCount()
 {
     QVERIFY(m_barseries->barsetCount() == 0);
     QVERIFY(m_barseries_with_sets->barsetCount() == m_testSets.count());
 }
 
-void tst_QBarSeries::categoryCount_data()
+void tst_QPercentBarSeries::categoryCount_data()
 {
 
 }
 
-void tst_QBarSeries::categoryCount()
+void tst_QPercentBarSeries::categoryCount()
 {
     QVERIFY(m_barseries->categoryCount() == m_categories.count());
     QVERIFY(m_barseries_with_sets->categoryCount() == m_categories.count());
 }
 
-void tst_QBarSeries::barSets_data()
+void tst_QPercentBarSeries::barSets_data()
 {
 
 }
 
-void tst_QBarSeries::barSets()
+void tst_QPercentBarSeries::barSets()
 {
     QVERIFY(m_barseries->barSets().count() == 0);
 
@@ -293,12 +293,12 @@ void tst_QBarSeries::barSets()
     }
 }
 
-void tst_QBarSeries::categories_data()
+void tst_QPercentBarSeries::categories_data()
 {
 
 }
 
-void tst_QBarSeries::categories()
+void tst_QPercentBarSeries::categories()
 {
     QBarCategories categories = m_barseries->categories();
 
@@ -308,12 +308,12 @@ void tst_QBarSeries::categories()
     }
 }
 
-void tst_QBarSeries::setLabelsVisible_data()
+void tst_QPercentBarSeries::setLabelsVisible_data()
 {
 
 }
 
-void tst_QBarSeries::setLabelsVisible()
+void tst_QPercentBarSeries::setLabelsVisible()
 {
     foreach (QBarSet* s, m_testSets) {
         QVERIFY(s->labelsVisible() == false);
@@ -335,7 +335,7 @@ bool setModel(QAbstractItemModel *model);
 void setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
 void setModelMappingRange(int first, int count = -1);
 */
-QTEST_MAIN(tst_QBarSeries)
+QTEST_MAIN(tst_QPercentBarSeries)
 
-#include "tst_qbarseries.moc"
+#include "tst_qpercentbarseries.moc"
 
