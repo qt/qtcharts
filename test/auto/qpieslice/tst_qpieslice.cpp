@@ -20,6 +20,7 @@
 
 #include <QtTest/QtTest>
 #include <qpieslice.h>
+#include <tst_definitions.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -122,7 +123,7 @@ void tst_qpieslice::changedSignals()
     slice.setLabelArmLengthFactor(0.1);
     slice.setExplodeDistanceFactor(0.1);
     slice.setExplodeDistanceFactor(0.1);
-    QCOMPARE(spy.count(), 10);
+    TRY_COMPARE(spy.count(), 10);
 }
 
 QTEST_MAIN(tst_qpieslice)

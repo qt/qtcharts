@@ -22,6 +22,7 @@
 #include <qlineseries.h>
 #include <qchartview.h>
 #include <QStandardItemModel>
+#include <tst_definitions.h>
 
 Q_DECLARE_METATYPE(QList<QPointF>)
 
@@ -173,10 +174,8 @@ void tst_QLineSeries::append_raw()
 {
     QFETCH(QList<QPointF>, points);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
-    QTest::qWait(200);
     m_series->append(points);
-    QTest::qWait(200);
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points(), points);
 }
 
@@ -240,7 +239,7 @@ void tst_QLineSeries::count_raw()
     for(int i=0 ; i< count; ++i)
         m_series->append(i,i);
 
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->count(), count);
 }
 
@@ -262,7 +261,7 @@ void tst_QLineSeries::oper()
     }
 
     QCOMPARE(series.points(), points);
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
 }
 
 
@@ -283,7 +282,7 @@ void tst_QLineSeries::pen()
     QSignalSpy spy0(&series, SIGNAL(clicked(QPointF const&)));
     series.setPen(pen);
 
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(series.pen(), pen);
 
     m_chart->addSeries(&series);
@@ -308,7 +307,7 @@ void tst_QLineSeries::pointsVisible_raw()
     QFETCH(bool, pointsVisible);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
     m_series->setPointsVisible(pointsVisible);
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->pointsVisible(), pointsVisible);
 }
 
@@ -322,17 +321,13 @@ void tst_QLineSeries::remove_raw()
     QFETCH(QList<QPointF>, points);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
     m_series->append(points);
-    QTest::qWait(200);
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points(), points);
 
     foreach(const QPointF& point,points)
-    {
         m_series->remove(point);
-        QTest::qWait(200);
-    }
 
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points().count(), 0);
 }
 
@@ -371,12 +366,10 @@ void tst_QLineSeries::removeAll_raw()
     QFETCH(QList<QPointF>, points);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
     m_series->append(points);
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points(), points);
-    QTest::qWait(200);
     m_series->removeAll();
-    QTest::qWait(200);
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points().count(), 0);
 }
 
@@ -414,15 +407,11 @@ void tst_QLineSeries::replace_raw()
     QFETCH(QList<QPointF>, points);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
     m_series->append(points);
-    QCOMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points(), points);
-    QTest::qWait(200);
 
     foreach(const QPointF& point,points)
-    {
-           m_series->replace(point.x(),point.y(),point.x(),0);
-           QTest::qWait(200);
-    }
+       m_series->replace(point.x(),point.y(),point.x(),0);
 
     QList<QPointF> newPoints = m_series->points();
 

@@ -21,6 +21,7 @@
 #include <QtTest/QtTest>
 #include <private/domain_p.h>
 #include <qaxis.h>
+#include <tst_definitions.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -132,9 +133,9 @@ void tst_Domain::handleAxisRangeXChanged()
     QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
     QVERIFY(qFuzzyIsNull(arg1.at(1).toReal() - max));
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 1);
+    TRY_COMPARE(spy2.count(), 0);
 
 }
 
@@ -168,9 +169,9 @@ void tst_Domain::handleAxisRangeYChanged()
     QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
     QVERIFY(qFuzzyIsNull(arg1.at(1).toReal() - max));
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 1);
 }
 
 void tst_Domain::isEmpty_data()
@@ -226,9 +227,9 @@ void tst_Domain::maxX()
     domain.setMaxX(maxX2);
     QCOMPARE(domain.maxX(), maxX2);
 
-    QCOMPARE(spy0.count(), count);
-    QCOMPARE(spy1.count(), count);
-    QCOMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.count(), count);
+    TRY_COMPARE(spy1.count(), count);
+    TRY_COMPARE(spy2.count(), 0);
 
 }
 
@@ -259,9 +260,9 @@ void tst_Domain::maxY()
     domain.setMaxY(maxY2);
     QCOMPARE(domain.maxY(), maxY2);
 
-    QCOMPARE(spy0.count(), count);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), count);
+    TRY_COMPARE(spy0.count(), count);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), count);
 }
 
 void tst_Domain::minX_data()
@@ -291,9 +292,9 @@ void tst_Domain::minX()
     domain.setMinX(minX2);
     QCOMPARE(domain.minX(), minX2);
 
-    QCOMPARE(spy0.count(), count);
-    QCOMPARE(spy1.count(), count);
-    QCOMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.count(), count);
+    TRY_COMPARE(spy1.count(), count);
+    TRY_COMPARE(spy2.count(), 0);
 }
 
 void tst_Domain::minY_data()
@@ -323,9 +324,9 @@ void tst_Domain::minY()
     domain.setMinY(minY2);
     QCOMPARE(domain.minY(), minY2);
 
-    QCOMPARE(spy0.count(), count);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), count);
+    TRY_COMPARE(spy0.count(), count);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), count);
 }
 
 void tst_Domain::operatorEquals_data()
@@ -371,9 +372,9 @@ void tst_Domain::operatorEquals()
     QCOMPARE(*domain1==*domain2, equals);
     QCOMPARE(*domain1!=*domain2, notEquals);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 0);
 }
 
 void tst_Domain::setRange_data()
@@ -407,9 +408,9 @@ void tst_Domain::setRange()
     QCOMPARE(domain.minY(), minY);
     QCOMPARE(domain.maxY(), maxY);
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 1);
+    TRY_COMPARE(spy2.count(), 1);
 
 }
 
@@ -443,9 +444,9 @@ void tst_Domain::setRangeX()
     QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
     QVERIFY(qFuzzyIsNull(arg1.at(1).toReal() - max));
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 1);
+    TRY_COMPARE(spy2.count(), 0);
 }
 
 void tst_Domain::setRangeY_data()
@@ -478,9 +479,9 @@ void tst_Domain::setRangeY()
     QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
     QVERIFY(qFuzzyIsNull(arg1.at(1).toReal() - max));
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 1);
 }
 
 void tst_Domain::spanX_data()
@@ -508,9 +509,9 @@ void tst_Domain::spanX()
 
     QCOMPARE(domain.spanX(), spanX);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 0);
 }
 
 void tst_Domain::spanY_data()
@@ -538,9 +539,9 @@ void tst_Domain::spanY()
 
     QCOMPARE(domain.spanY(), spanY);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 0);
 }
 
 void tst_Domain::zoom_data()
@@ -593,9 +594,9 @@ void tst_Domain::zoom()
     QCOMPARE(domain == domain1, true);
     domain.zoomOut(rect0, size0);
     QCOMPARE(domain == domain0, true);
-    QCOMPARE(spy0.count(), 6);
-    QCOMPARE(spy1.count(), 6);
-    QCOMPARE(spy2.count(), 6);
+    TRY_COMPARE(spy0.count(), 6);
+    TRY_COMPARE(spy1.count(), 6);
+    TRY_COMPARE(spy2.count(), 6);
 
 }
 
@@ -631,9 +632,9 @@ void tst_Domain::move()
     result.setRange(dx, size.width() + dx, dy, size.height() + dy);
 
     QCOMPARE(domain == result, true);
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), dx!=0?1:0);
-    QCOMPARE(spy2.count(), dy!=0?1:0);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), dx!=0?1:0);
+    TRY_COMPARE(spy2.count(), dy!=0?1:0);
 }
 
 void tst_Domain::handleAxisXChanged_data()
@@ -671,9 +672,9 @@ void tst_Domain::handleAxisXChanged()
     QCOMPARE(resultMin, domain.minX());
     QCOMPARE(resultMax, domain.maxX());
     QCOMPARE(resultTickCount, domain.tickXCount());
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 1);
+    TRY_COMPARE(spy2.count(), 0);
 
 }
 
@@ -702,9 +703,9 @@ void tst_Domain::handleAxisYChanged()
     QCOMPARE(resultMin, domain.minY());
     QCOMPARE(resultMax, domain.maxY());
     QCOMPARE(resultTickCount, domain.tickYCount());
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 1);
 }
 
 QTEST_MAIN(tst_Domain)

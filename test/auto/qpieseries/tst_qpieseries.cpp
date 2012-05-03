@@ -21,6 +21,7 @@
 #include <QtTest/QtTest>
 #include <qpieseries.h>
 #include <qpieslice.h>
+#include <tst_definitions.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -187,9 +188,9 @@ void tst_qpieseries::remove()
     QCOMPARE(s.count(), 0);
 
     // check that slices were actually destroyed
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
-    QCOMPARE(spy3.count(), 1);
+    TRY_COMPARE(spy1.count(), 1);
+    TRY_COMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy3.count(), 1);
 }
 
 /*

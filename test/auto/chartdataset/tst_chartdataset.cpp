@@ -23,6 +23,7 @@
 #include <qlineseries.h>
 #include <private/chartdataset_p.h>
 #include <private/domain_p.h>
+#include <tst_definitions.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -151,10 +152,10 @@ void tst_ChartDataSet::addSeries()
     m_dataset->addSeries(series1,axis1);
     m_dataset->addSeries(series2,axis2);
 
-    QCOMPARE(spy0.count(), axisCount);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 3);
-    QCOMPARE(spy3.count(), 0);
+    TRY_COMPARE(spy0.count(), axisCount);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 3);
+    TRY_COMPARE(spy3.count(), 0);
 
     if(axis0==0) axis0 = m_dataset->axisY();
     if(axis1==0) axis1 = m_dataset->axisY();
@@ -193,10 +194,10 @@ void tst_ChartDataSet::removeSeries()
     m_dataset->removeSeries(series1);
     m_dataset->removeSeries(series2);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), axisCount);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 3);
+    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy1.count(), axisCount);
+    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy3.count(), 3);
 }
 
 void tst_ChartDataSet::removeAllSeries_data()
@@ -225,10 +226,10 @@ void tst_ChartDataSet::removeAllSeries()
 
     m_dataset->removeAllSeries();
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 4);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 3);
+    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy1.count(), 4);
+    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy3.count(), 3);
 }
 
 
@@ -296,10 +297,10 @@ void tst_ChartDataSet::seriesCount()
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
     QCOMPARE(m_dataset->seriesCount(series0->type()),3);
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy3.count(), 0);
 }
 
 void tst_ChartDataSet::seriesIndex_data()
@@ -333,10 +334,10 @@ void tst_ChartDataSet::seriesIndex()
     QCOMPARE(m_dataset->seriesIndex(series1),1);
     QCOMPARE(m_dataset->seriesIndex(series2),2);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy3.count(), 0);
 
     m_dataset->removeSeries(series0);
     m_dataset->removeSeries(series1);
@@ -414,10 +415,10 @@ void tst_ChartDataSet::domain()
     QVERIFY(m_dataset->domain(axis0)==m_dataset->domain(series0));
     QVERIFY(m_dataset->domain(axis1)==m_dataset->domain(series1));
     QVERIFY(m_dataset->domain(axis2)==m_dataset->domain(series2));
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
+    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy3.count(), 0);
 }
 
 void tst_ChartDataSet::zoomInDomain_data()
@@ -450,9 +451,9 @@ void tst_ChartDataSet::zoomInDomain()
 
     m_dataset->zoomInDomain(QRect(0,0,100,100),QSize(1000,1000));
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 1);
+    TRY_COMPARE(spy2.count(), 1);
 }
 
 void tst_ChartDataSet::zoomOutDomain_data()
@@ -486,9 +487,9 @@ void tst_ChartDataSet::zoomOutDomain()
 
     m_dataset->zoomOutDomain(QRect(0,0,100,100),QSize(1000,1000));
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 1);
+    TRY_COMPARE(spy2.count(), 1);
 }
 
 void tst_ChartDataSet::scrollDomain_data()
@@ -522,9 +523,9 @@ void tst_ChartDataSet::scrollDomain()
 
     m_dataset->scrollDomain(10,10,QSize(1000,1000));
 
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
+    TRY_COMPARE(spy0.count(), 1);
+    TRY_COMPARE(spy1.count(), 1);
+    TRY_COMPARE(spy2.count(), 1);
 }
 
 QTEST_MAIN(tst_ChartDataSet)
