@@ -30,11 +30,6 @@ DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
 {
 }
 
-QAbstractSeries *DeclarativeLineSeries::series()
-{
-    return this;
-}
-
 QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeLineSeries::points()
 {
     return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXySeries::appendPoints);

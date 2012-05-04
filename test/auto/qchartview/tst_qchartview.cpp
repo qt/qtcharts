@@ -22,6 +22,7 @@
 #include <qchartview.h>
 #include <qlineseries.h>
 #include <cmath>
+#include <tst_definitions.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -153,8 +154,8 @@ void tst_QChartView::rubberBand()
     QTest::mouseMove(m_view->viewport(), QPoint(maxX, maxY) + padding.topLeft().toPoint());
     QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, 0, QPoint(maxX, maxY)+ padding.topLeft().toPoint());
 
-    QCOMPARE(spy0.count(), Xcount);
-    QCOMPARE(spy1.count(), Ycount);
+    TRY_COMPARE(spy0.count(), Xcount);
+    TRY_COMPARE(spy1.count(), Ycount);
 
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(false);

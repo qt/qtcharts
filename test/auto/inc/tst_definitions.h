@@ -18,28 +18,21 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVELINESERIES_H
-#define DECLARATIVELINESERIES_H
+#ifndef TST_DEFINITIONS_H
+#define TST_DEFINITIONS_H
 
-#include "qchartglobal.h"
-#include "qlineseries.h"
-#include "declarativexyseries.h"
-#include <QDeclarativeParserStatus>
+#include <QtTest/QtTest>
 
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
+#define TRY_COMPARE(actual, expected) { \
+    do { \
+        const int timeout(1000); \
+        const int waitStep(30); \
+        /* always wait before comparing to catch possible extra signals */ \
+        QTest::qWait(waitStep); \
+        for (int time(0); (actual != expected) && (time < timeout); time += waitStep) \
+            QTest::qWait(waitStep); \
+        QCOMPARE(actual, expected); \
+    } while (0); \
+}
 
-class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries
-{
-    Q_OBJECT
-    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> points READ points)
-
-public:
-    explicit DeclarativeLineSeries(QObject *parent = 0);
-
-public:
-    QDeclarativeListProperty<DeclarativeXyPoint> points();
-};
-
-QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif // DECLARATIVELINESERIES_H
+#endif // TST_DEFINITIONS_H

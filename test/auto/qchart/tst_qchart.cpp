@@ -164,9 +164,16 @@ void tst_QChart::addSeries_data()
     QAbstractSeries* series2 = new QScatterSeries(this);
     QAbstractSeries* series3 = new QSplineSeries(this);
     QAbstractSeries* series4 = new QPieSeries(this);
-    QAbstractSeries* series5 = new QBarSeries(QBarCategories(),this);
-    QAbstractSeries* series6 = new QPercentBarSeries(QBarCategories(),this);
-    QAbstractSeries* series7 = new QStackedBarSeries(QBarCategories(),this);
+    QAbstractSeries* series5 = new QBarSeries(this);
+    QAbstractSeries* series6 = new QPercentBarSeries(this);
+    QAbstractSeries* series7 = new QStackedBarSeries(this);
+
+    QBarSeries* s5 = static_cast<QBarSeries*> (series5);
+    s5->setCategories(QBarCategories());
+    QPercentBarSeries* s6 = static_cast<QPercentBarSeries*> (series6);
+    s6->setCategories(QBarCategories());
+    QStackedBarSeries* s7 = static_cast<QStackedBarSeries*> (series7);
+    s7->setCategories(QBarCategories());
 
     QAxis* axis = new QAxis(this);
 
@@ -550,17 +557,27 @@ void tst_QChart::zoomOut()
 
     m_chart->zoomIn();
 
-    QVERIFY(minX<m_chart->axisX()->min());
-    QVERIFY(maxX>m_chart->axisX()->max());
-    QVERIFY(minY<m_chart->axisY()->min());
-    QVERIFY(maxY>m_chart->axisY()->max());
+    QVERIFY(minX < m_chart->axisX()->min());
+    QVERIFY(maxX > m_chart->axisX()->max());
+    QVERIFY(minY < m_chart->axisY()->min());
+    QVERIFY(maxY > m_chart->axisY()->max());
 
     m_chart->zoomOut();
 
-    QVERIFY(minX==m_chart->axisX()->min());
-    QVERIFY(maxX==m_chart->axisX()->max());
-    QVERIFY(minY==m_chart->axisY()->min());
-    QVERIFY(maxY==m_chart->axisY()->max());
+    // min x may be a zero value
+    if (qFuzzyIsNull(minX))
+        QVERIFY(qFuzzyIsNull(m_chart->axisX()->min()));
+    else
+        QCOMPARE(minX, m_chart->axisX()->min());
+
+    // min y may be a zero value
+    if (qFuzzyIsNull(minY))
+        QVERIFY(qFuzzyIsNull(m_chart->axisY()->min()));
+    else
+        QCOMPARE(minY, m_chart->axisY()->min());
+
+    QVERIFY(maxX == m_chart->axisX()->max());
+    QVERIFY(maxY == m_chart->axisY()->max());
 }
 
 QTEST_MAIN(tst_QChart)

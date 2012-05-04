@@ -140,8 +140,9 @@ void Widget::refreshChart()
         QStringList category;
         for (int i = 0; i < selectedCountriesStrings.size(); i++)
             category << selectedCountriesStrings[i];
-        QBarSeries* series0 = new QBarSeries(category);
-        series0 = new QBarSeries(category);
+        QBarSeries* series0 = new QBarSeries();
+        series0->setCategories(category);
+//        series0 = new QBarSeries(category);
 
         // prepare the selected counries SQL query
         QString countriesQuery = "country IN (";

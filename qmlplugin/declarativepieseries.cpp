@@ -25,23 +25,8 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
-    QPieSeries(parent),
-    m_chart(0)
+    QPieSeries(parent)
 {
-}
-
-void DeclarativePieSeries::classBegin()
-{
-}
-
-void DeclarativePieSeries::componentComplete()
-{
-    DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(parent());
-    if (declarativeChart) {
-        QChart *chart = qobject_cast<QChart *>(declarativeChart->m_chart);
-        Q_ASSERT(chart);
-        chart->addSeries(this);
-    }
 }
 
 QDeclarativeListProperty<QPieSlice> DeclarativePieSeries::slices()

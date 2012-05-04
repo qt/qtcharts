@@ -32,8 +32,9 @@ class QTCOMMERCIALCHART_EXPORT QPercentBarSeries : public QBarSeries
 {
     Q_OBJECT
 public:
-    explicit QPercentBarSeries(QBarCategories categories, QObject *parent = 0);
+    explicit QPercentBarSeries(/*QBarCategories categories,*/ QObject *parent = 0);
     QAbstractSeries::SeriesType type() const;
+
 private:
     Q_DECLARE_PRIVATE(QPercentBarSeries)
     Q_DISABLE_COPY(QPercentBarSeries)

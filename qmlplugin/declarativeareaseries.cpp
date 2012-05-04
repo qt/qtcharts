@@ -30,11 +30,6 @@ DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
 {
 }
 
-QAbstractSeries *DeclarativeAreaSeries::series()
-{
-    return this;
-}
-
 QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeAreaSeries::points()
 {
     return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeAreaSeries::appendPoints);

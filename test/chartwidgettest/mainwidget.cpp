@@ -272,12 +272,16 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         foreach(QString label, labels)
             category << label;
         QBarSeries* series = 0;
-        if (seriesName == "Bar")
-            series = new QBarSeries(category, this);
-        else if (seriesName == "Stacked bar")
-            series = new QStackedBarSeries(category, this);
-        else
-            series = new QPercentBarSeries(category, this);
+        if (seriesName == "Bar") {
+            series = new QBarSeries(this);
+            series->setCategories(category);
+        } else if (seriesName == "Stacked bar") {
+            series = new QStackedBarSeries(this);
+            series->setCategories(category);
+        } else {
+            series = new QPercentBarSeries(this);
+            series->setCategories(category);
+        }
 
         for (int j(0); j < data.count(); j++) {
             QList<qreal> column = data.at(j);

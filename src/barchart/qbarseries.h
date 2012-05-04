@@ -39,15 +39,16 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
 {
     Q_OBJECT
 public:
-    explicit QBarSeries(QBarCategories categories, QObject *parent = 0);
+    explicit QBarSeries(/*QBarCategories categories,*/ QObject *parent = 0);
     virtual ~QBarSeries();
 
     QAbstractSeries::SeriesType type() const;
+    void setCategories(QBarCategories categories);
 
-    void appendBarSet(QBarSet *set);            // Takes ownership of set
-    void removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
-    void appendBarSets(QList<QBarSet* > sets);
-    void removeBarSets(QList<QBarSet* > sets);
+    bool appendBarSet(QBarSet *set);            // Takes ownership of set
+    bool removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
+    bool appendBarSets(QList<QBarSet* > sets);
+    bool removeBarSets(QList<QBarSet* > sets);
     int barsetCount() const;
     int categoryCount() const;
     QList<QBarSet*> barSets() const;

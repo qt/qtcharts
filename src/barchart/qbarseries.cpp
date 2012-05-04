@@ -67,8 +67,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QBarSeries. Parameter \a categories defines the categories for chart.
     QBarSeries is QObject which is a child of a \a parent.
 */
-QBarSeries::QBarSeries(QBarCategories categories, QObject *parent) :
-    QAbstractSeries(*new QBarSeriesPrivate(categories, this),parent)
+QBarSeries::QBarSeries(/*QBarCategories categories,*/ QObject *parent) :
+    QAbstractSeries(*new QBarSeriesPrivate(/*categories,*/ this),parent)
 {
 }
 
@@ -96,57 +96,90 @@ QAbstractSeries::SeriesType QBarSeries::type() const
     return QAbstractSeries::SeriesTypeBar;
 }
 
+void QBarSeries::setCategories(QBarCategories categories)
+{
+    Q_D(QBarSeries);
+    d->setCategories(categories);
+    emit d->categoriesUpdated();
+}
+
 /*!
     Adds a set of bars to series. Takes ownership of \a set.
 */
-void QBarSeries::appendBarSet(QBarSet *set)
+bool QBarSeries::appendBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
+    if ((d->m_barSets.contains(set)) || (set == 0)) {
+        // Fail if set is already in list or set is null.
+        return false;
+    }
     d->m_barSets.append(set);
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
     emit d->restructuredBars();
+    return true;
 }
 
 /*!
     Removes a set of bars from series. Releases ownership of \a set. Doesn't delete \a set.
 */
-void QBarSeries::removeBarSet(QBarSet *set)
+bool QBarSeries::removeBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
-    if (d->m_barSets.contains(set)) {
-        d->m_barSets.removeOne(set);
-        QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
-        emit d->restructuredBars();
+    if (!d->m_barSets.contains(set)) {
+        // Fail if set is not in list
+        return false;
     }
+    d->m_barSets.removeOne(set);
+    QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
+    emit d->restructuredBars();
+    return true;
 }
 
 /*!
     Adds a list of barsets to series. Takes ownership of \a sets.
 */
-void QBarSeries::appendBarSets(QList<QBarSet* > sets)
+bool QBarSeries::appendBarSets(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
+    foreach (QBarSet* set, sets) {
+        if ((set == 0) || (d->m_barSets.contains(set))) {
+            // Fail if any of the sets is null or is already appended.
+            return false;
+        }
+        if (sets.count(set) != 1) {
+            // Also fail if same set is more than once in given list.
+            return false;
+        }
+    }
+
     foreach (QBarSet* set, sets) {
         d->m_barSets.append(set);
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
     }
     emit d->restructuredBars();
+    return true;
 }
 
 /*!
     Removes a list of barsets from series. Releases ownership of \a sets. Doesn't delete \a sets.
 */
-void QBarSeries::removeBarSets(QList<QBarSet* > sets)
+bool QBarSeries::removeBarSets(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
 
+    bool setsRemoved = false;
     foreach (QBarSet* set, sets) {
         if (d->m_barSets.contains(set)) {
             d->m_barSets.removeOne(set);
             QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
+            setsRemoved = true;
         }
     }
-    emit d->restructuredBars();
+
+    if (setsRemoved) {
+        emit d->restructuredBars();
+    }
+    return setsRemoved;
 }
 
 /*!
@@ -227,14 +260,20 @@ void QBarSeries::setLabelsVisible(bool visible)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarSeriesPrivate::QBarSeriesPrivate(QBarCategories categories, QBarSeries *q) :
+QBarSeriesPrivate::QBarSeriesPrivate(/*QBarCategories categories,*/ QBarSeries *q) :
     QAbstractSeriesPrivate(q),
-    m_categories(categories),
+//    m_categories(categories),
     m_mapCategories(-1),
     m_mapBarBottom(-1),
     m_mapBarTop(-1)
 {
 }
+
+void QBarSeriesPrivate::setCategories(QBarCategories categories)
+{
+    m_categories = categories;
+}
+
 
 QBarSet* QBarSeriesPrivate::barsetAt(int index)
 {

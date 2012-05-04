@@ -18,28 +18,21 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVELINESERIES_H
-#define DECLARATIVELINESERIES_H
+import QtQuick 1.0
+import QtCommercial.Chart 1.0
 
-#include "qchartglobal.h"
-#include "qlineseries.h"
-#include "declarativexyseries.h"
-#include <QDeclarativeParserStatus>
+Rectangle {
+    anchors.fill: parent
 
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
+    Chart {
+        title: "Bar series"
+        anchors.fill: parent
+        theme: Chart.ChartThemeLight
+        legend: Chart.LegendBottom
 
-class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries
-{
-    Q_OBJECT
-    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> points READ points)
-
-public:
-    explicit DeclarativeLineSeries(QObject *parent = 0);
-
-public:
-    QDeclarativeListProperty<DeclarativeXyPoint> points();
-};
-
-QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif // DECLARATIVELINESERIES_H
+        BarSeries {
+            barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
+            // data implementation missing
+        }
+    }
+}
