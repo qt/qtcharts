@@ -1,0 +1,317 @@
+/****************************************************************************
+ **
+ ** Copyright (C) 2012 Digia Plc
+ ** All rights reserved.
+ ** For any questions to Digia, please use contact form at http://qt.digia.com
+ **
+ ** This file is part of the Qt Commercial Charts Add-on.
+ **
+ ** $QT_BEGIN_LICENSE$
+ ** Licensees holding valid Qt Commercial licenses may use this file in
+ ** accordance with the Qt Commercial License Agreement provided with the
+ ** Software or, alternatively, in accordance with the terms contained in
+ ** a written agreement between you and Digia.
+ **
+ ** If you have questions regarding the use of this file, please use
+ ** contact form at http://qt.digia.com
+ ** $QT_END_LICENSE$
+ **
+ ****************************************************************************/
+
+#include "engine.h"
+#include <QItemSelectionModel>
+#include <QStandardItemModel>
+#include <QLineSeries>
+#include <QSplineSeries>
+#include <QScatterSeries>
+#include <QBarSeries>
+#include <QPercentBarSeries>
+#include <QStackedBarSeries>
+#include <QAreaSeries>
+#include <QPieSeries>
+#include <QChart>
+#include <QBarSet>
+
+const qint32 MAGIC_NUMBER = 0x66666666;
+
+Engine::Engine(QObject* parent) :
+    QObject(parent), m_count(10), m_chart(new QChart()), m_model(0), m_selection(0)
+{
+    createModels();
+}
+
+Engine::~Engine()
+{
+    delete m_chart;
+    delete m_selection;
+    delete m_model;
+
+}
+
+void Engine::createModels()
+{
+    m_model = new QStandardItemModel(m_count, m_count);
+    m_model->setHorizontalHeaderLabels(
+        QStringList() << "A" << "B" << "C" << "D" << "E" << "F" << "G" << "H" << "I" << "J");
+    m_model->setVerticalHeaderLabels(
+        QStringList() << "1" << "2" << "3" << "4" << "5" << "6" << "7" << "8" << "9" << "10");
+    m_selection = new QItemSelectionModel(m_model);
+
+}
+
+QList<QAbstractSeries*> Engine::addSeries(QAbstractSeries::SeriesType type)
+{
+    const QModelIndexList& list = m_selection->selectedIndexes();
+
+    QMap<int, QModelIndex> columns;
+
+    foreach(const QModelIndex& index, list) {
+        columns.insertMulti(index.column(), index);
+    }
+
+    QList<int> keys = columns.uniqueKeys();
+
+    QModelIndexList rows = columns.values(keys.first());
+
+    int minRow = m_count + 1;
+    int maxRow = -1;
+
+    foreach(const QModelIndex& index, rows) {
+        minRow = qMin(index.row(), minRow);
+        maxRow = qMax(index.row(), maxRow);
+    }
+
+    QList<QAbstractSeries*> result;
+    QColor color;
+
+    switch (type) {
+
+    case QAbstractSeries::SeriesTypeLine:
+    {
+        for (int i = 1; i < keys.count(); ++i) {
+            QLineSeries *line = new QLineSeries();
+            setupXYSeries(line, keys, i, minRow, maxRow);
+            result << line;
+        }
+        break;
+    }
+    case QAbstractSeries::SeriesTypeSpline:
+    {
+        for (int i = 1; i < keys.count(); ++i) {
+            QSplineSeries *line = new QSplineSeries();
+            setupXYSeries(line, keys, i, minRow, maxRow);
+            result << line;
+        }
+        break;
+    }
+    case QAbstractSeries::SeriesTypeScatter:
+    {
+        for (int i = 1; i < keys.count(); ++i) {
+            QScatterSeries *line = new QScatterSeries();
+            setupXYSeries(line, keys, i, minRow, maxRow);
+            result << line;
+        }
+        break;
+    }
+    case QAbstractSeries::SeriesTypeBar:
+    {
+        //TODO: fix me
+        QBarSeries *bar = new QBarSeries(QBarCategories() << "temp");
+        setupBarSeries(bar,keys,minRow,maxRow);
+        result << bar;
+        break;
+    }
+    case QAbstractSeries::SeriesTypePercentBar:
+    {
+        QPercentBarSeries *bar = new QPercentBarSeries(QBarCategories() << "temp");
+        setupBarSeries(bar,keys,minRow,maxRow);
+        result << bar;
+        break;
+    }
+    case QAbstractSeries::SeriesTypeStackedBar:
+    {
+        QStackedBarSeries *bar = new QStackedBarSeries(QBarCategories() << "temp");
+        setupBarSeries(bar,keys,minRow,maxRow);
+        result << bar;
+        break;
+    }
+    case QAbstractSeries::SeriesTypePie:
+    {
+
+        QPieSeries *pie = new QPieSeries();
+        setupPieSeries(pie,keys,minRow,maxRow);
+        result << pie;
+        break;
+    }
+    case QAbstractSeries::SeriesTypeArea:
+    {
+         QAreaSeries *area = new QAreaSeries( new QLineSeries(), new QLineSeries());
+         setupAreaSeries(area,keys,minRow,maxRow);
+         result << area;
+         break;
+    }
+    }
+    return result;
+}
+
+void Engine::removeSeries(QAbstractSeries* series)
+{
+    m_chart->removeSeries(series);
+
+    foreach(const QModelIndex& index, m_seriesModelIndex.value(series)) {
+        m_model->setData(index, Qt::white, Qt::BackgroundRole);
+    }
+}
+
+void Engine::clearModels()
+{
+    delete m_selection;
+    m_selection = 0;
+    delete m_model;
+    m_model = 0;
+    createModels();
+}
+
+bool Engine::save(const QString &filename) const
+{
+    if (filename.isEmpty())
+        return false;
+
+    QFile file(filename);
+
+    if (!file.open(QIODevice::WriteOnly)) {
+        return false;
+    }
+
+    QDataStream out(&file);
+    out << MAGIC_NUMBER;
+    out.setVersion(QDataStream::Qt_4_8);
+    out << m_model->rowCount();
+    out << m_model->columnCount();
+
+    for (int row = 0; row < m_model->rowCount(); ++row) {
+        for (int column = 0; column < m_model->columnCount(); ++column) {
+            QStandardItem *item = m_model->item(row, column);
+            if (item) {
+                    out << row;
+                    out << column;
+                    out << item->data(Qt::EditRole).toString();
+            }
+        }
+    }
+    return true;
+}
+
+bool Engine::load(const QString &filename)
+{
+    clearModels();
+
+    if (filename.isEmpty())
+        return false;
+
+    QFile file(filename);
+
+    if (!file.open(QIODevice::ReadOnly)) {
+        return false;
+    }
+
+    QDataStream in(&file);
+
+    qint32 magicNumber;
+    in >> magicNumber;
+
+    if (magicNumber != MAGIC_NUMBER)
+        return false;
+
+    in.setVersion(QDataStream::Qt_4_8);
+
+    int rowCount;
+    in >> rowCount;
+
+    int columnCount;
+    in >> columnCount;
+
+    while (!in.atEnd()) {
+        int row;
+        int column;
+        QString value;
+        in >> row >> column >> value;
+        QStandardItem *item = new QStandardItem();
+        bool ok;
+        double result = value.toDouble(&ok);
+        if(ok)
+            item->setData(result, Qt::EditRole);
+        else
+            item->setData(value, Qt::EditRole);
+        m_model->setItem(row, column, item);
+    }
+
+    return true;
+}
+
+void Engine::setupXYSeries(QXYSeries *xyseries, const QList<int>& columns, int column, int minRow, int maxRow)
+{
+    xyseries->setModel(m_model);
+    xyseries->setModelMapping(columns.first(), columns.at(column), Qt::Vertical);
+    xyseries->setModelMappingRange(minRow, maxRow - minRow + 1);
+    m_chart->addSeries(xyseries);
+    xyseries->setName(QString("Series %1").arg(m_chart->series().count()));
+    QObject::connect(xyseries,SIGNAL(clicked(const QPointF&)),this,SIGNAL(selected()));
+    const QModelIndexList& list = m_selection->selectedIndexes();
+    QModelIndexList result;
+    foreach(const QModelIndex& index, list) {
+        if (index.column() ==columns.at(column)){
+            m_model->setData(index, xyseries->pen().color(), Qt::BackgroundRole);
+            result << index;
+        }
+    }
+    m_seriesModelIndex.insert(xyseries,result);
+}
+
+void Engine::setupBarSeries(QBarSeries *bar, const QList<int>& columns, int minRow, int maxRow)
+{
+    bar->setModel(m_model);
+    bar->setModelMapping(columns.first(), columns.at(1), columns.last(), Qt::Vertical);
+    bar->setModelMappingRange(minRow, maxRow - minRow + 1);
+    m_chart->addSeries(bar);
+    bar->setName(QString("Series %1").arg(m_chart->series().count()));
+
+    const QModelIndexList& list = m_selection->selectedIndexes();
+    foreach(const QModelIndex& index, list) {
+        if (index.column() >= columns.at(1) && index.column()<= columns.last()) {
+            //m_model->setData(index, bar->barSets().at(index.column())->brush().color(), Qt::BackgroundRole);
+        }
+    }
+}
+
+void Engine::setupPieSeries(QPieSeries *pie, const QList<int>& columns, int minRow, int maxRow)
+{
+    pie->setModel(m_model);
+    pie->setModelMapping(columns.at(1),columns.first() ,Qt::Vertical);
+    pie->setModelMappingRange(minRow, maxRow - minRow + 1);
+    m_chart->addSeries(pie);
+    pie->setName(QString("Series %1").arg(m_chart->series().count()));
+
+    const QModelIndexList& list = m_selection->selectedIndexes();
+    foreach(const QModelIndex& index, list) {
+       // m_model->setData(index, bar->barSets()pen().color(), Qt::BackgroundRole);
+    }
+}
+
+void Engine::setupAreaSeries(QAreaSeries *series, const QList<int>& columns, int minRow, int maxRow)
+{
+    series->lowerSeries()->setModel(m_model);
+    series->upperSeries()->setModel(m_model);
+    series->upperSeries()->setModelMapping(columns.first(), columns.at(1), Qt::Vertical);
+    series->lowerSeries()->setModelMapping(columns.first(), columns.at(2), Qt::Vertical);
+    series->upperSeries()->setModelMappingRange(minRow, maxRow - minRow + 1);
+    series->lowerSeries()->setModelMappingRange(minRow, maxRow - minRow + 1);
+    m_chart->addSeries(series);
+    series->setName(QString("Series %1").arg(m_chart->series().count()));
+
+    const QModelIndexList& list = m_selection->selectedIndexes();
+    foreach(const QModelIndex& index, list) {
+        //if (index.column() ==columns.at(column))
+          //  m_model->setData(index, xyseries->pen().color(), Qt::BackgroundRole);
+    }
+}
