@@ -73,7 +73,7 @@ void tst_qpieslice::construction()
 {
     // no params
     QPieSlice slice1;
-    QVERIFY(qFuzzyIsNull(slice1.value()));
+    QCOMPARE(slice1.value(), 0.0);
     QVERIFY(slice1.label().isEmpty());
     QVERIFY(!slice1.isLabelVisible());
     QVERIFY(!slice1.isExploded());
@@ -81,15 +81,15 @@ void tst_qpieslice::construction()
     QCOMPARE(slice1.brush(), QBrush());
     QCOMPARE(slice1.labelPen(), QPen());
     QCOMPARE(slice1.labelFont(), QFont());
-    QVERIFY(qFuzzyCompare(slice1.labelArmLengthFactor(), 0.15)); // default value
-    QVERIFY(qFuzzyCompare(slice1.explodeDistanceFactor(), 0.15)); // default value
-    QVERIFY(qFuzzyIsNull(slice1.percentage()));
-    QVERIFY(qFuzzyIsNull(slice1.startAngle()));
-    QVERIFY(qFuzzyIsNull(slice1.endAngle()));
+    QCOMPARE(slice1.labelArmLengthFactor(), 0.15); // default value
+    QCOMPARE(slice1.explodeDistanceFactor(), 0.15); // default value
+    QCOMPARE(slice1.percentage(), 0.0);
+    QCOMPARE(slice1.startAngle(), 0.0);
+    QCOMPARE(slice1.endAngle(), 0.0);
 
     // value and label params
     QPieSlice slice2(1.0, "foobar");
-    QVERIFY(qFuzzyCompare(slice2.value(), 1.0));
+    QCOMPARE(slice2.value(), 1.0);
     QCOMPARE(slice2.label(), QString("foobar"));
     QVERIFY(!slice2.isLabelVisible());
     QVERIFY(!slice2.isExploded());
@@ -97,11 +97,11 @@ void tst_qpieslice::construction()
     QCOMPARE(slice2.brush(), QBrush());
     QCOMPARE(slice2.labelPen(), QPen());
     QCOMPARE(slice2.labelFont(), QFont());
-    QVERIFY(qFuzzyCompare(slice2.labelArmLengthFactor(), 0.15)); // default value
-    QVERIFY(qFuzzyCompare(slice2.explodeDistanceFactor(), 0.15)); // default value
-    QVERIFY(qFuzzyIsNull(slice2.percentage()));
-    QVERIFY(qFuzzyIsNull(slice2.startAngle()));
-    QVERIFY(qFuzzyIsNull(slice2.endAngle()));
+    QCOMPARE(slice2.labelArmLengthFactor(), 0.15); // default value
+    QCOMPARE(slice2.explodeDistanceFactor(), 0.15); // default value
+    QCOMPARE(slice2.percentage(), 0.0);
+    QCOMPARE(slice2.startAngle(), 0.0);
+    QCOMPARE(slice2.endAngle(), 0.0);
 }
 
 void tst_qpieslice::changedSignals()

@@ -81,12 +81,12 @@ void tst_qpieseries::construction()
     QVERIFY(s.type() == QAbstractSeries::SeriesTypePie);
     QVERIFY(s.count() == 0);
     QVERIFY(s.isEmpty());
-    QVERIFY(qFuzzyIsNull(s.sum()));
-    QVERIFY(qFuzzyCompare(s.horizontalPosition(), 0.5));
-    QVERIFY(qFuzzyCompare(s.verticalPosition(), 0.5));
-    QVERIFY(qFuzzyCompare(s.pieSize(), 0.7));
-    QVERIFY(qFuzzyIsNull(s.pieStartAngle()));
-    QVERIFY(qFuzzyCompare(s.pieEndAngle(), 360));
+    QCOMPARE(s.sum(), 0.0);
+    QCOMPARE(s.horizontalPosition(), 0.5);
+    QCOMPARE(s.verticalPosition(), 0.5);
+    QCOMPARE(s.pieSize(), 0.7);
+    QCOMPARE(s.pieStartAngle(), 0.0);
+    QCOMPARE(s.pieEndAngle(), 360.0);
 }
 
 void tst_qpieseries::append()
@@ -121,14 +121,14 @@ void tst_qpieseries::append()
     // append with params
     QPieSlice *slice5 = s.append(5, "slice 5");
     QVERIFY(slice5 != 0);
-    QVERIFY(qFuzzyCompare(slice5->value(), 5.0));
+    QCOMPARE(slice5->value(), 5.0);
     QCOMPARE(slice5->label(), QString("slice 5"));
     QCOMPARE(s.count(), 5);
 
     // check slices
     QVERIFY(!s.isEmpty());
     for (int i=0; i<s.count(); i++) {
-        QVERIFY(qFuzzyCompare(s.slices().at(i)->value(), (qreal) i+1));
+        QCOMPARE(s.slices().at(i)->value(), (qreal) i+1);
         QCOMPARE(s.slices().at(i)->label(), QString("slice ") + QString::number(i+1));
     }
 }
@@ -158,7 +158,7 @@ void tst_qpieseries::insert()
 
     // check slices
     for (int i=0; i<s.count(); i++) {
-        QVERIFY(qFuzzyCompare(s.slices().at(i)->value(), (qreal) i+1));
+        QCOMPARE(s.slices().at(i)->value(), (qreal) i+1);
         QCOMPARE(s.slices().at(i)->label(), QString("slice ") + QString::number(i+1));
     }
 }
