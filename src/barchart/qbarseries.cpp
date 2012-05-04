@@ -167,25 +167,19 @@ bool QBarSeries::removeBarSets(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
 
-    foreach (QBarSet* set, sets) {
-        if ((set == 0) || (!d->m_barSets.contains(set))) {
-            // Fail if any of the sets is null or isn't in m_barSets
-            return false;
-        }
-        if (sets.count(set) != 1) {
-            // Also fail if same set is more than once in given list.
-            return false;
-        }
-    }
-
+    bool setsRemoved = false;
     foreach (QBarSet* set, sets) {
         if (d->m_barSets.contains(set)) {
             d->m_barSets.removeOne(set);
             QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
+            setsRemoved = true;
         }
     }
-    emit d->restructuredBars();
-    return true;
+
+    if (setsRemoved) {
+        emit d->restructuredBars();
+    }
+    return setsRemoved;
 }
 
 /*!
