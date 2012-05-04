@@ -106,46 +106,77 @@ void QBarSeries::setCategories(QBarCategories categories)
 /*!
     Adds a set of bars to series. Takes ownership of \a set.
 */
-void QBarSeries::appendBarSet(QBarSet *set)
+bool QBarSeries::appendBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
+    if ((d->m_barSets.contains(set)) || (set == 0)) {
+        // Fail if set is already in list or set is null.
+        return false;
+    }
     d->m_barSets.append(set);
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
     emit d->restructuredBars();
+    return true;
 }
 
 /*!
     Removes a set of bars from series. Releases ownership of \a set. Doesn't delete \a set.
 */
-void QBarSeries::removeBarSet(QBarSet *set)
+bool QBarSeries::removeBarSet(QBarSet *set)
 {
     Q_D(QBarSeries);
-    if (d->m_barSets.contains(set)) {
-        d->m_barSets.removeOne(set);
-        QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
-        emit d->restructuredBars();
+    if (!d->m_barSets.contains(set)) {
+        // Fail if set is not in list
+        return false;
     }
+    d->m_barSets.removeOne(set);
+    QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
+    emit d->restructuredBars();
+    return true;
 }
 
 /*!
     Adds a list of barsets to series. Takes ownership of \a sets.
 */
-void QBarSeries::appendBarSets(QList<QBarSet* > sets)
+bool QBarSeries::appendBarSets(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
+    foreach (QBarSet* set, sets) {
+        if ((set == 0) || (d->m_barSets.contains(set))) {
+            // Fail if any of the sets is null or is already appended.
+            return false;
+        }
+        if (sets.count(set) != 1) {
+            // Also fail if same set is more than once in given list.
+            return false;
+        }
+    }
+
     foreach (QBarSet* set, sets) {
         d->m_barSets.append(set);
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
     }
     emit d->restructuredBars();
+    return true;
 }
 
 /*!
     Removes a list of barsets from series. Releases ownership of \a sets. Doesn't delete \a sets.
 */
-void QBarSeries::removeBarSets(QList<QBarSet* > sets)
+bool QBarSeries::removeBarSets(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
+
+    foreach (QBarSet* set, sets) {
+        if ((set == 0) || (!d->m_barSets.contains(set))) {
+            // Fail if any of the sets is null or isn't in m_barSets
+            return false;
+        }
+        if (sets.count(set) != 1) {
+            // Also fail if same set is more than once in given list.
+            return false;
+        }
+    }
 
     foreach (QBarSet* set, sets) {
         if (d->m_barSets.contains(set)) {
@@ -154,6 +185,7 @@ void QBarSeries::removeBarSets(QList<QBarSet* > sets)
         }
     }
     emit d->restructuredBars();
+    return true;
 }
 
 /*!
