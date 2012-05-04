@@ -31,20 +31,20 @@ Rectangle {
         legend: Chart.LegendTop
 
         AreaSeries {
-            name: "Finnish"
+            name: "Swedish"
             points: [
-                XyPoint { x: 0; y: 0 },
-                XyPoint { x: 1; y: 0 },
-                XyPoint { x: 2; y: 0 },
-                XyPoint { x: 3; y: 0 },
-                XyPoint { x: 4; y: 0 },
+                XyPoint { x: 0; y: 1 },
+                XyPoint { x: 1; y: 1 },
+                XyPoint { x: 2; y: 3 },
+                XyPoint { x: 3; y: 3 },
+                XyPoint { x: 4; y: 2 },
                 XyPoint { x: 5; y: 0 },
-                XyPoint { x: 6; y: 1 },
-                XyPoint { x: 7; y: 0 },
-                XyPoint { x: 8; y: 0 },
-                XyPoint { x: 9; y: 0 },
-                XyPoint { x: 10; y: 0 },
-                XyPoint { x: 11; y: 1 }
+                XyPoint { x: 6; y: 2 },
+                XyPoint { x: 7; y: 1 },
+                XyPoint { x: 8; y: 2 },
+                XyPoint { x: 9; y: 1 },
+                XyPoint { x: 10; y: 3 },
+                XyPoint { x: 11; y: 3 }
             ]
             lowerPoints: [
                 XyPoint { x: 0; y: 0 },
@@ -95,20 +95,20 @@ Rectangle {
         }
 
         AreaSeries {
-            name: "Swedish"
+            name: "Finnish"
             points: [
-                XyPoint { x: 0; y: 1 },
-                XyPoint { x: 1; y: 1 },
-                XyPoint { x: 2; y: 3 },
-                XyPoint { x: 3; y: 3 },
-                XyPoint { x: 4; y: 2 },
+                XyPoint { x: 0; y: 0 },
+                XyPoint { x: 1; y: 0 },
+                XyPoint { x: 2; y: 0 },
+                XyPoint { x: 3; y: 0 },
+                XyPoint { x: 4; y: 0 },
                 XyPoint { x: 5; y: 0 },
-                XyPoint { x: 6; y: 2 },
-                XyPoint { x: 7; y: 1 },
-                XyPoint { x: 8; y: 2 },
-                XyPoint { x: 9; y: 1 },
-                XyPoint { x: 10; y: 3 },
-                XyPoint { x: 11; y: 3 }
+                XyPoint { x: 6; y: 1 },
+                XyPoint { x: 7; y: 0 },
+                XyPoint { x: 8; y: 0 },
+                XyPoint { x: 9; y: 0 },
+                XyPoint { x: 10; y: 0 },
+                XyPoint { x: 11; y: 1 }
             ]
             lowerPoints: [
                 XyPoint { x: 0; y: 0 },

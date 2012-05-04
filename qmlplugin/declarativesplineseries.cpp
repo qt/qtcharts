@@ -29,11 +29,6 @@ DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
 {
 }
 
-QAbstractSeries *DeclarativeSplineSeries::series()
-{
-    return this;
-}
-
 QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeSplineSeries::points()
 {
     return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXySeries::appendPoints);

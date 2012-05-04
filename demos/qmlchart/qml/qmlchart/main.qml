@@ -40,7 +40,7 @@ Rectangle {
     Loader {
         id: loader
         anchors.fill: parent
-        source: "View" + (__viewNumber % 4 + 1) + ".qml";
+        source: "View" + (__viewNumber % 5 + 1) + ".qml";
     }
 
     MouseArea {

@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "declarativechart.h"
+#include "declarativepieseries.h"
 #include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -34,6 +35,26 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
 DeclarativeChart::~DeclarativeChart()
 {
     delete m_chart;
+}
+
+void DeclarativeChart::childEvent(QChildEvent *event)
+{
+    if (event->type() == QEvent::ChildAdded) {
+        if (qobject_cast<QAbstractSeries *>(event->child())) {
+            m_chart->addSeries(qobject_cast<QAbstractSeries *>(event->child()));
+        }
+    }
+}
+
+void DeclarativeChart::componentComplete()
+{
+    foreach(QObject *child, children()) {
+        if (qobject_cast<QAbstractSeries *>(child)) {
+            m_chart->addSeries(qobject_cast<QAbstractSeries *>(child));
+        }
+    }
+
+    QDeclarativeItem::componentComplete();
 }
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)

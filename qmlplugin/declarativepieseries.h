@@ -24,32 +24,24 @@
 #include "qchartglobal.h"
 #include "qpieslice.h"
 #include "qpieseries.h"
-#include <QDeclarativeItem>
+#include <QDeclarativeListProperty>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
 
-class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
+class DeclarativePieSeries : public QPieSeries
 {
     Q_OBJECT
-    Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QDeclarativeListProperty<QPieSlice> slices READ slices)
 
 public:
     explicit DeclarativePieSeries(QObject *parent = 0);
     QDeclarativeListProperty<QPieSlice> slices();
 
-public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
-
 public Q_SLOTS:
     static void appendSlice(QDeclarativeListProperty<QPieSlice> *list,
                             QPieSlice *element);
-
-private:
-    QChart *m_chart;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

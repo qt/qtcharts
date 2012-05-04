@@ -6,5 +6,6 @@
         <file>qml/qmlchart/View2.qml</file>
         <file>qml/qmlchart/View3.qml</file>
         <file>qml/qmlchart/View4.qml</file>
+        <file>qml/qmlchart/View5.qml</file>
     </qresource>
 </RCC>

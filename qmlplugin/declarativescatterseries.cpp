@@ -30,11 +30,6 @@ DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
 {
 }
 
-QAbstractSeries *DeclarativeScatterSeries::series()
-{
-    return this;
-}
-
 QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeScatterSeries::points()
 {
     return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXySeries::appendPoints);

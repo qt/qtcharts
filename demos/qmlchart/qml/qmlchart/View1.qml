@@ -31,9 +31,9 @@ Rectangle {
         legend: Chart.LegendBottom
 
         PieSeries {
-            horizontalPosition: 0.2
-            verticalPosition: 0.3
-            size: 0.4
+            horizontalPosition: 0.5
+            verticalPosition: 0.5
+            size: 0.7
             slices: [
                 PieSlice { label: "Volkswagen"; value: 13.5 },
                 PieSlice { label: "Toyota"; value: 10.9 },
@@ -42,11 +42,6 @@ Rectangle {
                 PieSlice { label: "Volvo"; value: 6.8 },
                 PieSlice { label: "Others"; value: 52.0 }
             ]
-        }
-
-        BarSeries {
-            barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
-            // data implementation missing
         }
     }
 }

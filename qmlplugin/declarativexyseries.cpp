@@ -33,22 +33,6 @@ DeclarativeXySeries::~DeclarativeXySeries()
 {
 }
 
-void DeclarativeXySeries::classBegin()
-{
-}
-
-void DeclarativeXySeries::componentComplete()
-{
-    QAbstractSeries *thisObj = reinterpret_cast<QAbstractSeries *>(series());
-    DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(thisObj->parent());
-
-    if (declarativeChart) {
-        QChart *chart = qobject_cast<QChart *>(declarativeChart->m_chart);
-        Q_ASSERT(chart);
-        chart->addSeries(thisObj);
-    }
-}
-
 void DeclarativeXySeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
                                        DeclarativeXyPoint *element)
 {

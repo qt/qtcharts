@@ -23,7 +23,6 @@
 
 #include "qchartglobal.h"
 #include "declarativexypoint.h"
-#include <QDeclarativeParserStatus>
 #include <QDeclarativeListProperty>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -31,7 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChart;
 class QAbstractSeries;
 
-class DeclarativeXySeries : public QDeclarativeParserStatus
+class DeclarativeXySeries
 {
     Q_INTERFACES(QDeclarativeParserStatus)
 
@@ -39,12 +38,7 @@ public:
     explicit DeclarativeXySeries();
     ~DeclarativeXySeries();
 
-public: // from QDeclarativeParserStatus
-    virtual void classBegin();
-    virtual void componentComplete();
-
 public:
-    virtual QAbstractSeries *series() = 0;
     virtual QDeclarativeListProperty<DeclarativeXyPoint> points() = 0;
 
 public Q_SLOTS:

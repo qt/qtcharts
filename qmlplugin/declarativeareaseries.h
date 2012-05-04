@@ -37,7 +37,6 @@ public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
 
 public:
-    QAbstractSeries *series();
     QDeclarativeListProperty<DeclarativeXyPoint> points();
     QDeclarativeListProperty<DeclarativeXyPoint> lowerPoints();
 
