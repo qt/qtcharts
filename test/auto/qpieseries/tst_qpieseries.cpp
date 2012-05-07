@@ -281,8 +281,7 @@ void tst_qpieseries::clickedSignal()
     // simulate clicks
     // pie rectangle: QRectF(60,60 121x121)
     QTest::mouseClick(view.viewport(), Qt::LeftButton, 0,  QPoint(139, 85)); // inside slice 1
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    QCOMPARE(clickSpy1.count(), 1);
+    TRY_COMPARE(clickSpy1.count(), 1);
     QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy1.at(0).at(0)), s1);
 }
 
@@ -310,15 +309,13 @@ void tst_qpieseries::hoverSignal()
     // pie rectangle: QRectF(60,60 121x121)
     QSignalSpy hoverSpy(series, SIGNAL(hovered(QPieSlice*,bool)));
     QTest::mouseMove(view.viewport(), QPoint(139, 85));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    QCOMPARE(hoverSpy.count(), 1);
+    TRY_COMPARE(hoverSpy.count(), 1);
     QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(0).at(0)), s1);
     QCOMPARE(qvariant_cast<bool>(hoverSpy.at(0).at(1)), true);
 
     // move outside the slice
     QTest::mouseMove(view.viewport(), QPoint(200, 0));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    QCOMPARE(hoverSpy.count(), 2);
+    TRY_COMPARE(hoverSpy.count(), 2);
     QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(1).at(0)), s1);
     QCOMPARE(qvariant_cast<bool>(hoverSpy.at(1).at(1)), false);
 }

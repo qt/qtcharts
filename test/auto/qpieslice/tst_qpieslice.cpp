@@ -249,19 +249,16 @@ void tst_qpieslice::mouseHover()
     // pie rectangle: QRectF(60,60 121x121)
     QSignalSpy hoverSpy(s1, SIGNAL(hovered(bool)));
     QTest::mouseMove(view.viewport(), QPoint(170, 70));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    QCOMPARE(hoverSpy.count(), 0);
+    TRY_COMPARE(hoverSpy.count(), 0);
 
     // move inside the slice
     QTest::mouseMove(view.viewport(), QPoint(139, 85));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    QCOMPARE(hoverSpy.count(), 1);
+    TRY_COMPARE(hoverSpy.count(), 1);
     QCOMPARE(qvariant_cast<bool>(hoverSpy.at(0).at(0)), true);
 
     // move outside the slice
     QTest::mouseMove(view.viewport(), QPoint(200, 0));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-    QCOMPARE(hoverSpy.count(), 2);
+    TRY_COMPARE(hoverSpy.count(), 2);
     QCOMPARE(qvariant_cast<bool>(hoverSpy.at(1).at(0)), false);
 }
 
