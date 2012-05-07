@@ -26,13 +26,9 @@ Rectangle {
     height: parent.height
     property int __viewNumber: 0
 
-    Timer {
-        id: timer
-        running: true
-        repeat: true
-        interval: 5000
-        triggeredOnStart: false
-        onTriggered: {
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
             __viewNumber++;
         }
     }
@@ -41,13 +37,5 @@ Rectangle {
         id: loader
         anchors.fill: parent
         source: "View" + (__viewNumber % 5 + 1) + ".qml";
-    }
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            timer.restart();
-            __viewNumber++;
-        }
     }
 }

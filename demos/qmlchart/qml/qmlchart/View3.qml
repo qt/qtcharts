@@ -24,11 +24,11 @@ import QtCommercial.Chart 1.0
 Rectangle {
     anchors.fill: parent
 
-    Chart {
+    ChartView {
         title: "NHL All-Star Team Players"
         anchors.fill: parent
-        theme: Chart.ChartThemeHighContrast
-        legend: Chart.LegendTop
+        theme: ChartView.ChartThemeHighContrast
+        legend: ChartView.LegendTop
 
         AreaSeries {
             name: "Swedish"

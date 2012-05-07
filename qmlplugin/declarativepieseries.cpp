@@ -21,6 +21,7 @@
 #include "declarativepieseries.h"
 #include "declarativechart.h"
 #include "qchart.h"
+#include <qdeclarativelist.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -29,17 +30,20 @@ DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
 {
 }
 
-QDeclarativeListProperty<QPieSlice> DeclarativePieSeries::slices()
+bool DeclarativePieSeries::setPieModel(DeclarativePieModel *model)
 {
-    return QDeclarativeListProperty<QPieSlice>(this, 0, &DeclarativePieSeries::appendSlice);
+    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
+    bool value(false);
+    if (m) {
+        value = QPieSeries::setModel(m);
+        setModelMapping(0, 1, Qt::Vertical);
+    }
+    return value;
 }
 
-void DeclarativePieSeries::appendSlice(QDeclarativeListProperty<QPieSlice> *list,
-                                      QPieSlice *slice)
+DeclarativePieModel *DeclarativePieSeries::pieModel()
 {
-    DeclarativePieSeries *series = qobject_cast<DeclarativePieSeries *>(list->object);
-    if (series)
-        series->append(slice->value(), slice->label());
+    return qobject_cast<DeclarativePieModel *>(model());
 }
 
 #include "moc_declarativepieseries.cpp"

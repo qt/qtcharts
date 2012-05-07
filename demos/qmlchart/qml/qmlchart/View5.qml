@@ -24,11 +24,11 @@ import QtCommercial.Chart 1.0
 Rectangle {
     anchors.fill: parent
 
-    Chart {
+    ChartView {
         title: "Bar series"
         anchors.fill: parent
-        theme: Chart.ChartThemeLight
-        legend: Chart.LegendBottom
+        theme: ChartView.ChartThemeLight
+        legend: ChartView.LegendBottom
 
         BarSeries {
             barCategories: [ "2008", "2009", "2010", "2011", "2012" ]

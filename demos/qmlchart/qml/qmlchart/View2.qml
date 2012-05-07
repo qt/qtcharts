@@ -24,11 +24,11 @@ import QtCommercial.Chart 1.0
 Rectangle {
     anchors.fill: parent
 
-    Chart {
+    ChartView {
         title: "Line&Spline"
         anchors.fill: parent
-        theme: Chart.ChartThemeBrownSand
-        animationOptions: Chart.NoAnimation
+        theme: ChartView.ChartThemeBrownSand
+        animationOptions: ChartView.NoAnimation
 
         LineSeries {
             name: "Line"

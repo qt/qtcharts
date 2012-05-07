@@ -18,36 +18,44 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVEPIESERIES_H
-#define DECLARATIVEPIESERIES_H
+#ifndef DECLARATIVEPIEMODEL_H
+#define DECLARATIVEPIEMODEL_H
 
 #include "qchartglobal.h"
 #include "qpieslice.h"
 #include "qpieseries.h"
+#include "../src/charttablemodel.h"
+#include <QDeclarativeParserStatus>
 #include <QDeclarativeListProperty>
 #include <QAbstractItemModel>
 #include <QVariant>
-#include "declarativepiemodel.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QChart;
-
-class DeclarativePieSeries : public QPieSeries
+class DeclarativePieModel : public ChartTableModel/*, public QDeclarativeParserStatus*/
 {
+//    Q_INTERFACES(QDeclarativeParserStatus)
     Q_OBJECT
-    Q_PROPERTY(DeclarativePieModel *model READ pieModel WRITE setPieModel)
+    Q_PROPERTY(QDeclarativeListProperty<QPieSlice> slices READ slices)
+    Q_CLASSINFO("DefaultProperty", "slices")
 
 public:
-    explicit DeclarativePieSeries(QObject *parent = 0);
+    explicit DeclarativePieModel(QObject *parent = 0);
+    QDeclarativeListProperty<QPieSlice> slices();
+
+//public: // from QDeclarativeParserStatus
+//    virtual void classBegin();
+//    virtual void componentComplete();
 
 public Q_SLOTS:
+    void append(QPieSlice* slice);
+    void append(QVariantList slices);
+    static void appendSlice(QDeclarativeListProperty<QPieSlice> *list,
+                            QPieSlice *element);
 
 public:
-    bool setPieModel(DeclarativePieModel *model);
-    DeclarativePieModel *pieModel();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // DECLARATIVEPIESERIES_H
+#endif // DECLARATIVEPIEMODEL_H

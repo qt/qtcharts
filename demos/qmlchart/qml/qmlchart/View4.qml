@@ -24,10 +24,10 @@ import QtCommercial.Chart 1.0
 Rectangle {
     anchors.fill: parent
 
-    Chart {
+    ChartView {
         title: "Scatters"
         anchors.fill: parent
-        theme: Chart.ChartThemeBlueCerulean
+        theme: ChartView.ChartThemeBlueCerulean
 
         ScatterSeries {
             id: scatter1
