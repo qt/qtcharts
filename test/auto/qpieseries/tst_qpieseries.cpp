@@ -304,6 +304,7 @@ void tst_qpieseries::hoverSignal()
 
     // first move to right top corner
     QTest::mouseMove(view.viewport(), QPoint(200, 0));
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     // move inside the slice
     // pie rectangle: QRectF(60,60 121x121)
