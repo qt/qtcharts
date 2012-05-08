@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include "DeclarativePieModel.h"
+#include "declarativepiemodel.h"
 #include "declarativechart.h"
 #include "qchart.h"
 #include <qdeclarativelist.h>
