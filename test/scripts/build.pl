@@ -6,6 +6,10 @@ use feature "switch";
 # read command line params
 my $jobname = shift;
 
+# Strip the prefix from job name when using ${bamboo.buildPlanName}
+my $prefix = "Digia Qt Commercial - Chart component - ";
+$jobname =~ s/$prefix//;
+
 # read ini file
 my $scriptdir = File::Basename::dirname($0);
 my $inifile = $scriptdir . "/jobs.ini";
@@ -14,6 +18,9 @@ tie %cfg, 'Config::IniFiles', ( -file => $inifile );
 
 # get section from ini by jobname
 my %build = %{$cfg{$jobname}};
+if (!%build) {
+	die ("Unknown jobname! Check $inifile and bamboo job name.");
+}
 
 # print out the ini settings
 print "\n\n$jobname\n";
