@@ -1,6 +1,6 @@
 package Jobs;
 use File::Basename;
-use Config::Tiny;
+use Tiny;
 
 sub get {
 	my $inifile = shift;
