@@ -21,11 +21,12 @@ sub get {
 	}
 
 	# print out the ini settings
-	print "\n\n$jobname\n";
-	print "**********\n";
+	print "\n\nini file: $inifile\n";
+	print "[$jobname]\n";
 	foreach (keys %job) {
-		print $_ . " : " . $job{$_} . "\n";
+		print $_ . "=" . $job{$_} . "\n";
 	}
+	print "\n";
 	
 	return %job;
 }
