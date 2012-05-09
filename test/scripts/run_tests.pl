@@ -12,9 +12,13 @@ my $jobname = shift;
 my $inifile = File::Basename::dirname($0) . "/jobs.ini";
 my %job = Jobs::get($inifile, $jobname);
 
-# get paths
+# set/get paths
 my $root_path = abs_path();
 my $test_path = "$root_path/bin/test/";
+my $reports_path = "test-reports";
+
+# create reports path
+mkdir dirname($reports_path);
 
 # Windows specific magic
 if ($job{'Platform'} eq "Win7") {
@@ -23,24 +27,19 @@ if ($job{'Platform'} eq "Win7") {
 	$ENV{'PATH'} =~ s/\//\\/g; # replace / -> \
 }
 
+my $script_exit_status = 0;
+
 # Go through all the files in the test folder
+# autotest is an executable beginning with "tst_"
 opendir (TESTAPPDIR, "$test_path") or die "Couldn't open test app dir";
 @files = <TESTAPPDIR>;
 while ($testapp = readdir TESTAPPDIR) {
-    # autotest is an executable beginning with "tst_"
     if (index($testapp, "tst_") == 0) {
         if (-x "$test_path$testapp") {
-            my $cmd_postfix = "";
-            if ($^O eq "darwin") {
-                # On OSX the actual test binary is in a sub folder
-                $cmd_postfix = "/Contents/MacOS/$testapp";
-                $cmd_postfix = substr($cmd_postfix, 0, rindex($cmd_postfix, ".app"));
-            }
-            # Generate path for test results
-            my $test_result_path = "test-reports/$testapp.xml";
-            mkdir dirname($test_result_path);
-            # Execute the actual auto test
-            executeTestApp("$test_path$testapp$cmd_postfix", "-xunitxml -o $test_result_path");
+            my $status = executeTestApp($testapp);
+			if ($status != 0) {
+				$script_exit_status = $status;
+			}
         } else {
             #print "file $testapp not executable\n";
         }
@@ -48,13 +47,24 @@ while ($testapp = readdir TESTAPPDIR) {
 }
 closedir TESTAPPDIR;
 
+print "\nscript exit status : $script_exit_status\n";
+exit($script_exit_status);
+
 sub executeTestApp($) {
-    my $test_app_path = $_[0];
-    my $parameters = $_[1];
-
-    print "executing: $test_app_path $parameters\n";
-    my $file_handle = system("$test_app_path $parameters");
-
+    my $testapp = $_[0];
+	
+	# On OSX the actual test binary is in a sub folder
+	my $cmd_postfix = "";
+	if ($^O eq "darwin") {
+		$cmd_postfix = "/Contents/MacOS/$testapp";
+		$cmd_postfix = substr($cmd_postfix, 0, rindex($cmd_postfix, ".app"));
+	}
+	
+    my $cmd = "$test_path$testapp$cmd_postfix -xunitxml -o $reports_path/$testapp.xml";
+    print "executing: $cmd\n";
+    my $file_handle = system($cmd);
     my $exit_status = $? >> 8;
     print "\texit status: $exit_status handle: $file_handle\n";
+	
+	return $exit_status;
 }
