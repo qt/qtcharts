@@ -93,8 +93,8 @@ development_build: {
         MAC_POST_LINK_PREFIX = install_name_tool -change $$MAC_CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$MAC_CHARTS_LIB_NAME
         MAC_DEMOS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
         MAC_EXAMPLES_BIN_DIR = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
-        MAC_TESTS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/test/"$$TARGET".app/Contents/MacOS/"$$TARGET
-        MAC_AUTOTESTS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/test/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET
+        MAC_TESTS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
+        MAC_AUTOTESTS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET
         MAC_PLUGINS_BIN_DIR = $$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib"
     }
 
