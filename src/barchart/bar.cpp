@@ -29,7 +29,7 @@ Bar::Bar(QBarSet *barset, QString category, QGraphicsItem *parent) : QGraphicsRe
     m_category(category),
     m_barset(barset)
 {
-    setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
+    setAcceptedMouseButtons(Qt::LeftButton /*| Qt::RightButton*/);
     setAcceptHoverEvents(true);
 }
 

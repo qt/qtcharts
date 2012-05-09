@@ -21,8 +21,12 @@
 #include <QtTest/QtTest>
 #include <qbarseries.h>
 #include <qbarset.h>
+#include <qchartview.h>
+#include <qchart.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
+
+Q_DECLARE_METATYPE(QBarSet*)
 
 class tst_QBarSeries : public QObject
 {
@@ -59,6 +63,8 @@ private slots:
     void categories();
     void setLabelsVisible_data();
     void setLabelsVisible();
+    void mouseclick_data();
+    void mouseclick();
 
 private:
     QBarSeries* m_barseries;
@@ -71,6 +77,7 @@ private:
 
 void tst_QBarSeries::initTestCase()
 {
+    qRegisterMetaType<QBarSet*>("QBarSet*");
 }
 
 void tst_QBarSeries::cleanupTestCase()
@@ -415,6 +422,143 @@ void tst_QBarSeries::setLabelsVisible()
     foreach (QBarSet* s, m_testSets) {
         QVERIFY(s->labelsVisible() == true);
     }
+}
+
+void tst_QBarSeries::mouseclick_data()
+{
+
+}
+
+void tst_QBarSeries::mouseclick()
+{
+    QBarSeries* series = new QBarSeries();
+    QBarCategories categories;
+    categories << "test1" << "test2" << "test3";
+    series->setCategories(categories);
+
+    QBarSet* set1 = new QBarSet(QString("set 1"));
+    *set1 << 10 << 10 << 10;
+    series->appendBarSet(set1);
+
+    QBarSet* set2 = new QBarSet(QString("set 2"));
+    *set2 << 10 << 10 << 10;
+    series->appendBarSet(set2);
+
+    QSignalSpy setSpy1(set1, SIGNAL(clicked(QString)));
+    QSignalSpy setSpy2(set2, SIGNAL(clicked(QString)));
+    QSignalSpy seriesSpy(series,SIGNAL(clicked(QBarSet*,QString)));
+
+    QChartView view(new QChart());
+    view.resize(400,300);
+    view.chart()->addSeries(series);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+//====================================================================================
+// barset 1, category test1
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(100,180));
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.count(), 1);
+    QList<QVariant> setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::String);
+    QVERIFY(setSpyArg.at(0).toString().compare(QString("test1")) == 0);
+
+    QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
+
+//====================================================================================
+// barset 1, category test2
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(190,180));
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.count(), 1);
+    setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::String);
+    QVERIFY(setSpyArg.at(0).toString().compare(QString("test2")) == 0);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
+
+//====================================================================================
+// barset 1, category test3
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(280,180));
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.count(), 1);
+    setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::String);
+    QVERIFY(setSpyArg.at(0).toString().compare(QString("test3")) == 0);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
+
+//====================================================================================
+// barset 2, category test1
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(130,180));
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.count(), 1);
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::String);
+    QVERIFY(setSpyArg.at(0).toString().compare(QString("test1")) == 0);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
+
+//====================================================================================
+// barset 2, category test2
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(220,180));
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.count(), 1);
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::String);
+    QVERIFY(setSpyArg.at(0).toString().compare(QString("test2")) == 0);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
+
+//====================================================================================
+// barset 2, category test3
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(310,180));
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
+    QCOMPARE(seriesSpy.count(), 1);
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::String);
+    QVERIFY(setSpyArg.at(0).toString().compare(QString("test3")) == 0);
+
+    seriesSpyArg = seriesSpy.takeFirst();
+    QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
+
+//====================================================================================
+// no event cases
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(1,1));     // Outside of both sets
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(1,1));    // Right mouse button outside and inside sets
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(100,180)); // barset 1, category test1
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(190,180)); // barset 1, category test2
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(280,180)); // barset 1, category test3
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(130,180)); // barset 2, category test1
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(220,180)); // barset 2, category test2
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(310,180)); // barset 2, category test3
+
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 0);
+    QCOMPARE(seriesSpy.count(), 0);
 }
 
 /*
