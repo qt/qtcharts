@@ -17,6 +17,8 @@ my %job = Jobs::get($inifile, $jobname);
 given ($job{'Platform'}) {
 	
 	when ("Win7") {
+	
+		$scriptdir =~ s/\//\\/g; # replace / -> \
 		
 		# construct a build command	
 		if ($job{'ToolChain'} eq "mingw") {
