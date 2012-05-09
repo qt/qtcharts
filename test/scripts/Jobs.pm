@@ -1,13 +1,6 @@
 package Jobs;
 use File::Basename;
-use Config::IniFiles; 
-
-# NOTE:
-# Config::IniFiles is from CPAN
-# http://search.cpan.org/dist/Config-IniFiles-2.72/
-# 
-# On windows (ActivePerl) install it from command line by calling:
-# 	ppm install Config-IniFiles
+use Config::Tiny;
 
 sub get {
 	my $inifile = shift;
@@ -18,11 +11,10 @@ sub get {
 	$jobname =~ s/$prefix//;
 
 	# read ini file
-	my %cfg;
-	tie %cfg, 'Config::IniFiles', ( -file => $inifile );
-
+	my $cfg = Config::Tiny->read( $inifile );
+	
 	# get section from ini by jobname
-	my %job = %{$cfg{$jobname}};
+	my %job = %{$cfg->{$jobname}};
 	if (!%job) {
 		die ("Unknown jobname! Check $inifile and bamboo job name.");
 	}
