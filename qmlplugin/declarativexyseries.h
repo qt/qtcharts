@@ -23,7 +23,7 @@
 
 #include "qchartglobal.h"
 #include "declarativexypoint.h"
-#include <QDeclarativeListProperty>
+#include "declarativemodel.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -39,11 +39,8 @@ public:
     ~DeclarativeXySeries();
 
 public:
-    virtual QDeclarativeListProperty<DeclarativeXyPoint> points() = 0;
-
-public Q_SLOTS:
-    static void appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                             DeclarativeXyPoint *element);
+    bool setDeclarativeModel(DeclarativeXyModel *model);
+    DeclarativeXyModel *declarativeModel();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

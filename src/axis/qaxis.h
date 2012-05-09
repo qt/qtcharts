@@ -34,6 +34,8 @@ class QTCOMMERCIALCHART_EXPORT QAxis : public QObject
 {
 	Q_OBJECT
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible)
+    Q_PROPERTY(qreal min READ min WRITE setMin)
+    Q_PROPERTY(qreal max READ max WRITE setMax)
 
 public:
 

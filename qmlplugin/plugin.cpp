@@ -21,8 +21,8 @@
 #include <QtDeclarative/qdeclarativeextensionplugin.h>
 #include <QtDeclarative/qdeclarative.h>
 #include "qchart.h"
+#include "qaxiscategories.h"
 #include "declarativechart.h"
-#include "declarativeaxis.h"
 #include "declarativexypoint.h"
 #include "declarativelineseries.h"
 #include "declarativesplineseries.h"
@@ -30,7 +30,7 @@
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
-#include "declarativepiemodel.h"
+//#include "declarativepiemodel.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -43,7 +43,9 @@ public:
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCommercial.Chart"));
 
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "ChartView");
-        qmlRegisterType<DeclarativeAxis>(uri, 1, 0, "Axis");
+        qmlRegisterUncreatableType<QAxis>(uri, 1, 0, "Axis",
+                                          QLatin1String("Trying to create uncreatable type: Axis."));
+        //qmlRegisterType<DeclarativeAxisCategory>(uri, 1, 0, "AxisCategory");
         qmlRegisterType<DeclarativeXyPoint>(uri, 1, 0, "XyPoint");
         qmlRegisterType<DeclarativeScatterSeries>(uri, 1, 0, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries>(uri, 1, 0, "LineSeries");
@@ -54,6 +56,7 @@ public:
         qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
         // TODO: a declarative model for each type
         qmlRegisterType<DeclarativePieModel>(uri, 1, 0, "PieModel");
+        qmlRegisterType<DeclarativeXyModel>(uri, 1, 0, "XYModel");
     }
 };
 

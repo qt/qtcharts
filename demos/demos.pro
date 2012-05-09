@@ -6,5 +6,6 @@ CURRENTLY_BUILDING_COMPONENTS = "demos"
 TEMPLATE = subdirs
 SUBDIRS += chartthemes \
            piechartcustomization \
+           dynamicspline \
            qmlchart \
-           dynamicspline
+           qmlweather

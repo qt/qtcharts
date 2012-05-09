@@ -30,11 +30,6 @@ DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
 {
 }
 
-QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeLineSeries::points()
-{
-    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXySeries::appendPoints);
-}
-
 #include "moc_declarativelineseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

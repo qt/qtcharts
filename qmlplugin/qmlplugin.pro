@@ -21,7 +21,6 @@ RCC_DIR = $$CHART_BUILD_DIR/plugin
 SOURCES += \
     plugin.cpp \
     declarativechart.cpp \
-    declarativeaxis.cpp \
     declarativexypoint.cpp \
     declarativexyseries.cpp \
     declarativelineseries.cpp \
@@ -30,10 +29,9 @@ SOURCES += \
     declarativescatterseries.cpp \
     declarativepieseries.cpp \
     declarativebarseries.cpp \
-    declarativepiemodel.cpp
+    declarativemodel.cpp
 HEADERS += \
     declarativechart.h \
-    declarativeaxis.h \
     declarativexypoint.h \
     declarativexyseries.h \
     declarativelineseries.h \
@@ -42,7 +40,7 @@ HEADERS += \
     declarativescatterseries.h \
     declarativepieseries.h \
     declarativebarseries.h \
-    declarativepiemodel.h
+    declarativemodel.h
 
 TARGETPATH = QtCommercial/Chart
 target.path = $$[QT_INSTALL_IMPORTS]/$$TARGETPATH

@@ -19,7 +19,6 @@
 ****************************************************************************/
 
 #include "declarativechart.h"
-#include "declarativepieseries.h"
 #include <QPainter>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -30,6 +29,7 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
       m_legend(LegendDisabled)
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
+    m_chart->axisX()->setNiceNumbersEnabled(false);
 }
 
 DeclarativeChart::~DeclarativeChart()
@@ -48,17 +48,20 @@ void DeclarativeChart::childEvent(QChildEvent *event)
 
 void DeclarativeChart::componentComplete()
 {
+//    qDebug() << "DeclarativeChart::componentComplete(), maxX: " << axisX()->max();
     foreach(QObject *child, children()) {
         if (qobject_cast<QAbstractSeries *>(child)) {
             m_chart->addSeries(qobject_cast<QAbstractSeries *>(child));
         }
     }
+//    qDebug() << "DeclarativeChart::componentComplete(), maxX: " << axisX()->max();
 
     QDeclarativeItem::componentComplete();
 }
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
+//    qDebug() << "DeclarativeChart::geometryChanged" << newGeometry.width() << newGeometry.height();
     Q_UNUSED(oldGeometry)
 
     if (newGeometry.isValid()) {
@@ -128,6 +131,16 @@ void DeclarativeChart::setLegend(ChartLegend legend)
 DeclarativeChart::ChartLegend DeclarativeChart::legend()
 {
     return m_legend;
+}
+
+QAxis *DeclarativeChart::axisX()
+{
+    return m_chart->axisX();
+}
+
+QAxis *DeclarativeChart::axisY()
+{
+    return m_chart->axisY();
 }
 
 #include "moc_declarativechart.cpp"

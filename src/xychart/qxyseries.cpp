@@ -419,24 +419,36 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
 
     const QList<QPointF>& points = q->points();
 
-    if(points.isEmpty()){
-        minX=0.0;
-        minY=0.0;
-        maxX=1.0;
-        maxY=1.0;
-    }
+//    if(points.isEmpty()){
+//        minX=0.0;
+//        minY=0.0;
+//        maxX=1.0;
+//        maxY=1.0;
+//    }
 
-    for (int i = 0; i < points.count(); i++)
-    {
-        qreal x = points[i].x();
-        qreal y = points[i].y();
-        minX = qMin(minX, x);
-        minY = qMin(minY, y);
-        maxX = qMax(maxX, x);
-        maxY = qMax(maxY, y);
-    }
+//    for (int i = 0; i < points.count(); i++)
+//    {
+//        qreal x = points[i].x();
+//        qreal y = points[i].y();
+//        minX = qMin(minX, x);
+//        minY = qMin(minY, y);
+//        maxX = qMax(maxX, x);
+//        maxY = qMax(maxY, y);
+//    }
 
-    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+//    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+
+    if (!points.isEmpty()) {
+        for (int i = 0; i < points.count(); i++) {
+            qreal x = points[i].x();
+            qreal y = points[i].y();
+            minX = qMin(minX, x);
+            minY = qMin(minY, y);
+            maxX = qMax(maxX, x);
+            maxY = qMax(maxY, y);
+        }
+        domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    }
 }
 
 QList<LegendMarker*> QXYSeriesPrivate::createLegendMarker(QLegend* legend)

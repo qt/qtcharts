@@ -30,11 +30,6 @@ DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
 {
 }
 
-QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeScatterSeries::points()
-{
-    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXySeries::appendPoints);
-}
-
 #include "moc_declarativescatterseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -33,12 +33,27 @@ DeclarativeXySeries::~DeclarativeXySeries()
 {
 }
 
-void DeclarativeXySeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                                       DeclarativeXyPoint *element)
+bool DeclarativeXySeries::setDeclarativeModel(DeclarativeXyModel *model)
 {
-    QXYSeries *series = qobject_cast<QXYSeries *>(list->object);
-    if (series)
-        series->append(element->x(), element->y());
+    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
+    bool value(false);
+    if (m) {
+        // All the inherited objects must be of type QXYSeries, so it is safe to cast
+        QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+        series->setModel(m);
+        series->setModelMapping(0, 1, Qt::Vertical);
+    } else {
+        qWarning("DeclarativeXySeries: Illegal model");
+    }
+    return value;
+}
+
+DeclarativeXyModel *DeclarativeXySeries::declarativeModel()
+{
+    // All the inherited objects must be of type QXYSeries, so it is safe to cast
+    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    Q_ASSERT(series);
+    return qobject_cast<DeclarativeXyModel *>(series->model());
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

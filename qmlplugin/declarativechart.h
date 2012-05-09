@@ -24,6 +24,7 @@
 #include <QtCore/QtGlobal>
 #include <QDeclarativeItem>
 #include <qchart.h>
+#include <QAxis>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -37,6 +38,8 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(QChart::AnimationOption animationOptions READ animationOptions WRITE setAnimationOptions)
     Q_PROPERTY(QString title READ title WRITE setTitle)
     Q_PROPERTY(ChartLegend legend READ legend WRITE setLegend)
+    Q_PROPERTY(QAxis *axisX READ axisX)
+    Q_PROPERTY(QAxis *axisY READ axisY)
     Q_ENUMS(ChartLegend)
 
 public:
@@ -67,6 +70,8 @@ public:
     QString title() { return m_chart->title();}
     void setLegend(ChartLegend legend);
     ChartLegend legend();
+    QAxis *axisX();
+    QAxis *axisY();
 
 public:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support

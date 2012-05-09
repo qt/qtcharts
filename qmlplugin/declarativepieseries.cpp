@@ -37,6 +37,8 @@ bool DeclarativePieSeries::setPieModel(DeclarativePieModel *model)
     if (m) {
         value = QPieSeries::setModel(m);
         setModelMapping(0, 1, Qt::Vertical);
+    } else {
+        qWarning("DeclarativePieSeries: Illegal model");
     }
     return value;
 }

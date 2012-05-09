@@ -18,23 +18,38 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVEPIEMODEL_H
-#define DECLARATIVEPIEMODEL_H
+#ifndef DECLARATIVEMODEL_H
+#define DECLARATIVEMODEL_H
 
 #include "qchartglobal.h"
+#include "declarativexypoint.h"
 #include "qpieslice.h"
-#include "qpieseries.h"
-#include "../src/charttablemodel.h"
-#include <QDeclarativeParserStatus>
+#include "../src/charttablemodel.h" // TODO
 #include <QDeclarativeListProperty>
-#include <QAbstractItemModel>
 #include <QVariant>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativePieModel : public ChartTableModel/*, public QDeclarativeParserStatus*/
+class DeclarativeXyModel : public ChartTableModel
 {
-//    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_OBJECT
+    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> points READ points)
+    Q_CLASSINFO("DefaultProperty", "points")
+
+public:
+    explicit DeclarativeXyModel(QObject *parent = 0);
+    QDeclarativeListProperty<DeclarativeXyPoint> points();
+
+public Q_SLOTS:
+    void append(DeclarativeXyPoint* point);
+    void append(QVariantList points);
+    static void appendPoint(QDeclarativeListProperty<DeclarativeXyPoint> *list,
+                            DeclarativeXyPoint *element);
+};
+
+
+class DeclarativePieModel : public ChartTableModel
+{
     Q_OBJECT
     Q_PROPERTY(QDeclarativeListProperty<QPieSlice> slices READ slices)
     Q_CLASSINFO("DefaultProperty", "slices")
@@ -43,19 +58,13 @@ public:
     explicit DeclarativePieModel(QObject *parent = 0);
     QDeclarativeListProperty<QPieSlice> slices();
 
-//public: // from QDeclarativeParserStatus
-//    virtual void classBegin();
-//    virtual void componentComplete();
-
 public Q_SLOTS:
     void append(QPieSlice* slice);
     void append(QVariantList slices);
     static void appendSlice(QDeclarativeListProperty<QPieSlice> *list,
                             QPieSlice *element);
-
-public:
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // DECLARATIVEPIEMODEL_H
+#endif // DECLARATIVEMODEL_H

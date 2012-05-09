@@ -27,7 +27,7 @@
 #include <QDeclarativeListProperty>
 #include <QAbstractItemModel>
 #include <QVariant>
-#include "declarativepiemodel.h"
+#include "declarativemodel.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

@@ -18,25 +18,17 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVELINESERIES_H
-#define DECLARATIVELINESERIES_H
+#include <QApplication>
+#include "qmlapplicationviewer.h"
 
-#include "qchartglobal.h"
-#include "qlineseries.h"
-#include "declarativexyseries.h"
-#include <QDeclarativeParserStatus>
-
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries
+Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    Q_OBJECT
-    Q_PROPERTY(DeclarativeXyModel *model READ declarativeModel WRITE setDeclarativeModel)
+    QScopedPointer<QApplication> app(createApplication(argc, argv));
 
-public:
-    explicit DeclarativeLineSeries(QObject *parent = 0);
-};
+    QmlApplicationViewer viewer;
+    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer.setSource(QUrl("qrc:/qml/qmlweather/main.qml"));
+    viewer.showExpanded();
 
-QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif // DECLARATIVELINESERIES_H
+    return app->exec();
+}

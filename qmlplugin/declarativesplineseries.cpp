@@ -29,11 +29,6 @@ DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
 {
 }
 
-QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeSplineSeries::points()
-{
-    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXySeries::appendPoints);
-}
-
 #include "moc_declarativesplineseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

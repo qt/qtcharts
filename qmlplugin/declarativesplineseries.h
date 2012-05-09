@@ -31,13 +31,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 {
     Q_OBJECT
-    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> points READ points)
+    Q_PROPERTY(DeclarativeXyModel *model READ declarativeModel WRITE setDeclarativeModel)
 
 public:
     explicit DeclarativeSplineSeries(QObject *parent = 0);
-
-public:
-    QDeclarativeListProperty<DeclarativeXyPoint> points();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

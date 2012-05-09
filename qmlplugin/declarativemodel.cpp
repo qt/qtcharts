@@ -18,29 +18,79 @@
 **
 ****************************************************************************/
 
-#include "declarativepiemodel.h"
-#include "declarativechart.h"
-#include "qchart.h"
+#include "declarativemodel.h"
 #include <qdeclarativelist.h>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+////////////// XY model ///////////////////////
+
+DeclarativeXyModel::DeclarativeXyModel(QObject *parent) :
+    ChartTableModel(parent)
+{
+}
+
+void DeclarativeXyModel::append(DeclarativeXyPoint* point)
+{
+//    qDebug() << "DeclarativeXyModel::append:" << point->x() << " " << point->y();
+    insertRow(rowCount());
+    QModelIndex xModelIndex = createIndex(rowCount() - 1, 0);
+    QModelIndex yModelIndex = createIndex(rowCount() - 1, 1);
+    setData(xModelIndex, point->x());
+    setData(yModelIndex, point->y());
+    dataChanged(xModelIndex, yModelIndex);
+}
+
+void DeclarativeXyModel::append(QVariantList points)
+{
+    qreal x = 0.0;
+    for (int i(0); i < points.count(); i++) {
+        if (i % 2) {
+            bool ok(false);
+            qreal y = points.at(i).toReal(&ok);
+            if (ok) {
+                DeclarativeXyPoint *point= new DeclarativeXyPoint();
+                point->setX(x);
+                point->setY(y);
+                append(point);
+            } else {
+                qWarning() << "Illegal y value";
+            }
+        } else {
+            bool ok(false);
+            x = points.at(i).toReal(&ok);
+            if (!ok) {
+                qWarning() << "Illegal x value";
+            }
+        }
+    }
+}
+
+QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeXyModel::points()
+{
+    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXyModel::appendPoint);
+}
+
+void DeclarativeXyModel::appendPoint(QDeclarativeListProperty<DeclarativeXyPoint> *list,
+                                     DeclarativeXyPoint *point)
+{
+    DeclarativeXyModel *model = qobject_cast<DeclarativeXyModel *>(list->object);
+    if (model)
+        model->append(point);
+    else
+        qWarning() << "Illegal point item";
+}
+
+////////////// Pie model ///////////////////////
 
 DeclarativePieModel::DeclarativePieModel(QObject *parent) :
     ChartTableModel(parent)
 {
 }
 
-//void DeclarativePieModel::classBegin()
-//{
-//}
-
-//void DeclarativePieModel::componentComplete()
-//{
-//}
-
 void DeclarativePieModel::append(QPieSlice* slice)
 {
-    // TODO: label not working...
     qDebug() << "DeclarativePieModel::append:" << slice->label() << " " << slice->value();
     qDebug() << "rowCount:" << rowCount();
     qDebug() << "coolCount:" << columnCount();
@@ -62,6 +112,8 @@ void DeclarativePieModel::append(QVariantList slices)
             if (ok) {
                 QPieSlice *slice = new QPieSlice(value, label);
                 append(slice);
+            } else {
+                qWarning() << "Illegal slice item";
             }
         } else {
             label = slices.at(i).toString();
@@ -84,6 +136,6 @@ void DeclarativePieModel::appendSlice(QDeclarativeListProperty<QPieSlice> *list,
         qWarning() << "Illegal slice item";
 }
 
-#include "moc_declarativepiemodel.cpp"
+#include "moc_declarativemodel.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
