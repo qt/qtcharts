@@ -1,6 +1,13 @@
 package Jobs;
 use File::Basename;
-use IniFiles;
+use Config::IniFiles; 
+
+# NOTE:
+# Config::IniFiles is from CPAN
+# http://search.cpan.org/dist/Config-IniFiles-2.72/
+# 
+# On windows (ActivePerl) install it from command line by calling:
+# 	ppm install Config-IniFiles
 
 sub get {
 	my $inifile = shift;
