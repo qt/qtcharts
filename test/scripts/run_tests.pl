@@ -12,14 +12,18 @@ my $jobname = shift;
 my $inifile = File::Basename::dirname($0) . "/jobs.ini";
 my %job = Jobs::get($inifile, $jobname);
 
+# get paths
+my $root_path = abs_path();
+my $test_path = "$root_path/bin/test/";
+
 # Windows specific magic
 if ($job{'Platform'} eq "Win7") {
 	$ENV{'PATH'} .= ";" . $job{'QtDir'} . "\\bin"; # Add qtdir to path
+	$ENV{'PATH'} .= ";" . $root_path . "\\bin"; # Add charts bin to path
+	$ENV{'PATH'} =~ s/\//\\/g; # replace / -> \
 }
 
 # Go through all the files in the test folder
-my $root_path = abs_path();
-my $test_path = "$root_path/bin/test/";
 opendir (TESTAPPDIR, "$test_path") or die "Couldn't open test app dir";
 @files = <TESTAPPDIR>;
 while ($testapp = readdir TESTAPPDIR) {
@@ -48,10 +52,9 @@ sub executeTestApp($) {
     my $test_app_path = $_[0];
     my $parameters = $_[1];
 
-    print "executing: $cmd_prefix$test_app_path $parameters\n";
+    print "executing: $test_app_path $parameters\n";
     my $file_handle = system("$test_app_path $parameters");
 
     my $exit_status = $? >> 8;
-#    print "exit: $exit_status \n";
-#    print "handle: $file_handle\n";
+    print "\texit status: $exit_status handle: $file_handle\n";
 }
