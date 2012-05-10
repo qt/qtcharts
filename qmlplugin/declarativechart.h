@@ -40,6 +40,8 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(ChartLegend legend READ legend WRITE setLegend)
     Q_PROPERTY(QAxis *axisX READ axisX)
     Q_PROPERTY(QAxis *axisY READ axisY)
+    // TODO: how to define axis labels? This is not very convenient
+    Q_PROPERTY(QVariantList axisXLabels READ axisXLabels WRITE setAxisXLabels)
     Q_ENUMS(ChartLegend)
 
 public:
@@ -72,6 +74,8 @@ public:
     ChartLegend legend();
     QAxis *axisX();
     QAxis *axisY();
+    QVariantList axisXLabels();
+    void setAxisXLabels(QVariantList list);
 
 public:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support

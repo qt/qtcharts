@@ -29,6 +29,8 @@ Rectangle {
         anchors.fill: parent
         theme: ChartView.ChartThemeHighContrast
         legend: ChartView.LegendTop
+        axisXLabels: ["0", "2000", "1", "2001", "2", "2002", "3", "2003", "4", "2004", "5", "2005",
+            "6", "2006", "7", "2007", "8", "2008", "9", "2009", "10", "2010", "11", "2011"]
 
         AreaSeries {
             name: "Swedish"

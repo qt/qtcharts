@@ -19,6 +19,8 @@
 ****************************************************************************/
 
 #include <QApplication>
+#include <QDeclarativeContext>
+#include <QDebug>
 #include "qmlapplicationviewer.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
@@ -27,8 +29,15 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     QmlApplicationViewer viewer;
     viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    QString appKey;
+    if (argc > 1) {
+        appKey = argv[1];
+        qDebug() << "App key for worldweatheronline.com:" << appKey;
+    } else {
+        qWarning() << "No app key for worldweatheronline.com given. Using static test data instead of live data.";
+    }
+    viewer.rootContext()->setContextProperty("weatherAppKey", appKey);
     viewer.setSource(QUrl("qrc:/qml/qmlweather/main.qml"));
     viewer.showExpanded();
-
     return app->exec();
 }

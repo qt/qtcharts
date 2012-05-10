@@ -143,6 +143,31 @@ QAxis *DeclarativeChart::axisY()
     return m_chart->axisY();
 }
 
+QVariantList DeclarativeChart::axisXLabels()
+{
+    QVariantList labels;
+    foreach (qreal value, m_chart->axisX()->categories()->values()) {
+//        qDebug() << "Label for" << value << "is" << m_chart->axisX()->categories()->label(value);
+        labels.append(value);
+        labels.append(m_chart->axisX()->categories()->label(value));
+    }
+    return labels;
+}
+
+void DeclarativeChart::setAxisXLabels(QVariantList list)
+{
+    QVariant value(QVariant::Invalid);
+    foreach (QVariant element, list) {
+        if (value.isValid() && element.type() == QVariant::String) {
+            m_chart->axisX()->categories()->insert(value.toDouble(), element.toString());
+            value = QVariant(QVariant::Invalid);
+        } else {
+            if (element.canConvert(QVariant::Double))
+                value = element;
+        }
+    }
+}
+
 #include "moc_declarativechart.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
