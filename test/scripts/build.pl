@@ -33,6 +33,9 @@ given ($job{'Platform'}) {
 		elsif ($job{'ToolChain'} eq "vs2010") {
 			run($scriptdir . "\\build_win_vs2010.bat", $job{'QtDir'}, $job{'Config'});
 		}
+		elsif ($job{'ToolChain'} eq "vs2010-64bit") {
+			run($scriptdir . "\\build_win_vs2010_64bit.bat", $job{'QtDir'}, $job{'Config'});
+		}
 		else {
 			die "Unknown toolchain!";
 		}
@@ -76,7 +79,7 @@ given ($job{'Platform'}) {
 		}
 		
 		# run make
-		run("make");
+		run("make -j 4");
 	}
 	
 	default {
