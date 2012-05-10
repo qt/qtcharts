@@ -2,6 +2,7 @@ use Cwd;
 use Cwd 'abs_path';
 use File::Basename;
 use File::Copy;
+use feature "switch";
 use lib 'test/scripts';
 use Jobs;
 
@@ -20,16 +21,23 @@ my $reports_path = "test-reports";
 # create reports path
 mkdir $reports_path;
 
-# Windows specific magic
-if ($job{'Platform'} eq "Win7") {
-	$ENV{'PATH'} .= ";" . $job{'QtDir'} . "\\bin"; # Add qtdir to path
-	$ENV{'PATH'} =~ s/\//\\/g; # replace / -> \
-}
+# setup environment for running tests
+given ($job{'Platform'}) {
+	
+	when ("Win7") {
+		$ENV{'PATH'} .= ";" . $job{'QtDir'} . "\\bin"; # Add qtdir to path
+		$ENV{'PATH'} =~ s/\//\\/g; # replace / -> \
+	}
 
-my $script_exit_status = 0;
+	when ("Linux") {
+		$ENV{'PATH'} = $job{'QtDir'} . "/bin:" . $ENV{'PATH'};
+		$ENV{'DISPLAY'} = ":0.0";
+	}
+}	
 
 # Go through all the files in the test folder
 # autotest is an executable beginning with "tst_"
+my $script_exit_status = 0;
 opendir (TESTAPPDIR, "$bin_path") or die "Couldn't open test app dir";
 @files = <TESTAPPDIR>;
 while ($testapp = readdir TESTAPPDIR) {
@@ -48,6 +56,7 @@ closedir TESTAPPDIR;
 
 print "\n*** script exit status : $script_exit_status ***\n\n";
 exit($script_exit_status);
+
 
 sub executeTestApp($) {
     my $testapp = $_[0];
