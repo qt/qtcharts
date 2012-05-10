@@ -25,12 +25,18 @@ mkdir $reports_path;
 given ($job{'Platform'}) {
 	
 	when ("Win7") {
-		$ENV{'PATH'} .= ";" . $job{'QtDir'} . "\\bin"; # Add qtdir to path
-		$ENV{'PATH'} =~ s/\//\\/g; # replace / -> \
+		# Add qtdir to path
+		$ENV{'PATH'} .= ";" . $job{'QtDir'} . "\\bin";
+		
+		# replace / -> \
+		$ENV{'PATH'} =~ s/\//\\/g;
 	}
 
 	when ("Linux") {
+		# Add qtdir to path
 		$ENV{'PATH'} = $job{'QtDir'} . "/bin:" . $ENV{'PATH'};
+		
+		# If this is not set we get "cannot connect to X server" errors
 		$ENV{'DISPLAY'} = ":0.0";
 	}
 }	
