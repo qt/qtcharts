@@ -60,6 +60,25 @@ given ($job{'Platform'}) {
 		run("make");
 	}
 	
+	when ("Linux") {
+		
+		# setup build environment
+		$ENV{'QTDIR'} = $job{'QtDir'};
+		$ENV{'PATH'} = $job{'QtDir'} . "/bin:" . $ENV{'PATH'};
+		
+		# run qmake
+		my $cmd;
+		if ($job{'ToolChain'} eq "gcc") {
+			run("qmake -r CONFIG+=" . $job{'Config'});
+		}
+		else {
+			die "Unknown toolchain!";
+		}
+		
+		# run make
+		run("make");
+	}
+	
 	default {
 		die "Unknown platform " . $job{'Platform'};
 	}
