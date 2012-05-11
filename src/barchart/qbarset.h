@@ -39,10 +39,21 @@ public:
 
     void setName(const QString name);
     QString name() const;
-    void append(const qreal value);
-    QBarSet& operator << (const qreal &value);
-    void insert(const int index, const qreal value);
-    void remove(const int index);
+
+// TODO:
+//    void append(const QPointF value);         // Appends bar with x-value
+//    void append(const QList<QPointF> value);  // Same with list
+    void append(const qreal value);             // TODO: change so, that count becomes x-value
+
+// TODO:
+//    void append(const QList<qreal> values);   // Append list of values. Using index as x-value
+
+    QBarSet& operator << (const qreal &value);  // TODO: change implementations so, that count becomes x-value
+// TODO:
+//    QBarSet& operator << (const QPointF &value);  // Appends bar with x-value
+
+    void insert(const int index, const qreal value); // TODO: internal reindexing (what happens, if there are points with real x values?)
+    void remove(const int index);                    // TODO: internal reindexing (what happens, if there are points with real x values?)
     void replace(const int index, const qreal value);
     qreal at(const int index) const;
     qreal operator [] (int index) const;
