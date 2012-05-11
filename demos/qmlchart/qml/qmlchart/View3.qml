@@ -33,99 +33,83 @@ Rectangle {
             "6", "2006", "7", "2007", "8", "2008", "9", "2009", "10", "2010", "11", "2011"]
 
         AreaSeries {
-            name: "Swedish"
-            points: [
-                XyPoint { x: 0; y: 1 },
-                XyPoint { x: 1; y: 1 },
-                XyPoint { x: 2; y: 3 },
-                XyPoint { x: 3; y: 3 },
-                XyPoint { x: 4; y: 2 },
-                XyPoint { x: 5; y: 0 },
-                XyPoint { x: 6; y: 2 },
-                XyPoint { x: 7; y: 1 },
-                XyPoint { x: 8; y: 2 },
-                XyPoint { x: 9; y: 1 },
-                XyPoint { x: 10; y: 3 },
-                XyPoint { x: 11; y: 3 }
-            ]
-            lowerPoints: [
-                XyPoint { x: 0; y: 0 },
-                XyPoint { x: 1; y: 0 },
-                XyPoint { x: 2; y: 0 },
-                XyPoint { x: 3; y: 0 },
-                XyPoint { x: 4; y: 0 },
-                XyPoint { x: 5; y: 0 },
-                XyPoint { x: 6; y: 0 },
-                XyPoint { x: 7; y: 0 },
-                XyPoint { x: 8; y: 0 },
-                XyPoint { x: 9; y: 0 },
-                XyPoint { x: 10; y: 0 },
-                XyPoint { x: 11; y: 0 }
-            ]
-        }
-
-        AreaSeries {
             name: "Russian"
-            points: [
-                XyPoint { x: 0; y: 1 },
-                XyPoint { x: 1; y: 1 },
-                XyPoint { x: 2; y: 1 },
-                XyPoint { x: 3; y: 1 },
-                XyPoint { x: 4; y: 1 },
-                XyPoint { x: 5; y: 0 },
-                XyPoint { x: 6; y: 1 },
-                XyPoint { x: 7; y: 1 },
-                XyPoint { x: 8; y: 4 },
-                XyPoint { x: 9; y: 3 },
-                XyPoint { x: 10; y: 2 },
-                XyPoint { x: 11; y: 1 }
-            ]
-            lowerPoints: [
-                XyPoint { x: 0; y: 0 },
-                XyPoint { x: 1; y: 0 },
-                XyPoint { x: 2; y: 0 },
-                XyPoint { x: 3; y: 0 },
-                XyPoint { x: 4; y: 0 },
-                XyPoint { x: 5; y: 0 },
-                XyPoint { x: 6; y: 0 },
-                XyPoint { x: 7; y: 0 },
-                XyPoint { x: 8; y: 0 },
-                XyPoint { x: 9; y: 0 },
-                XyPoint { x: 10; y: 0 },
-                XyPoint { x: 11; y: 0 }
-            ]
+            upperModel: russianModel
+            lowerModel: zerosModel
         }
-
+        AreaSeries {
+            name: "Swedish"
+            upperModel: swedishModel
+            lowerModel: zerosModel
+        }
         AreaSeries {
             name: "Finnish"
-            points: [
-                XyPoint { x: 0; y: 0 },
-                XyPoint { x: 1; y: 0 },
-                XyPoint { x: 2; y: 0 },
-                XyPoint { x: 3; y: 0 },
-                XyPoint { x: 4; y: 0 },
-                XyPoint { x: 5; y: 0 },
-                XyPoint { x: 6; y: 1 },
-                XyPoint { x: 7; y: 0 },
-                XyPoint { x: 8; y: 0 },
-                XyPoint { x: 9; y: 0 },
-                XyPoint { x: 10; y: 0 },
-                XyPoint { x: 11; y: 1 }
-            ]
-            lowerPoints: [
-                XyPoint { x: 0; y: 0 },
-                XyPoint { x: 1; y: 0 },
-                XyPoint { x: 2; y: 0 },
-                XyPoint { x: 3; y: 0 },
-                XyPoint { x: 4; y: 0 },
-                XyPoint { x: 5; y: 0 },
-                XyPoint { x: 6; y: 0 },
-                XyPoint { x: 7; y: 0 },
-                XyPoint { x: 8; y: 0 },
-                XyPoint { x: 9; y: 0 },
-                XyPoint { x: 10; y: 0 },
-                XyPoint { x: 11; y: 0 }
-            ]
+            upperModel: finnishModel
+            lowerModel: zerosModel
         }
+    }
+
+    XYModel {
+        id: zerosModel
+        XyPoint { x: 0; y: 0 }
+        XyPoint { x: 1; y: 0 }
+        XyPoint { x: 2; y: 0 }
+        XyPoint { x: 3; y: 0 }
+        XyPoint { x: 4; y: 0 }
+        XyPoint { x: 5; y: 0 }
+        XyPoint { x: 6; y: 0 }
+        XyPoint { x: 7; y: 0 }
+        XyPoint { x: 8; y: 0 }
+        XyPoint { x: 9; y: 0 }
+        XyPoint { x: 10; y: 0 }
+        XyPoint { x: 11; y: 0 }
+    }
+
+    XYModel {
+        id: russianModel
+        XyPoint { x: 0; y: 1 }
+        XyPoint { x: 1; y: 1 }
+        XyPoint { x: 2; y: 1 }
+        XyPoint { x: 3; y: 1 }
+        XyPoint { x: 4; y: 1 }
+        XyPoint { x: 5; y: 0 }
+        XyPoint { x: 6; y: 1 }
+        XyPoint { x: 7; y: 1 }
+        XyPoint { x: 8; y: 4 }
+        XyPoint { x: 9; y: 3 }
+        XyPoint { x: 10; y: 2 }
+        XyPoint { x: 11; y: 1 }
+    }
+
+    XYModel {
+        id: swedishModel
+        XyPoint { x: 0; y: 1 }
+        XyPoint { x: 1; y: 1 }
+        XyPoint { x: 2; y: 3 }
+        XyPoint { x: 3; y: 3 }
+        XyPoint { x: 4; y: 2 }
+        XyPoint { x: 5; y: 0 }
+        XyPoint { x: 6; y: 2 }
+        XyPoint { x: 7; y: 1 }
+        XyPoint { x: 8; y: 2 }
+        XyPoint { x: 9; y: 1 }
+        XyPoint { x: 10; y: 3 }
+        XyPoint { x: 11; y: 3 }
+    }
+
+    XYModel {
+        id: finnishModel
+        XyPoint { x: 0; y: 0 }
+        XyPoint { x: 1; y: 0 }
+        XyPoint { x: 2; y: 0 }
+        XyPoint { x: 3; y: 0 }
+        XyPoint { x: 4; y: 0 }
+        XyPoint { x: 5; y: 0 }
+        XyPoint { x: 6; y: 1 }
+        XyPoint { x: 7; y: 0 }
+        XyPoint { x: 8; y: 0 }
+        XyPoint { x: 9; y: 0 }
+        XyPoint { x: 10; y: 0 }
+        XyPoint { x: 11; y: 1 }
     }
 }

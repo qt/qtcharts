@@ -26,7 +26,7 @@ Rectangle {
 
     ChartView {
         id: chart
-        title: "Car brand shares in Finland"
+        title: "Top-5 car brand shares in Finland"
         anchors.top: parent.top
         anchors.bottom: button.top
         anchors.left: parent.left

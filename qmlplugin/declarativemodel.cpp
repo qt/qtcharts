@@ -91,19 +91,16 @@ DeclarativePieModel::DeclarativePieModel(QObject *parent) :
 
 void DeclarativePieModel::append(QPieSlice* slice)
 {
-    qDebug() << "DeclarativePieModel::append:" << slice->label() << " " << slice->value();
-    qDebug() << "rowCount:" << rowCount();
-    qDebug() << "coolCount:" << columnCount();
+//    qDebug() << "DeclarativePieModel::append:" << slice->label() << " " << slice->value();
     insertRow(rowCount());
-    qDebug() << "new rowCount:" << rowCount();
 
-    qDebug() << setData(createIndex(rowCount() - 1, 0), slice->value());
-    qDebug() << setData(createIndex(rowCount() - 1, 1), slice->label());
+    setData(createIndex(rowCount() - 1, 0), slice->value());
+    setData(createIndex(rowCount() - 1, 1), slice->label());
 }
 
 void DeclarativePieModel::append(QVariantList slices)
 {
-    qDebug() << "append:" << slices;
+//    qDebug() << "append:" << slices;
     QString label = "";
     for (int i(0); i < slices.count(); i++) {
         if (i % 2) {

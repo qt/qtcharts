@@ -23,6 +23,7 @@
 
 #include "qchartglobal.h"
 #include "qareaseries.h"
+#include "declarativelineseries.h"
 #include "declarativexyseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -30,21 +31,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class DeclarativeAreaSeries : public QAreaSeries, public DeclarativeXySeries
 {
     Q_OBJECT
-    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> points READ points)
-    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> lowerPoints READ lowerPoints)
+    Q_PROPERTY(DeclarativeXyModel *upperModel READ declarativeUpperModel WRITE setDeclarativeUpperModel)
+    Q_PROPERTY(DeclarativeXyModel *lowerModel READ declarativeLowerModel WRITE setDeclarativeLowerModel)
 
 public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
 
 public:
-    QDeclarativeListProperty<DeclarativeXyPoint> points();
-    QDeclarativeListProperty<DeclarativeXyPoint> lowerPoints();
-
-public Q_SLOTS:
-    static void appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                             DeclarativeXyPoint *element);
-    static void appendLowerPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                             DeclarativeXyPoint *element);
+    bool setDeclarativeUpperModel(DeclarativeXyModel *model);
+    DeclarativeXyModel *declarativeUpperModel();
+    bool setDeclarativeLowerModel(DeclarativeXyModel *model);
+    DeclarativeXyModel *declarativeLowerModel();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

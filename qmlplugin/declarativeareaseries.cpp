@@ -21,7 +21,6 @@
 #include "declarativeareaseries.h"
 #include "declarativechart.h"
 #include "qchart.h"
-#include "qlineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -30,34 +29,40 @@ DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
 {
 }
 
-QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeAreaSeries::points()
+bool DeclarativeAreaSeries::setDeclarativeUpperModel(DeclarativeXyModel *model)
 {
-    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeAreaSeries::appendPoints);
-}
-
-QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeAreaSeries::lowerPoints()
-{
-    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeAreaSeries::appendLowerPoints);
-}
-
-void DeclarativeAreaSeries::appendPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                                          DeclarativeXyPoint *element)
-{
-    QAreaSeries *series = qobject_cast<QAreaSeries *>(list->object);
-    if (series) {
-        QLineSeries *upper = series->upperSeries();
-        upper->append(element->x(), element->y());
+    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
+    bool value(false);
+    if (m) {
+        upperSeries()->setModel(m);
+        upperSeries()->setModelMapping(0, 1, Qt::Vertical);
+    } else {
+        qWarning("DeclarativeAreaSeries: Illegal model");
     }
+    return value;
 }
 
-void DeclarativeAreaSeries::appendLowerPoints(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                                              DeclarativeXyPoint *element)
+DeclarativeXyModel *DeclarativeAreaSeries::declarativeUpperModel()
 {
-    QAreaSeries *series = qobject_cast<QAreaSeries *>(list->object);
-    if (series) {
-        QLineSeries *lower = series->lowerSeries();
-        lower->append(element->x(), element->y());
+    return qobject_cast<DeclarativeXyModel *>(upperSeries()->model());
+}
+
+bool DeclarativeAreaSeries::setDeclarativeLowerModel(DeclarativeXyModel *model)
+{
+    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
+    bool value(false);
+    if (m) {
+        lowerSeries()->setModel(m);
+        lowerSeries()->setModelMapping(0, 1, Qt::Vertical);
+    } else {
+        qWarning("DeclarativeAreaSeries: Illegal model");
     }
+    return value;
+}
+
+DeclarativeXyModel *DeclarativeAreaSeries::declarativeLowerModel()
+{
+    return qobject_cast<DeclarativeXyModel *>(lowerSeries()->model());
 }
 
 #include "moc_declarativeareaseries.cpp"
