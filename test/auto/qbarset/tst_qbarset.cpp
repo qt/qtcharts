@@ -56,6 +56,17 @@ private slots:
     void count();
     void sum_data();
     void sum();
+    void setPen_data();
+    void setPen();
+    void setBrush_data();
+    void setBrush();
+    void setLabelPen_data();
+    void setLabelPen();
+    void setLabelBrush_data();
+    void setLabelBrush();
+    void setLabelFont_data();
+    void setLabelFont();
+
 private:
     QBarSet* m_barset;
 };
@@ -336,6 +347,88 @@ void tst_QBarSet::sum()
     m_barset->append(4.0);
     QVERIFY(qFuzzyCompare(m_barset->sum(),10.0));
 }
+
+void tst_QBarSet::setPen_data()
+{
+
+}
+
+void tst_QBarSet::setPen()
+{
+    QVERIFY(m_barset->pen() == QPen());
+
+    QPen pen;
+    pen.setColor(QColor(128,128,128,128));
+    m_barset->setPen(pen);
+
+    QVERIFY(m_barset->pen() == pen);
+}
+
+void tst_QBarSet::setBrush_data()
+{
+
+}
+
+void tst_QBarSet::setBrush()
+{
+    QVERIFY(m_barset->brush() == QBrush());
+
+    QBrush brush;
+    brush.setColor(QColor(128,128,128,128));
+    m_barset->setBrush(brush);
+
+    QVERIFY(m_barset->brush() == brush);
+}
+
+void tst_QBarSet::setLabelPen_data()
+{
+
+}
+
+void tst_QBarSet::setLabelPen()
+{
+    QVERIFY(m_barset->labelPen() == QPen());
+
+    QPen pen;
+    pen.setColor(QColor(128,128,128,128));
+    m_barset->setLabelPen(pen);
+
+    QVERIFY(m_barset->labelPen() == pen);
+}
+
+void tst_QBarSet::setLabelBrush_data()
+{
+
+}
+
+void tst_QBarSet::setLabelBrush()
+{
+    QVERIFY(m_barset->labelBrush() == QBrush());
+
+    QBrush brush;
+    brush.setColor(QColor(128,128,128,128));
+    m_barset->setLabelBrush(brush);
+
+    QVERIFY(m_barset->labelBrush() == brush);
+}
+
+void tst_QBarSet::setLabelFont_data()
+{
+
+}
+
+void tst_QBarSet::setLabelFont()
+{
+    QVERIFY(m_barset->labelFont() == QFont());
+
+    QFont font;
+    font.setBold(true);
+    font.setItalic(true);
+    m_barset->setLabelFont(font);
+
+    QVERIFY(m_barset->labelFont() == font);
+}
+
 
 QTEST_MAIN(tst_QBarSet)
 
