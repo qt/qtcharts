@@ -42,6 +42,8 @@ public:
     Chart* createGraphics(ChartPresenter* presenter);
     QSplineSeriesPrivate(QSplineSeries* q);
 
+    QPointF controlPoint(int index) const;
+
 public Q_SLOTS:
     void updateControlPoints();
 

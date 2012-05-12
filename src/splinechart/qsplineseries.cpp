@@ -71,19 +71,13 @@ QSplineSeries::~QSplineSeries()
 {
     Q_D(QSplineSeries);
     if(d->m_dataset){
-           d->m_dataset->removeSeries(this);
+        d->m_dataset->removeSeries(this);
     }
 }
 
 QAbstractSeries::SeriesType QSplineSeries::type() const
 {
     return QAbstractSeries::SeriesTypeSpline;
-}
-
-QPointF QSplineSeries::controlPoint(int index) const
-{
-    Q_D(const QSplineSeries);
-    return d->m_controlPoints[index];
 }
 
 /*!
@@ -214,6 +208,13 @@ QVector<qreal> QSplineSeriesPrivate::firstControlPoints(const QVector<qreal>& ve
         result[count - i - 1] -= temp[count - i] * result[count - i];
 
     return result;
+}
+
+QPointF QSplineSeriesPrivate::controlPoint(int index) const
+{
+    //    Q_D(const QSplineSeries);
+    //    return d->m_controlPoints[index];
+    return m_controlPoints[index];
 }
 
 /*!

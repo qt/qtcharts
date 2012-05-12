@@ -74,7 +74,8 @@ void SplineChartItem::updateLayout(QVector<QPointF> &oldPoints, QVector<QPointF>
 
 QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 {
-    return XYChartItem::calculateGeometryPoint(m_series->controlPoint(index));
+//    return XYChartItem::calculateGeometryPoint(m_series->controlPoint(index));
+    return XYChartItem::calculateGeometryPoint(m_series->d_func()->controlPoint(index));
 }
 
 void SplineChartItem::setLayout(QVector<QPointF> &points)
