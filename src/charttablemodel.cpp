@@ -64,15 +64,14 @@ QVariant ChartTableModel::headerData (int section, Qt::Orientation orientation, 
     if (role != Qt::DisplayRole)
         return QVariant();
 
-    if (orientation == Qt::Horizontal)
-    {
-        if (section%2 == 0)
+    if (orientation == Qt::Horizontal) {
+        if (section % 2 == 0)
             return "x";
         else
             return "y";
-    }
-    else
+    } else {
         return QString("%1").arg(section + 1);
+    }
 }
 
 QVariant ChartTableModel::data(const QModelIndex &index, int role) const

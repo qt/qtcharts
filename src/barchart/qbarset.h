@@ -32,6 +32,7 @@ class QBarSetPrivate;
 class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString name READ name WRITE setName)
 
 public:
     explicit QBarSet(const QString name, QObject *parent = 0);

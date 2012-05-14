@@ -22,25 +22,45 @@
 #define DECLARATIVEBARSERIES_H
 
 #include "qchartglobal.h"
+#include "declarativemodel.h"
 #include <QDeclarativeItem>
+#include <QDeclarativeParserStatus>
+#include <QBarSeries>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
 class QBarSeries;
 
-class DeclarativeBarSeries : public QDeclarativeItem
+class DeclarativeBarSet : public QBarSet
 {
     Q_OBJECT
+    Q_PROPERTY(QVariantList values READ values WRITE setValues)
+    Q_PROPERTY(QString name READ name WRITE setName)
+
+public:
+    explicit DeclarativeBarSet(QObject *parent = 0);
+    QVariantList values();
+    void setValues(QVariantList values);
+};
+
+class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
+{
+    Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(DeclarativeBarModel *model READ declarativeModel WRITE setDeclarativeModel)
     Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
 
 public:
     explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
 
 public: // from QDeclarativeParserStatus
+    void classBegin();
     void componentComplete();
 
 public:
+    bool setDeclarativeModel(DeclarativeBarModel *model);
+    DeclarativeBarModel *declarativeModel();
     void setBarCategories(QStringList categories);
     QStringList barCategories();
 
@@ -49,9 +69,6 @@ Q_SIGNALS:
 public Q_SLOTS:
 
 public:
-    QChart *m_chart;
-    QBarSeries *m_series;
-    QStringList m_categories;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

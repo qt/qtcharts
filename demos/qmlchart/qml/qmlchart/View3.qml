@@ -49,6 +49,19 @@ Rectangle {
         }
     }
 
+    // TODO: optional implementation with generic ChartModel
+//    AreaSeries {
+//        model: chartModel
+//        modelMapping: XyMapping {
+//            xValues: 0 // undefined by default
+//            yValues: 1 // undefined by default
+//            first: 0  // 0 by default
+//            count: 10 // "Undefined" by default
+//            orientation: XyMapping.Vertical // Vertical by default
+//        }
+//    }
+
+
     XYModel {
         id: zerosModel
         XyPoint { x: 0; y: 0 }

@@ -30,6 +30,15 @@ DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
 {
 }
 
+QPieSlice *DeclarativePieSeries::slice(int index)
+{
+    QList<QPieSlice*> sliceList = slices();
+    if (index < sliceList.count())
+        return sliceList[index];
+
+    return 0;
+}
+
 bool DeclarativePieSeries::setPieModel(DeclarativePieModel *model)
 {
     QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);

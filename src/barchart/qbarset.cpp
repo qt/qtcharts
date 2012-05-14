@@ -137,6 +137,9 @@ void QBarSet::replace(const int index, const qreal value)
 */
 qreal QBarSet::at(const int index) const
 {
+    if (index < 0 || index >= d_ptr->m_values.count())
+        return 0.0;
+
     return d_ptr->m_values.at(index);
 }
 

@@ -24,10 +24,54 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+////////////// Table model (base) ///////////////////
+
+DeclarativeTableModel::DeclarativeTableModel(QObject *parent) :
+    ChartTableModel(parent)
+{
+}
+
+void DeclarativeTableModel::classBegin()
+{
+}
+
+void DeclarativeTableModel::componentComplete()
+{
+    foreach (QObject *child, children())
+        appendToModel(child);
+}
+
+QDeclarativeListProperty<QObject> DeclarativeTableModel::modelChildren()
+{
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeTableModel::appendModelChild);
+}
+
+void DeclarativeTableModel::appendModelChild(QDeclarativeListProperty<QObject> *list,
+                                             QObject *child)
+{
+    // childs are added in componentComplete instead
+    Q_UNUSED(list)
+    Q_UNUSED(child)
+}
+
+void DeclarativeTableModel::appendToModel(QObject *object)
+{
+    if (qobject_cast<DeclarativeBarModel *>(this)) {
+        DeclarativeBarModel *model = qobject_cast<DeclarativeBarModel *>(this);
+        model->append(qobject_cast<QBarSet *>(object));
+    } else if (qobject_cast<DeclarativePieModel *>(this)) {
+        DeclarativePieModel *model = qobject_cast<DeclarativePieModel *>(this);
+        model->append(qobject_cast<QPieSlice *>(object));
+    } else if (qobject_cast<DeclarativeXyModel *>(this)) {
+        DeclarativeXyModel *model = qobject_cast<DeclarativeXyModel *>(this);
+        model->append(qobject_cast<DeclarativeXyPoint *>(object));
+    }
+}
+
 ////////////// XY model ///////////////////////
 
 DeclarativeXyModel::DeclarativeXyModel(QObject *parent) :
-    ChartTableModel(parent)
+    DeclarativeTableModel(parent)
 {
 }
 
@@ -67,25 +111,10 @@ void DeclarativeXyModel::append(QVariantList points)
     }
 }
 
-QDeclarativeListProperty<DeclarativeXyPoint> DeclarativeXyModel::points()
-{
-    return QDeclarativeListProperty<DeclarativeXyPoint>(this, 0, &DeclarativeXyModel::appendPoint);
-}
-
-void DeclarativeXyModel::appendPoint(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                                     DeclarativeXyPoint *point)
-{
-    DeclarativeXyModel *model = qobject_cast<DeclarativeXyModel *>(list->object);
-    if (model)
-        model->append(point);
-    else
-        qWarning() << "Illegal point item";
-}
-
 ////////////// Pie model ///////////////////////
 
 DeclarativePieModel::DeclarativePieModel(QObject *parent) :
-    ChartTableModel(parent)
+    DeclarativeTableModel(parent)
 {
 }
 
@@ -109,6 +138,10 @@ void DeclarativePieModel::append(QVariantList slices)
             if (ok) {
                 QPieSlice *slice = new QPieSlice(value, label);
                 append(slice);
+                // TODO: how to copy the properties to the newly added slice?
+                // (DeclarativePieModel::append only copies the label and value to the model)
+//                QPieSlice *addedSlice = append(slice);
+//                addedSlice->setExploded(slice->isExploded());
             } else {
                 qWarning() << "Illegal slice item";
             }
@@ -118,19 +151,25 @@ void DeclarativePieModel::append(QVariantList slices)
     }
 }
 
-QDeclarativeListProperty<QPieSlice> DeclarativePieModel::slices()
+////////////// Bar model ///////////////////////
+
+DeclarativeBarModel::DeclarativeBarModel(QObject *parent) :
+    DeclarativeTableModel(parent)
 {
-    return QDeclarativeListProperty<QPieSlice>(this, 0, &DeclarativePieModel::appendSlice);
 }
 
-void DeclarativePieModel::appendSlice(QDeclarativeListProperty<QPieSlice> *list,
-                                      QPieSlice *slice)
+void DeclarativeBarModel::append(QBarSet* barSet)
 {
-    DeclarativePieModel *pieModel = qobject_cast<DeclarativePieModel *>(list->object);
-    if (pieModel)
-        pieModel->append(slice);
-    else
-        qWarning() << "Illegal slice item";
+    insertColumn(columnCount());
+    for (int i(0); i < barSet->count(); i++) {
+        if (rowCount() < (i + 1))
+            insertRow(rowCount());
+        setData(createIndex(i, columnCount() - 1), barSet->at(i));
+//        insertRow(rowCount());
+//        setData(createIndex(rowCount() - 1, 0), );
+//        setData(createIndex(rowCount() - 1, 1), barSet->at(i));
+    }
+//    TODO: setModelMapping(0, 1, columnCount(), Qt::Vertical);
 }
 
 #include "moc_declarativemodel.cpp"

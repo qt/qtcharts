@@ -33,8 +33,9 @@ class PieSliceData;
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY changed)
-    Q_PROPERTY(qreal value READ value WRITE setValue NOTIFY changed)
+    Q_PROPERTY(QString label READ label WRITE setLabel)
+    Q_PROPERTY(qreal value READ value WRITE setValue)
+    Q_PROPERTY(bool exploded READ isExploded WRITE setExploded)
 
 public:
     explicit QPieSlice(QObject *parent = 0);

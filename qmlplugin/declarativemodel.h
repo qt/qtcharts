@@ -23,46 +23,70 @@
 
 #include "qchartglobal.h"
 #include "declarativexypoint.h"
-#include "qpieslice.h"
+#include <QPieSlice>
 #include "../src/charttablemodel.h" // TODO
+#include <QBarSet>
 #include <QDeclarativeListProperty>
 #include <QVariant>
+#include <QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeXyModel : public ChartTableModel
+class DeclarativeTableModel : public ChartTableModel, public QDeclarativeParserStatus
 {
     Q_OBJECT
-    Q_PROPERTY(QDeclarativeListProperty<DeclarativeXyPoint> points READ points)
-    Q_CLASSINFO("DefaultProperty", "points")
+    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QDeclarativeListProperty<QObject> modelChildren READ modelChildren)
+    Q_CLASSINFO("DefaultProperty", "modelChildren")
+
+public:
+    explicit DeclarativeTableModel(QObject *parent = 0);
+    QDeclarativeListProperty<QObject> modelChildren();
+
+public: // from QDeclarativeParserStatus
+    void classBegin();
+    void componentComplete();
+
+public Q_SLOTS:
+    static void appendModelChild(QDeclarativeListProperty<QObject> *list,
+                                 QObject *element);
+private:
+    void appendToModel(QObject *object);
+};
+
+class DeclarativeXyModel : public DeclarativeTableModel
+{
+    Q_OBJECT
 
 public:
     explicit DeclarativeXyModel(QObject *parent = 0);
-    QDeclarativeListProperty<DeclarativeXyPoint> points();
 
 public Q_SLOTS:
     void append(DeclarativeXyPoint* point);
     void append(QVariantList points);
-    static void appendPoint(QDeclarativeListProperty<DeclarativeXyPoint> *list,
-                            DeclarativeXyPoint *element);
 };
 
-
-class DeclarativePieModel : public ChartTableModel
+class DeclarativePieModel : public DeclarativeTableModel
 {
     Q_OBJECT
-    Q_PROPERTY(QDeclarativeListProperty<QPieSlice> slices READ slices)
-    Q_CLASSINFO("DefaultProperty", "slices")
 
 public:
     explicit DeclarativePieModel(QObject *parent = 0);
-    QDeclarativeListProperty<QPieSlice> slices();
 
 public Q_SLOTS:
     void append(QPieSlice* slice);
     void append(QVariantList slices);
-    static void appendSlice(QDeclarativeListProperty<QPieSlice> *list,
-                            QPieSlice *element);
+};
+
+class DeclarativeBarModel : public DeclarativeTableModel
+{
+    Q_OBJECT
+
+public:
+    explicit DeclarativeBarModel(QObject *parent = 0);
+
+public Q_SLOTS:
+    void append(QBarSet* barSet);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

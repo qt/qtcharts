@@ -41,6 +41,9 @@ class DeclarativePieSeries : public QPieSeries
 public:
     explicit DeclarativePieSeries(QObject *parent = 0);
 
+public:
+    Q_INVOKABLE QPieSlice *slice(int index);
+
 public Q_SLOTS:
 
 public:

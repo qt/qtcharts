@@ -30,7 +30,6 @@
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
-//#include "declarativepiemodel.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -54,9 +53,10 @@ public:
         qmlRegisterType<DeclarativeBarSeries>(uri, 1, 0, "BarSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
         qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
-        // TODO: a declarative model for each type
         qmlRegisterType<DeclarativePieModel>(uri, 1, 0, "PieModel");
         qmlRegisterType<DeclarativeXyModel>(uri, 1, 0, "XYModel");
+        qmlRegisterType<DeclarativeBarModel>(uri, 1, 0, "BarModel");
+        qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
     }
 };
 

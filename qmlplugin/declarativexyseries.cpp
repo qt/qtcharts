@@ -40,7 +40,7 @@ bool DeclarativeXySeries::setDeclarativeModel(DeclarativeXyModel *model)
     if (m) {
         // All the inherited objects must be of type QXYSeries, so it is safe to cast
         QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
-        series->setModel(m);
+        value = series->setModel(m);
         series->setModelMapping(0, 1, Qt::Vertical);
     } else {
         qWarning("DeclarativeXySeries: Illegal model");

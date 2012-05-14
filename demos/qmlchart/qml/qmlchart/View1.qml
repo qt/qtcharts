@@ -23,6 +23,7 @@ import QtCommercial.Chart 1.0
 
 Rectangle {
     anchors.fill: parent
+    property int __explodedIndex: -1
 
     ChartView {
         id: chart
@@ -36,14 +37,34 @@ Rectangle {
         animationOptions: ChartView.SeriesAnimations
 
         PieSeries {
+            id: pieSeries
             model: PieModel {
                 id: pieModel
-                PieSlice { label: "Volkswagen"; value: 13.5 }
+                // TODO: initializing properties does not work at the moment, see DeclarativePieModel::append
+                // TODO: explode range, color, border color, border thickness, font, ..
+                PieSlice { exploded: true; label: "Volkswagen"; value: 13.5 }
                 PieSlice { label: "Toyota"; value: 10.9 }
                 PieSlice { label: "Ford"; value: 8.6 }
                 PieSlice { label: "Skoda"; value: 8.2 }
                 PieSlice { label: "Volvo"; value: 6.8 }
             }
+        }
+    }
+
+    Timer {
+        repeat: true
+        interval: 2000
+        running: true
+        onTriggered: {
+            changeSliceExploded(__explodedIndex);
+            __explodedIndex = (__explodedIndex + 1) % pieModel.count;
+            changeSliceExploded(__explodedIndex);
+        }
+    }
+
+    function changeSliceExploded(index) {
+        if (index >= 0 && index < pieModel.count) {
+            pieSeries.slice(index).exploded = !pieSeries.slice(index).exploded;
         }
     }
 
@@ -74,6 +95,7 @@ Rectangle {
                     // TODO: this should also be doable by redefining the range inside the model
                     button.state = "";
                     pieModel.removeRow(pieModel.count - 1);
+                    // TODO: removeAll("label") ?
                 }
             }
         }
@@ -89,9 +111,14 @@ Rectangle {
 //    // column3 not used by pie series
 //    PieSeries {
 //        model: chartModel
-//        mappings: [ {"column1":"label"}, {"column2":"value"} ]
+//        modelMapping: PieMapping {
+//            labels: 0 // undefined by default
+//            values: 1 // undefined by default
+//            first: 0  // 0 by default
+//            count: 10 // "Undefined" by default
+//            orientation: PieMapping.Vertical // Vertical by default
+//        }
 //    }
-
 
     // TODO: show how to use data from a list model in a chart view
     // i.e. copy the data into a chart model

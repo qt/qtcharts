@@ -20,60 +20,76 @@
 
 #include "declarativebarseries.h"
 #include "declarativechart.h"
-#include "qchart.h"
-#include "qbarseries.h"
-#include "qbarset.h"
+#include <QBarSet>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
-    QDeclarativeItem(parent)
+DeclarativeBarSet::DeclarativeBarSet(QObject *parent) :
+    QBarSet("", parent)
 {
-    setFlag(QGraphicsItem::ItemHasNoContents, false);
+}
+
+QVariantList DeclarativeBarSet::values()
+{
+    QVariantList values;
+    for (int i(0); i < count(); i++)
+        values.append(QVariant(at(i)));
+    return values;
+}
+
+void DeclarativeBarSet::setValues(QVariantList values)
+{
+    while (count())
+        remove(count() - 1);
+
+    for (int i(0); i < values.count(); i++) {
+        if (values.at(i).canConvert(QVariant::Double))
+            append(values[i].toDouble());
+    }
+}
+
+DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
+    QBarSeries(parent)
+{
+}
+
+void DeclarativeBarSeries::classBegin()
+{
 }
 
 void DeclarativeBarSeries::componentComplete()
 {
+    if (model())
+        setModelMapping(0, 1, 1, Qt::Vertical);
+}
+
+bool DeclarativeBarSeries::setDeclarativeModel(DeclarativeBarModel *model)
+{
+    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
+    bool value(false);
+    if (m) {
+        value = setModel(m);
+        //setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
+        setModelMapping(0, 1, 1, Qt::Vertical);
+    } else {
+        qWarning("DeclarativeBarSeries: Illegal model");
+    }
+    return value;
+}
+
+DeclarativeBarModel *DeclarativeBarSeries::declarativeModel()
+{
+    return qobject_cast<DeclarativeBarModel *>(model());
 }
 
 void DeclarativeBarSeries::setBarCategories(QStringList categories)
 {
-    m_categories = categories;
-
-    if (m_series) {
-        delete m_series;
-        m_series = 0;
-    }
-
-    DeclarativeChart *declarativeChart = qobject_cast<DeclarativeChart *>(parent());
-    if (declarativeChart) {
-        QChart *chart = qobject_cast<QChart *>(declarativeChart->m_chart);
-        Q_ASSERT(chart);
-
-//        m_series = new QBarSeries(m_categories);
-        m_series = new QBarSeries();
-        m_series->setCategories(m_categories);
-
-        // TODO: use data from model
-        QBarSet *set0 = new QBarSet("Bub");
-        QBarSet *set1 = new QBarSet("Bob");
-        QBarSet *set2 = new QBarSet("Guybrush");
-
-        *set0 << 1 << 2 << 3 << 4 << 5 << 6;
-        *set1 << 5 << 1 << 2 << 4 << 1 << 7;
-        *set2 << 3 << 5 << 8 << 13 << 8 << 5;
-
-        m_series->appendBarSet(set0);
-        m_series->appendBarSet(set1);
-        m_series->appendBarSet(set2);
-
-        chart->addSeries(m_series);
-    }
+    setCategories(categories);
 }
 
 QStringList DeclarativeBarSeries::barCategories()
 {
-    return m_categories;
+    return categories();
 }
 
 #include "moc_declarativebarseries.cpp"
