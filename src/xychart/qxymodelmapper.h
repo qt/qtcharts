@@ -3,13 +3,18 @@
 
 #include "qchartglobal.h"
 #include <QObject>
-#include <Qt>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QTCOMMERCIALCHART_EXPORT QXYModelMapper : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int mapX READ mapX WRITE setMapX)
+    Q_PROPERTY(int mapY READ mapY WRITE setMapY)
+    Q_PROPERTY(int first READ first WRITE setFirst)
+    Q_PROPERTY(int count READ count WRITE setCount)
+    Q_PROPERTY(Qt::Orientation orientation READ orientation WRITE setOrientation)
+    Q_ENUMS(Qt::Orientation)
 
 public:
     explicit QXYModelMapper(QObject *parent = 0);

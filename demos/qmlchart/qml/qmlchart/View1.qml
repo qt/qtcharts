@@ -25,6 +25,15 @@ Rectangle {
     anchors.fill: parent
     property int __explodedIndex: -1
 
+    ChartModel {
+        id: chartModel
+        ChartModelRow { values: ["Volkswagen", 13.5] }
+        ChartModelRow { values: ["Toyota", 10.9] }
+        ChartModelRow { values: ["Ford", 8.6] }
+        ChartModelRow { values: ["Skoda", 8.2] }
+        ChartModelRow { values: ["Volvo", 6.8] }
+    }
+
     ChartView {
         id: chart
         title: "Top-5 car brand shares in Finland"
@@ -38,17 +47,20 @@ Rectangle {
 
         PieSeries {
             id: pieSeries
-            model: PieModel {
-                id: pieModel
-                // TODO: initializing properties does not work at the moment, see DeclarativePieModel::append
-                // TODO: explode range, color, border color, border thickness, font, ..
-                PieSlice { exploded: true; label: "Volkswagen"; value: 13.5 }
-                PieSlice { label: "Toyota"; value: 10.9 }
-                PieSlice { label: "Ford"; value: 8.6 }
-                PieSlice { label: "Skoda"; value: 8.2 }
-                PieSlice { label: "Volvo"; value: 6.8 }
-            }
+            model: chartModel
+            modelMapper.mapLabels: 0
+            modelMapper.mapValues: 1
+            modelMapper.first: 0
+            modelMapper.count: -1 // "Undefined" = -1 by default
+            modelMapper.orientation: PieModelMapper.Vertical
+
+            // TODO: PieSlice to append the data directly into the mapped columns
+            //PieSlice { label: "Toyota"; value: 10.9 }
         }
+    }
+
+    Component.onCompleted: {
+        chartModel.append(["Others", 52.0]);
     }
 
     Timer {
@@ -56,15 +68,13 @@ Rectangle {
         interval: 2000
         running: true
         onTriggered: {
-            changeSliceExploded(__explodedIndex);
-            __explodedIndex = (__explodedIndex + 1) % pieModel.count;
-            changeSliceExploded(__explodedIndex);
-        }
-    }
+            // Set all slices as not exploded
+            for (var i = 0; i < pieSeries.count; i++)
+                pieSeries.slice(i).exploded = false;
 
-    function changeSliceExploded(index) {
-        if (index >= 0 && index < pieModel.count) {
-            pieSeries.slice(index).exploded = !pieSeries.slice(index).exploded;
+            // Explode one of the slices
+            __explodedIndex = (__explodedIndex + 1) % pieSeries.count;
+            pieSeries.slice(__explodedIndex).exploded = true;
         }
     }
 
@@ -80,45 +90,23 @@ Rectangle {
         Text {
             id: buttonText
             anchors.centerIn: parent
-            text: button.state == "" ? "Show others" : "Hide others"
+            text: "Hide others"
         }
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                if (button.state == "") {
-                    // The share of "others" was enabled -> append the data into the model
-                    // TODO: this should also be doable by redefining the range inside the model
-                    button.state = "show";
-                    pieModel.append(["Others", 52.0]);
+                if (buttonText.text == "Show others") {
+                    pieSeries.modelMapper.count = -1;
+                    buttonText.text = "Hide others";
                 } else {
-                    // The share of "others" was disabled -> remove the data from the model
-                    // TODO: this should also be doable by redefining the range inside the model
-                    button.state = "";
-                    pieModel.removeRow(pieModel.count - 1);
+                    pieSeries.modelMapper.count = 5;
+                    buttonText.text = "Show others";
+                    //pieModel.removeRow(pieModel.count - 1);
                     // TODO: removeAll("label") ?
                 }
             }
         }
     }
-
-
-    // TODO: Optional syntax for defining models for different series. Is this really needed?
-//    ChartModel {
-//        id: chartModel
-//        ChartElement { column1: "Volkswagen"; column2: 13.5; column3: 1.2 }
-//        ChartElement { column1: "Toyota"; column2: 10.9; column3: 2.5 }
-//    }
-//    // column3 not used by pie series
-//    PieSeries {
-//        model: chartModel
-//        modelMapping: PieMapping {
-//            labels: 0 // undefined by default
-//            values: 1 // undefined by default
-//            first: 0  // 0 by default
-//            count: 10 // "Undefined" by default
-//            orientation: PieMapping.Vertical // Vertical by default
-//        }
-//    }
 
     // TODO: show how to use data from a list model in a chart view
     // i.e. copy the data into a chart model

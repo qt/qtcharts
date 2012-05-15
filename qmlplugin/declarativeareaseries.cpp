@@ -28,48 +28,65 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
     QAreaSeries(new QLineSeries(parent), new QLineSeries(parent))
 {
+    QXYModelMapper *upperMapper = new QXYModelMapper(upperSeries());
+    upperMapper->setMapX(0);
+    upperMapper->setMapY(1);
+    upperMapper->setFirst(0);
+    upperMapper->setCount(-1);
+    upperMapper->setOrientation(Qt::Vertical);
+    upperSeries()->setModelMapper(upperMapper);
+
+    QXYModelMapper *lowerMapper = new QXYModelMapper(lowerSeries());
+    lowerMapper->setMapX(2);
+    lowerMapper->setMapY(3);
+    lowerMapper->setFirst(0);
+    lowerMapper->setCount(-1);
+    lowerMapper->setOrientation(Qt::Vertical);
+    lowerSeries()->setModelMapper(lowerMapper);
 }
 
-bool DeclarativeAreaSeries::setDeclarativeUpperModel(DeclarativeXyModel *model)
+bool DeclarativeAreaSeries::setDeclarativeUpperModel(DeclarativeTableModel *model)
 {
     QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
     bool value(false);
     if (m) {
         upperSeries()->setModel(m);
-        QXYModelMapper *mapper = new QXYModelMapper;
-        mapper->setMapX(0);
-        mapper->setMapY(1);
-        upperSeries()->setModelMapper(mapper);
     } else {
         qWarning("DeclarativeAreaSeries: Illegal model");
     }
     return value;
 }
 
-DeclarativeXyModel *DeclarativeAreaSeries::declarativeUpperModel()
+DeclarativeTableModel *DeclarativeAreaSeries::declarativeUpperModel()
 {
-    return qobject_cast<DeclarativeXyModel *>(upperSeries()->model());
+    return qobject_cast<DeclarativeTableModel *>(upperSeries()->model());
 }
 
-bool DeclarativeAreaSeries::setDeclarativeLowerModel(DeclarativeXyModel *model)
+bool DeclarativeAreaSeries::setDeclarativeLowerModel(DeclarativeTableModel *model)
 {
     QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
     bool value(false);
     if (m) {
         lowerSeries()->setModel(m);
-        QXYModelMapper *mapper = new QXYModelMapper;
-        mapper->setMapX(0);
-        mapper->setMapY(1);
-        lowerSeries()->setModelMapper(mapper);
     } else {
         qWarning("DeclarativeAreaSeries: Illegal model");
     }
     return value;
 }
 
-DeclarativeXyModel *DeclarativeAreaSeries::declarativeLowerModel()
+DeclarativeTableModel *DeclarativeAreaSeries::declarativeLowerModel()
 {
-    return qobject_cast<DeclarativeXyModel *>(lowerSeries()->model());
+    return qobject_cast<DeclarativeTableModel *>(lowerSeries()->model());
+}
+
+QXYModelMapper* DeclarativeAreaSeries::upperModelMapper() const
+{
+    return upperSeries()->modelMapper();
+}
+
+QXYModelMapper* DeclarativeAreaSeries::lowerModelMapper() const
+{
+    return lowerSeries()->modelMapper();
 }
 
 #include "moc_declarativeareaseries.cpp"

@@ -39,8 +39,8 @@ public:
     ~DeclarativeXySeries();
 
 public:
-    bool setDeclarativeModel(DeclarativeXyModel *model);
-    DeclarativeXyModel *declarativeModel();
+    bool setDeclarativeModel(DeclarativeTableModel *model);
+    DeclarativeTableModel *declarativeModel();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

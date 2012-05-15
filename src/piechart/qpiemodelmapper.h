@@ -9,9 +9,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QPieModelMapper : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int mapValues READ mapValues WRITE setMapValues)
+    Q_PROPERTY(int mapLabels READ mapLabels WRITE setMapLabels)
+    Q_PROPERTY(int first READ first WRITE setFirst)
+    Q_PROPERTY(int count READ count WRITE setCount)
+    Q_PROPERTY(Qt::Orientation orientation READ orientation WRITE setOrientation)
+    Q_ENUMS(Qt::Orientation)
+
 public:
     explicit QPieModelMapper(QObject *parent = 0);
-    
+
     int first() const;
     void setFirst(int first);
 

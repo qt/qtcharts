@@ -20,7 +20,7 @@
 
 #include "declarativesplineseries.h"
 #include "declarativechart.h"
-#include "qchart.h"
+#include <QChart>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

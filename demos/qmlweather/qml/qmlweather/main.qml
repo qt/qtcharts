@@ -69,11 +69,11 @@ Rectangle {
 //        id: chartModel
 //    }
 
-    XYModel {
+    ChartModel {
         id: maxModel
     }
 
-    XYModel {
+    ChartModel {
         id: minModel
     }
 

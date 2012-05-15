@@ -24,7 +24,25 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-////////////// Table model (base) ///////////////////
+
+////////////// Table model row ///////////////////
+
+DeclarativeTableModelRow::DeclarativeTableModelRow(QObject *parent)
+    : QObject(parent)
+{
+}
+
+QVariantList DeclarativeTableModelRow::values()
+{
+    return m_values;
+}
+
+void DeclarativeTableModelRow::setValues(QVariantList values)
+{
+    m_values = values;
+}
+
+////////////// Table model  ///////////////////
 
 DeclarativeTableModel::DeclarativeTableModel(QObject *parent) :
     ChartTableModel(parent)
@@ -54,39 +72,45 @@ void DeclarativeTableModel::appendModelChild(QDeclarativeListProperty<QObject> *
     Q_UNUSED(child)
 }
 
+void DeclarativeTableModel::append(QVariantList values)
+{
+//    qDebug() << "DeclarativeTableModel::append:" << values;
+
+    while (columnCount() < values.count())
+        insertColumn(columnCount());
+
+    insertRow(rowCount());
+
+    QModelIndex beginIndex = QModelIndex();
+    QModelIndex endIndex = QModelIndex();
+    for (int i(0); i < values.count(); i++) {
+        QModelIndex modelIndex = createIndex(rowCount() - 1, i);
+        if (i == 0)
+            beginIndex = modelIndex;
+        if (i == (values.count() - 1))
+            endIndex = modelIndex;
+        setData(modelIndex, values.at(i));
+    }
+    dataChanged(beginIndex, endIndex);
+}
+
 void DeclarativeTableModel::appendToModel(QObject *object)
 {
-    if (qobject_cast<DeclarativeBarModel *>(this)) {
+    if (qobject_cast<QBarSet *>(object)) {
         DeclarativeBarModel *model = qobject_cast<DeclarativeBarModel *>(this);
+        Q_ASSERT(model);
         model->append(qobject_cast<QBarSet *>(object));
-    } else if (qobject_cast<DeclarativePieModel *>(this)) {
-        DeclarativePieModel *model = qobject_cast<DeclarativePieModel *>(this);
-        model->append(qobject_cast<QPieSlice *>(object));
-    } else if (qobject_cast<DeclarativeXyModel *>(this)) {
-        DeclarativeXyModel *model = qobject_cast<DeclarativeXyModel *>(this);
-        model->append(qobject_cast<DeclarativeXyPoint *>(object));
+    } else if (qobject_cast<QPieSlice *>(object)) {
+        // TODO
+    } else if (qobject_cast<DeclarativeXyPoint *>(object)) {
+        // TODO
+        appendPoint(qobject_cast<DeclarativeXyPoint *>(object));
+    } else if (qobject_cast<DeclarativeTableModel *>(this)) {
+        append(qobject_cast<DeclarativeTableModelRow *>(object)->values());
     }
 }
 
-////////////// XY model ///////////////////////
-
-DeclarativeXyModel::DeclarativeXyModel(QObject *parent) :
-    DeclarativeTableModel(parent)
-{
-}
-
-void DeclarativeXyModel::append(DeclarativeXyPoint* point)
-{
-//    qDebug() << "DeclarativeXyModel::append:" << point->x() << " " << point->y();
-    insertRow(rowCount());
-    QModelIndex xModelIndex = createIndex(rowCount() - 1, 0);
-    QModelIndex yModelIndex = createIndex(rowCount() - 1, 1);
-    setData(xModelIndex, point->x());
-    setData(yModelIndex, point->y());
-    dataChanged(xModelIndex, yModelIndex);
-}
-
-void DeclarativeXyModel::append(QVariantList points)
+void DeclarativeTableModel::appendPoints(QVariantList points)
 {
     qreal x = 0.0;
     for (int i(0); i < points.count(); i++) {
@@ -97,7 +121,7 @@ void DeclarativeXyModel::append(QVariantList points)
                 DeclarativeXyPoint *point= new DeclarativeXyPoint();
                 point->setX(x);
                 point->setY(y);
-                append(point);
+                appendPoint(point);
             } else {
                 qWarning() << "Illegal y value";
             }
@@ -111,44 +135,15 @@ void DeclarativeXyModel::append(QVariantList points)
     }
 }
 
-////////////// Pie model ///////////////////////
-
-DeclarativePieModel::DeclarativePieModel(QObject *parent) :
-    DeclarativeTableModel(parent)
+void DeclarativeTableModel::appendPoint(DeclarativeXyPoint* point)
 {
-}
-
-void DeclarativePieModel::append(QPieSlice* slice)
-{
-//    qDebug() << "DeclarativePieModel::append:" << slice->label() << " " << slice->value();
+//    qDebug() << "DeclarativeTableModel::append:" << point->x() << " " << point->y();
     insertRow(rowCount());
-
-    setData(createIndex(rowCount() - 1, 0), slice->value());
-    setData(createIndex(rowCount() - 1, 1), slice->label());
-}
-
-void DeclarativePieModel::append(QVariantList slices)
-{
-//    qDebug() << "append:" << slices;
-    QString label = "";
-    for (int i(0); i < slices.count(); i++) {
-        if (i % 2) {
-            bool ok(false);
-            qreal value = slices.at(i).toReal(&ok);
-            if (ok) {
-                QPieSlice *slice = new QPieSlice(value, label);
-                append(slice);
-                // TODO: how to copy the properties to the newly added slice?
-                // (DeclarativePieModel::append only copies the label and value to the model)
-//                QPieSlice *addedSlice = append(slice);
-//                addedSlice->setExploded(slice->isExploded());
-            } else {
-                qWarning() << "Illegal slice item";
-            }
-        } else {
-            label = slices.at(i).toString();
-        }
-    }
+    QModelIndex xModelIndex = createIndex(rowCount() - 1, 0);
+    QModelIndex yModelIndex = createIndex(rowCount() - 1, 1);
+    setData(xModelIndex, point->x());
+    setData(yModelIndex, point->y());
+    dataChanged(xModelIndex, yModelIndex);
 }
 
 ////////////// Bar model ///////////////////////

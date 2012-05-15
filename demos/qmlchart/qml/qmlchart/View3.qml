@@ -34,95 +34,46 @@ Rectangle {
 
         AreaSeries {
             name: "Russian"
-            upperModel: russianModel
-            lowerModel: zerosModel
+            upperModel: chartModel
+            upperModelMapper.mapX: 0
+            upperModelMapper.mapY: 2
+            lowerModel: chartModel
+            lowerModelMapper.mapX: 0
+            lowerModelMapper.mapY: 1
         }
         AreaSeries {
             name: "Swedish"
-            upperModel: swedishModel
-            lowerModel: zerosModel
+            upperModel: chartModel
+            upperModelMapper.mapX: 0
+            upperModelMapper.mapY: 3
+            lowerModel: chartModel
+            lowerModelMapper.mapX: 0
+            lowerModelMapper.mapY: 1
         }
         AreaSeries {
             name: "Finnish"
-            upperModel: finnishModel
-            lowerModel: zerosModel
+            upperModel: chartModel
+            upperModelMapper.mapX: 0
+            upperModelMapper.mapY: 4
+            lowerModel: chartModel
+            lowerModelMapper.mapX: 0
+            lowerModelMapper.mapY: 1
         }
     }
 
-    // TODO: optional implementation with generic ChartModel
-//    AreaSeries {
-//        model: chartModel
-//        modelMapping: XyMapping {
-//            xValues: 0 // undefined by default
-//            yValues: 1 // undefined by default
-//            first: 0  // 0 by default
-//            count: 10 // "Undefined" by default
-//            orientation: XyMapping.Vertical // Vertical by default
-//        }
-//    }
-
-
-    XYModel {
-        id: zerosModel
-        XyPoint { x: 0; y: 0 }
-        XyPoint { x: 1; y: 0 }
-        XyPoint { x: 2; y: 0 }
-        XyPoint { x: 3; y: 0 }
-        XyPoint { x: 4; y: 0 }
-        XyPoint { x: 5; y: 0 }
-        XyPoint { x: 6; y: 0 }
-        XyPoint { x: 7; y: 0 }
-        XyPoint { x: 8; y: 0 }
-        XyPoint { x: 9; y: 0 }
-        XyPoint { x: 10; y: 0 }
-        XyPoint { x: 11; y: 0 }
-    }
-
-    XYModel {
-        id: russianModel
-        XyPoint { x: 0; y: 1 }
-        XyPoint { x: 1; y: 1 }
-        XyPoint { x: 2; y: 1 }
-        XyPoint { x: 3; y: 1 }
-        XyPoint { x: 4; y: 1 }
-        XyPoint { x: 5; y: 0 }
-        XyPoint { x: 6; y: 1 }
-        XyPoint { x: 7; y: 1 }
-        XyPoint { x: 8; y: 4 }
-        XyPoint { x: 9; y: 3 }
-        XyPoint { x: 10; y: 2 }
-        XyPoint { x: 11; y: 1 }
-    }
-
-    XYModel {
-        id: swedishModel
-        XyPoint { x: 0; y: 1 }
-        XyPoint { x: 1; y: 1 }
-        XyPoint { x: 2; y: 3 }
-        XyPoint { x: 3; y: 3 }
-        XyPoint { x: 4; y: 2 }
-        XyPoint { x: 5; y: 0 }
-        XyPoint { x: 6; y: 2 }
-        XyPoint { x: 7; y: 1 }
-        XyPoint { x: 8; y: 2 }
-        XyPoint { x: 9; y: 1 }
-        XyPoint { x: 10; y: 3 }
-        XyPoint { x: 11; y: 3 }
-    }
-
-    XYModel {
-        id: finnishModel
-        XyPoint { x: 0; y: 0 }
-        XyPoint { x: 1; y: 0 }
-        XyPoint { x: 2; y: 0 }
-        XyPoint { x: 3; y: 0 }
-        XyPoint { x: 4; y: 0 }
-        XyPoint { x: 5; y: 0 }
-        XyPoint { x: 6; y: 1 }
-        XyPoint { x: 7; y: 0 }
-        XyPoint { x: 8; y: 0 }
-        XyPoint { x: 9; y: 0 }
-        XyPoint { x: 10; y: 0 }
-        XyPoint { x: 11; y: 1 }
+    ChartModel {
+        id: chartModel
+        ChartModelRow { values: [0,  0, 1, 1, 0] }
+        ChartModelRow { values: [1,  0, 1, 1, 0] }
+        ChartModelRow { values: [2,  0, 1, 3, 0] }
+        ChartModelRow { values: [3,  0, 1, 3, 0] }
+        ChartModelRow { values: [4,  0, 1, 2, 0] }
+        ChartModelRow { values: [5,  0, 0, 0, 0] }
+        ChartModelRow { values: [6,  0, 1, 2, 1] }
+        ChartModelRow { values: [7,  0, 1, 1, 0] }
+        ChartModelRow { values: [8,  0, 4, 2, 0] }
+        ChartModelRow { values: [9,  0, 3, 1, 0] }
+        ChartModelRow { values: [10, 0, 2, 3, 0] }
+        ChartModelRow { values: [11, 0, 1, 3, 1] }
     }
 }

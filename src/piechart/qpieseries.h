@@ -36,6 +36,8 @@ class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
     Q_PROPERTY(qreal size READ pieSize WRITE setPieSize)
     Q_PROPERTY(qreal startAngle READ pieStartAngle WRITE setPieStartAngle)
     Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle)
+    Q_PROPERTY(int count READ count)
+    Q_PROPERTY(QPieModelMapper *modelMapper READ modelMapper)
 
 public:
     explicit QPieSeries(QObject *parent = 0);

@@ -29,6 +29,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
     QPieSeries(parent)
 {
+    // TODO: set default model on init?
+//    setModel(new DeclarativeTableModel());
+
+    // Set default mapper parameters to allow easy to use PieSeries api
+    QPieModelMapper *mapper = new QPieModelMapper();
+    mapper->setMapLabels(0);
+    mapper->setMapValues(1);
+    mapper->setOrientation(Qt::Vertical);
+    mapper->setFirst(0);
+    mapper->setCount(-1);
+    setModelMapper(mapper);
 }
 
 QPieSlice *DeclarativePieSeries::slice(int index)
@@ -40,24 +51,19 @@ QPieSlice *DeclarativePieSeries::slice(int index)
     return 0;
 }
 
-
-void DeclarativePieSeries::setPieModel(DeclarativePieModel *model)
+void DeclarativePieSeries::setPieModel(DeclarativeTableModel *model)
 {
     QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
     if (m) {
         QPieSeries::setModel(m);
-        QPieModelMapper *mapper = new QPieModelMapper;
-        mapper->setMapValues(0);
-        mapper->setMapLabels(1);
-        QPieSeries::setModelMapper(mapper);
     } else {
         qWarning("DeclarativePieSeries: Illegal model");
     }
 }
 
-DeclarativePieModel *DeclarativePieSeries::pieModel()
+DeclarativeTableModel *DeclarativePieSeries::pieModel()
 {
-    return qobject_cast<DeclarativePieModel *>(model());
+    return qobject_cast<DeclarativeTableModel *>(model());
 }
 
 #include "moc_declarativepieseries.cpp"

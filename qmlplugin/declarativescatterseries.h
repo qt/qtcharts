@@ -31,7 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeries
 {
     Q_OBJECT
-    Q_PROPERTY(DeclarativeXyModel *model READ declarativeModel WRITE setDeclarativeModel)
+    Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
 
 public:
     explicit DeclarativeScatterSeries(QObject *parent = 0);

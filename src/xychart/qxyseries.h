@@ -36,6 +36,8 @@ class QXYModelMapper;
 class QTCOMMERCIALCHART_EXPORT QXYSeries : public QAbstractSeries
 {
     Q_OBJECT
+    Q_PROPERTY(QXYModelMapper *modelMapper READ modelMapper)
+
 protected:
     explicit QXYSeries(QXYSeriesPrivate &d,QObject *parent = 0);
     ~QXYSeries();

@@ -31,7 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries
 {
     Q_OBJECT
-    Q_PROPERTY(DeclarativeXyModel *model READ declarativeModel WRITE setDeclarativeModel)
+    Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
 
 public:
     explicit DeclarativeLineSeries(QObject *parent = 0);

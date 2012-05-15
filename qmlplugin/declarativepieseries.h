@@ -36,7 +36,7 @@ class QChart;
 class DeclarativePieSeries : public QPieSeries
 {
     Q_OBJECT
-    Q_PROPERTY(DeclarativePieModel *model READ pieModel WRITE setPieModel)
+    Q_PROPERTY(DeclarativeTableModel *model READ pieModel WRITE setPieModel)
 
 public:
     explicit DeclarativePieSeries(QObject *parent = 0);
@@ -44,11 +44,9 @@ public:
 public:
     Q_INVOKABLE QPieSlice *slice(int index);
 
-public Q_SLOTS:
-
 public:
-    void setPieModel(DeclarativePieModel *model);
-    DeclarativePieModel *pieModel();
+    void setPieModel(DeclarativeTableModel *model);
+    DeclarativeTableModel *pieModel();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

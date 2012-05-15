@@ -32,6 +32,19 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class DeclarativeTableModelRow : public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QVariantList values READ values WRITE setValues)
+
+public:
+    explicit DeclarativeTableModelRow(QObject *parent = 0);
+    QVariantList values();
+    void setValues(QVariantList values);
+private:
+    QVariantList m_values;
+};
+
 class DeclarativeTableModel : public ChartTableModel, public QDeclarativeParserStatus
 {
     Q_OBJECT
@@ -48,34 +61,13 @@ public: // from QDeclarativeParserStatus
     void componentComplete();
 
 public Q_SLOTS:
+    void append(QVariantList slices);
+    void appendPoints(QVariantList points);
+    void appendPoint(DeclarativeXyPoint* point);
     static void appendModelChild(QDeclarativeListProperty<QObject> *list,
                                  QObject *element);
 private:
     void appendToModel(QObject *object);
-};
-
-class DeclarativeXyModel : public DeclarativeTableModel
-{
-    Q_OBJECT
-
-public:
-    explicit DeclarativeXyModel(QObject *parent = 0);
-
-public Q_SLOTS:
-    void append(DeclarativeXyPoint* point);
-    void append(QVariantList points);
-};
-
-class DeclarativePieModel : public DeclarativeTableModel
-{
-    Q_OBJECT
-
-public:
-    explicit DeclarativePieModel(QObject *parent = 0);
-
-public Q_SLOTS:
-    void append(QPieSlice* slice);
-    void append(QVariantList slices);
 };
 
 class DeclarativeBarModel : public DeclarativeTableModel

@@ -32,7 +32,7 @@ Rectangle {
         ScatterSeries {
             id: scatter1
             name: "Scatter1"
-            model: XYModel {
+            model: ChartModel {
                 XyPoint { x: 1.5; y: 1.5 }
                 XyPoint { x: 1.5; y: 1.6 }
                 XyPoint { x: 1.57; y: 1.55 }
@@ -44,7 +44,7 @@ Rectangle {
         }
         ScatterSeries {
             name: "Scatter2"
-            model: XYModel {
+            model: ChartModel {
                 XyPoint { x: 2.0; y: 2.0 }
                 XyPoint { x: 2.0; y: 2.1 }
                 XyPoint { x: 2.07; y: 2.05 }

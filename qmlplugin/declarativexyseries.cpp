@@ -20,21 +20,30 @@
 
 //#include "DeclarativeXySeries.h"
 #include "declarativexyseries.h"
-#include "qxyseries.h"
-#include "qxymodelmapper.h"
+#include <QXYSeries>
+#include <QXYModelMapper>
 #include "declarativechart.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeXySeries::DeclarativeXySeries()
 {
+    // All the inherited objects must be of type QXYSeries, so it is safe to cast
+    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    QXYModelMapper *mapper = new QXYModelMapper(series);
+    mapper->setMapX(0);
+    mapper->setMapY(1);
+    mapper->setFirst(0);
+    mapper->setCount(-1);
+    mapper->setOrientation(Qt::Vertical);
+    series->setModelMapper(mapper);
 }
 
 DeclarativeXySeries::~DeclarativeXySeries()
 {
 }
 
-bool DeclarativeXySeries::setDeclarativeModel(DeclarativeXyModel *model)
+bool DeclarativeXySeries::setDeclarativeModel(DeclarativeTableModel *model)
 {
     QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
     bool value(false);
@@ -42,22 +51,21 @@ bool DeclarativeXySeries::setDeclarativeModel(DeclarativeXyModel *model)
         // All the inherited objects must be of type QXYSeries, so it is safe to cast
         QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
         series->setModel(m);
-        QXYModelMapper *mapper = new QXYModelMapper;
-        mapper->setMapX(0);
-        mapper->setMapY(1);
-        series->setModelMapper(mapper);
+//        QXYModelMapper *mapper = new QXYModelMapper;
+//        mapper->setMapX(0);
+//        mapper->setMapY(1);
+//        series->setModelMapper(mapper);
     } else {
         qWarning("DeclarativeXySeries: Illegal model");
     }
     return value;
 }
 
-DeclarativeXyModel *DeclarativeXySeries::declarativeModel()
+DeclarativeTableModel *DeclarativeXySeries::declarativeModel()
 {
     // All the inherited objects must be of type QXYSeries, so it is safe to cast
     QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
-    Q_ASSERT(series);
-    return qobject_cast<DeclarativeXyModel *>(series->model());
+    return qobject_cast<DeclarativeTableModel *>(series->model());
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

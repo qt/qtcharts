@@ -32,27 +32,31 @@ Rectangle {
 
         LineSeries {
             name: "Line"
-            model: XYModel {
-                XyPoint { x: 0.0; y: 0.0 }
-                XyPoint { x: 1.1; y: 2.1 }
-                XyPoint { x: 1.9; y: 3.3 }
-                XyPoint { x: 2.9; y: 4.9 }
-                XyPoint { x: 3.2; y: 3.0 }
-                XyPoint { x: 4.0; y: 3.3 }
-            }
+            model: chartModel
+            modelMapper.mapX: 0
+            modelMapper.mapY: 1
+            modelMapper.first: 0
+            modelMapper.count: -1
+            modelMapper.orientation: XYModelMapper.Vertical
         }
 
         SplineSeries {
             name: "Spline"
-            model: XYModel {
-                XyPoint { x: 0.0; y: 0.3 }
-                XyPoint { x: 1.1; y: 3.2 }
-                XyPoint { x: 1.7; y: 2.4 }
-                XyPoint { x: 2.1; y: 2.1 }
-                XyPoint { x: 2.9; y: 2.6 }
-                XyPoint { x: 3.4; y: 2.3 }
-                XyPoint { x: 4.1; y: 3.1 }
-            }
+            model: chartModel
+            modelMapper.mapX: 0
+            modelMapper.mapY: 2
         }
     }
+
+    ChartModel {
+        id: chartModel
+        ChartModelRow { values: [0.0, 0.0, 0.3] }
+        ChartModelRow { values: [1.1, 2.1, 3.2] }
+        ChartModelRow { values: [1.9, 3.3, 2.4] }
+        ChartModelRow { values: [2.1, 2.1, 2.1] }
+        ChartModelRow { values: [2.9, 4.9, 2.6] }
+        ChartModelRow { values: [3.4, 3.0, 2.3] }
+        ChartModelRow { values: [4.1, 3.3, 3.1] }
+    }
+
 }

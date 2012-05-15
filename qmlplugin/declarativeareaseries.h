@@ -24,24 +24,27 @@
 #include "qchartglobal.h"
 #include "qareaseries.h"
 #include "declarativelineseries.h"
-#include "declarativexyseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeAreaSeries : public QAreaSeries, public DeclarativeXySeries
+class DeclarativeAreaSeries : public QAreaSeries
 {
     Q_OBJECT
-    Q_PROPERTY(DeclarativeXyModel *upperModel READ declarativeUpperModel WRITE setDeclarativeUpperModel)
-    Q_PROPERTY(DeclarativeXyModel *lowerModel READ declarativeLowerModel WRITE setDeclarativeLowerModel)
+    Q_PROPERTY(DeclarativeTableModel *upperModel READ declarativeUpperModel WRITE setDeclarativeUpperModel)
+    Q_PROPERTY(DeclarativeTableModel *lowerModel READ declarativeLowerModel WRITE setDeclarativeLowerModel)
+    Q_PROPERTY(QXYModelMapper *upperModelMapper READ upperModelMapper)
+    Q_PROPERTY(QXYModelMapper *lowerModelMapper READ lowerModelMapper)
 
 public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
 
 public:
-    bool setDeclarativeUpperModel(DeclarativeXyModel *model);
-    DeclarativeXyModel *declarativeUpperModel();
-    bool setDeclarativeLowerModel(DeclarativeXyModel *model);
-    DeclarativeXyModel *declarativeLowerModel();
+    bool setDeclarativeUpperModel(DeclarativeTableModel *model);
+    DeclarativeTableModel *declarativeUpperModel();
+    bool setDeclarativeLowerModel(DeclarativeTableModel *model);
+    DeclarativeTableModel *declarativeLowerModel();
+    QXYModelMapper* upperModelMapper() const;
+    QXYModelMapper* lowerModelMapper() const;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

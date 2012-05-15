@@ -94,11 +94,16 @@ bool ChartTableModel::setData(const QModelIndex &index, const QVariant &value, i
     return false;
 }
 
+void ChartTableModel::insertColumn(int column, const QModelIndex &parent)
+{
+    beginInsertColumns(parent, column, column);
+    m_columnCount++;
+    endInsertColumns();
+}
+
 void ChartTableModel::insertRow(int row, const QModelIndex &parent)
 {
-    Q_UNUSED(parent)
-
-    beginInsertRows(QModelIndex(), row, row);
+    beginInsertRows(parent, row, row);
     QVector<QVariant>* dataVec = new QVector<QVariant>(m_columnCount);
     m_data.insert(row, dataVec);
     endInsertRows();
