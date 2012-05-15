@@ -50,11 +50,6 @@
   Returns the type of the series
   */
 
-/*!
-  \fn QSeriesType QSplineSeries::controlPoint(int index) const
-  Returns the control point specified by \a index
-  */
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -80,25 +75,20 @@ QAbstractSeries::SeriesType QSplineSeries::type() const
     return QAbstractSeries::SeriesTypeSpline;
 }
 
-/*!
-     Sets the \a modelX to be used as a data source for x coordinate and \a modelY to be used
-     as a data source for y coordinate. The \a orientation parameter specifies whether the data
-     is in columns or in rows.
-     \sa setModel()
- */
-void QSplineSeries::setModelMapping(int modelX, int modelY, Qt::Orientation orientation)
+void QSplineSeries::setModel(QAbstractItemModel *model)
 {
     Q_D(QSplineSeries);
-    QXYSeries::setModelMapping(modelX, modelY, orientation);
-    d->updateControlPoints();
+    QXYSeries::setModel(model);
+    if (d->m_model && d->m_mapper)
+        d->updateControlPoints();
 }
 
-void QSplineSeries::setModelMappingRange(int first, int count)
+void QSplineSeries::setModelMapper(QXYModelMapper *mapper)
 {
     Q_D(QSplineSeries);
-    QXYSeries::setModelMappingRange(first, count);
-    d->updateControlPoints();
-
+    QXYSeries::setModelMapper(mapper);
+    if (d->m_model && d->m_mapper)
+        d->updateControlPoints();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -227,6 +217,12 @@ void QSplineSeriesPrivate::updateControlPoints()
         m_controlPoints.resize(2*q->count()-2);
         calculateControlPoints();
     }
+}
+
+void QSplineSeriesPrivate::mappingUpdated()
+{
+    updateControlPoints();
+    emit updated();
 }
 
 void QSplineSeriesPrivate::modelRowsAdded(QModelIndex parent, int start, int end)

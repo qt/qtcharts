@@ -26,6 +26,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSeriesPrivate;
 class QPieSlice;
+class QPieModelMapper;
 
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
 {
@@ -71,9 +72,9 @@ public:
 
     void setLabelsVisible(bool visible = true);
 
-    bool setModel(QAbstractItemModel* model);
-    void setModelMapping(int modelValuesLine, int modelLabelsLine, Qt::Orientation orientation = Qt::Vertical);
-    void setModelMappingRange(int first, int count = -1);
+    void setModel(QAbstractItemModel* model);
+    void setModelMapper(QPieModelMapper *mapper);
+    QPieModelMapper* modelMapper() const;
 
 Q_SIGNALS:
     void clicked(QPieSlice* slice);

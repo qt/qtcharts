@@ -29,7 +29,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
 {
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
-    m_columnCount = 3;
+    m_columnCount = 7;
     m_rowCount = 9;
 
     m_labels.append("Apples");
@@ -67,7 +67,7 @@ int CustomTableModel::rowCount(const QModelIndex & parent) const
 int CustomTableModel::columnCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent)
-    return m_columnCount;
+    return m_columnCount + 1;
 }
 
 QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation, int role ) const
@@ -79,7 +79,7 @@ QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation,
     {
         switch(section)
         {
-        case 0:
+        case 7:
             return "Fruit";
         case 1:
             return "Count";
@@ -102,7 +102,7 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
     {
         switch(index.column())
         {
-        case 0:
+        case 7:
             return m_labels[index.row()];
         default:
             return m_data[index.row()]->at(index.column());
@@ -113,7 +113,7 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
     {
         switch(index.column())
         {
-        case 0:
+        case 7:
             return m_labels[index.row()];
         default:
             return m_data[index.row()]->at(index.column());
@@ -139,7 +139,7 @@ bool CustomTableModel::setData ( const QModelIndex & index, const QVariant & val
     {
         switch(index.column())
         {
-        case 0:
+        case 7:
             m_labels.replace(index.row(), value.toString());
             break;
         default:

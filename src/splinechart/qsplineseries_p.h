@@ -52,6 +52,7 @@ protected Q_SLOTS:
     void modelRowsRemoved(QModelIndex parent, int start, int end);
     void modelColumnsAdded(QModelIndex parent, int start, int end);
     void modelColumnsRemoved(QModelIndex parent, int start, int end);
+    void mappingUpdated();
 
 private:
     void calculateControlPoints();

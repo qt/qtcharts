@@ -5,7 +5,8 @@ SOURCES += \
     $$PWD/qpieseries.cpp \
     $$PWD/piesliceitem.cpp \
     $$PWD/piechartitem.cpp \
-    $$PWD/qpieslice.cpp
+    $$PWD/qpieslice.cpp \
+    $$PWD/qpiemodelmapper.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/pieslicedata_p.h \
@@ -15,4 +16,5 @@ PRIVATE_HEADERS += \
 
 PUBLIC_HEADERS += \
     $$PWD/qpieseries.h \
-    $$PWD/qpieslice.h
+    $$PWD/qpieslice.h \
+    $$PWD/qpiemodelmapper.h

@@ -25,6 +25,7 @@
 #include <QChart>
 #include <QChartView>
 #include <QLineSeries>
+#include "qxymodelmapper.h"
 #include <QHeaderView>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -55,7 +56,12 @@ TableWidget::TableWidget(QWidget *parent)
     //! [4]
     QLineSeries *series = new QLineSeries;
     series->setModel(model);
-    series->setModelMapping(0, 1, Qt::Vertical);
+
+    QXYModelMapper *mapper = new QXYModelMapper;
+    mapper->setMapX(0);
+    mapper->setMapY(1);
+    series->setModelMapper(mapper);
+//    series->setModelMapping(0, 1, Qt::Vertical);
     chart->addSeries(series);
     //! [4]
 
@@ -72,7 +78,12 @@ TableWidget::TableWidget(QWidget *parent)
     //! [6]
     series = new QLineSeries;
     series->setModel(model);
-    series->setModelMapping(2,3, Qt::Vertical);
+
+    mapper = new QXYModelMapper;
+    mapper->setMapX(2);
+    mapper->setMapY(3);
+    series->setModelMapper(mapper);
+//    series->setModelMapping(2,3, Qt::Vertical);
     chart->addSeries(series);
     //! [6]
 

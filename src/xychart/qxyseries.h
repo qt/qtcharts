@@ -31,6 +31,7 @@ class QModelIndex;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYSeriesPrivate;
+class QXYModelMapper;
 
 class QTCOMMERCIALCHART_EXPORT QXYSeries : public QAbstractSeries
 {
@@ -64,11 +65,9 @@ public:
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
-    bool setModel(QAbstractItemModel *model);
-    virtual void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
-    virtual void setModelMappingRange(int first, int count = -1);
-    int mapX() const;
-    int mapY() const;
+    void setModel(QAbstractItemModel *model);
+    virtual void setModelMapper(QXYModelMapper *mapper);
+    QXYModelMapper* modelMapper() const;
 
 Q_SIGNALS:
     void clicked(const QPointF &point);

@@ -35,6 +35,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYSeries;
+class QXYModelMapper;
 
 class QXYSeriesPrivate: public QAbstractSeriesPrivate
 {
@@ -52,8 +53,10 @@ protected Q_SLOTS:
     virtual void modelRowsRemoved(QModelIndex parent, int start, int end);
     virtual void modelColumnsAdded(QModelIndex parent, int start, int end);
     virtual void modelColumnsRemoved(QModelIndex parent, int start, int end);
+    virtual void mappingUpdated();
 
 private:
+    void setMapping();
     void insertData(int start, int end);
     void removeData(int start, int end);
 
@@ -71,9 +74,7 @@ protected:
 
     QPen m_pen;
     QBrush m_brush;
-
-    int m_mapX;
-    int m_mapY;
+    QXYModelMapper* m_mapper;
     bool m_pointsVisible;
 
 private:

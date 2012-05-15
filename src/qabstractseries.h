@@ -31,6 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAbstractSeriesPrivate;
 class QChart;
+//class QModelMapper;
 
 class QTCOMMERCIALCHART_EXPORT QAbstractSeries : public QObject
 {
@@ -56,11 +57,8 @@ protected:
 public:
     ~QAbstractSeries();
     virtual SeriesType type() const = 0;
-    virtual bool setModel(QAbstractItemModel* model) = 0;
+    virtual void setModel(QAbstractItemModel *model) = 0;
     QAbstractItemModel* model() const;
-    int mapFirst() const;
-    int mapCount() const;
-    int mapOrientation() const;
     void setName(const QString& name);
     QString name() const;
     QChart* chart() const;

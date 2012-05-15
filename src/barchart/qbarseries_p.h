@@ -22,9 +22,9 @@ public:
     Chart* createGraphics(ChartPresenter* presenter);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
 
-    bool setModel(QAbstractItemModel *model);
-    void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
-    void setModelMappingRange(int first, int count = -1);
+//    void setModel(QAbstractItemModel *model);
+//    void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
+//    void setModelMappingRange(int first, int count = -1);
 
     void insertCategory(int index, const QString category);
     void removeCategory(int index);
@@ -47,10 +47,10 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     // slots for updating bars when data in model changes
-    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
+//    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
     void modelDataAdded(QModelIndex parent, int start, int end);
     void modelDataRemoved(QModelIndex parent, int start, int end);
-    void initializeDataFromModel();
+//    void initializeDataFromModel();
     void barsetChanged();
 
 protected:

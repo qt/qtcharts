@@ -52,7 +52,7 @@ public:
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
-    bool setModel(QAbstractItemModel* model);
+    void setModel(QAbstractItemModel* model);
     QAbstractItemModel* model() const;
 
 Q_SIGNALS:

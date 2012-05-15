@@ -22,6 +22,7 @@
 #include "declarativechart.h"
 #include "qchart.h"
 #include <qdeclarativelist.h>
+#include "qpiemodelmapper.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -39,17 +40,19 @@ QPieSlice *DeclarativePieSeries::slice(int index)
     return 0;
 }
 
-bool DeclarativePieSeries::setPieModel(DeclarativePieModel *model)
+
+void DeclarativePieSeries::setPieModel(DeclarativePieModel *model)
 {
     QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
-    bool value(false);
     if (m) {
-        value = QPieSeries::setModel(m);
-        setModelMapping(0, 1, Qt::Vertical);
+        QPieSeries::setModel(m);
+        QPieModelMapper *mapper = new QPieModelMapper;
+        mapper->setMapValues(0);
+        mapper->setMapLabels(1);
+        QPieSeries::setModelMapper(mapper);
     } else {
         qWarning("DeclarativePieSeries: Illegal model");
     }
-    return value;
 }
 
 DeclarativePieModel *DeclarativePieSeries::pieModel()

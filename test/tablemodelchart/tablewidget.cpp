@@ -26,8 +26,10 @@
 #include <QLineSeries>
 #include <QSplineSeries>
 #include <QScatterSeries>
+#include <QXYModelMapper>
 #include "customtablemodel.h"
 #include <QPieSeries>
+#include <QPieModelMapper>
 #include <QPieSlice>
 #include <QAreaSeries>
 #include <QBarSeries>
@@ -50,13 +52,13 @@ TableWidget::TableWidget(QWidget *parent)
     m_model = new CustomTableModel;
     m_tableView = new QTableView;
     m_tableView->setModel(m_model);
-//    m_tableView->setMinimumHeight(300);
+    //    m_tableView->setMinimumHeight(300);
     m_tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
     m_tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
 
     m_chart = new QChart;
     m_chart->legend()->setVisible(true);
-        m_chart->setAnimationOptions(QChart::SeriesAnimations);
+    m_chart->setAnimationOptions(QChart::SeriesAnimations);
     m_chartView = new QChartView(m_chart);
     m_chartView->setRenderHint(QPainter::Antialiasing);
     m_chartView->setMinimumSize(640, 480);
@@ -81,7 +83,7 @@ TableWidget::TableWidget(QWidget *parent)
     connect(specialPieButton, SIGNAL(clicked()), this, SLOT(testPie()));
 
 
-    QLabel *spinBoxLabel = new QLabel("Rows affected:");
+    //    QLabel *spinBoxLabel = new QLabel("Rows affected:");
 
     // spin box for setting number of affected items (add, remove)
     m_linesCountSpinBox = new QSpinBox;
@@ -90,14 +92,14 @@ TableWidget::TableWidget(QWidget *parent)
 
     // buttons layout
     QVBoxLayout* buttonsLayout = new QVBoxLayout;
-//    buttonsLayout->addWidget(spinBoxLabel);
-//    buttonsLayout->addWidget(m_linesCountSpinBox);
-//    buttonsLayout->addWidget(addRowAboveButton);
+    //    buttonsLayout->addWidget(spinBoxLabel);
+    //    buttonsLayout->addWidget(m_linesCountSpinBox);
+    //    buttonsLayout->addWidget(addRowAboveButton);
     buttonsLayout->addWidget(addRowBelowButton);
     buttonsLayout->addWidget(removeRowButton);
-//    buttonsLayout->addWidget(addColumnRightButton);
-//    buttonsLayout->addWidget(removeColumnButton);
-//    buttonsLayout->addWidget(specialPieButton);
+    //    buttonsLayout->addWidget(addColumnRightButton);
+    //    buttonsLayout->addWidget(removeColumnButton);
+        buttonsLayout->addWidget(specialPieButton);
     buttonsLayout->addStretch();
 
     // chart type radio buttons
@@ -114,22 +116,22 @@ TableWidget::TableWidget(QWidget *parent)
     connect(m_pieRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
     connect(m_areaRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
     connect(m_barRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
-    m_pieRadioButton->setChecked(true);
+    m_lineRadioButton->setChecked(true);
 
     // radio buttons layout
     QVBoxLayout* radioLayout = new QVBoxLayout;
     radioLayout->addWidget(m_lineRadioButton);
-//    radioLayout->addWidget(m_splineRadioButton);
-//    radioLayout->addWidget(m_scatterRadioButton);
+        radioLayout->addWidget(m_splineRadioButton);
+    //    radioLayout->addWidget(m_scatterRadioButton);
     radioLayout->addWidget(m_pieRadioButton);
-//    radioLayout->addWidget(m_areaRadioButton);
+    //    radioLayout->addWidget(m_areaRadioButton);
     radioLayout->addWidget(m_barRadioButton);
     radioLayout->addStretch();
 
     // create main layout
     QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addLayout(buttonsLayout, 2, 0);
-//    mainLayout->addLayout(radioLayout, 2, 1);
+        mainLayout->addLayout(radioLayout, 3, 0);
     mainLayout->addWidget(m_tableView, 1, 0);
     mainLayout->addWidget(m_chartView, 1, 1, 2, 1);
     setLayout(mainLayout);
@@ -199,8 +201,15 @@ void TableWidget::updateChartType(bool toggle)
             // series 1
             m_series = new QLineSeries;
             m_series->setModel(m_model);
-            m_series->setModelMapping(0,1, Qt::Vertical);
-            m_series->setModelMappingRange(3, 4);
+
+            QXYModelMapper *mapper = new QXYModelMapper;
+            mapper->setMapX(0);
+            mapper->setMapY(1);
+            mapper->setFirst(3);
+            mapper->setCount(4);
+            m_series->setModelMapper(mapper);
+            //            m_series->setModelMapping(0,1, Qt::Vertical);
+            //            m_series->setModelMappingRange(3, 4);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(0, 3, 2, 4));
@@ -208,19 +217,33 @@ void TableWidget::updateChartType(bool toggle)
             // series 2
             m_series = new QLineSeries;
             m_series->setModel(m_model);
-            m_series->setModelMapping(2,3, Qt::Vertical);
+
+            mapper = new QXYModelMapper;
+            mapper->setMapX(3);
+            mapper->setMapY(4);
+            //            mapper->setFirst(3);
+            //            mapper->setCount(4);
+            m_series->setModelMapper(mapper);
+            //            m_series->setModelMapping(2,3, Qt::Vertical);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(2, 0, 2, 1000));
+            m_model->addMapping(seriesColorHex, QRect(3, 0, 2, 1000));
 
             // series 3
             m_series = new QLineSeries;
             m_series->setModel(m_model);
-            m_series->setModelMapping(4,5, Qt::Vertical);
-            m_series->setModelMappingRange(2, -1);
+
+            mapper = new QXYModelMapper;
+            mapper->setMapX(5);
+            mapper->setMapY(6);
+            mapper->setFirst(2);
+            mapper->setCount(-1);
+            m_series->setModelMapper(mapper);
+            //            m_series->setModelMapping(4,5, Qt::Vertical);
+            //            m_series->setModelMappingRange(2, -1);
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(4, 2, 2, 1000));
+            m_model->addMapping(seriesColorHex, QRect(5, 2, 2, 1000));
         }
         else if (m_splineRadioButton->isChecked())
         {
@@ -229,9 +252,15 @@ void TableWidget::updateChartType(bool toggle)
             // series 1
             m_series = new QSplineSeries;
             m_series->setModel(m_model);
-            m_series->setModelMapping(0,1, Qt::Vertical);
-            //            m_series->setModelMappingRange(1, 4);
-            //        series->setModelMapping(0,1, Qt::Horizontal);
+
+            QXYModelMapper *mapper = new QXYModelMapper;
+            mapper->setMapX(0);
+            mapper->setMapY(1);
+            mapper->setFirst(0);
+            mapper->setCount(-1);
+
+            m_series->setModelMapper(mapper);
+
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(0, 0, 2, 1000));
@@ -239,9 +268,15 @@ void TableWidget::updateChartType(bool toggle)
             // series 2
             m_series = new QSplineSeries;
             m_series->setModel(m_model);
-            m_series->setModelMapping(2,3, Qt::Vertical);
-            m_series->setModelMappingRange(2, 4);
-            //        series->setModelMapping(2,3, Qt::Horizontal);
+
+            mapper = new QXYModelMapper;
+            mapper->setMapX(2);
+            mapper->setMapY(3);
+            mapper->setFirst(2);
+            mapper->setCount(4);
+
+            m_series->setModelMapper(mapper);
+
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(2, 2, 2, 4));
@@ -249,145 +284,157 @@ void TableWidget::updateChartType(bool toggle)
             // series 3
             m_series = new QSplineSeries;
             m_series->setModel(m_model);
-            m_series->setModelMapping(4,5, Qt::Vertical);
-            m_series->setModelMappingRange(2, -1);
-            //        series->setModelMapping(4,5, Qt::Horizontal);
+
+            mapper = new QXYModelMapper;
+            mapper->setMapX(4);
+            mapper->setMapY(5);
+            mapper->setFirst(2);
+            mapper->setCount(-1);
+
+            m_series->setModelMapper(mapper);
+
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
             m_model->addMapping(seriesColorHex, QRect(4, 2, 2, 1000));
         }
-        else if (m_scatterRadioButton->isChecked())
-        {
-            m_chart->setAnimationOptions(QChart::NoAnimation);
+        //        else if (m_scatterRadioButton->isChecked())
+        //        {
+        //            m_chart->setAnimationOptions(QChart::NoAnimation);
 
-            // series 1
-            m_series = new QScatterSeries;
-            m_series->setModel(m_model);
-            m_series->setModelMapping(0,1, Qt::Vertical);
-            //            m_series->setModelMappingRange(2, 0);
-            //        series->setModelMapping(0,1, Qt::Horizontal);
-            m_chart->addSeries(m_series);
+        //            // series 1
+        //            m_series = new QScatterSeries;
+        //            m_series->setModel(m_model);
+        //            m_series->setModelMapping(0,1, Qt::Vertical);
+        //            //            m_series->setModelMappingRange(2, 0);
+        //            //        series->setModelMapping(0,1, Qt::Horizontal);
+        //            m_chart->addSeries(m_series);
 
-            seriesColorHex = "#" + QString::number(m_series->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 1000));
+        //            seriesColorHex = "#" + QString::number(m_series->brush().color().rgb(), 16).right(6).toUpper();
+        //            m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 1000));
 
-            // series 2
-            m_series = new QScatterSeries;
-            m_series->setModel(m_model);
-            m_series->setModelMapping(2,3, Qt::Vertical);
-            //            m_series->setModelMappingRange(1, 6);
-            //        series->setModelMapping(2,3, Qt::Horizontal);
-            m_chart->addSeries(m_series);
+        //            // series 2
+        //            m_series = new QScatterSeries;
+        //            m_series->setModel(m_model);
+        //            m_series->setModelMapping(2,3, Qt::Vertical);
+        //            //            m_series->setModelMappingRange(1, 6);
+        //            //        series->setModelMapping(2,3, Qt::Horizontal);
+        //            m_chart->addSeries(m_series);
 
-            seriesColorHex = "#" + QString::number(m_series->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(2, 1, 2, 6));
+        //            seriesColorHex = "#" + QString::number(m_series->brush().color().rgb(), 16).right(6).toUpper();
+        //            m_model->addMapping(seriesColorHex, QRect(2, 1, 2, 6));
 
-            // series 3
-            m_series = new QScatterSeries;
-            m_series->setModel(m_model);
-            m_series->setModelMapping(4,5, Qt::Vertical);
-            //        series->setModelMapping(4,5, Qt::Horizontal);
-            m_chart->addSeries(m_series);
-            seriesColorHex = "#" + QString::number(m_series->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(4, 0, 2, 1000));
-        }
-        else if (m_pieRadioButton->isChecked())
-        {
-            m_chart->setAnimationOptions(QChart::SeriesAnimations);
+        //            // series 3
+        //            m_series = new QScatterSeries;
+        //            m_series->setModel(m_model);
+        //            m_series->setModelMapping(4,5, Qt::Vertical);
+        //            //        series->setModelMapping(4,5, Qt::Horizontal);
+        //            m_chart->addSeries(m_series);
+        //            seriesColorHex = "#" + QString::number(m_series->brush().color().rgb(), 16).right(6).toUpper();
+        //            m_model->addMapping(seriesColorHex, QRect(4, 0, 2, 1000));
+        //        }
+                else if (m_pieRadioButton->isChecked())
+                {
+                    m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
-            // pie 1
-            QPieSeries* pieSeries = new QPieSeries;
-            pieSeries->setModel(m_model);
-            pieSeries->setModelMappingRange(2, 5);
-            pieSeries->setModelMapping(1, 0, Qt::Vertical);
-            pieSeries->setLabelsVisible(true);
-            pieSeries->setPieSize(0.75);
-//            pieSeries->setHorizontalPosition(0.2);
-//            pieSeries->setVerticalPosition(0.3);
+                    // pie 1
+                    QPieSeries* pieSeries = new QPieSeries;
+                    pieSeries->setModel(m_model);
 
-            m_chart->addSeries(pieSeries);
-            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 5));
+                    QPieModelMapper *mapper = new QPieModelMapper;
+                    mapper->setMapValues(1);
+                    mapper->setMapLabels(1);
+                    mapper->setFirst(2);
+                    mapper->setCount(5);
+                    pieSeries->setModelMapper(mapper);
 
-//            // pie 2
-//            pieSeries = new QPieSeries;
-//            pieSeries->setModel(m_model);
+                    pieSeries->setLabelsVisible(true);
+                    pieSeries->setPieSize(0.75);
+        //            pieSeries->setHorizontalPosition(0.2);
+        //            pieSeries->setVerticalPosition(0.3);
 
-//            pieSeries->setModelMapping(1,1, Qt::Vertical);
-//            pieSeries->setModelMappingRange(2, -1);
-//            pieSeries->setLabelsVisible(true);
-//            pieSeries->setPieSize(0.35);
-//            pieSeries->setHorizontalPosition(0.8);
-//            pieSeries->setVerticalPosition(0.3);
-//            m_chart->addSeries(pieSeries);
-//            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-//            m_model->addMapping(seriesColorHex, QRect(1, 2, 1, 1000));
+                    m_chart->addSeries(pieSeries);
+                    seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
+                    m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 5));
 
-//            // pie 3
-//            pieSeries = new QPieSeries;
-//            pieSeries->setModel(m_model);
-//            pieSeries->setModelMapping(2,2, Qt::Vertical);
-//            pieSeries->setLabelsVisible(true);
-//            pieSeries->setPieSize(0.35);
-//            pieSeries->setHorizontalPosition(0.5);
-//            pieSeries->setVerticalPosition(0.75);
-//            m_chart->addSeries(pieSeries);
-//            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-//            m_model->addMapping(seriesColorHex, QRect(2, 0, 1, 1000));
+        //            // pie 2
+        //            pieSeries = new QPieSeries;
+        //            pieSeries->setModel(m_model);
 
-            //            // special pie
-            //            specialPie = new QPieSeries;
-            //            specialPie->append(17, "1");
-            //            specialPie->append(45, "2");
-            //            specialPie->append(77, "3");
-            //            specialPie->append(37, "4");
-            //            specialPie->append(27, "5");
-            //            specialPie->append(47, "6");
-            //            specialPie->setPieSize(0.35);
-            //            specialPie->setHorizontalPosition(0.8);
-            //            specialPie->setVerticalPosition(0.75);
-            //            specialPie->setLabelsVisible(true);
-            //            m_chart->addSeries(specialPie);
-        }
-        else if (m_areaRadioButton->isChecked())
-        {
-            m_chart->setAnimationOptions(QChart::NoAnimation);
+        //            pieSeries->setModelMapping(1,1, Qt::Vertical);
+        //            pieSeries->setModelMappingRange(2, -1);
+        //            pieSeries->setLabelsVisible(true);
+        //            pieSeries->setPieSize(0.35);
+        //            pieSeries->setHorizontalPosition(0.8);
+        //            pieSeries->setVerticalPosition(0.3);
+        //            m_chart->addSeries(pieSeries);
+        //            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
+        //            m_model->addMapping(seriesColorHex, QRect(1, 2, 1, 1000));
 
-            QLineSeries* upperLineSeries = new QLineSeries;
-            upperLineSeries->setModel(m_model);
-            upperLineSeries->setModelMapping(0, 1, Qt::Vertical);
-            //            upperLineSeries->setModelMappingRange(1, 5);
-            QLineSeries* lowerLineSeries = new QLineSeries;
-            lowerLineSeries->setModel(m_model);
-            lowerLineSeries->setModelMapping(2, 3, Qt::Vertical);
-            QAreaSeries* areaSeries = new QAreaSeries(upperLineSeries, lowerLineSeries);
-            m_chart->addSeries(areaSeries);
-            seriesColorHex = "#" + QString::number(areaSeries->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 1, 2, 5));
-            m_model->addMapping(seriesColorHex, QRect(2, 0, 2, 1000));
-        }
-        else if (m_barRadioButton->isChecked())
-        {
-            m_chart->setAnimationOptions(QChart::SeriesAnimations);
+        //            // pie 3
+        //            pieSeries = new QPieSeries;
+        //            pieSeries->setModel(m_model);
+        //            pieSeries->setModelMapping(2,2, Qt::Vertical);
+        //            pieSeries->setLabelsVisible(true);
+        //            pieSeries->setPieSize(0.35);
+        //            pieSeries->setHorizontalPosition(0.5);
+        //            pieSeries->setVerticalPosition(0.75);
+        //            m_chart->addSeries(pieSeries);
+        //            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
+        //            m_model->addMapping(seriesColorHex, QRect(2, 0, 1, 1000));
 
-            QBarSeries* barSeries = new QBarSeries();
-            barSeries->setCategories(QStringList());
-            barSeries->setModel(m_model);
-            //            barSeries->setModelMappingRange(2, 5);
-            barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
-            m_chart->addSeries(barSeries);
-            QList<QBarSet*> barsets = barSeries->barSets();
-            for (int i = 0; i < barsets.count(); i++) {
-                seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
-                m_model->addMapping(seriesColorHex, QRect(2 + i, 0, 1, 1000));
-            }
-        }
+                    //            // special pie
+                    //            specialPie = new QPieSeries;
+                    //            specialPie->append(17, "1");
+                    //            specialPie->append(45, "2");
+                    //            specialPie->append(77, "3");
+                    //            specialPie->append(37, "4");
+                    //            specialPie->append(27, "5");
+                    //            specialPie->append(47, "6");
+                    //            specialPie->setPieSize(0.35);
+                    //            specialPie->setHorizontalPosition(0.8);
+                    //            specialPie->setVerticalPosition(0.75);
+                    //            specialPie->setLabelsVisible(true);
+                    //            m_chart->addSeries(specialPie);
+                }
+        //        else if (m_areaRadioButton->isChecked())
+        //        {
+        //            m_chart->setAnimationOptions(QChart::NoAnimation);
+
+        //            QLineSeries* upperLineSeries = new QLineSeries;
+        //            upperLineSeries->setModel(m_model);
+        //            upperLineSeries->setModelMapping(0, 1, Qt::Vertical);
+        //            //            upperLineSeries->setModelMappingRange(1, 5);
+        //            QLineSeries* lowerLineSeries = new QLineSeries;
+        //            lowerLineSeries->setModel(m_model);
+        //            lowerLineSeries->setModelMapping(2, 3, Qt::Vertical);
+        //            QAreaSeries* areaSeries = new QAreaSeries(upperLineSeries, lowerLineSeries);
+        //            m_chart->addSeries(areaSeries);
+        //            seriesColorHex = "#" + QString::number(areaSeries->brush().color().rgb(), 16).right(6).toUpper();
+        //            m_model->addMapping(seriesColorHex, QRect(0, 1, 2, 5));
+        //            m_model->addMapping(seriesColorHex, QRect(2, 0, 2, 1000));
+        //        }
+        //        else if (m_barRadioButton->isChecked())
+        //        {
+        //            m_chart->setAnimationOptions(QChart::SeriesAnimations);
+
+        //            QBarSeries* barSeries = new QBarSeries();
+        //            barSeries->setCategories(QStringList());
+        //            barSeries->setModel(m_model);
+        //            //            barSeries->setModelMappingRange(2, 5);
+        //            barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
+        //            m_chart->addSeries(barSeries);
+        //            QList<QBarSet*> barsets = barSeries->barSets();
+        //            for (int i = 0; i < barsets.count(); i++) {
+        //                seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
+        //                m_model->addMapping(seriesColorHex, QRect(2 + i, 0, 1, 1000));
+        //            }
+        //        }
 
 
-        if (!m_barRadioButton->isChecked()) {
-            m_chart->axisX()->setRange(0, 500);
-            m_chart->axisY()->setRange(0, 220);
-        }
+        //        if (!m_barRadioButton->isChecked()) {
+        //            m_chart->axisX()->setRange(0, 500);
+        //            m_chart->axisY()->setRange(0, 220);
+        //        }
         m_chart->legend()->setVisible(true);
 
         // repaint table view colors
@@ -398,7 +445,8 @@ void TableWidget::updateChartType(bool toggle)
 
 void TableWidget::testPie()
 {
-    m_tableView->setColumnWidth(10, 250);
+    m_series->modelMapper()->setMapX(4);
+//    m_tableView->setColumnWidth(10, 250);
     //    if (specialPie) {
     //        specialPie->remove(specialPie->slices().at(2));
     //        //    specialPie->insert(4, new QPieSlice(45, "Hello"));//specialPie->slices.at(2));

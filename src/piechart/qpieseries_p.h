@@ -28,6 +28,7 @@ class QModelIndex;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QLegendPrivate;
+class QPieModelMapper;
 
 class QPieSeriesPrivate : public QAbstractSeriesPrivate
 {
@@ -55,6 +56,7 @@ public Q_SLOTS:
     void sliceChanged();
     void sliceClicked();
     void sliceHovered(bool state);
+    void initializePieFromModel();
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
     void modelRowsAdded(QModelIndex parent, int start, int end);
     void modelRowsRemoved(QModelIndex parent, int start, int end);
@@ -63,7 +65,7 @@ public Q_SLOTS:
     bool setRealValue(qreal &value, qreal newValue, qreal max, qreal min = 0.0);
 
 private:
-    void initializePieFromModel();
+    void setMapping();
     void insertData(int start, int end);
     void removeData(int start, int end);
 
@@ -77,9 +79,7 @@ public:
     qreal m_sum;
 
     // model map
-    int m_mapValues;
-    int m_mapLabels;
-    bool m_modelReady;
+    QPieModelMapper *m_mapper;
 
 private:
     friend class QLegendPrivate;

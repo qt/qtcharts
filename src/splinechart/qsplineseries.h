@@ -40,10 +40,8 @@ public:
     ~QSplineSeries();
     QAbstractSeries::SeriesType type() const;
 
-//    QPointF controlPoint(int index) const;
-
-    void setModelMapping(int modelX, int modelY, Qt::Orientation orientation = Qt::Vertical);
-    void setModelMappingRange(int first, int count = -1);
+    void setModel(QAbstractItemModel *model);
+    void setModelMapper(QXYModelMapper *mapper);
 
 private:
     Q_DECLARE_PRIVATE(QSplineSeries);

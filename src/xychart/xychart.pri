@@ -3,7 +3,8 @@ DEPENDPATH += $$PWD
 
 SOURCES += \
     $$PWD/xychartitem.cpp \
-    $$PWD/qxyseries.cpp  
+    $$PWD/qxyseries.cpp \  
+    $$PWD/qxymodelmapper.cpp
     
 PRIVATE_HEADERS += \
     $$PWD/xychartitem_p.h \
@@ -11,4 +12,5 @@ PRIVATE_HEADERS += \
 
     
 PUBLIC_HEADERS += \    
-    $$PWD/qxyseries.h  
+    $$PWD/qxyseries.h \
+    $$PWD/qxymodelmapper.h

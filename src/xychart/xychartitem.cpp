@@ -26,6 +26,7 @@
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 #include <QAbstractItemModel>
+#include "qxymodelmapper.h"
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -126,26 +127,30 @@ void XYChartItem::handlePointAdded(int index)
 }
 
 void XYChartItem::handlePointsAdded(int start, int end)
-{
+{    
     if (m_series->model() == 0) {
         for (int i = start; i <= end; i++)
             handlePointAdded(i);
-    } else if (m_series->mapCount() != -1 && start >= m_series->mapFirst() + m_series->mapCount()) {
-        return;
     } else {
-        int addedCount = end - start + 1;
-        if (m_series->mapCount() != -1 && addedCount > m_series->mapCount())
-            addedCount = m_series->mapCount();
-        int first = qMax(start, m_series->mapFirst());  // get the index of the first item that will be added
-        int last = qMin(first + addedCount - 1, m_series->count() + m_series->mapFirst() - 1);  // get the index of the last item that will be added
-        for (int i = first; i <= last; i++) {
-            handlePointAdded(i - m_series->mapFirst());
+        int mapFirst = m_series->modelMapper()->first();
+        int mapCount = m_series->modelMapper()->count();
+        if (mapCount != -1 && start >= mapFirst + mapCount) {
+            return;
+        } else {
+            int addedCount = end - start + 1;
+            if (mapCount != -1 && addedCount > mapCount)
+                addedCount = mapCount;
+            int first = qMax(start, mapFirst);  // get the index of the first item that will be added
+            int last = qMin(first + addedCount - 1, mapCount + mapFirst - 1);  // get the index of the last item that will be added
+            for (int i = first; i <= last; i++) {
+                handlePointAdded(i - mapFirst);
+            }
+            // the map is limited therefore the items that are now outside the map
+            // need to be removed from the drawn points
+            if (mapCount != -1 && m_points.size() > mapCount)
+                for (int i = m_points.size() - 1; i >= mapCount; i--)
+                    handlePointRemoved(i);
         }
-        // the map is limited therefore the items that are now outside the map
-        // need to be removed from the drawn points
-        if (m_series->mapCount() != -1 && m_points.size() > m_series->mapCount())
-            for (int i = m_points.size() - 1; i >= m_series->mapCount(); i--)
-                handlePointRemoved(i);
     }
 }
 
@@ -170,8 +175,8 @@ void XYChartItem::handlePointsRemoved(int start, int end)
             handlePointRemoved(i);
     } else {
         // series uses model as a data source
-        int mapFirst = m_series->mapFirst();
-        int mapCount = m_series->mapCount();
+        int mapFirst = m_series->modelMapper()->first();
+        int mapCount = m_series->modelMapper()->count();
         int removedCount = end - start + 1;
         if (mapCount != -1 && start >= mapFirst + mapCount) {
             return;
@@ -193,7 +198,7 @@ void XYChartItem::handlePointsRemoved(int start, int end)
             }
             if (mapCount != -1) {
                 int itemsAvailable;     // check how many are available to be added
-                if (m_series->mapOrientation() == Qt::Vertical)
+                if (m_series->modelMapper()->orientation() == Qt::Vertical)
                     itemsAvailable = m_series->model()->rowCount() - mapFirst - m_points.size();
                 else
                     itemsAvailable = m_series->model()->columnCount() - mapFirst - m_points.size();

@@ -59,9 +59,9 @@ public:
 //    void setGroupedDrawing(bool on = true);   // By default this is on. Bars are grouped next to each other. If off, bars are drawn at their x-position (propably on top of each other)
 //    void setBarMargin(int margin);            // Margin that is left between bars (if drawn as grouped bars)
 
-    bool setModel(QAbstractItemModel *model);
-    void setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
-    void setModelMappingRange(int first, int count = -1);
+    void setModel(QAbstractItemModel *model);
+//    void setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
+//    void setModelMappingRange(int first, int count = -1);
 
 protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);

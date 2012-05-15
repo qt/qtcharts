@@ -47,7 +47,7 @@ public:
 public Q_SLOTS:
 
 public:
-    bool setPieModel(DeclarativePieModel *model);
+    void setPieModel(DeclarativePieModel *model);
     DeclarativePieModel *pieModel();
 };
 
