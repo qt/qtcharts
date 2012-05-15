@@ -34,6 +34,7 @@
 #include <QAreaSeries>
 #include <QBarSeries>
 #include <QBarSet>
+#include <QBarModelMapper>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QLabel>
@@ -413,28 +414,34 @@ void TableWidget::updateChartType(bool toggle)
         //            m_model->addMapping(seriesColorHex, QRect(0, 1, 2, 5));
         //            m_model->addMapping(seriesColorHex, QRect(2, 0, 2, 1000));
         //        }
-        //        else if (m_barRadioButton->isChecked())
-        //        {
-        //            m_chart->setAnimationOptions(QChart::SeriesAnimations);
+                else if (m_barRadioButton->isChecked())
+                {
+                    m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
-        //            QBarSeries* barSeries = new QBarSeries();
-        //            barSeries->setCategories(QStringList());
-        //            barSeries->setModel(m_model);
-        //            //            barSeries->setModelMappingRange(2, 5);
-        //            barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
-        //            m_chart->addSeries(barSeries);
-        //            QList<QBarSet*> barsets = barSeries->barSets();
-        //            for (int i = 0; i < barsets.count(); i++) {
-        //                seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
-        //                m_model->addMapping(seriesColorHex, QRect(2 + i, 0, 1, 1000));
-        //            }
-        //        }
+                    QBarSeries* barSeries = new QBarSeries();
+                    barSeries->setCategories(QStringList());
+                    barSeries->setModel(m_model);
+                    //            barSeries->setModelMappingRange(2, 5);
+//                    barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
+
+                    QBarModelMapper *mapper = new QBarModelMapper;
+                    mapper->setMapCategories(5);
+                    mapper->setMapBarBottom(2);
+                    mapper->setMapBarTop(4);
+                    barSeries->setModelMapper(mapper);
+                    m_chart->addSeries(barSeries);
+                    QList<QBarSet*> barsets = barSeries->barSets();
+                    for (int i = 0; i < barsets.count(); i++) {
+                        seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
+                        m_model->addMapping(seriesColorHex, QRect(2 + i, 0, 1, 1000));
+                    }
+                }
 
 
-        //        if (!m_barRadioButton->isChecked()) {
-        //            m_chart->axisX()->setRange(0, 500);
-        //            m_chart->axisY()->setRange(0, 220);
-        //        }
+                if (!m_barRadioButton->isChecked()) {
+                    m_chart->axisX()->setRange(0, 500);
+                    m_chart->axisY()->setRange(0, 220);
+                }
         m_chart->legend()->setVisible(true);
 
         // repaint table view colors

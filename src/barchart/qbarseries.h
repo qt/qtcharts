@@ -33,6 +33,7 @@ typedef QStringList QBarCategories;
 class QBarSet;
 class BarCategory;
 class QBarSeriesPrivate;
+class QBarModelMapper;
 
 // Container for series
 class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
@@ -57,8 +58,8 @@ public:
     void setLabelsVisible(bool visible = true);
 
     void setModel(QAbstractItemModel *model);
-//    void setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
-//    void setModelMappingRange(int first, int count = -1);
+    void setModelMapper(QBarModelMapper *mapper);
+    QBarModelMapper* modelMapper() const;
 
 protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);

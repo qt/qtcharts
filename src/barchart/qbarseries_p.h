@@ -10,6 +10,8 @@ class QModelIndex;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QBarModelMapper;
+
 // Container for series
 class QBarSeriesPrivate : public QAbstractSeriesPrivate
 {
@@ -23,10 +25,6 @@ public:
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter* presenter);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
-
-//    void setModel(QAbstractItemModel *model);
-//    void setModelMapping(int categories, int bottomBoundry, int topBoundry, Qt::Orientation orientation = Qt::Vertical);
-//    void setModelMappingRange(int first, int count = -1);
 
     void insertCategory(int index, const QString category);
     void removeCategory(int index);
@@ -49,20 +47,16 @@ Q_SIGNALS:
 
 private Q_SLOTS:
     // slots for updating bars when data in model changes
-//    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
+    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
     void modelDataAdded(QModelIndex parent, int start, int end);
     void modelDataRemoved(QModelIndex parent, int start, int end);
-//    void initializeDataFromModel();
+    void initializeDataFromModel();
     void barsetChanged();
 
 protected:
     QList<QBarSet *> m_barSets;
     QBarCategories m_categories;
-
-    qreal m_barMargin;
-    int m_mapCategories;
-    int m_mapBarBottom;
-    int m_mapBarTop;
+    QBarModelMapper *m_mapper;
 private:
     Q_DECLARE_PUBLIC(QBarSeries)
 };
