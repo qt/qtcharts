@@ -23,15 +23,15 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Domain::Domain(QObject* parent):QObject(parent),
-m_minX(0),
-m_maxX(1),
-m_minY(0),
-m_maxY(1),
-m_tickXCount(5),
-m_tickYCount(5),
-m_niceXNumbers(false),
-m_niceYNumbers(false)
+Domain::Domain(QObject* parent) : QObject(parent),
+    m_minX(0),
+    m_maxX(0),
+    m_minY(0),
+    m_maxY(0),
+    m_tickXCount(5),
+    m_tickYCount(5),
+    m_niceXNumbers(false),
+    m_niceYNumbers(false)
 {
 }
 
