@@ -213,8 +213,9 @@ QList<QBarSet*> QBarSeries::barSets() const
      \fn bool QBarSeries::setModel(QAbstractItemModel *model)
      Sets the \a model to be used as a data source
  */
-void QBarSeries::setModel(QAbstractItemModel */*model*/)
+void QBarSeries::setModel(QAbstractItemModel *model)
 {
+    Q_UNUSED(model);
 //    Q_D(QBarSeries);
 //    d->setModel(model);
 }
