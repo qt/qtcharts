@@ -59,8 +59,8 @@ void DeclarativeBarSeries::classBegin()
 
 void DeclarativeBarSeries::componentComplete()
 {
-    if (model())
-        setModelMapping(0, 1, 1, Qt::Vertical);
+//    if (model())
+//        setModelMapping(0, 1, 1, Qt::Vertical);
 }
 
 bool DeclarativeBarSeries::setDeclarativeModel(DeclarativeBarModel *model)
@@ -68,9 +68,9 @@ bool DeclarativeBarSeries::setDeclarativeModel(DeclarativeBarModel *model)
     QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
     bool value(false);
     if (m) {
-        value = setModel(m);
+        setModel(m);
         //setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
-        setModelMapping(0, 1, 1, Qt::Vertical);
+//        setModelMapping(0, 1, 1, Qt::Vertical);
     } else {
         qWarning("DeclarativeBarSeries: Illegal model");
     }

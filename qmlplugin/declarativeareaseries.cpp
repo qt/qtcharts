@@ -21,6 +21,7 @@
 #include "declarativeareaseries.h"
 #include "declarativechart.h"
 #include "qchart.h"
+#include "qxymodelmapper.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -35,7 +36,10 @@ bool DeclarativeAreaSeries::setDeclarativeUpperModel(DeclarativeXyModel *model)
     bool value(false);
     if (m) {
         upperSeries()->setModel(m);
-        upperSeries()->setModelMapping(0, 1, Qt::Vertical);
+        QXYModelMapper *mapper = new QXYModelMapper;
+        mapper->setMapX(0);
+        mapper->setMapY(1);
+        upperSeries()->setModelMapper(mapper);
     } else {
         qWarning("DeclarativeAreaSeries: Illegal model");
     }
@@ -53,7 +57,10 @@ bool DeclarativeAreaSeries::setDeclarativeLowerModel(DeclarativeXyModel *model)
     bool value(false);
     if (m) {
         lowerSeries()->setModel(m);
-        lowerSeries()->setModelMapping(0, 1, Qt::Vertical);
+        QXYModelMapper *mapper = new QXYModelMapper;
+        mapper->setMapX(0);
+        mapper->setMapY(1);
+        lowerSeries()->setModelMapper(mapper);
     } else {
         qWarning("DeclarativeAreaSeries: Illegal model");
     }

@@ -492,9 +492,9 @@ void tst_QLineSeries::setModelMapping()
 {
     QSKIP("Model mapping has been rewriten, test case needs update", SkipAll);
 
-    QFETCH(int, modelX);
-    QFETCH(int, modelY);
-    QFETCH(Qt::Orientation, orientation);
+//    QFETCH(int, modelX);
+//    QFETCH(int, modelY);
+//    QFETCH(Qt::Orientation, orientation);
 
 //    QLineSeries series;
 
@@ -538,12 +538,12 @@ void tst_QLineSeries::setModelMappingRange()
 {
     QSKIP("Model mapping has been rewriten, test case needs update", SkipAll);
 
-    QFETCH(int, first);
-    QFETCH(int, count);
-    QLineSeries series;
+//    QFETCH(int, first);
+//    QFETCH(int, count);
+//    QLineSeries series;
 
-    QStandardItemModel *model = new QStandardItemModel(0, 2);
-    series.setModel(model);
+//    QStandardItemModel *model = new QStandardItemModel(0, 2);
+//    series.setModel(model);
 //    series.setModelMapping(0, 1);
 //    series.setModelMappingRange(first, count);
 
