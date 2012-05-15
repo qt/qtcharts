@@ -715,6 +715,10 @@ void QPieSeriesPrivate::removeData(int start, int end)
 void QPieSeriesPrivate::initializePieFromModel()
 {
     Q_Q(QPieSeries);
+
+    if (m_model == 0 || m_mapper == 0)
+        return;
+
     // clear current content
     q->clear();
 
