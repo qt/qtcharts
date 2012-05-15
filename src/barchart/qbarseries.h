@@ -39,7 +39,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
 {
     Q_OBJECT
 public:
-    explicit QBarSeries(/*QBarCategories categories,*/ QObject *parent = 0);
+    explicit QBarSeries(QObject *parent = 0);
     virtual ~QBarSeries();
 
     QAbstractSeries::SeriesType type() const;
@@ -55,9 +55,6 @@ public:
     QBarCategories categories() const;
 
     void setLabelsVisible(bool visible = true);
-// TODO:
-//    void setGroupedDrawing(bool on = true);   // By default this is on. Bars are grouped next to each other. If off, bars are drawn at their x-position (propably on top of each other)
-//    void setBarMargin(int margin);            // Margin that is left between bars (if drawn as grouped bars)
 
     void setModel(QAbstractItemModel *model);
 //    void setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
@@ -75,6 +72,7 @@ protected:
     friend class BarChartItem;
     friend class PercentBarChartItem;
     friend class StackedBarChartItem;
+    friend class GroupedBarChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

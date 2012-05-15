@@ -88,7 +88,7 @@ void ChartDataSet::addSeries(QAbstractSeries* series, QAxis *axisY)
 
     series->d_ptr->scaleDomain(*domain);
 
-    if(series->type() == QAbstractSeries::SeriesTypeBar
+    if(series->type() == QAbstractSeries::SeriesTypeGroupedBar
             || series->type() == QAbstractSeries::SeriesTypeStackedBar
             || series->type() == QAbstractSeries::SeriesTypePercentBar) {
         QBarSeries* barSeries = static_cast<QBarSeries*>(series);

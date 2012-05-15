@@ -15,8 +15,10 @@ class QBarSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 public:
-    QBarSeriesPrivate(/*QBarCategories categories,*/ QBarSeries *parent);
+    QBarSeriesPrivate(QBarSeries *parent);
     void setCategories(QBarCategories categories);
+    void setBarMargin(qreal margin);
+    qreal barMargin();
 
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter* presenter);
@@ -57,6 +59,7 @@ protected:
     QList<QBarSet *> m_barSets;
     QBarCategories m_categories;
 
+    qreal m_barMargin;
     int m_mapCategories;
     int m_mapBarBottom;
     int m_mapBarTop;

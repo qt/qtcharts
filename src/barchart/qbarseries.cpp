@@ -260,9 +260,9 @@ void QBarSeries::setLabelsVisible(bool visible)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarSeriesPrivate::QBarSeriesPrivate(/*QBarCategories categories,*/ QBarSeries *q) :
+QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
     QAbstractSeriesPrivate(q),
-//    m_categories(categories),
+    m_barMargin(0.05),  // Default value is 5% of category width
     m_mapCategories(-1),
     m_mapBarBottom(-1),
     m_mapBarTop(-1)
@@ -274,6 +274,22 @@ void QBarSeriesPrivate::setCategories(QBarCategories categories)
     m_categories = categories;
 }
 
+void QBarSeriesPrivate::setBarMargin(qreal margin)
+{
+    if (margin > 1.0) {
+        margin = 1.0;
+    } else if (margin < 0.0) {
+        margin = 0.0;
+    }
+
+    m_barMargin = margin;
+    emit updatedBars();
+}
+
+qreal QBarSeriesPrivate::barMargin()
+{
+    return m_barMargin;
+}
 
 QBarSet* QBarSeriesPrivate::barsetAt(int index)
 {
@@ -295,7 +311,7 @@ qreal QBarSeriesPrivate::min()
     for (int i = 0; i < m_barSets.count(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
-            qreal temp = m_barSets.at(i)->at(j);
+            qreal temp = m_barSets.at(i)->at(j).y();
             if (temp < min)
                 min = temp;
         }
@@ -313,7 +329,7 @@ qreal QBarSeriesPrivate::max()
     for (int i = 0; i < m_barSets.count(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
-            qreal temp = m_barSets.at(i)->at(j);
+            qreal temp = m_barSets.at(i)->at(j).y();
             if (temp > max)
                 max = temp;
         }
@@ -332,7 +348,7 @@ qreal QBarSeriesPrivate::valueAt(int set, int category)
         return 0;
     }
 
-    return m_barSets.at(set)->at(category);
+    return m_barSets.at(set)->at(category).y();
 }
 
 qreal QBarSeriesPrivate::percentageAt(int set, int category)
@@ -345,7 +361,7 @@ qreal QBarSeriesPrivate::percentageAt(int set, int category)
         return 0;
     }
 
-    qreal value = m_barSets.at(set)->at(category);
+    qreal value = m_barSets.at(set)->at(category).y();
     qreal sum = categorySum(category);
     if ( qFuzzyIsNull(sum) ) {
         return 0;
@@ -360,7 +376,7 @@ qreal QBarSeriesPrivate::categorySum(int category)
     int count = m_barSets.count(); // Count sets
     for (int set = 0; set < count; set++) {
         if (category < m_barSets.at(set)->count())
-            sum += m_barSets.at(set)->at(category);
+            sum += m_barSets.at(set)->at(category).y();
     }
     return sum;
 }
@@ -371,7 +387,7 @@ qreal QBarSeriesPrivate::absoluteCategorySum(int category)
     int count = m_barSets.count(); // Count sets
     for (int set = 0; set < count; set++) {
         if (category < m_barSets.at(set)->count())
-            sum += qAbs(m_barSets.at(set)->at(category));
+            sum += qAbs(m_barSets.at(set)->at(category).y());
     }
     return sum;
 }

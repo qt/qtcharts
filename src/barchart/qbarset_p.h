@@ -23,8 +23,7 @@ Q_SIGNALS:
 public:
     QBarSet * const q_ptr;
     QString m_name;
-    QList<qreal> m_values;   // TODO: replace with map (category, value)
-    QMap<QString, qreal> m_mappedValues;
+    QList<QPointF> m_values;
     QPen m_pen;
     QBrush m_brush;
     QPen m_labelPen;

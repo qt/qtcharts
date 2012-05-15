@@ -111,30 +111,32 @@ QVector<QRectF> BarChartItem::calculateLayout()
     // Domain:
     qreal width = geometry().width();
     qreal height = geometry().height();
-    qreal range = m_domainMaxY - m_domainMinY;
-    qreal scale = (height / range);
+    qreal rangeY = m_domainMaxY - m_domainMinY;
+    qreal rangeX = m_domainMaxX - m_domainMinX;
+    qreal scaleY = (height / rangeY);
+    qreal scaleX = (width / rangeX);
     qreal categoryWidth = width / categoryCount;
-    qreal barWidth = categoryWidth / (setCount+1);
+    qreal barWidth = categoryWidth - categoryWidth * m_series->d_func()->barMargin();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal xPos = categoryWidth * category + barWidth / 2 + geometry().topLeft().x();
-        qreal yPos = height + scale * m_domainMinY + geometry().topLeft().y();
+        qreal yPos = height + scaleY * m_domainMinY + geometry().topLeft().y();
         for (int set = 0; set < setCount; set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
+            qreal xPos = (barSet->at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
+            qreal barHeight = barSet->at(category).y() * scaleY;
 
-            qreal barHeight = barSet->at(category) * scale;
             Bar* bar = m_bars.at(itemIndex);
-
             QRectF rect(xPos, yPos - barHeight, barWidth, barHeight);
+
             layout.append(rect);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
 
             BarLabel* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(barSet->at(category))) {
-                label->setText(QString::number(barSet->at(category)));
+            if (!qFuzzyIsNull(barSet->at(category).y())) {
+                label->setText(QString::number(barSet->at(category).y()));
             } else {
                 label->setText(QString(""));
             }
@@ -144,9 +146,9 @@ QVector<QRectF> BarChartItem::calculateLayout()
             label->setFont(barSet->labelFont());
 
             itemIndex++;
-            xPos += barWidth;
         }
     }
+
     return layout;
 }
 

@@ -21,7 +21,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QChartView>
-#include <QBarSeries>
+#include <QGroupedBarSeries>
 #include <QBarSet>
 #include <QLegend>
 
@@ -43,15 +43,15 @@ int main(int argc, char *argv[])
     QBarSet *set3 = new QBarSet("Mary");
     QBarSet *set4 = new QBarSet("Samantha");
 
-    *set0 << QPointF(0.0, 1) << QPointF(1.0, 2) << QPointF(2.0, 3) << QPointF(3.0, 4) << QPointF(4.0, 5) << QPointF(5.0, 6);
-    *set1 << QPointF(0.2, 2) << QPointF(1.2, 3) << QPointF(2.2, 4) << QPointF(3.2, 5) << QPointF(4.2, 6) << QPointF(5.2, 7);
-    *set2 << QPointF(0.4, 3) << QPointF(1.4, 4) << QPointF(2.4, 5) << QPointF(3.4, 6) << QPointF(4.4, 7) << QPointF(5.4, 8);
-    *set3 << QPointF(0.6, 4) << QPointF(1.6, 5) << QPointF(2.6, 6) << QPointF(3.6, 7) << QPointF(4.6, 8) << QPointF(5.6, 9);
-    *set4 << QPointF(0.8, 5) << QPointF(1.8, 6) << QPointF(2.8, 7) << QPointF(3.8, 8) << QPointF(4.8, 9) << QPointF(5.8, 10);
+    *set0 << 1 << 2 << 3 << 4 << 5 << 6;
+    *set1 << 5 << 0 << 0 << 4 << 0 << 7;
+    *set2 << 3 << 5 << 8 << 13 << 8 << 5;
+    *set3 << 5 << 6 << 7 << 3 << 4 << 5;
+    *set4 << 9 << 7 << 5 << 3 << 1 << 2;
 //![2]
 
 //![3]
-    QBarSeries* series = new QBarSeries();
+    QGroupedBarSeries* series = new QGroupedBarSeries();
     series->setCategories(categories);
     series->appendBarSet(set0);
     series->appendBarSet(set1);
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 //![4]
     QChart* chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Simple barchart example");
+    chart->setTitle("Simple grouped barchart example");
 //![4]
 
 //![5]

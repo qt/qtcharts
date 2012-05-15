@@ -18,58 +18,55 @@
 **
 ****************************************************************************/
 
-#include "percentbarchartitem_p.h"
+#include "groupedbarchartitem_p.h"
 #include "bar_p.h"
 #include "barlabel_p.h"
+#include "qbarset_p.h"
 #include "qbarseries_p.h"
 #include "qbarset.h"
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PercentBarChartItem::PercentBarChartItem(QBarSeries *series, ChartPresenter *presenter) :
+GroupedBarChartItem::GroupedBarChartItem(QBarSeries *series, ChartPresenter *presenter) :
     BarChartItem(series, presenter)
 {
 }
 
-QVector<QRectF> PercentBarChartItem::calculateLayout()
+QVector<QRectF> GroupedBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
 
     // Use temporary qreals for accurancy
+    qreal categoryCount = m_series->categoryCount();
+    qreal setCount = m_series->barsetCount();
+
+    // Domain:
     qreal width = geometry().width();
     qreal height = geometry().height();
-
-    qreal categoryCount = m_series->categoryCount();
-    qreal barWidth = width / (m_series->categoryCount() * 2);
-    qreal xStep = width / categoryCount;
-    qreal xPos =  xStep / 2 - barWidth / 2 + geometry().topLeft().x();
-
     qreal range = m_domainMaxY - m_domainMinY;
-    qreal domainScale = (height / range);
+    qreal scale = (height / range);
+    qreal categoryWidth = width / categoryCount;
+    qreal barWidth = categoryWidth / (setCount+1);
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal colSum = m_series->d_func()->categorySum(category);
-        qreal percentage = (100 / colSum);
-        qreal yPos = height + domainScale * m_domainMinY + geometry().topLeft().y();
-        for (int set=0; set < m_series->barsetCount(); set++) {
+        qreal xPos = categoryWidth * category + barWidth / 2 + geometry().topLeft().x();
+        qreal yPos = height + scale * m_domainMinY + geometry().topLeft().y();
+        for (int set = 0; set < setCount; set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
-            qreal barHeight = barSet->at(category).y() * percentage * domainScale;
+
+            qreal barHeight = barSet->at(category).y() * scale;
             Bar* bar = m_bars.at(itemIndex);
+
+            QRectF rect(xPos, yPos - barHeight, barWidth, barHeight);
+            layout.append(rect);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
-            QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
-            layout.append(rect);
 
             BarLabel* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(m_series->d_func()->valueAt(set,category))) {
-                int p = m_series->d_func()->percentageAt(set,category) * 100;
-                QString vString(QString::number(p));
-                vString.truncate(3);
-                vString.append("%");
-                label->setText(vString);
+            if (!qFuzzyIsNull(barSet->at(category).y())) {
+                label->setText(QString::number(barSet->at(category).y()));
             } else {
                 label->setText(QString(""));
             }
@@ -77,14 +74,14 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
                           ,yPos - barHeight/2 - label->boundingRect().height()/2);
             label->setFont(barSet->labelFont());
+
             itemIndex++;
-            yPos -= barHeight;
+            xPos += barWidth;
         }
-        xPos += xStep;
     }
     return layout;
 }
 
-#include "moc_percentbarchartitem_p.cpp"
+#include "moc_groupedbarchartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

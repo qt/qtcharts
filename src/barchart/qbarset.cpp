@@ -84,12 +84,38 @@ QString QBarSet::name() const
     return d_ptr->m_name;
 }
 
+void QBarSet::append(const QPointF value)
+{
+    d_ptr->m_values.append(value);
+    emit d_ptr->restructuredBars();
+}
+
+
+void QBarSet::append(const QList<QPointF> values)
+{
+    for (int i=0; i<values.count(); i++) {
+        d_ptr->m_values.append(values.at(i));
+    }
+    emit d_ptr->restructuredBars();
+}
+
 /*!
     Appends new value \a value to the end of set.
 */
 void QBarSet::append(const qreal value)
 {
-    d_ptr->m_values.append(value);
+    append(QPointF(d_ptr->m_values.count(), value));
+//    d_ptr->m_values.append(value);
+}
+
+
+void QBarSet::append(const QList<qreal> values)
+{
+    int index = d_ptr->m_values.count();
+    for (int i=0; i<values.count(); i++) {
+        d_ptr->m_values.append(QPointF(index,values.at(i)));
+        index++;
+    }
     emit d_ptr->restructuredBars();
 }
 
@@ -102,6 +128,12 @@ QBarSet& QBarSet::operator << (const qreal &value)
     return *this;
 }
 
+QBarSet& QBarSet::operator << (const QPointF &value)
+{
+    append(value);
+    return *this;
+}
+
 /*!
     Inserts new \a value on the \a index position.
     The value that is currently at this postion is moved to postion index + 1
@@ -109,7 +141,7 @@ QBarSet& QBarSet::operator << (const qreal &value)
 */
 void QBarSet::insert(const int index, const qreal value)
 {
-    d_ptr->m_values.insert(index, value);
+    d_ptr->m_values.insert(index, QPointF(index, value));
 //    emit d_ptr->updatedBars();
 }
 
@@ -128,14 +160,14 @@ void QBarSet::remove(const int index)
 */
 void QBarSet::replace(const int index, const qreal value)
 {
-    d_ptr->m_values.replace(index,value);
+    d_ptr->m_values.replace(index,QPointF(index,value));
     emit d_ptr->updatedBars();
 }
 
 /*!
-    Returns value of set indexed by \a index
+    Returns value of set indexed by \a index. Note that all appended values are stored internally as QPointF
 */
-qreal QBarSet::at(const int index) const
+QPointF QBarSet::at(const int index) const
 {
     if (index < 0 || index >= d_ptr->m_values.count())
         return 0.0;
@@ -146,7 +178,7 @@ qreal QBarSet::at(const int index) const
 /*!
     Returns value of set indexed by \a index
 */
-qreal QBarSet::operator [] (int index) const
+QPointF QBarSet::operator [](const int index) const
 {
     return d_ptr->m_values.at(index);
 }
@@ -166,7 +198,8 @@ qreal QBarSet::sum() const
 {
     qreal total(0);
     for (int i=0; i < d_ptr->m_values.count(); i++) {
-        total += d_ptr->m_values.at(i);
+        //total += d_ptr->m_values.at(i);
+        total += d_ptr->m_values.at(i).y();
     }
     return total;
 }

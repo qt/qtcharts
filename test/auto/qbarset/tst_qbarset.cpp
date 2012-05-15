@@ -140,7 +140,7 @@ void tst_QBarSet::append()
 
     for (int i=0; i<count; i++) {
         m_barset->append(value);
-        QCOMPARE(m_barset->at(i), value);
+        QCOMPARE(m_barset->at(i).y(), value);
         sum += value;
         value += 1.0;
     }
@@ -166,7 +166,7 @@ void tst_QBarSet::appendOperator()
 
     for (int i=0; i<count; i++) {
         *m_barset << value;
-        QCOMPARE(m_barset->at(i), value);
+        QCOMPARE(m_barset->at(i).y(), value);
         sum += value;
         value += 1.0;
     }
@@ -185,20 +185,20 @@ void tst_QBarSet::insert()
     QVERIFY(qFuzzyIsNull(m_barset->sum()));
 
     m_barset->insert(0, 1.0);       // 1.0
-    QCOMPARE(m_barset->at(0), 1.0);
+    QCOMPARE(m_barset->at(0).y(), 1.0);
     QCOMPARE(m_barset->count(), 1);
     QVERIFY(qFuzzyCompare(m_barset->sum(), 1.0));
 
     m_barset->insert(0, 2.0);       // 2.0 1.0
-    QCOMPARE(m_barset->at(0), 2.0);
-    QCOMPARE(m_barset->at(1), 1.0);
+    QCOMPARE(m_barset->at(0).y(), 2.0);
+    QCOMPARE(m_barset->at(1).y(), 1.0);
     QCOMPARE(m_barset->count(), 2);
     QVERIFY(qFuzzyCompare(m_barset->sum(), 3.0));
 
     m_barset->insert(1, 3.0);       // 2.0 3.0 1.0
-    QCOMPARE(m_barset->at(1), 3.0);
-    QCOMPARE(m_barset->at(0), 2.0);
-    QCOMPARE(m_barset->at(2), 1.0);
+    QCOMPARE(m_barset->at(1).y(), 3.0);
+    QCOMPARE(m_barset->at(0).y(), 2.0);
+    QCOMPARE(m_barset->at(2).y(), 1.0);
     QCOMPARE(m_barset->count(), 3);
     QVERIFY(qFuzzyCompare(m_barset->sum(), 6.0));
 }
@@ -221,15 +221,15 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->sum(), 10.0);
 
     m_barset->remove(2);                // 1.0 2.0 4.0
-    QCOMPARE(m_barset->at(0), 1.0);
-    QCOMPARE(m_barset->at(1), 2.0);
-    QCOMPARE(m_barset->at(2), 4.0);
+    QCOMPARE(m_barset->at(0).y(), 1.0);
+    QCOMPARE(m_barset->at(1).y(), 2.0);
+    QCOMPARE(m_barset->at(2).y(), 4.0);
     QCOMPARE(m_barset->count(), 3);
     QCOMPARE(m_barset->sum(), 7.0);
 
     m_barset->remove(0);                // 2.0 4.0
-    QCOMPARE(m_barset->at(0), 2.0);
-    QCOMPARE(m_barset->at(1), 4.0);
+    QCOMPARE(m_barset->at(0).y(), 2.0);
+    QCOMPARE(m_barset->at(1).y(), 4.0);
     QCOMPARE(m_barset->count(), 2);
     QCOMPARE(m_barset->sum(), 6.0);
 }
@@ -255,15 +255,15 @@ void tst_QBarSet::replace()
     m_barset->replace(0, 5.0);          // 5.0 2.0 3.0 4.0
     QCOMPARE(m_barset->count(), 4);
     QCOMPARE(m_barset->sum(), 14.0);
-    QCOMPARE(m_barset->at(0), 5.0);
+    QCOMPARE(m_barset->at(0).y(), 5.0);
 
     m_barset->replace(3, 6.0);
     QCOMPARE(m_barset->count(), 4);     // 5.0 2.0 3.0 6.0
     QCOMPARE(m_barset->sum(), 16.0);
-    QCOMPARE(m_barset->at(0), 5.0);
-    QCOMPARE(m_barset->at(1), 2.0);
-    QCOMPARE(m_barset->at(2), 3.0);
-    QCOMPARE(m_barset->at(3), 6.0);
+    QCOMPARE(m_barset->at(0).y(), 5.0);
+    QCOMPARE(m_barset->at(1).y(), 2.0);
+    QCOMPARE(m_barset->at(2).y(), 3.0);
+    QCOMPARE(m_barset->at(3).y(), 6.0);
 }
 
 void tst_QBarSet::at_data()
@@ -281,10 +281,10 @@ void tst_QBarSet::at()
     m_barset->append(3.0);
     m_barset->append(4.0);
 
-    QCOMPARE(m_barset->at(0), 1.0);
-    QCOMPARE(m_barset->at(1), 2.0);
-    QCOMPARE(m_barset->at(2), 3.0);
-    QCOMPARE(m_barset->at(3), 4.0);
+    QCOMPARE(m_barset->at(0).y(), 1.0);
+    QCOMPARE(m_barset->at(1).y(), 2.0);
+    QCOMPARE(m_barset->at(2).y(), 3.0);
+    QCOMPARE(m_barset->at(3).y(), 4.0);
 }
 
 void tst_QBarSet::atOperator_data()
@@ -302,10 +302,10 @@ void tst_QBarSet::atOperator()
     m_barset->append(3.0);
     m_barset->append(4.0);
 
-    QCOMPARE(m_barset->operator [](0), 1.0);
-    QCOMPARE(m_barset->operator [](1), 2.0);
-    QCOMPARE(m_barset->operator [](2), 3.0);
-    QCOMPARE(m_barset->operator [](3), 4.0);
+    QCOMPARE(m_barset->operator [](0).y(), 1.0);
+    QCOMPARE(m_barset->operator [](1).y(), 2.0);
+    QCOMPARE(m_barset->operator [](2).y(), 3.0);
+    QCOMPARE(m_barset->operator [](3).y(), 4.0);
 }
 
 void tst_QBarSet::count_data()

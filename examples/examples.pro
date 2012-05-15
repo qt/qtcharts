@@ -19,4 +19,5 @@ SUBDIRS += \
            stackedbarchart \
            stackedbarchartdrilldown \
            zoomlinechart \
-           modeldata          
+           modeldata \
+           groupedbarchart
