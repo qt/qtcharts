@@ -33,6 +33,7 @@
 #include <QPieSlice>
 #include <QAreaSeries>
 #include <QBarSeries>
+#include <QGroupedBarSeries>
 #include <QBarSet>
 #include <QBarModelMapper>
 #include <QPushButton>
@@ -418,7 +419,7 @@ void TableWidget::updateChartType(bool toggle)
                 {
                     m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
-                    QBarSeries* barSeries = new QBarSeries();
+                    QGroupedBarSeries* barSeries = new QGroupedBarSeries();
                     barSeries->setCategories(QStringList());
                     barSeries->setModel(m_model);
                     //            barSeries->setModelMappingRange(2, 5);

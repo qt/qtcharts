@@ -56,6 +56,10 @@ private Q_SLOTS:
 protected:
     QList<QBarSet *> m_barSets;
     QBarCategories m_categories;
+    qreal m_barMargin;
+    int m_mapCategories;
+    int m_mapBarBottom;
+    int m_mapBarTop;
     QBarModelMapper *m_mapper;
 private:
     Q_DECLARE_PUBLIC(QBarSeries)
