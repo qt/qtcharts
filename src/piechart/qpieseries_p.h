@@ -65,7 +65,6 @@ public Q_SLOTS:
     bool setRealValue(qreal &value, qreal newValue, qreal max, qreal min = 0.0);
 
 private:
-    void setMapping();
     void insertData(int start, int end);
     void removeData(int start, int end);
 

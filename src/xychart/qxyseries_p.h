@@ -56,7 +56,6 @@ protected Q_SLOTS:
     virtual void mappingUpdated();
 
 private:
-    void setMapping();
     void insertData(int start, int end);
     void removeData(int start, int end);
 
