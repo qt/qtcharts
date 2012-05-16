@@ -23,6 +23,8 @@
 #include <qchart.h>
 #include <qpieseries.h>
 #include <qpieslice.h>
+#include <qpiemodelmapper.h>
+#include <QStandardItemModel>
 #include <tst_definitions.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -47,6 +49,8 @@ private slots:
     void calculatedValues();
     void clickedSignal();
     void hoverSignal();
+    void model();
+    void modelCustomMap();
 
 private:
     void verifyCalculatedData(const QPieSeries &series, bool *ok);
@@ -318,6 +322,74 @@ void tst_qpieseries::hoverSignal()
     TRY_COMPARE(hoverSpy.count(), 2);
     QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(1).at(0)), s1);
     QCOMPARE(qvariant_cast<bool>(hoverSpy.at(1).at(1)), false);
+}
+
+void tst_qpieseries::model()
+{
+    QPieSeries *series = new QPieSeries;
+    QStandardItemModel *stdModel = new QStandardItemModel(0, 2);
+    series->setModel(stdModel);
+    QVERIFY2((series->model()) == stdModel, "Model should be stdModel");
+
+    int rowCount = 3;
+    for (int row = 0; row < rowCount; ++row) {
+        for (int column = 0; column < 2; column++) {
+            QStandardItem *item = new QStandardItem(row * column);
+            stdModel->setItem(row, column, item);
+        }
+    }
+
+    // data has been added to the model, but mapper is not set the number of slices should still be 0
+    QVERIFY2(series->slices().count() == 0, "Mapper has not been set, so the number of slices should be 0");
+
+    // set the mapper
+    QPieModelMapper *mapper = new QPieModelMapper;
+    mapper->setMapValues(0);
+    mapper->setMapLabels(0);
+    series->setModelMapper(mapper); // this should cause the Pie to get initialized from the model, since there is now both the model and the mapper defined
+    QCOMPARE(series->slices().count(), rowCount);
+
+    // reset the mappings
+    mapper->reset();
+    QCOMPARE(series->slices().count(), 0); // Mappings have been reset and are invalid, so the number of slices should be 0
+
+    // unset the model and the mapper
+    series->setModel(0);
+    series->setModelMapper(0);
+    QVERIFY(series->model() == 0); // Model should be unset
+    QVERIFY(series->modelMapper() == 0); // Model mapper should be unset
+}
+
+void tst_qpieseries::modelCustomMap()
+{
+    int rowCount = 12;
+    QStandardItemModel *stdModel = new QStandardItemModel(0, 2);
+    for (int row = 0; row < rowCount; ++row) {
+        for (int column = 0; column < 2; column++) {
+            QStandardItem *item = new QStandardItem(row * column);
+            stdModel->setItem(row, column, item);
+        }
+    }
+
+    QPieSeries *series = new QPieSeries;
+    series->setModel(stdModel);
+
+    QPieModelMapper *mapper = new QPieModelMapper;
+    mapper->setMapValues(0);
+    mapper->setMapLabels(0);
+    series->setModelMapper(mapper);
+    QCOMPARE(series->slices().count(), rowCount);
+
+    // lets customize the mapping
+    int first = 3;
+    mapper->setFirst(first);
+    QCOMPARE(series->slices().count(), rowCount - first);
+    int count = 7;
+    mapper->setCount(count);
+    QCOMPARE(series->slices().count(), count);
+    first = 9;
+    mapper->setFirst(first);
+    QCOMPARE(series->slices().count(), qMin(count, rowCount - first));
 }
 
 QTEST_MAIN(tst_qpieseries)

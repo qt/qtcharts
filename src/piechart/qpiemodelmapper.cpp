@@ -74,6 +74,7 @@ void QPieModelMapper::reset()
     m_orientation = Qt::Vertical;
     m_mapValues = -1;
     m_mapLabels = -1;
+    emit updated();
 }
 
 #include "moc_qpiemodelmapper.cpp"

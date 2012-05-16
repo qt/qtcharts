@@ -722,6 +722,10 @@ void QPieSeriesPrivate::initializePieFromModel()
     // clear current content
     q->clear();
 
+    // check if mappings are set
+    if (m_mapper->mapValues() == -1 || m_mapper->mapLabels() == -1)
+        return;
+
     // create the initial slices set
     if (m_mapper->orientation() == Qt::Vertical) {
         if (m_mapper->mapValues() >= m_model->columnCount() || m_mapper->mapLabels() >= m_model->columnCount())
