@@ -593,6 +593,9 @@ void tst_QBarSeries::mousehovered()
     view.show();
     QTest::qWaitForWindowShown(&view);
 
+    //this is hack since view does not get events otherwise
+    view.setMouseTracking(true);
+
 //=======================================================================
 // move mouse to left border
     QTest::mouseMove(view.viewport(), QPoint(0, 180));
