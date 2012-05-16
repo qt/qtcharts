@@ -63,6 +63,7 @@ private slots:
     void categories();
     void setLabelsVisible_data();
     void setLabelsVisible();
+private:
     void mouseclicked_data();
     void mouseclicked();
     void mousehovered_data();
@@ -433,6 +434,7 @@ void tst_QBarSeries::mouseclicked_data()
 
 void tst_QBarSeries::mouseclicked()
 {
+
     QBarSeries* series = new QBarSeries();
     QBarCategories categories;
     categories << "test1" << "test2" << "test3";
