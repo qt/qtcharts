@@ -441,11 +441,11 @@ void tst_QBarSeries::mouseclicked()
     series->setCategories(categories);
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-    *set1 << 10 << 10 << 10;
+    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
     series->appendBarSet(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
-    *set2 << 10 << 10 << 10;
+    *set2 << QPointF(0.5,10) << QPointF(1.5,10) << QPointF(2.5,10);
     series->appendBarSet(set2);
 
     QSignalSpy setSpy1(set1, SIGNAL(clicked(QString)));
@@ -460,7 +460,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, category test1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(100,180));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(75,180));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(setSpy1.count(), 1);
@@ -475,7 +475,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, category test2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(190,180));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(160,180));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(setSpy1.count(), 1);
@@ -490,7 +490,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, category test3
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(280,180));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(255,180));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(setSpy1.count(), 1);
@@ -505,7 +505,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, category test1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(130,180));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(115,180));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(setSpy1.count(), 0);
@@ -520,7 +520,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, category test2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(220,180));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(205,180));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(setSpy1.count(), 0);
@@ -535,7 +535,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, category test3
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(310,180));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(300,180));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(setSpy1.count(), 0);
@@ -552,12 +552,12 @@ void tst_QBarSeries::mouseclicked()
 // no event cases
     QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(1,1));     // Outside of both sets
     QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(1,1));    // Right mouse button outside and inside sets
-    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(100,180)); // barset 1, category test1
-    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(190,180)); // barset 1, category test2
-    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(280,180)); // barset 1, category test3
-    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(130,180)); // barset 2, category test1
-    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(220,180)); // barset 2, category test2
-    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(310,180)); // barset 2, category test3
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(75,180)); // barset 1, category test1
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(160,180)); // barset 1, category test2
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(255,180)); // barset 1, category test3
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(115,180)); // barset 2, category test1
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(205,180)); // barset 2, category test2
+    QTest::mouseClick(view.viewport(), Qt::RightButton, 0, QPoint(300,180)); // barset 2, category test3
 
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
     QCOMPARE(setSpy1.count(), 0);
@@ -578,11 +578,11 @@ void tst_QBarSeries::mousehovered()
     series->setCategories(categories);
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-    *set1 << 10 << 10 << 10;
+    *set1 << QPointF(0.1,10) << QPointF(1.1,10) << QPointF(2.1,10);
     series->appendBarSet(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
-    *set2 << 10 << 10 << 10;
+    *set2 << QPointF(0.4,10) << QPointF(1.4,10) << QPointF(2.4,10);
     series->appendBarSet(set2);
 
     QSignalSpy setSpy1(set1, SIGNAL(hovered(bool)));
@@ -608,7 +608,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse on top of set1
-    QTest::mouseMove(view.viewport(), QPoint(100,180));
+    QTest::mouseMove(view.viewport(), QPoint(75,180));
 
     QVERIFY(setSpy1.count() == 1);
     QVERIFY(setSpy2.count() == 0);
@@ -623,7 +623,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set1 to top of set2
-    QTest::mouseMove(view.viewport(), QPoint(130,180));
+    QTest::mouseMove(view.viewport(), QPoint(105,180));
 
     QVERIFY(setSpy1.count() == 1);
     QVERIFY(setSpy2.count() == 1);
@@ -653,7 +653,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set2 to background
-    QTest::mouseMove(view.viewport(), QPoint(160,180));
+    QTest::mouseMove(view.viewport(), QPoint(135,180));
 
     QVERIFY(setSpy1.count() == 0);
     QVERIFY(setSpy2.count() == 1);
