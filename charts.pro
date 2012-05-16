@@ -49,7 +49,7 @@ unix:coverage:{
 
     runcoverage.target = run_coverage
     runcoverage.depends = buildcoverage
-    runcoverage.commands = for f in `ls ./bin/test/tst_*` ; do echo "processing \$\$f test..."; \$\$f >> unit.log; done ;
+    runcoverage.commands = for f in `ls ./bin/tst_*` ; do echo "processing \$\$f test..."; \$\$f >> unit.log; done ;
 
     gencoverage.target = gen_coverage
     gencoverage.depends = runcoverage

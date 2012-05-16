@@ -20,6 +20,7 @@
 
 #include <QtTest/QtTest>
 #include <qlineseries.h>
+#include <qxymodelmapper.h>
 #include <qchartview.h>
 #include <QStandardItemModel>
 #include <tst_definitions.h>
@@ -125,36 +126,36 @@ void tst_QLineSeries::qlineseries_data()
 
 void tst_QLineSeries::qlineseries()
 {
-//    QLineSeries series;
+    QLineSeries series;
 
-//    QCOMPARE(series.count(),0);
-//    QCOMPARE(series.brush(), QBrush());
-//    QCOMPARE(series.points(), QList<QPointF>());
-//    QCOMPARE(series.pen(), QPen());
-//    QCOMPARE(series.pointsVisible(), false);
+    QCOMPARE(series.count(),0);
+    QCOMPARE(series.brush(), QBrush());
+    QCOMPARE(series.points(), QList<QPointF>());
+    QCOMPARE(series.pen(), QPen());
+    QCOMPARE(series.pointsVisible(), false);
 
-//    series.append(QList<QPointF>());
-//    series.append(0.0,0.0);
-//    series.append(QPointF());
+    series.append(QList<QPointF>());
+    series.append(0.0,0.0);
+    series.append(QPointF());
 
-//    series.remove(0.0,0.0);
-//    series.remove(QPointF());
-//    series.removeAll();
+    series.remove(0.0,0.0);
+    series.remove(QPointF());
+    series.removeAll();
 
-//    series.replace(QPointF(),QPointF());
-//    series.replace(0,0,0,0);
-//    series.setBrush(QBrush());
+    series.replace(QPointF(),QPointF());
+    series.replace(0,0,0,0);
+    series.setBrush(QBrush());
 
 //    QCOMPARE(series.setModel((QAbstractItemModel*)0), false);
 
 //    series.setModelMapping(-1, -1, Qt::Orientation(0));
 
-//    series.setPen(QPen());
-//    series.setPointsVisible(false);
+    series.setPen(QPen());
+    series.setPointsVisible(false);
 
-//    m_chart->addSeries(&series);
-//    m_view->show();
-//    QTest::qWaitForWindowShown(m_view);
+    m_chart->addSeries(&series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
 }
 
 void tst_QLineSeries::append_data()
@@ -490,20 +491,25 @@ void tst_QLineSeries::setModelMapping_data()
 
 void tst_QLineSeries::setModelMapping()
 {
-    QSKIP("Model mapping has been rewriten, test case needs update", SkipAll);
+//    QSKIP("Model mapping has been rewriten, test case needs update", SkipAll);
 
-//    QFETCH(int, modelX);
-//    QFETCH(int, modelY);
-//    QFETCH(Qt::Orientation, orientation);
+    QFETCH(int, modelX);
+    QFETCH(int, modelY);
+    QFETCH(Qt::Orientation, orientation);
 
-//    QLineSeries series;
+    QLineSeries series;
 
-//    // model has not been set so setting mapping should do nothing
-//    series.setModelMapping(modelX, modelY, orientation);
-//    QCOMPARE(series.mapX(), -1);
-//    QCOMPARE(series.mapY(), -1);
-//    QVERIFY2(series.mapOrientation() == Qt::Vertical, "The orientation by default should be Qt::Vertical");
+    QXYModelMapper *mapper = new QXYModelMapper;
+    mapper->setMapX(modelX);
+    mapper->setMapY(modelY);
+    mapper->setOrientation(orientation);
 
+    QCOMPARE(mapper->mapX(), modelX);
+    QCOMPARE(mapper->mapY(), modelY);
+    QCOMPARE(mapper->orientation(), orientation);
+//    QVERIFY2(mapper->orientation() == Qt::Vertical, "The orientation by default should be Qt::Vertical");
+
+//    series.setModelMapper(mapper);
 //    // now let us set the model
 //    series.setModel(new QStandardItemModel());
 //    series.setModelMapping(modelX, modelY, orientation);
@@ -536,50 +542,55 @@ void tst_QLineSeries::setModelMappingRange_data()
 
 void tst_QLineSeries::setModelMappingRange()
 {
-    QSKIP("Model mapping has been rewriten, test case needs update", SkipAll);
+//    QSKIP("Model mapping has been rewriten, test case needs update", SkipAll);
 
-//    QFETCH(int, first);
-//    QFETCH(int, count);
-//    QLineSeries series;
+    QFETCH(int, first);
+    QFETCH(int, count);
+    QLineSeries series;
 
-//    QStandardItemModel *model = new QStandardItemModel(0, 2);
-//    series.setModel(model);
-//    series.setModelMapping(0, 1);
-//    series.setModelMappingRange(first, count);
+    QXYModelMapper *mapper = new QXYModelMapper;
+    mapper->setMapX(0);
+    mapper->setMapY(1);
+    mapper->setFirst(first);
+    mapper->setCount(count);
 
-//    QCOMPARE(series.mapFirst(), qMax(first, 0)); // regardles of what value was used to set the range, first should not be less than 0
-//    QCOMPARE(series.mapCount(), qMax(count, -1)); // regardles of what value was used to set the range, first should not be less than 0
-//    QVERIFY2(series.count() == 0, "No rows in the model, count should be 0");
+    QCOMPARE(mapper->first(), qMax(first, 0)); // regardles of what value was used in setFirst function, first should not be less than 0
+    QCOMPARE(mapper->count(), qMax(count, -1)); // regardles of what value was used setCount function, count should not be less than -1
 
-//    for (int row = 0; row < 3; ++row) {
-//        for (int column = 0; column < 2; column++) {
-//            QStandardItem *item = new QStandardItem(row * column);
-//            model->setItem(row, column, item);
-//        }
-//    }
-//    if (qMax(count, -1) != -1)
-//        QVERIFY2(series.count() == qMin(model->rowCount() - qMax(first, 0), qMax(count, -1)), "Count should be the number of items in a model after first item, but not more than count and not less than 0");
-//    else
-//        QVERIFY2(series.count() == model->rowCount() - qMax(first, 0), "Count should be the number of items in a model after first item, but not less then 0");
+    QStandardItemModel *model = new QStandardItemModel(0, 2);
+    series.setModel(model);
+    series.setModelMapper(mapper);
+    QVERIFY2(series.count() == 0, "No rows in the model, count should be 0");
 
-//    // let's add few more rows to the model
-//    for (int row = 0; row < 10; ++row) {
-//        QList<QStandardItem *> newRow;
-//        for (int column = 0; column < 2; column++) {
-//            newRow.append(new QStandardItem(row * column));
-//        }
-//        model->appendRow(newRow);
-//    }
-//    if (qMax(count, -1) != -1)
-//        QVERIFY2(series.count() == qMin(model->rowCount() - qMax(first, 0), qMax(count, -1)), "Count should be the number of items in a model after first item, but not more than count, but not more than count and not less than 0");
-//    else
-//        QVERIFY2(series.count() == model->rowCount() - qMax(first, 0), "Count should be the number of items in a model after first item, but not less then 0");
+    for (int row = 0; row < 3; ++row) {
+        for (int column = 0; column < 2; column++) {
+            QStandardItem *item = new QStandardItem(row * column);
+            model->setItem(row, column, item);
+        }
+    }
+    if (qMax(count, -1) != -1)
+        QVERIFY2(series.count() == qMin(model->rowCount() - qMax(first, 0), qMax(count, -1)), "Count should be the number of items in a model after first item, but not more than count and not less than 0");
+    else
+        QVERIFY2(series.count() == model->rowCount() - qMax(first, 0), "Count should be the number of items in a model after first item, but not less then 0");
 
-//    // unset the model, values should be default
-//    series.setModel(0);
+    // let's add few more rows to the model
+    for (int row = 0; row < 10; ++row) {
+        QList<QStandardItem *> newRow;
+        for (int column = 0; column < 2; column++) {
+            newRow.append(new QStandardItem(row * column));
+        }
+        model->appendRow(newRow);
+    }
+    if (qMax(count, -1) != -1)
+        QVERIFY2(series.count() == qMin(model->rowCount() - qMax(first, 0), qMax(count, -1)), "Count should be the number of items in a model after first item, but not more than count, but not more than count and not less than 0");
+    else
+        QVERIFY2(series.count() == model->rowCount() - qMax(first, 0), "Count should be the number of items in a model after first item, but not less then 0");
+
+    // unset the model, values should be default
+    series.setModel(0);
 //    QCOMPARE(series.mapFirst(), 0);
 //    QCOMPARE(series.mapCount(), -1);
-//    QVERIFY2(series.count() == 0, "No rows in the model, count should be 0");
+    QVERIFY2(series.count() == 0, "No rows in the model, count should be 0");
 }
 
 void tst_QLineSeries::modelUpdated()
