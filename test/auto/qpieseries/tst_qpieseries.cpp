@@ -425,9 +425,9 @@ void tst_qpieseries::modelUpdate()
 {
     int rowCount = 12;
     int columnCount = 7;
-    QStandardItemModel *stdModel = new QStandardItemModel(0, 3);
+    QStandardItemModel *stdModel = new QStandardItemModel(rowCount, columnCount);
     for (int row = 0; row < rowCount; ++row) {
-        for (int column = 0; column < 2; column++) {
+        for (int column = 0; column < columnCount; column++) {
             QStandardItem *item = new QStandardItem(row * column);
             stdModel->setItem(row, column, item);
         }

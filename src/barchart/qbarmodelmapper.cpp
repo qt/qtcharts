@@ -87,6 +87,7 @@ void QBarModelMapper::reset()
     m_mapBarBottom = -1;
     m_mapBarTop = -1;
     m_mapCategories = -1;
+    emit updated();
 }
 
 #include "moc_qbarmodelmapper.cpp"

@@ -23,6 +23,8 @@
 #include <qbarset.h>
 #include <qchartview.h>
 #include <qchart.h>
+#include <QBarModelMapper>
+#include <QStandardItemModel>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -47,6 +49,7 @@ private slots:
     void mouseclicked();
     void mousehovered_data();
     void mousehovered();
+    void model();
 
 private:
     QGroupedBarSeries* m_barseries;
@@ -335,6 +338,59 @@ void tst_QGroupedBarSeries::mousehovered()
     QVERIFY(seriesSpyArg.at(1).toBool() == false);
 }
 
+void tst_QGroupedBarSeries::model()
+{
+    QGroupedBarSeries *series = new QGroupedBarSeries;
+    QChart *chart = new QChart;
+    chart->addSeries(series);
+    QChartView *chartView = new QChartView(chart);
+    chartView->show();
+
+    int rowCount = 12;
+    int columnCount = 5;
+    QStandardItemModel *stdModel = new QStandardItemModel(rowCount, columnCount);
+    series->setModel(stdModel);
+    QVERIFY2((series->model()) == stdModel, "Model should be stdModel");
+
+
+    for (int row = 0; row < rowCount; ++row) {
+        for (int column = 0; column < columnCount; column++) {
+            QStandardItem *item = new QStandardItem(row * column);
+            stdModel->setItem(row, column, item);
+        }
+    }
+
+    // data has been added to the model, but mapper is not set the number of slices should still be 0
+    QVERIFY2(series->barsetCount() == 0, "Mapper has not been set, so the number of slices should be 0");
+
+    // set the mapper
+    QBarModelMapper *mapper = new QBarModelMapper;
+    mapper->setMapCategories(0);
+    mapper->setMapBarBottom(1);
+    mapper->setMapBarTop(3);
+    series->setModelMapper(mapper); // this should cause the Pie to get initialized from the model, since there is now both the model and the mapper defined
+    QCOMPARE(series->barsetCount(), 3);
+
+    // set the mappings to be outside of the model
+    mapper->setMapBarBottom(6);
+    mapper->setMapBarTop(7);
+    QCOMPARE(series->barsetCount(), 0); // Mappings are invalid, so the number of slices should be 0
+
+    // set back to correct ones
+    mapper->setMapBarBottom(1);
+    mapper->setMapBarTop(3);
+    QCOMPARE(series->barsetCount(), 3);
+
+    // reset the mappings
+    mapper->reset();
+    QCOMPARE(series->barsetCount(), 0); // Mappings have been reset and are invalid, so the number of slices should be 0
+
+    // unset the model and the mapper
+    series->setModel(0);
+    series->setModelMapper(0);
+    QVERIFY(series->model() == 0); // Model should be unset
+    QVERIFY(series->modelMapper() == 0); // Model mapper should be unset
+}
 
 /*
 bool setModel(QAbstractItemModel *model);

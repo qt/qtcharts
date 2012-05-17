@@ -716,11 +716,11 @@ void QPieSeriesPrivate::initializePieFromModel()
 {
     Q_Q(QPieSeries);
 
-    if (m_model == 0 || m_mapper == 0)
-        return;
-
     // clear current content
     q->clear();
+
+    if (m_model == 0 || m_mapper == 0)
+        return;
 
     // check if mappings are set
     if (m_mapper->mapValues() == -1 || m_mapper->mapLabels() == -1)
