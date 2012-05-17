@@ -51,6 +51,7 @@ private slots:
     void hoverSignal();
     void model();
     void modelCustomMap();
+    void modelUpdate();
 
 private:
     void verifyCalculatedData(const QPieSeries &series, bool *ok);
@@ -327,6 +328,11 @@ void tst_qpieseries::hoverSignal()
 void tst_qpieseries::model()
 {
     QPieSeries *series = new QPieSeries;
+    QChart *chart = new QChart;
+    chart->addSeries(series);
+    QChartView *chartView = new QChartView(chart);
+    chartView->show();
+
     QStandardItemModel *stdModel = new QStandardItemModel(0, 2);
     series->setModel(stdModel);
     QVERIFY2((series->model()) == stdModel, "Model should be stdModel");
@@ -349,6 +355,16 @@ void tst_qpieseries::model()
     series->setModelMapper(mapper); // this should cause the Pie to get initialized from the model, since there is now both the model and the mapper defined
     QCOMPARE(series->slices().count(), rowCount);
 
+    // set the mappings to be outside of the model
+    mapper->setMapLabels(5);
+    mapper->setMapValues(4);
+    QCOMPARE(series->slices().count(), 0); // Mappings are invalid, so the number of slices should be 0
+
+    // set back to correct ones
+    mapper->setMapValues(0);
+    mapper->setMapLabels(0);
+    QCOMPARE(series->slices().count(), rowCount);
+
     // reset the mappings
     mapper->reset();
     QCOMPARE(series->slices().count(), 0); // Mappings have been reset and are invalid, so the number of slices should be 0
@@ -363,7 +379,8 @@ void tst_qpieseries::model()
 void tst_qpieseries::modelCustomMap()
 {
     int rowCount = 12;
-    QStandardItemModel *stdModel = new QStandardItemModel(0, 2);
+    int columnCount = 3;
+    QStandardItemModel *stdModel = new QStandardItemModel(0, 3);
     for (int row = 0; row < rowCount; ++row) {
         for (int column = 0; column < 2; column++) {
             QStandardItem *item = new QStandardItem(row * column);
@@ -372,12 +389,24 @@ void tst_qpieseries::modelCustomMap()
     }
 
     QPieSeries *series = new QPieSeries;
+    QChart *chart = new QChart;
+    chart->addSeries(series);
+    QChartView *chartView = new QChartView(chart);
+    chartView->show();
     series->setModel(stdModel);
 
     QPieModelMapper *mapper = new QPieModelMapper;
     mapper->setMapValues(0);
     mapper->setMapLabels(0);
     series->setModelMapper(mapper);
+    QCOMPARE(series->slices().count(), rowCount);
+
+    // lets change the orientation to horizontal
+    mapper->setOrientation(Qt::Horizontal);
+    QCOMPARE(series->slices().count(), columnCount);
+
+    // change it back to vertical
+    mapper->setOrientation(Qt::Vertical);
     QCOMPARE(series->slices().count(), rowCount);
 
     // lets customize the mapping
@@ -390,6 +419,56 @@ void tst_qpieseries::modelCustomMap()
     first = 9;
     mapper->setFirst(first);
     QCOMPARE(series->slices().count(), qMin(count, rowCount - first));
+}
+
+void tst_qpieseries::modelUpdate()
+{
+    int rowCount = 12;
+    int columnCount = 7;
+    QStandardItemModel *stdModel = new QStandardItemModel(0, 3);
+    for (int row = 0; row < rowCount; ++row) {
+        for (int column = 0; column < 2; column++) {
+            QStandardItem *item = new QStandardItem(row * column);
+            stdModel->setItem(row, column, item);
+        }
+    }
+
+    QPieSeries *series = new QPieSeries;
+    QChart *chart = new QChart;
+    chart->addSeries(series);
+    QChartView *chartView = new QChartView(chart);
+    chartView->show();
+    series->setModel(stdModel);
+
+    QPieModelMapper *mapper = new QPieModelMapper;
+    mapper->setMapValues(0);
+    mapper->setMapLabels(0);
+    series->setModelMapper(mapper);
+
+    stdModel->insertRows(3, 5);
+    QCOMPARE(series->slices().count(), rowCount + 5);
+
+    stdModel->removeRows(10, 5);
+    QCOMPARE(series->slices().count(), rowCount);
+
+    // limit the number of slices taken from the model to 12
+    mapper->setCount(rowCount);
+    stdModel->insertRows(3, 5);
+    QCOMPARE(series->slices().count(), rowCount);
+
+    stdModel->removeRows(0, 10);
+    QCOMPARE(series->slices().count(), rowCount - 5);
+
+    // change the orientation to horizontal
+    mapper->setOrientation(Qt::Horizontal);
+    QCOMPARE(series->slices().count(), columnCount);
+
+    stdModel->insertColumns(3, 10);
+    QCOMPARE(series->slices().count(), rowCount); // count is limited to rowCount (12)
+
+    stdModel->removeColumns(5, 10);
+    QCOMPARE(series->slices().count(), columnCount);
+
 }
 
 QTEST_MAIN(tst_qpieseries)

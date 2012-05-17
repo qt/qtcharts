@@ -343,8 +343,8 @@ void TableWidget::updateChartType(bool toggle)
                     pieSeries->setModel(m_model);
 
                     QPieModelMapper *mapper = new QPieModelMapper;
-                    mapper->setMapValues(1);
-                    mapper->setMapLabels(1);
+                    mapper->setMapValues(-1);
+                    mapper->setMapLabels(-1);
                     mapper->setFirst(2);
                     mapper->setCount(5);
                     pieSeries->setModelMapper(mapper);
@@ -355,7 +355,7 @@ void TableWidget::updateChartType(bool toggle)
         //            pieSeries->setVerticalPosition(0.3);
 
                     m_chart->addSeries(pieSeries);
-                    seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
+//                    seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
                     m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 5));
 
         //            // pie 2
