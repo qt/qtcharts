@@ -27,17 +27,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ////////////// Table model row ///////////////////
 
-DeclarativeTableModelRow::DeclarativeTableModelRow(QObject *parent)
+DeclarativeTableModelElement::DeclarativeTableModelElement(QObject *parent)
     : QObject(parent)
 {
 }
 
-QVariantList DeclarativeTableModelRow::values()
+QVariantList DeclarativeTableModelElement::values()
 {
     return m_values;
 }
 
-void DeclarativeTableModelRow::setValues(QVariantList values)
+void DeclarativeTableModelElement::setValues(QVariantList values)
 {
     m_values = values;
 }
@@ -56,8 +56,8 @@ void DeclarativeTableModel::classBegin()
 void DeclarativeTableModel::componentComplete()
 {
     foreach (QObject *child, children()) {
-        if (qobject_cast<DeclarativeTableModelRow *>(child)) {
-            append(qobject_cast<DeclarativeTableModelRow *>(child)->values());
+        if (qobject_cast<DeclarativeTableModelElement *>(child)) {
+            append(qobject_cast<DeclarativeTableModelElement *>(child)->values());
         }
     }
 }
@@ -99,48 +99,12 @@ void DeclarativeTableModel::append(QVariantList values)
 
 void DeclarativeTableModel::appendPoint(QXYModelMapper *mapper, DeclarativeXyPoint *point)
 {
-    qDebug() << "DeclarativeTableModel::appendPoint:" << point;
+//    qDebug() << "DeclarativeTableModel::appendPoint:" << point;
     QVariantList values;
     values.insert(mapper->mapX(), point->x());
     values.insert(mapper->mapY(), point->y());
     append(values);
 }
-
-//void DeclarativeTableModel::appendPoints(QVariantList points)
-//{
-//    qreal x = 0.0;
-//    for (int i(0); i < points.count(); i++) {
-//        if (i % 2) {
-//            bool ok(false);
-//            qreal y = points.at(i).toReal(&ok);
-//            if (ok) {
-//                DeclarativeXyPoint *point= new DeclarativeXyPoint();
-//                point->setX(x);
-//                point->setY(y);
-//                appendPoint(point);
-//            } else {
-//                qWarning() << "Illegal y value";
-//            }
-//        } else {
-//            bool ok(false);
-//            x = points.at(i).toReal(&ok);
-//            if (!ok) {
-//                qWarning() << "Illegal x value";
-//            }
-//        }
-//    }
-//}
-
-//void DeclarativeTableModel::appendPoint(DeclarativeXyPoint* point)
-//{
-////    qDebug() << "DeclarativeTableModel::append:" << point->x() << " " << point->y();
-//    insertRow(rowCount());
-//    QModelIndex xModelIndex = createIndex(rowCount() - 1, 0);
-//    QModelIndex yModelIndex = createIndex(rowCount() - 1, 1);
-//    setData(xModelIndex, point->x());
-//    setData(yModelIndex, point->y());
-//    dataChanged(xModelIndex, yModelIndex);
-//}
 
 ////////////// Bar model ///////////////////////
 

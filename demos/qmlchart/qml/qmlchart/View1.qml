@@ -50,11 +50,11 @@ Rectangle {
 //        // For dynamic data you can use the ChartModel API.
 //        ChartModel {
 //            id: chartModel
-//            ChartModelRow { values: ["Volkswagen", 13.5] }
-//            ChartModelRow { values: ["Toyota", 10.9] }
-//            ChartModelRow { values: ["Ford", 8.6] }
-//            ChartModelRow { values: ["Skoda", 8.2] }
-//            ChartModelRow { values: ["Volvo", 6.8] }
+//            ChartModelElement { values: ["Volkswagen", 13.5] }
+//            ChartModelElement { values: ["Toyota", 10.9] }
+//            ChartModelElement { values: ["Ford", 8.6] }
+//            ChartModelElement { values: ["Skoda", 8.2] }
+//            ChartModelElement { values: ["Volvo", 6.8] }
 //        }
 //        // In this case you need to define how the data maps to pie slices with the ModelMapper API of the pie series.
 //        PieSeries {

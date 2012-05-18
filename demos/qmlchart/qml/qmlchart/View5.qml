@@ -37,7 +37,6 @@ Rectangle {
             model: barModel
         }
 
-
 //        // TODO: optional syntax with ChartModel base model API
 //        BarSeries {
 //            model: chartModel
@@ -65,8 +64,8 @@ Rectangle {
     BarModel {
         id: barModel
         BarSet { name: "Bob"; values: [2, 2, 3, 4, 5, 6] }
-        BarSet { name: "Bub"; values: [5, 1, 2, 4, 1, 7] }
-        BarSet { name: "Bib"; values: [3, 5, 8, 13, 5, 8] }
+        BarSet { name: "Susan"; values: [5, 1, 2, 4, 1, 7] }
+        BarSet { name: "James"; values: [3, 5, 8, 13, 5, 8] }
     }
 
     // TODO

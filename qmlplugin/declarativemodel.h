@@ -33,13 +33,13 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeTableModelRow : public QObject
+class DeclarativeTableModelElement : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
 
 public:
-    explicit DeclarativeTableModelRow(QObject *parent = 0);
+    explicit DeclarativeTableModelElement(QObject *parent = 0);
     QVariantList values();
     void setValues(QVariantList values);
 private:

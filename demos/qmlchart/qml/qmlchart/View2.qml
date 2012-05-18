@@ -50,13 +50,13 @@ Rectangle {
 
     ChartModel {
         id: chartModel
-        ChartModelRow { values: [0.0, 0.0, 0.3] }
-        ChartModelRow { values: [1.1, 2.1, 3.2] }
-        ChartModelRow { values: [1.9, 3.3, 2.4] }
-        ChartModelRow { values: [2.1, 2.1, 2.1] }
-        ChartModelRow { values: [2.9, 4.9, 2.6] }
-        ChartModelRow { values: [3.4, 3.0, 2.3] }
-        ChartModelRow { values: [4.1, 3.3, 3.1] }
+        ChartModelElement { values: [0.0, 0.0, 0.3] }
+        ChartModelElement { values: [1.1, 2.1, 3.2] }
+        ChartModelElement { values: [1.9, 3.3, 2.4] }
+        ChartModelElement { values: [2.1, 2.1, 2.1] }
+        ChartModelElement { values: [2.9, 4.9, 2.6] }
+        ChartModelElement { values: [3.4, 3.0, 2.3] }
+        ChartModelElement { values: [4.1, 3.3, 3.1] }
     }
 
 }

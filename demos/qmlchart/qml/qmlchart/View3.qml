@@ -62,17 +62,17 @@ Rectangle {
 
     ChartModel {
         id: chartModel
-        ChartModelRow { values: [0,  0, 1, 1, 0] }
-        ChartModelRow { values: [1,  0, 1, 1, 0] }
-        ChartModelRow { values: [2,  0, 1, 3, 0] }
-        ChartModelRow { values: [3,  0, 1, 3, 0] }
-        ChartModelRow { values: [4,  0, 1, 2, 0] }
-        ChartModelRow { values: [5,  0, 0, 0, 0] }
-        ChartModelRow { values: [6,  0, 1, 2, 1] }
-        ChartModelRow { values: [7,  0, 1, 1, 0] }
-        ChartModelRow { values: [8,  0, 4, 2, 0] }
-        ChartModelRow { values: [9,  0, 3, 1, 0] }
-        ChartModelRow { values: [10, 0, 2, 3, 0] }
-        ChartModelRow { values: [11, 0, 1, 3, 1] }
+        ChartModelElement { values: [0,  0, 1, 1, 0] }
+        ChartModelElement { values: [1,  0, 1, 1, 0] }
+        ChartModelElement { values: [2,  0, 1, 3, 0] }
+        ChartModelElement { values: [3,  0, 1, 3, 0] }
+        ChartModelElement { values: [4,  0, 1, 2, 0] }
+        ChartModelElement { values: [5,  0, 0, 0, 0] }
+        ChartModelElement { values: [6,  0, 1, 2, 1] }
+        ChartModelElement { values: [7,  0, 1, 1, 0] }
+        ChartModelElement { values: [8,  0, 4, 2, 0] }
+        ChartModelElement { values: [9,  0, 3, 1, 0] }
+        ChartModelElement { values: [10, 0, 2, 3, 0] }
+        ChartModelElement { values: [11, 0, 1, 3, 1] }
     }
 }

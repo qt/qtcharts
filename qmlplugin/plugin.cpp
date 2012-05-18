@@ -57,7 +57,7 @@ public:
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
         qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
         qmlRegisterType<DeclarativeTableModel>(uri, 1, 0, "ChartModel");
-        qmlRegisterType<DeclarativeTableModelRow>(uri, 1, 0, "ChartModelRow");
+        qmlRegisterType<DeclarativeTableModelElement>(uri, 1, 0, "ChartModelElement");
         //qmlRegisterType<DeclarativePieMapping>(uri, 1, 0, "PieMapping");
         //qmlRegisterType<QPieModelMapper>(uri, 1, 0, "PieModelMapper");
         qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",
