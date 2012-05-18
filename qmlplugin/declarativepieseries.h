@@ -47,7 +47,8 @@ public:
     QDeclarativeListProperty<QPieSlice> initialSlices();
     DeclarativeTableModel *pieModel();
     void setPieModel(DeclarativeTableModel *model);
-    Q_INVOKABLE QPieSlice *slice(int index);
+    Q_INVOKABLE QPieSlice *at(int index);
+    Q_INVOKABLE QPieSlice* append(QString name, qreal value);
 
 public:
     void classBegin();

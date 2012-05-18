@@ -26,7 +26,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
       m_chart(new QChart(this)),
-      m_legend(LegendDisabled)
+      m_legend(LegendTop)
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
     m_chart->axisX()->setNiceNumbersEnabled(false);

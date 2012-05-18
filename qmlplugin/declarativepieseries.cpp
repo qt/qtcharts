@@ -30,9 +30,9 @@ DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
     QPieSeries(parent)
 {
     // TODO: set default model on init?
-    setModel(new DeclarativeTableModel());
+//    setModel(new DeclarativeTableModel());
 
-    // Set default mapper parameters to allow easy to use PieSeries api
+    // TODO: Set default mapper parameters to allow easy to use PieSeries api?
     QPieModelMapper *mapper = new QPieModelMapper();
     mapper->setMapLabels(0);
     mapper->setMapValues(1);
@@ -49,15 +49,8 @@ void DeclarativePieSeries::classBegin()
 void DeclarativePieSeries::componentComplete()
 {
     foreach(QObject *child, children()) {
-        qDebug() << "pie child: " << child;
         if (qobject_cast<QPieSlice *>(child)) {
-            QPieSlice *slice = qobject_cast<QPieSlice *>(child);
-            QVariantList values;
-            values.insert(modelMapper()->mapLabels(), slice->label());
-            values.insert(modelMapper()->mapValues(), slice->value());
-            DeclarativeTableModel *m = qobject_cast<DeclarativeTableModel *>(model());
-            Q_ASSERT(m);
-            m->append(values);
+            QPieSeries::append(qobject_cast<QPieSlice *>(child));
         }
     }
 }
@@ -67,13 +60,19 @@ QDeclarativeListProperty<QPieSlice> DeclarativePieSeries::initialSlices()
     return QDeclarativeListProperty<QPieSlice>(this, 0, &DeclarativePieSeries::appendInitialSlices);
 }
 
-QPieSlice *DeclarativePieSeries::slice(int index)
+QPieSlice *DeclarativePieSeries::at(int index)
 {
     QList<QPieSlice*> sliceList = slices();
     if (index < sliceList.count())
         return sliceList[index];
 
     return 0;
+}
+
+QPieSlice* DeclarativePieSeries::append(QString name, qreal value)
+{
+    // TODO: parameter order is wrong, switch it:
+    return QPieSeries::append(value, name);
 }
 
 void DeclarativePieSeries::setPieModel(DeclarativeTableModel *model)

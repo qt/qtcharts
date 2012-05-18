@@ -39,14 +39,15 @@ Rectangle {
         // If you have static data, you can simply use the PieSlice API
         PieSeries {
             id: pieSeries
-            PieSlice { label: "Volkswagen"; value: 13.5 }
+            PieSlice { id: volkswagenSlice; label: "Volkswagen"; value: 13.5 }
             PieSlice { label: "Toyota"; value: 10.9 }
             PieSlice { label: "Ford"; value: 8.6 }
             PieSlice { label: "Skoda"; value: 8.2 }
             PieSlice { label: "Volvo"; value: 6.8 }
         }
 
-        // For dynamic data you can use the ChartModel API.
+        // TODO: move ChartModel API into a demo application instead of making it a public API
+//        // For dynamic data you can use the ChartModel API.
 //        ChartModel {
 //            id: chartModel
 //            ChartModelRow { values: ["Volkswagen", 13.5] }
@@ -55,8 +56,7 @@ Rectangle {
 //            ChartModelRow { values: ["Skoda", 8.2] }
 //            ChartModelRow { values: ["Volvo", 6.8] }
 //        }
-
-        //  In this case you need to define how the data maps to pie slices with the ModelMapper API of the pie series.
+//        // In this case you need to define how the data maps to pie slices with the ModelMapper API of the pie series.
 //        PieSeries {
 //            id: pieSeries
 //            model: chartModel
@@ -66,11 +66,15 @@ Rectangle {
 //            modelMapper.count: -1 // "Undefined" = -1 by default
 //            modelMapper.orientation: PieModelMapper.Vertical
 //        }
+
+        // TODO: you could also append to your model, for example:
+//        pieSeries.model.append(["Others", 52.0]);
     }
 
     Component.onCompleted: {
-        // You can also add data dynamically
-        pieSeries.model.append(["Others", 52.0]);
+        volkswagenSlice.exploded = true;
+        // You can also add slices dynamically
+        var newSlice = pieSeries.append("Others", 52.0);
     }
 
     Timer {
@@ -80,11 +84,15 @@ Rectangle {
         onTriggered: {
             // Set all slices as not exploded
             for (var i = 0; i < pieSeries.count; i++)
-                pieSeries.slice(i).exploded = false;
+                pieSeries.at(i).exploded = false;
 
             // Explode one of the slices
             __explodedIndex = (__explodedIndex + 1) % pieSeries.count;
-            pieSeries.slice(__explodedIndex).exploded = true;
+            pieSeries.at(__explodedIndex).exploded = true;
+
+            // TODO: implement for convenience
+//            pieSeries.find("Ford").exploded = true;
+//            pieSeries.removeAll("Ford")
         }
     }
 
@@ -111,8 +119,6 @@ Rectangle {
                 } else {
                     pieSeries.modelMapper.count = 5;
                     buttonText.text = "Show others";
-                    //pieModel.removeRow(pieModel.count - 1);
-                    // TODO: removeAll("label") ?
                 }
             }
         }
