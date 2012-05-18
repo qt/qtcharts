@@ -18,32 +18,27 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTVIEW_H
-#define CHARTVIEW_H
+#ifndef CHART_H
+#define CHART_H
 
-#include <QChartView>
-#include <QRubberBand>
+#include <QChart>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-//![1]
-class ChartView : public QChartView
-//![1]
+class Chart : public QChart
 {
 public:
-    ChartView(QChart *chart, QWidget *parent = 0);
+    explicit Chart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
+    ~Chart();
 
-//![2]
 protected:
-    bool viewportEvent(QEvent *event);
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
-    void keyPressEvent(QKeyEvent *event);
-//![2]
+    bool sceneEvent(QEvent *event);
 
 private:
-    bool m_isTouching;
+    bool gestureEvent(QGestureEvent* event);
+
+private:
+
 };
 
-#endif
+#endif // CHART_H

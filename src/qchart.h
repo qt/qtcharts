@@ -94,10 +94,12 @@ public:
     void zoomIn();
     void zoomIn(const QRectF &rect);
     void zoomOut();
+    void zoom(qreal factor);
     void scrollLeft();
     void scrollRight();
     void scrollUp();
     void scrollDown();
+    void scroll(const QPointF &delta);
 
     QAxis* axisX() const;
     QAxis* axisY(QAbstractSeries* series = 0) const;

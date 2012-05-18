@@ -22,41 +22,52 @@
 #include <QMouseEvent>
 
 ChartView::ChartView(QChart *chart, QWidget *parent) :
-    QChartView(chart, parent), m_rubberBand(QRubberBand::Rectangle, this), m_chart(chart)
+    QChartView(chart, parent),
+    m_isTouching(false)
 {
+    setRubberBand(QChartView::RectangleRubberBand);
+}
+
+bool ChartView::viewportEvent(QEvent *event)
+{
+    if (event->type() == QEvent::TouchBegin) {
+        // By default touch events are converted to mouse events. So
+        // after this event we will get a mouse event also but we want
+        // to handle touch events as gestures only. So we need this safeguard
+        // to block mouse events that are actually generated from touch.
+        m_isTouching = true;
+
+        // Turn off animations when handling gestures they
+        // will only slow us down.
+        chart()->setAnimationOptions(QChart::NoAnimation);
+    }
+    return QChartView::viewportEvent(event);
 }
 
 void ChartView::mousePressEvent(QMouseEvent *event)
 {
-    if (event->button() != Qt::LeftButton)
+    if (m_isTouching)
         return;
-
-    m_origin = event->pos();
-    m_rubberBand.setGeometry(QRect(m_origin, QSize()));
-    m_rubberBand.show();
-
-    event->accept();
+    QChartView::mousePressEvent(event);
 }
 
 void ChartView::mouseMoveEvent(QMouseEvent *event)
 {
-    if (m_rubberBand.isVisible())
-        m_rubberBand.setGeometry(QRect(m_origin, event->pos()).normalized());
+    if (m_isTouching)
+        return;
+    QChartView::mouseMoveEvent(event);
 }
 
 void ChartView::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (event->button() == Qt::LeftButton && m_rubberBand.isVisible()) {
-        m_rubberBand.hide();
+    if (m_isTouching)
+        m_isTouching = false;
 
-        QRect rect = m_rubberBand.geometry();
-        m_chart->zoomIn(rect);
-        event->accept();
-    }
+    // Because we disabled animations when touch event was detected
+    // we must put them back on.
+    chart()->setAnimationOptions(QChart::SeriesAnimations);
 
-    if (event->button() == Qt::RightButton) {
-        m_chart->zoomOut();
-    }
+    QChartView::mouseReleaseEvent(event);
 }
 
 //![1]
@@ -64,23 +75,23 @@ void ChartView::keyPressEvent(QKeyEvent *event)
 {
     switch (event->key()) {
     case Qt::Key_Plus:
-        m_chart->zoomIn();
+        chart()->zoomIn();
         break;
     case Qt::Key_Minus:
-        m_chart->zoomOut();
+        chart()->zoomOut();
         break;
 //![1]
     case Qt::Key_Left:
-        m_chart->scrollLeft();
+        chart()->scrollLeft();
         break;
     case Qt::Key_Right:
-        m_chart->scrollRight();
+        chart()->scrollRight();
         break;
     case Qt::Key_Up:
-        m_chart->scrollUp();
+        chart()->scrollUp();
         break;
     case Qt::Key_Down:
-        m_chart->scrollDown();
+        chart()->scrollDown();
         break;
     default:
         QGraphicsView::keyPressEvent(event);

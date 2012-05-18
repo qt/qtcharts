@@ -18,6 +18,7 @@
 **
 ****************************************************************************/
 
+#include "chart.h"
 #include "chartview.h"
 #include <QApplication>
 #include <QMainWindow>
@@ -39,10 +40,10 @@ int main(int argc, char *argv[])
     }
 //![1]
 
-    QChart* chart = new QChart();
+    Chart* chart = new Chart();
     chart->addSeries(series);
     chart->setTitle("Zoom in/out example");
-    chart->setAnimationOptions(QChart::AllAnimations);
+    chart->setAnimationOptions(QChart::SeriesAnimations);
 
     ChartView* chartView = new ChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -50,6 +51,8 @@ int main(int argc, char *argv[])
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
+    window.grabGesture(Qt::PanGesture);
+    window.grabGesture(Qt::PinchGesture);
     window.show();
 
     return a.exec();

@@ -228,11 +228,11 @@ void ChartPresenter::resetAllElements()
     }
 }
 
-void ChartPresenter::zoomIn()
+void ChartPresenter::zoomIn(qreal factor)
 {
     QRectF rect = chartGeometry();
-    rect.setWidth(rect.width()/2);
-    rect.setHeight(rect.height()/2);
+    rect.setWidth(rect.width()/factor);
+    rect.setHeight(rect.height()/factor);
     rect.moveCenter(chartGeometry().center());
     zoomIn(rect);
 }
@@ -241,35 +241,38 @@ void ChartPresenter::zoomIn(const QRectF& rect)
 {
     QRectF r = rect.normalized();
     r.translate(-m_chartMargins.topLeft());
-    if(!r.isValid()) return;
-    if(m_animator) {
+    if (!r.isValid())
+        return;
 
+    if (m_animator) {
         QPointF point(r.center().x()/chartGeometry().width(),r.center().y()/chartGeometry().height());
         m_animator->setState(ChartAnimator::ZoomInState,point);
     }
+
     m_dataset->zoomInDomain(r,chartGeometry().size());
-    if(m_animator) {
+
+    if (m_animator)
         m_animator->setState(ChartAnimator::ShowState);
-    }
 }
 
-void ChartPresenter::zoomOut()
+void ChartPresenter::zoomOut(qreal factor)
 {
-    if(m_animator)
-    {
+    if (m_animator)
         m_animator->setState(ChartAnimator::ZoomOutState);
-    }
 
-    QSizeF size = chartGeometry().size();
-    QRectF rect = chartGeometry();
-    rect.translate(-m_chartMargins.topLeft());
-    if(!rect.isValid()) return;
-    m_dataset->zoomOutDomain(rect.adjusted(size.width()/4,size.height()/4,-size.width()/4,-size.height()/4),size);
-    //m_dataset->zoomOutDomain(m_zoomStack[m_zoomIndex-1],geometry().size());
+    QRectF chartRect;
+    chartRect.setSize(chartGeometry().size());
 
-    if(m_animator){
+    QRectF rect;
+    rect.setSize(chartRect.size()/factor);
+    rect.moveCenter(chartRect.center());
+    if (!rect.isValid())
+        return;
+
+    m_dataset->zoomOutDomain(rect, chartRect.size());
+
+    if (m_animator)
         m_animator->setState(ChartAnimator::ShowState);
-    }
 }
 
 void ChartPresenter::scroll(int dx,int dy)

@@ -252,7 +252,7 @@ QChart::ChartTheme QChart::theme() const
  */
 void QChart::zoomIn()
 {
-    d_ptr->m_presenter->zoomIn();
+    d_ptr->m_presenter->zoomIn(2.0);
 }
 
 /*!
@@ -269,7 +269,29 @@ void QChart::zoomIn(const QRectF& rect)
  */
 void QChart::zoomOut()
 {
-    d_ptr->m_presenter->zoomOut();
+    d_ptr->m_presenter->zoomOut(2.0);
+}
+
+/*!
+ Zooms in the view by a \a factor.
+
+ A factor over 1.0 zooms the view in and factor between 0.0 and 1.0 zooms out.
+ */
+void QChart::zoom(qreal factor)
+{
+    if (qFuzzyIsNull(factor))
+        return;
+
+    if (qFuzzyCompare(factor, 1.0))
+        return;
+
+    if (factor < 0)
+        return;
+
+    if (factor > 1.0)
+        d_ptr->m_presenter->zoomIn(factor);
+    else
+        d_ptr->m_presenter->zoomOut(1.0 / factor);
 }
 
 /*!
@@ -363,6 +385,14 @@ void QChart::scrollUp()
 void QChart::scrollDown()
 {
     d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->chartGeometry().width()/(axisY()->ticksCount()-1));
+}
+
+/*!
+    Scrolls the visible area of the chart by the distance defined in the \a delta.
+ */
+void QChart::scroll(const QPointF &delta)
+{
+    d_ptr->m_presenter->scroll(-delta.x(), delta.y());
 }
 
 /*!
