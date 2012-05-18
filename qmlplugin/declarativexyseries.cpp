@@ -20,9 +20,10 @@
 
 //#include "DeclarativeXySeries.h"
 #include "declarativexyseries.h"
+#include "declarativechart.h"
 #include <QXYSeries>
 #include <QXYModelMapper>
-#include "declarativechart.h"
+#include <QDeclarativeListProperty>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -30,6 +31,8 @@ DeclarativeXySeries::DeclarativeXySeries()
 {
     // All the inherited objects must be of type QXYSeries, so it is safe to cast
     QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    // TODO: set default model on init?
+    series->setModel(new DeclarativeTableModel());
     QXYModelMapper *mapper = new QXYModelMapper(series);
     mapper->setMapX(0);
     mapper->setMapY(1);
@@ -51,10 +54,6 @@ bool DeclarativeXySeries::setDeclarativeModel(DeclarativeTableModel *model)
         // All the inherited objects must be of type QXYSeries, so it is safe to cast
         QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
         series->setModel(m);
-//        QXYModelMapper *mapper = new QXYModelMapper;
-//        mapper->setMapX(0);
-//        mapper->setMapY(1);
-//        series->setModelMapper(mapper);
     } else {
         qWarning("DeclarativeXySeries: Illegal model");
     }

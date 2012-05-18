@@ -30,6 +30,18 @@ DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
 {
 }
 
+QDeclarativeListProperty<QObject> DeclarativeScatterSeries::declarativeChildren()
+{
+    return QDeclarativeListProperty<QObject>(this, 0, &appendDeclarativeChildren);
+}
+
+void DeclarativeScatterSeries::appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
+{
+    DeclarativeScatterSeries *series = qobject_cast<DeclarativeScatterSeries *>(list->object);
+    if (series && qobject_cast<DeclarativeXyPoint *>(element))
+        series->declarativeModel()->appendPoint(series->modelMapper(), qobject_cast<DeclarativeXyPoint *>(element));
+}
+
 #include "moc_declarativescatterseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

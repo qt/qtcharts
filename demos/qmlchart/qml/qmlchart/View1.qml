@@ -25,15 +25,6 @@ Rectangle {
     anchors.fill: parent
     property int __explodedIndex: -1
 
-    ChartModel {
-        id: chartModel
-        ChartModelRow { values: ["Volkswagen", 13.5] }
-        ChartModelRow { values: ["Toyota", 10.9] }
-        ChartModelRow { values: ["Ford", 8.6] }
-        ChartModelRow { values: ["Skoda", 8.2] }
-        ChartModelRow { values: ["Volvo", 6.8] }
-    }
-
     ChartView {
         id: chart
         title: "Top-5 car brand shares in Finland"
@@ -45,22 +36,41 @@ Rectangle {
         legend: ChartView.LegendBottom
         animationOptions: ChartView.SeriesAnimations
 
+        // If you have static data, you can simply use the PieSlice API
         PieSeries {
             id: pieSeries
-            model: chartModel
-            modelMapper.mapLabels: 0
-            modelMapper.mapValues: 1
-            modelMapper.first: 0
-            modelMapper.count: -1 // "Undefined" = -1 by default
-            modelMapper.orientation: PieModelMapper.Vertical
-
-            // TODO: PieSlice to append the data directly into the mapped columns
-            //PieSlice { label: "Toyota"; value: 10.9 }
+            PieSlice { label: "Volkswagen"; value: 13.5 }
+            PieSlice { label: "Toyota"; value: 10.9 }
+            PieSlice { label: "Ford"; value: 8.6 }
+            PieSlice { label: "Skoda"; value: 8.2 }
+            PieSlice { label: "Volvo"; value: 6.8 }
         }
+
+        // For dynamic data you can use the ChartModel API.
+//        ChartModel {
+//            id: chartModel
+//            ChartModelRow { values: ["Volkswagen", 13.5] }
+//            ChartModelRow { values: ["Toyota", 10.9] }
+//            ChartModelRow { values: ["Ford", 8.6] }
+//            ChartModelRow { values: ["Skoda", 8.2] }
+//            ChartModelRow { values: ["Volvo", 6.8] }
+//        }
+
+        //  In this case you need to define how the data maps to pie slices with the ModelMapper API of the pie series.
+//        PieSeries {
+//            id: pieSeries
+//            model: chartModel
+//            modelMapper.mapLabels: 0
+//            modelMapper.mapValues: 1
+//            modelMapper.first: 0
+//            modelMapper.count: -1 // "Undefined" = -1 by default
+//            modelMapper.orientation: PieModelMapper.Vertical
+//        }
     }
 
     Component.onCompleted: {
-        chartModel.append(["Others", 52.0]);
+        // You can also add data dynamically
+        pieSeries.model.append(["Others", 52.0]);
     }
 
     Timer {

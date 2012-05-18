@@ -32,8 +32,6 @@ class QAbstractSeries;
 
 class DeclarativeXySeries
 {
-    Q_INTERFACES(QDeclarativeParserStatus)
-
 public:
     explicit DeclarativeXySeries();
     ~DeclarativeXySeries();

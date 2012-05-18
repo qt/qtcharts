@@ -26,6 +26,7 @@
 #include <QPieSlice>
 #include "../src/charttablemodel.h" // TODO
 #include <QBarSet>
+#include <QXYModelMapper>
 #include <QDeclarativeListProperty>
 #include <QVariant>
 #include <QDeclarativeParserStatus>
@@ -55,6 +56,7 @@ class DeclarativeTableModel : public ChartTableModel, public QDeclarativeParserS
 public:
     explicit DeclarativeTableModel(QObject *parent = 0);
     QDeclarativeListProperty<QObject> modelChildren();
+    void appendPoint(QXYModelMapper *mapper, DeclarativeXyPoint *point);
 
 public: // from QDeclarativeParserStatus
     void classBegin();
@@ -62,12 +64,8 @@ public: // from QDeclarativeParserStatus
 
 public Q_SLOTS:
     void append(QVariantList slices);
-    void appendPoints(QVariantList points);
-    void appendPoint(DeclarativeXyPoint* point);
     static void appendModelChild(QDeclarativeListProperty<QObject> *list,
                                  QObject *element);
-private:
-    void appendToModel(QObject *object);
 };
 
 class DeclarativeBarModel : public DeclarativeTableModel

@@ -22,8 +22,9 @@
 #define DECLARATIVEPIESERIES_H
 
 #include "qchartglobal.h"
-#include "qpieslice.h"
-#include "qpieseries.h"
+#include <QPieSlice>
+#include <QPieSeries>
+#include <QDeclarativeParserStatus>
 #include <QDeclarativeListProperty>
 #include <QAbstractItemModel>
 #include <QVariant>
@@ -33,20 +34,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
 
-class DeclarativePieSeries : public QPieSeries
+class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(DeclarativeTableModel *model READ pieModel WRITE setPieModel)
+    Q_PROPERTY(QDeclarativeListProperty<QPieSlice> initialSlices READ initialSlices)
+    Q_CLASSINFO("DefaultProperty", "initialSlices")
 
 public:
     explicit DeclarativePieSeries(QObject *parent = 0);
-
-public:
+    QDeclarativeListProperty<QPieSlice> initialSlices();
+    DeclarativeTableModel *pieModel();
+    void setPieModel(DeclarativeTableModel *model);
     Q_INVOKABLE QPieSlice *slice(int index);
 
 public:
-    void setPieModel(DeclarativeTableModel *model);
-    DeclarativeTableModel *pieModel();
+    void classBegin();
+    void componentComplete();
+
+public Q_SLOTS:
+    static void appendInitialSlices(QDeclarativeListProperty<QPieSlice> */*list*/, QPieSlice */*element*/) {}
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
