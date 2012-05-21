@@ -61,6 +61,31 @@ void PieChartItem::handleGeometryChanged(const QRectF& rect)
     updateLayout();
 }
 
+void PieChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
+{
+    Q_UNUSED(minX);
+    Q_UNUSED(maxX);
+    Q_UNUSED(minY);
+    Q_UNUSED(maxY);
+    // does not apply to pie
+}
+
+void PieChartItem::rangeXChanged(qreal min, qreal max, int tickXCount)
+{
+    Q_UNUSED(min);
+    Q_UNUSED(max);
+    Q_UNUSED(tickXCount);
+    // does not apply to pie
+}
+
+void PieChartItem::rangeYChanged(qreal min, qreal max, int tickYCount)
+{
+    Q_UNUSED(min);
+    Q_UNUSED(max);
+    Q_UNUSED(tickYCount);
+    // does not apply to pie
+}
+
 void PieChartItem::initialize()
 {
     handleSlicesAdded(m_series->slices());

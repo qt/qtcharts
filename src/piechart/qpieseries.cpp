@@ -782,9 +782,7 @@ bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qr
 void QPieSeriesPrivate::scaleDomain(Domain& domain)
 {
     Q_UNUSED(domain);
-#ifndef QT_NO_DEBUG
-    qWarning() << __FILE__<<__FUNCTION__<<"not implemented";
-#endif
+    // does not apply to pie
 }
 
 Chart* QPieSeriesPrivate::createGraphics(ChartPresenter* presenter)
