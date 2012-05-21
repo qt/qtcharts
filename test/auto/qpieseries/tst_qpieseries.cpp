@@ -278,6 +278,7 @@ void tst_qpieseries::clickedSignal()
 
     // add series to the chart
     QChartView view(new QChart());
+    view.chart()->legend()->setVisible(false);
     view.resize(200, 200);
     view.chart()->addSeries(series);
     view.show();
@@ -285,7 +286,7 @@ void tst_qpieseries::clickedSignal()
 
     // simulate clicks
     // pie rectangle: QRectF(60,60 121x121)
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0,  QPoint(139, 85)); // inside slice 1
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0,  QPoint(146, 90)); // inside slice 1
     TRY_COMPARE(clickSpy1.count(), 1);
     QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy1.at(0).at(0)), s1);
 }
@@ -301,6 +302,7 @@ void tst_qpieseries::hoverSignal()
 
     // add series to the chart
     QChartView view(new QChart());
+    view.chart()->legend()->setVisible(false);
     view.resize(200, 200);
     view.chart()->addSeries(series);
     view.show();

@@ -207,6 +207,7 @@ void tst_qpieslice::mouseClick()
 
     // add series to the chart
     QChartView view(new QChart());
+    view.chart()->legend()->setVisible(false);
     view.resize(200, 200);
     view.chart()->addSeries(series);
     view.show();
@@ -236,6 +237,7 @@ void tst_qpieslice::mouseHover()
 
     // add series to the chart
     QChartView view(new QChart());
+    view.chart()->legend()->setVisible(false);
     view.resize(200, 200);
     view.chart()->addSeries(series);
     view.show();
