@@ -1,5 +1,5 @@
-!include( ../test.pri ) {
- error( "Couldn't find the test.pri file!" )
+!include( ../tests.pri ) {
+ error( "Couldn't find the tests.pri file!" )
 }
 
 TEMPLATE = subdirs

@@ -1,4 +1,4 @@
-!include( ../test.pri ) {
+!include( ../tests.pri ) {
     error( "Couldn't find the test.pri file!" )
 }
 

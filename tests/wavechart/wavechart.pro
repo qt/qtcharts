@@ -1,4 +1,4 @@
-!include( ../test.pri ) {
+!include( ../tests.pri ) {
  error( "Couldn't find the examples.pri file!" )
 }
 QT+=opengl
