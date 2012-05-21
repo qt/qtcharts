@@ -64,8 +64,6 @@ public:
                                                     QLatin1String("Trying to create uncreatable: PieModelMapper."));
         qmlRegisterUncreatableType<QXYModelMapper>(uri, 1, 0, "XYModelMapper",
                                                     QLatin1String("Trying to create uncreatable: PieModelMapper."));
-
-        qmlRegisterType<DeclarativeBarModel>(uri, 1, 0, "BarModel");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
     }
 };

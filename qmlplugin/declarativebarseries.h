@@ -25,12 +25,11 @@
 #include "declarativemodel.h"
 #include <QDeclarativeItem>
 #include <QDeclarativeParserStatus>
-#include <QBarSeries>
+#include <QGroupedBarSeries>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
-class QBarSeries;
 
 class DeclarativeBarSet : public QBarSet
 {
@@ -44,31 +43,31 @@ public:
     void setValues(QVariantList values);
 };
 
-class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
+class DeclarativeBarSeries : public QGroupedBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(DeclarativeBarModel *model READ declarativeModel WRITE setDeclarativeModel)
+    Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
     Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
+    Q_PROPERTY(QDeclarativeListProperty<DeclarativeBarSet> initialBarSets READ initialBarSets)
+    Q_CLASSINFO("DefaultProperty", "initialBarSets")
 
 public:
     explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
+    QDeclarativeListProperty<DeclarativeBarSet> initialBarSets();
 
 public: // from QDeclarativeParserStatus
     void classBegin();
     void componentComplete();
 
 public:
-    bool setDeclarativeModel(DeclarativeBarModel *model);
-    DeclarativeBarModel *declarativeModel();
+    bool setDeclarativeModel(DeclarativeTableModel *model);
+    DeclarativeTableModel *declarativeModel();
     void setBarCategories(QStringList categories);
     QStringList barCategories();
 
-Q_SIGNALS:
-
 public Q_SLOTS:
-
-public:
+    static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> */*list*/, DeclarativeBarSet */*element*/) {}
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

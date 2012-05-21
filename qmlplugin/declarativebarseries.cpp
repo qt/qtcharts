@@ -49,7 +49,7 @@ void DeclarativeBarSet::setValues(QVariantList values)
 }
 
 DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
-    QBarSeries(parent)
+    QGroupedBarSeries(parent)
 {
 }
 
@@ -59,11 +59,20 @@ void DeclarativeBarSeries::classBegin()
 
 void DeclarativeBarSeries::componentComplete()
 {
-//    if (model())
-//        setModelMapping(0, 1, 1, Qt::Vertical);
+    foreach(QObject *child, children()) {
+        if (qobject_cast<QBarSet *>(child)) {
+            qDebug() << "append bar set:" << child;
+            QBarSeries::appendBarSet(qobject_cast<QBarSet *>(child));
+        }
+    }
 }
 
-bool DeclarativeBarSeries::setDeclarativeModel(DeclarativeBarModel *model)
+QDeclarativeListProperty<DeclarativeBarSet> DeclarativeBarSeries::initialBarSets()
+{
+    return QDeclarativeListProperty<DeclarativeBarSet>(this, 0, &DeclarativeBarSeries::appendInitialBarSets);
+}
+
+bool DeclarativeBarSeries::setDeclarativeModel(DeclarativeTableModel *model)
 {
     QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
     bool value(false);
@@ -77,9 +86,9 @@ bool DeclarativeBarSeries::setDeclarativeModel(DeclarativeBarModel *model)
     return value;
 }
 
-DeclarativeBarModel *DeclarativeBarSeries::declarativeModel()
+DeclarativeTableModel *DeclarativeBarSeries::declarativeModel()
 {
-    return qobject_cast<DeclarativeBarModel *>(model());
+    return qobject_cast<DeclarativeTableModel *>(model());
 }
 
 void DeclarativeBarSeries::setBarCategories(QStringList categories)

@@ -106,27 +106,6 @@ void DeclarativeTableModel::appendPoint(QXYModelMapper *mapper, DeclarativeXyPoi
     append(values);
 }
 
-////////////// Bar model ///////////////////////
-
-DeclarativeBarModel::DeclarativeBarModel(QObject *parent) :
-    DeclarativeTableModel(parent)
-{
-}
-
-void DeclarativeBarModel::append(QBarSet* barSet)
-{
-    insertColumn(columnCount());
-    for (int i(0); i < barSet->count(); i++) {
-        if (rowCount() < (i + 1))
-            insertRow(rowCount());
-        setData(createIndex(i, columnCount() - 1), barSet->at(i));
-//        insertRow(rowCount());
-//        setData(createIndex(rowCount() - 1, 0), );
-//        setData(createIndex(rowCount() - 1, 1), barSet->at(i));
-    }
-//    TODO: setModelMapping(0, 1, columnCount(), Qt::Vertical);
-}
-
 #include "moc_declarativemodel.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

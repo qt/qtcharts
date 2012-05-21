@@ -68,17 +68,6 @@ public Q_SLOTS:
                                  QObject *element);
 };
 
-class DeclarativeBarModel : public DeclarativeTableModel
-{
-    Q_OBJECT
-
-public:
-    explicit DeclarativeBarModel(QObject *parent = 0);
-
-public Q_SLOTS:
-    void append(QBarSet* barSet);
-};
-
 QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif // DECLARATIVEMODEL_H

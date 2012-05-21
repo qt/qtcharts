@@ -34,44 +34,25 @@ Rectangle {
 
         BarSeries {
             barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
-            model: barModel
+            BarSet { name: "Bob"; values: [2, 2, 3, 4, 5, 6] }
+            BarSet { name: "Susan"; values: [5, 1, 2, 4, 1, 7] }
+            BarSet { name: "James"; values: [3, 5, 8, 13, 5, 8] }
         }
 
-//        // TODO: optional syntax with ChartModel base model API
+        // TODO: optional syntax with ChartModel base model API
 //        BarSeries {
 //            model: chartModel
 //            modelMapping: BarSeriesMapping {
-//                // Giving "undefined" x mapping value means that the indexes are used as x-values
-//                setIndexes: [BarSeriesMapping.Undefined, 0,
-//                             BarSeriesMapping.Undefined, 1,
-//                             BarSeriesMapping.Undefined, 2] // defaults to []
-////                setValues: [
-////                    BarSetMapping {x: BarSetMapping.Undefined; y: 0},
-////                    BarSetMapping {x: BarSetMapping.Undefined; y: 1},
-////                    BarSetMapping {x: BarSetMapping.Undefined; y: 2}
-////                ]
-//                orientation: BarSeriesMapping.Vertical // defaults to Vertical
+//                ?
 //                startIndex: 0 // defaults to 0
 //                count: BarSeriesMapping.Undefined // defaults to "Undefined"
 //            }
 //        }
+//        ChartModel {
+//            id: chartModel
+//            ChartModelElement { values: ["Bob", 2, 2, 3, 4, 5, 6] }
+//            ChartModelElement { values: ["Susan", 5, 1, 2, 4, 1, 7] }
+//            ChartModelElement { values: ["James", 3, 5, 8, 13, 5, 8] }
+//        }
     }
-
-//    ChartModel {
-//        id: chartModel
-//    }
-
-    BarModel {
-        id: barModel
-        BarSet { name: "Bob"; values: [2, 2, 3, 4, 5, 6] }
-        BarSet { name: "Susan"; values: [5, 1, 2, 4, 1, 7] }
-        BarSet { name: "James"; values: [3, 5, 8, 13, 5, 8] }
-    }
-
-    // TODO
-//    Component.onCompleted: {
-//        bobBars.append(1.2);
-//        bobBars.append(1.5);
-//        bobBars.append([1.5, 1.4, 1.9]);
-//    }
 }
