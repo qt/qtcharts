@@ -4,4 +4,5 @@
 
 TEMPLATE = subdirs
 SUBDIRS += \ 
-        declarative
+        declarative \
+        designer

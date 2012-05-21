@@ -5,8 +5,6 @@ QT += declarative
     error( "Couldn't find the plugins.pri file!" )
 }
 
-DESTDIR = $$CHART_BUILD_PLUGIN_DIR
-
 contains(QT_MAJOR_VERSION, 5) {
     # TODO: QtQuick2 not supported by the implementation currently
     DEFINES += QTQUICK2
