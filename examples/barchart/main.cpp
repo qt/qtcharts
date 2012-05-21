@@ -53,11 +53,11 @@ int main(int argc, char *argv[])
 //![3]
     QBarSeries* series = new QBarSeries();
     series->setCategories(categories);
-    series->appendBarSet(set0);
-    series->appendBarSet(set1);
-    series->appendBarSet(set2);
-    series->appendBarSet(set3);
-    series->appendBarSet(set4);
+    series->append(set0);
+    series->append(set1);
+    series->append(set2);
+    series->append(set3);
+    series->append(set4);
 
 //![3]
 

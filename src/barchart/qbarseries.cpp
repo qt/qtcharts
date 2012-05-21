@@ -107,7 +107,7 @@ void QBarSeries::setCategories(QBarCategories categories)
 /*!
     Adds a set of bars to series. Takes ownership of \a set.
 */
-bool QBarSeries::appendBarSet(QBarSet *set)
+bool QBarSeries::append(QBarSet *set)
 {
     Q_D(QBarSeries);
     if ((d->m_barSets.contains(set)) || (set == 0)) {
@@ -123,7 +123,7 @@ bool QBarSeries::appendBarSet(QBarSet *set)
 /*!
     Removes a set of bars from series. Releases ownership of \a set. Doesn't delete \a set.
 */
-bool QBarSeries::removeBarSet(QBarSet *set)
+bool QBarSeries::remove(QBarSet *set)
 {
     Q_D(QBarSeries);
     if (!d->m_barSets.contains(set)) {
@@ -139,7 +139,7 @@ bool QBarSeries::removeBarSet(QBarSet *set)
 /*!
     Adds a list of barsets to series. Takes ownership of \a sets.
 */
-bool QBarSeries::appendBarSets(QList<QBarSet* > sets)
+bool QBarSeries::append(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
     foreach (QBarSet* set, sets) {
@@ -164,7 +164,7 @@ bool QBarSeries::appendBarSets(QList<QBarSet* > sets)
 /*!
     Removes a list of barsets from series. Releases ownership of \a sets. Doesn't delete \a sets.
 */
-bool QBarSeries::removeBarSets(QList<QBarSet* > sets)
+bool QBarSeries::remove(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
 
@@ -513,7 +513,7 @@ void QBarSeriesPrivate::initializeDataFromModel()
             QBarSet* barSet = new QBarSet(m_model->headerData(i, Qt::Horizontal, Qt::DisplayRole).toString());
             for(int m = m_mapper->first(); m < m_mapper->first() + rowCount; m++)
                 *barSet << m_model->data(m_model->index(m, i), Qt::DisplayRole).toDouble();
-            q->appendBarSet(barSet);
+            q->append(barSet);
         }
     } else {
         if (m_mapCategories >= m_model->rowCount())
@@ -533,7 +533,7 @@ void QBarSeriesPrivate::initializeDataFromModel()
             QBarSet* barSet = new QBarSet(m_model->headerData(i, Qt::Vertical, Qt::DisplayRole).toString());
             for(int m = m_mapper->first(); m < m_mapper->first() + columnCount; m++)
                 *barSet << m_model->data(m_model->index(i, m), Qt::DisplayRole).toDouble();
-            q->appendBarSet(barSet);
+            q->append(barSet);
         }
     }
     emit restructuredBars();

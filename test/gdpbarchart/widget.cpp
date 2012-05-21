@@ -183,7 +183,7 @@ void Widget::refreshChart()
                     qDebug() << "Putting 0 for the missing data" << " : " << QString("%1").arg(selectedYearsInts[i]);
                 }
             }
-            series0->appendBarSet(barSet);
+            series0->append(barSet);
         }
         // add the serie to the chart
         chartView->chart()->addSeries(series0);

@@ -45,14 +45,14 @@ private slots:
     void type();
     void setCategories_data();
     void setCategories();
-    void appendBarSet_data();
-    void appendBarSet();
-    void removeBarSet_data();
-    void removeBarSet();
-    void appendBarSets_data();
-    void appendBarSets();
-    void removeBarSets_data();
-    void removeBarSets();
+    void append_data();
+    void append();
+    void remove_data();
+    void remove();
+    void appendList_data();
+    void appendList();
+    void removeList_data();
+    void removeList();
     void barsetCount_data();
     void barsetCount();
     void categoryCount_data();
@@ -96,14 +96,14 @@ void tst_QBarSeries::init()
 
     for (int i=0; i<5; i++) {
         m_testSets.append(new QBarSet("testset"));
-        m_barseries_with_sets->appendBarSet(m_testSets.at(i));
+        m_barseries_with_sets->append(m_testSets.at(i));
     }
 }
 
 void tst_QBarSeries::cleanup()
 {
     foreach(QBarSet* s, m_testSets) {
-        m_barseries_with_sets->removeBarSet(s);
+        m_barseries_with_sets->remove(s);
         delete s;
     }
     m_testSets.clear();
@@ -168,11 +168,11 @@ void tst_QBarSeries::setCategories()
     }
 }
 
-void tst_QBarSeries::appendBarSet_data()
+void tst_QBarSeries::append_data()
 {
 }
 
-void tst_QBarSeries::appendBarSet()
+void tst_QBarSeries::append()
 {
     QVERIFY(m_barseries->barsetCount() == 0);
 
@@ -180,56 +180,56 @@ void tst_QBarSeries::appendBarSet()
 
     // Try adding barset
     QBarSet *barset = new QBarSet("testset");
-    ret = m_barseries->appendBarSet(barset);
+    ret = m_barseries->append(barset);
 
     QVERIFY(ret == true);
     QVERIFY(m_barseries->barsetCount() == 1);
 
     // Try adding another set
     QBarSet *barset2 = new QBarSet("testset2");
-    ret = m_barseries->appendBarSet(barset2);
+    ret = m_barseries->append(barset2);
 
     QVERIFY(ret == true);
     QVERIFY(m_barseries->barsetCount() == 2);
 
     // Try adding same set again
-    ret = m_barseries->appendBarSet(barset2);
+    ret = m_barseries->append(barset2);
     QVERIFY(ret == false);
     QVERIFY(m_barseries->barsetCount() == 2);
 
     // Try adding null set
-    ret = m_barseries->appendBarSet(0);
+    ret = m_barseries->append(0);
     QVERIFY(ret == false);
     QVERIFY(m_barseries->barsetCount() == 2);
 
 }
 
-void tst_QBarSeries::removeBarSet_data()
+void tst_QBarSeries::remove_data()
 {
 }
 
-void tst_QBarSeries::removeBarSet()
+void tst_QBarSeries::remove()
 {
     int count = m_testSets.count();
     QVERIFY(m_barseries_with_sets->barsetCount() == count);
 
     // Try to remove null pointer (should not remove, should not crash)
     bool ret = false;
-    ret = m_barseries_with_sets->removeBarSet(0);
+    ret = m_barseries_with_sets->remove(0);
     QVERIFY(ret == false);
     QVERIFY(m_barseries_with_sets->barsetCount() == count);
 
     // Try to remove invalid pointer (should not remove, should not crash)
-    ret = m_barseries_with_sets->removeBarSet((QBarSet*) (m_testSets.at(0) + 1) );
+    ret = m_barseries_with_sets->remove((QBarSet*) (m_testSets.at(0) + 1) );
     QVERIFY(ret == false);
     QVERIFY(m_barseries_with_sets->barsetCount() == count);
 
     // remove some sets
-    ret = m_barseries_with_sets->removeBarSet(m_testSets.at(2));
+    ret = m_barseries_with_sets->remove(m_testSets.at(2));
     QVERIFY(ret == true);
-    ret = m_barseries_with_sets->removeBarSet(m_testSets.at(3));
+    ret = m_barseries_with_sets->remove(m_testSets.at(3));
     QVERIFY(ret == true);
-    ret = m_barseries_with_sets->removeBarSet(m_testSets.at(4));
+    ret = m_barseries_with_sets->remove(m_testSets.at(4));
     QVERIFY(ret == true);
 
     QVERIFY(m_barseries_with_sets->barsetCount() == 2);
@@ -242,19 +242,19 @@ void tst_QBarSeries::removeBarSet()
     // Try removing all sets again (should be ok, even if some sets have already been removed)
     ret = false;
     for (int i=0; i<count; i++) {
-        ret |= m_barseries_with_sets->removeBarSet(m_testSets.at(i));
+        ret |= m_barseries_with_sets->remove(m_testSets.at(i));
     }
 
     QVERIFY(ret == true);
     QVERIFY(m_barseries_with_sets->barsetCount() == 0);
 }
 
-void tst_QBarSeries::appendBarSets_data()
+void tst_QBarSeries::appendList_data()
 {
 
 }
 
-void tst_QBarSeries::appendBarSets()
+void tst_QBarSeries::appendList()
 {
     int count = 5;
     QVERIFY(m_barseries->barsetCount() == 0);
@@ -266,25 +266,25 @@ void tst_QBarSeries::appendBarSets()
 
     // Append new sets (should succeed, count should match the count of sets)
     bool ret = false;
-    ret = m_barseries->appendBarSets(sets);
+    ret = m_barseries->append(sets);
     QVERIFY(ret == true);
     QVERIFY(m_barseries->barsetCount() == count);
 
     // Append same sets again (should fail, count should remain same)
-    ret = m_barseries->appendBarSets(sets);
+    ret = m_barseries->append(sets);
     QVERIFY(ret == false);
     QVERIFY(m_barseries->barsetCount() == count);
 
     // Try append empty list (should succeed, but count should remain same)
     QList<QBarSet*> invalidList;
-    ret = m_barseries->appendBarSets(invalidList);
+    ret = m_barseries->append(invalidList);
     QVERIFY(ret == true);
     QVERIFY(m_barseries->barsetCount() == count);
 
     // Try append list with one new and one existing set (should fail, count remains same)
     invalidList.append(new QBarSet("ok set"));
     invalidList.append(sets.at(0));
-    ret = m_barseries->appendBarSets(invalidList);
+    ret = m_barseries->append(invalidList);
     QVERIFY(ret == false);
     QVERIFY(m_barseries->barsetCount() == count);
 
@@ -293,17 +293,17 @@ void tst_QBarSeries::appendBarSets()
     invalidList2.append(0);
     invalidList2.append(0);
     invalidList2.append(0);
-    ret = m_barseries->appendBarSets(invalidList2);
+    ret = m_barseries->append(invalidList2);
     QVERIFY(ret == false);
     QVERIFY(m_barseries->barsetCount() == count);
 }
 
-void tst_QBarSeries::removeBarSets_data()
+void tst_QBarSeries::removeList_data()
 {
 
 }
 
-void tst_QBarSeries::removeBarSets()
+void tst_QBarSeries::removeList()
 {
     int count = m_testSets.count();
     QVERIFY(m_barseries_with_sets->barsetCount() == count);
@@ -311,7 +311,7 @@ void tst_QBarSeries::removeBarSets()
     // Try removing empty list of sets (should return false, since no barsets were removed)
     bool ret = false;
     QList<QBarSet*> invalidList;
-    ret = m_barseries_with_sets->removeBarSets(invalidList);
+    ret = m_barseries_with_sets->remove(invalidList);
     QVERIFY(ret == false);
     QVERIFY(m_barseries_with_sets->barsetCount() == count);
 
@@ -321,22 +321,22 @@ void tst_QBarSeries::removeBarSets()
     invalidList.append(0);
 
     // Try removing null pointers from list (should return false, should not crash, should not remove anything)
-    ret = m_barseries_with_sets->removeBarSets(invalidList);
+    ret = m_barseries_with_sets->remove(invalidList);
     QVERIFY(ret == false);
     QVERIFY(m_barseries_with_sets->barsetCount() == count);
 
     // remove all sets (should return true, since sets were removed)
-    ret = m_barseries_with_sets->removeBarSets(m_testSets);
+    ret = m_barseries_with_sets->remove(m_testSets);
     QVERIFY(ret == true);
     QVERIFY(m_barseries_with_sets->barsetCount() == 0);
 
     // Try removing invalid list again (should return false, since no barsets were removed)
-    ret = m_barseries_with_sets->removeBarSets(invalidList);
+    ret = m_barseries_with_sets->remove(invalidList);
     QVERIFY(ret == false);
     QVERIFY(m_barseries_with_sets->barsetCount() == 0);
 
     // remove all sets again (should return false, since barsets were already removed)
-    ret = m_barseries_with_sets->removeBarSets(m_testSets);
+    ret = m_barseries_with_sets->remove(m_testSets);
     QVERIFY(ret == false);
     QVERIFY(m_barseries_with_sets->barsetCount() == 0);
 }
@@ -440,11 +440,11 @@ void tst_QBarSeries::mouseclicked()
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
-    series->appendBarSet(set1);
+    series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
     *set2 << QPointF(0.5,10) << QPointF(1.5,10) << QPointF(2.5,10);
-    series->appendBarSet(set2);
+    series->append(set2);
 
     QSignalSpy setSpy1(set1, SIGNAL(clicked(QString)));
     QSignalSpy setSpy2(set2, SIGNAL(clicked(QString)));
@@ -577,11 +577,11 @@ void tst_QBarSeries::mousehovered()
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << QPointF(0.1,10) << QPointF(1.1,10) << QPointF(2.1,10);
-    series->appendBarSet(set1);
+    series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
     *set2 << QPointF(0.4,10) << QPointF(1.4,10) << QPointF(2.4,10);
-    series->appendBarSet(set2);
+    series->append(set2);
 
     QSignalSpy setSpy1(set1, SIGNAL(hovered(bool)));
     QSignalSpy setSpy2(set2, SIGNAL(hovered(bool)));

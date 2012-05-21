@@ -288,7 +288,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             QBarSet *set = new QBarSet("set" + QString::number(j));
             for (int i(0); i < column.count(); i++)
                 *set << column.at(i);
-            series->appendBarSet(set);
+            series->append(set);
         }
 
         m_chart->addSeries(series);

@@ -222,7 +222,7 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
         QBarSet *set = new QBarSet("Bar set " + QString::number(i));
         foreach (Data data, m_dataTable[i])
             *set << data.first.y();
-        series->appendBarSet(set);
+        series->append(set);
     }
     chart->addSeries(series);
 

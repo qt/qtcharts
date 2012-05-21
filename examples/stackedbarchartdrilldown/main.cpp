@@ -86,10 +86,10 @@ int main(int argc, char *argv[])
             foreach (QString week, weeks )
                 *weeklyCrop << (qrand() % 20);
             // Get the drilldown series from season series and add crop to it.
-            seasonSeries->drilldownSeries(month)->appendBarSet(weeklyCrop);
+            seasonSeries->drilldownSeries(month)->append(weeklyCrop);
             *monthlyCrop << weeklyCrop->sum();
         }
-        seasonSeries->appendBarSet(monthlyCrop);
+        seasonSeries->append(monthlyCrop);
     }
 //! [5]
 

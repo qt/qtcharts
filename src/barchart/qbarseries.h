@@ -46,10 +46,10 @@ public:
     QAbstractSeries::SeriesType type() const;
     void setCategories(QBarCategories categories);
 
-    bool appendBarSet(QBarSet *set);            // Takes ownership of set
-    bool removeBarSet(QBarSet *set);            // Releases ownership, doesn't delete set
-    bool appendBarSets(QList<QBarSet* > sets);
-    bool removeBarSets(QList<QBarSet* > sets);
+    bool append(QBarSet *set);            // Takes ownership of set
+    bool remove(QBarSet *set);            // Releases ownership, doesn't delete set
+    bool append(QList<QBarSet* > sets);
+    bool remove(QList<QBarSet* > sets);
     int barsetCount() const;
     int categoryCount() const;
     QList<QBarSet*> barSets() const;

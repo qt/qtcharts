@@ -106,11 +106,11 @@ void tst_QStackedBarSeries::mouseclicked()
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;
-    series->appendBarSet(set1);
+    series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
     *set2 << 10 << 10 << 10;
-    series->appendBarSet(set2);
+    series->append(set2);
 
     QSignalSpy setSpy1(set1, SIGNAL(clicked(QString)));
     QSignalSpy setSpy2(set2, SIGNAL(clicked(QString)));
@@ -243,11 +243,11 @@ void tst_QStackedBarSeries::mousehovered()
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;
-    series->appendBarSet(set1);
+    series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
     *set2 << 10 << 10 << 10;
-    series->appendBarSet(set2);
+    series->append(set2);
 
     QSignalSpy setSpy1(set1, SIGNAL(hovered(bool)));
     QSignalSpy setSpy2(set2, SIGNAL(hovered(bool)));
