@@ -61,7 +61,6 @@ void DeclarativeBarSeries::componentComplete()
 {
     foreach(QObject *child, children()) {
         if (qobject_cast<QBarSet *>(child)) {
-            qDebug() << "append bar set:" << child;
             QBarSeries::append(qobject_cast<QBarSet *>(child));
         }
     }

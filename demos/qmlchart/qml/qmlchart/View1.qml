@@ -45,30 +45,6 @@ Rectangle {
             PieSlice { label: "Skoda"; value: 8.2 }
             PieSlice { label: "Volvo"; value: 6.8 }
         }
-
-        // TODO: move ChartModel API into a demo application instead of making it a public API
-//        // For dynamic data you can use the ChartModel API.
-//        ChartModel {
-//            id: chartModel
-//            ChartModelElement { values: ["Volkswagen", 13.5] }
-//            ChartModelElement { values: ["Toyota", 10.9] }
-//            ChartModelElement { values: ["Ford", 8.6] }
-//            ChartModelElement { values: ["Skoda", 8.2] }
-//            ChartModelElement { values: ["Volvo", 6.8] }
-//        }
-//        // In this case you need to define how the data maps to pie slices with the ModelMapper API of the pie series.
-//        PieSeries {
-//            id: pieSeries
-//            model: chartModel
-//            modelMapper.mapLabels: 0
-//            modelMapper.mapValues: 1
-//            modelMapper.first: 0
-//            modelMapper.count: -1 // "Undefined" = -1 by default
-//            modelMapper.orientation: PieModelMapper.Vertical
-//        }
-
-        // TODO: you could also append to your model, for example:
-//        pieSeries.model.append(["Others", 52.0]);
     }
 
     Component.onCompleted: {
@@ -90,9 +66,9 @@ Rectangle {
             __explodedIndex = (__explodedIndex + 1) % pieSeries.count;
             pieSeries.at(__explodedIndex).exploded = true;
 
+            pieSeries.find("Volkswagen").exploded = true;
             // TODO: implement for convenience
-//            pieSeries.find("Ford").exploded = true;
-//            pieSeries.removeAll("Ford")
+//            pieSeries.removeAll("Ford");
         }
     }
 
@@ -123,20 +99,4 @@ Rectangle {
             }
         }
     }
-
-    // TODO: show how to use data from a list model in a chart view
-    // i.e. copy the data into a chart model
-//    ListModel {
-//        id: listModel
-//        ListElement {
-//            label: "Volkswagen"
-//            value: 13.5
-//        }
-//        ListElement {
-//            label: "Toyota"
-//            value: 10.9
-//        }
-//        // and so on...
-//    }
-
 }

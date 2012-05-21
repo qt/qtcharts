@@ -31,8 +31,7 @@ DeclarativeXySeries::DeclarativeXySeries()
 {
     // All the inherited objects must be of type QXYSeries, so it is safe to cast
     QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
-    // TODO: set default model on init?
-    series->setModel(new DeclarativeTableModel());
+    // TODO: mapper should be available on the series by default
     QXYModelMapper *mapper = new QXYModelMapper(series);
     mapper->setMapX(0);
     mapper->setMapY(1);

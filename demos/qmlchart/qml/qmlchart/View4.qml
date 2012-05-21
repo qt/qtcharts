@@ -40,6 +40,7 @@ Rectangle {
             XyPoint { x: 2.1; y: 1.3 }
             XyPoint { x: 2.5; y: 2.1 }
         }
+
         ScatterSeries {
             name: "Scatter2"
             XyPoint { x: 2.0; y: 2.0 }

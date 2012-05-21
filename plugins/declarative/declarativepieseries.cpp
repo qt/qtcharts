@@ -69,6 +69,15 @@ QPieSlice *DeclarativePieSeries::at(int index)
     return 0;
 }
 
+QPieSlice* DeclarativePieSeries::find(QString label)
+{
+    foreach (QPieSlice *slice, slices()) {
+        if (slice->label() == label)
+            return slice;
+    }
+    return 0;
+}
+
 QPieSlice* DeclarativePieSeries::append(QString name, qreal value)
 {
     // TODO: parameter order is wrong, switch it:

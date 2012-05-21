@@ -32,9 +32,15 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 {
     Q_OBJECT
     Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
+    Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
+    Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
 public:
     explicit DeclarativeSplineSeries(QObject *parent = 0);
+    QDeclarativeListProperty<QObject> declarativeChildren();
+
+public Q_SLOTS:
+    static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

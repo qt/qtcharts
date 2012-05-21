@@ -34,13 +34,16 @@ class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QAbstractSeries
 {
     Q_OBJECT
 public:
+    explicit QAreaSeries(QObject *parent = 0);
     explicit QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries = 0);
     ~QAreaSeries();
 
 public:
     QAbstractSeries::SeriesType type() const;
 
+    void setUpperSeries(QLineSeries* series);
     QLineSeries* upperSeries() const;
+    void setLowerSeries(QLineSeries* series);
     QLineSeries* lowerSeries() const;
 
     void setPen(const QPen &pen);

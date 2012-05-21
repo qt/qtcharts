@@ -29,6 +29,20 @@ DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
 {
 }
 
+QDeclarativeListProperty<QObject> DeclarativeSplineSeries::declarativeChildren()
+{
+    return QDeclarativeListProperty<QObject>(this, 0, &appendDeclarativeChildren);
+}
+
+void DeclarativeSplineSeries::appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
+{
+    QXYSeries *series = qobject_cast<QXYSeries*>(list->object);
+    DeclarativeXyPoint *point = qobject_cast<DeclarativeXyPoint *>(element);
+    if (series && point) {
+        qDebug() << "DeclarativeScatterSeries::appendDeclarativeChildren:" << *point;
+        series->append(*point);
+    }
+}
 #include "moc_declarativesplineseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

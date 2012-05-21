@@ -109,6 +109,14 @@ QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
 }
 
 /*!
+    Constructs area series object without upper or lower series.
+*/
+QAreaSeries::QAreaSeries(QObject *parent)
+    : QAbstractSeries(*new QAreaSeriesPrivate(0, 0, this), parent)
+{
+}
+
+/*!
     Destroys the object. Series added to QChartView or QChart instances are owned by those,
     and are deleted when mentioned object are destroyed.
 */
@@ -122,10 +130,22 @@ QAbstractSeries::SeriesType QAreaSeries::type() const
     return QAbstractSeries::SeriesTypeArea;
 }
 
+void QAreaSeries::setUpperSeries(QLineSeries* series)
+{
+    Q_D(QAreaSeries);
+    d->m_upperSeries = series;
+}
+
 QLineSeries* QAreaSeries::upperSeries() const
 {
     Q_D(const QAreaSeries);
     return d->m_upperSeries;
+}
+
+void QAreaSeries::setLowerSeries(QLineSeries* series)
+{
+    Q_D(QAreaSeries);
+    d->m_lowerSeries = series;
 }
 
 QLineSeries* QAreaSeries::lowerSeries() const

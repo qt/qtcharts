@@ -30,10 +30,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class DeclarativeAreaSeries : public QAreaSeries
 {
     Q_OBJECT
-    Q_PROPERTY(DeclarativeTableModel *upperModel READ declarativeUpperModel WRITE setDeclarativeUpperModel)
-    Q_PROPERTY(DeclarativeTableModel *lowerModel READ declarativeLowerModel WRITE setDeclarativeLowerModel)
-    Q_PROPERTY(QXYModelMapper *upperModelMapper READ upperModelMapper)
-    Q_PROPERTY(QXYModelMapper *lowerModelMapper READ lowerModelMapper)
+    Q_PROPERTY(DeclarativeLineSeries *upperSeries READ upperSeries WRITE setUpperSeries)
+    Q_PROPERTY(DeclarativeLineSeries *lowerSeries READ lowerSeries WRITE setLowerSeries)
 
 public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
@@ -45,6 +43,11 @@ public:
     DeclarativeTableModel *declarativeLowerModel();
     QXYModelMapper* upperModelMapper() const;
     QXYModelMapper* lowerModelMapper() const;
+public:
+    void setUpperSeries(DeclarativeLineSeries* series);
+    DeclarativeLineSeries* upperSeries() const;
+    void setLowerSeries(DeclarativeLineSeries* series);
+    DeclarativeLineSeries* lowerSeries() const;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

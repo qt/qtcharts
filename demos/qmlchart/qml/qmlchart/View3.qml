@@ -33,46 +33,98 @@ Rectangle {
 
         AreaSeries {
             name: "Russian"
-            upperModel: chartModel
-            upperModelMapper.mapX: 0
-            upperModelMapper.mapY: 2
-            lowerModel: chartModel
-            lowerModelMapper.mapX: 0
-            lowerModelMapper.mapY: 1
+            upperSeries: LineSeries {
+                XyPoint { x: 0; y: 1 }
+                XyPoint { x: 1; y: 1 }
+                XyPoint { x: 2; y: 1 }
+                XyPoint { x: 3; y: 1 }
+                XyPoint { x: 4; y: 1 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 1 }
+                XyPoint { x: 7; y: 1 }
+                XyPoint { x: 8; y: 4 }
+                XyPoint { x: 9; y: 3 }
+                XyPoint { x: 10; y: 2 }
+                XyPoint { x: 11; y: 1 }
+            }
+            lowerSeries: LineSeries {
+                XyPoint { x: 0; y: 0 }
+                XyPoint { x: 1; y: 0 }
+                XyPoint { x: 2; y: 0 }
+                XyPoint { x: 3; y: 0 }
+                XyPoint { x: 4; y: 0 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 0 }
+                XyPoint { x: 7; y: 0 }
+                XyPoint { x: 8; y: 0 }
+                XyPoint { x: 9; y: 0 }
+                XyPoint { x: 10; y: 0 }
+                XyPoint { x: 11; y: 0 }
+            }
         }
+
         AreaSeries {
             name: "Swedish"
-            upperModel: chartModel
-            upperModelMapper.mapX: 0
-            upperModelMapper.mapY: 3
-            lowerModel: chartModel
-            lowerModelMapper.mapX: 0
-            lowerModelMapper.mapY: 1
+            upperSeries: LineSeries {
+                XyPoint { x: 0; y: 1 }
+                XyPoint { x: 1; y: 1 }
+                XyPoint { x: 2; y: 3 }
+                XyPoint { x: 3; y: 3 }
+                XyPoint { x: 4; y: 2 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 2 }
+                XyPoint { x: 7; y: 1 }
+                XyPoint { x: 8; y: 2 }
+                XyPoint { x: 9; y: 1 }
+                XyPoint { x: 10; y: 3 }
+                XyPoint { x: 11; y: 3 }
+            }
+            lowerSeries: LineSeries {
+                XyPoint { x: 0; y: 0 }
+                XyPoint { x: 1; y: 0 }
+                XyPoint { x: 2; y: 0 }
+                XyPoint { x: 3; y: 0 }
+                XyPoint { x: 4; y: 0 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 0 }
+                XyPoint { x: 7; y: 0 }
+                XyPoint { x: 8; y: 0 }
+                XyPoint { x: 9; y: 0 }
+                XyPoint { x: 10; y: 0 }
+                XyPoint { x: 11; y: 0 }
+            }
         }
-        AreaSeries {
-            name: "Finnish"
-            upperModel: chartModel
-            upperModelMapper.mapX: 0
-            upperModelMapper.mapY: 4
-            lowerModel: chartModel
-            lowerModelMapper.mapX: 0
-            lowerModelMapper.mapY: 1
-        }
-    }
 
-    ChartModel {
-        id: chartModel
-        ChartModelElement { values: [0,  0, 1, 1, 0] }
-        ChartModelElement { values: [1,  0, 1, 1, 0] }
-        ChartModelElement { values: [2,  0, 1, 3, 0] }
-        ChartModelElement { values: [3,  0, 1, 3, 0] }
-        ChartModelElement { values: [4,  0, 1, 2, 0] }
-        ChartModelElement { values: [5,  0, 0, 0, 0] }
-        ChartModelElement { values: [6,  0, 1, 2, 1] }
-        ChartModelElement { values: [7,  0, 1, 1, 0] }
-        ChartModelElement { values: [8,  0, 4, 2, 0] }
-        ChartModelElement { values: [9,  0, 3, 1, 0] }
-        ChartModelElement { values: [10, 0, 2, 3, 0] }
-        ChartModelElement { values: [11, 0, 1, 3, 1] }
+        AreaSeries {
+            name: "Swedish"
+            upperSeries: LineSeries {
+                XyPoint { x: 0; y: 0 }
+                XyPoint { x: 1; y: 0 }
+                XyPoint { x: 2; y: 0 }
+                XyPoint { x: 3; y: 0 }
+                XyPoint { x: 4; y: 0 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 1 }
+                XyPoint { x: 7; y: 0 }
+                XyPoint { x: 8; y: 0 }
+                XyPoint { x: 9; y: 0 }
+                XyPoint { x: 10; y: 0 }
+                XyPoint { x: 11; y: 1 }
+            }
+            lowerSeries: LineSeries {
+                XyPoint { x: 0; y: 0 }
+                XyPoint { x: 1; y: 0 }
+                XyPoint { x: 2; y: 0 }
+                XyPoint { x: 3; y: 0 }
+                XyPoint { x: 4; y: 0 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 0 }
+                XyPoint { x: 7; y: 0 }
+                XyPoint { x: 8; y: 0 }
+                XyPoint { x: 9; y: 0 }
+                XyPoint { x: 10; y: 0 }
+                XyPoint { x: 11; y: 0 }
+            }
+        }
     }
 }

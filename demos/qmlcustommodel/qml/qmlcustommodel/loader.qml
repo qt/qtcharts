@@ -19,25 +19,19 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.0
 
-Rectangle {
-    anchors.fill: parent
-
-    ChartView {
-        title: "Bar series"
-        anchors.fill: parent
-        theme: ChartView.ChartThemeLight
-        legend: ChartView.LegendBottom
-        // TODO: labels defined by x-axis, not by bar series
-//        axisXLabels: ["0", "2008", "1", "2009", "2", "2010", "3", "2012"]
-        axisX.max: 10
-
-        BarSeries {
-            barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
-            BarSet { name: "Bob"; values: [2, 2, 3, 4, 5, 6] }
-            BarSet { name: "Susan"; values: [5, 1, 2, 4, 1, 7] }
-            BarSet { name: "James"; values: [3, 5, 8, 13, 5, 8] }
-        }
+Item {
+    id: container
+    width: 400
+    height: 300
+    Component.onCompleted: {
+    var co = Qt.createComponent("main.qml")
+    if (co.status == Component.Ready) {
+            var o = co.createObject(container)
+        } else {
+            console.log(co.errorString())
+            console.log("QtCommercial.Chart 1.1 not available")
+            console.log("Please use correct QML_IMPORT_PATH export")
+         }
     }
 }

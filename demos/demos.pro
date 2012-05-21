@@ -8,4 +8,5 @@ SUBDIRS += chartthemes \
            piechartcustomization \
            dynamicspline \
            qmlchart \
-           qmlweather
+           qmlweather \
+           qmlcustommodel

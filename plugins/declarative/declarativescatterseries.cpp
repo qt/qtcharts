@@ -37,9 +37,10 @@ QDeclarativeListProperty<QObject> DeclarativeScatterSeries::declarativeChildren(
 
 void DeclarativeScatterSeries::appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
 {
-    DeclarativeScatterSeries *series = qobject_cast<DeclarativeScatterSeries *>(list->object);
-    if (series && qobject_cast<DeclarativeXyPoint *>(element))
-        series->declarativeModel()->appendPoint(series->modelMapper(), qobject_cast<DeclarativeXyPoint *>(element));
+    QXYSeries *series = qobject_cast<QXYSeries*>(list->object);
+    DeclarativeXyPoint *point = qobject_cast<DeclarativeXyPoint *>(element);
+    if (series && point)
+        series->append(*point);
 }
 
 #include "moc_declarativescatterseries.cpp"
