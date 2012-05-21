@@ -17,7 +17,7 @@ QChartsPlugin::~QChartsPlugin()
 
 QString QChartsPlugin::name() const
 {
-    return "QCharts";
+    return "QChartView";
 }
 
 QString QChartsPlugin::includeFile() const
