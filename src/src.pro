@@ -147,18 +147,18 @@ QMAKE_EXTRA_COMPILERS += install_build_public_headers \
 
 win32:{
    bintarget.CONFIG += no_check_exist
-   bintarget.files = $$CHART_BUILD_LIB_DIR\\*.dll
+   bintarget.files = $$CHART_BUILD_LIB_DIR\\$${TARGET}.dll
    win32-msvc*:CONFIG(debug, debug|release): {
-      bintarget.files += $$CHART_BUILD_LIB_DIR\\*.pdb
+      bintarget.files += $$CHART_BUILD_LIB_DIR\\$${TARGET}.pdb
    }
    bintarget.path = $$[QT_INSTALL_BINS]
 
    libtarget.CONFIG += no_check_exist
-   libtarget.files = $$CHART_BUILD_LIB_DIR\\*.prl
+   libtarget.files = $$CHART_BUILD_LIB_DIR\\$${TARGET}.prl
    win32-msvc*: {
-      libtarget.files += $$CHART_BUILD_LIB_DIR\\*.lib
+      libtarget.files += $$CHART_BUILD_LIB_DIR\\$${TARGET}.lib
    } else {
-      libtarget.files += $$CHART_BUILD_LIB_DIR\\*.a
+      libtarget.files += $$CHART_BUILD_LIB_DIR\\lib$${TARGET}.a
    }
    libtarget.path = $$[QT_INSTALL_LIBS]
 
