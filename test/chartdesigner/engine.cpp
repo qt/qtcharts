@@ -21,6 +21,9 @@
 #include "engine.h"
 #include <QItemSelectionModel>
 #include <QStandardItemModel>
+#include <QXYModelMapper>
+#include <QBarModelMapper>
+#include <QPieModelMapper>
 #include <QLineSeries>
 #include <QSplineSeries>
 #include <QScatterSeries>
@@ -31,6 +34,7 @@
 #include <QPieSeries>
 #include <QChart>
 #include <QBarSet>
+
 
 const qint32 MAGIC_NUMBER = 0x66666666;
 
@@ -116,21 +120,21 @@ QList<QAbstractSeries*> Engine::addSeries(QAbstractSeries::SeriesType type)
     case QAbstractSeries::SeriesTypeBar:
     {
         //TODO: fix me
-        QBarSeries *bar = new QBarSeries(QBarCategories() << "temp");
+        QBarSeries *bar = new QBarSeries();
         setupBarSeries(bar,keys,minRow,maxRow);
         result << bar;
         break;
     }
     case QAbstractSeries::SeriesTypePercentBar:
     {
-        QPercentBarSeries *bar = new QPercentBarSeries(QBarCategories() << "temp");
+        QPercentBarSeries *bar = new QPercentBarSeries();
         setupBarSeries(bar,keys,minRow,maxRow);
         result << bar;
         break;
     }
     case QAbstractSeries::SeriesTypeStackedBar:
     {
-        QStackedBarSeries *bar = new QStackedBarSeries(QBarCategories() << "temp");
+        QStackedBarSeries *bar = new QStackedBarSeries();
         setupBarSeries(bar,keys,minRow,maxRow);
         result << bar;
         break;
@@ -252,8 +256,13 @@ bool Engine::load(const QString &filename)
 void Engine::setupXYSeries(QXYSeries *xyseries, const QList<int>& columns, int column, int minRow, int maxRow)
 {
     xyseries->setModel(m_model);
-    xyseries->setModelMapping(columns.first(), columns.at(column), Qt::Vertical);
-    xyseries->setModelMappingRange(minRow, maxRow - minRow + 1);
+    QXYModelMapper* mapper = new QXYModelMapper(xyseries);
+    xyseries->setModelMapper(mapper);
+    mapper->setMapX(columns.first());
+    mapper->setMapY(columns.at(column));
+    mapper->setOrientation(Qt::Vertical);
+    mapper->setFirst(minRow);
+    mapper->setCount(maxRow - minRow + 1);
     m_chart->addSeries(xyseries);
     xyseries->setName(QString("Series %1").arg(m_chart->series().count()));
     QObject::connect(xyseries,SIGNAL(clicked(const QPointF&)),this,SIGNAL(selected()));
@@ -271,8 +280,14 @@ void Engine::setupXYSeries(QXYSeries *xyseries, const QList<int>& columns, int c
 void Engine::setupBarSeries(QBarSeries *bar, const QList<int>& columns, int minRow, int maxRow)
 {
     bar->setModel(m_model);
-    bar->setModelMapping(columns.first(), columns.at(1), columns.last(), Qt::Vertical);
-    bar->setModelMappingRange(minRow, maxRow - minRow + 1);
+    QBarModelMapper* mapper = new QBarModelMapper(bar);
+    bar->setModelMapper(mapper);
+    mapper->setMapCategories(columns.first());
+    mapper->setMapBarTop(columns.last());
+    mapper->setMapBarBottom(columns.at(1));
+    mapper->setOrientation(Qt::Vertical);
+    mapper->setFirst(minRow);
+    mapper->setCount(maxRow - minRow + 1);
     m_chart->addSeries(bar);
     bar->setName(QString("Series %1").arg(m_chart->series().count()));
 
@@ -287,8 +302,13 @@ void Engine::setupBarSeries(QBarSeries *bar, const QList<int>& columns, int minR
 void Engine::setupPieSeries(QPieSeries *pie, const QList<int>& columns, int minRow, int maxRow)
 {
     pie->setModel(m_model);
-    pie->setModelMapping(columns.at(1),columns.first() ,Qt::Vertical);
-    pie->setModelMappingRange(minRow, maxRow - minRow + 1);
+    QPieModelMapper* mapper = new QPieModelMapper(pie);
+    pie->setModelMapper(mapper);
+    mapper->setMapValues(columns.at(1));
+    mapper->setMapLabels(columns.first());
+    mapper->setOrientation(Qt::Vertical);
+    mapper->setFirst(minRow);
+    mapper->setCount(maxRow - minRow + 1);
     m_chart->addSeries(pie);
     pie->setName(QString("Series %1").arg(m_chart->series().count()));
 
@@ -302,10 +322,20 @@ void Engine::setupAreaSeries(QAreaSeries *series, const QList<int>& columns, int
 {
     series->lowerSeries()->setModel(m_model);
     series->upperSeries()->setModel(m_model);
-    series->upperSeries()->setModelMapping(columns.first(), columns.at(1), Qt::Vertical);
-    series->lowerSeries()->setModelMapping(columns.first(), columns.at(2), Qt::Vertical);
-    series->upperSeries()->setModelMappingRange(minRow, maxRow - minRow + 1);
-    series->lowerSeries()->setModelMappingRange(minRow, maxRow - minRow + 1);
+    QXYModelMapper* umapper = new QXYModelMapper(series);
+    umapper->setMapX(columns.first());
+    umapper->setMapY(columns.at(1));
+    umapper->setOrientation(Qt::Vertical);
+    umapper->setFirst(minRow);
+    umapper->setCount(maxRow - minRow + 1);
+    QXYModelMapper* lmapper = new QXYModelMapper(series);
+    lmapper->setMapX(columns.first());
+    lmapper->setMapY(columns.at(2));
+    lmapper->setOrientation(Qt::Vertical);
+    lmapper->setFirst(minRow);
+    lmapper->setCount(maxRow - minRow + 1);
+    series->upperSeries()->setModelMapper(umapper);
+    series->lowerSeries()->setModelMapper(lmapper);
     m_chart->addSeries(series);
     series->setName(QString("Series %1").arg(m_chart->series().count()));
 
