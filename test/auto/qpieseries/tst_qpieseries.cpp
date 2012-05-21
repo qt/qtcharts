@@ -351,10 +351,10 @@ void tst_qpieseries::model()
     QVERIFY2(series->slices().count() == 0, "Mapper has not been set, so the number of slices should be 0");
 
     // set the mapper
-    QPieModelMapper *mapper = new QPieModelMapper;
+    QPieModelMapper *mapper = series->modelMapper();//new QPieModelMapper;
     mapper->setMapValues(0);
     mapper->setMapLabels(0);
-    series->setModelMapper(mapper); // this should cause the Pie to get initialized from the model, since there is now both the model and the mapper defined
+//    series->setModelMapper(mapper); // this should cause the Pie to get initialized from the model, since there is now both the model and the mapper defined
     QCOMPARE(series->slices().count(), rowCount);
 
     // set the mappings to be outside of the model
@@ -373,9 +373,9 @@ void tst_qpieseries::model()
 
     // unset the model and the mapper
     series->setModel(0);
-    series->setModelMapper(0);
+//    series->setModelMapper(0);
     QVERIFY(series->model() == 0); // Model should be unset
-    QVERIFY(series->modelMapper() == 0); // Model mapper should be unset
+//    QVERIFY(series->modelMapper() == 0); // Model mapper should be unset
 }
 
 void tst_qpieseries::modelCustomMap()
@@ -397,10 +397,10 @@ void tst_qpieseries::modelCustomMap()
     chartView->show();
     series->setModel(stdModel);
 
-    QPieModelMapper *mapper = new QPieModelMapper;
+    QPieModelMapper *mapper = series->modelMapper();//new QPieModelMapper;
     mapper->setMapValues(0);
     mapper->setMapLabels(0);
-    series->setModelMapper(mapper);
+//    series->setModelMapper(mapper);
     QCOMPARE(series->slices().count(), rowCount);
 
     // lets change the orientation to horizontal
@@ -442,10 +442,10 @@ void tst_qpieseries::modelUpdate()
     chartView->show();
     series->setModel(stdModel);
 
-    QPieModelMapper *mapper = new QPieModelMapper;
+    QPieModelMapper *mapper = series->modelMapper();//new QPieModelMapper;
     mapper->setMapValues(0);
     mapper->setMapLabels(0);
-    series->setModelMapper(mapper);
+//    series->setModelMapper(mapper);
 
     stdModel->insertRows(3, 5);
     QCOMPARE(series->slices().count(), rowCount + 5);

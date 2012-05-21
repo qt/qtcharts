@@ -65,6 +65,9 @@ public Q_SLOTS:
     bool setRealValue(qreal &value, qreal newValue, qreal max, qreal min = 0.0);
 
 private:
+    void doClear();
+    void doRemove(QPieSlice* slice);
+    void doInsert(int index, QPieSlice* slice);
     void insertData(int start, int end);
     void removeData(int start, int end);
 
@@ -77,7 +80,8 @@ public:
     qreal m_pieEndAngle;
     qreal m_sum;
 
-    // model map
+    // model
+    QAbstractItemModel *m_model;
     QPieModelMapper *m_mapper;
 
 private:

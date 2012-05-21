@@ -33,13 +33,13 @@ DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
 //    setModel(new DeclarativeTableModel());
 
     // TODO: Set default mapper parameters to allow easy to use PieSeries api?
-    QPieModelMapper *mapper = new QPieModelMapper();
+    QPieModelMapper *mapper = modelMapper();//new QPieModelMapper();
     mapper->setMapLabels(0);
     mapper->setMapValues(1);
     mapper->setOrientation(Qt::Vertical);
     mapper->setFirst(0);
     mapper->setCount(-1);
-    setModelMapper(mapper);
+//    setModelMapper(mapper);
 }
 
 void DeclarativePieSeries::classBegin()

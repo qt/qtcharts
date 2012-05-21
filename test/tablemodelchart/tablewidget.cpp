@@ -342,12 +342,12 @@ void TableWidget::updateChartType(bool toggle)
                     QPieSeries* pieSeries = new QPieSeries;
                     pieSeries->setModel(m_model);
 
-                    QPieModelMapper *mapper = new QPieModelMapper;
-                    mapper->setMapValues(-1);
-                    mapper->setMapLabels(-1);
+                    QPieModelMapper *mapper = pieSeries->modelMapper();//new QPieModelMapper;
+                    mapper->setMapValues(1);
+                    mapper->setMapLabels(0);
                     mapper->setFirst(2);
                     mapper->setCount(5);
-                    pieSeries->setModelMapper(mapper);
+//                    pieSeries->setModelMapper(mapper);
 
                     pieSeries->setLabelsVisible(true);
                     pieSeries->setPieSize(0.75);
@@ -355,8 +355,12 @@ void TableWidget::updateChartType(bool toggle)
         //            pieSeries->setVerticalPosition(0.3);
 
                     m_chart->addSeries(pieSeries);
-//                    seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
+                    seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
                     m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 5));
+
+
+                    pieSeries->slices().at(0)->setValue(400);
+                    pieSeries->slices().at(0)->setLabel(QString("36"));
 
         //            // pie 2
         //            pieSeries = new QPieSeries;
@@ -453,7 +457,7 @@ void TableWidget::updateChartType(bool toggle)
 
 void TableWidget::testPie()
 {
-    m_series->modelMapper()->setMapX(4);
+//    m_series->modelMapper()->setMapX(4);
 //    m_tableView->setColumnWidth(10, 250);
     //    if (specialPie) {
     //        specialPie->remove(specialPie->slices().at(2));

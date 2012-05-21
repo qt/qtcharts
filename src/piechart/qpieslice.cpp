@@ -20,6 +20,7 @@
 
 #include "qpieslice.h"
 #include "pieslicedata_p.h"
+#include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -271,6 +272,7 @@ void QPieSlice::setLabel(QString label)
 {
     if (d->m_labelText != label) {
         d->m_labelText = label;
+
         emit changed();
     }
 }
