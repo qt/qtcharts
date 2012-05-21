@@ -7,3 +7,8 @@ CONFIG  += qtestlib
 
 INCLUDEPATH += ../inc
 HEADERS += ../inc/tst_definitions.h
+
+OBJECTS_DIR = $$CHART_BUILD_DIR/tests/auto/$$TARGET
+MOC_DIR = $$CHART_BUILD_DIR/tests/auto/$$TARGET
+UI_DIR = $$CHART_BUILD_DIR/tests/auto/$$TARGET
+RCC_DIR = $$CHART_BUILD_DIR/tests/auto/$$TARGET
