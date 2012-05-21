@@ -3,7 +3,7 @@
 }
 
 TEMPLATE = subdirs
-SUBDIRS = src qmlplugin examples demos test
+SUBDIRS = src plugins examples demos test
 
 development_build: message('Development build')
 

@@ -1,22 +1,16 @@
-TEMPLATE = lib
 TARGET = qtcommercialchartqml
-CONFIG += qt plugin
 QT += declarative
 
-!include( ../config.pri ) {
-    error( "Couldn't find the config.pri file!" )
+!include( ../plugins.pri ) {
+    error( "Couldn't find the plugins.pri file!" )
 }
 
 DESTDIR = $$CHART_BUILD_PLUGIN_DIR
+
 contains(QT_MAJOR_VERSION, 5) {
     # TODO: QtQuick2 not supported by the implementation currently
     DEFINES += QTQUICK2
 }
-
-OBJECTS_DIR = $$CHART_BUILD_DIR/plugin
-MOC_DIR = $$CHART_BUILD_DIR/plugin
-UI_DIR = $$CHART_BUILD_DIR/plugin
-RCC_DIR = $$CHART_BUILD_DIR/plugin
 
 SOURCES += \
     plugin.cpp \
@@ -30,6 +24,7 @@ SOURCES += \
     declarativepieseries.cpp \
     declarativebarseries.cpp \
     declarativemodel.cpp
+    
 HEADERS += \
     declarativechart.h \
     declarativexypoint.h \
