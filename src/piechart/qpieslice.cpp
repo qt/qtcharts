@@ -20,7 +20,6 @@
 
 #include "qpieslice.h"
 #include "pieslicedata_p.h"
-#include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
