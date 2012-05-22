@@ -37,12 +37,12 @@ QIcon QChartsPlugin::icon() const
 
 QString QChartsPlugin::toolTip() const
 {
-    return tr("An qcharts widget");
+    return tr("An qcharts view widget");
 }
 
 QString QChartsPlugin::whatsThis() const
 {
-    return tr("This widget is presents QCharts view widget");
+    return tr("This widget is presents QChartView widget");
 }
 
 bool QChartsPlugin::isContainer() const
