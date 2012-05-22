@@ -234,6 +234,13 @@ void tst_qpieseries::calculatedValues()
     if (!ok)
         return;
 
+    // modify pie angles
+    s.setPieStartAngle(-90);
+    s.setPieEndAngle(90);
+    verifyCalculatedData(s, &ok);
+    if (!ok)
+        return;
+
     // clear all
     s.clear();
     verifyCalculatedData(s, &ok);

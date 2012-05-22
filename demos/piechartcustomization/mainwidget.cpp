@@ -104,14 +104,14 @@ MainWidget::MainWidget(QWidget* parent)
     m_sizeFactor->setValue(m_series->pieSize());
 
     m_startAngle = new QDoubleSpinBox();
-    m_startAngle->setMinimum(0.0);
-    m_startAngle->setMaximum(360);
+    m_startAngle->setMinimum(-720);
+    m_startAngle->setMaximum(720);
     m_startAngle->setValue(m_series->pieStartAngle());
     m_startAngle->setSingleStep(1);
 
     m_endAngle = new QDoubleSpinBox();
-    m_endAngle->setMinimum(0.0);
-    m_endAngle->setMaximum(360);
+    m_endAngle->setMinimum(-720);
+    m_endAngle->setMaximum(720);
     m_endAngle->setValue(m_series->pieEndAngle());
     m_endAngle->setSingleStep(1);
 

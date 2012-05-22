@@ -341,8 +341,10 @@ qreal QPieSeries::pieSize() const
 void QPieSeries::setPieStartAngle(qreal angle)
 {
     Q_D(QPieSeries);
-    if (d->setRealValue(d->m_pieStartAngle, angle, d->m_pieEndAngle))
-        d->updateDerivativeData();
+    if (qFuzzyIsNull(d->m_pieStartAngle - angle))
+        return;
+    d->m_pieStartAngle = angle;
+    d->updateDerivativeData();
 }
 
 qreal QPieSeries::pieStartAngle() const
@@ -363,9 +365,10 @@ qreal QPieSeries::pieStartAngle() const
 void QPieSeries::setPieEndAngle(qreal angle)
 {
     Q_D(QPieSeries);
-
-    if (d->setRealValue(d->m_pieEndAngle, angle, 360.0, d->m_pieStartAngle))
-        d->updateDerivativeData();
+    if (qFuzzyIsNull(d->m_pieEndAngle - angle))
+        return;
+    d->m_pieEndAngle = angle;
+    d->updateDerivativeData();
 }
 
 /*!
