@@ -64,13 +64,14 @@ QAbstractSeries::SeriesType QGroupedBarSeries::type() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QGroupedBarSeriesPrivate::QGroupedBarSeriesPrivate(/*QBarCategories categories,*/ QGroupedBarSeries *q) : QBarSeriesPrivate(/*categories,*/q)
+QGroupedBarSeriesPrivate::QGroupedBarSeriesPrivate(QGroupedBarSeries *q) : QBarSeriesPrivate(q)
 {
 
 }
 
 void QGroupedBarSeriesPrivate::scaleDomain(Domain& domain)
 {
+    Q_Q(QGroupedBarSeries);
     qreal minX(domain.minX());
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
@@ -78,7 +79,7 @@ void QGroupedBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    qreal x = m_categories.count();
+    qreal x = q->categoryCount();
     qreal y = maxCategorySum();
     minX = qMin(minX, x);
     minY = qMin(minY, y);
