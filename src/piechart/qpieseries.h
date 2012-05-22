@@ -75,7 +75,7 @@ public:
     void setLabelsVisible(bool visible = true);
 
     void setModel(QAbstractItemModel* model);
-//    void setModelMapper(QPieModelMapper *mapper);
+    void setModelMapper(QPieModelMapper *mapper);
     QPieModelMapper* modelMapper() const;
 
 Q_SIGNALS:
