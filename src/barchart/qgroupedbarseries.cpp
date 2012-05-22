@@ -80,7 +80,7 @@ void QGroupedBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickYCount(domain.tickYCount());
 
     qreal x = q->categoryCount();
-    qreal y = maxCategorySum();
+    qreal y = max();
     minX = qMin(minX, x);
     minY = qMin(minY, y);
     maxX = qMax(maxX, x);
