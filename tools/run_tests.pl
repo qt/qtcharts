@@ -3,7 +3,7 @@ use Cwd 'abs_path';
 use File::Basename;
 use File::Copy;
 use feature "switch";
-use lib 'test/scripts';
+use lib 'tools';
 use Jobs;
 
 # read command line params

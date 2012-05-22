@@ -1,6 +1,6 @@
 use File::Basename;
 use feature "switch";
-use lib 'test/scripts';
+use lib 'tools';
 use Jobs;
 
 # read command line params
