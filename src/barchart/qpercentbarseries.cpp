@@ -25,7 +25,6 @@
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
 
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -33,9 +32,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief part of QtCommercial chart API.
     \mainclass
 
-    QPercentBarSeries represents a series of data shown as bars. Each bar of QBarSet is shown as percentage
-    of all bars in category. One QPercentBarSeries can contain multiple QBarSet data sets.
-    QBarSeries groups the data from sets to categories, which are defined by QStringList.
+    QPercentBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
+    as stacks, where each bar is shown as percentage of all bars in that category.
+    QPercentBarSeries groups the data from sets to categories, which are defined by a QStringList.
 
     See the \l {PercentbarChart Example} {percent bar chart example} to learn how to create a percent bar chart.
     \image examples_percentbarchart.png
@@ -50,11 +49,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QPercentBarSeries. Parameter \a categories defines the categories for chart.
+    Constructs empty QPercentBarSeries.
     QPercentBarSeries is QObject which is a child of a \a parent.
 */
-QPercentBarSeries::QPercentBarSeries(/*QBarCategories categories,*/ QObject *parent)
-    : QBarSeries(*new QPercentBarSeriesPrivate(/*categories,*/this), parent)
+QPercentBarSeries::QPercentBarSeries(QObject *parent)
+    : QBarSeries(*new QPercentBarSeriesPrivate(this), parent)
 {
 }
 
@@ -65,7 +64,7 @@ QAbstractSeries::SeriesType QPercentBarSeries::type() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QPercentBarSeriesPrivate::QPercentBarSeriesPrivate(/*QBarCategories categories,*/ QPercentBarSeries *q) : QBarSeriesPrivate(/*categories,*/q)
+QPercentBarSeriesPrivate::QPercentBarSeriesPrivate(QPercentBarSeries *q) : QBarSeriesPrivate(q)
 {
 
 }

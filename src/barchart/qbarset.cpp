@@ -34,7 +34,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \mainclass
 
-    \sa QBarSeries, QStackedBarSeries, QPercentBarSeries
+    \sa QBarSeries, QGroupedBarSeries, QStackedBarSeries, QPercentBarSeries
 */
 
 /*!
@@ -84,13 +84,22 @@ QString QBarSet::name() const
     return d_ptr->m_name;
 }
 
+/*!
+    Appends a point to set. Parameter \a value x coordinate defines the
+    position in x-axis and y coordinate defines the height of bar.
+    Depending on presentation (QBarSeries, QGroupedBarSeries, QStackedBarSeries, QPercentBarSeries)
+    the x values are used or ignored.
+*/
 void QBarSet::append(const QPointF value)
 {
     d_ptr->m_values.append(value);
     emit d_ptr->restructuredBars();
 }
 
-
+/*!
+    Appends a list of \a points to set. Works like append with single point.
+    \sa append()
+*/
 void QBarSet::append(const QList<QPointF> values)
 {
     for (int i=0; i<values.count(); i++) {
@@ -100,15 +109,19 @@ void QBarSet::append(const QList<QPointF> values)
 }
 
 /*!
-    Appends new value \a value to the end of set.
+    Appends new value \a value to the end of set. Internally the value is converted to QPointF,
+    with x coordinate being the index of appended value and y coordinate is the value.
 */
 void QBarSet::append(const qreal value)
 {
     append(QPointF(d_ptr->m_values.count(), value));
-//    d_ptr->m_values.append(value);
 }
 
-
+/*!
+    Appends a list of reals to set. Works like append with single real value. The values in list
+    are converted to QPointF, where x coordinate is the index of point and y coordinate is the value.
+    \sa append()
+*/
 void QBarSet::append(const QList<qreal> values)
 {
     int index = d_ptr->m_values.count();
@@ -120,7 +133,8 @@ void QBarSet::append(const QList<qreal> values)
 }
 
 /*!
-    Appends new value \a value to the end of set.
+    Convinience operator. Same as append, with real \a value.
+    \sa append()
 */
 QBarSet& QBarSet::operator << (const qreal &value)
 {
@@ -128,6 +142,10 @@ QBarSet& QBarSet::operator << (const qreal &value)
     return *this;
 }
 
+/*!
+    Convinience operator. Same as append, with QPointF \a value.
+    \sa append()
+*/
 QBarSet& QBarSet::operator << (const QPointF &value)
 {
     append(value);
@@ -165,7 +183,10 @@ void QBarSet::replace(const int index, const qreal value)
 }
 
 /*!
-    Returns value of set indexed by \a index. Note that all appended values are stored internally as QPointF
+    Returns value of set indexed by \a index. Note that all appended values are stored internally as QPointF.
+    The returned QPointF has x coordinate, which is index (if appended with qreal append) or the x value
+    of the QPointF (if appended with QPointF append).
+    If the index is out of bounds QPointF(0, 0.0) is returned.
 */
 QPointF QBarSet::at(const int index) const
 {
@@ -177,7 +198,9 @@ QPointF QBarSet::at(const int index) const
 }
 
 /*!
-    Returns value of set indexed by \a index
+    Returns value of set indexed by \a index. ote that all appended values are stored internally as QPointF.
+    The returned QPointF has x coordinate, which is index (if appended with qreal append) or the x value
+    of the QPointF (if appended with QPointF append).
 */
 QPointF QBarSet::operator [](const int index) const
 {
@@ -193,7 +216,7 @@ int QBarSet::count() const
 }
 
 /*!
-    Returns sum of all values in barset.
+    Returns sum of all values in barset. The sum is sum of y coordinates in the QPointF representation.
 */
 qreal QBarSet::sum() const
 {

@@ -19,15 +19,17 @@ class QBarSeriesPrivate : public QAbstractSeriesPrivate
 public:
     QBarSeriesPrivate(QBarSeries *parent);
     void setCategories(QBarCategories categories);
+    void insertCategory(int index, const QString category);
+    void removeCategory(int index);
+    int categoryCount() const;
+    QBarCategories categories() const;
+
     void setBarMargin(qreal margin);
     qreal barMargin();
 
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter* presenter);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
-
-    void insertCategory(int index, const QString category);
-    void removeCategory(int index);
 
     QBarSet* barsetAt(int index);
     QString categoryName(int category);

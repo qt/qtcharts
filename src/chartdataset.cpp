@@ -88,6 +88,7 @@ void ChartDataSet::addSeries(QAbstractSeries* series, QAxis *axisY)
 
     series->d_ptr->scaleDomain(*domain);
 
+    // Note that with SeriesTypeBar we don't set up categories, but use real values on x-asis
     if(series->type() == QAbstractSeries::SeriesTypeGroupedBar
             || series->type() == QAbstractSeries::SeriesTypeStackedBar
             || series->type() == QAbstractSeries::SeriesTypePercentBar) {

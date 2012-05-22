@@ -32,9 +32,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief part of QtCommercial chart API.
     \mainclass
 
-    QGroupedBarSeries represents a series of data shown as bars. All bars in same category are
-    grouped next to each other. One QGroupedBarSeries can contain multiple QBarSet data sets.
-    QGroupedBarSeries groups the data from sets to categories, which are defined by QStringList.
+    QGroupedBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
+    as groups, where bars in same category are grouped next to each other. QGroupedBarSeries groups the data
+    from sets to categories, which are defined by a QStringList.
 
     See the \l {GroupedbarChart Example} {grouped bar chart example} to learn how to create a grouped bar chart.
     \image examples_groupedbarchart.png
@@ -45,11 +45,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn virtual QSeriesType QGroupedBarSeries::type() const
     \brief Returns type of series.
-    \sa QSeriesType
+    \sa QAbstractSeries, QSeriesType
 */
 
 /*!
-    Constructs empty QGroupedBarSeries. Parameter \a categories defines the categories for chart.
+    Constructs empty QGroupedBarSeries.
     QGroupedBarSeries is QObject which is a child of a \a parent.
 */
 QGroupedBarSeries::QGroupedBarSeries(QObject *parent)

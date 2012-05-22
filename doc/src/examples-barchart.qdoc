@@ -3,38 +3,32 @@
     \title BarChart Example
     \subtitle
 
-    The example shows how to create simple bar chart. Barchart shows the data in sets as separate bars, which are grouped in categories.
+    The example shows how to create simple bar chart. Barchart shows the data in sets as separate bars, which are drawn at the x-axis to the position defined by data.
 
     \image examples_barchart.png
 	
-    First we define categories.
+    Data that barchart visualizes, is defined by QBarSet instances. Here we create some sets and append data
+    we want to visualize to them. Note that first and third QPointF in each set have smaller intervals at their x coordinates. This will be reflected in the chart.
 
     \snippet ../examples/barchart/main.cpp 1
 
-    Data that barchart visualizes, is defined by QBarSet instances. Here we create some sets and append data
-    we want to visualize to them.
+    To combine the sets to a chart, we need to create QBarSeries instance. Then we append our barsets to the series.
 
     \snippet ../examples/barchart/main.cpp 2
-
-    To combine the sets and categories to a chart, we need to create QBarSeries instance. When creating
-	the QBarSeries, the categories must be known. Sets can be added later. For example purposes the sets
-	are added to series here.
+    
+    Next we create a chart and add the series to it.
 
     \snippet ../examples/barchart/main.cpp 3
-    
-    Then we create a chart and add the series to it.
+
+    We want to have the legend displayed at the bottom of the chart. Also we turn on the nice numbers algorithm on for y-axis.
 
     \snippet ../examples/barchart/main.cpp 4
 
-    And we also want to show the legend, so that the data is easier to read.
+    Finally we add the chart onto a view.
 
     \snippet ../examples/barchart/main.cpp 5
 
-    Finally we add the chart onto a view.
-
-    \snippet ../examples/barchart/main.cpp 6
-
     And it is ready to be shown in a window.
 
-    \snippet ../examples/percentbarchart/main.cpp 7
+    \snippet ../examples/percentbarchart/main.cpp 6
 */

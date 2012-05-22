@@ -32,8 +32,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief part of QtCommercial chart API.
     \mainclass
 
-    QStackedBarSeries represents a series of data shown as bars. All bars in same category are
-    stacked on top of each other. One QStackedBarSeries can contain multiple QBarSet data sets.
+    QStackedBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
+    as stacks, where bars in same category are stacked on top of each other.
     QStackedBarSeries groups the data from sets to categories, which are defined by QStringList.
 
     See the \l {StackedbarChart Example} {stacked bar chart example} to learn how to create a stacked bar chart.
@@ -45,15 +45,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn virtual QSeriesType QStackedBarSeries::type() const
     \brief Returns type of series.
-    \sa QSeriesType
+    \sa QAbstractSeries, QSeriesType
 */
 
 /*!
-    Constructs empty QStackedBarSeries. Parameter \a categories defines the categories for chart.
+    Constructs empty QStackedBarSeries.
     QStackedBarSeries is QObject which is a child of a \a parent.
 */
-QStackedBarSeries::QStackedBarSeries(/*QBarCategories categories,*/ QObject *parent)
-    : QBarSeries(*new QStackedBarSeriesPrivate(/*categories,*/this), parent)
+QStackedBarSeries::QStackedBarSeries(QObject *parent)
+    : QBarSeries(*new QStackedBarSeriesPrivate(this), parent)
 {
 }
 
@@ -64,7 +64,7 @@ QAbstractSeries::SeriesType QStackedBarSeries::type() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(/*QBarCategories categories,*/ QStackedBarSeries *q) : QBarSeriesPrivate(/*categories,*/q)
+QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QStackedBarSeries *q) : QBarSeriesPrivate(q)
 {
 
 }

@@ -39,9 +39,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief part of QtCommercial chart API.
     \mainclass
 
-    QBarSeries represents a series of data shown as bars. One QBarSeries can contain multiple
-    QBarSet data sets. QBarSeries groups the data from sets to categories, which are defined
-    by QStringList.
+    QBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars to
+    the position defined by data. Single bar is defined by QPointF, where x value is the x-coordinate of the bar
+    and y-value is the height of the bar. The category names are ignored with this series and x-axis
+    shows the x-values.
 
     See the \l {BarChart Example} {bar chart example} to learn how to create a simple bar chart.
     \image examples_barchart.png
@@ -65,11 +66,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QBarSeries. Parameter \a categories defines the categories for chart.
+    Constructs empty QBarSeries.
     QBarSeries is QObject which is a child of a \a parent.
 */
-QBarSeries::QBarSeries(/*QBarCategories categories,*/ QObject *parent) :
-    QAbstractSeries(*new QBarSeriesPrivate(/*categories,*/ this),parent)
+QBarSeries::QBarSeries(QObject *parent) :
+    QAbstractSeries(*new QBarSeriesPrivate(this),parent)
 {
 }
 
@@ -97,6 +98,9 @@ QAbstractSeries::SeriesType QBarSeries::type() const
     return QAbstractSeries::SeriesTypeBar;
 }
 
+/*!
+    Sets the \a categories, which are used to to group the data.
+*/
 void QBarSeries::setCategories(QBarCategories categories)
 {
     Q_D(QBarSeries);
@@ -105,7 +109,9 @@ void QBarSeries::setCategories(QBarCategories categories)
 }
 
 /*!
-    Adds a set of bars to series. Takes ownership of \a set.
+    Adds a set of bars to series. Takes ownership of \a set. If the set is null or is already in series, it won't be appended.
+    Returns true, if appending succeeded.
+
 */
 bool QBarSeries::append(QBarSet *set)
 {
@@ -122,6 +128,7 @@ bool QBarSeries::append(QBarSet *set)
 
 /*!
     Removes a set of bars from series. Releases ownership of \a set. Doesn't delete \a set.
+    Returns true, if set was removed.
 */
 bool QBarSeries::remove(QBarSet *set)
 {
@@ -138,6 +145,9 @@ bool QBarSeries::remove(QBarSet *set)
 
 /*!
     Adds a list of barsets to series. Takes ownership of \a sets.
+    Returns true, if all sets were appended succesfully. If any of the sets is null or is already appended to series,
+    nothing is appended and function returns false. If any of the sets is in list more than once, nothing is appended
+    and function returns false.
 */
 bool QBarSeries::append(QList<QBarSet* > sets)
 {
@@ -198,7 +208,7 @@ int QBarSeries::barsetCount() const
 int QBarSeries::categoryCount() const
 {
     Q_D(const QBarSeries);
-    return d->m_categories.count();
+    return d->categoryCount();
 }
 
 /*!
@@ -276,7 +286,7 @@ QBarModelMapper* QBarSeries::modelMapper() const
 QBarCategories QBarSeries::categories() const
 {
     Q_D(const QBarSeries);
-    return d->m_categories;
+    return d->categories();
 }
 
 /*!
@@ -295,13 +305,57 @@ QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
     QAbstractSeriesPrivate(q),
     m_barMargin(0.05),  // Default value is 5% of category width
     m_mapper(0)
-    //    m_categories(categories),
 {
 }
 
 void QBarSeriesPrivate::setCategories(QBarCategories categories)
 {
     m_categories = categories;
+}
+
+void QBarSeriesPrivate::insertCategory(int index, const QString category)
+{
+    m_categories.insert(index, category);
+    emit categoriesUpdated();
+}
+
+void QBarSeriesPrivate::removeCategory(int index)
+{
+    m_categories.removeAt(index);
+    emit categoriesUpdated();
+}
+
+int QBarSeriesPrivate::categoryCount() const
+{
+    if (m_categories.count() > 0) {
+        return m_categories.count();
+    }
+
+    // No categories defined. return count of longest set.
+    int count = 0;
+    for (int i=0; i<m_barSets.count(); i++) {
+        if (m_barSets.at(i)->count() > count) {
+            count = m_barSets.at(i)->count();
+        }
+    }
+
+    return count;
+}
+
+QBarCategories QBarSeriesPrivate::categories() const
+{
+    if (m_categories.count() > 0) {
+        return m_categories;
+    }
+
+    // No categories defined. retun list of indices.
+    QBarCategories categories;
+
+    int count = categoryCount();
+    for (int i = 0; i < count; i++) {
+        categories.append(QString::number(i));
+    }
+    return categories;
 }
 
 void QBarSeriesPrivate::setBarMargin(qreal margin)
@@ -328,7 +382,11 @@ QBarSet* QBarSeriesPrivate::barsetAt(int index)
 
 QString QBarSeriesPrivate::categoryName(int category)
 {
-    return m_categories.at(category);
+    if ((category > 0) && (category < m_categories.count())) {
+        return m_categories.at(category);
+    }
+
+    return QString::number(category);
 }
 
 qreal QBarSeriesPrivate::min()
@@ -425,7 +483,7 @@ qreal QBarSeriesPrivate::absoluteCategorySum(int category)
 qreal QBarSeriesPrivate::maxCategorySum()
 {
     qreal max = INT_MIN;
-    int count = m_categories.count();
+    int count = categoryCount();
     for (int i = 0; i < count; i++) {
         qreal sum = categorySum(i);
         if (sum > max)
@@ -540,18 +598,6 @@ void QBarSeriesPrivate::initializeDataFromModel()
     //    emit updatedBars();
 }
 
-void QBarSeriesPrivate::insertCategory(int index, const QString category)
-{
-    m_categories.insert(index, category);
-    emit categoriesUpdated();
-}
-
-void QBarSeriesPrivate::removeCategory(int index)
-{
-    m_categories.removeAt(index);
-    emit categoriesUpdated();
-}
-
 void QBarSeriesPrivate::barsetChanged()
 {
     emit updatedBars();
@@ -566,7 +612,7 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    qreal x = m_categories.count();
+    qreal x = categoryCount();
     qreal y = max();
     minX = qMin(minX, x);
     minY = qMin(minY, y);

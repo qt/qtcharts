@@ -32,7 +32,7 @@ class QTCOMMERCIALCHART_EXPORT QStackedBarSeries : public QBarSeries
 {
     Q_OBJECT
 public:
-    explicit QStackedBarSeries(/*QBarCategories categories,*/ QObject *parent = 0);
+    explicit QStackedBarSeries(QObject *parent = 0);
     QAbstractSeries::SeriesType type() const;
 
 private:

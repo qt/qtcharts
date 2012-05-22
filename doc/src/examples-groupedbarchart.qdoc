@@ -1,0 +1,40 @@
+/*!
+    \example examples/groupedbarchart
+    \title GroupedBarChart Example
+    \subtitle
+
+    The example shows how to create simple bar chart. GroupedBarChart shows the data in sets as separate bars, which are grouped in categories.
+
+    \image examples_groupedbarchart.png
+	
+    First we define categories.
+
+    \snippet ../examples/groupedbarchart/main.cpp 1
+
+    Data that groupedbarchart visualizes, is defined by QBarSet instances. Here we create some sets and append data
+    we want to visualize to them.
+
+    \snippet ../examples/groupedbarchart/main.cpp 2
+
+    To combine the sets and categories to a chart, we need to create QBarSeries instance. When creating
+	the QBarSeries, the categories must be known. Sets can be added later. For example purposes the sets
+	are added to series here.
+
+    \snippet ../examples/groupedbarchart/main.cpp 3
+    
+    Then we create a chart and add the series to it.
+
+    \snippet ../examples/groupedbarchart/main.cpp 4
+
+    And we also want to show the legend, so that the data is easier to read.
+
+    \snippet ../examples/groupedbarchart/main.cpp 5
+
+    Finally we add the chart onto a view.
+
+    \snippet ../examples/groupedbarchart/main.cpp 6
+
+    And it is ready to be shown in a window.
+
+    \snippet ../examples/groupedbarchart/main.cpp 7
+*/
