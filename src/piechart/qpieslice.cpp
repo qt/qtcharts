@@ -68,7 +68,7 @@ QPieSlice::QPieSlice(QObject *parent)
     Constructs an empty slice with given \a value, \a label and a \a parent.
     \sa QPieSeries::append(), QPieSeries::insert()
 */
-QPieSlice::QPieSlice(qreal value, QString label, QObject *parent)
+QPieSlice::QPieSlice(QString label, qreal value, QObject *parent)
     :QObject(parent),
     d(new PieSliceData())
 {

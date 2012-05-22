@@ -48,7 +48,7 @@ public:
     bool append(QPieSlice* slice);
     bool append(QList<QPieSlice*> slices);
     QPieSeries& operator << (QPieSlice* slice);
-    QPieSlice* append(qreal value, QString name);
+    QPieSlice* append(QString label, qreal value);
     bool insert(int index, QPieSlice* slice);
     bool remove(QPieSlice* slice);
     void clear();

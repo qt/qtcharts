@@ -88,7 +88,7 @@ void tst_qpieslice::construction()
     QCOMPARE(slice1.endAngle(), 0.0);
 
     // value and label params
-    QPieSlice slice2(1.0, "foobar");
+    QPieSlice slice2("foobar", 1.0);
     QCOMPARE(slice2.value(), 1.0);
     QCOMPARE(slice2.label(), QString("foobar"));
     QVERIFY(!slice2.isLabelVisible());
@@ -136,9 +136,9 @@ void tst_qpieslice::customize()
 {
     // create a pie series
     QPieSeries *series = new QPieSeries();
-    QPieSlice *s1 = series->append(1, "slice 1");
-    QPieSlice *s2 = series->append(2, "slice 2");
-    series->append(3, "slice 3");
+    QPieSlice *s1 = series->append("slice 1", 1);
+    QPieSlice *s2 = series->append("slice 2", 2);
+    series->append("slice 3", 3);
 
     // customize a slice
     QPen p1(Qt::red);
@@ -171,14 +171,14 @@ void tst_qpieslice::customize()
     QCOMPARE(s1->labelFont(), f1);
 
     // add a slice
-    series->append(4, "slice 4");
+    series->append("slice 4", 4);
     QCOMPARE(s1->pen(), p1);
     QCOMPARE(s1->brush(), b1);
     QCOMPARE(s1->labelPen(), p1);
     QCOMPARE(s1->labelFont(), f1);
 
     // insert a slice
-    series->insert(0, new QPieSlice(5, "slice 5"));
+    series->insert(0, new QPieSlice("slice 5", 5));
     QCOMPARE(s1->pen(), p1);
     QCOMPARE(s1->brush(), b1);
     QCOMPARE(s1->labelPen(), p1);
@@ -198,9 +198,9 @@ void tst_qpieslice::mouseClick()
     // create a pie series
     QPieSeries *series = new QPieSeries();
     series->setPieSize(1.0);
-    QPieSlice *s1 = series->append(1, "slice 1");
-    QPieSlice *s2 = series->append(2, "slice 2");
-    QPieSlice *s3 = series->append(3, "slice 3");
+    QPieSlice *s1 = series->append("slice 1", 1);
+    QPieSlice *s2 = series->append("slice 2", 2);
+    QPieSlice *s3 = series->append("slice 3", 3);
     QSignalSpy clickSpy1(s1, SIGNAL(clicked()));
     QSignalSpy clickSpy2(s2, SIGNAL(clicked()));
     QSignalSpy clickSpy3(s3, SIGNAL(clicked()));
@@ -231,9 +231,9 @@ void tst_qpieslice::mouseHover()
     // create a pie series
     QPieSeries *series = new QPieSeries();
     series->setPieSize(1.0);
-    QPieSlice *s1 = series->append(1, "slice 1");
-    series->append(2, "slice 2");
-    series->append(3, "slice 3");
+    QPieSlice *s1 = series->append("slice 1", 1);
+    series->append("slice 2", 2);
+    series->append("slice 3", 3);
 
     // add series to the chart
     QChartView view(new QChart());

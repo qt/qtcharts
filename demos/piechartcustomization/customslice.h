@@ -29,7 +29,7 @@ class CustomSlice : public QPieSlice
     Q_OBJECT
 
 public:
-    CustomSlice(qreal value, QString label);
+    CustomSlice(QString label, qreal value);
 
 public:
     QBrush originalBrush();

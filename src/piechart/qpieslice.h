@@ -39,7 +39,7 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 
 public:
     explicit QPieSlice(QObject *parent = 0);
-    QPieSlice(qreal value, QString label, QObject *parent = 0);
+    QPieSlice(QString label, qreal value, QObject *parent = 0);
     virtual ~QPieSlice();
 
     void setValue(qreal value);

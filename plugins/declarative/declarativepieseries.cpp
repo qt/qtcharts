@@ -81,7 +81,7 @@ QPieSlice* DeclarativePieSeries::find(QString label)
 QPieSlice* DeclarativePieSeries::append(QString name, qreal value)
 {
     // TODO: parameter order is wrong, switch it:
-    return QPieSeries::append(value, name);
+    return QPieSeries::append(name, value);
 }
 
 void DeclarativePieSeries::setPieModel(DeclarativeTableModel *model)

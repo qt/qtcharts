@@ -259,7 +259,7 @@ QChart* ThemeWidget::createPieChart() const
     for (int i = 0; i < m_dataTable.count(); i++) {
         QPieSeries *series = new QPieSeries(chart);
         foreach (Data data, m_dataTable[i]) {
-            QPieSlice *slice = series->append(data.first.y(), data.second);
+            QPieSlice *slice = series->append(data.second, data.first.y());
             if (data == m_dataTable[i].first()) {
                 slice->setLabelVisible();
                 slice->setExploded();

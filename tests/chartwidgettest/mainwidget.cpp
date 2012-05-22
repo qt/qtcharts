@@ -261,7 +261,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             QPieSeries *series = new QPieSeries();
             QList<qreal> column = data.at(j);
             for (int i(0); i < column.count(); i++)
-                series->append(column.at(i), labels.at(i));
+                series->append(labels.at(i), column.at(i));
             m_chart->addSeries(series);
         }
     } else if (seriesName == "Bar"

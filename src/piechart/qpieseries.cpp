@@ -191,12 +191,12 @@ QPieSeries& QPieSeries::operator << (QPieSlice* slice)
 
 
 /*!
-    Appends a single slice to the series with give \a value and \a name.
+    Appends a single slice to the series with give \a value and \a label.
     Slice ownership is passed to the series.
 */
-QPieSlice* QPieSeries::append(qreal value, QString name)
+QPieSlice* QPieSeries::append(QString label, qreal value)
 {
-    QPieSlice* slice = new QPieSlice(value, name);
+    QPieSlice* slice = new QPieSlice(label, value);
     append(slice);
     return slice;
 }
@@ -737,7 +737,7 @@ void QPieSeriesPrivate::initializePieFromModel()
         else
             sliceCount = qMin(m_mapper->count(), m_model->rowCount() - m_mapper->first());
         for (int i = m_mapper->first(); i < m_mapper->first() + sliceCount; i++)
-            q->append(m_model->data(m_model->index(i, m_mapper->mapValues()), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(i, m_mapper->mapLabels()), Qt::DisplayRole).toString());
+            q->append(m_model->data(m_model->index(i, m_mapper->mapLabels()), Qt::DisplayRole).toString(), m_model->data(m_model->index(i, m_mapper->mapValues()), Qt::DisplayRole).toDouble());
     } else {
         if (m_mapper->mapValues() >= m_model->rowCount() || m_mapper->mapLabels() >= m_model->rowCount())
             return;   // mapped columns are not existing
@@ -748,7 +748,7 @@ void QPieSeriesPrivate::initializePieFromModel()
         else
             sliceCount = qMin(m_mapper->count(), m_model->columnCount() - m_mapper->first());
         for (int i = m_mapper->first(); i < m_mapper->first() + sliceCount; i++)
-            q->append(m_model->data(m_model->index(m_mapper->mapValues(), i), Qt::DisplayRole).toDouble(), m_model->data(m_model->index(m_mapper->mapLabels(), i), Qt::DisplayRole).toString());
+            q->append(m_model->data(m_model->index(m_mapper->mapLabels(), i), Qt::DisplayRole).toString(), m_model->data(m_model->index(m_mapper->mapValues(), i), Qt::DisplayRole).toDouble());
     }
     q->setLabelsVisible(true);
 }

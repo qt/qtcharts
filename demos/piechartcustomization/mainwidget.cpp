@@ -45,11 +45,11 @@ MainWidget::MainWidget(QWidget* parent)
 
     // create series
     m_series = new QPieSeries();
-    *m_series << new CustomSlice(10.0, "Slice 1");
-    *m_series << new CustomSlice(20.0, "Slice 2");
-    *m_series << new CustomSlice(30.0, "Slice 3");
-    *m_series << new CustomSlice(40.0, "Slice 4");
-    *m_series << new CustomSlice(50.0, "Slice 5");
+    *m_series << new CustomSlice("Slice 1", 10.0);
+    *m_series << new CustomSlice("Slice 2", 20.0);
+    *m_series << new CustomSlice("Slice 3", 30.0);
+    *m_series << new CustomSlice("Slice 4", 40.0);
+    *m_series << new CustomSlice("Slice 5", 50.0);
     m_series->setLabelsVisible();
     chart->addSeries(m_series);
 
@@ -304,7 +304,7 @@ void MainWidget::showFontDialog()
 
 void MainWidget::appendSlice()
 {
-    *m_series << new CustomSlice(10.0, "Slice " + QString::number(m_series->count()+1));
+    *m_series << new CustomSlice("Slice " + QString::number(m_series->count()+1), 10.0);
 }
 
 void MainWidget::insertSlice()
@@ -314,7 +314,7 @@ void MainWidget::insertSlice()
 
     int i = m_series->slices().indexOf(m_slice);
 
-    m_series->insert(i, new CustomSlice(10.0, "Slice " + QString::number(m_series->count()+1)));
+    m_series->insert(i, new CustomSlice("Slice " + QString::number(m_series->count()+1), 10.0));
 }
 
 void MainWidget::removeSlice()

@@ -32,11 +32,11 @@ int main(int argc, char *argv[])
 
 //![1]
     QPieSeries *series = new QPieSeries();
-    series->append(1, "Jane");
-    series->append(2, "Joe");
-    series->append(3, "Andy");
-    series->append(4, "Barbara");
-    series->append(5, "Axel");
+    series->append("Jane", 1);
+    series->append("Joe", 2);
+    series->append("Andy", 3);
+    series->append("Barbara", 4);
+    series->append("Axel", 5);
 //![1]
 
 //![2]
