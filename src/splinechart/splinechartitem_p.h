@@ -22,14 +22,15 @@
 #define SPLINECHARTITEM_P_H
 
 #include "qsplineseries.h"
-#include "xychartitem_p.h"
+#include "xychart_p.h"
 #include "splineanimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class SplineChartItem : public XYChartItem
+class SplineChartItem : public XYChart, public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
     SplineChartItem(QSplineSeries *series, ChartPresenter *presenter);
 
@@ -50,6 +51,7 @@ public Q_SLOTS:
 protected:
     void updateGeometry();
     void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QPointF calculateGeometryControlPoint(int index) const;

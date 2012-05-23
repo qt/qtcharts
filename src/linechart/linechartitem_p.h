@@ -22,7 +22,7 @@
 #define LINECHARTITEM_H
 
 #include "qchartglobal.h"
-#include "xychartitem_p.h"
+#include "xychart_p.h"
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -30,9 +30,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QLineSeries;
 class ChartPresenter;
 
-class LineChartItem :  public XYChartItem
+class LineChartItem :  public XYChart , public QGraphicsItem
 {
      Q_OBJECT
+     Q_INTERFACES(QGraphicsItem)
 public:
      explicit LineChartItem(QLineSeries *series,ChartPresenter *presenter);
     ~LineChartItem() {};
@@ -46,6 +47,7 @@ public Q_SLOTS:
     void handleUpdated();
 protected:
     void updateGeometry();
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QLineSeries* m_series;

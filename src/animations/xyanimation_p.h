@@ -26,13 +26,13 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class XYChartItem;
+class XYChart;
 
 class XYAnimation : public ChartAnimation
 {
 public:
     enum Animation { LineDrawAnimation, MoveDownAnimation, MoveUpAnimation };
-    XYAnimation(XYChartItem *item);
+    XYAnimation(XYChart *item);
     ~XYAnimation();
     void setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index);
     void setAnimationType(Animation type);
@@ -43,7 +43,7 @@ protected:
     void updateCurrentValue (const QVariant &value );
 
 private:
-    XYChartItem *m_item;
+    XYChart *m_item;
     QVector<QPointF> m_oldPoints;
     bool m_dirty;
     Animation m_type;

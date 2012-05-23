@@ -2,12 +2,12 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 SOURCES += \
-    $$PWD/xychartitem.cpp \
+    $$PWD/xychart.cpp \
     $$PWD/qxyseries.cpp \  
     $$PWD/qxymodelmapper.cpp
     
 PRIVATE_HEADERS += \
-    $$PWD/xychartitem_p.h \
+    $$PWD/xychart_p.h \
     $$PWD/qxyseries_p.h
 
     

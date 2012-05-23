@@ -22,7 +22,7 @@
 #include "axisanimation_p.h"
 #include "xyanimation_p.h"
 #include "splineanimation_p.h"
-#include "xychartitem_p.h"
+#include "xychart_p.h"
 #include "pieanimation_p.h"
 #include "baranimation_p.h"
 #include "barchartitem_p.h"

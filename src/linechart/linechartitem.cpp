@@ -23,13 +23,15 @@
 #include "qlineseries_p.h"
 #include "chartpresenter_p.h"
 #include <QPainter>
+#include <QGraphicsSceneMouseEvent>
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-LineChartItem::LineChartItem(QLineSeries* series,ChartPresenter *presenter):XYChartItem(series,presenter),
+LineChartItem::LineChartItem(QLineSeries* series,ChartPresenter *presenter):XYChart(series,presenter),
+QGraphicsItem(presenter ? presenter->rootItem() : 0),
 m_series(series),
 m_pointsVisible(false)
 {
@@ -67,6 +69,7 @@ void LineChartItem::updateGeometry()
     prepareGeometryChange();
     m_path = linePath;
     m_rect = linePath.boundingRect();
+    setPos(origin());
 }
 
 void LineChartItem::handleUpdated()
@@ -94,6 +97,11 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     	painter->drawPoints(geometryPoints());
     }
     painter->restore();
+}
+
+void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit XYChart::clicked(calculateDomainPoint(event->pos()));
 }
 
 #include "moc_linechartitem_p.cpp"

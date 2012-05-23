@@ -18,22 +18,20 @@
  **
  ****************************************************************************/
 
-#include "xychartitem_p.h"
+#include "xychart_p.h"
 #include "qxyseries.h"
 #include "qxyseries_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
-#include <QGraphicsSceneMouseEvent>
 #include <QAbstractItemModel>
 #include "qxymodelmapper.h"
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-XYChartItem::XYChartItem(QXYSeries *series, ChartPresenter *presenter):ChartItem(presenter),
+XYChart::XYChart(QXYSeries *series, ChartPresenter *presenter):Chart(presenter),
 m_minX(0),
 m_maxX(0),
 m_minY(0),
@@ -50,22 +48,22 @@ m_animation(0)
     QObject::connect(this,SIGNAL(clicked(QPointF)),series,SIGNAL(clicked(QPointF)));
 }
 
-void XYChartItem::setGeometryPoints(QVector<QPointF>& points)
+void XYChart::setGeometryPoints(QVector<QPointF>& points)
 {
     m_points = points;
 }
 
-void XYChartItem::setClipRect(const QRectF &rect)
+void XYChart::setClipRect(const QRectF &rect)
 {
     m_clipRect = rect;
 }
 
-void XYChartItem::setAnimation(XYAnimation* animation)
+void XYChart::setAnimation(XYAnimation* animation)
 {
     m_animation=animation;
 }
 
-QPointF XYChartItem::calculateGeometryPoint(const QPointF &point) const
+QPointF XYChart::calculateGeometryPoint(const QPointF &point) const
 {
     const qreal deltaX = m_size.width()/(m_maxX-m_minX);
     const qreal deltaY = m_size.height()/(m_maxY-m_minY);
@@ -74,7 +72,7 @@ QPointF XYChartItem::calculateGeometryPoint(const QPointF &point) const
     return QPointF(x,y);
 }
 
-QPointF XYChartItem::calculateGeometryPoint(int index) const
+QPointF XYChart::calculateGeometryPoint(int index) const
 {
     const qreal deltaX = m_size.width()/(m_maxX-m_minX);
     const qreal deltaY = m_size.height()/(m_maxY-m_minY);
@@ -84,7 +82,7 @@ QPointF XYChartItem::calculateGeometryPoint(int index) const
     return QPointF(x,y);
 }
 
-QVector<QPointF> XYChartItem::calculateGeometryPoints() const
+QVector<QPointF> XYChart::calculateGeometryPoints() const
 {
     const qreal deltaX = m_size.width()/(m_maxX-m_minX);
     const qreal deltaY = m_size.height()/(m_maxY-m_minY);
@@ -101,7 +99,7 @@ QVector<QPointF> XYChartItem::calculateGeometryPoints() const
     return result;
 }
 
-QPointF XYChartItem::calculateDomainPoint(const QPointF &point) const
+QPointF XYChart::calculateDomainPoint(const QPointF &point) const
 {
     const qreal deltaX = m_size.width()/(m_maxX-m_minX);
     const qreal deltaY = m_size.height()/(m_maxY-m_minY);
@@ -110,7 +108,7 @@ QPointF XYChartItem::calculateDomainPoint(const QPointF &point) const
     return QPointF(x,y);
 }
 
-void XYChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index)
+void XYChart::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index)
 {
     if (m_animation) {
         m_animation->setValues(oldPoints, newPoints, index);
@@ -122,13 +120,9 @@ void XYChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &new
     }
 }
 
-void XYChartItem::updateGeometry()
-{
-    update();
-}
 //handlers
 
-void XYChartItem::handlePointAdded(int index)
+void XYChart::handlePointAdded(int index)
 {
     if (m_series->model() == 0) {
         Q_ASSERT(index<m_series->count());
@@ -147,7 +141,7 @@ void XYChartItem::handlePointAdded(int index)
    updateChart(m_points,points,index);
 }
 
-void XYChartItem::handlePointsAdded(int start, int end)
+void XYChart::handlePointsAdded(int start, int end)
 {
     if (m_series->model() == 0) {
         for (int i = start; i <= end; i++)
@@ -177,7 +171,7 @@ void XYChartItem::handlePointsAdded(int start, int end)
     }
 }
 
-void XYChartItem::handlePointRemoved(int index)
+void XYChart::handlePointRemoved(int index)
 {
     if (m_series->model() == 0) {
         Q_ASSERT(index<m_series->count() + 1);
@@ -193,7 +187,7 @@ void XYChartItem::handlePointRemoved(int index)
     updateChart(m_points,points,index);
 }
 
-void XYChartItem::handlePointsRemoved(int start, int end)
+void XYChart::handlePointsRemoved(int start, int end)
 {
     Q_UNUSED(start)
     Q_UNUSED(end)
@@ -244,7 +238,7 @@ void XYChartItem::handlePointsRemoved(int start, int end)
 
 }
 
-void XYChartItem::handlePointReplaced(int index)
+void XYChart::handlePointReplaced(int index)
 {
     Q_ASSERT(index<m_series->count());
     Q_ASSERT(index>=0);
@@ -259,7 +253,7 @@ void XYChartItem::handlePointReplaced(int index)
     updateChart(m_points,points,index);
 }
 
-void XYChartItem::handleReinitialized()
+void XYChart::handleReinitialized()
 {
     QVector<QPointF> points = calculateGeometryPoints();
 
@@ -270,7 +264,7 @@ void XYChartItem::handleReinitialized()
     updateChart(m_points,points);
 }
 
-void XYChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
+void XYChart::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
     m_minX=minX;
     m_maxX=maxX;
@@ -285,12 +279,12 @@ void XYChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal 
     updateChart(m_points,points);
 }
 
-void XYChartItem::handleGeometryChanged(const QRectF &rect)
+void XYChart::handleGeometryChanged(const QRectF &rect)
 {
     Q_ASSERT(rect.isValid());
     m_size=rect.size();
     m_clipRect=rect.translated(-rect.topLeft());
-    setPos(rect.topLeft());
+    m_origin=rect.topLeft();
 
     if (isEmpty()) return;
     QVector<QPointF> points = calculateGeometryPoints();
@@ -300,16 +294,11 @@ void XYChartItem::handleGeometryChanged(const QRectF &rect)
     updateChart(m_points,points);
 }
 
-bool XYChartItem::isEmpty()
+bool XYChart::isEmpty()
 {
     return !m_clipRect.isValid() || qFuzzyIsNull(m_maxX - m_minX) || qFuzzyIsNull(m_maxY - m_minY) || m_series->points().isEmpty();
 }
 
-void XYChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    emit clicked(calculateDomainPoint(event->pos()));
-}
-
-#include "moc_xychartitem_p.cpp"
+#include "moc_xychart_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

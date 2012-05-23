@@ -22,7 +22,7 @@
 #define SCATTERCHARTITEM_H
 
 #include "qchartglobal.h"
-#include "xychartitem_p.h"
+#include "xychart_p.h"
 #include <QGraphicsEllipseItem>
 #include <QPen>
 
@@ -31,7 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QScatterSeries;
 class Marker;
 
-class ScatterChartItem : public XYChartItem
+class ScatterChartItem : public XYChart, public QGraphicsItem
 {
     Q_OBJECT
 public:
@@ -56,6 +56,7 @@ private:
 
 protected:
     void updateGeometry();
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QScatterSeries *m_series;

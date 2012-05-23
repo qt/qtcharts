@@ -31,12 +31,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartPresenter;
 class QXYSeries;
 
-class XYChartItem :  public ChartItem
+class XYChart :  public Chart
 {
      Q_OBJECT
 public:
-     explicit XYChartItem(QXYSeries *series, ChartPresenter *presenter);
-    ~XYChartItem(){};
+     explicit XYChart(QXYSeries *series, ChartPresenter *presenter);
+    ~XYChart(){};
 
     void setGeometryPoints(QVector<QPointF>& points);
     QVector<QPointF> geometryPoints() const { return m_points; }
@@ -44,9 +44,12 @@ public:
     void setClipRect(const QRectF &rect);
     QRectF clipRect() const { return m_clipRect; }
 
+    QSizeF size() const { return m_size; }
+    QPointF origin() const { return m_origin; }
+
     void setAnimation(XYAnimation* animation);
     ChartAnimation* animation() const { return m_animation; }
-    virtual void updateGeometry();
+    virtual void updateGeometry() = 0;
 
 public Q_SLOTS:
     void handlePointAdded(int index);
@@ -67,7 +70,6 @@ protected:
     QPointF calculateGeometryPoint(int index) const;
     QPointF calculateDomainPoint(const QPointF &point) const;
     QVector<QPointF> calculateGeometryPoints() const;
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     inline bool isEmpty();
@@ -79,6 +81,7 @@ private:
     qreal m_maxY;
     QXYSeries* m_series;
     QSizeF m_size;
+    QPointF m_origin;
     QRectF m_clipRect;
     QVector<QPointF> m_points;
     XYAnimation* m_animation;

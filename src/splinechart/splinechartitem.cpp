@@ -1,37 +1,38 @@
 /****************************************************************************
-**
-** Copyright (C) 2012 Digia Plc
-** All rights reserved.
-** For any questions to Digia, please use contact form at http://qt.digia.com
-**
-** This file is part of the Qt Commercial Charts Add-on.
-**
-** $QT_BEGIN_LICENSE$
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Digia.
-**
-** If you have questions regarding the use of this file, please use
-** contact form at http://qt.digia.com
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+ **
+ ** Copyright (C) 2012 Digia Plc
+ ** All rights reserved.
+ ** For any questions to Digia, please use contact form at http://qt.digia.com
+ **
+ ** This file is part of the Qt Commercial Charts Add-on.
+ **
+ ** $QT_BEGIN_LICENSE$
+ ** Licensees holding valid Qt Commercial licenses may use this file in
+ ** accordance with the Qt Commercial License Agreement provided with the
+ ** Software or, alternatively, in accordance with the terms contained in
+ ** a written agreement between you and Digia.
+ **
+ ** If you have questions regarding the use of this file, please use
+ ** contact form at http://qt.digia.com
+ ** $QT_END_LICENSE$
+ **
+ ****************************************************************************/
 
 #include "splinechartitem_p.h"
 #include "qsplineseries_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
-#include <QDebug>
+#include <QGraphicsSceneMouseEvent>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 SplineChartItem::SplineChartItem(QSplineSeries *series, ChartPresenter *presenter) :
-    XYChartItem(series, presenter),
-    m_series(series),
-    m_pointsVisible(false),
-    m_animation(0)
+XYChart(series, presenter),
+QGraphicsItem(presenter ? presenter->rootItem() : 0),
+m_series(series),
+m_pointsVisible(false),
+m_animation(0)
 {
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
@@ -51,7 +52,7 @@ QPainterPath SplineChartItem::shape() const
 void SplineChartItem::setAnimation(SplineAnimation* animation)
 {
     m_animation=animation;
-    XYChartItem::setAnimation(animation);
+    XYChart::setAnimation(animation);
 }
 
 void SplineChartItem::setControlGeometryPoints(QVector<QPointF>& points)
@@ -97,7 +98,7 @@ void SplineChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> 
 
 QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 {
-    return XYChartItem::calculateGeometryPoint(m_series->d_func()->controlPoint(index));
+    return XYChart::calculateGeometryPoint(m_series->d_func()->controlPoint(index));
 }
 
 void SplineChartItem::updateGeometry()
@@ -122,6 +123,7 @@ void SplineChartItem::updateGeometry()
     prepareGeometryChange();
     m_path = splinePath;
     m_rect = splinePath.boundingRect();
+    setPos(origin());
 }
 
 //handlers
@@ -152,7 +154,10 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     painter->restore();
 }
 
-
+void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit XYChart::clicked(calculateDomainPoint(event->pos()));
+}
 
 #include "moc_splinechartitem_p.cpp"
 

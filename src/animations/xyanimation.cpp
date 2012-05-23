@@ -19,14 +19,14 @@
 ****************************************************************************/
 
 #include "xyanimation_p.h"
-#include "xychartitem_p.h"
+#include "xychart_p.h"
 #include <QDebug>
 
 Q_DECLARE_METATYPE(QVector<QPointF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-XYAnimation::XYAnimation(XYChartItem *item):ChartAnimation(item),
+XYAnimation::XYAnimation(XYChart *item):ChartAnimation(item),
     m_item(item),
     m_dirty(false),
     m_type(MoveDownAnimation)

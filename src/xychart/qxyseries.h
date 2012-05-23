@@ -78,7 +78,7 @@ private:
     Q_DECLARE_PRIVATE(QXYSeries);
     Q_DISABLE_COPY(QXYSeries);
     friend class XYLegendMarker;
-    friend class XYChartItem;
+    friend class XYChart;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
