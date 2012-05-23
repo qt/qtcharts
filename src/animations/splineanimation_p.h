@@ -20,7 +20,7 @@
 
 #ifndef SPLINEANIMATION_P_H
 #define SPLINEANIMATION_P_H
-#include "chartanimation_p.h"
+#include "xyanimation_p.h"
 #include <QPointF>
 
 typedef  QPair<QVector<QPointF >, QVector<QPointF > >  SplineVector;
@@ -29,10 +29,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class SplineChartItem;
 
-class SplineAnimation : public ChartAnimation
+class SplineAnimation : public XYAnimation
 {
 public:
-
     SplineAnimation(SplineChartItem *item);
     ~SplineAnimation();
     void setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldContorlPoints, QVector<QPointF> &newControlPoints, int index);

@@ -20,14 +20,14 @@
 
 #include "chart_p.h"
 #include "chartpresenter_p.h"
-#include <QDebug>
+#include "domain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-
 Chart::Chart(ChartPresenter *presenter):QObject(presenter),
     m_animator(0),
-    m_presenter(presenter)
+    m_presenter(presenter),
+    m_domain(0)
 {
 }
 
@@ -41,9 +41,25 @@ ChartAnimator* Chart::animator() const
     return m_animator;
 }
 
+
+void Chart::setPresenter(ChartPresenter *presenter)
+{
+    m_presenter=presenter;
+}
+
 ChartPresenter* Chart::presenter() const
 {
     return m_presenter;
+}
+
+void Chart::setDomain(Domain *domain)
+{
+    m_domain=domain;
+}
+
+Domain* Chart::domain() const
+{
+    return m_domain;
 }
 
 void Chart::handleGeometryChanged(const QRectF& rect)
@@ -58,22 +74,6 @@ void Chart::handleDomainChanged(qreal minX,qreal maxX,qreal minY,qreal maxY)
     Q_UNUSED(maxX);
     Q_UNUSED(minY);
     Q_UNUSED(maxY);
-    qWarning()<<"Slot not implemented";
-}
-
-void Chart::rangeXChanged(qreal min, qreal max, int tickXCount)
-{
-    Q_UNUSED(min);
-    Q_UNUSED(max);
-    Q_UNUSED(tickXCount);
-    qWarning()<<"Slot not implemented";
-}
-
-void Chart::rangeYChanged(qreal min, qreal max, int tickYCount)
-{
-    Q_UNUSED(min);
-    Q_UNUSED(max);
-    Q_UNUSED(tickYCount);
     qWarning()<<"Slot not implemented";
 }
 

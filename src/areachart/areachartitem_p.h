@@ -78,8 +78,8 @@ public:
     AreaBoundItem(AreaChartItem *item,QLineSeries *lineSeries) : LineChartItem(lineSeries, 0), m_item(item) {}
     ~AreaBoundItem() {}
 
-    void setLayout(QVector<QPointF> &points) {
-        LineChartItem::setLayout(points);
+    void updateGeometry() {
+        LineChartItem::updateGeometry();
         m_item->updatePath();
     }
 

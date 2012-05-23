@@ -35,6 +35,8 @@ public:
     XYAnimation(XYChartItem *item);
     ~XYAnimation();
     void setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index);
+    void setAnimationType(Animation type);
+    Animation animationType() const { return m_type; };
 
 protected:
     QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress ) const;
@@ -44,6 +46,7 @@ private:
     XYChartItem *m_item;
     QVector<QPointF> m_oldPoints;
     bool m_dirty;
+    Animation m_type;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

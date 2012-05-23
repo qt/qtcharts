@@ -23,6 +23,7 @@
 
 #include "qsplineseries.h"
 #include "xychartitem_p.h"
+#include "splineanimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -37,13 +38,18 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
+    void setControlGeometryPoints(QVector<QPointF>& points);
+    QVector<QPointF> controlGeometryPoints() const;
+
+    void setAnimation(SplineAnimation* animation);
+    ChartAnimation* animation() const { return m_animation; }
+
 public Q_SLOTS:
     void handleUpdated();
 
 protected:
-    void setLayout(QVector<QPointF> &points);
-    void setLayout(QVector<QPointF> &points,QVector<QPointF> &controlPoints);
-    void updateLayout(QVector<QPointF> &oldPoints,QVector<QPointF> &newPoints,int index);
+    void updateGeometry();
+    void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index);
 
 private:
     QPointF calculateGeometryControlPoint(int index) const;
@@ -56,6 +62,7 @@ private:
     QPen m_pointPen;
     bool m_pointsVisible;
     QVector<QPointF> m_controlPoints;
+    SplineAnimation* m_animation;
 
     friend class SplineAnimation;
 };

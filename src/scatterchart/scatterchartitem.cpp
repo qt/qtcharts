@@ -101,12 +101,14 @@ void ScatterChartItem::markerSelected(Marker *marker)
     emit XYChartItem::clicked(marker->point());
 }
 
-void ScatterChartItem::setLayout(QVector<QPointF>& points)
+void ScatterChartItem::updateGeometry()
 {
+
+    const QVector<QPointF>& points = geometryPoints();
+
     if(points.size()==0)
     {
         deletePoints(m_items.childItems().count());
-        XYChartItem::setLayout(points);
         return;
     }
 
@@ -139,7 +141,6 @@ void ScatterChartItem::setLayout(QVector<QPointF>& points)
 
     prepareGeometryChange();
     m_rect = clipRect();
-    XYChartItem::setLayout(points);
 }
 
 

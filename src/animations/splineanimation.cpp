@@ -27,7 +27,7 @@ Q_DECLARE_METATYPE(SplineVector)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-SplineAnimation::SplineAnimation(SplineChartItem* item):ChartAnimation(item),
+SplineAnimation::SplineAnimation(SplineChartItem* item):XYAnimation(item),
     m_item(item),
     m_dirty(true)
 {
@@ -82,7 +82,6 @@ void SplineAnimation::setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &n
         newPair.second=newControlPoints;
         setKeyValueAt(0.0, qVariantFromValue(m_oldSpline));
         setKeyValueAt(1.0, qVariantFromValue(newPair));
-
     }
 }
 
@@ -93,8 +92,7 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
     SplineVector endPair =  qVariantValue< SplineVector >(end);
     SplineVector result;
 
-
-    switch (m_type) {
+    switch (animationType()) {
 
     case MoveDownAnimation: {
         if (startPair.first.count() != endPair.first.count())
@@ -130,7 +128,7 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
     }
         break;
     default:
-        qWarning() << "Unknow type of animation";
+        qWarning() << "Unknown type of animation";
         break;
     }
 
@@ -142,7 +140,9 @@ void SplineAnimation::updateCurrentValue (const QVariant &value )
     if (state() != QAbstractAnimation::Stopped) { //workaround
         m_dirty = true;
         QPair<QVector<QPointF >, QVector<QPointF > > pair = qVariantValue< QPair< QVector<QPointF>, QVector<QPointF> > >(value);
-        m_item->setLayout(pair.first, pair.second);
+        m_item->setGeometryPoints(pair.first);
+        m_item->setControlGeometryPoints(pair.second);
+        m_item->updateGeometry();
     }
 }
 

@@ -31,14 +31,7 @@ const static int ChartAnimationDuration = 1000;
 class ChartAnimation: public QVariantAnimation
 {
 public:
-    enum Animation { LineDrawAnimation, MoveDownAnimation, MoveUpAnimation };
-    ChartAnimation(QObject *parent = 0):QVariantAnimation(parent), m_type(MoveDownAnimation){}
-    void setAnimationType(Animation type){
-        m_type=type;
-    }
-protected:
-    Animation m_type;
-
+    ChartAnimation(QObject *parent = 0):QVariantAnimation(parent){};
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

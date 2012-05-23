@@ -111,7 +111,8 @@ Chart* QLineSeriesPrivate::createGraphics(ChartPresenter* presenter)
     Q_Q(QLineSeries);
     LineChartItem* line = new LineChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        presenter->animator()->addAnimation(line);
+        line->setAnimator(presenter->animator());
+        line->setAnimation(new XYAnimation(line));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return line;

@@ -254,8 +254,10 @@ Chart* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)
     Q_Q(QSplineSeries);
     SplineChartItem* spline  = new SplineChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        presenter->animator()->addAnimation(spline);
+        spline->setAnimator(presenter->animator());
+        spline->setAnimation(new SplineAnimation(spline));
     }
+
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return spline;
 }

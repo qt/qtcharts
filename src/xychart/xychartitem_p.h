@@ -23,6 +23,7 @@
 
 #include "qchartglobal.h"
 #include "chartitem_p.h"
+#include "xyanimation_p.h"
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -37,9 +38,15 @@ public:
      explicit XYChartItem(QXYSeries *series, ChartPresenter *presenter);
     ~XYChartItem(){};
 
-    QVector<QPointF> points() const {return m_points;}
-    QRectF clipRect() const { return m_clipRect;}
+    void setGeometryPoints(QVector<QPointF>& points);
+    QVector<QPointF> geometryPoints() const { return m_points; }
 
+    void setClipRect(const QRectF &rect);
+    QRectF clipRect() const { return m_clipRect; }
+
+    void setAnimation(XYAnimation* animation);
+    ChartAnimation* animation() const { return m_animation; }
+    virtual void updateGeometry();
 
 public Q_SLOTS:
     void handlePointAdded(int index);
@@ -55,10 +62,7 @@ Q_SIGNALS:
     void clicked(const QPointF& point);
 
 protected:
-
-    virtual void setLayout(QVector<QPointF> &points);
-    virtual void updateLayout(QVector<QPointF> &oldPoints,QVector<QPointF> &newPoints,int index = 0);
-
+    virtual void updateChart(QVector<QPointF> &oldPoints,QVector<QPointF> &newPoints,int index = 0);
     QPointF calculateGeometryPoint(const QPointF &point) const;
     QPointF calculateGeometryPoint(int index) const;
     QPointF calculateDomainPoint(const QPointF &point) const;
@@ -77,8 +81,8 @@ private:
     QSizeF m_size;
     QRectF m_clipRect;
     QVector<QPointF> m_points;
+    XYAnimation* m_animation;
 
-    friend class XYAnimation;
     friend class AreaChartItem;
 
 };

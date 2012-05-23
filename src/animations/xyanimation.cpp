@@ -28,12 +28,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 XYAnimation::XYAnimation(XYChartItem *item):ChartAnimation(item),
     m_item(item),
-    m_dirty(false)
+    m_dirty(false),
+    m_type(MoveDownAnimation)
 {
 }
 
 XYAnimation::~XYAnimation()
 {
+}
+
+void XYAnimation::setAnimationType(Animation type)
+{
+    m_type=type;
 }
 
 void XYAnimation::setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index)
@@ -103,7 +109,8 @@ void XYAnimation::updateCurrentValue (const QVariant &value)
     if(state()!=QAbstractAnimation::Stopped){ //workaround
         m_dirty = true;
         QVector<QPointF> vector = qVariantValue<QVector<QPointF> >(value);
-        m_item->setLayout(vector);
+        m_item->setGeometryPoints(vector);
+        m_item->updateGeometry();
     }
 }
 

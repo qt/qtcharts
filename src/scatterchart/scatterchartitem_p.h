@@ -55,7 +55,7 @@ private:
     void deletePoints(int count);
 
 protected:
-    void setLayout(QVector<QPointF> &points);
+    void updateGeometry();
 
 private:
     QScatterSeries *m_series;

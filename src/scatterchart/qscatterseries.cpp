@@ -140,7 +140,8 @@ Chart* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
     Q_Q(QScatterSeries);
     ScatterChartItem *scatter = new ScatterChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        presenter->animator()->addAnimation(scatter);
+        scatter->setAnimator(presenter->animator());
+        scatter->setAnimation(new XYAnimation(scatter));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return scatter;

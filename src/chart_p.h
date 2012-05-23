@@ -29,6 +29,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartAnimator;
 class ChartPresenter;
+class ChartAnimation;
+class Domain;
 
 class Chart: public QObject
 {
@@ -39,16 +41,19 @@ public:
 public Q_SLOTS:
     virtual void handleGeometryChanged(const QRectF& rect);
     virtual void handleDomainChanged(qreal minX,qreal maxX,qreal minY,qreal maxY);
-    virtual void rangeXChanged(qreal min, qreal max, int tickXCount);
-    virtual void rangeYChanged(qreal min, qreal max, int tickYCount);
 
     void setAnimator(ChartAnimator* animator);
     ChartAnimator* animator() const;
+    void setPresenter(ChartPresenter *presenter);
     ChartPresenter* presenter() const;
+    void setDomain(Domain *domain);
+    Domain* domain() const;
+    virtual ChartAnimation* animation() const { return 0; };
 
 private:
     ChartAnimator* m_animator;
     ChartPresenter* m_presenter;
+    Domain* m_domain;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

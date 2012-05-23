@@ -134,7 +134,7 @@ void ChartPresenter::handleAxisAdded(QAxis* axis,Domain* domain)
 
     QObject::connect(this,SIGNAL(geometryChanged(QRectF)),item,SLOT(handleGeometryChanged(QRectF)));
     //initialize
-    item->handleGeometryChanged(m_chartRect);
+    if(m_chartRect.isValid()) item->handleGeometryChanged(m_chartRect);
     m_axisItems.insert(axis, item);
 }
 
@@ -384,7 +384,7 @@ void ChartPresenter::updateLayout()
 
     legend->setGeometry(m_rect.adjusted(m_legendMargins.left(),m_legendMargins.top(),-m_legendMargins.right(),-m_legendMargins.bottom()));
 
-    if(m_chartRect!=chartRect){
+    if(m_chartRect!=chartRect && chartRect.isValid()){
         m_chartRect=chartRect;
         emit geometryChanged(m_chartRect);
     }

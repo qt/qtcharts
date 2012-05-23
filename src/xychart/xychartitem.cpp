@@ -1,22 +1,22 @@
 /****************************************************************************
-**
-** Copyright (C) 2012 Digia Plc
-** All rights reserved.
-** For any questions to Digia, please use contact form at http://qt.digia.com
-**
-** This file is part of the Qt Commercial Charts Add-on.
-**
-** $QT_BEGIN_LICENSE$
-** Licensees holding valid Qt Commercial licenses may use this file in
-** accordance with the Qt Commercial License Agreement provided with the
-** Software or, alternatively, in accordance with the terms contained in
-** a written agreement between you and Digia.
-**
-** If you have questions regarding the use of this file, please use
-** contact form at http://qt.digia.com
-** $QT_END_LICENSE$
-**
-****************************************************************************/
+ **
+ ** Copyright (C) 2012 Digia Plc
+ ** All rights reserved.
+ ** For any questions to Digia, please use contact form at http://qt.digia.com
+ **
+ ** This file is part of the Qt Commercial Charts Add-on.
+ **
+ ** $QT_BEGIN_LICENSE$
+ ** Licensees holding valid Qt Commercial licenses may use this file in
+ ** accordance with the Qt Commercial License Agreement provided with the
+ ** Software or, alternatively, in accordance with the terms contained in
+ ** a written agreement between you and Digia.
+ **
+ ** If you have questions regarding the use of this file, please use
+ ** contact form at http://qt.digia.com
+ ** $QT_END_LICENSE$
+ **
+ ****************************************************************************/
 
 #include "xychartitem_p.h"
 #include "qxyseries.h"
@@ -27,26 +27,42 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QAbstractItemModel>
 #include "qxymodelmapper.h"
-
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
 XYChartItem::XYChartItem(QXYSeries *series, ChartPresenter *presenter):ChartItem(presenter),
-    m_minX(0),
-    m_maxX(0),
-    m_minY(0),
-    m_maxY(0),
-    m_series(series)
+m_minX(0),
+m_maxX(0),
+m_minY(0),
+m_maxY(0),
+m_series(series),
+m_animation(0)
 {
-    connect(series->d_func(),SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
-    connect(series->d_func(),SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
-    connect(series->d_func(),SIGNAL(pointsAdded(int, int)),this,SLOT(handlePointsAdded(int, int)));
-    connect(series->d_func(),SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
-    connect(series->d_func(),SIGNAL(pointsRemoved(int, int)),this,SLOT(handlePointsRemoved(int, int)));
-    connect(series->d_func(),SIGNAL(reinitialized()),this,SLOT(handleReinitialized()));
-    connect(this,SIGNAL(clicked(QPointF)),series,SIGNAL(clicked(QPointF)));
+    QObject::connect(series->d_func(),SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
+    QObject::connect(series->d_func(),SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
+    QObject::connect(series->d_func(),SIGNAL(pointsAdded(int, int)),this,SLOT(handlePointsAdded(int, int)));
+    QObject::connect(series->d_func(),SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
+    QObject::connect(series->d_func(),SIGNAL(pointsRemoved(int, int)),this,SLOT(handlePointsRemoved(int, int)));
+    QObject::connect(series->d_func(),SIGNAL(reinitialized()),this,SLOT(handleReinitialized()));
+    QObject::connect(this,SIGNAL(clicked(QPointF)),series,SIGNAL(clicked(QPointF)));
+}
+
+void XYChartItem::setGeometryPoints(QVector<QPointF>& points)
+{
+    m_points = points;
+}
+
+void XYChartItem::setClipRect(const QRectF &rect)
+{
+    m_clipRect = rect;
+}
+
+void XYChartItem::setAnimation(XYAnimation* animation)
+{
+    m_animation=animation;
 }
 
 QPointF XYChartItem::calculateGeometryPoint(const QPointF &point) const
@@ -57,7 +73,6 @@ QPointF XYChartItem::calculateGeometryPoint(const QPointF &point) const
     qreal y = (point.y() - m_minY)*-deltaY + m_size.height();
     return QPointF(x,y);
 }
-
 
 QPointF XYChartItem::calculateGeometryPoint(int index) const
 {
@@ -95,21 +110,22 @@ QPointF XYChartItem::calculateDomainPoint(const QPointF &point) const
     return QPointF(x,y);
 }
 
-void XYChartItem::updateLayout(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index)
+void XYChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index)
 {
-    if (animator()) {
-        animator()->updateLayout(this,oldPoints,newPoints,index);
-    } else {
-        setLayout(newPoints);
+    if (m_animation) {
+        m_animation->setValues(oldPoints, newPoints, index);
+        animator()->startAnimation(m_animation);
+    }
+    else {
+        setGeometryPoints(newPoints);
+        updateGeometry();
     }
 }
 
-void XYChartItem::setLayout(QVector<QPointF> &points)
+void XYChartItem::updateGeometry()
 {
-    m_points = points;
     update();
 }
-
 //handlers
 
 void XYChartItem::handlePointAdded(int index)
@@ -118,38 +134,45 @@ void XYChartItem::handlePointAdded(int index)
         Q_ASSERT(index<m_series->count());
         Q_ASSERT(index>=0);
     }
+
     QVector<QPointF> points = m_points;
     QPointF point;
     point = calculateGeometryPoint(index);
     points.insert(index, point);
-    updateLayout(m_points, points, index);
-    update();
+
+    if(m_animation) {
+        m_animation->setAnimationType(XYAnimation::LineDrawAnimation);
+    }
+
+   updateChart(m_points,points,index);
 }
 
 void XYChartItem::handlePointsAdded(int start, int end)
-{    
+{
     if (m_series->model() == 0) {
         for (int i = start; i <= end; i++)
-            handlePointAdded(i);
-    } else {
+        handlePointAdded(i);
+    }
+    else {
         int mapFirst = m_series->modelMapper()->first();
         int mapCount = m_series->modelMapper()->count();
         if (mapCount != -1 && start >= mapFirst + mapCount) {
             return;
-        } else {
+        }
+        else {
             int addedCount = end - start + 1;
             if (mapCount != -1 && addedCount > mapCount)
-                addedCount = mapCount;
-            int first = qMax(start, mapFirst);  // get the index of the first item that will be added
-            int last = qMin(first + addedCount - 1, mapCount + mapFirst - 1);  // get the index of the last item that will be added
+            addedCount = mapCount;
+            int first = qMax(start, mapFirst); // get the index of the first item that will be added
+            int last = qMin(first + addedCount - 1, mapCount + mapFirst - 1);// get the index of the last item that will be added
             for (int i = first; i <= last; i++) {
                 handlePointAdded(i - mapFirst);
             }
             // the map is limited therefore the items that are now outside the map
             // need to be removed from the drawn points
             if (mapCount != -1 && m_points.size() > mapCount)
-                for (int i = m_points.size() - 1; i >= mapCount; i--)
-                    handlePointRemoved(i);
+            for (int i = m_points.size() - 1; i >= mapCount; i--)
+            handlePointRemoved(i);
         }
     }
 }
@@ -162,8 +185,12 @@ void XYChartItem::handlePointRemoved(int index)
     }
     QVector<QPointF> points = m_points;
     points.remove(index);
-    updateLayout(m_points, points, index);
-    update();
+
+    if(m_animation) {
+        m_animation->setAnimationType(XYAnimation::LineDrawAnimation);
+    }
+
+    updateChart(m_points,points,index);
 }
 
 void XYChartItem::handlePointsRemoved(int start, int end)
@@ -172,42 +199,45 @@ void XYChartItem::handlePointsRemoved(int start, int end)
     Q_UNUSED(end)
     if (m_series->model() == 0) {
         for (int i = end; i >= start; i--)
-            handlePointRemoved(i);
-    } else {
+        handlePointRemoved(i);
+    }
+    else {
         // series uses model as a data source
         int mapFirst = m_series->modelMapper()->first();
         int mapCount = m_series->modelMapper()->count();
         int removedCount = end - start + 1;
         if (mapCount != -1 && start >= mapFirst + mapCount) {
             return;
-        } else {
-            int toRemove = qMin(m_points.size(), removedCount);     // first find how many items can actually be removed
-            int first = qMax(start, mapFirst);    // get the index of the first item that will be removed.
-            int last = qMin(first + toRemove - 1, m_points.size() + mapFirst - 1);    // get the index of the last item that will be removed.
+        }
+        else {
+            int toRemove = qMin(m_points.size(), removedCount); // first find how many items can actually be removed
+            int first = qMax(start, mapFirst);// get the index of the first item that will be removed.
+            int last = qMin(first + toRemove - 1, m_points.size() + mapFirst - 1);// get the index of the last item that will be removed.
             if (last - first == 0) {
                 for (int i = last; i >= first; i--) {
                     handlePointRemoved(i - mapFirst);
 
                 }
-            } else {
+            }
+            else {
                 QVector<QPointF> points = m_points;
                 for (int i = last; i >= first; i--)
-                    points.remove(i - mapFirst);
-                setLayout(points);
-                update();
+                points.remove(i - mapFirst);
+                setGeometryPoints(points);
+                updateGeometry();
             }
             if (mapCount != -1) {
-                int itemsAvailable;     // check how many are available to be added
+                int itemsAvailable; // check how many are available to be added
                 if (m_series->modelMapper()->orientation() == Qt::Vertical)
-                    itemsAvailable = m_series->model()->rowCount() - mapFirst - m_points.size();
+                itemsAvailable = m_series->model()->rowCount() - mapFirst - m_points.size();
                 else
-                    itemsAvailable = m_series->model()->columnCount() - mapFirst - m_points.size();
-                int toBeAdded = qMin(itemsAvailable, mapCount - m_points.size());     // add not more items than there is space left to be filled.
+                itemsAvailable = m_series->model()->columnCount() - mapFirst - m_points.size();
+                int toBeAdded = qMin(itemsAvailable, mapCount - m_points.size());// add not more items than there is space left to be filled.
                 int currentSize = m_points.size();
                 if (toBeAdded > 0)
-                    for (int i = m_points.size(); i < currentSize + toBeAdded; i++) {
-                        handlePointAdded(i);
-                    }
+                for (int i = m_points.size(); i < currentSize + toBeAdded; i++) {
+                    handlePointAdded(i);
+                }
             }
         }
     }
@@ -221,18 +251,23 @@ void XYChartItem::handlePointReplaced(int index)
     QPointF point = calculateGeometryPoint(index);
     QVector<QPointF> points = m_points;
     points.replace(index,point);
-    updateLayout(m_points,points,index);
-    update();
+
+    if(m_animation) {
+        m_animation->setAnimationType(XYAnimation::MoveDownAnimation);
+    }
+
+    updateChart(m_points,points,index);
 }
 
 void XYChartItem::handleReinitialized()
 {
     QVector<QPointF> points = calculateGeometryPoints();
-    if (points.isEmpty())
-        setLayout(points);
-    else
-        updateLayout(m_points,points);
-    update();
+
+    if(m_animation) {
+        m_animation->setAnimationType(XYAnimation::LineDrawAnimation);
+    }
+
+    updateChart(m_points,points);
 }
 
 void XYChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
@@ -243,8 +278,11 @@ void XYChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal 
     m_maxY=maxY;
     if (isEmpty()) return;
     QVector<QPointF> points = calculateGeometryPoints();
-    updateLayout(m_points,points);
-    update();
+
+    if(m_animation) {
+        m_animation->setAnimationType(XYAnimation::LineDrawAnimation);
+    }
+    updateChart(m_points,points);
 }
 
 void XYChartItem::handleGeometryChanged(const QRectF &rect)
@@ -256,10 +294,11 @@ void XYChartItem::handleGeometryChanged(const QRectF &rect)
 
     if (isEmpty()) return;
     QVector<QPointF> points = calculateGeometryPoints();
-    updateLayout(m_points,points);
-    update();
+    if(m_animation) {
+          m_animation->setAnimationType(XYAnimation::LineDrawAnimation);
+      }
+    updateChart(m_points,points);
 }
-
 
 bool XYChartItem::isEmpty()
 {

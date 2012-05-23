@@ -58,42 +58,6 @@ void ChartAnimator::addAnimation(ChartAxis *item)
     item->setAnimator(this);
 }
 
-void ChartAnimator::addAnimation(SplineChartItem *item)
-{
-    ChartAnimation *animation = m_animations.value(item);
-
-    if (!animation) {
-        animation = new SplineAnimation(item);
-        m_animations.insert(item, animation);
-    }
-
-    item->setAnimator(this);
-}
-
-void ChartAnimator::addAnimation(ScatterChartItem *item)
-{
-    ChartAnimation *animation = m_animations.value(item);
-
-    if (!animation) {
-        animation = new XYAnimation(item);
-        m_animations.insert(item, animation);
-    }
-
-    item->setAnimator(this);
-}
-
-void ChartAnimator::addAnimation(LineChartItem *item)
-{
-    ChartAnimation *animation = m_animations.value(item);
-
-    if (!animation) {
-        animation = new XYAnimation(item);
-        m_animations.insert(item, animation);
-    }
-
-    item->setAnimator(this);
-}
-
 void ChartAnimator::addAnimation(PieChartItem *item)
 {
     ChartAnimation *animation = m_animations.value(item);
@@ -194,61 +158,6 @@ void ChartAnimator::updateLayout(ChartAxis *item , QVector<qreal> &newLayout)
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-void ChartAnimator::updateLayout(SplineChartItem *item, QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldControlPoints, QVector<QPointF> &newControlPoints, int index)
-{
-    SplineAnimation *animation = static_cast<SplineAnimation *>(m_animations.value(item));
-
-    Q_ASSERT(animation);
-
-    if (newPoints.count() < 2 || newControlPoints.count() < 2)
-        return;
-
-    bool empty = oldPoints.count() == 0;
-
-
-    if (animation->state() != QAbstractAnimation::Stopped)
-        animation->stop();
-
-    animation->setDuration(ChartAnimationDuration);
-    if (!empty)
-        animation->setAnimationType(ChartAnimation::MoveDownAnimation);
-    else
-        animation->setAnimationType(ChartAnimation::LineDrawAnimation);
-
-    animation->setEasingCurve(QEasingCurve::OutQuart);
-    animation->setValues(oldPoints, newPoints, oldControlPoints, newControlPoints, index);
-
-    QTimer::singleShot(0, animation, SLOT(start()));
-}
-
-
-void ChartAnimator::updateLayout(XYChartItem *item, QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index)
-{
-    XYAnimation *animation = static_cast<XYAnimation *>(m_animations.value(item));
-
-    Q_ASSERT(animation);
-
-    if (newPoints.count() == 0)
-        return;
-
-    bool empty = oldPoints.count() == 0;
-
-
-    if (animation->state() != QAbstractAnimation::Stopped)
-        animation->stop();
-
-    animation->setDuration(ChartAnimationDuration);
-    if (!empty)
-        animation->setAnimationType(ChartAnimation::MoveDownAnimation);
-    else
-        animation->setAnimationType(ChartAnimation::LineDrawAnimation);
-
-    animation->setEasingCurve(QEasingCurve::OutQuart);
-    animation->setValues(oldPoints, newPoints, index);
-
-    QTimer::singleShot(0, animation, SLOT(start()));
-}
-
 void ChartAnimator::addAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData, bool startupAnimation)
 {
     PieAnimation *animation = static_cast<PieAnimation *>(m_animations.value(item));
@@ -285,6 +194,16 @@ void ChartAnimator::setState(State state, const QPointF &point)
 {
     m_state = state;
     m_point = point;
+}
+
+void ChartAnimator::startAnimation(XYAnimation* animation)
+{
+    Q_ASSERT(animation);
+    if (animation->state() != QAbstractAnimation::Stopped)
+    animation->stop();
+    animation->setDuration(ChartAnimationDuration);
+    animation->setEasingCurve(QEasingCurve::OutQuart);
+    QTimer::singleShot(0, animation, SLOT(start()));
 }
 
 #include "moc_chartanimator_p.cpp"

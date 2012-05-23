@@ -48,16 +48,15 @@ QPainterPath LineChartItem::shape() const
     return m_path;
 }
 
-void LineChartItem::setLayout(QVector<QPointF>& points)
+void LineChartItem::updateGeometry()
 {
+    const QVector<QPointF>& points = geometryPoints();
+
     if(points.size()==0)
     {
         m_path = QPainterPath();
-        XYChartItem::setLayout(points);
         return;
     }
-
-    QList<QGraphicsItem*> items = m_items.childItems();
 
     QPainterPath linePath(points.at(0));
 
@@ -68,9 +67,6 @@ void LineChartItem::setLayout(QVector<QPointF>& points)
     prepareGeometryChange();
     m_path = linePath;
     m_rect = linePath.boundingRect();
-
-    XYChartItem::setLayout(points);
-
 }
 
 void LineChartItem::handleUpdated()
@@ -95,7 +91,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->drawPath(m_path);
     if(m_pointsVisible){
     	painter->setPen(m_pointPen);
-    	painter->drawPoints(points());
+    	painter->drawPoints(geometryPoints());
     }
     painter->restore();
 }

@@ -284,8 +284,12 @@ Chart* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)
 
     AreaChartItem* area = new AreaChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        presenter->animator()->addAnimation(area->upperLineItem());
-        if(q->lowerSeries())  presenter->animator()->addAnimation(area->lowerLineItem());
+        area->upperLineItem()->setAnimator(presenter->animator());
+        area->upperLineItem()->setAnimation(new XYAnimation(area->upperLineItem()));
+        if(q->lowerSeries())  {
+            area->lowerLineItem()->setAnimator(presenter->animator());
+            area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem()));
+        }
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return area;

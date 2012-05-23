@@ -44,13 +44,11 @@ public:
 
 public Q_SLOTS:
     void handleUpdated();
-
 protected:
-    void setLayout(QVector<QPointF>& points);
+    void updateGeometry();
 
 private:
     QLineSeries* m_series;
-    QGraphicsItemGroup m_items;
     QPainterPath m_path;
     QRectF m_rect;
     QPen m_linePen;
