@@ -165,7 +165,7 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
         connect(s, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
     }
 
-    emit d->added(slices);
+    emit added(slices);
 
     return true;
 }
@@ -224,7 +224,7 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
     connect(slice, SIGNAL(clicked()), d, SLOT(sliceClicked()));
     connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
 
-    emit d->added(QList<QPieSlice*>() << slice);
+    emit added(QList<QPieSlice*>() << slice);
 
     return true;
 }
@@ -243,7 +243,7 @@ bool QPieSeries::remove(QPieSlice* slice)
 
     d->updateDerivativeData();
 
-    emit d->removed(QList<QPieSlice*>() << slice);
+    emit removed(QList<QPieSlice*>() << slice);
 
     delete slice;
     slice = 0;
@@ -268,7 +268,7 @@ void QPieSeries::clear()
 
     d->updateDerivativeData();
 
-    emit d->removed(slices);
+    emit removed(slices);
 }
 
 /*!

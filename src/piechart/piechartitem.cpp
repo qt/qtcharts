@@ -37,9 +37,9 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
 {
     Q_ASSERT(series);
 
+    connect(series, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
+    connect(series, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleSlicesRemoved(QList<QPieSlice*>)));
     QPieSeriesPrivate *d = QPieSeriesPrivate::seriesData(*series);
-    connect(d, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
-    connect(d, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleSlicesRemoved(QList<QPieSlice*>)));
     connect(d, SIGNAL(piePositionChanged()), this, SLOT(updateLayout()));
     connect(d, SIGNAL(pieSizeChanged()), this, SLOT(updateLayout()));
 

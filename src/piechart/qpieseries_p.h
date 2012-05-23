@@ -47,8 +47,6 @@ public:
     static QPieSeriesPrivate* seriesData(QPieSeries &series);
 
 Q_SIGNALS:
-    void added(QList<QPieSlice*> slices);
-    void removed(QList<QPieSlice*> slices);
     void piePositionChanged();
     void pieSizeChanged();
 

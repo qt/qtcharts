@@ -79,6 +79,8 @@ public:
     QPieModelMapper* modelMapper() const;
 
 Q_SIGNALS:
+    void added(QList<QPieSlice*> slices);
+    void removed(QList<QPieSlice*> slices);
     void clicked(QPieSlice* slice);
     void hovered(QPieSlice* slice, bool state);
 

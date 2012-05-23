@@ -415,9 +415,8 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     if(series->type() == QAbstractSeries::SeriesTypePie)
     {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        QPieSeriesPrivate *d = QPieSeriesPrivate::seriesData(*pieSeries);
-        QObject::connect(d, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
-        QObject::connect(d, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
+        QObject::connect(pieSeries, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
+        QObject::connect(pieSeries, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
     }
 
     updateLayout();
@@ -438,9 +437,8 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
     if(series->type() == QAbstractSeries::SeriesTypePie)
     {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        QPieSeriesPrivate *d = QPieSeriesPrivate::seriesData(*pieSeries);
-        QObject::disconnect(d, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
-        QObject::disconnect(d, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
+        QObject::disconnect(pieSeries, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
+        QObject::disconnect(pieSeries, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
     }
 
     updateLayout();
@@ -449,10 +447,10 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 void QLegendPrivate::handleUpdatePieSeries()
 {
     //TODO: reimplement to be optimal
-    QPieSeriesPrivate* d = qobject_cast<QPieSeriesPrivate *> (sender());
-    Q_ASSERT(d->q_func());
-    handleSeriesRemoved(d->q_func());
-    handleSeriesAdded(d->q_func(), 0);
+    QPieSeries* series = qobject_cast<QPieSeries *> (sender());
+    Q_ASSERT(series);
+    handleSeriesRemoved(series);
+    handleSeriesAdded(series, 0);
 }
 
 #include "moc_qlegend.cpp"
