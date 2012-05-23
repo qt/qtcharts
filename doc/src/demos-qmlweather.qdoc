@@ -1,0 +1,32 @@
+/*!
+    \example demos/qmlweather
+    \title Qml Weather
+    \subtitle
+
+    \image demos_qmlweather.png
+
+    This is a basic demonstration how to use the different chart types by using qml. By default the
+    application uses static test data to mimic a weather forecast. You can also obtain an application
+    id from http://www.worldweatheronline.com/ to get access to their weather API. You can then give
+    your application id as a parameter to the Qml Weather executable to make it use live data.
+
+    For example:
+    \code
+    bin\qmlweather.exe 1234567890abcdef123456
+    \endcode
+
+    The demo application uses a ChartView and a couple of series to visualize weather data:
+    \snippet ../demos/qmlweather/qml/qmlweather/main.qml 1
+    \snippet ../demos/qmlweather/qml/qmlweather/main.qml 2
+
+    To get data with weather forecast data, we make an HTTP GET request to World Weather Online. We
+    request the response in JSON data format.
+    \snippet ../demos/qmlweather/qml/qmlweather/main.qml 3
+
+    The JSON response contains an array of forecast data:
+    \snippet ../demos/qmlweather/qml/qmlweather/main.qml 4
+
+    That is then used as input data for our series and a ListModel we use as a container for weather
+    icon URLs:
+    \snippet ../demos/qmlweather/qml/qmlweather/main.qml 5
+*/
