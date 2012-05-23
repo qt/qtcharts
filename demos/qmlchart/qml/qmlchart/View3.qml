@@ -96,7 +96,7 @@ Rectangle {
         }
 
         AreaSeries {
-            name: "Swedish"
+            name: "Finnish"
             upperSeries: LineSeries {
                 XyPoint { x: 0; y: 0 }
                 XyPoint { x: 1; y: 0 }

@@ -353,9 +353,6 @@ QColor ChartTheme::colorAt(const QGradient &gradient, qreal pos)
 {
     Q_ASSERT(pos >= 0 && pos <= 1.0);
 
-    // another possibility:
-    // http://stackoverflow.com/questions/3306786/get-intermediate-color-from-a-gradient
-
     QGradientStops stops = gradient.stops();
     int count = stops.count();
 

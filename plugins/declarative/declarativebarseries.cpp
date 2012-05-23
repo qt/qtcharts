@@ -90,12 +90,54 @@ DeclarativeTableModel *DeclarativeBarSeries::declarativeModel()
     return qobject_cast<DeclarativeTableModel *>(model());
 }
 
-void DeclarativeBarSeries::setBarCategories(QStringList categories)
+DeclarativeGroupedBarSeries::DeclarativeGroupedBarSeries(QDeclarativeItem *parent) :
+    QGroupedBarSeries(parent)
+{
+}
+
+void DeclarativeGroupedBarSeries::classBegin()
+{
+}
+
+void DeclarativeGroupedBarSeries::componentComplete()
+{
+    foreach(QObject *child, children()) {
+        if (qobject_cast<QBarSet *>(child)) {
+            QBarSeries::append(qobject_cast<QBarSet *>(child));
+        }
+    }
+}
+
+QDeclarativeListProperty<DeclarativeBarSet> DeclarativeGroupedBarSeries::initialBarSets()
+{
+    return QDeclarativeListProperty<DeclarativeBarSet>(this, 0, &DeclarativeGroupedBarSeries::appendInitialBarSets);
+}
+
+bool DeclarativeGroupedBarSeries::setDeclarativeModel(DeclarativeTableModel *model)
+{
+    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
+    bool value(false);
+    if (m) {
+        setModel(m);
+        //setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
+//        setModelMapping(0, 1, 1, Qt::Vertical);
+    } else {
+        qWarning("DeclarativeGroupedBarSeries: Illegal model");
+    }
+    return value;
+}
+
+DeclarativeTableModel *DeclarativeGroupedBarSeries::declarativeModel()
+{
+    return qobject_cast<DeclarativeTableModel *>(model());
+}
+
+void DeclarativeGroupedBarSeries::setBarCategories(QStringList categories)
 {
     setCategories(categories);
 }
 
-QStringList DeclarativeBarSeries::barCategories()
+QStringList DeclarativeGroupedBarSeries::barCategories()
 {
     return categories();
 }

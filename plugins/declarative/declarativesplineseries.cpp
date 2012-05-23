@@ -38,11 +38,10 @@ void DeclarativeSplineSeries::appendDeclarativeChildren(QDeclarativeListProperty
 {
     QXYSeries *series = qobject_cast<QXYSeries*>(list->object);
     DeclarativeXyPoint *point = qobject_cast<DeclarativeXyPoint *>(element);
-    if (series && point) {
-        qDebug() << "DeclarativeScatterSeries::appendDeclarativeChildren:" << *point;
+    if (series && point)
         series->append(*point);
-    }
 }
+
 #include "moc_declarativesplineseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
