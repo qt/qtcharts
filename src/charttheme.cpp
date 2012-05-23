@@ -225,31 +225,31 @@ void ChartTheme::decorate(QPieSeries *series, int index)
         QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
 
         QPieSlice *s = series->slices().at(i);
-        PieSliceData data = PieSliceData::data(s);
+        PieSliceData data = PieSliceData::fromSlice(s);
 
-        if (data.m_slicePen.isThemed() ||  m_force) {
+        if (data.m_slicePen.isThemed() || m_force) {
             data.m_slicePen = penColor;
             data.m_slicePen.setThemed(true);
         }
 
-        if (data.m_sliceBrush.isThemed() ||  m_force) {
+        if (data.m_sliceBrush.isThemed() || m_force) {
             data.m_sliceBrush = brushColor;
             data.m_sliceBrush.setThemed(true);
         }
 
-        if (data.m_labelPen.isThemed() ||  m_force) {
+        if (data.m_labelPen.isThemed() || m_force) {
             data.m_labelPen = QPen(m_titleBrush.color());
             data.m_labelPen.setThemed(true);
         }
 
-        if (data.m_labelFont.isThemed() ||  m_force) {
+        if (data.m_labelFont.isThemed() || m_force) {
             data.m_labelFont = m_labelFont;
             data.m_labelFont.setThemed(true);
         }
 
-        if (PieSliceData::data(s) != data) {
-            PieSliceData::data(s) = data;
-            emit PieSliceData::data(s).emitChangedSignal(s);
+        if (PieSliceData::fromSlice(s) != data) {
+            PieSliceData::fromSlice(s) = data;
+            emit PieSliceData::emitAppearanceChanged(s);
         }
     }
 }

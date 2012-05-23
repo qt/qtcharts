@@ -106,9 +106,14 @@ void tst_qpieslice::construction()
 
 void tst_qpieslice::changedSignals()
 {
-    // set everything twice to see we do not get unnecessary signals
     QPieSlice slice;
-    QSignalSpy spy(&slice, SIGNAL(changed())); // TODO: this will be changed to something more refined
+
+    QSignalSpy valueSpy(&slice, SIGNAL(valueChanged()));
+    QSignalSpy labelSpy(&slice, SIGNAL(labelChanged()));
+    QSignalSpy appearanceSpy(&slice, SIGNAL(appearanceChanged()));
+    // calculatedDataChanged signal is tested at tst_qpieseries::calculatedValues()
+
+    // set everything twice to see we do not get unnecessary signals
     slice.setValue(1);
     slice.setValue(1);
     slice.setLabel("foobar");
@@ -129,7 +134,10 @@ void tst_qpieslice::changedSignals()
     slice.setLabelArmLengthFactor(0.1);
     slice.setExplodeDistanceFactor(0.1);
     slice.setExplodeDistanceFactor(0.1);
-    TRY_COMPARE(spy.count(), 10);
+
+    TRY_COMPARE(valueSpy.count(), 1);
+    TRY_COMPARE(labelSpy.count(), 1);
+    TRY_COMPARE(appearanceSpy.count(), 8);
 }
 
 void tst_qpieslice::customize()

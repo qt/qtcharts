@@ -33,35 +33,48 @@ class PieSliceData;
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString label READ label WRITE setLabel)
-    Q_PROPERTY(qreal value READ value WRITE setValue)
+    Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)
+    Q_PROPERTY(qreal value READ value WRITE setValue NOTIFY valueChanged)
+    Q_PROPERTY(bool labelVisible READ isLabelVisible WRITE setLabelVisible)
     Q_PROPERTY(bool exploded READ isExploded WRITE setExploded)
+    Q_PROPERTY(qreal LabelArmLengthFactor READ labelArmLengthFactor WRITE setLabelArmLengthFactor)
+    Q_PROPERTY(qreal explodeDistanceFactor READ explodeDistanceFactor WRITE setExplodeDistanceFactor)
+    Q_PROPERTY(qreal percentage READ percentage NOTIFY calculatedDataChanged)
+    Q_PROPERTY(qreal startAngle READ startAngle NOTIFY calculatedDataChanged)
+    Q_PROPERTY(qreal endAngle READ endAngle NOTIFY calculatedDataChanged)
 
 public:
     explicit QPieSlice(QObject *parent = 0);
     QPieSlice(QString label, qreal value, QObject *parent = 0);
     virtual ~QPieSlice();
 
-    void setValue(qreal value);
-    qreal value() const;
     void setLabel(QString label);
     QString label() const;
-    void setLabelVisible(bool visible = true);
-    bool isLabelVisible() const;
-    void setExploded(bool exploded = true);
-    bool isExploded() const;
+
+    void setValue(qreal value);
+    qreal value() const;
 
     void setPen(const QPen &pen);
     QPen pen() const;
+
     void setBrush(const QBrush &brush);
     QBrush brush() const;
-    void setLabelPen(const QPen &pen);
-    QPen labelPen() const;
-    void setLabelFont(const QFont &font);
-    QFont labelFont() const;
+
+    void setLabelVisible(bool visible = true);
+    bool isLabelVisible() const;
 
     void setLabelArmLengthFactor(qreal factor);
     qreal labelArmLengthFactor() const;
+
+    void setLabelPen(const QPen &pen);
+    QPen labelPen() const;
+
+    void setLabelFont(const QFont &font);
+    QFont labelFont() const;
+
+    void setExploded(bool exploded = true);
+    bool isExploded() const;
+
     void setExplodeDistanceFactor(qreal factor);
     qreal explodeDistanceFactor() const;
 
@@ -70,9 +83,12 @@ public:
     qreal endAngle() const;
 
 Q_SIGNALS:
+    void labelChanged();
+    void valueChanged();
+    void appearanceChanged();
+    void calculatedDataChanged();
     void clicked();
     void hovered(bool state);
-    void changed();
 
 private:
     friend class PieSliceData;

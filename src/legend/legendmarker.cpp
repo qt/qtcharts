@@ -155,8 +155,8 @@ void BarLegendMarker::updated()
 PieLegendMarker::PieLegendMarker(QPieSeries* series,QPieSlice *pieslice, QLegend *legend) : LegendMarker(series,legend),
 m_pieslice(pieslice)
 {
-    //QObject::connect(this, SIGNAL(selected()),pieslice, SIGNAL(clicked()));
-    QObject::connect(pieslice, SIGNAL(changed()), this, SLOT(updated()));
+    QObject::connect(pieslice, SIGNAL(labelChanged()), this, SLOT(updated()));
+    QObject::connect(pieslice, SIGNAL(appearanceChanged()), this, SLOT(updated()));
     updated();
 }
 

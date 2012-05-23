@@ -110,6 +110,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Default is value is 360.
 */
 
+/*!
+    \property QPieSeries::count
+    \brief Number of slices in the series.
+
+*/
+
+/*!
+    \property QPieSeries::sum
+    \brief Sum of all slices.
+
+    The series keeps track of the sum of all slices it holds.
+*/
+
 
 /*!
     Constructs a series object which is a child of \a parent.
@@ -139,6 +152,8 @@ QAbstractSeries::SeriesType QPieSeries::type() const
 /*!
     Appends an array of \a slices to the series.
     Slice ownership is passed to the series.
+
+    Returns true if append was successfull.
 */
 bool QPieSeries::append(QList<QPieSlice*> slices)
 {
@@ -160,7 +175,7 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
     d->updateDerivativeData();
 
     foreach (QPieSlice* s, slices) {
-        connect(s, SIGNAL(changed()), d, SLOT(sliceChanged()));
+        connect(s, SIGNAL(valueChanged()), d, SLOT(sliceChanged()));
         connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
         connect(s, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
     }
@@ -173,6 +188,8 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
 /*!
     Appends a single \a slice to the series.
     Slice ownership is passed to the series.
+
+    Returns true if append was succesfull.
 */
 bool QPieSeries::append(QPieSlice* slice)
 {
@@ -204,6 +221,8 @@ QPieSlice* QPieSeries::append(QString label, qreal value)
 /*!
     Inserts a single \a slice to the series before the slice at \a index position.
     Slice ownership is passed to the series.
+
+    Returns true if insert was successfull.
 */
 bool QPieSeries::insert(int index, QPieSlice* slice)
 {
@@ -220,7 +239,7 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
 
     d->updateDerivativeData();
 
-    connect(slice, SIGNAL(changed()), d, SLOT(sliceChanged()));
+    connect(slice, SIGNAL(valueChanged()), d, SLOT(sliceChanged()));
     connect(slice, SIGNAL(clicked()), d, SLOT(sliceClicked()));
     connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
 
@@ -233,6 +252,8 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
     Removes a single \a slice from the series and deletes the slice.
 
     Do not reference the pointer after this call.
+
+    Returns true if remove was successfull.
 */
 bool QPieSeries::remove(QPieSlice* slice)
 {
@@ -408,6 +429,22 @@ qreal QPieSeries::sum() const
 }
 
 /*!
+    \fn void QPieSeries::added(QList<QPieSlice*> slices)
+
+    This signal is emitted when \a slices have been added to the series.
+
+    \sa append(), insert()
+*/
+
+/*!
+    \fn void QPieSeries::removed(QList<QPieSlice*> slices)
+
+    This signal is emitted when \a slices have been removed from the series.
+
+    \sa remove()
+*/
+
+/*!
     \fn void QPieSeries::clicked(QPieSlice* slice)
 
     This signal is emitted when a \a slice has been clicked.
@@ -527,21 +564,21 @@ void QPieSeriesPrivate::updateDerivativeData()
     QVector<QPieSlice*> changed;
     foreach (QPieSlice* s, m_slices) {
 
-        PieSliceData data = PieSliceData::data(s);
+        PieSliceData data = PieSliceData::fromSlice(s);
         data.m_percentage = s->value() / m_sum;
         data.m_angleSpan = pieSpan * data.m_percentage;
         data.m_startAngle = sliceAngle;
         sliceAngle += data.m_angleSpan;
 
-        if (PieSliceData::data(s) != data) {
-            PieSliceData::data(s) = data;
+        if (PieSliceData::fromSlice(s) != data) {
+            PieSliceData::fromSlice(s) = data;
             changed << s;
         }
     }
 
     // emit signals
     foreach (QPieSlice* s, changed)
-        PieSliceData::data(s).emitChangedSignal(s);
+        PieSliceData::emitCalculatedDataChanged(s);
 }
 
 QPieSeriesPrivate* QPieSeriesPrivate::seriesData(QPieSeries &series)

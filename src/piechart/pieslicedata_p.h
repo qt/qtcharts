@@ -104,12 +104,19 @@ public:
         return false;
     }
 
-    void emitChangedSignal(QPieSlice *s)
+    static void emitAppearanceChanged(QPieSlice *slice)
     {
-        emit s->changed();
+        Q_ASSERT(slice);
+        emit slice->appearanceChanged();
     }
 
-    static PieSliceData &data(QPieSlice *slice)
+    static void emitCalculatedDataChanged(QPieSlice *slice)
+    {
+        Q_ASSERT(slice);
+        emit slice->calculatedDataChanged();
+    }
+
+    static PieSliceData &fromSlice(QPieSlice *slice)
     {
         Q_ASSERT(slice);
         return *slice->d;

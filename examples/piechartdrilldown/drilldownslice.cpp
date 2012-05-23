@@ -29,7 +29,7 @@ DrilldownSlice::DrilldownSlice(qreal value, QString prefix, QAbstractSeries* dri
     setValue(value);
     updateLabel();
     setLabelFont(QFont("Arial", 8));
-    connect(this, SIGNAL(changed()), this, SLOT(updateLabel()));
+    connect(this, SIGNAL(calculatedDataChanged()), this, SLOT(updateLabel()));
     connect(this, SIGNAL(hovered(bool)), this, SLOT(showHighlight(bool)));
 }
 

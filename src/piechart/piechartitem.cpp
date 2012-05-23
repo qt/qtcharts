@@ -129,7 +129,12 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
     foreach (QPieSlice *slice, slices) {
         PieSliceItem* sliceItem = new PieSliceItem(this);
         m_sliceItems.insert(slice, sliceItem);
-        connect(slice, SIGNAL(changed()), this, SLOT(handleSliceChanged()));
+
+        // note: do need to connect to slice valueChanged(). calculatedDataChanged() is enough.
+        // to update the slice.
+        connect(slice, SIGNAL(calculatedDataChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(labelChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(appearanceChanged()), this, SLOT(handleSliceChanged()));
         connect(sliceItem, SIGNAL(clicked(Qt::MouseButtons)), slice, SIGNAL(clicked()));
         connect(sliceItem, SIGNAL(hovered(bool)), slice, SIGNAL(hovered(bool)));
 
@@ -174,7 +179,7 @@ void PieChartItem::handleSliceChanged()
 
 PieSliceData PieChartItem::updateSliceGeometry(QPieSlice *slice)
 {
-    PieSliceData &sliceData = PieSliceData::data(slice);
+    PieSliceData &sliceData = PieSliceData::fromSlice(slice);
     sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
     return sliceData;

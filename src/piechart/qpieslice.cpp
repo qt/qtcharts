@@ -228,6 +228,38 @@ qreal QPieSlice::labelArmLengthFactor() const
 }
 
 /*!
+    \fn void QPieSlice::labelChanged()
+
+    This signal is emitted when the slice label changes.
+
+    \sa setLabel()
+*/
+
+/*!
+    \fn void QPieSlice::valueChanged()
+
+    This signal is emitted when the slice value changes.
+
+    \sa setValue()
+*/
+
+/*!
+    \fn void QPieSlice::appearanceChanged()
+
+    This signal is emitted when visual appearance of the slice changes.
+
+    \sa setPen(), setBrush(), setLabelVisible(), setExploded()
+*/
+
+/*!
+    \fn void QPieSlice::calculatedDataChanged()
+
+    This signal is emitted when calculated data for this slice changes.
+
+    \sa percentage(), startAngle(), endAngle()
+*/
+
+/*!
     \fn void QPieSlice::clicked()
 
     This signal is emitted when user has clicked the slice.
@@ -246,12 +278,6 @@ qreal QPieSlice::labelArmLengthFactor() const
 */
 
 /*!
-    \fn void QPieSlice::changed()
-
-    This signal emitted when something has changed in the slice.
-*/
-
-/*!
     Sets the \a value of this slice.
     \sa value()
 */
@@ -259,7 +285,7 @@ void QPieSlice::setValue(qreal value)
 {
     if (!qFuzzyIsNull(d->m_value - value)) {
         d->m_value = value;
-        emit changed();
+        emit valueChanged();
     }
 }
 
@@ -271,8 +297,7 @@ void QPieSlice::setLabel(QString label)
 {
     if (d->m_labelText != label) {
         d->m_labelText = label;
-
-        emit changed();
+        emit labelChanged();
     }
 }
 
@@ -284,7 +309,7 @@ void QPieSlice::setLabelVisible(bool visible)
 {
     if (d->m_isLabelVisible != visible) {
         d->m_isLabelVisible = visible;
-        emit changed();
+        emit appearanceChanged();
     }
 }
 
@@ -299,7 +324,7 @@ void QPieSlice::setExploded(bool exploded)
 {
     if (d->m_isExploded != exploded) {
         d->m_isExploded = exploded;
-        emit changed();
+        emit appearanceChanged();
     }
 }
 
@@ -318,7 +343,7 @@ void QPieSlice::setExplodeDistanceFactor(qreal factor)
 {
     if (!qFuzzyIsNull(d->m_explodeDistanceFactor - factor)) {
         d->m_explodeDistanceFactor = factor;
-        emit changed();
+        emit appearanceChanged();
     }
 }
 
@@ -334,7 +359,7 @@ void QPieSlice::setPen(const QPen &pen)
     if (d->m_slicePen != pen) {
         d->m_slicePen = pen;
         d->m_slicePen.setThemed(false);
-        emit changed();
+        emit appearanceChanged();
     }
 }
 
@@ -350,7 +375,7 @@ void QPieSlice::setBrush(const QBrush &brush)
     if (d->m_sliceBrush != brush) {
         d->m_sliceBrush = brush;
         d->m_sliceBrush.setThemed(false);
-        emit changed();
+        emit appearanceChanged();
     }
 }
 
@@ -366,7 +391,7 @@ void QPieSlice::setLabelPen(const QPen &pen)
     if (d->m_labelPen != pen) {
         d->m_labelPen = pen;
         d->m_labelPen.setThemed(false);
-        emit changed();
+        emit appearanceChanged();
     }
 }
 
@@ -382,7 +407,7 @@ void QPieSlice::setLabelFont(const QFont &font)
     if (d->m_labelFont != font) {
         d->m_labelFont = font;
         d->m_labelFont.setThemed(false);
-        emit changed();
+        emit appearanceChanged();
     }
 }
 
@@ -401,7 +426,7 @@ void QPieSlice::setLabelArmLengthFactor(qreal factor)
 {
     if (!qFuzzyIsNull(d->m_labelArmLengthFactor - factor)) {
         d->m_labelArmLengthFactor = factor;
-        emit changed();
+        emit appearanceChanged();
     }
 }
 

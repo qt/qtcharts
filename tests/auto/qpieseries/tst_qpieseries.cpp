@@ -207,11 +207,15 @@ void tst_qpieseries::calculatedValues()
     bool ok;
     QPieSeries s;
 
+    QPieSlice *slice1 = new QPieSlice("slice 1", 1);
+    QSignalSpy calculatedDataSpy(slice1, SIGNAL(calculatedDataChanged()));
+
     // add a slice
-    QPieSlice *slice1 = s.append("slice 1", 1);
+    s.append(slice1);
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
+    QCOMPARE(calculatedDataSpy.count(), 1);
 
     // add some more slices
     QList<QPieSlice *> list;
@@ -221,18 +225,21 @@ void tst_qpieseries::calculatedValues()
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
+    QCOMPARE(calculatedDataSpy.count(), 2);
 
     // remove a slice
-    s.remove(slice1);
+    s.remove(list.first()); // remove slice 2
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
+    QCOMPARE(calculatedDataSpy.count(), 3);
 
     // insert a slice
     s.insert(0, new QPieSlice("Slice 4", 4));
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
+    QCOMPARE(calculatedDataSpy.count(), 4);
 
     // modify pie angles
     s.setPieStartAngle(-90);
@@ -240,6 +247,7 @@ void tst_qpieseries::calculatedValues()
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
+    QCOMPARE(calculatedDataSpy.count(), 6);
 
     // clear all
     s.clear();
