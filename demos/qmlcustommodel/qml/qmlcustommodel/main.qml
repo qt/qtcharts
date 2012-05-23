@@ -27,40 +27,65 @@ Rectangle {
 
     ChartView {
         id: chart
-        title: "Top-5 car brand shares in Finland"
+        title: "Custom model example"
         anchors.fill: parent
         theme: ChartView.ChartThemeLight
 
         // For dynamic data you can use the ChartModel API.
         ChartModel {
             id: chartModel
-            ChartModelElement { values: [0, "Volkswagen", 13.5] }
-            ChartModelElement { values: [0, "Toyota", 10.9] }
-            ChartModelElement { values: [0, "Ford", 8.6] }
-            ChartModelElement { values: [0, "Skoda", 8.2] }
-            ChartModelElement { values: [0, "Volvo", 6.8] }
+            ChartModelElement { values: [0, "Volkswagen", 13.5, 4.4] }
+            ChartModelElement { values: [0, "Toyota", 10.9, 4.2] }
+            ChartModelElement { values: [0, "Ford", 8.6, 3.0] }
+            ChartModelElement { values: [0, "Skoda", 8.2, 1.9] }
+            ChartModelElement { values: [0, "Volvo", 6.8, 1.5] }
         }
 
         LineSeries {
             name: "line"
+            // TODO: the current mapper api
             model: chartModel
-            modelMapper.mapX: 2
-            modelMapper.mapY: 2
+            modelMapper.mapX: 3
+            modelMapper.mapY: 3
+
+            // TODO: the new mapper api
+//            XYModelMapperVertical {
+//                model: chartModel
+//                xColumn: 0
+//                yColumn: 1
+//            }
         }
+
 
         PieSeries {
             id: pieSeries
-            model: chartModel
             size: 0.4
             horizontalPosition: 0.2
             verticalPosition: 0.3
-            // Define how your data maps to pie slices with the ModelMapper API of the pie series
-            modelMapper.mapLabels: 1
-            modelMapper.mapValues: 2
-            modelMapper.first: 0
-            modelMapper.count: -1 // "Undefined" = -1 by default
-            modelMapper.orientation: PieModelMapper.Vertical
+
+//            model: chartModel
+//            // TODO: the current mapper api
+//            modelMapper.mapLabels: 1
+//            modelMapper.mapValues: 2
+//            modelMapper.first: 0
+//            modelMapper.count: -1 // "Undefined" = -1 by default
+//            modelMapper.orientation: PieModelMapper.Vertical
+
+            // TODO: the new mapper api
+//            PieModelMapperVertical {
+//                model: chartModel
+//                labelsColumn: 0
+//                valuesColumn: 1
+//            }
         }
+
+        // TODO: the new mapper api
+//        PieModelMapperVertical {
+//            series: pieSeries
+//            model: chartModel
+//            labelsColumn: 0
+//            valuesColumn: 1
+//        }
 
         AreaSeries {
             name: "area"
