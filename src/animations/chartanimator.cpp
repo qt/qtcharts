@@ -199,8 +199,7 @@ void ChartAnimator::setState(State state, const QPointF &point)
 void ChartAnimator::startAnimation(XYAnimation* animation)
 {
     Q_ASSERT(animation);
-    if (animation->state() != QAbstractAnimation::Stopped)
-    animation->stop();
+    if (animation->state() != QAbstractAnimation::Stopped) animation->stop();
     animation->setDuration(ChartAnimationDuration);
     animation->setEasingCurve(QEasingCurve::OutQuart);
     QTimer::singleShot(0, animation, SLOT(start()));

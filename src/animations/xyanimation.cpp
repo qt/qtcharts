@@ -39,11 +39,14 @@ XYAnimation::~XYAnimation()
 
 void XYAnimation::setAnimationType(Animation type)
 {
+    if (state() != QAbstractAnimation::Stopped) stop();
     m_type=type;
 }
 
 void XYAnimation::setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index)
 {
+    if (state() != QAbstractAnimation::Stopped) stop();
+
     int x = oldPoints.count();
     int y = newPoints.count();
 

@@ -274,7 +274,7 @@ void XYChart::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY
     QVector<QPointF> points = calculateGeometryPoints();
 
     if(m_animation) {
-        m_animation->setAnimationType(XYAnimation::LineDrawAnimation);
+        m_animation->setAnimationType(XYAnimation::MoveDownAnimation);
     }
     updateChart(m_points,points);
 }
