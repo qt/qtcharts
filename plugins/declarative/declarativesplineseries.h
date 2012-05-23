@@ -39,6 +39,11 @@ public:
     explicit DeclarativeSplineSeries(QObject *parent = 0);
     QDeclarativeListProperty<QObject> declarativeChildren();
 
+public: // from QSplineSeries
+    Q_INVOKABLE void append(qreal x, qreal y) { QSplineSeries::append(x, y); }
+    Q_INVOKABLE void remove(qreal x, qreal y) { QSplineSeries::remove(x, y); }
+    Q_INVOKABLE void clear() { QSplineSeries::removeAll(); }
+
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 };

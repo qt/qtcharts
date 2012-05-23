@@ -44,8 +44,8 @@ public:
     void setModelMapper(QXYModelMapper *mapper);
 
 private:
-    Q_DECLARE_PRIVATE(QSplineSeries);
-    Q_DISABLE_COPY(QSplineSeries);
+    Q_DECLARE_PRIVATE(QSplineSeries)
+    Q_DISABLE_COPY(QSplineSeries)
     friend class SplineChartItem;
 };
 

@@ -75,8 +75,8 @@ Q_SIGNALS:
     void clicked(const QPointF &point);
 
 private:
-    Q_DECLARE_PRIVATE(QXYSeries);
-    Q_DISABLE_COPY(QXYSeries);
+    Q_DECLARE_PRIVATE(QXYSeries)
+    Q_DISABLE_COPY(QXYSeries)
     friend class XYLegendMarker;
     friend class XYChart;
 };

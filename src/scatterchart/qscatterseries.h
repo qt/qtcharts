@@ -49,8 +49,8 @@ public:
     void setSize(qreal size);
 
 private:
-    Q_DECLARE_PRIVATE(QScatterSeries);
-    Q_DISABLE_COPY(QScatterSeries);
+    Q_DECLARE_PRIVATE(QScatterSeries)
+    Q_DISABLE_COPY(QScatterSeries)
     friend class ScatterChartItem;
 
 };

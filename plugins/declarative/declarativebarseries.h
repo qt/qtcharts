@@ -41,19 +41,27 @@ public:
     explicit DeclarativeBarSet(QObject *parent = 0);
     QVariantList values();
     void setValues(QVariantList values);
+
+public: // From QBarSet
+    Q_INVOKABLE void append(qreal value) { QBarSet::append(value); }
+    Q_INVOKABLE void append(qreal x, qreal y) { QBarSet::append(QPointF(x, y)); }
 };
 
-class DeclarativeBarSeries : public QGroupedBarSeries, public QDeclarativeParserStatus
+class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
+    Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
     Q_PROPERTY(QDeclarativeListProperty<DeclarativeBarSet> initialBarSets READ initialBarSets)
     Q_CLASSINFO("DefaultProperty", "initialBarSets")
 
 public:
     explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<DeclarativeBarSet> initialBarSets();
+
+    void setBarCategories(QStringList categories);
+    QStringList barCategories();
 
 public: // from QDeclarativeParserStatus
     void classBegin();

@@ -49,7 +49,7 @@ void DeclarativeBarSet::setValues(QVariantList values)
 }
 
 DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
-    QGroupedBarSeries(parent)
+    QBarSeries(parent)
 {
 }
 
@@ -88,6 +88,16 @@ bool DeclarativeBarSeries::setDeclarativeModel(DeclarativeTableModel *model)
 DeclarativeTableModel *DeclarativeBarSeries::declarativeModel()
 {
     return qobject_cast<DeclarativeTableModel *>(model());
+}
+
+void DeclarativeBarSeries::setBarCategories(QStringList categories)
+{
+    setCategories(categories);
+}
+
+QStringList DeclarativeBarSeries::barCategories()
+{
+    return categories();
 }
 
 DeclarativeGroupedBarSeries::DeclarativeGroupedBarSeries(QDeclarativeItem *parent) :

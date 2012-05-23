@@ -38,6 +38,11 @@ public:
     explicit DeclarativeScatterSeries(QObject *parent = 0);
     QDeclarativeListProperty<QObject> declarativeChildren();
 
+public: // from QScatterSeries
+    Q_INVOKABLE void append(qreal x, qreal y) { QScatterSeries::append(x, y); }
+    Q_INVOKABLE void remove(qreal x, qreal y) { QScatterSeries::remove(x, y); }
+    Q_INVOKABLE void clear() { QScatterSeries::removeAll(); }
+
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 };

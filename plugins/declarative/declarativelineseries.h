@@ -25,6 +25,7 @@
 #include "qlineseries.h"
 #include "declarativexyseries.h"
 #include <QDeclarativeParserStatus>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -38,6 +39,11 @@ class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries
 public:
     explicit DeclarativeLineSeries(QObject *parent = 0);
     QDeclarativeListProperty<QObject> declarativeChildren();
+
+public: // from QLineSeries
+    Q_INVOKABLE void append(qreal x, qreal y) { QLineSeries::append(x, y); }
+    Q_INVOKABLE void remove(qreal x, qreal y) { QLineSeries::remove(x, y); }
+    Q_INVOKABLE void clear() { QLineSeries::removeAll(); }
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);

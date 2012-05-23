@@ -41,8 +41,8 @@ protected:
     QLineSeries(QLineSeriesPrivate &d,QObject *parent = 0);
 
 private:
-    Q_DECLARE_PRIVATE(QLineSeries);
-    Q_DISABLE_COPY(QLineSeries);
+    Q_DECLARE_PRIVATE(QLineSeries)
+    Q_DISABLE_COPY(QLineSeries)
     friend class LineChartItem;
 
 };
