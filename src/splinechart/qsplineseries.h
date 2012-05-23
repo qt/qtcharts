@@ -40,9 +40,6 @@ public:
     ~QSplineSeries();
     QAbstractSeries::SeriesType type() const;
 
-    void setModel(QAbstractItemModel *model);
-    void setModelMapper(QXYModelMapper *mapper);
-
 private:
     Q_DECLARE_PRIVATE(QSplineSeries)
     Q_DISABLE_COPY(QSplineSeries)

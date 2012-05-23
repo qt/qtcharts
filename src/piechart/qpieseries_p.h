@@ -24,11 +24,8 @@
 #include "qpieseries.h"
 #include "qabstractseries_p.h"
 
-class QModelIndex;
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QLegendPrivate;
-class QPieModelMapper;
 
 class QPieSeriesPrivate : public QAbstractSeriesPrivate
 {
@@ -54,18 +51,7 @@ public Q_SLOTS:
     void sliceChanged();
     void sliceClicked();
     void sliceHovered(bool state);
-//    void initializePieFromModel();
-//    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-//    void modelRowsAdded(QModelIndex parent, int start, int end);
-//    void modelRowsRemoved(QModelIndex parent, int start, int end);
-//    void modelColumnsAdded(QModelIndex parent, int start, int end);
-//    void modelColumnsRemoved(QModelIndex parent, int start, int end);
     bool setRealValue(qreal &value, qreal newValue, qreal max, qreal min = 0.0);
-
-private:
-    void setModel(QAbstractItemModel *model);
-//    void insertData(int start, int end);
-//    void removeData(int start, int end);
 
 public:
     QList<QPieSlice*> m_slices;
@@ -75,10 +61,6 @@ public:
     qreal m_pieStartAngle;
     qreal m_pieEndAngle;
     qreal m_sum;
-
-    // model
-    QAbstractItemModel *m_model;
-    QPieModelMapper *m_mapper;
 
 private:
     friend class QLegendPrivate;

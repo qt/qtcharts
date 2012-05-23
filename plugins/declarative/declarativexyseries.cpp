@@ -38,7 +38,7 @@ DeclarativeXySeries::DeclarativeXySeries()
     mapper->setFirst(0);
     mapper->setCount(-1);
     mapper->setOrientation(Qt::Vertical);
-    series->setModelMapper(mapper);
+//    series->setModelMapper(mapper);
 }
 
 DeclarativeXySeries::~DeclarativeXySeries()
@@ -51,8 +51,8 @@ bool DeclarativeXySeries::setDeclarativeModel(DeclarativeTableModel *model)
     bool value(false);
     if (m) {
         // All the inherited objects must be of type QXYSeries, so it is safe to cast
-        QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
-        series->setModel(m);
+//        QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+//        series->setModel(m);
     } else {
         qWarning("DeclarativeXySeries: Illegal model");
     }
@@ -62,8 +62,8 @@ bool DeclarativeXySeries::setDeclarativeModel(DeclarativeTableModel *model)
 DeclarativeTableModel *DeclarativeXySeries::declarativeModel()
 {
     // All the inherited objects must be of type QXYSeries, so it is safe to cast
-    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
-    return qobject_cast<DeclarativeTableModel *>(series->model());
+//    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    return 0; //qobject_cast<DeclarativeTableModel *>(series->model());
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

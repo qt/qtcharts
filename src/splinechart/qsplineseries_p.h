@@ -47,13 +47,6 @@ public:
 public Q_SLOTS:
     void updateControlPoints();
 
-protected Q_SLOTS:
-    void modelRowsAdded(QModelIndex parent, int start, int end);
-    void modelRowsRemoved(QModelIndex parent, int start, int end);
-    void modelColumnsAdded(QModelIndex parent, int start, int end);
-    void modelColumnsRemoved(QModelIndex parent, int start, int end);
-    void mappingUpdated();
-
 private:
     void calculateControlPoints();
     QVector<qreal> firstControlPoints(const QVector<qreal>& vector);

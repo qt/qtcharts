@@ -26,9 +26,6 @@
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
 #include "legendmarker_p.h"
-#include <QAbstractItemModel>
-#include "qpiemodelmapper.h"
-#include "qpiemodelmapper_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -463,65 +460,7 @@ qreal QPieSeries::sum() const
     \sa QPieSlice::hovered()
 */
 
-/*!
-     \fn bool QPieSeries::setModel(QAbstractItemModel *model)
-     Sets the \a model to be used as a data source
- */
-void QPieSeries::setModel(QAbstractItemModel* model)
-{
-    Q_D(QPieSeries);
-    d->setModel(model);
-    //    // disconnect signals from old model
-    //    if(d->m_model)
-    //    {
-    //        disconnect(d->m_model, 0, this, 0);
-    //    }
 
-    //    // set new model
-    //    if(model)
-    //    {
-    //        d->m_model = model;
-    //        // connect signals from the model
-    ////        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
-    ////        connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelRowsAdded(QModelIndex,int,int)));
-    ////        connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
-    ////        connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
-    ////        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
-
-    ////        if (d->m_mapper)
-    ////            d->initializePieFromModel();
-    //    }
-    //    else
-    //    {
-    //        d->m_model = 0;
-    //    }
-}
-
-void QPieSeries::setModelMapper(QPieModelMapper *mapper)
-{
-    Q_D(QPieSeries);
-    // disconnect signals from old mapper
-    if (d->m_mapper) {
-        QObject::disconnect(d->m_mapper, 0, this, 0);
-    }
-
-    if (mapper) {
-        d->m_mapper = mapper;
-        // connect the signal from the mapper
-        //        connect(d->m_mapper, SIGNAL(updated()), d, SLOT(initializePieFromModel()));
-
-        //        if (d->m_model)
-        //            d->initializePieFromModel();
-    } else {
-        d->m_mapper = 0;
-    }
-}
-
-QPieModelMapper* QPieSeries::modelMapper() const
-{
-    Q_D(const QPieSeries);
-    return d->m_mapper;
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -533,16 +472,12 @@ QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent) :
     m_pieRelativeSize(0.7),
     m_pieStartAngle(0),
     m_pieEndAngle(360),
-    m_sum(0),
-    m_model(0),
-    m_mapper(0)
+    m_sum(0)
 {
-
 }
 
 QPieSeriesPrivate::~QPieSeriesPrivate()
 {
-
 }
 
 void QPieSeriesPrivate::updateDerivativeData()
@@ -663,21 +598,6 @@ QList<LegendMarker*> QPieSeriesPrivate::createLegendMarker(QLegend* legend)
         markers << marker;
     }
     return markers;
-}
-
-void QPieSeriesPrivate::setModel(QAbstractItemModel* model)
-{
-    Q_Q(QPieSeries);
-    QPieModelMapperPrivate *mapperPrivate = m_mapper->d_func();
-    mapperPrivate->setModel(model);
-    if(mapperPrivate->m_series != q)
-    {
-        disconnect(mapperPrivate->m_series, 0, mapperPrivate, 0);
-        mapperPrivate->m_series = q;
-        connect(this, SIGNAL(added(QList<QPieSlice*>)), mapperPrivate, SLOT(slicesAdded()));
-        connect(this, SIGNAL(removed(QList<QPieSlice*>)), mapperPrivate, SLOT(slicesRemoved()));
-        connect(this, SIGNAL(modified()), mapperPrivate, SLOT(sliceChanged()));
-    }
 }
 
 #include "moc_qpieseries.cpp"

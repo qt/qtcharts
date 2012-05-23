@@ -96,14 +96,6 @@ QAbstractSeries::~QAbstractSeries()
     if(d_ptr->m_dataset) qFatal("Still binded series detected !");
 }
 
-/*!
-    \brief Returns the pointer to the model that is used as the series data source
-*/
-QAbstractItemModel* QAbstractSeries::model() const
-{
-    return d_ptr->m_model;
-}
-
 void QAbstractSeries::setName(const QString& name)
 {
     d_ptr->m_name = name;
@@ -122,7 +114,6 @@ QString QAbstractSeries::name() const
 
 QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q):
     q_ptr(q),
-    m_model(0),
     m_dataset(0)
 {
 }

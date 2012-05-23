@@ -36,7 +36,6 @@ class QXYModelMapper;
 class QTCOMMERCIALCHART_EXPORT QXYSeries : public QAbstractSeries
 {
     Q_OBJECT
-    Q_PROPERTY(QXYModelMapper *modelMapper READ modelMapper)
 
 protected:
     explicit QXYSeries(QXYSeriesPrivate &d,QObject *parent = 0);
@@ -66,10 +65,6 @@ public:
 
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
-
-    void setModel(QAbstractItemModel *model);
-    virtual void setModelMapper(QXYModelMapper *mapper);
-    QXYModelMapper* modelMapper() const;
 
 Q_SIGNALS:
     void clicked(const QPointF &point);

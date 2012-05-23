@@ -26,7 +26,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSeriesPrivate;
 class QPieSlice;
-class QPieModelMapper;
 
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
 {
@@ -38,7 +37,6 @@ class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
     Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle)
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(qreal sum READ sum)
-    Q_PROPERTY(QPieModelMapper *modelMapper READ modelMapper)
 
 public:
     explicit QPieSeries(QObject *parent = 0);
@@ -74,10 +72,6 @@ public:
     qreal pieEndAngle() const;
 
     void setLabelsVisible(bool visible = true);
-
-    void setModel(QAbstractItemModel* model);
-    void setModelMapper(QPieModelMapper *mapper);
-    QPieModelMapper* modelMapper() const;
 
 Q_SIGNALS:
     void added(QList<QPieSlice*> slices);

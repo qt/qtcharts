@@ -6,8 +6,6 @@
 #include <QStringList>
 #include <QAbstractSeries>
 
-class QModelIndex;
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarModelMapper;
@@ -48,21 +46,12 @@ Q_SIGNALS:
     void categoriesUpdated();
 
 private Q_SLOTS:
-    // slots for updating bars when data in model changes
-    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-    void modelDataAdded(QModelIndex parent, int start, int end);
-    void modelDataRemoved(QModelIndex parent, int start, int end);
-    void initializeDataFromModel();
     void barsetChanged();
 
 protected:
     QList<QBarSet *> m_barSets;
     QBarCategories m_categories;
     qreal m_barMargin;
-    int m_mapCategories;
-    int m_mapBarBottom;
-    int m_mapBarTop;
-    QBarModelMapper *m_mapper;
 private:
     Q_DECLARE_PUBLIC(QBarSeries)
 };

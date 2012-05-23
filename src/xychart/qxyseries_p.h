@@ -35,7 +35,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYSeries;
-class QXYModelMapper;
 
 class QXYSeriesPrivate: public QAbstractSeriesPrivate
 {
@@ -46,18 +45,6 @@ public:
 
     void scaleDomain(Domain& domain);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
-
-protected Q_SLOTS:
-    void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
-    virtual void modelRowsAdded(QModelIndex parent, int start, int end);
-    virtual void modelRowsRemoved(QModelIndex parent, int start, int end);
-    virtual void modelColumnsAdded(QModelIndex parent, int start, int end);
-    virtual void modelColumnsRemoved(QModelIndex parent, int start, int end);
-    virtual void mappingUpdated();
-
-private:
-    void insertData(int start, int end);
-    void removeData(int start, int end);
 
 Q_SIGNALS:
     void updated();
@@ -70,10 +57,8 @@ Q_SIGNALS:
 
 protected:
     QVector<QPointF> m_points;
-
     QPen m_pen;
     QBrush m_brush;
-    QXYModelMapper* m_mapper;
     bool m_pointsVisible;
 
 private:

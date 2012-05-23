@@ -88,7 +88,7 @@ void DeclarativePieSeries::setPieModel(DeclarativeTableModel *model)
 {
     QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
     if (m) {
-        QPieSeries::setModel(m);
+//        QPieSeries::setModel(m);
     } else {
         qWarning("DeclarativePieSeries: Illegal model");
     }
@@ -96,7 +96,7 @@ void DeclarativePieSeries::setPieModel(DeclarativeTableModel *model)
 
 DeclarativeTableModel *DeclarativePieSeries::pieModel()
 {
-    return qobject_cast<DeclarativeTableModel *>(model());
+    return 0;//qobject_cast<DeclarativeTableModel *>(model());
 }
 
 #include "moc_declarativepieseries.cpp"

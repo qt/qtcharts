@@ -55,9 +55,6 @@ public:
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
-    void setModel(QAbstractItemModel* model);
-    QAbstractItemModel* model() const;
-
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void selected();

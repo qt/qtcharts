@@ -24,7 +24,6 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
-#include <QAbstractItemModel>
 
 /*!
     \class QSplineSeries
@@ -73,22 +72,6 @@ QSplineSeries::~QSplineSeries()
 QAbstractSeries::SeriesType QSplineSeries::type() const
 {
     return QAbstractSeries::SeriesTypeSpline;
-}
-
-void QSplineSeries::setModel(QAbstractItemModel *model)
-{
-    Q_D(QSplineSeries);
-    QXYSeries::setModel(model);
-    if (d->m_model && d->m_mapper)
-        d->updateControlPoints();
-}
-
-void QSplineSeries::setModelMapper(QXYModelMapper *mapper)
-{
-    Q_D(QSplineSeries);
-    QXYSeries::setModelMapper(mapper);
-    if (d->m_model && d->m_mapper)
-        d->updateControlPoints();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -217,36 +200,6 @@ void QSplineSeriesPrivate::updateControlPoints()
         m_controlPoints.resize(2*q->count()-2);
         calculateControlPoints();
     }
-}
-
-void QSplineSeriesPrivate::mappingUpdated()
-{
-    updateControlPoints();
-    emit updated();
-}
-
-void QSplineSeriesPrivate::modelRowsAdded(QModelIndex parent, int start, int end)
-{
-    updateControlPoints();
-    QXYSeriesPrivate::modelRowsAdded(parent, start, end);
-}
-
-void QSplineSeriesPrivate::modelRowsRemoved(QModelIndex parent, int start, int end)
-{
-    updateControlPoints();
-    QXYSeriesPrivate::modelRowsRemoved(parent, start, end);
-}
-
-void QSplineSeriesPrivate::modelColumnsAdded(QModelIndex parent, int start, int end)
-{
-    updateControlPoints();
-    QXYSeriesPrivate::modelColumnsAdded(parent, start, end);
-}
-
-void QSplineSeriesPrivate::modelColumnsRemoved(QModelIndex parent, int start, int end)
-{
-    updateControlPoints();
-    QXYSeriesPrivate::modelColumnsRemoved(parent, start, end);
 }
 
 Chart* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)

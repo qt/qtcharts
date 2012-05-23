@@ -24,8 +24,6 @@
 #include <qabstractseries.h>
 #include <QStringList>
 
-class QModelIndex;
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 typedef QStringList QBarCategories;
@@ -33,7 +31,6 @@ typedef QStringList QBarCategories;
 class QBarSet;
 class BarCategory;
 class QBarSeriesPrivate;
-class QBarModelMapper;
 
 // Container for series
 class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
@@ -56,10 +53,6 @@ public:
     QBarCategories categories() const;
 
     void setLabelsVisible(bool visible = true);
-
-    void setModel(QAbstractItemModel *model);
-    void setModelMapper(QBarModelMapper *mapper);
-    QBarModelMapper* modelMapper() const;
 
 protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);

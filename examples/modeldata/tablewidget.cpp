@@ -52,48 +52,47 @@ TableWidget::TableWidget(QWidget *parent)
     chart->setAnimationOptions(QChart::AllAnimations);
     //! [3]
 
-    // series 1
-    //! [4]
-    QLineSeries *series = new QLineSeries;
-    series->setName("line1");
-    series->setModel(model);
+//    // series 1
+//    //! [4]
+//    QLineSeries *series = new QLineSeries;
+//    series->setModel(model);
 
-    QXYModelMapper *mapper = new QXYModelMapper;
-    mapper->setMapX(0);
-    mapper->setMapY(1);
-    series->setModelMapper(mapper);
-//    series->setModelMapping(0, 1, Qt::Vertical);
-    chart->addSeries(series);
-    //! [4]
+//    QXYModelMapper *mapper = new QXYModelMapper;
+//    mapper->setMapX(0);
+//    mapper->setMapY(1);
+//    series->setModelMapper(mapper);
+////    series->setModelMapping(0, 1, Qt::Vertical);
+//    chart->addSeries(series);
+//    //! [4]
 
-    //! [5]
-    // for storing color hex from the series
-    QString seriesColorHex = "#000000";
+//    //! [5]
+//    // for storing color hex from the series
+//    QString seriesColorHex = "#000000";
 
-    // get the color of the series and use it for showing the mapped area
-    seriesColorHex = "#" + QString::number(series->pen().color().rgb(), 16).right(6).toUpper();
-    model->addMapping(seriesColorHex, QRect(0, 0, 2, model->rowCount()));
-    //! [5]
+//    // get the color of the series and use it for showing the mapped area
+//    seriesColorHex = "#" + QString::number(series->pen().color().rgb(), 16).right(6).toUpper();
+//    model->addMapping(seriesColorHex, QRect(0, 0, 2, model->rowCount()));
+//    //! [5]
 
-    // series 2
-    //! [6]
-    series = new QLineSeries;
-    series->setName("line2");
-    series->setModel(model);
 
-    mapper = new QXYModelMapper;
-    mapper->setMapX(2);
-    mapper->setMapY(3);
-    series->setModelMapper(mapper);
-//    series->setModelMapping(2,3, Qt::Vertical);
-    chart->addSeries(series);
-    //! [6]
+//    // series 2
+//    //! [6]
+//    series = new QLineSeries;
+//    series->setModel(model);
 
-    //! [7]
-    // get the color of the series and use it for showing the mapped area
-    seriesColorHex = "#" + QString::number(series->pen().color().rgb(), 16).right(6).toUpper();
-    model->addMapping(seriesColorHex, QRect(2, 0, 2, model->rowCount()));
-    //! [7]
+//    mapper = new QXYModelMapper;
+//    mapper->setMapX(2);
+//    mapper->setMapY(3);
+//    series->setModelMapper(mapper);
+////    series->setModelMapping(2,3, Qt::Vertical);
+//    chart->addSeries(series);
+//    //! [6]
+
+//    //! [7]
+//    // get the color of the series and use it for showing the mapped area
+//    seriesColorHex = "#" + QString::number(series->pen().color().rgb(), 16).right(6).toUpper();
+//    model->addMapping(seriesColorHex, QRect(2, 0, 2, model->rowCount()));
+//    //! [7]
 
     //! [8]
     QChartView *chartView = new QChartView(chart);
