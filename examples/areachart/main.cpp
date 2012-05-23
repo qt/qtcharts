@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 
 //![3]
     QAreaSeries* series = new QAreaSeries(series0, series1);
+    series->setName("Batman");
     QPen pen(0x059605);
     pen.setWidth(3);
     series->setPen(pen);

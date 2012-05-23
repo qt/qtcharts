@@ -6,10 +6,12 @@ ChartView::ChartView(QWidget *parent) :
 {
     //![1]
     QScatterSeries *series0 = new QScatterSeries();
+    series0->setName("scatter1");
     series0->setShape(QScatterSeries::MarkerShapeCircle);
     series0->setSize(15.0);
 
     QScatterSeries *series1 = new QScatterSeries();
+    series1->setName("scatter2");
     series1->setShape(QScatterSeries::MarkerShapeCircle);
     series1->setSize(20.0);
     //![1]

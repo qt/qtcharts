@@ -60,7 +60,7 @@ Rectangle {
 
     // A timer to refresh the forecast every 5 minutes
     Timer {
-        interval: 300000;
+        interval: 300000
         repeat: true
         triggeredOnStart: true
         running: true

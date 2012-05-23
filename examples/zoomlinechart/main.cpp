@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
+    series->setName("line");
     qreal yValue = 0.0;
     for (int i(0); i < 500; i++) {
         yValue = yValue + (qreal) (qrand() % 10) / 500.0;

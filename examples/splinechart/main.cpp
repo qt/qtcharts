@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
 
     //![1]
     QSplineSeries* series = new QSplineSeries();
+    series->setName("spline");
     //![1]
 
     //![2]

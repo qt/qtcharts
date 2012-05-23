@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
+    series->setName("line");
 //![1]
 
 //![2]

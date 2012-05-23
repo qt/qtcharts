@@ -35,22 +35,26 @@ m_index(-1),m_chart(chart)
 
 //![1]
     QLineSeries* series0 = new QLineSeries();
+    series0->setName("line");
     QPen blue(Qt::blue);
     blue.setWidth(3);
     series0->setPen(blue);
 
     QScatterSeries* series1 = new QScatterSeries();
+    series1->setName("scatter");
     QPen red(Qt::red);
     red.setWidth(3);
     series1->setPen(red);
     series1->setBrush(Qt::white);
 
     QSplineSeries* series2 = new QSplineSeries();
+    series2->setName("spline");
     QPen green(Qt::green);
     green.setWidth(3);
     series2->setPen(green);
 
     QAreaSeries* series3 = new QAreaSeries(series0);
+    series3->setName("area");
     QPen yellow(Qt::black);
     yellow.setWidth(3);
     series3->setPen(yellow);
