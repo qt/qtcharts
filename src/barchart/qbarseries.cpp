@@ -382,7 +382,7 @@ QBarSet* QBarSeriesPrivate::barsetAt(int index)
 
 QString QBarSeriesPrivate::categoryName(int category)
 {
-    if ((category > 0) && (category < m_categories.count())) {
+    if ((category >= 0) && (category < m_categories.count())) {
         return m_categories.at(category);
     }
 
