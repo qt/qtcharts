@@ -6,6 +6,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QPieModelMapperPrivate;
+
 class QTCOMMERCIALCHART_EXPORT QPieModelMapper : public QObject
 {
     Q_OBJECT
@@ -17,7 +19,10 @@ class QTCOMMERCIALCHART_EXPORT QPieModelMapper : public QObject
     Q_ENUMS(Qt::Orientation)
 
 public:
-    explicit QPieModelMapper(QObject *parent = 0);
+    QPieModelMapper(QObject *parent = 0);
+
+//    QAbstractItemModel* model() const;
+//    void setModel(QAbstractItemModel *model);
 
     int first() const;
     void setFirst(int first);
@@ -36,16 +41,10 @@ public:
 
     void reset();
 
-Q_SIGNALS:
-    void updated();
-
 private:
-    int m_first;
-    int m_count;
-    Qt::Orientation m_orientation;
-    int m_mapValues;
-    int m_mapLabels;
-    
+    QScopedPointer<QPieModelMapperPrivate> d_ptr;
+    Q_DECLARE_PRIVATE(QPieModelMapper)
+    friend class QPieSeriesPrivate;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -28,6 +28,7 @@
 #include "legendmarker_p.h"
 #include <QAbstractItemModel>
 #include "qpiemodelmapper.h"
+#include "qpiemodelmapper_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -469,30 +470,31 @@ qreal QPieSeries::sum() const
 void QPieSeries::setModel(QAbstractItemModel* model)
 {
     Q_D(QPieSeries);
-    // disconnect signals from old model
-    if(d->m_model)
-    {
-        disconnect(d->m_model, 0, this, 0);
-    }
+    d->setModel(model);
+    //    // disconnect signals from old model
+    //    if(d->m_model)
+    //    {
+    //        disconnect(d->m_model, 0, this, 0);
+    //    }
 
-    // set new model
-    if(model)
-    {
-        d->m_model = model;
-        // connect signals from the model
-        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
-        connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelRowsAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
-        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
+    //    // set new model
+    //    if(model)
+    //    {
+    //        d->m_model = model;
+    //        // connect signals from the model
+    ////        connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+    ////        connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelRowsAdded(QModelIndex,int,int)));
+    ////        connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
+    ////        connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
+    ////        connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
 
-        if (d->m_mapper)
-            d->initializePieFromModel();
-    }
-    else
-    {
-        d->m_model = 0;
-    }
+    ////        if (d->m_mapper)
+    ////            d->initializePieFromModel();
+    //    }
+    //    else
+    //    {
+    //        d->m_model = 0;
+    //    }
 }
 
 void QPieSeries::setModelMapper(QPieModelMapper *mapper)
@@ -506,10 +508,10 @@ void QPieSeries::setModelMapper(QPieModelMapper *mapper)
     if (mapper) {
         d->m_mapper = mapper;
         // connect the signal from the mapper
-        connect(d->m_mapper, SIGNAL(updated()), d, SLOT(initializePieFromModel()));
+        //        connect(d->m_mapper, SIGNAL(updated()), d, SLOT(initializePieFromModel()));
 
-        if (d->m_model)
-            d->initializePieFromModel();
+        //        if (d->m_model)
+        //            d->initializePieFromModel();
     } else {
         d->m_mapper = 0;
     }
@@ -532,6 +534,7 @@ QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent) :
     m_pieStartAngle(0),
     m_pieEndAngle(360),
     m_sum(0),
+    m_model(0),
     m_mapper(0)
 {
 
@@ -608,191 +611,6 @@ void QPieSeriesPrivate::sliceHovered(bool state)
     emit q->hovered(slice, state);
 }
 
-void QPieSeriesPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
-{
-    if (m_mapper) {
-        for (int row = topLeft.row(); row <= bottomRight.row(); row++) {
-            for (int column = topLeft.column(); column <= bottomRight.column(); column++) {
-                if (m_mapper->orientation() == Qt::Vertical)
-                {
-                    if ( topLeft.row() >= m_mapper->first() && (m_mapper->count() == - 1 || topLeft.row() < m_mapper->first() + m_mapper->count())) {
-                        if (topLeft.column() == m_mapper->mapValues())
-                            m_slices.at(topLeft.row() - m_mapper->first())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-                        if (topLeft.column() == m_mapper->mapLabels())
-                            m_slices.at(topLeft.row() - m_mapper->first())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
-                    }
-                }
-                else
-                {
-                    if (topLeft.column() >= m_mapper->first() && (m_mapper->count() == - 1 || topLeft.column() < m_mapper->first() + m_mapper->count())) {
-                        if (topLeft.row() == m_mapper->mapValues())
-                            m_slices.at(topLeft.column() - m_mapper->first())->setValue(m_model->data(topLeft, Qt::DisplayRole).toDouble());
-                        if (topLeft.row() == m_mapper->mapLabels())
-                            m_slices.at(topLeft.column() - m_mapper->first())->setLabel(m_model->data(topLeft, Qt::DisplayRole).toString());
-                    }
-                }
-            }
-        }
-    }
-}
-
-
-void QPieSeriesPrivate::modelRowsAdded(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent);
-    if (m_mapper) {
-        if (m_mapper->orientation() == Qt::Vertical)
-            insertData(start, end);
-        else if (start <= m_mapper->mapValues() || start <= m_mapper->mapLabels()) // if the changes affect the map - reinitialize the pie
-            initializePieFromModel();
-    }
-}
-
-void QPieSeriesPrivate::modelRowsRemoved(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent);
-    if (m_mapper) {
-        if (m_mapper->orientation() == Qt::Vertical)
-            removeData(start, end);
-        else if (start <= m_mapper->mapValues() || start <= m_mapper->mapLabels()) // if the changes affect the map - reinitialize the pie
-            initializePieFromModel();
-    }
-}
-
-void QPieSeriesPrivate::modelColumnsAdded(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent);
-    if (m_mapper) {
-        if (m_mapper->orientation() == Qt::Horizontal)
-            insertData(start, end);
-        else if (start <= m_mapper->mapValues() || start <= m_mapper->mapLabels()) // if the changes affect the map - reinitialize the pie
-            initializePieFromModel();
-    }
-}
-
-void QPieSeriesPrivate::modelColumnsRemoved(QModelIndex parent, int start, int end)
-{
-    Q_UNUSED(parent);
-    if (m_mapper) {
-        if (m_mapper->orientation() == Qt::Horizontal)
-            removeData(start, end);
-        else if (start <= m_mapper->mapValues() || start <= m_mapper->mapLabels()) // if the changes affect the map - reinitialize the pie
-            initializePieFromModel();
-    }
-}
-
-void QPieSeriesPrivate::insertData(int start, int end)
-{
-    Q_Q(QPieSeries);
-    if (m_mapper) {
-        if (m_mapper->count() != -1 && start >= m_mapper->first() + m_mapper->count()) {
-            return;
-        } else {
-            int addedCount = end - start + 1;
-            if (m_mapper->count() != -1 && addedCount > m_mapper->count())
-                addedCount = m_mapper->count();
-            int first = qMax(start, m_mapper->first());
-            int last = qMin(first + addedCount - 1, m_mapper->orientation() == Qt::Vertical ? m_model->rowCount() - 1 : m_model->columnCount() - 1);
-            for (int i = first; i <= last; i++) {
-                QPieSlice *slice = new QPieSlice;
-                if (m_mapper->orientation() == Qt::Vertical) {
-                    slice->setValue(m_model->data(m_model->index(i, m_mapper->mapValues()), Qt::DisplayRole).toDouble());
-                    slice->setLabel(m_model->data(m_model->index(i, m_mapper->mapLabels()), Qt::DisplayRole).toString());
-                } else {
-                    slice->setValue(m_model->data(m_model->index(m_mapper->mapValues(), i), Qt::DisplayRole).toDouble());
-                    slice->setLabel(m_model->data(m_model->index(m_mapper->mapLabels(), i), Qt::DisplayRole).toString());
-                }
-                slice->setLabelVisible();
-                q->insert(i - m_mapper->first(), slice);
-            }
-            if (m_mapper->count() != -1 && m_slices.size() > m_mapper->count())
-                for (int i = m_slices.size() - 1; i >= m_mapper->count(); i--)
-                    q->remove(q->slices().at(i));
-        }
-    }
-}
-
-void QPieSeriesPrivate::removeData(int start, int end)
-{
-    Q_Q(QPieSeries);
-    if (m_mapper) {
-        int removedCount = end - start + 1;
-        if (m_mapper->count() != -1 && start >= m_mapper->first() + m_mapper->count()) {
-            return;
-        } else {
-            int toRemove = qMin(m_slices.size(), removedCount);     // first find how many items can actually be removed
-            int first = qMax(start, m_mapper->first());    // get the index of the first item that will be removed.
-            int last = qMin(first + toRemove - 1, m_slices.size() + m_mapper->first() - 1);    // get the index of the last item that will be removed.
-            for (int i = last; i >= first; i--)
-                q->remove(q->slices().at(i - m_mapper->first()));
-
-            if (m_mapper->count() != -1) {
-                int itemsAvailable;     // check how many are available to be added
-                if (m_mapper->orientation() == Qt::Vertical)
-                    itemsAvailable = m_model->rowCount() - m_mapper->first() - m_slices.size();
-                else
-                    itemsAvailable = m_model->columnCount() - m_mapper->first() - m_slices.size();
-                int toBeAdded = qMin(itemsAvailable, m_mapper->count() - m_slices.size());     // add not more items than there is space left to be filled.
-                int currentSize = m_slices.size();
-                if (toBeAdded > 0)
-                    for (int i = m_slices.size(); i < currentSize + toBeAdded; i++) {
-                        QPieSlice *slice = new QPieSlice;
-                        if (m_mapper->orientation() == Qt::Vertical) {
-                            slice->setValue(m_model->data(m_model->index(i + m_mapper->first(), m_mapper->mapValues()), Qt::DisplayRole).toDouble());
-                            slice->setLabel(m_model->data(m_model->index(i + m_mapper->first(), m_mapper->mapLabels()), Qt::DisplayRole).toString());
-                        } else {
-                            slice->setValue(m_model->data(m_model->index(m_mapper->mapValues(), i + m_mapper->first()), Qt::DisplayRole).toDouble());
-                            slice->setLabel(m_model->data(m_model->index(m_mapper->mapLabels(), i + m_mapper->first()), Qt::DisplayRole).toString());
-                        }
-                        slice->setLabelVisible();
-                        q->insert(i, slice);
-                    }
-            }
-        }
-    }
-}
-
-void QPieSeriesPrivate::initializePieFromModel()
-{
-    Q_Q(QPieSeries);
-
-    // clear current content
-    q->clear();
-
-    if (m_model == 0 || m_mapper == 0)
-        return;
-
-    // check if mappings are set
-    if (m_mapper->mapValues() == -1 || m_mapper->mapLabels() == -1)
-        return;
-
-    // create the initial slices set
-    if (m_mapper->orientation() == Qt::Vertical) {
-        if (m_mapper->mapValues() >= m_model->columnCount() || m_mapper->mapLabels() >= m_model->columnCount())
-            return;   // mapped columns are not existing
-
-        int sliceCount = 0;
-        if(m_mapper->count() == -1)
-            sliceCount = m_model->rowCount() - m_mapper->first();
-        else
-            sliceCount = qMin(m_mapper->count(), m_model->rowCount() - m_mapper->first());
-        for (int i = m_mapper->first(); i < m_mapper->first() + sliceCount; i++)
-            q->append(m_model->data(m_model->index(i, m_mapper->mapLabels()), Qt::DisplayRole).toString(), m_model->data(m_model->index(i, m_mapper->mapValues()), Qt::DisplayRole).toDouble());
-    } else {
-        if (m_mapper->mapValues() >= m_model->rowCount() || m_mapper->mapLabels() >= m_model->rowCount())
-            return;   // mapped columns are not existing
-
-        int sliceCount = 0;
-        if(m_mapper->count() == -1)
-            sliceCount = m_model->columnCount() - m_mapper->first();
-        else
-            sliceCount = qMin(m_mapper->count(), m_model->columnCount() - m_mapper->first());
-        for (int i = m_mapper->first(); i < m_mapper->first() + sliceCount; i++)
-            q->append(m_model->data(m_model->index(m_mapper->mapLabels(), i), Qt::DisplayRole).toString(), m_model->data(m_model->index(m_mapper->mapValues(), i), Qt::DisplayRole).toDouble());
-    }
-    q->setLabelsVisible(true);
-}
-
 bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qreal min)
 {
     // Remove rounding errors
@@ -845,6 +663,21 @@ QList<LegendMarker*> QPieSeriesPrivate::createLegendMarker(QLegend* legend)
         markers << marker;
     }
     return markers;
+}
+
+void QPieSeriesPrivate::setModel(QAbstractItemModel* model)
+{
+    Q_Q(QPieSeries);
+    QPieModelMapperPrivate *mapperPrivate = m_mapper->d_func();
+    mapperPrivate->setModel(model);
+    if(mapperPrivate->m_series != q)
+    {
+        disconnect(mapperPrivate->m_series, 0, mapperPrivate, 0);
+        mapperPrivate->m_series = q;
+        connect(this, SIGNAL(added(QList<QPieSlice*>)), mapperPrivate, SLOT(slicesAdded()));
+        connect(this, SIGNAL(removed(QList<QPieSlice*>)), mapperPrivate, SLOT(slicesRemoved()));
+        connect(this, SIGNAL(modified()), mapperPrivate, SLOT(sliceChanged()));
+    }
 }
 
 #include "moc_qpieseries.cpp"
