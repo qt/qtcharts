@@ -25,7 +25,7 @@
 //#include <QChartGlobal>
 #include "qchartview.h"
 //#include "qxyseries.h"
-//#include <QPieSeries>
+#include <QPieSeries>
 #include <QPieModelMapper>
 
 class CustomTableModel;
@@ -52,6 +52,7 @@ public:
     void removeColumn();
     void updateChartType(bool toggle);
     void testPie();
+    void testPie2();
 
     private:
     QChartView* m_chartView;
@@ -67,6 +68,7 @@ public:
     QRadioButton* m_barRadioButton;
     QSpinBox* m_linesCountSpinBox;
     QPieModelMapper *m_pieMapper;
+    QPieSeries* m_pieSeries;
 //    QPieSeries* specialPie;
 };
 

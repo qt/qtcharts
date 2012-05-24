@@ -81,8 +81,11 @@ TableWidget::TableWidget(QWidget *parent)
     QPushButton* removeColumnButton = new QPushButton("Remove column");
     connect(removeColumnButton, SIGNAL(clicked()), this, SLOT(removeColumn()));
 
-    QPushButton* specialPieButton = new QPushButton("Test pie");
+    QPushButton* specialPieButton = new QPushButton("Add slices from series");
     connect(specialPieButton, SIGNAL(clicked()), this, SLOT(testPie()));
+
+    QPushButton* specialPieButton2 = new QPushButton("Remove slices from series");
+    connect(specialPieButton2, SIGNAL(clicked()), this, SLOT(testPie2()));
 
 
     //    QLabel *spinBoxLabel = new QLabel("Rows affected:");
@@ -102,6 +105,7 @@ TableWidget::TableWidget(QWidget *parent)
     //    buttonsLayout->addWidget(addColumnRightButton);
     //    buttonsLayout->addWidget(removeColumnButton);
     buttonsLayout->addWidget(specialPieButton);
+    buttonsLayout->addWidget(specialPieButton2);
     buttonsLayout->addStretch();
 
     // chart type radio buttons
@@ -339,25 +343,25 @@ void TableWidget::updateChartType(bool toggle)
             m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
             // pie 1
-            QPieSeries* pieSeries = new QPieSeries;
+            m_pieSeries = new QPieSeries;
 
             m_pieMapper = new QPieModelMapper;
             m_pieMapper->setValuesIndex(1);
             m_pieMapper->setLabelsIndex(1);
-            m_pieMapper->setSeries(pieSeries);
+            m_pieMapper->setSeries(m_pieSeries);
             m_pieMapper->setModel(m_model);
             m_pieMapper->setFirst(2);
-            m_pieMapper->setCount(5);
+            //            m_pieMapper->setCount(5);
             //                    pieSeries->setModelMapper(mapper);
 
-            pieSeries->setLabelsVisible(true);
-            pieSeries->setPieSize(0.75);
+            m_pieSeries->setLabelsVisible(true);
+            m_pieSeries->setPieSize(0.75);
             //            pieSeries->setHorizontalPosition(0.2);
             //            pieSeries->setVerticalPosition(0.3);
 
-            m_chart->addSeries(pieSeries);
-            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 5));
+            m_chart->addSeries(m_pieSeries);
+            seriesColorHex = "#" + QString::number(m_pieSeries->slices().at(m_pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
+            m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 50));
 
 
             //                            pieSeries->slices().at(0)->setValue(400);
@@ -458,7 +462,14 @@ void TableWidget::updateChartType(bool toggle)
 
 void TableWidget::testPie()
 {
-    m_pieMapper->setCount(-1);
+    //    m_pieMapper->setCount(-1);
+    QPieSlice *slice = new QPieSlice("Hehe", 145);
+    slice->setLabelVisible();
+    m_pieSeries->append(slice);
+
+    slice = new QPieSlice("Hoho", 34);
+    slice->setLabelVisible();
+    m_pieSeries->append(slice);
     //    m_series->modelMapper()->setMapX(4);
     //    m_tableView->setColumnWidth(10, 250);
     //    if (specialPie) {
@@ -466,6 +477,20 @@ void TableWidget::testPie()
     //        //    specialPie->insert(4, new QPieSlice(45, "Hello"));//specialPie->slices.at(2));
     //        specialPie->append(4, "heloo");
     //    }
+}
+
+void TableWidget::testPie2()
+{
+    QPieSlice *slice;
+    if (m_pieSeries->count() > 0) {
+        slice = m_pieSeries->slices().last();
+        m_pieSeries->remove(slice);
+    }
+
+    if (m_pieSeries->count() > 0) {
+        slice = m_pieSeries->slices().first();
+        m_pieSeries->remove(slice);
+    }
 }
 
 TableWidget::~TableWidget()

@@ -29,8 +29,8 @@ public Q_SLOTS:
     void modelColumnsRemoved(QModelIndex parent, int start, int end);
 
     // for the series
-    void slicesAdded();
-    void slicesRemoved();
+    void slicesAdded(QList<QPieSlice*> slices);
+    void slicesRemoved(QList<QPieSlice*> slices);
     void sliceChanged();
 
     void initializePieFromModel();
@@ -42,7 +42,12 @@ private:
     void insertData(int start, int end);
     void removeData(int start, int end);
 
+    void blockModelSignals(bool block = true);
+    void blockSeriesSignals(bool block = true);
+
 private:
+    bool m_seriesSignalsBlock;
+    bool m_modelSignalsBlock;
     QPieSeries *m_series;
     QAbstractItemModel *m_model;
     int m_first;
