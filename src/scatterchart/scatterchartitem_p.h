@@ -34,6 +34,7 @@ class Marker;
 class ScatterChartItem : public XYChart, public QGraphicsItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
     explicit ScatterChartItem(QScatterSeries *series, ChartPresenter *presenter);
 
