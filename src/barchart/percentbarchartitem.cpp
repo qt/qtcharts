@@ -37,25 +37,30 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
     QVector<QRectF> layout;
 
     // Use temporary qreals for accurancy
+    qreal categoryCount = m_series->categoryCount();
+    qreal setCount = m_series->barsetCount();
+
+    // Domain:
     qreal width = geometry().width();
     qreal height = geometry().height();
-
-    qreal categoryCount = m_series->categoryCount();
-    qreal barWidth = width / (m_series->categoryCount() * 2);
-    qreal xStep = width / categoryCount;
-    qreal xPos =  xStep / 2 - barWidth / 2 + geometry().topLeft().x();
-
-    qreal range = m_domainMaxY - m_domainMinY;
-    qreal domainScale = (height / range);
+    qreal rangeY = m_domainMaxY - m_domainMinY;
+    qreal rangeX = m_domainMaxX - m_domainMinX;
+    qreal scaleY = (height / rangeY);
+    qreal scaleX = (width / rangeX);
+    qreal categoryWidth = width / categoryCount;
+    qreal barWidth = categoryWidth / setCount - categoryWidth * m_series->d_func()->barMargin();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
         qreal colSum = m_series->d_func()->categorySum(category);
         qreal percentage = (100 / colSum);
-        qreal yPos = height + domainScale * m_domainMinY + geometry().topLeft().y();
-        for (int set=0; set < m_series->barsetCount(); set++) {
+        qreal yPos = height + scaleY * m_domainMinY + geometry().topLeft().y();
+        for (int set=0; set < setCount; set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
-            qreal barHeight = barSet->at(category).y() * percentage * domainScale;
+
+            qreal xPos = (barSet->at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
+
+            qreal barHeight = barSet->at(category).y() * percentage * scaleY;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
@@ -80,7 +85,6 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             itemIndex++;
             yPos -= barHeight;
         }
-        xPos += xStep;
     }
     return layout;
 }

@@ -36,24 +36,28 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
     // Use temporary qreals for accurancy
+    qreal categoryCount = m_series->categoryCount();
+    qreal setCount = m_series->barsetCount();
 
     // Domain:
-    qreal range = m_domainMaxY - m_domainMinY;
-    qreal height = geometry().height();
     qreal width = geometry().width();
-    qreal scale = (height / range);
-    qreal categotyCount = m_series->categoryCount();
-    qreal barWidth = width / (categotyCount * 2);
-    qreal xStep = width / categotyCount;
-    qreal xPos = xStep / 2 - barWidth / 2 + geometry().topLeft().x();
+    qreal height = geometry().height();
+    qreal rangeY = m_domainMaxY - m_domainMinY;
+    qreal rangeX = m_domainMaxX - m_domainMinX;
+    qreal scaleY = (height / rangeY);
+    qreal scaleX = (width / rangeX);
+    qreal categoryWidth = width / categoryCount;
+    qreal barWidth = categoryWidth / setCount - categoryWidth * m_series->d_func()->barMargin();
 
     int itemIndex(0);
-    for (int category = 0; category < categotyCount; category++) {
-        qreal yPos = height + scale * m_domainMinY + geometry().topLeft().y();
+    for (int category = 0; category < categoryCount; category++) {
+        qreal yPos = height + rangeY * m_domainMinY + geometry().topLeft().y();
         for (int set=0; set < m_series->barsetCount(); set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
 
-            qreal barHeight = barSet->at(category).y() * scale;
+            qreal xPos = (barSet->at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
+
+            qreal barHeight = barSet->at(category).y() * scaleY;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
@@ -74,7 +78,6 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             itemIndex++;
             yPos -= barHeight;
         }
-        xPos += xStep;
     }
 
     return layout;

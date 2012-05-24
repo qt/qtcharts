@@ -43,19 +43,23 @@ QVector<QRectF> GroupedBarChartItem::calculateLayout()
     // Domain:
     qreal width = geometry().width();
     qreal height = geometry().height();
-    qreal range = m_domainMaxY - m_domainMinY;
-    qreal scale = (height / range);
+    qreal rangeY = m_domainMaxY - m_domainMinY;
+    qreal rangeX = m_domainMaxX - m_domainMinX;
+    qreal scaleY = (height / rangeY);
+    qreal scaleX = (width / rangeX);
     qreal categoryWidth = width / categoryCount;
-    qreal barWidth = categoryWidth / (setCount+1);
+    qreal barWidth = categoryWidth / setCount - categoryWidth * m_series->d_func()->barMargin();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal xPos = categoryWidth * category + barWidth / 2 + geometry().topLeft().x();
-        qreal yPos = height + scale * m_domainMinY + geometry().topLeft().y();
+        qreal yPos = height + scaleY * m_domainMinY + geometry().topLeft().y();
         for (int set = 0; set < setCount; set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
 
-            qreal barHeight = barSet->at(category).y() * scale;
+            qreal xPos = (barSet->at(category).x() - m_domainMinX) * scaleX + m_rect.left();
+            xPos -= setCount*barWidth/2;
+            xPos += set*barWidth;
+            qreal barHeight = barSet->at(category).y() * scaleY;
             Bar* bar = m_bars.at(itemIndex);
 
             QRectF rect(xPos, yPos - barHeight, barWidth, barHeight);
@@ -76,7 +80,6 @@ QVector<QRectF> GroupedBarChartItem::calculateLayout()
             label->setFont(barSet->labelFont());
 
             itemIndex++;
-            xPos += barWidth;
         }
     }
     return layout;

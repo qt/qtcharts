@@ -81,9 +81,9 @@ void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
 
     qreal x = q->categoryCount();
     qreal y = maxCategorySum();
-    minX = qMin(minX, x);
+    minX = qMin(minX, x) - 0.5;
     minY = qMin(minY, y);
-    maxX = qMax(maxX, x);
+    maxX = qMax(maxX, x) - 0.5;
     maxY = qMax(maxY, y);
     tickXCount = x+1;
 
