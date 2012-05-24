@@ -72,7 +72,7 @@ public:
     DeclarativeTableModel *declarativeModel();
 
 public Q_SLOTS:
-    static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> */*list*/, DeclarativeBarSet */*element*/) {}
+    static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> * /*list*/, DeclarativeBarSet * /*element*/) {}
 };
 
 class DeclarativeGroupedBarSeries : public QGroupedBarSeries, public QDeclarativeParserStatus
@@ -99,7 +99,7 @@ public:
     DeclarativeTableModel *declarativeModel();
 
 public Q_SLOTS:
-    static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> */*list*/, DeclarativeBarSet */*element*/) {}
+    static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> * /*list*/, DeclarativeBarSet * /*element*/) {}
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

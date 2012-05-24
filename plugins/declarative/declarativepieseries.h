@@ -56,7 +56,7 @@ public:
     void componentComplete();
 
 public Q_SLOTS:
-    static void appendInitialSlices(QDeclarativeListProperty<QPieSlice> */*list*/, QPieSlice */*element*/) {}
+    static void appendInitialSlices(QDeclarativeListProperty<QPieSlice> * /*list*/, QPieSlice * /*element*/) {}
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
