@@ -48,7 +48,7 @@ public:
     void reset();
 
 private:
-    QScopedPointer<QPieModelMapperPrivate> d_ptr;
+    QPieModelMapperPrivate * const d_ptr;
     Q_DECLARE_PRIVATE(QPieModelMapper)
 };
 
