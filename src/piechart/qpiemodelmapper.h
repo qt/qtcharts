@@ -47,7 +47,7 @@ public:
 
     void reset();
 
-private:
+protected:
     QPieModelMapperPrivate * const d_ptr;
     Q_DECLARE_PRIVATE(QPieModelMapper)
 };

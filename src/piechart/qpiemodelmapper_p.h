@@ -31,7 +31,8 @@ public Q_SLOTS:
     // for the series
     void slicesAdded(QList<QPieSlice*> slices);
     void slicesRemoved(QList<QPieSlice*> slices);
-    void sliceChanged();
+    void sliceLabelChanged();
+    void sliceValueChanged();
 
     void initializePieFromModel();
 
@@ -49,6 +50,7 @@ private:
     bool m_seriesSignalsBlock;
     bool m_modelSignalsBlock;
     QPieSeries *m_series;
+    QList<QPieSlice*> m_slices;
     QAbstractItemModel *m_model;
     int m_first;
     int m_count;

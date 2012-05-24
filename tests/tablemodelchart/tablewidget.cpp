@@ -87,6 +87,9 @@ TableWidget::TableWidget(QWidget *parent)
     QPushButton* specialPieButton2 = new QPushButton("Remove slices from series");
     connect(specialPieButton2, SIGNAL(clicked()), this, SLOT(testPie2()));
 
+    QPushButton* specialPieButton3 = new QPushButton("Remove slices from series");
+    connect(specialPieButton3, SIGNAL(clicked()), this, SLOT(testPie3()));
+
 
     //    QLabel *spinBoxLabel = new QLabel("Rows affected:");
 
@@ -106,6 +109,7 @@ TableWidget::TableWidget(QWidget *parent)
     //    buttonsLayout->addWidget(removeColumnButton);
     buttonsLayout->addWidget(specialPieButton);
     buttonsLayout->addWidget(specialPieButton2);
+    buttonsLayout->addWidget(specialPieButton3);
     buttonsLayout->addStretch();
 
     // chart type radio buttons
@@ -347,11 +351,11 @@ void TableWidget::updateChartType(bool toggle)
 
             m_pieMapper = new QPieModelMapper;
             m_pieMapper->setValuesIndex(1);
-            m_pieMapper->setLabelsIndex(1);
+            m_pieMapper->setLabelsIndex(7);
             m_pieMapper->setSeries(m_pieSeries);
             m_pieMapper->setModel(m_model);
             m_pieMapper->setFirst(2);
-            //            m_pieMapper->setCount(5);
+                        m_pieMapper->setCount(5);
             //                    pieSeries->setModelMapper(mapper);
 
             m_pieSeries->setLabelsVisible(true);
@@ -361,7 +365,7 @@ void TableWidget::updateChartType(bool toggle)
 
             m_chart->addSeries(m_pieSeries);
             seriesColorHex = "#" + QString::number(m_pieSeries->slices().at(m_pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 50));
+            m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 5));
 
 
             //                            pieSeries->slices().at(0)->setValue(400);
@@ -490,6 +494,22 @@ void TableWidget::testPie2()
     if (m_pieSeries->count() > 0) {
         slice = m_pieSeries->slices().first();
         m_pieSeries->remove(slice);
+    }
+}
+
+void TableWidget::testPie3()
+{
+    QPieSlice *slice;
+    if (m_pieSeries->count() > 0) {
+        slice = m_pieSeries->slices().last();
+        slice->setLabel("Dalej");
+        slice->setValue(222);
+    }
+
+    if (m_pieSeries->count() > 0) {
+        slice = m_pieSeries->slices().first();
+        slice->setLabel("Prawie");
+        slice->setValue(111);
     }
 }
 

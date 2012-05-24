@@ -53,6 +53,7 @@ public:
     void updateChartType(bool toggle);
     void testPie();
     void testPie2();
+    void testPie3();
 
     private:
     QChartView* m_chartView;
