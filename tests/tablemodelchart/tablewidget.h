@@ -26,7 +26,7 @@
 #include "qchartview.h"
 //#include "qxyseries.h"
 #include <QPieSeries>
-#include <QPieModelMapper>
+#include <QVPieModelMapper>
 
 class CustomTableModel;
 class QTableView;
@@ -68,7 +68,7 @@ public:
     QRadioButton* m_areaRadioButton;
     QRadioButton* m_barRadioButton;
     QSpinBox* m_linesCountSpinBox;
-    QPieModelMapper *m_pieMapper;
+    QVPieModelMapper *m_pieMapper;
     QPieSeries* m_pieSeries;
 //    QPieSeries* specialPie;
 };

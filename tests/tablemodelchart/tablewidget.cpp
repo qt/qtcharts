@@ -29,7 +29,7 @@
 #include <QXYModelMapper>
 #include "customtablemodel.h"
 #include <QPieSeries>
-#include <QPieModelMapper>
+#include <QVPieModelMapper>
 #include <QPieSlice>
 #include <QAreaSeries>
 #include <QBarSeries>
@@ -349,9 +349,9 @@ void TableWidget::updateChartType(bool toggle)
             // pie 1
             m_pieSeries = new QPieSeries;
 
-            m_pieMapper = new QPieModelMapper;
-            m_pieMapper->setValuesIndex(1);
-            m_pieMapper->setLabelsIndex(7);
+            m_pieMapper = new QVPieModelMapper;
+            m_pieMapper->setValuesColumn(1);
+            m_pieMapper->setLabelsColumn(7);
             m_pieMapper->setSeries(m_pieSeries);
             m_pieMapper->setModel(m_model);
             m_pieMapper->setFirst(2);
