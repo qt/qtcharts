@@ -123,7 +123,7 @@ void tst_QChart::qchart()
 {
     QVERIFY(m_chart);
     QVERIFY(m_chart->legend());
-    QVERIFY(!m_chart->legend()->isVisible());
+    QVERIFY(m_chart->legend()->isVisible());
 
     QCOMPARE(m_chart->animationOptions(), QChart::NoAnimation);
     QVERIFY(m_chart->axisX());
