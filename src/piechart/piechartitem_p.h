@@ -49,7 +49,6 @@ public Q_SLOTS:
     virtual void rangeXChanged(qreal min, qreal max, int tickXCount);
     virtual void rangeYChanged(qreal min, qreal max, int tickYCount);
 
-    void initialize();
     void updateLayout();
     void handleSlicesAdded(QList<QPieSlice*> slices);
     void handleSlicesRemoved(QList<QPieSlice*> slices);

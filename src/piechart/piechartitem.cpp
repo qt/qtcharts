@@ -43,10 +43,10 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
     connect(d, SIGNAL(piePositionChanged()), this, SLOT(updateLayout()));
     connect(d, SIGNAL(pieSizeChanged()), this, SLOT(updateLayout()));
 
-    QTimer::singleShot(0, this, SLOT(initialize())); // TODO: get rid of this
-
     // Note: the following does not affect as long as the item does not have anything to paint
     setZValue(ChartPresenter::PieSeriesZValue);
+
+    // Note: will not create slice items until we have a proper rectangle to draw on.
 }
 
 PieChartItem::~PieChartItem()
@@ -59,6 +59,11 @@ void PieChartItem::handleGeometryChanged(const QRectF& rect)
     prepareGeometryChange();
     m_rect = rect;
     updateLayout();
+
+    // This is for delayed initialization of the slice items during startup.
+    // It ensures that startup animation originates from the correct position.
+    if (m_sliceItems.isEmpty())
+        handleSlicesAdded(m_series->slices());
 }
 
 void PieChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
@@ -84,11 +89,6 @@ void PieChartItem::rangeYChanged(qreal min, qreal max, int tickYCount)
     Q_UNUSED(max);
     Q_UNUSED(tickYCount);
     // does not apply to pie
-}
-
-void PieChartItem::initialize()
-{
-    handleSlicesAdded(m_series->slices());
 }
 
 void PieChartItem::updateLayout()
@@ -122,6 +122,10 @@ void PieChartItem::updateLayout()
 
 void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 {
+    // delay creating slice items until there is a proper rectangle
+    if (!m_rect.isValid() && m_sliceItems.isEmpty())
+        return;
+
     presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
 
     bool startupAnimation = m_sliceItems.isEmpty();
