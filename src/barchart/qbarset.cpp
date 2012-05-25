@@ -97,7 +97,7 @@ void QBarSet::append(const QPointF value)
 }
 
 /*!
-    Appends a list of \a points to set. Works like append with single point.
+    Appends a list of \a values to set. Works like append with single point.
     \sa append()
 */
 void QBarSet::append(const QList<QPointF> values)
