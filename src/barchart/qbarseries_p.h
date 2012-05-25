@@ -44,6 +44,7 @@ Q_SIGNALS:
     void updatedBars();
     void restructuredBars();
     void categoriesUpdated();
+    void labelsVisibleChanged(bool visible);
 
 private Q_SLOTS:
     void barsetChanged();
@@ -52,6 +53,8 @@ protected:
     QList<QBarSet *> m_barSets;
     QBarCategories m_categories;
     qreal m_barMargin;
+    bool m_labelsVisible;
+
 private:
     Q_DECLARE_PUBLIC(QBarSeries)
 };

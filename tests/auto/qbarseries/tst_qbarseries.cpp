@@ -403,27 +403,23 @@ void tst_QBarSeries::setLabelsVisible_data()
 void tst_QBarSeries::setLabelsVisible()
 {
     // labels should be invisible by default
-    foreach (QBarSet* s, m_testSets) {
-        QVERIFY(s->labelsVisible() == false);
-    }
+    QVERIFY(m_barseries->isLabelsVisible() == false);
+    QVERIFY(m_barseries_with_sets->isLabelsVisible() == false);
 
     // turn labels to visible
     m_barseries_with_sets->setLabelsVisible(true);
-    foreach (QBarSet* s, m_testSets) {
-        QVERIFY(s->labelsVisible() == true);
-    }
+    // TODO: test the signal
+    QVERIFY(m_barseries_with_sets->isLabelsVisible() == true);
 
     // turn labels to invisible
     m_barseries_with_sets->setLabelsVisible(false);
-    foreach (QBarSet* s, m_testSets) {
-        QVERIFY(s->labelsVisible() == false);
-    }
+    // TODO: test the signal
+    QVERIFY(m_barseries_with_sets->isLabelsVisible() == false);
 
     // without parameter, should turn labels to visible
     m_barseries_with_sets->setLabelsVisible();
-    foreach (QBarSet* s, m_testSets) {
-        QVERIFY(s->labelsVisible() == true);
-    }
+    // TODO: test the signal
+    QVERIFY(m_barseries_with_sets->isLabelsVisible() == true);
 }
 
 void tst_QBarSeries::mouseclicked_data()

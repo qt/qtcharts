@@ -230,16 +230,25 @@ QBarCategories QBarSeries::categories() const
 */
 void QBarSeries::setLabelsVisible(bool visible)
 {
-    foreach (QBarSet* s, barSets()) {
-        s->setLabelsVisible(visible);
+    Q_D(QBarSeries);
+    if (d->m_labelsVisible != visible) {
+        d->m_labelsVisible = visible;
+        emit d->updatedBars();
     }
+}
+
+bool QBarSeries::isLabelsVisible() const
+{
+    Q_D(const QBarSeries);
+    return d->m_labelsVisible;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
     QAbstractSeriesPrivate(q),
-    m_barMargin(0.05)  // Default value is 5% of category width
+    m_barMargin(0.05),  // Default value is 5% of category width
+    m_labelsVisible(false)
 {
 }
 

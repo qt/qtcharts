@@ -29,7 +29,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Bar;
-class BarLabel;
 class QAxisCategories;
 class QChart;
 
@@ -61,6 +60,7 @@ public Q_SLOTS:
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF &size);
     void handleLayoutChanged();
+    void labelsVisibleChanged(bool visible);
 
 protected:
 
@@ -76,7 +76,7 @@ protected:
     // Not owned.
     QBarSeries *m_series;
     QList<Bar *> m_bars;
-    QList<BarLabel *> m_labels;
+    QList<QGraphicsSimpleTextItem *> m_labels;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

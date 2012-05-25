@@ -20,7 +20,6 @@
 
 #include "barchartitem_p.h"
 #include "bar_p.h"
-#include "barlabel_p.h"
 #include "qbarset.h"
 #include "qbarset_p.h"
 #include "qbarseries.h"
@@ -41,6 +40,7 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
     setFlag(ItemClipsChildrenToShape);
     connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleModelChanged()));
+    connect(series->d_func(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(labelsVisibleChanged(bool)));
     setZValue(ChartPresenter::BarSeriesZValue);
     dataChanged();
 }
@@ -71,11 +71,15 @@ void BarChartItem::dataChanged()
     m_labels.clear();
     m_layout.clear();
 
+    bool labelsVisible = m_series->isLabelsVisible();
+
     // Create new graphic items for bars
     for (int c = 0; c < m_series->categoryCount(); c++) {
         QString category = m_series->d_func()->categoryName(c);
         for (int s = 0; s < m_series->barsetCount(); s++) {
             QBarSet *set = m_series->d_func()->barsetAt(s);
+
+            // Bars
             Bar *bar = new Bar(set,category,this);
             m_bars.append(bar);
             connect(bar, SIGNAL(clicked(QString)), set, SIGNAL(clicked(QString)));
@@ -83,18 +87,13 @@ void BarChartItem::dataChanged()
             connect(bar, SIGNAL(hovered(bool)), set, SIGNAL(hovered(bool)));
             connect(bar, SIGNAL(hovered(QBarSet*,bool)), m_series, SIGNAL(hovered(QBarSet*,bool)));
             m_layout.append(QRectF(0, 0, 0, 0));
+
+            // Labels
+            QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem(this);
+            label->setVisible(labelsVisible);
+            m_labels.append(label);
         }
     }
-
-    // Create labels
-    for (int category = 0; category < m_series->categoryCount(); category++) {
-        for (int s = 0; s < m_series->barsetCount(); s++) {
-            QBarSet *set = m_series->d_func()->barsetAt(s);
-            BarLabel *value = new BarLabel(*set, this);
-            m_labels.append(value);
-            connect(set->d_ptr.data(),SIGNAL(labelsVisibleChanged(bool)),value,SLOT(labelsVisibleChanged(bool)));
-        }
-    }     
 
     // TODO: Is this the right place to call it?
 //    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
@@ -133,7 +132,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
 
-            BarLabel* label = m_labels.at(itemIndex);
+            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(barSet->at(category).y())) {
                 label->setText(QString::number(barSet->at(category).y()));
@@ -202,6 +201,14 @@ void BarChartItem::handleLayoutChanged()
     }
     QVector<QRectF> layout = calculateLayout();
     applyLayout(layout);
+    update();
+}
+
+void BarChartItem::labelsVisibleChanged(bool visible)
+{
+    foreach (QGraphicsSimpleTextItem* label, m_labels) {
+        label->setVisible(visible);
+    }
     update();
 }
 

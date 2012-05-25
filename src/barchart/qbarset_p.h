@@ -3,6 +3,9 @@
 
 #include "qbarset.h"
 #include <QMap>
+#include <QPen>
+#include <QBrush>
+#include <QFont>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -18,7 +21,6 @@ Q_SIGNALS:
     void clicked(QString category);
     void restructuredBars();
     void updatedBars();
-    void labelsVisibleChanged(bool visible);
 
 public:
     QBarSet * const q_ptr;
@@ -29,7 +31,6 @@ public:
     QPen m_labelPen;
     QBrush m_labelBrush;
     QFont m_labelFont;
-    bool m_labelsVisible;
 
     friend class QBarSet;
 };

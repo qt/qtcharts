@@ -20,7 +20,6 @@
 
 #include "percentbarchartitem_p.h"
 #include "bar_p.h"
-#include "barlabel_p.h"
 #include "qbarseries_p.h"
 #include "qbarset.h"
 #include <QDebug>
@@ -67,7 +66,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
             layout.append(rect);
 
-            BarLabel* label = m_labels.at(itemIndex);
+            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(m_series->d_func()->valueAt(set,category))) {
                 int p = m_series->d_func()->percentageAt(set,category) * 100;

@@ -20,7 +20,6 @@
 
 #include "stackedbarchartitem_p.h"
 #include "bar_p.h"
-#include "barlabel_p.h"
 #include "qbarset_p.h"
 #include "qbarseries_p.h"
 #include "qbarset.h"
@@ -64,7 +63,7 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
             layout.append(rect);
 
-            BarLabel* label = m_labels.at(itemIndex);
+            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(barSet->at(category).y())) {
                 label->setText(QString::number(barSet->at(category).y()));

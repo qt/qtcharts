@@ -41,16 +41,16 @@ public:
     void setName(const QString name);
     QString name() const;
 
-    void append(const QPointF value);           // Appends bar with x-value
-    void append(const QList<QPointF> values);   // Same with list
-    void append(const qreal value);             // TODO: change so, that count becomes x-value
-    void append(const QList<qreal> values);     // Append list of values. Using index as x-value
+    void append(const QPointF value);
+    void append(const QList<QPointF> values);
+    void append(const qreal value);
+    void append(const QList<qreal> values);
 
-    QBarSet& operator << (const qreal &value);      // TODO: change implementations so, that count becomes x-value
-    QBarSet& operator << (const QPointF &value);    // Appends bar with x-value
+    QBarSet& operator << (const qreal &value);
+    QBarSet& operator << (const QPointF &value);
 
-    void insert(const int index, const qreal value); // TODO: internal reindexing (what happens, if there are points with real x values?)
-    void remove(const int index);                    // TODO: internal reindexing (what happens, if there are points with real x values?)
+    void insert(const int index, const qreal value);
+    void remove(const int index);
     void replace(const int index, const qreal value);
     QPointF at(const int index) const;
     QPointF operator [] (const int index) const;
@@ -71,9 +71,6 @@ public:
 
     void setLabelFont(const QFont &font);
     QFont labelFont() const;
-
-    void setLabelsVisible(bool visible = true);
-    bool labelsVisible() const;
 
 Q_SIGNALS:
     void clicked(QString category);

@@ -324,32 +324,11 @@ QFont QBarSet::labelFont() const
     return d_ptr->m_labelFont;
 }
 
-/*!
-    Sets visibility of bar labels. If \a visible is true, labels are drawn on top of barsets.
-*/
-
-void QBarSet::setLabelsVisible(bool visible)
-{
-    if(d_ptr->m_labelsVisible!=visible) {
-        d_ptr->m_labelsVisible = visible;
-        emit d_ptr->labelsVisibleChanged(visible);
-    }
-}
-
-/*!
-    Returns the visibility of values
-*/
-bool QBarSet::labelsVisible() const
-{
-    return d_ptr->m_labelsVisible;
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QBarSetPrivate::QBarSetPrivate(const QString name, QBarSet *parent) : QObject(parent),
     q_ptr(parent),
-    m_name(name),
-    m_labelsVisible(false)
+    m_name(name)
 {
 }
 

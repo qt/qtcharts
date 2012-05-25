@@ -53,6 +53,7 @@ public:
     QBarCategories categories() const;
 
     void setLabelsVisible(bool visible = true);
+    bool isLabelsVisible() const;
 
 protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);
