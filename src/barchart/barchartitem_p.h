@@ -18,6 +18,16 @@
 **
 ****************************************************************************/
 
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the QtCommercial Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
+
+
 #ifndef BARCHARTITEM_H
 #define BARCHARTITEM_H
 
@@ -32,8 +42,6 @@ class Bar;
 class QAxisCategories;
 class QChart;
 
-//typedef QVector<QRectF> BarLayout;
-
 class BarChartItem : public ChartItem
 {
     Q_OBJECT
@@ -42,7 +50,6 @@ public:
     virtual ~BarChartItem();
 
 public:
-    // From QGraphicsItem
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
 
