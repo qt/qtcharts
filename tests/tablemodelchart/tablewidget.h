@@ -70,6 +70,8 @@ public:
     QSpinBox* m_linesCountSpinBox;
     QVPieModelMapper *m_pieMapper;
     QPieSeries* m_pieSeries;
+    QVPieModelMapper *m_pieMapper2;
+    QPieSeries* m_pieSeries2;
 //    QPieSeries* specialPie;
 };
 

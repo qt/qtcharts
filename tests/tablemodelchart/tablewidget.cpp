@@ -81,13 +81,13 @@ TableWidget::TableWidget(QWidget *parent)
     QPushButton* removeColumnButton = new QPushButton("Remove column");
     connect(removeColumnButton, SIGNAL(clicked()), this, SLOT(removeColumn()));
 
-    QPushButton* specialPieButton = new QPushButton("Add slices from series");
+    QPushButton* specialPieButton = new QPushButton("Add slices using series API");
     connect(specialPieButton, SIGNAL(clicked()), this, SLOT(testPie()));
 
-    QPushButton* specialPieButton2 = new QPushButton("Remove slices from series");
+    QPushButton* specialPieButton2 = new QPushButton("Remove slices using series API");
     connect(specialPieButton2, SIGNAL(clicked()), this, SLOT(testPie2()));
 
-    QPushButton* specialPieButton3 = new QPushButton("Remove slices from series");
+    QPushButton* specialPieButton3 = new QPushButton("Modify slices using series API");
     connect(specialPieButton3, SIGNAL(clicked()), this, SLOT(testPie3()));
 
 
@@ -355,35 +355,39 @@ void TableWidget::updateChartType(bool toggle)
             m_pieMapper->setSeries(m_pieSeries);
             m_pieMapper->setModel(m_model);
             m_pieMapper->setFirst(2);
-//                        m_pieMapper->setCount(5);
+            //                        m_pieMapper->setCount(5);
             //                    pieSeries->setModelMapper(mapper);
 
             m_pieSeries->setLabelsVisible(true);
-            m_pieSeries->setPieSize(0.75);
-            //            pieSeries->setHorizontalPosition(0.2);
-            //            pieSeries->setVerticalPosition(0.3);
+            m_pieSeries->setPieSize(0.35);
+            m_pieSeries->setHorizontalPosition(0.25);
+            m_pieSeries->setVerticalPosition(0.35);
 
             m_chart->addSeries(m_pieSeries);
             seriesColorHex = "#" + QString::number(m_pieSeries->slices().at(m_pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-            m_model->addMapping(seriesColorHex, QRect(0, 2, 2, 5));
+            m_model->addMapping(seriesColorHex, QRect(1, 2, 1, 50));
 
 
             //                            pieSeries->slices().at(0)->setValue(400);
             //                            pieSeries->slices().at(0)->setLabel(QString("36"));
 
-            //            // pie 2
-            //            pieSeries = new QPieSeries;
-            //            pieSeries->setModel(m_model);
+            // pie 2
+            m_pieSeries2 = new QPieSeries;
 
-            //            pieSeries->setModelMapping(1,1, Qt::Vertical);
-            //            pieSeries->setModelMappingRange(2, -1);
-            //            pieSeries->setLabelsVisible(true);
-            //            pieSeries->setPieSize(0.35);
-            //            pieSeries->setHorizontalPosition(0.8);
-            //            pieSeries->setVerticalPosition(0.3);
-            //            m_chart->addSeries(pieSeries);
-            //            seriesColorHex = "#" + QString::number(pieSeries->slices().at(pieSeries->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
-            //            m_model->addMapping(seriesColorHex, QRect(1, 2, 1, 1000));
+            m_pieMapper = new QVPieModelMapper;
+            m_pieMapper->setValuesColumn(0);
+            m_pieMapper->setLabelsColumn(7);
+            m_pieMapper->setSeries(m_pieSeries2);
+            m_pieMapper->setModel(m_model);
+            m_pieMapper->setFirst(2);
+
+            m_pieSeries2->setLabelsVisible(true);
+            m_pieSeries2->setPieSize(0.35);
+            m_pieSeries2->setHorizontalPosition(0.75);
+            m_pieSeries2->setVerticalPosition(0.65);
+            m_chart->addSeries(m_pieSeries2);
+            seriesColorHex = "#" + QString::number(m_pieSeries2->slices().at(m_pieSeries2->slices().count()/2)->brush().color().rgb(), 16).right(6).toUpper();
+            m_model->addMapping(seriesColorHex, QRect(0, 2, 1, 1000));
 
             //            // pie 3
             //            pieSeries = new QPieSeries;

@@ -30,6 +30,7 @@ class tst_piemodelmapper : public QObject
     void horizontalMapper();
     void horizontalMapperCustomMapping_data();
     void horizontalMapperCustomMapping();
+    void seriesUpdated();
 
 
     private:
@@ -149,7 +150,7 @@ void tst_piemodelmapper::verticalMapperCustomMapping()
 
     QCOMPARE(m_series->count(), expectedCount);
 
-    // change values column mappings to invalid
+    // change values column mapping to invalid
     mapper->setValuesColumn(-1);
     mapper->setLabelsColumn(1);
 
@@ -226,7 +227,7 @@ void tst_piemodelmapper::horizontalMapperCustomMapping()
 
     QCOMPARE(m_series->count(), expectedCount);
 
-    // change values column mappings to invalid
+    // change values row mapping to invalid
     mapper->setValuesRow(-1);
     mapper->setLabelsRow(1);
 
@@ -234,6 +235,34 @@ void tst_piemodelmapper::horizontalMapperCustomMapping()
 
     delete mapper;
     mapper = 0;
+}
+
+void tst_piemodelmapper::seriesUpdated()
+{
+    QStandardItemModel *otherModel = new QStandardItemModel;
+    for (int row = 0; row < m_modelRowCount; ++row) {
+        for (int column = 0; column < m_modelColumnCount; column++) {
+            QStandardItem *item = new QStandardItem(row * column);
+            otherModel->setItem(row, column, item);
+        }
+    }
+
+    QVPieModelMapper *mapper = new QVPieModelMapper;
+    mapper->setValuesColumn(0);
+    mapper->setLabelsColumn(1);
+    mapper->setModel(otherModel);
+    mapper->setSeries(m_series);
+    QCOMPARE(m_series->count(), m_modelRowCount);
+
+    m_series->append("1000", 1000);
+    QCOMPARE(m_series->count(), m_modelRowCount + 1);
+
+    m_series->remove(m_series->slices().last());
+    QCOMPARE(m_series->count(), m_modelRowCount);
+
+    otherModel->clear();
+    delete otherModel;
+    otherModel = 0;
 }
 
 QTEST_MAIN(tst_piemodelmapper)

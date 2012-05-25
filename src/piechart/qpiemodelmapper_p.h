@@ -38,6 +38,8 @@ public Q_SLOTS:
 
 private:
     QPieSlice* pieSlice(QModelIndex index) const;
+    bool isLabelIndex(QModelIndex index) const;
+    bool isValueIndex(QModelIndex index) const;
     QModelIndex valueModelIndex(int slicePos);
     QModelIndex labelModelIndex(int slicePos);
     void insertData(int start, int end);

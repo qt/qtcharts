@@ -198,6 +198,26 @@ QModelIndex QPieModelMapperPrivate::labelModelIndex(int slicePos)
         return m_model->index(m_labelsIndex, slicePos + m_first);
 }
 
+bool QPieModelMapperPrivate::isLabelIndex(QModelIndex index) const
+{
+    if (m_orientation == Qt::Vertical && index.column() == m_labelsIndex)
+        return true;
+    else if (m_orientation == Qt::Horizontal && index.row() == m_labelsIndex)
+        return true;
+
+    return false;
+}
+
+bool QPieModelMapperPrivate::isValueIndex(QModelIndex index) const
+{
+    if (m_orientation == Qt::Vertical && index.column() == m_valuesIndex)
+        return true;
+    else if (m_orientation == Qt::Horizontal && index.row() == m_valuesIndex)
+        return true;
+
+    return false;
+}
+
 void QPieModelMapperPrivate::slicesAdded(QList<QPieSlice*> slices)
 {
     if (m_seriesSignalsBlock)
@@ -293,8 +313,10 @@ void QPieModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex botto
             index = topLeft.sibling(row, column);
             slice = pieSlice(index);
             if (slice) {
-                slice->setValue(m_model->data(index, Qt::DisplayRole).toReal());
-                slice->setLabel(m_model->data(index, Qt::DisplayRole).toString());
+                if (isValueIndex(index))
+                    slice->setValue(m_model->data(index, Qt::DisplayRole).toReal());
+                if (isLabelIndex(index))
+                    slice->setLabel(m_model->data(index, Qt::DisplayRole).toString());
             }
         }
     }
@@ -360,6 +382,9 @@ void QPieModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int start, 
 
 void QPieModelMapperPrivate::insertData(int start, int end)
 {
+    if (m_model == 0 || m_series == 0)
+        return;
+
     if (m_count != -1 && start >= m_first + m_count) {
         return;
     } else {
@@ -390,6 +415,9 @@ void QPieModelMapperPrivate::insertData(int start, int end)
 
 void QPieModelMapperPrivate::removeData(int start, int end)
 {
+    if (m_model == 0 || m_series == 0)
+        return;
+
     int removedCount = end - start + 1;
     if (m_count != -1 && start >= m_first + m_count) {
         return;
@@ -450,7 +478,7 @@ void QPieModelMapperPrivate::initializePieFromModel()
         connect(slice, SIGNAL(valueChanged()), this, SLOT(sliceValueChanged()));
         m_series->append(slice);
         m_slices.append(slice);
-//        m_series->append(m_model->data(labelIndex, Qt::DisplayRole).toString(), m_model->data(valueIndex, Qt::DisplayRole).toDouble());
+        //        m_series->append(m_model->data(labelIndex, Qt::DisplayRole).toString(), m_model->data(valueIndex, Qt::DisplayRole).toDouble());
         slicePos++;
         valueIndex = valueModelIndex(slicePos);
         labelIndex = labelModelIndex(slicePos);
