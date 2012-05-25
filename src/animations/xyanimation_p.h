@@ -31,20 +31,22 @@ class XYChart;
 class XYAnimation : public ChartAnimation
 {
 public:
-    enum Animation { LineDrawAnimation, MoveDownAnimation, MoveUpAnimation };
+    enum Animation { AddPointAnimation, RemovePointAnimation, ReplacePointAnimation, NewAnimation };
     XYAnimation(XYChart *item);
     ~XYAnimation();
-    void setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index);
+    void setValues(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints,int index);
     void setAnimationType(Animation type);
     Animation animationType() const { return m_type; };
 
 protected:
     QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress ) const;
     void updateCurrentValue (const QVariant &value );
-
+    void updateState( QAbstractAnimation::State newState, QAbstractAnimation::State oldState );
 private:
     XYChart *m_item;
     QVector<QPointF> m_oldPoints;
+    QVector<QPointF> m_newPoints;
+    int m_index;
     bool m_dirty;
     Animation m_type;
 };

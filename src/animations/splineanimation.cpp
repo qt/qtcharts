@@ -94,7 +94,10 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
 
     switch (animationType()) {
 
-    case MoveDownAnimation: {
+    case RemovePointAnimation:
+    case AddPointAnimation:
+    case ReplacePointAnimation:
+    {
         if (startPair.first.count() != endPair.first.count())
             break;
         Q_ASSERT(startPair.first.count() * 2 - 2 == startPair.second.count());
@@ -115,7 +118,7 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
 
     }
         break;
-    case LineDrawAnimation:{
+    case NewAnimation:{
         Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
         int count = endPair.first.count()* qBound(qreal(0), progress, qreal(1));
         for(int i = 0; i < count; i++) {

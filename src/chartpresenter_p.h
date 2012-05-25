@@ -35,6 +35,7 @@ class ChartAxis;
 class ChartTheme;
 class ChartAnimator;
 class ChartBackground;
+class ChartAnimation;
 
 class ChartPresenter: public QObject
 {
@@ -50,6 +51,14 @@ public:
         PieSeriesZValue,
         AxisZValue,
         LegendZValue
+    };
+    enum State {ShowState,
+        ScrollUpState,
+        ScrollDownState,
+        ScrollLeftState,
+        ScrollRightState,
+        ZoomInState,
+        ZoomOutState
     };
 
     ChartPresenter(QChart* chart,ChartDataSet *dataset);
@@ -79,6 +88,9 @@ public:
     qreal minimumLeftMargin() const { return m_minLeftMargin; }
     qreal minimumBottomMargin() const { return m_minBottomMargin; }
 
+    void startAnimation(ChartAnimation* animation);
+    State state() const { return m_state; }
+    QPointF statePoint() const { return m_statePoint; }
 public: //TODO: fix me
     void resetAllElements();
     void createChartBackgroundItem();
@@ -92,9 +104,12 @@ public Q_SLOTS:
     void handleAxisRemoved(QAxis* axis);
     void updateLayout();
 
+private Q_SLOTS:
+    void handleAnimationFinished();
+
 Q_SIGNALS:
     void geometryChanged(const QRectF& rect);
-
+    void animationsFinished();
 
 private:
     QChart* m_chart;
@@ -108,6 +123,10 @@ private:
     QChart::AnimationOptions m_options;
     qreal m_minLeftMargin;
     qreal m_minBottomMargin;
+    State m_state;
+    QPointF m_statePoint;
+    QList<ChartAnimation*> m_animations;
+
 public: //TODO: fixme
     ChartBackground* m_backgroundItem;
     QGraphicsSimpleTextItem* m_titleItem;
@@ -116,7 +135,6 @@ public: //TODO: fixme
     int m_marginTiny;
     QRectF m_chartMargins;
     QRectF m_legendMargins;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

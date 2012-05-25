@@ -38,7 +38,7 @@ public:
      explicit XYChart(QXYSeries *series, ChartPresenter *presenter);
     ~XYChart(){};
 
-    void setGeometryPoints(QVector<QPointF>& points);
+    void setGeometryPoints(const QVector<QPointF>& points);
     QVector<QPointF> geometryPoints() const { return m_points; }
 
     void setClipRect(const QRectF &rect);
@@ -50,6 +50,9 @@ public:
     void setAnimation(XYAnimation* animation);
     ChartAnimation* animation() const { return m_animation; }
     virtual void updateGeometry() = 0;
+
+    bool isDirty() const { return m_dirty; }
+    void setDirty(bool dirty);
 
 public Q_SLOTS:
     void handlePointAdded(int index);
@@ -83,6 +86,7 @@ private:
     QRectF m_clipRect;
     QVector<QPointF> m_points;
     XYAnimation* m_animation;
+    bool m_dirty;
 
     friend class AreaChartItem;
 

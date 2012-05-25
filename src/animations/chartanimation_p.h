@@ -30,6 +30,7 @@ const static int ChartAnimationDuration = 1000;
 
 class ChartAnimation: public QVariantAnimation
 {
+    Q_OBJECT
 public:
     ChartAnimation(QObject *parent = 0):QVariantAnimation(parent){};
 };

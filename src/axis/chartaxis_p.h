@@ -18,11 +18,12 @@
 **
 ****************************************************************************/
 
-#ifndef AXIS_H
-#define AXIS_H
+#ifndef CHARTAXIS_H
+#define CHARTAXIS_H
 
 #include "qchartglobal.h"
 #include "chart_p.h"
+#include "axisanimation_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -34,12 +35,12 @@ class ChartAxis : public Chart
 {
     Q_OBJECT
 public:
-    enum AxisType{X_AXIS,Y_AXIS};
+    enum AxisType{ X_AXIS,Y_AXIS };
 
-    ChartAxis(QAxis *axis, ChartPresenter *presenter, AxisType type = X_AXIS);
+    ChartAxis(QAxis *axis, ChartPresenter *presenter);
     ~ChartAxis();
 
-    AxisType axisType() const { return m_type; }
+    virtual AxisType axisType() const = 0;
 
     void setAxisOpacity(qreal opacity);
     qreal axisOpacity() const;
@@ -66,8 +67,18 @@ public:
     void setLabelsBrush(const QBrush &brush);
     void setLabelsFont(const QFont &font);
 
-    inline QRectF geometry() const { return m_rect; }
-    inline QVector<qreal> layout() { return m_layoutVector; }
+    void setLayout(QVector<qreal> &layout);
+    QVector<qreal> layout() const { return m_layoutVector; }
+
+    void setAnimation(AxisAnimation* animation);
+    ChartAnimation* animation() const { return m_animation; };
+
+    QRectF geometry() const { return m_rect; }
+
+protected:
+    virtual void updateGeometry() = 0;
+    virtual QVector<qreal> calculateLayout() const = 0;
+    bool createLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
 
 public Q_SLOTS:
     void handleAxisUpdated();
@@ -75,22 +86,15 @@ public Q_SLOTS:
     void handleRangeChanged(qreal min , qreal max,int tickCount);
     void handleGeometryChanged(const QRectF &size);
 
-
 private:
     inline bool isEmpty();
     void createItems(int count);
     void deleteItems(int count);
-
-    QVector<qreal> calculateLayout() const;
     void updateLayout(QVector<qreal> &layout);
-    void setLayout(QVector<qreal> &layout);
-
-    bool createLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
     void axisSelected();
 
-private:
+protected:
     QAxis* m_chartAxis;
-    AxisType m_type;
     QRectF m_rect;
     int m_labelsAngle;
     QScopedPointer<QGraphicsItemGroup> m_grid;
@@ -101,6 +105,7 @@ private:
     qreal m_min;
     qreal m_max;
     int m_ticksCount;
+    AxisAnimation *m_animation;
 
     friend class AxisAnimation;
     friend class AxisItem;

@@ -87,7 +87,7 @@ void SplineChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> 
 
     if (m_animation) {
         m_animation->setValues(oldPoints,newPoints,m_controlPoints,controlPoints,index);
-        animator()->startAnimation(m_animation);
+        presenter()->startAnimation(m_animation);
     }
     else {
         setGeometryPoints(newPoints);

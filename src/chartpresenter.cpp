@@ -24,11 +24,15 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
+#include "chartanimation_p.h"
 #include "qabstractseries_p.h"
 #include "qareaseries.h"
 #include "chartaxis_p.h"
+#include "chartaxisx_p.h"
+#include "chartaxisy_p.h"
 #include "areachartitem_p.h"
 #include "chartbackground_p.h"
+#include <QTimer>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -41,6 +45,7 @@ m_chartRect(QRectF(QPoint(0,0),m_chart->size())),
 m_options(QChart::NoAnimation),
 m_minLeftMargin(0),
 m_minBottomMargin(0),
+m_state(ShowState),
 m_backgroundItem(0),
 m_titleItem(0),
 m_marginBig(60),
@@ -48,6 +53,7 @@ m_marginSmall(20),
 m_marginTiny(10),
 m_chartMargins(QRect(m_marginBig,m_marginBig,0,0))
 {
+
 }
 
 ChartPresenter::~ChartPresenter()
@@ -112,10 +118,17 @@ void ChartPresenter::setMinimumMarginHeight(ChartAxis* axis, qreal height)
 
 void ChartPresenter::handleAxisAdded(QAxis* axis,Domain* domain)
 {
-    ChartAxis* item = new ChartAxis(axis,this,axis==m_dataset->axisX()?ChartAxis::X_AXIS : ChartAxis::Y_AXIS);
+    ChartAxis* item;
+
+    if(axis == m_dataset->axisX()){
+        item = new ChartAxisX(axis,this);
+    }else{
+        item = new ChartAxisY(axis,this);
+    }
 
     if(m_options.testFlag(QChart::GridAxisAnimations)){
-        m_animator->addAnimation(item);
+        item->setAnimator(m_animator);
+        item->setAnimation(new AxisAnimation(item));
     }
 
     if(axis==m_dataset->axisX()){
@@ -244,21 +257,15 @@ void ChartPresenter::zoomIn(const QRectF& rect)
     if (!r.isValid())
         return;
 
-    if (m_animator) {
-        QPointF point(r.center().x()/chartGeometry().width(),r.center().y()/chartGeometry().height());
-        m_animator->setState(ChartAnimator::ZoomInState,point);
-    }
-
+    m_state = ZoomInState;
+    m_statePoint = QPointF(r.center().x()/chartGeometry().width(),r.center().y()/chartGeometry().height());
     m_dataset->zoomInDomain(r,chartGeometry().size());
-
-    if (m_animator)
-        m_animator->setState(ChartAnimator::ShowState);
+    m_state = ShowState;
 }
 
 void ChartPresenter::zoomOut(qreal factor)
 {
-    if (m_animator)
-        m_animator->setState(ChartAnimator::ZoomOutState);
+    m_state = ZoomOutState;
 
     QRectF chartRect;
     chartRect.setSize(chartGeometry().size());
@@ -268,27 +275,21 @@ void ChartPresenter::zoomOut(qreal factor)
     rect.moveCenter(chartRect.center());
     if (!rect.isValid())
         return;
-
+    m_statePoint = QPointF(rect.center().x()/chartGeometry().width(),rect.center().y()/chartGeometry().height());
     m_dataset->zoomOutDomain(rect, chartRect.size());
-
-    if (m_animator)
-        m_animator->setState(ChartAnimator::ShowState);
+    m_state = ShowState;
 }
 
 void ChartPresenter::scroll(int dx,int dy)
 {
-    if(m_animator){
-        if(dx<0) m_animator->setState(ChartAnimator::ScrollLeftState,QPointF());
-        if(dx>0) m_animator->setState(ChartAnimator::ScrollRightState,QPointF());
-        if(dy<0) m_animator->setState(ChartAnimator::ScrollUpState,QPointF());
-        if(dy>0) m_animator->setState(ChartAnimator::ScrollDownState,QPointF());
-    }
+
+    if(dx<0) m_state=ScrollLeftState;
+    if(dx>0) m_state=ScrollRightState;
+    if(dy<0) m_state=ScrollUpState;
+    if(dy>0) m_state=ScrollDownState;
 
     m_dataset->scrollDomain(dx,dy,chartGeometry().size());
-
-    if(m_animator){
-        m_animator->setState(ChartAnimator::ShowState);
-    }
+    m_state = ShowState;
 }
 
 QChart::AnimationOptions ChartPresenter::animationOptions() const
@@ -389,7 +390,6 @@ void ChartPresenter::updateLayout()
         emit geometryChanged(m_chartRect);
     }
 
-
 }
 
 void ChartPresenter::createChartBackgroundItem()
@@ -407,6 +407,22 @@ void ChartPresenter::createChartTitleItem()
         m_titleItem = new QGraphicsSimpleTextItem(rootItem());
         m_titleItem->setZValue(ChartPresenter::BackgroundZValue);
     }
+}
+
+void ChartPresenter::handleAnimationFinished()
+{
+   m_animations.removeAll(qobject_cast<ChartAnimation*>(sender()));
+   if(m_animations.empty()) emit animationsFinished();
+}
+
+void ChartPresenter::startAnimation(ChartAnimation* animation)
+{
+    if (animation->state() != QAbstractAnimation::Stopped) animation->stop();
+    QObject::connect(animation, SIGNAL(finished()),this,SLOT(handleAnimationFinished()),Qt::UniqueConnection);
+    if(!m_animations.isEmpty()){
+        m_animations.append(animation);
+    }
+    QTimer::singleShot(0, animation, SLOT(start()));
 }
 
 #include "moc_chartpresenter_p.cpp"

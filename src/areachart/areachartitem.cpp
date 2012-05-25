@@ -25,6 +25,7 @@
 #include "chartpresenter_p.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
+#include <QDebug>
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -39,9 +40,9 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
     m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
-    m_upper = new AreaBoundItem(this,m_series->upperSeries());
+    m_upper = new AreaBoundItem(this,m_series->upperSeries(),presenter);
     if (m_series->lowerSeries())
-        m_lower = new AreaBoundItem(this,m_series->lowerSeries());
+        m_lower = new AreaBoundItem(this,m_series->lowerSeries(),presenter);
 
     QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
     QObject::connect(this,SIGNAL(clicked(QPointF)),areaSeries,SIGNAL(clicked(QPointF)));

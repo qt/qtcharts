@@ -42,18 +42,12 @@ class ChartAnimator : public QObject
 {
     Q_OBJECT
 public:
-    enum State{ShowState, ScrollUpState, ScrollDownState, ScrollLeftState, ScrollRightState, ZoomInState, ZoomOutState};
-
     ChartAnimator(QObject *parent = 0);
     virtual ~ChartAnimator();
 
-    void addAnimation(ChartAxis *item);
     void addAnimation(PieChartItem *item);
     void addAnimation(BarChartItem *item);
     void removeAnimation(Chart *item);
-
-    void animationStarted();
-    void updateLayout(ChartAxis *item, QVector<qreal> &layout);
 
     void addAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData, bool isEmpty);
     void removeAnimation(PieChartItem *item, PieSliceItem *sliceItem);
@@ -61,14 +55,8 @@ public:
 
     void updateLayout(BarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
 
-    void setState(State state,const QPointF &point = QPointF());
-
-    void startAnimation(XYAnimation* animation);
-
 private:
      QMap<Chart *, ChartAnimation *> m_animations;
-     State m_state;
-     QPointF m_point;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

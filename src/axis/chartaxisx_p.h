@@ -18,36 +18,29 @@
 **
 ****************************************************************************/
 
-#ifndef AXISANIMATION_H
-#define AXISANIMATION_H
+#ifndef CHARTAXISX_H
+#define CHARTAXISX_H
 
-#include "chartanimation_p.h"
-#include <QPointF>
+#include "chartaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartAxis;
+class QAxis;
+class ChartPresenter;
 
-class AxisAnimation: public ChartAnimation
+class ChartAxisX : public ChartAxis
 {
 public:
-    enum Animation { DefaultAnimation, ZoomOutAnimation, ZoomInAnimation, MoveForwardAnimation, MoveBackwordAnimation};
-    AxisAnimation(ChartAxis *axis);
-    ~AxisAnimation();
-    void setAnimationType(Animation type);
-    void setAnimationPoint(const QPointF& point);
-    void setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayout);
+    ChartAxisX(QAxis *axis, ChartPresenter *presenter);
+    ~ChartAxisX();
+
+    AxisType axisType() const { return X_AXIS;}
+
 protected:
-    QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress ) const;
-    void updateCurrentValue(const QVariant &value );
-private:
-    ChartAxis *m_axis;
-    Animation m_type;
-    QPointF m_point;
+    QVector<qreal> calculateLayout() const;
+    void updateGeometry();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
-
-
 
 #endif /* AXISITEM_H_ */
