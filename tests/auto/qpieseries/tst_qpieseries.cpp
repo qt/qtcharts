@@ -282,11 +282,11 @@ void tst_qpieseries::clickedSignal()
 {
     // create a pie series
     QPieSeries *series = new QPieSeries();
-    series->setPieSize(1.0);
     QPieSlice *s1 = series->append("slice 1", 1);
-    series->append("slice 2", 2);
-    series->append("slice 3", 3);
-    QSignalSpy clickSpy1(series, SIGNAL(clicked(QPieSlice*)));
+    QPieSlice *s2 = series->append("slice 2", 1);
+    QPieSlice *s3 = series->append("slice 3", 1);
+    QPieSlice *s4 = series->append("slice 4", 1);
+    QSignalSpy clickSpy(series, SIGNAL(clicked(QPieSlice*)));
 
     // add series to the chart
     QChartView view(new QChart());
@@ -296,11 +296,68 @@ void tst_qpieseries::clickedSignal()
     view.show();
     QTest::qWaitForWindowShown(&view);
 
-    // simulate clicks
-    // pie rectangle: QRectF(60,60 121x121)
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0,  QPoint(146, 90)); // inside slice 1
-    TRY_COMPARE(clickSpy1.count(), 1);
-    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy1.at(0).at(0)), s1);
+    // if you devide the chart in four equal tiles these
+    // are the center points of those tiles
+    QPoint p1(90.25, 90);
+    QPoint p2(150, 90);
+    QPoint p3(90, 150);
+    QPoint p4(150, 150);
+
+    QPoint center(120, 120);
+
+    series->setPieSize(1.0);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    TRY_COMPARE(clickSpy.count(), 5); // all hit
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s4);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(1).at(0)), s1);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(2).at(0)), s3);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(3).at(0)), s2);
+    clickSpy.clear();
+
+    series->setPieSize(0.5);
+    series->setVerticalPosition(0.25);
+    series->setHorizontalPosition(0.25);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1); // hits
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    TRY_COMPARE(clickSpy.count(), 1);
+    clickSpy.clear();
+
+    series->setVerticalPosition(0.25);
+    series->setHorizontalPosition(0.75);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2); // hits
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    TRY_COMPARE(clickSpy.count(), 1);
+    clickSpy.clear();
+
+    series->setVerticalPosition(0.75);
+    series->setHorizontalPosition(0.25);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3); // hits
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    TRY_COMPARE(clickSpy.count(), 1);
+    clickSpy.clear();
+
+    series->setVerticalPosition(0.75);
+    series->setHorizontalPosition(0.75);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4); // hits
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    TRY_COMPARE(clickSpy.count(), 1);
+    clickSpy.clear();
 }
 
 void tst_qpieseries::hoverSignal()
