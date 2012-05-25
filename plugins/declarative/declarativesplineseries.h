@@ -32,6 +32,7 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 {
     Q_OBJECT
     Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
+    Q_PROPERTY(QColor color READ color WRITE setColor)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 

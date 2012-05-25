@@ -34,23 +34,57 @@ class DeclarativeChart : public QDeclarativeItem
 //class DeclarativeChart : public QQuickPaintedItem, public Chart
 {
     Q_OBJECT
-    Q_PROPERTY(QChart::ChartTheme theme READ theme WRITE setTheme)
-    Q_PROPERTY(QChart::AnimationOption animationOptions READ animationOptions WRITE setAnimationOptions)
+    Q_PROPERTY(Theme theme READ theme WRITE setTheme)
+    Q_PROPERTY(Animation animationOptions READ animationOptions WRITE setAnimationOptions)
     Q_PROPERTY(QString title READ title WRITE setTitle)
-    Q_PROPERTY(ChartLegend legend READ legend WRITE setLegend)
+    Q_PROPERTY(Legend legend READ legend WRITE setLegend)
     Q_PROPERTY(QAxis *axisX READ axisX)
     Q_PROPERTY(QAxis *axisY READ axisY)
     // TODO: how to define axis labels? This is not very convenient
     Q_PROPERTY(QVariantList axisXLabels READ axisXLabels WRITE setAxisXLabels)
-    Q_ENUMS(ChartLegend)
+    Q_PROPERTY(int count READ count)
+    Q_ENUMS(Animation)
+    Q_ENUMS(Theme)
+    Q_ENUMS(Legend)
+    Q_ENUMS(SeriesType)
 
 public:
-    enum ChartLegend {
+    // duplicating enums from QChart to make the QML api namings 1-to-1 with the C++ api
+    enum Theme {
+        ChartThemeLight = 0,
+        ChartThemeBlueCerulean,
+        ChartThemeDark,
+        ChartThemeBrownSand,
+        ChartThemeBlueNcs,
+        ChartThemeHighContrast,
+        ChartThemeBlueIcy
+    };
+
+    enum Animation {
+        NoAnimation = 0x0,
+        GridAxisAnimations = 0x1,
+        SeriesAnimations =0x2,
+        AllAnimations = 0x3
+    };
+
+    enum Legend {
         LegendDisabled = 0,
         LegendTop,
         LegendBottom,
         LegendLeft,
         LegendRight
+    };
+
+    enum SeriesType {
+        SeriesTypeLine,
+        SeriesTypeArea,
+        SeriesTypeBar,
+        SeriesTypeStackedBar,
+        SeriesTypePercentBar,
+        SeriesTypeGroupedBar,
+        SeriesTypePie,
+        SeriesTypeScatter,
+        SeriesTypeSpline
     };
 
 public:
@@ -64,24 +98,28 @@ public: // From QDeclarativeItem/QGraphicsItem
     void paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
 public:
-    void setTheme(QChart::ChartTheme theme) {m_chart->setTheme(theme);}
-    QChart::ChartTheme theme() {return m_chart->theme();}
-    void setAnimationOptions(QChart::AnimationOption animations);
-    QChart::AnimationOption animationOptions();
+    void setTheme(DeclarativeChart::Theme theme);
+    DeclarativeChart::Theme theme();
+    void setAnimationOptions(DeclarativeChart::Animation animations);
+    DeclarativeChart::Animation animationOptions();
     void setTitle(QString title) {m_chart->setTitle(title);}
     QString title() { return m_chart->title();}
-    void setLegend(ChartLegend legend);
-    ChartLegend legend();
+    void setLegend(DeclarativeChart::Legend legend);
+    DeclarativeChart::Legend legend();
     QAxis *axisX();
     QAxis *axisY();
     QVariantList axisXLabels();
     void setAxisXLabels(QVariantList list);
+    int count();
+    Q_INVOKABLE QAbstractSeries *series(int index);
+    Q_INVOKABLE QAbstractSeries *series(QString seriesName);
+    Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
 
 public:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;
-    ChartLegend m_legend;
+    Legend m_legend;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

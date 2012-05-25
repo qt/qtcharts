@@ -20,6 +20,12 @@
 
 #include "declarativechart.h"
 #include <QPainter>
+#include "declarativelineseries.h"
+#include "declarativeareaseries.h"
+#include "declarativebarseries.h"
+#include "declarativepieseries.h"
+#include "declarativesplineseries.h"
+#include "declarativescatterseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -80,24 +86,34 @@ void DeclarativeChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     painter->setRenderHint(QPainter::Antialiasing, true);
 }
 
-void DeclarativeChart::setAnimationOptions(QChart::AnimationOption animations)
+void DeclarativeChart::setTheme(DeclarativeChart::Theme theme)
 {
-    m_chart->setAnimationOptions(animations);
+    m_chart->setTheme((QChart::ChartTheme) theme);
 }
 
-QChart::AnimationOption DeclarativeChart::animationOptions()
+DeclarativeChart::Theme DeclarativeChart::theme()
+{
+    return (DeclarativeChart::Theme) m_chart->theme();
+}
+
+void DeclarativeChart::setAnimationOptions(DeclarativeChart::Animation animations)
+{
+    m_chart->setAnimationOptions((QChart::AnimationOption) animations);
+}
+
+DeclarativeChart::Animation DeclarativeChart::animationOptions()
 {
     if (m_chart->animationOptions().testFlag(QChart::AllAnimations))
-        return QChart::AllAnimations;
+        return DeclarativeChart::AllAnimations;
     else if (m_chart->animationOptions().testFlag(QChart::GridAxisAnimations))
-        return QChart::GridAxisAnimations;
+        return DeclarativeChart::GridAxisAnimations;
     else if (m_chart->animationOptions().testFlag(QChart::SeriesAnimations))
-        return QChart::SeriesAnimations;
+        return DeclarativeChart::SeriesAnimations;
     else
-        return QChart::NoAnimation;
+        return DeclarativeChart::NoAnimation;
 }
 
-void DeclarativeChart::setLegend(ChartLegend legend)
+void DeclarativeChart::setLegend(DeclarativeChart::Legend legend)
 {
     if (legend != m_legend) {
         m_legend = legend;
@@ -128,7 +144,7 @@ void DeclarativeChart::setLegend(ChartLegend legend)
     }
 }
 
-DeclarativeChart::ChartLegend DeclarativeChart::legend()
+DeclarativeChart::Legend DeclarativeChart::legend()
 {
     return m_legend;
 }
@@ -147,7 +163,6 @@ QVariantList DeclarativeChart::axisXLabels()
 {
     QVariantList labels;
     foreach (qreal value, m_chart->axisX()->categories()->values()) {
-//        qDebug() << "Label for" << value << "is" << m_chart->axisX()->categories()->label(value);
         labels.append(value);
         labels.append(m_chart->axisX()->categories()->label(value));
     }
@@ -166,6 +181,67 @@ void DeclarativeChart::setAxisXLabels(QVariantList list)
                 value = element;
         }
     }
+}
+
+int DeclarativeChart::count()
+{
+    return m_chart->series().count();
+}
+
+QAbstractSeries *DeclarativeChart::series(int index)
+{
+    if (index < m_chart->series().count()) {
+        return m_chart->series().at(index);
+    }
+    return 0;
+}
+
+QAbstractSeries *DeclarativeChart::series(QString seriesName)
+{
+    foreach(QAbstractSeries *series, m_chart->series()) {
+        if (series->name() == seriesName)
+            return series;
+    }
+    return 0;
+}
+
+QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType type, QString name)
+{
+    QAbstractSeries *series = 0;
+    switch (type) {
+    case DeclarativeChart::SeriesTypeLine:
+        series = new DeclarativeLineSeries();
+        break;
+    case DeclarativeChart::SeriesTypeArea:
+        series = new DeclarativeAreaSeries();
+        break;
+    case DeclarativeChart::SeriesTypeBar:
+        series = new DeclarativeBarSeries();
+        break;
+    case DeclarativeChart::SeriesTypeStackedBar:
+        // TODO
+        break;
+    case DeclarativeChart::SeriesTypePercentBar:
+        // TODO
+        break;
+    case DeclarativeChart::SeriesTypeGroupedBar:
+        series = new DeclarativeGroupedBarSeries();
+        break;
+    case DeclarativeChart::SeriesTypePie:
+        series = new DeclarativePieSeries();
+        break;
+    case DeclarativeChart::SeriesTypeScatter:
+        series = new DeclarativeScatterSeries();
+        break;
+    case DeclarativeChart::SeriesTypeSpline:
+        series = new DeclarativeSplineSeries();
+        break;
+    default:
+        qWarning() << "Illegal series type";
+    }
+    series->setName(name);
+    m_chart->addSeries(series);
+    return series;
 }
 
 #include "moc_declarativechart.cpp"

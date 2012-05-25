@@ -66,4 +66,20 @@ DeclarativeTableModel *DeclarativeXySeries::declarativeModel()
     return 0; //qobject_cast<DeclarativeTableModel *>(series->model());
 }
 
+QColor DeclarativeXySeries::color()
+{
+    // All the inherited objects must be of type QXYSeries, so it is safe to cast
+    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    return series->pen().color();
+}
+
+void DeclarativeXySeries::setColor(QColor color)
+{
+    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    QPen pen = series->pen();
+    pen.setColor(color);
+    series->setPen(pen);
+}
+
+
 QTCOMMERCIALCHART_END_NAMESPACE

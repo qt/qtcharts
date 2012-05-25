@@ -65,7 +65,6 @@ private:
     int m_shape;
     int m_size;
     QRectF m_rect;
-
 };
 
 

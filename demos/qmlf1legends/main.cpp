@@ -18,31 +18,18 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVE_XY_SERIES_H
-#define DECLARATIVE_XY_SERIES_H
+#include <QApplication>
+#include <QDeclarativeContext>
+#include <QDebug>
+#include "qmlapplicationviewer.h"
 
-#include "qchartglobal.h"
-#include "declarativexypoint.h"
-#include "declarativemodel.h"
-
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-class QChart;
-class QAbstractSeries;
-
-class DeclarativeXySeries
+Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-public:
-    explicit DeclarativeXySeries();
-    ~DeclarativeXySeries();
+    QScopedPointer<QApplication> app(createApplication(argc, argv));
 
-public:
-    bool setDeclarativeModel(DeclarativeTableModel *model);
-    DeclarativeTableModel *declarativeModel();
-    QColor color();
-    void setColor(QColor color);
-};
-
-QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif // DECLARATIVE_XY_SERIES_H
+    QmlApplicationViewer viewer;
+    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer.setSource(QUrl("qrc:/qml/qmlf1legends/main.qml"));
+    viewer.showExpanded();
+    return app->exec();
+}

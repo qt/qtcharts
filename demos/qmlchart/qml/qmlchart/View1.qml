@@ -24,6 +24,7 @@ import QtCommercial.Chart 1.0
 Rectangle {
     anchors.fill: parent
     property int __explodedIndex: -1
+    property variant otherSlice: 0
 
     ChartView {
         id: chart
@@ -50,7 +51,7 @@ Rectangle {
     Component.onCompleted: {
         volkswagenSlice.exploded = true;
         // You can also add slices dynamically
-        var newSlice = pieSeries.append("Others", 52.0);
+        otherSlice = pieSeries.append("Others", 52.0);
     }
 
     Timer {
@@ -90,11 +91,12 @@ Rectangle {
             anchors.fill: parent
             onClicked: {
                 if (buttonText.text == "Show others") {
-                    pieSeries.modelMapper.count = -1;
                     buttonText.text = "Hide others";
+                    // TODO: ?
+                    otherSlice.visible = true;
                 } else {
-                    pieSeries.modelMapper.count = 5;
                     buttonText.text = "Show others";
+                    otherSlice.visible = false;
                 }
             }
         }

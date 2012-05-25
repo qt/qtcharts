@@ -9,4 +9,5 @@ SUBDIRS += chartthemes \
            dynamicspline \
            qmlchart \
            qmlweather \
+           qmlf1legends \
            qmlcustommodel

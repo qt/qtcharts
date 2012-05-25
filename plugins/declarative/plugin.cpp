@@ -45,8 +45,6 @@ public:
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCommercial.Chart"));
 
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "ChartView");
-        qmlRegisterUncreatableType<QAxis>(uri, 1, 0, "Axis",
-                                          QLatin1String("Trying to create uncreatable: Axis."));
         qmlRegisterType<DeclarativeXyPoint>(uri, 1, 0, "XyPoint");
         qmlRegisterType<DeclarativeScatterSeries>(uri, 1, 0, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries>(uri, 1, 0, "LineSeries");
@@ -58,11 +56,17 @@ public:
         qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
         qmlRegisterType<DeclarativeTableModel>(uri, 1, 0, "ChartModel");
         qmlRegisterType<DeclarativeTableModelElement>(uri, 1, 0, "ChartModelElement");
+        qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
+
+
+        qmlRegisterUncreatableType<QAbstractSeries>(uri, 1, 0, "AbstractSeries",
+                                          QLatin1String("Trying to create uncreatable: AbstractSeries."));
+        qmlRegisterUncreatableType<QAxis>(uri, 1, 0, "Axis",
+                                          QLatin1String("Trying to create uncreatable: Axis."));
         qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",
                                                     QLatin1String("Trying to create uncreatable: PieModelMapper."));
         qmlRegisterUncreatableType<QXYModelMapper>(uri, 1, 0, "XYModelMapper",
                                                     QLatin1String("Trying to create uncreatable: XYModelMapper."));
-        qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
     }
 };
 
