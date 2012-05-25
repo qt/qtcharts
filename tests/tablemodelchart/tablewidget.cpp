@@ -355,7 +355,7 @@ void TableWidget::updateChartType(bool toggle)
             m_pieMapper->setSeries(m_pieSeries);
             m_pieMapper->setModel(m_model);
             m_pieMapper->setFirst(2);
-                        m_pieMapper->setCount(5);
+//                        m_pieMapper->setCount(5);
             //                    pieSeries->setModelMapper(mapper);
 
             m_pieSeries->setLabelsVisible(true);

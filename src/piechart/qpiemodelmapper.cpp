@@ -73,7 +73,6 @@ void QPieModelMapper::setFirst(int first)
     Q_D(QPieModelMapper);
     d->m_first = qMax(first, 0);
     d->initializePieFromModel();
-    //    emit updated();
 }
 
 int QPieModelMapper::count() const
@@ -87,7 +86,6 @@ void QPieModelMapper::setCount(int count)
     Q_D(QPieModelMapper);
     d->m_count = qMax(count, -1);
     d->initializePieFromModel();
-    //    emit updated();
 }
 
 Qt::Orientation QPieModelMapper::orientation() const
@@ -101,7 +99,6 @@ void QPieModelMapper::setOrientation(Qt::Orientation orientation)
     Q_D(QPieModelMapper);
     d->m_orientation = orientation;
     d->initializePieFromModel();
-    //    emit updated();
 }
 
 int QPieModelMapper::valuesIndex() const
@@ -110,12 +107,11 @@ int QPieModelMapper::valuesIndex() const
     return d->m_valuesIndex;
 }
 
-void QPieModelMapper::setValuesIndex(int mapValues)
+void QPieModelMapper::setValuesIndex(int valuesIndex)
 {
     Q_D(QPieModelMapper);
-    d->m_valuesIndex = mapValues;
+    d->m_valuesIndex = qMax(-1, valuesIndex);
     d->initializePieFromModel();
-    //    emit updated();
 }
 
 int QPieModelMapper::labelsIndex() const
@@ -124,12 +120,11 @@ int QPieModelMapper::labelsIndex() const
     return d->m_labelsIndex;
 }
 
-void QPieModelMapper::setLabelsIndex(int mapLabels)
+void QPieModelMapper::setLabelsIndex(int labelsIndex)
 {
     Q_D(QPieModelMapper);
-    d->m_labelsIndex = mapLabels;
+    d->m_labelsIndex = qMax(-1, labelsIndex);
     d->initializePieFromModel();
-    //    emit updated();
 }
 
 void QPieModelMapper::reset()
@@ -140,7 +135,6 @@ void QPieModelMapper::reset()
     d->m_orientation = Qt::Vertical;
     d->m_valuesIndex = -1;
     d->m_labelsIndex = -1;
-    //    emit updated();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -437,10 +431,6 @@ void QPieModelMapperPrivate::removeData(int start, int end)
 void QPieModelMapperPrivate::initializePieFromModel()
 {
     if (m_model == 0 || m_series == 0)
-        return;
-
-    // check if mappings are set
-    if (m_valuesIndex == -1 || m_labelsIndex == -1)
         return;
 
     blockSeriesSignals();
