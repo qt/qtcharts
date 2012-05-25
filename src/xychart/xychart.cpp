@@ -207,7 +207,6 @@ void XYChart::handleReinitialized()
 
 void XYChart::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
-    qDebug()<<__FUNCTION__;
     m_minX=minX;
     m_maxX=maxX;
     m_minY=minY;
