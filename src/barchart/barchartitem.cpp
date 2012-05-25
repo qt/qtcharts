@@ -34,7 +34,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
     ChartItem(presenter),
-    m_layoutSet(false),
     m_series(series)
 {
     setFlag(ItemClipsChildrenToShape);
@@ -190,7 +189,6 @@ void BarChartItem::handleGeometryChanged(const QRectF &rect)
     prepareGeometryChange();
     m_rect = rect;
     handleLayoutChanged();
-    m_layoutSet = true;
 }
 
 void BarChartItem::handleLayoutChanged()

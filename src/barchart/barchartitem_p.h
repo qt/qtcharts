@@ -70,7 +70,6 @@ protected:
     qreal m_domainMaxY;
 
     QRectF m_rect;
-    bool m_layoutSet;    // True, if component has been laid out.
     QVector<QRectF> m_layout;
 
     // Not owned.
