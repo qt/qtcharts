@@ -31,7 +31,8 @@
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
 #include "declarativemodel.h"
-#include <QPieModelMapper>
+#include <QHPieModelMapper>
+#include <QVPieModelMapper>
 #include <QXYModelMapper>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -58,6 +59,12 @@ public:
         qmlRegisterType<DeclarativeTableModelElement>(uri, 1, 0, "ChartModelElement");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
 
+        qmlRegisterUncreatableType<QAbstractItemModel>(uri, 1, 0, "AbstractItemModel",
+                                          QLatin1String("Trying to create uncreatable: AbstractItemModel."));
+        qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",
+                                          QLatin1String("Trying to create uncreatable: PieModelMapper."));
+        qmlRegisterType<QHPieModelMapper>(uri, 1, 0, "HPieModelMapper");
+        qmlRegisterType<QVPieModelMapper>(uri, 1, 0, "VPieModelMapper");
 
         qmlRegisterUncreatableType<QAbstractSeries>(uri, 1, 0, "AbstractSeries",
                                           QLatin1String("Trying to create uncreatable: AbstractSeries."));

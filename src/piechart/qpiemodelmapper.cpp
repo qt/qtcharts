@@ -140,17 +140,17 @@ void QPieModelMapper::reset()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QPieModelMapperPrivate::QPieModelMapperPrivate(QPieModelMapper *q) :
+    m_series(0),
+    m_model(0),
+    m_first(0),
+    m_count(-1),
+    m_orientation(Qt::Vertical),
+    m_valuesIndex(-1),
+    m_labelsIndex(-1),
+    m_seriesSignalsBlock(false),
+    m_modelSignalsBlock(false),
     q_ptr(q)
 {
-    m_series = 0;
-    m_model = 0;
-    m_first = 0;
-    m_count = -1;
-    m_orientation = Qt::Vertical;
-    m_valuesIndex = -1;
-    m_labelsIndex = -1;
-    m_seriesSignalsBlock = false;
-    m_modelSignalsBlock = false;
 }
 
 void QPieModelMapperPrivate::blockModelSignals(bool block)

@@ -31,7 +31,6 @@ Rectangle {
         legend: ChartView.LegendBottom
         // TODO: labels defined by x-axis, not by bar series
         axisXLabels: ["0", "2008", "1", "2009", "2", "2010", "3", "2012"]
-        axisX.max: 10
 
         GroupedBarSeries {
             barCategories: [ "2008", "2009", "2010", "2011", "2012" ]

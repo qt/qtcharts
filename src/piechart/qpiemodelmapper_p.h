@@ -47,8 +47,6 @@ private:
     void blockSeriesSignals(bool block = true);
 
 private:
-    bool m_seriesSignalsBlock;
-    bool m_modelSignalsBlock;
     QPieSeries *m_series;
     QList<QPieSlice*> m_slices;
     QAbstractItemModel *m_model;
@@ -57,6 +55,8 @@ private:
     Qt::Orientation m_orientation;
     int m_valuesIndex;
     int m_labelsIndex;
+    bool m_seriesSignalsBlock;
+    bool m_modelSignalsBlock;
 
 private:
 

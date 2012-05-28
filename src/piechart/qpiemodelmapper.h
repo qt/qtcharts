@@ -34,6 +34,8 @@ class QPieSeries;
 class QTCOMMERCIALCHART_EXPORT QPieModelMapper : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QPieSeries *series READ series WRITE setSeries)
+    Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel)
     Q_PROPERTY(int first READ first WRITE setFirst)
     Q_PROPERTY(int count READ count WRITE setCount)
     Q_ENUMS(Qt::Orientation)

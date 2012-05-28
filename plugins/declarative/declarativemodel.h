@@ -33,6 +33,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+// TODO: move model into demo app,
+// the ChartModel API will not be implemented by charts declarative plugin
+
 class DeclarativeTableModelElement : public QObject
 {
     Q_OBJECT

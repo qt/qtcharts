@@ -43,10 +43,6 @@ Rectangle {
 
         LineSeries {
             name: "line"
-            // TODO: the current mapper api
-            model: chartModel
-            modelMapper.mapX: 3
-            modelMapper.mapY: 3
 
             // TODO: the new mapper api
 //            XYModelMapperVertical {
@@ -63,20 +59,12 @@ Rectangle {
             horizontalPosition: 0.2
             verticalPosition: 0.3
 
-//            model: chartModel
-//            // TODO: the current mapper api
-//            modelMapper.mapLabels: 1
-//            modelMapper.mapValues: 2
-//            modelMapper.first: 0
-//            modelMapper.count: -1 // "Undefined" = -1 by default
-//            modelMapper.orientation: PieModelMapper.Vertical
-
-            // TODO: the new mapper api
-//            PieModelMapperVertical {
-//                model: chartModel
-//                labelsColumn: 0
-//                valuesColumn: 1
-//            }
+            VPieModelMapper {
+                series: pieSeries // TODO
+                model: chartModel
+                labelsColumn: 1
+                valuesColumn: 2
+            }
         }
 
         // TODO: the new mapper api
@@ -90,14 +78,14 @@ Rectangle {
         AreaSeries {
             name: "area"
             upperSeries: LineSeries {
-                model: chartModel
-                modelMapper.mapX: 2
-                modelMapper.mapY: 2
+//                model: chartModel
+//                modelMapper.mapX: 2
+//                modelMapper.mapY: 2
             }
             lowerSeries: LineSeries {
-                model: chartModel
-                modelMapper.mapX: 2
-                modelMapper.mapY: 0
+//                model: chartModel
+//                modelMapper.mapX: 2
+//                modelMapper.mapY: 0
             }
         }
 
