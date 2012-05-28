@@ -19,12 +19,11 @@
 ****************************************************************************/
 
 #include "../qxyseries/tst_qxyseries.h"
-#include <qlineseries.h>
-
+#include <qsplineseries.h>
 
 Q_DECLARE_METATYPE(QList<QPointF>)
 
-class tst_QLineSeries : public tst_QXYSeries
+class tst_QSplineSeries : public tst_QXYSeries
 {
     Q_OBJECT
 
@@ -34,40 +33,40 @@ public slots:
     void init();
     void cleanup();
 private slots:
-    void qlineseries_data();
-    void qlineseries();
+    void qsplineseries_data();
+    void qsplineseries();
 protected:
     void pointsVisible_data();
 };
 
-void tst_QLineSeries::initTestCase()
+void tst_QSplineSeries::initTestCase()
 {
 }
 
-void tst_QLineSeries::cleanupTestCase()
+void tst_QSplineSeries::cleanupTestCase()
 {
 }
 
-void tst_QLineSeries::init()
+void tst_QSplineSeries::init()
 {
     tst_QXYSeries::init();
-    m_series = new QLineSeries();
+    m_series = new QSplineSeries();
 }
 
-void tst_QLineSeries::cleanup()
+void tst_QSplineSeries::cleanup()
 {
     delete m_series;
     tst_QXYSeries::cleanup();
 }
 
-void tst_QLineSeries::qlineseries_data()
+void tst_QSplineSeries::qsplineseries_data()
 {
 
 }
 
-void tst_QLineSeries::qlineseries()
+void tst_QSplineSeries::qsplineseries()
 {
-    QLineSeries series;
+    QSplineSeries series;
 
     QCOMPARE(series.count(),0);
     QCOMPARE(series.brush(), QBrush());
@@ -95,7 +94,7 @@ void tst_QLineSeries::qlineseries()
     QTest::qWaitForWindowShown(m_view);
 }
 
-QTEST_MAIN(tst_QLineSeries)
+QTEST_MAIN(tst_QSplineSeries)
 
-#include "tst_qlineseries.moc"
+#include "tst_qsplineseries.moc"
 
