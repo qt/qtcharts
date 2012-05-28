@@ -22,24 +22,14 @@
 #include "declarativechart.h"
 #include "qchart.h"
 #include <qdeclarativelist.h>
-#include "qpiemodelmapper.h"
+#include <QVPieModelMapper>
+#include <QHPieModelMapper>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
     QPieSeries(parent)
 {
-    // TODO: set default model on init?
-//    setModel(new DeclarativeTableModel());
-
-    // TODO: Set default mapper parameters to allow easy to use PieSeries api?
-//    QPieModelMapper *mapper = modelMapper();//new QPieModelMapper();
-//    mapper->setMapLabels(0);
-//    mapper->setMapValues(1);
-//    mapper->setOrientation(Qt::Vertical);
-//    mapper->setFirst(0);
-//    mapper->setCount(-1);
-//    setModelMapper(mapper);
 }
 
 void DeclarativePieSeries::classBegin()
@@ -51,13 +41,26 @@ void DeclarativePieSeries::componentComplete()
     foreach(QObject *child, children()) {
         if (qobject_cast<QPieSlice *>(child)) {
             QPieSeries::append(qobject_cast<QPieSlice *>(child));
+        } else if(qobject_cast<QVPieModelMapper *>(child)) {
+            QVPieModelMapper *mapper = qobject_cast<QVPieModelMapper *>(child);
+            mapper->setSeries(this);
+        } else if(qobject_cast<QHPieModelMapper *>(child)) {
+            QHPieModelMapper *mapper = qobject_cast<QHPieModelMapper *>(child);
+            mapper->setSeries(this);
         }
     }
 }
 
-QDeclarativeListProperty<QPieSlice> DeclarativePieSeries::initialSlices()
+QDeclarativeListProperty<QObject> DeclarativePieSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QPieSlice>(this, 0, &DeclarativePieSeries::appendInitialSlices);
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativePieSeries::appendSeriesChildren);
+}
+
+void DeclarativePieSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+{
+    // Empty implementation; the children are parsed in componentComplete instead
+    Q_UNUSED(list);
+    Q_UNUSED(element);
 }
 
 QPieSlice *DeclarativePieSeries::at(int index)

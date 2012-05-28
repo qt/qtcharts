@@ -27,7 +27,6 @@
 #include <QDeclarativeParserStatus>
 #include <QDeclarativeListProperty>
 #include <QAbstractItemModel>
-#include <QVariant>
 #include "declarativemodel.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -39,12 +38,12 @@ class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(DeclarativeTableModel *model READ pieModel WRITE setPieModel)
-    Q_PROPERTY(QDeclarativeListProperty<QPieSlice> initialSlices READ initialSlices)
-    Q_CLASSINFO("DefaultProperty", "initialSlices")
+    Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+    Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativePieSeries(QObject *parent = 0);
-    QDeclarativeListProperty<QPieSlice> initialSlices();
+    QDeclarativeListProperty<QObject> seriesChildren();
     DeclarativeTableModel *pieModel();
     void setPieModel(DeclarativeTableModel *model);
     Q_INVOKABLE QPieSlice *at(int index);
@@ -56,7 +55,7 @@ public:
     void componentComplete();
 
 public Q_SLOTS:
-    static void appendInitialSlices(QDeclarativeListProperty<QPieSlice> * /*list*/, QPieSlice * /*element*/) {}
+    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

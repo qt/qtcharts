@@ -34,18 +34,18 @@ Rectangle {
         // For dynamic data you can use the ChartModel API.
         ChartModel {
             id: chartModel
-            ChartModelElement { values: [0, "Volkswagen", 13.5, 4.4] }
-            ChartModelElement { values: [0, "Toyota", 10.9, 4.2] }
-            ChartModelElement { values: [0, "Ford", 8.6, 3.0] }
-            ChartModelElement { values: [0, "Skoda", 8.2, 1.9] }
-            ChartModelElement { values: [0, "Volvo", 6.8, 1.5] }
+            ChartModelElement { values: ["Volkswagen", 13.5, 4.4] }
+            ChartModelElement { values: ["Toyota", 10.9, 4.2] }
+            ChartModelElement { values: ["Ford", 8.6, 3.0] }
+            ChartModelElement { values: ["Skoda", 8.2, 1.9] }
+            ChartModelElement { values: ["Volvo", 6.8, 1.5] }
         }
 
         LineSeries {
             name: "line"
 
             // TODO: the new mapper api
-//            XYModelMapperVertical {
+//            VXYModelMapper {
 //                model: chartModel
 //                xColumn: 0
 //                yColumn: 1
@@ -60,34 +60,24 @@ Rectangle {
             verticalPosition: 0.3
 
             VPieModelMapper {
-                series: pieSeries // TODO
                 model: chartModel
-                labelsColumn: 1
-                valuesColumn: 2
+                labelsColumn: 0
+                valuesColumn: 1
             }
         }
 
-        // TODO: the new mapper api
-//        PieModelMapperVertical {
+//        VPieModelMapper {
 //            series: pieSeries
 //            model: chartModel
-//            labelsColumn: 0
-//            valuesColumn: 1
+//            labelsColumn: 1
+//            valuesColumn: 2
 //        }
 
-        AreaSeries {
-            name: "area"
-            upperSeries: LineSeries {
-//                model: chartModel
-//                modelMapper.mapX: 2
-//                modelMapper.mapY: 2
-            }
-            lowerSeries: LineSeries {
-//                model: chartModel
-//                modelMapper.mapX: 2
-//                modelMapper.mapY: 0
-            }
-        }
+//        AreaSeries {
+//            name: "area"
+//            upperSeries: LineSeries {}
+//            lowerSeries: LineSeries {}
+//        }
 
         // TODO: BarSeries with ChartModel base model API
 //        BarSeries {
