@@ -50,6 +50,7 @@ public:
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
     void handleSeriesRemoved(QAbstractSeries *series);
+    void handleSeriesUpdated(QAbstractSeries *series);
     void handleUpdatePieSeries(); //TODO remove this function
 
 private:

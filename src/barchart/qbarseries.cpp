@@ -75,7 +75,10 @@ QBarSeries::QBarSeries(QObject *parent) :
 */
 QBarSeries::~QBarSeries()
 {
-    // NOTE: d_ptr destroyed by QObject
+    Q_D(QBarSeries);
+    if(d->m_dataset){
+        d->m_dataset->removeSeries(this);
+    }
 }
 
 /*!
@@ -112,14 +115,7 @@ void QBarSeries::setCategories(QBarCategories categories)
 bool QBarSeries::append(QBarSet *set)
 {
     Q_D(QBarSeries);
-    if ((d->m_barSets.contains(set)) || (set == 0)) {
-        // Fail if set is already in list or set is null.
-        return false;
-    }
-    d->m_barSets.append(set);
-    QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
-    emit d->restructuredBars();
-    return true;
+    return d->append(set);
 }
 
 /*!
@@ -129,14 +125,7 @@ bool QBarSeries::append(QBarSet *set)
 bool QBarSeries::remove(QBarSet *set)
 {
     Q_D(QBarSeries);
-    if (!d->m_barSets.contains(set)) {
-        // Fail if set is not in list
-        return false;
-    }
-    d->m_barSets.removeOne(set);
-    QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
-    emit d->restructuredBars();
-    return true;
+    return d->remove(set);
 }
 
 /*!
@@ -148,23 +137,7 @@ bool QBarSeries::remove(QBarSet *set)
 bool QBarSeries::append(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
-    foreach (QBarSet* set, sets) {
-        if ((set == 0) || (d->m_barSets.contains(set))) {
-            // Fail if any of the sets is null or is already appended.
-            return false;
-        }
-        if (sets.count(set) != 1) {
-            // Also fail if same set is more than once in given list.
-            return false;
-        }
-    }
-
-    foreach (QBarSet* set, sets) {
-        d->m_barSets.append(set);
-        QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
-    }
-    emit d->restructuredBars();
-    return true;
+    return d->append(sets);
 }
 
 /*!
@@ -173,20 +146,7 @@ bool QBarSeries::append(QList<QBarSet* > sets)
 bool QBarSeries::remove(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
-
-    bool setsRemoved = false;
-    foreach (QBarSet* set, sets) {
-        if (d->m_barSets.contains(set)) {
-            d->m_barSets.removeOne(set);
-            QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), d, SLOT(barsetChanged()));
-            setsRemoved = true;
-        }
-    }
-
-    if (setsRemoved) {
-        emit d->restructuredBars();
-    }
-    return setsRemoved;
+    return d->remove(sets);
 }
 
 /*!
@@ -454,7 +414,7 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal y = max();
     minX = qMin(minX, x) - 0.5;
     minY = qMin(minY, y);
-    maxX = qMax(maxX, x) - 0.5;
+    maxX = qMax(maxX, x) + 0.5;
     maxY = qMax(maxY, y);
     tickXCount = x+1;
 
@@ -484,6 +444,84 @@ QList<LegendMarker*> QBarSeriesPrivate::createLegendMarker(QLegend* legend)
     }
 
     return markers;
+}
+
+bool QBarSeriesPrivate::append(QBarSet *set)
+{
+    Q_Q(QBarSeries);
+    if ((m_barSets.contains(set)) || (set == 0)) {
+        // Fail if set is already in list or set is null.
+        return false;
+    }
+    m_barSets.append(set);
+    QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+    if (m_dataset) {
+        m_dataset->updateSeries(q);   // this notifies legend
+    }
+    emit restructuredBars();      // this notifies barchartitem
+    return true;
+}
+
+bool QBarSeriesPrivate::remove(QBarSet *set)
+{
+    Q_Q(QBarSeries);
+    if (!m_barSets.contains(set)) {
+        // Fail if set is not in list
+        return false;
+    }
+    m_barSets.removeOne(set);
+    QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+    if (m_dataset) {
+        m_dataset->updateSeries(q);   // this notifies legend
+    }
+    emit restructuredBars();        // this notifies barchartitem
+    return true;
+}
+
+bool QBarSeriesPrivate::append(QList<QBarSet* > sets)
+{
+    Q_Q(QBarSeries);
+    foreach (QBarSet* set, sets) {
+        if ((set == 0) || (m_barSets.contains(set))) {
+            // Fail if any of the sets is null or is already appended.
+            return false;
+        }
+        if (sets.count(set) != 1) {
+            // Also fail if same set is more than once in given list.
+            return false;
+        }
+    }
+
+    foreach (QBarSet* set, sets) {
+        m_barSets.append(set);
+        QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+    }
+    if (m_dataset) {
+        m_dataset->updateSeries(q);   // this notifies legend
+    }
+    emit restructuredBars();        // this notifies barchartitem
+    return true;
+}
+
+bool QBarSeriesPrivate::remove(QList<QBarSet* > sets)
+{
+    Q_Q(QBarSeries);
+    bool setsRemoved = false;
+    foreach (QBarSet* set, sets) {
+        if (m_barSets.contains(set)) {
+            m_barSets.removeOne(set);
+            QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+            setsRemoved = true;
+        }
+    }
+
+    if (setsRemoved) {
+        if (m_dataset) {
+            m_dataset->updateSeries(q);   // this notifies legend
+        }
+        emit restructuredBars();        // this notifies barchartitem
+    }
+    return setsRemoved;
 }
 
 #include "moc_qbarseries.cpp"

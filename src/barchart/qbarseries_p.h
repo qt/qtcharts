@@ -57,6 +57,11 @@ public:
     Chart* createGraphics(ChartPresenter* presenter);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
 
+    bool append(QBarSet *set);
+    bool remove(QBarSet *set);
+    bool append(QList<QBarSet* > sets);
+    bool remove(QList<QBarSet* > sets);
+
     QBarSet* barsetAt(int index);
     QString categoryName(int category);
     qreal min();

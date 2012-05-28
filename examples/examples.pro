@@ -20,4 +20,5 @@ SUBDIRS += \
            stackedbarchartdrilldown \
            zoomlinechart \
            modeldata \
-           groupedbarchart
+           groupedbarchart \
+           legend

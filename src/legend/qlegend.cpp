@@ -93,6 +93,7 @@ d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,this))
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesAdded(QAbstractSeries*,Domain*)),d_ptr.data(),SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries*)));
+    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
 }
 
 /*!
@@ -442,6 +443,15 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
     }
 
     updateLayout();
+}
+
+void QLegendPrivate::handleSeriesUpdated(QAbstractSeries *series)
+{
+    // TODO: find out which markers are are added or removed. Update them
+    // TODO: better implementation
+    handleSeriesRemoved(series);
+    Domain domain;
+    handleSeriesAdded(series, &domain);
 }
 
 void QLegendPrivate::handleUpdatePieSeries()
