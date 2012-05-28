@@ -10,4 +10,5 @@ SUBDIRS += chartthemes \
            qmlchart \
            qmlweather \
            qmlf1legends \
+           qmlcustomizations \
            qmlcustommodel

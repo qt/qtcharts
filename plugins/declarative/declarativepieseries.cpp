@@ -27,6 +27,47 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+DeclarativePieSlice::DeclarativePieSlice(QObject *parent) :
+    QPieSlice(parent)
+{
+}
+
+QColor DeclarativePieSlice::color()
+{
+    return brush().color();
+}
+
+void DeclarativePieSlice::setColor(QColor color)
+{
+    QBrush b = brush();
+    b.setColor(color);
+    setBrush(b);
+}
+
+QColor DeclarativePieSlice::borderColor()
+{
+    return pen().color();
+}
+
+void DeclarativePieSlice::setBorderColor(QColor color)
+{
+    QPen p = pen();
+    p.setColor(color);
+    setPen(p);
+}
+
+int DeclarativePieSlice::borderWidth()
+{
+    return pen().width();
+}
+
+void DeclarativePieSlice::setBorderWidth(int width)
+{
+    QPen p = pen();
+    p.setWidth(width);
+    setPen(p);
+}
+
 DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
     QPieSeries(parent)
 {
@@ -39,8 +80,8 @@ void DeclarativePieSeries::classBegin()
 void DeclarativePieSeries::componentComplete()
 {
     foreach(QObject *child, children()) {
-        if (qobject_cast<QPieSlice *>(child)) {
-            QPieSeries::append(qobject_cast<QPieSlice *>(child));
+        if (qobject_cast<DeclarativePieSlice *>(child)) {
+            QPieSeries::append(qobject_cast<DeclarativePieSlice *>(child));
         } else if(qobject_cast<QVPieModelMapper *>(child)) {
             QVPieModelMapper *mapper = qobject_cast<QVPieModelMapper *>(child);
             mapper->setSeries(this);
@@ -63,43 +104,32 @@ void DeclarativePieSeries::appendSeriesChildren(QDeclarativeListProperty<QObject
     Q_UNUSED(element);
 }
 
-QPieSlice *DeclarativePieSeries::at(int index)
+DeclarativePieSlice *DeclarativePieSeries::at(int index)
 {
     QList<QPieSlice*> sliceList = slices();
     if (index < sliceList.count())
-        return sliceList[index];
+        return qobject_cast<DeclarativePieSlice *>(sliceList[index]);
 
     return 0;
 }
 
-QPieSlice* DeclarativePieSeries::find(QString label)
+DeclarativePieSlice* DeclarativePieSeries::find(QString label)
 {
     foreach (QPieSlice *slice, slices()) {
         if (slice->label() == label)
-            return slice;
+            return qobject_cast<DeclarativePieSlice *>(slice);
     }
     return 0;
 }
 
-QPieSlice* DeclarativePieSeries::append(QString name, qreal value)
+DeclarativePieSlice* DeclarativePieSeries::append(QString label, qreal value)
 {
     // TODO: parameter order is wrong, switch it:
-    return QPieSeries::append(name, value);
-}
-
-void DeclarativePieSeries::setPieModel(DeclarativeTableModel *model)
-{
-    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
-    if (m) {
-//        QPieSeries::setModel(m);
-    } else {
-        qWarning("DeclarativePieSeries: Illegal model");
-    }
-}
-
-DeclarativeTableModel *DeclarativePieSeries::pieModel()
-{
-    return 0;//qobject_cast<DeclarativeTableModel *>(model());
+    DeclarativePieSlice *slice = new DeclarativePieSlice(this);
+    slice->setLabel(label);
+    slice->setValue(value);
+    QPieSeries::append(slice);
+    return slice;
 }
 
 #include "moc_declarativepieseries.cpp"

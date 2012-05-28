@@ -31,7 +31,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 {
     Q_OBJECT
-    Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
     Q_PROPERTY(QColor color READ color WRITE setColor)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
@@ -44,6 +43,7 @@ public: // from QSplineSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QSplineSeries::append(x, y); }
     Q_INVOKABLE void remove(qreal x, qreal y) { QSplineSeries::remove(x, y); }
     Q_INVOKABLE void clear() { QSplineSeries::removeAll(); }
+    Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);

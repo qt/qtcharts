@@ -51,7 +51,6 @@ class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
     Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
     Q_PROPERTY(QDeclarativeListProperty<DeclarativeBarSet> initialBarSets READ initialBarSets)
     Q_CLASSINFO("DefaultProperty", "initialBarSets")
@@ -67,10 +66,6 @@ public: // from QDeclarativeParserStatus
     void classBegin();
     void componentComplete();
 
-public:
-    bool setDeclarativeModel(DeclarativeTableModel *model);
-    DeclarativeTableModel *declarativeModel();
-
 public Q_SLOTS:
     static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> * /*list*/, DeclarativeBarSet * /*element*/) {}
 };
@@ -79,7 +74,6 @@ class DeclarativeGroupedBarSeries : public QGroupedBarSeries, public QDeclarativ
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
     Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
     Q_PROPERTY(QDeclarativeListProperty<DeclarativeBarSet> initialBarSets READ initialBarSets)
     Q_CLASSINFO("DefaultProperty", "initialBarSets")
@@ -95,8 +89,6 @@ public: // from QDeclarativeParserStatus
 public:
     void setBarCategories(QStringList categories);
     QStringList barCategories();
-    bool setDeclarativeModel(DeclarativeTableModel *model);
-    DeclarativeTableModel *declarativeModel();
 
 public Q_SLOTS:
     static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> * /*list*/, DeclarativeBarSet * /*element*/) {}

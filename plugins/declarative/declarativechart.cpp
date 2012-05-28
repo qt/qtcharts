@@ -57,6 +57,7 @@ void DeclarativeChart::componentComplete()
 //    qDebug() << "DeclarativeChart::componentComplete(), maxX: " << axisX()->max();
     foreach(QObject *child, children()) {
         if (qobject_cast<QAbstractSeries *>(child)) {
+//            qDebug() << "DeclarativeChart::componentComplete(), add: " << child;
             m_chart->addSeries(qobject_cast<QAbstractSeries *>(child));
         }
     }

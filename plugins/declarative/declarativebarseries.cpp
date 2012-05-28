@@ -71,25 +71,6 @@ QDeclarativeListProperty<DeclarativeBarSet> DeclarativeBarSeries::initialBarSets
     return QDeclarativeListProperty<DeclarativeBarSet>(this, 0, &DeclarativeBarSeries::appendInitialBarSets);
 }
 
-bool DeclarativeBarSeries::setDeclarativeModel(DeclarativeTableModel *model)
-{
-    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
-    bool value(false);
-    if (m) {
-//        setModel(m);
-        //setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
-//        setModelMapping(0, 1, 1, Qt::Vertical);
-    } else {
-        qWarning("DeclarativeBarSeries: Illegal model");
-    }
-    return value;
-}
-
-DeclarativeTableModel *DeclarativeBarSeries::declarativeModel()
-{
-    return 0;//qobject_cast<DeclarativeTableModel *>(model());
-}
-
 void DeclarativeBarSeries::setBarCategories(QStringList categories)
 {
     setCategories(categories);
@@ -121,25 +102,6 @@ void DeclarativeGroupedBarSeries::componentComplete()
 QDeclarativeListProperty<DeclarativeBarSet> DeclarativeGroupedBarSeries::initialBarSets()
 {
     return QDeclarativeListProperty<DeclarativeBarSet>(this, 0, &DeclarativeGroupedBarSeries::appendInitialBarSets);
-}
-
-bool DeclarativeGroupedBarSeries::setDeclarativeModel(DeclarativeTableModel *model)
-{
-    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
-    bool value(false);
-    if (m) {
-//        setModel(m);
-        //setModelMapping(int categories, int bottomBoundary, int topBoundary, Qt::Orientation orientation = Qt::Vertical);
-//        setModelMapping(0, 1, 1, Qt::Vertical);
-    } else {
-        qWarning("DeclarativeGroupedBarSeries: Illegal model");
-    }
-    return value;
-}
-
-DeclarativeTableModel *DeclarativeGroupedBarSeries::declarativeModel()
-{
-    return 0; //qobject_cast<DeclarativeTableModel *>(model());
 }
 
 void DeclarativeGroupedBarSeries::setBarCategories(QStringList categories)

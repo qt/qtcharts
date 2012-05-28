@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/qmlcustomizations/loader.qml</file>
+        <file>qml/qmlcustomizations/main.qml</file>
+        <file>qml/qmlcustomizations/View1.qml</file>
+    </qresource>
+</RCC>

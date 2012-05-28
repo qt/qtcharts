@@ -33,22 +33,36 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
 
+class DeclarativePieSlice: public QPieSlice
+{
+    Q_OBJECT
+    Q_PROPERTY(QColor color READ color WRITE setColor)
+    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
+    Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth)
+
+public:
+    explicit DeclarativePieSlice(QObject *parent = 0);
+    QColor color();
+    void setColor(QColor color);
+    QColor borderColor();
+    void setBorderColor(QColor color);
+    int borderWidth();
+    void setBorderWidth(int width);
+};
+
 class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(DeclarativeTableModel *model READ pieModel WRITE setPieModel)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativePieSeries(QObject *parent = 0);
     QDeclarativeListProperty<QObject> seriesChildren();
-    DeclarativeTableModel *pieModel();
-    void setPieModel(DeclarativeTableModel *model);
-    Q_INVOKABLE QPieSlice *at(int index);
-    Q_INVOKABLE QPieSlice* find(QString label);
-    Q_INVOKABLE QPieSlice* append(QString label, qreal value);
+    Q_INVOKABLE DeclarativePieSlice *at(int index);
+    Q_INVOKABLE DeclarativePieSlice* find(QString label);
+    Q_INVOKABLE DeclarativePieSlice* append(QString label, qreal value);
 
 public:
     void classBegin();

@@ -18,27 +18,18 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVE_XY_POINT_H
-#define DECLARATIVE_XY_POINT_H
+#include <QtGui/QApplication>
+#include <QDeclarativeEngine>
+#include "qmlapplicationviewer.h"
 
-#include "qchartglobal.h"
-#include <QObject>
-#include <QPointF>
-#include <QDataStream>
-
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-class DeclarativeXyPoint : public QObject, public QPointF
+Q_DECL_EXPORT int main(int argc, char *argv[])
 {
-    Q_OBJECT
-    // TODO: make the setters change the value, if parented by a series
-    Q_PROPERTY(qreal x READ x WRITE setX /*NOTIFY dataXChanged*/)
-    Q_PROPERTY(qreal y READ y WRITE setY /*NOTIFY dataYChanged*/)
+    QScopedPointer<QApplication> app(createApplication(argc, argv));
+    QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
-public:
-    explicit DeclarativeXyPoint(QObject *parent = 0);
-};
+    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer->setSource(QUrl("qrc:/qml/qmlcustomizations/loader.qml"));
+    viewer->showExpanded();
 
-QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif // DECLARATIVE_XY_POINT_H
+    return app->exec();
+}

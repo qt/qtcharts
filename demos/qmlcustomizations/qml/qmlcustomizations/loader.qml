@@ -18,27 +18,20 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVE_XY_POINT_H
-#define DECLARATIVE_XY_POINT_H
+import QtQuick 1.0
 
-#include "qchartglobal.h"
-#include <QObject>
-#include <QPointF>
-#include <QDataStream>
-
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-class DeclarativeXyPoint : public QObject, public QPointF
-{
-    Q_OBJECT
-    // TODO: make the setters change the value, if parented by a series
-    Q_PROPERTY(qreal x READ x WRITE setX /*NOTIFY dataXChanged*/)
-    Q_PROPERTY(qreal y READ y WRITE setY /*NOTIFY dataYChanged*/)
-
-public:
-    explicit DeclarativeXyPoint(QObject *parent = 0);
-};
-
-QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif // DECLARATIVE_XY_POINT_H
+Item {
+    id: container
+    width: 400
+    height: 300
+    Component.onCompleted: {
+    var co = Qt.createComponent("main.qml")
+    if (co.status == Component.Ready) {
+            var o = co.createObject(container)
+        } else {
+            console.log(co.errorString())
+            console.log("QtCommercial.Chart 1.1 not available")
+            console.log("Please use correct QML_IMPORT_PATH export")
+         }
+    }
+}

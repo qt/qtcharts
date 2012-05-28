@@ -30,7 +30,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeries
 {
     Q_OBJECT
-    Q_PROPERTY(DeclarativeTableModel *model READ declarativeModel WRITE setDeclarativeModel)
     Q_PROPERTY(QColor color READ color WRITE setColor)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
@@ -43,6 +42,7 @@ public: // from QScatterSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QScatterSeries::append(x, y); }
     Q_INVOKABLE void remove(qreal x, qreal y) { QScatterSeries::remove(x, y); }
     Q_INVOKABLE void clear() { QScatterSeries::removeAll(); }
+    Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);

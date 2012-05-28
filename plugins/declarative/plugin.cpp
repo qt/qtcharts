@@ -54,7 +54,7 @@ public:
         qmlRegisterType<DeclarativeBarSeries>(uri, 1, 0, "BarSeries");
         qmlRegisterType<DeclarativeGroupedBarSeries>(uri, 1, 0, "GroupedBarSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
-        qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
+        qmlRegisterType<DeclarativePieSlice>(uri, 1, 0, "PieSlice");
         qmlRegisterType<DeclarativeTableModel>(uri, 1, 0, "ChartModel");
         qmlRegisterType<DeclarativeTableModelElement>(uri, 1, 0, "ChartModelElement");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");

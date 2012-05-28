@@ -37,10 +37,9 @@ public:
     ~DeclarativeXySeries();
 
 public:
-    bool setDeclarativeModel(DeclarativeTableModel *model);
-    DeclarativeTableModel *declarativeModel();
     QColor color();
     void setColor(QColor color);
+    DeclarativeXyPoint *at(int index);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

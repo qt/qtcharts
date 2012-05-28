@@ -29,43 +29,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeXySeries::DeclarativeXySeries()
 {
-    // TODO: XYModelMapper implementation has changed, this code has to be updated
-
-    // All the inherited objects must be of type QXYSeries, so it is safe to cast
-//    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
-//    // TODO: mapper should be available on the series by default
-//    QXYModelMapper *mapper = new QXYModelMapper(series);
-//    mapper->setMapX(0);
-//    mapper->setMapY(1);
-//    mapper->setFirst(0);
-//    mapper->setCount(-1);
-//    mapper->setOrientation(Qt::Vertical);
-//    series->setModelMapper(mapper);
 }
 
 DeclarativeXySeries::~DeclarativeXySeries()
 {
-}
-
-bool DeclarativeXySeries::setDeclarativeModel(DeclarativeTableModel *model)
-{
-    QAbstractItemModel *m = qobject_cast<QAbstractItemModel *>(model);
-    bool value(false);
-    if (m) {
-        // All the inherited objects must be of type QXYSeries, so it is safe to cast
-//        QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
-//        series->setModel(m);
-    } else {
-        qWarning("DeclarativeXySeries: Illegal model");
-    }
-    return value;
-}
-
-DeclarativeTableModel *DeclarativeXySeries::declarativeModel()
-{
-    // All the inherited objects must be of type QXYSeries, so it is safe to cast
-//    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
-    return 0; //qobject_cast<DeclarativeTableModel *>(series->model());
 }
 
 QColor DeclarativeXySeries::color()
@@ -81,6 +48,19 @@ void DeclarativeXySeries::setColor(QColor color)
     QPen pen = series->pen();
     pen.setColor(color);
     series->setPen(pen);
+}
+
+DeclarativeXyPoint *DeclarativeXySeries::at(int index)
+{
+    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    if (index < series->count()) {
+        QPointF point = series->points().at(index);
+        DeclarativeXyPoint *xyPoint = new DeclarativeXyPoint(series);
+        xyPoint->setX(point.x());
+        xyPoint->setY(point.y());
+        return xyPoint;
+    }
+    return 0;
 }
 
 

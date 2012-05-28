@@ -18,27 +18,27 @@
 **
 ****************************************************************************/
 
-#ifndef DECLARATIVE_XY_POINT_H
-#define DECLARATIVE_XY_POINT_H
+import QtQuick 1.0
+import QtCommercial.Chart 1.0
 
-#include "qchartglobal.h"
-#include <QObject>
-#include <QPointF>
-#include <QDataStream>
+Rectangle {
+    anchors.fill: parent
 
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
+    ChartView {
+        id: chart
+        title: "Top-5 car brand shares in Finland"
+        anchors.fill: parent
+        theme: ChartView.ChartThemeLight
+        legend: ChartView.LegendBottom
+        animationOptions: ChartView.SeriesAnimations
 
-class DeclarativeXyPoint : public QObject, public QPointF
-{
-    Q_OBJECT
-    // TODO: make the setters change the value, if parented by a series
-    Q_PROPERTY(qreal x READ x WRITE setX /*NOTIFY dataXChanged*/)
-    Q_PROPERTY(qreal y READ y WRITE setY /*NOTIFY dataYChanged*/)
-
-public:
-    explicit DeclarativeXyPoint(QObject *parent = 0);
-};
-
-QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif // DECLARATIVE_XY_POINT_H
+        PieSeries {
+            id: pieSeries
+            PieSlice { label: "Volkswagen"; value: 13.5 }
+            PieSlice { label: "Toyota"; value: 10.9 }
+            PieSlice { label: "Ford"; value: 8.6 }
+            PieSlice { label: "Skoda"; value: 8.2 }
+            PieSlice { label: "Volvo"; value: 6.8 }
+        }
+    }
+}
