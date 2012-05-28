@@ -280,9 +280,8 @@ void ChartPresenter::zoomOut(qreal factor)
     m_state = ShowState;
 }
 
-void ChartPresenter::scroll(int dx,int dy)
+void ChartPresenter::scroll(qreal dx,qreal dy)
 {
-
     if(dx<0) m_state=ScrollLeftState;
     if(dx>0) m_state=ScrollRightState;
     if(dy<0) m_state=ScrollUpState;

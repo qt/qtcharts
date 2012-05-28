@@ -62,7 +62,7 @@ public:
 
     void zoomIn(const QRectF& rect, const QSizeF& size);
     void zoomOut(const QRectF& rect, const QSizeF& size);
-    void move(int dx,int dy,const QSizeF& size);
+    void move(qreal dx,qreal dy,const QSizeF& size);
 
 Q_SIGNALS:
     void domainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);

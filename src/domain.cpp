@@ -197,7 +197,7 @@ void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
     setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
 }
 
-void Domain::move(int dx,int dy,const QSizeF& size)
+void Domain::move(qreal dx,qreal dy,const QSizeF& size)
 {
     qreal x = spanX() / size.width();
     qreal y = spanY() / size.height();

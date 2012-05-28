@@ -268,7 +268,7 @@ Domain* ChartDataSet::domain(QAxis* axis) const
     }
 }
 
-void ChartDataSet::scrollDomain(int dx,int dy,const QSizeF& size)
+void ChartDataSet::scrollDomain(qreal dx,qreal dy,const QSizeF& size)
 {
     QMapIterator<QAxis*, Domain*> i( m_axisDomainMap);
     //main domain has to be the last one;

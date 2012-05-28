@@ -81,7 +81,7 @@ public:
     void zoomIn(qreal factor);
     void zoomIn(const QRectF& rect);
     void zoomOut(qreal factor);
-    void scroll(int dx,int dy);
+    void scroll(qreal dx,qreal dy);
 
     void setGeometry(const QRectF& rect);
     QRectF chartGeometry() const { return m_chartRect; }
