@@ -39,9 +39,9 @@ class QTCOMMERCIALCHART_EXPORT QXYSeries : public QAbstractSeries
 
 protected:
     explicit QXYSeries(QXYSeriesPrivate &d,QObject *parent = 0);
-    ~QXYSeries();
 
 public:
+    ~QXYSeries();
     void append(qreal x, qreal y);
     void append(const QPointF &point);
     void append(const QList<QPointF> &points);
