@@ -37,7 +37,7 @@ SplineAnimation::~SplineAnimation()
 {
 }
 
-void SplineAnimation::setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldControlPoints, QVector<QPointF> &newControlPoints, int index)
+void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldControlPoints, QVector<QPointF> &newControlPoints, int index)
 {
     int x = oldPoints.count();
     int y = newPoints.count();

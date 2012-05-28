@@ -34,7 +34,7 @@ class SplineAnimation : public XYAnimation
 public:
     SplineAnimation(SplineChartItem *item);
     ~SplineAnimation();
-    void setValues(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldContorlPoints, QVector<QPointF> &newControlPoints, int index);
+    void setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldContorlPoints, QVector<QPointF> &newControlPoints, int index = -1);
 
 protected:
     QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const;

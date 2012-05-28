@@ -86,7 +86,9 @@ void SplineChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> 
     }
 
     if (m_animation) {
-        m_animation->setValues(oldPoints,newPoints,m_controlPoints,controlPoints,index);
+        m_animation->setup(oldPoints,newPoints,m_controlPoints,controlPoints,index);
+        setGeometryPoints(newPoints);
+        setDirty(false);
         presenter()->startAnimation(m_animation);
     }
     else {
@@ -107,7 +109,9 @@ void SplineChartItem::updateGeometry()
     const QVector<QPointF> &controlPoints = controlGeometryPoints();
 
     if ((points.size()<2) || (controlPoints.size()<2)) {
+    	prepareGeometryChange();
         m_path = QPainterPath();
+        m_rect = QRect();
         return;
     }
 

@@ -39,50 +39,53 @@ XYAnimation::~XYAnimation()
 {
 }
 
-void XYAnimation::setAnimationType(Animation type)
+void XYAnimation::setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints, int index)
 {
-	if (state() != QAbstractAnimation::Stopped) stop();
-    m_type=type;
-}
+	m_type = NewAnimation;
 
-void XYAnimation::setValues(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints, int index)
-{
-	if (state() != QAbstractAnimation::Stopped) stop();
+	if (state() != QAbstractAnimation::Stopped){
+	    stop();
+	    m_dirty=false;
+	}
 
-    if (m_item->isDirty()) {
-        m_oldPoints = oldPoints;
-        m_newPoints = newPoints;
-        m_dirty=false;
-    }
-    else {
-        if(m_dirty) {
-            m_newPoints = newPoints;
-            m_oldPoints = oldPoints;
-            m_dirty=false;
-        }
-    }
+	if(!m_dirty){
+	    m_dirty = true;
+	    m_oldPoints = oldPoints;
+	}
 
-    int x = m_oldPoints.count();
-    int y = m_newPoints.count();
+	m_newPoints = newPoints;
 
-    if (abs(x - y) == 1) {
-        if (y < x){
-            if(!newPoints.isEmpty()) m_newPoints.insert(index,newPoints[index]);
-            m_index=index;if(newPoints.isEmpty())
-            m_dirty=true;
-        }
-        if (y > x){
-            m_oldPoints.insert(index, x > 0 ? m_oldPoints[index-1] : newPoints[index]);//add
-        }
-    }else{
-        m_newPoints=newPoints;
-        m_dirty=false;
-        m_oldPoints.resize(m_newPoints.size());
-    }
+	int x = m_oldPoints.count();
+	int y = m_newPoints.count();
+
+	if(x - y == 1  && index >= 0 && !newPoints.isEmpty()){
+		 //remove point
+		 m_newPoints.insert(index, index >= 1 ? m_newPoints[index-1] : newPoints[index]);
+		 m_index=index;
+		 m_type = RemovePointAnimation;
+	}
+
+	if(x - y == -1  && index >= 0){
+		  //add point
+		 m_oldPoints.insert(index, x > 0 && index > 1 ? m_oldPoints[index-1] : newPoints[index]);
+		 m_index=index;
+		 m_type = AddPointAnimation;
+	}
+
+	x = m_oldPoints.count();
+	y = m_newPoints.count();
+
+	if(x != y)
+	{
+		m_type = NewAnimation;
+	}
+	else if(m_type == NewAnimation)
+	{
+		m_type = ReplacePointAnimation;
+	}
 
     setKeyValueAt(0.0, qVariantFromValue(m_oldPoints));
     setKeyValueAt(1.0, qVariantFromValue(m_newPoints));
-
 }
 
 QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress ) const
@@ -97,8 +100,9 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, q
     case AddPointAnimation:
     case RemovePointAnimation:
     {
-        if (startVector.count() != endVector.count())
+        if (startVector.count() != endVector.count()){
             break;
+        }
 
         for(int i = 0; i < startVector.count(); i++) {
             qreal x = startVector[i].x() + ((endVector[i].x() - startVector[i].x()) * progress);
@@ -124,10 +128,13 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, q
 void XYAnimation::updateCurrentValue (const QVariant &value)
 {
     if(state()!=QAbstractAnimation::Stopped){ //workaround
+
         QVector<QPointF> vector = qVariantValue<QVector<QPointF> >(value);
         m_item->setGeometryPoints(vector);
         m_item->updateGeometry();
         m_item->setDirty(true);
+        m_dirty=false;
+
     }
 }
 

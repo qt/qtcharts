@@ -34,8 +34,7 @@ public:
     enum Animation { AddPointAnimation, RemovePointAnimation, ReplacePointAnimation, NewAnimation };
     XYAnimation(XYChart *item);
     ~XYAnimation();
-    void setValues(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints,int index);
-    void setAnimationType(Animation type);
+    void setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints,int index = -1);
     Animation animationType() const { return m_type; };
 
 protected:
