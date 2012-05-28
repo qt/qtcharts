@@ -30,13 +30,13 @@ class QPieSlice;
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
 {
     Q_OBJECT
-    Q_PROPERTY(qreal horizontalPosition READ horizontalPosition WRITE setHorizontalPosition)
-    Q_PROPERTY(qreal verticalPosition READ verticalPosition WRITE setVerticalPosition)
-    Q_PROPERTY(qreal size READ pieSize WRITE setPieSize)
-    Q_PROPERTY(qreal startAngle READ pieStartAngle WRITE setPieStartAngle)
-    Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle)
-    Q_PROPERTY(int count READ count)
-    Q_PROPERTY(qreal sum READ sum)
+    Q_PROPERTY(qreal horizontalPosition READ horizontalPosition WRITE setHorizontalPosition NOTIFY horizontalPositionChanged)
+    Q_PROPERTY(qreal verticalPosition READ verticalPosition WRITE setVerticalPosition NOTIFY verticalPositionChanged)
+    Q_PROPERTY(qreal size READ pieSize WRITE setPieSize NOTIFY pieSizeChanged)
+    Q_PROPERTY(qreal startAngle READ pieStartAngle WRITE setPieStartAngle NOTIFY pieStartAngleChanged)
+    Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle NOTIFY pieEndAngleChanged)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
+    Q_PROPERTY(qreal sum READ sum NOTIFY sumChanged)
 
 public:
     explicit QPieSeries(QObject *parent = 0);
@@ -48,18 +48,22 @@ public:
     bool append(QList<QPieSlice*> slices);
     QPieSeries& operator << (QPieSlice* slice);
     QPieSlice* append(QString label, qreal value);
+
     bool insert(int index, QPieSlice* slice);
+
     bool remove(QPieSlice* slice);
     void clear();
 
     QList<QPieSlice*> slices() const;
     int count() const;
+
     bool isEmpty() const;
 
     qreal sum() const;
 
     void setHorizontalPosition(qreal relativePosition);
     qreal horizontalPosition() const;
+
     void setVerticalPosition(qreal relativePosition);
     qreal verticalPosition() const;
 
@@ -68,6 +72,7 @@ public:
 
     void setPieStartAngle(qreal startAngle);
     qreal pieStartAngle() const;
+
     void setPieEndAngle(qreal endAngle);
     qreal pieEndAngle() const;
 
@@ -78,6 +83,13 @@ Q_SIGNALS:
     void removed(QList<QPieSlice*> slices);
     void clicked(QPieSlice* slice);
     void hovered(QPieSlice* slice, bool state);
+    void countChanged();
+    void sumChanged();
+    void pieSizeChanged();
+    void pieStartAngleChanged();
+    void pieEndAngleChanged();
+    void horizontalPositionChanged();
+    void verticalPositionChanged();
 
 private:
     Q_DECLARE_PRIVATE(QPieSeries)

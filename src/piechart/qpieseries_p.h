@@ -43,15 +43,10 @@ public:
 
     static QPieSeriesPrivate* seriesData(QPieSeries &series);
 
-Q_SIGNALS:
-    void piePositionChanged();
-    void pieSizeChanged();
-
 public Q_SLOTS:
     void sliceChanged();
     void sliceClicked();
     void sliceHovered(bool state);
-    bool setRealValue(qreal &value, qreal newValue, qreal max, qreal min = 0.0);
 
 public:
     QList<QPieSlice*> m_slices;

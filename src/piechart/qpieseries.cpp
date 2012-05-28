@@ -179,6 +179,7 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
     }
 
     emit added(slices);
+    emit countChanged();
 
     return true;
 }
@@ -242,6 +243,7 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
     connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
 
     emit added(QList<QPieSlice*>() << slice);
+    emit countChanged();
 
     return true;
 }
@@ -263,6 +265,7 @@ bool QPieSeries::remove(QPieSlice* slice)
     d->updateDerivativeData();
 
     emit removed(QList<QPieSlice*>() << slice);
+    emit countChanged();
 
     delete slice;
     slice = 0;
@@ -288,6 +291,7 @@ void QPieSeries::clear()
     d->updateDerivativeData();
 
     emit removed(slices);
+    emit countChanged();
 }
 
 /*!
@@ -320,15 +324,31 @@ QList<QPieSlice*> QPieSeries::slices() const
 void QPieSeries::setHorizontalPosition(qreal relativePosition)
 {
     Q_D(QPieSeries);
-    if (d->setRealValue(d->m_pieRelativeHorPos, relativePosition, 1.0))
-        emit d->piePositionChanged();
+
+    if (relativePosition < 0.0)
+        relativePosition = 0.0;
+    if (relativePosition > 1.0)
+        relativePosition = 1.0;
+
+    if (!qFuzzyIsNull(d->m_pieRelativeHorPos - relativePosition)) {
+        d->m_pieRelativeHorPos = relativePosition;
+        emit horizontalPositionChanged();
+    }
 }
 
 void QPieSeries::setVerticalPosition(qreal relativePosition)
 {
     Q_D(QPieSeries);
-    if (d->setRealValue(d->m_pieRelativeVerPos, relativePosition, 1.0))
-        emit d->piePositionChanged();
+
+    if (relativePosition < 0.0)
+        relativePosition = 0.0;
+    if (relativePosition > 1.0)
+        relativePosition = 1.0;
+
+    if (!qFuzzyIsNull(d->m_pieRelativeVerPos - relativePosition)) {
+        d->m_pieRelativeVerPos = relativePosition;
+        emit verticalPositionChanged();
+    }
 }
 
 qreal QPieSeries::horizontalPosition() const
@@ -346,8 +366,16 @@ qreal QPieSeries::verticalPosition() const
 void QPieSeries::setPieSize(qreal relativeSize)
 {
     Q_D(QPieSeries);
-    if (d->setRealValue(d->m_pieRelativeSize, relativeSize, 1.0))
-        emit d->pieSizeChanged();
+
+    if (relativeSize < 0.0)
+        relativeSize = 0.0;
+    if (relativeSize > 1.0)
+        relativeSize = 1.0;
+
+    if (!qFuzzyIsNull(d->m_pieRelativeSize - relativeSize)) {
+        d->m_pieRelativeSize = relativeSize;
+        emit pieSizeChanged();
+    }
 }
 
 qreal QPieSeries::pieSize() const
@@ -364,6 +392,7 @@ void QPieSeries::setPieStartAngle(qreal angle)
         return;
     d->m_pieStartAngle = angle;
     d->updateDerivativeData();
+    emit pieStartAngleChanged();
 }
 
 qreal QPieSeries::pieStartAngle() const
@@ -388,6 +417,7 @@ void QPieSeries::setPieEndAngle(qreal angle)
         return;
     d->m_pieEndAngle = angle;
     d->updateDerivativeData();
+    emit pieEndAngleChanged();
 }
 
 /*!
@@ -482,15 +512,15 @@ QPieSeriesPrivate::~QPieSeriesPrivate()
 
 void QPieSeriesPrivate::updateDerivativeData()
 {
-    m_sum = 0;
-
-    // nothing to do?
-    if (m_slices.count() == 0)
-        return;
-
     // calculate sum of all slices
+    qreal sum = 0;
     foreach (QPieSlice* s, m_slices)
-        m_sum += s->value();
+        sum += s->value();
+
+    if (!qFuzzyIsNull(m_sum - sum)) {
+        m_sum = sum;
+        emit q_func()->sumChanged();
+    }
 
     // nothing to show..
     if (qFuzzyIsNull(m_sum))
@@ -544,32 +574,6 @@ void QPieSeriesPrivate::sliceHovered(bool state)
     Q_ASSERT(m_slices.contains(slice));
     Q_Q(QPieSeries);
     emit q->hovered(slice, state);
-}
-
-bool QPieSeriesPrivate::setRealValue(qreal &value, qreal newValue, qreal max, qreal min)
-{
-    // Remove rounding errors
-    qreal roundedValue = newValue;
-    if (qFuzzyIsNull(min) && qFuzzyIsNull(newValue))
-        roundedValue = 0.0;
-    else if (qFuzzyCompare(newValue, max))
-        roundedValue = max;
-    else if (qFuzzyCompare(newValue, min))
-        roundedValue = min;
-
-    // Check if the position is valid after removing the rounding errors
-    if (roundedValue < min || roundedValue > max) {
-        qWarning("QPieSeries: Illegal value");
-        return false;
-    }
-
-    if (!qFuzzyIsNull(value - roundedValue)) {
-        value = roundedValue;
-        return true;
-    }
-
-    // The change was so small it is considered a rounding error
-    return false;
 }
 
 void QPieSeriesPrivate::scaleDomain(Domain& domain)

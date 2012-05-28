@@ -42,7 +42,7 @@ public slots:
     void cleanup();
 
 private slots:
-    void construction();
+    void properties();
     void append();
     void insert();
     void remove();
@@ -76,10 +76,18 @@ void tst_qpieseries::cleanup()
 
 }
 
-void tst_qpieseries::construction()
+void tst_qpieseries::properties()
 {
-    // verify default values
     QPieSeries s;
+
+    QSignalSpy countSpy(&s, SIGNAL(countChanged()));
+    QSignalSpy sumSpy(&s, SIGNAL(sumChanged()));
+    QSignalSpy sizeSpy(&s, SIGNAL(pieSizeChanged()));
+    QSignalSpy startAngleSpy(&s, SIGNAL(pieStartAngleChanged()));
+    QSignalSpy endAngleSpy(&s, SIGNAL(pieEndAngleChanged()));
+    QSignalSpy horPosSpy(&s, SIGNAL(horizontalPositionChanged()));
+    QSignalSpy verPosSpy(&s, SIGNAL(verticalPositionChanged()));
+
     QVERIFY(s.type() == QAbstractSeries::SeriesTypePie);
     QVERIFY(s.count() == 0);
     QVERIFY(s.isEmpty());
@@ -89,6 +97,53 @@ void tst_qpieseries::construction()
     QCOMPARE(s.pieSize(), 0.7);
     QCOMPARE(s.pieStartAngle(), 0.0);
     QCOMPARE(s.pieEndAngle(), 360.0);
+
+    s.append("s1", 1);
+    s.append("s2", 1);
+    s.append("s3", 1);
+    s.insert(1, new QPieSlice("s4", 1));
+    s.remove(s.slices().first());
+    QCOMPARE(s.count(), 3);
+    QCOMPARE(s.sum(), 3.0);
+    s.clear();
+    QCOMPARE(s.count(), 0);
+    QCOMPARE(s.sum(), 0.0);
+    QCOMPARE(countSpy.count(), 6);
+    QCOMPARE(sumSpy.count(), 6);
+
+    s.setPieSize(-1.0);
+    QCOMPARE(s.pieSize(), 0.0);
+    s.setPieSize(0.0);
+    s.setPieSize(0.9);
+    s.setPieSize(2.0);
+    QCOMPARE(s.pieSize(), 1.0);
+    QCOMPARE(sizeSpy.count(), 3);
+
+    s.setPieStartAngle(0);
+    s.setPieStartAngle(-180);
+    s.setPieStartAngle(180);
+    QCOMPARE(startAngleSpy.count(), 2);
+
+    s.setPieEndAngle(360);
+    s.setPieEndAngle(-180);
+    s.setPieEndAngle(180);
+    QCOMPARE(endAngleSpy.count(), 2);
+
+    s.setHorizontalPosition(0.5);
+    s.setHorizontalPosition(-1.0);
+    QCOMPARE(s.horizontalPosition(), 0.0);
+    s.setHorizontalPosition(1.0);
+    s.setHorizontalPosition(2.0);
+    QCOMPARE(s.horizontalPosition(), 1.0);
+    QCOMPARE(horPosSpy.count(), 2);
+
+    s.setVerticalPosition(0.5);
+    s.setVerticalPosition(-1.0);
+    QCOMPARE(s.verticalPosition(), 0.0);
+    s.setVerticalPosition(1.0);
+    s.setVerticalPosition(2.0);
+    QCOMPARE(s.verticalPosition(), 1.0);
+    QCOMPARE(verPosSpy.count(), 2);
 }
 
 void tst_qpieseries::append()
