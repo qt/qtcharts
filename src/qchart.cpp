@@ -230,7 +230,9 @@ QBrush QChart::titleBrush() const
 }
 
 /*!
- Sets the \a theme used by the chart for rendering the graphical representation of the data
+ Sets the \a theme used by the chart for rendering the graphical representation of the data.
+
+ Note: changing the theme will overwrite all customizations (pen, brush, font, ect.) done to the series.
  \sa theme()
  */
 void QChart::setTheme(QChart::ChartTheme theme)

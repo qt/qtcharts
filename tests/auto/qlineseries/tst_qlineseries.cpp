@@ -284,7 +284,7 @@ void tst_QLineSeries::pen()
 
     m_chart->setTheme(QChart::ChartThemeDark);
 
-    if(pen!=QPen()) QCOMPARE(series.pen(), pen);
+    QVERIFY(series.pen() != pen);
 }
 
 void tst_QLineSeries::pointsVisible_data()
