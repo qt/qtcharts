@@ -7,8 +7,8 @@ QXYModelMapper::QXYModelMapper(QObject *parent):
     m_first(0),
     m_count(-1),
     m_orientation(Qt::Vertical),
-    m_mapX(-1),
-    m_mapY(-1)
+    m_xSection(-1),
+    m_ySection(-1)
 {
 }
 
@@ -20,7 +20,7 @@ int QXYModelMapper::first() const
 void QXYModelMapper::setFirst(int first)
 {
     m_first = qMax(first, 0);
-    emit updated();
+//    emit updated();
 }
 
 int QXYModelMapper::count() const
@@ -31,7 +31,7 @@ int QXYModelMapper::count() const
 void QXYModelMapper::setCount(int count)
 {
     m_count = qMax(count, -1);
-    emit updated();
+//    emit updated();
 }
 
 Qt::Orientation QXYModelMapper::orientation() const
@@ -42,29 +42,29 @@ Qt::Orientation QXYModelMapper::orientation() const
 void QXYModelMapper::setOrientation(Qt::Orientation orientation)
 {
     m_orientation = orientation;
-    emit updated();
+//    emit updated();
 }
 
-int QXYModelMapper::mapX() const
+int QXYModelMapper::xSection() const
 {
-    return m_mapX;
+    return m_xSection;
 }
 
-void QXYModelMapper::setMapX(int mapX)
+void QXYModelMapper::setXSection(int xSection)
 {
-    m_mapX = mapX;
-    emit updated();
+    m_xSection = xSection;
+//    emit updated();
 }
 
-int QXYModelMapper::mapY() const
+int QXYModelMapper::ySection() const
 {
-    return m_mapY;
+    return m_ySection;
 }
 
-void QXYModelMapper::setMapY(int mapY)
+void QXYModelMapper::setYSection(int ySection)
 {
-    m_mapY = mapY;
-    emit updated();
+    m_ySection = ySection;
+//    emit updated();
 }
 
 void QXYModelMapper::reset()
@@ -72,8 +72,8 @@ void QXYModelMapper::reset()
     m_first = 0;
     m_count = -1;
     m_orientation = Qt::Vertical;
-    m_mapX = -1;
-    m_mapY = -1;
+    m_xSection = -1;
+    m_ySection = -1;
 }
 
 #include "moc_qxymodelmapper.cpp"

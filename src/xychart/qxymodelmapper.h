@@ -9,30 +9,31 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QXYModelMapper : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int mapX READ mapX WRITE setMapX)
-    Q_PROPERTY(int mapY READ mapY WRITE setMapY)
+    Q_PROPERTY(int xSection READ xSection WRITE setXSection)
+    Q_PROPERTY(int ySection READ ySection WRITE setYSection)
     Q_PROPERTY(int first READ first WRITE setFirst)
     Q_PROPERTY(int count READ count WRITE setCount)
     Q_PROPERTY(Qt::Orientation orientation READ orientation WRITE setOrientation)
     Q_ENUMS(Qt::Orientation)
 
 public:
-    explicit QXYModelMapper(QObject *parent = 0);
-
     int first() const;
     void setFirst(int first);
 
     int count() const;
     void setCount(int count);
 
+protected:
+    explicit QXYModelMapper(QObject *parent = 0);
+
     Qt::Orientation orientation() const;
     void setOrientation(Qt::Orientation orientation);
 
-    int mapX() const;
-    void setMapX(int mapX);
+    int xSection() const;
+    void setXSection(int xSection);
 
-    int mapY() const;
-    void setMapY(int mapY);
+    int ySection() const;
+    void setYSection(int ySection);
 
     void reset();
 
@@ -43,8 +44,8 @@ private:
     int m_first;
     int m_count;
     Qt::Orientation m_orientation;
-    int m_mapX;
-    int m_mapY;
+    int m_xSection;
+    int m_ySection;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

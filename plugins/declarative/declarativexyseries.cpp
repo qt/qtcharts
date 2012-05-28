@@ -29,15 +29,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeXySeries::DeclarativeXySeries()
 {
+    // TODO: XYModelMapper implementation has changed, this code has to be updated
+
     // All the inherited objects must be of type QXYSeries, so it is safe to cast
-    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
-    // TODO: mapper should be available on the series by default
-    QXYModelMapper *mapper = new QXYModelMapper(series);
-    mapper->setMapX(0);
-    mapper->setMapY(1);
-    mapper->setFirst(0);
-    mapper->setCount(-1);
-    mapper->setOrientation(Qt::Vertical);
+//    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+//    // TODO: mapper should be available on the series by default
+//    QXYModelMapper *mapper = new QXYModelMapper(series);
+//    mapper->setMapX(0);
+//    mapper->setMapY(1);
+//    mapper->setFirst(0);
+//    mapper->setCount(-1);
+//    mapper->setOrientation(Qt::Vertical);
 //    series->setModelMapper(mapper);
 }
 

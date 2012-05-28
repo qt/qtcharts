@@ -46,20 +46,19 @@ QPieSeries* QPieModelMapper::series() const
 
 void QPieModelMapper::setSeries(QPieSeries *series)
 {
-    if (series == 0)
-        return;
-
     Q_D(QPieModelMapper);
     if (d->m_series) {
         disconnect(d->m_series, 0, d, 0);
     }
+
+    if (series == 0)
+        return;
 
     d->m_series = series;
     d->initializePieFromModel();
     // connect the signals from the series
     connect(d->m_series, SIGNAL(added(QList<QPieSlice*>)), d, SLOT(slicesAdded(QList<QPieSlice*>)));
     connect(d->m_series, SIGNAL(removed(QList<QPieSlice*>)), d, SLOT(slicesRemoved(QList<QPieSlice*>)));
-    //        connect(d->m_model, SIGNAL(), d, SLOT());
 }
 
 int QPieModelMapper::first() const

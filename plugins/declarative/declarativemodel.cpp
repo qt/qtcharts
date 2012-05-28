@@ -101,8 +101,9 @@ void DeclarativeTableModel::appendPoint(QXYModelMapper *mapper, DeclarativeXyPoi
 {
 //    qDebug() << "DeclarativeTableModel::appendPoint:" << point;
     QVariantList values;
-    values.insert(mapper->mapX(), point->x());
-    values.insert(mapper->mapY(), point->y());
+    // TODO: XYModelMapper implementation has change, this code has to be updated.
+//    values.insert(mapper->mapX(), point->x());
+//    values.insert(mapper->mapY(), point->y());
     append(values);
 }
 

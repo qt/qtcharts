@@ -253,12 +253,15 @@ void tst_piemodelmapper::seriesUpdated()
     mapper->setModel(otherModel);
     mapper->setSeries(m_series);
     QCOMPARE(m_series->count(), m_modelRowCount);
+    QCOMPARE(mapper->count(), -1);
 
     m_series->append("1000", 1000);
     QCOMPARE(m_series->count(), m_modelRowCount + 1);
+    QCOMPARE(mapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
 
     m_series->remove(m_series->slices().last());
     QCOMPARE(m_series->count(), m_modelRowCount);
+    QCOMPARE(mapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
 
     otherModel->clear();
     delete otherModel;

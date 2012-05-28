@@ -4,7 +4,9 @@ DEPENDPATH += $$PWD
 SOURCES += \
     $$PWD/xychart.cpp \
     $$PWD/qxyseries.cpp \  
-    $$PWD/qxymodelmapper.cpp
+    $$PWD/qxymodelmapper.cpp \
+    $$PWD/qvxymodelmapper.cpp \
+    $$PWD/qhxymodelmapper.cpp
     
 PRIVATE_HEADERS += \
     $$PWD/xychart_p.h \
@@ -13,4 +15,7 @@ PRIVATE_HEADERS += \
     
 PUBLIC_HEADERS += \    
     $$PWD/qxyseries.h \
-    $$PWD/qxymodelmapper.h
+    $$PWD/qxymodelmapper.h \
+    $$PWD/qvxymodelmapper.h \
+    $$PWD/qhxymodelmapper.h
+
