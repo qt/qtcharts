@@ -48,9 +48,9 @@ public:
 
 Q_SIGNALS:
     void updated();
-    void pointReplaced(int index);
-    void pointRemoved(int index);
-    void pointAdded(int index);
+//    void pointReplaced(int index);
+//    void pointRemoved(int index);
+//    void pointAdded(int index);
 
 protected:
     QVector<QPointF> m_points;

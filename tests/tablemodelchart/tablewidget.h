@@ -55,6 +55,8 @@ public:
     void testPie2();
     void testPie3();
 
+    void testXY();
+
     private:
     QChartView* m_chartView;
     QChart* m_chart;

@@ -102,7 +102,8 @@ void QXYSeries::append(const QPointF &point)
 {
     Q_D(QXYSeries);
     d->m_points<<point;
-    emit d->pointAdded(d->m_points.count()-1);
+//    emit d->pointAdded(d->m_points.count()-1);
+    emit pointAdded(d->m_points.count()-1);
 }
 
 /*!
@@ -128,7 +129,8 @@ void QXYSeries::replace(const QPointF &oldPoint,const QPointF &newPoint)
     int index = d->m_points.indexOf(oldPoint);
     if(index==-1) return;
     d->m_points[index] = newPoint;
-    emit d->pointReplaced(index);
+//    emit d->pointReplaced(index);
+    emit pointReplaced(index);
 }
 
 /*!
@@ -148,7 +150,8 @@ void QXYSeries::remove(const QPointF &point)
     int index = d->m_points.indexOf(point);
     if(index==-1) return;
     d->m_points.remove(index);
-    emit d->pointRemoved(index);
+//    emit d->pointRemoved(index);
+    emit pointRemoved(index);
 }
 
 /*!
@@ -166,7 +169,8 @@ void QXYSeries::insert(int index, const QPointF &point)
 {
     Q_D(QXYSeries);
     d->m_points.insert(index, point);
-    emit d->pointAdded(index);
+//    emit d->pointAdded(index);
+    emit pointAdded(index);
 }
 
 void QXYSeries::clear()

@@ -70,6 +70,9 @@ public:
 
 Q_SIGNALS:
     void clicked(const QPointF &point);
+    void pointReplaced(int index);
+    void pointRemoved(int index);
+    void pointAdded(int index);
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

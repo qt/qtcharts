@@ -58,7 +58,7 @@ void QXYModelMapper::setSeries(QXYSeries *series)
     // connect the signals from the series
     connect(d->m_series, SIGNAL(pointAdded(int)), d, SLOT(handlePointAdded(int)));
     connect(d->m_series, SIGNAL(pointRemoved(int)), d, SLOT(handlePointRemoved(int)));
-    connect(d->m_series, SIGNAL(pointReplaced(int)), d, SLOT(pointReplaced(int)));
+    connect(d->m_series, SIGNAL(pointReplaced(int)), d, SLOT(handlePointReplaced(int)));
 }
 
 int QXYModelMapper::first() const
@@ -187,17 +187,48 @@ QModelIndex QXYModelMapperPrivate::yModelIndex(int yPos)
 
 void QXYModelMapperPrivate::handlePointAdded(int pointPos)
 {
-    Q_UNUSED(pointPos)
+    if (m_seriesSignalsBlock)
+        return;
+
+    if (m_count != -1)
+        m_count += 1;
+
+    blockModelSignals();
+    if (m_orientation == Qt::Vertical)
+        m_model->insertRows(pointPos + m_first, 1);
+    else
+        m_model->insertColumns(pointPos + m_first, 1);
+
+    m_model->setData(xModelIndex(pointPos), m_series->points().at(pointPos).x());
+    m_model->setData(yModelIndex(pointPos), m_series->points().at(pointPos).y());
+    blockModelSignals(false);
 }
 
 void QXYModelMapperPrivate::handlePointRemoved(int pointPos)
 {
-    Q_UNUSED(pointPos)
+    if (m_seriesSignalsBlock)
+        return;
+
+    if (m_count != -1)
+        m_count -= 1;
+
+    blockModelSignals();
+    if (m_orientation == Qt::Vertical)
+        m_model->removeRow(pointPos + m_first);
+    else
+        m_model->removeColumn(pointPos + m_first);
+    blockModelSignals(false);
 }
 
 void QXYModelMapperPrivate::handlePointReplaced(int pointPos)
 {
-    Q_UNUSED(pointPos)
+    if (m_seriesSignalsBlock)
+        return;
+
+    blockModelSignals();
+    m_model->setData(xModelIndex(pointPos), m_series->points().at(pointPos).x());
+    m_model->setData(yModelIndex(pointPos), m_series->points().at(pointPos).y());
+    blockModelSignals(false);
 }
 
 void QXYModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)

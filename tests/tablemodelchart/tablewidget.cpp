@@ -90,6 +90,9 @@ TableWidget::TableWidget(QWidget *parent)
     QPushButton* specialPieButton3 = new QPushButton("Modify slices using series API");
     connect(specialPieButton3, SIGNAL(clicked()), this, SLOT(testPie3()));
 
+    QPushButton* xyTestButton = new QPushButton("Append XY point");
+    connect(xyTestButton, SIGNAL(clicked()), this, SLOT(testXY()));
+
 
     QLabel *spinBoxLabel = new QLabel("Rows affected:");
 
@@ -110,6 +113,7 @@ TableWidget::TableWidget(QWidget *parent)
     buttonsLayout->addWidget(specialPieButton);
     buttonsLayout->addWidget(specialPieButton2);
     buttonsLayout->addWidget(specialPieButton3);
+    buttonsLayout->addWidget(xyTestButton);
     buttonsLayout->addStretch();
 
     // chart type radio buttons
@@ -206,7 +210,7 @@ void TableWidget::updateChartType(bool toggle)
 
         if (m_lineRadioButton->isChecked())
         {
-            //            m_chart->setAnimationOptions(QChart::NoAnimation);
+                        m_chart->setAnimationOptions(QChart::NoAnimation);
 
             // series 1
             m_series = new QLineSeries(this);
@@ -217,7 +221,7 @@ void TableWidget::updateChartType(bool toggle)
             mapper->setXColumn(0);
             mapper->setYColumn(1);
             mapper->setFirst(3);
-            //            mapper->setCount(4);
+                        mapper->setCount(4);
 
             //            m_series->setModelMapping(0,1, Qt::Vertical);
             //            m_series->setModelMappingRange(3, 4);
@@ -355,7 +359,7 @@ void TableWidget::updateChartType(bool toggle)
             m_pieMapper->setLabelsColumn(7);
             m_pieMapper->setSeries(m_pieSeries);
             m_pieMapper->setModel(m_model);
-//            m_pieMapper->setFirst(2);
+            m_pieMapper->setFirst(2);
             //                        m_pieMapper->setCount(5);
             //                    pieSeries->setModelMapper(mapper);
 
@@ -380,7 +384,7 @@ void TableWidget::updateChartType(bool toggle)
             m_pieMapper->setLabelsColumn(7);
             m_pieMapper->setModel(m_model);
             m_pieMapper->setSeries(m_pieSeries2);
-//            m_pieMapper->setFirst(2);
+            m_pieMapper->setFirst(2);
 
             m_pieSeries2->setLabelsVisible(true);
             m_pieSeries2->setPieSize(0.35);
@@ -515,6 +519,17 @@ void TableWidget::testPie3()
         slice = m_pieSeries->slices().first();
         slice->setLabel("Prawie");
         slice->setValue(111);
+    }
+}
+
+void TableWidget::testXY()
+{
+//    if (m_series->type() != QAbstractSeries::SeriesTypeLine) {
+//        m_series->append(QPointF(150, 75));
+//    }
+
+    if (m_series->count() > 0) {
+        m_series->remove(m_series->points().last());
     }
 }
 
