@@ -44,7 +44,6 @@ m_dirty(true)
     QObject::connect(series->d_func(),SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
     QObject::connect(series->d_func(),SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
     QObject::connect(series->d_func(),SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
-    QObject::connect(series->d_func(),SIGNAL(reinitialized()),this,SLOT(handleReinitialized()));
     QObject::connect(this,SIGNAL(clicked(QPointF)),series,SIGNAL(clicked(QPointF)));
 }
 
@@ -192,17 +191,6 @@ void XYChart::handlePointReplaced(int index)
 	}
 
 	updateChart(m_points,points,index);
-}
-
-void XYChart::handleReinitialized()
-{
-    QVector<QPointF> points = calculateGeometryPoints();
-
-    if(m_animation) {
-        m_animation->setAnimationType(XYAnimation::NewAnimation);
-    }
-
-    updateChart(m_points,points);
 }
 
 void XYChart::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
