@@ -31,7 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 {
     Q_OBJECT
-    Q_PROPERTY(QColor color READ color WRITE setColor)
+    Q_PROPERTY(QColor color READ penColor WRITE setPenColor)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 

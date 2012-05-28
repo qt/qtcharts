@@ -30,13 +30,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeries
 {
     Q_OBJECT
-    Q_PROPERTY(QColor color READ color WRITE setColor)
+    Q_PROPERTY(QColor color READ brushColor WRITE setBrushColor)
+    Q_PROPERTY(QColor borderColor READ penColor WRITE setPenColor)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
 public:
     explicit DeclarativeScatterSeries(QObject *parent = 0);
     QDeclarativeListProperty<QObject> declarativeChildren();
+    QColor brushColor();
+    void setBrushColor(QColor color);
 
 public: // from QScatterSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QScatterSeries::append(x, y); }

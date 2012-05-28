@@ -70,7 +70,6 @@ Rectangle {
         repeat: true
         interval: 100
         onTriggered: {
-//            console.log("interval: " + interval);
             var index = __activeIndex % wheelOfFortune.count;
             if (interval < 700) {
                 scatterSeries.clear();
@@ -80,6 +79,7 @@ Rectangle {
                 wheelOfFortune.at(index).exploded = true;
                 interval = splineSeries.at(__activeIndex).y;
                 scatterSeries.append(__activeIndex, interval);
+                scatterSeries.color = Qt.tint(scatterSeries.color, "#05FF0000");
             } else {
                 // Switch the colors of the slice and the border
                 wheelOfFortune.at(index).borderWidth = 2;
@@ -89,10 +89,4 @@ Rectangle {
             }
         }
     }
-
-//    Loader {
-//        id: loader
-//        anchors.fill: parent
-//        source: "View" + (__viewNumber % 5 + 1) + ".qml";
-//    }
 }

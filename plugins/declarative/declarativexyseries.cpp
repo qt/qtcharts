@@ -35,14 +35,14 @@ DeclarativeXySeries::~DeclarativeXySeries()
 {
 }
 
-QColor DeclarativeXySeries::color()
+QColor DeclarativeXySeries::penColor()
 {
     // All the inherited objects must be of type QXYSeries, so it is safe to cast
     QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
     return series->pen().color();
 }
 
-void DeclarativeXySeries::setColor(QColor color)
+void DeclarativeXySeries::setPenColor(QColor color)
 {
     QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
     QPen pen = series->pen();

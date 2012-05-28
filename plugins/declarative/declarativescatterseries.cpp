@@ -43,6 +43,18 @@ void DeclarativeScatterSeries::appendDeclarativeChildren(QDeclarativeListPropert
         series->append(*point);
 }
 
+QColor DeclarativeScatterSeries::brushColor()
+{
+    return brush().color();
+}
+
+void DeclarativeScatterSeries::setBrushColor(QColor color)
+{
+    QBrush b = brush();
+    b.setColor(color);
+    setBrush(b);
+}
+
 #include "moc_declarativescatterseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
