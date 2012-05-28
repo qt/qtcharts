@@ -75,6 +75,10 @@ QScatterSeries::QScatterSeries(QObject *parent) : QXYSeries(*new QScatterSeriesP
 */
 QScatterSeries::~QScatterSeries()
 {
+    Q_D(QScatterSeries);
+    if(d->m_dataset) {
+        d->m_dataset->removeSeries(this);
+    }
 }
 
 QAbstractSeries::SeriesType QScatterSeries::type() const
