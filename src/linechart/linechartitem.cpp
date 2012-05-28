@@ -56,7 +56,9 @@ void LineChartItem::updateGeometry()
 
     if(points.size()==0)
     {
+        prepareGeometryChange();
         m_path = QPainterPath();
+        m_rect = QRect();
         return;
     }
 
