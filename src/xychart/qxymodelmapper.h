@@ -4,24 +4,36 @@
 #include "qchartglobal.h"
 #include <QObject>
 
+class QAbstractItemModel;
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+class QXYModelMapperPrivate;
+class QXYSeries;
 
 class QTCOMMERCIALCHART_EXPORT QXYModelMapper : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(int xSection READ xSection WRITE setXSection)
-    Q_PROPERTY(int ySection READ ySection WRITE setYSection)
+    Q_PROPERTY(QXYSeries *series READ series WRITE setSeries)
+    Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel)
     Q_PROPERTY(int first READ first WRITE setFirst)
     Q_PROPERTY(int count READ count WRITE setCount)
-    Q_PROPERTY(Qt::Orientation orientation READ orientation WRITE setOrientation)
     Q_ENUMS(Qt::Orientation)
 
 public:
+    QAbstractItemModel* model() const;
+    void setModel(QAbstractItemModel *model);
+
+    QXYSeries* series() const;
+    void setSeries(QXYSeries *series);
+
     int first() const;
     void setFirst(int first);
 
     int count() const;
     void setCount(int count);
+
+    void reset();
 
 protected:
     explicit QXYModelMapper(QObject *parent = 0);
@@ -35,17 +47,9 @@ protected:
     int ySection() const;
     void setYSection(int ySection);
 
-    void reset();
-
-Q_SIGNALS:
-    void updated();
-
-private:
-    int m_first;
-    int m_count;
-    Qt::Orientation m_orientation;
-    int m_xSection;
-    int m_ySection;
+protected:
+    QXYModelMapperPrivate * const d_ptr;
+    Q_DECLARE_PRIVATE(QXYModelMapper)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

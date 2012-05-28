@@ -50,10 +50,7 @@ Q_SIGNALS:
     void updated();
     void pointReplaced(int index);
     void pointRemoved(int index);
-    void pointsRemoved(int start, int end);
     void pointAdded(int index);
-    void pointsAdded(int start, int end);
-    void reinitialized();
 
 protected:
     QVector<QPointF> m_points;

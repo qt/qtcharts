@@ -10,7 +10,8 @@ SOURCES += \
     
 PRIVATE_HEADERS += \
     $$PWD/xychart_p.h \
-    $$PWD/qxyseries_p.h
+    $$PWD/qxyseries_p.h \
+    $$PWD/qxymodelmapper_p.h
 
     
 PUBLIC_HEADERS += \    
@@ -18,4 +19,3 @@ PUBLIC_HEADERS += \
     $$PWD/qxymodelmapper.h \
     $$PWD/qvxymodelmapper.h \
     $$PWD/qhxymodelmapper.h
-

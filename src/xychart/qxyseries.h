@@ -50,6 +50,8 @@ public:
     void remove(qreal x, qreal y);
     void remove(const QPointF &point);
     void removeAll();
+    void insert(int index, const QPointF &point);
+    void clear();
 
     int count() const;
     QList<QPointF> points() const;

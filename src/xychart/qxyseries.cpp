@@ -162,6 +162,20 @@ void QXYSeries::removeAll()
     }
 }
 
+void QXYSeries::insert(int index, const QPointF &point)
+{
+    Q_D(QXYSeries);
+    d->m_points.insert(index, point);
+    emit d->pointAdded(index);
+}
+
+void QXYSeries::clear()
+{
+    Q_D(QXYSeries);
+    for (int i = d->m_points.size() - 1; i >= 0; i--)
+        remove(d->m_points.at(i));
+}
+
 /*!
     \internal \a pos
 */

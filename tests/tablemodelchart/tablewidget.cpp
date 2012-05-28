@@ -26,7 +26,7 @@
 #include <QLineSeries>
 #include <QSplineSeries>
 #include <QScatterSeries>
-#include <QXYModelMapper>
+#include <QVXYModelMapper>
 #include "customtablemodel.h"
 #include <QPieSeries>
 #include <QVPieModelMapper>
@@ -91,7 +91,7 @@ TableWidget::TableWidget(QWidget *parent)
     connect(specialPieButton3, SIGNAL(clicked()), this, SLOT(testPie3()));
 
 
-    //    QLabel *spinBoxLabel = new QLabel("Rows affected:");
+    QLabel *spinBoxLabel = new QLabel("Rows affected:");
 
     // spin box for setting number of affected items (add, remove)
     m_linesCountSpinBox = new QSpinBox;
@@ -100,8 +100,8 @@ TableWidget::TableWidget(QWidget *parent)
 
     // buttons layout
     QVBoxLayout* buttonsLayout = new QVBoxLayout;
-    //    buttonsLayout->addWidget(spinBoxLabel);
-    //    buttonsLayout->addWidget(m_linesCountSpinBox);
+    buttonsLayout->addWidget(spinBoxLabel);
+    buttonsLayout->addWidget(m_linesCountSpinBox);
     //    buttonsLayout->addWidget(addRowAboveButton);
     buttonsLayout->addWidget(addRowBelowButton);
     buttonsLayout->addWidget(removeRowButton);
@@ -185,20 +185,20 @@ void TableWidget::updateChartType(bool toggle)
         //        m_chart->axisX()->setNiceNumbersEnabled(false);
         //        m_chart->axisY()->setNiceNumbersEnabled(false);
 
-        //        // renable axes of the chart (pie hides them)
-        //        // x axis
-        //        QAxis *axis = m_chart->axisX();
-        //        axis->setAxisVisible(true);
-        //        axis->setGridLineVisible(true);
-        //        axis->setLabelsVisible(true);
+        // renable axes of the chart (pie hides them)
+        // x axis
+        QAxis *axis = m_chart->axisX();
+        axis->setAxisVisible(true);
+        axis->setGridLineVisible(true);
+        axis->setLabelsVisible(true);
 
-        //        // y axis
-        //        axis = m_chart->axisY();
-        //        axis->setAxisVisible(true);
-        //        axis->setGridLineVisible(true);
-        //        axis->setLabelsVisible(true);
+        // y axis
+        axis = m_chart->axisY();
+        axis->setAxisVisible(true);
+        axis->setGridLineVisible(true);
+        axis->setLabelsVisible(true);
 
-        //        m_model->clearMapping();
+        m_model->clearMapping();
 
         QString seriesColorHex = "#000000";
         //        QPen pen;
@@ -208,21 +208,22 @@ void TableWidget::updateChartType(bool toggle)
         {
             //            m_chart->setAnimationOptions(QChart::NoAnimation);
 
-            //            // series 1
-            //            m_series = new QLineSeries;
-            //            m_series->setModel(m_model);
+            // series 1
+            m_series = new QLineSeries(this);
 
-            //            QXYModelMapper *mapper = new QXYModelMapper;
-            //            mapper->setMapX(0);
-            //            mapper->setMapY(1);
-            //            mapper->setFirst(3);
+            QVXYModelMapper *mapper = new QVXYModelMapper;
+            mapper->setModel(m_model);
+            mapper->setSeries(m_series);
+            mapper->setXColumn(0);
+            mapper->setYColumn(1);
+            mapper->setFirst(3);
             //            mapper->setCount(4);
-            //            m_series->setModelMapper(mapper);
-            //            //            m_series->setModelMapping(0,1, Qt::Vertical);
-            //            //            m_series->setModelMappingRange(3, 4);
-            //            m_chart->addSeries(m_series);
-            //            seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
-            //            m_model->addMapping(seriesColorHex, QRect(0, 3, 2, 4));
+
+            //            m_series->setModelMapping(0,1, Qt::Vertical);
+            //            m_series->setModelMappingRange(3, 4);
+            m_chart->addSeries(m_series);
+            seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
+            m_model->addMapping(seriesColorHex, QRect(0, 3, 2, 4));
 
             //            // series 2
             //            m_series = new QLineSeries;
@@ -354,7 +355,7 @@ void TableWidget::updateChartType(bool toggle)
             m_pieMapper->setLabelsColumn(7);
             m_pieMapper->setSeries(m_pieSeries);
             m_pieMapper->setModel(m_model);
-            m_pieMapper->setFirst(2);
+//            m_pieMapper->setFirst(2);
             //                        m_pieMapper->setCount(5);
             //                    pieSeries->setModelMapper(mapper);
 
@@ -377,9 +378,9 @@ void TableWidget::updateChartType(bool toggle)
             m_pieMapper = new QVPieModelMapper;
             m_pieMapper->setValuesColumn(0);
             m_pieMapper->setLabelsColumn(7);
-            m_pieMapper->setSeries(m_pieSeries2);
             m_pieMapper->setModel(m_model);
-            m_pieMapper->setFirst(2);
+            m_pieMapper->setSeries(m_pieSeries2);
+//            m_pieMapper->setFirst(2);
 
             m_pieSeries2->setLabelsVisible(true);
             m_pieSeries2->setPieSize(0.35);
