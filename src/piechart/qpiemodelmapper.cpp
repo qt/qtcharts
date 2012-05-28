@@ -301,6 +301,9 @@ void QPieModelMapperPrivate::sliceValueChanged()
 
 void QPieModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
+    if (m_model == 0 || m_series == 0)
+        return;
+
     if (m_modelSignalsBlock)
         return;
 
