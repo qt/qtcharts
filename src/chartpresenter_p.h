@@ -45,14 +45,17 @@ public:
         BackgroundZValue = -1,
         ShadesZValue,
         GridZValue,
-        LineChartZValue,
-        BarSeriesZValue,
-        ScatterSeriesZValue,
-        PieSeriesZValue,
+        SeriesZValue,
+        LineChartZValue = SeriesZValue,
+        BarSeriesZValue = SeriesZValue,
+        ScatterSeriesZValue = SeriesZValue,
+        PieSeriesZValue = SeriesZValue,
         AxisZValue,
         LegendZValue
     };
-    enum State {ShowState,
+
+    enum State {
+        ShowState,
         ScrollUpState,
         ScrollDownState,
         ScrollLeftState,
