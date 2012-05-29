@@ -118,4 +118,6 @@ Chart* QLineSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return line;
 }
 
+#include "moc_qlineseries.cpp"
+
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -111,6 +111,7 @@ QGroupBox *DataSerieDialog::rowCountSelector()
     layout->addWidget(radio);
     layout->addWidget(new QRadioButton("50"));
     layout->addWidget(new QRadioButton("100"));
+    layout->addWidget(new QRadioButton("1000"));
     layout->addWidget(new QRadioButton("10000"));
     layout->addWidget(new QRadioButton("100000"));
     layout->addWidget(new QRadioButton("1000000"));

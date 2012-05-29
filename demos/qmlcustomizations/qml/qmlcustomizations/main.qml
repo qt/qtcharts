@@ -80,6 +80,7 @@ Rectangle {
                 interval = splineSeries.at(__activeIndex).y;
                 scatterSeries.append(__activeIndex, interval);
                 scatterSeries.color = Qt.tint(scatterSeries.color, "#05FF0000");
+                scatterSeries.markerSize += 0.5;
             } else {
                 // Switch the colors of the slice and the border
                 wheelOfFortune.at(index).borderWidth = 2;

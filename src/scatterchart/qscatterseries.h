@@ -30,6 +30,10 @@ class QScatterSeriesPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QXYSeries
 {
+    Q_OBJECT
+    Q_PROPERTY(MarkerShape markerShape READ markerShape WRITE setMarkerShape)
+    Q_PROPERTY(qreal markerSize READ markerSize WRITE setMarkerSize)
+    Q_ENUMS(MarkerShape)
 
 public:
     enum MarkerShape {
@@ -40,13 +44,11 @@ public:
 public:
     explicit QScatterSeries(QObject *parent = 0);
     ~QScatterSeries();
-
     QAbstractSeries::SeriesType type() const;
-
-    MarkerShape shape() const;
-    void setShape(MarkerShape shape);
-    qreal size() const;
-    void setSize(qreal size);
+    MarkerShape markerShape() const;
+    void setMarkerShape(MarkerShape shape);
+    qreal markerSize() const;
+    void setMarkerSize(qreal size);
 
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)

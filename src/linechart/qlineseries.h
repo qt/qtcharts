@@ -31,10 +31,11 @@ class QLineSeriesPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QLineSeries : public QXYSeries
 {
+    Q_OBJECT
+
 public:
     explicit QLineSeries(QObject *parent = 0);
     ~QLineSeries();
-
     QAbstractSeries::SeriesType type() const;
 
 protected:
@@ -44,7 +45,6 @@ private:
     Q_DECLARE_PRIVATE(QLineSeries)
     Q_DISABLE_COPY(QLineSeries)
     friend class LineChartItem;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

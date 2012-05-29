@@ -89,7 +89,7 @@ QAbstractSeries::SeriesType QScatterSeries::type() const
 /*!
     Returns the shape used for drawing markers.
 */
-QScatterSeries::MarkerShape QScatterSeries::shape() const
+QScatterSeries::MarkerShape QScatterSeries::markerShape() const
 {
     Q_D(const QScatterSeries);
     return d->m_shape;
@@ -99,7 +99,7 @@ QScatterSeries::MarkerShape QScatterSeries::shape() const
     Overrides the default shape of the marker items with a user defined \a shape. The default shape
     is defined by chart theme setting.
 */
-void QScatterSeries::setShape(MarkerShape shape)
+void QScatterSeries::setMarkerShape(MarkerShape shape)
 {
     Q_D(QScatterSeries);
     if (d->m_shape != shape) {
@@ -111,7 +111,7 @@ void QScatterSeries::setShape(MarkerShape shape)
 /*!
     Returns the size of the marker items.
 */
-qreal QScatterSeries::size() const
+qreal QScatterSeries::markerSize() const
 {
     Q_D(const QScatterSeries);
     return d->m_size;
@@ -120,7 +120,7 @@ qreal QScatterSeries::size() const
 /*!
     Set the \a size of the marker items. The default size is 15.
 */
-void QScatterSeries::setSize(qreal size)
+void QScatterSeries::setMarkerSize(qreal size)
 {
     Q_D(QScatterSeries);
 
@@ -151,5 +151,6 @@ Chart* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return scatter;
 }
 
+#include "moc_qscatterseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

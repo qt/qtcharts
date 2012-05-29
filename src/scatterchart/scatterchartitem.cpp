@@ -167,21 +167,22 @@ void ScatterChartItem::setBrush(const QBrush& brush)
 
 void ScatterChartItem::handleUpdated()
 {
-
     int count = m_items.childItems().count();
 
     if(count==0) return;
 
-    bool recreate = m_size != m_series->size() || m_shape != m_series->shape();
+    bool recreate = m_size != m_series->markerSize() || m_shape != m_series->markerShape();
 
-    //TODO: only rewrite on size change
-
-    m_size = m_series->size();
-    m_shape = m_series->shape();
+    m_size = m_series->markerSize();
+    m_shape = m_series->markerShape();
 
     if(recreate) {
+        // TODO: optimize handleUpdate to recreate points only in case shape changed
         deletePoints(count);
         createPoints(count);
+
+        // Updating geometry is now safe, because it won't call handleUpdated unless it creates/deletes points
+        updateGeometry();
     }
 
     setPen(m_series->pen());

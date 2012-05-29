@@ -34,8 +34,8 @@ class QSplineSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QSplineSeries : public QLineSeries
 {
     Q_OBJECT
-public:
 
+public:
     explicit QSplineSeries(QObject *parent = 0);
     ~QSplineSeries();
     QAbstractSeries::SeriesType type() const;
