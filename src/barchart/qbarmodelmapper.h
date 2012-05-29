@@ -4,45 +4,59 @@
 #include "qchartglobal.h"
 #include <QObject>
 
+class QAbstractItemModel;
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+class QBarModelMapperPrivate;
+class QBarSeries;
 
 class QTCOMMERCIALCHART_EXPORT QBarModelMapper : public QObject
 {
     Q_OBJECT
-public:
+    Q_PROPERTY(QBarSeries *series READ series WRITE setSeries)
+    Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel)
+    Q_PROPERTY(int first READ first WRITE setFirst)
+    Q_PROPERTY(int count READ count WRITE setCount)
+    Q_ENUMS(Qt::Orientation)
+
+protected:
     explicit QBarModelMapper(QObject *parent = 0);
-    
+
+public:
+    QAbstractItemModel* model() const;
+    void setModel(QAbstractItemModel *model);
+
+    QBarSeries* series() const;
+    void setSeries(QBarSeries *series);
+
     int first() const;
     void setFirst(int first);
 
     int count() const;
     void setCount(int count);
 
+    int firstBarSection() const;
+    void setFirstBarSection(int firstBarSection);
+
+    int lastBarSection() const;
+    void setLastBarSection(int lastBarSection);
+
+    int categoriesSection() const;
+    void setCategoriesSection(int categoriesSection);
+
+protected:
     Qt::Orientation orientation() const;
     void setOrientation(Qt::Orientation orientation);
-
-    int mapBarBottom() const;
-    void setMapBarBottom(int mapBarBottom);
-
-    int mapBarTop() const;
-    void setMapBarTop(int mapBarTop);
-
-    int mapCategories() const;
-    void setMapCategories(int mapCategories);
 
     void reset();
 
 Q_SIGNALS:
     void updated();
 
-private:
-    int m_first;
-    int m_count;
-    Qt::Orientation m_orientation;
-    int m_mapBarBottom;
-    int m_mapBarTop;
-    int m_mapCategories;
-    
+protected:
+    QBarModelMapperPrivate * const d_ptr;
+    Q_DECLARE_PRIVATE(QBarModelMapper)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

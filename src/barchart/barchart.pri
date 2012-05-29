@@ -25,6 +25,7 @@ PRIVATE_HEADERS += \
     $$PWD/qstackedbarseries_p.h\
     $$PWD/qpercentbarseries_p.h \
     $$PWD/qgroupedbarseries_p.h \
+    $$PWD/qbarmodelmapper_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qbarseries.h \
