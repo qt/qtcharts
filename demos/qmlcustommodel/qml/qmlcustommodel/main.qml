@@ -58,20 +58,14 @@ Rectangle {
             size: 0.4
             horizontalPosition: 0.2
             verticalPosition: 0.3
-
-            VPieModelMapper {
-                model: chartModel
-                labelsColumn: 0
-                valuesColumn: 1
-            }
         }
 
-//        VPieModelMapper {
-//            series: pieSeries
-//            model: chartModel
-//            labelsColumn: 1
-//            valuesColumn: 2
-//        }
+        VPieModelMapper {
+            series: pieSeries
+            model: chartModel
+            labelsColumn: 0
+            valuesColumn: 1
+        }
 
 //        AreaSeries {
 //            name: "area"

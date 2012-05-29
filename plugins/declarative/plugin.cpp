@@ -59,6 +59,8 @@ public:
         qmlRegisterType<DeclarativeTableModelElement>(uri, 1, 0, "ChartModelElement");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
 
+        qmlRegisterUncreatableType<QPieSeries>(uri, 1, 0, "QPieSeries",
+                                          QLatin1String("Trying to create uncreatable: QPieSeries."));
         qmlRegisterUncreatableType<QAbstractItemModel>(uri, 1, 0, "AbstractItemModel",
                                           QLatin1String("Trying to create uncreatable: AbstractItemModel."));
         qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",

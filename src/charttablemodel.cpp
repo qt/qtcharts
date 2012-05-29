@@ -20,31 +20,16 @@
 
 #include "charttablemodel.h"
 #include <QVector>
-#include <QTime>
 #include <QRect>
 #include <QColor>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 ChartTableModel::ChartTableModel(QObject *parent) :
-    QAbstractTableModel(parent)
+    QAbstractTableModel(parent),
+    m_columnCount(0),
+    m_rowCount(0)
 {
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
-
-    m_columnCount = 2;
-    m_rowCount = 0;
-
-    // m_data
-    for (int i = 0; i < m_rowCount; i++) {
-        QVector<QVariant>* dataVec = new QVector<QVariant>(m_columnCount);
-        for (int k = 0; k < dataVec->size(); k++) {
-            if (k%2 == 0)
-                dataVec->replace(k, i * 50 + qrand()%20);
-            else
-                dataVec->replace(k, qrand()%100);
-        }
-        m_data.append(dataVec);
-    }
 }
 
 int ChartTableModel::rowCount(const QModelIndex & parent) const
