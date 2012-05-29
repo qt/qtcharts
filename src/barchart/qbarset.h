@@ -72,9 +72,9 @@ public:
     void setLabelFont(const QFont &font);
     QFont labelFont() const;
 
-Q_SIGNALS:
-    void clicked(QString category);
-    void hovered(bool status);
+//Q_SIGNALS:
+//    void clicked(QString category);
+//    void hovered(bool status);
 
 private:
     QScopedPointer<QBarSetPrivate> d_ptr;

@@ -36,21 +36,18 @@ Bar::Bar(QBarSet *barset, QString category, QGraphicsItem *parent) : QGraphicsRe
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event)
-    emit clicked(m_category);
     emit clicked(m_barset, m_category);
 }
 
 void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
-    emit hovered(true);
     emit hovered(m_barset, true);
 }
 
 void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
-    emit hovered(false);
     emit hovered(m_barset, false);
 }
 

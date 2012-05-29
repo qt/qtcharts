@@ -81,9 +81,7 @@ void BarChartItem::dataChanged()
             // Bars
             Bar *bar = new Bar(set,category,this);
             m_bars.append(bar);
-            connect(bar, SIGNAL(clicked(QString)), set, SIGNAL(clicked(QString)));
             connect(bar, SIGNAL(clicked(QBarSet*,QString)), m_series, SIGNAL(clicked(QBarSet*,QString)));
-            connect(bar, SIGNAL(hovered(bool)), set, SIGNAL(hovered(bool)));
             connect(bar, SIGNAL(hovered(QBarSet*,bool)), m_series, SIGNAL(hovered(QBarSet*,bool)));
             m_layout.append(QRectF(0, 0, 0, 0));
 
