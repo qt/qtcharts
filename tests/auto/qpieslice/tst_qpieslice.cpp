@@ -85,7 +85,7 @@ void tst_qpieslice::construction()
     QCOMPARE(slice1.explodeDistanceFactor(), 0.15); // default value
     QCOMPARE(slice1.percentage(), 0.0);
     QCOMPARE(slice1.startAngle(), 0.0);
-    QCOMPARE(slice1.endAngle(), 0.0);
+    QCOMPARE(slice1.angleSpan(), 0.0);
 
     // value and label params
     QPieSlice slice2("foobar", 1.0);
@@ -101,7 +101,7 @@ void tst_qpieslice::construction()
     QCOMPARE(slice2.explodeDistanceFactor(), 0.15); // default value
     QCOMPARE(slice2.percentage(), 0.0);
     QCOMPARE(slice2.startAngle(), 0.0);
-    QCOMPARE(slice2.endAngle(), 0.0);
+    QCOMPARE(slice2.angleSpan(), 0.0);
 }
 
 void tst_qpieslice::changedSignals()
@@ -110,8 +110,15 @@ void tst_qpieslice::changedSignals()
 
     QSignalSpy valueSpy(&slice, SIGNAL(valueChanged()));
     QSignalSpy labelSpy(&slice, SIGNAL(labelChanged()));
-    QSignalSpy appearanceSpy(&slice, SIGNAL(appearanceChanged()));
-    // calculatedDataChanged signal is tested at tst_qpieseries::calculatedValues()
+    QSignalSpy explodedSpy(&slice, SIGNAL(explodedChanged()));
+    QSignalSpy penSpy(&slice, SIGNAL(penChanged()));
+    QSignalSpy brushSpy(&slice, SIGNAL(brushChanged()));
+    QSignalSpy labelPenSpy(&slice, SIGNAL(labelPenChanged()));
+    QSignalSpy labelFontSpy(&slice, SIGNAL(labelFontChanged()));
+    QSignalSpy labelArmLengthFactorSpy(&slice, SIGNAL(labelArmLengthFactorChanged()));
+    QSignalSpy explodeDistanceFactorSpy(&slice, SIGNAL(explodeDistanceFactorChanged()));
+
+    // percentageChanged(), startAngleChanged() and angleSpanChanged() signals tested at tst_qpieseries::calculatedValues()
 
     // set everything twice to see we do not get unnecessary signals
     slice.setValue(1);
@@ -137,7 +144,13 @@ void tst_qpieslice::changedSignals()
 
     TRY_COMPARE(valueSpy.count(), 1);
     TRY_COMPARE(labelSpy.count(), 1);
-    TRY_COMPARE(appearanceSpy.count(), 8);
+    TRY_COMPARE(explodedSpy.count(), 1);
+    TRY_COMPARE(penSpy.count(), 1);
+    TRY_COMPARE(brushSpy.count(), 1);
+    TRY_COMPARE(labelPenSpy.count(), 1);
+    TRY_COMPARE(labelFontSpy.count(), 1);
+    TRY_COMPARE(labelArmLengthFactorSpy.count(), 1);
+    TRY_COMPARE(explodeDistanceFactorSpy.count(), 1);
 }
 
 void tst_qpieslice::customize()

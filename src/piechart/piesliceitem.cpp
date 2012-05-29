@@ -143,7 +143,7 @@ void PieSliceItem::updateGeometry()
 QPointF PieSliceItem::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
 {
     if (slice->isExploded()) {
-        qreal centerAngle = slice->startAngle() + ((slice->endAngle() - slice->startAngle())/2);
+        qreal centerAngle = slice->startAngle() + (slice->angleSpan()/2);
         qreal len = radius * slice->explodeDistanceFactor();
         qreal dx = qSin(centerAngle*(PI/180)) * len;
         qreal dy = -qCos(centerAngle*(PI/180)) * len;

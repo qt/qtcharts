@@ -104,24 +104,6 @@ public:
         return false;
     }
 
-    static void emitAppearanceChanged(QPieSlice *slice)
-    {
-        Q_ASSERT(slice);
-        emit slice->appearanceChanged();
-    }
-
-    static void emitCalculatedDataChanged(QPieSlice *slice)
-    {
-        Q_ASSERT(slice);
-        emit slice->calculatedDataChanged();
-    }
-
-    static PieSliceData &fromSlice(QPieSlice *slice)
-    {
-        Q_ASSERT(slice);
-        return *slice->d;
-    }
-
     qreal m_value;
 
     Themed<QPen> m_slicePen;

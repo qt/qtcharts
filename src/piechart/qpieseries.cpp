@@ -21,6 +21,7 @@
 #include "qpieseries.h"
 #include "qpieseries_p.h"
 #include "qpieslice.h"
+#include "qpieslice_p.h"
 #include "pieslicedata_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
@@ -173,7 +174,7 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
     d->updateDerivativeData();
 
     foreach (QPieSlice* s, slices) {
-        connect(s, SIGNAL(valueChanged()), d, SLOT(sliceChanged()));
+        connect(s, SIGNAL(valueChanged()), d, SLOT(sliceValueChanged()));
         connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
         connect(s, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
     }
@@ -238,7 +239,7 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
 
     d->updateDerivativeData();
 
-    connect(slice, SIGNAL(valueChanged()), d, SLOT(sliceChanged()));
+    connect(slice, SIGNAL(valueChanged()), d, SLOT(sliceValueChanged()));
     connect(slice, SIGNAL(clicked()), d, SLOT(sliceClicked()));
     connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
 
@@ -531,30 +532,23 @@ void QPieSeriesPrivate::updateDerivativeData()
     qreal pieSpan = m_pieEndAngle - m_pieStartAngle;
     QVector<QPieSlice*> changed;
     foreach (QPieSlice* s, m_slices) {
-
-        PieSliceData data = PieSliceData::fromSlice(s);
-        data.m_percentage = s->value() / m_sum;
-        data.m_angleSpan = pieSpan * data.m_percentage;
-        data.m_startAngle = sliceAngle;
-        sliceAngle += data.m_angleSpan;
-
-        if (PieSliceData::fromSlice(s) != data) {
-            PieSliceData::fromSlice(s) = data;
-            changed << s;
-        }
+        QPieSlicePrivate *d = QPieSlicePrivate::fromSlice(s);
+        d->setPercentage(s->value() / m_sum);
+        d->setStartAngle(sliceAngle);
+        d->setAngleSpan(pieSpan * s->percentage());
+        sliceAngle += s->angleSpan();
     }
 
-    // emit signals
-    foreach (QPieSlice* s, changed)
-        PieSliceData::emitCalculatedDataChanged(s);
+
+    emit calculatedDataChanged();
 }
 
-QPieSeriesPrivate* QPieSeriesPrivate::seriesData(QPieSeries &series)
+QPieSeriesPrivate* QPieSeriesPrivate::fromSeries(QPieSeries *series)
 {
-    return series.d_func();
+    return series->d_func();
 }
 
-void QPieSeriesPrivate::sliceChanged()
+void QPieSeriesPrivate::sliceValueChanged()
 {
     Q_ASSERT(m_slices.contains(qobject_cast<QPieSlice *>(sender())));
     updateDerivativeData();

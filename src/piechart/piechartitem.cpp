@@ -21,6 +21,7 @@
 #include "piechartitem_p.h"
 #include "piesliceitem_p.h"
 #include "qpieslice.h"
+#include "qpieslice_p.h"
 #include "qpieseries.h"
 #include "qpieseries_p.h"
 #include "chartpresenter_p.h"
@@ -42,6 +43,7 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
     connect(series, SIGNAL(horizontalPositionChanged()), this, SLOT(updateLayout()));
     connect(series, SIGNAL(verticalPositionChanged()), this, SLOT(updateLayout()));
     connect(series, SIGNAL(pieSizeChanged()), this, SLOT(updateLayout()));
+    connect(QPieSeriesPrivate::fromSeries(series), SIGNAL(calculatedDataChanged()), this, SLOT(updateLayout()));
 
     // Note: the following does not affect as long as the item does not have anything to paint
     setZValue(ChartPresenter::PieSeriesZValue);
@@ -134,11 +136,18 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         PieSliceItem* sliceItem = new PieSliceItem(this);
         m_sliceItems.insert(slice, sliceItem);
 
-        // note: do need to connect to slice valueChanged(). calculatedDataChanged() is enough.
-        // to update the slice.
-        connect(slice, SIGNAL(calculatedDataChanged()), this, SLOT(handleSliceChanged()));
+        // Note: do need to connect to slice valueChanged() etc.
+        // This is handled through calculatedDataChanged signal.
         connect(slice, SIGNAL(labelChanged()), this, SLOT(handleSliceChanged()));
-        connect(slice, SIGNAL(appearanceChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(labelVisibleChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(explodedChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(penChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(brushChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(labelPenChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(labelFontChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(labelArmLengthFactorChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(explodeDistanceFactorChanged()), this, SLOT(handleSliceChanged()));
+
         connect(sliceItem, SIGNAL(clicked(Qt::MouseButtons)), slice, SIGNAL(clicked()));
         connect(sliceItem, SIGNAL(hovered(bool)), slice, SIGNAL(hovered(bool)));
 
@@ -183,7 +192,7 @@ void PieChartItem::handleSliceChanged()
 
 PieSliceData PieChartItem::updateSliceGeometry(QPieSlice *slice)
 {
-    PieSliceData &sliceData = PieSliceData::fromSlice(slice);
+    PieSliceData &sliceData = QPieSlicePrivate::fromSlice(slice)->m_data;
     sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
     return sliceData;

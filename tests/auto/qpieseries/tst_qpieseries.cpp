@@ -260,14 +260,18 @@ void tst_qpieseries::calculatedValues()
     QPieSeries s;
 
     QPieSlice *slice1 = new QPieSlice("slice 1", 1);
-    QSignalSpy calculatedDataSpy(slice1, SIGNAL(calculatedDataChanged()));
+    QSignalSpy percentageSpy(slice1, SIGNAL(percentageChanged()));
+    QSignalSpy startAngleSpy(slice1, SIGNAL(startAngleChanged()));
+    QSignalSpy angleSpanSpy(slice1, SIGNAL(angleSpanChanged()));
 
     // add a slice
     s.append(slice1);
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
-    QCOMPARE(calculatedDataSpy.count(), 1);
+    QCOMPARE(percentageSpy.count(), 1);
+    QCOMPARE(startAngleSpy.count(), 0);
+    QCOMPARE(angleSpanSpy.count(), 1);
 
     // add some more slices
     QList<QPieSlice *> list;
@@ -277,21 +281,27 @@ void tst_qpieseries::calculatedValues()
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
-    QCOMPARE(calculatedDataSpy.count(), 2);
+    QCOMPARE(percentageSpy.count(), 2);
+    QCOMPARE(startAngleSpy.count(), 0);
+    QCOMPARE(angleSpanSpy.count(), 2);
 
     // remove a slice
     s.remove(list.first()); // remove slice 2
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
-    QCOMPARE(calculatedDataSpy.count(), 3);
+    QCOMPARE(percentageSpy.count(), 3);
+    QCOMPARE(startAngleSpy.count(), 0);
+    QCOMPARE(angleSpanSpy.count(), 3);
 
     // insert a slice
     s.insert(0, new QPieSlice("Slice 4", 4));
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
-    QCOMPARE(calculatedDataSpy.count(), 4);
+    QCOMPARE(percentageSpy.count(), 4);
+    QCOMPARE(startAngleSpy.count(), 1);
+    QCOMPARE(angleSpanSpy.count(), 4);
 
     // modify pie angles
     s.setPieStartAngle(-90);
@@ -299,11 +309,16 @@ void tst_qpieseries::calculatedValues()
     verifyCalculatedData(s, &ok);
     if (!ok)
         return;
-    QCOMPARE(calculatedDataSpy.count(), 6);
+    QCOMPARE(percentageSpy.count(), 4);
+    QCOMPARE(startAngleSpy.count(), 3);
+    QCOMPARE(angleSpanSpy.count(), 6);
 
     // clear all
     s.clear();
     verifyCalculatedData(s, &ok);
+    QCOMPARE(percentageSpy.count(), 4);
+    QCOMPARE(startAngleSpy.count(), 3);
+    QCOMPARE(angleSpanSpy.count(), 6);
 }
 
 void tst_qpieseries::verifyCalculatedData(const QPieSeries &series, bool *ok)
@@ -321,13 +336,13 @@ void tst_qpieseries::verifyCalculatedData(const QPieSeries &series, bool *ok)
         qreal ratio = slice->value() / sum;
         qreal sliceSpan = pieAngleSpan * ratio;
         QCOMPARE(slice->startAngle(), startAngle);
-        QCOMPARE(slice->endAngle(), startAngle + sliceSpan);
+        QCOMPARE(slice->angleSpan(), sliceSpan);
         QCOMPARE(slice->percentage(), ratio);
         startAngle += sliceSpan;
     }
 
     if (!series.isEmpty())
-        QCOMPARE(series.slices().last()->endAngle(), series.pieEndAngle());
+        QCOMPARE(series.slices().last()->startAngle() + series.slices().last()->angleSpan(), series.pieEndAngle());
 
     *ok = true;
 }

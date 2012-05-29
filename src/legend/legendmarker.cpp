@@ -156,7 +156,7 @@ PieLegendMarker::PieLegendMarker(QPieSeries* series,QPieSlice *pieslice, QLegend
 m_pieslice(pieslice)
 {
     QObject::connect(pieslice, SIGNAL(labelChanged()), this, SLOT(updated()));
-    QObject::connect(pieslice, SIGNAL(appearanceChanged()), this, SLOT(updated()));
+    QObject::connect(pieslice, SIGNAL(brushChanged()), this, SLOT(updated()));
     updated();
 }
 

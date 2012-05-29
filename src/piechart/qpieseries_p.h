@@ -41,14 +41,17 @@ public:
 
     void updateDerivativeData();
 
-    static QPieSeriesPrivate* seriesData(QPieSeries &series);
+    static QPieSeriesPrivate* fromSeries(QPieSeries *series);
+
+signals:
+    void calculatedDataChanged();
 
 public Q_SLOTS:
-    void sliceChanged();
+    void sliceValueChanged();
     void sliceClicked();
     void sliceHovered(bool state);
 
-public:
+private:
     QList<QPieSlice*> m_slices;
     qreal m_pieRelativeHorPos;
     qreal m_pieRelativeVerPos;
