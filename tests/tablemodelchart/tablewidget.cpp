@@ -210,7 +210,7 @@ void TableWidget::updateChartType(bool toggle)
 
         if (m_lineRadioButton->isChecked())
         {
-                        m_chart->setAnimationOptions(QChart::NoAnimation);
+            m_chart->setAnimationOptions(QChart::NoAnimation);
 
             // series 1
             m_series = new QLineSeries(this);
@@ -221,7 +221,7 @@ void TableWidget::updateChartType(bool toggle)
             mapper->setXColumn(0);
             mapper->setYColumn(1);
             mapper->setFirst(3);
-                        mapper->setCount(4);
+            mapper->setCount(4);
 
             //            m_series->setModelMapping(0,1, Qt::Vertical);
             //            m_series->setModelMappingRange(3, 4);
@@ -262,23 +262,25 @@ void TableWidget::updateChartType(bool toggle)
         }
         else if (m_splineRadioButton->isChecked())
         {
-            //            m_chart->setAnimationOptions(QChart::NoAnimation);
+            m_chart->setAnimationOptions(QChart::NoAnimation);
 
-            //            // series 1
-            //            m_series = new QSplineSeries;
-            //            m_series->setModel(m_model);
+            // series 1
+            m_series = new QSplineSeries;
+//            m_series->setModel(m_model);
 
-            //            QXYModelMapper *mapper = new QXYModelMapper;
-            //            mapper->setMapX(0);
-            //            mapper->setMapY(1);
-            //            mapper->setFirst(0);
-            //            mapper->setCount(-1);
+            QVXYModelMapper *mapper = new QVXYModelMapper;
+            mapper->setSeries(m_series);
+            mapper->setModel(m_model);
+            mapper->setXColumn(0);
+            mapper->setYColumn(1);
+            mapper->setFirst(0);
+            mapper->setCount(-1);
 
-            //            m_series->setModelMapper(mapper);
+//            m_series->setModelMapper(mapper);
 
-            //            m_chart->addSeries(m_series);
-            //            seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
-            //            m_model->addMapping(seriesColorHex, QRect(0, 0, 2, 1000));
+            m_chart->addSeries(m_series);
+            seriesColorHex = "#" + QString::number(m_series->pen().color().rgb(), 16).right(6).toUpper();
+            m_model->addMapping(seriesColorHex, QRect(0, 0, 2, 1000));
 
             //            // series 2
             //            m_series = new QSplineSeries;
@@ -524,9 +526,9 @@ void TableWidget::testPie3()
 
 void TableWidget::testXY()
 {
-//    if (m_series->type() != QAbstractSeries::SeriesTypeLine) {
-//        m_series->append(QPointF(150, 75));
-//    }
+    //    if (m_series->type() != QAbstractSeries::SeriesTypeLine) {
+    //        m_series->append(QPointF(150, 75));
+    //    }
 
     if (m_series->count() > 0) {
         m_series->remove(m_series->points().last());

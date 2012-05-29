@@ -59,6 +59,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QSplineSeries::QSplineSeries(QObject *parent) :
     QLineSeries(*new QSplineSeriesPrivate(this),parent)
 {
+    Q_D(QSplineSeries);
+    QObject::connect(this,SIGNAL(pointAdded(int)), d, SLOT(updateControlPoints()));
+    QObject::connect(this,SIGNAL(pointRemoved(int)), d, SLOT(updateControlPoints()));
+    QObject::connect(this,SIGNAL(pointReplaced(int)), d, SLOT(updateControlPoints()));
 }
 
 QSplineSeries::~QSplineSeries()
@@ -78,9 +82,9 @@ QAbstractSeries::SeriesType QSplineSeries::type() const
 
 QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(q)
 {
-    QObject::connect(this,SIGNAL(pointAdded(int)), this, SLOT(updateControlPoints()));
-    QObject::connect(this,SIGNAL(pointRemoved(int)), this, SLOT(updateControlPoints()));
-    QObject::connect(this,SIGNAL(pointReplaced(int)), this, SLOT(updateControlPoints()));
+//    QObject::connect(this,SIGNAL(pointAdded(int)), this, SLOT(updateControlPoints()));
+//    QObject::connect(this,SIGNAL(pointRemoved(int)), this, SLOT(updateControlPoints()));
+//    QObject::connect(this,SIGNAL(pointReplaced(int)), this, SLOT(updateControlPoints()));
 };
 
 /*!
