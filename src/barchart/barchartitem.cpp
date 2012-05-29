@@ -113,7 +113,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
     qreal scaleY = (height / rangeY);
     qreal scaleX = (width / rangeX);
     qreal categoryWidth = width / categoryCount;
-    qreal barWidth = categoryWidth / setCount - categoryWidth * m_series->d_func()->barMargin();
+    qreal barWidth = categoryWidth - categoryWidth * m_series->d_func()->barMargin();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
