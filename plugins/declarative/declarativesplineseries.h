@@ -26,12 +26,14 @@
 #include "declarativexyseries.h"
 #include <QDeclarativeParserStatus>
 #include <QDeclarativeListProperty>
+#include <QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
+class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QColor color READ penColor WRITE setPenColor)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
@@ -39,6 +41,10 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 public:
     explicit DeclarativeSplineSeries(QObject *parent = 0);
     QDeclarativeListProperty<QObject> declarativeChildren();
+
+public: // from QDeclarativeParserStatus
+    void classBegin() { DeclarativeXySeries::classBegin(); }
+    void componentComplete() { DeclarativeXySeries::componentComplete(); }
 
 public: // from QSplineSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QSplineSeries::append(x, y); }

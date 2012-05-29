@@ -30,9 +30,10 @@
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
+#include <QVXYModelMapper>
+#include <QHXYModelMapper>
 #include <QHPieModelMapper>
 #include <QVPieModelMapper>
-#include <QXYModelMapper>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -55,6 +56,10 @@ public:
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
         qmlRegisterType<DeclarativePieSlice>(uri, 1, 0, "PieSlice");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
+        qmlRegisterType<QHXYModelMapper>(uri, 1, 0, "HXYModelMapper");
+        qmlRegisterType<QVXYModelMapper>(uri, 1, 0, "VXYModelMapper");
+        qmlRegisterType<QHPieModelMapper>(uri, 1, 0, "HPieModelMapper");
+        qmlRegisterType<QVPieModelMapper>(uri, 1, 0, "VPieModelMapper");
 
 
         qmlRegisterUncreatableType<QScatterSeries>(uri, 1, 0, "QScatterSeries",
@@ -63,11 +68,10 @@ public:
                                           QLatin1String("Trying to create uncreatable: QPieSeries."));
         qmlRegisterUncreatableType<QAbstractItemModel>(uri, 1, 0, "AbstractItemModel",
                                           QLatin1String("Trying to create uncreatable: AbstractItemModel."));
+        qmlRegisterUncreatableType<QXYModelMapper>(uri, 1, 0, "XYModelMapper",
+                                          QLatin1String("Trying to create uncreatable: XYModelMapper."));
         qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",
                                           QLatin1String("Trying to create uncreatable: PieModelMapper."));
-        qmlRegisterType<QHPieModelMapper>(uri, 1, 0, "HPieModelMapper");
-        qmlRegisterType<QVPieModelMapper>(uri, 1, 0, "VPieModelMapper");
-
         qmlRegisterUncreatableType<QAbstractSeries>(uri, 1, 0, "AbstractSeries",
                                           QLatin1String("Trying to create uncreatable: AbstractSeries."));
         qmlRegisterUncreatableType<QAxis>(uri, 1, 0, "Axis",

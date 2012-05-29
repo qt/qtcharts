@@ -37,6 +37,8 @@ public:
     ~DeclarativeXySeries();
 
 public:
+    void classBegin();
+    void componentComplete();
     QColor penColor();
     void setPenColor(QColor color);
     DeclarativeXyPoint *at(int index);

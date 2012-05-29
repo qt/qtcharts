@@ -22,7 +22,8 @@
 #include "declarativexyseries.h"
 #include "declarativechart.h"
 #include <QXYSeries>
-#include <QXYModelMapper>
+#include <QVXYModelMapper>
+#include <QHXYModelMapper>
 #include <QDeclarativeListProperty>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -34,6 +35,29 @@ DeclarativeXySeries::DeclarativeXySeries()
 DeclarativeXySeries::~DeclarativeXySeries()
 {
 }
+
+void DeclarativeXySeries::classBegin()
+{
+}
+
+void DeclarativeXySeries::componentComplete()
+{
+    // All the inherited objects must be of type QXYSeries, so it is safe to cast
+    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    foreach(QObject *child, series->children()) {
+        if (qobject_cast<DeclarativeXyPoint *>(child)) {
+            // TODO:
+//            series->append(qobject_cast<DeclarativeXyPoint *>(child));
+        } else if(qobject_cast<QVXYModelMapper *>(child)) {
+            QVXYModelMapper *mapper = qobject_cast<QVXYModelMapper *>(child);
+            mapper->setSeries(series);
+        } else if(qobject_cast<QHXYModelMapper *>(child)) {
+            QHXYModelMapper *mapper = qobject_cast<QHXYModelMapper *>(child);
+            mapper->setSeries(series);
+        }
+    }
+}
+
 
 QColor DeclarativeXySeries::penColor()
 {

@@ -26,12 +26,14 @@
 #include "declarativexyseries.h"
 #include <QDeclarativeParserStatus>
 #include <QDeclarativeListProperty>
+#include <QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries
+class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QColor color READ penColor WRITE setPenColor)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
@@ -39,6 +41,10 @@ class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries
 public:
     explicit DeclarativeLineSeries(QObject *parent = 0);
     QDeclarativeListProperty<QObject> declarativeChildren();
+
+public: // from QDeclarativeParserStatus
+    void classBegin() { DeclarativeXySeries::classBegin(); }
+    void componentComplete() { DeclarativeXySeries::componentComplete(); }
 
 public: // from QLineSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QLineSeries::append(x, y); }

@@ -25,12 +25,14 @@
 #include "qscatterseries.h"
 #include "declarativexyseries.h"
 #include <QDeclarativeListProperty>
+#include <QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeries
+class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QColor color READ brushColor WRITE setBrushColor)
     Q_PROPERTY(QColor borderColor READ penColor WRITE setPenColor)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
@@ -41,6 +43,10 @@ public:
     QDeclarativeListProperty<QObject> declarativeChildren();
     QColor brushColor();
     void setBrushColor(QColor color);
+
+public: // from QDeclarativeParserStatus
+    void classBegin() { DeclarativeXySeries::classBegin(); }
+    void componentComplete() { DeclarativeXySeries::componentComplete(); }
 
 public: // from QScatterSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QScatterSeries::append(x, y); }

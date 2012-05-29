@@ -28,6 +28,8 @@ Rectangle {
         title: "Scatters"
         anchors.fill: parent
         theme: ChartView.ChartThemeBlueCerulean
+        axisX.max: 4
+        axisY.max: 4
 
         ScatterSeries {
             id: scatter1

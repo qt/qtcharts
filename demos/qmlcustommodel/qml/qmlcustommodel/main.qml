@@ -31,28 +31,39 @@ Rectangle {
         title: "Custom model example"
         anchors.fill: parent
         theme: ChartView.ChartThemeLight
+        axisX.max: 20
+        axisY.max: 20
 
         // For dynamic data we use a custom data model derived from QAbstractiItemModel
         CustomModel {
             id: customModel
-            CustomModelElement { values: ["Volkswagen", 13.5, 4.4] }
-            CustomModelElement { values: ["Toyota", 10.9, 4.2] }
-            CustomModelElement { values: ["Ford", 8.6, 3.0] }
-            CustomModelElement { values: ["Skoda", 8.2, 1.9] }
-            CustomModelElement { values: ["Volvo", 6.8, 1.5] }
+            CustomModelElement { values: [index, "Manufacturer", 1, 2] }
+            CustomModelElement { values: [1, "Volkswagen", 13.5, 12.5] }
+            CustomModelElement { values: [2, "Toyota", 10.9, 9.9] }
+            CustomModelElement { values: [3, "Ford", 8.6, 7.6] }
+            CustomModelElement { values: [4, "Skoda", 8.2, 7.2] }
+            CustomModelElement { values: [5, "Volvo", 6.8, 5.8] }
         }
 
         LineSeries {
-            name: "line"
-
-            // TODO: the new mapper api
-//            VXYModelMapper {
-//                model: customModel
-//                xColumn: 0
-//                yColumn: 1
-//            }
+            name: "Volkswagen"
+            HXYModelMapper {
+                model: customModel
+                xRow: 0
+                yRow: 1
+                first: 2
+            }
         }
 
+        LineSeries {
+            name: "Toyota"
+            HXYModelMapper {
+                model: customModel
+                xRow: 0
+                yRow: 2
+                first: 2
+            }
+        }
 
         PieSeries {
             id: pieSeries
@@ -64,15 +75,22 @@ Rectangle {
         VPieModelMapper {
             series: pieSeries
             model: customModel
-            labelsColumn: 0
-            valuesColumn: 1
+            labelsColumn: 1
+            valuesColumn: 2
+            first: 1
         }
 
-//        AreaSeries {
-//            name: "area"
-//            upperSeries: LineSeries {}
-//            lowerSeries: LineSeries {}
-//        }
+        AreaSeries {
+            name: "Ford"
+            upperSeries: LineSeries {
+                HXYModelMapper {
+                    model: customModel
+                    xRow: 0
+                    yRow: 3
+                    first: 2
+                }
+            }
+        }
 
 //        BarSeries {
 //            model: customModel

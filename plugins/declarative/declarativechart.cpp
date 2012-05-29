@@ -35,7 +35,7 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
       m_legend(LegendTop)
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
-    m_chart->axisX()->setNiceNumbersEnabled(false);
+//    m_chart->axisX()->setNiceNumbersEnabled(false);
 }
 
 DeclarativeChart::~DeclarativeChart()
