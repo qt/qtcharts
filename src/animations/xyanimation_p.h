@@ -30,8 +30,9 @@ class XYChart;
 
 class XYAnimation : public ChartAnimation
 {
-public:
+protected:
     enum Animation { AddPointAnimation, RemovePointAnimation, ReplacePointAnimation, NewAnimation };
+public:
     XYAnimation(XYChart *item);
     ~XYAnimation();
     void setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints,int index = -1);
@@ -40,14 +41,15 @@ public:
 protected:
     QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress ) const;
     void updateCurrentValue (const QVariant &value );
-    void updateState( QAbstractAnimation::State newState, QAbstractAnimation::State oldState );
+    void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
+protected:
+    Animation m_type;
+    bool m_dirty;
+    int m_index;
 private:
     XYChart *m_item;
     QVector<QPointF> m_oldPoints;
     QVector<QPointF> m_newPoints;
-    int m_index;
-    bool m_dirty;
-    Animation m_type;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

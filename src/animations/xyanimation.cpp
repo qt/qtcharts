@@ -27,9 +27,10 @@ Q_DECLARE_METATYPE(QVector<QPointF>)
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 XYAnimation::XYAnimation(XYChart *item):ChartAnimation(item),
-    m_item(item),
+    m_type(NewAnimation),
     m_dirty(false),
-    m_type(NewAnimation)
+    m_index(-1),
+    m_item(item)
 {
     setDuration(ChartAnimationDuration);
     setEasingCurve(QEasingCurve::OutQuart);
@@ -58,16 +59,16 @@ void XYAnimation::setup(const QVector<QPointF> &oldPoints, const QVector<QPointF
 	int x = m_oldPoints.count();
 	int y = m_newPoints.count();
 
-	if(x - y == 1  && index >= 0 && !newPoints.isEmpty()){
+	if(x - y == 1  && index >= 0 && y > 0){
 		 //remove point
-		 m_newPoints.insert(index, index >= 1 ? m_newPoints[index-1] : newPoints[index]);
+		 m_newPoints.insert(index, index > 0 ? newPoints[index-1] : newPoints[index]);
 		 m_index=index;
 		 m_type = RemovePointAnimation;
 	}
 
 	if(x - y == -1  && index >= 0){
 		  //add point
-		 m_oldPoints.insert(index, x > 0 && index > 1 ? m_oldPoints[index-1] : newPoints[index]);
+		 m_oldPoints.insert(index, index > 0 ? newPoints[index-1] : newPoints[index]);
 		 m_index=index;
 		 m_type = AddPointAnimation;
 	}
