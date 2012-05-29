@@ -61,6 +61,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \endlist
 
     Default value is 0.5 (center).
+
+    \sa verticalPosition
+*/
+
+/*!
+    \fn void QPieSeries::horizontalPositionChanged()
+
+    Emitted then the horizontal position of the pie has changed.
+
+    \sa horizontalPosition
 */
 
 /*!
@@ -75,6 +85,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \endlist
 
     Default value is 0.5 (center).
+
+    \sa horizontalPosition
+*/
+
+/*!
+    \fn void QPieSeries::verticalPositionChanged()
+
+    Emitted then the vertical position of the pie has changed.
+
+    \sa verticalPosition
 */
 
 /*!
@@ -92,12 +112,28 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QPieSeries::pieSizeChanged()
+
+    Emitted when the pie size has changed.
+
+    \sa size
+*/
+
+/*!
     \property QPieSeries::startAngle
     \brief Defines the starting angle of the pie.
 
     Full pie is 360 degrees where 0 degrees is at 12 a'clock.
 
     Default is value is 0.
+*/
+
+/*!
+    \fn void QPieSeries::pieStartAngleChanged()
+
+    Emitted when the starting angle of the pie has changed.
+
+    \sa startAngle
 */
 
 /*!
@@ -110,18 +146,76 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QPieSeries::count
-    \brief Number of slices in the series.
+    \fn void QPieSeries::pieEndAngleChanged()
 
+    Emitted when the ending angle of the pie has changed.
+
+    \sa endAngle
+*/
+
+/*!
+    \property QPieSeries::count
+
+    Number of slices in the series.
+*/
+
+/*!
+    \fn void QPieSeries::countChanged()
+
+    Emitted when the slice count has changed.
+
+    \sa count
 */
 
 /*!
     \property QPieSeries::sum
-    \brief Sum of all slices.
+
+    Sum of all slices.
 
     The series keeps track of the sum of all slices it holds.
 */
 
+/*!
+    \fn void QPieSeries::sumChanged()
+
+    Emitted when the sum of all slices has changed.
+
+    \sa sum
+*/
+
+/*!
+    \fn void QPieSeries::added(QList<QPieSlice*> slices)
+
+    This signal is emitted when \a slices have been added to the series.
+
+    \sa append(), insert()
+*/
+
+/*!
+    \fn void QPieSeries::removed(QList<QPieSlice*> slices)
+
+    This signal is emitted when \a slices have been removed from the series.
+
+    \sa remove()
+*/
+
+/*!
+    \fn void QPieSeries::clicked(QPieSlice* slice)
+
+    This signal is emitted when a \a slice has been clicked.
+
+    \sa QPieSlice::clicked()
+*/
+
+/*!
+    \fn void QPieSeries::hovered(QPieSlice* slice, bool state)
+
+    This signal is emitted when user has hovered over or away from the \a slice.
+
+    \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
+
+    \sa QPieSlice::hovered()
+*/
 
 /*!
     Constructs a series object which is a child of \a parent.
@@ -146,6 +240,17 @@ QPieSeries::~QPieSeries()
 QAbstractSeries::SeriesType QPieSeries::type() const
 {
     return QAbstractSeries::SeriesTypePie;
+}
+
+/*!
+    Appends a single \a slice to the series.
+    Slice ownership is passed to the series.
+
+    Returns true if append was succesfull.
+*/
+bool QPieSeries::append(QPieSlice* slice)
+{
+    return append(QList<QPieSlice*>() << slice);
 }
 
 /*!
@@ -183,17 +288,6 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
     emit countChanged();
 
     return true;
-}
-
-/*!
-    Appends a single \a slice to the series.
-    Slice ownership is passed to the series.
-
-    Returns true if append was succesfull.
-*/
-bool QPieSeries::append(QPieSlice* slice)
-{
-    return append(QList<QPieSlice*>() << slice);
 }
 
 /*!
@@ -296,6 +390,15 @@ void QPieSeries::clear()
 }
 
 /*!
+    Returns a list of slices that belong to this series.
+*/
+QList<QPieSlice*> QPieSeries::slices() const
+{
+    Q_D(const QPieSeries);
+    return d->m_slices;
+}
+
+/*!
     returns the number of the slices in this series.
 */
 int QPieSeries::count() const
@@ -314,12 +417,14 @@ bool QPieSeries::isEmpty() const
 }
 
 /*!
-    Returns a list of slices that belong to this series.
+    Returns the sum of all slice values in this series.
+
+    \sa QPieSlice::value(), QPieSlice::setValue(), QPieSlice::percentage()
 */
-QList<QPieSlice*> QPieSeries::slices() const
+qreal QPieSeries::sum() const
 {
     Q_D(const QPieSeries);
-    return d->m_slices;
+    return d->m_sum;
 }
 
 void QPieSeries::setHorizontalPosition(qreal relativePosition)
@@ -337,6 +442,12 @@ void QPieSeries::setHorizontalPosition(qreal relativePosition)
     }
 }
 
+qreal QPieSeries::horizontalPosition() const
+{
+    Q_D(const QPieSeries);
+    return d->m_pieRelativeHorPos;
+}
+
 void QPieSeries::setVerticalPosition(qreal relativePosition)
 {
     Q_D(QPieSeries);
@@ -350,12 +461,6 @@ void QPieSeries::setVerticalPosition(qreal relativePosition)
         d->m_pieRelativeVerPos = relativePosition;
         emit verticalPositionChanged();
     }
-}
-
-qreal QPieSeries::horizontalPosition() const
-{
-    Q_D(const QPieSeries);
-    return d->m_pieRelativeHorPos;
 }
 
 qreal QPieSeries::verticalPosition() const
@@ -437,6 +542,9 @@ qreal QPieSeries::pieEndAngle() const
 /*!
     Sets the all the slice labels \a visible or invisible.
 
+    Note that this affects only the current slices in the series.
+    If user adds a new slice the default label visibility is false.
+
     \sa QPieSlice::isLabelVisible(), QPieSlice::setLabelVisible()
 */
 void QPieSeries::setLabelsVisible(bool visible)
@@ -445,53 +553,6 @@ void QPieSeries::setLabelsVisible(bool visible)
     foreach (QPieSlice* s, d->m_slices)
         s->setLabelVisible(visible);
 }
-
-/*!
-    Returns the sum of all slice values in this series.
-
-    \sa QPieSlice::value(), QPieSlice::setValue(), QPieSlice::percentage()
-*/
-qreal QPieSeries::sum() const
-{
-    Q_D(const QPieSeries);
-    return d->m_sum;
-}
-
-/*!
-    \fn void QPieSeries::added(QList<QPieSlice*> slices)
-
-    This signal is emitted when \a slices have been added to the series.
-
-    \sa append(), insert()
-*/
-
-/*!
-    \fn void QPieSeries::removed(QList<QPieSlice*> slices)
-
-    This signal is emitted when \a slices have been removed from the series.
-
-    \sa remove()
-*/
-
-/*!
-    \fn void QPieSeries::clicked(QPieSlice* slice)
-
-    This signal is emitted when a \a slice has been clicked.
-
-    \sa QPieSlice::clicked()
-*/
-
-/*!
-    \fn void QPieSeries::hovered(QPieSlice* slice, bool state)
-
-    This signal is emitted when user has hovered over or away from the \a slice.
-
-    \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
-
-    \sa QPieSlice::hovered()
-*/
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
