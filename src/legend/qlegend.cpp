@@ -173,7 +173,7 @@ QPen QLegend::pen() const
  */
 void QLegend::setAlignment(QLegend::Alignments alignment)
 {
-    if(d_ptr->m_alignment!=alignment && d_ptr->m_attachedToChart) {
+    if(d_ptr->m_alignment!=alignment) {
         d_ptr->m_alignment = alignment;
         d_ptr->updateLayout();
     }
@@ -402,7 +402,9 @@ void QLegendPrivate::updateLayout()
         break;
     }
 
-    m_presenter->updateLayout();
+    if (m_attachedToChart) {
+        m_presenter->updateLayout();
+    }
 }
 
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)

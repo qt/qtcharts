@@ -77,6 +77,8 @@ void MainWidget::detachLegend()
     // Detach legend from chart
     QLegend *legend = m_chart->legend();
     legend->detachFromChart();
+    legend->setGeometry(m_customView->rect());
+//    legend->setAlignment(QLegend::AlignmentLeft);
 
     // Put legend to our custom scene
     m_customScene->addItem(legend);
@@ -100,6 +102,7 @@ void MainWidget::attachLegend()
         m_customScene->removeItem(legend);
         legend->setParent(m_chart);
         m_chartView->scene()->addItem(legend);
+//        legend->setAlignment(QLegend::AlignmentBottom);
         legend->attachToChart();
     }
 //![4]
