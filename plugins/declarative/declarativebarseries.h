@@ -22,10 +22,10 @@
 #define DECLARATIVEBARSERIES_H
 
 #include "qchartglobal.h"
-#include "declarativemodel.h"
 #include <QDeclarativeItem>
 #include <QDeclarativeParserStatus>
 #include <QGroupedBarSeries>
+#include <QBarSet>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

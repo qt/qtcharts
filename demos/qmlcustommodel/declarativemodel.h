@@ -21,20 +21,10 @@
 #ifndef DECLARATIVEMODEL_H
 #define DECLARATIVEMODEL_H
 
-#include "qchartglobal.h"
-#include "declarativexypoint.h"
-#include <QPieSlice>
-#include "../src/charttablemodel.h" // TODO
-#include <QBarSet>
-#include <QXYModelMapper>
+#include "customtablemodel.h"
 #include <QDeclarativeListProperty>
 #include <QVariant>
 #include <QDeclarativeParserStatus>
-
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-// TODO: move model into demo app,
-// the ChartModel API will not be implemented by charts declarative plugin
 
 class DeclarativeTableModelElement : public QObject
 {
@@ -49,7 +39,7 @@ private:
     QVariantList m_values;
 };
 
-class DeclarativeTableModel : public ChartTableModel, public QDeclarativeParserStatus
+class DeclarativeTableModel : public CustomTableModel, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
@@ -59,7 +49,7 @@ class DeclarativeTableModel : public ChartTableModel, public QDeclarativeParserS
 public:
     explicit DeclarativeTableModel(QObject *parent = 0);
     QDeclarativeListProperty<QObject> modelChildren();
-    void appendPoint(QXYModelMapper *mapper, DeclarativeXyPoint *point);
+//    void appendPoint(QXYModelMapper *mapper, DeclarativeXyPoint *point);
 
 public: // from QDeclarativeParserStatus
     void classBegin();
@@ -70,7 +60,5 @@ public Q_SLOTS:
     static void appendModelChild(QDeclarativeListProperty<QObject> *list,
                                  QObject *element);
 };
-
-QTCOMMERCIALCHART_END_NAMESPACE
 
 #endif // DECLARATIVEMODEL_H

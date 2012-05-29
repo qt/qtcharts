@@ -24,6 +24,7 @@
 #include "qchartglobal.h"
 #include "qscatterseries.h"
 #include "declarativexyseries.h"
+#include <QDeclarativeListProperty>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

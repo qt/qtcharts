@@ -18,33 +18,31 @@
 **
 ****************************************************************************/
 
-#include "charttablemodel.h"
+#include "customtablemodel.h"
 #include <QVector>
 #include <QRect>
 #include <QColor>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
-
-ChartTableModel::ChartTableModel(QObject *parent) :
+CustomTableModel::CustomTableModel(QObject *parent) :
     QAbstractTableModel(parent),
     m_columnCount(0),
     m_rowCount(0)
 {
 }
 
-int ChartTableModel::rowCount(const QModelIndex & parent) const
+int CustomTableModel::rowCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent)
     return m_data.count();
 }
 
-int ChartTableModel::columnCount(const QModelIndex & parent) const
+int CustomTableModel::columnCount(const QModelIndex & parent) const
 {
     Q_UNUSED(parent)
     return m_columnCount;
 }
 
-QVariant ChartTableModel::headerData (int section, Qt::Orientation orientation, int role ) const
+QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation, int role ) const
 {
     if (role != Qt::DisplayRole)
         return QVariant();
@@ -59,7 +57,7 @@ QVariant ChartTableModel::headerData (int section, Qt::Orientation orientation, 
     }
 }
 
-QVariant ChartTableModel::data(const QModelIndex &index, int role) const
+QVariant CustomTableModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
         return m_data[index.row()]->at(index.column());
@@ -69,7 +67,7 @@ QVariant ChartTableModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-bool ChartTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
+bool CustomTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (index.isValid() && role == Qt::EditRole) {
         m_data[index.row()]->replace(index.column(), value);
@@ -79,14 +77,14 @@ bool ChartTableModel::setData(const QModelIndex &index, const QVariant &value, i
     return false;
 }
 
-void ChartTableModel::insertColumn(int column, const QModelIndex &parent)
+void CustomTableModel::insertColumn(int column, const QModelIndex &parent)
 {
     beginInsertColumns(parent, column, column);
     m_columnCount++;
     endInsertColumns();
 }
 
-void ChartTableModel::insertRow(int row, const QModelIndex &parent)
+void CustomTableModel::insertRow(int row, const QModelIndex &parent)
 {
     beginInsertRows(parent, row, row);
     QVector<QVariant>* dataVec = new QVector<QVariant>(m_columnCount);
@@ -94,23 +92,12 @@ void ChartTableModel::insertRow(int row, const QModelIndex &parent)
     endInsertRows();
 }
 
-//bool ChartTableModel::removeRow(int row, const QModelIndex &parent)
-//{
-//    Q_UNUSED(parent)
-//    Q_ASSERT(row >= 0 && row < rowCount);
-
-//    beginRemoveRows(parent, row, row);
-//    m_data.removeAt(row);
-//    endRemoveRows();
-//    return true;
-//}
-
-bool ChartTableModel::removeRow(int row, const QModelIndex &parent)
+bool CustomTableModel::removeRow(int row, const QModelIndex &parent)
 {
     return QAbstractTableModel::removeRow(row, parent);
 }
 
-bool ChartTableModel::removeRows(int row, int count, const QModelIndex &parent)
+bool CustomTableModel::removeRows(int row, int count, const QModelIndex &parent)
 {
     beginRemoveRows(parent, row, row + count - 1);
     bool removed(false);
@@ -122,9 +109,9 @@ bool ChartTableModel::removeRows(int row, int count, const QModelIndex &parent)
     return removed;
 }
 
-Qt::ItemFlags ChartTableModel::flags ( const QModelIndex & index ) const
+Qt::ItemFlags CustomTableModel::flags ( const QModelIndex & index ) const
 {
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
 
-#include "moc_charttablemodel.cpp"
+#include "moc_customtablemodel.cpp"

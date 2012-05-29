@@ -18,23 +18,19 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTTABLEMODEL_H
-#define CHARTTABLEMODEL_H
+#ifndef CUSTOMTABLEMODEL_H
+#define CUSTOMTABLEMODEL_H
 
-#include "qchartglobal.h"
 #include <QAbstractTableModel>
 #include <QHash>
-#include <QRect>
 
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-class QTCOMMERCIALCHART_EXPORT ChartTableModel : public QAbstractTableModel
+class CustomTableModel : public QAbstractTableModel
 {
     Q_OBJECT
     Q_PROPERTY(int count READ rowCount)
 
 public:
-    explicit ChartTableModel(QObject *parent = 0);
+    explicit CustomTableModel(QObject *parent = 0);
 
     int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
     int columnCount ( const QModelIndex & parent = QModelIndex() ) const;
@@ -54,6 +50,4 @@ private:
     int m_rowCount;
 };
 
-QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif // CHARTTABLEMODEL_H
+#endif // CUSTOMTABLEMODEL_H

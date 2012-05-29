@@ -30,7 +30,6 @@
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
-#include "declarativemodel.h"
 #include <QHPieModelMapper>
 #include <QVPieModelMapper>
 #include <QXYModelMapper>
@@ -55,8 +54,6 @@ public:
         qmlRegisterType<DeclarativeGroupedBarSeries>(uri, 1, 0, "GroupedBarSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
         qmlRegisterType<DeclarativePieSlice>(uri, 1, 0, "PieSlice");
-        qmlRegisterType<DeclarativeTableModel>(uri, 1, 0, "ChartModel");
-        qmlRegisterType<DeclarativeTableModelElement>(uri, 1, 0, "ChartModelElement");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
 
         qmlRegisterUncreatableType<QPieSeries>(uri, 1, 0, "QPieSeries",

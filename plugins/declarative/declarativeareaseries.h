@@ -37,10 +37,6 @@ public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
 
 public:
-    bool setDeclarativeUpperModel(DeclarativeTableModel *model);
-    DeclarativeTableModel *declarativeUpperModel();
-    bool setDeclarativeLowerModel(DeclarativeTableModel *model);
-    DeclarativeTableModel *declarativeLowerModel();
     QXYModelMapper* upperModelMapper() const;
     QXYModelMapper* lowerModelMapper() const;
 public:

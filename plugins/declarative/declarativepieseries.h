@@ -27,7 +27,6 @@
 #include <QDeclarativeParserStatus>
 #include <QDeclarativeListProperty>
 #include <QAbstractItemModel>
-#include "declarativemodel.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

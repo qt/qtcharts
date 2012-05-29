@@ -25,6 +25,7 @@
 #include "qsplineseries.h"
 #include "declarativexyseries.h"
 #include <QDeclarativeParserStatus>
+#include <QDeclarativeListProperty>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

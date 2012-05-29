@@ -3,7 +3,11 @@
 }
 
 RESOURCES += resources.qrc
-SOURCES += main.cpp
+SOURCES += main.cpp\
+           customtablemodel.cpp \
+           declarativemodel.cpp
+HEADERS += customtablemodel.h \
+           declarativemodel.h
 
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
 

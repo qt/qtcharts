@@ -25,7 +25,7 @@
 #include "qlineseries.h"
 #include "declarativexyseries.h"
 #include <QDeclarativeParserStatus>
-#include <QDebug>
+#include <QDeclarativeListProperty>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

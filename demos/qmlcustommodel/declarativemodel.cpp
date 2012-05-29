@@ -22,10 +22,7 @@
 #include <qdeclarativelist.h>
 #include <QDebug>
 
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-
-////////////// Table model row ///////////////////
+////////////// Table model element ///////////////////
 
 DeclarativeTableModelElement::DeclarativeTableModelElement(QObject *parent)
     : QObject(parent)
@@ -45,7 +42,7 @@ void DeclarativeTableModelElement::setValues(QVariantList values)
 ////////////// Table model  ///////////////////
 
 DeclarativeTableModel::DeclarativeTableModel(QObject *parent) :
-    ChartTableModel(parent)
+    CustomTableModel(parent)
 {
 }
 
@@ -97,18 +94,16 @@ void DeclarativeTableModel::append(QVariantList values)
     dataChanged(beginIndex, endIndex);
 }
 
-void DeclarativeTableModel::appendPoint(QXYModelMapper *mapper, DeclarativeXyPoint *point)
-{
-    Q_UNUSED(mapper)
-    Q_UNUSED(point)
-    // TODO: XYModelMapper implementation has change, this code has to be updated.
-//    qDebug() << "DeclarativeTableModel::appendPoint:" << point;
-//    QVariantList values;
-//    values.insert(mapper->mapX(), point->x());
-//    values.insert(mapper->mapY(), point->y());
-//    append(values);
-}
+//void DeclarativeTableModel::appendPoint(QXYModelMapper *mapper, DeclarativeXyPoint *point)
+//{
+//    Q_UNUSED(mapper)
+//    Q_UNUSED(point)
+//    // TODO: XYModelMapper implementation has change, this code has to be updated.
+////    qDebug() << "DeclarativeTableModel::appendPoint:" << point;
+////    QVariantList values;
+////    values.insert(mapper->mapX(), point->x());
+////    values.insert(mapper->mapY(), point->y());
+////    append(values);
+//}
 
 #include "moc_declarativemodel.cpp"
-
-QTCOMMERCIALCHART_END_NAMESPACE

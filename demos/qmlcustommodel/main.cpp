@@ -20,12 +20,24 @@
 
 #include <QtGui/QApplication>
 #include <QDeclarativeEngine>
+#include <QtDeclarative>
+#include <QAbstractItemModel>
+#include "declarativemodel.h"
+#include "customtablemodel.h"
 #include "qmlapplicationviewer.h"
+
+const char *uri = "QmlCustomModel";
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
 {
     QScopedPointer<QApplication> app(createApplication(argc, argv));
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
+
+    // @uri QmlCustomModel
+    qmlRegisterUncreatableType<QAbstractItemModel>(uri, 1, 0, "AbstractItemModel",
+                                                   QLatin1String("Trying to create uncreatable: AbstractItemModel."));
+    qmlRegisterType<DeclarativeTableModel>(uri, 1, 0, "CustomModel");
+    qmlRegisterType<DeclarativeTableModelElement>(uri, 1, 0, "CustomModelElement");
 
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer->setSource(QUrl("qrc:/qml/qmlcustommodel/loader.qml"));

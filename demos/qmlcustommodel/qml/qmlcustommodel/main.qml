@@ -20,6 +20,7 @@
 
 import QtQuick 1.0
 import QtCommercial.Chart 1.0
+import QmlCustomModel 1.0
 
 Rectangle {
     width: parent.width
@@ -31,14 +32,14 @@ Rectangle {
         anchors.fill: parent
         theme: ChartView.ChartThemeLight
 
-        // For dynamic data you can use the ChartModel API.
-        ChartModel {
-            id: chartModel
-            ChartModelElement { values: ["Volkswagen", 13.5, 4.4] }
-            ChartModelElement { values: ["Toyota", 10.9, 4.2] }
-            ChartModelElement { values: ["Ford", 8.6, 3.0] }
-            ChartModelElement { values: ["Skoda", 8.2, 1.9] }
-            ChartModelElement { values: ["Volvo", 6.8, 1.5] }
+        // For dynamic data we use a custom data model derived from QAbstractiItemModel
+        CustomModel {
+            id: customModel
+            CustomModelElement { values: ["Volkswagen", 13.5, 4.4] }
+            CustomModelElement { values: ["Toyota", 10.9, 4.2] }
+            CustomModelElement { values: ["Ford", 8.6, 3.0] }
+            CustomModelElement { values: ["Skoda", 8.2, 1.9] }
+            CustomModelElement { values: ["Volvo", 6.8, 1.5] }
         }
 
         LineSeries {
@@ -46,7 +47,7 @@ Rectangle {
 
             // TODO: the new mapper api
 //            VXYModelMapper {
-//                model: chartModel
+//                model: customModel
 //                xColumn: 0
 //                yColumn: 1
 //            }
@@ -62,7 +63,7 @@ Rectangle {
 
         VPieModelMapper {
             series: pieSeries
-            model: chartModel
+            model: customModel
             labelsColumn: 0
             valuesColumn: 1
         }
@@ -73,9 +74,8 @@ Rectangle {
 //            lowerSeries: LineSeries {}
 //        }
 
-        // TODO: BarSeries with ChartModel base model API
 //        BarSeries {
-//            model: chartModel
+//            model: customModel
 //            modelMapper.first: 0
 //        }
     }
@@ -85,7 +85,7 @@ Rectangle {
 //        pieSeries.model.append(["Others", 52.0]);
 
     // TODO: show how to use data from a list model in a chart view
-    // i.e. copy the data into a chart model
+    // i.e. copy the data into a custom model
 //    ListModel {
 //        id: listModel
 //        ListElement {

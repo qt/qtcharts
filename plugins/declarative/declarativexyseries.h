@@ -23,7 +23,7 @@
 
 #include "qchartglobal.h"
 #include "declarativexypoint.h"
-#include "declarativemodel.h"
+#include <QColor>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
