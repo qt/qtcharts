@@ -31,17 +31,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     In addition to the obvious value and label properties the user can also control
     the visual appearance of a slice. By modifying the visual appearance also means that
-    the user is overriding the default appearance set by the theme. Even if the theme is
-    changed users settings will persist.
+    the user is overriding the default appearance set by the theme.
 
-    To enable user interaction customization with the slices some basic signals
-    are provided about clicking and hovering.
+    Note that if the user has customized slices and theme is changed all customizations will be lost.
+
+    To enable user interaction with the pie some basic signals are provided about clicking and hovering.
 */
 
 /*!
     \property QPieSlice::label
 
     Label of the slice.
+
+    \sa labelVisible, labelPen, labelFont, labelArmLengthFactor
+*/
+
+/*!
+    \fn void QPieSlice::labelChanged()
+
+    This signal emitted when the slice label has been changed.
+
+    \sa label
 */
 
 /*!
@@ -50,6 +60,227 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Value of the slice.
 
     \sa percentage(), QPieSeries::sum()
+*/
+
+/*!
+    \fn void QPieSlice::valueChanged()
+
+    This signal is emitted when the slice value changes.
+
+    \sa value
+*/
+
+/*!
+    \property QPieSlice::labelVisible
+
+    Defienes the visibility of the slice label.
+
+    Default is not visible.
+
+    \sa label, labelPen, labelFont, labelArmLengthFactor
+*/
+
+/*!
+    \fn void QPieSlice::labelVisibleChanged()
+
+    This signal emitted when visibility of the slice label has changed.
+
+    \sa labelVisible
+*/
+
+/*!
+    \property QPieSlice::exploded
+
+    Defines if the slice is exploded from the pie.
+
+    \sa explodeDistanceFactor
+*/
+
+/*!
+    \fn void QPieSlice::explodedChanged()
+
+    This signal is emitted the the slice has been exploded from the pie or is returned back to the pie.
+
+    \sa exploded
+*/
+
+/*!
+    \property QPieSlice::pen
+
+    Pen used to draw the slice border.
+*/
+
+/*!
+    \fn void QPieSlice::penChanged()
+
+    This signal is emitted when the pen of the slice has changed.
+
+    \sa pen
+*/
+
+/*!
+    \property QPieSlice::brush
+
+    Brush used to draw the slice.
+*/
+
+/*!
+    \fn void QPieSlice::brushChanged()
+
+    This signal is emitted when the brush of the slice has changed.
+
+    \sa brush
+*/
+
+/*!
+    \property QPieSlice::labelPen
+
+    Pen used to draw label and label arm of the slice.
+
+    \sa label, labelVisible, labelFont, labelArmLengthFactor
+*/
+
+/*!
+    \fn void QPieSlice::labelPenChanged()
+
+    This signal is emitted when the label pen of the slice has changed.
+
+    \sa labelPen
+*/
+
+/*!
+    \property QPieSlice::labelFont
+
+    Font used for drawing label text.
+
+    \sa label, labelVisible, labelArmLengthFactor
+*/
+
+/*!
+    \fn void QPieSlice::labelFontChanged()
+
+    This signal is emitted when the label font of the slice has changed.
+
+    \sa labelFont
+*/
+
+/*!
+    \property QPieSlice::labelArmLengthFactor
+
+    Defines the length of the label arm.
+
+    The factor is relative to pie radius. For example:
+    1.0 means the length is the same as the radius.
+    0.5 means the length is half of the radius.
+
+    Default value is 0.15
+
+    \sa label, labelVisible, labelPen, labelFont
+*/
+
+/*!
+    \fn void QPieSlice::labelArmLengthFactorChanged()
+
+    This signal is emitted when the label arm factor of the slice has changed.
+
+    \sa labelArmLengthFactor
+*/
+
+/*!
+    \property QPieSlice::explodeDistanceFactor
+
+    When the slice is exploded this factor defines how far the slice is exploded away from the pie.
+
+    The factor is relative to pie radius. For example:
+    1.0 means the distance is the same as the radius.
+    0.5 means the distance is half of the radius.
+
+    Default value is 0.15
+
+    \sa exploded
+*/
+
+/*!
+    \fn void QPieSlice::explodeDistanceFactorChanged()
+
+    This signal is emitted when the explode distance factor of the slice has changed.
+
+    \sa explodeDistanceFactor
+*/
+
+/*!
+    \property QPieSlice::percentage
+
+    Percentage of the slice compared to the sum of all slices in the series.
+
+    The actual value ranges from 0.0 to 1.0.
+
+    Updated automatically once the slice is added to the series.
+
+    \sa value, QPieSeries::sum
+*/
+
+/*!
+    \fn void QPieSlice::percentageChanged()
+
+    This signal is emitted when the percentage of the slice has changed.
+
+    \sa percentage
+*/
+
+/*!
+    \property QPieSlice::startAngle
+
+    Defines the starting angle of this slice in the series it belongs to.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
+    Updated automatically once the slice is added to the series.
+*/
+
+/*!
+    \fn void QPieSlice::startAngleChanged()
+
+    This signal is emitted when the starting angle f the slice has changed.
+
+    \sa startAngle
+*/
+
+/*!
+    \property QPieSlice::angleSpan
+
+    Span of the slice in degrees.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
+    Updated automatically once the slice is added to the series.
+*/
+
+/*!
+    \fn void QPieSlice::angleSpanChanged()
+
+    This signal is emitted when the angle span of the slice has changed.
+
+    \sa angleSpan
+*/
+
+
+/*!
+    \fn void QPieSlice::clicked()
+
+    This signal is emitted when user has clicked the slice.
+
+    \sa QPieSeries::clicked()
+*/
+
+/*!
+    \fn void QPieSlice::hovered(bool state)
+
+    This signal is emitted when user has hovered over or away from the slice.
+
+    \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
+
+    \sa QPieSeries::hovered()
 */
 
 /*!
@@ -85,214 +316,6 @@ QPieSlice::~QPieSlice()
 
 }
 
-/*!
-    Gets the value of the slice.
-    Note that all values in the series
-    \sa setValue()
-*/
-qreal QPieSlice::value() const
-{
-    return d_ptr->m_data.m_value;
-}
-
-/*!
-    Gets the label of the slice.
-    \sa setLabel()
-*/
-QString QPieSlice::label() const
-{ 
-    return d_ptr->m_data.m_labelText;
-}
-
-/*!
-    Returns true if label is set as visible.
-    \sa setLabelVisible()
-*/
-bool QPieSlice::isLabelVisible() const
-{
-    return d_ptr->m_data.m_isLabelVisible;
-}
-
-/*!
-    Returns true if slice is exloded from the pie.
-    \sa setExploded(), explodeDistanceFactor(), setExplodeDistanceFactor()
-*/
-bool QPieSlice::isExploded() const
-{
-    return d_ptr->m_data.m_isExploded;
-}
-
-/*!
-    Returns the explode distance factor.
-
-    The factor is relative to pie radius. For example:
-    1.0 means the distance is the same as the radius.
-    0.5 means the distance is half of the radius.
-
-    Default value is 0.15.
-
-    \sa setExplodeDistanceFactor(), isExploded(), setExploded()
-*/
-qreal QPieSlice::explodeDistanceFactor() const
-{
-    return d_ptr->m_data.m_explodeDistanceFactor;
-}
-
-/*!
-    Returns the percentage of this slice compared to the sum of all slices in the same series.
-    The returned value ranges from 0 to 1.0.
-
-    Updated internally after the slice is added to the series.
-
-    \sa QPieSeries::sum()
-*/
-qreal QPieSlice::percentage() const
-{
-    return d_ptr->m_data.m_percentage;
-}
-
-/*!
-    Returns the starting angle of this slice in the series it belongs to.
-
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
-
-    Updated internally after the slice is added to the series.
-*/
-qreal QPieSlice::startAngle() const
-{
-    return d_ptr->m_data.m_startAngle;
-}
-
-/*!
-    Returns the end angle of this slice in the series it belongs to.
-
-    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
-
-    Updated internally after the slice is added to the series.
-*/
-qreal QPieSlice::angleSpan() const
-{
-    return d_ptr->m_data.m_angleSpan;
-}
-
-/*!
-    Returns the pen used to draw this slice.
-    \sa setPen()
-*/
-QPen QPieSlice::pen() const
-{
-    return d_ptr->m_data.m_slicePen;
-}
-
-/*!
-    Returns the brush used to draw this slice.
-    \sa setBrush()
-*/
-QBrush QPieSlice::brush() const
-{
-    return d_ptr->m_data.m_sliceBrush;
-}
-
-/*!
-    Returns the pen used to draw the label in this slice.
-    \sa setLabelPen()
-*/
-QPen QPieSlice::labelPen() const
-{
-    return d_ptr->m_data.m_labelPen;
-}
-
-/*!
-    Returns the font used to draw label in this slice.
-    \sa setLabelFont()
-*/
-QFont QPieSlice::labelFont() const
-{
-    return d_ptr->m_data.m_labelFont;
-}
-
-/*!
-    Gets the label arm length factor.
-
-    The factor is relative to pie radius. For example:
-    1.0 means the length is the same as the radius.
-    0.5 means the length is half of the radius.
-
-    Default value is 0.15
-
-    \sa setLabelArmLengthFactor()
-*/
-qreal QPieSlice::labelArmLengthFactor() const
-{
-    return d_ptr->m_data.m_labelArmLengthFactor;
-}
-
-/*!
-    \fn void QPieSlice::labelChanged()
-
-    This signal is emitted when the slice label changes.
-
-    \sa setLabel()
-*/
-
-/*!
-    \fn void QPieSlice::valueChanged()
-
-    This signal is emitted when the slice value changes.
-
-    \sa setValue()
-*/
-
-/*!
-    \fn void QPieSlice::appearanceChanged()
-
-    This signal is emitted when visual appearance of the slice changes.
-
-    \sa setPen(), setBrush(), setLabelVisible(), setExploded()
-*/
-
-/*!
-    \fn void QPieSlice::calculatedDataChanged()
-
-    This signal is emitted when calculated data for this slice changes.
-
-    \sa percentage(), startAngle(), endAngle()
-*/
-
-/*!
-    \fn void QPieSlice::clicked()
-
-    This signal is emitted when user has clicked the slice.
-
-    \sa QPieSeries::clicked()
-*/
-
-/*!
-    \fn void QPieSlice::hovered(bool state)
-
-    This signal is emitted when user has hovered over or away from the slice.
-
-    \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
-
-    \sa QPieSeries::hovered()
-*/
-
-/*!
-    Sets the \a value of this slice.
-    \sa value()
-*/
-void QPieSlice::setValue(qreal value)
-{
-    if (!qFuzzyIsNull(d_ptr->m_data.m_value - value)) {
-        d_ptr->m_data.m_value = value;
-        emit valueChanged();
-    }
-}
-
-/*!
-    Sets the \a label of the slice.
-    \sa label()
-*/
 void QPieSlice::setLabel(QString label)
 {
     if (d_ptr->m_data.m_labelText != label) {
@@ -301,10 +324,24 @@ void QPieSlice::setLabel(QString label)
     }
 }
 
-/*!
-    Sets the label \a visible in this slice.
-    \sa isLabelVisible(), QPieSeries::setLabelsVisible()
-*/
+QString QPieSlice::label() const
+{
+    return d_ptr->m_data.m_labelText;
+}
+
+void QPieSlice::setValue(qreal value)
+{
+    if (!qFuzzyIsNull(d_ptr->m_data.m_value - value)) {
+        d_ptr->m_data.m_value = value;
+        emit valueChanged();
+    }
+}
+
+qreal QPieSlice::value() const
+{
+    return d_ptr->m_data.m_value;
+}
+
 void QPieSlice::setLabelVisible(bool visible)
 {
     if (d_ptr->m_data.m_isLabelVisible != visible) {
@@ -313,13 +350,11 @@ void QPieSlice::setLabelVisible(bool visible)
     }
 }
 
-/*!
-    Sets this slices \a exploded state.
+bool QPieSlice::isLabelVisible() const
+{
+    return d_ptr->m_data.m_isLabelVisible;
+}
 
-    If the slice is exploded it is moved away from the pie center. The distance is defined by the explode distance factor.
-
-    \sa isExploded(), explodeDistanceFactor(), setExplodeDistanceFactor()
-*/
 void QPieSlice::setExploded(bool exploded)
 {
     if (d_ptr->m_data.m_isExploded != exploded) {
@@ -328,17 +363,64 @@ void QPieSlice::setExploded(bool exploded)
     }
 }
 
-/*!
-    Sets the explode distance \a factor.
+bool QPieSlice::isExploded() const
+{
+    return d_ptr->m_data.m_isExploded;
+}
 
-    The factor is relative to pie radius. For example:
-    1.0 means the distance is the same as the radius.
-    0.5 means the distance is half of the radius.
+void QPieSlice::setPen(const QPen &pen)
+{
+    d_ptr->setPen(pen, false);
+}
 
-    Default value is 0.15
+QPen QPieSlice::pen() const
+{
+    return d_ptr->m_data.m_slicePen;
+}
 
-    \sa explodeDistanceFactor(), isExploded(), setExploded()
-*/
+void QPieSlice::setBrush(const QBrush &brush)
+{
+    d_ptr->setBrush(brush, false);
+}
+
+QBrush QPieSlice::brush() const
+{
+    return d_ptr->m_data.m_sliceBrush;
+}
+
+void QPieSlice::setLabelPen(const QPen &pen)
+{
+    d_ptr->setLabelPen(pen, false);
+}
+
+QPen QPieSlice::labelPen() const
+{
+    return d_ptr->m_data.m_labelPen;
+}
+
+void QPieSlice::setLabelFont(const QFont &font)
+{
+    d_ptr->setLabelFont(font, false);
+}
+
+QFont QPieSlice::labelFont() const
+{
+    return d_ptr->m_data.m_labelFont;
+}
+
+void QPieSlice::setLabelArmLengthFactor(qreal factor)
+{
+    if (!qFuzzyIsNull(d_ptr->m_data.m_labelArmLengthFactor - factor)) {
+        d_ptr->m_data.m_labelArmLengthFactor = factor;
+        emit labelArmLengthFactorChanged();
+    }
+}
+
+qreal QPieSlice::labelArmLengthFactor() const
+{
+    return d_ptr->m_data.m_labelArmLengthFactor;
+}
+
 void QPieSlice::setExplodeDistanceFactor(qreal factor)
 {
     if (!qFuzzyIsNull(d_ptr->m_data.m_explodeDistanceFactor - factor)) {
@@ -347,71 +429,24 @@ void QPieSlice::setExplodeDistanceFactor(qreal factor)
     }
 }
 
-/*!
-    Sets the \a pen used to draw this slice.
-
-    Overrides the pen set by the theme.
-
-    \sa pen()
-*/
-void QPieSlice::setPen(const QPen &pen)
+qreal QPieSlice::explodeDistanceFactor() const
 {
-    d_ptr->setPen(pen, false);
+    return d_ptr->m_data.m_explodeDistanceFactor;
 }
 
-/*!
-    Sets the \a brush used to draw this slice.
-
-    Overrides the brush set by the theme.
-
-    \sa brush()
-*/
-void QPieSlice::setBrush(const QBrush &brush)
+qreal QPieSlice::percentage() const
 {
-    d_ptr->setBrush(brush, false);
+    return d_ptr->m_data.m_percentage;
 }
 
-/*!
-    Sets the \a pen used to draw the label in this slice.
-
-    Overrides the pen set by the theme.
-
-    \sa labelPen()
-*/
-void QPieSlice::setLabelPen(const QPen &pen)
+qreal QPieSlice::startAngle() const
 {
-    d_ptr->setLabelPen(pen, false);
+    return d_ptr->m_data.m_startAngle;
 }
 
-/*!
-    Sets the \a font used to draw the label in this slice.
-
-    Overrides the font set by the theme.
-
-    \sa labelFont()
-*/
-void QPieSlice::setLabelFont(const QFont &font)
+qreal QPieSlice::angleSpan() const
 {
-    d_ptr->setLabelFont(font, false);
-}
-
-/*!
-    Sets the label arm length \a factor.
-
-    The factor is relative to pie radius. For example:
-    1.0 means the length is the same as the radius.
-    0.5 means the length is half of the radius.
-
-    Default value is 0.15
-
-    \sa labelArmLengthFactor()
-*/
-void QPieSlice::setLabelArmLengthFactor(qreal factor)
-{
-    if (!qFuzzyIsNull(d_ptr->m_data.m_labelArmLengthFactor - factor)) {
-        d_ptr->m_data.m_labelArmLengthFactor = factor;
-        emit labelArmLengthFactorChanged();
-    }
+    return d_ptr->m_data.m_angleSpan;
 }
 
 QPieSlicePrivate::QPieSlicePrivate(QPieSlice *parent)

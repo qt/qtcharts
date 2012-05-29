@@ -41,7 +41,7 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
     Q_PROPERTY(QPen labelPen READ labelPen WRITE setLabelPen NOTIFY labelPenChanged)
     Q_PROPERTY(QFont labelFont READ labelFont WRITE setLabelFont NOTIFY labelFontChanged)
-    Q_PROPERTY(qreal LabelArmLengthFactor READ labelArmLengthFactor WRITE setLabelArmLengthFactor)
+    Q_PROPERTY(qreal labelArmLengthFactor READ labelArmLengthFactor WRITE setLabelArmLengthFactor)
     Q_PROPERTY(qreal explodeDistanceFactor READ explodeDistanceFactor WRITE setExplodeDistanceFactor)
     Q_PROPERTY(qreal percentage READ percentage NOTIFY percentageChanged)
     Q_PROPERTY(qreal startAngle READ startAngle NOTIFY startAngleChanged)
