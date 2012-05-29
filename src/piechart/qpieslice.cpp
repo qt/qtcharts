@@ -59,6 +59,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     Value of the slice.
 
+    Note that if users sets a negative value it is converted to a positive value.
+
     \sa percentage(), QPieSeries::sum()
 */
 
@@ -303,8 +305,8 @@ QPieSlice::QPieSlice(QString label, qreal value, QObject *parent)
     :QObject(parent),
     d_ptr(new QPieSlicePrivate(this))
 {
-    d_ptr->m_data.m_value = value;
-    d_ptr->m_data.m_labelText = label;
+    setValue(value);
+    setLabel(label);
 }
 
 /*!
@@ -331,6 +333,7 @@ QString QPieSlice::label() const
 
 void QPieSlice::setValue(qreal value)
 {
+    value = qAbs(value); // negative values not allowed
     if (!qFuzzyIsNull(d_ptr->m_data.m_value - value)) {
         d_ptr->m_data.m_value = value;
         emit valueChanged();

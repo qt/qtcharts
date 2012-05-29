@@ -121,8 +121,9 @@ void tst_qpieslice::changedSignals()
     // percentageChanged(), startAngleChanged() and angleSpanChanged() signals tested at tst_qpieseries::calculatedValues()
 
     // set everything twice to see we do not get unnecessary signals
-    slice.setValue(1);
-    slice.setValue(1);
+    slice.setValue(1.0);
+    slice.setValue(-1.0);
+    QCOMPARE(slice.value(), 1.0);
     slice.setLabel("foobar");
     slice.setLabel("foobar");
     slice.setLabelVisible();
