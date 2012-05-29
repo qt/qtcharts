@@ -231,7 +231,7 @@ bool QBarSeries::isLabelsVisible() const
 
 QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
     QAbstractSeriesPrivate(q),
-    m_barMargin(0.05),  // Default value is 5% of category width
+    m_barMargin(0.5),  // Default value is 50% of category width
     m_labelsVisible(false),
     m_visible(true)
 {

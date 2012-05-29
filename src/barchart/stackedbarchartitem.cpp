@@ -46,12 +46,12 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     qreal scaleY = (height / rangeY);
     qreal scaleX = (width / rangeX);
     qreal categoryWidth = width / categoryCount;
-    qreal barWidth = categoryWidth / setCount - categoryWidth * m_series->d_func()->barMargin();
+    qreal barWidth = categoryWidth - categoryWidth * m_series->d_func()->barMargin();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
         qreal yPos = height + rangeY * m_domainMinY + geometry().topLeft().y();
-        for (int set=0; set < m_series->barsetCount(); set++) {
+        for (int set=0; set < setCount; set++) {
             QBarSet* barSet = m_series->d_func()->barsetAt(set);
 
             qreal xPos = (barSet->at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
