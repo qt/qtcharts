@@ -103,6 +103,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
     // Use temporary qreals for accurancy
     qreal categoryCount = m_series->categoryCount();
     qreal setCount = m_series->barsetCount();
+    bool barsVisible = m_series->isVisible();
 
     // Domain:
     qreal width = geometry().width();
@@ -128,6 +129,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
             layout.append(rect);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
+            bar->setVisible(barsVisible);
 
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 

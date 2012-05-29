@@ -113,6 +113,12 @@ void QBarSeries::setBarMargin(qreal margin)
     d->setBarMargin(margin);
 }
 
+qreal QBarSeries::barMargin() const
+{
+    Q_D(const QBarSeries);
+    return d->barMargin();
+}
+
 /*!
     Adds a set of bars to series. Takes ownership of \a set. If the set is null or is already in series, it won't be appended.
     Returns true, if appending succeeded.
@@ -191,6 +197,18 @@ QBarCategories QBarSeries::categories() const
     return d->categories();
 }
 
+void QBarSeries::setVisible(bool visible)
+{
+    Q_D(QBarSeries);
+    d->setVisible(visible);
+}
+
+bool QBarSeries::isVisible() const
+{
+    Q_D(const QBarSeries);
+    return d->isVisible();
+}
+
 /*!
     Sets the visibility of labels in series to \a visible
 */
@@ -214,7 +232,8 @@ bool QBarSeries::isLabelsVisible() const
 QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
     QAbstractSeriesPrivate(q),
     m_barMargin(0.05),  // Default value is 5% of category width
-    m_labelsVisible(false)
+    m_labelsVisible(false),
+    m_visible(true)
 {
 }
 
@@ -280,7 +299,7 @@ void QBarSeriesPrivate::setBarMargin(qreal margin)
     emit updatedBars();
 }
 
-qreal QBarSeriesPrivate::barMargin()
+qreal QBarSeriesPrivate::barMargin() const
 {
     return m_barMargin;
 }
@@ -288,6 +307,19 @@ qreal QBarSeriesPrivate::barMargin()
 QBarSet* QBarSeriesPrivate::barsetAt(int index)
 {
     return m_barSets.at(index);
+}
+
+void QBarSeriesPrivate::setVisible(bool visible)
+{
+    if (m_visible != visible) {
+        m_visible = visible;
+        emit updatedBars();
+    }
+}
+
+bool QBarSeriesPrivate::isVisible() const
+{
+    return m_visible;
 }
 
 QString QBarSeriesPrivate::categoryName(int category)

@@ -51,7 +51,10 @@ public:
     QBarCategories categories() const;
 
     void setBarMargin(qreal margin);
-    qreal barMargin();
+    qreal barMargin() const;
+
+    void setVisible(bool visible);
+    bool isVisible() const;
 
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter* presenter);
@@ -87,6 +90,7 @@ protected:
     QBarCategories m_categories;
     qreal m_barMargin;
     bool m_labelsVisible;
+    bool m_visible;
 
 private:
     Q_DECLARE_PUBLIC(QBarSeries)

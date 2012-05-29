@@ -44,6 +44,7 @@ public:
     void setCategories(QBarCategories categories);
 
     void setBarMargin(qreal margin);
+    qreal barMargin() const;
 
     bool append(QBarSet *set);
     bool remove(QBarSet *set);
@@ -54,6 +55,8 @@ public:
     QList<QBarSet*> barSets() const;
     QBarCategories categories() const;
 
+    void setVisible(bool visible = true);
+    bool isVisible() const;
     void setLabelsVisible(bool visible = true);
     bool isLabelsVisible() const;
 
