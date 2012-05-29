@@ -23,8 +23,8 @@ public:
 signals:
     
 public slots:
-    void attachLegend();
     void detachLegend();
+    void attachLegend();
     void addBarset();
     void removeBarset();
 

@@ -16,6 +16,7 @@ MainWidget::MainWidget(QWidget *parent) :
     m_setCount = 0;
     m_chart = new QChart();
 
+//![1]
     m_buttonLayout = new QGridLayout();
     QPushButton *detachLegendButton = new QPushButton("detach legend");
     connect(detachLegendButton, SIGNAL(clicked()), this, SLOT(detachLegend()));
@@ -30,18 +31,17 @@ MainWidget::MainWidget(QWidget *parent) :
     QPushButton *removeBarsetButton = new QPushButton("remove barset");
     connect(removeBarsetButton, SIGNAL(clicked()), this, SLOT(removeBarset()));
     m_buttonLayout->addWidget(removeBarsetButton, 3, 0);
-
-    // add row with empty label to make all the other rows static
-    m_buttonLayout->addWidget(new QLabel(""), m_buttonLayout->rowCount(), 0);
-    m_buttonLayout->setRowStretch(m_buttonLayout->rowCount() - 1, 1);
+//![1]
 
     // Create chart view with the chart
     m_chartView = new QChartView(m_chart, this);
     m_chartView->setRubberBand(QChartView::HorizonalRubberBand);
 
+//![2]
     m_customView = new QGraphicsView(this);
     m_customScene = new QGraphicsScene(this);
     m_customView->setScene(m_customScene);
+//![2]
 
     // Create layout for grid and detached legend
     m_mainLayout = new QGridLayout();
@@ -55,61 +55,55 @@ MainWidget::MainWidget(QWidget *parent) :
 
 void MainWidget::createSeries()
 {
-//![1]
     m_series = new QBarSeries();
+    addBarset();
+    addBarset();
+    addBarset();
+    addBarset();
 
-    addBarset();
-    addBarset();
-    addBarset();
-    addBarset();
-//![1]
-
-//![2]
     m_chart->addSeries(m_series);
     m_chart->setTitle("Legend detach example");
-//![2]
 
-//![3]
     m_chart->legend()->setVisible(true);
     m_chart->legend()->setAlignment(QLegend::AlignmentBottom);
     m_chart->axisY()->setNiceNumbersEnabled(true);
-//![3]
 
-//![4]
     m_chartView->setRenderHint(QPainter::Antialiasing);
-//![4]
 }
 
-void MainWidget::attachLegend()
+void MainWidget::detachLegend()
 {
-    qDebug() << "attach legend";
+//![3]
+    // Detach legend from chart
     QLegend *legend = m_chart->legend();
+    legend->detachFromChart();
 
-    if (m_customScene->items().contains(legend)) {
-        qDebug() << "legend removed from other scene";
-        m_customScene->removeItem(legend);
-        legend->setParent(m_chart);
-        legend->attachToChart();
-    }
+    // Put legend to our custom scene
+    m_customScene->addItem(legend);
+//![3]
 
-//    legend->attachToChart();
     // This causes redraw
     QSize size(1,1);
     this->resize(this->size() + size);
     this->resize(this->size() - size);
 }
 
-void MainWidget::detachLegend()
+
+void MainWidget::attachLegend()
 {
-    qDebug() << "detach legend";
+//![4]
     QLegend *legend = m_chart->legend();
-    legend->detachFromChart();
 
-    m_customScene->addItem(legend);
-//    m_mainLayout->addWidget(legend,0,2,3,1);
-//    setLayout(m_layout);
+    if (m_customScene->items().contains(legend)) {
+        // Remove legend from custom scene and put it back to chartview scene.
+        // Attach legend back to chart, so that layout works.
+        m_customScene->removeItem(legend);
+        legend->setParent(m_chart);
+        m_chartView->scene()->addItem(legend);
+        legend->attachToChart();
+    }
+//![4]
 
-    // TODO: layout legend to somewhere else
     // This causes redraw
     QSize size(1,1);
     this->resize(this->size() + size);
