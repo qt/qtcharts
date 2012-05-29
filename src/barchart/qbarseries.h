@@ -43,6 +43,8 @@ public:
     QAbstractSeries::SeriesType type() const;
     void setCategories(QBarCategories categories);
 
+    void setBarMargin(qreal margin);
+
     bool append(QBarSet *set);
     bool remove(QBarSet *set);
     bool append(QList<QBarSet* > sets);

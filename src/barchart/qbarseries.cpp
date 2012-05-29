@@ -107,6 +107,12 @@ void QBarSeries::setCategories(QBarCategories categories)
     emit d->categoriesUpdated();
 }
 
+void QBarSeries::setBarMargin(qreal margin)
+{
+    Q_D(QBarSeries);
+    d->setBarMargin(margin);
+}
+
 /*!
     Adds a set of bars to series. Takes ownership of \a set. If the set is null or is already in series, it won't be appended.
     Returns true, if appending succeeded.
