@@ -45,8 +45,11 @@ public slots:
 private slots:
     void properties();
     void append();
+    void appendAnimated();
     void insert();
+    void insertAnimated();
     void remove();
+    void removeAnimated();
     void calculatedValues();
     void clickedSignal();
     void hoverSignal();
@@ -55,7 +58,8 @@ private:
     void verifyCalculatedData(const QPieSeries &series, bool *ok);
 
 private:
-
+    QChartView *m_view;
+    QPieSeries *m_series;
 };
 
 void tst_qpieseries::initTestCase()
@@ -70,96 +74,97 @@ void tst_qpieseries::cleanupTestCase()
 
 void tst_qpieseries::init()
 {
-
+    m_view = new QChartView();
+    m_series = new QPieSeries(m_view);
 }
 
 void tst_qpieseries::cleanup()
 {
-
+    delete m_view;
+    m_view = 0;
+    m_series = 0;
 }
 
 void tst_qpieseries::properties()
 {
-    QPieSeries s;
+    QSignalSpy countSpy(m_series, SIGNAL(countChanged()));
+    QSignalSpy sumSpy(m_series, SIGNAL(sumChanged()));
+    QSignalSpy sizeSpy(m_series, SIGNAL(pieSizeChanged()));
+    QSignalSpy startAngleSpy(m_series, SIGNAL(pieStartAngleChanged()));
+    QSignalSpy endAngleSpy(m_series, SIGNAL(pieEndAngleChanged()));
+    QSignalSpy horPosSpy(m_series, SIGNAL(horizontalPositionChanged()));
+    QSignalSpy verPosSpy(m_series, SIGNAL(verticalPositionChanged()));
 
-    QSignalSpy countSpy(&s, SIGNAL(countChanged()));
-    QSignalSpy sumSpy(&s, SIGNAL(sumChanged()));
-    QSignalSpy sizeSpy(&s, SIGNAL(pieSizeChanged()));
-    QSignalSpy startAngleSpy(&s, SIGNAL(pieStartAngleChanged()));
-    QSignalSpy endAngleSpy(&s, SIGNAL(pieEndAngleChanged()));
-    QSignalSpy horPosSpy(&s, SIGNAL(horizontalPositionChanged()));
-    QSignalSpy verPosSpy(&s, SIGNAL(verticalPositionChanged()));
+    QVERIFY(m_series->type() == QAbstractSeries::SeriesTypePie);
+    QVERIFY(m_series->count() == 0);
+    QVERIFY(m_series->isEmpty());
+    QCOMPARE(m_series->sum(), 0.0);
+    QCOMPARE(m_series->horizontalPosition(), 0.5);
+    QCOMPARE(m_series->verticalPosition(), 0.5);
+    QCOMPARE(m_series->pieSize(), 0.7);
+    QCOMPARE(m_series->pieStartAngle(), 0.0);
+    QCOMPARE(m_series->pieEndAngle(), 360.0);
 
-    QVERIFY(s.type() == QAbstractSeries::SeriesTypePie);
-    QVERIFY(s.count() == 0);
-    QVERIFY(s.isEmpty());
-    QCOMPARE(s.sum(), 0.0);
-    QCOMPARE(s.horizontalPosition(), 0.5);
-    QCOMPARE(s.verticalPosition(), 0.5);
-    QCOMPARE(s.pieSize(), 0.7);
-    QCOMPARE(s.pieStartAngle(), 0.0);
-    QCOMPARE(s.pieEndAngle(), 360.0);
-
-    s.append("s1", 1);
-    s.append("s2", 1);
-    s.append("s3", 1);
-    s.insert(1, new QPieSlice("s4", 1));
-    s.remove(s.slices().first());
-    QCOMPARE(s.count(), 3);
-    QCOMPARE(s.sum(), 3.0);
-    s.clear();
-    QCOMPARE(s.count(), 0);
-    QCOMPARE(s.sum(), 0.0);
+    m_series->append("s1", 1);
+    m_series->append("s2", 1);
+    m_series->append("s3", 1);
+    m_series->insert(1, new QPieSlice("s4", 1));
+    m_series->remove(m_series->slices().first());
+    QCOMPARE(m_series->count(), 3);
+    QCOMPARE(m_series->sum(), 3.0);
+    m_series->clear();
+    QCOMPARE(m_series->count(), 0);
+    QCOMPARE(m_series->sum(), 0.0);
     QCOMPARE(countSpy.count(), 6);
     QCOMPARE(sumSpy.count(), 6);
 
-    s.setPieSize(-1.0);
-    QCOMPARE(s.pieSize(), 0.0);
-    s.setPieSize(0.0);
-    s.setPieSize(0.9);
-    s.setPieSize(2.0);
-    QCOMPARE(s.pieSize(), 1.0);
+    m_series->setPieSize(-1.0);
+    QCOMPARE(m_series->pieSize(), 0.0);
+    m_series->setPieSize(0.0);
+    m_series->setPieSize(0.9);
+    m_series->setPieSize(2.0);
+    QCOMPARE(m_series->pieSize(), 1.0);
     QCOMPARE(sizeSpy.count(), 3);
 
-    s.setPieStartAngle(0);
-    s.setPieStartAngle(-180);
-    s.setPieStartAngle(180);
+    m_series->setPieStartAngle(0);
+    m_series->setPieStartAngle(-180);
+    m_series->setPieStartAngle(180);
     QCOMPARE(startAngleSpy.count(), 2);
 
-    s.setPieEndAngle(360);
-    s.setPieEndAngle(-180);
-    s.setPieEndAngle(180);
+    m_series->setPieEndAngle(360);
+    m_series->setPieEndAngle(-180);
+    m_series->setPieEndAngle(180);
     QCOMPARE(endAngleSpy.count(), 2);
 
-    s.setHorizontalPosition(0.5);
-    s.setHorizontalPosition(-1.0);
-    QCOMPARE(s.horizontalPosition(), 0.0);
-    s.setHorizontalPosition(1.0);
-    s.setHorizontalPosition(2.0);
-    QCOMPARE(s.horizontalPosition(), 1.0);
+    m_series->setHorizontalPosition(0.5);
+    m_series->setHorizontalPosition(-1.0);
+    QCOMPARE(m_series->horizontalPosition(), 0.0);
+    m_series->setHorizontalPosition(1.0);
+    m_series->setHorizontalPosition(2.0);
+    QCOMPARE(m_series->horizontalPosition(), 1.0);
     QCOMPARE(horPosSpy.count(), 2);
 
-    s.setVerticalPosition(0.5);
-    s.setVerticalPosition(-1.0);
-    QCOMPARE(s.verticalPosition(), 0.0);
-    s.setVerticalPosition(1.0);
-    s.setVerticalPosition(2.0);
-    QCOMPARE(s.verticalPosition(), 1.0);
+    m_series->setVerticalPosition(0.5);
+    m_series->setVerticalPosition(-1.0);
+    QCOMPARE(m_series->verticalPosition(), 0.0);
+    m_series->setVerticalPosition(1.0);
+    m_series->setVerticalPosition(2.0);
+    QCOMPARE(m_series->verticalPosition(), 1.0);
     QCOMPARE(verPosSpy.count(), 2);
 }
 
 void tst_qpieseries::append()
 {
-    QPieSeries s;
-    QSignalSpy addedSpy(&s, SIGNAL(added(QList<QPieSlice*>)));
+    m_view->chart()->addSeries(m_series);
+    QSignalSpy addedSpy(m_series, SIGNAL(added(QList<QPieSlice*>)));
 
     // append pointer
     QPieSlice *slice1 = 0;
-    QVERIFY(!s.append(slice1));
+    QVERIFY(!m_series->append(slice1));
     slice1 = new QPieSlice("slice 1", 1);
-    QVERIFY(s.append(slice1));
-    QVERIFY(!s.append(slice1));
-    QCOMPARE(s.count(), 1);
+    QVERIFY(m_series->append(slice1));
+    QVERIFY(!m_series->append(slice1));
+    QCOMPARE(m_series->count(), 1);
     QCOMPARE(addedSpy.count(), 1);
     QList<QPieSlice*> added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(0).at(0));
     QCOMPARE(added.count(), 1);
@@ -167,15 +172,15 @@ void tst_qpieseries::append()
 
     // append pointer list
     QList<QPieSlice *> list;
-    QVERIFY(!s.append(list));
+    QVERIFY(!m_series->append(list));
     list << (QPieSlice *) 0;
-    QVERIFY(!s.append(list));
+    QVERIFY(!m_series->append(list));
     list.clear();
     list << new QPieSlice("slice 2", 2);
     list << new QPieSlice("slice 3", 3);
-    QVERIFY(s.append(list));
-    QVERIFY(!s.append(list));
-    QCOMPARE(s.count(), 3);
+    QVERIFY(m_series->append(list));
+    QVERIFY(!m_series->append(list));
+    QCOMPARE(m_series->count(), 3);
     QCOMPARE(addedSpy.count(), 2);
     added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(1).at(0));
     QCOMPARE(added.count(), 2);
@@ -183,56 +188,61 @@ void tst_qpieseries::append()
 
     // append operator
     QPieSlice *slice4 = new QPieSlice("slice 4", 4);
-    s << slice4;
-    s << slice1; // fails because already added
-    QCOMPARE(s.count(), 4);
+    *m_series << slice4;
+    *m_series << slice1; // fails because already added
+    QCOMPARE(m_series->count(), 4);
     QCOMPARE(addedSpy.count(), 3);
     added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(2).at(0));
     QCOMPARE(added.count(), 1);
     QCOMPARE(added.first(), slice4);
 
     // append with params
-    QPieSlice *slice5 = s.append("slice 5", 5);
+    QPieSlice *slice5 = m_series->append("slice 5", 5);
     QVERIFY(slice5 != 0);
     QCOMPARE(slice5->value(), 5.0);
     QCOMPARE(slice5->label(), QString("slice 5"));
-    QCOMPARE(s.count(), 5);
+    QCOMPARE(m_series->count(), 5);
     QCOMPARE(addedSpy.count(), 4);
     added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(3).at(0));
     QCOMPARE(added.count(), 1);
     QCOMPARE(added.first(), slice5);
 
     // check slices
-    QVERIFY(!s.isEmpty());
-    for (int i=0; i<s.count(); i++) {
-        QCOMPARE(s.slices().at(i)->value(), (qreal) i+1);
-        QCOMPARE(s.slices().at(i)->label(), QString("slice ") + QString::number(i+1));
+    QVERIFY(!m_series->isEmpty());
+    for (int i=0; i<m_series->count(); i++) {
+        QCOMPARE(m_series->slices().at(i)->value(), (qreal) i+1);
+        QCOMPARE(m_series->slices().at(i)->label(), QString("slice ") + QString::number(i+1));
     }
+}
+
+void tst_qpieseries::appendAnimated()
+{
+    m_view->chart()->setAnimationOptions(QChart::AllAnimations);
 }
 
 void tst_qpieseries::insert()
 {
-    QPieSeries s;
-    QSignalSpy addedSpy(&s, SIGNAL(added(QList<QPieSlice*>)));
+    m_view->chart()->addSeries(m_series);
+    QSignalSpy addedSpy(m_series, SIGNAL(added(QList<QPieSlice*>)));
 
     // insert one slice
     QPieSlice *slice1 = 0;
-    QVERIFY(!s.insert(0, slice1));
+    QVERIFY(!m_series->insert(0, slice1));
     slice1 = new QPieSlice("slice 1", 1);
-    QVERIFY(!s.insert(-1, slice1));
-    QVERIFY(!s.insert(5, slice1));
-    QVERIFY(s.insert(0, slice1));
-    QVERIFY(!s.insert(0, slice1));
-    QCOMPARE(s.count(), 1);
+    QVERIFY(!m_series->insert(-1, slice1));
+    QVERIFY(!m_series->insert(5, slice1));
+    QVERIFY(m_series->insert(0, slice1));
+    QVERIFY(!m_series->insert(0, slice1));
+    QCOMPARE(m_series->count(), 1);
     QCOMPARE(addedSpy.count(), 1);
     QList<QPieSlice*> added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(0).at(0));
     QCOMPARE(added.count(), 1);
     QCOMPARE(added.first(), slice1);
 
     // add some more slices
-    QPieSlice *slice2 = s.append("slice 2", 2);
-    QPieSlice *slice4 = s.append("slice 4", 4);
-    QCOMPARE(s.count(), 3);
+    QPieSlice *slice2 = m_series->append("slice 2", 2);
+    QPieSlice *slice4 = m_series->append("slice 4", 4);
+    QCOMPARE(m_series->count(), 3);
     QCOMPARE(addedSpy.count(), 3);
     added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(1).at(0));
     QCOMPARE(added.count(), 1);
@@ -243,52 +253,57 @@ void tst_qpieseries::insert()
 
     // insert between slices
     QPieSlice *slice3 = new QPieSlice("slice 3", 3);
-    s.insert(2, slice3);
-    QCOMPARE(s.count(), 4);
+    m_series->insert(2, slice3);
+    QCOMPARE(m_series->count(), 4);
     QCOMPARE(addedSpy.count(), 4);
     added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(3).at(0));
     QCOMPARE(added.count(), 1);
     QCOMPARE(added.first(), slice3);
 
     // check slices
-    for (int i=0; i<s.count(); i++) {
-        QCOMPARE(s.slices().at(i)->value(), (qreal) i+1);
-        QCOMPARE(s.slices().at(i)->label(), QString("slice ") + QString::number(i+1));
+    for (int i=0; i<m_series->count(); i++) {
+        QCOMPARE(m_series->slices().at(i)->value(), (qreal) i+1);
+        QCOMPARE(m_series->slices().at(i)->label(), QString("slice ") + QString::number(i+1));
     }
+}
+
+void tst_qpieseries::insertAnimated()
+{
+    m_view->chart()->setAnimationOptions(QChart::AllAnimations);
 }
 
 void tst_qpieseries::remove()
 {
-    QPieSeries s;
-    QSignalSpy removedSpy(&s, SIGNAL(removed(QList<QPieSlice*>)));
+    m_view->chart()->addSeries(m_series);
+    QSignalSpy removedSpy(m_series, SIGNAL(removed(QList<QPieSlice*>)));
 
     // add some slices
-    QPieSlice *slice1 = s.append("slice 1", 1);
-    QPieSlice *slice2 = s.append("slice 2", 2);
-    QPieSlice *slice3 = s.append("slice 3", 3);
+    QPieSlice *slice1 = m_series->append("slice 1", 1);
+    QPieSlice *slice2 = m_series->append("slice 2", 2);
+    QPieSlice *slice3 = m_series->append("slice 3", 3);
     QSignalSpy spy1(slice1, SIGNAL(destroyed()));
     QSignalSpy spy2(slice2, SIGNAL(destroyed()));
     QSignalSpy spy3(slice3, SIGNAL(destroyed()));
-    QCOMPARE(s.count(), 3);
+    QCOMPARE(m_series->count(), 3);
 
     // null pointer remove
-    QVERIFY(!s.remove(0));
+    QVERIFY(!m_series->remove(0));
 
     // remove first
-    QVERIFY(s.remove(slice1));
-    QVERIFY(!s.remove(slice1));
-    QCOMPARE(s.count(), 2);
-    QCOMPARE(s.slices().at(0)->label(), slice2->label());
+    QVERIFY(m_series->remove(slice1));
+    QVERIFY(!m_series->remove(slice1));
+    QCOMPARE(m_series->count(), 2);
+    QCOMPARE(m_series->slices().at(0)->label(), slice2->label());
     QCOMPARE(removedSpy.count(), 1);
     QList<QPieSlice*> removed = qvariant_cast<QList<QPieSlice*> >(removedSpy.at(0).at(0));
     QCOMPARE(removed.count(), 1);
     QCOMPARE(removed.first(), slice1);
 
     // remove all
-    s.clear();
-    QVERIFY(s.isEmpty());
-    QVERIFY(s.slices().isEmpty());
-    QCOMPARE(s.count(), 0);
+    m_series->clear();
+    QVERIFY(m_series->isEmpty());
+    QVERIFY(m_series->slices().isEmpty());
+    QCOMPARE(m_series->count(), 0);
     QCOMPARE(removedSpy.count(), 2);
     removed = qvariant_cast<QList<QPieSlice*> >(removedSpy.at(1).at(0));
     QCOMPARE(removed.count(), 2);
@@ -301,10 +316,14 @@ void tst_qpieseries::remove()
     TRY_COMPARE(spy3.count(), 1);
 }
 
+void tst_qpieseries::removeAnimated()
+{
+    m_view->chart()->setAnimationOptions(QChart::AllAnimations);
+}
+
 void tst_qpieseries::calculatedValues()
 {
-    bool ok;
-    QPieSeries s;
+    m_view->chart()->addSeries(m_series);
 
     QPieSlice *slice1 = new QPieSlice("slice 1", 1);
     QSignalSpy percentageSpy(slice1, SIGNAL(percentageChanged()));
@@ -312,8 +331,9 @@ void tst_qpieseries::calculatedValues()
     QSignalSpy angleSpanSpy(slice1, SIGNAL(angleSpanChanged()));
 
     // add a slice
-    s.append(slice1);
-    verifyCalculatedData(s, &ok);
+    m_series->append(slice1);
+    bool ok;
+    verifyCalculatedData(*m_series, &ok);
     if (!ok)
         return;
     QCOMPARE(percentageSpy.count(), 1);
@@ -324,8 +344,8 @@ void tst_qpieseries::calculatedValues()
     QList<QPieSlice *> list;
     list << new QPieSlice("slice 2", 2);
     list << new QPieSlice("slice 3", 3);
-    s.append(list);
-    verifyCalculatedData(s, &ok);
+    m_series->append(list);
+    verifyCalculatedData(*m_series, &ok);
     if (!ok)
         return;
     QCOMPARE(percentageSpy.count(), 2);
@@ -333,8 +353,8 @@ void tst_qpieseries::calculatedValues()
     QCOMPARE(angleSpanSpy.count(), 2);
 
     // remove a slice
-    s.remove(list.first()); // remove slice 2
-    verifyCalculatedData(s, &ok);
+    m_series->remove(list.first()); // remove slice 2
+    verifyCalculatedData(*m_series, &ok);
     if (!ok)
         return;
     QCOMPARE(percentageSpy.count(), 3);
@@ -342,8 +362,8 @@ void tst_qpieseries::calculatedValues()
     QCOMPARE(angleSpanSpy.count(), 3);
 
     // insert a slice
-    s.insert(0, new QPieSlice("Slice 4", 4));
-    verifyCalculatedData(s, &ok);
+    m_series->insert(0, new QPieSlice("Slice 4", 4));
+    verifyCalculatedData(*m_series, &ok);
     if (!ok)
         return;
     QCOMPARE(percentageSpy.count(), 4);
@@ -351,9 +371,9 @@ void tst_qpieseries::calculatedValues()
     QCOMPARE(angleSpanSpy.count(), 4);
 
     // modify pie angles
-    s.setPieStartAngle(-90);
-    s.setPieEndAngle(90);
-    verifyCalculatedData(s, &ok);
+    m_series->setPieStartAngle(-90);
+    m_series->setPieEndAngle(90);
+    verifyCalculatedData(*m_series, &ok);
     if (!ok)
         return;
     QCOMPARE(percentageSpy.count(), 4);
@@ -361,8 +381,10 @@ void tst_qpieseries::calculatedValues()
     QCOMPARE(angleSpanSpy.count(), 6);
 
     // clear all
-    s.clear();
-    verifyCalculatedData(s, &ok);
+    m_series->clear();
+    verifyCalculatedData(*m_series, &ok);
+    if (!ok)
+        return;
     QCOMPARE(percentageSpy.count(), 4);
     QCOMPARE(startAngleSpy.count(), 3);
     QCOMPARE(angleSpanSpy.count(), 6);
@@ -397,21 +419,19 @@ void tst_qpieseries::verifyCalculatedData(const QPieSeries &series, bool *ok)
 
 void tst_qpieseries::clickedSignal()
 {
-    // create a pie series
-    QPieSeries *series = new QPieSeries();
-    QPieSlice *s1 = series->append("slice 1", 1);
-    QPieSlice *s2 = series->append("slice 2", 1);
-    QPieSlice *s3 = series->append("slice 3", 1);
-    QPieSlice *s4 = series->append("slice 4", 1);
-    QSignalSpy clickSpy(series, SIGNAL(clicked(QPieSlice*)));
+    // add some slices
+    QPieSlice *s1 = m_series->append("slice 1", 1);
+    QPieSlice *s2 = m_series->append("slice 2", 1);
+    QPieSlice *s3 = m_series->append("slice 3", 1);
+    QPieSlice *s4 = m_series->append("slice 4", 1);
+    QSignalSpy clickSpy(m_series, SIGNAL(clicked(QPieSlice*)));
 
     // add series to the chart
-    QChartView view(new QChart());
-    view.chart()->legend()->setVisible(false);
-    view.resize(200, 200);
-    view.chart()->addSeries(series);
-    view.show();
-    QTest::qWaitForWindowShown(&view);
+    m_view->chart()->legend()->setVisible(false);
+    m_view->resize(200, 200);
+    m_view->chart()->addSeries(m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
 
     // if you devide the chart in four equal tiles these
     // are the center points of those tiles
@@ -422,12 +442,12 @@ void tst_qpieseries::clickedSignal()
 
     QPoint center(120, 120);
 
-    series->setPieSize(1.0);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    m_series->setPieSize(1.0);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
     TRY_COMPARE(clickSpy.count(), 5); // all hit
     QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s4);
     QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(1).at(0)), s1);
@@ -435,79 +455,77 @@ void tst_qpieseries::clickedSignal()
     QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(3).at(0)), s2);
     clickSpy.clear();
 
-    series->setPieSize(0.5);
-    series->setVerticalPosition(0.25);
-    series->setHorizontalPosition(0.25);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1); // hits
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    m_series->setPieSize(0.5);
+    m_series->setVerticalPosition(0.25);
+    m_series->setHorizontalPosition(0.25);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1); // hits
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
     TRY_COMPARE(clickSpy.count(), 1);
     clickSpy.clear();
 
-    series->setVerticalPosition(0.25);
-    series->setHorizontalPosition(0.75);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2); // hits
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    m_series->setVerticalPosition(0.25);
+    m_series->setHorizontalPosition(0.75);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2); // hits
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
     TRY_COMPARE(clickSpy.count(), 1);
     clickSpy.clear();
 
-    series->setVerticalPosition(0.75);
-    series->setHorizontalPosition(0.25);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3); // hits
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    m_series->setVerticalPosition(0.75);
+    m_series->setHorizontalPosition(0.25);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3); // hits
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
     TRY_COMPARE(clickSpy.count(), 1);
     clickSpy.clear();
 
-    series->setVerticalPosition(0.75);
-    series->setHorizontalPosition(0.75);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p1);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p2);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p3);
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, p4); // hits
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, center);
+    m_series->setVerticalPosition(0.75);
+    m_series->setHorizontalPosition(0.75);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4); // hits
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
     TRY_COMPARE(clickSpy.count(), 1);
     clickSpy.clear();
 }
 
 void tst_qpieseries::hoverSignal()
 {
-    // create a pie series
-    QPieSeries *series = new QPieSeries();
-    series->setPieSize(1.0);
-    QPieSlice *s1 = series->append("slice 1", 1);
-    series->append("slice 2", 2);
-    series->append("slice 3", 3);
+    // add some slices
+    m_series->setPieSize(1.0);
+    QPieSlice *s1 = m_series->append("slice 1", 1);
+    m_series->append("slice 2", 2);
+    m_series->append("slice 3", 3);
 
     // add series to the chart
-    QChartView view(new QChart());
-    view.chart()->legend()->setVisible(false);
-    view.resize(200, 200);
-    view.chart()->addSeries(series);
-    view.show();
-    QTest::qWaitForWindowShown(&view);
+    m_view->chart()->legend()->setVisible(false);
+    m_view->resize(200, 200);
+    m_view->chart()->addSeries(m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
 
     // first move to right top corner
-    QTest::mouseMove(view.viewport(), QPoint(200, 0));
+    QTest::mouseMove(m_view->viewport(), QPoint(200, 0));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     // move inside the slice
     // pie rectangle: QRectF(60,60 121x121)
-    QSignalSpy hoverSpy(series, SIGNAL(hovered(QPieSlice*,bool)));
-    QTest::mouseMove(view.viewport(), QPoint(139, 85));
+    QSignalSpy hoverSpy(m_series, SIGNAL(hovered(QPieSlice*,bool)));
+    QTest::mouseMove(m_view->viewport(), QPoint(139, 85));
     TRY_COMPARE(hoverSpy.count(), 1);
     QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(0).at(0)), s1);
     QCOMPARE(qvariant_cast<bool>(hoverSpy.at(0).at(1)), true);
 
     // move outside the slice
-    QTest::mouseMove(view.viewport(), QPoint(200, 0));
+    QTest::mouseMove(m_view->viewport(), QPoint(200, 0));
     TRY_COMPARE(hoverSpy.count(), 2);
     QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(1).at(0)), s1);
     QCOMPARE(qvariant_cast<bool>(hoverSpy.at(1).at(1)), false);

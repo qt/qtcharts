@@ -164,8 +164,13 @@ void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
     presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
 
     foreach (QPieSlice *slice, slices) {
+
         PieSliceItem *sliceItem = m_sliceItems.value(slice);
-        Q_ASSERT(sliceItem);
+
+        // this can happen if you call append() & remove() in a row so that PieSliceItem is not even created
+        if (!sliceItem)
+            continue;
+
         m_sliceItems.remove(slice);
 
         if (animator())
