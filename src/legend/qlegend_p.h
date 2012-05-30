@@ -34,6 +34,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QChart;
 class ChartPresenter;
 class QAbstractSeries;
 
@@ -41,11 +42,12 @@ class QLegendPrivate : public QObject
 {
     Q_OBJECT
 public:
-    QLegendPrivate(ChartPresenter *chart,QLegend *q);
+    QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend *q);
     ~QLegendPrivate();
 
     void setOffset(qreal x, qreal y);
     void updateLayout();
+    void attachToChart();
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
@@ -56,6 +58,7 @@ public Q_SLOTS:
 private:
     QLegend *q_ptr;
     ChartPresenter *m_presenter;
+    QChart* m_chart;
     QGraphicsItemGroup* m_markers;
     QLegend::Alignments m_alignment;
     QBrush m_brush;

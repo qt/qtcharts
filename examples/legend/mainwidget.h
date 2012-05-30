@@ -33,17 +33,12 @@ private:
     QChart *m_chart;
     QBarSeries *m_series;
 
-    QGraphicsScene *m_scene;
     QChartView *m_chartView;
     QGridLayout *m_mainLayout;
     QGridLayout *m_buttonLayout;
 
     QGraphicsView *m_customView;
     QGraphicsScene *m_customScene;
-    QGraphicsGridLayout *m_customLayout;
-
-
-    int m_setCount;
 };
 
 #endif // MAINWIDGET_H

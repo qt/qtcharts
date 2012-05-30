@@ -13,10 +13,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent)
 {
-    m_setCount = 0;
-    m_chart = new QChart();
-
-//![1]
+    // Create buttons for ui
     m_buttonLayout = new QGridLayout();
     QPushButton *detachLegendButton = new QPushButton("detach legend");
     connect(detachLegendButton, SIGNAL(clicked()), this, SLOT(detachLegend()));
@@ -31,12 +28,15 @@ MainWidget::MainWidget(QWidget *parent) :
     QPushButton *removeBarsetButton = new QPushButton("remove barset");
     connect(removeBarsetButton, SIGNAL(clicked()), this, SLOT(removeBarset()));
     m_buttonLayout->addWidget(removeBarsetButton, 3, 0);
-//![1]
 
     // Create chart view with the chart
+//![1]
+    m_chart = new QChart();
     m_chartView = new QChartView(m_chart, this);
     m_chartView->setRubberBand(QChartView::HorizonalRubberBand);
+//![1]
 
+    // Create custom scene and view, where detached legend will be drawn
 //![2]
     m_customView = new QGraphicsView(this);
     m_customScene = new QGraphicsScene(this);
@@ -55,6 +55,7 @@ MainWidget::MainWidget(QWidget *parent) :
 
 void MainWidget::createSeries()
 {
+//![3]
     m_series = new QBarSeries();
     addBarset();
     addBarset();
@@ -69,54 +70,51 @@ void MainWidget::createSeries()
     m_chart->axisY()->setNiceNumbersEnabled(true);
 
     m_chartView->setRenderHint(QPainter::Antialiasing);
+//![3]
 }
 
 void MainWidget::detachLegend()
 {
-//![3]
-    // Detach legend from chart
+    // Detach legend from chart and
+    // put legend to our custom scene
+//![4]
     QLegend *legend = m_chart->legend();
     legend->detachFromChart();
     legend->setGeometry(m_customView->rect());
-//    legend->setAlignment(QLegend::AlignmentLeft);
-
-    // Put legend to our custom scene
     m_customScene->addItem(legend);
-//![3]
+//![4]
 
-    // This causes redraw
-    QSize size(1,1);
-    this->resize(this->size() + size);
-    this->resize(this->size() - size);
+    // This forces redraw
+    QSize delta(1,1);
+    resize(size() + delta);
+    resize(size() - delta);
 }
 
 
 void MainWidget::attachLegend()
 {
-//![4]
+    // Remove legend from custom scene and put it back to chartview scene.
+    // Attach legend back to chart, so that layout works.
+
+//![5]
     QLegend *legend = m_chart->legend();
 
     if (m_customScene->items().contains(legend)) {
-        // Remove legend from custom scene and put it back to chartview scene.
-        // Attach legend back to chart, so that layout works.
         m_customScene->removeItem(legend);
-        legend->setParent(m_chart);
         m_chartView->scene()->addItem(legend);
-//        legend->setAlignment(QLegend::AlignmentBottom);
         legend->attachToChart();
     }
-//![4]
+//![5]
 
-    // This causes redraw
-    QSize size(1,1);
-    this->resize(this->size() + size);
-    this->resize(this->size() - size);
+    // This forces redraw
+    QSize delta(1,1);
+    resize(size() + delta);
+    resize(size() - delta);
 }
 
 void MainWidget::addBarset()
 {
-    QBarSet *barSet = new QBarSet(QString("set ") + QString::number(m_setCount));
-    m_setCount++;
+    QBarSet *barSet = new QBarSet(QString("set ") + QString::number(m_series->barsetCount()));
     qreal delta = m_series->barsetCount() * 0.1;
     *barSet << QPointF(0.0 + delta, 1 + delta) << QPointF(1.0 + delta, 2 + delta) << QPointF(2.0 + delta, 3 + delta) << QPointF(3.0 + delta, 4 + delta);
     m_series->append(barSet);

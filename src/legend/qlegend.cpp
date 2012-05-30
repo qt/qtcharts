@@ -87,7 +87,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  */
 
 QLegend::QLegend(QChart *chart):QGraphicsWidget(chart),
-d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,this))
+d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,chart,this))
 {
     setZValue(ChartPresenter::LegendZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
@@ -200,7 +200,7 @@ void QLegend::detachFromChart()
  */
 void QLegend::attachToChart()
 {
-    d_ptr->m_attachedToChart = true;
+    d_ptr->attachToChart();
 }
 
 /*!
@@ -292,19 +292,20 @@ qreal QLegend::minHeight() const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QLegendPrivate::QLegendPrivate(ChartPresenter* presenter,QLegend *q):
-q_ptr(q),
-m_presenter(presenter),
-m_markers(new QGraphicsItemGroup(q)),
-m_alignment(QLegend::AlignmentTop),
-m_offsetX(0),
-m_offsetY(0),
-m_minWidth(0),
-m_minHeight(0),
-m_width(0),
-m_height(0),
-m_attachedToChart(true),
-m_backgroundVisible(false)
+QLegendPrivate::QLegendPrivate(ChartPresenter* presenter, QChart *chart, QLegend *q):
+    q_ptr(q),
+    m_presenter(presenter),
+    m_chart(chart),
+    m_markers(new QGraphicsItemGroup(q)),
+    m_alignment(QLegend::AlignmentTop),
+    m_offsetX(0),
+    m_offsetY(0),
+    m_minWidth(0),
+    m_minHeight(0),
+    m_width(0),
+    m_height(0),
+    m_attachedToChart(true),
+    m_backgroundVisible(false)
 {
 
 }
@@ -405,6 +406,12 @@ void QLegendPrivate::updateLayout()
     if (m_attachedToChart) {
         m_presenter->updateLayout();
     }
+}
+
+void QLegendPrivate::attachToChart()
+{
+    m_attachedToChart = true;
+    q_ptr->setParent(m_chart);
 }
 
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)

@@ -1,0 +1,29 @@
+/*!
+    \example examples/legend
+    \title Legend Example
+    \subtitle
+
+	This example shows how to detach legend from chart and how to attach it back. By default the chart
+	draws the legend inside same view with the chart. In some cases user may want to draw legend to somewhere else. To make this possible the legend can be detached from the chart. Detaching means that chart doesn't draw the legend or try to change it's layout. Detached can then be drawn where user wants, for example in different graphics scene. In this example we do so.
+	
+    First we create our chart as usual.
+	
+    \snippet ../examples/legend/mainwidget.cpp 1
+
+    Here we create custom graphics scene, where we want to draw the detached legend.
+	
+    \snippet ../examples/legend/mainwidget.cpp 2
+    
+    Add some series to the chart.
+
+    \snippet ../examples/legend/mainwidget.cpp 3
+
+    Here we detach the legend. After detaching, we set new geometry for it and add it to the custom scene. The custom scene adopts the legend and becomes new parent for it. Note that chart will still update the contents of the legend.
+
+    \snippet ../examples/legend/mainwidget.cpp 4
+
+    To attach legend back to chart we first remove it from the custom scene. Then we add legend to the scene, where chart is. Last we attach legend to chart. Attaching legend to chart automatically sets the QChart as parent for legend.
+
+    \snippet ../examples/legend/mainwidget.cpp 5
+
+*/

@@ -316,7 +316,7 @@ void ChartPresenter::updateLayout()
     QLegend* legend = m_chart->d_ptr->m_legend;
 
     // recalculate legend position
-    if (legend->isAttachedToChart() && legend->isEnabled()) {
+    if (legend != 0 && legend->isAttachedToChart() && legend->isEnabled()) {
 
         QRect legendRect;
 
