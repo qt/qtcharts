@@ -54,6 +54,7 @@ public:
     int categoryCount() const;
     QList<QBarSet*> barSets() const;
     QBarCategories categories() const;
+    void clear();
 
     void setVisible(bool visible = true);
     bool isVisible() const;

@@ -476,13 +476,13 @@ void TableWidget::updateChartType(bool toggle)
             //                    barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
 
             int first = 3;
-            int count = 4;
+//            int count = 4;
             QVBarModelMapper *mapper = new QVBarModelMapper;
             mapper->setCategoriesSection(5);
             mapper->setFirstBarSection(2);
             mapper->setLastBarSection(4);
             mapper->setFirst(first);
-            mapper->setCount(count);
+//            mapper->setCount(count);
             mapper->setSeries(barSeries);
             mapper->setModel(m_model);
 //            barSeries->setModelMapper(mapper);
@@ -490,7 +490,7 @@ void TableWidget::updateChartType(bool toggle)
             QList<QBarSet*> barsets = barSeries->barSets();
             for (int i = 0; i < barsets.count(); i++) {
                 seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
-                m_model->addMapping(seriesColorHex, QRect(2 + i, first, 1, count));
+                m_model->addMapping(seriesColorHex, QRect(2 + i, first, 1, barsets.at(i)->count()));
             }
         }
 

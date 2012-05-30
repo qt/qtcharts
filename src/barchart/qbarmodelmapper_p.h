@@ -9,6 +9,8 @@ class QModelIndex;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QBarSet;
+
 class QBarModelMapperPrivate : public QObject
 {
     Q_OBJECT
@@ -31,6 +33,7 @@ public Q_SLOTS:
     void initializeBarFromModel();
 
 private:
+    QBarSet* barSet(QModelIndex index);
     QModelIndex barModelIndex(int barSection, int posInBar);
     QModelIndex categoriesModelIndex(int posInCategories);
     void insertData(int start, int end);

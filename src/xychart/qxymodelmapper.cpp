@@ -15,7 +15,7 @@ QXYModelMapper::~QXYModelMapper()
 {
     Q_D(QXYModelMapper);
     disconnect(d->m_model, 0, d, 0);
-//    disconnect(d->m_series, 0, d, 0);
+    //    disconnect(d->m_series, 0, d, 0);
 }
 
 QAbstractItemModel* QXYModelMapper::model() const
@@ -270,8 +270,8 @@ void QXYModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottom
             }
             m_series->replace(oldPoint, newPoint);
         }
-        blockSeriesSignals(false);
     }
+    blockSeriesSignals(false);
 }
 
 void QXYModelMapperPrivate::modelRowsAdded(QModelIndex parent, int start, int end)

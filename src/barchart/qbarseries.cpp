@@ -161,6 +161,13 @@ bool QBarSeries::remove(QList<QBarSet* > sets)
     return d->remove(sets);
 }
 
+void QBarSeries::clear()
+{
+    Q_D(QBarSeries);
+    d->m_barSets.clear();
+    d->m_categories.clear();
+}
+
 /*!
     Returns number of sets in series.
 */
