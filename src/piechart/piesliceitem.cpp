@@ -81,9 +81,10 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
     if (m_data.m_isLabelVisible) {
         painter->save();
         painter->setClipRect(parentItem()->boundingRect());
-        painter->setPen(m_data.m_labelPen);
+        // Pen for label arm not defined in the QPieSeries api, let's use brush's color instead
+        // Also, the drawText actually uses the pen color for the text color (unlike QGraphicsSimpleTextItem)
+        painter->setPen(m_data.m_labelBrush.color());
         painter->drawPath(m_labelArmPath);
-		// the pen color will affect the font color as well
         painter->setFont(m_data.m_labelFont);
         painter->drawText(m_labelTextRect.bottomLeft(), m_data.m_labelText);
         painter->restore();

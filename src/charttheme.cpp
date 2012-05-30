@@ -234,8 +234,8 @@ void ChartTheme::decorate(QPieSeries *series, int index)
         if (d->m_data.m_sliceBrush.isThemed() || m_force)
             d->setBrush(brushColor, true);
 
-        if (d->m_data.m_labelPen.isThemed() || m_force)
-            d->setLabelPen(QPen(m_titleBrush.color()), true);
+        if (d->m_data.m_labelBrush.isThemed() || m_force)
+            d->setLabelBrush(QBrush(m_titleBrush.color()), true);
 
         if (d->m_data.m_labelFont.isThemed() || m_force)
             d->setLabelFont(m_labelFont, true);

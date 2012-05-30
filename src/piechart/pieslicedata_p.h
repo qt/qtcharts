@@ -91,7 +91,7 @@ public:
             m_labelText != other.m_labelText ||
             m_labelFont != other.m_labelFont ||
             !qFuzzyIsNull(m_labelArmLengthFactor - other.m_labelArmLengthFactor) ||
-            m_labelPen != other.m_labelPen)
+            m_labelBrush != other.m_labelBrush)
             return true;
 
         if (!qFuzzyIsNull(m_percentage - other.m_percentage) ||
@@ -116,7 +116,7 @@ public:
     QString m_labelText;
     Themed<QFont> m_labelFont;
     qreal m_labelArmLengthFactor;
-    Themed<QPen> m_labelPen;
+    Themed<QBrush> m_labelBrush;
 
     qreal m_percentage;
     QPointF m_center;

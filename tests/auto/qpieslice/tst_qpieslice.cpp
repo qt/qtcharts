@@ -79,7 +79,7 @@ void tst_qpieslice::construction()
     QVERIFY(!slice1.isExploded());
     QCOMPARE(slice1.pen(), QPen());
     QCOMPARE(slice1.brush(), QBrush());
-    QCOMPARE(slice1.labelPen(), QPen());
+    QCOMPARE(slice1.labelBrush(), QBrush());
     QCOMPARE(slice1.labelFont(), QFont());
     QCOMPARE(slice1.labelArmLengthFactor(), 0.15); // default value
     QCOMPARE(slice1.explodeDistanceFactor(), 0.15); // default value
@@ -95,7 +95,7 @@ void tst_qpieslice::construction()
     QVERIFY(!slice2.isExploded());
     QCOMPARE(slice2.pen(), QPen());
     QCOMPARE(slice2.brush(), QBrush());
-    QCOMPARE(slice2.labelPen(), QPen());
+    QCOMPARE(slice2.labelBrush(), QBrush());
     QCOMPARE(slice2.labelFont(), QFont());
     QCOMPARE(slice2.labelArmLengthFactor(), 0.15); // default value
     QCOMPARE(slice2.explodeDistanceFactor(), 0.15); // default value
@@ -113,7 +113,7 @@ void tst_qpieslice::changedSignals()
     QSignalSpy explodedSpy(&slice, SIGNAL(explodedChanged()));
     QSignalSpy penSpy(&slice, SIGNAL(penChanged()));
     QSignalSpy brushSpy(&slice, SIGNAL(brushChanged()));
-    QSignalSpy labelPenSpy(&slice, SIGNAL(labelPenChanged()));
+    QSignalSpy labelBrushSpy(&slice, SIGNAL(labelBrushChanged()));
     QSignalSpy labelFontSpy(&slice, SIGNAL(labelFontChanged()));
     QSignalSpy labelArmLengthFactorSpy(&slice, SIGNAL(labelArmLengthFactorChanged()));
     QSignalSpy explodeDistanceFactorSpy(&slice, SIGNAL(explodeDistanceFactorChanged()));
@@ -134,8 +134,8 @@ void tst_qpieslice::changedSignals()
     slice.setPen(QPen(Qt::red));
     slice.setBrush(QBrush(Qt::red));
     slice.setBrush(QBrush(Qt::red));
-    slice.setLabelPen(QPen(Qt::green));
-    slice.setLabelPen(QPen(Qt::green));
+    slice.setLabelBrush(QBrush(Qt::green));
+    slice.setLabelBrush(QBrush(Qt::green));
     slice.setLabelFont(QFont("Tahoma"));
     slice.setLabelFont(QFont("Tahoma"));
     slice.setLabelArmLengthFactor(0.1);
@@ -148,7 +148,7 @@ void tst_qpieslice::changedSignals()
     TRY_COMPARE(explodedSpy.count(), 1);
     TRY_COMPARE(penSpy.count(), 1);
     TRY_COMPARE(brushSpy.count(), 1);
-    TRY_COMPARE(labelPenSpy.count(), 1);
+    TRY_COMPARE(labelBrushSpy.count(), 1);
     TRY_COMPARE(labelFontSpy.count(), 1);
     TRY_COMPARE(labelArmLengthFactorSpy.count(), 1);
     TRY_COMPARE(explodeDistanceFactorSpy.count(), 1);
@@ -167,7 +167,7 @@ void tst_qpieslice::customize()
     s1->setPen(p1);
     QBrush b1(Qt::red);
     s1->setBrush(b1);
-    s1->setLabelPen(p1);
+    s1->setLabelBrush(b1);
     QFont f1("Consolas");
     s1->setLabelFont(f1);
 
@@ -182,28 +182,28 @@ void tst_qpieslice::customize()
     // check that customizations persist
     QCOMPARE(s1->pen(), p1);
     QCOMPARE(s1->brush(), b1);
-    QCOMPARE(s1->labelPen(), p1);
+    QCOMPARE(s1->labelBrush(), b1);
     QCOMPARE(s1->labelFont(), f1);
 
     // remove a slice
     series->remove(s2);
     QCOMPARE(s1->pen(), p1);
     QCOMPARE(s1->brush(), b1);
-    QCOMPARE(s1->labelPen(), p1);
+    QCOMPARE(s1->labelBrush(), b1);
     QCOMPARE(s1->labelFont(), f1);
 
     // add a slice
     series->append("slice 4", 4);
     QCOMPARE(s1->pen(), p1);
     QCOMPARE(s1->brush(), b1);
-    QCOMPARE(s1->labelPen(), p1);
+    QCOMPARE(s1->labelBrush(), b1);
     QCOMPARE(s1->labelFont(), f1);
 
     // insert a slice
     series->insert(0, new QPieSlice("slice 5", 5));
     QCOMPARE(s1->pen(), p1);
     QCOMPARE(s1->brush(), b1);
-    QCOMPARE(s1->labelPen(), p1);
+    QCOMPARE(s1->labelBrush(), b1);
     QCOMPARE(s1->labelFont(), f1);
 
     // change theme
@@ -211,7 +211,7 @@ void tst_qpieslice::customize()
     view.chart()->setTheme(QChart::ChartThemeHighContrast);
     QVERIFY(s1->pen() != p1);
     QVERIFY(s1->brush() != b1);
-    QVERIFY(s1->labelPen() != p1);
+    QVERIFY(s1->labelBrush() != b1);
     QVERIFY(s1->labelFont() != f1);
 }
 

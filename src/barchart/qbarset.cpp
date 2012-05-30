@@ -267,25 +267,6 @@ QBrush QBarSet::brush() const
 }
 
 /*!
-    Sets \a pen of the values that are drawn on top of this barset
-*/
-void QBarSet::setLabelPen(const QPen &pen)
-{
-    if(d_ptr->m_labelPen!=pen){
-        d_ptr->m_labelPen = pen;
-        emit d_ptr->updatedBars();
-    }
-}
-
-/*!
-    Returns pen of the values that are drawn on top of this barset
-*/
-QPen QBarSet::labelPen() const
-{
-    return d_ptr->m_labelPen;
-}
-
-/*!
     Sets \a brush of the values that are drawn on top of this barset
 */
 void QBarSet::setLabelBrush(const QBrush &brush)

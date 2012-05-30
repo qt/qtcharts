@@ -60,8 +60,6 @@ private slots:
     void setPen();
     void setBrush_data();
     void setBrush();
-    void setLabelPen_data();
-    void setLabelPen();
     void setLabelBrush_data();
     void setLabelBrush();
     void setLabelFont_data();
@@ -378,22 +376,6 @@ void tst_QBarSet::setBrush()
     m_barset->setBrush(brush);
 
     QVERIFY(m_barset->brush() == brush);
-}
-
-void tst_QBarSet::setLabelPen_data()
-{
-
-}
-
-void tst_QBarSet::setLabelPen()
-{
-    QVERIFY(m_barset->labelPen() == QPen());
-
-    QPen pen;
-    pen.setColor(QColor(128,128,128,128));
-    m_barset->setLabelPen(pen);
-
-    QVERIFY(m_barset->labelPen() == pen);
 }
 
 void tst_QBarSet::setLabelBrush_data()

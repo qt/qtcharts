@@ -19,7 +19,7 @@ public:
 
     void setPen(const QPen &pen, bool themed);
     void setBrush(const QBrush &brush, bool themed);
-    void setLabelPen(const QPen &pen, bool themed);
+    void setLabelBrush(const QBrush &brush, bool themed);
     void setLabelFont(const QFont &font, bool themed);
 
     void setPercentage(qreal percentage);

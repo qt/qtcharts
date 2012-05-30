@@ -39,7 +39,7 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
     Q_PROPERTY(bool exploded READ isExploded WRITE setExploded NOTIFY explodedChanged)
     Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
-    Q_PROPERTY(QPen labelPen READ labelPen WRITE setLabelPen NOTIFY labelPenChanged)
+    Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush NOTIFY labelBrushChanged)
     Q_PROPERTY(QFont labelFont READ labelFont WRITE setLabelFont NOTIFY labelFontChanged)
     Q_PROPERTY(qreal labelArmLengthFactor READ labelArmLengthFactor WRITE setLabelArmLengthFactor)
     Q_PROPERTY(qreal explodeDistanceFactor READ explodeDistanceFactor WRITE setExplodeDistanceFactor)
@@ -70,8 +70,8 @@ public:
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
-    void setLabelPen(const QPen &pen);
-    QPen labelPen() const;
+    void setLabelBrush(const QBrush &brush);
+    QBrush labelBrush() const;
 
     void setLabelFont(const QFont &font);
     QFont labelFont() const;
@@ -93,7 +93,7 @@ Q_SIGNALS:
     void explodedChanged();
     void penChanged();
     void brushChanged();
-    void labelPenChanged();
+    void labelBrushChanged();
     void labelFontChanged();
     void labelArmLengthFactorChanged();
     void explodeDistanceFactorChanged();

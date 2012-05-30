@@ -43,7 +43,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     Label of the slice.
 
-    \sa labelVisible, labelPen, labelFont, labelArmLengthFactor
+    \sa labelVisible, labelBrush, labelFont, labelArmLengthFactor
 */
 
 /*!
@@ -79,7 +79,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     Default is not visible.
 
-    \sa label, labelPen, labelFont, labelArmLengthFactor
+    \sa label, labelBrush, labelFont, labelArmLengthFactor
 */
 
 /*!
@@ -135,7 +135,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QPieSlice::labelPen
+    \property QPieSlice::labelBrush
 
     Pen used to draw label and label arm of the slice.
 
@@ -143,11 +143,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSlice::labelPenChanged()
+    \fn void QPieSlice::labelBrushChanged()
 
     This signal is emitted when the label pen of the slice has changed.
 
-    \sa labelPen
+    \sa labelBrush
 */
 
 /*!
@@ -177,7 +177,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     Default value is 0.15
 
-    \sa label, labelVisible, labelPen, labelFont
+    \sa label, labelVisible, labelBrush, labelFont
 */
 
 /*!
@@ -391,14 +391,14 @@ QBrush QPieSlice::brush() const
     return d_ptr->m_data.m_sliceBrush;
 }
 
-void QPieSlice::setLabelPen(const QPen &pen)
+void QPieSlice::setLabelBrush(const QBrush &brush)
 {
-    d_ptr->setLabelPen(pen, false);
+    d_ptr->setLabelBrush(brush, false);
 }
 
-QPen QPieSlice::labelPen() const
+QBrush QPieSlice::labelBrush() const
 {
-    return d_ptr->m_data.m_labelPen;
+    return d_ptr->m_data.m_labelBrush;
 }
 
 void QPieSlice::setLabelFont(const QFont &font)
@@ -487,12 +487,12 @@ void QPieSlicePrivate::setBrush(const QBrush &brush, bool themed)
     }
 }
 
-void QPieSlicePrivate::setLabelPen(const QPen &pen, bool themed)
+void QPieSlicePrivate::setLabelBrush(const QBrush &brush, bool themed)
 {
-    if (m_data.m_labelPen != pen) {
-        m_data.m_labelPen = pen;
-        m_data.m_labelPen.setThemed(themed);
-        emit q_ptr->labelPenChanged();
+    if (m_data.m_labelBrush != brush) {
+        m_data.m_labelBrush = brush;
+        m_data.m_labelBrush.setThemed(themed);
+        emit q_ptr->labelBrushChanged();
     }
 }
 

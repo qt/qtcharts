@@ -63,9 +63,6 @@ public:
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
-    void setLabelPen(const QPen &pen);
-    QPen labelPen() const;
-
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
 

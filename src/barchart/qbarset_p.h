@@ -57,7 +57,6 @@ public:
     QList<QPointF> m_values;
     QPen m_pen;
     QBrush m_brush;
-    QPen m_labelPen;
     QBrush m_labelBrush;
     QFont m_labelFont;
 

@@ -84,8 +84,8 @@ private:
     QPushButton *m_pen;
     PenTool *m_penTool;
     QPushButton *m_font;
-    QPushButton *m_labelPen;
-    PenTool *m_labelPenTool;
+    QPushButton *m_labelBrush;
+    BrushTool *m_labelBrushTool;
 };
 
 #endif // MAINWIDGET_H
