@@ -187,6 +187,7 @@ void ScatterChartItem::handleUpdated()
 
     setPen(m_series->pen());
     setBrush(m_series->brush());
+    update();
 }
 
 void ScatterChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
