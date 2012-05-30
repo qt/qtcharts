@@ -38,6 +38,7 @@ class DeclarativePieSlice: public QPieSlice
     Q_PROPERTY(QColor color READ color WRITE setColor)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
     Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth)
+    Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor)
 
 public:
     explicit DeclarativePieSlice(QObject *parent = 0);
@@ -47,6 +48,8 @@ public:
     void setBorderColor(QColor color);
     int borderWidth();
     void setBorderWidth(int width);
+    QColor labelColor();
+    void setLabelColor(QColor color);
 };
 
 class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus

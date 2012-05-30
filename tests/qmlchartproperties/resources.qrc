@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/qmlchartproperties/loader.qml</file>
+        <file>qml/qmlchartproperties/main.qml</file>
+        <file>qml/qmlchartproperties/Button.qml</file>
+        <file>qml/qmlchartproperties/PieChart.qml</file>
+        <file>qml/qmlchartproperties/PieEditor.qml</file>
+        <file>qml/qmlchartproperties/LineChart.qml</file>
+        <file>qml/qmlchartproperties/LineEditor.qml</file>
+        <file>qml/qmlchartproperties/SplineChart.qml</file>
+        <file>qml/qmlchartproperties/ScatterChart.qml</file>
+        <file>qml/qmlchartproperties/AreaChart.qml</file>
+        <file>qml/qmlchartproperties/BarChart.qml</file>
+        <file>qml/qmlchartproperties/BarEditor.qml</file>
+    </qresource>
+</RCC>

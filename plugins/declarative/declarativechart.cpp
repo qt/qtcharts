@@ -69,13 +69,12 @@ void DeclarativeChart::componentComplete()
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
 //    qDebug() << "DeclarativeChart::geometryChanged" << newGeometry.width() << newGeometry.height();
-    Q_UNUSED(oldGeometry)
-
     if (newGeometry.isValid()) {
         if (newGeometry.width() > 0 && newGeometry.height() > 0) {
             m_chart->resize(newGeometry.width(), newGeometry.height());
         }
     }
+    QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
 }
 
 void DeclarativeChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

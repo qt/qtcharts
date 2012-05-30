@@ -68,6 +68,18 @@ void DeclarativePieSlice::setBorderWidth(int width)
     setPen(p);
 }
 
+QColor DeclarativePieSlice::labelColor()
+{
+    return labelPen().color();
+}
+
+void DeclarativePieSlice::setLabelColor(QColor color)
+{
+    QPen p = labelPen();
+    p.setColor(color);
+    setLabelPen(p);
+}
+
 DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
     QPieSeries(parent)
 {

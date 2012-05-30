@@ -8,4 +8,5 @@ SUBDIRS += \
     chartwidgettest \
     wavechart \
     gdpbarchart \
-    tablemodelchart
+    tablemodelchart \
+    qmlchartproperties

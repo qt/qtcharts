@@ -37,7 +37,7 @@ Rectangle {
         // For dynamic data we use a custom data model derived from QAbstractiItemModel
         CustomModel {
             id: customModel
-            CustomModelElement { values: [index, "Manufacturer", 1, 2] }
+            CustomModelElement { values: [0, "Manufacturer", 1, 2] }
             CustomModelElement { values: [1, "Volkswagen", 13.5, 12.5] }
             CustomModelElement { values: [2, "Toyota", 10.9, 9.9] }
             CustomModelElement { values: [3, "Ford", 8.6, 7.6] }
