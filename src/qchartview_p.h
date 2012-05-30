@@ -38,12 +38,18 @@ class ChartPresenter;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
+class QChartView;
 
-struct QChartViewPrivate {
+class QChartViewPrivate {
 
-    QChartViewPrivate();
+public:
+    QChartViewPrivate(QChartView *q,QChart *chart = 0);
     ~QChartViewPrivate();
 
+protected:
+    QChartView *q_ptr;
+
+public:
     QGraphicsScene *m_scene;
     QChart *m_chart;
     ChartPresenter *m_presenter;

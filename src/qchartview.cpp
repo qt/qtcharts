@@ -50,22 +50,25 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
+    Constructs a chartView object with parent \a parent.
+*/
+
+QChartView::QChartView(QWidget *parent) :
+    QGraphicsView(parent),
+    d_ptr(new QChartViewPrivate(this))
+{
+
+}
+
+/*!
     Constructs a chartView object with parent \a parent to display a \a chart.
 */
+
 QChartView::QChartView(QChart *chart,QWidget *parent) :
     QGraphicsView(parent),
-    d_ptr(new QChartViewPrivate())
+    d_ptr(new QChartViewPrivate(this,chart))
 {
-    Q_ASSERT(chart);
-    d_ptr->m_scene = new QGraphicsScene(this);
-    d_ptr->m_chart = chart;
-    setFrameShape(QFrame::NoFrame);
-    setBackgroundRole(QPalette::Window);
-    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    setScene(d_ptr->m_scene);
-    d_ptr->m_scene->addItem(chart);
-    setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
 }
 
 
@@ -198,14 +201,22 @@ void QChartView::resizeEvent(QResizeEvent *event)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QChartViewPrivate::QChartViewPrivate():
-m_scene(0),
-m_chart(0),
+QChartViewPrivate::QChartViewPrivate(QChartView *q,QChart* chart):
+q_ptr(q),
+m_scene(new QGraphicsScene(q)),
+m_chart(chart),
 m_presenter(0),
 m_rubberBand(0),
 m_rubberBandFlags(QChartView::NoRubberBand)
 {
-
+    q_ptr->setFrameShape(QFrame::NoFrame);
+    q_ptr->setBackgroundRole(QPalette::Window);
+    q_ptr->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    q_ptr->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    q_ptr->setScene(m_scene);
+    q_ptr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    if(!m_chart) m_chart = new QChart();
+    m_scene->addItem(m_chart);
 }
 
 QChartViewPrivate::~QChartViewPrivate()

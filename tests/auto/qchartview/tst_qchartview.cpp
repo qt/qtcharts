@@ -86,6 +86,12 @@ void tst_QChartView::qchartview()
     QCOMPARE(m_view->rubberBand(), QChartView::NoRubberBand);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
+
+    delete(new QChartView());
+
+    QChartView view;
+    QVERIFY(view.chart());
+
 }
 
 void tst_QChartView::chart_data()
