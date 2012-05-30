@@ -31,7 +31,7 @@ class QRubberBand;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-struct QChartViewPrivate;
+class QChartViewPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QChartView : public QGraphicsView
 {
