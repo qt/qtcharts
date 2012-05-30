@@ -30,6 +30,7 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QPieSlice*)
+Q_DECLARE_METATYPE(QList<QPieSlice*>)
 
 class tst_qpieseries : public QObject
 {
@@ -60,6 +61,7 @@ private:
 void tst_qpieseries::initTestCase()
 {
     qRegisterMetaType<QPieSlice*>("QPieSlice*");
+    qRegisterMetaType<QList<QPieSlice*> >("QList<QPieSlice*>");
 }
 
 void tst_qpieseries::cleanupTestCase()
@@ -149,6 +151,7 @@ void tst_qpieseries::properties()
 void tst_qpieseries::append()
 {
     QPieSeries s;
+    QSignalSpy addedSpy(&s, SIGNAL(added(QList<QPieSlice*>)));
 
     // append pointer
     QPieSlice *slice1 = 0;
@@ -157,6 +160,10 @@ void tst_qpieseries::append()
     QVERIFY(s.append(slice1));
     QVERIFY(!s.append(slice1));
     QCOMPARE(s.count(), 1);
+    QCOMPARE(addedSpy.count(), 1);
+    QList<QPieSlice*> added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(0).at(0));
+    QCOMPARE(added.count(), 1);
+    QCOMPARE(added.first(), slice1);
 
     // append pointer list
     QList<QPieSlice *> list;
@@ -169,11 +176,20 @@ void tst_qpieseries::append()
     QVERIFY(s.append(list));
     QVERIFY(!s.append(list));
     QCOMPARE(s.count(), 3);
+    QCOMPARE(addedSpy.count(), 2);
+    added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(1).at(0));
+    QCOMPARE(added.count(), 2);
+    QCOMPARE(added, list);
 
     // append operator
-    s << new QPieSlice("slice 4", 4);
+    QPieSlice *slice4 = new QPieSlice("slice 4", 4);
+    s << slice4;
     s << slice1; // fails because already added
     QCOMPARE(s.count(), 4);
+    QCOMPARE(addedSpy.count(), 3);
+    added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(2).at(0));
+    QCOMPARE(added.count(), 1);
+    QCOMPARE(added.first(), slice4);
 
     // append with params
     QPieSlice *slice5 = s.append("slice 5", 5);
@@ -181,6 +197,10 @@ void tst_qpieseries::append()
     QCOMPARE(slice5->value(), 5.0);
     QCOMPARE(slice5->label(), QString("slice 5"));
     QCOMPARE(s.count(), 5);
+    QCOMPARE(addedSpy.count(), 4);
+    added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(3).at(0));
+    QCOMPARE(added.count(), 1);
+    QCOMPARE(added.first(), slice5);
 
     // check slices
     QVERIFY(!s.isEmpty());
@@ -193,6 +213,7 @@ void tst_qpieseries::append()
 void tst_qpieseries::insert()
 {
     QPieSeries s;
+    QSignalSpy addedSpy(&s, SIGNAL(added(QList<QPieSlice*>)));
 
     // insert one slice
     QPieSlice *slice1 = 0;
@@ -203,15 +224,31 @@ void tst_qpieseries::insert()
     QVERIFY(s.insert(0, slice1));
     QVERIFY(!s.insert(0, slice1));
     QCOMPARE(s.count(), 1);
+    QCOMPARE(addedSpy.count(), 1);
+    QList<QPieSlice*> added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(0).at(0));
+    QCOMPARE(added.count(), 1);
+    QCOMPARE(added.first(), slice1);
 
     // add some more slices
-    s.append("slice 2", 2);
-    s.append("slice 4", 4);
+    QPieSlice *slice2 = s.append("slice 2", 2);
+    QPieSlice *slice4 = s.append("slice 4", 4);
     QCOMPARE(s.count(), 3);
+    QCOMPARE(addedSpy.count(), 3);
+    added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(1).at(0));
+    QCOMPARE(added.count(), 1);
+    QCOMPARE(added.first(), slice2);
+    added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(2).at(0));
+    QCOMPARE(added.count(), 1);
+    QCOMPARE(added.first(), slice4);
 
     // insert between slices
-    s.insert(2, new QPieSlice("slice 3", 3));
+    QPieSlice *slice3 = new QPieSlice("slice 3", 3);
+    s.insert(2, slice3);
     QCOMPARE(s.count(), 4);
+    QCOMPARE(addedSpy.count(), 4);
+    added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(3).at(0));
+    QCOMPARE(added.count(), 1);
+    QCOMPARE(added.first(), slice3);
 
     // check slices
     for (int i=0; i<s.count(); i++) {
@@ -223,6 +260,7 @@ void tst_qpieseries::insert()
 void tst_qpieseries::remove()
 {
     QPieSeries s;
+    QSignalSpy removedSpy(&s, SIGNAL(removed(QList<QPieSlice*>)));
 
     // add some slices
     QPieSlice *slice1 = s.append("slice 1", 1);
@@ -241,12 +279,21 @@ void tst_qpieseries::remove()
     QVERIFY(!s.remove(slice1));
     QCOMPARE(s.count(), 2);
     QCOMPARE(s.slices().at(0)->label(), slice2->label());
+    QCOMPARE(removedSpy.count(), 1);
+    QList<QPieSlice*> removed = qvariant_cast<QList<QPieSlice*> >(removedSpy.at(0).at(0));
+    QCOMPARE(removed.count(), 1);
+    QCOMPARE(removed.first(), slice1);
 
     // remove all
     s.clear();
     QVERIFY(s.isEmpty());
     QVERIFY(s.slices().isEmpty());
     QCOMPARE(s.count(), 0);
+    QCOMPARE(removedSpy.count(), 2);
+    removed = qvariant_cast<QList<QPieSlice*> >(removedSpy.at(1).at(0));
+    QCOMPARE(removed.count(), 2);
+    QCOMPARE(removed.first(), slice2);
+    QCOMPARE(removed.last(), slice3);
 
     // check that slices were actually destroyed
     TRY_COMPARE(spy1.count(), 1);
