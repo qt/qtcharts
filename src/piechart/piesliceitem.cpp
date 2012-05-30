@@ -27,6 +27,7 @@
 #include <qmath.h>
 #include <QGraphicsSceneEvent>
 #include <QTime>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -78,12 +79,14 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
     painter->restore();
 
     if (m_data.m_isLabelVisible) {
+        painter->save();
         painter->setClipRect(parentItem()->boundingRect());
         painter->setPen(m_data.m_labelPen);
         painter->drawPath(m_labelArmPath);
 		// the pen color will affect the font color as well
         painter->setFont(m_data.m_labelFont);
         painter->drawText(m_labelTextRect.bottomLeft(), m_data.m_labelText);
+        painter->restore();
     }
 }
 
