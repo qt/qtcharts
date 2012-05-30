@@ -81,6 +81,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
                           ,yPos - barHeight/2 - label->boundingRect().height()/2);
             label->setFont(barSet->labelFont());
+            label->setBrush(barSet->labelBrush());
             itemIndex++;
             yPos -= barHeight;
         }
