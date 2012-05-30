@@ -318,11 +318,14 @@ void tst_QXYSeries::pen()
 
     m_chart->addSeries(m_series);
 
-    if(pen!=QPen()) QCOMPARE(m_series->pen(), pen);
+    if (pen != QPen())
+        QCOMPARE(m_series->pen(), pen);
 
     m_chart->setTheme(QChart::ChartThemeDark);
 
-    if(pen!=QPen()) QCOMPARE(m_series->pen(), pen);
+    // setting a theme will overwrite all customizations
+    if (pen != QPen())
+        QVERIFY(m_series->pen() != pen);
 }
 
 void tst_QXYSeries::pointsVisible_data()
