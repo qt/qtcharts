@@ -82,10 +82,7 @@ QAbstractSeries::SeriesType QSplineSeries::type() const
 
 QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(q)
 {
-//    QObject::connect(this,SIGNAL(pointAdded(int)), this, SLOT(updateControlPoints()));
-//    QObject::connect(this,SIGNAL(pointRemoved(int)), this, SLOT(updateControlPoints()));
-//    QObject::connect(this,SIGNAL(pointReplaced(int)), this, SLOT(updateControlPoints()));
-};
+}
 
 /*!
   Calculates control points which are needed by QPainterPath.cubicTo function to draw the cubic Bezier cureve between two points.
