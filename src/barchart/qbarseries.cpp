@@ -237,7 +237,7 @@ void QBarSeries::setLabelsVisible(bool visible)
     Q_D(QBarSeries);
     if (d->m_labelsVisible != visible) {
         d->m_labelsVisible = visible;
-        emit d->updatedBars();
+        emit d->labelsVisibleChanged(visible);
     }
 }
 

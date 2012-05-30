@@ -48,6 +48,42 @@ void DeclarativeBarSet::setValues(QVariantList values)
     }
 }
 
+QColor DeclarativeBarSet::color()
+{
+    return brush().color();
+}
+
+void DeclarativeBarSet::setColor(QColor color)
+{
+    QBrush b = brush();
+    b.setColor(color);
+    setBrush(b);
+}
+
+QColor DeclarativeBarSet::borderColor()
+{
+    return pen().color();
+}
+
+void DeclarativeBarSet::setBorderColor(QColor color)
+{
+    QPen p = pen();
+    p.setColor(color);
+    setPen(p);
+}
+
+QColor DeclarativeBarSet::labelColor()
+{
+    return labelBrush().color();
+}
+
+void DeclarativeBarSet::setLabelColor(QColor color)
+{
+    QBrush b = labelBrush();
+    b.setColor(color);
+    setLabelBrush(b);
+}
+
 DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
     QBarSeries(parent)
 {
@@ -60,8 +96,8 @@ void DeclarativeBarSeries::classBegin()
 void DeclarativeBarSeries::componentComplete()
 {
     foreach(QObject *child, children()) {
-        if (qobject_cast<QBarSet *>(child)) {
-            QBarSeries::append(qobject_cast<QBarSet *>(child));
+        if (qobject_cast<DeclarativeBarSet *>(child)) {
+            QBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
         }
     }
 }
@@ -81,6 +117,15 @@ QStringList DeclarativeBarSeries::barCategories()
     return categories();
 }
 
+DeclarativeBarSet *DeclarativeBarSeries::at(int index)
+{
+    QList<QBarSet*> setList = barSets();
+    if (index < setList.count())
+        return qobject_cast<DeclarativeBarSet *>(setList[index]);
+
+    return 0;
+}
+
 DeclarativeGroupedBarSeries::DeclarativeGroupedBarSeries(QDeclarativeItem *parent) :
     QGroupedBarSeries(parent)
 {
@@ -93,8 +138,8 @@ void DeclarativeGroupedBarSeries::classBegin()
 void DeclarativeGroupedBarSeries::componentComplete()
 {
     foreach(QObject *child, children()) {
-        if (qobject_cast<QBarSet *>(child)) {
-            QBarSeries::append(qobject_cast<QBarSet *>(child));
+        if (qobject_cast<DeclarativeBarSet *>(child)) {
+            QBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
         }
     }
 }
@@ -112,6 +157,15 @@ void DeclarativeGroupedBarSeries::setBarCategories(QStringList categories)
 QStringList DeclarativeGroupedBarSeries::barCategories()
 {
     return categories();
+}
+
+DeclarativeBarSet *DeclarativeGroupedBarSeries::at(int index)
+{
+    QList<QBarSet*> setList = barSets();
+    if (index < setList.count())
+        return qobject_cast<DeclarativeBarSet *>(setList[index]);
+
+    return 0;
 }
 
 #include "moc_declarativebarseries.cpp"

@@ -27,11 +27,19 @@ Flow {
     property variant series
 
     Button {
-        text: "color"
-        onClicked: series.color = main.nextColor();
+        text: "set 1 color"
+        onClicked: series.at(0).color = main.nextColor();
     }
     Button {
-        text: "points visible"
-        onClicked: series.pointsVisible = !series.pointsVisible
+        text: "set 1 border color"
+        onClicked: series.at(0).borderColor = main.nextColor();
+    }
+    Button {
+        text: "set 1 label color"
+        onClicked: series.at(0).labelColor = main.nextColor();
+    }
+    Button {
+        text: "labels visible"
+        onClicked: series.labelsVisible = !series.labelsVisible;
     }
 }

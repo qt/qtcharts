@@ -35,12 +35,20 @@ class DeclarativeBarSet : public QBarSet
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
-    Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QColor color READ color WRITE setColor)
+    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
+    Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor)
 
 public:
     explicit DeclarativeBarSet(QObject *parent = 0);
     QVariantList values();
     void setValues(QVariantList values);
+    QColor color();
+    void setColor(QColor color);
+    QColor borderColor();
+    void setBorderColor(QColor color);
+    QColor labelColor();
+    void setLabelColor(QColor color);
 
 public: // From QBarSet
     Q_INVOKABLE void append(qreal value) { QBarSet::append(value); }
@@ -62,6 +70,8 @@ public:
     void setBarCategories(QStringList categories);
     QStringList barCategories();
 
+    Q_INVOKABLE DeclarativeBarSet *at(int index);
+
 public: // from QDeclarativeParserStatus
     void classBegin();
     void componentComplete();
@@ -82,13 +92,14 @@ public:
     explicit DeclarativeGroupedBarSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<DeclarativeBarSet> initialBarSets();
 
+    void setBarCategories(QStringList categories);
+    QStringList barCategories();
+
+    Q_INVOKABLE DeclarativeBarSet *at(int index);
+
 public: // from QDeclarativeParserStatus
     void classBegin();
     void componentComplete();
-
-public:
-    void setBarCategories(QStringList categories);
-    QStringList barCategories();
 
 public Q_SLOTS:
     static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> * /*list*/, DeclarativeBarSet * /*element*/) {}
