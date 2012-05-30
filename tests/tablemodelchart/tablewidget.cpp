@@ -27,6 +27,7 @@
 #include <QSplineSeries>
 #include <QScatterSeries>
 #include <QVXYModelMapper>
+#include <QHXYModelMapper>
 #include "customtablemodel.h"
 #include <QPieSeries>
 #include <QVPieModelMapper>
@@ -135,7 +136,7 @@ TableWidget::TableWidget(QWidget *parent)
     connect(m_pieRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
     connect(m_areaRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
     connect(m_barRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
-    m_barRadioButton->setChecked(true);
+    m_lineRadioButton->setChecked(true);
 
     // radio buttons layout
     QVBoxLayout* radioLayout = new QVBoxLayout;
@@ -240,13 +241,21 @@ void TableWidget::updateChartType(bool toggle)
             // series 1
             m_series = new QLineSeries;
 
-            m_mapper = new QVXYModelMapper;
+            m_mapper = new QHXYModelMapper;
             m_mapper->setModel(m_model);
             m_mapper->setSeries(m_series);
-            m_mapper->setXColumn(0);
-            m_mapper->setYColumn(1);
+            m_mapper->setXRow(0);
+            m_mapper->setYRow(1);
             m_mapper->setFirst(3);
             m_mapper->setCount(4);
+
+//            m_mapper = new QVXYModelMapper;
+//            m_mapper->setModel(m_model);
+//            m_mapper->setSeries(m_series);
+//            m_mapper->setXColumn(0);
+//            m_mapper->setYColumn(1);
+//            m_mapper->setFirst(3);
+//            m_mapper->setCount(4);
 
             //            m_series->setModelMapping(0,1, Qt::Vertical);
             //            m_series->setModelMappingRange(3, 4);
@@ -293,13 +302,13 @@ void TableWidget::updateChartType(bool toggle)
             m_series = new QSplineSeries;
             //            m_series->setModel(m_model);
 
-            m_mapper = new QVXYModelMapper;
-            m_mapper->setSeries(m_series);
-            m_mapper->setModel(m_model);
-            m_mapper->setXColumn(0);
-            m_mapper->setYColumn(1);
-            m_mapper->setFirst(0);
-            m_mapper->setCount(-1);
+//            m_mapper = new QVXYModelMapper;
+//            m_mapper->setSeries(m_series);
+//            m_mapper->setModel(m_model);
+//            m_mapper->setXColumn(0);
+//            m_mapper->setYColumn(1);
+//            m_mapper->setFirst(0);
+//            m_mapper->setCount(-1);
 
             //            m_series->setModelMapper(mapper);
 
@@ -345,13 +354,13 @@ void TableWidget::updateChartType(bool toggle)
             // series 1
             m_series = new QScatterSeries;
 
-            m_mapper = new QVXYModelMapper;
-            m_mapper->setSeries(m_series);
-            m_mapper->setModel(m_model);
-            m_mapper->setXColumn(0);
-            m_mapper->setYColumn(1);
-            m_mapper->setFirst(0);
-            m_mapper->setCount(-1);
+//            m_mapper = new QVXYModelMapper;
+//            m_mapper->setSeries(m_series);
+//            m_mapper->setModel(m_model);
+//            m_mapper->setXColumn(0);
+//            m_mapper->setYColumn(1);
+//            m_mapper->setFirst(0);
+//            m_mapper->setCount(-1);
 
             m_chart->addSeries(m_series);
             seriesColorHex = "#" + QString::number(m_series->brush().color().rgb(), 16).right(6).toUpper();

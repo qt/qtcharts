@@ -5,6 +5,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QHXYModelMapper::QHXYModelMapper(QObject *parent) :
     QXYModelMapper(parent)
 {
+    QXYModelMapper::setOrientation(Qt::Horizontal);
 }
 
 int QHXYModelMapper::xRow() const

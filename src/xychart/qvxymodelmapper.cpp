@@ -5,6 +5,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QVXYModelMapper::QVXYModelMapper(QObject *parent) :
     QXYModelMapper(parent)
 {
+    QXYModelMapper::setOrientation(Qt::Vertical);
 }
 
 int QVXYModelMapper::xColumn() const
