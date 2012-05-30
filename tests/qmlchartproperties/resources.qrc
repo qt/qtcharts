@@ -12,5 +12,7 @@
         <file>qml/qmlchartproperties/AreaChart.qml</file>
         <file>qml/qmlchartproperties/BarChart.qml</file>
         <file>qml/qmlchartproperties/BarEditor.qml</file>
+        <file>qml/qmlchartproperties/ScatterEditor.qml</file>
+        <file>qml/qmlchartproperties/AreaEditor.qml</file>
     </qresource>
 </RCC>

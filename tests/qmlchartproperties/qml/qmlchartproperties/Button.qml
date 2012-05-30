@@ -22,8 +22,8 @@ import QtQuick 1.0
 
 Rectangle {
     id: button
-    height: 45
-    width: 165
+    height: 25
+    width: 110
     color: "#afafaf"
     radius: 5
 

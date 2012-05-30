@@ -25,6 +25,7 @@ import QtCommercial.Chart 1.0
 Flow {
     id: flow
     spacing: 5
+    flow: Flow.TopToBottom
     property variant series
 
     Button {

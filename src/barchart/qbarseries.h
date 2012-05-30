@@ -36,7 +36,9 @@ class QBarSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
 {
     Q_OBJECT
+    Q_PROPERTY(qreal barMargin READ barMargin WRITE setBarMargin)
     Q_PROPERTY(int count READ barsetCount) // TODO: categoryCount to be removed
+    Q_PROPERTY(bool visible READ isVisible WRITE setVisible)
     Q_PROPERTY(bool labelsVisible READ isLabelsVisible WRITE setLabelsVisible)
 
 public:

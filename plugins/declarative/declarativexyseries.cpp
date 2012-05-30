@@ -58,7 +58,6 @@ void DeclarativeXySeries::componentComplete()
     }
 }
 
-
 QColor DeclarativeXySeries::penColor()
 {
     // All the inherited objects must be of type QXYSeries, so it is safe to cast

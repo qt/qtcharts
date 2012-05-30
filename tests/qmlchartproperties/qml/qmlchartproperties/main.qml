@@ -48,10 +48,10 @@ Rectangle {
             editorLoader.source = "LineEditor.qml";
         } else if (viewNumber == 3) {
             chartLoader.source = "ScatterChart.qml";
-            editorLoader.source = "LineEditor.qml"; // TODO: scatter specific properties
+            editorLoader.source = "ScatterEditor.qml";
         } else if (viewNumber == 4) {
             chartLoader.source = "AreaChart.qml";
-            editorLoader.source = "LineEditor.qml"; // TODO: area specific properties
+            editorLoader.source = "AreaEditor.qml";
         } else if (viewNumber == 5) {
             chartLoader.source = "BarChart.qml";
             editorLoader.source = "BarEditor.qml";
@@ -80,7 +80,7 @@ Rectangle {
 
         Loader {
             id: editorLoader
-            width: 150
+            width: 230
             height: parent.height
             source: "PieEditor.qml"
             onStatusChanged: {
@@ -90,15 +90,6 @@ Rectangle {
             }
         }
     }
-
-//    Loader {
-//        id: loader
-//        anchors.top: parent.top
-//        anchors.bottom: buttonRow.top
-//        anchors.left: parent.left
-//        anchors.right: parent.right
-//        source: "View" + viewNumber + ".qml";
-//    }
 
     Row {
         id: buttonRow

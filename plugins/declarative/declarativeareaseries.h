@@ -32,18 +32,19 @@ class DeclarativeAreaSeries : public QAreaSeries
     Q_OBJECT
     Q_PROPERTY(DeclarativeLineSeries *upperSeries READ upperSeries WRITE setUpperSeries)
     Q_PROPERTY(DeclarativeLineSeries *lowerSeries READ lowerSeries WRITE setLowerSeries)
+    Q_PROPERTY(QColor color READ brushColor WRITE setBrushColor)
+    Q_PROPERTY(QColor borderColor READ penColor WRITE setPenColor)
 
 public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
-
-public:
-    QXYModelMapper* upperModelMapper() const;
-    QXYModelMapper* lowerModelMapper() const;
-public:
     void setUpperSeries(DeclarativeLineSeries* series);
     DeclarativeLineSeries* upperSeries() const;
     void setLowerSeries(DeclarativeLineSeries* series);
     DeclarativeLineSeries* lowerSeries() const;
+    QColor penColor() const;
+    void setPenColor(QColor color);
+    QColor brushColor() const;
+    void setBrushColor(QColor color);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

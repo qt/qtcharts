@@ -24,6 +24,7 @@ import QtCommercial.Chart 1.0
 Flow {
     id: flow
     spacing: 5
+    flow: Flow.TopToBottom
     property variant series
 
     Button {
@@ -47,11 +48,67 @@ Flow {
         onClicked: series.at(0).labelVisible = !series.at(0).labelVisible;
     }
     Button {
+        text: "slice label arm len +"
+        onClicked: series.at(0).labelArmLengthFactor += 0.1;
+    }
+    Button {
+        text: "slice label arm len -"
+        onClicked: series.at(0).labelArmLengthFactor -= 0.1;
+    }
+    Button {
         text: "slice label color"
         onClicked: series.at(0).labelColor = main.nextColor();
     }
     Button {
         text: "slice exploded"
         onClicked: series.at(0).exploded = !series.at(0).exploded;
+    }
+    Button {
+        text: "slice explode dist +"
+        onClicked: series.at(0).explodeDistanceFactor += 0.1;
+    }
+    Button {
+        text: "slice explode dist -"
+        onClicked: series.at(0).explodeDistanceFactor -= 0.1;
+    }
+    Button {
+        text: "series hpos +"
+        onClicked: series.horizontalPosition += 0.1;
+    }
+    Button {
+        text: "series hpos -"
+        onClicked: series.horizontalPosition -= 0.1;
+    }
+    Button {
+        text: "series vpos +"
+        onClicked: series.verticalPosition += 0.1;
+    }
+    Button {
+        text: "series vpos -"
+        onClicked: series.verticalPosition -= 0.1;
+    }
+    Button {
+        text: "series size +"
+        onClicked: series.size += 0.1;
+    }
+    Button {
+        text: "series size -"
+        onClicked: series.size -= 0.1;
+    }
+    Button {
+        text: "series start angle +"
+        onClicked: series.startAngle += 0.1;
+    }
+    Button {
+        text: "series start angle -"
+        onClicked: series.startAngle -= 0.1;
+    }
+    Button {
+        text: "series end angle +"
+        onClicked: series.endAngle += 0.1;
+    }
+    Button {
+        text: "series end angle -"
+        onClicked: series.endAngle -= 0.1;
     }
 }

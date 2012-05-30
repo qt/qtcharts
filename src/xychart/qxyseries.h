@@ -37,6 +37,7 @@ class QTCOMMERCIALCHART_EXPORT QXYSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(bool pointsVisible READ pointsVisible WRITE setPointsVisible)
+    Q_PROPERTY(int count READ count)
 
 protected:
     explicit QXYSeries(QXYSeriesPrivate &d,QObject *parent = 0);

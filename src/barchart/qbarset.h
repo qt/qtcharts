@@ -33,6 +33,10 @@ class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName)
+    Q_PROPERTY(QPen pen READ pen WRITE setPen)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush)
+    Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush)
+    Q_PROPERTY(QFont labelFont READ labelFont WRITE setLabelFont)
 
 public:
     explicit QBarSet(const QString name, QObject *parent = 0);

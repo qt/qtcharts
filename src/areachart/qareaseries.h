@@ -33,6 +33,7 @@ class QAreaSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QAbstractSeries
 {
     Q_OBJECT
+
 public:
     explicit QAreaSeries(QObject *parent = 0);
     explicit QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries = 0);

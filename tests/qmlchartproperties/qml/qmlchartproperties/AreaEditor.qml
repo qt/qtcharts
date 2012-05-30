@@ -21,6 +21,7 @@
 import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
+
 Flow {
     id: flow
     spacing: 5
@@ -28,39 +29,27 @@ Flow {
     property variant series
 
     Button {
-        text: "set 1 color"
-        onClicked: series.at(0).color = main.nextColor();
+        text: "color"
+        onClicked: series.color = main.nextColor();
     }
     Button {
-        text: "set 1 border color"
-        onClicked: series.at(0).borderColor = main.nextColor();
+        text: "borderColor"
+        onClicked: series.borderColor = main.nextColor();
     }
     Button {
-        text: "set 1 label color"
-        onClicked: series.at(0).labelColor = main.nextColor();
+        text: "upper color"
+        onClicked: series.upperSeries.color = main.nextColor();
     }
     Button {
-        text: "visible"
-        onClicked: series.visible = !series.visible;
+        text: "lower color"
+        onClicked: series.lowerSeries.color = main.nextColor();
     }
     Button {
-        text: "labels visible"
-        onClicked: series.labelsVisible = !series.labelsVisible;
+        text: "upper points visible"
+        onClicked: series.upperSeries.pointsVisible = !series.pointsVisible;
     }
     Button {
-        text: "bar margin +"
-        onClicked: series.barMargin += 0.1;
-    }
-    Button {
-        text: "bar margin -"
-        onClicked: series.barMargin -= 0.1;
-    }
-    Button {
-        text: "set 1 font size +"
-        onClicked: series.at(0).labelFont.pixelSize += 1;
-    }
-    Button {
-        text: "set 1 font size -"
-        onClicked: series.at(0).labelFont.pixelSize -= 1;
+        text: "lower points visible"
+        onClicked: series.lowerSeries.pointsVisible = !series.pointsVisible;
     }
 }
