@@ -107,12 +107,19 @@ void QBarSeries::setCategories(QBarCategories categories)
     emit d->categoriesUpdated();
 }
 
+/*!
+    Sets the margin around bars. Parameter \a margin is from 0 to 1 and represents
+    percentage of margin compared to bars
+*/
 void QBarSeries::setBarMargin(qreal margin)
 {
     Q_D(QBarSeries);
     d->setBarMargin(margin);
 }
 
+/*!
+    Returns the margin around bars
+*/
 qreal QBarSeries::barMargin() const
 {
     Q_D(const QBarSeries);
@@ -204,12 +211,18 @@ QBarCategories QBarSeries::categories() const
     return d->categories();
 }
 
+/*!
+    Sets the visibility of series to \a visible
+*/
 void QBarSeries::setVisible(bool visible)
 {
     Q_D(QBarSeries);
     d->setVisible(visible);
 }
 
+/*!
+    Returns the visibility of series
+*/
 bool QBarSeries::isVisible() const
 {
     Q_D(const QBarSeries);
@@ -228,6 +241,9 @@ void QBarSeries::setLabelsVisible(bool visible)
     }
 }
 
+/*!
+    Returns the visibility of labels
+*/
 bool QBarSeries::isLabelsVisible() const
 {
     Q_D(const QBarSeries);
