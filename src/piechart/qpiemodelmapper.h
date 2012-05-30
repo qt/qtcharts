@@ -42,6 +42,7 @@ class QTCOMMERCIALCHART_EXPORT QPieModelMapper : public QObject
 
 protected:
     QPieModelMapper(QObject *parent = 0);
+    ~QPieModelMapper();
 
 public:
     QAbstractItemModel* model() const;

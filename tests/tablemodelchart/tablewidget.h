@@ -27,6 +27,7 @@
 //#include "qxyseries.h"
 #include <QPieSeries>
 #include <QVPieModelMapper>
+#include <QVXYModelMapper>
 
 class CustomTableModel;
 class QTableView;
@@ -61,6 +62,7 @@ public:
     QChartView* m_chartView;
     QChart* m_chart;
     QXYSeries* m_series;
+    QVXYModelMapper *m_mapper;
     CustomTableModel* m_model;
     QTableView* m_tableView;
     QRadioButton* m_lineRadioButton;

@@ -37,6 +37,7 @@ public:
 
 protected:
     explicit QXYModelMapper(QObject *parent = 0);
+    ~QXYModelMapper();
 
     Qt::Orientation orientation() const;
     void setOrientation(Qt::Orientation orientation);

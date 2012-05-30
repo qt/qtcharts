@@ -12,6 +12,12 @@ QPieModelMapper::QPieModelMapper(QObject *parent) :
 {
 }
 
+QPieModelMapper::~QPieModelMapper()
+{
+//    Q_D(QPieModelMapper);
+//    disconnect(d->m_model, 0, d, 0);
+}
+
 QAbstractItemModel* QPieModelMapper::model() const
 {
     Q_D(const QPieModelMapper);

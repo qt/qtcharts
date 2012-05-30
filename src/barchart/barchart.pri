@@ -12,7 +12,9 @@ SOURCES += \
     $$PWD/qstackedbarseries.cpp \
     $$PWD/qgroupedbarseries.cpp \
     $$PWD/stackedbarchartitem.cpp \
-    $$PWD/qbarmodelmapper.cpp
+    $$PWD/qbarmodelmapper.cpp \
+    $$PWD/qvbarmodelmapper.cpp \
+    $$PWD/qhbarmodelmapper.cpp
  
 PRIVATE_HEADERS += \
     $$PWD/bar_p.h \
@@ -33,4 +35,6 @@ PUBLIC_HEADERS += \
     $$PWD/qpercentbarseries.h \      
     $$PWD/qstackedbarseries.h \
     $$PWD/qgroupedbarseries.h \
-    $$PWD/qbarmodelmapper.h
+    $$PWD/qbarmodelmapper.h \
+    $$PWD/qvbarmodelmapper.h \
+    $$PWD/qhbarmodelmapper.h

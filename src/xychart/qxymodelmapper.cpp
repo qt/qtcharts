@@ -11,6 +11,13 @@ QXYModelMapper::QXYModelMapper(QObject *parent):
 {
 }
 
+QXYModelMapper::~QXYModelMapper()
+{
+    Q_D(QXYModelMapper);
+    disconnect(d->m_model, 0, d, 0);
+//    disconnect(d->m_series, 0, d, 0);
+}
+
 QAbstractItemModel* QXYModelMapper::model() const
 {
     Q_D(const QXYModelMapper);
@@ -360,9 +367,9 @@ void QXYModelMapperPrivate::removeData(int start, int end)
     if (m_count != -1 && start >= m_first + m_count) {
         return;
     } else {
-        int toRemove = qMin(m_series->points().size(), removedCount);     // first find how many items can actually be removed
+        int toRemove = qMin(m_series->count(), removedCount);     // first find how many items can actually be removed
         int first = qMax(start, m_first);    // get the index of the first item that will be removed.
-        int last = qMin(first + toRemove - 1, m_series->points().size() + m_first - 1);    // get the index of the last item that will be removed.
+        int last = qMin(first + toRemove - 1, m_series->count() + m_first - 1);    // get the index of the last item that will be removed.
         for (int i = last; i >= first; i--) {
             m_series->remove(m_series->points().at(i - m_first));
         }
@@ -370,13 +377,13 @@ void QXYModelMapperPrivate::removeData(int start, int end)
         if (m_count != -1) {
             int itemsAvailable;     // check how many are available to be added
             if (m_orientation == Qt::Vertical)
-                itemsAvailable = m_model->rowCount() - m_first - m_series->points().size();
+                itemsAvailable = m_model->rowCount() - m_first - m_series->count();
             else
-                itemsAvailable = m_model->columnCount() - m_first - m_series->points().size();
-            int toBeAdded = qMin(itemsAvailable, m_count - m_series->points().size());     // add not more items than there is space left to be filled.
-            int currentSize = m_series->points().size();
+                itemsAvailable = m_model->columnCount() - m_first - m_series->count();
+            int toBeAdded = qMin(itemsAvailable, m_count - m_series->count());     // add not more items than there is space left to be filled.
+            int currentSize = m_series->count();
             if (toBeAdded > 0)
-                for (int i = m_series->points().size(); i < currentSize + toBeAdded; i++) {
+                for (int i = m_series->count(); i < currentSize + toBeAdded; i++) {
                     QPointF point;
                     point.setX(m_model->data(xModelIndex(i), Qt::DisplayRole).toDouble());
                     point.setY(m_model->data(yModelIndex(i), Qt::DisplayRole).toDouble());
