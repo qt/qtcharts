@@ -43,7 +43,7 @@ class QTCOMMERCIALCHART_AUTOTEST_EXPORT ChartDataSet : public QObject
 {
     Q_OBJECT
 public:
-    ChartDataSet(QObject* parent=0);
+    ChartDataSet(QChart* parent=0);
     virtual ~ChartDataSet();
 
     void addSeries(QAbstractSeries* series,QAxis *axisY = 0);

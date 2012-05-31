@@ -203,10 +203,12 @@ void tst_QChart::addSeries()
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
+    QVERIFY(!series->chart());
     m_chart->addSeries(series,axis);
+    QVERIFY(series->chart() == m_chart);
     QCOMPARE(m_chart->axisY(series),axis);
     m_chart->removeSeries(series);
-
+    QVERIFY(!series->chart());
 }
 
 void tst_QChart::animationOptions_data()
@@ -362,6 +364,9 @@ void tst_QChart::removeAllSeries()
     QLineSeries* series0 = new QLineSeries(this);
     QLineSeries* series1 = new QLineSeries(this);
     QLineSeries* series2 = new QLineSeries(this);
+    QSignalSpy deleteSpy1(series0, SIGNAL(destroyed()));
+    QSignalSpy deleteSpy2(series1, SIGNAL(destroyed()));
+    QSignalSpy deleteSpy3(series2, SIGNAL(destroyed()));
 
     m_chart->addSeries(series0);
     m_chart->addSeries(series1);
@@ -374,10 +379,12 @@ void tst_QChart::removeAllSeries()
     QVERIFY(m_chart->axisY(series2)!=0);
 
     m_chart->removeAllSeries();
-
     QVERIFY(m_chart->axisY(series0)==0);
     QVERIFY(m_chart->axisY(series1)==0);
     QVERIFY(m_chart->axisY(series2)==0);
+    QCOMPARE(deleteSpy1.count(), 1);
+    QCOMPARE(deleteSpy2.count(), 1);
+    QCOMPARE(deleteSpy3.count(), 1);
 }
 
 void tst_QChart::removeSeries_data()
@@ -389,6 +396,7 @@ void tst_QChart::removeSeries()
 {
     QFETCH(QAbstractSeries *, series);
     QFETCH(QAxis *, axis);
+    QSignalSpy deleteSpy(series, SIGNAL(destroyed()));
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
@@ -396,6 +404,7 @@ void tst_QChart::removeSeries()
     QCOMPARE(m_chart->axisY(series),axis);
     m_chart->removeSeries(series);
     QVERIFY(m_chart->axisY(series)==0);
+    QCOMPARE(deleteSpy.count(), 0);
 }
 
 void tst_QChart::scrollDown_data()

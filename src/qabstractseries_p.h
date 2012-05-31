@@ -54,6 +54,7 @@ public:
 
 protected:
     QAbstractSeries *q_ptr;
+    QChart *m_chart;
     ChartDataSet *m_dataset;
     QString m_name;
 

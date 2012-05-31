@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "chartdataset_p.h"
+#include "qchart.h"
 #include "qaxis.h"
 #include "qaxis_p.h"
 #include "qabstractseries_p.h"
@@ -29,7 +30,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartDataSet::ChartDataSet(QObject *parent):QObject(parent),
+ChartDataSet::ChartDataSet(QChart *parent):QObject(parent),
     m_axisX(new QAxis(this)),
     m_axisY(new QAxis(this)),
     m_domainIndex(0),
@@ -116,7 +117,8 @@ void ChartDataSet::addSeries(QAbstractSeries* series, QAxis *axisY)
 
     m_indexSeriesMap.insert(key,series);
 
-    series->d_ptr->m_dataset=this;
+    series->d_ptr->m_chart = qobject_cast<QChart*>(parent());
+    series->d_ptr->m_dataset = this;
 
     emit seriesAdded(series,domain);
 
@@ -138,8 +140,10 @@ QAxis* ChartDataSet::removeSeries(QAbstractSeries* series)
     Q_ASSERT(key!=-1);
 
     m_indexSeriesMap.remove(key);
+
     series->setParent(0);
-    series->d_ptr->m_dataset=0;
+    series->d_ptr->m_chart = 0;
+    series->d_ptr->m_dataset = 0;
 
     QList<QAxis*> axes =  m_seriesAxisMap.values();
 

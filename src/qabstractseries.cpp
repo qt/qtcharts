@@ -110,10 +110,22 @@ QString QAbstractSeries::name() const
     return d_ptr->m_name;
 }
 
+/*!
+    \brief Returns the chart where series belongs to.
+
+    Set automatically when the series is added to the chart
+    and unset when the series is removed from the chart.
+*/
+QChart* QAbstractSeries::chart() const
+{
+    return d_ptr->m_chart;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q):
     q_ptr(q),
+    m_chart(0),
     m_dataset(0)
 {
 }
