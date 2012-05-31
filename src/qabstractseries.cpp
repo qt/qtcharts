@@ -56,14 +56,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn bool QAbstractSeries::setModel(QAbstractItemModel *model)
-    \brief Use the \a model to provide data for the series. The model overrides possible user data
-    set with QChartSeries type specific data setters. For example if you call both
-    QScatterSeries::addData() and QScatterSeries::setModel, only the data provided by the model is
-    used by the series. Returns true if the model is valid for the series.
-*/
-
-/*!
     \property QAbstractSeries::name
     \brief name of the series property
 */
