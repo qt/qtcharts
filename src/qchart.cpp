@@ -92,6 +92,8 @@ QChart::~QChart()
  Adds the \a series and optional \a axisY onto the chart and takes the ownership of the objects.
  If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
  the y axis).
+
+ \sa removeSeries(), removeAllSeries()
  */
 void QChart::addSeries(QAbstractSeries *series, QAxis *axisY)
 {
@@ -439,6 +441,11 @@ bool QChart::isBackgroundDropShadowEnabled() const
     return d_ptr->m_presenter->m_backgroundItem->isDropShadowEnabled();
 }
 
+/*!
+  Returns all the series that are added to the chart.
+
+  \sa addSeries(), removeSeries(), removeAllSeries()
+*/
 QList<QAbstractSeries*> QChart::series() const
 {
     return d_ptr->m_dataset->series();

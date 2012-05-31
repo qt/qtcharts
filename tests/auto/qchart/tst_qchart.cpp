@@ -204,11 +204,15 @@ void tst_QChart::addSeries()
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
     QVERIFY(!series->chart());
+    QCOMPARE(m_chart->series().count(), 0);
     m_chart->addSeries(series,axis);
+    QCOMPARE(m_chart->series().count(), 1);
+    QCOMPARE(m_chart->series().first(), series);
     QVERIFY(series->chart() == m_chart);
     QCOMPARE(m_chart->axisY(series),axis);
     m_chart->removeSeries(series);
     QVERIFY(!series->chart());
+    QCOMPARE(m_chart->series().count(), 0);
 }
 
 void tst_QChart::animationOptions_data()
