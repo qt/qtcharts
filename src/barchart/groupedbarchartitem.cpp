@@ -38,6 +38,7 @@ QVector<QRectF> GroupedBarChartItem::calculateLayout()
     // Use temporary qreals for accuracy
     qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->barsetCount();
+    bool barsVisible = m_series->isVisible();
 
     // Domain:
     qreal width = geometry().width();
@@ -65,6 +66,7 @@ QVector<QRectF> GroupedBarChartItem::calculateLayout()
             layout.append(rect);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
+            bar->setVisible(barsVisible);
 
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 

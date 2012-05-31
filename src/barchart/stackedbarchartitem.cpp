@@ -37,6 +37,7 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     // Use temporary qreals for accuracy
     qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->barsetCount();
+    bool barsVisible = m_series->isVisible();
 
     // Domain:
     qreal width = geometry().width();
@@ -60,6 +61,8 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
+            bar->setVisible(barsVisible);
+
             QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
             layout.append(rect);
 

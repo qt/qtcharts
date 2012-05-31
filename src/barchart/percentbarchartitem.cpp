@@ -38,6 +38,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
     // Use temporary qreals for accuracy
     qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->barsetCount();
+    bool barsVisible = m_series->isVisible();
 
     // Domain:
     qreal width = geometry().width();
@@ -63,6 +64,8 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->pen());
             bar->setBrush(barSet->brush());
+            bar->setVisible(barsVisible);
+
             QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
             layout.append(rect);
 
@@ -82,6 +85,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
                           ,yPos - barHeight/2 - label->boundingRect().height()/2);
             label->setFont(barSet->labelFont());
             label->setBrush(barSet->labelBrush());
+
             itemIndex++;
             yPos -= barHeight;
         }
