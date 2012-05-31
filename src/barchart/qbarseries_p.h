@@ -45,9 +45,6 @@ class QBarSeriesPrivate : public QAbstractSeriesPrivate
 public:
     QBarSeriesPrivate(QBarSeries *parent);
     // TODO: refactor/remove private category stuff
-    void setCategories(QStringList categories);
-    void insertCategory(int index, const QString category);
-    void removeCategory(int index);
     int categoryCount() const;
     QStringList categories() const;
 
@@ -79,8 +76,8 @@ public:
 Q_SIGNALS:
     void clicked(QBarSet *barset, int index);
     void updatedBars();
-    void restructuredBars();
-    void categoriesUpdated();
+//    void restructuredBars();
+//    void categoriesUpdated();
     void labelsVisibleChanged(bool visible);
 
 private Q_SLOTS:

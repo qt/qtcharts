@@ -38,7 +38,6 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
 {
     setFlag(ItemClipsChildrenToShape);
     connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
-    connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleModelChanged()));
     connect(series->d_func(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(labelsVisibleChanged(bool)));
     setZValue(ChartPresenter::BarSeriesZValue);
     dataChanged();
@@ -167,12 +166,6 @@ void BarChartItem::setLayout(const QVector<QRectF> &layout)
     update();
 }
 //handlers
-
-void BarChartItem::handleModelChanged()
-{
-//    dataChanged();
-    presenter()->resetAllElements();
-}
 
 void BarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {

@@ -63,7 +63,6 @@ public:
     QRectF geometry() const { return m_rect;}
 
 public Q_SLOTS:
-    void handleModelChanged();
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF &size);
     void handleLayoutChanged();
