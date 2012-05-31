@@ -157,7 +157,6 @@ void QPieModelMapper::reset()
     Q_D(QPieModelMapper);
     d->m_first = 0;
     d->m_count = -1;
-    d->m_orientation = Qt::Vertical;
     d->m_valuesSection = -1;
     d->m_labelsSection = -1;
 }

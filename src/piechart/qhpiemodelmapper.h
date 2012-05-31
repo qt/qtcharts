@@ -32,7 +32,7 @@ class QTCOMMERCIALCHART_EXPORT QHPieModelMapper : public QPieModelMapper
     Q_PROPERTY(int labelsRow READ labelsRow WRITE setLabelsRow)
 
 public:
-    QHPieModelMapper(QObject *parent = 0);
+    explicit QHPieModelMapper(QObject *parent = 0);
 
     int valuesRow() const;
     void setValuesRow(int valuesRow);
