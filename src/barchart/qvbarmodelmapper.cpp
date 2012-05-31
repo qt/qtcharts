@@ -8,24 +8,24 @@ QVBarModelMapper::QVBarModelMapper(QObject *parent) :
     QBarModelMapper::setOrientation(Qt::Vertical);
 }
 
-int QVBarModelMapper::firstBarColumn() const
+int QVBarModelMapper::firstBarSetColumn() const
 {
-    return QBarModelMapper::firstBarSection();
+    return QBarModelMapper::firstBarSetSection();
 }
 
-void QVBarModelMapper::setFirstBarColumn(int firstBarColumn)
+void QVBarModelMapper::setFirstBarSetColumn(int firstBarSetColumn)
 {
-    return QBarModelMapper::setFirstBarSection(firstBarColumn);
+    return QBarModelMapper::setFirstBarSetSection(firstBarSetColumn);
 }
 
-int QVBarModelMapper::lastBarColumn() const
+int QVBarModelMapper::lastBarSetColumn() const
 {
-    return QBarModelMapper::lastBarSection();
+    return QBarModelMapper::lastBarSetSection();
 }
 
-void QVBarModelMapper::setLastBarColumn(int lastBarColumn)
+void QVBarModelMapper::setLastBarSetColumn(int lastBarSetColumn)
 {
-    return QBarModelMapper::setLastBarSection(lastBarColumn);
+    return QBarModelMapper::setLastBarSetSection(lastBarSetColumn);
 }
 
 int QVBarModelMapper::categoriesColumn() const

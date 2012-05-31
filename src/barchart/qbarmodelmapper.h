@@ -36,11 +36,11 @@ public:
     int count() const;
     void setCount(int count);
 
-    int firstBarSection() const;
-    void setFirstBarSection(int firstBarSection);
+    int firstBarSetSection() const;
+    void setFirstBarSetSection(int firstBarSetSection);
 
-    int lastBarSection() const;
-    void setLastBarSection(int lastBarSection);
+    int lastBarSetSection() const;
+    void setLastBarSetSection(int lastBarSetSection);
 
     int categoriesSection() const;
     void setCategoriesSection(int categoriesSection);

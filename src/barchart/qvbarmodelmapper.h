@@ -8,17 +8,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QVBarModelMapper : public QBarModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(int firstBarColumn READ firstBarColumn WRITE setFirstBarColumn)
-    Q_PROPERTY(int lastBarColumn READ lastBarColumn WRITE setLastBarColumn)
+    Q_PROPERTY(int firstBarSetColumn READ firstBarSetColumn WRITE setFirstBarSetColumn)
+    Q_PROPERTY(int lastBarSetColumn READ lastBarSetColumn WRITE setLastBarSetColumn)
 
 public:
     explicit QVBarModelMapper(QObject *parent = 0);
 
-    int firstBarColumn() const;
-    void setFirstBarColumn(int firstBarColumn);
+    int firstBarSetColumn() const;
+    void setFirstBarSetColumn(int firstBarSetColumn);
 
-    int lastBarColumn() const;
-    void setLastBarColumn(int lastBarColumn);
+    int lastBarSetColumn() const;
+    void setLastBarSetColumn(int lastBarSetColumn);
 
     int categoriesColumn() const;
     void setCategoriesColumn(int categoriesColumn);

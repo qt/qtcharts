@@ -47,8 +47,8 @@ private:
     int m_first;
     int m_count;
     Qt::Orientation m_orientation;
-    int m_firstBarSection;
-    int m_lastBarSection;
+    int m_firstBarSetSection;
+    int m_lastBarSetSection;
     int m_categoriesSection;
     bool m_seriesSignalsBlock;
     bool m_modelSignalsBlock;

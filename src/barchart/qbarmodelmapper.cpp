@@ -101,29 +101,29 @@ void QBarModelMapper::setOrientation(Qt::Orientation orientation)
     d->initializeBarFromModel();
 }
 
-int QBarModelMapper::firstBarSection() const
+int QBarModelMapper::firstBarSetSection() const
 {
     Q_D(const QBarModelMapper);
-    return d->m_firstBarSection;
+    return d->m_firstBarSetSection;
 }
 
-void QBarModelMapper::setFirstBarSection(int firstBarSection)
+void QBarModelMapper::setFirstBarSetSection(int firstBarSetSection)
 {
     Q_D(QBarModelMapper);
-    d->m_firstBarSection = firstBarSection;
+    d->m_firstBarSetSection = firstBarSetSection;
     d->initializeBarFromModel();
 }
 
-int QBarModelMapper::lastBarSection() const
+int QBarModelMapper::lastBarSetSection() const
 {
     Q_D(const QBarModelMapper);
-    return d->m_lastBarSection;
+    return d->m_lastBarSetSection;
 }
 
-void QBarModelMapper::setLastBarSection(int lastBarSection)
+void QBarModelMapper::setLastBarSetSection(int lastBarSetSection)
 {
     Q_D(QBarModelMapper);
-    d->m_lastBarSection = lastBarSection;
+    d->m_lastBarSetSection = lastBarSetSection;
     d->initializeBarFromModel();
 }
 
@@ -146,8 +146,8 @@ void QBarModelMapper::reset()
     d->m_first = 0;
     d->m_count = -1;
     d->m_orientation = Qt::Vertical;
-    d->m_firstBarSection = -1;
-    d->m_lastBarSection = -1;
+    d->m_firstBarSetSection = -1;
+    d->m_lastBarSetSection = -1;
     d->m_categoriesSection = -1;
     d->initializeBarFromModel();
 }
@@ -160,8 +160,8 @@ QBarModelMapperPrivate::QBarModelMapperPrivate(QBarModelMapper *q) :
     m_first(0),
     m_count(-1),
     m_orientation(Qt::Vertical),
-    m_firstBarSection(-1),
-    m_lastBarSection(-1),
+    m_firstBarSetSection(-1),
+    m_lastBarSetSection(-1),
     m_categoriesSection(-1),
     m_seriesSignalsBlock(false),
     m_modelSignalsBlock(false),
@@ -184,12 +184,12 @@ QBarSet* QBarModelMapperPrivate::barSet(QModelIndex index)
     if (!index.isValid())
         return 0;
 
-    if (m_orientation == Qt::Vertical && index.column() >= m_firstBarSection && index.column() <= m_lastBarSection) {
+    if (m_orientation == Qt::Vertical && index.column() >= m_firstBarSetSection && index.column() <= m_lastBarSetSection) {
         if (index.row() >= m_first && (m_count == - 1 || index.row() < m_first + m_count))
-            return m_series->barSets().at(index.column() - m_firstBarSection);
-    } else if (m_orientation == Qt::Horizontal && index.row() >= m_firstBarSection && index.row() <= m_lastBarSection) {
+            return m_series->barSets().at(index.column() - m_firstBarSetSection);
+    } else if (m_orientation == Qt::Horizontal && index.row() >= m_firstBarSetSection && index.row() <= m_lastBarSetSection) {
         if (index.column() >= m_first && (m_count == - 1 || index.column() < m_first + m_count))
-            return m_series->barSets().at(index.row() - m_firstBarSection);
+            return m_series->barSets().at(index.row() - m_firstBarSetSection);
     }
     return 0; // This part of model has not been mapped to any slice
 }
@@ -199,7 +199,7 @@ QModelIndex QBarModelMapperPrivate::barModelIndex(int barSection, int posInBar)
     if (m_count != -1 && posInBar >= m_count)
         return QModelIndex(); // invalid
 
-    if (barSection < m_firstBarSection || barSection > m_lastBarSection)
+    if (barSection < m_firstBarSetSection || barSection > m_lastBarSetSection)
         return QModelIndex(); // invalid
 
     if (m_orientation == Qt::Vertical)
@@ -260,7 +260,7 @@ void QBarModelMapperPrivate::modelRowsAdded(QModelIndex parent, int start, int e
     if (m_orientation == Qt::Vertical)
         //        insertData(start, end);
         initializeBarFromModel();
-    else if (start <= m_firstBarSection || start <= m_lastBarSection || start <= m_categoriesSection) // if the changes affect the map - reinitialize
+    else if (start <= m_firstBarSetSection || start <= m_lastBarSetSection || start <= m_categoriesSection) // if the changes affect the map - reinitialize
         initializeBarFromModel();
     blockSeriesSignals(false);
 }
@@ -276,7 +276,7 @@ void QBarModelMapperPrivate::modelRowsRemoved(QModelIndex parent, int start, int
     if (m_orientation == Qt::Vertical)
         //        removeData(start, end);
         initializeBarFromModel();
-    else if (start <= m_firstBarSection || start <= m_lastBarSection || start <= m_categoriesSection) // if the changes affect the map - reinitialize
+    else if (start <= m_firstBarSetSection || start <= m_lastBarSetSection || start <= m_categoriesSection) // if the changes affect the map - reinitialize
         initializeBarFromModel();
     blockSeriesSignals(false);
 }
@@ -292,7 +292,7 @@ void QBarModelMapperPrivate::modelColumnsAdded(QModelIndex parent, int start, in
     if (m_orientation == Qt::Horizontal)
         //        insertData(start, end);
         initializeBarFromModel();
-    else if (start <= m_firstBarSection || start <= m_lastBarSection || start <= m_categoriesSection) // if the changes affect the map - reinitialize
+    else if (start <= m_firstBarSetSection || start <= m_lastBarSetSection || start <= m_categoriesSection) // if the changes affect the map - reinitialize
         initializeBarFromModel();
     blockSeriesSignals(false);
 }
@@ -308,7 +308,7 @@ void QBarModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int start, 
     if (m_orientation == Qt::Horizontal)
         //        removeData(start, end);
         initializeBarFromModel();
-    else if (start <= m_firstBarSection || start <= m_lastBarSection || start <= m_categoriesSection) // if the changes affect the map - reinitialize
+    else if (start <= m_firstBarSetSection || start <= m_lastBarSetSection || start <= m_categoriesSection) // if the changes affect the map - reinitialize
         initializeBarFromModel();
     blockSeriesSignals(false);
 }
@@ -390,7 +390,7 @@ void QBarModelMapperPrivate::initializeBarFromModel()
     m_series->clear();
 
     // create the initial bar sets
-    for (int i = m_firstBarSection; i <= m_lastBarSection; i++) {
+    for (int i = m_firstBarSetSection; i <= m_lastBarSetSection; i++) {
         int posInBar = 0;
         QModelIndex barIndex = barModelIndex(i, posInBar);
         QBarSet *barSet = new QBarSet(m_model->headerData(i, Qt::Horizontal).toString());
