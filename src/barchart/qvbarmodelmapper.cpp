@@ -5,6 +5,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QVBarModelMapper::QVBarModelMapper(QObject *parent) :
     QBarModelMapper(parent)
 {
+    QBarModelMapper::setOrientation(Qt::Vertical);
 }
 
 int QVBarModelMapper::firstBarColumn() const
