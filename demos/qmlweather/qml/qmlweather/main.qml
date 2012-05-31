@@ -35,11 +35,10 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         legend: ChartView.LegendTop
+        axisXLabels: ["0", "Mo", "1", "Tu", "2", "We", "3", "Th", "4", "Fr", "5", "Sa"]
 
     //![2]
-//        BarSeries {
-        GroupedBarSeries {
-            barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
+        BarSeries {
             BarSet {
                 id: rainfallSet
                 name: "Rainfall"

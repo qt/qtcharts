@@ -26,16 +26,14 @@ ChartView {
     anchors.fill: parent
     theme: ChartView.ChartThemeLight
     legend: ChartView.LegendBottom
-    // TODO: labels defined by x-axis, not by bar series
-    axisXLabels: ["0", "2008", "1", "2009", "2", "2010", "3", "2012"]
+    axisXLabels: ["0", "2007", "1", "2008", "2", "2009", "3", "2010", "4", "2011", "5", "2012"]
 
     property variant series: daSeries
 
     BarSeries {
         id: daSeries
-        barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
-        BarSet { name: "Bob"; values: [2, 2, 3, 4, 5, 6] }
-        BarSet { name: "Susan"; values: [5, 1, 2, 4, 1, 7] }
-        BarSet { name: "James"; values: [3, 5, 8, 13, 5, 8] }
+        BarSet { name: "Bob"; values: [4, 7, 3, 10, 5, 6] }
+        BarSet { name: "Susan"; values: [5, 1, 2, 4, 1, 8] }
+        BarSet { name: "James"; values: [3, 5, 8, 5, 4, 7] }
     }
 }

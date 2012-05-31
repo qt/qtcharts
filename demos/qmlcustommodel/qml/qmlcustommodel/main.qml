@@ -96,7 +96,6 @@ Rectangle {
 
         GroupedBarSeries {
             name: "Skoda and Volvo"
-            barCategories: [ "1", "2", "3", "4", "5", "6" ]
             HBarModelMapper {
                 model: customModel
                 firstBarSetRow: 4

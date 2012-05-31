@@ -61,17 +61,12 @@ class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<QObject> seriesChildren();
-
-    void setBarCategories(QStringList categories);
-    QStringList barCategories();
-
     Q_INVOKABLE DeclarativeBarSet *at(int index);
 
 public: // from QDeclarativeParserStatus
@@ -86,17 +81,12 @@ class DeclarativeGroupedBarSeries : public QGroupedBarSeries, public QDeclarativ
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativeGroupedBarSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<QObject> seriesChildren();
-
-    void setBarCategories(QStringList categories);
-    QStringList barCategories();
-
     Q_INVOKABLE DeclarativeBarSet *at(int index);
 
 public: // from QDeclarativeParserStatus

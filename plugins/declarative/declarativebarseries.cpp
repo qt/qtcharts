@@ -122,16 +122,6 @@ void DeclarativeBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject
     Q_UNUSED(element);
 }
 
-void DeclarativeBarSeries::setBarCategories(QStringList categories)
-{
-    setCategories(categories);
-}
-
-QStringList DeclarativeBarSeries::barCategories()
-{
-    return categories();
-}
-
 DeclarativeBarSet *DeclarativeBarSeries::at(int index)
 {
     QList<QBarSet*> setList = barSets();
@@ -175,16 +165,6 @@ void DeclarativeGroupedBarSeries::appendSeriesChildren(QDeclarativeListProperty<
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);
     Q_UNUSED(element);
-}
-
-void DeclarativeGroupedBarSeries::setBarCategories(QStringList categories)
-{
-    setCategories(categories);
-}
-
-QStringList DeclarativeGroupedBarSeries::barCategories()
-{
-    return categories();
 }
 
 DeclarativeBarSet *DeclarativeGroupedBarSeries::at(int index)
