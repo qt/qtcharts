@@ -22,18 +22,16 @@ import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
 ChartView {
-    title: "Bar series"
+    title: "Stacked bar series"
     anchors.fill: parent
     theme: ChartView.ChartThemeLight
     legend: ChartView.LegendBottom
-    // TODO: labels defined by x-axis, not by bar series
     axisXLabels: ["0", "2008", "1", "2009", "2", "2010", "3", "2012"]
 
     property variant series: daSeries
 
-    BarSeries {
+    StackedBarSeries {
         id: daSeries
-        barCategories: [ "2008", "2009", "2010", "2011", "2012" ]
         BarSet { name: "Bob"; values: [2, 2, 3, 4, 5, 6] }
         BarSet { name: "Susan"; values: [5, 1, 2, 4, 1, 7] }
         BarSet { name: "James"; values: [3, 5, 8, 13, 5, 8] }

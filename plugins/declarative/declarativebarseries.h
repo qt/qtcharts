@@ -22,10 +22,12 @@
 #define DECLARATIVEBARSERIES_H
 
 #include "qchartglobal.h"
+#include <QGroupedBarSeries>
+#include <QStackedBarSeries>
+#include <QPercentBarSeries>
+#include <QBarSet>
 #include <QDeclarativeItem>
 #include <QDeclarativeParserStatus>
-#include <QGroupedBarSeries>
-#include <QBarSet>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -95,6 +97,46 @@ public:
     void setBarCategories(QStringList categories);
     QStringList barCategories();
 
+    Q_INVOKABLE DeclarativeBarSet *at(int index);
+
+public: // from QDeclarativeParserStatus
+    void classBegin();
+    void componentComplete();
+
+public Q_SLOTS:
+    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+};
+
+class DeclarativeStackedBarSeries : public QStackedBarSeries, public QDeclarativeParserStatus
+{
+    Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+    Q_CLASSINFO("DefaultProperty", "seriesChildren")
+
+public:
+    explicit DeclarativeStackedBarSeries(QDeclarativeItem *parent = 0);
+    QDeclarativeListProperty<QObject> seriesChildren();
+    Q_INVOKABLE DeclarativeBarSet *at(int index);
+
+public: // from QDeclarativeParserStatus
+    void classBegin();
+    void componentComplete();
+
+public Q_SLOTS:
+    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+};
+
+class DeclarativePercentBarSeries : public QPercentBarSeries, public QDeclarativeParserStatus
+{
+    Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+    Q_CLASSINFO("DefaultProperty", "seriesChildren")
+
+public:
+    explicit DeclarativePercentBarSeries(QDeclarativeItem *parent = 0);
+    QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
 
 public: // from QDeclarativeParserStatus

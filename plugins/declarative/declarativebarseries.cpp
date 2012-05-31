@@ -196,6 +196,96 @@ DeclarativeBarSet *DeclarativeGroupedBarSeries::at(int index)
     return 0;
 }
 
+DeclarativeStackedBarSeries::DeclarativeStackedBarSeries(QDeclarativeItem *parent) :
+    QStackedBarSeries(parent)
+{
+}
+
+void DeclarativeStackedBarSeries::classBegin()
+{
+}
+
+void DeclarativeStackedBarSeries::componentComplete()
+{
+    foreach(QObject *child, children()) {
+        if (qobject_cast<DeclarativeBarSet *>(child)) {
+            QBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
+        } else if(qobject_cast<QVBarModelMapper *>(child)) {
+            QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
+            mapper->setSeries(this);
+        } else if(qobject_cast<QHBarModelMapper *>(child)) {
+            QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
+            mapper->setSeries(this);
+        }
+    }
+}
+
+QDeclarativeListProperty<QObject> DeclarativeStackedBarSeries::seriesChildren()
+{
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
+}
+
+void DeclarativeStackedBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+{
+    // Empty implementation; the children are parsed in componentComplete instead
+    Q_UNUSED(list);
+    Q_UNUSED(element);
+}
+
+DeclarativeBarSet *DeclarativeStackedBarSeries::at(int index)
+{
+    QList<QBarSet*> setList = barSets();
+    if (index < setList.count())
+        return qobject_cast<DeclarativeBarSet *>(setList[index]);
+
+    return 0;
+}
+
+DeclarativePercentBarSeries::DeclarativePercentBarSeries(QDeclarativeItem *parent) :
+    QPercentBarSeries(parent)
+{
+}
+
+void DeclarativePercentBarSeries::classBegin()
+{
+}
+
+void DeclarativePercentBarSeries::componentComplete()
+{
+    foreach(QObject *child, children()) {
+        if (qobject_cast<DeclarativeBarSet *>(child)) {
+            QBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
+        } else if(qobject_cast<QVBarModelMapper *>(child)) {
+            QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
+            mapper->setSeries(this);
+        } else if(qobject_cast<QHBarModelMapper *>(child)) {
+            QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
+            mapper->setSeries(this);
+        }
+    }
+}
+
+QDeclarativeListProperty<QObject> DeclarativePercentBarSeries::seriesChildren()
+{
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
+}
+
+void DeclarativePercentBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+{
+    // Empty implementation; the children are parsed in componentComplete instead
+    Q_UNUSED(list);
+    Q_UNUSED(element);
+}
+
+DeclarativeBarSet *DeclarativePercentBarSeries::at(int index)
+{
+    QList<QBarSet*> setList = barSets();
+    if (index < setList.count())
+        return qobject_cast<DeclarativeBarSet *>(setList[index]);
+
+    return 0;
+}
+
 #include "moc_declarativebarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
