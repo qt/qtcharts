@@ -21,6 +21,8 @@
 #include "declarativebarseries.h"
 #include "declarativechart.h"
 #include <QBarSet>
+#include <QVBarModelMapper>
+#include <QHBarModelMapper>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -98,13 +100,26 @@ void DeclarativeBarSeries::componentComplete()
     foreach(QObject *child, children()) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
             QBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
+        } else if(qobject_cast<QVBarModelMapper *>(child)) {
+            QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
+            mapper->setSeries(this);
+        } else if(qobject_cast<QHBarModelMapper *>(child)) {
+            QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
+            mapper->setSeries(this);
         }
     }
 }
 
-QDeclarativeListProperty<DeclarativeBarSet> DeclarativeBarSeries::initialBarSets()
+QDeclarativeListProperty<QObject> DeclarativeBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<DeclarativeBarSet>(this, 0, &DeclarativeBarSeries::appendInitialBarSets);
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
+}
+
+void DeclarativeBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+{
+    // Empty implementation; the children are parsed in componentComplete instead
+    Q_UNUSED(list);
+    Q_UNUSED(element);
 }
 
 void DeclarativeBarSeries::setBarCategories(QStringList categories)
@@ -140,13 +155,26 @@ void DeclarativeGroupedBarSeries::componentComplete()
     foreach(QObject *child, children()) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
             QBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
+        } else if(qobject_cast<QVBarModelMapper *>(child)) {
+            QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
+            mapper->setSeries(this);
+        } else if(qobject_cast<QHBarModelMapper *>(child)) {
+            QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
+            mapper->setSeries(this);
         }
     }
 }
 
-QDeclarativeListProperty<DeclarativeBarSet> DeclarativeGroupedBarSeries::initialBarSets()
+QDeclarativeListProperty<QObject> DeclarativeGroupedBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<DeclarativeBarSet>(this, 0, &DeclarativeGroupedBarSeries::appendInitialBarSets);
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
+}
+
+void DeclarativeGroupedBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+{
+    // Empty implementation; the children are parsed in componentComplete instead
+    Q_UNUSED(list);
+    Q_UNUSED(element);
 }
 
 void DeclarativeGroupedBarSeries::setBarCategories(QStringList categories)

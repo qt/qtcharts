@@ -488,8 +488,8 @@ void TableWidget::updateChartType(bool toggle)
 //            int count = 4;
             QVBarModelMapper *mapper = new QVBarModelMapper;
             mapper->setCategoriesSection(5);
-            mapper->setFirstBarSection(2);
-            mapper->setLastBarSection(4);
+            mapper->setFirstBarSetSection(2);
+            mapper->setLastBarSetSection(4);
             mapper->setFirst(first);
 //            mapper->setCount(count);
             mapper->setSeries(barSeries);

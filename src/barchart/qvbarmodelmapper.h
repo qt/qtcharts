@@ -10,6 +10,7 @@ class QTCOMMERCIALCHART_EXPORT QVBarModelMapper : public QBarModelMapper
     Q_OBJECT
     Q_PROPERTY(int firstBarSetColumn READ firstBarSetColumn WRITE setFirstBarSetColumn)
     Q_PROPERTY(int lastBarSetColumn READ lastBarSetColumn WRITE setLastBarSetColumn)
+    Q_PROPERTY(int categoriesColumn READ categoriesColumn WRITE setCategoriesColumn)
 
 public:
     explicit QVBarModelMapper(QObject *parent = 0);

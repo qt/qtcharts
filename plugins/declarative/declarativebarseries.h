@@ -60,12 +60,12 @@ class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
-    Q_PROPERTY(QDeclarativeListProperty<DeclarativeBarSet> initialBarSets READ initialBarSets)
-    Q_CLASSINFO("DefaultProperty", "initialBarSets")
+    Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+    Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
-    QDeclarativeListProperty<DeclarativeBarSet> initialBarSets();
+    QDeclarativeListProperty<QObject> seriesChildren();
 
     void setBarCategories(QStringList categories);
     QStringList barCategories();
@@ -77,7 +77,7 @@ public: // from QDeclarativeParserStatus
     void componentComplete();
 
 public Q_SLOTS:
-    static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> * /*list*/, DeclarativeBarSet * /*element*/) {}
+    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 };
 
 class DeclarativeGroupedBarSeries : public QGroupedBarSeries, public QDeclarativeParserStatus
@@ -85,12 +85,12 @@ class DeclarativeGroupedBarSeries : public QGroupedBarSeries, public QDeclarativ
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QStringList barCategories READ barCategories WRITE setBarCategories)
-    Q_PROPERTY(QDeclarativeListProperty<DeclarativeBarSet> initialBarSets READ initialBarSets)
-    Q_CLASSINFO("DefaultProperty", "initialBarSets")
+    Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+    Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativeGroupedBarSeries(QDeclarativeItem *parent = 0);
-    QDeclarativeListProperty<DeclarativeBarSet> initialBarSets();
+    QDeclarativeListProperty<QObject> seriesChildren();
 
     void setBarCategories(QStringList categories);
     QStringList barCategories();
@@ -102,7 +102,7 @@ public: // from QDeclarativeParserStatus
     void componentComplete();
 
 public Q_SLOTS:
-    static void appendInitialBarSets(QDeclarativeListProperty<DeclarativeBarSet> * /*list*/, DeclarativeBarSet * /*element*/) {}
+    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

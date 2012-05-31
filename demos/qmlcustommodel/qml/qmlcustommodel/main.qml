@@ -31,8 +31,10 @@ Rectangle {
         title: "Custom model example"
         anchors.fill: parent
         theme: ChartView.ChartThemeLight
-        axisX.max: 20
+        axisX.max: 10
+        axisX.min: 0
         axisY.max: 20
+        axisY.min: 0
 
         // For dynamic data we use a custom data model derived from QAbstractiItemModel
         CustomModel {
@@ -68,7 +70,7 @@ Rectangle {
         PieSeries {
             id: pieSeries
             size: 0.4
-            horizontalPosition: 0.2
+            horizontalPosition: 0.7
             verticalPosition: 0.3
         }
 
@@ -92,10 +94,16 @@ Rectangle {
             }
         }
 
-//        BarSeries {
-//            model: customModel
-//            modelMapper.first: 0
-//        }
+        GroupedBarSeries {
+            name: "Skoda and Volvo"
+            barCategories: [ "1", "2", "3", "4", "5", "6" ]
+            HBarModelMapper {
+                model: customModel
+                firstBarSetRow: 4
+                lastBarSetRow: 5
+                first: 2
+            }
+        }
     }
 
 

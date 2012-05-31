@@ -34,6 +34,8 @@
 #include <QHXYModelMapper>
 #include <QHPieModelMapper>
 #include <QVPieModelMapper>
+#include <QHBarModelMapper>
+#include <QVBarModelMapper>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -60,6 +62,8 @@ public:
         qmlRegisterType<QVXYModelMapper>(uri, 1, 0, "VXYModelMapper");
         qmlRegisterType<QHPieModelMapper>(uri, 1, 0, "HPieModelMapper");
         qmlRegisterType<QVPieModelMapper>(uri, 1, 0, "VPieModelMapper");
+        qmlRegisterType<QHBarModelMapper>(uri, 1, 0, "HBarModelMapper");
+        qmlRegisterType<QVBarModelMapper>(uri, 1, 0, "VBarModelMapper");
 
 
         qmlRegisterUncreatableType<QScatterSeries>(uri, 1, 0, "QScatterSeries",
@@ -72,6 +76,8 @@ public:
                                           QLatin1String("Trying to create uncreatable: XYModelMapper."));
         qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",
                                           QLatin1String("Trying to create uncreatable: PieModelMapper."));
+        qmlRegisterUncreatableType<QBarModelMapper>(uri, 1, 0, "BarModelMapper",
+                                          QLatin1String("Trying to create uncreatable: BarModelMapper."));
         qmlRegisterUncreatableType<QAbstractSeries>(uri, 1, 0, "AbstractSeries",
                                           QLatin1String("Trying to create uncreatable: AbstractSeries."));
         qmlRegisterUncreatableType<QAxis>(uri, 1, 0, "Axis",
