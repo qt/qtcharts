@@ -171,6 +171,10 @@ void tst_qpieseries::append()
     QCOMPARE(added.count(), 1);
     QCOMPARE(added.first(), slice1);
 
+    // try to append same slice to another series
+    QPieSeries series2;
+    QVERIFY(!series2.append(slice1));
+
     // append pointer list
     QList<QPieSlice *> list;
     QVERIFY(!m_series->append(list));
@@ -239,6 +243,10 @@ void tst_qpieseries::insert()
     QList<QPieSlice*> added = qvariant_cast<QList<QPieSlice*> >(addedSpy.at(0).at(0));
     QCOMPARE(added.count(), 1);
     QCOMPARE(added.first(), slice1);
+
+    // try to insert same slice to another series
+    QPieSeries series2;
+    QVERIFY(!series2.insert(0, slice1));
 
     // add some more slices
     QPieSlice *slice2 = m_series->append("slice 2", 2);

@@ -269,6 +269,8 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
     foreach (QPieSlice* s, slices) {
         if (!s || d->m_slices.contains(s))
             return false;
+        if (s->series()) // already added to some series
+            return false;
     }
 
     foreach (QPieSlice* s, slices) {
@@ -327,6 +329,9 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
         return false;
 
     if (!slice || d->m_slices.contains(slice))
+        return false;
+
+    if (slice->series()) // already added to some series
         return false;
 
     slice->setParent(this);
