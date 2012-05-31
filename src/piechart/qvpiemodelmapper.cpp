@@ -23,6 +23,14 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \class QVPieModelMapper
+    \brief part of QtCommercial chart API.
+    \mainclass
+
+    Nothing here yet
+*/
+
 QVPieModelMapper::QVPieModelMapper(QObject *parent) :
     QPieModelMapper(parent)
 {

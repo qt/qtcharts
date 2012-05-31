@@ -10,6 +10,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarModelMapperPrivate;
 class QBarSeries;
+class QChart;
 
 class QTCOMMERCIALCHART_EXPORT QBarModelMapper : public QObject
 {
@@ -36,6 +37,9 @@ public:
     int count() const;
     void setCount(int count);
 
+    void reset();
+
+protected:
     int firstBarSetSection() const;
     void setFirstBarSetSection(int firstBarSetSection);
 
@@ -45,11 +49,8 @@ public:
     int categoriesSection() const;
     void setCategoriesSection(int categoriesSection);
 
-protected:
     Qt::Orientation orientation() const;
-    void setOrientation(Qt::Orientation orientation);
-
-    void reset();
+    void setOrientation(Qt::Orientation orientation);    
 
 Q_SIGNALS:
     void updated();

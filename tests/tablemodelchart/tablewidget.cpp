@@ -136,7 +136,7 @@ TableWidget::TableWidget(QWidget *parent)
     connect(m_pieRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
     connect(m_areaRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
     connect(m_barRadioButton, SIGNAL(toggled(bool)), this, SLOT(updateChartType(bool)));
-    m_lineRadioButton->setChecked(true);
+    m_barRadioButton->setChecked(true);
 
     // radio buttons layout
     QVBoxLayout* radioLayout = new QVBoxLayout;
@@ -484,23 +484,27 @@ void TableWidget::updateChartType(bool toggle)
             //            barSeries->setModelMappingRange(2, 5);
             //                    barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
 
+
             int first = 3;
-//            int count = 4;
+            int count = 6;
             QVBarModelMapper *mapper = new QVBarModelMapper;
-            mapper->setCategoriesSection(5);
-            mapper->setFirstBarSetSection(2);
-            mapper->setLastBarSetSection(4);
+            mapper->setCategoriesColumn(5);
+            mapper->setFirstBarSetColumn(2);
+            mapper->setLastBarSetColumn(4);
             mapper->setFirst(first);
-//            mapper->setCount(count);
+            mapper->setCount(count);
             mapper->setSeries(barSeries);
             mapper->setModel(m_model);
 //            barSeries->setModelMapper(mapper);
             m_chart->addSeries(barSeries);
+
             QList<QBarSet*> barsets = barSeries->barSets();
             for (int i = 0; i < barsets.count(); i++) {
                 seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
                 m_model->addMapping(seriesColorHex, QRect(2 + i, first, 1, barsets.at(i)->count()));
             }
+
+
         }
 
 

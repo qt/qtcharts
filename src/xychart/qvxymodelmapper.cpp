@@ -2,6 +2,14 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \class QVXYModelMapper
+    \brief part of QtCommercial chart API.
+    \mainclass
+
+    Nothing here yet
+*/
+
 QVXYModelMapper::QVXYModelMapper(QObject *parent) :
     QXYModelMapper(parent)
 {

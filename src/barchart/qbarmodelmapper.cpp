@@ -2,6 +2,8 @@
 #include "qbarmodelmapper_p.h"
 #include "qbarseries.h"
 #include "qbarset.h"
+#include "qchart.h"
+#include "qaxis.h"
 #include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -145,7 +147,6 @@ void QBarModelMapper::reset()
     Q_D(QBarModelMapper);
     d->m_first = 0;
     d->m_count = -1;
-    d->m_orientation = Qt::Vertical;
     d->m_firstBarSetSection = -1;
     d->m_lastBarSetSection = -1;
     d->m_categoriesSection = -1;
@@ -185,8 +186,12 @@ QBarSet* QBarModelMapperPrivate::barSet(QModelIndex index)
         return 0;
 
     if (m_orientation == Qt::Vertical && index.column() >= m_firstBarSetSection && index.column() <= m_lastBarSetSection) {
-        if (index.row() >= m_first && (m_count == - 1 || index.row() < m_first + m_count))
-            return m_series->barSets().at(index.column() - m_firstBarSetSection);
+        if (index.row() >= m_first && (m_count == - 1 || index.row() < m_first + m_count)) {
+//            if (m_model->index(index.row(), m_valuesSection).isValid() && m_model->index(index.row(), m_labelsSection).isValid())
+                return m_series->barSets().at(index.column() - m_firstBarSetSection);
+//            else
+//                return 0;
+        }
     } else if (m_orientation == Qt::Horizontal && index.row() >= m_firstBarSetSection && index.row() <= m_lastBarSetSection) {
         if (index.column() >= m_first && (m_count == - 1 || index.column() < m_first + m_count))
             return m_series->barSets().at(index.row() - m_firstBarSetSection);
@@ -334,6 +339,7 @@ void QBarModelMapperPrivate::insertData(int start, int end)
                 point.setY(m_model->data(yModelIndex(i - m_first), Qt::DisplayRole).toDouble());
                 m_series->insert(i - m_first, point);
             }
+>>>>>>> Stashed changes
         }
 
         // remove excess of slices (abouve m_count)
@@ -403,7 +409,7 @@ void QBarModelMapperPrivate::initializeBarFromModel()
         m_series->append(barSet);
     }
 
-    if (m_categoriesSection != -1) {
+    if (m_series->chart() && m_categoriesSection != -1) {
         int posInCategories = 0;
         QStringList categories;
         QModelIndex categoriesIndex = categoriesModelIndex(posInCategories);
@@ -412,8 +418,7 @@ void QBarModelMapperPrivate::initializeBarFromModel()
             posInCategories++;
             categoriesIndex = categoriesModelIndex(posInCategories);
         }
-        // TODO: set the categories to axis
-//        m_series->setCategories(categories);
+        m_series->chart()->axisX()->categories()->insert(categories);
     }
     blockSeriesSignals(false);
 }

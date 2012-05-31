@@ -2,6 +2,14 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \class QVBarModelMapper
+    \brief part of QtCommercial chart API.
+    \mainclass
+
+    Nothing here yet
+*/
+
 QVBarModelMapper::QVBarModelMapper(QObject *parent) :
     QBarModelMapper(parent)
 {

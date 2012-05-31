@@ -55,7 +55,13 @@
             <li><a href="qsplineseries.html">QSplineSeries</a></li>
             <li><a href="qstackedbarseries.html">QStackedBarSeries</a></li>
             <li><a href="qxyseries.html">QXYSeries</a></li>
-			<li><a href="qlegend.html">QLegend</a></li>
+            <li><a href="qlegend.html">QLegend</a></li>
+	    <li><a href="qhpiemodelmapper.html">QHPieModelMapper</a></li>
+	    <li><a href="qvpiemodelmapper.html">QVPieModelMapper</a></li>
+	    <li><a href="qhbarmodelmapper.html">QHBarModelMapper</a></li>
+	    <li><a href="qvbarmodelmapper.html">QVBarModelMapper</a></li>
+	    <li><a href="qhxymodelmapper.html">QHXYModelMapper</a></li>
+	    <li><a href="qvxymodelmapper.html">QVXYModelMapper</a></li>
         </ul>
         </td>
         </tr>
