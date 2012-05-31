@@ -253,17 +253,25 @@ void QXYModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottom
     for (int row = topLeft.row(); row <= bottomRight.row(); row++) {
         for (int column = topLeft.column(); column <= bottomRight.column(); column++) {
             index = topLeft.sibling(row, column);
-            if (m_orientation == Qt::Vertical && (index.column() == m_xSection|| index.column() == m_ySection)) {
+            if (m_orientation == Qt::Vertical && (index.column() == m_xSection || index.column() == m_ySection)) {
                 if (index.row() >= m_first && (m_count == - 1 || index.row() < m_first + m_count)) {
-                    oldPoint = m_series->points().at(index.row() - m_first);
-                    newPoint.setX(m_model->data(m_model->index(index.row(), m_xSection)).toReal());
-                    newPoint.setY(m_model->data(m_model->index(index.row(), m_ySection)).toReal());
+                    QModelIndex xIndex = xModelIndex(index.row() - m_first);
+                    QModelIndex yIndex = yModelIndex(index.row() - m_first);
+                    if (xIndex.isValid() && yIndex.isValid()) {
+                        oldPoint = m_series->points().at(index.row() - m_first);
+                        newPoint.setX(m_model->data(xIndex).toReal());
+                        newPoint.setY(m_model->data(yIndex).toReal());
+                    }
                 }
             } else if (m_orientation == Qt::Horizontal && (index.row() == m_xSection || index.row() == m_ySection)) {
                 if (index.column() >= m_first && (m_count == - 1 || index.column() < m_first + m_count)) {
-                    oldPoint = m_series->points().at(index.column() - m_first);
-                    newPoint.setX(m_model->data(m_model->index(m_xSection, index.column())).toReal());
-                    newPoint.setY(m_model->data(m_model->index(m_ySection, index.column())).toReal());
+                    QModelIndex xIndex = xModelIndex(index.column() - m_first);
+                    QModelIndex yIndex = yModelIndex(index.column() - m_first);
+                    if (xIndex.isValid() && yIndex.isValid()) {
+                        oldPoint = m_series->points().at(index.column() - m_first);
+                        newPoint.setX(m_model->data(xIndex).toReal());
+                        newPoint.setY(m_model->data(yIndex).toReal());
+                    }
                 }
             } else {
                 continue;
@@ -345,9 +353,13 @@ void QXYModelMapperPrivate::insertData(int start, int end)
         int last = qMin(first + addedCount - 1, m_orientation == Qt::Vertical ? m_model->rowCount() - 1 : m_model->columnCount() - 1);
         for (int i = first; i <= last; i++) {
             QPointF point;
-            point.setX(m_model->data(xModelIndex(i - m_first), Qt::DisplayRole).toDouble());
-            point.setY(m_model->data(yModelIndex(i - m_first), Qt::DisplayRole).toDouble());
-            m_series->insert(i - m_first, point);
+            QModelIndex xIndex = xModelIndex(i - m_first);
+            QModelIndex yIndex = yModelIndex(i - m_first);
+            if (xIndex.isValid() && yIndex.isValid()) {
+                point.setX(m_model->data(xIndex, Qt::DisplayRole).toDouble());
+                point.setY(m_model->data(yIndex, Qt::DisplayRole).toDouble());
+                m_series->insert(i - m_first, point);
+            }
         }
 
         // remove excess of slices (abouve m_count)
@@ -385,9 +397,13 @@ void QXYModelMapperPrivate::removeData(int start, int end)
             if (toBeAdded > 0)
                 for (int i = m_series->count(); i < currentSize + toBeAdded; i++) {
                     QPointF point;
-                    point.setX(m_model->data(xModelIndex(i), Qt::DisplayRole).toDouble());
-                    point.setY(m_model->data(yModelIndex(i), Qt::DisplayRole).toDouble());
-                    m_series->insert(i, point);
+                    QModelIndex xIndex = xModelIndex(i);
+                    QModelIndex yIndex = yModelIndex(i);
+                    if (xIndex.isValid() && yIndex.isValid()) {
+                        point.setX(m_model->data(xIndex, Qt::DisplayRole).toDouble());
+                        point.setY(m_model->data(yIndex, Qt::DisplayRole).toDouble());
+                        m_series->insert(i, point);
+                    }
                 }
         }
     }

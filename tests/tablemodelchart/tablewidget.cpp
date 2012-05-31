@@ -236,25 +236,25 @@ void TableWidget::updateChartType(bool toggle)
 
         if (m_lineRadioButton->isChecked())
         {
-            m_chart->setAnimationOptions(QChart::NoAnimation);
+//            m_chart->setAnimationOptions(QChart::NoAnimation);
 
             // series 1
             m_series = new QLineSeries;
 
-            m_mapper = new QHXYModelMapper;
-            m_mapper->setModel(m_model);
-            m_mapper->setSeries(m_series);
-            m_mapper->setXRow(0);
-            m_mapper->setYRow(1);
-            m_mapper->setFirst(3);
-            m_mapper->setCount(4);
-
-//            m_mapper = new QVXYModelMapper;
+//            m_mapper = new QHXYModelMapper;
 //            m_mapper->setModel(m_model);
 //            m_mapper->setSeries(m_series);
-//            m_mapper->setXColumn(0);
-//            m_mapper->setYColumn(1);
+//            m_mapper->setXRow(0);
+//            m_mapper->setYRow(1);
 //            m_mapper->setFirst(3);
+//            m_mapper->setCount(4);
+
+            m_mapper = new QVXYModelMapper;
+            m_mapper->setModel(m_model);
+            m_mapper->setSeries(m_series);
+            m_mapper->setXColumn(0);
+            m_mapper->setYColumn(1);
+            m_mapper->setFirst(3);
 //            m_mapper->setCount(4);
 
             //            m_series->setModelMapping(0,1, Qt::Vertical);
@@ -505,8 +505,8 @@ void TableWidget::updateChartType(bool toggle)
 
 
         if (!m_barRadioButton->isChecked()) {
-            m_chart->axisX()->setRange(0, 500);
-            m_chart->axisY()->setRange(0, 220);
+//            m_chart->axisX()->setRange(0, 500);
+//            m_chart->axisY()->setRange(0, 220);
         }
         m_chart->legend()->setVisible(true);
 
