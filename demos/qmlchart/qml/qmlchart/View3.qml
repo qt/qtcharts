@@ -61,9 +61,14 @@ Rectangle {
                 XyPoint { x: 10; y: 0 }
                 XyPoint { x: 11; y: 0 }
             }
+            onClicked: {
+                color = "red";
+                borderColor = "black";
+            }
         }
 
         AreaSeries {
+            id: swedish
             name: "Swedish"
             upperSeries: LineSeries {
                 XyPoint { x: 0; y: 1 }
@@ -92,6 +97,10 @@ Rectangle {
                 XyPoint { x: 9; y: 0 }
                 XyPoint { x: 10; y: 0 }
                 XyPoint { x: 11; y: 0 }
+            }
+            onClicked: {
+                color = "yellow";
+                borderColor = "blue";
             }
         }
 
@@ -124,6 +133,10 @@ Rectangle {
                 XyPoint { x: 9; y: 0 }
                 XyPoint { x: 10; y: 0 }
                 XyPoint { x: 11; y: 0 }
+            }
+            onClicked: {
+                color = "white";
+                borderColor = "blue";
             }
         }
     }

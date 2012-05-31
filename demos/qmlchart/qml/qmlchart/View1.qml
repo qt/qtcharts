@@ -29,10 +29,7 @@ Rectangle {
     ChartView {
         id: chart
         title: "Top-5 car brand shares in Finland"
-        anchors.top: parent.top
-        anchors.bottom: button.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.fill: parent
         theme: ChartView.ChartThemeLight
         legend: ChartView.LegendBottom
         animationOptions: ChartView.SeriesAnimations
@@ -40,7 +37,10 @@ Rectangle {
         // If you have static data, you can simply use the PieSlice API
         PieSeries {
             id: pieSeries
-            PieSlice { id: volkswagenSlice; label: "Volkswagen"; value: 13.5 }
+            onClicked: {
+                slice.exploded = !slice.exploded;
+            }
+            PieSlice { label: "Volkswagen"; value: 13.5 }
             PieSlice { label: "Toyota"; value: 10.9 }
             PieSlice { label: "Ford"; value: 8.6 }
             PieSlice { label: "Skoda"; value: 8.2 }
@@ -49,56 +49,8 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        volkswagenSlice.exploded = true;
         // You can also add slices dynamically
         otherSlice = pieSeries.append("Others", 52.0);
-    }
-
-    Timer {
-        repeat: true
-        interval: 2000
-        running: true
-        onTriggered: {
-            // Set all slices as not exploded
-            for (var i = 0; i < pieSeries.count; i++)
-                pieSeries.at(i).exploded = false;
-
-            // Explode one of the slices
-            __explodedIndex = (__explodedIndex + 1) % pieSeries.count;
-            pieSeries.at(__explodedIndex).exploded = true;
-
-            pieSeries.find("Volkswagen").exploded = true;
-            // TODO: implement for convenience
-//            pieSeries.removeAll("Ford");
-        }
-    }
-
-    Rectangle {
-        id: button
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
-        anchors.horizontalCenter: parent.horizontalCenter
-        height: 40
-        width: 100
-        color: "orange"
-        radius: 5
-        Text {
-            id: buttonText
-            anchors.centerIn: parent
-            text: "Hide others"
-        }
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                if (buttonText.text == "Show others") {
-                    buttonText.text = "Hide others";
-                    // TODO: ?
-                    otherSlice.visible = true;
-                } else {
-                    buttonText.text = "Show others";
-                    otherSlice.visible = false;
-                }
-            }
-        }
+        pieSeries.find("Volkswagen").exploded = true;
     }
 }

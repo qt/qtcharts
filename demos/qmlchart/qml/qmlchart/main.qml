@@ -24,18 +24,63 @@ import QtCommercial.Chart 1.0
 Rectangle {
     width: parent.width
     height: parent.height
-    property int __viewNumber: 0
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            __viewNumber++;
-        }
-    }
+    property int viewNumber: 1
 
     Loader {
         id: loader
-        anchors.fill: parent
-        source: "View" + (__viewNumber % 5 + 1) + ".qml";
+        anchors.top: parent.top
+        anchors.bottom: buttons.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        source: "View" + viewNumber + ".qml";
+    }
+
+    Row {
+        id: buttons
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 5
+        anchors.horizontalCenter: parent.horizontalCenter
+        spacing: 10
+
+        Rectangle {
+            height: 35
+            width: 55
+            color: "grey"
+            radius: 5
+            Text {
+                anchors.centerIn: parent
+                text: "previous"
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    var i = viewNumber - 1;
+                    if (i <= 0)
+                        viewNumber = 5;
+                    else
+                        viewNumber = i;
+                }
+            }
+        }
+        Rectangle {
+            height: 35
+            width: 55
+            color: "grey"
+            radius: 5
+            Text {
+                anchors.centerIn: parent
+                text: "next"
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    var i = viewNumber + 1;
+                    if (i > 5)
+                        viewNumber = 1;
+                    else
+                        viewNumber = i;
+                }
+            }
+        }
     }
 }
