@@ -273,6 +273,7 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
 
     foreach (QPieSlice* s, slices) {
         s->setParent(this);
+        QPieSlicePrivate::fromSlice(s)->m_series = this;
         d->m_slices << s;
     }
 
@@ -329,6 +330,7 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
         return false;
 
     slice->setParent(this);
+    QPieSlicePrivate::fromSlice(slice)->m_series = this;
     d->m_slices.insert(index, slice);
 
     d->updateDerivativeData();

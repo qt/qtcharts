@@ -53,6 +53,7 @@ private slots:
     void calculatedValues();
     void clickedSignal();
     void hoverSignal();
+    void sliceSeries();
 
 private:
     void verifyCalculatedData(const QPieSeries &series, bool *ok);
@@ -529,6 +530,23 @@ void tst_qpieseries::hoverSignal()
     TRY_COMPARE(hoverSpy.count(), 2);
     QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(1).at(0)), s1);
     QCOMPARE(qvariant_cast<bool>(hoverSpy.at(1).at(1)), false);
+}
+
+void tst_qpieseries::sliceSeries()
+{
+    QPieSlice *slice = new QPieSlice();
+    QVERIFY(!slice->series());
+    delete slice;
+
+    slice = new QPieSlice(m_series);
+    QVERIFY(!slice->series());
+
+    m_series->append(slice);
+    QCOMPARE(slice->series(), m_series);
+
+    slice = new QPieSlice();
+    m_series->insert(0, slice);
+    QCOMPARE(slice->series(), m_series);
 }
 
 QTEST_MAIN(tst_qpieseries)

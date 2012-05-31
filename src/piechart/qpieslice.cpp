@@ -452,9 +452,20 @@ qreal QPieSlice::angleSpan() const
     return d_ptr->m_data.m_angleSpan;
 }
 
+/*!
+  Returns the series that this slice belongs to.
+
+  \sa QPieSeries::append()
+*/
+QPieSeries *QPieSlice::series() const
+{
+    return d_ptr->m_series;
+}
+
 QPieSlicePrivate::QPieSlicePrivate(QPieSlice *parent)
     :QObject(parent),
-    q_ptr(parent)
+    q_ptr(parent),
+    m_series(0)
 {
 
 }

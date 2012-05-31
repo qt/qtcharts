@@ -6,6 +6,7 @@
 #include "pieslicedata_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class QPieSeries;
 
 class QPieSlicePrivate : public QObject
 {
@@ -27,15 +28,16 @@ public:
     void setAngleSpan(qreal span);
 
 private:
-    PieSliceData m_data;
-
-private:
+    friend class QPieSeries;
     friend class QPieSeriesPrivate;
     friend class ChartTheme;
     friend class PieChartItem;
 
     QPieSlice * const q_ptr;
     Q_DECLARE_PUBLIC(QPieSlice)
+
+    PieSliceData m_data;
+    QPieSeries *m_series;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

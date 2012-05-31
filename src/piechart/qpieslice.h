@@ -29,6 +29,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSlicePrivate;
+class QPieSeries;
 
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
@@ -85,6 +86,8 @@ public:
     qreal percentage() const;
     qreal startAngle() const;
     qreal angleSpan() const;
+
+    QPieSeries *series() const;
 
 Q_SIGNALS:
     void labelChanged();
