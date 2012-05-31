@@ -60,11 +60,11 @@ public:
     void reset();
 
 protected:
-    int valuesIndex() const;
-    void setValuesIndex(int valuesIndex);
+    int valuesSection() const;
+    void setValuesSection(int valuesSection);
 
-    int labelsIndex() const;
-    void setLabelsIndex(int labelsIndex);
+    int labelsSection() const;
+    void setLabelsSection(int labelsSection);
 
     Qt::Orientation orientation() const;
     void setOrientation(Qt::Orientation orientation);

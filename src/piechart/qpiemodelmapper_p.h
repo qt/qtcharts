@@ -84,8 +84,8 @@ private:
     int m_first;
     int m_count;
     Qt::Orientation m_orientation;
-    int m_valuesIndex;
-    int m_labelsIndex;
+    int m_valuesSection;
+    int m_labelsSection;
     bool m_seriesSignalsBlock;
     bool m_modelSignalsBlock;
 

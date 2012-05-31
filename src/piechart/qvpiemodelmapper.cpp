@@ -31,22 +31,22 @@ QVPieModelMapper::QVPieModelMapper(QObject *parent) :
 
 int QVPieModelMapper::valuesColumn() const
 {
-    return QPieModelMapper::valuesIndex();
+    return QPieModelMapper::valuesSection();
 }
 
 void QVPieModelMapper::setValuesColumn(int valuesColumn)
 {
-    QPieModelMapper::setValuesIndex(valuesColumn);
+    QPieModelMapper::setValuesSection(valuesColumn);
 }
 
 int QVPieModelMapper::labelsColumn() const
 {
-    return QPieModelMapper::labelsIndex();
+    return QPieModelMapper::labelsSection();
 }
 
 void QVPieModelMapper::setLabelsColumn(int labelsColumn)
 {
-    QPieModelMapper::setLabelsIndex(labelsColumn);
+    QPieModelMapper::setLabelsSection(labelsColumn);
 }
 
 #include "moc_qvpiemodelmapper.cpp"

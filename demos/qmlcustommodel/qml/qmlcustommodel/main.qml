@@ -74,12 +74,19 @@ Rectangle {
             verticalPosition: 0.3
         }
 
-        VPieModelMapper {
+//        VPieModelMapper {
+//            series: pieSeries
+//            model: customModel
+//            labelsColumn: 1
+//            valuesColumn: 2
+//            first: 1
+//        }
+        HPieModelMapper {
             series: pieSeries
             model: customModel
-            labelsColumn: 1
-            valuesColumn: 2
-            first: 1
+            labelsRow: 1
+            valuesRow: 2
+            first: 2
         }
 
         AreaSeries {
