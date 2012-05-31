@@ -36,7 +36,7 @@ public:
     void changeSeries(QAbstractSeries *series);
 
 public Q_SLOTS:
-    void handleClicked(QBarSet *barset, QString category);
+    void handleClicked(QBarSet *barset, int index);
 
 private:
     QAbstractSeries* m_currentSeries;

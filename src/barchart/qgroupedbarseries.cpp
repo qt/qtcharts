@@ -71,7 +71,6 @@ QGroupedBarSeriesPrivate::QGroupedBarSeriesPrivate(QGroupedBarSeries *q) : QBarS
 
 void QGroupedBarSeriesPrivate::scaleDomain(Domain& domain)
 {
-    Q_Q(QGroupedBarSeries);
     qreal minX(domain.minX());
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
@@ -79,7 +78,7 @@ void QGroupedBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    qreal x = q->categoryCount();
+    qreal x = categoryCount();
     qreal y = max();
     minX = qMin(minX, x) - 0.5;
     minY = qMin(minY, y);

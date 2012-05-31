@@ -43,8 +43,6 @@ private slots:
     void qbarseries();
     void type_data();
     void type();
-    void setCategories_data();
-    void setCategories();
     void append_data();
     void append();
     void remove_data();
@@ -55,12 +53,8 @@ private slots:
     void removeList();
     void barsetCount_data();
     void barsetCount();
-    void categoryCount_data();
-    void categoryCount();
     void barSets_data();
     void barSets();
-    void categories_data();
-    void categories();
     void setLabelsVisible_data();
     void setLabelsVisible();
     void mouseclicked_data();
@@ -74,7 +68,6 @@ private:
 
     QList<QBarSet*> m_testSets;
 
-    QBarCategories m_categories;
 };
 
 void tst_QBarSeries::initTestCase()
@@ -88,11 +81,8 @@ void tst_QBarSeries::cleanupTestCase()
 
 void tst_QBarSeries::init()
 {
-    m_categories << "category0" << "category1" << "category2";
     m_barseries = new QBarSeries();
-    m_barseries->setCategories(m_categories);
     m_barseries_with_sets = new QBarSeries();
-    m_barseries_with_sets->setCategories(m_categories);
 
     for (int i=0; i<5; i++) {
         m_testSets.append(new QBarSet("testset"));
@@ -112,29 +102,16 @@ void tst_QBarSeries::cleanup()
     m_barseries = 0;
     delete m_barseries_with_sets;
     m_barseries_with_sets = 0;
-    m_categories.clear();
 }
 
 void tst_QBarSeries::qbarseries_data()
 {
-    QTest::addColumn<QBarCategories> ("categories");
-    QBarCategories c;
-    c << "category0" << "category1" << "category2";
-    QTest::newRow("categories") << c;
 }
 
 void tst_QBarSeries::qbarseries()
 {
-    QFETCH(QBarCategories, categories);
     QBarSeries *barseries = new QBarSeries();
     QVERIFY(barseries != 0);
-    barseries->setCategories(categories);
-    QBarCategories verifyCategories = barseries->categories();
-
-    QVERIFY(verifyCategories.count() == categories.count());
-    for (int i=0; i<categories.count(); i++) {
-        QVERIFY(verifyCategories.at(i).compare(categories.at(i)) == 0);
-    }
 }
 
 void tst_QBarSeries::type_data()
@@ -145,27 +122,6 @@ void tst_QBarSeries::type_data()
 void tst_QBarSeries::type()
 {
     QVERIFY(m_barseries->type() == QAbstractSeries::SeriesTypeBar);
-}
-
-void tst_QBarSeries::setCategories_data()
-{
-    QTest::addColumn<QBarCategories> ("categories");
-    QBarCategories categories;
-    categories << "c1" << "c2" << "c3" << "c4" << "c5" << "c6";
-    QTest::newRow("cat") << categories;
-}
-
-void tst_QBarSeries::setCategories()
-{
-    QVERIFY(m_barseries->categories().count() == m_categories.count());
-
-    QFETCH(QBarCategories, categories);
-    m_barseries->setCategories(categories);
-
-    QVERIFY(m_barseries->categories().count() == categories.count());
-    for (int i=0; i<categories.count(); i++) {
-        QVERIFY(m_barseries->categories().at(i).compare(categories.at(i)) == 0);
-    }
 }
 
 void tst_QBarSeries::append_data()
@@ -352,17 +308,6 @@ void tst_QBarSeries::barsetCount()
     QVERIFY(m_barseries_with_sets->barsetCount() == m_testSets.count());
 }
 
-void tst_QBarSeries::categoryCount_data()
-{
-
-}
-
-void tst_QBarSeries::categoryCount()
-{
-    QVERIFY(m_barseries->categoryCount() == m_categories.count());
-    QVERIFY(m_barseries_with_sets->categoryCount() == m_categories.count());
-}
-
 void tst_QBarSeries::barSets_data()
 {
 
@@ -377,21 +322,6 @@ void tst_QBarSeries::barSets()
 
     for (int i=0; i<m_testSets.count(); i++) {
         QVERIFY(sets.at(i) == m_testSets.at(i));
-    }
-}
-
-void tst_QBarSeries::categories_data()
-{
-
-}
-
-void tst_QBarSeries::categories()
-{
-    QBarCategories categories = m_barseries->categories();
-
-    QVERIFY(categories.count() == m_categories.count());
-    for (int i=0; i<m_categories.count(); i++) {
-        QVERIFY(categories.at(i).compare(m_categories.at(i)) == 0);
     }
 }
 
@@ -430,9 +360,6 @@ void tst_QBarSeries::mouseclicked_data()
 void tst_QBarSeries::mouseclicked()
 {
     QBarSeries* series = new QBarSeries();
-    QBarCategories categories;
-    categories << "test1" << "test2" << "test3";
-    series->setCategories(categories);
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
@@ -442,7 +369,7 @@ void tst_QBarSeries::mouseclicked()
     *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
     series->append(set2);
 
-    QSignalSpy seriesSpy(series,SIGNAL(clicked(QBarSet*,QString)));
+    QSignalSpy seriesSpy(series,SIGNAL(clicked(QBarSet*,int)));
 
     QChartView view(new QChart());
     view.resize(400,300);
@@ -459,8 +386,8 @@ void tst_QBarSeries::mouseclicked()
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test1")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 0);
 
 //====================================================================================
 // barset 1, category test2
@@ -471,8 +398,8 @@ void tst_QBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test2")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 1);
 
 //====================================================================================
 // barset 1, category test3
@@ -483,8 +410,8 @@ void tst_QBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test3")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 2);
 
 //====================================================================================
 // barset 2, category test1
@@ -495,8 +422,8 @@ void tst_QBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test1")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 0);
 
 //====================================================================================
 // barset 2, category test2
@@ -507,8 +434,8 @@ void tst_QBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test2")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 1);
 
 //====================================================================================
 // barset 2, category test3
@@ -519,8 +446,8 @@ void tst_QBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test3")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 2);
 }
 
 void tst_QBarSeries::mousehovered_data()
@@ -531,9 +458,9 @@ void tst_QBarSeries::mousehovered_data()
 void tst_QBarSeries::mousehovered()
 {
     QBarSeries* series = new QBarSeries();
-    QBarCategories categories;
+    QStringList categories;
     categories << "test1" << "test2" << "test3";
-    series->setCategories(categories);
+//    series->setCategories(categories);
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << QPointF(0.1,10) << QPointF(1.1,10) << QPointF(2.1,10);

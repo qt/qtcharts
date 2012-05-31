@@ -47,7 +47,6 @@ public:
     ~QBarSetPrivate();
 
 Q_SIGNALS:
-    void clicked(QString category);
     void restructuredBars();
     void updatedBars();
 

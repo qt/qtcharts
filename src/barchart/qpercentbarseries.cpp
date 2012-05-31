@@ -71,7 +71,6 @@ QPercentBarSeriesPrivate::QPercentBarSeriesPrivate(QPercentBarSeries *q) : QBarS
 
 void QPercentBarSeriesPrivate::scaleDomain(Domain& domain)
 {
-    Q_Q(QPercentBarSeries);
     qreal minX(domain.minX());
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
@@ -79,7 +78,7 @@ void QPercentBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    qreal x = q->categoryCount();
+    qreal x = categoryCount();
     minX = qMin(minX, x) - 0.5;
     maxX = qMax(maxX, x) - 0.5;
     minY = 0;

@@ -47,10 +47,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::clicked(QBarSet *barset, QString category)
+    \fn void QBarSeries::clicked(QBarSet *barset, int index)
 
-    The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset of category \a category
-    contained by the series.
+    The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset.
+    Clicked bar inside set is indexed by \a index
 */
 
 /*!
@@ -95,16 +95,6 @@ QBarSeries::QBarSeries(QBarSeriesPrivate &d, QObject *parent) :
 QAbstractSeries::SeriesType QBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeBar;
-}
-
-/*!
-    Sets the \a categories, which are used to to group the data.
-*/
-void QBarSeries::setCategories(QBarCategories categories)
-{
-    Q_D(QBarSeries);
-    d->setCategories(categories);
-    emit d->categoriesUpdated();
 }
 
 /*!
@@ -172,7 +162,6 @@ void QBarSeries::clear()
 {
     Q_D(QBarSeries);
     d->m_barSets.clear();
-    d->m_categories.clear();
 }
 
 /*!
@@ -185,30 +174,12 @@ int QBarSeries::barsetCount() const
 }
 
 /*!
-    Returns number of categories in series
-*/
-int QBarSeries::categoryCount() const
-{
-    Q_D(const QBarSeries);
-    return d->categoryCount();
-}
-
-/*!
     Returns a list of sets in series. Keeps ownership of sets.
  */
 QList<QBarSet*> QBarSeries::barSets() const
 {
     Q_D(const QBarSeries);
     return d->m_barSets;
-}
-
-/*!
-    Returns the bar categories of the series.
-*/
-QBarCategories QBarSeries::categories() const
-{
-    Q_D(const QBarSeries);
-    return d->categories();
 }
 
 /*!
@@ -260,7 +231,7 @@ QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
 {
 }
 
-void QBarSeriesPrivate::setCategories(QBarCategories categories)
+void QBarSeriesPrivate::setCategories(QStringList categories)
 {
     m_categories = categories;
 }
@@ -294,14 +265,14 @@ int QBarSeriesPrivate::categoryCount() const
     return count;
 }
 
-QBarCategories QBarSeriesPrivate::categories() const
+QStringList QBarSeriesPrivate::categories() const
 {
     if (m_categories.count() > 0) {
         return m_categories;
     }
 
     // No categories defined. retun list of indices.
-    QBarCategories categories;
+    QStringList categories;
 
     int count = categoryCount();
     for (int i = 0; i < count; i++) {

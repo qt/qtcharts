@@ -276,16 +276,16 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         QBarSeries* series = 0;
         if (seriesName == "Bar") {
             series = new QBarSeries(this);
-            series->setCategories(category);
+            m_chart->axisX()->categories()->insert(category);
         } else if (seriesName == "Grouped bar") {
             series = new QGroupedBarSeries(this);
-            series->setCategories(category);
+            m_chart->axisX()->categories()->insert(category);
         } else if (seriesName == "Stacked bar") {
             series = new QStackedBarSeries(this);
-            series->setCategories(category);
+            m_chart->axisX()->categories()->insert(category);
         } else {
             series = new QPercentBarSeries(this);
-            series->setCategories(category);
+            m_chart->axisX()->categories()->insert(category);
         }
 
         for (int j(0); j < data.count(); j++) {

@@ -39,11 +39,11 @@ void DrilldownChart::changeSeries(QAbstractSeries *series)
     axisY()->setNiceNumbersEnabled(true);
 }
 
-void DrilldownChart::handleClicked(QBarSet *barset, QString category)
+void DrilldownChart::handleClicked(QBarSet *barset, int index)
 {
     Q_UNUSED(barset)
     DrilldownBarSeries* series = static_cast<DrilldownBarSeries*> (sender());
-    changeSeries(series->drilldownSeries(category));
+    changeSeries(series->drilldownSeries(index));
 }
 
 #include "moc_drilldownchart.cpp"

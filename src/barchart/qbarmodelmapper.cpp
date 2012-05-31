@@ -412,7 +412,8 @@ void QBarModelMapperPrivate::initializeBarFromModel()
             posInCategories++;
             categoriesIndex = categoriesModelIndex(posInCategories);
         }
-        m_series->setCategories(categories);
+        // TODO: set the categories to axis
+//        m_series->setCategories(categories);
     }
     blockSeriesSignals(false);
 }

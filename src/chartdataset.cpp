@@ -89,14 +89,6 @@ void ChartDataSet::addSeries(QAbstractSeries* series, QAxis *axisY)
 
     series->d_ptr->scaleDomain(*domain);
 
-    // Note that with SeriesTypeBar we don't set up categories, but use real values on x-asis
-    if(series->type() == QAbstractSeries::SeriesTypeGroupedBar
-            || series->type() == QAbstractSeries::SeriesTypeStackedBar
-            || series->type() == QAbstractSeries::SeriesTypePercentBar) {
-        QBarSeries* barSeries = static_cast<QBarSeries*>(series);
-        setupCategories(barSeries);
-    }
-
     if (series->type()== QAbstractSeries::SeriesTypePie && m_seriesAxisMap.count() == 0) {
         axisX()->hide();
         this->axisY()->hide();
@@ -188,13 +180,6 @@ void ChartDataSet::removeAllSeries()
 
     qDeleteAll(series);
     qDeleteAll(axes);
-}
-
-void ChartDataSet::setupCategories(QBarSeries* series)
-{
-   QAxisCategories* categories = axisX()->categories();
-   categories->clear();
-   categories->insert(series->categories());
 }
 
 void ChartDataSet::zoomInDomain(const QRectF& rect, const QSizeF& size)

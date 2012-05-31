@@ -26,10 +26,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-typedef QStringList QBarCategories;
-
 class QBarSet;
-class BarCategory;
 class QBarSeriesPrivate;
 
 // Container for series
@@ -46,7 +43,6 @@ public:
     virtual ~QBarSeries();
 
     QAbstractSeries::SeriesType type() const;
-    void setCategories(QBarCategories categories);
 
     void setBarMargin(qreal margin);
     qreal barMargin() const;
@@ -56,9 +52,7 @@ public:
     bool append(QList<QBarSet* > sets);
     bool remove(QList<QBarSet* > sets);
     int barsetCount() const;
-    int categoryCount() const;
     QList<QBarSet*> barSets() const;
-    QBarCategories categories() const;
     void clear();
 
     void setVisible(bool visible = true);
@@ -70,7 +64,7 @@ protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);
 
 Q_SIGNALS:
-    void clicked(QBarSet *barset, QString category);
+    void clicked(QBarSet *barset, int index);
     void hovered(QBarSet* barset, bool status);
 
 protected:

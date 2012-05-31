@@ -42,7 +42,7 @@ class Bar : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    Bar(QBarSet *barset, QString category, QGraphicsItem *parent = 0);
+    Bar(QBarSet *barset, int index, QGraphicsItem *parent = 0);
 
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -50,13 +50,11 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 Q_SIGNALS:
-    void clicked(QString category);
-    void clicked(QBarSet *barset, QString category);
-    void hovered(bool status);
+    void clicked(QBarSet *barset, int index);
     void hovered(QBarSet *barset, bool status);
 
 private:
-    QString m_category;
+    int m_index;
     QBarSet *m_barset;
 };
 

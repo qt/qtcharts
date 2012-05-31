@@ -212,12 +212,13 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
     chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Bar chart");
 
-    QBarCategories categories;
+    QStringList categories;
     for (int i(0); i < valueCount; i++)
         categories << QString::number(i);
 
+    chart->axisX()->categories()->insert(categories);
+
     QStackedBarSeries* series = new QStackedBarSeries(chart);
-    series->setCategories(categories);
     for (int i(0); i < m_dataTable.count(); i++) {
         QBarSet *set = new QBarSet("Bar set " + QString::number(i));
         foreach (Data data, m_dataTable[i])

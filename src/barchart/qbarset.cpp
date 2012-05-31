@@ -38,20 +38,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::clicked(QString category)
-    \brief signals that set has been clicked
-    Parameter \a category describes on which category was clicked
-*/
-
-/*!
-    \fn void QBarSet::hovered(bool status)
-    \brief signals that mouse has hovered over the set. If \a status is true, then mouse was entered. If \a status is false, then mouse was left.
-
-    The signal is emitted if mouse is hovered on top of set
-    Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
-*/
-
-/*!
     Constructs QBarSet with a name of \a name and with parent of \a parent
 */
 QBarSet::QBarSet(const QString name, QObject *parent)

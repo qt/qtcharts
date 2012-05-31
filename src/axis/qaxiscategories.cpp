@@ -45,17 +45,18 @@ QAxisCategories::~QAxisCategories()
 }
 
 /*!
-  Inserts bar \a categories.
+  Inserts \a categories to axis. First item in list is assumed to be at x = 0, next at x = 1 and so on
  */
-void QAxisCategories::insert(const QBarCategories &categories)
+void QAxisCategories::insert(const QStringList &categories)
 {
-    int i=1;
+    int i=0;
     foreach (const QString& string , categories) {
         d_ptr->m_map.insert(i,string);
         i++;
     }
     emit d_ptr->updated();
 }
+
 
 /*!
   Inserts category, instead of \a value on axis a \a label will be shown.

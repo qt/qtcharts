@@ -44,11 +44,12 @@ class QBarSeriesPrivate : public QAbstractSeriesPrivate
     Q_OBJECT
 public:
     QBarSeriesPrivate(QBarSeries *parent);
-    void setCategories(QBarCategories categories);
+    // TODO: refactor/remove private category stuff
+    void setCategories(QStringList categories);
     void insertCategory(int index, const QString category);
     void removeCategory(int index);
     int categoryCount() const;
-    QBarCategories categories() const;
+    QStringList categories() const;
 
     void setBarMargin(qreal margin);
     qreal barMargin() const;
@@ -76,7 +77,7 @@ public:
     qreal maxCategorySum();
 
 Q_SIGNALS:
-    void clicked(QBarSet *barset, QString category);
+    void clicked(QBarSet *barset, int index);
     void updatedBars();
     void restructuredBars();
     void categoriesUpdated();
@@ -87,7 +88,7 @@ private Q_SLOTS:
 
 protected:
     QList<QBarSet *> m_barSets;
-    QBarCategories m_categories;
+    QStringList m_categories;
     qreal m_barMargin;
     bool m_labelsVisible;
     bool m_visible;

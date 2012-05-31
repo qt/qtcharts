@@ -33,12 +33,12 @@ class DrilldownBarSeries : public QStackedBarSeries
 public:
     DrilldownBarSeries(QStringList categories, QObject *parent = 0);
 
-    void mapDrilldownSeries(QString category, DrilldownBarSeries* drilldownSeries);
+    void mapDrilldownSeries(int index, DrilldownBarSeries* drilldownSeries);
 
-    DrilldownBarSeries* drilldownSeries(QString category);
+    DrilldownBarSeries* drilldownSeries(int index);
 
 private:
-    QMap<QString, DrilldownBarSeries*> mDrilldownSeries;
+    QMap<int, DrilldownBarSeries*> mDrilldownSeries;
 };
 //! [1]
 

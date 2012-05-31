@@ -37,7 +37,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAxis;
-class QBarSeries;
 
 class QTCOMMERCIALCHART_AUTOTEST_EXPORT ChartDataSet : public QObject
 {
@@ -76,7 +75,6 @@ Q_SIGNALS:
 private:
     QStringList createLabels(QAxis* axis,qreal min, qreal max);
     void calculateDomain(QAbstractSeries* series,Domain* domain);
-    void setupCategories(QBarSeries* series);
 
 private:
     QMap<QAbstractSeries *, QAxis *> m_seriesAxisMap;

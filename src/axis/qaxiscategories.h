@@ -22,7 +22,7 @@
 #define QAXISCATEGORIES_H
 
 #include <qchartglobal.h>
-#include <qbarseries.h>
+#include <QStringList>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -36,7 +36,7 @@ private:
 public:
     ~QAxisCategories();
 
-    void insert(const QBarCategories &category);
+    void insert(const QStringList &category);
     void insert(qreal value,QString label);
     void remove(qreal value);
     QList<qreal> values() const;

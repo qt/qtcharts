@@ -102,9 +102,6 @@ void tst_QGroupedBarSeries::mouseclicked_data()
 void tst_QGroupedBarSeries::mouseclicked()
 {
     QGroupedBarSeries* series = new QGroupedBarSeries();
-    QBarCategories categories;
-    categories << "test1" << "test2" << "test3";
-    series->setCategories(categories);
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;
@@ -114,7 +111,7 @@ void tst_QGroupedBarSeries::mouseclicked()
     *set2 << 10 << 10 << 10;
     series->append(set2);
 
-    QSignalSpy seriesSpy(series,SIGNAL(clicked(QBarSet*,QString)));
+    QSignalSpy seriesSpy(series,SIGNAL(clicked(QBarSet*,int)));
 
     QChartView view(new QChart());
     view.resize(400,300);
@@ -131,8 +128,8 @@ void tst_QGroupedBarSeries::mouseclicked()
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test1")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 0);
 
 //====================================================================================
 // barset 1, category test2
@@ -143,8 +140,8 @@ void tst_QGroupedBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test2")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 1);
 
 //====================================================================================
 // barset 1, category test3
@@ -155,8 +152,8 @@ void tst_QGroupedBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test3")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 2);
 
 //====================================================================================
 // barset 2, category test1
@@ -167,8 +164,8 @@ void tst_QGroupedBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test1")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 0);
 
 //====================================================================================
 // barset 2, category test2
@@ -179,8 +176,8 @@ void tst_QGroupedBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test2")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 1);
 
 //====================================================================================
 // barset 2, category test3
@@ -191,8 +188,8 @@ void tst_QGroupedBarSeries::mouseclicked()
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
-    QVERIFY(seriesSpyArg.at(1).type() == QVariant::String);
-    QVERIFY(seriesSpyArg.at(1).toString().compare(QString("test3")) == 0);
+    QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(seriesSpyArg.at(1).toInt() == 2);
 }
 
 void tst_QGroupedBarSeries::mousehovered_data()
@@ -203,9 +200,6 @@ void tst_QGroupedBarSeries::mousehovered_data()
 void tst_QGroupedBarSeries::mousehovered()
 {
     QGroupedBarSeries* series = new QGroupedBarSeries();
-    QBarCategories categories;
-    categories << "test1" << "test2" << "test3";
-    series->setCategories(categories);
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;

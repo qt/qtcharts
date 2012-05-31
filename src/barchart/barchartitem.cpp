@@ -73,15 +73,14 @@ void BarChartItem::dataChanged()
     bool labelsVisible = m_series->isLabelsVisible();
 
     // Create new graphic items for bars
-    for (int c = 0; c < m_series->categoryCount(); c++) {
-        QString category = m_series->d_func()->categoryName(c);
+    for (int c = 0; c < m_series->d_func()->categoryCount(); c++) {
         for (int s = 0; s < m_series->barsetCount(); s++) {
             QBarSet *set = m_series->d_func()->barsetAt(s);
 
             // Bars
-            Bar *bar = new Bar(set,category,this);
+            Bar *bar = new Bar(set,c,this);
             m_bars.append(bar);
-            connect(bar, SIGNAL(clicked(QBarSet*,QString)), m_series, SIGNAL(clicked(QBarSet*,QString)));
+            connect(bar, SIGNAL(clicked(QBarSet*,int)), m_series, SIGNAL(clicked(QBarSet*,int)));
             connect(bar, SIGNAL(hovered(QBarSet*,bool)), m_series, SIGNAL(hovered(QBarSet*,bool)));
             m_layout.append(QRectF(0, 0, 0, 0));
 
@@ -100,8 +99,8 @@ QVector<QRectF> BarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
 
-    // Use temporary qreals for accurancy
-    qreal categoryCount = m_series->categoryCount();
+    // Use temporary qreals for accuracy
+    qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->barsetCount();
     bool barsVisible = m_series->isVisible();
 

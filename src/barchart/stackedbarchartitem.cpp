@@ -34,8 +34,8 @@ StackedBarChartItem::StackedBarChartItem(QBarSeries *series, ChartPresenter *pre
 QVector<QRectF> StackedBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
-    // Use temporary qreals for accurancy
-    qreal categoryCount = m_series->categoryCount();
+    // Use temporary qreals for accuracy
+    qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->barsetCount();
 
     // Domain:

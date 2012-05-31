@@ -32,11 +32,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //![1]
-    QBarCategories categories;
-    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
-//![1]
-
-//![2]
     QBarSet *set0 = new QBarSet("Jane");
     QBarSet *set1 = new QBarSet("John");
     QBarSet *set2 = new QBarSet("Axel");
@@ -48,22 +43,27 @@ int main(int argc, char *argv[])
     *set2 << 3 << 5 << 8 << 13 << 8 << 5;
     *set3 << 5 << 6 << 7 << 3 << 4 << 5;
     *set4 << 9 << 7 << 5 << 3 << 1 << 2;
-//![2]
+//![1]
 
-//![3]
+//![2]
     QPercentBarSeries* series = new QPercentBarSeries();
-    series->setCategories(categories);
     series->append(set0);
     series->append(set1);
     series->append(set2);
     series->append(set3);
     series->append(set4);
-//![3]
+//![2]
 
-//![4]
+//![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple percentbarchart example");
+//![3]
+
+//![4]
+    QStringList categories;
+    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+    chart->axisX()->categories()->insert(categories);
 //![4]
 
 //![5]

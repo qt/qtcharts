@@ -71,7 +71,6 @@ QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QStackedBarSeries *q) : QBarS
 
 void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
 {
-    Q_Q(QStackedBarSeries);
     qreal minX(domain.minX());
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
@@ -79,7 +78,7 @@ void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    qreal x = q->categoryCount();
+    qreal x = categoryCount();
     qreal y = maxCategorySum();
     minX = qMin(minX, x) - 0.5;
     minY = qMin(minY, y);

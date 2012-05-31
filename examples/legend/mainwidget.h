@@ -12,7 +12,6 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 class MainWidget : public QWidget
-//class MainWidget : public QGraphicsWidget
 {
     Q_OBJECT
 public:
