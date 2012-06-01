@@ -56,6 +56,18 @@
 */
 
 /*!
+  \property QScatterSeries::markerShape
+
+  Defines the shape of the marker used to draw the points in the series.
+*/
+
+/*!
+  \property QScatterSeries::markerSize
+
+  Defines the size of the marker used to draw the points in the series.
+*/
+
+/*!
     \fn QChartSeriesType QScatterSeries::type() const
     \brief Returns QChartSeries::SeriesTypeScatter.
     \sa QAbstractSeries, SeriesType
