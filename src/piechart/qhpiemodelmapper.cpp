@@ -46,6 +46,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Default value is: -1 (invalid mapping)
 */
 
+/*!
+    Constructs a mapper object which is a child of \a parent.
+*/
 QHPieModelMapper::QHPieModelMapper(QObject *parent) :
     QPieModelMapper(parent)
 {

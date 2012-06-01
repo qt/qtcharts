@@ -10,6 +10,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Nothing here yet
 */
 
+/*!
+    Constructs a mapper object which is a child of \a parent.
+*/
 QVBarModelMapper::QVBarModelMapper(QObject *parent) :
     QBarModelMapper(parent)
 {

@@ -63,6 +63,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 
+/*!
+    Constructs a mapper object which is a child of \a parent.
+*/
 QPieModelMapper::QPieModelMapper(QObject *parent) :
     QObject(parent),
     d_ptr(new QPieModelMapperPrivate(this))

@@ -38,10 +38,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     The instance of this class cannot be created directly. QHXYModelMapper of QVXYModelMapper should be used instead. This class is used to create a connection between QXYSeries and QAbstractItemModel derived model object.
-    It is possible to use both QAbstractItemModel and QPieSeries model API. QPieModelMapper makes sure that QXYSeries and the model are kept in sync.
+    It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 
+/*!
+    Constructs a mapper object which is a child of \a parent.
+*/
 QXYModelMapper::QXYModelMapper(QObject *parent):
     QObject(parent),
     d_ptr(new QXYModelMapperPrivate(this))

@@ -24,6 +24,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Default value is: -1 (invalid mapping)
 */
 
+/*!
+    Constructs a mapper object which is a child of \a parent.
+*/
 QVXYModelMapper::QVXYModelMapper(QObject *parent) :
     QXYModelMapper(parent)
 {
