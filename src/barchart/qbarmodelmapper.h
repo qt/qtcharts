@@ -52,9 +52,6 @@ protected:
     Qt::Orientation orientation() const;
     void setOrientation(Qt::Orientation orientation);    
 
-Q_SIGNALS:
-    void updated();
-
 protected:
     QBarModelMapperPrivate * const d_ptr;
     Q_DECLARE_PRIVATE(QBarModelMapper)

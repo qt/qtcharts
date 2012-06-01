@@ -11,6 +11,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QHBarModelMapper::firstBarSetRow
+    \brief Defines which column of the model is used as the data source for the first bar set
+
+    Default value is: -1 (invalid mapping)
+*/
+
+/*!
+    \property QHBarModelMapper::lastBarSetRow
+    \brief Defines which column of the model is used as the data source for the last bar set
+
+    Default value is: -1 (invalid mapping)
+*/
+
+/*!
+    \property QHBarModelMapper::categoriesRow
+    \brief Defines which row of the model is used as the data source for the x axis categories
+
+    Default value is: -1 (invalid mapping)
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QHBarModelMapper::QHBarModelMapper(QObject *parent) :
