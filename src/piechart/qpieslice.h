@@ -39,18 +39,18 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
     Q_PROPERTY(bool labelVisible READ isLabelVisible WRITE setLabelVisible NOTIFY labelVisibleChanged)
     Q_PROPERTY(bool exploded READ isExploded WRITE setExploded NOTIFY explodedChanged)
     Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
+    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
+    Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged)
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
+    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush NOTIFY labelBrushChanged)
+    Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
     Q_PROPERTY(QFont labelFont READ labelFont WRITE setLabelFont NOTIFY labelFontChanged)
     Q_PROPERTY(qreal labelArmLengthFactor READ labelArmLengthFactor WRITE setLabelArmLengthFactor)
     Q_PROPERTY(qreal explodeDistanceFactor READ explodeDistanceFactor WRITE setExplodeDistanceFactor)
     Q_PROPERTY(qreal percentage READ percentage NOTIFY percentageChanged)
     Q_PROPERTY(qreal startAngle READ startAngle NOTIFY startAngleChanged)
     Q_PROPERTY(qreal angleSpan READ angleSpan NOTIFY angleSpanChanged)
-    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
-    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
-    Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged)
-    Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
 
 public:
     explicit QPieSlice(QObject *parent = 0);
@@ -72,11 +72,23 @@ public:
     void setPen(const QPen &pen);
     QPen pen() const;
 
+    QColor borderColor();
+    void setBorderColor(QColor color);
+
+    int borderWidth();
+    void setBorderWidth(int width);
+
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
+    QColor color();
+    void setColor(QColor color);
+
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
+
+    QColor labelColor();
+    void setLabelColor(QColor color);
 
     void setLabelFont(const QFont &font);
     QFont labelFont() const;
@@ -90,15 +102,6 @@ public:
     qreal percentage() const;
     qreal startAngle() const;
     qreal angleSpan() const;
-
-    QColor color();
-    void setColor(QColor color);
-    QColor borderColor();
-    void setBorderColor(QColor color);
-    int borderWidth();
-    void setBorderWidth(int width);
-    QColor labelColor();
-    void setLabelColor(QColor color);
 
     QPieSeries *series() const;
 

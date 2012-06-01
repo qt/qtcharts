@@ -121,6 +121,42 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QPieSlice::borderColor
+
+    Color used to draw the slice border.
+
+    This is a convenience property for modifying the slice pen.
+
+    \sa pen, borderWidth
+*/
+
+/*!
+    \fn void QPieSlice::borderColorChanged()
+
+    This signal is emitted when slice border color changes.
+
+    \sa pen, borderColor
+*/
+
+/*!
+    \property QPieSlice::borderWidth
+
+    Width of the slice border.
+
+    This is a convenience property for modifying the slice pen.
+
+    \sa pen, borderColor
+*/
+
+/*!
+    \fn void QPieSlice::borderWidthChanged()
+
+    This signal is emitted when slice border width changes.
+
+    \sa pen, borderWidth
+*/
+
+/*!
     \property QPieSlice::brush
 
     Brush used to draw the slice.
@@ -130,6 +166,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \fn void QPieSlice::brushChanged()
 
     This signal is emitted when the brush of the slice has changed.
+
+    \sa brush
+*/
+
+/*!
+    \property QPieSlice::color
+
+    Color used to draw the slice.
+
+    This is a convenience property for modifying the slice brush.
+
+    \sa brush
+*/
+
+/*!
+    \fn void QPieSlice::colorChanged()
+
+    This signal is emitted when slice color changes.
 
     \sa brush
 */
@@ -148,6 +202,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when the label pen of the slice has changed.
 
     \sa labelBrush
+*/
+
+/*!
+    \property QPieSlice::labelColor
+
+    Color used to draw the slice label.
+
+    This is a convenience property for modifying the slice label brush.
+
+    \sa labelBrush
+*/
+
+/*!
+    \fn void QPieSlice::labelColorChanged()
+
+    This signal is emitted when slice label color changes.
+
+    \sa labelColor
 */
 
 /*!
@@ -381,6 +453,34 @@ QPen QPieSlice::pen() const
     return d_ptr->m_data.m_slicePen;
 }
 
+QColor QPieSlice::borderColor()
+{
+    return pen().color();
+}
+
+void QPieSlice::setBorderColor(QColor color)
+{
+    QPen p = pen();
+    if (color != p.color()) {
+        p.setColor(color);
+        setPen(p);
+    }
+}
+
+int QPieSlice::borderWidth()
+{
+    return pen().width();
+}
+
+void QPieSlice::setBorderWidth(int width)
+{
+    QPen p = pen();
+    if (width != p.width()) {
+        p.setWidth(width);
+        setPen(p);
+    }
+}
+
 void QPieSlice::setBrush(const QBrush &brush)
 {
     d_ptr->setBrush(brush, false);
@@ -391,6 +491,20 @@ QBrush QPieSlice::brush() const
     return d_ptr->m_data.m_sliceBrush;
 }
 
+QColor QPieSlice::color()
+{
+    return brush().color();
+}
+
+void QPieSlice::setColor(QColor color)
+{
+    QBrush b = brush();
+    if (color != b.color()) {
+        b.setColor(color);
+        setBrush(b);
+    }
+}
+
 void QPieSlice::setLabelBrush(const QBrush &brush)
 {
     d_ptr->setLabelBrush(brush, false);
@@ -399,6 +513,20 @@ void QPieSlice::setLabelBrush(const QBrush &brush)
 QBrush QPieSlice::labelBrush() const
 {
     return d_ptr->m_data.m_labelBrush;
+}
+
+QColor QPieSlice::labelColor()
+{
+    return labelBrush().color();
+}
+
+void QPieSlice::setLabelColor(QColor color)
+{
+    QBrush b = labelBrush();
+    if (color != b.color()) {
+        b.setColor(color);
+        setLabelBrush(b);
+    }
 }
 
 void QPieSlice::setLabelFont(const QFont &font)
@@ -452,63 +580,6 @@ qreal QPieSlice::angleSpan() const
     return d_ptr->m_data.m_angleSpan;
 }
 
-QColor QPieSlice::color()
-{
-    return brush().color();
-}
-
-void QPieSlice::setColor(QColor color)
-{
-    QBrush b = brush();
-    if (color != b.color()) {
-        b.setColor(color);
-        setBrush(b);
-    }
-}
-
-QColor QPieSlice::borderColor()
-{
-    return pen().color();
-}
-
-void QPieSlice::setBorderColor(QColor color)
-{
-    QPen p = pen();
-    if (color != p.color()) {
-        p.setColor(color);
-        setPen(p);
-        emit borderColorChanged();
-    }
-}
-
-int QPieSlice::borderWidth()
-{
-    return pen().width();
-}
-
-void QPieSlice::setBorderWidth(int width)
-{
-    QPen p = pen();
-    if (width != p.width()) {
-        p.setWidth(width);
-        setPen(p);
-    }
-}
-
-QColor QPieSlice::labelColor()
-{
-    return labelBrush().color();
-}
-
-void QPieSlice::setLabelColor(QColor color)
-{
-    QBrush b = labelBrush();
-    if (color != b.color()) {
-        b.setColor(color);
-        setLabelBrush(b);
-    }
-}
-
 /*!
   Returns the series that this slice belongs to.
 
@@ -540,35 +611,47 @@ QPieSlicePrivate *QPieSlicePrivate::fromSlice(QPieSlice *slice)
 void QPieSlicePrivate::setPen(const QPen &pen, bool themed)
 {
     if (m_data.m_slicePen != pen) {
-        if (m_data.m_slicePen.color() != pen.color())
-            emit q_ptr->borderColorChanged();
-        if (m_data.m_slicePen.width() != pen.width())
-            emit q_ptr->borderWidthChanged();
+
+        QPen oldPen = m_data.m_slicePen;
+
         m_data.m_slicePen = pen;
         m_data.m_slicePen.setThemed(themed);
+
         emit q_ptr->penChanged();
+        if (oldPen.color() != pen.color())
+            emit q_ptr->borderColorChanged();
+        if (oldPen.width() != pen.width())
+            emit q_ptr->borderWidthChanged();
     }
 }
 
 void QPieSlicePrivate::setBrush(const QBrush &brush, bool themed)
 {
     if (m_data.m_sliceBrush != brush) {
-        if (m_data.m_sliceBrush.color() != brush.color())
-            emit q_ptr->colorChanged();
+
+        QBrush oldBrush = m_data.m_sliceBrush;
+
         m_data.m_sliceBrush = brush;
         m_data.m_sliceBrush.setThemed(themed);
+
         emit q_ptr->brushChanged();
+        if (oldBrush.color() != brush.color())
+            emit q_ptr->colorChanged();
     }
 }
 
 void QPieSlicePrivate::setLabelBrush(const QBrush &brush, bool themed)
 {
     if (m_data.m_labelBrush != brush) {
-        if (m_data.m_labelBrush.color() != brush.color())
-            emit q_ptr->labelColorChanged();
+
+        QBrush oldBrush = m_data.m_labelBrush;
+
         m_data.m_labelBrush = brush;
         m_data.m_labelBrush.setThemed(themed);
+
         emit q_ptr->labelBrushChanged();
+        if (oldBrush.color() != brush.color())
+            emit q_ptr->labelColorChanged();
     }
 }
 
