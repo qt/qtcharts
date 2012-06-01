@@ -103,7 +103,7 @@ QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
 }
 
 /*!
-    Constructs area series object without upper or lower series.
+    Constructs area series object without upper or lower series with \a parent object.
 */
 QAreaSeries::QAreaSeries(QObject *parent)
     : QAbstractSeries(*new QAreaSeriesPrivate(0, 0, this), parent)

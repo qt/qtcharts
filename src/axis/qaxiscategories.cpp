@@ -39,6 +39,9 @@ d_ptr(new QAxisCategoriesPrivate(this))
 
 }
 
+/*!
+  Destroys the object.
+*/
 QAxisCategories::~QAxisCategories()
 {
 

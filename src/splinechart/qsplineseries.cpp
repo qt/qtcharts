@@ -65,6 +65,9 @@ QSplineSeries::QSplineSeries(QObject *parent) :
     QObject::connect(this,SIGNAL(pointReplaced(int)), d, SLOT(updateControlPoints()));
 }
 
+/*!
+  Destroys the object.
+*/
 QSplineSeries::~QSplineSeries()
 {
     Q_D(QSplineSeries);
