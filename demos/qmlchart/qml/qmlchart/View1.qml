@@ -31,7 +31,7 @@ Rectangle {
         title: "Top-5 car brand shares in Finland"
         anchors.fill: parent
         theme: ChartView.ChartThemeLight
-        legend: ChartView.LegendBottom
+        legend.alignment: Qt.AlignBottom
         animationOptions: ChartView.SeriesAnimations
 
         // If you have static data, you can simply use the PieSlice API

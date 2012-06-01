@@ -34,7 +34,7 @@ Rectangle {
         anchors.bottom: weatherImageRow.top
         anchors.left: parent.left
         anchors.right: parent.right
-        legend: ChartView.LegendTop
+        legend.alignment: Qt.AlignTop
         axisXLabels: ["0", "Mo", "1", "Tu", "2", "We", "3", "Th", "4", "Fr", "5", "Sa"]
 
     //![2]

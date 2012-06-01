@@ -30,7 +30,7 @@ Rectangle {
         id: chartView
         title: "Driver Speeds, lap 1"
         anchors.fill: parent
-        legend: ChartView.LegendTop
+        legend.alignment: Qt.AlignTop
         animationOptions: ChartView.SeriesAnimations
     }
 

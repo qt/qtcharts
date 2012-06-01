@@ -32,7 +32,7 @@ Rectangle {
         id: chartView
         anchors.fill: parent
         title: "Wheel of fortune"
-        legend: ChartView.LegendDisabled
+        legend.visible: false
 
         PieSeries {
             id: wheelOfFortune
@@ -50,7 +50,6 @@ Rectangle {
 
     Component.onCompleted: {
         __intervalCoefficient = Math.random() + 0.1;
-        console.log("__intervalCoefficient: " + __intervalCoefficient);
 
         for (var i = 0; i < 20; i++)
             wheelOfFortune.append("", 1);
