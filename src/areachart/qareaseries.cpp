@@ -47,12 +47,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QSeriesType QAreaSeries::type() const
-    \brief Returns type of series.
-    \sa QAbstractSeries, QSeriesType
-*/
-
-/*!
    \fn QLineSeries* QAreaSeries::upperSeries() const
    \brief Returns upperSeries used to define one of area boundaries.
 */
@@ -124,7 +118,9 @@ QAreaSeries::~QAreaSeries()
 {
 }
 
-
+/*!
+    Returns QChartSeries::SeriesTypeArea.
+*/
 QAbstractSeries::SeriesType QAreaSeries::type() const
 {
     return QAbstractSeries::SeriesTypeArea;

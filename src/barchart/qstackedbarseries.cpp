@@ -43,12 +43,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QSeriesType QStackedBarSeries::type() const
-    \brief Returns type of series.
-    \sa QAbstractSeries, QSeriesType
-*/
-
-/*!
     Constructs empty QStackedBarSeries.
     QStackedBarSeries is QObject which is a child of a \a parent.
 */
@@ -57,6 +51,9 @@ QStackedBarSeries::QStackedBarSeries(QObject *parent)
 {
 }
 
+/*!
+    Returns QChartSeries::SeriesTypeStackedBar.
+*/
 QAbstractSeries::SeriesType QStackedBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeStackedBar;

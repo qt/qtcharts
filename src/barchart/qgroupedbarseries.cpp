@@ -43,12 +43,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QSeriesType QGroupedBarSeries::type() const
-    \brief Returns type of series.
-    \sa QAbstractSeries, QSeriesType
-*/
-
-/*!
     Constructs empty QGroupedBarSeries.
     QGroupedBarSeries is QObject which is a child of a \a parent.
 */
@@ -57,6 +51,9 @@ QGroupedBarSeries::QGroupedBarSeries(QObject *parent)
 {
 }
 
+/*!
+    Returns QChartSeries::SeriesTypeGroupedBar.
+*/
 QAbstractSeries::SeriesType QGroupedBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeGroupedBar;

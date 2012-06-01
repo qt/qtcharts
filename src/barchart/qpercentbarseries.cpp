@@ -43,12 +43,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn virtual QSeriesType QPercentBarSeries::type() const
-    \brief Returns type of series.
-    \sa QAbstractSeries, QSeriesType
-*/
-
-/*!
     Constructs empty QPercentBarSeries.
     QPercentBarSeries is QObject which is a child of a \a parent.
 */
@@ -57,6 +51,9 @@ QPercentBarSeries::QPercentBarSeries(QObject *parent)
 {
 }
 
+/*!
+    Returns QChartSeries::SeriesTypePercentBar.
+*/
 QAbstractSeries::SeriesType QPercentBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypePercentBar;
