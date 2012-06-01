@@ -62,6 +62,16 @@
 */
 
 /*!
+    \fn void QScatterSeries::markerShapeChanged()
+    Emitted when marker shape is changed
+*/
+
+/*!
+    \fn void QScatterSeries::markerSizeChanged()
+    Emitted when marker size is changed
+*/
+
+/*!
   \property QScatterSeries::markerSize
 
   Defines the size of the marker used to draw the points in the series.
@@ -116,7 +126,7 @@ void QScatterSeries::setMarkerShape(MarkerShape shape)
     Q_D(QScatterSeries);
     if (d->m_shape != shape) {
         d->m_shape = shape;
-        emit d->updated();
+        emit markerShapeChanged();
     }
 }
 
@@ -138,7 +148,7 @@ void QScatterSeries::setMarkerSize(qreal size)
 
     if (!qFuzzyIsNull(d->m_size - size)) {
         d->m_size = size;
-        emit d->updated();
+        emit markerSizeChanged();
     }
 }
 

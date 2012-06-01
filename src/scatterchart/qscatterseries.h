@@ -31,8 +31,8 @@ class QScatterSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QScatterSeries : public QXYSeries
 {
     Q_OBJECT
-    Q_PROPERTY(MarkerShape markerShape READ markerShape WRITE setMarkerShape)
-    Q_PROPERTY(qreal markerSize READ markerSize WRITE setMarkerSize)
+    Q_PROPERTY(MarkerShape markerShape READ markerShape WRITE setMarkerShape NOTIFY markerShapeChanged)
+    Q_PROPERTY(qreal markerSize READ markerSize WRITE setMarkerSize NOTIFY markerSizeChanged)
     Q_ENUMS(MarkerShape)
 
 public:
@@ -49,6 +49,10 @@ public:
     void setMarkerShape(MarkerShape shape);
     qreal markerSize() const;
     void setMarkerSize(qreal size);
+
+Q_SIGNALS:
+    void markerShapeChanged();
+    void markerSizeChanged();
 
 private:
     Q_DECLARE_PRIVATE(QScatterSeries)
