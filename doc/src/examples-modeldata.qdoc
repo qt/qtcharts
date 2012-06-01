@@ -23,9 +23,10 @@
 
      \snippet ../examples/modeldata/tablewidget.cpp 3
 
-     Then let's create two QLineSeries and tell them to use the data from the model.
-     First line of the code below creates new line series. Line number two sets the model as the data source for the series.
-     Third line specifies that x coordinates are taken from the model's column(Qt::Vertical) with index 0 and the y coordinates are taken from the model's column with index 1.
+     First line of the code below creates new line series. Line number two creates an instance of QVXYModelMapper class.
+     Next two lines specifie that x coordinates are taken from the model's column(Qt::Vertical) with index 0 and the y coordinates are taken from the model's column with index 1.
+     To create a connection between the series and the model we set both of those objects to QVXYModelMapper.
+
      Finally the series is added to the chart.
 
      \snippet ../examples/modeldata/tablewidget.cpp 4
@@ -44,7 +45,7 @@
      \snippet ../examples/modeldata/tablewidget.cpp 7
 
      To avoid setting up the QGraphicsScene we use QChartView class that does it for us. QChart object pointer is used as a parameter of the QChartView constructor.
-     To make the render look nicer Antialiasing is turned on and the minimum size of the chart is set.
+     To make the render look nicer Antialiasing is turned on and the minimum size of the chartView widget is set.
 
      \snippet ../examples/modeldata/tablewidget.cpp 8
 
