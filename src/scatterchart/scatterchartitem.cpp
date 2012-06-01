@@ -34,6 +34,7 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *prese
     QGraphicsItem(presenter ? presenter->rootItem() : 0),
     m_series(series),
     m_items(this),
+    m_visible(true),
     m_shape(QScatterSeries::MarkerShapeRectangle),
     m_size(15)
 {
@@ -132,7 +133,7 @@ void ScatterChartItem::updateGeometry()
         const QRectF& rect = item->boundingRect();
         item->setPoint(point);
         item->setPos(point.x()-rect.width()/2,point.y()-rect.height()/2);
-        if(!clipRect().contains(point)) {
+        if(!m_visible || !clipRect().contains(point)) {
             item->setVisible(false);
         }
         else {
@@ -172,8 +173,11 @@ void ScatterChartItem::handleUpdated()
 
     if(count==0) return;
 
-    bool recreate = m_size != m_series->markerSize() || m_shape != m_series->markerShape();
+    bool recreate = m_visible != m_series->isVisible()
+            || m_size != m_series->markerSize()
+            || m_shape != m_series->markerShape();
 
+    m_visible = m_series->isVisible();
     m_size = m_series->markerSize();
     m_shape = m_series->markerShape();
 

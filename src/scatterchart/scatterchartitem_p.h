@@ -62,6 +62,7 @@ protected:
 private:
     QScatterSeries *m_series;
     QGraphicsItemGroup m_items;
+    bool m_visible;
     int m_shape;
     int m_size;
     QRectF m_rect;

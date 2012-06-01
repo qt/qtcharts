@@ -90,6 +90,7 @@ void AreaChartItem::updatePath()
 
 void AreaChartItem::handleUpdated()
 {
+    setVisible(m_series->isVisible());
     m_pointsVisible = m_series->pointsVisible();
     m_linePen = m_series->pen();
     m_brush = m_series->brush();
@@ -120,20 +121,18 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget)
     Q_UNUSED(option)
 
-    if (m_series->isVisible()) {
-        painter->save();
-        painter->setPen(m_linePen);
-        painter->setBrush(m_brush);
-        painter->setClipRect(m_clipRect);
-        painter->drawPath(m_path);
-        if (m_pointsVisible) {
-               painter->setPen(m_pointPen);
-               painter->drawPoints(m_upper->geometryPoints());
-               if (m_lower)
-                   painter->drawPoints(m_lower->geometryPoints());
-        }
-        painter->restore();
+    painter->save();
+    painter->setPen(m_linePen);
+    painter->setBrush(m_brush);
+    painter->setClipRect(m_clipRect);
+    painter->drawPath(m_path);
+    if (m_pointsVisible) {
+           painter->setPen(m_pointPen);
+           painter->drawPoints(m_upper->geometryPoints());
+           if (m_lower)
+               painter->drawPoints(m_lower->geometryPoints());
     }
+    painter->restore();
 }
 
 void AreaChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

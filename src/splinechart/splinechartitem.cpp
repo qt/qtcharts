@@ -135,6 +135,7 @@ void SplineChartItem::updateGeometry()
 
 void SplineChartItem::handleUpdated()
 {
+    setVisible(m_series->isVisible());
     m_pointsVisible = m_series->pointsVisible();
     m_linePen = m_series->pen();
     m_pointPen = m_series->pen();
@@ -148,17 +149,16 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 {
     Q_UNUSED(widget)
     Q_UNUSED(option)
-    if (m_series->isVisible()) {
-        painter->save();
-        painter->setClipRect(clipRect());
-        painter->setPen(m_linePen);
-        painter->drawPath(m_path);
-        if (m_pointsVisible) {
-            painter->setPen(m_pointPen);
-            painter->drawPoints(geometryPoints());
-        }
-        painter->restore();
+
+    painter->save();
+    painter->setClipRect(clipRect());
+    painter->setPen(m_linePen);
+    painter->drawPath(m_path);
+    if (m_pointsVisible) {
+        painter->setPen(m_pointPen);
+        painter->drawPoints(geometryPoints());
     }
+    painter->restore();
 }
 
 void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

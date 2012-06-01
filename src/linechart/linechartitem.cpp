@@ -30,10 +30,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-LineChartItem::LineChartItem(QLineSeries* series,ChartPresenter *presenter):XYChart(series,presenter),
-QGraphicsItem(presenter ? presenter->rootItem() : 0),
-m_series(series),
-m_pointsVisible(false)
+LineChartItem::LineChartItem(QLineSeries* series,ChartPresenter *presenter):
+    XYChart(series, presenter),
+    QGraphicsItem(presenter ? presenter->rootItem() : 0),
+    m_series(series),
+    m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
@@ -77,6 +78,7 @@ void LineChartItem::updateGeometry()
 
 void LineChartItem::handleUpdated()
 {
+    setVisible(m_series->isVisible());
     m_pointsVisible = m_series->pointsVisible();
     m_linePen = m_series->pen();
     m_pointPen = m_series->pen();
@@ -91,17 +93,15 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget)
     Q_UNUSED(option)
 
-    if (m_series->isVisible()) {
-        painter->save();
-        painter->setPen(m_linePen);
-        painter->setClipRect(clipRect());
-        painter->drawPath(m_path);
-        if(m_pointsVisible){
-            painter->setPen(m_pointPen);
-            painter->drawPoints(geometryPoints());
-        }
-        painter->restore();
+    painter->save();
+    painter->setPen(m_linePen);
+    painter->setClipRect(clipRect());
+    painter->drawPath(m_path);
+    if (m_pointsVisible){
+        painter->setPen(m_pointPen);
+        painter->drawPoints(geometryPoints());
     }
+    painter->restore();
 }
 
 void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
