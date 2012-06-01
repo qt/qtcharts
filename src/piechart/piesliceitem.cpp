@@ -31,12 +31,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-#define PI 3.14159265 // TODO: is this defined in some header?
-
 QPointF offset(qreal angle, qreal length)
 {
-    qreal dx = qSin(angle*(PI/180)) * length;
-    qreal dy = qCos(angle*(PI/180)) * length;
+    qreal dx = qSin(angle*(M_PI/180)) * length;
+    qreal dy = qCos(angle*(M_PI/180)) * length;
     return QPointF(dx, -dy);
 }
 
@@ -149,9 +147,7 @@ QPointF PieSliceItem::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
     if (slice->isExploded()) {
         qreal centerAngle = slice->startAngle() + (slice->angleSpan()/2);
         qreal len = radius * slice->explodeDistanceFactor();
-        qreal dx = qSin(centerAngle*(PI/180)) * len;
-        qreal dy = -qCos(centerAngle*(PI/180)) * len;
-        point += QPointF(dx, dy);
+        point += offset(centerAngle, len);
     }
     return point;
 }
@@ -180,6 +176,18 @@ QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAn
 
 QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length, qreal textWidth, QPointF *textStart)
 {
+    // Normalize the angle to 0-360 range
+    // NOTE: We are using int here on purpose. Depenging on platform and hardware
+    // qreal can be a double, float or something the user gives to the Qt configure
+    // (QT_COORD_TYPE). Compilers do not seem to support modulo for double or float
+    // but there are fmod() and fmodf() functions for that. So instead of some #ifdef
+    // that might break we just use int. Precision for this is just fine for our needs.
+    int normalized = angle * 10.0;
+    normalized = normalized % 3600;
+    if (normalized < 0)
+        normalized += 3600;
+    angle = (qreal) normalized / 10.0;
+
     // prevent label arm pointing straight down because it will look bad
     if (angle < 180 && angle > 170)
         angle = 170;
@@ -187,9 +195,7 @@ QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length
         angle = 190;
 
     // line from slice to label
-    qreal dx = qSin(angle*(PI/180)) * length;
-    qreal dy = -qCos(angle*(PI/180)) * length;
-    QPointF parm1 = start + QPointF(dx, dy);
+    QPointF parm1 = start + offset(angle, length);
 
     // line to underline the label
     QPointF parm2 = parm1;
