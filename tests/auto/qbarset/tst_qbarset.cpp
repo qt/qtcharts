@@ -20,6 +20,8 @@
 
 #include <QtTest/QtTest>
 #include <qbarset.h>
+#include <qgroupedbarseries.h>
+#include <qchartview.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -56,14 +58,7 @@ private slots:
     void count();
     void sum_data();
     void sum();
-    void setPen_data();
-    void setPen();
-    void setBrush_data();
-    void setBrush();
-    void setLabelBrush_data();
-    void setLabelBrush();
-    void setLabelFont_data();
-    void setLabelFont();
+    void customize();
 
 private:
     QBarSet* m_barset;
@@ -346,71 +341,67 @@ void tst_QBarSet::sum()
     QVERIFY(qFuzzyCompare(m_barset->sum(),10.0));
 }
 
-void tst_QBarSet::setPen_data()
+void tst_QBarSet::customize()
 {
+    // Create sets
+    QBarSet *set1 = new QBarSet("set1");
+    QBarSet *set2 = new QBarSet("set2");
 
-}
+    // Append set1 to series
+    QGroupedBarSeries *series = new QGroupedBarSeries();
+    series->append(set1);
 
-void tst_QBarSet::setPen()
-{
-    QVERIFY(m_barset->pen() == QPen());
+    // Add series to the chart
+    QChartView view(new QChart());
+    view.resize(200, 200);
+    view.chart()->addSeries(series);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
 
-    QPen pen;
-    pen.setColor(QColor(128,128,128,128));
-    m_barset->setPen(pen);
+    // Test adding data to the sets
+    *set1 << 1 << 2 << 1 << 3;
+    *set2 << 2 << 1 << 3 << 1;
 
-    QVERIFY(m_barset->pen() == pen);
-}
+    // Test pen
+    QVERIFY(set1->pen() != QPen());
+    QVERIFY(set2->pen() == QPen());
+    QPen pen(QColor(128,128,128,128));
+    set1->setPen(pen);
+    QVERIFY(set1->pen() == pen);
+    QVERIFY(set2->pen() == QPen());
 
-void tst_QBarSet::setBrush_data()
-{
+    // Test brush
+    QVERIFY(set1->brush() != QBrush());
+    QVERIFY(set2->brush() == QBrush());
+    QBrush brush(QColor(128,128,128,128));
+    set1->setBrush(brush);
+    QVERIFY(set1->brush() == brush);
+    QVERIFY(set2->brush() == QBrush());
 
-}
+    // Test label brush
+    QVERIFY(set1->labelBrush() != QBrush());
+    QVERIFY(set2->labelBrush() == QBrush());
+    set1->setLabelBrush(brush);
+    QVERIFY(set1->labelBrush() == brush);
+    QVERIFY(set2->labelBrush() == QBrush());
 
-void tst_QBarSet::setBrush()
-{
-    QVERIFY(m_barset->brush() == QBrush());
-
-    QBrush brush;
-    brush.setColor(QColor(128,128,128,128));
-    m_barset->setBrush(brush);
-
-    QVERIFY(m_barset->brush() == brush);
-}
-
-void tst_QBarSet::setLabelBrush_data()
-{
-
-}
-
-void tst_QBarSet::setLabelBrush()
-{
-    QVERIFY(m_barset->labelBrush() == QBrush());
-
-    QBrush brush;
-    brush.setColor(QColor(128,128,128,128));
-    m_barset->setLabelBrush(brush);
-
-    QVERIFY(m_barset->labelBrush() == brush);
-}
-
-void tst_QBarSet::setLabelFont_data()
-{
-
-}
-
-void tst_QBarSet::setLabelFont()
-{
-    QVERIFY(m_barset->labelFont() == QFont());
-
+    // Test label font
+    // Note: QFont empty constructor creates font with application's default font, so the font may or may not be the
+    // same for the set added to the series  (depending on the QChart's theme configuration)
+    QVERIFY(set1->labelFont() != QFont() || set1->labelFont() == QFont());
+    QVERIFY(set2->labelFont() == QFont());
     QFont font;
     font.setBold(true);
     font.setItalic(true);
-    m_barset->setLabelFont(font);
+    set1->setLabelFont(font);
+    QVERIFY(set1->labelFont() == font);
+    QVERIFY(set2->labelFont() == QFont());
 
-    QVERIFY(m_barset->labelFont() == font);
+    // Test adding data to the sets
+    *set1 << 1 << 2 << 1 << 3;
+    *set2 << 2 << 1 << 3 << 1;
+    QTest::qWait(3000);
 }
-
 
 QTEST_MAIN(tst_QBarSet)
 
