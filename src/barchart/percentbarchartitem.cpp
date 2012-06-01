@@ -47,8 +47,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
     qreal rangeX = m_domainMaxX - m_domainMinX;
     qreal scaleY = (height / rangeY);
     qreal scaleX = (width / rangeX);
-    qreal categoryWidth = width / categoryCount;
-    qreal barWidth = categoryWidth - categoryWidth * m_series->d_func()->barMargin();
+    qreal barWidth = scaleX - scaleX * m_series->d_func()->barMargin();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
