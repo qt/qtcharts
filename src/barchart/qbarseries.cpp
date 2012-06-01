@@ -231,6 +231,23 @@ QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
 {
 }
 
+void QBarSeriesPrivate::setCategories(QStringList categories)
+{
+    m_categories = categories;
+}
+
+void QBarSeriesPrivate::insertCategory(int index, const QString category)
+{
+    m_categories.insert(index, category);
+    emit categoriesUpdated();
+}
+
+void QBarSeriesPrivate::removeCategory(int index)
+{
+    m_categories.removeAt(index);
+    emit categoriesUpdated();
+}
+
 int QBarSeriesPrivate::categoryCount() const
 {
     if (m_categories.count() > 0) {
@@ -473,7 +490,7 @@ bool QBarSeriesPrivate::append(QBarSet *set)
     if (m_dataset) {
         m_dataset->updateSeries(q);   // this notifies legend
     }
-//    emit restructuredBars();      // this notifies barchartitem
+    emit restructuredBars();      // this notifies barchartitem
     return true;
 }
 
@@ -489,7 +506,7 @@ bool QBarSeriesPrivate::remove(QBarSet *set)
     if (m_dataset) {
         m_dataset->updateSeries(q);   // this notifies legend
     }
-//    emit restructuredBars();        // this notifies barchartitem
+    emit restructuredBars();        // this notifies barchartitem
     return true;
 }
 
@@ -514,7 +531,7 @@ bool QBarSeriesPrivate::append(QList<QBarSet* > sets)
     if (m_dataset) {
         m_dataset->updateSeries(q);   // this notifies legend
     }
-//    emit restructuredBars();        // this notifies barchartitem
+    emit restructuredBars();        // this notifies barchartitem
     return true;
 }
 
@@ -534,7 +551,7 @@ bool QBarSeriesPrivate::remove(QList<QBarSet* > sets)
         if (m_dataset) {
             m_dataset->updateSeries(q);   // this notifies legend
         }
-//        emit restructuredBars();        // this notifies barchartitem
+        emit restructuredBars();        // this notifies barchartitem
     }
     return setsRemoved;
 }
