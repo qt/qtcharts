@@ -31,6 +31,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QXYSeries::pointsVisible
+
+    Controls if the data points are visible and should be drawn.
+*/
+
+/*!
+    \property QXYSeries::count
+
+    Number of points in the series.
+*/
+
+/*!
    \fn QPen QXYSeries::pen() const
    \brief  Returns pen used to draw points for series.
     \sa setPen()
@@ -47,20 +59,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Signal is emitted when user clicks the \a point on chart.
 */
 
-
 /*!
-    \fn void QXYSeriesPrivate::pointReplaced(int index)
-    \brief \internal \a index
+    \fn void QXYSeries::pointReplaced(int index)
+    \brief Signal is emitted when user replaces a point at \a index.
+    \sa replace()
 */
 
 /*!
-    \fn void QXYSeriesPrivate::pointAdded(int index)
-    \brief \internal \a index
+    \fn void QXYSeries::pointAdded(int index)
+    \brief Signal is emitted when user adds a point at \a index.
+    \sa append(), insert()
 */
 
 /*!
-    \fn void QXYSeriesPrivate::pointRemoved(int index)
-    \brief \internal \a index
+    \fn void QXYSeries::pointRemoved(int index)
+    \brief Signal is emitted when user removes a point at \a index.
+    \sa remove()
 */
 
 /*!
@@ -117,12 +131,17 @@ void QXYSeries::append(const QList<QPointF> &points)
     }
 }
 
-
+/*!
+  Replaces data point \a oldX \a oldY with data point \a newX \a newY.
+*/
 void QXYSeries::replace(qreal oldX,qreal oldY,qreal newX,qreal newY)
 {
     replace(QPointF(oldX,oldY),QPointF(newX,newY));
 }
 
+/*!
+  Replaces \a oldPoint with \a newPoint.
+*/
 void QXYSeries::replace(const QPointF &oldPoint,const QPointF &newPoint)
 {
     Q_D(QXYSeries);
@@ -142,7 +161,9 @@ void QXYSeries::remove(qreal x,qreal y)
 }
 
 /*!
-  Removes current \a point x value. Note \a point y value is ignored.
+  Removes current \a point x value.
+
+  Note: point y value is ignored.
 */
 void QXYSeries::remove(const QPointF &point)
 {
@@ -165,6 +186,9 @@ void QXYSeries::removeAll()
     }
 }
 
+/*!
+   Inserts a \a point in the series at \a index position.
+*/
 void QXYSeries::insert(int index, const QPointF &point)
 {
     Q_D(QXYSeries);
@@ -173,6 +197,9 @@ void QXYSeries::insert(int index, const QPointF &point)
     emit pointAdded(index);
 }
 
+/*!
+    Removes all points from the series.
+*/
 void QXYSeries::clear()
 {
     Q_D(QXYSeries);
@@ -240,9 +267,6 @@ QBrush QXYSeries::brush() const
 }
 
 
-/*!
-    Sets if data points are \a visible and should be drawn on line.
-*/
 void QXYSeries::setPointsVisible(bool visible)
 {
     Q_D(QXYSeries);
@@ -252,9 +276,6 @@ void QXYSeries::setPointsVisible(bool visible)
     }
 }
 
-/*!
-    Returns true if drawing the data points of the series is enabled.
-*/
 bool QXYSeries::pointsVisible() const
 {
     Q_D(const QXYSeries);
