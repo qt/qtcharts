@@ -117,6 +117,10 @@ void tst_qpieslice::changedSignals()
     QSignalSpy labelFontSpy(&slice, SIGNAL(labelFontChanged()));
     QSignalSpy labelArmLengthFactorSpy(&slice, SIGNAL(labelArmLengthFactorChanged()));
     QSignalSpy explodeDistanceFactorSpy(&slice, SIGNAL(explodeDistanceFactorChanged()));
+    QSignalSpy colorSpy(&slice, SIGNAL(colorChanged()));
+    QSignalSpy borderColorSpy(&slice, SIGNAL(borderColorChanged()));
+    QSignalSpy borderWidthSpy(&slice, SIGNAL(borderWidthChanged()));
+    QSignalSpy labelColorSpy(&slice, SIGNAL(labelColorChanged()));
 
     // percentageChanged(), startAngleChanged() and angleSpanChanged() signals tested at tst_qpieseries::calculatedValues()
 
@@ -131,7 +135,7 @@ void tst_qpieslice::changedSignals()
     slice.setExploded();
     slice.setExploded();
     slice.setPen(QPen(Qt::red));
-    slice.setPen(QPen(Qt::red));
+    slice.setPen(QPen(QBrush(Qt::red), 3));
     slice.setBrush(QBrush(Qt::red));
     slice.setBrush(QBrush(Qt::red));
     slice.setLabelBrush(QBrush(Qt::green));
@@ -146,12 +150,16 @@ void tst_qpieslice::changedSignals()
     TRY_COMPARE(valueSpy.count(), 1);
     TRY_COMPARE(labelSpy.count(), 1);
     TRY_COMPARE(explodedSpy.count(), 1);
-    TRY_COMPARE(penSpy.count(), 1);
+    TRY_COMPARE(penSpy.count(), 2);
     TRY_COMPARE(brushSpy.count(), 1);
     TRY_COMPARE(labelBrushSpy.count(), 1);
     TRY_COMPARE(labelFontSpy.count(), 1);
     TRY_COMPARE(labelArmLengthFactorSpy.count(), 1);
     TRY_COMPARE(explodeDistanceFactorSpy.count(), 1);
+    TRY_COMPARE(colorSpy.count(), 1);
+    TRY_COMPARE(borderColorSpy.count(), 1);
+    TRY_COMPARE(borderWidthSpy.count(), 1);
+    TRY_COMPARE(labelColorSpy.count(), 1);
 }
 
 void tst_qpieslice::customize()
