@@ -3,7 +3,7 @@
 }
 
 TEMPLATE = subdirs
-SUBDIRS += qchartview qchart qlineseries qbarset qbarseries qstackedbarseries qpercentbarseries qgroupedbarseries qpieslice qpieseries qpiemodelmapper qsplineseries qscatterseries
+SUBDIRS += qchartview qchart qlineseries qbarset qbarseries qstackedbarseries qpercentbarseries qgroupedbarseries qpieslice qpieseries qpiemodelmapper qsplineseries qscatterseries qxymodelmapper
 
 test_private:{
     SUBDIRS += chartdataset domain

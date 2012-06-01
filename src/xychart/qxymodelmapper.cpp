@@ -166,7 +166,7 @@ int QXYModelMapper::xSection() const
 void QXYModelMapper::setXSection(int xSection)
 {
     Q_D(QXYModelMapper);
-    d->m_xSection = xSection;
+    d->m_xSection = qMax(-1, xSection);
     d->initializeXYFromModel();
 }
 
@@ -186,7 +186,7 @@ int QXYModelMapper::ySection() const
 void QXYModelMapper::setYSection(int ySection)
 {
     Q_D(QXYModelMapper);
-    d->m_ySection = ySection;
+    d->m_ySection = qMax(-1, ySection);
     d->initializeXYFromModel();
 }
 
