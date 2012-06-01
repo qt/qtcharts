@@ -60,7 +60,7 @@ private:
     ChartPresenter *m_presenter;
     QChart* m_chart;
     QGraphicsItemGroup* m_markers;
-    QLegend::Alignments m_alignment;
+    Qt::Alignment m_alignment;
     QBrush m_brush;
     QPen m_pen;
     QRectF m_rect;

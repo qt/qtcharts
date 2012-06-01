@@ -31,8 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
-      m_chart(new QChart(this)),
-      m_legend(LegendTop)
+      m_chart(new QChart(this))
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
 //    m_chart->axisX()->setNiceNumbersEnabled(false);
@@ -88,7 +87,11 @@ void DeclarativeChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
 void DeclarativeChart::setTheme(DeclarativeChart::Theme theme)
 {
-    m_chart->setTheme((QChart::ChartTheme) theme);
+    QChart::ChartTheme chartTheme = (QChart::ChartTheme) theme;
+    if (chartTheme != m_chart->theme()) {
+        m_chart->setTheme(chartTheme);
+        themeChanged();
+    }
 }
 
 DeclarativeChart::Theme DeclarativeChart::theme()
@@ -98,7 +101,11 @@ DeclarativeChart::Theme DeclarativeChart::theme()
 
 void DeclarativeChart::setAnimationOptions(DeclarativeChart::Animation animations)
 {
-    m_chart->setAnimationOptions((QChart::AnimationOption) animations);
+    QChart::AnimationOption animationOptions = (QChart::AnimationOption) animations;
+    if (animationOptions != m_chart->animationOptions()) {
+        m_chart->setAnimationOptions(animationOptions);
+        animationOptionsChanged();
+    }
 }
 
 DeclarativeChart::Animation DeclarativeChart::animationOptions()
@@ -113,40 +120,16 @@ DeclarativeChart::Animation DeclarativeChart::animationOptions()
         return DeclarativeChart::NoAnimation;
 }
 
-void DeclarativeChart::setLegend(DeclarativeChart::Legend legend)
+void DeclarativeChart::setTitle(QString title)
 {
-    if (legend != m_legend) {
-        m_legend = legend;
-        switch (m_legend) {
-        case LegendDisabled:
-            m_chart->legend()->setVisible(false);
-            break;
-        case LegendTop:
-            m_chart->legend()->setVisible(true);
-            m_chart->legend()->setAlignment(QLegend::AlignmentTop);
-            break;
-        case LegendBottom:
-            m_chart->legend()->setVisible(true);
-            m_chart->legend()->setAlignment(QLegend::AlignmentBottom);
-            break;
-        case LegendLeft:
-            m_chart->legend()->setVisible(true);
-            m_chart->legend()->setAlignment(QLegend::AlignmentLeft);
-            break;
-        case LegendRight:
-            m_chart->legend()->setVisible(true);
-            m_chart->legend()->setAlignment(QLegend::AlignmentRight);
-            break;
-        default:
-            m_chart->legend()->setVisible(false);
-            break;
-        }
+    if (title != m_chart->title()) {
+        m_chart->setTitle(title);
+        emit titleChanged();
     }
 }
-
-DeclarativeChart::Legend DeclarativeChart::legend()
+QString DeclarativeChart::title()
 {
-    return m_legend;
+    return m_chart->title();
 }
 
 QAxis *DeclarativeChart::axisX()
@@ -157,6 +140,11 @@ QAxis *DeclarativeChart::axisX()
 QAxis *DeclarativeChart::axisY()
 {
     return m_chart->axisY();
+}
+
+QLegend *DeclarativeChart::legend()
+{
+    return m_chart->legend();
 }
 
 QVariantList DeclarativeChart::axisXLabels()
@@ -181,6 +169,37 @@ void DeclarativeChart::setAxisXLabels(QVariantList list)
                 value = element;
         }
     }
+    emit axisLabelsChanged();
+}
+
+void DeclarativeChart::setTitleColor(QColor color)
+{
+    QBrush b = m_chart->titleBrush();
+    if (color != b.color()) {
+        b.setColor(color);
+        m_chart->setTitleBrush(b);
+        emit titleColorChanged();
+    }
+}
+
+QColor DeclarativeChart::titleColor()
+{
+    return m_chart->titleBrush().color();
+}
+
+void DeclarativeChart::setBackgroundColor(QColor color)
+{
+    QBrush b = m_chart->backgroundBrush();
+    if (color != b.color()) {
+        b.setColor(color);
+        m_chart->setBackgroundBrush(b);
+        emit backgroundColorChanged();
+    }
+}
+
+QColor DeclarativeChart::backgroundColor()
+{
+    return m_chart->backgroundBrush().color();
 }
 
 int DeclarativeChart::count()

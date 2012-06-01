@@ -70,7 +70,7 @@ int main(int argc, char *argv[])
 
 //![5]
     chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(QLegend::AlignmentBottom);
+    chart->legend()->setAlignment(Qt::AlignBottom);
     chart->axisY()->setNiceNumbersEnabled(true);
 //![5]
 

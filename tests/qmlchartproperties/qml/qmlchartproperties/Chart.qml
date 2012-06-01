@@ -21,33 +21,20 @@
 import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
-Rectangle {
+ChartView {
+    id: chartView
+    title: "chart"
     anchors.fill: parent
+    property variant series: chartView
 
-    ChartView {
-        title: "spline series"
-        anchors.fill: parent
-
-        SplineSeries {
-            id: daSeries
-            name: "spline 1"
-            XyPoint { x: 0; y: 0 }
-            XyPoint { x: 1.1; y: 2.1 }
-            XyPoint { x: 1.9; y: 3.3 }
-            XyPoint { x: 2.1; y: 2.1 }
-            XyPoint { x: 2.9; y: 4.9 }
-            XyPoint { x: 3.4; y: 3.0 }
-            XyPoint { x: 4.1; y: 3.3 }
-        }
-
-        SplineSeries {
-            name: "spline 2"
-            XyPoint { x: 1.1; y: 1.1 }
-            XyPoint { x: 1.9; y: 2.3 }
-            XyPoint { x: 2.1; y: 1.1 }
-            XyPoint { x: 2.9; y: 3.9 }
-            XyPoint { x: 3.4; y: 2.0 }
-            XyPoint { x: 4.1; y: 2.3 }
-        }
+    LineSeries {
+        name: "line"
+        XyPoint { x: 0; y: 0 }
+        XyPoint { x: 1.1; y: 2.1 }
+        XyPoint { x: 1.9; y: 3.3 }
+        XyPoint { x: 2.1; y: 2.1 }
+        XyPoint { x: 2.9; y: 4.9 }
+        XyPoint { x: 3.4; y: 3.0 }
+        XyPoint { x: 4.1; y: 3.3 }
     }
 }

@@ -167,10 +167,10 @@ QComboBox* ThemeWidget::createLegendBox() const
 {
     QComboBox* legendComboBox = new QComboBox();
     legendComboBox->addItem("No Legend ", 0);
-    legendComboBox->addItem("Legend Top", QLegend::AlignmentTop);
-    legendComboBox->addItem("Legend Bottom", QLegend::AlignmentBottom);
-    legendComboBox->addItem("Legend Left", QLegend::AlignmentLeft);
-    legendComboBox->addItem("Legend Right", QLegend::AlignmentRight);
+    legendComboBox->addItem("Legend Top", Qt::AlignTop);
+    legendComboBox->addItem("Legend Bottom", Qt::AlignBottom);
+    legendComboBox->addItem("Legend Left", Qt::AlignLeft);
+    legendComboBox->addItem("Legend Right", Qt::AlignRight);
     return legendComboBox;
 }
 
@@ -361,7 +361,7 @@ void ThemeWidget::updateUI()
             chartView->chart()->setAnimationOptions(options);
     }
 
-    QLegend::Alignments alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
+    Qt::Alignment alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
 
     if (!alignment) {
         foreach (QChartView *chartView, m_charts) {

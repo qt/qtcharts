@@ -62,15 +62,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
- \enum QLegend::Alignment
-
- This enum describes the possible position for legend inside chart.
-
- \value AlignmentTop
- \value AlignmentBottom
- \value AlignmentLeft
- \value AlignmentRight
- */
+    \fn void QLegend::alignmentChanged()
+    Emitted when the alignment of the legend changes.
+*/
 
 /*!
  \fn qreal QLegend::minWidth() const
@@ -168,21 +162,30 @@ QPen QLegend::pen() const
 }
 
 /*!
- Sets the \a alignment for legend. Legend tries to paint itself on the defined position in chart.
- \sa QLegend::Alignment
+    \property QLegend::alignment
+    \brief The alignment of the legend.
+*/
+
+/*!
+    Sets the \a alignment for legend. Legend paints on the defined position in chart. The following alignments are
+    supported: Qt::AlignTop, Qt::AlignBottom, Qt::AlignLeft, Qt::AlignRight. If you set more than one flag the result
+    is undefined.
+
+    \sa QLegend::Alignment
  */
-void QLegend::setAlignment(QLegend::Alignments alignment)
+void QLegend::setAlignment(Qt::Alignment alignment)
 {
     if(d_ptr->m_alignment!=alignment) {
         d_ptr->m_alignment = alignment;
         d_ptr->updateLayout();
+        alignmentChanged();
     }
 }
 
 /*!
  Returns the preferred layout for legend
  */
-QLegend::Alignments QLegend::alignment() const
+Qt::Alignment QLegend::alignment() const
 {
     return d_ptr->m_alignment;
 }
@@ -297,7 +300,7 @@ QLegendPrivate::QLegendPrivate(ChartPresenter* presenter, QChart *chart, QLegend
     m_presenter(presenter),
     m_chart(chart),
     m_markers(new QGraphicsItemGroup(q)),
-    m_alignment(QLegend::AlignmentTop),
+    m_alignment(Qt::AlignTop),
     m_offsetX(0),
     m_offsetY(0),
     m_minWidth(0),
@@ -320,8 +323,8 @@ void QLegendPrivate::setOffset(qreal x, qreal y)
 
     switch(m_alignment) {
 
-        case QLegend::AlignmentTop:
-        case QLegend::AlignmentBottom: {
+        case Qt::AlignTop:
+        case Qt::AlignBottom: {
             if(m_width<=m_rect.width()) return;
 
             if (x != m_offsetX) {
@@ -330,8 +333,8 @@ void QLegendPrivate::setOffset(qreal x, qreal y)
             }
             break;
         }
-        case QLegend::AlignmentLeft:
-        case QLegend::AlignmentRight: {
+        case Qt::AlignLeft:
+        case Qt::AlignRight: {
 
             if(m_height<=m_rect.height()) return;
 
@@ -357,8 +360,8 @@ void QLegendPrivate::updateLayout()
 
     switch(m_alignment) {
 
-        case QLegend::AlignmentTop:
-        case QLegend::AlignmentBottom: {
+        case Qt::AlignTop:
+        case Qt::AlignBottom: {
             QPointF point = m_rect.topLeft();
             m_width = 0;
             foreach (QGraphicsItem *item, items) {
@@ -379,8 +382,8 @@ void QLegendPrivate::updateLayout()
             m_height=m_minHeight;
         }
         break;
-        case QLegend::AlignmentLeft:
-        case QLegend::AlignmentRight: {
+        case Qt::AlignLeft:
+        case Qt::AlignRight: {
             QPointF point = m_rect.topLeft();
             m_height = 0;
             foreach (QGraphicsItem *item, items) {

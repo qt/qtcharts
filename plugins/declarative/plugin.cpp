@@ -67,6 +67,8 @@ public:
         qmlRegisterType<QHBarModelMapper>(uri, 1, 0, "HBarModelMapper");
         qmlRegisterType<QVBarModelMapper>(uri, 1, 0, "VBarModelMapper");
 
+        qmlRegisterUncreatableType<QLegend>(uri, 1, 0, "Legend",
+                                          QLatin1String("Trying to create uncreatable: Legend."));
         qmlRegisterUncreatableType<QScatterSeries>(uri, 1, 0, "QScatterSeries",
                                           QLatin1String("Trying to create uncreatable: QScatterSeries."));
         qmlRegisterUncreatableType<QPieSeries>(uri, 1, 0, "QPieSeries",

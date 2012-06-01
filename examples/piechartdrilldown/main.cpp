@@ -41,7 +41,7 @@ int main(int argc, char *argv[])
     chart->setTheme(QChart::ChartThemeLight);
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(QLegend::AlignmentRight);
+    chart->legend()->setAlignment(Qt::AlignRight);
 
     QPieSeries* yearSeries = new QPieSeries(&window);
     yearSeries->setName("Sales by year - All");

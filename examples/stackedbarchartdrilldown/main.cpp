@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
     drilldownChart->axisX()->setGridLineVisible(false);
     drilldownChart->axisY()->setNiceNumbersEnabled(true);
     drilldownChart->legend()->setVisible(true);
-    drilldownChart->legend()->setAlignment(QLegend::AlignmentBottom);
+    drilldownChart->legend()->setAlignment(Qt::AlignBottom);
 //! [7]
 
     QChartView *chartView = new QChartView(drilldownChart);

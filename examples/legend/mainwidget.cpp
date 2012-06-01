@@ -66,7 +66,7 @@ void MainWidget::createSeries()
     m_chart->setTitle("Legend detach example");
 
     m_chart->legend()->setVisible(true);
-    m_chart->legend()->setAlignment(QLegend::AlignmentBottom);
+    m_chart->legend()->setAlignment(Qt::AlignBottom);
     m_chart->axisY()->setNiceNumbersEnabled(true);
 
     m_chartView->setRenderHint(QPainter::Antialiasing);

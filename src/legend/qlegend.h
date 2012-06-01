@@ -43,17 +43,7 @@ class QLegendPrivate;
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
     Q_OBJECT
-public:
-
-    // We only support these alignments (for now)
-    enum Alignment {
-        AlignmentTop = Qt::AlignTop,
-        AlignmentBottom = Qt::AlignBottom,
-        AlignmentLeft = Qt::AlignLeft,
-        AlignmentRight = Qt::AlignRight
-    };
-
-    Q_DECLARE_FLAGS(Alignments, Alignment)
+    Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment NOTIFY alignmentChanged)
 
 private:
     explicit QLegend(QChart *chart);
@@ -70,8 +60,8 @@ public:
     void setPen(const QPen &pen);
     QPen pen() const;
 
-    void setAlignment(QLegend::Alignments alignment);
-    QLegend::Alignments alignment() const;
+    void setAlignment(Qt::Alignment alignment);
+    Qt::Alignment alignment() const;
 
     void detachFromChart();
     void attachToChart();
@@ -90,6 +80,9 @@ protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
+
+Q_SIGNALS:
+    void alignmentChanged();
 
 private:
     QScopedPointer<QLegendPrivate> d_ptr;

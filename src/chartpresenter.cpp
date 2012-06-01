@@ -323,7 +323,7 @@ void ChartPresenter::updateLayout()
         // Reserve some space for legend
         switch (legend->alignment()) {
 
-        case QLegend::AlignmentTop: {
+        case Qt::AlignTop: {
             int ledgendSize = legend->minHeight();
             int topPadding = 2*m_marginTiny + titleSize.height() + ledgendSize + m_marginTiny;
             m_chartMargins = QRect(QPoint(m_chartMargins.left(),topPadding),QPoint(m_chartMargins.right(),m_chartMargins.bottom()));
@@ -331,7 +331,7 @@ void ChartPresenter::updateLayout()
             titlePadding = m_marginTiny + m_marginTiny;
             break;
         }
-        case QLegend::AlignmentBottom: {
+        case Qt::AlignBottom: {
             int ledgendSize = legend->minHeight();
             int bottomPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny + m_minBottomMargin;
             m_chartMargins = QRect(QPoint(m_chartMargins.left(),m_chartMargins.top()),QPoint(m_chartMargins.right(),bottomPadding));
@@ -339,7 +339,7 @@ void ChartPresenter::updateLayout()
             titlePadding = m_chartMargins.top()/2;
             break;
         }
-        case QLegend::AlignmentLeft: {
+        case Qt::AlignLeft: {
             int ledgendSize = legend->minWidth();
             int leftPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny + m_minLeftMargin;
             m_chartMargins = QRect(QPoint(leftPadding,m_chartMargins.top()),QPoint(m_chartMargins.right(),m_chartMargins.bottom()));
@@ -347,7 +347,7 @@ void ChartPresenter::updateLayout()
             titlePadding = m_chartMargins.top()/2;
             break;
         }
-        case QLegend::AlignmentRight: {
+        case Qt::AlignRight: {
             int ledgendSize = legend->minWidth();
             int rightPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny;
             m_chartMargins = QRect(QPoint(m_chartMargins.left(),m_chartMargins.top()),QPoint(rightPadding,m_chartMargins.bottom()));

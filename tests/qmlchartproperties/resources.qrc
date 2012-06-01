@@ -17,5 +17,7 @@
         <file>qml/qmlchartproperties/GroupedBarChart.qml</file>
         <file>qml/qmlchartproperties/StackedBarChart.qml</file>
         <file>qml/qmlchartproperties/PercentBarChart.qml</file>
+        <file>qml/qmlchartproperties/Chart.qml</file>
+        <file>qml/qmlchartproperties/ChartEditor.qml</file>
     </qresource>
 </RCC>
