@@ -46,6 +46,17 @@ public:
     QBarSetPrivate(const QString name, QBarSet *parent);
     ~QBarSetPrivate();
 
+    void append(QPointF value);
+    void append(QList<QPointF> values);
+    void append(QList<qreal> values);
+
+    void insert(const int index, const qreal value);
+    void insert(const int index, const QPointF value);
+    bool remove(const int index, const int count);
+
+    void replace(const int index, const qreal value);
+    void replace(const int index, const QPointF value);
+
 Q_SIGNALS:
     void restructuredBars();
     void updatedBars();

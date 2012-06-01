@@ -124,7 +124,13 @@ qreal QBarSeries::barMargin() const
 bool QBarSeries::append(QBarSet *set)
 {
     Q_D(QBarSeries);
-    return d->append(set);
+    bool success = d->append(set);
+    if (success) {
+        QList<QBarSet*> sets;
+        sets.append(set);
+        emit barsetsAdded(sets);
+    }
+    return success;
 }
 
 /*!
@@ -134,7 +140,13 @@ bool QBarSeries::append(QBarSet *set)
 bool QBarSeries::remove(QBarSet *set)
 {
     Q_D(QBarSeries);
-    return d->remove(set);
+    bool success = d->remove(set);
+    if (success) {
+        QList<QBarSet*> sets;
+        sets.append(set);
+        emit barsetsRemoved(sets);
+    }
+    return success;
 }
 
 /*!
@@ -146,7 +158,11 @@ bool QBarSeries::remove(QBarSet *set)
 bool QBarSeries::append(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
-    return d->append(sets);
+    bool success = d->append(sets);
+    if (success) {
+        emit barsetsAdded(sets);
+    }
+    return success;
 }
 
 /*!
@@ -155,7 +171,11 @@ bool QBarSeries::append(QList<QBarSet* > sets)
 bool QBarSeries::remove(QList<QBarSet* > sets)
 {
     Q_D(QBarSeries);
-    return d->remove(sets);
+    bool success = d->remove(sets);
+    if (success) {
+        emit barsetsRemoved(sets);
+    }
+    return success;
 }
 
 void QBarSeries::clear()
@@ -189,8 +209,8 @@ void QBarSeries::setLabelsVisible(bool visible)
 {
     Q_D(QBarSeries);
     if (d->m_labelsVisible != visible) {
-        d->m_labelsVisible = visible;
-        emit d->labelsVisibleChanged(visible);
+        d->setLabelsVisible(visible);
+        emit labelsVisibleChanged();
     }
 }
 
@@ -287,15 +307,14 @@ QBarSet* QBarSeriesPrivate::barsetAt(int index)
 
 void QBarSeriesPrivate::setVisible(bool visible)
 {
-    if (m_visible != visible) {
-        m_visible = visible;
-        emit updatedBars();
-    }
+    m_visible = visible;
+    emit updatedBars();
 }
 
-bool QBarSeriesPrivate::isVisible() const
+void QBarSeriesPrivate::setLabelsVisible(bool visible)
 {
-    return m_visible;
+    m_labelsVisible = visible;
+    emit labelsVisibleChanged(visible);
 }
 
 QString QBarSeriesPrivate::categoryName(int category)
@@ -518,23 +537,28 @@ bool QBarSeriesPrivate::append(QList<QBarSet* > sets)
 bool QBarSeriesPrivate::remove(QList<QBarSet* > sets)
 {
     Q_Q(QBarSeries);
-    bool setsRemoved = false;
     foreach (QBarSet* set, sets) {
-        if (m_barSets.contains(set)) {
-            m_barSets.removeOne(set);
-            QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
-            QObject::disconnect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
-            setsRemoved = true;
+        if ((set == 0) || (!m_barSets.contains(set))) {
+            // Fail if any of the sets is null or is not in series
+            return false;
+        }
+        if (sets.count(set) != 1) {
+            // Also fail if same set is more than once in given list.
+            return false;
         }
     }
 
-    if (setsRemoved) {
-        if (m_dataset) {
-            m_dataset->updateSeries(q);   // this notifies legend
-        }
-        emit restructuredBars();        // this notifies barchartitem
+    foreach (QBarSet* set, sets) {
+        m_barSets.removeOne(set);
+        QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
+        QObject::disconnect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     }
-    return setsRemoved;
+
+    if (m_dataset) {
+        m_dataset->updateSeries(q);   // this notifies legend
+    }
+    emit restructuredBars();        // this notifies barchartitem
+    return true;
 }
 
 #include "moc_qbarseries.cpp"

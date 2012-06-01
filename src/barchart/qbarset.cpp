@@ -60,6 +60,7 @@ QBarSet::~QBarSet()
 void QBarSet::setName(const QString name)
 {
     d_ptr->m_name = name;
+    emit nameChanged();
 }
 
 /*!
@@ -78,8 +79,9 @@ QString QBarSet::name() const
 */
 void QBarSet::append(const QPointF value)
 {
-    d_ptr->m_values.append(value);
-    emit d_ptr->restructuredBars();
+    int index = d_ptr->m_values.count();
+    d_ptr->append(value);
+    emit valuesAdded(index, 1);
 }
 
 /*!
@@ -88,10 +90,9 @@ void QBarSet::append(const QPointF value)
 */
 void QBarSet::append(const QList<QPointF> values)
 {
-    for (int i=0; i<values.count(); i++) {
-        d_ptr->m_values.append(values.at(i));
-    }
-    emit d_ptr->restructuredBars();
+    int index = d_ptr->m_values.count();
+    d_ptr->append(values);
+    emit valuesAdded(index, values.count());
 }
 
 /*!
@@ -100,6 +101,7 @@ void QBarSet::append(const QList<QPointF> values)
 */
 void QBarSet::append(const qreal value)
 {
+    // Convert to QPointF and use other append(QPointF) method.
     append(QPointF(d_ptr->m_values.count(), value));
 }
 
@@ -111,11 +113,8 @@ void QBarSet::append(const qreal value)
 void QBarSet::append(const QList<qreal> values)
 {
     int index = d_ptr->m_values.count();
-    for (int i=0; i<values.count(); i++) {
-        d_ptr->m_values.append(QPointF(index,values.at(i)));
-        index++;
-    }
-    emit d_ptr->restructuredBars();
+    d_ptr->append(values);
+    emit valuesAdded(index, values.count());
 }
 
 /*!
@@ -145,18 +144,32 @@ QBarSet& QBarSet::operator << (const QPointF &value)
 */
 void QBarSet::insert(const int index, const qreal value)
 {
-    d_ptr->m_values.insert(index, QPointF(index, value));
-//    emit d_ptr->updatedBars();
+    d_ptr->insert(index, value);
+    emit valuesAdded(index,1);
+}
+
+/*!
+    Inserts new \a value on the \a index position.
+    The value that is currently at this postion is moved to postion index + 1
+    \sa remove()
+*/
+void QBarSet::insert(const int index, const QPointF value)
+{
+    d_ptr->insert(index,value);
+    emit valuesAdded(index,1);
 }
 
 /*!
     Removes the value specified by \a index
     \sa insert()
 */
-void QBarSet::remove(const int index)
+bool QBarSet::remove(const int index, const int count)
 {
-    d_ptr->m_values.removeAt(index);
-//    emit d_ptr->updatedBars();
+    bool success = d_ptr->remove(index,count);
+    if (success) {
+        emit valuesRemoved(index,count);
+    }
+    return success;
 }
 
 /*!
@@ -164,8 +177,17 @@ void QBarSet::remove(const int index)
 */
 void QBarSet::replace(const int index, const qreal value)
 {
-    d_ptr->m_values.replace(index,QPointF(index,value));
-    emit d_ptr->updatedBars();
+    d_ptr->replace(index,value);
+    emit valueChanged(index);
+}
+
+/*!
+    Sets a new value \a value to set, indexed by \a index
+*/
+void QBarSet::replace(const int index, const QPointF value)
+{
+    d_ptr->replace(index,value);
+    emit valueChanged(index);
 }
 
 /*!
@@ -222,6 +244,7 @@ void QBarSet::setPen(const QPen &pen)
       if(d_ptr->m_pen!=pen){
           d_ptr->m_pen = pen;
           emit d_ptr->updatedBars();
+          emit penChanged();
       }
 }
 
@@ -241,6 +264,7 @@ void QBarSet::setBrush(const QBrush &brush)
     if(d_ptr->m_brush!=brush){
       d_ptr->m_brush = brush;
       emit d_ptr->updatedBars();
+      emit brushChanged();
     }
 }
 
@@ -260,6 +284,7 @@ void QBarSet::setLabelBrush(const QBrush &brush)
     if(d_ptr->m_labelBrush!=brush){
         d_ptr->m_labelBrush = brush;
         emit d_ptr->updatedBars();
+        emit labelBrushChanged();
     }
 }
 
@@ -279,6 +304,7 @@ void QBarSet::setLabelFont(const QFont &font)
     if(d_ptr->m_labelFont!=font) {
         d_ptr->m_labelFont = font;
         emit d_ptr->updatedBars();
+        emit labelFontChanged();
     }
 
 }
@@ -301,6 +327,69 @@ QBarSetPrivate::QBarSetPrivate(const QString name, QBarSet *parent) : QObject(pa
 
 QBarSetPrivate::~QBarSetPrivate()
 {
+}
+
+void QBarSetPrivate::append(QPointF value)
+{
+    m_values.append(value);
+    emit restructuredBars();
+}
+
+void QBarSetPrivate::append(QList<QPointF> values)
+{
+    for (int i=0; i<values.count(); i++) {
+        m_values.append(values.at(i));
+    }
+    emit restructuredBars();
+}
+
+void QBarSetPrivate::append(QList<qreal> values)
+{
+    int index = m_values.count();
+    for (int i=0; i<values.count(); i++) {
+        m_values.append(QPointF(index,values.at(i)));
+        index++;
+    }
+    emit restructuredBars();
+}
+
+void QBarSetPrivate::insert(const int index, const qreal value)
+{
+    m_values.insert(index, QPointF(index, value));
+    emit restructuredBars();
+}
+
+void QBarSetPrivate::insert(const int index, const QPointF value)
+{
+    m_values.insert(index, value);
+    emit restructuredBars();
+}
+
+bool QBarSetPrivate::remove(const int index, const int count)
+{
+    if ((index + count) > m_values.count()) {
+        // cant remove more values than there are
+        return false;
+    }
+    int c = count;
+    while (c > 0) {
+        m_values.removeAt(index);
+        c--;
+    }
+    emit restructuredBars();
+    return true;
+}
+
+void QBarSetPrivate::replace(const int index, const qreal value)
+{
+    m_values.replace(index,QPointF(index,value));
+    emit updatedBars();
+}
+
+void QBarSetPrivate::replace(const int index, const QPointF value)
+{
+    m_values.replace(index,value);
+    emit updatedBars();
 }
 
 #include "moc_qbarset.cpp"

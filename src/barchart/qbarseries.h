@@ -63,6 +63,11 @@ protected:
 Q_SIGNALS:
     void clicked(QBarSet *barset, int index);
     void hovered(QBarSet* barset, bool status);
+    void visibleChanged();
+    void labelsVisibleChanged();
+
+    void barsetsAdded(QList<QBarSet*> sets);
+    void barsetsRemoved(QList<QBarSet*> sets);
 
 protected:
     Q_DECLARE_PRIVATE(QBarSeries)

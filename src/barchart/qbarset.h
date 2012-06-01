@@ -54,8 +54,10 @@ public:
     QBarSet& operator << (const QPointF &value);
 
     void insert(const int index, const qreal value);
-    void remove(const int index);
+    void insert(const int index, const QPointF value);
+    bool remove(const int index, const int count = 1);
     void replace(const int index, const qreal value);
+    void replace(const int index, const QPointF value);
     QPointF at(const int index) const;
     QPointF operator [] (const int index) const;
     int count() const;
@@ -72,6 +74,18 @@ public:
 
     void setLabelFont(const QFont &font);
     QFont labelFont() const;
+
+Q_SIGNALS:
+    void nameChanged();
+    void penChanged();
+    void brushChanged();
+    void labelChanged();
+    void labelBrushChanged();
+    void labelFontChanged();
+
+    void valuesAdded(int index, int count);
+    void valuesRemoved(int index, int count);
+    void valueChanged(int index);
 
 private:
     QScopedPointer<QBarSetPrivate> d_ptr;

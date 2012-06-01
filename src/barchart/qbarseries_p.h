@@ -55,7 +55,7 @@ public:
     qreal barMargin() const;
 
     void setVisible(bool visible);
-    bool isVisible() const;
+    void setLabelsVisible(bool visible);
 
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter* presenter);
