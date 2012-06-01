@@ -61,6 +61,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QAbstractSeries::nameChanged()
+
+    This signal is emitted when the series name changes.
+
+    \sa name
+*/
+
+/*!
     \fn void QAbstractSeries::setName(const QString& name)
     \brief Sets a \a name for the series.
 
