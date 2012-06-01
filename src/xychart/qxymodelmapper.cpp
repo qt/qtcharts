@@ -5,17 +5,47 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \property QXYModelMapper::series
+    \brief Defines the QPieSeries object that is used by the mapper.
+
+    All the data in the series in the series is discarded when it is set to the mapper.
+    When new series is specified the old series is disconnected (it preserves its data)
+*/
+
+/*!
+    \property QXYModelMapper::model
+    \brief Defines the model that is used by the mapper.
+*/
+
+/*!
+    \property QXYModelMapper::first
+    \brief Defines which item of the model's row/column should be mapped as the first x/y pair
+
+    Minimal and default value is: 0
+*/
+
+/*!
+    \property QXYModelMapper::count
+    \brief Defines the number of rows/columns of the model that are mapped as the data for QXYSeries
+
+    Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
+*/
+
+/*!
+    \class QXYModelMapper
+    \brief part of QtCommercial chart API.
+    \mainclass
+
+    The instance of this class cannot be created directly. QHXYModelMapper of QVXYModelMapper should be used instead. This class is used to create a connection between QXYSeries and QAbstractItemModel derived model object.
+    It is possible to use both QAbstractItemModel and QPieSeries model API. QPieModelMapper makes sure that QXYSeries and the model are kept in sync.
+    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
 QXYModelMapper::QXYModelMapper(QObject *parent):
     QObject(parent),
     d_ptr(new QXYModelMapperPrivate(this))
 {
-}
-
-QXYModelMapper::~QXYModelMapper()
-{
-    Q_D(QXYModelMapper);
-    disconnect(d->m_model, 0, d, 0);
-    //    disconnect(d->m_series, 0, d, 0);
 }
 
 QAbstractItemModel* QXYModelMapper::model() const
@@ -94,12 +124,22 @@ void QXYModelMapper::setCount(int count)
     d->initializeXYFromModel();
 }
 
+/*!
+    Returns the orientation that is used when QXYModelMapper accesses the model.
+    This mean whether the consecutive x/y values of the QXYSeries are read from rows (Qt::Horizontal)
+    or from columns (Qt::Vertical)
+*/
 Qt::Orientation QXYModelMapper::orientation() const
 {
     Q_D(const QXYModelMapper);
     return d->m_orientation;
 }
 
+/*!
+    Returns the \a orientation that is used when QXYModelMapper accesses the model.
+    This mean whether the consecutive x/y values of the QXYSeries are read from rows (Qt::Horizontal)
+    or from columns (Qt::Vertical)
+*/
 void QXYModelMapper::setOrientation(Qt::Orientation orientation)
 {
     Q_D(QXYModelMapper);
@@ -107,12 +147,19 @@ void QXYModelMapper::setOrientation(Qt::Orientation orientation)
     d->initializeXYFromModel();
 }
 
+/*!
+    Returns which section of the model is kept in sync with the x values of the QXYSeries
+*/
 int QXYModelMapper::xSection() const
 {
     Q_D(const QXYModelMapper);
     return d->m_xSection;
 }
 
+/*!
+    Sets the model section that is kept in sync with the x values of the QXYSeries.
+    Parameter \a xSection specifies the section of the model.
+*/
 void QXYModelMapper::setXSection(int xSection)
 {
     Q_D(QXYModelMapper);
@@ -120,12 +167,19 @@ void QXYModelMapper::setXSection(int xSection)
     d->initializeXYFromModel();
 }
 
+/*!
+    Returns which section of the model is kept in sync with the y values of the QXYSeries
+*/
 int QXYModelMapper::ySection() const
 {
     Q_D(const QXYModelMapper);
     return d->m_ySection;
 }
 
+/*!
+    Sets the model section that is kept in sync with the y values of the QXYSeries.
+    Parameter \a ySection specifies the section of the model.
+*/
 void QXYModelMapper::setYSection(int ySection)
 {
     Q_D(QXYModelMapper);
@@ -133,6 +187,10 @@ void QXYModelMapper::setYSection(int ySection)
     d->initializeXYFromModel();
 }
 
+/*!
+    Resets the QXYModelMapper to the default state.
+    first: 0; count: -1; xSection: -1; ySection: -1;
+*/
 void QXYModelMapper::reset()
 {
     Q_D(QXYModelMapper);

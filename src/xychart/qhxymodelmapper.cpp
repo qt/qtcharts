@@ -10,6 +10,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Nothing here yet
 */
 
+/*!
+    \property QHXYModelMapper::xRow
+    \brief Defines which row of the model is kept in sync with the x values of the QXYSeries
+    Default value is: -1 (invalid mapping)
+*/
+
+/*!
+    \property QHXYModelMapper::yRow
+    \brief Defines which row of the model is kept in sync with the  y values of the QXYSeries
+
+    Default value is: -1 (invalid mapping)
+*/
+
 QHXYModelMapper::QHXYModelMapper(QObject *parent) :
     QXYModelMapper(parent)
 {
