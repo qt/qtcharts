@@ -25,13 +25,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QHBarModelMapper::categoriesRow
-    \brief Defines which row of the model is used as the data source for the x axis categories
-
-    Default value is: -1 (invalid mapping)
-*/
-
-/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QHBarModelMapper::QHBarModelMapper(QObject *parent) :
@@ -58,16 +51,6 @@ int QHBarModelMapper::lastBarSetRow() const
 void QHBarModelMapper::setLastBarSetRow(int lastBarSetRow)
 {
     return QBarModelMapper::setLastBarSetSection(lastBarSetRow);
-}
-
-int QHBarModelMapper::categoriesRow() const
-{
-    return QBarModelMapper::categoriesSection();
-}
-
-void QHBarModelMapper::setCategoriesRow(int categoriesRow)
-{
-    return QBarModelMapper::setCategoriesSection(categoriesRow);
 }
 
 #include "moc_qhbarmodelmapper.cpp"

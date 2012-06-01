@@ -479,16 +479,10 @@ void TableWidget::updateChartType(bool toggle)
             m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
             QGroupedBarSeries* barSeries = new QGroupedBarSeries();
-//            barSeries->setCategories(QStringList());
-//            barSeries->setModel(m_model);
-            //            barSeries->setModelMappingRange(2, 5);
-            //                    barSeries->setModelMapping(5, 2, 4, Qt::Vertical);
-
 
             int first = 3;
             int count = 6;
             QVBarModelMapper *mapper = new QVBarModelMapper;
-            mapper->setCategoriesColumn(5);
             mapper->setFirstBarSetColumn(2);
             mapper->setLastBarSetColumn(4);
             mapper->setFirst(first);
@@ -497,6 +491,11 @@ void TableWidget::updateChartType(bool toggle)
             mapper->setModel(m_model);
 //            barSeries->setModelMapper(mapper);
             m_chart->addSeries(barSeries);
+
+            QStringList categories;
+            categories << "June" << "July" << "August" << "September" << "October" << "November";
+
+            m_chart->axisX()->categories()->insert(categories);
 
             QList<QBarSet*> barsets = barSeries->barSets();
             for (int i = 0; i < barsets.count(); i++) {

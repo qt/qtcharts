@@ -25,13 +25,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QVBarModelMapper::categoriesColumn
-    \brief Defines which column of the model is used as the data source for the x axis categories
-
-    Default value is: -1 (invalid mapping)
-*/
-
-/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QVBarModelMapper::QVBarModelMapper(QObject *parent) :
@@ -58,16 +51,6 @@ int QVBarModelMapper::lastBarSetColumn() const
 void QVBarModelMapper::setLastBarSetColumn(int lastBarSetColumn)
 {
     return QBarModelMapper::setLastBarSetSection(lastBarSetColumn);
-}
-
-int QVBarModelMapper::categoriesColumn() const
-{
-    return QBarModelMapper::categoriesSection();
-}
-
-void QVBarModelMapper::setCategoriesColumn(int categoriesColumn)
-{
-    return QBarModelMapper::setCategoriesSection(categoriesColumn);
 }
 
 #include "moc_qvbarmodelmapper.cpp"

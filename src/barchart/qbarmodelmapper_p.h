@@ -35,7 +35,6 @@ public Q_SLOTS:
 private:
     QBarSet* barSet(QModelIndex index);
     QModelIndex barModelIndex(int barSection, int posInBar);
-    QModelIndex categoriesModelIndex(int posInCategories);
     void insertData(int start, int end);
     void removeData(int start, int end);
     void blockModelSignals(bool block = true);
@@ -49,7 +48,6 @@ private:
     Qt::Orientation m_orientation;
     int m_firstBarSetSection;
     int m_lastBarSetSection;
-    int m_categoriesSection;
     bool m_seriesSignalsBlock;
     bool m_modelSignalsBlock;
 

@@ -10,7 +10,6 @@ class QTCOMMERCIALCHART_EXPORT QHBarModelMapper : public QBarModelMapper
     Q_OBJECT
     Q_PROPERTY(int firstBarSetRow READ firstBarSetRow WRITE setFirstBarSetRow)
     Q_PROPERTY(int lastBarSetRow READ lastBarSetRow WRITE setLastBarSetRow)
-    Q_PROPERTY(int categoriesRow READ categoriesRow WRITE setCategoriesRow)
 
 public:
     explicit QHBarModelMapper(QObject *parent = 0);
@@ -20,10 +19,6 @@ public:
 
     int lastBarSetRow() const;
     void setLastBarSetRow(int lastBarSetRow);
-
-    int categoriesRow() const;
-    void setCategoriesRow(int categoriesRow);
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

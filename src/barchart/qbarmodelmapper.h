@@ -46,9 +46,6 @@ protected:
     int lastBarSetSection() const;
     void setLastBarSetSection(int lastBarSetSection);
 
-    int categoriesSection() const;
-    void setCategoriesSection(int categoriesSection);
-
     Qt::Orientation orientation() const;
     void setOrientation(Qt::Orientation orientation);    
 
