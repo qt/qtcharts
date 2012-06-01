@@ -419,11 +419,10 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     Q_UNUSED(domain)
 
     QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
-    foreach(LegendMarker* marker , markers)
+    foreach(LegendMarker* marker, markers)
         m_markers->addToGroup(marker);
 
-    if(series->type() == QAbstractSeries::SeriesTypePie)
-    {
+    if(series->type() == QAbstractSeries::SeriesTypePie) {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
         QObject::connect(pieSeries, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
         QObject::connect(pieSeries, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
@@ -434,7 +433,6 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 
 void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 {
-
     QList<QGraphicsItem *> items = m_markers->childItems();
 
     foreach (QGraphicsItem *markers, items) {

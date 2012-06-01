@@ -90,7 +90,10 @@ QAbstractSeries::~QAbstractSeries()
 
 void QAbstractSeries::setName(const QString& name)
 {
-    d_ptr->m_name = name;
+    if (name != d_ptr->m_name) {
+        d_ptr->m_name = name;
+        nameChanged();
+    }
 }
 
 /*!

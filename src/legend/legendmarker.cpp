@@ -36,13 +36,14 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-LegendMarker::LegendMarker(QAbstractSeries *series, QLegend *legend) : QGraphicsObject(legend),
-m_series(series),
-m_markerRect(0,0,10.0,10.0),
-m_boundingRect(0,0,0,0),
-m_legend(legend),
-m_textItem(new QGraphicsSimpleTextItem(this)),
-m_rectItem(new QGraphicsRectItem(this))
+LegendMarker::LegendMarker(QAbstractSeries *series, QLegend *legend) :
+    QGraphicsObject(legend),
+    m_series(series),
+    m_markerRect(0,0,10.0,10.0),
+    m_boundingRect(0,0,0,0),
+    m_legend(legend),
+    m_textItem(new QGraphicsSimpleTextItem(this)),
+    m_rectItem(new QGraphicsRectItem(this))
 {
     //setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     m_rectItem->setRect(m_markerRect);
@@ -125,6 +126,7 @@ m_series(series)
 {
     //QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
     QObject::connect(series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
+    QObject::connect(series, SIGNAL(nameChanged()), this, SLOT(updated()));
     updated();
 }
 
@@ -173,6 +175,7 @@ m_series(series)
 {
     //QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
     QObject::connect(series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
+    QObject::connect(series, SIGNAL(nameChanged()), this, SLOT(updated()));
     updated();
 }
 
