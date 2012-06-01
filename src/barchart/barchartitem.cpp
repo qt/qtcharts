@@ -38,9 +38,10 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
 {
     setFlag(ItemClipsChildrenToShape);
     connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
-    connect(series->d_func(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(labelsVisibleChanged(bool)));
+    connect(series->d_func(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(handleLabelsVisibleChanged(bool)));
+    connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
     setZValue(ChartPresenter::BarSeriesZValue);
-    dataChanged();
+    handleDataStructureChanged();
 }
 
 BarChartItem::~BarChartItem()
@@ -59,7 +60,7 @@ QRectF BarChartItem::boundingRect() const
     return m_rect;
 }
 
-void BarChartItem::dataChanged()
+void BarChartItem::handleDataStructureChanged()
 {
     foreach(QGraphicsItem *item, childItems()) {
         delete item;
@@ -92,6 +93,7 @@ void BarChartItem::dataChanged()
 
     // TODO: Is this the right place to call it?
 //    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
+    handleLayoutChanged();
 }
 
 QVector<QRectF> BarChartItem::calculateLayout()
@@ -150,18 +152,20 @@ QVector<QRectF> BarChartItem::calculateLayout()
 
 void BarChartItem::applyLayout(const QVector<QRectF> &layout)
 {
-    if (animator())
+    if (animator()) {
         animator()->updateLayout(this, m_layout, layout);
-    else
+    } else {
         setLayout(layout);
+    }
 }
 
 void BarChartItem::setLayout(const QVector<QRectF> &layout)
 {
     m_layout = layout;
 
-    for (int i=0; i < m_bars.count(); i++)
+    for (int i=0; i < m_bars.count(); i++) {
         m_bars.at(i)->setRect(layout.at(i));
+    }
 
     update();
 }
@@ -194,7 +198,7 @@ void BarChartItem::handleLayoutChanged()
     update();
 }
 
-void BarChartItem::labelsVisibleChanged(bool visible)
+void BarChartItem::handleLabelsVisibleChanged(bool visible)
 {
     foreach (QGraphicsSimpleTextItem* label, m_labels) {
         label->setVisible(visible);

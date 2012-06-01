@@ -428,11 +428,6 @@ qreal QBarSeriesPrivate::maxCategorySum()
     return max;
 }
 
-void QBarSeriesPrivate::barsetChanged()
-{
-    emit updatedBars();
-}
-
 void QBarSeriesPrivate::scaleDomain(Domain& domain)
 {
     qreal minX(domain.minX());
@@ -486,7 +481,8 @@ bool QBarSeriesPrivate::append(QBarSet *set)
         return false;
     }
     m_barSets.append(set);
-    QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+    QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
+    QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     if (m_dataset) {
         m_dataset->updateSeries(q);   // this notifies legend
     }
@@ -502,7 +498,8 @@ bool QBarSeriesPrivate::remove(QBarSet *set)
         return false;
     }
     m_barSets.removeOne(set);
-    QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+    QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
+    QObject::disconnect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     if (m_dataset) {
         m_dataset->updateSeries(q);   // this notifies legend
     }
@@ -526,7 +523,8 @@ bool QBarSeriesPrivate::append(QList<QBarSet* > sets)
 
     foreach (QBarSet* set, sets) {
         m_barSets.append(set);
-        QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+        QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
+        QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     }
     if (m_dataset) {
         m_dataset->updateSeries(q);   // this notifies legend
@@ -542,7 +540,8 @@ bool QBarSeriesPrivate::remove(QList<QBarSet* > sets)
     foreach (QBarSet* set, sets) {
         if (m_barSets.contains(set)) {
             m_barSets.removeOne(set);
-            QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(barsetChanged()));
+            QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
+            QObject::disconnect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
             setsRemoved = true;
         }
     }

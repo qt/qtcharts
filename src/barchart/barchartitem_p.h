@@ -53,8 +53,6 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QRectF boundingRect() const;
 
-    virtual void dataChanged();     // data of series has changed -> need to recalculate bar sizes
-
     virtual QVector<QRectF> calculateLayout();
     void applyLayout(const QVector<QRectF> &layout);
     void setLayout(const QVector<QRectF> &layout);
@@ -66,7 +64,8 @@ public Q_SLOTS:
     void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void handleGeometryChanged(const QRectF &size);
     void handleLayoutChanged();
-    void labelsVisibleChanged(bool visible);
+    void handleLabelsVisibleChanged(bool visible);
+    void handleDataStructureChanged();     // structure of of series has changed, recreate graphic items
 
 protected:
 

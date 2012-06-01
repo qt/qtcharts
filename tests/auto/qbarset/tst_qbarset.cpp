@@ -349,7 +349,8 @@ void tst_QBarSet::customize()
 
     // Append set1 to series
     QGroupedBarSeries *series = new QGroupedBarSeries();
-    series->append(set1);
+    bool success = series->append(set1);
+    QVERIFY(success);
 
     // Add series to the chart
     QChartView view(new QChart());

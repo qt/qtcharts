@@ -83,9 +83,6 @@ Q_SIGNALS:
     void categoriesUpdated();
     void labelsVisibleChanged(bool visible);
 
-private Q_SLOTS:
-    void barsetChanged();
-
 protected:
     QList<QBarSet *> m_barSets;
     QStringList m_categories;
