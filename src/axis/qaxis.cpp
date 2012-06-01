@@ -36,6 +36,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAxis::labelsVisible
+
+  Defines if axis labels are visible.
+*/
+
+/*!
+  \property QAxis::min
+
+  Defines the minimum value on the axis.
+*/
+
+/*!
+  \property QAxis::max
+
+  Defines the maximum value on the axis.
+*/
+
+/*!
    \fn bool QAxis::isAxisVisible() const
    \brief Returns if axis is visible
    \sa setAxisVisible()
@@ -58,12 +76,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
    \fn QPen QAxis::gridLinePen() const
    \brief  Returns pen used to draw grid.
     \sa setGridLinePen()
-*/
-
-/*!
-   \fn  bool QAxis::labelsVisible() const
-   \brief Returns if grid is visible
-   \sa setLabelsVisible()
 */
 
 /*!
@@ -240,9 +252,6 @@ QPen QAxis::gridLinePen() const
     return d_ptr->m_gridLinePen;
 }
 
-/*!
-  Sets if axis' labels are \a visible.
- */
 void QAxis::setLabelsVisible(bool visible)
 {
     if (d_ptr->m_labelsVisible != visible) {
@@ -383,9 +392,6 @@ qreal QAxis::shadesOpacity() const
     return d_ptr->m_shadesOpacity;
 }
 
-/*!
- Sets \a min value on the axis.
- */
 void QAxis::setMin(qreal min)
 {
 	setRange(min,d_ptr->m_max);
@@ -396,9 +402,6 @@ qreal QAxis::min() const
     return d_ptr->m_min;
 }
 
-/*!
- Sets \a max value on the axis.
- */
 void QAxis::setMax(qreal max)
 {
     setRange(d_ptr->m_min,max);
