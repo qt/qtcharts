@@ -178,10 +178,13 @@ bool QBarSeries::remove(QList<QBarSet* > sets)
     return success;
 }
 
+/*!
+    Removes all of the bar sets from the series
+*/
 void QBarSeries::clear()
 {
     Q_D(QBarSeries);
-    d->m_barSets.clear();
+    d->remove(barSets());
 }
 
 /*!

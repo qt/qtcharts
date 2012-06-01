@@ -29,6 +29,8 @@
 #include <QVPieModelMapper>
 #include <QVXYModelMapper>
 #include <QHXYModelMapper>
+#include <QGroupedBarSeries>
+#include <QVBarModelMapper>
 
 class CustomTableModel;
 class QTableView;
@@ -66,6 +68,7 @@ public:
     QVXYModelMapper *m_mapper;
     CustomTableModel* m_model;
     QTableView* m_tableView;
+
     QRadioButton* m_lineRadioButton;
     QRadioButton* m_splineRadioButton;
     QRadioButton* m_scatterRadioButton;
@@ -73,10 +76,14 @@ public:
     QRadioButton* m_areaRadioButton;
     QRadioButton* m_barRadioButton;
     QSpinBox* m_linesCountSpinBox;
+
     QVPieModelMapper *m_pieMapper;
     QPieSeries* m_pieSeries;
     QVPieModelMapper *m_pieMapper2;
     QPieSeries* m_pieSeries2;
+
+    QGroupedBarSeries* m_barSeries;
+    QVBarModelMapper* m_barMapper;
 //    QPieSeries* specialPie;
 };
 

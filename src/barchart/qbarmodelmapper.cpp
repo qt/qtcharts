@@ -262,10 +262,10 @@ QBarSet* QBarModelMapperPrivate::barSet(QModelIndex index)
 
     if (m_orientation == Qt::Vertical && index.column() >= m_firstBarSetSection && index.column() <= m_lastBarSetSection) {
         if (index.row() >= m_first && (m_count == - 1 || index.row() < m_first + m_count)) {
-//            if (m_model->index(index.row(), m_valuesSection).isValid() && m_model->index(index.row(), m_labelsSection).isValid())
-                return m_series->barSets().at(index.column() - m_firstBarSetSection);
-//            else
-//                return 0;
+            //            if (m_model->index(index.row(), m_valuesSection).isValid() && m_model->index(index.row(), m_labelsSection).isValid())
+            return m_series->barSets().at(index.column() - m_firstBarSetSection);
+            //            else
+            //                return 0;
         }
     } else if (m_orientation == Qt::Horizontal && index.row() >= m_firstBarSetSection && index.row() <= m_lastBarSetSection) {
         if (index.column() >= m_first && (m_count == - 1 || index.column() < m_first + m_count))
@@ -461,13 +461,18 @@ void QBarModelMapperPrivate::initializeBarFromModel()
     for (int i = m_firstBarSetSection; i <= m_lastBarSetSection; i++) {
         int posInBar = 0;
         QModelIndex barIndex = barModelIndex(i, posInBar);
-        QBarSet *barSet = new QBarSet(m_model->headerData(i, Qt::Horizontal).toString());
-        while (barIndex.isValid()) {
-            barSet->append(m_model->data(barIndex, Qt::DisplayRole).toDouble());
-            posInBar++;
-            barIndex = barModelIndex(i, posInBar);
+        // check if there is such model index
+        if (barIndex.isValid()) {
+            QBarSet *barSet = new QBarSet(m_model->headerData(i, Qt::Horizontal).toString());
+            while (barIndex.isValid()) {
+                barSet->append(m_model->data(barIndex, Qt::DisplayRole).toDouble());
+                posInBar++;
+                barIndex = barModelIndex(i, posInBar);
+            }
+            m_series->append(barSet);
+        } else {
+            break;
         }
-        m_series->append(barSet);
     }
     blockSeriesSignals(false);
 }

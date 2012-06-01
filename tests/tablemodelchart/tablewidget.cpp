@@ -50,7 +50,9 @@ TableWidget::TableWidget(QWidget *parent)
       m_mapper(0),
       m_model(0),
       m_pieMapper(0),
-      m_pieMapper2(0)
+      m_pieMapper2(0),
+      m_barSeries(0),
+      m_barMapper(0)
     //      specialPie(0)
 {
     setGeometry(1900, 100, 1000, 600);
@@ -476,28 +478,29 @@ void TableWidget::updateChartType(bool toggle)
         //        }
         else if (m_barRadioButton->isChecked())
         {
-            m_chart->setAnimationOptions(QChart::SeriesAnimations);
+//            m_chart->setAnimationOptions(QChart::SeriesAnimations);
+            m_chart->setAnimationOptions(QChart::NoAnimation);
 
-            QGroupedBarSeries* barSeries = new QGroupedBarSeries();
+            m_barSeries = new QGroupedBarSeries();
 
             int first = 3;
             int count = 6;
-            QVBarModelMapper *mapper = new QVBarModelMapper;
-            mapper->setFirstBarSetColumn(2);
-            mapper->setLastBarSetColumn(4);
-            mapper->setFirst(first);
-            mapper->setCount(count);
-            mapper->setSeries(barSeries);
-            mapper->setModel(m_model);
+            m_barMapper = new QVBarModelMapper;
+            m_barMapper->setFirstBarSetColumn(2);
+            m_barMapper->setLastBarSetColumn(4);
+            m_barMapper->setFirst(first);
+            m_barMapper->setCount(count);
+            m_barMapper->setSeries(m_barSeries);
+            m_barMapper->setModel(m_model);
 //            barSeries->setModelMapper(mapper);
-            m_chart->addSeries(barSeries);
+            m_chart->addSeries(m_barSeries);
 
             QStringList categories;
             categories << "June" << "July" << "August" << "September" << "October" << "November";
 
             m_chart->axisX()->categories()->insert(categories);
 
-            QList<QBarSet*> barsets = barSeries->barSets();
+            QList<QBarSet*> barsets = m_barSeries->barSets();
             for (int i = 0; i < barsets.count(); i++) {
                 seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
                 m_model->addMapping(seriesColorHex, QRect(2 + i, first, 1, barsets.at(i)->count()));
@@ -570,13 +573,15 @@ void TableWidget::testPie3()
 
 void TableWidget::testXY()
 {
+    if (m_barMapper)
+        m_barMapper->setLastBarSetColumn(m_barMapper->lastBarSetColumn() + 1);
     //    if (m_series->type() != QAbstractSeries::SeriesTypeLine) {
     //        m_series->append(QPointF(150, 75));
     //    }
 
-    if (m_series->count() > 0) {
-        m_series->remove(m_series->points().last());
-    }
+//    if (m_series->count() > 0) {
+//        m_series->remove(m_series->points().last());
+//    }
 }
 
 TableWidget::~TableWidget()
