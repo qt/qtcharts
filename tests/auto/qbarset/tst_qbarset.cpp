@@ -401,7 +401,6 @@ void tst_QBarSet::customize()
     // Test adding data to the sets
     *set1 << 1 << 2 << 1 << 3;
     *set2 << 2 << 1 << 3 << 1;
-    QTest::qWait(3000);
 }
 
 QTEST_MAIN(tst_QBarSet)

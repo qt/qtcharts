@@ -183,24 +183,6 @@ QList<QBarSet*> QBarSeries::barSets() const
 }
 
 /*!
-    Sets the visibility of series to \a visible
-*/
-void QBarSeries::setVisible(bool visible)
-{
-    Q_D(QBarSeries);
-    d->setVisible(visible);
-}
-
-/*!
-    Returns the visibility of series
-*/
-bool QBarSeries::isVisible() const
-{
-    Q_D(const QBarSeries);
-    return d->isVisible();
-}
-
-/*!
     Sets the visibility of labels in series to \a visible
 */
 void QBarSeries::setLabelsVisible(bool visible)

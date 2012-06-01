@@ -28,18 +28,6 @@ Flow {
     property variant series
 
     Button {
-        text: "set 1 color"
-        onClicked: series.at(0).color = main.nextColor();
-    }
-    Button {
-        text: "set 1 border color"
-        onClicked: series.at(0).borderColor = main.nextColor();
-    }
-    Button {
-        text: "set 1 label color"
-        onClicked: series.at(0).labelColor = main.nextColor();
-    }
-    Button {
         text: "visible"
         onClicked: series.visible = !series.visible;
     }
@@ -54,6 +42,18 @@ Flow {
     Button {
         text: "bar margin -"
         onClicked: series.barMargin -= 0.1;
+    }
+    Button {
+        text: "set 1 color"
+        onClicked: series.at(0).color = main.nextColor();
+    }
+    Button {
+        text: "set 1 border color"
+        onClicked: series.at(0).borderColor = main.nextColor();
+    }
+    Button {
+        text: "set 1 label color"
+        onClicked: series.at(0).labelColor = main.nextColor();
     }
     Button {
         text: "set 1 font size +"

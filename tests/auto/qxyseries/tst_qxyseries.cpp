@@ -348,3 +348,15 @@ void tst_QXYSeries::pointsVisible_raw()
     TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->pointsVisible(), pointsVisible);
 }
+
+void tst_QXYSeries::changedSignals()
+{
+    QSignalSpy visibleSpy(m_series, SIGNAL(visibleChanged()));
+
+    m_series->setVisible(false);
+    m_series->setVisible(false);
+    TRY_COMPARE(visibleSpy.count(), 1);
+    m_series->setVisible(true);
+    TRY_COMPARE(visibleSpy.count(), 2);
+}
+

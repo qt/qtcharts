@@ -29,6 +29,10 @@ Flow {
     property variant series
 
     Button {
+        text: "visible"
+        onClicked: series.visible = !series.visible;
+    }
+    Button {
         text: "color"
         onClicked: series.color = main.nextColor();
     }

@@ -37,6 +37,7 @@ m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     handleUpdated();
 }
 
@@ -90,15 +91,17 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget)
     Q_UNUSED(option)
 
-    painter->save();
-    painter->setPen(m_linePen);
-    painter->setClipRect(clipRect());
-    painter->drawPath(m_path);
-    if(m_pointsVisible){
-    	painter->setPen(m_pointPen);
-    	painter->drawPoints(geometryPoints());
+    if (m_series->isVisible()) {
+        painter->save();
+        painter->setPen(m_linePen);
+        painter->setClipRect(clipRect());
+        painter->drawPath(m_path);
+        if(m_pointsVisible){
+            painter->setPen(m_pointPen);
+            painter->drawPoints(geometryPoints());
+        }
+        painter->restore();
     }
-    painter->restore();
 }
 
 void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

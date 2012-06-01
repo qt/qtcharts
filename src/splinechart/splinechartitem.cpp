@@ -28,14 +28,15 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 SplineChartItem::SplineChartItem(QSplineSeries *series, ChartPresenter *presenter) :
-XYChart(series, presenter),
-QGraphicsItem(presenter ? presenter->rootItem() : 0),
-m_series(series),
-m_pointsVisible(false),
-m_animation(0)
+    XYChart(series, presenter),
+    QGraphicsItem(presenter ? presenter->rootItem() : 0),
+    m_series(series),
+    m_pointsVisible(false),
+    m_animation(0)
 {
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     handleUpdated();
 }
 
@@ -147,15 +148,17 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 {
     Q_UNUSED(widget)
     Q_UNUSED(option)
-    painter->save();
-    painter->setClipRect(clipRect());
-    painter->setPen(m_linePen);
-    painter->drawPath(m_path);
-    if (m_pointsVisible) {
-        painter->setPen(m_pointPen);
-        painter->drawPoints(geometryPoints());
+    if (m_series->isVisible()) {
+        painter->save();
+        painter->setClipRect(clipRect());
+        painter->setPen(m_linePen);
+        painter->drawPath(m_path);
+        if (m_pointsVisible) {
+            painter->setPen(m_pointPen);
+            painter->drawPoints(geometryPoints());
+        }
+        painter->restore();
     }
-    painter->restore();
 }
 
 void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -45,6 +45,7 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
         m_lower = new AreaBoundItem(this,m_series->lowerSeries(),presenter);
 
     QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
+    QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     QObject::connect(this,SIGNAL(clicked(QPointF)),areaSeries,SIGNAL(clicked(QPointF)));
 
     handleUpdated();
@@ -119,18 +120,20 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget)
     Q_UNUSED(option)
 
-    painter->save();
-    painter->setPen(m_linePen);
-    painter->setBrush(m_brush);
-    painter->setClipRect(m_clipRect);
-    painter->drawPath(m_path);
-    if (m_pointsVisible) {
-           painter->setPen(m_pointPen);
-           painter->drawPoints(m_upper->geometryPoints());
-           if (m_lower)
-               painter->drawPoints(m_lower->geometryPoints());
+    if (m_series->isVisible()) {
+        painter->save();
+        painter->setPen(m_linePen);
+        painter->setBrush(m_brush);
+        painter->setClipRect(m_clipRect);
+        painter->drawPath(m_path);
+        if (m_pointsVisible) {
+               painter->setPen(m_pointPen);
+               painter->drawPoints(m_upper->geometryPoints());
+               if (m_lower)
+                   painter->drawPoints(m_lower->geometryPoints());
+        }
+        painter->restore();
     }
-    painter->restore();
 }
 
 void AreaChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

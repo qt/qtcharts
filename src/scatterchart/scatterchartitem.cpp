@@ -30,14 +30,15 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *presenter) :
-XYChart(series,presenter),
-QGraphicsItem(presenter ? presenter->rootItem() : 0),
-m_series(series),
-m_items(this),
-m_shape(QScatterSeries::MarkerShapeRectangle),
-m_size(15)
+    XYChart(series,presenter),
+    QGraphicsItem(presenter ? presenter->rootItem() : 0),
+    m_series(series),
+    m_items(this),
+    m_shape(QScatterSeries::MarkerShapeRectangle),
+    m_size(15)
 {
     QObject::connect(m_series->d_func(),SIGNAL(updated()), this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);

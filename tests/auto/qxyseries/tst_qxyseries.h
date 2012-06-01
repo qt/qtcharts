@@ -74,6 +74,7 @@ private slots:
     void replace_chart();
     void replace_chart_animation_data();
     void replace_chart_animation();
+    void changedSignals();
 protected:
     void append_data();
     void count_data();

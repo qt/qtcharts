@@ -57,6 +57,7 @@ protected:
     QChart *m_chart;
     ChartDataSet *m_dataset;
     QString m_name;
+    bool m_visible;
 
     friend class QAbstractSeries;
     friend class ChartDataSet;

@@ -40,6 +40,7 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
     connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
     connect(series->d_func(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(handleLabelsVisibleChanged(bool)));
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
+    connect(series, SIGNAL(visibleChanged()), this, SLOT(handleLayoutChanged()));
     setZValue(ChartPresenter::BarSeriesZValue);
     handleDataStructureChanged();
 }

@@ -34,6 +34,7 @@ class QTCOMMERCIALCHART_EXPORT QAbstractSeries : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
+    Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
     Q_ENUMS(SeriesType)
 
 public:
@@ -57,10 +58,13 @@ public:
     virtual SeriesType type() const = 0;
     void setName(const QString& name);
     QString name() const;
+    void setVisible(bool visible = true);
+    bool isVisible() const;
     QChart* chart() const;
 
 Q_SIGNALS:
     void nameChanged();
+    void visibleChanged();
 
 protected:
     QScopedPointer<QAbstractSeriesPrivate> d_ptr;

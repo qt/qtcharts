@@ -100,7 +100,7 @@ void QAbstractSeries::setName(const QString& name)
 {
     if (name != d_ptr->m_name) {
         d_ptr->m_name = name;
-        nameChanged();
+        emit nameChanged();
     }
 }
 
@@ -111,6 +111,25 @@ void QAbstractSeries::setName(const QString& name)
 QString QAbstractSeries::name() const
 {
     return d_ptr->m_name;
+}
+
+/*!
+    Sets the visibility of series to \a visible
+*/
+void QAbstractSeries::setVisible(bool visible)
+{
+    if (visible != d_ptr->m_visible) {
+        d_ptr->m_visible = visible;
+        emit visibleChanged();
+    }
+}
+
+/*!
+    Returns the visibility of series
+*/
+bool QAbstractSeries::isVisible() const
+{
+    return d_ptr->m_visible;
 }
 
 /*!
@@ -129,7 +148,8 @@ QChart* QAbstractSeries::chart() const
 QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q):
     q_ptr(q),
     m_chart(0),
-    m_dataset(0)
+    m_dataset(0),
+    m_visible(true)
 {
 }
 

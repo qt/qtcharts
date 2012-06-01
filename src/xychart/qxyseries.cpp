@@ -90,8 +90,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 QXYSeries::QXYSeries(QXYSeriesPrivate &d,QObject *parent) : QAbstractSeries(d, parent)
 {
-
 }
+
 /*!
     Destroys the object. Series added to QChartView or QChart instances are owned by those,
     and are deleted when mentioned object are destroyed.

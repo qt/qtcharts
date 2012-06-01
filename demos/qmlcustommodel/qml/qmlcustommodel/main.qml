@@ -27,7 +27,7 @@ Rectangle {
     height: parent.height
 
     ChartView {
-        id: chart
+        id: chartView
         title: "Top-5 car brand shares in Finland"
         anchors.fill: parent
         theme: ChartView.ChartThemeLight
@@ -53,6 +53,7 @@ Rectangle {
         BarSeries {
             name: "Others"
             barMargin: 0
+            visible: false
             HBarModelMapper {
                 model: customModel
                 firstBarSetRow: 6
@@ -62,13 +63,56 @@ Rectangle {
         }
 
         LineSeries {
-            id: lineSeries
             name: "Volkswagen"
+            visible: false
             HXYModelMapper {
-                id: lineSeriesMapper
                 model: customModel
                 xRow: 0
                 yRow: 1
+                first: 2
+            }
+        }
+
+        LineSeries {
+            name: "Toyota"
+            visible: false
+            HXYModelMapper {
+                model: customModel
+                xRow: 0
+                yRow: 2
+                first: 2
+            }
+        }
+
+        LineSeries {
+            name: "Ford"
+            visible: false
+            HXYModelMapper {
+                model: customModel
+                xRow: 0
+                yRow: 2
+                first: 2
+            }
+        }
+
+        LineSeries {
+            name: "Skoda"
+            visible: false
+            HXYModelMapper {
+                model: customModel
+                xRow: 0
+                yRow: 3
+                first: 2
+            }
+        }
+
+        LineSeries {
+            name: "Volvo"
+            visible: false
+            HXYModelMapper {
+                model: customModel
+                xRow: 0
+                yRow: 4
                 first: 2
             }
         }
@@ -80,15 +124,12 @@ Rectangle {
             verticalPosition: 0.4
             onClicked: {
                 // Show the selection by exploding the slice
-                for (var i = 0; i < pieSeries.count; i++)
-                    pieSeries.at(i).exploded = false;
-                slice.exploded = true;
+                slice.exploded = !slice.exploded;
 
                 // Update the line series to show the yearly data for this slice
-                lineSeries.name = slice.label;
-                for (var j = 0; j < customModel.rowCount; j++) {
-                    if (customModel.at(j, 1) == slice.label) {
-                        lineSeriesMapper.yRow = j;
+                for (var i = 0; i < chartView.count; i++) {
+                    if (chartView.series(i).name == slice.label) {
+                        chartView.series(i).visible = slice.exploded;
                     }
                 }
             }

@@ -28,6 +28,50 @@ Flow {
     property variant series
 
     Button {
+        text: "visible"
+        onClicked: series.visible = !series.visible;
+    }
+    Button {
+        text: "series hpos +"
+        onClicked: series.horizontalPosition += 0.1;
+    }
+    Button {
+        text: "series hpos -"
+        onClicked: series.horizontalPosition -= 0.1;
+    }
+    Button {
+        text: "series vpos +"
+        onClicked: series.verticalPosition += 0.1;
+    }
+    Button {
+        text: "series vpos -"
+        onClicked: series.verticalPosition -= 0.1;
+    }
+    Button {
+        text: "series size +"
+        onClicked: series.size += 0.1;
+    }
+    Button {
+        text: "series size -"
+        onClicked: series.size -= 0.1;
+    }
+    Button {
+        text: "series start angle +"
+        onClicked: series.startAngle += 0.1;
+    }
+    Button {
+        text: "series start angle -"
+        onClicked: series.startAngle -= 0.1;
+    }
+    Button {
+        text: "series end angle +"
+        onClicked: series.endAngle += 0.1;
+    }
+    Button {
+        text: "series end angle -"
+        onClicked: series.endAngle -= 0.1;
+    }
+    Button {
         text: "slice color"
         onClicked: series.at(0).color = main.nextColor();
     }
@@ -70,45 +114,5 @@ Flow {
     Button {
         text: "slice explode dist -"
         onClicked: series.at(0).explodeDistanceFactor -= 0.1;
-    }
-    Button {
-        text: "series hpos +"
-        onClicked: series.horizontalPosition += 0.1;
-    }
-    Button {
-        text: "series hpos -"
-        onClicked: series.horizontalPosition -= 0.1;
-    }
-    Button {
-        text: "series vpos +"
-        onClicked: series.verticalPosition += 0.1;
-    }
-    Button {
-        text: "series vpos -"
-        onClicked: series.verticalPosition -= 0.1;
-    }
-    Button {
-        text: "series size +"
-        onClicked: series.size += 0.1;
-    }
-    Button {
-        text: "series size -"
-        onClicked: series.size -= 0.1;
-    }
-    Button {
-        text: "series start angle +"
-        onClicked: series.startAngle += 0.1;
-    }
-    Button {
-        text: "series start angle -"
-        onClicked: series.startAngle -= 0.1;
-    }
-    Button {
-        text: "series end angle +"
-        onClicked: series.endAngle += 0.1;
-    }
-    Button {
-        text: "series end angle -"
-        onClicked: series.endAngle -= 0.1;
     }
 }
