@@ -69,13 +69,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QAbstractSeries::setName(const QString& name)
-    \brief Sets a \a name for the series.
+    \property QAbstractSeries::visible
+    \brief whether the series is visible or not; true by default.
+*/
 
-    The name of a series is shown in the legend for QXYSeries.
-    \sa QChart::setTitle()
-    \sa QPieSlice::setLabel()
-    \sa QBarSet::setName()
+/*!
+    \fn void QAbstractSeries::visibleChanged()
+    Emitted when the series visibility changes.
 */
 
 /*!
@@ -96,6 +96,14 @@ QAbstractSeries::~QAbstractSeries()
     if(d_ptr->m_dataset) qFatal("Still binded series detected !");
 }
 
+/*!
+    \brief Sets a \a name for the series.
+
+    The name of a series is shown in the legend for QXYSeries.
+    \sa QChart::setTitle()
+    \sa QPieSlice::setLabel()
+    \sa QBarSet::setName()
+*/
 void QAbstractSeries::setName(const QString& name)
 {
     if (name != d_ptr->m_name) {
