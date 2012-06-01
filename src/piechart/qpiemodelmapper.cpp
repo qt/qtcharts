@@ -26,16 +26,47 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \property QPieModelMapper::series
+    \brief Defines the QPieSeries object that is used by the mapper.
+
+    All the data in the series in the series is discarded when it is set to the mapper.
+    When new series is specified the old series is disconnected (it preserves its data)
+*/
+
+/*!
+    \property QPieModelMapper::model
+    \brief Defines the model that is used by the mapper.
+*/
+
+/*!
+    \property QPieModelMapper::first
+    \brief Defines which item of the model's row/column should be mapped as the value/label of the first slice of the pie
+
+    Minimal and default value is: 0
+*/
+
+/*!
+    \property QPieModelMapper::count
+    \brief Defines the number of rows/columns of the model that are mapped as the data for the pie.
+
+    Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
+*/
+
+/*!
+    \class QPieModelMapper
+    \brief part of QtCommercial chart API.
+    \mainclass
+
+    The instance of this class cannot be created directly. QHPieModelMapper of QVPieModelMapper should be used instead. This class is used to create a connection between QPieSeries and QAbstractItemModel derived model object.
+    It is possible to use both QAbstractItemModel and QPieSeries model API. QPieModelMapper makes sure that Pie and the model are kept in sync.
+    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
 QPieModelMapper::QPieModelMapper(QObject *parent) :
     QObject(parent),
     d_ptr(new QPieModelMapperPrivate(this))
 {
-}
-
-QPieModelMapper::~QPieModelMapper()
-{
-    //    Q_D(QPieModelMapper);
-    //    disconnect(d->m_model, 0, d, 0);
 }
 
 QAbstractItemModel* QPieModelMapper::model() const
@@ -113,12 +144,22 @@ void QPieModelMapper::setCount(int count)
     d->initializePieFromModel();
 }
 
+/*!
+    Returns the orientation that is used when QPieModelMapper accesses the model.
+    This mean whether the consecutive values/labels of the pie are read from row (Qt::Horizontal)
+    or from columns (Qt::Vertical)
+*/
 Qt::Orientation QPieModelMapper::orientation() const
 {
     Q_D(const QPieModelMapper);
     return d->m_orientation;
 }
 
+/*!
+    Returns the \a orientation that is used when QPieModelMapper accesses the model.
+    This mean whether the consecutive values/labels of the pie are read from row (Qt::Horizontal)
+    or from columns (Qt::Vertical)
+*/
 void QPieModelMapper::setOrientation(Qt::Orientation orientation)
 {
     Q_D(QPieModelMapper);
@@ -126,12 +167,19 @@ void QPieModelMapper::setOrientation(Qt::Orientation orientation)
     d->initializePieFromModel();
 }
 
+/*!
+    Returns which section of the model is kept in sync with the values of the pie's slices
+*/
 int QPieModelMapper::valuesSection() const
 {
     Q_D(const QPieModelMapper);
     return d->m_valuesSection;
 }
 
+/*!
+    Sets the model section that is kept in sync with the pie slices values.
+    Parameter \a valuesSection specifies the section of the model.
+*/
 void QPieModelMapper::setValuesSection(int valuesSection)
 {
     Q_D(QPieModelMapper);
@@ -139,12 +187,19 @@ void QPieModelMapper::setValuesSection(int valuesSection)
     d->initializePieFromModel();
 }
 
+/*!
+    Returns which section of the model is kept in sync with the labels of the pie's slices
+*/
 int QPieModelMapper::labelsSection() const
 {
     Q_D(const QPieModelMapper);
     return d->m_labelsSection;
 }
 
+/*!
+    Sets the model section that is kept in sync with the pie slices labels.
+    Parameter \a labelsSection specifies the section of the model.
+*/
 void QPieModelMapper::setLabelsSection(int labelsSection)
 {
     Q_D(QPieModelMapper);
@@ -152,6 +207,10 @@ void QPieModelMapper::setLabelsSection(int labelsSection)
     d->initializePieFromModel();
 }
 
+/*!
+    Resets the QPieModelMapper to the default state.
+    first: 0; count: -1; valuesSection: -1; labelsSection: -1;
+*/
 void QPieModelMapper::reset()
 {
     Q_D(QPieModelMapper);

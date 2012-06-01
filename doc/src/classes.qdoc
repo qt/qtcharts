@@ -56,12 +56,21 @@
             <li><a href="qstackedbarseries.html">QStackedBarSeries</a></li>
             <li><a href="qxyseries.html">QXYSeries</a></li>
             <li><a href="qlegend.html">QLegend</a></li>
-	    <li><a href="qhpiemodelmapper.html">QHPieModelMapper</a></li>
-	    <li><a href="qvpiemodelmapper.html">QVPieModelMapper</a></li>
-	    <li><a href="qhbarmodelmapper.html">QHBarModelMapper</a></li>
-	    <li><a href="qvbarmodelmapper.html">QVBarModelMapper</a></li>
-	    <li><a href="qhxymodelmapper.html">QHXYModelMapper</a></li>
-	    <li><a href="qvxymodelmapper.html">QVXYModelMapper</a></li>
+	    <li><a href="qpiemodelmapper.html">QPieModelMapper</a></li>
+	        <ul>
+		    <li><a href="qhpiemodelmapper.html">QHPieModelMapper</a></li>
+		    <li><a href="qvpiemodelmapper.html">QVPieModelMapper</a></li>
+		</ul>
+	    <li><a href="qbarmodelmapper.html">QBarModelMapper</a></li>
+	        <ul>
+	 	    <li><a href="qhbarmodelmapper.html">QHBarModelMapper</a></li>
+	    	    <li><a href="qvbarmodelmapper.html">QVBarModelMapper</a></li>
+	        </ul>
+	    <li><a href="qxymodelmapper.html">QXYModelMapper</a></li>
+	        <ul>
+		    <li><a href="qhxymodelmapper.html">QHXYModelMapper</a></li>
+		    <li><a href="qvxymodelmapper.html">QVXYModelMapper</a></li>
+	        </ul>
         </ul>
         </td>
         </tr>

@@ -27,7 +27,23 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief part of QtCommercial chart API.
     \mainclass
 
-    Nothing here yet
+    This class is used to create a connection between QPieSeries and QAbstractItemModel derived model object that keeps the consecutive pie slices data in rows.
+    It is possible to use both QAbstractItemModel and QPieSeries model API. QHPieModelMapper makes sure that Pie and the model are kept in sync.
+    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
+/*!
+    \property QHPieModelMapper::valuesRow
+    \brief Defines which row of the model is kept in sync with the values of the pie's slices
+
+    Default value is: -1 (invalid mapping)
+*/
+
+/*!
+    \property QHPieModelMapper::labelsRow
+    \brief Defines which row of the model is kept in sync with the labels of the pie's slices
+
+    Default value is: -1 (invalid mapping)
 */
 
 QHPieModelMapper::QHPieModelMapper(QObject *parent) :
@@ -36,21 +52,35 @@ QHPieModelMapper::QHPieModelMapper(QObject *parent) :
     QPieModelMapper::setOrientation(Qt::Horizontal);
 }
 
+/*!
+    Returns which row of the model is kept in sync with the values of the pie's slices
+*/
 int QHPieModelMapper::valuesRow() const
 {
     return QPieModelMapper::valuesSection();
 }
 
+/*!
+    Sets the model row that is kept in sync with the pie slices values.
+    Parameter \a valuesRow specifies the row of the model.
+*/
 void QHPieModelMapper::setValuesRow(int valuesRow)
 {
     QPieModelMapper::setValuesSection(valuesRow);
 }
 
+/*!
+    Returns which row of the model is kept in sync with the labels of the pie's slices
+*/
 int QHPieModelMapper::labelsRow() const
 {
     return QPieModelMapper::labelsSection();
 }
 
+/*!
+    Sets the model row that is kept in sync with the pie's slices labels.
+    Parameter \a labelsRow specifies the row of the model.
+*/
 void QHPieModelMapper::setLabelsRow(int labelsRow)
 {
     QPieModelMapper::setLabelsSection(labelsRow);

@@ -28,7 +28,23 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief part of QtCommercial chart API.
     \mainclass
 
-    Nothing here yet
+    This class is used to create a connection between QPieSeries and QAbstractItemModel derived model object that keeps the consecutive pie slices data in columns.
+    It is possible to use both QAbstractItemModel and QPieSeries model API. QVPieModelMapper makes sure that Pie and the model are kept in sync.
+    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
+/*!
+    \property QVPieModelMapper::valuesColumn
+    \brief Defines which column of the model is kept in sync with the values of the pie's slices
+
+    Default value is: -1 (invalid mapping)
+*/
+
+/*!
+    \property QVPieModelMapper::labelsColumn
+    \brief Defines which column of the model is kept in sync with the labels of the pie's slices
+
+    Default value is: -1 (invalid mapping)
 */
 
 QVPieModelMapper::QVPieModelMapper(QObject *parent) :
@@ -37,21 +53,35 @@ QVPieModelMapper::QVPieModelMapper(QObject *parent) :
     QPieModelMapper::setOrientation(Qt::Vertical);
 }
 
+/*!
+    Returns which column of the model is kept in sync with the values of the pie's slices
+*/
 int QVPieModelMapper::valuesColumn() const
 {
     return QPieModelMapper::valuesSection();
 }
 
+/*!
+    Sets the model column that is kept in sync with the pie slices values.
+    Parameter \a valuesColumn specifies the row of the model.
+*/
 void QVPieModelMapper::setValuesColumn(int valuesColumn)
 {
     QPieModelMapper::setValuesSection(valuesColumn);
 }
 
+/*!
+    Returns which column of the model is kept in sync with the labels of the pie's slices
+*/
 int QVPieModelMapper::labelsColumn() const
 {
     return QPieModelMapper::labelsSection();
 }
 
+/*!
+    Sets the model column that is kept in sync with the pie's slices labels.
+    Parameter \a labelsColumn specifies the row of the model.
+*/
 void QVPieModelMapper::setLabelsColumn(int labelsColumn)
 {
     QPieModelMapper::setLabelsSection(labelsColumn);
