@@ -32,26 +32,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
 
-class DeclarativePieSlice: public QPieSlice
-{
-    Q_OBJECT
-    Q_PROPERTY(QColor color READ color WRITE setColor)
-    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
-    Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth)
-    Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor)
-
-public:
-    explicit DeclarativePieSlice(QObject *parent = 0);
-    QColor color();
-    void setColor(QColor color);
-    QColor borderColor();
-    void setBorderColor(QColor color);
-    int borderWidth();
-    void setBorderWidth(int width);
-    QColor labelColor();
-    void setLabelColor(QColor color);
-};
-
 class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
@@ -62,9 +42,9 @@ class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
 public:
     explicit DeclarativePieSeries(QObject *parent = 0);
     QDeclarativeListProperty<QObject> seriesChildren();
-    Q_INVOKABLE DeclarativePieSlice *at(int index);
-    Q_INVOKABLE DeclarativePieSlice* find(QString label);
-    Q_INVOKABLE DeclarativePieSlice* append(QString label, qreal value);
+    Q_INVOKABLE QPieSlice *at(int index);
+    Q_INVOKABLE QPieSlice *find(QString label);
+    Q_INVOKABLE QPieSlice *append(QString label, qreal value);
 
 public:
     void classBegin();

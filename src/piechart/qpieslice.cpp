@@ -452,6 +452,63 @@ qreal QPieSlice::angleSpan() const
     return d_ptr->m_data.m_angleSpan;
 }
 
+QColor QPieSlice::color()
+{
+    return brush().color();
+}
+
+void QPieSlice::setColor(QColor color)
+{
+    QBrush b = brush();
+    if (color != b.color()) {
+        b.setColor(color);
+        setBrush(b);
+    }
+}
+
+QColor QPieSlice::borderColor()
+{
+    return pen().color();
+}
+
+void QPieSlice::setBorderColor(QColor color)
+{
+    QPen p = pen();
+    if (color != p.color()) {
+        p.setColor(color);
+        setPen(p);
+        emit borderColorChanged();
+    }
+}
+
+int QPieSlice::borderWidth()
+{
+    return pen().width();
+}
+
+void QPieSlice::setBorderWidth(int width)
+{
+    QPen p = pen();
+    if (width != p.width()) {
+        p.setWidth(width);
+        setPen(p);
+    }
+}
+
+QColor QPieSlice::labelColor()
+{
+    return labelBrush().color();
+}
+
+void QPieSlice::setLabelColor(QColor color)
+{
+    QBrush b = labelBrush();
+    if (color != b.color()) {
+        b.setColor(color);
+        setLabelBrush(b);
+    }
+}
+
 /*!
   Returns the series that this slice belongs to.
 
@@ -483,6 +540,10 @@ QPieSlicePrivate *QPieSlicePrivate::fromSlice(QPieSlice *slice)
 void QPieSlicePrivate::setPen(const QPen &pen, bool themed)
 {
     if (m_data.m_slicePen != pen) {
+        if (m_data.m_slicePen.color() != pen.color())
+            emit q_ptr->borderColorChanged();
+        if (m_data.m_slicePen.width() != pen.width())
+            emit q_ptr->borderWidthChanged();
         m_data.m_slicePen = pen;
         m_data.m_slicePen.setThemed(themed);
         emit q_ptr->penChanged();
@@ -492,6 +553,8 @@ void QPieSlicePrivate::setPen(const QPen &pen, bool themed)
 void QPieSlicePrivate::setBrush(const QBrush &brush, bool themed)
 {
     if (m_data.m_sliceBrush != brush) {
+        if (m_data.m_sliceBrush.color() != brush.color())
+            emit q_ptr->colorChanged();
         m_data.m_sliceBrush = brush;
         m_data.m_sliceBrush.setThemed(themed);
         emit q_ptr->brushChanged();
@@ -501,6 +564,8 @@ void QPieSlicePrivate::setBrush(const QBrush &brush, bool themed)
 void QPieSlicePrivate::setLabelBrush(const QBrush &brush, bool themed)
 {
     if (m_data.m_labelBrush != brush) {
+        if (m_data.m_labelBrush.color() != brush.color())
+            emit q_ptr->labelColorChanged();
         m_data.m_labelBrush = brush;
         m_data.m_labelBrush.setThemed(themed);
         emit q_ptr->labelBrushChanged();

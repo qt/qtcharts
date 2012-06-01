@@ -27,7 +27,8 @@
 class CustomTableModel : public QAbstractTableModel
 {
     Q_OBJECT
-    Q_PROPERTY(int count READ rowCount)
+    Q_PROPERTY(int rowCount READ rowCount)
+    Q_PROPERTY(int columnCount READ columnCount)
 
 public:
     explicit CustomTableModel(QObject *parent = 0);
@@ -42,6 +43,7 @@ public:
     void insertRow(int row, const QModelIndex &parent = QModelIndex());
     Q_INVOKABLE bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
     Q_INVOKABLE bool removeRow (int row, const QModelIndex &parent = QModelIndex());
+    Q_INVOKABLE QVariant at(int row, int column);
 
 private:
     QList<QVector<QVariant> * > m_data;

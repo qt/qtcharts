@@ -77,6 +77,11 @@ bool CustomTableModel::setData(const QModelIndex &index, const QVariant &value, 
     return false;
 }
 
+QVariant CustomTableModel::at(int row, int column)
+{
+    return data(index(row, column));
+}
+
 void CustomTableModel::insertColumn(int column, const QModelIndex &parent)
 {
     beginInsertColumns(parent, column, column);

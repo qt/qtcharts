@@ -28,41 +28,47 @@ Rectangle {
 
     ChartView {
         id: chart
-        title: "Custom model example"
+        title: "Top-5 car brand shares in Finland"
         anchors.fill: parent
         theme: ChartView.ChartThemeLight
         axisX.max: 10
         axisX.min: 0
         axisY.max: 20
         axisY.min: 0
+        animationOptions: ChartView.SeriesAnimations
+        axisXLabels: [0, "2007", 1, "2008", 2, "2009", 3, "2010", 4, "2011", 5, "2012"]
 
         // For dynamic data we use a custom data model derived from QAbstractiItemModel
         CustomModel {
             id: customModel
-            CustomModelElement { values: [0, "Manufacturer", 1, 2] }
-            CustomModelElement { values: [1, "Volkswagen", 13.5, 12.5] }
-            CustomModelElement { values: [2, "Toyota", 10.9, 9.9] }
-            CustomModelElement { values: [3, "Ford", 8.6, 7.6] }
-            CustomModelElement { values: [4, "Skoda", 8.2, 7.2] }
-            CustomModelElement { values: [5, "Volvo", 6.8, 5.8] }
+            CustomModelElement { values: [0, "Manufacturer", 0, 1, 2, 3, 4] }
+            CustomModelElement { values: [1, "Volkswagen", 10.3, 12.0, 12.8, 13.0, 13.8] }
+            CustomModelElement { values: [2, "Toyota", 13.8, 13.5, 16.2, 13.7, 10.7] }
+            CustomModelElement { values: [3, "Ford", 6.4, 7.1, 8.9, 8.2, 8.6] }
+            CustomModelElement { values: [4, "Skoda", 4.7, 5.8, 6.9, 8.3, 8.2] }
+            CustomModelElement { values: [5, "Volvo", 7.1, 6.7, 6.5, 6.3, 7.0] }
+            CustomModelElement { values: [6, "Others", 57.7, 54.9, 48.7, 50.5, 51.7] }
         }
 
-        LineSeries {
-            name: "Volkswagen"
-            HXYModelMapper {
+        BarSeries {
+            name: "Others"
+            barMargin: 0
+            HBarModelMapper {
                 model: customModel
-                xRow: 0
-                yRow: 1
+                firstBarSetRow: 6
+                lastBarSetRow: 6
                 first: 2
             }
         }
 
         LineSeries {
-            name: "Toyota"
+            id: lineSeries
+            name: "Volkswagen"
             HXYModelMapper {
+                id: lineSeriesMapper
                 model: customModel
                 xRow: 0
-                yRow: 2
+                yRow: 1
                 first: 2
             }
         }
@@ -71,64 +77,29 @@ Rectangle {
             id: pieSeries
             size: 0.4
             horizontalPosition: 0.7
-            verticalPosition: 0.3
-        }
+            verticalPosition: 0.4
+            onClicked: {
+                // Show the selection by exploding the slice
+                for (var i = 0; i < pieSeries.count; i++)
+                    pieSeries.at(i).exploded = false;
+                slice.exploded = true;
 
-//        VPieModelMapper {
-//            series: pieSeries
-//            model: customModel
-//            labelsColumn: 1
-//            valuesColumn: 2
-//            first: 1
-//        }
-        HPieModelMapper {
-            series: pieSeries
-            model: customModel
-            labelsRow: 1
-            valuesRow: 2
-            first: 2
-        }
-
-        AreaSeries {
-            name: "Ford"
-            upperSeries: LineSeries {
-                HXYModelMapper {
-                    model: customModel
-                    xRow: 0
-                    yRow: 3
-                    first: 2
+                // Update the line series to show the yearly data for this slice
+                lineSeries.name = slice.label;
+                for (var j = 0; j < customModel.rowCount; j++) {
+                    if (customModel.at(j, 1) == slice.label) {
+                        lineSeriesMapper.yRow = j;
+                    }
                 }
             }
         }
 
-        GroupedBarSeries {
-            name: "Skoda and Volvo"
-            HBarModelMapper {
-                model: customModel
-                firstBarSetRow: 4
-                lastBarSetRow: 5
-                first: 2
-            }
+        VPieModelMapper {
+            series: pieSeries
+            model: customModel
+            labelsColumn: 1
+            valuesColumn: 2
+            first: 1
         }
     }
-
-
-    // TODO: you could also implement appending to your model, for example:
-//        pieSeries.model.append(["Others", 52.0]);
-
-    // TODO: show how to use data from a list model in a chart view
-    // i.e. copy the data into a custom model
-//    ListModel {
-//        id: listModel
-//        ListElement {
-//            label: "Volkswagen"
-//            value: 13.5
-//        }
-//        ListElement {
-//            label: "Toyota"
-//            value: 10.9
-//        }
-//        // and so on...
-//    }
-
 }

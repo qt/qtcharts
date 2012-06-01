@@ -47,6 +47,10 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
     Q_PROPERTY(qreal percentage READ percentage NOTIFY percentageChanged)
     Q_PROPERTY(qreal startAngle READ startAngle NOTIFY startAngleChanged)
     Q_PROPERTY(qreal angleSpan READ angleSpan NOTIFY angleSpanChanged)
+    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
+    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
+    Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged)
+    Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
 
 public:
     explicit QPieSlice(QObject *parent = 0);
@@ -87,6 +91,15 @@ public:
     qreal startAngle() const;
     qreal angleSpan() const;
 
+    QColor color();
+    void setColor(QColor color);
+    QColor borderColor();
+    void setBorderColor(QColor color);
+    int borderWidth();
+    void setBorderWidth(int width);
+    QColor labelColor();
+    void setLabelColor(QColor color);
+
     QPieSeries *series() const;
 
 Q_SIGNALS:
@@ -103,6 +116,10 @@ Q_SIGNALS:
     void percentageChanged();
     void startAngleChanged();
     void angleSpanChanged();
+    void colorChanged();
+    void borderColorChanged();
+    void borderWidthChanged();
+    void labelColorChanged();
     void clicked();
     void hovered(bool state);
 

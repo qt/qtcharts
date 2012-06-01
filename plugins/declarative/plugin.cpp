@@ -58,7 +58,7 @@ public:
         qmlRegisterType<DeclarativeStackedBarSeries>(uri, 1, 0, "StackedBarSeries");
         qmlRegisterType<DeclarativePercentBarSeries>(uri, 1, 0, "PercentBarSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
-        qmlRegisterType<DeclarativePieSlice>(uri, 1, 0, "PieSlice");
+        qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
         qmlRegisterType<QHXYModelMapper>(uri, 1, 0, "HXYModelMapper");
         qmlRegisterType<QVXYModelMapper>(uri, 1, 0, "VXYModelMapper");
@@ -71,8 +71,6 @@ public:
                                           QLatin1String("Trying to create uncreatable: QScatterSeries."));
         qmlRegisterUncreatableType<QPieSeries>(uri, 1, 0, "QPieSeries",
                                           QLatin1String("Trying to create uncreatable: QPieSeries."));
-        qmlRegisterUncreatableType<QPieSlice>(uri, 1, 0, "QPieSlice",
-                                          QLatin1String("Trying to create uncreatable: QPieSlice."));
         qmlRegisterUncreatableType<QAbstractItemModel>(uri, 1, 0, "AbstractItemModel",
                                           QLatin1String("Trying to create uncreatable: AbstractItemModel."));
         qmlRegisterUncreatableType<QXYModelMapper>(uri, 1, 0, "XYModelMapper",
