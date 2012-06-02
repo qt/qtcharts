@@ -25,7 +25,7 @@
     series->add(0, 6);
     series->add(2, 4);
     ...
-    chartView->addSeries(series);
+    chart->addSeries(series);
     \endcode
      
     \raw HTML

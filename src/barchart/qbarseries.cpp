@@ -88,7 +88,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
      This signal is emitted when labels visibility have changed.
 
-    \sa labelsVisible(), setLabelsVisible()
+    \sa isLabelsVisible(), setLabelsVisible()
 */
 
 /*!
@@ -225,6 +225,23 @@ bool QBarSeries::remove(QList<QBarSet* > sets)
 }
 
 /*!
+    Insert a set of bars to series at \a index postion. Takes ownership of \a set. If the set is null or is already in series, it won't be appended.
+    Returns true, if inserting succeeded.
+
+*/
+bool QBarSeries::insert(int index, QBarSet *set)
+{
+    Q_D(QBarSeries);
+    bool success = d->insert(index, set);
+    if (success) {
+        QList<QBarSet*> sets;
+        sets.append(set);
+        emit barsetsAdded(sets);
+    }
+    return success;
+}
+
+/*!
     Removes all of the bar sets from the series
 */
 void QBarSeries::clear()
@@ -266,7 +283,7 @@ void QBarSeries::setLabelsVisible(bool visible)
 /*!
     Returns the visibility of labels
 */
-bool QBarSeries::labelsVisible() const
+bool QBarSeries::isLabelsVisible() const
 {
     Q_D(const QBarSeries);
     return d->m_labelsVisible;
@@ -607,6 +624,23 @@ bool QBarSeriesPrivate::remove(QList<QBarSet* > sets)
         m_dataset->updateSeries(q);   // this notifies legend
     }
     emit restructuredBars();        // this notifies barchartitem
+    return true;
+}
+
+bool QBarSeriesPrivate::insert(int index, QBarSet *set)
+{
+    Q_Q(QBarSeries);
+    if ((m_barSets.contains(set)) || (set == 0)) {
+        // Fail if set is already in list or set is null.
+        return false;
+    }
+    m_barSets.insert(index, set);
+    QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
+    QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
+    if (m_dataset) {
+        m_dataset->updateSeries(q);   // this notifies legend
+    }
+    emit restructuredBars();      // this notifies barchartitem
     return true;
 }
 
