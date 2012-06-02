@@ -23,7 +23,6 @@
 #include "qbarseries.h"
 #include "qbarset.h"
 #include "qchart.h"
-#include "qaxis.h"
 #include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
