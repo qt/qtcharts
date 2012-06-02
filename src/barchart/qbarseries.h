@@ -35,7 +35,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
     Q_OBJECT
     Q_PROPERTY(qreal barMargin READ barMargin WRITE setBarMargin)
     Q_PROPERTY(int count READ barsetCount)
-    Q_PROPERTY(bool labelsVisible READ isLabelsVisible WRITE setLabelsVisible)
+    Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible)
 
 public:
     explicit QBarSeries(QObject *parent = 0);
@@ -55,7 +55,7 @@ public:
     void clear();
 
     void setLabelsVisible(bool visible = true);
-    bool isLabelsVisible() const;
+    bool labelsVisible() const;
 
 protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);

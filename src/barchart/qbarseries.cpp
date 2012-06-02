@@ -47,6 +47,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QBarSeries::barMargin
+    \brief Defines the margin around bars.
+
+    Value is from 0 to 1 and represents
+    percentage of margin compared to bars
+*/
+
+/*!
+    \property QBarSeries::count
+    \brief Holds the number of sets in series.
+*/
+
+/*!
+    \property QBarSeries::labelsVisible
+    \brief Defines the visibility of the labels in series
+*/
+
+/*!
     \fn void QBarSeries::clicked(QBarSet *barset, int index)
 
     The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset.
@@ -59,6 +77,34 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The signal is emitted if mouse is hovered on top of series.
     Parameter \a barset is the pointer of barset, where hover happened.
     Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
+*/
+
+/*!
+    \fn void QBarSeries::visibleChanged()
+*/
+
+/*!
+    \fn void QBarSeries::labelsVisibleChanged()
+
+     This signal is emitted when labels visibility have changed.
+
+    \sa labelsVisible(), setLabelsVisible()
+*/
+
+/*!
+    \fn void QBarSeries::barsetsAdded(QList<QBarSet*> sets)
+
+    This signal is emitted when \a sets have been added to the series.
+
+    \sa append(), insert()
+*/
+
+/*!
+    \fn void QBarSeries::barsetsRemoved(QList<QBarSet*> sets)
+
+    This signal is emitted when \a sets have been removed from the series.
+
+    \sa remove()
 */
 
 /*!
@@ -220,7 +266,7 @@ void QBarSeries::setLabelsVisible(bool visible)
 /*!
     Returns the visibility of labels
 */
-bool QBarSeries::isLabelsVisible() const
+bool QBarSeries::labelsVisible() const
 {
     Q_D(const QBarSeries);
     return d->m_labelsVisible;

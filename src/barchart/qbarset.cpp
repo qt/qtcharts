@@ -38,6 +38,107 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QBarSet::name
+    \brief Defines the name of the barSet.
+*/
+
+/*!
+    \property QBarSet::pen
+    \brief Defines the pen used by the barSet.
+*/
+
+/*!
+    \property QBarSet::brush
+    \brief Defines the brush used by the barSet.
+*/
+
+/*!
+    \property QBarSet::labelBrush
+    \brief Defines the brush used by the barSet's label.
+*/
+
+/*!
+    \property QBarSet::labelFont
+    \brief Defines the font used by the barSet's label.
+*/
+
+/*!
+    \fn void QBarSet::nameChanged()
+
+    This signal is emitted when the name of the barSet has changed.
+
+    \sa name
+*/
+
+/*!
+    \fn void QBarSet::penChanged()
+
+    This signal is emitted when the pen of the barSet has changed.
+
+    \sa pen
+*/
+
+/*!
+    \fn void QBarSet::brushChanged()
+
+    This signal is emitted when the brush of the barSet has changed.
+
+    \sa brush
+*/
+
+/*!
+    \fn void QBarSet::labelChanged()
+
+    This signal is emitted when the label of the barSet has changed.
+*/
+
+/*!
+    \fn void QBarSet::labelBrushChanged()
+
+    This signal is emitted when the brush of the barSet's label has changed.
+
+    \sa labelBrush
+*/
+
+/*!
+    \fn void QBarSet::labelFontChanged()
+
+    This signal is emitted when the font of the barSet's label has changed.
+
+    \sa labelBrush
+*/
+
+/*!
+    \fn void QBarSet::valuesAdded(int index, int count)
+
+    This signal is emitted when new values have been added to the set.
+    Parameter \a index indicates the position of the first inserted value.
+    Parameter \a count is the number of iserted values.
+
+    \sa append(), insert()
+*/
+
+/*!
+    \fn void QBarSet::valuesRemoved(int index, int count)
+
+    This signal is emitted values have been removed from the set.
+    Parameter \a index indicates the position of the first removed value.
+    Parameter \a count is the number of removed values.
+
+    \sa remove()
+*/
+
+/*!
+    \fn void QBarSet::valueChanged(int index)
+
+    This signal is emitted values the value in the set has been modified.
+    Parameter \a index indicates the position of the modified value.
+
+    \sa at()
+*/
+void valueChanged(int index);
+
+/*!
     Constructs QBarSet with a name of \a name and with parent of \a parent
 */
 QBarSet::QBarSet(const QString name, QObject *parent)
@@ -106,7 +207,7 @@ void QBarSet::append(const qreal value)
 }
 
 /*!
-    Appends a list of reals to set. Works like append with single real value. The values in list
+    Appends a list of reals to set. Works like append with single real value. The \a values in list
     are converted to QPointF, where x coordinate is the index of point and y coordinate is the value.
     \sa append()
 */
@@ -160,7 +261,8 @@ void QBarSet::insert(const int index, const QPointF value)
 }
 
 /*!
-    Removes the value specified by \a index
+    Removes \a count number of values from the set starting at \a index.
+    Returns true if remove operation was succesfull.
     \sa insert()
 */
 bool QBarSet::remove(const int index, const int count)
