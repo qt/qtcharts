@@ -1,5 +1,5 @@
 --------------------------------
-Commercial Charts Add-on Preview
+Commercial Charts Add-on Beta
 --------------------------------
 
 Whats in Qt Commercial Charts
@@ -46,15 +46,12 @@ into "doc/html" in the build directory.
 
 KNOWN ISSUES
 ============
- * The preview version of Qt Commercial Charts is still under development
-      and thus should not be used in e.g. product development
- * The Charts API might change between the Preview and first official release
+ * The Charts API should be stable, but might still change between the Beta and first official release
  * Some areas will be refactored before the first official release
- * Qt Designer plugin is missing
  * Enable/disable tooltip is missing from the API
  * Mutliple axis are not suported at the moment.
  * Logartmic, polar axis are not supported at the moment.
- * Getting data from QAbstractItemModel is not feature complete.
+ * Model support for QBarSeries is not complete.
  * Interlnal layout hadnling is not working properly.
  * The QML Bindings are still under development and to be considered as early draft
  * All the current QML APIs are shown in qmlchart demo app

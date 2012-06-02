@@ -109,8 +109,7 @@ void QSplineSeriesPrivate::calculateControlPoints()
     }
 
     // Calculate first Bezier control points
-    // Right hand side vector
-    //  Set of equations for P0 to Pn points.
+    // Set of equations for P0 to Pn points.
     //
     //  |   2   1   0   0   ... 0   0   0   ... 0   0   0   |   |   P1_1    |   |   P0 + 2 * P1             |
     //  |   1   4   1   0   ... 0   0   0   ... 0   0   0   |   |   P1_2    |   |   4 * P1 + 2 * P2         |
