@@ -3,8 +3,6 @@
     \title QtCommercial Charts API
     \keyword All Classes
 
-    \image class_diagram.png
-
     Charts API is build on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using QChart class. However 
     there is also convenience class QChartView which is QWidget based. These lets quickly use QCharts as normal Qt widget.
     The API supports following chart types:
