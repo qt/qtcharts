@@ -191,7 +191,7 @@ int QBarModelMapper::firstBarSetSection() const
 void QBarModelMapper::setFirstBarSetSection(int firstBarSetSection)
 {
     Q_D(QBarModelMapper);
-    d->m_firstBarSetSection = firstBarSetSection;
+    d->m_firstBarSetSection = qMax(-1, firstBarSetSection);
     d->initializeBarFromModel();
 }
 
@@ -211,7 +211,7 @@ int QBarModelMapper::lastBarSetSection() const
 void QBarModelMapper::setLastBarSetSection(int lastBarSetSection)
 {
     Q_D(QBarModelMapper);
-    d->m_lastBarSetSection = lastBarSetSection;
+    d->m_lastBarSetSection = qMax(-1, lastBarSetSection);
     d->initializeBarFromModel();
 }
 

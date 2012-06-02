@@ -247,11 +247,11 @@ bool QBarSeries::insert(int index, QBarSet *set)
 void QBarSeries::clear()
 {
     Q_D(QBarSeries);
-    bool success = d->remove(barSets());
+    QList<QBarSet *> sets = barSets();
+    bool success = d->remove(sets);
     if (success) {
         emit barsetsRemoved(sets);
     }
-    return success;
 }
 
 /*!
