@@ -126,6 +126,9 @@ QAbstractSeries::SeriesType QAreaSeries::type() const
     return QAbstractSeries::SeriesTypeArea;
 }
 
+/*!
+    Sets the \a series that is to be used as the area chart upper series.
+*/
 void QAreaSeries::setUpperSeries(QLineSeries* series)
 {
     Q_D(QAreaSeries);
@@ -138,6 +141,9 @@ QLineSeries* QAreaSeries::upperSeries() const
     return d->m_upperSeries;
 }
 
+/*!
+    Sets the \a series that is to be used as the area chart lower series.
+*/
 void QAreaSeries::setLowerSeries(QLineSeries* series)
 {
     Q_D(QAreaSeries);

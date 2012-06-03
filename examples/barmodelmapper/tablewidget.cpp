@@ -46,7 +46,7 @@ TableWidget::TableWidget(QWidget *parent)
     // create table view and add model to it
     QTableView *tableView = new QTableView;
     tableView->setModel(model);
-    tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
+    tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);    
     tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
     //! [2]
 
@@ -71,11 +71,6 @@ TableWidget::TableWidget(QWidget *parent)
     chart->addSeries(series);
     //! [4]
 
-    QStringList categories;
-    categories << "June" << "July" << "August" << "September" << "October" << "November";
-
-    chart->axisX()->categories()->insert(categories);
-
     //! [5]
     // for storing color hex from the series
     QString seriesColorHex = "#000000";
@@ -88,13 +83,20 @@ TableWidget::TableWidget(QWidget *parent)
     }
     //! [5]
 
-    //! [8]
+    //! [6]
+    QStringList categories;
+    categories << "April" << "May" << "June" << "July" << "August";
+
+    chart->axisX()->categories()->insert(categories);
+    //! [6]
+
+    //! [7]
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setMinimumSize(640, 480);
-    //! [8]
+    //! [7]
 
-    //! [9]
+    //! [8]
     // create main layout
     QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addWidget(tableView, 1, 0);
@@ -102,5 +104,5 @@ TableWidget::TableWidget(QWidget *parent)
     mainLayout->setColumnStretch(1, 1);
     mainLayout->setColumnStretch(0, 0);
     setLayout(mainLayout);
-    //! [9]
+    //! [8]
 }

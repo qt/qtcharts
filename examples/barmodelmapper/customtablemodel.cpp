@@ -30,7 +30,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
     m_columnCount = 6;
-    m_rowCount = 10;
+    m_rowCount = 12;
 
     // m_data
     for (int i = 0; i < m_rowCount; i++)
@@ -69,7 +69,7 @@ QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation,
         return QString("201%1").arg(section);
     }
     else
-        return QString("%1").arg(section);
+        return QString("%1").arg(section + 1);
 }
 
 QVariant CustomTableModel::data(const QModelIndex & index, int role) const
