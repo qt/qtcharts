@@ -26,6 +26,9 @@
 #include <QChartView>
 #include <QLineSeries>
 #include <QVXYModelMapper>
+#include <QGroupedBarSeries>
+#include <QBarSet>
+#include <QVBarModelMapper>
 #include <QHeaderView>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -54,42 +57,36 @@ TableWidget::TableWidget(QWidget *parent)
 
     // series 1
     //! [4]
-    QLineSeries *series = new QLineSeries;
-    QVXYModelMapper *mapper = new QVXYModelMapper(this);
-    mapper->setXColumn(0);
-    mapper->setYColumn(1);
+    QGroupedBarSeries *series = new QGroupedBarSeries;
+
+    int first = 3;
+    int count = 5;
+    QVBarModelMapper *mapper = new QVBarModelMapper(this);
+    mapper->setFirstBarSetColumn(1);
+    mapper->setLastBarSetColumn(4);
+    mapper->setFirst(3);
+    mapper->setCount(count);
     mapper->setSeries(series);
     mapper->setModel(model);
     chart->addSeries(series);
     //! [4]
+
+    QStringList categories;
+    categories << "June" << "July" << "August" << "September" << "October" << "November";
+
+    chart->axisX()->categories()->insert(categories);
 
     //! [5]
     // for storing color hex from the series
     QString seriesColorHex = "#000000";
 
     // get the color of the series and use it for showing the mapped area
-    seriesColorHex = "#" + QString::number(series->pen().color().rgb(), 16).right(6).toUpper();
-    model->addMapping(seriesColorHex, QRect(0, 0, 2, model->rowCount()));
+    QList<QBarSet*> barsets = series->barSets();
+    for (int i = 0; i < barsets.count(); i++) {
+        seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
+        model->addMapping(seriesColorHex, QRect(1 + i, first, 1, barsets.at(i)->count()));
+    }
     //! [5]
-
-
-    // series 2
-    //! [6]
-    series = new QLineSeries;
-
-    mapper = new QVXYModelMapper(this);
-    mapper->setXColumn(2);
-    mapper->setYColumn(3);
-    mapper->setSeries(series);
-    mapper->setModel(model);
-    chart->addSeries(series);
-    //! [6]
-
-    //! [7]
-    // get the color of the series and use it for showing the mapped area
-    seriesColorHex = "#" + QString::number(series->pen().color().rgb(), 16).right(6).toUpper();
-    model->addMapping(seriesColorHex, QRect(2, 0, 2, model->rowCount()));
-    //! [7]
 
     //! [8]
     QChartView *chartView = new QChartView(chart);

@@ -21,4 +21,5 @@ SUBDIRS += \
            zoomlinechart \
            modeldata \
            groupedbarchart \
-           legend
+           legend \
+           barmodelmapper
