@@ -30,7 +30,7 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
     m_columnCount = 7;
-    m_rowCount = 29;
+    m_rowCount = 10;
 
     m_labels.append("Apples");
     m_labels.append("Oranges");

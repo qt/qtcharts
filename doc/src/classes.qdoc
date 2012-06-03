@@ -3,89 +3,99 @@
     \title QtCommercial Charts API
     \keyword All Classes
 
-    Charts API is build on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using QChart class. However 
+    Charts API is build on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using QChart class. However
     there is also convenience class QChartView which is QWidget based. These lets quickly use QCharts as normal Qt widget.
     The API supports following chart types:
-        
+
      \list
      \o area
-     \o line  
-     \o bar
-     \o percent bar 
+     \o line
+     \o grouped bar
+     \o percent bar
      \o pie
      \o scatter
      \o spline
      \o stacked bar
      \endlist
- 
-    
+
+
     Each chart type is represented by QSeries derived class. To create given chart type users have to use instace of releted sereis class and add it to QChart/QChartView instance.
     \code
     QLineSeries* series = new QLineSeries();
     series->add(0, 6);
     series->add(2, 4);
     ...
-    chart->addSeries(series);
+    chartView->chart()->addSeries(series);
     \endcode
-     
+
     \raw HTML
         <table cellpadding="2" cellspacing="1" border="0" width="100%" class="indextable">
         <tr>
-        <th class="titleheader" width="33%">
-        List of classes
+        <th class="titleheader" width="25%">
+            Common
+        </th>
+        <th class="titleheader" width="25%">
+            XY type
+        </th>
+        <th class="titleheader" width="25%">
+            Pie type
+        </th>
+        <th class="titleheader" width="25%">
+            Bar type
+        </th>
+        <th class="titleheader" width="25%">
+            Other files
         </th>
         </tr>
         <tr>
-        <td valign="top">
-        <ul>
-            <li><a href="qareaseries.html">QAreaSeries</a></li>
-            <li><a href="qbarseries.html">QBarSeries</a></li>
-            <li><a href="qbarset.html">QBarSet</a></li>
-            <li><a href="qchart.html">QChart</a></li>
-            <li><a href="qaxis.html">QAxis</a></li>
-            <li><a href="qchartview.html">QChartView</a></li>
-            <li><a href="qlineseries.html">QLineSeries</a></li>
-            <li><a href="qpercentbarseries.html">QPercentBarSeries</a></li>
-            <li><a href="qpieseries.html">QPieSeries</a></li>
-            <li><a href="qpieslice.html">QPieSlice</a></li>
-            <li><a href="qscatterseries.html">QScatterSeries</a></li>
-            <li><a href="qabstractseries.html">QAbstractSeries</a></li>
-            <li><a href="qsplineseries.html">QSplineSeries</a></li>
-            <li><a href="qstackedbarseries.html">QStackedBarSeries</a></li>
-            <li><a href="qxyseries.html">QXYSeries</a></li>
-            <li><a href="qlegend.html">QLegend</a></li>
-	    <li><a href="qpiemodelmapper.html">QPieModelMapper</a></li>
-	        <ul>
-		    <li><a href="qhpiemodelmapper.html">QHPieModelMapper</a></li>
-		    <li><a href="qvpiemodelmapper.html">QVPieModelMapper</a></li>
-		</ul>
-	    <li><a href="qbarmodelmapper.html">QBarModelMapper</a></li>
-	        <ul>
-	 	    <li><a href="qhbarmodelmapper.html">QHBarModelMapper</a></li>
-	    	    <li><a href="qvbarmodelmapper.html">QVBarModelMapper</a></li>
-	        </ul>
-	    <li><a href="qxymodelmapper.html">QXYModelMapper</a></li>
-	        <ul>
-		    <li><a href="qhxymodelmapper.html">QHXYModelMapper</a></li>
-		    <li><a href="qvxymodelmapper.html">QVXYModelMapper</a></li>
-	        </ul>
-        </ul>
-        </td>
-        </tr>
-        </table>
-        
-        <table cellpadding="2" cellspacing="1" border="0" width="100%" class="indextable">
-        <tr>
-        <th class="titleheader" width="33%">
-        Other files:
-        </th>
-        </tr>
-        <tr>
-        <td valign="top">
-        <ul>
-            <li><a href="qchartglobal.html">QChartGlobal</a></li>
-        </ul>
-        </td>
+            <td valign="top">
+                <ul>
+                    <li><a href="qchart.html">QChart</a></li>
+                    <li><a href="qaxis.html">QAxis</a></li>
+                    <li><a href="qaxiscategories.html">QAxisCategories</a></li>
+                    <li><a href="qchartview.html">QChartView</a></li>
+                    <li><a href="qlegend.html">QLegend</a></li>
+                    <li><a href="qabstractseries.html">QAbstractSeries</a></li>
+                    <li><a href="qchartglobal.html">QChartGlobal</a></li>
+                </ul>
+            </td>
+            <td valign="top">
+                <ul>
+                    <li><a href="qlineseries.html">QLineSeries</a></li>
+                    <li><a href="qareaseries.html">QAreaSeries</a></li>
+                    <li><a href="qscatterseries.html">QScatterSeries</a></li>
+                    <li><a href="qsplineseries.html">QSplineSeries</a></li>
+                    <li><a href="qxymodelmapper.html">QXYModelMapper</a></li>
+                    <li><a href="qhxymodelmapper.html">QHXYModelMapper</a></li>
+                    <li><a href="qvxymodelmapper.html">QVXYModelMapper</a></li>
+                </ul>
+            </td>
+            <td valign="top">
+                <ul>
+                    <li><a href="qpieseries.html">QPieSeries</a></li>
+                    <li><a href="qpieslice.html">QPieSlice</a></li>
+                    <li><a href="qpiemodelmapper.html">QPieModelMapper</a></li>
+                    <li><a href="qhpiemodelmapper.html">QHPieModelMapper</a></li>
+                    <li><a href="qvpiemodelmapper.html">QVPieModelMapper</a></li>
+                </ul>
+            </td>
+            <td valign="top">
+                <ul>
+                    <li><a href="qbarseries.html">QBarSeries</a></li>
+                    <li><a href="qbarset.html">QBarSet</a></li>
+                    <li><a href="qgroupedbarseries.html">QGroupedBarSeries</a></li>
+                    <li><a href="qpercentbarseries.html">QPercentBarSeries</a></li>
+                    <li><a href="qstackedbarseries.html">QStackedBarSeries</a></li>
+                    <li><a href="qbarmodelmapper.html">QBarModelMapper</a></li>
+                    <li><a href="qhbarmodelmapper.html">QHBarModelMapper</a></li>
+                    <li><a href="qvbarmodelmapper.html">QVBarModelMapper</a></li>
+                </ul>
+            </td>
+            <td valign="top">
+                <ul>
+                    <li><a href="qchartglobal.html">QChartGlobal</a></li>
+                </ul>
+            </td>
         </tr>
         </table>
         

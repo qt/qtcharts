@@ -251,6 +251,14 @@ void TableWidget::updateChartType(bool toggle)
 //            m_mapper->setFirst(3);
 //            m_mapper->setCount(4);
 
+            QAxisCategories* xCategories = m_chart->axisX()->categories();
+            xCategories->insert(50, "Jeden");
+            xCategories->insert(100, "Dwa");
+            xCategories->insert(150, "Trzy");
+            xCategories->insert(200, "Cztery");
+            xCategories->insert(250, "Piec");
+            xCategories->insert(300, "szesc");
+
             m_mapper = new QVXYModelMapper;
             m_mapper->setModel(m_model);
             m_mapper->setSeries(m_series);
@@ -483,6 +491,19 @@ void TableWidget::updateChartType(bool toggle)
 
             m_barSeries = new QGroupedBarSeries();
 
+//            QAxisCategories* xCategories = m_chart->axisX()->categories();
+//            xCategories->insert(0, "Jeden");
+//            xCategories->insert(1, "Dwa");
+//            xCategories->insert(2, "Trzy");
+//            xCategories->insert(3, "Cztery");
+//            xCategories->insert(4, "Piec");
+//            xCategories->insert(5, "szesc");
+
+            QStringList categories;
+            categories << "June" << "July" << "August" << "September" << "October" << "November";
+
+            m_chart->axisX()->categories()->insert(categories);
+
             int first = 3;
             int count = 6;
             m_barMapper = new QVBarModelMapper;
@@ -495,10 +516,10 @@ void TableWidget::updateChartType(bool toggle)
 //            barSeries->setModelMapper(mapper);
             m_chart->addSeries(m_barSeries);
 
-            QStringList categories;
-            categories << "June" << "July" << "August" << "September" << "October" << "November";
+//            QStringList categories;
+//            categories << "June" << "July" << "August" << "September" << "October" << "November";
 
-            m_chart->axisX()->categories()->insert(categories);
+//            m_chart->axisX()->categories()->insert(categories);
 
             QList<QBarSet*> barsets = m_barSeries->barSets();
             for (int i = 0; i < barsets.count(); i++) {
