@@ -29,6 +29,16 @@ DeclarativeTableModelElement::DeclarativeTableModelElement(QObject *parent)
 {
 }
 
+QString DeclarativeTableModelElement::rowHeader()
+{
+    return m_rowHeader;
+}
+
+void DeclarativeTableModelElement::setRowHeader(QString header)
+{
+    m_rowHeader = header;
+}
+
 QVariantList DeclarativeTableModelElement::values()
 {
     return m_values;
@@ -54,7 +64,9 @@ void DeclarativeTableModel::componentComplete()
 {
     foreach (QObject *child, children()) {
         if (qobject_cast<DeclarativeTableModelElement *>(child)) {
-            append(qobject_cast<DeclarativeTableModelElement *>(child)->values());
+            DeclarativeTableModelElement *element = qobject_cast<DeclarativeTableModelElement *>(child);
+            append(element->values());
+            setHeaderData(rowCount() - 1, Qt::Horizontal, element->rowHeader());
         }
     }
 }

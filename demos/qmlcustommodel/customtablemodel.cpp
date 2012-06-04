@@ -22,6 +22,7 @@
 #include <QVector>
 #include <QRect>
 #include <QColor>
+#include <QDebug>
 
 CustomTableModel::CustomTableModel(QObject *parent) :
     QAbstractTableModel(parent),
@@ -42,19 +43,32 @@ int CustomTableModel::columnCount(const QModelIndex & parent) const
     return m_columnCount;
 }
 
-QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation, int role ) const
+QVariant CustomTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
         return QVariant();
 
     if (orientation == Qt::Horizontal) {
-        if (section % 2 == 0)
-            return "x";
+        if (m_rowHeaders.count() > section)
+            return m_rowHeaders[section];
         else
-            return "y";
+            return QAbstractTableModel::headerData(section, orientation, role);
     } else {
-        return QString("%1").arg(section + 1);
+        return QAbstractTableModel::headerData(section, orientation, role);
     }
+}
+
+bool CustomTableModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
+{
+    if (orientation == Qt::Horizontal) {
+        while (m_rowHeaders.count() <= section)
+            m_rowHeaders.append(QVariant());
+        m_rowHeaders.replace(section, value);
+    } else {
+        return QAbstractTableModel::setHeaderData(section, orientation, value, role);
+    }
+    emit headerDataChanged(orientation, section, section);
+    return true;
 }
 
 QVariant CustomTableModel::data(const QModelIndex &index, int role) const

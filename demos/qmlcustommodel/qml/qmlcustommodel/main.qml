@@ -23,8 +23,7 @@ import QtCommercial.Chart 1.0
 import QmlCustomModel 1.0
 
 Rectangle {
-    width: parent.width
-    height: parent.heigh
+    anchors.fill: parent
 
     //![1]
     ChartView {
@@ -43,13 +42,13 @@ Rectangle {
         //![2]
         CustomModel {
             id: customModel
-            CustomModelElement { values: [0, "Manufacturer", 0, 1, 2, 3, 4] }
-            CustomModelElement { values: [1, "Volkswagen", 10.3, 12.0, 12.8, 13.0, 13.8] }
-            CustomModelElement { values: [2, "Toyota", 13.8, 13.5, 16.2, 13.7, 10.7] }
-            CustomModelElement { values: [3, "Ford", 6.4, 7.1, 8.9, 8.2, 8.6] }
-            CustomModelElement { values: [4, "Skoda", 4.7, 5.8, 6.9, 8.3, 8.2] }
-            CustomModelElement { values: [5, "Volvo", 7.1, 6.7, 6.5, 6.3, 7.0] }
-            CustomModelElement { values: [6, "Others", 57.7, 54.9, 48.7, 50.5, 51.7] }
+            CustomModelElement { rowHeader: ""; values: [0, "Manufacturer", 0, 1, 2, 3, 4] }
+            CustomModelElement { rowHeader: "Volkswagen"; values: [1, "Volkswagen", 10.3, 12.0, 12.8, 13.0, 13.8] }
+            CustomModelElement { rowHeader: "Toyota"; values: [2, "Toyota", 13.8, 13.5, 16.2, 13.7, 10.7] }
+            CustomModelElement { rowHeader: "Ford"; values: [3, "Ford", 6.4, 7.1, 8.9, 8.2, 8.6] }
+            CustomModelElement { rowHeader: "Skoda"; values: [4, "Skoda", 4.7, 5.8, 6.9, 8.3, 8.2] }
+            CustomModelElement { rowHeader: "Volvo"; values: [5, "Volvo", 7.1, 6.7, 6.5, 6.3, 7.0] }
+            CustomModelElement { rowHeader: "Others"; values: [6, "Others", 57.7, 54.9, 48.7, 50.5, 51.7] }
         }
         //![2]
 
@@ -97,7 +96,7 @@ Rectangle {
             HXYModelMapper {
                 model: customModel
                 xRow: 0
-                yRow: 2
+                yRow: 3
                 first: 2
             }
         }
@@ -108,7 +107,7 @@ Rectangle {
             HXYModelMapper {
                 model: customModel
                 xRow: 0
-                yRow: 3
+                yRow: 4
                 first: 2
             }
         }
@@ -119,7 +118,7 @@ Rectangle {
             HXYModelMapper {
                 model: customModel
                 xRow: 0
-                yRow: 4
+                yRow: 5
                 first: 2
             }
         }
