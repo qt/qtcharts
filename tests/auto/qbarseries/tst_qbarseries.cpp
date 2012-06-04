@@ -49,8 +49,6 @@ private slots:
     void remove();
     void appendList_data();
     void appendList();
-    void removeList_data();
-    void removeList();
     void barsetCount_data();
     void barsetCount();
     void barSets_data();
@@ -252,49 +250,6 @@ void tst_QBarSeries::appendList()
     ret = m_barseries->append(invalidList2);
     QVERIFY(ret == false);
     QVERIFY(m_barseries->barsetCount() == count);
-}
-
-void tst_QBarSeries::removeList_data()
-{
-
-}
-
-void tst_QBarSeries::removeList()
-{
-    int count = m_testSets.count();
-    QVERIFY(m_barseries_with_sets->barsetCount() == count);
-
-    // Try removing empty list of sets (should return false, since no barsets were removed)
-    bool ret = false;
-    QList<QBarSet*> invalidList;
-    ret = m_barseries_with_sets->remove(invalidList);
-    QVERIFY(ret == false);
-    QVERIFY(m_barseries_with_sets->barsetCount() == count);
-
-    // Add some null pointers to list
-    invalidList.append(0);
-    invalidList.append(0);
-    invalidList.append(0);
-
-    // Try removing null pointers from list (should return false, should not crash, should not remove anything)
-    ret = m_barseries_with_sets->remove(invalidList);
-    QVERIFY(ret == false);
-    QVERIFY(m_barseries_with_sets->barsetCount() == count);
-
-    // remove all sets (should return true, since sets were removed)
-    ret = m_barseries_with_sets->remove(m_testSets);
-    QVERIFY(ret == true);
-    QVERIFY(m_barseries_with_sets->barsetCount() == 0);
-
-    // Try removing invalid list again (should return false, since no barsets were removed)
-    ret = m_barseries_with_sets->remove(invalidList);
-    QVERIFY(ret == false);
-    QVERIFY(m_barseries_with_sets->barsetCount() == 0);
-
-    // remove all sets again (should return false, since barsets were already removed)
-    ret = m_barseries_with_sets->remove(m_testSets);
-    QVERIFY(ret == false);
-    QVERIFY(m_barseries_with_sets->barsetCount() == 0);
 }
 
 void tst_QBarSeries::barsetCount_data()

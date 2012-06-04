@@ -212,19 +212,6 @@ bool QBarSeries::append(QList<QBarSet* > sets)
 }
 
 /*!
-    Removes a list of barsets from series. Releases ownership of \a sets. Doesn't delete \a sets.
-*/
-bool QBarSeries::remove(QList<QBarSet* > sets)
-{
-    Q_D(QBarSeries);
-    bool success = d->remove(sets);
-    if (success) {
-        emit barsetsRemoved(sets);
-    }
-    return success;
-}
-
-/*!
     Insert a set of bars to series at \a index postion. Takes ownership of \a set. If the set is null or is already in series, it won't be appended.
     Returns true, if inserting succeeded.
 
