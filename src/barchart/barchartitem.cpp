@@ -157,6 +157,7 @@ void BarChartItem::applyLayout(const QVector<QRectF> &layout)
         animator()->updateLayout(this, m_layout, layout);
     } else {
         setLayout(layout);
+        update();
     }
 }
 
@@ -196,7 +197,6 @@ void BarChartItem::handleLayoutChanged()
     }
     QVector<QRectF> layout = calculateLayout();
     applyLayout(layout);
-    update();
 }
 
 void BarChartItem::handleLabelsVisibleChanged(bool visible)
