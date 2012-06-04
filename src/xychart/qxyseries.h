@@ -51,7 +51,6 @@ public:
     void replace(const QPointF &oldPoint,const QPointF &newPoint);
     void remove(qreal x, qreal y);
     void remove(const QPointF &point);
-    void removeAll();
     void insert(int index, const QPointF &point);
     void clear();
 

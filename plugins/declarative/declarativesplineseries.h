@@ -49,7 +49,7 @@ public: // from QDeclarativeParserStatus
 public: // from QSplineSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QSplineSeries::append(x, y); }
     Q_INVOKABLE void remove(qreal x, qreal y) { QSplineSeries::remove(x, y); }
-    Q_INVOKABLE void clear() { QSplineSeries::removeAll(); }
+    Q_INVOKABLE void clear() { QSplineSeries::clear(); }
     Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
 
 public Q_SLOTS:

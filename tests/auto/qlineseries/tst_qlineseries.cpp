@@ -81,7 +81,7 @@ void tst_QLineSeries::qlineseries()
 
     series.remove(0.0,0.0);
     series.remove(QPointF());
-    series.removeAll();
+    series.clear();
 
     series.replace(QPointF(),QPointF());
     series.replace(0,0,0,0);

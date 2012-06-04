@@ -176,17 +176,6 @@ void QXYSeries::remove(const QPointF &point)
 }
 
 /*!
-   Removes all data points from the series.
-*/
-void QXYSeries::removeAll()
-{
-    Q_D(QXYSeries);
-    foreach(const QPointF& point, d->m_points) {
-        remove(point);
-    }
-}
-
-/*!
    Inserts a \a point in the series at \a index position.
 */
 void QXYSeries::insert(int index, const QPointF &point)

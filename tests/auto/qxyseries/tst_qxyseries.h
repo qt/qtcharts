@@ -62,12 +62,12 @@ private slots:
     void remove_chart();
     void remove_chart_animation_data();
     void remove_chart_animation();
-    void removeAll_raw_data();
-    void removeAll_raw();
-    void removeAll_chart_data();
-    void removeAll_chart();
-    void removeAll_chart_animation_data();
-    void removeAll_chart_animation();
+    void clear_raw_data();
+    void clear_raw();
+    void clear_chart_data();
+    void clear_chart();
+    void clear_chart_animation_data();
+    void clear_chart_animation();
     void replace_raw_data();
     void replace_raw();
     void replace_chart_data();

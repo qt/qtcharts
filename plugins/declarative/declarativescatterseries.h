@@ -51,7 +51,7 @@ public: // from QDeclarativeParserStatus
 public: // from QScatterSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QScatterSeries::append(x, y); }
     Q_INVOKABLE void remove(qreal x, qreal y) { QScatterSeries::remove(x, y); }
-    Q_INVOKABLE void clear() { QScatterSeries::removeAll(); }
+    Q_INVOKABLE void clear() { QScatterSeries::clear(); }
     Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
 
 public Q_SLOTS:

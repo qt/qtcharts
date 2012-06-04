@@ -184,45 +184,45 @@ void tst_QXYSeries::remove_chart_animation()
 }
 
 
-void tst_QXYSeries::removeAll_raw_data()
+void tst_QXYSeries::clear_raw_data()
 {
     append_data();
 }
 
-void tst_QXYSeries::removeAll_raw()
+void tst_QXYSeries::clear_raw()
 {
     QFETCH(QList<QPointF>, points);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
     m_series->append(points);
     TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points(), points);
-    m_series->removeAll();
+    m_series->clear();
     TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points().count(), 0);
 }
 
-void tst_QXYSeries::removeAll_chart_data()
+void tst_QXYSeries::clear_chart_data()
 {
     append_data();
 }
 
-void tst_QXYSeries::removeAll_chart()
+void tst_QXYSeries::clear_chart()
 {
     m_view->show();
     m_chart->addSeries(m_series);
     QTest::qWaitForWindowShown(m_view);
-    removeAll_raw();
+    clear_raw();
 }
 
-void tst_QXYSeries::removeAll_chart_animation_data()
+void tst_QXYSeries::clear_chart_animation_data()
 {
     append_data();
 }
 
-void tst_QXYSeries::removeAll_chart_animation()
+void tst_QXYSeries::clear_chart_animation()
 {
     m_chart->setAnimationOptions(QChart::AllAnimations);
-    removeAll_chart();
+    clear_chart();
 }
 
 void tst_QXYSeries::replace_raw_data()
