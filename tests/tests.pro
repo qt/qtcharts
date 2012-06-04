@@ -7,6 +7,4 @@ SUBDIRS += \
     auto \
     chartwidgettest \
     wavechart \
-    gdpbarchart \
-    tablemodelchart \
     qmlchartproperties
