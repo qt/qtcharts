@@ -49,9 +49,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QBarSeries::barMargin
     \brief Defines the margin around bars.
-
-    Value is from 0 to 1 and represents
-    percentage of margin compared to bars
 */
 
 /*!
@@ -77,10 +74,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The signal is emitted if mouse is hovered on top of series.
     Parameter \a barset is the pointer of barset, where hover happened.
     Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
-*/
-
-/*!
-    \fn void QBarSeries::visibleChanged()
 */
 
 /*!
@@ -144,8 +137,11 @@ QAbstractSeries::SeriesType QBarSeries::type() const
 }
 
 /*!
-    Sets the margin around bars. Parameter \a margin is from 0 to 1 and represents
-    percentage of margin compared to bars
+    Sets the margin of the bars of the series. The unit of \a margin is the unit of x-axis. Setting the margin to 0.0
+    means there is no margin around the bars, making a single bar or bargroup to take one x-axis unit on the screen.
+    Setting margin to maximum value of 1.0 makes the bar width to exactly 1 pixel on the screen. Bars cannot be zero
+    width, otherwise they would not be visible at all. If you want to hide bars, use visible property of the series
+    instead.
 */
 void QBarSeries::setBarMargin(qreal margin)
 {
