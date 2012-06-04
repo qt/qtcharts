@@ -3,7 +3,8 @@
     \title Zoom line example
     \subtitle
 
-    The example shows how to create your own custom zooming effect with QRubberBand.
+    The example shows how to create your own custom zooming effect with QRubberBand by using a mouse
+    and how to use touch gestures for paning and zooming.
     \image examples_zoomlinechart1.png
     \image examples_zoomlinechart2.png
 
@@ -19,4 +20,12 @@
     Then we implement a custom logic for mouse and key events. For example pressing '+' key will zoom in and pressing
     the '-' key will zoom out.
     \snippet ../examples/zoomlinechart/chartview.cpp 1
+
+    We also create our own QChart:
+    \snippet ../examples/zoomlinechart/chart.h 1
+
+    Where we can handle the gestures:
+    \snippet ../examples/zoomlinechart/chart.cpp 1
+
+    Note that you will need to call grabGesture() to both QMainWindow and QChart.
 */

@@ -22,6 +22,7 @@
 #include "chartview.h"
 #include <QApplication>
 #include <QMainWindow>
+#include <qmath.h>
 #include <QLineSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -32,12 +33,10 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
-    series->setName("line");
-    qreal yValue = 0.0;
-    for (int i(0); i < 500; i++) {
-        yValue = yValue + (qreal) (qrand() % 10) / 500.0;
-        QPointF value((i + (qreal) rand() / (qreal) RAND_MAX) * (10.0 / 500.0), yValue);
-        *series << value;
+    for (int i=0; i < 500; i++) {
+        QPointF p((qreal) i, qSin(M_PI / 50 * i) * 100);
+        p.ry() += qrand() % 20;
+        *series << p;
     }
 //![1]
 
@@ -45,6 +44,7 @@ int main(int argc, char *argv[])
     chart->addSeries(series);
     chart->setTitle("Zoom in/out example");
     chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart->legend()->hide();
 
     ChartView* chartView = new ChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);

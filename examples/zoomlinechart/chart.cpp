@@ -37,6 +37,7 @@ Chart::~Chart()
 
 }
 
+//![1]
 bool Chart::sceneEvent(QEvent *event)
 {
     if (event->type() == QEvent::Gesture)
@@ -48,14 +49,15 @@ bool Chart::gestureEvent(QGestureEvent* event)
 {
     if (QGesture *gesture = event->gesture(Qt::PanGesture)) {
         QPanGesture *pan = static_cast<QPanGesture *>(gesture);
-        scroll(pan->delta());
+        QChart::scroll(pan->delta());
     }
 
     if (QGesture *gesture = event->gesture(Qt::PinchGesture)) {
         QPinchGesture *pinch = static_cast<QPinchGesture *>(gesture);
         if (pinch->changeFlags() & QPinchGesture::ScaleFactorChanged)
-            zoom(pinch->scaleFactor());
+            QChart::zoom(pinch->scaleFactor());
     }
 
     return true;
 }
+//![1]
