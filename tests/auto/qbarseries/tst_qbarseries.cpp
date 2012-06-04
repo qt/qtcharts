@@ -59,6 +59,7 @@ private slots:
     void mouseclicked();
     void mousehovered_data();
     void mousehovered();
+    void clearWithAnimations();
 
 private:
     QBarSeries* m_barseries;
@@ -481,6 +482,30 @@ void tst_QBarSeries::mousehovered()
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Bool);
     QVERIFY(seriesSpyArg.at(1).toBool() == false);
+}
+
+void tst_QBarSeries::clearWithAnimations()
+{
+    QBarSeries* series = new QBarSeries();
+    QStringList categories;
+    categories << "test1" << "test2" << "test3";
+//    series->setCategories(categories);
+
+    QBarSet* set1 = new QBarSet(QString("set 1"));
+    *set1 << QPointF(0.1,10) << QPointF(1.1,10) << QPointF(2.1,10);
+    series->append(set1);
+
+    QBarSet* set2 = new QBarSet(QString("set 2"));
+    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
+    series->append(set2);
+
+    QChartView view(new QChart());
+    view.resize(400,300);
+    view.chart()->setAnimationOptions(QChart::SeriesAnimations);
+    view.chart()->addSeries(series);
+    view.show();
+
+    series->clear();
 }
 
 QTEST_MAIN(tst_QBarSeries)
