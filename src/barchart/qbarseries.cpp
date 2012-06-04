@@ -607,6 +607,9 @@ bool QBarSeriesPrivate::append(QList<QBarSet* > sets)
 bool QBarSeriesPrivate::remove(QList<QBarSet* > sets)
 {
     Q_Q(QBarSeries);
+    if (sets.count() == 0) {
+        return false;
+    }
     foreach (QBarSet* set, sets) {
         if ((set == 0) || (!m_barSets.contains(set))) {
             // Fail if any of the sets is null or is not in series
