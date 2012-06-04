@@ -94,16 +94,4 @@ void DeclarativeTableModel::append(QVariantList values)
     dataChanged(beginIndex, endIndex);
 }
 
-//void DeclarativeTableModel::appendPoint(QXYModelMapper *mapper, DeclarativeXyPoint *point)
-//{
-//    Q_UNUSED(mapper)
-//    Q_UNUSED(point)
-//    // TODO: XYModelMapper implementation has change, this code has to be updated.
-////    qDebug() << "DeclarativeTableModel::appendPoint:" << point;
-////    QVariantList values;
-////    values.insert(mapper->mapX(), point->x());
-////    values.insert(mapper->mapY(), point->y());
-////    append(values);
-//}
-
 #include "moc_declarativemodel.cpp"

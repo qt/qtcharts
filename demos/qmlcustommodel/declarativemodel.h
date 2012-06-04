@@ -49,7 +49,6 @@ class DeclarativeTableModel : public CustomTableModel, public QDeclarativeParser
 public:
     explicit DeclarativeTableModel(QObject *parent = 0);
     QDeclarativeListProperty<QObject> modelChildren();
-//    void appendPoint(QXYModelMapper *mapper, DeclarativeXyPoint *point);
 
 public: // from QDeclarativeParserStatus
     void classBegin();
