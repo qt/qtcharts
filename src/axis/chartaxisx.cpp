@@ -105,8 +105,8 @@ void ChartAxisX::updateGeometry()
         lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
     }
 
-    //presenter()->setMinimumMarginWidth(this,minWidth);
-    //presenter()->setMinimumMarginHeight(this,minHeight);
+    presenter()->setMinimumMarginWidth(this,minWidth);
+    presenter()->setMinimumMarginHeight(this,minHeight);
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

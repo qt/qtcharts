@@ -108,8 +108,8 @@ void ChartAxisY::updateGeometry()
         lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
     }
 
-    //presenter()->setMinimumMarginWidth(this,minWidth);
-    //presenter()->setMinimumMarginHeight(this,minHeight);
+    presenter()->setMinimumMarginWidth(this,minWidth);
+    presenter()->setMinimumMarginHeight(this,minHeight);
 
 }
 

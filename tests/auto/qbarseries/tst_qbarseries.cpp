@@ -334,8 +334,8 @@ void tst_QBarSeries::mouseclicked()
     QTest::qWaitForWindowShown(&view);
 
 //====================================================================================
-// barset 1, category test1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(106,142));
+// barset 1, bar 0
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(95,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -346,8 +346,8 @@ void tst_QBarSeries::mouseclicked()
     QVERIFY(seriesSpyArg.at(1).toInt() == 0);
 
 //====================================================================================
-// barset 1, category test2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(199,142));
+// barset 1, bar 1
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(164,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -358,8 +358,8 @@ void tst_QBarSeries::mouseclicked()
     QVERIFY(seriesSpyArg.at(1).toInt() == 1);
 
 //====================================================================================
-// barset 1, category test3
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(291,142));
+// barset 1, bar 2
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(234,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -370,8 +370,8 @@ void tst_QBarSeries::mouseclicked()
     QVERIFY(seriesSpyArg.at(1).toInt() == 2);
 
 //====================================================================================
-// barset 2, category test1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(134,142));
+// barset 2, bar 0
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(115,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -382,8 +382,8 @@ void tst_QBarSeries::mouseclicked()
     QVERIFY(seriesSpyArg.at(1).toInt() == 0);
 
 //====================================================================================
-// barset 2, category test2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(227,142));
+// barset 2, bar 1
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(185,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -394,8 +394,8 @@ void tst_QBarSeries::mouseclicked()
     QVERIFY(seriesSpyArg.at(1).toInt() == 1);
 
 //====================================================================================
-// barset 2, category test3
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(319,142));
+// barset 2, bar 2
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(254,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -445,7 +445,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse on top of set1
-    QTest::mouseMove(view.viewport(), QPoint(106,142));
+    QTest::mouseMove(view.viewport(), QPoint(95,142));
 
     QVERIFY(seriesSpy.count() == 1);
 
@@ -456,7 +456,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set1 to top of set2
-    QTest::mouseMove(view.viewport(), QPoint(134,142));
+    QTest::mouseMove(view.viewport(), QPoint(116,142));
 
     QVERIFY(seriesSpy.count() == 2);
 
@@ -474,7 +474,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set2 to background
-    QTest::mouseMove(view.viewport(), QPoint(134,0));
+    QTest::mouseMove(view.viewport(), QPoint(116,0));
     QVERIFY(seriesSpy.count() == 1);
 
     // should leave set2
