@@ -36,22 +36,20 @@ int main(int argc, char *argv[])
     QBarSet *set1 = new QBarSet("John");
     QBarSet *set2 = new QBarSet("Axel");
     QBarSet *set3 = new QBarSet("Mary");
-    QBarSet *set4 = new QBarSet("Samantha");
 
     *set0 << QPointF(0.0, 1) << QPointF(1.0, 2) << QPointF(2.4, 3) << QPointF(3.0, 4) << QPointF(4.0, 5) << QPointF(5.0, 6);
     *set1 << QPointF(0.1, 2) << QPointF(1.2, 3) << QPointF(2.45, 4) << QPointF(3.2, 5) << QPointF(4.2, 6) << QPointF(5.2, 7);
     *set2 << QPointF(0.2, 3) << QPointF(1.4, 4) << QPointF(2.50, 5) << QPointF(3.4, 6) << QPointF(4.4, 7) << QPointF(5.4, 8);
     *set3 << QPointF(0.3, 4) << QPointF(1.6, 5) << QPointF(2.55, 6) << QPointF(3.6, 7) << QPointF(4.6, 8) << QPointF(5.6, 9);
-    *set4 << QPointF(0.4, 5) << QPointF(1.8, 6) << QPointF(2.6, 7) << QPointF(3.8, 8) << QPointF(4.8, 9) << QPointF(5.8, 10);
 //![1]
 
 //![2]
     QBarSeries* series = new QBarSeries();
+    series->setBarMargin(0.8);
     series->append(set0);
     series->append(set1);
     series->append(set2);
     series->append(set3);
-    series->append(set4);
 //![2]
 
 //![3]
