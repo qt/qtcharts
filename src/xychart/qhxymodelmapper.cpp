@@ -27,7 +27,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief part of QtCommercial chart API.
     \mainclass
 
-    Nothing here yet
+    Horizontal model mapper is used to create a connection between QXYSeries and QAbstractItemModel derived model object.
+    It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
+    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 
 /*!

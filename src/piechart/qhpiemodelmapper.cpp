@@ -27,7 +27,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief part of QtCommercial chart API.
     \mainclass
 
-    This class is used to create a connection between QPieSeries and QAbstractItemModel derived model object that keeps the consecutive pie slices data in rows.
+    Horizontal model mapper is used to create a connection between QPieSeries and QAbstractItemModel derived model object that keeps the consecutive pie slices data in rows.
     It is possible to use both QAbstractItemModel and QPieSeries model API. QHPieModelMapper makes sure that Pie and the model are kept in sync.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */

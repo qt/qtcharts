@@ -28,10 +28,22 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
+    \class QBarModelMapper
+    \brief part of QtCommercial chart API.
+    \mainclass
+
+    The instance of this class cannot be created directly. QHBarModelMapper of QVBarModelMapper should be used instead. This class is used to create a connection between QBarSeries and QAbstractItemModel derived model object.
+    Curently it is NOT possible to use both QAbstractItemModel and QBarSeries model API.
+    When the series is set to the mapper the QBarSeries and QBarSet API that affect the data (append, setValue, remove) should not be used.
+    The model and the QBarSeries won't be kept in sync. Model API should be used to insert,remove,modify BarSets.
+    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
+/*!
     \property QBarModelMapper::series
     \brief Defines the QPieSeries object that is used by the mapper.
 
-    All the data in the series in the series is discarded when it is set to the mapper.
+    All the data in the series is discarded when it is set to the mapper.
     When new series is specified the old series is disconnected (it preserves its data)
 */
 
@@ -52,18 +64,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Defines the number of rows/columns of the model that are mapped as the data for QBarSeries
 
     Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
-*/
-
-/*!
-    \class QBarModelMapper
-    \brief part of QtCommercial chart API.
-    \mainclass
-
-    The instance of this class cannot be created directly. QHBarModelMapper of QVBarModelMapper should be used instead. This class is used to create a connection between QBarSeries and QAbstractItemModel derived model object.
-    Curently it is NOT possible to use both QAbstractItemModel and QXYSeries model API.
-    When the series is set to the mapper the QBarSeries and QBarSet API that affect the data (append, setValue, remove) should not be used.
-    The model and the QBarSeries won't be kept in sync. Model API should be used to insert,remove,modify BarSets.
-    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 
 /*!

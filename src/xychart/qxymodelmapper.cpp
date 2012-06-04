@@ -26,10 +26,20 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
+    \class QXYModelMapper
+    \brief part of QtCommercial chart API.
+    \mainclass
+
+    The instance of this class cannot be created directly. QHXYModelMapper of QVXYModelMapper should be used instead. This class is used to create a connection between QXYSeries and QAbstractItemModel derived model object.
+    It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
+    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
+/*!
     \property QXYModelMapper::series
     \brief Defines the QPieSeries object that is used by the mapper.
 
-    All the data in the series in the series is discarded when it is set to the mapper.
+    All the data in the series is discarded when it is set to the mapper.
     When new series is specified the old series is disconnected (it preserves its data)
 */
 
@@ -50,16 +60,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Defines the number of rows/columns of the model that are mapped as the data for QXYSeries
 
     Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
-*/
-
-/*!
-    \class QXYModelMapper
-    \brief part of QtCommercial chart API.
-    \mainclass
-
-    The instance of this class cannot be created directly. QHXYModelMapper of QVXYModelMapper should be used instead. This class is used to create a connection between QXYSeries and QAbstractItemModel derived model object.
-    It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
-    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 
 /*!
