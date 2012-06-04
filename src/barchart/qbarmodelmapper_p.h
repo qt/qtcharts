@@ -54,11 +54,6 @@ public Q_SLOTS:
     void modelColumnsAdded(QModelIndex parent, int start, int end);
     void modelColumnsRemoved(QModelIndex parent, int start, int end);
 
-//    // for the series
-//    void handlePointAdded(int pointPos);
-//    void handlePointRemoved(int pointPos);
-//    void handlePointReplaced(int pointPos);
-
     void initializeBarFromModel();
 
 private:

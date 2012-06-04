@@ -38,8 +38,7 @@ public:
     void setXColumn(int xColumn);
 
     int yColumn() const;
-    void setYColumn(int yColumn);
-    
+    void setYColumn(int yColumn);    
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -120,9 +120,7 @@ void QBarModelMapper::setSeries(QBarSeries *series)
     d->m_series = series;
     d->initializeBarFromModel();
     // connect the signals from the series
-    //    connect(d->m_series, SIGNAL(pointAdded(int)), d, SLOT(handlePointAdded(int)));
-    //    connect(d->m_series, SIGNAL(pointRemoved(int)), d, SLOT(handlePointRemoved(int)));
-    //    connect(d->m_series, SIGNAL(pointReplaced(int)), d, SLOT(handlePointReplaced(int)));
+    // TODO: TO be implemented
 }
 
 int QBarModelMapper::first() const
@@ -382,69 +380,17 @@ void QBarModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int start, 
 void QBarModelMapperPrivate::insertData(int start, int end)
 {
     Q_UNUSED(end)
-    if (m_model == 0 || m_series == 0)
-        return;
-
-    if (m_count != -1 && start >= m_first + m_count) {
-        return;
-    } /*else {
-        int addedCount = end - start + 1;
-        if (m_count != -1 && addedCount > m_count)
-            addedCount = m_count;
-        int first = qMax(start, m_first);
-        int last = qMin(first + addedCount - 1, m_orientation == Qt::Vertical ? m_model->rowCount() - 1 : m_model->columnCount() - 1);
-        for (int k = 0; k < m_series->barSets().count(); k++) {
-            for (int i = first; i <= last; i++) {
-                QBar point;
-                point.setX(m_model->data(xModelIndex(i - m_first), Qt::DisplayRole).toDouble());
-                point.setY(m_model->data(yModelIndex(i - m_first), Qt::DisplayRole).toDouble());
-                m_series->insert(i - m_first, point);
-            }
->>>>>>> Stashed changes
-        }
-
-        // remove excess of slices (abouve m_count)
-        if (m_count != -1 && m_series->points().size() > m_count)
-            for (int i = m_series->points().size() - 1; i >= m_count; i--) {
-                m_series->remove(m_series->points().at(i));
-            }
-    }*/
+    Q_UNUSED(start)
+    Q_UNUSED(end)
+    // To be implemented
 }
 
 void QBarModelMapperPrivate::removeData(int start, int end)
 {
     Q_UNUSED(end)
-    if (m_model == 0 || m_series == 0)
-        return;
-
-    //    int removedCount = end - start + 1;
-    if (m_count != -1 && start >= m_first + m_count) {
-        return;
-    } /*else {
-        int toRemove = qMin(m_series->count(), removedCount);     // first find how many items can actually be removed
-        int first = qMax(start, m_first);    // get the index of the first item that will be removed.
-        int last = qMin(first + toRemove - 1, m_series->count() + m_first - 1);    // get the index of the last item that will be removed.
-        for (int i = last; i >= first; i--) {
-            m_series->remove(m_series->points().at(i - m_first));
-        }
-
-        if (m_count != -1) {
-            int itemsAvailable;     // check how many are available to be added
-            if (m_orientation == Qt::Vertical)
-                itemsAvailable = m_model->rowCount() - m_first - m_series->count();
-            else
-                itemsAvailable = m_model->columnCount() - m_first - m_series->count();
-            int toBeAdded = qMin(itemsAvailable, m_count - m_series->count());     // add not more items than there is space left to be filled.
-            int currentSize = m_series->count();
-            if (toBeAdded > 0)
-                for (int i = m_series->count(); i < currentSize + toBeAdded; i++) {
-                    QPointF point;
-                    point.setX(m_model->data(xModelIndex(i), Qt::DisplayRole).toDouble());
-                    point.setY(m_model->data(yModelIndex(i), Qt::DisplayRole).toDouble());
-                    m_series->insert(i, point);
-                }
-        }
-    }*/
+    Q_UNUSED(start)
+    Q_UNUSED(end)
+    // To be implemented
 }
 
 void QBarModelMapperPrivate::initializeBarFromModel()

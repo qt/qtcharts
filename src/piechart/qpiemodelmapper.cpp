@@ -27,6 +27,16 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
+    \class QPieModelMapper
+    \brief part of QtCommercial chart API.
+    \mainclass
+
+    The instance of this class cannot be created directly. QHPieModelMapper of QVPieModelMapper should be used instead. This class is used to create a connection between QPieSeries and QAbstractItemModel derived model object.
+    It is possible to use both QAbstractItemModel and QPieSeries model API. QPieModelMapper makes sure that Pie and the model are kept in sync.
+    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
+/*!
     \property QPieModelMapper::series
     \brief Defines the QPieSeries object that is used by the mapper.
 
@@ -51,16 +61,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Defines the number of rows/columns of the model that are mapped as the data for the pie.
 
     Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
-*/
-
-/*!
-    \class QPieModelMapper
-    \brief part of QtCommercial chart API.
-    \mainclass
-
-    The instance of this class cannot be created directly. QHPieModelMapper of QVPieModelMapper should be used instead. This class is used to create a connection between QPieSeries and QAbstractItemModel derived model object.
-    It is possible to use both QAbstractItemModel and QPieSeries model API. QPieModelMapper makes sure that Pie and the model are kept in sync.
-    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 
 /*!
@@ -581,7 +581,6 @@ void QPieModelMapperPrivate::initializePieFromModel()
         connect(slice, SIGNAL(valueChanged()), this, SLOT(sliceValueChanged()));
         m_series->append(slice);
         m_slices.append(slice);
-        //        m_series->append(m_model->data(labelIndex, Qt::DisplayRole).toString(), m_model->data(valueIndex, Qt::DisplayRole).toDouble());
         slicePos++;
         valueIndex = valueModelIndex(slicePos);
         labelIndex = labelModelIndex(slicePos);

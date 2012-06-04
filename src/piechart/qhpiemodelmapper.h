@@ -39,7 +39,6 @@ public:
 
     int labelsRow() const;
     void setLabelsRow(int labelsRow);
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

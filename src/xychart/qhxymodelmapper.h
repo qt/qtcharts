@@ -38,8 +38,7 @@ public:
     void setXRow(int xRow);
 
     int yRow() const;
-    void setYRow(int yRow);
-    
+    void setYRow(int yRow);    
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
