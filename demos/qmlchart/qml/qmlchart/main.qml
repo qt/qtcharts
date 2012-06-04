@@ -44,12 +44,12 @@ Rectangle {
 
         Rectangle {
             height: 35
-            width: 55
-            color: "grey"
+            width: 60
+            color: "#c8955c"
             radius: 5
             Text {
                 anchors.centerIn: parent
-                text: "previous"
+                text: "<"
             }
             MouseArea {
                 anchors.fill: parent
@@ -64,12 +64,12 @@ Rectangle {
         }
         Rectangle {
             height: 35
-            width: 55
-            color: "grey"
+            width: 60
+            color: "#c8955c"
             radius: 5
             Text {
                 anchors.centerIn: parent
-                text: "next"
+                text: ">"
             }
             MouseArea {
                 anchors.fill: parent

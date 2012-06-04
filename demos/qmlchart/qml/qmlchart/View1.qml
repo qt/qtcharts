@@ -26,15 +26,13 @@ Rectangle {
     property int __explodedIndex: -1
     property variant otherSlice: 0
 
+    //![1]
     ChartView {
         id: chart
         title: "Top-5 car brand shares in Finland"
         anchors.fill: parent
-        theme: ChartView.ChartThemeLight
         legend.alignment: Qt.AlignBottom
-        animationOptions: ChartView.SeriesAnimations
 
-        // If you have static data, you can simply use the PieSlice API
         PieSeries {
             id: pieSeries
             onClicked: {
@@ -47,6 +45,7 @@ Rectangle {
             PieSlice { label: "Volvo"; value: 6.8 }
         }
     }
+    //![1]
 
     Component.onCompleted: {
         // You can also add slices dynamically

@@ -24,11 +24,10 @@ import QtCommercial.Chart 1.0
 Rectangle {
     anchors.fill: parent
 
+    //![1]
     ChartView {
         title: "Line&Spline"
         anchors.fill: parent
-        theme: ChartView.ChartThemeBrownSand
-        animationOptions: ChartView.NoAnimation
 
         LineSeries {
             name: "Line"
@@ -52,4 +51,5 @@ Rectangle {
             XyPoint { x: 4.1; y: 3.1 }
         }
     }
+    //![1]
 }

@@ -24,10 +24,10 @@ import QtCommercial.Chart 1.0
 Rectangle {
     anchors.fill: parent
 
+    //![1]
     ChartView {
         title: "NHL All-Star Team Players"
         anchors.fill: parent
-        theme: ChartView.ChartThemeHighContrast
         axisXLabels: ["0", "2000", "1", "2001", "2", "2002", "3", "2003", "4", "2004", "5", "2005",
             "6", "2006", "7", "2007", "8", "2008", "9", "2009", "10", "2010", "11", "2011"]
 
@@ -61,11 +61,9 @@ Rectangle {
                 XyPoint { x: 10; y: 0 }
                 XyPoint { x: 11; y: 0 }
             }
-            onClicked: {
-                color = "red";
-                borderColor = "black";
-            }
         }
+        // ...
+        //![1]
 
         AreaSeries {
             id: swedish

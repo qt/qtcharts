@@ -24,10 +24,10 @@ import QtCommercial.Chart 1.0
 Rectangle {
     anchors.fill: parent
 
+    //![1]
     ChartView {
         title: "Bar series"
         anchors.fill: parent
-        theme: ChartView.ChartThemeLight
         legend.alignment: Qt.AlignBottom
         axisXLabels: ["0", "2007", "1", "2008", "2", "2009", "3", "2010", "4", "2011", "5", "2012"]
 
@@ -37,4 +37,5 @@ Rectangle {
             BarSet { name: "James"; values: [3, 5, 8, 13, 5, 8] }
         }
     }
+    //![1]
 }

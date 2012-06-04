@@ -24,12 +24,10 @@ import QtCommercial.Chart 1.0
 Rectangle {
     anchors.fill: parent
 
+    //![1]
     ChartView {
         title: "Scatters"
         anchors.fill: parent
-        theme: ChartView.ChartThemeBlueCerulean
-        axisX.max: 4
-        axisY.max: 4
 
         ScatterSeries {
             id: scatter1
@@ -45,6 +43,8 @@ Rectangle {
 
         ScatterSeries {
             name: "Scatter2"
+            // ...
+            //![1]
             XyPoint { x: 2.0; y: 2.0 }
             XyPoint { x: 2.0; y: 2.1 }
             XyPoint { x: 2.07; y: 2.05 }
