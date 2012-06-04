@@ -25,7 +25,7 @@ ChartView {
     title: "Stacked bar series"
     anchors.fill: parent
     theme: ChartView.ChartThemeLight
-    legend: ChartView.LegendBottom
+    legend.alignment: Qt.AlignBottom
     axisXLabels: ["0", "2007", "1", "2008", "2", "2009", "3", "2010", "4", "2011", "5", "2012"]
 
     property variant series: daSeries
