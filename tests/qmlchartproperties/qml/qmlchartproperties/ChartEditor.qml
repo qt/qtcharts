@@ -28,8 +28,13 @@ Flow {
     flow: Flow.TopToBottom
     property variant series // TODO: rename to chart
 
+    onSeriesChanged: {
+        legendConnections.target = series.legend
+    }
+
     Connections {
         target: series
+        ignoreUnknownSignals: true
         onVisibleChanged:           console.log("chart.onVisibleChanged: " + series.visible);
         onThemeChanged:             console.log("chart.onThemeChanged: " + series.theme);
         onLegendChanged:            console.log("chart.onLegendChanged: " + series.legend);
@@ -37,8 +42,10 @@ Flow {
         onTitleColorChanged:        console.log("chart.onTitleColorChanged: " + series.titleColor);
         onBackgroundColorChanged:   console.log("chart.onBackgroundColorChanged: " + series.backgroundColor);
     }
+
     Connections {
-        target: series.legend
+        id: legendConnections
+        ignoreUnknownSignals: true
         onAlignmentChanged:         console.log("legend.onAlignmentChanged: " + series.legend.alignment);
         onVisibleChanged:           console.log("legend.onVisibleChanged: " + series.legend.visible);
     }

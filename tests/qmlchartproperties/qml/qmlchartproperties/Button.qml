@@ -58,7 +58,7 @@ Rectangle {
 
     Timer {
         id: repeatTimer
-        interval: 200
+        interval: 140
         repeat: true
         triggeredOnStart: false
         running: false

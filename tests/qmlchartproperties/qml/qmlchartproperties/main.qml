@@ -85,8 +85,7 @@ Rectangle {
             height: parent.height
             source: "Chart.qml"
             onStatusChanged: {
-                console.log("chartLoader.status: " + status + " " + source);
-                if (status == Loader.Ready && editorLoader.status == Loader.Ready)
+                if (status == Loader.Ready && editorLoader.status == Loader.Ready && chartLoader.item)
                     editorLoader.item.series = chartLoader.item.series;
             }
         }
@@ -97,8 +96,7 @@ Rectangle {
             height: parent.height
             source: "ChartEditor.qml"
             onStatusChanged: {
-                console.log("editorLoader.status: " + status + " " + source);
-                if (status == Loader.Ready && chartLoader.status == Loader.Ready)
+                if (status == Loader.Ready && chartLoader.status == Loader.Ready && chartLoader.item)
                     editorLoader.item.series = chartLoader.item.series;
             }
         }

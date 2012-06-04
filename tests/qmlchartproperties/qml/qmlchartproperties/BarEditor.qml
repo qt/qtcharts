@@ -27,6 +27,29 @@ Flow {
     flow: Flow.TopToBottom
     property variant series
 
+    onSeriesChanged: {
+        seriesConnections.target = series;
+        setConnections.target = series.at(0);
+    }
+
+    Connections {
+        id: seriesConnections
+        ignoreUnknownSignals: true
+        onNameChanged:              console.log("series.onNameChanged: " + series.name);
+        onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
+        onLabelsVisibleChanged:     console.log("series.onLabelsVisibleChanged: " + series.labelsVisible);
+        onCountChanged:             console.log("series.onCountChanged: " + series.count);
+    }
+
+    Connections {
+        id: setConnections
+        ignoreUnknownSignals: true
+        onColorChanged:             console.log("series.onColorChanged: " + series.color);
+        onBorderColorChanged:       console.log("series.onBorderColorChanged: " + series.borderColor);
+        onLabelColorChanged:        console.log("series.onLabelColorChanged: " + series.labelColor);
+        onCountChanged:             console.log("series.onCountChanged: " + series.count);
+    }
+
     Button {
         text: "visible"
         onClicked: series.visible = !series.visible;
