@@ -102,7 +102,7 @@ void ScatterChartItem::deletePoints(int count)
 
 void ScatterChartItem::markerSelected(Marker *marker)
 {
-    emit XYChart::clicked(marker->point());
+    emit XYChart::clicked(calculateDomainPoint(marker->point()));
 }
 
 void ScatterChartItem::updateGeometry()
