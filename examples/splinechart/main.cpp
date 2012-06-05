@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
 
     //![3]
     QChart* chart = new QChart();
+    chart->legend()->hide();
     chart->addSeries(series);
     chart->setTitle("Simple spline chart example");
     chart->axisY()->setRange(0, 10);

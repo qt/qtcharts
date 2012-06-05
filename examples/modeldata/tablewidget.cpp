@@ -55,6 +55,7 @@ TableWidget::TableWidget(QWidget *parent)
     // series 1
     //! [4]
     QLineSeries *series = new QLineSeries;
+    series->setName("Line 1");
     QVXYModelMapper *mapper = new QVXYModelMapper(this);
     mapper->setXColumn(0);
     mapper->setYColumn(1);
@@ -76,6 +77,7 @@ TableWidget::TableWidget(QWidget *parent)
     // series 2
     //! [6]
     series = new QLineSeries;
+    series->setName("Line 2");
 
     mapper = new QVXYModelMapper(this);
     mapper->setXColumn(2);

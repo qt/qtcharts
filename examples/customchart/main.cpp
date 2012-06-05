@@ -31,9 +31,9 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
-    series->setName("line");
     *series << QPointF(0, 6) << QPointF(2, 4) << QPointF(3, 8) << QPointF(7, 4) << QPointF(10,5);
     QChart* chart = new QChart();
+    chart->legend()->hide();
     chart->addSeries(series);
 //![1]
 

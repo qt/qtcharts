@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
     QMainWindow window;
     Chart *chart = new Chart;
     chart->setTitle("Dynamic spline chart");
+    chart->legend()->hide();
     chart->setAnimationOptions(QChart::AllAnimations);
     QChartView chartView(chart);
     chartView.setRenderHint(QPainter::Antialiasing);

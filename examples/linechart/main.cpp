@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
-    series->setName("line");
 //![1]
 
 //![2]
@@ -45,6 +44,7 @@ int main(int argc, char *argv[])
 
 //![3]
     QChart* chart = new QChart();
+    chart->legend()->hide();
     chart->addSeries(series);
     chart->setTitle("Simple line chart example");
 //![3]
