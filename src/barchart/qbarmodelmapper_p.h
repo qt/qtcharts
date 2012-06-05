@@ -49,6 +49,7 @@ public:
 public Q_SLOTS:
     // for the model
     void modelUpdated(QModelIndex topLeft, QModelIndex bottomRight);
+    void modelHeaderDataUpdated(Qt::Orientation orientation, int first, int last);
     void modelRowsAdded(QModelIndex parent, int start, int end);
     void modelRowsRemoved(QModelIndex parent, int start, int end);
     void modelColumnsAdded(QModelIndex parent, int start, int end);

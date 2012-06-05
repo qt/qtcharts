@@ -95,6 +95,7 @@ void QBarModelMapper::setModel(QAbstractItemModel *model)
     d->initializeBarFromModel();
     //    connect signals from the model
     connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
+    connect(d->m_model, SIGNAL(headerDataChanged(Qt::Orientation,int,int)), d, SLOT(modelHeaderDataUpdated(Qt::Orientation,int,int)));
     connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelRowsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
@@ -313,6 +314,27 @@ void QBarModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex botto
     blockSeriesSignals(false);
 }
 
+void QBarModelMapperPrivate::modelHeaderDataUpdated(Qt::Orientation orientation, int first, int last)
+{
+    if (m_model == 0 || m_series == 0)
+        return;
+
+    if (m_modelSignalsBlock)
+        return;
+
+    blockSeriesSignals();
+    if (orientation != m_orientation) {
+        for (int section = first; section <= last; section++) {
+            if (section >= m_firstBarSetSection && section <= m_lastBarSetSection) {
+                QBarSet* bar = m_series->barSets().at(section - m_firstBarSetSection);
+                if (bar)
+                    bar->setName(m_model->headerData(section, orientation).toString());
+            }
+        }
+    }
+    blockSeriesSignals(false);
+}
+
 void QBarModelMapperPrivate::modelRowsAdded(QModelIndex parent, int start, int end)
 {
     Q_UNUSED(parent);
@@ -408,7 +430,7 @@ void QBarModelMapperPrivate::initializeBarFromModel()
         QModelIndex barIndex = barModelIndex(i, posInBar);
         // check if there is such model index
         if (barIndex.isValid()) {
-            QBarSet *barSet = new QBarSet(m_model->headerData(i, Qt::Horizontal).toString());
+            QBarSet *barSet = new QBarSet(m_model->headerData(i, m_orientation == Qt::Vertical ? Qt::Horizontal : Qt::Vertical).toString());
             while (barIndex.isValid()) {
                 barSet->append(m_model->data(barIndex, Qt::DisplayRole).toDouble());
                 posInBar++;

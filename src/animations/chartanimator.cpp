@@ -101,9 +101,12 @@ void ChartAnimator::updateLayout(BarChartItem *item, const QVector<QRectF> &oldL
 {
     BarAnimation *animation = static_cast<BarAnimation *>(m_animations.value(item));
     Q_ASSERT(animation);
+    animation->stop();
     animation->setDuration(ChartAnimationDuration);
+    animation->setStartValue(qVariantFromValue(oldLayout));
     animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
     animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
+    animation->setEndValue(qVariantFromValue(newLayout));
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
