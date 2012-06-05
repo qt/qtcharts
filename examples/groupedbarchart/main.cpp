@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
 
 //![2]
     QGroupedBarSeries* series = new QGroupedBarSeries();
-//    series->setCategories(categories);
     series->append(set0);
     series->append(set1);
     series->append(set2);
