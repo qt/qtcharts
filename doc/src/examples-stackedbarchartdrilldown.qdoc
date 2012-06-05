@@ -6,10 +6,10 @@
     The example shows how to implement drilldown using stacked barchart. In drilldown example we create stacked barchart, which shows the harvest of various chili peppers during season. In season view the harvest is grouped by month. To drill down to weekly view, user clicks selected month with right mouse button. On weekly view, the harvest of clicked month is shown by week. For example purposes each month is 4 weeks long :)
 
     Season view looks like this:
-    \image stackedbarchart_drilldown_season.png
+    \image examples_stackedbarchartdrilldown1.png
 
-    Right mouse button clicked on august, shows the harvest from august:
-    \image stackedbarchart_drilldown_august.png
+    Mouse button clicked on a month, shows the harvest from that month:
+    \image examples_stackedbarchartdrilldown2.png
 
     Here we define a drilldown series, which adds mapping for categories to other drilldown series.
     Purpose of drilldown series is to contain knowledge of the drilldown structure. The mapDrilldownSeries function maps the category to given series. We can ask the mapping for category with drilldownSeries(QString category) function.
