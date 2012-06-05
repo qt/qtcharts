@@ -19,7 +19,7 @@
      \endlist
 
 
-    Each chart type is represented by QAbstractSeries derived class. To create given chart type users have to use instace of releted sereis class and add it to QChart/QChartView instance.
+    Each chart type is represented by QAbstractSeries derived class. To create given chart type users have to use instance of related series class and add it to QChart instance.
     \code
     QLineSeries* series = new QLineSeries();
     series->add(0, 6);
