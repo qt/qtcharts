@@ -66,7 +66,9 @@ KNOWN ISSUES
 * Setting bar width is not possible on QBarSeries derived classes (the width
   is affected with setMargin, but it has limitations)
 * API for Animations state (signaling started, finished) and setting duration
-  etc. are missing
+  etc. is missing
+* In QBarSeries API bar margin related methods will be replaced with bar width
+  in final release
 
 Main changes between Technology Preview and Beta release
 ========================================================
