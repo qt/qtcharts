@@ -26,7 +26,7 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-//! [2]
+//! [1]
 class DrilldownChart : public QChart
 {
     Q_OBJECT
@@ -41,6 +41,6 @@ public Q_SLOTS:
 private:
     DrilldownBarSeries* m_currentSeries;
 };
-//! [2]
+//! [1]
 
 #endif // DRILLDOWNCHART_H

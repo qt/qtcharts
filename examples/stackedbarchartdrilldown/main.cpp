@@ -30,18 +30,16 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
-//! [1]
     QApplication a(argc, argv);
     QMainWindow window;
-//! [1]
 
-//! [2]
+//! [1]
     DrilldownChart* drilldownChart =  new DrilldownChart();
     drilldownChart->setTheme(QChart::ChartThemeBlueIcy);
     drilldownChart->setAnimationOptions(QChart::SeriesAnimations);
-//! [2]
+//! [1]
 
-//! [3]
+//! [2]
     // Define categories
     QStringList months;
     months << "May" << "Jun" << "Jul" << "Aug" << "Sep";
@@ -49,9 +47,9 @@ int main(int argc, char *argv[])
     weeks << "week 1" << "week 2" << "week 3" << "week 4";
     QStringList plants;
     plants << "Habanero" << "Lemon Drop" << "Starfish" << "Aji Amarillo";
-//! [3]
+//! [2]
 
-//! [4]
+//! [3]
     // Create drilldown structure
     DrilldownBarSeries* seasonSeries = new DrilldownBarSeries(months, drilldownChart);
     seasonSeries->setName("Crop by month - Season");
@@ -75,9 +73,9 @@ int main(int argc, char *argv[])
 
     // Enable drilldown from season series using right click.
     QObject::connect(seasonSeries, SIGNAL(clicked(QBarSet*,int)), drilldownChart, SLOT(handleClicked(QBarSet*,int)));
-//! [4]
+//! [3]
 
-//! [5]
+//! [4]
     // Fill monthly and weekly series with data
     foreach (QString plant, plants) {
         QBarSet* monthlyCrop = new QBarSet(plant);
@@ -92,20 +90,20 @@ int main(int argc, char *argv[])
         }
         seasonSeries->append(monthlyCrop);
     }
-//! [5]
+//! [4]
 
-//! [6]
+//! [5]
     // Show season series in initial view
     drilldownChart->changeSeries(seasonSeries);
     drilldownChart->setTitle(seasonSeries->name());
-//! [6]
+//! [5]
 
-//! [7]
+//! [6]
     drilldownChart->axisX()->setGridLineVisible(false);
     drilldownChart->axisY()->setNiceNumbersEnabled(true);
     drilldownChart->legend()->setVisible(true);
     drilldownChart->legend()->setAlignment(Qt::AlignBottom);
-//! [7]
+//! [6]
 
     QChartView *chartView = new QChartView(drilldownChart);
     window.setCentralWidget(chartView);
