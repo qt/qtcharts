@@ -40,6 +40,7 @@ class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeri
 
 public:
     explicit DeclarativeScatterSeries(QObject *parent = 0);
+    QXYSeries *xySeries();
     QDeclarativeListProperty<QObject> declarativeChildren();
     QColor brushColor();
     void setBrushColor(QColor color);

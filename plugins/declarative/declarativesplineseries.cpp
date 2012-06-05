@@ -30,6 +30,11 @@ DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
 {
 }
 
+QXYSeries *DeclarativeSplineSeries::xySeries()
+{
+    return this;
+}
+
 QDeclarativeListProperty<QObject> DeclarativeSplineSeries::declarativeChildren()
 {
     return QDeclarativeListProperty<QObject>(this, 0, &appendDeclarativeChildren);

@@ -42,8 +42,9 @@ void DeclarativeXySeries::classBegin()
 
 void DeclarativeXySeries::componentComplete()
 {
-    // All the inherited objects must be of type QXYSeries, so it is safe to cast
-    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
+
     foreach(QObject *child, series->children()) {
         if (qobject_cast<DeclarativeXyPoint *>(child)) {
             // TODO:
@@ -61,13 +62,15 @@ void DeclarativeXySeries::componentComplete()
 QColor DeclarativeXySeries::penColor()
 {
     // All the inherited objects must be of type QXYSeries, so it is safe to cast
-    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
     return series->pen().color();
 }
 
 void DeclarativeXySeries::setPenColor(QColor color)
 {
-    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
     QPen pen = series->pen();
     pen.setColor(color);
     series->setPen(pen);
@@ -75,7 +78,8 @@ void DeclarativeXySeries::setPenColor(QColor color)
 
 DeclarativeXyPoint *DeclarativeXySeries::at(int index)
 {
-    QXYSeries *series = reinterpret_cast<QXYSeries *>(this);
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
     if (index < series->count()) {
         QPointF point = series->points().at(index);
         DeclarativeXyPoint *xyPoint = new DeclarativeXyPoint(series);

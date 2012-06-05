@@ -30,6 +30,11 @@ DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
 {
 }
 
+QXYSeries *DeclarativeScatterSeries::xySeries()
+{
+    return this;
+}
+
 QDeclarativeListProperty<QObject> DeclarativeScatterSeries::declarativeChildren()
 {
     return QDeclarativeListProperty<QObject>(this, 0, &appendDeclarativeChildren);

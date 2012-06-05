@@ -40,6 +40,7 @@ class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, pu
 
 public:
     explicit DeclarativeLineSeries(QObject *parent = 0);
+    QXYSeries *xySeries();
     QDeclarativeListProperty<QObject> declarativeChildren();
 
 public: // from QDeclarativeParserStatus

@@ -30,6 +30,11 @@ DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
 {
 }
 
+QXYSeries *DeclarativeLineSeries::xySeries()
+{
+    return this;
+}
+
 QDeclarativeListProperty<QObject> DeclarativeLineSeries::declarativeChildren()
 {
     return QDeclarativeListProperty<QObject>(this, 0, &appendDeclarativeChildren);

@@ -40,6 +40,7 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 
 public:
     explicit DeclarativeSplineSeries(QObject *parent = 0);
+    QXYSeries *xySeries();
     QDeclarativeListProperty<QObject> declarativeChildren();
 
 public: // from QDeclarativeParserStatus
