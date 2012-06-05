@@ -52,6 +52,7 @@ private Q_SLOTS:
     void horizontalMapperCustomMapping_data();
     void horizontalMapperCustomMapping();
     void seriesUpdated();
+    void modelUpdated();
 
 private:
     QStandardItemModel *m_model;
@@ -121,6 +122,8 @@ void tst_qxymodelmapper::verticalMapper()
     QFETCH(int, expectedCount);
 
     QVXYModelMapper *mapper = new QVXYModelMapper;
+    QVERIFY(mapper->model() == 0);
+
     mapper->setXColumn(xColumn);
     mapper->setYColumn(yColumn);
     mapper->setModel(m_model);
@@ -282,6 +285,43 @@ void tst_qxymodelmapper::seriesUpdated()
     m_series->remove(m_series->points().last());
     QCOMPARE(m_series->count(), m_modelRowCount);
     QCOMPARE(mapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
+
+    delete mapper;
+    mapper = 0;
+
+    otherModel->clear();
+    delete otherModel;
+    otherModel = 0;
+}
+
+void tst_qxymodelmapper::modelUpdated()
+{
+    QStandardItemModel *otherModel = new QStandardItemModel;
+    for (int row = 0; row < m_modelRowCount; ++row) {
+        for (int column = 0; column < m_modelColumnCount; column++) {
+            QStandardItem *item = new QStandardItem(row * column);
+            otherModel->setItem(row, column, item);
+        }
+    }
+
+    QVXYModelMapper *mapper = new QVXYModelMapper;
+    QVERIFY(mapper->model() == 0);
+    mapper->setXColumn(0);
+    mapper->setYColumn(1);
+    mapper->setModel(otherModel);
+    mapper->setSeries(m_series);
+    QCOMPARE(m_series->count(), m_modelRowCount);
+
+    QVERIFY(mapper->model() != 0);
+
+    if (otherModel->insertRows(3, 4))
+        QCOMPARE(m_series->count(), m_modelRowCount + 4);
+
+    if (otherModel->removeRows(1, 5))
+        QCOMPARE(m_series->count(), m_modelRowCount - 1);
+
+    delete mapper;
+    mapper = 0;
 
     otherModel->clear();
     delete otherModel;
