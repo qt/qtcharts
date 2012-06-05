@@ -59,8 +59,8 @@ void ChartView::handleClickedPoint(const QPointF& point)
 {
     QPointF clickedPoint = point;
     // Find the closest point from series 1
-    QPointF closest(INT64_MAX, INT64_MAX);
-    qreal distance(INT64_MAX);
+    QPointF closest(INT_MAX, INT_MAX);
+    qreal distance(INT_MAX);
     foreach(QPointF currentPoint, m_scatter->points()) {
         qreal currentDistance = sqrt((currentPoint.x() - clickedPoint.x()) * (currentPoint.x() - clickedPoint.x())
                                       + (currentPoint.y() - clickedPoint.y()) * (currentPoint.y() - clickedPoint.y()));
