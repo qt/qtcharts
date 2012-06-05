@@ -20,8 +20,7 @@
     Class will implement \c handleTimeout() slot which we are going to use to trigger switching between different chart presentations. 
     We are also going to provide \c handlePoitClicked() slot which will show clicked point on the chart. 
     Class members \c m_series and \c m_titles are going to store series and related titles. In example we are going to present data as a line chart
-    using QLineSeries , as scatter chart using QScatterSeries, as a spline chart using QSplineSeries and a area chart using QAreaSeries. We create needed instances in constructor of ChartView class.
-    We set custom line and points colors.
+    using QLineSeries , as scatter chart using QScatterSeries, as a spline chart using QSplineSeries and a area chart using QAreaSeries. We create needed instances in constructor of ChartView class.    
 
     \snippet ../examples/presenterchart/chartview.cpp 1
 
