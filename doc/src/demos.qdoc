@@ -18,6 +18,7 @@
             <li><a href="demos-dynamicspline.html">Dynamic spline chart</a></li>
             <li><a href="demos-qmlchart.html">Qml Basic Charts</a></li>
             <li><a href="demos-qmlweather.html">Qml Weather</a></li>
+            <li><a href="demos-qmlf1legends.html">Qml F1 Legends</a></li>
             <li><a href="demos-qmlcustommodel.html">Qml Custom Model</a></li>
         </ul>
         </td>

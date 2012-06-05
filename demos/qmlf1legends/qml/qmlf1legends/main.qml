@@ -26,6 +26,7 @@ Rectangle {
     height: 360
     property int currentIndex: -1
 
+    //![1]
     ChartView {
         id: chartView
         title: "Driver Speeds, lap 1"
@@ -33,7 +34,9 @@ Rectangle {
         legend.alignment: Qt.AlignTop
         animationOptions: ChartView.SeriesAnimations
     }
+    //![1]
 
+    //![2]
     // An example XmlListModel containing F1 legend drivers' speeds at speed traps
     SpeedsXml {
         id: speedsXml
@@ -43,7 +46,9 @@ Rectangle {
             }
         }
     }
+    //![2]
 
+    //![3]
     // A timer to mimic refreshing the data dynamically
     Timer {
         id: timer
@@ -79,4 +84,5 @@ Rectangle {
             chartView.axisY.max = 250;
         }
     }
+    //![3]
 }
