@@ -54,7 +54,6 @@ MainWidget::MainWidget(QWidget *parent) :
     m_chart = new QChart();
     m_chartView = new QChartView(m_chart, this);
     m_chartView->setRubberBand(QChartView::HorizonalRubberBand);
-    m_chart->setAnimationOptions(QChart::SeriesAnimations);
 //![1]
 
     // Create custom scene and view, where detached legend will be drawn
@@ -143,9 +142,8 @@ void MainWidget::addBarset()
 
 void MainWidget::removeBarset()
 {
-    m_series->clear();
-//    QList<QBarSet*> sets = m_series->barSets();
-//    if (sets.count() > 0) {
-//        m_series->remove(sets.at(sets.count()-1));
-//    }
+    QList<QBarSet*> sets = m_series->barSets();
+    if (sets.count() > 0) {
+        m_series->remove(sets.at(sets.count()-1));
+    }
 }
