@@ -46,12 +46,28 @@ into "doc/html" in the build directory.
 
 KNOWN ISSUES
 ============
- * The Charts API should be stable, but might still change between the Beta and first official release
- * Some areas will be refactored before the first official release
- * Enable/disable tooltip is missing from the API
- * Mutliple axis are not suported at the moment.
- * Logartmic, polar axis are not supported at the moment.
- * Model support for QBarSeries is not complete.
- * Interlnal layout hadnling is not working properly.
- * The QML Bindings are still under development and to be considered as early draft
- * All the current QML APIs are shown in qmlchart demo app
+* The beta version of Qt Commercial Charts is still under development and thus should not be used in e.g. product development
+* The Charts API might change between the Beta and the first official release
+* Mutliple axis are not suported at the moment.
+* Logartmic, polar axis are not supported at the moment.
+* If using QAbstractiItemModel derived model with QBarSeries, data manipulation with QBarSeries/QBarSet APIs does not synchronize the data into the model
+* Model support requires more thorough testing.
+* Some QObject properties are missing
+* Some notifications missing from QObject properties
+* Legend layout does not work correctly with several labels
+* Animations with Bar Charts can cause crashes in certain situations
+* Automatic scaling of the axes is only done when you add a series on a chart
+* The QML Bindings are still under development
+* Mouse and touch interactions not complete on the QML API
+* Missing documentation for QML API; the QML demo applications serve as documentation instead
+* Setting bar width is not possible on QBarSeries derived classes (the width is affected with setMargin, but it has limitations)
+* API for Animations state (signaling started , finished) and setting&nbsp;duration etc. are missing
+
+Main changes between Technology Preview and Beta releases
+=========================================================
+* QBarSeries now enables defining both values and bar placement in X-Axis. Previous implementation of QBarSeries is now new series type: QGroupedBarSeries
+* QML API now defined and mostly implemented
+* Q_PROPERTY definitions have been added to the API
+* Model API&nbsp; refactored and moved from Series Classes to separate Model Mapper Classes
+* First version of Qt Designer plugin included
+* Example for handling Gestures included (ZoomLineChart example)
