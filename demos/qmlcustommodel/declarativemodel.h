@@ -29,17 +29,13 @@
 class DeclarativeTableModelElement : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString rowHeader READ rowHeader WRITE setRowHeader)
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
 
 public:
     explicit DeclarativeTableModelElement(QObject *parent = 0);
-    QString rowHeader();
-    void setRowHeader(QString header);
     QVariantList values();
     void setValues(QVariantList values);
 private:
-    QString m_rowHeader;
     QVariantList m_values;
 };
 
@@ -48,11 +44,14 @@ class DeclarativeTableModel : public CustomTableModel, public QDeclarativeParser
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QDeclarativeListProperty<QObject> modelChildren READ modelChildren)
+    Q_PROPERTY(QStringList verticalHeaders READ verticalHeaders WRITE setVerticalHeaders)
     Q_CLASSINFO("DefaultProperty", "modelChildren")
 
 public:
     explicit DeclarativeTableModel(QObject *parent = 0);
     QDeclarativeListProperty<QObject> modelChildren();
+    void setVerticalHeaders(QStringList headers);
+    QStringList verticalHeaders();
 
 public: // from QDeclarativeParserStatus
     void classBegin();

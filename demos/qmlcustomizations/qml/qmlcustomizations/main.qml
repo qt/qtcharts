@@ -37,6 +37,7 @@ Rectangle {
 
         PieSeries {
             id: wheelOfFortune
+            horizontalPosition: 0.3
         }
 
         SplineSeries {

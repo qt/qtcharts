@@ -48,9 +48,9 @@ QVariant CustomTableModel::headerData(int section, Qt::Orientation orientation, 
     if (role != Qt::DisplayRole)
         return QVariant();
 
-    if (orientation == Qt::Horizontal) {
-        if (m_rowHeaders.count() > section)
-            return m_rowHeaders[section];
+    if (orientation == Qt::Vertical) {
+        if (m_verticalHeaders.count() > section)
+            return m_verticalHeaders[section];
         else
             return QAbstractTableModel::headerData(section, orientation, role);
     } else {
@@ -60,10 +60,10 @@ QVariant CustomTableModel::headerData(int section, Qt::Orientation orientation, 
 
 bool CustomTableModel::setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role)
 {
-    if (orientation == Qt::Horizontal) {
-        while (m_rowHeaders.count() <= section)
-            m_rowHeaders.append(QVariant());
-        m_rowHeaders.replace(section, value);
+    if (orientation == Qt::Vertical) {
+        while (m_verticalHeaders.count() <= section)
+            m_verticalHeaders.append(QVariant());
+        m_verticalHeaders.replace(section, value);
     } else {
         return QAbstractTableModel::setHeaderData(section, orientation, value, role);
     }

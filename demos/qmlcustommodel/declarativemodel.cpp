@@ -20,6 +20,7 @@
 
 #include "declarativemodel.h"
 #include <qdeclarativelist.h>
+#include <QStringList>
 #include <QDebug>
 
 ////////////// Table model element ///////////////////
@@ -27,16 +28,6 @@
 DeclarativeTableModelElement::DeclarativeTableModelElement(QObject *parent)
     : QObject(parent)
 {
-}
-
-QString DeclarativeTableModelElement::rowHeader()
-{
-    return m_rowHeader;
-}
-
-void DeclarativeTableModelElement::setRowHeader(QString header)
-{
-    m_rowHeader = header;
 }
 
 QVariantList DeclarativeTableModelElement::values()
@@ -66,9 +57,19 @@ void DeclarativeTableModel::componentComplete()
         if (qobject_cast<DeclarativeTableModelElement *>(child)) {
             DeclarativeTableModelElement *element = qobject_cast<DeclarativeTableModelElement *>(child);
             append(element->values());
-            setHeaderData(rowCount() - 1, Qt::Horizontal, element->rowHeader());
         }
     }
+}
+
+void DeclarativeTableModel::setVerticalHeaders(QStringList headers)
+{
+    for (int i(0); i < headers.count(); i++)
+        setHeaderData(i, Qt::Vertical, headers.at(i));
+}
+
+QStringList DeclarativeTableModel::verticalHeaders()
+{
+    return QStringList();
 }
 
 QDeclarativeListProperty<QObject> DeclarativeTableModel::modelChildren()

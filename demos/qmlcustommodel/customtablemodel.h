@@ -48,7 +48,7 @@ public:
 
 private:
     QList<QVector<QVariant> * > m_data;
-    QList<QVariant> m_rowHeaders;
+    QList<QVariant> m_verticalHeaders;
     int m_columnCount;
     int m_rowCount;
 };
