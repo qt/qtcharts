@@ -30,6 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief part of QtCommercial chart API.
     \mainclass
 
+    Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
     The instance of this class cannot be created directly. QHXYModelMapper of QVXYModelMapper should be used instead. This class is used to create a connection between QXYSeries and QAbstractItemModel derived model object.
     It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
