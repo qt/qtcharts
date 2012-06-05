@@ -28,6 +28,7 @@ Rectangle {
     property real __intervalCoefficient: 0
 
 
+    //![1]
     ChartView {
         id: chartView
         anchors.fill: parent
@@ -46,8 +47,9 @@ Rectangle {
             id: scatterSeries
         }
     }
+    //![1]
 
-
+    //![2]
     Component.onCompleted: {
         __intervalCoefficient = Math.random() + 0.1;
 
@@ -62,6 +64,7 @@ Rectangle {
         chartView.axisX.max = j;
         chartView.axisY.max = 1000;
     }
+    //![2]
 
     Timer {
         triggeredOnStart: true
@@ -71,21 +74,27 @@ Rectangle {
         onTriggered: {
             var index = __activeIndex % wheelOfFortune.count;
             if (interval < 700) {
-                scatterSeries.clear();
+                //![3]
                 wheelOfFortune.at(index).exploded = false;
                 __activeIndex++;
                 index = __activeIndex % wheelOfFortune.count;
                 wheelOfFortune.at(index).exploded = true;
+                //![3]
                 interval = splineSeries.at(__activeIndex).y;
+                //![4]
+                scatterSeries.clear();
                 scatterSeries.append(__activeIndex, interval);
                 scatterSeries.color = Qt.tint(scatterSeries.color, "#05FF0000");
                 scatterSeries.markerSize += 0.5;
+                //![4]
             } else {
+                //![5]
                 // Switch the colors of the slice and the border
                 wheelOfFortune.at(index).borderWidth = 2;
                 var borderColor = wheelOfFortune.at(index).borderColor;
                 wheelOfFortune.at(index).borderColor = wheelOfFortune.at(index).color;
                 wheelOfFortune.at(index).color = borderColor;
+                //![5]
             }
         }
     }

@@ -1,0 +1,26 @@
+/*!
+    \example demos/qmlcustomizations
+    \title Qml Customizations
+    \subtitle
+
+    \image demos_qmlcustomizations.png
+
+    This application shows you how to customize different visual properties of a ChartView and series. It shows
+    a wheel of fortune by customizing a pie series.
+
+    First we create ChartView and a couple of series.
+    \snippet ../demos/qmlcustomizations/qml/qmlcustomizations/main.qml 1
+
+    The application data is generated in Component.onCompleted of the main rectangle:
+    \snippet ../demos/qmlcustomizations/qml/qmlcustomizations/main.qml 2
+
+    The following customizations are done repeatedly with a timer. To highlight one of the pie slices at time
+    we modify it's exploded property:
+    \snippet ../demos/qmlcustomizations/qml/qmlcustomizations/main.qml 3
+
+    Then an animation using a scatter series with one data point:
+    \snippet ../demos/qmlcustomizations/qml/qmlcustomizations/main.qml 4
+
+    When the wheel of fortune has stopped, we make the active slice blink by modifying it's colors.
+    \snippet ../demos/qmlcustomizations/qml/qmlcustomizations/main.qml 5
+*/
