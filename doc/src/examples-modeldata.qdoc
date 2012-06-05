@@ -23,7 +23,7 @@
 
      \snippet ../examples/modeldata/tablewidget.cpp 3
 
-     First line of the code below creates new line series. Line number two creates an instance of QVXYModelMapper class.
+     The code below creates new line series and gives it a name. Following line creates an instance of QVXYModelMapper class.
      Next two lines specifie that x coordinates are taken from the model's column(Qt::Vertical) with index 0 and the y coordinates are taken from the model's column with index 1.
      To create a connection between the series and the model we set both of those objects to QVXYModelMapper.
 
@@ -32,7 +32,7 @@
      \snippet ../examples/modeldata/tablewidget.cpp 4
 
      To show in QTableView which data coresponds with which series this example uses table coloring.
-     When series is added to the chart it is assigned a color beased on the currently selected theme.
+     When series is added to the chart it is assigned a color based on the currently selected theme.
      Code below extracts that color from the series and uses it to create colored QTableView.
      Coloring of the view is not a part of the QChart functionality.
 
