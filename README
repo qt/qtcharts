@@ -30,7 +30,7 @@ Configure project with qmake:
 Build poject with make:
     (Linux) make
     (Windows with MinGw) mingw32-make
-    (Visual Studio) namke
+    (Visual Studio) nmake
 
 If you want to install the libraries to your Qt library directory use:
     make install
