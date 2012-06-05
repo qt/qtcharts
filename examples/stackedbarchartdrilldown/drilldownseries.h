@@ -37,8 +37,11 @@ public:
 
     DrilldownBarSeries* drilldownSeries(int index);
 
+    QStringList categories();
+
 private:
-    QMap<int, DrilldownBarSeries*> mDrilldownSeries;
+    QMap<int, DrilldownBarSeries*> m_DrilldownSeries;
+    QStringList m_categories;
 };
 //! [1]
 

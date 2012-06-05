@@ -29,14 +29,22 @@ DrilldownChart::DrilldownChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 {
 }
 
-void DrilldownChart::changeSeries(QAbstractSeries *series)
+void DrilldownChart::changeSeries(DrilldownBarSeries *series)
 {
-    if (m_currentSeries)
+    if (m_currentSeries) {
         removeSeries(m_currentSeries);
+    }
+
     m_currentSeries = series;
+
+    // Reset axis
+    axisX()->setRange(0,0);
+    axisY()->setNiceNumbersEnabled(true);
+    axisX()->categories()->clear();
+    axisX()->categories()->insert(m_currentSeries->categories());
+
     addSeries(series);
     setTitle(series->name());
-    axisY()->setNiceNumbersEnabled(true);
 }
 
 void DrilldownChart::handleClicked(QBarSet *barset, int index)
