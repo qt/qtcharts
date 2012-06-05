@@ -25,14 +25,14 @@
 
      First line of the code below creates new grouped bar series. Variables firstRow and rowCount are used to define a custom model mapping.
      Custom mapping allows to take only part of the data from the model. In this case data from 5 rows starting with the row with the index 3.
-     Following three lines create an instance of QVBarModelMapper class and specifie that data for the bar sets should be taken from the model's columns(Qt::Vertical) with indexes from 1 to 4(inclusive).
+     Following three lines create an instance of QVBarModelMapper class and specifie that data for the bar sets should be taken from the model's columns with indexes from 1 to 4(inclusive).
      To create a connection between the series and the model we set both of those objects to QVBarModelMapper.
 
      Finally the series is added to the chart.
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 4
 
-     To show in QTableView which data coresponds with which series this example uses table coloring.
+     To show in QTableView which data coresponds with which bar set this example uses table coloring.
      When series is added to the chart it is assigned a color beased on the currently selected theme.
      Code below extracts that color from the series and uses it to create colored QTableView.
      Coloring of the view is not a part of the QChart functionality.
