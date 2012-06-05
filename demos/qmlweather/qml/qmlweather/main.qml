@@ -90,7 +90,7 @@ Rectangle {
 
     Row {
         id: weatherImageRow
-        anchors.bottom: parent.bottom
+        anchors.bottom: poweredByText.top
         anchors.bottomMargin: 10
         anchors.left: parent.left
         anchors.leftMargin: 25
@@ -111,6 +111,15 @@ Rectangle {
                 fillMode: Image.PreserveAspectCrop
             }
         }
+    }
+
+    Text {
+        id: poweredByText
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 10
+        anchors.left: parent.left
+        anchors.leftMargin: 25
+        text: "Powered by World Weather Online"
     }
 
     function parseWeatherData(weatherData) {
