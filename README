@@ -69,6 +69,12 @@ KNOWN ISSUES
   etc. is missing
 * In QBarSeries API bar margin related methods will be replaced with bar width
   in final release
+* OSX specific issue: after running 'make install' you need to fix the library
+  location of libQtCommercialChart.1.dylib to match the actual installation
+  path. For example:
+      sudo install_name_tool -id
+          /usr/local/Trolltech/Qt-4.8.0/lib/libQtCommercialChart.1.dylib
+          /usr/local/Trolltech/Qt-4.8.0/lib/libQtCommercialChart.1.dylib
 
 Main changes between Technology Preview and Beta release
 ========================================================
