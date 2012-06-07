@@ -482,6 +482,44 @@ qreal QBarSeriesPrivate::maxCategorySum()
     return max;
 }
 
+qreal QBarSeriesPrivate::minX()
+{
+    if (m_barSets.count() <= 0) {
+        return 0;
+    }
+    qreal min = INT_MAX;
+
+    for (int i = 0; i < m_barSets.count(); i++) {
+        int categoryCount = m_barSets.at(i)->count();
+        for (int j = 0; j < categoryCount; j++) {
+            qreal temp = m_barSets.at(i)->at(j).x();
+            if (temp < min)
+                min = temp;
+        }
+    }
+    return min;
+}
+
+qreal QBarSeriesPrivate::maxX()
+{
+    if (m_barSets.count() <= 0) {
+        return 0;
+    }
+    qreal max = INT_MIN;
+
+    for (int i = 0; i < m_barSets.count(); i++) {
+        int categoryCount = m_barSets.at(i)->count();
+        for (int j = 0; j < categoryCount; j++) {
+            qreal temp = m_barSets.at(i)->at(j).x();
+            if (temp > max)
+                max = temp;
+        }
+    }
+
+    return max;
+}
+
+
 void QBarSeriesPrivate::scaleDomain(Domain& domain)
 {
     qreal minX(domain.minX());
@@ -491,13 +529,14 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    qreal x = categoryCount();
+    qreal seriesMinX = this->minX();
+    qreal seriesMaxX = this->maxX();
     qreal y = max();
-    minX = qMin(minX, x) - 0.5;
+    minX = qMin(minX, seriesMinX - 0.5);
     minY = qMin(minY, y);
-    maxX = qMax(maxX, x) + 0.5;
+    maxX = qMax(maxX, seriesMaxX + 0.5);
     maxY = qMax(maxY, y);
-    tickXCount = x+1;
+    tickXCount = categoryCount()+1;
 
     domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
 }

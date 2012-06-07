@@ -76,6 +76,8 @@ public:
     qreal categorySum(int category);
     qreal absoluteCategorySum(int category);
     qreal maxCategorySum();
+    qreal minX();
+    qreal maxX();
 
 Q_SIGNALS:
     void clicked(QBarSet *barset, int index);
