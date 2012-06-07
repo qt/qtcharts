@@ -166,6 +166,13 @@ win32:{
    target.path=$$[QT_INSTALL_LIBS]
    INSTALLS += target
 }
+
+mac: {
+    # Update the name (id) of the library on OSX to point to the lib dir
+    MAC_CHARTS_LIB_NAME = "lib"$$LIBRARY_NAME".1.dylib"
+    QMAKE_POST_LINK += "install_name_tool -id $$CHART_BUILD_LIB_DIR"/"$$MAC_CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$MAC_CHARTS_LIB_NAME"
+}
+
 ################################ DEVELOPMENT BUILD ##########################################    
 # There is a problem with jom.exe currently. It does not seem to understand QMAKE_EXTRA_TARGETS properly.
 # This is the case at least with shadow builds.

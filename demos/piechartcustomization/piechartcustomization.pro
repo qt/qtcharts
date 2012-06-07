@@ -13,6 +13,3 @@ HEADERS += \
     brushtool.h \
     customslice.h \
     mainwidget.h
-
-!system_build:mac: QMAKE_POST_LINK += "$$MAC_POST_LINK_PREFIX $$MAC_DEMOS_BIN_DIR"
-

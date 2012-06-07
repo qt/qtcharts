@@ -79,25 +79,9 @@ development_build: {
     CONFIG(debug, debug|release) {
       mac: LIBRARY_NAME = $$join(LIBRARY_NAME,,,_debug)
       win32: LIBRARY_NAME = $$join(LIBRARY_NAME,,,d)
-    } 
-       
-    LIBS += -l$$LIBRARY_NAME    
-
-    mac: {
-        # This is a hack; we define variables for easier install_name_tool calls from project files of OSX executables/libraries
-        # install_name_tool is used to update the dependencies to chart library to match the local build folder
-        MAC_CHARTS_LIB_NAME = "lib"$$LIBRARY_NAME".1.dylib"
-        CONFIG(debug, debug|release) {
-            MAC_CHARTS_LIB_NAME = "lib"$$LIBRARY_NAME".1.dylib"
-        }
-        MAC_POST_LINK_PREFIX = install_name_tool -change $$MAC_CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$MAC_CHARTS_LIB_NAME
-        MAC_DEMOS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
-        MAC_EXAMPLES_BIN_DIR = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
-        MAC_TESTS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/"$$TARGET".app/Contents/MacOS/"$$TARGET
-        MAC_AUTOTESTS_BIN_DIR = $$CHART_BUILD_BIN_DIR"/tst_"$$TARGET".app/Contents/MacOS/tst_"$$TARGET
-        MAC_PLUGINS_BIN_DIR = $$CHART_BUILD_PLUGIN_DIR"/lib"$$TARGET".dylib"
     }
-
+       
+    LIBS += -l$$LIBRARY_NAME
 } else {
     CONFIG += qtcommercialchart 
 }
