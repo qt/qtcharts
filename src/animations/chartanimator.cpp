@@ -100,13 +100,16 @@ void ChartAnimator::updateAnimation(PieChartItem *item, PieSliceItem *sliceItem,
 void ChartAnimator::updateLayout(BarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
 {
     BarAnimation *animation = static_cast<BarAnimation *>(m_animations.value(item));
-    Q_ASSERT(animation);
-    animation->stop();
+    m_animations.remove(item);
+    if (animation) {
+        animation->deleteLater();
+        animation = 0;
+    }
+    addAnimation(item);
+    animation = static_cast<BarAnimation *>(m_animations.value(item));
     animation->setDuration(ChartAnimationDuration);
-    animation->setStartValue(qVariantFromValue(oldLayout));
     animation->setKeyValueAt(0.0, qVariantFromValue(oldLayout));
     animation->setKeyValueAt(1.0, qVariantFromValue(newLayout));
-    animation->setEndValue(qVariantFromValue(newLayout));
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
