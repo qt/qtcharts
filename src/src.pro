@@ -168,9 +168,14 @@ win32:{
 }
 
 mac: {
-    # Update the name (id) of the library on OSX to point to the lib dir
+    # Update the name (id) of the library on OSX to point to the lib path
     MAC_CHARTS_LIB_NAME = "lib"$$LIBRARY_NAME".1.dylib"
     QMAKE_POST_LINK += "install_name_tool -id $$CHART_BUILD_LIB_DIR"/"$$MAC_CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$MAC_CHARTS_LIB_NAME"
+
+    # Update the name (id) of the installed library on OSX to point to the installation path
+    postinstall.path = $$[QT_INSTALL_LIBS]
+    postinstall.extra = "install_name_tool -id $$[QT_INSTALL_LIBS]"/"$$MAC_CHARTS_LIB_NAME $$[QT_INSTALL_LIBS]"/"$$MAC_CHARTS_LIB_NAME"
+    INSTALLS += postinstall
 }
 
 ################################ DEVELOPMENT BUILD ##########################################    

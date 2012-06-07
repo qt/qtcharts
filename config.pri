@@ -46,8 +46,6 @@ mac: {
     # it should probably define the minimum OSX version to be 10.5...
     QMAKE_CXXFLAGS *= -mmacosx-version-min=10.5
     QMAKE_LFLAGS *= -mmacosx-version-min=10.5
-
-    CHART_BUILD_LIB_DIR = $$CHART_BUILD_BIN_DIR
 }
 
 ##################### DEVELOPMENT BUILD ###################################################
