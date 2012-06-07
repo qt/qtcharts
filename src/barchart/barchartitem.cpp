@@ -171,8 +171,6 @@ void BarChartItem::setLayout(const QVector<QRectF> &layout)
     for (int i=0; i < m_bars.count(); i++) {
         m_bars.at(i)->setRect(layout.at(i));
     }
-
-    update();
 }
 //handlers
 
