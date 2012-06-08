@@ -54,7 +54,7 @@ public:
     QRectF boundingRect() const;
 
     virtual QVector<QRectF> calculateLayout();
-    void applyLayout(const QVector<QRectF> &layout);
+    virtual void applyLayout(const QVector<QRectF> &layout);
     void setLayout(const QVector<QRectF> &layout);
     void updateLayout(const QVector<QRectF> &layout);
 

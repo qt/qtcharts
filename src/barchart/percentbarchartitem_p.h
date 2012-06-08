@@ -46,6 +46,7 @@ public:
 
 private:
     virtual QVector<QRectF> calculateLayout();
+    virtual void applyLayout(const QVector<QRectF> &layout);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

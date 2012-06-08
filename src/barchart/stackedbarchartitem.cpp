@@ -23,6 +23,7 @@
 #include "qbarset_p.h"
 #include "qbarseries_p.h"
 #include "qbarset.h"
+#include "chartanimator_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -83,6 +84,16 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     }
 
     return layout;
+}
+
+void StackedBarChartItem::applyLayout(const QVector<QRectF> &layout)
+{
+    if (animator()) {
+        animator()->updateLayout(this, m_layout, layout);
+    } else {
+        setLayout(layout);
+        update();
+    }
 }
 
 #include "moc_stackedbarchartitem_p.cpp"

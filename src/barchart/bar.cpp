@@ -19,7 +19,6 @@
 ****************************************************************************/
 
 #include "bar_p.h"
-#include <QDebug>
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 

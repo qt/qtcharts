@@ -51,11 +51,10 @@ public: // from QVariantAnimation
     virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
     virtual void updateCurrentValue(const QVariant &value);
 
-public Q_SLOTS:
+    void updateLayout(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
 
 private:
     BarChartItem *m_item;
-    QHash<QBarSet *, BarSetAnimation *> m_animations;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

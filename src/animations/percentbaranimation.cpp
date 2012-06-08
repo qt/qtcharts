@@ -18,26 +18,26 @@
 **
 ****************************************************************************/
 
-#include "baranimation_p.h"
-#include "barchartitem_p.h"
+#include "percentbaranimation_p.h"
+#include "percentbarchartitem_p.h"
 #include <QTimer>
 
 Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarAnimation::BarAnimation(BarChartItem *item)
+PercentBarAnimation::PercentBarAnimation(BarChartItem *item)
     :ChartAnimation(item),
     m_item(item)
 {
     setEasingCurve(QEasingCurve::OutQuart);
 }
 
-BarAnimation::~BarAnimation()
+PercentBarAnimation::~PercentBarAnimation()
 {
 }
 
-QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
+QVariant PercentBarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
     QVector<QRectF> startVector = qVariantValue<QVector<QRectF> >(from);
     QVector<QRectF> endVector = qVariantValue<QVector<QRectF> >(to);
@@ -45,11 +45,14 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
 
     Q_ASSERT(startVector.count() == endVector.count());
 
+    qreal zeroPos = ((m_item->geometry().height() + m_item->geometry().y()) * (1 - progress));
+
     for(int i = 0; i < startVector.count(); i++) {
         qreal w = endVector[i].width();
         qreal h = startVector[i].height() + ((endVector[i].height() - startVector[i].height()) * progress);
         qreal x = endVector[i].topLeft().x();
-        qreal y = endVector[i].topLeft().y() + endVector[i].height() - h;
+        qreal y = startVector[i].topLeft().y() + ((endVector[i].topLeft().y() - startVector[i].topLeft().y()) * progress)
+                + zeroPos;
 
         QRectF value(x,y,w,h);
         result << value;
@@ -57,13 +60,13 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
     return qVariantFromValue(result);
 }
 
-void BarAnimation::updateCurrentValue(const QVariant &value)
+void PercentBarAnimation::updateCurrentValue(const QVariant &value)
 {
     QVector<QRectF> layout = qVariantValue<QVector<QRectF> >(value);
     m_item->setLayout(layout);
 }
 
-void BarAnimation::updateLayout(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
+void PercentBarAnimation::updateLayout(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
 {
     setDuration(ChartAnimationDuration);
     setKeyValueAt(0.0, qVariantFromValue(oldLayout));
@@ -71,6 +74,6 @@ void BarAnimation::updateLayout(const QVector<QRectF> &oldLayout, const QVector<
     QTimer::singleShot(0, this, SLOT(start()));
 }
 
-#include "moc_baranimation_p.cpp"
+#include "moc_percentbaranimation_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
