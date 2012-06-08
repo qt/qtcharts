@@ -329,7 +329,7 @@ void QBarModelMapperPrivate::modelHeaderDataUpdated(Qt::Orientation orientation,
             if (section >= m_firstBarSetSection && section <= m_lastBarSetSection) {
                 QBarSet* bar = m_series->barSets().at(section - m_firstBarSetSection);
                 if (bar)
-                    bar->setName(m_model->headerData(section, orientation).toString());
+                    bar->setLabel(m_model->headerData(section, orientation).toString());
             }
         }
     }

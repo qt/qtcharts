@@ -38,8 +38,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QBarSet::name
-    \brief Defines the name of the barSet.
+    \property QBarSet::label
+    \brief Defines the label of the barSet.
 */
 
 /*!
@@ -63,11 +63,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSet::nameChanged()
+    \fn void QBarSet::labelChanged()
 
-    This signal is emitted when the name of the barSet has changed.
+    This signal is emitted when the label of the barSet has changed.
 
-    \sa name
+    \sa label
 */
 
 /*!
@@ -84,12 +84,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when the brush of the barSet has changed.
 
     \sa brush
-*/
-
-/*!
-    \fn void QBarSet::labelChanged()
-
-    This signal is emitted when the label of the barSet has changed.
 */
 
 /*!
@@ -139,11 +133,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 void valueChanged(int index);
 
 /*!
-    Constructs QBarSet with a name of \a name and with parent of \a parent
+    Constructs QBarSet with a label of \a label and with parent of \a parent
 */
-QBarSet::QBarSet(const QString name, QObject *parent)
+QBarSet::QBarSet(const QString label, QObject *parent)
     : QObject(parent)
-    ,d_ptr(new QBarSetPrivate(name,this))
+    ,d_ptr(new QBarSetPrivate(label,this))
 {
 }
 
@@ -156,20 +150,20 @@ QBarSet::~QBarSet()
 }
 
 /*!
-    Sets new \a name for set.
+    Sets new \a label for set.
 */
-void QBarSet::setName(const QString name)
+void QBarSet::setLabel(const QString label)
 {
-    d_ptr->m_name = name;
-    emit nameChanged();
+    d_ptr->m_label = label;
+    emit labelChanged();
 }
 
 /*!
-    Returns name of the set.
+    Returns label of the set.
 */
-QString QBarSet::name() const
+QString QBarSet::label() const
 {
-    return d_ptr->m_name;
+    return d_ptr->m_label;
 }
 
 /*!
@@ -421,9 +415,9 @@ QFont QBarSet::labelFont() const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarSetPrivate::QBarSetPrivate(const QString name, QBarSet *parent) : QObject(parent),
+QBarSetPrivate::QBarSetPrivate(const QString label, QBarSet *parent) : QObject(parent),
     q_ptr(parent),
-    m_name(name)
+    m_label(label)
 {
 }
 

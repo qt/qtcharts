@@ -155,6 +155,7 @@ void QBarSeries::setBarWidth(qreal width)
 {
     Q_D(QBarSeries);
     d->setBarWidth(width);
+    emit barWidthChanged();
 }
 
 /*!
@@ -179,6 +180,7 @@ bool QBarSeries::append(QBarSet *set)
         QList<QBarSet*> sets;
         sets.append(set);
         emit barsetsAdded(sets);
+        emit barsetCountChanged();
     }
     return success;
 }
@@ -195,6 +197,7 @@ bool QBarSeries::remove(QBarSet *set)
         QList<QBarSet*> sets;
         sets.append(set);
         emit barsetsRemoved(sets);
+        emit barsetCountChanged();
     }
     return success;
 }
@@ -211,6 +214,7 @@ bool QBarSeries::append(QList<QBarSet* > sets)
     bool success = d->append(sets);
     if (success) {
         emit barsetsAdded(sets);
+        emit barsetCountChanged();
     }
     return success;
 }
@@ -228,6 +232,7 @@ bool QBarSeries::insert(int index, QBarSet *set)
         QList<QBarSet*> sets;
         sets.append(set);
         emit barsetsAdded(sets);
+        emit barsetCountChanged();
     }
     return success;
 }
@@ -242,6 +247,7 @@ void QBarSeries::clear()
     bool success = d->remove(sets);
     if (success) {
         emit barsetsRemoved(sets);
+        emit barsetCountChanged();
     }
 }
 

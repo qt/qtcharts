@@ -43,7 +43,7 @@ class QBarSetPrivate : public QObject
     Q_OBJECT
 
 public:
-    QBarSetPrivate(const QString name, QBarSet *parent);
+    QBarSetPrivate(const QString label, QBarSet *parent);
     ~QBarSetPrivate();
 
     void append(QPointF value);
@@ -63,7 +63,7 @@ Q_SIGNALS:
 
 public:
     QBarSet * const q_ptr;
-    QString m_name;
+    QString m_label;
     QList<QPointF> m_values;
     QPen m_pen;
     QBrush m_brush;

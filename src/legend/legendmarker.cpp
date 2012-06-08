@@ -71,9 +71,9 @@ QBrush LegendMarker::brush() const
     return m_rectItem->brush();
 }
 
-void LegendMarker::setLabel(const QString name)
+void LegendMarker::setLabel(const QString label)
 {
-    m_textItem->setText(name);
+    m_textItem->setText(label);
     updateLayout();
 }
 
@@ -149,7 +149,7 @@ m_barset(barset)
 void BarLegendMarker::updated()
 {
     setBrush(m_barset->brush());
-    setLabel(m_barset->name());
+    setLabel(m_barset->label());
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

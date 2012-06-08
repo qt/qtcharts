@@ -38,8 +38,8 @@ public slots:
 private slots:
     void qbarset_data();
     void qbarset();
-    void name_data();
-    void name();
+    void label_data();
+    void label();
     void append_data();
     void append();
     void appendOperator_data();
@@ -74,7 +74,7 @@ void tst_QBarSet::cleanupTestCase()
 
 void tst_QBarSet::init()
 {
-     m_barset = new QBarSet(QString("Name"));
+     m_barset = new QBarSet(QString("label"));
 }
 
 void tst_QBarSet::cleanup()
@@ -89,29 +89,29 @@ void tst_QBarSet::qbarset_data()
 
 void tst_QBarSet::qbarset()
 {
-    QBarSet barset(QString("Name"));
-    QCOMPARE(barset.name(), QString("Name"));
+    QBarSet barset(QString("label"));
+    QCOMPARE(barset.label(), QString("label"));
     QCOMPARE(barset.count(), 0);
     QVERIFY(qFuzzyIsNull(barset.sum()));
 }
 
-void tst_QBarSet::name_data()
+void tst_QBarSet::label_data()
 {
-    QTest::addColumn<QString> ("name");
+    QTest::addColumn<QString> ("label");
     QTest::addColumn<QString> ("result");
-    QTest::newRow("name0") << QString("name0") << QString("name0");
-    QTest::newRow("name1") << QString("name1") << QString("name1");
+    QTest::newRow("label0") << QString("label0") << QString("label0");
+    QTest::newRow("label1") << QString("label1") << QString("label1");
 }
 
-void tst_QBarSet::name()
+void tst_QBarSet::label()
 {
-    QFETCH(QString, name);
+    QFETCH(QString, label);
     QFETCH(QString, result);
 
-    QSignalSpy nameSpy(m_barset,SIGNAL(nameChanged()));
-    m_barset->setName(name);
-    QCOMPARE(m_barset->name(), result);
-    QVERIFY(nameSpy.count() == 1);
+    QSignalSpy labelSpy(m_barset,SIGNAL(labelChanged()));
+    m_barset->setLabel(label);
+    QCOMPARE(m_barset->label(), result);
+    QVERIFY(labelSpy.count() == 1);
 }
 
 void tst_QBarSet::append_data()

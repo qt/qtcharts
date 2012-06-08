@@ -32,18 +32,18 @@ class QBarSetPrivate;
 class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QString name READ name WRITE setName)
-    Q_PROPERTY(QPen pen READ pen WRITE setPen)
-    Q_PROPERTY(QBrush brush READ brush WRITE setBrush)
-    Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush)
-    Q_PROPERTY(QFont labelFont READ labelFont WRITE setLabelFont)
+    Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)
+    Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
+    Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush NOTIFY labelBrushChanged)
+    Q_PROPERTY(QFont labelFont READ labelFont WRITE setLabelFont NOTIFY labelFontChanged)
 
 public:
-    explicit QBarSet(const QString name, QObject *parent = 0);
+    explicit QBarSet(const QString label, QObject *parent = 0);
     virtual ~QBarSet();
 
-    void setName(const QString name);
-    QString name() const;
+    void setLabel(const QString label);
+    QString label() const;
 
     void append(const QPointF value);
     void append(const QList<QPointF> values);
@@ -76,7 +76,6 @@ public:
     QFont labelFont() const;
 
 Q_SIGNALS:
-    void nameChanged();
     void penChanged();
     void brushChanged();
     void labelChanged();
