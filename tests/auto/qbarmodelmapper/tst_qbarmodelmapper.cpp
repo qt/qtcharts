@@ -37,6 +37,8 @@ class tst_qbarmodelmapper : public QObject
     
     public:
     tst_qbarmodelmapper();
+    void createVerticalMapper();
+    void createHorizontalMapper();
     
     private Q_SLOTS:
     void initTestCase();
@@ -52,10 +54,23 @@ class tst_qbarmodelmapper : public QObject
     void horizontalMapperCustomMapping_data();
     void horizontalMapperCustomMapping();
 
+    void verticalModelInsertRows();
+    void verticalModelRemoveRows();
+    void verticalModelInsertColumns();
+    void verticalModelRemoveColumns();
+    void horizontalModelInsertRows();
+    void horizontalModelRemoveRows();
+    void horizontalModelInsertColumns();
+    void horizontalModelRemoveColumns();
+    void modelUpdateCell();
+
     private:
     QStandardItemModel *m_model;
     int m_modelRowCount;
     int m_modelColumnCount;
+
+    QVBarModelMapper *m_vMapper;
+    QHBarModelMapper *m_hMapper;
 
     QGroupedBarSeries *m_series;
     QChart *m_chart;
@@ -64,14 +79,45 @@ class tst_qbarmodelmapper : public QObject
 tst_qbarmodelmapper::tst_qbarmodelmapper():
     m_model(0),
     m_modelRowCount(10),
-    m_modelColumnCount(8)
+    m_modelColumnCount(8),
+    m_vMapper(0),
+    m_hMapper(0),
+    m_series(0),
+    m_chart(0)
 {
+}
+
+void tst_qbarmodelmapper::createVerticalMapper()
+{
+    m_vMapper = new QVBarModelMapper;
+    QVERIFY(m_vMapper->model() == 0);
+    m_vMapper->setFirstBarSetColumn(0);
+    m_vMapper->setLastBarSetColumn(4);
+    m_vMapper->setModel(m_model);
+    m_vMapper->setSeries(m_series);
+}
+
+void tst_qbarmodelmapper::createHorizontalMapper()
+{
+    m_hMapper = new QHBarModelMapper;
+    QVERIFY(m_hMapper->model() == 0);
+    m_hMapper->setFirstBarSetRow(0);
+    m_hMapper->setLastBarSetRow(4);
+    m_hMapper->setModel(m_model);
+    m_hMapper->setSeries(m_series);
 }
 
 void tst_qbarmodelmapper::init()
 {
-    //    m_series = new QGroupedBarSeries;
-    //    m_chart->addSeries(m_series);
+    m_series = new QGroupedBarSeries;
+    m_chart->addSeries(m_series);
+
+    m_model = new QStandardItemModel(m_modelRowCount, m_modelColumnCount, this);
+    for (int row = 0; row < m_modelRowCount; ++row) {
+        for (int column = 0; column < m_modelColumnCount; column++) {
+            m_model->setData(m_model->index(row, column), row * column);
+        }
+    }
 }
 
 void tst_qbarmodelmapper::cleanup()
@@ -79,6 +125,20 @@ void tst_qbarmodelmapper::cleanup()
     m_chart->removeSeries(m_series);
     delete m_series;
     m_series = 0;
+
+    m_model->clear();
+    m_model->deleteLater();
+    m_model = 0;
+
+    if (m_vMapper) {
+        m_vMapper->deleteLater();
+        m_vMapper = 0;
+    }
+
+    if (m_hMapper) {
+        m_hMapper->deleteLater();
+        m_hMapper = 0;
+    }
 }
 
 void tst_qbarmodelmapper::initTestCase()
@@ -86,19 +146,10 @@ void tst_qbarmodelmapper::initTestCase()
     m_chart = new QChart;
     QChartView *chartView = new QChartView(m_chart);
     chartView->show();
-
-    m_model = new QStandardItemModel(this);
-    for (int row = 0; row < m_modelRowCount; ++row) {
-        for (int column = 0; column < m_modelColumnCount; column++) {
-            QStandardItem *item = new QStandardItem(row * column);
-            m_model->setItem(row, column, item);
-        }
-    }
 }
 
 void tst_qbarmodelmapper::cleanupTestCase()
 {
-    m_model->clear();
 }
 
 void tst_qbarmodelmapper::verticalMapper_data()
@@ -279,6 +330,240 @@ void tst_qbarmodelmapper::horizontalMapperCustomMapping()
 
     delete mapper;
     mapper = 0;
+}
+
+void tst_qbarmodelmapper::verticalModelInsertRows()
+{
+    // setup the mapper
+    createVerticalMapper();
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount);
+    QVERIFY(m_vMapper->model() != 0);
+
+    int insertCount = 4;
+    m_model->insertRows(3, insertCount);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount + insertCount);
+
+    int first = 3;
+    m_vMapper->setFirst(3);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount + insertCount - first);
+
+    m_model->insertRows(3, insertCount);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount +  2 * insertCount - first);
+
+    int countLimit = 6;
+    m_vMapper->setCount(countLimit);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelRowCount + 2 * insertCount - first));
+
+    m_model->insertRows(3, insertCount);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelRowCount + 3 * insertCount - first));
+
+    m_vMapper->setFirst(0);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelRowCount + 3 * insertCount));
+
+    m_vMapper->setCount(-1);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount + 3 * insertCount);
+}
+
+void tst_qbarmodelmapper::verticalModelRemoveRows()
+{
+    // setup the mapper
+    createVerticalMapper();
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount);
+    QVERIFY(m_vMapper->model() != 0);
+
+    int removeCount = 2;
+    m_model->removeRows(1, removeCount);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount - removeCount);
+
+    int first = 1;
+    m_vMapper->setFirst(first);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount - removeCount - first);
+
+    m_model->removeRows(1, removeCount);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount -  2 * removeCount - first);
+
+    int countLimit = 3;
+    m_vMapper->setCount(countLimit);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelRowCount -  2 * removeCount - first));
+
+    m_model->removeRows(1, removeCount);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelRowCount -  3 * removeCount - first));
+
+    m_vMapper->setFirst(0);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelRowCount -  3 * removeCount));
+
+    m_vMapper->setCount(-1);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount -  3 * removeCount);
+}
+
+void tst_qbarmodelmapper::verticalModelInsertColumns()
+{
+    // setup the mapper
+    createVerticalMapper();
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount);
+    QVERIFY(m_vMapper->model() != 0);
+
+    int insertCount = 4;
+    m_model->insertColumns(3, insertCount);
+    QCOMPARE(m_series->barsetCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount);
+}
+
+void tst_qbarmodelmapper::verticalModelRemoveColumns()
+{
+    // setup the mapper
+    createVerticalMapper();
+    QCOMPARE(m_series->barsetCount(), qMin(m_model->columnCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1));
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount);
+    QVERIFY(m_vMapper->model() != 0);
+
+    int removeCount = m_modelColumnCount - 2;
+    m_model->removeColumns(0, removeCount);
+    QCOMPARE(m_series->barsetCount(), qMin(m_model->columnCount(), m_vMapper->lastBarSetColumn() - m_vMapper->firstBarSetColumn() + 1));
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount);
+
+    // leave all the columns
+    m_model->removeColumns(0, m_modelColumnCount - removeCount);
+    QCOMPARE(m_series->barsetCount(), 0);
+}
+
+void tst_qbarmodelmapper::horizontalModelInsertRows()
+{
+    // setup the mapper
+    createHorizontalMapper();
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount);
+    QVERIFY(m_hMapper->model() != 0);
+
+    int insertCount = 4;
+    m_model->insertRows(3, insertCount);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount);
+}
+
+void tst_qbarmodelmapper::horizontalModelRemoveRows()
+{
+    // setup the mapper
+    createHorizontalMapper();
+    QCOMPARE(m_series->barsetCount(), qMin(m_model->rowCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1));
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount);
+    QVERIFY(m_hMapper->model() != 0);
+
+    int removeCount = m_modelRowCount - 2;
+    m_model->removeRows(0, removeCount);
+    QCOMPARE(m_series->barsetCount(), qMin(m_model->rowCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1));
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount);
+
+    // leave all the columns
+    m_model->removeRows(0, m_modelRowCount - removeCount);
+    QCOMPARE(m_series->barsetCount(), 0);
+}
+
+void tst_qbarmodelmapper::horizontalModelInsertColumns()
+{
+    // setup the mapper
+    createHorizontalMapper();
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount);
+    QVERIFY(m_hMapper->model() != 0);
+
+    int insertCount = 4;
+    m_model->insertColumns(3, insertCount);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount + insertCount);
+
+    int first = 3;
+    m_hMapper->setFirst(3);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount + insertCount - first);
+
+    m_model->insertColumns(3, insertCount);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount +  2 * insertCount - first);
+
+    int countLimit = 6;
+    m_hMapper->setCount(countLimit);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelColumnCount + 2 * insertCount - first));
+
+    m_model->insertColumns(3, insertCount);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelColumnCount + 3 * insertCount - first));
+
+    m_hMapper->setFirst(0);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelColumnCount + 3 * insertCount));
+
+    m_hMapper->setCount(-1);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount + 3 * insertCount);
+}
+
+void tst_qbarmodelmapper::horizontalModelRemoveColumns()
+{
+    // setup the mapper
+    createHorizontalMapper();
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount);
+    QVERIFY(m_hMapper->model() != 0);
+
+    int removeCount = 2;
+    m_model->removeColumns(1, removeCount);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount - removeCount);
+
+    int first = 1;
+    m_hMapper->setFirst(first);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount - removeCount - first);
+
+    m_model->removeColumns(1, removeCount);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount -  2 * removeCount - first);
+
+    int countLimit = 3;
+    m_hMapper->setCount(countLimit);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelColumnCount -  2 * removeCount - first));
+
+    m_model->removeColumns(1, removeCount);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelColumnCount -  3 * removeCount - first));
+
+    m_hMapper->setFirst(0);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), qMin(countLimit, m_modelColumnCount -  3 * removeCount));
+
+    m_hMapper->setCount(-1);
+    QCOMPARE(m_series->barsetCount(), m_hMapper->lastBarSetRow() - m_hMapper->firstBarSetRow() + 1);
+    QCOMPARE(m_series->barSets().first()->count(), m_modelColumnCount -  3 * removeCount);
+}
+
+void tst_qbarmodelmapper::modelUpdateCell()
+{
+    // setup the mapper
+    createVerticalMapper();
+
+    QVERIFY(m_model->setData(m_model->index(1, 0), 44));
+    QCOMPARE(m_series->barSets().at(0)->at(1).y(), 44.0);
+    QCOMPARE(m_model->data(m_model->index(1, 0)).toReal(), 44.0);
 }
 
 QTEST_MAIN(tst_qbarmodelmapper)
