@@ -47,7 +47,7 @@ QVector<QRectF> GroupedBarChartItem::calculateLayout()
     qreal rangeX = m_domainMaxX - m_domainMinX;
     qreal scaleY = (height / rangeY);
     qreal scaleX = (width / rangeX);
-    qreal barWidth = scaleX / setCount - (scaleX / setCount) * m_series->d_func()->barMargin();
+    qreal barWidth = (scaleX / setCount) * m_series->d_func()->barWidth();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {

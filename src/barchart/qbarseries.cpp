@@ -47,8 +47,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QBarSeries::barMargin
-    \brief Defines the margin around bars.
+    \property QBarSeries::barWidth
+    \brief Sets the width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
+    is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
+    is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
+    Note that with QGroupedBarSeries this value means the width of one group of bars instead of just one bar. This is
+    because with grouped series it is more logical to set width of whole group and let the chart calculate correct
+    width for bar.
+    \sa QGroupedBarSeries
 */
 
 /*!
@@ -137,25 +143,27 @@ QAbstractSeries::SeriesType QBarSeries::type() const
 }
 
 /*!
-    Sets the margin of the bars of the series. The unit of \a margin is the unit of x-axis. Setting the margin to 0.0
-    means there is no margin around the bars, making a single bar or bargroup to take one x-axis unit on the screen.
-    Setting margin to maximum value of 1.0 makes the bar width to exactly 1 pixel on the screen. Bars cannot be zero
-    width, otherwise they would not be visible at all. If you want to hide bars, use visible property of the series
-    instead.
+    Sets the width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
+    is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
+    is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
+    Note that with QGroupedBarSeries this value means the width of one group of bars instead of just one bar. This is
+    because with grouped series it is more logical to set widht of whole group and let the chart calculate correct
+    width for bar.
+    \sa QGroupedBarSeries
 */
-void QBarSeries::setBarMargin(qreal margin)
+void QBarSeries::setBarWidth(qreal width)
 {
     Q_D(QBarSeries);
-    d->setBarMargin(margin);
+    d->setBarWidth(width);
 }
 
 /*!
-    Returns the margin around bars
+    Returns the width of bars.
 */
-qreal QBarSeries::barMargin() const
+qreal QBarSeries::barWidth() const
 {
     Q_D(const QBarSeries);
-    return d->barMargin();
+    return d->barWidth();
 }
 
 /*!
@@ -280,7 +288,7 @@ bool QBarSeries::isLabelsVisible() const
 
 QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
     QAbstractSeriesPrivate(q),
-    m_barMargin(0.5),  // Default value is 50% of category width
+    m_barWidth(0.5),  // Default value is 50% of category width
     m_labelsVisible(false),
     m_visible(true)
 {
@@ -336,21 +344,18 @@ QStringList QBarSeriesPrivate::categories() const
     return categories;
 }
 
-void QBarSeriesPrivate::setBarMargin(qreal margin)
+void QBarSeriesPrivate::setBarWidth(qreal width)
 {
-    if (margin > 1.0) {
-        margin = 1.0;
-    } else if (margin < 0.0) {
-        margin = 0.0;
+    if (width < 0.0) {
+        width = 0.0;
     }
-
-    m_barMargin = margin;
+    m_barWidth = width;
     emit updatedBars();
 }
 
-qreal QBarSeriesPrivate::barMargin() const
+qreal QBarSeriesPrivate::barWidth() const
 {
-    return m_barMargin;
+    return m_barWidth;
 }
 
 QBarSet* QBarSeriesPrivate::barsetAt(int index)

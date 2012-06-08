@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
 
 //![2]
     QBarSeries* series = new QBarSeries();
-    series->setBarMargin(0.8);
+    series->setBarWidth(0.2);
     series->append(set0);
     series->append(set1);
     series->append(set2);

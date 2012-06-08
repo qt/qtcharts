@@ -51,8 +51,8 @@ public:
     int categoryCount() const;
     QStringList categories() const;
 
-    void setBarMargin(qreal margin);
-    qreal barMargin() const;
+    void setBarWidth(qreal width);
+    qreal barWidth() const;
 
     void setVisible(bool visible);
     void setLabelsVisible(bool visible);
@@ -89,7 +89,7 @@ Q_SIGNALS:
 protected:
     QList<QBarSet *> m_barSets;
     QStringList m_categories;
-    qreal m_barMargin;
+    qreal m_barWidth;
     bool m_labelsVisible;
     bool m_visible;
 

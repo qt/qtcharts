@@ -33,7 +33,7 @@ class QBarSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
 {
     Q_OBJECT
-    Q_PROPERTY(qreal barMargin READ barMargin WRITE setBarMargin)
+    Q_PROPERTY(qreal barWidth READ barWidth WRITE setBarWidth)
     Q_PROPERTY(int count READ barsetCount)
     Q_PROPERTY(bool labelsVisible READ isLabelsVisible WRITE setLabelsVisible)
 
@@ -43,8 +43,8 @@ public:
 
     QAbstractSeries::SeriesType type() const;
 
-    void setBarMargin(qreal margin);
-    qreal barMargin() const;
+    void setBarWidth(qreal width);
+    qreal barWidth() const;
 
     bool append(QBarSet *set);
     bool remove(QBarSet *set);

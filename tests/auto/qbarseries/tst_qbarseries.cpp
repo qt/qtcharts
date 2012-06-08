@@ -335,7 +335,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(95,142));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(102,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -347,7 +347,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(164,142));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(186,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -359,7 +359,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(234,142));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(271,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -371,7 +371,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(115,142));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(127,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -383,7 +383,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(185,142));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(212,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -395,7 +395,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(254,142));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(296,142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -414,12 +414,9 @@ void tst_QBarSeries::mousehovered_data()
 void tst_QBarSeries::mousehovered()
 {
     QBarSeries* series = new QBarSeries();
-    QStringList categories;
-    categories << "test1" << "test2" << "test3";
-//    series->setCategories(categories);
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-    *set1 << QPointF(0.1,10) << QPointF(1.1,10) << QPointF(2.1,10);
+    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
     series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
@@ -445,7 +442,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse on top of set1
-    QTest::mouseMove(view.viewport(), QPoint(95,142));
+    QTest::mouseMove(view.viewport(), QPoint(102,142));
 
     QVERIFY(seriesSpy.count() == 1);
 
@@ -456,7 +453,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set1 to top of set2
-    QTest::mouseMove(view.viewport(), QPoint(116,142));
+    QTest::mouseMove(view.viewport(), QPoint(127,142));
 
     QVERIFY(seriesSpy.count() == 2);
 
@@ -474,7 +471,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set2 to background
-    QTest::mouseMove(view.viewport(), QPoint(116,0));
+    QTest::mouseMove(view.viewport(), QPoint(127,0));
     QVERIFY(seriesSpy.count() == 1);
 
     // should leave set2
@@ -486,14 +483,10 @@ void tst_QBarSeries::mousehovered()
 
 void tst_QBarSeries::clearWithAnimations()
 {
-    QSKIP("Known issue with the animation handling", SkipAll);
     QBarSeries* series = new QBarSeries();
-    QStringList categories;
-    categories << "test1" << "test2" << "test3";
-//    series->setCategories(categories);
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-    *set1 << QPointF(0.1,10) << QPointF(1.1,10) << QPointF(2.1,10);
+    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
     series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
