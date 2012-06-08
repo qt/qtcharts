@@ -24,6 +24,7 @@
 #include <qchart.h>
 #include <qchartview.h>
 #include <qpieseries.h>
+#include <qpieslice.h>
 #include <qvpiemodelmapper.h>
 #include <qhpiemodelmapper.h>
 #include <QStandardItemModel>
@@ -36,6 +37,8 @@ class tst_qpiemodelmapper : public QObject
     
     public:
     tst_qpiemodelmapper();
+    void createVerticalMapper();
+    void createHorizontalMapper();
     
     private Q_SLOTS:
     void initTestCase();
@@ -51,12 +54,22 @@ class tst_qpiemodelmapper : public QObject
     void horizontalMapperCustomMapping_data();
     void horizontalMapperCustomMapping();
     void seriesUpdated();
-
+    void verticalModelInsertRows();
+    void verticalModelRemoveRows();
+    void verticalModelInsertColumns();
+    void verticalModelRemoveColumns();
+    void horizontalModelInsertRows();
+    void horizontalModelRemoveRows();
+    void horizontalModelInsertColumns();
+    void horizontalModelRemoveColumns();
+    void modelUpdateCell();
 
     private:
     QStandardItemModel *m_model;
     int m_modelRowCount;
     int m_modelColumnCount;
+    QVPieModelMapper *m_vMapper;
+    QHPieModelMapper *m_hMapper;
 
     QPieSeries *m_series;
     QChart *m_chart;
@@ -65,21 +78,66 @@ class tst_qpiemodelmapper : public QObject
 tst_qpiemodelmapper::tst_qpiemodelmapper():
     m_model(0),
     m_modelRowCount(10),
-    m_modelColumnCount(8)
+    m_modelColumnCount(8),
+    m_vMapper(0),
+    m_hMapper(0),
+    m_series(0),
+    m_chart(0)
 {
+}
+
+void tst_qpiemodelmapper::createVerticalMapper()
+{
+    m_vMapper = new QVPieModelMapper;
+    QVERIFY(m_vMapper->model() == 0);
+    m_vMapper->setValuesColumn(0);
+    m_vMapper->setLabelsColumn(1);
+    m_vMapper->setModel(m_model);
+    m_vMapper->setSeries(m_series);
+}
+
+void tst_qpiemodelmapper::createHorizontalMapper()
+{
+    m_hMapper = new QHPieModelMapper;
+    QVERIFY(m_hMapper->model() == 0);
+    m_hMapper->setValuesRow(0);
+    m_hMapper->setLabelsRow(1);
+    m_hMapper->setModel(m_model);
+    m_hMapper->setSeries(m_series);
 }
 
 void tst_qpiemodelmapper::init()
 {
     m_series = new QPieSeries;
     m_chart->addSeries(m_series);
+
+    m_model = new QStandardItemModel(m_modelRowCount, m_modelColumnCount, this);
+    for (int row = 0; row < m_modelRowCount; ++row) {
+        for (int column = 0; column < m_modelColumnCount; column++) {
+            m_model->setData(m_model->index(row, column), row * column);
+        }
+    }
 }
 
 void tst_qpiemodelmapper::cleanup()
 {
     m_chart->removeSeries(m_series);
-    delete m_series;
+    m_series->deleteLater();
     m_series = 0;
+
+    m_model->clear();
+    m_model->deleteLater();
+    m_model = 0;
+
+    if (m_vMapper) {
+        m_vMapper->deleteLater();
+        m_vMapper = 0;
+    }
+
+    if (m_hMapper) {
+        m_hMapper->deleteLater();
+        m_hMapper = 0;
+    }
 }
 
 void tst_qpiemodelmapper::initTestCase()
@@ -87,19 +145,11 @@ void tst_qpiemodelmapper::initTestCase()
     m_chart = new QChart;
     QChartView *chartView = new QChartView(m_chart);
     chartView->show();
-
-    m_model = new QStandardItemModel(this);
-    for (int row = 0; row < m_modelRowCount; ++row) {
-        for (int column = 0; column < m_modelColumnCount; column++) {
-            QStandardItem *item = new QStandardItem(row * column);
-            m_model->setItem(row, column, item);
-        }
-    }
 }
 
 void tst_qpiemodelmapper::cleanupTestCase()
 {
-    m_model->clear();
+    //
 }
 
 void tst_qpiemodelmapper::verticalMapper_data()
@@ -259,33 +309,218 @@ void tst_qpiemodelmapper::horizontalMapperCustomMapping()
 
 void tst_qpiemodelmapper::seriesUpdated()
 {
-    QStandardItemModel *otherModel = new QStandardItemModel;
-    for (int row = 0; row < m_modelRowCount; ++row) {
-        for (int column = 0; column < m_modelColumnCount; column++) {
-            QStandardItem *item = new QStandardItem(row * column);
-            otherModel->setItem(row, column, item);
-        }
-    }
-
-    QVPieModelMapper *mapper = new QVPieModelMapper;
-    mapper->setValuesColumn(0);
-    mapper->setLabelsColumn(1);
-    mapper->setModel(otherModel);
-    mapper->setSeries(m_series);
+    // setup the mapper
+    createVerticalMapper();
     QCOMPARE(m_series->count(), m_modelRowCount);
-    QCOMPARE(mapper->count(), -1);
+    QCOMPARE(m_vMapper->count(), -1);
 
     m_series->append("1000", 1000);
     QCOMPARE(m_series->count(), m_modelRowCount + 1);
-    QCOMPARE(mapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
+    QCOMPARE(m_vMapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
 
     m_series->remove(m_series->slices().last());
     QCOMPARE(m_series->count(), m_modelRowCount);
-    QCOMPARE(mapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
+    QCOMPARE(m_vMapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
 
-    otherModel->clear();
-    delete otherModel;
-    otherModel = 0;
+    QPieSlice *slice = m_series->slices().first();
+    slice->setValue(25.0);
+    slice->setLabel(QString("25.0"));
+    QCOMPARE(m_model->data(m_model->index(0, 0)).toReal(), 25.0);
+    QCOMPARE(m_model->data(m_model->index(0, 1)).toString(), QString("25.0"));
+}
+
+void tst_qpiemodelmapper::verticalModelInsertRows()
+{
+    // setup the mapper
+    createVerticalMapper();
+    QCOMPARE(m_series->count(), m_modelRowCount);
+    QVERIFY(m_vMapper->model() != 0);
+
+    int insertCount = 4;
+    m_model->insertRows(3, insertCount);
+    QCOMPARE(m_series->count(), m_modelRowCount + insertCount);
+
+    int first = 3;
+    m_vMapper->setFirst(3);
+    QCOMPARE(m_series->count(), m_modelRowCount + insertCount - first);
+
+    m_model->insertRows(3, insertCount);
+    QCOMPARE(m_series->count(), m_modelRowCount +  2 * insertCount - first);
+
+    int countLimit = 6;
+    m_vMapper->setCount(countLimit);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount + 2 * insertCount - first));
+
+    m_model->insertRows(3, insertCount);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount + 3 * insertCount - first));
+
+    m_vMapper->setFirst(0);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount + 3 * insertCount));
+
+    m_vMapper->setCount(-1);
+    QCOMPARE(m_series->count(), m_modelRowCount + 3 * insertCount);
+}
+
+void tst_qpiemodelmapper::verticalModelRemoveRows()
+{
+    // setup the mapper
+    createVerticalMapper();
+    QCOMPARE(m_series->count(), m_modelRowCount);
+    QVERIFY(m_vMapper->model() != 0);
+
+    int removeCount = 2;
+    m_model->removeRows(1, removeCount);
+    QCOMPARE(m_series->count(), m_modelRowCount - removeCount);
+
+    int first = 1;
+    m_vMapper->setFirst(first);
+    QCOMPARE(m_series->count(), m_modelRowCount - removeCount - first);
+
+    m_model->removeRows(1, removeCount);
+    QCOMPARE(m_series->count(), m_modelRowCount -  2 * removeCount - first);
+
+    int countLimit = 3;
+    m_vMapper->setCount(countLimit);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount -  2 * removeCount - first));
+
+    m_model->removeRows(1, removeCount);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount -  3 * removeCount - first));
+
+    m_vMapper->setFirst(0);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount -  3 * removeCount));
+
+    m_vMapper->setCount(-1);
+    QCOMPARE(m_series->count(), m_modelRowCount -  3 * removeCount);
+}
+
+void tst_qpiemodelmapper::verticalModelInsertColumns()
+{
+    // setup the mapper
+    createVerticalMapper();
+    QCOMPARE(m_series->count(), m_modelRowCount);
+    QVERIFY(m_vMapper->model() != 0);
+
+    int insertCount = 4;
+    m_model->insertColumns(3, insertCount);
+    QCOMPARE(m_series->count(), m_modelRowCount);
+}
+
+void tst_qpiemodelmapper::verticalModelRemoveColumns()
+{
+    // setup the mapper
+    createVerticalMapper();
+    QCOMPARE(m_series->count(), m_modelRowCount);
+    QVERIFY(m_vMapper->model() != 0);
+
+    int removeCount = m_modelColumnCount - 2;
+    m_model->removeColumns(0, removeCount);
+    QCOMPARE(m_series->count(), m_modelRowCount);
+
+    // leave only one column
+    m_model->removeColumns(0, m_modelColumnCount - removeCount - 1);
+    QCOMPARE(m_series->count(), 0);
+}
+
+void tst_qpiemodelmapper::horizontalModelInsertRows()
+{
+    // setup the mapper
+    createHorizontalMapper();
+    QCOMPARE(m_series->count(), m_modelColumnCount);
+    QVERIFY(m_hMapper->model() != 0);
+
+    int insertCount = 4;
+    m_model->insertRows(3, insertCount);
+    QCOMPARE(m_series->count(), m_modelColumnCount);
+}
+
+void tst_qpiemodelmapper::horizontalModelRemoveRows()
+{
+    // setup the mapper
+    createHorizontalMapper();
+    QCOMPARE(m_series->count(), m_modelColumnCount);
+    QVERIFY(m_hMapper->model() != 0);
+
+    int removeCount = m_modelRowCount - 2;
+    m_model->removeRows(0, removeCount);
+    QCOMPARE(m_series->count(), m_modelColumnCount);
+
+    // leave only one column
+    m_model->removeRows(0, m_modelRowCount - removeCount - 1);
+    QCOMPARE(m_series->count(), 0);
+}
+
+void tst_qpiemodelmapper::horizontalModelInsertColumns()
+{
+    // setup the mapper
+    createHorizontalMapper();
+    QCOMPARE(m_series->count(), m_modelColumnCount);
+    QVERIFY(m_hMapper->model() != 0);
+
+    int insertCount = 4;
+    m_model->insertColumns(3, insertCount);
+    QCOMPARE(m_series->count(), m_modelColumnCount + insertCount);
+
+    int first = 3;
+    m_hMapper->setFirst(3);
+    QCOMPARE(m_series->count(), m_modelColumnCount + insertCount - first);
+
+    m_model->insertColumns(3, insertCount);
+    QCOMPARE(m_series->count(), m_modelColumnCount +  2 * insertCount - first);
+
+    int countLimit = 6;
+    m_hMapper->setCount(countLimit);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount + 2 * insertCount - first));
+
+    m_model->insertColumns(3, insertCount);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount + 3 * insertCount - first));
+
+    m_hMapper->setFirst(0);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount + 3 * insertCount));
+
+    m_hMapper->setCount(-1);
+    QCOMPARE(m_series->count(), m_modelColumnCount + 3 * insertCount);
+}
+
+void tst_qpiemodelmapper::horizontalModelRemoveColumns()
+{
+    // setup the mapper
+    createHorizontalMapper();
+    QCOMPARE(m_series->count(), m_modelColumnCount);
+    QVERIFY(m_hMapper->model() != 0);
+
+    int removeCount = 2;
+    m_model->removeColumns(1, removeCount);
+    QCOMPARE(m_series->count(), m_modelColumnCount - removeCount);
+
+    int first = 1;
+    m_hMapper->setFirst(first);
+    QCOMPARE(m_series->count(), m_modelColumnCount - removeCount - first);
+
+    m_model->removeColumns(1, removeCount);
+    QCOMPARE(m_series->count(), m_modelColumnCount -  2 * removeCount - first);
+
+    int countLimit = 3;
+    m_hMapper->setCount(countLimit);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount -  2 * removeCount - first));
+
+    m_model->removeColumns(1, removeCount);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount -  3 * removeCount - first));
+
+    m_hMapper->setFirst(0);
+    QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount -  3 * removeCount));
+
+    m_hMapper->setCount(-1);
+    QCOMPARE(m_series->count(), m_modelColumnCount -  3 * removeCount);
+}
+
+void tst_qpiemodelmapper::modelUpdateCell()
+{
+    // setup the mapper
+    createVerticalMapper();
+
+    QVERIFY(m_model->setData(m_model->index(1, 0), 44));
+    QCOMPARE(m_series->slices().at(1)->value(), 44.0);
+    QCOMPARE(m_model->data(m_model->index(1, 0)).toReal(), 44.0);
 }
 
 QTEST_MAIN(tst_qpiemodelmapper)

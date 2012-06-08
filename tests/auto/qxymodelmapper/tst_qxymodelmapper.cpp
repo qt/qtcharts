@@ -312,24 +312,22 @@ void tst_qxymodelmapper::horizontalMapperCustomMapping()
 
 void tst_qxymodelmapper::seriesUpdated()
 {
-    QVXYModelMapper *mapper = new QVXYModelMapper;
-    mapper->setXColumn(0);
-    mapper->setYColumn(1);
-    mapper->setModel(m_model);
-    mapper->setSeries(m_series);
+    // setup the mapper
+    createVerticalMapper();
     QCOMPARE(m_series->count(), m_modelRowCount);
-    QCOMPARE(mapper->count(), -1);
+    QCOMPARE(m_vMapper->count(), -1);
 
     m_series->append(QPointF(100, 100));
     QCOMPARE(m_series->count(), m_modelRowCount + 1);
-    QCOMPARE(mapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
+    QCOMPARE(m_vMapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
 
     m_series->remove(m_series->points().last());
     QCOMPARE(m_series->count(), m_modelRowCount);
-    QCOMPARE(mapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
+    QCOMPARE(m_vMapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
 
-    delete mapper;
-    mapper = 0;
+    m_series->replace(m_series->points().first(), QPointF(25.0, 75.0));
+    QCOMPARE(m_model->data(m_model->index(0, 0)).toReal(), 25.0);
+    QCOMPARE(m_model->data(m_model->index(0, 1)).toReal(), 75.0);
 }
 
 void tst_qxymodelmapper::verticalModelInsertRows()
