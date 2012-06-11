@@ -56,7 +56,7 @@ Rectangle {
         //![5]
         BarSeries {
             name: "Others"
-            barMargin: 0
+            barWidth: 0.9
             visible: false
             HBarModelMapper {
                 model: customModel

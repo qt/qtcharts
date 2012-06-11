@@ -32,9 +32,9 @@ Rectangle {
         axisXLabels: ["0", "2007", "1", "2008", "2", "2009", "3", "2010", "4", "2011", "5", "2012"]
 
         GroupedBarSeries {
-            BarSet { name: "Bob"; values: [2, 2, 3, 4, 5, 6] }
-            BarSet { name: "Susan"; values: [5, 1, 2, 4, 1, 7] }
-            BarSet { name: "James"; values: [3, 5, 8, 13, 5, 8] }
+            BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6] }
+            BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 7] }
+            BarSet { label: "James"; values: [3, 5, 8, 13, 5, 8] }
         }
     }
     //![1]

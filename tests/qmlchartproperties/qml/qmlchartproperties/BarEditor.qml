@@ -59,12 +59,12 @@ Flow {
         onClicked: series.labelsVisible = !series.labelsVisible;
     }
     Button {
-        text: "bar margin +"
-        onClicked: series.barMargin += 0.1;
+        text: "bar width +"
+        onClicked: series.barWidth += 0.1;
     }
     Button {
-        text: "bar margin -"
-        onClicked: series.barMargin -= 0.1;
+        text: "bar width -"
+        onClicked: series.barWidth -= 0.1;
     }
     Button {
         text: "set 1 color"

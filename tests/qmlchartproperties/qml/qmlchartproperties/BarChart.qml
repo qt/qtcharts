@@ -32,8 +32,8 @@ ChartView {
 
     BarSeries {
         id: daSeries
-        BarSet { name: "Bob"; values: [4, 7, 3, 10, 5, 6] }
-        BarSet { name: "Susan"; values: [5, 1, 2, 4, 1, 8] }
-        BarSet { name: "James"; values: [3, 5, 8, 5, 4, 7] }
+        BarSet { label: "Bob"; values: [4, 7, 3, 10, 5, 6] }
+        BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 8] }
+        BarSet { label: "James"; values: [3, 5, 8, 5, 4, 7] }
     }
 }

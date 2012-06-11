@@ -41,7 +41,7 @@ Rectangle {
         BarSeries {
             BarSet {
                 id: rainfallSet
-                name: "Rainfall"
+                label: "Rainfall"
             }
         }
 
