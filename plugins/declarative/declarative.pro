@@ -10,6 +10,17 @@ contains(QT_MAJOR_VERSION, 5) {
     DEFINES += QTQUICK2
 }
 
+CONFIG(debug, debug|release) {
+  mac: TARGET = $$join(TARGET,,,_debug)
+  win32: TARGET = $$join(TARGET,,,d)
+}
+
+# enable building debug and release at the same time
+CONFIG += debug_and_release
+
+# On windows by default build both debug and release at the same time
+win32:CONFIG += build_all
+
 SOURCES += \
     plugin.cpp \
     declarativechart.cpp \

@@ -29,6 +29,10 @@ CHART_BUILD_BIN_DIR = $$SHADOW/bin
 CHART_BUILD_PLUGIN_DIR = $$CHART_BUILD_BIN_DIR/QtCommercial/Chart
 CHART_BUILD_DOC_DIR = $$SHADOW/doc
 
+# Use own folders for debug and release builds
+CONFIG(debug, debug|release):CHART_BUILD_DIR = $$join(CHART_BUILD_DIR,,,/debug)
+CONFIG(release, debug|release): CHART_BUILD_DIR = $$join(CHART_BUILD_DIR,,,/release)
+
 win32:{
     CHART_BUILD_PUBLIC_HEADER_DIR = $$replace(CHART_BUILD_PUBLIC_HEADER_DIR, "/","\\")
     CHART_BUILD_PRIVATE_HEADER_DIR = $$replace(CHART_BUILD_PRIVATE_HEADER_DIR, "/","\\")
