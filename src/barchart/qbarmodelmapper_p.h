@@ -55,6 +55,14 @@ public Q_SLOTS:
     void modelColumnsAdded(QModelIndex parent, int start, int end);
     void modelColumnsRemoved(QModelIndex parent, int start, int end);
 
+    // for the series
+    void barSetsAdded(QList<QBarSet*> sets);
+    void barSetsRemoved(QList<QBarSet*> sets);
+    void valuesAdded(int index, int count);
+    void valuesRemoved(int index, int count);
+    void barLabelChanged();
+    void barValueChanged(int index);
+
     void initializeBarFromModel();
 
 private:
@@ -66,7 +74,8 @@ private:
     void blockSeriesSignals(bool block = true);
 
 private:
-    QBarSeries *m_series;
+    QBarSeries *m_series;    
+    QList<QBarSet*> m_barSets;
     QAbstractItemModel *m_model;
     int m_first;
     int m_count;
