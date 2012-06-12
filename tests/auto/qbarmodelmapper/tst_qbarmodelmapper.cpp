@@ -53,7 +53,7 @@ class tst_qbarmodelmapper : public QObject
     void horizontalMapper();
     void horizontalMapperCustomMapping_data();
     void horizontalMapperCustomMapping();
-
+    void seriesUpdated();
     void verticalModelInsertRows();
     void verticalModelRemoveRows();
     void verticalModelInsertColumns();
@@ -330,6 +330,49 @@ void tst_qbarmodelmapper::horizontalMapperCustomMapping()
 
     delete mapper;
     mapper = 0;
+}
+
+void tst_qbarmodelmapper::seriesUpdated()
+{
+    // setup the mapper
+    createVerticalMapper();
+    QCOMPARE(m_series->barSets().first()->count(), m_modelRowCount);
+    QCOMPARE(m_vMapper->count(), -1);
+
+    m_series->barSets().first()->append(123);
+    QCOMPARE(m_model->rowCount(), m_modelRowCount + 1);
+    QCOMPARE(m_vMapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
+
+    m_series->barSets().last()->remove(0, m_modelRowCount);
+    QCOMPARE(m_model->rowCount(), 1);
+    QCOMPARE(m_vMapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
+
+    m_series->barSets().first()->replace(0, 444.0);
+    QCOMPARE(m_model->data(m_model->index(0, 0)).toReal(), 444.0);
+
+    m_series->barSets().first()->setLabel("Hello");
+    QCOMPARE(m_model->headerData(0, Qt::Horizontal).toString(), QString("Hello"));
+
+    QList<qreal> newValues;
+    newValues << 15 << 27 << 35 << 49;
+    m_series->barSets().first()->append(newValues);
+    QCOMPARE(m_model->rowCount(), 1 + newValues.count());
+
+    QList<QBarSet* > newBarSets;
+    QBarSet* newBarSet_1 = new QBarSet("New_1");
+    newBarSet_1->append(101);
+    newBarSet_1->append(102);
+    newBarSet_1->append(103);
+    newBarSets.append(newBarSet_1);
+
+    QBarSet* newBarSet_2 = new QBarSet("New_1");
+    newBarSet_2->append(201);
+    newBarSet_2->append(202);
+    newBarSet_2->append(203);
+    newBarSets.append(newBarSet_2);
+
+    m_series->append(newBarSets);
+    QCOMPARE(m_model->columnCount(), m_modelColumnCount + newBarSets.count());
 }
 
 void tst_qbarmodelmapper::verticalModelInsertRows()
