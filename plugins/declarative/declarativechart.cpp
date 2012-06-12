@@ -29,6 +29,19 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \qmlclass ChartView DeclarativeChart
+
+    ChartView element is the parent that is responsible for showing different chart series types.
+
+    \section1 Example Usage
+
+    \beginfloatleft
+    \image demos_qmlchart1.png
+    \endfloat
+    \clearfloat
+*/
+
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
       m_chart(new QChart(this))

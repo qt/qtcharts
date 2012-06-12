@@ -1,0 +1,14 @@
+/*!
+    \page qml.html
+    \title QtCommercial Charts QML API
+    \keyword Charts QML API
+
+    Charts QML API is an intuitive and simple way to use QtCommercial Charts in your QML applications.
+
+    \raw HTML
+        <ul>
+        <li><a href="qml-chartview.html">ChartView</a></li>
+        <li><a href="qml-pieseries.html">PieSeries</a></li>
+        </ul>
+    \endraw    
+*/

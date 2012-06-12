@@ -27,6 +27,53 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \qmlclass PieSeries DeclarativePieSeries
+
+    \section1 Example Usage
+
+    \beginfloatleft
+    \image demos_qmlchart1.png
+    \endfloat
+    \clearfloat
+
+    The following QML shows how to create a simple pie chart.
+
+    \snippet ../demos/qmlchart/qml/qmlchart/View1.qml 1
+*/
+
+/*!
+    \qmlproperty real PieSeries::horizontalPosition
+    \brief Defines the horizontal position of the pie.
+
+    The value is a relative value to the chart rectangle where:
+
+    \list
+    \o 0.0 is the absolute left.
+    \o 1.0 is the absolute right.
+    \endlist
+
+    Default value is 0.5 (center).
+
+    \sa verticalPosition
+*/
+
+/*!
+    \qmlproperty real PieSeries::verticalPosition
+    \brief Defines the vertical position of the pie.
+
+    The value is a relative value to the chart rectangle where:
+
+    \list
+    \o 0.0 is the absolute top.
+    \o 1.0 is the absolute bottom.
+    \endlist
+
+    Default value is 0.5 (center).
+
+    \sa horizontalPosition
+*/
+
 DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
     QPieSeries(parent)
 {

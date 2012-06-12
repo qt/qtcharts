@@ -7,9 +7,11 @@ description = Library for creating charts
 
 sourcedirs = ../src \
              ../examples \
-             ./src
+             ./src \
+             ../plugins/declarative
 headerdirs = ../src \
-             ../examples
+             ../examples \
+             ../plugins/declarative
 exampledirs = ../ \
               ../src \
               ../examples 

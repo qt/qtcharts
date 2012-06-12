@@ -13,6 +13,7 @@ HTML.postheader = \
     "      <li class=\"first\"><a href=\"index.html\">About</a></li>\n" \
     "      <li><a href=\"introduction.html\">Getting started</a></li>\n" \
     "      <li><a href=\"classes.html\">API Classes</a></li>\n" \
+    "      <li><a href=\"qml.html\">QML API</a></li>\n" \
     "      <li><a href=\"examples.html\">Examples</a></li>\n" \
     "      <li><a href=\"demos.html\">Demos</a></li>\n" \
     "      <!--  Breadcrumbs go here -->\n"
