@@ -47,6 +47,7 @@ public:
 
     void setOffset(qreal x, qreal y);
     void updateLayout();
+    void updateDetachedLayout();
     void attachToChart();
 
 public Q_SLOTS:

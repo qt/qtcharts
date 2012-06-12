@@ -28,6 +28,8 @@
 #include <QGraphicsWidget>
 #include <QGridLayout>
 #include <QGraphicsGridLayout>
+#include <QDoubleSpinBox>
+#include <QGroupBox>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -36,9 +38,10 @@ class MainWidget : public QWidget
     Q_OBJECT
 public:
     explicit MainWidget(QWidget *parent = 0);
-
     void createSeries();
-    
+    void showLegendSpinbox();
+    void hideLegendSpinbox();
+
 signals:
     
 public slots:
@@ -46,6 +49,13 @@ public slots:
     void attachLegend();
     void addBarset();
     void removeBarset();
+
+    void setLegendLeft();
+    void setLegendRight();
+    void setLegendTop();
+    void setLegendBottom();
+
+    void updateLegendLayout();
 
 private:
 
@@ -56,8 +66,12 @@ private:
     QGridLayout *m_mainLayout;
     QGridLayout *m_buttonLayout;
 
-    QGraphicsView *m_customView;
-    QGraphicsScene *m_customScene;
+    // For detached layout
+    QGroupBox*  m_legendSettings;
+    QDoubleSpinBox *m_legendPosX;
+    QDoubleSpinBox *m_legendPosY;
+    QDoubleSpinBox *m_legendWidth;
+    QDoubleSpinBox *m_legendHeight;
 };
 
 #endif // MAINWIDGET_H

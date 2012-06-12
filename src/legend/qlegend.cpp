@@ -320,29 +320,38 @@ QLegendPrivate::~QLegendPrivate()
 
 void QLegendPrivate::setOffset(qreal x, qreal y)
 {
-
+    bool scrollHorizontal = true;
     switch(m_alignment) {
-
         case Qt::AlignTop:
         case Qt::AlignBottom: {
-            if(m_width<=m_rect.width()) return;
-
-            if (x != m_offsetX) {
-                m_offsetX = qBound(qreal(0), x, m_width - m_rect.width());
-                m_markers->setPos(-m_offsetX,m_rect.top());
-            }
+            scrollHorizontal = true;
             break;
         }
         case Qt::AlignLeft:
         case Qt::AlignRight: {
-
-            if(m_height<=m_rect.height()) return;
-
-            if (y != m_offsetY) {
-                m_offsetY = qBound(qreal(0), y, m_height - m_rect.height());
-                m_markers->setPos(m_rect.left(),-m_offsetY);
-            }
+            scrollHorizontal = false;
             break;
+        }
+    }
+
+    // If detached, the scrolling and layout logic is inverted.
+    if (!m_attachedToChart) {
+        scrollHorizontal = !scrollHorizontal;
+    }
+
+    if (scrollHorizontal) {
+        if(m_width<=m_rect.width()) return;
+
+        if (x != m_offsetX) {
+            m_offsetX = qBound(qreal(0), x, m_width - m_rect.width());
+            m_markers->setPos(-m_offsetX,m_rect.top());
+        }
+    } else {
+        if(m_height<=m_rect.height()) return;
+
+        if (y != m_offsetY) {
+            m_offsetY = qBound(qreal(0), y, m_height - m_rect.height());
+            m_markers->setPos(m_rect.left(),-m_offsetY);
         }
     }
 }
@@ -350,6 +359,11 @@ void QLegendPrivate::setOffset(qreal x, qreal y)
 
 void QLegendPrivate::updateLayout()
 {
+    if (!m_attachedToChart) {
+        updateDetachedLayout();
+        return;
+    }
+
     m_offsetX=0;
     QList<QGraphicsItem *> items = m_markers->childItems();
 
@@ -406,8 +420,136 @@ void QLegendPrivate::updateLayout()
         break;
     }
 
-    if (m_attachedToChart) {
-        m_presenter->updateLayout();
+    m_presenter->updateLayout();
+}
+
+void QLegendPrivate::updateDetachedLayout()
+{
+    m_offsetX=0;
+    QList<QGraphicsItem *> items = m_markers->childItems();
+
+    if(items.isEmpty()) return;
+
+    m_minWidth = 0;
+    m_minHeight = 0;
+
+    switch (m_alignment) {
+        case Qt::AlignTop: {
+            QPointF point = m_rect.topLeft();
+            m_width = 0;
+            m_height = 0;
+            for (int i=0; i<items.count(); i++) {
+                QGraphicsItem *item = items.at(i);
+                const QRectF& rect = item->boundingRect();
+                qreal w = rect.width();
+                qreal h = rect.height();
+                m_minWidth = qMax(m_minWidth,w);
+                m_minHeight = qMax(m_minHeight,rect.height());
+                m_height = qMax(m_height,h);
+                item->setPos(point.x(),point.y());
+                point.setX(point.x() + w);
+                if (point.x() + w > m_rect.topLeft().x() + m_rect.width()) {
+                    // Next item would go off rect.
+                    point.setX(m_rect.topLeft().x());
+                    point.setY(point.y() + h);
+                    if (i+1 < items.count()) {
+                        m_height += h;
+                    }
+                }
+            }
+            m_markers->setPos(m_rect.topLeft());
+            m_width = m_minWidth;
+        }
+        break;
+        case Qt::AlignBottom: {
+            QPointF point = m_rect.bottomLeft();
+            m_width = 0;
+            m_height = 0;
+            for (int i=0; i<items.count(); i++) {
+                QGraphicsItem *item = items.at(i);
+                const QRectF& rect = item->boundingRect();
+                qreal w = rect.width();
+                qreal h = rect.height();
+                m_minWidth = qMax(m_minWidth,w);
+                m_minHeight = qMax(m_minHeight,rect.height());
+                m_height = qMax(m_height,h);
+                item->setPos(point.x(),point.y() - h);
+                point.setX(point.x() + w);
+                if (point.x() + w > m_rect.bottomLeft().x() + m_rect.width()) {
+                    // Next item would go off rect.
+                    point.setX(m_rect.bottomLeft().x());
+                    point.setY(point.y() - h);
+                    if (i+1 < items.count()) {
+                        m_height += h;
+                    }
+                }
+            }
+            m_markers->setPos(m_rect.topLeft());
+            m_width = m_minWidth;
+        }
+        break;
+        case Qt::AlignLeft: {
+            QPointF point = m_rect.topLeft();
+            m_width = 0;
+            m_height = 0;
+            qreal maxWidth = 0;
+            for (int i=0; i<items.count(); i++) {
+                QGraphicsItem *item = items.at(i);
+                const QRectF& rect = item->boundingRect();
+                qreal w = rect.width();
+                qreal h = rect.height();
+                m_minWidth = qMax(m_minWidth,rect.width());
+                m_minHeight = qMax(m_minHeight,h);
+                maxWidth = qMax(maxWidth,w);
+                m_width = qMax(m_width, maxWidth);
+                item->setPos(point.x(),point.y());
+                point.setY(point.y() + h);
+                if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
+                    // Next item would go off rect.
+                    point.setX(point.x() + maxWidth);
+                    point.setY(m_rect.topLeft().y());
+                    if (i+1 < items.count()) {
+                        m_width += maxWidth;
+                        maxWidth = 0;
+                    }
+                }
+            }
+            m_markers->setPos(m_rect.topLeft());
+            m_height = m_minHeight;
+        }
+        break;
+        case Qt::AlignRight: {
+            QPointF point = m_rect.topRight();
+            m_width = 0;
+            m_height = 0;
+            qreal maxWidth = 0;
+            for (int i=0; i<items.count(); i++) {
+                QGraphicsItem *item = items.at(i);
+                const QRectF& rect = item->boundingRect();
+                qreal w = rect.width();
+                qreal h = rect.height();
+                m_minWidth = qMax(m_minWidth,rect.width());
+                m_minHeight = qMax(m_minHeight,h);
+                maxWidth = qMax(maxWidth,w);
+                m_width = qMax(m_width, maxWidth);
+                item->setPos(point.x() - w,point.y());
+                point.setY(point.y() + h);
+                if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
+                    // Next item would go off rect.
+                    point.setX(point.x() - maxWidth);
+                    point.setY(m_rect.topLeft().y());
+                    if (i+1 < items.count()) {
+                        m_width += maxWidth;
+                        maxWidth = 0;
+                    }
+                }
+            }
+            m_markers->setPos(m_rect.topLeft());
+            m_height = m_minHeight;
+        }
+        break;
+        default:
+        break;
     }
 }
 

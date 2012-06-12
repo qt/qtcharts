@@ -27,6 +27,7 @@
 #include <QBarSet>
 #include <QBarSeries>
 #include <QLegend>
+#include <QFormLayout>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -49,25 +50,52 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(removeBarsetButton, SIGNAL(clicked()), this, SLOT(removeBarset()));
     m_buttonLayout->addWidget(removeBarsetButton, 3, 0);
 
+    QPushButton *leftButton = new QPushButton("Align legend left");
+    connect(leftButton, SIGNAL(clicked()), this, SLOT(setLegendLeft()));
+    m_buttonLayout->addWidget(leftButton, 4, 0);
+
+    QPushButton *rightButton = new QPushButton("Align legend right");
+    connect(rightButton, SIGNAL(clicked()), this, SLOT(setLegendRight()));
+    m_buttonLayout->addWidget(rightButton, 5, 0);
+
+    QPushButton *topButton = new QPushButton("Align legend top");
+    connect(topButton, SIGNAL(clicked()), this, SLOT(setLegendTop()));
+    m_buttonLayout->addWidget(topButton, 6, 0);
+
+    QPushButton *bottomButton = new QPushButton("Align legend bottom");
+    connect(bottomButton, SIGNAL(clicked()), this, SLOT(setLegendBottom()));
+    m_buttonLayout->addWidget(bottomButton, 7, 0);
+
+    m_legendPosX = new QDoubleSpinBox();
+    m_legendPosY = new QDoubleSpinBox();
+    m_legendWidth = new QDoubleSpinBox();
+    m_legendHeight = new QDoubleSpinBox();
+
+    connect(m_legendPosX, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
+    connect(m_legendPosY, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
+    connect(m_legendWidth, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
+    connect(m_legendHeight, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
+
+    QFormLayout* legendLayout = new QFormLayout();
+    legendLayout->addRow("Horizontal position", m_legendPosX);
+    legendLayout->addRow("Vertical position", m_legendPosY);
+    legendLayout->addRow("Width", m_legendWidth);
+    legendLayout->addRow("Height", m_legendHeight);
+    m_legendSettings = new QGroupBox("Detached legend");
+    m_legendSettings->setLayout(legendLayout);
+    m_buttonLayout->addWidget(m_legendSettings);
+    m_legendSettings->setVisible(false);
+
     // Create chart view with the chart
 //![1]
     m_chart = new QChart();
     m_chartView = new QChartView(m_chart, this);
-    m_chartView->setRubberBand(QChartView::HorizonalRubberBand);
 //![1]
-
-    // Create custom scene and view, where detached legend will be drawn
-//![2]
-    m_customView = new QGraphicsView(this);
-    m_customScene = new QGraphicsScene(this);
-    m_customView->setScene(m_customScene);
-//![2]
 
     // Create layout for grid and detached legend
     m_mainLayout = new QGridLayout();
     m_mainLayout->addLayout(m_buttonLayout, 0, 0);
     m_mainLayout->addWidget(m_chartView, 0, 1, 3, 1);
-    m_mainLayout->addWidget(m_customView, 0, 2, 3, 1);
     setLayout(m_mainLayout);
 
     createSeries();
@@ -93,43 +121,61 @@ void MainWidget::createSeries()
 //![3]
 }
 
+void MainWidget::showLegendSpinbox()
+{
+    m_legendSettings->setVisible(true);
+    QRectF chartViewRect = m_chartView->rect();
+    QRectF legendRect = m_chart->legend()->boundingRect();
+
+    m_legendPosX->setMinimum(0);
+    m_legendPosX->setMaximum(chartViewRect.width());
+    m_legendPosX->setValue(150);
+
+    m_legendPosY->setMinimum(0);
+    m_legendPosY->setMaximum(chartViewRect.height());
+    m_legendPosY->setValue(150);
+
+    m_legendWidth->setMinimum(0);
+    m_legendWidth->setMaximum(chartViewRect.width());
+    m_legendWidth->setValue(150);
+
+    m_legendHeight->setMinimum(0);
+    m_legendHeight->setMaximum(chartViewRect.height());
+    m_legendHeight->setValue(64);
+}
+
+void MainWidget::hideLegendSpinbox()
+{
+    m_legendSettings->setVisible(false);
+}
+
+
 void MainWidget::detachLegend()
 {
-    // Detach legend from chart and
-    // put legend to our custom scene
 //![4]
     QLegend *legend = m_chart->legend();
     legend->detachFromChart();
-    legend->setGeometry(m_customView->rect());
-    m_customScene->addItem(legend);
+
+    m_chart->legend()->setBackgroundVisible(true);
+    m_chart->legend()->setBrush(QBrush(QColor(128,128,128,128)));
 //![4]
 
-    // This forces redraw
-    QSize delta(1,1);
-    resize(size() + delta);
-    resize(size() - delta);
+    showLegendSpinbox();
+    updateLegendLayout();
+    update();
 }
 
 
 void MainWidget::attachLegend()
 {
-    // Remove legend from custom scene and put it back to chartview scene.
-    // Attach legend back to chart, so that layout works.
-
 //![5]
     QLegend *legend = m_chart->legend();
-
-    if (m_customScene->items().contains(legend)) {
-        m_customScene->removeItem(legend);
-        m_chartView->scene()->addItem(legend);
-        legend->attachToChart();
-    }
+    legend->attachToChart();
+    m_chart->legend()->setBackgroundVisible(false);
 //![5]
 
-    // This forces redraw
-    QSize delta(1,1);
-    resize(size() + delta);
-    resize(size() - delta);
+    hideLegendSpinbox();
+    update();
 }
 
 void MainWidget::addBarset()
@@ -146,4 +192,33 @@ void MainWidget::removeBarset()
     if (sets.count() > 0) {
         m_series->remove(sets.at(sets.count()-1));
     }
+}
+
+void MainWidget::setLegendLeft()
+{
+    m_chart->legend()->setAlignment(Qt::AlignLeft);
+}
+
+void MainWidget::setLegendRight()
+{
+    m_chart->legend()->setAlignment(Qt::AlignRight);
+}
+
+void MainWidget::setLegendTop()
+{
+    m_chart->legend()->setAlignment(Qt::AlignTop);
+}
+
+void MainWidget::setLegendBottom()
+{
+    m_chart->legend()->setAlignment(Qt::AlignBottom);
+}
+
+void MainWidget::updateLegendLayout()
+{
+    m_chart->legend()->setGeometry(m_legendPosX->value()
+                                   ,m_legendPosY->value()
+                                   ,m_legendWidth->value()
+                                   ,m_legendHeight->value());
+    m_chart->legend()->update();
 }

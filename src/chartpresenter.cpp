@@ -318,8 +318,6 @@ void ChartPresenter::updateLayout()
     // recalculate legend position
     if (legend != 0 && legend->isAttachedToChart() && legend->isEnabled()) {
 
-        QRect legendRect;
-
         // Reserve some space for legend
         switch (legend->alignment()) {
 
@@ -382,7 +380,9 @@ void ChartPresenter::updateLayout()
 
     QRectF chartRect = m_rect.adjusted(m_chartMargins.left(),m_chartMargins.top(),-m_chartMargins.right(),-m_chartMargins.bottom());
 
-    legend->setGeometry(m_rect.adjusted(m_legendMargins.left(),m_legendMargins.top(),-m_legendMargins.right(),-m_legendMargins.bottom()));
+    if (legend != 0 && legend->isAttachedToChart() && legend->isEnabled()) {
+        legend->setGeometry(m_rect.adjusted(m_legendMargins.left(),m_legendMargins.top(),-m_legendMargins.right(),-m_legendMargins.bottom()));
+    }
 
     if(m_chartRect!=chartRect && chartRect.isValid()){
         m_chartRect=chartRect;
