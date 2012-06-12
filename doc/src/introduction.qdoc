@@ -1,0 +1,16 @@
+/*!
+    \page introduction.html
+    \title QtCommercial Charts Introduction
+    \keyword Introduction
+
+    You can obtain the QtCommercial Charts package from \l {http://www.digia.com/en/Qt/Log-in-Customer-Portal/} {Customer portal}.
+
+    Add to you *.pro file
+    \code
+    CONFIG += qtcommercialchart
+    \endcode
+
+    \raw HTML
+    \endraw
+    
+*/
