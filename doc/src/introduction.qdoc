@@ -5,9 +5,51 @@
 
     You can obtain the QtCommercial Charts package from \l {http://www.digia.com/en/Qt/Log-in-Customer-Portal/} {Customer portal}.
 
-    Add to you *.pro file
+    Compiling:
+    \code
+    qmake CONFIG+=release
+    make
+    make install
+    \endcode
+
+    Depending on the OS and the compiler you are using "make" might need to be replaced with another command like: nmake, mingw32-make, etc
+
+    \bold {New project}
+
+    Create a new project in a usual way and then add to your project's *.pro file following line
     \code
     CONFIG += qtcommercialchart
+    \endcode
+
+    or if you have not installed QCharts afer building:
+
+    On *unix:
+    \code
+        INCLUDEPATH += <path_to_charts_folder>/include
+        LIBS += -L<path_to_charts_folder>/lib -lQtCommercialChart
+    \endcode
+
+    On windows:
+
+    On mac:
+
+    \bold {Widget project}
+
+    To use the QCharts classes add QtCommercialChart namespace macro in your header file.
+    \code
+        #include<QWidget>
+        #include<QChartView>
+
+        QTCOMMERCIALCHART_USE_NAMESPACE
+
+        class ExampleWidget : public QWidget
+    \endcode
+
+    \bold {QML project}
+
+    Add an import line to your *.qml file:
+    \code
+        import QtCommercial.Chart 1.0
     \endcode
 
     \raw HTML
