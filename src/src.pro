@@ -175,7 +175,7 @@ win32:{
    INSTALLS += target
 }
 
-mac: {
+mac: !staticlib: {
     # Update the name (id) of the library on OSX to point to the lib path
     MAC_CHARTS_LIB_NAME = "lib"$$LIBRARY_NAME".1.dylib"
     QMAKE_POST_LINK += "install_name_tool -id $$CHART_BUILD_LIB_DIR"/"$$MAC_CHARTS_LIB_NAME $$CHART_BUILD_LIB_DIR"/"$$MAC_CHARTS_LIB_NAME"
