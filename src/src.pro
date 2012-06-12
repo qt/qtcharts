@@ -151,7 +151,9 @@ QMAKE_EXTRA_COMPILERS += install_build_public_headers \
 
 win32:{
    bintarget.CONFIG += no_check_exist
-   bintarget.files = $$CHART_BUILD_LIB_DIR\\$${TARGET}.dll
+   !staticlib: {
+      bintarget.files += $$CHART_BUILD_LIB_DIR\\$${TARGET}.dll
+   }
    win32-msvc*:CONFIG(debug, debug|release): {
       bintarget.files += $$CHART_BUILD_LIB_DIR\\$${TARGET}.pdb
    }

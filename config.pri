@@ -83,6 +83,10 @@ INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR
 
 LIBS += -l$$LIBRARY_NAME
 
+# This will undefine Q_DECL_EXPORT/Q_DECL_IMPORT at qchartglobal.h
+# They should not be used for staticlib builds.
+staticlib:DEFINES+=QTCOMMERCIALCHART_STATICLIB
+
 ##################### UNIT TESTS ##############################################################
 
 CONFIG(debug, debug|release) {

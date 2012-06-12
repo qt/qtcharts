@@ -24,20 +24,29 @@ licenses/
 Building
 ========
 
-Configure project with qmake:
-    qmake CONFIG+=release
+Configure project with qmake. On Windows by default both debug and release
+versions are built. On other platforms you need to specify the version
+(default is debug):
+    (Windows) qmake
+    (Other platforms) qmake CONFIG+=release
 
 Build poject with make:
     (Linux) make
     (Windows with MinGw) mingw32-make
     (Visual Studio) nmake
-	(OSX) make
+    (OSX) make
 
 If you want to install the libraries to your Qt library directory use:
     make install
 
 If you want to uninstall the libraries
     make uninstall
+
+Building as a statically linked library
+=======================================
+
+The same as above applies you will just have to add staticlib to the CONFIG:
+    qmake CONFIG+=staticlib
 
 Documentation
 =============
