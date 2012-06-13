@@ -334,23 +334,24 @@ void QLegendPrivate::setOffset(qreal x, qreal y)
         }
     }
 
-    // If detached, the scrolling and layout logic is inverted.
+    // If detached, the scrolling direction is vertical instead of horizontal and vice versa.
     if (!m_attachedToChart) {
         scrollHorizontal = !scrollHorizontal;
     }
 
+    // Limit offset between m_minOffset and m_maxOffset
     if (scrollHorizontal) {
         if(m_width<=m_rect.width()) return;
 
         if (x != m_offsetX) {
-            m_offsetX = qBound(qreal(0), x, m_width - m_rect.width());
+            m_offsetX = qBound(m_minOffsetX, x, m_maxOffsetX);
             m_markers->setPos(-m_offsetX,m_rect.top());
         }
     } else {
         if(m_height<=m_rect.height()) return;
 
         if (y != m_offsetY) {
-            m_offsetY = qBound(qreal(0), y, m_height - m_rect.height());
+            m_offsetY = qBound(m_minOffsetY, y, m_maxOffsetY);
             m_markers->setPos(m_rect.left(),-m_offsetY);
         }
     }
@@ -420,12 +421,22 @@ void QLegendPrivate::updateLayout()
         break;
     }
 
+    m_minOffsetX = 0;
+    m_minOffsetY = 0;
+    m_maxOffsetX = m_width - m_rect.width();
+    m_maxOffsetY = m_height - m_rect.height();
+
     m_presenter->updateLayout();
 }
 
 void QLegendPrivate::updateDetachedLayout()
 {
+    // Detached layout is different.
+    // In detached mode legend may have multiple rows and columns, so layout calculations
+    // differ a log from attached mode.
+    // Also the scrolling logic is bit different.
     m_offsetX=0;
+    m_offsetY=0;
     QList<QGraphicsItem *> items = m_markers->childItems();
 
     if(items.isEmpty()) return;
@@ -459,6 +470,11 @@ void QLegendPrivate::updateDetachedLayout()
             }
             m_markers->setPos(m_rect.topLeft());
             m_width = m_minWidth;
+
+            m_minOffsetX = 0;
+            m_minOffsetY = 0;
+            m_maxOffsetX = m_width - m_rect.width();
+            m_maxOffsetY = m_height - m_rect.height();
         }
         break;
         case Qt::AlignBottom: {
@@ -486,6 +502,11 @@ void QLegendPrivate::updateDetachedLayout()
             }
             m_markers->setPos(m_rect.topLeft());
             m_width = m_minWidth;
+
+            m_minOffsetX = 0;
+            m_minOffsetY = qMin(m_rect.topLeft().y(), m_rect.topLeft().y() - m_height + m_rect.height());
+            m_maxOffsetX = m_width - m_rect.width();
+            m_maxOffsetY = 0;
         }
         break;
         case Qt::AlignLeft: {
@@ -501,7 +522,6 @@ void QLegendPrivate::updateDetachedLayout()
                 m_minWidth = qMax(m_minWidth,rect.width());
                 m_minHeight = qMax(m_minHeight,h);
                 maxWidth = qMax(maxWidth,w);
-                m_width = qMax(m_width, maxWidth);
                 item->setPos(point.x(),point.y());
                 point.setY(point.y() + h);
                 if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
@@ -514,8 +534,14 @@ void QLegendPrivate::updateDetachedLayout()
                     }
                 }
             }
+            m_width += maxWidth;
             m_markers->setPos(m_rect.topLeft());
             m_height = m_minHeight;
+
+            m_minOffsetX = 0;
+            m_minOffsetY = 0;
+            m_maxOffsetX = m_width - m_rect.width();
+            m_maxOffsetY = m_height - m_rect.height();
         }
         break;
         case Qt::AlignRight: {
@@ -531,7 +557,6 @@ void QLegendPrivate::updateDetachedLayout()
                 m_minWidth = qMax(m_minWidth,rect.width());
                 m_minHeight = qMax(m_minHeight,h);
                 maxWidth = qMax(maxWidth,w);
-                m_width = qMax(m_width, maxWidth);
                 item->setPos(point.x() - w,point.y());
                 point.setY(point.y() + h);
                 if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
@@ -544,8 +569,14 @@ void QLegendPrivate::updateDetachedLayout()
                     }
                 }
             }
+            m_width += maxWidth;
             m_markers->setPos(m_rect.topLeft());
             m_height = m_minHeight;
+
+            m_minOffsetX = qMin(m_rect.topLeft().x(), m_rect.topLeft().x() - m_width + m_rect.width());
+            m_minOffsetY = 0;
+            m_maxOffsetX = 0;
+            m_maxOffsetY = m_height - m_rect.height();
         }
         break;
         default:

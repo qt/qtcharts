@@ -67,6 +67,10 @@ private:
     QRectF m_rect;
     qreal m_offsetX;
     qreal m_offsetY;
+    qreal m_minOffsetX;
+    qreal m_minOffsetY;
+    qreal m_maxOffsetX;
+    qreal m_maxOffsetY;
     qreal m_minWidth;
     qreal m_minHeight;
     qreal m_width;

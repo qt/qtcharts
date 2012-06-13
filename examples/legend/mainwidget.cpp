@@ -141,7 +141,7 @@ void MainWidget::showLegendSpinbox()
 
     m_legendHeight->setMinimum(0);
     m_legendHeight->setMaximum(chartViewRect.height());
-    m_legendHeight->setValue(64);
+    m_legendHeight->setValue(75);
 }
 
 void MainWidget::hideLegendSpinbox()
