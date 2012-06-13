@@ -87,10 +87,8 @@ MainWidget::MainWidget(QWidget *parent) :
     m_legendSettings->setVisible(false);
 
     // Create chart view with the chart
-//![1]
     m_chart = new QChart();
     m_chartView = new QChartView(m_chart, this);
-//![1]
 
     // Create layout for grid and detached legend
     m_mainLayout = new QGridLayout();
@@ -103,7 +101,6 @@ MainWidget::MainWidget(QWidget *parent) :
 
 void MainWidget::createSeries()
 {
-//![3]
     m_series = new QBarSeries();
     addBarset();
     addBarset();
@@ -112,13 +109,13 @@ void MainWidget::createSeries()
 
     m_chart->addSeries(m_series);
     m_chart->setTitle("Legend detach example");
-
+//![1]
     m_chart->legend()->setVisible(true);
     m_chart->legend()->setAlignment(Qt::AlignBottom);
-    m_chart->axisY()->setNiceNumbersEnabled(true);
+//![1]
 
+    m_chart->axisY()->setNiceNumbersEnabled(true);
     m_chartView->setRenderHint(QPainter::Antialiasing);
-//![3]
 }
 
 void MainWidget::showLegendSpinbox()
@@ -152,13 +149,13 @@ void MainWidget::hideLegendSpinbox()
 
 void MainWidget::detachLegend()
 {
-//![4]
+//![2]
     QLegend *legend = m_chart->legend();
     legend->detachFromChart();
 
     m_chart->legend()->setBackgroundVisible(true);
     m_chart->legend()->setBrush(QBrush(QColor(128,128,128,128)));
-//![4]
+//![2]
 
     showLegendSpinbox();
     updateLegendLayout();
@@ -168,11 +165,11 @@ void MainWidget::detachLegend()
 
 void MainWidget::attachLegend()
 {
-//![5]
+//![3]
     QLegend *legend = m_chart->legend();
     legend->attachToChart();
     m_chart->legend()->setBackgroundVisible(false);
-//![5]
+//![3]
 
     hideLegendSpinbox();
     update();
@@ -216,9 +213,11 @@ void MainWidget::setLegendBottom()
 
 void MainWidget::updateLegendLayout()
 {
+//![4]
     m_chart->legend()->setGeometry(m_legendPosX->value()
                                    ,m_legendPosY->value()
                                    ,m_legendWidth->value()
                                    ,m_legendHeight->value());
     m_chart->legend()->update();
+//![4]
 }
