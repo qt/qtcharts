@@ -49,6 +49,7 @@ public:
     void updateLayout();
     void updateDetachedLayout();
     void attachToChart();
+    int roundness(qreal size);
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
@@ -75,6 +76,7 @@ private:
     qreal m_minHeight;
     qreal m_width;
     qreal m_height;
+    qreal m_diameter;
     bool m_attachedToChart;
     bool m_backgroundVisible;
 

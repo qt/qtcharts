@@ -183,7 +183,7 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->setOpacity(opacity());
     painter->setPen(d_ptr->m_pen);
     painter->setBrush(d_ptr->m_brush);
-    painter->drawRect(boundingRect());
+    painter->drawRoundRect(rect(),d_ptr->roundness(rect().width()),d_ptr->roundness(rect().height()));
 }
 
 /*!
@@ -395,6 +395,7 @@ QLegendPrivate::QLegendPrivate(ChartPresenter* presenter, QChart *chart, QLegend
     m_minHeight(0),
     m_width(0),
     m_height(0),
+    m_diameter(5),
     m_attachedToChart(true),
     m_backgroundVisible(false)
 {
@@ -676,6 +677,11 @@ void QLegendPrivate::attachToChart()
 {
     m_attachedToChart = true;
     q_ptr->setParent(m_chart);
+}
+
+int QLegendPrivate::roundness(qreal size)
+{
+    return 100*m_diameter/int(size);
 }
 
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)

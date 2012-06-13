@@ -155,6 +155,7 @@ void MainWidget::detachLegend()
 
     m_chart->legend()->setBackgroundVisible(true);
     m_chart->legend()->setBrush(QBrush(QColor(128,128,128,128)));
+    m_chart->legend()->setPen(QPen(QColor(192,192,192,192)));
 //![2]
 
     showLegendSpinbox();
