@@ -39,6 +39,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+ \enum QPieSlice::LabelPosition
+
+ This enum describes the position of the slice label.
+
+ \value LabelOutside Label is outside the slice with an arm.
+ \value LabelInside Label is centered inside the slice.
+
+ */
+
+/*!
     \property QPieSlice::label
 
     Label of the slice.
@@ -239,6 +249,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QPieSlice::labelPosition
+
+    Position of the slice label.
+
+    \sa label, labelVisible
+*/
+
+/*!
+    \fn void QPieSlice::labelPositionChanged()
+
+    This signal is emitted when the label position of the slice has changed.
+
+    \sa labelPosition
+*/
+
+/*!
     \property QPieSlice::labelArmLengthFactor
 
     Defines the length of the label arm.
@@ -435,6 +461,19 @@ void QPieSlice::setExploded(bool exploded)
     if (d_ptr->m_data.m_isExploded != exploded) {
         d_ptr->m_data.m_isExploded = exploded;
         emit explodedChanged();
+    }
+}
+
+QPieSlice::LabelPosition QPieSlice::labelPosition()
+{
+    return d_ptr->m_data.m_labelPosition;
+}
+
+void QPieSlice::setLabelPosition(LabelPosition position)
+{
+    if (d_ptr->m_data.m_labelPosition != position) {
+        d_ptr->m_data.m_labelPosition = position;
+        emit labelPositionChanged();
     }
 }
 

@@ -145,6 +145,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         connect(slice, SIGNAL(brushChanged()), this, SLOT(handleSliceChanged()));
         connect(slice, SIGNAL(labelBrushChanged()), this, SLOT(handleSliceChanged()));
         connect(slice, SIGNAL(labelFontChanged()), this, SLOT(handleSliceChanged()));
+        connect(slice, SIGNAL(labelPositionChanged()), this, SLOT(handleSliceChanged()));
         connect(slice, SIGNAL(labelArmLengthFactorChanged()), this, SLOT(handleSliceChanged()));
         connect(slice, SIGNAL(explodeDistanceFactorChanged()), this, SLOT(handleSliceChanged()));
 

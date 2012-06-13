@@ -75,6 +75,7 @@ public:
         m_explodeDistanceFactor = 0.15;
 
         m_isLabelVisible = false;
+        m_labelPosition = QPieSlice::LabelOutside;
         m_labelArmLengthFactor = 0.15;
 
         m_percentage = 0;
@@ -99,6 +100,7 @@ public:
         if (m_isLabelVisible != other.m_isLabelVisible ||
             m_labelText != other.m_labelText ||
             m_labelFont != other.m_labelFont ||
+            m_labelPosition != other.m_labelPosition ||
             !qFuzzyIsNull(m_labelArmLengthFactor - other.m_labelArmLengthFactor) ||
             m_labelBrush != other.m_labelBrush)
             return true;
@@ -124,6 +126,7 @@ public:
     bool m_isLabelVisible;
     QString m_labelText;
     Themed<QFont> m_labelFont;
+    QPieSlice::LabelPosition m_labelPosition;
     qreal m_labelArmLengthFactor;
     Themed<QBrush> m_labelBrush;
 

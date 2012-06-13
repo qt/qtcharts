@@ -85,6 +85,7 @@ private:
     PenTool *m_penTool;
     QPushButton *m_font;
     QPushButton *m_labelBrush;
+    QComboBox *m_labelPosition;
     BrushTool *m_labelBrushTool;
 };
 

@@ -78,13 +78,20 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
 
     if (m_data.m_isLabelVisible) {
         painter->save();
-        painter->setClipRect(parentItem()->boundingRect());
+
         // Pen for label arm not defined in the QPieSeries api, let's use brush's color instead
         // Also, the drawText actually uses the pen color for the text color (unlike QGraphicsSimpleTextItem)
         painter->setPen(m_data.m_labelBrush.color());
-        painter->drawPath(m_labelArmPath);
+        painter->setBrush(m_data.m_labelBrush);
         painter->setFont(m_data.m_labelFont);
-        painter->drawText(m_labelTextRect.bottomLeft(), m_data.m_labelText);
+        if (m_data.m_labelPosition == QPieSlice::LabelOutside) {
+            painter->setClipRect(parentItem()->boundingRect());
+            painter->strokePath(m_labelArmPath, m_data.m_labelBrush.color());
+        } else { // QPieSlice::LabelInside
+            painter->setClipPath(m_slicePath);
+        }
+        painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
+
         painter->restore();
     }
 }
@@ -120,22 +127,28 @@ void PieSliceItem::updateGeometry()
 
     prepareGeometryChange();
 
-    // update slice path
+    // slice path
     qreal centerAngle;
     QPointF armStart;
     m_slicePath = slicePath(m_data.m_center, m_data.m_radius, m_data.m_startAngle, m_data.m_angleSpan, &centerAngle, &armStart);
 
-    // update text rect
-    m_labelTextRect = labelTextRect(m_data.m_labelFont, m_data.m_labelText);
+    // text rect
+    QFontMetricsF fm(m_data.m_labelFont);
+    m_labelTextRect = QRectF(0, 0, fm.width(m_data.m_labelText), fm.height());
 
-    // update label arm path
+    // label arm path
     QPointF labelTextStart;
     m_labelArmPath = labelArmPath(armStart, centerAngle, m_data.m_radius * m_data.m_labelArmLengthFactor, m_labelTextRect.width(), &labelTextStart);
 
-    // update text position
-    m_labelTextRect.moveBottomLeft(labelTextStart);
+    // text position
+    if (m_data.m_labelPosition == QPieSlice::LabelOutside)
+        m_labelTextRect.moveBottomLeft(labelTextStart);
+    else {// QPieSlice::LabelInside
+        QPointF sliceCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
+        m_labelTextRect.moveCenter(sliceCenter);
+    }
 
-    // update bounding rect
+    //  bounding rect
     if (m_data.m_isLabelVisible)
         m_boundingRect = m_slicePath.boundingRect().united(m_labelArmPath.boundingRect()).united(m_labelTextRect);
     else
@@ -208,21 +221,12 @@ QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length
          *textStart = parm2;
     }
 
-    // elevate the text position a bit so that it does not hit the line
-    *textStart += QPointF(0, -3);
-
     QPainterPath path;
     path.moveTo(start);
     path.lineTo(parm1);
     path.lineTo(parm2);
 
     return path;
-}
-
-QRectF PieSliceItem::labelTextRect(QFont font, QString text)
-{
-    QFontMetricsF fm(font);
-    return fm.boundingRect(text);
 }
 
 #include "moc_piesliceitem_p.cpp"

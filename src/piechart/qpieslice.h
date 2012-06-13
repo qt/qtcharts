@@ -34,9 +34,11 @@ class QPieSeries;
 class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 {
     Q_OBJECT
+    Q_ENUMS(LabelPosition)
     Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)
     Q_PROPERTY(qreal value READ value WRITE setValue NOTIFY valueChanged)
     Q_PROPERTY(bool labelVisible READ isLabelVisible WRITE setLabelVisible NOTIFY labelVisibleChanged)
+    Q_PROPERTY(LabelPosition labelPosition READ labelPosition WRITE setLabelPosition NOTIFY labelPositionChanged)
     Q_PROPERTY(bool exploded READ isExploded WRITE setExploded NOTIFY explodedChanged)
     Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
@@ -53,6 +55,12 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
     Q_PROPERTY(qreal angleSpan READ angleSpan NOTIFY angleSpanChanged)
 
 public:
+    enum LabelPosition {
+        LabelOutside,
+        LabelInside
+    };
+
+public:
     explicit QPieSlice(QObject *parent = 0);
     QPieSlice(QString label, qreal value, QObject *parent = 0);
     virtual ~QPieSlice();
@@ -65,6 +73,9 @@ public:
 
     void setLabelVisible(bool visible = true);
     bool isLabelVisible() const;
+
+    LabelPosition labelPosition();
+    void setLabelPosition(LabelPosition position);
 
     void setExploded(bool exploded = true);
     bool isExploded() const;
@@ -109,6 +120,7 @@ Q_SIGNALS:
     void labelChanged();
     void valueChanged();
     void labelVisibleChanged();
+    void labelPositionChanged();
     void explodedChanged();
     void penChanged();
     void brushChanged();

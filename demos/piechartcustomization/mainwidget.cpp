@@ -154,6 +154,9 @@ MainWidget::MainWidget(QWidget* parent)
     m_font = new QPushButton();
     m_labelBrush = new QPushButton();
     m_labelBrushTool = new BrushTool("Label brush", this);
+    m_labelPosition = new QComboBox(this);
+    m_labelPosition->addItem("Outside", QPieSlice::LabelOutside);
+    m_labelPosition->addItem("Inside", QPieSlice::LabelInside);
     QPushButton *removeSlice = new QPushButton("Remove slice");
 
     QFormLayout* sliceSettingsLayout = new QFormLayout();
@@ -163,7 +166,8 @@ MainWidget::MainWidget(QWidget* parent)
     sliceSettingsLayout->addRow("Brush", m_brush);
     sliceSettingsLayout->addRow("Label visible", m_sliceLabelVisible);
     sliceSettingsLayout->addRow("Label font", m_font);
-    sliceSettingsLayout->addRow("Label pen", m_labelBrush);
+    sliceSettingsLayout->addRow("Label brush", m_labelBrush);
+    sliceSettingsLayout->addRow("Label position", m_labelPosition);
     sliceSettingsLayout->addRow("Label arm length", m_sliceLabelArmFactor);
     sliceSettingsLayout->addRow("Exploded", m_sliceExploded);
     sliceSettingsLayout->addRow("Explode distance", m_sliceExplodedFactor);
@@ -184,6 +188,7 @@ MainWidget::MainWidget(QWidget* parent)
     connect(m_sliceLabelArmFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
     connect(m_sliceExploded, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
     connect(m_sliceExplodedFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
+    connect(m_labelPosition, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSliceSettings()));
     connect(removeSlice, SIGNAL(clicked()), this, SLOT(removeSlice()));
 
     // create chart view
@@ -244,6 +249,7 @@ void MainWidget::updateSliceSettings()
     m_slice->setLabelBrush(m_labelBrushTool->brush());
     m_slice->setLabelVisible(m_sliceLabelVisible->isChecked());
     m_slice->setLabelArmLengthFactor(m_sliceLabelArmFactor->value());
+    m_slice->setLabelPosition((QPieSlice::LabelPosition)m_labelPosition->currentIndex()); // assumes that index is in sync with the enum
 
     m_slice->setExploded(m_sliceExploded->isChecked());
     m_slice->setExplodeDistanceFactor(m_sliceExplodedFactor->value());
@@ -279,6 +285,9 @@ void MainWidget::handleSliceClicked(QPieSlice* slice)
     m_sliceLabelArmFactor->blockSignals(true);
     m_sliceLabelArmFactor->setValue(slice->labelArmLengthFactor());
     m_sliceLabelArmFactor->blockSignals(false);
+    m_labelPosition->blockSignals(true);
+    m_labelPosition->setCurrentIndex(slice->labelPosition()); // assumes that index is in sync with the enum
+    m_labelPosition->blockSignals(false);
 
     // exploded
     m_sliceExploded->blockSignals(true);

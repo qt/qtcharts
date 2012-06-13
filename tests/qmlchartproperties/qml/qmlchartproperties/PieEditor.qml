@@ -50,6 +50,7 @@ Flow {
         ignoreUnknownSignals: true
         onValueChanged:             console.log("slice.onValueChanged: " + series.at(0).value);
         onLabelVisibleChanged:      console.log("slice.onLabelVisibleChanged: " + series.at(0).labelVisible);
+        onLabelPositionChanged:     console.log("slice.onLabelPositionChanged: " + series.at(0).labelPosition);
         onExplodedChanged:          console.log("slice.onExplodedChanged: " + series.at(0).exploded);
         onPenChanged:               console.log("slice.onPenChanged: " + series.at(0).pen);
         onBorderColorChanged:       console.log("slice.onBorderColorChanged: " + series.at(0).borderColor);
@@ -129,6 +130,14 @@ Flow {
     Button {
         text: "slice label visible"
         onClicked: series.at(0).labelVisible = !series.at(0).labelVisible;
+    }
+    Button {
+        text: "slice label position inside"
+        onClicked: series.at(0).labelPosition = PieSlice.LabelInside;
+    }
+    Button {
+        text: "slice label position outside"
+        onClicked: series.at(0).labelPosition = PieSlice.LabelOutside;
     }
     Button {
         text: "slice label arm len +"
