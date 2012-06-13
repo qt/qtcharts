@@ -48,8 +48,11 @@ Flow {
     Connections {
         id: legendConnections
         ignoreUnknownSignals: true
-        onAlignmentChanged:         console.log("legend.onAlignmentChanged: " + series.legend.alignment);
+        onAlignmentChanged:         console.log("legend.onAlignmentChanged: " + alignment);
         onVisibleChanged:           console.log("legend.onVisibleChanged: " + series.legend.visible);
+        onBackgroundVisibleChanged: console.log("legend.onBackgroundVisibleChanged: " + visible);
+        onColorChanged:             console.log("legend.onColorChanged: " + color);
+        onBorderColorChanged:       console.log("legend.onBorderColorChanged: " + color);
     }
 
     Connections {
@@ -113,6 +116,22 @@ Flow {
         onClicked: series.backgroundColor = main.nextColor();
     }
     Button {
+        text: "legend visible"
+        onClicked: series.legend.visible = !series.legend.visible;
+    }
+    Button {
+        text: "legend bckgrd visible"
+        onClicked: series.legend.backgroundVisible = !series.legend.backgroundVisible;
+    }
+    Button {
+        text: "legend color"
+        onClicked: series.legend.color = main.nextColor();
+    }
+    Button {
+        text: "legend border color"
+        onClicked: series.legend.borderColor = main.nextColor();
+    }
+    Button {
         text: "legend top"
         onClicked: series.legend.alignment ^= Qt.AlignTop;
     }
@@ -127,10 +146,6 @@ Flow {
     Button {
         text: "legend right"
         onClicked: series.legend.alignment ^= Qt.AlignRight;
-    }
-    Button {
-        text: "legend visible"
-        onClicked: series.legend.visible = !series.legend.visible;
     }
     Button {
         text: "axis X nice nmb"

@@ -44,6 +44,9 @@ class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
     Q_OBJECT
     Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment NOTIFY alignmentChanged)
+    Q_PROPERTY(bool backgroundVisible READ isBackgroundVisible WRITE setBackgroundVisible NOTIFY backgroundVisibleChanged)
+    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
+    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
 
 private:
     explicit QLegend(QChart *chart);
@@ -56,9 +59,13 @@ public:
 
     void setBrush(const QBrush &brush);
     QBrush brush() const;
+    void setColor(QColor color);
+    QColor color();
 
     void setPen(const QPen &pen);
     QPen pen() const;
+    void setBorderColor(QColor color);
+    QColor borderColor();
 
     void setAlignment(Qt::Alignment alignment);
     Qt::Alignment alignment() const;
@@ -82,11 +89,14 @@ protected:
     void showEvent(QShowEvent *event);
 
 Q_SIGNALS:
-    void alignmentChanged();
+    void alignmentChanged(Qt::Alignment alignment);
+    void backgroundVisibleChanged(bool visible);
+    void colorChanged(QColor color);
+    void borderColorChanged(QColor color);
 
 private:
     QScopedPointer<QLegendPrivate> d_ptr;
-    Q_DISABLE_COPY(QLegend);
+    Q_DISABLE_COPY(QLegend)
     friend class LegendScroller;
 };
 

@@ -60,10 +60,83 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QChart
 */
+/*!
+    \qmlclass Legend QLegend
+    \brief Legend is part of QtCommercial Chart QML API.
+
+    Legend is a graphical object, whics displays legend of the chart. Legend state is updated by ChartView, when
+    series have been changed. Legend is referenced via ChartView class. For example:
+    \code
+        ChartView {
+            legend.visible: true
+            legend.alignment: Qt.AlignBottom
+            // Add a few series...
+        }
+    \endcode
+
+    \image examples_percentbarchart_legend.png
+*/
 
 /*!
-    \fn void QLegend::alignmentChanged()
-    Emitted when the alignment of the legend changes.
+    \property QLegend::alignment
+    \brief The alignment of the legend.
+
+    Legend paints on the defined position in the chart. The following alignments are supported:
+    Qt::AlignTop, Qt::AlignBottom, Qt::AlignLeft, Qt::AlignRight. If you set more than one flag the result is undefined.
+*/
+/*!
+    \qmlproperty Qt.Alignment Legend::alignment
+    \brief The alignment of the legend.
+
+    Legend paints on the defined position in the chart. The following alignments are supported:
+    Qt.AlignTop, Qt.AlignBottom, Qt.AlignLeft, Qt.AlignRight. If you set more than one flag the result is undefined.
+*/
+
+/*!
+    \property QLegend::backgroundVisible
+    Whether the legend background is visible or not.
+*/
+/*!
+    \qmlproperty bool Legend::backgroundVisible
+    Whether the legend background is visible or not.
+*/
+
+/*!
+    \property QLegend::color
+    The color of the legend, i.e. the background color.
+*/
+/*!
+    \qmlproperty color Legend::color
+    The color of the legend, i.e. the background color.
+*/
+
+/*!
+    \property QLegend::borderColor
+    The border color of the legend, i.e. the line color.
+*/
+/*!
+    \qmlproperty color Legend::borderColor
+    The border color of the legend, i.e. the line color.
+*/
+
+/*!
+    \fn void QLegend::alignmentChanged(Qt::Alignment)
+    Emitted when the \a alignment of the legend changes.
+*/
+
+/*!
+    \fn void QLegend::backgroundVisibleChanged(bool)
+    The visibility of the legend background changed to \a visible.
+*/
+
+/*!
+    \fn void QLegend::colorChanged(QColor)
+    The color of the legend background changed to \a color.
+*/
+
+/*!
+    \fn void QLegend::borderColorChanged(QColor)
+    The border color of the legend background changed to \a color.
 */
 
 /*!
@@ -141,6 +214,21 @@ QBrush QLegend::brush() const
     return d_ptr->m_brush;
 }
 
+void QLegend::setColor(QColor color)
+{
+    QBrush b = d_ptr->m_brush;
+    if (b.color() != color) {
+        b.setColor(color);
+        setBrush(b);
+        emit colorChanged(color);
+    }
+}
+
+QColor QLegend::color()
+{
+    return d_ptr->m_brush.color();
+}
+
 /*!
  Sets the \a pen of legend. Pen affects the legend borders.
  */
@@ -161,30 +249,30 @@ QPen QLegend::pen() const
     return d_ptr->m_pen;
 }
 
-/*!
-    \property QLegend::alignment
-    \brief The alignment of the legend.
-*/
+void QLegend::setBorderColor(QColor color)
+{
+    QPen p = d_ptr->m_pen;
+    if (p.color() != color) {
+        p.setColor(color);
+        setPen(p);
+        emit borderColorChanged(color);
+    }
+}
 
-/*!
-    Sets the \a alignment for legend. Legend paints on the defined position in chart. The following alignments are
-    supported: Qt::AlignTop, Qt::AlignBottom, Qt::AlignLeft, Qt::AlignRight. If you set more than one flag the result
-    is undefined.
+QColor QLegend::borderColor()
+{
+    return d_ptr->m_pen.color();
+}
 
-    \sa QLegend::Alignment
- */
 void QLegend::setAlignment(Qt::Alignment alignment)
 {
     if(d_ptr->m_alignment!=alignment) {
         d_ptr->m_alignment = alignment;
         d_ptr->updateLayout();
-        alignmentChanged();
+        alignmentChanged(alignment);
     }
 }
 
-/*!
- Returns the preferred layout for legend
- */
 Qt::Alignment QLegend::alignment() const
 {
     return d_ptr->m_alignment;
@@ -235,10 +323,10 @@ QPointF QLegend::offset() const
  */
 void QLegend::setBackgroundVisible(bool visible)
 {
-    if(d_ptr->m_backgroundVisible!=visible)
-    {
-        d_ptr->m_backgroundVisible=visible;
+    if(d_ptr->m_backgroundVisible != visible) {
+        d_ptr->m_backgroundVisible = visible;
         update();
+        emit backgroundVisibleChanged(visible);
     }
 }
 
