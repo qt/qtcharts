@@ -4,7 +4,7 @@
     \subtitle
 
 	This example shows how to detach legend from chart and how to attach it back. By default the chart
-	draws the legend inside same view with the chart. In some cases user may want to draw legend to somewhere else. To make this possible the legend can be detached from the chart. Detaching means that chart doesn't draw the legend or try to change it's layout. Detached can then be drawn where user wants, for example in different graphics scene. The behaviour of legend can be inspected by running the legend example.
+	draws the legend inside same view with the chart. In some cases user may want to draw legend to somewhere else. To make this possible the legend can be detached from the chart. Detaching means that chart doesn't draw the legend or try to change it's layout. Detached legend can then be drawn where user wants, for example in different graphics scene. The behaviour of legend can be inspected by running the legend example.
 	In example we use barseries where we add or remove barsets. The legend reflects the changes in series. Legend can be detached or attached back to chart and its alignment can be modified.
 	When legend is detached, it can be resized and positioned freely.
 
