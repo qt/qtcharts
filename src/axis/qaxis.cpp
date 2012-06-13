@@ -30,151 +30,217 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     There is only one x Axis, however there can be multiple y axes.
-    Each chart series can be bound to exactly one Y axis and the share common X axis.
-    Axis can be setup to show axis line with ticks, gird lines and shades.
+    Each chart series can be bound to exactly one Y axis and the shared common X axis.
+    Axis can be setup to show axis line with tick marks, grid lines and shades.
+*/
 
+/*!
+    \qmlclass Axis QAxis
+    \brief The Axis element is used for manipulating chart's axes
+
+    There is only one x Axis, however there can be multiple y axes on a ChartView.
+    Each chart series can be bound to exactly one Y axis and the shared common X axis.
+    Axis can be setup to show axis line with tick marks, grid lines and shades.
 */
 
 /*!
   \property QAxis::labelsVisible
-
+  Defines if axis labels are visible.
+*/
+/*!
+  \qmlproperty bool Axis::labelsVisible
   Defines if axis labels are visible.
 */
 
 /*!
   \property QAxis::min
-
+  Defines the minimum value on the axis.
+*/
+/*!
+  \qmlproperty real Axis::min
   Defines the minimum value on the axis.
 */
 
 /*!
   \property QAxis::max
-
+  Defines the maximum value on the axis.
+*/
+/*!
+  \qmlproperty real Axis::max
   Defines the maximum value on the axis.
 */
 
 /*!
-   \fn bool QAxis::isAxisVisible() const
-   \brief Returns if axis is visible
-   \sa setAxisVisible()
+  \property QAxis::visible
+  The visibility of the axis.
+*/
+/*!
+  \qmlproperty bool Axis::visible
+  The visibility of the axis.
 */
 
 /*!
-   \fn QPen QAxis::axisPen() const
-   \brief  Returns pen used to draw axis and ticks.
-    \sa setAxisPen()
+  \property QAxis::gridVisible
+  The visibility of the grid lines.
 */
-
-
 /*!
-   \fn bool QAxis::isGridLineVisible() const
-   \brief Returns if grid is visible
-   \sa setGridLineVisible()
+  \qmlproperty bool Axis::gridVisible
+  The visibility of the grid lines.
 */
 
 /*!
-   \fn QPen QAxis::gridLinePen() const
-   \brief  Returns pen used to draw grid.
-    \sa setGridLinePen()
+  \property QAxis::color
+  The color of the axis and ticks.
+*/
+/*!
+  \qmlproperty color Axis::color
+  The color of the axis and ticks.
 */
 
 /*!
-   \fn QPen QAxis::labelsPen() const
-   \brief Returns the pen used to labels.
-    \sa setLabelsPen()
+  \property QAxis::labelsColor
+  The color of the axis labels.
+*/
+/*!
+  \qmlproperty color Axis::labelsColor
+  The color of the axis labels.
 */
 
 /*!
-   \fn QBrush QAxis::labelsBrush() const
-   \brief Returns brush used to draw labels.
-    \sa setLabelsBrush()
+  \property QAxis::labelsAngle
+  The angle of the axis labels in degrees.
+*/
+/*!
+  \qmlproperty int Axis::labelsAngle
+  The angle of the axis labels in degrees.
 */
 
 /*!
-   \fn QFont QAxis::labelsFont() const
-   \brief Returns font used to draw labels.
-    \sa setLabelsFont()
+  \property QAxis::shadesVisible
+  The visibility of the axis shades.
+*/
+/*!
+  \qmlproperty bool Axis::shadesVisible
+  The visibility of the axis shades.
 */
 
 /*!
-   \fn QFont QAxis::labelsAngle() const
-   \brief Returns angle used to draw labels.
-    \sa setLabelsAngle()
+  \property QAxis::shadesColor
+  The fill (brush) color of the axis shades.
+*/
+/*!
+  \qmlproperty color Axis::shadesColor
+  The fill (brush) color of the axis shades.
 */
 
 /*!
-   \fn bool QAxis::shadesVisible() const
-   \brief Returns if shades are visible.
-   \sa setShadesVisible()
+  \property QAxis::shadesBorderColor
+  The border (pen) color of the axis shades.
+*/
+/*!
+  \qmlproperty color Axis::shadesBorderColor
+  The border (pen) color of the axis shades.
 */
 
 /*!
-  \fn  qreal QAxis::shadesOpacity() const
-  \brief Returns opacity of shades.
- */
-
+  \property QAxis::ticksCount
+  The number of tick marks for the axis.
+*/
 /*!
-   \fn QPen QAxis::shadesPen() const
-   \brief Returns pen used to draw shades.
-    \sa setShadesPen()
+  \qmlproperty int Axis::ticksCount
+  The number of tick marks for the axis.
 */
 
 /*!
-   \fn QBrush QAxis::shadesBrush() const
-   \brief Returns brush used to draw shades.
-    \sa setShadesBrush()
+  \property QAxis::niceNumbersEnabled
+  Whether the nice numbers algorithm is enabled or not for the axis.
+*/
+/*!
+  \qmlproperty bool Axis::niceNumbersEnabled
+  Whether the nice numbers algorithm is enabled or not for the axis.
 */
 
 /*!
-   \fn qreal QAxis::min() const
-   \brief Returns minimum value on the axis.
-   \sa setMin()
+  \fn void QAxis::visibleChanged(bool)
+  Visiblity of the axis has changed to \a visible.
 */
 
 /*!
-   \fn qreal QAxis::max() const
-   \brief Returns maximim value on the axis.
-   \sa setMax()
+  \fn void QAxis::labelsVisibleChanged(bool)
+  Visiblity of the labels of the axis has changed to \a visible.
 */
 
 /*!
-   \fn void QAxis::minChanged(qreal min)
-   \brief Axis emits signal when \a min of axis has changed.
+  \fn void QAxis::gridVisibleChanged(bool)
+  Visiblity of the grid lines of the axis has changed to \a visible.
 */
 
 /*!
-   \fn void QAxis::maxChanged(qreal max)
-   \brief Axis emits signal when \a max of axis has changed.
+  \fn void QAxis::minChanged(qreal min)
+  Axis emits signal when \a min of axis has changed.
 */
 
 /*!
-   \fn void QAxis::rangeChanged(qreal min, qreal max)
-   \brief Axis emits signal when \a min or \a max of axis has changed.
+  \fn void QAxis::maxChanged(qreal max)
+  Axis emits signal when \a max of axis has changed.
 */
 
 /*!
-   \fn int QAxis::ticksCount() const
-   \brief Return number of ticks on the axis
-   \sa setTicksCount()
+  \fn void QAxis::rangeChanged(qreal min, qreal max)
+  Axis emits signal when \a min or \a max of axis has changed.
 */
 
 /*!
-    \fn QChartAxisCategories* QAxis::categories()
-    \brief Returns pointer to the list of categories which correspond to the values on the axis.
+  \fn QChartAxisCategories* QAxis::categories()
+  Returns pointer to the list of categories which correspond to the values on the axis.
 */
 
 /*!
-    \fn void QAxis::ticksCountChanged(int count)
-    \brief Emits the new \a count of ticks on the axis
-    Signal is emitted when the number of the ticks on the axis has been changed to a different value.
-    Parementer count\a count is the new number of ticks on the axis.
+  \fn void QAxis::colorChanged(QColor)
+  Emitted if the \a color of the axis is changed.
 */
 
 /*!
-    Constructs new axis object which is a child of \a parent. Ownership is taken by
-    QChart when axis added.
+  \fn void QAxis::labelsColorChanged(QColor)
+  Emitted if the \a color of the axis labels is changed.
 */
 
+/*!
+  \fn void QAxis::labelsAngleChanged(int)
+  Emitted if the \a angle of the axis labels is changed.
+*/
+
+/*!
+  \fn void QAxis::shadesVisibleChanged(bool)
+  Emitted if the visibility of the axis shades is changed to \a visible.
+*/
+
+/*!
+  \fn void QAxis::shadesColorChanged(QColor)
+  Emitted if the \a color of the axis shades is changed.
+*/
+
+/*!
+  \fn void QAxis::shadesBorderColorChanged(QColor)
+  Emitted if the border \a color of the axis shades is changed.
+*/
+
+/*!
+  \fn void QAxis::ticksCountChanged(int count)
+  \brief Emits the new \a count of ticks on the axis
+  Signal is emitted when the number of the ticks on the axis has been changed to a different value.
+  Parementer count\a count is the new number of ticks on the axis.
+*/
+
+/*!
+  \fn void QAxis::niceNumbersEnabledChanged(bool)
+  Nice numbers algorithm was \a enabled or disabled.
+*/
+
+/*!
+  Constructs new axis object which is a child of \a parent. Ownership is taken by
+  QChart when axis added.
+*/
 QAxis::QAxis(QObject *parent) : QObject(parent),
 d_ptr(new QAxisPrivate(this))
 {
@@ -182,7 +248,7 @@ d_ptr(new QAxisPrivate(this))
 }
 
 /*!
-    Destructor of the axis object. When axis is added to chart, chart object takes ownership.
+  Destructor of the axis object. When axis is added to chart, chart object takes ownership.
 */
 
 QAxis::~QAxis()
@@ -200,9 +266,27 @@ void QAxis::setAxisPen(const QPen &pen)
 	}
 }
 
+/*!
+  Returns pen used to draw axis and ticks.
+*/
 QPen QAxis::axisPen() const
 {
     return d_ptr->m_axisPen;
+}
+
+void QAxis::setAxisPenColor(QColor color)
+{
+    QPen p = d_ptr->m_axisPen;
+    if (p.color() != color) {
+        p.setColor(color);
+        setAxisPen(p);
+        emit colorChanged(color);
+    }
+}
+
+QColor QAxis::axisPenColor() const
+{
+    return d_ptr->m_axisPen.color();
 }
 
 /*!
@@ -213,6 +297,7 @@ void QAxis::setAxisVisible(bool visible)
     if (d_ptr->m_axisVisible != visible) {
         d_ptr->m_axisVisible = visible;
         emit d_ptr->updated();
+        emit visibleChanged(visible);
 	}
 }
 
@@ -221,14 +306,12 @@ bool QAxis::isAxisVisible() const
     return d_ptr->m_axisVisible;
 }
 
-/*!
-  Sets if grid line is \a visible.
- */
 void QAxis::setGridLineVisible(bool visible)
 {
     if (d_ptr->m_gridLineVisible != visible) {
         d_ptr->m_gridLineVisible = visible;
         emit d_ptr->updated();
+        emit gridVisibleChanged(visible);
 	}
 }
 
@@ -236,9 +319,10 @@ bool QAxis::isGridLineVisible() const
 {
     return d_ptr->m_gridLineVisible;
 }
+
 /*!
   Sets \a pen used to draw grid line.
- */
+*/
 void QAxis::setGridLinePen(const QPen &pen)
 {
     if (d_ptr->m_gridLinePen != pen) {
@@ -247,6 +331,9 @@ void QAxis::setGridLinePen(const QPen &pen)
 	}
 }
 
+/*!
+  Returns pen used to draw grid.
+*/
 QPen QAxis::gridLinePen() const
 {
     return d_ptr->m_gridLinePen;
@@ -257,6 +344,7 @@ void QAxis::setLabelsVisible(bool visible)
     if (d_ptr->m_labelsVisible != visible) {
         d_ptr->m_labelsVisible = visible;
         emit d_ptr->updated();
+        emit labelsVisibleChanged(visible);
 	}
 }
 
@@ -264,9 +352,10 @@ bool QAxis::labelsVisible() const
 {
     return d_ptr->m_labelsVisible;
 }
+
 /*!
   Sets \a pen used to draw labels.
- */
+*/
 void QAxis::setLabelsPen(const QPen &pen)
 {
     if (d_ptr->m_labelsPen != pen) {
@@ -275,6 +364,9 @@ void QAxis::setLabelsPen(const QPen &pen)
 	}
 }
 
+/*!
+  Returns the pen used to labels.
+*/
 QPen QAxis::labelsPen() const
 {
     return d_ptr->m_labelsPen;
@@ -291,6 +383,9 @@ void QAxis::setLabelsBrush(const QBrush &brush)
 	}
 }
 
+/*!
+  Returns brush used to draw labels.
+*/
 QBrush  QAxis::labelsBrush() const
 {
     return d_ptr->m_labelsBrush;
@@ -298,7 +393,7 @@ QBrush  QAxis::labelsBrush() const
 
 /*!
   Sets \a font used to draw labels.
- */
+*/
 void QAxis::setLabelsFont(const QFont &font)
 {
     if (d_ptr->m_labelsFont != font) {
@@ -307,19 +402,20 @@ void QAxis::setLabelsFont(const QFont &font)
 	}
 }
 
+/*!
+  Returns font used to draw labels.
+*/
 QFont QAxis::labelsFont() const
 {
     return d_ptr->m_labelsFont;
 }
 
-/*!
-  Sets \a angle for all the labels on given axis.
- */
 void QAxis::setLabelsAngle(int angle)
 {
     if (d_ptr->m_labelsAngle != angle) {
         d_ptr->m_labelsAngle = angle;
         emit d_ptr->updated();
+        emit labelsAngleChanged(angle);
 	}
 }
 
@@ -328,14 +424,27 @@ int QAxis::labelsAngle() const
     return d_ptr->m_labelsAngle;
 }
 
-/*!
-  Sets if shades are \a visible.
- */
+void QAxis::setLabelsColor(QColor color)
+{
+    QBrush b = d_ptr->m_labelsBrush;
+    if (b.color() != color) {
+        b.setColor(color);
+        setLabelsBrush(b);
+        emit labelsColorChanged(color);
+    }
+}
+
+QColor QAxis::labelsColor() const
+{
+    return d_ptr->m_labelsBrush.color();
+}
+
 void QAxis::setShadesVisible(bool visible)
 {
     if (d_ptr->m_shadesVisible != visible) {
         d_ptr->m_shadesVisible = visible;
         emit d_ptr->updated();
+        emit shadesVisibleChanged(visible);
 	}
 }
 
@@ -346,7 +455,7 @@ bool QAxis::shadesVisible() const
 
 /*!
   Sets \a pen used to draw shades.
- */
+*/
 void QAxis::setShadesPen(const QPen &pen)
 {
     if (d_ptr->m_shadesPen != pen) {
@@ -355,6 +464,9 @@ void QAxis::setShadesPen(const QPen &pen)
 	}
 }
 
+/*!
+  Returns pen used to draw shades.
+*/
 QPen QAxis::shadesPen() const
 {
     return d_ptr->m_shadesPen;
@@ -362,34 +474,46 @@ QPen QAxis::shadesPen() const
 
 /*!
   Sets \a brush used to draw shades.
- */
+*/
 void QAxis::setShadesBrush(const QBrush &brush)
 {
     if (d_ptr->m_shadesBrush != brush) {
         d_ptr->m_shadesBrush = brush;
         emit d_ptr->updated();
-	}
+        emit shadesColorChanged(brush.color());
+    }
 }
 
+/*!
+   \brief Returns brush used to draw shades.
+*/
 QBrush QAxis::shadesBrush() const
 {
     return d_ptr->m_shadesBrush;
 }
 
-/*!
-  Sets \a opacity of the shades.
- */
-void QAxis::setShadesOpacity(qreal opacity)
+void QAxis::setShadesColor(QColor color)
 {
-    if (d_ptr->m_shadesOpacity != opacity) {
-        d_ptr->m_shadesOpacity=opacity;
-        emit d_ptr->updated();
-	}
+    QBrush b = d_ptr->m_shadesBrush;
+    b.setColor(color);
+    setShadesBrush(b);
 }
 
-qreal QAxis::shadesOpacity() const
+QColor QAxis::shadesColor() const
 {
-    return d_ptr->m_shadesOpacity;
+    return d_ptr->m_shadesBrush.color();
+}
+
+void QAxis::setShadesBorderColor(QColor color)
+{
+    QPen p = d_ptr->m_shadesPen;
+    p.setColor(color);
+    setShadesPen(p);
+}
+
+QColor QAxis::shadesBorderColor() const
+{
+    return d_ptr->m_shadesPen.color();
 }
 
 void QAxis::setMin(qreal min)
@@ -414,7 +538,7 @@ qreal QAxis::max() const
 
 /*!
   Sets range from \a min to \a max on the axis.
- */
+*/
 void QAxis::setRange(qreal min, qreal max)
 {
 	bool changed = false;
@@ -438,7 +562,7 @@ void QAxis::setRange(qreal min, qreal max)
 
 /*!
   Sets \a count for ticks on the axis.
- */
+*/
 void QAxis::setTicksCount(int count)
 {
     if (d_ptr->m_ticksCount != count) {
@@ -448,6 +572,10 @@ void QAxis::setTicksCount(int count)
 	}
 }
 
+/*!
+  \fn int QAxis::ticksCount() const
+  Return number of ticks on the axis
+*/
 int QAxis::ticksCount() const
 {
     return d_ptr->m_ticksCount;
@@ -455,7 +583,7 @@ int QAxis::ticksCount() const
 
 /*!
   Sets axis, shades, labels and grid lines to be visible.
- */
+*/
 void QAxis::show()
 {
     d_ptr->m_axisVisible=true;
@@ -467,7 +595,7 @@ void QAxis::show()
 
 /*!
   Sets axis, shades, labels and grid lines to not be visible.
- */
+*/
 void QAxis::hide()
 {
     d_ptr->m_axisVisible = false;
@@ -477,20 +605,15 @@ void QAxis::hide()
     emit d_ptr->updated();
 }
 
-/*!
-    Sets the nice numbers state to \a enable
-*/
 void QAxis::setNiceNumbersEnabled(bool enable)
 {
     if (d_ptr->m_niceNumbers != enable){
         d_ptr->m_niceNumbers = enable;
         emit d_ptr->changed(d_ptr->m_min, d_ptr->m_max, d_ptr->m_ticksCount, d_ptr->m_niceNumbers);
+        emit niceNumbersEnabledChanged(enable);
     }
 }
 
-/*!
-    Returns whether nice numbers are enabled or not.
-*/
 bool  QAxis::niceNumbersEnabled() const
 {
     return d_ptr->m_niceNumbers;
@@ -504,17 +627,18 @@ QAxisCategories* QAxis::categories()
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAxisPrivate::QAxisPrivate(QAxis* q):
-q_ptr(q),
-m_axisVisible(true),
-m_gridLineVisible(true),
-m_labelsVisible(true),
-m_labelsAngle(0),
-m_shadesVisible(false),
-m_shadesOpacity(1.0),
-m_min(0),
-m_max(0),
-m_ticksCount(5),
-m_niceNumbers(false)
+    q_ptr(q),
+    m_axisVisible(true),
+    m_gridLineVisible(true),
+    m_labelsVisible(true),
+    m_labelsAngle(0),
+    m_shadesVisible(false),
+    m_shadesBrush(Qt::SolidPattern),
+    m_shadesOpacity(1.0),
+    m_min(0),
+    m_max(0),
+    m_ticksCount(5),
+    m_niceNumbers(false)
 {
 
 }
@@ -530,7 +654,9 @@ void QAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
    q_ptr->setTicksCount(count);
 }
 
+QTCOMMERCIALCHART_END_NAMESPACE
+
+QTCOMMERCIALCHART_USE_NAMESPACE
+
 #include "moc_qaxis.cpp"
 #include "moc_qaxis_p.cpp"
-
-QTCOMMERCIALCHART_END_NAMESPACE

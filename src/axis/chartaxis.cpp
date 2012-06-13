@@ -310,7 +310,7 @@ void ChartAxis::handleAxisUpdated()
     }
 
     if (m_chartAxis->shadesVisible()) {
-        setShadesOpacity(m_chartAxis->shadesOpacity());
+        setShadesOpacity(100);
     } else {
         setShadesOpacity(0);
     }

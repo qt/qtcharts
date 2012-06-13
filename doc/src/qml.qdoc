@@ -9,6 +9,7 @@
         <ul>
         <li><a href="qml-chartview.html">ChartView</a></li>
         <li><a href="qml-pieseries.html">PieSeries</a></li>
+        <li><a href="qml-axis.html">Axis</a></li>
         </ul>
     \endraw    
 */
