@@ -46,6 +46,7 @@ public:
     ~QLegendPrivate();
 
     void setOffset(qreal x, qreal y);
+    QPointF offset() const;
     void updateLayout();
     void updateDetachedLayout();
     void attachToChart();

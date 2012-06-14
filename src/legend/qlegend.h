@@ -80,9 +80,6 @@ public:
     void setBackgroundVisible(bool visible = true);
     bool isBackgroundVisible() const;
 
-    void setOffset(const QPointF& point);
-    QPointF offset() const;
-
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);
     void hideEvent(QHideEvent *event);

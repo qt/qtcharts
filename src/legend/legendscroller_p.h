@@ -32,6 +32,7 @@
 #define LEGENDSCROLLER_P_H
 
 #include "qlegend.h"
+#include "qlegend_p.h"
 #include "scroller_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -46,24 +47,21 @@ public:
 
     void setOffset(const QPointF& point)
     {
-        QLegend::setOffset(point);
+        d_ptr->setOffset(point.x(), point.y());
     }
     QPointF offset() const
     {
-        return QLegend::offset();
+        return d_ptr->offset();
     }
 
     void mousePressEvent(QGraphicsSceneMouseEvent* event){
         Scroller::mousePressEvent(event);
-        //QLegend::mousePressEvent(event);
     }
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event){
         Scroller::mouseMoveEvent(event);
-        //QLegend::mouseMoveEvent(event);
     }
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event){
         Scroller::mouseReleaseEvent(event);
-        //QLegend::mouseReleaseEvent(event);
     }
 };
 

@@ -303,22 +303,6 @@ bool QLegend::isAttachedToChart()
 }
 
 /*!
-    Sets the legend's scrolling offset to value defined by \a point.
-*/
-void QLegend::setOffset(const QPointF& point)
-{
-    d_ptr->setOffset(point.x(),point.y());
-}
-
-/*!
-    Returns the legend's scrolling offset.
-*/
-QPointF QLegend::offset() const
-{
-    return QPointF(d_ptr->m_offsetX,d_ptr->m_offsetY);
-}
-
-/*!
  Sets the visibility of legend background to \a visible
  */
 void QLegend::setBackgroundVisible(bool visible)
@@ -448,6 +432,10 @@ void QLegendPrivate::setOffset(qreal x, qreal y)
     }
 }
 
+QPointF QLegendPrivate::offset() const
+{
+    return QPointF(m_offsetX,m_offsetY);
+}
 
 void QLegendPrivate::updateLayout()
 {
@@ -741,6 +729,7 @@ void QLegendPrivate::handleUpdatePieSeries()
     handleSeriesRemoved(series);
     handleSeriesAdded(series, 0);
 }
+
 
 #include "moc_qlegend.cpp"
 #include "moc_qlegend_p.cpp"
