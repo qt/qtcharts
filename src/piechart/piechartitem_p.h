@@ -62,6 +62,7 @@ public Q_SLOTS:
     void handleSlicesAdded(QList<QPieSlice*> slices);
     void handleSlicesRemoved(QList<QPieSlice*> slices);
     void handleSliceChanged();
+    void handleSeriesVisibleChanged();
 
 private:
     PieSliceData updateSliceGeometry(QPieSlice *slice);

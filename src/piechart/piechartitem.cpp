@@ -38,6 +38,7 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
 {
     Q_ASSERT(series);
 
+    connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
     connect(series, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
     connect(series, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleSlicesRemoved(QList<QPieSlice*>)));
     connect(series, SIGNAL(horizontalPositionChanged()), this, SLOT(updateLayout()));
@@ -194,6 +195,11 @@ void PieChartItem::handleSliceChanged()
         sliceItem->setLayout(sliceData);
 
     update();
+}
+
+void PieChartItem::handleSeriesVisibleChanged()
+{
+    setVisible(m_series->isVisible());
 }
 
 PieSliceData PieChartItem::updateSliceGeometry(QPieSlice *slice)
