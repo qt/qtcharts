@@ -81,6 +81,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Parameter \a barset is the pointer of barset, where hover happened.
     Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
 */
+/*!
+    \fn void QBarSeries::barWidthChanged()
+
+    This signal is emitted when bar width has been changed.
+*/
+
+/*!
+    \fn void QBarSeries::barsetCountChanged()
+
+    This signal is emitted when barset count has been changed, for example by append or remove.
+*/
 
 /*!
     \fn void QBarSeries::labelsVisibleChanged()
