@@ -500,8 +500,7 @@ void QPieModelMapperPrivate::insertData(int start, int end)
             if (valueIndex.isValid() && labelIndex.isValid()) {
                 QPieSlice *slice = new QPieSlice;
                 slice->setValue(m_model->data(valueIndex, Qt::DisplayRole).toDouble());
-                slice->setLabel(m_model->data(labelIndex, Qt::DisplayRole).toString());
-                slice->setLabelVisible();
+                slice->setLabel(m_model->data(labelIndex, Qt::DisplayRole).toString());                
                 connect(slice, SIGNAL(labelChanged()), this, SLOT(sliceLabelChanged()));
                 connect(slice, SIGNAL(valueChanged()), this, SLOT(sliceValueChanged()));
                 m_series->insert(i - m_first, slice);
@@ -551,7 +550,6 @@ void QPieModelMapperPrivate::removeData(int start, int end)
                         QPieSlice *slice = new QPieSlice;
                         slice->setValue(m_model->data(valueIndex, Qt::DisplayRole).toDouble());
                         slice->setLabel(m_model->data(labelIndex, Qt::DisplayRole).toString());
-                        slice->setLabelVisible();
                         m_series->insert(i, slice);
                         m_slices.insert(i, slice);
                     }
@@ -585,8 +583,7 @@ void QPieModelMapperPrivate::initializePieFromModel()
         slicePos++;
         valueIndex = valueModelIndex(slicePos);
         labelIndex = labelModelIndex(slicePos);
-    }
-    m_series->setLabelsVisible(true);
+    }    
     blockSeriesSignals(false);
 }
 
