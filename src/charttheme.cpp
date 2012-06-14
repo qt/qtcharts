@@ -118,13 +118,11 @@ void ChartTheme::decorate(QLegend *legend)
     QPen pen;
     QBrush brush;
 
-    if (pen == legend->pen() ||  m_force){
-        legend->setPen(Qt::NoPen);
-    }
+    if (pen == legend->pen() || m_force)
+        legend->setPen(m_axisLinePen);
 
-    if (brush == legend->brush() ||  m_force) {
+    if (brush == legend->brush() || m_force)
         legend->setBrush(m_chartBackgroundGradient);
-    }
 }
 
 void ChartTheme::decorate(QAreaSeries *series, int index)
