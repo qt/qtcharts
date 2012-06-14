@@ -459,13 +459,15 @@ void QLegendPrivate::updateLayout()
             QPointF point = m_rect.topLeft();
             m_width = 0;
             foreach (QGraphicsItem *item, items) {
-                item->setPos(point.x(),m_rect.height()/2 -item->boundingRect().height()/2);
-                const QRectF& rect = item->boundingRect();
-                qreal w = rect.width();
-                m_minWidth=qMax(m_minWidth,w);
-                m_minHeight=qMax(m_minHeight,rect.height());
-                m_width+=w;
-                point.setX(point.x() + w);
+                if (item->isVisible()) {
+                    item->setPos(point.x(),m_rect.height()/2 -item->boundingRect().height()/2);
+                    const QRectF& rect = item->boundingRect();
+                    qreal w = rect.width();
+                    m_minWidth=qMax(m_minWidth,w);
+                    m_minHeight=qMax(m_minHeight,rect.height());
+                    m_width+=w;
+                    point.setX(point.x() + w);
+                }
             }
             if(m_width<m_rect.width()) {
                 m_markers->setPos(m_rect.width()/2-m_width/2,m_rect.top());
@@ -481,13 +483,15 @@ void QLegendPrivate::updateLayout()
             QPointF point = m_rect.topLeft();
             m_height = 0;
             foreach (QGraphicsItem *item, items) {
-                item->setPos(point);
-                const QRectF& rect = item->boundingRect();
-                qreal h = rect.height();
-                m_minWidth=qMax(m_minWidth,rect.width());
-                m_minHeight=qMax(m_minHeight,h);
-                m_height+=h;
-                point.setY(point.y() + h);
+                if (item->isVisible()) {
+                    item->setPos(point);
+                    const QRectF& rect = item->boundingRect();
+                    qreal h = rect.height();
+                    m_minWidth=qMax(m_minWidth,rect.width());
+                    m_minHeight=qMax(m_minHeight,h);
+                    m_height+=h;
+                    point.setY(point.y() + h);
+                }
             }
             if(m_height<m_rect.height()) {
                 m_markers->setPos(m_rect.left(),m_rect.height()/2-m_height/2);
@@ -530,20 +534,22 @@ void QLegendPrivate::updateDetachedLayout()
             m_height = 0;
             for (int i=0; i<items.count(); i++) {
                 QGraphicsItem *item = items.at(i);
-                const QRectF& rect = item->boundingRect();
-                qreal w = rect.width();
-                qreal h = rect.height();
-                m_minWidth = qMax(m_minWidth,w);
-                m_minHeight = qMax(m_minHeight,rect.height());
-                m_height = qMax(m_height,h);
-                item->setPos(point.x(),point.y());
-                point.setX(point.x() + w);
-                if (point.x() + w > m_rect.topLeft().x() + m_rect.width()) {
-                    // Next item would go off rect.
-                    point.setX(m_rect.topLeft().x());
-                    point.setY(point.y() + h);
-                    if (i+1 < items.count()) {
-                        m_height += h;
+                if (item->isVisible()) {
+                    const QRectF& rect = item->boundingRect();
+                    qreal w = rect.width();
+                    qreal h = rect.height();
+                    m_minWidth = qMax(m_minWidth,w);
+                    m_minHeight = qMax(m_minHeight,rect.height());
+                    m_height = qMax(m_height,h);
+                    item->setPos(point.x(),point.y());
+                    point.setX(point.x() + w);
+                    if (point.x() + w > m_rect.topLeft().x() + m_rect.width()) {
+                        // Next item would go off rect.
+                        point.setX(m_rect.topLeft().x());
+                        point.setY(point.y() + h);
+                        if (i+1 < items.count()) {
+                            m_height += h;
+                        }
                     }
                 }
             }
@@ -562,20 +568,22 @@ void QLegendPrivate::updateDetachedLayout()
             m_height = 0;
             for (int i=0; i<items.count(); i++) {
                 QGraphicsItem *item = items.at(i);
-                const QRectF& rect = item->boundingRect();
-                qreal w = rect.width();
-                qreal h = rect.height();
-                m_minWidth = qMax(m_minWidth,w);
-                m_minHeight = qMax(m_minHeight,rect.height());
-                m_height = qMax(m_height,h);
-                item->setPos(point.x(),point.y() - h);
-                point.setX(point.x() + w);
-                if (point.x() + w > m_rect.bottomLeft().x() + m_rect.width()) {
-                    // Next item would go off rect.
-                    point.setX(m_rect.bottomLeft().x());
-                    point.setY(point.y() - h);
-                    if (i+1 < items.count()) {
-                        m_height += h;
+                if (item->isVisible()) {
+                    const QRectF& rect = item->boundingRect();
+                    qreal w = rect.width();
+                    qreal h = rect.height();
+                    m_minWidth = qMax(m_minWidth,w);
+                    m_minHeight = qMax(m_minHeight,rect.height());
+                    m_height = qMax(m_height,h);
+                    item->setPos(point.x(),point.y() - h);
+                    point.setX(point.x() + w);
+                    if (point.x() + w > m_rect.bottomLeft().x() + m_rect.width()) {
+                        // Next item would go off rect.
+                        point.setX(m_rect.bottomLeft().x());
+                        point.setY(point.y() - h);
+                        if (i+1 < items.count()) {
+                            m_height += h;
+                        }
                     }
                 }
             }
@@ -595,21 +603,23 @@ void QLegendPrivate::updateDetachedLayout()
             qreal maxWidth = 0;
             for (int i=0; i<items.count(); i++) {
                 QGraphicsItem *item = items.at(i);
-                const QRectF& rect = item->boundingRect();
-                qreal w = rect.width();
-                qreal h = rect.height();
-                m_minWidth = qMax(m_minWidth,rect.width());
-                m_minHeight = qMax(m_minHeight,h);
-                maxWidth = qMax(maxWidth,w);
-                item->setPos(point.x(),point.y());
-                point.setY(point.y() + h);
-                if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
-                    // Next item would go off rect.
-                    point.setX(point.x() + maxWidth);
-                    point.setY(m_rect.topLeft().y());
-                    if (i+1 < items.count()) {
-                        m_width += maxWidth;
-                        maxWidth = 0;
+                if (item->isVisible()) {
+                    const QRectF& rect = item->boundingRect();
+                    qreal w = rect.width();
+                    qreal h = rect.height();
+                    m_minWidth = qMax(m_minWidth,rect.width());
+                    m_minHeight = qMax(m_minHeight,h);
+                    maxWidth = qMax(maxWidth,w);
+                    item->setPos(point.x(),point.y());
+                    point.setY(point.y() + h);
+                    if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
+                        // Next item would go off rect.
+                        point.setX(point.x() + maxWidth);
+                        point.setY(m_rect.topLeft().y());
+                        if (i+1 < items.count()) {
+                            m_width += maxWidth;
+                            maxWidth = 0;
+                        }
                     }
                 }
             }
@@ -630,21 +640,23 @@ void QLegendPrivate::updateDetachedLayout()
             qreal maxWidth = 0;
             for (int i=0; i<items.count(); i++) {
                 QGraphicsItem *item = items.at(i);
-                const QRectF& rect = item->boundingRect();
-                qreal w = rect.width();
-                qreal h = rect.height();
-                m_minWidth = qMax(m_minWidth,rect.width());
-                m_minHeight = qMax(m_minHeight,h);
-                maxWidth = qMax(maxWidth,w);
-                item->setPos(point.x() - w,point.y());
-                point.setY(point.y() + h);
-                if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
-                    // Next item would go off rect.
-                    point.setX(point.x() - maxWidth);
-                    point.setY(m_rect.topLeft().y());
-                    if (i+1 < items.count()) {
-                        m_width += maxWidth;
-                        maxWidth = 0;
+                if (item->isVisible()) {
+                    const QRectF& rect = item->boundingRect();
+                    qreal w = rect.width();
+                    qreal h = rect.height();
+                    m_minWidth = qMax(m_minWidth,rect.width());
+                    m_minHeight = qMax(m_minHeight,h);
+                    maxWidth = qMax(maxWidth,w);
+                    item->setPos(point.x() - w,point.y());
+                    point.setY(point.y() + h);
+                    if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
+                        // Next item would go off rect.
+                        point.setX(point.x() - maxWidth);
+                        point.setY(m_rect.topLeft().y());
+                        if (i+1 < items.count()) {
+                            m_width += maxWidth;
+                            maxWidth = 0;
+                        }
                     }
                 }
             }
@@ -681,6 +693,8 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
     foreach(LegendMarker* marker, markers)
         m_markers->addToGroup(marker);
+
+    QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
 
     if(series->type() == QAbstractSeries::SeriesTypePie) {
         QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
@@ -728,6 +742,21 @@ void QLegendPrivate::handleUpdatePieSeries()
     Q_ASSERT(series);
     handleSeriesRemoved(series);
     handleSeriesAdded(series, 0);
+}
+
+void QLegendPrivate::handleSeriesVisibleChanged()
+{
+    QAbstractSeries* series = qobject_cast<QAbstractSeries *> (sender());
+    QList<QGraphicsItem *> items = m_markers->childItems();
+
+    foreach (QGraphicsItem *markers, items) {
+        LegendMarker *marker = static_cast<LegendMarker*>(markers);
+        if (marker->series() == series) {
+            marker->setVisible(!marker->isVisible());
+        }
+    }
+
+    updateLayout();
 }
 
 

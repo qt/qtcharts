@@ -22,10 +22,6 @@
 
 #include <QApplication>
 #include <QMainWindow>
-#include <QChartView>
-#include <QBarSeries>
-#include <QBarSet>
-#include <QLegend>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

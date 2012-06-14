@@ -30,6 +30,7 @@
 #include <QGraphicsGridLayout>
 #include <QDoubleSpinBox>
 #include <QGroupBox>
+#include <QBarSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

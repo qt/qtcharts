@@ -57,6 +57,7 @@ public Q_SLOTS:
     void handleSeriesRemoved(QAbstractSeries *series);
     void handleSeriesUpdated(QAbstractSeries *series);
     void handleUpdatePieSeries(); //TODO remove this function
+    void handleSeriesVisibleChanged();
 
 private:
     QLegend *q_ptr;
