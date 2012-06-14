@@ -389,6 +389,8 @@ QLegendPrivate::QLegendPrivate(ChartPresenter* presenter, QChart *chart, QLegend
     m_chart(chart),
     m_markers(new QGraphicsItemGroup(q)),
     m_alignment(Qt::AlignTop),
+    m_brush(Qt::SolidPattern),
+    m_pen(Qt::SolidLine),
     m_offsetX(0),
     m_offsetY(0),
     m_minWidth(0),
