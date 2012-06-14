@@ -37,14 +37,15 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(Theme theme READ theme WRITE setTheme NOTIFY themeChanged)
     Q_PROPERTY(Animation animationOptions READ animationOptions WRITE setAnimationOptions NOTIFY animationOptionsChanged)
     Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+    Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
     Q_PROPERTY(QAxis *axisX READ axisX)
     Q_PROPERTY(QAxis *axisY READ axisY)
     Q_PROPERTY(QLegend *legend READ legend)
     // TODO: how to define axis labels? This is not very convenient
     Q_PROPERTY(QVariantList axisXLabels READ axisXLabels WRITE setAxisXLabels NOTIFY axisLabelsChanged)
     Q_PROPERTY(int count READ count)
-    Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
+    Q_PROPERTY(bool dropShadowEnabled READ dropShadowEnabled WRITE setDropShadowEnabled NOTIFY dropShadowEnabledChanged)
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
@@ -107,6 +108,13 @@ public:
     void setBackgroundColor(QColor color);
     QColor backgroundColor();
     int count();
+    void setDropShadowEnabled(bool enabled);
+    bool dropShadowEnabled();
+    Q_INVOKABLE void zoom(qreal factor);
+    Q_INVOKABLE void scrollLeft(qreal pixels);
+    Q_INVOKABLE void scrollRight(qreal pixels);
+    Q_INVOKABLE void scrollUp(qreal pixels);
+    Q_INVOKABLE void scrollDown(qreal pixels);
     Q_INVOKABLE QAbstractSeries *series(int index);
     Q_INVOKABLE QAbstractSeries *series(QString seriesName);
     Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
@@ -118,6 +126,7 @@ Q_SIGNALS:
     void axisLabelsChanged();
     void titleColorChanged();
     void backgroundColorChanged();
+    void dropShadowEnabledChanged(bool enabled);
 
 public:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support

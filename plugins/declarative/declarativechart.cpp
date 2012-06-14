@@ -220,6 +220,71 @@ int DeclarativeChart::count()
     return m_chart->series().count();
 }
 
+void DeclarativeChart::setDropShadowEnabled(bool enabled)
+{
+    if (enabled != m_chart->isBackgroundDropShadowEnabled()) {
+        m_chart->setBackgroundDropShadowEnabled(enabled);
+        dropShadowEnabledChanged(enabled);
+    }
+}
+
+bool DeclarativeChart::dropShadowEnabled()
+{
+    return m_chart->isBackgroundDropShadowEnabled();
+}
+
+void DeclarativeChart::zoom(qreal factor)
+{
+    m_chart->zoom(factor);
+}
+
+void DeclarativeChart::scrollLeft(qreal pixels)
+{
+    m_chart->scroll(QPointF(pixels, 0));
+}
+
+void DeclarativeChart::scrollRight(qreal pixels)
+{
+    m_chart->scroll(QPointF(-pixels, 0));
+}
+
+void DeclarativeChart::scrollUp(qreal pixels)
+{
+    m_chart->scroll(QPointF(0, pixels));
+}
+
+void DeclarativeChart::scrollDown(qreal pixels)
+{
+    m_chart->scroll(QPointF(0, -pixels));
+}
+
+//void DeclarativeChart::scrollLeft(qreal ticks)
+//{
+//    m_chart->scroll(QPointF(ticksToPixels(m_chart->axisX(), ticks), 0));
+//}
+
+//void DeclarativeChart::scrollRight(qreal ticks)
+//{
+//    m_chart->scroll(QPointF(-ticksToPixels(m_chart->axisX(), ticks), 0));
+//}
+
+//void DeclarativeChart::scrollUp(qreal ticks)
+//{
+//    m_chart->scroll(QPointF(0, ticksToPixels(m_chart->axisY(), ticks)));
+//}
+
+//void DeclarativeChart::scrollDown(qreal ticks)
+//{
+//    m_chart->scroll(QPointF(0, -ticksToPixels(m_chart->axisY(), ticks)));
+//}
+
+//qreal DeclarativeChart::ticksToPixels(QAxis *axis, qreal ticks)
+//{
+//    qreal tickCount = axis->max() - axis->min();
+//    qreal tickPixels = (m_chart->size().width() - m_chart->margins().width() * 2) / tickCount;
+//    return tickPixels * ticks;
+//}
+
 QAbstractSeries *DeclarativeChart::series(int index)
 {
     if (index < m_chart->series().count()) {

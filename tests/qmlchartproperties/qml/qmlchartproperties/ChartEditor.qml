@@ -43,6 +43,7 @@ Flow {
         onAnimationOptionsChanged:  console.log("chart.onAnimationOptionsChanged: " + series.animationOptions);
         onTitleColorChanged:        console.log("chart.onTitleColorChanged: " + series.titleColor);
         onBackgroundColorChanged:   console.log("chart.onBackgroundColorChanged: " + series.backgroundColor);
+        onDropShadowEnabledChanged: console.log("chart.onDropShadowEnabledChanged: " + enabled);
     }
 
     Connections {
@@ -114,6 +115,34 @@ Flow {
     Button {
         text: "background color"
         onClicked: series.backgroundColor = main.nextColor();
+    }
+    Button {
+        text: "drop shadow enabled"
+        onClicked: series.dropShadowEnabled = !series.dropShadowEnabled;
+    }
+    Button {
+        text: "zoom +"
+        onClicked: series.zoom(2);
+    }
+    Button {
+        text: "zoom -"
+        onClicked: series.zoom(0.5);
+    }
+    Button {
+        text: "scroll left"
+        onClicked: series.scrollLeft(10);
+    }
+    Button {
+        text: "scroll right"
+        onClicked: series.scrollRight(10);
+    }
+    Button {
+        text: "scroll up"
+        onClicked: series.scrollUp(10);
+    }
+    Button {
+        text: "scroll down"
+        onClicked: series.scrollDown(10);
     }
     Button {
         text: "legend visible"
