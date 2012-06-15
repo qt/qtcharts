@@ -65,6 +65,8 @@ Flow {
         onPercentageChanged:        console.log("slice.onPercentageChanged: " + series.at(0).percentage);
         onStartAngleChanged:        console.log("slice.onStartAngleChanged: " + series.at(0).startAngle);
         onAngleSpanChanged:         console.log("slice.onAngleSpanChanged: " + series.at(0).angleSpan);
+        onClicked:                  console.log("slice.onClicked");
+        onHovered:                  console.log("slice.onHovered: " + state);
     }
 
     Button {
