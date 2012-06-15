@@ -29,6 +29,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativeBarSet::DeclarativeBarSet(QObject *parent) :
     QBarSet("", parent)
 {
+    connect(this, SIGNAL(valuesAdded(int,int)), this, SLOT(handleCountChanged(int, int)));
+    connect(this, SIGNAL(valuesRemoved(int,int)), this, SLOT(handleCountChanged(int, int)));
+}
+
+void DeclarativeBarSet::handleCountChanged(int index, int count)
+{
+    Q_UNUSED(index)
+    Q_UNUSED(count)
+    emit countChanged(QBarSet::count());
 }
 
 QVariantList DeclarativeBarSet::values()
@@ -48,42 +57,6 @@ void DeclarativeBarSet::setValues(QVariantList values)
         if (values.at(i).canConvert(QVariant::Double))
             append(values[i].toDouble());
     }
-}
-
-QColor DeclarativeBarSet::color()
-{
-    return brush().color();
-}
-
-void DeclarativeBarSet::setColor(QColor color)
-{
-    QBrush b = brush();
-    b.setColor(color);
-    setBrush(b);
-}
-
-QColor DeclarativeBarSet::borderColor()
-{
-    return pen().color();
-}
-
-void DeclarativeBarSet::setBorderColor(QColor color)
-{
-    QPen p = pen();
-    p.setColor(color);
-    setPen(p);
-}
-
-QColor DeclarativeBarSet::labelColor()
-{
-    return labelBrush().color();
-}
-
-void DeclarativeBarSet::setLabelColor(QColor color)
-{
-    QBrush b = labelBrush();
-    b.setColor(color);
-    setLabelBrush(b);
 }
 
 DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :

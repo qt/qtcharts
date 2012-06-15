@@ -28,11 +28,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
     QScatterSeries(parent)
 {
+    connect(this, SIGNAL(pointAdded(int)), this, SLOT(handleCountChanged(int)));
+    connect(this, SIGNAL(pointRemoved(int)), this, SLOT(handleCountChanged(int)));
 }
 
 QXYSeries *DeclarativeScatterSeries::xySeries()
 {
     return this;
+}
+
+void DeclarativeScatterSeries::handleCountChanged(int index)
+{
+    Q_UNUSED(index)
+    emit countChanged(QScatterSeries::count());
 }
 
 QDeclarativeListProperty<QObject> DeclarativeScatterSeries::declarativeChildren()
@@ -42,10 +50,9 @@ QDeclarativeListProperty<QObject> DeclarativeScatterSeries::declarativeChildren(
 
 void DeclarativeScatterSeries::appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
 {
-    QXYSeries *series = qobject_cast<QXYSeries*>(list->object);
-    DeclarativeXyPoint *point = qobject_cast<DeclarativeXyPoint *>(element);
-    if (series && point)
-        series->append(*point);
+    Q_UNUSED(list)
+    Q_UNUSED(element)
+    // Empty implementation, childs are parsed in componentComplete
 }
 
 QColor DeclarativeScatterSeries::brushColor()

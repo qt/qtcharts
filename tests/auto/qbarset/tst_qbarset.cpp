@@ -130,7 +130,8 @@ void tst_QBarSet::append()
     QCOMPARE(m_barset->count(), 0);
     QVERIFY(qFuzzyIsNull(m_barset->sum()));
 
-    QSignalSpy valueSpy(m_barset,SIGNAL(valuesAdded(int,int)));
+    QSignalSpy valueSpy(m_barset, SIGNAL(valuesAdded(int,int)));
+    QSignalSpy countSpy(m_barset, SIGNAL(countChanged(int)));
 
     qreal sum(0.0);
     qreal value(0.0);
@@ -145,7 +146,8 @@ void tst_QBarSet::append()
     QCOMPARE(m_barset->count(), count);
     QVERIFY(qFuzzyCompare(m_barset->sum(), sum));
 
-    QVERIFY(valueSpy.count() == count);
+    QCOMPARE(valueSpy.count(), count);
+    QCOMPARE(countSpy.count(), count);
 }
 
 void tst_QBarSet::appendOperator_data()
@@ -161,6 +163,7 @@ void tst_QBarSet::appendOperator()
     QVERIFY(qFuzzyIsNull(m_barset->sum()));
 
     QSignalSpy valueSpy(m_barset,SIGNAL(valuesAdded(int,int)));
+    QSignalSpy countSpy(m_barset, SIGNAL(countChanged(int)));
 
     qreal sum(0.0);
     qreal value(0.0);
@@ -174,8 +177,8 @@ void tst_QBarSet::appendOperator()
 
     QCOMPARE(m_barset->count(), count);
     QVERIFY(qFuzzyCompare(m_barset->sum(), sum));
-    QVERIFY(valueSpy.count() == count);
-
+    QCOMPARE(valueSpy.count(), count);
+    QCOMPARE(countSpy.count(), count);
 }
 
 void tst_QBarSet::insert_data()
@@ -187,6 +190,7 @@ void tst_QBarSet::insert()
     QCOMPARE(m_barset->count(), 0);
     QVERIFY(qFuzzyIsNull(m_barset->sum()));
     QSignalSpy valueSpy(m_barset,SIGNAL(valuesAdded(int,int)));
+    QSignalSpy countSpy(m_barset, SIGNAL(countChanged(int)));
 
     m_barset->insert(0, 1.0);       // 1.0
     QCOMPARE(m_barset->at(0).y(), 1.0);
@@ -205,7 +209,8 @@ void tst_QBarSet::insert()
     QCOMPARE(m_barset->at(2).y(), 1.0);
     QCOMPARE(m_barset->count(), 3);
     QVERIFY(qFuzzyCompare(m_barset->sum(), 6.0));
-    QVERIFY(valueSpy.count() == 3);
+    QCOMPARE(valueSpy.count(), 3);
+    QCOMPARE(countSpy.count(), 3);
 }
 
 void tst_QBarSet::remove_data()
@@ -218,6 +223,7 @@ void tst_QBarSet::remove()
     QVERIFY(qFuzzyIsNull(m_barset->sum()));
 
     QSignalSpy valueSpy(m_barset,SIGNAL(valuesRemoved(int,int)));
+    QSignalSpy countSpy(m_barset, SIGNAL(countChanged(int)));
 
     m_barset->append(1.0);
     m_barset->append(2.0);
@@ -240,7 +246,8 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->count(), 2);
     QCOMPARE(m_barset->sum(), 6.0);
 
-    QVERIFY(valueSpy.count() == 2);
+    QCOMPARE(valueSpy.count(), 2);
+    QCOMPARE(countSpy.count(), 6);
 }
 
 void tst_QBarSet::replace_data()

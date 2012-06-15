@@ -63,6 +63,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QBarSet::color
+    \brief The fill (brush) color of the bar set.
+*/
+
+/*!
+    \property QBarSet::borderColor
+    \brief The line (pen) color of the bar set.
+*/
+
+/*!
+    \property QBarSet::labelColor
+    \brief The text (label) color of the bar set.
+*/
+
+/*!
     \fn void QBarSet::labelChanged()
 
     This signal is emitted when the label of the barSet has changed.
@@ -100,6 +115,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when the font of the barSet's label has changed.
 
     \sa labelBrush
+*/
+
+/*!
+    \fn void QBarSet::colorChanged(QColor)
+    This signal is emitted when the fill (brush) color of the set has changed to \a color.
+*/
+
+/*!
+    \fn void QBarSet::borderColorChanged(QColor)
+    This signal is emitted when the line (pen) color of the set has changed to \a color.
+*/
+
+/*!
+    \fn void QBarSet::labelColorChanged(QColor)
+    This signal is emitted when the text (label) color of the set has changed to \a color.
 */
 
 /*!
@@ -411,6 +441,51 @@ void QBarSet::setLabelFont(const QFont &font)
 QFont QBarSet::labelFont() const
 {
     return d_ptr->m_labelFont;
+}
+
+QColor QBarSet::color()
+{
+    return brush().color();
+}
+
+void QBarSet::setColor(QColor color)
+{
+    QBrush b = brush();
+    if (b.color() != color) {
+        b.setColor(color);
+        setBrush(b);
+        emit colorChanged(color);
+    }
+}
+
+QColor QBarSet::borderColor()
+{
+    return pen().color();
+}
+
+void QBarSet::setBorderColor(QColor color)
+{
+    QPen p = pen();
+    if (p.color() != color) {
+        p.setColor(color);
+        setPen(p);
+        emit borderColorChanged(color);
+    }
+}
+
+QColor QBarSet::labelColor()
+{
+    return labelBrush().color();
+}
+
+void QBarSet::setLabelColor(QColor color)
+{
+    QBrush b = labelBrush();
+    if (b.color() != color) {
+        b.setColor(color);
+        setLabelBrush(b);
+        emit labelColorChanged(color);
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

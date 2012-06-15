@@ -28,11 +28,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
     QSplineSeries(parent)
 {
+    connect(this, SIGNAL(pointAdded(int)), this, SLOT(handleCountChanged(int)));
+    connect(this, SIGNAL(pointRemoved(int)), this, SLOT(handleCountChanged(int)));
 }
 
 QXYSeries *DeclarativeSplineSeries::xySeries()
 {
     return this;
+}
+
+void DeclarativeSplineSeries::handleCountChanged(int index)
+{
+    Q_UNUSED(index)
+    emit countChanged(points().count());
 }
 
 QDeclarativeListProperty<QObject> DeclarativeSplineSeries::declarativeChildren()
@@ -42,10 +50,9 @@ QDeclarativeListProperty<QObject> DeclarativeSplineSeries::declarativeChildren()
 
 void DeclarativeSplineSeries::appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
 {
-    QXYSeries *series = qobject_cast<QXYSeries*>(list->object);
-    DeclarativeXyPoint *point = qobject_cast<DeclarativeXyPoint *>(element);
-    if (series && point)
-        series->append(*point);
+    Q_UNUSED(list)
+    Q_UNUSED(element)
+    // Empty implementation, childs are parsed in componentComplete
 }
 
 #include "moc_declarativesplineseries.cpp"

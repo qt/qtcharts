@@ -37,17 +37,18 @@ Flow {
         ignoreUnknownSignals: true
         onNameChanged:              console.log("series.onNameChanged: " + series.name);
         onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
+        onBarWidthChanged:          console.log("series.onBardWidthChanged: " + width)
         onLabelsVisibleChanged:     console.log("series.onLabelsVisibleChanged: " + series.labelsVisible);
-        onCountChanged:             console.log("series.onCountChanged: " + series.count);
+        onCountChanged:             console.log("series.onCountChanged: " + count);
     }
 
     Connections {
         id: setConnections
         ignoreUnknownSignals: true
-        onColorChanged:             console.log("series.onColorChanged: " + series.color);
-        onBorderColorChanged:       console.log("series.onBorderColorChanged: " + series.borderColor);
-        onLabelColorChanged:        console.log("series.onLabelColorChanged: " + series.labelColor);
-        onCountChanged:             console.log("series.onCountChanged: " + series.count);
+        onColorChanged:             console.log("series.onColorChanged: " + color);
+        onBorderColorChanged:       console.log("series.onBorderColorChanged: " + color);
+        onLabelColorChanged:        console.log("series.onLabelColorChanged: " + color);
+        onCountChanged:             console.log("series.onCountChanged: " + count);
     }
 
     Button {

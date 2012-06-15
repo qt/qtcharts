@@ -68,8 +68,10 @@ Flow {
         onShadesVisibleChanged:         console.log("axisX.onShadesVisibleChanged: " + visible);
         onShadesColorChanged:           console.log("axisX.onShadesColorChanged: " + color);
         onShadesBorderColorChanged:     console.log("axisX.onShadesBorderColorChanged: " + color);
-        onNiceNumbersEnabledChanged:    console.log("axisX.onNiceNumbersEnabledChanged: " + enabled);
+        onMinChanged:                   console.log("axisX.onMinChanged: " + min);
+        onMaxChanged:                   console.log("axisX.onMaxChanged: " + max);
         onTicksCountChanged:            console.log("axisX.onTicksCountChanged: " + count);
+        onNiceNumbersEnabledChanged:    console.log("axisX.onNiceNumbersEnabledChanged: " + enabled);
     }
 
     Connections {
@@ -84,8 +86,10 @@ Flow {
         onShadesVisibleChanged:         console.log("axisY.onShadesVisibleChanged: " + visible);
         onShadesColorChanged:           console.log("axisY.onShadesColorChanged: " + color);
         onShadesBorderColorChanged:     console.log("axisY.onShadesBorderColorChanged: " + color);
-        onNiceNumbersEnabledChanged:    console.log("axisY.onNiceNumbersEnabledChanged: " + enabled);
+        onMinChanged:                   console.log("axisY.onMinChanged: " + min);
+        onMaxChanged:                   console.log("axisY.onMaxChanged: " + max);
         onTicksCountChanged:            console.log("axisY.onTicksCountChanged: " + count);
+        onNiceNumbersEnabledChanged:    console.log("axisY.onNiceNumbersEnabledChanged: " + enabled);
     }
 
     Button {
@@ -177,10 +181,6 @@ Flow {
         onClicked: series.legend.alignment ^= Qt.AlignRight;
     }
     Button {
-        text: "axis X nice nmb"
-        onClicked: series.axisX.niceNumbersEnabled = !series.axisX.niceNumbersEnabled;
-    }
-    Button {
         text: "axis X visible"
         onClicked: series.axisX.visible = !series.axisX.visible;
     }
@@ -221,6 +221,22 @@ Flow {
         onClicked: series.axisX.shadesBorderColor = main.nextColor();
     }
     Button {
+        text: "axis X max +"
+        onClicked: series.axisX.max += 0.1;
+    }
+    Button {
+        text: "axis X max -"
+        onClicked: series.axisX.max -= 0.1;
+    }
+    Button {
+        text: "axis X min +"
+        onClicked: series.axisX.min += 0.1;
+    }
+    Button {
+        text: "axis X min -"
+        onClicked: series.axisX.min -= 0.1;
+    }
+    Button {
         text: "axis X ticks count +"
         onClicked: series.axisX.ticksCount++;
     }
@@ -229,8 +245,8 @@ Flow {
         onClicked: series.axisX.ticksCount--;
     }
     Button {
-        text: "axis Y nice nmb"
-        onClicked: series.axisY.niceNumbersEnabled = !series.axisY.niceNumbersEnabled;
+        text: "axis X nice nmb"
+        onClicked: series.axisX.niceNumbersEnabled = !series.axisX.niceNumbersEnabled;
     }
     Button {
         text: "axis Y visible"
@@ -273,11 +289,31 @@ Flow {
         onClicked: series.axisY.shadesBorderColor = main.nextColor();
     }
     Button {
+        text: "axis Y max +"
+        onClicked: series.axisY.max += 0.1;
+    }
+    Button {
+        text: "axis Y max -"
+        onClicked: series.axisY.max -= 0.1;
+    }
+    Button {
+        text: "axis Y min +"
+        onClicked: series.axisY.min += 0.1;
+    }
+    Button {
+        text: "axis Y min -"
+        onClicked: series.axisY.min -= 0.1;
+    }
+    Button {
         text: "axis Y ticks count +"
         onClicked: series.axisY.ticksCount++;
     }
     Button {
         text: "axis Y ticks count -"
         onClicked: series.axisY.ticksCount--;
+    }
+    Button {
+        text: "axis Y nice nmb"
+        onClicked: series.axisY.niceNumbersEnabled = !series.axisY.niceNumbersEnabled;
     }
 }

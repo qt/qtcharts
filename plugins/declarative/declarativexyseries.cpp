@@ -47,8 +47,8 @@ void DeclarativeXySeries::componentComplete()
 
     foreach(QObject *child, series->children()) {
         if (qobject_cast<DeclarativeXyPoint *>(child)) {
-            // TODO:
-//            series->append(qobject_cast<DeclarativeXyPoint *>(child));
+            DeclarativeXyPoint *point = qobject_cast<DeclarativeXyPoint *>(child);
+            series->append(point->x(), point->y());
         } else if(qobject_cast<QVXYModelMapper *>(child)) {
             QVXYModelMapper *mapper = qobject_cast<QVXYModelMapper *>(child);
             mapper->setSeries(series);

@@ -48,7 +48,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QBarSeries::barWidth
-    \brief Sets the width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
+    \brief The width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
     is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
     is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
     Note that with QGroupedBarSeries this value means the width of one group of bars instead of just one bar. This is
@@ -82,9 +82,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
 */
 /*!
-    \fn void QBarSeries::barWidthChanged()
+    \fn void QBarSeries::barWidthChanged(qreal)
 
-    This signal is emitted when bar width has been changed.
+    This signal is emitted when bar width has been changed to \a width.
 */
 
 /*!
@@ -153,25 +153,13 @@ QAbstractSeries::SeriesType QBarSeries::type() const
     return QAbstractSeries::SeriesTypeBar;
 }
 
-/*!
-    Sets the width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
-    is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
-    is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
-    Note that with QGroupedBarSeries this value means the width of one group of bars instead of just one bar. This is
-    because with grouped series it is more logical to set widht of whole group and let the chart calculate correct
-    width for bar.
-    \sa QGroupedBarSeries
-*/
 void QBarSeries::setBarWidth(qreal width)
 {
     Q_D(QBarSeries);
     d->setBarWidth(width);
-    emit barWidthChanged();
+    emit barWidthChanged(width);
 }
 
-/*!
-    Returns the width of bars.
-*/
 qreal QBarSeries::barWidth() const
 {
     Q_D(const QBarSeries);
@@ -181,7 +169,6 @@ qreal QBarSeries::barWidth() const
 /*!
     Adds a set of bars to series. Takes ownership of \a set. If the set is null or is already in series, it won't be appended.
     Returns true, if appending succeeded.
-
 */
 bool QBarSeries::append(QBarSet *set)
 {

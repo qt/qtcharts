@@ -37,12 +37,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QXYSeries::count
-
-    Number of points in the series.
-*/
-
-/*!
    \fn QPen QXYSeries::pen() const
    \brief  Returns pen used to draw points for series.
     \sa setPen()
@@ -75,6 +69,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \fn void QXYSeries::pointRemoved(int index)
     \brief Signal is emitted when user removes a point at \a index.
     \sa remove()
+*/
+
+/*!
+    \fn void QXYSeries::pointsVisibleChanged(bool visible)
+    \brief Signal is emitted when the point visibility has changed to \a visible.
 */
 
 /*!
@@ -262,6 +261,7 @@ void QXYSeries::setPointsVisible(bool visible)
     if (d->m_pointsVisible != visible){
         d->m_pointsVisible = visible;
         emit d->updated();
+        emit pointsVisibleChanged(visible);
     }
 }
 

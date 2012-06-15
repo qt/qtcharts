@@ -37,6 +37,9 @@ class QTCOMMERCIALCHART_EXPORT QBarSet : public QObject
     Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
     Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush NOTIFY labelBrushChanged)
     Q_PROPERTY(QFont labelFont READ labelFont WRITE setLabelFont NOTIFY labelFontChanged)
+    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
+    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
+    Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
 
 public:
     explicit QBarSet(const QString label, QObject *parent = 0);
@@ -75,12 +78,24 @@ public:
     void setLabelFont(const QFont &font);
     QFont labelFont() const;
 
+    QColor color();
+    void setColor(QColor color);
+
+    QColor borderColor();
+    void setBorderColor(QColor color);
+
+    QColor labelColor();
+    void setLabelColor(QColor color);
+
 Q_SIGNALS:
     void penChanged();
     void brushChanged();
     void labelChanged();
     void labelBrushChanged();
     void labelFontChanged();
+    void colorChanged(QColor color);
+    void borderColorChanged(QColor color);
+    void labelColorChanged(QColor color);
 
     void valuesAdded(int index, int count);
     void valuesRemoved(int index, int count);

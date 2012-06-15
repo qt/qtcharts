@@ -35,6 +35,7 @@ class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeri
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QColor color READ brushColor WRITE setBrushColor)
     Q_PROPERTY(QColor borderColor READ penColor WRITE setPenColor)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
@@ -55,8 +56,12 @@ public: // from QScatterSeries
     Q_INVOKABLE void clear() { QScatterSeries::clear(); }
     Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
 
+Q_SIGNALS:
+    void countChanged(int count);
+
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+    void handleCountChanged(int index);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

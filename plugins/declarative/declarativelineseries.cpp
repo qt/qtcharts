@@ -28,11 +28,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
     QLineSeries(parent)
 {
+    connect(this, SIGNAL(pointAdded(int)), this, SLOT(handleCountChanged(int)));
+    connect(this, SIGNAL(pointRemoved(int)), this, SLOT(handleCountChanged(int)));
 }
 
 QXYSeries *DeclarativeLineSeries::xySeries()
 {
     return this;
+}
+
+void DeclarativeLineSeries::handleCountChanged(int index)
+{
+    Q_UNUSED(index)
+    emit countChanged(points().count());
 }
 
 QDeclarativeListProperty<QObject> DeclarativeLineSeries::declarativeChildren()
@@ -42,10 +50,9 @@ QDeclarativeListProperty<QObject> DeclarativeLineSeries::declarativeChildren()
 
 void DeclarativeLineSeries::appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element)
 {
-    QXYSeries *series = qobject_cast<QXYSeries*>(list->object);
-    DeclarativeXyPoint *point = qobject_cast<DeclarativeXyPoint *>(element);
-    if (series && point)
-        series->append(*point);
+    Q_UNUSED(list)
+    Q_UNUSED(element)
+    // Empty implementation, childs are parsed in componentComplete
 }
 
 #include "moc_declarativelineseries.cpp"

@@ -42,8 +42,8 @@ class QTCOMMERCIALCHART_EXPORT QAxis : public QObject
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
     Q_PROPERTY(QColor shadesColor READ shadesColor WRITE setShadesColor NOTIFY shadesColorChanged)
     Q_PROPERTY(QColor shadesBorderColor READ shadesBorderColor WRITE setShadesBorderColor NOTIFY shadesBorderColorChanged)
-    Q_PROPERTY(qreal min READ min WRITE setMin)
-    Q_PROPERTY(qreal max READ max WRITE setMax)
+    Q_PROPERTY(qreal min READ min WRITE setMin NOTIFY minChanged)
+    Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
     Q_PROPERTY(int ticksCount READ ticksCount WRITE setTicksCount NOTIFY ticksCountChanged)
     Q_PROPERTY(bool niceNumbersEnabled READ niceNumbersEnabled WRITE setNiceNumbersEnabled NOTIFY niceNumbersEnabledChanged)
 
@@ -115,8 +115,6 @@ Q_SIGNALS:
     void visibleChanged(bool visible);
     void labelsVisibleChanged(bool visible);
     void gridVisibleChanged(bool visible);
-	void minChanged(qreal min);
-	void maxChanged(qreal max);
 	void rangeChanged(qreal min, qreal max);
     void colorChanged(QColor color);
     void labelsColorChanged(QColor color);
@@ -124,6 +122,8 @@ Q_SIGNALS:
     void shadesVisibleChanged(bool visible);
     void shadesColorChanged(QColor color);
     void shadesBorderColorChanged(QColor color);
+    void minChanged(qreal min);
+    void maxChanged(qreal max);
     void ticksCountChanged(int count);
     void niceNumbersEnabledChanged(bool enabled);
 

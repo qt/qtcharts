@@ -53,8 +53,12 @@ public: // from QSplineSeries
     Q_INVOKABLE void clear() { QSplineSeries::clear(); }
     Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
 
+Q_SIGNALS:
+    void countChanged(int count);
+
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+    void handleCountChanged(int index);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

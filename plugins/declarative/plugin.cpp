@@ -69,6 +69,8 @@ public:
 
         qmlRegisterUncreatableType<QLegend>(uri, 1, 0, "Legend",
                                           QLatin1String("Trying to create uncreatable: Legend."));
+        qmlRegisterUncreatableType<QXYSeries>(uri, 1, 0, "QXYSeries",
+                                          QLatin1String("Trying to create uncreatable: QXYSeries."));
         qmlRegisterUncreatableType<QScatterSeries>(uri, 1, 0, "QScatterSeries",
                                           QLatin1String("Trying to create uncreatable: QScatterSeries."));
         qmlRegisterUncreatableType<QPieSeries>(uri, 1, 0, "QPieSeries",

@@ -37,24 +37,22 @@ class DeclarativeBarSet : public QBarSet
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
-    Q_PROPERTY(QColor color READ color WRITE setColor)
-    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor)
-    Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
 
 public:
     explicit DeclarativeBarSet(QObject *parent = 0);
     QVariantList values();
     void setValues(QVariantList values);
-    QColor color();
-    void setColor(QColor color);
-    QColor borderColor();
-    void setBorderColor(QColor color);
-    QColor labelColor();
-    void setLabelColor(QColor color);
 
 public: // From QBarSet
     Q_INVOKABLE void append(qreal value) { QBarSet::append(value); }
     Q_INVOKABLE void append(qreal x, qreal y) { QBarSet::append(QPointF(x, y)); }
+
+Q_SIGNALS:
+    void countChanged(int count);
+
+private Q_SLOTS:
+    void handleCountChanged(int index, int count);
 };
 
 class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
