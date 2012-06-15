@@ -178,8 +178,8 @@ void MainWidget::attachLegend()
 
 void MainWidget::addBarset()
 {
-    QBarSet *barSet = new QBarSet(QString("set ") + QString::number(m_series->barsetCount()));
-    qreal delta = m_series->barsetCount() * 0.1;
+    QBarSet *barSet = new QBarSet(QString("set ") + QString::number(m_series->count()));
+    qreal delta = m_series->count() * 0.1;
     *barSet << QPointF(0.0 + delta, 1 + delta) << QPointF(1.0 + delta, 2 + delta) << QPointF(2.0 + delta, 3 + delta) << QPointF(3.0 + delta, 4 + delta);
     m_series->append(barSet);
 }
