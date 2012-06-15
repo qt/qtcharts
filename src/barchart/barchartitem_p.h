@@ -66,6 +66,7 @@ public Q_SLOTS:
     void handleLayoutChanged();
     void handleLabelsVisibleChanged(bool visible);
     void handleDataStructureChanged();     // structure of of series has changed, recreate graphic items
+    void handleVisibleChanged();
 
 protected:
 

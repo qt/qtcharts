@@ -40,7 +40,7 @@ BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
     connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
     connect(series->d_func(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(handleLabelsVisibleChanged(bool)));
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
-    connect(series, SIGNAL(visibleChanged()), this, SLOT(handleLayoutChanged()));
+    connect(series, SIGNAL(visibleChanged()), this, SLOT(handleVisibleChanged()));
     setZValue(ChartPresenter::BarSeriesZValue);
     handleDataStructureChanged();
 }
@@ -59,42 +59,6 @@ void BarChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
 QRectF BarChartItem::boundingRect() const
 {
     return m_rect;
-}
-
-void BarChartItem::handleDataStructureChanged()
-{
-    foreach(QGraphicsItem *item, childItems()) {
-        delete item;
-    }
-
-    m_bars.clear();
-    m_labels.clear();
-    m_layout.clear();
-
-    bool labelsVisible = m_series->isLabelsVisible();
-
-    // Create new graphic items for bars
-    for (int c = 0; c < m_series->d_func()->categoryCount(); c++) {
-        for (int s = 0; s < m_series->count(); s++) {
-            QBarSet *set = m_series->d_func()->barsetAt(s);
-
-            // Bars
-            Bar *bar = new Bar(set,c,this);
-            m_bars.append(bar);
-            connect(bar, SIGNAL(clicked(QBarSet*,int)), m_series, SIGNAL(clicked(QBarSet*,int)));
-            connect(bar, SIGNAL(hovered(QBarSet*,bool)), m_series, SIGNAL(hovered(QBarSet*,bool)));
-            m_layout.append(QRectF(0, 0, 0, 0));
-
-            // Labels
-            QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem(this);
-            label->setVisible(labelsVisible);
-            m_labels.append(label);
-        }
-    }
-
-    // TODO: Is this the right place to call it?
-    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
-    handleLayoutChanged();
 }
 
 QVector<QRectF> BarChartItem::calculateLayout()
@@ -200,12 +164,59 @@ void BarChartItem::handleLayoutChanged()
     applyLayout(layout);
 }
 
+
+
 void BarChartItem::handleLabelsVisibleChanged(bool visible)
 {
     foreach (QGraphicsSimpleTextItem* label, m_labels) {
         label->setVisible(visible);
     }
     update();
+}
+
+void BarChartItem::handleDataStructureChanged()
+{
+    foreach(QGraphicsItem *item, childItems()) {
+        delete item;
+    }
+
+    m_bars.clear();
+    m_labels.clear();
+    m_layout.clear();
+
+    bool labelsVisible = m_series->isLabelsVisible();
+
+    // Create new graphic items for bars
+    for (int c = 0; c < m_series->d_func()->categoryCount(); c++) {
+        for (int s = 0; s < m_series->count(); s++) {
+            QBarSet *set = m_series->d_func()->barsetAt(s);
+
+            // Bars
+            Bar *bar = new Bar(set,c,this);
+            m_bars.append(bar);
+            connect(bar, SIGNAL(clicked(QBarSet*,int)), m_series, SIGNAL(clicked(QBarSet*,int)));
+            connect(bar, SIGNAL(hovered(QBarSet*,bool)), m_series, SIGNAL(hovered(QBarSet*,bool)));
+            m_layout.append(QRectF(0, 0, 0, 0));
+
+            // Labels
+            QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem(this);
+            label->setVisible(labelsVisible);
+            m_labels.append(label);
+        }
+    }
+
+    // TODO: Is this the right place to call it?
+    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
+    handleLayoutChanged();
+}
+
+void BarChartItem::handleVisibleChanged()
+{
+    bool visible = m_series->isVisible();
+    handleLabelsVisibleChanged(visible);
+    foreach(QGraphicsItem *item, childItems()) {
+        item->setVisible(visible);
+    }
 }
 
 #include "moc_barchartitem_p.cpp"
