@@ -26,18 +26,15 @@ Rectangle {
 
     //![1]
     ChartView {
-        title: "Spline"
+        title: "Grouped Bar series"
         anchors.fill: parent
+        legend.alignment: Qt.AlignBottom
+        axisXLabels: ["0", "2007", "1", "2008", "2", "2009", "3", "2010", "4", "2011", "5", "2012"]
 
-        SplineSeries {
-            name: "SplineSeries"
-            XyPoint { x: 0; y: 0.3 }
-            XyPoint { x: 1.1; y: 3.2 }
-            XyPoint { x: 1.9; y: 2.4 }
-            XyPoint { x: 2.1; y: 2.1 }
-            XyPoint { x: 2.9; y: 2.6 }
-            XyPoint { x: 3.4; y: 2.3 }
-            XyPoint { x: 4.1; y: 3.1 }
+        GroupedBarSeries {
+            BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6] }
+            BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 7] }
+            BarSet { label: "James"; values: [3, 5, 8, 13, 5, 8] }
         }
     }
     //![1]

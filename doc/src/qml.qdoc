@@ -8,9 +8,20 @@
     \raw HTML
         <ul>
         <li><a href="qml-chartview.html">ChartView</a></li>
+        <li><a href="qml-lineseries.html">LineSeries</a></li>
+        <li><a href="qml-areaseries.html">AreaSeries</a></li>
+        <li><a href="qml-scatterseries.html">ScatterSeries</a></li>
+        <li><a href="qml-splineseries.html">SplineSeries</a></li>
         <li><a href="qml-pieseries.html">PieSeries</a></li>
+        <li><a href="qml-pieslice.html">PieSlice</a></li>
+        <li><a href="qml-barseries.html">BarSeries</a></li>
+        <li><a href="qml-groupedbarseries.html">GroupedBarSeries</a></li>
+        <li><a href="qml-stackedbarseries.html">StackedBarSeries</a></li>
+        <li><a href="qml-percentbarseries.html">PercentBarSeries</a></li>
+        <li><a href="qml-barset.html">BarSet</a></li>
         <li><a href="qml-axis.html">Axis</a></li>
         <li><a href="qml-legend.html">Legend</a></li>
+        <li><a href="qml-xypoint.html">XyPoint</a></li>
         </ul>
     \endraw    
 */

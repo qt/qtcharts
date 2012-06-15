@@ -7,5 +7,9 @@
         <file>qml/qmlchart/View3.qml</file>
         <file>qml/qmlchart/View4.qml</file>
         <file>qml/qmlchart/View5.qml</file>
+        <file>qml/qmlchart/View6.qml</file>
+        <file>qml/qmlchart/View7.qml</file>
+        <file>qml/qmlchart/View8.qml</file>
+        <file>qml/qmlchart/View9.qml</file>
     </qresource>
 </RCC>

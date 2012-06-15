@@ -26,31 +26,116 @@ Rectangle {
 
     //![1]
     ChartView {
-        title: "Scatters"
+        title: "NHL All-Star Team Players"
         anchors.fill: parent
+        axisXLabels: ["0", "2000", "1", "2001", "2", "2002", "3", "2003", "4", "2004", "5", "2005",
+            "6", "2006", "7", "2007", "8", "2008", "9", "2009", "10", "2010", "11", "2011"]
 
-        ScatterSeries {
-            id: scatter1
-            name: "Scatter1"
-            XyPoint { x: 1.5; y: 1.5 }
-            XyPoint { x: 1.5; y: 1.6 }
-            XyPoint { x: 1.57; y: 1.55 }
-            XyPoint { x: 1.8; y: 1.8 }
-            XyPoint { x: 1.9; y: 1.6 }
-            XyPoint { x: 2.1; y: 1.3 }
-            XyPoint { x: 2.5; y: 2.1 }
+        AreaSeries {
+            name: "Russian"
+            upperSeries: LineSeries {
+                XyPoint { x: 0; y: 1 }
+                XyPoint { x: 1; y: 1 }
+                XyPoint { x: 2; y: 1 }
+                XyPoint { x: 3; y: 1 }
+                XyPoint { x: 4; y: 1 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 1 }
+                XyPoint { x: 7; y: 1 }
+                XyPoint { x: 8; y: 4 }
+                XyPoint { x: 9; y: 3 }
+                XyPoint { x: 10; y: 2 }
+                XyPoint { x: 11; y: 1 }
+            }
+            lowerSeries: LineSeries {
+                XyPoint { x: 0; y: 0 }
+                XyPoint { x: 1; y: 0 }
+                XyPoint { x: 2; y: 0 }
+                XyPoint { x: 3; y: 0 }
+                XyPoint { x: 4; y: 0 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 0 }
+                XyPoint { x: 7; y: 0 }
+                XyPoint { x: 8; y: 0 }
+                XyPoint { x: 9; y: 0 }
+                XyPoint { x: 10; y: 0 }
+                XyPoint { x: 11; y: 0 }
+            }
+        }
+        // ...
+        //![1]
+
+        AreaSeries {
+            id: swedish
+            name: "Swedish"
+            upperSeries: LineSeries {
+                XyPoint { x: 0; y: 1 }
+                XyPoint { x: 1; y: 1 }
+                XyPoint { x: 2; y: 3 }
+                XyPoint { x: 3; y: 3 }
+                XyPoint { x: 4; y: 2 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 2 }
+                XyPoint { x: 7; y: 1 }
+                XyPoint { x: 8; y: 2 }
+                XyPoint { x: 9; y: 1 }
+                XyPoint { x: 10; y: 3 }
+                XyPoint { x: 11; y: 3 }
+            }
+            lowerSeries: LineSeries {
+                XyPoint { x: 0; y: 0 }
+                XyPoint { x: 1; y: 0 }
+                XyPoint { x: 2; y: 0 }
+                XyPoint { x: 3; y: 0 }
+                XyPoint { x: 4; y: 0 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 0 }
+                XyPoint { x: 7; y: 0 }
+                XyPoint { x: 8; y: 0 }
+                XyPoint { x: 9; y: 0 }
+                XyPoint { x: 10; y: 0 }
+                XyPoint { x: 11; y: 0 }
+            }
+            onClicked: {
+                color = "yellow";
+                borderColor = "blue";
+            }
         }
 
-        ScatterSeries {
-            name: "Scatter2"
-            // ...
-            //![1]
-            XyPoint { x: 2.0; y: 2.0 }
-            XyPoint { x: 2.0; y: 2.1 }
-            XyPoint { x: 2.07; y: 2.05 }
-            XyPoint { x: 2.2; y: 2.9 }
-            XyPoint { x: 2.4; y: 2.7 }
-            XyPoint { x: 2.67; y: 2.65 }
+        AreaSeries {
+            name: "Finnish"
+            upperSeries: LineSeries {
+                XyPoint { x: 0; y: 0 }
+                XyPoint { x: 1; y: 0 }
+                XyPoint { x: 2; y: 0 }
+                XyPoint { x: 3; y: 0 }
+                XyPoint { x: 4; y: 0 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 1 }
+                XyPoint { x: 7; y: 0 }
+                XyPoint { x: 8; y: 0 }
+                XyPoint { x: 9; y: 0 }
+                XyPoint { x: 10; y: 0 }
+                XyPoint { x: 11; y: 1 }
+            }
+            lowerSeries: LineSeries {
+                XyPoint { x: 0; y: 0 }
+                XyPoint { x: 1; y: 0 }
+                XyPoint { x: 2; y: 0 }
+                XyPoint { x: 3; y: 0 }
+                XyPoint { x: 4; y: 0 }
+                XyPoint { x: 5; y: 0 }
+                XyPoint { x: 6; y: 0 }
+                XyPoint { x: 7; y: 0 }
+                XyPoint { x: 8; y: 0 }
+                XyPoint { x: 9; y: 0 }
+                XyPoint { x: 10; y: 0 }
+                XyPoint { x: 11; y: 0 }
+            }
+            onClicked: {
+                color = "white";
+                borderColor = "blue";
+            }
         }
     }
 }

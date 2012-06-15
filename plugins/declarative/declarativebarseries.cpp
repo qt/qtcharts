@@ -26,6 +26,62 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \qmlclass BarSeries QBarSeries
+
+    \section1 Example Usage
+
+    \beginfloatleft
+    \image demos_qmlchart6.png
+    \endfloat
+    \clearfloat
+
+    The following QML shows how to create a simple bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
+*/
+
+/*!
+    \qmlclass GroupedBarSeries QGroupedBarSeries
+
+    \section1 Example Usage
+
+    \beginfloatleft
+    \image demos_qmlchart7.png
+    \endfloat
+    \clearfloat
+
+    The following QML shows how to create a simple grouped bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View7.qml 1
+*/
+
+/*!
+    \qmlclass StackedBarSeries QStackedBarSeries
+
+    \section1 Example Usage
+
+    \beginfloatleft
+    \image demos_qmlchart8.png
+    \endfloat
+    \clearfloat
+
+    The following QML shows how to create a simple stacked bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View8.qml 1
+*/
+
+/*!
+    \qmlclass PercentBarSeries QPercentBarSeries
+
+    \section1 Example Usage
+
+    \beginfloatleft
+    \image demos_qmlchart9.png
+    \endfloat
+    \clearfloat
+
+    The following QML shows how to create a simple percent bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View9.qml 1
+*/
+
 DeclarativeBarSet::DeclarativeBarSet(QObject *parent) :
     QBarSet("", parent)
 {

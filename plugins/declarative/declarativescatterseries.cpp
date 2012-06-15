@@ -25,6 +25,20 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \qmlclass ScatterSeries QScatterSeries
+
+    \section1 Example Usage
+
+    \beginfloatleft
+    \image demos_qmlchart5.png
+    \endfloat
+    \clearfloat
+
+    The following QML shows how to create a simple scatter chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View5.qml 1
+*/
+
 DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
     QScatterSeries(parent)
 {

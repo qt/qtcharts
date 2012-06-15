@@ -25,6 +25,20 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \qmlclass SplineSeries QSplineSeries
+
+    \section1 Example Usage
+
+    \beginfloatleft
+    \image demos_qmlchart3.png
+    \endfloat
+    \clearfloat
+
+    The following QML shows how to create a simple spline chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View3.qml 1
+*/
+
 DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
     QSplineSeries(parent)
 {

@@ -28,7 +28,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    \qmlclass PieSeries DeclarativePieSeries
+    \qmlclass PieSeries QPieSeries
 
     \section1 Example Usage
 

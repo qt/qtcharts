@@ -25,6 +25,20 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \qmlclass AreaSeries QAreaSeries
+
+    \section1 Example Usage
+
+    \beginfloatleft
+    \image demos_qmlchart4.png
+    \endfloat
+    \clearfloat
+
+    The following QML shows how to create a simple area chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View4.qml 1
+*/
+
 DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
     QAreaSeries(parent)
 {

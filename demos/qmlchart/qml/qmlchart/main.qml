@@ -38,14 +38,15 @@ Rectangle {
     Row {
         id: buttons
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 5
+        anchors.bottomMargin: 15
         anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 10
+        spacing: 5
 
         Rectangle {
             height: 35
             width: 60
-            color: "#c8955c"
+            border.color: "#c8955c"
+            border.width: 2
             radius: 5
             Text {
                 anchors.centerIn: parent
@@ -56,7 +57,7 @@ Rectangle {
                 onClicked: {
                     var i = viewNumber - 1;
                     if (i <= 0)
-                        viewNumber = 5;
+                        viewNumber = 9;
                     else
                         viewNumber = i;
                 }
@@ -65,7 +66,8 @@ Rectangle {
         Rectangle {
             height: 35
             width: 60
-            color: "#c8955c"
+            border.color: "#c8955c"
+            border.width: 2
             radius: 5
             Text {
                 anchors.centerIn: parent
@@ -75,7 +77,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     var i = viewNumber + 1;
-                    if (i > 5)
+                    if (i > 9)
                         viewNumber = 1;
                     else
                         viewNumber = i;
