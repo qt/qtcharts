@@ -25,6 +25,7 @@
 #include <qchart.h>
 #include <QBarModelMapper>
 #include <QStandardItemModel>
+#include "tst_definitions.h"
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -224,17 +225,14 @@ void tst_QGroupedBarSeries::mousehovered()
 // move mouse to left border
     qDebug() << "move mouse to left border";
     QTest::mouseMove(view.viewport(), QPoint(0, 143));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-
-    QVERIFY(seriesSpy.count() == 0);
+    QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
+    TRY_COMPARE(seriesSpy.count(), 0);
 
 //=======================================================================
 // move mouse on top of set1
     qDebug() << "move mouse on top of set1";
     QTest::mouseMove(view.viewport(), QPoint(95,143));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
-
-    QVERIFY(seriesSpy.count() == 1);
+    TRY_COMPARE(seriesSpy.count(), 1);
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
@@ -245,9 +243,7 @@ void tst_QGroupedBarSeries::mousehovered()
 // move mouse from top of set1 to top of set2
     qDebug() << "move mouse from top of set1 to top of set2";
     QTest::mouseMove(view.viewport(), QPoint(118,143));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
-
-    QVERIFY(seriesSpy.count() == 2);
+    TRY_COMPARE(seriesSpy.count(), 2);
 
     // should leave set1
     seriesSpyArg = seriesSpy.takeFirst();
@@ -266,9 +262,7 @@ void tst_QGroupedBarSeries::mousehovered()
     qDebug() << "move mouse from top of set2 to background";
 
     QTest::mouseMove(view.viewport(), QPoint(118,0));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
-
-    QVERIFY(seriesSpy.count() == 1);
+    TRY_COMPARE(seriesSpy.count(), 1);
 
     // should leave set2
     seriesSpyArg = seriesSpy.takeFirst();
