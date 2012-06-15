@@ -35,6 +35,7 @@ class QTCOMMERCIALCHART_EXPORT QAbstractSeries : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
+    Q_PROPERTY(SeriesType type READ type)
     Q_ENUMS(SeriesType)
 
 public:

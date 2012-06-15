@@ -29,7 +29,7 @@ ChartView::ChartView(QChart* chart,QWidget* parent):QChartView(chart,parent),
 m_index(-1),m_chart(chart)
 {
     m_chart->setTitle("Charts presenter");
-    m_chart->setBackgroundDropShadowEnabled(false);
+    m_chart->setDropShadowEnabled(false);
     QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(handleTimeout()));
     m_timer.setInterval(3000);
 

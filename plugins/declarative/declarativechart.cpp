@@ -42,6 +42,44 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \clearfloat
 */
 
+/*!
+  \qmlproperty Theme ChartView::theme
+  Theme defines the visual appearance of the chart, including for example colors, fonts, line
+  widths and chart background.
+*/
+
+/*!
+  \qmlproperty Animation ChartView::animation
+  Animation configuration of the chart. One of ChartView.NoAnimation, ChartView.GridAxisAnimations,
+  ChartView.SeriesAnimations or ChartView.AllAnimations.
+*/
+
+/*!
+  \qmlproperty string ChartView::title
+  The title of the chart, shown on top of the chart.
+*/
+
+/*!
+  \qmlproperty string ChartView::titleColor
+  The color of the title text.
+*/
+
+/*!
+  \qmlproperty Axis ChartView::axisX
+  The x-axis of the chart.
+*/
+
+/*!
+  \qmlproperty Axis ChartView::axisY
+  The default y-axis of the chart.
+*/
+
+/*!
+  \qmlmethod Axis ChartView::axisY(QAbstractSeries *series)
+  The y-axis of the series. This is the same as the default y-axis of the chart, unless you have
+  explicitly defined the series to have a non-default y-axis.
+*/
+
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
       m_chart(new QChart(this))
@@ -66,15 +104,13 @@ void DeclarativeChart::childEvent(QChildEvent *event)
 
 void DeclarativeChart::componentComplete()
 {
-//    qDebug() << "DeclarativeChart::componentComplete(), maxX: " << axisX()->max();
     foreach(QObject *child, children()) {
         if (qobject_cast<QAbstractSeries *>(child)) {
 //            qDebug() << "DeclarativeChart::componentComplete(), add: " << child;
+            // TODO: how about optional y-axis?
             m_chart->addSeries(qobject_cast<QAbstractSeries *>(child));
         }
     }
-//    qDebug() << "DeclarativeChart::componentComplete(), maxX: " << axisX()->max();
-
     QDeclarativeItem::componentComplete();
 }
 
@@ -150,9 +186,9 @@ QAxis *DeclarativeChart::axisX()
     return m_chart->axisX();
 }
 
-QAxis *DeclarativeChart::axisY()
+QAxis *DeclarativeChart::axisY(QAbstractSeries *series)
 {
-    return m_chart->axisY();
+    return m_chart->axisY(series);
 }
 
 QLegend *DeclarativeChart::legend()
@@ -222,15 +258,15 @@ int DeclarativeChart::count()
 
 void DeclarativeChart::setDropShadowEnabled(bool enabled)
 {
-    if (enabled != m_chart->isBackgroundDropShadowEnabled()) {
-        m_chart->setBackgroundDropShadowEnabled(enabled);
+    if (enabled != m_chart->isDropShadowEnabled()) {
+        m_chart->setDropShadowEnabled(enabled);
         dropShadowEnabledChanged(enabled);
     }
 }
 
 bool DeclarativeChart::dropShadowEnabled()
 {
-    return m_chart->isBackgroundDropShadowEnabled();
+    return m_chart->isDropShadowEnabled();
 }
 
 void DeclarativeChart::zoom(qreal factor)
@@ -257,33 +293,6 @@ void DeclarativeChart::scrollDown(qreal pixels)
 {
     m_chart->scroll(QPointF(0, -pixels));
 }
-
-//void DeclarativeChart::scrollLeft(qreal ticks)
-//{
-//    m_chart->scroll(QPointF(ticksToPixels(m_chart->axisX(), ticks), 0));
-//}
-
-//void DeclarativeChart::scrollRight(qreal ticks)
-//{
-//    m_chart->scroll(QPointF(-ticksToPixels(m_chart->axisX(), ticks), 0));
-//}
-
-//void DeclarativeChart::scrollUp(qreal ticks)
-//{
-//    m_chart->scroll(QPointF(0, ticksToPixels(m_chart->axisY(), ticks)));
-//}
-
-//void DeclarativeChart::scrollDown(qreal ticks)
-//{
-//    m_chart->scroll(QPointF(0, -ticksToPixels(m_chart->axisY(), ticks)));
-//}
-
-//qreal DeclarativeChart::ticksToPixels(QAxis *axis, qreal ticks)
-//{
-//    qreal tickCount = axis->max() - axis->min();
-//    qreal tickPixels = (m_chart->size().width() - m_chart->margins().width() * 2) / tickCount;
-//    return tickPixels * ticks;
-//}
 
 QAbstractSeries *DeclarativeChart::series(int index)
 {

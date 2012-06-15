@@ -85,9 +85,9 @@ public:
     QPen backgroundPen() const;
     void setBackgroundVisible(bool visible = true);
     bool isBackgroundVisible() const;
-    void setBackgroundDropShadowEnabled(bool enabled = true);
-    bool isBackgroundDropShadowEnabled() const;
 
+    void setDropShadowEnabled(bool enabled = true);
+    bool isDropShadowEnabled() const;
     void setAnimationOptions(AnimationOptions options);
     AnimationOptions animationOptions() const;
 

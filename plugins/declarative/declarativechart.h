@@ -99,7 +99,7 @@ public:
     void setTitle(QString title);
     QString title();
     QAxis *axisX();
-    QAxis *axisY();
+    Q_INVOKABLE QAxis *axisY(QAbstractSeries *series = 0);
     QLegend *legend();
     QVariantList axisXLabels();
     void setAxisXLabels(QVariantList list);

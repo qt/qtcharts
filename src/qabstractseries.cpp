@@ -51,8 +51,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn QSeriesType QAbstractSeries::type() const
-    \brief The type of the series.
+    \property QAbstractSeries::type
+    The type of the series.
 */
 
 /*!

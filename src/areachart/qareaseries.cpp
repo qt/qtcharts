@@ -47,14 +47,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-   \fn QLineSeries* QAreaSeries::upperSeries() const
-   \brief Returns upperSeries used to define one of area boundaries.
+   \property QAreaSeries::upperSeries
+   \brief The upper one of the two line series used to define area series boundaries.
 */
 
 /*!
-   \fn QLineSeries* QAreaSeries::lowerSeries() const
-   \brief Returns lowerSeries used to define one of area boundaries. Note if QAreaSeries where counstucted wihtout a\ lowerSeries
-    this function return Null pointer.
+    \property QAreaSeries::lowerSeries
+    The lower one of the two line series used to define are series boundaries. Note if
+    QAreaSeries was counstucted wihtout a\ lowerSeries this is null.
 */
 
 /*!

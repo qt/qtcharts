@@ -88,7 +88,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::barsetCountChanged()
+    \fn void QBarSeries::countChanged()
 
     This signal is emitted when barset count has been changed, for example by append or remove.
 */
@@ -191,7 +191,7 @@ bool QBarSeries::append(QBarSet *set)
         QList<QBarSet*> sets;
         sets.append(set);
         emit barsetsAdded(sets);
-        emit barsetCountChanged();
+        emit countChanged();
     }
     return success;
 }
@@ -208,7 +208,7 @@ bool QBarSeries::remove(QBarSet *set)
         QList<QBarSet*> sets;
         sets.append(set);
         emit barsetsRemoved(sets);
-        emit barsetCountChanged();
+        emit countChanged();
     }
     return success;
 }
@@ -225,7 +225,7 @@ bool QBarSeries::append(QList<QBarSet* > sets)
     bool success = d->append(sets);
     if (success) {
         emit barsetsAdded(sets);
-        emit barsetCountChanged();
+        emit countChanged();
     }
     return success;
 }
@@ -243,7 +243,7 @@ bool QBarSeries::insert(int index, QBarSet *set)
         QList<QBarSet*> sets;
         sets.append(set);
         emit barsetsAdded(sets);
-        emit barsetCountChanged();
+        emit countChanged();
     }
     return success;
 }
@@ -258,14 +258,14 @@ void QBarSeries::clear()
     bool success = d->remove(sets);
     if (success) {
         emit barsetsRemoved(sets);
-        emit barsetCountChanged();
+        emit countChanged();
     }
 }
 
 /*!
     Returns number of sets in series.
 */
-int QBarSeries::barsetCount() const
+int QBarSeries::count() const
 {
     Q_D(const QBarSeries);
     return d->m_barSets.count();

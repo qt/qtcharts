@@ -34,7 +34,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(qreal barWidth READ barWidth WRITE setBarWidth NOTIFY barWidthChanged)
-    Q_PROPERTY(int count READ barsetCount NOTIFY barsetCountChanged)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool labelsVisible READ isLabelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
 
 public:
@@ -50,7 +50,7 @@ public:
     bool remove(QBarSet *set);
     bool append(QList<QBarSet* > sets);
     bool insert(int index, QBarSet *set);
-    int barsetCount() const;
+    int count() const;
     QList<QBarSet*> barSets() const;
     void clear();
 
@@ -64,7 +64,7 @@ Q_SIGNALS:
     void clicked(QBarSet *barset, int index);
     void hovered(QBarSet* barset, bool status);
     void barWidthChanged();
-    void barsetCountChanged();
+    void countChanged();
     void labelsVisibleChanged();
 
     void barsetsAdded(QList<QBarSet*> sets);

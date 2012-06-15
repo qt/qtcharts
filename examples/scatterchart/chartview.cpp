@@ -51,6 +51,6 @@ ChartView::ChartView(QWidget *parent) :
     chart()->addSeries(series0);
     chart()->addSeries(series1);
     chart()->setTitle("Simple scatterchart example");
-    chart()->setBackgroundDropShadowEnabled(false);
+    chart()->setDropShadowEnabled(false);
     //![3]
 }

@@ -75,7 +75,7 @@ void BarChartItem::handleDataStructureChanged()
 
     // Create new graphic items for bars
     for (int c = 0; c < m_series->d_func()->categoryCount(); c++) {
-        for (int s = 0; s < m_series->barsetCount(); s++) {
+        for (int s = 0; s < m_series->count(); s++) {
             QBarSet *set = m_series->d_func()->barsetAt(s);
 
             // Bars
@@ -103,7 +103,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
 
     // Use temporary qreals for accuracy
     qreal categoryCount = m_series->d_func()->categoryCount();
-    qreal setCount = m_series->barsetCount();
+    qreal setCount = m_series->count();
     bool barsVisible = m_series->isVisible();
 
     // Domain:

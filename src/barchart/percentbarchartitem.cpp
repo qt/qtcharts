@@ -37,7 +37,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
 
     // Use temporary qreals for accuracy
     qreal categoryCount = m_series->d_func()->categoryCount();
-    qreal setCount = m_series->barsetCount();
+    qreal setCount = m_series->count();
     bool barsVisible = m_series->isVisible();
 
     // Domain:

@@ -110,7 +110,7 @@ void ChartTheme::decorate(QChart *chart)
         chart->setBackgroundBrush(m_chartBackgroundGradient);
     chart->setTitleFont(m_masterFont);
     chart->setTitleBrush(m_titleBrush);
-    chart->setBackgroundDropShadowEnabled(m_backgroundDropShadowEnabled);
+    chart->setDropShadowEnabled(m_backgroundDropShadowEnabled);
 }
 
 void ChartTheme::decorate(QLegend *legend)
