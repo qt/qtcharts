@@ -22,4 +22,5 @@ SUBDIRS += \
            modeldata \
            groupedbarchart \
            legend \
-           barmodelmapper
+           barmodelmapper \
+           qmlpiechart

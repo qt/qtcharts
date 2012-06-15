@@ -3,25 +3,72 @@
     \title QtCommercial Charts QML API
     \keyword Charts QML API
 
-    Charts QML API is an intuitive and simple way to use QtCommercial Charts in your QML applications.
+    QtCommercial Charts QML API is an intuitive and simple way to show charts in your QML
+    applications. The following example QML shows you how to create a simple pie chart:
+    \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 1
+
+    \beginfloatleft
+    \image examples_qmlpiechart.png
+    \endfloat
+    \clearfloat
 
     \raw HTML
-        <ul>
-        <li><a href="qml-chartview.html">ChartView</a></li>
-        <li><a href="qml-lineseries.html">LineSeries</a></li>
-        <li><a href="qml-areaseries.html">AreaSeries</a></li>
-        <li><a href="qml-scatterseries.html">ScatterSeries</a></li>
-        <li><a href="qml-splineseries.html">SplineSeries</a></li>
-        <li><a href="qml-pieseries.html">PieSeries</a></li>
-        <li><a href="qml-pieslice.html">PieSlice</a></li>
-        <li><a href="qml-barseries.html">BarSeries</a></li>
-        <li><a href="qml-groupedbarseries.html">GroupedBarSeries</a></li>
-        <li><a href="qml-stackedbarseries.html">StackedBarSeries</a></li>
-        <li><a href="qml-percentbarseries.html">PercentBarSeries</a></li>
-        <li><a href="qml-barset.html">BarSet</a></li>
-        <li><a href="qml-axis.html">Axis</a></li>
-        <li><a href="qml-legend.html">Legend</a></li>
-        <li><a href="qml-xypoint.html">XyPoint</a></li>
-        </ul>
-    \endraw    
+        <table cellpadding="2" cellspacing="1" border="0" width="95%" class="indextable">
+            <tr>
+                <th class="titleheader" width="25%"> ChartView and it's properties </th>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <ul>
+                    <li><a href="qml-chartview.html">ChartView</a></li>
+                    <li><a href="qml-axis.html">Axis</a></li>
+                    <li><a href="qml-legend.html">Legend</a></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <table cellpadding="2" cellspacing="1" border="0" width="95%" class="indextable">
+            <tr>
+                <th class="titleheader" width="25%"> XY chart </th>
+            </tr>
+            <tr>
+                <td valign="top">
+                    <ul>
+                    <li><a href="qml-lineseries.html">LineSeries</a></li>
+                    <li><a href="qml-areaseries.html">AreaSeries</a></li>
+                    <li><a href="qml-scatterseries.html">ScatterSeries</a></li>
+                    <li><a href="qml-splineseries.html">SplineSeries</a></li>
+                    <li><a href="qml-xypoint.html">XyPoint</a></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <table cellpadding="2" cellspacing="1" border="0" width="95%" class="indextable">
+            <tr>
+                <th class="titleheader" width="25%"> Pie chart </th>
+            <tr>
+                <td valign="top">
+                    <ul>
+                    <li><a href="qml-pieseries.html">PieSeries</a></li>
+                    <li><a href="qml-pieslice.html">PieSlice</a></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <table cellpadding="2" cellspacing="1" border="0" width="95%" class="indextable">
+            <tr>
+                <th class="titleheader" width="25%"> Bar chart </th>
+            <tr>
+                <td valign="top">
+                    <ul>
+                    <li><a href="qml-barseries.html">BarSeries</a></li>
+                    <li><a href="qml-groupedbarseries.html">GroupedBarSeries</a></li>
+                    <li><a href="qml-stackedbarseries.html">StackedBarSeries</a></li>
+                    <li><a href="qml-percentbarseries.html">PercentBarSeries</a></li>
+                    <li><a href="qml-barset.html">BarSet</a></li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    \endraw
 */
