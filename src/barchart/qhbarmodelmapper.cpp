@@ -50,6 +50,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QHBarModelMapper::firstBarSetRowChanged()
+
+    Emitted when the firstBarSetRow has changed.
+*/
+
+/*!
+    \fn void QHBarModelMapper::lastBarSetRowChanged()
+
+    Emitted when the lastBarSetRow has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QHBarModelMapper::QHBarModelMapper(QObject *parent) :
@@ -65,7 +77,10 @@ int QHBarModelMapper::firstBarSetRow() const
 
 void QHBarModelMapper::setFirstBarSetRow(int firstBarSetRow)
 {
-    return QBarModelMapper::setFirstBarSetSection(firstBarSetRow);
+    if (firstBarSetRow != firstBarSetSection()) {
+        return QBarModelMapper::setFirstBarSetSection(firstBarSetRow);
+        emit firstBarSetRowChanged();
+    }
 }
 
 int QHBarModelMapper::lastBarSetRow() const
@@ -75,7 +90,10 @@ int QHBarModelMapper::lastBarSetRow() const
 
 void QHBarModelMapper::setLastBarSetRow(int lastBarSetRow)
 {
-    return QBarModelMapper::setLastBarSetSection(lastBarSetRow);
+    if (lastBarSetRow != lastBarSetSection()) {
+        return QBarModelMapper::setLastBarSetSection(lastBarSetRow);
+        emit lastBarSetRowChanged();
+    }
 }
 
 #include "moc_qhbarmodelmapper.cpp"

@@ -28,8 +28,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QHBarModelMapper : public QBarModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(int firstBarSetRow READ firstBarSetRow WRITE setFirstBarSetRow)
-    Q_PROPERTY(int lastBarSetRow READ lastBarSetRow WRITE setLastBarSetRow)
+    Q_PROPERTY(int firstBarSetRow READ firstBarSetRow WRITE setFirstBarSetRow NOTIFY firstBarSetRowChanged)
+    Q_PROPERTY(int lastBarSetRow READ lastBarSetRow WRITE setLastBarSetRow NOTIFY lastBarSetRowChanged)
 
 public:
     explicit QHBarModelMapper(QObject *parent = 0);
@@ -39,6 +39,10 @@ public:
 
     int lastBarSetRow() const;
     void setLastBarSetRow(int lastBarSetRow);
+
+Q_SIGNALS:
+    void firstBarSetRowChanged();
+    void lastBarSetRowChanged();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -68,6 +68,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QBarModelMapper::seriesReplaced()
+
+    Emitted when the series to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QBarModelMapper::modelReplaced()
+
+    Emitted when the model to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QBarModelMapper::firstChanged()
+
+    Emitted when the value for the first has changed.
+*/
+
+/*!
+    \fn void QBarModelMapper::countChanged()
+
+    Emitted when the value for the count has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QBarModelMapper::QBarModelMapper(QObject *parent) :
@@ -101,6 +125,8 @@ void QBarModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
+
+    emit modelReplaced();
 }
 
 QBarSeries* QBarModelMapper::series() const
@@ -124,6 +150,8 @@ void QBarModelMapper::setSeries(QBarSeries *series)
     // connect the signals from the series
     connect(d->m_series, SIGNAL(barsetsAdded(QList<QBarSet*>)), d, SLOT(barSetsAdded(QList<QBarSet*>)));
     connect(d->m_series, SIGNAL(barsetsRemoved(QList<QBarSet*>)), d, SLOT(barSetsRemoved(QList<QBarSet*>)));
+
+    emit seriesReplaced();
 }
 
 int QBarModelMapper::first() const
@@ -135,8 +163,12 @@ int QBarModelMapper::first() const
 void QBarModelMapper::setFirst(int first)
 {
     Q_D(QBarModelMapper);
-    d->m_first = qMax(first, 0);
-    d->initializeBarFromModel();
+    if (first != d->m_first) {
+        d->m_first = qMax(first, 0);
+        d->initializeBarFromModel();
+
+        emit firstChanged();
+    }
 }
 
 int QBarModelMapper::count() const
@@ -148,8 +180,12 @@ int QBarModelMapper::count() const
 void QBarModelMapper::setCount(int count)
 {
     Q_D(QBarModelMapper);
-    d->m_count = qMax(count, -1);
-    d->initializeBarFromModel();
+    if (count != d->m_count) {
+        d->m_count = qMax(count, -1);
+        d->initializeBarFromModel();
+
+        emit countChanged();
+    }
 }
 
 /*!

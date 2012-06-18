@@ -50,6 +50,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QVBarModelMapper::firstBarSetColumnChanged()
+
+    Emitted when the firstBarSetColumn has changed.
+*/
+
+/*!
+    \fn void QVBarModelMapper::lastBarSetColumnChanged()
+
+    Emitted when the lastBarSetColumn has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QVBarModelMapper::QVBarModelMapper(QObject *parent) :
@@ -65,7 +77,10 @@ int QVBarModelMapper::firstBarSetColumn() const
 
 void QVBarModelMapper::setFirstBarSetColumn(int firstBarSetColumn)
 {
-    return QBarModelMapper::setFirstBarSetSection(firstBarSetColumn);
+    if (firstBarSetColumn != firstBarSetSection()) {
+        return QBarModelMapper::setFirstBarSetSection(firstBarSetColumn);
+        emit firstBarSetColumnChanged();
+    }
 }
 
 int QVBarModelMapper::lastBarSetColumn() const
@@ -75,7 +90,10 @@ int QVBarModelMapper::lastBarSetColumn() const
 
 void QVBarModelMapper::setLastBarSetColumn(int lastBarSetColumn)
 {
-    return QBarModelMapper::setLastBarSetSection(lastBarSetColumn);
+    if (lastBarSetColumn != lastBarSetSection()) {
+        return QBarModelMapper::setLastBarSetSection(lastBarSetColumn);
+        emit lastBarSetColumnChanged();
+    }
 }
 
 #include "moc_qvbarmodelmapper.cpp"
