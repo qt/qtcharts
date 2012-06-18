@@ -75,6 +75,8 @@ public:
                                           QLatin1String("Trying to create uncreatable: QScatterSeries."));
         qmlRegisterUncreatableType<QPieSeries>(uri, 1, 0, "QPieSeries",
                                           QLatin1String("Trying to create uncreatable: QPieSeries."));
+        qmlRegisterUncreatableType<QBarSet>(uri, 1, 0, "QBarSet",
+                                          QLatin1String("Trying to create uncreatable: QBarSet."));
         qmlRegisterUncreatableType<QAbstractItemModel>(uri, 1, 0, "AbstractItemModel",
                                           QLatin1String("Trying to create uncreatable: AbstractItemModel."));
         qmlRegisterUncreatableType<QXYModelMapper>(uri, 1, 0, "XYModelMapper",
