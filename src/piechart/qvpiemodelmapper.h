@@ -28,8 +28,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QVPieModelMapper : public QPieModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(int valuesColumn READ valuesColumn WRITE setValuesColumn)
-    Q_PROPERTY(int labelsColumn READ labelsColumn WRITE setLabelsColumn)
+    Q_PROPERTY(int valuesColumn READ valuesColumn WRITE setValuesColumn NOTIFY valuesColumnChanged)
+    Q_PROPERTY(int labelsColumn READ labelsColumn WRITE setLabelsColumn NOTIFY labelsColumnChanged)
 
 public:
     explicit QVPieModelMapper(QObject *parent = 0);
@@ -39,6 +39,10 @@ public:
 
     int labelsColumn() const;
     void setLabelsColumn(int labelsColumn);
+
+Q_SIGNALS:
+    void valuesColumnChanged();
+    void labelsColumnChanged();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

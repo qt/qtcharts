@@ -70,7 +70,10 @@ int QVPieModelMapper::valuesColumn() const
 */
 void QVPieModelMapper::setValuesColumn(int valuesColumn)
 {
-    QPieModelMapper::setValuesSection(valuesColumn);
+    if (valuesColumn != valuesSection()) {
+        QPieModelMapper::setValuesSection(valuesColumn);
+        emit valuesColumnChanged();
+    }
 }
 
 /*!
@@ -87,7 +90,10 @@ int QVPieModelMapper::labelsColumn() const
 */
 void QVPieModelMapper::setLabelsColumn(int labelsColumn)
 {
-    QPieModelMapper::setLabelsSection(labelsColumn);
+    if (labelsColumn != labelsSection()) {
+        QPieModelMapper::setLabelsSection(labelsColumn);
+        emit labelsColumnChanged();
+    }
 }
 
 #include "moc_qvpiemodelmapper.cpp"

@@ -70,7 +70,10 @@ int QHPieModelMapper::valuesRow() const
 */
 void QHPieModelMapper::setValuesRow(int valuesRow)
 {
-    QPieModelMapper::setValuesSection(valuesRow);
+    if (valuesRow != valuesSection()) {
+        QPieModelMapper::setValuesSection(valuesRow);
+        emit valuesRowChanged();
+    }
 }
 
 /*!
@@ -87,7 +90,10 @@ int QHPieModelMapper::labelsRow() const
 */
 void QHPieModelMapper::setLabelsRow(int labelsRow)
 {
-    QPieModelMapper::setLabelsSection(labelsRow);
+    if (labelsRow != labelsSection()) {
+        QPieModelMapper::setLabelsSection(labelsRow);
+        emit labelsRowChanged();
+    }
 }
 
 #include "moc_qhpiemodelmapper.cpp"

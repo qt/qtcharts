@@ -97,6 +97,8 @@ void QPieModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
+
+    emit modelReplaced();
 }
 
 QPieSeries* QPieModelMapper::series() const
@@ -120,6 +122,8 @@ void QPieModelMapper::setSeries(QPieSeries *series)
     // connect the signals from the series
     connect(d->m_series, SIGNAL(added(QList<QPieSlice*>)), d, SLOT(slicesAdded(QList<QPieSlice*>)));
     connect(d->m_series, SIGNAL(removed(QList<QPieSlice*>)), d, SLOT(slicesRemoved(QList<QPieSlice*>)));
+
+    emit seriesReplaced();
 }
 
 int QPieModelMapper::first() const
@@ -131,8 +135,12 @@ int QPieModelMapper::first() const
 void QPieModelMapper::setFirst(int first)
 {
     Q_D(QPieModelMapper);
-    d->m_first = qMax(first, 0);
-    d->initializePieFromModel();
+    if (first != d->m_first) {
+        d->m_first = qMax(first, 0);
+        d->initializePieFromModel();
+
+        emit firstChanged();
+    }
 }
 
 int QPieModelMapper::count() const
@@ -144,8 +152,12 @@ int QPieModelMapper::count() const
 void QPieModelMapper::setCount(int count)
 {
     Q_D(QPieModelMapper);
-    d->m_count = qMax(count, -1);
-    d->initializePieFromModel();
+    if (count != d->m_count) {
+        d->m_count = qMax(count, -1);
+        d->initializePieFromModel();
+
+        emit countChanged();
+    }
 }
 
 /*!
@@ -500,7 +512,7 @@ void QPieModelMapperPrivate::insertData(int start, int end)
             if (valueIndex.isValid() && labelIndex.isValid()) {
                 QPieSlice *slice = new QPieSlice;
                 slice->setValue(m_model->data(valueIndex, Qt::DisplayRole).toDouble());
-                slice->setLabel(m_model->data(labelIndex, Qt::DisplayRole).toString());                
+                slice->setLabel(m_model->data(labelIndex, Qt::DisplayRole).toString());
                 connect(slice, SIGNAL(labelChanged()), this, SLOT(sliceLabelChanged()));
                 connect(slice, SIGNAL(valueChanged()), this, SLOT(sliceValueChanged()));
                 m_series->insert(i - m_first, slice);
@@ -583,7 +595,7 @@ void QPieModelMapperPrivate::initializePieFromModel()
         slicePos++;
         valueIndex = valueModelIndex(slicePos);
         labelIndex = labelModelIndex(slicePos);
-    }    
+    }
     blockSeriesSignals(false);
 }
 
