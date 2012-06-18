@@ -34,10 +34,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     ChartView element is the parent that is responsible for showing different chart series types.
 
-    \section1 Example Usage
+    The following QML shows how to create a simple line chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View2.qml 1
 
     \beginfloatleft
-    \image demos_qmlchart1.png
+    \image demos_qmlchart2.png
     \endfloat
     \clearfloat
 */

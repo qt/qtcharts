@@ -65,7 +65,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Legend is part of QtCommercial Chart QML API.
 
     Legend is a graphical object, whics displays legend of the chart. Legend state is updated by ChartView, when
-    series have been changed. Legend is referenced via ChartView class. For example:
+    series have been changed. Legend is used via ChartView class. For example:
     \code
         ChartView {
             legend.visible: true

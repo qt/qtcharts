@@ -28,61 +28,63 @@ Rectangle {
 
     Loader {
         id: loader
-        anchors.top: parent.top
-        anchors.bottom: buttons.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.fill: parent
         source: "View" + viewNumber + ".qml";
     }
 
-    Row {
-        id: buttons
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 15
-        anchors.horizontalCenter: parent.horizontalCenter
-        spacing: 5
+    Rectangle {
+        id: infoText
+        anchors.centerIn: parent
+        width: parent.width
+        height: 40
+        color: "black"
+        Text {
+            color: "white"
+            anchors.centerIn: parent
+            text: "Use left and right arrow keys to navigate between chart types"
+        }
 
-        Rectangle {
-            height: 35
-            width: 60
-            border.color: "#c8955c"
-            border.width: 2
-            radius: 5
-            Text {
-                anchors.centerIn: parent
-                text: "<"
+        Behavior on opacity {
+            NumberAnimation { duration: 400 }
+        }
+    }
+
+    MouseArea {
+        focus: true
+        anchors.fill: parent
+        onClicked: {
+            if (infoText.opacity > 0) {
+                infoText.opacity = 0.0;
+            } else {
+                nextView();
             }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    var i = viewNumber - 1;
-                    if (i <= 0)
-                        viewNumber = 9;
-                    else
-                        viewNumber = i;
+        }
+        Keys.onPressed: {
+            if (infoText.opacity > 0) {
+                infoText.opacity = 0.0;
+            } else {
+                if (event.key == Qt.Key_Left) {
+                    previousView();
+                } else {
+                    nextView();
                 }
             }
         }
-        Rectangle {
-            height: 35
-            width: 60
-            border.color: "#c8955c"
-            border.width: 2
-            radius: 5
-            Text {
-                anchors.centerIn: parent
-                text: ">"
-            }
-            MouseArea {
-                anchors.fill: parent
-                onClicked: {
-                    var i = viewNumber + 1;
-                    if (i > 9)
-                        viewNumber = 1;
-                    else
-                        viewNumber = i;
-                }
-            }
-        }
+    }
+
+    function nextView() {
+        var i = viewNumber + 1;
+        if (i > 9)
+            viewNumber = 1;
+        else
+            viewNumber = i;
+    }
+
+    function previousView() {
+        var i = viewNumber - 1;
+        if (i <= 0)
+            viewNumber = 9;
+        else
+            viewNumber = i;
     }
 }

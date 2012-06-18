@@ -28,8 +28,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \qmlclass LineSeries QLineSeries
 
-    \section1 Example Usage
-
     \beginfloatleft
     \image demos_qmlchart2.png
     \endfloat

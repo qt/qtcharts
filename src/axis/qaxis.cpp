@@ -41,6 +41,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     There is only one x Axis, however there can be multiple y axes on a ChartView.
     Each chart series can be bound to exactly one Y axis and the shared common X axis.
     Axis can be setup to show axis line with tick marks, grid lines and shades.
+
+    To access Axes you can use ChartView API. For example:
+    \code
+        ChartView {
+            axisX.min: 0
+            axisX.max: 3
+            axisX.ticksCount: 4
+            axisY.min: 0
+            axisY.max: 4
+            // Add a few series...
+        }
+    \endcode
 */
 
 /*!

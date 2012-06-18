@@ -51,6 +51,8 @@ Rectangle {
             XyPoint { x: 2.2; y: 2.9 }
             XyPoint { x: 2.4; y: 2.7 }
             XyPoint { x: 2.67; y: 2.65 }
+    //![2]
         }
     }
+    //![2]
 }

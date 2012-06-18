@@ -4,7 +4,7 @@
     \keyword Charts QML API
 
     QtCommercial Charts QML API is an intuitive and simple way to show charts in your QML
-    applications. The following example QML shows you how to create a simple pie chart:
+    applications. The following QML shows you to create a simple pie chart:
     \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 1
     \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 2
     \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 3
