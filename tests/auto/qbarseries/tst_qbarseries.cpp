@@ -327,6 +327,8 @@ void tst_QBarSeries::mouseclicked()
     series->append(set2);
 
     QSignalSpy seriesSpy(series,SIGNAL(clicked(QBarSet*,int)));
+    QSignalSpy setSpy1(set1, SIGNAL(clicked(int)));
+    QSignalSpy setSpy2(set2, SIGNAL(clicked(int)));
 
     QChartView view(new QChart());
     view.resize(400,300);
@@ -340,11 +342,17 @@ void tst_QBarSeries::mouseclicked()
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
     QVERIFY(seriesSpyArg.at(1).toInt() == 0);
+
+    QList<QVariant> setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 0);
 
 //====================================================================================
 // barset 1, bar 1
@@ -352,11 +360,17 @@ void tst_QBarSeries::mouseclicked()
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
     QVERIFY(seriesSpyArg.at(1).toInt() == 1);
+
+    setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 1);
 
 //====================================================================================
 // barset 1, bar 2
@@ -364,11 +378,17 @@ void tst_QBarSeries::mouseclicked()
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 1);
+    QCOMPARE(setSpy2.count(), 0);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
     QVERIFY(seriesSpyArg.at(1).toInt() == 2);
+
+    setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 2);
 
 //====================================================================================
 // barset 2, bar 0
@@ -376,11 +396,17 @@ void tst_QBarSeries::mouseclicked()
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
     QVERIFY(seriesSpyArg.at(1).toInt() == 0);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 0);
 
 //====================================================================================
 // barset 2, bar 1
@@ -388,11 +414,17 @@ void tst_QBarSeries::mouseclicked()
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
     QVERIFY(seriesSpyArg.at(1).toInt() == 1);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 1);
 
 //====================================================================================
 // barset 2, bar 2
@@ -400,11 +432,17 @@ void tst_QBarSeries::mouseclicked()
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
+    QCOMPARE(setSpy1.count(), 0);
+    QCOMPARE(setSpy2.count(), 1);
 
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Int);
     QVERIFY(seriesSpyArg.at(1).toInt() == 2);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(setSpyArg.at(0).toInt() == 2);
 }
 
 void tst_QBarSeries::mousehovered_data()
@@ -425,6 +463,8 @@ void tst_QBarSeries::mousehovered()
     series->append(set2);
 
     QSignalSpy seriesSpy(series,SIGNAL(hovered(QBarSet*,bool)));
+    QSignalSpy setSpy1(set1, SIGNAL(hovered(bool)));
+    QSignalSpy setSpy2(set2, SIGNAL(hovered(bool)));
 
     QChartView view(new QChart());
     view.resize(400,300);
@@ -440,21 +480,31 @@ void tst_QBarSeries::mousehovered()
     QTest::mouseMove(view.viewport(), QPoint(0, 142));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
     TRY_COMPARE(seriesSpy.count(), 0);
+    TRY_COMPARE(setSpy1.count(), 0);
+    TRY_COMPARE(setSpy2.count(), 0);
 
 //=======================================================================
 // move mouse on top of set1
     QTest::mouseMove(view.viewport(), QPoint(102,142));
     TRY_COMPARE(seriesSpy.count(), 1);
+    TRY_COMPARE(setSpy1.count(), 1);
+    TRY_COMPARE(setSpy2.count(), 0);
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set1);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Bool);
     QVERIFY(seriesSpyArg.at(1).toBool() == true);
 
+    QList<QVariant> setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setSpyArg.at(0).toBool() == true);
+
 //=======================================================================
 // move mouse from top of set1 to top of set2
     QTest::mouseMove(view.viewport(), QPoint(127,142));
     TRY_COMPARE(seriesSpy.count(), 2);
+    TRY_COMPARE(setSpy1.count(), 1);
+    TRY_COMPARE(setSpy2.count(), 1);
 
     // should leave set1
     seriesSpyArg = seriesSpy.takeFirst();
@@ -462,22 +512,36 @@ void tst_QBarSeries::mousehovered()
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Bool);
     QVERIFY(seriesSpyArg.at(1).toBool() == false);
 
+    setSpyArg = setSpy1.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setSpyArg.at(0).toBool() == false);
+
     // should enter set2
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Bool);
     QVERIFY(seriesSpyArg.at(1).toBool() == true);
 
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setSpyArg.at(0).toBool() == true);
+
 //=======================================================================
 // move mouse from top of set2 to background
     QTest::mouseMove(view.viewport(), QPoint(127,0));
     TRY_COMPARE(seriesSpy.count(), 1);
+    TRY_COMPARE(setSpy1.count(), 0);
+    TRY_COMPARE(setSpy2.count(), 1);
 
     // should leave set2
     seriesSpyArg = seriesSpy.takeFirst();
     QCOMPARE(qvariant_cast<QBarSet*>(seriesSpyArg.at(0)), set2);
     QVERIFY(seriesSpyArg.at(1).type() == QVariant::Bool);
     QVERIFY(seriesSpyArg.at(1).toBool() == false);
+
+    setSpyArg = setSpy2.takeFirst();
+    QVERIFY(setSpyArg.at(0).type() == QVariant::Bool);
+    QVERIFY(setSpyArg.at(0).toBool() == false);
 }
 
 void tst_QBarSeries::clearWithAnimations()

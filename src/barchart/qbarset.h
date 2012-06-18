@@ -88,6 +88,8 @@ public:
     void setLabelColor(QColor color);
 
 Q_SIGNALS:
+    void clicked(int index);
+    void hovered(bool status);
     void penChanged();
     void brushChanged();
     void labelChanged();

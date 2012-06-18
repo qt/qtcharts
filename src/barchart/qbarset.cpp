@@ -103,6 +103,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QBarSet::clicked(int index)
+
+    The signal is emitted if the user clicks with a mouse on top of barset.
+    Clicked bar inside set is indexed by \a index
+*/
+
+/*!
+    \fn void QBarSet::hovered(bool status)
+
+    The signal is emitted if mouse is hovered on top of barset.
+    Parameter \a status is true, if mouse entered on top of barset, false if mouse left from top of barset.
+*/
+
+
+/*!
     \fn void QBarSet::labelChanged()
     This signal is emitted when the label of the barSet has changed.
     \sa label

@@ -196,6 +196,8 @@ void BarChartItem::handleDataStructureChanged()
             m_bars.append(bar);
             connect(bar, SIGNAL(clicked(QBarSet*,int)), m_series, SIGNAL(clicked(QBarSet*,int)));
             connect(bar, SIGNAL(hovered(QBarSet*,bool)), m_series, SIGNAL(hovered(QBarSet*,bool)));
+            connect(bar, SIGNAL(clicked(int)), set, SIGNAL(clicked(int)));
+            connect(bar, SIGNAL(hovered(bool)), set, SIGNAL(hovered(bool)));
             m_layout.append(QRectF(0, 0, 0, 0));
 
             // Labels
