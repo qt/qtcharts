@@ -45,10 +45,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     See the \l {AreaChart Example} {area chart example} to learn how to create a simple area chart.
     \image examples_areachart.png
 */
+/*!
+    \qmlclass AreaSeries QAreaSeries
+
+    The following QML shows how to create a simple area chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View4.qml 1
+    \beginfloatleft
+    \image demos_qmlchart4.png
+    \endfloat
+    \clearfloat
+*/
 
 /*!
    \property QAreaSeries::upperSeries
    \brief The upper one of the two line series used to define area series boundaries.
+*/
+/*!
+   \qmlproperty LineSeries AreaSeries::upperSeries
+   The upper one of the two line series used to define area series boundaries.
 */
 
 /*!
@@ -56,17 +70,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The lower one of the two line series used to define are series boundaries. Note if
     QAreaSeries was counstucted wihtout a\ lowerSeries this is null.
 */
+/*!
+    \qmlproperty LineSeries AreaSeries::lowerSeries
+    The lower one of the two line series used to define are series boundaries. Note if
+    AreaSeries was counstucted wihtout a\ lowerSeries this is null.
+*/
 
 /*!
     \property QAreaSeries::color
     Fill (brush) color of the series. This is a convenience property for modifying the color of brush.
     \sa QAreaSeries::brush()
 */
+/*!
+    \qmlproperty color AreaSeries::color
+    Fill (brush) color of the series.
+*/
 
 /*!
     \property QAreaSeries::borderColor
     Line (pen) color of the series. This is a convenience property for modifying the color of pen.
     \sa QAreaSeries::pen()
+*/
+/*!
+    \qmlproperty color AreaSeries::borderColor
+    Line (pen) color of the series.
 */
 
 /*!
@@ -85,28 +112,38 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \fn void QAreaSeries::colorChanged(QColor color)
     \brief Signal is emitted when the fill (brush) color has changed to \a color.
 */
+/*!
+    \qmlsignal AreaSeries::colorChanged(color color)
+    Signal is emitted when the fill (brush) color has changed to \a color.
+*/
 
 /*!
     \fn void QAreaSeries::borderColorChanged(QColor color)
     \brief Signal is emitted when the line (pen) color has changed to \a color.
 */
-
 /*!
-   \fn bool  QAreaSeries::pointsVisible() const
-   \brief  Returns if the points are drawn for this series.
-    \sa setPointsVisible()
+    \qmlsignal AreaSeries::borderColorChanged(color color)
+    Signal is emitted when the line (pen) color has changed to \a color.
 */
 
 /*!
     \fn void QAreaSeries::clicked(const QPointF& point)
     \brief Signal is emitted when user clicks the \a point on area chart.
 */
+/*!
+    \qmlsignal AreaSeries::clicked(QPointF point)
+    Signal is emitted when user clicks the \a point on area chart.
+*/
 
 /*!
     \fn void QAreaSeries::selected()
-
     The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
     implemented by the user of QAreaSeries API.
+*/
+/*!
+    \qmlsignal AreaSeries::selected()
+    The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
+    implemented by the user of AreaSeries API.
 */
 
 /*!
@@ -256,6 +293,10 @@ void QAreaSeries::setPointsVisible(bool visible)
     }
 }
 
+/*!
+    Returns if the points are drawn for this series.
+    \sa setPointsVisible()
+*/
 bool QAreaSeries::pointsVisible() const
 {
     Q_D(const QAreaSeries);

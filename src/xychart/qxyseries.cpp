@@ -29,10 +29,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \class QXYSeries
     \brief The QXYSeries class is a base class for line, spline and scatter series.
 */
+/*!
+    \qmlclass XYSeries
+    \brief The XYSeries class is a base class for line, spline and scatter series.
+
+    The class cannot be instantiated directly.
+*/
 
 /*!
     \property QXYSeries::pointsVisible
-
+    Controls if the data points are visible and should be drawn.
+*/
+/*!
+    \qmlproperty bool XYSeries::pointsVisible
     Controls if the data points are visible and should be drawn.
 */
 
@@ -50,41 +59,78 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QXYSeries::color
-    Line (pen) color of the series. This is a convenience property for modifying the color of pen.
-    \sa QXYSeries::pen()
+    The color of the series. This is line (pen) color in case of QLineSeries or QSplineSeries and
+    fill (brush) color in case of QScatterSeries or QAreaSeries.
+    \sa QXYSeries::pen(), QXYSeries::brush()
+*/
+/*!
+    \qmlproperty color XYSeries::color
+    The color of the series. This is line (pen) color in case of LineSeries or SplineSeries and
+    fill (brush) color in case of ScatterSeries or AreaSeries.
 */
 
 /*!
     \fn void QXYSeries::clicked(const QPointF& point)
     \brief Signal is emitted when user clicks the \a point on chart.
 */
+/*!
+    \qmlsignal XYSeries::onClicked(QPointF point)
+    Signal is emitted when user clicks the \a point on chart. For example:
+    \code
+    LineSeries {
+        XyPoint { x: 0; y: 0 }
+        XyPoint { x: 1.1; y: 2.1 }
+        onClicked: console.log("onClicked: " + point.x + ", " + point.y);
+    }
+    \endcode
+*/
 
 /*!
     \fn void QXYSeries::pointReplaced(int index)
-    \brief Signal is emitted when user replaces a point at \a index.
+    Signal is emitted when a point has been replaced at \a index.
     \sa replace()
+*/
+/*!
+    \qmlsignal XYSeries::pointReplaced(int index)
+    Signal is emitted when a point has been replaced at \a index.
 */
 
 /*!
     \fn void QXYSeries::pointAdded(int index)
-    \brief Signal is emitted when user adds a point at \a index.
+    Signal is emitted when a point has been added at \a index.
     \sa append(), insert()
+*/
+/*!
+    \qmlsignal XYSeries::pointAdded(int index)
+    Signal is emitted when a point has been added at \a index.
 */
 
 /*!
     \fn void QXYSeries::pointRemoved(int index)
-    \brief Signal is emitted when user removes a point at \a index.
+    Signal is emitted when a point has been removed from \a index.
     \sa remove()
+*/
+/*!
+    \qmlsignal XYSeries::pointRemoved(int index)
+    Signal is emitted when a point has been removed from \a index.
 */
 
 /*!
     \fn void QXYSeries::colorChanged(QColor color)
     \brief Signal is emitted when the line (pen) color has changed to \a color.
 */
+/*!
+    \qmlsignal XYSeries::colorChanged(QColor color)
+    Signal is emitted when the line (pen) color has changed to \a color.
+*/
 
 /*!
     \fn void QXYSeriesPrivate::updated()
     \brief \internal
+*/
+
+/*!
+    \qmlmethod XyPoint XYSeries::at(int index)
 */
 
 /*!

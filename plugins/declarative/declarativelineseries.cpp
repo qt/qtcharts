@@ -25,18 +25,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-/*!
-    \qmlclass LineSeries QLineSeries
-
-    \beginfloatleft
-    \image demos_qmlchart2.png
-    \endfloat
-    \clearfloat
-
-    The following QML shows how to create a simple line chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View2.qml 1
-*/
-
 DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
     QLineSeries(parent)
 {

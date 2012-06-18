@@ -48,36 +48,58 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     See the \l {PieChart Example} {pie chart example} to learn how to create a simple pie chart.
     \image examples_piechart.png
 */
+/*!
+    \qmlclass PieSeries QPieSeries
+
+    The following QML shows how to create a simple pie chart.
+    \snippet ../demos/qmlchart/qml/qmlchart/View1.qml 1
+    \beginfloatleft
+    \image demos_qmlchart1.png
+    \endfloat
+    \clearfloat
+*/
 
 /*!
     \property QPieSeries::horizontalPosition
     \brief Defines the horizontal position of the pie.
-
     The value is a relative value to the chart rectangle where:
-
     \list
     \o 0.0 is the absolute left.
     \o 1.0 is the absolute right.
     \endlist
-
     Default value is 0.5 (center).
-
+    \sa verticalPosition
+*/
+/*!
+    \qmlproperty real PieSeries::horizontalPosition
+    Defines the horizontal position of the pie. The value is a relative value to the chart rectangle where:
+    \list
+    \o 0.0 is the absolute left.
+    \o 1.0 is the absolute right.
+    \endlist
+    Default value is 0.5 (center).
     \sa verticalPosition
 */
 
 /*!
     \property QPieSeries::verticalPosition
     \brief Defines the vertical position of the pie.
-
     The value is a relative value to the chart rectangle where:
-
     \list
     \o 0.0 is the absolute top.
     \o 1.0 is the absolute bottom.
     \endlist
-
     Default value is 0.5 (center).
-
+    \sa horizontalPosition
+*/
+/*!
+    \qmlproperty real PieSeries::verticalPosition
+    Defines the vertical position of the pie. The value is a relative value to the chart rectangle where:
+    \list
+    \o 0.0 is the absolute top.
+    \o 1.0 is the absolute bottom.
+    \endlist
+    Default value is 0.5 (center).
     \sa horizontalPosition
 */
 

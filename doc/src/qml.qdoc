@@ -9,11 +9,6 @@
     \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 2
     \snippet ../examples/qmlpiechart/qml/qmlpiechart/main.qml 3
 
-    \beginfloatleft
-    \image examples_qmlpiechart.png
-    \endfloat
-    \clearfloat
-
     \raw HTML
         <table cellpadding="2" cellspacing="1" border="0" width="95%" class="indextable">
             <tr>

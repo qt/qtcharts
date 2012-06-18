@@ -22,6 +22,23 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \qmlclass XyPoint QPointF
+    XyPoint is a convenience element for initializing XY-series with static coordinate data. To
+    manipulate an XY-series dynamically, use it's data manipulation functions instead.
+    \sa LineSeries, AreaSeries, ScatterSeries, SplineSeries
+*/
+
+/*!
+    \qmlproperty real XyPoint::x
+    The x-coordinate of the point.
+*/
+
+/*!
+    \qmlproperty real XyPoint::y
+    The y-coordinate of the point.
+*/
+
 DeclarativeXyPoint::DeclarativeXyPoint(QObject *parent) :
     QObject(parent)
 {

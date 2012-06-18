@@ -45,6 +45,19 @@
     chart->addSeries(series);
     \endcode
 */
+/*!
+    \qmlclass ScatterSeries QScatterSeries
+    \inherits XYSeries
+
+    The following QML shows how to create a chart with two simple scatter series:
+    \snippet ../demos/qmlchart/qml/qmlchart/View5.qml 1
+    \snippet ../demos/qmlchart/qml/qmlchart/View5.qml 2
+
+    \beginfloatleft
+    \image demos_qmlchart5.png
+    \endfloat
+    \clearfloat
+*/
 
 /*!
     \enum QScatterSeries::MarkerShape
@@ -68,30 +81,42 @@
 */
 
 /*!
-  \property QScatterSeries::markerShape
-
-  Defines the shape of the marker used to draw the points in the series. The default shape is MarkerShapeCircle.
+    \property QScatterSeries::markerShape
+    Defines the shape of the marker used to draw the points in the series. The default shape is MarkerShapeCircle.
+*/
+/*!
+    \qmlproperty MarkerShape ScatterSeries::markerShape
+    Defines the shape of the marker used to draw the points in the series. One of ScatterSeries
+    ScatterSeries.MarkerShapeCircle or ScatterSeries.MarkerShapeRectangle.
+    The default shape is ScatterSeries.MarkerShapeCircle.
 */
 
 /*!
-  \property QScatterSeries::markerSize
-
-  Defines the size of the marker used to draw the points in the series. The default size is 15.0.
+    \property QScatterSeries::markerSize
+    Defines the size of the marker used to draw the points in the series. The default size is 15.0.
+*/
+/*!
+    \qmlproperty real ScatterSeries::markerSize
+    Defines the size of the marker used to draw the points in the series. The default size is 15.0.
 */
 
 /*!
     \fn void QScatterSeries::colorChanged(QColor color)
-    \brief Signal is emitted when the fill (brush) color has changed to \a color.
+    Signal is emitted when the fill (brush) color has changed to \a color.
 */
 
 /*!
     \fn void QScatterSeries::borderColorChanged(QColor color)
-    \brief Signal is emitted when the line (pen) color has changed to \a color.
+    Signal is emitted when the line (pen) color has changed to \a color.
+*/
+/*!
+    \qmlsignal ScatterSeries::borderColorChanged(color color)
+    Signal is emitted when the line (pen) color has changed to \a color.
 */
 
 /*!
     \fn QChartSeriesType QScatterSeries::type() const
-    \brief Returns QChartSeries::SeriesTypeScatter.
+    Returns QChartSeries::SeriesTypeScatter.
     \sa QAbstractSeries, SeriesType
 */
 

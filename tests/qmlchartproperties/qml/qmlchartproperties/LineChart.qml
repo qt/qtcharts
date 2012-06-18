@@ -30,6 +30,7 @@ ChartView {
     LineSeries {
         id: daSeries
         name: "line 1"
+        onClicked: console.log("onClicked: " + point.x + ", " + point.y);
         XyPoint { x: 0; y: 0 }
         XyPoint { x: 1.1; y: 2.1 }
         XyPoint { x: 1.9; y: 3.3 }

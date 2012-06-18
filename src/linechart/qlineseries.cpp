@@ -47,6 +47,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     chart->addSeries(series);
     \endcode
 */
+/*!
+    \qmlclass LineSeries QLineSeries
+    \inherits XYSeries
+
+    The following QML shows how to create a simple line chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View2.qml 1
+    \beginfloatleft
+    \image demos_qmlchart2.png
+    \endfloat
+    \clearfloat
+*/
 
 /*!
     \fn virtual SeriesType QLineSeries::type() const

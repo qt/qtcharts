@@ -32,6 +32,8 @@ ChartView {
     AreaSeries {
         id: daSeries
         name: "area 1"
+        onSelected: console.log("areaSeries.onSelected");
+        onClicked: console.log("areaSeries.onClicked: " + point.x + ", " + point.y);
         upperSeries: LineSeries {
             XyPoint { x: 0; y: 1 }
             XyPoint { x: 1; y: 1 }

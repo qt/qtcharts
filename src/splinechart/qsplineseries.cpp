@@ -45,9 +45,21 @@
 */
 
 /*!
-  \fn QSeriesType QSplineSeries::type() const
-  Returns the type of the series
-  */
+    \qmlclass SplineSeries QSplineSeries
+    \inherits XYSeries
+
+    The following QML shows how to create a simple spline chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View3.qml 1
+    \beginfloatleft
+    \image demos_qmlchart3.png
+    \endfloat
+    \clearfloat
+*/
+
+/*!
+    \fn QSeriesType QSplineSeries::type() const
+    Returns the type of the series
+*/
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
