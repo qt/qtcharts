@@ -42,7 +42,6 @@ Flow {
         target: null
         onNameChanged:              console.log("series.onNameChanged: " + series.name);
         onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
-        onBarWidthChanged:          console.log("series.onBardWidthChanged: " + width)
         onLabelsVisibleChanged:     console.log("series.onLabelsVisibleChanged: " + series.labelsVisible);
         onCountChanged:             console.log("series.onCountChanged: " + count);
     }

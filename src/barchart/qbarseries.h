@@ -33,7 +33,7 @@ class QBarSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
 {
     Q_OBJECT
-    Q_PROPERTY(qreal barWidth READ barWidth WRITE setBarWidth NOTIFY barWidthChanged)
+    Q_PROPERTY(qreal barWidth READ barWidth WRITE setBarWidth)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool labelsVisible READ isLabelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
 
@@ -63,7 +63,6 @@ protected:
 Q_SIGNALS:
     void clicked(QBarSet *barset, int index);
     void hovered(QBarSet* barset, bool status);
-    void barWidthChanged(qreal width);
     void countChanged();
     void labelsVisibleChanged();
 
