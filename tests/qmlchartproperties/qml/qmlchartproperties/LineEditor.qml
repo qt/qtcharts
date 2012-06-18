@@ -29,15 +29,18 @@ Flow {
     property variant series
 
     onSeriesChanged: {
-        seriesConnections.target = series;
+        if (series && (series.name == "line 1" || series.name == "spline 1")) {
+            seriesConnections.target = series;
+        } else {
+            seriesConnections.target = null;
+        }
     }
 
     Connections {
         id: seriesConnections
-        ignoreUnknownSignals: true
+        target: null
         onNameChanged:              console.log("series.onNameChanged: " + series.name);
         onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
-        onPointsVisibleChanged:     console.log("series.onPointsVisibleChanged: " + series.pointsVisible);
         onColorChanged:             console.log("series.onColorChanged: " + series.color);
         onCountChanged:             console.log("series.onCountChanged: " + series.count);
     }

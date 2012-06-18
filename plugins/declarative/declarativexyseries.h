@@ -41,8 +41,6 @@ public:
     void classBegin();
     void componentComplete();
     virtual QXYSeries *xySeries() = 0;
-    QColor penColor();
-    void setPenColor(QColor color);
     DeclarativeXyPoint *at(int index);
 };
 

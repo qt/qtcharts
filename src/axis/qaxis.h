@@ -36,7 +36,7 @@ class QTCOMMERCIALCHART_EXPORT QAxis : public QObject
     Q_PROPERTY(bool visible READ isAxisVisible WRITE setAxisVisible NOTIFY visibleChanged)
     Q_PROPERTY(QColor color READ axisPenColor WRITE setAxisPenColor NOTIFY colorChanged)
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
-    Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle NOTIFY labelsAngleChanged)
+    Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle)
     Q_PROPERTY(QColor labelsColor READ labelsColor WRITE setLabelsColor NOTIFY labelsColorChanged)
     Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridVisibleChanged)
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
@@ -44,8 +44,8 @@ class QTCOMMERCIALCHART_EXPORT QAxis : public QObject
     Q_PROPERTY(QColor shadesBorderColor READ shadesBorderColor WRITE setShadesBorderColor NOTIFY shadesBorderColorChanged)
     Q_PROPERTY(qreal min READ min WRITE setMin NOTIFY minChanged)
     Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
-    Q_PROPERTY(int ticksCount READ ticksCount WRITE setTicksCount NOTIFY ticksCountChanged)
-    Q_PROPERTY(bool niceNumbersEnabled READ niceNumbersEnabled WRITE setNiceNumbersEnabled NOTIFY niceNumbersEnabledChanged)
+    Q_PROPERTY(int ticksCount READ ticksCount WRITE setTicksCount)
+    Q_PROPERTY(bool niceNumbersEnabled READ niceNumbersEnabled WRITE setNiceNumbersEnabled)
 
 public:
 
@@ -118,14 +118,11 @@ Q_SIGNALS:
 	void rangeChanged(qreal min, qreal max);
     void colorChanged(QColor color);
     void labelsColorChanged(QColor color);
-    void labelsAngleChanged(int angle);
     void shadesVisibleChanged(bool visible);
     void shadesColorChanged(QColor color);
     void shadesBorderColorChanged(QColor color);
     void minChanged(qreal min);
     void maxChanged(qreal max);
-    void ticksCountChanged(int count);
-    void niceNumbersEnabledChanged(bool enabled);
 
 private:
 	QScopedPointer<QAxisPrivate> d_ptr;

@@ -39,8 +39,6 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *prese
     m_size(15)
 {
     QObject::connect(m_series->d_func(),SIGNAL(updated()), this, SLOT(handleUpdated()));
-    QObject::connect(m_series, SIGNAL(markerShapeChanged()), this, SLOT(handleUpdated()));
-    QObject::connect(m_series, SIGNAL(markerSizeChanged()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
 
     setZValue(ChartPresenter::ScatterSeriesZValue);

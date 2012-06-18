@@ -35,6 +35,8 @@ class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QAbstractSeries
     Q_OBJECT
     Q_PROPERTY(QAbstractSeries *upperSeries READ upperSeries)
     Q_PROPERTY(QAbstractSeries *lowerSeries READ lowerSeries)
+    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
+    Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
 
 public:
     explicit QAreaSeries(QObject *parent = 0);
@@ -55,16 +57,24 @@ public:
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
+    void setColor(const QColor &color);
+    QColor color() const;
+
+    void setBorderColor(const QColor &color);
+    QColor borderColor() const;
+
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void selected();
+    void colorChanged(QColor color);
+    void borderColorChanged(QColor color);
 
 private:
-    Q_DECLARE_PRIVATE(QAreaSeries);
-    Q_DISABLE_COPY(QAreaSeries);
+    Q_DECLARE_PRIVATE(QAreaSeries)
+    Q_DISABLE_COPY(QAreaSeries)
     friend class AreaLegendMarker;
     friend class AreaChartItem;
 };

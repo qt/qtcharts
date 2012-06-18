@@ -64,30 +64,6 @@ DeclarativeLineSeries* DeclarativeAreaSeries::lowerSeries() const
     return qobject_cast<DeclarativeLineSeries *>(QAreaSeries::lowerSeries());
 }
 
-QColor DeclarativeAreaSeries::penColor() const
-{
-    return pen().color();
-}
-
-void DeclarativeAreaSeries::setPenColor(QColor color)
-{
-    QPen p = pen();
-    p.setColor(color);
-    setPen(p);
-}
-
-QColor DeclarativeAreaSeries::brushColor() const
-{
-    return brush().color();
-}
-
-void DeclarativeAreaSeries::setBrushColor(QColor color)
-{
-    QBrush b = brush();
-    b.setColor(color);
-    setBrush(b);
-}
-
 #include "moc_declarativeareaseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

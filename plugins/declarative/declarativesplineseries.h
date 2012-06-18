@@ -34,7 +34,6 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QColor color READ penColor WRITE setPenColor)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 

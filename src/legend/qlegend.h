@@ -43,7 +43,7 @@ class QLegendPrivate;
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
     Q_OBJECT
-    Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment NOTIFY alignmentChanged)
+    Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment)
     Q_PROPERTY(bool backgroundVisible READ isBackgroundVisible WRITE setBackgroundVisible NOTIFY backgroundVisibleChanged)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
@@ -86,7 +86,6 @@ protected:
     void showEvent(QShowEvent *event);
 
 Q_SIGNALS:
-    void alignmentChanged(Qt::Alignment alignment);
     void backgroundVisibleChanged(bool visible);
     void colorChanged(QColor color);
     void borderColorChanged(QColor color);

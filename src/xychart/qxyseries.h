@@ -36,7 +36,8 @@ class QXYModelMapper;
 class QTCOMMERCIALCHART_EXPORT QXYSeries : public QAbstractSeries
 {
     Q_OBJECT
-    Q_PROPERTY(bool pointsVisible READ pointsVisible WRITE setPointsVisible NOTIFY pointsVisibleChanged)
+    Q_PROPERTY(bool pointsVisible READ pointsVisible WRITE setPointsVisible)
+    Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
 
 protected:
     explicit QXYSeries(QXYSeriesPrivate &d,QObject *parent = 0);
@@ -65,6 +66,9 @@ public:
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
+    virtual void setColor(const QColor &color);
+    virtual QColor color() const;
+
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
@@ -73,8 +77,7 @@ Q_SIGNALS:
     void pointReplaced(int index);
     void pointRemoved(int index);
     void pointAdded(int index);
-    void pointsVisibleChanged(bool visible);
-
+    void colorChanged(QColor color);
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

@@ -56,25 +56,37 @@
 */
 
 /*!
+    \property QScatterSeries::color
+    Fill (brush) color of the series. This is a convenience property for modifying the color of brush.
+    \sa QScatterSeries::brush()
+*/
+
+/*!
+    \property QScatterSeries::borderColor
+    Line (pen) color of the series. This is a convenience property for modifying the color of pen.
+    \sa QScatterSeries::pen()
+*/
+
+/*!
   \property QScatterSeries::markerShape
 
-  Defines the shape of the marker used to draw the points in the series.
-*/
-
-/*!
-    \fn void QScatterSeries::markerShapeChanged()
-    Emitted when marker shape is changed
-*/
-
-/*!
-    \fn void QScatterSeries::markerSizeChanged()
-    Emitted when marker size is changed
+  Defines the shape of the marker used to draw the points in the series. The default shape is MarkerShapeCircle.
 */
 
 /*!
   \property QScatterSeries::markerSize
 
-  Defines the size of the marker used to draw the points in the series.
+  Defines the size of the marker used to draw the points in the series. The default size is 15.0.
+*/
+
+/*!
+    \fn void QScatterSeries::colorChanged(QColor color)
+    \brief Signal is emitted when the fill (brush) color has changed to \a color.
+*/
+
+/*!
+    \fn void QScatterSeries::borderColorChanged(QColor color)
+    \brief Signal is emitted when the line (pen) color has changed to \a color.
 */
 
 /*!
@@ -108,47 +120,64 @@ QAbstractSeries::SeriesType QScatterSeries::type() const
     return QAbstractSeries::SeriesTypeScatter;
 }
 
-/*!
-    Returns the shape used for drawing markers.
-*/
+void QScatterSeries::setColor(const QColor &color)
+{
+    QBrush b = brush();
+    if (b.color() != color) {
+        b.setColor(color);
+        setBrush(b);
+        emit colorChanged(color);
+    }
+}
+
+QColor QScatterSeries::color() const
+{
+    return brush().color();
+}
+
+void QScatterSeries::setBorderColor(const QColor &color)
+{
+    QPen p = pen();
+    if (p.color() != color) {
+        p.setColor(color);
+        setPen(p);
+        emit borderColorChanged(color);
+    }
+}
+
+QColor QScatterSeries::borderColor() const
+{
+    return pen().color();
+}
+
 QScatterSeries::MarkerShape QScatterSeries::markerShape() const
 {
     Q_D(const QScatterSeries);
     return d->m_shape;
 }
 
-/*!
-    Overrides the default shape of the marker items with a user defined \a shape. The default shape
-    is defined by chart theme setting.
-*/
 void QScatterSeries::setMarkerShape(MarkerShape shape)
 {
     Q_D(QScatterSeries);
     if (d->m_shape != shape) {
         d->m_shape = shape;
-        emit markerShapeChanged();
+        emit d->updated();
     }
 }
 
-/*!
-    Returns the size of the marker items.
-*/
 qreal QScatterSeries::markerSize() const
 {
     Q_D(const QScatterSeries);
     return d->m_size;
 }
 
-/*!
-    Set the \a size of the marker items. The default size is 15.
-*/
 void QScatterSeries::setMarkerSize(qreal size)
 {
     Q_D(QScatterSeries);
 
     if (!qFuzzyIsNull(d->m_size - size)) {
         d->m_size = size;
-        emit markerSizeChanged();
+        emit d->updated();
     }
 }
 

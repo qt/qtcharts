@@ -68,18 +68,6 @@ void DeclarativeScatterSeries::appendDeclarativeChildren(QDeclarativeListPropert
     // Empty implementation, childs are parsed in componentComplete
 }
 
-QColor DeclarativeScatterSeries::brushColor()
-{
-    return brush().color();
-}
-
-void DeclarativeScatterSeries::setBrushColor(QColor color)
-{
-    QBrush b = brush();
-    b.setColor(color);
-    setBrush(b);
-}
-
 #include "moc_declarativescatterseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

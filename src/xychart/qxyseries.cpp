@@ -49,6 +49,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QXYSeries::color
+    Line (pen) color of the series. This is a convenience property for modifying the color of pen.
+    \sa QXYSeries::pen()
+*/
+
+/*!
     \fn void QXYSeries::clicked(const QPointF& point)
     \brief Signal is emitted when user clicks the \a point on chart.
 */
@@ -72,8 +78,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QXYSeries::pointsVisibleChanged(bool visible)
-    \brief Signal is emitted when the point visibility has changed to \a visible.
+    \fn void QXYSeries::colorChanged(QColor color)
+    \brief Signal is emitted when the line (pen) color has changed to \a color.
 */
 
 /*!
@@ -254,6 +260,20 @@ QBrush QXYSeries::brush() const
     return d->m_brush;
 }
 
+void QXYSeries::setColor(const QColor &color)
+{
+    QPen p = pen();
+    if (p.color() != color) {
+        p.setColor(color);
+        setPen(p);
+        emit colorChanged(color);
+    }
+}
+
+QColor QXYSeries::color() const
+{
+    return pen().color();
+}
 
 void QXYSeries::setPointsVisible(bool visible)
 {
@@ -261,7 +281,6 @@ void QXYSeries::setPointsVisible(bool visible)
     if (d->m_pointsVisible != visible){
         d->m_pointsVisible = visible;
         emit d->updated();
-        emit pointsVisibleChanged(visible);
     }
 }
 

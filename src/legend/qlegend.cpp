@@ -121,11 +121,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QLegend::alignmentChanged(Qt::Alignment)
-    Emitted when the \a alignment of the legend changes.
-*/
-
-/*!
     \fn void QLegend::backgroundVisibleChanged(bool)
     The visibility of the legend background changed to \a visible.
 */
@@ -271,7 +266,6 @@ void QLegend::setAlignment(Qt::Alignment alignment)
     if(d_ptr->m_alignment!=alignment) {
         d_ptr->m_alignment = alignment;
         d_ptr->updateLayout();
-        alignmentChanged(alignment);
     }
 }
 

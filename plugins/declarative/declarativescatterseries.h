@@ -33,8 +33,6 @@ class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeri
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QColor color READ brushColor WRITE setBrushColor)
-    Q_PROPERTY(QColor borderColor READ penColor WRITE setPenColor)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
@@ -43,8 +41,6 @@ public:
     explicit DeclarativeScatterSeries(QObject *parent = 0);
     QXYSeries *xySeries();
     QDeclarativeListProperty<QObject> declarativeChildren();
-    QColor brushColor();
-    void setBrushColor(QColor color);
 
 public: // from QDeclarativeParserStatus
     void classBegin() { DeclarativeXySeries::classBegin(); }

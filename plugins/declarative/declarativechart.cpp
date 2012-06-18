@@ -160,10 +160,8 @@ void DeclarativeChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 void DeclarativeChart::setTheme(DeclarativeChart::Theme theme)
 {
     QChart::ChartTheme chartTheme = (QChart::ChartTheme) theme;
-    if (chartTheme != m_chart->theme()) {
+    if (chartTheme != m_chart->theme())
         m_chart->setTheme(chartTheme);
-        themeChanged();
-    }
 }
 
 DeclarativeChart::Theme DeclarativeChart::theme()
@@ -174,10 +172,8 @@ DeclarativeChart::Theme DeclarativeChart::theme()
 void DeclarativeChart::setAnimationOptions(DeclarativeChart::Animation animations)
 {
     QChart::AnimationOption animationOptions = (QChart::AnimationOption) animations;
-    if (animationOptions != m_chart->animationOptions()) {
+    if (animationOptions != m_chart->animationOptions())
         m_chart->setAnimationOptions(animationOptions);
-        animationOptionsChanged();
-    }
 }
 
 DeclarativeChart::Animation DeclarativeChart::animationOptions()
@@ -194,10 +190,8 @@ DeclarativeChart::Animation DeclarativeChart::animationOptions()
 
 void DeclarativeChart::setTitle(QString title)
 {
-    if (title != m_chart->title()) {
+    if (title != m_chart->title())
         m_chart->setTitle(title);
-        emit titleChanged();
-    }
 }
 QString DeclarativeChart::title()
 {

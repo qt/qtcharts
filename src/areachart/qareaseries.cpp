@@ -58,6 +58,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QAreaSeries::color
+    Fill (brush) color of the series. This is a convenience property for modifying the color of brush.
+    \sa QAreaSeries::brush()
+*/
+
+/*!
+    \property QAreaSeries::borderColor
+    Line (pen) color of the series. This is a convenience property for modifying the color of pen.
+    \sa QAreaSeries::pen()
+*/
+
+/*!
    \fn QPen QAreaSeries::pen() const
    \brief  Returns the pen used to draw line for this series.
     \sa setPen()
@@ -67,6 +79,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
    \fn QPen QAreaSeries::brush() const
    \brief  Returns the brush used to draw line for this series.
     \sa setBrush()
+*/
+
+/*!
+    \fn void QAreaSeries::colorChanged(QColor color)
+    \brief Signal is emitted when the fill (brush) color has changed to \a color.
+*/
+
+/*!
+    \fn void QAreaSeries::borderColorChanged(QColor color)
+    \brief Signal is emitted when the line (pen) color has changed to \a color.
 */
 
 /*!
@@ -191,6 +213,37 @@ QBrush QAreaSeries::brush() const
     Q_D(const QAreaSeries);
     return d->m_brush;
 }
+
+void QAreaSeries::setColor(const QColor &color)
+{
+    QBrush b = brush();
+    if (b.color() != color) {
+        b.setColor(color);
+        setBrush(b);
+        emit colorChanged(color);
+    }
+}
+
+QColor QAreaSeries::color() const
+{
+    return brush().color();
+}
+
+void QAreaSeries::setBorderColor(const QColor &color)
+{
+    QPen p = pen();
+    if (p.color() != color) {
+        p.setColor(color);
+        setPen(p);
+        emit borderColorChanged(color);
+    }
+}
+
+QColor QAreaSeries::borderColor() const
+{
+    return pen().color();
+}
+
 /*!
     Sets if data points are \a visible and should be drawn on line.
 */

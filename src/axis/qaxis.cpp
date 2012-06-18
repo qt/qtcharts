@@ -218,11 +218,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QAxis::labelsAngleChanged(int)
-  Emitted if the \a angle of the axis labels is changed.
-*/
-
-/*!
   \fn void QAxis::shadesVisibleChanged(bool)
   Emitted if the visibility of the axis shades is changed to \a visible.
 */
@@ -235,18 +230,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \fn void QAxis::shadesBorderColorChanged(QColor)
   Emitted if the border \a color of the axis shades is changed.
-*/
-
-/*!
-  \fn void QAxis::ticksCountChanged(int count)
-  \brief Emits the new \a count of ticks on the axis
-  Signal is emitted when the number of the ticks on the axis has been changed to a different value.
-  Parementer count\a count is the new number of ticks on the axis.
-*/
-
-/*!
-  \fn void QAxis::niceNumbersEnabledChanged(bool)
-  Nice numbers algorithm was \a enabled or disabled.
 */
 
 /*!
@@ -427,7 +410,6 @@ void QAxis::setLabelsAngle(int angle)
     if (d_ptr->m_labelsAngle != angle) {
         d_ptr->m_labelsAngle = angle;
         emit d_ptr->updated();
-        emit labelsAngleChanged(angle);
 	}
 }
 
@@ -579,7 +561,6 @@ void QAxis::setTicksCount(int count)
 {
     if (d_ptr->m_ticksCount != count) {
         d_ptr->m_ticksCount = count;
-		emit ticksCountChanged(count);
 		emit d_ptr->changed(d_ptr->m_min, d_ptr->m_max, d_ptr->m_ticksCount, d_ptr->m_niceNumbers);
 	}
 }
@@ -622,7 +603,6 @@ void QAxis::setNiceNumbersEnabled(bool enable)
     if (d_ptr->m_niceNumbers != enable){
         d_ptr->m_niceNumbers = enable;
         emit d_ptr->changed(d_ptr->m_min, d_ptr->m_max, d_ptr->m_ticksCount, d_ptr->m_niceNumbers);
-        emit niceNumbersEnabledChanged(enable);
     }
 }
 

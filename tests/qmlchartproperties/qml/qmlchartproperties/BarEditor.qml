@@ -28,13 +28,18 @@ Flow {
     property variant series
 
     onSeriesChanged: {
-        seriesConnections.target = series;
-        setConnections.target = series.at(0);
+        if (series && series.name == "bar") {
+            seriesConnections.target = series;
+            setConnections.target = series.at(0);
+        } else {
+            seriesConnections.target = null;
+            setConnections.target = null;
+        }
     }
 
     Connections {
         id: seriesConnections
-        ignoreUnknownSignals: true
+        target: null
         onNameChanged:              console.log("series.onNameChanged: " + series.name);
         onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
         onBarWidthChanged:          console.log("series.onBardWidthChanged: " + width)
@@ -44,7 +49,7 @@ Flow {
 
     Connections {
         id: setConnections
-        ignoreUnknownSignals: true
+        target: null
         onColorChanged:             console.log("series.onColorChanged: " + color);
         onBorderColorChanged:       console.log("series.onBorderColorChanged: " + color);
         onLabelColorChanged:        console.log("series.onLabelColorChanged: " + color);

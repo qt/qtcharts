@@ -32,6 +32,7 @@ ChartView {
 
     GroupedBarSeries {
         id: daSeries
+        name: "bar"
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6] }
         BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 7] }
         BarSet { label: "James"; values: [3, 5, 8, 13, 5, 8] }

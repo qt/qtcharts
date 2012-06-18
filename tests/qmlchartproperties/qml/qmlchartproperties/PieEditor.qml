@@ -28,13 +28,18 @@ Flow {
     property variant series
 
     onSeriesChanged: {
-        seriesConnections.target = series;
-        sliceConnections.target = series.at(0);
+        if (series && series.name == "pie") {
+            seriesConnections.target = series;
+            sliceConnections.target = series.at(0);
+        } else {
+            seriesConnections.target = null;
+            sliceConnections.target = null;
+        }
     }
 
     Connections {
         id: seriesConnections
-        ignoreUnknownSignals: true
+        target: null
         onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
         onHorizontalPositionChanged:console.log("series.onHorizontalPositionChanged: " + series.horizontalPosition);
         onVerticalPositionChanged:  console.log("series.onVerticalPositionChanged: " + series.verticalPosition);
@@ -47,7 +52,7 @@ Flow {
 
     Connections {
         id: sliceConnections
-        ignoreUnknownSignals: true
+        target: null
         onValueChanged:             console.log("slice.onValueChanged: " + series.at(0).value);
         onLabelVisibleChanged:      console.log("slice.onLabelVisibleChanged: " + series.at(0).labelVisible);
         onLabelPositionChanged:     console.log("slice.onLabelPositionChanged: " + series.at(0).labelPosition);

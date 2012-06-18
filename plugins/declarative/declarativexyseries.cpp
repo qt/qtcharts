@@ -59,23 +59,6 @@ void DeclarativeXySeries::componentComplete()
     }
 }
 
-QColor DeclarativeXySeries::penColor()
-{
-    // All the inherited objects must be of type QXYSeries, so it is safe to cast
-    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
-    Q_ASSERT(series);
-    return series->pen().color();
-}
-
-void DeclarativeXySeries::setPenColor(QColor color)
-{
-    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
-    Q_ASSERT(series);
-    QPen pen = series->pen();
-    pen.setColor(color);
-    series->setPen(pen);
-}
-
 DeclarativeXyPoint *DeclarativeXySeries::at(int index)
 {
     QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());

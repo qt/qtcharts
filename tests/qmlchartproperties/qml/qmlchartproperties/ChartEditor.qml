@@ -29,18 +29,22 @@ Flow {
     property variant series // TODO: rename to chart
 
     onSeriesChanged: {
-        legendConnections.target = series.legend;
-        axisXConnections.target = series.axisX;
-        axisYConnections.target = series.axisY;
+        if (series && series.name == "") {
+            chartConnections.target = series;
+            legendConnections.target = series.legend;
+            axisXConnections.target = series.axisX;
+            axisYConnections.target = series.axisY;
+        } else {
+            legendConnections.target = null;
+            axisXConnections.target = null;
+            axisYConnections.target = null;
+        }
     }
 
     Connections {
-        target: series
-        ignoreUnknownSignals: true
+        id: chartConnections
+        target: null
         onVisibleChanged:           console.log("chart.onVisibleChanged: " + series.visible);
-        onThemeChanged:             console.log("chart.onThemeChanged: " + series.theme);
-        onLegendChanged:            console.log("chart.onLegendChanged: " + series.legend);
-        onAnimationOptionsChanged:  console.log("chart.onAnimationOptionsChanged: " + series.animationOptions);
         onTitleColorChanged:        console.log("chart.onTitleColorChanged: " + series.titleColor);
         onBackgroundColorChanged:   console.log("chart.onBackgroundColorChanged: " + series.backgroundColor);
         onDropShadowEnabledChanged: console.log("chart.onDropShadowEnabledChanged: " + enabled);
@@ -48,8 +52,7 @@ Flow {
 
     Connections {
         id: legendConnections
-        ignoreUnknownSignals: true
-        onAlignmentChanged:         console.log("legend.onAlignmentChanged: " + alignment);
+        target: null
         onVisibleChanged:           console.log("legend.onVisibleChanged: " + series.legend.visible);
         onBackgroundVisibleChanged: console.log("legend.onBackgroundVisibleChanged: " + visible);
         onColorChanged:             console.log("legend.onColorChanged: " + color);
@@ -58,11 +61,10 @@ Flow {
 
     Connections {
         id: axisXConnections
-        ignoreUnknownSignals: true
+        target: null
         onColorChanged:                 console.log("axisX.onColorChanged: " + color);
         onLabelsVisibleChanged:         console.log("axisX.onLabelsVisibleChanged: " + visible);
         onLabelsColorChanged:           console.log("axisX.onLabelsColorChanged: " + color);
-        onLabelsAngleChanged:           console.log("axisX.onLabelsAngleChanged: " + angle);
         onVisibleChanged:               console.log("axisX.onVisibleChanged: " + visible);
         onGridVisibleChanged:           console.log("axisX.onGridVisibleChanged: " + visible);
         onShadesVisibleChanged:         console.log("axisX.onShadesVisibleChanged: " + visible);
@@ -70,17 +72,14 @@ Flow {
         onShadesBorderColorChanged:     console.log("axisX.onShadesBorderColorChanged: " + color);
         onMinChanged:                   console.log("axisX.onMinChanged: " + min);
         onMaxChanged:                   console.log("axisX.onMaxChanged: " + max);
-        onTicksCountChanged:            console.log("axisX.onTicksCountChanged: " + count);
-        onNiceNumbersEnabledChanged:    console.log("axisX.onNiceNumbersEnabledChanged: " + enabled);
     }
 
     Connections {
         id: axisYConnections
-        ignoreUnknownSignals: true
+        target: null
         onColorChanged:                 console.log("axisY.onColorChanged: " + color);
         onLabelsVisibleChanged:         console.log("axisY.onLabelsVisibleChanged: " + visible);
         onLabelsColorChanged:           console.log("axisY.onLabelsColorChanged: " + color);
-        onLabelsAngleChanged:           console.log("axisY.onLabelsAngleChanged: " + angle);
         onVisibleChanged:               console.log("axisY.onVisibleChanged: " + visible);
         onGridVisibleChanged:           console.log("axisY.onGridVisibleChanged: " + visible);
         onShadesVisibleChanged:         console.log("axisY.onShadesVisibleChanged: " + visible);
@@ -88,8 +87,6 @@ Flow {
         onShadesBorderColorChanged:     console.log("axisY.onShadesBorderColorChanged: " + color);
         onMinChanged:                   console.log("axisY.onMinChanged: " + min);
         onMaxChanged:                   console.log("axisY.onMaxChanged: " + max);
-        onTicksCountChanged:            console.log("axisY.onTicksCountChanged: " + count);
-        onNiceNumbersEnabledChanged:    console.log("axisY.onNiceNumbersEnabledChanged: " + enabled);
     }
 
     Button {

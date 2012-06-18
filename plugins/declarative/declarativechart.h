@@ -34,9 +34,9 @@ class DeclarativeChart : public QDeclarativeItem
 //class DeclarativeChart : public QQuickPaintedItem, public Chart
 {
     Q_OBJECT
-    Q_PROPERTY(Theme theme READ theme WRITE setTheme NOTIFY themeChanged)
-    Q_PROPERTY(Animation animationOptions READ animationOptions WRITE setAnimationOptions NOTIFY animationOptionsChanged)
-    Q_PROPERTY(QString title READ title WRITE setTitle NOTIFY titleChanged)
+    Q_PROPERTY(Theme theme READ theme WRITE setTheme)
+    Q_PROPERTY(Animation animationOptions READ animationOptions WRITE setAnimationOptions)
+    Q_PROPERTY(QString title READ title WRITE setTitle)
     Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
     Q_PROPERTY(QAxis *axisX READ axisX)
     Q_PROPERTY(QAxis *axisY READ axisY)
@@ -120,9 +120,6 @@ public:
     Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
 
 Q_SIGNALS:
-    void themeChanged();
-    void animationOptionsChanged();
-    void titleChanged();
     void axisLabelsChanged();
     void titleColorChanged();
     void backgroundColorChanged();
