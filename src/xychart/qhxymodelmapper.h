@@ -28,8 +28,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QHXYModelMapper : public QXYModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(int xRow READ xRow WRITE setXRow)
-    Q_PROPERTY(int yRow READ yRow WRITE setYRow)
+    Q_PROPERTY(int xRow READ xRow WRITE setXRow NOTIFY xRowChanged)
+    Q_PROPERTY(int yRow READ yRow WRITE setYRow NOTIFY yRowChanged)
 
 public:
     explicit QHXYModelMapper(QObject *parent = 0);
@@ -38,7 +38,11 @@ public:
     void setXRow(int xRow);
 
     int yRow() const;
-    void setYRow(int yRow);    
+    void setYRow(int yRow);
+
+Q_SIGNALS:
+    void xRowChanged();
+    void yRowChanged();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

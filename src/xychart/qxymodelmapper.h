@@ -34,10 +34,10 @@ class QXYSeries;
 class QTCOMMERCIALCHART_EXPORT QXYModelMapper : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QXYSeries *series READ series WRITE setSeries)
-    Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel)
-    Q_PROPERTY(int first READ first WRITE setFirst)
-    Q_PROPERTY(int count READ count WRITE setCount)
+    Q_PROPERTY(QXYSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
+    Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
+    Q_PROPERTY(int first READ first WRITE setFirst NOTIFY firstChanged)
+    Q_PROPERTY(int count READ count WRITE setCount NOTIFY countChanged)
     Q_ENUMS(Qt::Orientation)
 
 protected:
@@ -67,6 +67,12 @@ protected:
 
     int ySection() const;
     void setYSection(int ySection);
+
+Q_SIGNALS:
+    void seriesReplaced();
+    void modelReplaced();
+    void firstChanged();
+    void countChanged();
 
 protected:
     QXYModelMapperPrivate * const d_ptr;

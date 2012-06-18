@@ -48,6 +48,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QVXYModelMapper::xColumnChanged()
+
+    Emitted when the xColumn has changed.
+*/
+
+/*!
+    \fn void QVXYModelMapper::yColumnChanged()
+
+    Emitted when the yColumn has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QVXYModelMapper::QVXYModelMapper(QObject *parent) :
@@ -63,7 +75,10 @@ int QVXYModelMapper::xColumn() const
 
 void QVXYModelMapper::setXColumn(int xColumn)
 {
-    return QXYModelMapper::setXSection(xColumn);
+    if (xColumn != xSection()) {
+        return QXYModelMapper::setXSection(xColumn);
+        emit xColumnChanged();
+    }
 }
 
 int QVXYModelMapper::yColumn() const
@@ -73,7 +88,10 @@ int QVXYModelMapper::yColumn() const
 
 void QVXYModelMapper::setYColumn(int yColumn)
 {
-    return QXYModelMapper::setYSection(yColumn);
+    if (yColumn != ySection()) {
+        return QXYModelMapper::setYSection(yColumn);
+        emit yColumnChanged();
+    }
 }
 
 #include "moc_qvxymodelmapper.cpp"

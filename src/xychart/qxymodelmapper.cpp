@@ -64,6 +64,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYModelMapper::seriesReplaced()
+
+    Emitted when the series to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QXYModelMapper::modelReplaced()
+
+    Emitted when the model to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QXYModelMapper::firstChanged()
+
+    Emitted when the value for the first has changed.
+*/
+
+/*!
+    \fn void QXYModelMapper::countChanged()
+
+    Emitted when the value for the count has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QXYModelMapper::QXYModelMapper(QObject *parent):
@@ -96,6 +120,8 @@ void QXYModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
+
+    emit modelReplaced();
 }
 
 QXYSeries* QXYModelMapper::series() const
@@ -120,6 +146,8 @@ void QXYModelMapper::setSeries(QXYSeries *series)
     connect(d->m_series, SIGNAL(pointAdded(int)), d, SLOT(handlePointAdded(int)));
     connect(d->m_series, SIGNAL(pointRemoved(int)), d, SLOT(handlePointRemoved(int)));
     connect(d->m_series, SIGNAL(pointReplaced(int)), d, SLOT(handlePointReplaced(int)));
+
+    emit seriesReplaced();
 }
 
 int QXYModelMapper::first() const
@@ -131,8 +159,12 @@ int QXYModelMapper::first() const
 void QXYModelMapper::setFirst(int first)
 {
     Q_D(QXYModelMapper);
-    d->m_first = qMax(first, 0);
-    d->initializeXYFromModel();
+    if (first != d->m_first) {
+        d->m_first = qMax(first, 0);
+        d->initializeXYFromModel();
+
+        emit firstChanged();
+    }
 }
 
 int QXYModelMapper::count() const
@@ -144,8 +176,12 @@ int QXYModelMapper::count() const
 void QXYModelMapper::setCount(int count)
 {
     Q_D(QXYModelMapper);
-    d->m_count = qMax(count, -1);
-    d->initializeXYFromModel();
+    if (count != d->m_count) {
+        d->m_count = qMax(count, -1);
+        d->initializeXYFromModel();
+
+        emit countChanged();
+    }
 }
 
 /*!

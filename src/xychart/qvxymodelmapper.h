@@ -28,8 +28,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QVXYModelMapper : public QXYModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(int xColumn READ xColumn WRITE setXColumn)
-    Q_PROPERTY(int yColumn READ yColumn WRITE setYColumn)
+    Q_PROPERTY(int xColumn READ xColumn WRITE setXColumn NOTIFY xColumnChanged)
+    Q_PROPERTY(int yColumn READ yColumn WRITE setYColumn NOTIFY yColumnChanged)
 
 public:
     explicit QVXYModelMapper(QObject *parent = 0);
@@ -39,6 +39,10 @@ public:
 
     int yColumn() const;
     void setYColumn(int yColumn);    
+
+Q_SIGNALS:
+    void xColumnChanged();
+    void yColumnChanged();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

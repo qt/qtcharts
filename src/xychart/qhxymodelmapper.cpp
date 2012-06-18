@@ -47,6 +47,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QHXYModelMapper::xRowChanged()
+
+    Emitted when the xRow has changed.
+*/
+
+/*!
+    \fn void QHXYModelMapper::yRowChanged()
+
+    Emitted when the yRow has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QHXYModelMapper::QHXYModelMapper(QObject *parent) :
@@ -62,7 +74,10 @@ int QHXYModelMapper::xRow() const
 
 void QHXYModelMapper::setXRow(int xRow)
 {
-    return QXYModelMapper::setXSection(xRow);
+    if (xRow != xSection()) {
+        return QXYModelMapper::setXSection(xRow);
+        emit xRowChanged();
+    }
 }
 
 int QHXYModelMapper::yRow() const
@@ -72,7 +87,10 @@ int QHXYModelMapper::yRow() const
 
 void QHXYModelMapper::setYRow(int yRow)
 {
-    return QXYModelMapper::setYSection(yRow);
+    if (yRow != ySection()) {
+        return QXYModelMapper::setYSection(yRow);
+        emit yRowChanged();
+    }
 }
 
 #include "moc_qhxymodelmapper.cpp"
