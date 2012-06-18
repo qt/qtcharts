@@ -41,11 +41,6 @@ Flow {
         id: seriesConnections
         target: null
         onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
-        onHorizontalPositionChanged:console.log("series.onHorizontalPositionChanged: " + series.horizontalPosition);
-        onVerticalPositionChanged:  console.log("series.onVerticalPositionChanged: " + series.verticalPosition);
-        onSizeChanged:              console.log("series.onSizeChanged: " + series.size);
-        onStartAngleChanged:        console.log("series.onStartAngleChanged: " + series.startAngle);
-        onEndAngleChanged:          console.log("series.onEndAngleChanged: " + series.endAngle);
         onCountChanged:             console.log("series.onCountChanged: " + series.count);
         onSumChanged:               console.log("series.onSumChanged: " + series.sum);
     }

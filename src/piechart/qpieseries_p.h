@@ -54,6 +54,11 @@ public:
 
 signals:
     void calculatedDataChanged();
+    void pieSizeChanged();
+    void pieStartAngleChanged();
+    void pieEndAngleChanged();
+    void horizontalPositionChanged();
+    void verticalPositionChanged();
 
 public Q_SLOTS:
     void sliceValueChanged();

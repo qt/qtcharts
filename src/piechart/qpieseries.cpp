@@ -66,14 +66,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSeries::horizontalPositionChanged()
-
-    Emitted then the horizontal position of the pie has changed.
-
-    \sa horizontalPosition
-*/
-
-/*!
     \property QPieSeries::verticalPosition
     \brief Defines the vertical position of the pie.
 
@@ -87,14 +79,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Default value is 0.5 (center).
 
     \sa horizontalPosition
-*/
-
-/*!
-    \fn void QPieSeries::verticalPositionChanged()
-
-    Emitted then the vertical position of the pie has changed.
-
-    \sa verticalPosition
 */
 
 /*!
@@ -112,14 +96,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSeries::pieSizeChanged()
-
-    Emitted when the pie size has changed.
-
-    \sa size
-*/
-
-/*!
     \property QPieSeries::startAngle
     \brief Defines the starting angle of the pie.
 
@@ -129,28 +105,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSeries::pieStartAngleChanged()
-
-    Emitted when the starting angle of the pie has changed.
-
-    \sa startAngle
-*/
-
-/*!
     \property QPieSeries::endAngle
     \brief Defines the ending angle of the pie.
 
     Full pie is 360 degrees where 0 degrees is at 12 a'clock.
 
     Default is value is 360.
-*/
-
-/*!
-    \fn void QPieSeries::pieEndAngleChanged()
-
-    Emitted when the ending angle of the pie has changed.
-
-    \sa endAngle
 */
 
 /*!
@@ -445,7 +405,7 @@ void QPieSeries::setHorizontalPosition(qreal relativePosition)
 
     if (!qFuzzyIsNull(d->m_pieRelativeHorPos - relativePosition)) {
         d->m_pieRelativeHorPos = relativePosition;
-        emit horizontalPositionChanged();
+        emit d->horizontalPositionChanged();
     }
 }
 
@@ -466,7 +426,7 @@ void QPieSeries::setVerticalPosition(qreal relativePosition)
 
     if (!qFuzzyIsNull(d->m_pieRelativeVerPos - relativePosition)) {
         d->m_pieRelativeVerPos = relativePosition;
-        emit verticalPositionChanged();
+        emit d->verticalPositionChanged();
     }
 }
 
@@ -487,7 +447,7 @@ void QPieSeries::setPieSize(qreal relativeSize)
 
     if (!qFuzzyIsNull(d->m_pieRelativeSize - relativeSize)) {
         d->m_pieRelativeSize = relativeSize;
-        emit pieSizeChanged();
+        emit d->pieSizeChanged();
     }
 }
 
@@ -505,7 +465,7 @@ void QPieSeries::setPieStartAngle(qreal angle)
         return;
     d->m_pieStartAngle = angle;
     d->updateDerivativeData();
-    emit pieStartAngleChanged();
+    emit d->pieStartAngleChanged();
 }
 
 qreal QPieSeries::pieStartAngle() const
@@ -530,7 +490,7 @@ void QPieSeries::setPieEndAngle(qreal angle)
         return;
     d->m_pieEndAngle = angle;
     d->updateDerivativeData();
-    emit pieEndAngleChanged();
+    emit d->pieEndAngleChanged();
 }
 
 /*!

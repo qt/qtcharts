@@ -90,11 +90,6 @@ void tst_qpieseries::properties()
 {
     QSignalSpy countSpy(m_series, SIGNAL(countChanged()));
     QSignalSpy sumSpy(m_series, SIGNAL(sumChanged()));
-    QSignalSpy sizeSpy(m_series, SIGNAL(pieSizeChanged()));
-    QSignalSpy startAngleSpy(m_series, SIGNAL(pieStartAngleChanged()));
-    QSignalSpy endAngleSpy(m_series, SIGNAL(pieEndAngleChanged()));
-    QSignalSpy horPosSpy(m_series, SIGNAL(horizontalPositionChanged()));
-    QSignalSpy verPosSpy(m_series, SIGNAL(verticalPositionChanged()));
 
     QVERIFY(m_series->type() == QAbstractSeries::SeriesTypePie);
     QVERIFY(m_series->count() == 0);
@@ -125,17 +120,16 @@ void tst_qpieseries::properties()
     m_series->setPieSize(0.9);
     m_series->setPieSize(2.0);
     QCOMPARE(m_series->pieSize(), 1.0);
-    QCOMPARE(sizeSpy.count(), 3);
 
     m_series->setPieStartAngle(0);
     m_series->setPieStartAngle(-180);
     m_series->setPieStartAngle(180);
-    QCOMPARE(startAngleSpy.count(), 2);
+    QCOMPARE(m_series->pieStartAngle(), 180.0);
 
     m_series->setPieEndAngle(360);
     m_series->setPieEndAngle(-180);
     m_series->setPieEndAngle(180);
-    QCOMPARE(endAngleSpy.count(), 2);
+    QCOMPARE(m_series->pieEndAngle(), 180.0);
 
     m_series->setHorizontalPosition(0.5);
     m_series->setHorizontalPosition(-1.0);
@@ -143,7 +137,6 @@ void tst_qpieseries::properties()
     m_series->setHorizontalPosition(1.0);
     m_series->setHorizontalPosition(2.0);
     QCOMPARE(m_series->horizontalPosition(), 1.0);
-    QCOMPARE(horPosSpy.count(), 2);
 
     m_series->setVerticalPosition(0.5);
     m_series->setVerticalPosition(-1.0);
@@ -151,7 +144,6 @@ void tst_qpieseries::properties()
     m_series->setVerticalPosition(1.0);
     m_series->setVerticalPosition(2.0);
     QCOMPARE(m_series->verticalPosition(), 1.0);
-    QCOMPARE(verPosSpy.count(), 2);
 }
 
 void tst_qpieseries::append()

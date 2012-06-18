@@ -38,13 +38,14 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
 {
     Q_ASSERT(series);
 
+    QPieSeriesPrivate *p = QPieSeriesPrivate::fromSeries(series);
     connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
     connect(series, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
     connect(series, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleSlicesRemoved(QList<QPieSlice*>)));
-    connect(series, SIGNAL(horizontalPositionChanged()), this, SLOT(updateLayout()));
-    connect(series, SIGNAL(verticalPositionChanged()), this, SLOT(updateLayout()));
-    connect(series, SIGNAL(pieSizeChanged()), this, SLOT(updateLayout()));
-    connect(QPieSeriesPrivate::fromSeries(series), SIGNAL(calculatedDataChanged()), this, SLOT(updateLayout()));
+    connect(p, SIGNAL(horizontalPositionChanged()), this, SLOT(updateLayout()));
+    connect(p, SIGNAL(verticalPositionChanged()), this, SLOT(updateLayout()));
+    connect(p, SIGNAL(pieSizeChanged()), this, SLOT(updateLayout()));
+    connect(p, SIGNAL(calculatedDataChanged()), this, SLOT(updateLayout()));
 
     // Note: the following does not affect as long as the item does not have anything to paint
     setZValue(ChartPresenter::PieSeriesZValue);

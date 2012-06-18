@@ -30,11 +30,11 @@ class QPieSlice;
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
 {
     Q_OBJECT
-    Q_PROPERTY(qreal horizontalPosition READ horizontalPosition WRITE setHorizontalPosition NOTIFY horizontalPositionChanged)
-    Q_PROPERTY(qreal verticalPosition READ verticalPosition WRITE setVerticalPosition NOTIFY verticalPositionChanged)
-    Q_PROPERTY(qreal size READ pieSize WRITE setPieSize NOTIFY pieSizeChanged)
-    Q_PROPERTY(qreal startAngle READ pieStartAngle WRITE setPieStartAngle NOTIFY pieStartAngleChanged)
-    Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle NOTIFY pieEndAngleChanged)
+    Q_PROPERTY(qreal horizontalPosition READ horizontalPosition WRITE setHorizontalPosition)
+    Q_PROPERTY(qreal verticalPosition READ verticalPosition WRITE setVerticalPosition)
+    Q_PROPERTY(qreal size READ pieSize WRITE setPieSize)
+    Q_PROPERTY(qreal startAngle READ pieStartAngle WRITE setPieStartAngle)
+    Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(qreal sum READ sum NOTIFY sumChanged)
 
@@ -85,11 +85,6 @@ Q_SIGNALS:
     void hovered(QPieSlice* slice, bool state);
     void countChanged();
     void sumChanged();
-    void pieSizeChanged();
-    void pieStartAngleChanged();
-    void pieEndAngleChanged();
-    void horizontalPositionChanged();
-    void verticalPositionChanged();
 
 private:
     Q_DECLARE_PRIVATE(QPieSeries)
