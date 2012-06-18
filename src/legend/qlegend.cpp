@@ -103,11 +103,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QLegend::color
-    The color of the legend, i.e. the background color.
+    The color of the legend, i.e. the background (brush) color. Note that if you change the color
+    of the legend, the style of the legend brush is set to Qt::SolidPattern.
 */
 /*!
     \qmlproperty color Legend::color
-    The color of the legend, i.e. the background color.
+    The color of the legend, i.e. the background (brush) color.
 */
 
 /*!
@@ -217,7 +218,8 @@ QBrush QLegend::brush() const
 void QLegend::setColor(QColor color)
 {
     QBrush b = d_ptr->m_brush;
-    if (b.color() != color) {
+    if (b.style() != Qt::SolidPattern || b.color() != color) {
+        b.setStyle(Qt::SolidPattern);
         b.setColor(color);
         setBrush(b);
         emit colorChanged(color);
