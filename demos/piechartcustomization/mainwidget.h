@@ -23,7 +23,7 @@
 #include <QWidget>
 #include <QChartGlobal>
 
-class QLabel;
+class QLineEdit;
 class QPushButton;
 class QCheckBox;
 class QComboBox;
@@ -73,7 +73,7 @@ private:
     QDoubleSpinBox* m_startAngle;
     QDoubleSpinBox* m_endAngle;
 
-    QLabel* m_sliceName;
+    QLineEdit* m_sliceName;
     QDoubleSpinBox* m_sliceValue;
     QCheckBox* m_sliceLabelVisible;
     QDoubleSpinBox* m_sliceLabelArmFactor;

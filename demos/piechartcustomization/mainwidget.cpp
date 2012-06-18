@@ -24,7 +24,7 @@
 #include <QPushButton>
 #include <QComboBox>
 #include <QCheckBox>
-#include <QLabel>
+#include <QLineEdit>
 #include <QGroupBox>
 #include <QDoubleSpinBox>
 #include <QFormLayout>
@@ -117,6 +117,7 @@ MainWidget::MainWidget(QWidget* parent)
 
     QPushButton *appendSlice = new QPushButton("Append slice");
     QPushButton *insertSlice = new QPushButton("Insert slice");
+    QPushButton *removeSlice = new QPushButton("Remove selected slice");
 
     QFormLayout* seriesSettingsLayout = new QFormLayout();
     seriesSettingsLayout->addRow("Horizontal position", m_hPosition);
@@ -126,6 +127,7 @@ MainWidget::MainWidget(QWidget* parent)
     seriesSettingsLayout->addRow("End angle", m_endAngle);
     seriesSettingsLayout->addRow(appendSlice);
     seriesSettingsLayout->addRow(insertSlice);
+    seriesSettingsLayout->addRow(removeSlice);
     QGroupBox* seriesSettings = new QGroupBox("Series");
     seriesSettings->setLayout(seriesSettingsLayout);
 
@@ -136,9 +138,11 @@ MainWidget::MainWidget(QWidget* parent)
     connect(m_endAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
     connect(appendSlice, SIGNAL(clicked()), this, SLOT(appendSlice()));
     connect(insertSlice, SIGNAL(clicked()), this, SLOT(insertSlice()));
+    connect(removeSlice, SIGNAL(clicked()), this, SLOT(removeSlice()));
 
     // slice settings
-    m_sliceName = new QLabel("<click a slice>");
+    m_sliceName = new QLineEdit("<click a slice>");
+    m_sliceName->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     m_sliceValue = new QDoubleSpinBox();
     m_sliceValue->setMaximum(1000);
     m_sliceLabelVisible = new QCheckBox();
@@ -157,10 +161,9 @@ MainWidget::MainWidget(QWidget* parent)
     m_labelPosition = new QComboBox(this);
     m_labelPosition->addItem("Outside", QPieSlice::LabelOutside);
     m_labelPosition->addItem("Inside", QPieSlice::LabelInside);
-    QPushButton *removeSlice = new QPushButton("Remove slice");
 
     QFormLayout* sliceSettingsLayout = new QFormLayout();
-    sliceSettingsLayout->addRow("Selected", m_sliceName);
+    sliceSettingsLayout->addRow("Label", m_sliceName);
     sliceSettingsLayout->addRow("Value", m_sliceValue);
     sliceSettingsLayout->addRow("Pen", m_pen);
     sliceSettingsLayout->addRow("Brush", m_brush);
@@ -171,10 +174,10 @@ MainWidget::MainWidget(QWidget* parent)
     sliceSettingsLayout->addRow("Label arm length", m_sliceLabelArmFactor);
     sliceSettingsLayout->addRow("Exploded", m_sliceExploded);
     sliceSettingsLayout->addRow("Explode distance", m_sliceExplodedFactor);
-    sliceSettingsLayout->addRow(removeSlice);
-    QGroupBox* sliceSettings = new QGroupBox("Slice");
+    QGroupBox* sliceSettings = new QGroupBox("Selected slice");
     sliceSettings->setLayout(sliceSettingsLayout);
 
+    connect(m_sliceName, SIGNAL(textChanged(QString)), this, SLOT(updateSliceSettings()));
     connect(m_sliceValue, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
     connect(m_pen, SIGNAL(clicked()), m_penTool, SLOT(show()));
     connect(m_penTool, SIGNAL(changed()), this, SLOT(updateSliceSettings()));
@@ -189,7 +192,6 @@ MainWidget::MainWidget(QWidget* parent)
     connect(m_sliceExploded, SIGNAL(toggled(bool)), this, SLOT(updateSliceSettings()));
     connect(m_sliceExplodedFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSliceSettings()));
     connect(m_labelPosition, SIGNAL(currentIndexChanged(int)), this, SLOT(updateSliceSettings()));
-    connect(removeSlice, SIGNAL(clicked()), this, SLOT(removeSlice()));
 
     // create chart view
     m_chartView = new QChartView(chart);
@@ -241,6 +243,8 @@ void MainWidget::updateSliceSettings()
     if (!m_slice)
         return;
 
+    m_slice->setLabel(m_sliceName->text());
+
     m_slice->setValue(m_sliceValue->value());
 
     m_slice->setPen(m_penTool->pen());
@@ -260,7 +264,9 @@ void MainWidget::handleSliceClicked(QPieSlice* slice)
     m_slice = static_cast<CustomSlice*>(slice);
 
     // name
+    m_sliceName->blockSignals(true);
     m_sliceName->setText(slice->label());
+    m_sliceName->blockSignals(false);
 
     // value
     m_sliceValue->blockSignals(true);
