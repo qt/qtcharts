@@ -298,29 +298,8 @@ QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
 {
 }
 
-void QBarSeriesPrivate::setCategories(QStringList categories)
-{
-    m_categories = categories;
-}
-
-void QBarSeriesPrivate::insertCategory(int index, const QString category)
-{
-    m_categories.insert(index, category);
-    emit categoriesUpdated();
-}
-
-void QBarSeriesPrivate::removeCategory(int index)
-{
-    m_categories.removeAt(index);
-    emit categoriesUpdated();
-}
-
 int QBarSeriesPrivate::categoryCount() const
 {
-    if (m_categories.count() > 0) {
-        return m_categories.count();
-    }
-
     // No categories defined. return count of longest set.
     int count = 0;
     for (int i=0; i<m_barSets.count(); i++) {
@@ -330,22 +309,6 @@ int QBarSeriesPrivate::categoryCount() const
     }
 
     return count;
-}
-
-QStringList QBarSeriesPrivate::categories() const
-{
-    if (m_categories.count() > 0) {
-        return m_categories;
-    }
-
-    // No categories defined. retun list of indices.
-    QStringList categories;
-
-    int count = categoryCount();
-    for (int i = 0; i < count; i++) {
-        categories.append(QString::number(i));
-    }
-    return categories;
 }
 
 void QBarSeriesPrivate::setBarWidth(qreal width)
@@ -377,15 +340,6 @@ void QBarSeriesPrivate::setLabelsVisible(bool visible)
 {
     m_labelsVisible = visible;
     emit labelsVisibleChanged(visible);
-}
-
-QString QBarSeriesPrivate::categoryName(int category)
-{
-    if ((category >= 0) && (category < m_categories.count())) {
-        return m_categories.at(category);
-    }
-
-    return QString::number(category);
 }
 
 qreal QBarSeriesPrivate::min()
