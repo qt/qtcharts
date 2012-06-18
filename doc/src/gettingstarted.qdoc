@@ -52,19 +52,19 @@
 
     To use the QCharts classes add QtCommercialChart namespace macro in your header file.
     \code
-        #include<QWidget>
-        #include<QChartView>
+    #include<QWidget>
+    #include<QChartView>
 
-        QTCOMMERCIALCHART_USE_NAMESPACE
+    QTCOMMERCIALCHART_USE_NAMESPACE
 
-        class ExampleWidget : public QWidget
+    class ExampleWidget : public QWidget
     \endcode
 
     \bold {QML project}
 
     Add an import line to your *.qml file:
     \code
-        import QtCommercial.Chart 1.0
+    import QtCommercial.Chart 1.0
     \endcode
 
     \raw HTML
