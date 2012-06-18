@@ -33,10 +33,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    The instance of this class cannot be created directly. QHBarModelMapper of QVBarModelMapper should be used instead. This class is used to create a connection between QBarSeries and QAbstractItemModel derived model object.
-    Curently it is NOT possible to use both QAbstractItemModel and QBarSeries model API.
-    When the series is set to the mapper the QBarSeries and QBarSet API that affect the data (append, setValue, remove) should not be used.
-    The model and the QBarSeries won't be kept in sync. Model API should be used to insert,remove,modify BarSets.
+    The instance of this class cannot be created directly. QHBarModelMapper of QVBarModelMapper should be used instead.
+    This class is used to create a connection between QBarSeries and QAbstractItemModel derived model object.
+    Model mapper maintains equal size of all the BarSets.
+    Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
 
