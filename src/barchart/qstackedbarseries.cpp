@@ -43,6 +43,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlclass StackedBarSeries QStackedBarSeries
+    \inherits BarSeries
+
+    The following QML shows how to create a simple stacked bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View8.qml 1
+    \beginfloatleft
+    \image demos_qmlchart8.png
+    \endfloat
+    \clearfloat
+*/
+
+/*!
     Constructs empty QStackedBarSeries.
     QStackedBarSeries is QObject which is a child of a \a parent.
 */

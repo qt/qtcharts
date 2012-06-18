@@ -45,32 +45,62 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QBarSet, QStackedBarSeries, QPercentBarSeries
 */
+/*!
+    \qmlclass BarSeries QBarSeries
+
+    \beginfloatleft
+    \image demos_qmlchart6.png
+    \endfloat
+    \clearfloat
+
+    The following QML shows how to create a simple bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
+*/
 
 /*!
     \property QBarSeries::barWidth
-    \brief The width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
+    The width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
     is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
     is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
-    Note that with QGroupedBarSeries this value means the width of one group of bars instead of just one bar. This is
-    because with grouped series it is more logical to set width of whole group and let the chart calculate correct
-    width for bar.
+    Note that with QGroupedBarSeries this value means the width of one group of bars instead of just one bar.
     \sa QGroupedBarSeries
+*/
+/*!
+    \qmlproperty real BarSeries::barWidth
+    The width of the bars of the series. The unit of width is the unit of x-axis. The minimum width for bars
+    is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
+    is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
+    Note that with QGroupedBarSeries this value means the width of one group of bars instead of just one bar.
 */
 
 /*!
     \property QBarSeries::count
-    \brief Holds the number of sets in series.
+    Holds the number of sets in series.
+*/
+/*!
+    \qmlproperty int BarSeries::count
+    Holds the number of sets in series.
 */
 
 /*!
     \property QBarSeries::labelsVisible
-    \brief Defines the visibility of the labels in series
+    Defines the visibility of the labels in series
+*/
+/*!
+    \qmlproperty bool BarSeries::labelsVisible
+    Defines the visibility of the labels in series
 */
 
 /*!
     \fn void QBarSeries::clicked(QBarSet *barset, int index)
 
     The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset.
+    Clicked bar inside set is indexed by \a index
+*/
+/*!
+    \qmlsignal BarSeries::onClicked(BarSet barset, int index)
+
+    The signal is emitted if the user clicks with a mouse on top of BarSet.
     Clicked bar inside set is indexed by \a index
 */
 
@@ -81,34 +111,38 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Parameter \a barset is the pointer of barset, where hover happened.
     Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
 */
+/*!
+    \qmlsignal BarSeries::onHovered(BarSet barset, bool status)
+
+    The signal is emitted if mouse is hovered on top of series.
+    Parameter \a barset is the pointer of barset, where hover happened.
+    Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
+*/
 
 /*!
     \fn void QBarSeries::countChanged()
-
+    This signal is emitted when barset count has been changed, for example by append or remove.
+*/
+/*!
+    \qmlsignal BarSeries::countChanged()
     This signal is emitted when barset count has been changed, for example by append or remove.
 */
 
 /*!
     \fn void QBarSeries::labelsVisibleChanged()
-
-     This signal is emitted when labels visibility have changed.
-
+    This signal is emitted when labels visibility have changed.
     \sa isLabelsVisible(), setLabelsVisible()
 */
 
 /*!
     \fn void QBarSeries::barsetsAdded(QList<QBarSet*> sets)
-
     This signal is emitted when \a sets have been added to the series.
-
     \sa append(), insert()
 */
 
 /*!
     \fn void QBarSeries::barsetsRemoved(QList<QBarSet*> sets)
-
     This signal is emitted when \a sets have been removed from the series.
-
     \sa remove()
 */
 

@@ -41,6 +41,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QBarSet, QStackedBarSeries, QBarSeries
 */
+/*!
+    \qmlclass PercentBarSeries QPercentBarSeries
+    \inherits BarSeries
+
+    The following QML shows how to create a simple percent bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View9.qml 1
+    \beginfloatleft
+    \image demos_qmlchart9.png
+    \endfloat
+    \clearfloat
+*/
 
 /*!
     Constructs empty QPercentBarSeries.

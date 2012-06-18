@@ -36,10 +36,23 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QBarSeries, QGroupedBarSeries, QStackedBarSeries, QPercentBarSeries
 */
+/*!
+    \qmlclass BarSet QBarSet
+
+    BarSet represents one set of bars. Set of bars contains one data value for each category.
+    First value of set is assumed to belong to first category, second to second category and so on.
+    If set has fewer values than there are categories, then the missing values are assumed to be
+    at the end of set. For missing values in middle of a set, numerical value of zero is used.
+    \sa BarSeries, GroupedBarSeries, StackedBarSeries, PercentBarSeries
+*/
 
 /*!
     \property QBarSet::label
-    \brief Defines the label of the barSet.
+    Defines the label of the barSet.
+*/
+/*!
+    \qmlproperty string BarSet::label
+    Defines the label of the barSet.
 */
 
 /*!
@@ -64,56 +77,58 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QBarSet::color
-    \brief The fill (brush) color of the bar set.
+    The fill (brush) color of the bar set.
+*/
+/*!
+    \qmlproperty color BarSet::color
+    The fill (brush) color of the bar set.
 */
 
 /*!
     \property QBarSet::borderColor
-    \brief The line (pen) color of the bar set.
+    The line (pen) color of the bar set.
+*/
+/*!
+    \qmlproperty color BarSet::borderColor
+    The line (pen) color of the bar set.
 */
 
 /*!
     \property QBarSet::labelColor
-    \brief The text (label) color of the bar set.
+    The text (label) color of the bar set.
+*/
+/*!
+    \qmlproperty color BarSet::labelColor
+    The text (label) color of the bar set.
 */
 
 /*!
     \fn void QBarSet::labelChanged()
-
     This signal is emitted when the label of the barSet has changed.
-
     \sa label
 */
 
 /*!
     \fn void QBarSet::penChanged()
-
     This signal is emitted when the pen of the barSet has changed.
-
     \sa pen
 */
 
 /*!
     \fn void QBarSet::brushChanged()
-
     This signal is emitted when the brush of the barSet has changed.
-
     \sa brush
 */
 
 /*!
     \fn void QBarSet::labelBrushChanged()
-
     This signal is emitted when the brush of the barSet's label has changed.
-
     \sa labelBrush
 */
 
 /*!
     \fn void QBarSet::labelFontChanged()
-
     This signal is emitted when the font of the barSet's label has changed.
-
     \sa labelBrush
 */
 
@@ -121,9 +136,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \fn void QBarSet::colorChanged(QColor)
     This signal is emitted when the fill (brush) color of the set has changed to \a color.
 */
+/*!
+    \qmlsignal BarSet::onColorChanged(color color)
+    This signal is emitted when the fill (brush) color of the set has changed to \a color.
+*/
 
 /*!
     \fn void QBarSet::borderColorChanged(QColor)
+    This signal is emitted when the line (pen) color of the set has changed to \a color.
+*/
+/*!
+    \qmlsignal BarSet::onBorderColorChanged(color color)
     This signal is emitted when the line (pen) color of the set has changed to \a color.
 */
 
@@ -131,36 +154,50 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \fn void QBarSet::labelColorChanged(QColor)
     This signal is emitted when the text (label) color of the set has changed to \a color.
 */
+/*!
+    \qmlsignal BarSet::onLabelColorChanged(color color)
+    This signal is emitted when the text (label) color of the set has changed to \a color.
+*/
 
 /*!
     \fn void QBarSet::valuesAdded(int index, int count)
-
     This signal is emitted when new values have been added to the set.
     Parameter \a index indicates the position of the first inserted value.
     Parameter \a count is the number of iserted values.
-
     \sa append(), insert()
+*/
+/*!
+    \qmlsignal BarSet::onValuesAdded(int index, int count)
+    This signal is emitted when new values have been added to the set.
+    Parameter \a index indicates the position of the first inserted value.
+    Parameter \a count is the number of iserted values.
 */
 
 /*!
     \fn void QBarSet::valuesRemoved(int index, int count)
-
     This signal is emitted values have been removed from the set.
     Parameter \a index indicates the position of the first removed value.
     Parameter \a count is the number of removed values.
-
     \sa remove()
+*/
+/*!
+    \qmlsignal BarSet::onValuesRemoved(int index, int count)
+    This signal is emitted values have been removed from the set.
+    Parameter \a index indicates the position of the first removed value.
+    Parameter \a count is the number of removed values.
 */
 
 /*!
     \fn void QBarSet::valueChanged(int index)
-
     This signal is emitted values the value in the set has been modified.
     Parameter \a index indicates the position of the modified value.
-
     \sa at()
 */
-void valueChanged(int index);
+/*!
+    \qmlsignal BarSet::onValueChanged(int index)
+    This signal is emitted values the value in the set has been modified.
+    Parameter \a index indicates the position of the modified value.
+*/
 
 /*!
     Constructs QBarSet with a label of \a label and with parent of \a parent

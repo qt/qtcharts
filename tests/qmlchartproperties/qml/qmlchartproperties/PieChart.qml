@@ -31,7 +31,7 @@ ChartView {
     PieSeries {
         id: pieSeries
         name: "pie"
-        PieSlice { id: daSlice; label: "slice1"; value: 11 }
+        PieSlice { label: "slice1"; value: 11 }
         PieSlice { label: "slice2"; value: 22 }
         PieSlice { label: "slice3"; value: 33 }
     }

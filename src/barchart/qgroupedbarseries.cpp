@@ -41,6 +41,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QBarSet, QPercentBarSeries, QBarSeries, QStackedBarSeries
 */
+/*!
+    \qmlclass GroupedBarSeries QGroupedBarSeries
+    \inherits BarSeries
+
+    The following QML shows how to create a simple grouped bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View8.qml 1
+    \beginfloatleft
+    \image demos_qmlchart7.png
+    \endfloat
+    \clearfloat
+*/
 
 /*!
     Constructs empty QGroupedBarSeries.

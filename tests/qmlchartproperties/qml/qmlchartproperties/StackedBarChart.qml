@@ -33,6 +33,8 @@ ChartView {
     StackedBarSeries {
         id: daSeries
         name: "bar"
+        onClicked: console.log("onClicked: " + barset + " " + index);
+        onHovered: console.log("onHovered: " + barset + " " + status);
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6] }
         BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 7] }
         BarSet { label: "James"; values: [3, 5, 8, 13, 5, 8] }
