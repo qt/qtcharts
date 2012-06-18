@@ -48,6 +48,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QHPieModelMapper::valuesRowChanged()
+
+    Emitted when the valuesRow has changed.
+*/
+
+/*!
+    \fn void QHPieModelMapper::labelsRowChanged()
+
+    Emitted when the labelsRow has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QHPieModelMapper::QHPieModelMapper(QObject *parent) :

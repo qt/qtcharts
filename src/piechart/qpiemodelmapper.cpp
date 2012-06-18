@@ -65,6 +65,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QPieModelMapper::seriesReplaced()
+
+    Emitted when the series to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QPieModelMapper::modelReplaced()
+
+    Emitted when the model to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QPieModelMapper::firstChanged()
+
+    Emitted when the value for the first has changed.
+*/
+
+/*!
+    \fn void QPieModelMapper::countChanged()
+
+    Emitted when the value for the count has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QPieModelMapper::QPieModelMapper(QObject *parent) :
