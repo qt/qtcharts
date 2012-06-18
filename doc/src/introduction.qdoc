@@ -12,26 +12,41 @@
     make install
     \endcode
 
-    Depending on the OS and the compiler you are using "make" might need to be replaced with another command like: nmake, mingw32-make, etc
+    Depending on the OS and the compiler you are using "make" might need to be replaced with another command like: nmake, mingw32-make, etc.
+
+    On Windows platforms both debug and release configurations are built by default at the same time.
+    To build both at the same time on other platforms invoke the following command:
+
+    \code
+    make all
+    \endcode
+
+    Compiling as a static library (lib only):
+    \code
+    qmake CONFIG+=staticlib
+    make
+    make install
+    \endcode
 
     \bold {New project}
 
-    Create a new project in a usual way and then add to your project's *.pro file following line
+    Create a new project in a usual way and then add to your project's *.pro file following line:
+
     \code
     CONFIG += qtcommercialchart
     \endcode
 
-    or if you have not installed QCharts afer building:
+    Or if you have not installed charts after building:
 
-    On *unix:
     \code
-        INCLUDEPATH += <path_to_charts_folder>/include
-        LIBS += -L<path_to_charts_folder>/lib -lQtCommercialChart
+    CHARTSLIB = QtCommercialChart
+    CONFIG(debug, debug|release) {
+        mac: CHARTSLIB = $$join(CHARTSLIB,,,_debug)
+        win32: CHARTSLIB = $$join(CHARTSLIB,,,d)
+    }
+    INCLUDEPATH += <path_to_charts_folder>/include
+    LIBS += -L<path_to_charts_folder>/lib -l$$CHARTSLIB
     \endcode
-
-    On windows:
-
-    On mac:
 
     \bold {Widget project}
 
