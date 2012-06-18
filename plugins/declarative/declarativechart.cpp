@@ -57,6 +57,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlproperty string ChartView::title
   The title of the chart, shown on top of the chart.
+  \sa ChartView::titleColor
 */
 
 /*!
@@ -72,6 +73,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlproperty Axis ChartView::axisY
   The default y-axis of the chart.
+*/
+
+/*!
+  \qmlproperty Legend ChartView::legend
+  The legend of the chart. Legend lists all the series, pie slices and bar sets added on the chart.
+*/
+
+/*!
+  \qmlproperty int ChartView::count
+  The count of series added to the chart.
+*/
+
+/*!
+  \qmlproperty color ChartView::backgroundColor
+  The color of the chart's background. By default background color is defined by chart theme.
+  \sa ChartView::theme
+*/
+
+/*!
+  \qmlproperty bool ChartView::dropShadowEnabled
+  The chart's border drop shadow. Set to true to enable drop shadow.
 */
 
 /*!
@@ -239,7 +261,8 @@ QColor DeclarativeChart::titleColor()
 void DeclarativeChart::setBackgroundColor(QColor color)
 {
     QBrush b = m_chart->backgroundBrush();
-    if (color != b.color()) {
+    if (b.style() != Qt::SolidPattern || color != b.color()) {
+        b.setStyle(Qt::SolidPattern);
         b.setColor(color);
         m_chart->setBackgroundBrush(b);
         emit backgroundColorChanged();
