@@ -33,8 +33,8 @@ class QAreaSeriesPrivate;
 class QTCOMMERCIALCHART_EXPORT QAreaSeries : public QAbstractSeries
 {
     Q_OBJECT
-    Q_PROPERTY(QAbstractSeries *upperSeries READ upperSeries)
-    Q_PROPERTY(QAbstractSeries *lowerSeries READ lowerSeries)
+    Q_PROPERTY(QLineSeries *upperSeries READ upperSeries)
+    Q_PROPERTY(QLineSeries *lowerSeries READ lowerSeries)
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
 
