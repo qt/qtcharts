@@ -51,20 +51,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QPieModelMapper::first
-    \brief Defines which item of the model's row/column should be mapped as the value/label of the first slice of the pie
-
-    Minimal and default value is: 0
-*/
-
-/*!
-    \property QPieModelMapper::count
-    \brief Defines the number of rows/columns of the model that are mapped as the data for the pie.
-
-    Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
-*/
-
-/*!
     \fn void QPieModelMapper::seriesReplaced()
 
     Emitted when the series to which mapper is connected to has changed.
@@ -74,18 +60,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \fn void QPieModelMapper::modelReplaced()
 
     Emitted when the model to which mapper is connected to has changed.
-*/
-
-/*!
-    \fn void QPieModelMapper::firstChanged()
-
-    Emitted when the value for the first has changed.
-*/
-
-/*!
-    \fn void QPieModelMapper::countChanged()
-
-    Emitted when the value for the count has changed.
 */
 
 /*!
@@ -150,38 +124,46 @@ void QPieModelMapper::setSeries(QPieSeries *series)
     emit seriesReplaced();
 }
 
+/*!
+    Defines which row/column of the model contains the first slice value.
+    Minimal and default value is: 0
+*/
 int QPieModelMapper::first() const
 {
     Q_D(const QPieModelMapper);
     return d->m_first;
 }
 
+/*!
+    Sets which row/column of the model contains the \a first slice value.
+    Minimal and default value is: 0
+*/
 void QPieModelMapper::setFirst(int first)
 {
     Q_D(QPieModelMapper);
-    if (first != d->m_first) {
-        d->m_first = qMax(first, 0);
-        d->initializePieFromModel();
-
-        emit firstChanged();
-    }
+    d->m_first = qMax(first, 0);
+    d->initializePieFromModel();
 }
 
+/*!
+    Defines the number of rows/columns of the model that are mapped as the data for QPieSeries
+    Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
+*/
 int QPieModelMapper::count() const
 {
     Q_D(const QPieModelMapper);
     return d->m_count;
 }
 
+/*!
+    Defines the \a count of rows/columns of the model that are mapped as the data for QPieSeries
+    Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
+*/
 void QPieModelMapper::setCount(int count)
 {
     Q_D(QPieModelMapper);
-    if (count != d->m_count) {
-        d->m_count = qMax(count, -1);
-        d->initializePieFromModel();
-
-        emit countChanged();
-    }
+    d->m_count = qMax(count, -1);
+    d->initializePieFromModel();
 }
 
 /*!

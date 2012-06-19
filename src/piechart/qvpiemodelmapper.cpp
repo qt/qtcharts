@@ -48,6 +48,28 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QVPieModelMapper::firstRow
+    \brief Defines which row of the model contains the first slice value.
+    Minimal and default value is: 0
+*/
+/*!
+    \qmlproperty int QVPieModelMapper::firstRow
+    Defines which row of the model contains the first slice value.
+    The default value is 0.
+*/
+
+/*!
+    \property QVPieModelMapper::rowCount
+    \brief Defines the number of rows of the model that are mapped as the data for QPieSeries
+    Minimal and default value is: -1 (count limited by the number of rows in the model)
+*/
+/*!
+    \qmlproperty int QVPieModelMapper::columnCount
+    Defines the number of rows of the model that are mapped as the data for QPieSeries. The default value is
+    -1 (count limited by the number of rows in the model)
+*/
+
+/*!
     \fn void QVPieModelMapper::valuesColumnChanged()
 
     Emitted when the valuesColumn has changed.
@@ -57,6 +79,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \fn void QVPieModelMapper::labelsColumnChanged()
 
     Emitted when the labelsColumn has changed.
+*/
+
+/*!
+    \fn void QVPieModelMapper::firstRowChanged()
+    Emitted when the firstRow has changed.
+*/
+
+/*!
+    \fn void QVPieModelMapper::rowCountChanged()
+    Emitted when the rowCount has changed.
 */
 
 /*!
@@ -105,6 +137,32 @@ void QVPieModelMapper::setLabelsColumn(int labelsColumn)
     if (labelsColumn != labelsSection()) {
         QPieModelMapper::setLabelsSection(labelsColumn);
         emit labelsColumnChanged();
+    }
+}
+
+int QVPieModelMapper::firstRow() const
+{
+    return first();
+}
+
+void QVPieModelMapper::setFirstRow(int firstRow)
+{
+    if (firstRow != first()) {
+        setFirst(firstRow);
+        emit firstRowChanged();
+    }
+}
+
+int QVPieModelMapper::rowCount() const
+{
+    return count();
+}
+
+void QVPieModelMapper::setRowCount(int rowCount)
+{
+    if (rowCount != count()) {
+        setCount(rowCount);
+        emit firstRowChanged();
     }
 }
 

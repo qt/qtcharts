@@ -215,8 +215,8 @@ void tst_qpiemodelmapper::verticalMapperCustomMapping()
     mapper->setLabelsColumn(1);
     mapper->setModel(m_model);
     mapper->setSeries(m_series);
-    mapper->setFirst(first);
-    mapper->setCount(countLimit);
+    mapper->setFirstRow(first);
+    mapper->setRowCount(countLimit);
 
     QCOMPARE(m_series->count(), expectedCount);
 
@@ -292,8 +292,8 @@ void tst_qpiemodelmapper::horizontalMapperCustomMapping()
     mapper->setLabelsRow(1);
     mapper->setModel(m_model);
     mapper->setSeries(m_series);
-    mapper->setFirst(first);
-    mapper->setCount(countLimit);
+    mapper->setFirstColumn(first);
+    mapper->setColumnCount(countLimit);
 
     QCOMPARE(m_series->count(), expectedCount);
 
@@ -312,15 +312,15 @@ void tst_qpiemodelmapper::seriesUpdated()
     // setup the mapper
     createVerticalMapper();
     QCOMPARE(m_series->count(), m_modelRowCount);
-    QCOMPARE(m_vMapper->count(), -1);
+    QCOMPARE(m_vMapper->rowCount(), -1);
 
     m_series->append("1000", 1000);
     QCOMPARE(m_series->count(), m_modelRowCount + 1);
-    QCOMPARE(m_vMapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
+    QCOMPARE(m_vMapper->rowCount(), -1); // the value should not change as it indicates 'all' items there are in the model
 
     m_series->remove(m_series->slices().last());
     QCOMPARE(m_series->count(), m_modelRowCount);
-    QCOMPARE(m_vMapper->count(), -1); // the value should not change as it indicates 'all' items there are in the model
+    QCOMPARE(m_vMapper->rowCount(), -1); // the value should not change as it indicates 'all' items there are in the model
 
     QPieSlice *slice = m_series->slices().first();
     slice->setValue(25.0);
@@ -341,23 +341,23 @@ void tst_qpiemodelmapper::verticalModelInsertRows()
     QCOMPARE(m_series->count(), m_modelRowCount + insertCount);
 
     int first = 3;
-    m_vMapper->setFirst(3);
+    m_vMapper->setFirstRow(3);
     QCOMPARE(m_series->count(), m_modelRowCount + insertCount - first);
 
     m_model->insertRows(3, insertCount);
     QCOMPARE(m_series->count(), m_modelRowCount +  2 * insertCount - first);
 
     int countLimit = 6;
-    m_vMapper->setCount(countLimit);
+    m_vMapper->setRowCount(countLimit);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount + 2 * insertCount - first));
 
     m_model->insertRows(3, insertCount);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount + 3 * insertCount - first));
 
-    m_vMapper->setFirst(0);
+    m_vMapper->setFirstRow(0);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount + 3 * insertCount));
 
-    m_vMapper->setCount(-1);
+    m_vMapper->setRowCount(-1);
     QCOMPARE(m_series->count(), m_modelRowCount + 3 * insertCount);
 }
 
@@ -373,23 +373,23 @@ void tst_qpiemodelmapper::verticalModelRemoveRows()
     QCOMPARE(m_series->count(), m_modelRowCount - removeCount);
 
     int first = 1;
-    m_vMapper->setFirst(first);
+    m_vMapper->setFirstRow(first);
     QCOMPARE(m_series->count(), m_modelRowCount - removeCount - first);
 
     m_model->removeRows(1, removeCount);
     QCOMPARE(m_series->count(), m_modelRowCount -  2 * removeCount - first);
 
     int countLimit = 3;
-    m_vMapper->setCount(countLimit);
+    m_vMapper->setRowCount(countLimit);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount -  2 * removeCount - first));
 
     m_model->removeRows(1, removeCount);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount -  3 * removeCount - first));
 
-    m_vMapper->setFirst(0);
+    m_vMapper->setFirstRow(0);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelRowCount -  3 * removeCount));
 
-    m_vMapper->setCount(-1);
+    m_vMapper->setRowCount(-1);
     QCOMPARE(m_series->count(), m_modelRowCount -  3 * removeCount);
 }
 
@@ -461,23 +461,23 @@ void tst_qpiemodelmapper::horizontalModelInsertColumns()
     QCOMPARE(m_series->count(), m_modelColumnCount + insertCount);
 
     int first = 3;
-    m_hMapper->setFirst(3);
+    m_hMapper->setFirstColumn(3);
     QCOMPARE(m_series->count(), m_modelColumnCount + insertCount - first);
 
     m_model->insertColumns(3, insertCount);
     QCOMPARE(m_series->count(), m_modelColumnCount +  2 * insertCount - first);
 
     int countLimit = 6;
-    m_hMapper->setCount(countLimit);
+    m_hMapper->setColumnCount(countLimit);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount + 2 * insertCount - first));
 
     m_model->insertColumns(3, insertCount);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount + 3 * insertCount - first));
 
-    m_hMapper->setFirst(0);
+    m_hMapper->setFirstColumn(0);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount + 3 * insertCount));
 
-    m_hMapper->setCount(-1);
+    m_hMapper->setColumnCount(-1);
     QCOMPARE(m_series->count(), m_modelColumnCount + 3 * insertCount);
 }
 
@@ -493,23 +493,23 @@ void tst_qpiemodelmapper::horizontalModelRemoveColumns()
     QCOMPARE(m_series->count(), m_modelColumnCount - removeCount);
 
     int first = 1;
-    m_hMapper->setFirst(first);
+    m_hMapper->setFirstColumn(first);
     QCOMPARE(m_series->count(), m_modelColumnCount - removeCount - first);
 
     m_model->removeColumns(1, removeCount);
     QCOMPARE(m_series->count(), m_modelColumnCount -  2 * removeCount - first);
 
     int countLimit = 3;
-    m_hMapper->setCount(countLimit);
+    m_hMapper->setColumnCount(countLimit);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount -  2 * removeCount - first));
 
     m_model->removeColumns(1, removeCount);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount -  3 * removeCount - first));
 
-    m_hMapper->setFirst(0);
+    m_hMapper->setFirstColumn(0);
     QCOMPARE(m_series->count(), qMin(countLimit, m_modelColumnCount -  3 * removeCount));
 
-    m_hMapper->setCount(-1);
+    m_hMapper->setColumnCount(-1);
     QCOMPARE(m_series->count(), m_modelColumnCount -  3 * removeCount);
 }
 

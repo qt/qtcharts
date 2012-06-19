@@ -48,6 +48,28 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QHPieModelMapper::firstColumn
+    \brief Defines which column of the model contains the first slice value.
+    Minimal and default value is: 0
+*/
+/*!
+    \qmlproperty int QHPieModelMapper::firstColumn
+    Defines which column of the model contains the first slice value.
+    The default value is 0.
+*/
+
+/*!
+    \property QHPieModelMapper::columnCount
+    \brief Defines the number of columns of the model that are mapped as the data for QPieSeries
+    Minimal and default value is: -1 (count limited by the number of columns in the model)
+*/
+/*!
+    \qmlproperty int QHPieModelMapper::columnCount
+    Defines the number of columns of the model that are mapped as the data for QPieSeries. The default value is
+    -1 (count limited by the number of columns in the model)
+*/
+
+/*!
     \fn void QHPieModelMapper::valuesRowChanged()
 
     Emitted when the valuesRow has changed.
@@ -60,12 +82,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QHPieModelMapper::firstColumnChanged()
+    Emitted when the firstColumn has changed.
+*/
+
+/*!
+    \fn void QHPieModelMapper::columnCountChanged()
+    Emitted when the columnCount has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QHPieModelMapper::QHPieModelMapper(QObject *parent) :
     QPieModelMapper(parent)
 {
-    QPieModelMapper::setOrientation(Qt::Horizontal);
+    setOrientation(Qt::Horizontal);
 }
 
 /*!
@@ -73,7 +105,7 @@ QHPieModelMapper::QHPieModelMapper(QObject *parent) :
 */
 int QHPieModelMapper::valuesRow() const
 {
-    return QPieModelMapper::valuesSection();
+    return valuesSection();
 }
 
 /*!
@@ -83,7 +115,7 @@ int QHPieModelMapper::valuesRow() const
 void QHPieModelMapper::setValuesRow(int valuesRow)
 {
     if (valuesRow != valuesSection()) {
-        QPieModelMapper::setValuesSection(valuesRow);
+        setValuesSection(valuesRow);
         emit valuesRowChanged();
     }
 }
@@ -93,7 +125,7 @@ void QHPieModelMapper::setValuesRow(int valuesRow)
 */
 int QHPieModelMapper::labelsRow() const
 {
-    return QPieModelMapper::labelsSection();
+    return labelsSection();
 }
 
 /*!
@@ -103,8 +135,34 @@ int QHPieModelMapper::labelsRow() const
 void QHPieModelMapper::setLabelsRow(int labelsRow)
 {
     if (labelsRow != labelsSection()) {
-        QPieModelMapper::setLabelsSection(labelsRow);
+        setLabelsSection(labelsRow);
         emit labelsRowChanged();
+    }
+}
+
+int QHPieModelMapper::firstColumn() const
+{
+    return first();
+}
+
+void QHPieModelMapper::setFirstColumn(int firstColumn)
+{
+    if (firstColumn != first()) {
+        setFirst(firstColumn);
+        emit firstColumnChanged();
+    }
+}
+
+int QHPieModelMapper::columnCount() const
+{
+    return count();
+}
+
+void QHPieModelMapper::setColumnCount(int columnCount)
+{
+    if (columnCount != count()) {
+        setCount(columnCount);
+        emit firstColumnChanged();
     }
 }
 

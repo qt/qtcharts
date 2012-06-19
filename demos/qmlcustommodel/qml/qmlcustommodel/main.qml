@@ -149,7 +149,7 @@ Rectangle {
             model: customModel
             labelsColumn: 1
             valuesColumn: 2
-            first: 1
+            firstRow: 1
         }
     }
 }

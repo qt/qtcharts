@@ -30,6 +30,8 @@ class QTCOMMERCIALCHART_EXPORT QHPieModelMapper : public QPieModelMapper
     Q_OBJECT
     Q_PROPERTY(int valuesRow READ valuesRow WRITE setValuesRow NOTIFY valuesRowChanged)
     Q_PROPERTY(int labelsRow READ labelsRow WRITE setLabelsRow NOTIFY labelsRowChanged)
+    Q_PROPERTY(int firstColumn READ firstColumn WRITE setFirstColumn NOTIFY firstColumnChanged)
+    Q_PROPERTY(int columnCount READ columnCount WRITE setColumnCount NOTIFY columnCountChanged)
 
 public:
     explicit QHPieModelMapper(QObject *parent = 0);
@@ -40,9 +42,17 @@ public:
     int labelsRow() const;
     void setLabelsRow(int labelsRow);
 
+    int firstColumn() const;
+    void setFirstColumn(int firstColumn);
+
+    int columnCount() const;
+    void setColumnCount(int columnCount);
+
 Q_SIGNALS:
     void valuesRowChanged();
     void labelsRowChanged();
+    void firstColumnChanged();
+    void columnCountChanged();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
