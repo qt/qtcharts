@@ -35,23 +35,36 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlclass VBarModelMapper
-    \inherits BarModelMapper
     \mainclass
 
     VBarModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
-    for any bar series. The following QML example would create a bar series with three bar sets (assuming the model has
-    at least four columns). Each bar set would contain data starting from row 1. The name of a set would be defined
-    by the horizontal header (of the column).
+    for any bar series. Adding/removing value from the BarSet causes the the same change in the rest of the BarSets
+    added to the same series. The following QML example would create a bar series with three bar sets (assuming the
+    model has at least four columns). Each bar set would contain data starting from row 1. The name of a set would be
+    defined by the horizontal header (of the column).
     \code
         GroupedBarSeries {
             VBarModelMapper {
-                model: myCustomModel
+                model: myCustomModel // QAbstractItemModel derived implementation
                 firstBarSetColumn: 1
                 lastBarSetColumn: 3
                 firstRow: 1
             }
         }
     \endcode
+*/
+
+/*!
+    \qmlproperty BarSeries VBarModelMapper::series
+    Defines the BarSeries based object that is used by the mapper. All the data in the series is discarded when it is
+    set to the mapper. When new series is specified the old series is disconnected (it preserves its data).
+*/
+
+/*!
+    \qmlproperty Model VBarModelMapper::model
+    The QAbstractItemModel based model that is used by the mapper. You need to implement the model and expose it to
+    QML as shown in \l {QML Custom Model} demo application. NOTE: the model has to support adding/removing rows/columns
+    and modifying the data of the cells.
 */
 
 /*!
@@ -82,7 +95,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: 0
 */
 /*!
-    \qmlproperty int BarModelMapper::firstRow
+    \qmlproperty int VBarModelMapper::firstRow
     Defines which row of the model contains the first values of the QBarSets in the series.
     The default value is 0.
 */
@@ -93,7 +106,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: -1 (count limited by the number of rows in the model)
 */
 /*!
-    \qmlproperty int BarModelMapper::rowCount
+    \qmlproperty int VBarModelMapper::rowCount
     Defines the number of rows of the model that are mapped as the data for QBarSeries. The default value is
     -1 (count limited by the number of rows in the model)
 */
