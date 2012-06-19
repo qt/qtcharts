@@ -65,8 +65,8 @@ TableWidget::TableWidget(QWidget *parent)
     QVBarModelMapper *mapper = new QVBarModelMapper(this);
     mapper->setFirstBarSetColumn(1);
     mapper->setLastBarSetColumn(4);
-    mapper->setFirst(first);
-    mapper->setCount(count);
+    mapper->setFirstRow(first);
+    mapper->setRowCount(count);
     mapper->setSeries(series);
     mapper->setModel(model);
     chart->addSeries(series);

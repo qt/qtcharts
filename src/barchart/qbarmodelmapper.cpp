@@ -71,28 +71,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QBarModelMapper::first
-    \brief Defines which item of the model's row/column should be mapped as the value of the first QBarSet in the series.
-    Minimal and default value is: 0
-*/
-/*!
-    \qmlproperty int BarModelMapper::first
-    Defines which item of the model's row/column should be mapped as the value of the first QBarSet in the series.
-    The default value is 0.
-*/
-
-/*!
-    \property QBarModelMapper::count
-    \brief Defines the number of rows/columns of the model that are mapped as the data for QBarSeries
-    Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
-*/
-/*!
-    \qmlproperty int BarModelMapper::count
-    Defines the number of rows/columns of the model that are mapped as the data for QBarSeries. The default value is
-    -1 (count limited by the number of rows/columns in the model)
-*/
-
-/*!
     \fn void QBarModelMapper::seriesReplaced()
     Emitted when the series to which mapper is connected to has changed.
 */
@@ -100,16 +78,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn void QBarModelMapper::modelReplaced()
     Emitted when the model to which mapper is connected to has changed.
-*/
-
-/*!
-    \fn void QBarModelMapper::firstChanged()
-    Emitted when the value for the first has changed.
-*/
-
-/*!
-    \fn void QBarModelMapper::countChanged()
-    Emitted when the value for the count has changed.
 */
 
 /*!
@@ -175,38 +143,46 @@ void QBarModelMapper::setSeries(QBarSeries *series)
     emit seriesReplaced();
 }
 
+/*!
+    Returns which row/column of the model contains the first values of the QBarSets in the series.
+    The default value is 0.
+*/
 int QBarModelMapper::first() const
 {
     Q_D(const QBarModelMapper);
     return d->m_first;
 }
 
+/*!
+    Sets which row of the model contains the \a first values of the QBarSets in the series.
+    The default value is 0.
+*/
 void QBarModelMapper::setFirst(int first)
 {
     Q_D(QBarModelMapper);
-    if (first != d->m_first) {
-        d->m_first = qMax(first, 0);
-        d->initializeBarFromModel();
-
-        emit firstChanged();
-    }
+    d->m_first = qMax(first, 0);
+    d->initializeBarFromModel();
 }
 
+/*!
+    Returns the number of rows/columns of the model that are mapped as the data for QBarSeries
+    Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
+*/
 int QBarModelMapper::count() const
 {
     Q_D(const QBarModelMapper);
     return d->m_count;
 }
 
+/*!
+    Sets the \a count of rows/columns of the model that are mapped as the data for QBarSeries
+    Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
+*/
 void QBarModelMapper::setCount(int count)
 {
     Q_D(QBarModelMapper);
-    if (count != d->m_count) {
-        d->m_count = qMax(count, -1);
-        d->initializeBarFromModel();
-
-        emit countChanged();
-    }
+    d->m_count = qMax(count, -1);
+    d->initializeBarFromModel();
 }
 
 /*!

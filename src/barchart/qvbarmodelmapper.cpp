@@ -77,6 +77,28 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QVBarModelMapper::firstRow
+    \brief Defines which row of the model contains the first values of the QBarSets in the series.
+    Minimal and default value is: 0
+*/
+/*!
+    \qmlproperty int BarModelMapper::first
+    Defines which row of the model contains the first values of the QBarSets in the series.
+    The default value is 0.
+*/
+
+/*!
+    \property QVBarModelMapper::rowCount
+    \brief Defines the number of rows of the model that are mapped as the data for QBarSeries
+    Minimal and default value is: -1 (count limited by the number of rows in the model)
+*/
+/*!
+    \qmlproperty int BarModelMapper::count
+    Defines the number of rows of the model that are mapped as the data for QBarSeries. The default value is
+    -1 (count limited by the number of rows in the model)
+*/
+
+/*!
     \fn void QVBarModelMapper::firstBarSetColumnChanged()
     Emitted when the firstBarSetColumn has changed.
 */
@@ -84,6 +106,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn void QVBarModelMapper::lastBarSetColumnChanged()
     Emitted when the lastBarSetColumn has changed.
+*/
+
+/*!
+    \fn void QVBarModelMapper::firstRowChanged()
+    Emitted when the firstRow has changed.
+*/
+
+/*!
+    \fn void QVBarModelMapper::rowCountChanged()
+    Emitted when the rowCount has changed.
 */
 
 /*!
@@ -103,7 +135,7 @@ int QVBarModelMapper::firstBarSetColumn() const
 void QVBarModelMapper::setFirstBarSetColumn(int firstBarSetColumn)
 {
     if (firstBarSetColumn != firstBarSetSection()) {
-        return QBarModelMapper::setFirstBarSetSection(firstBarSetColumn);
+        QBarModelMapper::setFirstBarSetSection(firstBarSetColumn);
         emit firstBarSetColumnChanged();
     }
 }
@@ -116,8 +148,34 @@ int QVBarModelMapper::lastBarSetColumn() const
 void QVBarModelMapper::setLastBarSetColumn(int lastBarSetColumn)
 {
     if (lastBarSetColumn != lastBarSetSection()) {
-        return QBarModelMapper::setLastBarSetSection(lastBarSetColumn);
+        QBarModelMapper::setLastBarSetSection(lastBarSetColumn);
         emit lastBarSetColumnChanged();
+    }
+}
+
+int QVBarModelMapper::firstRow() const
+{
+    return QBarModelMapper::first();
+}
+
+void QVBarModelMapper::setFirstRow(int firstRow)
+{
+    if (firstRow != first()) {
+        QBarModelMapper::setFirst(firstRow);
+        emit firstRowChanged();
+    }
+}
+
+int QVBarModelMapper::rowCount() const
+{
+    return QBarModelMapper::count();
+}
+
+void QVBarModelMapper::setRowCount(int rowCount)
+{
+    if (rowCount != count()) {
+        QBarModelMapper::setCount(rowCount);
+        emit firstRowChanged();
     }
 }
 

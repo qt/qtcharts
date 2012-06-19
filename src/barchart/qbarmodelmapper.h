@@ -37,8 +37,6 @@ class QTCOMMERCIALCHART_EXPORT QBarModelMapper : public QObject
     Q_OBJECT
     Q_PROPERTY(QBarSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
     Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
-    Q_PROPERTY(int first READ first WRITE setFirst NOTIFY firstChanged)
-    Q_PROPERTY(int count READ count WRITE setCount NOTIFY countChanged)
     Q_ENUMS(Qt::Orientation)
 
 protected:
@@ -51,15 +49,15 @@ public:
     QBarSeries* series() const;
     void setSeries(QBarSeries *series);
 
+    void reset();
+
+protected:
     int first() const;
     void setFirst(int first);
 
     int count() const;
     void setCount(int count);
 
-    void reset();
-
-protected:
     int firstBarSetSection() const;
     void setFirstBarSetSection(int firstBarSetSection);
 
@@ -72,8 +70,6 @@ protected:
 Q_SIGNALS:
     void seriesReplaced();
     void modelReplaced();
-    void firstChanged();
-    void countChanged();
 
 protected:
     QBarModelMapperPrivate * const d_ptr;
