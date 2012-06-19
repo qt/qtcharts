@@ -33,6 +33,26 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+/*!
+    \qmlclass HBarModelMapper
+    \inherits BarModelMapper
+    \mainclass
+
+    HBarModelMapper allows you to use your own QAbstractItemModel derived model with data in rows as a data source
+    for any bar series. The following QML example would create a bar series with three bar sets (assuming the model has
+    at least four rows). Each bar set would contain data starting from column 1. The name of a set would be defined
+    by the vertical header (of the row).
+    \code
+        BarSeries {
+            HBarModelMapper {
+                model: myCustomModel
+                firstBarSetRow: 1
+                lastBarSetRow: 3
+                first: 1
+            }
+        }
+    \endcode
+*/
 
 /*!
     \property QHBarModelMapper::firstBarSetRow

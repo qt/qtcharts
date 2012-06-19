@@ -39,55 +39,76 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+/*!
+    \qmlclass BarModelMapper
+    Cannot be created by the user. Base for HBarModelMapper and VBarModelMapper. Model mappers allow you to use
+    QAbstractItemModel derived models as a data source for a chart series. Adding/removing value from the BarSet causes
+    the the same change in the rest of the BarSets added to the same series.
+*/
 
 /*!
     \property QBarModelMapper::series
     \brief Defines the QPieSeries object that is used by the mapper.
-
     All the data in the series is discarded when it is set to the mapper.
     When new series is specified the old series is disconnected (it preserves its data)
+*/
+/*!
+    \qmlproperty BarSeries BarModelMapper::series
+    Defines the BarSeries based object that is used by the mapper. All the data in the series is
+    discarded when it is set to the mapper. When new series is specified the old series is
+    disconnected (it preserves its data).
 */
 
 /*!
     \property QBarModelMapper::model
     \brief Defines the model that is used by the mapper.
 */
+/*!
+    \qmlproperty Model BarModelMapper::model
+    The QAbstractItemModel based model that is used by the mapper. You need to implement the model and expose it to
+    QML as shown in \l {QML Custom Model} demo application. NOTE: the model has to support adding/removing rows/columns
+    and modifying the data of the cells.
+*/
 
 /*!
     \property QBarModelMapper::first
     \brief Defines which item of the model's row/column should be mapped as the value of the first QBarSet in the series.
-
     Minimal and default value is: 0
+*/
+/*!
+    \qmlproperty int BarModelMapper::first
+    Defines which item of the model's row/column should be mapped as the value of the first QBarSet in the series.
+    The default value is 0.
 */
 
 /*!
     \property QBarModelMapper::count
     \brief Defines the number of rows/columns of the model that are mapped as the data for QBarSeries
-
     Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
+*/
+/*!
+    \qmlproperty int BarModelMapper::count
+    Defines the number of rows/columns of the model that are mapped as the data for QBarSeries. The default value is
+    -1 (count limited by the number of rows/columns in the model)
 */
 
 /*!
     \fn void QBarModelMapper::seriesReplaced()
-
     Emitted when the series to which mapper is connected to has changed.
 */
 
 /*!
     \fn void QBarModelMapper::modelReplaced()
-
     Emitted when the model to which mapper is connected to has changed.
 */
 
 /*!
     \fn void QBarModelMapper::firstChanged()
-
     Emitted when the value for the first has changed.
 */
 
 /*!
     \fn void QBarModelMapper::countChanged()
-
     Emitted when the value for the count has changed.
 */
 

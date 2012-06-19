@@ -33,30 +33,56 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+/*!
+    \qmlclass VBarModelMapper
+    \inherits BarModelMapper
+    \mainclass
+
+    VBarModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
+    for any bar series. The following QML example would create a bar series with three bar sets (assuming the model has
+    at least four columns). Each bar set would contain data starting from row 1. The name of a set would be defined
+    by the horizontal header (of the column).
+    \code
+        GroupedBarSeries {
+            VBarModelMapper {
+                model: myCustomModel
+                firstBarSetColumn: 1
+                lastBarSetColumn: 3
+                first: 1
+            }
+        }
+    \endcode
+*/
 
 /*!
     \property QVBarModelMapper::firstBarSetColumn
     \brief Defines which column of the model is used as the data source for the first bar set
-
     Default value is: -1 (invalid mapping)
+*/
+/*!
+    \qmlproperty int VBarModelMapper::firstBarSetColumn
+    Defines which column of the model is used as the data source for the first bar set. Default value
+    is: -1 (invalid mapping).
 */
 
 /*!
     \property QVBarModelMapper::lastBarSetColumn
     \brief Defines which column of the model is used as the data source for the last bar set
-
     Default value is: -1 (invalid mapping)
+*/
+/*!
+    \qmlproperty int VBarModelMapper::lastBarSetColumn
+    Defines which column of the model is used as the data source for the last bar set. Default
+    value is: -1 (invalid mapping).
 */
 
 /*!
     \fn void QVBarModelMapper::firstBarSetColumnChanged()
-
     Emitted when the firstBarSetColumn has changed.
 */
 
 /*!
     \fn void QVBarModelMapper::lastBarSetColumnChanged()
-
     Emitted when the lastBarSetColumn has changed.
 */
 

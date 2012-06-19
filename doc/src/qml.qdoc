@@ -36,6 +36,8 @@
                     <li><a href="qml-scatterseries.html">ScatterSeries</a></li>
                     <li><a href="qml-splineseries.html">SplineSeries</a></li>
                     <li><a href="qml-xypoint.html">XyPoint</a></li>
+                    <li><a href="qml-hxymodelmapper.html">HXYModelMapper</a></li>
+                    <li><a href="qml-vxymodelmapper.html">VXYModelMapper</a></li>
                     </ul>
                 </td>
             </tr>
@@ -48,6 +50,8 @@
                     <ul>
                     <li><a href="qml-pieseries.html">PieSeries</a></li>
                     <li><a href="qml-pieslice.html">PieSlice</a></li>
+                    <li><a href="qml-hpiemodelmapper.html">HPieModelMapper</a></li>
+                    <li><a href="qml-vpiemodelmapper.html">VPieModelMapper</a></li>
                     </ul>
                 </td>
             </tr>
@@ -63,6 +67,8 @@
                     <li><a href="qml-stackedbarseries.html">StackedBarSeries</a></li>
                     <li><a href="qml-percentbarseries.html">PercentBarSeries</a></li>
                     <li><a href="qml-barset.html">BarSet</a></li>
+                    <li><a href="qml-hbarmodelmapper.html">HBarModelMapper</a></li>
+                    <li><a href="qml-vbarmodelmapper.html">VBarModelMapper</a></li>
                     </ul>
                 </td>
             </tr>
