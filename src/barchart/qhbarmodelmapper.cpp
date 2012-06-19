@@ -48,7 +48,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
                 model: myCustomModel
                 firstBarSetRow: 1
                 lastBarSetRow: 3
-                first: 1
+                firstColumn: 1
             }
         }
     \endcode
@@ -74,7 +74,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: 0
 */
 /*!
-    \qmlproperty int BarModelMapper::first
+    \qmlproperty int BarModelMapper::firstColumn
     Defines which column of the model contains the first values of the QBarSets in the series.
     The default value is 0.
 */
@@ -85,7 +85,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: -1 (count limited by the number of rows in the model)
 */
 /*!
-    \qmlproperty int BarModelMapper::count
+    \qmlproperty int BarModelMapper::columnCount
     Defines the number of rows of the model that are mapped as the data for QBarSeries. The default value is
     -1 (count limited by the number of rows in the model)
 */

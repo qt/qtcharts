@@ -62,7 +62,7 @@ Rectangle {
                 model: customModel
                 firstBarSetRow: 6
                 lastBarSetRow: 6
-                first: 2
+                firstColumn: 2
             }
         }
         //![5]
