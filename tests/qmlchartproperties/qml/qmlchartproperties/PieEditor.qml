@@ -50,8 +50,6 @@ Flow {
         target: null
         onValueChanged:             console.log("slice.onValueChanged: " + series.at(0).value);
         onLabelVisibleChanged:      console.log("slice.onLabelVisibleChanged: " + series.at(0).labelVisible);
-        onLabelPositionChanged:     console.log("slice.onLabelPositionChanged: " + series.at(0).labelPosition);
-        onExplodedChanged:          console.log("slice.onExplodedChanged: " + series.at(0).exploded);
         onPenChanged:               console.log("slice.onPenChanged: " + series.at(0).pen);
         onBorderColorChanged:       console.log("slice.onBorderColorChanged: " + series.at(0).borderColor);
         onBorderWidthChanged:       console.log("slice.onBorderWidthChanged: " + series.at(0).borderWidth);
@@ -60,8 +58,6 @@ Flow {
         onLabelColorChanged:        console.log("slice.onLabelColorChanged: " + series.at(0).labelColor);
         onLabelBrushChanged:        console.log("slice.onLabelBrushChanged: " + series.at(0).labelBrush);
         onLabelFontChanged:         console.log("slice.onLabelFontChanged: " + series.at(0).labelFont);
-        onLabelArmLengthFactorChanged:  console.log("slice.onLabelArmLengthFactorChanged: " + series.at(0).labelArmLengthFactor);
-        onExplodeDistanceFactorChanged: console.log("slice.onExplodeDistanceFactorChanged: " + series.at(0).explodeDistanceFactor);
         onPercentageChanged:        console.log("slice.onPercentageChanged: " + series.at(0).percentage);
         onStartAngleChanged:        console.log("slice.onStartAngleChanged: " + series.at(0).startAngle);
         onAngleSpanChanged:         console.log("slice.onAngleSpanChanged: " + series.at(0).angleSpan);

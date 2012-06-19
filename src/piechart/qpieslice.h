@@ -38,8 +38,8 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
     Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)
     Q_PROPERTY(qreal value READ value WRITE setValue NOTIFY valueChanged)
     Q_PROPERTY(bool labelVisible READ isLabelVisible WRITE setLabelVisible NOTIFY labelVisibleChanged)
-    Q_PROPERTY(LabelPosition labelPosition READ labelPosition WRITE setLabelPosition NOTIFY labelPositionChanged)
-    Q_PROPERTY(bool exploded READ isExploded WRITE setExploded NOTIFY explodedChanged)
+    Q_PROPERTY(LabelPosition labelPosition READ labelPosition WRITE setLabelPosition)
+    Q_PROPERTY(bool exploded READ isExploded WRITE setExploded)
     Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
     Q_PROPERTY(int borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged)
@@ -48,8 +48,8 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
     Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush NOTIFY labelBrushChanged)
     Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
     Q_PROPERTY(QFont labelFont READ labelFont WRITE setLabelFont NOTIFY labelFontChanged)
-    Q_PROPERTY(qreal labelArmLengthFactor READ labelArmLengthFactor WRITE setLabelArmLengthFactor NOTIFY labelArmLengthFactorChanged)
-    Q_PROPERTY(qreal explodeDistanceFactor READ explodeDistanceFactor WRITE setExplodeDistanceFactor NOTIFY explodeDistanceFactorChanged)
+    Q_PROPERTY(qreal labelArmLengthFactor READ labelArmLengthFactor WRITE setLabelArmLengthFactor)
+    Q_PROPERTY(qreal explodeDistanceFactor READ explodeDistanceFactor WRITE setExplodeDistanceFactor)
     Q_PROPERTY(qreal percentage READ percentage NOTIFY percentageChanged)
     Q_PROPERTY(qreal startAngle READ startAngle NOTIFY startAngleChanged)
     Q_PROPERTY(qreal angleSpan READ angleSpan NOTIFY angleSpanChanged)
@@ -117,17 +117,15 @@ public:
     QPieSeries *series() const;
 
 Q_SIGNALS:
+    void clicked();
+    void hovered(bool state);
     void labelChanged();
     void valueChanged();
     void labelVisibleChanged();
-    void labelPositionChanged();
-    void explodedChanged();
     void penChanged();
     void brushChanged();
     void labelBrushChanged();
     void labelFontChanged();
-    void labelArmLengthFactorChanged();
-    void explodeDistanceFactorChanged();
     void percentageChanged();
     void startAngleChanged();
     void angleSpanChanged();
@@ -135,8 +133,6 @@ Q_SIGNALS:
     void borderColorChanged();
     void borderWidthChanged();
     void labelColorChanged();
-    void clicked();
-    void hovered(bool state);
 
 private:
     QPieSlicePrivate * const d_ptr;

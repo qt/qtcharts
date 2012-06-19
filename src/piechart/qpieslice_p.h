@@ -56,6 +56,12 @@ public:
     void setStartAngle(qreal angle);
     void setAngleSpan(qreal span);
 
+Q_SIGNALS:
+    void labelPositionChanged();
+    void explodedChanged();
+    void labelArmLengthFactorChanged();
+    void explodeDistanceFactorChanged();
+
 private:
     friend class QPieSeries;
     friend class QPieSeriesPrivate;

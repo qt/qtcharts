@@ -140,17 +140,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSlice::explodedChanged()
-    This signal is emitted the the slice has been exploded from the pie or is returned back to the pie.
-    \sa exploded
-*/
-/*!
-    \qmlsignal PieSlice::explodedChanged()
-    This signal is emitted the the slice has been exploded from the pie or is returned back to the pie.
-    \sa exploded
-*/
-
-/*!
     \property QPieSlice::pen
     Pen used to draw the slice border.
 */
@@ -298,17 +287,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSlice::labelPositionChanged()
-    This signal is emitted when the label position of the slice has changed.
-    \sa labelPosition
-*/
-/*!
-    \qmlsignal PieSlice::labelPositionChanged()
-    This signal is emitted when the label position of the slice has changed.
-    \sa labelPosition
-*/
-
-/*!
     \property QPieSlice::labelArmLengthFactor
     Defines the length of the label arm.
     The factor is relative to pie radius. For example:
@@ -328,17 +306,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QPieSlice::labelArmLengthFactorChanged()
-    This signal is emitted when the label arm factor of the slice has changed.
-    \sa labelArmLengthFactor
-*/
-/*!
-    \qmlsignal PieSlice::labelArmLengthFactorChanged()
-    This signal is emitted when the label arm factor of the slice has changed.
-    \sa labelArmLengthFactor
-*/
-
-/*!
     \property QPieSlice::explodeDistanceFactor
     When the slice is exploded this factor defines how far the slice is exploded away from the pie.
     The factor is relative to pie radius. For example:
@@ -355,17 +322,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     0.5 means the distance is half of the radius.
     By default the distance is is 0.15
     \sa exploded
-*/
-
-/*!
-    \fn void QPieSlice::explodeDistanceFactorChanged()
-    This signal is emitted when the explode distance factor of the slice has changed.
-    \sa explodeDistanceFactor
-*/
-/*!
-    \qmlsignal PieSlice::explodeDistanceFactorChanged()
-    This signal is emitted when the explode distance factor of the slice has changed.
-    \sa explodeDistanceFactor
 */
 
 /*!
@@ -539,7 +495,7 @@ void QPieSlice::setExploded(bool exploded)
 {
     if (d_ptr->m_data.m_isExploded != exploded) {
         d_ptr->m_data.m_isExploded = exploded;
-        emit explodedChanged();
+        emit d_ptr->explodedChanged();
     }
 }
 
@@ -552,7 +508,7 @@ void QPieSlice::setLabelPosition(LabelPosition position)
 {
     if (d_ptr->m_data.m_labelPosition != position) {
         d_ptr->m_data.m_labelPosition = position;
-        emit labelPositionChanged();
+        emit d_ptr->labelPositionChanged();
     }
 }
 
@@ -661,7 +617,7 @@ void QPieSlice::setLabelArmLengthFactor(qreal factor)
 {
     if (!qFuzzyIsNull(d_ptr->m_data.m_labelArmLengthFactor - factor)) {
         d_ptr->m_data.m_labelArmLengthFactor = factor;
-        emit labelArmLengthFactorChanged();
+        emit d_ptr->labelArmLengthFactorChanged();
     }
 }
 
@@ -674,7 +630,7 @@ void QPieSlice::setExplodeDistanceFactor(qreal factor)
 {
     if (!qFuzzyIsNull(d_ptr->m_data.m_explodeDistanceFactor - factor)) {
         d_ptr->m_data.m_explodeDistanceFactor = factor;
-        emit explodeDistanceFactorChanged();
+        emit d_ptr->explodeDistanceFactorChanged();
     }
 }
 

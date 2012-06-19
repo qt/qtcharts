@@ -138,18 +138,20 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         PieSliceItem* sliceItem = new PieSliceItem(this);
         m_sliceItems.insert(slice, sliceItem);
 
-        // Note: do need to connect to slice valueChanged() etc.
+        // Note: no need to connect to slice valueChanged() etc.
         // This is handled through calculatedDataChanged signal.
         connect(slice, SIGNAL(labelChanged()), this, SLOT(handleSliceChanged()));
         connect(slice, SIGNAL(labelVisibleChanged()), this, SLOT(handleSliceChanged()));
-        connect(slice, SIGNAL(explodedChanged()), this, SLOT(handleSliceChanged()));
         connect(slice, SIGNAL(penChanged()), this, SLOT(handleSliceChanged()));
         connect(slice, SIGNAL(brushChanged()), this, SLOT(handleSliceChanged()));
         connect(slice, SIGNAL(labelBrushChanged()), this, SLOT(handleSliceChanged()));
         connect(slice, SIGNAL(labelFontChanged()), this, SLOT(handleSliceChanged()));
-        connect(slice, SIGNAL(labelPositionChanged()), this, SLOT(handleSliceChanged()));
-        connect(slice, SIGNAL(labelArmLengthFactorChanged()), this, SLOT(handleSliceChanged()));
-        connect(slice, SIGNAL(explodeDistanceFactorChanged()), this, SLOT(handleSliceChanged()));
+
+        QPieSlicePrivate *p = QPieSlicePrivate::fromSlice(slice);
+        connect(p, SIGNAL(labelPositionChanged()), this, SLOT(handleSliceChanged()));
+        connect(p, SIGNAL(explodedChanged()), this, SLOT(handleSliceChanged()));
+        connect(p, SIGNAL(labelArmLengthFactorChanged()), this, SLOT(handleSliceChanged()));
+        connect(p, SIGNAL(explodeDistanceFactorChanged()), this, SLOT(handleSliceChanged()));
 
         connect(sliceItem, SIGNAL(clicked(Qt::MouseButtons)), slice, SIGNAL(clicked()));
         connect(sliceItem, SIGNAL(hovered(bool)), slice, SIGNAL(hovered(bool)));
@@ -186,6 +188,10 @@ void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
 void PieChartItem::handleSliceChanged()
 {
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    if (!slice) {
+        QPieSlicePrivate* slicep = qobject_cast<QPieSlicePrivate *>(sender());
+        slice = slicep->q_ptr;
+    }
     Q_ASSERT(m_sliceItems.contains(slice));
 
     PieSliceItem *sliceItem = m_sliceItems.value(slice);
