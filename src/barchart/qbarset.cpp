@@ -488,18 +488,24 @@ void QBarSet::setLabelFont(const QFont &font)
 }
 
 /*!
-    Returns the pen for values that are drawn on top of this set
+    Returns the pen for values that are drawn on top of this barset
 */
 QFont QBarSet::labelFont() const
 {
     return d_ptr->m_labelFont;
 }
 
+/*!
+    Returns the color of the brush of barset.
+*/
 QColor QBarSet::color()
 {
     return brush().color();
 }
 
+/*!
+    Sets the \a color of brush for this barset
+*/
 void QBarSet::setColor(QColor color)
 {
     QBrush b = brush();
@@ -510,11 +516,17 @@ void QBarSet::setColor(QColor color)
     }
 }
 
+/*!
+    Returns the color of pen of this barset
+*/
 QColor QBarSet::borderColor()
 {
     return pen().color();
 }
 
+/*!
+    Sets the color of pen for this barset
+*/
 void QBarSet::setBorderColor(QColor color)
 {
     QPen p = pen();
@@ -525,11 +537,17 @@ void QBarSet::setBorderColor(QColor color)
     }
 }
 
+/*!
+    Returns the color of labels of this barset
+*/
 QColor QBarSet::labelColor()
 {
     return labelBrush().color();
 }
 
+/*!
+    Sets the color of labels for this barset
+*/
 void QBarSet::setLabelColor(QColor color)
 {
     QBrush b = labelBrush();

@@ -182,12 +182,22 @@ QAbstractSeries::SeriesType QBarSeries::type() const
     return QAbstractSeries::SeriesTypeBar;
 }
 
+/*!
+    Sets the width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
+    is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
+    is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
+    Note that with \link QGroupedBarSeries \endlink this value means the width of one group of bars instead of just one bar.
+*/
 void QBarSeries::setBarWidth(qreal width)
 {
     Q_D(QBarSeries);
     d->setBarWidth(width);
 }
 
+/*!
+    Returns the width of the bars of the series.
+    \sa setBarWidth()
+*/
 qreal QBarSeries::barWidth() const
 {
     Q_D(const QBarSeries);
