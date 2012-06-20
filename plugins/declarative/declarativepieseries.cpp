@@ -93,12 +93,9 @@ QPieSlice* DeclarativePieSeries::append(QString label, qreal value)
     return slice;
 }
 
-bool DeclarativePieSeries::remove(int index)
+bool DeclarativePieSeries::remove(QPieSlice *slice)
 {
-    QPieSlice *slice = at(index);
-    if (slice)
-        return QPieSeries::remove(slice);
-    return false;
+    return QPieSeries::remove(slice);
 }
 
 void DeclarativePieSeries::clear()

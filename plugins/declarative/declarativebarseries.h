@@ -66,6 +66,10 @@ public:
     explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
+    Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
+    Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
+    Q_INVOKABLE bool remove(QBarSet *barset) { return QBarSeries::remove(barset); }
+    Q_INVOKABLE void clear() { return QBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
     void classBegin();
@@ -92,6 +96,10 @@ public:
     explicit DeclarativeGroupedBarSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
+    Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
+    Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
+    Q_INVOKABLE bool remove(QBarSet *barset) { return QGroupedBarSeries::remove(barset); }
+    Q_INVOKABLE void clear() { return QGroupedBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
     void classBegin();
@@ -112,6 +120,10 @@ public:
     explicit DeclarativeStackedBarSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
+    Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
+    Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
+    Q_INVOKABLE bool remove(QBarSet *barset) { return QStackedBarSeries::remove(barset); }
+    Q_INVOKABLE void clear() { return QStackedBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
     void classBegin();
@@ -132,6 +144,10 @@ public:
     explicit DeclarativePercentBarSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
+    Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
+    Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
+    Q_INVOKABLE bool remove(QBarSet *barset) { return QPercentBarSeries::remove(barset); }
+    Q_INVOKABLE void clear() { return QPercentBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
     void classBegin();

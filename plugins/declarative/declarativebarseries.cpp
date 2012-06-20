@@ -116,9 +116,20 @@ void DeclarativeBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject
 DeclarativeBarSet *DeclarativeBarSeries::at(int index)
 {
     QList<QBarSet*> setList = barSets();
-    if (index < setList.count())
+    if (index >= 0 && index < setList.count())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
+    return 0;
+}
+
+DeclarativeBarSet *DeclarativeBarSeries::insert(int index, QString label, QVariantList values)
+{
+    DeclarativeBarSet *barset = new DeclarativeBarSet(this);
+    barset->setLabel(label);
+    barset->setValues(values);
+    if (QBarSeries::insert(index, barset))
+        return barset;
+    delete barset;
     return 0;
 }
 
@@ -161,9 +172,20 @@ void DeclarativeGroupedBarSeries::appendSeriesChildren(QDeclarativeListProperty<
 DeclarativeBarSet *DeclarativeGroupedBarSeries::at(int index)
 {
     QList<QBarSet*> setList = barSets();
-    if (index < setList.count())
+    if (index >= 0 && index < setList.count())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
+    return 0;
+}
+
+DeclarativeBarSet *DeclarativeGroupedBarSeries::insert(int index, QString label, QVariantList values)
+{
+    DeclarativeBarSet *barset = new DeclarativeBarSet(this);
+    barset->setLabel(label);
+    barset->setValues(values);
+    if (QGroupedBarSeries::insert(index, barset))
+        return barset;
+    delete barset;
     return 0;
 }
 
@@ -206,9 +228,20 @@ void DeclarativeStackedBarSeries::appendSeriesChildren(QDeclarativeListProperty<
 DeclarativeBarSet *DeclarativeStackedBarSeries::at(int index)
 {
     QList<QBarSet*> setList = barSets();
-    if (index < setList.count())
+    if (index >= 0 && index < setList.count())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
+    return 0;
+}
+
+DeclarativeBarSet *DeclarativeStackedBarSeries::insert(int index, QString label, QVariantList values)
+{
+    DeclarativeBarSet *barset = new DeclarativeBarSet(this);
+    barset->setLabel(label);
+    barset->setValues(values);
+    if (QStackedBarSeries::insert(index, barset))
+        return barset;
+    delete barset;
     return 0;
 }
 
@@ -251,9 +284,20 @@ void DeclarativePercentBarSeries::appendSeriesChildren(QDeclarativeListProperty<
 DeclarativeBarSet *DeclarativePercentBarSeries::at(int index)
 {
     QList<QBarSet*> setList = barSets();
-    if (index < setList.count())
+    if (index >= 0 && index < setList.count())
         return qobject_cast<DeclarativeBarSet *>(setList[index]);
 
+    return 0;
+}
+
+DeclarativeBarSet *DeclarativePercentBarSeries::insert(int index, QString label, QVariantList values)
+{
+    DeclarativeBarSet *barset = new DeclarativeBarSet(this);
+    barset->setLabel(label);
+    barset->setValues(values);
+    if (QPercentBarSeries::insert(index, barset))
+        return barset;
+    delete barset;
     return 0;
 }
 

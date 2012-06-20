@@ -45,7 +45,7 @@ public:
     Q_INVOKABLE QPieSlice *at(int index);
     Q_INVOKABLE QPieSlice *find(QString label);
     Q_INVOKABLE QPieSlice *append(QString label, qreal value);
-    Q_INVOKABLE bool remove(int index);
+    Q_INVOKABLE bool remove(QPieSlice *slice);
     Q_INVOKABLE void clear();
 
 public:

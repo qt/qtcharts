@@ -73,7 +73,7 @@ Flow {
     }
     Button {
         text: "remove slice"
-        onClicked: series.remove(series.count - 1);
+        onClicked: series.remove(series.at(series.count - 1));
     }
     Button {
         text: "slice color"

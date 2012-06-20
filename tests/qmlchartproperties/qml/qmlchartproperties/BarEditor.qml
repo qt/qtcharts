@@ -44,8 +44,26 @@ Flow {
         onClicked: series.barWidth -= 0.1;
     }
     Button {
+        text: "append set"
+        onClicked: {
+            var count = series.count;
+            series.append("set" + count, [0, 0.1 * count, 0.2 * count, 0.3 * count, 0.4 * count, 0.5 * count, 0.6 * count]);
+        }
+    }
+    Button {
+        text: "insert set"
+        onClicked: {
+            var count = series.count;
+            series.insert(count - 1, "set" + count, [0, 0.1 * count, 0.2 * count, 0.3 * count, 0.4 * count, 0.5 * count, 0.6 * count]);
+        }
+    }
+    Button {
         text: "remove set"
-        onClicked: series.remove(series.count - 1);
+        onClicked: series.remove(series.at(series.count - 1));
+    }
+    Button {
+        text: "clear sets"
+        onClicked: series.clear();
     }
     Button {
         text: "set 1 color"
