@@ -355,8 +355,10 @@ bool QBarSet::remove(const int index, const int count)
 */
 void QBarSet::replace(const int index, const qreal value)
 {
-    d_ptr->replace(index,value);
-    emit valueChanged(index);
+    if (index >= 0 && index < d_ptr->m_values.count()) {
+        d_ptr->replace(index,value);
+        emit valueChanged(index);
+    }
 }
 
 /*!
@@ -364,8 +366,10 @@ void QBarSet::replace(const int index, const qreal value)
 */
 void QBarSet::replace(const int index, const QPointF value)
 {
-    d_ptr->replace(index,value);
-    emit valueChanged(index);
+    if (index >= 0 && index < d_ptr->m_values.count()) {
+        d_ptr->replace(index,value);
+        emit valueChanged(index);
+    }
 }
 
 /*!
@@ -608,7 +612,7 @@ void QBarSetPrivate::insert(const int index, const QPointF value)
 
 bool QBarSetPrivate::remove(const int index, const int count)
 {
-    if ((index + count) > m_values.count()) {
+    if (index < 0 || (index + count) > m_values.count()) {
         // cant remove more values than there are
         return false;
     }

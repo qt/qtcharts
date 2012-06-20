@@ -226,6 +226,7 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->count(), 4);
     QCOMPARE(m_barset->sum(), 10.0);
 
+    // Remove middle
     m_barset->remove(2);                // 1.0 2.0 4.0
     QCOMPARE(m_barset->at(0).y(), 1.0);
     QCOMPARE(m_barset->at(1).y(), 2.0);
@@ -233,9 +234,18 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->count(), 3);
     QCOMPARE(m_barset->sum(), 7.0);
 
+    // Remove first
     m_barset->remove(0);                // 2.0 4.0
     QCOMPARE(m_barset->at(0).y(), 2.0);
     QCOMPARE(m_barset->at(1).y(), 4.0);
+    QCOMPARE(m_barset->count(), 2);
+    QCOMPARE(m_barset->sum(), 6.0);
+
+    // Illegal indexes
+    m_barset->remove(4);
+    QCOMPARE(m_barset->count(), 2);
+    QCOMPARE(m_barset->sum(), 6.0);
+    m_barset->remove(-1);
     QCOMPARE(m_barset->count(), 2);
     QCOMPARE(m_barset->sum(), 6.0);
 
@@ -261,11 +271,13 @@ void tst_QBarSet::replace()
     QCOMPARE(m_barset->count(), 4);
     QCOMPARE(m_barset->sum(), 10.0);
 
+    // Replace first
     m_barset->replace(0, 5.0);          // 5.0 2.0 3.0 4.0
     QCOMPARE(m_barset->count(), 4);
     QCOMPARE(m_barset->sum(), 14.0);
     QCOMPARE(m_barset->at(0).y(), 5.0);
 
+    // Replace last
     m_barset->replace(3, 6.0);
     QCOMPARE(m_barset->count(), 4);     // 5.0 2.0 3.0 6.0
     QCOMPARE(m_barset->sum(), 16.0);
@@ -273,6 +285,20 @@ void tst_QBarSet::replace()
     QCOMPARE(m_barset->at(1).y(), 2.0);
     QCOMPARE(m_barset->at(2).y(), 3.0);
     QCOMPARE(m_barset->at(3).y(), 6.0);
+
+    // Illegal indexes
+    m_barset->replace(4, 6.0);
+    QCOMPARE(m_barset->count(), 4);     // 5.0 2.0 3.0 6.0
+    QCOMPARE(m_barset->sum(), 16.0);
+    m_barset->replace(-1, 6.0);
+    QCOMPARE(m_barset->count(), 4);     // 5.0 2.0 3.0 6.0
+    QCOMPARE(m_barset->sum(), 16.0);
+    m_barset->replace(4, QPointF(1.0, 1.0));
+    QCOMPARE(m_barset->count(), 4);     // 5.0 2.0 3.0 6.0
+    QCOMPARE(m_barset->sum(), 16.0);
+    m_barset->replace(-1, QPointF(1.0, 1.0));
+    QCOMPARE(m_barset->count(), 4);     // 5.0 2.0 3.0 6.0
+    QCOMPARE(m_barset->sum(), 16.0);
 
     QVERIFY(valueSpy.count() == 2);
 }
