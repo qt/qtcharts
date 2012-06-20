@@ -47,7 +47,7 @@ public:
 public: // From QBarSet
     Q_INVOKABLE void append(qreal value) { QBarSet::append(value); }
     Q_INVOKABLE void append(qreal x, qreal y) { QBarSet::append(QPointF(x, y)); }
-    Q_INVOKABLE bool remove(const int index, const int count = 1) { return QBarSet::remove(index, count); }
+    Q_INVOKABLE void remove(const int index, const int count = 1) { QBarSet::remove(index, count); }
     Q_INVOKABLE void replace(int index, qreal value) { QBarSet::replace(index, value); }
     Q_INVOKABLE void replace(int index, qreal x, qreal y) { QBarSet::replace(index, QPointF(x, y)); }
     Q_INVOKABLE QPointF at(int index) { return QBarSet::at(index); }

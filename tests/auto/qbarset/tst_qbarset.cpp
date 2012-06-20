@@ -233,6 +233,15 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->at(2).y(), 4.0);
     QCOMPARE(m_barset->count(), 3);
     QCOMPARE(m_barset->sum(), 7.0);
+    QCOMPARE(valueSpy.count(), 1);
+
+    QList<QVariant> valueSpyArg = valueSpy.takeFirst();
+    // Verify index of removed signal
+    QVERIFY(valueSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(0).toInt() == 2);
+    // Verify count of removed signal
+    QVERIFY(valueSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(1).toInt() == 1);
 
     // Remove first
     m_barset->remove(0);                // 2.0 4.0
@@ -240,6 +249,16 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->at(1).y(), 4.0);
     QCOMPARE(m_barset->count(), 2);
     QCOMPARE(m_barset->sum(), 6.0);
+
+    QCOMPARE(valueSpy.count(), 1);
+    valueSpyArg = valueSpy.takeFirst();
+    // Verify index of removed signal
+    QVERIFY(valueSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(0).toInt() == 0);
+    // Verify count of removed signal
+    QVERIFY(valueSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(1).toInt() == 1);
+
 
     // Illegal indexes
     m_barset->remove(4);
@@ -249,7 +268,23 @@ void tst_QBarSet::remove()
     QCOMPARE(m_barset->count(), 2);
     QCOMPARE(m_barset->sum(), 6.0);
 
-    QCOMPARE(valueSpy.count(), 2);
+    // nothing removed, no signals should be emitted
+    QCOMPARE(valueSpy.count(), 0);
+
+    // Remove more items than list has
+    m_barset->remove(0,312);
+    QCOMPARE(m_barset->count(), 0);
+    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+
+    QCOMPARE(valueSpy.count(), 1);
+    valueSpyArg = valueSpy.takeFirst();
+
+    // Verify index of removed signal
+    QVERIFY(valueSpyArg.at(0).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(0).toInt() == 0);
+    // Verify count of removed signal (expect 2 values removed, because list had only 2 items)
+    QVERIFY(valueSpyArg.at(1).type() == QVariant::Int);
+    QVERIFY(valueSpyArg.at(1).toInt() == 2);
 }
 
 void tst_QBarSet::replace_data()

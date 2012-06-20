@@ -58,7 +58,7 @@ public:
 
     void insert(const int index, const qreal value);
     void insert(const int index, const QPointF value);
-    bool remove(const int index, const int count = 1);
+    void remove(const int index, const int count = 1);
     void replace(const int index, const qreal value);
     void replace(const int index, const QPointF value);
     QPointF at(const int index) const;

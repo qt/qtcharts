@@ -338,16 +338,15 @@ void QBarSet::insert(const int index, const QPointF value)
 
 /*!
     Removes \a count number of values from the set starting at \a index.
-    Returns true if remove operation was succesfull.
     \sa insert()
 */
-bool QBarSet::remove(const int index, const int count)
+void QBarSet::remove(const int index, const int count)
 {
-    bool success = d_ptr->remove(index,count);
-    if (success) {
-        emit valuesRemoved(index,count);
+    int removedCount = d_ptr->remove(index,count);
+    if (removedCount > 0) {
+        emit valuesRemoved(index,removedCount);
     }
-    return success;
+    return;
 }
 
 /*!
@@ -610,19 +609,25 @@ void QBarSetPrivate::insert(const int index, const QPointF value)
     emit restructuredBars();
 }
 
-bool QBarSetPrivate::remove(const int index, const int count)
+int QBarSetPrivate::remove(const int index, const int count)
 {
-    if (index < 0 || (index + count) > m_values.count()) {
-        // cant remove more values than there are
-        return false;
+    int removeCount = count;
+
+    if ((index <0) || (m_values.count() == 0)) {
+        // Invalid index or not values in list, remove nothing.
+        return 0;
+    } else if ((index + count) > m_values.count()) {
+        // Trying to remove more items than list has. Limit amount to be removed.
+        removeCount = m_values.count() - index;
     }
-    int c = count;
-    while (c > 0) {
+
+    int c = 0;
+    while (c < removeCount) {
         m_values.removeAt(index);
-        c--;
+        c++;
     }
     emit restructuredBars();
-    return true;
+    return removeCount;
 }
 
 void QBarSetPrivate::replace(const int index, const qreal value)

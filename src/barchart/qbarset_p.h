@@ -52,7 +52,7 @@ public:
 
     void insert(const int index, const qreal value);
     void insert(const int index, const QPointF value);
-    bool remove(const int index, const int count);
+    int remove(const int index, const int count);
 
     void replace(const int index, const qreal value);
     void replace(const int index, const QPointF value);
