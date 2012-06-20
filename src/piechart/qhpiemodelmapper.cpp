@@ -24,13 +24,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QHPieModelMapper
-    \brief part of QtCommercial chart API.
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
     Horizontal model mapper is used to create a connection between QPieSeries and QAbstractItemModel derived model object that keeps the consecutive pie slices data in rows.
     It is possible to use both QAbstractItemModel and QPieSeries model API. QHPieModelMapper makes sure that Pie and the model are kept in sync.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
+/*!
+    \property QHPieModelMapper::series
+    \brief Defines the QPieSeries object that is used by the mapper.
+
+    All the data in the series is discarded when it is set to the mapper.
+    When new series is specified the old series is disconnected (it preserves its data)
+*/
+
+/*!
+    \property QHPieModelMapper::model
+    \brief Defines the model that is used by the mapper.
 */
 
 /*!
@@ -70,6 +82,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QHPieModelMapper::seriesReplaced()
+
+    Emitted when the series to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QHPieModelMapper::modelReplaced()
+
+    Emitted when the model to which mapper is connected to has changed.
+*/
+
+/*!
     \fn void QHPieModelMapper::valuesRowChanged()
 
     Emitted when the valuesRow has changed.
@@ -98,6 +122,32 @@ QHPieModelMapper::QHPieModelMapper(QObject *parent) :
     QPieModelMapper(parent)
 {
     setOrientation(Qt::Horizontal);
+}
+
+QAbstractItemModel* QHPieModelMapper::model() const
+{
+    return QPieModelMapper::model();
+}
+
+void QHPieModelMapper::setModel(QAbstractItemModel *model)
+{
+    if (model != QPieModelMapper::model()) {
+        QPieModelMapper::setModel(model);
+        emit modelReplaced();
+    }
+}
+
+QPieSeries* QHPieModelMapper::series() const
+{
+    return QPieModelMapper::series();
+}
+
+void QHPieModelMapper::setSeries(QPieSeries *series)
+{
+    if (series != QPieModelMapper::series()) {
+        QPieModelMapper::setSeries(series);
+        emit seriesReplaced();
+    }
 }
 
 /*!

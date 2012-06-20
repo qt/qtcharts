@@ -76,7 +76,6 @@
                     <ul>
                     <li><a href="qpieseries.html">QPieSeries</a></li>
                     <li><a href="qpieslice.html">QPieSlice</a></li>
-                    <li><a href="qpiemodelmapper.html">QPieModelMapper</a></li>
                     <li><a href="qhpiemodelmapper.html">QHPieModelMapper</a></li>
                     <li><a href="qvpiemodelmapper.html">QVPieModelMapper</a></li>
                     </ul>

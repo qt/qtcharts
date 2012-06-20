@@ -34,23 +34,16 @@ class QPieSeries;
 class QTCOMMERCIALCHART_EXPORT QPieModelMapper : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QPieSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
-    Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
-    Q_ENUMS(Qt::Orientation)
 
 protected:
     QPieModelMapper(QObject *parent = 0);
 
-public:
     QAbstractItemModel* model() const;
     void setModel(QAbstractItemModel *model);
 
     QPieSeries* series() const;
     void setSeries(QPieSeries *series);
 
-    void reset();
-
-protected:
     int first() const;
     void setFirst(int first);
 
@@ -65,10 +58,6 @@ protected:
 
     Qt::Orientation orientation() const;
     void setOrientation(Qt::Orientation orientation);
-
-Q_SIGNALS:
-    void seriesReplaced();
-    void modelReplaced();
 
 protected:
     QPieModelMapperPrivate * const d_ptr;

@@ -26,45 +26,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-/*!
-    \class QPieModelMapper
-    \brief part of QtCommercial chart API.
-    \mainclass
-
-    Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    The instance of this class cannot be created directly. QHPieModelMapper of QVPieModelMapper should be used instead. This class is used to create a connection between QPieSeries and QAbstractItemModel derived model object.
-    It is possible to use both QAbstractItemModel and QPieSeries model API. QPieModelMapper makes sure that Pie and the model are kept in sync.
-    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
-*/
-
-/*!
-    \property QPieModelMapper::series
-    \brief Defines the QPieSeries object that is used by the mapper.
-
-    All the data in the series is discarded when it is set to the mapper.
-    When new series is specified the old series is disconnected (it preserves its data)
-*/
-
-/*!
-    \property QPieModelMapper::model
-    \brief Defines the model that is used by the mapper.
-*/
-
-/*!
-    \fn void QPieModelMapper::seriesReplaced()
-
-    Emitted when the series to which mapper is connected to has changed.
-*/
-
-/*!
-    \fn void QPieModelMapper::modelReplaced()
-
-    Emitted when the model to which mapper is connected to has changed.
-*/
-
-/*!
-    Constructs a mapper object which is a child of \a parent.
-*/
 QPieModelMapper::QPieModelMapper(QObject *parent) :
     QObject(parent),
     d_ptr(new QPieModelMapperPrivate(this))
@@ -95,8 +56,6 @@ void QPieModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
-
-    emit modelReplaced();
 }
 
 QPieSeries* QPieModelMapper::series() const
@@ -120,8 +79,6 @@ void QPieModelMapper::setSeries(QPieSeries *series)
     // connect the signals from the series
     connect(d->m_series, SIGNAL(added(QList<QPieSlice*>)), d, SLOT(slicesAdded(QList<QPieSlice*>)));
     connect(d->m_series, SIGNAL(removed(QList<QPieSlice*>)), d, SLOT(slicesRemoved(QList<QPieSlice*>)));
-
-    emit seriesReplaced();
 }
 
 /*!
@@ -227,19 +184,6 @@ void QPieModelMapper::setLabelsSection(int labelsSection)
     Q_D(QPieModelMapper);
     d->m_labelsSection = qMax(-1, labelsSection);
     d->initializePieFromModel();
-}
-
-/*!
-    Resets the QPieModelMapper to the default state.
-    first: 0; count: -1; valuesSection: -1; labelsSection: -1;
-*/
-void QPieModelMapper::reset()
-{
-    Q_D(QPieModelMapper);
-    d->m_first = 0;
-    d->m_count = -1;
-    d->m_valuesSection = -1;
-    d->m_labelsSection = -1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

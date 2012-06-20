@@ -24,13 +24,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QVPieModelMapper
-    \brief part of QtCommercial chart API.
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
     Vertical model mapper is used to create a connection between QPieSeries and QAbstractItemModel derived model object that keeps the consecutive pie slices data in columns.
     It is possible to use both QAbstractItemModel and QPieSeries model API. QVPieModelMapper makes sure that Pie and the model are kept in sync.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
+/*!
+    \property QVPieModelMapper::series
+    \brief Defines the QPieSeries object that is used by the mapper.
+
+    All the data in the series is discarded when it is set to the mapper.
+    When new series is specified the old series is disconnected (it preserves its data)
+*/
+
+/*!
+    \property QVPieModelMapper::model
+    \brief Defines the model that is used by the mapper.
 */
 
 /*!
@@ -70,6 +82,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QVPieModelMapper::seriesReplaced()
+
+    Emitted when the series to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QVPieModelMapper::modelReplaced()
+
+    Emitted when the model to which mapper is connected to has changed.
+*/
+
+/*!
     \fn void QVPieModelMapper::valuesColumnChanged()
 
     Emitted when the valuesColumn has changed.
@@ -98,6 +122,32 @@ QVPieModelMapper::QVPieModelMapper(QObject *parent) :
     QPieModelMapper(parent)
 {
     QPieModelMapper::setOrientation(Qt::Vertical);
+}
+
+QAbstractItemModel* QVPieModelMapper::model() const
+{
+    return QPieModelMapper::model();
+}
+
+void QVPieModelMapper::setModel(QAbstractItemModel *model)
+{
+    if (model != QPieModelMapper::model()) {
+        QPieModelMapper::setModel(model);
+        emit modelReplaced();
+    }
+}
+
+QPieSeries* QVPieModelMapper::series() const
+{
+    return QPieModelMapper::series();
+}
+
+void QVPieModelMapper::setSeries(QPieSeries *series)
+{
+    if (series != QPieModelMapper::series()) {
+        QPieModelMapper::setSeries(series);
+        emit seriesReplaced();
+    }
 }
 
 /*!
