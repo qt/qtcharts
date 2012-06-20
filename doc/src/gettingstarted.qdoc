@@ -3,8 +3,6 @@
     \title QtCommercial Charts getting started
     \keyword Introduction
 
-    You can obtain the QtCommercial Charts package from \l {http://www.digia.com/en/Qt/Log-in-Customer-Portal/} {Customer portal}.
-
     Compiling:
     \code
     qmake CONFIG+=release
@@ -13,6 +11,11 @@
     \endcode
 
     Depending on the OS and the compiler you are using "make" might need to be replaced with another command like: nmake, mingw32-make, etc.
+
+    To uninstall the QtCommercialCharts run:
+    \code
+    make uninstall
+    \endcode
 
     On Windows platforms both debug and release configurations are built by default at the same time.
     To build both at the same time on other platforms invoke the following command:
@@ -34,18 +37,6 @@
 
     \code
     CONFIG += qtcommercialchart
-    \endcode
-
-    Or if you have not installed charts after building:
-
-    \code
-    CHARTSLIB = QtCommercialChart
-    CONFIG(debug, debug|release) {
-        mac: CHARTSLIB = $$join(CHARTSLIB,,,_debug)
-        win32: CHARTSLIB = $$join(CHARTSLIB,,,d)
-    }
-    INCLUDEPATH += <path_to_charts_folder>/include
-    LIBS += -L<path_to_charts_folder>/lib -l$$CHARTSLIB
     \endcode
 
     \bold {Widget project}

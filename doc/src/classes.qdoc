@@ -5,19 +5,6 @@
 
     Charts API is build on top of Qt Graphics View Framework. Charts can be displayed as QGraphicsWidget using QChart class. However
     there is also convenience class QChartView which is QWidget based. These lets quickly use QCharts as normal Qt widget.
-    The API supports following chart types:
-
-     \list
-     \o line
-     \o area
-     \o scatter
-     \o spline
-     \o pie
-     \o grouped bar
-     \o percent bar
-     \o stacked bar
-     \endlist
-
 
     Each chart type is represented by QAbstractSeries derived class. To create given chart type users have to use instance of related series class and add it to QChart instance.
     \code
