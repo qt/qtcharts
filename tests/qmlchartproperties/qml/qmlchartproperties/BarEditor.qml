@@ -27,34 +27,6 @@ Flow {
     flow: Flow.TopToBottom
     property variant series
 
-    onSeriesChanged: {
-        if (series && series.name == "bar") {
-            seriesConnections.target = series;
-            setConnections.target = series.at(0);
-        } else {
-            seriesConnections.target = null;
-            setConnections.target = null;
-        }
-    }
-
-    Connections {
-        id: seriesConnections
-        target: null
-        onNameChanged:              console.log("series.onNameChanged: " + series.name);
-        onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
-        onLabelsVisibleChanged:     console.log("series.onLabelsVisibleChanged: " + series.labelsVisible);
-        onCountChanged:             console.log("series.onCountChanged: " + count);
-    }
-
-    Connections {
-        id: setConnections
-        target: null
-        onColorChanged:             console.log("series.onColorChanged: " + color);
-        onBorderColorChanged:       console.log("series.onBorderColorChanged: " + color);
-        onLabelColorChanged:        console.log("series.onLabelColorChanged: " + color);
-        onCountChanged:             console.log("series.onCountChanged: " + count);
-    }
-
     Button {
         text: "visible"
         onClicked: series.visible = !series.visible;

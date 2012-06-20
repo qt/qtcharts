@@ -172,13 +172,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa append(), insert()
 */
+/*!
+    \qmlsignal PieSeries::added(PieSlice slice)
+    Emitted when \a slice has been added to the series.
+*/
 
 /*!
     \fn void QPieSeries::removed(QList<QPieSlice*> slices)
-
     This signal is emitted when \a slices have been removed from the series.
-
     \sa remove()
+*/
+/*!
+    \qmlsignal PieSeries::removed(PieSlice slice)
+    Emitted when \a slice has been removed from the series.
 */
 
 /*!

@@ -27,13 +27,11 @@ ChartView {
     axisXLabels: ["0", "2000", "1", "2001", "2", "2002", "3", "2003", "4", "2004", "5", "2005",
         "6", "2006", "7", "2007", "8", "2008", "9", "2009", "10", "2010", "11", "2011"]
 
-    property variant series: daSeries
+    property variant series: areaSeries
 
     AreaSeries {
-        id: daSeries
+        id: areaSeries
         name: "area 1"
-        onSelected: console.log("areaSeries.onSelected");
-        onClicked: console.log("areaSeries.onClicked: " + point.x + ", " + point.y);
         upperSeries: LineSeries {
             XyPoint { x: 0; y: 1 }
             XyPoint { x: 1; y: 1 }
@@ -62,5 +60,13 @@ ChartView {
             XyPoint { x: 10; y: 0 }
             XyPoint { x: 11; y: 0 }
         }
+
+        onNameChanged:              console.log("areaSeries.onNameChanged: " + name);
+        onVisibleChanged:           console.log("areaSeries.onVisibleChanged: " + visible);
+        onClicked:                  console.log("areaSeries.onClicked: " + point.x + ", " + point.y);
+        onSelected:                 console.log("areaSeries.onSelected");
+        onColorChanged:             console.log("areaSeries.onColorChanged: " + color);
+        onBorderColorChanged:       console.log("areaSeries.onBorderColorChanged: " + borderColor);
+//        onCountChanged:             console.log("areaSeries.onCountChanged: " + count);
     }
 }

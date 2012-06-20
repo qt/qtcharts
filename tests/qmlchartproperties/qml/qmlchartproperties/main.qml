@@ -32,7 +32,6 @@ Rectangle {
 
     function nextColor() {
         colorIndex++;
-        console.log("color: " + colors[colorIndex % colors.length]);
         return colors[colorIndex % colors.length];
     }
 

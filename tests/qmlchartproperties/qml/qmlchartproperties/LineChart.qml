@@ -22,15 +22,14 @@ import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
 ChartView {
+    property variant series: lineSeries
+
     title: "line series"
     anchors.fill: parent
 
-    property variant series: daSeries
-
     LineSeries {
-        id: daSeries
+        id: lineSeries
         name: "line 1"
-        onClicked: console.log("onClicked: " + point.x + ", " + point.y);
         XyPoint { x: 0; y: 0 }
         XyPoint { x: 1.1; y: 2.1 }
         XyPoint { x: 1.9; y: 3.3 }
@@ -38,6 +37,15 @@ ChartView {
         XyPoint { x: 2.9; y: 4.9 }
         XyPoint { x: 3.4; y: 3.0 }
         XyPoint { x: 4.1; y: 3.3 }
+
+        onNameChanged:              console.log("lineSeries.onNameChanged: " + name);
+        onVisibleChanged:           console.log("lineSeries.onVisibleChanged: " + visible);
+        onClicked:                  console.log("lineSeries.onClicked: " + point.x + ", " + point.y);
+        onPointReplaced:            console.log("lineSeries.onPointReplaced: " + index);
+        onPointRemoved:             console.log("lineSeries.onPointRemoved: " + index);
+        onPointAdded:               console.log("lineSeries.onPointAdded: " + index);
+        onColorChanged:             console.log("lineSeries.onColorChanged: " + color);
+        onCountChanged:             console.log("lineSeries.onCountChanged: " + count);
     }
 
     LineSeries {

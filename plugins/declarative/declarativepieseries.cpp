@@ -30,6 +30,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
     QPieSeries(parent)
 {
+    connect(this, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleAdded(QList<QPieSlice*>)));
+    connect(this, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleRemoved(QList<QPieSlice*>)));
 }
 
 void DeclarativePieSeries::classBegin()
@@ -66,7 +68,7 @@ void DeclarativePieSeries::appendSeriesChildren(QDeclarativeListProperty<QObject
 QPieSlice *DeclarativePieSeries::at(int index)
 {
     QList<QPieSlice*> sliceList = slices();
-    if (index < sliceList.count())
+    if (index >= 0 && index < sliceList.count())
         return sliceList[index];
 
     return 0;
@@ -89,6 +91,31 @@ QPieSlice* DeclarativePieSeries::append(QString label, qreal value)
     slice->setValue(value);
     QPieSeries::append(slice);
     return slice;
+}
+
+bool DeclarativePieSeries::remove(int index)
+{
+    QPieSlice *slice = at(index);
+    if (slice)
+        return QPieSeries::remove(slice);
+    return false;
+}
+
+void DeclarativePieSeries::clear()
+{
+    QPieSeries::clear();
+}
+
+void DeclarativePieSeries::handleAdded(QList<QPieSlice*> slices)
+{
+    foreach(QPieSlice *slice, slices)
+        emit sliceAdded(slice);
+}
+
+void DeclarativePieSeries::handleRemoved(QList<QPieSlice*> slices)
+{
+    foreach(QPieSlice *slice, slices)
+        emit sliceRemoved(slice);
 }
 
 #include "moc_declarativepieseries.cpp"

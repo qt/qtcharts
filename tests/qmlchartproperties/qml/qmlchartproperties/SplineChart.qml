@@ -24,10 +24,10 @@ import QtCommercial.Chart 1.0
 ChartView {
     title: "spline series"
     anchors.fill: parent
-    property variant series: daSeries
+    property variant series: splineSeries
 
     SplineSeries {
-        id: daSeries
+        id: splineSeries
         name: "spline 1"
         XyPoint { x: 0; y: 0 }
         XyPoint { x: 1.1; y: 2.1 }
@@ -36,6 +36,15 @@ ChartView {
         XyPoint { x: 2.9; y: 4.9 }
         XyPoint { x: 3.4; y: 3.0 }
         XyPoint { x: 4.1; y: 3.3 }
+
+        onNameChanged:              console.log("splineSeries.onNameChanged: " + name);
+        onVisibleChanged:           console.log("splineSeries.onVisibleChanged: " + visible);
+        onClicked:                  console.log("splineSeries.onClicked: " + point.x + ", " + point.y);
+        onPointReplaced:            console.log("splineSeries.onPointReplaced: " + index);
+        onPointRemoved:             console.log("splineSeries.onPointRemoved: " + index);
+        onPointAdded:               console.log("splineSeries.onPointAdded: " + index);
+        onColorChanged:             console.log("splineSeries.onColorChanged: " + color);
+        onCountChanged:             console.log("splineSeries.onCountChanged: " + count);
     }
 
     SplineSeries {

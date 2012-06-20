@@ -28,24 +28,6 @@ Flow {
     flow: Flow.TopToBottom
     property variant series
 
-    onSeriesChanged: {
-        if (series && series.name == "area 1") {
-            seriesConnections.target = series;
-        } else {
-            seriesConnections.target = null;
-        }
-    }
-
-    Connections {
-        id: seriesConnections
-        target: null
-        onNameChanged:              console.log("series.onNameChanged: " + series.name);
-        onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
-        onColorChanged:             console.log("series.onColorChanged: " + series.color);
-        onBorderColorChanged:       console.log("series.onBorderColorChanged: " + series.borderColor);
-        onCountChanged:             console.log("series.onCountChanged: " + series.count);
-    }
-
     Button {
         text: "visible"
         onClicked: series.visible = !series.visible;

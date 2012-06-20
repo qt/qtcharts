@@ -28,67 +28,6 @@ Flow {
     flow: Flow.TopToBottom
     property variant series // TODO: rename to chart
 
-    onSeriesChanged: {
-        if (series && series.name == "") {
-            chartConnections.target = series;
-            legendConnections.target = series.legend;
-            axisXConnections.target = series.axisX;
-            axisYConnections.target = series.axisY;
-        } else {
-            legendConnections.target = null;
-            axisXConnections.target = null;
-            axisYConnections.target = null;
-        }
-    }
-
-    Connections {
-        id: chartConnections
-        target: null
-        onVisibleChanged:           console.log("chart.onVisibleChanged: " + series.visible);
-        onTitleColorChanged:        console.log("chart.onTitleColorChanged: " + series.titleColor);
-        onBackgroundColorChanged:   console.log("chart.onBackgroundColorChanged: " + series.backgroundColor);
-        onDropShadowEnabledChanged: console.log("chart.onDropShadowEnabledChanged: " + enabled);
-    }
-
-    Connections {
-        id: legendConnections
-        target: null
-        onVisibleChanged:           console.log("legend.onVisibleChanged: " + series.legend.visible);
-        onBackgroundVisibleChanged: console.log("legend.onBackgroundVisibleChanged: " + visible);
-        onColorChanged:             console.log("legend.onColorChanged: " + color);
-        onBorderColorChanged:       console.log("legend.onBorderColorChanged: " + color);
-    }
-
-    Connections {
-        id: axisXConnections
-        target: null
-        onColorChanged:                 console.log("axisX.onColorChanged: " + color);
-        onLabelsVisibleChanged:         console.log("axisX.onLabelsVisibleChanged: " + visible);
-        onLabelsColorChanged:           console.log("axisX.onLabelsColorChanged: " + color);
-        onVisibleChanged:               console.log("axisX.onVisibleChanged: " + visible);
-        onGridVisibleChanged:           console.log("axisX.onGridVisibleChanged: " + visible);
-        onShadesVisibleChanged:         console.log("axisX.onShadesVisibleChanged: " + visible);
-        onShadesColorChanged:           console.log("axisX.onShadesColorChanged: " + color);
-        onShadesBorderColorChanged:     console.log("axisX.onShadesBorderColorChanged: " + color);
-        onMinChanged:                   console.log("axisX.onMinChanged: " + min);
-        onMaxChanged:                   console.log("axisX.onMaxChanged: " + max);
-    }
-
-    Connections {
-        id: axisYConnections
-        target: null
-        onColorChanged:                 console.log("axisY.onColorChanged: " + color);
-        onLabelsVisibleChanged:         console.log("axisY.onLabelsVisibleChanged: " + visible);
-        onLabelsColorChanged:           console.log("axisY.onLabelsColorChanged: " + color);
-        onVisibleChanged:               console.log("axisY.onVisibleChanged: " + visible);
-        onGridVisibleChanged:           console.log("axisY.onGridVisibleChanged: " + visible);
-        onShadesVisibleChanged:         console.log("axisY.onShadesVisibleChanged: " + visible);
-        onShadesColorChanged:           console.log("axisY.onShadesColorChanged: " + color);
-        onShadesBorderColorChanged:     console.log("axisY.onShadesBorderColorChanged: " + color);
-        onMinChanged:                   console.log("axisY.onMinChanged: " + min);
-        onMaxChanged:                   console.log("axisY.onMaxChanged: " + max);
-    }
-
     Button {
         text: "visible"
         onClicked: series.visible = !series.visible;

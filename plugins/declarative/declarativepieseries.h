@@ -45,13 +45,21 @@ public:
     Q_INVOKABLE QPieSlice *at(int index);
     Q_INVOKABLE QPieSlice *find(QString label);
     Q_INVOKABLE QPieSlice *append(QString label, qreal value);
+    Q_INVOKABLE bool remove(int index);
+    Q_INVOKABLE void clear();
 
 public:
     void classBegin();
     void componentComplete();
 
+Q_SIGNALS:
+    void sliceAdded(QPieSlice* slice);
+    void sliceRemoved(QPieSlice* slice);
+
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+    void handleAdded(QList<QPieSlice*> slices);
+    void handleRemoved(QList<QPieSlice*> slices);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -27,44 +27,6 @@ Flow {
     flow: Flow.TopToBottom
     property variant series
 
-    onSeriesChanged: {
-        if (series && series.name == "pie") {
-            seriesConnections.target = series;
-            sliceConnections.target = series.at(0);
-        } else {
-            seriesConnections.target = null;
-            sliceConnections.target = null;
-        }
-    }
-
-    Connections {
-        id: seriesConnections
-        target: null
-        onVisibleChanged:           console.log("series.onVisibleChanged: " + series.visible);
-        onCountChanged:             console.log("series.onCountChanged: " + series.count);
-        onSumChanged:               console.log("series.onSumChanged: " + series.sum);
-    }
-
-    Connections {
-        id: sliceConnections
-        target: null
-        onValueChanged:             console.log("slice.onValueChanged: " + series.at(0).value);
-        onLabelVisibleChanged:      console.log("slice.onLabelVisibleChanged: " + series.at(0).labelVisible);
-        onPenChanged:               console.log("slice.onPenChanged: " + series.at(0).pen);
-        onBorderColorChanged:       console.log("slice.onBorderColorChanged: " + series.at(0).borderColor);
-        onBorderWidthChanged:       console.log("slice.onBorderWidthChanged: " + series.at(0).borderWidth);
-        onBrushChanged:             console.log("slice.onBrushChanged: " + series.at(0).brush);
-        onColorChanged:             console.log("slice.onColorChanged: " + series.at(0).color);
-        onLabelColorChanged:        console.log("slice.onLabelColorChanged: " + series.at(0).labelColor);
-        onLabelBrushChanged:        console.log("slice.onLabelBrushChanged: " + series.at(0).labelBrush);
-        onLabelFontChanged:         console.log("slice.onLabelFontChanged: " + series.at(0).labelFont);
-        onPercentageChanged:        console.log("slice.onPercentageChanged: " + series.at(0).percentage);
-        onStartAngleChanged:        console.log("slice.onStartAngleChanged: " + series.at(0).startAngle);
-        onAngleSpanChanged:         console.log("slice.onAngleSpanChanged: " + series.at(0).angleSpan);
-        onClicked:                  console.log("slice.onClicked");
-        onHovered:                  console.log("slice.onHovered: " + state);
-    }
-
     Button {
         text: "visible"
         onClicked: series.visible = !series.visible;
@@ -108,6 +70,10 @@ Flow {
     Button {
         text: "series end angle -"
         onClicked: series.endAngle -= 1.1;
+    }
+    Button {
+        text: "remove slice"
+        onClicked: series.remove(series.count - 1);
     }
     Button {
         text: "slice color"

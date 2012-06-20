@@ -37,4 +37,36 @@ ChartView {
         XyPoint { x: 3.4; y: 3.0 }
         XyPoint { x: 4.1; y: 3.3 }
     }
+
+    onVisibleChanged:                  console.log("chart.onVisibleChanged: " + series.visible);
+    onTitleColorChanged:               console.log("chart.onTitleColorChanged: " + series.titleColor);
+    onBackgroundColorChanged:          console.log("chart.onBackgroundColorChanged: " + series.backgroundColor);
+    onDropShadowEnabledChanged:        console.log("chart.onDropShadowEnabledChanged: " + enabled);
+
+    legend.onVisibleChanged:           console.log("legend.onVisibleChanged: " + series.legend.visible);
+    legend.onBackgroundVisibleChanged: console.log("legend.onBackgroundVisibleChanged: " + visible);
+    legend.onColorChanged:             console.log("legend.onColorChanged: " + color);
+    legend.onBorderColorChanged:       console.log("legend.onBorderColorChanged: " + color);
+
+    axisX.onColorChanged:               console.log("axisX.onColorChanged: " + color);
+    axisX.onLabelsVisibleChanged:       console.log("axisX.onLabelsVisibleChanged: " + visible);
+    axisX.onLabelsColorChanged:         console.log("axisX.onLabelsColorChanged: " + color);
+    axisX.onVisibleChanged:             console.log("axisX.onVisibleChanged: " + visible);
+    axisX.onGridVisibleChanged:         console.log("axisX.onGridVisibleChanged: " + visible);
+    axisX.onShadesVisibleChanged:       console.log("axisX.onShadesVisibleChanged: " + visible);
+    axisX.onShadesColorChanged:         console.log("axisX.onShadesColorChanged: " + color);
+    axisX.onShadesBorderColorChanged:   console.log("axisX.onShadesBorderColorChanged: " + color);
+    axisX.onMinChanged:                 console.log("axisX.onMinChanged: " + min);
+    axisX.onMaxChanged:                 console.log("axisX.onMaxChanged: " + max);
+
+    axisY.onColorChanged:               console.log("axisY.onColorChanged: " + color);
+    axisY.onLabelsVisibleChanged:       console.log("axisY.onLabelsVisibleChanged: " + visible);
+    axisY.onLabelsColorChanged:         console.log("axisY.onLabelsColorChanged: " + color);
+    axisY.onVisibleChanged:             console.log("axisY.onVisibleChanged: " + visible);
+    axisY.onGridVisibleChanged:         console.log("axisY.onGridVisibleChanged: " + visible);
+    axisY.onShadesVisibleChanged:       console.log("axisY.onShadesVisibleChanged: " + visible);
+    axisY.onShadesColorChanged:         console.log("axisY.onShadesColorChanged: " + color);
+    axisY.onShadesBorderColorChanged:   console.log("axisY.onShadesBorderColorChanged: " + color);
+    axisY.onMinChanged:                 console.log("axisY.onMinChanged: " + min);
+    axisY.onMaxChanged:                 console.log("axisY.onMaxChanged: " + max);
 }

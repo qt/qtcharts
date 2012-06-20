@@ -28,15 +28,27 @@ ChartView {
     legend.alignment: Qt.AlignBottom
     axisXLabels: ["0", "2007", "1", "2008", "2", "2009", "3", "2010", "4", "2011", "5", "2012"]
 
-    property variant series: daSeries
+    property variant series: barSeries
 
     StackedBarSeries {
-        id: daSeries
+        id: barSeries
         name: "bar"
-        onClicked: console.log("onClicked: " + barset + " " + index);
-        onHovered: console.log("onHovered: " + barset + " " + status);
-        BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6] }
+        BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
+            onClicked:                  console.log("barset.onClicked: " + index);
+            onHovered:                  console.log("barset.onHovered: " + status);
+            onColorChanged:             console.log("barset.onColorChanged: " + color);
+            onBorderColorChanged:       console.log("barset.onBorderColorChanged: " + color);
+            onLabelColorChanged:        console.log("barset.onLabelColorChanged: " + color);
+            onCountChanged:             console.log("barset.onCountChanged: " + count);
+        }
         BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 7] }
         BarSet { label: "James"; values: [3, 5, 8, 13, 5, 8] }
+
+        onNameChanged:              console.log("stackedBarSeries.onNameChanged: " + series.name);
+        onVisibleChanged:           console.log("stackedBarSeries.onVisibleChanged: " + series.visible);
+        onClicked:                  console.log("stackedBarSeries.onClicked: " + barset + " " + index);
+        onHovered:                  console.log("stackedBarSeries.onHovered: " + barset + " " + status);
+        onLabelsVisibleChanged:     console.log("stackedBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);
+        onCountChanged:             console.log("stackedBarSeries.onCountChanged: " + count);
     }
 }
