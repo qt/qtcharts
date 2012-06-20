@@ -24,13 +24,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QHXYModelMapper
-    \brief part of QtCommercial chart API.
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
     Horizontal model mapper is used to create a connection between QXYSeries and QAbstractItemModel derived model object.
     It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
+*/
+
+/*!
+    \property QHXYModelMapper::series
+    \brief Defines the QXYSeries object that is used by the mapper.
+
+    All the data in the series is discarded when it is set to the mapper.
+    When new series is specified the old series is disconnected (it preserves its data)
+*/
+
+/*!
+    \property QHXYModelMapper::model
+    \brief Defines the model that is used by the mapper.
 */
 
 /*!
@@ -47,6 +59,40 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QHXYModelMapper::firstColumn
+    \brief Defines which column of the model contains the data for the first point of the series.
+    Minimal and default value is: 0
+*/
+/*!
+    \qmlproperty int QHXYModelMapper::firstColumn
+    Defines which column of the model contains the data for the first point of the series.
+    The default value is 0.
+*/
+
+/*!
+    \property QHXYModelMapper::columnCount
+    \brief Defines the number of columns of the model that are mapped as the data for series
+    Minimal and default value is: -1 (count limited by the number of columns in the model)
+*/
+/*!
+    \qmlproperty int QHXYModelMapper::columnCount
+    Defines the number of columns of the model that are mapped as the data for series. The default value is
+    -1 (count limited by the number of columns in the model)
+*/
+
+/*!
+    \fn void QHXYModelMapper::seriesReplaced()
+
+    Emitted when the series to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QHXYModelMapper::modelReplaced()
+
+    Emitted when the model to which mapper is connected to has changed.
+*/
+
+/*!
     \fn void QHXYModelMapper::xRowChanged()
 
     Emitted when the xRow has changed.
@@ -59,12 +105,48 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QHXYModelMapper::firstColumnChanged()
+    Emitted when the firstColumn has changed.
+*/
+
+/*!
+    \fn void QHXYModelMapper::columnCountChanged()
+    Emitted when the columnCount has changed.
+*/
+
+/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QHXYModelMapper::QHXYModelMapper(QObject *parent) :
     QXYModelMapper(parent)
 {
     QXYModelMapper::setOrientation(Qt::Horizontal);
+}
+
+QAbstractItemModel* QHXYModelMapper::model() const
+{
+    return QXYModelMapper::model();
+}
+
+void QHXYModelMapper::setModel(QAbstractItemModel *model)
+{
+    if (model != QXYModelMapper::model()) {
+        QXYModelMapper::setModel(model);
+        emit modelReplaced();
+    }
+}
+
+QXYSeries* QHXYModelMapper::series() const
+{
+    return QXYModelMapper::series();
+}
+
+void QHXYModelMapper::setSeries(QXYSeries *series)
+{
+    if (series != QXYModelMapper::series()) {
+        QXYModelMapper::setSeries(series);
+        emit seriesReplaced();
+    }
 }
 
 int QHXYModelMapper::xRow() const
@@ -90,6 +172,32 @@ void QHXYModelMapper::setYRow(int yRow)
     if (yRow != ySection()) {
         return QXYModelMapper::setYSection(yRow);
         emit yRowChanged();
+    }
+}
+
+int QHXYModelMapper::firstColumn() const
+{
+    return first();
+}
+
+void QHXYModelMapper::setFirstColumn(int firstColumn)
+{
+    if (firstColumn != first()) {
+        setFirst(firstColumn);
+        emit firstColumnChanged();
+    }
+}
+
+int QHXYModelMapper::columnCount() const
+{
+    return count();
+}
+
+void QHXYModelMapper::setColumnCount(int columnCount)
+{
+    if (columnCount != count()) {
+        setCount(columnCount);
+        emit firstColumnChanged();
     }
 }
 

@@ -75,7 +75,7 @@ Rectangle {
                 model: customModel
                 xRow: 0
                 yRow: 1
-                first: 2
+                firstColumn: 2
             }
         }
         //![4]
@@ -87,7 +87,7 @@ Rectangle {
                 model: customModel
                 xRow: 0
                 yRow: 2
-                first: 2
+                firstColumn: 2
             }
         }
 
@@ -98,7 +98,7 @@ Rectangle {
                 model: customModel
                 xRow: 0
                 yRow: 3
-                first: 2
+                firstColumn: 2
             }
         }
 
@@ -109,7 +109,7 @@ Rectangle {
                 model: customModel
                 xRow: 0
                 yRow: 4
-                first: 2
+                firstColumn: 2
             }
         }
 
@@ -120,7 +120,7 @@ Rectangle {
                 model: customModel
                 xRow: 0
                 yRow: 5
-                first: 2
+                firstColumn: 2
             }
         }
 

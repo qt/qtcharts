@@ -52,11 +52,11 @@
                 </td>
                 <td valign="top">
                     <ul>
+                    <li><a href="qxyseries.html">QXYSeries</a></li>
                     <li><a href="qlineseries.html">QLineSeries</a></li>
                     <li><a href="qareaseries.html">QAreaSeries</a></li>
                     <li><a href="qscatterseries.html">QScatterSeries</a></li>
                     <li><a href="qsplineseries.html">QSplineSeries</a></li>
-                    <li><a href="qxymodelmapper.html">QXYModelMapper</a></li>
                     <li><a href="qhxymodelmapper.html">QHXYModelMapper</a></li>
                     <li><a href="qvxymodelmapper.html">QVXYModelMapper</a></li>
                     </ul>

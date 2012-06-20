@@ -26,68 +26,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    \class QXYModelMapper
-    \brief part of QtCommercial chart API.
-    \mainclass
-
-    Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    The instance of this class cannot be created directly. QHXYModelMapper of QVXYModelMapper should be used instead. This class is used to create a connection between QXYSeries and QAbstractItemModel derived model object.
-    It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
-    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
-*/
-
-/*!
-    \property QXYModelMapper::series
-    \brief Defines the QPieSeries object that is used by the mapper.
-
-    All the data in the series is discarded when it is set to the mapper.
-    When new series is specified the old series is disconnected (it preserves its data)
-*/
-
-/*!
-    \property QXYModelMapper::model
-    \brief Defines the model that is used by the mapper.
-*/
-
-/*!
-    \property QXYModelMapper::first
-    \brief Defines which item of the model's row/column should be mapped as the first x/y pair
-
-    Minimal and default value is: 0
-*/
-
-/*!
-    \property QXYModelMapper::count
-    \brief Defines the number of rows/columns of the model that are mapped as the data for QXYSeries
-
-    Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
-*/
-
-/*!
-    \fn void QXYModelMapper::seriesReplaced()
-
-    Emitted when the series to which mapper is connected to has changed.
-*/
-
-/*!
-    \fn void QXYModelMapper::modelReplaced()
-
-    Emitted when the model to which mapper is connected to has changed.
-*/
-
-/*!
-    \fn void QXYModelMapper::firstChanged()
-
-    Emitted when the value for the first has changed.
-*/
-
-/*!
-    \fn void QXYModelMapper::countChanged()
-
-    Emitted when the value for the count has changed.
-*/
-
-/*!
     Constructs a mapper object which is a child of \a parent.
 */
 QXYModelMapper::QXYModelMapper(QObject *parent):
@@ -96,12 +34,18 @@ QXYModelMapper::QXYModelMapper(QObject *parent):
 {
 }
 
+/*!
+    \internal
+*/
 QAbstractItemModel* QXYModelMapper::model() const
 {
     Q_D(const QXYModelMapper);
     return d->m_model;
 }
 
+/*!
+    \internal
+*/
 void QXYModelMapper::setModel(QAbstractItemModel *model)
 {
     if (model == 0)
@@ -120,16 +64,20 @@ void QXYModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
-
-    emit modelReplaced();
 }
 
+/*!
+    \internal
+*/
 QXYSeries* QXYModelMapper::series() const
 {
     Q_D(const QXYModelMapper);
     return d->m_series;
 }
 
+/*!
+    \internal
+*/
 void QXYModelMapper::setSeries(QXYSeries *series)
 {
     Q_D(QXYModelMapper);
@@ -146,42 +94,44 @@ void QXYModelMapper::setSeries(QXYSeries *series)
     connect(d->m_series, SIGNAL(pointAdded(int)), d, SLOT(handlePointAdded(int)));
     connect(d->m_series, SIGNAL(pointRemoved(int)), d, SLOT(handlePointRemoved(int)));
     connect(d->m_series, SIGNAL(pointReplaced(int)), d, SLOT(handlePointReplaced(int)));
-
-    emit seriesReplaced();
 }
 
+/*!
+    \internal
+*/
 int QXYModelMapper::first() const
 {
     Q_D(const QXYModelMapper);
     return d->m_first;
 }
 
+/*!
+    \internal
+*/
 void QXYModelMapper::setFirst(int first)
 {
     Q_D(QXYModelMapper);
-    if (first != d->m_first) {
-        d->m_first = qMax(first, 0);
-        d->initializeXYFromModel();
-
-        emit firstChanged();
-    }
+    d->m_first = qMax(first, 0);
+    d->initializeXYFromModel();
 }
 
+/*!
+    \internal
+*/
 int QXYModelMapper::count() const
 {
     Q_D(const QXYModelMapper);
     return d->m_count;
 }
 
+/*!
+    \internal
+*/
 void QXYModelMapper::setCount(int count)
 {
     Q_D(QXYModelMapper);
-    if (count != d->m_count) {
-        d->m_count = qMax(count, -1);
-        d->initializeXYFromModel();
-
-        emit countChanged();
-    }
+    d->m_count = qMax(count, -1);
+    d->initializeXYFromModel();
 }
 
 /*!
@@ -244,21 +194,6 @@ void QXYModelMapper::setYSection(int ySection)
 {
     Q_D(QXYModelMapper);
     d->m_ySection = qMax(-1, ySection);
-    d->initializeXYFromModel();
-}
-
-/*!
-    Resets the QXYModelMapper to the default state.
-    first: 0; count: -1; xSection: -1; ySection: -1;
-*/
-void QXYModelMapper::reset()
-{
-    Q_D(QXYModelMapper);
-    d->m_first = 0;
-    d->m_count = -1;
-    d->m_orientation = Qt::Vertical;
-    d->m_xSection = -1;
-    d->m_ySection = -1;
     d->initializeXYFromModel();
 }
 
