@@ -40,6 +40,9 @@ ChartView {
 
         onNameChanged:              console.log("scatterSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("scatterSeries.onVisibleChanged: " + visible);
+        onPointReplaced:            console.log("scatterSeries.onPointReplaced: " + index);
+        onPointRemoved:             console.log("scatterSeries.onPointRemoved: " + index);
+        onPointAdded:               console.log("scatterSeries.onPointAdded: " + series.at(index).x + ", " + series.at(index).y);
         onColorChanged:             console.log("scatterSeries.onColorChanged: " + color);
         onBorderColorChanged:       console.log("scatterSeries.onBorderColorChanged: " + borderColor);
         onCountChanged:             console.log("scatterSeries.onCountChanged: " + count);

@@ -49,7 +49,9 @@ public: // from QDeclarativeParserStatus
 
 public: // from QLineSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QLineSeries::append(x, y); }
+    Q_INVOKABLE void replace(qreal oldX, qreal oldY, qreal newX, qreal newY) { QLineSeries::replace(oldX, oldY, newX, newY); }
     Q_INVOKABLE void remove(qreal x, qreal y) { QLineSeries::remove(x, y); }
+    Q_INVOKABLE void insert(int index, qreal x, qreal y) { QLineSeries::insert(index, QPointF(x, y)); }
     Q_INVOKABLE void clear() { QLineSeries::clear(); }
     Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
 

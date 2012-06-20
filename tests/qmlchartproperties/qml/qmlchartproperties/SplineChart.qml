@@ -42,7 +42,7 @@ ChartView {
         onClicked:                  console.log("splineSeries.onClicked: " + point.x + ", " + point.y);
         onPointReplaced:            console.log("splineSeries.onPointReplaced: " + index);
         onPointRemoved:             console.log("splineSeries.onPointRemoved: " + index);
-        onPointAdded:               console.log("splineSeries.onPointAdded: " + index);
+        onPointAdded:               console.log("splineSeries.onPointAdded: " + series.at(index).x + ", " + series.at(index).y);
         onColorChanged:             console.log("splineSeries.onColorChanged: " + color);
         onCountChanged:             console.log("splineSeries.onCountChanged: " + count);
     }

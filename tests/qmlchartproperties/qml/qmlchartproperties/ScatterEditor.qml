@@ -52,4 +52,27 @@ Flow {
         text: "markerShape"
         onClicked: series.markerShape = ((series.markerShape + 1) % 2);
     }
+    Button {
+        text: "append point"
+        onClicked: series.append(series.count - 1, series.count - 1);
+    }
+    Button {
+        text: "replace point"
+        onClicked: {
+            var xyPoint = series.at(series.count - 1);
+            series.replace(xyPoint.x, xyPoint.y, xyPoint.x, xyPoint.y + 0.1);
+        }
+    }
+    Button {
+        text: "remove point"
+        onClicked: series.remove(series.at(series.count - 1).x, series.at(series.count - 1).y);
+    }
+    Button {
+        text: "insert point"
+        onClicked: series.insert(0, series.count - 1, series.count - 1);
+    }
+    Button {
+        text: "clear"
+        onClicked: series.clear();
+    }
 }

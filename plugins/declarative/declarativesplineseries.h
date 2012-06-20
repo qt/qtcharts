@@ -34,6 +34,7 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
@@ -48,8 +49,10 @@ public: // from QDeclarativeParserStatus
 
 public: // from QSplineSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QSplineSeries::append(x, y); }
+    Q_INVOKABLE void replace(qreal oldX, qreal oldY, qreal newX, qreal newY) { QSplineSeries::replace(oldX, oldY, newX, newY); }
     Q_INVOKABLE void remove(qreal x, qreal y) { QSplineSeries::remove(x, y); }
     Q_INVOKABLE void clear() { QSplineSeries::clear(); }
+    Q_INVOKABLE void insert(int index, qreal x, qreal y) { QSplineSeries::insert(index, QPointF(x, y)); }
     Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
 
 Q_SIGNALS:

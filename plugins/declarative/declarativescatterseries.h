@@ -48,8 +48,10 @@ public: // from QDeclarativeParserStatus
 
 public: // from QScatterSeries
     Q_INVOKABLE void append(qreal x, qreal y) { QScatterSeries::append(x, y); }
+    Q_INVOKABLE void replace(qreal oldX, qreal oldY, qreal newX, qreal newY) { QScatterSeries::replace(oldX, oldY, newX, newY); }
     Q_INVOKABLE void remove(qreal x, qreal y) { QScatterSeries::remove(x, y); }
     Q_INVOKABLE void clear() { QScatterSeries::clear(); }
+    Q_INVOKABLE void insert(int index, qreal x, qreal y) { QScatterSeries::insert(index, QPointF(x, y)); }
     Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
 
 Q_SIGNALS:
