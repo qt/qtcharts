@@ -47,7 +47,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlproperty XYSeries VXYModelMapper::series
-    Defines the QXYSeries object that is used by the mapper. All the data in the series is discarded when it is set to
+    Defines the XYSeries object that is used by the mapper. All the data in the series is discarded when it is set to
     the mapper. When new series is specified the old series is disconnected (it preserves its data).
 */
 
@@ -69,7 +69,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlproperty int VXYModelMapper::xColumn
-    Defines which column of the model is kept in sync with the x values of XYSeries. Default value is -1 (invalid
+    Defines which column of the model is kept in sync with the x values of the series. Default value is -1 (invalid
     mapping).
 */
 
@@ -80,7 +80,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlproperty int VXYModelMapper::yColumn
-    Defines which column of the model is kept in sync with the y values of QXYSeries. Default value is -1 (invalid
+    Defines which column of the model is kept in sync with the y values of the series. Default value is -1 (invalid
     mapping).
 */
 
