@@ -50,5 +50,9 @@ ChartView {
         onHovered:                  console.log("barSeries.onHovered: " + barset + " " + status);
         onLabelsVisibleChanged:     console.log("barSeries.onLabelsVisibleChanged: " + series.labelsVisible);
         onCountChanged:             console.log("barSeries.onCountChanged: " + count);
+        onBarsetsAdded:             console.log("barSeries.onBarsetsAdded: " + sets); // There is no point in this signal on QML side
+        onAdded:                    console.log("barSeries.onBarsetAdded: " + barset);
+        onBarsetsRemoved:           console.log("barSeries.onBarsetsRemoved: " + sets); // There is no point in this signal on QML side
+        onRemoved:                  console.log("barSeries.onBarsetRemoved: " + barset);
     }
 }

@@ -44,6 +44,10 @@ Flow {
         onClicked: series.barWidth -= 0.1;
     }
     Button {
+        text: "remove set"
+        onClicked: series.remove(series.count - 1);
+    }
+    Button {
         text: "set 1 color"
         onClicked: series.at(0).color = main.nextColor();
     }

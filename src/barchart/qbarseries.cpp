@@ -139,11 +139,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when \a sets have been added to the series.
     \sa append(), insert()
 */
+/*!
+    \qmlsignal BarSeries::added(BarSet barset)
+    Emitted when \a barset has been added to the series.
+*/
 
 /*!
     \fn void QBarSeries::barsetsRemoved(QList<QBarSet*> sets)
     This signal is emitted when \a sets have been removed from the series.
     \sa remove()
+*/
+/*!
+    \qmlsignal BarSeries::removed(BarSet barset)
+    Emitted when \a barset has been removed from the series.
 */
 
 /*!

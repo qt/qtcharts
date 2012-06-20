@@ -71,8 +71,14 @@ public: // from QDeclarativeParserStatus
     void classBegin();
     void componentComplete();
 
+Q_SIGNALS:
+    void added(DeclarativeBarSet *barset);
+    void removed(DeclarativeBarSet *barset);
+
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+    void handleAdded(QList<QBarSet* > barsets);
+    void handleRemoved(QList<QBarSet* > barsets);
 };
 
 class DeclarativeGroupedBarSeries : public QGroupedBarSeries, public QDeclarativeParserStatus

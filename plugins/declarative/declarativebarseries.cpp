@@ -62,6 +62,24 @@ void DeclarativeBarSet::setValues(QVariantList values)
 DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
     QBarSeries(parent)
 {
+    connect(this, SIGNAL(barsetsAdded(QList<QBarSet*>)), this, SLOT(handleAdded(QList<QBarSet*>)));
+    connect(this, SIGNAL(barsetsRemoved(QList<QBarSet*>)), this, SLOT(handleRemoved(QList<QBarSet*>)));
+}
+
+void DeclarativeBarSeries::handleAdded(QList<QBarSet* > barsets)
+{
+    foreach(QBarSet *b, barsets) {
+        DeclarativeBarSet *barset = qobject_cast<DeclarativeBarSet *>(b);
+        emit added(barset);
+    }
+}
+
+void DeclarativeBarSeries::handleRemoved(QList<QBarSet* > barsets)
+{
+    foreach(QBarSet *b, barsets) {
+        DeclarativeBarSet *barset = qobject_cast<DeclarativeBarSet *>(b);
+        emit removed(barset);
+    }
 }
 
 void DeclarativeBarSeries::classBegin()
