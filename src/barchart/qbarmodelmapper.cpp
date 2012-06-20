@@ -29,7 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBarModelMapper
-    \brief part of QtCommercial chart API.
+    \brief Model mapper for bar series
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.

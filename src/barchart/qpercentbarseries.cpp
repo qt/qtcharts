@@ -29,7 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QPercentBarSeries
-    \brief part of QtCommercial chart API.
+    \brief Series for creating percent bar chart
     \mainclass
 
     QPercentBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars

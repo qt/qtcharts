@@ -32,7 +32,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBarSeries
-    \brief part of QtCommercial chart API.
+    \brief Series for creating a bar chart
     \mainclass
 
     QBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars to

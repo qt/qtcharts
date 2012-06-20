@@ -25,7 +25,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QBarSet
-    \brief part of QtCommercial chart API.
+    \brief Building block for different bar charts
 
     QBarSet represents one set of bars. Set of bars contains one data value for each category.
     First value of set is assumed to belong to first category, second to second category and so on.
