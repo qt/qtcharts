@@ -31,18 +31,35 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     It is possible to use both QAbstractItemModel and QXYSeries model API. QXYModelMapper makes sure that QXYSeries and the model are kept in sync.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+/*!
+    \qmlclass HXYModelMapper QHXYModelMapper
+
+    HXYModelMapper allows you to use your own QAbstractItemModel derived model with data in rows as a data source
+    for XYSeries based series. It is possible to use both QAbstractItemModel and XYSeries data API to manipulate data.
+    HXYModelMapper keeps the series and the model in sync.
+*/
 
 /*!
     \property QHXYModelMapper::series
     \brief Defines the QXYSeries object that is used by the mapper.
-
     All the data in the series is discarded when it is set to the mapper.
     When new series is specified the old series is disconnected (it preserves its data)
+*/
+/*!
+    \qmlproperty XYSeries HXYModelMapper::series
+    Defines the QXYSeries object that is used by the mapper. All the data in the series is discarded when it is set to
+    the mapper. When new series is specified the old series is disconnected (it preserves its data).
 */
 
 /*!
     \property QHXYModelMapper::model
     \brief Defines the model that is used by the mapper.
+*/
+/*!
+    \qmlproperty SomeModel HXYModelMapper::model
+    The QAbstractItemModel based model that is used by the mapper. You need to implement the model and expose it to
+    QML as shown in \l {QML Custom Model} demo application. NOTE: the model has to support adding/removing rows/columns
+    and modifying the data of the cells.
 */
 
 /*!
@@ -50,12 +67,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Defines which row of the model is kept in sync with the x values of the QXYSeries
     Default value is: -1 (invalid mapping)
 */
+/*!
+    \qmlproperty int HXYModelMapper::xRow
+    Defines which row of the model is kept in sync with the x values of the QXYSeries. Default value is -1 (invalid
+    mapping).
+*/
 
 /*!
     \property QHXYModelMapper::yRow
     \brief Defines which row of the model is kept in sync with the  y values of the QXYSeries
-
     Default value is: -1 (invalid mapping)
+*/
+/*!
+    \qmlproperty int HXYModelMapper::yRow
+    Defines which row of the model is kept in sync with the  y values of the QXYSeries. Default value is -1
+    (invalid mapping).
 */
 
 /*!
@@ -64,7 +90,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: 0
 */
 /*!
-    \qmlproperty int QHXYModelMapper::firstColumn
+    \qmlproperty int HXYModelMapper::firstColumn
     Defines which column of the model contains the data for the first point of the series.
     The default value is 0.
 */
@@ -75,7 +101,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: -1 (count limited by the number of columns in the model)
 */
 /*!
-    \qmlproperty int QHXYModelMapper::columnCount
+    \qmlproperty int HXYModelMapper::columnCount
     Defines the number of columns of the model that are mapped as the data for series. The default value is
     -1 (count limited by the number of columns in the model)
 */

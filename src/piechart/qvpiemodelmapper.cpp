@@ -31,32 +31,71 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     It is possible to use both QAbstractItemModel and QPieSeries model API. QVPieModelMapper makes sure that Pie and the model are kept in sync.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+/*!
+    \qmlclass VPieModelMapper QVPieModelMapper
+
+    VPieModelMapper allows you to use your own QAbstractItemModel derived model with data in columns as a data source
+    for a pie series. It is possible to use both QAbstractItemModel and PieSeries data API to manipulate data.
+    VPieModelMapper keeps the Pie and the model in sync.
+
+    The following QML example would create a pie series with four slices (assuming the model has at least five rows).
+    Each slice would contain a label from column 1 and a value from column 2.
+    \code
+        VPieModelMapper {
+            series: pieSeries
+            model: customModel
+            labelsColumn: 1
+            valuesColumn: 2
+            firstRow: 1
+            rowCount: 4
+        }
+    \endcode
+*/
 
 /*!
     \property QVPieModelMapper::series
     \brief Defines the QPieSeries object that is used by the mapper.
-
     All the data in the series is discarded when it is set to the mapper.
     When new series is specified the old series is disconnected (it preserves its data)
+*/
+/*!
+    \qmlproperty PieSeries VPieModelMapper::series
+    Defines the PieSeries object that is used by the mapper. If you define the mapper element as a child for a
+    PieSeries, leave this property undefined. All the data in the series is discarded when it is set to the mapper.
+    When new series is specified the old series is disconnected (it preserves its data).
 */
 
 /*!
     \property QVPieModelMapper::model
     \brief Defines the model that is used by the mapper.
 */
+/*!
+    \qmlproperty SomeModel VPieModelMapper::model
+    The QAbstractItemModel based model that is used by the mapper. You need to implement the model and expose it to
+    QML as shown in \l {QML Custom Model} demo application. NOTE: the model has to support adding/removing rows/columns
+    and modifying the data of the cells.
+*/
 
 /*!
     \property QVPieModelMapper::valuesColumn
     \brief Defines which column of the model is kept in sync with the values of the pie's slices
-
     Default value is: -1 (invalid mapping)
+*/
+/*!
+    \qmlproperty int VPieModelMapper::valuesColumn
+    Defines which column of the model is kept in sync with the values of the pie's slices. Default value is -1 (invalid
+    mapping).
 */
 
 /*!
     \property QVPieModelMapper::labelsColumn
     \brief Defines which column of the model is kept in sync with the labels of the pie's slices
-
     Default value is: -1 (invalid mapping)
+*/
+/*!
+    \qmlproperty int VPieModelMapper::labelsColumn
+    Defines which column of the model is kept in sync with the labels of the pie's slices. Default value is -1 (invalid
+    mapping).
 */
 
 /*!
@@ -65,7 +104,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: 0
 */
 /*!
-    \qmlproperty int QVPieModelMapper::firstRow
+    \qmlproperty int VPieModelMapper::firstRow
     Defines which row of the model contains the first slice value.
     The default value is 0.
 */
@@ -76,7 +115,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: -1 (count limited by the number of rows in the model)
 */
 /*!
-    \qmlproperty int QVPieModelMapper::columnCount
+    \qmlproperty int VPieModelMapper::columnCount
     Defines the number of rows of the model that are mapped as the data for QPieSeries. The default value is
     -1 (count limited by the number of rows in the model)
 */

@@ -31,6 +31,26 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     It is possible to use both QAbstractItemModel and QPieSeries model API. QHPieModelMapper makes sure that Pie and the model are kept in sync.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
 */
+/*!
+    \qmlclass HPieModelMapper QHPieModelMapper
+
+    HPieModelMapper allows you to use your own QAbstractItemModel derived model with data in rows as a data source
+    for a pie series. It is possible to use both QAbstractItemModel and PieSeries data API to manipulate data.
+    HPieModelMapper keeps the Pie and the model in sync.
+
+    The following QML example would create a pie series with four slices (assuming the model has
+    at least five columns). Each slice would contain a label from row 1 and a value from row 2.
+    \code
+        HPieModelMapper {
+            series: pieSeries
+            model: customModel
+            labelsRow: 1
+            valuesRow: 2
+            firstColumn: 1
+            columnCount: 4
+        }
+    \endcode
+*/
 
 /*!
     \property QHPieModelMapper::series
@@ -39,23 +59,43 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     All the data in the series is discarded when it is set to the mapper.
     When new series is specified the old series is disconnected (it preserves its data)
 */
+/*!
+    \qmlproperty PieSeries HPieModelMapper::series
+    Defines the PieSeries object that is used by the mapper. If you define the mapper element as a child for a
+    PieSeries, leave this property undefined. All the data in the series is discarded when it is set to the mapper.
+    When new series is specified the old series is disconnected (it preserves its data).
+*/
 
 /*!
     \property QHPieModelMapper::model
     \brief Defines the model that is used by the mapper.
 */
+/*!
+    \qmlproperty SomeModel HPieModelMapper::model
+    The QAbstractItemModel based model that is used by the mapper. You need to implement the model and expose it to
+    QML as shown in \l {QML Custom Model} demo application. NOTE: the model has to support adding/removing rows/columns
+    and modifying the data of the cells.
+*/
 
 /*!
     \property QHPieModelMapper::valuesRow
     \brief Defines which row of the model is kept in sync with the values of the pie's slices
-
     Default value is: -1 (invalid mapping)
+*/
+/*!
+    \qmlproperty int HPieModelMapper::valuesRow
+    Defines which row of the model is kept in sync with the values of the pie's slices. Default value is: -1 (invalid
+    mapping).
 */
 
 /*!
     \property QHPieModelMapper::labelsRow
     \brief Defines which row of the model is kept in sync with the labels of the pie's slices
-
+    Default value is: -1 (invalid mapping)
+*/
+/*!
+    \qmlproperty int HPieModelMapper::labelsRow
+    Defines which row of the model is kept in sync with the labels of the pie's slices
     Default value is: -1 (invalid mapping)
 */
 
@@ -65,7 +105,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: 0
 */
 /*!
-    \qmlproperty int QHPieModelMapper::firstColumn
+    \qmlproperty int HPieModelMapper::firstColumn
     Defines which column of the model contains the first slice value.
     The default value is 0.
 */
@@ -76,32 +116,28 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Minimal and default value is: -1 (count limited by the number of columns in the model)
 */
 /*!
-    \qmlproperty int QHPieModelMapper::columnCount
+    \qmlproperty int HPieModelMapper::columnCount
     Defines the number of columns of the model that are mapped as the data for QPieSeries. The default value is
     -1 (count limited by the number of columns in the model)
 */
 
 /*!
     \fn void QHPieModelMapper::seriesReplaced()
-
     Emitted when the series to which mapper is connected to has changed.
 */
 
 /*!
     \fn void QHPieModelMapper::modelReplaced()
-
     Emitted when the model to which mapper is connected to has changed.
 */
 
 /*!
     \fn void QHPieModelMapper::valuesRowChanged()
-
     Emitted when the valuesRow has changed.
 */
 
 /*!
     \fn void QHPieModelMapper::labelsRowChanged()
-
     Emitted when the labelsRow has changed.
 */
 
