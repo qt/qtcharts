@@ -265,7 +265,7 @@ void QBarSet::append(const QPointF value)
     Appends a list of \a values to set. Works like append with single point.
     \sa append()
 */
-void QBarSet::append(const QList<QPointF> values)
+void QBarSet::append(const QList<QPointF> &values)
 {
     int index = d_ptr->m_values.count();
     d_ptr->append(values);
@@ -287,7 +287,7 @@ void QBarSet::append(const qreal value)
     are converted to QPointF, where x coordinate is the index of point and y coordinate is the value.
     \sa append()
 */
-void QBarSet::append(const QList<qreal> values)
+void QBarSet::append(const QList<qreal> &values)
 {
     int index = d_ptr->m_values.count();
     d_ptr->append(values);

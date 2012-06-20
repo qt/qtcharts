@@ -49,9 +49,9 @@ public:
     QString label() const;
 
     void append(const QPointF value);
-    void append(const QList<QPointF> values);
+    void append(const QList<QPointF> &values);
     void append(const qreal value);
-    void append(const QList<qreal> values);
+    void append(const QList<qreal> &values);
 
     QBarSet& operator << (const qreal &value);
     QBarSet& operator << (const QPointF &value);
