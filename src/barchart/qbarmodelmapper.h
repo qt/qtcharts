@@ -35,23 +35,16 @@ class QChart;
 class QTCOMMERCIALCHART_EXPORT QBarModelMapper : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QBarSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
-    Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
-    Q_ENUMS(Qt::Orientation)
 
 protected:
     explicit QBarModelMapper(QObject *parent = 0);
 
-public:
     QAbstractItemModel* model() const;
     void setModel(QAbstractItemModel *model);
 
     QBarSeries* series() const;
     void setSeries(QBarSeries *series);
 
-    void reset();
-
-protected:
     int first() const;
     void setFirst(int first);
 
@@ -66,10 +59,6 @@ protected:
 
     Qt::Orientation orientation() const;
     void setOrientation(Qt::Orientation orientation);    
-
-Q_SIGNALS:
-    void seriesReplaced();
-    void modelReplaced();
 
 protected:
     QBarModelMapperPrivate * const d_ptr;

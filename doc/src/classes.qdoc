@@ -87,7 +87,6 @@
                     <li><a href="qgroupedbarseries.html">QGroupedBarSeries</a></li>
                     <li><a href="qpercentbarseries.html">QPercentBarSeries</a></li>
                     <li><a href="qstackedbarseries.html">QStackedBarSeries</a></li>
-                    <li><a href="qbarmodelmapper.html">QBarModelMapper</a></li>
                     <li><a href="qhbarmodelmapper.html">QHBarModelMapper</a></li>
                     <li><a href="qvbarmodelmapper.html">QVBarModelMapper</a></li>
                     </ul>

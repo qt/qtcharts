@@ -27,44 +27,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-/*!
-    \class QBarModelMapper
-    \brief Model mapper for bar series
-    \mainclass
-
-    Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    The instance of this class cannot be created directly. QHBarModelMapper of QVBarModelMapper should be used instead.
-    This class is used to create a connection between QBarSeries and QAbstractItemModel derived model object.
-    Model mapper maintains equal size of all the BarSets.
-    Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
-    NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
-*/
-
-/*!
-    \property QBarModelMapper::series
-    \brief Defines the QPieSeries object that is used by the mapper.
-    All the data in the series is discarded when it is set to the mapper.
-    When new series is specified the old series is disconnected (it preserves its data)
-*/
-
-/*!
-    \property QBarModelMapper::model
-    \brief Defines the model that is used by the mapper.
-*/
-
-/*!
-    \fn void QBarModelMapper::seriesReplaced()
-    Emitted when the series to which mapper is connected to has changed.
-*/
-
-/*!
-    \fn void QBarModelMapper::modelReplaced()
-    Emitted when the model to which mapper is connected to has changed.
-*/
-
-/*!
-    Constructs a mapper object which is a child of \a parent.
-*/
 QBarModelMapper::QBarModelMapper(QObject *parent) :
     QObject(parent),
     d_ptr(new QBarModelMapperPrivate(this))
@@ -96,8 +58,6 @@ void QBarModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
-
-    emit modelReplaced();
 }
 
 QBarSeries* QBarModelMapper::series() const
@@ -121,8 +81,6 @@ void QBarModelMapper::setSeries(QBarSeries *series)
     // connect the signals from the series
     connect(d->m_series, SIGNAL(barsetsAdded(QList<QBarSet*>)), d, SLOT(barSetsAdded(QList<QBarSet*>)));
     connect(d->m_series, SIGNAL(barsetsRemoved(QList<QBarSet*>)), d, SLOT(barSetsRemoved(QList<QBarSet*>)));
-
-    emit seriesReplaced();
 }
 
 /*!
@@ -227,20 +185,6 @@ void QBarModelMapper::setLastBarSetSection(int lastBarSetSection)
 {
     Q_D(QBarModelMapper);
     d->m_lastBarSetSection = qMax(-1, lastBarSetSection);
-    d->initializeBarFromModel();
-}
-
-/*!
-    Resets the QBarModelMapper to the default state.
-    first: 0; count: -1; firstBarSetSection: -1; lastBarSetSection: -1; categoriesSection: -1
-*/
-void QBarModelMapper::reset()
-{
-    Q_D(QBarModelMapper);
-    d->m_first = 0;
-    d->m_count = -1;
-    d->m_firstBarSetSection = -1;
-    d->m_lastBarSetSection = -1;
     d->initializeBarFromModel();
 }
 

@@ -55,11 +55,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QVBarModelMapper::series
+    \brief Defines the QPieSeries object that is used by the mapper.
+
+    All the data in the series is discarded when it is set to the mapper.
+    When new series is specified the old series is disconnected (it preserves its data)
+*/
+/*!
     \qmlproperty BarSeries VBarModelMapper::series
     Defines the BarSeries based object that is used by the mapper. All the data in the series is discarded when it is
     set to the mapper. When new series is specified the old series is disconnected (it preserves its data).
 */
 
+/*!
+    \property QVBarModelMapper::model
+    \brief Defines the model that is used by the mapper.
+*/
 /*!
     \qmlproperty Model VBarModelMapper::model
     The QAbstractItemModel based model that is used by the mapper. You need to implement the model and expose it to
@@ -112,6 +123,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QVBarModelMapper::seriesReplaced()
+
+    Emitted when the series to which mapper is connected to has changed.
+*/
+
+/*!
+    \fn void QVBarModelMapper::modelReplaced()
+
+    Emitted when the model to which mapper is connected to has changed.
+*/
+
+/*!
     \fn void QVBarModelMapper::firstBarSetColumnChanged()
     Emitted when the firstBarSetColumn has changed.
 */
@@ -138,6 +161,32 @@ QVBarModelMapper::QVBarModelMapper(QObject *parent) :
     QBarModelMapper(parent)
 {
     QBarModelMapper::setOrientation(Qt::Vertical);
+}
+
+QAbstractItemModel* QVBarModelMapper::model() const
+{
+    return QBarModelMapper::model();
+}
+
+void QVBarModelMapper::setModel(QAbstractItemModel *model)
+{
+    if (model != QBarModelMapper::model()) {
+        QBarModelMapper::setModel(model);
+        emit modelReplaced();
+    }
+}
+
+QBarSeries* QVBarModelMapper::series() const
+{
+    return QBarModelMapper::series();
+}
+
+void QVBarModelMapper::setSeries(QBarSeries *series)
+{
+    if (series != QBarModelMapper::series()) {
+        QBarModelMapper::setSeries(series);
+        emit seriesReplaced();
+    }
 }
 
 int QVBarModelMapper::firstBarSetColumn() const
