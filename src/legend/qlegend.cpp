@@ -48,7 +48,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \class QLegend
-    \brief part of QtCommercial chart API.
+    \brief Legend object
     \mainclass
 
     QLegend is a graphical object, whics displays legend of the chart. Legend state is updated by QChart, when
@@ -167,9 +167,8 @@ QLegend::~QLegend()
 }
 
 /*!
- Paints the legend to given \a painter. Paremeters \a option and \a widget arent used.
+ \internal
  */
-
 void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option)
@@ -183,9 +182,8 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 }
 
 /*!
- Bounding rect of legend.
+ \internal
  */
-
 QRectF QLegend::boundingRect() const
 {
     return d_ptr->m_rect;
