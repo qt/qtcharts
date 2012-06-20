@@ -65,6 +65,20 @@ Flow {
         text: "clear sets"
         onClicked: series.clear();
     }
+
+    Button {
+        text: "set 1 append"
+        onClicked: series.at(0).append(series.at(0).count + 1);
+    }
+    Button {
+        text: "set 1 replace"
+        onClicked: series.at(0).replace(series.at(0).count - 1, series.at(0).at(series.at(0).count - 1).y + 0.5);
+    }
+    Button {
+        text: "set 1 remove"
+        onClicked: series.at(0).remove(series.at(0).count - 1);
+    }
+
     Button {
         text: "set 1 color"
         onClicked: series.at(0).color = main.nextColor();

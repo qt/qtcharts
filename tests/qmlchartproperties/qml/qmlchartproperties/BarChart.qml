@@ -36,10 +36,18 @@ ChartView {
         BarSet { label: "Bob"; values: [4, 7, 3, 10, 5, 6]
             onClicked:                  console.log("barset.onClicked: " + index);
             onHovered:                  console.log("barset.onHovered: " + status);
+            onPenChanged:               console.log("barset.onPenChanged: " + pen);
+            onBrushChanged:             console.log("barset.onBrushChanged: " + brush);
+            onLabelChanged:             console.log("barset.onLabelChanged: " + label);
+            onLabelBrushChanged:        console.log("barset.onLabelBrushChanged: " + labelBrush);
+            onLabelFontChanged:         console.log("barset.onLabelFontChanged: " + labelFont);
             onColorChanged:             console.log("barset.onColorChanged: " + color);
             onBorderColorChanged:       console.log("barset.onBorderColorChanged: " + color);
             onLabelColorChanged:        console.log("barset.onLabelColorChanged: " + color);
             onCountChanged:             console.log("barset.onCountChanged: " + count);
+            onValuesAdded:              console.log("barset.onValuesAdded: " + index + ", " + count);
+            onValuesRemoved:            console.log("barset.onValuesRemoved: " + index + ", " + count);
+            onValueChanged:             console.log("barset.onValuesChanged: " + index);
         }
         BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 8] }
         BarSet { label: "James"; values: [3, 5, 8, 5, 4, 7] }

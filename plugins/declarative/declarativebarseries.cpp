@@ -44,7 +44,7 @@ QVariantList DeclarativeBarSet::values()
 {
     QVariantList values;
     for (int i(0); i < count(); i++)
-        values.append(QVariant(at(i)));
+        values.append(QVariant(QBarSet::at(i)));
     return values;
 }
 
@@ -55,7 +55,9 @@ void DeclarativeBarSet::setValues(QVariantList values)
 
     for (int i(0); i < values.count(); i++) {
         if (values.at(i).canConvert(QVariant::Double))
-            append(values[i].toDouble());
+            QBarSet::append(values[i].toDouble());
+        else if (values.at(i).canConvert(QVariant::PointF))
+            QBarSet::append(values[i].toPointF());
     }
 }
 
