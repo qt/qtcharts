@@ -52,7 +52,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmlclass PieSeries QPieSeries
 
     The following QML shows how to create a simple pie chart.
+
     \snippet ../demos/qmlchart/qml/qmlchart/View1.qml 1
+
     \beginfloatleft
     \image demos_qmlchart1.png
     \endfloat
@@ -62,7 +64,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QPieSeries::horizontalPosition
     \brief Defines the horizontal position of the pie.
+
     The value is a relative value to the chart rectangle where:
+
     \list
     \o 0.0 is the absolute left.
     \o 1.0 is the absolute right.
@@ -70,9 +74,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Default value is 0.5 (center).
     \sa verticalPosition
 */
+
 /*!
     \qmlproperty real PieSeries::horizontalPosition
-    Defines the horizontal position of the pie. The value is a relative value to the chart rectangle where:
+
+    Defines the horizontal position of the pie.
+
+    The value is a relative value to the chart rectangle where:
+
     \list
     \o 0.0 is the absolute left.
     \o 1.0 is the absolute right.
@@ -84,7 +93,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QPieSeries::verticalPosition
     \brief Defines the vertical position of the pie.
+
     The value is a relative value to the chart rectangle where:
+
     \list
     \o 0.0 is the absolute top.
     \o 1.0 is the absolute bottom.
@@ -92,9 +103,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Default value is 0.5 (center).
     \sa horizontalPosition
 */
+
 /*!
     \qmlproperty real PieSeries::verticalPosition
-    Defines the vertical position of the pie. The value is a relative value to the chart rectangle where:
+
+    Defines the vertical position of the pie.
+
+    The value is a relative value to the chart rectangle where:
+
     \list
     \o 0.0 is the absolute top.
     \o 1.0 is the absolute bottom.
@@ -118,8 +134,33 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty real PieSeries::size
+
+    Defines the pie size.
+
+    The value is a relative value to the chart rectangle where:
+
+    \list
+    \o 0.0 is the minimum size (pie not drawn).
+    \o 1.0 is the maximum size that can fit the chart.
+    \endlist
+
+    Default value is 0.7.
+*/
+
+/*!
     \property QPieSeries::startAngle
     \brief Defines the starting angle of the pie.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
+    Default is value is 0.
+*/
+
+/*!
+    \qmlproperty real PieSeries::startAngle
+
+    Defines the starting angle of the pie.
 
     Full pie is 360 degrees where 0 degrees is at 12 a'clock.
 
@@ -136,7 +177,23 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty real PieSeries::endAngle
+
+    Defines the ending angle of the pie.
+
+    Full pie is 360 degrees where 0 degrees is at 12 a'clock.
+
+    Default is value is 360.
+*/
+
+/*!
     \property QPieSeries::count
+
+    Number of slices in the series.
+*/
+
+/*!
+    \qmlproperty int PieSeries::count
 
     Number of slices in the series.
 */
@@ -151,6 +208,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QPieSeries::sum
+
+    Sum of all slices.
+
+    The series keeps track of the sum of all slices it holds.
+*/
+
+/*!
+    \qmlproperty real PieSeries::sum
 
     Sum of all slices.
 
