@@ -127,4 +127,12 @@ Flow {
         text: "slice explode dist -"
         onClicked: series.at(0).explodeDistanceFactor -= 0.1;
     }
+    Button {
+        text: "slice label fontsize -"
+        onClicked: series.at(0).labelFont.pixelSize -= 1;
+    }
+    Button {
+        text: "slice label fontsize +"
+        onClicked: series.at(0).labelFont.pixelSize += 1;
+    }
 }

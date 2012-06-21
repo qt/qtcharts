@@ -49,6 +49,10 @@ Flow {
         onClicked: series.animationOptions--;
     }
     Button {
+        text: "title font bold"
+        onClicked: series.titleFont.bold = !series.titleFont.bold;
+    }
+    Button {
         text: "title color"
         onClicked: series.titleColor = main.nextColor();
     }
@@ -123,6 +127,10 @@ Flow {
     Button {
         text: "axis X grid visible"
         onClicked: series.axisX.gridVisible = !series.axisX.gridVisible;
+    }
+    Button {
+        text: "axis X labels italic"
+        onClicked: series.axisX.labelsFont.italic = !series.axisX.labelsFont.italic;
     }
     Button {
         text: "axis X labels visible"
