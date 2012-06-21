@@ -126,10 +126,16 @@ DeclarativeBarSet *DeclarativeBarSeries::at(int index)
 
 DeclarativeBarSet *DeclarativeBarSeries::insert(int index, QString label, QVariantList values)
 {
+    int insertIndex = index;
+    if (insertIndex < 0)
+        insertIndex = 0;
+    else if (insertIndex > count())
+        insertIndex = count();
+
     DeclarativeBarSet *barset = new DeclarativeBarSet(this);
     barset->setLabel(label);
     barset->setValues(values);
-    if (QBarSeries::insert(index, barset))
+    if (QBarSeries::insert(insertIndex, barset))
         return barset;
     delete barset;
     return 0;

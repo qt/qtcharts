@@ -40,6 +40,8 @@ public slots:
     virtual void cleanup();
 
 private slots:
+    void seriesName();
+    void seriesVisible();
     void oper_data();
     void oper();
     void pen_data();
@@ -74,6 +76,8 @@ private slots:
     void replace_chart();
     void replace_chart_animation_data();
     void replace_chart_animation();
+    void insert_data();
+    void insert();
     void changedSignals();
 protected:
     void append_data();

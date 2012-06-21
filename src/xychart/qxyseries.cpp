@@ -31,7 +31,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlclass XYSeries
-    \brief The XYSeries class is a base class for line, spline and scatter series.
+    \inherits AbstractSeries
+    The XYSeries class is a base class for line, spline and scatter series.
 
     The class cannot be instantiated directly.
 */
@@ -130,7 +131,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod XyPoint XYSeries::at(int index)
+    \qmlmethod XYSeries::append(real x, real y)
+    Append point (\a x, \a y) to the series
+*/
+
+/*!
+    \qmlmethod XYSeries::replace(real oldX, real oldY, real newX, real newY)
+    Replaces point (\a oldX, \a oldY) with point (\a newX, \a newY). Does nothing, if point (oldX, oldY) does not
+    exist.
+*/
+
+/*!
+    \qmlmethod XYSeries::remove(real x, real y)
+    Removes point (\a x, \a y) from the series. Does nothing, if point (x, y) does not exist.
+*/
+
+/*!
+    \qmlmethod XYSeries::insert(int index, real x, real y)
+    Inserts point (\a x, \a y) to the \a index. If index is 0 or smaller than 0 the point is prepended to the list of
+    points. If index is the same as or bigger than count, the point is appended to the list of points.
+*/
+
+/*!
+    \qmlmethod QPointF XYSeries::at(int index)
+    Returns point at \a index. Returns (0, 0) if the index is not valid.
 */
 
 /*!

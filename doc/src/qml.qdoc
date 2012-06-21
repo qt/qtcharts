@@ -20,6 +20,7 @@
                     <li><a href="qml-chartview.html">ChartView</a></li>
                     <li><a href="qml-axis.html">Axis</a></li>
                     <li><a href="qml-legend.html">Legend</a></li>
+                    <li><a href="qml-abstractseries.html">AbstractSeries</a></li>
                     </ul>
                 </td>
             </tr>
@@ -31,6 +32,7 @@
             <tr>
                 <td valign="top">
                     <ul>
+                    <li><a href="qml-xyseries.html">XYSeries</a></li>
                     <li><a href="qml-lineseries.html">LineSeries</a></li>
                     <li><a href="qml-areaseries.html">AreaSeries</a></li>
                     <li><a href="qml-scatterseries.html">ScatterSeries</a></li>

@@ -33,6 +33,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa QXYSeries, QLineSeries, QSplineSeries, QScatterSeries, QAreaSeries, QBarSeries, QStackedBarSeries,
     QPercentBarSeries, QPieSeries
 */
+/*!
+    \qmlclass AbstractSeries
+    AbstractSeries is the base class for all series.
+    The class cannot be instantiated by the user.
+*/
 
 /*!
     \enum QAbstractSeries::SeriesType
@@ -54,18 +59,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \property QAbstractSeries::type
     The type of the series.
 */
+/*!
+    \qmlproperty ChartView.SeriesType AbstractSeries::type
+    The type of the series.
+*/
 
 /*!
     \property QAbstractSeries::name
-    \brief name of the series property
+    \brief name of the series property. The name is shown in legend for QXYSeries.
+*/
+/*!
+    \qmlproperty string AbstractSeries::name
+    Name of the series. The name is shown in legend for QXYSeries.
 */
 
 /*!
     \fn void QAbstractSeries::nameChanged()
-
     This signal is emitted when the series name changes.
-
-    \sa name
+*/
+/*!
+    \qmlsignal AbstractSeries::nameChanged()
+    This signal is emitted when the series name changes.
 */
 
 /*!
@@ -96,14 +110,6 @@ QAbstractSeries::~QAbstractSeries()
     if(d_ptr->m_dataset) qFatal("Still binded series detected !");
 }
 
-/*!
-    \brief Sets a \a name for the series.
-
-    The name of a series is shown in the legend for QXYSeries.
-    \sa QChart::setTitle()
-    \sa QPieSlice::setLabel()
-    \sa QBarSet::setName()
-*/
 void QAbstractSeries::setName(const QString& name)
 {
     if (name != d_ptr->m_name) {
@@ -112,10 +118,6 @@ void QAbstractSeries::setName(const QString& name)
     }
 }
 
-/*!
-    \brief Returns the name of the series.
-    \sa setName()
-*/
 QString QAbstractSeries::name() const
 {
     return d_ptr->m_name;

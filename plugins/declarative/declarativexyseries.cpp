@@ -59,19 +59,48 @@ void DeclarativeXySeries::componentComplete()
     }
 }
 
-DeclarativeXyPoint *DeclarativeXySeries::at(int index)
+void DeclarativeXySeries::append(qreal x, qreal y)
 {
     QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
     Q_ASSERT(series);
-    if (index < series->count()) {
-        QPointF point = series->points().at(index);
-        DeclarativeXyPoint *xyPoint = new DeclarativeXyPoint(series);
-        xyPoint->setX(point.x());
-        xyPoint->setY(point.y());
-        return xyPoint;
-    }
-    return 0;
+    series->append(x, y);
 }
 
+void DeclarativeXySeries::replace(qreal oldX, qreal oldY, qreal newX, qreal newY)
+{
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
+    series->replace(oldX, oldY, newX, newY);
+}
+
+void DeclarativeXySeries::remove(qreal x, qreal y)
+{
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
+    series->remove(x, y);
+}
+
+void DeclarativeXySeries::insert(int index, qreal x, qreal y)
+{
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
+    series->insert(index, QPointF(x, y));
+}
+
+void DeclarativeXySeries::clear()
+{
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
+    series->clear();
+}
+
+QPointF DeclarativeXySeries::at(int index)
+{
+    QXYSeries *series = qobject_cast<QXYSeries *>(xySeries());
+    Q_ASSERT(series);
+    if (index >= 0 || index < series->count())
+        return series->points().at(index);
+    return QPointF(0, 0);
+}
 
 QTCOMMERCIALCHART_END_NAMESPACE

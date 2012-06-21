@@ -41,7 +41,13 @@ public:
     void classBegin();
     void componentComplete();
     virtual QXYSeries *xySeries() = 0;
-    DeclarativeXyPoint *at(int index);
+
+    void append(qreal x, qreal y);
+    void replace(qreal oldX, qreal oldY, qreal newX, qreal newY);
+    void remove(qreal x, qreal y);
+    void insert(int index, qreal x, qreal y);
+    void clear();
+    QPointF at(int index);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

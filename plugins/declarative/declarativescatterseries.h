@@ -46,13 +46,13 @@ public: // from QDeclarativeParserStatus
     void classBegin() { DeclarativeXySeries::classBegin(); }
     void componentComplete() { DeclarativeXySeries::componentComplete(); }
 
-public: // from QScatterSeries
-    Q_INVOKABLE void append(qreal x, qreal y) { QScatterSeries::append(x, y); }
-    Q_INVOKABLE void replace(qreal oldX, qreal oldY, qreal newX, qreal newY) { QScatterSeries::replace(oldX, oldY, newX, newY); }
-    Q_INVOKABLE void remove(qreal x, qreal y) { QScatterSeries::remove(x, y); }
-    Q_INVOKABLE void clear() { QScatterSeries::clear(); }
-    Q_INVOKABLE void insert(int index, qreal x, qreal y) { QScatterSeries::insert(index, QPointF(x, y)); }
-    Q_INVOKABLE DeclarativeXyPoint *at(int index) { return DeclarativeXySeries::at(index); }
+public:
+    Q_INVOKABLE void append(qreal x, qreal y) { DeclarativeXySeries::append(x, y); }
+    Q_INVOKABLE void replace(qreal oldX, qreal oldY, qreal newX, qreal newY) { DeclarativeXySeries::replace(oldX, oldY, newX, newY); }
+    Q_INVOKABLE void remove(qreal x, qreal y) { DeclarativeXySeries::remove(x, y); }
+    Q_INVOKABLE void insert(int index, qreal x, qreal y) { DeclarativeXySeries::insert(index, x, y); }
+    Q_INVOKABLE void clear() { DeclarativeXySeries::clear(); }
+    Q_INVOKABLE QPointF at(int index) { return DeclarativeXySeries::at(index); }
 
 Q_SIGNALS:
     void countChanged(int count);

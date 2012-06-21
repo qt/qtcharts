@@ -44,6 +44,25 @@ void tst_QXYSeries::cleanup()
     m_series = 0;
 }
 
+void tst_QXYSeries::seriesName()
+{
+    QSignalSpy nameSpy(m_series, SIGNAL(nameChanged()));
+    QCOMPARE(m_series->name(), QString());
+    m_series->setName("seriesname");
+    QCOMPARE(m_series->name(), QString("seriesname"));
+    TRY_COMPARE(nameSpy.count(), 1);
+}
+
+void tst_QXYSeries::seriesVisible()
+{
+    QSignalSpy visibleSpy(m_series, SIGNAL(visibleChanged()));
+    QCOMPARE(m_series->isVisible(), true);
+    m_series->setVisible(false);
+    QCOMPARE(m_series->isVisible(), false);
+    m_series->setVisible(true);
+    TRY_COMPARE(visibleSpy.count(), 2);
+}
+
 void tst_QXYSeries::append_data()
 {
     QTest::addColumn< QList<QPointF> >("points");
@@ -61,8 +80,10 @@ void tst_QXYSeries::append_raw()
 {
     QFETCH(QList<QPointF>, points);
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    QSignalSpy addedSpy(m_series, SIGNAL(pointAdded(int)));
     m_series->append(points);
     TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(addedSpy.count(), points.count());
     QCOMPARE(m_series->points(), points);
 }
 
@@ -233,13 +254,18 @@ void tst_QXYSeries::replace_raw_data()
 void tst_QXYSeries::replace_raw()
 {
     QFETCH(QList<QPointF>, points);
-    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    QSignalSpy replacedSpy(m_series, SIGNAL(pointReplaced(int)));
     m_series->append(points);
-    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(replacedSpy.count(), 0);
     QCOMPARE(m_series->points(), points);
 
-    foreach(const QPointF& point,points)
+    foreach(const QPointF& point, points)
        m_series->replace(point.x(),point.y(),point.x(),0);
+    TRY_COMPARE(replacedSpy.count(), points.count());
+
+    // Replace a point that does not exist
+    m_series->replace(-123, 999, 0, 0);
+    TRY_COMPARE(replacedSpy.count(), points.count());
 
     QList<QPointF> newPoints = m_series->points();
 
@@ -274,6 +300,27 @@ void tst_QXYSeries::replace_chart_animation()
 {
     m_chart->setAnimationOptions(QChart::AllAnimations);
     replace_chart();
+}
+
+void tst_QXYSeries::insert_data()
+{
+    append_data();
+}
+
+void tst_QXYSeries::insert()
+{
+    QFETCH(QList<QPointF>, points);
+    m_series->append(points);
+
+    QSignalSpy addedSpy(m_series, SIGNAL(pointAdded(int)));
+
+    m_series->insert(0, QPointF(5, 5));
+    TRY_COMPARE(addedSpy.count(), 1);
+    QCOMPARE(m_series->points().count(), points.count() + 1);
+
+    m_series->insert(m_series->count(), QPointF(6, 6));
+    TRY_COMPARE(addedSpy.count(), 2);
+    QCOMPARE(m_series->points().count(), points.count() + 2);
 }
 
 void tst_QXYSeries::oper_data()

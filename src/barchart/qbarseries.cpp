@@ -47,14 +47,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlclass BarSeries QBarSeries
+    \inherits AbstractSeries
+
+    The following QML shows how to create a simple bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
 
     \beginfloatleft
     \image demos_qmlchart6.png
     \endfloat
     \clearfloat
-
-    The following QML shows how to create a simple bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
 */
 
 /*!
@@ -152,6 +153,39 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \qmlsignal BarSeries::removed(BarSet barset)
     Emitted when \a barset has been removed from the series.
+*/
+
+/*!
+    \qmlmethod BarSet BarSeries::at(int index)
+    Returns bar set at \a index. Returns null if the index is not valid.
+*/
+
+/*!
+    \qmlmethod BarSet BarSeries::append(string label, VariantList values)
+    Adds a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XyPoints.
+    For example:
+    \code
+        myBarSeries.append("set 1", [0, 0.2, 0.2, 0.5, 0.4, 1.5, 0.9]);
+        myBarSeries.append("set 2", [Qt.point(0, 1), Qt.point(2, 2.5), Qt.point(3.5, 2.2)]);
+    \endcode
+*/
+
+/*!
+    \qmlmethod BarSet BarSeries::insert(int index, string label, VariantList values)
+    Inserts a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XyPoints.
+    If index is zero or smaller, the new barset is prepended. If the index is count or bigger, the new barset is
+    appended.
+    \sa BarSeries::append()
+*/
+
+/*!
+    \qmlmethod bool BarSeries::remove(BarSet barset)
+    Removes the barset from the series. Returns true if successfull, false otherwise.
+*/
+
+/*!
+    \qmlmethod BarSeries::clear()
+    Removes all barsets from the series.
 */
 
 /*!

@@ -50,6 +50,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlclass PieSeries QPieSeries
+    \inherits AbstractSeries
 
     The following QML shows how to create a simple pie chart.
 
@@ -268,6 +269,31 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
 
     \sa QPieSlice::hovered()
+*/
+
+/*!
+    \qmlmethod PieSlice PieSeries::at(int index)
+    Returns slice at \a index. Returns null if the index is not valid.
+*/
+
+/*!
+    \qmlmethod PieSlice PieSeries::find(string label)
+    Returns the first slice with \a label. Returns null if the index is not valid.
+*/
+
+/*!
+    \qmlmethod PieSlice PieSeries::append(string label, real value)
+    Adds a new slice with \a label and \a value to the pie.
+*/
+
+/*!
+    \qmlmethod bool PieSeries::remove(PieSlice slice)
+    Removes the \a slice from the pie. Returns true if the removal was successfull, false otherwise.
+*/
+
+/*!
+    \qmlmethod PieSeries::clear()
+    Removes all slices from the pie.
 */
 
 /*!

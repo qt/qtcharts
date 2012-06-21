@@ -69,7 +69,7 @@ Flow {
     }
     Button {
         text: "insert point"
-        onClicked: series.insert(0, series.count - 1, series.count - 1);
+        onClicked: series.insert(series.count - 2, series.count - 2, series.count - 2);
     }
     Button {
         text: "clear"

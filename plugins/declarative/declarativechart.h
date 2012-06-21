@@ -100,7 +100,6 @@ public:
     void setTitle(QString title);
     QString title();
     QAxis *axisX();
-    Q_INVOKABLE QAxis *axisY(QAbstractSeries *series = 0);
     QLegend *legend();
     QVariantList axisXLabels();
     void setAxisXLabels(QVariantList list);
@@ -113,14 +112,17 @@ public:
     int count();
     void setDropShadowEnabled(bool enabled);
     bool dropShadowEnabled();
+
+public:
+    Q_INVOKABLE QAbstractSeries *series(int index);
+    Q_INVOKABLE QAbstractSeries *series(QString seriesName);
+    Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
+    Q_INVOKABLE QAxis *axisY(QAbstractSeries *series = 0);
     Q_INVOKABLE void zoom(qreal factor);
     Q_INVOKABLE void scrollLeft(qreal pixels);
     Q_INVOKABLE void scrollRight(qreal pixels);
     Q_INVOKABLE void scrollUp(qreal pixels);
     Q_INVOKABLE void scrollDown(qreal pixels);
-    Q_INVOKABLE QAbstractSeries *series(int index);
-    Q_INVOKABLE QAbstractSeries *series(QString seriesName);
-    Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
 
 Q_SIGNALS:
     void axisLabelsChanged();

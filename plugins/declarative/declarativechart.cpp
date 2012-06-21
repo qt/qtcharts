@@ -107,9 +107,58 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlmethod AbstractSeries ChartView::series(int index)
+  Returns the series with \a index on the chart. This allows you to loop through the series of a chart together with
+  the count property of the chart.
+*/
+
+/*!
+  \qmlmethod AbstractSeries ChartView::series(string name)
+  Returns the first series on the chart with \a name. If there is no series with that name, returns null.
+*/
+
+/*!
+  \qmlmethod AbstractSeries ChartView::createSeries(SeriesType type, string name)
+  Creates a series object of \a type to the chart. For example:
+  \code
+    var scatter = chartView.createSeries(ChartView.SeriesTypeScatter, "scatter series");
+    scatter.markerSize = 22;
+    scatter.append(1.1, 2.0);
+  \endcode
+*/
+
+/*!
   \qmlmethod Axis ChartView::axisY(QAbstractSeries *series)
-  The y-axis of the series. This is the same as the default y-axis of the chart, unless you have
-  explicitly defined the series to have a non-default y-axis.
+  The y-axis of the series. This is the same as the default y-axis of the chart as multiple y-axes are not yet supported.
+*/
+
+/*!
+  \qmlmethod ChartView::zoomY(real factor)
+  Zooms in by \a factor on the center of the chart.
+*/
+
+/*!
+  \qmlmethod ChartView::scrollLeft(real pixels)
+  Scrolls to left by \a pixels. This is a convenience function that suits for example for key navigation.
+  \sa Axis::min, Axis::max
+*/
+
+/*!
+  \qmlmethod ChartView::scrollRight(real pixels)
+  Scrolls to right by \a pixels. This is a convenience function that suits for example for key navigation.
+  \sa Axis::min, Axis::max
+*/
+
+/*!
+  \qmlmethod ChartView::scrollUp(real pixels)
+  Scrolls up by \a pixels. This is a convenience function that suits for example for key navigation.
+  \sa Axis::min, Axis::max
+*/
+
+/*!
+  \qmlmethod ChartView::scrollDown(real pixels)
+  Scrolls down by \a pixels. This is a convenience function that suits for example for key navigation.
+  \sa Axis::min, Axis::max
 */
 
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
