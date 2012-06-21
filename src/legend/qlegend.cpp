@@ -121,6 +121,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QLegend::font
+    The font of markers used by legend
+*/
+/*!
+    \qmlproperty color Legend::font
+    The font of markers used by legend
+*/
+
+/*!
     \fn void QLegend::backgroundVisibleChanged(bool)
     The visibility of the legend background changed to \a visible.
 */
@@ -133,6 +142,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn void QLegend::borderColorChanged(QColor)
     The border color of the legend background changed to \a color.
+*/
+
+/*!
+    \fn void QLegend::fontChanged(QFont)
+    The font of markers of the legend changed to \a font.
 */
 
 /*!
@@ -257,6 +271,19 @@ void QLegend::setBorderColor(QColor color)
 QColor QLegend::borderColor()
 {
     return d_ptr->m_pen.color();
+}
+
+void QLegend::setFont(const QFont &font)
+{
+    if (d_ptr->m_font != font) {
+        d_ptr->setFont(font);
+        emit fontChanged(font);
+    }
+}
+
+QFont QLegend::font() const
+{
+    return d_ptr->m_font;
 }
 
 void QLegend::setAlignment(Qt::Alignment alignment)
@@ -680,13 +707,27 @@ int QLegendPrivate::roundness(qreal size)
     return 100*m_diameter/int(size);
 }
 
+void QLegendPrivate::setFont(const QFont &font)
+{
+    m_font = font;
+    QList<QGraphicsItem *> items = m_markers->childItems();
+
+    foreach (QGraphicsItem *markers, items) {
+        LegendMarker *marker = static_cast<LegendMarker*>(markers);
+        marker->setFont(m_font);
+    }
+    updateLayout();
+}
+
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 {
     Q_UNUSED(domain)
 
     QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
-    foreach(LegendMarker* marker, markers)
+    foreach(LegendMarker* marker, markers) {
+        marker->setFont(m_font);
         m_markers->addToGroup(marker);
+    }
 
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
 

@@ -66,6 +66,14 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(bottomButton, SIGNAL(clicked()), this, SLOT(setLegendBottom()));
     m_buttonLayout->addWidget(bottomButton, 7, 0);
 
+    QPushButton *boldButton = new QPushButton("Toggle bold");
+    connect(boldButton, SIGNAL(clicked()), this, SLOT(toggleBold()));
+    m_buttonLayout->addWidget(boldButton, 8, 0);
+
+    QPushButton *italicButton = new QPushButton("Toggle italic");
+    connect(italicButton, SIGNAL(clicked()), this, SLOT(toggleItalic()));
+    m_buttonLayout->addWidget(italicButton, 9, 0);
+
     m_legendPosX = new QDoubleSpinBox();
     m_legendPosY = new QDoubleSpinBox();
     m_legendWidth = new QDoubleSpinBox();
@@ -90,9 +98,18 @@ MainWidget::MainWidget(QWidget *parent) :
     m_chart = new QChart();
     m_chartView = new QChartView(m_chart, this);
 
+    // Create spinbox to modify font size
+    m_fontSize = new QDoubleSpinBox();
+    m_fontSize->setValue(m_chart->legend()->font().pointSizeF());
+    connect(m_fontSize, SIGNAL(valueChanged(double)), this, SLOT(fontSizeChanged()));
+
+    QFormLayout* fontLayout = new QFormLayout();
+    fontLayout->addRow("Legend font size", m_fontSize);
+
     // Create layout for grid and detached legend
     m_mainLayout = new QGridLayout();
     m_mainLayout->addLayout(m_buttonLayout, 0, 0);
+    m_mainLayout->addLayout(fontLayout,1,0);
     m_mainLayout->addWidget(m_chartView, 0, 1, 3, 1);
     setLayout(m_mainLayout);
 
@@ -210,6 +227,27 @@ void MainWidget::setLegendTop()
 void MainWidget::setLegendBottom()
 {
     m_chart->legend()->setAlignment(Qt::AlignBottom);
+}
+
+void MainWidget::toggleBold()
+{
+    QFont font = m_chart->legend()->font();
+    font.setBold(!font.bold());
+    m_chart->legend()->setFont(font);
+}
+
+void MainWidget::toggleItalic()
+{
+    QFont font = m_chart->legend()->font();
+    font.setItalic(!font.italic());
+    m_chart->legend()->setFont(font);
+}
+
+void MainWidget::fontSizeChanged()
+{
+    QFont font = m_chart->legend()->font();
+    font.setPointSizeF(m_fontSize->value());
+    m_chart->legend()->setFont(font);
 }
 
 void MainWidget::updateLegendLayout()

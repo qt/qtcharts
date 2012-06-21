@@ -51,6 +51,7 @@ public:
     void updateDetachedLayout();
     void attachToChart();
     int roundness(qreal size);
+    void setFont(const QFont &font);
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
@@ -67,6 +68,7 @@ private:
     Qt::Alignment m_alignment;
     QBrush m_brush;
     QPen m_pen;
+    QFont m_font;
     QRectF m_rect;
     qreal m_offsetX;
     qreal m_offsetY;

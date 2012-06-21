@@ -71,6 +71,17 @@ QBrush LegendMarker::brush() const
     return m_rectItem->brush();
 }
 
+void LegendMarker::setFont(const QFont &font)
+{
+    m_textItem->setFont(font);
+    updateLayout();
+}
+
+QFont LegendMarker::font() const
+{
+    return m_textItem->font();
+}
+
 void LegendMarker::setLabel(const QString label)
 {
     m_textItem->setText(label);

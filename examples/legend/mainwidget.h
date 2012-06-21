@@ -56,7 +56,12 @@ public slots:
     void setLegendTop();
     void setLegendBottom();
 
+    void toggleBold();
+    void toggleItalic();
+    void fontSizeChanged();
+
     void updateLegendLayout();
+
 
 private:
 
@@ -66,6 +71,9 @@ private:
     QChartView *m_chartView;
     QGridLayout *m_mainLayout;
     QGridLayout *m_buttonLayout;
+    QGridLayout *m_fontLayout;
+
+    QDoubleSpinBox *m_fontSize;
 
     // For detached layout
     QGroupBox*  m_legendSettings;

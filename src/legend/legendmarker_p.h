@@ -59,6 +59,9 @@ public:
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
+    void setFont(const QFont &font);
+    QFont font() const;
+
     void setSize(const QSize& size);
 
     void setLabel(const QString label);
