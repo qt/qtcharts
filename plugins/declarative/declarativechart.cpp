@@ -58,6 +58,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlproperty Font ChartView::titleFont
+  The title font of the chart
+
+  See the \l {Font} {QML Font Element} for detailed documentation.
+*/
+
+/*!
   \qmlproperty string ChartView::title
   The title of the chart, shown on top of the chart.
   \sa ChartView::titleColor
@@ -248,6 +255,16 @@ void DeclarativeChart::setTitleColor(QColor color)
         m_chart->setTitleBrush(b);
         emit titleColorChanged();
     }
+}
+
+QFont DeclarativeChart::titleFont() const
+{
+    return m_chart->titleFont();
+}
+
+void DeclarativeChart::setTitleFont(const QFont& font)
+{
+    m_chart->setTitleFont(font);
 }
 
 QColor DeclarativeChart::titleColor()

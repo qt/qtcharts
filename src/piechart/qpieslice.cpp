@@ -276,6 +276,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty Font PieSlice::labelFont
+
+    Defines the font used for slice label.
+
+    See the \l {Font} {QML Font Element} for detailed documentation.
+
+    \sa labelVisible, labelPosition
+*/
+
+/*!
     \property QPieSlice::labelPosition
     Position of the slice label.
     \sa label, labelVisible

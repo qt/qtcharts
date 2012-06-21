@@ -37,6 +37,7 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(Theme theme READ theme WRITE setTheme)
     Q_PROPERTY(Animation animationOptions READ animationOptions WRITE setAnimationOptions)
     Q_PROPERTY(QString title READ title WRITE setTitle)
+    Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
     Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
     Q_PROPERTY(QAxis *axisX READ axisX)
     Q_PROPERTY(QAxis *axisY READ axisY)
@@ -103,6 +104,8 @@ public:
     QLegend *legend();
     QVariantList axisXLabels();
     void setAxisXLabels(QVariantList list);
+    QFont titleFont() const;
+    void setTitleFont(const QFont& font);
     void setTitleColor(QColor color);
     QColor titleColor();
     void setBackgroundColor(QColor color);

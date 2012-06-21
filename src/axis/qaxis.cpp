@@ -110,6 +110,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAxis::labelsFont
+  The font of the axis labels.
+*/
+/*!
+  \qmlproperty Font Axis::labelsFont
+  The font of the axis labels.
+
+  See the \l {Font} {QML Font Element} for detailed documentation.
+*/
+
+/*!
   \property QAxis::labelsColor
   The color of the axis labels.
 */

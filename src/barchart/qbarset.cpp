@@ -76,6 +76,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty Font BarSet::labelFont
+    Defines the font used by the barSet's label.
+
+    See the \l {Font} {QML Font Element} for detailed documentation.
+*/
+
+/*!
     \property QBarSet::color
     The fill (brush) color of the bar set.
 */

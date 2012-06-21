@@ -1,0 +1,114 @@
+/*!
+    \qmlclass Font QFont
+    \brief Defines the font used for drawing text.
+
+    Font instantiates the C++ class QFont
+*/
+
+// NOTE: This is a copy-paste from:
+// <qt dir>\src\declarative\graphicsitems\qdeclarativetext.cpp
+
+/*!
+    \qmlproperty string Font::family
+
+    Sets the family name of the font.
+
+    The family name is case insensitive and may optionally include a foundry name, e.g. "Helvetica [Cronyx]".
+    If the family is available from more than one foundry and the foundry isn't specified, an arbitrary foundry is chosen.
+    If the family isn't available a family will be set using the font matching algorithm.
+*/
+
+/*!
+    \qmlproperty bool Font::bold
+
+    Sets whether the font weight is bold.
+*/
+
+/*!
+    \qmlproperty enumeration Font::weight
+
+    Sets the font's weight.
+
+    The weight can be one of:
+    \list
+    \o Font.Light
+    \o Font.Normal - the default
+    \o Font.DemiBold
+    \o Font.Bold
+    \o Font.Black
+    \endlist
+
+    \qml
+    Text { text: "Hello"; font.weight: Font.DemiBold }
+    \endqml
+*/
+
+/*!
+    \qmlproperty bool Font::italic
+
+    Sets whether the font has an italic style.
+*/
+
+/*!
+    \qmlproperty bool Font::underline
+
+    Sets whether the text is underlined.
+*/
+
+/*!
+    \qmlproperty bool Font::strikeout
+
+    Sets whether the font has a strikeout style.
+*/
+
+/*!
+    \qmlproperty real Font::pointSize
+
+    Sets the font size in points. The point size must be greater than zero.
+*/
+
+/*!
+    \qmlproperty int Font::pixelSize
+
+    Sets the font size in pixels.
+
+    Using this function makes the font device dependent.
+    Use \c pointSize to set the size of the font in a device independent manner.
+*/
+
+/*!
+    \qmlproperty real Font::letterSpacing
+
+    Sets the letter spacing for the font.
+
+    Letter spacing changes the default spacing between individual letters in the font.
+    A positive value increases the letter spacing by the corresponding pixels; a negative value decreases the spacing.
+*/
+
+/*!
+    \qmlproperty real Font::wordSpacing
+
+    Sets the word spacing for the font.
+
+    Word spacing changes the default spacing between individual words.
+    A positive value increases the word spacing by a corresponding amount of pixels,
+    while a negative value decreases the inter-word spacing accordingly.
+*/
+
+/*!
+    \qmlproperty enumeration Font::capitalization
+
+    Sets the capitalization for the text.
+
+    \list
+    \o Font.MixedCase - This is the normal text rendering option where no capitalization change is applied.
+    \o Font.AllUppercase - This alters the text to be rendered in all uppercase type.
+    \o Font.AllLowercase	 - This alters the text to be rendered in all lowercase type.
+    \o Font.SmallCaps -	This alters the text to be rendered in small-caps type.
+    \o Font.Capitalize - This alters the text to be rendered with the first character of each word as an uppercase character.
+    \endlist
+
+    \qml
+    Text { text: "Hello"; font.capitalization: Font.AllLowercase }
+    \endqml
+*/

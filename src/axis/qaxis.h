@@ -37,6 +37,7 @@ class QTCOMMERCIALCHART_EXPORT QAxis : public QObject
     Q_PROPERTY(QColor color READ axisPenColor WRITE setAxisPenColor NOTIFY colorChanged)
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
     Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle)
+    Q_PROPERTY(QFont labelsFont READ labelsFont WRITE setLabelsFont)
     Q_PROPERTY(QColor labelsColor READ labelsColor WRITE setLabelsColor NOTIFY labelsColorChanged)
     Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridVisibleChanged)
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
