@@ -88,6 +88,7 @@ Flow {
         text: "scroll down"
         onClicked: series.scrollDown(10);
     }
+
     Button {
         text: "legend visible"
         onClicked: series.legend.visible = !series.legend.visible;
@@ -120,6 +121,7 @@ Flow {
         text: "legend right"
         onClicked: series.legend.alignment ^= Qt.AlignRight;
     }
+
     Button {
         text: "axis X visible"
         onClicked: series.axisX.visible = !series.axisX.visible;
@@ -192,6 +194,7 @@ Flow {
         text: "axis X nice nmb"
         onClicked: series.axisX.niceNumbersEnabled = !series.axisX.niceNumbersEnabled;
     }
+
     Button {
         text: "axis Y visible"
         onClicked: series.axisY.visible = !series.axisY.visible;

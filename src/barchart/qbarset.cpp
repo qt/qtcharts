@@ -222,6 +222,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty int BarSet::count
+    The count of values on the barset
+*/
+
+/*!
+    \qmlproperty QVariantList BarSet::values
+    The values of the barset. You can set either a list of reals or a list of points as values. If you set a list of
+    reals as values, the values are automatically completed to points by using the index of a value as it's
+    x-coordinate. For example:
+    \code
+        myBarSet1.values = [0, 5, 1, 5];
+        myBarSet2.values = [Qt.point(0, 1), Qt.point(1, 5), Qt.point(2.2, 4.3)];
+    \endcode
+*/
+
+/*!
     Constructs QBarSet with a label of \a label and with parent of \a parent
 */
 QBarSet::QBarSet(const QString label, QObject *parent)
