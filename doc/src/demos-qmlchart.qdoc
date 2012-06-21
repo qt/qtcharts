@@ -8,20 +8,24 @@
     \snippet ../demos/qmlchart/qml/qmlchart/View1.qml 1
     \image demos_qmlchart1.png
 
-    To create a chart with line and spline series:
+    To create a chart with line series:
     \snippet ../demos/qmlchart/qml/qmlchart/View2.qml 1
     \image demos_qmlchart2.png
 
-    Then we create a chart that illustrates the success of Russian, Swedish and Finnish ice-hockey players in the
-    NHL All-Star player selections by using three area series:
+    And spline series:
     \snippet ../demos/qmlchart/qml/qmlchart/View3.qml 1
     \image demos_qmlchart3.png
 
-    Then couple of scatter series:
+    Then we create a chart that illustrates the success of Russian, Swedish and Finnish ice-hockey players in the
+    NHL All-Star player selections by using three area series:
     \snippet ../demos/qmlchart/qml/qmlchart/View4.qml 1
     \image demos_qmlchart4.png
 
-    And finally a bar series:
+    Then couple of scatter series:
     \snippet ../demos/qmlchart/qml/qmlchart/View5.qml 1
     \image demos_qmlchart5.png
+
+    And finally a bar series:
+    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
+    \image demos_qmlchart6.png
 */
