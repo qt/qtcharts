@@ -66,6 +66,47 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  */
 
 /*!
+ \property QChart::animationOptions
+ The animation \a options for the chart. Animations are enabled/disabled based on this setting.
+ */
+
+/*!
+ \property QChart::backgroundVisible
+ Whether the chart background is visible or not.
+ \sa setBackgroundBrush(), setBackgroundPen()
+ */
+
+/*!
+ \property QChart::dropShadowEnabled
+ If set to true, the background drop shadow effect is enabled. If set to false, it is disabled. Note that the drop
+ shadow effect depends on theme, which means the setting may be changed if you switch to another theme.
+ */
+
+/*!
+ \property QChart::margins
+ Margins around the plot area. Note that the margin area is used for drawing chart title, legend and axes.
+ */
+
+/*!
+ \property QChart::theme
+ Theme is a built-in collection of UI style related settings applied for all visual elements of a chart, like colors,
+ pens, brushes and fonts of series, axes, title and legend. \l {Chart themes demo} shows an example with a few
+ different themes.
+ Note: changing the theme will overwrite all customizations previously applied to the series.
+ */
+
+/*!
+ \property QChart::title
+ Title is the name (label) of a chart. It is shown as a headline on top of the chart.
+ */
+
+/*!
+ \fn void QChart::marginsChanged(QRectF newMargins)
+ The margins around plot area have changed to \a newMargins. This may happen for example if you change title font size,
+ modify axes or hide/show legend.
+ */
+
+/*!
  Constructs a chart object which is a child of a\a parent. Parameter \a wFlags is passed to the QGraphicsWidget constructor.
  */
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
@@ -232,21 +273,11 @@ QBrush QChart::titleBrush() const
     return d_ptr->m_presenter->m_titleItem->brush();
 }
 
-/*!
- Sets the \a theme used by the chart for rendering the graphical representation of the data.
-
- Note: changing the theme will overwrite all customizations (pen, brush, font, ect.) done to the series.
- \sa theme()
- */
 void QChart::setTheme(QChart::ChartTheme theme)
 {
     d_ptr->m_presenter->setTheme(theme);
 }
 
-/*!
- Returns the theme enum used by the chart.
- \sa ChartTheme, setTheme()
- */
 QChart::ChartTheme QChart::theme() const
 {
     return d_ptr->m_presenter->theme();
@@ -344,17 +375,11 @@ void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
     d_ptr->m_presenter->setGeometry(d_ptr->m_rect);
 }
 
-/*!
- Sets animation \a options for the chart
- */
 void QChart::setAnimationOptions(AnimationOptions options)
 {
     d_ptr->m_presenter->setAnimationOptions(options);
 }
 
-/*!
- Returns animation options for the chart
- */
 QChart::AnimationOptions QChart::animationOptions() const
 {
     return d_ptr->m_presenter->animationOptions();
@@ -400,9 +425,6 @@ void QChart::scroll(const QPointF &delta)
     d_ptr->m_presenter->scroll(-delta.x(), delta.y());
 }
 
-/*!
-    Sets the chart background visibility state to \a visible
- */
 void QChart::setBackgroundVisible(bool visible)
 {
     //TODO: refactor me
@@ -410,9 +432,6 @@ void QChart::setBackgroundVisible(bool visible)
     d_ptr->m_presenter->m_backgroundItem->setVisible(visible);
 }
 
-/*!
-    Returns the chart's background visibility state
- */
 bool QChart::isBackgroundVisible() const
 {
     //TODO: refactor me
@@ -422,18 +441,12 @@ bool QChart::isBackgroundVisible() const
     return d_ptr->m_presenter->m_backgroundItem->isVisible();
 }
 
-/*!
-    Sets the background drop shadow effect state to \a enabled.
-*/
 void QChart::setDropShadowEnabled(bool enabled)
 {
     d_ptr->m_presenter->createChartBackgroundItem();
     d_ptr->m_presenter->m_backgroundItem->setDropShadowEnabled(enabled);
 }
 
-/*!
-    Returns true if the drop shadow effect is enabled for the chart background.
-*/
 bool QChart::isDropShadowEnabled() const
 {
     if (!d_ptr->m_presenter->m_backgroundItem)
