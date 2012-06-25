@@ -48,6 +48,9 @@ class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
     Q_PROPERTY(QColor borderColor READ borderColor WRITE setBorderColor NOTIFY borderColorChanged)
     Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
+    Q_PROPERTY(QColor labelColor READ labelColor WRITE setLabelColor NOTIFY labelColorChanged)
+// TODO?
+//    Q_PROPERTY(QColor labelBorderColor READ labelBorderColor WRITE setLabelBorderColor NOTIFY labelBorderColorChanged)
 
 private:
     explicit QLegend(QChart *chart);
@@ -70,6 +73,13 @@ public:
 
     void setFont(const QFont &font);
     QFont font() const;
+    void setLabelPen(const QPen &pen);
+    QPen labelPen() const;
+    void setLabelBrush(const QBrush &brush);
+    QBrush labelBrush() const;
+
+    void setLabelColor(QColor color);
+    QColor labelColor() const;
 
     void setAlignment(Qt::Alignment alignment);
     Qt::Alignment alignment() const;
@@ -94,6 +104,11 @@ Q_SIGNALS:
     void colorChanged(QColor color);
     void borderColorChanged(QColor color);
     void fontChanged(QFont font);
+    void labelPenChanged(QPen pen);
+    void labelBrushChanged(QBrush brush);
+    void labelColorChanged(QColor color);
+// TODO?
+//    void labelBorderColorChanged(QColor color);
 
 private:
     QScopedPointer<QLegendPrivate> d_ptr;

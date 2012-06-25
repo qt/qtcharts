@@ -98,6 +98,28 @@ QString LegendMarker::label() const
     return m_textItem->text();
 }
 
+void LegendMarker::setLabelBrush(const QBrush &brush)
+{
+    m_textItem->setBrush(brush);
+    updateLayout();
+}
+
+QBrush LegendMarker::labelBrush() const
+{
+    return m_textItem->brush();
+}
+
+void LegendMarker::setLabelPen(const QPen &pen)
+{
+    m_textItem->setPen(pen);
+    updateLayout();
+}
+
+QPen LegendMarker::labelPen() const
+{
+    return m_textItem->pen();
+}
+
 void LegendMarker::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(option)

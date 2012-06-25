@@ -286,6 +286,50 @@ QFont QLegend::font() const
     return d_ptr->m_font;
 }
 
+void QLegend::setLabelPen(const QPen &pen)
+{
+    if (d_ptr->m_labelPen != pen) {
+        d_ptr->setLabelPen(pen);
+        emit labelPenChanged(pen);
+    }
+}
+
+QPen QLegend::labelPen() const
+{
+    return d_ptr->m_labelPen;
+}
+
+void QLegend::setLabelBrush(const QBrush &brush)
+{
+    qDebug() << "setting legend brush 1";
+    if (d_ptr->m_labelBrush != brush) {
+        d_ptr->setLabelBrush(brush);
+        emit labelBrushChanged(brush);
+        qDebug() << "setting legend brush 2";
+    }
+}
+
+QBrush QLegend::labelBrush() const
+{
+    return d_ptr->m_labelBrush;
+}
+
+void QLegend::setLabelColor(QColor color)
+{
+    QBrush b = d_ptr->m_labelBrush;
+    if (b.style() != Qt::SolidPattern || b.color() != color) {
+        b.setStyle(Qt::SolidPattern);
+        b.setColor(color);
+        setLabelBrush(b);
+        emit labelColorChanged(color);
+    }
+}
+
+QColor QLegend::labelColor() const
+{
+    return d_ptr->m_labelBrush.color();
+}
+
 void QLegend::setAlignment(Qt::Alignment alignment)
 {
     if(d_ptr->m_alignment!=alignment) {
@@ -396,6 +440,8 @@ QLegendPrivate::QLegendPrivate(ChartPresenter* presenter, QChart *chart, QLegend
     m_alignment(Qt::AlignTop),
     m_brush(QBrush()),
     m_pen(QPen()),
+    m_labelPen(QPen(Qt::NoPen)),
+    m_labelBrush(QBrush()),
     m_offsetX(0),
     m_offsetY(0),
     m_minWidth(0),
@@ -719,6 +765,30 @@ void QLegendPrivate::setFont(const QFont &font)
     updateLayout();
 }
 
+void QLegendPrivate::setLabelPen(const QPen &pen)
+{
+    m_labelPen = pen;
+    QList<QGraphicsItem *> items = m_markers->childItems();
+
+    foreach (QGraphicsItem *markers, items) {
+        LegendMarker *marker = static_cast<LegendMarker*>(markers);
+        marker->setPen(m_labelPen);
+    }
+    updateLayout();
+}
+
+void QLegendPrivate::setLabelBrush(const QBrush &brush)
+{
+    m_labelBrush = brush;
+    QList<QGraphicsItem *> items = m_markers->childItems();
+
+    foreach (QGraphicsItem *markers, items) {
+        LegendMarker *marker = static_cast<LegendMarker*>(markers);
+        marker->setLabelBrush(m_labelBrush);
+    }
+    updateLayout();
+}
+
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 {
     Q_UNUSED(domain)
@@ -726,6 +796,8 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
     foreach(LegendMarker* marker, markers) {
         marker->setFont(m_font);
+        marker->setLabelPen(m_labelPen);
+        marker->setLabelBrush(m_labelBrush);
         m_markers->addToGroup(marker);
     }
 
