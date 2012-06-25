@@ -300,6 +300,8 @@ void ChartPresenter::updateLayout()
 {
     if (!m_rect.isValid()) return;
 
+    QRectF oldChargMargins = m_chartMargins;
+
     // recalculate title size
 
     QSize titleSize;
@@ -389,6 +391,8 @@ void ChartPresenter::updateLayout()
         emit geometryChanged(m_chartRect);
     }
 
+    if (oldChargMargins != m_chartMargins)
+        emit marginsChanged(m_chartMargins);
 }
 
 void ChartPresenter::createChartBackgroundItem()

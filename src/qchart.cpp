@@ -76,6 +76,7 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     d_ptr->createConnections();
     d_ptr->m_legend = new LegendScroller(this);
     d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);
+    connect(d_ptr->m_presenter, SIGNAL(marginsChanged(QRectF)), this, SIGNAL(marginsChanged(QRectF)));
 }
 
 /*!

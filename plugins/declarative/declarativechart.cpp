@@ -107,6 +107,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlproperty real ChartView::topMargin
+  The space between the top of chart view and the top of the plot area. The title (if non-empty) is drawn on top margin
+  area of the chart view. Top margin area is also used by legend, if aligned to top.
+*/
+
+/*!
+  \qmlproperty real ChartView::bottomMargin
+  The space between the bottom of chart view and the bottom of the plot area. The bottom margin area may be used by
+  legend (if aligned to bottom), x-axis, x-axis labels and x-axis tick marks.
+*/
+
+/*!
+  \qmlproperty real ChartView::leftMargin
+  The space between the left side of chart view and the left side of the plot area. The left margin area may be used by
+  legend (if aligned to left), y-axis, y-axis labels and y-axis tick marks.
+*/
+
+/*!
+  \qmlproperty real ChartView::rightMargin
+  The space between the right side of chart view and the right side of the plot area. The right margin area may be used
+  by legend (if aligned to right).
+*/
+
+/*!
   \qmlmethod AbstractSeries ChartView::series(int index)
   Returns the series with \a index on the chart. This allows you to loop through the series of a chart together with
   the count property of the chart.
@@ -167,6 +191,22 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
 //    m_chart->axisX()->setNiceNumbersEnabled(false);
+    m_chartMargins = m_chart->margins();
+    connect(m_chart, SIGNAL(marginsChanged(QRectF)), this, SLOT(handleMarginsChanged(QRectF)));
+}
+
+void DeclarativeChart::handleMarginsChanged(QRectF newMargins)
+{
+    if (m_chartMargins.top() != newMargins.top())
+        topMarginChanged(m_chart->margins().top());
+    if (m_chartMargins.bottom() != newMargins.bottom())
+        bottomMarginChanged(m_chart->margins().bottom());
+    if (m_chartMargins.left() != newMargins.left())
+        leftMarginChanged(m_chart->margins().left());
+    if (m_chartMargins.right() != newMargins.right())
+        rightMarginChanged(m_chart->margins().right());
+
+    m_chartMargins = m_chart->margins();
 }
 
 DeclarativeChart::~DeclarativeChart()
@@ -302,7 +342,7 @@ void DeclarativeChart::setTitleColor(QColor color)
     if (color != b.color()) {
         b.setColor(color);
         m_chart->setTitleBrush(b);
-        emit titleColorChanged();
+        emit titleColorChanged(color);
     }
 }
 
@@ -353,6 +393,26 @@ void DeclarativeChart::setDropShadowEnabled(bool enabled)
 bool DeclarativeChart::dropShadowEnabled()
 {
     return m_chart->isDropShadowEnabled();
+}
+
+qreal DeclarativeChart::topMargin()
+{
+    return m_chart->margins().top();
+}
+
+qreal DeclarativeChart::bottomMargin()
+{
+    return m_chart->margins().bottom();
+}
+
+qreal DeclarativeChart::leftMargin()
+{
+    return m_chart->margins().left();
+}
+
+qreal DeclarativeChart::rightMargin()
+{
+    return m_chart->margins().right();
 }
 
 void DeclarativeChart::zoom(qreal factor)

@@ -38,10 +38,26 @@ ChartView {
         XyPoint { x: 4.1; y: 3.3 }
     }
 
-    onVisibleChanged:                  console.log("chart.onVisibleChanged: " + series.visible);
-    onTitleColorChanged:               console.log("chart.onTitleColorChanged: " + series.titleColor);
+    onVisibleChanged:                  console.log("chart.onVisibleChanged: " + visible);
+    onTitleColorChanged:               console.log("chart.onTitleColorChanged: " + color);
     onBackgroundColorChanged:          console.log("chart.onBackgroundColorChanged: " + series.backgroundColor);
     onDropShadowEnabledChanged:        console.log("chart.onDropShadowEnabledChanged: " + enabled);
+    onTopMarginChanged: {
+        console.log("chart.onTopMarginChanged: " + margin);
+        marginVisualizer.opacity = 1.0;
+    }
+    onBottomMarginChanged: {
+        console.log("chart.onBottomMarginChanged: " + margin);
+        marginVisualizer.opacity = 1.0;
+    }
+    onLeftMarginChanged: {
+        console.log("chart.onLeftMarginChanged: " + margin);
+        marginVisualizer.opacity = 1.0;
+    }
+    onRightMarginChanged: {
+        console.log("chart.onRightMarginChanged: " + margin);
+        marginVisualizer.opacity = 1.0;
+    }
 
     legend.onVisibleChanged:           console.log("legend.onVisibleChanged: " + series.legend.visible);
     legend.onBackgroundVisibleChanged: console.log("legend.onBackgroundVisibleChanged: " + visible);
@@ -69,4 +85,21 @@ ChartView {
     axisY.onShadesBorderColorChanged:   console.log("axisY.onShadesBorderColorChanged: " + color);
     axisY.onMinChanged:                 console.log("axisY.onMinChanged: " + min);
     axisY.onMaxChanged:                 console.log("axisY.onMaxChanged: " + max);
+
+
+    Rectangle {
+        id: marginVisualizer
+        color: "transparent"
+        border.color: "red"
+        anchors.fill: parent
+        anchors.topMargin: parent.topMargin
+        anchors.bottomMargin: parent.bottomMargin
+        anchors.leftMargin: parent.leftMargin
+        anchors.rightMargin: parent.rightMargin
+        opacity: 0.0
+        onOpacityChanged: if (opacity == 1.0) opacity = 0.0;
+        Behavior on opacity {
+            NumberAnimation { duration: 800 }
+        }
+    }
 }

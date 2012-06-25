@@ -139,7 +139,6 @@ void MainWidget::showLegendSpinbox()
 {
     m_legendSettings->setVisible(true);
     QRectF chartViewRect = m_chartView->rect();
-    QRectF legendRect = m_chart->legend()->boundingRect();
 
     m_legendPosX->setMinimum(0);
     m_legendPosX->setMaximum(chartViewRect.width());

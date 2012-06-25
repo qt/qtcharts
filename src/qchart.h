@@ -37,6 +37,12 @@ struct QChartPrivate;
 class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {
     Q_OBJECT
+    Q_PROPERTY(QChart::ChartTheme theme READ theme WRITE setTheme)
+    Q_PROPERTY(QString title READ title WRITE setTitle)
+    Q_PROPERTY(bool backgroundVisible READ isBackgroundVisible WRITE setBackgroundVisible)
+    Q_PROPERTY(bool dropShadowEnabled READ isDropShadowEnabled WRITE setDropShadowEnabled)
+    Q_PROPERTY(QChart::AnimationOptions animationOptions READ animationOptions WRITE setAnimationOptions)
+    Q_PROPERTY(QRectF margins READ margins NOTIFY marginsChanged)
     Q_ENUMS(ChartTheme)
     Q_ENUMS(AnimationOption)
 
@@ -106,6 +112,9 @@ public:
 
     QLegend* legend() const;
     QRectF margins() const;
+
+Q_SIGNALS:
+    void marginsChanged(QRectF newMargins);
 
 protected:
     void resizeEvent(QGraphicsSceneResizeEvent *event);

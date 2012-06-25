@@ -122,6 +122,7 @@ private Q_SLOTS:
 Q_SIGNALS:
     void geometryChanged(const QRectF& rect);
     void animationsFinished();
+    void marginsChanged(QRectF margins);
 
 private:
     QChart* m_chart;

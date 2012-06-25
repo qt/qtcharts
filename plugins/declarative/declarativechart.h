@@ -47,6 +47,10 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(bool dropShadowEnabled READ dropShadowEnabled WRITE setDropShadowEnabled NOTIFY dropShadowEnabledChanged)
+    Q_PROPERTY(qreal topMargin READ topMargin NOTIFY topMarginChanged)
+    Q_PROPERTY(qreal bottomMargin READ bottomMargin NOTIFY bottomMarginChanged)
+    Q_PROPERTY(qreal leftMargin READ leftMargin NOTIFY leftMarginChanged)
+    Q_PROPERTY(qreal rightMargin READ rightMargin NOTIFY rightMarginChanged)
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
@@ -112,6 +116,10 @@ public:
     int count();
     void setDropShadowEnabled(bool enabled);
     bool dropShadowEnabled();
+    qreal topMargin();
+    qreal bottomMargin();
+    qreal leftMargin();
+    qreal rightMargin();
 
 public:
     Q_INVOKABLE QAbstractSeries *series(int index);
@@ -126,14 +134,22 @@ public:
 
 Q_SIGNALS:
     void axisLabelsChanged();
-    void titleColorChanged();
+    void titleColorChanged(QColor color);
     void backgroundColorChanged();
     void dropShadowEnabledChanged(bool enabled);
+    void topMarginChanged(qreal margin);
+    void bottomMarginChanged(qreal margin);
+    void leftMarginChanged(qreal margin);
+    void rightMarginChanged(qreal margin);
 
-public:
+public Q_SLOTS:
+    void handleMarginsChanged(QRectF newMargins);
+
+private:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;
+    QRectF m_chartMargins;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
