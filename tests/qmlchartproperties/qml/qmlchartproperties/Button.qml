@@ -24,8 +24,9 @@ Rectangle {
     id: button
     height: 25
     width: 140
-    color: "#afafaf"
+    color: unpressedColor
     radius: 5
+    property color unpressedColor: "#afafaf"
 
     property string text: "button"
     signal clicked
@@ -45,7 +46,7 @@ Rectangle {
             if (pressed) {
                 button.color = "#efefef";
             } else {
-                button.color = "#afafaf";
+                button.color = unpressedColor;
             }
         }
         onPressAndHold: {

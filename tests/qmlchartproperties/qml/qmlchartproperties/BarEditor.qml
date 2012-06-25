@@ -21,82 +21,86 @@
 import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
-Flow {
-    id: flow
+Row {
+    anchors.fill: parent
     spacing: 5
-    flow: Flow.TopToBottom
     property variant series
 
-    Button {
-        text: "visible"
-        onClicked: series.visible = !series.visible;
-    }
-    Button {
-        text: "labels visible"
-        onClicked: series.labelsVisible = !series.labelsVisible;
-    }
-    Button {
-        text: "bar width +"
-        onClicked: series.barWidth += 0.1;
-    }
-    Button {
-        text: "bar width -"
-        onClicked: series.barWidth -= 0.1;
-    }
-    Button {
-        text: "append set"
-        onClicked: {
-            var count = series.count;
-            series.append("set" + count, [0, 0.1 * count, 0.2 * count, 0.3 * count, 0.4 * count, 0.5 * count, 0.6 * count]);
+    Flow {
+        spacing: 5
+        flow: Flow.TopToBottom
+
+        Button {
+            text: "visible"
+            onClicked: series.visible = !series.visible;
+        }
+        Button {
+            text: "labels visible"
+            onClicked: series.labelsVisible = !series.labelsVisible;
+        }
+        Button {
+            text: "bar width +"
+            onClicked: series.barWidth += 0.1;
+        }
+        Button {
+            text: "bar width -"
+            onClicked: series.barWidth -= 0.1;
+        }
+        Button {
+            text: "append set"
+            onClicked: {
+                var count = series.count;
+                series.append("set" + count, [0, 0.1 * count, 0.2 * count, 0.3 * count, 0.4 * count, 0.5 * count, 0.6 * count]);
+            }
+        }
+        Button {
+            text: "insert set"
+            onClicked: {
+                var count = series.count;
+                series.insert(count - 1, "set" + count, [0, 0.1 * count, 0.2 * count, 0.3 * count, 0.4 * count, 0.5 * count, 0.6 * count]);
+            }
+        }
+        Button {
+            text: "remove set"
+            onClicked: series.remove(series.at(series.count - 1));
+        }
+        Button {
+            text: "clear sets"
+            onClicked: series.clear();
+        }
+
+        Button {
+            text: "set 1 append"
+            onClicked: series.at(0).append(series.at(0).count + 1);
+        }
+        Button {
+            text: "set 1 replace"
+            onClicked: series.at(0).replace(series.at(0).count - 1, series.at(0).at(series.at(0).count - 1).y + 0.5);
+        }
+        Button {
+            text: "set 1 remove"
+            onClicked: series.at(0).remove(series.at(0).count - 1);
+        }
+
+        Button {
+            text: "set 1 color"
+            onClicked: series.at(0).color = main.nextColor();
+        }
+        Button {
+            text: "set 1 border color"
+            onClicked: series.at(0).borderColor = main.nextColor();
+        }
+        Button {
+            text: "set 1 label color"
+            onClicked: series.at(0).labelColor = main.nextColor();
         }
     }
-    Button {
-        text: "insert set"
-        onClicked: {
-            var count = series.count;
-            series.insert(count - 1, "set" + count, [0, 0.1 * count, 0.2 * count, 0.3 * count, 0.4 * count, 0.5 * count, 0.6 * count]);
+
+    FontEditor {
+        id: fontEditor
+        fontDescription: "label"
+        function editedFont() {
+            return series.at(0).labelFont;
         }
-    }
-    Button {
-        text: "remove set"
-        onClicked: series.remove(series.at(series.count - 1));
-    }
-    Button {
-        text: "clear sets"
-        onClicked: series.clear();
-    }
-
-    Button {
-        text: "set 1 append"
-        onClicked: series.at(0).append(series.at(0).count + 1);
-    }
-    Button {
-        text: "set 1 replace"
-        onClicked: series.at(0).replace(series.at(0).count - 1, series.at(0).at(series.at(0).count - 1).y + 0.5);
-    }
-    Button {
-        text: "set 1 remove"
-        onClicked: series.at(0).remove(series.at(0).count - 1);
-    }
-
-    Button {
-        text: "set 1 color"
-        onClicked: series.at(0).color = main.nextColor();
-    }
-    Button {
-        text: "set 1 border color"
-        onClicked: series.at(0).borderColor = main.nextColor();
-    }
-    Button {
-        text: "set 1 label color"
-        onClicked: series.at(0).labelColor = main.nextColor();
-    }
-    Button {
-        text: "set 1 font size +"
-        onClicked: series.at(0).labelFont.pixelSize += 1;
-    }
-    Button {
-        text: "set 1 font size -"
-        onClicked: series.at(0).labelFont.pixelSize -= 1;
     }
 }

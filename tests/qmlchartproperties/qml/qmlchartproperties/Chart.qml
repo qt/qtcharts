@@ -23,7 +23,7 @@ import QtCommercial.Chart 1.0
 
 ChartView {
     id: chartView
-    title: "chart"
+    title: "Chart Title"
     anchors.fill: parent
     property variant series: chartView
 
@@ -97,7 +97,7 @@ ChartView {
         anchors.leftMargin: parent.leftMargin
         anchors.rightMargin: parent.rightMargin
         opacity: 0.0
-        onOpacityChanged: if (opacity == 1.0) opacity = 0.0;
+        onOpacityChanged: if (opacity > 0.9) opacity = 0.0;
         Behavior on opacity {
             NumberAnimation { duration: 800 }
         }

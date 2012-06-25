@@ -19,5 +19,9 @@
         <file>qml/qmlchartproperties/PercentBarChart.qml</file>
         <file>qml/qmlchartproperties/Chart.qml</file>
         <file>qml/qmlchartproperties/ChartEditor.qml</file>
+        <file>qml/qmlchartproperties/ChartEditor1.qml</file>
+        <file>qml/qmlchartproperties/ChartEditor2.qml</file>
+        <file>qml/qmlchartproperties/ChartEditor3.qml</file>
+        <file>qml/qmlchartproperties/FontEditor.qml</file>
     </qresource>
 </RCC>
