@@ -23,7 +23,7 @@
 #include "qabstractseries.h"
 #include "qabstractseries_p.h"
 #include "qchart_p.h"
-
+#include "legendlayout_p.h"
 #include "legendmarker_p.h"
 #include "qxyseries.h"
 #include "qlineseries.h"
@@ -41,7 +41,7 @@
 #include <QPainter>
 #include <QPen>
 #include <QTimer>
-
+#include <QGraphicsLayout>
 #include <QGraphicsSceneEvent>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -190,6 +190,7 @@ d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,chart,this))
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesAdded(QAbstractSeries*,Domain*)),d_ptr.data(),SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries*)));
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
+    setLayout(d_ptr->m_layout);
 }
 
 /*!
@@ -212,15 +213,9 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     painter->setPen(d_ptr->m_pen);
     painter->setBrush(d_ptr->m_brush);
     painter->drawRoundRect(rect(),d_ptr->roundness(rect().width()),d_ptr->roundness(rect().height()));
+
 }
 
-/*!
- \internal
- */
-QRectF QLegend::boundingRect() const
-{
-    return d_ptr->m_rect;
-}
 
 /*!
  Sets the \a brush of legend. Brush affects the background of legend.
@@ -277,6 +272,23 @@ QPen QLegend::pen() const
     return d_ptr->m_pen;
 }
 
+void QLegend::setFont(const QFont &font)
+{
+    if (d_ptr->m_font != font) {
+        d_ptr->m_font = font;
+
+        foreach (LegendMarker *marker, d_ptr->markers()) {
+            marker->setFont(d_ptr->m_font);
+        }
+        emit fontChanged(font);
+    }
+}
+
+QFont QLegend::font() const
+{
+   return d_ptr->m_font;
+}
+
 void QLegend::setBorderColor(QColor color)
 {
     QPen p = d_ptr->m_pen;
@@ -292,26 +304,18 @@ QColor QLegend::borderColor()
     return d_ptr->m_pen.color();
 }
 
-void QLegend::setFont(const QFont &font)
-{
-    if (d_ptr->m_font != font) {
-        d_ptr->setFont(font);
-        emit fontChanged(font);
-    }
-}
-
-QFont QLegend::font() const
-{
-    return d_ptr->m_font;
-}
-
 /*!
     Set brush used to draw labels to \a brush.
 */
 void QLegend::setLabelBrush(const QBrush &brush)
 {
     if (d_ptr->m_labelBrush != brush) {
-        d_ptr->setLabelBrush(brush);
+
+        d_ptr->m_labelBrush = brush;
+
+        foreach (LegendMarker *marker, d_ptr->markers()) {
+            marker->setLabelBrush(d_ptr->m_labelBrush);
+        }
         emit labelBrushChanged(brush);
     }
 }
@@ -340,11 +344,17 @@ QColor QLegend::labelColor() const
     return d_ptr->m_labelBrush.color();
 }
 
+
 void QLegend::setAlignment(Qt::Alignment alignment)
 {
     if(d_ptr->m_alignment!=alignment) {
         d_ptr->m_alignment = alignment;
-        d_ptr->updateLayout();
+        updateGeometry();
+        if(isAttachedToChart()){
+            d_ptr->m_presenter->layout()->invalidate();
+        }else{
+            layout()->invalidate();
+        }
     }
 }
 
@@ -359,6 +369,9 @@ Qt::Alignment QLegend::alignment() const
 void QLegend::detachFromChart()
 {
     d_ptr->m_attachedToChart = false;
+    d_ptr->m_layout->invalidate();
+    setParent(0);
+
 }
 
 /*!
@@ -366,7 +379,9 @@ void QLegend::detachFromChart()
  */
 void QLegend::attachToChart()
 {
-    d_ptr->attachToChart();
+    d_ptr->m_attachedToChart = true;
+    d_ptr->m_layout->invalidate();
+    setParent(d_ptr->m_chart);
 }
 
 /*!
@@ -400,24 +415,10 @@ bool QLegend::isBackgroundVisible() const
 /*!
  \internal \a event see QGraphicsWidget for details
  */
-void QLegend::resizeEvent(QGraphicsSceneResizeEvent *event)
-{
-    const QRectF& rect = QRectF(QPoint(0,0),event->newSize());
-    QGraphicsWidget::resizeEvent(event);
-    if(d_ptr->m_rect != rect) {
-        d_ptr->m_rect = rect;
-        d_ptr->updateLayout();
-    }
-}
-
-/*!
- \internal \a event see QGraphicsWidget for details
- */
 void QLegend::hideEvent(QHideEvent *event)
 {
     QGraphicsWidget::hideEvent(event);
-    setEnabled(false);
-    d_ptr->updateLayout();
+    d_ptr->m_presenter->layout()->invalidate();
 }
 
 /*!
@@ -426,18 +427,7 @@ void QLegend::hideEvent(QHideEvent *event)
 void QLegend::showEvent(QShowEvent *event)
 {
     QGraphicsWidget::showEvent(event);
-    setEnabled(true);
-    d_ptr->updateLayout();
-}
-
-qreal QLegend::minWidth() const
-{
-    return d_ptr->m_minWidth;
-}
-
-qreal QLegend::minHeight() const
-{
-    return d_ptr->m_minHeight;
+    d_ptr->m_presenter->layout()->invalidate();
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -445,18 +435,13 @@ qreal QLegend::minHeight() const
 QLegendPrivate::QLegendPrivate(ChartPresenter* presenter, QChart *chart, QLegend *q):
     q_ptr(q),
     m_presenter(presenter),
+    m_layout(new LegendLayout(q)),
     m_chart(chart),
-    m_markers(new QGraphicsItemGroup(q)),
+    m_items(new QGraphicsItemGroup(q)),
     m_alignment(Qt::AlignTop),
     m_brush(QBrush()),
     m_pen(QPen()),
     m_labelBrush(QBrush()),
-    m_offsetX(0),
-    m_offsetY(0),
-    m_minWidth(0),
-    m_minHeight(0),
-    m_width(0),
-    m_height(0),
     m_diameter(5),
     m_attachedToChart(true),
     m_backgroundVisible(false)
@@ -471,290 +456,12 @@ QLegendPrivate::~QLegendPrivate()
 
 void QLegendPrivate::setOffset(qreal x, qreal y)
 {
-    bool scrollHorizontal = true;
-    switch(m_alignment) {
-        case Qt::AlignTop:
-        case Qt::AlignBottom: {
-            scrollHorizontal = true;
-            break;
-        }
-        case Qt::AlignLeft:
-        case Qt::AlignRight: {
-            scrollHorizontal = false;
-            break;
-        }
-    }
-
-    // If detached, the scrolling direction is vertical instead of horizontal and vice versa.
-    if (!m_attachedToChart) {
-        scrollHorizontal = !scrollHorizontal;
-    }
-
-    // Limit offset between m_minOffset and m_maxOffset
-    if (scrollHorizontal) {
-        if(m_width<=m_rect.width()) return;
-
-        if (x != m_offsetX) {
-            m_offsetX = qBound(m_minOffsetX, x, m_maxOffsetX);
-            m_markers->setPos(-m_offsetX,m_rect.top());
-        }
-    } else {
-        if(m_height<=m_rect.height()) return;
-
-        if (y != m_offsetY) {
-            m_offsetY = qBound(m_minOffsetY, y, m_maxOffsetY);
-            m_markers->setPos(m_rect.left(),-m_offsetY);
-        }
-    }
+   m_layout->setOffset(x,y);
 }
 
 QPointF QLegendPrivate::offset() const
 {
-    return QPointF(m_offsetX,m_offsetY);
-}
-
-void QLegendPrivate::updateLayout()
-{
-    if (!m_attachedToChart) {
-        updateDetachedLayout();
-        return;
-    }
-
-    m_offsetX=0;
-    QList<QGraphicsItem *> items = m_markers->childItems();
-
-    if(items.isEmpty()) return;
-
-    m_minWidth=0;
-    m_minHeight=0;
-
-    switch(m_alignment) {
-
-        case Qt::AlignTop:
-        case Qt::AlignBottom: {
-            QPointF point = m_rect.topLeft();
-            m_width = 0;
-            foreach (QGraphicsItem *item, items) {
-                if (item->isVisible()) {
-                    item->setPos(point.x(),m_rect.height()/2 -item->boundingRect().height()/2);
-                    const QRectF& rect = item->boundingRect();
-                    qreal w = rect.width();
-                    m_minWidth=qMax(m_minWidth,w);
-                    m_minHeight=qMax(m_minHeight,rect.height());
-                    m_width+=w;
-                    point.setX(point.x() + w);
-                }
-            }
-            if(m_width<m_rect.width()) {
-                m_markers->setPos(m_rect.width()/2-m_width/2,m_rect.top());
-            }
-            else {
-                m_markers->setPos(m_rect.topLeft());
-            }
-            m_height=m_minHeight;
-        }
-        break;
-        case Qt::AlignLeft:
-        case Qt::AlignRight: {
-            QPointF point = m_rect.topLeft();
-            m_height = 0;
-            foreach (QGraphicsItem *item, items) {
-                if (item->isVisible()) {
-                    item->setPos(point);
-                    const QRectF& rect = item->boundingRect();
-                    qreal h = rect.height();
-                    m_minWidth=qMax(m_minWidth,rect.width());
-                    m_minHeight=qMax(m_minHeight,h);
-                    m_height+=h;
-                    point.setY(point.y() + h);
-                }
-            }
-            if(m_height<m_rect.height()) {
-                m_markers->setPos(m_rect.left(),m_rect.height()/2-m_height/2);
-            }
-            else {
-                m_markers->setPos(m_rect.topLeft());
-            }
-            m_width=m_minWidth;
-        }
-        break;
-    }
-
-    m_minOffsetX = 0;
-    m_minOffsetY = 0;
-    m_maxOffsetX = m_width - m_rect.width();
-    m_maxOffsetY = m_height - m_rect.height();
-
-    m_presenter->updateLayout();
-}
-
-void QLegendPrivate::updateDetachedLayout()
-{
-    // Detached layout is different.
-    // In detached mode legend may have multiple rows and columns, so layout calculations
-    // differ a log from attached mode.
-    // Also the scrolling logic is bit different.
-    m_offsetX=0;
-    m_offsetY=0;
-    QList<QGraphicsItem *> items = m_markers->childItems();
-
-    if(items.isEmpty()) return;
-
-    m_minWidth = 0;
-    m_minHeight = 0;
-
-    switch (m_alignment) {
-        case Qt::AlignTop: {
-            QPointF point = m_rect.topLeft();
-            m_width = 0;
-            m_height = 0;
-            for (int i=0; i<items.count(); i++) {
-                QGraphicsItem *item = items.at(i);
-                if (item->isVisible()) {
-                    const QRectF& rect = item->boundingRect();
-                    qreal w = rect.width();
-                    qreal h = rect.height();
-                    m_minWidth = qMax(m_minWidth,w);
-                    m_minHeight = qMax(m_minHeight,rect.height());
-                    m_height = qMax(m_height,h);
-                    item->setPos(point.x(),point.y());
-                    point.setX(point.x() + w);
-                    if (point.x() + w > m_rect.topLeft().x() + m_rect.width()) {
-                        // Next item would go off rect.
-                        point.setX(m_rect.topLeft().x());
-                        point.setY(point.y() + h);
-                        if (i+1 < items.count()) {
-                            m_height += h;
-                        }
-                    }
-                }
-            }
-            m_markers->setPos(m_rect.topLeft());
-            m_width = m_minWidth;
-
-            m_minOffsetX = 0;
-            m_minOffsetY = 0;
-            m_maxOffsetX = m_width - m_rect.width();
-            m_maxOffsetY = m_height - m_rect.height();
-        }
-        break;
-        case Qt::AlignBottom: {
-            QPointF point = m_rect.bottomLeft();
-            m_width = 0;
-            m_height = 0;
-            for (int i=0; i<items.count(); i++) {
-                QGraphicsItem *item = items.at(i);
-                if (item->isVisible()) {
-                    const QRectF& rect = item->boundingRect();
-                    qreal w = rect.width();
-                    qreal h = rect.height();
-                    m_minWidth = qMax(m_minWidth,w);
-                    m_minHeight = qMax(m_minHeight,rect.height());
-                    m_height = qMax(m_height,h);
-                    item->setPos(point.x(),point.y() - h);
-                    point.setX(point.x() + w);
-                    if (point.x() + w > m_rect.bottomLeft().x() + m_rect.width()) {
-                        // Next item would go off rect.
-                        point.setX(m_rect.bottomLeft().x());
-                        point.setY(point.y() - h);
-                        if (i+1 < items.count()) {
-                            m_height += h;
-                        }
-                    }
-                }
-            }
-            m_markers->setPos(m_rect.topLeft());
-            m_width = m_minWidth;
-
-            m_minOffsetX = 0;
-            m_minOffsetY = qMin(m_rect.topLeft().y(), m_rect.topLeft().y() - m_height + m_rect.height());
-            m_maxOffsetX = m_width - m_rect.width();
-            m_maxOffsetY = 0;
-        }
-        break;
-        case Qt::AlignLeft: {
-            QPointF point = m_rect.topLeft();
-            m_width = 0;
-            m_height = 0;
-            qreal maxWidth = 0;
-            for (int i=0; i<items.count(); i++) {
-                QGraphicsItem *item = items.at(i);
-                if (item->isVisible()) {
-                    const QRectF& rect = item->boundingRect();
-                    qreal w = rect.width();
-                    qreal h = rect.height();
-                    m_minWidth = qMax(m_minWidth,rect.width());
-                    m_minHeight = qMax(m_minHeight,h);
-                    maxWidth = qMax(maxWidth,w);
-                    item->setPos(point.x(),point.y());
-                    point.setY(point.y() + h);
-                    if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
-                        // Next item would go off rect.
-                        point.setX(point.x() + maxWidth);
-                        point.setY(m_rect.topLeft().y());
-                        if (i+1 < items.count()) {
-                            m_width += maxWidth;
-                            maxWidth = 0;
-                        }
-                    }
-                }
-            }
-            m_width += maxWidth;
-            m_markers->setPos(m_rect.topLeft());
-            m_height = m_minHeight;
-
-            m_minOffsetX = 0;
-            m_minOffsetY = 0;
-            m_maxOffsetX = m_width - m_rect.width();
-            m_maxOffsetY = m_height - m_rect.height();
-        }
-        break;
-        case Qt::AlignRight: {
-            QPointF point = m_rect.topRight();
-            m_width = 0;
-            m_height = 0;
-            qreal maxWidth = 0;
-            for (int i=0; i<items.count(); i++) {
-                QGraphicsItem *item = items.at(i);
-                if (item->isVisible()) {
-                    const QRectF& rect = item->boundingRect();
-                    qreal w = rect.width();
-                    qreal h = rect.height();
-                    m_minWidth = qMax(m_minWidth,rect.width());
-                    m_minHeight = qMax(m_minHeight,h);
-                    maxWidth = qMax(maxWidth,w);
-                    item->setPos(point.x() - w,point.y());
-                    point.setY(point.y() + h);
-                    if (point.y() + h > m_rect.topLeft().y() + m_rect.height()) {
-                        // Next item would go off rect.
-                        point.setX(point.x() - maxWidth);
-                        point.setY(m_rect.topLeft().y());
-                        if (i+1 < items.count()) {
-                            m_width += maxWidth;
-                            maxWidth = 0;
-                        }
-                    }
-                }
-            }
-            m_width += maxWidth;
-            m_markers->setPos(m_rect.topLeft());
-            m_height = m_minHeight;
-
-            m_minOffsetX = qMin(m_rect.topLeft().x(), m_rect.topLeft().x() - m_width + m_rect.width());
-            m_minOffsetY = 0;
-            m_maxOffsetX = 0;
-            m_maxOffsetY = m_height - m_rect.height();
-        }
-        break;
-        default:
-        break;
-    }
-}
-
-void QLegendPrivate::attachToChart()
-{
-    m_attachedToChart = true;
-    q_ptr->setParent(m_chart);
+    return m_layout->offset();
 }
 
 int QLegendPrivate::roundness(qreal size)
@@ -762,39 +469,17 @@ int QLegendPrivate::roundness(qreal size)
     return 100*m_diameter/int(size);
 }
 
-void QLegendPrivate::setFont(const QFont &font)
-{
-    m_font = font;
-    QList<QGraphicsItem *> items = m_markers->childItems();
-
-    foreach (QGraphicsItem *markers, items) {
-        LegendMarker *marker = static_cast<LegendMarker*>(markers);
-        marker->setFont(m_font);
-    }
-    updateLayout();
-}
-
-void QLegendPrivate::setLabelBrush(const QBrush &brush)
-{
-    m_labelBrush = brush;
-    QList<QGraphicsItem *> items = m_markers->childItems();
-
-    foreach (QGraphicsItem *markers, items) {
-        LegendMarker *marker = static_cast<LegendMarker*>(markers);
-        marker->setLabelBrush(m_labelBrush);
-    }
-    updateLayout();
-}
-
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 {
     Q_UNUSED(domain)
 
     QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
+
     foreach(LegendMarker* marker, markers) {
         marker->setFont(m_font);
         marker->setLabelBrush(m_labelBrush);
-        m_markers->addToGroup(marker);
+        m_items->addToGroup(marker);
+        m_markers<<marker;
     }
 
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
@@ -805,17 +490,15 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
         QObject::connect(pieSeries, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
     }
 
-    updateLayout();
+    q_ptr->layout()->invalidate();
 }
 
 void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 {
-    QList<QGraphicsItem *> items = m_markers->childItems();
-
-    foreach (QGraphicsItem *markers, items) {
-        LegendMarker *marker = static_cast<LegendMarker*>(markers);
+    foreach (LegendMarker *marker, m_markers) {
         if (marker->series() == series) {
             delete marker;
+            m_markers.removeAll(marker);
         }
     }
 
@@ -826,7 +509,7 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
         QObject::disconnect(pieSeries, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
     }
 
-    updateLayout();
+    q_ptr->layout()->invalidate();
 }
 
 void QLegendPrivate::handleSeriesUpdated(QAbstractSeries *series)
@@ -850,18 +533,15 @@ void QLegendPrivate::handleUpdatePieSeries()
 void QLegendPrivate::handleSeriesVisibleChanged()
 {
     QAbstractSeries* series = qobject_cast<QAbstractSeries *> (sender());
-    QList<QGraphicsItem *> items = m_markers->childItems();
 
-    foreach (QGraphicsItem *markers, items) {
-        LegendMarker *marker = static_cast<LegendMarker*>(markers);
+    foreach (LegendMarker* marker, m_markers) {
         if (marker->series() == series) {
             marker->setVisible(!marker->isVisible());
         }
     }
 
-    updateLayout();
+    q_ptr->layout()->invalidate();
 }
-
 
 #include "moc_qlegend.cpp"
 #include "moc_qlegend_p.cpp"

@@ -32,6 +32,7 @@
 #include "chartaxisy_p.h"
 #include "areachartitem_p.h"
 #include "chartbackground_p.h"
+#include "chartlayout_p.h"
 #include <QTimer>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -41,17 +42,11 @@ m_chart(chart),
 m_animator(0),
 m_dataset(dataset),
 m_chartTheme(0),
-m_chartRect(QRectF(QPoint(0,0),m_chart->size())),
 m_options(QChart::NoAnimation),
-m_minLeftMargin(0),
-m_minBottomMargin(0),
 m_state(ShowState),
+m_layout(new ChartLayout(this)),
 m_backgroundItem(0),
-m_titleItem(0),
-m_marginBig(60),
-m_marginSmall(20),
-m_marginTiny(10),
-m_chartMargins(QRect(m_marginBig,m_marginBig,0,0))
+m_titleItem(0)
 {
 
 }
@@ -63,56 +58,12 @@ ChartPresenter::~ChartPresenter()
 
 void ChartPresenter::setGeometry(const QRectF& rect)
 {
-    m_rect = rect;
-    Q_ASSERT(m_rect.isValid());
-    updateLayout();
-}
 
-void ChartPresenter::setMinimumMarginWidth(ChartAxis* axis, qreal width)
-{
-    switch(axis->axisType()){
-    case ChartAxis::X_AXIS:
-    {
-        if(width>m_chartRect.width()+ m_chartMargins.left()) {
-            m_minLeftMargin= width - m_chartRect.width();
-            updateLayout();
-        }
-        break;
-    }
-    case ChartAxis::Y_AXIS:
-    {
+    Q_ASSERT(rect.isValid());
 
-        if(m_minLeftMargin!=width){
-            m_minLeftMargin= width;
-            updateLayout();
-        }
-        break;
-    }
-
-    }
-}
-
-void ChartPresenter::setMinimumMarginHeight(ChartAxis* axis, qreal height)
-{
-    switch(axis->axisType()){
-    case ChartAxis::X_AXIS:
-    {
-        if(m_minBottomMargin!=height) {
-            m_minBottomMargin= height;
-            updateLayout();
-        }
-        break;
-    }
-    case ChartAxis::Y_AXIS:
-    {
-
-        if(height>m_chartMargins.bottom()+m_chartRect.height()){
-            m_minBottomMargin= height - m_chartRect.height();
-            updateLayout();
-        }
-        break;
-    }
-
+    if(m_rect!=rect) {
+           m_rect=rect;
+           emit geometryChanged(m_rect);
     }
 }
 
@@ -147,7 +98,7 @@ void ChartPresenter::handleAxisAdded(QAxis* axis,Domain* domain)
 
     QObject::connect(this,SIGNAL(geometryChanged(QRectF)),item,SLOT(handleGeometryChanged(QRectF)));
     //initialize
-    if(m_chartRect.isValid()) item->handleGeometryChanged(m_chartRect);
+    if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
     m_axisItems.insert(axis, item);
 }
 
@@ -168,7 +119,7 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries* series,Domain* domain)
     QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),item,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
     //initialize
     item->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());
-    if(m_chartRect.isValid()) item->handleGeometryChanged(m_chartRect);
+    if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
     m_chartItems.insert(series,item);
 }
 
@@ -243,23 +194,23 @@ void ChartPresenter::resetAllElements()
 
 void ChartPresenter::zoomIn(qreal factor)
 {
-    QRectF rect = chartGeometry();
+    QRectF rect = geometry();
     rect.setWidth(rect.width()/factor);
     rect.setHeight(rect.height()/factor);
-    rect.moveCenter(chartGeometry().center());
+    rect.moveCenter(geometry().center());
     zoomIn(rect);
 }
 
 void ChartPresenter::zoomIn(const QRectF& rect)
 {
     QRectF r = rect.normalized();
-    r.translate(-m_chartMargins.topLeft());
+    r.translate(-geometry().topLeft());
     if (!r.isValid())
         return;
 
     m_state = ZoomInState;
-    m_statePoint = QPointF(r.center().x()/chartGeometry().width(),r.center().y()/chartGeometry().height());
-    m_dataset->zoomInDomain(r,chartGeometry().size());
+    m_statePoint = QPointF(r.center().x()/geometry().width(),r.center().y()/geometry().height());
+    m_dataset->zoomInDomain(r,geometry().size());
     m_state = ShowState;
 }
 
@@ -268,14 +219,14 @@ void ChartPresenter::zoomOut(qreal factor)
     m_state = ZoomOutState;
 
     QRectF chartRect;
-    chartRect.setSize(chartGeometry().size());
+    chartRect.setSize(geometry().size());
 
     QRectF rect;
     rect.setSize(chartRect.size()/factor);
     rect.moveCenter(chartRect.center());
     if (!rect.isValid())
         return;
-    m_statePoint = QPointF(rect.center().x()/chartGeometry().width(),rect.center().y()/chartGeometry().height());
+    m_statePoint = QPointF(rect.center().x()/geometry().width(),rect.center().y()/geometry().height());
     m_dataset->zoomOutDomain(rect, chartRect.size());
     m_state = ShowState;
 }
@@ -287,7 +238,7 @@ void ChartPresenter::scroll(qreal dx,qreal dy)
     if(dy<0) m_state=ScrollUpState;
     if(dy>0) m_state=ScrollDownState;
 
-    m_dataset->scrollDomain(dx,dy,chartGeometry().size());
+    m_dataset->scrollDomain(dx,dy,geometry().size());
     m_state = ShowState;
 }
 
@@ -296,106 +247,7 @@ QChart::AnimationOptions ChartPresenter::animationOptions() const
     return m_options;
 }
 
-void ChartPresenter::updateLayout()
-{
-    if (!m_rect.isValid()) return;
-
-    QRectF oldChargMargins = m_chartMargins;
-
-    // recalculate title size
-
-    QSize titleSize;
-    int titlePadding=0;
-
-    if (m_titleItem) {
-        titleSize= m_titleItem->boundingRect().size().toSize();
-    }
-
-    //defaults
-    m_chartMargins = QRect(QPoint(m_minLeftMargin>m_marginBig?m_minLeftMargin:m_marginBig,m_marginBig),QPoint(m_marginBig,m_minBottomMargin>m_marginBig?m_minBottomMargin:m_marginBig));
-    titlePadding = m_chartMargins.top()/2;
-
-    QLegend* legend = m_chart->d_ptr->m_legend;
-
-    // recalculate legend position
-    if (legend != 0 && legend->isAttachedToChart() && legend->isEnabled()) {
-
-        // Reserve some space for legend
-        switch (legend->alignment()) {
-
-        case Qt::AlignTop: {
-            int ledgendSize = legend->minHeight();
-            int topPadding = 2*m_marginTiny + titleSize.height() + ledgendSize + m_marginTiny;
-            m_chartMargins = QRect(QPoint(m_chartMargins.left(),topPadding),QPoint(m_chartMargins.right(),m_chartMargins.bottom()));
-            m_legendMargins = QRect(QPoint(m_chartMargins.left(),topPadding - (ledgendSize + m_marginTiny)),QPoint(m_chartMargins.right(),m_rect.height()-topPadding + m_marginTiny));
-            titlePadding = m_marginTiny + m_marginTiny;
-            break;
-        }
-        case Qt::AlignBottom: {
-            int ledgendSize = legend->minHeight();
-            int bottomPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny + m_minBottomMargin;
-            m_chartMargins = QRect(QPoint(m_chartMargins.left(),m_chartMargins.top()),QPoint(m_chartMargins.right(),bottomPadding));
-            m_legendMargins = QRect(QPoint(m_chartMargins.left(),m_rect.height()-bottomPadding + m_marginTiny + m_minBottomMargin),QPoint(m_chartMargins.right(),m_marginTiny + m_marginSmall));
-            titlePadding = m_chartMargins.top()/2;
-            break;
-        }
-        case Qt::AlignLeft: {
-            int ledgendSize = legend->minWidth();
-            int leftPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny + m_minLeftMargin;
-            m_chartMargins = QRect(QPoint(leftPadding,m_chartMargins.top()),QPoint(m_chartMargins.right(),m_chartMargins.bottom()));
-            m_legendMargins = QRect(QPoint(m_marginTiny + m_marginSmall,m_chartMargins.top()),QPoint(m_rect.width()-leftPadding + m_marginTiny + m_minLeftMargin,m_chartMargins.bottom()));
-            titlePadding = m_chartMargins.top()/2;
-            break;
-        }
-        case Qt::AlignRight: {
-            int ledgendSize = legend->minWidth();
-            int rightPadding = m_marginTiny + m_marginSmall + ledgendSize + m_marginTiny;
-            m_chartMargins = QRect(QPoint(m_chartMargins.left(),m_chartMargins.top()),QPoint(rightPadding,m_chartMargins.bottom()));
-            m_legendMargins = QRect(QPoint(m_rect.width()- rightPadding+ m_marginTiny ,m_chartMargins.top()),QPoint(m_marginTiny + m_marginSmall,m_chartMargins.bottom()));
-            titlePadding = m_chartMargins.top()/2;
-            break;
-        }
-        default: {
-            break;
-        }
-        }
-    }
-
-    if(m_rect.width()<2*(m_chartMargins.top()+m_chartMargins.bottom()) || m_rect.height()< 2*(m_chartMargins.top() + m_chartMargins.bottom()))
-    {
-        m_chart->setMinimumSize(2*(m_chartMargins.top()+m_chartMargins.bottom()),2*(m_chartMargins.top() + m_chartMargins.bottom()));
-        return;
-    }
-
-
-    // recalculate title position
-    if (m_titleItem) {
-        QPointF center = m_rect.center() -m_titleItem->boundingRect().center();
-        m_titleItem->setPos(center.x(),titlePadding);
-    }
-
-    //recalculate background gradient
-    if (m_backgroundItem) {
-        m_backgroundItem->setRect(m_rect.adjusted(m_marginTiny,m_marginTiny, -m_marginTiny, -m_marginTiny));
-    }
-
-
-    QRectF chartRect = m_rect.adjusted(m_chartMargins.left(),m_chartMargins.top(),-m_chartMargins.right(),-m_chartMargins.bottom());
-
-    if (legend != 0 && legend->isAttachedToChart() && legend->isEnabled()) {
-        legend->setGeometry(m_rect.adjusted(m_legendMargins.left(),m_legendMargins.top(),-m_legendMargins.right(),-m_legendMargins.bottom()));
-    }
-
-    if(m_chartRect!=chartRect && chartRect.isValid()){
-        m_chartRect=chartRect;
-        emit geometryChanged(m_chartRect);
-    }
-
-    if (oldChargMargins != m_chartMargins)
-        emit marginsChanged(m_chartMargins);
-}
-
-void ChartPresenter::createChartBackgroundItem()
+void ChartPresenter::createBackgroundItem()
 {
     if (!m_backgroundItem) {
         m_backgroundItem = new ChartBackground(rootItem());
@@ -404,13 +256,14 @@ void ChartPresenter::createChartBackgroundItem()
     }
 }
 
-void ChartPresenter::createChartTitleItem()
+void ChartPresenter::createTitleItem()
 {
     if (!m_titleItem) {
         m_titleItem = new QGraphicsSimpleTextItem(rootItem());
         m_titleItem->setZValue(ChartPresenter::BackgroundZValue);
     }
 }
+
 
 void ChartPresenter::handleAnimationFinished()
 {
@@ -426,6 +279,138 @@ void ChartPresenter::startAnimation(ChartAnimation* animation)
         m_animations.append(animation);
     }
     QTimer::singleShot(0, animation, SLOT(start()));
+}
+
+QGraphicsRectItem* ChartPresenter::backgroundItem()
+{
+    return m_backgroundItem;
+}
+
+void ChartPresenter::setBackgroundBrush(const QBrush& brush)
+{
+    createBackgroundItem();
+    m_backgroundItem->setBrush(brush);
+    m_layout->invalidate();
+}
+
+QBrush ChartPresenter::backgroundBrush() const
+{
+    if (!m_backgroundItem) return QBrush();
+    return m_backgroundItem->brush();
+}
+
+void ChartPresenter::setBackgroundPen(const QPen& pen)
+{
+    createBackgroundItem();
+    m_backgroundItem->setPen(pen);
+    m_layout->invalidate();
+}
+
+QPen ChartPresenter::backgroundPen() const
+{
+    if (!m_backgroundItem) return QPen();
+    return m_backgroundItem->pen();
+}
+
+QGraphicsItem* ChartPresenter::titleItem()
+{
+    return m_titleItem;
+}
+
+void ChartPresenter::setTitle(const QString& title)
+{
+    createTitleItem();
+    m_titleItem->setText(title);
+    m_layout->invalidate();
+}
+
+QString ChartPresenter::title() const
+{
+    if (!m_titleItem) return QString();
+    return m_titleItem->text();
+}
+
+void ChartPresenter::setTitleFont(const QFont& font)
+{
+    createTitleItem();
+    m_titleItem->setFont(font);
+    m_layout->invalidate();
+}
+
+QFont ChartPresenter::titleFont() const
+{
+    if (!m_titleItem)  return QFont();
+    return m_titleItem->font();
+}
+
+void ChartPresenter::setTitleBrush(const QBrush &brush)
+{
+    createTitleItem();
+    m_titleItem->setBrush(brush);
+    m_layout->invalidate();
+}
+
+QBrush ChartPresenter::titleBrush() const
+{
+    if (!m_titleItem) return QBrush();
+    return m_titleItem->brush();
+}
+
+void ChartPresenter::setBackgroundVisible(bool visible)
+{
+    createBackgroundItem();
+    m_backgroundItem->setVisible(visible);
+}
+
+
+bool ChartPresenter::isBackgroundVisible() const
+{
+    if (!m_backgroundItem) return false;
+    return m_backgroundItem->isVisible();
+}
+
+void ChartPresenter::setBackgroundDropShadowEnabled(bool enabled)
+{
+    createBackgroundItem();
+    m_backgroundItem->setDropShadowEnabled(enabled);
+}
+
+bool ChartPresenter::isBackgroundDropShadowEnabled() const
+{
+    if (!m_backgroundItem) return false;
+    return m_backgroundItem->isDropShadowEnabled();
+}
+
+
+QGraphicsLayout* ChartPresenter::layout()
+{
+    return m_layout;
+}
+
+void ChartPresenter::setMarginsMinimum(const QRectF& margins)
+{
+    Q_UNUSED(margins);
+  //  m_layout->setMarginsMinimum(margins);
+}
+
+QRectF ChartPresenter::margins() const
+{
+    return QRectF();//m_layout->margins();
+}
+
+QLegend* ChartPresenter::legend()
+{
+    return m_chart->legend();
+}
+
+QList<ChartAxis*>  ChartPresenter::axisItems() const
+{
+    return m_axisItems.values();
+}
+
+void ChartPresenter::setVisible(bool visible)
+{
+    m_chart->setVisible(visible);
 }
 
 #include "moc_chartpresenter_p.cpp"

@@ -43,17 +43,18 @@ LegendMarker::LegendMarker(QAbstractSeries *series, QLegend *legend) :
     m_boundingRect(0,0,0,0),
     m_legend(legend),
     m_textItem(new QGraphicsSimpleTextItem(this)),
-    m_rectItem(new QGraphicsRectItem(this))
+    m_rectItem(new QGraphicsRectItem(this)),
+    m_margin(2),
+    m_space(4)
 {
     //setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     m_rectItem->setRect(m_markerRect);
-    updateLayout();
 }
 
 void LegendMarker::setPen(const QPen &pen)
 {
     m_rectItem->setPen(pen);
-    updateLayout();
+    m_textItem->setPen(pen);
 }
 
 QPen LegendMarker::pen() const
@@ -74,7 +75,6 @@ QBrush LegendMarker::brush() const
 void LegendMarker::setFont(const QFont &font)
 {
     m_textItem->setFont(font);
-    updateLayout();
 }
 
 QFont LegendMarker::font() const
@@ -85,12 +85,6 @@ QFont LegendMarker::font() const
 void LegendMarker::setLabel(const QString label)
 {
     m_textItem->setText(label);
-    updateLayout();
-}
-
-void LegendMarker::setSize(const QSize& size)
-{
-    m_markerRect = QRectF(0,0,size.width(),size.height());
 }
 
 QString LegendMarker::label() const
@@ -98,15 +92,31 @@ QString LegendMarker::label() const
     return m_textItem->text();
 }
 
+QRectF LegendMarker::boundingRect() const
+{
+    return m_boundingRect;
+}
+
 void LegendMarker::setLabelBrush(const QBrush &brush)
 {
     m_textItem->setBrush(brush);
-    updateLayout();
 }
 
 QBrush LegendMarker::labelBrush() const
 {
     return m_textItem->brush();
+}
+
+
+void LegendMarker::setGeometry(const QRectF& rect)
+{
+    const QRectF& textRect = m_textItem->boundingRect();
+
+    m_textItem->setPos(m_markerRect.width() + m_space + m_margin,rect.height()/2 - textRect.height()/2);
+    m_rectItem->setPos(m_margin,rect.height()/2 - m_markerRect.height()/2);
+
+    prepareGeometryChange();
+    m_boundingRect = rect;
 }
 
 void LegendMarker::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -116,23 +126,26 @@ void LegendMarker::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     Q_UNUSED(painter)
 }
 
-QRectF LegendMarker::boundingRect() const
+
+QSizeF LegendMarker::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
 {
-    return m_boundingRect;
-}
+    Q_UNUSED(constraint)
 
-void LegendMarker::updateLayout()
-{
+    QFontMetrics fn(m_textItem->font());
+    QSizeF sh;
 
-    static const qreal margin = 2;
-    static const qreal space = 4;
+      switch (which) {
+        case Qt::MinimumSize:
+            sh = QSizeF(fn.boundingRect("...").width(),fn.height());
+            break;
+        case Qt::PreferredSize:
+            sh = QSizeF(fn.boundingRect(m_textItem->text()).width() + 2*m_margin + m_space +m_markerRect.width(),qMax(m_markerRect.height()+2*m_margin,fn.height()+2*m_margin));
+            break;
+        default:
+          break;
+      }
 
-    const QRectF& textRect = m_textItem->boundingRect();
-    prepareGeometryChange();
-    m_boundingRect = QRectF(0,0,m_markerRect.width() + 2*margin + space + textRect.width(),qMax(m_markerRect.height()+2*margin,textRect.height()+2*margin));
-    m_textItem->setPos(m_markerRect.width() + space + margin,m_boundingRect.height()/2 - textRect.height()/2);
-    m_rectItem->setPos(margin,m_boundingRect.height()/2 - m_markerRect.height()/2);
-
+      return sh;
 }
 
 void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)

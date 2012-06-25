@@ -37,6 +37,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChart;
 class ChartPresenter;
 class QAbstractSeries;
+class LegendLayout;
 
 class QLegendPrivate : public QObject
 {
@@ -47,12 +48,10 @@ public:
 
     void setOffset(qreal x, qreal y);
     QPointF offset() const;
-    void updateLayout();
-    void updateDetachedLayout();
-    void attachToChart();
     int roundness(qreal size);
-    void setFont(const QFont &font);
-    void setLabelBrush(const QBrush &brush);
+
+    QList<LegendMarker*> markers() { return m_markers; }
+    QGraphicsItemGroup* items() { return m_items; }
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
@@ -64,24 +63,16 @@ public Q_SLOTS:
 private:
     QLegend *q_ptr;
     ChartPresenter *m_presenter;
+    LegendLayout *m_layout;
     QChart* m_chart;
-    QGraphicsItemGroup* m_markers;
+    QGraphicsItemGroup* m_items;
+    QList<LegendMarker*> m_markers;
     Qt::Alignment m_alignment;
     QBrush m_brush;
     QPen m_pen;
     QFont m_font;
     QBrush m_labelBrush;
-    QRectF m_rect;
-    qreal m_offsetX;
-    qreal m_offsetY;
-    qreal m_minOffsetX;
-    qreal m_minOffsetY;
-    qreal m_maxOffsetX;
-    qreal m_maxOffsetY;
-    qreal m_minWidth;
-    qreal m_minHeight;
-    qreal m_width;
-    qreal m_height;
+
     qreal m_diameter;
     bool m_attachedToChart;
     bool m_backgroundVisible;

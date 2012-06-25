@@ -45,6 +45,7 @@ class ChartTheme;
 class ChartAnimator;
 class ChartBackground;
 class ChartAnimation;
+class ChartLayout;
 
 class ChartPresenter: public QObject
 {
@@ -80,6 +81,34 @@ public:
     ChartTheme *chartTheme() const { return m_chartTheme; }
     ChartDataSet *dataSet() const { return m_dataset; }
     QGraphicsItem* rootItem() const { return m_chart; }
+    QGraphicsRectItem* backgroundItem();
+    QGraphicsItem* titleItem();
+    QList<ChartAxis*> axisItems() const;
+
+    QLegend* legend();
+
+    void setBackgroundBrush(const QBrush& brush);
+    QBrush backgroundBrush() const;
+
+    void setBackgroundPen(const QPen& pen);
+    QPen backgroundPen() const;
+
+    void setTitle(const QString& title);
+    QString title() const;
+
+    void setTitleFont(const QFont& font);
+    QFont titleFont() const;
+
+    void setTitleBrush(const QBrush &brush);
+    QBrush titleBrush() const;
+
+    void setBackgroundVisible(bool visible);
+    bool isBackgroundVisible() const;
+
+    void setBackgroundDropShadowEnabled(bool enabled);
+    bool isBackgroundDropShadowEnabled() const;
+
+    void setVisible(bool visible);
 
     void setTheme(QChart::ChartTheme theme,bool force = true);
     QChart::ChartTheme theme();
@@ -93,28 +122,27 @@ public:
     void scroll(qreal dx,qreal dy);
 
     void setGeometry(const QRectF& rect);
-    QRectF chartGeometry() const { return m_chartRect; }
-
-    void setMinimumMarginHeight(ChartAxis* axis, qreal height);
-    void setMinimumMarginWidth(ChartAxis* axis, qreal width);
-    qreal minimumLeftMargin() const { return m_minLeftMargin; }
-    qreal minimumBottomMargin() const { return m_minBottomMargin; }
+    QRectF geometry() { return m_rect; }
 
     void startAnimation(ChartAnimation* animation);
     State state() const { return m_state; }
     QPointF statePoint() const { return m_statePoint; }
-public: //TODO: fix me
+
     void resetAllElements();
-    void createChartBackgroundItem();
-    void createChartTitleItem();
-    QRectF margins() const { return m_chartMargins;}
+
+    void setMarginsMinimum(const QRectF& margins);
+    QRectF margins() const;
+    QGraphicsLayout* layout();
+
+private:
+    void createBackgroundItem();
+    void createTitleItem();
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries* series,Domain* domain);
     void handleSeriesRemoved(QAbstractSeries* series);
     void handleAxisAdded(QAxis* axis,Domain* domain);
     void handleAxisRemoved(QAxis* axis);
-    void updateLayout();
 
 private Q_SLOTS:
     void handleAnimationFinished();
@@ -132,22 +160,13 @@ private:
     QMap<QAbstractSeries *, Chart *> m_chartItems;
     QMap<QAxis *, ChartAxis *> m_axisItems;
     QRectF m_rect;
-    QRectF m_chartRect;
     QChart::AnimationOptions m_options;
-    qreal m_minLeftMargin;
-    qreal m_minBottomMargin;
     State m_state;
     QPointF m_statePoint;
     QList<ChartAnimation*> m_animations;
-
-public: //TODO: fixme
+    ChartLayout* m_layout;
     ChartBackground* m_backgroundItem;
     QGraphicsSimpleTextItem* m_titleItem;
-    int m_marginBig;
-    int m_marginSmall;
-    int m_marginTiny;
-    QRectF m_chartMargins;
-    QRectF m_legendMargins;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

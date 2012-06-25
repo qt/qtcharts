@@ -34,6 +34,7 @@
 #include "chart_p.h"
 #include "axisanimation_p.h"
 #include <QGraphicsItem>
+#include <QFont>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -84,6 +85,9 @@ public:
 
     QRectF geometry() const { return m_rect; }
 
+    qreal minimumWidth();
+    qreal minimumHeight();
+
 protected:
     virtual void updateGeometry() = 0;
     virtual QVector<qreal> calculateLayout() const = 0;
@@ -115,6 +119,9 @@ protected:
     qreal m_max;
     int m_ticksCount;
     AxisAnimation *m_animation;
+    qreal m_minWidth;
+    qreal m_minHeight;
+    QFont m_font;
 
     friend class AxisAnimation;
     friend class AxisItem;

@@ -42,7 +42,6 @@ struct QChartPrivate
 {
     QChartPrivate();
     ~QChartPrivate();
-    QRectF m_rect;
     QLegend* m_legend;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;

@@ -252,10 +252,10 @@ void MainWidget::fontSizeChanged()
 void MainWidget::updateLegendLayout()
 {
 //![4]
-    m_chart->legend()->setGeometry(m_legendPosX->value()
+    m_chart->legend()->setGeometry(QRectF(m_legendPosX->value()
                                    ,m_legendPosY->value()
                                    ,m_legendWidth->value()
-                                   ,m_legendHeight->value());
+                                   ,m_legendHeight->value()));
     m_chart->legend()->update();
 //![4]
 }

@@ -57,7 +57,6 @@ public:
     ~QLegend();
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
-    QRectF boundingRect() const;
 
     void setBrush(const QBrush &brush);
     QBrush brush() const;
@@ -84,14 +83,11 @@ public:
     void attachToChart();
     bool isAttachedToChart();
 
-    qreal minWidth() const;
-    qreal minHeight() const;
-
     void setBackgroundVisible(bool visible = true);
     bool isBackgroundVisible() const;
 
+
 protected:
-    void resizeEvent(QGraphicsSceneResizeEvent *event);
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);
 
@@ -107,6 +103,8 @@ private:
     QScopedPointer<QLegendPrivate> d_ptr;
     Q_DISABLE_COPY(QLegend)
     friend class LegendScroller;
+    friend class LegendLayout;
+    friend class ChartLayout;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

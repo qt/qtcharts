@@ -40,7 +40,9 @@ ChartAxis::ChartAxis(QAxis *axis,ChartPresenter *presenter) : Chart(presenter),
     m_min(0),
     m_max(0),
     m_ticksCount(0),
-    m_animation(0)
+    m_animation(0),
+    m_minWidth(0),
+    m_minHeight(0)
 {
     //initial initialization
     m_axis->setZValue(ChartPresenter::AxisZValue);
@@ -51,6 +53,9 @@ ChartAxis::ChartAxis(QAxis *axis,ChartPresenter *presenter) : Chart(presenter),
 
     QObject::connect(m_chartAxis->d_ptr.data(),SIGNAL(updated()),this,SLOT(handleAxisUpdated()));
     QObject::connect(m_chartAxis->categories()->d_ptr.data(),SIGNAL(updated()),this,SLOT(handleAxisCategoriesUpdated()));
+
+    QGraphicsSimpleTextItem item;
+    m_font = item.font();
 
     handleAxisUpdated();
 }
@@ -243,6 +248,7 @@ void ChartAxis::setLabelsFont(const QFont &font)
     foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setFont(font);
     }
+    m_font = font;
 }
 
 void ChartAxis::setShadesBrush(const QBrush &brush)
@@ -350,6 +356,20 @@ void ChartAxis::handleGeometryChanged(const QRectF &rect)
         updateLayout(layout);
     }
 }
+
+
+qreal ChartAxis::minimumWidth()
+{
+    if(m_minWidth == 0) updateGeometry();
+    return m_minWidth;
+}
+
+qreal ChartAxis::minimumHeight()
+{
+    if(m_minHeight == 0) updateGeometry();
+    return m_minHeight;
+}
+
 
 void ChartAxis::axisSelected()
 {

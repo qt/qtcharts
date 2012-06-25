@@ -26,6 +26,7 @@
 #include "qaxis.h"
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
+#include <QGraphicsLayout>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -117,7 +118,8 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
     d_ptr->createConnections();
     d_ptr->m_legend = new LegendScroller(this);
     d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);
-    connect(d_ptr->m_presenter, SIGNAL(marginsChanged(QRectF)), this, SIGNAL(marginsChanged(QRectF)));
+    //connect(d_ptr->m_presenter, SIGNAL(marginsChanged(QRectF)), this, SIGNAL(marginsChanged(QRectF)));
+    setLayout(d_ptr->m_presenter->layout());
 }
 
 /*!
@@ -126,6 +128,7 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(
 QChart::~QChart()
 {
     //delete first presenter , since this is a root of all the graphical items
+    setLayout(0);
     delete d_ptr->m_presenter;
     d_ptr->m_presenter=0;
 }
@@ -170,10 +173,7 @@ void QChart::removeAllSeries()
  */
 void QChart::setBackgroundBrush(const QBrush& brush)
 {
-    //TODO: refactor me
-    d_ptr->m_presenter->createChartBackgroundItem();
-    d_ptr->m_presenter->m_backgroundItem->setBrush(brush);
-    d_ptr->m_presenter->m_backgroundItem->update();
+    d_ptr->m_presenter->setBackgroundBrush(brush);
 }
 
 /*!
@@ -181,9 +181,7 @@ void QChart::setBackgroundBrush(const QBrush& brush)
  */
 QBrush QChart::backgroundBrush() const
 {
-    //TODO: refactor me
-    if (!d_ptr->m_presenter->m_backgroundItem) return QBrush();
-    return (d_ptr->m_presenter->m_backgroundItem)->brush();
+    return d_ptr->m_presenter->backgroundBrush();
 }
 
 /*!
@@ -191,10 +189,7 @@ QBrush QChart::backgroundBrush() const
  */
 void QChart::setBackgroundPen(const QPen& pen)
 {
-    //TODO: refactor me
-    d_ptr->m_presenter->createChartBackgroundItem();
-    d_ptr->m_presenter->m_backgroundItem->setPen(pen);
-    d_ptr->m_presenter->m_backgroundItem->update();
+    d_ptr->m_presenter->setBackgroundPen(pen);
 }
 
 /*!
@@ -202,9 +197,7 @@ void QChart::setBackgroundPen(const QPen& pen)
  */
 QPen QChart::backgroundPen() const
 {
-    //TODO: refactor me
-    if (!d_ptr->m_presenter->m_backgroundItem) return QPen();
-    return d_ptr->m_presenter->m_backgroundItem->pen();
+    return d_ptr->m_presenter->backgroundPen();
 }
 
 /*!
@@ -212,10 +205,7 @@ QPen QChart::backgroundPen() const
  */
 void QChart::setTitle(const QString& title)
 {
-    //TODO: refactor me
-    d_ptr->m_presenter->createChartTitleItem();
-    d_ptr->m_presenter->m_titleItem->setText(title);
-    d_ptr->m_presenter->updateLayout();
+    d_ptr->m_presenter->setTitle(title);
 }
 
 /*!
@@ -223,11 +213,7 @@ void QChart::setTitle(const QString& title)
  */
 QString QChart::title() const
 {
-    //TODO: refactor me
-    if (d_ptr->m_presenter->m_titleItem)
-        return d_ptr->m_presenter->m_titleItem->text();
-    else
-        return QString();
+    return d_ptr->m_presenter->title();
 }
 
 /*!
@@ -235,10 +221,7 @@ QString QChart::title() const
  */
 void QChart::setTitleFont(const QFont& font)
 {
-    //TODO: refactor me
-    d_ptr->m_presenter->createChartTitleItem();
-    d_ptr->m_presenter->m_titleItem->setFont(font);
-    d_ptr->m_presenter->updateLayout();
+    d_ptr->m_presenter->setTitleFont(font);
 }
 
 /*!
@@ -246,10 +229,7 @@ void QChart::setTitleFont(const QFont& font)
  */
 QFont QChart::titleFont() const
 {
-    if (d_ptr->m_presenter->m_titleItem)
-        return d_ptr->m_presenter->m_titleItem->font();
-    else
-        return QFont();
+    return d_ptr->m_presenter->titleFont();
 }
 
 /*!
@@ -257,10 +237,7 @@ QFont QChart::titleFont() const
  */
 void QChart::setTitleBrush(const QBrush &brush)
 {
-    //TODO: refactor me
-    d_ptr->m_presenter->createChartTitleItem();
-    d_ptr->m_presenter->m_titleItem->setBrush(brush);
-    d_ptr->m_presenter->updateLayout();
+    d_ptr->m_presenter->setTitleBrush(brush);
 }
 
 /*!
@@ -268,9 +245,7 @@ void QChart::setTitleBrush(const QBrush &brush)
  */
 QBrush QChart::titleBrush() const
 {
-    //TODO: refactor me
-    if (!d_ptr->m_presenter->m_titleItem) return QBrush();
-    return d_ptr->m_presenter->m_titleItem->brush();
+    return d_ptr->m_presenter->titleBrush();
 }
 
 void QChart::setTheme(QChart::ChartTheme theme)
@@ -364,16 +339,9 @@ QRectF QChart::margins() const
     return d_ptr->m_presenter->margins();
 }
 
-
 /*!
- Resizes and updates the chart area using the \a event data
+ Sets animation \a options for the chart
  */
-void QChart::resizeEvent(QGraphicsSceneResizeEvent *event)
-{
-    d_ptr->m_rect = QRectF(QPoint(0,0),event->newSize());
-    QGraphicsWidget::resizeEvent(event);
-    d_ptr->m_presenter->setGeometry(d_ptr->m_rect);
-}
 
 void QChart::setAnimationOptions(AnimationOptions options)
 {
@@ -390,7 +358,7 @@ QChart::AnimationOptions QChart::animationOptions() const
  */
 void QChart::scrollLeft()
 {
-    d_ptr->m_presenter->scroll(-d_ptr->m_presenter->chartGeometry().width()/(axisX()->ticksCount()-1),0);
+    d_ptr->m_presenter->scroll(-d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
 }
 
 /*!
@@ -398,7 +366,7 @@ void QChart::scrollLeft()
  */
 void QChart::scrollRight()
 {
-    d_ptr->m_presenter->scroll(d_ptr->m_presenter->chartGeometry().width()/(axisX()->ticksCount()-1),0);
+    d_ptr->m_presenter->scroll(d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
 }
 
 /*!
@@ -406,7 +374,7 @@ void QChart::scrollRight()
  */
 void QChart::scrollUp()
 {
-    d_ptr->m_presenter->scroll(0,d_ptr->m_presenter->chartGeometry().width()/(axisY()->ticksCount()-1));
+    d_ptr->m_presenter->scroll(0,d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
 }
 
 /*!
@@ -414,7 +382,7 @@ void QChart::scrollUp()
  */
 void QChart::scrollDown()
 {
-    d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->chartGeometry().width()/(axisY()->ticksCount()-1));
+    d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
 }
 
 /*!
@@ -427,32 +395,22 @@ void QChart::scroll(const QPointF &delta)
 
 void QChart::setBackgroundVisible(bool visible)
 {
-    //TODO: refactor me
-    d_ptr->m_presenter->createChartBackgroundItem();
-    d_ptr->m_presenter->m_backgroundItem->setVisible(visible);
+    d_ptr->m_presenter->setBackgroundVisible(visible);
 }
 
 bool QChart::isBackgroundVisible() const
 {
-    //TODO: refactor me
-    if (!d_ptr->m_presenter->m_backgroundItem)
-        return false;
-
-    return d_ptr->m_presenter->m_backgroundItem->isVisible();
+    return d_ptr->m_presenter->isBackgroundVisible();
 }
 
 void QChart::setDropShadowEnabled(bool enabled)
 {
-    d_ptr->m_presenter->createChartBackgroundItem();
-    d_ptr->m_presenter->m_backgroundItem->setDropShadowEnabled(enabled);
+    d_ptr->m_presenter->setBackgroundDropShadowEnabled(enabled);
 }
 
 bool QChart::isDropShadowEnabled() const
 {
-    if (!d_ptr->m_presenter->m_backgroundItem)
-        return false;
-
-    return d_ptr->m_presenter->m_backgroundItem->isDropShadowEnabled();
+    return d_ptr->m_presenter->isBackgroundDropShadowEnabled();
 }
 
 /*!
@@ -463,6 +421,11 @@ bool QChart::isDropShadowEnabled() const
 QList<QAbstractSeries*> QChart::series() const
 {
     return d_ptr->m_dataset->series();
+}
+
+void QChart::setMarginsMinimum(const QRectF& margins)
+{
+    d_ptr->m_presenter->setMarginsMinimum(margins);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -486,6 +449,7 @@ void QChartPrivate::createConnections()
     QObject::connect(m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),m_presenter,SLOT(handleSeriesRemoved(QAbstractSeries*)));
     QObject::connect(m_dataset,SIGNAL(axisAdded(QAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QAxis*,Domain*)));
     QObject::connect(m_dataset,SIGNAL(axisRemoved(QAxis*)),m_presenter,SLOT(handleAxisRemoved(QAxis*)));
+    //QObject::connect(m_presenter, SIGNAL(marginsChanged(QRectF)), q_ptr, SIGNAL(marginsChanged(QRectF)));
 }
 
 #include "moc_qchart.cpp"

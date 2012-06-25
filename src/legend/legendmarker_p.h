@@ -35,6 +35,7 @@
 #include <QBrush>
 #include <QPen>
 #include <QGraphicsSimpleTextItem>
+#include <QGraphicsLayoutItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -47,35 +48,37 @@ class QPieSlice;
 class QLegend;
 class QPieSeries;
 
-class LegendMarker : public QGraphicsObject
+class LegendMarker : public QGraphicsObject, public QGraphicsLayoutItem
 {
     Q_OBJECT
-
+    Q_INTERFACES(QGraphicsLayoutItem)
 public:
     explicit LegendMarker(QAbstractSeries *m_series, QLegend *parent);
 
     void setPen(const QPen &pen);
     QPen pen() const;
+
     void setBrush(const QBrush &brush);
     QBrush brush() const;
 
     void setFont(const QFont &font);
     QFont font() const;
 
-    void setSize(const QSize& size);
-
     void setLabel(const QString label);
     QString label() const;
+
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
 
     QAbstractSeries *series() const { return m_series;}
 
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+    void setGeometry(const QRectF& rect);
 
     QRectF boundingRect() const;
 
-    void updateLayout();
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
+
+    QSizeF sizeHint (Qt::SizeHint which, const QSizeF& constraint) const;
 
 protected:
     // From QGraphicsObject
@@ -91,6 +94,8 @@ protected:
     QLegend* m_legend;
     QGraphicsSimpleTextItem *m_textItem;
     QGraphicsRectItem *m_rectItem;
+    qreal m_margin;
+    qreal m_space;
 
 };
 

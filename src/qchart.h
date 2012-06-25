@@ -111,13 +111,12 @@ public:
     QAxis* axisY(QAbstractSeries* series = 0) const;
 
     QLegend* legend() const;
+
+    void setMarginsMinimum(const QRectF& margins);
     QRectF margins() const;
 
 Q_SIGNALS:
     void marginsChanged(QRectF newMargins);
-
-protected:
-    void resizeEvent(QGraphicsSceneResizeEvent *event);
 
 protected:
     QScopedPointer<QChartPrivate> d_ptr;

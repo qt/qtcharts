@@ -24,6 +24,9 @@
 #include "qaxiscategories_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
+#include <QGraphicsLayout>
+#include <QDebug>
+#include <QFontMetrics>
 
 static int label_padding = 5;
 
@@ -56,6 +59,11 @@ void ChartAxisX::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
 
+    m_minWidth = 0;
+    m_minHeight = 0;
+
+    if(layout.isEmpty()) return;
+
     QStringList ticksList;
 
     bool categories = createLabels(ticksList,m_min,m_max,layout.size());
@@ -68,12 +76,10 @@ void ChartAxisX::updateGeometry()
     Q_ASSERT(labels.size() == ticksList.size());
     Q_ASSERT(layout.size() == ticksList.size());
 
-    qreal minWidth = 0;
-    qreal minHeight = 0;
-
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
     lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
 
+    qreal width = 0;
     for (int i = 0; i < layout.size(); ++i) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
         lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
@@ -81,20 +87,29 @@ void ChartAxisX::updateGeometry()
         if (!categories || i<1) {
             labelItem->setText(ticksList.at(i));
             const QRectF& rect = labelItem->boundingRect();
-            minWidth+=rect.width();
-            minHeight=qMax(rect.height(),minHeight);
             QPointF center = rect.center();
             labelItem->setTransformOriginPoint(center.x(), center.y());
             labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
+
+            if(labelItem->pos().x()<=width){
+                labelItem->setVisible(false);
+                lineItem->setVisible(false);
+            }else{
+                labelItem->setVisible(true);
+                lineItem->setVisible(true);
+                width=rect.width()+labelItem->pos().x();
+            }
+            m_minWidth+=rect.width();
+            m_minHeight=qMax(rect.height(),m_minHeight);
         }
         else {
             labelItem->setText(ticksList.at(i));
             const QRectF& rect = labelItem->boundingRect();
-            minWidth+=rect.width();
-            minHeight=qMax(rect.height()+label_padding,minHeight);
             QPointF center = rect.center();
             labelItem->setTransformOriginPoint(center.x(), center.y());
             labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
+            m_minWidth+=rect.width();
+            m_minHeight=qMax(rect.height()+label_padding,m_minHeight);
         }
 
         if ((i+1)%2 && i>1) {
@@ -104,9 +119,6 @@ void ChartAxisX::updateGeometry()
         lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
         lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
     }
-
-    presenter()->setMinimumMarginWidth(this,minWidth);
-    presenter()->setMinimumMarginHeight(this,minHeight);
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE
