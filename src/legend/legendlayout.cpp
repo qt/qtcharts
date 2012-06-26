@@ -22,6 +22,7 @@
 #include "chartpresenter_p.h"
 #include "legendmarker_p.h"
 #include "qlegend_p.h"
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -85,7 +86,6 @@ QPointF LegendLayout::offset() const
 
 void LegendLayout::setGeometry(const QRectF& rect)
 {
-    if (!rect.isValid()) return;
 
     QGraphicsLayout::setGeometry(rect);
 
@@ -99,6 +99,7 @@ void LegendLayout::setGeometry(const QRectF& rect)
 
 void LegendLayout::setAttachedGeometry(const QRectF& rect)
 {
+    if (!rect.isValid()) return;
 
     m_offsetX=0;
     m_offsetY=0;
@@ -170,6 +171,8 @@ void LegendLayout::setAttachedGeometry(const QRectF& rect)
 
 void LegendLayout::setDettachedGeometry(const QRectF& rect)
 {
+    if (!rect.isValid()) return;
+
     // Detached layout is different.
     // In detached mode legend may have multiple rows and columns, so layout calculations
     // differ a log from attached mode.
@@ -335,6 +338,8 @@ QSizeF LegendLayout::sizeHint ( Qt::SizeHint which, const QSizeF & constraint) c
     qreal left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);
 
+    if(which!=Qt::PreferredSize) return QSizeF(-1,-1);
+
     if(constraint.isValid()) {
         foreach(LegendMarker* marker, m_legend->d_ptr->markers()) {
             size = size.expandedTo(marker->effectiveSizeHint(which));
@@ -366,7 +371,10 @@ QSizeF LegendLayout::sizeHint ( Qt::SizeHint which, const QSizeF & constraint) c
         }
     }
     size += QSize(left + right, top + bottom);
+
     return size;
+
+
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

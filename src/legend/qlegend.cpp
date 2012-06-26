@@ -492,6 +492,7 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     }
 
     q_ptr->layout()->invalidate();
+    q_ptr->layout()->activate();
 }
 
 void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)

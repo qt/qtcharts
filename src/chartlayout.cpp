@@ -21,6 +21,7 @@
 #include "chartlayout_p.h"
 #include "chartpresenter_p.h"
 #include "chartaxis_p.h"
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -41,6 +42,7 @@ ChartLayout::~ChartLayout()
 
 void ChartLayout::setGeometry(const QRectF& rect)
 {
+
     if (!rect.isValid()) return;
 
     QGraphicsLayout::setGeometry(rect);
