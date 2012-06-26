@@ -37,7 +37,7 @@
                     <li><a href="qml-areaseries.html">AreaSeries</a></li>
                     <li><a href="qml-scatterseries.html">ScatterSeries</a></li>
                     <li><a href="qml-splineseries.html">SplineSeries</a></li>
-                    <li><a href="qml-xypoint.html">XyPoint</a></li>
+                    <li><a href="qml-xypoint.html">XYPoint</a></li>
                     <li><a href="qml-hxymodelmapper.html">HXYModelMapper</a></li>
                     <li><a href="qml-vxymodelmapper.html">VXYModelMapper</a></li>
                     </ul>

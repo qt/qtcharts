@@ -79,8 +79,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Signal is emitted when user clicks the \a point on chart. For example:
     \code
     LineSeries {
-        XyPoint { x: 0; y: 0 }
-        XyPoint { x: 1.1; y: 2.1 }
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 1.1; y: 2.1 }
         onClicked: console.log("onClicked: " + point.x + ", " + point.y);
     }
     \endcode

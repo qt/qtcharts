@@ -29,13 +29,13 @@ ChartView {
     SplineSeries {
         id: splineSeries
         name: "spline 1"
-        XyPoint { x: 0; y: 0 }
-        XyPoint { x: 1.1; y: 2.1 }
-        XyPoint { x: 1.9; y: 3.3 }
-        XyPoint { x: 2.1; y: 2.1 }
-        XyPoint { x: 2.9; y: 4.9 }
-        XyPoint { x: 3.4; y: 3.0 }
-        XyPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 1.1; y: 2.1 }
+        XYPoint { x: 1.9; y: 3.3 }
+        XYPoint { x: 2.1; y: 2.1 }
+        XYPoint { x: 2.9; y: 4.9 }
+        XYPoint { x: 3.4; y: 3.0 }
+        XYPoint { x: 4.1; y: 3.3 }
 
         onNameChanged:              console.log("splineSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("splineSeries.onVisibleChanged: " + visible);
@@ -49,12 +49,12 @@ ChartView {
 
     SplineSeries {
         name: "spline 2"
-        XyPoint { x: 1.1; y: 1.1 }
-        XyPoint { x: 1.9; y: 2.3 }
-        XyPoint { x: 2.1; y: 1.1 }
-        XyPoint { x: 2.9; y: 3.9 }
-        XyPoint { x: 3.4; y: 2.0 }
-        XyPoint { x: 4.1; y: 2.3 }
+        XYPoint { x: 1.1; y: 1.1 }
+        XYPoint { x: 1.9; y: 2.3 }
+        XYPoint { x: 2.1; y: 1.1 }
+        XYPoint { x: 2.9; y: 3.9 }
+        XYPoint { x: 3.4; y: 2.0 }
+        XYPoint { x: 4.1; y: 2.3 }
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
     }
 }

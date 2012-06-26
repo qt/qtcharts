@@ -28,7 +28,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class DeclarativeXyPoint : public QObject, public QPointF
+class DeclarativeXYPoint : public QObject, public QPointF
 {
     Q_OBJECT
     // TODO: make the setters change the value, if parented by a series
@@ -36,7 +36,7 @@ class DeclarativeXyPoint : public QObject, public QPointF
     Q_PROPERTY(qreal y READ y WRITE setY /*NOTIFY dataYChanged*/)
 
 public:
-    explicit DeclarativeXyPoint(QObject *parent = 0);
+    explicit DeclarativeXYPoint(QObject *parent = 0);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

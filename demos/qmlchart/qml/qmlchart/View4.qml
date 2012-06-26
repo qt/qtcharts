@@ -34,32 +34,32 @@ Rectangle {
         AreaSeries {
             name: "Russian"
             upperSeries: LineSeries {
-                XyPoint { x: 0; y: 1 }
-                XyPoint { x: 1; y: 1 }
-                XyPoint { x: 2; y: 1 }
-                XyPoint { x: 3; y: 1 }
-                XyPoint { x: 4; y: 1 }
-                XyPoint { x: 5; y: 0 }
-                XyPoint { x: 6; y: 1 }
-                XyPoint { x: 7; y: 1 }
-                XyPoint { x: 8; y: 4 }
-                XyPoint { x: 9; y: 3 }
-                XyPoint { x: 10; y: 2 }
-                XyPoint { x: 11; y: 1 }
+                XYPoint { x: 0; y: 1 }
+                XYPoint { x: 1; y: 1 }
+                XYPoint { x: 2; y: 1 }
+                XYPoint { x: 3; y: 1 }
+                XYPoint { x: 4; y: 1 }
+                XYPoint { x: 5; y: 0 }
+                XYPoint { x: 6; y: 1 }
+                XYPoint { x: 7; y: 1 }
+                XYPoint { x: 8; y: 4 }
+                XYPoint { x: 9; y: 3 }
+                XYPoint { x: 10; y: 2 }
+                XYPoint { x: 11; y: 1 }
             }
             lowerSeries: LineSeries {
-                XyPoint { x: 0; y: 0 }
-                XyPoint { x: 1; y: 0 }
-                XyPoint { x: 2; y: 0 }
-                XyPoint { x: 3; y: 0 }
-                XyPoint { x: 4; y: 0 }
-                XyPoint { x: 5; y: 0 }
-                XyPoint { x: 6; y: 0 }
-                XyPoint { x: 7; y: 0 }
-                XyPoint { x: 8; y: 0 }
-                XyPoint { x: 9; y: 0 }
-                XyPoint { x: 10; y: 0 }
-                XyPoint { x: 11; y: 0 }
+                XYPoint { x: 0; y: 0 }
+                XYPoint { x: 1; y: 0 }
+                XYPoint { x: 2; y: 0 }
+                XYPoint { x: 3; y: 0 }
+                XYPoint { x: 4; y: 0 }
+                XYPoint { x: 5; y: 0 }
+                XYPoint { x: 6; y: 0 }
+                XYPoint { x: 7; y: 0 }
+                XYPoint { x: 8; y: 0 }
+                XYPoint { x: 9; y: 0 }
+                XYPoint { x: 10; y: 0 }
+                XYPoint { x: 11; y: 0 }
             }
         }
         // ...
@@ -69,32 +69,32 @@ Rectangle {
             id: swedish
             name: "Swedish"
             upperSeries: LineSeries {
-                XyPoint { x: 0; y: 1 }
-                XyPoint { x: 1; y: 1 }
-                XyPoint { x: 2; y: 3 }
-                XyPoint { x: 3; y: 3 }
-                XyPoint { x: 4; y: 2 }
-                XyPoint { x: 5; y: 0 }
-                XyPoint { x: 6; y: 2 }
-                XyPoint { x: 7; y: 1 }
-                XyPoint { x: 8; y: 2 }
-                XyPoint { x: 9; y: 1 }
-                XyPoint { x: 10; y: 3 }
-                XyPoint { x: 11; y: 3 }
+                XYPoint { x: 0; y: 1 }
+                XYPoint { x: 1; y: 1 }
+                XYPoint { x: 2; y: 3 }
+                XYPoint { x: 3; y: 3 }
+                XYPoint { x: 4; y: 2 }
+                XYPoint { x: 5; y: 0 }
+                XYPoint { x: 6; y: 2 }
+                XYPoint { x: 7; y: 1 }
+                XYPoint { x: 8; y: 2 }
+                XYPoint { x: 9; y: 1 }
+                XYPoint { x: 10; y: 3 }
+                XYPoint { x: 11; y: 3 }
             }
             lowerSeries: LineSeries {
-                XyPoint { x: 0; y: 0 }
-                XyPoint { x: 1; y: 0 }
-                XyPoint { x: 2; y: 0 }
-                XyPoint { x: 3; y: 0 }
-                XyPoint { x: 4; y: 0 }
-                XyPoint { x: 5; y: 0 }
-                XyPoint { x: 6; y: 0 }
-                XyPoint { x: 7; y: 0 }
-                XyPoint { x: 8; y: 0 }
-                XyPoint { x: 9; y: 0 }
-                XyPoint { x: 10; y: 0 }
-                XyPoint { x: 11; y: 0 }
+                XYPoint { x: 0; y: 0 }
+                XYPoint { x: 1; y: 0 }
+                XYPoint { x: 2; y: 0 }
+                XYPoint { x: 3; y: 0 }
+                XYPoint { x: 4; y: 0 }
+                XYPoint { x: 5; y: 0 }
+                XYPoint { x: 6; y: 0 }
+                XYPoint { x: 7; y: 0 }
+                XYPoint { x: 8; y: 0 }
+                XYPoint { x: 9; y: 0 }
+                XYPoint { x: 10; y: 0 }
+                XYPoint { x: 11; y: 0 }
             }
             onClicked: {
                 color = "yellow";
@@ -105,32 +105,32 @@ Rectangle {
         AreaSeries {
             name: "Finnish"
             upperSeries: LineSeries {
-                XyPoint { x: 0; y: 0 }
-                XyPoint { x: 1; y: 0 }
-                XyPoint { x: 2; y: 0 }
-                XyPoint { x: 3; y: 0 }
-                XyPoint { x: 4; y: 0 }
-                XyPoint { x: 5; y: 0 }
-                XyPoint { x: 6; y: 1 }
-                XyPoint { x: 7; y: 0 }
-                XyPoint { x: 8; y: 0 }
-                XyPoint { x: 9; y: 0 }
-                XyPoint { x: 10; y: 0 }
-                XyPoint { x: 11; y: 1 }
+                XYPoint { x: 0; y: 0 }
+                XYPoint { x: 1; y: 0 }
+                XYPoint { x: 2; y: 0 }
+                XYPoint { x: 3; y: 0 }
+                XYPoint { x: 4; y: 0 }
+                XYPoint { x: 5; y: 0 }
+                XYPoint { x: 6; y: 1 }
+                XYPoint { x: 7; y: 0 }
+                XYPoint { x: 8; y: 0 }
+                XYPoint { x: 9; y: 0 }
+                XYPoint { x: 10; y: 0 }
+                XYPoint { x: 11; y: 1 }
             }
             lowerSeries: LineSeries {
-                XyPoint { x: 0; y: 0 }
-                XyPoint { x: 1; y: 0 }
-                XyPoint { x: 2; y: 0 }
-                XyPoint { x: 3; y: 0 }
-                XyPoint { x: 4; y: 0 }
-                XyPoint { x: 5; y: 0 }
-                XyPoint { x: 6; y: 0 }
-                XyPoint { x: 7; y: 0 }
-                XyPoint { x: 8; y: 0 }
-                XyPoint { x: 9; y: 0 }
-                XyPoint { x: 10; y: 0 }
-                XyPoint { x: 11; y: 0 }
+                XYPoint { x: 0; y: 0 }
+                XYPoint { x: 1; y: 0 }
+                XYPoint { x: 2; y: 0 }
+                XYPoint { x: 3; y: 0 }
+                XYPoint { x: 4; y: 0 }
+                XYPoint { x: 5; y: 0 }
+                XYPoint { x: 6; y: 0 }
+                XYPoint { x: 7; y: 0 }
+                XYPoint { x: 8; y: 0 }
+                XYPoint { x: 9; y: 0 }
+                XYPoint { x: 10; y: 0 }
+                XYPoint { x: 11; y: 0 }
             }
             onClicked: {
                 color = "white";

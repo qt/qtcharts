@@ -160,7 +160,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlmethod BarSet BarSeries::append(string label, VariantList values)
-    Adds a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XyPoints.
+    Adds a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XYPoints.
     For example:
     \code
         myBarSeries.append("set 1", [0, 0.2, 0.2, 0.5, 0.4, 1.5, 0.9]);
@@ -170,7 +170,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlmethod BarSet BarSeries::insert(int index, string label, VariantList values)
-    Inserts a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XyPoints.
+    Inserts a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XYPoints.
     If index is zero or smaller, the new barset is prepended. If the index is count or bigger, the new barset is
     appended.
     \sa BarSeries::append()

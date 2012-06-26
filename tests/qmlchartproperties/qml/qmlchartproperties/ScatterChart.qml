@@ -30,13 +30,13 @@ ChartView {
     ScatterSeries {
         id: scatterSeries
         name: "scatter 1"
-        XyPoint { x: 1.5; y: 1.5 }
-        XyPoint { x: 1.5; y: 1.6 }
-        XyPoint { x: 1.57; y: 1.55 }
-        XyPoint { x: 1.8; y: 1.8 }
-        XyPoint { x: 1.9; y: 1.6 }
-        XyPoint { x: 2.1; y: 1.3 }
-        XyPoint { x: 2.5; y: 2.1 }
+        XYPoint { x: 1.5; y: 1.5 }
+        XYPoint { x: 1.5; y: 1.6 }
+        XYPoint { x: 1.57; y: 1.55 }
+        XYPoint { x: 1.8; y: 1.8 }
+        XYPoint { x: 1.9; y: 1.6 }
+        XYPoint { x: 2.1; y: 1.3 }
+        XYPoint { x: 2.5; y: 2.1 }
 
         onNameChanged:              console.log("scatterSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("scatterSeries.onVisibleChanged: " + visible);
@@ -51,12 +51,12 @@ ChartView {
 
     ScatterSeries {
         name: "scatter2"
-        XyPoint { x: 2.0; y: 2.0 }
-        XyPoint { x: 2.0; y: 2.1 }
-        XyPoint { x: 2.07; y: 2.05 }
-        XyPoint { x: 2.2; y: 2.9 }
-        XyPoint { x: 2.4; y: 2.7 }
-        XyPoint { x: 2.67; y: 2.65 }
+        XYPoint { x: 2.0; y: 2.0 }
+        XYPoint { x: 2.0; y: 2.1 }
+        XYPoint { x: 2.07; y: 2.05 }
+        XYPoint { x: 2.2; y: 2.9 }
+        XYPoint { x: 2.4; y: 2.7 }
+        XYPoint { x: 2.67; y: 2.65 }
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
     }
 }

@@ -48,7 +48,7 @@ public:
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCommercial.Chart"));
 
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "ChartView");
-        qmlRegisterType<DeclarativeXyPoint>(uri, 1, 0, "XyPoint");
+        qmlRegisterType<DeclarativeXYPoint>(uri, 1, 0, "XYPoint");
         qmlRegisterType<DeclarativeScatterSeries>(uri, 1, 0, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries>(uri, 1, 0, "LineSeries");
         qmlRegisterType<DeclarativeSplineSeries>(uri, 1, 0, "SplineSeries");
