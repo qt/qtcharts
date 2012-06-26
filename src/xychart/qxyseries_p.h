@@ -59,9 +59,8 @@ protected:
     bool m_pointsVisible;
 
 private:
-    Q_DECLARE_PUBLIC(QXYSeries);
+    Q_DECLARE_PUBLIC(QXYSeries)
     friend class QScatterSeries;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

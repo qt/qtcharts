@@ -47,6 +47,8 @@ public:
     explicit QScatterSeries(QObject *parent = 0);
     ~QScatterSeries();
     QAbstractSeries::SeriesType type() const;
+    void setPen(const QPen &pen);
+    void setBrush(const QBrush &brush);
     void setColor(const QColor &color);
     QColor color() const;
     void setBorderColor(const QColor &color);

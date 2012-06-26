@@ -399,11 +399,31 @@ void tst_QXYSeries::pointsVisible_raw()
 void tst_QXYSeries::changedSignals()
 {
     QSignalSpy visibleSpy(m_series, SIGNAL(visibleChanged()));
+    QSignalSpy nameSpy(m_series, SIGNAL(nameChanged()));
+    QSignalSpy colorSpy(m_series, SIGNAL(colorChanged(QColor)));
 
+    // Visibility
     m_series->setVisible(false);
     m_series->setVisible(false);
     TRY_COMPARE(visibleSpy.count(), 1);
     m_series->setVisible(true);
     TRY_COMPARE(visibleSpy.count(), 2);
-}
 
+    // Color
+    m_series->setColor(QColor("aliceblue"));
+    TRY_COMPARE(colorSpy.count(), 1);
+
+    // Pen and Brush
+    QPen p = m_series->pen();
+    p.setColor("aquamarine");
+    m_series->setPen(p);
+    QBrush b = m_series->brush();
+    b.setColor("beige");
+    m_series->setBrush(b);
+    TRY_COMPARE(colorSpy.count(), 2);
+
+    // Verify all the signals again, to make sure no extra signals were emitted
+    TRY_COMPARE(visibleSpy.count(), 2);
+    TRY_COMPARE(nameSpy.count(), 0);
+    TRY_COMPARE(colorSpy.count(), 2);
+}

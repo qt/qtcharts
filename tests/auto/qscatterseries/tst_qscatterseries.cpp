@@ -35,6 +35,8 @@ public slots:
 private slots:
     void qscatterseries_data();
     void qscatterseries();
+    void scatterChangedSignals();
+
 protected:
     void pointsVisible_data();
 };
@@ -92,6 +94,35 @@ void tst_QScatterSeries::qscatterseries()
     m_chart->addSeries(&series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
+}
+
+void tst_QScatterSeries::scatterChangedSignals()
+{
+    QScatterSeries *series = qobject_cast<QScatterSeries *>(m_series);
+    QVERIFY(series);
+
+    QSignalSpy colorSpy(series, SIGNAL(colorChanged(QColor)));
+    QSignalSpy borderColorSpy(series, SIGNAL(borderColorChanged(QColor)));
+
+    // Color
+    series->setColor(QColor("blueviolet"));
+    TRY_COMPARE(colorSpy.count(), 1);
+
+    // Border color
+    series->setBorderColor(QColor("burlywood"));
+    TRY_COMPARE(borderColorSpy.count(), 1);
+
+    // Pen
+    QPen p = series->pen();
+    p.setColor("lightpink");
+    series->setPen(p);
+    TRY_COMPARE(borderColorSpy.count(), 2);
+
+    // Brush
+    QBrush b = series->brush();
+    b.setColor("lime");
+    series->setBrush(b);
+    TRY_COMPARE(colorSpy.count(), 2);
 }
 
 QTEST_MAIN(tst_QScatterSeries)

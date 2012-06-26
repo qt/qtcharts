@@ -60,10 +60,10 @@ public:
     QXYSeries& operator << (const QPointF &point);
     QXYSeries& operator << (const QList<QPointF> &points);
 
-    void setPen(const QPen &pen);
+    virtual void setPen(const QPen &pen);
     QPen pen() const;
 
-    void setBrush(const QBrush &brush);
+    virtual void setBrush(const QBrush &brush);
     QBrush brush() const;
 
     virtual void setColor(const QColor &color);

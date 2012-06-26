@@ -298,9 +298,12 @@ int QXYSeries::count() const
 void QXYSeries::setPen(const QPen &pen)
 {
     Q_D(QXYSeries);
-    if (d->m_pen!=pen) {
+    if (d->m_pen != pen) {
+        bool emitColorChanged = d->m_pen.color() != pen.color();
         d->m_pen = pen;
         emit d->updated();
+        if (emitColorChanged)
+            emit colorChanged(pen.color());
     }
 }
 
@@ -336,7 +339,6 @@ void QXYSeries::setColor(const QColor &color)
     if (p.color() != color) {
         p.setColor(color);
         setPen(p);
-        emit colorChanged(color);
     }
 }
 

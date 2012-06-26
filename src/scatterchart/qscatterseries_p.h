@@ -43,8 +43,7 @@ public:
 private:
     QScatterSeries::MarkerShape m_shape;
     qreal m_size;
-    Q_DECLARE_PUBLIC(QScatterSeries);
-
+    Q_DECLARE_PUBLIC(QScatterSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

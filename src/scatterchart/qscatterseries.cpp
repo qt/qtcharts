@@ -145,13 +145,36 @@ QAbstractSeries::SeriesType QScatterSeries::type() const
     return QAbstractSeries::SeriesTypeScatter;
 }
 
+void QScatterSeries::setPen(const QPen &pen)
+{
+    Q_D(QXYSeries);
+    if (d->m_pen != pen) {
+        bool emitColorChanged = d->m_pen.color() != pen.color();
+        d->m_pen = pen;
+        emit d->updated();
+        if (emitColorChanged)
+            emit borderColorChanged(pen.color());
+    }
+}
+
+void QScatterSeries::setBrush(const QBrush &brush)
+{
+    Q_D(QScatterSeries);
+    if (d->m_brush != brush) {
+        bool emitColorChanged = d->m_brush.color() != brush.color();
+        d->m_brush = brush;
+        emit d->updated();
+        if (emitColorChanged)
+            emit colorChanged(brush.color());
+    }
+}
+
 void QScatterSeries::setColor(const QColor &color)
 {
     QBrush b = brush();
     if (b.color() != color) {
         b.setColor(color);
         setBrush(b);
-        emit colorChanged(color);
     }
 }
 
@@ -166,7 +189,6 @@ void QScatterSeries::setBorderColor(const QColor &color)
     if (p.color() != color) {
         p.setColor(color);
         setPen(p);
-        emit borderColorChanged(color);
     }
 }
 
@@ -208,12 +230,12 @@ void QScatterSeries::setMarkerSize(qreal size)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries* q):QXYSeriesPrivate(q),
-   m_shape(QScatterSeries::MarkerShapeCircle),
-   m_size(15.0)
+QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries* q) :
+    QXYSeriesPrivate(q),
+    m_shape(QScatterSeries::MarkerShapeCircle),
+    m_size(15.0)
 {
-
-};
+}
 
 Chart* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
