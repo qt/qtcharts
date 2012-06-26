@@ -130,6 +130,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QLegend::labelColor
+    The color of brush used to draw labels.
+*/
+/*!
+    \qmlproperty color QLegend::labelColor
+    The color of brush used to draw labels.
+*/
+
+/*!
     \fn void QLegend::backgroundVisibleChanged(bool)
     The visibility of the legend background changed to \a visible.
 */
@@ -147,6 +156,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \fn void QLegend::fontChanged(QFont)
     The font of markers of the legend changed to \a font.
+*/
+
+/*!
+    \fn void QLegend::labelBrushChanged(QBrush brush)
+    This signal is emitted when the brush used to draw labels has changed to \a brush.
+*/
+
+/*!
+    \fn void QLegend::labelColorChanged(QColor color)
+    This signal is emitted when the color of brush used to draw labels has changed to \a color.
 */
 
 /*!
@@ -286,6 +305,9 @@ QFont QLegend::font() const
     return d_ptr->m_font;
 }
 
+/*!
+    Set brush used to draw labels to \a brush.
+*/
 void QLegend::setLabelBrush(const QBrush &brush)
 {
     if (d_ptr->m_labelBrush != brush) {
@@ -294,6 +316,9 @@ void QLegend::setLabelBrush(const QBrush &brush)
     }
 }
 
+/*!
+    Brush used to draw labels.
+*/
 QBrush QLegend::labelBrush() const
 {
     return d_ptr->m_labelBrush;

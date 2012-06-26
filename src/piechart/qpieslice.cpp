@@ -237,7 +237,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \fn void QPieSlice::labelBrushChanged()
-    This signal is emitted when the label pen of the slice has changed.
+    This signal is emitted when the label brush of the slice has changed.
     \sa labelBrush
 */
 
