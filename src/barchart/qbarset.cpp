@@ -129,6 +129,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when the label of the barSet has changed.
     \sa label
 */
+/*!
+    \qmlsignal BarSet::onLabelChanged()
+    This signal is emitted when the label of the barSet has changed.
+*/
 
 /*!
     \fn void QBarSet::penChanged()

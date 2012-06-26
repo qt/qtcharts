@@ -201,10 +201,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \fn void QPieSeries::countChanged()
-
     Emitted when the slice count has changed.
-
     \sa count
+*/
+/*!
+    \qmlsignal PieSeries::onCountChanged()
+    Emitted when the slice count has changed.
 */
 
 /*!
@@ -225,10 +227,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \fn void QPieSeries::sumChanged()
-
     Emitted when the sum of all slices has changed.
-
     \sa sum
+*/
+/*!
+    \qmlsignal PieSeries::onSumChanged()
+    Emitted when the sum of all slices has changed. This may happen for example if you add or remove slices, or if you
+    change value of a slice.
 */
 
 /*!
@@ -239,7 +244,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa append(), insert()
 */
 /*!
-    \qmlsignal PieSeries::added(PieSlice slice)
+    \qmlsignal PieSeries::onAdded(PieSlice slice)
     Emitted when \a slice has been added to the series.
 */
 
@@ -249,26 +254,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa remove()
 */
 /*!
-    \qmlsignal PieSeries::removed(PieSlice slice)
+    \qmlsignal PieSeries::onRemoved(PieSlice slice)
     Emitted when \a slice has been removed from the series.
 */
 
 /*!
     \fn void QPieSeries::clicked(QPieSlice* slice)
-
     This signal is emitted when a \a slice has been clicked.
-
     \sa QPieSlice::clicked()
+*/
+/*!
+  \qmlsignal PieSeries::onClicked(PieSlice slice)
+  This signal is emitted when a \a slice has been clicked.
 */
 
 /*!
     \fn void QPieSeries::hovered(QPieSlice* slice, bool state)
-
     This signal is emitted when user has hovered over or away from the \a slice.
-
     \a state is true when user has hovered over the slice and false when hover has moved away from the slice.
-
     \sa QPieSlice::hovered()
+*/
+/*!
+    \qmlsignal PieSeries::onHovered(PieSlice slice, bool state)
+    This signal is emitted when user has hovered over or away from the \a slice. \a state is true when user has hovered
+    over the slice and false when hover has moved away from the slice.
 */
 
 /*!

@@ -94,13 +94,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \fn void QBarSeries::clicked(QBarSet *barset, int index)
-
     The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset.
     Clicked bar inside set is indexed by \a index
 */
 /*!
     \qmlsignal BarSeries::onClicked(BarSet barset, int index)
-
     The signal is emitted if the user clicks with a mouse on top of BarSet.
     Clicked bar inside set is indexed by \a index
 */
@@ -125,7 +123,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when barset count has been changed, for example by append or remove.
 */
 /*!
-    \qmlsignal BarSeries::countChanged()
+    \qmlsignal BarSeries::onCountChanged()
     This signal is emitted when barset count has been changed, for example by append or remove.
 */
 
@@ -141,7 +139,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa append(), insert()
 */
 /*!
-    \qmlsignal BarSeries::added(BarSet barset)
+    \qmlsignal BarSeries::onAdded(BarSet barset)
     Emitted when \a barset has been added to the series.
 */
 
@@ -151,7 +149,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa remove()
 */
 /*!
-    \qmlsignal BarSeries::removed(BarSet barset)
+    \qmlsignal BarSeries::onRemoved(BarSet barset)
     Emitted when \a barset has been removed from the series.
 */
 

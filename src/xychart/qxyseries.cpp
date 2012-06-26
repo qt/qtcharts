@@ -92,7 +92,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa replace()
 */
 /*!
-    \qmlsignal XYSeries::pointReplaced(int index)
+    \qmlsignal XYSeries::onPointReplaced(int index)
     Signal is emitted when a point has been replaced at \a index.
 */
 
@@ -102,7 +102,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa append(), insert()
 */
 /*!
-    \qmlsignal XYSeries::pointAdded(int index)
+    \qmlsignal XYSeries::onPointAdded(int index)
     Signal is emitted when a point has been added at \a index.
 */
 
@@ -112,7 +112,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa remove()
 */
 /*!
-    \qmlsignal XYSeries::pointRemoved(int index)
+    \qmlsignal XYSeries::onPointRemoved(int index)
     Signal is emitted when a point has been removed from \a index.
 */
 
@@ -121,7 +121,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Signal is emitted when the line (pen) color has changed to \a color.
 */
 /*!
-    \qmlsignal XYSeries::colorChanged(QColor color)
+    \qmlsignal XYSeries::onColorChanged(color color)
     Signal is emitted when the line (pen) color has changed to \a color.
 */
 

@@ -185,6 +185,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \sa Axis::min, Axis::max
 */
 
+/*!
+  \qmlsignal ChartView::onTopMarginChanged(real margin)
+  The top margin of the chart view has changed to \a margin. This may happen for example if you modify font size
+  related properties of the legend or chart title.
+*/
+
+/*!
+  \qmlsignal ChartView::onBottomMarginChanged(real margin)
+  The bottom margin of the chart view has changed to \a margin. This may happen for example if you modify font size
+  related properties of the legend or chart title.
+*/
+
+/*!
+  \qmlsignal ChartView::onLeftMarginChanged(real margin)
+  The left margin of the chart view has changed to \a margin. This may happen for example if you modify font size
+  related properties of the legend or chart title.
+*/
+
+/*!
+  \qmlsignal ChartView::onRightMarginChanged(real margin)
+  The right margin of the chart view has changed to \a margin. This may happen for example if you modify font size
+  related properties of the legend or chart title.
+*/
+
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
       m_chart(new QChart(this))

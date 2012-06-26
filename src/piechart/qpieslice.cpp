@@ -80,7 +80,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa label
 */
 /*!
-    \qmlsignal PieSlice::labelChanged()
+    \qmlsignal PieSlice::onLabelChanged()
     This signal emitted when the slice label has been changed.
     \sa label
 */
@@ -102,7 +102,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa value
 */
 /*!
-    \qmlsignal PieSlice::valueChanged()
+    \qmlsignal PieSlice::onValueChanged()
     This signal is emitted when the slice value changes.
     \sa value
 */
@@ -123,7 +123,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa labelVisible
 */
 /*!
-    \qmlsignal PieSlice::labelVisibleChanged()
+    \qmlsignal PieSlice::onLabelVisibleChanged()
     This signal emitted when visibility of the slice label has changed.
     \sa labelVisible
 */
@@ -168,7 +168,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa pen, borderColor
 */
 /*!
-    \qmlsignal PieSlice::borderColorChanged()
+    \qmlsignal PieSlice::onBorderColorChanged()
     This signal is emitted when slice border color changes.
     \sa borderColor
 */
@@ -192,7 +192,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa pen, borderWidth
 */
 /*!
-    \qmlsignal PieSlice::borderWidthChanged()
+    \qmlsignal PieSlice::onBorderWidthChanged()
     This signal is emitted when slice border width changes.
     \sa borderWidth
 */
@@ -225,7 +225,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa brush
 */
 /*!
-    \qmlsignal PieSlice::colorChanged()
+    \qmlsignal PieSlice::onColorChanged()
     This signal is emitted when slice color changes.
 */
 
@@ -258,7 +258,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa labelColor
 */
 /*!
-    \qmlsignal PieSlice::labelColorChanged()
+    \qmlsignal PieSlice::onLabelColorChanged()
     This signal is emitted when slice label color changes.
     \sa labelColor
 */
@@ -354,7 +354,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa percentage
 */
 /*!
-    \qmlsignal void PieSlice::percentageChanged()
+    \qmlsignal void PieSlice::onPercentageChanged()
     This signal is emitted when the percentage of the slice has changed.
     \sa percentage
 */
@@ -378,7 +378,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa startAngle
 */
 /*!
-    \qmlsignal PieSlice::startAngleChanged()
+    \qmlsignal PieSlice::onStartAngleChanged()
     This signal is emitted when the starting angle f the slice has changed.
     \sa startAngle
 */
@@ -402,7 +402,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa angleSpan
 */
 /*!
-    \qmlsignal PieSlice::angleSpanChanged()
+    \qmlsignal PieSlice::onAngleSpanChanged()
     This signal is emitted when the angle span of the slice has changed.
     \sa angleSpan
 */

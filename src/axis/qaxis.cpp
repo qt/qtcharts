@@ -202,15 +202,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \fn void QAxis::minChanged(qreal min)
   Axis emits signal when \a min of axis has changed.
 */
+/*!
+  \qmlsignal Axis::onMinChanged(real min)
+  Axis emits signal when \a min of axis has changed. This may happen for example if you zoom, scroll or
+  enable nice numbers algorithm.
+*/
 
 /*!
   \fn void QAxis::maxChanged(qreal max)
   Axis emits signal when \a max of axis has changed.
 */
+/*!
+  \qmlsignal Axis::onMaxChanged(real max)
+  Axis emits signal when \a max of axis has changed. This may happen for example if you zoom, scroll or
+  enable nice numbers algorithm.
+*/
 
 /*!
   \fn void QAxis::rangeChanged(qreal min, qreal max)
   Axis emits signal when \a min or \a max of axis has changed.
+*/
+/*!
+  \qmlsignal Axis::onRangeChanged(real min, real max)
+  Axis emits signal when \a min or \a max of axis has changed. This may happen for example if you zoom, scroll or
+  enable nice numbers algorithm.
 */
 
 /*!

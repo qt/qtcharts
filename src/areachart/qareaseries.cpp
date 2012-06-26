@@ -113,7 +113,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Signal is emitted when the fill (brush) color has changed to \a color.
 */
 /*!
-    \qmlsignal AreaSeries::colorChanged(color color)
+    \qmlsignal AreaSeries::onColorChanged(color color)
     Signal is emitted when the fill (brush) color has changed to \a color.
 */
 
@@ -122,7 +122,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Signal is emitted when the line (pen) color has changed to \a color.
 */
 /*!
-    \qmlsignal AreaSeries::borderColorChanged(color color)
+    \qmlsignal AreaSeries::onBorderColorChanged(color color)
     Signal is emitted when the line (pen) color has changed to \a color.
 */
 
@@ -131,7 +131,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief Signal is emitted when user clicks the \a point on area chart.
 */
 /*!
-    \qmlsignal AreaSeries::clicked(QPointF point)
+    \qmlsignal AreaSeries::onClicked(QPointF point)
     Signal is emitted when user clicks the \a point on area chart.
 */
 
@@ -141,7 +141,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     implemented by the user of QAreaSeries API.
 */
 /*!
-    \qmlsignal AreaSeries::selected()
+    \qmlsignal AreaSeries::onSelected()
     The signal is emitted if the user selects/deselects the XY series. The logic for maintaining selections should be
     implemented by the user of AreaSeries API.
 */
