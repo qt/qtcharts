@@ -75,6 +75,7 @@ QBrush LegendMarker::brush() const
 void LegendMarker::setFont(const QFont &font)
 {
     m_textItem->setFont(font);
+    updateGeometry();
 }
 
 QFont LegendMarker::font() const

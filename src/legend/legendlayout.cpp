@@ -180,30 +180,31 @@ void LegendLayout::setDettachedGeometry(const QRectF& rect)
 
     QSizeF size(0,0);
 
-    if( m_legend->d_ptr->markers().isEmpty()) return;
+    QList<LegendMarker *> markers = m_legend->d_ptr->markers();
 
-    QList<QGraphicsItem *> items = m_legend->d_ptr->items()->childItems();
+    if(markers.isEmpty()) return;
 
     switch (m_legend->alignment()) {
         case Qt::AlignTop: {
             QPointF point = rect.topLeft();
             m_width = 0;
             m_height = 0;
-            for (int i=0; i<items.count(); i++) {
-                QGraphicsItem *item = items.at(i);
-                if (item->isVisible()) {
-                    const QRectF& boundingRect = item->boundingRect();
+            for (int i=0; i<markers.count(); i++) {
+                LegendMarker *marker = markers.at(i);
+                if (marker->isVisible()) {
+                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    marker->setPos(point.x(),point.y());
+                    const QRectF& boundingRect = marker->boundingRect();
                     qreal w = boundingRect.width();
                     qreal h = boundingRect.height();
                     m_width = qMax(m_width,w);
                     m_height = qMax(m_height,h);
-                    item->setPos(point.x(),point.y());
                     point.setX(point.x() + w);
                     if (point.x() + w > rect.topLeft().x() + rect.width()) {
                         // Next item would go off rect.
                         point.setX(rect.topLeft().x());
                         point.setY(point.y() + h);
-                        if (i+1 < items.count()) {
+                        if (i+1 < markers.count()) {
                             m_height += h;
                         }
                     }
@@ -221,21 +222,22 @@ void LegendLayout::setDettachedGeometry(const QRectF& rect)
             QPointF point = rect.bottomLeft();
             m_width = 0;
             m_height = 0;
-            for (int i=0; i<items.count(); i++) {
-                QGraphicsItem *item = items.at(i);
-                if (item->isVisible()) {
-                    const QRectF& boundingRect = item->boundingRect();
+            for (int i=0; i<markers.count(); i++) {
+                LegendMarker *marker = markers.at(i);
+                if (marker->isVisible()) {
+                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    const QRectF& boundingRect = marker->boundingRect();
                     qreal w = boundingRect.width();
                     qreal h = boundingRect.height();
                     m_width = qMax(m_width,w);
                     m_height = qMax(m_height,h);
-                    item->setPos(point.x(),point.y() - h);
+                    marker->setPos(point.x(),point.y() - h);
                     point.setX(point.x() + w);
                     if (point.x() + w > rect.bottomLeft().x() + rect.width()) {
                         // Next item would go off rect.
                         point.setX(rect.bottomLeft().x());
                         point.setY(point.y() - h);
-                        if (i+1 < items.count()) {
+                        if (i+1 < markers.count()) {
                             m_height += h;
                         }
                     }
@@ -254,21 +256,22 @@ void LegendLayout::setDettachedGeometry(const QRectF& rect)
             m_width = 0;
             m_height = 0;
             qreal maxWidth = 0;
-            for (int i=0; i<items.count(); i++) {
-                QGraphicsItem *item = items.at(i);
-                if (item->isVisible()) {
-                    const QRectF& boundingRect = item->boundingRect();
+            for (int i=0; i<markers.count(); i++) {
+                LegendMarker *marker = markers.at(i);
+                if (marker->isVisible()) {
+                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    const QRectF& boundingRect = marker->boundingRect();
                     qreal w = boundingRect.width();
                     qreal h = boundingRect.height();
                     m_height = qMax(m_height,h);
                     maxWidth = qMax(maxWidth,w);
-                    item->setPos(point.x(),point.y());
+                    marker->setPos(point.x(),point.y());
                     point.setY(point.y() + h);
                     if (point.y() + h > rect.topLeft().y() + rect.height()) {
                         // Next item would go off rect.
                         point.setX(point.x() + maxWidth);
                         point.setY(rect.topLeft().y());
-                        if (i+1 < items.count()) {
+                        if (i+1 < markers.count()) {
                             m_width += maxWidth;
                             maxWidth = 0;
                         }
@@ -289,21 +292,22 @@ void LegendLayout::setDettachedGeometry(const QRectF& rect)
             m_width = 0;
             m_height = 0;
             qreal maxWidth = 0;
-            for (int i=0; i<items.count(); i++) {
-                QGraphicsItem *item = items.at(i);
-                if (item->isVisible()) {
-                    const QRectF& boundingRect = item->boundingRect();
+            for (int i=0; i<markers.count(); i++) {
+                LegendMarker *marker = markers.at(i);
+                if (marker->isVisible()) {
+                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    const QRectF& boundingRect = marker->boundingRect();
                     qreal w = boundingRect.width();
                     qreal h = boundingRect.height();
                     m_height = qMax(m_height,h);
                     maxWidth = qMax(maxWidth,w);
-                    item->setPos(point.x() - w,point.y());
+                    marker->setPos(point.x() - w,point.y());
                     point.setY(point.y() + h);
                     if (point.y() + h > rect.topLeft().y() + rect.height()) {
                         // Next item would go off rect.
                         point.setX(point.x() - maxWidth);
                         point.setY(rect.topLeft().y());
-                        if (i+1 < items.count()) {
+                        if (i+1 < markers.count()) {
                             m_width += maxWidth;
                             maxWidth = 0;
                         }

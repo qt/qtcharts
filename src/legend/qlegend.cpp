@@ -280,6 +280,7 @@ void QLegend::setFont(const QFont &font)
         foreach (LegendMarker *marker, d_ptr->markers()) {
             marker->setFont(d_ptr->m_font);
         }
+        layout()->invalidate();
         emit fontChanged(font);
     }
 }
