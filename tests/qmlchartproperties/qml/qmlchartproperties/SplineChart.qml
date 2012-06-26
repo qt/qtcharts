@@ -39,7 +39,7 @@ ChartView {
 
         onNameChanged:              console.log("splineSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("splineSeries.onVisibleChanged: " + visible);
-        onClicked:                  console.log("splineSeries.onClicked: " + point.x + ", " + point.y);
+        onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
         onPointReplaced:            console.log("splineSeries.onPointReplaced: " + index);
         onPointRemoved:             console.log("splineSeries.onPointRemoved: " + index);
         onPointAdded:               console.log("splineSeries.onPointAdded: " + series.at(index).x + ", " + series.at(index).y);
@@ -55,5 +55,6 @@ ChartView {
         XyPoint { x: 2.9; y: 3.9 }
         XyPoint { x: 3.4; y: 2.0 }
         XyPoint { x: 4.1; y: 2.3 }
+        onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
     }
 }

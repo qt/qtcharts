@@ -63,7 +63,7 @@ ChartView {
 
         onNameChanged:              console.log("areaSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("areaSeries.onVisibleChanged: " + visible);
-        onClicked:                  console.log("areaSeries.onClicked: " + point.x + ", " + point.y);
+        onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
         onSelected:                 console.log("areaSeries.onSelected");
         onColorChanged:             console.log("areaSeries.onColorChanged: " + color);
         onBorderColorChanged:       console.log("areaSeries.onBorderColorChanged: " + borderColor);

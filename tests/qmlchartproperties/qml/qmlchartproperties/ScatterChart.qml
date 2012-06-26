@@ -40,6 +40,7 @@ ChartView {
 
         onNameChanged:              console.log("scatterSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("scatterSeries.onVisibleChanged: " + visible);
+        onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
         onPointReplaced:            console.log("scatterSeries.onPointReplaced: " + index);
         onPointRemoved:             console.log("scatterSeries.onPointRemoved: " + index);
         onPointAdded:               console.log("scatterSeries.onPointAdded: " + series.at(index).x + ", " + series.at(index).y);
@@ -56,5 +57,6 @@ ChartView {
         XyPoint { x: 2.2; y: 2.9 }
         XyPoint { x: 2.4; y: 2.7 }
         XyPoint { x: 2.67; y: 2.65 }
+        onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
     }
 }
