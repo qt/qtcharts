@@ -60,8 +60,8 @@ public:
     Domain* domain(QAbstractSeries* series) const;
     Domain* domain(QAbstractAxis* axis) const;
 
-    QAbstractAxis* axisX() const { return m_axisX; }
-    QAbstractAxis* axisY(QAbstractSeries *series = 0) const;
+    QAbstractAxis* axisX(QAbstractSeries *series) const;
+    QAbstractAxis* axisY(QAbstractSeries *series) const;
 
     QList<QAbstractSeries*> series() const;
 

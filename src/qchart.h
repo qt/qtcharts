@@ -78,6 +78,9 @@ public:
     void setAxisX(QAbstractSeries *series, QAbstractAxis* axis);
     void setAxisY(QAbstractSeries *series, QAbstractAxis* axis);
 
+    QAbstractAxis* axisX(QAbstractSeries* series = 0) const;
+    QAbstractAxis* axisY(QAbstractSeries* series = 0) const;
+
     void setTheme(QChart::ChartTheme theme);
     QChart::ChartTheme theme() const;
 
@@ -109,9 +112,6 @@ public:
     void scrollUp();
     void scrollDown();
     void scroll(const QPointF &delta);
-
-    QAbstractAxis* axisX() const;
-    QAbstractAxis* axisY(QAbstractSeries* series = 0) const;
 
     QLegend* legend() const;
 

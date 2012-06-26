@@ -65,6 +65,8 @@ protected:
     QBrush m_shadesBrush;
     qreal m_shadesOpacity;
 
+    Qt::Orientation m_orientation;
+
     friend class QAbstractAxis;
 };
 

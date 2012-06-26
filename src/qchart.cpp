@@ -308,9 +308,9 @@ void QChart::zoom(qreal factor)
 /*!
  Returns the pointer to the x axis object of the chart
  */
-QAbstractAxis* QChart::axisX() const
+QAbstractAxis* QChart::axisX(QAbstractSeries* series) const
 {
-    return d_ptr->m_dataset->axisX();
+    return d_ptr->m_dataset->axisX(series);
 }
 
 /*!

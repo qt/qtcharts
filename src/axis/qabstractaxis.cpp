@@ -557,7 +557,8 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     m_labelsAngle(0),
     m_shadesVisible(false),
     m_shadesBrush(Qt::SolidPattern),
-    m_shadesOpacity(1.0)
+    m_shadesOpacity(1.0),
+    m_orientation(Qt::Orientation(0))
 {
 
 }

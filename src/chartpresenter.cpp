@@ -71,7 +71,7 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
 {
     ChartAxis* item;
 
-    if(axis == m_dataset->axisX()){
+    if(axis == m_dataset->axisX(0)){
         item = new ChartAxisX(axis,this);
     }else{
         item = new ChartAxisY(axis,this);
@@ -82,7 +82,7 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
         item->setAnimation(new AxisAnimation(item));
     }
 
-    if(axis==m_dataset->axisX()){
+    if(axis==m_dataset->axisX(0)){
         m_chartTheme->decorate(axis,true);
         QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),item,SLOT(handleRangeChanged(qreal,qreal,int)));
         //initialize

@@ -53,9 +53,6 @@ ChartDataSet::~ChartDataSet()
 
 void ChartDataSet::addSeries(QAbstractSeries* series)
 {
-    //TODO: if(axisY==0) axisY = m_axisY;
-    QAbstractAxis* axisY = m_axisY;
-
     QAbstractAxis* axis = m_seriesAxisMap.value(series);
 
     if(axis) {
@@ -63,15 +60,18 @@ void ChartDataSet::addSeries(QAbstractSeries* series)
         return;
     }
 
+    QAbstractAxis* axisX = m_axisX ; //series->d_ptr->createAxisX();
+    QAbstractAxis* axisY = m_axisY ; //series->d_ptr->createAxisY();
+
     series->setParent(this); // take ownership
-    axisY->setParent(this); // take ownership
+    //axisY->setParent(this); // take ownership
 
     Domain* domain = m_axisDomainMap.value(axisY);
 
     if(!domain) {
         domain = new Domain(axisY);
         QObject::connect(axisY->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,bool)));
-        QObject::connect(axisX()->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisXChanged(qreal,qreal,int)));
+        QObject::connect(axisX->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisXChanged(qreal,qreal,int)));
         QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axisY->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
         //initialize
         m_axisDomainMap.insert(axisY,domain);
@@ -91,8 +91,8 @@ void ChartDataSet::addSeries(QAbstractSeries* series)
     series->d_ptr->scaleDomain(*domain);
 
     if (series->type()== QAbstractSeries::SeriesTypePie && m_seriesAxisMap.count() == 0) {
-        axisX()->hide();
-        this->axisY()->hide();
+        axisX->hide();
+        axisY->hide();
     }
 
     m_seriesAxisMap.insert(series,axisY);
@@ -157,7 +157,7 @@ QAbstractAxis* ChartDataSet::removeSeries(QAbstractSeries* series)
     if(m_seriesAxisMap.values().size()==0)
     {
         m_axisXInitialized=false;
-        emit axisRemoved(axisX());
+        emit axisRemoved(m_axisX);
     }
 
     return axis;
@@ -169,7 +169,7 @@ void ChartDataSet::removeAllSeries()
     QList<QAbstractAxis*> axes;
     foreach(QAbstractSeries *s , series) {
         QAbstractAxis* axis  = removeSeries(s);
-        if(axis==axisY()) continue;
+        if(axis==m_axisY) continue;
         int i = axes.indexOf(axis);
         if(i==-1){
             axes<<axis;
@@ -187,7 +187,7 @@ void ChartDataSet::zoomInDomain(const QRectF& rect, const QSizeF& size)
 {
     QMapIterator<QAbstractAxis*, Domain*> i(m_axisDomainMap);
     //main domain has to be the last one;
-    Domain *domain = m_axisDomainMap.value(axisY());
+    Domain *domain = m_axisDomainMap.value(m_axisY);
     Q_ASSERT(domain);
     while (i.hasNext()) {
         i.next();
@@ -201,7 +201,7 @@ void ChartDataSet::zoomOutDomain(const QRectF& rect, const QSizeF& size)
 {
     QMapIterator<QAbstractAxis*, Domain*> i(m_axisDomainMap);
     //main domain has to be the last one;
-    Domain *domain = m_axisDomainMap.value(axisY());
+    Domain *domain = m_axisDomainMap.value(m_axisY);
     Q_ASSERT(domain);
     while (i.hasNext()) {
         i.next();
@@ -239,6 +239,12 @@ QAbstractAxis* ChartDataSet::axisY(QAbstractSeries *series) const
     return m_seriesAxisMap.value(series);
 }
 
+QAbstractAxis* ChartDataSet::axisX(QAbstractSeries *series) const
+{
+   Q_UNUSED(series)
+    return m_axisX;
+}
+
 Domain* ChartDataSet::domain(QAbstractSeries *series) const
 {
     QAbstractAxis* axis = m_seriesAxisMap.value(series);
@@ -250,8 +256,8 @@ Domain* ChartDataSet::domain(QAbstractSeries *series) const
 
 Domain* ChartDataSet::domain(QAbstractAxis* axis) const
 {
-    if(!axis || axis==axisX()) {
-        return  m_axisDomainMap.value(axisY());
+    if(!axis || axis==m_axisX) {
+        return  m_axisDomainMap.value(m_axisY);
     }
     else {
         return m_axisDomainMap.value(axis);
@@ -262,7 +268,7 @@ void ChartDataSet::scrollDomain(qreal dx,qreal dy,const QSizeF& size)
 {
     QMapIterator<QAbstractAxis*, Domain*> i( m_axisDomainMap);
     //main domain has to be the last one;
-    Domain *domain = m_axisDomainMap.value(axisY());
+    Domain *domain = m_axisDomainMap.value(m_axisY);
     while (i.hasNext()) {
         i.next();
         if(i.value()==domain) continue;
