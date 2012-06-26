@@ -56,10 +56,9 @@ public:
         m_backgroundDropShadowEnabled = true;
 
         // Axes and other
-        m_titleBrush = QBrush(QRgb(0x181818));
+        m_labelBrush = QBrush(QRgb(0x181818));
         m_axisLinePen = QPen(QRgb(0x8c8c8c));
         m_axisLinePen.setWidth(2);
-        m_axisLabelBrush = QBrush(QRgb(0x181818));
         m_gridLinePen = QPen(QRgb(0x8c8c8c));
         m_gridLinePen.setWidth(1);
         m_backgroundShadesBrush = QBrush(QRgb(0xffeecd));

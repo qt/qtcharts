@@ -55,10 +55,9 @@ public:
         m_chartBackgroundGradient = backgroundGradient;
 
         // Axes and other
-        m_titleBrush = QBrush(QRgb(0xffffff));
+        m_labelBrush = QBrush(QRgb(0xffffff));
         m_axisLinePen = QPen(QRgb(0x86878c));
         m_axisLinePen.setWidth(2);
-        m_axisLabelBrush = QBrush(QRgb(0xffffff));
         m_gridLinePen = QPen(QRgb(0x86878c));
         m_gridLinePen.setWidth(1);
         m_backgroundShades = BackgroundShadesNone;

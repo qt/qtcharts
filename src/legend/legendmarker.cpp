@@ -52,13 +52,13 @@ LegendMarker::LegendMarker(QAbstractSeries *series, QLegend *legend) :
 
 void LegendMarker::setPen(const QPen &pen)
 {
-    m_textItem->setPen(pen);
+    m_rectItem->setPen(pen);
     updateLayout();
 }
 
 QPen LegendMarker::pen() const
 {
-    return m_textItem->pen();
+    return m_rectItem->pen();
 }
 
 void LegendMarker::setBrush(const QBrush &brush)
@@ -107,17 +107,6 @@ void LegendMarker::setLabelBrush(const QBrush &brush)
 QBrush LegendMarker::labelBrush() const
 {
     return m_textItem->brush();
-}
-
-void LegendMarker::setLabelPen(const QPen &pen)
-{
-    m_textItem->setPen(pen);
-    updateLayout();
-}
-
-QPen LegendMarker::labelPen() const
-{
-    return m_textItem->pen();
 }
 
 void LegendMarker::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

@@ -95,9 +95,8 @@ protected:
 
     QFont m_masterFont;
     QFont m_labelFont;
-    QBrush m_titleBrush;
+    QBrush m_labelBrush;
     QPen m_axisLinePen;
-    QBrush m_axisLabelBrush;
     QPen m_backgroundShadesPen;
     QBrush m_backgroundShadesBrush;
     BackgroundShadesMode m_backgroundShades;

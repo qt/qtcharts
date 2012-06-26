@@ -47,6 +47,10 @@ Row {
             onClicked: chartLegend.borderColor = main.nextColor();
         }
         Button {
+            text: "legend label color"
+            onClicked: chartLegend.labelColor = main.nextColor();
+        }
+        Button {
             text: "legend top"
             onClicked: chartLegend.alignment ^= Qt.AlignTop;
         }

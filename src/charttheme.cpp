@@ -65,9 +65,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 ChartTheme::ChartTheme(QChart::ChartTheme id) :
     m_masterFont(QFont("arial", 14)),
     m_labelFont(QFont("arial", 10)),
-    m_titleBrush(QColor(QRgb(0x000000))),
+    m_labelBrush(QColor(QRgb(0x000000))),
     m_axisLinePen(QPen(QRgb(0x000000))),
-    m_axisLabelBrush(QColor(QRgb(0x000000))),
     m_backgroundShadesPen(Qt::NoPen),
     m_backgroundShadesBrush(Qt::NoBrush),
     m_backgroundShades(BackgroundShadesNone),
@@ -109,7 +108,7 @@ void ChartTheme::decorate(QChart *chart)
     if(brush == chart->backgroundBrush() ||  m_force)
         chart->setBackgroundBrush(m_chartBackgroundGradient);
     chart->setTitleFont(m_masterFont);
-    chart->setTitleBrush(m_titleBrush);
+    chart->setTitleBrush(m_labelBrush);
     chart->setDropShadowEnabled(m_backgroundDropShadowEnabled);
 }
 
@@ -125,12 +124,11 @@ void ChartTheme::decorate(QLegend *legend)
     if (brush == legend->brush() || m_force)
         legend->setBrush(m_chartBackgroundGradient);
 
-    // TODO: should legend have own brush & font defined by theme?
     if (font == legend->font() || m_force)
         legend->setFont(m_labelFont);
 
     if (brush == legend->labelBrush() || m_force)
-        legend->setLabelBrush(m_axisLabelBrush);
+        legend->setLabelBrush(m_labelBrush);
 }
 
 void ChartTheme::decorate(QAreaSeries *series, int index)
@@ -241,7 +239,7 @@ void ChartTheme::decorate(QPieSeries *series, int index)
             d->setBrush(brushColor, true);
 
         if (d->m_data.m_labelBrush.isThemed() || m_force)
-            d->setLabelBrush(QBrush(m_titleBrush.color()), true);
+            d->setLabelBrush(m_labelBrush.color(), true);
 
         if (d->m_data.m_labelFont.isThemed() || m_force)
             d->setLabelFont(m_labelFont, true);
@@ -267,7 +265,7 @@ void ChartTheme::decorate(QAxis *axis,bool axisX)
     if (axis->isAxisVisible()) {
 
         if(brush == axis->labelsBrush() ||  m_force){
-            axis->setLabelsBrush(m_axisLabelBrush);
+            axis->setLabelsBrush(m_labelBrush);
         }
         if(pen == axis->labelsPen() ||  m_force){
             axis->setLabelsPen(Qt::NoPen); // NoPen for performance reasons

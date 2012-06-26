@@ -59,7 +59,7 @@ public:
         // Axes and other
         m_axisLinePen = QPen(0xd6d6d6);
         m_axisLinePen.setWidth(1);
-        m_axisLabelBrush = QBrush(QRgb(0x404044));
+        m_labelBrush = QBrush(QRgb(0x404044));
         m_gridLinePen = QPen(QRgb(0xe2e2e2));
         m_gridLinePen.setWidth(1);
         m_backgroundShades = BackgroundShadesNone;

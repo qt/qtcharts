@@ -68,8 +68,6 @@ public:
     QString label() const;
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
-    void setLabelPen(const QPen &pen);
-    QPen labelPen() const;
 
     QAbstractSeries *series() const { return m_series;}
 

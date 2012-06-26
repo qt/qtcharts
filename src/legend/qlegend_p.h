@@ -52,7 +52,6 @@ public:
     void attachToChart();
     int roundness(qreal size);
     void setFont(const QFont &font);
-    void setLabelPen(const QPen &pen);
     void setLabelBrush(const QBrush &brush);
 
 public Q_SLOTS:
@@ -71,7 +70,6 @@ private:
     QBrush m_brush;
     QPen m_pen;
     QFont m_font;
-    QPen m_labelPen;
     QBrush m_labelBrush;
     QRectF m_rect;
     qreal m_offsetX;
