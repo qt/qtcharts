@@ -149,9 +149,9 @@ void tst_QChartView::rubberBand()
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(true);
 
-    QAxis* axisY = m_view->chart()->axisY();
+    QAbstractAxis* axisY = m_view->chart()->axisY();
     QSignalSpy spy0(axisY, SIGNAL(rangeChanged(qreal,qreal)));
-    QAxis* axisX = m_view->chart()->axisX();
+    QAbstractAxis* axisX = m_view->chart()->axisX();
     QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal,qreal)));
 
     QTest::qWaitForWindowShown(m_view);
@@ -166,10 +166,11 @@ void tst_QChartView::rubberBand()
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(false);
 
-    QVERIFY(axisX->min() - minX < 1);
-    QVERIFY(axisX->max() - maxX < 1);
-    QVERIFY(axisY->min() - minY < 1);
-    QVERIFY(axisY->max() - maxY < 1);
+    //TODO: QVERIFY(axisX->min() - minX < 1);
+    //TODO: QVERIFY(axisX->max() - maxX < 1);
+    //TODO: QVERIFY(axisY->min() - minY < 1);
+    //TODO: QVERIFY(axisY->max() - maxY < 1);
+    qFatal("implement TODO");
 }
 
 QTEST_MAIN(tst_QChartView)

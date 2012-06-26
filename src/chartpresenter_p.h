@@ -141,8 +141,8 @@ private:
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries* series,Domain* domain);
     void handleSeriesRemoved(QAbstractSeries* series);
-    void handleAxisAdded(QAxis* axis,Domain* domain);
-    void handleAxisRemoved(QAxis* axis);
+    void handleAxisAdded(QAbstractAxis* axis,Domain* domain);
+    void handleAxisRemoved(QAbstractAxis* axis);
 
 private Q_SLOTS:
     void handleAnimationFinished();
@@ -157,8 +157,8 @@ private:
     ChartAnimator* m_animator;
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
-    QMap<QAbstractSeries *, Chart *> m_chartItems;
-    QMap<QAxis *, ChartAxis *> m_axisItems;
+    QMap<QAbstractSeries*, Chart*> m_chartItems;
+    QMap<QAbstractAxis*, ChartAxis*> m_axisItems;
     QRectF m_rect;
     QChart::AnimationOptions m_options;
     State m_state;

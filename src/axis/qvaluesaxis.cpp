@@ -130,6 +130,30 @@ QAbstractAxis::AxisType QValuesAxis::type() const
     return AxisTypeValues;
 }
 
+void QValuesAxis::setMin(QVariant min)
+{
+    bool ok;
+    qreal value = min.toReal(&ok);
+    if(ok) setMin(value);
+}
+
+void QValuesAxis::setMax(QVariant max)
+{
+    bool ok;
+    qreal value = max.toReal(&ok);
+    if(ok) setMax(value);
+}
+
+void QValuesAxis::setRange(QVariant min, QVariant max)
+{
+    bool ok1;
+    bool ok2;
+    qreal value1 = min.toReal(&ok1);
+    qreal value2 = max.toReal(&ok2);
+    if(ok1&&ok2) setRange(value1,value2);
+}
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QValuesAxisPrivate::QValuesAxisPrivate(QValuesAxis* q):

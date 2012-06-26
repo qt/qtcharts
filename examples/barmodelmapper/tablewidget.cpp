@@ -30,6 +30,7 @@
 #include <QBarSet>
 #include <QVBarModelMapper>
 #include <QHeaderView>
+#include <QCategoriesAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -87,8 +88,9 @@ TableWidget::TableWidget(QWidget *parent)
     //! [6]
     QStringList categories;
     categories << "April" << "May" << "June" << "July" << "August";
-
-    chart->axisX()->categories()->insert(categories);
+    QCategoriesAxis* axis = new QCategoriesAxis();
+    axis->append(categories);
+    chart->setAxisX(series,axis);
     //! [6]
 
     //! [7]

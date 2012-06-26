@@ -40,12 +40,12 @@ protected:
 
 public:
     AxisType type() const;
-    void append(QStringList &categories);
+    void append(const QStringList &categories);
     void append(const QString &category);
     void remove(const QString &category);
     void insert(int index, const QString &category);
     void clear();
-    int count();
+    int count() const;
 
     QString at(int index) const;
 
@@ -53,6 +53,13 @@ public:
     void setMin(QString minCategory);
     void setMax(QString maxCategory);
     void setRange(QString minCategory, QString maxCategory);
+
+private:
+    //range handling
+    void setMin(QVariant min);
+    void setMax(QVariant max);
+    void setRange(QVariant min, QVariant max);
+    int ticksCount() const;
 
 Q_SIGNALS:
     void categoriesChanged();

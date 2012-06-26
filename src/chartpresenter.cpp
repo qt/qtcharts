@@ -20,7 +20,7 @@
 #include "chartpresenter_p.h"
 #include "qchart.h"
 #include "qchart_p.h"
-#include "qaxis.h"
+#include "qabstractaxis.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
@@ -67,7 +67,7 @@ void ChartPresenter::setGeometry(const QRectF& rect)
     }
 }
 
-void ChartPresenter::handleAxisAdded(QAxis* axis,Domain* domain)
+void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
 {
     ChartAxis* item;
 
@@ -102,7 +102,7 @@ void ChartPresenter::handleAxisAdded(QAxis* axis,Domain* domain)
     m_axisItems.insert(axis, item);
 }
 
-void ChartPresenter::handleAxisRemoved(QAxis* axis)
+void ChartPresenter::handleAxisRemoved(QAbstractAxis* axis)
 {
     ChartAxis* item = m_axisItems.take(axis);
     Q_ASSERT(item);
@@ -177,10 +177,10 @@ void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
 
 void ChartPresenter::resetAllElements()
 {
-    QList<QAxis *> axisList = m_axisItems.uniqueKeys();
+    QList<QAbstractAxis*> axisList = m_axisItems.uniqueKeys();
     QList<QAbstractSeries *> seriesList = m_chartItems.uniqueKeys();
 
-    foreach(QAxis *axis, axisList) {
+    foreach(QAbstractAxis *axis, axisList) {
         handleAxisRemoved(axis);
         handleAxisAdded(axis,m_dataset->domain(axis));
     }

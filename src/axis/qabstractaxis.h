@@ -24,6 +24,7 @@
 #include <qchartglobal.h>
 #include <QPen>
 #include <QFont>
+#include <QVariant>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -101,7 +102,12 @@ public:
     void setShadesBorderColor(QColor color);
     QColor shadesBorderColor() const;
 
-    int ticksCount() const;
+    //range handling
+    virtual void setMin(QVariant min) = 0;
+    virtual void setMax(QVariant max) = 0 ;
+    virtual void setRange(QVariant min, QVariant max) = 0;
+
+    virtual int ticksCount() const = 0;
 
     void show();
     void hide();
@@ -110,18 +116,17 @@ Q_SIGNALS:
     void visibleChanged(bool visible);
     void labelsVisibleChanged(bool visible);
     void gridVisibleChanged(bool visible);
-    void rangeChanged();
     void colorChanged(QColor color);
     void labelsColorChanged(QColor color);
     void shadesVisibleChanged(bool visible);
     void shadesColorChanged(QColor color);
     void shadesBorderColorChanged(QColor color);
-    void minChanged();
-    void maxChanged();
 
 protected:
 	QScopedPointer<QAbstractAxisPrivate> d_ptr;
-    Q_DISABLE_COPY(QAbstractAxis)
+    Q_DISABLE_COPY(QAbstractAxis);
+    friend class ChartDataSet;
+    friend class ChartAxis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

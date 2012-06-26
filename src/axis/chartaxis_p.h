@@ -38,7 +38,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAxis;
+class QAbstractAxis;
 class ChartPresenter;
 
 class ChartAxis : public Chart
@@ -47,7 +47,7 @@ class ChartAxis : public Chart
 public:
     enum AxisType{ X_AXIS,Y_AXIS };
 
-    ChartAxis(QAxis *axis, ChartPresenter *presenter);
+    ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter);
     ~ChartAxis();
 
     virtual AxisType axisType() const = 0;
@@ -107,7 +107,7 @@ private:
     void axisSelected();
 
 protected:
-    QAxis* m_chartAxis;
+    QAbstractAxis* m_chartAxis;
     QRectF m_rect;
     int m_labelsAngle;
     QScopedPointer<QGraphicsItemGroup> m_grid;

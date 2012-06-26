@@ -36,7 +36,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAxis;
+class QAbstractAxis;
 
 class QTCOMMERCIALCHART_AUTOTEST_EXPORT ChartDataSet : public QObject
 {
@@ -45,8 +45,8 @@ public:
     ChartDataSet(QChart* parent=0);
     virtual ~ChartDataSet();
 
-    void addSeries(QAbstractSeries* series,QAxis *axisY = 0);
-    QAxis* removeSeries(QAbstractSeries* series);
+    void addSeries(QAbstractSeries* series);
+    QAbstractAxis* removeSeries(QAbstractSeries* series);
     void removeAllSeries();
     void updateSeries(QAbstractSeries* series);
 
@@ -58,10 +58,10 @@ public:
     int seriesIndex(QAbstractSeries *series);
 
     Domain* domain(QAbstractSeries* series) const;
-    Domain* domain(QAxis* axis) const;
+    Domain* domain(QAbstractAxis* axis) const;
 
-    QAxis* axisX() const { return m_axisX; }
-    QAxis* axisY(QAbstractSeries *series = 0) const;
+    QAbstractAxis* axisX() const { return m_axisX; }
+    QAbstractAxis* axisY(QAbstractSeries *series = 0) const;
 
     QList<QAbstractSeries*> series() const;
 
@@ -69,19 +69,19 @@ Q_SIGNALS:
     void seriesAdded(QAbstractSeries* series, Domain* domain);
     void seriesRemoved(QAbstractSeries* series);
     void seriesUpdated(QAbstractSeries* series);
-    void axisAdded(QAxis* axis,Domain* domain);
-    void axisRemoved(QAxis* axis);
+    void axisAdded(QAbstractAxis* axis,Domain* domain);
+    void axisRemoved(QAbstractAxis* axis);
 
 private:
-    QStringList createLabels(QAxis* axis,qreal min, qreal max);
+    QStringList createLabels(QAbstractAxis* axis,qreal min, qreal max);
     void calculateDomain(QAbstractSeries* series,Domain* domain);
 
 private:
-    QMap<QAbstractSeries *, QAxis *> m_seriesAxisMap;
-    QMap<QAxis*, Domain *> m_axisDomainMap;
-    QMap<int, QAbstractSeries *> m_indexSeriesMap;
-    QAxis* m_axisX;
-    QAxis* m_axisY;
+    QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisMap;
+    QMap<QAbstractAxis*, Domain*> m_axisDomainMap;
+    QMap<int, QAbstractSeries*> m_indexSeriesMap;
+    QAbstractAxis* m_axisX;
+    QAbstractAxis* m_axisY;
 
     int m_domainIndex;
     bool m_axisXInitialized;

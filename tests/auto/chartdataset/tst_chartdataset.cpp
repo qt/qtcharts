@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qaxis.h>
+#include <qabstractaxis.h>
 #include <qlineseries.h>
 #include <private/chartdataset_p.h>
 #include <private/domain_p.h>
@@ -28,7 +28,7 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(Domain *)
-Q_DECLARE_METATYPE(QAxis *)
+Q_DECLARE_METATYPE(QAbstractAxis *)
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QLineSeries *)
 

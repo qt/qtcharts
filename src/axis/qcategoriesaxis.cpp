@@ -42,7 +42,7 @@ QCategoriesAxis::QCategoriesAxis(QCategoriesAxisPrivate &d,QObject *parent):QAbs
 /*!
     Appends \a categories to axis
 */
-void QCategoriesAxis::append(QStringList &categories)
+void QCategoriesAxis::append(const QStringList &categories)
 {
     Q_D(QCategoriesAxis);
     d->m_categories.append(categories);
@@ -94,9 +94,9 @@ void QCategoriesAxis::clear()
 /*!
   Returns number of categories.
  */
-int QCategoriesAxis::count()
+int QCategoriesAxis::count() const
 {
-    Q_D(QCategoriesAxis);
+    Q_D(const QCategoriesAxis);
     return d->m_categories.count();
 }
 
@@ -153,7 +153,25 @@ QAbstractAxis::AxisType QCategoriesAxis::type() const
     return AxisTypeCategories;
 }
 
+void QCategoriesAxis::setMin(QVariant min)
+{
+    setMin(min.toString());
+}
 
+void QCategoriesAxis::setMax(QVariant max)
+{
+    setMax(max.toString());
+}
+
+void QCategoriesAxis::setRange(QVariant min, QVariant max)
+{
+   setRange(min.toString(),max.toString());
+}
+
+int QCategoriesAxis::ticksCount() const
+{
+    return count();
+}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QCategoriesAxisPrivate::QCategoriesAxisPrivate(QCategoriesAxis* q):

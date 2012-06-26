@@ -19,8 +19,8 @@
 ****************************************************************************/
 
 #include "chartaxis_p.h"
-#include "qaxis.h"
-#include "qaxis_p.h"
+#include "qabstractaxis.h"
+#include "qabstractaxis_p.h"
 #include "qaxiscategories_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
@@ -30,7 +30,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartAxis::ChartAxis(QAxis *axis,ChartPresenter *presenter) : Chart(presenter),
+ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : Chart(presenter),
     m_chartAxis(axis),
     m_labelsAngle(0),
     m_grid(new QGraphicsItemGroup(presenter->rootItem())),
@@ -52,7 +52,6 @@ ChartAxis::ChartAxis(QAxis *axis,ChartPresenter *presenter) : Chart(presenter),
     m_grid->setZValue(ChartPresenter::GridZValue);
 
     QObject::connect(m_chartAxis->d_ptr.data(),SIGNAL(updated()),this,SLOT(handleAxisUpdated()));
-    QObject::connect(m_chartAxis->categories()->d_ptr.data(),SIGNAL(updated()),this,SLOT(handleAxisCategoriesUpdated()));
 
     QGraphicsSimpleTextItem item;
     m_font = item.font();
@@ -150,7 +149,8 @@ bool ChartAxis::createLabels(QStringList &labels,qreal min, qreal max,int ticks)
     Q_ASSERT(max>min);
     Q_ASSERT(ticks>1);
 
-    QAxisCategories* categories = m_chartAxis->categories();
+    //TODO:: QAxisCategories* categories = m_chartAxis->categories();
+    QAxisCategories* categories = new QAxisCategories();
 
     bool category = categories->count()>0;
 

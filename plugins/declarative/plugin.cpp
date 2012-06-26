@@ -21,6 +21,7 @@
 #include <QtDeclarative/qdeclarativeextensionplugin.h>
 #include <QtDeclarative/qdeclarative.h>
 #include "qchart.h"
+#include "qabstractaxis.h"
 #include "qaxiscategories.h"
 #include "declarativechart.h"
 #include "declarativexypoint.h"
@@ -87,7 +88,7 @@ public:
                                           QLatin1String("Trying to create uncreatable: BarModelMapper."));
         qmlRegisterUncreatableType<QAbstractSeries>(uri, 1, 0, "AbstractSeries",
                                           QLatin1String("Trying to create uncreatable: AbstractSeries."));
-        qmlRegisterUncreatableType<QAxis>(uri, 1, 0, "Axis",
+        qmlRegisterUncreatableType<QAbstractAxis>(uri, 1, 0, "Axis",
                                           QLatin1String("Trying to create uncreatable: Axis."));
         qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",
                                                     QLatin1String("Trying to create uncreatable: PieModelMapper."));

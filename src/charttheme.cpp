@@ -23,7 +23,7 @@
 #include "qchart_p.h"
 #include "qchartview.h"
 #include "qlegend.h"
-#include "qaxis.h"
+#include "qabstractaxis.h"
 #include <QTime>
 
 //series
@@ -256,7 +256,7 @@ void ChartTheme::decorate(QSplineSeries *series, int index)
     }
 }
 
-void ChartTheme::decorate(QAxis *axis,bool axisX)
+void ChartTheme::decorate(QAbstractAxis *axis,bool axisX)
 {
     QPen pen;
     QBrush brush;

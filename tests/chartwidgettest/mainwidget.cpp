@@ -43,6 +43,7 @@
 #include <cmath>
 #include <QDebug>
 #include <QStandardItemModel>
+#include <QCategoriesAxis>
 
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -276,16 +277,24 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         QBarSeries* series = 0;
         if (seriesName == "Bar") {
             series = new QBarSeries(this);
-            m_chart->axisX()->categories()->insert(category);
+            QCategoriesAxis* axis = new QCategoriesAxis();
+            axis->append(category);
+            m_chart->setAxisX(series,axis);
         } else if (seriesName == "Grouped bar") {
             series = new QGroupedBarSeries(this);
-            m_chart->axisX()->categories()->insert(category);
+            QCategoriesAxis* axis = new QCategoriesAxis();
+            axis->append(category);
+            m_chart->setAxisX(series,axis);
         } else if (seriesName == "Stacked bar") {
             series = new QStackedBarSeries(this);
-            m_chart->axisX()->categories()->insert(category);
+            QCategoriesAxis* axis = new QCategoriesAxis();
+            axis->append(category);
+            m_chart->setAxisX(series,axis);
         } else {
             series = new QPercentBarSeries(this);
-            m_chart->axisX()->categories()->insert(category);
+            QCategoriesAxis* axis = new QCategoriesAxis();
+            axis->append(category);
+            m_chart->setAxisX(series,axis);
         }
 
         for (int j(0); j < data.count(); j++) {

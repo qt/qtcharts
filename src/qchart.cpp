@@ -23,7 +23,7 @@
 #include "legendscroller_p.h"
 #include "qlegend_p.h"
 #include "chartbackground_p.h"
-#include "qaxis.h"
+#include "qabstractaxis.h"
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 #include <QGraphicsLayout>
@@ -140,10 +140,10 @@ QChart::~QChart()
 
  \sa removeSeries(), removeAllSeries()
  */
-void QChart::addSeries(QAbstractSeries *series, QAxis *axisY)
+void QChart::addSeries(QAbstractSeries *series)
 {
     Q_ASSERT(series);
-    d_ptr->m_dataset->addSeries(series, axisY);
+    d_ptr->m_dataset->addSeries(series);
 }
 
 /*!
@@ -308,7 +308,7 @@ void QChart::zoom(qreal factor)
 /*!
  Returns the pointer to the x axis object of the chart
  */
-QAxis* QChart::axisX() const
+QAbstractAxis* QChart::axisX() const
 {
     return d_ptr->m_dataset->axisX();
 }
@@ -317,7 +317,7 @@ QAxis* QChart::axisX() const
  Returns the pointer to the y axis object of the \a series
  If no \a series is provided then default Y axis of the chart is returned.
  */
-QAxis* QChart::axisY(QAbstractSeries *series) const
+QAbstractAxis* QChart::axisY(QAbstractSeries *series) const
 {
     return d_ptr->m_dataset->axisY(series);
 }
@@ -428,6 +428,18 @@ void QChart::setMarginsMinimum(const QRectF& margins)
     d_ptr->m_presenter->setMarginsMinimum(margins);
 }
 
+void QChart::setAxisX(QAbstractSeries *series, QAbstractAxis* axis)
+{
+    Q_UNUSED(series);
+    Q_UNUSED(axis);
+}
+
+void QChart::setAxisY(QAbstractSeries *series, QAbstractAxis* axis)
+{
+    Q_UNUSED(series);
+    Q_UNUSED(axis);
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QChartPrivate::QChartPrivate():
@@ -447,8 +459,8 @@ void QChartPrivate::createConnections()
 {
     QObject::connect(m_dataset,SIGNAL(seriesAdded(QAbstractSeries*,Domain*)),m_presenter,SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
     QObject::connect(m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),m_presenter,SLOT(handleSeriesRemoved(QAbstractSeries*)));
-    QObject::connect(m_dataset,SIGNAL(axisAdded(QAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QAxis*,Domain*)));
-    QObject::connect(m_dataset,SIGNAL(axisRemoved(QAxis*)),m_presenter,SLOT(handleAxisRemoved(QAxis*)));
+    QObject::connect(m_dataset,SIGNAL(axisAdded(QAbstractAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QAbstractAxis*,Domain*)));
+    QObject::connect(m_dataset,SIGNAL(axisRemoved(QAbstractAxis*)),m_presenter,SLOT(handleAxisRemoved(QAbstractAxis*)));
     //QObject::connect(m_presenter, SIGNAL(marginsChanged(QRectF)), q_ptr, SIGNAL(marginsChanged(QRectF)));
 }
 

@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "drilldownchart.h"
-#include <QAxis>
+#include <QCategoriesAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -39,11 +39,12 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
 
     // Reset axis
     axisX()->setRange(0,0);
-    axisY()->setNiceNumbersEnabled(true);
-    axisX()->categories()->clear();
-    axisX()->categories()->insert(m_currentSeries->categories());
+    QCategoriesAxis* axis = new QCategoriesAxis();
+    axis->append(m_currentSeries->categories());
 
     addSeries(series);
+    setAxisX(series,axis);
+
     setTitle(series->name());
 }
 

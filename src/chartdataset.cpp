@@ -20,8 +20,8 @@
 
 #include "chartdataset_p.h"
 #include "qchart.h"
-#include "qaxis.h"
-#include "qaxis_p.h"
+#include "qvaluesaxis.h"
+#include "qvaluesaxis_p.h"
 #include "qabstractseries_p.h"
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
@@ -31,8 +31,8 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartDataSet::ChartDataSet(QChart *parent):QObject(parent),
-    m_axisX(new QAxis(this)),
-    m_axisY(new QAxis(this)),
+    m_axisX(new QValuesAxis(this)),
+    m_axisY(new QValuesAxis(this)),
     m_domainIndex(0),
     m_axisXInitialized(false),
     m_axisYInitialized(false)
@@ -51,11 +51,12 @@ ChartDataSet::~ChartDataSet()
     removeAllSeries();
 }
 
-void ChartDataSet::addSeries(QAbstractSeries* series, QAxis *axisY)
+void ChartDataSet::addSeries(QAbstractSeries* series)
 {
-    if(axisY==0) axisY = m_axisY;
+    //TODO: if(axisY==0) axisY = m_axisY;
+    QAbstractAxis* axisY = m_axisY;
 
-    QAxis* axis = m_seriesAxisMap.value(series);
+    QAbstractAxis* axis = m_seriesAxisMap.value(series);
 
     if(axis) {
         qWarning() << "Can not add series. Series already on the chart";
@@ -116,9 +117,9 @@ void ChartDataSet::addSeries(QAbstractSeries* series, QAxis *axisY)
 
 }
 
-QAxis* ChartDataSet::removeSeries(QAbstractSeries* series)
+QAbstractAxis* ChartDataSet::removeSeries(QAbstractSeries* series)
 {
-    QAxis* axis = m_seriesAxisMap.value(series);
+    QAbstractAxis* axis = m_seriesAxisMap.value(series);
 
     if(!axis){
         qWarning()<<"Can not remove series. Series not found on the chart.";
@@ -137,7 +138,7 @@ QAxis* ChartDataSet::removeSeries(QAbstractSeries* series)
     series->d_ptr->m_chart = 0;
     series->d_ptr->m_dataset = 0;
 
-    QList<QAxis*> axes =  m_seriesAxisMap.values();
+    QList<QAbstractAxis*> axes =  m_seriesAxisMap.values();
 
     int i = axes.indexOf(axis);
 
@@ -165,9 +166,9 @@ QAxis* ChartDataSet::removeSeries(QAbstractSeries* series)
 void ChartDataSet::removeAllSeries()
 {
     QList<QAbstractSeries*> series =  m_seriesAxisMap.keys();
-    QList<QAxis*> axes;
+    QList<QAbstractAxis*> axes;
     foreach(QAbstractSeries *s , series) {
-        QAxis* axis  = removeSeries(s);
+        QAbstractAxis* axis  = removeSeries(s);
         if(axis==axisY()) continue;
         int i = axes.indexOf(axis);
         if(i==-1){
@@ -184,7 +185,7 @@ void ChartDataSet::removeAllSeries()
 
 void ChartDataSet::zoomInDomain(const QRectF& rect, const QSizeF& size)
 {
-    QMapIterator<QAxis*, Domain*> i(m_axisDomainMap);
+    QMapIterator<QAbstractAxis*, Domain*> i(m_axisDomainMap);
     //main domain has to be the last one;
     Domain *domain = m_axisDomainMap.value(axisY());
     Q_ASSERT(domain);
@@ -198,7 +199,7 @@ void ChartDataSet::zoomInDomain(const QRectF& rect, const QSizeF& size)
 
 void ChartDataSet::zoomOutDomain(const QRectF& rect, const QSizeF& size)
 {
-    QMapIterator<QAxis*, Domain*> i(m_axisDomainMap);
+    QMapIterator<QAbstractAxis*, Domain*> i(m_axisDomainMap);
     //main domain has to be the last one;
     Domain *domain = m_axisDomainMap.value(axisY());
     Q_ASSERT(domain);
@@ -213,7 +214,7 @@ void ChartDataSet::zoomOutDomain(const QRectF& rect, const QSizeF& size)
 int ChartDataSet::seriesCount(QAbstractSeries::SeriesType type)
 {
     int count=0;
-    QMapIterator<QAbstractSeries*, QAxis*> i(m_seriesAxisMap);
+    QMapIterator<QAbstractSeries*, QAbstractAxis*> i(m_seriesAxisMap);
     while (i.hasNext()) {
            i.next();
            if(i.key()->type()==type) count++;
@@ -232,7 +233,7 @@ int ChartDataSet::seriesIndex(QAbstractSeries *series)
     return -1;
 }
 
-QAxis* ChartDataSet::axisY(QAbstractSeries *series) const
+QAbstractAxis* ChartDataSet::axisY(QAbstractSeries *series) const
 {
     if(series == 0) return m_axisY;
     return m_seriesAxisMap.value(series);
@@ -240,14 +241,14 @@ QAxis* ChartDataSet::axisY(QAbstractSeries *series) const
 
 Domain* ChartDataSet::domain(QAbstractSeries *series) const
 {
-	QAxis* axis = m_seriesAxisMap.value(series);
+    QAbstractAxis* axis = m_seriesAxisMap.value(series);
 	if(axis){
 		return m_axisDomainMap.value(axis);
 	}else
 		return 0;
 }
 
-Domain* ChartDataSet::domain(QAxis* axis) const
+Domain* ChartDataSet::domain(QAbstractAxis* axis) const
 {
     if(!axis || axis==axisX()) {
         return  m_axisDomainMap.value(axisY());
@@ -259,7 +260,7 @@ Domain* ChartDataSet::domain(QAxis* axis) const
 
 void ChartDataSet::scrollDomain(qreal dx,qreal dy,const QSizeF& size)
 {
-    QMapIterator<QAxis*, Domain*> i( m_axisDomainMap);
+    QMapIterator<QAbstractAxis*, Domain*> i( m_axisDomainMap);
     //main domain has to be the last one;
     Domain *domain = m_axisDomainMap.value(axisY());
     while (i.hasNext()) {

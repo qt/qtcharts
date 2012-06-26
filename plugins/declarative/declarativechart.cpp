@@ -26,6 +26,7 @@
 #include "declarativepieseries.h"
 #include "declarativesplineseries.h"
 #include "declarativescatterseries.h"
+#include "qcategoriesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -320,12 +321,12 @@ QString DeclarativeChart::title()
     return m_chart->title();
 }
 
-QAxis *DeclarativeChart::axisX()
+QAbstractAxis *DeclarativeChart::axisX()
 {
     return m_chart->axisX();
 }
 
-QAxis *DeclarativeChart::axisY(QAbstractSeries *series)
+QAbstractAxis *DeclarativeChart::axisY(QAbstractSeries *series)
 {
     return m_chart->axisY(series);
 }
@@ -338,26 +339,43 @@ QLegend *DeclarativeChart::legend()
 QVariantList DeclarativeChart::axisXLabels()
 {
     QVariantList labels;
-    foreach (qreal value, m_chart->axisX()->categories()->values()) {
-        labels.append(value);
-        labels.append(m_chart->axisX()->categories()->label(value));
+
+
+    if(m_chart->axisX()->type()==QAbstractAxis::AxisTypeCategories) {
+
+        QCategoriesAxis* axis = static_cast<QCategoriesAxis*>(m_chart->axisX());
+
+        for(int i=0;i<axis->count();i++){
+            labels.append(i);
+            labels.append(axis->at(i));
+        }
+
     }
     return labels;
+
 }
 
 void DeclarativeChart::setAxisXLabels(QVariantList list)
 {
     QVariant value(QVariant::Invalid);
-    foreach (QVariant element, list) {
-        if (value.isValid() && element.type() == QVariant::String) {
-            m_chart->axisX()->categories()->insert(value.toDouble(), element.toString());
-            value = QVariant(QVariant::Invalid);
-        } else {
-            if (element.canConvert(QVariant::Double))
+
+    if(m_chart->axisX()->type()==QAbstractAxis::AxisTypeCategories) {
+        QCategoriesAxis* axis = static_cast<QCategoriesAxis*>(m_chart->axisX());
+
+        foreach (QVariant element, list) {
+            if (value.isValid() && element.type() == QVariant::String) {
+                axis->append(element.toString());
+                value = QVariant(QVariant::Invalid);
+            }
+            else {
+                if (element.canConvert(QVariant::Double))
                 value = element;
+            }
+
         }
+        emit axisLabelsChanged();
     }
-    emit axisLabelsChanged();
+
 }
 
 void DeclarativeChart::setTitleColor(QColor color)

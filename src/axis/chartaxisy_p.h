@@ -34,13 +34,13 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAxis;
+class QAbstractAxis;
 class ChartPresenter;
 
 class ChartAxisY : public ChartAxis
 {
 public:
-    ChartAxisY(QAxis *axis, ChartPresenter *presenter);
+    ChartAxisY(QAbstractAxis *axis, ChartPresenter *presenter);
     ~ChartAxisY();
 
     AxisType axisType() const { return Y_AXIS;}

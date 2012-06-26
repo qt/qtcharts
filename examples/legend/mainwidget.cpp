@@ -131,7 +131,7 @@ void MainWidget::createSeries()
     m_chart->legend()->setAlignment(Qt::AlignBottom);
 //![1]
 
-    m_chart->axisY()->setNiceNumbersEnabled(true);
+    //TODO:m_chart->axisY()->setNiceNumbersEnabled(true);
     m_chartView->setRenderHint(QPainter::Antialiasing);
 }
 

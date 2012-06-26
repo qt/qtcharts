@@ -7,7 +7,7 @@ TEMPLATE = subdirs
 SUBDIRS += \
            areachart \
            barchart \
-           customchart \
+           #customchart \
            linechart \
            percentbarchart \
            piechart \

@@ -28,10 +28,12 @@
 #include <qbarseries.h>
 #include <qpercentbarseries.h>
 #include <qstackedbarseries.h>
+#include <qvaluesaxis.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-Q_DECLARE_METATYPE(QAxis *)
+Q_DECLARE_METATYPE(QAbstractAxis *)
+Q_DECLARE_METATYPE(QValuesAxis *)
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QChart::AnimationOption)
 Q_DECLARE_METATYPE(QBrush)
@@ -177,7 +179,7 @@ void tst_QChart::qchart()
 void tst_QChart::addSeries_data()
 {
     QTest::addColumn<QAbstractSeries *>("series");
-    QTest::addColumn<QAxis *>("axis");
+    QTest::addColumn<QAbstractAxis *>("axis");
 
     QAbstractSeries* series0 = new QLineSeries(this);
     QAbstractSeries* series1 = new QAreaSeries(static_cast<QLineSeries*>(series0));
@@ -188,23 +190,23 @@ void tst_QChart::addSeries_data()
     QAbstractSeries* series6 = new QPercentBarSeries(this);
     QAbstractSeries* series7 = new QStackedBarSeries(this);
 
-    QAxis* axis = new QAxis(this);
+    QValuesAxis* axis = new QValuesAxis(this);
 
-    QTest::newRow("default axis: lineSeries") << series0 << (QAxis*) 0;
+    QTest::newRow("default axis: lineSeries") << series0 << (QAbstractAxis*) 0;
     QTest::newRow("axis0: lineSeries") << series0 << axis;
-    QTest::newRow("default axis: areaSeries") << series1 << (QAxis*) 0;
+    QTest::newRow("default axis: areaSeries") << series1 << (QAbstractAxis*) 0;
     QTest::newRow("axis: areaSeries") << series1 << axis;
-    QTest::newRow("default axis: scatterSeries") << series2 << (QAxis*) 0;
+    QTest::newRow("default axis: scatterSeries") << series2 << (QAbstractAxis*) 0;
     QTest::newRow("axis1: scatterSeries") << series2 << axis;
-    QTest::newRow("default axis: splineSeries") << series3 << (QAxis*) 0;
+    QTest::newRow("default axis: splineSeries") << series3 << (QAbstractAxis*) 0;
     QTest::newRow("axis: splineSeries") << series3 << axis;
-    QTest::newRow("default axis: pieSeries") << series4 << (QAxis*) 0;
+    QTest::newRow("default axis: pieSeries") << series4 << (QAbstractAxis*) 0;
     QTest::newRow("axis: pieSeries") << series4 << axis;
-    QTest::newRow("default axis: barSeries") << series5 << (QAxis*) 0;
+    QTest::newRow("default axis: barSeries") << series5 << (QAbstractAxis*) 0;
     QTest::newRow("axis: barSeries") << series5 << axis;
-    QTest::newRow("default axis: percentBarSeries") << series6 << (QAxis*) 0;
+    QTest::newRow("default axis: percentBarSeries") << series6 << (QAbstractAxis*) 0;
     QTest::newRow("axis: barSeries") << series6 << axis;
-    QTest::newRow("default axis: stackedBarSeries") << series7 << (QAxis*) 0;
+    QTest::newRow("default axis: stackedBarSeries") << series7 << (QAbstractAxis*) 0;
     QTest::newRow("axis: barSeries") << series7 << axis;
 
 }
@@ -212,13 +214,14 @@ void tst_QChart::addSeries_data()
 void tst_QChart::addSeries()
 {
     QFETCH(QAbstractSeries *, series);
-    QFETCH(QAxis *, axis);
+    QFETCH(QAbstractAxis *, axis);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
     QVERIFY(!series->chart());
     QCOMPARE(m_chart->series().count(), 0);
-    m_chart->addSeries(series,axis);
+    m_chart->addSeries(series);
+    m_chart->setAxisY(series,axis);
     QCOMPARE(m_chart->series().count(), 1);
     QCOMPARE(m_chart->series().first(), series);
     QVERIFY(series->chart() == m_chart);
@@ -253,7 +256,7 @@ void tst_QChart::axisX_data()
 void tst_QChart::axisX()
 {
     QVERIFY(m_chart->axisX());
-    QAxis* axis = m_chart->axisX();
+    QAbstractAxis* axis = m_chart->axisX();
     createTestData();
     //it should be the same axis
     QCOMPARE(axis,m_chart->axisX());
@@ -261,32 +264,35 @@ void tst_QChart::axisX()
 
 void tst_QChart::axisY_data()
 {
-    QTest::addColumn<QAxis*>("axis0");
-    QTest::addColumn<QAxis*>("axis1");
-    QTest::addColumn<QAxis*>("axis2");
-    QTest::newRow("1 defualt, 2 optional") << (QAxis*)0 << new QAxis() << new QAxis();
-    QTest::newRow("3 optional") << new QAxis() << new QAxis() << new QAxis();
+    QTest::addColumn<QAbstractAxis*>("axis0");
+    QTest::addColumn<QAbstractAxis*>("axis1");
+    QTest::addColumn<QAbstractAxis*>("axis2");
+    QTest::newRow("1 defualt, 2 optional") << (QAbstractAxis*)0 << new QValuesAxis() << new QValuesAxis();
+    QTest::newRow("3 optional") << new QValuesAxis() << new QValuesAxis() << new QValuesAxis();
 }
 
 
 void tst_QChart::axisY()
 {
-    QFETCH(QAxis*, axis0);
-    QFETCH(QAxis*, axis1);
-    QFETCH(QAxis*, axis2);
+    QFETCH(QAbstractAxis*, axis0);
+    QFETCH(QAbstractAxis*, axis1);
+    QFETCH(QAbstractAxis*, axis2);
 
-    QAxis* defaultAxisY = m_chart->axisY();
+    QAbstractAxis* defaultAxisY = m_chart->axisY();
 
     QVERIFY2(defaultAxisY, "Missing axisY.");
 
     QLineSeries* series0 = new QLineSeries();
-    m_chart->addSeries(series0, axis0);
+    m_chart->addSeries(series0);
+    m_chart->setAxisY(series0,axis0);
 
     QLineSeries* series1 = new QLineSeries();
-    m_chart->addSeries(series1, axis1);
+    m_chart->addSeries(series1);
+    m_chart->setAxisY(series1,axis1);
 
     QLineSeries* series2 = new QLineSeries();
-    m_chart->addSeries(series2, axis2);
+    m_chart->addSeries(series2);
+    m_chart->setAxisY(series2,axis2);
 
     if (!axis0)
         axis0 = defaultAxisY;
@@ -412,12 +418,13 @@ void tst_QChart::removeSeries_data()
 void tst_QChart::removeSeries()
 {
     QFETCH(QAbstractSeries *, series);
-    QFETCH(QAxis *, axis);
+    QFETCH(QAbstractAxis *, axis);
     QSignalSpy deleteSpy(series, SIGNAL(destroyed()));
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
-    m_chart->addSeries(series,axis);
+    m_chart->addSeries(series);
+    m_chart->setAxisY(series,axis);
     QCOMPARE(m_chart->axisY(series),axis);
     m_chart->removeSeries(series);
     QVERIFY(m_chart->axisY(series)==0);
@@ -431,10 +438,11 @@ void tst_QChart::scrollDown_data()
 
 void tst_QChart::scrollDown()
 {
+    qFatal("implement me");
     createTestData();
-    qreal min = m_chart->axisY()->min();
+    //TODO qreal min = m_chart->axisY()->min();
     m_chart->scrollDown();
-    QVERIFY(m_chart->axisY()->min()<min);
+    //TODO QVERIFY(m_chart->axisY()->min()<min);
 }
 
 void tst_QChart::scrollLeft_data()
@@ -444,10 +452,11 @@ void tst_QChart::scrollLeft_data()
 
 void tst_QChart::scrollLeft()
 {
+    qFatal("implement me");
     createTestData();
-    qreal min = m_chart->axisX()->min();
+    //TODO qreal min = m_chart->axisX()->min();
     m_chart->scrollLeft();
-    QVERIFY(m_chart->axisX()->min()<min);
+    //TODO QVERIFY(m_chart->axisX()->min()<min);
 }
 
 void tst_QChart::scrollRight_data()
@@ -457,10 +466,11 @@ void tst_QChart::scrollRight_data()
 
 void tst_QChart::scrollRight()
 {
+    qFatal("implement me");
     createTestData();
-    qreal min = m_chart->axisX()->min();
+    //TODO qreal min = m_chart->axisX()->min();
     m_chart->scrollRight();
-    QVERIFY(m_chart->axisX()->min()>min);
+    //TODO QVERIFY(m_chart->axisX()->min()>min);
 }
 
 void tst_QChart::scrollUp_data()
@@ -470,10 +480,11 @@ void tst_QChart::scrollUp_data()
 
 void tst_QChart::scrollUp()
 {
+    qFatal("implement me");
     createTestData();
-    qreal min = m_chart->axisY()->min();
+    //TODO qreal min = m_chart->axisY()->min();
     m_chart->scrollUp();
-    QVERIFY(m_chart->axisY()->min()>min);
+    //TODO QVERIFY(m_chart->axisY()->min()>min);
 }
 
 void tst_QChart::theme_data()
@@ -551,6 +562,8 @@ void tst_QChart::zoomIn_data()
 
 void tst_QChart::zoomIn()
 {
+    qFatal("implement me");
+    /*
     QFETCH(QRectF, rect);
     createTestData();
     QRectF marigns = m_chart->margins();
@@ -566,6 +579,7 @@ void tst_QChart::zoomIn()
         QVERIFY(minY<m_chart->axisY()->min());
         QVERIFY(maxY>m_chart->axisY()->max());
     }
+    */
 }
 
 void tst_QChart::zoomOut_data()
@@ -575,7 +589,9 @@ void tst_QChart::zoomOut_data()
 
 void tst_QChart::zoomOut()
 {
+    qFatal("implement me");
     createTestData();
+    /*
     qreal minX = m_chart->axisX()->min();
     qreal minY = m_chart->axisY()->min();
     qreal maxX = m_chart->axisX()->max();
@@ -604,6 +620,7 @@ void tst_QChart::zoomOut()
 
     QVERIFY(maxX == m_chart->axisX()->max());
     QVERIFY(maxY == m_chart->axisY()->max());
+    */
 }
 
 QTEST_MAIN(tst_QChart)

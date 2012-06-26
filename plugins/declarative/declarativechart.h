@@ -24,7 +24,6 @@
 #include <QtCore/QtGlobal>
 #include <QDeclarativeItem>
 #include <qchart.h>
-#include <QAxis>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -39,8 +38,8 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(QString title READ title WRITE setTitle)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
     Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
-    Q_PROPERTY(QAxis *axisX READ axisX)
-    Q_PROPERTY(QAxis *axisY READ axisY)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY)
     Q_PROPERTY(QLegend *legend READ legend)
     // TODO: how to define axis labels? This is not very convenient
     Q_PROPERTY(QVariantList axisXLabels READ axisXLabels WRITE setAxisXLabels NOTIFY axisLabelsChanged)
@@ -103,7 +102,7 @@ public:
     DeclarativeChart::Animation animationOptions();
     void setTitle(QString title);
     QString title();
-    QAxis *axisX();
+    QAbstractAxis *axisX();
     QLegend *legend();
     QVariantList axisXLabels();
     void setAxisXLabels(QVariantList list);
@@ -125,7 +124,7 @@ public:
     Q_INVOKABLE QAbstractSeries *series(int index);
     Q_INVOKABLE QAbstractSeries *series(QString seriesName);
     Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
-    Q_INVOKABLE QAxis *axisY(QAbstractSeries *series = 0);
+    Q_INVOKABLE QAbstractAxis *axisY(QAbstractSeries *series = 0);
     Q_INVOKABLE void zoom(qreal factor);
     Q_INVOKABLE void scrollLeft(qreal pixels);
     Q_INVOKABLE void scrollRight(qreal pixels);

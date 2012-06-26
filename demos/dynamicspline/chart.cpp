@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "chart.h"
-#include <QAxis>
+#include <QAbstractAxis>
 #include <QSplineSeries>
 #include <QTime>
 
@@ -44,7 +44,7 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 
     axisY()->setRange(-5, 5);
     axisX()->setRange(-9, 1);
-    axisX()->setTicksCount(11);
+    //TODO:axisX()->setTicksCount(11);
 
     m_timer.start();
 }

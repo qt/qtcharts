@@ -19,8 +19,7 @@
 ****************************************************************************/
 
 #include "chartaxisy_p.h"
-#include "qaxis.h"
-#include "qaxis_p.h"
+#include "qabstractaxis.h"
 #include "qaxiscategories_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
@@ -32,7 +31,7 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartAxisY::ChartAxisY(QAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter)
+ChartAxisY::ChartAxisY(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter)
 {
 }
 

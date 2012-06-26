@@ -30,7 +30,7 @@ class QGraphicsSceneResizeEvent;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAbstractSeries;
-class QAxis;
+class QAbstractAxis;
 class QLegend;
 struct QChartPrivate;
 
@@ -70,10 +70,13 @@ public:
     explicit QChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
     ~QChart();
 
-    void addSeries(QAbstractSeries *series, QAxis *axisY = 0);
+    void addSeries(QAbstractSeries *series);
     void removeSeries(QAbstractSeries *series);
     void removeAllSeries();
     QList<QAbstractSeries*> series() const;
+
+    void setAxisX(QAbstractSeries *series, QAbstractAxis* axis);
+    void setAxisY(QAbstractSeries *series, QAbstractAxis* axis);
 
     void setTheme(QChart::ChartTheme theme);
     QChart::ChartTheme theme() const;
@@ -107,8 +110,8 @@ public:
     void scrollDown();
     void scroll(const QPointF &delta);
 
-    QAxis* axisX() const;
-    QAxis* axisY(QAbstractSeries* series = 0) const;
+    QAbstractAxis* axisX() const;
+    QAbstractAxis* axisY(QAbstractSeries* series = 0) const;
 
     QLegend* legend() const;
 

@@ -24,6 +24,7 @@
 #include <QPercentBarSeries>
 #include <QBarSet>
 #include <QLegend>
+#include <QCategoriesAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -63,7 +64,9 @@ int main(int argc, char *argv[])
 //![4]
     QStringList categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
-    chart->axisX()->categories()->insert(categories);
+    QCategoriesAxis* axis = new QCategoriesAxis();
+    axis->append(categories);
+    chart->setAxisX(series,axis);
 //![4]
 
 //![5]
