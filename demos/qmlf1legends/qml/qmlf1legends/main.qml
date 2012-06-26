@@ -33,6 +33,8 @@ Rectangle {
         anchors.fill: parent
         legend.alignment: Qt.AlignTop
         animationOptions: ChartView.SeriesAnimations
+        axisY.min: 0
+        axisY.max: 250
     }
     //![1]
 
@@ -79,9 +81,6 @@ Rectangle {
                 chartView.axisX.min = 0;
                 chartView.axisX.max = currentIndex + 1;
             }
-            // TODO: initialising y range when creating the chart view does not work, so let's set the range here
-            chartView.axisY.min = 0;
-            chartView.axisY.max = 250;
         }
     }
     //![3]
