@@ -55,6 +55,20 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \enum QAbstractAxis::AxisType
+
+    The type of the series object.
+
+    \value AxisTypeValues
+    \value AxisTypeCategories
+*/
+
+/*!
+    \property QAbstractAxis::type
+    The type of the axis.
+*/
+
+/*!
   \property QAbstractAxis::labelsVisible
   Defines if axis labels are visible.
 */

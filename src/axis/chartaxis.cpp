@@ -150,11 +150,11 @@ bool ChartAxis::createLabels(QStringList &labels,qreal min, qreal max,int ticks)
     Q_ASSERT(ticks>1);
 
     //TODO:: QAxisCategories* categories = m_chartAxis->categories();
-    QAxisCategories* categories = new QAxisCategories();
+//    QAxisCategories* categories = new QAxisCategories();
 
-    bool category = categories->count()>0;
+//    bool category = categories->count()>0;
 
-    if (!category) {
+//    if (!category) {
         int n = qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
         n++;
         for (int i=0; i< ticks; i++) {
@@ -162,22 +162,23 @@ bool ChartAxis::createLabels(QStringList &labels,qreal min, qreal max,int ticks)
             Q_UNUSED(value);
             labels << QString::number(value,'f',n);
         }
-    } else {
-        QList<qreal> values = categories->values();
-        for (int i=0; i< ticks; i++) {
-            qreal value = (min + (i * (max - min)/ (ticks-1)));
-            int j=0;
-            for (; j<values.count(); j++) {
-                if (values.at(j) > value) break;
-            }
-            if (j!=0) value=values.at(j-1);
+//    } else {
+//        QList<qreal> values = categories->values();
+//        for (int i=0; i< ticks; i++) {
+//            qreal value = (min + (i * (max - min)/ (ticks-1)));
+//            int j=0;
+//            for (; j<values.count(); j++) {
+//                if (values.at(j) > value) break;
+//            }
+//            if (j!=0) value=values.at(j-1);
 
-            QString label = categories->label(value);
-            labels << label;
-        }
-    }
+//            QString label = categories->label(value);
+//            labels << label;
+//        }
+//    }
 
-    return category;
+//    return category;
+        return true;
 }
 
 void ChartAxis::setAxisOpacity(qreal opacity)
@@ -204,6 +205,7 @@ void ChartAxis::setLabelsOpacity(qreal opacity)
 {
     m_labels->setOpacity(opacity);
 }
+#include "qaxiscategories.h"
 
 qreal ChartAxis::labelsOpacity() const
 {
