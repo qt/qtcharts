@@ -20,7 +20,6 @@
 
 #include "chartaxisx_p.h"
 #include "qabstractaxis.h"
-#include "qaxiscategories_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QGraphicsLayout>

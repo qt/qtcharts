@@ -21,7 +21,6 @@
 #include "chartaxis_p.h"
 #include "qabstractaxis.h"
 #include "qabstractaxis_p.h"
-#include "qaxiscategories_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include <QPainter>
@@ -205,7 +204,6 @@ void ChartAxis::setLabelsOpacity(qreal opacity)
 {
     m_labels->setOpacity(opacity);
 }
-#include "qaxiscategories.h"
 
 qreal ChartAxis::labelsOpacity() const
 {
