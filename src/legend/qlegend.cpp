@@ -225,6 +225,7 @@ void QLegend::setBrush(const QBrush &brush)
     if (d_ptr->m_brush != brush) {
         d_ptr->m_brush = brush;
         update();
+        emit colorChanged(brush.color());
     }
 }
 
@@ -243,7 +244,6 @@ void QLegend::setColor(QColor color)
         b.setStyle(Qt::SolidPattern);
         b.setColor(color);
         setBrush(b);
-        emit colorChanged(color);
     }
 }
 
@@ -260,6 +260,7 @@ void QLegend::setPen(const QPen &pen)
     if (d_ptr->m_pen != pen) {
         d_ptr->m_pen = pen;
         update();
+        emit borderColorChanged(pen.color());
     }
 }
 
@@ -296,7 +297,6 @@ void QLegend::setBorderColor(QColor color)
     if (p.color() != color) {
         p.setColor(color);
         setPen(p);
-        emit borderColorChanged(color);
     }
 }
 
@@ -311,13 +311,11 @@ QColor QLegend::borderColor()
 void QLegend::setLabelBrush(const QBrush &brush)
 {
     if (d_ptr->m_labelBrush != brush) {
-
         d_ptr->m_labelBrush = brush;
-
         foreach (LegendMarker *marker, d_ptr->markers()) {
             marker->setLabelBrush(d_ptr->m_labelBrush);
         }
-        emit labelBrushChanged(brush);
+        emit labelColorChanged(brush.color());
     }
 }
 
@@ -336,7 +334,6 @@ void QLegend::setLabelColor(QColor color)
         b.setStyle(Qt::SolidPattern);
         b.setColor(color);
         setLabelBrush(b);
-        emit labelColorChanged(color);
     }
 }
 

@@ -360,7 +360,44 @@ void tst_QChart::legend_data()
 
 void tst_QChart::legend()
 {
-    QVERIFY(m_chart->legend());
+    QLegend *legend = m_chart->legend();
+    QVERIFY(legend);
+
+    // Colors related signals
+    QSignalSpy colorSpy(legend, SIGNAL(colorChanged(QColor)));
+    QSignalSpy borderColorSpy(legend, SIGNAL(borderColorChanged(QColor)));
+    QSignalSpy labelColorSpy(legend, SIGNAL(labelColorChanged(QColor)));
+
+    // colorChanged
+    legend->setColor(QColor("aliceblue"));
+    QCOMPARE(colorSpy.count(), 1);
+    QBrush b = legend->brush();
+    b.setColor(QColor("aqua"));
+    legend->setBrush(b);
+    QCOMPARE(colorSpy.count(), 2);
+
+    // borderColorChanged
+    legend->setBorderColor(QColor("aliceblue"));
+    QCOMPARE(borderColorSpy.count(), 1);
+    QPen p = legend->pen();
+    p.setColor(QColor("aqua"));
+    legend->setPen(p);
+    QCOMPARE(borderColorSpy.count(), 2);
+
+    // labelColorChanged
+    legend->setLabelColor(QColor("lightsalmon"));
+    QCOMPARE(labelColorSpy.count(), 1);
+    b = legend->labelBrush();
+    b.setColor(QColor("lightseagreen"));
+    legend->setLabelBrush(b);
+    QCOMPARE(labelColorSpy.count(), 2);
+
+    // fontChanged
+    QSignalSpy fontSpy(legend, SIGNAL(fontChanged(QFont)));
+    QFont f = legend->font();
+    f.setBold(!f.bold());
+    legend->setFont(f);
+    QCOMPARE(fontSpy.count(), 1);
 }
 
 void tst_QChart::margins_data()

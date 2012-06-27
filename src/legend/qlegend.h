@@ -96,7 +96,6 @@ Q_SIGNALS:
     void colorChanged(QColor color);
     void borderColorChanged(QColor color);
     void fontChanged(QFont font);
-    void labelBrushChanged(QBrush brush);
     void labelColorChanged(QColor color);
 
 private:

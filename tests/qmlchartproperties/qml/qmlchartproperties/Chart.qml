@@ -64,7 +64,6 @@ ChartView {
     legend.onColorChanged:             console.log("legend.onColorChanged: " + color);
     legend.onBorderColorChanged:       console.log("legend.onBorderColorChanged: " + color);
     legend.onLabelColorChanged:        console.log("legend.onLabelColorChanged: " + color);
-    legend.onLabelBrushChanged:        console.log("legend.onLabelBrushChanged: " + brush);
 
     axisX.onColorChanged:               console.log("axisX.onColorChanged: " + color);
     axisX.onLabelsVisibleChanged:       console.log("axisX.onLabelsVisibleChanged: " + visible);
