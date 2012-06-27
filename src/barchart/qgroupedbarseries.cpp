@@ -112,17 +112,6 @@ Chart* QGroupedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
-QAbstractAxis* QGroupedBarSeriesPrivate::createAxisX()
-{
-    // TODO: parent?
-    return new QCategoriesAxis(this);
-}
-
-QAbstractAxis* QGroupedBarSeriesPrivate::createAxisY()
-{
-    // TODO: parent?
-    return new QValuesAxis(this);
-}
 
 #include "moc_qgroupedbarseries.cpp"
 

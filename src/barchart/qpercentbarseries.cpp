@@ -111,18 +111,6 @@ Chart* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
-QAbstractAxis* QPercentBarSeriesPrivate::createAxisX()
-{
-    // TODO: parent?
-    return new QCategoriesAxis(this);
-}
-
-QAbstractAxis* QPercentBarSeriesPrivate::createAxisY()
-{
-    // TODO: parent?
-    return new QValuesAxis(this);
-}
-
 #include "moc_qpercentbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -113,18 +113,6 @@ Chart* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
-QAbstractAxis* QStackedBarSeriesPrivate::createAxisX()
-{
-    // TODO: parent?
-    return new QCategoriesAxis(this);
-}
-
-QAbstractAxis* QStackedBarSeriesPrivate::createAxisY()
-{
-    // TODO: parent?
-    return new QValuesAxis(this);
-}
-
 
 #include "moc_qstackedbarseries.cpp"
 
