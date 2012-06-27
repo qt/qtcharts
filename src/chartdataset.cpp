@@ -62,7 +62,7 @@ void ChartDataSet::addSeries(QAbstractSeries* series)
         QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),axisX->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
         axisX->d_ptr->m_orientation=Qt::Horizontal;
         emit axisAdded(axisX,domain);
-        m_seriesAxisYMap.insert(series,axisX);
+        m_seriesAxisXMap.insert(series,axisX);
     }
 
     if(axisY){
@@ -196,11 +196,13 @@ int ChartDataSet::seriesIndex(QAbstractSeries *series)
 
 QAbstractAxis* ChartDataSet::axisX(QAbstractSeries *series) const
 {
+    if(series == 0) return m_seriesAxisXMap.begin().value();
     return m_seriesAxisXMap.value(series);
 }
 
 QAbstractAxis* ChartDataSet::axisY(QAbstractSeries *series) const
 {
+    if(series == 0) return m_seriesAxisYMap.begin().value();
     return m_seriesAxisYMap.value(series);
 }
 
