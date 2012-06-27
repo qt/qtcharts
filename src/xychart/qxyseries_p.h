@@ -35,6 +35,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYSeries;
+class QAbstractAxis;
 
 class QXYSeriesPrivate: public QAbstractSeriesPrivate
 {
@@ -45,6 +46,9 @@ public:
 
     void scaleDomain(Domain& domain);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
+
+    QAbstractAxis* createAxisX(QObject* parent);
+    QAbstractAxis* createAxisY(QObject* parent);
 
 Q_SIGNALS:
     void updated();

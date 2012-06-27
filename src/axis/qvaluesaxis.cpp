@@ -20,6 +20,9 @@
 
 #include "qvaluesaxis.h"
 #include "qvaluesaxis_p.h"
+#include "chartaxisx_p.h"
+#include "chartaxisy_p.h"
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
@@ -243,6 +246,17 @@ void QValuesAxisPrivate::setRange(const QVariant& min, const QVariant& max)
 int QValuesAxisPrivate::ticksCount() const
 {
     return m_ticksCount;
+}
+
+ChartAxis* QValuesAxisPrivate::createGraphics(ChartPresenter* presenter)
+{
+    Q_Q(QValuesAxis);
+    if(m_orientation == Qt::Vertical){
+        return new ChartAxisY(q,presenter);
+    }else{
+        return new ChartAxisX(q,presenter);
+    }
+
 }
 
 #include "moc_qvaluesaxis.cpp"

@@ -21,6 +21,7 @@
 #include "qchart.h"
 #include "qchart_p.h"
 #include "qabstractaxis.h"
+#include "qabstractaxis_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
@@ -69,20 +70,15 @@ void ChartPresenter::setGeometry(const QRectF& rect)
 
 void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
 {
-    ChartAxis* item;
-
-    if(axis == m_dataset->axisX(0)){
-        item = new ChartAxisX(axis,this);
-    }else{
-        item = new ChartAxisY(axis,this);
-    }
+    ChartAxis* item = axis->d_ptr->createGraphics(this);
+    item->setDomain(domain);
 
     if(m_options.testFlag(QChart::GridAxisAnimations)){
         item->setAnimator(m_animator);
         item->setAnimation(new AxisAnimation(item));
     }
 
-    if(axis==m_dataset->axisX(0)){
+    if(item->axisType()==ChartAxis::X_AXIS){
         m_chartTheme->decorate(axis,true);
         QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),item,SLOT(handleRangeChanged(qreal,qreal,int)));
         //initialize
@@ -115,6 +111,8 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries* series,Domain* domain)
 {
     Chart *item = series->d_ptr->createGraphics(this);
     Q_ASSERT(item);
+    item->setDomain(domain);
+
     QObject::connect(this,SIGNAL(geometryChanged(QRectF)),item,SLOT(handleGeometryChanged(QRectF)));
     QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),item,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
     //initialize
@@ -177,19 +175,23 @@ void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
 
 void ChartPresenter::resetAllElements()
 {
-    QList<QAbstractAxis*> axisList = m_axisItems.uniqueKeys();
-    QList<QAbstractSeries *> seriesList = m_chartItems.uniqueKeys();
+    QMapIterator<QAbstractAxis*, ChartAxis*> i(m_axisItems);
+    while (i.hasNext()) {
+           i.next();
+           Domain* domain = i.value()->domain();
+           QAbstractAxis* axis = i.key();
+           handleAxisRemoved(axis);
+           handleAxisAdded(axis,domain);
+    }
 
-    foreach(QAbstractAxis *axis, axisList) {
-        handleAxisRemoved(axis);
-        handleAxisAdded(axis,m_dataset->domain(axis));
-    }
-    foreach(QAbstractSeries *series, seriesList) {
-        handleSeriesRemoved(series);
-        handleSeriesAdded(series,m_dataset->domain(series));
-//        m_dataset->removeSeries(series);
-//        m_dataset->addSeries(series);
-    }
+    QMapIterator<QAbstractSeries*, Chart*> j(m_chartItems);
+       while (j.hasNext()) {
+              j.next();
+              Domain* domain = j.value()->domain();
+              QAbstractSeries* series = j.key();
+              handleSeriesRemoved(series);
+              handleSeriesAdded(series,domain);
+       }
 }
 
 void ChartPresenter::zoomIn(qreal factor)

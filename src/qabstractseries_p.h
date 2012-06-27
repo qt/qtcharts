@@ -52,8 +52,8 @@ public:
     virtual void scaleDomain(Domain& domain) = 0;
     virtual Chart* createGraphics(ChartPresenter* presenter) = 0;
     virtual QList<LegendMarker*> createLegendMarker(QLegend* legend) = 0;
-    virtual QAbstractAxis* createAxisX() = 0;
-    virtual QAbstractAxis* createAxisY() = 0;
+    virtual QAbstractAxis* createAxisX(QObject* parent) = 0;
+    virtual QAbstractAxis* createAxisY(QObject* parent) = 0;
 
 protected:
     QAbstractSeries *q_ptr;

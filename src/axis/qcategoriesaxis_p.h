@@ -43,6 +43,9 @@ public:
     QCategoriesAxisPrivate(QCategoriesAxis *q);
     ~QCategoriesAxisPrivate();
 
+public:
+    ChartAxis* createGraphics(ChartPresenter* presenter);
+
 private:
     //range handling
     void setMin(const QVariant& min);

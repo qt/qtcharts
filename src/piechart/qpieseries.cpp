@@ -755,13 +755,15 @@ QList<LegendMarker*> QPieSeriesPrivate::createLegendMarker(QLegend* legend)
     return markers;
 }
 
-QAbstractAxis* QPieSeriesPrivate::createAxisX()
+QAbstractAxis* QPieSeriesPrivate::createAxisX(QObject* parent)
 {
+    Q_UNUSED(parent);
     return 0;
 }
 
-QAbstractAxis* QPieSeriesPrivate::createAxisY()
+QAbstractAxis* QPieSeriesPrivate::createAxisY(QObject* parent)
 {
+    Q_UNUSED(parent);
     return 0;
 }
 

@@ -123,6 +123,7 @@ protected:
     Q_DISABLE_COPY(QAbstractAxis);
     friend class ChartDataSet;
     friend class ChartAxis;
+    friend class ChartPresenter;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

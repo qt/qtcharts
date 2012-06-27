@@ -608,16 +608,14 @@ QList<LegendMarker*> QBarSeriesPrivate::createLegendMarker(QLegend* legend)
     return markers;
 }
 
-QAbstractAxis* QBarSeriesPrivate::createAxisX()
+QAbstractAxis* QBarSeriesPrivate::createAxisX(QObject* parent)
 {
-    // TODO: parent?
-    return new QValuesAxis(this);
+    return new QValuesAxis(parent);
 }
 
-QAbstractAxis* QBarSeriesPrivate::createAxisY()
+QAbstractAxis* QBarSeriesPrivate::createAxisY(QObject* parent)
 {
-    // TODO: parent?
-    return new QValuesAxis(this);
+    return new QValuesAxis(parent);
 }
 
 bool QBarSeriesPrivate::append(QBarSet *set)

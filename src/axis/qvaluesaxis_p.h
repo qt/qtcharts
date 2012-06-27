@@ -48,6 +48,9 @@ Q_SIGNALS:
 public Q_SLOTS:
     void handleAxisRangeChanged(qreal min, qreal max,int count);
 
+public:
+    ChartAxis* createGraphics(ChartPresenter* presenter);
+
 protected:
     void setMin(const QVariant& min);
     void setMax(const QVariant& max);

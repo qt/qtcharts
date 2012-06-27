@@ -22,6 +22,7 @@
 #include "qxyseries_p.h"
 #include "domain_p.h"
 #include "legendmarker_p.h"
+#include "qvaluesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -432,6 +433,16 @@ QList<LegendMarker*> QXYSeriesPrivate::createLegendMarker(QLegend* legend)
     Q_Q(QXYSeries);
     QList<LegendMarker*> list;
     return list << new XYLegendMarker(q,legend);
+}
+
+QAbstractAxis* QXYSeriesPrivate::createAxisX(QObject* parent)
+{
+    return new QValuesAxis(parent);
+}
+
+QAbstractAxis* QXYSeriesPrivate::createAxisY(QObject* parent)
+{
+    return new QValuesAxis(parent);
 }
 
 #include "moc_qxyseries.cpp"

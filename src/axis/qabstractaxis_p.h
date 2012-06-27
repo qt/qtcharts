@@ -34,6 +34,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class ChartPresenter;
+class ChartAxis;
+
 class QAbstractAxisPrivate : public QObject
 {
     Q_OBJECT
@@ -44,13 +47,16 @@ public:
 Q_SIGNALS:
     void updated();
 
+public:
+    virtual ChartAxis* createGraphics(ChartPresenter* presenter) = 0;
+
 protected:
     virtual void setMin(const QVariant& min) = 0;
     virtual void setMax(const QVariant& max) = 0;
     virtual void setRange(const QVariant& min, const QVariant& max) = 0;
     virtual int ticksCount() const = 0;
 
-protected:
+public:
     QAbstractAxis *q_ptr;
 
     bool m_axisVisible;

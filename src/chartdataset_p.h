@@ -46,7 +46,7 @@ public:
     virtual ~ChartDataSet();
 
     void addSeries(QAbstractSeries* series);
-    QAbstractAxis* removeSeries(QAbstractSeries* series);
+    void removeSeries(QAbstractSeries* series);
     void removeAllSeries();
     void updateSeries(QAbstractSeries* series);
 
@@ -56,9 +56,6 @@ public:
 
     int seriesCount(QAbstractSeries::SeriesType type);
     int seriesIndex(QAbstractSeries *series);
-
-    Domain* domain(QAbstractSeries* series) const;
-    Domain* domain(QAbstractAxis* axis) const;
 
     QAbstractAxis* axisX(QAbstractSeries *series) const;
     QAbstractAxis* axisY(QAbstractSeries *series) const;
@@ -82,14 +79,10 @@ private:
 private:
     QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisXMap;
     QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisYMap;
-    QMap<QAbstractAxis*, Domain*> m_axisDomainMap;
+    QMap<QAbstractSeries*, Domain*> m_seriesDomainMap;
     QMap<int, QAbstractSeries*> m_indexSeriesMap;
-    QAbstractAxis* m_axisX;
-    QAbstractAxis* m_axisY;
-
     int m_domainIndex;
-    bool m_axisXInitialized;
-    bool m_axisYInitialized;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

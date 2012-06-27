@@ -33,6 +33,7 @@
 #include "qchartglobal.h"
 #include "chartitem_p.h"
 #include "xyanimation_p.h"
+#include "qvaluesaxis.h"
 #include <QPen>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
