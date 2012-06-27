@@ -22,7 +22,9 @@
 #include <QtDeclarative/qdeclarative.h>
 #include "qchart.h"
 #include "qabstractaxis.h"
-//#include "qaxiscategories.h"
+#include "qvaluesaxis.h"
+#include "qcategoriesaxis.h"
+#include "qaxiscategories.h"
 #include "declarativechart.h"
 #include "declarativexypoint.h"
 #include "declarativelineseries.h"
@@ -67,6 +69,8 @@ public:
         qmlRegisterType<QVPieModelMapper>(uri, 1, 0, "VPieModelMapper");
         qmlRegisterType<QHBarModelMapper>(uri, 1, 0, "HBarModelMapper");
         qmlRegisterType<QVBarModelMapper>(uri, 1, 0, "VBarModelMapper");
+        qmlRegisterType<QValuesAxis>(uri, 1, 0, "ValuesAxis");
+        qmlRegisterType<QCategoriesAxis>(uri, 1, 0, "CategoriesAxis");
 
         qmlRegisterUncreatableType<QLegend>(uri, 1, 0, "Legend",
                                           QLatin1String("Trying to create uncreatable: Legend."));
@@ -88,8 +92,8 @@ public:
                                           QLatin1String("Trying to create uncreatable: BarModelMapper."));
         qmlRegisterUncreatableType<QAbstractSeries>(uri, 1, 0, "AbstractSeries",
                                           QLatin1String("Trying to create uncreatable: AbstractSeries."));
-        qmlRegisterUncreatableType<QAbstractAxis>(uri, 1, 0, "Axis",
-                                          QLatin1String("Trying to create uncreatable: Axis."));
+        qmlRegisterUncreatableType<QAbstractAxis>(uri, 1, 0, "AbstractAxis",
+                                          QLatin1String("Trying to create uncreatable: AbstractAxis."));
         qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",
                                                     QLatin1String("Trying to create uncreatable: PieModelMapper."));
         qmlRegisterUncreatableType<QXYModelMapper>(uri, 1, 0, "XYModelMapper",

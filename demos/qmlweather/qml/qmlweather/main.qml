@@ -35,10 +35,14 @@ Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         legend.alignment: Qt.AlignTop
-        axisXLabels: ["0", "Mo", "1", "Tu", "2", "We", "3", "Th", "4", "Fr", "5", "Sa"]
 
     //![2]
         BarSeries {
+            axisX: CategoriesAxis {
+                id: categoriesAxis
+                categories: ["Mo", "Tu", "We", "Th", "Fr", "Sa" ]
+            }
+
             BarSet {
                 id: rainfallSet
                 label: "Rainfall"
@@ -156,12 +160,10 @@ Rectangle {
                 chartView.axisY.max = chartView.axisY.max + 10;
 
             // Set the x-axis labels to the dates of the forecast
-            // TODO: the API could probably be more intuitive..
-            // Now it takes an array of strings: chartView.axisXLabels = ["value1", "label1", "value2", "label2", ...]
-            var xLabels = chartView.axisXLabels;
+            var xLabels = categoriesAxis.categories;
             xLabels[Number(i) * 2] = i;
             xLabels[(Number(i) * 2) + 1] = weatherObj.date.substring(5, 10);
-            chartView.axisXLabels = xLabels;
+            categoriesAxis.categories = xLabels;
         }
     }
 }

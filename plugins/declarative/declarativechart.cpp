@@ -321,9 +321,9 @@ QString DeclarativeChart::title()
     return m_chart->title();
 }
 
-QAbstractAxis *DeclarativeChart::axisX()
+QAbstractAxis *DeclarativeChart::axisX(QAbstractSeries *series)
 {
-    return m_chart->axisX();
+    return m_chart->axisX(series);
 }
 
 QAbstractAxis *DeclarativeChart::axisY(QAbstractSeries *series)
@@ -334,48 +334,6 @@ QAbstractAxis *DeclarativeChart::axisY(QAbstractSeries *series)
 QLegend *DeclarativeChart::legend()
 {
     return m_chart->legend();
-}
-
-QVariantList DeclarativeChart::axisXLabels()
-{
-    QVariantList labels;
-
-
-    if(m_chart->axisX()->type()==QAbstractAxis::AxisTypeCategories) {
-
-        QCategoriesAxis* axis = static_cast<QCategoriesAxis*>(m_chart->axisX());
-
-        for(int i=0;i<axis->count();i++){
-            labels.append(i);
-            labels.append(axis->at(i));
-        }
-
-    }
-    return labels;
-
-}
-
-void DeclarativeChart::setAxisXLabels(QVariantList list)
-{
-    QVariant value(QVariant::Invalid);
-
-    if(m_chart->axisX()->type()==QAbstractAxis::AxisTypeCategories) {
-        QCategoriesAxis* axis = static_cast<QCategoriesAxis*>(m_chart->axisX());
-
-        foreach (QVariant element, list) {
-            if (value.isValid() && element.type() == QVariant::String) {
-                axis->append(element.toString());
-                value = QVariant(QVariant::Invalid);
-            }
-            else {
-                if (element.canConvert(QVariant::Double))
-                value = element;
-            }
-
-        }
-        emit axisLabelsChanged();
-    }
-
 }
 
 void DeclarativeChart::setTitleColor(QColor color)

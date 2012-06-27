@@ -23,6 +23,7 @@
 #include <QBarSet>
 #include <QVBarModelMapper>
 #include <QHBarModelMapper>
+#include <QAbstractAxis>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -93,14 +94,34 @@ void DeclarativeBarSeries::componentComplete()
     foreach(QObject *child, children()) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
             QBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
-        } else if(qobject_cast<QVBarModelMapper *>(child)) {
+        } else if (qobject_cast<QVBarModelMapper *>(child)) {
             QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
             mapper->setSeries(this);
-        } else if(qobject_cast<QHBarModelMapper *>(child)) {
+        } else if (qobject_cast<QHBarModelMapper *>(child)) {
             QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
             mapper->setSeries(this);
         }
     }
+}
+
+void DeclarativeBarSeries::setAxisX(QAbstractAxis *axis)
+{
+    chart()->setAxisX(this, axis);
+}
+
+QAbstractAxis *DeclarativeBarSeries::axisX()
+{
+    return chart()->axisX(this);
+}
+
+void DeclarativeBarSeries::setAxisY(QAbstractAxis *axis)
+{
+    chart()->setAxisY(this, axis);
+}
+
+QAbstractAxis *DeclarativeBarSeries::axisY()
+{
+    return chart()->axisY(this);
 }
 
 QDeclarativeListProperty<QObject> DeclarativeBarSeries::seriesChildren()
@@ -165,6 +186,26 @@ void DeclarativeGroupedBarSeries::componentComplete()
     }
 }
 
+void DeclarativeGroupedBarSeries::setAxisX(QAbstractAxis *axis)
+{
+    chart()->setAxisX(this, axis);
+}
+
+QAbstractAxis *DeclarativeGroupedBarSeries::axisX()
+{
+    return chart()->axisX(this);
+}
+
+void DeclarativeGroupedBarSeries::setAxisY(QAbstractAxis *axis)
+{
+    chart()->setAxisY(this, axis);
+}
+
+QAbstractAxis *DeclarativeGroupedBarSeries::axisY()
+{
+    return chart()->axisY(this);
+}
+
 QDeclarativeListProperty<QObject> DeclarativeGroupedBarSeries::seriesChildren()
 {
     return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
@@ -221,6 +262,26 @@ void DeclarativeStackedBarSeries::componentComplete()
     }
 }
 
+void DeclarativeStackedBarSeries::setAxisX(QAbstractAxis *axis)
+{
+    chart()->setAxisX(this, axis);
+}
+
+QAbstractAxis *DeclarativeStackedBarSeries::axisX()
+{
+    return chart()->axisX(this);
+}
+
+void DeclarativeStackedBarSeries::setAxisY(QAbstractAxis *axis)
+{
+    chart()->setAxisY(this, axis);
+}
+
+QAbstractAxis *DeclarativeStackedBarSeries::axisY()
+{
+    return chart()->axisY(this);
+}
+
 QDeclarativeListProperty<QObject> DeclarativeStackedBarSeries::seriesChildren()
 {
     return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
@@ -275,6 +336,26 @@ void DeclarativePercentBarSeries::componentComplete()
             mapper->setSeries(this);
         }
     }
+}
+
+void DeclarativePercentBarSeries::setAxisX(QAbstractAxis *axis)
+{
+    chart()->setAxisX(this, axis);
+}
+
+QAbstractAxis *DeclarativePercentBarSeries::axisX()
+{
+    return chart()->axisX(this);
+}
+
+void DeclarativePercentBarSeries::setAxisY(QAbstractAxis *axis)
+{
+    chart()->setAxisY(this, axis);
+}
+
+QAbstractAxis *DeclarativePercentBarSeries::axisY()
+{
+    return chart()->axisY(this);
 }
 
 QDeclarativeListProperty<QObject> DeclarativePercentBarSeries::seriesChildren()

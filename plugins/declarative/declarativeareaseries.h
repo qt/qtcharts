@@ -24,16 +24,23 @@
 #include "qchartglobal.h"
 #include "qareaseries.h"
 #include "declarativelineseries.h"
+#include "qabstractaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class DeclarativeAreaSeries : public QAreaSeries
 {
     Q_OBJECT
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY)
     Q_PROPERTY(DeclarativeLineSeries *upperSeries READ upperSeries WRITE setUpperSeries)
     Q_PROPERTY(DeclarativeLineSeries *lowerSeries READ lowerSeries WRITE setLowerSeries)
 
 public:
+    void setAxisX(QAbstractAxis *axis);
+    QAbstractAxis *axisX();
+    void setAxisY(QAbstractAxis *axis);
+    QAbstractAxis *axisY();
     explicit DeclarativeAreaSeries(QObject *parent = 0);
     void setUpperSeries(DeclarativeLineSeries* series);
     DeclarativeLineSeries* upperSeries() const;

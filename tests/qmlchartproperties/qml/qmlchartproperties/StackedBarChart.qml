@@ -26,13 +26,13 @@ ChartView {
     anchors.fill: parent
     theme: ChartView.ChartThemeLight
     legend.alignment: Qt.AlignBottom
-    axisXLabels: ["0", "2007", "1", "2008", "2", "2009", "3", "2010", "4", "2011", "5", "2012"]
 
     property variant series: barSeries
 
     StackedBarSeries {
         id: barSeries
         name: "bar"
+        axisX: CategoriesAxis { categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
             onClicked:                  console.log("barset.onClicked: " + index);
             onHovered:                  console.log("barset.onHovered: " + status);

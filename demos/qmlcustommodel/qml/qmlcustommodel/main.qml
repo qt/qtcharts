@@ -30,12 +30,11 @@ Rectangle {
         id: chartView
         title: "Top-5 car brand shares in Finland"
         anchors.fill: parent
-        axisX.max: 10
-        axisX.min: 0
-        axisY.max: 20
-        axisY.min: 0
         animationOptions: ChartView.SeriesAnimations
-        axisXLabels: [0, "2007", 1, "2008", 2, "2009", 3, "2010", 4, "2011", 5, "2012"]
+        CategoriesAxis {
+            id: categoryAxis
+            categories: ["2007", "2008", "2009", "2010", "2011", "2012" ]
+        }
         // ...
     //![1]
 
@@ -58,6 +57,7 @@ Rectangle {
             name: "Others"
             barWidth: 0.9
             visible: false
+            axisX: categoryAxis
             HBarModelMapper {
                 model: customModel
                 firstBarSetRow: 6
@@ -70,6 +70,7 @@ Rectangle {
         //![4]
         LineSeries {
             name: "Volkswagen"
+            axisX: categoryAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -82,6 +83,7 @@ Rectangle {
 
         LineSeries {
             name: "Toyota"
+            axisX: categoryAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -93,6 +95,7 @@ Rectangle {
 
         LineSeries {
             name: "Ford"
+            axisX: categoryAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -104,6 +107,7 @@ Rectangle {
 
         LineSeries {
             name: "Skoda"
+            axisX: categoryAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -115,6 +119,7 @@ Rectangle {
 
         LineSeries {
             name: "Volvo"
+            axisX: categoryAxis
             visible: false
             HXYModelMapper {
                 model: customModel

@@ -91,6 +91,19 @@ void QCategoriesAxis::clear()
     emit categoriesChanged();
 }
 
+void QCategoriesAxis::setCategories(const QStringList &categories)
+{
+    Q_D(QCategoriesAxis);
+    d->m_categories = categories;
+    emit categoriesChanged();
+}
+
+QStringList QCategoriesAxis::categories()
+{
+    Q_D(QCategoriesAxis);
+    return d->m_categories;
+}
+
 /*!
   Returns number of categories.
  */

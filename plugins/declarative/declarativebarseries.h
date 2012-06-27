@@ -22,10 +22,11 @@
 #define DECLARATIVEBARSERIES_H
 
 #include "qchartglobal.h"
-#include <QGroupedBarSeries>
-#include <QStackedBarSeries>
-#include <QPercentBarSeries>
-#include <QBarSet>
+#include "qgroupedbarseries.h"
+#include "qstackedbarseries.h"
+#include "qpercentbarseries.h"
+#include "qbarset.h"
+#include "qabstractaxis.h"
 #include <QDeclarativeItem>
 #include <QDeclarativeParserStatus>
 
@@ -64,10 +65,16 @@ class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
+    void setAxisX(QAbstractAxis *axis);
+    QAbstractAxis *axisX();
+    void setAxisY(QAbstractAxis *axis);
+    QAbstractAxis *axisY();
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
     Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
@@ -93,11 +100,17 @@ class DeclarativeGroupedBarSeries : public QGroupedBarSeries, public QDeclarativ
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativeGroupedBarSeries(QDeclarativeItem *parent = 0);
+    void setAxisX(QAbstractAxis *axis);
+    QAbstractAxis *axisX();
+    void setAxisY(QAbstractAxis *axis);
+    QAbstractAxis *axisY();
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
     Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
@@ -117,11 +130,17 @@ class DeclarativeStackedBarSeries : public QStackedBarSeries, public QDeclarativ
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativeStackedBarSeries(QDeclarativeItem *parent = 0);
+    void setAxisX(QAbstractAxis *axis);
+    QAbstractAxis *axisX();
+    void setAxisY(QAbstractAxis *axis);
+    QAbstractAxis *axisY();
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
     Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
@@ -141,11 +160,17 @@ class DeclarativePercentBarSeries : public QPercentBarSeries, public QDeclarativ
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativePercentBarSeries(QDeclarativeItem *parent = 0);
+    void setAxisX(QAbstractAxis *axis);
+    QAbstractAxis *axisX();
+    void setAxisY(QAbstractAxis *axis);
+    QAbstractAxis *axisY();
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
     Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }

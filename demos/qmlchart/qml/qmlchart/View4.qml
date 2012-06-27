@@ -28,10 +28,14 @@ Rectangle {
     ChartView {
         title: "NHL All-Star Team Players"
         anchors.fill: parent
-        axisXLabels: ["0", "2000", "1", "2001", "2", "2002", "3", "2003", "4", "2004", "5", "2005",
-            "6", "2006", "7", "2007", "8", "2008", "9", "2009", "10", "2010", "11", "2011"]
 
         AreaSeries {
+            axisX: CategoriesAxis {
+                id: categoriesAxis
+                categories: ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007",
+                    "2008", "2009", "2010", "2011" ]
+            }
+
             name: "Russian"
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 1 }

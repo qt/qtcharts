@@ -30,6 +30,7 @@ class QCategoriesAxisPrivate;
 class QTCOMMERCIALCHART_EXPORT QCategoriesAxis : public QAbstractAxis
 {
     Q_OBJECT
+    Q_PROPERTY(QStringList categories READ categories WRITE setCategories NOTIFY categoriesChanged)
 
 public:
     explicit QCategoriesAxis(QObject *parent = 0);
@@ -45,6 +46,8 @@ public:
     void remove(const QString &category);
     void insert(int index, const QString &category);
     void clear();
+    void setCategories(const QStringList &categories);
+    QStringList categories();
     int count() const;
 
     QString at(int index) const;

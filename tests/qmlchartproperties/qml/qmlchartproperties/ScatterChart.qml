@@ -23,8 +23,6 @@ import QtCommercial.Chart 1.0
 
 ChartView {
     title: "scatter series"
-    axisX.max: 4
-    axisY.max: 4
     property variant series: scatterSeries
 
     ScatterSeries {
