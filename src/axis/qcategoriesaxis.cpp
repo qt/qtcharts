@@ -112,7 +112,7 @@ QString QCategoriesAxis::at(int index) const
 /*!
     Sets minimum category to \a minCategory.
 */
-void QCategoriesAxis::setMin(QString minCategory)
+void QCategoriesAxis::setMin(const QString& minCategory)
 {
     Q_D(QCategoriesAxis);
     int minIndex = d->m_categories.indexOf(minCategory);
@@ -125,7 +125,7 @@ void QCategoriesAxis::setMin(QString minCategory)
 /*!
     Sets maximum category to \a maxCategory.
 */
-void QCategoriesAxis::setMax(QString maxCategory)
+void QCategoriesAxis::setMax(const QString& maxCategory)
 {
     Q_D(QCategoriesAxis);
     int maxIndex = d->m_categories.indexOf(maxCategory);
@@ -138,7 +138,7 @@ void QCategoriesAxis::setMax(QString maxCategory)
 /*!
     Sets range from \a minCategory to \a maxCategory
 */
-void QCategoriesAxis::setRange(QString minCategory, QString maxCategory)
+void QCategoriesAxis::setRange(const QString& minCategory, const QString& maxCategory)
 {
     // TODO: what if maxCategory < minCategory?
     setMin(minCategory);
@@ -153,26 +153,7 @@ QAbstractAxis::AxisType QCategoriesAxis::type() const
     return AxisTypeCategories;
 }
 
-void QCategoriesAxis::setMin(QVariant min)
-{
-    setMin(min.toString());
-}
-
-void QCategoriesAxis::setMax(QVariant max)
-{
-    setMax(max.toString());
-}
-
-void QCategoriesAxis::setRange(QVariant min, QVariant max)
-{
-   setRange(min.toString(),max.toString());
-}
-
-int QCategoriesAxis::ticksCount() const
-{
-    return count();
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QCategoriesAxisPrivate::QCategoriesAxisPrivate(QCategoriesAxis* q):
     QAbstractAxisPrivate(q)
@@ -183,6 +164,30 @@ QCategoriesAxisPrivate::QCategoriesAxisPrivate(QCategoriesAxis* q):
 QCategoriesAxisPrivate::~QCategoriesAxisPrivate()
 {
 
+}
+
+
+void QCategoriesAxisPrivate::setMin(const QVariant& min)
+{
+    Q_Q(QCategoriesAxis);
+    q->setMin(min.toString());
+}
+
+void QCategoriesAxisPrivate::setMax(const QVariant& max)
+{
+    Q_Q(QCategoriesAxis);
+    q->setMax(max.toString());
+}
+
+void QCategoriesAxisPrivate::setRange(const QVariant& min, const QVariant& max)
+{
+   Q_Q(QCategoriesAxis);
+   q->setRange(min.toString(),max.toString());
+}
+
+int QCategoriesAxisPrivate::ticksCount() const
+{
+    return m_categories.count()+1;
 }
 
 #include "moc_qcategoriesaxis.cpp"

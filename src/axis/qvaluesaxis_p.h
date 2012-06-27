@@ -48,6 +48,12 @@ Q_SIGNALS:
 public Q_SLOTS:
     void handleAxisRangeChanged(qreal min, qreal max,int count);
 
+protected:
+    void setMin(const QVariant& min);
+    void setMax(const QVariant& max);
+    void setRange(const QVariant& min, const QVariant& max);
+    int ticksCount() const;
+
 private:
     qreal m_min;
     qreal m_max;

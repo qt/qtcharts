@@ -50,16 +50,9 @@ public:
     QString at(int index) const;
 
     //range handling convenience functions
-    void setMin(QString minCategory);
-    void setMax(QString maxCategory);
-    void setRange(QString minCategory, QString maxCategory);
-
-private:
-    //range handling
-    void setMin(QVariant min);
-    void setMax(QVariant max);
-    void setRange(QVariant min, QVariant max);
-    int ticksCount() const;
+    void setMin(const QString& minCategory);
+    void setMax(const QString& maxCategory);
+    void setRange(const QString& minCategory, const QString& maxCategory);
 
 Q_SIGNALS:
     void categoriesChanged();

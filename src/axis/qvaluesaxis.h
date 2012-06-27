@@ -59,12 +59,6 @@ public:
     void setNiceNumbersEnabled(bool enable = true);
     bool niceNumbersEnabled() const;
 
-private:
-    //range handling
-    void setMin(QVariant min);
-    void setMax(QVariant max);
-    void setRange(QVariant min, QVariant max);
-
 Q_SIGNALS:
     void minChanged(qreal min);
     void maxChanged(qreal max);

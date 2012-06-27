@@ -45,6 +45,12 @@ Q_SIGNALS:
     void updated();
 
 protected:
+    virtual void setMin(const QVariant& min) = 0;
+    virtual void setMax(const QVariant& max) = 0;
+    virtual void setRange(const QVariant& min, const QVariant& max) = 0;
+    virtual int ticksCount() const = 0;
+
+protected:
     QAbstractAxis *q_ptr;
 
     bool m_axisVisible;

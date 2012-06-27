@@ -44,6 +44,13 @@ public:
     ~QCategoriesAxisPrivate();
 
 private:
+    //range handling
+    void setMin(const QVariant& min);
+    void setMax(const QVariant& max);
+    void setRange(const QVariant& min, const QVariant& max);
+    int ticksCount() const;
+
+private:
     QStringList m_categories;
     QString m_minCategory;
     QString m_maxCategory;

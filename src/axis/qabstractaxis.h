@@ -44,8 +44,6 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
     Q_PROPERTY(QColor shadesColor READ shadesColor WRITE setShadesColor NOTIFY shadesColorChanged)
     Q_PROPERTY(QColor shadesBorderColor READ shadesBorderColor WRITE setShadesBorderColor NOTIFY shadesBorderColorChanged)
-    //Q_PROPERTY(qreal min READ min WRITE setMin NOTIFY minChanged)
-    //Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
 
 public:
 
@@ -103,11 +101,9 @@ public:
     QColor shadesBorderColor() const;
 
     //range handling
-    virtual void setMin(QVariant min) = 0;
-    virtual void setMax(QVariant max) = 0 ;
-    virtual void setRange(QVariant min, QVariant max) = 0;
-
-    virtual int ticksCount() const = 0;
+    void setMin(const QVariant& min);
+    void setMax(const QVariant& max);
+    void setRange(const QVariant& min, const QVariant& max);
 
     void show();
     void hide();
