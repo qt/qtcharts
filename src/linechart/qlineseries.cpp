@@ -24,6 +24,7 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
+#include "qvaluesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -127,6 +128,18 @@ Chart* QLineSeriesPrivate::createGraphics(ChartPresenter* presenter)
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return line;
+}
+
+QAbstractAxis* QLineSeriesPrivate::createAxisX()
+{
+    // TODO: parent?
+    return new QValuesAxis(this);
+}
+
+QAbstractAxis* QLineSeriesPrivate::createAxisY()
+{
+    // TODO: parent?
+    return new QValuesAxis(this);
 }
 
 #include "moc_qlineseries.cpp"

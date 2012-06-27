@@ -56,6 +56,9 @@ public:
     Chart* createGraphics(ChartPresenter* presenter);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
 
+    QAbstractAxis* createAxisX();
+    QAbstractAxis* createAxisY();
+
     bool append(QBarSet *set);
     bool remove(QBarSet *set);
     bool append(QList<QBarSet* > sets);

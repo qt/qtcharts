@@ -40,6 +40,9 @@ class QLineSeriesPrivate: public QXYSeriesPrivate
 public:
     QLineSeriesPrivate(QLineSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
+    QAbstractAxis* createAxisX();
+    QAbstractAxis* createAxisY();
+
 private:
     Q_DECLARE_PUBLIC(QLineSeries);
 

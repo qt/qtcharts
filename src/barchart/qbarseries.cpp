@@ -27,6 +27,7 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
+#include "qvaluesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -605,6 +606,18 @@ QList<LegendMarker*> QBarSeriesPrivate::createLegendMarker(QLegend* legend)
     }
 
     return markers;
+}
+
+QAbstractAxis* QBarSeriesPrivate::createAxisX()
+{
+    // TODO: parent?
+    return new QValuesAxis(this);
+}
+
+QAbstractAxis* QBarSeriesPrivate::createAxisY()
+{
+    // TODO: parent?
+    return new QValuesAxis(this);
 }
 
 bool QBarSeriesPrivate::append(QBarSet *set)

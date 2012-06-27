@@ -39,6 +39,8 @@ class QScatterSeriesPrivate: public QXYSeriesPrivate
 public:
     QScatterSeriesPrivate(QScatterSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
+    QAbstractAxis* createAxisX();
+    QAbstractAxis* createAxisY();
 
 private:
     QScatterSeries::MarkerShape m_shape;

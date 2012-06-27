@@ -24,6 +24,8 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
+#include "qcategoriesaxis.h"
+#include "qvaluesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -108,6 +110,18 @@ Chart* QGroupedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
+}
+
+QAbstractAxis* QGroupedBarSeriesPrivate::createAxisX()
+{
+    // TODO: parent?
+    return new QCategoriesAxis(this);
+}
+
+QAbstractAxis* QGroupedBarSeriesPrivate::createAxisY()
+{
+    // TODO: parent?
+    return new QValuesAxis(this);
 }
 
 #include "moc_qgroupedbarseries.cpp"

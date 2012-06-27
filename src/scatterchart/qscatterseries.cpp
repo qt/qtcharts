@@ -24,6 +24,7 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
+#include "qvaluesaxis.h"
 
 /*!
     \class QScatterSeries
@@ -248,6 +249,19 @@ Chart* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return scatter;
 }
+
+QAbstractAxis* QScatterSeriesPrivate::createAxisX()
+{
+    // TODO: parent?
+    return new QValuesAxis(this);
+}
+
+QAbstractAxis* QScatterSeriesPrivate::createAxisY()
+{
+    // TODO: parent?
+    return new QValuesAxis(this);
+}
+
 
 #include "moc_qscatterseries.cpp"
 

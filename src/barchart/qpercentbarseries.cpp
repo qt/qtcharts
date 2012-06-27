@@ -24,6 +24,8 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
+#include "qcategoriesaxis.h"
+#include "qvaluesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -107,6 +109,18 @@ Chart* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
+}
+
+QAbstractAxis* QPercentBarSeriesPrivate::createAxisX()
+{
+    // TODO: parent?
+    return new QCategoriesAxis(this);
+}
+
+QAbstractAxis* QPercentBarSeriesPrivate::createAxisY()
+{
+    // TODO: parent?
+    return new QValuesAxis(this);
 }
 
 #include "moc_qpercentbarseries.cpp"

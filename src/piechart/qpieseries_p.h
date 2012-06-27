@@ -47,6 +47,8 @@ public:
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter *presenter);
     QList<LegendMarker*> createLegendMarker(QLegend *legend);
+    QAbstractAxis* createAxisX();
+    QAbstractAxis* createAxisY();
 
     void updateDerivativeData();
 

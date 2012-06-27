@@ -27,6 +27,7 @@
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
 #include "legendmarker_p.h"
+#include "qabstractaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -752,6 +753,16 @@ QList<LegendMarker*> QPieSeriesPrivate::createLegendMarker(QLegend* legend)
         markers << marker;
     }
     return markers;
+}
+
+QAbstractAxis* QPieSeriesPrivate::createAxisX()
+{
+    return 0;
+}
+
+QAbstractAxis* QPieSeriesPrivate::createAxisY()
+{
+    return 0;
 }
 
 #include "moc_qpieseries.cpp"
