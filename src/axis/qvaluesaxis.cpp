@@ -22,6 +22,65 @@
 #include "qvaluesaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+/*!
+    \class QValuesAxis
+    \brief The QValuesAxis class is used for manipulating chart's axis.
+    \mainclass
+
+    Axis can be setup to show axis line with tick marks, grid lines and shades.
+*/
+
+/*!
+    \qmlclass Axis QValuesAxis
+    \brief The Axis element is used for manipulating chart's axes
+
+    Axis can be setup to show axis line with tick marks, grid lines and shades.
+
+    To access Axes you can use ChartView API. For example:
+    \code
+        ChartView {
+            axisX.min: 0
+            axisX.max: 3
+            axisX.ticksCount: 4
+            axisY.min: 0
+            axisY.max: 4
+            // Add a few series...
+        }
+    \endcode
+*/
+
+/*!
+  \property QValuesAxis::min
+  Defines the minimum value on the axis.
+*/
+/*!
+  \qmlproperty real Axis::min
+  Defines the minimum value on the axis.
+*/
+
+/*!
+  \property QValuesAxis::max
+  Defines the maximum value on the axis.
+*/
+/*!
+  \qmlproperty real Axis::max
+  Defines the maximum value on the axis.
+*/
+
+/*!
+  \fn void QValuesAxis::minChanged(qreal min)
+  Axis emits signal when \a min of axis has changed.
+*/
+
+/*!
+  \fn void QValuesAxis::maxChanged(qreal max)
+  Axis emits signal when \a max of axis has changed.
+*/
+
+/*!
+  \fn void QValuesAxis::rangeChanged(qreal min, qreal max)
+  Axis emits signal when \a min or \a max of axis has changed.
+*/
 
 QValuesAxis::QValuesAxis(QObject *parent) :
     QAbstractAxis(*new QValuesAxisPrivate(this),parent)
