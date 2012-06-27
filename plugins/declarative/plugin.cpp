@@ -24,7 +24,6 @@
 #include "qabstractaxis.h"
 #include "qvaluesaxis.h"
 #include "qcategoriesaxis.h"
-#include "qaxiscategories.h"
 #include "declarativechart.h"
 #include "declarativexypoint.h"
 #include "declarativelineseries.h"
