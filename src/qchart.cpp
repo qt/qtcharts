@@ -358,7 +358,7 @@ QChart::AnimationOptions QChart::animationOptions() const
  */
 void QChart::scrollLeft()
 {
-    d_ptr->m_presenter->scroll(-d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+//    d_ptr->m_presenter->scroll(-d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
 }
 
 /*!
@@ -366,7 +366,7 @@ void QChart::scrollLeft()
  */
 void QChart::scrollRight()
 {
-    d_ptr->m_presenter->scroll(d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+//    d_ptr->m_presenter->scroll(d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
 }
 
 /*!
@@ -374,7 +374,7 @@ void QChart::scrollRight()
  */
 void QChart::scrollUp()
 {
-    d_ptr->m_presenter->scroll(0,d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
+//    d_ptr->m_presenter->scroll(0,d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
 }
 
 /*!
@@ -382,7 +382,7 @@ void QChart::scrollUp()
  */
 void QChart::scrollDown()
 {
-    d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
+//    d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
 }
 
 /*!
