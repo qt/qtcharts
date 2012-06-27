@@ -356,33 +356,56 @@ QChart::AnimationOptions QChart::animationOptions() const
 /*!
     Scrolls the visible area of the chart to the left by the distance between two x axis ticks
  */
-void QChart::scrollLeft()
+void QChart::scrollLeft(qreal dx)
 {
+<<<<<<< Updated upstream
 //    d_ptr->m_presenter->scroll(-d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+=======
+    //TODO:
+    Q_UNUSED(dx);
+  //  d_ptr->m_presenter->scroll(-d_ptr->m_presenter->geometry().width()/(axisX()->d_ptr->ticksCount()-1),0);
+>>>>>>> Stashed changes
 }
 
 /*!
     Scrolls the visible area of the chart to the right by the distance between two x axis ticks
  */
-void QChart::scrollRight()
+void QChart::scrollRight(qreal dx)
 {
+<<<<<<< Updated upstream
 //    d_ptr->m_presenter->scroll(d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+=======
+    //TODO:
+    Q_UNUSED(dx);
+ //   d_ptr->m_presenter->scroll(d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
+>>>>>>> Stashed changes
 }
 
 /*!
     Scrolls the visible area of the chart up by the distance between two y axis ticks
  */
-void QChart::scrollUp()
+void QChart::scrollUp(qreal dy)
 {
+<<<<<<< Updated upstream
+=======
+    //TODO:
+    Q_UNUSED(dy);
+>>>>>>> Stashed changes
 //    d_ptr->m_presenter->scroll(0,d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
 }
 
 /*!
     Scrolls the visible area of the chart down by the distance between two y axis ticks
  */
-void QChart::scrollDown()
+void QChart::scrollDown(qreal dy)
 {
+<<<<<<< Updated upstream
 //    d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
+=======
+    //TODO:
+    Q_UNUSED(dy);
+ //   d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
+>>>>>>> Stashed changes
 }
 
 /*!

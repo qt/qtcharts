@@ -63,6 +63,10 @@ public:
     bool isVisible() const;
     QChart* chart() const;
 
+    void adjustView();
+    void show();
+    void hide();
+
 Q_SIGNALS:
     void nameChanged();
     void visibleChanged();

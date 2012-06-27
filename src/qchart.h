@@ -107,11 +107,13 @@ public:
     void zoomIn(const QRectF &rect);
     void zoomOut();
     void zoom(qreal factor);
-    void scrollLeft();
-    void scrollRight();
-    void scrollUp();
-    void scrollDown();
+    void scrollLeft(qreal dx);
+    void scrollRight(qreal dx);
+    void scrollUp(qreal dy);
+    void scrollDown(qreal dy);
     void scroll(const QPointF &delta);
+
+    void adjustViewToSeries(QAbstractSeries* series= 0);
 
     QLegend* legend() const;
 
