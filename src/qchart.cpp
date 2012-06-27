@@ -310,7 +310,7 @@ void QChart::zoom(qreal factor)
  */
 QAbstractAxis* QChart::axisX(QAbstractSeries* series) const
 {
-    return d_ptr->m_dataset->axisX(series);;
+    return d_ptr->m_dataset->axisX(series);
 }
 
 /*!
