@@ -59,6 +59,6 @@ void Chart::handleTimeout()
     m_x += m_step;
     m_y = qrand() % 5 - 2.5;
     m_series->append(m_x, m_y);
-    scrollRight();
+    scroll(10,0);
     if(m_x==100) m_timer.stop();
 }

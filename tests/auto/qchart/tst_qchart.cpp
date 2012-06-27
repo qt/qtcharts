@@ -76,14 +76,8 @@ private slots:
     void removeAllSeries();
     void removeSeries_data();
     void removeSeries();
-    void scrollDown_data();
-    void scrollDown();
-    void scrollLeft_data();
-    void scrollLeft();
-    void scrollRight_data();
-    void scrollRight();
-    void scrollUp_data();
-    void scrollUp();
+    void scroll_data();
+    void scroll();
     void theme_data();
     void theme();
     void title_data();
@@ -166,10 +160,7 @@ void tst_QChart::qchart()
     //QCOMPARE(m_chart->titleFont(),QFont());
 
     m_chart->removeAllSeries();
-    m_chart->scrollDown();
-    m_chart->scrollLeft();
-    m_chart->scrollRight();
-    m_chart->scrollUp();
+    m_chart->scroll(0,0);
 
     m_chart->zoomIn();
     m_chart->zoomIn(QRectF());
@@ -468,60 +459,18 @@ void tst_QChart::removeSeries()
     QCOMPARE(deleteSpy.count(), 0);
 }
 
-void tst_QChart::scrollDown_data()
+void tst_QChart::scroll_data()
 {
 
 }
 
-void tst_QChart::scrollDown()
+void tst_QChart::scroll()
 {
     qFatal("implement me");
     createTestData();
     //TODO qreal min = m_chart->axisY()->min();
-    m_chart->scrollDown();
+    m_chart->scroll(0,0);
     //TODO QVERIFY(m_chart->axisY()->min()<min);
-}
-
-void tst_QChart::scrollLeft_data()
-{
-
-}
-
-void tst_QChart::scrollLeft()
-{
-    qFatal("implement me");
-    createTestData();
-    //TODO qreal min = m_chart->axisX()->min();
-    m_chart->scrollLeft();
-    //TODO QVERIFY(m_chart->axisX()->min()<min);
-}
-
-void tst_QChart::scrollRight_data()
-{
-
-}
-
-void tst_QChart::scrollRight()
-{
-    qFatal("implement me");
-    createTestData();
-    //TODO qreal min = m_chart->axisX()->min();
-    m_chart->scrollRight();
-    //TODO QVERIFY(m_chart->axisX()->min()>min);
-}
-
-void tst_QChart::scrollUp_data()
-{
-
-}
-
-void tst_QChart::scrollUp()
-{
-    qFatal("implement me");
-    createTestData();
-    //TODO qreal min = m_chart->axisY()->min();
-    m_chart->scrollUp();
-    //TODO QVERIFY(m_chart->axisY()->min()>min);
 }
 
 void tst_QChart::theme_data()

@@ -422,22 +422,22 @@ void DeclarativeChart::zoom(qreal factor)
 
 void DeclarativeChart::scrollLeft(qreal pixels)
 {
-    m_chart->scroll(QPointF(pixels, 0));
+    m_chart->scroll(pixels, 0);
 }
 
 void DeclarativeChart::scrollRight(qreal pixels)
 {
-    m_chart->scroll(QPointF(-pixels, 0));
+    m_chart->scroll(-pixels, 0);
 }
 
 void DeclarativeChart::scrollUp(qreal pixels)
 {
-    m_chart->scroll(QPointF(0, pixels));
+    m_chart->scroll(0, pixels);
 }
 
 void DeclarativeChart::scrollDown(qreal pixels)
 {
-    m_chart->scroll(QPointF(0, -pixels));
+    m_chart->scroll(0, -pixels);
 }
 
 QAbstractSeries *DeclarativeChart::series(int index)

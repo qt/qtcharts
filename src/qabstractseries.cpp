@@ -153,6 +153,21 @@ QChart* QAbstractSeries::chart() const
     return d_ptr->m_chart;
 }
 
+void QAbstractSeries::adjustView()
+{
+    //TODO:
+}
+
+void QAbstractSeries::show()
+{
+    setVisible(true);
+}
+
+void QAbstractSeries::hide()
+{
+    setVisible(false);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q):

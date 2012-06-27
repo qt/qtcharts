@@ -354,66 +354,11 @@ QChart::AnimationOptions QChart::animationOptions() const
 }
 
 /*!
-    Scrolls the visible area of the chart to the left by the distance between two x axis ticks
- */
-void QChart::scrollLeft(qreal dx)
-{
-<<<<<<< Updated upstream
-//    d_ptr->m_presenter->scroll(-d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
-=======
-    //TODO:
-    Q_UNUSED(dx);
-  //  d_ptr->m_presenter->scroll(-d_ptr->m_presenter->geometry().width()/(axisX()->d_ptr->ticksCount()-1),0);
->>>>>>> Stashed changes
-}
-
-/*!
-    Scrolls the visible area of the chart to the right by the distance between two x axis ticks
- */
-void QChart::scrollRight(qreal dx)
-{
-<<<<<<< Updated upstream
-//    d_ptr->m_presenter->scroll(d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
-=======
-    //TODO:
-    Q_UNUSED(dx);
- //   d_ptr->m_presenter->scroll(d_ptr->m_presenter->geometry().width()/(axisX()->ticksCount()-1),0);
->>>>>>> Stashed changes
-}
-
-/*!
-    Scrolls the visible area of the chart up by the distance between two y axis ticks
- */
-void QChart::scrollUp(qreal dy)
-{
-<<<<<<< Updated upstream
-=======
-    //TODO:
-    Q_UNUSED(dy);
->>>>>>> Stashed changes
-//    d_ptr->m_presenter->scroll(0,d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
-}
-
-/*!
-    Scrolls the visible area of the chart down by the distance between two y axis ticks
- */
-void QChart::scrollDown(qreal dy)
-{
-<<<<<<< Updated upstream
-//    d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
-=======
-    //TODO:
-    Q_UNUSED(dy);
- //   d_ptr->m_presenter->scroll(0,-d_ptr->m_presenter->geometry().width()/(axisY()->ticksCount()-1));
->>>>>>> Stashed changes
-}
-
-/*!
     Scrolls the visible area of the chart by the distance defined in the \a delta.
  */
-void QChart::scroll(const QPointF &delta)
+void QChart::scroll(qreal dx, qreal dy)
 {
-    d_ptr->m_presenter->scroll(-delta.x(), delta.y());
+    d_ptr->m_presenter->scroll(dx, dy);
 }
 
 void QChart::setBackgroundVisible(bool visible)
