@@ -104,12 +104,11 @@ void ChartDataSet::removeSeries(QAbstractSeries* series)
     if(!domain) {
         qWarning()<<"Can not remove series. Series not found on the chart.";
     }
-    else {
-        delete domain;
-        domain =0;
-    }
 
     emit seriesRemoved(series);
+
+    delete domain;
+    domain = 0;
 
     QAbstractAxis* axisX = m_seriesAxisXMap.take(series);
     QAbstractAxis* axisY = m_seriesAxisYMap.take(series);
@@ -208,12 +207,16 @@ QAbstractAxis* ChartDataSet::axisY(QAbstractSeries *series) const
 
 void ChartDataSet::setAxisX(QAbstractSeries *series, QAbstractAxis *axis)
 {
-    m_seriesAxisXMap.insert(series,axis);
+    Q_UNUSED(series);
+    Q_UNUSED(axis);
+  //  m_seriesAxisXMap.insert(series,axis);
 }
 
 void ChartDataSet::setAxisY(QAbstractSeries *series, QAbstractAxis *axis)
 {
-    m_seriesAxisYMap.insert(series,axis);
+    Q_UNUSED(series);
+    Q_UNUSED(axis);
+  //  m_seriesAxisYMap.insert(series,axis);
 }
 
 void ChartDataSet::scrollDomain(qreal dx,qreal dy,const QSizeF& size)

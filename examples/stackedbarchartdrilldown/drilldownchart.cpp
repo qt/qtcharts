@@ -38,11 +38,11 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
     m_currentSeries = series;
 
     // Reset axis
-    axisX()->setRange(0,0);
     QCategoriesAxis* axis = new QCategoriesAxis();
     axis->append(m_currentSeries->categories());
 
     addSeries(series);
+
     setAxisX(series,axis);
 
     setTitle(series->name());
