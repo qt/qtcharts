@@ -63,6 +63,9 @@ public:
     QAbstractAxis* axisX(QAbstractSeries *series) const;
     QAbstractAxis* axisY(QAbstractSeries *series) const;
 
+    void setAxisX(QAbstractSeries *series, QAbstractAxis *axis);
+    void setAxisY(QAbstractSeries *series, QAbstractAxis *axis);
+
     QList<QAbstractSeries*> series() const;
 
 Q_SIGNALS:
@@ -77,7 +80,8 @@ private:
     void calculateDomain(QAbstractSeries* series,Domain* domain);
 
 private:
-    QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisMap;
+    QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisXMap;
+    QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisYMap;
     QMap<QAbstractAxis*, Domain*> m_axisDomainMap;
     QMap<int, QAbstractSeries*> m_indexSeriesMap;
     QAbstractAxis* m_axisX;

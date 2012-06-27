@@ -398,14 +398,16 @@ void QChart::setMarginsMinimum(const QRectF& margins)
 
 void QChart::setAxisX(QAbstractSeries *series, QAbstractAxis* axis)
 {
-    Q_UNUSED(series);
-    Q_UNUSED(axis);
+//    Q_UNUSED(series);
+//    Q_UNUSED(axis);
+    d_ptr->m_dataset->setAxisX(series, axis);
 }
 
 void QChart::setAxisY(QAbstractSeries *series, QAbstractAxis* axis)
 {
-    Q_UNUSED(series);
-    Q_UNUSED(axis);
+//    Q_UNUSED(series);
+//    Q_UNUSED(axis);
+    d_ptr->m_dataset->setAxisY(series, axis);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
