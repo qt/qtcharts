@@ -56,8 +56,8 @@ Q_SIGNALS:
 
 private:
     int m_index;
-    bool m_hovering;
     QBarSet *m_barset;
+    bool m_hovering;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
