@@ -28,6 +28,7 @@
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
 #include "qvaluesaxis.h"
+#include "qcategoriesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -610,7 +611,7 @@ QList<LegendMarker*> QBarSeriesPrivate::createLegendMarker(QLegend* legend)
 
 QAbstractAxis* QBarSeriesPrivate::createAxisX(QObject* parent)
 {
-    return new QValuesAxis(parent);
+    return new QCategoriesAxis(parent);
 }
 
 QAbstractAxis* QBarSeriesPrivate::createAxisY(QObject* parent)

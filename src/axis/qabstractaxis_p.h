@@ -51,9 +51,9 @@ public:
     virtual ChartAxis* createGraphics(ChartPresenter* presenter) = 0;
 
 protected:
-    virtual void setMin(const QVariant& min) = 0;
-    virtual void setMax(const QVariant& max) = 0;
-    virtual void setRange(const QVariant& min, const QVariant& max) = 0;
+    virtual void setMin(const qreal min) = 0;
+    virtual void setMax(const qreal max) = 0;
+    virtual void setRange(const qreal min, const qreal max) = 0;
     virtual int ticksCount() const = 0;
 
 public:
@@ -78,6 +78,11 @@ public:
     qreal m_shadesOpacity;
 
     Qt::Orientation m_orientation;
+
+    // range
+    qreal m_min;
+    qreal m_max;
+    int m_ticksCount;
 
     friend class QAbstractAxis;
 };

@@ -47,19 +47,29 @@ public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
 
 private:
+    void setMinCategory(const QString& minCategory);
+    void setMaxCategory(const QString& maxCategory);
+    void setRangeCategory(const QString& minCategory, const QString& maxCategory);
+
     //range handling
-    void setMin(const QVariant& min);
-    void setMax(const QVariant& max);
-    void setRange(const QVariant& min, const QVariant& max);
+    void setMin(const qreal min);
+    void setMax(const qreal max);
+    void setRange(const qreal min, const qreal max);
     int ticksCount() const;
+
+Q_SIGNALS:
+    void changed(qreal min, qreal max, int tickCount,bool niceNumbers);
+
+public Q_SLOTS:
+    void handleAxisRangeChanged(qreal min, qreal max,int count);
 
 private:
     QStringList m_categories;
     QString m_minCategory;
     QString m_maxCategory;
 
-Q_SIGNALS:
-    void updated();
+//    qreal m_rangeMin;
+//    qreal m_rangeMax;
 
 private:
     Q_DECLARE_PUBLIC(QCategoriesAxis)

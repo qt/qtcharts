@@ -130,11 +130,7 @@ QString QCategoriesAxis::at(int index) const
 void QCategoriesAxis::setMin(const QString& minCategory)
 {
     Q_D(QCategoriesAxis);
-    int minIndex = d->m_categories.indexOf(minCategory);
-    if (minIndex == -1)
-        return;
-//    else
-//        QAbstractAxis::setMin(minIndex);
+    d->setMinCategory(minCategory);
 }
 
 /*!
@@ -143,11 +139,7 @@ void QCategoriesAxis::setMin(const QString& minCategory)
 void QCategoriesAxis::setMax(const QString& maxCategory)
 {
     Q_D(QCategoriesAxis);
-    int maxIndex = d->m_categories.indexOf(maxCategory);
-    if (maxIndex == -1)
-        return;
-//    else
-//        QAbstractAxis::setMax(maxIndex);
+    d->setMaxCategory(maxCategory);
 }
 
 /*!
@@ -155,9 +147,8 @@ void QCategoriesAxis::setMax(const QString& maxCategory)
 */
 void QCategoriesAxis::setRange(const QString& minCategory, const QString& maxCategory)
 {
-    // TODO: what if maxCategory < minCategory?
-    setMin(minCategory);
-    setMax(maxCategory);
+    Q_D(QCategoriesAxis);
+    d->setRangeCategory(minCategory,maxCategory);
 }
 
 /*!
@@ -181,28 +172,86 @@ QCategoriesAxisPrivate::~QCategoriesAxisPrivate()
 
 }
 
-
-void QCategoriesAxisPrivate::setMin(const QVariant& min)
+void QCategoriesAxisPrivate::setMinCategory(const QString& minCategory)
 {
-    Q_Q(QCategoriesAxis);
-    q->setMin(min.toString());
+    // Convert the category to value
+    int minIndex = m_categories.indexOf(minCategory);
+    if (minIndex == -1) {
+        return;
+    }
+    setRange(minIndex,m_max);
 }
 
-void QCategoriesAxisPrivate::setMax(const QVariant& max)
+void QCategoriesAxisPrivate::setMaxCategory(const QString& maxCategory)
 {
-    Q_Q(QCategoriesAxis);
-    q->setMax(max.toString());
+    // Convert the category to value
+    int maxIndex = m_categories.indexOf(maxCategory);
+    if (maxIndex == -1) {
+        return;
+    }
+    setRange(m_min,maxIndex);
 }
 
-void QCategoriesAxisPrivate::setRange(const QVariant& min, const QVariant& max)
+void QCategoriesAxisPrivate::setRangeCategory(const QString& minCategory, const QString& maxCategory)
 {
-   Q_Q(QCategoriesAxis);
-   q->setRange(min.toString(),max.toString());
+    // TODO:
+    int minIndex = m_categories.indexOf(minCategory);
+    if (minIndex == -1) {
+        return;
+    }
+    int maxIndex = m_categories.indexOf(maxCategory);
+    if (maxIndex == -1) {
+        return;
+    }
+    setRange(minIndex,maxIndex);
+}
+
+void QCategoriesAxisPrivate::setMin(const qreal min)
+{
+    setRange(min,m_max);
+}
+
+void QCategoriesAxisPrivate::setMax(const qreal max)
+{
+    setRange(m_min,max);
+}
+
+void QCategoriesAxisPrivate::setRange(const qreal min, const qreal max)
+{
+    Q_Q(QCategoriesAxis);
+    bool changed = false;
+    if (!qFuzzyIsNull(m_min - min)) {
+        m_min = min;
+        changed = true;
+    }
+
+    if (!qFuzzyIsNull(m_max - max)) {
+        m_max = max;
+        changed = true;
+    }
+
+    if (changed) {
+        emit this->changed(m_min, m_max, m_ticksCount, false);
+        emit q->categoriesChanged();
+    }
 }
 
 int QCategoriesAxisPrivate::ticksCount() const
 {
     return m_categories.count()+1;
+}
+
+void QCategoriesAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
+{
+//   Q_Q(QCategoriesAxis);
+//   q->setRange(min,max);
+//   q->setTicksCount(count);
+    m_min = min;
+    m_max = max;
+    m_ticksCount = count;
+
+    // TODO?:
+    //emit updated();
 }
 
 ChartAxis* QCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
@@ -213,7 +262,6 @@ ChartAxis* QCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
     }else{
         return new ChartCategoriesAxisX(q,presenter);
     }
-
 }
 
 #include "moc_qcategoriesaxis.cpp"

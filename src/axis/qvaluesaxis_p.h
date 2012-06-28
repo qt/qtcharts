@@ -52,16 +52,13 @@ public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
 
 protected:
-    void setMin(const QVariant& min);
-    void setMax(const QVariant& max);
-    void setRange(const QVariant& min, const QVariant& max);
+    void setMin(const qreal min);
+    void setMax(const qreal max);
+    void setRange(const qreal min, const qreal max);
     int ticksCount() const;
 
 private:
-    qreal m_min;
-    qreal m_max;
     bool m_niceNumbers;
-    int m_ticksCount;
     Q_DECLARE_PUBLIC(QValuesAxis)
 };
 

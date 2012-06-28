@@ -561,15 +561,15 @@ void QAbstractAxis::hide()
 }
 
 
-void QAbstractAxis::setMin(const QVariant& min)
+void QAbstractAxis::setMin(const qreal min)
 {
     d_ptr->setMin(min);
 }
-void QAbstractAxis::setMax(const QVariant& max)
+void QAbstractAxis::setMax(const qreal max)
 {
     d_ptr->setMax(max);
 }
-void QAbstractAxis::setRange(const QVariant& min, const QVariant& max)
+void QAbstractAxis::setRange(const qreal min, const qreal max)
 {
     d_ptr->setRange(min,max);
 }
@@ -585,7 +585,10 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     m_shadesVisible(false),
     m_shadesBrush(Qt::SolidPattern),
     m_shadesOpacity(1.0),
-    m_orientation(Qt::Orientation(0))
+    m_orientation(Qt::Orientation(0)),
+    m_min(0),
+    m_max(0),
+    m_ticksCount(5)
 {
 
 }
