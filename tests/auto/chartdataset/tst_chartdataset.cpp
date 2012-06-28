@@ -70,11 +70,11 @@ private Q_SLOTS:
 	void seriesCount();
     void seriesIndex_data();
 	void seriesIndex();
-	/*
 	void domain_data();
 	void domain();
     void zoomInDomain_data();
 	void zoomInDomain();
+	/*
     void zoomOutDomain_data();
     void zoomOutDomain();
     void scrollDomain_data();
@@ -485,7 +485,7 @@ void tst_ChartDataSet::seriesIndex()
     }
 
 }
-/*
+
 void tst_ChartDataSet::domain_data()
 {
     addSeries_data();
@@ -493,68 +493,65 @@ void tst_ChartDataSet::domain_data()
 
 void tst_ChartDataSet::domain()
 {
-    QFETCH(QLineSeries*, series0);
-    QFETCH(QAxis*, axis0);
-    QFETCH(QLineSeries*, series1);
-    QFETCH(QAxis*, axis1);
-    QFETCH(QLineSeries*, series2);
-    QFETCH(QAxis*, axis2);
-    QFETCH(int, axisCount);
-    Q_UNUSED(axisCount);
+    QFETCH(QAbstractSeries*, series);
 
-    m_dataset->addSeries(series0, axis0);
-    m_dataset->addSeries(series1, axis1);
-    m_dataset->addSeries(series2, axis2);
-
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAxis *, Domain *)));
-    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAxis *)));
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis *, Domain *)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis *)));
     QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)));
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
-    QVERIFY(m_dataset->domain(axis0)==m_dataset->domain(series0));
-    QVERIFY(m_dataset->domain(axis1)==m_dataset->domain(series1));
-    QVERIFY(m_dataset->domain(axis2)==m_dataset->domain(series2));
-    TRY_COMPARE(spy0.count(), 0);
+    m_dataset->addSeries(series);
+    QVERIFY(m_dataset->domain(series));
+
+    if(series->type()!=QAbstractSeries::SeriesTypePie){
+    TRY_COMPARE(spy0.count(), 2);
+    }
+
     TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy2.count(), 1);
+
+    QList<QVariant> arguments = spy2.takeFirst();
+    Domain *domain = (Domain *) arguments.at(1).value<Domain *>();
+    QVERIFY(m_dataset->domain(series) == domain);
+
     TRY_COMPARE(spy3.count(), 0);
+
 }
 
 void tst_ChartDataSet::zoomInDomain_data()
 {
-    addSeries_data();
+    QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
+    QTest::newRow("line,line, line, spline") << (QList<QAbstractSeries*>() <<  new QLineSeries(this) <<  new QLineSeries(this) <<  new QLineSeries(this) << new QSplineSeries(this) );
 }
 
 void tst_ChartDataSet::zoomInDomain()
 {
-    QFETCH(QLineSeries*, series0);
-    QFETCH(QAxis*, axis0);
-    QFETCH(QLineSeries*, series1);
-    QFETCH(QAxis*, axis1);
-    QFETCH(QLineSeries*, series2);
-    QFETCH(QAxis*, axis2);
-    QFETCH(int, axisCount);
-    Q_UNUSED(axisCount);
+    QFETCH(QList<QAbstractSeries*>, seriesList);
 
-    m_dataset->addSeries(series0, axis0);
-    m_dataset->addSeries(series1, axis1);
-    m_dataset->addSeries(series2, axis2);
+    foreach(QAbstractSeries* series, seriesList) {
+        m_dataset->addSeries(series);
+    }
 
-    Domain* domain0 = m_dataset->domain(series0);
-    Domain* domain1 = m_dataset->domain(series1);
-    Domain* domain2 = m_dataset->domain(series2);
+    for (int i = 1; i < seriesList.count(); i++) {
+        m_dataset->setAxisX(seriesList.at(i), m_dataset->axisX(seriesList.at(0)));
+    }
 
-    QSignalSpy spy0(domain0, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(domain1, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy2(domain2, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
+    QList<QSignalSpy*> spyList;
 
-    m_dataset->zoomInDomain(QRect(0,0,100,100),QSize(1000,1000));
+    foreach(QAbstractSeries* series, seriesList) {
+        spyList << new QSignalSpy(m_dataset->domain(series),SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
+    }
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 1);
-    TRY_COMPARE(spy2.count(), 1);
+    m_dataset->zoomInDomain(QRect(0, 0, 100, 100), QSize(1000, 1000));
+
+    foreach(QSignalSpy* spy, spyList) {
+        TRY_COMPARE(spy->count(), 1);
+    }
+
+    qDeleteAll(spyList);
 }
 
+/*
 void tst_ChartDataSet::zoomOutDomain_data()
 {
     addSeries_data();
