@@ -103,7 +103,7 @@ void ChartPresenter::handleAxisRemoved(QAbstractAxis* axis)
     ChartAxis* item = m_axisItems.take(axis);
     Q_ASSERT(item);
     if(m_animator) m_animator->removeAnimation(item);
-    delete item;
+    item->deleteLater();
 }
 
 
@@ -135,7 +135,7 @@ void ChartPresenter::handleSeriesRemoved(QAbstractSeries* series)
         }else
             m_animator->removeAnimation(item);
     }
-    delete item;
+    item->deleteLater();
 }
 
 void ChartPresenter::setTheme(QChart::ChartTheme theme,bool force)

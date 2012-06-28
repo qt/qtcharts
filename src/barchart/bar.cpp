@@ -36,21 +36,21 @@ void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event)
     emit clicked(m_barset, m_index);
-    //TODO:: emit clicked(m_index);
+    emit clicked(m_index);
 }
 
 void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
     emit hovered(m_barset, true);
-    //TODO::emit hovered(true);
+    emit hovered(true);
 }
 
 void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
     emit hovered(m_barset, false);
-    //TODO::emit hovered(false);
+    emit hovered(false);
 }
 
 #include "moc_bar_p.cpp"
