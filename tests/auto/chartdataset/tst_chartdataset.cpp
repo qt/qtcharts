@@ -175,9 +175,9 @@ void tst_ChartDataSet::addSeries()
 void tst_ChartDataSet::setAxisX_data()
 {
 
-	QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
-    QTest::addColumn<QList<QAbstractAxis*> > ("axisList");
-    QTest::addColumn<int > ("axisCount");
+    QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
+    QTest::addColumn<QList<QAbstractAxis*> >("axisList");
+    QTest::addColumn<int>("axisCount");
 
     QAbstractSeries* line = new QLineSeries(this);
     QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
@@ -188,15 +188,20 @@ void tst_ChartDataSet::setAxisX_data()
     QAbstractSeries* percent = new QPercentBarSeries(this);
     QAbstractSeries* stacked = new QStackedBarSeries(this);
 
-    QValuesAxis* valueaxis0 = new QValuesAxis(this);
-    QValuesAxis* valueaxis1 = new QValuesAxis(this);
-    QValuesAxis* valueaxis2 = new QValuesAxis(this);
-    QCategoriesAxis* categoriesaxis = new QCategoriesAxis(this);
+    QTest::newRow("line,spline,scatter: axis 0 axis1 axis 2")
+        << (QList<QAbstractSeries*>() << line << spline << scatter)
+        << (QList<QAbstractAxis*>() << new QValuesAxis(this) << new QValuesAxis(this) << new QValuesAxis(this)) << 3;
 
-	QTest::newRow("line,spline,scatter: axis 0 axis1 axis 2") << ( QList<QAbstractSeries*>() << line << spline << scatter)  << ( QList<QAbstractAxis*>() << valueaxis0 << valueaxis1 << valueaxis2) << 3;
-	QTest::newRow("area: axis 0") << ( QList<QAbstractSeries*>() << area)  << ( QList<QAbstractAxis*>() << valueaxis0) << 1;
-    QTest::newRow("area, spline, scatter: axis 0 axis1 axis 1") << ( QList<QAbstractSeries*>() << area << spline << scatter)  << ( QList<QAbstractAxis*>() << valueaxis0 << valueaxis1 << valueaxis1) << 2;
-	//TODO: add more test cases
+    QTest::newRow("area: axis 0") << (QList<QAbstractSeries*>() << area)
+        << (QList<QAbstractAxis*>() << new QValuesAxis(this)) << 1;
+
+    QList<QAbstractAxis*> axes0;
+    axes0 << new QValuesAxis(this) << new QValuesAxis(this);
+    axes0 << axes0.last();
+    QTest::newRow("line,spline,scatter: axis 0 axis1 axis 1")
+        << (QList<QAbstractSeries*>() << line << spline << scatter)
+        << axes0 << 2;
+    //TODO: add more test cases
 }
 
 void tst_ChartDataSet::setAxisX()
@@ -321,24 +326,12 @@ void tst_ChartDataSet::removeAllSeries_data()
     QTest::addColumn<QList<QAbstractAxis*> >("axisList");
     QTest::addColumn<int>("axisCount");
 
-    QAbstractSeries* line = new QLineSeries(this);
-    QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
-    QAbstractSeries* scatter = new QScatterSeries(this);
-    QAbstractSeries* spline = new QSplineSeries(this);
-    QAbstractSeries* pie = new QPieSeries(this);
-    QAbstractSeries* bar = new QBarSeries(this);
-    QAbstractSeries* percent = new QPercentBarSeries(this);
-    QAbstractSeries* stacked = new QStackedBarSeries(this);
-
-    QValuesAxis* valueaxis0 = new QValuesAxis(this);
-    QValuesAxis* valueaxis1 = new QValuesAxis(this);
-    QValuesAxis* valueaxis2 = new QValuesAxis(this);
-
     QTest::newRow("line,spline,scatter: axis 0 axis1 axis 2")
-        << (QList<QAbstractSeries*>() << line << spline << scatter)
-        << (QList<QAbstractAxis*>() << valueaxis0 << valueaxis1 << valueaxis2) << 3;
+        << (QList<QAbstractSeries*>() << new QLineSeries(this) << new QSplineSeries(this)
+            << new QScatterSeries(this))
+        << (QList<QAbstractAxis*>() << new QValuesAxis(this) << new QValuesAxis(this)
+            << new QValuesAxis(this)) << 3;
     //TODO:
-
 }
 
 void tst_ChartDataSet::removeAllSeries()

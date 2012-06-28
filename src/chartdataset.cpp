@@ -127,7 +127,7 @@ void ChartDataSet::removeSeries(QAbstractSeries* series)
 
         if(x==-1) {
             emit axisRemoved(axisX);
-            axisX->deleteLater();
+            delete axisX;
         }
     }
 
@@ -140,7 +140,7 @@ void ChartDataSet::removeSeries(QAbstractSeries* series)
 
         if(y==-1) {
             emit axisRemoved(axisY);
-            axisY->deleteLater();
+            delete axisY;
         }
     }
 }
