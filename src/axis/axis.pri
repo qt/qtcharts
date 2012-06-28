@@ -3,8 +3,8 @@ DEPENDPATH += $$PWD
 
 SOURCES += \
     $$PWD/chartaxis.cpp \
-    $$PWD/chartaxisx.cpp \
-    $$PWD/chartaxisy.cpp \
+#    $$PWD/chartaxisx.cpp \
+#    $$PWD/chartaxisy.cpp \
     $$PWD/chartvaluesaxisx.cpp \
     $$PWD/chartvaluesaxisy.cpp \
     $$PWD/chartcategoriesaxisx.cpp \
@@ -15,8 +15,8 @@ SOURCES += \
     
 PRIVATE_HEADERS += \
     $$PWD/chartaxis_p.h \
-    $$PWD/chartaxisx_p.h \
-    $$PWD/chartaxisy_p.h \
+#    $$PWD/chartaxisx_p.h \
+#    $$PWD/chartaxisy_p.h \
     $$PWD/chartvaluesaxisx_p.h \
     $$PWD/chartvaluesaxisy_p.h \
     $$PWD/chartcategoriesaxisx_p.h \

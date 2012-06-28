@@ -45,11 +45,12 @@ QVector<qreal> ChartCategoriesAxisY::calculateLayout() const
     QVector<qreal> points;
     points.resize(m_ticksCount);
 
-    const qreal deltaX = m_rect.width()/(m_ticksCount-1);
+    const qreal deltaY = m_rect.height()/(m_ticksCount-1);
     for (int i = 0; i < m_ticksCount; ++i) {
-        int x = i * deltaX + m_rect.left();
-        points[i] = x;
+        int y = i * -deltaY + m_rect.bottom();
+        points[i] = y;
     }
+
     return points;
 }
 

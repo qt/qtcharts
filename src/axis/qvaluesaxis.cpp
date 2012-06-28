@@ -20,8 +20,8 @@
 
 #include "qvaluesaxis.h"
 #include "qvaluesaxis_p.h"
-#include "chartaxisx_p.h"
-#include "chartaxisy_p.h"
+#include "chartvaluesaxisx_p.h"
+#include "chartvaluesaxisy_p.h"
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -252,9 +252,9 @@ ChartAxis* QValuesAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QValuesAxis);
     if(m_orientation == Qt::Vertical){
-        return new ChartAxisY(q,presenter);
+        return new ChartValuesAxisY(q,presenter);
     }else{
-        return new ChartAxisX(q,presenter);
+        return new ChartValuesAxisX(q,presenter);
     }
 
 }

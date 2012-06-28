@@ -25,6 +25,7 @@
 #include <QGraphicsLayout>
 #include <QDebug>
 #include <QFontMetrics>
+#include <cmath>
 
 static int label_padding = 5;
 
@@ -64,7 +65,16 @@ void ChartValuesAxisX::updateGeometry()
 
     QStringList ticksList;
 
-    bool categories = createLabels(ticksList,m_min,m_max,layout.size());
+    int ticks = layout.size();
+    int n = qMax(int(-floor(log10((m_max-m_min)/(ticks-1)))),0);
+    n++;
+    for (int i=0; i< ticks; i++) {
+        qreal value = m_min + (i * (m_max - m_min)/ (ticks-1));
+        Q_UNUSED(value);
+        ticksList << QString::number(value,'f',n);
+    }
+
+    bool categories = false; //createLabels(ticksList,m_min,m_max,layout.size());
 
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
@@ -100,15 +110,15 @@ void ChartValuesAxisX::updateGeometry()
             m_minWidth+=rect.width();
             m_minHeight=qMax(rect.height(),m_minHeight);
         }
-        else {
-            labelItem->setText(ticksList.at(i));
-            const QRectF& rect = labelItem->boundingRect();
-            QPointF center = rect.center();
-            labelItem->setTransformOriginPoint(center.x(), center.y());
-            labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
-            m_minWidth+=rect.width();
-            m_minHeight=qMax(rect.height()+label_padding,m_minHeight);
-        }
+//        else {
+//            labelItem->setText(ticksList.at(i));
+//            const QRectF& rect = labelItem->boundingRect();
+//            QPointF center = rect.center();
+//            labelItem->setTransformOriginPoint(center.x(), center.y());
+//            labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
+//            m_minWidth+=rect.width();
+//            m_minHeight=qMax(rect.height()+label_padding,m_minHeight);
+//        }
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
