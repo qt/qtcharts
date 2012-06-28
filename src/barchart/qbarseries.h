@@ -61,8 +61,8 @@ protected:
     explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);
 
 Q_SIGNALS:
-    void clicked(QBarSet *barset, int index);
-    void hovered(QBarSet* barset, bool status);
+    void clicked(int index, QBarSet *barset);
+    void hovered(bool status, QBarSet *barset);
     void countChanged();
     void labelsVisibleChanged();
 

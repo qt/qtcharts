@@ -48,7 +48,7 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
     setTitle(series->name());
 }
 
-void DrilldownChart::handleClicked(QBarSet *barset, int index)
+void DrilldownChart::handleClicked(int index, QBarSet *barset)
 {
     Q_UNUSED(barset)
     DrilldownBarSeries* series = static_cast<DrilldownBarSeries*> (sender());

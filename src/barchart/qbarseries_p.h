@@ -77,7 +77,7 @@ public:
     qreal maxX();
 
 Q_SIGNALS:
-    void clicked(QBarSet *barset, int index);
+    void clicked(int index, QBarSet *barset);
     void updatedBars();
     void restructuredBars();
     void labelsVisibleChanged(bool visible);

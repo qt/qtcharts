@@ -67,12 +67,12 @@ int main(int argc, char *argv[])
             weeklySeries->setName(QString("Crop by week - " + months.at(month)));
         }
 
-        // Use right click signal to implement drilldown
-        QObject::connect(weeklySeries, SIGNAL(clicked(QBarSet*,int)), drilldownChart, SLOT(handleClicked(QBarSet*,int)));
+        // Use clicked signal to implement drilldown
+        QObject::connect(weeklySeries, SIGNAL(clicked(int, QBarSet*)), drilldownChart, SLOT(handleClicked(int, QBarSet*)));
     }
 
-    // Enable drilldown from season series using right click.
-    QObject::connect(seasonSeries, SIGNAL(clicked(QBarSet*,int)), drilldownChart, SLOT(handleClicked(QBarSet*,int)));
+    // Enable drilldown from season series using clicked signal
+    QObject::connect(seasonSeries, SIGNAL(clicked(int, QBarSet*)), drilldownChart, SLOT(handleClicked(int, QBarSet*)));
 //! [3]
 
 //! [4]

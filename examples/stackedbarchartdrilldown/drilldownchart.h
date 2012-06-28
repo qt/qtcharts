@@ -36,7 +36,7 @@ public:
     void changeSeries(DrilldownBarSeries *series);
 
 public Q_SLOTS:
-    void handleClicked(QBarSet *barset, int index);
+    void handleClicked(int index, QBarSet *barset);
 
 private:
     DrilldownBarSeries* m_currentSeries;

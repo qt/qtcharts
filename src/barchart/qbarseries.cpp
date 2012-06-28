@@ -94,25 +94,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::clicked(QBarSet *barset, int index)
+    \fn void QBarSeries::clicked(int index, QBarSet *barset)
     The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset.
     Clicked bar inside set is indexed by \a index
 */
 /*!
-    \qmlsignal BarSeries::onClicked(BarSet barset, int index)
+    \qmlsignal BarSeries::onClicked(int index, BarSet barset)
     The signal is emitted if the user clicks with a mouse on top of BarSet.
     Clicked bar inside set is indexed by \a index
 */
 
 /*!
-    \fn void QBarSeries::hovered(QBarSet* barset, bool status)
+    \fn void QBarSeries::hovered(bool status, QBarSet* barset)
 
     The signal is emitted if mouse is hovered on top of series.
     Parameter \a barset is the pointer of barset, where hover happened.
     Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
 */
 /*!
-    \qmlsignal BarSeries::onHovered(BarSet barset, bool status)
+    \qmlsignal BarSeries::onHovered(bool status, BarSet barset)
 
     The signal is emitted if mouse is hovered on top of series.
     Parameter \a barset is the pointer of barset, where hover happened.

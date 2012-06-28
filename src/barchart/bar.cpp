@@ -26,31 +26,39 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 Bar::Bar(QBarSet *barset, int index, QGraphicsItem *parent) : QGraphicsRectItem(parent),
     m_index(index),
-    m_barset(barset)
+    m_barset(barset),
+    m_hovering(false)
 {
     setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
     setAcceptHoverEvents(true);
 }
 
+Bar::~Bar()
+{
+    // End hover event, if bar is deleted during it
+    if (m_hovering) {
+        emit hovered(false, m_barset);
+    }
+}
+
 void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event)
-    emit clicked(m_barset, m_index);
-    emit clicked(m_index);
+    emit clicked(m_index, m_barset);
 }
 
 void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
-    emit hovered(m_barset, true);
-    emit hovered(true);
+    m_hovering = true;
+    emit hovered(true, m_barset);
 }
 
 void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     Q_UNUSED(event)
-    emit hovered(m_barset, false);
-    emit hovered(false);
+    m_hovering = false;
+    emit hovered(false, m_barset);
 }
 
 #include "moc_bar_p.cpp"
