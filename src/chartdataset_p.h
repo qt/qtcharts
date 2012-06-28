@@ -64,6 +64,7 @@ public:
     void setAxisY(QAbstractSeries *series, QAbstractAxis *axis);
 
     QList<QAbstractSeries*> series() const;
+    Domain* domain(QAbstractSeries *series) const;
 
 Q_SIGNALS:
     void seriesAdded(QAbstractSeries* series, Domain* domain);
