@@ -127,7 +127,7 @@ void ChartDataSet::removeSeries(QAbstractSeries* series)
 
         if(x==-1) {
             emit axisRemoved(axisX);
-            delete axisX;
+            axisX->deleteLater();
         }
     }
 
@@ -140,7 +140,7 @@ void ChartDataSet::removeSeries(QAbstractSeries* series)
 
         if(y==-1) {
             emit axisRemoved(axisY);
-            delete axisY;
+            axisY->deleteLater();
         }
     }
 }
@@ -213,6 +213,7 @@ QAbstractAxis* ChartDataSet::axisY(QAbstractSeries *series) const
 
 void ChartDataSet::setAxisX(QAbstractSeries *series, QAbstractAxis *axis)
 {
+
     Q_ASSERT(axis);
     QAbstractAxis *oldAxis = m_seriesAxisXMap.take(series);
 
@@ -230,7 +231,7 @@ void ChartDataSet::setAxisX(QAbstractSeries *series, QAbstractAxis *axis)
 	int x = axesX.indexOf(oldAxis);
 	if(x==-1) {
 		emit axisRemoved(oldAxis);
-		delete oldAxis;
+		oldAxis->deleteLater();
 	}
 
     Domain* domain = m_seriesDomainMap.value(series);
@@ -267,7 +268,7 @@ void ChartDataSet::setAxisY(QAbstractSeries *series, QAbstractAxis *axis)
 	int y = axesY.indexOf(oldAxis);
 	if(y==-1) {
 		emit axisRemoved(oldAxis);
-		delete oldAxis;
+		oldAxis->deleteLater();
 	}
 
 	Domain* domain = m_seriesDomainMap.value(series);
