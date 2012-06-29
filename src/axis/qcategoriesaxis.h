@@ -53,8 +53,10 @@ public:
     QString at(int index) const;
 
     //range handling convenience functions
-    void setMin(const QString& minCategory);
-    void setMax(const QString& maxCategory);
+    void setMinCategory(const QString& minCategory);
+    QString minCategory() const;
+    void setMaxCategory(const QString& maxCategory);
+    QString maxCategory() const;
     void setRange(const QString& minCategory, const QString& maxCategory);
 
 Q_SIGNALS:

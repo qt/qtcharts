@@ -68,9 +68,6 @@ private:
     QString m_minCategory;
     QString m_maxCategory;
 
-//    qreal m_rangeMin;
-//    qreal m_rangeMax;
-
 private:
     Q_DECLARE_PUBLIC(QCategoriesAxis)
 };

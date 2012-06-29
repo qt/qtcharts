@@ -125,19 +125,37 @@ QString QCategoriesAxis::at(int index) const
 /*!
     Sets minimum category to \a minCategory.
 */
-void QCategoriesAxis::setMin(const QString& minCategory)
+void QCategoriesAxis::setMinCategory(const QString& minCategory)
 {
     Q_D(QCategoriesAxis);
     d->setMinCategory(minCategory);
 }
 
 /*!
+    Returns minimum category.
+*/
+QString QCategoriesAxis::minCategory() const
+{
+    Q_D(const QCategoriesAxis);
+    return d->m_minCategory;
+}
+
+/*!
     Sets maximum category to \a maxCategory.
 */
-void QCategoriesAxis::setMax(const QString& maxCategory)
+void QCategoriesAxis::setMaxCategory(const QString& maxCategory)
 {
     Q_D(QCategoriesAxis);
     d->setMaxCategory(maxCategory);
+}
+
+/*!
+    Returns maximum category
+*/
+QString QCategoriesAxis::maxCategory() const
+{
+    Q_D(const QCategoriesAxis);
+    return d->m_maxCategory;
 }
 
 /*!
