@@ -67,6 +67,9 @@ int main(int argc, char *argv[])
     QCategoriesAxis* axis = new QCategoriesAxis();
     axis->append(categories);
     chart->setAxisX(series,axis);
+//    axis->setMinCategory(QString("Feb"));
+//    axis->setMaxCategory(QString("May"));
+//    axis->setRange(QString("Feb"), QString("Apr"));
 //![4]
 
 //![5]

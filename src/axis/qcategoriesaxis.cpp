@@ -22,6 +22,7 @@
 #include "qcategoriesaxis_p.h"
 #include "chartcategoriesaxisx_p.h"
 #include "chartcategoriesaxisy_p.h"
+#include <qmath.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -195,7 +196,12 @@ void QCategoriesAxisPrivate::setMinCategory(const QString& minCategory)
     if (minIndex == -1) {
         return;
     }
-    setRange(minIndex,m_max);
+
+    int maxIndex = m_max;
+    if (minIndex > maxIndex) {
+        maxIndex = m_categories.count()-1;
+    }
+    setRange(minIndex - 0.5, maxIndex + 0.5);
 }
 
 void QCategoriesAxisPrivate::setMaxCategory(const QString& maxCategory)
@@ -205,7 +211,10 @@ void QCategoriesAxisPrivate::setMaxCategory(const QString& maxCategory)
     if (maxIndex == -1) {
         return;
     }
-    setRange(m_min,maxIndex);
+    if (maxIndex < m_min) {
+        m_min = 0;
+    }
+    setRange(m_min - 0.5, maxIndex + 0.5);
 }
 
 void QCategoriesAxisPrivate::setRangeCategory(const QString& minCategory, const QString& maxCategory)
@@ -219,7 +228,7 @@ void QCategoriesAxisPrivate::setRangeCategory(const QString& minCategory, const 
     if (maxIndex == -1) {
         return;
     }
-    setRange(minIndex,maxIndex);
+    setRange(minIndex -0.5, maxIndex + 0.5);
 }
 
 void QCategoriesAxisPrivate::setMin(const qreal min)
@@ -234,6 +243,10 @@ void QCategoriesAxisPrivate::setMax(const qreal max)
 
 void QCategoriesAxisPrivate::setRange(const qreal min, const qreal max)
 {
+    if (max <= min) {
+        // max must be greater than min
+        return;
+    }
     Q_Q(QCategoriesAxis);
     bool changed = false;
     if (!qFuzzyIsNull(m_min - min)) {
@@ -247,7 +260,7 @@ void QCategoriesAxisPrivate::setRange(const qreal min, const qreal max)
     }
 
     if (changed) {
-        emit this->changed(m_min, m_max, m_ticksCount, false);
+        emit this->changed(m_min, m_max, qCeil(m_max) -qCeil(m_min) +1, false);
         emit q->categoriesChanged();
     }
 }
