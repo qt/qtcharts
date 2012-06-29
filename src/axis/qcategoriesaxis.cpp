@@ -28,12 +28,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QCategoriesAxis::QCategoriesAxis(QObject *parent):
     QAbstractAxis(*new QCategoriesAxisPrivate(this),parent)
 {
-
 }
 
 QCategoriesAxis::~QCategoriesAxis()
 {
-
 }
 
 QCategoriesAxis::QCategoriesAxis(QCategoriesAxisPrivate &d,QObject *parent):QAbstractAxis(d,parent)
@@ -243,15 +241,9 @@ int QCategoriesAxisPrivate::ticksCount() const
 
 void QCategoriesAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
 {
-//   Q_Q(QCategoriesAxis);
-//   q->setRange(min,max);
-//   q->setTicksCount(count);
     m_min = min;
     m_max = max;
     m_ticksCount = count;
-
-    // TODO?:
-    //emit updated();
 }
 
 ChartAxis* QCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)

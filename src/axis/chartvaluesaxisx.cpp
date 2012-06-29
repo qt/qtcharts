@@ -39,6 +39,21 @@ ChartValuesAxisX::~ChartValuesAxisX()
 {
 }
 
+bool ChartValuesAxisX::createLabels(QStringList &labels,qreal min, qreal max,int ticks) const
+{
+    Q_ASSERT(max>min);
+    Q_ASSERT(ticks>1);
+
+    int n = qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
+    n++;
+    for (int i=0; i< ticks; i++) {
+        qreal value = min + (i * (max - min)/ (ticks-1));
+        Q_UNUSED(value);
+        labels << QString::number(value,'f',n);
+    }
+    return true;
+}
+
 QVector<qreal> ChartValuesAxisX::calculateLayout() const
 {
     Q_ASSERT(m_ticksCount>=2);
@@ -110,16 +125,6 @@ void ChartValuesAxisX::updateGeometry()
             m_minWidth+=rect.width();
             m_minHeight=qMax(rect.height(),m_minHeight);
         }
-//        else {
-//            labelItem->setText(ticksList.at(i));
-//            const QRectF& rect = labelItem->boundingRect();
-//            QPointF center = rect.center();
-//            labelItem->setTransformOriginPoint(center.x(), center.y());
-//            labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
-//            m_minWidth+=rect.width();
-//            m_minHeight=qMax(rect.height()+label_padding,m_minHeight);
-//        }
-
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
             rectItem->setRect(layout[i-1],m_rect.top(),layout[i]-layout[i-1],m_rect.height());

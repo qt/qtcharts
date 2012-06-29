@@ -36,18 +36,23 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 class ChartPresenter;
+class QCategoriesAxis;
 
 class ChartCategoriesAxisX : public ChartAxis
 {
 public:
-    ChartCategoriesAxisX(QAbstractAxis *axis, ChartPresenter *presenter);
+    ChartCategoriesAxisX(QCategoriesAxis *axis, ChartPresenter *presenter);
     ~ChartCategoriesAxisX();
 
     AxisType axisType() const { return X_AXIS;}
+    bool createLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
 
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
+
+private:
+    QCategoriesAxis *m_categoriesAxis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
