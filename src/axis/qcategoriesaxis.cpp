@@ -243,7 +243,7 @@ void QCategoriesAxisPrivate::setMax(const qreal max)
     setRange(m_min,max);
 }
 
-void QCategoriesAxisPrivate::setRange(const qreal min, const qreal max)
+void QCategoriesAxisPrivate::setRange(const qreal min, const qreal max, bool force)
 {
     if (max <= min) {
         // max must be greater than min
@@ -261,7 +261,7 @@ void QCategoriesAxisPrivate::setRange(const qreal min, const qreal max)
         changed = true;
     }
 
-    if (changed) {
+    if ((changed) ||(force)) {
         emit this->changed(m_min, m_max, qCeil(m_max) -qCeil(m_min) +1, false);
         emit q->categoriesChanged();
     }
@@ -288,6 +288,12 @@ ChartAxis* QCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
         return new ChartCategoriesAxisX(q,presenter);
     }
 }
+
+void QCategoriesAxisPrivate::updateRange()
+{
+    setRange(m_min,m_max,true);
+}
+
 
 #include "moc_qcategoriesaxis.cpp"
 #include "moc_qcategoriesaxis_p.cpp"

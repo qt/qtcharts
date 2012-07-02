@@ -208,7 +208,7 @@ void QValuesAxisPrivate::setMax(const qreal max)
     setRange(m_min,max);
 }
 
-void QValuesAxisPrivate::setRange(const qreal min, const qreal max)
+void QValuesAxisPrivate::setRange(const qreal min, const qreal max, bool force)
 {
     Q_Q(QValuesAxis);
     bool changed = false;
@@ -224,7 +224,7 @@ void QValuesAxisPrivate::setRange(const qreal min, const qreal max)
         emit q->maxChanged(max);
     }
 
-    if (changed) {
+    if ((changed) ||(force)) {
        emit q->rangeChanged(m_min,m_max);
        emit this->changed(m_min, m_max, m_ticksCount, m_niceNumbers);
     }
@@ -244,6 +244,11 @@ ChartAxis* QValuesAxisPrivate::createGraphics(ChartPresenter* presenter)
         return new ChartValuesAxisX(q,presenter);
     }
 
+}
+
+void QValuesAxisPrivate::updateRange()
+{
+    setRange(m_min,m_max,true);
 }
 
 #include "moc_qvaluesaxis.cpp"

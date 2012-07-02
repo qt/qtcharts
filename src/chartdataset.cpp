@@ -234,7 +234,6 @@ void ChartDataSet::setAxisX(QAbstractSeries *series, QAbstractAxis *axis)
 		oldAxis->deleteLater();
 	}
 
-    // TODO: should we take domain from axis (if it has min and max already defined)
     Domain* domain = m_seriesDomainMap.value(series);
     Q_ASSERT(domain);
 
@@ -248,6 +247,9 @@ void ChartDataSet::setAxisX(QAbstractSeries *series, QAbstractAxis *axis)
     }
 
     m_seriesAxisXMap.insert(series,axis);
+
+    // Force range update
+    axis->d_ptr->updateRange();
 }
 
 void ChartDataSet::setAxisY(QAbstractSeries *series, QAbstractAxis *axis)

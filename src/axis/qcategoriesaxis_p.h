@@ -45,6 +45,7 @@ public:
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
+    void updateRange();
 
 private:
     void setMinCategory(const QString& minCategory);
@@ -54,7 +55,7 @@ private:
     //range handling
     void setMin(const qreal min);
     void setMax(const qreal max);
-    void setRange(const qreal min, const qreal max);
+    void setRange(const qreal min, const qreal max, bool force = false);
     int ticksCount() const;
 
 Q_SIGNALS:
