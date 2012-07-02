@@ -197,7 +197,7 @@ void QCategoriesAxisPrivate::setMinCategory(const QString& minCategory)
         return;
     }
 
-    int maxIndex = m_max;
+    int maxIndex = qFloor(m_max);
     if (minIndex > maxIndex) {
         maxIndex = m_categories.count()-1;
     }
@@ -211,10 +211,12 @@ void QCategoriesAxisPrivate::setMaxCategory(const QString& maxCategory)
     if (maxIndex == -1) {
         return;
     }
-    if (maxIndex < m_min) {
-        m_min = 0;
+
+    int minIndex = qCeil(m_min);
+    if (maxIndex < minIndex) {
+        minIndex = 0;
     }
-    setRange(m_min - 0.5, maxIndex + 0.5);
+    setRange(minIndex - 0.5, maxIndex + 0.5);
 }
 
 void QCategoriesAxisPrivate::setRangeCategory(const QString& minCategory, const QString& maxCategory)
