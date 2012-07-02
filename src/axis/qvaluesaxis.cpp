@@ -85,6 +85,26 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a min or \a max of axis has changed.
 */
 
+/*!
+  \property QValuesAxis::ticksCount
+  The number of tick marks for the axis.
+*/
+
+/*!
+  \qmlproperty int Axis::ticksCount
+  The number of tick marks for the axis.
+*/
+
+/*!
+  \property QValuesAxis::niceNumbersEnabled
+  Whether the nice numbers algorithm is enabled or not for the axis.
+*/
+
+/*!
+  \qmlproperty bool Axis::niceNumbersEnabled
+  Whether the nice numbers algorithm is enabled or not for the axis.
+*/
+
 QValuesAxis::QValuesAxis(QObject *parent) :
     QAbstractAxis(*new QValuesAxisPrivate(this),parent)
 {
@@ -147,7 +167,7 @@ void QValuesAxis::setTicksCount(int count)
 }
 
 /*!
-  \fn int QAbstractAxis::ticksCount() const
+  \fn int QValuesAxis::ticksCount() const
   Return number of ticks on the axis
 */
 int QValuesAxis::ticksCount() const

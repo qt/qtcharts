@@ -63,7 +63,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \value AxisTypeCategories
 */
 
-/*!
+/*
     \property QAbstractAxis::type
     The type of the axis.
 */
@@ -77,20 +77,20 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines if axis labels are visible.
 */
 
-/*!
+/*
   \property QAbstractAxis::min
   Defines the minimum value on the axis.
 */
-/*!
+/*
   \qmlproperty real Axis::min
   Defines the minimum value on the axis.
 */
 
-/*!
+/*
   \property QAbstractAxis::max
   Defines the maximum value on the axis.
 */
-/*!
+/*
   \qmlproperty real Axis::max
   Defines the maximum value on the axis.
 */
@@ -123,9 +123,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QAxis::labelsFont
+  \property QAbstractAxis::labelsFont
   The font of the axis labels.
 */
+
 /*!
   \qmlproperty Font Axis::labelsFont
   The font of the axis labels.
@@ -179,24 +180,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QAbstractAxis::ticksCount
-  The number of tick marks for the axis.
-*/
-/*!
-  \qmlproperty int Axis::ticksCount
-  The number of tick marks for the axis.
-*/
-
-/*!
-  \property QAbstractAxis::niceNumbersEnabled
-  Whether the nice numbers algorithm is enabled or not for the axis.
-*/
-/*!
-  \qmlproperty bool Axis::niceNumbersEnabled
-  Whether the nice numbers algorithm is enabled or not for the axis.
-*/
-
-/*!
   \fn void QAbstractAxis::visibleChanged(bool)
   Visiblity of the axis has changed to \a visible.
 */
@@ -211,22 +194,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Visiblity of the grid lines of the axis has changed to \a visible.
 */
 
-/*!
+/*
   \fn void QAbstractAxis::minChanged(qreal min)
   Axis emits signal when \a min of axis has changed.
 */
 
-/*!
+/*
   \fn void QAbstractAxis::maxChanged(qreal max)
   Axis emits signal when \a max of axis has changed.
 */
 
-/*!
+/*
   \fn void QAbstractAxis::rangeChanged(qreal min, qreal max)
   Axis emits signal when \a min or \a max of axis has changed.
 */
 
-/*!
+/*
   \fn QChartAxisCategories* QAbstractAxis::categories()
   Returns pointer to the list of categories which correspond to the values on the axis.
 */

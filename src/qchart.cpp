@@ -134,7 +134,7 @@ QChart::~QChart()
 }
 
 /*!
- Adds the \a series and optional \a axisY onto the chart and takes the ownership of the objects.
+ Adds the \a series onto the chart and takes the ownership of the object.
  If auto scaling is enabled, re-scales the axes the series is bound to (both the x axis and
  the y axis).
 
@@ -354,7 +354,7 @@ QChart::AnimationOptions QChart::animationOptions() const
 }
 
 /*!
-    Scrolls the visible area of the chart by the distance defined in the \a delta.
+    Scrolls the visible area of the chart by the distance defined in the \a dx and \a dy.
  */
 void QChart::scroll(qreal dx, qreal dy)
 {

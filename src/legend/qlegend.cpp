@@ -159,24 +159,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QLegend::labelBrushChanged(QBrush brush)
-    This signal is emitted when the brush used to draw labels has changed to \a brush.
-*/
-
-/*!
     \fn void QLegend::labelColorChanged(QColor color)
     This signal is emitted when the color of brush used to draw labels has changed to \a color.
 */
-
-/*!
- \fn qreal QLegend::minWidth() const
- Returns minimum width of the legend
- */
-
-/*!
- \fn qreal QLegend::minHeight() const
- Returns minimum height of the legend
- */
 
 /*!
  Constructs the legend object and sets the parent to \a parent
