@@ -61,7 +61,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     QStackedBarSeries is QObject which is a child of a \a parent.
 */
 QStackedBarSeries::QStackedBarSeries(QObject *parent)
-    : QBarSeries(*new QStackedBarSeriesPrivate(this), parent)
+    : QAbstractBarSeries(*new QStackedBarSeriesPrivate(this), parent)
 {
 }
 
@@ -75,7 +75,7 @@ QAbstractSeries::SeriesType QStackedBarSeries::type() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QStackedBarSeries *q) : QBarSeriesPrivate(q)
+QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QStackedBarSeries *q) : QAbstractBarSeriesPrivate(q)
 {
 
 }

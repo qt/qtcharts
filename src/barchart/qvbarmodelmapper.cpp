@@ -178,12 +178,12 @@ void QVBarModelMapper::setModel(QAbstractItemModel *model)
     }
 }
 
-QBarSeries* QVBarModelMapper::series() const
+QAbstractBarSeries* QVBarModelMapper::series() const
 {
     return QBarModelMapper::series();
 }
 
-void QVBarModelMapper::setSeries(QBarSeries *series)
+void QVBarModelMapper::setSeries(QAbstractBarSeries *series)
 {
     if (series != QBarModelMapper::series()) {
         QBarModelMapper::setSeries(series);

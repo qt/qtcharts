@@ -60,7 +60,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     QPercentBarSeries is QObject which is a child of a \a parent.
 */
 QPercentBarSeries::QPercentBarSeries(QObject *parent)
-    : QBarSeries(*new QPercentBarSeriesPrivate(this), parent)
+    : QAbstractBarSeries(*new QPercentBarSeriesPrivate(this), parent)
 {
 }
 
@@ -74,7 +74,7 @@ QAbstractSeries::SeriesType QPercentBarSeries::type() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QPercentBarSeriesPrivate::QPercentBarSeriesPrivate(QPercentBarSeries *q) : QBarSeriesPrivate(q)
+QPercentBarSeriesPrivate::QPercentBarSeriesPrivate(QPercentBarSeries *q) : QAbstractBarSeriesPrivate(q)
 {
 
 }

@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QGroupedBarSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QGroupedBarSeries : public QBarSeries
+class QTCOMMERCIALCHART_EXPORT QGroupedBarSeries : public QAbstractBarSeries
 {
     Q_OBJECT
 public:

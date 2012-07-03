@@ -104,7 +104,7 @@ private:
     friend class QBarSeries;
     friend class BarLegendMarker;
     friend class BarChartItem;
-    friend class QBarSeriesPrivate;
+    friend class QAbstractBarSeriesPrivate;
     friend class StackedBarChartItem;
     friend class PercentBarChartItem;
     friend class GroupedBarChartItem;

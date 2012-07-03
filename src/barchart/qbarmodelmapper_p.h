@@ -74,7 +74,7 @@ private:
     void blockSeriesSignals(bool block = true);
 
 private:
-    QBarSeries *m_series;    
+    QAbstractBarSeries *m_series;    
     QList<QBarSet*> m_barSets;
     QAbstractItemModel *m_model;
     int m_first;

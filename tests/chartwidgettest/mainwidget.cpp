@@ -274,9 +274,9 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         QStringList labels = generateLabels(rowCount);
         foreach(QString label, labels)
             category << label;
-        QBarSeries* series = 0;
+        QAbstractBarSeries* series = 0;
         if (seriesName == "Bar") {
-            series = new QBarSeries(this);
+            series = new QAbstractBarSeries(this);
             QCategoriesAxis* axis = new QCategoriesAxis();
             axis->append(category);
             m_chart->setAxisX(axis,series);

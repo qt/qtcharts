@@ -32,7 +32,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarChartItem::BarChartItem(QBarSeries *series, ChartPresenter *presenter) :
+BarChartItem::BarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter) :
     ChartItem(presenter),
     m_series(series)
 {

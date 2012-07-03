@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QStackedBarSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QStackedBarSeries : public QBarSeries
+class QTCOMMERCIALCHART_EXPORT QStackedBarSeries : public QAbstractBarSeries
 {
     Q_OBJECT
 public:

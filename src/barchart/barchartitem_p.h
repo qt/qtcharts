@@ -46,7 +46,7 @@ class BarChartItem : public ChartItem
 {
     Q_OBJECT
 public:
-    BarChartItem(QBarSeries *series, ChartPresenter *presenter);
+    BarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
     virtual ~BarChartItem();
 
 public:
@@ -79,7 +79,7 @@ protected:
     QVector<QRectF> m_layout;
 
     // Not owned.
-    QBarSeries *m_series;
+    QAbstractBarSeries *m_series;
     QList<Bar *> m_bars;
     QList<QGraphicsSimpleTextItem *> m_labels;
 };

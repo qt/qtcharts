@@ -63,8 +63,8 @@ private slots:
     void clearWithAnimations();
 
 private:
-    QBarSeries* m_barseries;
-    QBarSeries* m_barseries_with_sets;
+    QAbstractBarSeries* m_barseries;
+    QAbstractBarSeries* m_barseries_with_sets;
 
     QList<QBarSet*> m_testSets;
 
@@ -81,8 +81,8 @@ void tst_QBarSeries::cleanupTestCase()
 
 void tst_QBarSeries::init()
 {
-    m_barseries = new QBarSeries();
-    m_barseries_with_sets = new QBarSeries();
+    m_barseries = new QAbstractBarSeries();
+    m_barseries_with_sets = new QAbstractBarSeries();
 
     for (int i=0; i<5; i++) {
         m_testSets.append(new QBarSet("testset"));
@@ -110,7 +110,7 @@ void tst_QBarSeries::qbarseries_data()
 
 void tst_QBarSeries::qbarseries()
 {
-    QBarSeries *barseries = new QBarSeries();
+    QAbstractBarSeries *barseries = new QAbstractBarSeries();
     QVERIFY(barseries != 0);
 }
 
@@ -316,7 +316,7 @@ void tst_QBarSeries::mouseclicked_data()
 
 void tst_QBarSeries::mouseclicked()
 {
-    QBarSeries* series = new QBarSeries();
+    QAbstractBarSeries* series = new QAbstractBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
 //    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
@@ -454,7 +454,7 @@ void tst_QBarSeries::mousehovered_data()
 
 void tst_QBarSeries::mousehovered()
 {
-    QBarSeries* series = new QBarSeries();
+    QAbstractBarSeries* series = new QAbstractBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
 //    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
@@ -550,7 +550,7 @@ void tst_QBarSeries::mousehovered()
 
 void tst_QBarSeries::clearWithAnimations()
 {
-    QBarSeries* series = new QBarSeries();
+    QAbstractBarSeries* series = new QAbstractBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
 //    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);

@@ -192,17 +192,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QBarSeries.
     QBarSeries is QObject which is a child of a \a parent.
 */
-QBarSeries::QBarSeries(QObject *parent) :
-    QAbstractSeries(*new QBarSeriesPrivate(this),parent)
+QAbstractBarSeries::QAbstractBarSeries(QObject *parent) :
+    QAbstractSeries(*new QAbstractBarSeriesPrivate(this),parent)
 {
 }
 
 /*!
     Destructs barseries and owned barsets.
 */
-QBarSeries::~QBarSeries()
+QAbstractBarSeries::~QAbstractBarSeries()
 {
-    Q_D(QBarSeries);
+    Q_D(QAbstractBarSeries);
     if(d->m_dataset){
         d->m_dataset->removeSeries(this);
     }
@@ -211,7 +211,7 @@ QBarSeries::~QBarSeries()
 /*!
     \internal
 */
-QBarSeries::QBarSeries(QBarSeriesPrivate &d, QObject *parent) :
+QAbstractBarSeries::QAbstractBarSeries(QAbstractBarSeriesPrivate &d, QObject *parent) :
     QAbstractSeries(d,parent)
 {
 }
@@ -219,7 +219,7 @@ QBarSeries::QBarSeries(QBarSeriesPrivate &d, QObject *parent) :
 /*!
     Returns the type of series. Derived classes override this.
 */
-QAbstractSeries::SeriesType QBarSeries::type() const
+QAbstractSeries::SeriesType QAbstractBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeBar;
 }
@@ -230,9 +230,9 @@ QAbstractSeries::SeriesType QBarSeries::type() const
     is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
     Note that with \link QGroupedBarSeries \endlink this value means the width of one group of bars instead of just one bar.
 */
-void QBarSeries::setBarWidth(qreal width)
+void QAbstractBarSeries::setBarWidth(qreal width)
 {
-    Q_D(QBarSeries);
+    Q_D(QAbstractBarSeries);
     d->setBarWidth(width);
 }
 
@@ -240,9 +240,9 @@ void QBarSeries::setBarWidth(qreal width)
     Returns the width of the bars of the series.
     \sa setBarWidth()
 */
-qreal QBarSeries::barWidth() const
+qreal QAbstractBarSeries::barWidth() const
 {
-    Q_D(const QBarSeries);
+    Q_D(const QAbstractBarSeries);
     return d->barWidth();
 }
 
@@ -250,9 +250,9 @@ qreal QBarSeries::barWidth() const
     Adds a set of bars to series. Takes ownership of \a set. If the set is null or is already in series, it won't be appended.
     Returns true, if appending succeeded.
 */
-bool QBarSeries::append(QBarSet *set)
+bool QAbstractBarSeries::append(QBarSet *set)
 {
-    Q_D(QBarSeries);
+    Q_D(QAbstractBarSeries);
     bool success = d->append(set);
     if (success) {
         QList<QBarSet*> sets;
@@ -267,9 +267,9 @@ bool QBarSeries::append(QBarSet *set)
     Removes a set of bars from series. Releases ownership of \a set. Doesn't delete \a set.
     Returns true, if set was removed.
 */
-bool QBarSeries::remove(QBarSet *set)
+bool QAbstractBarSeries::remove(QBarSet *set)
 {
-    Q_D(QBarSeries);
+    Q_D(QAbstractBarSeries);
     bool success = d->remove(set);
     if (success) {
         QList<QBarSet*> sets;
@@ -286,9 +286,9 @@ bool QBarSeries::remove(QBarSet *set)
     nothing is appended and function returns false. If any of the sets is in list more than once, nothing is appended
     and function returns false.
 */
-bool QBarSeries::append(QList<QBarSet* > sets)
+bool QAbstractBarSeries::append(QList<QBarSet* > sets)
 {
-    Q_D(QBarSeries);
+    Q_D(QAbstractBarSeries);
     bool success = d->append(sets);
     if (success) {
         emit barsetsAdded(sets);
@@ -302,9 +302,9 @@ bool QBarSeries::append(QList<QBarSet* > sets)
     Returns true, if inserting succeeded.
 
 */
-bool QBarSeries::insert(int index, QBarSet *set)
+bool QAbstractBarSeries::insert(int index, QBarSet *set)
 {
-    Q_D(QBarSeries);
+    Q_D(QAbstractBarSeries);
     bool success = d->insert(index, set);
     if (success) {
         QList<QBarSet*> sets;
@@ -318,9 +318,9 @@ bool QBarSeries::insert(int index, QBarSet *set)
 /*!
     Removes all of the bar sets from the series
 */
-void QBarSeries::clear()
+void QAbstractBarSeries::clear()
 {
-    Q_D(QBarSeries);
+    Q_D(QAbstractBarSeries);
     QList<QBarSet *> sets = barSets();
     bool success = d->remove(sets);
     if (success) {
@@ -332,27 +332,27 @@ void QBarSeries::clear()
 /*!
     Returns number of sets in series.
 */
-int QBarSeries::count() const
+int QAbstractBarSeries::count() const
 {
-    Q_D(const QBarSeries);
+    Q_D(const QAbstractBarSeries);
     return d->m_barSets.count();
 }
 
 /*!
     Returns a list of sets in series. Keeps ownership of sets.
  */
-QList<QBarSet*> QBarSeries::barSets() const
+QList<QBarSet*> QAbstractBarSeries::barSets() const
 {
-    Q_D(const QBarSeries);
+    Q_D(const QAbstractBarSeries);
     return d->m_barSets;
 }
 
 /*!
     Sets the visibility of labels in series to \a visible
 */
-void QBarSeries::setLabelsVisible(bool visible)
+void QAbstractBarSeries::setLabelsVisible(bool visible)
 {
-    Q_D(QBarSeries);
+    Q_D(QAbstractBarSeries);
     if (d->m_labelsVisible != visible) {
         d->setLabelsVisible(visible);
         emit labelsVisibleChanged();
@@ -362,15 +362,15 @@ void QBarSeries::setLabelsVisible(bool visible)
 /*!
     Returns the visibility of labels
 */
-bool QBarSeries::isLabelsVisible() const
+bool QAbstractBarSeries::isLabelsVisible() const
 {
-    Q_D(const QBarSeries);
+    Q_D(const QAbstractBarSeries);
     return d->m_labelsVisible;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
+QAbstractBarSeriesPrivate::QAbstractBarSeriesPrivate(QAbstractBarSeries *q) :
     QAbstractSeriesPrivate(q),
     m_barWidth(0.5),  // Default value is 50% of category width
     m_labelsVisible(false),
@@ -378,7 +378,7 @@ QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) :
 {
 }
 
-int QBarSeriesPrivate::categoryCount() const
+int QAbstractBarSeriesPrivate::categoryCount() const
 {
     // No categories defined. return count of longest set.
     int count = 0;
@@ -391,7 +391,7 @@ int QBarSeriesPrivate::categoryCount() const
     return count;
 }
 
-void QBarSeriesPrivate::setBarWidth(qreal width)
+void QAbstractBarSeriesPrivate::setBarWidth(qreal width)
 {
     if (width < 0.0) {
         width = 0.0;
@@ -400,29 +400,29 @@ void QBarSeriesPrivate::setBarWidth(qreal width)
     emit updatedBars();
 }
 
-qreal QBarSeriesPrivate::barWidth() const
+qreal QAbstractBarSeriesPrivate::barWidth() const
 {
     return m_barWidth;
 }
 
-QBarSet* QBarSeriesPrivate::barsetAt(int index)
+QBarSet* QAbstractBarSeriesPrivate::barsetAt(int index)
 {
     return m_barSets.at(index);
 }
 
-void QBarSeriesPrivate::setVisible(bool visible)
+void QAbstractBarSeriesPrivate::setVisible(bool visible)
 {
     m_visible = visible;
     emit updatedBars();
 }
 
-void QBarSeriesPrivate::setLabelsVisible(bool visible)
+void QAbstractBarSeriesPrivate::setLabelsVisible(bool visible)
 {
     m_labelsVisible = visible;
     emit labelsVisibleChanged(visible);
 }
 
-qreal QBarSeriesPrivate::min()
+qreal QAbstractBarSeriesPrivate::min()
 {
     if (m_barSets.count() <= 0) {
         return 0;
@@ -440,7 +440,7 @@ qreal QBarSeriesPrivate::min()
     return min;
 }
 
-qreal QBarSeriesPrivate::max()
+qreal QAbstractBarSeriesPrivate::max()
 {
     if (m_barSets.count() <= 0) {
         return 0;
@@ -459,7 +459,7 @@ qreal QBarSeriesPrivate::max()
     return max;
 }
 
-qreal QBarSeriesPrivate::valueAt(int set, int category)
+qreal QAbstractBarSeriesPrivate::valueAt(int set, int category)
 {
     if ((set < 0) || (set >= m_barSets.count())) {
         // No set, no value.
@@ -472,7 +472,7 @@ qreal QBarSeriesPrivate::valueAt(int set, int category)
     return m_barSets.at(set)->at(category);
 }
 
-qreal QBarSeriesPrivate::percentageAt(int set, int category)
+qreal QAbstractBarSeriesPrivate::percentageAt(int set, int category)
 {
     if ((set < 0) || (set >= m_barSets.count())) {
         // No set, no value.
@@ -491,7 +491,7 @@ qreal QBarSeriesPrivate::percentageAt(int set, int category)
     return value / sum;
 }
 
-qreal QBarSeriesPrivate::categorySum(int category)
+qreal QAbstractBarSeriesPrivate::categorySum(int category)
 {
     qreal sum(0);
     int count = m_barSets.count(); // Count sets
@@ -502,7 +502,7 @@ qreal QBarSeriesPrivate::categorySum(int category)
     return sum;
 }
 
-qreal QBarSeriesPrivate::absoluteCategorySum(int category)
+qreal QAbstractBarSeriesPrivate::absoluteCategorySum(int category)
 {
     qreal sum(0);
     int count = m_barSets.count(); // Count sets
@@ -513,7 +513,7 @@ qreal QBarSeriesPrivate::absoluteCategorySum(int category)
     return sum;
 }
 
-qreal QBarSeriesPrivate::maxCategorySum()
+qreal QAbstractBarSeriesPrivate::maxCategorySum()
 {
     qreal max = INT_MIN;
     int count = categoryCount();
@@ -525,7 +525,7 @@ qreal QBarSeriesPrivate::maxCategorySum()
     return max;
 }
 
-qreal QBarSeriesPrivate::minX()
+qreal QAbstractBarSeriesPrivate::minX()
 {
     if (m_barSets.count() <= 0) {
         return 0;
@@ -543,7 +543,7 @@ qreal QBarSeriesPrivate::minX()
     return min;
 }
 
-qreal QBarSeriesPrivate::maxX()
+qreal QAbstractBarSeriesPrivate::maxX()
 {
     if (m_barSets.count() <= 0) {
         return 0;
@@ -563,7 +563,7 @@ qreal QBarSeriesPrivate::maxX()
 }
 
 
-void QBarSeriesPrivate::scaleDomain(Domain& domain)
+void QAbstractBarSeriesPrivate::scaleDomain(Domain& domain)
 {
     qreal minX(domain.minX());
     qreal minY(domain.minY());
@@ -584,9 +584,9 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
 }
 
-Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+Chart* QAbstractBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
-    Q_Q(QBarSeries);
+    Q_Q(QAbstractBarSeries);
 
     BarChartItem* bar = new BarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
@@ -597,9 +597,9 @@ Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 
 }
 
-QList<LegendMarker*> QBarSeriesPrivate::createLegendMarker(QLegend* legend)
+QList<LegendMarker*> QAbstractBarSeriesPrivate::createLegendMarker(QLegend* legend)
 {
-    Q_Q(QBarSeries);
+    Q_Q(QAbstractBarSeries);
     QList<LegendMarker*> markers;
     foreach(QBarSet* set, q->barSets()) {
         BarLegendMarker* marker = new BarLegendMarker(q,set,legend);
@@ -609,19 +609,19 @@ QList<LegendMarker*> QBarSeriesPrivate::createLegendMarker(QLegend* legend)
     return markers;
 }
 
-QAbstractAxis* QBarSeriesPrivate::createAxisX(QObject* parent)
+QAbstractAxis* QAbstractBarSeriesPrivate::createAxisX(QObject* parent)
 {
     return new QCategoriesAxis(parent);
 }
 
-QAbstractAxis* QBarSeriesPrivate::createAxisY(QObject* parent)
+QAbstractAxis* QAbstractBarSeriesPrivate::createAxisY(QObject* parent)
 {
     return new QValuesAxis(parent);
 }
 
-bool QBarSeriesPrivate::append(QBarSet *set)
+bool QAbstractBarSeriesPrivate::append(QBarSet *set)
 {
-    Q_Q(QBarSeries);
+    Q_Q(QAbstractBarSeries);
     if ((m_barSets.contains(set)) || (set == 0)) {
         // Fail if set is already in list or set is null.
         return false;
@@ -636,9 +636,9 @@ bool QBarSeriesPrivate::append(QBarSet *set)
     return true;
 }
 
-bool QBarSeriesPrivate::remove(QBarSet *set)
+bool QAbstractBarSeriesPrivate::remove(QBarSet *set)
 {
-    Q_Q(QBarSeries);
+    Q_Q(QAbstractBarSeries);
     if (!m_barSets.contains(set)) {
         // Fail if set is not in list
         return false;
@@ -653,9 +653,9 @@ bool QBarSeriesPrivate::remove(QBarSet *set)
     return true;
 }
 
-bool QBarSeriesPrivate::append(QList<QBarSet* > sets)
+bool QAbstractBarSeriesPrivate::append(QList<QBarSet* > sets)
 {
-    Q_Q(QBarSeries);
+    Q_Q(QAbstractBarSeries);
     foreach (QBarSet* set, sets) {
         if ((set == 0) || (m_barSets.contains(set))) {
             // Fail if any of the sets is null or is already appended.
@@ -679,9 +679,9 @@ bool QBarSeriesPrivate::append(QList<QBarSet* > sets)
     return true;
 }
 
-bool QBarSeriesPrivate::remove(QList<QBarSet* > sets)
+bool QAbstractBarSeriesPrivate::remove(QList<QBarSet* > sets)
 {
-    Q_Q(QBarSeries);
+    Q_Q(QAbstractBarSeries);
     if (sets.count() == 0) {
         return false;
     }
@@ -709,9 +709,9 @@ bool QBarSeriesPrivate::remove(QList<QBarSet* > sets)
     return true;
 }
 
-bool QBarSeriesPrivate::insert(int index, QBarSet *set)
+bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
 {
-    Q_Q(QBarSeries);
+    Q_Q(QAbstractBarSeries);
     if ((m_barSets.contains(set)) || (set == 0)) {
         // Fail if set is already in list or set is null.
         return false;

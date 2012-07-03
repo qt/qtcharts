@@ -60,7 +60,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     QGroupedBarSeries is QObject which is a child of a \a parent.
 */
 QGroupedBarSeries::QGroupedBarSeries(QObject *parent)
-    : QBarSeries(*new QGroupedBarSeriesPrivate(this), parent)
+    : QAbstractBarSeries(*new QGroupedBarSeriesPrivate(this), parent)
 {
 }
 
@@ -74,7 +74,7 @@ QAbstractSeries::SeriesType QGroupedBarSeries::type() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QGroupedBarSeriesPrivate::QGroupedBarSeriesPrivate(QGroupedBarSeries *q) : QBarSeriesPrivate(q)
+QGroupedBarSeriesPrivate::QGroupedBarSeriesPrivate(QGroupedBarSeries *q) : QAbstractBarSeriesPrivate(q)
 {
 
 }

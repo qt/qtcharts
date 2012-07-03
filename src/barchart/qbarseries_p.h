@@ -39,11 +39,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarModelMapper;
 
-class QBarSeriesPrivate : public QAbstractSeriesPrivate
+class QAbstractBarSeriesPrivate : public QAbstractSeriesPrivate
 {
     Q_OBJECT
 public:
-    QBarSeriesPrivate(QBarSeries *parent);
+    QAbstractBarSeriesPrivate(QAbstractBarSeries *parent);
     int categoryCount() const;
 
     void setBarWidth(qreal width);
@@ -89,7 +89,7 @@ protected:
     bool m_visible;
 
 private:
-    Q_DECLARE_PUBLIC(QBarSeries)
+    Q_DECLARE_PUBLIC(QAbstractBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

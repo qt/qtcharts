@@ -177,7 +177,7 @@ void tst_QChart::addSeries_data()
     QAbstractSeries* series2 = new QScatterSeries(this);
     QAbstractSeries* series3 = new QSplineSeries(this);
     QAbstractSeries* series4 = new QPieSeries(this);
-    QAbstractSeries* series5 = new QBarSeries(this);
+    QAbstractSeries* series5 = new QAbstractBarSeries(this);
     QAbstractSeries* series6 = new QPercentBarSeries(this);
     QAbstractSeries* series7 = new QStackedBarSeries(this);
 

@@ -27,7 +27,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-GroupedBarChartItem::GroupedBarChartItem(QBarSeries *series, ChartPresenter *presenter) :
+GroupedBarChartItem::GroupedBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter) :
     BarChartItem(series, presenter)
 {
 }

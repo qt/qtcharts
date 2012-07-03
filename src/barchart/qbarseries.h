@@ -27,10 +27,10 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarSet;
-class QBarSeriesPrivate;
+class QAbstractBarSeriesPrivate;
 
 // Container for series
-class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
+class QTCOMMERCIALCHART_EXPORT QAbstractBarSeries : public QAbstractSeries
 {
     Q_OBJECT
     Q_PROPERTY(qreal barWidth READ barWidth WRITE setBarWidth)
@@ -38,8 +38,8 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractSeries
     Q_PROPERTY(bool labelsVisible READ isLabelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
 
 public:
-    explicit QBarSeries(QObject *parent = 0);
-    virtual ~QBarSeries();
+    explicit QAbstractBarSeries(QObject *parent = 0);
+    virtual ~QAbstractBarSeries();
 
     QAbstractSeries::SeriesType type() const;
 
@@ -58,7 +58,7 @@ public:
     bool isLabelsVisible() const;
 
 protected:
-    explicit QBarSeries(QBarSeriesPrivate &d,QObject *parent = 0);
+    explicit QAbstractBarSeries(QAbstractBarSeriesPrivate &d,QObject *parent = 0);
 
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
@@ -70,7 +70,7 @@ Q_SIGNALS:
     void barsetsRemoved(QList<QBarSet*> sets);
 
 protected:
-    Q_DECLARE_PRIVATE(QBarSeries)
+    Q_DECLARE_PRIVATE(QAbstractBarSeries)
     friend class BarChartItem;
     friend class PercentBarChartItem;
     friend class StackedBarChartItem;

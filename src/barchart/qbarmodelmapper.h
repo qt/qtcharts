@@ -29,7 +29,7 @@ class QAbstractItemModel;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarModelMapperPrivate;
-class QBarSeries;
+class QAbstractBarSeries;
 class QChart;
 
 class QTCOMMERCIALCHART_EXPORT QBarModelMapper : public QObject
@@ -42,8 +42,8 @@ protected:
     QAbstractItemModel* model() const;
     void setModel(QAbstractItemModel *model);
 
-    QBarSeries* series() const;
-    void setSeries(QBarSeries *series);
+    QAbstractBarSeries* series() const;
+    void setSeries(QAbstractBarSeries *series);
 
     int first() const;
     void setFirst(int first);

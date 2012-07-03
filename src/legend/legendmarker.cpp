@@ -177,7 +177,7 @@ void AreaLegendMarker::updated()
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-BarLegendMarker::BarLegendMarker(QBarSeries *barseries,QBarSet *barset, QLegend *legend) : LegendMarker(barseries,legend),
+BarLegendMarker::BarLegendMarker(QAbstractBarSeries *barseries,QBarSet *barset, QLegend *legend) : LegendMarker(barseries,legend),
 m_barset(barset)
 {
     //QObject::connect(this, SIGNAL(selected()),barset->d_ptr.data(), SIGNAL(selected()));

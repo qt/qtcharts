@@ -60,13 +60,13 @@ void QBarModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
 }
 
-QBarSeries* QBarModelMapper::series() const
+QAbstractBarSeries* QBarModelMapper::series() const
 {
     Q_D(const QBarModelMapper);
     return d->m_series;
 }
 
-void QBarModelMapper::setSeries(QBarSeries *series)
+void QBarModelMapper::setSeries(QAbstractBarSeries *series)
 {
     Q_D(QBarModelMapper);
     if (d->m_series) {

@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QTCOMMERCIALCHART_EXPORT QVBarModelMapper : public QBarModelMapper
 {
     Q_OBJECT
-    Q_PROPERTY(QBarSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
+    Q_PROPERTY(QAbstractBarSeries *series READ series WRITE setSeries NOTIFY seriesReplaced)
     Q_PROPERTY(QAbstractItemModel *model READ model WRITE setModel NOTIFY modelReplaced)
     Q_PROPERTY(int firstBarSetColumn READ firstBarSetColumn WRITE setFirstBarSetColumn NOTIFY firstBarSetColumnChanged)
     Q_PROPERTY(int lastBarSetColumn READ lastBarSetColumn WRITE setLastBarSetColumn NOTIFY lastBarSetColumnChanged)
@@ -41,8 +41,8 @@ public:
     QAbstractItemModel* model() const;
     void setModel(QAbstractItemModel *model);
 
-    QBarSeries* series() const;
-    void setSeries(QBarSeries *series);
+    QAbstractBarSeries* series() const;
+    void setSeries(QAbstractBarSeries *series);
 
     int firstBarSetColumn() const;
     void setFirstBarSetColumn(int firstBarSetColumn);

@@ -36,7 +36,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-class QPercentBarSeriesPrivate: public QBarSeriesPrivate
+class QPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
     QPercentBarSeriesPrivate(QPercentBarSeries* q);

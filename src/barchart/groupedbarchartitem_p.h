@@ -41,7 +41,7 @@ class GroupedBarChartItem : public BarChartItem
 {
     Q_OBJECT
 public:
-    GroupedBarChartItem(QBarSeries *series, ChartPresenter *presenter);
+    GroupedBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
 
 private:
     virtual QVector<QRectF> calculateLayout();

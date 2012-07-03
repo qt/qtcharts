@@ -159,7 +159,7 @@ void ChartTheme::decorate(QLineSeries *series,int index)
     }
 }
 
-void ChartTheme::decorate(QBarSeries *series, int index)
+void ChartTheme::decorate(QAbstractBarSeries *series, int index)
 {
     QBrush brush;
     QPen pen;

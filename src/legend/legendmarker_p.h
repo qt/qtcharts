@@ -43,7 +43,7 @@ class QAbstractSeries;
 class QAreaSeries;
 class QXYSeries;
 class QBarSet;
-class QBarSeries;
+class QAbstractBarSeries;
 class QPieSlice;
 class QLegend;
 class QPieSeries;
@@ -123,7 +123,7 @@ private:
 class BarLegendMarker : public LegendMarker
 {
 public:
-    BarLegendMarker(QBarSeries *barseries, QBarSet *barset,QLegend *legend);
+    BarLegendMarker(QAbstractBarSeries *barseries, QBarSet *barset,QLegend *legend);
 protected:
     void updated();
 private:

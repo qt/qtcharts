@@ -36,7 +36,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-class QGroupedBarSeriesPrivate: public QBarSeriesPrivate
+class QGroupedBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
     QGroupedBarSeriesPrivate(QGroupedBarSeries* q);

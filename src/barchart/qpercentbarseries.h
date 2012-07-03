@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QPercentBarSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QPercentBarSeries : public QBarSeries
+class QTCOMMERCIALCHART_EXPORT QPercentBarSeries : public QAbstractBarSeries
 {
     Q_OBJECT
 public:

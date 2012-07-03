@@ -58,7 +58,7 @@ private Q_SLOTS:
     void handleCountChanged(int index, int count);
 };
 
-class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
+class DeclarativeBarSeries : public QAbstractBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
@@ -77,8 +77,8 @@ public:
     Q_INVOKABLE DeclarativeBarSet *at(int index);
     Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
     Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
-    Q_INVOKABLE bool remove(QBarSet *barset) { return QBarSeries::remove(barset); }
-    Q_INVOKABLE void clear() { return QBarSeries::clear(); }
+    Q_INVOKABLE bool remove(QBarSet *barset) { return QAbstractBarSeries::remove(barset); }
+    Q_INVOKABLE void clear() { return QAbstractBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
     void classBegin();

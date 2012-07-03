@@ -36,13 +36,13 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QBarSeries;
+class QAbstractBarSeries;
 
 class PercentBarChartItem : public BarChartItem
 {
     Q_OBJECT
 public:
-    PercentBarChartItem(QBarSeries *series, ChartPresenter *presenter);
+    PercentBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
 
 private:
     virtual QVector<QRectF> calculateLayout();

@@ -41,7 +41,7 @@ class ChartItem;
 class LineChartItem;
 class QLineSeries;
 class BarChartItem;
-class QBarSeries;
+class QAbstractBarSeries;
 class StackedBarChartItem;
 class QStackedBarSeries;
 class QPercentBarSeries;
@@ -72,7 +72,7 @@ public:
     QChart::ChartTheme id() const {return m_id;}
     void decorate(QChart *chart);
     void decorate(QLegend *legend);
-    void decorate(QBarSeries *series, int index);
+    void decorate(QAbstractBarSeries *series, int index);
     void decorate(QLineSeries *series, int index);
     void decorate(QAreaSeries *series, int index);
     void decorate(QScatterSeries *series, int index);
