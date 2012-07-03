@@ -45,6 +45,7 @@ int main(int argc, char *argv[])
     chart->setTitle("Zoom in/out example");
     chart->setAnimationOptions(QChart::SeriesAnimations);
     chart->legend()->hide();
+    chart->createDefaultAxes();
 
     ChartView* chartView = new ChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
