@@ -32,7 +32,7 @@
 
     \snippet ../examples/presenterchart/chartview.cpp 3
 
-    In  \c handleTimeout() slot  we change currently displayed chart by removing previous series and adding next series from the \c m_series list. We also set proper title.
+    In  \c handleTimeout() slot  we change currently displayed chart by removing previous series and adding next series from the \c m_series list. We also set proper title and create the axes for the chart.
 
     \snippet ../examples/presenterchart/chartview.cpp 4
 */
