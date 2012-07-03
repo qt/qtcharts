@@ -24,6 +24,7 @@
 #include <QBarSeries>
 #include <QBarSet>
 #include <QLegend>
+#include <QCategoriesAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -36,44 +37,56 @@ int main(int argc, char *argv[])
     QBarSet *set1 = new QBarSet("John");
     QBarSet *set2 = new QBarSet("Axel");
     QBarSet *set3 = new QBarSet("Mary");
+    QBarSet *set4 = new QBarSet("Samantha");
 
-    *set0 << QPointF(0.0, 1) << QPointF(1.0, 2) << QPointF(2.4, 3) << QPointF(3.0, 4) << QPointF(4.0, 5) << QPointF(5.0, 6);
-    *set1 << QPointF(0.1, 2) << QPointF(1.2, 3) << QPointF(2.45, 4) << QPointF(3.2, 5) << QPointF(4.2, 6) << QPointF(5.2, 7);
-    *set2 << QPointF(0.2, 3) << QPointF(1.4, 4) << QPointF(2.50, 5) << QPointF(3.4, 6) << QPointF(4.4, 7) << QPointF(5.4, 8);
-    *set3 << QPointF(0.3, 4) << QPointF(1.6, 5) << QPointF(2.55, 6) << QPointF(3.6, 7) << QPointF(4.6, 8) << QPointF(5.6, 9);
+    *set0 << 1 << 2 << 3 << 4 << 5 << 6;
+    *set1 << 5 << 0 << 0 << 4 << 0 << 7;
+    *set2 << 3 << 5 << 8 << 13 << 8 << 5;
+    *set3 << 5 << 6 << 7 << 3 << 4 << 5;
+    *set4 << 9 << 7 << 5 << 3 << 1 << 2;
 //![1]
 
 //![2]
     QBarSeries* series = new QBarSeries();
-    series->setBarWidth(0.2);
     series->append(set0);
     series->append(set1);
     series->append(set2);
     series->append(set3);
+    series->append(set4);
+
 //![2]
 
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Barchart example");
+    chart->createDefaultAxes();
 //![3]
 
 //![4]
-    chart->legend()->setVisible(true);
-    chart->legend()->setAlignment(Qt::AlignBottom);
+    QStringList categories;
+    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+    QCategoriesAxis* axis = new QCategoriesAxis();
+    axis->append(categories);
+    chart->setAxisX(axis,series);
 //![4]
 
 //![5]
-    QChartView* chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+    chart->legend()->setVisible(true);
+    chart->legend()->setAlignment(Qt::AlignBottom);
 //![5]
 
 //![6]
+    QChartView* chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+//![6]
+
+//![7]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);
     window.show();
-//![6]
+//![7]
 
     return a.exec();
 }

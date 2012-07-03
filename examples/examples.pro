@@ -19,7 +19,7 @@ SUBDIRS += \
            stackedbarchartdrilldown \
            zoomlinechart \
            modeldata \
-           groupedbarchart \
+           barchart \
            legend \
            barmodelmapper \
            qmlpiechart
