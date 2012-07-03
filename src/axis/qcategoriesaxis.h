@@ -49,19 +49,14 @@ public:
     void setCategories(const QStringList &categories);
     QStringList categories();
     int count() const;
-
     QString at(int index) const;
 
-    //range handling convenience functions
-    void setMinCategory(const QString& minCategory);
-    QString minCategory() const;
-    void setMaxCategory(const QString& maxCategory);
-    QString maxCategory() const;
-    void setCategoryRange(const QString& minCategory, const QString& maxCategory);
-
-    void setMin(const QVariant &min);
-    void setMax(const QVariant &max);
-    void setRange(const QVariant &min, const QVariant &max);
+    //range handling
+    void setMin(const QString& minCategory);
+    QString min() const;
+    void setMax(const QString& maxCategory);
+    QString max() const;
+    void setRange(const QString& minCategory, const QString& maxCategory);
 
 Q_SIGNALS:
     void categoriesChanged();

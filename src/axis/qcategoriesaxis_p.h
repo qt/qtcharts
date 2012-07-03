@@ -48,10 +48,6 @@ public:
     void updateRange();
 
 private:
-    void setMinCategory(const QString& minCategory);
-    void setMaxCategory(const QString& maxCategory);
-    void setRangeCategory(const QString& minCategory, const QString& maxCategory);
-
     //range handling
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);
