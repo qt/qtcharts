@@ -315,6 +315,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             m_chart->addSeries(series);
         }
     }
+    m_chart->createDefaultAxes();
 }
 
 void MainWidget::backgroundChanged(int itemIndex)

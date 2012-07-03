@@ -94,6 +94,7 @@ TableWidget::TableWidget(QWidget *parent)
     //! [7]
 
     //! [8]
+    chart->createDefaultAxes();
     QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->setMinimumSize(640, 480);
