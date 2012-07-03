@@ -63,8 +63,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     When new series is specified the old series is disconnected (it preserves its data)
 */
 /*!
-    \qmlproperty BarSeries HBarModelMapper::series
-    Defines the BarSeries based object that is used by the mapper. All the data in the series is discarded when it is
+    \qmlproperty AbstractBarSeries HBarModelMapper::series
+    Defines the AbstractBarSeries based object that is used by the mapper. All the data in the series is discarded when it is
     set to the mapper. When new series is specified the old series is disconnected (it preserves its data).
 */
 

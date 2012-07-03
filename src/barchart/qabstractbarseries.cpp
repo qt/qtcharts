@@ -48,7 +48,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa QBarSet, QStackedBarSeries, QPercentBarSeries
 */
 /*!
-    \qmlclass BarSeries QAbstractBarSeries
+    \qmlclass AbstractBarSeries QAbstractBarSeries
     \inherits QAbstractSeries
 
     The following QML shows how to create a simple bar chart:
@@ -69,7 +69,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa QGroupedBarSeries
 */
 /*!
-    \qmlproperty real BarSeries::barWidth
+    \qmlproperty real AbstractBarSeries::barWidth
     The width of the bars of the series. The unit of width is the unit of x-axis. The minimum width for bars
     is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
     is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
@@ -81,7 +81,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Holds the number of sets in series.
 */
 /*!
-    \qmlproperty int BarSeries::count
+    \qmlproperty int AbstractBarSeries::count
     Holds the number of sets in series.
 */
 
@@ -90,7 +90,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Defines the visibility of the labels in series
 */
 /*!
-    \qmlproperty bool BarSeries::labelsVisible
+    \qmlproperty bool AbstractBarSeries::labelsVisible
     Defines the visibility of the labels in series
 */
 
@@ -100,7 +100,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Clicked bar inside set is indexed by \a index
 */
 /*!
-    \qmlsignal BarSeries::onClicked(int index, BarSet barset)
+    \qmlsignal AbstractBarSeries::onClicked(int index, BarSet barset)
     The signal is emitted if the user clicks with a mouse on top of BarSet.
     Clicked bar inside set is indexed by \a index
 */
@@ -113,7 +113,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Parameter \a status is true, if mouse entered on top of series, false if mouse left from top of series.
 */
 /*!
-    \qmlsignal BarSeries::onHovered(bool status, BarSet barset)
+    \qmlsignal AbstractBarSeries::onHovered(bool status, BarSet barset)
 
     The signal is emitted if mouse is hovered on top of series.
     Parameter \a barset is the pointer of barset, where hover happened.
@@ -125,7 +125,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when barset count has been changed, for example by append or remove.
 */
 /*!
-    \qmlsignal BarSeries::onCountChanged()
+    \qmlsignal AbstractBarSeries::onCountChanged()
     This signal is emitted when barset count has been changed, for example by append or remove.
 */
 
@@ -141,7 +141,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa append(), insert()
 */
 /*!
-    \qmlsignal BarSeries::onAdded(BarSet barset)
+    \qmlsignal AbstractBarSeries::onAdded(BarSet barset)
     Emitted when \a barset has been added to the series.
 */
 
@@ -151,17 +151,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa remove()
 */
 /*!
-    \qmlsignal BarSeries::onRemoved(BarSet barset)
+    \qmlsignal AbstractBarSeries::onRemoved(BarSet barset)
     Emitted when \a barset has been removed from the series.
 */
 
 /*!
-    \qmlmethod BarSet BarSeries::at(int index)
+    \qmlmethod BarSet AbstractBarSeries::at(int index)
     Returns bar set at \a index. Returns null if the index is not valid.
 */
 
 /*!
-    \qmlmethod BarSet BarSeries::append(string label, VariantList values)
+    \qmlmethod BarSet AbstractBarSeries::append(string label, VariantList values)
     Adds a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XYPoints.
     For example:
     \code
@@ -171,20 +171,20 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlmethod BarSet BarSeries::insert(int index, string label, VariantList values)
+    \qmlmethod BarSet AbstractBarSeries::insert(int index, string label, VariantList values)
     Inserts a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XYPoints.
     If index is zero or smaller, the new barset is prepended. If the index is count or bigger, the new barset is
     appended.
-    \sa BarSeries::append()
+    \sa AbstractBarSeries::append()
 */
 
 /*!
-    \qmlmethod bool BarSeries::remove(BarSet barset)
+    \qmlmethod bool AbstractBarSeries::remove(BarSet barset)
     Removes the barset from the series. Returns true if successfull, false otherwise.
 */
 
 /*!
-    \qmlmethod BarSeries::clear()
+    \qmlmethod AbstractBarSeries::clear()
     Removes all barsets from the series.
 */
 
@@ -198,7 +198,7 @@ QAbstractBarSeries::QAbstractBarSeries(QObject *parent) :
 }
 
 /*!
-    Destructs barseries and owned barsets.
+    Destructs abstractbarseries and owned barsets.
 */
 QAbstractBarSeries::~QAbstractBarSeries()
 {

@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef BARSERIES_H
-#define BARSERIES_H
+#ifndef ABSTRACTBARSERIES_H
+#define ABSTRACTBARSERIES_H
 
 #include <qabstractseries.h>
 #include <QStringList>
@@ -81,4 +81,4 @@ protected:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // BARSERIES_H
+#endif // ABSTRACTBARSERIES_H

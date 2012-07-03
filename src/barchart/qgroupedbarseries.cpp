@@ -45,7 +45,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlclass GroupedBarSeries QGroupedBarSeries
-    \inherits BarSeries
+    \inherits AbstractBarSeries
 
     The following QML shows how to create a simple grouped bar chart:
     \snippet ../demos/qmlchart/qml/qmlchart/View8.qml 1

@@ -46,7 +46,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlclass StackedBarSeries QStackedBarSeries
-    \inherits BarSeries
+    \inherits AbstractBarSeries
 
     The following QML shows how to create a simple stacked bar chart:
     \snippet ../demos/qmlchart/qml/qmlchart/View8.qml 1
