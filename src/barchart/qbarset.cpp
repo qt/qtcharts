@@ -283,7 +283,7 @@ void QBarSet::append(const qreal value)
     // Convert to QPointF
     int index = d_ptr->m_values.count();
     d_ptr->append(QPointF(d_ptr->m_values.count(), value));
-    emit valuesAdded(index,1);
+    emit valuesAdded(index, 1);
 }
 
 /*!

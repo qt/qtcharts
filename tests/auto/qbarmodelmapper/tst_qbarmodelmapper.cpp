@@ -365,7 +365,7 @@ void tst_qbarmodelmapper::seriesUpdated()
     newBarSet_1->append(103);
     newBarSets.append(newBarSet_1);
 
-    QBarSet* newBarSet_2 = new QBarSet("New_1");
+    QBarSet* newBarSet_2 = new QBarSet("New_2");
     newBarSet_2->append(201);
     newBarSet_2->append(202);
     newBarSet_2->append(203);
