@@ -710,7 +710,15 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
 
 void QAbstractBarSeriesPrivate::initializeAxisX(QAbstractAxis* axis)
 {
-    Q_UNUSED(axis);
+    if(axis->type()==QAbstractAxis::AxisTypeCategories)
+    {
+        QCategoriesAxis* cataxis = qobject_cast<QCategoriesAxis*>(axis);
+        Q_ASSERT(cataxis);
+        QStringList categories;
+        for (int i(1); i < categoryCount()+1; i++)
+        categories << QString::number(i);
+        cataxis->append(categories);
+    }
 }
 
 void QAbstractBarSeriesPrivate::initializeAxisY(QAbstractAxis* axis)

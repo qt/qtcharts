@@ -214,13 +214,6 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
    //TODO: chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Bar chart");
 
-    QStringList categories;
-    for (int i(0); i < valueCount; i++)
-        categories << QString::number(i);
-
-    QCategoriesAxis* axis = new QCategoriesAxis();
-    axis->append(categories);
-
     QStackedBarSeries* series = new QStackedBarSeries(chart);
     for (int i(0); i < m_dataTable.count(); i++) {
         QBarSet *set = new QBarSet("Bar set " + QString::number(i));
@@ -230,7 +223,6 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
     }
     chart->addSeries(series);
     chart->createDefaultAxes();
-    chart->setAxisX(axis, series);
 
     return chart;
 }
