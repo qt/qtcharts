@@ -92,7 +92,7 @@ void tst_QGroupedBarSeries::type_data()
 
 void tst_QGroupedBarSeries::type()
 {
-    QVERIFY(m_barseries->type() == QAbstractSeries::SeriesTypeGroupedBar);
+    QVERIFY(m_barseries->type() == QAbstractSeries::SeriesTypeBar);
 }
 
 void tst_QGroupedBarSeries::mouseclicked_data()
