@@ -37,26 +37,6 @@ QXYSeries *DeclarativeScatterSeries::xySeries()
     return this;
 }
 
-void DeclarativeScatterSeries::setAxisX(QAbstractAxis *axis)
-{
-    chart()->setAxisX(axis,this);
-}
-
-QAbstractAxis *DeclarativeScatterSeries::axisX()
-{
-    return chart()->axisX(this);
-}
-
-void DeclarativeScatterSeries::setAxisY(QAbstractAxis *axis)
-{
-    chart()->setAxisY(axis,this);
-}
-
-QAbstractAxis *DeclarativeScatterSeries::axisY()
-{
-    return chart()->axisY(this);
-}
-
 void DeclarativeScatterSeries::handleCountChanged(int index)
 {
     Q_UNUSED(index)

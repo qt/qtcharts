@@ -68,10 +68,6 @@ class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
 
 public:
     explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
-    void setAxisX(QAbstractAxis *axis);
-    QAbstractAxis *axisX();
-    void setAxisY(QAbstractAxis *axis);
-    QAbstractAxis *axisY();
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
     Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }

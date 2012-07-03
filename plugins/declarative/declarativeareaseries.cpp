@@ -30,25 +30,6 @@ DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
 {
 }
 
-void DeclarativeAreaSeries::setAxisX(QAbstractAxis *axis)
-{
-    chart()->setAxisX(axis,this);
-}
-
-QAbstractAxis *DeclarativeAreaSeries::axisX()
-{
-    return chart()->axisX(this);
-}
-
-void DeclarativeAreaSeries::setAxisY(QAbstractAxis *axis)
-{
-    chart()->setAxisY(axis,this);
-}
-
-QAbstractAxis *DeclarativeAreaSeries::axisY()
-{
-    return chart()->axisY(this);
-}
 
 void DeclarativeAreaSeries::setUpperSeries(DeclarativeLineSeries* series)
 {

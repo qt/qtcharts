@@ -37,26 +37,6 @@ QXYSeries *DeclarativeSplineSeries::xySeries()
     return this;
 }
 
-void DeclarativeSplineSeries::setAxisX(QAbstractAxis *axis)
-{
-    chart()->setAxisX(axis,this);
-}
-
-QAbstractAxis *DeclarativeSplineSeries::axisX()
-{
-    return chart()->axisX(this);
-}
-
-void DeclarativeSplineSeries::setAxisY(QAbstractAxis *axis)
-{
-    chart()->setAxisY(axis,this);
-}
-
-QAbstractAxis *DeclarativeSplineSeries::axisY()
-{
-    return chart()->axisY(this);
-}
-
 void DeclarativeSplineSeries::handleCountChanged(int index)
 {
     Q_UNUSED(index)
