@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qabstractbarseries.h>
+#include <qgroupedbarseries.h>
 #include <qbarset.h>
 #include <qchartview.h>
 #include <qchart.h>
@@ -63,8 +63,8 @@ private slots:
     void clearWithAnimations();
 
 private:
-    QAbstractBarSeries* m_barseries;
-    QAbstractBarSeries* m_barseries_with_sets;
+    QGroupedBarSeries* m_barseries;
+    QGroupedBarSeries* m_barseries_with_sets;
 
     QList<QBarSet*> m_testSets;
 
@@ -81,8 +81,8 @@ void tst_QBarSeries::cleanupTestCase()
 
 void tst_QBarSeries::init()
 {
-    m_barseries = new QAbstractBarSeries();
-    m_barseries_with_sets = new QAbstractBarSeries();
+    m_barseries = new QGroupedBarSeries();
+    m_barseries_with_sets = new QGroupedBarSeries();
 
     for (int i=0; i<5; i++) {
         m_testSets.append(new QBarSet("testset"));
@@ -110,7 +110,7 @@ void tst_QBarSeries::qbarseries_data()
 
 void tst_QBarSeries::qbarseries()
 {
-    QAbstractBarSeries *barseries = new QAbstractBarSeries();
+    QGroupedBarSeries *barseries = new QGroupedBarSeries();
     QVERIFY(barseries != 0);
 }
 
@@ -316,15 +316,13 @@ void tst_QBarSeries::mouseclicked_data()
 
 void tst_QBarSeries::mouseclicked()
 {
-    QAbstractBarSeries* series = new QAbstractBarSeries();
+    QGroupedBarSeries* series = new QGroupedBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-//    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
     *set1 << 10 << 10 << 10;
     series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
-//    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
     *set2 << 10 << 10 << 10;
     series->append(set2);
 
@@ -454,15 +452,13 @@ void tst_QBarSeries::mousehovered_data()
 
 void tst_QBarSeries::mousehovered()
 {
-    QAbstractBarSeries* series = new QAbstractBarSeries();
+    QGroupedBarSeries* series = new QGroupedBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-//    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
     *set1 << 10 << 10 << 10;
     series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
-//    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
     *set2 << 10 << 10 << 10;
     series->append(set2);
 
@@ -550,15 +546,13 @@ void tst_QBarSeries::mousehovered()
 
 void tst_QBarSeries::clearWithAnimations()
 {
-    QAbstractBarSeries* series = new QAbstractBarSeries();
+    QGroupedBarSeries* series = new QGroupedBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-//    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
     *set1 << 10 << 10 << 10;
     series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
-//    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
     *set2 << 10 << 10 << 10;
     series->append(set2);
 

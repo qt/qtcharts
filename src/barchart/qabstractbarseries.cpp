@@ -217,14 +217,6 @@ QAbstractBarSeries::QAbstractBarSeries(QAbstractBarSeriesPrivate &d, QObject *pa
 }
 
 /*!
-    Returns the type of series. Derived classes override this.
-*/
-QAbstractSeries::SeriesType QAbstractBarSeries::type() const
-{
-    return QAbstractSeries::SeriesTypeBar;
-}
-
-/*!
     Sets the width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
     is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
     is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.

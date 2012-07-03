@@ -55,7 +55,6 @@ public:
         qmlRegisterType<DeclarativeLineSeries>(uri, 1, 0, "LineSeries");
         qmlRegisterType<DeclarativeSplineSeries>(uri, 1, 0, "SplineSeries");
         qmlRegisterType<DeclarativeAreaSeries>(uri, 1, 0, "AreaSeries");
-        qmlRegisterType<DeclarativeBarSeries>(uri, 1, 0, "BarSeries");
         qmlRegisterType<DeclarativeGroupedBarSeries>(uri, 1, 0, "GroupedBarSeries");
         qmlRegisterType<DeclarativeStackedBarSeries>(uri, 1, 0, "StackedBarSeries");
         qmlRegisterType<DeclarativePercentBarSeries>(uri, 1, 0, "PercentBarSeries");

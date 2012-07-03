@@ -27,7 +27,7 @@
 #include <qscatterseries.h>
 #include <qsplineseries.h>
 #include <qpieseries.h>
-#include <qabstractbarseries.h>
+#include <qgroupedbarseries.h>
 #include <qpercentbarseries.h>
 #include <qstackedbarseries.h>
 #include <private/chartdataset_p.h>
@@ -136,7 +136,7 @@ void tst_ChartDataSet::addSeries_data()
     QAbstractSeries* scatter = new QScatterSeries(this);
     QAbstractSeries* spline = new QSplineSeries(this);
     QAbstractSeries* pie = new QPieSeries(this);
-    QAbstractSeries* bar = new QAbstractBarSeries(this);
+    QAbstractSeries* bar = new QGroupedBarSeries(this);
     QAbstractSeries* percent = new QPercentBarSeries(this);
     QAbstractSeries* stacked = new QStackedBarSeries(this);
 
@@ -185,7 +185,7 @@ void tst_ChartDataSet::setAxisX_data()
     QAbstractSeries* scatter = new QScatterSeries(this);
     QAbstractSeries* spline = new QSplineSeries(this);
     QAbstractSeries* pie = new QPieSeries(this);
-    QAbstractSeries* bar = new QAbstractBarSeries(this);
+    QAbstractSeries* bar = new QGroupedBarSeries(this);
     QAbstractSeries* percent = new QPercentBarSeries(this);
     QAbstractSeries* stacked = new QStackedBarSeries(this);
 

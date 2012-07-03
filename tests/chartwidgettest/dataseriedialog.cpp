@@ -65,7 +65,6 @@ QGroupBox *DataSerieDialog::seriesTypeSelector()
     layout->addWidget(line);
     layout->addWidget(new QRadioButton("Area"));
     layout->addWidget(new QRadioButton("Pie"));
-    layout->addWidget(new QRadioButton("Bar"));
     layout->addWidget(new QRadioButton("Grouped bar"));
     layout->addWidget(new QRadioButton("Stacked bar"));
     layout->addWidget(new QRadioButton("Percent bar"));

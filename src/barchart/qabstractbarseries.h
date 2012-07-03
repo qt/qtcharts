@@ -37,11 +37,13 @@ class QTCOMMERCIALCHART_EXPORT QAbstractBarSeries : public QAbstractSeries
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(bool labelsVisible READ isLabelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
 
-public:
+protected:
     explicit QAbstractBarSeries(QObject *parent = 0);
+
+public:
     virtual ~QAbstractBarSeries();
 
-    QAbstractSeries::SeriesType type() const;
+    virtual QAbstractSeries::SeriesType type() const = 0;
 
     void setBarWidth(qreal width);
     qreal barWidth() const;
