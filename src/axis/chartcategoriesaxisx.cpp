@@ -26,7 +26,6 @@
 #include <QDebug>
 #include <QFontMetrics>
 #include <QCategoriesAxis>
-#include <qmath.h>
 
 static int label_padding = 5;
 
@@ -35,36 +34,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 ChartCategoriesAxisX::ChartCategoriesAxisX(QCategoriesAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
   m_categoriesAxis(axis)
 {
+
 }
 
 ChartCategoriesAxisX::~ChartCategoriesAxisX()
 {
-}
-
-bool ChartCategoriesAxisX::createLabels(QStringList &labels,qreal min, qreal max,int ticks) const
-{
-    Q_ASSERT(max>min);
-    Q_UNUSED(ticks);
-    Q_UNUSED(max);
-
-    QStringList categories = m_categoriesAxis->categories();
-
-    int x = qCeil(min);
-    int count = 0;
-
-    // Try to find category for x coordinate
-    while (count < ticks) {
-        if ((x < categories.count()) && (x >= 0)) {
-            labels << categories.at(x);
-        } else {
-            // No label for x coordinate
-            labels << "";
-        }
-        x++;
-        count++;
-    }
-
-    return true;
 }
 
 QVector<qreal> ChartCategoriesAxisX::calculateLayout() const
@@ -94,7 +68,7 @@ void ChartCategoriesAxisX::updateGeometry()
 
     QStringList ticksList;
 
-    createLabels(ticksList,m_min,m_max,layout.size());
+    createCategoryLabels(ticksList,m_min,m_max,m_categoriesAxis->categories());
 
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();

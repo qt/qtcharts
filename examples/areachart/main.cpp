@@ -60,6 +60,7 @@ int main(int argc, char *argv[])
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple areachart example");
+    chart->createDefaultAxes();
     chart->axisX()->setRange(0, 20);
     chart->axisY()->setRange(0, 10);
 //![4]

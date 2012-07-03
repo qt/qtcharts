@@ -25,7 +25,7 @@
 #include "chartanimator_p.h"
 #include <QPainter>
 #include <QDebug>
-#include <cmath>
+#include <qmath.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -141,21 +141,6 @@ void ChartAxis::updateLayout(QVector<qreal> &layout)
         setLayout(layout);
         updateGeometry();
     }
-}
-
-bool ChartAxis::createLabels(QStringList &labels,qreal min, qreal max,int ticks) const
-{
-    Q_ASSERT(max>min);
-    Q_ASSERT(ticks>1);
-
-    int n = qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
-    n++;
-    for (int i=0; i< ticks; i++) {
-        qreal value = min + (i * (max - min)/ (ticks-1));
-        Q_UNUSED(value);
-        labels << QString::number(value,'f',n);
-    }
-    return true;
 }
 
 void ChartAxis::setAxisOpacity(qreal opacity)
@@ -352,6 +337,41 @@ qreal ChartAxis::minimumHeight()
 void ChartAxis::axisSelected()
 {
     qDebug()<<"TODO: axis clicked";
+}
+
+
+void ChartAxis::createNumberLabels(QStringList &labels,qreal min, qreal max, int ticks) const
+{
+    Q_ASSERT(max>min);
+    Q_ASSERT(ticks>1);
+
+    int n = qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
+    n++;
+    for (int i=0; i< ticks; i++) {
+        qreal value = min + (i * (max - min)/ (ticks-1));
+        labels << QString::number(value,'f',n);
+    }
+}
+
+void ChartAxis::createCategoryLabels(QStringList &labels,qreal min, qreal max,const QStringList &categories) const
+{
+    Q_ASSERT(max>min);
+    Q_UNUSED(max);
+
+    int x = qCeil(min);
+    int count = 0;
+
+    // Try to find category for x coordinate
+    while (count < m_ticksCount) {
+        if ((x < categories.count()) && (x >= 0)) {
+            labels << categories.at(x);
+        } else {
+            // No label for x coordinate
+            labels << "";
+        }
+        x++;
+        count++;
+    }
 }
 
 #include "moc_chartaxis_p.cpp"

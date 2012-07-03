@@ -44,11 +44,14 @@ public:
     ~ChartValuesAxisX();
 
     AxisType axisType() const { return X_AXIS;}
-    bool createLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
 
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
+
+private:
+    void createLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

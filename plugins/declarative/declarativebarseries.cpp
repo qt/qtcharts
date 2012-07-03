@@ -106,7 +106,7 @@ void DeclarativeBarSeries::componentComplete()
 
 void DeclarativeBarSeries::setAxisX(QAbstractAxis *axis)
 {
-    chart()->setAxisX(this, axis);
+    chart()->setAxisX(axis, this);
 }
 
 QAbstractAxis *DeclarativeBarSeries::axisX()
@@ -116,7 +116,7 @@ QAbstractAxis *DeclarativeBarSeries::axisX()
 
 void DeclarativeBarSeries::setAxisY(QAbstractAxis *axis)
 {
-    chart()->setAxisY(this, axis);
+    chart()->setAxisY(axis, this);
 }
 
 QAbstractAxis *DeclarativeBarSeries::axisY()
@@ -188,7 +188,7 @@ void DeclarativeGroupedBarSeries::componentComplete()
 
 void DeclarativeGroupedBarSeries::setAxisX(QAbstractAxis *axis)
 {
-    chart()->setAxisX(this, axis);
+    chart()->setAxisX(axis, this);
 }
 
 QAbstractAxis *DeclarativeGroupedBarSeries::axisX()
@@ -198,7 +198,7 @@ QAbstractAxis *DeclarativeGroupedBarSeries::axisX()
 
 void DeclarativeGroupedBarSeries::setAxisY(QAbstractAxis *axis)
 {
-    chart()->setAxisY(this, axis);
+    chart()->setAxisY(axis, this);
 }
 
 QAbstractAxis *DeclarativeGroupedBarSeries::axisY()
@@ -264,7 +264,7 @@ void DeclarativeStackedBarSeries::componentComplete()
 
 void DeclarativeStackedBarSeries::setAxisX(QAbstractAxis *axis)
 {
-    chart()->setAxisX(this, axis);
+    chart()->setAxisX(axis, this);
 }
 
 QAbstractAxis *DeclarativeStackedBarSeries::axisX()
@@ -274,7 +274,7 @@ QAbstractAxis *DeclarativeStackedBarSeries::axisX()
 
 void DeclarativeStackedBarSeries::setAxisY(QAbstractAxis *axis)
 {
-    chart()->setAxisY(this, axis);
+    chart()->setAxisY(axis, this);
 }
 
 QAbstractAxis *DeclarativeStackedBarSeries::axisY()
@@ -340,7 +340,7 @@ void DeclarativePercentBarSeries::componentComplete()
 
 void DeclarativePercentBarSeries::setAxisX(QAbstractAxis *axis)
 {
-    chart()->setAxisX(this, axis);
+    chart()->setAxisX(axis, this);
 }
 
 QAbstractAxis *DeclarativePercentBarSeries::axisX()
@@ -350,7 +350,7 @@ QAbstractAxis *DeclarativePercentBarSeries::axisX()
 
 void DeclarativePercentBarSeries::setAxisY(QAbstractAxis *axis)
 {
-    chart()->setAxisY(this, axis);
+    chart()->setAxisY(axis, this);
 }
 
 QAbstractAxis *DeclarativePercentBarSeries::axisY()

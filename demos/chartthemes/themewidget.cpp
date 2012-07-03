@@ -228,7 +228,7 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
         series->append(set);
     }
     chart->addSeries(series);
-    chart->setAxisX(series,axis);
+    chart->createDefaultAxes();
 
     return chart;
 }
@@ -249,6 +249,8 @@ QChart* ThemeWidget::createLineChart() const
         series->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(series);
+        chart->createDefaultAxes();
+
     }
 
     return chart;

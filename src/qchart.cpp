@@ -322,6 +322,11 @@ QAbstractAxis* QChart::axisY(QAbstractSeries *series) const
     return d_ptr->m_dataset->axisY(series);
 }
 
+void QChart::createDefaultAxes()
+{
+	d_ptr->m_dataset->createDefaultAxes();
+}
+
 /*!
  Returns the legend object of the chart. Ownership stays in chart.
  */
@@ -396,14 +401,14 @@ void QChart::setMarginsMinimum(const QRectF& margins)
     d_ptr->m_presenter->setMarginsMinimum(margins);
 }
 
-void QChart::setAxisX(QAbstractSeries *series, QAbstractAxis* axis)
+void QChart::setAxisX(QAbstractAxis* axis , QAbstractSeries *series)
 {
-    d_ptr->m_dataset->setAxisX(series, axis);
+    d_ptr->m_dataset->setAxisX(series,axis);
 }
 
-void QChart::setAxisY(QAbstractSeries *series, QAbstractAxis* axis)
+void QChart::setAxisY( QAbstractAxis* axis , QAbstractSeries *series)
 {
-    d_ptr->m_dataset->setAxisY(series, axis);
+    d_ptr->m_dataset->setAxisY(series,axis);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

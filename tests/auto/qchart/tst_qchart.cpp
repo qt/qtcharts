@@ -212,7 +212,7 @@ void tst_QChart::addSeries()
     QVERIFY(!series->chart());
     QCOMPARE(m_chart->series().count(), 0);
     m_chart->addSeries(series);
-    m_chart->setAxisY(series,axis);
+    m_chart->setAxisY(axis,series);
     QCOMPARE(m_chart->series().count(), 1);
     QCOMPARE(m_chart->series().first(), series);
     QVERIFY(series->chart() == m_chart);
@@ -275,15 +275,15 @@ void tst_QChart::axisY()
 
     QLineSeries* series0 = new QLineSeries();
     m_chart->addSeries(series0);
-    m_chart->setAxisY(series0,axis0);
+    m_chart->setAxisY(axis0,series0);
 
     QLineSeries* series1 = new QLineSeries();
     m_chart->addSeries(series1);
-    m_chart->setAxisY(series1,axis1);
+    m_chart->setAxisY(axis1,series1);
 
     QLineSeries* series2 = new QLineSeries();
     m_chart->addSeries(series2);
-    m_chart->setAxisY(series2,axis2);
+    m_chart->setAxisY(axis2,series2);
 
     if (!axis0)
         axis0 = defaultAxisY;
@@ -452,7 +452,7 @@ void tst_QChart::removeSeries()
     QTest::qWaitForWindowShown(m_view);
     if(!axis) axis = m_chart->axisY();
     m_chart->addSeries(series);
-    m_chart->setAxisY(series,axis);
+    m_chart->setAxisY(axis,series);
     QCOMPARE(m_chart->axisY(series),axis);
     m_chart->removeSeries(series);
     QVERIFY(m_chart->axisY(series)==0);

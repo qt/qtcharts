@@ -39,21 +39,6 @@ ChartValuesAxisX::~ChartValuesAxisX()
 {
 }
 
-bool ChartValuesAxisX::createLabels(QStringList &labels,qreal min, qreal max,int ticks) const
-{
-    Q_ASSERT(max>min);
-    Q_ASSERT(ticks>1);
-
-    int n = qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
-    n++;
-    for (int i=0; i< ticks; i++) {
-        qreal value = min + (i * (max - min)/ (ticks-1));
-        Q_UNUSED(value);
-        labels << QString::number(value,'f',n);
-    }
-    return true;
-}
-
 QVector<qreal> ChartValuesAxisX::calculateLayout() const
 {
     Q_ASSERT(m_ticksCount>=2);
@@ -80,16 +65,7 @@ void ChartValuesAxisX::updateGeometry()
 
     QStringList ticksList;
 
-    int ticks = layout.size();
-    int n = qMax(int(-floor(log10((m_max-m_min)/(ticks-1)))),0);
-    n++;
-    for (int i=0; i< ticks; i++) {
-        qreal value = m_min + (i * (m_max - m_min)/ (ticks-1));
-        Q_UNUSED(value);
-        ticksList << QString::number(value,'f',n);
-    }
-
-    bool categories = false; //createLabels(ticksList,m_min,m_max,layout.size());
+    createNumberLabels(ticksList,m_min,m_max,layout.size());
 
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
@@ -107,7 +83,6 @@ void ChartValuesAxisX::updateGeometry()
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
         lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-        if (!categories || i<1) {
             labelItem->setText(ticksList.at(i));
             const QRectF& rect = labelItem->boundingRect();
             QPointF center = rect.center();
@@ -124,7 +99,7 @@ void ChartValuesAxisX::updateGeometry()
             }
             m_minWidth+=rect.width();
             m_minHeight=qMax(rect.height(),m_minHeight);
-        }
+
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
             rectItem->setRect(layout[i-1],m_rect.top(),layout[i]-layout[i-1],m_rect.height());

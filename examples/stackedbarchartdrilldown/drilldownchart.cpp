@@ -43,7 +43,7 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
 
     addSeries(series);
 
-    setAxisX(series,axis);
+    createDefaultAxes();
 
     setTitle(series->name());
 }

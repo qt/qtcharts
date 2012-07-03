@@ -39,7 +39,7 @@ QXYSeries *DeclarativeScatterSeries::xySeries()
 
 void DeclarativeScatterSeries::setAxisX(QAbstractAxis *axis)
 {
-    chart()->setAxisX(this, axis);
+    chart()->setAxisX(axis,this);
 }
 
 QAbstractAxis *DeclarativeScatterSeries::axisX()
@@ -49,7 +49,7 @@ QAbstractAxis *DeclarativeScatterSeries::axisX()
 
 void DeclarativeScatterSeries::setAxisY(QAbstractAxis *axis)
 {
-    chart()->setAxisY(this, axis);
+    chart()->setAxisY(axis,this);
 }
 
 QAbstractAxis *DeclarativeScatterSeries::axisY()

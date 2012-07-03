@@ -279,22 +279,22 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
             series = new QBarSeries(this);
             QCategoriesAxis* axis = new QCategoriesAxis();
             axis->append(category);
-            m_chart->setAxisX(series,axis);
+            m_chart->setAxisX(axis,series);
         } else if (seriesName == "Grouped bar") {
             series = new QGroupedBarSeries(this);
             QCategoriesAxis* axis = new QCategoriesAxis();
             axis->append(category);
-            m_chart->setAxisX(series,axis);
+            m_chart->setAxisX(axis,series);
         } else if (seriesName == "Stacked bar") {
             series = new QStackedBarSeries(this);
             QCategoriesAxis* axis = new QCategoriesAxis();
             axis->append(category);
-            m_chart->setAxisX(series,axis);
+            m_chart->setAxisX(axis,series);
         } else {
             series = new QPercentBarSeries(this);
             QCategoriesAxis* axis = new QCategoriesAxis();
             axis->append(category);
-            m_chart->setAxisX(series,axis);
+            m_chart->setAxisX(axis,series);
         }
 
         for (int j(0); j < data.count(); j++) {

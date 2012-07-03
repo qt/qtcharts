@@ -75,11 +75,13 @@ public:
     void removeAllSeries();
     QList<QAbstractSeries*> series() const;
 
-    void setAxisX(QAbstractSeries *series, QAbstractAxis* axis);
-    void setAxisY(QAbstractSeries *series, QAbstractAxis* axis);
+    void setAxisX(QAbstractAxis* axis, QAbstractSeries *series = 0);
+    void setAxisY(QAbstractAxis* axis, QAbstractSeries *series = 0);
 
     QAbstractAxis* axisX(QAbstractSeries* series = 0) const;
     QAbstractAxis* axisY(QAbstractSeries* series = 0) const;
+
+    void createDefaultAxes();
 
     void setTheme(QChart::ChartTheme theme);
     QChart::ChartTheme theme() const;
@@ -109,7 +111,7 @@ public:
     void zoom(qreal factor);
     void scroll(qreal dx, qreal dy);
 
-    void adjustViewToSeries(QAbstractSeries* series= 0);
+    void adjustViewToSeries(QAbstractSeries* series = 0);
 
     QLegend* legend() const;
 

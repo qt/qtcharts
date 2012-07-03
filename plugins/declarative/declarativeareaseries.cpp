@@ -32,7 +32,7 @@ DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
 
 void DeclarativeAreaSeries::setAxisX(QAbstractAxis *axis)
 {
-    chart()->setAxisX(this, axis);
+    chart()->setAxisX(axis,this);
 }
 
 QAbstractAxis *DeclarativeAreaSeries::axisX()
@@ -42,7 +42,7 @@ QAbstractAxis *DeclarativeAreaSeries::axisX()
 
 void DeclarativeAreaSeries::setAxisY(QAbstractAxis *axis)
 {
-    chart()->setAxisY(this, axis);
+    chart()->setAxisY(axis,this);
 }
 
 QAbstractAxis *DeclarativeAreaSeries::axisY()

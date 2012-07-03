@@ -123,6 +123,7 @@ void tst_ChartDataSet::chartdataset()
 	QVERIFY(m_dataset->domain(series) == 0);
 	QVERIFY(m_dataset->axisX(series) == 0);
 	QVERIFY(m_dataset->axisY(series) == 0);
+	m_dataset->createDefaultAxes();
 }
 
 
@@ -160,7 +161,7 @@ void tst_ChartDataSet::addSeries()
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
     m_dataset->addSeries(series);
-
+    m_dataset->createDefaultAxes();
     if(series->type()==QAbstractSeries::SeriesTypePie){
         TRY_COMPARE(spy0.count(), 0);
     }else{
@@ -221,7 +222,7 @@ void tst_ChartDataSet::setAxisX()
         m_dataset->addSeries(series);
     }
 
-    TRY_COMPARE(spy0.count(), seriesList.count()*2);
+    TRY_COMPARE(spy0.count(), 0);
     TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), seriesList.count());
     TRY_COMPARE(spy3.count(), 0);
@@ -236,7 +237,7 @@ void tst_ChartDataSet::setAxisX()
     }
 
     TRY_COMPARE(spy4.count(), axisCount);
-    TRY_COMPARE(spy5.count(), seriesList.count());
+    TRY_COMPARE(spy5.count(), 0);
     TRY_COMPARE(spy6.count(), 0);
     TRY_COMPARE(spy7.count(), 0);
 
@@ -267,7 +268,7 @@ void tst_ChartDataSet::setAxisY()
         m_dataset->addSeries(series);
     }
 
-    TRY_COMPARE(spy0.count(), seriesList.count()*2);
+    TRY_COMPARE(spy0.count(), 0);
     TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), seriesList.count());
     TRY_COMPARE(spy3.count(), 0);
@@ -282,7 +283,7 @@ void tst_ChartDataSet::setAxisY()
     }
 
     TRY_COMPARE(spy4.count(), axisCount);
-    TRY_COMPARE(spy5.count(), seriesList.count());
+    TRY_COMPARE(spy5.count(), 0);
     TRY_COMPARE(spy6.count(), 0);
     TRY_COMPARE(spy7.count(), 0);
 
@@ -301,6 +302,7 @@ void tst_ChartDataSet::removeSeries()
     QFETCH(QAbstractSeries*, series);
 
     m_dataset->addSeries(series);
+    m_dataset->createDefaultAxes();
 
     QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*, Domain *)));
     QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
@@ -356,7 +358,7 @@ void tst_ChartDataSet::removeAllSeries()
     m_dataset->removeAllSeries();
 
     TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), axisCount + seriesList.count());
+    TRY_COMPARE(spy1.count(), axisCount);
     TRY_COMPARE(spy2.count(), 0);
     TRY_COMPARE(spy3.count(), seriesList.count());
 }
@@ -503,10 +505,8 @@ void tst_ChartDataSet::domain()
     m_dataset->addSeries(series);
     QVERIFY(m_dataset->domain(series));
 
-    if(series->type()!=QAbstractSeries::SeriesTypePie){
-    TRY_COMPARE(spy0.count(), 2);
-    }
 
+    TRY_COMPARE(spy0.count(), 0);
     TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), 1);
 
@@ -532,9 +532,14 @@ void tst_ChartDataSet::zoomInDomain()
         m_dataset->addSeries(series);
     }
 
-    for (int i = 1; i < seriesList.count(); i++) {
-        m_dataset->setAxisX(seriesList.at(i), m_dataset->axisX(seriesList.at(0)));
+    /*
+    QValuesAxis* axis = new QValuesAxis();
+
+    for (int i = 0; i < seriesList.count(); i++) {
+        m_dataset->setAxisX(seriesList.at(i), axis);
     }
+*/
+    m_dataset->createDefaultAxes();
 
     QList<QSignalSpy*> spyList;
 

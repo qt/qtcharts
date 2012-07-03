@@ -39,7 +39,7 @@ QXYSeries *DeclarativeSplineSeries::xySeries()
 
 void DeclarativeSplineSeries::setAxisX(QAbstractAxis *axis)
 {
-    chart()->setAxisX(this, axis);
+    chart()->setAxisX(axis,this);
 }
 
 QAbstractAxis *DeclarativeSplineSeries::axisX()
@@ -49,7 +49,7 @@ QAbstractAxis *DeclarativeSplineSeries::axisX()
 
 void DeclarativeSplineSeries::setAxisY(QAbstractAxis *axis)
 {
-    chart()->setAxisY(this, axis);
+    chart()->setAxisY(axis,this);
 }
 
 QAbstractAxis *DeclarativeSplineSeries::axisY()

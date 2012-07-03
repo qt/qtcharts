@@ -65,18 +65,7 @@ void ChartValuesAxisY::updateGeometry()
 
     QStringList ticksList;
 
-    int ticks = layout.size();
-    int n = qMax(int(-floor(log10((m_max-m_min)/(ticks-1)))),0);
-    n++;
-    for (int i=0; i< ticks; i++) {
-        qreal value = m_min + (i * (m_max - m_min)/ (ticks-1));
-        Q_UNUSED(value);
-        ticksList << QString::number(value,'f',n);
-    }
-
-    bool categories = false;
-
-//    bool categories = createLabels(ticksList,m_min,m_max,layout.size());
+    createNumberLabels(ticksList,m_min,m_max,layout.size());
 
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
@@ -96,7 +85,6 @@ void ChartValuesAxisY::updateGeometry()
         lineItem->setLine(m_rect.left() , layout[i], m_rect.right(), layout[i]);
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
 
-        if (!categories || i<1) {
             labelItem->setText(ticksList.at(i));
             const QRectF& rect = labelItem->boundingRect();
 
@@ -116,16 +104,6 @@ void ChartValuesAxisY::updateGeometry()
 
             m_minWidth=qMax(rect.width()+label_padding,m_minWidth);
             m_minHeight+=rect.height();
-        }
-        else {
-            labelItem->setText(ticksList.at(i));
-            const QRectF& rect = labelItem->boundingRect();
-            m_minWidth=qMax(rect.width(),m_minWidth);
-            m_minHeight+=rect.height();
-            QPointF center = rect.center();
-            labelItem->setTransformOriginPoint(center.x(), center.y());
-            labelItem->setPos(m_rect.left() - rect.width() - label_padding , layout[i] - (layout[i] - layout[i-1])/2 -center.y());
-        }
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));

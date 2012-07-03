@@ -46,6 +46,7 @@ int main(int argc, char *argv[])
     QChart* chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
+    chart->createDefaultAxes();
     chart->setTitle("Simple line chart example");
 //![3]
 
@@ -53,6 +54,7 @@ int main(int argc, char *argv[])
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![4]
+
 
 //![5]
     QMainWindow window;

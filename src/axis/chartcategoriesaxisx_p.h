@@ -45,7 +45,6 @@ public:
     ~ChartCategoriesAxisX();
 
     AxisType axisType() const { return X_AXIS;}
-    bool createLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
 
 protected:
     QVector<qreal> calculateLayout() const;

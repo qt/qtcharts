@@ -66,6 +66,8 @@ public:
     QList<QAbstractSeries*> series() const;
     Domain* domain(QAbstractSeries *series) const;
 
+    void createDefaultAxes();
+
 Q_SIGNALS:
     void seriesAdded(QAbstractSeries* series, Domain* domain);
     void seriesRemoved(QAbstractSeries* series);

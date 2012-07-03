@@ -25,6 +25,7 @@
 #include <QGraphicsLayout>
 #include <QDebug>
 #include <QFontMetrics>
+#include <QCategoriesAxis>
 
 static int label_padding = 5;
 
@@ -65,7 +66,7 @@ void ChartCategoriesAxisY::updateGeometry()
 
     QStringList ticksList;
 
-    bool categories = createLabels(ticksList,m_min,m_max,layout.size());
+    createCategoryLabels(ticksList,m_min,m_max,m_categoriesAxis->categories());
 
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
@@ -78,38 +79,18 @@ void ChartCategoriesAxisY::updateGeometry()
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
     lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
 
-    qreal width = 0;
-    for (int i = 0; i < layout.size(); ++i) {
+    for (int i = 1; i < layout.size(); ++i) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
         lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-        if (!categories || i<1) {
-            labelItem->setText(ticksList.at(i));
-            const QRectF& rect = labelItem->boundingRect();
-            QPointF center = rect.center();
-            labelItem->setTransformOriginPoint(center.x(), center.y());
-            labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
 
-            if(labelItem->pos().x()<=width){
-                labelItem->setVisible(false);
-                lineItem->setVisible(false);
-            }else{
-                labelItem->setVisible(true);
-                lineItem->setVisible(true);
-                width=rect.width()+labelItem->pos().x();
-            }
-            m_minWidth+=rect.width();
-            m_minHeight=qMax(rect.height(),m_minHeight);
-        }
-        else {
-            labelItem->setText(ticksList.at(i));
-            const QRectF& rect = labelItem->boundingRect();
-            QPointF center = rect.center();
-            labelItem->setTransformOriginPoint(center.x(), center.y());
-            labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
-            m_minWidth+=rect.width();
-            m_minHeight=qMax(rect.height()+label_padding,m_minHeight);
-        }
+        labelItem->setText(ticksList.at(i));
+        const QRectF& rect = labelItem->boundingRect();
+        QPointF center = rect.center();
+        labelItem->setTransformOriginPoint(center.x(), center.y());
+        labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
+        m_minWidth+=rect.width();
+        m_minHeight=qMax(rect.height()+label_padding,m_minHeight);
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));

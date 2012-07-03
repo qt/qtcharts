@@ -91,7 +91,8 @@ public:
 protected:
     virtual void updateGeometry() = 0;
     virtual QVector<qreal> calculateLayout() const = 0;
-    virtual bool createLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
+    void createNumberLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
+    void createCategoryLabels(QStringList &labels,qreal min, qreal max,const QStringList &categories) const;
 
 public Q_SLOTS:
     void handleAxisUpdated();
