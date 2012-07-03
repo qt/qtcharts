@@ -101,9 +101,9 @@ public:
     QColor shadesBorderColor() const;
 
     //range handling
-    void setMin(const qreal min);
-    void setMax(const qreal max);
-    void setRange(const qreal min, const qreal max);
+    void setMin(const QVariant &min);
+    void setMax(const QVariant &max);
+    void setRange(const QVariant &min, const QVariant &max);
 
     void show();
     void hide();

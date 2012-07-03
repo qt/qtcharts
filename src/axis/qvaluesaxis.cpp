@@ -151,6 +151,23 @@ qreal QValuesAxis::max() const
 void QValuesAxis::setRange(qreal min, qreal max)
 {
     Q_D(QValuesAxis);
+    bool changed = false;
+    if (!qFuzzyIsNull(d->m_min - min)) {
+        d->m_min = min;
+        changed = true;
+        emit minChanged(min);
+    }
+
+    if (!qFuzzyIsNull(d->m_max - max)) {
+        d->m_max = max;
+        changed = true;
+        emit maxChanged(max);
+    }
+
+    if (changed) {
+       emit rangeChanged(d->m_min,d->m_max);
+       emit d->changed(d->m_min, d->m_max, d->m_ticksCount, d->m_niceNumbers);
+    }
     d->setRange(min,max);
 }
 
@@ -218,36 +235,31 @@ void QValuesAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
 }
 
 
-void QValuesAxisPrivate::setMin(const qreal min)
-{
-    setRange(min,m_max);
-}
-
-void QValuesAxisPrivate::setMax(const qreal max)
-{
-    setRange(m_min,max);
-}
-
-void QValuesAxisPrivate::setRange(const qreal min, const qreal max, bool force)
+void QValuesAxisPrivate::setMin(const QVariant &min)
 {
     Q_Q(QValuesAxis);
-    bool changed = false;
-    if (!qFuzzyIsNull(m_min - min)) {
-        m_min = min;
-        changed = true;
-        emit q->minChanged(min);
-    }
+    bool ok;
+    qreal value = min.toReal(&ok);
+    if(ok) q->setMin(value);
+}
 
-    if (!qFuzzyIsNull(m_max - max)) {
-        m_max = max;
-        changed = true;
-        emit q->maxChanged(max);
-    }
+void QValuesAxisPrivate::setMax(const QVariant &max)
+{
+    Q_Q(QValuesAxis);
+    bool ok;
+    qreal value = max.toReal(&ok);
+    if(ok) q->setMax(value);
+}
 
-    if ((changed) ||(force)) {
-       emit q->rangeChanged(m_min,m_max);
-       emit this->changed(m_min, m_max, m_ticksCount, m_niceNumbers);
-    }
+void QValuesAxisPrivate::setRange(const QVariant &min, const QVariant &max, bool force)
+{
+    Q_UNUSED(force);    // TODO: use this
+    Q_Q(QValuesAxis);
+    bool ok1;
+    bool ok2;
+    qreal value1 = min.toReal(&ok1);
+    qreal value2 = max.toReal(&ok2);
+    if(ok1&&ok2) q->setRange(value1,value2);
 }
 
 int QValuesAxisPrivate::ticksCount() const

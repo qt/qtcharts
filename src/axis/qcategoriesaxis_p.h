@@ -53,9 +53,9 @@ private:
     void setRangeCategory(const QString& minCategory, const QString& maxCategory);
 
     //range handling
-    void setMin(const qreal min);
-    void setMax(const qreal max);
-    void setRange(const qreal min, const qreal max, bool force = false);
+    void setMin(const QVariant &min);
+    void setMax(const QVariant &max);
+    void setRange(const QVariant &min, const QVariant &max, bool force = false);
     int ticksCount() const;
 
 Q_SIGNALS:

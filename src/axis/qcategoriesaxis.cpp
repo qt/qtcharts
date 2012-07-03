@@ -233,18 +233,23 @@ void QCategoriesAxisPrivate::setRangeCategory(const QString& minCategory, const 
     setRange(minIndex -0.5, maxIndex + 0.5);
 }
 
-void QCategoriesAxisPrivate::setMin(const qreal min)
+void QCategoriesAxisPrivate::setMin(const QVariant &min)
 {
     setRange(min,m_max);
 }
 
-void QCategoriesAxisPrivate::setMax(const qreal max)
+void QCategoriesAxisPrivate::setMax(const QVariant &max)
 {
     setRange(m_min,max);
 }
 
-void QCategoriesAxisPrivate::setRange(const qreal min, const qreal max, bool force)
+void QCategoriesAxisPrivate::setRange(const QVariant &min, const QVariant &max, bool force)
 {
+    Q_UNUSED(min);
+    Q_UNUSED(max);
+    Q_UNUSED(force);
+    // TODO: refactor
+/*
     if (max <= min) {
         // max must be greater than min
         return;
@@ -265,6 +270,7 @@ void QCategoriesAxisPrivate::setRange(const qreal min, const qreal max, bool for
         emit this->changed(m_min, m_max, qCeil(m_max) -qCeil(m_min) +1, false);
         emit q->categoriesChanged();
     }
+*/
 }
 
 int QCategoriesAxisPrivate::ticksCount() const

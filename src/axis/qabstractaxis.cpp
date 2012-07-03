@@ -544,15 +544,15 @@ void QAbstractAxis::hide()
 }
 
 
-void QAbstractAxis::setMin(const qreal min)
+void QAbstractAxis::setMin(const QVariant &min)
 {
     d_ptr->setMin(min);
 }
-void QAbstractAxis::setMax(const qreal max)
+void QAbstractAxis::setMax(const QVariant &max)
 {
     d_ptr->setMax(max);
 }
-void QAbstractAxis::setRange(const qreal min, const qreal max)
+void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 {
     d_ptr->setRange(min,max);
 }
