@@ -30,11 +30,7 @@ ChartView {
     AreaSeries {
         id: areaSeries
         name: "area 1"
-        axisX: CategoriesAxis {
-            id: categoriesAxis
-            categories: ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007",
-                "2008", "2009", "2010", "2011" ]
-        }
+       
         upperSeries: LineSeries {
             XYPoint { x: 0; y: 1 }
             XYPoint { x: 1; y: 1 }
@@ -71,5 +67,9 @@ ChartView {
         onColorChanged:             console.log("areaSeries.onColorChanged: " + color);
         onBorderColorChanged:       console.log("areaSeries.onBorderColorChanged: " + borderColor);
 //        onCountChanged:             console.log("areaSeries.onCountChanged: " + count);
+
+        Component.onCompleted: {
+        createDefaultAxes();
+        }
     }
 }

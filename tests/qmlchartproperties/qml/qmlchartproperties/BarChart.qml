@@ -22,18 +22,22 @@ import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
 ChartView {
-    title: "Bar series"
+    title: "Grouped bar series"
     anchors.fill: parent
     theme: ChartView.ChartThemeLight
     legend.alignment: Qt.AlignBottom
 
-    property variant series: barSeries
+    property variant series: mySeries
+
+    CategoriesAxis {
+        id:myAxis; 
+        categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
 
     BarSeries {
-        id: barSeries
+        id: mySeries
         name: "bar"
-        axisX: CategoriesAxis { categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
-        BarSet { label: "Bob"; values: [4, 7, 3, 10, 5, 6]
+      
+        BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
             onClicked:                  console.log("barset.onClicked: " + index);
             onHovered:                  console.log("barset.onHovered: " + status);
             onPenChanged:               console.log("barset.onPenChanged: " + pen);
@@ -49,18 +53,20 @@ ChartView {
             onValuesRemoved:            console.log("barset.onValuesRemoved: " + index + ", " + count);
             onValueChanged:             console.log("barset.onValuesChanged: " + index);
         }
-        BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 8] }
-        BarSet { label: "James"; values: [3, 5, 8, 5, 4, 7] }
+        BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 7] }
+        BarSet { label: "James"; values: [3, 5, 8, 13, 5, 8] }
 
-        onNameChanged:              console.log("barSeries.onNameChanged: " + series.name);
-        onVisibleChanged:           console.log("barSeries.onVisibleChanged: " + series.visible);
-        onClicked:                  console.log("barSeries.onClicked: " + barset + " " + index);
-        onHovered:                  console.log("barSeries.onHovered: " + barset + " " + status);
-        onLabelsVisibleChanged:     console.log("barSeries.onLabelsVisibleChanged: " + series.labelsVisible);
-        onCountChanged:             console.log("barSeries.onCountChanged: " + count);
-        onBarsetsAdded:             console.log("barSeries.onBarsetsAdded: " + sets); // There is no point in this signal on QML side
-        onAdded:                    console.log("barSeries.onBarsetAdded: " + barset);
-        onBarsetsRemoved:           console.log("barSeries.onBarsetsRemoved: " + sets); // There is no point in this signal on QML side
-        onRemoved:                  console.log("barSeries.onBarsetRemoved: " + barset);
+        onNameChanged:              console.log("groupedBarSeries.onNameChanged: " + series.name);
+        onVisibleChanged:           console.log("groupedBarSeries.onVisibleChanged: " + series.visible);
+        onClicked:                  console.log("groupedBarSeries.onClicked: " + barset + " " + index);
+        onHovered:                  console.log("groupedBarSeries.onHovered: " + barset + " " + status);
+        onLabelsVisibleChanged:     console.log("groupedBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);
+        onCountChanged:             console.log("groupedBarSeries.onCountChanged: " + count);
     }
+    
+    Component.onCompleted: {
+        createDefaultAxes();
+        setAxisX(myAxis,mySeries);
+    }
+    
 }

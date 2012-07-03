@@ -26,7 +26,7 @@ Rectangle {
     width: parent.width
     height: parent.height
     property int viewNumber: 0
-    property int viewCount: 10
+    property int viewCount: 9
     property variant colors: ["#637D74", "#403D3A", "#8C3B3B", "#AB6937", "#D4A960"]
     property int colorIndex: 0
 
@@ -57,13 +57,10 @@ Rectangle {
         } else if (viewNumber == 6) {
             chartLoader.source = "BarChart.qml";
             editorLoader.source = "BarEditor.qml";
-        } else if (viewNumber == 7) {
-            chartLoader.source = "GroupedBarChart.qml";
-            editorLoader.source = "BarEditor.qml";
-        } else if (viewNumber == 8) {
+        }  else if (viewNumber == 7) {
             chartLoader.source = "StackedBarChart.qml";
             editorLoader.source = "BarEditor.qml";
-        } else if (viewNumber == 9) {
+        } else if (viewNumber == 8) {
             chartLoader.source = "PercentBarChart.qml";
             editorLoader.source = "BarEditor.qml";
         } else {

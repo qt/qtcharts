@@ -65,28 +65,32 @@ ChartView {
     legend.onBorderColorChanged:       console.log("legend.onBorderColorChanged: " + color);
     legend.onLabelColorChanged:        console.log("legend.onLabelColorChanged: " + color);
 
-    axisX.onColorChanged:               console.log("axisX.onColorChanged: " + color);
-    axisX.onLabelsVisibleChanged:       console.log("axisX.onLabelsVisibleChanged: " + visible);
-    axisX.onLabelsColorChanged:         console.log("axisX.onLabelsColorChanged: " + color);
-    axisX.onVisibleChanged:             console.log("axisX.onVisibleChanged: " + visible);
-    axisX.onGridVisibleChanged:         console.log("axisX.onGridVisibleChanged: " + visible);
-    axisX.onShadesVisibleChanged:       console.log("axisX.onShadesVisibleChanged: " + visible);
-    axisX.onShadesColorChanged:         console.log("axisX.onShadesColorChanged: " + color);
-    axisX.onShadesBorderColorChanged:   console.log("axisX.onShadesBorderColorChanged: " + color);
-    axisX.onMinChanged:                 console.log("axisX.onMinChanged: " + min);
-    axisX.onMaxChanged:                 console.log("axisX.onMaxChanged: " + max);
 
-    axisY.onColorChanged:               console.log("axisY.onColorChanged: " + color);
-    axisY.onLabelsVisibleChanged:       console.log("axisY.onLabelsVisibleChanged: " + visible);
-    axisY.onLabelsColorChanged:         console.log("axisY.onLabelsColorChanged: " + color);
-    axisY.onVisibleChanged:             console.log("axisY.onVisibleChanged: " + visible);
-    axisY.onGridVisibleChanged:         console.log("axisY.onGridVisibleChanged: " + visible);
-    axisY.onShadesVisibleChanged:       console.log("axisY.onShadesVisibleChanged: " + visible);
-    axisY.onShadesColorChanged:         console.log("axisY.onShadesColorChanged: " + color);
-    axisY.onShadesBorderColorChanged:   console.log("axisY.onShadesBorderColorChanged: " + color);
-    axisY.onMinChanged:                 console.log("axisY.onMinChanged: " + min);
-    axisY.onMaxChanged:                 console.log("axisY.onMaxChanged: " + max);
-
+    ValuesAxis{
+    onColorChanged:               console.log("axisX.onColorChanged: " + color);
+    onLabelsVisibleChanged:       console.log("axisX.onLabelsVisibleChanged: " + visible);
+    onLabelsColorChanged:         console.log("axisX.onLabelsColorChanged: " + color);
+    onVisibleChanged:             console.log("axisX.onVisibleChanged: " + visible);
+    onGridVisibleChanged:         console.log("axisX.onGridVisibleChanged: " + visible);
+    onShadesVisibleChanged:       console.log("axisX.onShadesVisibleChanged: " + visible);
+    onShadesColorChanged:         console.log("axisX.onShadesColorChanged: " + color);
+    onShadesBorderColorChanged:   console.log("axisX.onShadesBorderColorChanged: " + color);
+    onMinChanged:                 console.log("axisX.onMinChanged: " + min);
+    onMaxChanged:                 console.log("axisX.onMaxChanged: " + max);
+    }
+    
+    ValuesAxis{
+    onColorChanged:               console.log("axisY.onColorChanged: " + color);
+    onLabelsVisibleChanged:       console.log("axisY.onLabelsVisibleChanged: " + visible);
+    onLabelsColorChanged:         console.log("axisY.onLabelsColorChanged: " + color);
+    onVisibleChanged:             console.log("axisY.onVisibleChanged: " + visible);
+    onGridVisibleChanged:         console.log("axisY.onGridVisibleChanged: " + visible);
+    onShadesVisibleChanged:       console.log("axisY.onShadesVisibleChanged: " + visible);
+    onShadesColorChanged:         console.log("axisY.onShadesColorChanged: " + color);
+    onShadesBorderColorChanged:   console.log("axisY.onShadesBorderColorChanged: " + color);
+    onMinChanged:                 console.log("axisY.onMinChanged: " + min);
+    onMaxChanged:                 console.log("axisY.onMaxChanged: " + max);
+    }
 
     Rectangle {
         id: marginVisualizer
@@ -102,5 +106,9 @@ ChartView {
         Behavior on opacity {
             NumberAnimation { duration: 800 }
         }
+    }
+    
+    Component.onCompleted: {
+        createDefaultAxes();
     }
 }
