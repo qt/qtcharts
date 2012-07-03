@@ -388,6 +388,6 @@ DeclarativeBarSet *DeclarativePercentBarSeries::insert(int index, QString label,
     return 0;
 }
 
-#include "moc_declarativeabstractbarseries.cpp"
+#include "moc_declarativebarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
