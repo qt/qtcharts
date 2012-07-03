@@ -21,7 +21,7 @@
 
     \snippet ../examples/groupedbarchart/main.cpp 3
     
-	We define the categories here and add them to the x-axis.
+	We define the categories here and add them to QCategoriesAxis which we then set to be the x-axis of the chart.
 
     \snippet ../examples/groupedbarchart/main.cpp 4
 
