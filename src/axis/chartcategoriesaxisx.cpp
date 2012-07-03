@@ -74,6 +74,7 @@ QVector<qreal> ChartCategoriesAxisX::calculateLayout() const
     QVector<qreal> points;
     points.resize(m_ticksCount);
 
+    // TODO: shift logic
     const qreal deltaX = m_rect.width()/(m_ticksCount-1);
     for (int i = 0; i < m_ticksCount; ++i) {
         int x = i * deltaX + m_rect.left();

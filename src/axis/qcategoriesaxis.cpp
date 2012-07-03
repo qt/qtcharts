@@ -162,7 +162,7 @@ QString QCategoriesAxis::maxCategory() const
 /*!
     Sets range from \a minCategory to \a maxCategory
 */
-void QCategoriesAxis::setRange(const QString& minCategory, const QString& maxCategory)
+void QCategoriesAxis::setCategoryRange(const QString& minCategory, const QString& maxCategory)
 {
     Q_D(QCategoriesAxis);
     d->setRangeCategory(minCategory,maxCategory);

@@ -57,7 +57,7 @@ public:
     QString minCategory() const;
     void setMaxCategory(const QString& maxCategory);
     QString maxCategory() const;
-    void setRange(const QString& minCategory, const QString& maxCategory);
+    void setCategoryRange(const QString& minCategory, const QString& maxCategory);
 
 Q_SIGNALS:
     void categoriesChanged();
