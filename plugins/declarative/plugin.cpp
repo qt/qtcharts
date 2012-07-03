@@ -74,12 +74,6 @@ public:
                                           QLatin1String("Trying to create uncreatable: Legend."));
         qmlRegisterUncreatableType<QXYSeries>(uri, 1, 0, "XYSeries",
                                           QLatin1String("Trying to create uncreatable: XYSeries."));
-        qmlRegisterUncreatableType<QScatterSeries>(uri, 1, 0, "QScatterSeries",
-                                          QLatin1String("Trying to create uncreatable: QScatterSeries."));
-        qmlRegisterUncreatableType<QPieSeries>(uri, 1, 0, "QPieSeries",
-                                          QLatin1String("Trying to create uncreatable: QPieSeries."));
-        qmlRegisterUncreatableType<QBarSet>(uri, 1, 0, "QBarSet",
-                                          QLatin1String("Trying to create uncreatable: QBarSet."));
         qmlRegisterUncreatableType<QAbstractItemModel>(uri, 1, 0, "AbstractItemModel",
                                           QLatin1String("Trying to create uncreatable: AbstractItemModel."));
         qmlRegisterUncreatableType<QXYModelMapper>(uri, 1, 0, "XYModelMapper",
@@ -90,6 +84,8 @@ public:
                                           QLatin1String("Trying to create uncreatable: BarModelMapper."));
         qmlRegisterUncreatableType<QAbstractSeries>(uri, 1, 0, "AbstractSeries",
                                           QLatin1String("Trying to create uncreatable: AbstractSeries."));
+        qmlRegisterUncreatableType<QAbstractBarSeries>(uri, 1, 0, "AbstractBarSeries",
+                                             QLatin1String("Trying to create uncreatable: AbstractBarSeries."));
         qmlRegisterUncreatableType<QAbstractAxis>(uri, 1, 0, "AbstractAxis",
                                           QLatin1String("Trying to create uncreatable: AbstractAxis."));
         qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",

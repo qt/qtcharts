@@ -59,48 +59,10 @@ private Q_SLOTS:
     void handleCountChanged(int index, int count);
 };
 
-class DeclarativeAbstractBarSeries : public QAbstractBarSeries, public QDeclarativeParserStatus
-{
-    Q_OBJECT
-    Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY)
-    Q_CLASSINFO("DefaultProperty", "seriesChildren")
-
-public:
-    explicit DeclarativeAbstractBarSeries(QDeclarativeItem *parent = 0);
-    void setAxisX(QAbstractAxis *axis);
-    QAbstractAxis *axisX();
-    void setAxisY(QAbstractAxis *axis);
-    QAbstractAxis *axisY();
-    QDeclarativeListProperty<QObject> seriesChildren();
-    Q_INVOKABLE DeclarativeBarSet *at(int index);
-    Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
-    Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
-    Q_INVOKABLE bool remove(QBarSet *barset) { return QAbstractBarSeries::remove(barset); }
-    Q_INVOKABLE void clear() { return QAbstractBarSeries::clear(); }
-
-public: // from QDeclarativeParserStatus
-    void classBegin();
-    void componentComplete();
-
-Q_SIGNALS:
-    void added(DeclarativeBarSet *barset);
-    void removed(DeclarativeBarSet *barset);
-
-public Q_SLOTS:
-    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
-    void handleAdded(QList<QBarSet* > barsets);
-    void handleRemoved(QList<QBarSet* > barsets);
-};
-
 class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
@@ -123,23 +85,21 @@ public: // from QDeclarativeParserStatus
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+
+private:
+    QAbstractAxis* m_axisX;
+    QAbstractAxis* m_axisY;
 };
 
 class DeclarativeStackedBarSeries : public QStackedBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativeStackedBarSeries(QDeclarativeItem *parent = 0);
-    void setAxisX(QAbstractAxis *axis);
-    QAbstractAxis *axisX();
-    void setAxisY(QAbstractAxis *axis);
-    QAbstractAxis *axisY();
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
     Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
@@ -153,23 +113,18 @@ public: // from QDeclarativeParserStatus
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+
 };
 
 class DeclarativePercentBarSeries : public QPercentBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
     explicit DeclarativePercentBarSeries(QDeclarativeItem *parent = 0);
-    void setAxisX(QAbstractAxis *axis);
-    QAbstractAxis *axisX();
-    void setAxisY(QAbstractAxis *axis);
-    QAbstractAxis *axisY();
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE DeclarativeBarSet *at(int index);
     Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }

@@ -114,12 +114,17 @@ public:
     qreal leftMargin();
     qreal rightMargin();
 
+    QAbstractAxis *axisX(QAbstractSeries *series = 0);
+    QAbstractAxis *axisY(QAbstractSeries *series = 0);
+
 public:
     Q_INVOKABLE QAbstractSeries *series(int index);
     Q_INVOKABLE QAbstractSeries *series(QString seriesName);
     Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
-    Q_INVOKABLE QAbstractAxis *axisX(QAbstractSeries *series = 0);
-    Q_INVOKABLE QAbstractAxis *axisY(QAbstractSeries *series = 0);
+    Q_INVOKABLE void setAxisX(QAbstractAxis* axis, QAbstractSeries *series = 0);
+    Q_INVOKABLE void setAxisY(QAbstractAxis* axis, QAbstractSeries *series = 0);
+    Q_INVOKABLE void createDefaultAxes();
+
     Q_INVOKABLE void zoom(qreal factor);
     Q_INVOKABLE void scrollLeft(qreal pixels);
     Q_INVOKABLE void scrollRight(qreal pixels);

@@ -250,19 +250,15 @@ void DeclarativeChart::childEvent(QChildEvent *event)
 
 void DeclarativeChart::componentComplete()
 {
-    bool createAxis = true;
     foreach(QObject *child, children()) {
         if (qobject_cast<QAbstractSeries *>(child)) {
 //            qDebug() << "DeclarativeChart::componentComplete(), add: " << child;
             // TODO: how about optional y-axis?
             m_chart->addSeries(qobject_cast<QAbstractSeries *>(child));
         }else if(qobject_cast<QAbstractAxis *>(child)){
-           createAxis = false;
+
         }
     }
-
-    if(createAxis) m_chart->createDefaultAxes();
-
     QDeclarativeItem::componentComplete();
 }
 
@@ -497,6 +493,21 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
     series->setName(name);
     m_chart->addSeries(series);
     return series;
+}
+
+void DeclarativeChart::setAxisX(QAbstractAxis* axis, QAbstractSeries *series)
+{
+    m_chart->setAxisX(axis,series);
+}
+
+void DeclarativeChart::setAxisY(QAbstractAxis* axis, QAbstractSeries *series)
+{
+    m_chart->setAxisY(axis,series);
+}
+
+void DeclarativeChart::createDefaultAxes()
+{
+    m_chart->createDefaultAxes();
 }
 
 #include "moc_declarativechart.cpp"

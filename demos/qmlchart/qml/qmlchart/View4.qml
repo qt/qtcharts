@@ -30,11 +30,12 @@ Rectangle {
         anchors.fill: parent
 
         AreaSeries {
-            axisX: CategoriesAxis {
-                id: categoriesAxis
-                categories: ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007",
-                    "2008", "2009", "2010", "2011" ]
-            }
+            //TODO: obsolate
+            //axisX: CategoriesAxis {
+            //    id: categoriesAxis
+            //    categories: ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007",
+            //        "2008", "2009", "2010", "2011" ]
+            //}
 
             name: "Russian"
             upperSeries: LineSeries {
@@ -141,5 +142,8 @@ Rectangle {
                 borderColor = "blue";
             }
         }
+        Component.onCompleted: {
+        createDefaultAxes();
+    }
     }
 }

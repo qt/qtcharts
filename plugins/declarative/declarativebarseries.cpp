@@ -60,106 +60,6 @@ void DeclarativeBarSet::setValues(QVariantList values)
     }
 }
 
-DeclarativeAbstractBarSeries::DeclarativeAbstractBarSeries(QDeclarativeItem *parent) :
-    QAbstractBarSeries(parent)
-{
-    connect(this, SIGNAL(barsetsAdded(QList<QBarSet*>)), this, SLOT(handleAdded(QList<QBarSet*>)));
-    connect(this, SIGNAL(barsetsRemoved(QList<QBarSet*>)), this, SLOT(handleRemoved(QList<QBarSet*>)));
-}
-
-void DeclarativeAbstractBarSeries::handleAdded(QList<QBarSet* > barsets)
-{
-    foreach(QBarSet *b, barsets) {
-        DeclarativeBarSet *barset = qobject_cast<DeclarativeBarSet *>(b);
-        emit added(barset);
-    }
-}
-
-void DeclarativeAbstractBarSeries::handleRemoved(QList<QBarSet* > barsets)
-{
-    foreach(QBarSet *b, barsets) {
-        DeclarativeBarSet *barset = qobject_cast<DeclarativeBarSet *>(b);
-        emit removed(barset);
-    }
-}
-
-void DeclarativeAbstractBarSeries::classBegin()
-{
-}
-
-void DeclarativeAbstractBarSeries::componentComplete()
-{
-    foreach(QObject *child, children()) {
-        if (qobject_cast<DeclarativeBarSet *>(child)) {
-            QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
-        } else if (qobject_cast<QVBarModelMapper *>(child)) {
-            QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
-            mapper->setSeries(this);
-        } else if (qobject_cast<QHBarModelMapper *>(child)) {
-            QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
-            mapper->setSeries(this);
-        }
-    }
-}
-
-void DeclarativeAbstractBarSeries::setAxisX(QAbstractAxis *axis)
-{
-    chart()->setAxisX(axis, this);
-}
-
-QAbstractAxis *DeclarativeAbstractBarSeries::axisX()
-{
-    return chart()->axisX(this);
-}
-
-void DeclarativeAbstractBarSeries::setAxisY(QAbstractAxis *axis)
-{
-    chart()->setAxisY(axis, this);
-}
-
-QAbstractAxis *DeclarativeAbstractBarSeries::axisY()
-{
-    return chart()->axisY(this);
-}
-
-QDeclarativeListProperty<QObject> DeclarativeAbstractBarSeries::seriesChildren()
-{
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeAbstractBarSeries::appendSeriesChildren);
-}
-
-void DeclarativeAbstractBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
-{
-    // Empty implementation; the children are parsed in componentComplete instead
-    Q_UNUSED(list);
-    Q_UNUSED(element);
-}
-
-DeclarativeBarSet *DeclarativeAbstractBarSeries::at(int index)
-{
-    QList<QBarSet*> setList = barSets();
-    if (index >= 0 && index < setList.count())
-        return qobject_cast<DeclarativeBarSet *>(setList[index]);
-
-    return 0;
-}
-
-DeclarativeBarSet *DeclarativeAbstractBarSeries::insert(int index, QString label, QVariantList values)
-{
-    int insertIndex = index;
-    if (insertIndex < 0)
-        insertIndex = 0;
-    else if (insertIndex > count())
-        insertIndex = count();
-
-    DeclarativeBarSet *barset = new DeclarativeBarSet(this);
-    barset->setLabel(label);
-    barset->setValues(values);
-    if (QAbstractBarSeries::insert(insertIndex, barset))
-        return barset;
-    delete barset;
-    return 0;
-}
-
 DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
     QBarSeries(parent)
 {
@@ -184,29 +84,9 @@ void DeclarativeBarSeries::componentComplete()
     }
 }
 
-void DeclarativeBarSeries::setAxisX(QAbstractAxis *axis)
-{
-    chart()->setAxisX(axis, this);
-}
-
-QAbstractAxis *DeclarativeBarSeries::axisX()
-{
-    return chart()->axisX(this);
-}
-
-void DeclarativeBarSeries::setAxisY(QAbstractAxis *axis)
-{
-    chart()->setAxisY(axis, this);
-}
-
-QAbstractAxis *DeclarativeBarSeries::axisY()
-{
-    return chart()->axisY(this);
-}
-
 QDeclarativeListProperty<QObject> DeclarativeBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeAbstractBarSeries::appendSeriesChildren);
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
 }
 
 void DeclarativeBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
@@ -260,29 +140,10 @@ void DeclarativeStackedBarSeries::componentComplete()
     }
 }
 
-void DeclarativeStackedBarSeries::setAxisX(QAbstractAxis *axis)
-{
-    chart()->setAxisX(axis, this);
-}
-
-QAbstractAxis *DeclarativeStackedBarSeries::axisX()
-{
-    return chart()->axisX(this);
-}
-
-void DeclarativeStackedBarSeries::setAxisY(QAbstractAxis *axis)
-{
-    chart()->setAxisY(axis, this);
-}
-
-QAbstractAxis *DeclarativeStackedBarSeries::axisY()
-{
-    return chart()->axisY(this);
-}
 
 QDeclarativeListProperty<QObject> DeclarativeStackedBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeAbstractBarSeries::appendSeriesChildren);
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
 }
 
 void DeclarativeStackedBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
@@ -336,29 +197,9 @@ void DeclarativePercentBarSeries::componentComplete()
     }
 }
 
-void DeclarativePercentBarSeries::setAxisX(QAbstractAxis *axis)
-{
-    chart()->setAxisX(axis, this);
-}
-
-QAbstractAxis *DeclarativePercentBarSeries::axisX()
-{
-    return chart()->axisX(this);
-}
-
-void DeclarativePercentBarSeries::setAxisY(QAbstractAxis *axis)
-{
-    chart()->setAxisY(axis, this);
-}
-
-QAbstractAxis *DeclarativePercentBarSeries::axisY()
-{
-    return chart()->axisY(this);
-}
-
 QDeclarativeListProperty<QObject> DeclarativePercentBarSeries::seriesChildren()
 {
-    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeAbstractBarSeries::appendSeriesChildren);
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeBarSeries::appendSeriesChildren);
 }
 
 void DeclarativePercentBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)

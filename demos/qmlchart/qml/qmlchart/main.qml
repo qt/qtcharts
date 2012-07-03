@@ -74,7 +74,7 @@ Rectangle {
 
     function nextView() {
         var i = viewNumber + 1;
-        if (i > 9)
+        if (i > 8)
             viewNumber = 1;
         else
             viewNumber = i;
@@ -83,7 +83,7 @@ Rectangle {
     function previousView() {
         var i = viewNumber - 1;
         if (i <= 0)
-            viewNumber = 9;
+            viewNumber = 8;
         else
             viewNumber = i;
     }
