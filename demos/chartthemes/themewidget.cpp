@@ -200,6 +200,7 @@ QChart* ThemeWidget::createAreaChart() const
         area->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(area);
+        chart->createDefaultAxes();
         lowerSeries = upperSeries;
     }
 
@@ -229,6 +230,7 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
     }
     chart->addSeries(series);
     chart->createDefaultAxes();
+    chart->setAxisX(axis, series);
 
     return chart;
 }
@@ -296,6 +298,7 @@ QChart* ThemeWidget::createSplineChart() const
         series->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(series);
+        chart->createDefaultAxes();
     }
     return chart;
 }
@@ -315,6 +318,7 @@ QChart* ThemeWidget::createScatterChart() const
         series->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(series);
+        chart->createDefaultAxes();
     }
     return chart;
 }
