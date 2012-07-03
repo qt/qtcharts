@@ -492,6 +492,7 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
     }
     series->setName(name);
     m_chart->addSeries(series);
+    m_chart->createDefaultAxes();
     return series;
 }
 

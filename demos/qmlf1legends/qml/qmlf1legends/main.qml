@@ -33,8 +33,6 @@ Rectangle {
         anchors.fill: parent
         legend.alignment: Qt.AlignTop
         animationOptions: ChartView.SeriesAnimations
-        axisY.min: 0
-        axisY.max: 250
     }
     //![1]
 
@@ -65,6 +63,12 @@ Rectangle {
                 var lineSeries = chartView.series(speedsXml.get(currentIndex).driver);
                 if (!lineSeries)
                     lineSeries = chartView.createSeries(ChartView.SeriesTypeLine, speedsXml.get(currentIndex).driver);
+
+                // after the series has been created set the axes ranges.
+                if (currentIndex < 3) {
+                    chartView.axisY.min = 0;
+                    chartView.axisY.max = 250
+                }
 
                 lineSeries.append(currentIndex, speedsXml.get(currentIndex).speed);
 
