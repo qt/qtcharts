@@ -55,21 +55,25 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
         for (int set=0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal xPos = (barSet->m_values.at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
+            qreal xPos = (barSet->at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
 
-            qreal barHeight = barSet->m_values.at(category).y() * scaleY;
+            qreal barHeight = barSet->at(category).y() * scaleY;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            bar->setVisible(barsVisible);
+            if (qFuzzyIsNull(barHeight)) {
+                bar->setVisible(false);
+            } else {
+                bar->setVisible(barsVisible);
+            }
 
             QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
             layout.append(rect);
 
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(barSet->m_values.at(category).y())) {
-                label->setText(QString::number(barSet->m_values.at(category).y()));
+            if (!qFuzzyIsNull(barSet->at(category).y())) {
+                label->setText(QString::number(barSet->at(category).y()));
             } else {
                 label->setText(QString(""));
             }

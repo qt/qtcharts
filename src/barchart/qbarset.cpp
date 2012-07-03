@@ -611,6 +611,16 @@ void QBarSetPrivate::replace(const int index, const QPointF value)
     emit updatedBars();
 }
 
+QPointF QBarSetPrivate::at(const int index)
+{
+     if (index < 0 || index >= m_values.count()) {
+         return QPointF(0,0);
+     }
+
+     return m_values.at(index);
+}
+
+
 #include "moc_qbarset.cpp"
 #include "moc_qbarset_p.cpp"
 
