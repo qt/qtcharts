@@ -251,9 +251,8 @@ QChart* ThemeWidget::createLineChart() const
         series->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(series);
-        chart->createDefaultAxes();
-
     }
+    chart->createDefaultAxes();
 
     return chart;
 }
@@ -298,8 +297,8 @@ QChart* ThemeWidget::createSplineChart() const
         series->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(series);
-        chart->createDefaultAxes();
     }
+    chart->createDefaultAxes();
     return chart;
 }
 
@@ -318,8 +317,8 @@ QChart* ThemeWidget::createScatterChart() const
         series->setName(name + QString::number(nameIndex));
         nameIndex++;
         chart->addSeries(series);
-        chart->createDefaultAxes();
     }
+    chart->createDefaultAxes();
     return chart;
 }
 

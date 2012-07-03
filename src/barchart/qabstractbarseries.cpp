@@ -49,7 +49,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlclass BarSeries QAbstractBarSeries
-    \inherits AbstractSeries
+    \inherits QAbstractSeries
 
     The following QML shows how to create a simple bar chart:
     \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
@@ -601,16 +601,6 @@ QList<LegendMarker*> QAbstractBarSeriesPrivate::createLegendMarker(QLegend* lege
     return markers;
 }
 
-QAbstractAxis* QAbstractBarSeriesPrivate::createAxisX(QObject* parent)
-{
-    return new QCategoriesAxis(parent);
-}
-
-QAbstractAxis* QAbstractBarSeriesPrivate::createAxisY(QObject* parent)
-{
-    return new QValuesAxis(parent);
-}
-
 bool QAbstractBarSeriesPrivate::append(QBarSet *set)
 {
     Q_Q(QAbstractBarSeries);
@@ -718,7 +708,28 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
     return true;
 }
 
+void QAbstractBarSeriesPrivate::initializeAxisX(QAbstractAxis* axis)
+{
+    Q_UNUSED(axis);
+}
+
+void QAbstractBarSeriesPrivate::initializeAxisY(QAbstractAxis* axis)
+{
+    Q_UNUSED(axis)
+}
+
+QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisXType() const
+{
+    return QAbstractAxis::AxisTypeCategories;
+}
+
+QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisYType() const
+{
+    return QAbstractAxis::AxisTypeValues;
+}
+
 #include "moc_qabstractbarseries.cpp"
 #include "moc_qabstractbarseries_p.cpp"
+
 
 QTCOMMERCIALCHART_END_NAMESPACE

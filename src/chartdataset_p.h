@@ -32,6 +32,7 @@
 
 #include "qabstractseries.h"
 #include "domain_p.h"
+#include "qabstractaxis_p.h"
 #include <QVector>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -76,8 +77,11 @@ Q_SIGNALS:
     void axisRemoved(QAbstractAxis* axis);
 
 private:
-    QStringList createLabels(QAbstractAxis* axis,qreal min, qreal max);
     void calculateDomain(QAbstractSeries* series,Domain* domain);
+    QAbstractAxis* createAxis(QAbstractAxis::AxisType type);
+    void addAxisX(QAbstractAxis* axis,QAbstractSeries* series);
+    void addAxisY(QAbstractAxis* axis,QAbstractSeries* series);
+    void removeAxes(QAbstractSeries* series);
 
 private:
     QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisXMap;

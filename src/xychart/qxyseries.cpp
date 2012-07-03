@@ -435,14 +435,24 @@ QList<LegendMarker*> QXYSeriesPrivate::createLegendMarker(QLegend* legend)
     return list << new XYLegendMarker(q,legend);
 }
 
-QAbstractAxis* QXYSeriesPrivate::createAxisX(QObject* parent)
+void QXYSeriesPrivate::initializeAxisX(QAbstractAxis* axis)
 {
-    return new QValuesAxis(parent);
+    Q_UNUSED(axis);
 }
 
-QAbstractAxis* QXYSeriesPrivate::createAxisY(QObject* parent)
+void QXYSeriesPrivate::initializeAxisY(QAbstractAxis* axis)
 {
-    return new QValuesAxis(parent);
+    Q_UNUSED(axis);
+}
+
+QAbstractAxis::AxisType QXYSeriesPrivate::defaultAxisXType() const
+{
+    return QAbstractAxis::AxisTypeValues;
+}
+
+QAbstractAxis::AxisType QXYSeriesPrivate::defaultAxisYType() const
+{
+    return QAbstractAxis::AxisTypeValues;
 }
 
 #include "moc_qxyseries.cpp"

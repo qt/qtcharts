@@ -380,14 +380,24 @@ QList<LegendMarker*> QAreaSeriesPrivate::createLegendMarker(QLegend* legend)
 }
 
 
-QAbstractAxis* QAreaSeriesPrivate::createAxisX(QObject* parent)
+void QAreaSeriesPrivate::initializeAxisX(QAbstractAxis* axis)
 {
-    return new QValuesAxis(parent);
+    Q_UNUSED(axis);
 }
 
-QAbstractAxis* QAreaSeriesPrivate::createAxisY(QObject* parent)
+void QAreaSeriesPrivate::initializeAxisY(QAbstractAxis* axis)
 {
-    return new QValuesAxis(parent);
+    Q_UNUSED(axis);
+}
+
+QAbstractAxis::AxisType QAreaSeriesPrivate::defaultAxisXType() const
+{
+    return QAbstractAxis::AxisTypeValues;
+}
+
+QAbstractAxis::AxisType QAreaSeriesPrivate::defaultAxisYType() const
+{
+    return QAbstractAxis::AxisTypeValues;
 }
 
 #include "moc_qareaseries.cpp"

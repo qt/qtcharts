@@ -21,6 +21,7 @@
 #include "chartdataset_p.h"
 #include "qchart.h"
 #include "qvaluesaxis.h"
+#include "qcategoriesaxis.h"
 #include "qvaluesaxis_p.h"
 #include "qabstractseries_p.h"
 #include "qabstractbarseries.h"
@@ -80,41 +81,113 @@ void ChartDataSet::addSeries(QAbstractSeries* series)
 
 void ChartDataSet::createDefaultAxes()
 {
+
+    if(m_seriesDomainMap.isEmpty()) return;
+
+    QAbstractAxis::AxisTypes typeX(0);
+    QAbstractAxis::AxisTypes typeY(0);
+
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
+    while (i.hasNext()) {
+               i.next();
+               removeAxes(i.key());
+    }
+
+    i.toFront();
 
     while (i.hasNext()) {
-        i.next();
+            i.next();
+            QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
+            QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
+            if(axisX) typeX&=axisX->type();
+            else typeX|=i.key()->d_ptr->defaultAxisXType();
+            if(axisY) typeY&=axisY->type();
+            else typeY|=i.key()->d_ptr->defaultAxisYType();
+    }
 
-        if(!m_seriesAxisXMap.value(i.key()))
-        {
 
-            QAbstractAxis* axisX = i.key()->d_ptr->createAxisX(this);
-
-            if(axisX) {
-                QObject::connect(axisX->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),i.value(),SLOT(handleAxisXChanged(qreal,qreal,int,bool)));
-                QObject::connect(i.value(),SIGNAL(rangeXChanged(qreal,qreal,int)),axisX->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
-                axisX->d_ptr->m_orientation=Qt::Horizontal;
-                emit axisAdded(axisX,i.value());
-                m_seriesAxisXMap.insert(i.key(),axisX);
-            }
-
+    if(typeX.testFlag(QAbstractAxis::AxisTypeValues) && typeX.testFlag(QAbstractAxis::AxisTypeCategories))
+    {
+        i.toFront();
+        while (i.hasNext()) {
+               i.next();
+               QAbstractAxis* axis = createAxis(i.key()->d_ptr->defaultAxisXType());
+               i.key()->d_ptr->initializeAxisX(axis);
+               addAxisX(axis,i.key());
+               emit axisAdded(axis,i.value());
         }
 
-        if(!m_seriesAxisYMap.value(i.key()))
-        {
-            QAbstractAxis* axisY = i.key()->d_ptr->createAxisY(this);
+    }else if(!typeY.testFlag(QAbstractAxis::AxisTypeNoAxis)){
+        QAbstractAxis* axis = createAxis(QAbstractAxis::AxisType(int(typeX)));
+        i.toFront();
+              while (i.hasNext()) {
+                     i.next();
+                     i.key()->d_ptr->initializeAxisX(axis);
+                     addAxisX(axis,i.key());
+              }
+        emit axisAdded(axis,i.value());
 
-            if(axisY) {
-                QObject::connect(axisY->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),i.value(),SLOT(handleAxisYChanged(qreal,qreal,int,bool)));
-                QObject::connect(i.value(),SIGNAL(rangeYChanged(qreal,qreal,int)),axisY->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
-                axisY->d_ptr->m_orientation=Qt::Vertical;
-                emit axisAdded(axisY,i.value());
-                m_seriesAxisYMap.insert(i.key(),axisY);
-            }
+    }
+
+    if(typeY.testFlag(QAbstractAxis::AxisTypeValues) && typeY.testFlag(QAbstractAxis::AxisTypeCategories))
+    {
+        i.toFront();
+        while (i.hasNext()) {
+               i.next();
+               QAbstractAxis* axis = createAxis(i.key()->d_ptr->defaultAxisYType());
+               i.key()->d_ptr->initializeAxisY(axis);
+               addAxisY(axis,i.key());
+               emit axisAdded(axis,i.value());
         }
+
+    }else if(!typeY.testFlag(QAbstractAxis::AxisTypeNoAxis)){
+        QAbstractAxis* axis = createAxis(QAbstractAxis::AxisType(int(typeY)));
+        i.toFront();
+              while (i.hasNext()) {
+                     i.next();
+                     i.key()->d_ptr->initializeAxisY(axis);
+                     addAxisY(axis,i.key());
+              }
+              emit axisAdded(axis,i.value());
+
     }
 }
 
+
+QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type)
+{
+    QAbstractAxis* axis =0;
+
+    switch(type) {
+        case QAbstractAxis::AxisTypeValues:
+        axis = new QValuesAxis(this);
+        break;
+        case QAbstractAxis::AxisTypeCategories:
+        axis = new QCategoriesAxis(this);
+        break;
+        default:
+        axis = 0;
+        break;
+    }
+
+    return axis;
+}
+
+void ChartDataSet::addAxisX(QAbstractAxis* axis,QAbstractSeries* series) {
+    Domain* domain = m_seriesDomainMap.value(series);
+    QObject::connect(axis->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisXChanged(qreal,qreal,int,bool)));
+    QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),axis->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
+    axis->d_ptr->m_orientation=Qt::Horizontal;
+    m_seriesAxisXMap.insert(series,axis);
+}
+
+void ChartDataSet::addAxisY(QAbstractAxis* axis,QAbstractSeries* series) {
+    Domain* domain = m_seriesDomainMap.value(series);
+    QObject::connect(axis->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,bool)));
+    QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axis->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
+    axis->d_ptr->m_orientation=Qt::Vertical;
+    m_seriesAxisYMap.insert(series,axis);
+}
 
 void ChartDataSet::removeSeries(QAbstractSeries* series)
 {
@@ -138,6 +211,11 @@ void ChartDataSet::removeSeries(QAbstractSeries* series)
     series->d_ptr->m_chart = 0;
     series->d_ptr->m_dataset = 0;
 
+    removeAxes(series);
+}
+
+void ChartDataSet::removeAxes(QAbstractSeries* series)
+{
     QAbstractAxis* axisX = m_seriesAxisXMap.take(series);
 
     if(axisX) {

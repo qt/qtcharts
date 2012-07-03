@@ -48,9 +48,12 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
 public:
 
     enum AxisType {
-        AxisTypeValues,
-        AxisTypeCategories
+        AxisTypeNoAxis = 0x0,
+        AxisTypeValues = 0x1,
+        AxisTypeCategories = 0x2
     };
+
+    Q_DECLARE_FLAGS(AxisTypes, AxisType)
 
 protected:
     explicit QAbstractAxis(QAbstractAxisPrivate &d,QObject *parent = 0);

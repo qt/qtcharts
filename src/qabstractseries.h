@@ -22,6 +22,7 @@
 #define QABSTRACTSERIES_H
 
 #include <qchartglobal.h>
+#include <qabstractaxis.h>
 #include <QObject>
 #include <QPen>
 
@@ -57,6 +58,7 @@ protected:
 public:
     ~QAbstractSeries();
     virtual SeriesType type() const = 0;
+
     void setName(const QString& name);
     QString name() const;
     void setVisible(bool visible = true);

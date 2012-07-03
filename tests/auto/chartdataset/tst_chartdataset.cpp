@@ -541,6 +541,8 @@ void tst_ChartDataSet::zoomInDomain()
 */
     m_dataset->createDefaultAxes();
 
+
+
     QList<QSignalSpy*> spyList;
 
     foreach(QAbstractSeries* series, seriesList) {
