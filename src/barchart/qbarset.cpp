@@ -276,42 +276,17 @@ QString QBarSet::label() const
 }
 
 /*!
-    Appends a point to set. Parameter \a value x coordinate defines the
-    position in x-axis and y coordinate defines the height of bar.
-    Depending on presentation (QBarSeries, QGroupedBarSeries, QStackedBarSeries, QPercentBarSeries)
-    the x values are used or ignored.
-*/
-void QBarSet::append(const QPointF value)
-{
-    int index = d_ptr->m_values.count();
-    d_ptr->append(value);
-    emit valuesAdded(index, 1);
-}
-
-/*!
-    Appends a list of \a values to set. Works like append with single point.
-    \sa append()
-*/
-void QBarSet::append(const QList<QPointF> &values)
-{
-    int index = d_ptr->m_values.count();
-    d_ptr->append(values);
-    emit valuesAdded(index, values.count());
-}
-
-/*!
-    Appends new value \a value to the end of set. Internally the value is converted to QPointF,
-    with x coordinate being the index of appended value and y coordinate is the value.
+    Appends new value \a value to the end of set.
 */
 void QBarSet::append(const qreal value)
 {
-    // Convert to QPointF and use other append(QPointF) method.
-    append(QPointF(d_ptr->m_values.count(), value));
+    // Convert to QPointF
+    d_ptr->append(QPointF(d_ptr->m_values.count(), value));
 }
 
 /*!
     Appends a list of reals to set. Works like append with single real value. The \a values in list
-    are converted to QPointF, where x coordinate is the index of point and y coordinate is the value.
+    are appended to end of barset
     \sa append()
 */
 void QBarSet::append(const QList<qreal> &values)
@@ -327,17 +302,8 @@ void QBarSet::append(const QList<qreal> &values)
 */
 QBarSet& QBarSet::operator << (const qreal &value)
 {
-    append(value);
-    return *this;
-}
-
-/*!
-    Convinience operator. Same as append, with QPointF \a value.
-    \sa append()
-*/
-QBarSet& QBarSet::operator << (const QPointF &value)
-{
-    append(value);
+//    append(value);
+    d_ptr->append(QPointF(d_ptr->m_values.count(), value));
     return *this;
 }
 
@@ -349,17 +315,6 @@ QBarSet& QBarSet::operator << (const QPointF &value)
 void QBarSet::insert(const int index, const qreal value)
 {
     d_ptr->insert(index, value);
-    emit valuesAdded(index,1);
-}
-
-/*!
-    Inserts new \a value on the \a index position.
-    The value that is currently at this postion is moved to postion index + 1
-    \sa remove()
-*/
-void QBarSet::insert(const int index, const QPointF value)
-{
-    d_ptr->insert(index,value);
     emit valuesAdded(index,1);
 }
 
@@ -387,40 +342,27 @@ void QBarSet::replace(const int index, const qreal value)
     }
 }
 
-/*!
-    Sets a new value \a value to set, indexed by \a index
-*/
-void QBarSet::replace(const int index, const QPointF value)
-{
-    if (index >= 0 && index < d_ptr->m_values.count()) {
-        d_ptr->replace(index,value);
-        emit valueChanged(index);
-    }
-}
 
 /*!
-    Returns value of set indexed by \a index. Note that all appended values are stored internally as QPointF.
-    The returned QPointF has x coordinate, which is index (if appended with qreal append) or the x value
-    of the QPointF (if appended with QPointF append).
-    If the index is out of bounds QPointF(0, 0.0) is returned.
+    Returns value of set indexed by \a index.
+    If the index is out of bounds 0.0 is returned.
 */
-QPointF QBarSet::at(const int index) const
+qreal QBarSet::at(const int index) const
 {
     if (index < 0 || index >= d_ptr->m_values.count()) {
-        return QPointF(index, 0.0);
+        return 0;
     }
 
-    return d_ptr->m_values.at(index);
+    return d_ptr->m_values.at(index).y();
 }
 
 /*!
-    Returns value of set indexed by \a index. ote that all appended values are stored internally as QPointF.
-    The returned QPointF has x coordinate, which is index (if appended with qreal append) or the x value
-    of the QPointF (if appended with QPointF append).
+    Returns value of set indexed by \a index.
+    If the index is out of bounds 0.0 is returned.
 */
-QPointF QBarSet::operator [](const int index) const
+qreal QBarSet::operator [](const int index) const
 {
-    return d_ptr->m_values.at(index);
+    return at(index);
 }
 
 /*!
@@ -432,13 +374,12 @@ int QBarSet::count() const
 }
 
 /*!
-    Returns sum of all values in barset. The sum is sum of y coordinates in the QPointF representation.
+    Returns sum of all values in barset.
 */
 qreal QBarSet::sum() const
 {
     qreal total(0);
     for (int i=0; i < d_ptr->m_values.count(); i++) {
-        //total += d_ptr->m_values.at(i);
         total += d_ptr->m_values.at(i).y();
     }
     return total;

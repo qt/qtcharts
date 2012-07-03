@@ -6,7 +6,6 @@ CURRENTLY_BUILDING_COMPONENTS = "examples"
 TEMPLATE = subdirs
 SUBDIRS += \
            areachart \
-           barchart \
            #customchart \
            linechart \
            percentbarchart \

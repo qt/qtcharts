@@ -605,7 +605,7 @@ void tst_qbarmodelmapper::modelUpdateCell()
     createVerticalMapper();
 
     QVERIFY(m_model->setData(m_model->index(1, 0), 44));
-    QCOMPARE(m_series->barSets().at(0)->at(1).y(), 44.0);
+    QCOMPARE(m_series->barSets().at(0)->at(1), 44.0);
     QCOMPARE(m_model->data(m_model->index(1, 0)).toReal(), 44.0);
 }
 

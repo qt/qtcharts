@@ -48,21 +48,16 @@ public:
     void setLabel(const QString label);
     QString label() const;
 
-    void append(const QPointF value);
-    void append(const QList<QPointF> &values);
     void append(const qreal value);
     void append(const QList<qreal> &values);
 
     QBarSet& operator << (const qreal &value);
-    QBarSet& operator << (const QPointF &value);
 
     void insert(const int index, const qreal value);
-    void insert(const int index, const QPointF value);
     void remove(const int index, const int count = 1);
     void replace(const int index, const qreal value);
-    void replace(const int index, const QPointF value);
-    QPointF at(const int index) const;
-    QPointF operator [] (const int index) const;
+    qreal at(const int index) const;
+    qreal operator [] (const int index) const;
     int count() const;
     qreal sum() const;
 
@@ -110,6 +105,9 @@ private:
     friend class BarLegendMarker;
     friend class BarChartItem;
     friend class QBarSeriesPrivate;
+    friend class StackedBarChartItem;
+    friend class PercentBarChartItem;
+    friend class GroupedBarChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

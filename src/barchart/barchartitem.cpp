@@ -83,30 +83,30 @@ QVector<QRectF> BarChartItem::calculateLayout()
     for (int category = 0; category < categoryCount; category++) {
         qreal yPos = height + scaleY * m_domainMinY + geometry().topLeft().y();
         for (int set = 0; set < setCount; set++) {
-            QBarSet* barSet = m_series->d_func()->barsetAt(set);
-            qreal xPos = (barSet->at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
-            qreal barHeight = barSet->at(category).y() * scaleY;
+            QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+            qreal xPos = (barSet->m_values.at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
+            qreal barHeight = barSet->m_values.at(category).y() * scaleY;
 
             Bar* bar = m_bars.at(itemIndex);
             QRectF rect(xPos, yPos - barHeight, barWidth, barHeight);
 
             layout.append(rect);
-            bar->setPen(barSet->pen());
-            bar->setBrush(barSet->brush());
+            bar->setPen(barSet->m_pen);
+            bar->setBrush(barSet->m_brush);
             bar->setVisible(barsVisible);
 
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(barSet->at(category).y())) {
-                label->setText(QString::number(barSet->at(category).y()));
+            if (!qFuzzyIsNull(barSet->m_values.at(category).y())) {
+                label->setText(QString::number(barSet->m_values.at(category).y()));
             } else {
                 label->setText(QString(""));
             }
 
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
                           ,yPos - barHeight/2 - label->boundingRect().height()/2);
-            label->setFont(barSet->labelFont());
-            label->setBrush(barSet->labelBrush());
+            label->setFont(barSet->m_labelFont);
+            label->setBrush(barSet->m_labelBrush);
 
             itemIndex++;
         }

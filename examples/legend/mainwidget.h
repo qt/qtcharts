@@ -30,7 +30,7 @@
 #include <QGraphicsGridLayout>
 #include <QDoubleSpinBox>
 #include <QGroupBox>
-#include <QBarSeries>
+#include <QGroupedBarSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -66,7 +66,7 @@ public slots:
 private:
 
     QChart *m_chart;
-    QBarSeries *m_series;
+    QGroupedBarSeries *m_series;
 
     QChartView *m_chartView;
     QGridLayout *m_mainLayout;

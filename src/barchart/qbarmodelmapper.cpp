@@ -416,7 +416,7 @@ void QBarModelMapperPrivate::barSetsAdded(QList<QBarSet*> sets)
     for(int i = firstIndex + m_firstBarSetSection; i < firstIndex + m_firstBarSetSection + sets.count(); i++) {
         m_model->setHeaderData(i, m_orientation == Qt::Vertical ? Qt::Horizontal : Qt::Vertical, sets.at(i - firstIndex - m_firstBarSetSection)->label());
         for (int j = 0; j < sets.at(i - firstIndex - m_firstBarSetSection)->count(); j++)
-            m_model->setData(barModelIndex(i, j), sets.at(i - firstIndex - m_firstBarSetSection)->at(j).y());
+            m_model->setData(barModelIndex(i, j), sets.at(i - firstIndex - m_firstBarSetSection)->at(j));
     }
     blockModelSignals(false);
     initializeBarFromModel();
@@ -465,7 +465,7 @@ void QBarModelMapperPrivate::valuesAdded(int index, int count)
         m_model->insertColumns(index + m_first, count);
 
     for (int j = index; j < index + count; j++)
-        m_model->setData(barModelIndex(barSetIndex + m_firstBarSetSection, j), m_barSets.at(barSetIndex)->at(j).y());
+        m_model->setData(barModelIndex(barSetIndex + m_firstBarSetSection, j), m_barSets.at(barSetIndex)->at(j));
 
     blockModelSignals(false);
     initializeBarFromModel();
@@ -510,7 +510,7 @@ void QBarModelMapperPrivate::barValueChanged(int index)
     int barSetIndex = m_barSets.indexOf(qobject_cast<QBarSet *>(QObject::sender()));
 
     blockModelSignals();
-    m_model->setData(barModelIndex(barSetIndex + m_firstBarSetSection, index), m_barSets.at(barSetIndex)->at(index).y());
+    m_model->setData(barModelIndex(barSetIndex + m_firstBarSetSection, index), m_barSets.at(barSetIndex)->at(index));
     blockModelSignals(false);
     initializeBarFromModel();
 }

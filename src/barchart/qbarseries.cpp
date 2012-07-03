@@ -432,7 +432,7 @@ qreal QBarSeriesPrivate::min()
     for (int i = 0; i < m_barSets.count(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
-            qreal temp = m_barSets.at(i)->at(j).y();
+            qreal temp = m_barSets.at(i)->at(j);
             if (temp < min)
                 min = temp;
         }
@@ -450,7 +450,7 @@ qreal QBarSeriesPrivate::max()
     for (int i = 0; i < m_barSets.count(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
-            qreal temp = m_barSets.at(i)->at(j).y();
+            qreal temp = m_barSets.at(i)->at(j);
             if (temp > max)
                 max = temp;
         }
@@ -469,7 +469,7 @@ qreal QBarSeriesPrivate::valueAt(int set, int category)
         return 0;
     }
 
-    return m_barSets.at(set)->at(category).y();
+    return m_barSets.at(set)->at(category);
 }
 
 qreal QBarSeriesPrivate::percentageAt(int set, int category)
@@ -482,7 +482,7 @@ qreal QBarSeriesPrivate::percentageAt(int set, int category)
         return 0;
     }
 
-    qreal value = m_barSets.at(set)->at(category).y();
+    qreal value = m_barSets.at(set)->at(category);
     qreal sum = categorySum(category);
     if ( qFuzzyIsNull(sum) ) {
         return 0;
@@ -497,7 +497,7 @@ qreal QBarSeriesPrivate::categorySum(int category)
     int count = m_barSets.count(); // Count sets
     for (int set = 0; set < count; set++) {
         if (category < m_barSets.at(set)->count())
-            sum += m_barSets.at(set)->at(category).y();
+            sum += m_barSets.at(set)->at(category);
     }
     return sum;
 }
@@ -508,7 +508,7 @@ qreal QBarSeriesPrivate::absoluteCategorySum(int category)
     int count = m_barSets.count(); // Count sets
     for (int set = 0; set < count; set++) {
         if (category < m_barSets.at(set)->count())
-            sum += qAbs(m_barSets.at(set)->at(category).y());
+            sum += qAbs(m_barSets.at(set)->at(category));
     }
     return sum;
 }
@@ -535,7 +535,7 @@ qreal QBarSeriesPrivate::minX()
     for (int i = 0; i < m_barSets.count(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
-            qreal temp = m_barSets.at(i)->at(j).x();
+            qreal temp = m_barSets.at(i)->d_ptr.data()->m_values.at(j).x();
             if (temp < min)
                 min = temp;
         }
@@ -553,7 +553,7 @@ qreal QBarSeriesPrivate::maxX()
     for (int i = 0; i < m_barSets.count(); i++) {
         int categoryCount = m_barSets.at(i)->count();
         for (int j = 0; j < categoryCount; j++) {
-            qreal temp = m_barSets.at(i)->at(j).x();
+            qreal temp = m_barSets.at(i)->d_ptr.data()->m_values.at(j).x();
             if (temp > max)
                 max = temp;
         }

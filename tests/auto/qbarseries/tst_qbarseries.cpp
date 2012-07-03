@@ -319,11 +319,13 @@ void tst_QBarSeries::mouseclicked()
     QBarSeries* series = new QBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
+//    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
+    *set1 << 10 << 10 << 10;
     series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
-    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
+//    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
+    *set2 << 10 << 10 << 10;
     series->append(set2);
 
     QSignalSpy seriesSpy(series,SIGNAL(clicked(int,QBarSet*)));
@@ -455,11 +457,13 @@ void tst_QBarSeries::mousehovered()
     QBarSeries* series = new QBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
+//    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
+    *set1 << 10 << 10 << 10;
     series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
-    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
+//    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
+    *set2 << 10 << 10 << 10;
     series->append(set2);
 
     QSignalSpy seriesSpy(series,SIGNAL(hovered(bool,QBarSet*)));
@@ -549,11 +553,13 @@ void tst_QBarSeries::clearWithAnimations()
     QBarSeries* series = new QBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
-    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
+//    *set1 << QPointF(0,10) << QPointF(1,10) << QPointF(2,10);
+    *set1 << 10 << 10 << 10;
     series->append(set1);
 
     QBarSet* set2 = new QBarSet(QString("set 2"));
-    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
+//    *set2 << QPointF(0.3,10) << QPointF(1.3,10) << QPointF(2.3,10);
+    *set2 << 10 << 10 << 10;
     series->append(set2);
 
     QChartView view(new QChart());

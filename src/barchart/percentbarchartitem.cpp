@@ -23,6 +23,7 @@
 #include "qbarseries_p.h"
 #include "qbarset.h"
 #include "chartanimator_p.h"
+#include "qbarset_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -55,14 +56,14 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
         qreal percentage = (100 / colSum);
         qreal yPos = height + scaleY * m_domainMinY + geometry().topLeft().y();
         for (int set=0; set < setCount; set++) {
-            QBarSet* barSet = m_series->d_func()->barsetAt(set);
+            QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal xPos = (barSet->at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
+            qreal xPos = (barSet->m_values.at(category).x() - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
 
-            qreal barHeight = barSet->at(category).y() * percentage * scaleY;
+            qreal barHeight = barSet->m_values.at(category).y() * percentage * scaleY;
             Bar* bar = m_bars.at(itemIndex);
-            bar->setPen(barSet->pen());
-            bar->setBrush(barSet->brush());
+            bar->setPen(barSet->m_pen);
+            bar->setBrush(barSet->m_brush);
             bar->setVisible(barsVisible);
 
             QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
@@ -82,8 +83,8 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
 
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
                           ,yPos - barHeight/2 - label->boundingRect().height()/2);
-            label->setFont(barSet->labelFont());
-            label->setBrush(barSet->labelBrush());
+            label->setFont(barSet->m_labelFont);
+            label->setBrush(barSet->m_labelBrush);
 
             itemIndex++;
             yPos -= barHeight;
