@@ -258,20 +258,48 @@ void ChartDataSet::removeAllSeries()
 
 void ChartDataSet::zoomInDomain(const QRectF& rect, const QSizeF& size)
 {
+    //for performance reasons block, signals and scale "full" domain one by one. Gives twice less screen updates
+
+    blockAxisSignals(true);
+
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
+
     while (i.hasNext()) {
         i.next();
         i.value()->zoomIn(rect,size);
     }
+
+    blockAxisSignals(false);
+
 }
 
 void ChartDataSet::zoomOutDomain(const QRectF& rect, const QSizeF& size)
 {
+    //for performance reasons block, signals and scale "full" domain one by one. Gives twice less screen updates
+
+    blockAxisSignals(true);
+
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
+
     while (i.hasNext()) {
         i.next();
         i.value()->zoomOut(rect,size);
     }
+
+    blockAxisSignals(false);
+}
+
+void ChartDataSet::blockAxisSignals(bool enabled)
+{
+    QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
+
+    while (i.hasNext()) {
+           i.next();
+           QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
+           QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
+           if(axisX) axisX->blockSignals(enabled);
+           if(axisY) axisY->blockSignals(enabled);
+       }
 }
 
 int ChartDataSet::seriesCount(QAbstractSeries::SeriesType type)
@@ -395,11 +423,13 @@ Domain* ChartDataSet::domain(QAbstractSeries *series) const
 
 void ChartDataSet::scrollDomain(qreal dx,qreal dy,const QSizeF& size)
 {
+    blockAxisSignals(true);
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
     while (i.hasNext()) {
         i.next();
         i.value()->move(dx,dy,size);
     }
+    blockAxisSignals(false);
 }
 
 QList<QAbstractSeries*> ChartDataSet::series() const

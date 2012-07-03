@@ -82,6 +82,7 @@ private:
     void addAxisX(QAbstractAxis* axis,QAbstractSeries* series);
     void addAxisY(QAbstractAxis* axis,QAbstractSeries* series);
     void removeAxes(QAbstractSeries* series);
+    void blockAxisSignals(bool enabled);
 
 private:
     QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisXMap;

@@ -165,10 +165,11 @@ void QValuesAxis::setRange(qreal min, qreal max)
     }
 
     if (changed) {
-       emit rangeChanged(d->m_min,d->m_max);
-       emit d->changed(d->m_min, d->m_max, d->m_ticksCount, d->m_niceNumbers);
+        emit rangeChanged(d->m_min,d->m_max);
+        if(!signalsBlocked()){
+            emit d->changed(d->m_min, d->m_max, d->m_ticksCount, d->m_niceNumbers);
+        }
     }
-//    d->setRange(min,max);
 }
 
 /*!

@@ -74,12 +74,11 @@ private Q_SLOTS:
 	void domain();
     void zoomInDomain_data();
 	void zoomInDomain();
-	/*
     void zoomOutDomain_data();
     void zoomOutDomain();
     void scrollDomain_data();
     void scrollDomain();
-    */
+
 private:
     ChartDataSet* m_dataset;
 };
@@ -520,28 +519,22 @@ void tst_ChartDataSet::domain()
 
 void tst_ChartDataSet::zoomInDomain_data()
 {
+    QTest::addColumn<bool >("sameAxis");
     QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
-    QTest::newRow("line,line, line, spline") << (QList<QAbstractSeries*>() <<  new QLineSeries(this) <<  new QLineSeries(this) <<  new QLineSeries(this) << new QSplineSeries(this) );
+    QTest::newRow("sameAxis: line,line, line, spline") << true << (QList<QAbstractSeries*>() <<  new QLineSeries(this) <<  new QLineSeries(this) <<  new QLineSeries(this) << new QSplineSeries(this) );
+    QTest::newRow("separeateAxis: line,line, line, spline") << false << (QList<QAbstractSeries*>() <<  new QLineSeries(this) <<  new QLineSeries(this) <<  new QLineSeries(this) << new QSplineSeries(this) );
 }
 
 void tst_ChartDataSet::zoomInDomain()
 {
+    QFETCH(bool, sameAxis);
     QFETCH(QList<QAbstractSeries*>, seriesList);
 
     foreach(QAbstractSeries* series, seriesList) {
         m_dataset->addSeries(series);
     }
 
-    /*
-    QValuesAxis* axis = new QValuesAxis();
-
-    for (int i = 0; i < seriesList.count(); i++) {
-        m_dataset->setAxisX(seriesList.at(i), axis);
-    }
-*/
-    m_dataset->createDefaultAxes();
-
-
+    if(sameAxis) m_dataset->createDefaultAxes();
 
     QList<QSignalSpy*> spyList;
 
@@ -558,79 +551,74 @@ void tst_ChartDataSet::zoomInDomain()
     qDeleteAll(spyList);
 }
 
-/*
+
+
 void tst_ChartDataSet::zoomOutDomain_data()
 {
-    addSeries_data();
+    zoomInDomain_data();
 }
 
 void tst_ChartDataSet::zoomOutDomain()
 {
-    QFETCH(QLineSeries*, series0);
-    QFETCH(QAxis*, axis0);
-    QFETCH(QLineSeries*, series1);
-    QFETCH(QAxis*, axis1);
-    QFETCH(QLineSeries*, series2);
-    QFETCH(QAxis*, axis2);
-    QFETCH(int, axisCount);
+    QFETCH(bool, sameAxis);
+    QFETCH(QList<QAbstractSeries*>, seriesList);
 
-    Q_UNUSED(axisCount);
+    foreach(QAbstractSeries* series, seriesList) {
+        m_dataset->addSeries(series);
+    }
 
-    m_dataset->addSeries(series0, axis0);
-    m_dataset->addSeries(series1, axis1);
-    m_dataset->addSeries(series2, axis2);
+    if (sameAxis)
+        m_dataset->createDefaultAxes();
 
-    Domain* domain0 = m_dataset->domain(series0);
-    Domain* domain1 = m_dataset->domain(series1);
-    Domain* domain2 = m_dataset->domain(series2);
+    QList<QSignalSpy*> spyList;
 
-    QSignalSpy spy0(domain0, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(domain1, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy2(domain2, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
+    foreach(QAbstractSeries* series, seriesList) {
+        spyList << new QSignalSpy(m_dataset->domain(series), SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
+    }
 
-    m_dataset->zoomOutDomain(QRect(0,0,100,100),QSize(1000,1000));
+    m_dataset->zoomOutDomain(QRect(0, 0, 100, 100), QSize(1000, 1000));
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 1);
-    TRY_COMPARE(spy2.count(), 1);
+    foreach(QSignalSpy* spy, spyList) {
+        TRY_COMPARE(spy->count(), 1);
+    }
+
+    qDeleteAll (spyList);
 }
 
 void tst_ChartDataSet::scrollDomain_data()
 {
-    addSeries_data();
+    zoomInDomain_data();
 }
 
 void tst_ChartDataSet::scrollDomain()
 {
-    QFETCH(QLineSeries*, series0);
-    QFETCH(QAxis*, axis0);
-    QFETCH(QLineSeries*, series1);
-    QFETCH(QAxis*, axis1);
-    QFETCH(QLineSeries*, series2);
-    QFETCH(QAxis*, axis2);
-    QFETCH(int, axisCount);
+    QFETCH(bool, sameAxis);
+    QFETCH(QList<QAbstractSeries*>, seriesList);
 
-    Q_UNUSED(axisCount);
+    foreach(QAbstractSeries* series, seriesList) {
+        m_dataset->addSeries(series);
+    }
 
-    m_dataset->addSeries(series0, axis0);
-    m_dataset->addSeries(series1, axis1);
-    m_dataset->addSeries(series2, axis2);
+    if (sameAxis)
+        m_dataset->createDefaultAxes();
 
-    Domain* domain0 = m_dataset->domain(series0);
-    Domain* domain1 = m_dataset->domain(series1);
-    Domain* domain2 = m_dataset->domain(series2);
+    QList<QSignalSpy*> spyList;
 
-    QSignalSpy spy0(domain0, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(domain1, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy2(domain2, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
+    foreach(QAbstractSeries* series, seriesList) {
+        spyList
+            << new QSignalSpy(m_dataset->domain(series),
+                SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
+    }
 
-    m_dataset->scrollDomain(10,10,QSize(1000,1000));
+    m_dataset->scrollDomain(10, 10, QSize(1000, 1000));
 
-    TRY_COMPARE(spy0.count(), 1);
-    TRY_COMPARE(spy1.count(), 1);
-    TRY_COMPARE(spy2.count(), 1);
+    foreach(QSignalSpy* spy, spyList) {
+        TRY_COMPARE(spy->count(), 1);
+    }
+
+    qDeleteAll(spyList);
 }
-*/
+
 QTEST_MAIN(tst_ChartDataSet)
 #include "tst_chartdataset.moc"
 
