@@ -30,7 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     Usually you use the series type specific inherited classes instead of the base class.
-    \sa QXYSeries, QLineSeries, QSplineSeries, QScatterSeries, QAreaSeries, QBarSeries, QStackedBarSeries,
+    \sa QXYSeries, QLineSeries, QSplineSeries, QScatterSeries, QAreaSeries, QAbstractBarSeries, QStackedBarSeries,
     QPercentBarSeries, QPieSeries
 */
 /*!

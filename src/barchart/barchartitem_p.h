@@ -32,7 +32,7 @@
 #define BARCHARTITEM_H
 
 #include "chartitem_p.h"
-#include "qbarseries.h"
+#include "qabstractbarseries.h"
 #include <QPen>
 #include <QBrush>
 

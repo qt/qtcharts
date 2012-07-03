@@ -23,7 +23,7 @@
 #include "qvaluesaxis.h"
 #include "qvaluesaxis_p.h"
 #include "qabstractseries_p.h"
-#include "qbarseries.h"
+#include "qabstractbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
 #include "qpieseries.h"

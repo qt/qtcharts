@@ -28,7 +28,7 @@
 
 //series
 #include "qbarset.h"
-#include "qbarseries.h"
+#include "qabstractbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
 #include "qlineseries.h"

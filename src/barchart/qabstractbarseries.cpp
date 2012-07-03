@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include "qbarseries.h"
-#include "qbarseries_p.h"
+#include "qabstractbarseries.h"
+#include "qabstractbarseries_p.h"
 #include "qbarset.h"
 #include "qbarset_p.h"
 #include "domain_p.h"
@@ -33,11 +33,11 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    \class QBarSeries
+    \class QAbstractBarSeries
     \brief Series for creating a bar chart
     \mainclass
 
-    QBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars to
+    QAbstractBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars to
     the position defined by data. Single bar is defined by QPointF, where x value is the x-coordinate of the bar
     and y-value is the height of the bar. The category names are ignored with this series and x-axis
     shows the x-values.
@@ -48,7 +48,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa QBarSet, QStackedBarSeries, QPercentBarSeries
 */
 /*!
-    \qmlclass BarSeries QBarSeries
+    \qmlclass BarSeries QAbstractBarSeries
     \inherits AbstractSeries
 
     The following QML shows how to create a simple bar chart:
@@ -61,7 +61,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QBarSeries::barWidth
+    \property QAbstractBarSeries::barWidth
     The width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
     is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
     is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
@@ -77,7 +77,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QBarSeries::count
+    \property QAbstractBarSeries::count
     Holds the number of sets in series.
 */
 /*!
@@ -86,7 +86,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QBarSeries::labelsVisible
+    \property QAbstractBarSeries::labelsVisible
     Defines the visibility of the labels in series
 */
 /*!
@@ -95,7 +95,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::clicked(int index, QBarSet *barset)
+    \fn void QAbstractBarSeries::clicked(int index, QBarSet *barset)
     The signal is emitted if the user clicks with a mouse on top of QBarSet \a barset.
     Clicked bar inside set is indexed by \a index
 */
@@ -106,7 +106,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::hovered(bool status, QBarSet* barset)
+    \fn void QAbstractBarSeries::hovered(bool status, QBarSet* barset)
 
     The signal is emitted if mouse is hovered on top of series.
     Parameter \a barset is the pointer of barset, where hover happened.
@@ -121,7 +121,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::countChanged()
+    \fn void QAbstractBarSeries::countChanged()
     This signal is emitted when barset count has been changed, for example by append or remove.
 */
 /*!
@@ -130,13 +130,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::labelsVisibleChanged()
+    \fn void QAbstractBarSeries::labelsVisibleChanged()
     This signal is emitted when labels visibility have changed.
     \sa isLabelsVisible(), setLabelsVisible()
 */
 
 /*!
-    \fn void QBarSeries::barsetsAdded(QList<QBarSet*> sets)
+    \fn void QAbstractBarSeries::barsetsAdded(QList<QBarSet*> sets)
     This signal is emitted when \a sets have been added to the series.
     \sa append(), insert()
 */
@@ -146,7 +146,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \fn void QBarSeries::barsetsRemoved(QList<QBarSet*> sets)
+    \fn void QAbstractBarSeries::barsetsRemoved(QList<QBarSet*> sets)
     This signal is emitted when \a sets have been removed from the series.
     \sa remove()
 */
@@ -189,8 +189,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QBarSeries.
-    QBarSeries is QObject which is a child of a \a parent.
+    Constructs empty QAbstractBarSeries.
+    QAbstractBarSeries is QObject which is a child of a \a parent.
 */
 QAbstractBarSeries::QAbstractBarSeries(QObject *parent) :
     QAbstractSeries(*new QAbstractBarSeriesPrivate(this),parent)
@@ -726,7 +726,7 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
     return true;
 }
 
-#include "moc_qbarseries.cpp"
-#include "moc_qbarseries_p.cpp"
+#include "moc_qabstractbarseries.cpp"
+#include "moc_qabstractbarseries_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

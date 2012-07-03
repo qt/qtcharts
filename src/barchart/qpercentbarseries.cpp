@@ -41,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     See the \l {PercentbarChart Example} {percent bar chart example} to learn how to create a percent bar chart.
     \image examples_percentbarchart.png
 
-    \sa QBarSet, QStackedBarSeries, QBarSeries
+    \sa QBarSet, QStackedBarSeries, QAbstractBarSeries
 */
 /*!
     \qmlclass PercentBarSeries QPercentBarSeries

@@ -20,7 +20,7 @@
 
 #include "qbarmodelmapper.h"
 #include "qbarmodelmapper_p.h"
-#include "qbarseries.h"
+#include "qabstractbarseries.h"
 #include "qbarset.h"
 #include "qchart.h"
 #include <QAbstractItemModel>
@@ -105,7 +105,7 @@ void QBarModelMapper::setFirst(int first)
 }
 
 /*!
-    Returns the number of rows/columns of the model that are mapped as the data for QBarSeries
+    Returns the number of rows/columns of the model that are mapped as the data for QAbstractBarSeries
     Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
 */
 int QBarModelMapper::count() const
@@ -115,7 +115,7 @@ int QBarModelMapper::count() const
 }
 
 /*!
-    Sets the \a count of rows/columns of the model that are mapped as the data for QBarSeries
+    Sets the \a count of rows/columns of the model that are mapped as the data for QAbstractBarSeries
     Minimal and default value is: -1 (count limited by the number of rows/columns in the model)
 */
 void QBarModelMapper::setCount(int count)

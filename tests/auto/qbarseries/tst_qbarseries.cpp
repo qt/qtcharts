@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qbarseries.h>
+#include <qabstractbarseries.h>
 #include <qbarset.h>
 #include <qchartview.h>
 #include <qchart.h>

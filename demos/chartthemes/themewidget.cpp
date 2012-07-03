@@ -23,7 +23,7 @@
 #include <QChartView>
 #include <QPieSeries>
 #include <QPieSlice>
-#include <QBarSeries>
+#include <QAbstractBarSeries>
 #include <QPercentBarSeries>
 #include <QStackedBarSeries>
 #include <QBarSet>

@@ -21,7 +21,7 @@
 #include "stackedbarchartitem_p.h"
 #include "bar_p.h"
 #include "qbarset_p.h"
-#include "qbarseries_p.h"
+#include "qabstractbarseries_p.h"
 #include "qbarset.h"
 #include "chartanimator_p.h"
 

@@ -33,7 +33,7 @@ class LegendMarker;
 class QPieSlice;
 class QXYSeries;
 class QBarSet;
-class QBarSeries;
+class QAbstractBarSeries;
 class QPieSeries;
 class QAreaSeries;
 class LegendScrollButton;

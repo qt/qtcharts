@@ -22,7 +22,7 @@
 #include "qxyseries.h"
 #include "qxyseries_p.h"
 #include "qlegend.h"
-#include "qbarseries.h"
+#include "qabstractbarseries.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
 #include "qbarset.h"

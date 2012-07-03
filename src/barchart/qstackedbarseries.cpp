@@ -41,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     See the \l {StackedbarChart Example} {stacked bar chart example} to learn how to create a stacked bar chart.
     \image examples_stackedbarchart.png
 
-    \sa QBarSet, QPercentBarSeries, QBarSeries
+    \sa QBarSet, QPercentBarSeries, QAbstractBarSeries
 */
 
 /*!

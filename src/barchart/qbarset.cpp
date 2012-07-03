@@ -34,7 +34,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \mainclass
 
-    \sa QBarSeries, QGroupedBarSeries, QStackedBarSeries, QPercentBarSeries
+    \sa QAbstractBarSeries, QGroupedBarSeries, QStackedBarSeries, QPercentBarSeries
 */
 /*!
     \qmlclass BarSet QBarSet

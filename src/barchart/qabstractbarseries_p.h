@@ -27,10 +27,10 @@
 //
 // We mean it.
 
-#ifndef QBARSERIES_P_H
-#define QBARSERIES_P_H
+#ifndef QABSTRACTBARSERIES_P_H
+#define QABSTRACTBARSERIES_P_H
 
-#include "qbarseries.h"
+#include "qabstractbarseries.h"
 #include "qabstractseries_p.h"
 #include <QStringList>
 #include <QAbstractSeries>
@@ -94,4 +94,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QBARSERIESPRIVATE_P_H
+#endif // QABSTRACTBARSERIES_P_H

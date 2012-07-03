@@ -30,7 +30,7 @@
 #include "qareaseries.h"
 #include "qscatterseries.h"
 #include "qsplineseries.h"
-#include "qbarseries.h"
+#include "qabstractbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
 #include "qbarset.h"

@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     Model mappers allow you to use QAbstractItemModel derived models as a data source for a chart series.
-    Vertical model mapper is used to create a connection between QBarSeries and QAbstractItemModel derived model object.
+    Vertical model mapper is used to create a connection between QAbstractBarSeries and QAbstractItemModel derived model object.
     Model mapper maintains equal size of all the BarSets.
     Adding/removing value from the BarSet causes the the same change in the rest of the BarSets added to the same series.
     NOTE: used model has to support adding/removing rows/columns and modifying the data of the cells.
@@ -115,12 +115,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \property QVBarModelMapper::rowCount
-    \brief Defines the number of rows of the model that are mapped as the data for QBarSeries
+    \brief Defines the number of rows of the model that are mapped as the data for QAbstractBarSeries
     Minimal and default value is: -1 (count limited by the number of rows in the model)
 */
 /*!
     \qmlproperty int VBarModelMapper::rowCount
-    Defines the number of rows of the model that are mapped as the data for QBarSeries. The default value is
+    Defines the number of rows of the model that are mapped as the data for QAbstractBarSeries. The default value is
     -1 (count limited by the number of rows in the model)
 */
 

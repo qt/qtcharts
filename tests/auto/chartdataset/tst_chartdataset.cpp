@@ -27,7 +27,7 @@
 #include <qscatterseries.h>
 #include <qsplineseries.h>
 #include <qpieseries.h>
-#include <qbarseries.h>
+#include <qabstractbarseries.h>
 #include <qpercentbarseries.h>
 #include <qstackedbarseries.h>
 #include <private/chartdataset_p.h>

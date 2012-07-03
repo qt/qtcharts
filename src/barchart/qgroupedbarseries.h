@@ -22,7 +22,7 @@
 #define GROUPEDBARSERIES_H
 
 #include <QStringList>
-#include <qbarseries.h>
+#include <qabstractbarseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

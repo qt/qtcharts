@@ -27,7 +27,7 @@
 #include <qareaseries.h>
 #include <qsplineseries.h>
 #include <qbarset.h>
-#include <qbarseries.h>
+#include <qabstractbarseries.h>
 #include <qgroupedbarseries.h>
 #include <qstackedbarseries.h>
 #include <qpercentbarseries.h>

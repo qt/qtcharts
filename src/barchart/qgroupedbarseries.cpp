@@ -41,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     See the \l {GroupedbarChart Example} {grouped bar chart example} to learn how to create a grouped bar chart.
     \image examples_groupedbarchart.png
 
-    \sa QBarSet, QPercentBarSeries, QBarSeries, QStackedBarSeries
+    \sa QBarSet, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries
 */
 /*!
     \qmlclass GroupedBarSeries QGroupedBarSeries

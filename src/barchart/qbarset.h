@@ -101,7 +101,7 @@ Q_SIGNALS:
 private:
     QScopedPointer<QBarSetPrivate> d_ptr;
     Q_DISABLE_COPY(QBarSet)
-    friend class QBarSeries;
+    friend class QAbstractBarSeries;
     friend class BarLegendMarker;
     friend class BarChartItem;
     friend class QAbstractBarSeriesPrivate;
