@@ -41,6 +41,7 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     m_series->append(m_x, m_y);
 
     addSeries(m_series);
+    createDefaultAxes();
 
     axisY()->setRange(-5, 5);
     axisX()->setRange(-9, 1);

@@ -126,6 +126,7 @@ void MainWidget::createSeries()
 
     m_chart->addSeries(m_series);
     m_chart->setTitle("Legend detach example");
+    m_chart->createDefaultAxes();
 //![1]
     m_chart->legend()->setVisible(true);
     m_chart->legend()->setAlignment(Qt::AlignBottom);
