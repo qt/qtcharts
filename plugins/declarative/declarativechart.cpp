@@ -473,8 +473,8 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
     case DeclarativeChart::SeriesTypePercentBar:
         // TODO
         break;
-    case DeclarativeChart::SeriesTypeGroupedBar:
-        series = new DeclarativeGroupedBarSeries();
+    case DeclarativeChart::SeriesTypeBar:
+        series = new DeclarativeBarSeries();
         break;
     case DeclarativeChart::SeriesTypePie:
         series = new DeclarativePieSeries();

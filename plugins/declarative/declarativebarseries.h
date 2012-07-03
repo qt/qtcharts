@@ -22,7 +22,8 @@
 #define DECLARATIVEBARSERIES_H
 
 #include "qchartglobal.h"
-#include "qgroupedbarseries.h"
+#include "qabstractbarseries.h"
+#include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
 #include "qbarset.h"
@@ -94,7 +95,7 @@ public Q_SLOTS:
     void handleRemoved(QList<QBarSet* > barsets);
 };
 
-class DeclarativeGroupedBarSeries : public QGroupedBarSeries, public QDeclarativeParserStatus
+class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
@@ -104,7 +105,7 @@ class DeclarativeGroupedBarSeries : public QGroupedBarSeries, public QDeclarativ
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
-    explicit DeclarativeGroupedBarSeries(QDeclarativeItem *parent = 0);
+    explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
     void setAxisX(QAbstractAxis *axis);
     QAbstractAxis *axisX();
     void setAxisY(QAbstractAxis *axis);
@@ -113,8 +114,8 @@ public:
     Q_INVOKABLE DeclarativeBarSet *at(int index);
     Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
     Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
-    Q_INVOKABLE bool remove(QBarSet *barset) { return QGroupedBarSeries::remove(barset); }
-    Q_INVOKABLE void clear() { return QGroupedBarSeries::clear(); }
+    Q_INVOKABLE bool remove(QBarSet *barset) { return QBarSeries::remove(barset); }
+    Q_INVOKABLE void clear() { return QBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
     void classBegin();

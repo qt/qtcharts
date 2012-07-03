@@ -20,7 +20,7 @@
 
 #include <QtTest/QtTest>
 #include <qbarset.h>
-#include <qgroupedbarseries.h>
+#include <qbarseries.h>
 #include <qchartview.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -427,7 +427,7 @@ void tst_QBarSet::customize()
     QBarSet *set2 = new QBarSet("set2");
 
     // Append set1 to series
-    QGroupedBarSeries *series = new QGroupedBarSeries();
+    QBarSeries *series = new QBarSeries();
     bool success = series->append(set1);
     QVERIFY(success);
 

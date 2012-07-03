@@ -25,7 +25,7 @@
 #include <QLabel>
 #include <QDebug>
 #include <QBarSet>
-#include <QGroupedBarSeries>
+#include <QBarSeries>
 #include <QLegend>
 #include <QFormLayout>
 
@@ -118,7 +118,7 @@ MainWidget::MainWidget(QWidget *parent) :
 
 void MainWidget::createSeries()
 {
-    m_series = new QGroupedBarSeries();
+    m_series = new QBarSeries();
     addBarset();
     addBarset();
     addBarset();

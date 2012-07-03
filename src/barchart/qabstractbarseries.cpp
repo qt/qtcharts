@@ -65,15 +65,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
     is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
     is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
-    Note that with QGroupedBarSeries this value means the width of one group of bars instead of just one bar.
-    \sa QGroupedBarSeries
+    Note that with QBarSeries this value means the width of one group of bars instead of just one bar.
+    \sa QBarSeries
 */
 /*!
     \qmlproperty real AbstractBarSeries::barWidth
     The width of the bars of the series. The unit of width is the unit of x-axis. The minimum width for bars
     is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
     is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
-    Note that with QGroupedBarSeries this value means the width of one group of bars instead of just one bar.
+    Note that with QBarSeries this value means the width of one group of bars instead of just one bar.
 */
 
 /*!
@@ -220,7 +220,7 @@ QAbstractBarSeries::QAbstractBarSeries(QAbstractBarSeriesPrivate &d, QObject *pa
     Sets the width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
     is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen
     is one pixel no matter what the scale of x-axis is. Bars wider than zero are scaled with x-axis.
-    Note that with \link QGroupedBarSeries \endlink this value means the width of one group of bars instead of just one bar.
+    Note that with \link QBarSeries \endlink this value means the width of one group of bars instead of just one bar.
 */
 void QAbstractBarSeries::setBarWidth(qreal width)
 {

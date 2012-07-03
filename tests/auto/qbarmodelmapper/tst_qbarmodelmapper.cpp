@@ -23,7 +23,7 @@
 
 #include <qchart.h>
 #include <qchartview.h>
-#include <qgroupedbarseries.h>
+#include <qbarseries.h>
 #include <qbarset.h>
 #include <qvbarmodelmapper.h>
 #include <qhbarmodelmapper.h>
@@ -72,7 +72,7 @@ class tst_qbarmodelmapper : public QObject
     QVBarModelMapper *m_vMapper;
     QHBarModelMapper *m_hMapper;
 
-    QGroupedBarSeries *m_series;
+    QBarSeries *m_series;
     QChart *m_chart;
 };
 
@@ -109,7 +109,7 @@ void tst_qbarmodelmapper::createHorizontalMapper()
 
 void tst_qbarmodelmapper::init()
 {
-    m_series = new QGroupedBarSeries;
+    m_series = new QBarSeries;
     m_chart->addSeries(m_series);
 
     m_model = new QStandardItemModel(m_modelRowCount, m_modelColumnCount, this);
@@ -171,7 +171,7 @@ void tst_qbarmodelmapper::verticalMapper()
     QFETCH(int, lastBarSetColumn);
     QFETCH(int, expectedBarSetCount);
 
-    m_series = new QGroupedBarSeries;
+    m_series = new QBarSeries;
 
     QVBarModelMapper *mapper = new QVBarModelMapper;
     mapper->setFirstBarSetColumn(firstBarSetColumn);
@@ -214,7 +214,7 @@ void tst_qbarmodelmapper::verticalMapperCustomMapping()
     QFETCH(int, expectedBarSetCount);
     QFETCH(int, expectedCount);
 
-    m_series = new QGroupedBarSeries;
+    m_series = new QBarSeries;
 
     QCOMPARE(m_series->count(), 0);
 
@@ -261,7 +261,7 @@ void tst_qbarmodelmapper::horizontalMapper()
     QFETCH(int, lastBarSetRow);
     QFETCH(int, expectedBarSetCount);
 
-    m_series = new QGroupedBarSeries;
+    m_series = new QBarSeries;
 
     QHBarModelMapper *mapper = new QHBarModelMapper;
     mapper->setFirstBarSetRow(firstBarSetRow);
@@ -304,7 +304,7 @@ void tst_qbarmodelmapper::horizontalMapperCustomMapping()
     QFETCH(int, expectedBarSetCount);
     QFETCH(int, expectedCount);
 
-    m_series = new QGroupedBarSeries;
+    m_series = new QBarSeries;
 
     QCOMPARE(m_series->count(), 0);
 

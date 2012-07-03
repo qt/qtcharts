@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qgroupedbarseries.h>
+#include <qbarseries.h>
 #include <qbarset.h>
 #include <qchartview.h>
 #include <qchart.h>
@@ -52,7 +52,7 @@ private slots:
     void mousehovered();
 
 private:
-    QGroupedBarSeries* m_barseries;
+    QBarSeries* m_barseries;
 };
 
 void tst_QGroupedBarSeries::initTestCase()
@@ -66,7 +66,7 @@ void tst_QGroupedBarSeries::cleanupTestCase()
 
 void tst_QGroupedBarSeries::init()
 {
-    m_barseries = new QGroupedBarSeries();
+    m_barseries = new QBarSeries();
 }
 
 void tst_QGroupedBarSeries::cleanup()
@@ -81,7 +81,7 @@ void tst_QGroupedBarSeries::qgroupedbarseries_data()
 
 void tst_QGroupedBarSeries::qgroupedbarseries()
 {
-    QGroupedBarSeries *barseries = new QGroupedBarSeries();
+    QBarSeries *barseries = new QBarSeries();
     QVERIFY(barseries != 0);
 }
 
@@ -102,7 +102,7 @@ void tst_QGroupedBarSeries::mouseclicked_data()
 
 void tst_QGroupedBarSeries::mouseclicked()
 {
-    QGroupedBarSeries* series = new QGroupedBarSeries();
+    QBarSeries* series = new QBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;
@@ -200,7 +200,7 @@ void tst_QGroupedBarSeries::mousehovered_data()
 
 void tst_QGroupedBarSeries::mousehovered()
 {
-    QGroupedBarSeries* series = new QGroupedBarSeries();
+    QBarSeries* series = new QBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;

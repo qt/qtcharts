@@ -160,16 +160,16 @@ DeclarativeBarSet *DeclarativeAbstractBarSeries::insert(int index, QString label
     return 0;
 }
 
-DeclarativeGroupedBarSeries::DeclarativeGroupedBarSeries(QDeclarativeItem *parent) :
-    QGroupedBarSeries(parent)
+DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
+    QBarSeries(parent)
 {
 }
 
-void DeclarativeGroupedBarSeries::classBegin()
+void DeclarativeBarSeries::classBegin()
 {
 }
 
-void DeclarativeGroupedBarSeries::componentComplete()
+void DeclarativeBarSeries::componentComplete()
 {
     foreach(QObject *child, children()) {
         if (qobject_cast<DeclarativeBarSet *>(child)) {
@@ -184,39 +184,39 @@ void DeclarativeGroupedBarSeries::componentComplete()
     }
 }
 
-void DeclarativeGroupedBarSeries::setAxisX(QAbstractAxis *axis)
+void DeclarativeBarSeries::setAxisX(QAbstractAxis *axis)
 {
     chart()->setAxisX(axis, this);
 }
 
-QAbstractAxis *DeclarativeGroupedBarSeries::axisX()
+QAbstractAxis *DeclarativeBarSeries::axisX()
 {
     return chart()->axisX(this);
 }
 
-void DeclarativeGroupedBarSeries::setAxisY(QAbstractAxis *axis)
+void DeclarativeBarSeries::setAxisY(QAbstractAxis *axis)
 {
     chart()->setAxisY(axis, this);
 }
 
-QAbstractAxis *DeclarativeGroupedBarSeries::axisY()
+QAbstractAxis *DeclarativeBarSeries::axisY()
 {
     return chart()->axisY(this);
 }
 
-QDeclarativeListProperty<QObject> DeclarativeGroupedBarSeries::seriesChildren()
+QDeclarativeListProperty<QObject> DeclarativeBarSeries::seriesChildren()
 {
     return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeAbstractBarSeries::appendSeriesChildren);
 }
 
-void DeclarativeGroupedBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+void DeclarativeBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
 {
     // Empty implementation; the children are parsed in componentComplete instead
     Q_UNUSED(list);
     Q_UNUSED(element);
 }
 
-DeclarativeBarSet *DeclarativeGroupedBarSeries::at(int index)
+DeclarativeBarSet *DeclarativeBarSeries::at(int index)
 {
     QList<QBarSet*> setList = barSets();
     if (index >= 0 && index < setList.count())
@@ -225,12 +225,12 @@ DeclarativeBarSet *DeclarativeGroupedBarSeries::at(int index)
     return 0;
 }
 
-DeclarativeBarSet *DeclarativeGroupedBarSeries::insert(int index, QString label, QVariantList values)
+DeclarativeBarSet *DeclarativeBarSeries::insert(int index, QString label, QVariantList values)
 {
     DeclarativeBarSet *barset = new DeclarativeBarSet(this);
     barset->setLabel(label);
     barset->setValues(values);
-    if (QGroupedBarSeries::insert(index, barset))
+    if (QBarSeries::insert(index, barset))
         return barset;
     delete barset;
     return 0;

@@ -26,7 +26,7 @@
 #include <QChartView>
 #include <QLineSeries>
 #include <QVXYModelMapper>
-#include <QGroupedBarSeries>
+#include <QBarSeries>
 #include <QBarSet>
 #include <QVBarModelMapper>
 #include <QHeaderView>
@@ -59,7 +59,7 @@ TableWidget::TableWidget(QWidget *parent)
 
     // series 1
     //! [4]
-    QGroupedBarSeries *series = new QGroupedBarSeries;
+    QBarSeries *series = new QBarSeries;
 
     int first = 3;
     int count = 5;

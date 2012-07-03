@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include <QtTest/QtTest>
-#include <qgroupedbarseries.h>
+#include <qbarseries.h>
 #include <qbarset.h>
 #include <qchartview.h>
 #include <qchart.h>
@@ -63,8 +63,8 @@ private slots:
     void clearWithAnimations();
 
 private:
-    QGroupedBarSeries* m_barseries;
-    QGroupedBarSeries* m_barseries_with_sets;
+    QBarSeries* m_barseries;
+    QBarSeries* m_barseries_with_sets;
 
     QList<QBarSet*> m_testSets;
 
@@ -81,8 +81,8 @@ void tst_QBarSeries::cleanupTestCase()
 
 void tst_QBarSeries::init()
 {
-    m_barseries = new QGroupedBarSeries();
-    m_barseries_with_sets = new QGroupedBarSeries();
+    m_barseries = new QBarSeries();
+    m_barseries_with_sets = new QBarSeries();
 
     for (int i=0; i<5; i++) {
         m_testSets.append(new QBarSet("testset"));
@@ -110,7 +110,7 @@ void tst_QBarSeries::qbarseries_data()
 
 void tst_QBarSeries::qbarseries()
 {
-    QGroupedBarSeries *barseries = new QGroupedBarSeries();
+    QBarSeries *barseries = new QBarSeries();
     QVERIFY(barseries != 0);
 }
 
@@ -316,7 +316,7 @@ void tst_QBarSeries::mouseclicked_data()
 
 void tst_QBarSeries::mouseclicked()
 {
-    QGroupedBarSeries* series = new QGroupedBarSeries();
+    QBarSeries* series = new QBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;
@@ -452,7 +452,7 @@ void tst_QBarSeries::mousehovered_data()
 
 void tst_QBarSeries::mousehovered()
 {
-    QGroupedBarSeries* series = new QGroupedBarSeries();
+    QBarSeries* series = new QBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;
@@ -546,7 +546,7 @@ void tst_QBarSeries::mousehovered()
 
 void tst_QBarSeries::clearWithAnimations()
 {
-    QGroupedBarSeries* series = new QGroupedBarSeries();
+    QBarSeries* series = new QBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
     *set1 << 10 << 10 << 10;

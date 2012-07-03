@@ -26,7 +26,7 @@
 #include <qsplineseries.h>
 #include <qpieseries.h>
 #include <qabstractbarseries.h>
-#include <qgroupedbarseries.h>
+#include <qbarseries.h>
 #include <qpercentbarseries.h>
 #include <qstackedbarseries.h>
 #include <qvaluesaxis.h>
@@ -178,7 +178,7 @@ void tst_QChart::addSeries_data()
     QAbstractSeries* series2 = new QScatterSeries(this);
     QAbstractSeries* series3 = new QSplineSeries(this);
     QAbstractSeries* series4 = new QPieSeries(this);
-    QAbstractSeries* series5 = new QGroupedBarSeries(this);
+    QAbstractSeries* series5 = new QBarSeries(this);
     QAbstractSeries* series6 = new QPercentBarSeries(this);
     QAbstractSeries* series7 = new QStackedBarSeries(this);
 

@@ -18,28 +18,28 @@
 **
 ****************************************************************************/
 
-#ifndef GROUPEDBARSERIES_H
-#define GROUPEDBARSERIES_H
+#ifndef QBARSERIES_H
+#define QBARSERIES_H
 
 #include <QStringList>
 #include <qabstractbarseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QGroupedBarSeriesPrivate;
+class QBarSeriesPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QGroupedBarSeries : public QAbstractBarSeries
+class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractBarSeries
 {
     Q_OBJECT
 public:
-    explicit QGroupedBarSeries(QObject *parent = 0);
+    explicit QBarSeries(QObject *parent = 0);
     QAbstractSeries::SeriesType type() const;
 
 private:
-    Q_DECLARE_PRIVATE(QGroupedBarSeries)
-    Q_DISABLE_COPY(QGroupedBarSeries)
+    Q_DECLARE_PRIVATE(QBarSeries)
+    Q_DISABLE_COPY(QBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // GROUPEDBARSERIES_H
+#endif // QBARSERIES_H

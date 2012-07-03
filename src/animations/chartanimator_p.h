@@ -55,7 +55,7 @@ public:
     virtual ~ChartAnimator();
 
     void addAnimation(PieChartItem *item);
-    void addAnimation(BarChartItem *item);          // This can handle also grouped bar chart.
+    void addAnimation(BarChartItem *item);
     void addAnimation(StackedBarChartItem *item);
     void addAnimation(PercentBarChartItem *item);
     void removeAnimation(Chart *item);

@@ -46,7 +46,6 @@ public:
         SeriesTypeBar,
         SeriesTypeStackedBar,
         SeriesTypePercentBar,
-        SeriesTypeGroupedBar,
         SeriesTypePie,
         SeriesTypeScatter,
         SeriesTypeSpline

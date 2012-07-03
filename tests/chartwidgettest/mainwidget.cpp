@@ -27,7 +27,7 @@
 #include <qareaseries.h>
 #include <qsplineseries.h>
 #include <qbarset.h>
-#include <qgroupedbarseries.h>
+#include <qbarseries.h>
 #include <qstackedbarseries.h>
 #include <qpercentbarseries.h>
 #include <QPushButton>
@@ -265,7 +265,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
                 series->append(labels.at(i), column.at(i));
             m_chart->addSeries(series);
         }
-    } else if (seriesName == "Grouped bar"
+    } else if (seriesName == "Bar"
                || seriesName == "Stacked bar"
                || seriesName == "Percent bar") {
         QStringList category;
@@ -273,8 +273,8 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         foreach(QString label, labels)
             category << label;
         QAbstractBarSeries* series = 0;
-        if (seriesName == "Grouped bar") {
-            series = new QGroupedBarSeries(this);
+        if (seriesName == "Bar") {
+            series = new QBarSeries(this);
             QCategoriesAxis* axis = new QCategoriesAxis();
             axis->append(category);
             m_chart->setAxisX(axis,series);

@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include "qgroupedbarseries.h"
-#include "qgroupedbarseries_p.h"
+#include "qbarseries.h"
+#include "qbarseries_p.h"
 #include "groupedbarchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
@@ -30,12 +30,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    \class QGroupedBarSeries
-    \brief Series for creating grouped bar chart
+    \class QBarSeries
+    \brief Series for creating bar chart
     \mainclass
 
-    QGroupedBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
-    as groups, where bars in same category are grouped next to each other. QGroupedBarSeries groups the data
+    QBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
+    as groups, where bars in same category are grouped next to each other. QBarSeries groups the data
     from sets to categories, which are defined by a QStringList.
 
     See the \l {GroupedbarChart Example} {grouped bar chart example} to learn how to create a grouped bar chart.
@@ -44,7 +44,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa QBarSet, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries
 */
 /*!
-    \qmlclass GroupedBarSeries QGroupedBarSeries
+    \qmlclass BarSeries QBarSeries
     \inherits AbstractBarSeries
 
     The following QML shows how to create a simple grouped bar chart:
@@ -56,30 +56,30 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QGroupedBarSeries.
-    QGroupedBarSeries is QObject which is a child of a \a parent.
+    Constructs empty QBarSeries.
+    QBarSeries is QObject which is a child of a \a parent.
 */
-QGroupedBarSeries::QGroupedBarSeries(QObject *parent)
-    : QAbstractBarSeries(*new QGroupedBarSeriesPrivate(this), parent)
+QBarSeries::QBarSeries(QObject *parent)
+    : QAbstractBarSeries(*new QBarSeriesPrivate(this), parent)
 {
 }
 
 /*!
     Returns QChartSeries::SeriesTypeGroupedBar.
 */
-QAbstractSeries::SeriesType QGroupedBarSeries::type() const
+QAbstractSeries::SeriesType QBarSeries::type() const
 {
-    return QAbstractSeries::SeriesTypeGroupedBar;
+    return QAbstractSeries::SeriesTypeBar;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QGroupedBarSeriesPrivate::QGroupedBarSeriesPrivate(QGroupedBarSeries *q) : QAbstractBarSeriesPrivate(q)
+QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) : QAbstractBarSeriesPrivate(q)
 {
 
 }
 
-void QGroupedBarSeriesPrivate::scaleDomain(Domain& domain)
+void QBarSeriesPrivate::scaleDomain(Domain& domain)
 {
     qreal minX(domain.minX());
     qreal minY(domain.minY());
@@ -100,9 +100,9 @@ void QGroupedBarSeriesPrivate::scaleDomain(Domain& domain)
 }
 
 
-Chart* QGroupedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
-    Q_Q(QGroupedBarSeries);
+    Q_Q(QBarSeries);
 
     GroupedBarChartItem* bar = new GroupedBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
@@ -113,7 +113,7 @@ Chart* QGroupedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 }
 
 
-#include "moc_qgroupedbarseries.cpp"
+#include "moc_qbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

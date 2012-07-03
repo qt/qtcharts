@@ -45,7 +45,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     model has at least four columns). Each bar set would contain data starting from row 1. The name of a set would be
     defined by the horizontal header (of the column).
     \code
-        GroupedBarSeries {
+        BarSeries {
             VBarModelMapper {
                 model: myCustomModel // QAbstractItemModel derived implementation
                 firstBarSetColumn: 1

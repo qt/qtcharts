@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QGROUPEDBARSERIES_P_H
-#define QGROUPEDBARSERIES_P_H
+#ifndef QBARSERIES_P_H
+#define QBARSERIES_P_H
 
 #include "qabstractbarseries_p.h"
 #include "domain_p.h"
@@ -36,17 +36,17 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-class QGroupedBarSeriesPrivate: public QAbstractBarSeriesPrivate
+class QBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
-    QGroupedBarSeriesPrivate(QGroupedBarSeries* q);
+    QBarSeriesPrivate(QBarSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
 
 private:
-    Q_DECLARE_PUBLIC(QGroupedBarSeries)
+    Q_DECLARE_PUBLIC(QBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QGROUPEDBARSERIES_P_H
+#endif // QBARSERIES_P_H

@@ -21,7 +21,7 @@
 #include <QApplication>
 #include <QMainWindow>
 #include <QChartView>
-#include <QGroupedBarSeries>
+#include <QBarSeries>
 #include <QBarSet>
 #include <QLegend>
 #include <QCategoriesAxis>
@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 //![1]
 
 //![2]
-    QGroupedBarSeries* series = new QGroupedBarSeries();
+    QBarSeries* series = new QBarSeries();
     series->append(set0);
     series->append(set1);
     series->append(set2);
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Simple grouped barchart example");
+    chart->setTitle("Simple barchart example");
     chart->createDefaultAxes();
 //![3]
 
