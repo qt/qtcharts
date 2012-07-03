@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Simple percentbarchart example");
+    chart->setTitle("Percentbarchart example");
 //![3]
 
 //![4]
