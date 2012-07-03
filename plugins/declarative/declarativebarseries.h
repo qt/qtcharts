@@ -58,7 +58,7 @@ private Q_SLOTS:
     void handleCountChanged(int index, int count);
 };
 
-class DeclarativeBarSeries : public QAbstractBarSeries, public QDeclarativeParserStatus
+class DeclarativeAbstractBarSeries : public QAbstractBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
@@ -68,7 +68,7 @@ class DeclarativeBarSeries : public QAbstractBarSeries, public QDeclarativeParse
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
-    explicit DeclarativeBarSeries(QDeclarativeItem *parent = 0);
+    explicit DeclarativeAbstractBarSeries(QDeclarativeItem *parent = 0);
     void setAxisX(QAbstractAxis *axis);
     QAbstractAxis *axisX();
     void setAxisY(QAbstractAxis *axis);
