@@ -461,6 +461,7 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     foreach(LegendMarker* marker, markers) {
         marker->setFont(m_font);
         marker->setLabelBrush(m_labelBrush);
+        marker->setVisible(series->isVisible());
         m_items->addToGroup(marker);
         m_markers<<marker;
     }
@@ -520,7 +521,7 @@ void QLegendPrivate::handleSeriesVisibleChanged()
 
     foreach (LegendMarker* marker, m_markers) {
         if (marker->series() == series) {
-            marker->setVisible(!marker->isVisible());
+            marker->setVisible(series->isVisible());
         }
     }
 
