@@ -46,7 +46,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \endcode
 */
 
-
+/*!
+    Constructs an axis object which is a child of \a parent.
+*/
 QIntervalAxis::QIntervalAxis(QObject *parent):
     QValuesAxis(*new QIntervalAxisPrivate(this),parent)
 {

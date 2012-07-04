@@ -105,6 +105,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Whether the nice numbers algorithm is enabled or not for the axis.
 */
 
+/*!
+    Constructs an axis object which is a child of \a parent.
+*/
 QValuesAxis::QValuesAxis(QObject *parent) :
     QAbstractAxis(*new QValuesAxisPrivate(this),parent)
 {

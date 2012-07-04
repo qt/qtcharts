@@ -92,6 +92,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a min or \a max of axis has changed.
 */
 
+/*!
+    Constructs an axis object which is a child of \a parent.
+*/
 QBarCategoriesAxis::QBarCategoriesAxis(QObject *parent):
     QAbstractAxis(*new QBarCategoriesAxisPrivate(this),parent)
 {
