@@ -98,8 +98,7 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
     if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
     //reload visiblity
     m_axisItems.insert(axis, item);
-    if(axis->isVisible()) axis->hide();
-    axis->show();
+    selectVisibleAxis();
 
 }
 
@@ -107,6 +106,7 @@ void ChartPresenter::handleAxisRemoved(QAbstractAxis* axis)
 {
     ChartAxis* item = m_axisItems.take(axis);
     Q_ASSERT(item);
+    selectVisibleAxis();
     if(m_animator) m_animator->removeAnimation(item);
     item->deleteLater();
 }
@@ -141,6 +141,34 @@ void ChartPresenter::handleSeriesRemoved(QAbstractSeries* series)
             m_animator->removeAnimation(item);
     }
     item->deleteLater();
+}
+
+void ChartPresenter::selectVisibleAxis()
+{
+    QMapIterator<QAbstractAxis*, ChartAxis*> i(m_axisItems);
+
+    while (i.hasNext()) {
+        i.next();
+        i.key()->hide();
+    }
+
+    i.toFront();
+
+    bool axisX=false;
+    bool axisY=false;
+
+    while (i.hasNext()) {
+        i.next();
+        if(i.key()->d_ptr->m_orientation==Qt::Vertical && !axisY) {
+            axisY=true;
+            i.key()->show();
+        }
+        if(i.key()->d_ptr->m_orientation==Qt::Horizontal && !axisX) {
+            axisX=true;
+            i.key()->show();
+        }
+
+    }
 }
 
 

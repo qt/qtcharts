@@ -137,6 +137,7 @@ public:
 private:
     void createBackgroundItem();
     void createTitleItem();
+    void selectVisibleAxis();
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries* series,Domain* domain);

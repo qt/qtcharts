@@ -164,20 +164,10 @@ Rectangle {
         //![3]
 
         Component.onCompleted: {
-            setAxisX(categoryAxis,myBarSeries)
-            setAxisX(categoryAxis,lineSeries1)
-            setAxisX(categoryAxis,lineSeries2)
-            setAxisX(categoryAxis,lineSeries3)
-            setAxisX(categoryAxis,lineSeries4)
-            setAxisX(categoryAxis,lineSeries5)
-            setAxisY(yAxis,myBarSeries)
-            setAxisY(yAxis,lineSeries1)
-            setAxisY(yAxis,lineSeries2)
-            setAxisY(yAxis,lineSeries3)
-            setAxisY(yAxis,lineSeries4)
-            setAxisY(yAxis,lineSeries5)
-            categoryAxis.min = "2007"
-            categoryAxis.max = "2014"
+              createDefaultAxes();
+              setAxisX(categoryAxis,myBarSeries)
+              categoryAxis.min = "2007"
+              categoryAxis.max = "2014"
         }
     }
 }
