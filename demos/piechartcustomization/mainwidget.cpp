@@ -209,6 +209,7 @@ MainWidget::MainWidget(QWidget* parent)
     setLayout(baseLayout);
 
     updateSerieSettings();
+    updateChartSettings();
 }
 
 
