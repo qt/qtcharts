@@ -37,28 +37,44 @@ Rectangle {
         legend.alignment: Qt.AlignTop
 
     //![2]
+        BarCategoriesAxis {
+                id: myBarCategoryAxis
+                categories: ["Mo", "Tu", "We", "Th", "Fr"]
+        }
+    
         BarSeries {
-            axisX: CategoriesAxis {
-                id: categoriesAxis
-                categories: ["Mo", "Tu", "We", "Th", "Fr", "Sa" ]
-            }
-
+            id: myBarSeries
             BarSet {
                 id: rainfallSet
                 label: "Rainfall"
             }
         }
+     
+        ValuesAxis{
+            id: myValuesAxisY
+            min: 0
+            max: 10
+        }
 
-        ScatterSeries {
+        LineSeries {
             id: maxTempSeries
             name: "Max. temperature"
         }
 
-        ScatterSeries {
+        LineSeries {
             id: minTempSeries
             name: "Min. temperature"
         }
     //![2]
+    
+        Component.onCompleted: {
+              setAxisX(myBarCategoryAxis,myBarSeries)
+              setAxisX(myBarCategoryAxis,maxTempSeries)
+              setAxisX(myBarCategoryAxis,minTempSeries)
+              setAxisY(myValuesAxisY,maxTempSeries)
+              setAxisY(myValuesAxisY,minTempSeries)
+              setAxisY(myValuesAxisY,myBarSeries)
+        }
     }
 
     // A timer to refresh the forecast every 5 minutes
@@ -128,10 +144,6 @@ Rectangle {
 
     function parseWeatherData(weatherData) {
         // Clear previous values
-        chartView.axisX.min = 0;
-        chartView.axisX.max = 5;
-        chartView.axisY.min = 0;
-        chartView.axisY.max = 5;
         maxTempSeries.clear();
         minTempSeries.clear();
         weatherImageModel.clear();
@@ -147,23 +159,23 @@ Rectangle {
             maxTempSeries.append(i, weatherObj.tempMaxC);
             minTempSeries.append(i, weatherObj.tempMinC);
             rainfallSet.append(i, weatherObj.precipMM);
-
             weatherImageModel.append({"imageSource":weatherObj.weatherIconUrl[0].value});
             //![5]
 
             // Update scale of the chart
-            chartView.axisX.min = 0;
-            chartView.axisX.max = i;
-            while (chartView.axisY.min >= Number(weatherObj.tempMinC))
-                chartView.axisY.min = chartView.axisY.min - 10;
-            while (chartView.axisY.max <= Number(weatherObj.tempMaxC))
-                chartView.axisY.max = chartView.axisY.max + 10;
+            chartView.axisY().max = Math.max(chartView.axisY().max,weatherObj.tempMaxC)
+            chartView.axisY().max = Math.max(chartView.axisY().max,weatherObj.tempMinC)
+            chartView.axisX().min = 0;
+            chartView.axisX().max = i+1;
 
             // Set the x-axis labels to the dates of the forecast
-            var xLabels = categoriesAxis.categories;
-            xLabels[Number(i) * 2] = i;
-            xLabels[(Number(i) * 2) + 1] = weatherObj.date.substring(5, 10);
-            categoriesAxis.categories = xLabels;
+            var xLabels = myBarCategoryAxis.categories;
+            xLabels[Number(i)] = weatherObj.date.substring(5, 10);
+            myBarCategoryAxis.categories = xLabels;
+            myBarCategoryAxis.visible = true;
         }
+        
+        
     }
+    
 }

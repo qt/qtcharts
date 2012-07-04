@@ -38,8 +38,6 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(QString title READ title WRITE setTitle)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
     Q_PROPERTY(QColor titleColor READ titleColor WRITE setTitleColor NOTIFY titleColorChanged)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY)
     Q_PROPERTY(QLegend *legend READ legend)
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
@@ -114,8 +112,7 @@ public:
     qreal leftMargin();
     qreal rightMargin();
 
-    QAbstractAxis *axisX(QAbstractSeries *series = 0);
-    QAbstractAxis *axisY(QAbstractSeries *series = 0);
+
 
 public:
     Q_INVOKABLE QAbstractSeries *series(int index);
@@ -124,6 +121,8 @@ public:
     Q_INVOKABLE void setAxisX(QAbstractAxis* axis, QAbstractSeries *series = 0);
     Q_INVOKABLE void setAxisY(QAbstractAxis* axis, QAbstractSeries *series = 0);
     Q_INVOKABLE void createDefaultAxes();
+    Q_INVOKABLE QAbstractAxis *axisX(QAbstractSeries *series = 0);
+    Q_INVOKABLE QAbstractAxis *axisY(QAbstractSeries *series = 0);
 
     Q_INVOKABLE void zoom(qreal factor);
     Q_INVOKABLE void scrollLeft(qreal pixels);

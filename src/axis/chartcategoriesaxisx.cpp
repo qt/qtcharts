@@ -106,4 +106,14 @@ void ChartCategoriesAxisX::updateGeometry()
     }
 }
 
+void ChartCategoriesAxisX::handleAxisUpdated()
+{
+    if(m_categoriesAxis->categories()!=m_categories)
+    {
+        m_categories=m_categoriesAxis->categories();
+        if(ChartAxis::layout().count()==m_categories.size()+1) updateGeometry();
+    }
+    ChartAxis::handleAxisUpdated();
+}
+
 QTCOMMERCIALCHART_END_NAMESPACE

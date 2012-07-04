@@ -49,8 +49,11 @@ public:
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
+Q_SLOTS
+    void handleAxisUpdated();
 
 private:
+    QStringList m_categories;
     QBarCategoriesAxis *m_categoriesAxis;
 };
 

@@ -95,7 +95,7 @@ protected:
     void createCategoryLabels(QStringList &labels,qreal min, qreal max,const QStringList &categories) const;
 
 public Q_SLOTS:
-    void handleAxisUpdated();
+    virtual void handleAxisUpdated();
     void handleAxisCategoriesUpdated();
     void handleRangeChanged(qreal min , qreal max,int tickCount);
     void handleGeometryChanged(const QRectF &size);

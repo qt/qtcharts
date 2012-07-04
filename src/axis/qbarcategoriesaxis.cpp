@@ -133,7 +133,7 @@ void QBarCategoriesAxis::append(const QStringList &categories)
     }else{
     	d->m_categories.append(categories);
     }
-
+    emit d->updated();
     emit categoriesChanged();
 }
 
@@ -149,6 +149,7 @@ void QBarCategoriesAxis::append(const QString &category)
 	}else{
 		d->m_categories.append(category);
 	}
+	emit d->updated();
 	emit categoriesChanged();
 }
 
@@ -161,6 +162,7 @@ void QBarCategoriesAxis::remove(const QString &category)
     if (d->m_categories.contains(category)) {
         d->m_categories.removeAt(d->m_categories.indexOf(category));
         setRange(d->m_categories.first(),d->m_categories.last());
+        emit d->updated();
         emit categoriesChanged();
     }
 }
@@ -177,6 +179,7 @@ void QBarCategoriesAxis::insert(int index, const QString &category)
     }else{
         d->m_categories.insert(index,category);
     }
+    emit d->updated();
     emit categoriesChanged();
 }
 
@@ -188,6 +191,7 @@ void QBarCategoriesAxis::clear()
     Q_D(QBarCategoriesAxis);
     d->m_categories.clear();
     setRange(QString::null,QString::null);
+    emit d->updated();
     emit categoriesChanged();
 }
 
@@ -197,6 +201,7 @@ void QBarCategoriesAxis::setCategories(const QStringList &categories)
     if(d->m_categories!=categories){
     d->m_categories = categories;
     setRange(categories.first(),categories.last());
+    emit d->updated();
     emit categoriesChanged();
     }
 }
@@ -283,14 +288,14 @@ void QBarCategoriesAxis::setRange(const QString& minCategory, const QString& max
     }
 
     bool changed = false;
-    if (!qFuzzyIsNull(d->m_min - (minIndex))) {
+    if (!qFuzzyIsNull(d->m_min - (minIndex))||d->m_minCategory!=minCategory) {
     	d->m_minCategory = minCategory;
         d->m_min = minIndex;
         emit minChanged(minCategory);
         changed = true;
     }
 
-    if (!qFuzzyIsNull(d->m_max - (maxIndex))) {
+    if (!qFuzzyIsNull(d->m_max - (maxIndex))||d->m_maxCategory!=maxCategory ) {
         d->m_max = maxIndex;
         d->m_maxCategory = maxCategory;
         emit maxChanged(maxCategory);
@@ -299,7 +304,6 @@ void QBarCategoriesAxis::setRange(const QString& minCategory, const QString& max
 
     if (changed) {
         d->emitRange();
-        emit categoriesChanged();
     }
 }
 
