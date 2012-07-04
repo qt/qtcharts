@@ -61,7 +61,7 @@ public:
     QAbstractAxis *q_ptr;
     bool m_visible;
 
-    bool m_axisVisible;
+    bool m_arrowVisible;
     QPen m_axisPen;
     QBrush m_axisBrush;
 

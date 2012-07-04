@@ -76,9 +76,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \fn void QValuesAxis::minChanged(qreal min)
   Axis emits signal when \a min of axis has changed.
 */
+/*!
+  \qmlsignal ValuesAxis::onMinChanged(real min)
+  Axis emits signal when \a min of axis has changed.
+*/
 
 /*!
   \fn void QValuesAxis::maxChanged(qreal max)
+  Axis emits signal when \a max of axis has changed.
+*/
+/*!
+  \qmlsignal ValuesAxis::onMaxChanged(real max)
   Axis emits signal when \a max of axis has changed.
 */
 

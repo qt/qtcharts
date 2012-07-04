@@ -69,7 +69,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the minimum value on the axis.
 */
 /*!
-  \qmlproperty real BarCategoriesAxis::min
+  \qmlproperty QString BarCategoriesAxis::min
   Defines the minimum value on the axis.
 */
 
@@ -78,7 +78,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the maximum value on the axis.
 */
 /*!
-  \qmlproperty real BarCategoriesAxis::max
+  \qmlproperty QString BarCategoriesAxis::max
   Defines the maximum value on the axis.
 */
 
@@ -86,9 +86,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \fn void QBarCategoriesAxis::minChanged(const QString &min)
   Axis emits signal when \a min of axis has changed.
 */
+/*!
+  \qmlsignal BarCategoriesAxis::onMinChanged(const QString &min)
+  Axis emits signal when \a min of axis has changed.
+*/
 
 /*!
   \fn void QBarCategoriesAxis::maxChanged(const QString &max)
+  Axis emits signal when \a max of axis has changed.
+*/
+/*!
+  \qmlsignal BarCategoriesAxis::onMaxChanged(const QString &max)
   Axis emits signal when \a max of axis has changed.
 */
 

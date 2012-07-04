@@ -71,7 +71,7 @@ QIntervalAxis::QIntervalAxis(QIntervalAxisPrivate &d,QObject *parent):QValuesAxi
 }
 
 /*!
-    Appends \a categories to axis
+    Appends \a category to axis
 */
 void QIntervalAxis::append(const QString& category, qreal x)
 {

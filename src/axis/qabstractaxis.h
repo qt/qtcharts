@@ -34,7 +34,7 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
-    Q_PROPERTY(bool axisVisible READ isAxisVisible WRITE setAxisVisible NOTIFY visibleChanged)
+    Q_PROPERTY(bool arrowVisible READ isArrowVisible WRITE setArrowVisible NOTIFY arrowVisibleChanged)
     Q_PROPERTY(QColor color READ axisPenColor WRITE setAxisPenColor NOTIFY colorChanged)
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
     Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle)
@@ -69,8 +69,8 @@ public:
 
 
     //axis handling
-    bool isAxisVisible() const;
-    void setAxisVisible(bool visible = true);
+    bool isArrowVisible() const;
+    void setArrowVisible(bool visible = true);
     void setAxisPen(const QPen &pen);
     QPen axisPen() const;
     void setAxisPenColor(QColor color);
@@ -118,7 +118,7 @@ public:
 
 Q_SIGNALS:
     void visibleChanged(bool visible);
-    void axisVisibleChanged(bool visible);
+    void arrowVisibleChanged(bool visible);
     void labelsVisibleChanged(bool visible);
     void gridVisibleChanged(bool visible);
     void colorChanged(QColor color);

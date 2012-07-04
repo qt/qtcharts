@@ -268,7 +268,7 @@ void ChartAxis::handleAxisUpdated()
     }
     else {
 
-        if (m_chartAxis->isAxisVisible()) {
+        if (m_chartAxis->isArrowVisible()) {
             setAxisOpacity(100);
         }
         else {

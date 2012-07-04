@@ -262,7 +262,7 @@ void ChartTheme::decorate(QAbstractAxis *axis,bool axisX)
     QBrush brush;
     QFont font;
 
-    if (axis->isAxisVisible()) {
+    if (axis->isArrowVisible()) {
 
         if(brush == axis->labelsBrush() ||  m_force){
             axis->setLabelsBrush(m_labelBrush);

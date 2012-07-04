@@ -172,47 +172,56 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QAbstractAxis::visibleChanged(bool)
+  \fn void QAbstractAxis::visibleChanged(bool visible)
+  Visiblity of the axis has changed to \a visible.
+*/
+/*!
+  \qmlsignal AbstractAxis::onVisibleChanged(bool visible)
   Visiblity of the axis has changed to \a visible.
 */
 
 /*!
-  \fn void QAbstractAxis::labelsVisibleChanged(bool)
+  \fn void QAbstractAxis::arrowVisibleChanged(bool visible)
+  Visiblity of the axis arrow has changed to \a visible.
+*/
+/*!
+  \qmlsignal AbstractAxis::onArrowVisibleChanged(bool visible)
+  Visiblity of the axis arrow has changed to \a visible.
+*/
+
+/*!
+  \fn void QAbstractAxis::labelsVisibleChanged(bool visible)
+  Visiblity of the labels of the axis has changed to \a visible.
+*/
+/*!
+  \qmlsignal AbstractAxis::onLabelsVisibleChanged(bool visible)
   Visiblity of the labels of the axis has changed to \a visible.
 */
 
 /*!
-  \fn void QAbstractAxis::gridVisibleChanged(bool)
+  \fn void QAbstractAxis::gridVisibleChanged(bool visible)
+  Visiblity of the grid lines of the axis has changed to \a visible.
+*/
+/*!
+  \qmlsignal AbstractAxis::onGridVisibleChanged(bool visible)
   Visiblity of the grid lines of the axis has changed to \a visible.
 */
 
-/*
-  \fn void QAbstractAxis::minChanged(qreal min)
-  Axis emits signal when \a min of axis has changed.
-*/
-
-/*
-  \fn void QAbstractAxis::maxChanged(qreal max)
-  Axis emits signal when \a max of axis has changed.
-*/
-
-/*
-  \fn void QAbstractAxis::rangeChanged(qreal min, qreal max)
-  Axis emits signal when \a min or \a max of axis has changed.
-*/
-
-/*
-  \fn QChartAxisCategories* QAbstractAxis::categories()
-  Returns pointer to the list of categories which correspond to the values on the axis.
-*/
-
 /*!
-  \fn void QAbstractAxis::colorChanged(QColor)
+  \fn void QAbstractAxis::colorChanged(QColor color)
+  Emitted if the \a color of the axis is changed.
+*/
+/*!
+  \qmlsignal AbstractAxis::onColorChanged(QColor color)
   Emitted if the \a color of the axis is changed.
 */
 
 /*!
-  \fn void QAbstractAxis::labelsColorChanged(QColor)
+  \fn void QAbstractAxis::labelsColorChanged(QColor color)
+  Emitted if the \a color of the axis labels is changed.
+*/
+/*!
+  \qmlsignal AbstractAxis::onLabelsColorChanged(QColor color)
   Emitted if the \a color of the axis labels is changed.
 */
 
@@ -220,14 +229,26 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \fn void QAbstractAxis::shadesVisibleChanged(bool)
   Emitted if the visibility of the axis shades is changed to \a visible.
 */
+/*!
+  \qmlsignal AbstractAxis::onShadesVisibleChanged(bool visible)
+  Emitted if the visibility of the axis shades is changed to \a visible.
+*/
 
 /*!
-  \fn void QAbstractAxis::shadesColorChanged(QColor)
+  \fn void QAbstractAxis::shadesColorChanged(QColor color)
+  Emitted if the \a color of the axis shades is changed.
+*/
+/*!
+  \qmlsignal AbstractAxis::onShadesColorChanged(QColor color)
   Emitted if the \a color of the axis shades is changed.
 */
 
 /*!
   \fn void QAbstractAxis::shadesBorderColorChanged(QColor)
+  Emitted if the border \a color of the axis shades is changed.
+*/
+/*!
+  \qmlsignal AbstractAxis::onBorderColorChanged(QColor color)
   Emitted if the border \a color of the axis shades is changed.
 */
 
@@ -287,18 +308,18 @@ QColor QAbstractAxis::axisPenColor() const
 /*!
   Sets if axis and ticks are \a visible.
  */
-void QAbstractAxis::setAxisVisible(bool visible)
+void QAbstractAxis::setArrowVisible(bool visible)
 {
-    if (d_ptr->m_axisVisible != visible) {
-        d_ptr->m_axisVisible = visible;
+    if (d_ptr->m_arrowVisible != visible) {
+        d_ptr->m_arrowVisible = visible;
         emit d_ptr->updated();
-        emit visibleChanged(visible);
+        emit arrowVisibleChanged(visible);
 	}
 }
 
-bool QAbstractAxis::isAxisVisible() const
+bool QAbstractAxis::isArrowVisible() const
 {
-    return d_ptr->m_axisVisible;
+    return d_ptr->m_arrowVisible;
 }
 
 void QAbstractAxis::setGridLineVisible(bool visible)
@@ -580,7 +601,7 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     q_ptr(q),
     m_visible(false),
-    m_axisVisible(true),
+    m_arrowVisible(true),
     m_gridLineVisible(true),
     m_labelsVisible(true),
     m_labelsAngle(0),
