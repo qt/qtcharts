@@ -25,7 +25,7 @@
 #include <QGraphicsLayout>
 #include <QDebug>
 #include <QFontMetrics>
-#include <QCategoriesAxis>
+#include <QBarCategoriesAxis>
 
 static int label_padding = 5;
 

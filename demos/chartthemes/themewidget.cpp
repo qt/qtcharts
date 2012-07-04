@@ -40,7 +40,7 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QTime>
-#include <QCategoriesAxis>
+#include <QBarCategoriesAxis>
 
 ThemeWidget::ThemeWidget(QWidget* parent) :
     QWidget(parent),

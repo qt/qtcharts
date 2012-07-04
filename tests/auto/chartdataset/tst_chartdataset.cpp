@@ -21,7 +21,7 @@
 #include <QtTest/QtTest>
 #include <qabstractaxis.h>
 #include <qvaluesaxis.h>
-#include <qcategoriesaxis.h>
+#include <qbarcategoriesaxis.h>
 #include <qlineseries.h>
 #include <qareaseries.h>
 #include <qscatterseries.h>

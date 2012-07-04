@@ -42,7 +42,7 @@
 #include <cmath>
 #include <QDebug>
 #include <QStandardItemModel>
-#include <QCategoriesAxis>
+#include <QBarCategoriesAxis>
 
 
 QTCOMMERCIALCHART_USE_NAMESPACE

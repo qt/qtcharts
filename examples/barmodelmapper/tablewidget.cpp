@@ -30,7 +30,7 @@
 #include <QBarSet>
 #include <QVBarModelMapper>
 #include <QHeaderView>
-#include <QCategoriesAxis>
+#include <QBarCategoriesAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

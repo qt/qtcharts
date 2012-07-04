@@ -27,28 +27,31 @@
 //
 // We mean it.
 
-#ifndef QCATEGORIESAXIS_P_H
-#define QCATEGORIESAXIS_P_H
+#ifndef QBARCATEGORIESAXIS_P_H
+#define QBARCATEGORIESAXIS_P_H
 
-#include "qcategoriesaxis.h"
-#include "qvaluesaxis_p.h"
+#include "qbarcategoriesaxis.h"
+#include "qabstractaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-
-typedef QPair<qreal, qreal> Range;
-
-class QCategoriesAxisPrivate : public QValuesAxisPrivate
+class QBarCategoriesAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
 
 public:
-    QCategoriesAxisPrivate(QCategoriesAxis *q);
-    ~QCategoriesAxisPrivate();
-
+    QBarCategoriesAxisPrivate(QBarCategoriesAxis *q);
+    ~QBarCategoriesAxisPrivate();
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
+    void emitRange();
+
+private:
+    //range handling
+    void setMin(const QVariant &min);
+    void setMax(const QVariant &max);
+    void setRange(const QVariant &min, const QVariant &max);
     int ticksCount() const;
 
 Q_SIGNALS:
@@ -58,14 +61,14 @@ public Q_SLOTS:
     void handleAxisRangeChanged(qreal min, qreal max,int count);
 
 private:
-    QMap<QString , Range> m_categoriesMap;
     QStringList m_categories;
-    qreal m_categoryMinimum;
+    QString m_minCategory;
+    QString m_maxCategory;
 
 private:
-    Q_DECLARE_PUBLIC(QCategoriesAxis)
+    Q_DECLARE_PUBLIC(QBarCategoriesAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QCATEGORIESAXIS_P_H
+#endif // QBARCATEGORIESAXIS_P_H

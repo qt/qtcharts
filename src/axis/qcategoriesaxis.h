@@ -22,53 +22,41 @@
 #define QCATEGORIESAXIS_H
 
 #include "qabstractaxis.h"
+#include "qvaluesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QBarCategoriesAxisPrivate;
+class QCategoriesAxisPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QBarCategoriesAxis : public QAbstractAxis
+class QTCOMMERCIALCHART_EXPORT QCategoriesAxis : public QValuesAxis
 {
     Q_OBJECT
-    Q_PROPERTY(QStringList categories READ categories WRITE setCategories NOTIFY categoriesChanged)
-    Q_PROPERTY(QString min READ min WRITE setMin NOTIFY minChanged)
-    Q_PROPERTY(QString max READ max WRITE setMax NOTIFY maxChanged)
 
 public:
-    explicit QBarCategoriesAxis(QObject *parent = 0);
-    ~QBarCategoriesAxis();
+    explicit QCategoriesAxis(QObject *parent = 0);
+    ~QCategoriesAxis();
 
 protected:
-    QBarCategoriesAxis(QBarCategoriesAxisPrivate &d,QObject *parent = 0);
+    QCategoriesAxis(QCategoriesAxisPrivate &d,QObject *parent = 0);
 
 public:
     AxisType type() const;
-    void append(const QStringList &categories);
-    void append(const QString &category);
-    void remove(const QString &category);
-    void insert(int index, const QString &category);
-    void clear();
-    void setCategories(const QStringList &categories);
+
+    void append(const QString& category, qreal interval = 1);
+    void remove(const QString& category);
+
+    void setFisrtCategoryMinimum(qreal x);
+
+    qreal categoryMin(const QString& category) const;
+    qreal categoryMax(const QString& category) const;
+
     QStringList categories();
     int count() const;
-    QString at(int index) const;
 
-    //range handling
-    void setMin(const QString& minCategory);
-    QString min() const;
-    void setMax(const QString& maxCategory);
-    QString max() const;
-    void setRange(const QString& minCategory, const QString& maxCategory);
-
-Q_SIGNALS:
-    void categoriesChanged();
-	void minChanged(const QString &min);
-	void maxChanged(const QString &max);
-	void rangeChanged(const QString &min, const QString &max);
 
 private:
-    Q_DECLARE_PRIVATE(QBarCategoriesAxis)
-    Q_DISABLE_COPY(QBarCategoriesAxis)
+    Q_DECLARE_PRIVATE(QCategoriesAxis)
+    Q_DISABLE_COPY(QCategoriesAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
