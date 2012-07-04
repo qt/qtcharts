@@ -26,18 +26,18 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QCategoriesAxisPrivate;
+class QIntervalAxisPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QCategoriesAxis : public QValuesAxis
+class QTCOMMERCIALCHART_EXPORT QIntervalAxis : public QValuesAxis
 {
     Q_OBJECT
 
 public:
-    explicit QCategoriesAxis(QObject *parent = 0);
-    ~QCategoriesAxis();
+    explicit QIntervalAxis(QObject *parent = 0);
+    ~QIntervalAxis();
 
 protected:
-    QCategoriesAxis(QCategoriesAxisPrivate &d,QObject *parent = 0);
+    QIntervalAxis(QIntervalAxisPrivate &d,QObject *parent = 0);
 
 public:
     AxisType type() const;
@@ -55,8 +55,8 @@ public:
 
 
 private:
-    Q_DECLARE_PRIVATE(QCategoriesAxis)
-    Q_DISABLE_COPY(QCategoriesAxis)
+    Q_DECLARE_PRIVATE(QIntervalAxis)
+    Q_DISABLE_COPY(QIntervalAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

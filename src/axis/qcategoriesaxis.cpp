@@ -27,16 +27,16 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QCategoriesAxis::QCategoriesAxis(QObject *parent):
-    QValuesAxis(*new QCategoriesAxisPrivate(this),parent)
+QIntervalAxis::QIntervalAxis(QObject *parent):
+    QValuesAxis(*new QIntervalAxisPrivate(this),parent)
 {
 }
 
-QCategoriesAxis::~QCategoriesAxis()
+QIntervalAxis::~QIntervalAxis()
 {
 }
 
-QCategoriesAxis::QCategoriesAxis(QCategoriesAxisPrivate &d,QObject *parent):QValuesAxis(d,parent)
+QIntervalAxis::QIntervalAxis(QIntervalAxisPrivate &d,QObject *parent):QValuesAxis(d,parent)
 {
 
 }
@@ -44,9 +44,9 @@ QCategoriesAxis::QCategoriesAxis(QCategoriesAxisPrivate &d,QObject *parent):QVal
 /*!
     Appends \a categories to axis
 */
-void QCategoriesAxis::append(const QString& category, qreal x)
+void QIntervalAxis::append(const QString& category, qreal x)
 {
-    Q_D(QCategoriesAxis);
+    Q_D(QIntervalAxis);
     if (!d->m_categories.contains(category))
     {
     	if(d->m_categories.isEmpty()){
@@ -62,9 +62,9 @@ void QCategoriesAxis::append(const QString& category, qreal x)
     }
 }
 
-void QCategoriesAxis::setFisrtCategoryMinimum(qreal x)
+void QIntervalAxis::setFisrtCategoryMinimum(qreal x)
 {
-	 Q_D(QCategoriesAxis);
+	 Q_D(QIntervalAxis);
 	 if(d->m_categories.isEmpty()){
 		 d->m_categoryMinimum=x;
 	 }else{
@@ -77,62 +77,62 @@ void QCategoriesAxis::setFisrtCategoryMinimum(qreal x)
 /*!
     Removes \a category from axis
 */
-void QCategoriesAxis::remove(const QString &category)
+void QIntervalAxis::remove(const QString &category)
 {
 	Q_UNUSED(category);
 	//TODO
 }
 
-QStringList QCategoriesAxis::categories()
+QStringList QIntervalAxis::categories()
 {
-    Q_D(QCategoriesAxis);
+    Q_D(QIntervalAxis);
     return d->m_categories;
 }
 
 /*!
   Returns number of categories.
  */
-int QCategoriesAxis::count() const
+int QIntervalAxis::count() const
 {
-    Q_D(const QCategoriesAxis);
+    Q_D(const QIntervalAxis);
     return d->m_categories.count();
 }
 
 /*!
     Returns the type of axis.
 */
-QAbstractAxis::AxisType QCategoriesAxis::type() const
+QAbstractAxis::AxisType QIntervalAxis::type() const
 {
     return AxisTypeCategories;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QCategoriesAxisPrivate::QCategoriesAxisPrivate(QCategoriesAxis* q):
+QIntervalAxisPrivate::QIntervalAxisPrivate(QIntervalAxis* q):
     QValuesAxisPrivate(q),
     m_categoryMinimum(0)
 {
 
 }
 
-QCategoriesAxisPrivate::~QCategoriesAxisPrivate()
+QIntervalAxisPrivate::~QIntervalAxisPrivate()
 {
 
 }
 
-int QCategoriesAxisPrivate::ticksCount() const
+int QIntervalAxisPrivate::ticksCount() const
 {
     return m_categories.count()+1;
 }
 
-void QCategoriesAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
+void QIntervalAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
 {
     m_min = min;
     m_max = max;
     m_ticksCount = count;
 }
 
-ChartAxis* QCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
+ChartAxis* QIntervalAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
 	Q_UNUSED(presenter);
    // Q_Q( QCategoriesAxis);

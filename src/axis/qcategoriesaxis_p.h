@@ -38,13 +38,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 typedef QPair<qreal, qreal> Range;
 
-class QCategoriesAxisPrivate : public QValuesAxisPrivate
+class QIntervalAxisPrivate : public QValuesAxisPrivate
 {
     Q_OBJECT
 
 public:
-    QCategoriesAxisPrivate(QCategoriesAxis *q);
-    ~QCategoriesAxisPrivate();
+    QIntervalAxisPrivate(QIntervalAxis *q);
+    ~QIntervalAxisPrivate();
 
 
 public:
@@ -63,7 +63,7 @@ private:
     qreal m_categoryMinimum;
 
 private:
-    Q_DECLARE_PUBLIC(QCategoriesAxis)
+    Q_DECLARE_PUBLIC(QIntervalAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
