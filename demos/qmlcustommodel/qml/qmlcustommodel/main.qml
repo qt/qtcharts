@@ -38,6 +38,11 @@ Rectangle {
         }
 
         ValuesAxis {
+            id: xAxis
+            min: 0
+            max: 6.5
+        }
+        ValuesAxis {
             id: yAxis
             min: 0
             max: 60
@@ -164,10 +169,21 @@ Rectangle {
         //![3]
 
         Component.onCompleted: {
-              createDefaultAxes();
-              setAxisX(categoryAxis,myBarSeries)
-              categoryAxis.min = "2007"
-              categoryAxis.max = "2014"
+            setAxisX(categoryAxis,myBarSeries)
+            setAxisX(xAxis,lineSeries1)
+            setAxisX(xAxis,lineSeries2)
+            setAxisX(xAxis,lineSeries3)
+            setAxisX(xAxis,lineSeries4)
+            setAxisX(xAxis,lineSeries5)
+            setAxisY(yAxis,myBarSeries)
+            setAxisY(yAxis,lineSeries1)
+            setAxisY(yAxis,lineSeries2)
+            setAxisY(yAxis,lineSeries3)
+            setAxisY(yAxis,lineSeries4)
+            setAxisY(yAxis,lineSeries5)
+            categoryAxis.min = "2007"
+            categoryAxis.max = "2014"
+            categoryAxis.visible = true;
         }
     }
 }
