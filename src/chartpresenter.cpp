@@ -93,9 +93,14 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
     }
 
     QObject::connect(this,SIGNAL(geometryChanged(QRectF)),item,SLOT(handleGeometryChanged(QRectF)));
+    QObject::connect(axis,SIGNAL(visibleChanged(bool)),this,SLOT(handleAxisVisibleChanged(bool)));
     //initialize
     if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
+    //reload visiblity
     m_axisItems.insert(axis, item);
+    if(axis->isVisible()) axis->hide();
+    axis->show();
+
 }
 
 void ChartPresenter::handleAxisRemoved(QAbstractAxis* axis)
@@ -136,6 +141,27 @@ void ChartPresenter::handleSeriesRemoved(QAbstractSeries* series)
             m_animator->removeAnimation(item);
     }
     item->deleteLater();
+}
+
+
+void ChartPresenter::handleAxisVisibleChanged(bool visible)
+{
+    QAbstractAxis* axis = static_cast<QAbstractAxis*> (sender());
+    Q_ASSERT(axis);
+    if(visible){
+
+        QMapIterator<QAbstractAxis*, ChartAxis*> i(m_axisItems);
+
+        while (i.hasNext()) {
+        i.next();
+        if(i.key()==axis) {
+            continue;
+        }
+        if(i.key()->d_ptr->m_orientation==axis->d_ptr->m_orientation) {
+            i.key()->setVisible(false);
+        }
+        }
+    }
 }
 
 void ChartPresenter::setTheme(QChart::ChartTheme theme,bool force)

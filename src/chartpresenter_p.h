@@ -143,6 +143,7 @@ public Q_SLOTS:
     void handleSeriesRemoved(QAbstractSeries* series);
     void handleAxisAdded(QAbstractAxis* axis,Domain* domain);
     void handleAxisRemoved(QAbstractAxis* axis);
+    void handleAxisVisibleChanged(bool visible);
 
 private Q_SLOTS:
     void handleAnimationFinished();

@@ -516,8 +516,11 @@ bool QAbstractAxis::isVisible() const
 */
 void QAbstractAxis::setVisible(bool visible)
 {
-    d_ptr->m_visible=visible;
-    emit d_ptr->updated();
+    if(d_ptr->m_visible!=visible){
+        d_ptr->m_visible=visible;
+        emit visibleChanged(visible);
+        emit d_ptr->updated();
+    }
 }
 
 
@@ -555,7 +558,7 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     q_ptr(q),
-    m_visible(true),
+    m_visible(false),
     m_axisVisible(true),
     m_gridLineVisible(true),
     m_labelsVisible(true),
