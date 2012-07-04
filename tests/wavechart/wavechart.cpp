@@ -36,6 +36,8 @@ WaveChart::WaveChart(QChart* chart, QWidget* parent) :
     blue.setWidth(3);
     m_series->setPen(blue);
 
+    chart->legend()->setVisible(false);
+
     QTime now = QTime::currentTime();
     qsrand((uint) now.msec());
 
@@ -46,6 +48,7 @@ WaveChart::WaveChart(QChart* chart, QWidget* parent) :
     }
 
     chart->addSeries(m_series);
+    chart->createDefaultAxes();
 
     QObject::connect(&m_timer, SIGNAL(timeout()), this, SLOT(update()));
     m_timer.setInterval(5000);
