@@ -124,6 +124,8 @@ QBarCategoriesAxis::QBarCategoriesAxis(QBarCategoriesAxisPrivate &d,QObject *par
 */
 void QBarCategoriesAxis::append(const QStringList &categories)
 {
+    if(categories.isEmpty()) return;
+
     Q_D(QBarCategoriesAxis);
     if (d->m_categories.isEmpty()) {
     	d->m_categories.append(categories);
@@ -173,7 +175,7 @@ void QBarCategoriesAxis::insert(int index, const QString &category)
     	d->m_categories.insert(index,category);
     	setRange(category,category);
     }else{
-
+        d->m_categories.insert(index,category);
     }
     emit categoriesChanged();
 }
@@ -295,7 +297,7 @@ void QBarCategoriesAxis::setRange(const QString& minCategory, const QString& max
         changed = true;
     }
 
-    if ((changed)) {
+    if (changed) {
         d->emitRange();
         emit categoriesChanged();
     }

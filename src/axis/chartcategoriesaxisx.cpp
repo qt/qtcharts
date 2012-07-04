@@ -81,11 +81,11 @@ void ChartCategoriesAxisX::updateGeometry()
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
     lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
 
-    for (int i = 1; i < layout.size(); ++i) {
+    for (int i = 0; i < layout.size(); ++i) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
         lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i-1));
-
+        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+        if (i>=1) {
         labelItem->setText(ticksList.at(i-1));
         const QRectF& rect = labelItem->boundingRect();
         QPointF center = rect.center();
@@ -93,6 +93,9 @@ void ChartCategoriesAxisX::updateGeometry()
         labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
         m_minWidth+=rect.width();
         m_minHeight=qMax(rect.height()+label_padding,m_minHeight);
+        }else{
+            labelItem->setVisible(false);
+        }
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
