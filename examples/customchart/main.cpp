@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
-    *series << QPointF(0, 6) << QPointF(0.5, 4) << QPointF(1, 8) << QPointF(1.5, 4) << QPointF(2, 3);
+    *series << QPointF(0, 0.6) << QPointF(0.5, 0.4) << QPointF(1, 2) << QPointF(1.5, 1.2) << QPointF(2, 1.0);
     QChart* chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 
 //![3]
     QBarCategoriesAxis* axisX = new QBarCategoriesAxis;
-    QValuesAxis* axisY = new QValuesAxis;
+    QBarCategoriesAxis* axisY = new QBarCategoriesAxis;
 
     // Customize axis label font
     QFont labelsFont;
@@ -94,11 +94,14 @@ int main(int argc, char *argv[])
 //![4]
     axisX->append("low");
     axisX->append("optimal");
-    axisX->append("high");
+    axisX->append("high");    
 
     axisX->setRange("low","high");
-    axisY->setRange(0,10);
-    axisY->setTicksCount(4);
+    axisY->append("slow");
+    axisY->append("medium");
+    axisY->append("fast");
+    axisY->setRange("slow","fast");
+//    axisY->setTicksCount(4);
     chart->setAxisX(axisX, series);
     chart->setAxisY(axisY, series);
 //![4]
