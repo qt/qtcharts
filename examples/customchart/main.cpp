@@ -22,6 +22,7 @@
 #include <QMainWindow>
 #include <QChartView>
 #include <QLineSeries>
+#include <QValuesAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -35,6 +36,7 @@ int main(int argc, char *argv[])
     QChart* chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
+    chart->createDefaultAxes();
 //![1]
 
 //![2]
@@ -61,8 +63,8 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QAxis* axisX = chart->axisX();
-    QAxis* axisY = chart->axisY();
+    QValuesAxis* axisX = qobject_cast<QValuesAxis *>(chart->axisX());
+    QValuesAxis* axisY = qobject_cast<QValuesAxis *>(chart->axisY());
 
     // Customize axis label font
     QFont labelsFont;
@@ -90,15 +92,15 @@ int main(int argc, char *argv[])
 //![3]
 
 //![4]
-    QAxisCategories* categoriesX = chart->axisX()->categories();
-    categoriesX->insert(1,"low");
-    categoriesX->insert(5,"optimal");
-    categoriesX->insert(10,"high");
+//    QAxisCategories* categoriesX = chart->axisX()->categories();
+//    categoriesX->insert(1,"low");
+//    categoriesX->insert(5,"optimal");
+//    categoriesX->insert(10,"high");
 
-    QAxisCategories* categoriesY = chart->axisY()->categories();
-    categoriesY->insert(1,"slow");
-    categoriesY->insert(5,"med");
-    categoriesY->insert(10,"fast");
+//    QAxisCategories* categoriesY = chart->axisY()->categories();
+//    categoriesY->insert(1,"slow");
+//    categoriesY->insert(5,"med");
+//    categoriesY->insert(10,"fast");
 
     axisX->setRange(0,10);
     axisX->setTicksCount(4);
