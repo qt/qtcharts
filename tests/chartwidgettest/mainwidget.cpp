@@ -275,17 +275,17 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
         QAbstractBarSeries* series = 0;
         if (seriesName == "Bar") {
             series = new QBarSeries(this);
-            QCategoriesAxis* axis = new QCategoriesAxis();
+            QBarCategoriesAxis* axis = new QBarCategoriesAxis();
             axis->append(category);
             m_chart->setAxisX(axis,series);
         } else if (seriesName == "Stacked bar") {
             series = new QStackedBarSeries(this);
-            QCategoriesAxis* axis = new QCategoriesAxis();
+            QBarCategoriesAxis* axis = new QBarCategoriesAxis();
             axis->append(category);
             m_chart->setAxisX(axis,series);
         } else {
             series = new QPercentBarSeries(this);
-            QCategoriesAxis* axis = new QCategoriesAxis();
+            QBarCategoriesAxis* axis = new QBarCategoriesAxis();
             axis->append(category);
             m_chart->setAxisX(axis,series);
         }

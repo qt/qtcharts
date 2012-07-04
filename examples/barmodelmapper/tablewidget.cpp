@@ -88,7 +88,7 @@ TableWidget::TableWidget(QWidget *parent)
     //! [6]
     QStringList categories;
     categories << "April" << "May" << "June" << "July" << "August";
-    QCategoriesAxis* axis = new QCategoriesAxis();
+    QBarCategoriesAxis* axis = new QBarCategoriesAxis();
     axis->append(categories);    
     chart->createDefaultAxes();
     chart->setAxisX(axis, series);

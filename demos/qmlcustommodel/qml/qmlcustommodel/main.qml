@@ -32,7 +32,7 @@ Rectangle {
         anchors.fill: parent
         animationOptions: ChartView.SeriesAnimations
         
-        CategoriesAxis {
+        BarCategoriesAxis {
             id: categoryAxis
             categories: ["2007", "2008", "2009", "2010", "2011", "2012" ]
         }

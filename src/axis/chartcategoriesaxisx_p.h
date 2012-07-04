@@ -36,12 +36,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAbstractAxis;
 class ChartPresenter;
-class QCategoriesAxis;
+class QBarCategoriesAxis;
 
 class ChartCategoriesAxisX : public ChartAxis
 {
 public:
-    ChartCategoriesAxisX(QCategoriesAxis *axis, ChartPresenter *presenter);
+    ChartCategoriesAxisX(QBarCategoriesAxis *axis, ChartPresenter *presenter);
     ~ChartCategoriesAxisX();
 
     AxisType axisType() const { return X_AXIS;}
@@ -51,7 +51,7 @@ protected:
     void updateGeometry();
 
 private:
-    QCategoriesAxis *m_categoriesAxis;
+    QBarCategoriesAxis *m_categoriesAxis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

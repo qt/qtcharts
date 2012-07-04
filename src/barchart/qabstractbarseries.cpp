@@ -712,7 +712,7 @@ void QAbstractBarSeriesPrivate::initializeAxisX(QAbstractAxis* axis)
 {
     if(axis->type()==QAbstractAxis::AxisTypeCategories)
     {
-        QCategoriesAxis* cataxis = qobject_cast<QCategoriesAxis*>(axis);
+        QBarCategoriesAxis* cataxis = qobject_cast<QBarCategoriesAxis*>(axis);
         Q_ASSERT(cataxis);
         QStringList categories;
         for (int i(1); i < categoryCount()+1; i++)

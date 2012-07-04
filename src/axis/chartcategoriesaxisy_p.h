@@ -35,7 +35,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAbstractAxis;
-class QCategoriesAxis;
+class QBarCategoriesAxis;
 class ChartPresenter;
 
 class ChartCategoriesAxisY : public ChartAxis
@@ -51,7 +51,7 @@ protected:
     void updateGeometry();
 
 private:
-    QCategoriesAxis *m_categoriesAxis;
+    QBarCategoriesAxis *m_categoriesAxis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

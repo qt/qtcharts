@@ -35,13 +35,13 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QCategoriesAxisPrivate : public QAbstractAxisPrivate
+class QBarCategoriesAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
 
 public:
-    QCategoriesAxisPrivate(QCategoriesAxis *q);
-    ~QCategoriesAxisPrivate();
+    QBarCategoriesAxisPrivate(QBarCategoriesAxis *q);
+    ~QBarCategoriesAxisPrivate();
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
@@ -66,7 +66,7 @@ private:
     QString m_maxCategory;
 
 private:
-    Q_DECLARE_PUBLIC(QCategoriesAxis)
+    Q_DECLARE_PUBLIC(QBarCategoriesAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

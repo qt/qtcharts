@@ -29,7 +29,7 @@ Rectangle {
         title: "Stacked Bar series"
         anchors.fill: parent
         legend.alignment: Qt.AlignBottom
-        CategoriesAxis {
+        BarCategoriesAxis {
             id: myAxis; 
             categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] 
             }
