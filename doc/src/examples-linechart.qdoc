@@ -15,7 +15,7 @@
 
     \snippet ../examples/linechart/main.cpp 2
 
-    To present the data on the char we need QChart instance. We add the series to it and set the title of the chart.
+    To present the data on the char we need QChart instance. We add the series to it, create the default axes and set the title of the chart.
 
     \snippet ../examples/linechart/main.cpp 3
 
