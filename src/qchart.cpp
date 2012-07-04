@@ -306,7 +306,7 @@ void QChart::zoom(qreal factor)
 }
 
 /*!
- Returns the pointer to the x axis object of the chart
+ Returns the pointer to the x axis object of the chart asociated with the specified \a series
  */
 QAbstractAxis* QChart::axisX(QAbstractSeries* series) const
 {
@@ -314,14 +314,29 @@ QAbstractAxis* QChart::axisX(QAbstractSeries* series) const
 }
 
 /*!
- Returns the pointer to the y axis object of the \a series
- If no \a series is provided then default Y axis of the chart is returned.
+ Returns the pointer to the y axis object of the chart asociated with the specified \a series
  */
 QAbstractAxis* QChart::axisY(QAbstractSeries *series) const
 {
     return d_ptr->m_dataset->axisY(series);
 }
 
+/*!
+ NOTICE: This function has to be called after series has been added to the chart if no customized axes are set to the chart. Otherwise axisX(), axisY() calls return NULL.
+
+ Creates the axes for the chart based on the series that has already been added to the chart.
+ If QXYSeries derived series has been added to the chart then QValuesAxes are created as X and Y axes for the series.
+ If QBarSeries or series types derived from it has been added then QBarCategoriesAxis is created as X axis and QValueAxis as Y axis.
+ If there are several QXYSeries derived series added to the chart and no other series type has been added then only one pair of axes is created.
+ If there are sevaral series added of different types then each series gets its own axes pair.
+
+ NOTICE: if there is more than one x and y axes created then no axis is drawn by default and one needs to choose explicitly which axis should be shown.
+
+ Axis specifix to the series can be later obtained from the chart by providing the series as the parameter of axisX(), axisY() function calls.
+ QPieSeries does not create any axes.
+
+ \sa axisX(), axisY(), setAxisX(), setAxisY()
+ */
 void QChart::createDefaultAxes()
 {
 	d_ptr->m_dataset->createDefaultAxes();
@@ -401,11 +416,21 @@ void QChart::setMarginsMinimum(const QRectF& margins)
     d_ptr->m_presenter->setMarginsMinimum(margins);
 }
 
+/*!
+  Sets \a axis to the chart, which will control the presentation of the \a series
+
+   \sa axisX(), axisY(), setAxisY(), createDefaultAxes()
+*/
 void QChart::setAxisX(QAbstractAxis* axis , QAbstractSeries *series)
 {
     d_ptr->m_dataset->setAxisX(series,axis);
 }
 
+/*!
+  Sets \a axis to the chart, which will control the presentation of the \a series
+
+   \sa axisX(), axisY(), setAxisX(), createDefaultAxes()
+*/
 void QChart::setAxisY( QAbstractAxis* axis , QAbstractSeries *series)
 {
     d_ptr->m_dataset->setAxisY(series,axis);
