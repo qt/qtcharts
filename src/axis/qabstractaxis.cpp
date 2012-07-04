@@ -519,16 +519,27 @@ QColor QAbstractAxis::shadesBorderColor() const
 }
 
 
+bool QAbstractAxis::isVisible() const
+{
+    return d_ptr->m_visible;
+}
+
+/*!
+  Sets axis, shades, labels and grid lines to be visible.
+*/
+void QAbstractAxis::setVisible(bool visible)
+{
+    d_ptr->m_visible=visible;
+    emit d_ptr->updated();
+}
+
+
 /*!
   Sets axis, shades, labels and grid lines to be visible.
 */
 void QAbstractAxis::show()
 {
-    d_ptr->m_axisVisible=true;
-    d_ptr->m_gridLineVisible=true;
-    d_ptr->m_labelsVisible=true;
-    d_ptr->m_shadesVisible=true;
-    emit d_ptr->updated();
+    setVisible(true);
 }
 
 /*!
@@ -536,11 +547,7 @@ void QAbstractAxis::show()
 */
 void QAbstractAxis::hide()
 {
-    d_ptr->m_axisVisible = false;
-    d_ptr->m_gridLineVisible = false;
-    d_ptr->m_labelsVisible = false;
-    d_ptr->m_shadesVisible = false;
-    emit d_ptr->updated();
+    setVisible(false);
 }
 
 
@@ -561,6 +568,7 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     q_ptr(q),
+    m_visible(true),
     m_axisVisible(true),
     m_gridLineVisible(true),
     m_labelsVisible(true),

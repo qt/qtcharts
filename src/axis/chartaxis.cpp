@@ -260,30 +260,42 @@ void ChartAxis::handleAxisUpdated()
 
     if (isEmpty()) return;
 
-    if (m_chartAxis->isAxisVisible()) {
-        setAxisOpacity(100);
-    } else {
+    if (!m_chartAxis->isVisible()) {
         setAxisOpacity(0);
-    }
-
-    if (m_chartAxis->isGridLineVisible()) {
-        setGridOpacity(100);
-    } else {
         setGridOpacity(0);
-    }
-
-    if (m_chartAxis->labelsVisible()) {
-        setLabelsOpacity(100);
-    } else {
         setLabelsOpacity(0);
-    }
-
-    if (m_chartAxis->shadesVisible()) {
-        setShadesOpacity(100);
-    } else {
         setShadesOpacity(0);
     }
+    else {
 
+        if (m_chartAxis->isAxisVisible()) {
+            setAxisOpacity(100);
+        }
+        else {
+            setAxisOpacity(0);
+        }
+
+        if (m_chartAxis->isGridLineVisible()) {
+            setGridOpacity(100);
+        }
+        else {
+            setGridOpacity(0);
+        }
+
+        if (m_chartAxis->labelsVisible()) {
+            setLabelsOpacity(100);
+        }
+        else {
+            setLabelsOpacity(0);
+        }
+
+        if (m_chartAxis->shadesVisible()) {
+            setShadesOpacity(100);
+        }
+        else {
+            setShadesOpacity(0);
+        }
+    }
     setLabelsAngle(m_chartAxis->labelsAngle());
     setAxisPen(m_chartAxis->axisPen());
     setLabelsPen(m_chartAxis->labelsPen());

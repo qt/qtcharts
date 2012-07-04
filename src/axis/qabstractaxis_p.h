@@ -59,6 +59,7 @@ protected:
 
 public:
     QAbstractAxis *q_ptr;
+    bool m_visible;
 
     bool m_axisVisible;
     QPen m_axisPen;
