@@ -27,6 +27,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
+    \internal
     \class QIntervalAxis
     \brief The QIntervalAxis class is used for manipulating chart's axis.
     \mainclass

@@ -33,8 +33,7 @@
                     <li><a href="qchartview.html">QChartView</a></li>
                     <li><a href="qabstractaxis.html">QAbstractAxis</a></li>
                     <li><a href="qvaluesaxis.html">QValuesAxis</a></li>
-                    <li><a href="qbarcategoriesaxis.html">QBarCategoriesAxis</a></li>
-                    <li><a href="qintervalaxis.html">QIntervalAxis</a></li>                    
+                    <li><a href="qbarcategoriesaxis.html">QBarCategoriesAxis</a></li>                   
                     <li><a href="qlegend.html">QLegend</a></li>
                     <li><a href="qabstractseries.html">QAbstractSeries</a></li>
                     <li><a href="qchartglobal.html">QChartGlobal</a></li>
