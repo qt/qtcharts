@@ -164,7 +164,7 @@ Rectangle {
         //![3]
 
         Component.onCompleted: {
-            createDefaultAxes();
+//            createDefaultAxes();
             setAxisX(categoryAxis,myBarSeries)
             setAxisX(categoryAxis,lineSeries1)
             setAxisX(categoryAxis,lineSeries2)

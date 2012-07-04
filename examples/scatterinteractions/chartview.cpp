@@ -45,6 +45,7 @@ ChartView::ChartView(QWidget *parent)
 
     chart()->addSeries(m_scatter2);
     chart()->addSeries(m_scatter);
+    chart()->createDefaultAxes();
     chart()->axisX()->setRange(0, 4.5);
     chart()->axisY()->setRange(0, 4.5);
 
