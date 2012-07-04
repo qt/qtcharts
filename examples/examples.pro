@@ -22,4 +22,5 @@ SUBDIRS += \
            barchart \
            legend \
            barmodelmapper \
-           qmlpiechart
+           qmlpiechart \
+           lineandbar
