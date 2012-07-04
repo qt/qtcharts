@@ -27,10 +27,10 @@
 //
 // We mean it.
 
-#ifndef QCATEGORIESAXIS_P_H
-#define QCATEGORIESAXIS_P_H
+#ifndef QINTERVALAXIS_P_H
+#define QINTERVALAXIS_P_H
 
-#include "qcategoriesaxis.h"
+#include "qintervalaxis.h"
 #include "qvaluesaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

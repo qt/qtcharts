@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include "qcategoriesaxis.h"
-#include "qcategoriesaxis_p.h"
+#include "qintervalaxis.h"
+#include "qintervalaxis_p.h"
 #include "chartcategoriesaxisx_p.h"
 #include "chartcategoriesaxisy_p.h"
 #include <qmath.h>
@@ -143,7 +143,7 @@ ChartAxis* QIntervalAxisPrivate::createGraphics(ChartPresenter* presenter)
     }
 }
 
-#include "moc_qcategoriesaxis.cpp"
-#include "moc_qcategoriesaxis_p.cpp"
+#include "moc_qintervalaxis.cpp"
+#include "moc_qintervalaxis_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
