@@ -26,6 +26,26 @@
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+/*!
+    \class QIntervalAxis
+    \brief The QIntervalAxis class is used for manipulating chart's axis.
+    \mainclass
+
+    Axis can be setup to show axis line with tick marks, grid lines and shades.
+*/
+
+/*!
+    \qmlclass Axis QIntervalAxis
+    \brief The Axis element is used for manipulating chart's axes.
+
+    Axis can be setup to show axis line with tick marks, grid lines and shades.
+
+    To access Axes you can use ChartView API. For example:
+    \code
+    // TODO :)
+    \endcode
+*/
+
 
 QIntervalAxis::QIntervalAxis(QObject *parent):
     QValuesAxis(*new QIntervalAxisPrivate(this),parent)
