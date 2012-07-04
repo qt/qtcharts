@@ -64,9 +64,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \value AxisTypeCategories
 */
 
-/*
-    \property QAbstractAxis::type
-    The type of the axis.
+/*!
+  \property QAbstractAxis::arrowVisible
+  The visibility of the axis arrow
+*/
+/*!
+  \qmlproperty bool Axis::arrrowVisible
+  The visibility of the axis arrow
 */
 
 /*!
@@ -76,24 +80,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlproperty bool Axis::labelsVisible
   Defines if axis labels are visible.
-*/
-
-/*
-  \property QAbstractAxis::min
-  Defines the minimum value on the axis.
-*/
-/*
-  \qmlproperty real Axis::min
-  Defines the minimum value on the axis.
-*/
-
-/*
-  \property QAbstractAxis::max
-  Defines the maximum value on the axis.
-*/
-/*
-  \qmlproperty real Axis::max
-  Defines the maximum value on the axis.
 */
 
 /*!
