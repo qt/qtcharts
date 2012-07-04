@@ -30,24 +30,26 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The QValuesAxis class is used for manipulating chart's axis.
     \mainclass
 
-    Axis can be setup to show axis line with tick marks, grid lines and shades.
+    ValuesAxis can be setup to show axis line with tick marks, grid lines and shades.
+    Values of axis are drawn to position of ticks
 */
 
 /*!
-    \qmlclass Axis QValuesAxis
-    \brief The Axis element is used for manipulating chart's axes
+    \qmlclass ValuesAxis QValuesAxis
+    \brief The ValuesAxis element is used for manipulating chart's axes
 
-    Axis can be setup to show axis line with tick marks, grid lines and shades.
+    ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
+    Values of axis are drawn to position of ticks
 
     To access Axes you can use ChartView API. For example:
     \code
         ChartView {
-            axisX.min: 0
-            axisX.max: 3
-            axisX.ticksCount: 4
-            axisY.min: 0
-            axisY.max: 4
-            // Add a few series...
+            ValuesAxis {
+                id: xAxis
+                min: 0
+                max: 10
+            }
+        // Add a few series...
         }
     \endcode
 */
@@ -57,7 +59,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the minimum value on the axis.
 */
 /*!
-  \qmlproperty real Axis::min
+  \qmlproperty real ValuesAxis::min
   Defines the minimum value on the axis.
 */
 
@@ -66,7 +68,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the maximum value on the axis.
 */
 /*!
-  \qmlproperty real Axis::max
+  \qmlproperty real ValuesAxis::max
   Defines the maximum value on the axis.
 */
 
@@ -91,7 +93,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty int Axis::ticksCount
+  \qmlproperty int ValuesAxis::ticksCount
   The number of tick marks for the axis.
 */
 
@@ -101,7 +103,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty bool Axis::niceNumbersEnabled
+  \qmlproperty bool ValuesAxis::niceNumbersEnabled
   Whether the nice numbers algorithm is enabled or not for the axis.
 */
 

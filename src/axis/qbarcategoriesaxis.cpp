@@ -31,21 +31,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The QBarCategoriesAxis class is used for manipulating chart's axis.
     \mainclass
 
-    Axis can be setup to show axis line with tick marks, grid lines and shades.
+    BarCategoriesAxis can be setup to show axis line with tick marks, grid lines and shades.
+    Categories are drawn between ticks.
 */
 
 /*!
-    \qmlclass Axis QBarCategoriesAxis
+    \qmlclass BarCategoriesAxis QBarCategoriesAxis
     \brief The Axis element is used for manipulating chart's axes.
 
     Axis can be setup to show axis line with tick marks, grid lines and shades.
+    Categories are drawn between ticks.
 
-    To access Axes you can use ChartView API. For example:
+    To access BarCategoriesAxis you can use ChartView API. For example:
     \code
         ChartView {
-            axisX.min: "Feb"
-            axisX.max: "Jun"
-            // Add a few series...
+            BarCategoriesAxis {
+                id: categoryAxis
+                categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun" ]
+            }
+        // Add a few series...
         }
     \endcode
 */
@@ -55,7 +59,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the categories of axis
 */
 /*!
-  \qmlproperty QStringList Axis::categories
+  \qmlproperty QStringList BarCategoriesAxis::categories
   Defines the categories of axis
 */
 
@@ -64,7 +68,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the minimum value on the axis.
 */
 /*!
-  \qmlproperty real Axis::min
+  \qmlproperty real BarCategoriesAxis::min
   Defines the minimum value on the axis.
 */
 
@@ -73,7 +77,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the maximum value on the axis.
 */
 /*!
-  \qmlproperty real Axis::max
+  \qmlproperty real BarCategoriesAxis::max
   Defines the maximum value on the axis.
 */
 

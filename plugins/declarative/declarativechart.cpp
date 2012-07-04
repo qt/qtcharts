@@ -165,25 +165,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlmethod ChartView::scrollLeft(real pixels)
   Scrolls to left by \a pixels. This is a convenience function that suits for example for key navigation.
-  \sa Axis::min, Axis::max
+  \sa AbstractAxis::min, AbstractAxis::max
 */
 
 /*!
   \qmlmethod ChartView::scrollRight(real pixels)
   Scrolls to right by \a pixels. This is a convenience function that suits for example for key navigation.
-  \sa Axis::min, Axis::max
+  \sa AbstractAxis::min, AbstractAxis::max
 */
 
 /*!
   \qmlmethod ChartView::scrollUp(real pixels)
   Scrolls up by \a pixels. This is a convenience function that suits for example for key navigation.
-  \sa Axis::min, Axis::max
+  \sa AbstractAxis::min, AbstractAxis::max
 */
 
 /*!
   \qmlmethod ChartView::scrollDown(real pixels)
   Scrolls down by \a pixels. This is a convenience function that suits for example for key navigation.
-  \sa Axis::min, Axis::max
+  \sa AbstractAxis::min, AbstractAxis::max
 */
 
 /*!

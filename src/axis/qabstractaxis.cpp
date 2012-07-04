@@ -28,16 +28,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The QAbstractAxis class is used for manipulating chart's axis.
     \mainclass
 
-    There is only one x Axis, however there can be multiple y axes.
+    There is only one x Axis visible at the time, however there can be multiple y axes.
     Each chart series can be bound to exactly one Y axis and the shared common X axis.
     Axis can be setup to show axis line with tick marks, grid lines and shades.
 */
 
 /*!
-    \qmlclass Axis QAbstractAxis
+    \qmlclass AbstractAxis QAbstractAxis
     \brief The Axis element is used for manipulating chart's axes
 
-    There is only one x Axis, however there can be multiple y axes on a ChartView.
+    There is only one x Axis visible at the time, however there can be multiple y axes on a ChartView.
     Each chart series can be bound to exactly one Y axis and the shared common X axis.
     Axis can be setup to show axis line with tick marks, grid lines and shades.
 
@@ -74,7 +74,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The visibility of the axis arrow
 */
 /*!
-  \qmlproperty bool Axis::arrrowVisible
+  \qmlproperty bool AbstractAxis::arrrowVisible
   The visibility of the axis arrow
 */
 
@@ -83,7 +83,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines if axis labels are visible.
 */
 /*!
-  \qmlproperty bool Axis::labelsVisible
+  \qmlproperty bool AbstractAxis::labelsVisible
   Defines if axis labels are visible.
 */
 
@@ -92,7 +92,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The visibility of the axis.
 */
 /*!
-  \qmlproperty bool Axis::visible
+  \qmlproperty bool AbstractAxis::visible
   The visibility of the axis.
 */
 
@@ -101,7 +101,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The visibility of the grid lines.
 */
 /*!
-  \qmlproperty bool Axis::gridVisible
+  \qmlproperty bool AbstractAxis::gridVisible
   The visibility of the grid lines.
 */
 
@@ -110,7 +110,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The color of the axis and ticks.
 */
 /*!
-  \qmlproperty color Axis::color
+  \qmlproperty color AbstractAxis::color
   The color of the axis and ticks.
 */
 
@@ -120,7 +120,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty Font Axis::labelsFont
+  \qmlproperty Font AbstractAxis::labelsFont
   The font of the axis labels.
 
   See the \l {Font} {QML Font Element} for detailed documentation.
@@ -131,7 +131,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The color of the axis labels.
 */
 /*!
-  \qmlproperty color Axis::labelsColor
+  \qmlproperty color AbstractAxis::labelsColor
   The color of the axis labels.
 */
 
@@ -140,7 +140,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The angle of the axis labels in degrees.
 */
 /*!
-  \qmlproperty int Axis::labelsAngle
+  \qmlproperty int AbstractAxis::labelsAngle
   The angle of the axis labels in degrees.
 */
 
@@ -149,7 +149,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The visibility of the axis shades.
 */
 /*!
-  \qmlproperty bool Axis::shadesVisible
+  \qmlproperty bool AbstractAxis::shadesVisible
   The visibility of the axis shades.
 */
 
@@ -158,7 +158,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The fill (brush) color of the axis shades.
 */
 /*!
-  \qmlproperty color Axis::shadesColor
+  \qmlproperty color AbstractAxis::shadesColor
   The fill (brush) color of the axis shades.
 */
 
@@ -167,7 +167,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   The border (pen) color of the axis shades.
 */
 /*!
-  \qmlproperty color Axis::shadesBorderColor
+  \qmlproperty color AbstractAxis::shadesBorderColor
   The border (pen) color of the axis shades.
 */
 
