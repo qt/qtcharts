@@ -19,13 +19,11 @@
 ****************************************************************************/
 
 #include "chartcategoriesaxisx_p.h"
-#include "qabstractaxis.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
+#include "qbarcategoriesaxis.h"
 #include <QGraphicsLayout>
-#include <QDebug>
 #include <QFontMetrics>
-#include <QBarCategoriesAxis>
 
 static int label_padding = 5;
 

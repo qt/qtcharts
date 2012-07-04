@@ -41,7 +41,7 @@ class ChartPresenter;
 class ChartCategoriesAxisY : public ChartAxis
 {
 public:
-    ChartCategoriesAxisY(QAbstractAxis *axis, ChartPresenter *presenter);
+    ChartCategoriesAxisY(QBarCategoriesAxis *axis, ChartPresenter *presenter);
     ~ChartCategoriesAxisY();
 
     AxisType axisType() const { return Y_AXIS;}

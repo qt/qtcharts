@@ -63,8 +63,8 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QBarCategoriesAxis* axisX = new QBarCategoriesAxis;
-    QBarCategoriesAxis* axisY = new QBarCategoriesAxis;
+    QBarCategoriesAxis* axisX = new QBarCategoriesAxis();
+    QBarCategoriesAxis* axisY = new QBarCategoriesAxis();
 
     // Customize axis label font
     QFont labelsFont;
@@ -94,14 +94,14 @@ int main(int argc, char *argv[])
 //![4]
     axisX->append("low");
     axisX->append("optimal");
-    axisX->append("high");    
-
+    axisX->append("high");
     axisX->setRange("low","high");
+
     axisY->append("slow");
-    axisY->append("medium");
+    axisY->append("med");
     axisY->append("fast");
     axisY->setRange("slow","fast");
-//    axisY->setTicksCount(4);
+
     chart->setAxisX(axisX, series);
     chart->setAxisY(axisY, series);
 //![4]

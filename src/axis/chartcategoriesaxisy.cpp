@@ -19,11 +19,10 @@
 ****************************************************************************/
 
 #include "chartcategoriesaxisy_p.h"
-#include "qabstractaxis.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
+#include "qbarcategoriesaxis.h"
 #include <QGraphicsLayout>
-#include <QDebug>
 #include <QFontMetrics>
 #include <QBarCategoriesAxis>
 
@@ -31,7 +30,8 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartCategoriesAxisY::ChartCategoriesAxisY(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter)
+ChartCategoriesAxisY::ChartCategoriesAxisY(QBarCategoriesAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
+    m_categoriesAxis(axis)
 {
 }
 
@@ -77,7 +77,7 @@ void ChartCategoriesAxisY::updateGeometry()
     Q_ASSERT(layout.size() == ticksList.size());
 
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
-    lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
+    lineItem->setLine(m_rect.left() , m_rect.top(), m_rect.left(), m_rect.bottom());
 
     for (int i = 0; i < layout.size(); ++i) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
@@ -88,7 +88,7 @@ void ChartCategoriesAxisY::updateGeometry()
         const QRectF& rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
-        labelItem->setPos(layout[i] - (layout[i] - layout[i-1])/2 - center.x(), m_rect.bottom() + label_padding);
+        labelItem->setPos(m_rect.left() - rect.width() - label_padding , layout[i] - (layout[i] - layout[i-1])/2 -center.y());
         m_minWidth+=rect.width();
         m_minHeight=qMax(rect.height()+label_padding,m_minHeight);
         }else{
@@ -98,10 +98,10 @@ void ChartCategoriesAxisY::updateGeometry()
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
-            rectItem->setRect(layout[i-1],m_rect.top(),layout[i]-layout[i-1],m_rect.height());
+            rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i-1]-layout[i]);
         }
         lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
+        lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
     }
 }
 
