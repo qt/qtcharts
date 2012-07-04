@@ -145,6 +145,11 @@ QAbstractSeries::SeriesType QScatterSeries::type() const
     return QAbstractSeries::SeriesTypeScatter;
 }
 
+/*!
+    Sets \a pen used for drawing points' border on the chart. If the pen is not defined, the
+    pen from chart theme is used.
+    \sa QChart::setTheme()
+*/
 void QScatterSeries::setPen(const QPen &pen)
 {
     Q_D(QXYSeries);
@@ -157,6 +162,11 @@ void QScatterSeries::setPen(const QPen &pen)
     }
 }
 
+/*!
+    Sets \a brush used for drawing points on the chart. If the brush is not defined, brush
+    from chart theme setting is used.
+    \sa QChart::setTheme()
+*/
 void QScatterSeries::setBrush(const QBrush &brush)
 {
     Q_D(QScatterSeries);
