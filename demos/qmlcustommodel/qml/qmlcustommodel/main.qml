@@ -34,10 +34,16 @@ Rectangle {
         
         BarCategoriesAxis {
             id: categoryAxis
-            categories: ["2007", "2008", "2009", "2010", "2011", "2012" ]
+            categories: ["2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014" ]
+        }
+
+        ValuesAxis {
+            id: yAxis
+            min: 0
+            max: 60
         }
         // ...
-    //![1]
+        //![1]
 
         //![2]
         CustomModel {
@@ -58,7 +64,7 @@ Rectangle {
             id: myBarSeries
             name: "Others"
             barWidth: 0.9
-           // visible: false
+            visible: false
             HBarModelMapper {
                 model: customModel
                 firstBarSetRow: 6
@@ -70,8 +76,9 @@ Rectangle {
 
         //![4]
         LineSeries {
+            id: lineSeries1
             name: "Volkswagen"
-            //visible: false
+            visible: false
             HXYModelMapper {
                 model: customModel
                 xRow: 0
@@ -82,6 +89,7 @@ Rectangle {
         //![4]
 
         LineSeries {
+            id: lineSeries2
             name: "Toyota"
             visible: false
             HXYModelMapper {
@@ -93,6 +101,7 @@ Rectangle {
         }
 
         LineSeries {
+            id: lineSeries3
             name: "Ford"
             visible: false
             HXYModelMapper {
@@ -104,6 +113,7 @@ Rectangle {
         }
 
         LineSeries {
+            id: lineSeries4
             name: "Skoda"
             visible: false
             HXYModelMapper {
@@ -115,6 +125,7 @@ Rectangle {
         }
 
         LineSeries {
+            id: lineSeries5
             name: "Volvo"
             visible: false
             HXYModelMapper {
@@ -129,7 +140,7 @@ Rectangle {
         PieSeries {
             id: pieSeries
             size: 0.4
-            horizontalPosition: 0.7
+            horizontalPosition: 0.85
             verticalPosition: 0.4
             onClicked: {
                 // Show the selection by exploding the slice
@@ -142,20 +153,32 @@ Rectangle {
                     }
                 }
             }
+
+            VPieModelMapper {
+                model: customModel
+                labelsColumn: 1
+                valuesColumn: 2
+                firstRow: 1
+            }
         }
         //![3]
 
-        VPieModelMapper {
-            series: pieSeries
-            model: customModel
-          labelsColumn: 1
-            valuesColumn: 2
-            firstRow: 1
-        }
-       
         Component.onCompleted: {
             createDefaultAxes();
             setAxisX(categoryAxis,myBarSeries)
-        }  
+            setAxisX(categoryAxis,lineSeries1)
+            setAxisX(categoryAxis,lineSeries2)
+            setAxisX(categoryAxis,lineSeries3)
+            setAxisX(categoryAxis,lineSeries4)
+            setAxisX(categoryAxis,lineSeries5)
+            setAxisY(yAxis,myBarSeries)
+            setAxisY(yAxis,lineSeries1)
+            setAxisY(yAxis,lineSeries2)
+            setAxisY(yAxis,lineSeries3)
+            setAxisY(yAxis,lineSeries4)
+            setAxisY(yAxis,lineSeries5)
+            categoryAxis.min = "2007"
+            categoryAxis.max = "2014"
+        }
     }
 }
