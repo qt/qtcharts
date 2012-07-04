@@ -64,6 +64,7 @@ void QXYModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
+    connect(d->m_model, SIGNAL(destroyed()), d, SLOT(handleModelDestroyed()));
 }
 
 /*!
@@ -94,6 +95,7 @@ void QXYModelMapper::setSeries(QXYSeries *series)
     connect(d->m_series, SIGNAL(pointAdded(int)), d, SLOT(handlePointAdded(int)));
     connect(d->m_series, SIGNAL(pointRemoved(int)), d, SLOT(handlePointRemoved(int)));
     connect(d->m_series, SIGNAL(pointReplaced(int)), d, SLOT(handlePointReplaced(int)));
+    connect(d->m_series, SIGNAL(destroyed()), d, SLOT(handleSeriesDestroyed()));
 }
 
 /*!
@@ -291,6 +293,11 @@ void QXYModelMapperPrivate::handlePointReplaced(int pointPos)
     blockModelSignals(false);
 }
 
+void QXYModelMapperPrivate::handleSeriesDestroyed()
+{
+    m_series = 0;
+}
+
 void QXYModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
     if (m_model == 0 || m_series == 0)
@@ -389,6 +396,11 @@ void QXYModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int start, i
     else if (start <= m_xSection || start <= m_ySection) // if the changes affect the map - reinitialize the xy
         initializeXYFromModel();
     blockSeriesSignals(false);
+}
+
+void QXYModelMapperPrivate::handleModelDestroyed()
+{
+    m_model = 0;
 }
 
 void QXYModelMapperPrivate::insertData(int start, int end)

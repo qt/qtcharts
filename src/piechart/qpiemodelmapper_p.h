@@ -56,12 +56,14 @@ public Q_SLOTS:
     void modelRowsRemoved(QModelIndex parent, int start, int end);
     void modelColumnsAdded(QModelIndex parent, int start, int end);
     void modelColumnsRemoved(QModelIndex parent, int start, int end);
+    void handleModelDestroyed();
 
     // for the series
     void slicesAdded(QList<QPieSlice*> slices);
     void slicesRemoved(QList<QPieSlice*> slices);
     void sliceLabelChanged();
     void sliceValueChanged();
+    void handleSeriesDestroyed();
 
     void initializePieFromModel();
 

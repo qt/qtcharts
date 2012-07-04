@@ -56,6 +56,7 @@ void QPieModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
+    connect(d->m_model, SIGNAL(destroyed()), d, SLOT(handleModelDestroyed()));
 }
 
 QPieSeries* QPieModelMapper::series() const
@@ -79,6 +80,7 @@ void QPieModelMapper::setSeries(QPieSeries *series)
     // connect the signals from the series
     connect(d->m_series, SIGNAL(added(QList<QPieSlice*>)), d, SLOT(slicesAdded(QList<QPieSlice*>)));
     connect(d->m_series, SIGNAL(removed(QList<QPieSlice*>)), d, SLOT(slicesRemoved(QList<QPieSlice*>)));
+    connect(d->m_series, SIGNAL(destroyed()), d, SLOT(handleSeriesDestroyed()));
 }
 
 /*!
@@ -360,6 +362,11 @@ void QPieModelMapperPrivate::sliceValueChanged()
     blockModelSignals(false);
 }
 
+void QPieModelMapperPrivate::handleSeriesDestroyed()
+{
+    m_series = 0;
+}
+
 void QPieModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
     if (m_model == 0 || m_series == 0)
@@ -441,6 +448,11 @@ void QPieModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int start, 
     else if (start <= m_valuesSection || start <= m_labelsSection) // if the changes affect the map - reinitialize the pie
         initializePieFromModel();
     blockSeriesSignals(false);
+}
+
+void QPieModelMapperPrivate::handleModelDestroyed()
+{
+    m_model = 0;
 }
 
 void QPieModelMapperPrivate::insertData(int start, int end)

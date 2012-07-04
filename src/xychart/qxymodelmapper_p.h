@@ -56,11 +56,13 @@ public Q_SLOTS:
     void modelRowsRemoved(QModelIndex parent, int start, int end);
     void modelColumnsAdded(QModelIndex parent, int start, int end);
     void modelColumnsRemoved(QModelIndex parent, int start, int end);
+    void handleModelDestroyed();
 
     // for the series
     void handlePointAdded(int pointPos);
     void handlePointRemoved(int pointPos);
     void handlePointReplaced(int pointPos);
+    void handleSeriesDestroyed();
 
     void initializeXYFromModel();
 

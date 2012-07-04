@@ -54,6 +54,7 @@ public Q_SLOTS:
     void modelRowsRemoved(QModelIndex parent, int start, int end);
     void modelColumnsAdded(QModelIndex parent, int start, int end);
     void modelColumnsRemoved(QModelIndex parent, int start, int end);
+    void handleModelDestroyed();
 
     // for the series
     void barSetsAdded(QList<QBarSet*> sets);
@@ -62,6 +63,7 @@ public Q_SLOTS:
     void valuesRemoved(int index, int count);
     void barLabelChanged();
     void barValueChanged(int index);
+    void handleSeriesDestroyed();
 
     void initializeBarFromModel();
 

@@ -58,6 +58,7 @@ void QBarModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(rowsRemoved(QModelIndex,int,int)), d, SLOT(modelRowsRemoved(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsInserted(QModelIndex,int,int)), d, SLOT(modelColumnsAdded(QModelIndex,int,int)));
     connect(d->m_model, SIGNAL(columnsRemoved(QModelIndex,int,int)), d, SLOT(modelColumnsRemoved(QModelIndex,int,int)));
+    connect(d->m_model, SIGNAL(destroyed()), d, SLOT(handleModelDestroyed()));
 }
 
 QAbstractBarSeries* QBarModelMapper::series() const
@@ -81,6 +82,7 @@ void QBarModelMapper::setSeries(QAbstractBarSeries *series)
     // connect the signals from the series
     connect(d->m_series, SIGNAL(barsetsAdded(QList<QBarSet*>)), d, SLOT(barSetsAdded(QList<QBarSet*>)));
     connect(d->m_series, SIGNAL(barsetsRemoved(QList<QBarSet*>)), d, SLOT(barSetsRemoved(QList<QBarSet*>)));
+    connect(d->m_series, SIGNAL(destroyed()), d, SLOT(handleSeriesDestroyed()));
 }
 
 /*!
@@ -247,6 +249,11 @@ QModelIndex QBarModelMapperPrivate::barModelIndex(int barSection, int posInBar)
         return m_model->index(barSection, posInBar + m_first);
 }
 
+void QBarModelMapperPrivate::handleSeriesDestroyed()
+{
+    m_series = 0;
+}
+
 void QBarModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottomRight)
 {
     Q_UNUSED(topLeft)
@@ -358,6 +365,11 @@ void QBarModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int start, 
     else if (start <= m_firstBarSetSection || start <= m_lastBarSetSection) // if the changes affect the map - reinitialize
         initializeBarFromModel();
     blockSeriesSignals(false);
+}
+
+void QBarModelMapperPrivate::handleModelDestroyed()
+{
+    m_model = 0;
 }
 
 void QBarModelMapperPrivate::insertData(int start, int end)
