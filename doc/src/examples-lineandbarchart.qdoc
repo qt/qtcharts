@@ -1,0 +1,46 @@
+/*!
+    \example examples/lineandbar
+    \title Line and BarChart Example
+    \subtitle
+
+    The example shows how to combine different charts and set the axes. In the example we combine linechart with
+	barchart and use category axis as common axis for both.
+
+    \image examples_lineandbar.png
+
+	Here we create data for our barseries.
+
+    \snippet ../examples/lineandbar/main.cpp 1
+
+    We create the barseries and append the sets to it.
+	First value of each set are gropuped together at first category second value to second category and so on.
+
+    \snippet ../examples/lineandbar/main.cpp 2
+
+	Then we create lineseries and add data to it. To make data match with barchart we use index as an x-value for our line series, so that
+	first point is at (0,value) second at (1,value) and so on.
+	
+	\snippet ../examples/lineandbar/main.cpp 8
+	
+    Here we create the chart and add both series to it.
+
+    \snippet ../examples/lineandbar/main.cpp 3
+    
+	To make chart show series properly, we have to create custom axes for series. If we don't create custom axes, then each series will get scaled to
+	use maximum area of the chart (like in single series case) and result will be incorrect. With custom axes we set the range of both series to follow same
+	axis. For x-axis we use QBarCategoryAxis and for y-axis we use QValuesAxis.
+
+    \snippet ../examples/lineandbar/main.cpp 4
+
+    And we also want to show the legend.
+
+    \snippet ../examples/lineandbar/main.cpp 5
+
+    Finally we add the chart onto a view.
+
+    \snippet ../examples/lineandbar/main.cpp 6
+
+    And it is ready to be shown in a window.
+
+    \snippet ../examples/lineandbar/main.cpp 7
+*/

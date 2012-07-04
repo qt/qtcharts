@@ -18,6 +18,7 @@
             <li><a href="examples-customchart.html">Custom chart</a></li>
             <li><a href="examples-legend.html">Legend</a></li>
             <li><a href="examples-linechart.html">Line chart</a></li>
+            <li><a href="examples-lineandbar.html">Line and barchart</a></li>
             <li><a href="examples-modeldata.html">Model data</a></li>
             <li><a href="examples-barmodelmapper.html">Bar chart from model</a></li>
             <li><a href="examples-percentbarchart.html">Percent bar chart</a></li>
