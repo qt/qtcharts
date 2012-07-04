@@ -32,7 +32,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     BarCategoriesAxis can be setup to show axis line with tick marks, grid lines and shades.
-    Categories are drawn between ticks.
+    Categories are drawn between ticks. Note that you can use this also with lineseries too.
+    See the \l {Line and BarChart Example} {Line and BarChart Example} to learn how to do that.
 */
 
 /*!
@@ -40,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The Axis element is used for manipulating chart's axes.
 
     Axis can be setup to show axis line with tick marks, grid lines and shades.
-    Categories are drawn between ticks.
+    Categories are drawn between ticks. Note that you can use this also with lineseries too.
 
     To access BarCategoriesAxis you can use ChartView API. For example:
     \code
