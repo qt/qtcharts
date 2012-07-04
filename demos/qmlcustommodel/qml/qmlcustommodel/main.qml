@@ -55,9 +55,10 @@ Rectangle {
 
         //![5]
         BarSeries {
+            id: myBarSeries
             name: "Others"
             barWidth: 0.9
-            visible: false
+           // visible: false
             HBarModelMapper {
                 model: customModel
                 firstBarSetRow: 6
@@ -70,7 +71,7 @@ Rectangle {
         //![4]
         LineSeries {
             name: "Volkswagen"
-            visible: false
+            //visible: false
             HXYModelMapper {
                 model: customModel
                 xRow: 0
@@ -147,9 +148,14 @@ Rectangle {
         VPieModelMapper {
             series: pieSeries
             model: customModel
-            labelsColumn: 1
+          labelsColumn: 1
             valuesColumn: 2
             firstRow: 1
         }
+       
+        Component.onCompleted: {
+            createDefaultAxes();
+            setAxisX(categoryAxis,myBarSeries)
+        }  
     }
 }

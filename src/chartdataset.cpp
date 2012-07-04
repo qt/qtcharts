@@ -112,6 +112,7 @@ void ChartDataSet::createDefaultAxes()
         while (i.hasNext()) {
                i.next();
                QAbstractAxis* axis = createAxis(i.key()->d_ptr->defaultAxisXType());
+               if(!axis) continue;
                i.key()->d_ptr->initializeAxisX(axis);
                addAxisX(axis,i.key());
                emit axisAdded(axis,i.value());
