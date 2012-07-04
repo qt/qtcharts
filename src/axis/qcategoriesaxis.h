@@ -31,6 +31,8 @@ class QTCOMMERCIALCHART_EXPORT QCategoriesAxis : public QAbstractAxis
 {
     Q_OBJECT
     Q_PROPERTY(QStringList categories READ categories WRITE setCategories NOTIFY categoriesChanged)
+    Q_PROPERTY(QString min READ min WRITE setMin NOTIFY minChanged)
+    Q_PROPERTY(QString max READ max WRITE setMax NOTIFY maxChanged)
 
 public:
     explicit QCategoriesAxis(QObject *parent = 0);
@@ -60,6 +62,9 @@ public:
 
 Q_SIGNALS:
     void categoriesChanged();
+	void minChanged(const QString &min);
+	void maxChanged(const QString &max);
+	void rangeChanged(const QString &min, const QString &max);
 
 private:
     Q_DECLARE_PRIVATE(QCategoriesAxis)

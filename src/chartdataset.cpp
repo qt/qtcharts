@@ -373,9 +373,7 @@ void ChartDataSet::setAxisX(QAbstractSeries *series, QAbstractAxis *axis)
     }
 
     m_seriesAxisXMap.insert(series,axis);
-
-    // Force range update
-    axis->d_ptr->updateRange();
+    axis->d_ptr->emitRange();
 }
 
 void ChartDataSet::setAxisY(QAbstractSeries *series, QAbstractAxis *axis)
@@ -414,6 +412,7 @@ void ChartDataSet::setAxisY(QAbstractSeries *series, QAbstractAxis *axis)
     }
 
     m_seriesAxisYMap.insert(series,axis);
+    axis->d_ptr->emitRange();
 }
 
 Domain* ChartDataSet::domain(QAbstractSeries *series) const

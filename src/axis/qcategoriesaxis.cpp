@@ -23,6 +23,7 @@
 #include "chartcategoriesaxisx_p.h"
 #include "chartcategoriesaxisy_p.h"
 #include <qmath.h>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -47,11 +48,12 @@ void QCategoriesAxis::append(const QStringList &categories)
 {
     Q_D(QCategoriesAxis);
     if (d->m_categories.isEmpty()) {
-        d->m_minCategory = categories.first();
-        d->m_maxCategory = categories.last();
+    	d->m_categories.append(categories);
+    	setRange(categories.first(),categories.last());
+    }else{
+    	d->m_categories.append(categories);
     }
 
-    d->m_categories.append(categories);
     emit categoriesChanged();
 }
 
@@ -60,14 +62,14 @@ void QCategoriesAxis::append(const QStringList &categories)
 */
 void QCategoriesAxis::append(const QString &category)
 {
-    Q_D(QCategoriesAxis);
-    if (d->m_categories.isEmpty()) {
-        d->m_minCategory = category;
-        d->m_maxCategory = category;
-    }
-
-    d->m_categories.append(category);
-    emit categoriesChanged();
+	Q_D(QCategoriesAxis);
+	if (d->m_categories.isEmpty()) {
+		d->m_categories.append(category);
+		setRange(category,category);
+	}else{
+		d->m_categories.append(category);
+	}
+	emit categoriesChanged();
 }
 
 /*!
@@ -78,8 +80,7 @@ void QCategoriesAxis::remove(const QString &category)
     Q_D(QCategoriesAxis);
     if (d->m_categories.contains(category)) {
         d->m_categories.removeAt(d->m_categories.indexOf(category));
-        d->m_minCategory = d->m_categories.first();
-        d->m_maxCategory = d->m_categories.last();
+        setRange(d->m_categories.first(),d->m_categories.last());
         emit categoriesChanged();
     }
 }
@@ -91,10 +92,11 @@ void QCategoriesAxis::insert(int index, const QString &category)
 {
     Q_D(QCategoriesAxis);
     if (d->m_categories.isEmpty()) {
-        d->m_minCategory = category;
-        d->m_maxCategory = category;
+    	d->m_categories.insert(index,category);
+    	setRange(category,category);
+    }else{
+
     }
-    d->m_categories.insert(index,category);
     emit categoriesChanged();
 }
 
@@ -105,18 +107,18 @@ void QCategoriesAxis::clear()
 {
     Q_D(QCategoriesAxis);
     d->m_categories.clear();
-    d->m_minCategory.clear();
-    d->m_maxCategory.clear();
+    setRange(QString::null,QString::null);
     emit categoriesChanged();
 }
 
 void QCategoriesAxis::setCategories(const QStringList &categories)
 {
     Q_D(QCategoriesAxis);
+    if(d->m_categories!=categories){
     d->m_categories = categories;
-    d->m_minCategory = categories.first();
-    d->m_maxCategory = categories.last();
+    setRange(categories.first(),categories.last());
     emit categoriesChanged();
+    }
 }
 
 QStringList QCategoriesAxis::categories()
@@ -200,24 +202,21 @@ void QCategoriesAxis::setRange(const QString& minCategory, const QString& maxCat
         return;
     }
 
-    d->m_minCategory = minCategory;
-    d->m_maxCategory = maxCategory;
-
     bool changed = false;
     if (!qFuzzyIsNull(d->m_min - (minIndex))) {
+    	d->m_minCategory = minCategory;
         d->m_min = minIndex;
         changed = true;
     }
 
     if (!qFuzzyIsNull(d->m_max - (maxIndex))) {
         d->m_max = maxIndex;
+        d->m_maxCategory = maxCategory;
         changed = true;
     }
 
     if ((changed)) {
-        if(!signalsBlocked()){
-            emit d->changed(d->m_min -0.5, d->m_max +0.5, qCeil(d->m_max + 0.5) -qCeil(d->m_min - 0.5) +1, false);
-        }
+        d->emitRange();
         emit categoriesChanged();
     }
 }
@@ -253,9 +252,8 @@ void QCategoriesAxisPrivate::setMax(const QVariant &max)
     setRange(m_minCategory,max);
 }
 
-void QCategoriesAxisPrivate::setRange(const QVariant &min, const QVariant &max, bool force)
+void QCategoriesAxisPrivate::setRange(const QVariant &min, const QVariant &max)
 {
-    Q_UNUSED(force);    // TODO: use this?
     Q_Q(QCategoriesAxis);
     QString value1 = min.toString();
     QString value2 = max.toString();
@@ -284,9 +282,12 @@ ChartAxis* QCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
     }
 }
 
-void QCategoriesAxisPrivate::updateRange()
+void QCategoriesAxisPrivate::emitRange()
 {
-    setRange(m_min,m_max,true);
+	Q_Q( QCategoriesAxis);
+	if(!q->signalsBlocked()) {
+		emit changed(m_min -0.5, m_max +0.5, qCeil(m_max + 0.5) -qCeil(m_min - 0.5) +1, false);
+	}
 }
 
 

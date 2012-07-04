@@ -49,12 +49,12 @@ Q_SIGNALS:
 
 public:
     virtual ChartAxis* createGraphics(ChartPresenter* presenter) = 0;
-    virtual void updateRange() = 0;
+    virtual void emitRange() = 0;
 
 protected:
     virtual void setMin(const QVariant &min) = 0;
     virtual void setMax(const QVariant &max) = 0;
-    virtual void setRange(const QVariant &min, const QVariant &max, bool force = false) = 0;
+    virtual void setRange(const QVariant &min, const QVariant &max) = 0;
     virtual int ticksCount() const = 0;
 
 public:

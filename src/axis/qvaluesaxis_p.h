@@ -50,12 +50,12 @@ public Q_SLOTS:
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
-    void updateRange();
+    void emitRange();
 
 protected:
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);
-    void setRange(const QVariant &min, const QVariant &max, bool force = false);
+    void setRange(const QVariant &min, const QVariant &max);
     int ticksCount() const;
 
 private:
