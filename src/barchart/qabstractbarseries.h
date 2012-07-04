@@ -43,7 +43,7 @@ protected:
 public:
     virtual ~QAbstractBarSeries();
 
-    virtual QAbstractSeries::SeriesType type() const = 0;
+//    virtual QAbstractSeries::SeriesType type() const = 0;
 
     void setBarWidth(qreal width);
     qreal barWidth() const;

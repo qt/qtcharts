@@ -54,10 +54,16 @@ QIntervalAxis::QIntervalAxis(QObject *parent):
 {
 }
 
+/*!
+    Destroys the object
+*/
 QIntervalAxis::~QIntervalAxis()
 {
 }
 
+/*!
+    \internal
+*/
 QIntervalAxis::QIntervalAxis(QIntervalAxisPrivate &d,QObject *parent):QValuesAxis(d,parent)
 {
 

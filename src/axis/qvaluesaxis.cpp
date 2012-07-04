@@ -114,11 +114,17 @@ QValuesAxis::QValuesAxis(QObject *parent) :
 
 }
 
+/*!
+    \internal
+*/
 QValuesAxis::QValuesAxis(QValuesAxisPrivate &d,QObject *parent) : QAbstractAxis(d,parent)
 {
 
 }
 
+/*!
+    Destroys the object
+*/
 QValuesAxis::~QValuesAxis()
 {
 

@@ -100,10 +100,16 @@ QBarCategoriesAxis::QBarCategoriesAxis(QObject *parent):
 {
 }
 
+/*!
+    Destroys the object
+*/
 QBarCategoriesAxis::~QBarCategoriesAxis()
 {
 }
 
+/*!
+    \internal
+*/
 QBarCategoriesAxis::QBarCategoriesAxis(QBarCategoriesAxisPrivate &d,QObject *parent):QAbstractAxis(d,parent)
 {
 

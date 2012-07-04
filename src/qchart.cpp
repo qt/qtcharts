@@ -307,6 +307,7 @@ void QChart::zoom(qreal factor)
 
 /*!
  Returns the pointer to the x axis object of the chart asociated with the specified \a series
+ If no series is provided then pointer to currently visible axis is provided
  */
 QAbstractAxis* QChart::axisX(QAbstractSeries* series) const
 {
@@ -315,6 +316,7 @@ QAbstractAxis* QChart::axisX(QAbstractSeries* series) const
 
 /*!
  Returns the pointer to the y axis object of the chart asociated with the specified \a series
+ If no series is provided then pointer to currently visible axis is provided
  */
 QAbstractAxis* QChart::axisY(QAbstractSeries *series) const
 {
@@ -325,8 +327,26 @@ QAbstractAxis* QChart::axisY(QAbstractSeries *series) const
  NOTICE: This function has to be called after series has been added to the chart if no customized axes are set to the chart. Otherwise axisX(), axisY() calls return NULL.
 
  Creates the axes for the chart based on the series that has already been added to the chart.
- If QXYSeries derived series has been added to the chart then QValuesAxes are created as X and Y axes for the series.
- If QBarSeries or series types derived from it has been added then QBarCategoriesAxis is created as X axis and QValueAxis as Y axis.
+
+\table
+     \header
+         \o Series type
+         \o X-axis
+         \o Y-axis
+     \row
+         \o QXYSeries
+         \o QValuesAxis
+         \o QValuesAxis
+     \row
+         \o QBarSeries
+         \o QBarCategoriesAxis
+         \o QValuesAxis
+     \row
+         \o QPieSeries
+         \o None
+         \o None
+     \endtable
+
  If there are several QXYSeries derived series added to the chart and no other series type has been added then only one pair of axes is created.
  If there are sevaral series added of different types then each series gets its own axes pair.
 

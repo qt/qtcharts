@@ -157,11 +157,21 @@ void QAbstractSeries::adjustView()
     //TODO:
 }
 
+/*!
+    \brief Sets the visibility of the series to true
+
+    \sa setVisible(), isVisible()
+*/
 void QAbstractSeries::show()
 {
     setVisible(true);
 }
 
+/*!
+    \brief Sets the visibility of the series to false
+
+    \sa setVisible(), isVisible()
+*/
 void QAbstractSeries::hide()
 {
     setVisible(false);
