@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
     chart->legend()->hide();
     chart->addSeries(series);
     chart->setTitle("Simple spline chart example");
+    chart->createDefaultAxes();
     chart->axisY()->setRange(0, 10);
     //![3]
 
