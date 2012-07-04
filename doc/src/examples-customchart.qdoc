@@ -15,7 +15,7 @@
     Then we customize the axes.
     \snippet ../examples/customchart/main.cpp 3
 
-    And the axis label values and ranges.
+    And the axis label values and ranges. Once the axes are ready we set them to be used by the chart.
     \snippet ../examples/customchart/main.cpp 4
 
     Finally we create a view containing the chart.
