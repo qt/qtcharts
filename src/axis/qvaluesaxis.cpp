@@ -162,6 +162,7 @@ qreal QValuesAxis::max() const
 void QValuesAxis::setRange(qreal min, qreal max)
 {
     Q_D(QValuesAxis);
+
     bool changed = false;
     if (!qFuzzyIsNull(d->m_min - min)) {
         d->m_min = min;
@@ -258,6 +259,7 @@ void QValuesAxisPrivate::setMin(const QVariant &min)
 
 void QValuesAxisPrivate::setMax(const QVariant &max)
 {
+
     Q_Q(QValuesAxis);
     bool ok;
     qreal value = max.toReal(&ok);
@@ -292,10 +294,7 @@ ChartAxis* QValuesAxisPrivate::createGraphics(ChartPresenter* presenter)
 
 void QValuesAxisPrivate::emitRange()
 {
-	Q_Q(QValuesAxis);
-	if(!q->signalsBlocked()) {
-		emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
-	}
+	emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
 }
 
 #include "moc_qvaluesaxis.cpp"

@@ -261,6 +261,7 @@ void ChartDataSet::zoomInDomain(const QRectF& rect, const QSizeF& size)
 {
     //for performance reasons block, signals and scale "full" domain one by one. Gives twice less screen updates
 
+
     blockAxisSignals(true);
 
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
@@ -293,13 +294,13 @@ void ChartDataSet::zoomOutDomain(const QRectF& rect, const QSizeF& size)
 void ChartDataSet::blockAxisSignals(bool enabled)
 {
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
-
+Q_UNUSED(enabled);
     while (i.hasNext()) {
            i.next();
            QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
            QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
-           if(axisX) axisX->blockSignals(enabled);
-           if(axisY) axisY->blockSignals(enabled);
+           if(axisX) axisX->d_ptr->blockSignals(true);
+           if(axisY) axisY->d_ptr->blockSignals(true);
        }
 }
 

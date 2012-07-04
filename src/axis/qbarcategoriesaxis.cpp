@@ -371,10 +371,7 @@ ChartAxis* QBarCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
 
 void QBarCategoriesAxisPrivate::emitRange()
 {
-	Q_Q( QBarCategoriesAxis);
-	if(!q->signalsBlocked()) {
-		emit changed(m_min -0.5, m_max +0.5, qCeil(m_max + 0.5) -qCeil(m_min - 0.5) +1, false);
-	}
+	emit changed(m_min -0.5, m_max +0.5, qCeil(m_max + 0.5) -qCeil(m_min - 0.5) +1, false);
 }
 
 

@@ -23,6 +23,7 @@
 #include <qlineseries.h>
 #include <cmath>
 #include <tst_definitions.h>
+#include <qvaluesaxis.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -143,6 +144,7 @@ void tst_QChartView::rubberBand()
     *line << QPointF(0, 0) << QPointF(200, 200);
 
     m_view->chart()->addSeries(line);
+    m_view->chart()->createDefaultAxes();
     m_view->resize(200 + padding.left() + padding.right(), 200 +  padding.top()+ padding.bottom());
     m_view->show();
 
@@ -166,11 +168,14 @@ void tst_QChartView::rubberBand()
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(false);
 
-    //TODO: QVERIFY(axisX->min() - minX < 1);
-    //TODO: QVERIFY(axisX->max() - maxX < 1);
-    //TODO: QVERIFY(axisY->min() - minY < 1);
-    //TODO: QVERIFY(axisY->max() - maxY < 1);
-    qFatal("implement TODO");
+    QValuesAxis* vaxisX = qobject_cast<QValuesAxis*>(axisX);
+    QValuesAxis* vaxisY = qobject_cast<QValuesAxis*>(axisY);
+
+    QVERIFY(vaxisX->min() - minX < 1);
+    QVERIFY(vaxisX->max() - maxX < 1);
+    QVERIFY(vaxisY->min() - minY < 1);
+    QVERIFY(vaxisY->max() - maxY < 1);
+
 }
 
 QTEST_MAIN(tst_QChartView)
