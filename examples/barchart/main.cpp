@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Barchart example");
+    chart->setTitle("Simple barchart example");
     chart->createDefaultAxes();
 //![3]
 
