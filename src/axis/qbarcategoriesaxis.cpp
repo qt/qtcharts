@@ -292,7 +292,7 @@ void QBarCategoriesAxis::setRange(const QString& minCategory, const QString& max
 }
 
 /*!
-    Returns the type of axis.
+  Returns the type of the axis
 */
 QAbstractAxis::AxisType QBarCategoriesAxis::type() const
 {

@@ -65,6 +65,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+ *\fn void QAbstractAxis::type() const
+  Returns the type of the axis
+*/
+
+/*!
   \property QAbstractAxis::arrowVisible
   The visibility of the axis arrow
 */

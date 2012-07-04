@@ -210,6 +210,9 @@ bool  QValuesAxis::niceNumbersEnabled() const
     return d->m_niceNumbers;
 }
 
+/*!
+  Returns the type of the axis
+*/
 QAbstractAxis::AxisType QValuesAxis::type() const
 {
     return AxisTypeValues;

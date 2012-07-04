@@ -121,7 +121,7 @@ int QIntervalAxis::count() const
 }
 
 /*!
-    Returns the type of axis.
+  Returns the type of the axis
 */
 QAbstractAxis::AxisType QIntervalAxis::type() const
 {
