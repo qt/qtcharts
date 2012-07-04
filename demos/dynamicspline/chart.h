@@ -26,6 +26,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QSplineSeries;
+class QValuesAxis;
 QTCOMMERCIALCHART_END_NAMESPACE
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -45,6 +46,7 @@ private:
     QTimer m_timer;
     QSplineSeries* m_series;
     QStringList m_titles;
+    QValuesAxis* m_axis;
     qreal m_step;
     qreal m_x;
     qreal m_y;

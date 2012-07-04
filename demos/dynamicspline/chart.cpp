@@ -21,12 +21,15 @@
 #include "chart.h"
 #include <QAbstractAxis>
 #include <QSplineSeries>
+#include <QValuesAxis>
 #include <QTime>
+#include <QDebug>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     :QChart(parent, wFlags),
-    m_step(1),
-    m_x(0),
+    m_step(0),
+    m_axis(new QValuesAxis),
+    m_x(5),
     m_y(1)
 {
     qsrand((uint) QTime::currentTime().msec());
@@ -42,10 +45,10 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
 
     addSeries(m_series);
     createDefaultAxes();
-
-    axisY()->setRange(-5, 5);
-    axisX()->setRange(-9, 1);
-    //TODO:axisX()->setTicksCount(11);
+    setAxisX(m_axis,m_series);
+    m_axis->setTicksCount(5);
+    axisX()->setRange(0, 10);
+    axisY()->setRange(-5, 10);
 
     m_timer.start();
 }
@@ -57,9 +60,11 @@ Chart::~Chart()
 
 void Chart::handleTimeout()
 {
-    m_x += m_step;
+    qreal x = plotArea().width()/m_axis->ticksCount();
+    qreal y =(m_axis->max() - m_axis->min())/m_axis->ticksCount();
+    m_x += y;
     m_y = qrand() % 5 - 2.5;
     m_series->append(m_x, m_y);
-    scroll(10,0);
+    scroll(x,0);
     if(m_x==100) m_timer.stop();
 }

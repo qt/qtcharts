@@ -379,6 +379,11 @@ QRectF QChart::margins() const
     return d_ptr->m_presenter->margins();
 }
 
+QRectF QChart::plotArea() const
+{
+    return d_ptr->m_presenter->geometry();
+}
+
 /*!
  Sets animation \a options for the chart
  */

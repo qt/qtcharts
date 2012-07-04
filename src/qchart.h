@@ -117,6 +117,7 @@ public:
 
     void setMarginsMinimum(const QRectF& margins);
     QRectF margins() const;
+    QRectF plotArea() const;
 
 Q_SIGNALS:
     void marginsChanged(QRectF newMargins);

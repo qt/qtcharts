@@ -451,7 +451,7 @@ void ChartPresenter::setMarginsMinimum(const QRectF& margins)
 
 QRectF ChartPresenter::margins() const
 {
-    return QRectF();//m_layout->margins();
+    return m_layout->margins();
 }
 
 QLegend* ChartPresenter::legend()
