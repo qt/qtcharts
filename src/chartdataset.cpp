@@ -327,13 +327,30 @@ int ChartDataSet::seriesIndex(QAbstractSeries *series)
 
 QAbstractAxis* ChartDataSet::axisX(QAbstractSeries *series) const
 {
-    if(series == 0) return m_seriesAxisXMap.begin().value();
+    if(series == 0) {
+
+           QMapIterator<QAbstractSeries*, QAbstractAxis *> i(m_seriesAxisXMap);
+
+           while (i.hasNext()) {
+                  i.next();
+                  if(i.value()->isVisible()) return i.value();
+           }
+           return 0;
+    }
     return m_seriesAxisXMap.value(series);
 }
 
 QAbstractAxis* ChartDataSet::axisY(QAbstractSeries *series) const
 {
-    if(series == 0) return m_seriesAxisYMap.begin().value();
+    if(series == 0) {
+        QMapIterator<QAbstractSeries*, QAbstractAxis *> i(m_seriesAxisYMap);
+
+        while (i.hasNext()) {
+            i.next();
+            if(i.value()->isVisible()) return i.value();
+        }
+        return 0;
+    }
     return m_seriesAxisYMap.value(series);
 }
 
