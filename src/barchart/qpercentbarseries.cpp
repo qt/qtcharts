@@ -47,9 +47,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \inherits QAbstractBarSeries
 
     The following QML shows how to create a simple percent bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View9.qml 1
+    \snippet ../demos/qmlchart/qml/qmlchart/View8.qml 1
     \beginfloatleft
-    \image demos_qmlchart9.png
+    \image demos_qmlchart8.png
     \endfloat
     \clearfloat
 */

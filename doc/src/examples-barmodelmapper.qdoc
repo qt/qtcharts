@@ -23,7 +23,7 @@
 
      \snippet ../examples/barmodelmapper/tablewidget.cpp 3
 
-     First line of the code below creates new grouped bar series. Variables firstRow and rowCount are used to define a custom model mapping.
+     First line of the code below creates new bar series. Variables firstRow and rowCount are used to define a custom model mapping.
      Custom mapping allows to take only part of the data from the model. In this case data from 5 rows starting with the row with the index 3.
      Following three lines create an instance of QVBarModelMapper class and specifie that data for the bar sets should be taken from the model's columns with indexes from 1 to 4(inclusive).
      To create a connection between the series and the model we set both of those objects to QVBarModelMapper.

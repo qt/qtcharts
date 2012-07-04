@@ -65,7 +65,6 @@
                 <td valign="top">
                     <ul>
                     <li><a href="qml-barseries.html">BarSeries</a></li>
-                    <li><a href="qml-groupedbarseries.html">GroupedBarSeries</a></li>
                     <li><a href="qml-stackedbarseries.html">StackedBarSeries</a></li>
                     <li><a href="qml-percentbarseries.html">PercentBarSeries</a></li>
                     <li><a href="qml-barset.html">BarSet</a></li>

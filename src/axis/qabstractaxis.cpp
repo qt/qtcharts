@@ -59,6 +59,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     The type of the series object.
 
+    \value AxisTypeNoAxis
     \value AxisTypeValues
     \value AxisTypeCategories
 */

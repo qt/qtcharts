@@ -37,8 +37,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     as groups, where bars in same category are grouped next to each other. QBarSeries groups the data
     from sets to categories, which are defined by a QStringList.
 
-    See the \l {GroupedbarChart Example} {grouped bar chart example} to learn how to create a grouped bar chart.
-    \image examples_groupedbarchart.png
+    See the \l {BarChart Example} {bar chart example} to learn how to create a grouped bar chart.
+    \image examples_barchart.png
 
     \sa QBarSet, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries
 */
@@ -47,9 +47,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \inherits AbstractBarSeries
 
     The following QML shows how to create a simple grouped bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View8.qml 1
+    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
     \beginfloatleft
-    \image demos_qmlchart7.png
+    \image demos_qmlchart6.png
     \endfloat
     \clearfloat
 */

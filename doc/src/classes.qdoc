@@ -71,7 +71,6 @@
                     <ul>
                     <li><a href="qbarseries.html">QBarSeries</a></li>
                     <li><a href="qbarset.html">QBarSet</a></li>
-                    <li><a href="qgroupedbarseries.html">QGroupedBarSeries</a></li>
                     <li><a href="qpercentbarseries.html">QPercentBarSeries</a></li>
                     <li><a href="qstackedbarseries.html">QStackedBarSeries</a></li>
                     <li><a href="qhbarmodelmapper.html">QHBarModelMapper</a></li>

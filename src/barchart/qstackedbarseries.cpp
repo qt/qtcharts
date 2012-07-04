@@ -48,9 +48,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \inherits AbstractBarSeries
 
     The following QML shows how to create a simple stacked bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View8.qml 1
+    \snippet ../demos/qmlchart/qml/qmlchart/View7.qml 1
     \beginfloatleft
-    \image demos_qmlchart8.png
+    \image demos_qmlchart7.png
     \endfloat
     \clearfloat
 */

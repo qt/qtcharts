@@ -3,34 +3,37 @@
     \title BarChart Example
     \subtitle
 
-    The example shows how to create simple bar chart. Barchart shows the data in sets as separate bars, which are drawn at the x-axis to the position defined by data.
+    The example shows how to create a bar chart. BarChart shows the data in sets as separate bars, which are  in categories.
 
     \image examples_barchart.png
-	
-    Data that barchart visualizes, is defined by QBarSet instances. Here we create some sets and append data
-    we want to visualize to them. Note that x positions are not in even intervals and this will be reflected in the chart.
-	If x positions aren't defined, then the index of value is assumed to be x position.
+
+    Data that barchart visualizes, is defined by QBarSet instances. Here we create the sets and append data
+    to them.
 
     \snippet ../examples/barchart/main.cpp 1
 
-    To combine the sets to a chart, we need to create QBarSeries instance. Then we append our barsets to the series.
+    We create the series and append the sets to it. The barseries groups the data from sets to categories.
+	First value of each set are gropuped together at first category second value to second category and so on.
 
     \snippet ../examples/barchart/main.cpp 2
-    
-    Next we create a chart and add the series to it.
-	We also set the title for chart
+
+    Then we create a chart and add the series to it.
 
     \snippet ../examples/barchart/main.cpp 3
-
-    We want to have the legend displayed at the bottom of the chart. Also we turn on the nice numbers algorithm on for y-axis.
+    
+	We define the categories here and add them to QCategoriesAxis which we then set to be the x-axis of the chart.
 
     \snippet ../examples/barchart/main.cpp 4
 
-    Finally we add the chart onto a view.
+    And we also want to show the legend.
 
     \snippet ../examples/barchart/main.cpp 5
 
+    Finally we add the chart onto a view.
+
+    \snippet ../examples/barchart/main.cpp 6
+
     And it is ready to be shown in a window.
 
-    \snippet ../examples/percentbarchart/main.cpp 6
+    \snippet ../examples/barchart/main.cpp 7
 */
