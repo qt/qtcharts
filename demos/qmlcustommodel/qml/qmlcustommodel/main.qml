@@ -38,11 +38,6 @@ Rectangle {
         }
 
         ValuesAxis {
-            id: xAxis
-            min: 0
-            max: 6.5
-        }
-        ValuesAxis {
             id: yAxis
             min: 0
             max: 60
@@ -170,11 +165,11 @@ Rectangle {
 
         Component.onCompleted: {
             setAxisX(categoryAxis,myBarSeries)
-            setAxisX(xAxis,lineSeries1)
-            setAxisX(xAxis,lineSeries2)
-            setAxisX(xAxis,lineSeries3)
-            setAxisX(xAxis,lineSeries4)
-            setAxisX(xAxis,lineSeries5)
+            setAxisX(categoryAxis,lineSeries1)
+            setAxisX(categoryAxis,lineSeries2)
+            setAxisX(categoryAxis,lineSeries3)
+            setAxisX(categoryAxis,lineSeries4)
+            setAxisX(categoryAxis,lineSeries5)
             setAxisY(yAxis,myBarSeries)
             setAxisY(yAxis,lineSeries1)
             setAxisY(yAxis,lineSeries2)
