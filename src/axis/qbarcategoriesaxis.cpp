@@ -368,10 +368,12 @@ int QBarCategoriesAxisPrivate::ticksCount() const
 
 void QBarCategoriesAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
 {
-    Q_Q(QBarCategoriesAxis);
-    Q_UNUSED(count);
+//    Q_Q(QBarCategoriesAxis);
     m_min = min;
     m_max = max;
+    m_ticksCount = count;
+    // TODO: causes crash in some situations. added to known issues
+    /*
     int minIndex = qFloor(min);
     int maxIndex = qFloor(max);
 
@@ -380,6 +382,9 @@ void QBarCategoriesAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int 
     }
     if (maxIndex > m_categories.count()-1){
         maxIndex = m_categories.count()-1;
+        if (maxIndex<0) {
+            maxIndex = 0;
+        }
     }
 
     bool changed = false;
@@ -398,6 +403,7 @@ void QBarCategoriesAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int 
     if (changed) {
         emit q->rangeChanged(m_minCategory, m_maxCategory);
     }
+    */
 }
 
 ChartAxis* QBarCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
@@ -417,6 +423,9 @@ void QBarCategoriesAxisPrivate::emitRange()
 
 void QBarCategoriesAxisPrivate::initialize(Domain* domain)
 {
+    Q_UNUSED(domain);
+    // TODO: this causes crash now. added to known issues.
+    /*
     if (qFuzzyCompare(m_max, m_min)) {
         if(m_orientation==Qt::Vertical){
             handleAxisRangeChanged(domain->minY(),domain->maxY(),domain->tickXCount());
@@ -424,6 +433,7 @@ void QBarCategoriesAxisPrivate::initialize(Domain* domain)
             handleAxisRangeChanged(domain->minX(),domain->maxX(),domain->tickYCount());
         }
     }
+    */
 }
 
 #include "moc_qbarcategoriesaxis.cpp"
