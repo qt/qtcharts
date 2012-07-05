@@ -64,7 +64,6 @@ public:
     bool isVisible() const;
     QChart* chart() const;
 
-    void adjustView();
     void show();
     void hide();
 

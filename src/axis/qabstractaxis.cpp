@@ -253,6 +253,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+ \internal
   Constructs new axis object which is a child of \a parent. Ownership is taken by
   QChart when axis added.
 */

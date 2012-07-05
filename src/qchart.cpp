@@ -379,15 +379,27 @@ QRectF QChart::margins() const
     return d_ptr->m_presenter->margins();
 }
 
+/*!
+    Returns the the rect within which the drawing of the chart is done.
+    It does not include the area defines by margins.
+ */
 QRectF QChart::plotArea() const
 {
     return d_ptr->m_presenter->geometry();
 }
 
+///*!
+//    TODO: Dummy.
+//    Adjest the ranges of the axes so that all the data of the specified \a series is visible
+// */
+//void QChart::adjustViewToSeries(QAbstractSeries* series)
+//{
+//    //
+//}
+
 /*!
  Sets animation \a options for the chart
  */
-
 void QChart::setAnimationOptions(AnimationOptions options)
 {
     d_ptr->m_presenter->setAnimationOptions(options);
@@ -435,7 +447,9 @@ QList<QAbstractSeries*> QChart::series() const
 {
     return d_ptr->m_dataset->series();
 }
-
+/*!
+  Sets the minimum \a margins between the plot area (axes) and the edge of the chart widget.
+*/
 void QChart::setMarginsMinimum(const QRectF& margins)
 {
     d_ptr->m_presenter->setMarginsMinimum(margins);

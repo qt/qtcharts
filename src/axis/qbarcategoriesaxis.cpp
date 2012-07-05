@@ -82,6 +82,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the maximum value on the axis.
 */
 
+
+/*!
+  \fn void QBarCategoriesAxis::categoriesChanged()
+  Axis emits signal when the categories of the axis has changed.
+*/
 /*!
   \fn void QBarCategoriesAxis::minChanged(const QString &min)
   Axis emits signal when \a min of axis has changed.

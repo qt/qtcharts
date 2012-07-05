@@ -111,8 +111,6 @@ public:
     void zoom(qreal factor);
     void scroll(qreal dx, qreal dy);
 
-    void adjustViewToSeries(QAbstractSeries* series = 0);
-
     QLegend* legend() const;
 
     void setMarginsMinimum(const QRectF& margins);
