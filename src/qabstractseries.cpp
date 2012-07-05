@@ -77,7 +77,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when the series name changes.
 */
 /*!
-    \qmlsignal AbstractSeries::nameChanged()
+    \qmlsignal AbstractSeries::onNameChanged()
     This signal is emitted when the series name changes.
 */
 
@@ -85,12 +85,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \property QAbstractSeries::visible
     \brief whether the series is visible or not; true by default.
 */
+/*!
+    \qmlproperty void AbstractSeries::visible
+    Visibility of the series. True by default.
+*/
 
 /*!
     \fn void QAbstractSeries::visibleChanged()
     Emitted when the series visibility changes.
 */
-
+/*!
+    \qmlsignal AbstractSeries::onVisibleChanged()
+    Emitted when the series visibility changes.
+*/
 /*!
     \internal
     \brief Constructs ChartSeries object with \a parent.
