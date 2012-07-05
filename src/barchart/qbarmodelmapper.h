@@ -30,7 +30,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarModelMapperPrivate;
 class QAbstractBarSeries;
-class QChart;
 
 class QTCOMMERCIALCHART_EXPORT QBarModelMapper : public QObject
 {

@@ -30,16 +30,13 @@
 #ifndef QPIEMODELMAPPER_P_H
 #define QPIEMODELMAPPER_P_H
 
-#include "qpiemodelmapper.h"
 #include <QObject>
+#include "qpiemodelmapper.h"
 
 class QModelIndex;
-class QAbstractItemModel;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QPieModelMapper;
-class QPieSeries;
 class QPieSlice;
 
 class QPieModelMapperPrivate : public QObject
@@ -47,7 +44,7 @@ class QPieModelMapperPrivate : public QObject
     Q_OBJECT
 
 public:
-    QPieModelMapperPrivate(QPieModelMapper *q);
+    explicit QPieModelMapperPrivate(QPieModelMapper *q);
 
 public Q_SLOTS:
     // for the model
@@ -95,7 +92,6 @@ private:
 
     QPieModelMapper *q_ptr;
     Q_DECLARE_PUBLIC(QPieModelMapper)
-    friend class QPieSeriesPrivate;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

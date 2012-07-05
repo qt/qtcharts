@@ -30,7 +30,6 @@
 #ifndef QBARMODELMAPPER_P_H
 #define QBARMODELMAPPER_P_H
 
-#include "qchartglobal.h"
 #include <QObject>
 #include "qbarmodelmapper.h"
 
