@@ -62,8 +62,9 @@ Rectangle {
             interval = __intervalCoefficient * j * j;
             splineSeries.append(j, interval);
         }
-        chartView.axisX.max = j;
-        chartView.axisY.max = 1000;
+        chartView.createDefaultAxes()
+        chartView.axisX(scatterSeries).max = j;
+        chartView.axisY(scatterSeries).max = 1000;
     }
     //![2]
 
