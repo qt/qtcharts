@@ -308,7 +308,7 @@ void QValuesAxisPrivate::emitRange()
 
 void QValuesAxisPrivate::initialize(Domain* domain)
 {
-    if(m_max==m_min){
+    if(qFuzzyCompare(m_max,m_min)) {
         if(m_orientation==Qt::Vertical){
             handleAxisRangeChanged(domain->minY(),domain->maxY(),domain->tickXCount());
         }else{
