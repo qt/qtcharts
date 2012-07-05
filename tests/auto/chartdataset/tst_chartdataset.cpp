@@ -174,7 +174,6 @@ void tst_ChartDataSet::addSeries()
 
 void tst_ChartDataSet::setAxisX_data()
 {
-
     QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
     QTest::addColumn<QList<QAbstractAxis*> >("axisList");
     QTest::addColumn<int>("axisCount");
