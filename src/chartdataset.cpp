@@ -177,7 +177,7 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type)
 void ChartDataSet::addAxisX(QAbstractAxis* axis,QAbstractSeries* series) {
     Domain* domain = m_seriesDomainMap.value(series);
     axis->d_ptr->m_orientation=Qt::Horizontal;
-    axis->d_ptr->initialize(domain);
+    //TODO:axis->d_ptr->initialize(domain);
     QObject::connect(axis->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisXChanged(qreal,qreal,int,bool)));
     QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),axis->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
     m_seriesAxisXMap.insert(series,axis);
@@ -186,7 +186,7 @@ void ChartDataSet::addAxisX(QAbstractAxis* axis,QAbstractSeries* series) {
 void ChartDataSet::addAxisY(QAbstractAxis* axis,QAbstractSeries* series) {
     Domain* domain = m_seriesDomainMap.value(series);
     axis->d_ptr->m_orientation=Qt::Vertical;
-    axis->d_ptr->initialize(domain);
+    //TODO:axis->d_ptr->initialize(domain);
     QObject::connect(axis->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,bool)));
     QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axis->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
     m_seriesAxisYMap.insert(series,axis);
