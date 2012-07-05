@@ -35,6 +35,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class Domain;
+
 class QBarCategoriesAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
@@ -45,6 +47,7 @@ public:
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
+    void initialize(Domain* domain);
     void emitRange();
 
 private:

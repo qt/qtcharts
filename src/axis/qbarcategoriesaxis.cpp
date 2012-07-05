@@ -22,6 +22,7 @@
 #include "qbarcategoriesaxis_p.h"
 #include "chartcategoriesaxisx_p.h"
 #include "chartcategoriesaxisy_p.h"
+#include "domain_p.h"
 #include <qmath.h>
 #include <QDebug>
 
@@ -370,11 +371,12 @@ void QBarCategoriesAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int 
     m_min = min;
     m_max = max;
     m_ticksCount = count;
+    //TODO:
 }
 
 ChartAxis* QBarCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
-    Q_Q( QBarCategoriesAxis);
+    Q_Q(QBarCategoriesAxis);
     if(m_orientation == Qt::Vertical){
         return new ChartCategoriesAxisY(q,presenter);
     }else{
@@ -387,6 +389,11 @@ void QBarCategoriesAxisPrivate::emitRange()
 	emit changed(m_min -0.5, m_max +0.5, qCeil(m_max + 0.5) -qCeil(m_min - 0.5) +1, false);
 }
 
+void QBarCategoriesAxisPrivate::initialize(Domain* domain)
+{
+    Q_UNUSED(domain);
+    //TODO:
+}
 
 #include "moc_qbarcategoriesaxis.cpp"
 #include "moc_qbarcategoriesaxis_p.cpp"
