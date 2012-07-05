@@ -64,26 +64,27 @@ Rectangle {
                 if (!lineSeries)
                     lineSeries = chartView.createSeries(ChartView.SeriesTypeLine, speedsXml.get(currentIndex).driver);
 
-                // after the series has been created set the axes ranges.
                 if (currentIndex < 3) {
-                    chartView.axisY.min = 0;
-                    chartView.axisY.max = 250
+                    chartView.createDefaultAxes();
+                    chartView.axisY(lineSeries).min = 0;
+                    chartView.axisY(lineSeries).max = 250
                 }
 
                 lineSeries.append(currentIndex, speedsXml.get(currentIndex).speed);
 
                 // Make the x-axis range dynamic
                 if (currentIndex > 9)
-                    chartView.axisX.min = currentIndex - 10;
+                    chartView.axisX(lineSeries).min = currentIndex - 10;
                 else
-                    chartView.axisX.min = 0;
-                chartView.axisX.max = currentIndex + 1;
+                    chartView.axisX(lineSeries).min = 0;
+
+                chartView.axisX(lineSeries).max = currentIndex + 1;
             } else {
                 // No more data, change x-axis range to show all the data
                 timer.stop();
                 chartView.animationOptions = ChartView.AllAnimations;
-                chartView.axisX.min = 0;
-                chartView.axisX.max = currentIndex + 1;
+                chartView.axisX(lineSeries).min = 0;
+                chartView.axisX(lineSeries).max = currentIndex + 1;
             }
         }
     }
