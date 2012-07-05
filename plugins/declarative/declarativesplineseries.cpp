@@ -19,9 +19,6 @@
 ****************************************************************************/
 
 #include "declarativesplineseries.h"
-#include "declarativechart.h"
-#include <QChart>
-#include "declarativexypoint.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

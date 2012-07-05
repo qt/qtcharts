@@ -21,10 +21,8 @@
 #ifndef DECLARATIVEAREASERIES_H
 #define DECLARATIVEAREASERIES_H
 
-#include "qchartglobal.h"
 #include "qareaseries.h"
 #include "declarativelineseries.h"
-#include "qabstractaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

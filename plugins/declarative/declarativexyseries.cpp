@@ -18,13 +18,10 @@
 **
 ****************************************************************************/
 
-//#include "DeclarativeXySeries.h"
+
 #include "declarativexyseries.h"
-#include "declarativechart.h"
-#include <QXYSeries>
 #include <QVXYModelMapper>
 #include <QHXYModelMapper>
-#include <QDeclarativeListProperty>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

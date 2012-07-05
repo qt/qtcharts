@@ -21,13 +21,10 @@
 #ifndef DECLARATIVESPLINESERIES_H
 #define DECLARATIVESPLINESERIES_H
 
-#include "qchartglobal.h"
 #include "qsplineseries.h"
 #include "declarativexyseries.h"
-#include "qabstractaxis.h"
 #include <QDeclarativeParserStatus>
 #include <QDeclarativeListProperty>
-#include <QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

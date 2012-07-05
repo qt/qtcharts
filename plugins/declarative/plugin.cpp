@@ -32,12 +32,13 @@
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
-#include <QVXYModelMapper>
-#include <QHXYModelMapper>
-#include <QHPieModelMapper>
-#include <QVPieModelMapper>
-#include <QHBarModelMapper>
-#include <QVBarModelMapper>
+#include "qvxymodelmapper.h"
+#include "qhxymodelmapper.h"
+#include "qhpiemodelmapper.h"
+#include "qvpiemodelmapper.h"
+#include "qhbarmodelmapper.h"
+#include "qvbarmodelmapper.h"
+#include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -88,10 +89,6 @@ public:
                                              QLatin1String("Trying to create uncreatable: AbstractBarSeries."));
         qmlRegisterUncreatableType<QAbstractAxis>(uri, 1, 0, "AbstractAxis",
                                           QLatin1String("Trying to create uncreatable: AbstractAxis."));
-        qmlRegisterUncreatableType<QPieModelMapper>(uri, 1, 0, "PieModelMapper",
-                                                    QLatin1String("Trying to create uncreatable: PieModelMapper."));
-        qmlRegisterUncreatableType<QXYModelMapper>(uri, 1, 0, "XYModelMapper",
-                                                    QLatin1String("Trying to create uncreatable: XYModelMapper."));
     }
 };
 

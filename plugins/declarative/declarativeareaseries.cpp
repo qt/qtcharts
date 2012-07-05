@@ -19,9 +19,6 @@
 ****************************************************************************/
 
 #include "declarativeareaseries.h"
-#include "declarativechart.h"
-#include "qchart.h"
-#include "qxymodelmapper.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

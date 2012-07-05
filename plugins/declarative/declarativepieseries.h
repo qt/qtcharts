@@ -21,16 +21,12 @@
 #ifndef DECLARATIVEPIESERIES_H
 #define DECLARATIVEPIESERIES_H
 
-#include "qchartglobal.h"
-#include <QPieSlice>
-#include <QPieSeries>
+#include "qpieslice.h"
+#include "qpieseries.h"
+#include <QDeclarativeItem>
 #include <QDeclarativeParserStatus>
-#include <QDeclarativeListProperty>
-#include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
-class QChart;
 
 class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
 {
@@ -40,7 +36,7 @@ class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
 public:
-    explicit DeclarativePieSeries(QObject *parent = 0);
+    explicit DeclarativePieSeries(QDeclarativeItem *parent = 0);
     QDeclarativeListProperty<QObject> seriesChildren();
     Q_INVOKABLE QPieSlice *at(int index);
     Q_INVOKABLE QPieSlice *find(QString label);

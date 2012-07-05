@@ -19,15 +19,12 @@
 ****************************************************************************/
 
 #include "declarativepieseries.h"
-#include "declarativechart.h"
-#include "qchart.h"
-#include <qdeclarativelist.h>
 #include <QVPieModelMapper>
 #include <QHPieModelMapper>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-DeclarativePieSeries::DeclarativePieSeries(QObject *parent) :
+DeclarativePieSeries::DeclarativePieSeries(QDeclarativeItem *parent) :
     QPieSeries(parent)
 {
     connect(this, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleAdded(QList<QPieSlice*>)));

@@ -19,9 +19,6 @@
 ****************************************************************************/
 
 #include "declarativescatterseries.h"
-#include "declarativechart.h"
-#include "qchart.h"
-#include "qscatterseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

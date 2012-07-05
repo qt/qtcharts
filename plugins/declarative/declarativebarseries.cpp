@@ -19,11 +19,9 @@
 ****************************************************************************/
 
 #include "declarativebarseries.h"
-#include "declarativechart.h"
 #include <QBarSet>
 #include <QVBarModelMapper>
 #include <QHBarModelMapper>
-#include <QAbstractAxis>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

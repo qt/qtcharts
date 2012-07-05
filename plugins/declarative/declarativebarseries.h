@@ -21,13 +21,10 @@
 #ifndef DECLARATIVEBARSERIES_H
 #define DECLARATIVEBARSERIES_H
 
-#include "qchartglobal.h"
-#include "qabstractbarseries.h"
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
 #include "qbarset.h"
-#include "qabstractaxis.h"
 #include <QDeclarativeItem>
 #include <QDeclarativeParserStatus>
 

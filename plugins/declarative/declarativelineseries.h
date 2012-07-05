@@ -21,11 +21,8 @@
 #ifndef DECLARATIVELINESERIES_H
 #define DECLARATIVELINESERIES_H
 
-#include "qchartglobal.h"
 #include "qlineseries.h"
 #include "declarativexyseries.h"
-#include "qabstractaxis.h"
-#include <QDeclarativeParserStatus>
 #include <QDeclarativeListProperty>
 #include <QDeclarativeParserStatus>
 
