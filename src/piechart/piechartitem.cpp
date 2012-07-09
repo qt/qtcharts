@@ -214,6 +214,7 @@ PieSliceData PieChartItem::updateSliceGeometry(QPieSlice *slice)
     PieSliceData &sliceData = QPieSlicePrivate::fromSlice(slice)->m_data;
     sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
+    sliceData.m_donut = m_series->donut();
     return sliceData;
 }
 

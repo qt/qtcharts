@@ -523,6 +523,19 @@ qreal QPieSeries::sum() const
     return d->m_sum;
 }
 
+void QPieSeries::setDonut(bool donut)
+{
+    Q_D(QPieSeries);
+    d->m_donutChart = donut;
+    d->updateDerivativeData();
+}
+
+bool QPieSeries::donut() const
+{
+    Q_D(const QPieSeries);
+    return d->m_donutChart;
+}
+
 void QPieSeries::setHorizontalPosition(qreal relativePosition)
 {
     Q_D(QPieSeries);
@@ -660,7 +673,8 @@ QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent) :
     m_pieRelativeSize(0.7),
     m_pieStartAngle(0),
     m_pieEndAngle(360),
-    m_sum(0)
+    m_sum(0),
+    m_donutChart(false)
 {
 }
 
@@ -693,6 +707,7 @@ void QPieSeriesPrivate::updateDerivativeData()
         d->setPercentage(s->value() / m_sum);
         d->setStartAngle(sliceAngle);
         d->setAngleSpan(pieSpan * s->percentage());
+        d->m_data.m_donut = m_donutChart;
         sliceAngle += s->angleSpan();
     }
 

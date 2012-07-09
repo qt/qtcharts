@@ -40,7 +40,7 @@ QPointF offset(qreal angle, qreal length)
 
 PieSliceItem::PieSliceItem(QGraphicsItem* parent)
     :QGraphicsObject(parent),
-    m_hovered(false)
+      m_hovered(false)
 {
     setAcceptHoverEvents(true);
     setAcceptedMouseButtons(Qt::MouseButtonMask);
@@ -174,11 +174,19 @@ QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAn
     QRectF rect(center.x()-radius, center.y()-radius, radius*2, radius*2);
 
     // slice path
-    // TODO: draw the shape so that it might have a hole in the center
     QPainterPath path;
-    path.moveTo(rect.center());
-    path.arcTo(rect, -startAngle + 90, -angleSpan);
-    path.closeSubpath();
+    if (m_data.m_donut) {
+        qreal donutFraction = 5.0;
+        QRectF insideRect = rect.adjusted(rect.width() / donutFraction, rect.height() / donutFraction, -rect.width() / donutFraction, -rect.height() / donutFraction);
+        path.arcMoveTo(rect, -startAngle + 90);
+        path.arcTo(rect, -startAngle + 90, -angleSpan);
+        path.arcTo(insideRect, -startAngle + 90 - angleSpan, angleSpan);
+        path.closeSubpath();
+    } else {
+        path.moveTo(rect.center());
+        path.arcTo(rect, -startAngle + 90, -angleSpan);
+        path.closeSubpath();
+    }
 
     // calculate label arm start point
     *armStart = center;
@@ -213,12 +221,12 @@ QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length
     // line to underline the label
     QPointF parm2 = parm1;
     if (angle < 180) { // arm swings the other way on the left side
-         parm2 += QPointF(textWidth, 0);
-         *textStart = parm1;
+        parm2 += QPointF(textWidth, 0);
+        *textStart = parm1;
     }
     else {
-         parm2 += QPointF(-textWidth,0);
-         *textStart = parm2;
+        parm2 += QPointF(-textWidth,0);
+        *textStart = parm2;
     }
 
     QPainterPath path;

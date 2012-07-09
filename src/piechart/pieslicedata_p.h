@@ -82,6 +82,7 @@ public:
         m_radius = 0;
         m_startAngle = 0;
         m_angleSpan = 0;
+        m_donut = false;
     }
 
     bool operator!=(const PieSliceData &other) const
@@ -135,6 +136,7 @@ public:
     qreal m_radius;
     qreal m_startAngle;
     qreal m_angleSpan;
+    bool m_donut;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

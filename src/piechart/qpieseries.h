@@ -61,6 +61,9 @@ public:
 
     qreal sum() const;
 
+    void setDonut(bool donut = true);
+    bool donut() const;
+
     void setHorizontalPosition(qreal relativePosition);
     qreal horizontalPosition() const;
 
