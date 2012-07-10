@@ -64,6 +64,9 @@ public:
     void setDonut(bool donut = true);
     bool donut() const;
 
+    void setDonutInnerSize(qreal innerSize);
+    qreal donutInnerSize() const;
+
     void setHorizontalPosition(qreal relativePosition);
     qreal horizontalPosition() const;
 

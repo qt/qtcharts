@@ -73,6 +73,7 @@ private:
     QRectF m_rect;
     QPointF m_pieCenter;
     qreal m_pieRadius;
+    qreal m_donutInnerRadius;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

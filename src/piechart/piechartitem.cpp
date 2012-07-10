@@ -106,8 +106,10 @@ void PieChartItem::updateLayout()
     if (m_rect.width() < m_rect.height())
         m_pieRadius = m_rect.width() / 2;
 
+    m_donutInnerRadius = m_pieRadius;
     // apply size factor
     m_pieRadius *= m_series->pieSize();
+    m_donutInnerRadius *= m_series->donutInnerSize();
 
     // set layouts for existing slice items
     foreach (QPieSlice* slice, m_series->slices()) {
@@ -215,6 +217,7 @@ PieSliceData PieChartItem::updateSliceGeometry(QPieSlice *slice)
     sliceData.m_center = PieSliceItem::sliceCenter(m_pieCenter, m_pieRadius, slice);
     sliceData.m_radius = m_pieRadius;
     sliceData.m_donut = m_series->donut();
+    sliceData.m_innerRadius = m_donutInnerRadius;
     return sliceData;
 }
 

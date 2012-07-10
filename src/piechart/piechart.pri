@@ -8,7 +8,8 @@ SOURCES += \
     $$PWD/qpieslice.cpp \
     $$PWD/qpiemodelmapper.cpp \
     $$PWD/qvpiemodelmapper.cpp \
-    $$PWD/qhpiemodelmapper.cpp
+    $$PWD/qhpiemodelmapper.cpp \
+    piechart/qdonutgroup.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/pieslicedata_p.h \
@@ -16,12 +17,13 @@ PRIVATE_HEADERS += \
     $$PWD/piesliceitem_p.h \
     $$PWD/qpieslice_p.h \
     $$PWD/qpieseries_p.h \
-    $$PWD/qpiemodelmapper_p.h
+    $$PWD/qpiemodelmapper_p.h \
+    $$PWD/qdonutgroup_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qpieseries.h \
     $$PWD/qpieslice.h \
     $$PWD/qpiemodelmapper.h \
     $$PWD/qvpiemodelmapper.h \
-    $$PWD/qhpiemodelmapper.h
- 
+    $$PWD/qhpiemodelmapper.h \
+    $$PWD/qdonutgroup.h

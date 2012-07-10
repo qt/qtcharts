@@ -176,8 +176,7 @@ QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAn
     // slice path
     QPainterPath path;
     if (m_data.m_donut) {
-        qreal donutFraction = 5.0;
-        QRectF insideRect = rect.adjusted(rect.width() / donutFraction, rect.height() / donutFraction, -rect.width() / donutFraction, -rect.height() / donutFraction);
+        QRectF insideRect(center.x() - m_data.m_innerRadius, center.y()-m_data.m_innerRadius, m_data.m_innerRadius*2, m_data.m_innerRadius*2);
         path.arcMoveTo(rect, -startAngle + 90);
         path.arcTo(rect, -startAngle + 90, -angleSpan);
         path.arcTo(insideRect, -startAngle + 90 - angleSpan, angleSpan);
