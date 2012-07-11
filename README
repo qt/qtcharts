@@ -2,7 +2,7 @@
 Commercial Charts Add-on 1.0.0
 --------------------------------
 
-What�s in Qt Commercial Charts
+What's in Qt Commercial Charts
 =============================
 
 Directory structure:
@@ -24,7 +24,7 @@ licenses/
 Building
 ========
 
-Configure project with qmake and build poject with make:
+Configure project with qmake and build project with make:
     (Linux) make 
     (Windows with MinGw) mingw32-make
     (Visual Studio) nmake
@@ -33,15 +33,15 @@ Configure project with qmake and build poject with make:
 For debug builds:
     qmake CONFIG+=debug ; make
     or 
-    qmake CONFIG+=debug_and_relese; make debug
+    qmake CONFIG+=debug_and_release; make debug
     
 For release builds:    
     qmake CONFIG+=release ; make
     or 
-    qmake CONFIG+=debug_and_relese; make release
+    qmake CONFIG+=debug_and_release; make release
     
 For both builds
-    qmake CONFIG+=debug_and_relese; make all    
+    qmake CONFIG+=debug_and_release; make all    
 
 
 If you want to install the libraries to your Qt library directory use:
@@ -82,6 +82,6 @@ Main Changes between Beta and Final
 * In future it's possible to display several axes at the same time.
 * QBarCategoriesAxis and QValuesAxis classes have been added.
 * QBarSeries change to QGroupedBarSeries introduced in Beta has been reverted.
-* �Getting Started� documentation has been added.
+* "Getting Started" documentation has been added.
 * Chart layout management has been refactored.
 
