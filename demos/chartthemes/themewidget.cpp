@@ -210,6 +210,7 @@ QChart* ThemeWidget::createAreaChart() const
 
 QChart* ThemeWidget::createBarChart(int valueCount) const
 {
+    Q_UNUSED(valueCount);
     QChart* chart = new QChart();
    //TODO: chart->axisX()->setNiceNumbersEnabled(true);
    //TODO: chart->axisY()->setNiceNumbersEnabled(true);
