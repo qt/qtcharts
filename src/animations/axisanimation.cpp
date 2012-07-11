@@ -71,7 +71,7 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
       }
           break;
       case ZoomInAnimation: {
-          int index = qMin(oldLayout.count() * (m_axis->axisType() == ChartAxis::X_AXIS ? m_point.x() : (1 - m_point.y())), newLayout.count() - 1.0);
+          int index = qMin(oldLayout.count() * (m_axis->axisType() == ChartAxis::X_AXIS ? m_point.x() : (1 - m_point.y())), newLayout.count() - (qreal)1.0);
           oldLayout.resize(newLayout.count());
 
           for(int i = 0; i < oldLayout.count(); i++)

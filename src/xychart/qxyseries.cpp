@@ -410,10 +410,10 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
 
 
     if (points.isEmpty()){
-        minX = qMin(minX, 0.0);
-        minY = qMin(minY, 0.0);
-        maxX = qMax(maxX, 1.0);
-        maxY = qMax(maxY, 1.0);
+        minX = qMin(minX, (qreal)0.0);
+        minY = qMin(minY, (qreal)0.0);
+        maxX = qMax(maxX, (qreal)1.0);
+        maxY = qMax(maxY, (qreal)1.0);
     }
 
     for (int i = 0; i < points.count(); i++) {

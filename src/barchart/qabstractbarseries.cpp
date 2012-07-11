@@ -567,9 +567,9 @@ void QAbstractBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal seriesMinX = this->minX();
     qreal seriesMaxX = this->maxX();
     qreal y = max();
-    minX = qMin(minX, seriesMinX - 0.5);
+    minX = qMin(minX, seriesMinX - (qreal)0.5);
     minY = qMin(minY, y);
-    maxX = qMax(maxX, seriesMaxX + 0.5);
+    maxX = qMax(maxX, seriesMaxX + (qreal)0.5);
     maxY = qMax(maxY, y);
     tickXCount = categoryCount()+1;
 
