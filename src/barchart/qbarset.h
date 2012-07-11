@@ -103,11 +103,11 @@ private:
     Q_DISABLE_COPY(QBarSet)
     friend class QAbstractBarSeries;
     friend class BarLegendMarker;
-    friend class BarChartItem;
+    friend class AbstractBarChartItem;
     friend class QAbstractBarSeriesPrivate;
     friend class StackedBarChartItem;
     friend class PercentBarChartItem;
-    friend class GroupedBarChartItem;
+    friend class BarChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

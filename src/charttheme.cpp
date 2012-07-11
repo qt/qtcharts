@@ -41,7 +41,7 @@
 
 //items
 #include "chartaxis_p.h"
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 #include "stackedbarchartitem_p.h"
 #include "percentbarchartitem_p.h"
 #include "linechartitem_p.h"

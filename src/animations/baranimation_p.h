@@ -32,18 +32,18 @@
 
 #include "abstractbaranimation_p.h"
 #include "chartanimation_p.h"
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class BarChartItem;
+class AbstractBarChartItem;
 
 class BarAnimation : public AbstractBarAnimation
 {
     Q_OBJECT
 
 public:
-    BarAnimation(BarChartItem *item);
+    BarAnimation(AbstractBarChartItem *item);
     ~BarAnimation();
 
 public: // from QVariantAnimation

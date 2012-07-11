@@ -34,14 +34,14 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class BarChartItem;
+class AbstractBarChartItem;
 
 class AbstractBarAnimation : public ChartAnimation
 {
     Q_OBJECT
 
 public:
-    AbstractBarAnimation(BarChartItem *item);
+    AbstractBarAnimation(AbstractBarChartItem *item);
     ~AbstractBarAnimation();
 
 public: // from QVariantAnimation
@@ -51,7 +51,7 @@ public: // from QVariantAnimation
     void setup(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
 
 protected:
-    BarChartItem *m_item;
+    AbstractBarChartItem *m_item;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

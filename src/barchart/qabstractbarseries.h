@@ -43,8 +43,6 @@ protected:
 public:
     virtual ~QAbstractBarSeries();
 
-//    virtual QAbstractSeries::SeriesType type() const = 0;
-
     void setBarWidth(qreal width);
     qreal barWidth() const;
 
@@ -73,10 +71,10 @@ Q_SIGNALS:
 
 protected:
     Q_DECLARE_PRIVATE(QAbstractBarSeries)
-    friend class BarChartItem;
+    friend class AbstractBarChartItem;
     friend class PercentBarChartItem;
     friend class StackedBarChartItem;
-    friend class GroupedBarChartItem;
+    friend class BarChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -31,13 +31,13 @@
 #ifndef STACKEDBARCHARTITEM_H
 #define STACKEDBARCHARTITEM_H
 
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 #include "qstackedbarseries.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class StackedBarChartItem : public BarChartItem
+class StackedBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:

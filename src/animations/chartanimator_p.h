@@ -33,7 +33,7 @@
 #include "qchartglobal.h"
 #include "chartanimation_p.h"
 #include "piechartitem_p.h"
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 #include <QPointF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

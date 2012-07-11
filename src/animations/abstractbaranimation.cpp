@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "abstractbaranimation_p.h"
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 #include <QTimer>
 #include <QDebug>
 
@@ -27,7 +27,7 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-AbstractBarAnimation::AbstractBarAnimation(BarChartItem *item)
+AbstractBarAnimation::AbstractBarAnimation(AbstractBarChartItem *item)
     :ChartAnimation(item),
     m_item(item)
 {

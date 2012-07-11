@@ -11,7 +11,7 @@
 #define STACKEDBARANIMATION_P_H
 
 #include "chartanimation_p.h"
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 #include "abstractbaranimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

@@ -19,14 +19,14 @@
 ****************************************************************************/
 
 #include "baranimation_p.h"
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 #include <QTimer>
 
 Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarAnimation::BarAnimation(BarChartItem *item)
+BarAnimation::BarAnimation(AbstractBarChartItem *item)
     :AbstractBarAnimation(item)
 {
     setDuration(ChartAnimationDuration);

@@ -25,7 +25,7 @@
 #include "xychart_p.h"
 #include "pieanimation_p.h"
 #include "baranimation_p.h"
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 #include "stackedbaranimation_p.h"
 #include "stackedbarchartitem_p.h"
 #include "percentbaranimation_p.h"

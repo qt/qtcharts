@@ -31,14 +31,14 @@
 #ifndef PERCENTBARCHARTITEM_H
 #define PERCENTBARCHARTITEM_H
 
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAbstractBarSeries;
 
-class PercentBarChartItem : public BarChartItem
+class PercentBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:

@@ -20,7 +20,7 @@
 
 #include "qbarseries.h"
 #include "qbarseries_p.h"
-#include "groupedbarchartitem_p.h"
+#include "barchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
@@ -65,7 +65,7 @@ QBarSeries::QBarSeries(QObject *parent)
 }
 
 /*!
-    Returns QChartSeries::SeriesTypeGroupedBar.
+    Returns QChartSeries::SeriesTypeBar.
 */
 QAbstractSeries::SeriesType QBarSeries::type() const
 {
@@ -104,7 +104,7 @@ Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QBarSeries);
 
-    GroupedBarChartItem* bar = new GroupedBarChartItem(q,presenter);
+    BarChartItem* bar = new BarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
         bar->setAnimator(presenter->animator());
         bar->setAnimation(new BarAnimation(bar));

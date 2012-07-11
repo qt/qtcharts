@@ -3,7 +3,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 HorizontalBarChartitem::HorizontalBarChartitem(QAbstractBarSeries *series, ChartPresenter *presenter) :
-    BarChartItem(series, presenter)
+    AbstractBarChartItem(series, presenter)
 {
 }
 

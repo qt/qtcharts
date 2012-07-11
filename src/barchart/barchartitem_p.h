@@ -31,62 +31,20 @@
 #ifndef BARCHARTITEM_H
 #define BARCHARTITEM_H
 
-#include "chartitem_p.h"
-#include "qabstractbarseries.h"
-#include <QPen>
-#include <QBrush>
+#include "abstractbarchartitem_p.h"
+#include "qstackedbarseries.h"
+#include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class Bar;
-class QAxisCategories;
-class QChart;
-class AbstractBarAnimation;
-
-class BarChartItem : public ChartItem
+class BarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:
     BarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
-    virtual ~BarChartItem();
 
-public:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-    QRectF boundingRect() const;
-
+private:
     virtual QVector<QRectF> calculateLayout();
-    virtual void applyLayout(const QVector<QRectF> &layout);
-    virtual void setAnimation(AbstractBarAnimation* animation);
-    void setLayout(const QVector<QRectF> &layout);
-    void updateLayout(const QVector<QRectF> &layout);
-
-
-    QRectF geometry() const { return m_rect;}
-
-public Q_SLOTS:
-    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
-    void handleGeometryChanged(const QRectF &size);
-    void handleLayoutChanged();
-    void handleLabelsVisibleChanged(bool visible);
-    void handleDataStructureChanged();     // structure of of series has changed, recreate graphic items
-    void handleVisibleChanged();
-
-protected:
-
-    qreal m_domainMinX;
-    qreal m_domainMaxX;
-    qreal m_domainMinY;
-    qreal m_domainMaxY;
-
-    QRectF m_rect;
-    QVector<QRectF> m_layout;
-
-    AbstractBarAnimation *m_animation;
-
-    // Not owned.
-    QAbstractBarSeries *m_series;
-    QList<Bar *> m_bars;
-    QList<QGraphicsSimpleTextItem *> m_labels;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

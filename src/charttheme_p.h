@@ -40,7 +40,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartItem;
 class LineChartItem;
 class QLineSeries;
-class BarChartItem;
+class AbstractBarChartItem;
 class QAbstractBarSeries;
 class StackedBarChartItem;
 class QStackedBarSeries;

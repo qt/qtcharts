@@ -1,14 +1,14 @@
 #ifndef HORIZONTALBARCHARTITEM_H
 #define HORIZONTALBARCHARTITEM_H
 
-#include "barchartitem_p.h"
+#include "abstractbarchartitem_p.h"
 #include "qstackedbarseries.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-class HorizontalBarChartitem : public BarChartItem
+class HorizontalBarChartitem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:
