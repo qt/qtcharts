@@ -1,3 +1,4 @@
+##################### LIB #################################################
 
 LIBRARY_NAME = QtCommercialChart
 CONFIG(debug, debug|release) {
@@ -5,7 +6,11 @@ CONFIG(debug, debug|release) {
     win32: LIBRARY_NAME = $$join(LIBRARY_NAME,,,d)
 }
 
-coverage: CONFIG += debug
+LIBS += -l$$LIBRARY_NAME
+
+# This will undefine Q_DECL_EXPORT/Q_DECL_IMPORT at qchartglobal.h
+# They should not be used for staticlib builds.
+staticlib:DEFINES+=QTCOMMERCIALCHART_STATICLIB
 
 ##################### SHADOW CONFIG #################################################
 
@@ -35,10 +40,10 @@ CHART_BUILD_PLUGIN_DIR = $$CHART_BUILD_BIN_DIR/QtCommercial/Chart
 CHART_BUILD_DOC_DIR = $$SHADOW/doc
 
 # Use own folders for debug and release builds
-!coverage {
-    CONFIG(debug, debug|release):CHART_BUILD_DIR = $$join(CHART_BUILD_DIR,,,/debug)
-    CONFIG(release, debug|release): CHART_BUILD_DIR = $$join(CHART_BUILD_DIR,,,/release)
-}
+
+CONFIG(debug, debug|release):CHART_BUILD_DIR = $$join(CHART_BUILD_DIR,,,/debug)
+CONFIG(release, debug|release): CHART_BUILD_DIR = $$join(CHART_BUILD_DIR,,,/release)
+
 
 win32:{
     CHART_BUILD_PUBLIC_HEADER_DIR = $$replace(CHART_BUILD_PUBLIC_HEADER_DIR, "/","\\")
@@ -59,15 +64,8 @@ mac: {
     QMAKE_LFLAGS *= -mmacosx-version-min=10.5
 }
 
-##################### DEVELOPMENT BUILD ###################################################
+##################### INCLUDES ############################################################
 
-development_build: {
-    DEFINES+=DEVELOPMENT_BUILD
-    CONFIG+=debug_and_release
-}
-
-
-##################### BUILD CONFIG ########################################################
 
 INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR
 
@@ -83,11 +81,13 @@ INCLUDEPATH += $$CHART_BUILD_PUBLIC_HEADER_DIR
     }
 }
 
-LIBS += -l$$LIBRARY_NAME
+##################### DEVELOPMENT BUILD ###################################################
 
-# This will undefine Q_DECL_EXPORT/Q_DECL_IMPORT at qchartglobal.h
-# They should not be used for staticlib builds.
-staticlib:DEFINES+=QTCOMMERCIALCHART_STATICLIB
+development_build: {
+    DEFINES+=DEVELOPMENT_BUILD
+    CONFIG+=debug_and_release
+    CONFIG+=build_all
+}
 
 ##################### UNIT TESTS ##############################################################
 
@@ -96,3 +96,5 @@ CONFIG(debug, debug|release) {
     DEFINES+=BUILD_PRIVATE_UNIT_TESTS
 }
 
+#################### COVERAGE #################################################################
+coverage: CONFIG += debug

@@ -19,12 +19,6 @@ unix:{
   QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
 }
 
-# enable building debug and release at the same time
-CONFIG += debug_and_release
-
-# On windows by default build both debug and release at the same time
-win32:CONFIG += build_all
-
 ############################# DEPEDENCES ########################################
 
 win32-msvc*: LIBS += User32.lib

@@ -15,12 +15,6 @@ CONFIG(debug, debug|release) {
   win32: TARGET = $$join(TARGET,,,d)
 }
 
-# enable building debug and release at the same time
-CONFIG += debug_and_release
-
-# On windows by default build both debug and release at the same time
-win32:CONFIG += build_all
-
 SOURCES += \
     plugin.cpp \
     declarativechart.cpp \
