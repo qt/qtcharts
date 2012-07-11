@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
     chart->addSeries(series);
     chart->setTitle("Simple horizontal barchart example");
     chart->createDefaultAxes();
+    chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
 //![4]

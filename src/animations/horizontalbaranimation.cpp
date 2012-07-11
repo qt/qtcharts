@@ -39,11 +39,22 @@ HorizontalBarAnimation::~HorizontalBarAnimation()
 
 QVariant HorizontalBarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
-    // TODO:
-    Q_UNUSED(from);
-    Q_UNUSED(to);
-    Q_UNUSED(progress);
-    return to;
+    QVector<QRectF> startVector = qVariantValue<QVector<QRectF> >(from);
+    QVector<QRectF> endVector = qVariantValue<QVector<QRectF> >(to);
+    QVector<QRectF> result;
+
+    Q_ASSERT(startVector.count() == endVector.count());
+
+    for(int i = 0; i < startVector.count(); i++) {
+        qreal h = endVector[i].height();
+        qreal w = startVector[i].width() + ((endVector[i].width() - startVector[i].width()) * progress);
+        qreal x = endVector[i].topLeft().x();
+        qreal y = endVector[i].topLeft().y();
+
+        QRectF value(x,y,w,h);
+        result << value;
+    }
+    return qVariantFromValue(result);
 }
 
 #include "moc_horizontalbaranimation_p.cpp"
