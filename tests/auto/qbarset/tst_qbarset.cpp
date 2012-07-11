@@ -190,20 +190,20 @@ void tst_QBarSet::insert()
     m_barset->insert(0, 1.0);       // 1.0
     QCOMPARE(m_barset->at(0), 1.0);
     QCOMPARE(m_barset->count(), 1);
-    QVERIFY(qFuzzyCompare(m_barset->sum(), 1.0));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), (qreal)1.0));
 
     m_barset->insert(0, 2.0);       // 2.0 1.0
     QCOMPARE(m_barset->at(0), 2.0);
     QCOMPARE(m_barset->at(1), 1.0);
     QCOMPARE(m_barset->count(), 2);
-    QVERIFY(qFuzzyCompare(m_barset->sum(), 3.0));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), (qreal)3.0));
 
     m_barset->insert(1, 3.0);       // 2.0 3.0 1.0
     QCOMPARE(m_barset->at(1), 3.0);
     QCOMPARE(m_barset->at(0), 2.0);
     QCOMPARE(m_barset->at(2), 1.0);
     QCOMPARE(m_barset->count(), 3);
-    QVERIFY(qFuzzyCompare(m_barset->sum(), 6.0));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), (qreal)6.0));
     QCOMPARE(valueSpy.count(), 3);
 }
 
@@ -411,13 +411,13 @@ void tst_QBarSet::sum()
     QVERIFY(qFuzzyIsNull(m_barset->sum()));
 
     m_barset->append(1.0);
-    QVERIFY(qFuzzyCompare(m_barset->sum(),1.0));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), (qreal)1.0));
     m_barset->append(2.0);
-    QVERIFY(qFuzzyCompare(m_barset->sum(),3.0));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), (qreal)3.0));
     m_barset->append(3.0);
-    QVERIFY(qFuzzyCompare(m_barset->sum(),6.0));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), (qreal)6.0));
     m_barset->append(4.0);
-    QVERIFY(qFuzzyCompare(m_barset->sum(),10.0));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), (qreal)10.0));
 }
 
 void tst_QBarSet::customize()

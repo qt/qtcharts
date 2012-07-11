@@ -4,5 +4,9 @@
 
 TEMPLATE = subdirs
 SUBDIRS += \ 
-        declarative \
-        designer
+        declarative
+
+!linux-arm*: {
+    SUBDIRS += \
+            designer
+}

@@ -6,5 +6,9 @@ TEMPLATE = subdirs
 SUBDIRS += \ 
     auto \
     chartwidgettest \
-    wavechart \
     qmlchartproperties
+
+!linux-arm*: {
+    SUBDIRS += \
+            wavechart
+}
