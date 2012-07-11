@@ -89,6 +89,9 @@ development_build: {
     CONFIG+=build_all
 }
 
+#################### COVERAGE #################################################################
+coverage: CONFIG += debug
+
 ##################### UNIT TESTS ##############################################################
 
 CONFIG(debug, debug|release) {
@@ -96,5 +99,3 @@ CONFIG(debug, debug|release) {
     DEFINES+=BUILD_PRIVATE_UNIT_TESTS
 }
 
-#################### COVERAGE #################################################################
-coverage: CONFIG += debug
