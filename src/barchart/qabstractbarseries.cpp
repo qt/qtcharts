@@ -722,12 +722,12 @@ void QAbstractBarSeriesPrivate::initializeAxisY(QAbstractAxis* axis)
 
 QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisXType() const
 {
-    return QAbstractAxis::AxisTypeCategories;
+    return QAbstractAxis::AxisTypeNoAxis;
 }
 
 QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisYType() const
 {
-    return QAbstractAxis::AxisTypeValues;
+    return QAbstractAxis::AxisTypeNoAxis;
 }
 
 #include "moc_qabstractbarseries.cpp"

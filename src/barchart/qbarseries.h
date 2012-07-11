@@ -21,7 +21,6 @@
 #ifndef QBARSERIES_H
 #define QBARSERIES_H
 
-#include <QStringList>
 #include <qabstractbarseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

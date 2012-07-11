@@ -1,9 +1,16 @@
 #include "qhorizontalbarseries.h"
 #include "qhorizontalbarseries_p.h"
+#include "horizontalbarchartitem_p.h"
+#include "horizontalbaranimation_p.h"
+
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
+
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent) :
-    QAbstractBarSeries(parent)
+    QAbstractBarSeries(*new QHorizontalBarSeriesPrivate(this), parent)
 {
 }
 
@@ -24,8 +31,6 @@ QHorizontalBarSeriesPrivate::QHorizontalBarSeriesPrivate(QHorizontalBarSeries *q
 void QHorizontalBarSeriesPrivate::scaleDomain(Domain& domain)
 {
     // TODO:
-    Q_UNUSED(domain);
-    /*
     qreal minX(domain.minX());
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
@@ -33,34 +38,39 @@ void QHorizontalBarSeriesPrivate::scaleDomain(Domain& domain)
     int tickXCount(domain.tickXCount());
     int tickYCount(domain.tickYCount());
 
-    qreal x = categoryCount();
-    qreal y = max();
-    minX = qMin(minX, -0.5);
-    minY = qMin(minY, y);
-    maxX = qMax(maxX, x - 0.5);
-    maxY = qMax(maxY, y);
-    tickXCount = x+1;
+    qreal y = categoryCount();
+    qreal x = max();
+    minX = qMin(minX, x);
+    minY = qMin(minY, -0.5);
+    maxX = qMax(maxX, x);
+    maxY = qMax(maxY, y -0.5);
+    tickYCount = y+1;
 
     domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
-    */
 }
 
 
 Chart* QHorizontalBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
-    // TODO:
-    Q_UNUSED(presenter);
-    return 0;
-/*
     Q_Q(QHorizontalBarSeries);
 
-    GroupedBarChartItem* bar = new GroupedBarChartItem(q,presenter);
+    HorizontalBarChartItem* bar = new HorizontalBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        presenter->animator()->addAnimation(bar);
+        bar->setAnimator(presenter->animator());
+        bar->setAnimation(new HorizontalBarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
-*/
+}
+
+QAbstractAxis::AxisType QHorizontalBarSeriesPrivate::defaultAxisXType() const
+{
+    return QAbstractAxis::AxisTypeValues;
+}
+
+QAbstractAxis::AxisType QHorizontalBarSeriesPrivate::defaultAxisYType() const
+{
+    return QAbstractAxis::AxisTypeValues;
 }
 
 

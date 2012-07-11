@@ -113,6 +113,16 @@ Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
+QAbstractAxis::AxisType QBarSeriesPrivate::defaultAxisXType() const
+{
+    return QAbstractAxis::AxisTypeCategories;
+}
+
+QAbstractAxis::AxisType QBarSeriesPrivate::defaultAxisYType() const
+{
+    return QAbstractAxis::AxisTypeValues;
+}
+
 #include "moc_qbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

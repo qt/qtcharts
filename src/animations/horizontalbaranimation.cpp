@@ -18,34 +18,34 @@
 **
 ****************************************************************************/
 
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the QtCommercial Chart API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-
-#ifndef HORIZONTALBARCHARTITEM_H
-#define HORIZONTALBARCHARTITEM_H
-
+#include "horizontalbaranimation_p.h"
 #include "abstractbarchartitem_p.h"
-#include "qstackedbarseries.h"
-#include <QGraphicsItem>
+#include <QTimer>
+
+Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class HorizontalBarChartItem : public AbstractBarChartItem
+HorizontalBarAnimation::HorizontalBarAnimation(AbstractBarChartItem *item) :
+    AbstractBarAnimation(item)
 {
-    Q_OBJECT
-public:
-    HorizontalBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
+}
 
-private:
-    virtual QVector<QRectF> calculateLayout();
-};
+HorizontalBarAnimation::~HorizontalBarAnimation()
+{
+
+}
+
+
+QVariant HorizontalBarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
+{
+    // TODO:
+    Q_UNUSED(from);
+    Q_UNUSED(to);
+    Q_UNUSED(progress);
+    return to;
+}
+
+#include "moc_horizontalbaranimation_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif // HORIZONTALBARCHARTITEM_H

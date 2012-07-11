@@ -108,6 +108,7 @@ private:
     friend class StackedBarChartItem;
     friend class PercentBarChartItem;
     friend class BarChartItem;
+    friend class HorizontalBarChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -112,6 +112,16 @@ Chart* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
+QAbstractAxis::AxisType QPercentBarSeriesPrivate::defaultAxisXType() const
+{
+    return QAbstractAxis::AxisTypeCategories;
+}
+
+QAbstractAxis::AxisType QPercentBarSeriesPrivate::defaultAxisYType() const
+{
+    return QAbstractAxis::AxisTypeValues;
+}
+
 #include "moc_qpercentbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

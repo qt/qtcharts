@@ -114,6 +114,16 @@ Chart* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
+QAbstractAxis::AxisType QStackedBarSeriesPrivate::defaultAxisXType() const
+{
+    return QAbstractAxis::AxisTypeCategories;
+}
+
+QAbstractAxis::AxisType QStackedBarSeriesPrivate::defaultAxisYType() const
+{
+    return QAbstractAxis::AxisTypeValues;
+}
+
 
 #include "moc_qstackedbarseries.cpp"
 

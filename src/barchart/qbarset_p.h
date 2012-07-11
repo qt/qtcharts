@@ -57,7 +57,8 @@ public:
     void replace(const int index, const qreal value);
     void replace(const int index, const QPointF value);
 
-    QPointF at(const int index);
+    qreal pos(const int index);
+    qreal value(const int index);
 
 Q_SIGNALS:
     void restructuredBars();
