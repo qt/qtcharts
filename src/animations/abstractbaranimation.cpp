@@ -18,45 +18,49 @@
 **
 ****************************************************************************/
 
-#include "baranimation_p.h"
+#include "abstractbaranimation_p.h"
 #include "barchartitem_p.h"
 #include <QTimer>
+#include <QDebug>
 
 Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-BarAnimation::BarAnimation(BarChartItem *item)
-    :AbstractBarAnimation(item)
+AbstractBarAnimation::AbstractBarAnimation(BarChartItem *item)
+    :ChartAnimation(item),
+    m_item(item)
 {
     setDuration(ChartAnimationDuration);
     setEasingCurve(QEasingCurve::OutQuart);
 }
 
-BarAnimation::~BarAnimation()
+AbstractBarAnimation::~AbstractBarAnimation()
 {
 }
 
-QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
+QVariant AbstractBarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
-    QVector<QRectF> startVector = qVariantValue<QVector<QRectF> >(from);
-    QVector<QRectF> endVector = qVariantValue<QVector<QRectF> >(to);
-    QVector<QRectF> result;
-
-    Q_ASSERT(startVector.count() == endVector.count());
-
-    for(int i = 0; i < startVector.count(); i++) {
-        qreal w = endVector[i].width();
-        qreal h = startVector[i].height() + ((endVector[i].height() - startVector[i].height()) * progress);
-        qreal x = endVector[i].topLeft().x();
-        qreal y = endVector[i].topLeft().y() + endVector[i].height() - h;
-
-        QRectF value(x,y,w,h);
-        result << value;
-    }
-    return qVariantFromValue(result);
+    Q_UNUSED(from);
+    Q_UNUSED(to);
+    Q_UNUSED(progress);
+    qWarning() << "AbstractBarAnimation::interpolated called";
+    return to;
 }
 
-#include "moc_baranimation_p.cpp"
+void AbstractBarAnimation::updateCurrentValue(const QVariant &value)
+{
+    QVector<QRectF> layout = qVariantValue<QVector<QRectF> >(value);
+    m_item->setLayout(layout);
+}
+
+void AbstractBarAnimation::setup(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
+{
+    setKeyValueAt(0.0, qVariantFromValue(oldLayout));
+    setKeyValueAt(1.0, qVariantFromValue(newLayout));
+}
+
+#include "moc_abstractbaranimation_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
+

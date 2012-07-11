@@ -11,6 +11,7 @@
 #define PERCENTBARANIMATION_P_H
 
 #include "chartanimation_p.h"
+#include "abstractbaranimation_p.h"
 #include "barchartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -19,23 +20,14 @@ class PercentBarChartItem;
 class QBarSet;
 class BarSetAnimation;
 
-class PercentBarAnimation : public ChartAnimation
+class PercentBarAnimation : public AbstractBarAnimation
 {
     Q_OBJECT
 public:
-    PercentBarAnimation(BarChartItem *item);
+    PercentBarAnimation(PercentBarChartItem *item);
     ~PercentBarAnimation();
 
-public:
     virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
-    virtual void updateCurrentValue(const QVariant &value);
-
-    void updateLayout(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
-
-private:
-    BarChartItem *m_item;
-    QHash<QBarSet *, BarSetAnimation *> m_animations;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

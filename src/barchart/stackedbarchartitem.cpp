@@ -90,16 +90,6 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     return layout;
 }
 
-void StackedBarChartItem::applyLayout(const QVector<QRectF> &layout)
-{
-    if (animator()) {
-        animator()->updateLayout(this, m_layout, layout);
-    } else {
-        setLayout(layout);
-        update();
-    }
-}
-
 #include "moc_stackedbarchartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

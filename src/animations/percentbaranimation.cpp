@@ -26,10 +26,10 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PercentBarAnimation::PercentBarAnimation(BarChartItem *item)
-    :ChartAnimation(item),
-    m_item(item)
+PercentBarAnimation::PercentBarAnimation(PercentBarChartItem *item)
+    :AbstractBarAnimation(item)
 {
+    setDuration(ChartAnimationDuration);
     setEasingCurve(QEasingCurve::OutQuart);
 }
 
@@ -57,20 +57,6 @@ QVariant PercentBarAnimation::interpolated(const QVariant &from, const QVariant 
         result << value;
     }
     return qVariantFromValue(result);
-}
-
-void PercentBarAnimation::updateCurrentValue(const QVariant &value)
-{
-    QVector<QRectF> layout = qVariantValue<QVector<QRectF> >(value);
-    m_item->setLayout(layout);
-}
-
-void PercentBarAnimation::updateLayout(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
-{
-    setDuration(ChartAnimationDuration);
-    setKeyValueAt(0.0, qVariantFromValue(oldLayout));
-    setKeyValueAt(1.0, qVariantFromValue(newLayout));
-    QTimer::singleShot(0, this, SLOT(start()));
 }
 
 #include "moc_percentbaranimation_p.cpp"

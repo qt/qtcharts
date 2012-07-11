@@ -27,6 +27,7 @@
 #include "qchart.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
+#include "abstractbaranimation_p.h"
 #include "chartdataset_p.h"
 #include <QPainter>
 
@@ -34,6 +35,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarChartItem::BarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter) :
     ChartItem(presenter),
+    m_animation(0),
     m_series(series)
 {
     setFlag(ItemClipsChildrenToShape);
@@ -121,12 +123,19 @@ QVector<QRectF> BarChartItem::calculateLayout()
 
 void BarChartItem::applyLayout(const QVector<QRectF> &layout)
 {
-    if (animator()) {
-        animator()->updateLayout(this, m_layout, layout);
+    if (m_animation) {
+        m_animation->setup(m_layout,layout);
+        presenter()->startAnimation(m_animation);
+
     } else {
         setLayout(layout);
         update();
     }
+}
+
+void BarChartItem::setAnimation(AbstractBarAnimation *animation)
+{
+    m_animation = animation;
 }
 
 void BarChartItem::setLayout(const QVector<QRectF> &layout)

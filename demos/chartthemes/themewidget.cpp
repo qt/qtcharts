@@ -26,6 +26,7 @@
 #include <QAbstractBarSeries>
 #include <QPercentBarSeries>
 #include <QStackedBarSeries>
+#include <QBarSeries>
 #include <QBarSet>
 #include <QLineSeries>
 #include <QSplineSeries>

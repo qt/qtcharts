@@ -25,6 +25,7 @@
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
 #include "qvaluesaxis.h"
+#include "percentbaranimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -104,7 +105,8 @@ Chart* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 
     PercentBarChartItem* bar = new PercentBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        presenter->animator()->addAnimation(bar);
+        bar->setAnimator(presenter->animator());
+        bar->setAnimation(new PercentBarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;

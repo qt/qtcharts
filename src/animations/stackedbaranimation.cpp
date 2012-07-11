@@ -26,9 +26,8 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-StackedBarAnimation::StackedBarAnimation(BarChartItem *item)
-    :ChartAnimation(item),
-    m_item(item)
+StackedBarAnimation::StackedBarAnimation(StackedBarChartItem *item)
+    :AbstractBarAnimation(item)
 {
     setEasingCurve(QEasingCurve::OutQuart);
 }
@@ -59,20 +58,6 @@ QVariant StackedBarAnimation::interpolated(const QVariant &from, const QVariant 
     return qVariantFromValue(result);
 }
 
-void StackedBarAnimation::updateCurrentValue(const QVariant &value)
-{
-    QVector<QRectF> layout = qVariantValue<QVector<QRectF> >(value);
-    m_item->setLayout(layout);
-}
-
-
-void StackedBarAnimation::updateLayout(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
-{
-    setDuration(ChartAnimationDuration);
-    setKeyValueAt(0.0, qVariantFromValue(oldLayout));
-    setKeyValueAt(1.0, qVariantFromValue(newLayout));
-    QTimer::singleShot(0, this, SLOT(start()));
-}
 #include "moc_stackedbaranimation_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

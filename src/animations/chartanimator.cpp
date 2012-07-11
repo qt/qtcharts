@@ -61,43 +61,6 @@ void ChartAnimator::addAnimation(PieChartItem *item)
     item->setAnimator(this);
 }
 
-void ChartAnimator::addAnimation(BarChartItem *item)
-{
-    // This can handle also GroupedBarChartItem because bars are side by side
-    ChartAnimation *animation = m_animations.value(item);
-
-    if (!animation) {
-        animation = new BarAnimation(item);
-        m_animations.insert(item, animation);
-    }
-
-    item->setAnimator(this);
-}
-
-void ChartAnimator::addAnimation(StackedBarChartItem *item)
-{
-    ChartAnimation *animation = m_animations.value(item);
-
-    if (!animation) {
-        animation = new StackedBarAnimation(item);
-        m_animations.insert(item, animation);
-    }
-
-    item->setAnimator(this);
-}
-
-void ChartAnimator::addAnimation(PercentBarChartItem *item)
-{
-    ChartAnimation *animation = m_animations.value(item);
-
-    if (!animation) {
-        animation = new PercentBarAnimation(item);
-        m_animations.insert(item, animation);
-    }
-
-    item->setAnimator(this);
-}
-
 void ChartAnimator::removeAnimation(Chart *item)
 {
     item->setAnimator(0);
@@ -125,44 +88,6 @@ void ChartAnimator::updateAnimation(PieChartItem *item, PieSliceItem *sliceItem,
     animation->updateValue(sliceItem, sliceData);
 }
 
-void ChartAnimator::updateLayout(BarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
-{
-    BarAnimation *animation = static_cast<BarAnimation *>(m_animations.value(item));
-    if (animation) {
-        m_animations.remove(item);
-        animation->deleteLater();
-        animation = 0;
-        addAnimation(item);
-    }
-    animation = static_cast<BarAnimation *>(m_animations.value(item));
-    animation->updateLayout(oldLayout,newLayout);
-}
-
-void ChartAnimator::updateLayout(StackedBarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
-{
-    StackedBarAnimation *animation = static_cast<StackedBarAnimation *>(m_animations.value(item));
-    if (animation) {
-        m_animations.remove(item);
-        animation->deleteLater();
-        animation = 0;
-        addAnimation(item);
-    }
-    animation = static_cast<StackedBarAnimation *>(m_animations.value(item));
-    animation->updateLayout(oldLayout,newLayout);
-}
-
-void ChartAnimator::updateLayout(PercentBarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
-{
-    PercentBarAnimation *animation = static_cast<PercentBarAnimation *>(m_animations.value(item));
-    if (animation) {
-        m_animations.remove(item);
-        animation->deleteLater();
-        animation = 0;
-        addAnimation(item);
-    }
-    animation = static_cast<PercentBarAnimation *>(m_animations.value(item));
-    animation->updateLayout(oldLayout,newLayout);
-}
 #include "moc_chartanimator_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -12,6 +12,7 @@
 
 #include "chartanimation_p.h"
 #include "barchartitem_p.h"
+#include "abstractbaranimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -19,23 +20,14 @@ class StackedBarChartItem;
 class QBarSet;
 class BarSetAnimation;
 
-class StackedBarAnimation : public ChartAnimation
+class StackedBarAnimation : public AbstractBarAnimation
 {
     Q_OBJECT
 public:
-    StackedBarAnimation(BarChartItem *item);
+    StackedBarAnimation(StackedBarChartItem *item);
     ~StackedBarAnimation();
 
-public:
     virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
-    virtual void updateCurrentValue(const QVariant &value);
-
-    void updateLayout(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
-
-private:
-    BarChartItem *m_item;
-    QHash<QBarSet *, BarSetAnimation *> m_animations;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

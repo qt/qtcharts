@@ -24,6 +24,7 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
+#include "baranimation_p.h"
 #include "qvaluesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -105,12 +106,12 @@ Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 
     GroupedBarChartItem* bar = new GroupedBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        presenter->animator()->addAnimation(bar);
+        bar->setAnimator(presenter->animator());
+        bar->setAnimation(new BarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
 }
-
 
 #include "moc_qbarseries.cpp"
 

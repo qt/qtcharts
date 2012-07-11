@@ -55,18 +55,11 @@ public:
     virtual ~ChartAnimator();
 
     void addAnimation(PieChartItem *item);
-    void addAnimation(BarChartItem *item);
-    void addAnimation(StackedBarChartItem *item);
-    void addAnimation(PercentBarChartItem *item);
     void removeAnimation(Chart *item);
 
     void addAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData, bool isEmpty);
     void removeAnimation(PieChartItem *item, PieSliceItem *sliceItem);
     void updateAnimation(PieChartItem *item, PieSliceItem *sliceItem, const PieSliceData &sliceData);
-
-    void updateLayout(BarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
-    void updateLayout(StackedBarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
-    void updateLayout(PercentBarChartItem *item, const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout);
 
 private:
      QMap<Chart *, ChartAnimation *> m_animations;

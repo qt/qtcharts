@@ -578,15 +578,9 @@ void QAbstractBarSeriesPrivate::scaleDomain(Domain& domain)
 
 Chart* QAbstractBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
-    Q_Q(QAbstractBarSeries);
-
-    BarChartItem* bar = new BarChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        presenter->animator()->addAnimation(bar);
-    }
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return bar;
-
+    Q_UNUSED(presenter);
+    qWarning() << "QAbstractBarSeriesPrivate::createGraphics called";
+    return 0;
 }
 
 QList<LegendMarker*> QAbstractBarSeriesPrivate::createLegendMarker(QLegend* legend)

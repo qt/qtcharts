@@ -97,15 +97,6 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
     return layout;
 }
 
-void PercentBarChartItem::applyLayout(const QVector<QRectF> &layout)
-{
-    if (animator()) {
-        animator()->updateLayout(this, m_layout, layout);
-    } else {
-        setLayout(layout);
-        update();
-    }
-}
 #include "moc_percentbarchartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
