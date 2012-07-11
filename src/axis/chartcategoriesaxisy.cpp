@@ -81,7 +81,7 @@ void ChartCategoriesAxisY::updateGeometry()
 
     for (int i = 0; i < layout.size(); ++i) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
+        lineItem->setLine(m_rect.left() , layout[i], m_rect.right(), layout[i]);
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
         if(i>=1){
         labelItem->setText(ticksList.at(i-1));
