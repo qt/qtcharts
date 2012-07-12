@@ -26,4 +26,5 @@ SUBDIRS += \
            lineandbar \
            horizontalbarchart \
            horizontalstackedbarchart \
-           horizontalpercentbarchart
+           horizontalpercentbarchart \
+           donut

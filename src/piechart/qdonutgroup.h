@@ -17,6 +17,14 @@ public:
 
     void append(QPieSeries *donut);
 
+    bool insert(int index, QPieSeries* donut);
+
+    bool remove(QPieSeries* donut);
+    void clear();
+
+    QList<QPieSeries*> donuts() const;
+    int count() const;
+
 protected:
     QDonutGroupPrivate * const d_ptr;
     Q_DECLARE_PRIVATE(QDonutGroup)
