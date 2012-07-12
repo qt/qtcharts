@@ -49,7 +49,7 @@ public:
         SeriesTypePie,
         SeriesTypeScatter,
         SeriesTypeSpline,
-        SeriesTypeHorizontalBar
+        SeriesTypeHorizontalBar,
         SeriesTypeHorizontalStackedBar,
         SeriesTypeHorizontalPercentBar
     };
