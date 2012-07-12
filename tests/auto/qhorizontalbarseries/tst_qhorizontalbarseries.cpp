@@ -501,7 +501,6 @@ void tst_QHorizontalBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set1 to top of set2
-    qDebug() << "move mouse from top of set1 to top of set2";
     QTest::mouseMove(view.viewport(), QPoint(200,203));
     TRY_COMPARE(seriesSpy.count(), 2);
     TRY_COMPARE(setSpy1.count(), 1);
@@ -529,8 +528,6 @@ void tst_QHorizontalBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set2 to background
-    qDebug() << "move mouse from top of set2 to background";
-
     QTest::mouseMove(view.viewport(), QPoint(0,203));
     TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(setSpy1.count(), 0);

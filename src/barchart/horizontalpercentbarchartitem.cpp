@@ -22,7 +22,6 @@
 #include "qabstractbarseries_p.h"
 #include "qbarset_p.h"
 #include "bar_p.h"
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

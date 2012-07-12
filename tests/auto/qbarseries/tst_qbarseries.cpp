@@ -477,7 +477,6 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse to left border
-    qDebug() << "move mouse to left border";
     QTest::mouseMove(view.viewport(), QPoint(0, 143));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
     TRY_COMPARE(seriesSpy.count(), 0);
@@ -486,7 +485,6 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse on top of set1
-    qDebug() << "move mouse on top of set1";
     QTest::mouseMove(view.viewport(), QPoint(95,143));
     TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(setSpy1.count(), 1);
@@ -503,7 +501,6 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set1 to top of set2
-    qDebug() << "move mouse from top of set1 to top of set2";
     QTest::mouseMove(view.viewport(), QPoint(118,143));
     TRY_COMPARE(seriesSpy.count(), 2);
     TRY_COMPARE(setSpy1.count(), 1);
@@ -531,8 +528,6 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set2 to background
-    qDebug() << "move mouse from top of set2 to background";
-
     QTest::mouseMove(view.viewport(), QPoint(118,0));
     TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(setSpy1.count(), 0);
