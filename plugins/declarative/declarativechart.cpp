@@ -470,10 +470,10 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
         series = new DeclarativeAreaSeries();
         break;
     case DeclarativeChart::SeriesTypeStackedBar:
-        // TODO
+        series = new DeclarativeStackedBarSeries();
         break;
     case DeclarativeChart::SeriesTypePercentBar:
-        // TODO
+        series = new DeclarativePercentBarSeries();
         break;
     case DeclarativeChart::SeriesTypeBar:
         series = new DeclarativeBarSeries();
