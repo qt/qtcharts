@@ -60,7 +60,7 @@ int main(int argc, char *argv[])
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Simple horizontal stacked barchart example");
+    chart->setTitle("Simple horizontal percent barchart example");
     chart->createDefaultAxes();
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
