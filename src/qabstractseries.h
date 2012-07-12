@@ -50,7 +50,8 @@ public:
         SeriesTypeScatter,
         SeriesTypeSpline,
         SeriesTypeHorizontalBar
-
+        SeriesTypeHorizontalStackedBar,
+        SeriesTypeHorizontalPercentBar
     };
 
 protected:
