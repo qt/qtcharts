@@ -12,7 +12,8 @@ SOURCES += \
     $$PWD/stackedbaranimation.cpp \
     $$PWD/percentbaranimation.cpp \
     $$PWD/abstractbaranimation.cpp \
-    $$PWD/horizontalbaranimation.cpp
+    $$PWD/horizontalbaranimation.cpp \
+    $$PWD/horizontalstackedbaranimation.cpp
 
 
 PRIVATE_HEADERS += \
@@ -27,4 +28,5 @@ PRIVATE_HEADERS += \
     $$PWD/stackedbaranimation_p.h \
     $$PWD/percentbaranimation_p.h \
     $$PWD/abstractbaranimation_p.h \
-    $$PWD/horizontalbaranimation_p.h
+    $$PWD/horizontalbaranimation_p.h \
+    $$PWD/horizontalstackedbaranimation_p.h

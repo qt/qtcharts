@@ -24,4 +24,5 @@ SUBDIRS += \
            barmodelmapper \
            qmlpiechart \
            lineandbar \
-           horizontalbarchart
+           horizontalbarchart \
+           horizontalstackedbarchart

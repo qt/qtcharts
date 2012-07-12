@@ -27,24 +27,26 @@
 //
 // We mean it.
 
-#ifndef HORIZONTALBARCHARTITEM_H
-#define HORIZONTALBARCHARTITEM_H
+#ifndef HORIZONTALSTACKEDBARANIMATION_P_H
+#define HORIZONTALSTACKEDBARANIMATION_P_H
 
+#include "abstractbaranimation_p.h"
+#include "chartanimation_p.h"
 #include "abstractbarchartitem_p.h"
-#include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class HorizontalBarChartItem : public AbstractBarChartItem
+class HorizontalStackedBarAnimation : public AbstractBarAnimation
 {
     Q_OBJECT
 public:
-    HorizontalBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
+    explicit HorizontalStackedBarAnimation(AbstractBarChartItem *item);
+    ~HorizontalStackedBarAnimation();
 
-private:
-    virtual QVector<QRectF> calculateLayout();
+    virtual QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // HORIZONTALBARCHARTITEM_H
+#endif // HORIZONTALSTACKEDBARANIMATION_P_H

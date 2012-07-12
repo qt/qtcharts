@@ -27,24 +27,27 @@
 //
 // We mean it.
 
-#ifndef HORIZONTALBARCHARTITEM_H
-#define HORIZONTALBARCHARTITEM_H
+#ifndef QHORIZONTALSTACKEDBARSERIES_P_H
+#define QHORIZONTALSTACKEDBARSERIES_P_H
 
-#include "abstractbarchartitem_p.h"
-#include <QGraphicsItem>
+#include "qabstractbarseries_p.h"
+#include "domain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class HorizontalBarChartItem : public AbstractBarChartItem
+class QHorizontalStackedBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
-    Q_OBJECT
 public:
-    HorizontalBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
+    QHorizontalStackedBarSeriesPrivate(QHorizontalStackedBarSeries* q);
+    Chart* createGraphics(ChartPresenter* presenter);
+    void scaleDomain(Domain& domain);
+    QAbstractAxis::AxisType defaultAxisXType() const;
+    QAbstractAxis::AxisType defaultAxisYType() const;
 
 private:
-    virtual QVector<QRectF> calculateLayout();
+    Q_DECLARE_PUBLIC(QHorizontalStackedBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // HORIZONTALBARCHARTITEM_H
+#endif // QHORIZONTALSTACKEDBARSERIES_P_H

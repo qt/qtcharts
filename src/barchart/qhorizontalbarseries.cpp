@@ -30,7 +30,6 @@ QHorizontalBarSeriesPrivate::QHorizontalBarSeriesPrivate(QHorizontalBarSeries *q
 
 void QHorizontalBarSeriesPrivate::scaleDomain(Domain& domain)
 {
-    // TODO:
     qreal minX(domain.minX());
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
@@ -70,7 +69,7 @@ QAbstractAxis::AxisType QHorizontalBarSeriesPrivate::defaultAxisXType() const
 
 QAbstractAxis::AxisType QHorizontalBarSeriesPrivate::defaultAxisYType() const
 {
-    return QAbstractAxis::AxisTypeValues;
+    return QAbstractAxis::AxisTypeCategories;
 }
 
 

@@ -18,33 +18,27 @@
 **
 ****************************************************************************/
 
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the QtCommercial Chart API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
+#ifndef QHORIZONTALSTACKEDBARSERIES_H
+#define QHORIZONTALSTACKEDBARSERIES_H
 
-#ifndef HORIZONTALBARCHARTITEM_H
-#define HORIZONTALBARCHARTITEM_H
-
-#include "abstractbarchartitem_p.h"
-#include <QGraphicsItem>
+#include <qabstractbarseries.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class HorizontalBarChartItem : public AbstractBarChartItem
+class QHorizontalStackedBarSeriesPrivate;
+
+class QTCOMMERCIALCHART_EXPORT QHorizontalStackedBarSeries : public QAbstractBarSeries
 {
     Q_OBJECT
 public:
-    HorizontalBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
+    explicit QHorizontalStackedBarSeries(QObject *parent = 0);
+    QAbstractSeries::SeriesType type() const;
 
 private:
-    virtual QVector<QRectF> calculateLayout();
+    Q_DECLARE_PRIVATE(QHorizontalStackedBarSeries)
+    Q_DISABLE_COPY(QHorizontalStackedBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // HORIZONTALBARCHARTITEM_H
+#endif // QHORIZONTALSTACKEDBARSERIES_H

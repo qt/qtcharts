@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include "horizontalbaranimation_p.h"
+#include "horizontalstackedbaranimation_p.h"
 #include "abstractbarchartitem_p.h"
 #include <QTimer>
 
@@ -26,18 +26,18 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-HorizontalBarAnimation::HorizontalBarAnimation(AbstractBarChartItem *item) :
+HorizontalStackedBarAnimation::HorizontalStackedBarAnimation(AbstractBarChartItem *item) :
     AbstractBarAnimation(item)
 {
 }
 
-HorizontalBarAnimation::~HorizontalBarAnimation()
+HorizontalStackedBarAnimation::~HorizontalStackedBarAnimation()
 {
 
 }
 
 
-QVariant HorizontalBarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
+QVariant HorizontalStackedBarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
     QVector<QRectF> startVector = qVariantValue<QVector<QRectF> >(from);
     QVector<QRectF> endVector = qVariantValue<QVector<QRectF> >(to);
@@ -45,10 +45,12 @@ QVariant HorizontalBarAnimation::interpolated(const QVariant &from, const QVaria
 
     Q_ASSERT(startVector.count() == endVector.count());
 
+    qreal xAxis = m_item->geometry().x();
+
     for(int i = 0; i < startVector.count(); i++) {
         qreal h = endVector[i].height();
         qreal w = startVector[i].width() + ((endVector[i].width() - startVector[i].width()) * progress);
-        qreal x = endVector[i].left();
+        qreal x = xAxis + ((endVector[i].left() - xAxis) * progress);
         qreal y = endVector[i].top();
 
         QRectF value(x,y,w,h);
@@ -57,6 +59,6 @@ QVariant HorizontalBarAnimation::interpolated(const QVariant &from, const QVaria
     return qVariantFromValue(result);
 }
 
-#include "moc_horizontalbaranimation_p.cpp"
+#include "moc_horizontalstackedbaranimation_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

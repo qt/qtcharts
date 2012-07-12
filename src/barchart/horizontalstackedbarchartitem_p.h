@@ -27,19 +27,19 @@
 //
 // We mean it.
 
-#ifndef HORIZONTALBARCHARTITEM_H
-#define HORIZONTALBARCHARTITEM_H
+#ifndef HORIZONTALSTACKEDBARCHARTITEM_P_H
+#define HORIZONTALSTACKEDBARCHARTITEM_P_H
 
 #include "abstractbarchartitem_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class HorizontalBarChartItem : public AbstractBarChartItem
+class HorizontalStackedBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:
-    HorizontalBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
+    HorizontalStackedBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
 
 private:
     virtual QVector<QRectF> calculateLayout();
@@ -47,4 +47,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // HORIZONTALBARCHARTITEM_H
+#endif // HORIZONTALSTACKEDBARCHARTITEM_P_H
