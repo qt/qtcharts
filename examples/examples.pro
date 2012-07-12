@@ -25,4 +25,5 @@ SUBDIRS += \
            qmlpiechart \
            lineandbar \
            horizontalbarchart \
-           horizontalstackedbarchart
+           horizontalstackedbarchart \
+           horizontalpercentbarchart

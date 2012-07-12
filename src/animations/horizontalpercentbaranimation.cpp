@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include "horizontalstackedbaranimation_p.h"
+#include "horizontalpercentbaranimation_p.h"
 #include "abstractbarchartitem_p.h"
 #include <QTimer>
 
@@ -26,18 +26,18 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-HorizontalStackedBarAnimation::HorizontalStackedBarAnimation(AbstractBarChartItem *item) :
+HorizontalPercentBarAnimation::HorizontalPercentBarAnimation(AbstractBarChartItem *item) :
     AbstractBarAnimation(item)
 {
 }
 
-HorizontalStackedBarAnimation::~HorizontalStackedBarAnimation()
+HorizontalPercentBarAnimation::~HorizontalPercentBarAnimation()
 {
 
 }
 
 
-QVariant HorizontalStackedBarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
+QVariant HorizontalPercentBarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
     QVector<QRectF> startVector = qVariantValue<QVector<QRectF> >(from);
     QVector<QRectF> endVector = qVariantValue<QVector<QRectF> >(to);
@@ -59,6 +59,6 @@ QVariant HorizontalStackedBarAnimation::interpolated(const QVariant &from, const
     return qVariantFromValue(result);
 }
 
-#include "moc_horizontalstackedbaranimation_p.cpp"
+#include "moc_horizontalpercentbaranimation_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
