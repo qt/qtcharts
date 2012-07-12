@@ -91,6 +91,7 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
         }else if (m_data.m_labelPosition == QPieSlice::LabelOutside) {
             painter->setClipRect(parentItem()->boundingRect());
             painter->strokePath(m_labelArmPath, m_data.m_labelBrush.color());
+            painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
         } else { // QPieSlice::LabelInside
             painter->setClipPath(m_slicePath);
             painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
