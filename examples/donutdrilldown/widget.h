@@ -4,8 +4,6 @@
 #include <QWidget>
 #include <QPieSeries>
 
-class QTimer;
-
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 class Widget : public QWidget
@@ -17,12 +15,16 @@ public:
     ~Widget();
 
 public slots:
+    void updatedStartAngle();
+    void updatedAngleSpan();
     void updateRotation();
-    void explodeSlice(bool exploded);
+    void highlight();
 
 private:
-    QList<QPieSeries *> m_donuts;
-    QTimer *updateTimer;
+    QPieSeries *mainData;
+    QList<QPieSeries *> detailedData;
+    int detailIndex;
+    int sliceIndex;
 };
 
 #endif // WIDGET_H

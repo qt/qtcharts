@@ -88,7 +88,7 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
             painter->translate(m_labelTextRect.center());
             painter->rotate(m_data.m_startAngle + m_data.m_angleSpan / 2);
             painter->drawText(-m_labelTextRect.width() / 2, -m_labelTextRect.height() / 2, m_labelTextRect.width(), m_labelTextRect.height(), Qt::AlignCenter, m_data.m_labelText);
-        }else if (m_data.m_labelPosition == QPieSlice::LabelOutside) {
+        } else if (m_data.m_labelPosition == QPieSlice::LabelOutside) {
             painter->setClipRect(parentItem()->boundingRect());
             painter->strokePath(m_labelArmPath, m_data.m_labelBrush.color());
             painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
