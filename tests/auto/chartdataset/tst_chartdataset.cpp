@@ -231,7 +231,7 @@ void tst_ChartDataSet::setAxisX()
     QSignalSpy spy7(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
     for(int i=0 ; i < seriesList.count(); i++){
-           m_dataset->setAxisX(seriesList.at(i),axisList.at(i));
+           m_dataset->setAxis(seriesList.at(i),axisList.at(i),Qt::Horizontal);
     }
 
     TRY_COMPARE(spy4.count(), axisCount);
@@ -277,7 +277,7 @@ void tst_ChartDataSet::setAxisY()
     QSignalSpy spy7(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
     for(int i=0 ; i < seriesList.count(); i++){
-           m_dataset->setAxisY(seriesList.at(i),axisList.at(i));
+           m_dataset->setAxis(seriesList.at(i),axisList.at(i),Qt::Vertical);
     }
 
     TRY_COMPARE(spy4.count(), axisCount);
@@ -345,7 +345,7 @@ void tst_ChartDataSet::removeAllSeries()
     }
 
     for (int i = 0; i < seriesList.count(); i++) {
-        m_dataset->setAxisX(seriesList.at(i), axisList.at(i));
+        m_dataset->setAxis(seriesList.at(i), axisList.at(i),Qt::Horizontal);
     }
 
     QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis *, Domain *)));
