@@ -401,8 +401,6 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
     qreal maxY(domain.maxY());
-    int tickXCount(domain.tickXCount());
-    int tickYCount(domain.tickYCount());
 
     Q_Q(QXYSeries);
 
@@ -425,7 +423,7 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
         maxY = qMax(maxY, y);
     }
 
-    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY);
 }
 
 QList<LegendMarker*> QXYSeriesPrivate::createLegendMarker(QLegend* legend)

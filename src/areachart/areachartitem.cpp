@@ -23,6 +23,7 @@
 #include "qareaseries_p.h"
 #include "qlineseries.h"
 #include "chartpresenter_p.h"
+#include "domain_p.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
@@ -41,8 +42,9 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
 {
     setZValue(ChartPresenter::LineChartZValue);
     m_upper = new AreaBoundItem(this,m_series->upperSeries(),presenter);
-    if (m_series->lowerSeries())
+    if (m_series->lowerSeries()){
         m_lower = new AreaBoundItem(this,m_series->lowerSeries(),presenter);
+    }
 
     QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
@@ -100,11 +102,14 @@ void AreaChartItem::handleUpdated()
     update();
 }
 
-void AreaChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
+void AreaChartItem::handleDomainUpdated()
 {
-    m_upper->handleDomainChanged(minX,maxX,minY,maxY);
-    if (m_lower)
-        m_lower->handleDomainChanged(minX,maxX,minY,maxY);
+    m_upper->setDomain(domain());
+    m_upper->handleDomainUpdated();
+    if (m_lower){
+        m_lower->setDomain(domain());
+        m_lower->handleDomainUpdated();
+    }
 }
 
 void AreaChartItem::handleGeometryChanged(const QRectF &rect)

@@ -85,7 +85,7 @@ void AbstractBarChartItem::setLayout(const QVector<QRectF> &layout)
     if (layout.count() != m_bars.count())
         return;
 
-    m_layout = layout;    
+    m_layout = layout;
 
     for (int i=0; i < m_bars.count(); i++) {
         m_bars.at(i)->setRect(layout.at(i));
@@ -93,12 +93,12 @@ void AbstractBarChartItem::setLayout(const QVector<QRectF> &layout)
 }
 //handlers
 
-void AbstractBarChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
+void AbstractBarChartItem::handleDomainUpdated()
 {
-    m_domainMinX = minX;
-    m_domainMaxX = maxX;
-    m_domainMinY = minY;
-    m_domainMaxY = maxY;
+    m_domainMinX = domain()->minX();
+    m_domainMaxX = domain()->maxX();
+    m_domainMinY = domain()->minY();
+    m_domainMaxY = domain()->maxY();
     handleLayoutChanged();
 }
 

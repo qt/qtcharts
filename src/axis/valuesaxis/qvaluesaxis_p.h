@@ -42,16 +42,12 @@ public:
     QValuesAxisPrivate(QValuesAxis *q);
     ~QValuesAxisPrivate();
 
-Q_SIGNALS:
-    void changed(qreal min, qreal max, int tickCount,bool niceNumbers);
-
-public Q_SLOTS:
-    void handleAxisRangeChanged(qreal min, qreal max,int count);
-
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
     void intializeDomain(Domain* domain);
-    void emitRange();
+    void handleDomainUpdated();
+    qreal min(){ return m_min; };
+    qreal max(){ return m_max; };
 
 protected:
     void setMin(const QVariant &min);
@@ -60,6 +56,13 @@ protected:
     int ticksCount() const;
 
 private:
+    void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const;
+    qreal niceNumber(qreal x,bool ceiling) const;
+
+private:
+    qreal m_min;
+    qreal m_max;
+    int m_tickCount;
     bool m_niceNumbers;
     Q_DECLARE_PUBLIC(QValuesAxis)
 };

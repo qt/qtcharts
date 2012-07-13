@@ -59,12 +59,10 @@ public:
     virtual void setAnimation(AbstractBarAnimation* animation);
     void setLayout(const QVector<QRectF> &layout);
     void updateLayout(const QVector<QRectF> &layout);
-
-
     QRectF geometry() const { return m_rect;}
 
 public Q_SLOTS:
-    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void handleDomainUpdated();
     void handleGeometryChanged(const QRectF &size);
     void handleLayoutChanged();
     void handleLabelsVisibleChanged(bool visible);

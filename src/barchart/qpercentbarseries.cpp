@@ -85,17 +85,14 @@ void QPercentBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
     qreal maxY(domain.maxY());
-    int tickXCount(domain.tickXCount());
-    int tickYCount(domain.tickYCount());
 
     qreal x = categoryCount();
     minX = qMin(minX, - (qreal)0.5);
     maxX = qMax(maxX, x - (qreal)0.5);
     minY = 0;
     maxY = 100;
-    tickXCount = x+1;
 
-    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY);
 }
 
 

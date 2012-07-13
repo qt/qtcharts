@@ -96,8 +96,7 @@ protected:
 
 public Q_SLOTS:
     virtual void handleAxisUpdated();
-    void handleAxisCategoriesUpdated();
-    void handleRangeChanged(qreal min , qreal max,int tickCount);
+    virtual void handleDomainUpdated();
     void handleGeometryChanged(const QRectF &size);
 
 private:
@@ -118,7 +117,6 @@ protected:
     QVector<qreal> m_layoutVector;
     qreal m_min;
     qreal m_max;
-    int m_ticksCount;
     AxisAnimation *m_animation;
     qreal m_minWidth;
     qreal m_minHeight;

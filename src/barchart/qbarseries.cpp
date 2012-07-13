@@ -85,8 +85,6 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
     qreal maxY(domain.maxY());
-    int tickXCount(domain.tickXCount());
-    int tickYCount(domain.tickYCount());
 
     qreal x = categoryCount();
     qreal y = max();
@@ -94,9 +92,8 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     minY = qMin(minY, y);
     maxX = qMax(maxX, x - (qreal)0.5);
     maxY = qMax(maxY, y);
-    tickXCount = x+1;
 
-    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY);
 }
 
 

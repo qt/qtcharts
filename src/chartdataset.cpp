@@ -186,7 +186,7 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type,Qt::Orienta
     }
 
     if(axis)
-        axis->d_ptr->m_orientation=orientation;
+        axis->d_ptr->setOrientation(orientation);
 
     return axis;
 }
@@ -197,16 +197,16 @@ void ChartDataSet::initializeAxis(QAbstractAxis* axis,QAbstractSeries* series)
     axis->d_ptr->intializeDomain(domain);
     series->d_ptr->initializeAxis(axis);
     if(axis->orientation()==Qt::Horizontal) {
-        QObject::connect(axis->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisXChanged(qreal,qreal,int,bool)));
-        QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),axis->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
+        QObject::connect(axis->d_ptr.data(),SIGNAL(updated()),domain,SLOT(handleAxisUpdated()));
+        QObject::connect(domain,SIGNAL(updated()),axis->d_ptr.data(),SLOT(handleDomainUpdated()));
         m_seriesAxisXMap.insert(series,axis);
     }
     else {
-        QObject::connect(axis->d_ptr.data(),SIGNAL(changed(qreal,qreal,int,bool)),domain,SLOT(handleAxisYChanged(qreal,qreal,int,bool)));
-        QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),axis->d_ptr.data(),SLOT(handleAxisRangeChanged(qreal,qreal,int)));
+        QObject::connect(axis->d_ptr.data(),SIGNAL(updated()),domain,SLOT(handleAxisUpdated()));
+        QObject::connect(domain,SIGNAL(updated()),axis->d_ptr.data(),SLOT(handleDomainUpdated()));
         m_seriesAxisYMap.insert(series,axis);
     }
-    axis->d_ptr->emitRange();
+    axis->d_ptr->emitUpdated();
 }
 
 void ChartDataSet::removeAxes(QAbstractSeries* series)
@@ -369,7 +369,7 @@ void ChartDataSet::setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Ori
         return;
     }
 
-    axis->d_ptr->m_orientation=orientation;
+    axis->d_ptr->setOrientation(orientation);
 
     QMap<QAbstractSeries*, QAbstractAxis*> *seriesAxisMap;
 

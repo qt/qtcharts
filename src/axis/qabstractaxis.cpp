@@ -279,7 +279,7 @@ void QAbstractAxis::setAxisPen(const QPen &pen)
 {
 	if (d_ptr->m_axisPen!=pen) {
 	    d_ptr->m_axisPen = pen;
-        emit d_ptr->updated();
+	    d_ptr->emitUpdated();
 	}
 }
 
@@ -313,7 +313,7 @@ void QAbstractAxis::setArrowVisible(bool visible)
 {
     if (d_ptr->m_arrowVisible != visible) {
         d_ptr->m_arrowVisible = visible;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
         emit arrowVisibleChanged(visible);
 	}
 }
@@ -327,7 +327,7 @@ void QAbstractAxis::setGridLineVisible(bool visible)
 {
     if (d_ptr->m_gridLineVisible != visible) {
         d_ptr->m_gridLineVisible = visible;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
         emit gridVisibleChanged(visible);
 	}
 }
@@ -344,7 +344,7 @@ void QAbstractAxis::setGridLinePen(const QPen &pen)
 {
     if (d_ptr->m_gridLinePen != pen) {
         d_ptr->m_gridLinePen = pen;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
 	}
 }
 
@@ -360,7 +360,7 @@ void QAbstractAxis::setLabelsVisible(bool visible)
 {
     if (d_ptr->m_labelsVisible != visible) {
         d_ptr->m_labelsVisible = visible;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
         emit labelsVisibleChanged(visible);
 	}
 }
@@ -377,7 +377,7 @@ void QAbstractAxis::setLabelsPen(const QPen &pen)
 {
     if (d_ptr->m_labelsPen != pen) {
         d_ptr->m_labelsPen = pen;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
 	}
 }
 
@@ -396,7 +396,7 @@ void QAbstractAxis::setLabelsBrush(const QBrush &brush)
 {
     if (d_ptr->m_labelsBrush != brush) {
         d_ptr->m_labelsBrush = brush;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
 	}
 }
 
@@ -415,7 +415,7 @@ void QAbstractAxis::setLabelsFont(const QFont &font)
 {
     if (d_ptr->m_labelsFont != font) {
         d_ptr->m_labelsFont = font;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
 	}
 }
 
@@ -431,7 +431,7 @@ void QAbstractAxis::setLabelsAngle(int angle)
 {
     if (d_ptr->m_labelsAngle != angle) {
         d_ptr->m_labelsAngle = angle;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
 	}
 }
 
@@ -459,7 +459,7 @@ void QAbstractAxis::setShadesVisible(bool visible)
 {
     if (d_ptr->m_shadesVisible != visible) {
         d_ptr->m_shadesVisible = visible;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
         emit shadesVisibleChanged(visible);
 	}
 }
@@ -476,7 +476,7 @@ void QAbstractAxis::setShadesPen(const QPen &pen)
 {
     if (d_ptr->m_shadesPen != pen) {
         d_ptr->m_shadesPen = pen;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
 	}
 }
 
@@ -495,7 +495,7 @@ void QAbstractAxis::setShadesBrush(const QBrush &brush)
 {
     if (d_ptr->m_shadesBrush != brush) {
         d_ptr->m_shadesBrush = brush;
-        emit d_ptr->updated();
+        d_ptr->emitUpdated();
         emit shadesColorChanged(brush.color());
     }
 }
@@ -545,8 +545,8 @@ void QAbstractAxis::setVisible(bool visible)
 {
     if(d_ptr->m_visible!=visible){
         d_ptr->m_visible=visible;
+        d_ptr->emitUpdated();
         emit visibleChanged(visible);
-        emit d_ptr->updated();
     }
 }
 
@@ -607,6 +607,7 @@ Qt::Orientation QAbstractAxis::orientation()
 
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     q_ptr(q),
+    m_orientation(Qt::Orientation(0)),
     m_visible(false),
     m_arrowVisible(true),
     m_gridLineVisible(true),
@@ -615,10 +616,7 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     m_shadesVisible(false),
     m_shadesBrush(Qt::SolidPattern),
     m_shadesOpacity(1.0),
-    m_orientation(Qt::Orientation(0)),
-    m_min(0),
-    m_max(0),
-    m_ticksCount(5)
+    m_dirty(false)
 {
 
 }
@@ -627,6 +625,25 @@ QAbstractAxisPrivate::~QAbstractAxisPrivate()
 {
 
 }
+
+void QAbstractAxisPrivate::emitUpdated()
+{
+    if(!m_dirty){
+        m_dirty=true;
+        emit updated();
+    }
+}
+
+void QAbstractAxisPrivate::setDirty(bool dirty)
+{
+    m_dirty=dirty;
+}
+
+void QAbstractAxisPrivate::setOrientation(Qt::Orientation orientation)
+{
+    m_orientation=orientation;
+}
+
 
 #include "moc_qabstractaxis.cpp"
 #include "moc_qabstractaxis_p.cpp"

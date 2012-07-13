@@ -20,12 +20,33 @@
 
 #include <QtTest/QtTest>
 #include <private/domain_p.h>
+#include <private/qabstractaxis_p.h>
 #include <tst_definitions.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(Domain*)
 Q_DECLARE_METATYPE(QSizeF)
+
+
+class AxisMock: public QAbstractAxisPrivate
+{
+Q_OBJECT
+public:
+    AxisMock(Qt::Orientation orientation):QAbstractAxisPrivate(0){ setOrientation(orientation);};
+    ChartAxis* createGraphics(ChartPresenter* presenter){};
+    void intializeDomain(Domain* domain){};
+    void setMin(const QVariant &min){}
+    qreal min() { return m_min;}
+    void setMax(const QVariant &max){}
+    qreal max() { return m_max; }
+    void setRange(const QVariant &min, const QVariant &max){};
+
+    void handleDomainUpdated(){};
+public:
+    qreal m_min;
+    qreal m_max;
+};
 
 class tst_Domain: public QObject
 {
@@ -39,10 +60,10 @@ public Q_SLOTS:
 
 private Q_SLOTS:
     void domain();
-    void handleAxisRangeXChanged_data();
-    void handleAxisRangeXChanged();
-    void handleAxisRangeYChanged_data();
-    void handleAxisRangeYChanged();
+    void handleAxisUpdatedX_data();
+    void handleAxisUpdatedX();
+    void handleAxisUpdatedY_data();
+    void handleAxisUpdatedY();
     void isEmpty_data();
     void isEmpty();
     void maxX_data();
@@ -69,10 +90,6 @@ private Q_SLOTS:
     void zoom();
     void move_data();
     void move();
-    void handleAxisXChanged_data();
-    void handleAxisXChanged();
-    void handleAxisYChanged_data();
-    void handleAxisYChanged();
 };
 
 void tst_Domain::initTestCase()
@@ -102,7 +119,7 @@ void tst_Domain::domain()
     QCOMPARE(domain.minY(), 0.0);
 }
 
-void tst_Domain::handleAxisRangeXChanged_data()
+void tst_Domain::handleAxisUpdatedX_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::addColumn<qreal>("max");
@@ -111,22 +128,25 @@ void tst_Domain::handleAxisRangeXChanged_data()
     QTest::newRow("-1 0") << -1.0 << 0.0;
 }
 
-void tst_Domain::handleAxisRangeXChanged()
+void tst_Domain::handleAxisUpdatedX()
 {
     QFETCH(qreal, min);
     QFETCH(qreal, max);
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
-    domain.handleAxisXChanged(min, max);
+    AxisMock axis(Qt::Horizontal);
+    QObject::connect(&axis,SIGNAL(updated()),&domain,SLOT(handleAxisUpdated()));
+    axis.m_min=min;
+    axis.m_max=max;
+    axis.emitUpdated();
 
-    QList<QVariant> arg0 = spy0.first();
-    QVERIFY(qFuzzyIsNull(arg0.at(0).toReal() - min));
-    QVERIFY(qFuzzyIsNull(arg0.at(1).toReal() - max));
+    QVERIFY(qFuzzyIsNull(domain.minX() - min));
+    QVERIFY(qFuzzyIsNull(domain.maxX() - max));
 
     QList<QVariant> arg1 = spy1.first();
     QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
@@ -138,7 +158,7 @@ void tst_Domain::handleAxisRangeXChanged()
 
 }
 
-void tst_Domain::handleAxisRangeYChanged_data()
+void tst_Domain::handleAxisUpdatedY_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::addColumn<qreal>("max");
@@ -147,22 +167,25 @@ void tst_Domain::handleAxisRangeYChanged_data()
     QTest::newRow("-1 0") << -1.0 << 0.0;
 }
 
-void tst_Domain::handleAxisRangeYChanged()
+void tst_Domain::handleAxisUpdatedY()
 {
     QFETCH(qreal, min);
     QFETCH(qreal, max);
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
-    domain.handleAxisYChanged(min, max, 5);
+    AxisMock axis(Qt::Vertical);
+    QObject::connect(&axis, SIGNAL(updated()), &domain, SLOT(handleAxisUpdated()));
+    axis.m_min = min;
+    axis.m_max = max;
+    axis.emitUpdated();
 
-    QList<QVariant> arg0 = spy0.first();
-    QVERIFY(qFuzzyIsNull(arg0.at(2).toReal() - min));
-    QVERIFY(qFuzzyIsNull(arg0.at(3).toReal() - max));
+    QVERIFY(qFuzzyIsNull(domain.minY() - min));
+    QVERIFY(qFuzzyIsNull(domain.maxY() - max));
 
     QList<QVariant> arg1 = spy2.first();
     QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
@@ -217,9 +240,9 @@ void tst_Domain::maxX()
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     domain.setMaxX(maxX1);
     QCOMPARE(domain.maxX(), maxX1);
@@ -250,9 +273,9 @@ void tst_Domain::maxY()
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     domain.setMaxY(maxY1);
     QCOMPARE(domain.maxY(), maxY1);
@@ -282,9 +305,9 @@ void tst_Domain::minX()
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     domain.setMinX(minX1);
     QCOMPARE(domain.minX(), minX1);
@@ -314,9 +337,9 @@ void tst_Domain::minY()
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     domain.setMinY(minY1);
     QCOMPARE(domain.minY(), minY1);
@@ -364,9 +387,9 @@ void tst_Domain::operatorEquals()
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     QCOMPARE(*domain1==*domain2, equals);
     QCOMPARE(*domain1!=*domain2, notEquals);
@@ -396,9 +419,9 @@ void tst_Domain::setRange()
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     domain.setRange(minX, maxX, minY, maxY);
 
@@ -429,15 +452,14 @@ void tst_Domain::setRangeX()
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     domain.setRangeX(min, max);
 
-    QList<QVariant> arg0 = spy0.first();
-    QVERIFY(qFuzzyIsNull(arg0.at(0).toReal() - min));
-    QVERIFY(qFuzzyIsNull(arg0.at(1).toReal() - max));
+    QVERIFY(qFuzzyIsNull(domain.minX() - min));
+    QVERIFY(qFuzzyIsNull(domain.maxX() - max));
 
     QList<QVariant> arg1 = spy1.first();
     QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
@@ -464,15 +486,14 @@ void tst_Domain::setRangeY()
 
     Domain domain;
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     domain.setRangeY(min, max);
 
-    QList<QVariant> arg0 = spy0.first();
-    QVERIFY(qFuzzyIsNull(arg0.at(2).toReal() - min));
-    QVERIFY(qFuzzyIsNull(arg0.at(3).toReal() - max));
+    QVERIFY(qFuzzyIsNull(domain.minY() - min));
+    QVERIFY(qFuzzyIsNull(domain.maxY() - max));
 
     QList<QVariant> arg1 = spy2.first();
     QVERIFY(qFuzzyIsNull(arg1.at(0).toReal() - min));
@@ -502,9 +523,9 @@ void tst_Domain::spanX()
 
     domain.setRangeX(minX, maxX);
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     QCOMPARE(domain.spanX(), spanX);
 
@@ -532,9 +553,9 @@ void tst_Domain::spanY()
 
     domain.setRangeY(minY, maxY);
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     QCOMPARE(domain.spanY(), spanY);
 
@@ -574,9 +595,9 @@ void tst_Domain::zoom()
 
     domain.setRange(0, 1000, 0, 1000);
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     Domain domain0;
     domain0.setRange(domain.minX(), domain.maxX(), domain.minY(), domain.maxY());
@@ -620,9 +641,9 @@ void tst_Domain::move()
 
     domain.setRange(0, size.width(), 0, size.height());
 
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
     domain.move(dx, dy, size);
 
@@ -635,6 +656,7 @@ void tst_Domain::move()
     TRY_COMPARE(spy2.count(), (dy != 0 ? 1 : 0));
 }
 
+/*
 void tst_Domain::handleAxisXChanged_data()
 {
     QTest::addColumn<qreal>("min");
@@ -661,15 +683,15 @@ void tst_Domain::handleAxisXChanged()
     QFETCH(int, resultTickCount);
 
     Domain domain;
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
-    domain.handleAxisXChanged(min, max, tickCount, niceNumbers);
+ //   domain.handleAxisXChanged(min, max, tickCount, niceNumbers);
 
     QCOMPARE(resultMin, domain.minX());
     QCOMPARE(resultMax, domain.maxX());
-    QCOMPARE(resultTickCount, domain.tickXCount());
+ //   QCOMPARE(resultTickCount, domain.tickXCount());
     TRY_COMPARE(spy0.count(), 1);
     TRY_COMPARE(spy1.count(), 1);
     TRY_COMPARE(spy2.count(), 0);
@@ -692,20 +714,20 @@ void tst_Domain::handleAxisYChanged()
     QFETCH(int, resultTickCount);
 
     Domain domain;
-    QSignalSpy spy0(&domain, SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
-    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal,int)));
-    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal,int)));
+    QSignalSpy spy0(&domain, SIGNAL(updated()));
+    QSignalSpy spy1(&domain, SIGNAL(rangeXChanged(qreal,qreal)));
+    QSignalSpy spy2(&domain, SIGNAL(rangeYChanged(qreal,qreal)));
 
-    domain.handleAxisYChanged(min, max, tickCount, niceNumbers);
+   // domain.handleAxisYChanged(min, max, tickCount, niceNumbers);
 
     QCOMPARE(resultMin, domain.minY());
     QCOMPARE(resultMax, domain.maxY());
-    QCOMPARE(resultTickCount, domain.tickYCount());
+  //  QCOMPARE(resultTickCount, domain.tickYCount());
     TRY_COMPARE(spy0.count(), 1);
     TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), 1);
 }
-
+*/
 QTEST_MAIN(tst_Domain)
 #include "tst_domain.moc"
 

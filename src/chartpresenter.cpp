@@ -78,28 +78,19 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
         item->setAnimation(new AxisAnimation(item));
     }
 
-    if(item->axisType()==ChartAxis::X_AXIS){
-        m_chartTheme->decorate(axis,true);
-        QObject::connect(domain,SIGNAL(rangeXChanged(qreal,qreal,int)),item,SLOT(handleRangeChanged(qreal,qreal,int)));
-        //initialize
-        item->handleRangeChanged(domain->minX(),domain->maxX(),domain->tickXCount());
-
-    }
-    else{
-        m_chartTheme->decorate(axis,false);
-        QObject::connect(domain,SIGNAL(rangeYChanged(qreal,qreal,int)),item,SLOT(handleRangeChanged(qreal,qreal,int)));
-        //initialize
-        item->handleRangeChanged(domain->minY(),domain->maxY(),domain->tickYCount());
-    }
-
     QObject::connect(this,SIGNAL(geometryChanged(QRectF)),item,SLOT(handleGeometryChanged(QRectF)));
+    QObject::connect(domain,SIGNAL(updated()),item,SLOT(handleDomainUpdated()));
     QObject::connect(axis,SIGNAL(visibleChanged(bool)),this,SLOT(handleAxisVisibleChanged(bool)));
+
     //initialize
+    domain->emitUpdated();
+    m_chartTheme->decorate(axis);
+    axis->d_ptr->setDirty(false);
+    axis->d_ptr->emitUpdated();
     if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
-    //reload visiblity
+
     m_axisItems.insert(axis, item);
     selectVisibleAxis();
-
 }
 
 void ChartPresenter::handleAxisRemoved(QAbstractAxis* axis)
@@ -119,9 +110,10 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries* series,Domain* domain)
     item->setDomain(domain);
 
     QObject::connect(this,SIGNAL(geometryChanged(QRectF)),item,SLOT(handleGeometryChanged(QRectF)));
-    QObject::connect(domain,SIGNAL(domainChanged(qreal,qreal,qreal,qreal)),item,SLOT(handleDomainChanged(qreal,qreal,qreal,qreal)));
+    QObject::connect(domain,SIGNAL(updated()),item,SLOT(handleDomainUpdated()));
     //initialize
-    item->handleDomainChanged(domain->minX(),domain->maxX(),domain->minY(),domain->maxY());
+    item->handleDomainUpdated();
+
     if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
     m_chartItems.insert(series,item);
 }
@@ -159,11 +151,11 @@ void ChartPresenter::selectVisibleAxis()
 
     while (i.hasNext()) {
         i.next();
-        if(i.key()->d_ptr->m_orientation==Qt::Vertical && !axisY) {
+        if(i.key()->orientation()==Qt::Vertical && !axisY) {
             axisY=true;
             i.key()->show();
         }
-        if(i.key()->d_ptr->m_orientation==Qt::Horizontal && !axisX) {
+        if(i.key()->orientation()==Qt::Horizontal && !axisX) {
             axisX=true;
             i.key()->show();
         }
@@ -185,7 +177,7 @@ void ChartPresenter::handleAxisVisibleChanged(bool visible)
         if(i.key()==axis) {
             continue;
         }
-        if(i.key()->d_ptr->m_orientation==axis->d_ptr->m_orientation) {
+        if(i.key()->orientation()==axis->orientation()) {
             i.key()->setVisible(false);
         }
         }

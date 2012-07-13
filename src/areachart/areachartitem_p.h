@@ -64,7 +64,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void handleUpdated();
-    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void handleDomainUpdated();
     void handleGeometryChanged(const QRectF &size);
 
 private:

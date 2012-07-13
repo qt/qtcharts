@@ -561,8 +561,6 @@ void QAbstractBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
     qreal maxY(domain.maxY());
-    int tickXCount(domain.tickXCount());
-    int tickYCount(domain.tickYCount());
 
     qreal seriesMinX = this->minX();
     qreal seriesMaxX = this->maxX();
@@ -571,9 +569,8 @@ void QAbstractBarSeriesPrivate::scaleDomain(Domain& domain)
     minY = qMin(minY, y);
     maxX = qMax(maxX, seriesMaxX + (qreal)0.5);
     maxY = qMax(maxY, y);
-    tickXCount = categoryCount()+1;
 
-    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY);
 }
 
 Chart* QAbstractBarSeriesPrivate::createGraphics(ChartPresenter* presenter)

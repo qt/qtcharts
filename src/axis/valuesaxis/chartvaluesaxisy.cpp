@@ -22,6 +22,7 @@
 #include "qabstractaxis.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
+#include "qvaluesaxis.h"
 #include <QGraphicsLayout>
 #include <QDebug>
 #include <QFontMetrics>
@@ -31,7 +32,8 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartValuesAxisY::ChartValuesAxisY(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter)
+ChartValuesAxisY::ChartValuesAxisY(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
+m_tickCount(0)
 {
 }
 
@@ -41,13 +43,13 @@ ChartValuesAxisY::~ChartValuesAxisY()
 
 QVector<qreal> ChartValuesAxisY::calculateLayout() const
 {
-    Q_ASSERT(m_ticksCount>=2);
+    Q_ASSERT(m_tickCount>=2);
 
     QVector<qreal> points;
-    points.resize(m_ticksCount);
+    points.resize(m_tickCount);
 
-    const qreal deltaY = m_rect.height()/(m_ticksCount-1);
-    for (int i = 0; i < m_ticksCount; ++i) {
+    const qreal deltaY = m_rect.height()/(m_tickCount-1);
+    for (int i = 0; i < m_tickCount; ++i) {
         int y = i * -deltaY + m_rect.bottom();
         points[i] = y;
     }
@@ -113,5 +115,14 @@ void ChartValuesAxisY::updateGeometry()
         lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
     }
 }
+
+void ChartValuesAxisY::handleAxisUpdated()
+{
+    //TODO:: fix this
+    QValuesAxis* axis = qobject_cast<QValuesAxis*>(m_chartAxis);
+    m_tickCount = axis->ticksCount();
+    ChartAxis::handleAxisUpdated();
+}
+
 
 QTCOMMERCIALCHART_END_NAMESPACE

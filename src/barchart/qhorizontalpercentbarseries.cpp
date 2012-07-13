@@ -33,17 +33,14 @@ void QHorizontalPercentBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
     qreal maxY(domain.maxY());
-    int tickXCount(domain.tickXCount());
-    int tickYCount(domain.tickYCount());
 
     qreal y = categoryCount();
     minX = 0;
     maxX = 100;
     minY = qMin(minY, - (qreal)0.5);
     maxY = qMax(maxY, y - (qreal)0.5);
-    tickYCount = y+1;
 
-    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY);
 }
 
 Chart* QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)

@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #include "domain_p.h"
-#include <cmath>
+#include "qabstractaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -27,11 +27,7 @@ Domain::Domain(QObject* parent) : QObject(parent),
     m_minX(0),
     m_maxX(0),
     m_minY(0),
-    m_maxY(0),
-    m_tickXCount(5),
-    m_tickYCount(5),
-    m_niceXNumbers(false),
-    m_niceYNumbers(false)
+    m_maxY(0)
 {
 }
 
@@ -41,48 +37,25 @@ Domain::~Domain()
 
 void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 {
-    setRange(minX, maxX, minY, maxY,m_tickXCount,m_tickYCount);
-}
-
-void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY,int tickXCount,int tickYCount)
-{
     bool axisXChanged = false;
     bool axisYChanged = false;
 
-    if(m_tickXCount!=tickXCount) {
-        m_tickXCount=tickXCount;
-        axisXChanged=true;
-    }
-
-    if(m_tickYCount!=tickYCount) {
-        m_tickYCount=tickYCount;
-        axisYChanged=true;
-    }
-
     if (!qFuzzyIsNull(m_minX - minX) || !qFuzzyIsNull(m_maxX - maxX)) {
-        if(m_niceXNumbers) looseNiceNumbers(minX, maxX, m_tickXCount);
         m_minX=minX;
         m_maxX=maxX;
         axisXChanged=true;
+        emit rangeXChanged(m_minX,m_maxX);
     }
 
     if (!qFuzzyIsNull(m_minY - minY) || !qFuzzyIsNull(m_maxY - maxY)) {
-        if(m_niceYNumbers) looseNiceNumbers(minY, maxY, m_tickYCount);
         m_minY=minY;
         m_maxY=maxY;
         axisYChanged=true;
+        emit rangeYChanged(m_minY,m_maxY);
     }
 
     if(axisXChanged || axisYChanged) {
-        emit this->domainChanged(m_minX, m_maxX, m_minY, m_maxY);
-    }
-
-    if(axisXChanged) {
-        emit rangeXChanged(minX,maxX, m_tickXCount);
-    }
-
-    if(axisYChanged) {
-        emit rangeYChanged(minY,maxY, m_tickYCount);
+        emit updated();
     }
 }
 
@@ -91,19 +64,9 @@ void Domain::setRangeX(qreal min, qreal max)
     setRange(min,max,m_minY, m_maxY);
 }
 
-void Domain::setRangeX(qreal min, qreal max, int tickCount)
-{
-    setRange(min,max,m_minY, m_maxY,tickCount,m_tickYCount);
-}
-
 void Domain::setRangeY(qreal min, qreal max)
 {
     setRange(m_minX, m_maxX, min, max);
-}
-
-void Domain::setRangeY(qreal min, qreal max,int tickCount)
-{
-    setRange(m_minX, m_maxX, min, max,m_tickXCount,tickCount);
 }
 
 void Domain::setMinX(qreal min)
@@ -158,16 +121,7 @@ void Domain::zoomIn(const QRectF& rect, const QSizeF& size)
     minY = maxY - dy * rect.bottom();
     maxY = maxY - dy * rect.top();
 
-    int tickXCount = m_tickXCount;
-    int tickYCount = m_tickYCount;
-
-    if(m_niceXNumbers) {
-        looseNiceNumbers(minX, maxX, tickXCount);
-    }
-    if(m_niceYNumbers) {
-        looseNiceNumbers(minY, maxY, tickYCount);
-    }
-    setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    setRange(minX,maxX,minY,maxY);
 }
 
 void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
@@ -185,16 +139,7 @@ void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
     maxY = minY + dy * rect.bottom();
     minY = maxY - dy * size.height();
 
-    int tickXCount = m_tickXCount;
-    int tickYCount = m_tickYCount;
-
-    if(m_niceXNumbers) {
-        looseNiceNumbers(minX, maxX, tickXCount);
-    }
-    if(m_niceYNumbers) {
-        looseNiceNumbers(minY, maxY, tickYCount);
-    }
-    setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    setRange(minX,maxX,minY,maxY);
 }
 
 void Domain::move(qreal dx,qreal dy,const QSizeF& size)
@@ -218,63 +163,23 @@ void Domain::move(qreal dx,qreal dy,const QSizeF& size)
     setRange(minX,maxX,minY,maxY);
 }
 
-void Domain::handleAxisXChanged(qreal min,qreal max,int tickXCount,bool niceNumbers)
+void Domain::emitUpdated()
 {
-    if (m_niceXNumbers != niceNumbers) {
-        m_niceXNumbers = niceNumbers;
-        //force recalculation
-        m_minX = 0;
-        m_maxX = 0;
-    }
-    setRange(min,max,m_minY, m_maxY,tickXCount,m_tickYCount);
+    emit updated();
 }
 
-void Domain::handleAxisYChanged(qreal min,qreal max,int tickYCount,bool niceNumbers)
+void Domain::handleAxisUpdated()
 {
-    if (m_niceYNumbers != niceNumbers) {
-        m_niceYNumbers = niceNumbers;
-        //force recalculation
-        m_minY = 0;
-        m_maxY = 0;
+    QAbstractAxisPrivate* axis = qobject_cast<QAbstractAxisPrivate*>(sender());
+    Q_ASSERT(axis);
+    axis->setDirty(false);
+    if(axis->orientation()==Qt::Horizontal){
+        setRangeX(axis->min(),axis->max());
+    }else if(axis->orientation()==Qt::Vertical){
+        setRangeY(axis->min(),axis->max());
     }
-    setRange(m_minX, m_maxX, min, max,m_tickXCount,tickYCount);
+
 }
-
-//algorithm defined by Paul S.Heckbert GraphicalGems I
-
-void Domain::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const
-{
-    qreal range = niceNumber(max-min,true); //range with ceiling
-    qreal step = niceNumber(range/(ticksCount-1),false);
-    min = floor(min/step);
-    max = ceil(max/step);
-    ticksCount = int(max-min) +1;
-    min*=step;
-    max*=step;
-}
-
-//nice numbers can be expressed as form of 1*10^n, 2* 10^n or 5*10^n
-
-qreal Domain::niceNumber(qreal x,bool ceiling) const
-{
-    qreal z = pow(10,floor(log10(x))); //find corresponding number of the form of 10^n than is smaller than x
-    qreal q = x/z;//q<10 && q>=1;
-
-    if(ceiling) {
-        if(q <= 1.0) q=1;
-        else if(q <= 2.0) q=2;
-        else if(q <= 5.0) q=5;
-        else q=10;
-    }
-    else {
-        if(q < 1.5) q=1;
-        else if(q < 3.0) q=2;
-        else if(q < 7.0) q=5;
-        else q=10;
-    }
-    return q*z;
-}
-
 
 bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2)
 {
@@ -293,7 +198,7 @@ bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const Domain &domain1, const 
 
 QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const Domain &domain)
 {
-    dbg.nospace() << "Domain("<<domain.m_minX<<','<<domain.m_maxX<<','<<domain.m_minY<<','<<domain.m_maxY<<')' << domain.m_tickXCount << "," << domain.m_tickYCount ;
+    dbg.nospace() << "Domain("<<domain.m_minX<<','<<domain.m_maxX<<','<<domain.m_minY<<','<<domain.m_maxY<<')';
     return dbg.maybeSpace();
 }
 

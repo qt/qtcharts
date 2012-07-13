@@ -38,29 +38,43 @@ class ChartPresenter;
 class ChartAxis;
 class Domain;
 
-class QAbstractAxisPrivate : public QObject
+class QTCOMMERCIALCHART_AUTOTEST_EXPORT QAbstractAxisPrivate : public QObject
 {
     Q_OBJECT
 public:
     QAbstractAxisPrivate(QAbstractAxis *q);
     ~QAbstractAxisPrivate();
 
+public:
+
+    virtual ChartAxis* createGraphics(ChartPresenter* presenter) = 0;
+    virtual void intializeDomain(Domain* domain) = 0;
+
+    void emitUpdated();
+    void setDirty(bool dirty);
+    bool isDirty(){ return m_dirty; };
+    void setOrientation(Qt::Orientation orientation);
+    Qt::Orientation orientation() const { return m_orientation; }
+
+    virtual void setMin(const QVariant &min) = 0;
+    virtual qreal min() = 0;
+
+    virtual void setMax(const QVariant &max) = 0;
+    virtual qreal max() = 0;
+
+    virtual void setRange(const QVariant &min, const QVariant &max) = 0;
+
+public Q_SLOTS:
+    virtual void handleDomainUpdated() = 0;
+
 Q_SIGNALS:
     void updated();
 
-public:
-    virtual ChartAxis* createGraphics(ChartPresenter* presenter) = 0;
-    virtual void emitRange() = 0;
-    virtual void intializeDomain(Domain* domain) = 0;
-
 protected:
-    virtual void setMin(const QVariant &min) = 0;
-    virtual void setMax(const QVariant &max) = 0;
-    virtual void setRange(const QVariant &min, const QVariant &max) = 0;
-    virtual int ticksCount() const = 0;
-
-public:
     QAbstractAxis *q_ptr;
+    Qt::Orientation m_orientation;
+
+private:
     bool m_visible;
 
     bool m_arrowVisible;
@@ -81,12 +95,7 @@ public:
     QBrush m_shadesBrush;
     qreal m_shadesOpacity;
 
-    Qt::Orientation m_orientation;
-
-    // range
-    qreal m_min;
-    qreal m_max;
-    int m_ticksCount;
+    bool m_dirty;
 
     friend class QAbstractAxis;
 };

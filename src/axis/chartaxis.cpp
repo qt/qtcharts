@@ -23,6 +23,7 @@
 #include "qabstractaxis_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
+#include "domain_p.h"
 #include <QPainter>
 #include <QDebug>
 #include <qmath.h>
@@ -38,7 +39,6 @@ ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : Chart(pres
     m_axis(new QGraphicsItemGroup(presenter->rootItem())),
     m_min(0),
     m_max(0),
-    m_ticksCount(0),
     m_animation(0),
     m_minWidth(0),
     m_minHeight(0)
@@ -54,8 +54,6 @@ ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : Chart(pres
 
     QGraphicsSimpleTextItem item;
     m_font = item.font();
-
-    handleAxisUpdated();
 }
 
 ChartAxis::~ChartAxis()
@@ -110,7 +108,7 @@ void ChartAxis::updateLayout(QVector<qreal> &layout)
         createItems(-diff);
     }
 
-    if( diff!=0) handleAxisUpdated();
+    if(diff<0) handleAxisUpdated();
 
     if (m_animation) {
           switch(presenter()->state()){
@@ -244,21 +242,40 @@ void ChartAxis::setGridPen(const QPen &pen)
 
 bool ChartAxis::isEmpty()
 {
-    return m_rect.isEmpty() || qFuzzyIsNull(m_min - m_max) || m_ticksCount==0;
+    return m_rect.isEmpty() || qFuzzyIsNull(m_min - m_max);
 }
 
-//handlers
-
-void ChartAxis::handleAxisCategoriesUpdated()
+void ChartAxis::handleDomainUpdated()
 {
-    if (isEmpty()) return;
-	updateLayout(m_layoutVector);
+    Domain* domain = qobject_cast<Domain*>(sender());
+    qreal min(0);
+    qreal max(0);
+
+    if(m_chartAxis->orientation()==Qt::Horizontal) {
+        min = domain->minX();
+        max = domain->maxX();
+    }
+    else if (m_chartAxis->orientation()==Qt::Vertical)
+    {
+        min = domain->minY();
+        max = domain->maxY();
+    }
+
+    if (!qFuzzyIsNull(m_min - min) || !qFuzzyIsNull(m_max - max))
+    {
+        m_min = min;
+        m_max = max;
+
+        if (!isEmpty()) {
+            QVector<qreal> layout = calculateLayout();
+            updateLayout(layout);
+        }
+    }
 }
 
 void ChartAxis::handleAxisUpdated()
 {
-
-    if (isEmpty()) return;
+    if(isEmpty()) return;
 
     if (!m_chartAxis->isVisible()) {
         setAxisOpacity(0);
@@ -296,6 +313,7 @@ void ChartAxis::handleAxisUpdated()
             setShadesOpacity(0);
         }
     }
+
     setLabelsAngle(m_chartAxis->labelsAngle());
     setAxisPen(m_chartAxis->axisPen());
     setLabelsPen(m_chartAxis->labelsPen());
@@ -305,20 +323,6 @@ void ChartAxis::handleAxisUpdated()
     setShadesPen(m_chartAxis->shadesPen());
     setShadesBrush(m_chartAxis->shadesBrush());
 
-}
-
-void ChartAxis::handleRangeChanged(qreal min, qreal max,int tickCount)
-{
-    if (qFuzzyIsNull(min - max) || tickCount < 2)
-        return;
-
-    m_min = min;
-    m_max = max;
-    m_ticksCount= tickCount;
-
-    if (isEmpty()) return;
-    QVector<qreal> layout = calculateLayout();
-    updateLayout(layout);
 }
 
 void ChartAxis::handleGeometryChanged(const QRectF &rect)
@@ -374,7 +378,7 @@ void ChartAxis::createCategoryLabels(QStringList &labels,qreal min, qreal max,co
     int count = 0;
 
     // Try to find category for x coordinate
-    while (count < m_ticksCount) {
+    while (count < categories.count()) {
         if ((x < categories.count()) && (x >= 0)) {
             labels << categories.at(x);
         } else {

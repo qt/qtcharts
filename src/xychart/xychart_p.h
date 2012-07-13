@@ -68,7 +68,7 @@ public Q_SLOTS:
     void handlePointAdded(int index);
     void handlePointRemoved(int index);
     void handlePointReplaced(int index);
-    void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    void handleDomainUpdated();
     void handleGeometryChanged(const QRectF &size);
 
 Q_SIGNALS:

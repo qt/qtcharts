@@ -43,11 +43,8 @@ public:
     virtual ~Domain();
 
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
-    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY, int tickXCount, int tickYCount);
     void setRangeX(qreal min, qreal max);
-    void setRangeX(qreal min, qreal max, int tickCount);
     void setRangeY(qreal min, qreal max);
-    void setRangeY(qreal min, qreal max, int tickCount);
     void setMinX(qreal min);
     void setMaxX(qreal max);
     void setMinY(qreal min);
@@ -62,9 +59,6 @@ public:
     qreal spanY() const;
     bool isEmpty() const;
 
-    int tickXCount() const {return m_tickXCount;}
-    int tickYCount() const {return m_tickYCount;}
-
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2);
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const Domain &domain1, const Domain &domain2);
     friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const Domain &domain);
@@ -72,29 +66,21 @@ public:
     void zoomIn(const QRectF& rect, const QSizeF& size);
     void zoomOut(const QRectF& rect, const QSizeF& size);
     void move(qreal dx,qreal dy,const QSizeF& size);
+    void emitUpdated();
 
 Q_SIGNALS:
-    void domainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
-    void rangeXChanged(qreal min, qreal max, int tickXCount);
-    void rangeYChanged(qreal min, qreal max, int tickYCount);
+    void updated();
+    void rangeXChanged(qreal min, qreal max);
+    void rangeYChanged(qreal min, qreal max);
 
 public Q_SLOTS:
-    void handleAxisXChanged(qreal min,qreal max,int tickXCount = 5,bool niceNumbers = false);
-    void handleAxisYChanged(qreal min,qreal max,int tickYCount = 5,bool niceNumbers = false);
-
-private:
-    void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const;
-    qreal niceNumber(qreal x,bool celing) const;
+    void handleAxisUpdated();
 
 private:
     qreal m_minX;
     qreal m_maxX;
     qreal m_minY;
     qreal m_maxY;
-    int m_tickXCount;
-    int m_tickYCount;
-    bool m_niceXNumbers;
-    bool m_niceYNumbers;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -48,20 +48,15 @@ public:
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
     void intializeDomain(Domain* domain);
-    void emitRange();
+    void handleDomainUpdated();
+    qreal min();
+    qreal max();
 
 private:
     //range handling
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);
     void setRange(const QVariant &min, const QVariant &max);
-    int ticksCount() const;
-
-Q_SIGNALS:
-    void changed(qreal min, qreal max, int tickCount,bool niceNumbers);
-
-public Q_SLOTS:
-    void handleAxisRangeChanged(qreal min, qreal max,int count);
 
 private:
     QStringList m_categories;

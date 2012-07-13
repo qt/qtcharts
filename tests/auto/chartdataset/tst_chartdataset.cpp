@@ -538,7 +538,7 @@ void tst_ChartDataSet::zoomInDomain()
     QList<QSignalSpy*> spyList;
 
     foreach(QAbstractSeries* series, seriesList) {
-        spyList << new QSignalSpy(m_dataset->domain(series),SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
+        spyList << new QSignalSpy(m_dataset->domain(series),SIGNAL(updated()));
     }
 
     m_dataset->zoomInDomain(QRect(0, 0, 100, 100), QSize(1000, 1000));
@@ -572,7 +572,7 @@ void tst_ChartDataSet::zoomOutDomain()
     QList<QSignalSpy*> spyList;
 
     foreach(QAbstractSeries* series, seriesList) {
-        spyList << new QSignalSpy(m_dataset->domain(series), SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
+        spyList << new QSignalSpy(m_dataset->domain(series), SIGNAL(updated()));
     }
 
     m_dataset->zoomOutDomain(QRect(0, 0, 100, 100), QSize(1000, 1000));
@@ -606,7 +606,7 @@ void tst_ChartDataSet::scrollDomain()
     foreach(QAbstractSeries* series, seriesList) {
         spyList
             << new QSignalSpy(m_dataset->domain(series),
-                SIGNAL(domainChanged(qreal,qreal,qreal,qreal)));
+                SIGNAL(updated()));
     }
 
     m_dataset->scrollDomain(10, 10, QSize(1000, 1000));

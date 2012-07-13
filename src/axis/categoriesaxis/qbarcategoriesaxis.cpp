@@ -251,7 +251,12 @@ QString QBarCategoriesAxis::at(int index) const
 void QBarCategoriesAxis::setMin(const QString& min)
 {
     Q_D(QBarCategoriesAxis);
-    setRange(min,d->m_maxCategory);
+    if (d->m_minCategory!=min && d->m_categories.contains(min)) {
+        d->m_minCategory = min;
+        d->emitUpdated();
+        emit minChanged(min);
+    }
+
 }
 
 /*!
@@ -269,7 +274,12 @@ QString QBarCategoriesAxis::min() const
 void QBarCategoriesAxis::setMax(const QString& max)
 {
     Q_D(QBarCategoriesAxis);
-    setRange(d->m_minCategory,max);
+    if (d->m_maxCategory!=max && d->m_categories.contains(max)) {
+        d->m_maxCategory = max;
+        d->emitUpdated();
+        emit maxChanged(max);
+    }
+
 }
 
 /*!
@@ -286,40 +296,8 @@ QString QBarCategoriesAxis::max() const
 */
 void QBarCategoriesAxis::setRange(const QString& minCategory, const QString& maxCategory)
 {
-    Q_D(QBarCategoriesAxis);
-
-    int minIndex = d->m_categories.indexOf(minCategory);
-    if (minIndex == -1) {
-        return;
-    }
-    int maxIndex = d->m_categories.indexOf(maxCategory);
-    if (maxIndex == -1) {
-        return;
-    }
-
-    if (maxIndex <= minIndex) {
-        // max must be greater than min
-        return;
-    }
-
-    bool changed = false;
-    if (!qFuzzyIsNull(d->m_min - (minIndex))||d->m_minCategory!=minCategory) {
-        d->m_minCategory = minCategory;
-        d->m_min = minIndex;
-        emit minChanged(minCategory);
-        changed = true;
-    }
-
-    if (!qFuzzyIsNull(d->m_max - (maxIndex))||d->m_maxCategory!=maxCategory ) {
-        d->m_max = maxIndex;
-        d->m_maxCategory = maxCategory;
-        emit maxChanged(maxCategory);
-        changed = true;
-    }
-
-    if (changed) {
-        d->emitRange();
-    }
+    setMin(minCategory);
+    setMax(maxCategory);
 }
 
 /*!
@@ -361,17 +339,22 @@ void QBarCategoriesAxisPrivate::setRange(const QVariant &min, const QVariant &ma
     q->setRange(value1,value2);
 }
 
-int QBarCategoriesAxisPrivate::ticksCount() const
+qreal QBarCategoriesAxisPrivate::min()
 {
-    return m_categories.count()+1;
+    //TODO:: cache it
+    return m_categories.indexOf(m_minCategory) + 0.5;
 }
 
-void QBarCategoriesAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
+qreal QBarCategoriesAxisPrivate::max()
+{
+    //TODO:: cache it
+    return m_categories.indexOf(m_maxCategory) + 0.5;
+}
+
+void QBarCategoriesAxisPrivate::handleDomainUpdated()
 {
 //    Q_Q(QBarCategoriesAxis);
-    m_min = min;
-    m_max = max;
-    m_ticksCount = count;
+
     // TODO: causes crash in some situations. added to known issues
     /*
     int minIndex = qFloor(min);
@@ -416,10 +399,12 @@ ChartAxis* QBarCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
     }
 }
 
+/*
 void QBarCategoriesAxisPrivate::emitRange()
 {
     emit changed(m_min -0.5, m_max +0.5, qCeil(m_max + 0.5) -qCeil(m_min - 0.5) +1, false);
 }
+*/
 
 void QBarCategoriesAxisPrivate::intializeDomain(Domain* domain)
 {

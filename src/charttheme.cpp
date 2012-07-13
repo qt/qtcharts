@@ -256,11 +256,13 @@ void ChartTheme::decorate(QSplineSeries *series, int index)
     }
 }
 
-void ChartTheme::decorate(QAbstractAxis *axis,bool axisX)
+void ChartTheme::decorate(QAbstractAxis *axis)
 {
     QPen pen;
     QBrush brush;
     QFont font;
+
+    bool axisX = axis->orientation()== Qt::Horizontal;
 
     if (axis->isArrowVisible()) {
 

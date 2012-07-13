@@ -77,6 +77,12 @@ void Chart::handleDomainChanged(qreal minX,qreal maxX,qreal minY,qreal maxY)
     qWarning()<<"Slot not implemented";
 }
 
+void Chart::handleDomainUpdated()
+{
+    qWarning()<<"Slot not implemented";
+}
+
+
 #include "moc_chart_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

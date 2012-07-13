@@ -46,11 +46,12 @@ public:
     AxisType axisType() const { return X_AXIS;}
 
 protected:
+    void handleAxisUpdated();
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
 
 private:
-    void createLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
+    int m_tickCount;
 
 };
 

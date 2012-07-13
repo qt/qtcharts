@@ -48,6 +48,9 @@ public:
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
+    void handleAxisUpdated();
+private:
+    int m_tickCount;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

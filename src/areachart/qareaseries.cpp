@@ -321,8 +321,6 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
     qreal minY(domain.minY());
     qreal maxX(domain.maxX());
     qreal maxY(domain.maxY());
-    int tickXCount(domain.tickXCount());
-    int tickYCount(domain.tickYCount());
 
     QLineSeries* upperSeries = q->upperSeries();
     QLineSeries* lowerSeries = q->lowerSeries();
@@ -352,7 +350,7 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
             maxY = qMax(maxY, y);
         }}
 
-    domain.setRange(minX,maxX,minY,maxY,tickXCount,tickYCount);
+    domain.setRange(minX,maxX,minY,maxY);
 }
 
 Chart* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)

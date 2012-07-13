@@ -41,13 +41,13 @@ ChartCategoriesAxisY::~ChartCategoriesAxisY()
 
 QVector<qreal> ChartCategoriesAxisY::calculateLayout() const
 {
-    Q_ASSERT(m_ticksCount>=2);
+    Q_ASSERT(m_categoriesAxis->categories().count()>=2);
 
     QVector<qreal> points;
-    points.resize(m_ticksCount);
+    points.resize(m_categoriesAxis->categories().count());
 
-    const qreal deltaY = m_rect.height()/(m_ticksCount-1);
-    for (int i = 0; i < m_ticksCount; ++i) {
+    const qreal deltaY = m_rect.height()/(m_categoriesAxis->categories().count()-1);
+    for (int i = 0; i < m_categoriesAxis->categories().count(); ++i) {
         int y = i * -deltaY + m_rect.bottom();
         points[i] = y;
     }

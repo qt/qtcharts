@@ -23,6 +23,7 @@
 #include "qxyseries_p.h"
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
+#include "domain_p.h"
 #include <QPainter>
 #include <QAbstractItemModel>
 #include "qxymodelmapper.h"
@@ -185,12 +186,12 @@ void XYChart::handlePointReplaced(int index)
 	updateChart(m_points,points,index);
 }
 
-void XYChart::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
+void XYChart::handleDomainUpdated()
 {
-    m_minX=minX;
-    m_maxX=maxX;
-    m_minY=minY;
-    m_maxY=maxY;
+    m_minX=domain()->minX();
+    m_maxX=domain()->maxX();
+    m_minY=domain()->minY();
+    m_maxY=domain()->maxY();
     if (isEmpty()) return;
 
     QVector<QPointF> points = calculateGeometryPoints();
