@@ -52,10 +52,8 @@ public:
     virtual void scaleDomain(Domain& domain) = 0;
     virtual Chart* createGraphics(ChartPresenter* presenter) = 0;
     virtual QList<LegendMarker*> createLegendMarker(QLegend* legend) = 0;
-    virtual void initializeAxisX(QAbstractAxis* axis) = 0;
-    virtual void initializeAxisY(QAbstractAxis* axis) = 0;
-    virtual QAbstractAxis::AxisType defaultAxisXType() const = 0;
-    virtual QAbstractAxis::AxisType defaultAxisYType() const = 0;
+    virtual void initializeAxis(QAbstractAxis* axis) = 0;
+    virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation) const = 0;
 
 protected:
     QAbstractSeries *q_ptr;

@@ -702,9 +702,9 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
     return true;
 }
 
-void QAbstractBarSeriesPrivate::initializeAxisX(QAbstractAxis* axis)
+void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 {
-    if(axis->type()==QAbstractAxis::AxisTypeCategories)
+    if(axis->type()==QAbstractAxis::AxisTypeCategories && axis->orientation()==Qt::Horizontal)
     {
         QBarCategoriesAxis* cataxis = qobject_cast<QBarCategoriesAxis*>(axis);
         Q_ASSERT(cataxis);
@@ -715,20 +715,12 @@ void QAbstractBarSeriesPrivate::initializeAxisX(QAbstractAxis* axis)
     }
 }
 
-void QAbstractBarSeriesPrivate::initializeAxisY(QAbstractAxis* axis)
+QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
 {
-    Q_UNUSED(axis)
-}
-
-QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisXType() const
-{
+    Q_UNUSED(orientation);
     return QAbstractAxis::AxisTypeNoAxis;
 }
 
-QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisYType() const
-{
-    return QAbstractAxis::AxisTypeNoAxis;
-}
 
 #include "moc_qabstractbarseries.cpp"
 #include "moc_qabstractbarseries_p.cpp"

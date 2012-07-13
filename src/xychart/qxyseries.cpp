@@ -435,23 +435,14 @@ QList<LegendMarker*> QXYSeriesPrivate::createLegendMarker(QLegend* legend)
     return list << new XYLegendMarker(q,legend);
 }
 
-void QXYSeriesPrivate::initializeAxisX(QAbstractAxis* axis)
+void QXYSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 {
     Q_UNUSED(axis);
 }
 
-void QXYSeriesPrivate::initializeAxisY(QAbstractAxis* axis)
+QAbstractAxis::AxisType QXYSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
 {
-    Q_UNUSED(axis);
-}
-
-QAbstractAxis::AxisType QXYSeriesPrivate::defaultAxisXType() const
-{
-    return QAbstractAxis::AxisTypeValues;
-}
-
-QAbstractAxis::AxisType QXYSeriesPrivate::defaultAxisYType() const
-{
+    Q_UNUSED(orientation);
     return QAbstractAxis::AxisTypeValues;
 }
 

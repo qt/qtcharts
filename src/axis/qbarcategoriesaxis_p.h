@@ -47,7 +47,7 @@ public:
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
-    void initialize(Domain* domain);
+    void intializeDomain(Domain* domain);
     void emitRange();
 
 private:

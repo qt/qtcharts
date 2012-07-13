@@ -114,14 +114,12 @@ Chart* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
-QAbstractAxis::AxisType QStackedBarSeriesPrivate::defaultAxisXType() const
+QAbstractAxis::AxisType QStackedBarSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
 {
-    return QAbstractAxis::AxisTypeCategories;
-}
-
-QAbstractAxis::AxisType QStackedBarSeriesPrivate::defaultAxisYType() const
-{
-    return QAbstractAxis::AxisTypeValues;
+    if(orientation==Qt::Horizontal)
+        return QAbstractAxis::AxisTypeCategories;
+    else
+        return QAbstractAxis::AxisTypeValues;
 }
 
 

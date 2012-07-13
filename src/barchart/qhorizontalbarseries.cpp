@@ -2,6 +2,7 @@
 #include "qhorizontalbarseries_p.h"
 #include "horizontalbarchartitem_p.h"
 #include "horizontalbaranimation_p.h"
+#include "qbarcategoriesaxis.h"
 
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
@@ -62,16 +63,27 @@ Chart* QHorizontalBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
-QAbstractAxis::AxisType QHorizontalBarSeriesPrivate::defaultAxisXType() const
+void QHorizontalBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 {
-    return QAbstractAxis::AxisTypeValues;
+
+    if(axis->type()==QAbstractAxis::AxisTypeCategories && axis->orientation()==Qt::Vertical)
+    {
+        QBarCategoriesAxis* cataxis = qobject_cast<QBarCategoriesAxis*>(axis);
+        Q_ASSERT(cataxis);
+        QStringList categories;
+        for (int i(1); i < categoryCount()+1; i++)
+        categories << QString::number(i);
+        cataxis->append(categories);
+    }
 }
 
-QAbstractAxis::AxisType QHorizontalBarSeriesPrivate::defaultAxisYType() const
+QAbstractAxis::AxisType QHorizontalBarSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
 {
-    return QAbstractAxis::AxisTypeCategories;
+    if(orientation==Qt::Vertical)
+        return QAbstractAxis::AxisTypeCategories;
+    else
+        return QAbstractAxis::AxisTypeValues;
 }
-
 
 #include "moc_qhorizontalbarseries.cpp"
 

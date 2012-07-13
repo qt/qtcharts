@@ -61,8 +61,7 @@ public:
     QAbstractAxis* axisX(QAbstractSeries *series) const;
     QAbstractAxis* axisY(QAbstractSeries *series) const;
 
-    void setAxisX(QAbstractSeries *series, QAbstractAxis *axis);
-    void setAxisY(QAbstractSeries *series, QAbstractAxis *axis);
+    void setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Orientation orientation);
 
     QList<QAbstractSeries*> series() const;
     Domain* domain(QAbstractSeries *series) const;
@@ -78,11 +77,13 @@ Q_SIGNALS:
 
 private:
     void calculateDomain(QAbstractSeries* series,Domain* domain);
-    QAbstractAxis* createAxis(QAbstractAxis::AxisType type);
-    void addAxisX(QAbstractAxis* axis,QAbstractSeries* series);
-    void addAxisY(QAbstractAxis* axis,QAbstractSeries* series);
+    void createAxes(QAbstractAxis::AxisTypes type,Qt::Orientation orientation);
+    QAbstractAxis* createAxis(QAbstractAxis::AxisType type,Qt::Orientation orientation);
+    void initializeAxis(QAbstractAxis* axis,QAbstractSeries* series);
     void removeAxes(QAbstractSeries* series);
     void blockAxisSignals(bool enabled);
+    void createSeriesIndex(QAbstractSeries* series);
+    void removeSeriesIndex(QAbstractSeries* series);
 
 private:
     QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisXMap;

@@ -108,6 +108,8 @@ public:
     void setShadesBorderColor(QColor color);
     QColor shadesBorderColor() const;
 
+    Qt::Orientation orientation();
+
     //range handling
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);

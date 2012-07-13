@@ -46,10 +46,8 @@ public:
     void scaleDomain(Domain& domain);
     Chart* createGraphics(ChartPresenter* presenter);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
-    void initializeAxisX(QAbstractAxis* axis);
-    void initializeAxisY(QAbstractAxis* axis);
-    QAbstractAxis::AxisType defaultAxisXType() const;
-    QAbstractAxis::AxisType defaultAxisYType() const;
+    void initializeAxis(QAbstractAxis* axis);
+    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
 
 Q_SIGNALS:
     void updated();

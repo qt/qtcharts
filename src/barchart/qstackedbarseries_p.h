@@ -42,8 +42,7 @@ public:
     QStackedBarSeriesPrivate(QStackedBarSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
-    QAbstractAxis::AxisType defaultAxisXType() const;
-    QAbstractAxis::AxisType defaultAxisYType() const;
+    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
 
 private:
     Q_DECLARE_PUBLIC(QStackedBarSeries)

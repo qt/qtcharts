@@ -465,9 +465,6 @@ void tst_QChart::scroll_right_data()
 	 QLineSeries* series0 = new QLineSeries(this);
 	 *series0 << QPointF(0, 0) << QPointF(100, 100);
 
-	 QLineSeries* series1 = new QLineSeries(this);
-     *series1 << QPointF(0, 0) << QPointF(100, 100);
-
      QTest::newRow("lineSeries") << (QAbstractSeries*) series0;
 
 

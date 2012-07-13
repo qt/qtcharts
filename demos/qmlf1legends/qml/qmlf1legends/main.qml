@@ -61,15 +61,13 @@ Rectangle {
             if (currentIndex < speedsXml.count) {
                 // Check if there is a series for the data already (we are using driver name to identify series)
                 var lineSeries = chartView.series(speedsXml.get(currentIndex).driver);
-                if (!lineSeries)
+                if (!lineSeries){
                     lineSeries = chartView.createSeries(ChartView.SeriesTypeLine, speedsXml.get(currentIndex).driver);
-
-                if (currentIndex < 3) {
                     chartView.createDefaultAxes();
                     chartView.axisY(lineSeries).min = 0;
                     chartView.axisY(lineSeries).max = 250
                 }
-
+              
                 lineSeries.append(currentIndex, speedsXml.get(currentIndex).speed);
 
                 // Make the x-axis range dynamic

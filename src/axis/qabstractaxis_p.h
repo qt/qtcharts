@@ -51,7 +51,7 @@ Q_SIGNALS:
 public:
     virtual ChartAxis* createGraphics(ChartPresenter* presenter) = 0;
     virtual void emitRange() = 0;
-    virtual void initialize(Domain* domain) = 0;
+    virtual void intializeDomain(Domain* domain) = 0;
 
 protected:
     virtual void setMin(const QVariant &min) = 0;

@@ -70,7 +70,6 @@ int main(int argc, char *argv[])
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     QBarCategoriesAxis* axis = new QBarCategoriesAxis();
     axis->append(categories);
-    chart->createDefaultAxes();
     chart->setAxisY(axis,series);
 //![4]
 

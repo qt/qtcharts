@@ -421,7 +421,7 @@ void QBarCategoriesAxisPrivate::emitRange()
     emit changed(m_min -0.5, m_max +0.5, qCeil(m_max + 0.5) -qCeil(m_min - 0.5) +1, false);
 }
 
-void QBarCategoriesAxisPrivate::initialize(Domain* domain)
+void QBarCategoriesAxisPrivate::intializeDomain(Domain* domain)
 {
     Q_UNUSED(domain);
     // TODO: this causes crash now. added to known issues.

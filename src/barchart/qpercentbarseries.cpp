@@ -112,15 +112,14 @@ Chart* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
-QAbstractAxis::AxisType QPercentBarSeriesPrivate::defaultAxisXType() const
+QAbstractAxis::AxisType QPercentBarSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
 {
-    return QAbstractAxis::AxisTypeCategories;
+    if(orientation==Qt::Horizontal)
+        return QAbstractAxis::AxisTypeCategories;
+    else
+        return QAbstractAxis::AxisTypeValues;
 }
 
-QAbstractAxis::AxisType QPercentBarSeriesPrivate::defaultAxisYType() const
-{
-    return QAbstractAxis::AxisTypeValues;
-}
 
 #include "moc_qpercentbarseries.cpp"
 

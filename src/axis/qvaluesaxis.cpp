@@ -171,7 +171,6 @@ qreal QValuesAxis::max() const
 void QValuesAxis::setRange(qreal min, qreal max)
 {
     Q_D(QValuesAxis);
-
     bool changed = false;
     if (!qFuzzyIsNull(d->m_min - min)) {
         d->m_min = min;
@@ -306,13 +305,17 @@ void QValuesAxisPrivate::emitRange()
 	emit changed(m_min, m_max, m_ticksCount, m_niceNumbers);
 }
 
-void QValuesAxisPrivate::initialize(Domain* domain)
+void QValuesAxisPrivate::intializeDomain(Domain* domain)
 {
     if(qFuzzyCompare(m_max,m_min)) {
         if(m_orientation==Qt::Vertical){
-            handleAxisRangeChanged(domain->minY(),domain->maxY(),domain->tickXCount());
+            m_min = domain->minY();
+            m_max = domain->maxY();
+            m_ticksCount = domain->tickYCount();
         }else{
-            handleAxisRangeChanged(domain->minX(),domain->maxX(),domain->tickYCount());
+            m_min = domain->minX();
+            m_max = domain->maxX();
+            m_ticksCount = domain->tickXCount();
         }
     }
 }

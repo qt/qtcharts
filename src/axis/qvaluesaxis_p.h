@@ -50,7 +50,7 @@ public Q_SLOTS:
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
-    void initialize(Domain* domain);
+    void intializeDomain(Domain* domain);
     void emitRange();
 
 protected:

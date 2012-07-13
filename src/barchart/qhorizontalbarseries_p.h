@@ -41,8 +41,8 @@ public:
     QHorizontalBarSeriesPrivate(QHorizontalBarSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
-    QAbstractAxis::AxisType defaultAxisXType() const;
-    QAbstractAxis::AxisType defaultAxisYType() const;
+    void initializeAxis(QAbstractAxis* axis);
+    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
 
 private:
     Q_DECLARE_PUBLIC(QHorizontalBarSeries)

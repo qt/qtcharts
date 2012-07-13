@@ -597,6 +597,12 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
     d_ptr->setRange(min,max);
 }
 
+
+Qt::Orientation QAbstractAxis::orientation()
+{
+    return d_ptr->m_orientation;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
