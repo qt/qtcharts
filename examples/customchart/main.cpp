@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
-    *series << QPointF(0, 6) << QPointF(9, 4) << QPointF(15, 20) << QPointF(25, 12) << QPointF(29, 26);
+    *series << QPointF(0, 6) << QPointF(9, 4) << QPointF(15, 20) << QPointF(25, 12) << QPointF(39, 36);
     QChart* chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
@@ -95,18 +95,14 @@ int main(int argc, char *argv[])
     axisX->append("optimal", 20);
     axisX->append("high", 30);
     axisX->setRange(0, 30);
-//    axisX->setRange("low","high");
 
     axisY->append("slow", 10);
     axisY->append("med", 20);
     axisY->append("fast", 30);
     axisY->setRange(0, 30);
-//    axisY->setRange("slow","fast");
 
     chart->setAxisX(axisX, series);
     chart->setAxisY(axisY, series);
-    axisX->setRange(0, 30);
-    axisY->setRange(0, 30);
 //![4]
 
 //![5]

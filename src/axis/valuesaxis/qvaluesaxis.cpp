@@ -318,6 +318,12 @@ void QValuesAxisPrivate::intializeDomain(Domain* domain)
             m_min = domain->minX();
             m_max = domain->maxX();
         }
+    } else {
+        if(m_orientation==Qt::Vertical){
+            domain->setRangeY(m_min, m_max);
+        }else{
+            domain->setRangeX(m_min, m_max);
+        }
     }
 }
 

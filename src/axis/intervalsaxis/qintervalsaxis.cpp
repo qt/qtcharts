@@ -87,7 +87,7 @@ void QIntervalsAxis::append(const QString& intervalLabel, qreal interval)
             d->m_intervalsMap.insert(intervalLabel, Range(range.second,interval));
             d->m_intervals.append(intervalLabel);
     	}
-        setRange(d->m_min,interval);
+//        setRange(d->m_min,interval);
     }
 }
 
