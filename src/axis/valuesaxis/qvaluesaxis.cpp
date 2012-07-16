@@ -200,7 +200,7 @@ void QValuesAxis::setRange(qreal min, qreal max)
 void QValuesAxis::setTicksCount(int count)
 {
     Q_D(QValuesAxis);
-    if (d->m_tickCount != count) {
+    if (d->m_tickCount != count && count >=2) {
         d->m_tickCount = count;
         d->emitUpdated();
     }
@@ -221,7 +221,7 @@ void QValuesAxis::setNiceNumbersEnabled(bool enable)
     Q_D(QValuesAxis);
     if (d->m_niceNumbers != enable){
         d->m_niceNumbers = enable;
-        if(enable) setRange(d->min(),d->max());
+        if(enable && !qFuzzyIsNull(d->m_max - d->m_min)) setRange(d->min(),d->max());
     }
 }
 
