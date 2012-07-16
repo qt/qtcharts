@@ -35,7 +35,7 @@ class tst_QAbstractAxis : public QObject
 public slots:
     virtual void initTestCase();
     virtual void cleanupTestCase();
-    virtual void init(QAbstractAxis* axis);
+    virtual void init(QAbstractAxis* axis,QAbstractSeries* series);
     virtual void cleanup();
 
 private slots:
@@ -45,14 +45,12 @@ private slots:
     void axisPenColor();
     void gridLinePen_data();
     void gridLinePen();
-    void hide_data();
-    void hide();
-    void isArrowVisible_data();
-    void isArrowVisible();
-    void isGridLineVisible_data();
-    void isGridLineVisible();
-    void isVisible_data();
-    void isVisible();
+    void arrowVisible_data();
+    void arrowVisible();
+    void gridLineVisible_data();
+    void gridLineVisible();
+    void visible_data();
+    void visible();
     void labelsAngle_data();
     void labelsAngle();
     void labelsBrush_data();
@@ -67,46 +65,12 @@ private slots:
     void labelsVisible();
     void orientation_data();
     void orientation();
-    void setArrowVisible_data();
-    void setArrowVisible();
-    void setAxisPen_data();
-    void setAxisPen();
-    void setAxisPenColor_data();
-    void setAxisPenColor();
-    void setGridLinePen_data();
-    void setGridLinePen();
-    void setGridLineVisible_data();
-    void setGridLineVisible();
-    void setLabelsAngle_data();
-    void setLabelsAngle();
-    void setLabelsBrush_data();
-    void setLabelsBrush();
-    void setLabelsColor_data();
-    void setLabelsColor();
-    void setLabelsFont_data();
-    void setLabelsFont();
-    void setLabelsPen_data();
-    void setLabelsPen();
-    void setLabelsVisible_data();
-    void setLabelsVisible();
     void setMax_data();
     void setMax();
     void setMin_data();
     void setMin();
     void setRange_data();
     void setRange();
-    void setShadesBorderColor_data();
-    void setShadesBorderColor();
-    void setShadesBrush_data();
-    void setShadesBrush();
-    void setShadesColor_data();
-    void setShadesColor();
-    void setShadesPen_data();
-    void setShadesPen();
-    void setShadesVisible_data();
-    void setShadesVisible();
-    void setVisible_data();
-    void setVisible();
     void shadesBorderColor_data();
     void shadesBorderColor();
     void shadesBrush_data();
@@ -119,26 +83,8 @@ private slots:
     void shadesVisible();
     void show_data();
     void show();
-    void type_data();
-    void type();
-    void arrowVisibleChanged_data();
-    void arrowVisibleChanged();
-    void colorChanged_data();
-    void colorChanged();
-    void gridVisibleChanged_data();
-    void gridVisibleChanged();
-    void labelsColorChanged_data();
-    void labelsColorChanged();
-    void labelsVisibleChanged_data();
-    void labelsVisibleChanged();
-    void shadesBorderColorChanged_data();
-    void shadesBorderColorChanged();
-    void shadesColorChanged_data();
-    void shadesColorChanged();
-    void shadesVisibleChanged_data();
-    void shadesVisibleChanged();
-    void visibleChanged_data();
-    void visibleChanged();
+    void hide_data();
+    void hide();
 
 protected:
     void qabstractaxis();
@@ -146,6 +92,7 @@ protected:
     QChartView* m_view;
     QChart* m_chart;
     QAbstractAxis* m_axis;
+    QAbstractSeries* m_series;
 };
 
 #endif
