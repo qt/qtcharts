@@ -100,11 +100,8 @@ void ChartIntervalAxisY::updateGeometry()
 
         if (i < ticksList.count())
             labelItem->setPos(m_rect.left() - rect.width() - label_padding , layout[i] + (layout[i + 1] - layout[i]) / 2 - center.y());
-//            labelItem->setPos(layout[i] + (layout[i + 1] - layout[i]) / 2 - center.x(), m_rect.bottom() + label_padding);
         else
             labelItem->setPos(m_rect.left() - rect.width() - label_padding , layout[i]-center.y());
-
-//        labelItem->setPos(m_rect.left() - rect.width() - label_padding , layout[i]-center.y());
 
         if(labelItem->pos().y()+rect.height()>height) {
             labelItem->setVisible(false);

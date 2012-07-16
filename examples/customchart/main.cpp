@@ -22,8 +22,7 @@
 #include <QMainWindow>
 #include <QChartView>
 #include <QLineSeries>
-#include <QValuesAxis>
-#include <QBarCategoriesAxis>
+#include <QIntervalsAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -33,7 +32,7 @@ int main(int argc, char *argv[])
 
 //![1]
     QLineSeries* series = new QLineSeries();
-    *series << QPointF(0, 0.6) << QPointF(0.5, 0.4) << QPointF(1, 2) << QPointF(1.5, 1.2) << QPointF(2, 1.0);
+    *series << QPointF(0, 6) << QPointF(9, 4) << QPointF(15, 20) << QPointF(25, 12) << QPointF(29, 26);
     QChart* chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
@@ -63,8 +62,8 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QBarCategoriesAxis* axisX = new QBarCategoriesAxis();
-    QBarCategoriesAxis* axisY = new QBarCategoriesAxis();
+    QIntervalsAxis* axisX = new QIntervalsAxis();
+    QIntervalsAxis* axisY = new QIntervalsAxis();
 
     // Customize axis label font
     QFont labelsFont;
@@ -92,18 +91,22 @@ int main(int argc, char *argv[])
 //![3]
 
 //![4]
-    axisX->append("low");
-    axisX->append("optimal");
-    axisX->append("high");
-    axisX->setRange("low","high");
+    axisX->append("low", 10);
+    axisX->append("optimal", 20);
+    axisX->append("high", 30);
+    axisX->setRange(0, 30);
+//    axisX->setRange("low","high");
 
-    axisY->append("slow");
-    axisY->append("med");
-    axisY->append("fast");
-    axisY->setRange("slow","fast");
+    axisY->append("slow", 10);
+    axisY->append("med", 20);
+    axisY->append("fast", 30);
+    axisY->setRange(0, 30);
+//    axisY->setRange("slow","fast");
 
     chart->setAxisX(axisX, series);
     chart->setAxisY(axisY, series);
+    axisX->setRange(0, 30);
+    axisY->setRange(0, 30);
 //![4]
 
 //![5]
