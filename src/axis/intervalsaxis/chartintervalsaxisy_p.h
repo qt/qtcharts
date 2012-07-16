@@ -18,47 +18,38 @@
 **
 ****************************************************************************/
 
-#ifndef QCATEGORIESAXIS_H
-#define QCATEGORIESAXIS_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the QtCommercial Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
 
-#include "qabstractaxis.h"
-#include "qvaluesaxis.h"
+#ifndef CHARTINTERVALAXISY_H
+#define CHARTINTERVALAXISY_H
+
+#include "chartaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QIntervalAxisPrivate;
+class QAbstractAxis;
+class ChartPresenter;
 
-class QTCOMMERCIALCHART_EXPORT QIntervalAxis : public QValuesAxis
+class ChartIntervalAxisY : public ChartAxis
 {
-    Q_OBJECT
-
 public:
-    explicit QIntervalAxis(QObject *parent = 0);
-    ~QIntervalAxis();
+    ChartIntervalAxisY(QAbstractAxis *axis, ChartPresenter *presenter);
+    ~ChartIntervalAxisY();
+
+    AxisType axisType() const { return Y_AXIS;}
 
 protected:
-    QIntervalAxis(QIntervalAxisPrivate &d,QObject *parent = 0);
-
-public:
-    AxisType type() const;
-
-    void append(const QString& category, qreal interval = 1);
-    void remove(const QString& category);
-
-    void setFisrtCategoryMinimum(qreal x);
-
-    qreal categoryMin(const QString& category) const;
-    qreal categoryMax(const QString& category) const;
-
-    QStringList categories();
-    int count() const;
-
-
-private:
-    Q_DECLARE_PRIVATE(QIntervalAxis)
-    Q_DISABLE_COPY(QIntervalAxis)
+    QVector<qreal> calculateLayout() const;
+    void updateGeometry();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QCATEGORIESAXIS_H
+#endif /* CHARTINTERVALAXISY_H */

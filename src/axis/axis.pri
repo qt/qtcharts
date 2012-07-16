@@ -1,5 +1,6 @@
 include(valuesaxis/valuesaxis.pri)
 include(categoriesaxis/categoriesaxis.pri)
+include(intervalsaxis/intervalsaxis.pri)
 
 INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD

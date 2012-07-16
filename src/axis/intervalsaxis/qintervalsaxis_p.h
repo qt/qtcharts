@@ -27,46 +27,44 @@
 //
 // We mean it.
 
-#ifndef QVALUESAXIS_P_H
-#define QVALUESAXIS_P_H
+#ifndef QIntervalsAxis_P_H
+#define QIntervalsAxis_P_H
 
-#include "qvaluesaxis.h"
-#include "qabstractaxis_p.h"
+#include "qintervalsaxis.h"
+#include "qvaluesaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QValuesAxisPrivate : public QAbstractAxisPrivate
+typedef QPair<qreal, qreal> Range;
+
+class QIntervalsAxisPrivate : public QValuesAxisPrivate
 {
     Q_OBJECT
+
 public:
-    QValuesAxisPrivate(QValuesAxis *q);
-    ~QValuesAxisPrivate();
+    QIntervalsAxisPrivate(QIntervalsAxis *q);
+    ~QIntervalsAxisPrivate();
+
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
-    void intializeDomain(Domain* domain);
-    void handleDomainUpdated();
-    qreal min(){ return m_min; };
-    qreal max(){ return m_max; };
-
-protected:
-    void setMin(const QVariant &min);
-    void setMax(const QVariant &max);
-    void setRange(const QVariant &min, const QVariant &max);
     int ticksCount() const;
 
-private:
-    void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const;
-    qreal niceNumber(qreal x,bool ceiling) const;
+Q_SIGNALS:
+    void changed(qreal min, qreal max, int tickCount,bool niceNumbers);
 
-protected:
-    qreal m_min;
-    qreal m_max;
-    int m_tickCount;
-    bool m_niceNumbers;
-    Q_DECLARE_PUBLIC(QValuesAxis)
+public Q_SLOTS:
+    void handleAxisRangeChanged(qreal min, qreal max,int count);
+
+private:
+    QMap<QString , Range> m_intervalsMap;
+    QStringList m_intervals;
+    qreal m_categoryMinimum;
+
+private:
+    Q_DECLARE_PUBLIC(QIntervalsAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QVALUESAXIS_P_H
+#endif // QCATEGORIESAXIS_P_H
