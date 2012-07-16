@@ -352,6 +352,11 @@ void ChartDataSet::setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Ori
 {
     Q_ASSERT(axis);
 
+    if(!series) {
+        qWarning() << "Series not found on the chart.";
+        return;
+    }
+
     Domain* domain = m_seriesDomainMap.value(series);
 
     if(!domain) {

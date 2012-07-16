@@ -57,6 +57,7 @@ void tst_QLineSeries::init()
 void tst_QLineSeries::cleanup()
 {
     delete m_series;
+    m_series=0;
     tst_QXYSeries::cleanup();
 }
 

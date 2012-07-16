@@ -3,7 +3,24 @@
 }
 
 TEMPLATE = subdirs
-SUBDIRS += qchartview qchart qlineseries qbarset qbarseries qstackedbarseries qpercentbarseries qpieslice qpieseries qpiemodelmapper qsplineseries qscatterseries qxymodelmapper qbarmodelmapper qhorizontalbarseries qhorizontalstackedbarseries qhorizontalpercentbarseries
+SUBDIRS += \
+           qchartview \
+           qchart \
+           qlineseries \ 
+           qbarset \
+           qbarseries \
+           qstackedbarseries \
+           qpercentbarseries \
+           qpieslice qpieseries \
+           qpiemodelmapper \
+           qsplineseries \
+           qscatterseries \
+           qxymodelmapper \
+           qbarmodelmapper \
+           qhorizontalbarseries \
+           qhorizontalstackedbarseries \
+           qhorizontalpercentbarseries \
+           qvaluesaxis
 
 test_private:{
     SUBDIRS += domain chartdataset
