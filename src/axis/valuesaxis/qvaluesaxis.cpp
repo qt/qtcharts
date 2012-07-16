@@ -310,13 +310,12 @@ ChartAxis* QValuesAxisPrivate::createGraphics(ChartPresenter* presenter)
 
 void QValuesAxisPrivate::intializeDomain(Domain* domain)
 {
+    Q_Q(QValuesAxis);
     if(qFuzzyCompare(m_max,m_min)) {
         if(m_orientation==Qt::Vertical){
-            m_min = domain->minY();
-            m_max = domain->maxY();
+            q->setRange(domain->minY(),domain->maxY());
         }else{
-            m_min = domain->minX();
-            m_max = domain->maxX();
+            q->setRange(domain->minX(), domain->maxX());
         }
     } else {
         if(m_orientation==Qt::Vertical){
