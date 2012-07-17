@@ -30,6 +30,35 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \class QHorizontalBarSeries
+    \brief Series for creating horizontal bar chart
+    \mainclass
+
+    QHorizontalBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
+    as groups, where bars in same category are grouped next to each other. QHorizontalBarSeries groups the data
+    from sets to categories, which are defined by a QStringList.
+
+    See the \l {HorizontalBarChart Example} {horizontal bar chart example} to learn how to create a horizontal bar chart.
+    \image examples_horizontalbarchart.png
+
+    \sa QBarSet, QBarSeries, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries, QHorizontalStackedBarSeries, QHorizontalPercentBarSeries
+*/
+/*
+    // TODO:
+    \qmlclass Horizontal QHorizontalBarSeries
+    \inherits AbstractBarSeries
+
+    The following QML shows how to create a simple grouped bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
+    \beginfloatleft
+    \image demos_qmlchart6.png
+    \endfloat
+    \clearfloat
+*/
+
+
+
 QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent) :
     QAbstractBarSeries(*new QHorizontalBarSeriesPrivate(this), parent)
 {

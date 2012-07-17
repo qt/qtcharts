@@ -1,0 +1,17 @@
+/*!
+    \example examples/horizontalpercentbarchart
+    \title HorizontalPercentBarChart Example
+    \subtitle
+
+    The example shows how to create simple horizontal percent bar chart. Horizontal percent bar chart shows the data in set as percentage of
+    all sets, per category.
+
+    \image examples_horizontalpercentbarchart.png
+
+    Creating horizontal percent bar chart is just like creating a regular \l {BarChart Example} {bar chart}, except that for a
+    horizontal percent bar chart, we use QHorizontalPercentBarSeries api instead of QBarSeries. Also, in the
+    \l {BarChart Example} {bar chart} we used nice numbers algorithm to make the y axis numbering look better. With
+    percent bar chart there is no need for that, because the maximum y-axis value is always 100.
+
+    \snippet ../examples/horizontalpercentbarchart/main.cpp 3
+*/

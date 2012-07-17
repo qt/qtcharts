@@ -1,0 +1,39 @@
+/*!
+    \example examples/horizontalbarchart
+    \title HorizontalBarChart Example
+    \subtitle
+
+    The example shows how to create a horizontal bar chart. HorizontalBarChart shows the data in sets as separate bars, which are grouped in categories.
+
+    \image examples_horizontalbarchart.png
+
+    Data that barchart visualizes, is defined by QBarSet instances. Here we create the sets and append data
+    to them.
+
+    \snippet ../examples/horizontalbarchart/main.cpp 1
+
+    We create the series and append the sets to it. The horizontalbarseries groups the data from sets to categories.
+	First value of each set are gropuped together at first category second value to second category and so on.
+
+    \snippet ../examples/horizontalbarchart/main.cpp 2
+
+    Then we create a chart and add the series to it.
+
+    \snippet ../examples/horizontalbarchart/main.cpp 3
+    
+	We define the categories here and add them to QCategoriesAxis which we then set to be the x-axis of the chart.
+
+    \snippet ../examples/horizontalbarchart/main.cpp 4
+
+    And we also want to show the legend.
+
+    \snippet ../examples/horizontalbarchart/main.cpp 5
+
+    Finally we add the chart onto a view.
+
+    \snippet ../examples/horizontalbarchart/main.cpp 6
+
+    And it is ready to be shown in a window.
+
+    \snippet ../examples/horizontalbarchart/main.cpp 7
+*/

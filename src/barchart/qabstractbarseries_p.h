@@ -58,7 +58,7 @@ public:
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
 
     void initializeAxis(QAbstractAxis* axis);
-    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
+    virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
 
     bool append(QBarSet *set);
     bool remove(QBarSet *set);

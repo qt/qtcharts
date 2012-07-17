@@ -56,7 +56,6 @@ Chart* QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter* presen
     return bar;
 }
 
-
 #include "moc_qhorizontalpercentbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

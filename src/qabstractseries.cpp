@@ -52,6 +52,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \value SeriesTypePie
     \value SeriesTypeScatter
     \value SeriesTypeSpline
+    \value SeriesTypeHorizontalBar
+    \value SeriesTypeHorizontalStackedBar
+    \value SeriesTypeHorizontalPercentBar
 */
 
 /*!
