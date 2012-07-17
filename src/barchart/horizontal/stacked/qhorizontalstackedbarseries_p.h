@@ -27,25 +27,24 @@
 //
 // We mean it.
 
-#ifndef QHORIZONTALPERCENTBARSERIES_P_H
-#define QHORIZONTALPERCENTBARSERIES_P_H
+#ifndef QHORIZONTALSTACKEDBARSERIES_P_H
+#define QHORIZONTALSTACKEDBARSERIES_P_H
 
 #include "qabstractbarseries_p.h"
 #include "domain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QHorizontalPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
+class QHorizontalStackedBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
-    QHorizontalPercentBarSeriesPrivate(QHorizontalPercentBarSeries* q);
+    QHorizontalStackedBarSeriesPrivate(QHorizontalStackedBarSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
-
 private:
-    Q_DECLARE_PUBLIC(QHorizontalPercentBarSeries)
+    Q_DECLARE_PUBLIC(QHorizontalStackedBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QHORIZONTALPERCENTBARSERIES_P_H
+#endif // QHORIZONTALSTACKEDBARSERIES_P_H

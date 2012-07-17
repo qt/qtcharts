@@ -109,15 +109,6 @@ Chart* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return bar;
 }
 
-QAbstractAxis::AxisType QPercentBarSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
-{
-    if(orientation==Qt::Horizontal)
-        return QAbstractAxis::AxisTypeCategories;
-    else
-        return QAbstractAxis::AxisTypeValues;
-}
-
-
 #include "moc_qpercentbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QPERCENTBARSERIES_P_H
-#define QPERCENTBARSERIES_P_H
+#ifndef QBARSERIES_P_H
+#define QBARSERIES_P_H
 
 #include "qabstractbarseries_p.h"
 #include "domain_p.h"
@@ -36,18 +36,16 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
-class QPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
+class QBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
-    QPercentBarSeriesPrivate(QPercentBarSeries* q);
-    void scaleDomain(Domain& domain);
+    QBarSeriesPrivate(QBarSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
-    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
-
+    void scaleDomain(Domain& domain);
 private:
-    Q_DECLARE_PUBLIC(QPercentBarSeries)
+    Q_DECLARE_PUBLIC(QBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif
+#endif // QBARSERIES_P_H

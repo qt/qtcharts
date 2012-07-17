@@ -57,17 +57,6 @@ Chart* QHorizontalStackedBarSeriesPrivate::createGraphics(ChartPresenter* presen
     return bar;
 }
 
-QAbstractAxis::AxisType QHorizontalStackedBarSeriesPrivate::defaultAxisXType() const
-{
-    return QAbstractAxis::AxisTypeValues;
-}
-
-QAbstractAxis::AxisType QHorizontalStackedBarSeriesPrivate::defaultAxisYType() const
-{
-    return QAbstractAxis::AxisTypeCategories;
-}
-
-
 #include "moc_qhorizontalstackedbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

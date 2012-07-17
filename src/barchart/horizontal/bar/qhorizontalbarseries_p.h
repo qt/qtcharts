@@ -27,27 +27,24 @@
 //
 // We mean it.
 
-#ifndef QSTACKEDBARSERIES_P_H
-#define QSTACKEDBARSERIES_P_H
+#ifndef QHORIZONTALBARSERIES_P_H
+#define QHORIZONTALBARSERIES_P_H
 
 #include "qabstractbarseries_p.h"
 #include "domain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-
-class QStackedBarSeriesPrivate: public QAbstractBarSeriesPrivate
+class QHorizontalBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
-    QStackedBarSeriesPrivate(QStackedBarSeries* q);
+    QHorizontalBarSeriesPrivate(QHorizontalBarSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
-    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
-
 private:
-    Q_DECLARE_PUBLIC(QStackedBarSeries)
+    Q_DECLARE_PUBLIC(QHorizontalBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif
+#endif // QHORIZONTALBARSERIES_P_H

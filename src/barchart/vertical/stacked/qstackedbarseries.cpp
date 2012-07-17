@@ -18,68 +18,69 @@
 **
 ****************************************************************************/
 
-#include "qbarseries.h"
-#include "qbarseries_p.h"
-#include "barchartitem_p.h"
+#include "qstackedbarseries.h"
+#include "qstackedbarseries_p.h"
+#include "stackedbarchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "chartanimator_p.h"
-#include "baranimation_p.h"
 #include "qvaluesaxis.h"
+#include "stackedbaranimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
-    \class QBarSeries
-    \brief Series for creating bar chart
+    \class QStackedBarSeries
+    \brief Series for creating stacked bar chart
     \mainclass
 
-    QBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
-    as groups, where bars in same category are grouped next to each other. QBarSeries groups the data
-    from sets to categories, which are defined by a QStringList.
+    QStackedBarSeries represents a series of data shown as bars. The purpose of this class is to draw bars
+    as stacks, where bars in same category are stacked on top of each other.
+    QStackedBarSeries groups the data from sets to categories, which are defined by QStringList.
 
-    See the \l {BarChart Example} {bar chart example} to learn how to create a grouped bar chart.
-    \image examples_barchart.png
+    See the \l {StackedbarChart Example} {stacked bar chart example} to learn how to create a stacked bar chart.
+    \image examples_stackedbarchart.png
 
-    \sa QBarSet, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries
+    \sa QBarSet, QPercentBarSeries, QAbstractBarSeries
 */
+
 /*!
-    \qmlclass BarSeries QBarSeries
+    \qmlclass StackedBarSeries QStackedBarSeries
     \inherits AbstractBarSeries
 
-    The following QML shows how to create a simple grouped bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
+    The following QML shows how to create a simple stacked bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View7.qml 1
     \beginfloatleft
-    \image demos_qmlchart6.png
+    \image demos_qmlchart7.png
     \endfloat
     \clearfloat
 */
 
 /*!
-    Constructs empty QBarSeries.
-    QBarSeries is QObject which is a child of a \a parent.
+    Constructs empty QStackedBarSeries.
+    QStackedBarSeries is QObject which is a child of a \a parent.
 */
-QBarSeries::QBarSeries(QObject *parent)
-    : QAbstractBarSeries(*new QBarSeriesPrivate(this), parent)
+QStackedBarSeries::QStackedBarSeries(QObject *parent)
+    : QAbstractBarSeries(*new QStackedBarSeriesPrivate(this), parent)
 {
 }
 
 /*!
-    Returns QChartSeries::SeriesTypeBar.
+    Returns QChartSeries::SeriesTypeStackedBar.
 */
-QAbstractSeries::SeriesType QBarSeries::type() const
+QAbstractSeries::SeriesType QStackedBarSeries::type() const
 {
-    return QAbstractSeries::SeriesTypeBar;
+    return QAbstractSeries::SeriesTypeStackedBar;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) : QAbstractBarSeriesPrivate(q)
+QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QStackedBarSeries *q) : QAbstractBarSeriesPrivate(q)
 {
 
 }
 
-void QBarSeriesPrivate::scaleDomain(Domain& domain)
+void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
 {
     qreal minX(domain.minX());
     qreal minY(domain.minY());
@@ -87,7 +88,7 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal maxY(domain.maxY());
 
     qreal x = categoryCount();
-    qreal y = max();
+    qreal y = maxCategorySum();
     minX = qMin(minX, - (qreal)0.5);
     minY = qMin(minY, y);
     maxX = qMax(maxX, x - (qreal)0.5);
@@ -97,28 +98,20 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
 }
 
 
-Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+Chart* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
-    Q_Q(QBarSeries);
+    Q_Q(QStackedBarSeries);
 
-    BarChartItem* bar = new BarChartItem(q,presenter);
+    StackedBarChartItem* bar = new StackedBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
         bar->setAnimator(presenter->animator());
-        bar->setAnimation(new BarAnimation(bar));
+        bar->setAnimation(new StackedBarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
 }
 
-QAbstractAxis::AxisType QBarSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
-{
-    if(orientation==Qt::Horizontal)
-        return QAbstractAxis::AxisTypeCategories;
-    else
-        return QAbstractAxis::AxisTypeValues;
-}
-
-#include "moc_qbarseries.cpp"
+#include "moc_qstackedbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

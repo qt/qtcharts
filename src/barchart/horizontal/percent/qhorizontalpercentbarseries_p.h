@@ -27,27 +27,24 @@
 //
 // We mean it.
 
-#ifndef QHORIZONTALBARSERIES_P_H
-#define QHORIZONTALBARSERIES_P_H
+#ifndef QHORIZONTALPERCENTBARSERIES_P_H
+#define QHORIZONTALPERCENTBARSERIES_P_H
 
 #include "qabstractbarseries_p.h"
 #include "domain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QHorizontalBarSeriesPrivate: public QAbstractBarSeriesPrivate
+class QHorizontalPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
-    QHorizontalBarSeriesPrivate(QHorizontalBarSeries* q);
+    QHorizontalPercentBarSeriesPrivate(QHorizontalPercentBarSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
-    void initializeAxis(QAbstractAxis* axis);
-    QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
-
 private:
-    Q_DECLARE_PUBLIC(QHorizontalBarSeries)
+    Q_DECLARE_PUBLIC(QHorizontalPercentBarSeries)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QHORIZONTALBARSERIES_P_H
+#endif // QHORIZONTALPERCENTBARSERIES_P_H

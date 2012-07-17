@@ -189,11 +189,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    Constructs empty QAbstractBarSeries.
-    QAbstractBarSeries is QObject which is a child of a \a parent.
+    This is depreciated constructor.
 */
 QAbstractBarSeries::QAbstractBarSeries(QObject *parent) :
-    QAbstractSeries(*new QAbstractBarSeriesPrivate(this),parent)
+    QAbstractSeries(*(QAbstractBarSeriesPrivate*)(0),parent)
 {
 }
 
@@ -701,25 +700,84 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
 
 void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 {
-    if(axis->type()==QAbstractAxis::AxisTypeCategories && axis->orientation()==Qt::Horizontal)
-    {
-        QBarCategoriesAxis* cataxis = qobject_cast<QBarCategoriesAxis*>(axis);
-        Q_ASSERT(cataxis);
-        QStringList categories;
-        if(cataxis->categories().isEmpty()){
-        for (int i(1); i < categoryCount()+1; i++)
-        categories << QString::number(i);
-        cataxis->append(categories);
+    Q_Q(QAbstractBarSeries);
+
+    if(axis->type()==QAbstractAxis::AxisTypeCategories) {
+
+        switch(q->type()) {
+
+            case QAbstractSeries::SeriesTypeHorizontalBar:
+            case QAbstractSeries::SeriesTypeHorizontalPercentBar:
+            case QAbstractSeries::SeriesTypeHorizontalStackedBar: {
+
+                if(axis->orientation()==Qt::Vertical)
+                {
+                    populateCategories(qobject_cast<QBarCategoriesAxis*>(axis));
+                }
+                break;
+            }
+            case QAbstractSeries::SeriesTypeBar:
+            case QAbstractSeries::SeriesTypePercentBar:
+            case QAbstractSeries::SeriesTypeStackedBar: {
+
+                if(axis->orientation()==Qt::Horizontal)
+                {
+                    populateCategories(qobject_cast<QBarCategoriesAxis*>(axis));
+                }
+                break;
+            }
+            default:
+            qWarning()<<"Unexpected series type";
+            break;
+
         }
     }
 }
 
 QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
 {
-    Q_UNUSED(orientation);
-    return QAbstractAxis::AxisTypeNoAxis;
+    Q_Q(const QAbstractBarSeries);
+
+    switch(q->type()) {
+
+        case QAbstractSeries::SeriesTypeHorizontalBar:
+        case QAbstractSeries::SeriesTypeHorizontalPercentBar:
+        case QAbstractSeries::SeriesTypeHorizontalStackedBar: {
+
+            if(orientation==Qt::Vertical)
+            {
+                return QAbstractAxis::AxisTypeCategories;
+            }
+            break;
+        }
+        case QAbstractSeries::SeriesTypeBar:
+        case QAbstractSeries::SeriesTypePercentBar:
+        case QAbstractSeries::SeriesTypeStackedBar: {
+
+            if(orientation==Qt::Horizontal)
+            {
+                return QAbstractAxis::AxisTypeCategories;
+            }
+            break;
+        }
+        default:
+        qWarning()<<"Unexpected series type";
+        break;
+
+    }
+    return QAbstractAxis::AxisTypeValues;
+
 }
 
+void QAbstractBarSeriesPrivate::populateCategories(QBarCategoriesAxis* axis)
+{
+    QStringList categories;
+    if(axis->categories().isEmpty()) {
+        for (int i(1); i < categoryCount()+1; i++)
+        categories << QString::number(i);
+        axis->append(categories);
+    }
+}
 
 #include "moc_qabstractbarseries.cpp"
 #include "moc_qabstractbarseries_p.cpp"
