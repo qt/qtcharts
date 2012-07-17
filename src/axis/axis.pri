@@ -13,9 +13,9 @@ DEPENDPATH += $$PWD \
 SOURCES += \
     $$PWD/chartaxis.cpp \
     $$PWD/qabstractaxis.cpp \
-    $$PWD/valueaxis/chartvaluesaxisx.cpp \
-    $$PWD/valueaxis/chartvaluesaxisy.cpp \
-    $$PWD/valueaxis/qvaluesaxis.cpp \
+    $$PWD/valuesaxis/chartvaluesaxisx.cpp \
+    $$PWD/valuesaxis/chartvaluesaxisy.cpp \
+    $$PWD/valuesaxis/qvaluesaxis.cpp \
     $$PWD/categoriesaxis/chartcategoriesaxisx.cpp \
     $$PWD/categoriesaxis/chartcategoriesaxisy.cpp \
     $$PWD/categoriesaxis/qbarcategoriesaxis.cpp \
@@ -26,9 +26,9 @@ SOURCES += \
 PRIVATE_HEADERS += \
     $$PWD/chartaxis_p.h \
     $$PWD/qabstractaxis_p.h \
-    $$PWD/valueaxis/chartvaluesaxisx_p.h \
-    $$PWD/valueaxis/chartvaluesaxisy_p.h \
-    $$PWD/valueaxis/qvaluesaxis_p.h \
+    $$PWD/valuesaxis/chartvaluesaxisx_p.h \
+    $$PWD/valuesaxis/chartvaluesaxisy_p.h \
+    $$PWD/valuesaxis/qvaluesaxis_p.h \
     $$PWD/categoriesaxis/chartcategoriesaxisx_p.h \
     $$PWD/categoriesaxis/chartcategoriesaxisy_p.h \
     $$PWD/categoriesaxis/qbarcategoriesaxis_p.h \
@@ -38,6 +38,6 @@ PRIVATE_HEADERS += \
 
 PUBLIC_HEADERS += \
     $$PWD/qabstractaxis.h \
-    $$PWD/valueaxis/qvaluesaxis.h \
+    $$PWD/valuesaxis/qvaluesaxis.h \
     $$PWD/categoriesaxis/qbarcategoriesaxis.h \
     $$PWD/intervalsaxis/qintervalsaxis.h
