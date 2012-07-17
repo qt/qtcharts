@@ -76,31 +76,31 @@ QIntervalsAxis::QIntervalsAxis(QIntervalsAxisPrivate &d,QObject *parent):QValues
 void QIntervalsAxis::append(const QString& intervalLabel, qreal interval)
 {
     Q_D(QIntervalsAxis);
+
     if (!d->m_intervals.contains(intervalLabel))
     {
         if(d->m_intervals.isEmpty()){
             Range range(d->m_categoryMinimum,interval);
             d->m_intervalsMap.insert(intervalLabel, range);
             d->m_intervals.append(intervalLabel);
-    	}else{
+        }else if (interval > intervalMax(d->m_intervals.last())){
             Range range = d->m_intervalsMap.value(d->m_intervals.last());
             d->m_intervalsMap.insert(intervalLabel, Range(range.second,interval));
             d->m_intervals.append(intervalLabel);
-    	}
-//        setRange(d->m_min,interval);
+        }
     }
 }
 
 void QIntervalsAxis::setFisrtIntervalMinimum(qreal min)
 {
-	 Q_D(QIntervalsAxis);
-     if(d->m_intervals.isEmpty()){
-         d->m_categoryMinimum = min;
-	 }else{
-         Range range = d->m_intervalsMap.value(d->m_intervals.first());
-         d->m_intervalsMap.insert(d->m_intervals.first(), Range(min, range.second));
-         setRange(min, d->m_min);
-	 }
+    Q_D(QIntervalsAxis);
+    if(d->m_intervals.isEmpty()){
+        d->m_categoryMinimum = min;
+    }else{
+        Range range = d->m_intervalsMap.value(d->m_intervals.first());
+        d->m_intervalsMap.insert(d->m_intervals.first(), Range(min, range.second));
+//        setRange(min, d->m_min);
+    }
 }
 
 qreal QIntervalsAxis::intervalMin(const QString& intervalLabel) const
@@ -120,8 +120,29 @@ qreal QIntervalsAxis::intervalMax(const QString& intervalLabel) const
 */
 void QIntervalsAxis::remove(const QString &intervalLabel)
 {
-    Q_UNUSED(intervalLabel);
-	//TODO
+    Q_D(QIntervalsAxis);
+    int labelIndex = d->m_intervals.indexOf(intervalLabel);
+
+    // check if such label exists
+    if (labelIndex != -1) {
+        d->m_intervals.removeAt(labelIndex);
+        d->m_intervalsMap.remove(intervalLabel);
+
+        // the range of the interval that follows (if exists) needs to be updated
+        if (labelIndex < d->m_intervals.count()) {
+            QString label = d->m_intervals.at(labelIndex);
+            Range range = d->m_intervalsMap.value(label);
+
+            // set the range
+            if (labelIndex == 0) {
+                range.first = d->m_categoryMinimum;
+                d->m_intervalsMap.insert(label, range);
+            } else {
+                range.first = d->m_intervalsMap.value(d->m_intervals.at(labelIndex - 1)).second;
+                d->m_intervalsMap.insert(label, range);
+            }
+        }
+    }
 }
 
 QStringList QIntervalsAxis::intervalsLabels()
@@ -144,7 +165,7 @@ int QIntervalsAxis::count() const
 */
 QAbstractAxis::AxisType QIntervalsAxis::type() const
 {
-    return AxisTypeCategories;
+    return QAbstractAxis::AxisTypeIntervals;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +192,6 @@ void QIntervalsAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int coun
     Q_UNUSED(count);
     m_min = min;
     m_max = max;
-//    m_ticksCount = count;
 }
 
 ChartAxis* QIntervalsAxisPrivate::createGraphics(ChartPresenter* presenter)

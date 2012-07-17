@@ -45,6 +45,10 @@ QVector<qreal> ChartIntervalAxisY::calculateLayout() const
     QIntervalsAxis *axis = qobject_cast<QIntervalsAxis *>(m_chartAxis);
     int tickCount = axis->intervalsLabels().count() + 1;
     QVector<qreal> points;
+
+    if (tickCount < 2)
+        return points;
+
     points.resize(tickCount);
 
     qreal scale = m_rect.height() / axis->max();

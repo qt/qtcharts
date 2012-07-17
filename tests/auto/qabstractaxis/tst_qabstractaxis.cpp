@@ -31,7 +31,7 @@ void tst_QAbstractAxis::cleanupTestCase()
 {
 }
 
-void tst_QAbstractAxis::init(QAbstractAxis* axis,QAbstractSeries* series)
+void tst_QAbstractAxis::init(QAbstractAxis* axis, QAbstractSeries* series)
 {
     m_axis = axis;
     m_series = series;
