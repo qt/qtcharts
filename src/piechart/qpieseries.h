@@ -22,10 +22,11 @@
 #define PIESERIES_H
 
 #include <qabstractseries.h>
+#include <QPieSlice>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSeriesPrivate;
-class QPieSlice;
+//class QPieSlice;
 
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
 {
@@ -83,6 +84,7 @@ public:
     qreal pieEndAngle() const;
 
     void setLabelsVisible(bool visible = true);
+    void setLabelsPosition(QPieSlice::LabelPosition position);
 
 Q_SIGNALS:
     void added(QList<QPieSlice*> slices);

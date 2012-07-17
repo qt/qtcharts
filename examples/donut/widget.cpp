@@ -23,7 +23,7 @@ Widget::Widget(QWidget *parent)
     for (int i = 0; i < donutsCount; i++) {
         QPieSeries *donut = new QPieSeries;
         donut->setDonut();
-        donut->setLabelsVisible();
+        donut->setLabelsVisible();        
         int sliceCount =  3 + qrand() % 3;
         for (int j = 0; j < sliceCount; j++) {
             qreal value = 100 + qrand() % 100;
@@ -37,6 +37,7 @@ Widget::Widget(QWidget *parent)
         }
         m_donuts.append(donut);
         qreal phase = qrand() % 180;
+        donut->setLabelsPosition(QPieSlice::LabelInsideTangential);
         donut->setPieStartAngle(phase);
         donut->setPieEndAngle(360 + phase);
         chartView->chart()->addSeries(donut);
@@ -51,7 +52,7 @@ Widget::Widget(QWidget *parent)
 
     updateTimer = new QTimer(this);
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateRotation()));
-    updateTimer->start(750);
+    updateTimer->start(1500);
 }
 
 Widget::~Widget()

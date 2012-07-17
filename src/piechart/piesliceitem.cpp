@@ -84,17 +84,33 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
         painter->setPen(m_data.m_labelBrush.color());
         painter->setBrush(m_data.m_labelBrush);
         painter->setFont(m_data.m_labelFont);
-        if (m_data.m_donut) {
-            painter->translate(m_labelTextRect.center());
-            painter->rotate(m_data.m_startAngle + m_data.m_angleSpan / 2);
-            painter->drawText(-m_labelTextRect.width() / 2, -m_labelTextRect.height() / 2, m_labelTextRect.width(), m_labelTextRect.height(), Qt::AlignCenter, m_data.m_labelText);
-        } else if (m_data.m_labelPosition == QPieSlice::LabelOutside) {
+
+        switch (m_data.m_labelPosition)
+        {
+        case QPieSlice::LabelOutside:
             painter->setClipRect(parentItem()->boundingRect());
             painter->strokePath(m_labelArmPath, m_data.m_labelBrush.color());
             painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
-        } else { // QPieSlice::LabelInside
+            break;
+        case QPieSlice::LabelInside:
             painter->setClipPath(m_slicePath);
             painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
+            break;
+        case QPieSlice::LabelInsideTangential:
+            painter->setClipPath(m_slicePath);
+            painter->translate(m_labelTextRect.center());
+            painter->rotate(m_data.m_startAngle + m_data.m_angleSpan / 2);
+            painter->drawText(-m_labelTextRect.width() / 2, -m_labelTextRect.height() / 2, m_labelTextRect.width(), m_labelTextRect.height(), Qt::AlignCenter, m_data.m_labelText);
+            break;
+        case QPieSlice::LabelInsideNormal:
+            painter->setClipPath(m_slicePath);
+            painter->translate(m_labelTextRect.center());
+            if (m_data.m_startAngle + m_data.m_angleSpan / 2 < 180)
+                painter->rotate(m_data.m_startAngle + m_data.m_angleSpan / 2 - 90);
+            else
+                painter->rotate(m_data.m_startAngle + m_data.m_angleSpan / 2 + 90);
+            painter->drawText(-m_labelTextRect.width() / 2, -m_labelTextRect.height() / 2, m_labelTextRect.width(), m_labelTextRect.height(), Qt::AlignCenter, m_data.m_labelText);
+            break;
         }
 
         painter->restore();
@@ -146,14 +162,22 @@ void PieSliceItem::updateGeometry()
     m_labelArmPath = labelArmPath(armStart, centerAngle, m_data.m_radius * m_data.m_labelArmLengthFactor, m_labelTextRect.width(), &labelTextStart);
 
     // text position
-    if (m_data.m_donut) {
-        QPointF donutCenter = m_data.m_center + offset(centerAngle, m_data.m_innerRadius + (m_data.m_radius - m_data.m_innerRadius) / 2);
-        m_labelTextRect.moveCenter(donutCenter);
-    } else if (m_data.m_labelPosition == QPieSlice::LabelOutside) {
+    switch (m_data.m_labelPosition)
+    {
+    case QPieSlice::LabelOutside:
         m_labelTextRect.moveBottomLeft(labelTextStart);
-    } else {// QPieSlice::LabelInside
-        QPointF sliceCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
-        m_labelTextRect.moveCenter(sliceCenter);
+        break;
+    case QPieSlice::LabelInside:
+    case QPieSlice::LabelInsideTangential:
+    case QPieSlice::LabelInsideNormal:{
+        QPointF textCenter;
+        if (m_data.m_donut)
+            textCenter = m_data.m_center + offset(centerAngle, m_data.m_innerRadius + (m_data.m_radius - m_data.m_innerRadius) / 2);
+        else
+            textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
+        m_labelTextRect.moveCenter(textCenter);
+        break;
+    }
     }
 
     //  bounding rect

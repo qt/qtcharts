@@ -683,6 +683,13 @@ void QPieSeries::setLabelsVisible(bool visible)
         s->setLabelVisible(visible);
 }
 
+void QPieSeries::setLabelsPosition(QPieSlice::LabelPosition position)
+{
+    Q_D(QPieSeries);
+    foreach (QPieSlice* s, d->m_slices)
+        s->setLabelPosition(position);
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

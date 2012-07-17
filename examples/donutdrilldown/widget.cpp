@@ -20,20 +20,18 @@ Widget::Widget(QWidget *parent)
     chartView->chart()->setAnimationOptions(QChart::AllAnimations);
 
     mainData = new QPieSeries;
+    mainData->setPieSize(0.6);
     for (int j = 0; j < 4; j++) {
-
         // create new slice for the mainData
         QPieSlice *slice = new QPieSlice;
-        slice->setLabelPosition(QPieSlice::LabelInside);
         slice->setLabelColor(Qt::white);
         mainData->append(slice);
 
         // create a new detailed data for the slice
         QPieSeries *donut = new QPieSeries;
-        donut->setDonut();
-        donut->setLabelsVisible();
+        donut->setDonut();        
         donut->setDonutInnerSize(mainData->pieSize());
-        donut->setPieSize(mainData->pieSize() + 0.2);
+        donut->setPieSize(mainData->pieSize() + 0.15);
 
         // when mainData slice is redrawn make sure the detailed data slices are aligned with it
         connect(slice, SIGNAL(startAngleChanged()), this, SLOT(updatedStartAngle()));
@@ -44,9 +42,9 @@ Widget::Widget(QWidget *parent)
             qreal value = 10 + qrand() % 100;
             QPieSlice *slice = new QPieSlice(QString("%1").arg(value), value);
             donut->append(slice);
-            donut->slices().last()->setLabelVisible(true);
-            donut->slices().last()->setLabelColor(Qt::white);
         }
+        donut->setLabelsPosition(QPieSlice::LabelOutside);
+        donut->setLabelsVisible();
         detailedData.append(donut);
 
         // update the value and label of mainData
@@ -55,6 +53,7 @@ Widget::Widget(QWidget *parent)
     }
 
     mainData->setLabelsVisible();
+    mainData->setLabelsPosition(QPieSlice::LabelInside);
     chartView->chart()->addSeries(mainData);
     for (int i = 0; i < detailedData.count(); i++)
         chartView->chart()->addSeries(detailedData.at(i));

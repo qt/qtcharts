@@ -161,6 +161,8 @@ MainWidget::MainWidget(QWidget* parent)
     m_labelPosition = new QComboBox(this);
     m_labelPosition->addItem("Outside", QPieSlice::LabelOutside);
     m_labelPosition->addItem("Inside", QPieSlice::LabelInside);
+    m_labelPosition->addItem("Inside tangential", QPieSlice::LabelInsideTangential);
+    m_labelPosition->addItem("Inside normal", QPieSlice::LabelInsideNormal);
 
     QFormLayout* sliceSettingsLayout = new QFormLayout();
     sliceSettingsLayout->addRow("Label", m_sliceName);
