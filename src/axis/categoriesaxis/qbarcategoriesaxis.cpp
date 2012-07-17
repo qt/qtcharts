@@ -342,7 +342,7 @@ void QBarCategoriesAxisPrivate::setRange(const QVariant &min, const QVariant &ma
 qreal QBarCategoriesAxisPrivate::min()
 {
     //TODO:: cache it
-    return m_categories.indexOf(m_minCategory) + 0.5;
+    return m_categories.indexOf(m_minCategory) - 0.5;
 }
 
 qreal QBarCategoriesAxisPrivate::max()

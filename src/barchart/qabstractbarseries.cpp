@@ -706,9 +706,11 @@ void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
         QBarCategoriesAxis* cataxis = qobject_cast<QBarCategoriesAxis*>(axis);
         Q_ASSERT(cataxis);
         QStringList categories;
+        if(cataxis->categories().isEmpty()){
         for (int i(1); i < categoryCount()+1; i++)
         categories << QString::number(i);
         cataxis->append(categories);
+        }
     }
 }
 

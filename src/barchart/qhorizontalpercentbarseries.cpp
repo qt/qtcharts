@@ -56,16 +56,6 @@ Chart* QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter* presen
     return bar;
 }
 
-QAbstractAxis::AxisType QHorizontalPercentBarSeriesPrivate::defaultAxisXType() const
-{
-    return QAbstractAxis::AxisTypeValues;
-}
-
-QAbstractAxis::AxisType QHorizontalPercentBarSeriesPrivate::defaultAxisYType() const
-{
-    return QAbstractAxis::AxisTypeCategories;
-}
-
 
 #include "moc_qhorizontalpercentbarseries.cpp"
 

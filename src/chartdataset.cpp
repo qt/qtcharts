@@ -380,7 +380,6 @@ void ChartDataSet::setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Ori
 
     if(orientation==Qt::Vertical) {
         seriesAxisMap= &m_seriesAxisYMap;
-
     }else{
         seriesAxisMap= &m_seriesAxisXMap;
     }

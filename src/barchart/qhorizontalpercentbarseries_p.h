@@ -41,8 +41,6 @@ public:
     QHorizontalPercentBarSeriesPrivate(QHorizontalPercentBarSeries* q);
     Chart* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
-    QAbstractAxis::AxisType defaultAxisXType() const;
-    QAbstractAxis::AxisType defaultAxisYType() const;
 
 private:
     Q_DECLARE_PUBLIC(QHorizontalPercentBarSeries)
