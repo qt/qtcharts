@@ -1,0 +1,48 @@
+/*!
+     \example examples/donut
+     \title Donut example
+     \subtitle
+
+     This example shows how to use create a nested donuts chart using QPieSeries API.
+
+     Let's start by creating a QChartView instance and enabling the Antialiasing on it. Last line enables the animations of the chart.
+
+     \snippet ../examples/donut/widget.cpp 1
+
+     Three variables are defined that will be used to define the donut chart. Min and max size define the relative size of the whole donut.
+     minSize is the relative inner size of the smallest donut. maxSize is the relative outer size of the biggest donut.
+
+     \snippet ../examples/donut/widget.cpp 2
+
+     Following block of code defines the individual donuts and their slices. First new QPieSeries object is created.
+     Callign setDonut() changes pie into a donut. The number of slices in each donut is randomized.
+     The internal for loop creates the slices with a random value and label same as the value.
+     Next the label of the slice is set to be visible and its color is set to white.
+     To make the example more interesting the hovered signal of the slice is connected to widget's slot which inner workings are explained later.
+     Finally the slice is added to the donut. The donut's size is adjusted to achive the nesting of the donuts.
+     Then the donut is added to the widget's list of donuts and to the chart.
+
+     \snippet ../examples/donut/widget.cpp 3
+
+     Finally the widget is placed in a layout used by the application.
+
+     \snippet ../examples/donut/widget.cpp 4
+
+     To make the example more interesting the donuts are rotated randomly every 1.25 sec.
+
+     \snippet ../examples/donut/widget.cpp 5
+
+     The widget's updatedRotation slot is defined below.
+     It goes through all of the donuts and modifies thier current rotation by a random value.
+
+     \snippet ../examples/donut/widget.cpp 6
+
+     The earlier mentioned explodeSlice slot code is provided below.
+     If the slice is set to exploded then stop the timer that controls the donuts rotation.
+     Then the slice's start and end agles are obtained from the slice.
+     To highlight the selected slice all the other donuts that lie outward from the one that contains the selected slice
+     have their start and end angles modified so that they wouldn't "block" the way for the hightlighted slice.
+     If the slice is no longer selected return to the original state.
+
+     \snippet ../examples/donut/widget.cpp 7
+*/

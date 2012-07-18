@@ -14,45 +14,51 @@ Widget::Widget(QWidget *parent)
     setMinimumSize(800, 600);
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
+    //! [1]
     QChartView *chartView = new QChartView;
     chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->chart()->setAnimationOptions(QChart::AllAnimations);
+    //! [1]
 
+    //! [2]
     qreal minSize = 0.1;
     qreal maxSize = 0.9;
     int donutsCount = 5;
+    //! [2]
+
+    //! [3]
     for (int i = 0; i < donutsCount; i++) {
         QPieSeries *donut = new QPieSeries;
         donut->setDonut();
-        donut->setLabelsVisible();        
         int sliceCount =  3 + qrand() % 3;
         for (int j = 0; j < sliceCount; j++) {
             qreal value = 100 + qrand() % 100;
             QPieSlice *slice = new QPieSlice(QString("%1").arg(value), value);
+            slice->setLabelVisible(true);
+            slice->setLabelColor(Qt::white);
+            slice->setLabelPosition(QPieSlice::LabelInsideTangential);
             connect(slice, SIGNAL(hovered(bool)), this, SLOT(explodeSlice(bool)));
             donut->append(slice);
-            donut->slices().last()->setLabelVisible(true);
-            donut->slices().last()->setLabelColor(Qt::white);
             donut->setDonutInnerSize(minSize + i * (maxSize - minSize) / donutsCount);
             donut->setPieSize(minSize + (i + 1) * (maxSize - minSize) / donutsCount);
         }
         m_donuts.append(donut);
-        qreal phase = qrand() % 180;
-        donut->setLabelsPosition(QPieSlice::LabelInsideTangential);
-        donut->setPieStartAngle(phase);
-        donut->setPieEndAngle(360 + phase);
         chartView->chart()->addSeries(donut);
     }
+    //! [3]
 
     // create main layout
+    //! [4]
     QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addWidget(chartView, 1, 1);
     setLayout(mainLayout);
+    //! [4]
 
-    chartView->chart()->setAnimationOptions(QChart::AllAnimations);
-
+    //! [5]
     updateTimer = new QTimer(this);
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(updateRotation()));
-    updateTimer->start(1500);
+    updateTimer->start(1250);
+    //! [5]
 }
 
 Widget::~Widget()
@@ -60,9 +66,9 @@ Widget::~Widget()
     
 }
 
+    //! [6]
 void Widget::updateRotation()
 {
-    //    int tobeupdated = qrand() % m_donutsGroup.count();
     for (int i = 0; i < m_donuts.count(); i++) {
         QPieSeries *donut = m_donuts.at(i);
         qreal phaseShift =  -50 + qrand() % 100;
@@ -70,7 +76,9 @@ void Widget::updateRotation()
         donut->setPieEndAngle(donut->pieEndAngle() + phaseShift);
     }
 }
+    //! [6]
 
+    //! [7]
 void Widget::explodeSlice(bool exploded)
 {
     QPieSlice *slice = qobject_cast<QPieSlice *>(sender());
@@ -94,3 +102,4 @@ void Widget::explodeSlice(bool exploded)
     }
     slice->setExploded(exploded);
 }
+    //! [7]
