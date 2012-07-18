@@ -50,11 +50,11 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal xPos = scaleX * m_domainMinX + geometry().left();
+        qreal xPos = -scaleX * m_domainMinX + geometry().left();
         for (int set = 0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal yPos = m_rect.bottom() -(barSet->pos(category) + m_domainMinY + 1) * scaleY;
+            qreal yPos = m_rect.bottom() + (m_domainMinY - barSet->pos(category)) * scaleY;
             yPos += setCount*barHeight/2;
             yPos -= set*barHeight;
 
