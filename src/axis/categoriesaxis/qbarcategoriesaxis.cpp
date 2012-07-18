@@ -311,7 +311,9 @@ QAbstractAxis::AxisType QBarCategoriesAxis::type() const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QBarCategoriesAxisPrivate::QBarCategoriesAxisPrivate(QBarCategoriesAxis* q):
-    QAbstractAxisPrivate(q)
+    QAbstractAxisPrivate(q),
+    m_min(0.0),
+    m_max(0.0)
 {
 
 }
@@ -342,17 +344,27 @@ void QBarCategoriesAxisPrivate::setRange(const QVariant &min, const QVariant &ma
 qreal QBarCategoriesAxisPrivate::min()
 {
     //TODO:: cache it
-    return m_categories.indexOf(m_minCategory) - 0.5;
+    return m_min;//m_categories.indexOf(m_minCategory) - 0.5;
 }
 
 qreal QBarCategoriesAxisPrivate::max()
 {
     //TODO:: cache it
-    return m_categories.indexOf(m_maxCategory) + 0.5;
+    return m_max;//m_categories.indexOf(m_maxCategory) + 0.5;
 }
 
 void QBarCategoriesAxisPrivate::handleDomainUpdated()
 {
+    Domain* domain = qobject_cast<Domain*>(sender());
+
+    if(m_orientation==Qt::Horizontal){
+        m_min = domain->minX();
+        m_max = domain->maxX();
+    }else if(m_orientation==Qt::Vertical){
+        m_min = domain->minY();
+        m_max = domain->maxY();
+    }
+
 //    Q_Q(QBarCategoriesAxis);
 
     // TODO: causes crash in some situations. added to known issues

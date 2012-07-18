@@ -374,11 +374,11 @@ void ChartAxis::createCategoryLabels(QStringList &labels,qreal min, qreal max,co
     Q_ASSERT(max>min);
     Q_UNUSED(max);
 
-    int x = qCeil(min);
+    int x = qFloor(min+0.5);
     int count = 0;
 
     // Try to find category for x coordinate
-    while (count < categories.count()) {
+    while (count < categories.count()+1) {
         if ((x < categories.count()) && (x >= 0)) {
             labels << categories.at(x);
         } else {

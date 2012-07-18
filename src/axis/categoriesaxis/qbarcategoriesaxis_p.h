@@ -62,6 +62,8 @@ private:
     QStringList m_categories;
     QString m_minCategory;
     QString m_maxCategory;
+    qreal m_min;
+    qreal m_max;
 
 private:
     Q_DECLARE_PUBLIC(QBarCategoriesAxis)
