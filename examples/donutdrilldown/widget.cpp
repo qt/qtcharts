@@ -15,12 +15,18 @@ Widget::Widget(QWidget *parent)
     setMinimumSize(800, 600);
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 
+    //! [1]
     QChartView *chartView = new QChartView;
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->chart()->setAnimationOptions(QChart::AllAnimations);
+    //! [1]
 
+    //! [2]
     mainData = new QPieSeries;
     mainData->setPieSize(0.6);
+    //! [2]
+
+    //! [3]
     for (int j = 0; j < 4; j++) {
         // create new slice for the mainData
         QPieSlice *slice = new QPieSlice;
@@ -51,22 +57,29 @@ Widget::Widget(QWidget *parent)
         slice->setValue(donut->sum());
         slice->setLabel(QString("%1").arg(donut->sum()));
     }
+    //! [3]
 
+    //! [4]
     mainData->setLabelsVisible();
     mainData->setLabelsPosition(QPieSlice::LabelInside);
     chartView->chart()->addSeries(mainData);
     for (int i = 0; i < detailedData.count(); i++)
         chartView->chart()->addSeries(detailedData.at(i));
+    //! [4]
 
+    //! [5]
     // create main layout
     QGridLayout* mainLayout = new QGridLayout;
     mainLayout->addWidget(chartView, 1, 1);
     setLayout(mainLayout);
+    //! [5]
 
+    //! [6]
     // modify the value of one detailed slice every 2.5 sec
     QTimer *updateTimer = new QTimer(this);
     connect(updateTimer, SIGNAL(timeout()), this, SLOT(highlight()));
     updateTimer->start(2500);
+    //! [6]
 }
 
 Widget::~Widget()
@@ -74,6 +87,7 @@ Widget::~Widget()
     
 }
 
+    //! [7]
 void Widget::updatedStartAngle()
 {
     // when the mainData slice has been updated the detailed data QPieSeries object as well
@@ -88,6 +102,21 @@ void Widget::updatedAngleSpan()
     QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
     QPieSeries *detailsDonut = detailedData.at(slice->series()->slices().indexOf(slice));
     detailsDonut->setPieEndAngle(slice->startAngle() + slice->angleSpan());
+}
+    //! [7]
+
+    //! [8]
+void Widget::highlight()
+{
+    // choose one random detailed data slice to be updated.
+    detailIndex = qrand() % mainData->count();
+    sliceIndex = qrand() % detailedData.at(detailIndex)->count();
+
+    // set the slice to exploded to make the change easier to observe
+    detailedData.at(detailIndex)->slices().at(sliceIndex)->setExploded();
+
+    // give the user time to focus on the slice that will be changed
+    QTimer::singleShot(1000, this, SLOT(updateRotation()));
 }
 
 void Widget::updateRotation()
@@ -104,16 +133,4 @@ void Widget::updateRotation()
     // change the explode state of the selected slice back to normal
     detailedData.at(detailIndex)->slices().at(sliceIndex)->setExploded(false);
 }
-
-void Widget::highlight()
-{
-    // choose one random detailed data slice to be updated.
-    detailIndex = qrand() % mainData->count();
-    sliceIndex = qrand() % detailedData.at(detailIndex)->count();
-
-    // set the slice to exploded to make the change easier to observe
-    detailedData.at(detailIndex)->slices().at(sliceIndex)->setExploded();
-
-    // give the user time to focus on the slice that will be changed
-    QTimer::singleShot(1000, this, SLOT(updateRotation()));
-}
+    //! [8]
