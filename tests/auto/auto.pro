@@ -21,7 +21,8 @@ SUBDIRS += \
            qhorizontalstackedbarseries \
            qhorizontalpercentbarseries \
            qvaluesaxis \
-           qintervalsaxis
+           qintervalsaxis \
+           qdatetimeaxis
 
 test_private:{
     SUBDIRS += domain chartdataset
