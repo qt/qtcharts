@@ -21,7 +21,8 @@
 #include "chartcategoriesaxisx_p.h"
 #include "chartpresenter_p.h"
 #include "qbarcategoriesaxis_p.h"
-#include <cmath>
+#include <QDebug>
+#include <qmath.h>
 
 static int label_padding = 5;
 
@@ -42,28 +43,46 @@ QVector<qreal> ChartCategoriesAxisX::calculateLayout() const
     Q_ASSERT(m_categoriesAxis->categories().count()>=1);
 
     QVector<qreal> points;
-    points.resize(m_categoriesAxis->categories().count()+1);
+    points.resize(m_categoriesAxis->categories().count()+2);
 
     const qreal delta = m_rect.width()/(m_categoriesAxis->categories().count());
-    const qreal min = m_categoriesAxis->d_ptr->min();
-    const qreal max = m_categoriesAxis->d_ptr->max();
-    qreal start =-min-0.5;
-    if(start<=0) {
-        start = fmod(start * m_rect.width()/(max - min),delta) + delta;
+    qreal offset =-m_min-0.5;
+
+    if(offset<=0) {
+        offset = int(offset * m_rect.width()/(m_max - m_min))%int(delta) + delta;
     }
     else {
-        start = fmod(start * m_rect.width()/(max - min),delta);
+        offset = int(offset * m_rect.width()/(m_max - m_min))%int(delta);
     }
 
-    points[m_categoriesAxis->categories().count()] = m_rect.left() + m_rect.width();
+    points[0] = m_rect.left();
+    points[m_categoriesAxis->categories().count()+1] = m_rect.right();
 
     for (int i = 0; i < m_categoriesAxis->categories().count(); ++i) {
-        qreal x = start + i * delta + m_rect.left();
-        points[i] = x;
+        qreal x = offset + i * delta + m_rect.left();
+        points[i+1] = x;
     }
-
     return points;
 }
+
+QStringList ChartCategoriesAxisX::createCategoryLabels(const QVector<qreal>& layout) const
+{
+    QStringList result;
+    qreal d = (m_max - m_min)/m_rect.width();
+    for (int i = 0;i < layout.count()-1; ++i) {
+        qreal x = qFloor((((layout[i+1] + layout[i])/2-m_rect.left())*d + m_min+0.5));
+        if ((x < m_categoriesAxis->categories().count()) && (x >= 0)) {
+            result << m_categoriesAxis->categories().at(x);
+        }
+        else {
+            // No label for x coordinate
+            result << "";
+        }
+    }
+    result << "";
+    return result;
+}
+
 
 void ChartCategoriesAxisX::updateGeometry()
 {
@@ -74,9 +93,7 @@ void ChartCategoriesAxisX::updateGeometry()
 
     if(layout.isEmpty()) return;
 
-    QStringList ticksList;
-
-    createCategoryLabels(ticksList,m_min,m_max,m_categoriesAxis->categories());
+    QStringList ticksList = createCategoryLabels(layout);
 
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
@@ -101,10 +118,10 @@ void ChartCategoriesAxisX::updateGeometry()
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
 
-        if(i==layout.size()-1){
-            labelItem->setPos(layout[i-1] + (delta)/2 - center.x(), m_rect.bottom() + label_padding);
+        if(i==0){
+            labelItem->setPos(layout[i+1] - (delta)/2 - center.x(), m_rect.bottom() + label_padding);
         }else{
-            labelItem->setPos(layout[i] - (delta)/2 - center.x(), m_rect.bottom() + label_padding);
+            labelItem->setPos(layout[i] + (delta)/2 - center.x(), m_rect.bottom() + label_padding);
         }
 
         if(labelItem->pos().x()<=width || labelItem->pos().x()+ rect.width()>m_rect.right()) {

@@ -24,8 +24,6 @@
 #include "chartpresenter_p.h"
 #include "chartanimator_p.h"
 #include "domain_p.h"
-#include <QPainter>
-#include <QDebug>
 #include <qmath.h>
 #include <QDateTime>
 
@@ -362,32 +360,11 @@ void ChartAxis::createNumberLabels(QStringList &labels,qreal min, qreal max, int
     Q_ASSERT(max>min);
     Q_ASSERT(ticks>1);
 
-    int n = qMax(int(-floor(log10((max-min)/(ticks-1)))),0);
+    int n = qMax(int(-qFloor(log10((max-min)/(ticks-1)))),0);
     n++;
     for (int i=0; i< ticks; i++) {
         qreal value = min + (i * (max - min)/ (ticks-1));
         labels << QString::number(value,'f',n);
-    }
-}
-
-void ChartAxis::createCategoryLabels(QStringList &labels,qreal min, qreal max,const QStringList &categories) const
-{
-    Q_ASSERT(max>min);
-    Q_UNUSED(max);
-
-    int x = qFloor(min+0.5);
-    int count = 0;
-
-    // Try to find category for x coordinate
-    while (count < categories.count()+1) {
-        if ((x < categories.count()) && (x >= 0)) {
-            labels << categories.at(x);
-        } else {
-            // No label for x coordinate
-            labels << "";
-        }
-        x++;
-        count++;
     }
 }
 

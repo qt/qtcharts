@@ -49,10 +49,13 @@ public:
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
+private:
+    QStringList createCategoryLabels(const QVector<qreal>& layout) const;
 Q_SLOTS
         void handleAxisUpdated();
 private:
     QStringList m_categories;
+    QVector<int> m_labelIndex;
     QBarCategoriesAxis *m_categoriesAxis;
 };
 

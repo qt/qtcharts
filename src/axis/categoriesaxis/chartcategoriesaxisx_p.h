@@ -49,6 +49,8 @@ public:
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
+private:
+    QStringList createCategoryLabels(const QVector<qreal>& layout) const;
 Q_SLOTS
     void handleAxisUpdated();
 
