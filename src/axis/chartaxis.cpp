@@ -27,6 +27,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <qmath.h>
+#include <QDateTime>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

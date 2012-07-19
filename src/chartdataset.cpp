@@ -23,6 +23,8 @@
 #include "qvaluesaxis.h"
 #include "qbarcategoriesaxis.h"
 #include "qvaluesaxis_p.h"
+#include "qintervalsaxis.h"
+#include "qdatetimeaxis.h"
 #include "qabstractseries_p.h"
 #include "qabstractbarseries.h"
 #include "qstackedbarseries.h"
@@ -122,20 +124,20 @@ void ChartDataSet::createDefaultAxes()
 
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
     while (i.hasNext()) {
-               i.next();
-               removeAxes(i.key());
+        i.next();
+        removeAxes(i.key());
     }
 
     i.toFront();
 
     while (i.hasNext()) {
-            i.next();
-            QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
-            QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
-            if(axisX) typeX&=axisX->type();
-            else typeX|=i.key()->d_ptr->defaultAxisType(Qt::Horizontal);
-            if(axisY) typeY&=axisY->type();
-            else typeY|=i.key()->d_ptr->defaultAxisType(Qt::Vertical);
+        i.next();
+        QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
+        QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
+        if(axisX) typeX&=axisX->type();
+        else typeX|=i.key()->d_ptr->defaultAxisType(Qt::Horizontal);
+        if(axisY) typeY&=axisY->type();
+        else typeY|=i.key()->d_ptr->defaultAxisType(Qt::Vertical);
     }
 
     createAxes(typeX,Qt::Horizontal);
@@ -174,13 +176,19 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type,Qt::Orienta
     QAbstractAxis* axis =0;
 
     switch(type) {
-        case QAbstractAxis::AxisTypeValues:
+    case QAbstractAxis::AxisTypeValues:
         axis = new QValuesAxis(this);
         break;
-        case QAbstractAxis::AxisTypeCategories:
+    case QAbstractAxis::AxisTypeCategories:
         axis = new QBarCategoriesAxis(this);
         break;
-        default:
+    case QAbstractAxis::AxisTypeIntervals:
+        axis = new QIntervalsAxis(this);
+        break;
+    case QAbstractAxis::AxisTypeDateTime:
+        axis = new QDateTimeAxis(this);
+        break;
+    default:
         axis = 0;
         break;
     }
@@ -289,12 +297,12 @@ void ChartDataSet::blockAxisSignals(bool enabled)
 {
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
     while (i.hasNext()) {
-           i.next();
-           QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
-           QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
-           if(axisX) axisX->d_ptr->blockSignals(enabled);
-           if(axisY) axisY->d_ptr->blockSignals(enabled);
-       }
+        i.next();
+        QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
+        QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
+        if(axisX) axisX->d_ptr->blockSignals(enabled);
+        if(axisY) axisY->d_ptr->blockSignals(enabled);
+    }
 }
 
 int ChartDataSet::seriesCount(QAbstractSeries::SeriesType type)
@@ -302,8 +310,8 @@ int ChartDataSet::seriesCount(QAbstractSeries::SeriesType type)
     int count=0;
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
     while (i.hasNext()) {
-           i.next();
-           if(i.key()->type()==type) count++;
+        i.next();
+        if(i.key()->type()==type) count++;
     }
     return count;
 }
@@ -323,13 +331,13 @@ QAbstractAxis* ChartDataSet::axisX(QAbstractSeries *series) const
 {
     if(series == 0) {
 
-           QMapIterator<QAbstractSeries*, QAbstractAxis *> i(m_seriesAxisXMap);
+        QMapIterator<QAbstractSeries*, QAbstractAxis *> i(m_seriesAxisXMap);
 
-           while (i.hasNext()) {
-                  i.next();
-                  if(i.value()->isVisible()) return i.value();
-           }
-           return 0;
+        while (i.hasNext()) {
+            i.next();
+            if(i.value()->isVisible()) return i.value();
+        }
+        return 0;
     }
     return m_seriesAxisXMap.value(series);
 }

@@ -51,7 +51,8 @@ public:
         AxisTypeNoAxis = 0x0,
         AxisTypeValues = 0x1,
         AxisTypeCategories = 0x2,
-        AxisTypeIntervals = 0x3
+        AxisTypeIntervals = 0x3,
+        AxisTypeDateTime = 0x4
     };
 
     Q_DECLARE_FLAGS(AxisTypes, AxisType)
