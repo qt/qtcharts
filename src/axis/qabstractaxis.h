@@ -137,8 +137,6 @@ protected:
     friend class ChartDataSet;
     friend class ChartAxis;
     friend class ChartPresenter;
-    friend class ChartCategoriesAxisX;
-    friend class ChartCategoriesAxisY;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
