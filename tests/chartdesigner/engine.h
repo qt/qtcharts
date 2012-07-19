@@ -32,7 +32,7 @@ class QItemSelectionModel;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChart;
 class QXYSeries;
-class QBarSeries;
+class QAbstractBarSeries;
 class QPieSeries;
 class QAreaSeries;
 QTCOMMERCIALCHART_END_NAMESPACE
@@ -61,7 +61,7 @@ signals:
 private:
     void createModels();
     void setupXYSeries(QXYSeries *xyseries, const QList<int>& columns, int column, int minRow, int maxRow);
-    void setupBarSeries(QBarSeries *series, const QList<int>& columns, int minRow, int maxRow);
+    void setupBarSeries(QAbstractBarSeries *series, const QList<int>& columns, int minRow, int maxRow);
     void setupPieSeries(QPieSeries *pie, const QList<int>& columns, int minRow, int maxRow);
     void setupAreaSeries(QAreaSeries *series, const QList<int>& columns, int minRow, int maxRow);
 
