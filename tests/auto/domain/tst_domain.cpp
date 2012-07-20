@@ -34,16 +34,36 @@ class AxisMock: public QAbstractAxisPrivate
 Q_OBJECT
 public:
     AxisMock(Qt::Orientation orientation):QAbstractAxisPrivate(0){ setOrientation(orientation);};
-    ChartAxis* createGraphics(ChartPresenter* presenter){};
-    void intializeDomain(Domain* domain){};
-    void setMin(const QVariant &min){}
+    ChartAxis* createGraphics(ChartPresenter* presenter)
+    {
+        Q_UNUSED(presenter);
+        return 0;
+    };
+    void intializeDomain(Domain* domain)
+    {
+        Q_UNUSED(domain);
+    };
+    void setMin(const QVariant &min)
+    {
+        Q_UNUSED(min);
+    }
     qreal min() { return m_min;}
-    void setMax(const QVariant &max){}
+    void setMax(const QVariant &max)
+    {
+        Q_UNUSED(max);
+    }
     qreal max() { return m_max; }
-    void setRange(const QVariant &min, const QVariant &max){};
+    void setRange(const QVariant &min, const QVariant &max)
+    {
+        Q_UNUSED(min);
+        Q_UNUSED(max);
+    };
+
+    int count () const { return m_count; }
 
     void handleDomainUpdated(){};
 public:
+    int m_count;
     qreal m_min;
     qreal m_max;
 };
