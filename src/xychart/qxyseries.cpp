@@ -273,7 +273,7 @@ void QXYSeries::clear()
 }
 
 /*!
-    \internal \a pos
+    Returns list of points in the series.
 */
 QList<QPointF> QXYSeries::points() const
 {
