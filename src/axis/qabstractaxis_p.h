@@ -37,6 +37,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartPresenter;
 class ChartAxis;
 class Domain;
+class ChartDataSet;
 
 class QTCOMMERCIALCHART_AUTOTEST_EXPORT QAbstractAxisPrivate : public QObject
 {
@@ -62,6 +63,8 @@ public:
     virtual void setMax(const QVariant &max) = 0;
     virtual qreal max() = 0;
 
+    virtual int count() const = 0;
+
     virtual void setRange(const QVariant &min, const QVariant &max) = 0;
 
 public Q_SLOTS:
@@ -73,6 +76,7 @@ Q_SIGNALS:
 protected:
     QAbstractAxis *q_ptr;
     Qt::Orientation m_orientation;
+    ChartDataSet *m_dataset;
 
 private:
     bool m_visible;
@@ -98,6 +102,7 @@ private:
     bool m_dirty;
 
     friend class QAbstractAxis;
+    friend class ChartDataSet;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

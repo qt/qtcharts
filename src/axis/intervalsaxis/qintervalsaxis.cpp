@@ -190,8 +190,10 @@ int QIntervalsAxisPrivate::ticksCount() const
 void QIntervalsAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
 {
     Q_UNUSED(count);
-    m_min = min;
-    m_max = max;
+    Q_UNUSED(min);
+    Q_UNUSED(max);
+    //m_min = min;
+    //m_max = max;
 }
 
 ChartAxis* QIntervalsAxisPrivate::createGraphics(ChartPresenter* presenter)

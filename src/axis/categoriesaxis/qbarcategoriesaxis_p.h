@@ -49,8 +49,9 @@ public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
     void intializeDomain(Domain* domain);
     void handleDomainUpdated();
-    qreal min();
-    qreal max();
+    qreal min() { return m_min;};
+    qreal max() { return m_max;};
+    int count() const { return m_count; };
 
 private:
     //range handling
@@ -64,9 +65,10 @@ private:
     QString m_maxCategory;
     qreal m_min;
     qreal m_max;
+    int m_count;
 
 private:
-    Q_DECLARE_PUBLIC(QBarCategoriesAxis)
+    Q_DECLARE_PUBLIC(QBarCategoriesAxis);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

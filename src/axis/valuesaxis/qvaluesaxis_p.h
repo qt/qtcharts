@@ -48,18 +48,18 @@ public:
     void handleDomainUpdated();
     qreal min(){ return m_min; };
     qreal max(){ return m_max; };
+    int count() const { return m_tickCount;}
 
 protected:
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);
     void setRange(const QVariant &min, const QVariant &max);
-    int ticksCount() const;
 
 private:
     void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const;
     qreal niceNumber(qreal x,bool ceiling) const;
 
-protected:
+private:
     qreal m_min;
     qreal m_max;
     int m_tickCount;

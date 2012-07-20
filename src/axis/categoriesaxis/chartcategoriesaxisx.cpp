@@ -40,12 +40,14 @@ ChartCategoriesAxisX::~ChartCategoriesAxisX()
 
 QVector<qreal> ChartCategoriesAxisX::calculateLayout() const
 {
-    Q_ASSERT(m_categoriesAxis->categories().count()>=1);
+    int count = m_categoriesAxis->d_ptr->count();
+
+    Q_ASSERT(count>=1);
 
     QVector<qreal> points;
-    points.resize(m_categoriesAxis->categories().count()+2);
+    points.resize(count+2);
 
-    const qreal delta = m_rect.width()/(m_categoriesAxis->categories().count());
+    const qreal delta = m_rect.width()/(count);
     qreal offset =-m_min-0.5;
 
     if(offset<=0) {
@@ -56,9 +58,9 @@ QVector<qreal> ChartCategoriesAxisX::calculateLayout() const
     }
 
     points[0] = m_rect.left();
-    points[m_categoriesAxis->categories().count()+1] = m_rect.right();
+    points[count+1] = m_rect.right();
 
-    for (int i = 0; i < m_categoriesAxis->categories().count(); ++i) {
+    for (int i = 0; i < count; ++i) {
         qreal x = offset + i * delta + m_rect.left();
         points[i+1] = x;
     }
@@ -103,7 +105,7 @@ void ChartCategoriesAxisX::updateGeometry()
     Q_ASSERT(labels.size() == ticksList.size());
     Q_ASSERT(layout.size() == ticksList.size());
 
-    const qreal delta = m_rect.width()/(m_categoriesAxis->categories().count());
+    const qreal delta = m_rect.width()/(m_categoriesAxis->d_ptr->count());
 
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
     lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
@@ -149,7 +151,7 @@ void ChartCategoriesAxisX::handleAxisUpdated()
     if(m_categoriesAxis->categories()!=m_categories)
     {
         m_categories=m_categoriesAxis->categories();
-        if(ChartAxis::layout().count()==m_categories.size()+1) updateGeometry();
+        if(ChartAxis::layout().count()==m_categoriesAxis->d_ptr->count()+2) updateGeometry();
     }
     ChartAxis::handleAxisUpdated();
 }

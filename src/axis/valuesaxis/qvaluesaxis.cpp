@@ -23,8 +23,9 @@
 #include "chartvaluesaxisx_p.h"
 #include "chartvaluesaxisy_p.h"
 #include "domain_p.h"
-#include <cmath>
-#include <QDebug>
+#include "chartdataset_p.h"
+#include <qmath.h>
+
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
@@ -139,7 +140,10 @@ QValuesAxis::QValuesAxis(QValuesAxisPrivate &d,QObject *parent) : QAbstractAxis(
 */
 QValuesAxis::~QValuesAxis()
 {
-
+    Q_D(QValuesAxis);
+    if(d->m_dataset) {
+        d->m_dataset->removeAxis(this);
+    }
 }
 
 void QValuesAxis::setMin(qreal min)
@@ -171,6 +175,8 @@ qreal QValuesAxis::max() const
 */
 void QValuesAxis::setRange(qreal min, qreal max)
 {
+    if(max<min) return;
+
     Q_D(QValuesAxis);
     bool changed = false;
 
@@ -332,8 +338,8 @@ void QValuesAxisPrivate::looseNiceNumbers(qreal &min, qreal &max, int &ticksCoun
 {
     qreal range = niceNumber(max-min,true); //range with ceiling
     qreal step = niceNumber(range/(ticksCount-1),false);
-    min = floor(min/step);
-    max = ceil(max/step);
+    min = qFloor(min/step);
+    max = qCeil(max/step);
     ticksCount = int(max-min) +1;
     min*=step;
     max*=step;
@@ -343,7 +349,7 @@ void QValuesAxisPrivate::looseNiceNumbers(qreal &min, qreal &max, int &ticksCoun
 
 qreal QValuesAxisPrivate::niceNumber(qreal x,bool ceiling) const
 {
-    qreal z = pow(10,floor(log10(x))); //find corresponding number of the form of 10^n than is smaller than x
+    qreal z = qPow(10,qFloor(log10(x))); //find corresponding number of the form of 10^n than is smaller than x
     qreal q = x/z;//q<10 && q>=1;
 
     if(ceiling) {

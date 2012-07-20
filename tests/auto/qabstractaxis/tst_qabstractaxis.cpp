@@ -41,7 +41,6 @@ void tst_QAbstractAxis::init(QAbstractAxis* axis, QAbstractSeries* series)
 
 void tst_QAbstractAxis::cleanup()
 {
-
     delete m_view;
     m_view = 0;
     m_chart = 0;

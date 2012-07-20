@@ -55,7 +55,6 @@ Q_SLOTS
         void handleAxisUpdated();
 private:
     QStringList m_categories;
-    QVector<int> m_labelIndex;
     QBarCategoriesAxis *m_categoriesAxis;
 };
 

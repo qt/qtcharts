@@ -202,6 +202,7 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type,Qt::Orienta
 void ChartDataSet::initializeAxis(QAbstractAxis* axis,QAbstractSeries* series)
 {
     Domain* domain = m_seriesDomainMap.value(series);
+    axis->d_ptr->m_dataset = this;
     axis->d_ptr->intializeDomain(domain);
     series->d_ptr->initializeAxis(axis);
     if(axis->orientation()==Qt::Horizontal) {
@@ -227,6 +228,7 @@ void ChartDataSet::removeAxes(QAbstractSeries* series)
 
         if(x==-1) {
             emit axisRemoved(axisX);
+            axisX->d_ptr->m_dataset=0;
             axisX->deleteLater();
         }
     }
@@ -240,7 +242,34 @@ void ChartDataSet::removeAxes(QAbstractSeries* series)
 
         if(y==-1) {
             emit axisRemoved(axisY);
+            axisY->d_ptr->m_dataset=0;
             axisY->deleteLater();
+        }
+    }
+}
+
+void ChartDataSet::removeAxis(QAbstractAxis* axis)
+{
+    if(!axis->d_ptr->m_dataset) {
+        qWarning()<<"UnBound axis found !";
+        return;
+    }
+
+    QMap<QAbstractSeries*, QAbstractAxis*> *seriesAxisMap;
+
+    if(axis->orientation()==Qt::Vertical) {
+        seriesAxisMap= &m_seriesAxisYMap;
+    }
+    else {
+        seriesAxisMap= &m_seriesAxisXMap;
+    }
+
+    QMapIterator<QAbstractSeries*, QAbstractAxis*> i(*seriesAxisMap);
+
+    while (i.hasNext()) {
+        i.next();
+        if(i.value()==axis) {
+            removeSeries(i.key());
         }
     }
 }
@@ -398,6 +427,7 @@ void ChartDataSet::setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Ori
     if(oldAxis) {
         if(axes.indexOf(oldAxis)==-1) {
             emit axisRemoved(oldAxis);
+            oldAxis->d_ptr->m_dataset=0;
             oldAxis->deleteLater();
         }
     }

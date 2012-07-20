@@ -201,10 +201,7 @@ QAbstractBarSeries::QAbstractBarSeries(QObject *parent) :
 */
 QAbstractBarSeries::~QAbstractBarSeries()
 {
-    Q_D(QAbstractBarSeries);
-    if(d->m_dataset){
-        d->m_dataset->removeSeries(this);
-    }
+
 }
 
 /*!

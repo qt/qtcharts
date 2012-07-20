@@ -73,6 +73,14 @@ QAbstractSeries::SeriesType QBarSeries::type() const
     return QAbstractSeries::SeriesTypeBar;
 }
 
+QBarSeries::~QBarSeries() {
+
+    Q_D(QBarSeries);
+    if(d->m_dataset) {
+        d->m_dataset->removeSeries(this);
+    }
+
+}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) : QAbstractBarSeriesPrivate(q)

@@ -270,6 +270,7 @@ d_ptr(&d)
 
 QAbstractAxis::~QAbstractAxis()
 {
+    if(d_ptr->m_dataset) qFatal("Still binded axis detected !");
 }
 
 /*!
@@ -608,6 +609,7 @@ Qt::Orientation QAbstractAxis::orientation()
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     q_ptr(q),
     m_orientation(Qt::Orientation(0)),
+    m_dataset(0),
     m_visible(false),
     m_arrowVisible(true),
     m_gridLineVisible(true),

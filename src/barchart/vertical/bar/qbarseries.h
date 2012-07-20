@@ -32,6 +32,7 @@ class QTCOMMERCIALCHART_EXPORT QBarSeries : public QAbstractBarSeries
     Q_OBJECT
 public:
     explicit QBarSeries(QObject *parent = 0);
+    ~QBarSeries();
     QAbstractSeries::SeriesType type() const;
 
 private:

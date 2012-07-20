@@ -69,6 +69,8 @@ Q_SIGNALS:
 private:
     Q_DECLARE_PRIVATE(QBarCategoriesAxis)
     Q_DISABLE_COPY(QBarCategoriesAxis)
+    friend class ChartCategoriesAxisX;
+    friend class ChartCategoriesAxisY;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
