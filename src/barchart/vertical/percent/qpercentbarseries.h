@@ -33,6 +33,7 @@ class QTCOMMERCIALCHART_EXPORT QPercentBarSeries : public QAbstractBarSeries
     Q_OBJECT
 public:
     explicit QPercentBarSeries(QObject *parent = 0);
+    ~QPercentBarSeries();
     QAbstractSeries::SeriesType type() const;
 
 private:

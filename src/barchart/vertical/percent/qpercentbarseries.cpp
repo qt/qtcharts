@@ -64,6 +64,14 @@ QPercentBarSeries::QPercentBarSeries(QObject *parent)
 {
 }
 
+QPercentBarSeries::~QPercentBarSeries()
+{
+    Q_D(QPercentBarSeries);
+    if(d->m_dataset) {
+        d->m_dataset->removeSeries(this);
+    }
+}
+
 /*!
     Returns QChartSeries::SeriesTypePercentBar.
 */

@@ -18,7 +18,13 @@ QAbstractSeries::SeriesType QHorizontalPercentBarSeries::type() const
     return QAbstractSeries::SeriesTypeHorizontalPercentBar;
 }
 
-
+QHorizontalPercentBarSeries::~QHorizontalPercentBarSeries()
+{
+    Q_D(QHorizontalPercentBarSeries);
+    if(d->m_dataset) {
+        d->m_dataset->removeSeries(this);
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

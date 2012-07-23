@@ -65,6 +65,13 @@ QStackedBarSeries::QStackedBarSeries(QObject *parent)
 {
 }
 
+QStackedBarSeries::~QStackedBarSeries()
+{
+    Q_D(QStackedBarSeries);
+    if(d->m_dataset) {
+        d->m_dataset->removeSeries(this);
+    }
+}
 /*!
     Returns QChartSeries::SeriesTypeStackedBar.
 */

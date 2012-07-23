@@ -175,6 +175,10 @@ QAreaSeries::QAreaSeries(QObject *parent)
 */
 QAreaSeries::~QAreaSeries()
 {
+    Q_D(QAreaSeries);
+    if(d->m_dataset){
+           d->m_dataset->removeSeries(this);
+    }
 }
 
 /*!

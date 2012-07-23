@@ -13,12 +13,18 @@ QHorizontalStackedBarSeries::QHorizontalStackedBarSeries(QObject *parent) :
 {
 }
 
+QHorizontalStackedBarSeries::~QHorizontalStackedBarSeries()
+{
+    Q_D(QHorizontalStackedBarSeries);
+    if(d->m_dataset) {
+        d->m_dataset->removeSeries(this);
+    }
+}
+
 QAbstractSeries::SeriesType QHorizontalStackedBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeHorizontalStackedBar;
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

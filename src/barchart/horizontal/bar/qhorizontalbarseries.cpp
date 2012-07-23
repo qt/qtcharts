@@ -64,6 +64,14 @@ QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent) :
 {
 }
 
+QHorizontalBarSeries::~QHorizontalBarSeries()
+{
+    Q_D(QHorizontalBarSeries);
+    if(d->m_dataset) {
+        d->m_dataset->removeSeries(this);
+    }
+}
+
 QAbstractSeries::SeriesType QHorizontalBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeHorizontalBar;
