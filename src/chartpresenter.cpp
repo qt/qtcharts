@@ -99,6 +99,9 @@ void ChartPresenter::handleAxisRemoved(QAbstractAxis* axis)
     Q_ASSERT(item);
     selectVisibleAxis();
     if(m_animator) m_animator->removeAnimation(item);
+    item->hide();
+    item->disconnect();
+    QObject::disconnect(this,0,item,0);
     item->deleteLater();
 }
 

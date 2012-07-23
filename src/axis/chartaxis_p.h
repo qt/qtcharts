@@ -52,17 +52,21 @@ public:
 
     virtual AxisType axisType() const = 0;
 
-    void setAxisOpacity(qreal opacity);
-    qreal axisOpacity() const;
+    void setArrowOpacity(qreal opacity);
+    qreal arrowOpacity() const;
+    void setArrowVisibility(bool visible);
 
     void setGridOpacity(qreal opacity);
     qreal gridOpacity() const;
+    void setGridVisibility(bool visible);
 
     void setLabelsOpacity(qreal opacity);
     qreal labelsOpacity() const;
+    void setLabelsVisibility(bool visible);
 
     void setShadesOpacity(qreal opacity);
     qreal shadesOpacity() const;
+    void setShadesVisibility(bool visible);
 
     void setLabelsAngle(int angle);
     int labelsAngle()const { return m_labelsAngle; }
@@ -70,7 +74,7 @@ public:
     void setShadesBrush(const QBrush &brush);
     void setShadesPen(const QPen &pen);
 
-    void setAxisPen(const QPen &pen);
+    void setArrowPen(const QPen &pen);
     void setGridPen(const QPen &pen);
 
     void setLabelsPen(const QPen &pen);
@@ -87,6 +91,8 @@ public:
 
     qreal minimumWidth();
     qreal minimumHeight();
+
+    void hide();
 
 protected:
     virtual void updateGeometry() = 0;
@@ -112,7 +118,7 @@ protected:
     QScopedPointer<QGraphicsItemGroup> m_grid;
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;
-    QScopedPointer<QGraphicsItemGroup> m_axis;
+    QScopedPointer<QGraphicsItemGroup> m_arrow;
     QVector<qreal> m_layoutVector;
     qreal m_min;
     qreal m_max;

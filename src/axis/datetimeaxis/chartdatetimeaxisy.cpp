@@ -88,7 +88,7 @@ void ChartDateTimeAxisY::updateGeometry()
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
     QList<QGraphicsItem *> shades = m_shades->childItems();
-    QList<QGraphicsItem *> axis = m_axis->childItems();
+    QList<QGraphicsItem *> axis = m_arrow->childItems();
 
     Q_ASSERT(labels.size() == ticksList.size());
     Q_ASSERT(layout.size() == ticksList.size());

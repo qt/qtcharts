@@ -423,10 +423,11 @@ void ChartDataSet::setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Ori
 
     QAbstractAxis *oldAxis = seriesAxisMap->take(series);
     QList<QAbstractAxis*> axes = seriesAxisMap->values();
-
     if(oldAxis) {
         if(axes.indexOf(oldAxis)==-1) {
             emit axisRemoved(oldAxis);
+            oldAxis->disconnect();
+            QObject::disconnect(domain,0,oldAxis,0);
             oldAxis->d_ptr->m_dataset=0;
             oldAxis->deleteLater();
         }

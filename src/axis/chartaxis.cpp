@@ -35,7 +35,7 @@ ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : Chart(pres
     m_grid(new QGraphicsItemGroup(presenter->rootItem())),
     m_shades(new QGraphicsItemGroup(presenter->rootItem())),
     m_labels(new QGraphicsItemGroup(presenter->rootItem())),
-    m_axis(new QGraphicsItemGroup(presenter->rootItem())),
+    m_arrow(new QGraphicsItemGroup(presenter->rootItem())),
     m_min(0),
     m_max(0),
     m_animation(0),
@@ -43,8 +43,8 @@ ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : Chart(pres
     m_minHeight(0)
 {
     //initial initialization
-    m_axis->setZValue(ChartPresenter::AxisZValue);
-    m_axis->setHandlesChildEvents(false);
+    m_arrow->setZValue(ChartPresenter::AxisZValue);
+    m_arrow->setHandlesChildEvents(false);
 
     m_shades->setZValue(ChartPresenter::ShadesZValue);
     m_grid->setZValue(ChartPresenter::GridZValue);
@@ -71,12 +71,12 @@ void ChartAxis::setLayout(QVector<qreal> &layout)
 
 void ChartAxis::createItems(int count)
 {
-    if (m_axis->children().size() == 0)
-    m_axis->addToGroup(new AxisItem(this));
+    if (m_arrow->children().size() == 0)
+    m_arrow->addToGroup(new AxisItem(this));
     for (int i = 0; i < count; ++i) {
         m_grid->addToGroup(new QGraphicsLineItem());
         m_labels->addToGroup(new QGraphicsSimpleTextItem());
-        m_axis->addToGroup(new QGraphicsLineItem());
+        m_arrow->addToGroup(new QGraphicsLineItem());
         if ((m_grid->childItems().size())%2 && m_grid->childItems().size()>2) m_shades->addToGroup(new QGraphicsRectItem());
     }
 }
@@ -86,7 +86,7 @@ void ChartAxis::deleteItems(int count)
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
     QList<QGraphicsItem *> shades = m_shades->childItems();
-    QList<QGraphicsItem *> axis = m_axis->childItems();
+    QList<QGraphicsItem *> axis = m_arrow->childItems();
 
     for (int i = 0; i < count; ++i) {
         if (lines.size()%2 && lines.size() > 1) delete(shades.takeLast());
@@ -140,14 +140,19 @@ void ChartAxis::updateLayout(QVector<qreal> &layout)
     }
 }
 
-void ChartAxis::setAxisOpacity(qreal opacity)
+void ChartAxis::setArrowOpacity(qreal opacity)
 {
-    m_axis->setOpacity(opacity);
+    m_arrow->setOpacity(opacity);
 }
 
-qreal ChartAxis::axisOpacity() const
+qreal ChartAxis::arrowOpacity() const
 {
-    return m_axis->opacity();
+    return m_arrow->opacity();
+}
+
+void ChartAxis::setArrowVisibility(bool visible)
+{
+    m_arrow->setOpacity(visible);
 }
 
 void ChartAxis::setGridOpacity(qreal opacity)
@@ -160,6 +165,11 @@ qreal ChartAxis::gridOpacity() const
     return m_grid->opacity();
 }
 
+void ChartAxis::setGridVisibility(bool visible)
+{
+    m_grid->setOpacity(visible);
+}
+
 void ChartAxis::setLabelsOpacity(qreal opacity)
 {
     m_labels->setOpacity(opacity);
@@ -170,6 +180,11 @@ qreal ChartAxis::labelsOpacity() const
     return m_labels->opacity();
 }
 
+void ChartAxis::setLabelsVisibility(bool visible)
+{
+    m_labels->setOpacity(visible);
+}
+
 void ChartAxis::setShadesOpacity(qreal opacity)
 {
     m_shades->setOpacity(opacity);
@@ -178,6 +193,11 @@ void ChartAxis::setShadesOpacity(qreal opacity)
 qreal ChartAxis::shadesOpacity() const
 {
     return m_shades->opacity();
+}
+
+void ChartAxis::setShadesVisibility(bool visible)
+{
+    m_shades->setVisible(visible);
 }
 
 void ChartAxis::setLabelsAngle(int angle)
@@ -225,9 +245,9 @@ void ChartAxis::setShadesPen(const QPen &pen)
     }
 }
 
-void ChartAxis::setAxisPen(const QPen &pen)
+void ChartAxis::setArrowPen(const QPen &pen)
 {
-    foreach(QGraphicsItem* item , m_axis->childItems()) {
+    foreach(QGraphicsItem* item , m_arrow->childItems()) {
            static_cast<QGraphicsLineItem*>(item)->setPen(pen);
     }
 }
@@ -276,45 +296,16 @@ void ChartAxis::handleAxisUpdated()
 {
     if(isEmpty()) return;
 
-    if (!m_chartAxis->isVisible()) {
-        setAxisOpacity(0);
-        setGridOpacity(0);
-        setLabelsOpacity(0);
-        setShadesOpacity(0);
-    }
-    else {
 
-        if (m_chartAxis->isArrowVisible()) {
-            setAxisOpacity(100);
-        }
-        else {
-            setAxisOpacity(0);
-        }
+    bool visible = m_chartAxis->isVisible();
 
-        if (m_chartAxis->isGridLineVisible()) {
-            setGridOpacity(100);
-        }
-        else {
-            setGridOpacity(0);
-        }
-
-        if (m_chartAxis->labelsVisible()) {
-            setLabelsOpacity(100);
-        }
-        else {
-            setLabelsOpacity(0);
-        }
-
-        if (m_chartAxis->shadesVisible()) {
-            setShadesOpacity(100);
-        }
-        else {
-            setShadesOpacity(0);
-        }
-    }
+    setArrowVisibility(visible && m_chartAxis->isArrowVisible());
+    setGridVisibility(visible && m_chartAxis->isGridLineVisible());
+    setLabelsVisibility(visible && m_chartAxis->labelsVisible());
+    setShadesVisibility(visible && m_chartAxis->shadesVisible());
 
     setLabelsAngle(m_chartAxis->labelsAngle());
-    setAxisPen(m_chartAxis->axisPen());
+    setArrowPen(m_chartAxis->axisPen());
     setLabelsPen(m_chartAxis->labelsPen());
     setLabelsBrush(m_chartAxis->labelsBrush());
     setLabelsFont(m_chartAxis->labelsFont());
@@ -322,6 +313,14 @@ void ChartAxis::handleAxisUpdated()
     setShadesPen(m_chartAxis->shadesPen());
     setShadesBrush(m_chartAxis->shadesBrush());
 
+}
+
+void ChartAxis::hide()
+{
+    setArrowVisibility(false);
+    setGridVisibility(false);
+    setLabelsVisibility(false);
+    setShadesVisibility(false);
 }
 
 void ChartAxis::handleGeometryChanged(const QRectF &rect)
