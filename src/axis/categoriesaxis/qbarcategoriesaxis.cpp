@@ -151,8 +151,8 @@ void QBarCategoriesAxis::append(const QStringList &categories)
         setRange(categories.first(),categories.last());
     }else{
         d->m_categories.append(categories);
+        d->emitUpdated();
     }
-    emit d->updated();
     emit categoriesChanged();
 }
 
@@ -167,8 +167,8 @@ void QBarCategoriesAxis::append(const QString &category)
         setRange(category,category);
     }else{
         d->m_categories.append(category);
+        d->emitUpdated();
     }
-    emit d->updated();
     emit categoriesChanged();
 }
 
@@ -184,7 +184,6 @@ void QBarCategoriesAxis::remove(const QString &category)
             setRange(d->m_categories.first(),d->m_categories.last());
         else
             setRange(QString::null,QString::null);
-        emit d->updated();
         emit categoriesChanged();
     }
 }
@@ -200,8 +199,8 @@ void QBarCategoriesAxis::insert(int index, const QString &category)
         setRange(category,category);
     }else{
         d->m_categories.insert(index,category);
+        d->emitUpdated();
     }
-    emit d->updated();
     emit categoriesChanged();
 }
 
@@ -213,18 +212,16 @@ void QBarCategoriesAxis::clear()
     Q_D(QBarCategoriesAxis);
     d->m_categories.clear();
     setRange(QString::null,QString::null);
-    emit d->updated();
     emit categoriesChanged();
 }
 
 void QBarCategoriesAxis::setCategories(const QStringList &categories)
 {
     Q_D(QBarCategoriesAxis);
-    if(d->m_categories!=categories){
-    d->m_categories = categories;
-    setRange(categories.first(),categories.last());
-    emit d->updated();
-    emit categoriesChanged();
+    if(d->m_categories!=categories) {
+        d->m_categories = categories;
+        setRange(categories.first(),categories.last());
+        emit categoriesChanged();
     }
 }
 
@@ -295,9 +292,22 @@ void QBarCategoriesAxis::setRange(const QString& minCategory, const QString& max
 {
     Q_D(QBarCategoriesAxis);
 
-    if(d->m_categories.indexOf(d->m_maxCategory)<d->m_categories.indexOf(d->m_minCategory)) return;
-
     bool changed = false;
+
+    //special case
+    if(minCategory.isNull() && maxCategory.isNull()){
+        d->m_minCategory = minCategory;
+        d->m_maxCategory = maxCategory;
+        d->m_min = 0;
+        d->m_max = 0;
+        emit minChanged(minCategory);
+        emit maxChanged(maxCategory);
+        d->m_count=0;
+        emit rangeChanged(d->m_minCategory,d->m_maxCategory);
+        d->emitUpdated();
+    }
+
+    if(d->m_categories.indexOf(d->m_maxCategory)<d->m_categories.indexOf(d->m_minCategory)) return;
 
     if (!minCategory.isEmpty() && d->m_minCategory!=minCategory && d->m_categories.contains(minCategory)) {
         d->m_minCategory = minCategory;

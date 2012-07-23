@@ -49,30 +49,27 @@ private slots:
     void count();
     void insert_data();
     void insert();
-    void max_data();
-    void max();
-    void min_data();
-    void min();
     void remove_data();
     void remove();
-    void setCategories_data();
-    void setCategories();
-    void setMax_data();
-    void setMax();
-    void setMin_data();
-    void setMin();
-    void setRange_data();
-    void setRange();
-    void type_data();
-    void type();
-    void categoriesChanged_data();
-    void categoriesChanged();
-    void maxChanged_data();
-    void maxChanged();
-    void minChanged_data();
-    void minChanged();
-    void rangeChanged_data();
-    void rangeChanged();
+    void max_raw_data();
+    void max_raw();
+    void max_data();
+    void max();
+    void max_animation_data();
+    void max_animation();
+    void min_raw_data();
+    void min_raw();
+    void min_data();
+    void min();
+    void min_animation_data();
+    void min_animation();
+    void range_raw_data();
+    void range_raw();
+    void range_data();
+    void range();
+    void range_animation_data();
+    void range_animation();
+
 private:
     QBarCategoriesAxis* m_baraxis;
     QBarSeries* m_series;
@@ -158,16 +155,15 @@ void tst_QBarCategoriesAxis::qbarcategoriesaxis()
 void tst_QBarCategoriesAxis::append_data()
 {
     QTest::addColumn<QStringList>("categories");
-    QTest::newRow("null") << QStringList();
+    QTest::newRow("Jan Feb Mar Apr") << (QStringList() << "Jan" << "Feb" << "Mar" << "Apr");
+    QTest::newRow("Jul Aug Sep") << (QStringList() << "Jul" << "Aug" << "Sep");
 }
 
-// public void append(QStringList const& categories)
 void tst_QBarCategoriesAxis::append()
 {
-#if 0
     QFETCH(QStringList, categories);
 
-    SubQBarCategoriesAxis axis;
+    QBarCategoriesAxis axis;
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
@@ -176,88 +172,115 @@ void tst_QBarCategoriesAxis::append()
 
     axis.append(categories);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+
+    m_chart->setAxisX(&axis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(axis.categories(), categories);
+
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
 }
 
 void tst_QBarCategoriesAxis::at_data()
 {
+    QTest::addColumn<QStringList>("categories");
     QTest::addColumn<int>("index");
-    QTest::addColumn<QString>("at");
-    QTest::newRow("null") << 0 << QString();
+    QTest::addColumn<QString>("string");
+    QTest::newRow("Jul Aug Sep 0 Jul") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 0 << "Jul";
+    QTest::newRow("Jul Aug Sep 2 Sep") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 2 << "Sep";
+    QTest::newRow("Jul Aug Sep 1 Aug") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 1 << "Aug";
 }
 
-// public QString at(int index) const
 void tst_QBarCategoriesAxis::at()
 {
-#if 0
     QFETCH(int, index);
-    QFETCH(QString, at);
+    QFETCH(QString, string);
+    QFETCH(QStringList, categories);
 
-    SubQBarCategoriesAxis axis;
+    QBarCategoriesAxis axis;
+    axis.append(categories);
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
 
-    QCOMPARE(axis.at(index), at);
+    QCOMPARE(axis.at(index), string);
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+
+    m_chart->setAxisX(&axis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(axis.at(index), string);
+
+    QCOMPARE(spy0.count(), 0);
+    QCOMPARE(spy1.count(), 0);
+    QCOMPARE(spy2.count(), 0);
+    QCOMPARE(spy3.count(), 0);
 }
 
 void tst_QBarCategoriesAxis::categories_data()
 {
     QTest::addColumn<QStringList>("categories");
-    QTest::newRow("null") << QStringList();
+    QTest::newRow("Jul Aug Sep") << (QStringList() << "Jul" << "Aug" << "Sep");
 }
 
-// public QStringList categories()
 void tst_QBarCategoriesAxis::categories()
 {
-#if 0
     QFETCH(QStringList, categories);
 
-    SubQBarCategoriesAxis axis;
+    QBarCategoriesAxis axis;
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
 
+    axis.setCategories(categories);
     QCOMPARE(axis.categories(), categories);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+
+    m_chart->setAxisX(&axis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(axis.categories(), categories);
+
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+
 }
 
 void tst_QBarCategoriesAxis::clear_data()
 {
-    QTest::addColumn<int>("foo");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+    QTest::addColumn<QStringList>("categories");
+    QTest::newRow("Jul Aug Sep") << (QStringList() << "Jul" << "Aug" << "Sep");
 }
 
-// public void clear()
 void tst_QBarCategoriesAxis::clear()
 {
-#if 0
-    QFETCH(int, foo);
+    QFETCH(QStringList, categories);
 
-    SubQBarCategoriesAxis axis;
+    QBarCategoriesAxis axis;
+
+    axis.setCategories(categories);
+    QCOMPARE(axis.categories(), categories);
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
@@ -265,29 +288,45 @@ void tst_QBarCategoriesAxis::clear()
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
 
     axis.clear();
+    QCOMPARE(axis.categories(), QStringList());
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+
+    m_chart->setAxisX(&axis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+
+    QCOMPARE(spy0.count(), 2);
+    QCOMPARE(spy1.count(), 2);
+    QCOMPARE(spy2.count(), 2);
+    QCOMPARE(spy3.count(), 2);
+
+    axis.clear();
+    QCOMPARE(axis.categories().count(),0);
+    QCOMPARE(spy0.count(), 3);
+    QCOMPARE(spy1.count(), 3);
+    QCOMPARE(spy2.count(), 3);
+    QCOMPARE(spy3.count(), 3);
 }
 
 void tst_QBarCategoriesAxis::count_data()
 {
+    QTest::addColumn<QStringList>("categories");
     QTest::addColumn<int>("count");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
+    QTest::newRow("Jul Aug Sep") << (QStringList() << "Jul" << "Aug" << "Sep") << 3;
+    QTest::newRow("Jul Aug ") << (QStringList() << "Jul" << "Aug") << 2;
 }
 
-// public int count() const
 void tst_QBarCategoriesAxis::count()
 {
-#if 0
+    QFETCH(QStringList, categories);
     QFETCH(int, count);
 
-    SubQBarCategoriesAxis axis;
+    QBarCategoriesAxis axis;
+    axis.setCategories(categories);
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
@@ -300,25 +339,31 @@ void tst_QBarCategoriesAxis::count()
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+
+    m_chart->setAxisX(&axis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(axis.count(), count);
 }
 
 void tst_QBarCategoriesAxis::insert_data()
 {
+    QTest::addColumn<QStringList>("categories");
     QTest::addColumn<int>("index");
     QTest::addColumn<QString>("category");
-    QTest::newRow("null") << 0 << QString();
+    QTest::newRow("Jul Aug Sep 0 Jun") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 0 << "Jun";
+    QTest::newRow("Jul Aug Sep 3 Sep") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 3 << "Sep";
+    QTest::newRow("Jul Aug Sep 2 Summer") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 2 << "Summer";
 }
 
-// public void insert(int index, QString const& category)
 void tst_QBarCategoriesAxis::insert()
 {
-#if 0
+    QFETCH(QStringList, categories);
     QFETCH(int, index);
     QFETCH(QString, category);
 
-    SubQBarCategoriesAxis axis;
+    QBarCategoriesAxis axis;
+    axis.append(categories);
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
@@ -326,89 +371,39 @@ void tst_QBarCategoriesAxis::insert()
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
 
     axis.insert(index, category);
+    QCOMPARE(axis.at(index),category);
 
-    QCOMPARE(spy0.count(), 0);
+    QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
 
-void tst_QBarCategoriesAxis::max_data()
-{
-    QTest::addColumn<QString>("max");
-    QTest::newRow("null") << QString();
-    QTest::newRow("foo") << QString("foo");
-}
-
-// public QString max() const
-void tst_QBarCategoriesAxis::max()
-{
-#if 0
-    QFETCH(QString, max);
-
-    SubQBarCategoriesAxis axis;
-
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    QCOMPARE(axis.max(), max);
-
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QBarCategoriesAxis::min_data()
-{
-    QTest::addColumn<QString>("min");
-    QTest::newRow("null") << QString();
-    QTest::newRow("foo") << QString("foo");
-}
-
-// public QString min() const
-void tst_QBarCategoriesAxis::min()
-{
-#if 0
-    QFETCH(QString, min);
-
-    SubQBarCategoriesAxis axis;
-
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    QCOMPARE(axis.min(), min);
-
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    m_chart->setAxisX(&axis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
 }
 
 void tst_QBarCategoriesAxis::remove_data()
 {
+    QTest::addColumn<QStringList>("categories");
     QTest::addColumn<QString>("category");
-    QTest::newRow("null") << QString();
-    QTest::newRow("foo") << QString("foo");
+    QTest::addColumn<QStringList>("result");
+    QTest::newRow("Jul Aug Sep 0") << (QStringList() << "Jul" << "Aug" << "Sep") << "Jul" << (QStringList() << "Aug" << "Sep");
+    QTest::newRow("Jul Aug Sep 1") << (QStringList() << "Jul" << "Aug" << "Sep") << "Aug"<< (QStringList() << "Jul" << "Sep");
 }
 
-// public void remove(QString const& category)
 void tst_QBarCategoriesAxis::remove()
 {
-#if 0
+    QFETCH(QStringList, categories);
     QFETCH(QString, category);
+    QFETCH(QStringList, result);
 
-    SubQBarCategoriesAxis axis;
+    QBarCategoriesAxis axis;
+    axis.append(categories);
+
+    int maxCount = axis.max() == category;
+    int minCount = axis.min() == category;
+    int rangeCount = maxCount + minCount;
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
@@ -416,285 +411,170 @@ void tst_QBarCategoriesAxis::remove()
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
 
     axis.remove(category);
+    QCOMPARE(axis.categories(),result);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), maxCount);
+    QCOMPARE(spy2.count(), minCount);
+    QCOMPARE(spy3.count(), rangeCount);
 }
 
-void tst_QBarCategoriesAxis::setCategories_data()
+void tst_QBarCategoriesAxis::max_raw_data()
 {
-    QTest::addColumn<QStringList>("categories");
-    QTest::newRow("null") << QStringList();
-}
-
-// public void setCategories(QStringList const& categories)
-void tst_QBarCategoriesAxis::setCategories()
-{
-#if 0
-    QFETCH(QStringList, categories);
-
-    SubQBarCategoriesAxis axis;
-
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    axis.setCategories(categories);
-
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QBarCategoriesAxis::setMax_data()
-{
-    QTest::addColumn<QString>("maxCategory");
-    QTest::newRow("null") << QString();
-    QTest::newRow("foo") << QString("foo");
-}
-
-// public void setMax(QString const& maxCategory)
-void tst_QBarCategoriesAxis::setMax()
-{
-#if 0
-    QFETCH(QString, maxCategory);
-
-    SubQBarCategoriesAxis axis;
-
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    axis.setMax(maxCategory);
-
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QBarCategoriesAxis::setMin_data()
-{
-    QTest::addColumn<QString>("minCategory");
-    QTest::newRow("null") << QString();
-    QTest::newRow("foo") << QString("foo");
-}
-
-// public void setMin(QString const& minCategory)
-void tst_QBarCategoriesAxis::setMin()
-{
-#if 0
-    QFETCH(QString, minCategory);
-
-    SubQBarCategoriesAxis axis;
-
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    axis.setMin(minCategory);
-
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QBarCategoriesAxis::setRange_data()
-{
-    QTest::addColumn<QString>("minCategory");
-    QTest::addColumn<QString>("maxCategory");
-    QTest::newRow("null") << QString() << QString();
-}
-
-// public void setRange(QString const& minCategory, QString const& maxCategory)
-void tst_QBarCategoriesAxis::setRange()
-{
-#if 0
-    QFETCH(QString, minCategory);
-    QFETCH(QString, maxCategory);
-
-    SubQBarCategoriesAxis axis;
-
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    axis.setRange(minCategory, maxCategory);
-
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QBarCategoriesAxis::type_data()
-{
-#if 0
-    QTest::addColumn<AxisType>("type");
-    QTest::newRow("null") << AxisType();
-#endif
-}
-
-// public AxisType type() const
-void tst_QBarCategoriesAxis::type()
-{
-#if 0
-    QFETCH(AxisType, type);
-
-    SubQBarCategoriesAxis axis;
-
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    QCOMPARE(axis.type(), type);
-
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QBarCategoriesAxis::categoriesChanged_data()
-{
-    QTest::addColumn<int>("foo");
-    QTest::newRow("0") << 0;
-    QTest::newRow("-1") << -1;
-}
-
-// protected void categoriesChanged()
-void tst_QBarCategoriesAxis::categoriesChanged()
-{
-#if 0
-    QFETCH(int, foo);
-
-    SubQBarCategoriesAxis axis;
-
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    axis.call_categoriesChanged();
-
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
-}
-
-void tst_QBarCategoriesAxis::maxChanged_data()
-{
+    //"Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     QTest::addColumn<QString>("max");
-    QTest::newRow("null") << QString();
-    QTest::newRow("foo") << QString("foo");
+    QTest::newRow("Feb") << "Feb";
+    QTest::newRow("Apr") << "Apr";
+    QTest::newRow("May") << "May";
 }
 
-// protected void maxChanged(QString const& max)
-void tst_QBarCategoriesAxis::maxChanged()
+void tst_QBarCategoriesAxis::max_raw()
 {
-#if 0
     QFETCH(QString, max);
 
-    SubQBarCategoriesAxis axis;
+    QSignalSpy spy0(m_baraxis, SIGNAL(categoriesChanged()));
+    QSignalSpy spy1(m_baraxis, SIGNAL(maxChanged(QString const&)));
+    QSignalSpy spy2(m_baraxis, SIGNAL(minChanged(QString const&)));
+    QSignalSpy spy3(m_baraxis, SIGNAL(rangeChanged(QString const&, QString const&)));
 
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    axis.call_maxChanged(max);
+    m_baraxis->setMax(max);
+    QCOMPARE(m_baraxis->max(), max);
 
     QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
+    QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QCOMPARE(spy3.count(), 1);
 }
 
-void tst_QBarCategoriesAxis::minChanged_data()
+void tst_QBarCategoriesAxis::max_data()
 {
+    max_raw_data();
+}
+
+void tst_QBarCategoriesAxis::max()
+{
+    m_chart->setAxisX(m_baraxis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    max_raw();
+}
+
+void tst_QBarCategoriesAxis::max_animation_data()
+{
+    max_data();
+}
+
+void tst_QBarCategoriesAxis::max_animation()
+{
+    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
+    max();
+}
+
+void tst_QBarCategoriesAxis::min_raw_data()
+{
+    //"Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     QTest::addColumn<QString>("min");
-    QTest::newRow("null") << QString();
-    QTest::newRow("foo") << QString("foo");
+    QTest::newRow("Feb") << "Feb";
+    QTest::newRow("Apr") << "Apr";
+    QTest::newRow("May") << "May";
 }
 
-// protected void minChanged(QString const& min)
-void tst_QBarCategoriesAxis::minChanged()
+void tst_QBarCategoriesAxis::min_raw()
 {
-#if 0
     QFETCH(QString, min);
 
-    SubQBarCategoriesAxis axis;
+    QSignalSpy spy0(m_baraxis, SIGNAL(categoriesChanged()));
+    QSignalSpy spy1(m_baraxis, SIGNAL(maxChanged(QString const&)));
+    QSignalSpy spy2(m_baraxis, SIGNAL(minChanged(QString const&)));
+    QSignalSpy spy3(m_baraxis, SIGNAL(rangeChanged(QString const&, QString const&)));
 
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    axis.call_minChanged(min);
+    m_baraxis->setMin(min);
+    QCOMPARE(m_baraxis->min(), min);
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+
 }
 
-void tst_QBarCategoriesAxis::rangeChanged_data()
+void tst_QBarCategoriesAxis::min_data()
 {
+    min_raw_data();
+}
+
+void tst_QBarCategoriesAxis::min()
+{
+    m_chart->setAxisX(m_baraxis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    min_raw();
+}
+
+void tst_QBarCategoriesAxis::min_animation_data()
+{
+    min_data();
+}
+
+void tst_QBarCategoriesAxis::min_animation()
+{
+    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
+    min();
+}
+
+
+void tst_QBarCategoriesAxis::range_raw_data()
+{
+    //"Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     QTest::addColumn<QString>("min");
     QTest::addColumn<QString>("max");
-    QTest::newRow("null") << QString() << QString();
+    QTest::newRow("Feb - Apr") << "Feb" << "Apr";
+    QTest::newRow("Feb - May") << "Feb" << "May";
+    QTest::newRow("Mar - Apr") << "Mar" << "Apr";
 }
 
-// protected void rangeChanged(QString const& min, QString const& max)
-void tst_QBarCategoriesAxis::rangeChanged()
+void tst_QBarCategoriesAxis::range_raw()
 {
-#if 0
     QFETCH(QString, min);
     QFETCH(QString, max);
 
-    SubQBarCategoriesAxis axis;
+    QSignalSpy spy0(m_baraxis, SIGNAL(categoriesChanged()));
+    QSignalSpy spy1(m_baraxis, SIGNAL(maxChanged(QString const&)));
+    QSignalSpy spy2(m_baraxis, SIGNAL(minChanged(QString const&)));
+    QSignalSpy spy3(m_baraxis, SIGNAL(rangeChanged(QString const&, QString const&)));
 
-    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
-    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
-    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString const&)));
-    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString const&, QString const&)));
-
-    axis.call_rangeChanged(min, max);
+    m_baraxis->setRange(min, max);
+    QCOMPARE(m_baraxis->min(), min);
+    QCOMPARE(m_baraxis->max(), max);
 
     QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
-    QCOMPARE(spy3.count(), 0);
-#endif
-    QSKIP("Test is not implemented.", SkipAll);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+}
+
+void tst_QBarCategoriesAxis::range_data()
+{
+    range_raw_data();
+}
+
+void tst_QBarCategoriesAxis::range()
+{
+    m_chart->setAxisX(m_baraxis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    range_raw();
+}
+
+void tst_QBarCategoriesAxis::range_animation_data()
+{
+    range_data();
+}
+
+void tst_QBarCategoriesAxis::range_animation()
+{
+    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
+    range();
 }
 
 QTEST_MAIN(tst_QBarCategoriesAxis)
