@@ -151,6 +151,37 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QPieSeries::donutInnerSize
+    \brief Defines the donut inner size.
+
+    The value is a relative value to the chart rectangle where:
+
+    \list
+    \o 0.0 is the minimum size (pie not drawn).
+    \o 1.0 is the maximum size that can fit the chart. (donut has no width)
+    \endlist
+
+    The value is never greater then size property.
+    Default value is 0.5.
+*/
+
+/*!
+    \qmlproperty real PieSeries::donutInnerSize
+
+    Defines the donut inner size.
+
+    The value is a relative value to the chart rectangle where:
+
+    \list
+    \o 0.0 is the minimum size (donut is a pie).
+    \o 1.0 is the maximum size that can fit the chart. (donut has no width)
+    \endlist
+
+    The value is never greater then size property.
+    Default value is 0.5.
+*/
+
+/*!
     \property QPieSeries::startAngle
     \brief Defines the starting angle of the pie.
 
@@ -542,8 +573,8 @@ void QPieSeries::setDonutInnerSize(qreal innerSize)
 
     if (innerSize < 0.0)
         innerSize = 0.0;
-    if (innerSize > 1.0)
-        innerSize = 1.0;
+    if (innerSize > d->m_pieRelativeSize)
+        innerSize = d->m_pieRelativeSize;
 
     d->m_donutRelativeInnerSize = innerSize;
     d->updateDerivativeData();

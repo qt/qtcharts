@@ -61,7 +61,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
  \value LabelOutside Label is outside the slice with an arm.
  \value LabelInside Label is centered inside the slice.
-
+ \value LabelInsideTangential Label is centered inside the slice and rotated to be parallel to the tangential of the slice's arc
+ \value LabelInsideNormal Label is centered inside the slice rotated to be parallel to the normal of the slice's arc.
  */
 
 /*!

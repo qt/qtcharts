@@ -38,6 +38,8 @@ class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
     Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(qreal sum READ sum NOTIFY sumChanged)
+    Q_PROPERTY(qreal donutInnerSize READ donutInnerSize WRITE setDonutInnerSize)
+    Q_PROPERTY(bool donut READ donut WRITE setDonut)
 
 public:
     explicit QPieSeries(QObject *parent = 0);

@@ -71,7 +71,8 @@ QIntervalsAxis::QIntervalsAxis(QIntervalsAxisPrivate &d,QObject *parent):QValues
 }
 
 /*!
-    Appends \a category to axis
+    Appends new interval to the axis with an \a intervalLabel.
+    Parameter \a interval specifies the high end limit of the interval.
 */
 void QIntervalsAxis::append(const QString& intervalLabel, qreal interval)
 {
@@ -91,6 +92,9 @@ void QIntervalsAxis::append(const QString& intervalLabel, qreal interval)
     }
 }
 
+/*!
+    Sets to \a min the low end limit of the first interval on the axis.
+*/
 void QIntervalsAxis::setFisrtIntervalMinimum(qreal min)
 {
     Q_D(QIntervalsAxis);
@@ -99,16 +103,21 @@ void QIntervalsAxis::setFisrtIntervalMinimum(qreal min)
     }else{
         Range range = d->m_intervalsMap.value(d->m_intervals.first());
         d->m_intervalsMap.insert(d->m_intervals.first(), Range(min, range.second));
-//        setRange(min, d->m_min);
     }
 }
 
+/*!
+    Returns the low end limit of the interval specified by an \a intervalLabel
+*/
 qreal QIntervalsAxis::intervalMin(const QString& intervalLabel) const
 {
     Q_D(const QIntervalsAxis);
     return d->m_intervalsMap.value(intervalLabel).first;
 }
 
+/*!
+    Returns the high end limit of the interval specified by an \a intervalLabel
+*/
 qreal QIntervalsAxis::intervalMax(const QString& intervalLabel) const
 {
     Q_D(const QIntervalsAxis);
@@ -116,7 +125,7 @@ qreal QIntervalsAxis::intervalMax(const QString& intervalLabel) const
 }
 
 /*!
-    Removes \a category from axis
+    Removes \a interval from axis
 */
 void QIntervalsAxis::remove(const QString &intervalLabel)
 {

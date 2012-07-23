@@ -79,25 +79,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QDateTimeAxis::minChanged(qreal min)
+  \fn void QDateTimeAxis::minChanged(QDateTime min)
   Axis emits signal when \a min of axis has changed.
 */
 /*!
-  \qmlsignal ValuesAxis::onMinChanged(real min)
+  \qmlsignal ValuesAxis::onMinChanged(QDateTime min)
   Axis emits signal when \a min of axis has changed.
 */
 
 /*!
-  \fn void QDateTimeAxis::maxChanged(qreal max)
+  \fn void QDateTimeAxis::maxChanged(QDateTime max)
   Axis emits signal when \a max of axis has changed.
 */
 /*!
-  \qmlsignal ValuesAxis::onMaxChanged(real max)
+  \qmlsignal ValuesAxis::onMaxChanged(QDateTime max)
   Axis emits signal when \a max of axis has changed.
 */
 
 /*!
-  \fn void QDateTimeAxis::rangeChanged(qreal min, qreal max)
+  \fn void QDateTimeAxis::rangeChanged(QDateTime min, QDateTime max)
   Axis emits signal when \a min or \a max of axis has changed.
 */
 
@@ -109,16 +109,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlproperty int ValuesAxis::ticksCount
   The number of tick marks for the axis.
-*/
-
-/*!
-  \property QDateTimeAxis::niceNumbersEnabled
-  Whether the nice numbers algorithm is enabled or not for the axis.
-*/
-
-/*!
-  \qmlproperty bool ValuesAxis::niceNumbersEnabled
-  Whether the nice numbers algorithm is enabled or not for the axis.
 */
 
 /*!
@@ -203,12 +193,22 @@ void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
     }
 }
 
+/*!
+  Sets \a format string that is used when creating label for the axis out of the QDateTime object.
+  Check QDateTime documentation for information on how the string should be defined.
+  \sa formatString()
+*/
 void QDateTimeAxis::setFormatString(QString format)
 {
     Q_D(QDateTimeAxis);
     d->m_format = format;
 }
 
+/*!
+  Returns the format string that is used when creating label for the axis out of the QDateTime object.
+  Check QDateTime documentation for information on how the string should be defined.
+  \sa setFormatString()
+*/
 QString QDateTimeAxis::formatString() const
 {
     Q_D(const QDateTimeAxis);
