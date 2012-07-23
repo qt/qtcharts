@@ -59,19 +59,23 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \property QDateTimeAxis::min
   Defines the minimum value on the axis.
+  When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
 */
 /*!
   \qmlproperty real ValuesAxis::min
   Defines the minimum value on the axis.
+  When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
 */
 
 /*!
   \property QDateTimeAxis::max
   Defines the maximum value on the axis.
+  When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
 */
 /*!
   \qmlproperty real ValuesAxis::max
   Defines the maximum value on the axis.
+  When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
 */
 
 /*!
@@ -170,6 +174,7 @@ QDateTime QDateTimeAxis::max() const
 
 /*!
   Sets range from \a min to \a max on the axis.
+  If min is greater than max then this function returns without making any changes.
 */
 void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
 {
