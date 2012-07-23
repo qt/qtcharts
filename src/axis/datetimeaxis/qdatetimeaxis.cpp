@@ -145,7 +145,8 @@ QDateTimeAxis::~QDateTimeAxis()
 void QDateTimeAxis::setMin(QDateTime min)
 {
     Q_D(QDateTimeAxis);
-    setRange(min,d->m_max);
+    if (min.isValid())
+        setRange(min, qMax(d->m_max, min));
 }
 
 QDateTime QDateTimeAxis::min() const
@@ -157,7 +158,8 @@ QDateTime QDateTimeAxis::min() const
 void QDateTimeAxis::setMax(QDateTime max)
 {
     Q_D(QDateTimeAxis);
-    setRange(d->m_min,max);
+    if (max.isValid())
+        setRange(qMin(d->m_min, max), max);
 }
 
 QDateTime QDateTimeAxis::max() const
@@ -172,8 +174,10 @@ QDateTime QDateTimeAxis::max() const
 void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
 {
     Q_D(QDateTimeAxis);
-    bool changed = false;
+    if (!min.isValid() || !max.isValid() || min > max)
+        return;
 
+    bool changed = false;
     if (d->m_min != min) {
         d->m_min = min;
         changed = true;

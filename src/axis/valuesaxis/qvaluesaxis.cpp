@@ -149,7 +149,7 @@ QValuesAxis::~QValuesAxis()
 void QValuesAxis::setMin(qreal min)
 {
     Q_D(QValuesAxis);
-    setRange(min,d->m_max);
+    setRange(min, qMax(d->m_max, min));
 }
 
 qreal QValuesAxis::min() const
@@ -161,7 +161,7 @@ qreal QValuesAxis::min() const
 void QValuesAxis::setMax(qreal max)
 {
     Q_D(QValuesAxis);
-    setRange(d->m_min,max);
+    setRange(qMin(d->m_min, max), max);
 }
 
 qreal QValuesAxis::max() const
@@ -179,6 +179,9 @@ void QValuesAxis::setRange(qreal min, qreal max)
 
     Q_D(QValuesAxis);
     bool changed = false;
+
+    if (min > max)
+        return;
 
     if (!qFuzzyIsNull(d->m_min - min)) {
         d->m_min = min;
