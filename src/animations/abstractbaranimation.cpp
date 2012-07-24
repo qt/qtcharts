@@ -56,6 +56,8 @@ void AbstractBarAnimation::updateCurrentValue(const QVariant &value)
 
 void AbstractBarAnimation::setup(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
 {
+    QVariantAnimation::KeyValues value;
+    setKeyValues(value); //workaround for wrong interpolation call
     setKeyValueAt(0.0, qVariantFromValue(oldLayout));
     setKeyValueAt(1.0, qVariantFromValue(newLayout));
 }

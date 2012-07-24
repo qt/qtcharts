@@ -29,8 +29,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 BarAnimation::BarAnimation(AbstractBarChartItem *item)
     :AbstractBarAnimation(item)
 {
-    setDuration(ChartAnimationDuration);
-    setEasingCurve(QEasingCurve::OutQuart);
+
 }
 
 BarAnimation::~BarAnimation()

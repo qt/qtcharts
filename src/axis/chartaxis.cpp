@@ -303,7 +303,6 @@ void ChartAxis::handleAxisUpdated()
     setGridVisibility(visible && m_chartAxis->isGridLineVisible());
     setLabelsVisibility(visible && m_chartAxis->labelsVisible());
     setShadesVisibility(visible && m_chartAxis->shadesVisible());
-
     setLabelsAngle(m_chartAxis->labelsAngle());
     setArrowPen(m_chartAxis->axisPen());
     setLabelsPen(m_chartAxis->labelsPen());
