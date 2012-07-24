@@ -217,7 +217,7 @@ void QSplineSeriesPrivate::updateControlPoints()
     }
 }
 
-Chart* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QSplineSeries);
     SplineChartItem* spline  = new SplineChartItem(q,presenter);

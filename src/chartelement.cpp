@@ -18,45 +18,45 @@
 **
 ****************************************************************************/
 
-#include "chart_p.h"
+#include "chartelement_p.h"
 #include "chartpresenter_p.h"
 #include "domain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Chart::Chart(ChartPresenter *presenter):QObject(presenter),
+ChartElement::ChartElement(ChartPresenter *presenter):QObject(presenter),
     m_presenter(presenter),
     m_domain(0)
 {
 }
 
-void Chart::setPresenter(ChartPresenter *presenter)
+void ChartElement::setPresenter(ChartPresenter *presenter)
 {
     m_presenter=presenter;
 }
 
-ChartPresenter* Chart::presenter() const
+ChartPresenter* ChartElement::presenter() const
 {
     return m_presenter;
 }
 
-void Chart::setDomain(Domain *domain)
+void ChartElement::setDomain(Domain *domain)
 {
     m_domain=domain;
 }
 
-Domain* Chart::domain() const
+Domain* ChartElement::domain() const
 {
     return m_domain;
 }
 
-void Chart::handleGeometryChanged(const QRectF& rect)
+void ChartElement::handleGeometryChanged(const QRectF& rect)
 {
     Q_UNUSED(rect);
     qWarning()<<"Slot not implemented";
 }
 
-void Chart::handleDomainChanged(qreal minX,qreal maxX,qreal minY,qreal maxY)
+void ChartElement::handleDomainChanged(qreal minX,qreal maxX,qreal minY,qreal maxY)
 {
     Q_UNUSED(minX);
     Q_UNUSED(maxX);
@@ -65,12 +65,12 @@ void Chart::handleDomainChanged(qreal minX,qreal maxX,qreal minY,qreal maxY)
     qWarning()<<"Slot not implemented";
 }
 
-void Chart::handleDomainUpdated()
+void ChartElement::handleDomainUpdated()
 {
     qWarning()<<"Slot not implemented";
 }
 
 
-#include "moc_chart_p.cpp"
+#include "moc_chartelement_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -50,7 +50,7 @@ void QHorizontalStackedBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX,maxX,minY,maxY);
 }
 
-Chart* QHorizontalStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QHorizontalStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QHorizontalStackedBarSeries);
 

@@ -818,7 +818,7 @@ void QPieSeriesPrivate::scaleDomain(Domain& domain)
     // does not apply to pie
 }
 
-Chart* QPieSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QPieSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QPieSeries);
     PieChartItem* pie = new PieChartItem(q,presenter);

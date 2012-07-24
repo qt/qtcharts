@@ -36,7 +36,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class Chart;
+class ChartElement;
 class QAbstractSeries;
 class ChartDataSet;
 class Domain;
@@ -157,7 +157,7 @@ private:
     QChart* m_chart;
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
-    QMap<QAbstractSeries*, Chart*> m_chartItems;
+    QMap<QAbstractSeries*, ChartElement*> m_chartItems;
     QMap<QAbstractAxis*, ChartAxis*> m_axisItems;
     QRectF m_rect;
     QChart::AnimationOptions m_options;

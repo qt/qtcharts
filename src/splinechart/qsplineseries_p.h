@@ -39,7 +39,7 @@ class QSplineSeriesPrivate: public QLineSeriesPrivate
 {
     Q_OBJECT
 public:
-    Chart* createGraphics(ChartPresenter* presenter);
+    ChartElement* createGraphics(ChartPresenter* presenter);
     QSplineSeriesPrivate(QSplineSeries* q);
 
     QPointF controlPoint(int index) const;

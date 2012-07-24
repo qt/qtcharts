@@ -28,7 +28,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : Chart(presenter),
+ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : ChartElement(presenter),
     m_chartAxis(axis),
     m_labelsAngle(0),
     m_grid(new QGraphicsItemGroup(presenter->rootItem())),

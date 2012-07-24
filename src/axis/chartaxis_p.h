@@ -31,7 +31,7 @@
 #define CHARTAXIS_H
 
 #include "qchartglobal.h"
-#include "chart_p.h"
+#include "chartelement_p.h"
 #include "axisanimation_p.h"
 #include <QGraphicsItem>
 #include <QFont>
@@ -41,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QAbstractAxis;
 class ChartPresenter;
 
-class ChartAxis : public Chart
+class ChartAxis : public ChartElement
 {
     Q_OBJECT
 public:

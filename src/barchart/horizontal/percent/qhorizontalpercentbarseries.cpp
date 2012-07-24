@@ -49,7 +49,7 @@ void QHorizontalPercentBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX,maxX,minY,maxY);
 }
 
-Chart* QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QHorizontalPercentBarSeries);
 

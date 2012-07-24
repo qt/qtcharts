@@ -39,7 +39,7 @@ class QHorizontalPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
     QHorizontalPercentBarSeriesPrivate(QHorizontalPercentBarSeries* q);
-    Chart* createGraphics(ChartPresenter* presenter);
+    ChartElement* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
 private:
     Q_DECLARE_PUBLIC(QHorizontalPercentBarSeries)

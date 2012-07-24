@@ -41,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartPresenter;
 class QXYSeries;
 
-class XYChart :  public Chart
+class XYChart :  public ChartElement
 {
      Q_OBJECT
 public:

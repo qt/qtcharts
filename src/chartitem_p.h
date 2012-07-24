@@ -30,17 +30,17 @@
 #ifndef CHARTITEM_H
 #define CHARTITEM_H
 
-#include "chart_p.h"
+#include "chartelement_p.h"
 #include "chartpresenter_p.h"
 #include <QGraphicsItem>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartItem : public QGraphicsItem, public Chart
+class ChartItem : public QGraphicsItem, public ChartElement
 {
     enum ChartItemTypes{ AXIS_ITEM = UserType + 1, XYLINE_ITEM };
 public:
-    ChartItem(ChartPresenter *presenter) : QGraphicsItem(presenter ? presenter->rootItem() : 0), Chart(presenter) {}
+    ChartItem(ChartPresenter *presenter) : QGraphicsItem(presenter ? presenter->rootItem() : 0), ChartElement(presenter) {}
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

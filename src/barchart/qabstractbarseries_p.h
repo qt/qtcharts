@@ -54,7 +54,7 @@ public:
     void setLabelsVisible(bool visible);
 
     void scaleDomain(Domain& domain);
-    Chart* createGraphics(ChartPresenter* presenter);
+    ChartElement* createGraphics(ChartPresenter* presenter);
     QList<LegendMarker*> createLegendMarker(QLegend* legend);
 
     void initializeAxis(QAbstractAxis* axis);

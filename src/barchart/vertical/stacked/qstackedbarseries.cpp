@@ -104,7 +104,7 @@ void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
 }
 
 
-Chart* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QStackedBarSeries);
 

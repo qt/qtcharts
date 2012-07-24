@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef CHART_H
-#define CHART_H
+#ifndef CHARTELEMENT_H
+#define CHARTELEMENT_H
 
 #include "qchartglobal.h"
 #include <QObject>
@@ -41,11 +41,11 @@ class ChartPresenter;
 class ChartAnimation;
 class Domain;
 
-class Chart: public QObject
+class ChartElement: public QObject
 {
     Q_OBJECT
 public:
-    explicit Chart(ChartPresenter *presenter);
+    explicit ChartElement(ChartPresenter *presenter);
 
 public Q_SLOTS:
     virtual void handleGeometryChanged(const QRectF& rect);

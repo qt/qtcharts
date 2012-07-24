@@ -103,7 +103,7 @@ void QPercentBarSeriesPrivate::scaleDomain(Domain& domain)
 }
 
 
-Chart* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QPercentBarSeries);
 

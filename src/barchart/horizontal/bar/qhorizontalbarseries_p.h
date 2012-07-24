@@ -39,7 +39,7 @@ class QHorizontalBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
     QHorizontalBarSeriesPrivate(QHorizontalBarSeries* q);
-    Chart* createGraphics(ChartPresenter* presenter);
+    ChartElement* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
 private:
     Q_DECLARE_PUBLIC(QHorizontalBarSeries)

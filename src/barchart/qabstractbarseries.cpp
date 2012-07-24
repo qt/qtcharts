@@ -26,7 +26,6 @@
 #include "legendmarker_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
 #include "qvaluesaxis.h"
 #include "qbarcategoriesaxis.h"
 
@@ -569,7 +568,7 @@ void QAbstractBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX,maxX,minY,maxY);
 }
 
-Chart* QAbstractBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QAbstractBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_UNUSED(presenter);
     qWarning() << "QAbstractBarSeriesPrivate::createGraphics called";

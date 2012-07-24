@@ -104,7 +104,7 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
 }
 
 
-Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QBarSeries);
 

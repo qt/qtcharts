@@ -101,7 +101,7 @@ void QHorizontalBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX,maxX,minY,maxY);
 }
 
-Chart* QHorizontalBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QHorizontalBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QHorizontalBarSeries);
 

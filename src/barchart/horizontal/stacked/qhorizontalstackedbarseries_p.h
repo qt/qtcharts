@@ -39,7 +39,7 @@ class QHorizontalStackedBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
     QHorizontalStackedBarSeriesPrivate(QHorizontalStackedBarSeries* q);
-    Chart* createGraphics(ChartPresenter* presenter);
+    ChartElement* createGraphics(ChartPresenter* presenter);
     void scaleDomain(Domain& domain);
 private:
     Q_DECLARE_PUBLIC(QHorizontalStackedBarSeries)

@@ -246,7 +246,7 @@ QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries* q) :
 {
 }
 
-Chart* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QScatterSeries);
     ScatterChartItem *scatter = new ScatterChartItem(q,presenter);

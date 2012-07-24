@@ -356,7 +356,7 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX,maxX,minY,maxY);
 }
 
-Chart* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QAreaSeries);
 

@@ -104,7 +104,7 @@ void ChartPresenter::handleAxisRemoved(QAbstractAxis* axis)
 
 void ChartPresenter::handleSeriesAdded(QAbstractSeries* series,Domain* domain)
 {
-    Chart *item = series->d_ptr->createGraphics(this);
+    ChartElement *item = series->d_ptr->createGraphics(this);
     Q_ASSERT(item);
     item->setDomain(domain);
 
@@ -119,7 +119,7 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries* series,Domain* domain)
 
 void ChartPresenter::handleSeriesRemoved(QAbstractSeries* series)
 {
-    Chart* item = m_chartItems.take(series);
+    ChartElement* item = m_chartItems.take(series);
     Q_ASSERT(item);
     item->deleteLater();
 }
@@ -214,7 +214,7 @@ void ChartPresenter::resetAllElements()
            handleAxisAdded(axis,domain);
     }
 
-    QMapIterator<QAbstractSeries*, Chart*> j(m_chartItems);
+    QMapIterator<QAbstractSeries*, ChartElement*> j(m_chartItems);
        while (j.hasNext()) {
               j.next();
               Domain* domain = j.value()->domain();

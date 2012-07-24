@@ -36,7 +36,7 @@ SOURCES += \
     $$PWD/qchartview.cpp \
     $$PWD/qabstractseries.cpp \
     $$PWD/chartbackground.cpp \
-    $$PWD/chart.cpp \
+    $$PWD/chartelement.cpp \
     $$PWD/scroller.cpp \
     $$PWD/chartlayout.cpp
 PRIVATE_HEADERS += \
@@ -46,7 +46,7 @@ PRIVATE_HEADERS += \
     $$PWD/charttheme_p.h \
     $$PWD/domain_p.h \
     $$PWD/chartbackground_p.h \
-    $$PWD/chart_p.h \
+    $$PWD/chartelement_p.h \
     $$PWD/chartconfig_p.h \
     $$PWD/qchart_p.h \
     $$PWD/qchartview_p.h \

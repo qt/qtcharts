@@ -36,7 +36,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Domain;
 class ChartPresenter;
-class Chart;
+class ChartElement;
 class LegendMarker;
 class QLegend;
 class ChartDataSet;
@@ -50,7 +50,7 @@ public:
     ~QAbstractSeriesPrivate();
 
     virtual void scaleDomain(Domain& domain) = 0;
-    virtual Chart* createGraphics(ChartPresenter* presenter) = 0;
+    virtual ChartElement* createGraphics(ChartPresenter* presenter) = 0;
     virtual QList<LegendMarker*> createLegendMarker(QLegend* legend) = 0;
     virtual void initializeAxis(QAbstractAxis* axis) = 0;
     virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation) const = 0;

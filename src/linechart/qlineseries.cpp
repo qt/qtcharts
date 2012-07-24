@@ -116,7 +116,7 @@ QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries* q):QXYSeriesPrivate(q)
 
 };
 
-Chart* QLineSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement* QLineSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QLineSeries);
     LineChartItem* line = new LineChartItem(q,presenter);

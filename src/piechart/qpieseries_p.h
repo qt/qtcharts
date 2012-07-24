@@ -45,7 +45,7 @@ public:
     ~QPieSeriesPrivate();
 
     void scaleDomain(Domain& domain);
-    Chart* createGraphics(ChartPresenter *presenter);
+    ChartElement* createGraphics(ChartPresenter *presenter);
     QList<LegendMarker*> createLegendMarker(QLegend *legend);
     void initializeAxis(QAbstractAxis* axis);
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
