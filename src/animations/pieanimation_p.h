@@ -45,9 +45,9 @@ class PieAnimation : public ChartAnimation
 public:
     PieAnimation(PieChartItem *item);
     ~PieAnimation();
-    void updateValue(PieSliceItem *sliceItem, const PieSliceData &newValue);
-    void addSlice(PieSliceItem *sliceItem, const PieSliceData &endValue, bool startupAnimation);
-    void removeSlice(PieSliceItem *sliceItem);
+    ChartAnimation* updateValue(PieSliceItem *sliceItem, const PieSliceData &newValue);
+    ChartAnimation* addSlice(PieSliceItem *sliceItem, const PieSliceData &endValue, bool startupAnimation);
+    ChartAnimation* removeSlice(PieSliceItem *sliceItem);
 
 public: // from QVariantAnimation
     void updateCurrentValue(const QVariant &value);

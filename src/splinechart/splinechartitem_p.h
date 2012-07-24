@@ -32,9 +32,10 @@
 
 #include "qsplineseries.h"
 #include "xychart_p.h"
-#include "splineanimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+
+class SplineAnimation;
 
 class SplineChartItem : public XYChart, public QGraphicsItem
 {
@@ -52,7 +53,7 @@ public:
     QVector<QPointF> controlGeometryPoints() const;
 
     void setAnimation(SplineAnimation* animation);
-    ChartAnimation* animation() const { return m_animation; }
+    ChartAnimation* animation() const;
 
 public Q_SLOTS:
     void handleUpdated();

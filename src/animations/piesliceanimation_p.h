@@ -30,14 +30,14 @@
 #ifndef PIESLICEANIMATION_P_H
 #define PIESLICEANIMATION_P_H
 
-#include <QVariantAnimation>
+#include "chartanimation_p.h"
 #include "piesliceitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class PieChartItem;
 
-class PieSliceAnimation : public QVariantAnimation
+class PieSliceAnimation : public ChartAnimation
 {
 public:
     PieSliceAnimation(PieSliceItem *sliceItem);

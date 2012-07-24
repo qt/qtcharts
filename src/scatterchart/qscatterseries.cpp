@@ -23,7 +23,6 @@
 #include "scatterchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
 
 /*!
     \class QScatterSeries
@@ -252,7 +251,6 @@ Chart* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
     Q_Q(QScatterSeries);
     ScatterChartItem *scatter = new ScatterChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        scatter->setAnimator(presenter->animator());
         scatter->setAnimation(new XYAnimation(scatter));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

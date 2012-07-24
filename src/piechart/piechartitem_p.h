@@ -38,6 +38,7 @@ class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSlice;
 class ChartPresenter;
+class PieAnimation;
 
 class PieChartItem : public ChartItem
 {
@@ -64,6 +65,9 @@ public Q_SLOTS:
     void handleSliceChanged();
     void handleSeriesVisibleChanged();
 
+    void setAnimation(PieAnimation* animation);
+    ChartAnimation* animation() const;
+
 private:
     PieSliceData updateSliceGeometry(QPieSlice *slice);
 
@@ -74,6 +78,8 @@ private:
     QPointF m_pieCenter;
     qreal m_pieRadius;
     qreal m_donutInnerRadius;
+    PieAnimation* m_animation;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

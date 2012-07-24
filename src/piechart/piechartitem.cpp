@@ -26,7 +26,7 @@
 #include "qpieseries_p.h"
 #include "chartpresenter_p.h"
 #include "chartdataset_p.h"
-#include "chartanimator_p.h"
+#include "pieanimation_p.h"
 #include <QPainter>
 #include <QTimer>
 
@@ -34,7 +34,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
     :ChartItem(presenter),
-    m_series(series)
+    m_series(series),
+    m_animation(0)
 {
     Q_ASSERT(series);
 
@@ -56,6 +57,16 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
 PieChartItem::~PieChartItem()
 {
     // slices deleted automatically through QGraphicsItem
+}
+
+void PieChartItem::setAnimation(PieAnimation* animation)
+{
+    m_animation=animation;
+}
+
+ChartAnimation* PieChartItem::animation() const
+{
+    return m_animation;
 }
 
 void PieChartItem::handleGeometryChanged(const QRectF& rect)
@@ -116,8 +127,9 @@ void PieChartItem::updateLayout()
         PieSliceItem *sliceItem = m_sliceItems.value(slice);
         if (sliceItem) {
             PieSliceData sliceData = updateSliceGeometry(slice);
-            if (animator())
-                animator()->updateAnimation(this, sliceItem, sliceData);
+            if (m_animation){
+                presenter()->startAnimation(m_animation->updateValue(sliceItem, sliceData));
+            }
             else
                 sliceItem->setLayout(sliceData);
         }
@@ -159,8 +171,8 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
         connect(sliceItem, SIGNAL(hovered(bool)), slice, SIGNAL(hovered(bool)));
 
         PieSliceData sliceData = updateSliceGeometry(slice);
-        if (animator())
-            animator()->addAnimation(this, sliceItem, sliceData, startupAnimation);
+        if (m_animation)
+            presenter()->startAnimation(m_animation->addSlice(sliceItem, sliceData, startupAnimation));
         else
             sliceItem->setLayout(sliceData);
     }
@@ -180,8 +192,8 @@ void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
 
         m_sliceItems.remove(slice);
 
-        if (animator())
-            animator()->removeAnimation(this, sliceItem); // animator deletes the PieSliceItem
+        if (m_animation)
+            presenter()->startAnimation(m_animation->removeSlice(sliceItem)); // animator deletes the PieSliceItem
         else
             delete sliceItem;
     }
@@ -198,8 +210,8 @@ void PieChartItem::handleSliceChanged()
 
     PieSliceItem *sliceItem = m_sliceItems.value(slice);
     PieSliceData sliceData = updateSliceGeometry(slice);
-    if (animator())
-        animator()->updateAnimation(this, sliceItem, sliceData);
+    if (m_animation)
+        presenter()->startAnimation(m_animation->updateValue(sliceItem, sliceData));
     else
         sliceItem->setLayout(sliceData);
 

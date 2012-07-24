@@ -23,7 +23,6 @@
 #include "percentbarchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
 #include "qvaluesaxis.h"
 #include "percentbaranimation_p.h"
 
@@ -110,7 +109,6 @@ Chart* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 
     PercentBarChartItem* bar = new PercentBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimator(presenter->animator());
         bar->setAnimation(new PercentBarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

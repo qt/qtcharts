@@ -56,7 +56,6 @@ Chart* QHorizontalStackedBarSeriesPrivate::createGraphics(ChartPresenter* presen
 
     HorizontalStackedBarChartItem* bar = new HorizontalStackedBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimator(presenter->animator());
         bar->setAnimation(new HorizontalStackedBarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

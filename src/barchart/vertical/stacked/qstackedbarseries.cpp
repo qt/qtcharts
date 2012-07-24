@@ -23,7 +23,6 @@
 #include "stackedbarchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
 #include "qvaluesaxis.h"
 #include "stackedbaranimation_p.h"
 
@@ -111,7 +110,6 @@ Chart* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 
     StackedBarChartItem* bar = new StackedBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimator(presenter->animator());
         bar->setAnimation(new StackedBarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

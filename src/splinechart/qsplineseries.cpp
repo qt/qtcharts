@@ -23,7 +23,7 @@
 #include "splinechartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
+#include "splineanimation_p.h"
 
 /*!
     \class QSplineSeries
@@ -222,7 +222,6 @@ Chart* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)
     Q_Q(QSplineSeries);
     SplineChartItem* spline  = new SplineChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        spline->setAnimator(presenter->animator());
         spline->setAnimation(new SplineAnimation(spline));
     }
 

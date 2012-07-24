@@ -77,7 +77,6 @@ public:
     ChartPresenter(QChart* chart,ChartDataSet *dataset);
     virtual ~ChartPresenter();
 
-    ChartAnimator* animator() const { return m_animator; }
     ChartTheme *chartTheme() const { return m_chartTheme; }
     ChartDataSet *dataSet() const { return m_dataset; }
     QGraphicsItem* rootItem() const { return m_chart; }
@@ -156,7 +155,6 @@ Q_SIGNALS:
 
 private:
     QChart* m_chart;
-    ChartAnimator* m_animator;
     ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
     QMap<QAbstractSeries*, Chart*> m_chartItems;

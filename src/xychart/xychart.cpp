@@ -22,12 +22,11 @@
 #include "qxyseries.h"
 #include "qxyseries_p.h"
 #include "chartpresenter_p.h"
-#include "chartanimator_p.h"
 #include "domain_p.h"
+#include "qxymodelmapper.h"
 #include <QPainter>
 #include <QAbstractItemModel>
-#include "qxymodelmapper.h"
-#include <QDebug>
+
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

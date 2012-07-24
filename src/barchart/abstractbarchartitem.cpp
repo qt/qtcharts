@@ -26,7 +26,7 @@
 #include "qabstractbarseries_p.h"
 #include "qchart.h"
 #include "chartpresenter_p.h"
-#include "chartanimator_p.h"
+#include "charttheme_p.h"
 #include "abstractbaranimation_p.h"
 #include "chartdataset_p.h"
 #include <QPainter>

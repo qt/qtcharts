@@ -25,9 +25,9 @@
 #include "pieslicedata_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
 #include "legendmarker_p.h"
 #include "qabstractaxis.h"
+#include "pieanimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -823,7 +823,7 @@ Chart* QPieSeriesPrivate::createGraphics(ChartPresenter* presenter)
     Q_Q(QPieSeries);
     PieChartItem* pie = new PieChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        presenter->animator()->addAnimation(pie);
+        pie->setAnimation(new PieAnimation(pie));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return pie;

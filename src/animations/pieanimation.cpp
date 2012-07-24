@@ -35,7 +35,7 @@ PieAnimation::~PieAnimation()
 {
 }
 
-void PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &sliceData)
+ChartAnimation* PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &sliceData)
 {
     PieSliceAnimation *animation = m_animations.value(sliceItem);
     Q_ASSERT(animation);
@@ -45,10 +45,10 @@ void PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &slic
     animation->setDuration(ChartAnimationDuration);
     animation->setEasingCurve(QEasingCurve::OutQuart);
 
-    QTimer::singleShot(0, animation, SLOT(start()));
+    return animation;
 }
 
-void PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceData, bool startupAnimation)
+ChartAnimation* PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceData, bool startupAnimation)
 {
     PieSliceAnimation *animation = new PieSliceAnimation(sliceItem);
     m_animations.insert(sliceItem, animation);
@@ -64,10 +64,11 @@ void PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceDa
 
     animation->setDuration(ChartAnimationDuration);
     animation->setEasingCurve(QEasingCurve::OutQuart);
-    QTimer::singleShot(0, animation, SLOT(start()));
+
+    return animation;
 }
 
-void PieAnimation::removeSlice(PieSliceItem *sliceItem)
+ChartAnimation* PieAnimation::removeSlice(PieSliceItem *sliceItem)
 {
     PieSliceAnimation *animation = m_animations.value(sliceItem);
     Q_ASSERT(animation);
@@ -87,7 +88,7 @@ void PieAnimation::removeSlice(PieSliceItem *sliceItem)
     connect(animation, SIGNAL(finished()), sliceItem, SLOT(deleteLater()));
     m_animations.remove(sliceItem);
 
-    QTimer::singleShot(0, animation, SLOT(start()));
+    return animation;
 }
 
 void PieAnimation::updateCurrentValue(const QVariant &)

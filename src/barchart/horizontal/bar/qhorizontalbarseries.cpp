@@ -107,7 +107,6 @@ Chart* QHorizontalBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 
     HorizontalBarChartItem* bar = new HorizontalBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimator(presenter->animator());
         bar->setAnimation(new HorizontalBarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

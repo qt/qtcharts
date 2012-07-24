@@ -51,17 +51,15 @@ public Q_SLOTS:
     virtual void handleGeometryChanged(const QRectF& rect);
     virtual void handleDomainChanged(qreal minX,qreal maxX,qreal minY,qreal maxY);
     virtual void handleDomainUpdated();
+    virtual ChartAnimation* animation() const { return 0; };
 
-    void setAnimator(ChartAnimator* animator);
-    ChartAnimator* animator() const;
     void setPresenter(ChartPresenter *presenter);
     ChartPresenter* presenter() const;
     void setDomain(Domain *domain);
     Domain* domain() const;
-    virtual ChartAnimation* animation() const { return 0; };
+
 
 private:
-    ChartAnimator* m_animator;
     ChartPresenter* m_presenter;
     Domain* m_domain;
 };

@@ -21,12 +21,10 @@
 #include "chartvaluesaxisy_p.h"
 #include "qabstractaxis.h"
 #include "chartpresenter_p.h"
-#include "chartanimator_p.h"
 #include "qvaluesaxis.h"
 #include <QGraphicsLayout>
-#include <QDebug>
 #include <QFontMetrics>
-#include <cmath>
+#include <qmath.h>
 
 static int label_padding = 5;
 

@@ -24,7 +24,6 @@
 #include "qabstractaxis_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
 #include "chartanimation_p.h"
 #include "qabstractseries_p.h"
 #include "qareaseries.h"
@@ -40,7 +39,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartPresenter::ChartPresenter(QChart* chart,ChartDataSet* dataset):QObject(chart),
 m_chart(chart),
-m_animator(0),
 m_dataset(dataset),
 m_chartTheme(0),
 m_options(QChart::NoAnimation),
@@ -74,7 +72,6 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
     item->setDomain(domain);
 
     if(m_options.testFlag(QChart::GridAxisAnimations)){
-        item->setAnimator(m_animator);
         item->setAnimation(new AxisAnimation(item));
     }
 
@@ -98,7 +95,6 @@ void ChartPresenter::handleAxisRemoved(QAbstractAxis* axis)
     ChartAxis* item = m_axisItems.take(axis);
     Q_ASSERT(item);
     selectVisibleAxis();
-    if(m_animator) m_animator->removeAnimation(item);
     item->hide();
     item->disconnect();
     QObject::disconnect(this,0,item,0);
@@ -125,16 +121,6 @@ void ChartPresenter::handleSeriesRemoved(QAbstractSeries* series)
 {
     Chart* item = m_chartItems.take(series);
     Q_ASSERT(item);
-    if(m_animator) {
-        //small hack to handle area animations
-        if(series->type() == QAbstractSeries::SeriesTypeArea){
-            QAreaSeries* areaSeries = static_cast<QAreaSeries*>(series);
-            AreaChartItem* area = static_cast<AreaChartItem*>(item);
-            m_animator->removeAnimation(area->upperLineItem());
-            if(areaSeries->lowerSeries())  m_animator->removeAnimation(area->lowerLineItem());
-        }else
-            m_animator->removeAnimation(item);
-    }
     item->deleteLater();
 }
 
@@ -211,12 +197,7 @@ QChart::ChartTheme ChartPresenter::theme()
 void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
 {
     if(m_options!=options) {
-
         m_options=options;
-
-        if(m_options!=QChart::NoAnimation && !m_animator) {
-            m_animator= new ChartAnimator(this);
-        }
         resetAllElements();
     }
 

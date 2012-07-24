@@ -26,7 +26,6 @@
 #include "domain_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
 #include "qvaluesaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -363,10 +362,8 @@ Chart* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)
 
     AreaChartItem* area = new AreaChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        area->upperLineItem()->setAnimator(presenter->animator());
         area->upperLineItem()->setAnimation(new XYAnimation(area->upperLineItem()));
         if(q->lowerSeries())  {
-            area->lowerLineItem()->setAnimator(presenter->animator());
             area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem()));
         }
     }

@@ -23,7 +23,6 @@
 #include "linechartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -122,7 +121,6 @@ Chart* QLineSeriesPrivate::createGraphics(ChartPresenter* presenter)
     Q_Q(QLineSeries);
     LineChartItem* line = new LineChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        line->setAnimator(presenter->animator());
         line->setAnimation(new XYAnimation(line));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

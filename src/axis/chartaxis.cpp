@@ -22,7 +22,6 @@
 #include "qabstractaxis.h"
 #include "qabstractaxis_p.h"
 #include "chartpresenter_p.h"
-#include "chartanimator_p.h"
 #include "domain_p.h"
 #include <qmath.h>
 #include <QDateTime>

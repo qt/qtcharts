@@ -23,7 +23,6 @@
 #include "qbarset_p.h"
 #include "qabstractbarseries_p.h"
 #include "qbarset.h"
-#include "chartanimator_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

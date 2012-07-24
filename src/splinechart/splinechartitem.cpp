@@ -21,7 +21,7 @@
 #include "splinechartitem_p.h"
 #include "qsplineseries_p.h"
 #include "chartpresenter_p.h"
-#include "chartanimator_p.h"
+#include "splineanimation_p.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 
@@ -54,6 +54,11 @@ void SplineChartItem::setAnimation(SplineAnimation* animation)
 {
     m_animation=animation;
     XYChart::setAnimation(animation);
+}
+
+ChartAnimation* SplineChartItem::animation() const
+{
+    return m_animation;
 }
 
 void SplineChartItem::setControlGeometryPoints(QVector<QPointF>& points)

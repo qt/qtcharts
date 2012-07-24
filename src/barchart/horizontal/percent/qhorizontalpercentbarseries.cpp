@@ -55,7 +55,6 @@ Chart* QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter* presen
 
     HorizontalPercentBarChartItem* bar = new HorizontalPercentBarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimator(presenter->animator());
         bar->setAnimation(new HorizontalPercentBarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

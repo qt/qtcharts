@@ -25,22 +25,10 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 Chart::Chart(ChartPresenter *presenter):QObject(presenter),
-    m_animator(0),
     m_presenter(presenter),
     m_domain(0)
 {
 }
-
-void Chart::setAnimator(ChartAnimator* animator)
-{
-    m_animator=animator;
-}
-
-ChartAnimator* Chart::animator() const
-{
-    return m_animator;
-}
-
 
 void Chart::setPresenter(ChartPresenter *presenter)
 {

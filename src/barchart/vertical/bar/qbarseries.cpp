@@ -23,7 +23,6 @@
 #include "barchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "chartanimator_p.h"
 #include "baranimation_p.h"
 #include "qvaluesaxis.h"
 #include "qbarcategoriesaxis.h"
@@ -111,7 +110,6 @@ Chart* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 
     BarChartItem* bar = new BarChartItem(q,presenter);
     if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimator(presenter->animator());
         bar->setAnimation(new BarAnimation(bar));
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
