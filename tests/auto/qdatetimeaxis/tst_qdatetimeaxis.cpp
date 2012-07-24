@@ -48,10 +48,10 @@ private slots:
     void min();
     //    void min_animation_data();
     //    void min_animation();
-    //    void range_raw_data();
-    //    void range_raw();
-    //    void range_data();
-    //    void range();
+    void range_raw_data();
+    void range_raw();
+    void range_data();
+    void range();
     //    void range_animation_data();
     //    void range_animation();
 
@@ -77,7 +77,7 @@ void tst_QDateTimeAxis::init()
     m_dateTimeAxisY = new QDateTimeAxis();
     m_series = new QLineSeries();
     *m_series << QPointF(-100, -100) << QPointF(0, 0) << QPointF(100, 100);
-//    tst_QAbstractAxis::init(m_datetimeaxis, m_series);
+    //    tst_QAbstractAxis::init(m_datetimeaxis, m_series);
 
     m_view = new QChartView(new QChart());
     m_chart = m_view->chart();
@@ -97,7 +97,7 @@ void tst_QDateTimeAxis::cleanup()
     delete m_view;
     m_view = 0;
     m_chart = 0;
-//    tst_QAbstractAxis::cleanup();
+    //    tst_QAbstractAxis::cleanup();
 }
 
 void tst_QDateTimeAxis::qdatetimeaxis_data()
@@ -106,10 +106,10 @@ void tst_QDateTimeAxis::qdatetimeaxis_data()
 
 void tst_QDateTimeAxis::qdatetimeaxis()
 {
-//    qabstractaxis();
+    //    qabstractaxis();
 
-//    QVERIFY(m_datetimeaxis->max().toMSecsSinceEpoch() == 0);
-//    QVERIFY(m_datetimeaxis->min().toMSecsSinceEpoch() == 0);
+    //    QVERIFY(m_datetimeaxis->max().toMSecsSinceEpoch() == 0);
+    //    QVERIFY(m_datetimeaxis->min().toMSecsSinceEpoch() == 0);
     QCOMPARE(m_dateTimeAxisX->type(), QAbstractAxis::AxisTypeDateTime);
 
     m_view->show();
@@ -148,7 +148,7 @@ void tst_QDateTimeAxis::max_raw()
         QCOMPARE(spy1.count(), 0);
         QCOMPARE(spy2.count(), 1);
     } else {
-        QVERIFY2(m_dateTimeAxisX->max() != max, "Date is invalid");
+        QVERIFY2(m_dateTimeAxisX->max() != max, "Date is invalid and should not be set");
         QCOMPARE(spy0.count(), 0);
         QCOMPARE(spy1.count(), 0);
         QCOMPARE(spy2.count(), 0);
@@ -207,7 +207,7 @@ void tst_QDateTimeAxis::min_raw()
         QCOMPARE(spy1.count(), 1);
         QCOMPARE(spy2.count(), 1);
     } else {
-        QVERIFY2(m_dateTimeAxisX->min() != min, "Date is invalid");
+        QVERIFY2(m_dateTimeAxisX->min() != min, "Date is invalid and should not be set");
         QCOMPARE(spy0.count(), 0);
         QCOMPARE(spy1.count(), 0);
         QCOMPARE(spy2.count(), 0);
@@ -238,45 +238,68 @@ void tst_QDateTimeAxis::min()
 //    min();
 //}
 
-//void tst_QDateTimeAxis::range_raw_data()
-//{
-//    QTest::addColumn<qreal>("min");
-//    QTest::addColumn<qreal>("max");
-//    QTest::newRow("1.0 - 101.0") << -1.0 << 101.0;
-//    QTest::newRow("25.0 - 75.0") << 25.0 << 75.0;
-//    QTest::newRow("101.0") << 40.0 << 60.0;
-//}
+void tst_QDateTimeAxis::range_raw_data()
+{
+    QTest::addColumn<QDateTime>("min");
+    QTest::addColumn<bool>("minValid");
+    QTest::addColumn<QDateTime>("max");
+    QTest::addColumn<bool>("maxValid");
 
-//void tst_QDateTimeAxis::range_raw()
-//{
-//    QFETCH(qreal, min);
-//    QFETCH(qreal, max);
+    QDateTime minDateTime;
+    QDateTime maxDateTime;
+    minDateTime.setDate(QDate(1908, 1, 11));
+    maxDateTime.setDate(QDate(1958, 11, 21));
+    QTest::newRow("11.1.1908 - min valid, 21.12.1958 - max valid") << minDateTime << true << maxDateTime << true; // negative MSecs from Epoch, min < max
 
-//    QSignalSpy spy0(m_intervalsaxis, SIGNAL(maxChanged(qreal)));
-//    QSignalSpy spy1(m_intervalsaxis, SIGNAL(minChanged(qreal)));
-//    QSignalSpy spy2(m_intervalsaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    minDateTime.setDate(QDate(2012, 17, 32));
+    QTest::newRow("32.17.2012 - min invalid, 21.12.1958 - max valid") << minDateTime << false << maxDateTime << true;
 
-//    m_intervalsaxis->setRange(min, max);
-//    QVERIFY2(qFuzzyIsNull(m_intervalsaxis->min() - min), "Min not equal");
-//    QVERIFY2(qFuzzyIsNull(m_intervalsaxis->max() - max), "Max not equal");
+    maxDateTime.setDate(QDate(2017, 0, 1));
+    QTest::newRow("32.17.2012 - min invalid, 1.0.2017 - max invalid") << minDateTime << false << maxDateTime << false;
 
-//    QCOMPARE(spy0.count(), 1);
-//    QCOMPARE(spy1.count(), 1);
-//    QCOMPARE(spy2.count(), 1);
-//}
+    minDateTime.setDate(QDate(2012, 1, 1));
+    QTest::newRow("1.1.2012 - min valid, 1.0.2017 - max invalid") << minDateTime << true << maxDateTime << false;
 
-//void tst_QDateTimeAxis::range_data()
-//{
-//    range_raw_data();
-//}
+    maxDateTime.setDate(QDate(2005, 2, 5));
+    QTest::newRow("1.1.2012 - min valid, 5.2.2005 - max valid") << minDateTime << true << maxDateTime << true; // min > max
+}
 
-//void tst_QDateTimeAxis::range()
-//{
-//    m_chart->setAxisX(m_intervalsaxis, m_series);
-//    m_view->show();
-//    QTest::qWaitForWindowShown(m_view);
-//    range_raw();
-//}
+void tst_QDateTimeAxis::range_raw()
+{
+    QFETCH(QDateTime, min);
+    QFETCH(bool, minValid);
+    QFETCH(QDateTime, max);
+    QFETCH(bool, maxValid);
+
+    QSignalSpy spy0(m_dateTimeAxisX, SIGNAL(maxChanged(QDateTime)));
+    QSignalSpy spy1(m_dateTimeAxisX, SIGNAL(minChanged(QDateTime)));
+    QSignalSpy spy2(m_dateTimeAxisX, SIGNAL(rangeChanged(QDateTime, QDateTime)));
+
+    m_dateTimeAxisX->setRange(min, max);
+
+    if (minValid && maxValid && min < max) {
+        QCOMPARE(spy0.count(), 1);
+        QCOMPARE(spy1.count(), 1);
+        QCOMPARE(spy2.count(), 1);
+    } else {
+        QCOMPARE(spy0.count(), 0);
+        QCOMPARE(spy1.count(), 0);
+        QCOMPARE(spy2.count(), 0);
+    }
+}
+
+void tst_QDateTimeAxis::range_data()
+{
+    range_raw_data();
+}
+
+void tst_QDateTimeAxis::range()
+{
+    m_chart->setAxisX(m_dateTimeAxisX, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    range_raw();
+}
 
 //void tst_QDateTimeAxis::range_animation_data()
 //{

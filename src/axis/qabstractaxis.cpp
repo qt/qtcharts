@@ -62,6 +62,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \value AxisTypeNoAxis
     \value AxisTypeValues
     \value AxisTypeCategories
+    \value AxisTypeIntervals
+    \value AxisTypeDateTime
 */
 
 /*!

@@ -232,6 +232,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QPieSeries::donut
+
+    Defines whether the series should be drawn as a donut
+*/
+
+/*!
+    \qmlproperty int PieSeries::donut
+
+    Defines whether the series should be drawn as a donut
+*/
+
+/*!
     \fn void QPieSeries::countChanged()
     Emitted when the slice count has changed.
     \sa count
