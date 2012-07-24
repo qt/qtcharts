@@ -40,20 +40,20 @@ private slots:
     void max_raw();
     void max_data();
     void max();
-    //    void max_animation_data();
-    //    void max_animation();
+    void max_animation_data();
+    void max_animation();
     void min_raw_data();
     void min_raw();
     void min_data();
     void min();
-    //    void min_animation_data();
-    //    void min_animation();
+    void min_animation_data();
+    void min_animation();
     void range_raw_data();
     void range_raw();
     void range_data();
     void range();
-    //    void range_animation_data();
-    //    void range_animation();
+    void range_animation_data();
+    void range_animation();
 
 private:
     QDateTimeAxis *m_dateTimeAxisX;
@@ -107,9 +107,6 @@ void tst_QDateTimeAxis::qdatetimeaxis_data()
 void tst_QDateTimeAxis::qdatetimeaxis()
 {
     //    qabstractaxis();
-
-    //    QVERIFY(m_datetimeaxis->max().toMSecsSinceEpoch() == 0);
-    //    QVERIFY(m_datetimeaxis->min().toMSecsSinceEpoch() == 0);
     QCOMPARE(m_dateTimeAxisX->type(), QAbstractAxis::AxisTypeDateTime);
 
     m_view->show();
@@ -141,7 +138,6 @@ void tst_QDateTimeAxis::max_raw()
 
     m_dateTimeAxisX->setMax(max);
 
-
     if (valid) {
         QVERIFY2(m_dateTimeAxisX->max() == max, "Not equal");
         QCOMPARE(spy0.count(), 1);
@@ -168,16 +164,16 @@ void tst_QDateTimeAxis::max()
     max_raw();
 }
 
-//void tst_QDateTimeAxis::max_animation_data()
-//{
-//    max_data();
-//}
+void tst_QDateTimeAxis::max_animation_data()
+{
+    max_data();
+}
 
-//void tst_QDateTimeAxis::max_animation()
-//{
-//    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
-//    max();
-//}
+void tst_QDateTimeAxis::max_animation()
+{
+    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
+    max();
+}
 
 void tst_QDateTimeAxis::min_raw_data()
 {
@@ -227,16 +223,16 @@ void tst_QDateTimeAxis::min()
     min_raw();
 }
 
-//void tst_QDateTimeAxis::min_animation_data()
-//{
-//    min_data();
-//}
+void tst_QDateTimeAxis::min_animation_data()
+{
+    min_data();
+}
 
-//void tst_QDateTimeAxis::min_animation()
-//{
-//    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
-//    min();
-//}
+void tst_QDateTimeAxis::min_animation()
+{
+    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
+    min();
+}
 
 void tst_QDateTimeAxis::range_raw_data()
 {
@@ -301,16 +297,16 @@ void tst_QDateTimeAxis::range()
     range_raw();
 }
 
-//void tst_QDateTimeAxis::range_animation_data()
-//{
-//    range_data();
-//}
+void tst_QDateTimeAxis::range_animation_data()
+{
+    range_data();
+}
 
-//void tst_QDateTimeAxis::range_animation()
-//{
-//    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
-//    range();
-//}
+void tst_QDateTimeAxis::range_animation()
+{
+    m_chart->setAnimationOptions(QChart::GridAxisAnimations);
+    range();
+}
 
 QTEST_MAIN(tst_QDateTimeAxis)
 #include "tst_qdatetimeaxis.moc"
