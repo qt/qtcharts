@@ -255,7 +255,7 @@ QDateTimeAxisPrivate::QDateTimeAxisPrivate(QDateTimeAxis* q):
 {
     m_min = QDateTime::fromMSecsSinceEpoch(0);
     m_max = QDateTime::fromMSecsSinceEpoch(0);
-    m_format = "hh:mm:ss\ndd-mm-yyyy";
+    m_format = "dd-MMM-yy\nh:mm";
 }
 
 QDateTimeAxisPrivate::~QDateTimeAxisPrivate()

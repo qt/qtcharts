@@ -29,4 +29,5 @@ SUBDIRS += \
            horizontalpercentbarchart \
            donut \
            donutdrilldown \
-           scrollchart
+           scrollchart \
+           datetimeaxis
