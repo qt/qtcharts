@@ -397,30 +397,29 @@ QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q) :
 
 void QXYSeriesPrivate::scaleDomain(Domain& domain)
 {
-    qreal minX(domain.minX());
-    qreal minY(domain.minY());
-    qreal maxX(domain.maxX());
-    qreal maxY(domain.maxY());
+    qreal minX(0);
+    qreal minY(0);
+    qreal maxX(1);
+    qreal maxY(1);
 
     Q_Q(QXYSeries);
 
     const QList<QPointF>& points = q->points();
 
+    if (!points.isEmpty()){
+        minX = points[0].x();
+        minY = points[0].y();
+        maxX = minX;
+        maxY = minY;
 
-    if (points.isEmpty()){
-        minX = qMin(minX, (qreal)0.0);
-        minY = qMin(minY, (qreal)0.0);
-        maxX = qMax(maxX, (qreal)1.0);
-        maxY = qMax(maxY, (qreal)1.0);
-    }
-
-    for (int i = 0; i < points.count(); i++) {
-        qreal x = points[i].x();
-        qreal y = points[i].y();
-        minX = qMin(minX, x);
-        minY = qMin(minY, y);
-        maxX = qMax(maxX, x);
-        maxY = qMax(maxY, y);
+        for (int i = 0; i < points.count(); i++) {
+            qreal x = points[i].x();
+            qreal y = points[i].y();
+            minX = qMin(minX, x);
+            minY = qMin(minY, y);
+            maxX = qMax(maxX, x);
+            maxY = qMax(maxY, y);
+        }
     }
 
     domain.setRange(minX,maxX,minY,maxY);
