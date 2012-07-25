@@ -180,13 +180,16 @@ qreal QValuesAxis::max() const
 */
 void QValuesAxis::setRange(qreal min, qreal max)
 {
-    if(max<min) return;
-
     Q_D(QValuesAxis);
     bool changed = false;
 
-    if (min > max)
-        return;
+    if (min > max) return;
+
+    if(d->m_niceNumbers) {
+        int ticks = d->m_tickCount;
+        d->looseNiceNumbers(min, max, ticks);
+        if(ticks!=d->m_tickCount) setTicksCount(ticks);
+    }
 
     if (!qFuzzyIsNull(d->m_min - min)) {
         d->m_min = min;
@@ -200,10 +203,8 @@ void QValuesAxis::setRange(qreal min, qreal max)
         emit maxChanged(max);
     }
 
-    if(d->m_niceNumbers) d->looseNiceNumbers(d->m_min, d->m_max, d->m_tickCount);
-
     if (changed) {
-        emit rangeChanged(d->m_min,d->m_max);
+        emit rangeChanged(min,max);
         d->emitUpdated();
     }
 }
@@ -235,7 +236,9 @@ void QValuesAxis::setNiceNumbersEnabled(bool enable)
     Q_D(QValuesAxis);
     if (d->m_niceNumbers != enable){
         d->m_niceNumbers = enable;
-        if(enable && !qFuzzyIsNull(d->m_max - d->m_min)) setRange(d->min(),d->max());
+        if(enable && !qFuzzyIsNull(d->m_max - d->m_min)) {
+            setRange(d->m_min,d->m_max);
+        }
     }
 }
 

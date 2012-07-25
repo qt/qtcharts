@@ -242,6 +242,12 @@ void tst_QValuesAxis::niceNumbersEnabled()
     QFETCH(qreal, expectedMax);
     QFETCH(int, expectedTicks);
 
+    m_valuesaxis->setRange(min, max);
+    m_valuesaxis->setTicksCount(ticks);
+
+    QVERIFY2(qFuzzyIsNull(m_valuesaxis->min() - min), "Min not equal");
+    QVERIFY2(qFuzzyIsNull(m_valuesaxis->max() - max), "Max not equal");
+
     QSignalSpy spy0(m_valuesaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
     QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal, qreal)));
@@ -249,19 +255,16 @@ void tst_QValuesAxis::niceNumbersEnabled()
     m_valuesaxis->setNiceNumbersEnabled(niceNumbersEnabled);
     QCOMPARE(m_valuesaxis->niceNumbersEnabled(), niceNumbersEnabled);
 
-    QCOMPARE(spy0.count(), 0);
-    QCOMPARE(spy1.count(), 0);
-    QCOMPARE(spy2.count(), 0);
+    if(!qFuzzyIsNull(expectedMin - min))
+        QCOMPARE(spy1.count(), 1);
+    if(!qFuzzyIsNull(expectedMax - max))
+        QCOMPARE(spy0.count(), 1);
+    if((!qFuzzyIsNull(expectedMin - min)) || (!qFuzzyIsNull(expectedMax - max)))
+        QCOMPARE(spy2.count(), 1);
 
-    m_valuesaxis->setTicksCount(ticks);
-    m_valuesaxis->setRange(min, max);
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->min() - expectedMin), "Min not equal");
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->max() - expectedMax), "Max not equal");
     QCOMPARE(m_valuesaxis->ticksCount(), expectedTicks);
-
-    QCOMPARE(spy0.count(), 1);
-    QCOMPARE(spy1.count(), 1);
-    QCOMPARE(spy2.count(), 1);
 
 }
 

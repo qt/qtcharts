@@ -329,8 +329,20 @@ void ChartDataSet::blockAxisSignals(bool enabled)
         i.next();
         QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
         QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
-        if(axisX) axisX->d_ptr->blockSignals(enabled);
-        if(axisY) axisY->d_ptr->blockSignals(enabled);
+        if(axisX) {
+            axisX->d_ptr->blockSignals(enabled);
+            if(!enabled) {
+                axisX->d_ptr->setDirty(false);
+                axisX->d_ptr->emitUpdated();
+            }
+        }
+        if(axisY) {
+            axisY->d_ptr->blockSignals(enabled);
+            if(!enabled) {
+                axisY->d_ptr->setDirty(false);
+                axisY->d_ptr->emitUpdated();
+            }
+        }
     }
 }
 
