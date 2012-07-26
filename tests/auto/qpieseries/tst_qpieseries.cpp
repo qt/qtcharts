@@ -121,6 +121,24 @@ void tst_qpieseries::properties()
     m_series->setPieSize(2.0);
     QCOMPARE(m_series->pieSize(), 1.0);
 
+    m_series->setPieSize(0.7);
+    QCOMPARE(m_series->pieSize(), 0.7);
+    m_series->setDonut();
+    QVERIFY(m_series->donut());
+
+    m_series->setDonutInnerSize(-1.0);
+    QCOMPARE(m_series->donutInnerSize(), 0.0);
+    m_series->setDonutInnerSize(0.5);
+    QCOMPARE(m_series->donutInnerSize(), 0.5);
+
+    m_series->setDonutInnerSize(0.8);
+    QCOMPARE(m_series->donutInnerSize(), 0.8);
+    QCOMPARE(m_series->pieSize(), 0.8);
+
+    m_series->setPieSize(0.4);
+    QCOMPARE(m_series->pieSize(), 0.4);
+    QCOMPARE(m_series->donutInnerSize(), 0.4);
+
     m_series->setPieStartAngle(0);
     m_series->setPieStartAngle(-180);
     m_series->setPieStartAngle(180);
