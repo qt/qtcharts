@@ -71,12 +71,12 @@ void ChartAxis::setLayout(QVector<qreal> &layout)
 void ChartAxis::createItems(int count)
 {
     if (m_arrow->children().size() == 0)
-    m_arrow->addToGroup(new AxisItem(this));
+    m_arrow->addToGroup(new AxisItem(this,presenter()->rootItem()));
     for (int i = 0; i < count; ++i) {
-        m_grid->addToGroup(new QGraphicsLineItem());
-        m_labels->addToGroup(new QGraphicsSimpleTextItem());
-        m_arrow->addToGroup(new QGraphicsLineItem());
-        if ((m_grid->childItems().size())%2 && m_grid->childItems().size()>2) m_shades->addToGroup(new QGraphicsRectItem());
+        m_grid->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
+        m_labels->addToGroup(new QGraphicsSimpleTextItem(presenter()->rootItem()));
+        m_arrow->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
+        if ((m_grid->childItems().size())%2 && m_grid->childItems().size()>2) m_shades->addToGroup(new QGraphicsRectItem(presenter()->rootItem()));
     }
 }
 
