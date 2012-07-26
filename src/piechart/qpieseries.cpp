@@ -132,6 +132,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \o 1.0 is the maximum size that can fit the chart.
     \endlist
 
+    When setting this property the donutInnerSize property is adjusted if necessary, to ensure that the inner size is not greater than the outer size.
+
     Default value is 0.7.
 */
 
@@ -177,7 +179,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \o 1.0 is the maximum size that can fit the chart. (donut has no width)
     \endlist
 
-    The value is never greater then size property.
+    When setting this property the size property is adjusted if necessary, to ensure that the inner size is not greater than the outer size.
+
     Default value is 0.5.
 */
 
@@ -582,15 +585,8 @@ bool QPieSeries::donut() const
 void QPieSeries::setDonutInnerSize(qreal innerSize)
 {
     Q_D(QPieSeries);
-
-    if (innerSize < 0.0)
-        innerSize = 0.0;
-    if (innerSize > d->m_pieRelativeSize)
-        innerSize = d->m_pieRelativeSize;
-
-    d->m_donutRelativeInnerSize = innerSize;
-    d->updateDerivativeData();
-    emit d->pieSizeChanged();
+    innerSize = qBound(0.0, innerSize, 1.0);
+    d->setSizes(innerSize, qMax(d->m_pieRelativeSize, innerSize));
 }
 
 qreal QPieSeries::donutInnerSize() const
@@ -644,16 +640,9 @@ qreal QPieSeries::verticalPosition() const
 void QPieSeries::setPieSize(qreal relativeSize)
 {
     Q_D(QPieSeries);
+    relativeSize = qBound(0.0, relativeSize, 1.0);
+    d->setSizes(qMin(d->m_donutRelativeInnerSize, relativeSize), relativeSize);
 
-    if (relativeSize < 0.0)
-        relativeSize = 0.0;
-    if (relativeSize > 1.0)
-        relativeSize = 1.0;
-
-    if (!qFuzzyIsNull(d->m_pieRelativeSize - relativeSize)) {
-        d->m_pieRelativeSize = relativeSize;
-        emit d->pieSizeChanged();
-    }
 }
 
 qreal QPieSeries::pieSize() const
@@ -783,6 +772,24 @@ void QPieSeriesPrivate::updateDerivativeData()
 
 
     emit calculatedDataChanged();
+}
+
+void QPieSeriesPrivate::setSizes(qreal innerSize, qreal outerSize)
+{
+    bool changed = false;
+
+    if (!qFuzzyIsNull(m_donutRelativeInnerSize - innerSize)) {
+        m_donutRelativeInnerSize = innerSize;
+        changed = true;
+    }
+
+    if (!qFuzzyIsNull(m_pieRelativeSize - outerSize)) {
+        m_pieRelativeSize = outerSize;
+        changed = true;
+    }
+
+    if (changed)
+        emit pieSizeChanged();
 }
 
 QPieSeriesPrivate* QPieSeriesPrivate::fromSeries(QPieSeries *series)

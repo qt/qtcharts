@@ -38,11 +38,11 @@ int main(int argc, char *argv[])
 
     //![2]
     QDateTime momentInTime;
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 200; i++) {
         momentInTime.setDate(QDate(2012, 1 , (1 + i / 9) % 28));
         momentInTime.setTime(QTime(9 + i % 9, 0));
         if (i > 0)
-            series->append(momentInTime.toMSecsSinceEpoch(), series->points().at(i - 1).y() *  (0.95 + (qrand() % 11) / 100.0));
+            series->append(momentInTime.toMSecsSinceEpoch(), series->points().at(i - 1).y() *  (0.99 + (qrand() % 3) / 100.0));
         else
             series->append(momentInTime.toMSecsSinceEpoch(), 45);
     }
@@ -54,13 +54,7 @@ int main(int argc, char *argv[])
     chart->addSeries(series);
     chart->createDefaultAxes();
     QDateTimeAxis *axisX = new QDateTimeAxis;
-    axisX->setTicksCount(20);
-    momentInTime.setDate(QDate(2012,1,1));
-    momentInTime.setTime(QTime(6, 0));
-    axisX->setMin(momentInTime);
-    momentInTime.setDate(QDate(2012,1,7));
-    momentInTime.setTime(QTime(18, 0));
-    axisX->setMax(momentInTime);
+//    axisX->setTicksCount(10);
     chart->setAxisX(axisX, series);
     chart->setTitle("Date and Time axis chart example");
     //![3]

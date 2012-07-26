@@ -51,6 +51,7 @@ public:
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
 
     void updateDerivativeData();
+    void setSizes(qreal innerSize, qreal outerSize);
 
     static QPieSeriesPrivate* fromSeries(QPieSeries *series);
 
