@@ -44,7 +44,7 @@ ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : ChartEleme
     //initial initialization
     m_arrow->setZValue(ChartPresenter::AxisZValue);
     m_arrow->setHandlesChildEvents(false);
-
+    m_labels->setZValue(ChartPresenter::AxisZValue);
     m_shades->setZValue(ChartPresenter::ShadesZValue);
     m_grid->setZValue(ChartPresenter::GridZValue);
 
