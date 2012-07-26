@@ -601,6 +601,9 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 }
 
 
+/*!
+  Returns the orientation in which the axis is being used (Vertical or Horizontal)
+*/
 Qt::Orientation QAbstractAxis::orientation()
 {
     return d_ptr->m_orientation;

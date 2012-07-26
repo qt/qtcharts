@@ -53,7 +53,7 @@ public:
 
     void emitUpdated();
     void setDirty(bool dirty);
-    bool isDirty(){ return m_dirty; };
+    bool isDirty(){ return m_dirty; }
     void setOrientation(Qt::Orientation orientation);
     Qt::Orientation orientation() const { return m_orientation; }
 

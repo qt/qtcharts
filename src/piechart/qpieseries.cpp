@@ -715,6 +715,14 @@ void QPieSeries::setLabelsVisible(bool visible)
         s->setLabelVisible(visible);
 }
 
+/*!
+    Sets the all the slice labels \a position
+
+    Note that this affects only the current slices in the series.
+    If user adds a new slice the default label position is LabelOutside
+
+    \sa QPieSlice::labelPosition(), QPieSlice::setLabelPosition()
+*/
 void QPieSeries::setLabelsPosition(QPieSlice::LabelPosition position)
 {
     Q_D(QPieSeries);
