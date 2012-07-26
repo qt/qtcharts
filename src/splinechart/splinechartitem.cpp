@@ -34,7 +34,7 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, ChartPresenter *presente
     m_pointsVisible(false),
     m_animation(0)
 {
-    setZValue(ChartPresenter::LineChartZValue);
+    setZValue(ChartPresenter::SplineChartZValue);
     QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     handleUpdated();
@@ -169,6 +169,7 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit XYChart::clicked(calculateDomainPoint(event->pos()));
+    QGraphicsItem::mousePressEvent(event);
 }
 
 #include "moc_splinechartitem_p.cpp"

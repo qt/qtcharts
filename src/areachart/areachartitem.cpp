@@ -143,6 +143,7 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 void AreaChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit clicked(m_upper->calculateDomainPoint(event->pos()));
+    ChartItem::mousePressEvent(event);
 }
 
 #include "moc_areachartitem_p.cpp"

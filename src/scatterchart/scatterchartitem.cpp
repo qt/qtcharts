@@ -68,14 +68,14 @@ void ScatterChartItem::createPoints(int count)
 
         switch (m_shape) {
             case QScatterSeries::MarkerShapeCircle: {
-                QGraphicsEllipseItem* i = new QGraphicsEllipseItem(0,0,m_size,m_size);
+                QGraphicsEllipseItem* i = new QGraphicsEllipseItem(0,0,m_size,m_size,this);
                 const QRectF& rect = i->boundingRect();
                 i->setPos(-rect.width()/2,-rect.height()/2);
                 item = new Marker(i,this);
                 break;
             }
             case QScatterSeries::MarkerShapeRectangle: {
-                QGraphicsRectItem* i = new QGraphicsRectItem(0,0,m_size,m_size);
+                QGraphicsRectItem* i = new QGraphicsRectItem(0,0,m_size,m_size,this);
                 i->setPos(-m_size/2,-m_size/2);
                 item = new Marker(i,this);
                 break;
@@ -198,6 +198,7 @@ void ScatterChartItem::handleUpdated()
 void ScatterChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit XYChart::clicked(calculateDomainPoint(event->pos()));
+    QGraphicsItem::mousePressEvent(event);
 }
 
 #include "moc_scatterchartitem_p.cpp"

@@ -45,6 +45,7 @@ void Bar::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event)
     emit clicked(m_index, m_barset);
+    QGraphicsItem::mousePressEvent(event);
 }
 
 void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -52,6 +53,7 @@ void Bar::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
     Q_UNUSED(event)
     m_hovering = true;
     emit hovered(true, m_barset);
+
 }
 
 void Bar::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)

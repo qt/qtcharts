@@ -107,6 +107,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit XYChart::clicked(calculateDomainPoint(event->pos()));
+    QGraphicsItem::mousePressEvent(event);
 }
 
 #include "moc_linechartitem_p.cpp"

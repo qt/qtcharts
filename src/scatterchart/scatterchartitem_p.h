@@ -138,6 +138,7 @@ protected:
    {
        Q_UNUSED(event)
        m_parent->markerSelected(this);
+       QAbstractGraphicsShapeItem::mousePressEvent(event);
    }
 
 private:

@@ -53,15 +53,17 @@ class ChartPresenter: public QObject
 public:
     enum ZValues {
         BackgroundZValue = -1,
-        ShadesZValue,
+        ShadesZValue ,
         GridZValue,
         SeriesZValue,
         LineChartZValue = SeriesZValue,
+        SplineChartZValue = SeriesZValue,
         BarSeriesZValue = SeriesZValue,
         ScatterSeriesZValue = SeriesZValue,
         PieSeriesZValue = SeriesZValue,
         AxisZValue,
-        LegendZValue
+        LegendZValue,
+        TopMostZValue
     };
 
     enum State {
