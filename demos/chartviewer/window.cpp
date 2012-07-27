@@ -18,7 +18,8 @@
  **
  ****************************************************************************/
 
-#include "chartwindow.h"
+#include "window.h"
+#include "view.h"
 
 #include <QChartView>
 #include <QPieSeries>
@@ -49,11 +50,27 @@
 #include <QApplication>
 #include <QDebug>
 
-ChartWindow::ChartWindow(QWidget* parent) :
-    QMainWindow(parent), m_listCount(3), m_valueMax(10), m_valueCount(7), m_scene(
-        new QGraphicsScene(this)), m_view(0), m_dataTable(
-        generateRandomData(m_listCount, m_valueMax, m_valueCount)), m_form(0), m_themeComboBox(0), m_antialiasCheckBox(
-        0), m_animatedComboBox(0), m_legendComboBox(0), m_openGLCheckBox(0)
+Window::Window(QWidget* parent) :
+    QMainWindow(parent),
+    m_listCount(3),
+    m_valueMax(10),
+    m_valueCount(7),
+    m_scene(new QGraphicsScene(this)),
+    m_view(0),
+    m_dataTable(generateRandomData(m_listCount, m_valueMax, m_valueCount)),
+    m_form(0),
+    m_themeComboBox(0),
+    m_antialiasCheckBox(0),
+    m_animatedComboBox(0),
+    m_legendComboBox(0),
+    m_openGLCheckBox(0),
+    m_zoomCheckBox(0),
+    m_scrollCheckBox(0),
+    m_rubberBand(new QGraphicsRectItem()),
+    m_isScrolling(false),
+    m_isZooming(false),
+    m_scroll(false),
+    m_zoom(false)
 {
     createProxyWidgets();
     connectSignals();
@@ -71,6 +88,8 @@ ChartWindow::ChartWindow(QWidget* parent) :
     settingsLayout->addItem(m_widgetHash["animatedComboBox"]);
     settingsLayout->addItem(m_widgetHash["legendLabel"]);
     settingsLayout->addItem(m_widgetHash["legendComboBox"]);
+    settingsLayout->addItem(m_widgetHash["scrollCheckBox"]);
+    settingsLayout->addItem(m_widgetHash["zoomCheckBox"]);
     settingsLayout->addStretch();
     baseLayout->addItem(settingsLayout, 0, 3, 2, 1);
     //create charts
@@ -107,34 +126,37 @@ ChartWindow::ChartWindow(QWidget* parent) :
     baseLayout->addItem(chart, 1, 2);
     m_chartList << chart;
 
-    // Set defaults
-    //m_antialiasCheckBox->setChecked(true);
-
     m_form = new QGraphicsWidget();
     m_form->setLayout(baseLayout);
     m_scene->addItem(m_form);
+    m_scene->addItem(m_rubberBand);
+    m_rubberBand->setVisible(false);
 
-    m_view = new GraphicsView(m_scene, m_form);
+    m_view = new View(m_scene, m_form);
     m_view->setMinimumSize(m_form->preferredSize().toSize());
 
+    // Set defaults
+    m_antialiasCheckBox->setChecked(true);
     updateUI();
     setCentralWidget(m_view);
 }
 
-ChartWindow::~ChartWindow()
+Window::~Window()
 {
 }
 
-void ChartWindow::connectSignals()
+void Window::connectSignals()
 {
     connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     connect(m_openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
+    connect(m_zoomCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
+    connect(m_scrollCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     connect(m_animatedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
 }
 
-DataTable ChartWindow::generateRandomData(int listCount, int valueMax, int valueCount) const
+DataTable Window::generateRandomData(int listCount, int valueMax, int valueCount) const
 {
     DataTable dataTable;
 
@@ -159,13 +181,15 @@ DataTable ChartWindow::generateRandomData(int listCount, int valueMax, int value
     return dataTable;
 }
 
-void ChartWindow::createProxyWidgets()
+void Window::createProxyWidgets()
 {
     m_themeComboBox = createThemeBox();
     m_antialiasCheckBox = new QCheckBox(tr("Anti-aliasing"));
     m_animatedComboBox = createAnimationBox();
     m_legendComboBox = createLegendBox();
     m_openGLCheckBox = new QCheckBox(tr("OpenGL"));
+    m_zoomCheckBox = new QCheckBox(tr("Zoom"));
+    m_scrollCheckBox = new QCheckBox(tr("Scroll"));
     m_widgetHash["themeComboBox"] = m_scene->addWidget(m_themeComboBox);
     m_widgetHash["antialiasCheckBox"] = m_scene->addWidget(m_antialiasCheckBox);
     m_widgetHash["animatedComboBox"] = m_scene->addWidget(m_animatedComboBox);
@@ -174,9 +198,11 @@ void ChartWindow::createProxyWidgets()
     m_widgetHash["themeLabel"] = m_scene->addWidget(new QLabel("Theme"));
     m_widgetHash["animationsLabel"] = m_scene->addWidget(new QLabel("Animations"));
     m_widgetHash["legendLabel"] = m_scene->addWidget(new QLabel("Legend"));
+    m_widgetHash["zoomCheckBox"] = m_scene->addWidget(m_zoomCheckBox);
+    m_widgetHash["scrollCheckBox"] = m_scene->addWidget(m_scrollCheckBox);
 }
 
-QComboBox* ChartWindow::createThemeBox() const
+QComboBox* Window::createThemeBox() const
 {
     // settings layoutQGLWidget’
     QComboBox* themeComboBox = new QComboBox();
@@ -190,7 +216,7 @@ QComboBox* ChartWindow::createThemeBox() const
     return themeComboBox;
 }
 
-QComboBox* ChartWindow::createAnimationBox() const
+QComboBox* Window::createAnimationBox() const
 {
     // settings layout
     QComboBox* animationComboBox = new QComboBox();
@@ -201,7 +227,7 @@ QComboBox* ChartWindow::createAnimationBox() const
     return animationComboBox;
 }
 
-QComboBox* ChartWindow::createLegendBox() const
+QComboBox* Window::createLegendBox() const
 {
     QComboBox* legendComboBox = new QComboBox();
     legendComboBox->addItem("No Legend ", 0);
@@ -212,7 +238,7 @@ QComboBox* ChartWindow::createLegendBox() const
     return legendComboBox;
 }
 
-QChart* ChartWindow::createAreaChart() const
+QChart* Window::createAreaChart() const
 {
     QChart *chart = new QChart();
 //    chart->axisX()->setNiceNumbersEnabled(true);
@@ -245,7 +271,7 @@ QChart* ChartWindow::createAreaChart() const
     return chart;
 }
 
-QChart* ChartWindow::createBarChart(int valueCount) const
+QChart* Window::createBarChart(int valueCount) const
 {
     Q_UNUSED(valueCount);
     QChart* chart = new QChart();
@@ -266,7 +292,7 @@ QChart* ChartWindow::createBarChart(int valueCount) const
     return chart;
 }
 
-QChart* ChartWindow::createLineChart() const
+QChart* Window::createLineChart() const
 {
     QChart* chart = new QChart();
     //TODO: chart->axisX()->setNiceNumbersEnabled(true);
@@ -288,7 +314,7 @@ QChart* ChartWindow::createLineChart() const
     return chart;
 }
 
-QChart* ChartWindow::createPieChart() const
+QChart* Window::createPieChart() const
 {
     QChart* chart = new QChart();
     chart->setTitle("Pie chart");
@@ -313,7 +339,7 @@ QChart* ChartWindow::createPieChart() const
     return chart;
 }
 
-QChart* ChartWindow::createSplineChart() const
+QChart* Window::createSplineChart() const
 {
     QChart* chart = new QChart();
     //TODO: chart->axisX()->setNiceNumbersEnabled(true);
@@ -333,7 +359,7 @@ QChart* ChartWindow::createSplineChart() const
     return chart;
 }
 
-QChart* ChartWindow::createScatterChart() const
+QChart* Window::createScatterChart() const
 {
     QChart* chart = new QChart();
     //TODO: chart->axisX()->setNiceNumbersEnabled(true);
@@ -353,13 +379,13 @@ QChart* ChartWindow::createScatterChart() const
     return chart;
 }
 
-void ChartWindow::updateUI()
+void Window::updateUI()
 {
     bool opengl = m_openGLCheckBox->isChecked();
     bool isOpengl = qobject_cast<QGLWidget*>(m_view->viewport());
     if ((isOpengl && !opengl) || (!isOpengl && opengl)) {
         m_view->deleteLater();
-        m_view = new GraphicsView(m_scene, m_form);
+        m_view = new View(m_scene, m_form);
         m_view->setViewport(!opengl ? new QWidget() : new QGLWidget());
         setCentralWidget(m_view);
     }
@@ -407,6 +433,7 @@ void ChartWindow::updateUI()
         widget->setPalette(pal);
     }
     m_view->setBackgroundBrush(pal.color((QPalette::Window)));
+    m_rubberBand->setPen(pal.color((QPalette::WindowText)));
 
     QChart::AnimationOptions options(
         m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
@@ -429,10 +456,129 @@ void ChartWindow::updateUI()
         }
     }
 
-    bool checked = m_antialiasCheckBox->isChecked();
+    bool antialias = m_antialiasCheckBox->isChecked();
+
     if (opengl)
-        m_view->setRenderHint(QPainter::HighQualityAntialiasing, checked);
+        m_view->setRenderHint(QPainter::HighQualityAntialiasing, antialias);
     else
-        m_view->setRenderHint(QPainter::Antialiasing, checked);
+        m_view->setRenderHint(QPainter::Antialiasing, antialias);
+
+    bool scroll = m_scrollCheckBox->isChecked();
+
+    if(!m_scroll & scroll){
+        m_scroll=true;
+        m_zoom=false;
+        m_zoomCheckBox->setChecked(false);
+    }
+
+    bool zoom = m_zoomCheckBox->isChecked();
+
+    if(!m_zoom & zoom){
+           m_scroll=false;
+           m_zoom=true;
+           m_scrollCheckBox->setChecked(false);
+    }
+
 }
 
+void Window::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+
+        m_origin = event->pos();
+        m_isScrolling = false;
+        m_isZooming = false;
+
+        foreach (QChart *chart, m_chartList) {
+
+            QRectF geometryRect = chart->geometry();
+            QRectF plotArea = chart->plotArea();
+            plotArea.translate(geometryRect.topLeft());
+            if (plotArea.contains(m_origin)) {
+                m_isScrolling = m_scroll;
+                m_isZooming = m_zoom;
+                break;
+            }
+        }
+
+        if (m_isZooming) {
+            m_rubberBand->setRect(QRectF(m_origin, QSize()));
+            m_rubberBand->setVisible(true);
+        }
+        event->accept();
+    }
+
+    if (event->button() == Qt::RightButton) {
+        m_origin = event->pos();
+        m_isZooming = m_zoom;
+    }
+}
+
+void Window::mouseMoveEvent(QMouseEvent *event)
+{
+    if (m_isScrolling || m_isZooming) {
+
+        foreach (QChart *chart, m_chartList) {
+
+            QRectF geometryRect = chart->geometry();
+            QRectF plotArea = chart->plotArea();
+            plotArea.translate(geometryRect.topLeft());
+
+            if (plotArea.contains(m_origin)) {
+                if (m_isScrolling) {
+                    QPointF delta = m_origin - event->pos();
+                    chart->scroll(delta.x(), -delta.y());
+                }
+                if (m_isZooming && plotArea.contains(event->pos())) {
+                    m_rubberBand->setRect(QRectF(m_origin, event->pos()).normalized());
+                }
+                break;
+            }
+        }
+        if(m_isScrolling) m_origin = event->pos();
+        event->accept();
+    }
+}
+
+void Window::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton) {
+        m_isScrolling = false;
+        if (m_isZooming) {
+            m_isZooming = false;
+            m_rubberBand->setVisible(false);
+
+            foreach (QChart *chart, m_chartList) {
+
+                QRectF geometryRect = chart->geometry();
+                QRectF plotArea = chart->plotArea();
+                plotArea.translate(geometryRect.topLeft());
+
+                if (plotArea.contains(m_origin)) {
+                    QRectF rect = m_rubberBand->rect();
+                    chart->zoomIn(rect);
+                    break;
+                }
+            }
+        }
+        event->accept();
+    }
+
+    if (event->button() == Qt::RightButton) {
+
+        if (m_isZooming) {
+            foreach (QChart *chart, m_chartList) {
+
+                QRectF geometryRect = chart->geometry();
+                QRectF plotArea = chart->plotArea();
+                plotArea.translate(geometryRect.topLeft());
+
+                if (plotArea.contains(m_origin)) {
+                    QRectF rect = m_rubberBand->rect();
+                    chart->zoomOut();
+                    break;
+                }
+            }
+        }
+    }
+}

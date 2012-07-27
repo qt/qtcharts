@@ -1,5 +1,5 @@
 !include( ../demos.pri ):error( "Couldn't find the demos.pri file!" )
 TARGET = chartviewer
 QT += opengl
-SOURCES = main.cpp chartwindow.cpp
-HEADERS = chartwindow.h
+SOURCES = main.cpp window.cpp view.cpp     
+HEADERS = window.h view.h

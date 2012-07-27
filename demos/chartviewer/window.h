@@ -18,17 +18,18 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTWINDOW_H_
-#define CHARTWINDOW_H_
+#ifndef WINDOW_H_
+#define WINDOW_H_
 #include <QMainWindow>
 #include <QChartGlobal>
 #include <QHash>
-#include <QGraphicsView>
-#include <QResizeEvent>
-#include <QGraphicsWidget>
 
 class QComboBox;
 class QCheckBox;
+class QGraphicsRectItem;
+class QGraphicsScene;
+class QGraphicsWidget;
+class View;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChart;
@@ -38,42 +39,18 @@ typedef QPair<QPointF, QString> Data;
 typedef QList<Data> DataList;
 typedef QList<DataList> DataTable;
 
-class QGraphicsScene;
-
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-
-class GraphicsView: public QGraphicsView
-{
-public:
-    GraphicsView(QGraphicsScene *scene, QGraphicsWidget *form , QWidget *parent = 0):QGraphicsView(scene,parent), m_form(form)
-    {
-        setWindowTitle(tr("Charts"));
-    }
-
-protected:
-    void resizeEvent(QResizeEvent *event)
-    {
-        if (scene())
-            scene()->setSceneRect(QRect(QPoint(0, 0), event->size()));
-        if (m_form)
-            m_form->resize(QSizeF(event->size()));
-        QGraphicsView::resizeEvent(event);
-    }
-private:
-    QGraphicsWidget *m_form;
-};
-
-
-class ChartWindow: public QMainWindow
+class Window: public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit ChartWindow(QWidget *parent = 0);
-    ~ChartWindow();
+    explicit Window(QWidget *parent = 0);
+    ~Window();
 
 private Q_SLOTS:
     void updateUI();
+
 
 private:
     DataTable generateRandomData(int listCount,int valueMax,int valueCount) const;
@@ -89,12 +66,18 @@ private:
     QChart* createScatterChart() const;
     void createProxyWidgets();
 
+protected:
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
+
 private:
     int m_listCount;
     int m_valueMax;
     int m_valueCount;
     QGraphicsScene* m_scene;
-    GraphicsView* m_view;
+    View* m_view;
     QHash<QString, QGraphicsProxyWidget*> m_widgetHash;
     QList<QChart*> m_chartList;
     DataTable m_dataTable;
@@ -105,6 +88,15 @@ private:
     QComboBox *m_animatedComboBox;
     QComboBox *m_legendComboBox;
     QCheckBox *m_openGLCheckBox;
+    QCheckBox *m_zoomCheckBox;
+    QCheckBox *m_scrollCheckBox;
+    QPoint m_origin;
+    QGraphicsRectItem* m_rubberBand;
+
+    bool m_isScrolling;
+    bool m_isZooming;
+    bool m_scroll;
+    bool m_zoom;
 };
 
 #endif

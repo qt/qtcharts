@@ -18,15 +18,24 @@
 **
 ****************************************************************************/
 
-#include "window.h"
-#include <QApplication>
-#include <QMainWindow>
+#ifndef VIEW_H_
+#define VIEW_H_
+#include <QGraphicsView>
 
-int main(int argc, char *argv[])
+class QGraphicsScene;
+class QResizeEvent;
+
+class View: public QGraphicsView
 {
-    QApplication a(argc, argv);
-    Window window;
-    window.show();
-    return a.exec();
-}
+public:
+    View(QGraphicsScene *scene, QGraphicsWidget *form , QWidget *parent = 0);
 
+protected:
+    void resizeEvent(QResizeEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+private:
+    QGraphicsWidget *m_form;
+};
+
+#endif
