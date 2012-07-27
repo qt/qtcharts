@@ -42,7 +42,17 @@ QString QChartsPlugin::name() const
 
 QString QChartsPlugin::includeFile() const
 {
-    return "<qchartview.h>";
+    #ifdef linux
+    QString myNewLine = "\n";
+    #endif
+    #ifdef WIN32
+    QString myNewLine = "\n\r";
+    #endif
+    #ifdef __APPLE__
+    QString myNewLine = "\n";
+    #endif
+
+    return "<qchartview.h>" + myNewLine + "#include <chartsnamespace.h>";
 }
 
 QString QChartsPlugin::group() const

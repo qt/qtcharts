@@ -53,11 +53,13 @@ PRIVATE_HEADERS += \
     $$PWD/scroller_p.h \
     $$PWD/qabstractseries_p.h \
     $$PWD/chartlayout_p.h
+
 PUBLIC_HEADERS += \
     $$PWD/qchart.h \
     $$PWD/qchartglobal.h \
     $$PWD/qabstractseries.h \
-    $$PWD/qchartview.h
+    $$PWD/qchartview.h \
+    $$PWD/chartsnamespace.h
     
 include(animations/animations.pri)
 include(areachart/areachart.pri)    
