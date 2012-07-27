@@ -43,6 +43,7 @@ void View::resizeEvent(QResizeEvent *event)
 void View::mouseMoveEvent(QMouseEvent *event)
 {
     //BugFix somehow view always eats the mouse move event;
+    QGraphicsView::mouseMoveEvent(event);
     event->setAccepted(false);
 }
 
