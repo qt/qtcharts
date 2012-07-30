@@ -556,6 +556,7 @@ void Window::mouseReleaseEvent(QMouseEvent *event)
 
                 if (plotArea.contains(m_origin)) {
                     QRectF rect = m_rubberBand->rect();
+                    rect.translate(-geometryRect.topLeft());
                     chart->zoomIn(rect);
                     break;
                 }
