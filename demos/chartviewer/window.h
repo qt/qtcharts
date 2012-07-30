@@ -23,8 +23,8 @@
 #include <QMainWindow>
 #include <QChartGlobal>
 #include <QHash>
+#include <QComboBox>
 
-class QComboBox;
 class QCheckBox;
 class QGraphicsRectItem;
 class QGraphicsScene;
@@ -41,6 +41,7 @@ typedef QList<DataList> DataTable;
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
+
 class Window: public QMainWindow
 {
     Q_OBJECT
@@ -54,11 +55,12 @@ private Q_SLOTS:
 
 private:
     DataTable generateRandomData(int listCount,int valueMax,int valueCount) const;
-    QComboBox* createThemeBox() const;
-    QComboBox* createAnimationBox() const;
-    QComboBox* createLegendBox() const;
+    QComboBox* createThemeBox();
+    QComboBox* createAnimationBox();
+    QComboBox* createLegendBox();
     void connectSignals();
     void createProxyWidgets();
+    void comboBoxFocused(QComboBox *combox);
 
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -91,6 +93,24 @@ private:
     bool m_isZooming;
     bool m_scroll;
     bool m_zoom;
+
+    friend class ComboBox;
+};
+
+class ComboBox: public QComboBox
+{
+public:
+    ComboBox(Window* window,QWidget *parent = 0):QComboBox(parent),m_window(window)
+    {}
+
+protected:
+    void focusInEvent(QFocusEvent *e)
+    {
+        QComboBox::focusInEvent(e);
+        m_window->comboBoxFocused(this);
+    }
+private:
+    Window* m_window;
 };
 
 #endif

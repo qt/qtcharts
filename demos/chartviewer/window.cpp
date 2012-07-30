@@ -95,13 +95,6 @@ Window::Window(QWidget* parent) :
     baseLayout->addItem(settingsLayout, 0, 3, 2, 1);
     //create charts
 
-    int i = m_widgetHash.count();
-    foreach(QGraphicsProxyWidget* widget , m_widgetHash) {
-        widget->setZValue(i--);
-        widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
-    }
-
-
     Charts::ChartList list = Charts::chartList();
 
     for(int i = 0 ; i < 6 ; ++i)
@@ -133,13 +126,13 @@ Window::~Window()
 
 void Window::connectSignals()
 {
-    connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
-    connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
-    connect(m_openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
-    connect(m_zoomCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
-    connect(m_scrollCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
-    connect(m_animatedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
-    connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
+    QObject::connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
+    QObject::connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
+    QObject::connect(m_openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
+    QObject::connect(m_zoomCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
+    QObject::connect(m_scrollCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
+    QObject::connect(m_animatedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
+    QObject::connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
 }
 
 DataTable Window::generateRandomData(int listCount, int valueMax, int valueCount) const
@@ -188,10 +181,10 @@ void Window::createProxyWidgets()
     m_widgetHash["scrollCheckBox"] = m_scene->addWidget(m_scrollCheckBox);
 }
 
-QComboBox* Window::createThemeBox() const
+QComboBox* Window::createThemeBox()
 {
     // settings layoutQGLWidget’
-    QComboBox* themeComboBox = new QComboBox();
+    QComboBox* themeComboBox = new ComboBox(this);
     themeComboBox->addItem("Light", QChart::ChartThemeLight);
     themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
     themeComboBox->addItem("Dark", QChart::ChartThemeDark);
@@ -202,10 +195,10 @@ QComboBox* Window::createThemeBox() const
     return themeComboBox;
 }
 
-QComboBox* Window::createAnimationBox() const
+QComboBox* Window::createAnimationBox()
 {
     // settings layout
-    QComboBox* animationComboBox = new QComboBox();
+    QComboBox* animationComboBox = new ComboBox(this);
     animationComboBox->addItem("No Animations", QChart::NoAnimation);
     animationComboBox->addItem("GridAxis Animations", QChart::GridAxisAnimations);
     animationComboBox->addItem("Series Animations", QChart::SeriesAnimations);
@@ -213,9 +206,9 @@ QComboBox* Window::createAnimationBox() const
     return animationComboBox;
 }
 
-QComboBox* Window::createLegendBox() const
+QComboBox* Window::createLegendBox()
 {
-    QComboBox* legendComboBox = new QComboBox();
+    QComboBox* legendComboBox = new ComboBox(this);
     legendComboBox->addItem("No Legend ", 0);
     legendComboBox->addItem("Legend Top", Qt::AlignTop);
     legendComboBox->addItem("Legend Bottom", Qt::AlignBottom);
@@ -426,5 +419,15 @@ void Window::mouseReleaseEvent(QMouseEvent *event)
                 }
             }
         }
+    }
+}
+
+void Window::comboBoxFocused(QComboBox *combobox)
+{
+    foreach(QGraphicsProxyWidget* widget , m_widgetHash) {
+       if(widget->widget()==combobox)
+        widget->setZValue(2.0);
+       else
+        widget->setZValue(0.0);
     }
 }
