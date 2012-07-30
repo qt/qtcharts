@@ -20,6 +20,7 @@
 
 #include "window.h"
 #include "view.h"
+#include "charts.h"
 
 #include <QChartView>
 #include <QPieSeries>
@@ -100,31 +101,16 @@ Window::Window(QWidget* parent) :
         widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     }
 
-    QChart* chart;
 
-    chart = createAreaChart();
-    baseLayout->addItem(chart, 0, 0);
-    m_chartList << chart;
+    Charts::ChartList list = Charts::chartList();
 
-    chart = createBarChart(m_valueCount);
-    baseLayout->addItem(chart, 0, 1);
-    m_chartList << chart;
-
-    chart = createLineChart();
-    baseLayout->addItem(chart, 0, 2);
-    m_chartList << chart;
-
-    chart = createPieChart();
-    baseLayout->addItem(chart, 1, 0);
-    m_chartList << chart;
-
-    chart = createSplineChart();
-    baseLayout->addItem(chart, 1, 1);
-    m_chartList << chart;
-
-    chart = createScatterChart();
-    baseLayout->addItem(chart, 1, 2);
-    m_chartList << chart;
+    for(int i = 0 ; i < 6 ; ++i)
+    {
+        if(!(i<list.size()) || list.isEmpty()) break;
+        QChart* chart = list.at(i)->createChart(m_dataTable);
+        baseLayout->addItem(chart, i/3, i%3);
+        m_chartList << chart;
+    }
 
     m_form = new QGraphicsWidget();
     m_form->setLayout(baseLayout);
@@ -238,147 +224,6 @@ QComboBox* Window::createLegendBox() const
     return legendComboBox;
 }
 
-QChart* Window::createAreaChart() const
-{
-    QChart *chart = new QChart();
-//    chart->axisX()->setNiceNumbersEnabled(true);
-//    chart->axisY()->setNiceNumbersEnabled(true);
-    chart->setTitle("Area chart");
-
-    // The lower series initialized to zero values
-    QLineSeries *lowerSeries = 0;
-    QString name("Series ");
-    int nameIndex = 0;
-    for (int i(0); i < m_dataTable.count(); i++) {
-        QLineSeries *upperSeries = new QLineSeries(chart);
-        for (int j(0); j < m_dataTable[i].count(); j++) {
-            Data data = m_dataTable[i].at(j);
-            if (lowerSeries) {
-                const QList<QPointF>& points = lowerSeries->points();
-                upperSeries->append(QPointF(j, points[i].y() + data.first.y()));
-            }
-            else
-                upperSeries->append(QPointF(j, data.first.y()));
-        }
-        QAreaSeries *area = new QAreaSeries(upperSeries, lowerSeries);
-        area->setName(name + QString::number(nameIndex));
-        nameIndex++;
-        chart->addSeries(area);
-        chart->createDefaultAxes();
-        lowerSeries = upperSeries;
-    }
-
-    return chart;
-}
-
-QChart* Window::createBarChart(int valueCount) const
-{
-    Q_UNUSED(valueCount);
-    QChart* chart = new QChart();
-    //TODO: chart->axisX()->setNiceNumbersEnabled(true);
-    //TODO: chart->axisY()->setNiceNumbersEnabled(true);
-    chart->setTitle("Bar chart");
-
-    QStackedBarSeries* series = new QStackedBarSeries(chart);
-    for (int i(0); i < m_dataTable.count(); i++) {
-        QBarSet *set = new QBarSet("Bar set " + QString::number(i));
-        foreach (Data data, m_dataTable[i])
-            *set << data.first.y();
-        series->append(set);
-    }
-    chart->addSeries(series);
-    chart->createDefaultAxes();
-
-    return chart;
-}
-
-QChart* Window::createLineChart() const
-{
-    QChart* chart = new QChart();
-    //TODO: chart->axisX()->setNiceNumbersEnabled(true);
-    //TODO: chart->axisY()->setNiceNumbersEnabled(true);
-    chart->setTitle("Line chart");
-
-    QString name("Series ");
-    int nameIndex = 0;
-    foreach (DataList list, m_dataTable) {
-        QLineSeries *series = new QLineSeries(chart);
-        foreach (Data data, list)
-            series->append(data.first);
-        series->setName(name + QString::number(nameIndex));
-        nameIndex++;
-        chart->addSeries(series);
-    }
-    chart->createDefaultAxes();
-
-    return chart;
-}
-
-QChart* Window::createPieChart() const
-{
-    QChart* chart = new QChart();
-    chart->setTitle("Pie chart");
-
-    qreal pieSize = 1.0 / m_dataTable.count();
-    for (int i = 0; i < m_dataTable.count(); i++) {
-        QPieSeries *series = new QPieSeries(chart);
-        foreach (Data data, m_dataTable[i]) {
-            QPieSlice *slice = series->append(data.second, data.first.y());
-            if (data == m_dataTable[i].first()) {
-                slice->setLabelVisible();
-                slice->setExploded();
-            }
-        }
-        qreal hPos = (pieSize / 2) + (i / (qreal) m_dataTable.count());
-        series->setPieSize(pieSize);
-        series->setHorizontalPosition(hPos);
-        series->setVerticalPosition(0.5);
-        chart->addSeries(series);
-    }
-
-    return chart;
-}
-
-QChart* Window::createSplineChart() const
-{
-    QChart* chart = new QChart();
-    //TODO: chart->axisX()->setNiceNumbersEnabled(true);
-    //TODO: chart->axisY()->setNiceNumbersEnabled(true);
-    chart->setTitle("Spline chart");
-    QString name("Series ");
-    int nameIndex = 0;
-    foreach (DataList list, m_dataTable) {
-        QSplineSeries *series = new QSplineSeries(chart);
-        foreach (Data data, list)
-            series->append(data.first);
-        series->setName(name + QString::number(nameIndex));
-        nameIndex++;
-        chart->addSeries(series);
-    }
-    chart->createDefaultAxes();
-    return chart;
-}
-
-QChart* Window::createScatterChart() const
-{
-    QChart* chart = new QChart();
-    //TODO: chart->axisX()->setNiceNumbersEnabled(true);
-    //TODO: chart->axisY()->setNiceNumbersEnabled(true);
-    chart->setTitle("Scatter chart");
-    QString name("Series ");
-    int nameIndex = 0;
-    foreach (DataList list, m_dataTable) {
-        QScatterSeries *series = new QScatterSeries(chart);
-        foreach (Data data, list)
-            series->append(data.first);
-        series->setName(name + QString::number(nameIndex));
-        nameIndex++;
-        chart->addSeries(series);
-    }
-    chart->createDefaultAxes();
-    return chart;
-}
-
 void Window::updateUI()
 {
     bool opengl = m_openGLCheckBox->isChecked();
@@ -437,7 +282,7 @@ void Window::updateUI()
 
     QChart::AnimationOptions options(
         m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
-    if (m_chartList.at(0)->animationOptions() != options) {
+    if (!m_chartList.isEmpty() && m_chartList.at(0)->animationOptions() != options) {
         foreach (QChart *chart, m_chartList)
             chart->setAnimationOptions(options);
     }

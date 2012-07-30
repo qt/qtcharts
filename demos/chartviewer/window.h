@@ -58,12 +58,6 @@ private:
     QComboBox* createAnimationBox() const;
     QComboBox* createLegendBox() const;
     void connectSignals();
-    QChart* createAreaChart() const;
-    QChart* createBarChart(int valueCount) const;
-    QChart* createPieChart() const;
-    QChart* createLineChart() const;
-    QChart* createSplineChart() const;
-    QChart* createScatterChart() const;
     void createProxyWidgets();
 
 protected:
