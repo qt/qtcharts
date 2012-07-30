@@ -21,17 +21,7 @@
 #include "window.h"
 #include "view.h"
 #include "charts.h"
-
 #include <QChartView>
-#include <QPieSeries>
-#include <QPieSlice>
-#include <QPercentBarSeries>
-#include <QStackedBarSeries>
-#include <QBarSeries>
-#include <QBarSet>
-#include <QLineSeries>
-#include <QSplineSeries>
-#include <QScatterSeries>
 #include <QAreaSeries>
 #include <QLegend>
 #include <QGridLayout>
@@ -41,8 +31,6 @@
 #include <QCheckBox>
 #include <QGroupBox>
 #include <QLabel>
-#include <QTime>
-#include <QBarCategoriesAxis>
 #include <QGraphicsScene>
 #include <QGraphicsGridLayout>
 #include <QGraphicsLinearLayout>
@@ -58,7 +46,7 @@ Window::Window(QWidget* parent) :
     m_valueCount(7),
     m_scene(new QGraphicsScene(this)),
     m_view(0),
-    m_dataTable(generateRandomData(m_listCount, m_valueMax, m_valueCount)),
+    m_dataTable(Model::generateRandomData(m_listCount, m_valueMax, m_valueCount)),
     m_form(0),
     m_themeComboBox(0),
     m_antialiasCheckBox(0),
@@ -97,9 +85,8 @@ Window::Window(QWidget* parent) :
 
     Charts::ChartList list = Charts::chartList();
 
-    for(int i = 0 ; i < 6 ; ++i)
+    for(int i = 0 ; i < 9 && i<list.size() ; ++i)
     {
-        if(!(i<list.size()) || list.isEmpty()) break;
         QChart* chart = list.at(i)->createChart(m_dataTable);
         baseLayout->addItem(chart, i/3, i%3);
         m_chartList << chart;
@@ -133,31 +120,6 @@ void Window::connectSignals()
     QObject::connect(m_scrollCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_animatedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
-}
-
-DataTable Window::generateRandomData(int listCount, int valueMax, int valueCount) const
-{
-    DataTable dataTable;
-
-    // set seed for random stuff
-    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
-
-    // generate random data
-    for (int i(0); i < listCount; i++) {
-        DataList dataList;
-        qreal yValue(0);
-        for (int j(0); j < valueCount; j++) {
-            yValue = yValue + (qreal) (qrand() % valueMax) / (qreal) valueCount;
-            QPointF value(
-                (j + (qreal) qrand() / (qreal) RAND_MAX)
-                    * ((qreal) m_valueMax / (qreal) valueCount), yValue);
-            QString label = "Slice " + QString::number(i) + ":" + QString::number(j);
-            dataList << Data(value, label);
-        }
-        dataTable << dataList;
-    }
-
-    return dataTable;
 }
 
 void Window::createProxyWidgets()

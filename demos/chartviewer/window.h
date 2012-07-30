@@ -20,6 +20,7 @@
 
 #ifndef WINDOW_H_
 #define WINDOW_H_
+#include "model.h"
 #include <QMainWindow>
 #include <QChartGlobal>
 #include <QHash>
@@ -35,10 +36,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChart;
 QTCOMMERCIALCHART_END_NAMESPACE
 
-typedef QPair<QPointF, QString> Data;
-typedef QList<Data> DataList;
-typedef QList<DataList> DataTable;
-
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 
@@ -51,10 +48,7 @@ public:
 
 private Q_SLOTS:
     void updateUI();
-
-
 private:
-    DataTable generateRandomData(int listCount,int valueMax,int valueCount) const;
     QComboBox* createThemeBox();
     QComboBox* createAnimationBox();
     QComboBox* createLegendBox();

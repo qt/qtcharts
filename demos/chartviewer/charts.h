@@ -21,7 +21,7 @@
 
 #ifndef CHARTS_H
 #define CHARTS_H
-#include "window.h"
+#include "model.h"
 #include <QList>
 #include <QString>
 #include <qchartglobal.h>

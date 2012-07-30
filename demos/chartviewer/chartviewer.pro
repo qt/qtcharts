@@ -3,5 +3,5 @@ include(charts/charts.pri)
 TARGET = chartviewer
 QT += opengl
 SOURCES += main.cpp window.cpp view.cpp charts.cpp     
-HEADERS += window.h view.h charts.h 
+HEADERS += window.h view.h charts.h model.h
 

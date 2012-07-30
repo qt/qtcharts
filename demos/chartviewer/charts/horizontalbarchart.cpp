@@ -20,18 +20,18 @@
 
 #include "charts.h"
 #include "qchart.h"
-#include "qstackedbarseries.h"
+#include "qhorizontalbarseries.h"
 #include "qbarset.h"
 
-class BarChart: public Chart
+class HorizontalBarChart: public Chart
 {
 public:
 
-    BarChart(){
+    HorizontalBarChart(){
         initialize();
     }
 
-    QString name() { return QObject::tr("VerticalStackedBarChart"); }
+    QString name() { return QObject::tr("HorizontalBarChart"); }
     QString category()  { return QObject::tr("BarSeries"); }
     QString subCategory() { return QObject::tr("Vertical"); }
 
@@ -40,9 +40,9 @@ public:
 
         QChart* chart = new QChart();
 
-        chart->setTitle("Bar chart");
+        chart->setTitle("Horizontal bar chart");
 
-        QStackedBarSeries* series = new QStackedBarSeries(chart);
+        QHorizontalBarSeries* series = new QHorizontalBarSeries(chart);
         for (int i(0); i < table.count(); i++) {
             QBarSet *set = new QBarSet("Bar set " + QString::number(i));
             foreach (Data data, table[i])
@@ -56,5 +56,5 @@ public:
 
 };
 
-DECLARE_CHART(BarChart)
+DECLARE_CHART(HorizontalBarChart)
 
