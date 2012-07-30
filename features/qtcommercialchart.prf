@@ -1,11 +1,19 @@
 INCLUDEPATH += $$[QT_INSTALL_HEADERS]/QtCommercialChart
 
 CONFIG(debug, debug|release) {
-    mac {
+
+    mac: {
         LIBS += -lQtCommercialChart_debug
-    } else {
+    }
+    
+    win32: {
         LIBS += -lQtCommercialChartd
     }
+    
+    linux: {
+        LIBS += -lQtCommercialChart
+    }
+    
 } else {
     LIBS += -lQtCommercialChart
 }
