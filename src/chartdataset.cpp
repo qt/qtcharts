@@ -203,8 +203,8 @@ void ChartDataSet::initializeAxis(QAbstractAxis* axis,QAbstractSeries* series)
 {
     Domain* domain = m_seriesDomainMap.value(series);
     axis->d_ptr->m_dataset = this;
-    axis->d_ptr->intializeDomain(domain);
     series->d_ptr->initializeAxis(axis);
+    axis->d_ptr->intializeDomain(domain);
     if(axis->orientation()==Qt::Horizontal) {
         QObject::connect(axis->d_ptr.data(),SIGNAL(updated()),domain,SLOT(handleAxisUpdated()));
         QObject::connect(domain,SIGNAL(updated()),axis->d_ptr.data(),SLOT(handleDomainUpdated()));

@@ -423,17 +423,31 @@ ChartAxis* QBarCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
 
 void QBarCategoriesAxisPrivate::intializeDomain(Domain* domain)
 {
-    Q_UNUSED(domain);
-    // TODO: this causes crash now. added to known issues.
-    /*
-    if (qFuzzyCompare(m_max, m_min)) {
-        if(m_orientation==Qt::Vertical){
-            handleAxisRangeChanged(domain->minY(),domain->maxY(),domain->tickXCount());
-        }else{
-            handleAxisRangeChanged(domain->minX(),domain->maxX(),domain->tickYCount());
+
+    Q_Q(QBarCategoriesAxis);
+    if(m_max==m_min) {
+        int min;
+        int max;
+        if(m_orientation==Qt::Vertical) {
+            min = domain->minY() + 0.5;
+            max = domain->maxY() - 0.5;
+        }
+        else {
+            min = domain->minX() + 0.5;
+            max = domain->maxX() - 0.5;
+        }
+
+        if(min>0 && min<m_categories.count() && max>0 && max<m_categories.count())
+            q->setRange(m_categories.at(min),m_categories.at(max));
+    }
+    else {
+        if(m_orientation==Qt::Vertical) {
+            domain->setRangeY(m_min, m_max);
+        }
+        else {
+            domain->setRangeX(m_min, m_max);
         }
     }
-    */
 }
 
 #include "moc_qbarcategoriesaxis.cpp"

@@ -69,6 +69,10 @@ private slots:
     void range();
     void range_animation_data();
     void range_animation();
+    void noautoscale_data();
+    void noautoscale();
+    void autoscale_data();
+    void autoscale();
 
 private:
     QBarCategoriesAxis* m_baraxis;
@@ -576,6 +580,69 @@ void tst_QBarCategoriesAxis::range_animation()
     m_chart->setAnimationOptions(QChart::GridAxisAnimations);
     range();
 }
+
+
+void tst_QBarCategoriesAxis::noautoscale_data()
+{
+    QTest::addColumn<QString>("min");
+    QTest::addColumn<QString>("max");
+    QTest::newRow("Feb - Mar") << "Feb" << "Mar";
+    QTest::newRow("Feb - May") << "Feb" << "May";
+    QTest::newRow("Apr - May") << "Apr" << "May";
+}
+
+void tst_QBarCategoriesAxis::noautoscale()
+{
+    QFETCH(QString, min);
+    QFETCH(QString, max);
+
+    QSignalSpy spy0(m_baraxis, SIGNAL(maxChanged(QString)));
+    QSignalSpy spy1(m_baraxis, SIGNAL(minChanged(QString)));
+    QSignalSpy spy2(m_baraxis, SIGNAL(rangeChanged(QString, QString)));
+
+    m_baraxis->setRange(min, max);
+    QCOMPARE(m_baraxis->min(),min);
+    QCOMPARE(m_baraxis->max(),max);
+
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+
+    m_chart->setAxisX(m_baraxis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(m_baraxis->min(),min);
+    QCOMPARE(m_baraxis->max(),max);
+}
+
+void tst_QBarCategoriesAxis::autoscale_data()
+{
+
+}
+
+void tst_QBarCategoriesAxis::autoscale()
+{
+    delete m_baraxis;
+    m_baraxis = new QBarCategoriesAxis();
+
+    QSignalSpy spy0(m_baraxis, SIGNAL(maxChanged(QString)));
+    QSignalSpy spy1(m_baraxis, SIGNAL(minChanged(QString)));
+    QSignalSpy spy2(m_baraxis, SIGNAL(rangeChanged(QString, QString)));
+
+    QCOMPARE(m_baraxis->min(),QString());
+    QCOMPARE(m_baraxis->max(),QString());
+    m_chart->setAxisX(m_baraxis, m_series);
+
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(m_baraxis->min(),QString("1"));
+    QCOMPARE(m_baraxis->max(),QString("6"));
+}
+
 
 QTEST_MAIN(tst_QBarCategoriesAxis)
 #include "tst_qbarcategoriesaxis.moc"
