@@ -82,7 +82,6 @@ Window::Window(QWidget* parent) :
     settingsLayout->addStretch();
     baseLayout->addItem(settingsLayout, 0, 3, 2, 1);
     //create charts
-
     Charts::ChartList list = Charts::chartList();
 
     for(int i = 0 ; i < 9 && i<list.size() ; ++i)
@@ -145,7 +144,6 @@ void Window::createProxyWidgets()
 
 QComboBox* Window::createThemeBox()
 {
-    // settings layoutQGLWidget’
     QComboBox* themeComboBox = new ComboBox(this);
     themeComboBox->addItem("Light", QChart::ChartThemeLight);
     themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
@@ -159,7 +157,6 @@ QComboBox* Window::createThemeBox()
 
 QComboBox* Window::createAnimationBox()
 {
-    // settings layout
     QComboBox* animationComboBox = new ComboBox(this);
     animationComboBox->addItem("No Animations", QChart::NoAnimation);
     animationComboBox->addItem("GridAxis Animations", QChart::GridAxisAnimations);

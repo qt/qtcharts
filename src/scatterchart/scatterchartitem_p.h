@@ -38,7 +38,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QScatterSeries;
-class Marker;
 
 class ScatterChartItem : public XYChart, public QGraphicsItem
 {
@@ -55,7 +54,7 @@ public:
     void setPen(const QPen &pen);
     void setBrush(const QBrush &brush);
 
-    void markerSelected(Marker *item);
+    void markerSelected(QGraphicsItem *item);
 
 public Q_SLOTS:
     void handleUpdated();
@@ -66,7 +65,6 @@ private:
 
 protected:
     void updateGeometry();
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QScatterSeries *m_series;
@@ -75,76 +73,47 @@ private:
     int m_shape;
     int m_size;
     QRectF m_rect;
+    QMap<QGraphicsItem *, QPointF> m_markerMap;
 };
 
-
-class Marker: public QAbstractGraphicsShapeItem
+class CircleMarker: public QGraphicsEllipseItem
 {
 
 public:
-
-   Marker(QAbstractGraphicsShapeItem *item , ScatterChartItem *parent) : QAbstractGraphicsShapeItem(0) ,m_item(item), m_parent(parent)
+   CircleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent) : QGraphicsEllipseItem(x,y,w,h,parent),
+       m_parent(parent)
    {
-   }
-
-   ~Marker()
-   {
-       delete m_item;
-   }
-
-   void setPoint(const QPointF& point)
-   {
-       m_point=point;
-   }
-
-   QPointF point() const
-   {
-       return m_point;
-   }
-
-   QPainterPath shape() const
-   {
-       return m_item->shape();
-   }
-
-   QRectF boundingRect() const
-   {
-       return m_item->boundingRect();
-   }
-
-   bool contains(const QPointF &point) const
-   {
-       return m_item->contains(point);
-   }
-
-   void setPen(const QPen &pen)
-   {
-       m_item->setPen(pen);
-   }
-
-   void setBrush(const QBrush &brush)
-   {
-       m_item->setBrush(brush);
-   }
-
-   void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-   {
-       m_item->paint(painter,option,widget);
    }
 
 protected:
-
    void mousePressEvent(QGraphicsSceneMouseEvent *event)
    {
-       Q_UNUSED(event)
        m_parent->markerSelected(this);
-       QAbstractGraphicsShapeItem::mousePressEvent(event);
+       QGraphicsEllipseItem::mousePressEvent(event);
    }
 
 private:
-   QAbstractGraphicsShapeItem* m_item;
    ScatterChartItem* m_parent;
-   QPointF m_point;
+};
+
+class RectangleMarker: public QGraphicsRectItem
+{
+
+public:
+   RectangleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent) : QGraphicsRectItem(x,y,w,h,parent),
+       m_parent(parent)
+   {
+   }
+
+protected:
+   void mousePressEvent(QGraphicsSceneMouseEvent *event)
+   {
+       m_parent->markerSelected(this);
+       QGraphicsRectItem::mousePressEvent(event);
+   }
+
+private:
+   ScatterChartItem* m_parent;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

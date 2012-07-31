@@ -47,12 +47,6 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *prese
     handleUpdated();
 
     m_items.setHandlesChildEvents(false);
-
-    // TODO: how to draw a drop shadow?
-//    QGraphicsDropShadowEffect *dropShadow = new QGraphicsDropShadowEffect();
-//    dropShadow->setOffset(2.0);
-//    dropShadow->setBlurRadius(2.0);
-//    setGraphicsEffect(dropShadow);
 }
 
 QRectF ScatterChartItem::boundingRect() const
@@ -68,16 +62,14 @@ void ScatterChartItem::createPoints(int count)
 
         switch (m_shape) {
             case QScatterSeries::MarkerShapeCircle: {
-                QGraphicsEllipseItem* i = new QGraphicsEllipseItem(0,0,m_size,m_size,this);
-                const QRectF& rect = i->boundingRect();
-                i->setPos(-rect.width()/2,-rect.height()/2);
-                item = new Marker(i,this);
+                item = new CircleMarker(0,0,m_size,m_size,this);
+                const QRectF& rect = item->boundingRect();
+                item->setPos(-rect.width()/2,-rect.height()/2);
                 break;
             }
             case QScatterSeries::MarkerShapeRectangle: {
-                QGraphicsRectItem* i = new QGraphicsRectItem(0,0,m_size,m_size,this);
-                i->setPos(-m_size/2,-m_size/2);
-                item = new Marker(i,this);
+                item = new RectangleMarker(0,0,m_size,m_size,this);
+                item->setPos(-m_size/2,-m_size/2);
                 break;
             }
             default:
@@ -94,13 +86,15 @@ void ScatterChartItem::deletePoints(int count)
     QList<QGraphicsItem *> items = m_items.childItems();
 
     for (int i = 0; i < count; ++i) {
-        delete(items.takeLast());
+        QGraphicsItem * item = items.takeLast();
+        m_markerMap.remove(item);
+        delete(item);
     }
 }
 
-void ScatterChartItem::markerSelected(Marker *marker)
+void ScatterChartItem::markerSelected(QGraphicsItem *marker)
 {
-    emit XYChart::clicked(calculateDomainPoint(marker->point()));
+    emit XYChart::clicked(calculateDomainPoint(m_markerMap[marker]));
 }
 
 void ScatterChartItem::updateGeometry()
@@ -128,10 +122,10 @@ void ScatterChartItem::updateGeometry()
     QList<QGraphicsItem*> items = m_items.childItems();
 
     for (int i = 0; i < points.size(); i++) {
-        Marker* item = static_cast<Marker*>(items.at(i));
+        QGraphicsItem* item = items.at(i);
         const QPointF& point = points.at(i);
         const QRectF& rect = item->boundingRect();
-        item->setPoint(point);
+        m_markerMap[item]=point;
         item->setPos(point.x()-rect.width()/2,point.y()-rect.height()/2);
         if(!m_visible || !clipRect().contains(point)) {
             item->setVisible(false);
@@ -156,14 +150,14 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 void ScatterChartItem::setPen(const QPen& pen)
 {
     foreach(QGraphicsItem* item , m_items.childItems()) {
-        static_cast<Marker*>(item)->setPen(pen);
+        static_cast<QAbstractGraphicsShapeItem*>(item)->setPen(pen);
     }
 }
 
 void ScatterChartItem::setBrush(const QBrush& brush)
 {
     foreach(QGraphicsItem* item , m_items.childItems()) {
-        static_cast<Marker*>(item)->setBrush(brush);
+        static_cast<QAbstractGraphicsShapeItem*>(item)->setBrush(brush);
     }
 }
 
@@ -193,12 +187,6 @@ void ScatterChartItem::handleUpdated()
     setPen(m_series->pen());
     setBrush(m_series->brush());
     update();
-}
-
-void ScatterChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    emit XYChart::clicked(calculateDomainPoint(event->pos()));
-    QGraphicsItem::mousePressEvent(event);
 }
 
 #include "moc_scatterchartitem_p.cpp"
