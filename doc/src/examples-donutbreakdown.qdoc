@@ -1,44 +1,44 @@
 /*!
-     \example examples/donutdrilldown
-     \title Donut chart drilldown example
+     \example examples/donutbreakdown
+     \title Donut chart breakdown example
      \subtitle
 
-     This example shows how to use create a donut drilldown chart using QPieSeries API.
+     This example shows how to use create a donut breakdown chart using QPieSeries API.
 
      Let's start by creating a QChartView instance and enabling the Antialiasing on it. Last line enables the animations of the chart.
 
-     \snippet ../examples/donutdrilldown/widget.cpp 1
+     \snippet ../examples/donutbreakdown/widget.cpp 1
 
      PieSeries is used to present the general data.
 
-     \snippet ../examples/donutdrilldown/widget.cpp 2
+     \snippet ../examples/donutbreakdown/widget.cpp 2
 
      Following block of code creates the slices for the mainData QPieSeries.
      Then for every created slice a new series is created that stores the detailed data.
      The details series is set to be a donut. Its size is adjusted so that it wraps around the mainData pie.
      Next two signals from the mainData pie's slices are connected. This is used to keep the mainData slices agligned with their respective details series.
 
-     \snippet ../examples/donutdrilldown/widget.cpp 3
+     \snippet ../examples/donutbreakdown/widget.cpp 3
 
      Set the labels of the mainData to enabled and their postion to Outside.
      Then add the mainData and detailedData series to the chart.
 
-     \snippet ../examples/donutdrilldown/widget.cpp 4
+     \snippet ../examples/donutbreakdown/widget.cpp 4
 
      Finally the widget is placed in a layout used by the application.
 
-     \snippet ../examples/donutdrilldown/widget.cpp 5
+     \snippet ../examples/donutbreakdown/widget.cpp 5
 
      To show that the detailed data stays aligned with the main data every 2.5 sec. one of the slices is modified.
      It should be noted that int this example the mainData slices should not be modified directly as the change
      cannot be applied to the detailed slices without the extra knowledge on how the split looks like.
 
-     \snippet ../examples/donutdrilldown/widget.cpp 6
+     \snippet ../examples/donutbreakdown/widget.cpp 6
 
      When the mainData slice layout is changed the detailed data layout has to be modified accordingly.
      This is achived by setting the start and end angle of the detailed series.
 
-     \snippet ../examples/donutdrilldown/widget.cpp 7
+     \snippet ../examples/donutbreakdown/widget.cpp 7
 
      Highlight slot selects a random slice for the modification.
      The slice is set to exploded to notify the user that its going to be changed.
@@ -47,6 +47,6 @@
      Then the slice is modified. Respective mainData slice is modified as well to contain as the value the sum of the detailed series slices values.
      Finally the slice exploded state is set to false.
 
-     \snippet ../examples/donutdrilldown/widget.cpp 8
+     \snippet ../examples/donutbreakdown/widget.cpp 8
 
 */

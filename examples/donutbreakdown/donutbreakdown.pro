@@ -2,7 +2,7 @@
  error( "Couldn't find the examples.pri file!" )
 }
 
-TARGET = donutdrilldown
+TARGET = donutbreakdown
 SOURCES += main.cpp\
         widget.cpp
 

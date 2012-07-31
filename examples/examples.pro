@@ -28,6 +28,6 @@ SUBDIRS += \
            horizontalstackedbarchart \
            horizontalpercentbarchart \
            donut \
-           donutdrilldown \
+           donutbreakdown \
            scrollchart \
            datetimeaxis
