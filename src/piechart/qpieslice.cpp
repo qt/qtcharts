@@ -60,8 +60,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  This enum describes the position of the slice label.
 
  \value LabelOutside Label is outside the slice with an arm.
- \value LabelInside Label is centered inside the slice.
- \value LabelInsideTangential Label is centered inside the slice and rotated to be parallel to the tangential of the slice's arc
+ \value LabelInsideHorizontal Label is centered inside the slice and laid out horizontally.
+ \value LabelInsideTangential Label is centered inside the slice and rotated to be parallel to the tangential of the slice's arc.
  \value LabelInsideNormal Label is centered inside the slice rotated to be parallel to the normal of the slice's arc.
  */
 

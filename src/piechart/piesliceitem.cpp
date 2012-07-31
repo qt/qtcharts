@@ -92,7 +92,7 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
             painter->strokePath(m_labelArmPath, m_data.m_labelBrush.color());
             painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
             break;
-        case QPieSlice::LabelInside:
+        case QPieSlice::LabelInsideHorizontal:
             painter->setClipPath(m_slicePath);
             painter->drawText(m_labelTextRect, Qt::AlignCenter, m_data.m_labelText);
             break;
@@ -168,7 +168,7 @@ void PieSliceItem::updateGeometry()
     case QPieSlice::LabelOutside:
         m_labelTextRect.moveBottomLeft(labelTextStart);
         break;
-    case QPieSlice::LabelInside:
+    case QPieSlice::LabelInsideHorizontal:
     case QPieSlice::LabelInsideTangential:
     case QPieSlice::LabelInsideNormal:{
         QPointF textCenter;

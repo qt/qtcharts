@@ -61,7 +61,7 @@ Widget::Widget(QWidget *parent)
 
     //! [4]
     mainData->setLabelsVisible();
-    mainData->setLabelsPosition(QPieSlice::LabelInside);
+    mainData->setLabelsPosition(QPieSlice::LabelInsideHorizontal);
     chartView->chart()->addSeries(mainData);
     for (int i = 0; i < detailedData.count(); i++)
         chartView->chart()->addSeries(detailedData.at(i));

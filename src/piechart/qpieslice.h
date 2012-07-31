@@ -57,7 +57,7 @@ class QTCOMMERCIALCHART_EXPORT QPieSlice : public QObject
 public:
     enum LabelPosition {
         LabelOutside,
-        LabelInside,
+        LabelInsideHorizontal,
         LabelInsideTangential, // better name needed
         LabelInsideNormal // better name needed
     };

@@ -139,8 +139,8 @@ void tst_qpieslice::changedSignals()
     slice.setLabelBrush(QBrush(Qt::green));
     slice.setLabelFont(QFont("Tahoma"));
     slice.setLabelFont(QFont("Tahoma"));
-    slice.setLabelPosition(QPieSlice::LabelInside);
-    slice.setLabelPosition(QPieSlice::LabelInside);
+    slice.setLabelPosition(QPieSlice::LabelInsideHorizontal);
+    slice.setLabelPosition(QPieSlice::LabelInsideHorizontal);
     slice.setLabelArmLengthFactor(0.1);
     slice.setLabelArmLengthFactor(0.1);
     slice.setExplodeDistanceFactor(0.1);

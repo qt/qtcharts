@@ -172,7 +172,7 @@ MainWidget::MainWidget(QWidget* parent)
     m_labelBrushTool = new BrushTool("Label brush", this);
     m_labelPosition = new QComboBox(this);
     m_labelPosition->addItem("Outside", QPieSlice::LabelOutside);
-    m_labelPosition->addItem("Inside", QPieSlice::LabelInside);
+    m_labelPosition->addItem("Inside horizontal", QPieSlice::LabelInsideHorizontal);
     m_labelPosition->addItem("Inside tangential", QPieSlice::LabelInsideTangential);
     m_labelPosition->addItem("Inside normal", QPieSlice::LabelInsideNormal);
 
