@@ -135,7 +135,7 @@ install_build_public_headers.commands = $$QMAKE_COPY \
 install_build_public_headers.CONFIG += target_predeps \
     no_link
     
-install_build_private_headers.name = buld_private_headers
+install_build_private_headers.name = build_private_headers
 install_build_private_headers.output = $$CHART_BUILD_PRIVATE_HEADER_DIR/${QMAKE_FILE_BASE}.h
 install_build_private_headers.input = PRIVATE_HEADERS
 install_build_private_headers.commands = $$QMAKE_COPY \
