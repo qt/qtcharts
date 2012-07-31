@@ -82,22 +82,22 @@ ChartTheme::ChartTheme(QChart::ChartTheme id) :
 ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 {
     switch(theme) {
-        case QChart::ChartThemeLight:
-            return new ChartThemeLight();
-        case QChart::ChartThemeBlueCerulean:
-            return new ChartThemeBlueCerulean();
-        case QChart::ChartThemeDark:
-            return new ChartThemeDark();
-        case QChart::ChartThemeBrownSand:
-            return new ChartThemeBrownSand();
-        case QChart::ChartThemeBlueNcs:
-            return new ChartThemeBlueNcs();
-        case QChart::ChartThemeHighContrast:
-            return new ChartThemeHighContrast();
-        case QChart::ChartThemeBlueIcy:
-            return new ChartThemeBlueIcy();
-        default:
-            return new ChartThemeSystem();
+    case QChart::ChartThemeLight:
+        return new ChartThemeLight();
+    case QChart::ChartThemeBlueCerulean:
+        return new ChartThemeBlueCerulean();
+    case QChart::ChartThemeDark:
+        return new ChartThemeDark();
+    case QChart::ChartThemeBrownSand:
+        return new ChartThemeBrownSand();
+    case QChart::ChartThemeBlueNcs:
+        return new ChartThemeBlueNcs();
+    case QChart::ChartThemeHighContrast:
+        return new ChartThemeHighContrast();
+    case QChart::ChartThemeBlueIcy:
+        return new ChartThemeBlueIcy();
+    default:
+        return new ChartThemeSystem();
     }
 }
 
@@ -143,8 +143,8 @@ void ChartTheme::decorate(QAreaSeries *series, int index)
     }
 
     if (brush == series->brush() ||  m_force) {
-       QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
-       series->setBrush(brush);
+        QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
+        series->setBrush(brush);
     }
 }
 
@@ -189,10 +189,12 @@ void ChartTheme::decorate(QAbstractBarSeries *series, int index)
 
         // Pick label color from the opposite end of the gradient.
         // 0.3 as a boundary seems to work well.
-        if (takeAtPos < 0.3)
-            sets.at(i)->setLabelBrush(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1));
-        else
-            sets.at(i)->setLabelBrush(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0));
+        if (brush == sets.at(i)->labelBrush() || m_force) {
+            if (takeAtPos < 0.3)
+                sets.at(i)->setLabelBrush(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1));
+            else
+                sets.at(i)->setLabelBrush(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0));
+        }
 
         if (pen == sets.at(i)->pen() ||  m_force) {
             QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0);
@@ -274,23 +276,23 @@ void ChartTheme::decorate(QAbstractAxis *axis)
         }
 
 
-       if (axis->shadesVisible() ||  m_force) {
+        if (axis->shadesVisible() ||  m_force) {
 
-         if(brush == axis->shadesBrush() ||  m_force){
-             axis->setShadesBrush(m_backgroundShadesBrush);
-         }
+            if(brush == axis->shadesBrush() ||  m_force){
+                axis->setShadesBrush(m_backgroundShadesBrush);
+            }
 
-         if(pen == axis->shadesPen() ||  m_force){
-             axis->setShadesPen(m_backgroundShadesPen);
-         }
+            if(pen == axis->shadesPen() ||  m_force){
+                axis->setShadesPen(m_backgroundShadesPen);
+            }
 
-         if( m_force && (m_backgroundShades == BackgroundShadesBoth
-                         || (m_backgroundShades == BackgroundShadesVertical && axisX)
-                         || (m_backgroundShades == BackgroundShadesHorizontal && !axisX))){
-             axis->setShadesVisible(true);
+            if( m_force && (m_backgroundShades == BackgroundShadesBoth
+                            || (m_backgroundShades == BackgroundShadesVertical && axisX)
+                            || (m_backgroundShades == BackgroundShadesHorizontal && !axisX))){
+                axis->setShadesVisible(true);
 
-         }
-       }
+            }
+        }
 
         if(pen == axis->axisPen() ||  m_force){
             axis->setAxisPen(m_axisLinePen);

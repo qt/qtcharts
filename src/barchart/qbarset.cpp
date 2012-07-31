@@ -522,7 +522,11 @@ QColor QBarSet::labelColor()
 */
 void QBarSet::setLabelColor(QColor color)
 {
+    QBrush defaultBrush;
     QBrush b = labelBrush();
+    if (b == defaultBrush)
+        b.setStyle(Qt::SolidPattern);
+
     if (b.color() != color) {
         b.setColor(color);
         setLabelBrush(b);
