@@ -60,8 +60,11 @@ ChartAnimation* PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceDa
     else
         startValue.m_startAngle = sliceData.m_startAngle + (sliceData.m_angleSpan / 2);
     startValue.m_angleSpan = 0;
-    animation->setValue(startValue, sliceData);
 
+    if (sliceData.m_donut)
+        startValue.m_radius = sliceData.m_innerRadius;
+
+    animation->setValue(startValue, sliceData);
     animation->setDuration(ChartAnimationDuration);
     animation->setEasingCurve(QEasingCurve::OutQuart);
 
@@ -75,7 +78,10 @@ ChartAnimation* PieAnimation::removeSlice(PieSliceItem *sliceItem)
     animation->stop();
 
     PieSliceData endValue = animation->currentSliceValue();
-    endValue.m_radius = 0;
+    if (endValue.m_donut)
+        endValue.m_radius = endValue.m_innerRadius;
+    else
+        endValue.m_radius = 0;
     endValue.m_startAngle = endValue.m_startAngle + endValue.m_angleSpan;
     endValue.m_angleSpan = 0;
     endValue.m_isLabelVisible = false;

@@ -115,6 +115,14 @@ MainWidget::MainWidget(QWidget* parent)
     m_endAngle->setValue(m_series->pieEndAngle());
     m_endAngle->setSingleStep(1);
 
+    m_isDonut = new QCheckBox();
+
+    m_donutInnerSize = new QDoubleSpinBox();
+    m_donutInnerSize->setMinimum(0.0);
+    m_donutInnerSize->setMaximum(1.0);
+    m_donutInnerSize->setSingleStep(0.1);
+    m_donutInnerSize->setValue(m_series->donutInnerSize());
+
     QPushButton *appendSlice = new QPushButton("Append slice");
     QPushButton *insertSlice = new QPushButton("Insert slice");
     QPushButton *removeSlice = new QPushButton("Remove selected slice");
@@ -125,6 +133,8 @@ MainWidget::MainWidget(QWidget* parent)
     seriesSettingsLayout->addRow("Size factor", m_sizeFactor);
     seriesSettingsLayout->addRow("Start angle", m_startAngle);
     seriesSettingsLayout->addRow("End angle", m_endAngle);
+    seriesSettingsLayout->addRow("Is donut", m_isDonut);
+    seriesSettingsLayout->addRow("Donut inner size", m_donutInnerSize);
     seriesSettingsLayout->addRow(appendSlice);
     seriesSettingsLayout->addRow(insertSlice);
     seriesSettingsLayout->addRow(removeSlice);
@@ -136,6 +146,8 @@ MainWidget::MainWidget(QWidget* parent)
     connect(m_sizeFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
     connect(m_startAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
     connect(m_endAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
+    connect(m_isDonut, SIGNAL(toggled(bool)), this, SLOT(updateSerieSettings()));
+    connect(m_donutInnerSize, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
     connect(appendSlice, SIGNAL(clicked()), this, SLOT(appendSlice()));
     connect(insertSlice, SIGNAL(clicked()), this, SLOT(insertSlice()));
     connect(removeSlice, SIGNAL(clicked()), this, SLOT(removeSlice()));
@@ -239,6 +251,8 @@ void MainWidget::updateSerieSettings()
     m_series->setPieSize(m_sizeFactor->value());
     m_series->setPieStartAngle(m_startAngle->value());
     m_series->setPieEndAngle(m_endAngle->value());
+    m_series->setDonut(m_isDonut->isChecked());
+    m_series->setDonutInnerSize(m_donutInnerSize->value());
 }
 
 void MainWidget::updateSliceSettings()
