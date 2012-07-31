@@ -25,6 +25,7 @@
 #include <QPair>
 #include <QPointF>
 #include <QTime>
+#include <stdlib.h>
 
 typedef QPair<QPointF, QString> Data;
 typedef QList<Data> DataList;
