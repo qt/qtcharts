@@ -47,6 +47,7 @@ public:
     void append(const QString &category);
     void remove(const QString &category);
     void insert(int index, const QString &category);
+    void replace(const QString &oldCategory, const QString &newCategory);
     void clear();
     void setCategories(const QStringList &categories);
     QStringList categories();

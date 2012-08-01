@@ -205,6 +205,21 @@ void QBarCategoriesAxis::insert(int index, const QString &category)
 }
 
 /*!
+    Replaces \a oldCategory with \a newCategory.
+    If \a oldCategory does not exits on the axis nothing is done.
+*/
+void QBarCategoriesAxis::replace(const QString &oldCategory, const QString &newCategory)
+{
+    Q_D(QBarCategoriesAxis);
+    int pos = d->m_categories.indexOf(oldCategory);
+    if (pos != -1) {
+        d->m_categories.replace(pos, newCategory);
+        d->emitUpdated();
+        emit categoriesChanged();
+    }
+}
+
+/*!
   Removes all categories.
  */
 void QBarCategoriesAxis::clear()
