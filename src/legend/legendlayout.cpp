@@ -119,7 +119,7 @@ void LegendLayout::setAttachedGeometry(const QRectF& rect)
             QPointF point(0,0);
             foreach (LegendMarker* marker, m_legend->d_ptr->markers()) {
                 if (marker->isVisible()) {
-                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    marker->setGeometry(QRectF(QPointF(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
                     marker->setPos(point.x(),rect.height()/2 - marker->boundingRect().height()/2);
                     const QRectF& rect = marker->boundingRect();
                     size = size.expandedTo(rect.size());
@@ -143,7 +143,7 @@ void LegendLayout::setAttachedGeometry(const QRectF& rect)
             QPointF point(0,0);
             foreach (LegendMarker* marker, m_legend->d_ptr->markers()) {
                 if (marker->isVisible()) {
-                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    marker->setGeometry(QRectF(QPointF(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
                     marker->setPos(point);
                     const QRectF& rect = marker->boundingRect();
                     qreal h = rect.height();
@@ -195,7 +195,7 @@ void LegendLayout::setDettachedGeometry(const QRectF& rect)
             for (int i=0; i<markers.count(); i++) {
                 LegendMarker *marker = markers.at(i);
                 if (marker->isVisible()) {
-                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    marker->setGeometry(QRectF(QPointF(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
                     marker->setPos(point.x(),point.y());
                     const QRectF& boundingRect = marker->boundingRect();
                     qreal w = boundingRect.width();
@@ -228,7 +228,7 @@ void LegendLayout::setDettachedGeometry(const QRectF& rect)
             for (int i=0; i<markers.count(); i++) {
                 LegendMarker *marker = markers.at(i);
                 if (marker->isVisible()) {
-                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    marker->setGeometry(QRectF(QPointF(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
                     const QRectF& boundingRect = marker->boundingRect();
                     qreal w = boundingRect.width();
                     qreal h = boundingRect.height();
@@ -262,7 +262,7 @@ void LegendLayout::setDettachedGeometry(const QRectF& rect)
             for (int i=0; i<markers.count(); i++) {
                 LegendMarker *marker = markers.at(i);
                 if (marker->isVisible()) {
-                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    marker->setGeometry(QRectF(QPointF(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
                     const QRectF& boundingRect = marker->boundingRect();
                     qreal w = boundingRect.width();
                     qreal h = boundingRect.height();
@@ -298,7 +298,7 @@ void LegendLayout::setDettachedGeometry(const QRectF& rect)
             for (int i=0; i<markers.count(); i++) {
                 LegendMarker *marker = markers.at(i);
                 if (marker->isVisible()) {
-                    marker->setGeometry(QRectF(QPoint(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
+                    marker->setGeometry(QRectF(QPointF(0,0),marker->effectiveSizeHint(Qt::PreferredSize)));
                     const QRectF& boundingRect = marker->boundingRect();
                     qreal w = boundingRect.width();
                     qreal h = boundingRect.height();

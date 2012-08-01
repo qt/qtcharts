@@ -144,10 +144,10 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
                 continue;
                 x = startPair.second[i * 2].x() + ((endPair.second[i * 2].x() - startPair.second[i * 2].x()) * progress);
                 y = startPair.second[i * 2].y() + ((endPair.second[i * 2].y() - startPair.second[i * 2].y()) * progress);
-                result.second << QPoint(x,y);
+                result.second << QPointF(x,y);
                 x = startPair.second[i * 2 + 1].x() + ((endPair.second[i * 2 + 1].x() - startPair.second[i * 2 + 1].x()) * progress);
                 y = startPair.second[i * 2 + 1].y() + ((endPair.second[i * 2 + 1].y() - startPair.second[i * 2 + 1].y()) * progress);
-                result.second << QPoint(x,y);
+                result.second << QPointF(x,y);
             }
 
         }

@@ -55,7 +55,7 @@ void Scroller::mousePressEvent(QGraphicsSceneMouseEvent* event)
         case Scroll:
         {
             m_state = Stop;
-            m_speed = QPoint(0, 0);
+            m_speed = QPointF(0, 0);
             m_offset = offset();
             m_press = event->pos();
             event->accept();
