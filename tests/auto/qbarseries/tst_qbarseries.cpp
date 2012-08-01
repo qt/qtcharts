@@ -61,6 +61,7 @@ private slots:
     void mousehovered_data();
     void mousehovered();
     void clearWithAnimations();
+    void destruction();
 
 private:
     QBarSeries* m_barseries;
@@ -563,6 +564,21 @@ void tst_QBarSeries::clearWithAnimations()
     view.show();
 
     series->clear();
+}
+
+void tst_QBarSeries::destruction()
+{
+    // add a barset
+    QBarSeries *series = new QBarSeries();
+    QBarSet *set = new QBarSet("testset");
+    QSignalSpy spy1(set, SIGNAL(destroyed()));
+    series->append(set);
+
+    // delete the series
+    delete series;
+
+    // check that series deletes the set
+    QCOMPARE(spy1.count(), 1);
 }
 
 QTEST_MAIN(tst_QBarSeries)

@@ -54,6 +54,7 @@ private slots:
     void clickedSignal();
     void hoverSignal();
     void sliceSeries();
+    void destruction();
 
 private:
     void verifyCalculatedData(const QPieSeries &series, bool *ok);
@@ -283,6 +284,7 @@ void tst_qpieseries::insert()
     for (int i=0; i<m_series->count(); i++) {
         QCOMPARE(m_series->slices().at(i)->value(), (qreal) i+1);
         QCOMPARE(m_series->slices().at(i)->label(), QString("slice ") + QString::number(i+1));
+        QVERIFY(m_series->slices().at(i)->parent() == m_series);
     }
 }
 
@@ -565,6 +567,26 @@ void tst_qpieseries::sliceSeries()
     slice = new QPieSlice();
     m_series->insert(0, slice);
     QCOMPARE(slice->series(), m_series);
+}
+
+void tst_qpieseries::destruction()
+{
+    // add some slices
+    QPieSlice *slice1 = m_series->append("slice 1", 1);
+    QPieSlice *slice2 = m_series->append("slice 2", 2);
+    QPieSlice *slice3 = m_series->append("slice 3", 3);
+    QSignalSpy spy1(slice1, SIGNAL(destroyed()));
+    QSignalSpy spy2(slice2, SIGNAL(destroyed()));
+    QSignalSpy spy3(slice3, SIGNAL(destroyed()));
+
+    // destroy series
+    delete m_series;
+    m_series = 0;
+
+    // check that series has destroyed its slices
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
 }
 
 QTEST_MAIN(tst_qpieseries)
