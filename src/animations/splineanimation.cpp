@@ -28,7 +28,8 @@ Q_DECLARE_METATYPE(SplineVector)
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 SplineAnimation::SplineAnimation(SplineChartItem* item):XYAnimation(item),
-m_item(item)
+m_item(item),
+m_valid(false)
 {
 }
 
@@ -38,7 +39,15 @@ SplineAnimation::~SplineAnimation()
 
 void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldControlPoints, QVector<QPointF> &newControlPoints, int index)
 {
-    Q_ASSERT(newPoints.count() * 2 - 2 == newControlPoints.count());
+    if(newPoints.count() * 2 - 2 != newControlPoints.count() || newControlPoints.count() < 2){
+           m_valid=false;
+           m_dirty=false;
+           m_item->setGeometryPoints(newPoints);
+           m_item->setControlGeometryPoints(newControlPoints);
+           m_item->setDirty(false);
+           m_item->updateGeometry();
+           return;
+    }
 
     m_type = NewAnimation;
 
@@ -55,6 +64,7 @@ void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPo
 
     m_newSpline.first=newPoints;
     m_newSpline.second=newControlPoints;
+
 
     int x = m_oldSpline.first.count();
     int y = m_newSpline.first.count();
@@ -104,52 +114,8 @@ void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPo
 
     setKeyValueAt(0.0, qVariantFromValue(m_oldSpline));
     setKeyValueAt(1.0, qVariantFromValue(m_newSpline));
-    /*
-     int x = oldPoints.count();
-     int y = newPoints.count();
 
-     Q_ASSERT(newPoints.count() * 2 - 2 == newControlPoints.count());
-
-     if (x != y && abs(x - y) != 1) {
-     m_oldSpline.first = newPoints;
-     m_oldSpline.second = newControlPoints;
-     oldPoints.resize(newPoints.size());
-     oldControlPoints.resize(newControlPoints.size());
-     SplineVector oldPair;
-     oldPair.first = oldPoints;
-     oldPair.second = oldControlPoints;
-     SplineVector newPair;
-     newPair.first = newPoints;
-     newPair.second = newControlPoints;
-     setKeyValueAt(0.0, qVariantFromValue(oldPair));
-     setKeyValueAt(1.0, qVariantFromValue(newPair));
-     m_dirty = false;
-     }
-     else {
-     if(m_dirty) {
-     m_oldSpline.first = oldPoints;
-     m_oldSpline.second = oldControlPoints;
-     m_dirty = false;
-     }
-     oldPoints = newPoints;
-     oldControlPoints = newControlPoints;
-     if (y < x) {
-     m_oldSpline.first.remove(index); //remove
-     m_oldSpline.second.remove(index * 2);
-     m_oldSpline.second.remove(index * 2);
-     }
-     if (y > x) {
-     m_oldSpline.first.insert(index, x > 0 ? m_oldSpline.first[index-1] : newPoints[index]); //add
-     m_oldSpline.second.insert((index - 1) * 2, x > 1 ? m_oldSpline.second[(index-2)*2] : newControlPoints[(index - 1) * 2]); //add
-     m_oldSpline.second.insert((index - 1) * 2 + 1, x > 1 ? m_oldSpline.second[(index - 2) * 2 + 1] : newControlPoints[(index - 1) * 2 + 1]); //add
-     }
-     SplineVector newPair;
-     newPair.first=newPoints;
-     newPair.second=newControlPoints;
-     setKeyValueAt(0.0, qVariantFromValue(m_oldSpline));
-     setKeyValueAt(1.0, qVariantFromValue(newPair));
-     }
-     */
+    m_valid=true;
 
 }
 
@@ -208,7 +174,7 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
 
 void SplineAnimation::updateCurrentValue (const QVariant &value )
 {
-    if (state() != QAbstractAnimation::Stopped) { //workaround
+    if (state() != QAbstractAnimation::Stopped && m_valid) { //workaround
         QPair<QVector<QPointF >, QVector<QPointF > > pair = qVariantValue< QPair< QVector<QPointF>, QVector<QPointF> > >(value);
         m_item->setGeometryPoints(pair.first);
         m_item->setControlGeometryPoints(pair.second);
@@ -220,6 +186,8 @@ void SplineAnimation::updateCurrentValue (const QVariant &value )
 
 void SplineAnimation::updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState)
 {
+    XYAnimation::updateState(newState, oldState);
+
     if(oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped)
     {
         if(m_item->isDirty() && m_type==RemovePointAnimation) {
@@ -230,6 +198,13 @@ void SplineAnimation::updateState(QAbstractAnimation::State newState, QAbstractA
             }
             m_item->setGeometryPoints(m_newSpline.first);
             m_item->setControlGeometryPoints(m_newSpline.second);
+        }
+    }
+
+    if(oldState == QAbstractAnimation::Stopped && newState == QAbstractAnimation::Running)
+    {
+        if(!m_valid) {
+           stop();
         }
     }
 }

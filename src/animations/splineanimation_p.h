@@ -54,6 +54,7 @@ private:
     SplineVector m_oldSpline;
     SplineVector m_newSpline;
     SplineChartItem *m_item;
+    bool m_valid;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

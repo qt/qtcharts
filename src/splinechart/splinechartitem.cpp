@@ -84,22 +84,17 @@ void SplineChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> 
         controlPoints[2 * i + 1] = calculateGeometryControlPoint(2 * i + 1);
     }
 
-    if (controlPoints.count()<2) {
-        setGeometryPoints(newPoints);
-        setControlGeometryPoints(controlPoints);
-        updateGeometry();
-        return;
-    }
-
     if (m_animation) {
         m_animation->setup(oldPoints,newPoints,m_controlPoints,controlPoints,index);
-        setGeometryPoints(newPoints);
-        setDirty(false);
-        presenter()->startAnimation(m_animation);
     }
-    else {
-        setGeometryPoints(newPoints);
-        setControlGeometryPoints(controlPoints);
+
+    setGeometryPoints(newPoints);
+    setControlGeometryPoints(controlPoints);
+    setDirty(false);
+
+    if (m_animation) {
+        presenter()->startAnimation(m_animation);
+    } else {
         updateGeometry();
     }
 }
