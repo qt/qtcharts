@@ -14,6 +14,6 @@ CONFIG(debug, debug|release){
         LIBS += -lQtCommercialChart
     }
 
-}els {
+} else {
     LIBS +=-lQtCommercialChart
 }
