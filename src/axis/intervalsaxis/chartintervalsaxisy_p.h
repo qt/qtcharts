@@ -48,6 +48,9 @@ public:
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
+
+Q_SLOTS
+    void handleAxisUpdated();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

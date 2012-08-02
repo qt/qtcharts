@@ -60,6 +60,10 @@ QIntervalsAxis::QIntervalsAxis(QObject *parent):
 */
 QIntervalsAxis::~QIntervalsAxis()
 {
+    //    Q_D(QValuesAxis);
+    //    if(d->m_dataset) {
+    //        d->m_dataset->removeAxis(this);
+    //    }
 }
 
 /*!
@@ -151,7 +155,24 @@ void QIntervalsAxis::remove(const QString &intervalLabel)
                 d->m_intervalsMap.insert(label, range);
             }
         }
+        d->emitUpdated();
     }
+}
+
+void QIntervalsAxis::replace(const QString& oldLabel, const QString& newLabel)
+{
+    Q_D(QIntervalsAxis);
+    int labelIndex = d->m_intervals.indexOf(oldLabel);
+
+    // check if such label exists
+    if (labelIndex != -1) {
+        d->m_intervals.replace(labelIndex, newLabel);
+        Range range = d->m_intervalsMap.value(oldLabel);
+        d->m_intervalsMap.remove(oldLabel);
+        d->m_intervalsMap.insert(newLabel, range);
+        d->emitUpdated();
+    }
+
 }
 
 QStringList QIntervalsAxis::intervalsLabels()

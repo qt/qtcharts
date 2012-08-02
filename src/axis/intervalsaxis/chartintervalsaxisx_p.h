@@ -49,9 +49,8 @@ protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
 
-private:
-    void createLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
-
+    Q_SLOTS
+    void handleAxisUpdated();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

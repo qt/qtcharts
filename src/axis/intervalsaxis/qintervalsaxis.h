@@ -44,6 +44,7 @@ public:
 
     void append(const QString& label, qreal interval = 1);
     void remove(const QString& label);
+    void replace(const QString& oldLabel, const QString& newLabel);
 
     void setFisrtIntervalMinimum(qreal min);
 

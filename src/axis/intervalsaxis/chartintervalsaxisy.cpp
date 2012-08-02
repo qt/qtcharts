@@ -128,4 +128,10 @@ void ChartIntervalAxisY::updateGeometry()
     }
 }
 
+void ChartIntervalAxisY::handleAxisUpdated()
+{
+    updateGeometry();
+    ChartAxis::handleAxisUpdated();
+}
+
 QTCOMMERCIALCHART_END_NAMESPACE
