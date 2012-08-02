@@ -105,7 +105,7 @@ void ChartTheme::decorate(QChart *chart)
 {
     QBrush brush;
 
-    if(brush == chart->backgroundBrush() ||  m_force)
+    if(m_force || brush == chart->backgroundBrush())
         chart->setBackgroundBrush(m_chartBackgroundGradient);
     chart->setTitleFont(m_masterFont);
     chart->setTitleBrush(m_labelBrush);
@@ -118,16 +118,16 @@ void ChartTheme::decorate(QLegend *legend)
     QBrush brush;
     QFont font;
 
-    if (pen == legend->pen() || m_force)
+    if (m_force || pen == legend->pen())
         legend->setPen(m_axisLinePen);
 
-    if (brush == legend->brush() || m_force)
+    if (m_force || brush == legend->brush())
         legend->setBrush(m_chartBackgroundGradient);
 
-    if (font == legend->font() || m_force)
+    if (m_force || font == legend->font())
         legend->setFont(m_labelFont);
 
-    if (brush == legend->labelBrush() || m_force)
+    if (m_force || brush == legend->labelBrush())
         legend->setLabelBrush(m_labelBrush);
 }
 
@@ -136,13 +136,13 @@ void ChartTheme::decorate(QAreaSeries *series, int index)
     QPen pen;
     QBrush brush;
 
-    if (pen == series->pen() ||  m_force){
+    if (m_force || pen == series->pen()){
         pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0));
         pen.setWidthF(2);
         series->setPen(pen);
     }
 
-    if (brush == series->brush() ||  m_force) {
+    if (m_force || brush == series->brush()) {
         QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
         series->setBrush(brush);
     }
@@ -152,7 +152,7 @@ void ChartTheme::decorate(QAreaSeries *series, int index)
 void ChartTheme::decorate(QLineSeries *series,int index)
 {
     QPen pen;
-    if(pen == series->pen() ||  m_force ){
+    if(m_force || pen == series->pen()){
         pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
         pen.setWidthF(2);
         series->setPen(pen);
@@ -184,19 +184,19 @@ void ChartTheme::decorate(QAbstractBarSeries *series, int index)
                 takeAtPos += step;
             takeAtPos -= (int) takeAtPos;
         }
-        if (brush == sets.at(i)->brush() ||  m_force )
+        if (m_force || brush == sets.at(i)->brush())
             sets.at(i)->setBrush(colorAt(m_seriesGradients.at(colorIndex), takeAtPos));
 
         // Pick label color from the opposite end of the gradient.
         // 0.3 as a boundary seems to work well.
-        if (brush == sets.at(i)->labelBrush() || m_force) {
+        if (m_force || brush == sets.at(i)->labelBrush()) {
             if (takeAtPos < 0.3)
                 sets.at(i)->setLabelBrush(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 1));
             else
                 sets.at(i)->setLabelBrush(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0));
         }
 
-        if (pen == sets.at(i)->pen() ||  m_force) {
+        if (m_force || pen == sets.at(i)->pen()) {
             QColor c = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0);
             sets.at(i)->setPen(c);
         }
@@ -208,13 +208,13 @@ void ChartTheme::decorate(QScatterSeries *series, int index)
     QPen pen;
     QBrush brush;
 
-    if (pen == series->pen() ||  m_force) {
+    if (m_force || pen == series->pen()) {
         pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0));
         pen.setWidthF(2);
         series->setPen(pen);
     }
 
-    if (brush == series->brush() ||  m_force) {
+    if (m_force || brush == series->brush()) {
         QBrush brush(m_seriesColors.at(index % m_seriesColors.size()));
         series->setBrush(brush);
     }
@@ -234,16 +234,16 @@ void ChartTheme::decorate(QPieSeries *series, int index)
         QPieSlice *s = series->slices().at(i);
         QPieSlicePrivate *d = QPieSlicePrivate::fromSlice(s);
 
-        if (d->m_data.m_slicePen.isThemed() || m_force)
+        if (m_force || d->m_data.m_slicePen.isThemed())
             d->setPen(penColor, true);
 
-        if (d->m_data.m_sliceBrush.isThemed() || m_force)
+        if (m_force || d->m_data.m_sliceBrush.isThemed())
             d->setBrush(brushColor, true);
 
-        if (d->m_data.m_labelBrush.isThemed() || m_force)
+        if (m_force || d->m_data.m_labelBrush.isThemed())
             d->setLabelBrush(m_labelBrush.color(), true);
 
-        if (d->m_data.m_labelFont.isThemed() || m_force)
+        if (m_force || d->m_data.m_labelFont.isThemed())
             d->setLabelFont(m_labelFont, true);
     }
 }
@@ -251,7 +251,7 @@ void ChartTheme::decorate(QPieSeries *series, int index)
 void ChartTheme::decorate(QSplineSeries *series, int index)
 {
     QPen pen;
-    if(pen == series->pen() ||  m_force){
+    if(m_force || pen == series->pen()){
         pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
         pen.setWidthF(2);
         series->setPen(pen);
@@ -268,21 +268,21 @@ void ChartTheme::decorate(QAbstractAxis *axis)
 
     if (axis->isArrowVisible()) {
 
-        if(brush == axis->labelsBrush() ||  m_force){
+        if(m_force || brush == axis->labelsBrush()){
             axis->setLabelsBrush(m_labelBrush);
         }
-        if(pen == axis->labelsPen() ||  m_force){
+        if(m_force || pen == axis->labelsPen()){
             axis->setLabelsPen(Qt::NoPen); // NoPen for performance reasons
         }
 
 
-        if (axis->shadesVisible() ||  m_force) {
+        if (m_force || axis->shadesVisible()) {
 
-            if(brush == axis->shadesBrush() ||  m_force){
+            if(m_force || brush == axis->shadesBrush()){
                 axis->setShadesBrush(m_backgroundShadesBrush);
             }
 
-            if(pen == axis->shadesPen() ||  m_force){
+            if(m_force || pen == axis->shadesPen()){
                 axis->setShadesPen(m_backgroundShadesPen);
             }
 
@@ -294,15 +294,15 @@ void ChartTheme::decorate(QAbstractAxis *axis)
             }
         }
 
-        if(pen == axis->axisPen() ||  m_force){
+        if(m_force || pen == axis->axisPen()){
             axis->setAxisPen(m_axisLinePen);
         }
 
-        if(pen == axis->gridLinePen() ||  m_force){
+        if(m_force || pen == axis->gridLinePen()){
             axis->setGridLinePen(m_gridLinePen);
         }
 
-        if(font == axis->labelsFont() || m_force){
+        if(m_force || font == axis->labelsFont()){
             axis->setLabelsFont(m_labelFont);
         }
     }
@@ -387,7 +387,7 @@ QColor ChartTheme::colorAt(const QGradient &gradient, qreal pos)
 
 void ChartTheme::setForced(bool enabled)
 {
-    m_force=enabled;
+    m_force = enabled;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

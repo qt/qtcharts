@@ -521,10 +521,9 @@ QColor QBarSet::labelColor()
     Sets the color of labels for this barset
 */
 void QBarSet::setLabelColor(QColor color)
-{
-    QBrush defaultBrush;
+{    
     QBrush b = labelBrush();
-    if (b == defaultBrush)
+    if (b == QBrush())
         b.setStyle(Qt::SolidPattern);
 
     if (b.color() != color) {
