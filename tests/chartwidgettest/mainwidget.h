@@ -59,6 +59,7 @@ private slots:
     void yMinChanged(int value);
     void yMaxChanged(int value);
     void antiAliasToggled(bool enabled);
+    void openGLToggled(bool enabled);
     void changeChartTheme(int themeIndex);
     QList<RealList> generateTestData(int columnCount, int rowCount, QString dataCharacteristics);
     QStringList generateLabels(int count);

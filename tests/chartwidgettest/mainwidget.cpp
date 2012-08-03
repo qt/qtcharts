@@ -43,7 +43,7 @@
 #include <QDebug>
 #include <QStandardItemModel>
 #include <QBarCategoriesAxis>
-
+#include <QGLWidget>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -164,11 +164,30 @@ void MainWidget::initCheckboxes(QGridLayout *grid)
     connect(aliasCheckBox, SIGNAL(toggled(bool)), this, SLOT(antiAliasToggled(bool)));
     aliasCheckBox->setChecked(false);
     grid->addWidget(aliasCheckBox, grid->rowCount(), 0);
+
+    QCheckBox *openGLCheckBox = new QCheckBox("Use QGLWidget");
+    connect(openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(openGLToggled(bool)));
+    openGLCheckBox->setChecked(false);
+    grid->addWidget(openGLCheckBox, grid->rowCount(), 0);
 }
 
 void MainWidget::antiAliasToggled(bool enabled)
 {
     m_chartView->setRenderHint(QPainter::Antialiasing, enabled);
+}
+
+void MainWidget::openGLToggled(bool enabled)
+{
+    if (enabled) {
+        QGLFormat f = QGLFormat::defaultFormat();
+        f.setSampleBuffers(true);
+        f.setSamples(4);
+        QGLFormat::setDefaultFormat(f);
+        QGLWidget *g = new QGLWidget();
+        m_chartView->setViewport(g);
+    } else {
+        m_chartView->setViewport(0);
+    }
 }
 
 void MainWidget::addSeries()
