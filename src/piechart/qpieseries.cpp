@@ -585,7 +585,7 @@ bool QPieSeries::donut() const
 void QPieSeries::setDonutInnerSize(qreal innerSize)
 {
     Q_D(QPieSeries);
-    innerSize = qBound(0.0, innerSize, 1.0);
+    innerSize = qBound((qreal)0.0, innerSize, (qreal)1.0);
     d->setSizes(innerSize, qMax(d->m_pieRelativeSize, innerSize));
 }
 
@@ -640,7 +640,7 @@ qreal QPieSeries::verticalPosition() const
 void QPieSeries::setPieSize(qreal relativeSize)
 {
     Q_D(QPieSeries);
-    relativeSize = qBound(0.0, relativeSize, 1.0);
+    relativeSize = qBound((qreal)0.0, relativeSize, (qreal)1.0);
     d->setSizes(qMin(d->m_donutRelativeInnerSize, relativeSize), relativeSize);
 
 }
