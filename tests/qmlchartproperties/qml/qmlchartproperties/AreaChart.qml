@@ -45,31 +45,43 @@ ChartView {
             XYPoint { x: 10; y: 3 }
             XYPoint { x: 11; y: 3 }
         }
-        lowerSeries: LineSeries {
-            XYPoint { x: 0; y: 0 }
-            XYPoint { x: 1; y: 0 }
-            XYPoint { x: 2; y: 0 }
-            XYPoint { x: 3; y: 0 }
-            XYPoint { x: 4; y: 0 }
-            XYPoint { x: 5; y: 0 }
-            XYPoint { x: 6; y: 0 }
-            XYPoint { x: 7; y: 0 }
-            XYPoint { x: 8; y: 0 }
-            XYPoint { x: 9; y: 0 }
-            XYPoint { x: 10; y: 0 }
-            XYPoint { x: 11; y: 0 }
-        }
 
-        onNameChanged:              console.log("areaSeries.onNameChanged: " + name);
-        onVisibleChanged:           console.log("areaSeries.onVisibleChanged: " + visible);
+        onNameChanged:              console.log(name + ".onNameChanged: " + name);
+        onVisibleChanged:           console.log(name + ".onVisibleChanged: " + visible);
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
-        onSelected:                 console.log("areaSeries.onSelected");
-        onColorChanged:             console.log("areaSeries.onColorChanged: " + color);
-        onBorderColorChanged:       console.log("areaSeries.onBorderColorChanged: " + borderColor);
-//        onCountChanged:             console.log("areaSeries.onCountChanged: " + count);
+        onSelected:                 console.log(name + ".onSelected");
+        onColorChanged:             console.log(name + ".onColorChanged: " + color);
+        onBorderColorChanged:       console.log(name + ".onBorderColorChanged: " + borderColor);
+//        onCountChanged:             console.log(name + ".onCountChanged: " + count);
 
         Component.onCompleted: {
-        createDefaultAxes();
+            createDefaultAxes();
         }
+    }
+
+    AreaSeries {
+        name: "area 2"
+
+        upperSeries: LineSeries {
+            XYPoint { x: 0; y: 0.5 }
+            XYPoint { x: 1; y: 1.5 }
+            XYPoint { x: 2; y: 0.3 }
+            XYPoint { x: 3; y: 1.5 }
+            XYPoint { x: 4; y: 0.1 }
+            XYPoint { x: 5; y: 0.3 }
+            XYPoint { x: 6; y: 1.2 }
+            XYPoint { x: 7; y: 1.3 }
+            XYPoint { x: 8; y: 0.2 }
+            XYPoint { x: 9; y: 0.1 }
+            XYPoint { x: 10; y: 3.2 }
+            XYPoint { x: 11; y: 4.6 }
+        }
+
+        onNameChanged:              console.log(name + ".onNameChanged: " + name);
+        onVisibleChanged:           console.log(name + ".onVisibleChanged: " + visible);
+        onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
+        onSelected:                 console.log(name + ".onSelected");
+        onColorChanged:             console.log(name + ".onColorChanged: " + color);
+        onBorderColorChanged:       console.log(name + ".onBorderColorChanged: " + borderColor);
     }
 }

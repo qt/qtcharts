@@ -22,7 +22,7 @@ import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
 ChartView {
-    title: "Grouped bar series"
+    title: "Bar series"
     anchors.fill: parent
     theme: ChartView.ChartThemeLight
     legend.alignment: Qt.AlignBottom

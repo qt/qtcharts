@@ -96,7 +96,11 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->save();
     painter->setPen(m_linePen);
     painter->setClipRect(clipRect());
-    painter->drawPath(m_path);
+    // Draw lines
+    const QVector<QPointF> &points = geometryPoints();
+    for (int i(1); i < points.size();i++)
+        painter->drawLine(points.at(i-1), points.at(i));
+    // Draw points
     if (m_pointsVisible){
         painter->setPen(m_pointPen);
         painter->drawPoints(geometryPoints());
