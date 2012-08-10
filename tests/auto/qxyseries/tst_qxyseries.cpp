@@ -254,27 +254,37 @@ void tst_QXYSeries::replace_raw_data()
 void tst_QXYSeries::replace_raw()
 {
     QFETCH(QList<QPointF>, points);
-    QSignalSpy replacedSpy(m_series, SIGNAL(pointReplaced(int)));
+    QSignalSpy pointReplacedSpy(m_series, SIGNAL(pointReplaced(int)));
+    QSignalSpy pointsReplacedSpy(m_series, SIGNAL(pointsReplaced()));
     m_series->append(points);
-    TRY_COMPARE(replacedSpy.count(), 0);
+    TRY_COMPARE(pointReplacedSpy.count(), 0);
+    TRY_COMPARE(pointsReplacedSpy.count(), 0);
     QCOMPARE(m_series->points(), points);
 
     foreach(const QPointF& point, points)
        m_series->replace(point.x(),point.y(),point.x(),0);
-    TRY_COMPARE(replacedSpy.count(), points.count());
+    TRY_COMPARE(pointReplacedSpy.count(), points.count());
+    TRY_COMPARE(pointsReplacedSpy.count(), 0);
 
     // Replace a point that does not exist
     m_series->replace(-123, 999, 0, 0);
-    TRY_COMPARE(replacedSpy.count(), points.count());
+    TRY_COMPARE(pointReplacedSpy.count(), points.count());
+    TRY_COMPARE(pointsReplacedSpy.count(), 0);
 
     QList<QPointF> newPoints = m_series->points();
-
     QCOMPARE(newPoints.count(), points.count());
-
     for(int i =0 ; i<points.count() ; ++i) {
         QCOMPARE(points[i].x(), newPoints[i].x());
         QCOMPARE(newPoints[i].y(), 0.0);
     }
+
+    // Replace all points
+    QList<QPointF> allPoints;
+    for (int i = 0; i < 10; i++)
+        allPoints.append(QPointF(i, (qreal) rand() / (qreal) RAND_MAX));
+    m_series->replace(allPoints);
+    TRY_COMPARE(pointReplacedSpy.count(), points.count());
+    TRY_COMPARE(pointsReplacedSpy.count(), 1);
 }
 
 

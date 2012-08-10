@@ -72,12 +72,15 @@ public:
     void setPointsVisible(bool visible = true);
     bool pointsVisible() const;
 
+    void replace(QList<QPointF> points);
+
 Q_SIGNALS:
     void clicked(const QPointF &point);
     void pointReplaced(int index);
     void pointRemoved(int index);
     void pointAdded(int index);
     void colorChanged(QColor color);
+    void pointsReplaced();
 
 private:
     Q_DECLARE_PRIVATE(QXYSeries)

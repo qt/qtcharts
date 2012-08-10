@@ -75,6 +75,7 @@ QSplineSeries::QSplineSeries(QObject *parent) :
     QObject::connect(this,SIGNAL(pointAdded(int)), d, SLOT(updateControlPoints()));
     QObject::connect(this,SIGNAL(pointRemoved(int)), d, SLOT(updateControlPoints()));
     QObject::connect(this,SIGNAL(pointReplaced(int)), d, SLOT(updateControlPoints()));
+    QObject::connect(this,SIGNAL(pointsReplaced()), d, SLOT(updateControlPoints()));
 }
 
 /*!

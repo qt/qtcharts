@@ -98,6 +98,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QXYSeries::pointsReplaced()
+    Signal is emitted when all points have been replaced with another points.
+    \sa replace()
+*/
+/*!
+    \qmlsignal XYSeries::onPointsReplaced()
+*/
+
+/*!
     \fn void QXYSeries::pointAdded(int index)
     Signal is emitted when a point has been added at \a index.
     \sa append(), insert()
@@ -192,7 +201,6 @@ void QXYSeries::append(const QPointF &point)
 {
     Q_D(QXYSeries);
     d->m_points<<point;
-//    emit d->pointAdded(d->m_points.count()-1);
     emit pointAdded(d->m_points.count()-1);
 }
 
@@ -209,6 +217,7 @@ void QXYSeries::append(const QList<QPointF> &points)
 
 /*!
   Replaces data point \a oldX \a oldY with data point \a newX \a newY.
+  \sa QXYSeries::pointReplaced()
 */
 void QXYSeries::replace(qreal oldX,qreal oldY,qreal newX,qreal newY)
 {
@@ -217,6 +226,7 @@ void QXYSeries::replace(qreal oldX,qreal oldY,qreal newX,qreal newY)
 
 /*!
   Replaces \a oldPoint with \a newPoint.
+  \sa QXYSeries::pointReplaced()
 */
 void QXYSeries::replace(const QPointF &oldPoint,const QPointF &newPoint)
 {
@@ -225,6 +235,19 @@ void QXYSeries::replace(const QPointF &oldPoint,const QPointF &newPoint)
     if(index==-1) return;
     d->m_points[index] = newPoint;
     emit pointReplaced(index);
+}
+
+/*!
+  Replaces the current points with \a points. This is faster than replacing data points one by one,
+  or first clearing all data, and then appending the new data. Emits QXYSeries::pointsReplaced()
+  when the points have been replaced.
+  \sa QXYSeries::pointsReplaced()
+*/
+void QXYSeries::replace(QList<QPointF> points)
+{
+    Q_D(QXYSeries);
+    d->m_points = points.toVector();
+    emit pointsReplaced();
 }
 
 /*!
@@ -246,7 +269,6 @@ void QXYSeries::remove(const QPointF &point)
     int index = d->m_points.indexOf(point);
     if(index==-1) return;
     d->m_points.remove(index);
-//    emit d->pointRemoved(index);
     emit pointRemoved(index);
 }
 
@@ -257,7 +279,6 @@ void QXYSeries::insert(int index, const QPointF &point)
 {
     Q_D(QXYSeries);
     d->m_points.insert(index, point);
-//    emit d->pointAdded(index);
     emit pointAdded(index);
 }
 

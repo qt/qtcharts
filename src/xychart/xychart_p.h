@@ -68,6 +68,7 @@ public Q_SLOTS:
     void handlePointAdded(int index);
     void handlePointRemoved(int index);
     void handlePointReplaced(int index);
+    void handlePointsReplaced();
     void handleDomainUpdated();
     void handleGeometryChanged(const QRectF &size);
 

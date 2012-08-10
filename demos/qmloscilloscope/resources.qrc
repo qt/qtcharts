@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/qmloscilloscope/main.qml</file>
+    </qresource>
+</RCC>

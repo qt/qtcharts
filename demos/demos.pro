@@ -12,4 +12,5 @@ SUBDIRS += chartthemes \
            qmlf1legends \
            qmlcustomizations \
            qmlcustommodel \
+           qmloscilloscope \
            chartviewer
