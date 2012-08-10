@@ -46,7 +46,7 @@ class XYChart :  public ChartElement
      Q_OBJECT
 public:
      explicit XYChart(QXYSeries *series, ChartPresenter *presenter);
-    ~XYChart(){};
+    ~XYChart() {}
 
     void setGeometryPoints(const QVector<QPointF>& points);
     QVector<QPointF> geometryPoints() const { return m_points; }
@@ -84,7 +84,7 @@ protected:
 private:
     inline bool isEmpty();
 
-private:
+protected:
     qreal m_minX;
     qreal m_maxX;
     qreal m_minY;

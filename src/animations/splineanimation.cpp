@@ -39,14 +39,14 @@ SplineAnimation::~SplineAnimation()
 
 void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldControlPoints, QVector<QPointF> &newControlPoints, int index)
 {
-    if(newPoints.count() * 2 - 2 != newControlPoints.count() || newControlPoints.count() < 2){
-           m_valid=false;
-           m_dirty=false;
-           m_item->setGeometryPoints(newPoints);
-           m_item->setControlGeometryPoints(newControlPoints);
-           m_item->setDirty(false);
-           m_item->updateGeometry();
-           return;
+    if (newPoints.count() * 2 - 2 != newControlPoints.count() || newControlPoints.count() < 2) {
+        m_valid=false;
+        m_dirty=false;
+        m_item->setGeometryPoints(newPoints);
+        m_item->setControlGeometryPoints(newControlPoints);
+        m_item->setDirty(false);
+        m_item->updateGeometry();
+        return;
     }
 
     m_type = NewAnimation;

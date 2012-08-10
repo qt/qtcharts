@@ -200,8 +200,6 @@ QVector<qreal> QSplineSeriesPrivate::firstControlPoints(const QVector<qreal>& ve
 
 QPointF QSplineSeriesPrivate::controlPoint(int index) const
 {
-    //    Q_D(const QSplineSeries);
-    //    return d->m_controlPoints[index];
     return m_controlPoints[index];
 }
 

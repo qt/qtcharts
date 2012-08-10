@@ -224,7 +224,6 @@ void QXYSeries::replace(const QPointF &oldPoint,const QPointF &newPoint)
     int index = d->m_points.indexOf(oldPoint);
     if(index==-1) return;
     d->m_points[index] = newPoint;
-//    emit d->pointReplaced(index);
     emit pointReplaced(index);
 }
 

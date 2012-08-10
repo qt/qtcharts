@@ -41,13 +41,10 @@ m_series(series),
 m_animation(0),
 m_dirty(true)
 {
-//    QObject::connect(series->d_func(),SIGNAL(pointReplaced(int)),this,SLOT(handlePointReplaced(int)));
-//    QObject::connect(series->d_func(),SIGNAL(pointAdded(int)),this,SLOT(handlePointAdded(int)));
-//    QObject::connect(series->d_func(),SIGNAL(pointRemoved(int)),this,SLOT(handlePointRemoved(int)));
-    QObject::connect(series, SIGNAL(pointReplaced(int)), this,SLOT(handlePointReplaced(int)));
-    QObject::connect(series, SIGNAL(pointAdded(int)), this,SLOT(handlePointAdded(int)));
-    QObject::connect(series, SIGNAL(pointRemoved(int)), this,SLOT(handlePointRemoved(int)));
-    QObject::connect(this, SIGNAL(clicked(QPointF)), series,SIGNAL(clicked(QPointF)));
+    QObject::connect(series, SIGNAL(pointReplaced(int)), this, SLOT(handlePointReplaced(int)));
+    QObject::connect(series, SIGNAL(pointAdded(int)), this, SLOT(handlePointAdded(int)));
+    QObject::connect(series, SIGNAL(pointRemoved(int)), this, SLOT(handlePointRemoved(int)));
+    QObject::connect(this, SIGNAL(clicked(QPointF)), series, SIGNAL(clicked(QPointF)));
 }
 
 void XYChart::setGeometryPoints(const QVector<QPointF>& points)
@@ -120,12 +117,12 @@ void XYChart::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoin
 
     if (m_animation) {
         m_animation->setup(oldPoints, newPoints, index);
-        setGeometryPoints(newPoints);
+        m_points = newPoints;
         setDirty(false);
         presenter()->startAnimation(m_animation);
     }
     else {
-        setGeometryPoints(newPoints);
+        m_points = newPoints;
         updateGeometry();
     }
 }
