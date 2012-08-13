@@ -41,19 +41,31 @@ Flow {
         onClicked: series.borderColor = main.nextColor();
     }
     Button {
-        text: "upper color"
-        onClicked: series.upperSeries.color = main.nextColor();
+        id: upperButton
+        text: "upper series"
+        unpressedColor: "#79bd8f"
+        onClicked: {
+            lineEditor.visible = true;
+            color = "#00a388";
+            lowerButton.color = "#79bd8f";
+            lineEditor.series = series.upperSeries;
+        }
     }
     Button {
-        text: "lower color"
-        onClicked: series.lowerSeries.color = main.nextColor();
+        id: lowerButton
+        text: "lower series"
+        unpressedColor: "#79bd8f"
+        onClicked: {
+            lineEditor.visible = true;
+            color = "#00a388";
+            upperButton.color = "#79bd8f";
+            lineEditor.series = series.lowerSeries;
+        }
     }
-    Button {
-        text: "upper points visible"
-        onClicked: series.upperSeries.pointsVisible = !series.pointsVisible;
+    LineEditor {
+        id: lineEditor
+        visible: false
     }
-    Button {
-        text: "lower points visible"
-        onClicked: series.lowerSeries.pointsVisible = !series.pointsVisible;
-    }
+
+    onSeriesChanged: lineEditor.series = series.upperSeries;
 }
