@@ -18,33 +18,30 @@
 **
 ****************************************************************************/
 
-#ifndef DATASOURCE_H
-#define DATASOURCE_H
+import QtQuick 1.0
 
-#include <QObject>
-#include <QAbstractSeries>
+Rectangle {
+    id: button
+    width: 105
+    height: 33
+    border.color: "gray"
+    radius: 5
+    property string text: "Option: "
+    property variant items: ["first"]
+    property int currentSelection: 0
+    signal selectionChanged(variant selection)
 
-class QAbstractScrollArea;
+    Text {
+        id: buttonText
+        anchors.centerIn: parent
+        text: button.text + button.items[currentSelection]
+    }
 
-QTCOMMERCIALCHART_USE_NAMESPACE
-
-class DataSource : public QObject
-{
-    Q_OBJECT
-public:
-    explicit DataSource(QAbstractScrollArea *appViewer, QObject *parent = 0);
-    
-signals:
-    
-public slots:
-    void generateData(int type, int rowCount, int colCount);
-    void update(QAbstractSeries *series);
-    void setOpenGL(bool enabled);
-
-private:
-    QAbstractScrollArea *m_appViewer;
-    QList<QList<QPointF> > m_data;
-    int m_index;
-};
-
-#endif // DATASOURCE_H
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            currentSelection = (currentSelection + 1) % items.length;
+            selectionChanged(button.items[currentSelection]);
+        }
+    }
+}

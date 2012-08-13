@@ -19,54 +19,38 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.0
 
 Rectangle {
+    id: main
     width: 400
     height: 300
 
-    ChartView {
-        id: chartView
-        anchors.fill: parent
-        title: "Oscilloscope"
-        animationOptions: ChartView.NoAnimation
+    ControlPanel {
+        id: controlPanel
+        anchors.top: parent.top
+        anchors.topMargin: 10
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.leftMargin: 10
 
-        ValuesAxis {
-            id: axisY
-            min: -1
-            max: 3
+        onSignalSourceChanged: {
+            if (source == "sin")
+                dataSource.generateData(0, signalCount, sampleCount);
+            else
+                dataSource.generateData(1, signalCount, sampleCount);
         }
-
-        ValuesAxis {
-            id: axisX
-            min: 0
-            max: 1000
-        }
-
-        LineSeries {
-            id: lineSeries1
-            name: "signal 1"
-        }
-        LineSeries {
-            id: lineSeries2
-            name: "signal 2"
-        }
+        onOpenGLEnabled: dataSource.setOpenGL(enabled);
+        onAnimationsEnabled: scopeView.setAnimations(enabled);
+        onSeriesTypeChanged: scopeView.changeSeriesType(type);
+        onRefreshRateChanged: scopeView.changeRefreshRate(rate);
     }
 
-    Timer {
-        interval: 16 // 60 Hz
-        running: true
-        repeat: true
-        onTriggered: {
-            dataSource.update(lineSeries1);
-            dataSource.update(lineSeries2);
-        }
-    }
-
-    Component.onCompleted: {
-        chartView.setAxisX(axisX, lineSeries1);
-        chartView.setAxisY(axisY, lineSeries1);
-        chartView.setAxisX(axisX, lineSeries2);
-        chartView.setAxisY(axisY, lineSeries2);
+    ScopeView {
+        id: scopeView
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        anchors.left: controlPanel.right
+        height: main.height
     }
 }

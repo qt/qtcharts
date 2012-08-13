@@ -21,7 +21,6 @@
 #include <QtGui/QApplication>
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
-#include <QGLWidget>
 #include "qmlapplicationviewer.h"
 #include "datasource.h"
 
@@ -30,12 +29,11 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QApplication> app(createApplication(argc, argv));
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
-    DataSource dataSource;
+    DataSource dataSource(viewer.data());
     viewer->rootContext()->setContextProperty("dataSource", &dataSource);
 
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer->setSource(QUrl("qrc:/qml/qmloscilloscope/main.qml"));
-    viewer->setViewport(new QGLWidget());
     viewer->showExpanded();
 
     return app->exec();
