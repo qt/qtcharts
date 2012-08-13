@@ -94,11 +94,10 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal maxY(domain.maxY());
 
     qreal x = categoryCount();
-    qreal y = max();
     minX = qMin(minX, - (qreal)0.5);
-    minY = qMin(minY, y);
+    minY = qMin(minY, min());
     maxX = qMax(maxX, x - (qreal)0.5);
-    maxY = qMax(maxY, y);
+    maxY = qMax(maxY, max());
 
     domain.setRange(minX,maxX,minY,maxY);
 }

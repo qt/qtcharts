@@ -92,10 +92,9 @@ void QHorizontalBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal maxY(domain.maxY());
 
     qreal y = categoryCount();
-    qreal x = max();
-    minX = qMin(minX, x);
+    minX = qMin(minX, min());
     minY = qMin(minY, - (qreal)0.5);
-    maxX = qMax(maxX, x);
+    maxX = qMax(maxX, max());
     maxY = qMax(maxY, y - (qreal)0.5);
 
     domain.setRange(minX,maxX,minY,maxY);
