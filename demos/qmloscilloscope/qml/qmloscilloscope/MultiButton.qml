@@ -22,10 +22,10 @@ import QtQuick 1.0
 
 Rectangle {
     id: button
-    width: 105
-    height: 33
+    width: 120
+    height: 35
     border.color: "gray"
-    radius: 5
+    radius: 7
     property string text: "Option: "
     property variant items: ["first"]
     property int currentSelection: 0

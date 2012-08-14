@@ -34,8 +34,15 @@ Column {
     }
 
     MultiButton {
+        text: "Graph: "
+        items: ["line", "spline", "scatter"]
+        currentSelection: 0
+        onSelectionChanged: seriesTypeChanged(items[currentSelection]);
+    }
+
+    MultiButton {
         id: signalSourceButton
-        text: "Signal source: "
+        text: "Source: "
         items: ["sin", "linear"]
         currentSelection: 0
         onSelectionChanged: signalSourceChanged(
@@ -53,13 +60,6 @@ Column {
                                 signalSourceButton.items[signalSourceButton.currentSelection],
                                 5,
                                 selection);
-    }
-
-    MultiButton {
-        text: "Graph: "
-        items: ["line", "spline", "scatter"]
-        currentSelection: 0
-        onSelectionChanged: seriesTypeChanged(items[currentSelection]);
     }
 
     MultiButton {

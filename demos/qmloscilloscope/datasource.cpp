@@ -24,12 +24,13 @@
 #include <QAbstractScrollArea>
 #include <QGLWidget>
 #include <QDebug>
+#include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 DataSource::DataSource(QAbstractScrollArea *appViewer, QObject *parent) :
-    m_appViewer(appViewer),
     QObject(parent),
+    m_appViewer(appViewer),
     m_index(-1)
 {
     // generate
