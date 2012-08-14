@@ -442,28 +442,55 @@ void tst_QBarSet::customize()
     *set1 << 1 << 2 << 1 << 3;
     *set2 << 2 << 1 << 3 << 1;
 
+    // Remove sets from series
+    series->remove(set1);
+    series->remove(set2);
+
     // Test pen
     QVERIFY(set1->pen() != QPen());
     QVERIFY(set2->pen() == QPen());
     QPen pen(QColor(128,128,128,128));
     set1->setPen(pen);
-    QVERIFY(set1->pen() == pen);
-    QVERIFY(set2->pen() == QPen());
+
+    // Add sets back to series
+    series->append(set1);
+    series->append(set2);
+
+    QVERIFY(set1->pen() == pen);      // Should be customized
+    QVERIFY(set2->pen() != QPen());   // Should be decorated by theme
+
+    // Remove sets from series
+    series->remove(set1);
+    series->remove(set2);
 
     // Test brush
+    set2->setBrush(QBrush());
     QVERIFY(set1->brush() != QBrush());
     QVERIFY(set2->brush() == QBrush());
     QBrush brush(QColor(128,128,128,128));
     set1->setBrush(brush);
-    QVERIFY(set1->brush() == brush);
-    QVERIFY(set2->brush() == QBrush());
+
+    // Add sets back to series
+    series->append(set1);
+    series->append(set2);
+
+    QVERIFY(set1->brush() == brush);    // Should be customized
+    QVERIFY(set2->brush() != QBrush()); // Should be decorated by theme
+
+    // Remove sets from series
+    series->remove(set1);
+    series->remove(set2);
 
     // Test label brush
+    set2->setLabelBrush(QBrush());
     QVERIFY(set1->labelBrush() != QBrush());
     QVERIFY(set2->labelBrush() == QBrush());
     set1->setLabelBrush(brush);
-    QVERIFY(set1->labelBrush() == brush);
-    QVERIFY(set2->labelBrush() == QBrush());
+
+    series->append(set1);
+    series->append(set2);
+    QVERIFY(set1->labelBrush() == brush);       // Should be customized
+    QVERIFY(set2->labelBrush() != QBrush());    // Should be decorated by theme
 
     // Test label font
     // Note: QFont empty constructor creates font with application's default font, so the font may or may not be the
@@ -480,7 +507,11 @@ void tst_QBarSet::customize()
     // Test adding data to the sets
     *set1 << 1 << 2 << 1 << 3;
     *set2 << 2 << 1 << 3 << 1;
+
 }
+
+
+
 
 QTEST_MAIN(tst_QBarSet)
 
