@@ -244,6 +244,7 @@ bool QAbstractBarSeries::append(QBarSet *set)
     if (success) {
         QList<QBarSet*> sets;
         sets.append(set);
+        set->setParent(this);
         emit barsetsAdded(sets);
         emit countChanged();
     }
@@ -261,6 +262,7 @@ bool QAbstractBarSeries::remove(QBarSet *set)
     if (success) {
         QList<QBarSet*> sets;
         sets.append(set);
+        set->setParent(0);
         emit barsetsRemoved(sets);
         emit countChanged();
     }
