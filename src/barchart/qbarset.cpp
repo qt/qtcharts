@@ -481,8 +481,15 @@ QColor QBarSet::color()
 void QBarSet::setColor(QColor color)
 {
     QBrush b = brush();
-    if (b.color() != color) {
+    if ((b.color() != color) || (b.style() == Qt::NoBrush)) {
         b.setColor(color);
+        if (b.style() == Qt::NoBrush) {
+            // Set tyle to Qt::SolidPattern. (Default is Qt::NoBrush)
+            // This prevents theme to override color defined in QML side:
+            // BarSet { label: "Bob"; color:"red"; values: [1,2,3] }
+            // The color must be obeyed, since user wanted it.
+            b.setStyle(Qt::SolidPattern);
+        }
         setBrush(b);
         emit colorChanged(color);
     }
