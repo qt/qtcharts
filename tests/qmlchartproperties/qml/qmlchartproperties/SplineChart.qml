@@ -25,6 +25,7 @@ ChartView {
     title: "spline series"
     anchors.fill: parent
     property variant series: splineSeries
+    animationOptions: ChartView.SeriesAnimations
 
     SplineSeries {
         id: splineSeries

@@ -24,6 +24,7 @@ import QtCommercial.Chart 1.0
 ChartView {
     title: "scatter series"
     property variant series: scatterSeries
+    animationOptions: ChartView.SeriesAnimations
 
     ScatterSeries {
         id: scatterSeries

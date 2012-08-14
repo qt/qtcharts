@@ -26,6 +26,7 @@ ChartView {
 
     title: "line series"
     anchors.fill: parent
+    animationOptions: ChartView.SeriesAnimations
 
     LineSeries {
         id: lineSeries

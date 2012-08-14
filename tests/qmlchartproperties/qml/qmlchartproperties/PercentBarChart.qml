@@ -26,6 +26,7 @@ ChartView {
     anchors.fill: parent
     theme: ChartView.ChartThemeLight
     legend.alignment: Qt.AlignBottom
+    animationOptions: ChartView.SeriesAnimations
 
     property variant series: mySeries
 

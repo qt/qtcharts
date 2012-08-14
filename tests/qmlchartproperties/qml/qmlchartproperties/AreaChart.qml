@@ -24,6 +24,7 @@ import QtCommercial.Chart 1.0
 ChartView {
     title: "area series"
     anchors.fill: parent
+    animationOptions: ChartView.SeriesAnimations
 
     property variant series: areaSeries
 
