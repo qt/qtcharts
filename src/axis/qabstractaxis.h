@@ -133,7 +133,7 @@ Q_SIGNALS:
 
 protected:
 	QScopedPointer<QAbstractAxisPrivate> d_ptr;
-    Q_DISABLE_COPY(QAbstractAxis);
+    Q_DISABLE_COPY(QAbstractAxis)
     friend class ChartDataSet;
     friend class ChartAxis;
     friend class ChartPresenter;

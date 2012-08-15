@@ -13,4 +13,5 @@ SUBDIRS += chartthemes \
            qmlcustomizations \
            qmlcustommodel \
            qmloscilloscope \
-           chartviewer
+           chartviewer \
+           chartinteractions

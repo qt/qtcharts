@@ -55,13 +55,13 @@ public:
         BackgroundZValue = -1,
         ShadesZValue ,
         GridZValue,
+        AxisZValue,
         SeriesZValue,
         LineChartZValue = SeriesZValue,
         SplineChartZValue = SeriesZValue,
         BarSeriesZValue = SeriesZValue,
         ScatterSeriesZValue = SeriesZValue,
         PieSeriesZValue = SeriesZValue,
-        AxisZValue,
         LegendZValue,
         TopMostZValue
     };
