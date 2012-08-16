@@ -52,8 +52,11 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
+    QPainterPath path() const { return m_path; }
+
 public Q_SLOTS:
     void handleUpdated();
+
 protected:
     void updateGeometry();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -65,7 +68,6 @@ private:
     QPen m_linePen;
     QPen m_pointPen;
     bool m_pointsVisible;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

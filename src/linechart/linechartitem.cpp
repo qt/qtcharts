@@ -27,7 +27,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-const qreal mouseEventMinWidth(14);
+const qreal mouseEventMinWidth(12);
 
 LineChartItem::LineChartItem(QLineSeries* series,ChartPresenter *presenter):
     XYChart(series, presenter),

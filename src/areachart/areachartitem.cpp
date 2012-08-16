@@ -73,10 +73,10 @@ void AreaChartItem::updatePath()
 {
     QPainterPath path;
 
-    path = m_upper->shape();
+    path = m_upper->path();
 
     if (m_lower) {
-        path.connectPath(m_lower->shape().toReversed());
+        path.connectPath(m_lower->path().toReversed());
     } else {
         QPointF first = path.pointAtPercent(0);
         QPointF last =  path.pointAtPercent(1);
