@@ -46,6 +46,9 @@ int main(int argc, char *argv[])
     Chart* chart = new Chart(0, 0, series);
     chart->legend()->hide();
     chart->addSeries(series);
+    QPen p = series->pen();
+    p.setWidth(5);
+    series->setPen(p);
     chart->createDefaultAxes();
     chart->setTitle("Drag'n drop to move data points");
 

@@ -45,7 +45,7 @@ class LineChartItem :  public XYChart , public QGraphicsItem
      Q_INTERFACES(QGraphicsItem)
 public:
      explicit LineChartItem(QLineSeries *series,ChartPresenter *presenter);
-    ~LineChartItem() {};
+    ~LineChartItem() {}
 
     //from QGraphicsItem
     QRectF boundingRect() const;

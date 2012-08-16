@@ -41,6 +41,7 @@ public:
     void setPointClicked(bool clicked);
 
 private:
+    qreal distance(const QPointF &p1, const QPointF &p2);
     QLineSeries *m_series;
     QPointF m_movingPoint;
 

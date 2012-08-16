@@ -20,6 +20,7 @@
 
 #include <QValuesAxis>
 #include <QAbstractAxis>
+#include <cmath>
 #include <QDebug>
 
 #include "chart.h"
@@ -36,20 +37,21 @@ Chart::~Chart()
 
 void Chart::clickPoint(const QPointF &point)
 {
-    //Get all points from the series.
-    QList<QPointF> points = m_series->points();
-    //Construct a small rectangle around the clicked point
-    //to identify the real point clicked from the series.
-    QRectF clickRect(point.x() - 0.5, point.y() - 0.5, 1.0, 1.0);
-
-    //Find the clicked point to be moved.
-    foreach (QPointF p, points) {
-        if (clickRect.contains(p)) {
+    // Find the closes data point
+    m_movingPoint = QPoint();
+    m_clicked = false;
+    foreach (QPointF p, m_series->points()) {
+        if (distance(p, point) < distance(m_movingPoint, point)) {
             m_movingPoint = p;
             m_clicked = true;
-            return;
         }
     }
+}
+
+qreal Chart::distance(const QPointF &p1, const QPointF &p2)
+{
+    return sqrt((p1.x() - p2.x()) * (p1.x() - p2.x())
+                + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 }
 
 void Chart::setPointClicked(bool clicked)

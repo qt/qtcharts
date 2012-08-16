@@ -25,10 +25,9 @@
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-//TODO: optimize : remove points which are not visible
+const qreal mouseEventMinWidth(14);
 
 LineChartItem::LineChartItem(QLineSeries* series,ChartPresenter *presenter):
     XYChart(series, presenter),
@@ -49,7 +48,13 @@ QRectF LineChartItem::boundingRect() const
 
 QPainterPath LineChartItem::shape() const
 {
-    return m_path;
+    // Increase the size of the path slightly to make mouse interactions more natural
+    QPainterPathStroker s;
+    s.setCapStyle(Qt::RoundCap);
+    s.setJoinStyle(Qt::RoundJoin);
+    qreal spacing = qMax(mouseEventMinWidth, (qreal) m_linePen.width());
+    s.setWidth(spacing);
+    return s.createStroke(m_path);
 }
 
 void LineChartItem::updateGeometry()
@@ -71,8 +76,18 @@ void LineChartItem::updateGeometry()
     }
 
     prepareGeometryChange();
+
     m_path = linePath;
-    m_rect = linePath.boundingRect();
+
+    // When defining bounding rectangle,
+    // 1. take the line width into account (otherwise you will get drawing artifacts) and
+    // 2. take the shape into account (otherwise you will not get mouse events through on border
+    // areas).
+    const qreal sqrtOf2 = 1.414214;
+    const qreal spacing = qMax(mouseEventMinWidth / 2.0,
+                               sqrtOf2 * (qreal) m_linePen.width() / 2.0);
+    m_rect = m_path.boundingRect().adjusted(-spacing, -spacing, spacing, spacing);
+
     setPos(origin());
 }
 
@@ -85,8 +100,6 @@ void LineChartItem::handleUpdated()
     m_pointPen.setWidthF(2*m_pointPen.width());
     update();
 }
-
-//painter
 
 void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
