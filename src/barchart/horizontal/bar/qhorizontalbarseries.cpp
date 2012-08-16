@@ -58,12 +58,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 
-
+/*!
+    Constructs empty QHorizontalBarSeries.
+    QHorizontalBarSeries is QObject which is a child of a \a parent.
+*/
 QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent) :
     QAbstractBarSeries(*new QHorizontalBarSeriesPrivate(this), parent)
 {
 }
 
+/*!
+    Destructor
+    Removes series from chart.
+*/
 QHorizontalBarSeries::~QHorizontalBarSeries()
 {
     Q_D(QHorizontalBarSeries);
@@ -72,6 +79,9 @@ QHorizontalBarSeries::~QHorizontalBarSeries()
     }
 }
 
+/*!
+    Returns QChartSeries::SeriesTypeHorizontalBar.
+*/
 QAbstractSeries::SeriesType QHorizontalBarSeries::type() const
 {
     return QAbstractSeries::SeriesTypeHorizontalBar;
