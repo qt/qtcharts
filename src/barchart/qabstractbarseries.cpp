@@ -357,13 +357,22 @@ bool QAbstractBarSeries::isLabelsVisible() const
     return d->m_labelsVisible;
 }
 
+void QAbstractBarSeries::setGrouping(bool grouping)
+{
+    Q_D(QAbstractBarSeries);
+    d->setGrouping(grouping);
+}
+
+
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractBarSeriesPrivate::QAbstractBarSeriesPrivate(QAbstractBarSeries *q) :
     QAbstractSeriesPrivate(q),
     m_barWidth(0.5),  // Default value is 50% of category width
     m_labelsVisible(false),
-    m_visible(true)
+    m_visible(true),
+    m_grouping(true)
 {
 }
 
@@ -409,6 +418,14 @@ void QAbstractBarSeriesPrivate::setLabelsVisible(bool visible)
 {
     m_labelsVisible = visible;
     emit labelsVisibleChanged(visible);
+}
+
+void QAbstractBarSeriesPrivate::setGrouping(bool grouping)
+{
+    if (m_grouping != grouping) {
+        m_grouping = grouping;
+        emit updatedBars();
+    }
 }
 
 qreal QAbstractBarSeriesPrivate::min()

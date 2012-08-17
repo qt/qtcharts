@@ -81,8 +81,7 @@ protected:
 
     AbstractBarAnimation *m_animation;
 
-    // Not owned.
-    QAbstractBarSeries *m_series;
+    QAbstractBarSeries *m_series; // Not owned.
     QList<Bar *> m_bars;
     QList<QGraphicsSimpleTextItem *> m_labels;
 };

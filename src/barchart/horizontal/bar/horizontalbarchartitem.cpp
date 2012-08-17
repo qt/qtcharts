@@ -46,7 +46,14 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
     qreal rangeX = m_domainMaxX - m_domainMinX;
     qreal scaleY = (height / rangeY);
     qreal scaleX = (width / rangeX);
-    qreal barHeight = (scaleY / setCount) * m_series->d_func()->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
+    qreal barHeight;
+
+ // On horizontal chart barWidth of the barseries means height of the rect.
+    if (m_series->d_func()->m_grouping) {
+        barHeight = (scaleY / setCount) * m_series->d_func()->barWidth();
+    } else {
+        barHeight = scaleY * m_series->d_func()->barWidth();
+    }
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
@@ -55,8 +62,12 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
             qreal yPos = m_rect.bottom() + (m_domainMinY - barSet->pos(category)) * scaleY;
-            yPos += setCount*barHeight/2;
-            yPos -= set*barHeight;
+            if (m_series->d_func()->m_grouping) {
+                yPos += setCount*barHeight/2;
+                yPos -= set*barHeight;
+            } else {
+                yPos += barHeight/2;
+            }
 
             qreal barWidth = barSet->value(category) * scaleX;
             Bar* bar = m_bars.at(itemIndex);
