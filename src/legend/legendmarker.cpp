@@ -54,7 +54,6 @@ LegendMarker::LegendMarker(QAbstractSeries *series, QLegend *legend) :
 void LegendMarker::setPen(const QPen &pen)
 {
     m_rectItem->setPen(pen);
-    m_textItem->setPen(pen);
 }
 
 QPen LegendMarker::pen() const

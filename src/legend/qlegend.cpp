@@ -299,6 +299,9 @@ void QLegend::setLabelBrush(const QBrush &brush)
         d_ptr->m_labelBrush = brush;
         foreach (LegendMarker *marker, d_ptr->markers()) {
             marker->setLabelBrush(d_ptr->m_labelBrush);
+            // Note: The pen of the marker rectangle could be exposed in the public QLegend API
+            // instead of mapping it from label brush color
+            marker->setPen(brush.color());
         }
         emit labelColorChanged(brush.color());
     }
