@@ -55,6 +55,7 @@ public:
     bool insert(int index, QPieSlice* slice);
 
     bool remove(QPieSlice* slice);
+    bool take(QPieSlice* slice);
     void clear();
 
     QList<QPieSlice*> slices() const;

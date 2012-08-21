@@ -511,6 +511,31 @@ bool QPieSeries::remove(QPieSlice* slice)
 }
 
 /*!
+    Takes a single \a slice from the series. Does not destroy the slice object.
+
+    NOTE: The series remains as the slice's parent object. You must set the
+    parent object to take full ownership.
+
+    Returns true if take was successfull.
+*/
+bool QPieSeries::take(QPieSlice* slice)
+{
+    Q_D(QPieSeries);
+
+    if (!d->m_slices.removeOne(slice))
+        return false;
+
+    QPieSlicePrivate::fromSlice(slice)->m_series = 0;
+
+    d->updateDerivativeData();
+
+    emit removed(QList<QPieSlice*>() << slice);
+    emit countChanged();
+
+    return true;
+}
+
+/*!
     Clears all slices from the series.
 */
 void QPieSeries::clear()

@@ -50,6 +50,8 @@ private slots:
     void insertAnimated();
     void remove();
     void removeAnimated();
+    void take();
+    void takeAnimated();
     void calculatedValues();
     void clickedSignal();
     void hoverSignal();
@@ -348,6 +350,40 @@ void tst_qpieseries::removeAnimated()
     remove();
 }
 
+void tst_qpieseries::take()
+{
+    m_view->chart()->addSeries(m_series);
+    QSignalSpy removedSpy(m_series, SIGNAL(removed(QList<QPieSlice*>)));
+
+    // add some slices
+    QPieSlice *slice1 = m_series->append("slice 1", 1);
+    QPieSlice *slice2 = m_series->append("slice 2", 2);
+    m_series->append("slice 3", 3);
+    QSignalSpy spy1(slice1, SIGNAL(destroyed()));
+    QCOMPARE(m_series->count(), 3);
+
+    // null pointer remove
+    QVERIFY(!m_series->take(0));
+
+    // take first
+    QVERIFY(m_series->take(slice1));
+    TRY_COMPARE(spy1.count(), 0);
+    QVERIFY(slice1->parent() == m_series); // series is still the parent object
+    QVERIFY(!m_series->take(slice1));
+    QCOMPARE(m_series->count(), 2);
+    QCOMPARE(m_series->slices().at(0)->label(), slice2->label());
+    QCOMPARE(removedSpy.count(), 1);
+    QList<QPieSlice*> removed = qvariant_cast<QList<QPieSlice*> >(removedSpy.at(0).at(0));
+    QCOMPARE(removed.count(), 1);
+    QCOMPARE(removed.first(), slice1);
+}
+
+void tst_qpieseries::takeAnimated()
+{
+    m_view->chart()->setAnimationOptions(QChart::AllAnimations);
+    take();
+}
+
 void tst_qpieseries::calculatedValues()
 {
     m_view->chart()->addSeries(m_series);
@@ -573,6 +609,9 @@ void tst_qpieseries::sliceSeries()
     slice = new QPieSlice();
     m_series->insert(0, slice);
     QCOMPARE(slice->series(), m_series);
+
+    m_series->take(slice);
+    QCOMPARE(slice->series(), (QPieSeries*) 0);
 }
 
 void tst_qpieseries::destruction()
