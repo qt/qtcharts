@@ -78,6 +78,9 @@ void tst_qpieseries::init()
 {
     m_view = new QChartView();
     m_series = new QPieSeries(m_view);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+
 }
 
 void tst_qpieseries::cleanup()
@@ -234,6 +237,7 @@ void tst_qpieseries::append()
 void tst_qpieseries::appendAnimated()
 {
     m_view->chart()->setAnimationOptions(QChart::AllAnimations);
+    append();
 }
 
 void tst_qpieseries::insert()
@@ -291,6 +295,7 @@ void tst_qpieseries::insert()
 void tst_qpieseries::insertAnimated()
 {
     m_view->chart()->setAnimationOptions(QChart::AllAnimations);
+    insert();
 }
 
 void tst_qpieseries::remove()
@@ -340,6 +345,7 @@ void tst_qpieseries::remove()
 void tst_qpieseries::removeAnimated()
 {
     m_view->chart()->setAnimationOptions(QChart::AllAnimations);
+    remove();
 }
 
 void tst_qpieseries::calculatedValues()
