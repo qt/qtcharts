@@ -49,13 +49,13 @@ class QDateTimeAxisPrivate : public QAbstractAxisPrivate
     void handleDomainUpdated();
     qreal min(){ return m_min.toMSecsSinceEpoch(); }
     qreal max(){ return m_max.toMSecsSinceEpoch(); }
-    int count() const { /*TODO:*/ return 0;};
+    int count() const { /*TODO:*/ return 0;}
 
     protected:
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);
     void setRange(const QVariant &min, const QVariant &max);
-    int ticksCount() const;
+    int tickCount() const;
 
     protected:
     QDateTime m_min;

@@ -32,30 +32,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The QDateTimeAxis class is used for manipulating chart's axis.
     \mainclass
 
+    The labels can be configured by setting an appropriate DateTime format.
     Note that any date before 4800 BCE or after about 1.4 million CE may not be accurately stored.
-
-    ValuesAxis can be setup to show axis line with tick marks, grid lines and shades.
-    Values of axis are drawn to position of ticks
+    QDateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
 */
 
 /*!
-    \qmlclass ValuesAxis QDateTimeAxis
-    \brief The ValuesAxis element is used for manipulating chart's axes
+    \qmlclass DateTimeAxis QDateTimeAxis
+    \brief The DateTimeAxis element is used for manipulating chart's axes
 
-    ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
-    Values of axis are drawn to position of ticks
-
-    To access Axes you can use ChartView API. For example:
-    \code
-        ChartView {
-            ValuesAxis {
-                id: xAxis
-                min: 0
-                max: 10
-            }
-        // Add a few series...
-        }
-    \endcode
+    The labels can be configured by setting an appropriate DateTime format.
+    Note that any date before 4800 BCE or after about 1.4 million CE may not be accurately stored.
+    DateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
 */
 
 /*!
@@ -200,7 +188,7 @@ void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
   Check QDateTime documentation for information on how the string should be defined.
   \sa formatString()
 */
-void QDateTimeAxis::setFormatString(QString format)
+void QDateTimeAxis::setFormat(QString format)
 {
     Q_D(QDateTimeAxis);
     d->m_format = format;
@@ -211,7 +199,7 @@ void QDateTimeAxis::setFormatString(QString format)
   Check QDateTime documentation for information on how the string should be defined.
   \sa setFormatString()
 */
-QString QDateTimeAxis::formatString() const
+QString QDateTimeAxis::format() const
 {
     Q_D(const QDateTimeAxis);
     return d->m_format;
@@ -220,7 +208,7 @@ QString QDateTimeAxis::formatString() const
 /*!
   Sets \a count for ticks on the axis.
 */
-void QDateTimeAxis::setTicksCount(int count)
+void QDateTimeAxis::setTickCount(int count)
 {    
     Q_D(QDateTimeAxis);
     if (d->m_tickCount != count && count >=2) {
@@ -233,7 +221,7 @@ void QDateTimeAxis::setTicksCount(int count)
   \fn int QDateTimeAxis::ticksCount() const
   Return number of ticks on the axis
 */
-int QDateTimeAxis::ticksCount() const
+int QDateTimeAxis::tickCount() const
 {
     Q_D(const QDateTimeAxis);
     return d->m_tickCount;

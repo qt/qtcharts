@@ -51,7 +51,7 @@ void ChartDateTimeAxisX::createLabels(QStringList &labels,qreal min, qreal max, 
     n++;
     for (int i=0; i< ticks; i++) {
         qreal value = min + (i * (max - min)/ (ticks-1));
-        labels << QDateTime::fromMSecsSinceEpoch(value).toString(axis->formatString());
+        labels << QDateTime::fromMSecsSinceEpoch(value).toString(axis->format());
     }
 }
 
@@ -129,7 +129,7 @@ void ChartDateTimeAxisX::handleAxisUpdated()
 {
     //TODO:: fix this
     QDateTimeAxis* axis = qobject_cast<QDateTimeAxis*>(m_chartAxis);
-    m_tickCount = axis->ticksCount();
+    m_tickCount = axis->tickCount();
     ChartAxis::handleAxisUpdated();
 }
 
