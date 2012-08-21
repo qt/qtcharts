@@ -42,9 +42,9 @@ protected:
 public:
     AxisType type() const;
 
-    void append(const QString& label, qreal interval = 1);
+    void append(const QString& label, qreal intervalEnd);
     void remove(const QString& label);
-    void replace(const QString& oldLabel, const QString& newLabel);
+    void replaceLabel(const QString& oldLabel, const QString& newLabel);
 
     void setFisrtIntervalMinimum(qreal min);
 

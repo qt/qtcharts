@@ -76,21 +76,24 @@ QIntervalsAxis::QIntervalsAxis(QIntervalsAxisPrivate &d,QObject *parent):QValues
 
 /*!
     Appends new interval to the axis with an \a intervalLabel.
+    Interval label has to be unique.
     Parameter \a interval specifies the high end limit of the interval.
+    It has to be greater than the high end limit of the previous interval.
+    Otherwise the method returns without adding a new interval.
 */
-void QIntervalsAxis::append(const QString& intervalLabel, qreal interval)
+void QIntervalsAxis::append(const QString& intervalLabel, qreal intervalEnd)
 {
     Q_D(QIntervalsAxis);
 
     if (!d->m_intervals.contains(intervalLabel))
     {
         if(d->m_intervals.isEmpty()){
-            Range range(d->m_categoryMinimum,interval);
+            Range range(d->m_categoryMinimum, intervalEnd);
             d->m_intervalsMap.insert(intervalLabel, range);
             d->m_intervals.append(intervalLabel);
-        }else if (interval > intervalMax(d->m_intervals.last())){
+        }else if (intervalEnd > intervalMax(d->m_intervals.last())){
             Range range = d->m_intervalsMap.value(d->m_intervals.last());
-            d->m_intervalsMap.insert(intervalLabel, Range(range.second,interval));
+            d->m_intervalsMap.insert(intervalLabel, Range(range.second, intervalEnd));
             d->m_intervals.append(intervalLabel);
         }
     }
@@ -159,7 +162,7 @@ void QIntervalsAxis::remove(const QString &intervalLabel)
     }
 }
 
-void QIntervalsAxis::replace(const QString& oldLabel, const QString& newLabel)
+void QIntervalsAxis::replaceLabel(const QString& oldLabel, const QString& newLabel)
 {
     Q_D(QIntervalsAxis);
     int labelIndex = d->m_intervals.indexOf(oldLabel);
@@ -182,7 +185,7 @@ QStringList QIntervalsAxis::intervalsLabels()
 }
 
 /*!
-  Returns number of categories.
+  Returns number of intervals.
  */
 int QIntervalsAxis::count() const
 {
