@@ -27,12 +27,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
-    \internal
     \class QIntervalsAxis
     \brief The QIntervalsAxis class is used for manipulating chart's axis.
     \mainclass
-
-    Axis can be setup to show axis line with tick marks, grid lines and shades.
 */
 
 /*!
@@ -77,7 +74,7 @@ QIntervalsAxis::QIntervalsAxis(QIntervalsAxisPrivate &d,QObject *parent):QValues
 /*!
     Appends new interval to the axis with an \a intervalLabel.
     Interval label has to be unique.
-    Parameter \a interval specifies the high end limit of the interval.
+    Parameter \a intervalEnd specifies the high end limit of the interval.
     It has to be greater than the high end limit of the previous interval.
     Otherwise the method returns without adding a new interval.
 */
@@ -132,7 +129,7 @@ qreal QIntervalsAxis::intervalMax(const QString& intervalLabel) const
 }
 
 /*!
-    Removes \a interval from axis
+    Removes an interval specified by the \a intervalLabel from the axis
 */
 void QIntervalsAxis::remove(const QString &intervalLabel)
 {
@@ -162,6 +159,10 @@ void QIntervalsAxis::remove(const QString &intervalLabel)
     }
 }
 
+/*!
+  Replaces \a oldLabel of an existing interval with a \a newLabel
+  If the old label does not exist the method returns without making any changes.
+ */
 void QIntervalsAxis::replaceLabel(const QString& oldLabel, const QString& newLabel)
 {
     Q_D(QIntervalsAxis);
@@ -178,6 +179,9 @@ void QIntervalsAxis::replaceLabel(const QString& oldLabel, const QString& newLab
 
 }
 
+/*!
+  Returns the list of the intervals labels
+ */
 QStringList QIntervalsAxis::intervalsLabels()
 {
     Q_D(QIntervalsAxis);

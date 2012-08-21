@@ -293,7 +293,7 @@ void tst_QIntervalsAxis::interval()
     QCOMPARE(m_intervalsaxis->intervalMax("second"), (qreal)75);
 
     // remove one interval
-    m_intervalsaxis->replace("second", "replaced");
+    m_intervalsaxis->replaceLabel("second", "replaced");
     QCOMPARE(m_intervalsaxis->count(), 2);
     QCOMPARE(m_intervalsaxis->intervalMin("replaced"), (qreal)0); // second interval should extend to firstInterval minimum
     QCOMPARE(m_intervalsaxis->intervalMax("replaced"), (qreal)75);
