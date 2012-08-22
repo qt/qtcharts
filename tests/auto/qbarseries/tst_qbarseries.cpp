@@ -28,6 +28,7 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QBarSet*)
+Q_DECLARE_METATYPE(QList<QBarSet*>)
 
 class tst_QBarSeries : public QObject
 {
@@ -48,6 +49,8 @@ private slots:
     void append();
     void remove_data();
     void remove();
+    void take_data();
+    void take();
     void appendList_data();
     void appendList();
     void count_data();
@@ -74,6 +77,7 @@ private:
 void tst_QBarSeries::initTestCase()
 {
     qRegisterMetaType<QBarSet*>("QBarSet*");
+    qRegisterMetaType<QList<QBarSet*>>("QList<QBarSet*>");
 }
 
 void tst_QBarSeries::cleanupTestCase()
@@ -95,7 +99,6 @@ void tst_QBarSeries::cleanup()
 {
     foreach(QBarSet* s, m_testSets) {
         m_barseries_with_sets->remove(s);
-        delete s;
     }
     m_testSets.clear();
 
@@ -205,6 +208,35 @@ void tst_QBarSeries::remove()
     QVERIFY(ret == true);
     QVERIFY(m_barseries_with_sets->count() == 0);
 }
+
+void tst_QBarSeries::take_data()
+{
+
+}
+
+void tst_QBarSeries::take()
+{
+    int count = m_testSets.count();
+    QVERIFY(m_barseries_with_sets->count() == count);
+
+    QSignalSpy countSpy(m_barseries_with_sets,SIGNAL(countChanged()));
+    QSignalSpy removedSpy(m_barseries_with_sets,SIGNAL(barsetsRemoved(QList<QBarSet *>)));
+
+    for (int i=0; i<m_testSets.count(); i++) {
+        QBarSet* set = m_testSets.at(i);
+        bool success = m_barseries_with_sets->take(set);
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+        QVERIFY(success);
+        TRY_COMPARE(countSpy.count(),1);
+        TRY_COMPARE(removedSpy.count(),1);
+
+        QList<QVariant> removedSpyArg = removedSpy.takeFirst();
+        QList<QBarSet*> removedSets = qvariant_cast<QList<QBarSet*>> (removedSpyArg.at(0));
+        QCOMPARE(removedSets.at(0), m_testSets.at(i));
+        countSpy.takeFirst();
+    }
+}
+
 
 void tst_QBarSeries::appendList_data()
 {

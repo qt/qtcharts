@@ -252,7 +252,8 @@ bool QAbstractBarSeries::append(QBarSet *set)
 }
 
 /*!
-    Removes a set of bars from series. Releases ownership of \a set. Doesn't delete \a set.
+    Removes barset from series. Releases ownership of \a set. Deletes the set, if remove
+    was successful.
     Returns true, if set was removed.
 */
 bool QAbstractBarSeries::remove(QBarSet *set)
@@ -263,6 +264,29 @@ bool QAbstractBarSeries::remove(QBarSet *set)
         QList<QBarSet*> sets;
         sets.append(set);
         set->setParent(0);
+        emit barsetsRemoved(sets);
+        emit countChanged();
+        delete set;
+        set = 0;
+    }
+    return success;
+}
+
+/*!
+    Takes a single \a set from the series. Does not delete the barset object.
+
+    NOTE: The series remains as the barset's parent object. You must set the
+    parent object to take full ownership.
+
+    Returns true if take was successfull.
+*/
+bool QAbstractBarSeries::take(QBarSet *set)
+{
+    Q_D(QAbstractBarSeries);
+    bool success = d->remove(set);
+    if (success) {
+        QList<QBarSet*> sets;
+        sets.append(set);
         emit barsetsRemoved(sets);
         emit countChanged();
     }
@@ -305,7 +329,7 @@ bool QAbstractBarSeries::insert(int index, QBarSet *set)
 }
 
 /*!
-    Removes all of the bar sets from the series
+    Removes all barsets from the series. Deletes removed sets.
 */
 void QAbstractBarSeries::clear()
 {
@@ -315,6 +339,9 @@ void QAbstractBarSeries::clear()
     if (success) {
         emit barsetsRemoved(sets);
         emit countChanged();
+        foreach (QBarSet* set, sets) {
+            delete set;
+        }
     }
 }
 

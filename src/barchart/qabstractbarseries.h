@@ -49,6 +49,7 @@ public:
 
     bool append(QBarSet *set);
     bool remove(QBarSet *set);
+    bool take(QBarSet *set);
     bool append(QList<QBarSet* > sets);
     bool insert(int index, QBarSet *set);
     int count() const;
