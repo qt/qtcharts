@@ -25,9 +25,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QValuesAxisPrivate;
+class QValueAxisPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QValuesAxis : public QAbstractAxis
+class QTCOMMERCIALCHART_EXPORT QValueAxis : public QAbstractAxis
 {
     Q_OBJECT
     Q_PROPERTY(int ticksCount READ ticksCount WRITE setTicksCount)
@@ -36,11 +36,11 @@ class QTCOMMERCIALCHART_EXPORT QValuesAxis : public QAbstractAxis
     Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
 
 public:
-    explicit QValuesAxis(QObject *parent = 0);
-    ~QValuesAxis();
+    explicit QValueAxis(QObject *parent = 0);
+    ~QValueAxis();
 
 protected:
-    QValuesAxis(QValuesAxisPrivate &d,QObject *parent = 0);
+    QValueAxis(QValueAxisPrivate &d,QObject *parent = 0);
 
 public:
     AxisType type() const;
@@ -65,8 +65,8 @@ Q_SIGNALS:
     void rangeChanged(qreal min, qreal max);
 
 private:
-    Q_DECLARE_PRIVATE(QValuesAxis)
-    Q_DISABLE_COPY(QValuesAxis)
+    Q_DECLARE_PRIVATE(QValueAxis)
+    Q_DISABLE_COPY(QValueAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

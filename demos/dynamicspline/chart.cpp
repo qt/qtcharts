@@ -21,14 +21,14 @@
 #include "chart.h"
 #include <QAbstractAxis>
 #include <QSplineSeries>
-#include <QValuesAxis>
+#include <QValueAxis>
 #include <QTime>
 #include <QDebug>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     QChart(parent, wFlags),
     m_series(0),
-    m_axis(new QValuesAxis),
+    m_axis(new QValueAxis),
     m_step(0),
     m_x(5),
     m_y(1)

@@ -117,7 +117,7 @@ void ChartValuesAxisY::updateGeometry()
 void ChartValuesAxisY::handleAxisUpdated()
 {
     //TODO:: fix this
-    QValuesAxis* axis = qobject_cast<QValuesAxis*>(m_chartAxis);
+    QValueAxis* axis = qobject_cast<QValueAxis*>(m_chartAxis);
     m_tickCount = axis->ticksCount();
     ChartAxis::handleAxisUpdated();
 }

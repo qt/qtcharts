@@ -48,7 +48,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs an axis object which is a child of \a parent.
 */
 QIntervalsAxis::QIntervalsAxis(QObject *parent):
-    QValuesAxis(*new QIntervalsAxisPrivate(this),parent)
+    QValueAxis(*new QIntervalsAxisPrivate(this),parent)
 {
 }
 
@@ -57,7 +57,7 @@ QIntervalsAxis::QIntervalsAxis(QObject *parent):
 */
 QIntervalsAxis::~QIntervalsAxis()
 {
-    //    Q_D(QValuesAxis);
+    //    Q_D(QValueAxis);
     //    if(d->m_dataset) {
     //        d->m_dataset->removeAxis(this);
     //    }
@@ -66,7 +66,7 @@ QIntervalsAxis::~QIntervalsAxis()
 /*!
     \internal
 */
-QIntervalsAxis::QIntervalsAxis(QIntervalsAxisPrivate &d,QObject *parent):QValuesAxis(d,parent)
+QIntervalsAxis::QIntervalsAxis(QIntervalsAxisPrivate &d,QObject *parent):QValueAxis(d,parent)
 {
 
 }
@@ -208,7 +208,7 @@ QAbstractAxis::AxisType QIntervalsAxis::type() const
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QIntervalsAxisPrivate::QIntervalsAxisPrivate(QIntervalsAxis* q):
-    QValuesAxisPrivate(q),
+    QValueAxisPrivate(q),
     m_categoryMinimum(0)
 {
 

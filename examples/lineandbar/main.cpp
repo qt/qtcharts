@@ -26,7 +26,7 @@
 #include <QLineSeries>
 #include <QLegend>
 #include <QBarCategoriesAxis>
-#include <QValuesAxis>
+#include <QValueAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
     chart->setAxisX(axisX,barseries);
     axisX->setRange(QString("Jan"),QString("Jun"));
 
-    QValuesAxis* axisY = new QValuesAxis();
+    QValueAxis* axisY = new QValueAxis();
     chart->setAxisY(axisY,lineseries);
     chart->setAxisY(axisY,barseries);
     axisY->setRange(0,20);

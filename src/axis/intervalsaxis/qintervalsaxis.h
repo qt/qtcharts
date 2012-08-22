@@ -28,7 +28,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QIntervalsAxisPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QIntervalsAxis : public QValuesAxis
+class QTCOMMERCIALCHART_EXPORT QIntervalsAxis : public QValueAxis
 {
     Q_OBJECT
 

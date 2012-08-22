@@ -189,13 +189,13 @@ void tst_ChartDataSet::setAxisX_data()
 
     QTest::newRow("line,spline,scatter: axis 0 axis1 axis 2")
         << (QList<QAbstractSeries*>() << line << spline << scatter)
-        << (QList<QAbstractAxis*>() << new QValuesAxis(this) << new QValuesAxis(this) << new QValuesAxis(this)) << 3;
+        << (QList<QAbstractAxis*>() << new QValueAxis(this) << new QValueAxis(this) << new QValueAxis(this)) << 3;
 
     QTest::newRow("area: axis 0") << (QList<QAbstractSeries*>() << area)
-        << (QList<QAbstractAxis*>() << new QValuesAxis(this)) << 1;
+        << (QList<QAbstractAxis*>() << new QValueAxis(this)) << 1;
 
     QList<QAbstractAxis*> axes0;
-    axes0 << new QValuesAxis(this) << new QValuesAxis(this);
+    axes0 << new QValueAxis(this) << new QValueAxis(this);
     axes0 << axes0.last();
     QTest::newRow("line,spline,scatter: axis 0 axis1 axis 1")
         << (QList<QAbstractSeries*>() << line << spline << scatter)
@@ -329,8 +329,8 @@ void tst_ChartDataSet::removeAllSeries_data()
     QTest::newRow("line,spline,scatter: axis 0 axis1 axis 2")
         << (QList<QAbstractSeries*>() << new QLineSeries(this) << new QSplineSeries(this)
             << new QScatterSeries(this))
-        << (QList<QAbstractAxis*>() << new QValuesAxis(this) << new QValuesAxis(this)
-            << new QValuesAxis(this)) << 3;
+        << (QList<QAbstractAxis*>() << new QValueAxis(this) << new QValueAxis(this)
+            << new QValueAxis(this)) << 3;
     //TODO:
 }
 

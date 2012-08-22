@@ -22,7 +22,7 @@
 #include "qvaluesaxis.h"
 #include <qlineseries.h>
 
-class tst_QValuesAxis: public tst_QAbstractAxis
+class tst_QValueAxis: public tst_QAbstractAxis
 {
 Q_OBJECT
 
@@ -63,21 +63,21 @@ private slots:
     void autoscale();
 
 private:
-    QValuesAxis* m_valuesaxis;
+    QValueAxis* m_valuesaxis;
     QLineSeries* m_series;
 };
 
-void tst_QValuesAxis::initTestCase()
+void tst_QValueAxis::initTestCase()
 {
 }
 
-void tst_QValuesAxis::cleanupTestCase()
+void tst_QValueAxis::cleanupTestCase()
 {
 }
 
-void tst_QValuesAxis::init()
+void tst_QValueAxis::init()
 {
-    m_valuesaxis = new QValuesAxis();
+    m_valuesaxis = new QValueAxis();
     m_series = new QLineSeries();
     *m_series << QPointF(-100, -100) << QPointF(0, 0) << QPointF(100, 100);
     tst_QAbstractAxis::init(m_valuesaxis,m_series);
@@ -85,7 +85,7 @@ void tst_QValuesAxis::init()
     m_chart->createDefaultAxes();
 }
 
-void tst_QValuesAxis::cleanup()
+void tst_QValueAxis::cleanup()
 {
     delete m_series;
     delete m_valuesaxis;
@@ -94,11 +94,11 @@ void tst_QValuesAxis::cleanup()
     tst_QAbstractAxis::cleanup();
 }
 
-void tst_QValuesAxis::qvaluesaxis_data()
+void tst_QValueAxis::qvaluesaxis_data()
 {
 }
 
-void tst_QValuesAxis::qvaluesaxis()
+void tst_QValueAxis::qvaluesaxis()
 {
     qabstractaxis();
 
@@ -118,7 +118,7 @@ void tst_QValuesAxis::qvaluesaxis()
     QCOMPARE(m_valuesaxis->ticksCount(), 5);
 }
 
-void tst_QValuesAxis::max_raw_data()
+void tst_QValueAxis::max_raw_data()
 {
     QTest::addColumn<qreal>("max");
     QTest::newRow("1.0") << 1.0;
@@ -126,7 +126,7 @@ void tst_QValuesAxis::max_raw_data()
     QTest::newRow("101.0") << 101.0;
 }
 
-void tst_QValuesAxis::max_raw()
+void tst_QValueAxis::max_raw()
 {
     QFETCH(qreal, max);
 
@@ -143,12 +143,12 @@ void tst_QValuesAxis::max_raw()
 
 }
 
-void tst_QValuesAxis::max_data()
+void tst_QValueAxis::max_data()
 {
     max_raw_data();
 }
 
-void tst_QValuesAxis::max()
+void tst_QValueAxis::max()
 {
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
@@ -156,18 +156,18 @@ void tst_QValuesAxis::max()
     max_raw();
 }
 
-void tst_QValuesAxis::max_animation_data()
+void tst_QValueAxis::max_animation_data()
 {
     max_data();
 }
 
-void tst_QValuesAxis::max_animation()
+void tst_QValueAxis::max_animation()
 {
     m_chart->setAnimationOptions(QChart::GridAxisAnimations);
     max();
 }
 
-void tst_QValuesAxis::min_raw_data()
+void tst_QValueAxis::min_raw_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::newRow("-1.0") << -1.0;
@@ -175,7 +175,7 @@ void tst_QValuesAxis::min_raw_data()
     QTest::newRow("-101.0") << -101.0;
 }
 
-void tst_QValuesAxis::min_raw()
+void tst_QValueAxis::min_raw()
 {
     QFETCH(qreal, min);
 
@@ -191,12 +191,12 @@ void tst_QValuesAxis::min_raw()
     QCOMPARE(spy2.count(), 1);
 }
 
-void tst_QValuesAxis::min_data()
+void tst_QValueAxis::min_data()
 {
     min_raw_data();
 }
 
-void tst_QValuesAxis::min()
+void tst_QValueAxis::min()
 {
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
@@ -204,18 +204,18 @@ void tst_QValuesAxis::min()
     min_raw();
 }
 
-void tst_QValuesAxis::min_animation_data()
+void tst_QValueAxis::min_animation_data()
 {
     min_data();
 }
 
-void tst_QValuesAxis::min_animation()
+void tst_QValueAxis::min_animation()
 {
     m_chart->setAnimationOptions(QChart::GridAxisAnimations);
     min();
 }
 
-void tst_QValuesAxis::niceNumbersEnabled_data()
+void tst_QValueAxis::niceNumbersEnabled_data()
 {
     QTest::addColumn<bool>("niceNumbersEnabled");
     QTest::addColumn<qreal>("min");
@@ -232,7 +232,7 @@ void tst_QValuesAxis::niceNumbersEnabled_data()
     QTest::newRow("true 5, 93.5 , 5") << true << 5.0 << 93.5 << 5 << 0.0 << 100.0 << 6;
 }
 
-void tst_QValuesAxis::niceNumbersEnabled()
+void tst_QValueAxis::niceNumbersEnabled()
 {
     QFETCH(bool, niceNumbersEnabled);
     QFETCH(qreal, min);
@@ -268,7 +268,7 @@ void tst_QValuesAxis::niceNumbersEnabled()
 
 }
 
-void tst_QValuesAxis::range_raw_data()
+void tst_QValueAxis::range_raw_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::addColumn<qreal>("max");
@@ -277,7 +277,7 @@ void tst_QValuesAxis::range_raw_data()
     QTest::newRow("101.0") << 40.0 << 60.0;
 }
 
-void tst_QValuesAxis::range_raw()
+void tst_QValueAxis::range_raw()
 {
     QFETCH(qreal, min);
     QFETCH(qreal, max);
@@ -295,12 +295,12 @@ void tst_QValuesAxis::range_raw()
     QCOMPARE(spy2.count(), 1);
 }
 
-void tst_QValuesAxis::range_data()
+void tst_QValueAxis::range_data()
 {
     range_raw_data();
 }
 
-void tst_QValuesAxis::range()
+void tst_QValueAxis::range()
 {
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
@@ -308,18 +308,18 @@ void tst_QValuesAxis::range()
     range_raw();
 }
 
-void tst_QValuesAxis::range_animation_data()
+void tst_QValueAxis::range_animation_data()
 {
     range_data();
 }
 
-void tst_QValuesAxis::range_animation()
+void tst_QValueAxis::range_animation()
 {
     m_chart->setAnimationOptions(QChart::GridAxisAnimations);
     range();
 }
 
-void tst_QValuesAxis::ticksCount_data()
+void tst_QValueAxis::ticksCount_data()
 {
     QTest::addColumn<int>("ticksCount");
     QTest::addColumn<int>("expectedCount");
@@ -330,7 +330,7 @@ void tst_QValuesAxis::ticksCount_data()
     QTest::newRow("-1") << 2;
 }
 
-void tst_QValuesAxis::ticksCount()
+void tst_QValueAxis::ticksCount()
 {
     QFETCH(int, ticksCount);
 
@@ -352,7 +352,7 @@ void tst_QValuesAxis::ticksCount()
     QCOMPARE(m_valuesaxis->ticksCount(), ticksCount);
 }
 
-void tst_QValuesAxis::noautoscale_data()
+void tst_QValueAxis::noautoscale_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::addColumn<qreal>("max");
@@ -361,7 +361,7 @@ void tst_QValuesAxis::noautoscale_data()
     QTest::newRow("101.0") << 40.0 << 60.0;
 }
 
-void tst_QValuesAxis::noautoscale()
+void tst_QValueAxis::noautoscale()
 {
     QFETCH(qreal, min);
     QFETCH(qreal, max);
@@ -385,12 +385,12 @@ void tst_QValuesAxis::noautoscale()
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->max() - max), "Max not equal");
 }
 
-void tst_QValuesAxis::autoscale_data()
+void tst_QValueAxis::autoscale_data()
 {
 
 }
 
-void tst_QValuesAxis::autoscale()
+void tst_QValueAxis::autoscale()
 {
     QSignalSpy spy0(m_valuesaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
@@ -410,6 +410,6 @@ void tst_QValuesAxis::autoscale()
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->max() - 100), "Max not equal");
 }
 
-QTEST_MAIN(tst_QValuesAxis)
+QTEST_MAIN(tst_QValueAxis)
 #include "tst_qvaluesaxis.moc"
 

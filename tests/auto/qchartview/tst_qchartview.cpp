@@ -168,8 +168,8 @@ void tst_QChartView::rubberBand()
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(false);
 
-    QValuesAxis* vaxisX = qobject_cast<QValuesAxis*>(axisX);
-    QValuesAxis* vaxisY = qobject_cast<QValuesAxis*>(axisY);
+    QValueAxis* vaxisX = qobject_cast<QValueAxis*>(axisX);
+    QValueAxis* vaxisY = qobject_cast<QValueAxis*>(axisY);
 
     QVERIFY(vaxisX->min() - minX < 1);
     QVERIFY(vaxisX->max() - maxX < 1);

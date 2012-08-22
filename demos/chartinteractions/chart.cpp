@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include <QValuesAxis>
+#include <QValueAxis>
 #include <QAbstractAxis>
 #include <cmath>
 #include <QDebug>
@@ -71,14 +71,14 @@ void Chart::handlePointMove(const QPoint &point)
         //Get the x- and y axis to be able to convert the mapped
         //coordinate point to the charts scale.
         QAbstractAxis * axisx = this->axisX();
-        QValuesAxis* haxis = 0;
+        QValueAxis* haxis = 0;
         if (axisx->type() == QAbstractAxis::AxisTypeValues)
-            haxis = qobject_cast<QValuesAxis*>(axisx);
+            haxis = qobject_cast<QValueAxis*>(axisx);
 
         QAbstractAxis * axisy = this->axisY();
-        QValuesAxis* vaxis = 0;
+        QValueAxis* vaxis = 0;
         if (axisy->type() == QAbstractAxis::AxisTypeValues)
-            vaxis = qobject_cast<QValuesAxis*>(axisy);
+            vaxis = qobject_cast<QValueAxis*>(axisy);
 
         if (haxis && vaxis) {
             //Calculate the "unit" between points on the x

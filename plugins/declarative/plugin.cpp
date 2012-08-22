@@ -68,7 +68,7 @@ public:
         qmlRegisterType<QVPieModelMapper>(uri, 1, 0, "VPieModelMapper");
         qmlRegisterType<QHBarModelMapper>(uri, 1, 0, "HBarModelMapper");
         qmlRegisterType<QVBarModelMapper>(uri, 1, 0, "VBarModelMapper");
-        qmlRegisterType<QValuesAxis>(uri, 1, 0, "ValuesAxis");
+        qmlRegisterType<QValueAxis>(uri, 1, 0, "ValuesAxis");
         qmlRegisterType<QBarCategoriesAxis>(uri, 1, 0, "BarCategoriesAxis");
 
         qmlRegisterUncreatableType<QLegend>(uri, 1, 0, "Legend",

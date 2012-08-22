@@ -22,7 +22,7 @@
 #include <QMainWindow>
 #include <QLineSeries>
 
-#include <QValuesAxis>
+#include <QValueAxis>
 
 #include "chart.h"
 #include "chartview.h"
@@ -52,11 +52,11 @@ int main(int argc, char *argv[])
     chart->createDefaultAxes();
     chart->setTitle("Drag'n drop to move data points");
 
-    QValuesAxis *axisX = new QValuesAxis();
+    QValueAxis *axisX = new QValueAxis();
     chart->setAxisX(axisX, series);
     axisX->setRange(0, 20);
 
-    QValuesAxis *axisY = new QValuesAxis();
+    QValueAxis *axisY = new QValueAxis();
     chart->setAxisY(axisY, series);
     axisY->setRange(0, 13);
 

@@ -29,8 +29,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
-    \class QValuesAxis
-    \brief The QValuesAxis class is used for manipulating chart's axis.
+    \class QValueAxis
+    \brief The QValueAxis class is used for manipulating chart's axis.
     \mainclass
 
     ValuesAxis can be setup to show axis line with tick marks, grid lines and shades.
@@ -38,7 +38,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlclass ValuesAxis QValuesAxis
+    \qmlclass ValuesAxis QValueAxis
     \brief The ValuesAxis element is used for manipulating chart's axes
 
     ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
@@ -58,7 +58,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QValuesAxis::min
+  \property QValueAxis::min
   Defines the minimum value on the axis.
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
 */
@@ -69,7 +69,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QValuesAxis::max
+  \property QValueAxis::max
   Defines the maximum value on the axis.
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
 */
@@ -80,7 +80,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QValuesAxis::minChanged(qreal min)
+  \fn void QValueAxis::minChanged(qreal min)
   Axis emits signal when \a min of axis has changed.
 */
 /*!
@@ -89,7 +89,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QValuesAxis::maxChanged(qreal max)
+  \fn void QValueAxis::maxChanged(qreal max)
   Axis emits signal when \a max of axis has changed.
 */
 /*!
@@ -98,12 +98,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QValuesAxis::rangeChanged(qreal min, qreal max)
+  \fn void QValueAxis::rangeChanged(qreal min, qreal max)
   Axis emits signal when \a min or \a max of axis has changed.
 */
 
 /*!
-  \property QValuesAxis::ticksCount
+  \property QValueAxis::ticksCount
   The number of tick marks for the axis.
 */
 
@@ -113,7 +113,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QValuesAxis::niceNumbersEnabled
+  \property QValueAxis::niceNumbersEnabled
   Whether the nice numbers algorithm is enabled or not for the axis.
 */
 
@@ -125,8 +125,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs an axis object which is a child of \a parent.
 */
-QValuesAxis::QValuesAxis(QObject *parent) :
-    QAbstractAxis(*new QValuesAxisPrivate(this),parent)
+QValueAxis::QValueAxis(QObject *parent) :
+    QAbstractAxis(*new QValueAxisPrivate(this),parent)
 {
 
 }
@@ -134,7 +134,7 @@ QValuesAxis::QValuesAxis(QObject *parent) :
 /*!
     \internal
 */
-QValuesAxis::QValuesAxis(QValuesAxisPrivate &d,QObject *parent) : QAbstractAxis(d,parent)
+QValueAxis::QValueAxis(QValueAxisPrivate &d,QObject *parent) : QAbstractAxis(d,parent)
 {
 
 }
@@ -142,35 +142,35 @@ QValuesAxis::QValuesAxis(QValuesAxisPrivate &d,QObject *parent) : QAbstractAxis(
 /*!
     Destroys the object
 */
-QValuesAxis::~QValuesAxis()
+QValueAxis::~QValueAxis()
 {
-    Q_D(QValuesAxis);
+    Q_D(QValueAxis);
     if(d->m_dataset) {
         d->m_dataset->removeAxis(this);
     }
 }
 
-void QValuesAxis::setMin(qreal min)
+void QValueAxis::setMin(qreal min)
 {
-    Q_D(QValuesAxis);
+    Q_D(QValueAxis);
     setRange(min, qMax(d->m_max, min));
 }
 
-qreal QValuesAxis::min() const
+qreal QValueAxis::min() const
 {
-    Q_D(const QValuesAxis);
+    Q_D(const QValueAxis);
     return d->m_min;
 }
 
-void QValuesAxis::setMax(qreal max)
+void QValueAxis::setMax(qreal max)
 {
-    Q_D(QValuesAxis);
+    Q_D(QValueAxis);
     setRange(qMin(d->m_min, max), max);
 }
 
-qreal QValuesAxis::max() const
+qreal QValueAxis::max() const
 {
-    Q_D(const QValuesAxis);
+    Q_D(const QValueAxis);
     return d->m_max;
 }
 
@@ -178,9 +178,9 @@ qreal QValuesAxis::max() const
   Sets range from \a min to \a max on the axis.
   If min is greater than max then this function returns without making any changes.
 */
-void QValuesAxis::setRange(qreal min, qreal max)
+void QValueAxis::setRange(qreal min, qreal max)
 {
-    Q_D(QValuesAxis);
+    Q_D(QValueAxis);
     bool changed = false;
 
     if (min > max) return;
@@ -212,9 +212,9 @@ void QValuesAxis::setRange(qreal min, qreal max)
 /*!
   Sets \a count for ticks on the axis.
 */
-void QValuesAxis::setTicksCount(int count)
+void QValueAxis::setTicksCount(int count)
 {
-    Q_D(QValuesAxis);
+    Q_D(QValueAxis);
     if (d->m_tickCount != count && count >=2) {
         d->m_tickCount = count;
         d->emitUpdated();
@@ -222,18 +222,18 @@ void QValuesAxis::setTicksCount(int count)
 }
 
 /*!
-  \fn int QValuesAxis::ticksCount() const
+  \fn int QValueAxis::ticksCount() const
   Return number of ticks on the axis
 */
-int QValuesAxis::ticksCount() const
+int QValueAxis::ticksCount() const
 {
-    Q_D(const QValuesAxis);
+    Q_D(const QValueAxis);
     return d->m_tickCount;
 }
 
-void QValuesAxis::setNiceNumbersEnabled(bool enable)
+void QValueAxis::setNiceNumbersEnabled(bool enable)
 {
-    Q_D(QValuesAxis);
+    Q_D(QValueAxis);
     if (d->m_niceNumbers != enable){
         d->m_niceNumbers = enable;
         if(enable && !qFuzzyIsNull(d->m_max - d->m_min)) {
@@ -242,23 +242,23 @@ void QValuesAxis::setNiceNumbersEnabled(bool enable)
     }
 }
 
-bool  QValuesAxis::niceNumbersEnabled() const
+bool  QValueAxis::niceNumbersEnabled() const
 {
-    Q_D(const QValuesAxis);
+    Q_D(const QValueAxis);
     return d->m_niceNumbers;
 }
 
 /*!
   Returns the type of the axis
 */
-QAbstractAxis::AxisType QValuesAxis::type() const
+QAbstractAxis::AxisType QValueAxis::type() const
 {
     return AxisTypeValues;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QValuesAxisPrivate::QValuesAxisPrivate(QValuesAxis* q):
+QValueAxisPrivate::QValueAxisPrivate(QValueAxis* q):
     QAbstractAxisPrivate(q),
     m_min(0),
     m_max(0),
@@ -268,14 +268,14 @@ QValuesAxisPrivate::QValuesAxisPrivate(QValuesAxis* q):
 
 }
 
-QValuesAxisPrivate::~QValuesAxisPrivate()
+QValueAxisPrivate::~QValueAxisPrivate()
 {
 
 }
 
-void QValuesAxisPrivate::handleDomainUpdated()
+void QValueAxisPrivate::handleDomainUpdated()
 {
-   Q_Q(QValuesAxis);
+   Q_Q(QValueAxis);
    Domain* domain = qobject_cast<Domain*>(sender());
    Q_ASSERT(domain);
 
@@ -287,26 +287,26 @@ void QValuesAxisPrivate::handleDomainUpdated()
 }
 
 
-void QValuesAxisPrivate::setMin(const QVariant &min)
+void QValueAxisPrivate::setMin(const QVariant &min)
 {
-    Q_Q(QValuesAxis);
+    Q_Q(QValueAxis);
     bool ok;
     qreal value = min.toReal(&ok);
     if(ok) q->setMin(value);
 }
 
-void QValuesAxisPrivate::setMax(const QVariant &max)
+void QValueAxisPrivate::setMax(const QVariant &max)
 {
 
-    Q_Q(QValuesAxis);
+    Q_Q(QValueAxis);
     bool ok;
     qreal value = max.toReal(&ok);
     if(ok) q->setMax(value);
 }
 
-void QValuesAxisPrivate::setRange(const QVariant &min, const QVariant &max)
+void QValueAxisPrivate::setRange(const QVariant &min, const QVariant &max)
 {
-    Q_Q(QValuesAxis);
+    Q_Q(QValueAxis);
     bool ok1;
     bool ok2;
     qreal value1 = min.toReal(&ok1);
@@ -314,9 +314,9 @@ void QValuesAxisPrivate::setRange(const QVariant &min, const QVariant &max)
     if(ok1&&ok2) q->setRange(value1,value2);
 }
 
-ChartAxis* QValuesAxisPrivate::createGraphics(ChartPresenter* presenter)
+ChartAxis* QValueAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
-    Q_Q(QValuesAxis);
+    Q_Q(QValueAxis);
     if(m_orientation == Qt::Vertical){
         return new ChartValuesAxisY(q,presenter);
     }else{
@@ -325,9 +325,9 @@ ChartAxis* QValuesAxisPrivate::createGraphics(ChartPresenter* presenter)
 
 }
 
-void QValuesAxisPrivate::intializeDomain(Domain* domain)
+void QValueAxisPrivate::intializeDomain(Domain* domain)
 {
-    Q_Q(QValuesAxis);
+    Q_Q(QValueAxis);
     if(qFuzzyCompare(m_max,m_min)) {
         if(m_orientation==Qt::Vertical){
             q->setRange(domain->minY(),domain->maxY());
@@ -345,7 +345,7 @@ void QValuesAxisPrivate::intializeDomain(Domain* domain)
 
 //algorithm defined by Paul S.Heckbert GraphicalGems I
 
-void QValuesAxisPrivate::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const
+void QValueAxisPrivate::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const
 {
     qreal range = niceNumber(max-min,true); //range with ceiling
     qreal step = niceNumber(range/(ticksCount-1),false);
@@ -358,7 +358,7 @@ void QValuesAxisPrivate::looseNiceNumbers(qreal &min, qreal &max, int &ticksCoun
 
 //nice numbers can be expressed as form of 1*10^n, 2* 10^n or 5*10^n
 
-qreal QValuesAxisPrivate::niceNumber(qreal x,bool ceiling) const
+qreal QValueAxisPrivate::niceNumber(qreal x,bool ceiling) const
 {
     qreal z = qPow(10,qFloor(log10(x))); //find corresponding number of the form of 10^n than is smaller than x
     qreal q = x/z;//q<10 && q>=1;

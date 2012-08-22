@@ -35,7 +35,7 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QAbstractAxis *)
-Q_DECLARE_METATYPE(QValuesAxis *)
+Q_DECLARE_METATYPE(QValueAxis *)
 Q_DECLARE_METATYPE(QBarCategoriesAxis *)
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QChart::AnimationOption)
@@ -256,14 +256,14 @@ void tst_QChart::axisX_data()
     QTest::newRow("categories,percentBarSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QPercentBarSeries(this);
     QTest::newRow("categories,stackedBarSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QStackedBarSeries(this);
 
-    QTest::newRow("value,lineSeries") << (QAbstractAxis*) new QValuesAxis() << (QAbstractSeries*) new QLineSeries(this);
-    QTest::newRow("value,areaSeries") << (QAbstractAxis*) new QValuesAxis() << (QAbstractSeries*) new QAreaSeries(new QLineSeries(this));
-    QTest::newRow("value,scatterSeries") << (QAbstractAxis*) new QValuesAxis() << (QAbstractSeries*) new QScatterSeries(this);
-    QTest::newRow("value,splineSeries") << (QAbstractAxis*) new QValuesAxis() <<  (QAbstractSeries*) new QSplineSeries(this);
-    QTest::newRow("value,pieSeries") << (QAbstractAxis*) new QValuesAxis() << (QAbstractSeries*) new QPieSeries(this);
-    QTest::newRow("value,barSeries") << (QAbstractAxis*) new QValuesAxis() <<   (QAbstractSeries*) new QBarSeries(this);
-    QTest::newRow("value,percentBarSeries") << (QAbstractAxis*) new QValuesAxis() << (QAbstractSeries*) new QPercentBarSeries(this);
-    QTest::newRow("value,stackedBarSeries") << (QAbstractAxis*) new QValuesAxis() << (QAbstractSeries*) new QStackedBarSeries(this);
+    QTest::newRow("value,lineSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QLineSeries(this);
+    QTest::newRow("value,areaSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QAreaSeries(new QLineSeries(this));
+    QTest::newRow("value,scatterSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QScatterSeries(this);
+    QTest::newRow("value,splineSeries") << (QAbstractAxis*) new QValueAxis() <<  (QAbstractSeries*) new QSplineSeries(this);
+    QTest::newRow("value,pieSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QPieSeries(this);
+    QTest::newRow("value,barSeries") << (QAbstractAxis*) new QValueAxis() <<   (QAbstractSeries*) new QBarSeries(this);
+    QTest::newRow("value,percentBarSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QPercentBarSeries(this);
+    QTest::newRow("value,stackedBarSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QStackedBarSeries(this);
 
 }
 
@@ -483,7 +483,7 @@ void tst_QChart::scroll_right()
     switch(axis->type())
     {
     	case QAbstractAxis::AxisTypeValues:{
-    		QValuesAxis* vaxis = qobject_cast<QValuesAxis*>(axis);
+            QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
     		QVERIFY(vaxis!=0);
     		qreal min = vaxis->min();
     		qreal max = vaxis->max();
@@ -527,7 +527,7 @@ void tst_QChart::scroll_left()
 	 switch(axis->type())
 	    {
 	    	case QAbstractAxis::AxisTypeValues:{
-	    		QValuesAxis* vaxis = qobject_cast<QValuesAxis*>(axis);
+                QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
 	    		QVERIFY(vaxis!=0);
 	    		qreal min = vaxis->min();
 	    		qreal max = vaxis->max();
@@ -570,7 +570,7 @@ void tst_QChart::scroll_up()
     switch(axis->type())
     {
     	case QAbstractAxis::AxisTypeValues:{
-    		QValuesAxis* vaxis = qobject_cast<QValuesAxis*>(axis);
+            QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
     		QVERIFY(vaxis!=0);
     		qreal min = vaxis->min();
     		qreal max = vaxis->max();
@@ -613,7 +613,7 @@ void tst_QChart::scroll_down()
 	 switch(axis->type())
 	    {
 	    	case QAbstractAxis::AxisTypeValues:{
-	    		QValuesAxis* vaxis = qobject_cast<QValuesAxis*>(axis);
+                QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
 	    		QVERIFY(vaxis!=0);
 	    		qreal min = vaxis->min();
 	    		qreal max = vaxis->max();
@@ -719,9 +719,9 @@ void tst_QChart::zoomIn()
     m_chart->createDefaultAxes();
     QRectF marigns = m_chart->margins();
     rect.adjust(marigns.left(),marigns.top(),-marigns.right(),-marigns.bottom());
-    QValuesAxis* axisX = qobject_cast<QValuesAxis*>(m_chart->axisX());
+    QValueAxis* axisX = qobject_cast<QValueAxis*>(m_chart->axisX());
     QVERIFY(axisX!=0);
-    QValuesAxis* axisY = qobject_cast<QValuesAxis*>(m_chart->axisY());
+    QValueAxis* axisY = qobject_cast<QValueAxis*>(m_chart->axisY());
     QVERIFY(axisY!=0);
     qreal minX = axisX->min();
     qreal minY = axisY->min();
@@ -747,9 +747,9 @@ void tst_QChart::zoomOut()
     createTestData();
     m_chart->createDefaultAxes();
 
-    QValuesAxis* axisX = qobject_cast<QValuesAxis*>(m_chart->axisX());
+    QValueAxis* axisX = qobject_cast<QValueAxis*>(m_chart->axisX());
     QVERIFY(axisX!=0);
-    QValuesAxis* axisY = qobject_cast<QValuesAxis*>(m_chart->axisY());
+    QValueAxis* axisY = qobject_cast<QValueAxis*>(m_chart->axisY());
     QVERIFY(axisY!=0);
 
     qreal minX = axisX->min();

@@ -177,7 +177,7 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type,Qt::Orienta
 
     switch(type) {
     case QAbstractAxis::AxisTypeValues:
-        axis = new QValuesAxis(this);
+        axis = new QValueAxis(this);
         break;
     case QAbstractAxis::AxisTypeCategories:
         axis = new QBarCategoriesAxis(this);

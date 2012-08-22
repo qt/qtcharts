@@ -37,7 +37,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 typedef QPair<qreal, qreal> Range;
 
-class QIntervalsAxisPrivate : public QValuesAxisPrivate
+class QIntervalsAxisPrivate : public QValueAxisPrivate
 {
     Q_OBJECT
 

@@ -35,12 +35,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QValuesAxisPrivate : public QAbstractAxisPrivate
+class QValueAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
 public:
-    QValuesAxisPrivate(QValuesAxis *q);
-    ~QValuesAxisPrivate();
+    QValueAxisPrivate(QValueAxis *q);
+    ~QValueAxisPrivate();
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
@@ -64,7 +64,7 @@ private:
     qreal m_max;
     int m_tickCount;
     bool m_niceNumbers;
-    Q_DECLARE_PUBLIC(QValuesAxis)
+    Q_DECLARE_PUBLIC(QValueAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
