@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "chartvaluesaxisx_p.h"
+#include "chartvalueaxisx_p.h"
 #include "qabstractaxis.h"
 #include "chartpresenter_p.h"
-#include "qvaluesaxis.h"
+#include "qvalueaxis.h"
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
@@ -30,16 +30,16 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartValuesAxisX::ChartValuesAxisX(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
+ChartValueAxisX::ChartValueAxisX(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
 m_tickCount(0)
 {
 }
 
-ChartValuesAxisX::~ChartValuesAxisX()
+ChartValueAxisX::~ChartValueAxisX()
 {
 }
 
-QVector<qreal> ChartValuesAxisX::calculateLayout() const
+QVector<qreal> ChartValueAxisX::calculateLayout() const
 {
     Q_ASSERT(m_tickCount>=2);
 
@@ -54,7 +54,7 @@ QVector<qreal> ChartValuesAxisX::calculateLayout() const
     return points;
 }
 
-void ChartValuesAxisX::updateGeometry()
+void ChartValueAxisX::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
 
@@ -109,7 +109,7 @@ void ChartValuesAxisX::updateGeometry()
     }
 }
 
-void ChartValuesAxisX::handleAxisUpdated()
+void ChartValueAxisX::handleAxisUpdated()
 {
     //TODO:: fix this
     QValueAxis* axis = qobject_cast<QValueAxis*>(m_chartAxis);

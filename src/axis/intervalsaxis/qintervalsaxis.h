@@ -22,7 +22,7 @@
 #define QCATEGORIESAXIS_H
 
 #include "qabstractaxis.h"
-#include "qvaluesaxis.h"
+#include "qvalueaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

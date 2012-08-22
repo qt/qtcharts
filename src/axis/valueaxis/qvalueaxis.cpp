@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "qvaluesaxis.h"
-#include "qvaluesaxis_p.h"
-#include "chartvaluesaxisx_p.h"
-#include "chartvaluesaxisy_p.h"
+#include "qvalueaxis.h"
+#include "qvalueaxis_p.h"
+#include "chartvalueaxisx_p.h"
+#include "chartvalueaxisy_p.h"
 #include "domain_p.h"
 #include "chartdataset_p.h"
 #include <qmath.h>
@@ -318,9 +318,9 @@ ChartAxis* QValueAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QValueAxis);
     if(m_orientation == Qt::Vertical){
-        return new ChartValuesAxisY(q,presenter);
+        return new ChartValueAxisY(q,presenter);
     }else{
-        return new ChartValuesAxisX(q,presenter);
+        return new ChartValueAxisX(q,presenter);
     }
 
 }
@@ -378,7 +378,7 @@ qreal QValueAxisPrivate::niceNumber(qreal x,bool ceiling) const
     return q*z;
 }
 
-#include "moc_qvaluesaxis.cpp"
-#include "moc_qvaluesaxis_p.cpp"
+#include "moc_qvalueaxis.cpp"
+#include "moc_qvalueaxis_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -29,7 +29,7 @@
 #include <qbarseries.h>
 #include <qpercentbarseries.h>
 #include <qstackedbarseries.h>
-#include <qvaluesaxis.h>
+#include <qvalueaxis.h>
 #include <qbarcategoriesaxis.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE

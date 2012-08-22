@@ -19,7 +19,7 @@
  ****************************************************************************/
 
 #include "../qabstractaxis/tst_qabstractaxis.h"
-#include "qvaluesaxis.h"
+#include "qvalueaxis.h"
 #include <qlineseries.h>
 
 class tst_QValueAxis: public tst_QAbstractAxis
@@ -33,8 +33,8 @@ public slots:
     void cleanup();
 
 private slots:
-    void qvaluesaxis_data();
-    void qvaluesaxis();
+    void qvalueaxis_data();
+    void qvalueaxis();
     void max_raw_data();
     void max_raw();
     void max_data();
@@ -94,11 +94,11 @@ void tst_QValueAxis::cleanup()
     tst_QAbstractAxis::cleanup();
 }
 
-void tst_QValueAxis::qvaluesaxis_data()
+void tst_QValueAxis::qvalueaxis_data()
 {
 }
 
-void tst_QValueAxis::qvaluesaxis()
+void tst_QValueAxis::qvalueaxis()
 {
     qabstractaxis();
 
@@ -411,5 +411,5 @@ void tst_QValueAxis::autoscale()
 }
 
 QTEST_MAIN(tst_QValueAxis)
-#include "tst_qvaluesaxis.moc"
+#include "tst_qvalueaxis.moc"
 

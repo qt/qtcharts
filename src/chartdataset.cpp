@@ -20,9 +20,9 @@
 
 #include "chartdataset_p.h"
 #include "qchart.h"
-#include "qvaluesaxis.h"
+#include "qvalueaxis.h"
 #include "qbarcategoriesaxis.h"
-#include "qvaluesaxis_p.h"
+#include "qvalueaxis_p.h"
 #include "qintervalsaxis.h"
 #include "qdatetimeaxis.h"
 #include "qabstractseries_p.h"

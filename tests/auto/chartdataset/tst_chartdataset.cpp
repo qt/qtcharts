@@ -20,7 +20,7 @@
 
 #include <QtTest/QtTest>
 #include <qabstractaxis.h>
-#include <qvaluesaxis.h>
+#include <qvalueaxis.h>
 #include <qbarcategoriesaxis.h>
 #include <qlineseries.h>
 #include <qareaseries.h>

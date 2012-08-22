@@ -22,7 +22,7 @@
 #include <QtDeclarative/qdeclarative.h>
 #include "qchart.h"
 #include "qabstractaxis.h"
-#include "qvaluesaxis.h"
+#include "qvalueaxis.h"
 #include "qbarcategoriesaxis.h"
 #include "declarativechart.h"
 #include "declarativexypoint.h"

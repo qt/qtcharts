@@ -30,7 +30,7 @@
 #ifndef QVALUESAXIS_P_H
 #define QVALUESAXIS_P_H
 
-#include "qvaluesaxis.h"
+#include "qvalueaxis.h"
 #include "qabstractaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

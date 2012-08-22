@@ -23,7 +23,7 @@
 #include <qlineseries.h>
 #include <cmath>
 #include <tst_definitions.h>
-#include <qvaluesaxis.h>
+#include <qvalueaxis.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

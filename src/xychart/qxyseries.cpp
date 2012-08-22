@@ -22,7 +22,7 @@
 #include "qxyseries_p.h"
 #include "domain_p.h"
 #include "legendmarker_p.h"
-#include "qvaluesaxis.h"
+#include "qvalueaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

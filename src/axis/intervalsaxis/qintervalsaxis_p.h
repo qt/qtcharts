@@ -31,7 +31,7 @@
 #define QIntervalsAxis_P_H
 
 #include "qintervalsaxis.h"
-#include "qvaluesaxis_p.h"
+#include "qvalueaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

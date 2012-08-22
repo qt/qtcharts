@@ -23,7 +23,7 @@
 #include "percentbarchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "qvaluesaxis.h"
+#include "qvalueaxis.h"
 #include "percentbaranimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

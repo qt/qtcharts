@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef CHARTVALUESAXISY_H
-#define CHARTVALUESAXISY_H
+#ifndef CHARTVALUESAXISX_H
+#define CHARTVALUESAXISX_H
 
 #include "chartaxis_p.h"
 
@@ -37,22 +37,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QAbstractAxis;
 class ChartPresenter;
 
-class ChartValuesAxisY : public ChartAxis
+class ChartValueAxisX : public ChartAxis
 {
 public:
-    ChartValuesAxisY(QAbstractAxis *axis, ChartPresenter *presenter);
-    ~ChartValuesAxisY();
+    ChartValueAxisX(QAbstractAxis *axis, ChartPresenter *presenter);
+    ~ChartValueAxisX();
 
-    AxisType axisType() const { return Y_AXIS;}
+    AxisType axisType() const { return X_AXIS;}
 
 protected:
+    void handleAxisUpdated();
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
-    void handleAxisUpdated();
+
 private:
     int m_tickCount;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTVALUESAXISY_H */
+#endif /* CHARTVALUESAXISX_H */

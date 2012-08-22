@@ -1,13 +1,13 @@
 #Subdirectiores are defined here, because qt creator doesn't handle nested include(foo.pri) chains very well.
 
 INCLUDEPATH += $$PWD \
-    $$PWD/valuesaxis \
+    $$PWD/valueaxis \
     $$PWD/categoriesaxis \
     $$PWD/intervalsaxis \
     $$PWD/datetimeaxis
 
 DEPENDPATH += $$PWD \
-    $$PWD/valuesaxis \
+    $$PWD/valueaxis \
     $$PWD/categoriesaxis \
     $$PWD/intervalsaxis \
     $$PWD/datetimeaxis
@@ -15,9 +15,9 @@ DEPENDPATH += $$PWD \
 SOURCES += \
     $$PWD/chartaxis.cpp \
     $$PWD/qabstractaxis.cpp \
-    $$PWD/valuesaxis/chartvaluesaxisx.cpp \
-    $$PWD/valuesaxis/chartvaluesaxisy.cpp \
-    $$PWD/valuesaxis/qvaluesaxis.cpp \
+    $$PWD/valueaxis/chartvalueaxisx.cpp \
+    $$PWD/valueaxis/chartvalueaxisy.cpp \
+    $$PWD/valueaxis/qvalueaxis.cpp \
     $$PWD/categoriesaxis/chartcategoriesaxisx.cpp \
     $$PWD/categoriesaxis/chartcategoriesaxisy.cpp \
     $$PWD/categoriesaxis/qbarcategoriesaxis.cpp \
@@ -31,9 +31,9 @@ SOURCES += \
 PRIVATE_HEADERS += \
     $$PWD/chartaxis_p.h \
     $$PWD/qabstractaxis_p.h \
-    $$PWD/valuesaxis/chartvaluesaxisx_p.h \
-    $$PWD/valuesaxis/chartvaluesaxisy_p.h \
-    $$PWD/valuesaxis/qvaluesaxis_p.h \
+    $$PWD/valueaxis/chartvalueaxisx_p.h \
+    $$PWD/valueaxis/chartvalueaxisy_p.h \
+    $$PWD/valueaxis/qvalueaxis_p.h \
     $$PWD/categoriesaxis/chartcategoriesaxisx_p.h \
     $$PWD/categoriesaxis/chartcategoriesaxisy_p.h \
     $$PWD/categoriesaxis/qbarcategoriesaxis_p.h \
@@ -46,7 +46,7 @@ PRIVATE_HEADERS += \
 
 PUBLIC_HEADERS += \
     $$PWD/qabstractaxis.h \
-    $$PWD/valuesaxis/qvaluesaxis.h \
+    $$PWD/valueaxis/qvalueaxis.h \
     $$PWD/categoriesaxis/qbarcategoriesaxis.h \
     $$PWD/intervalsaxis/qintervalsaxis.h \
     $$PWD/datetimeaxis/qdatetimeaxis.h
