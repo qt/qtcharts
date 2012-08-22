@@ -92,12 +92,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QDateTimeAxis::ticksCount
+  \property QDateTimeAxis::tickCount
   The number of tick marks for the axis.
 */
 
 /*!
-  \qmlproperty int ValuesAxis::ticksCount
+  \qmlproperty int ValuesAxis::tickCount
   The number of tick marks for the axis.
 */
 
@@ -186,7 +186,7 @@ void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
 /*!
   Sets \a format string that is used when creating label for the axis out of the QDateTime object.
   Check QDateTime documentation for information on how the string should be defined.
-  \sa formatString()
+  \sa format()
 */
 void QDateTimeAxis::setFormat(QString format)
 {
@@ -197,7 +197,7 @@ void QDateTimeAxis::setFormat(QString format)
 /*!
   Returns the format string that is used when creating label for the axis out of the QDateTime object.
   Check QDateTime documentation for information on how the string should be defined.
-  \sa setFormatString()
+  \sa setFormat()
 */
 QString QDateTimeAxis::format() const
 {
@@ -218,7 +218,7 @@ void QDateTimeAxis::setTickCount(int count)
 }
 
 /*!
-  \fn int QDateTimeAxis::ticksCount() const
+  \fn int QDateTimeAxis::tickCount() const
   Return number of ticks on the axis
 */
 int QDateTimeAxis::tickCount() const

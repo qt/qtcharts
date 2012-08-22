@@ -33,13 +33,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The QValueAxis class is used for manipulating chart's axis.
     \mainclass
 
-    ValuesAxis can be setup to show axis line with tick marks, grid lines and shades.
+    ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
     Values of axis are drawn to position of ticks
 */
 
 /*!
-    \qmlclass ValuesAxis QValueAxis
-    \brief The ValuesAxis element is used for manipulating chart's axes
+    \qmlclass ValueAxis QValueAxis
+    \brief The ValueAxis element is used for manipulating chart's axes
 
     ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
     Values of axis are drawn to position of ticks
@@ -47,7 +47,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     To access Axes you can use ChartView API. For example:
     \code
         ChartView {
-            ValuesAxis {
+            ValueAxis {
                 id: xAxis
                 min: 0
                 max: 10
@@ -63,7 +63,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
 */
 /*!
-  \qmlproperty real ValuesAxis::min
+  \qmlproperty real ValueAxis::min
   Defines the minimum value on the axis.
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
 */
@@ -74,7 +74,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
 */
 /*!
-  \qmlproperty real ValuesAxis::max
+  \qmlproperty real ValueAxis::max
   Defines the maximum value on the axis.
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
 */
@@ -84,7 +84,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a min of axis has changed.
 */
 /*!
-  \qmlsignal ValuesAxis::onMinChanged(real min)
+  \qmlsignal ValueAxis::onMinChanged(real min)
   Axis emits signal when \a min of axis has changed.
 */
 
@@ -93,7 +93,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a max of axis has changed.
 */
 /*!
-  \qmlsignal ValuesAxis::onMaxChanged(real max)
+  \qmlsignal ValueAxis::onMaxChanged(real max)
   Axis emits signal when \a max of axis has changed.
 */
 
@@ -103,12 +103,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QValueAxis::ticksCount
+  \property QValueAxis::tickCount
   The number of tick marks for the axis.
 */
 
 /*!
-  \qmlproperty int ValuesAxis::ticksCount
+  \qmlproperty int ValueAxis::tickCount
   The number of tick marks for the axis.
 */
 
@@ -118,7 +118,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty bool ValuesAxis::niceNumbersEnabled
+  \qmlproperty bool ValueAxis::niceNumbersEnabled
   Whether the nice numbers algorithm is enabled or not for the axis.
 */
 
@@ -222,7 +222,7 @@ void QValueAxis::setTickCount(int count)
 }
 
 /*!
-  \fn int QValueAxis::ticksCount() const
+  \fn int QValueAxis::tickCount() const
   Return number of ticks on the axis
 */
 int QValueAxis::tickCount() const
