@@ -195,7 +195,7 @@ int QCategoryAxis::count() const
 */
 QAbstractAxis::AxisType QCategoryAxis::type() const
 {
-    return QAbstractAxis::AxisTypeIntervals;
+    return QAbstractAxis::AxisTypeCategory;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

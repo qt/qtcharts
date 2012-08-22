@@ -153,7 +153,7 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
 
     // TODO: Add a descriptive comment of what happens here
-    if (type.testFlag(QAbstractAxis::AxisTypeValues) && type.testFlag(QAbstractAxis::AxisTypeCategories)) {
+    if (type.testFlag(QAbstractAxis::AxisTypeValue) && type.testFlag(QAbstractAxis::AxisTypeBarCategory)) {
         while (i.hasNext()) {
             i.next();
             QAbstractAxis* axis = createAxis(i.key()->d_ptr->defaultAxisType(orientation), orientation);
@@ -178,13 +178,13 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type, Qt::Orient
     QAbstractAxis* axis = 0;
 
     switch(type) {
-    case QAbstractAxis::AxisTypeValues:
+    case QAbstractAxis::AxisTypeValue:
         axis = new QValueAxis(this);
         break;
-    case QAbstractAxis::AxisTypeCategories:
+    case QAbstractAxis::AxisTypeBarCategory:
         axis = new QBarCategoryAxis(this);
         break;
-    case QAbstractAxis::AxisTypeIntervals:
+    case QAbstractAxis::AxisTypeCategory:
         axis = new QCategoryAxis(this);
         break;
     case QAbstractAxis::AxisTypeDateTime:

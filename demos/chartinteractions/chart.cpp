@@ -72,12 +72,12 @@ void Chart::handlePointMove(const QPoint &point)
         //coordinate point to the charts scale.
         QAbstractAxis * axisx = this->axisX();
         QValueAxis* haxis = 0;
-        if (axisx->type() == QAbstractAxis::AxisTypeValues)
+        if (axisx->type() == QAbstractAxis::AxisTypeValue)
             haxis = qobject_cast<QValueAxis*>(axisx);
 
         QAbstractAxis * axisy = this->axisY();
         QValueAxis* vaxis = 0;
-        if (axisy->type() == QAbstractAxis::AxisTypeValues)
+        if (axisy->type() == QAbstractAxis::AxisTypeValue)
             vaxis = qobject_cast<QValueAxis*>(axisy);
 
         if (haxis && vaxis) {

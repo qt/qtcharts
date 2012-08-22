@@ -460,7 +460,7 @@ void QXYSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 QAbstractAxis::AxisType QXYSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
 {
     Q_UNUSED(orientation);
-    return QAbstractAxis::AxisTypeValues;
+    return QAbstractAxis::AxisTypeValue;
 }
 
 #include "moc_qxyseries.cpp"

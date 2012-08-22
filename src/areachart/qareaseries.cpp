@@ -387,7 +387,7 @@ void QAreaSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 QAbstractAxis::AxisType QAreaSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
 {
     Q_UNUSED(orientation);
-    return QAbstractAxis::AxisTypeValues;
+    return QAbstractAxis::AxisTypeValue;
 }
 
 #include "moc_qareaseries.cpp"

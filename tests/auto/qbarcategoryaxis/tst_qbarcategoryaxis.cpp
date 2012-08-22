@@ -153,7 +153,7 @@ void tst_QBarCategoriesAxis::qbarcategoryaxis()
     axis.setMax(QString());
     axis.setMin(QString());
     axis.setRange(QString(), QString());
-    QCOMPARE(axis.type(), QAbstractAxis::AxisTypeCategories);
+    QCOMPARE(axis.type(), QAbstractAxis::AxisTypeBarCategory);
 }
 
 void tst_QBarCategoriesAxis::append_data()

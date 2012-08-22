@@ -30,7 +30,7 @@
 #include "qbarcategoryaxis.h"
 #include "qvalueaxis.h"
 #include "qdatetimeaxis.h"
-#include "qintervalsaxis.h"
+#include "qcategoryaxis.h"
 #include "qabstractseries_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -629,14 +629,14 @@ void DeclarativeChart::createDefaultAxes(QAbstractSeries* series)
     // If no x axis of correct type was found, create a new x axis based of default axis type
     if (!m_chart->axisX(series)) {
         switch (series->d_ptr->defaultAxisType(Qt::Horizontal)) {
-        case QAbstractAxis::AxisTypeValues:
+        case QAbstractAxis::AxisTypeValue:
             m_chart->setAxisX(new QValueAxis(this), series);
             break;
-        case QAbstractAxis::AxisTypeCategories:
+        case QAbstractAxis::AxisTypeBarCategory:
             m_chart->setAxisX(new QBarCategoryAxis(this), series);
             break;
-        case QAbstractAxis::AxisTypeIntervals:
-            m_chart->setAxisX(new QIntervalsAxis(this), series);
+        case QAbstractAxis::AxisTypeCategory:
+            m_chart->setAxisX(new QCategoryAxis(this), series);
             break;
         case QAbstractAxis::AxisTypeDateTime:
             m_chart->setAxisX(new QDateTimeAxis(this), series);
@@ -650,14 +650,14 @@ void DeclarativeChart::createDefaultAxes(QAbstractSeries* series)
     // If no y axis of correct type was found, create a new y axis based of default axis type
     if (!m_chart->axisY(series)) {
         switch (series->d_ptr->defaultAxisType(Qt::Vertical)) {
-        case QAbstractAxis::AxisTypeValues:
+        case QAbstractAxis::AxisTypeValue:
             m_chart->setAxisY(new QValueAxis(this), series);
             break;
-        case QAbstractAxis::AxisTypeCategories:
+        case QAbstractAxis::AxisTypeBarCategory:
             m_chart->setAxisY(new QBarCategoryAxis(this), series);
             break;
-        case QAbstractAxis::AxisTypeIntervals:
-            m_chart->setAxisY(new QIntervalsAxis(this), series);
+        case QAbstractAxis::AxisTypeCategory:
+            m_chart->setAxisY(new QCategoryAxis(this), series);
             break;
         case QAbstractAxis::AxisTypeDateTime:
             m_chart->setAxisY(new QDateTimeAxis(this), series);

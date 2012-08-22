@@ -49,9 +49,9 @@ public:
 
     enum AxisType {
         AxisTypeNoAxis = 0x0,
-        AxisTypeValues = 0x1,
-        AxisTypeCategories = 0x2,
-        AxisTypeIntervals = 0x3,
+        AxisTypeValue = 0x1,
+        AxisTypeBarCategory = 0x2,
+        AxisTypeCategory = 0x3,
         AxisTypeDateTime = 0x4
     };
 

@@ -482,7 +482,7 @@ void tst_QChart::scroll_right()
 
     switch(axis->type())
     {
-    	case QAbstractAxis::AxisTypeValues:{
+        case QAbstractAxis::AxisTypeValue:{
             QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
     		QVERIFY(vaxis!=0);
     		qreal min = vaxis->min();
@@ -493,7 +493,7 @@ void tst_QChart::scroll_right()
     		QVERIFY(max<vaxis->max());
     		break;
     	}
-    	case QAbstractAxis::AxisTypeCategories:{
+        case QAbstractAxis::AxisTypeBarCategory:{
             QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
     	   	QVERIFY(caxis!=0);
     	   	qreal min = caxis->min().toDouble();
@@ -526,7 +526,7 @@ void tst_QChart::scroll_left()
 
 	 switch(axis->type())
 	    {
-	    	case QAbstractAxis::AxisTypeValues:{
+            case QAbstractAxis::AxisTypeValue:{
                 QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
 	    		QVERIFY(vaxis!=0);
 	    		qreal min = vaxis->min();
@@ -536,7 +536,7 @@ void tst_QChart::scroll_left()
 	    		QVERIFY(max>vaxis->max());
 	    		break;
 	    	}
-	    	case QAbstractAxis::AxisTypeCategories:{
+            case QAbstractAxis::AxisTypeBarCategory:{
                 QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
 	    	   	QVERIFY(caxis!=0);
 	    	   	qreal min = caxis->min().toDouble();
@@ -569,7 +569,7 @@ void tst_QChart::scroll_up()
 
     switch(axis->type())
     {
-    	case QAbstractAxis::AxisTypeValues:{
+        case QAbstractAxis::AxisTypeValue:{
             QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
     		QVERIFY(vaxis!=0);
     		qreal min = vaxis->min();
@@ -579,7 +579,7 @@ void tst_QChart::scroll_up()
     		QVERIFY(max<vaxis->max());
     		break;
     	}
-    	case QAbstractAxis::AxisTypeCategories:{
+        case QAbstractAxis::AxisTypeBarCategory:{
             QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
     	   	QVERIFY(caxis!=0);
     	   	qreal min = caxis->min().toDouble();
@@ -612,7 +612,7 @@ void tst_QChart::scroll_down()
 
 	 switch(axis->type())
 	    {
-	    	case QAbstractAxis::AxisTypeValues:{
+            case QAbstractAxis::AxisTypeValue:{
                 QValueAxis* vaxis = qobject_cast<QValueAxis*>(axis);
 	    		QVERIFY(vaxis!=0);
 	    		qreal min = vaxis->min();
@@ -622,7 +622,7 @@ void tst_QChart::scroll_down()
 	    		QVERIFY(max>vaxis->max());
 	    		break;
 	    	}
-	    	case QAbstractAxis::AxisTypeCategories:{
+            case QAbstractAxis::AxisTypeBarCategory:{
                 QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
 	    	   	QVERIFY(caxis!=0);
 	    	   	qreal min = caxis->min().toDouble();

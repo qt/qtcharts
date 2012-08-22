@@ -744,7 +744,7 @@ void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 {
     Q_Q(QAbstractBarSeries);
 
-    if(axis->type()==QAbstractAxis::AxisTypeCategories) {
+    if(axis->type()==QAbstractAxis::AxisTypeBarCategory) {
 
         switch(q->type()) {
 
@@ -788,7 +788,7 @@ QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientati
 
             if(orientation==Qt::Vertical)
             {
-                return QAbstractAxis::AxisTypeCategories;
+                return QAbstractAxis::AxisTypeBarCategory;
             }
             break;
         }
@@ -798,7 +798,7 @@ QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientati
 
             if(orientation==Qt::Horizontal)
             {
-                return QAbstractAxis::AxisTypeCategories;
+                return QAbstractAxis::AxisTypeBarCategory;
             }
             break;
         }
@@ -807,7 +807,7 @@ QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientati
         break;
 
     }
-    return QAbstractAxis::AxisTypeValues;
+    return QAbstractAxis::AxisTypeValue;
 
 }
 

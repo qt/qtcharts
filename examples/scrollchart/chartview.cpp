@@ -23,8 +23,9 @@
 #include <QDebug>
 
 ChartView::ChartView(QChart *chart, QWidget *parent) :
-    QChartView(chart, parent), m_rubberBand(QRubberBand::Rectangle, this), m_isScrolling(
-        false)
+    QChartView(chart, parent),
+    m_isScrolling(false),
+    m_rubberBand(QRubberBand::Rectangle, this)
 {
     // setRubberBand(QChartView::RectangleRubberBand);
     this->chart()->setAnimationOptions(QChart::NoAnimation);

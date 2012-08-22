@@ -100,7 +100,7 @@ void tst_QCategoryAxis::qcategoryaxis()
 
     QVERIFY(qFuzzyIsNull(m_intervalsaxis->max()));
     QVERIFY(qFuzzyIsNull(m_intervalsaxis->min()));
-    QCOMPARE(m_intervalsaxis->type(), QAbstractAxis::AxisTypeIntervals);
+    QCOMPARE(m_intervalsaxis->type(), QAbstractAxis::AxisTypeCategory);
 
     m_chart->setAxisX(m_intervalsaxis, m_series);
     m_view->show();

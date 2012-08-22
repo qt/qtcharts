@@ -106,7 +106,7 @@ void tst_QValueAxis::qvalueaxis()
     QVERIFY(qFuzzyIsNull(m_valuesaxis->min()));
     QCOMPARE(m_valuesaxis->niceNumbersEnabled(), false);
     QCOMPARE(m_valuesaxis->tickCount(), 5);
-    QCOMPARE(m_valuesaxis->type(), QAbstractAxis::AxisTypeValues);
+    QCOMPARE(m_valuesaxis->type(), QAbstractAxis::AxisTypeValue);
 
     m_chart->setAxisX(m_valuesaxis, m_series);
     m_view->show();
