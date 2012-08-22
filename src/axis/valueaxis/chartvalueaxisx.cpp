@@ -113,7 +113,7 @@ void ChartValueAxisX::handleAxisUpdated()
 {
     //TODO:: fix this
     QValueAxis* axis = qobject_cast<QValueAxis*>(m_chartAxis);
-    m_tickCount = axis->ticksCount();
+    m_tickCount = axis->tickCount();
     ChartAxis::handleAxisUpdated();
 }
 

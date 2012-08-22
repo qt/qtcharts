@@ -188,7 +188,7 @@ void QValueAxis::setRange(qreal min, qreal max)
     if(d->m_niceNumbers) {
         int ticks = d->m_tickCount;
         d->looseNiceNumbers(min, max, ticks);
-        if(ticks!=d->m_tickCount) setTicksCount(ticks);
+        if(ticks!=d->m_tickCount) setTickCount(ticks);
     }
 
     if (!qFuzzyIsNull(d->m_min - min)) {
@@ -212,7 +212,7 @@ void QValueAxis::setRange(qreal min, qreal max)
 /*!
   Sets \a count for ticks on the axis.
 */
-void QValueAxis::setTicksCount(int count)
+void QValueAxis::setTickCount(int count)
 {
     Q_D(QValueAxis);
     if (d->m_tickCount != count && count >=2) {
@@ -225,7 +225,7 @@ void QValueAxis::setTicksCount(int count)
   \fn int QValueAxis::ticksCount() const
   Return number of ticks on the axis
 */
-int QValueAxis::ticksCount() const
+int QValueAxis::tickCount() const
 {
     Q_D(const QValueAxis);
     return d->m_tickCount;

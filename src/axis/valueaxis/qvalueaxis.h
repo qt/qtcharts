@@ -30,7 +30,7 @@ class QValueAxisPrivate;
 class QTCOMMERCIALCHART_EXPORT QValueAxis : public QAbstractAxis
 {
     Q_OBJECT
-    Q_PROPERTY(int ticksCount READ ticksCount WRITE setTicksCount)
+    Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount)
     Q_PROPERTY(bool niceNumbersEnabled READ niceNumbersEnabled WRITE setNiceNumbersEnabled)
     Q_PROPERTY(qreal min READ min WRITE setMin NOTIFY minChanged)
     Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
@@ -53,8 +53,8 @@ public:
     void setRange(qreal min, qreal max);
 
     //ticks handling
-    void setTicksCount(int count);
-    int ticksCount() const;
+    void setTickCount(int count);
+    int tickCount() const;
 
     void setNiceNumbersEnabled(bool enable = true);
     bool niceNumbersEnabled() const;

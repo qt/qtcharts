@@ -105,7 +105,7 @@ void tst_QValueAxis::qvalueaxis()
     QVERIFY(qFuzzyIsNull(m_valuesaxis->max()));
     QVERIFY(qFuzzyIsNull(m_valuesaxis->min()));
     QCOMPARE(m_valuesaxis->niceNumbersEnabled(), false);
-    QCOMPARE(m_valuesaxis->ticksCount(), 5);
+    QCOMPARE(m_valuesaxis->tickCount(), 5);
     QCOMPARE(m_valuesaxis->type(), QAbstractAxis::AxisTypeValues);
 
     m_chart->setAxisX(m_valuesaxis, m_series);
@@ -115,7 +115,7 @@ void tst_QValueAxis::qvalueaxis()
     QVERIFY(!qFuzzyIsNull(m_valuesaxis->max()));
     QVERIFY(!qFuzzyIsNull(m_valuesaxis->min()));
     QCOMPARE(m_valuesaxis->niceNumbersEnabled(), false);
-    QCOMPARE(m_valuesaxis->ticksCount(), 5);
+    QCOMPARE(m_valuesaxis->tickCount(), 5);
 }
 
 void tst_QValueAxis::max_raw_data()
@@ -243,7 +243,7 @@ void tst_QValueAxis::niceNumbersEnabled()
     QFETCH(int, expectedTicks);
 
     m_valuesaxis->setRange(min, max);
-    m_valuesaxis->setTicksCount(ticks);
+    m_valuesaxis->setTickCount(ticks);
 
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->min() - min), "Min not equal");
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->max() - max), "Max not equal");
@@ -264,7 +264,7 @@ void tst_QValueAxis::niceNumbersEnabled()
 
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->min() - expectedMin), "Min not equal");
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->max() - expectedMax), "Max not equal");
-    QCOMPARE(m_valuesaxis->ticksCount(), expectedTicks);
+    QCOMPARE(m_valuesaxis->tickCount(), expectedTicks);
 
 }
 
@@ -338,8 +338,8 @@ void tst_QValueAxis::ticksCount()
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
     QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal, qreal)));
 
-    m_valuesaxis->setTicksCount(ticksCount);
-    QCOMPARE(m_valuesaxis->ticksCount(), ticksCount);
+    m_valuesaxis->setTickCount(ticksCount);
+    QCOMPARE(m_valuesaxis->tickCount(), ticksCount);
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 0);
@@ -349,7 +349,7 @@ void tst_QValueAxis::ticksCount()
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
 
-    QCOMPARE(m_valuesaxis->ticksCount(), ticksCount);
+    QCOMPARE(m_valuesaxis->tickCount(), ticksCount);
 }
 
 void tst_QValueAxis::noautoscale_data()

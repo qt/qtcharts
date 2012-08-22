@@ -47,7 +47,7 @@ Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags):
     addSeries(m_series);
     createDefaultAxes();
     setAxisX(m_axis,m_series);
-    m_axis->setTicksCount(5);
+    m_axis->setTickCount(5);
     axisX()->setRange(0, 10);
     axisY()->setRange(-5, 10);
 
@@ -61,8 +61,8 @@ Chart::~Chart()
 
 void Chart::handleTimeout()
 {
-    qreal x = plotArea().width()/m_axis->ticksCount();
-    qreal y =(m_axis->max() - m_axis->min())/m_axis->ticksCount();
+    qreal x = plotArea().width()/m_axis->tickCount();
+    qreal y =(m_axis->max() - m_axis->min())/m_axis->tickCount();
     m_x += y;
     m_y = qrand() % 5 - 2.5;
     m_series->append(m_x, m_y);
