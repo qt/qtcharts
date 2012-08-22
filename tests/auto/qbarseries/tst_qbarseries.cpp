@@ -77,7 +77,7 @@ private:
 void tst_QBarSeries::initTestCase()
 {
     qRegisterMetaType<QBarSet*>("QBarSet*");
-    qRegisterMetaType<QList<QBarSet*>>("QList<QBarSet*>");
+    qRegisterMetaType<QList<QBarSet*> >("QList<QBarSet*>");
 }
 
 void tst_QBarSeries::cleanupTestCase()
@@ -231,7 +231,7 @@ void tst_QBarSeries::take()
         TRY_COMPARE(removedSpy.count(),1);
 
         QList<QVariant> removedSpyArg = removedSpy.takeFirst();
-        QList<QBarSet*> removedSets = qvariant_cast<QList<QBarSet*>> (removedSpyArg.at(0));
+        QList<QBarSet*> removedSets = qvariant_cast<QList<QBarSet*> > (removedSpyArg.at(0));
         QCOMPARE(removedSets.at(0), m_testSets.at(i));
         countSpy.takeFirst();
     }
