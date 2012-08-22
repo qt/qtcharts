@@ -754,7 +754,7 @@ void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 
                 if(axis->orientation()==Qt::Vertical)
                 {
-                    populateCategories(qobject_cast<QBarCategoriesAxis*>(axis));
+                    populateCategories(qobject_cast<QBarCategoryAxis*>(axis));
                 }
                 break;
             }
@@ -764,7 +764,7 @@ void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 
                 if(axis->orientation()==Qt::Horizontal)
                 {
-                    populateCategories(qobject_cast<QBarCategoriesAxis*>(axis));
+                    populateCategories(qobject_cast<QBarCategoryAxis*>(axis));
                 }
                 break;
             }
@@ -811,7 +811,7 @@ QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientati
 
 }
 
-void QAbstractBarSeriesPrivate::populateCategories(QBarCategoriesAxis* axis)
+void QAbstractBarSeriesPrivate::populateCategories(QBarCategoryAxis* axis)
 {
     QStringList categories;
     if(axis->categories().isEmpty()) {

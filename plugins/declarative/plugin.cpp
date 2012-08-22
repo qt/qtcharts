@@ -69,7 +69,7 @@ public:
         qmlRegisterType<QHBarModelMapper>(uri, 1, 0, "HBarModelMapper");
         qmlRegisterType<QVBarModelMapper>(uri, 1, 0, "VBarModelMapper");
         qmlRegisterType<QValueAxis>(uri, 1, 0, "ValuesAxis");
-        qmlRegisterType<QBarCategoriesAxis>(uri, 1, 0, "BarCategoriesAxis");
+        qmlRegisterType<QBarCategoryAxis>(uri, 1, 0, "BarCategoriesAxis");
 
         qmlRegisterUncreatableType<QLegend>(uri, 1, 0, "Legend",
                                           QLatin1String("Trying to create uncreatable: Legend."));

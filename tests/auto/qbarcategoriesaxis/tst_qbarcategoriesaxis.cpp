@@ -75,7 +75,7 @@ private slots:
     void autoscale();
 
 private:
-    QBarCategoriesAxis* m_baraxis;
+    QBarCategoryAxis* m_baraxis;
     QBarSeries* m_series;
 };
 
@@ -89,7 +89,7 @@ void tst_QBarCategoriesAxis::cleanupTestCase()
 
 void tst_QBarCategoriesAxis::init()
 {
-    m_baraxis = new QBarCategoriesAxis();
+    m_baraxis = new QBarCategoryAxis();
     m_series = new QBarSeries();
 
     QBarSet *set0 = new QBarSet("Jane");
@@ -136,7 +136,7 @@ void tst_QBarCategoriesAxis::qbarcategoriesaxis_data()
 void tst_QBarCategoriesAxis::qbarcategoriesaxis()
 {
     qabstractaxis();
-    QBarCategoriesAxis axis;
+    QBarCategoryAxis axis;
     axis.append(QStringList());
     axis.append(QString());
     QCOMPARE(axis.at(0), QString());
@@ -167,7 +167,7 @@ void tst_QBarCategoriesAxis::append()
 {
     QFETCH(QStringList, categories);
 
-    QBarCategoriesAxis axis;
+    QBarCategoryAxis axis;
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
@@ -208,7 +208,7 @@ void tst_QBarCategoriesAxis::at()
     QFETCH(QString, string);
     QFETCH(QStringList, categories);
 
-    QBarCategoriesAxis axis;
+    QBarCategoryAxis axis;
     axis.append(categories);
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
@@ -244,7 +244,7 @@ void tst_QBarCategoriesAxis::categories()
 {
     QFETCH(QStringList, categories);
 
-    QBarCategoriesAxis axis;
+    QBarCategoryAxis axis;
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString const&)));
@@ -281,7 +281,7 @@ void tst_QBarCategoriesAxis::clear()
 {
     QFETCH(QStringList, categories);
 
-    QBarCategoriesAxis axis;
+    QBarCategoryAxis axis;
 
     axis.setCategories(categories);
     QCOMPARE(axis.categories(), categories);
@@ -329,7 +329,7 @@ void tst_QBarCategoriesAxis::count()
     QFETCH(QStringList, categories);
     QFETCH(int, count);
 
-    QBarCategoriesAxis axis;
+    QBarCategoryAxis axis;
     axis.setCategories(categories);
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
@@ -366,7 +366,7 @@ void tst_QBarCategoriesAxis::insert()
     QFETCH(int, index);
     QFETCH(QString, category);
 
-    QBarCategoriesAxis axis;
+    QBarCategoryAxis axis;
     axis.append(categories);
 
     QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
@@ -402,7 +402,7 @@ void tst_QBarCategoriesAxis::remove()
     QFETCH(QString, category);
     QFETCH(QStringList, result);
 
-    QBarCategoriesAxis axis;
+    QBarCategoryAxis axis;
     axis.append(categories);
 
     int maxCount = axis.max() == category;
@@ -623,7 +623,7 @@ void tst_QBarCategoriesAxis::autoscale_data()
 void tst_QBarCategoriesAxis::autoscale()
 {
     delete m_baraxis;
-    m_baraxis = new QBarCategoriesAxis();
+    m_baraxis = new QBarCategoryAxis();
 
     QSignalSpy spy0(m_baraxis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy1(m_baraxis, SIGNAL(minChanged(QString)));

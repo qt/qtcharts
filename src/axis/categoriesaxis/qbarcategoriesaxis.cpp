@@ -114,17 +114,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs an axis object which is a child of \a parent.
 */
-QBarCategoriesAxis::QBarCategoriesAxis(QObject *parent):
-    QAbstractAxis(*new QBarCategoriesAxisPrivate(this),parent)
+QBarCategoryAxis::QBarCategoryAxis(QObject *parent):
+    QAbstractAxis(*new QBarCategoryAxisPrivate(this),parent)
 {
 }
 
 /*!
     Destroys the object
 */
-QBarCategoriesAxis::~QBarCategoriesAxis()
+QBarCategoryAxis::~QBarCategoryAxis()
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     if(d->m_dataset){
            d->m_dataset->removeAxis(this);
     }
@@ -133,7 +133,7 @@ QBarCategoriesAxis::~QBarCategoriesAxis()
 /*!
     \internal
 */
-QBarCategoriesAxis::QBarCategoriesAxis(QBarCategoriesAxisPrivate &d,QObject *parent):QAbstractAxis(d,parent)
+QBarCategoryAxis::QBarCategoryAxis(QBarCategoryAxisPrivate &d,QObject *parent):QAbstractAxis(d,parent)
 {
 
 }
@@ -141,11 +141,11 @@ QBarCategoriesAxis::QBarCategoriesAxis(QBarCategoriesAxisPrivate &d,QObject *par
 /*!
     Appends \a categories to axis
 */
-void QBarCategoriesAxis::append(const QStringList &categories)
+void QBarCategoryAxis::append(const QStringList &categories)
 {
     if(categories.isEmpty()) return;
 
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     if (d->m_categories.isEmpty()) {
         d->m_categories.append(categories);
         setRange(categories.first(),categories.last());
@@ -159,9 +159,9 @@ void QBarCategoriesAxis::append(const QStringList &categories)
 /*!
     Appends \a category to axis
 */
-void QBarCategoriesAxis::append(const QString &category)
+void QBarCategoryAxis::append(const QString &category)
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     if (d->m_categories.isEmpty()) {
         d->m_categories.append(category);
         setRange(category,category);
@@ -175,9 +175,9 @@ void QBarCategoriesAxis::append(const QString &category)
 /*!
     Removes \a category from axis
 */
-void QBarCategoriesAxis::remove(const QString &category)
+void QBarCategoryAxis::remove(const QString &category)
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     if (d->m_categories.contains(category)) {
         d->m_categories.removeAt(d->m_categories.indexOf(category));
         if(!d->m_categories.isEmpty())
@@ -191,9 +191,9 @@ void QBarCategoriesAxis::remove(const QString &category)
 /*!
     Inserts \a category to axis at \a index
 */
-void QBarCategoriesAxis::insert(int index, const QString &category)
+void QBarCategoryAxis::insert(int index, const QString &category)
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     if (d->m_categories.isEmpty()) {
         d->m_categories.insert(index,category);
         setRange(category,category);
@@ -208,9 +208,9 @@ void QBarCategoriesAxis::insert(int index, const QString &category)
     Replaces \a oldCategory with \a newCategory.
     If \a oldCategory does not exits on the axis nothing is done.
 */
-void QBarCategoriesAxis::replace(const QString &oldCategory, const QString &newCategory)
+void QBarCategoryAxis::replace(const QString &oldCategory, const QString &newCategory)
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     int pos = d->m_categories.indexOf(oldCategory);
     if (pos != -1) {
         d->m_categories.replace(pos, newCategory);
@@ -222,17 +222,17 @@ void QBarCategoriesAxis::replace(const QString &oldCategory, const QString &newC
 /*!
   Removes all categories.
  */
-void QBarCategoriesAxis::clear()
+void QBarCategoryAxis::clear()
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     d->m_categories.clear();
     setRange(QString::null,QString::null);
     emit categoriesChanged();
 }
 
-void QBarCategoriesAxis::setCategories(const QStringList &categories)
+void QBarCategoryAxis::setCategories(const QStringList &categories)
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     if(d->m_categories!=categories) {
         d->m_categories = categories;
         setRange(categories.first(),categories.last());
@@ -240,72 +240,72 @@ void QBarCategoriesAxis::setCategories(const QStringList &categories)
     }
 }
 
-QStringList QBarCategoriesAxis::categories()
+QStringList QBarCategoryAxis::categories()
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     return d->m_categories;
 }
 
 /*!
   Returns number of categories.
  */
-int QBarCategoriesAxis::count() const
+int QBarCategoryAxis::count() const
 {
-    Q_D(const QBarCategoriesAxis);
+    Q_D(const QBarCategoryAxis);
     return d->m_categories.count();
 }
 
 /*!
     Returns category at \a index. Index must be valid.
 */
-QString QBarCategoriesAxis::at(int index) const
+QString QBarCategoryAxis::at(int index) const
 {
-    Q_D(const QBarCategoriesAxis);
+    Q_D(const QBarCategoryAxis);
     return d->m_categories.at(index);
 }
 
 /*!
     Sets minimum category to \a min.
 */
-void QBarCategoriesAxis::setMin(const QString& min)
+void QBarCategoryAxis::setMin(const QString& min)
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     setRange(min,d->m_maxCategory);
 }
 
 /*!
     Returns minimum category.
 */
-QString QBarCategoriesAxis::min() const
+QString QBarCategoryAxis::min() const
 {
-    Q_D(const QBarCategoriesAxis);
+    Q_D(const QBarCategoryAxis);
     return d->m_minCategory;
 }
 
 /*!
     Sets maximum category to \a max.
 */
-void QBarCategoriesAxis::setMax(const QString& max)
+void QBarCategoryAxis::setMax(const QString& max)
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
     setRange(d->m_minCategory,max);
 }
 
 /*!
     Returns maximum category
 */
-QString QBarCategoriesAxis::max() const
+QString QBarCategoryAxis::max() const
 {
-    Q_D(const QBarCategoriesAxis);
+    Q_D(const QBarCategoryAxis);
     return d->m_maxCategory;
 }
 
 /*!
     Sets range from \a minCategory to \a maxCategory
 */
-void QBarCategoriesAxis::setRange(const QString& minCategory, const QString& maxCategory)
+void QBarCategoryAxis::setRange(const QString& minCategory, const QString& maxCategory)
 {
-    Q_D(QBarCategoriesAxis);
+    Q_D(QBarCategoryAxis);
 
     bool changed = false;
 
@@ -348,14 +348,14 @@ void QBarCategoriesAxis::setRange(const QString& minCategory, const QString& max
 /*!
   Returns the type of the axis
 */
-QAbstractAxis::AxisType QBarCategoriesAxis::type() const
+QAbstractAxis::AxisType QBarCategoryAxis::type() const
 {
     return AxisTypeCategories;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarCategoriesAxisPrivate::QBarCategoriesAxisPrivate(QBarCategoriesAxis* q):
+QBarCategoryAxisPrivate::QBarCategoryAxisPrivate(QBarCategoryAxis* q):
     QAbstractAxisPrivate(q),
     m_min(0.0),
     m_max(0.0),
@@ -364,32 +364,32 @@ QBarCategoriesAxisPrivate::QBarCategoriesAxisPrivate(QBarCategoriesAxis* q):
 
 }
 
-QBarCategoriesAxisPrivate::~QBarCategoriesAxisPrivate()
+QBarCategoryAxisPrivate::~QBarCategoryAxisPrivate()
 {
 
 }
 
-void QBarCategoriesAxisPrivate::setMin(const QVariant &min)
+void QBarCategoryAxisPrivate::setMin(const QVariant &min)
 {
     setRange(min,m_maxCategory);
 }
 
-void QBarCategoriesAxisPrivate::setMax(const QVariant &max)
+void QBarCategoryAxisPrivate::setMax(const QVariant &max)
 {
     setRange(m_minCategory,max);
 }
 
-void QBarCategoriesAxisPrivate::setRange(const QVariant &min, const QVariant &max)
+void QBarCategoryAxisPrivate::setRange(const QVariant &min, const QVariant &max)
 {
-    Q_Q(QBarCategoriesAxis);
+    Q_Q(QBarCategoryAxis);
     QString value1 = min.toString();
     QString value2 = max.toString();
     q->setRange(value1,value2);
 }
 
-void QBarCategoriesAxisPrivate::handleDomainUpdated()
+void QBarCategoryAxisPrivate::handleDomainUpdated()
 {
-    Q_Q(QBarCategoriesAxis);
+    Q_Q(QBarCategoryAxis);
     Domain* domain = qobject_cast<Domain*>(sender());
 
     if(m_orientation==Qt::Horizontal) {
@@ -426,9 +426,9 @@ void QBarCategoriesAxisPrivate::handleDomainUpdated()
     }
 }
 
-ChartAxis* QBarCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
+ChartAxis* QBarCategoryAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
-    Q_Q(QBarCategoriesAxis);
+    Q_Q(QBarCategoryAxis);
     if(m_orientation == Qt::Vertical){
         return new ChartCategoriesAxisY(q,presenter);
     }else{
@@ -436,10 +436,10 @@ ChartAxis* QBarCategoriesAxisPrivate::createGraphics(ChartPresenter* presenter)
     }
 }
 
-void QBarCategoriesAxisPrivate::intializeDomain(Domain* domain)
+void QBarCategoryAxisPrivate::intializeDomain(Domain* domain)
 {
 
-    Q_Q(QBarCategoriesAxis);
+    Q_Q(QBarCategoryAxis);
     if(m_max==m_min) {
         int min;
         int max;

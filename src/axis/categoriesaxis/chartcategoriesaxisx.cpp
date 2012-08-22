@@ -28,7 +28,7 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartCategoriesAxisX::ChartCategoriesAxisX(QBarCategoriesAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
+ChartCategoriesAxisX::ChartCategoriesAxisX(QBarCategoryAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
 m_categoriesAxis(axis)
 {
 

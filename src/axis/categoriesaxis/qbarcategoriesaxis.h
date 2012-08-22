@@ -25,9 +25,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QBarCategoriesAxisPrivate;
+class QBarCategoryAxisPrivate;
 
-class QTCOMMERCIALCHART_EXPORT QBarCategoriesAxis : public QAbstractAxis
+class QTCOMMERCIALCHART_EXPORT QBarCategoryAxis : public QAbstractAxis
 {
     Q_OBJECT
     Q_PROPERTY(QStringList categories READ categories WRITE setCategories NOTIFY categoriesChanged)
@@ -35,11 +35,11 @@ class QTCOMMERCIALCHART_EXPORT QBarCategoriesAxis : public QAbstractAxis
     Q_PROPERTY(QString max READ max WRITE setMax NOTIFY maxChanged)
 
 public:
-    explicit QBarCategoriesAxis(QObject *parent = 0);
-    ~QBarCategoriesAxis();
+    explicit QBarCategoryAxis(QObject *parent = 0);
+    ~QBarCategoryAxis();
 
 protected:
-    QBarCategoriesAxis(QBarCategoriesAxisPrivate &d,QObject *parent = 0);
+    QBarCategoryAxis(QBarCategoryAxisPrivate &d,QObject *parent = 0);
 
 public:
     AxisType type() const;
@@ -68,8 +68,8 @@ Q_SIGNALS:
 	void rangeChanged(const QString &min, const QString &max);
 
 private:
-    Q_DECLARE_PRIVATE(QBarCategoriesAxis)
-    Q_DISABLE_COPY(QBarCategoriesAxis)
+    Q_DECLARE_PRIVATE(QBarCategoryAxis)
+    Q_DISABLE_COPY(QBarCategoryAxis)
     friend class ChartCategoriesAxisX;
     friend class ChartCategoriesAxisY;
 };

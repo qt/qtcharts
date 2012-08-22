@@ -37,21 +37,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class Domain;
 
-class QBarCategoriesAxisPrivate : public QAbstractAxisPrivate
+class QBarCategoryAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
 
 public:
-    QBarCategoriesAxisPrivate(QBarCategoriesAxis *q);
-    ~QBarCategoriesAxisPrivate();
+    QBarCategoryAxisPrivate(QBarCategoryAxis *q);
+    ~QBarCategoryAxisPrivate();
 
 public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
     void intializeDomain(Domain* domain);
     void handleDomainUpdated();
-    qreal min() { return m_min;};
-    qreal max() { return m_max;};
-    int count() const { return m_count; };
+    qreal min() { return m_min;}
+    qreal max() { return m_max;}
+    int count() const { return m_count; }
 
 private:
     //range handling
@@ -68,7 +68,7 @@ private:
     int m_count;
 
 private:
-    Q_DECLARE_PUBLIC(QBarCategoriesAxis);
+    Q_DECLARE_PUBLIC(QBarCategoryAxis);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

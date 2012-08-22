@@ -180,7 +180,7 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type,Qt::Orienta
         axis = new QValueAxis(this);
         break;
     case QAbstractAxis::AxisTypeCategories:
-        axis = new QBarCategoriesAxis(this);
+        axis = new QBarCategoryAxis(this);
         break;
     case QAbstractAxis::AxisTypeIntervals:
         axis = new QIntervalsAxis(this);

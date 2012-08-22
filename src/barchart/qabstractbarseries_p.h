@@ -38,7 +38,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarModelMapper;
-class QBarCategoriesAxis;
+class QBarCategoryAxis;
 
 class QAbstractBarSeriesPrivate : public QAbstractSeriesPrivate
 {
@@ -85,7 +85,7 @@ Q_SIGNALS:
     void labelsVisibleChanged(bool visible);
 
 private:
-    void populateCategories(QBarCategoriesAxis* axis);
+    void populateCategories(QBarCategoryAxis* axis);
 
 protected:
     QList<QBarSet *> m_barSets;

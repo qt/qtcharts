@@ -36,7 +36,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QAbstractAxis *)
 Q_DECLARE_METATYPE(QValueAxis *)
-Q_DECLARE_METATYPE(QBarCategoriesAxis *)
+Q_DECLARE_METATYPE(QBarCategoryAxis *)
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QChart::AnimationOption)
 Q_DECLARE_METATYPE(QBrush)
@@ -247,14 +247,14 @@ void tst_QChart::axisX_data()
     QTest::addColumn<QAbstractAxis*>("axis");
     QTest::addColumn<QAbstractSeries *>("series");
 
-    QTest::newRow("categories,lineSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QLineSeries(this);
-    QTest::newRow("categories,areaSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QAreaSeries(new QLineSeries(this));
-    QTest::newRow("categories,scatterSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QScatterSeries(this);
-    QTest::newRow("categories,splineSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QSplineSeries(this);
-    QTest::newRow("categories,pieSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QPieSeries(this);
-    QTest::newRow("categories,barSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QBarSeries(this);
-    QTest::newRow("categories,percentBarSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QPercentBarSeries(this);
-    QTest::newRow("categories,stackedBarSeries") <<  (QAbstractAxis*) new QBarCategoriesAxis() << (QAbstractSeries*) new QStackedBarSeries(this);
+    QTest::newRow("categories,lineSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QLineSeries(this);
+    QTest::newRow("categories,areaSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QAreaSeries(new QLineSeries(this));
+    QTest::newRow("categories,scatterSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QScatterSeries(this);
+    QTest::newRow("categories,splineSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QSplineSeries(this);
+    QTest::newRow("categories,pieSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QPieSeries(this);
+    QTest::newRow("categories,barSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QBarSeries(this);
+    QTest::newRow("categories,percentBarSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QPercentBarSeries(this);
+    QTest::newRow("categories,stackedBarSeries") <<  (QAbstractAxis*) new QBarCategoryAxis() << (QAbstractSeries*) new QStackedBarSeries(this);
 
     QTest::newRow("value,lineSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QLineSeries(this);
     QTest::newRow("value,areaSeries") << (QAbstractAxis*) new QValueAxis() << (QAbstractSeries*) new QAreaSeries(new QLineSeries(this));
@@ -494,7 +494,7 @@ void tst_QChart::scroll_right()
     		break;
     	}
     	case QAbstractAxis::AxisTypeCategories:{
-    	   	QBarCategoriesAxis* caxis = qobject_cast<QBarCategoriesAxis*>(axis);
+            QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
     	   	QVERIFY(caxis!=0);
     	   	qreal min = caxis->min().toDouble();
     	   	qreal max = caxis->max().toDouble();
@@ -537,7 +537,7 @@ void tst_QChart::scroll_left()
 	    		break;
 	    	}
 	    	case QAbstractAxis::AxisTypeCategories:{
-	    	   	QBarCategoriesAxis* caxis = qobject_cast<QBarCategoriesAxis*>(axis);
+                QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
 	    	   	QVERIFY(caxis!=0);
 	    	   	qreal min = caxis->min().toDouble();
 	    	   	qreal max = caxis->max().toDouble();
@@ -580,7 +580,7 @@ void tst_QChart::scroll_up()
     		break;
     	}
     	case QAbstractAxis::AxisTypeCategories:{
-    	   	QBarCategoriesAxis* caxis = qobject_cast<QBarCategoriesAxis*>(axis);
+            QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
     	   	QVERIFY(caxis!=0);
     	   	qreal min = caxis->min().toDouble();
     	   	qreal max = caxis->max().toDouble();
@@ -623,7 +623,7 @@ void tst_QChart::scroll_down()
 	    		break;
 	    	}
 	    	case QAbstractAxis::AxisTypeCategories:{
-	    	   	QBarCategoriesAxis* caxis = qobject_cast<QBarCategoriesAxis*>(axis);
+                QBarCategoryAxis* caxis = qobject_cast<QBarCategoryAxis*>(axis);
 	    	   	QVERIFY(caxis!=0);
 	    	   	qreal min = caxis->min().toDouble();
 	    	   	qreal max = caxis->max().toDouble();
