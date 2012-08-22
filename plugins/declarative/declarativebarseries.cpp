@@ -58,6 +58,7 @@ void DeclarativeBarSet::setValues(QVariantList values)
     }
 }
 
+// Declarative bar series ======================================================================================
 DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
     QBarSeries(parent)
 {
@@ -114,6 +115,7 @@ DeclarativeBarSet *DeclarativeBarSeries::insert(int index, QString label, QVaria
     return 0;
 }
 
+// Declarative stacked bar series ==============================================================================
 DeclarativeStackedBarSeries::DeclarativeStackedBarSeries(QDeclarativeItem *parent) :
     QStackedBarSeries(parent)
 {
@@ -171,6 +173,7 @@ DeclarativeBarSet *DeclarativeStackedBarSeries::insert(int index, QString label,
     return 0;
 }
 
+// Declarative percent bar series ==============================================================================
 DeclarativePercentBarSeries::DeclarativePercentBarSeries(QDeclarativeItem *parent) :
     QPercentBarSeries(parent)
 {
@@ -222,6 +225,177 @@ DeclarativeBarSet *DeclarativePercentBarSeries::insert(int index, QString label,
     barset->setLabel(label);
     barset->setValues(values);
     if (QPercentBarSeries::insert(index, barset))
+        return barset;
+    delete barset;
+    return 0;
+}
+
+// Declarative horizontal bar series ===========================================================================
+DeclarativeHorizontalBarSeries::DeclarativeHorizontalBarSeries(QDeclarativeItem *parent) :
+    QHorizontalBarSeries(parent)
+{
+}
+
+void DeclarativeHorizontalBarSeries::classBegin()
+{
+}
+
+void DeclarativeHorizontalBarSeries::componentComplete()
+{
+    foreach(QObject *child, children()) {
+        if (qobject_cast<DeclarativeBarSet *>(child)) {
+            QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
+        } else if(qobject_cast<QVBarModelMapper *>(child)) {
+            QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
+            mapper->setSeries(this);
+        } else if(qobject_cast<QHBarModelMapper *>(child)) {
+            QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
+            mapper->setSeries(this);
+        }
+    }
+}
+
+QDeclarativeListProperty<QObject> DeclarativeHorizontalBarSeries::seriesChildren()
+{
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeHorizontalBarSeries::appendSeriesChildren);
+}
+
+void DeclarativeHorizontalBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+{
+    // Empty implementation; the children are parsed in componentComplete instead
+    Q_UNUSED(list);
+    Q_UNUSED(element);
+}
+
+DeclarativeBarSet *DeclarativeHorizontalBarSeries::at(int index)
+{
+    QList<QBarSet*> setList = barSets();
+    if (index >= 0 && index < setList.count())
+        return qobject_cast<DeclarativeBarSet *>(setList[index]);
+
+    return 0;
+}
+
+DeclarativeBarSet *DeclarativeHorizontalBarSeries::insert(int index, QString label, QVariantList values)
+{
+    DeclarativeBarSet *barset = new DeclarativeBarSet(this);
+    barset->setLabel(label);
+    barset->setValues(values);
+    if (QHorizontalBarSeries::insert(index, barset))
+        return barset;
+    delete barset;
+    return 0;
+}
+
+// Declarative horizontal stacked bar series ===================================================================
+DeclarativeHorizontalStackedBarSeries::DeclarativeHorizontalStackedBarSeries(QDeclarativeItem *parent) :
+    QHorizontalStackedBarSeries(parent)
+{
+}
+
+void DeclarativeHorizontalStackedBarSeries::classBegin()
+{
+}
+
+void DeclarativeHorizontalStackedBarSeries::componentComplete()
+{
+    foreach(QObject *child, children()) {
+        if (qobject_cast<DeclarativeBarSet *>(child)) {
+            QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
+        } else if(qobject_cast<QVBarModelMapper *>(child)) {
+            QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
+            mapper->setSeries(this);
+        } else if(qobject_cast<QHBarModelMapper *>(child)) {
+            QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
+            mapper->setSeries(this);
+        }
+    }
+}
+
+QDeclarativeListProperty<QObject> DeclarativeHorizontalStackedBarSeries::seriesChildren()
+{
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeHorizontalStackedBarSeries::appendSeriesChildren);
+}
+
+void DeclarativeHorizontalStackedBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+{
+    // Empty implementation; the children are parsed in componentComplete instead
+    Q_UNUSED(list);
+    Q_UNUSED(element);
+}
+
+DeclarativeBarSet *DeclarativeHorizontalStackedBarSeries::at(int index)
+{
+    QList<QBarSet*> setList = barSets();
+    if (index >= 0 && index < setList.count())
+        return qobject_cast<DeclarativeBarSet *>(setList[index]);
+
+    return 0;
+}
+
+DeclarativeBarSet *DeclarativeHorizontalStackedBarSeries::insert(int index, QString label, QVariantList values)
+{
+    DeclarativeBarSet *barset = new DeclarativeBarSet(this);
+    barset->setLabel(label);
+    barset->setValues(values);
+    if (QHorizontalStackedBarSeries::insert(index, barset))
+        return barset;
+    delete barset;
+    return 0;
+}
+
+// Declarative horizontal percent bar series ===================================================================
+DeclarativeHorizontalPercentBarSeries::DeclarativeHorizontalPercentBarSeries(QDeclarativeItem *parent) :
+    QHorizontalPercentBarSeries(parent)
+{
+}
+
+void DeclarativeHorizontalPercentBarSeries::classBegin()
+{
+}
+
+void DeclarativeHorizontalPercentBarSeries::componentComplete()
+{
+    foreach(QObject *child, children()) {
+        if (qobject_cast<DeclarativeBarSet *>(child)) {
+            QAbstractBarSeries::append(qobject_cast<DeclarativeBarSet *>(child));
+        } else if(qobject_cast<QVBarModelMapper *>(child)) {
+            QVBarModelMapper *mapper = qobject_cast<QVBarModelMapper *>(child);
+            mapper->setSeries(this);
+        } else if(qobject_cast<QHBarModelMapper *>(child)) {
+            QHBarModelMapper *mapper = qobject_cast<QHBarModelMapper *>(child);
+            mapper->setSeries(this);
+        }
+    }
+}
+
+QDeclarativeListProperty<QObject> DeclarativeHorizontalPercentBarSeries::seriesChildren()
+{
+    return QDeclarativeListProperty<QObject>(this, 0, &DeclarativeHorizontalPercentBarSeries::appendSeriesChildren);
+}
+
+void DeclarativeHorizontalPercentBarSeries::appendSeriesChildren(QDeclarativeListProperty<QObject> * list, QObject *element)
+{
+    // Empty implementation; the children are parsed in componentComplete instead
+    Q_UNUSED(list);
+    Q_UNUSED(element);
+}
+
+DeclarativeBarSet *DeclarativeHorizontalPercentBarSeries::at(int index)
+{
+    QList<QBarSet*> setList = barSets();
+    if (index >= 0 && index < setList.count())
+        return qobject_cast<DeclarativeBarSet *>(setList[index]);
+
+    return 0;
+}
+
+DeclarativeBarSet *DeclarativeHorizontalPercentBarSeries::insert(int index, QString label, QVariantList values)
+{
+    DeclarativeBarSet *barset = new DeclarativeBarSet(this);
+    barset->setLabel(label);
+    barset->setValues(values);
+    if (QHorizontalPercentBarSeries::insert(index, barset))
         return barset;
     delete barset;
     return 0;

@@ -24,6 +24,9 @@
 #include "qbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
+#include "qhorizontalbarseries.h"
+#include "qhorizontalstackedbarseries.h"
+#include "qhorizontalpercentbarseries.h"
 #include "qbarset.h"
 #include <QDeclarativeItem>
 #include <QDeclarativeParserStatus>
@@ -124,6 +127,78 @@ public:
     Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
     Q_INVOKABLE bool remove(QBarSet *barset) { return QPercentBarSeries::remove(barset); }
     Q_INVOKABLE void clear() { return QPercentBarSeries::clear(); }
+
+public: // from QDeclarativeParserStatus
+    void classBegin();
+    void componentComplete();
+
+public Q_SLOTS:
+    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+};
+
+class DeclarativeHorizontalBarSeries : public QHorizontalBarSeries, public QDeclarativeParserStatus
+{
+    Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+    Q_CLASSINFO("DefaultProperty", "seriesChildren")
+
+public:
+    explicit DeclarativeHorizontalBarSeries(QDeclarativeItem *parent = 0);
+    QDeclarativeListProperty<QObject> seriesChildren();
+    Q_INVOKABLE DeclarativeBarSet *at(int index);
+    Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
+    Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
+    Q_INVOKABLE bool remove(QBarSet *barset) { return QHorizontalBarSeries::remove(barset); }
+    Q_INVOKABLE void clear() { return QHorizontalBarSeries::clear(); }
+
+public: // from QDeclarativeParserStatus
+    void classBegin();
+    void componentComplete();
+
+public Q_SLOTS:
+    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+};
+
+class DeclarativeHorizontalStackedBarSeries : public QHorizontalStackedBarSeries, public QDeclarativeParserStatus
+{
+    Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+    Q_CLASSINFO("DefaultProperty", "seriesChildren")
+
+public:
+    explicit DeclarativeHorizontalStackedBarSeries(QDeclarativeItem *parent = 0);
+    QDeclarativeListProperty<QObject> seriesChildren();
+    Q_INVOKABLE DeclarativeBarSet *at(int index);
+    Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
+    Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
+    Q_INVOKABLE bool remove(QBarSet *barset) { return QHorizontalStackedBarSeries::remove(barset); }
+    Q_INVOKABLE void clear() { return QHorizontalStackedBarSeries::clear(); }
+
+public: // from QDeclarativeParserStatus
+    void classBegin();
+    void componentComplete();
+
+public Q_SLOTS:
+    static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+};
+
+class DeclarativeHorizontalPercentBarSeries : public QHorizontalPercentBarSeries, public QDeclarativeParserStatus
+{
+    Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
+    Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
+    Q_CLASSINFO("DefaultProperty", "seriesChildren")
+
+public:
+    explicit DeclarativeHorizontalPercentBarSeries(QDeclarativeItem *parent = 0);
+    QDeclarativeListProperty<QObject> seriesChildren();
+    Q_INVOKABLE DeclarativeBarSet *at(int index);
+    Q_INVOKABLE DeclarativeBarSet *append(QString label, QVariantList values) { return insert(count(), label, values); }
+    Q_INVOKABLE DeclarativeBarSet *insert(int index, QString label, QVariantList values);
+    Q_INVOKABLE bool remove(QBarSet *barset) { return QHorizontalPercentBarSeries::remove(barset); }
+    Q_INVOKABLE void clear() { return QHorizontalPercentBarSeries::clear(); }
 
 public: // from QDeclarativeParserStatus
     void classBegin();
