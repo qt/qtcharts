@@ -25,7 +25,7 @@ ChartView {
     id: chartView
     title: "user defined axes"
 
-    ValuesAxis {
+    ValueAxis {
         id: axisX
         min: 0
         max: 10
@@ -33,7 +33,7 @@ ChartView {
         // that don't have user defined X axis
     }
 
-    ValuesAxis {
+    ValueAxis {
         id: axisY
         min: 0
         max: 5

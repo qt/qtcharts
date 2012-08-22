@@ -30,21 +30,21 @@ ChartView {
         repeat: true
         running: true
         onTriggered: {
-            if (lineSeries.axisX == valuesAxis1)
-                lineSeries.axisX = valuesAxis2;
+            if (lineSeries.axisX == valueAxis1)
+                lineSeries.axisX = valueAxis2;
             else
-                lineSeries.axisX = valuesAxis1;
+                lineSeries.axisX = valueAxis1;
         }
     }
 
-    ValuesAxis {
-        id: valuesAxis1
+    ValueAxis {
+        id: valueAxis1
         min: 0
         max: 5
     }
 
-    ValuesAxis {
-        id: valuesAxis2
+    ValueAxis {
+        id: valueAxis2
         min: 1
         max: 6
     }
@@ -52,7 +52,7 @@ ChartView {
     LineSeries {
         id: lineSeries
         name: "line series"
-        axisX: valuesAxis1
+        axisX: valueAxis1
         XYPoint { x: 0; y: 0 }
         XYPoint { x: 1.1; y: 2.1 }
         XYPoint { x: 1.9; y: 3.3 }

@@ -39,8 +39,8 @@ Rectangle {
             max: "2014"
         }
 
-        ValuesAxis {
-            id: valuesAxis
+        ValueAxis {
+            id: valueAxis
             min: 0
             max: 60
         }
@@ -66,7 +66,7 @@ Rectangle {
             id: myBarSeries
             name: "Others"
             axisX: categoriesAxis
-            axisY: valuesAxis
+            axisY: valueAxis
             barWidth: 0.9
             visible: false
             HBarModelMapper {
@@ -83,7 +83,7 @@ Rectangle {
             id: lineSeries1
             name: "Volkswagen"
             axisX: categoriesAxis
-            axisY: valuesAxis
+            axisY: valueAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -98,7 +98,7 @@ Rectangle {
             id: lineSeries2
             name: "Toyota"
             axisX: categoriesAxis
-            axisY: valuesAxis
+            axisY: valueAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -112,7 +112,7 @@ Rectangle {
             id: lineSeries3
             name: "Ford"
             axisX: categoriesAxis
-            axisY: valuesAxis
+            axisY: valueAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -126,7 +126,7 @@ Rectangle {
             id: lineSeries4
             name: "Skoda"
             axisX: categoriesAxis
-            axisY: valuesAxis
+            axisY: valueAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -140,7 +140,7 @@ Rectangle {
             id: lineSeries5
             name: "Volvo"
             axisX: categoriesAxis
-            axisY: valuesAxis
+            axisY: valueAxis
             visible: false
             HXYModelMapper {
                 model: customModel

@@ -55,8 +55,8 @@ ChartView {
     LineSeries {
         id: lineSeries
         name: "line series"
-        axisX: ValuesAxis { id: lineAxisX }
-        axisY: ValuesAxis { id: lineAxisY }
+        axisX: ValueAxis { id: lineAxisX }
+        axisY: ValueAxis { id: lineAxisY }
 
         XYPoint { x: 0; y: 0 }
         XYPoint { x: 1.1; y: 2.1 }
@@ -70,8 +70,8 @@ ChartView {
     ScatterSeries {
         id: scatterSeries
         name: "scatter series"
-        axisX: ValuesAxis { id: scatterAxisX }
-        axisY: ValuesAxis { id: scatterAxisY }
+        axisX: ValueAxis { id: scatterAxisX }
+        axisY: ValueAxis { id: scatterAxisY }
 
         XYPoint { x: 0; y: 0 }
         XYPoint { x: 1.1; y: 2.1 }

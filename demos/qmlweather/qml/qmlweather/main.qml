@@ -44,36 +44,36 @@ Rectangle {
         BarSeries {
             id: myBarSeries
             axisX: barCategoriesAxis
-            axisY: valuesAxisY
+            axisY: valueAxisY
             BarSet {
                 id: rainfallSet
                 label: "Rainfall"
             }
         }
      
-        ValuesAxis {
-            id: valuesAxisX
+        ValueAxis {
+            id: valueAxisX
             min: 0
             max: 5
         }
 
-        ValuesAxis{
-            id: valuesAxisY
+        ValueAxis{
+            id: valueAxisY
             min: 0
             max: 10
         }
 
         LineSeries {
             id: maxTempSeries
-            axisX: valuesAxisX
-            axisY: valuesAxisY
+            axisX: valueAxisX
+            axisY: valueAxisY
             name: "Max. temperature"
         }
 
         LineSeries {
             id: minTempSeries
-            axisX: valuesAxisX
-            axisY: valuesAxisY
+            axisX: valueAxisX
+            axisY: valueAxisY
             name: "Min. temperature"
         }
     //![2]
@@ -165,9 +165,9 @@ Rectangle {
             //![5]
 
             // Update scale of the chart
-            valuesAxisY.max = Math.max(chartView.axisY().max,weatherObj.tempMaxC);
-            valuesAxisX.min = 0;
-            valuesAxisX.max = Number(i) + 1;
+            valueAxisY.max = Math.max(chartView.axisY().max,weatherObj.tempMaxC);
+            valueAxisX.min = 0;
+            valueAxisX.max = Number(i) + 1;
 
             // Set the x-axis labels to the dates of the forecast
             var xLabels = barCategoriesAxis.categories;

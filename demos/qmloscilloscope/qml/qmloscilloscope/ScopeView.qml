@@ -25,13 +25,13 @@ ChartView {
     id: chartView
     animationOptions: ChartView.NoAnimation
 
-    ValuesAxis {
+    ValueAxis {
         id: axisY
         min: -1
         max: 3
     }
 
-    ValuesAxis {
+    ValueAxis {
         id: axisX
         min: 0
         max: 1000
@@ -76,8 +76,6 @@ ChartView {
                 series.markerSize = 3;
                 series.borderColor = "transparent";
             }
-//            chartView.setAxisX(axisX, series);
-//            chartView.setAxisY(axisY, series);
         }
     }
 

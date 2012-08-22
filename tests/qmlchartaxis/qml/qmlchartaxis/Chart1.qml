@@ -24,13 +24,13 @@ import QtCommercial.Chart 1.0
 ChartView {
     title: "user defined axes"
 
-    ValuesAxis {
+    ValueAxis {
         id: axisX
         min: 0
         max: 10
     }
 
-    ValuesAxis {
+    ValueAxis {
         id: axisY
         min: 0
         max: 6

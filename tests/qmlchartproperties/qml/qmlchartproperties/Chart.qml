@@ -66,7 +66,7 @@ ChartView {
     legend.onLabelColorChanged:        console.log("legend.onLabelColorChanged: " + color);
 
 
-    ValuesAxis{
+    ValueAxis{
     onColorChanged:               console.log("axisX.onColorChanged: " + color);
     onLabelsVisibleChanged:       console.log("axisX.onLabelsVisibleChanged: " + visible);
     onLabelsColorChanged:         console.log("axisX.onLabelsColorChanged: " + color);
@@ -79,7 +79,7 @@ ChartView {
     onMaxChanged:                 console.log("axisX.onMaxChanged: " + max);
     }
     
-    ValuesAxis{
+    ValueAxis{
     onColorChanged:               console.log("axisY.onColorChanged: " + color);
     onLabelsVisibleChanged:       console.log("axisY.onLabelsVisibleChanged: " + visible);
     onLabelsColorChanged:         console.log("axisY.onLabelsColorChanged: " + color);
