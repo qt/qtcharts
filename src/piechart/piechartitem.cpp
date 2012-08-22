@@ -90,6 +90,11 @@ void PieChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal
     // does not apply to pie
 }
 
+void PieChartItem::handleDomainUpdated()
+{
+    // does not apply to pie
+}
+
 void PieChartItem::rangeXChanged(qreal min, qreal max, int tickXCount)
 {
     Q_UNUSED(min);

@@ -56,6 +56,7 @@ public Q_SLOTS:
     // from Chart
     virtual void handleGeometryChanged(const QRectF &rect);
     virtual void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    virtual void handleDomainUpdated();
     virtual void rangeXChanged(qreal min, qreal max, int tickXCount);
     virtual void rangeYChanged(qreal min, qreal max, int tickYCount);
 
