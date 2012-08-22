@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "qbarcategoriesaxis.h"
-#include "qbarcategoriesaxis_p.h"
-#include "chartcategoriesaxisx_p.h"
-#include "chartcategoriesaxisy_p.h"
+#include "qbarcategoryaxis.h"
+#include "qbarcategoryaxis_p.h"
+#include "chartbarcategoryaxisx_p.h"
+#include "chartbarcategoryaxisy_p.h"
 #include "domain_p.h"
 #include "chartdataset_p.h"
 #include <qmath.h>
@@ -465,7 +465,7 @@ void QBarCategoryAxisPrivate::intializeDomain(Domain* domain)
     }
 }
 
-#include "moc_qbarcategoriesaxis.cpp"
-#include "moc_qbarcategoriesaxis_p.cpp"
+#include "moc_qbarcategoryaxis.cpp"
+#include "moc_qbarcategoryaxis_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

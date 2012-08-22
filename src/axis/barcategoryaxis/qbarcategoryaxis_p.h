@@ -30,7 +30,7 @@
 #ifndef QBARCATEGORIESAXIS_P_H
 #define QBARCATEGORIESAXIS_P_H
 
-#include "qbarcategoriesaxis.h"
+#include "qbarcategoryaxis.h"
 #include "qabstractaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

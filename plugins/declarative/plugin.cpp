@@ -23,7 +23,7 @@
 #include "qchart.h"
 #include "qabstractaxis.h"
 #include "qvalueaxis.h"
-#include "qbarcategoriesaxis.h"
+#include "qbarcategoryaxis.h"
 #include "declarativechart.h"
 #include "declarativexypoint.h"
 #include "declarativelineseries.h"

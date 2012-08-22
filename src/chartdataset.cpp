@@ -21,7 +21,7 @@
 #include "chartdataset_p.h"
 #include "qchart.h"
 #include "qvalueaxis.h"
-#include "qbarcategoriesaxis.h"
+#include "qbarcategoryaxis.h"
 #include "qvalueaxis_p.h"
 #include "qintervalsaxis.h"
 #include "qdatetimeaxis.h"

@@ -26,7 +26,7 @@
 #include "declarativepieseries.h"
 #include "declarativesplineseries.h"
 #include "declarativescatterseries.h"
-#include "qbarcategoriesaxis.h"
+#include "qbarcategoryaxis.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

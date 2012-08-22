@@ -21,7 +21,7 @@
 #include "../qabstractaxis/tst_qabstractaxis.h"
 #include <qbarseries.h>
 #include <qbarset.h>
-#include <qbarcategoriesaxis.h>
+#include <qbarcategoryaxis.h>
 
 class tst_QBarCategoriesAxis: public tst_QAbstractAxis
 {
@@ -34,8 +34,8 @@ public slots:
     void cleanup();
 
 private slots:
-    void qbarcategoriesaxis_data();
-    void qbarcategoriesaxis();
+    void qbarcategoryaxis_data();
+    void qbarcategoryaxis();
 
     void append_data();
     void append();
@@ -129,11 +129,11 @@ void tst_QBarCategoriesAxis::cleanup()
     tst_QAbstractAxis::cleanup();
 }
 
-void tst_QBarCategoriesAxis::qbarcategoriesaxis_data()
+void tst_QBarCategoriesAxis::qbarcategoryaxis_data()
 {
 }
 
-void tst_QBarCategoriesAxis::qbarcategoriesaxis()
+void tst_QBarCategoriesAxis::qbarcategoryaxis()
 {
     qabstractaxis();
     QBarCategoryAxis axis;
@@ -645,5 +645,5 @@ void tst_QBarCategoriesAxis::autoscale()
 
 
 QTEST_MAIN(tst_QBarCategoriesAxis)
-#include "tst_qbarcategoriesaxis.moc"
+#include "tst_qbarcategoryaxis.moc"
 

@@ -18,25 +18,27 @@
  **
  ****************************************************************************/
 
-#include "chartcategoriesaxisy_p.h"
+#include "chartbarcategoryaxisx_p.h"
 #include "chartpresenter_p.h"
-#include "qbarcategoriesaxis_p.h"
+#include "qbarcategoryaxis_p.h"
+#include <QDebug>
 #include <qmath.h>
 
 static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartCategoriesAxisY::ChartCategoriesAxisY(QBarCategoryAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
+ChartCategoriesAxisX::ChartCategoriesAxisX(QBarCategoryAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
 m_categoriesAxis(axis)
 {
+
 }
 
-ChartCategoriesAxisY::~ChartCategoriesAxisY()
+ChartCategoriesAxisX::~ChartCategoriesAxisX()
 {
 }
 
-QVector<qreal> ChartCategoriesAxisY::calculateLayout() const
+QVector<qreal> ChartCategoriesAxisX::calculateLayout() const
 {
     int count = m_categoriesAxis->d_ptr->count();
 
@@ -45,32 +47,32 @@ QVector<qreal> ChartCategoriesAxisY::calculateLayout() const
     QVector<qreal> points;
     points.resize(count+2);
 
-    const qreal delta = m_rect.height()/(count);
-    qreal offset = - m_min - 0.5;
+    const qreal delta = m_rect.width()/(count);
+    qreal offset =-m_min-0.5;
 
     if(offset<=0) {
-        offset = int(offset * m_rect.height()/(m_max - m_min))%int(delta) + delta;
+        offset = int(offset * m_rect.width()/(m_max - m_min))%int(delta) + delta;
     }
     else {
-        offset = int(offset * m_rect.height()/(m_max - m_min))%int(delta);
+        offset = int(offset * m_rect.width()/(m_max - m_min))%int(delta);
     }
 
-    points[0] = m_rect.bottom();
-    points[count+1] = m_rect.top();
+    points[0] = m_rect.left();
+    points[count+1] = m_rect.right();
 
     for (int i = 0; i < count; ++i) {
-        int y = m_rect.bottom() - i * delta - offset;
-        points[i+1] = y;
+        qreal x = offset + i * delta + m_rect.left();
+        points[i+1] = x;
     }
     return points;
 }
 
-QStringList ChartCategoriesAxisY::createCategoryLabels(const QVector<qreal>& layout) const
+QStringList ChartCategoriesAxisX::createCategoryLabels(const QVector<qreal>& layout) const
 {
     QStringList result;
-    qreal d = (m_max - m_min)/m_rect.height();
+    qreal d = (m_max - m_min)/m_rect.width();
     for (int i = 0;i < layout.count()-1; ++i) {
-        qreal x = qFloor(((m_rect.height()- (layout[i+1] + layout[i])/2 + m_rect.top())*d + m_min+0.5));
+        qreal x = qFloor((((layout[i+1] + layout[i])/2-m_rect.left())*d + m_min+0.5));
         if ((x < m_categoriesAxis->categories().count()) && (x >= 0)) {
             result << m_categoriesAxis->categories().at(x);
         }
@@ -83,7 +85,8 @@ QStringList ChartCategoriesAxisY::createCategoryLabels(const QVector<qreal>& lay
     return result;
 }
 
-void ChartCategoriesAxisY::updateGeometry()
+
+void ChartCategoriesAxisX::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
 
@@ -102,34 +105,33 @@ void ChartCategoriesAxisY::updateGeometry()
     Q_ASSERT(labels.size() == ticksList.size());
     Q_ASSERT(layout.size() == ticksList.size());
 
-    const qreal delta = m_rect.height()/(m_categoriesAxis->d_ptr->count());
+    const qreal delta = m_rect.width()/(m_categoriesAxis->d_ptr->count());
 
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
-    lineItem->setLine(m_rect.left() , m_rect.top(), m_rect.left(), m_rect.bottom());
+    lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
 
-    qreal height = m_rect.bottom();
+    qreal width = m_rect.left();
     for (int i = 0; i < layout.size(); ++i) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        lineItem->setLine(m_rect.left() , layout[i], m_rect.right(), layout[i]);
+        lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
         labelItem->setText(ticksList.at(i));
         const QRectF& rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
 
-        if(i==0) {
-           labelItem->setPos(m_rect.left() - rect.width() - label_padding ,layout[i+1] + (delta)/2 - center.y());
-        }
-        else {
-            labelItem->setPos(m_rect.left() - rect.width() - label_padding ,layout[i] - (delta)/2 - center.y());
+        if(i==0){
+            labelItem->setPos(layout[i+1] - (delta)/2 - center.x(), m_rect.bottom() + label_padding);
+        }else{
+            labelItem->setPos(layout[i] + (delta)/2 - center.x(), m_rect.bottom() + label_padding);
         }
 
-        if(labelItem->pos().y()+rect.height()>= height || labelItem->pos().y() < m_rect.top()) {
+        if(labelItem->pos().x()<=width || labelItem->pos().x()+ rect.width()>m_rect.right()) {
             labelItem->setVisible(false);
         }
         else {
             labelItem->setVisible(true);
-            height=labelItem->pos().y();
+            width=rect.width()+labelItem->pos().x();
         }
 
         m_minWidth+=rect.width();
@@ -137,22 +139,19 @@ void ChartCategoriesAxisY::updateGeometry()
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
-            rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i-1]-layout[i]);
+            rectItem->setRect(layout[i-1],m_rect.top(),layout[i]-layout[i-1],m_rect.height());
         }
         lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
+        lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
     }
 }
 
-void ChartCategoriesAxisY::handleAxisUpdated()
+void ChartCategoriesAxisX::handleAxisUpdated()
 {
-
     if(m_categoriesAxis->categories()!=m_categories)
     {
         m_categories=m_categoriesAxis->categories();
-        if(ChartAxis::layout().count()==m_categoriesAxis->d_ptr->count()+2) {
-            updateGeometry();
-        }
+        if(ChartAxis::layout().count()==m_categoriesAxis->d_ptr->count()+2) updateGeometry();
     }
     ChartAxis::handleAxisUpdated();
 }

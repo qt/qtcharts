@@ -22,7 +22,7 @@
 #include "qhorizontalbarseries_p.h"
 #include "horizontalbarchartitem_p.h"
 #include "horizontalbaranimation_p.h"
-#include "qbarcategoriesaxis.h"
+#include "qbarcategoryaxis.h"
 
 #include "chartdataset_p.h"
 #include "charttheme_p.h"

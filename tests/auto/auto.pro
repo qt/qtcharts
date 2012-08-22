@@ -23,7 +23,7 @@ SUBDIRS += \
            qvalueaxis \
            qintervalsaxis \
            qdatetimeaxis \
-           qbarcategoriesaxis
+           qbarcategoryaxis
 
 test_private:{
     SUBDIRS += domain chartdataset
