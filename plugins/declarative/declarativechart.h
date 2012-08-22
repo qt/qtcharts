@@ -77,7 +77,10 @@ public:
         SeriesTypePercentBar,
         SeriesTypePie,
         SeriesTypeScatter,
-        SeriesTypeSpline
+        SeriesTypeSpline,
+        SeriesTypeHorizontalBar,
+        SeriesTypeHorizontalStackedBar,
+        SeriesTypeHorizontalPercentBar
     };
 
 public:

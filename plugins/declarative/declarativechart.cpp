@@ -478,6 +478,15 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
     case DeclarativeChart::SeriesTypeBar:
         series = new DeclarativeBarSeries();
         break;
+    case DeclarativeChart::SeriesTypeHorizontalBar:
+        series = new DeclarativeHorizontalBarSeries();
+        break;
+    case DeclarativeChart::SeriesTypeHorizontalPercentBar:
+        series = new DeclarativeHorizontalPercentBarSeries();
+        break;
+    case DeclarativeChart::SeriesTypeHorizontalStackedBar:
+        series = new DeclarativeHorizontalStackedBarSeries();
+        break;
     case DeclarativeChart::SeriesTypePie:
         series = new DeclarativePieSeries();
         break;

@@ -59,6 +59,9 @@ public:
         qmlRegisterType<DeclarativeBarSeries>(uri, 1, 0, "BarSeries");
         qmlRegisterType<DeclarativeStackedBarSeries>(uri, 1, 0, "StackedBarSeries");
         qmlRegisterType<DeclarativePercentBarSeries>(uri, 1, 0, "PercentBarSeries");
+        qmlRegisterType<DeclarativeHorizontalBarSeries>(uri, 1, 0, "HorizontalBarSeries");
+        qmlRegisterType<DeclarativeHorizontalStackedBarSeries>(uri, 1, 0, "HorizontalStackedBarSeries");
+        qmlRegisterType<DeclarativeHorizontalPercentBarSeries>(uri, 1, 0, "HorizontalPercentBarSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 0, "PieSeries");
         qmlRegisterType<QPieSlice>(uri, 1, 0, "PieSlice");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 0, "BarSet");
