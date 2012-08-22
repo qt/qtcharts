@@ -35,9 +35,6 @@ Rectangle {
 
         PieSeries {
             id: pieSeries
-            onClicked: {
-                slice.exploded = !slice.exploded;
-            }
             PieSlice { label: "Volkswagen"; value: 13.5 }
             PieSlice { label: "Toyota"; value: 10.9 }
             PieSlice { label: "Ford"; value: 8.6 }
@@ -45,11 +42,11 @@ Rectangle {
             PieSlice { label: "Volvo"; value: 6.8 }
         }
     }
-    //![1]
 
     Component.onCompleted: {
-        // You can also add slices dynamically
+        // You can also manipulate slices dynamically
         otherSlice = pieSeries.append("Others", 52.0);
         pieSeries.find("Volkswagen").exploded = true;
     }
+    //![1]
 }

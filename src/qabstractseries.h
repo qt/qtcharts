@@ -79,6 +79,7 @@ protected:
     friend class ChartDataSet;
     friend class ChartPresenter;
     friend class QLegendPrivate;
+    friend class DeclarativeChart;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -68,10 +68,6 @@ ChartView {
         onColorChanged:             console.log(name + ".onColorChanged: " + color);
         onBorderColorChanged:       console.log(name + ".onBorderColorChanged: " + borderColor);
 //        onCountChanged:             console.log(name + ".onCountChanged: " + count);
-
-        Component.onCompleted: {
-            createDefaultAxes();
-        }
     }
 
     AreaSeries {

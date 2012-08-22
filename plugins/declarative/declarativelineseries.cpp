@@ -23,15 +23,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeLineSeries::DeclarativeLineSeries(QObject *parent) :
-    QLineSeries(parent)
+    QLineSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
     connect(this, SIGNAL(pointAdded(int)), this, SLOT(handleCountChanged(int)));
     connect(this, SIGNAL(pointRemoved(int)), this, SLOT(handleCountChanged(int)));
-}
-
-QXYSeries *DeclarativeLineSeries::xySeries()
-{
-    return this;
 }
 
 void DeclarativeLineSeries::handleCountChanged(int index)

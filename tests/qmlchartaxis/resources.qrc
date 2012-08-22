@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qml/qmlchartaxis/main.qml</file>
+        <file>qml/qmlchartaxis/Button.qml</file>
+        <file>qml/qmlchartaxis/Chart0.qml</file>
+        <file>qml/qmlchartaxis/Chart1.qml</file>
+        <file>qml/qmlchartaxis/Chart2.qml</file>
+        <file>qml/qmlchartaxis/Chart3.qml</file>
+        <file>qml/qmlchartaxis/Chart4.qml</file>
+        <file>qml/qmlchartaxis/Chart5.qml</file>
+        <file>qml/qmlchartaxis/Chart6.qml</file>
+        <file>qml/qmlchartaxis/Chart7.qml</file>
+        <file>qml/qmlchartaxis/Chart8.qml</file>
+    </qresource>
+</RCC>

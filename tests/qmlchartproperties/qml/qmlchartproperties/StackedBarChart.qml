@@ -30,14 +30,10 @@ ChartView {
 
     property variant series: mySeries
 
-    BarCategoriesAxis {
-        id: myAxis 
-        categories: ["2007", "2008", "2009", "2010", "2011", "2012" ]
-    }
-        
     StackedBarSeries {
         id: mySeries
         name: "bar"
+        axisX: BarCategoriesAxis { categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
             onClicked:                  console.log("barset.onClicked: " + index);
             onHovered:                  console.log("barset.onHovered: " + status);
@@ -63,10 +59,5 @@ ChartView {
         onHovered:                  console.log("stackedBarSeries.onHovered: " + barset + " " + status);
         onLabelsVisibleChanged:     console.log("stackedBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);
         onCountChanged:             console.log("stackedBarSeries.onCountChanged: " + count);
-    }
-    
-    Component.onCompleted: {
-        createDefaultAxes();
-        setAxisX(myAxis,mySeries);
     }
 }

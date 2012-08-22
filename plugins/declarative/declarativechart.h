@@ -27,7 +27,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// TODO: Derive from QChart for easier definition of properties?
 class DeclarativeChart : public QDeclarativeItem
 // TODO: for QTQUICK2: extend QQuickPainterItem instead
 //class DeclarativeChart : public QQuickPaintedItem, public Chart
@@ -49,6 +48,7 @@ class DeclarativeChart : public QDeclarativeItem
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
+//    Q_ENUMS(AxisType)
 
 public:
     // duplicating enums from QChart to make the QML api namings 1-to-1 with the C++ api
@@ -114,15 +114,14 @@ public:
     qreal bottomMargin();
     qreal leftMargin();
     qreal rightMargin();
-
-
+    void createDefaultAxes(QAbstractSeries* series);
 
 public:
     Q_INVOKABLE QAbstractSeries *series(int index);
     Q_INVOKABLE QAbstractSeries *series(QString seriesName);
     Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
-    Q_INVOKABLE void setAxisX(QAbstractAxis* axis, QAbstractSeries *series = 0);
-    Q_INVOKABLE void setAxisY(QAbstractAxis* axis, QAbstractSeries *series = 0);
+    Q_INVOKABLE void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = 0);
+    Q_INVOKABLE void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = 0);
     Q_INVOKABLE void createDefaultAxes();
     Q_INVOKABLE QAbstractAxis *axisX(QAbstractSeries *series = 0);
     Q_INVOKABLE QAbstractAxis *axisY(QAbstractSeries *series = 0);
@@ -145,6 +144,8 @@ Q_SIGNALS:
 
 public Q_SLOTS:
     void handleMarginsChanged(QRectF newMargins);
+    void handleAxisXSet(QAbstractAxis *axis);
+    void handleAxisYSet(QAbstractAxis *axis);
 
 private:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support

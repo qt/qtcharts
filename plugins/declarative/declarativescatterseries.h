@@ -33,12 +33,18 @@ class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeri
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
 public:
     explicit DeclarativeScatterSeries(QObject *parent = 0);
-    QXYSeries *xySeries();
+    QXYSeries *xySeries() { return this; }
+    QAbstractAxis *axisX() { return m_axisX; }
+    void setAxisX(QAbstractAxis *axis) { m_axisX = axis; emit axisXChanged(axis); }
+    QAbstractAxis *axisY() { return m_axisY; }
+    void setAxisY(QAbstractAxis *axis) { m_axisY = axis; emit axisYChanged(axis); }
     QDeclarativeListProperty<QObject> declarativeChildren();
 
 public: // from QDeclarativeParserStatus
@@ -55,10 +61,16 @@ public:
 
 Q_SIGNALS:
     void countChanged(int count);
+    void axisXChanged(QAbstractAxis *axis);
+    void axisYChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
     void handleCountChanged(int index);
+
+private:
+    QAbstractAxis *m_axisX;
+    QAbstractAxis *m_axisY;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

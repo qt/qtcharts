@@ -50,7 +50,6 @@
 
     The following QML shows how to create a chart with two simple scatter series:
     \snippet ../demos/qmlchart/qml/qmlchart/View5.qml 1
-    \snippet ../demos/qmlchart/qml/qmlchart/View5.qml 2
 
     \beginfloatleft
     \image demos_qmlchart5.png

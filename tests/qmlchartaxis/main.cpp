@@ -18,27 +18,18 @@
 **
 ****************************************************************************/
 
-import QtQuick 1.0
-import QtCommercial.Chart 1.0
+#include <QtGui/QApplication>
+#include <QDeclarativeEngine>
+#include "qmlapplicationviewer.h"
 
-Rectangle {
-    anchors.fill: parent
+Q_DECL_EXPORT int main(int argc, char *argv[])
+{
+    QScopedPointer<QApplication> app(createApplication(argc, argv));
+    QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
-    //![1]
-    ChartView {
-        title: "Line"
-        anchors.fill: parent
+    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    viewer->setSource(QUrl("qrc:/qml/qmlchartaxis/main.qml"));
+    viewer->showExpanded();
 
-        LineSeries {
-            name: "LineSeries"
-            XYPoint { x: 0; y: 0 }
-            XYPoint { x: 1.1; y: 2.1 }
-            XYPoint { x: 1.9; y: 3.3 }
-            XYPoint { x: 2.1; y: 2.1 }
-            XYPoint { x: 2.9; y: 4.9 }
-            XYPoint { x: 3.4; y: 3.0 }
-            XYPoint { x: 4.1; y: 3.3 }
-        }
-    }
-    //![1]
+    return app->exec();
 }

@@ -40,17 +40,14 @@ ChartView {
     LineSeries {
         id: lineSeries1
         name: "signal 1"
+        axisX: axisX
+        axisY: axisY
     }
     LineSeries {
         id: lineSeries2
         name: "signal 2"
-    }
-
-    Component.onCompleted: {
-        chartView.setAxisX(axisX, lineSeries1);
-        chartView.setAxisY(axisY, lineSeries1);
-        chartView.setAxisX(axisX, lineSeries2);
-        chartView.setAxisY(axisY, lineSeries2);
+        axisX: axisX
+        axisY: axisY
     }
 
     Timer {
@@ -79,8 +76,8 @@ ChartView {
                 series.markerSize = 3;
                 series.borderColor = "transparent";
             }
-            chartView.setAxisX(axisX, series);
-            chartView.setAxisY(axisY, series);
+//            chartView.setAxisX(axisX, series);
+//            chartView.setAxisY(axisY, series);
         }
     }
 
@@ -92,7 +89,6 @@ ChartView {
     }
 
     function changeRefreshRate(rate) {
-        console.log("rate " + rate);
         refreshTimer.interval = 1 / Number(rate) * 1000;
     }
 }

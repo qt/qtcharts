@@ -23,10 +23,11 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
-    QAreaSeries(parent)
+    QAreaSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
 }
-
 
 void DeclarativeAreaSeries::setUpperSeries(DeclarativeLineSeries* series)
 {

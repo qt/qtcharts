@@ -4,6 +4,7 @@ QT += declarative
 !include( ../plugins.pri ) {
     error( "Couldn't find the plugins.pri file!" )
 }
+INCLUDEPATH += $$CHART_BUILD_PRIVATE_HEADER_DIR
 
 contains(QT_MAJOR_VERSION, 5) {
     # TODO: QtQuick2 not supported by the implementation currently

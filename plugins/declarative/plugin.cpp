@@ -91,7 +91,7 @@ public:
         qmlRegisterUncreatableType<QAbstractBarSeries>(uri, 1, 0, "AbstractBarSeries",
                                              QLatin1String("Trying to create uncreatable: AbstractBarSeries."));
         qmlRegisterUncreatableType<QAbstractAxis>(uri, 1, 0, "AbstractAxis",
-                                          QLatin1String("Trying to create uncreatable: AbstractAxis."));
+                                          QLatin1String("Trying to create uncreatable: AbstractAxis. Use specific types of axis instead."));
     }
 };
 

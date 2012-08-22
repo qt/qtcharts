@@ -6,7 +6,8 @@ TEMPLATE = subdirs
 SUBDIRS += \ 
     auto \
     chartwidgettest \
-    qmlchartproperties
+    qmlchartproperties \
+    qmlchartaxis
 
 !linux-arm*: {
     SUBDIRS += \

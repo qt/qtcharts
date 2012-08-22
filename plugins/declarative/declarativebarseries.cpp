@@ -60,7 +60,9 @@ void DeclarativeBarSet::setValues(QVariantList values)
 
 // Declarative bar series ======================================================================================
 DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
-    QBarSeries(parent)
+    QBarSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
 }
 
@@ -117,7 +119,9 @@ DeclarativeBarSet *DeclarativeBarSeries::insert(int index, QString label, QVaria
 
 // Declarative stacked bar series ==============================================================================
 DeclarativeStackedBarSeries::DeclarativeStackedBarSeries(QDeclarativeItem *parent) :
-    QStackedBarSeries(parent)
+    QStackedBarSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
 }
 
@@ -175,7 +179,9 @@ DeclarativeBarSet *DeclarativeStackedBarSeries::insert(int index, QString label,
 
 // Declarative percent bar series ==============================================================================
 DeclarativePercentBarSeries::DeclarativePercentBarSeries(QDeclarativeItem *parent) :
-    QPercentBarSeries(parent)
+    QPercentBarSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
 }
 
@@ -232,7 +238,9 @@ DeclarativeBarSet *DeclarativePercentBarSeries::insert(int index, QString label,
 
 // Declarative horizontal bar series ===========================================================================
 DeclarativeHorizontalBarSeries::DeclarativeHorizontalBarSeries(QDeclarativeItem *parent) :
-    QHorizontalBarSeries(parent)
+    QHorizontalBarSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
 }
 
@@ -289,7 +297,9 @@ DeclarativeBarSet *DeclarativeHorizontalBarSeries::insert(int index, QString lab
 
 // Declarative horizontal stacked bar series ===================================================================
 DeclarativeHorizontalStackedBarSeries::DeclarativeHorizontalStackedBarSeries(QDeclarativeItem *parent) :
-    QHorizontalStackedBarSeries(parent)
+    QHorizontalStackedBarSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
 }
 
@@ -346,7 +356,9 @@ DeclarativeBarSet *DeclarativeHorizontalStackedBarSeries::insert(int index, QStr
 
 // Declarative horizontal percent bar series ===================================================================
 DeclarativeHorizontalPercentBarSeries::DeclarativeHorizontalPercentBarSeries(QDeclarativeItem *parent) :
-    QHorizontalPercentBarSeries(parent)
+    QHorizontalPercentBarSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
 }
 

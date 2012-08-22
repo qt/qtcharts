@@ -33,12 +33,14 @@ Rectangle {
         animationOptions: ChartView.SeriesAnimations
         
         BarCategoriesAxis {
-            id: categoryAxis
+            id: categoriesAxis
             categories: ["2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014" ]
+            min: "2007"
+            max: "2014"
         }
 
         ValuesAxis {
-            id: yAxis
+            id: valuesAxis
             min: 0
             max: 60
         }
@@ -63,6 +65,8 @@ Rectangle {
         BarSeries {
             id: myBarSeries
             name: "Others"
+            axisX: categoriesAxis
+            axisY: valuesAxis
             barWidth: 0.9
             visible: false
             HBarModelMapper {
@@ -78,6 +82,8 @@ Rectangle {
         LineSeries {
             id: lineSeries1
             name: "Volkswagen"
+            axisX: categoriesAxis
+            axisY: valuesAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -91,6 +97,8 @@ Rectangle {
         LineSeries {
             id: lineSeries2
             name: "Toyota"
+            axisX: categoriesAxis
+            axisY: valuesAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -103,6 +111,8 @@ Rectangle {
         LineSeries {
             id: lineSeries3
             name: "Ford"
+            axisX: categoriesAxis
+            axisY: valuesAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -115,6 +125,8 @@ Rectangle {
         LineSeries {
             id: lineSeries4
             name: "Skoda"
+            axisX: categoriesAxis
+            axisY: valuesAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -127,6 +139,8 @@ Rectangle {
         LineSeries {
             id: lineSeries5
             name: "Volvo"
+            axisX: categoriesAxis
+            axisY: valuesAxis
             visible: false
             HXYModelMapper {
                 model: customModel
@@ -162,23 +176,5 @@ Rectangle {
             }
         }
         //![3]
-
-        Component.onCompleted: {
-            setAxisX(categoryAxis,myBarSeries)
-            setAxisX(categoryAxis,lineSeries1)
-            setAxisX(categoryAxis,lineSeries2)
-            setAxisX(categoryAxis,lineSeries3)
-            setAxisX(categoryAxis,lineSeries4)
-            setAxisX(categoryAxis,lineSeries5)
-            setAxisY(yAxis,myBarSeries)
-            setAxisY(yAxis,lineSeries1)
-            setAxisY(yAxis,lineSeries2)
-            setAxisY(yAxis,lineSeries3)
-            setAxisY(yAxis,lineSeries4)
-            setAxisY(yAxis,lineSeries5)
-            categoryAxis.min = "2007"
-            categoryAxis.max = "2014"
-            categoryAxis.visible = true;
-        }
     }
 }

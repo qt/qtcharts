@@ -31,6 +31,8 @@ class DeclarativeAreaSeries : public QAreaSeries
     Q_OBJECT
     Q_PROPERTY(DeclarativeLineSeries *upperSeries READ upperSeries WRITE setUpperSeries)
     Q_PROPERTY(DeclarativeLineSeries *lowerSeries READ lowerSeries WRITE setLowerSeries)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
 
 public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
@@ -38,6 +40,18 @@ public:
     DeclarativeLineSeries* upperSeries() const;
     void setLowerSeries(DeclarativeLineSeries* series);
     DeclarativeLineSeries* lowerSeries() const;
+    QAbstractAxis *axisX() { return m_axisX; }
+    void setAxisX(QAbstractAxis *axis) { m_axisX = axis; emit axisXChanged(axis); }
+    QAbstractAxis *axisY() { return m_axisY; }
+    void setAxisY(QAbstractAxis *axis) { m_axisY = axis; emit axisYChanged(axis); }
+
+Q_SIGNALS:
+    void axisXChanged(QAbstractAxis *axis);
+    void axisYChanged(QAbstractAxis *axis);
+
+private:
+    QAbstractAxis *m_axisX;
+    QAbstractAxis *m_axisY;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

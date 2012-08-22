@@ -29,15 +29,15 @@ Rectangle {
         title: "NHL All-Star Team Players"
         anchors.fill: parent
 
-        AreaSeries {
-            //TODO: obsolate
-            //axisX: CategoriesAxis {
-            //    id: categoriesAxis
-            //    categories: ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007",
-            //        "2008", "2009", "2010", "2011" ]
-            //}
+        BarCategoriesAxis {
+            id: catergoriesAxis
+            categories: ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008",
+                "2009", "2010", "2011" ]
+        }
 
+        AreaSeries {
             name: "Russian"
+            axisX: catergoriesAxis
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 1 }
                 XYPoint { x: 1; y: 1 }
@@ -52,27 +52,13 @@ Rectangle {
                 XYPoint { x: 10; y: 2 }
                 XYPoint { x: 11; y: 1 }
             }
-            lowerSeries: LineSeries {
-                XYPoint { x: 0; y: 0 }
-                XYPoint { x: 1; y: 0 }
-                XYPoint { x: 2; y: 0 }
-                XYPoint { x: 3; y: 0 }
-                XYPoint { x: 4; y: 0 }
-                XYPoint { x: 5; y: 0 }
-                XYPoint { x: 6; y: 0 }
-                XYPoint { x: 7; y: 0 }
-                XYPoint { x: 8; y: 0 }
-                XYPoint { x: 9; y: 0 }
-                XYPoint { x: 10; y: 0 }
-                XYPoint { x: 11; y: 0 }
-            }
         }
         // ...
         //![1]
 
         AreaSeries {
-            id: swedish
             name: "Swedish"
+            axisX: catergoriesAxis
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 1 }
                 XYPoint { x: 1; y: 1 }
@@ -87,28 +73,11 @@ Rectangle {
                 XYPoint { x: 10; y: 3 }
                 XYPoint { x: 11; y: 3 }
             }
-            lowerSeries: LineSeries {
-                XYPoint { x: 0; y: 0 }
-                XYPoint { x: 1; y: 0 }
-                XYPoint { x: 2; y: 0 }
-                XYPoint { x: 3; y: 0 }
-                XYPoint { x: 4; y: 0 }
-                XYPoint { x: 5; y: 0 }
-                XYPoint { x: 6; y: 0 }
-                XYPoint { x: 7; y: 0 }
-                XYPoint { x: 8; y: 0 }
-                XYPoint { x: 9; y: 0 }
-                XYPoint { x: 10; y: 0 }
-                XYPoint { x: 11; y: 0 }
-            }
-            onClicked: {
-                color = "yellow";
-                borderColor = "blue";
-            }
         }
 
         AreaSeries {
             name: "Finnish"
+            axisX: catergoriesAxis
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 0 }
                 XYPoint { x: 1; y: 0 }
@@ -123,27 +92,10 @@ Rectangle {
                 XYPoint { x: 10; y: 0 }
                 XYPoint { x: 11; y: 1 }
             }
-            lowerSeries: LineSeries {
-                XYPoint { x: 0; y: 0 }
-                XYPoint { x: 1; y: 0 }
-                XYPoint { x: 2; y: 0 }
-                XYPoint { x: 3; y: 0 }
-                XYPoint { x: 4; y: 0 }
-                XYPoint { x: 5; y: 0 }
-                XYPoint { x: 6; y: 0 }
-                XYPoint { x: 7; y: 0 }
-                XYPoint { x: 8; y: 0 }
-                XYPoint { x: 9; y: 0 }
-                XYPoint { x: 10; y: 0 }
-                XYPoint { x: 11; y: 0 }
-            }
             onClicked: {
                 color = "white";
                 borderColor = "blue";
             }
         }
-        Component.onCompleted: {
-        createDefaultAxes();
-    }
     }
 }

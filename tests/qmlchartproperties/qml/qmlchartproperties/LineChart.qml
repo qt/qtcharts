@@ -59,8 +59,4 @@ ChartView {
         XYPoint { x: 4.1; y: 2.3 }
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
     }
-    
-    Component.onCompleted: {
-        createDefaultAxes();
-    }
 }

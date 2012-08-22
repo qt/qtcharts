@@ -116,12 +116,13 @@ void ChartDataSet::removeSeriesIndex(QAbstractSeries* series)
 
 void ChartDataSet::createDefaultAxes()
 {
-
-    if(m_seriesDomainMap.isEmpty()) return;
+    if (m_seriesDomainMap.isEmpty())
+        return;
 
     QAbstractAxis::AxisTypes typeX(0);
     QAbstractAxis::AxisTypes typeY(0);
 
+    // Remove possibly existing axes
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
     while (i.hasNext()) {
         i.next();
@@ -130,8 +131,10 @@ void ChartDataSet::createDefaultAxes()
 
     i.toFront();
 
+    // Select the required axis x and axis y types based on the types of the current series
     while (i.hasNext()) {
         i.next();
+
         QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
         QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
         if(axisX) typeX&=axisX->type();
@@ -140,27 +143,27 @@ void ChartDataSet::createDefaultAxes()
         else typeY|=i.key()->d_ptr->defaultAxisType(Qt::Vertical);
     }
 
-    createAxes(typeX,Qt::Horizontal);
-    createAxes(typeY,Qt::Vertical);
+    // Create the axes of the types selected
+    createAxes(typeX, Qt::Horizontal);
+    createAxes(typeY, Qt::Vertical);
 }
 
-void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type,Qt::Orientation orientation)
+void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation orientation)
 {
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
 
-    if(type.testFlag(QAbstractAxis::AxisTypeValues) && type.testFlag(QAbstractAxis::AxisTypeCategories))
-    {
+    // TODO: Add a descriptive comment of what happens here
+    if (type.testFlag(QAbstractAxis::AxisTypeValues) && type.testFlag(QAbstractAxis::AxisTypeCategories)) {
         while (i.hasNext()) {
             i.next();
-            QAbstractAxis* axis = createAxis(i.key()->d_ptr->defaultAxisType(orientation),orientation);
-            if(!axis) continue;
-            initializeAxis(axis,i.key());
-            emit axisAdded(axis,i.value());
+            QAbstractAxis* axis = createAxis(i.key()->d_ptr->defaultAxisType(orientation), orientation);
+            if (axis) {
+                initializeAxis(axis, i.key());
+                emit axisAdded(axis, i.value());
+            }
         }
-
-    }
-    else if(!type.testFlag(QAbstractAxis::AxisTypeNoAxis)) {
-        QAbstractAxis* axis = createAxis(QAbstractAxis::AxisType(int(type)),orientation);
+    } else if (!type.testFlag(QAbstractAxis::AxisTypeNoAxis)) {
+        QAbstractAxis* axis = createAxis(QAbstractAxis::AxisType(int(type)), orientation);
         i.toFront();
         while (i.hasNext()) {
             i.next();
@@ -170,10 +173,9 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type,Qt::Orientation orie
     }
 }
 
-
-QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type,Qt::Orientation orientation)
+QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type, Qt::Orientation orientation)
 {
-    QAbstractAxis* axis =0;
+    QAbstractAxis* axis = 0;
 
     switch(type) {
     case QAbstractAxis::AxisTypeValues:
@@ -431,6 +433,11 @@ void ChartDataSet::setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Ori
         seriesAxisMap= &m_seriesAxisYMap;
     }else{
         seriesAxisMap= &m_seriesAxisXMap;
+    }
+
+    if (seriesAxisMap->value(series) == axis) {
+        qWarning() << "The axis already set for the series";
+        return;
     }
 
     QAbstractAxis *oldAxis = seriesAxisMap->take(series);

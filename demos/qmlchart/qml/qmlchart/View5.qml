@@ -51,13 +51,6 @@ Rectangle {
             XYPoint { x: 2.2; y: 2.9 }
             XYPoint { x: 2.4; y: 2.7 }
             XYPoint { x: 2.67; y: 2.65 }
-    //![2]
         }
-        
-        Component.onCompleted: {
-        createDefaultAxes();
-        }
-        
     }
-    //![2]
 }

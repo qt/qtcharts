@@ -23,15 +23,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
-    QSplineSeries(parent)
+    QSplineSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
     connect(this, SIGNAL(pointAdded(int)), this, SLOT(handleCountChanged(int)));
     connect(this, SIGNAL(pointRemoved(int)), this, SLOT(handleCountChanged(int)));
-}
-
-QXYSeries *DeclarativeSplineSeries::xySeries()
-{
-    return this;
 }
 
 void DeclarativeSplineSeries::handleCountChanged(int index)

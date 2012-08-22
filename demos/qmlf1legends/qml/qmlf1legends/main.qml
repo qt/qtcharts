@@ -61,28 +61,26 @@ Rectangle {
             if (currentIndex < speedsXml.count) {
                 // Check if there is a series for the data already (we are using driver name to identify series)
                 var lineSeries = chartView.series(speedsXml.get(currentIndex).driver);
-                if (!lineSeries){
+                if (!lineSeries) {
                     lineSeries = chartView.createSeries(ChartView.SeriesTypeLine, speedsXml.get(currentIndex).driver);
-                    chartView.createDefaultAxes();
-                    chartView.axisY(lineSeries).min = 0;
-                    chartView.axisY(lineSeries).max = 250
+                    chartView.axisY().min = 0;
+                    chartView.axisY().max = 250
                 }
-              
                 lineSeries.append(currentIndex, speedsXml.get(currentIndex).speed);
 
                 // Make the x-axis range dynamic
                 if (currentIndex > 9)
-                    chartView.axisX(lineSeries).min = currentIndex - 10;
+                    chartView.axisX().min = currentIndex - 10;
                 else
-                    chartView.axisX(lineSeries).min = 0;
+                    chartView.axisX().min = 0;
 
-                chartView.axisX(lineSeries).max = currentIndex + 1;
+                chartView.axisX().max = currentIndex + 1;
             } else {
                 // No more data, change x-axis range to show all the data
                 timer.stop();
                 chartView.animationOptions = ChartView.AllAnimations;
-                chartView.axisX(lineSeries).min = 0;
-                chartView.axisX(lineSeries).max = currentIndex + 1;
+                chartView.axisX().min = 0;
+                chartView.axisX().max = currentIndex + 1;
             }
         }
     }

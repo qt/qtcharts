@@ -20,6 +20,7 @@
 
 #include "declarativechart.h"
 #include <QPainter>
+#include <QDeclarativeEngine>
 #include "declarativelineseries.h"
 #include "declarativeareaseries.h"
 #include "declarativebarseries.h"
@@ -27,6 +28,10 @@
 #include "declarativesplineseries.h"
 #include "declarativescatterseries.h"
 #include "qbarcategoryaxis.h"
+#include "qvalueaxis.h"
+#include "qdatetimeaxis.h"
+#include "qintervalsaxis.h"
+#include "qabstractseries_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -165,25 +170,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlmethod ChartView::scrollLeft(real pixels)
   Scrolls to left by \a pixels. This is a convenience function that suits for example for key navigation.
-  \sa ValuesAxis::min, ValuesAxis::max, BarCategoriesAxis::min, BarCategoriesAxis::max
+  \sa ValueAxis::min, ValueAxis::max, BarCategoriesAxis::min, BarCategoriesAxis::max
 */
 
 /*!
   \qmlmethod ChartView::scrollRight(real pixels)
   Scrolls to right by \a pixels. This is a convenience function that suits for example for key navigation.
-  \sa ValuesAxis::min, ValuesAxis::max, BarCategoriesAxis::min, BarCategoriesAxis::max
+  \sa ValueAxis::min, ValueAxis::max, BarCategoriesAxis::min, BarCategoriesAxis::max
 */
 
 /*!
   \qmlmethod ChartView::scrollUp(real pixels)
   Scrolls up by \a pixels. This is a convenience function that suits for example for key navigation.
-  \sa ValuesAxis::min, ValuesAxis::max, BarCategoriesAxis::min, BarCategoriesAxis::max
+  \sa ValueAxis::min, ValueAxis::max, BarCategoriesAxis::min, BarCategoriesAxis::max
 */
 
 /*!
   \qmlmethod ChartView::scrollDown(real pixels)
   Scrolls down by \a pixels. This is a convenience function that suits for example for key navigation.
-  \sa ValuesAxis::min, ValuesAxis::max, BarCategoriesAxis::min, BarCategoriesAxis::max
+  \sa ValueAxis::min, ValueAxis::max, BarCategoriesAxis::min, BarCategoriesAxis::max
 */
 
 /*!
@@ -252,14 +257,94 @@ void DeclarativeChart::componentComplete()
 {
     foreach(QObject *child, children()) {
         if (qobject_cast<QAbstractSeries *>(child)) {
-//            qDebug() << "DeclarativeChart::componentComplete(), add: " << child;
-            // TODO: how about optional y-axis?
             m_chart->addSeries(qobject_cast<QAbstractSeries *>(child));
-        }else if(qobject_cast<QAbstractAxis *>(child)){
-
+            if (qobject_cast<DeclarativeLineSeries *>(child)) {
+                DeclarativeLineSeries *s = qobject_cast<DeclarativeLineSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            } else if (qobject_cast<DeclarativeSplineSeries *>(child)) {
+                DeclarativeSplineSeries *s = qobject_cast<DeclarativeSplineSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            } else if (qobject_cast<DeclarativeScatterSeries *>(child)) {
+                DeclarativeScatterSeries *s = qobject_cast<DeclarativeScatterSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            } else if (qobject_cast<DeclarativeAreaSeries *>(child)) {
+                DeclarativeAreaSeries *s = qobject_cast<DeclarativeAreaSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            } else if (qobject_cast<DeclarativeBarSeries *>(child)) {
+                DeclarativeBarSeries *s = qobject_cast<DeclarativeBarSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            } else if (qobject_cast<DeclarativeStackedBarSeries *>(child)) {
+                DeclarativeStackedBarSeries *s = qobject_cast<DeclarativeStackedBarSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            } else if (qobject_cast<DeclarativePercentBarSeries *>(child)) {
+                DeclarativePercentBarSeries *s = qobject_cast<DeclarativePercentBarSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            } else if (qobject_cast<DeclarativeHorizontalBarSeries *>(child)) {
+                DeclarativeHorizontalBarSeries *s = qobject_cast<DeclarativeHorizontalBarSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            } else if (qobject_cast<DeclarativeHorizontalStackedBarSeries *>(child)) {
+                DeclarativeHorizontalStackedBarSeries *s = qobject_cast<DeclarativeHorizontalStackedBarSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            } else if (qobject_cast<DeclarativeHorizontalPercentBarSeries *>(child)) {
+                DeclarativeHorizontalPercentBarSeries *s = qobject_cast<DeclarativeHorizontalPercentBarSeries *>(child);
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                setAxisX(s->axisX(), s);
+                setAxisY(s->axisY(), s);
+            }
+        } else if(qobject_cast<QAbstractAxis *>(child)) {
+            // Do nothing, axes are set for the chart in the context of series
         }
     }
+
+    // Create the missing axes for the series that cannot be painted without axes
+    foreach(QAbstractSeries *series, m_chart->series())
+        createDefaultAxes(series);
+
     QDeclarativeItem::componentComplete();
+}
+
+void DeclarativeChart::handleAxisXSet(QAbstractAxis* axis)
+{
+//    qDebug() << "DeclarativeChart::handleAxisXSet" << sender() << axis;
+    if (axis && qobject_cast<DeclarativeLineSeries *>(sender())) {
+        m_chart->setAxisX(axis, qobject_cast<DeclarativeLineSeries *>(sender()));
+    }
+}
+
+void DeclarativeChart::handleAxisYSet(QAbstractAxis* axis)
+{
+//    qDebug() << "DeclarativeChart::handleAxisYSet" << sender() << axis;
+    if (axis && qobject_cast<DeclarativeLineSeries *>(sender())) {
+        m_chart->setAxisY(axis, qobject_cast<DeclarativeLineSeries *>(sender()));
+    }
 }
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
@@ -462,6 +547,7 @@ QAbstractSeries *DeclarativeChart::series(QString seriesName)
 QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType type, QString name)
 {
     QAbstractSeries *series = 0;
+
     switch (type) {
     case DeclarativeChart::SeriesTypeLine:
         series = new DeclarativeLineSeries();
@@ -499,24 +585,90 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
     default:
         qWarning() << "Illegal series type";
     }
-    series->setName(name);
-    m_chart->addSeries(series);
+
+    if (series) {
+        series->setName(name);
+        m_chart->addSeries(series);
+        createDefaultAxes(series);
+    }
+
     return series;
 }
 
-void DeclarativeChart::setAxisX(QAbstractAxis* axis, QAbstractSeries *series)
+void DeclarativeChart::setAxisX(QAbstractAxis *axis, QAbstractSeries *series)
 {
-    m_chart->setAxisX(axis,series);
+    if (axis)
+        m_chart->setAxisX(axis, series);
 }
 
-void DeclarativeChart::setAxisY(QAbstractAxis* axis, QAbstractSeries *series)
+void DeclarativeChart::setAxisY(QAbstractAxis *axis, QAbstractSeries *series)
 {
-    m_chart->setAxisY(axis,series);
+    if (axis)
+        m_chart->setAxisY(axis, series);
 }
 
 void DeclarativeChart::createDefaultAxes()
 {
-    m_chart->createDefaultAxes();
+    qWarning() << "ChartView.createDefaultAxes() is deprecated. Axes are created automatically.";
+}
+
+void DeclarativeChart::createDefaultAxes(QAbstractSeries* series)
+{
+    foreach (QAbstractSeries *s, m_chart->series()) {
+        // If there is already an x axis of the correct type, re-use it
+        if (!m_chart->axisX(series) && s != series && m_chart->axisX(s)
+                && m_chart->axisX(s)->type() == series->d_ptr->defaultAxisType(Qt::Horizontal))
+            m_chart->setAxisX(m_chart->axisX(s), series);
+
+        // If there is already a y axis of the correct type, re-use it
+        if (!m_chart->axisY(series) && s != series && m_chart->axisY(s)
+                && m_chart->axisY(s)->type() == series->d_ptr->defaultAxisType(Qt::Vertical))
+            m_chart->setAxisY(m_chart->axisY(s), series);
+    }
+
+    // If no x axis of correct type was found, create a new x axis based of default axis type
+    if (!m_chart->axisX(series)) {
+        switch (series->d_ptr->defaultAxisType(Qt::Horizontal)) {
+        case QAbstractAxis::AxisTypeValues:
+            m_chart->setAxisX(new QValueAxis(this), series);
+            break;
+        case QAbstractAxis::AxisTypeCategories:
+            m_chart->setAxisX(new QBarCategoryAxis(this), series);
+            break;
+        case QAbstractAxis::AxisTypeIntervals:
+            m_chart->setAxisX(new QIntervalsAxis(this), series);
+            break;
+        case QAbstractAxis::AxisTypeDateTime:
+            m_chart->setAxisX(new QDateTimeAxis(this), series);
+            break;
+        default:
+            // Do nothing, assume AxisTypeNoAxis
+            break;
+        }
+    }
+
+    // If no y axis of correct type was found, create a new y axis based of default axis type
+    if (!m_chart->axisY(series)) {
+        switch (series->d_ptr->defaultAxisType(Qt::Vertical)) {
+        case QAbstractAxis::AxisTypeValues:
+            m_chart->setAxisY(new QValueAxis(this), series);
+            break;
+        case QAbstractAxis::AxisTypeCategories:
+            m_chart->setAxisY(new QBarCategoryAxis(this), series);
+            break;
+        case QAbstractAxis::AxisTypeIntervals:
+            m_chart->setAxisY(new QIntervalsAxis(this), series);
+            break;
+        case QAbstractAxis::AxisTypeDateTime:
+            m_chart->setAxisY(new QDateTimeAxis(this), series);
+            break;
+        default:
+            // Do nothing, assume AxisTypeNoAxis
+            break;
+        }
+    }
+
+    //qDebug() << "axis for series" << series << "x:" << m_chart->axisX(series) << "y:" << m_chart->axisY(series);
 }
 
 #include "moc_declarativechart.cpp"

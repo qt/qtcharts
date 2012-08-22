@@ -23,15 +23,12 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeScatterSeries::DeclarativeScatterSeries(QObject *parent) :
-    QScatterSeries(parent)
+    QScatterSeries(parent),
+    m_axisX(0),
+    m_axisY(0)
 {
     connect(this, SIGNAL(pointAdded(int)), this, SLOT(handleCountChanged(int)));
     connect(this, SIGNAL(pointRemoved(int)), this, SLOT(handleCountChanged(int)));
-}
-
-QXYSeries *DeclarativeScatterSeries::xySeries()
-{
-    return this;
 }
 
 void DeclarativeScatterSeries::handleCountChanged(int index)

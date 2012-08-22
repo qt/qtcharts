@@ -27,7 +27,6 @@ Rectangle {
     property int __activeIndex: 1
     property real __intervalCoefficient: 0
 
-
     //![1]
     ChartView {
         id: chartView
@@ -62,7 +61,6 @@ Rectangle {
             interval = __intervalCoefficient * j * j;
             splineSeries.append(j, interval);
         }
-        chartView.createDefaultAxes()
         chartView.axisX(scatterSeries).max = j;
         chartView.axisY(scatterSeries).max = 1000;
     }
