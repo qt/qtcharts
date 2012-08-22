@@ -48,20 +48,14 @@ QRectF LineChartItem::boundingRect() const
 
 QPainterPath LineChartItem::shape() const
 {
-    // Increase the size of the path slightly to make mouse interactions more natural
-    QPainterPathStroker s;
-    s.setCapStyle(Qt::RoundCap);
-    s.setJoinStyle(Qt::RoundJoin);
-    qreal spacing = qMax(mouseEventMinWidth, (qreal) m_linePen.width());
-    s.setWidth(spacing);
-    return s.createStroke(m_path);
+    return m_path;
 }
 
 void LineChartItem::updateGeometry()
 {
-    const QVector<QPointF>& points = geometryPoints();
+    m_points = geometryPoints();
 
-    if(points.size()==0)
+    if(m_points.size()==0)
     {
         prepareGeometryChange();
         m_path = QPainterPath();
@@ -69,24 +63,32 @@ void LineChartItem::updateGeometry()
         return;
     }
 
-    QPainterPath linePath(points.at(0));
+    QPainterPath linePath(m_points.at(0));
 
-    for(int i=1; i< points.size();i++) {
-        linePath.lineTo(points.at(i));
+    if(m_pointsVisible) {
+
+        int size = m_linePen.width();
+        linePath.addEllipse(m_points.at(0),size,size);
+        for(int i=1; i< m_points.size();i++) {
+            linePath.lineTo(m_points.at(i));
+            linePath.addEllipse(m_points.at(i),size,size);
+        }
+
+    } else {
+
+        for(int i=1; i< m_points.size();i++) {
+            linePath.lineTo(m_points.at(i));
+        }
     }
+
+    m_linePath=linePath;
+    QPainterPathStroker stroker;
+    stroker.setWidth(m_linePen.width());
 
     prepareGeometryChange();
 
-    m_path = linePath;
-
-    // When defining bounding rectangle,
-    // 1. take the line width into account (otherwise you will get drawing artifacts) and
-    // 2. take the shape into account (otherwise you will not get mouse events through on border
-    // areas).
-    const qreal sqrtOf2 = 1.414214;
-    const qreal spacing = qMax(mouseEventMinWidth / 2.0,
-                               sqrtOf2 * (qreal) m_linePen.width() / 2.0);
-    m_rect = m_path.boundingRect().adjusted(-spacing, -spacing, spacing, spacing);
+    m_path = stroker.createStroke(linePath);
+    m_rect = m_path.boundingRect();
 
     setPos(origin());
 }
@@ -96,8 +98,6 @@ void LineChartItem::handleUpdated()
     setVisible(m_series->isVisible());
     m_pointsVisible = m_series->pointsVisible();
     m_linePen = m_series->pen();
-    m_pointPen = m_series->pen();
-    m_pointPen.setWidthF(2*m_pointPen.width());
     update();
 }
 
@@ -106,19 +106,17 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget)
     Q_UNUSED(option)
 
-    painter->save();
     painter->setPen(m_linePen);
+    painter->setBrush(m_linePen.color());
     painter->setClipRect(clipRect());
-    // Draw lines
-    const QVector<QPointF> &points = geometryPoints();
-    for (int i(1); i < points.size();i++)
-        painter->drawLine(points.at(i-1), points.at(i));
-    // Draw points
-    if (m_pointsVisible){
-        painter->setPen(m_pointPen);
-        painter->drawPoints(geometryPoints());
+
+    if (m_pointsVisible) {
+        painter->drawPath(m_linePath);
     }
-    painter->restore();
+    else {
+        for (int i(1); i < m_points.size();i++)
+        painter->drawLine(m_points.at(i-1), m_points.at(i));
+    }
 }
 
 void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -64,9 +64,10 @@ protected:
 private:
     QLineSeries* m_series;
     QPainterPath m_path;
+    QPainterPath m_linePath;
+    QVector<QPointF> m_points;
     QRectF m_rect;
     QPen m_linePen;
-    QPen m_pointPen;
     bool m_pointsVisible;
 };
 
