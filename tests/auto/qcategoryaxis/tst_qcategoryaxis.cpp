@@ -19,7 +19,7 @@
  ****************************************************************************/
 
 #include "../qabstractaxis/tst_qabstractaxis.h"
-#include "qintervalsaxis.h"
+#include "qcategoryaxis.h"
 #include <qlineseries.h>
 
 class tst_QCategoryAxis: public tst_QAbstractAxis
@@ -33,8 +33,8 @@ public slots:
     void cleanup();
 
 private slots:
-    void qintervalsaxis_data();
-    void qintervalsaxis();
+    void qcategoryaxis_data();
+    void qcategoryaxis();
 
     void max_raw_data();
     void max_raw();
@@ -90,11 +90,11 @@ void tst_QCategoryAxis::cleanup()
     tst_QAbstractAxis::cleanup();
 }
 
-void tst_QCategoryAxis::qintervalsaxis_data()
+void tst_QCategoryAxis::qcategoryaxis_data()
 {
 }
 
-void tst_QCategoryAxis::qintervalsaxis()
+void tst_QCategoryAxis::qcategoryaxis()
 {
     qabstractaxis();
 
@@ -300,5 +300,5 @@ void tst_QCategoryAxis::interval()
 }
 
 QTEST_MAIN(tst_QCategoryAxis)
-#include "tst_qintervalsaxis.moc"
+#include "tst_qcategoryaxis.moc"
 

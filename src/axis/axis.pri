@@ -3,13 +3,13 @@
 INCLUDEPATH += $$PWD \
     $$PWD/valueaxis \
     $$PWD/barcategoryaxis \
-    $$PWD/intervalsaxis \
+    $$PWD/categoryaxis \
     $$PWD/datetimeaxis
 
 DEPENDPATH += $$PWD \
     $$PWD/valueaxis \
     $$PWD/barcategoryaxis \
-    $$PWD/intervalsaxis \
+    $$PWD/categoryaxis \
     $$PWD/datetimeaxis
 
 SOURCES += \
@@ -21,9 +21,9 @@ SOURCES += \
     $$PWD/barcategoryaxis/chartbarcategoryaxisx.cpp \
     $$PWD/barcategoryaxis/chartbarcategoryaxisy.cpp \
     $$PWD/barcategoryaxis/qbarcategoryaxis.cpp \
-    $$PWD/intervalsaxis/chartintervalsaxisx.cpp \
-    $$PWD/intervalsaxis/chartintervalsaxisy.cpp \
-    $$PWD/intervalsaxis/qintervalsaxis.cpp \
+    $$PWD/categoryaxis/chartcategoryaxisx.cpp \
+    $$PWD/categoryaxis/chartcategoryaxisy.cpp \
+    $$PWD/categoryaxis/qcategoryaxis.cpp \
     $$PWD/datetimeaxis/chartdatetimeaxisx.cpp \
     $$PWD/datetimeaxis/chartdatetimeaxisy.cpp \
     $$PWD/datetimeaxis/qdatetimeaxis.cpp
@@ -37,9 +37,9 @@ PRIVATE_HEADERS += \
     $$PWD/barcategoryaxis/chartbarcategoryaxisx_p.h \
     $$PWD/barcategoryaxis/chartbarcategoryaxisy_p.h \
     $$PWD/barcategoryaxis/qbarcategoryaxis_p.h \
-    $$PWD/intervalsaxis/chartintervalsaxisx_p.h \
-    $$PWD/intervalsaxis/chartintervalsaxisy_p.h \
-    $$PWD/intervalsaxis/qintervalsaxis_p.h \
+    $$PWD/categoryaxis/chartcategoryaxisx_p.h \
+    $$PWD/categoryaxis/chartcategoryaxisy_p.h \
+    $$PWD/categoryaxis/qcategoryaxis_p.h \
     $$PWD/datetimeaxis/chartdatetimeaxisx_p.h \
     $$PWD/datetimeaxis/chartdatetimeaxisy_p.h \
     $$PWD/datetimeaxis/qdatetimeaxis_p.h
@@ -48,5 +48,5 @@ PUBLIC_HEADERS += \
     $$PWD/qabstractaxis.h \
     $$PWD/valueaxis/qvalueaxis.h \
     $$PWD/barcategoryaxis/qbarcategoryaxis.h \
-    $$PWD/intervalsaxis/qintervalsaxis.h \
+    $$PWD/categoryaxis/qcategoryaxis.h \
     $$PWD/datetimeaxis/qdatetimeaxis.h

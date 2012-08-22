@@ -18,10 +18,10 @@
 **
 ****************************************************************************/
 
-#include "qintervalsaxis.h"
-#include "qintervalsaxis_p.h"
-#include "chartintervalsaxisx_p.h"
-#include "chartintervalsaxisy_p.h"
+#include "qcategoryaxis.h"
+#include "qcategoryaxis_p.h"
+#include "chartcategoryaxisx_p.h"
+#include "chartcategoryaxisy_p.h"
 #include <qmath.h>
 #include <QDebug>
 
@@ -33,15 +33,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlclass Axis QCategoryAxis
+    \qmlclass CategoryAxis QCategoryAxis
     \brief The Axis element is used for manipulating chart's axes.
-
-    Axis can be setup to show axis line with tick marks, grid lines and shades.
-
-    To access Axes you can use ChartView API. For example:
-    \code
-    // TODO :)
-    \endcode
 */
 
 /*!
@@ -237,13 +230,13 @@ ChartAxis* QCategoryAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QCategoryAxis);
     if(m_orientation == Qt::Vertical){
-        return new ChartIntervalAxisY(q,presenter);
+        return new ChartCategoryAxisY(q,presenter);
     }else{
-        return new ChartIntervalAxisX(q,presenter);
+        return new ChartCategoryAxisX(q,presenter);
     }
 }
 
-#include "moc_qintervalsaxis.cpp"
-#include "moc_qintervalsaxis_p.cpp"
+#include "moc_qcategoryaxis.cpp"
+#include "moc_qcategoryaxis_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -23,7 +23,7 @@
 #include "qvalueaxis.h"
 #include "qbarcategoryaxis.h"
 #include "qvalueaxis_p.h"
-#include "qintervalsaxis.h"
+#include "qcategoryaxis.h"
 #include "qdatetimeaxis.h"
 #include "qabstractseries_p.h"
 #include "qabstractbarseries.h"

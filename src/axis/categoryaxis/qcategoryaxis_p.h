@@ -27,32 +27,44 @@
 //
 // We mean it.
 
-#ifndef CHARTINTERVALAXISY_H
-#define CHARTINTERVALAXISY_H
+#ifndef QCATEGORYAXIS_P_H
+#define QCATEGORYAXIS_P_H
 
-#include "chartaxis_p.h"
+#include "qcategoryaxis.h"
+#include "qvalueaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAbstractAxis;
-class ChartPresenter;
+typedef QPair<qreal, qreal> Range;
 
-class ChartIntervalAxisY : public ChartAxis
+class QCategoryAxisPrivate : public QValueAxisPrivate
 {
+    Q_OBJECT
+
 public:
-    ChartIntervalAxisY(QAbstractAxis *axis, ChartPresenter *presenter);
-    ~ChartIntervalAxisY();
+    QCategoryAxisPrivate(QCategoryAxis *q);
+    ~QCategoryAxisPrivate();
 
-    AxisType axisType() const { return Y_AXIS;}
 
-protected:
-    QVector<qreal> calculateLayout() const;
-    void updateGeometry();
+public:
+    ChartAxis* createGraphics(ChartPresenter* presenter);
+    int ticksCount() const;
 
-Q_SLOTS
-    void handleAxisUpdated();
+Q_SIGNALS:
+    void changed(qreal min, qreal max, int tickCount,bool niceNumbers);
+
+public Q_SLOTS:
+    void handleAxisRangeChanged(qreal min, qreal max,int count);
+
+private:
+    QMap<QString , Range> m_intervalsMap;
+    QStringList m_intervals;
+    qreal m_categoryMinimum;
+
+private:
+    Q_DECLARE_PUBLIC(QCategoryAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTINTERVALAXISY_H */
+#endif // QCATEGORYAXIS_P_H

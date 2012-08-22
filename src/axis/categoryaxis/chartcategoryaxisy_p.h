@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef CHARTINTERVALAXISX_H
-#define CHARTINTERVALAXISX_H
+#ifndef CHARTINTERVALAXISY_H
+#define CHARTINTERVALAXISY_H
 
 #include "chartaxis_p.h"
 
@@ -37,22 +37,22 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QAbstractAxis;
 class ChartPresenter;
 
-class ChartIntervalAxisX : public ChartAxis
+class ChartCategoryAxisY : public ChartAxis
 {
 public:
-    ChartIntervalAxisX(QAbstractAxis *axis, ChartPresenter *presenter);
-    ~ChartIntervalAxisX();
+    ChartCategoryAxisY(QAbstractAxis *axis, ChartPresenter *presenter);
+    ~ChartCategoryAxisY();
 
-    AxisType axisType() const { return X_AXIS;}
+    AxisType axisType() const { return Y_AXIS;}
 
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
 
-    Q_SLOTS
+Q_SLOTS
     void handleAxisUpdated();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTINTERVALAXISX_H */
+#endif /* CHARTINTERVALAXISY_H */
