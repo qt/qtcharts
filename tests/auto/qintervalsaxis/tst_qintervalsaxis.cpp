@@ -22,7 +22,7 @@
 #include "qintervalsaxis.h"
 #include <qlineseries.h>
 
-class tst_QIntervalsAxis: public tst_QAbstractAxis
+class tst_QCategoryAxis: public tst_QAbstractAxis
 {
 Q_OBJECT
 
@@ -59,21 +59,21 @@ private slots:
     void interval();
 
 private:
-    QIntervalsAxis* m_intervalsaxis;
+    QCategoryAxis* m_intervalsaxis;
     QLineSeries* m_series;
 };
 
-void tst_QIntervalsAxis::initTestCase()
+void tst_QCategoryAxis::initTestCase()
 {
 }
 
-void tst_QIntervalsAxis::cleanupTestCase()
+void tst_QCategoryAxis::cleanupTestCase()
 {
 }
 
-void tst_QIntervalsAxis::init()
+void tst_QCategoryAxis::init()
 {
-    m_intervalsaxis = new QIntervalsAxis();
+    m_intervalsaxis = new QCategoryAxis();
     m_series = new QLineSeries();
     *m_series << QPointF(-100, -100) << QPointF(0, 0) << QPointF(100, 100);
     tst_QAbstractAxis::init(m_intervalsaxis, m_series);
@@ -81,7 +81,7 @@ void tst_QIntervalsAxis::init()
     m_chart->createDefaultAxes();
 }
 
-void tst_QIntervalsAxis::cleanup()
+void tst_QCategoryAxis::cleanup()
 {
     delete m_series;
     delete m_intervalsaxis;
@@ -90,11 +90,11 @@ void tst_QIntervalsAxis::cleanup()
     tst_QAbstractAxis::cleanup();
 }
 
-void tst_QIntervalsAxis::qintervalsaxis_data()
+void tst_QCategoryAxis::qintervalsaxis_data()
 {
 }
 
-void tst_QIntervalsAxis::qintervalsaxis()
+void tst_QCategoryAxis::qintervalsaxis()
 {
     qabstractaxis();
 
@@ -110,7 +110,7 @@ void tst_QIntervalsAxis::qintervalsaxis()
     QVERIFY(!qFuzzyIsNull(m_intervalsaxis->min()));
 }
 
-void tst_QIntervalsAxis::max_raw_data()
+void tst_QCategoryAxis::max_raw_data()
 {
     QTest::addColumn<qreal>("max");
     QTest::newRow("1.0") << 1.0;
@@ -118,7 +118,7 @@ void tst_QIntervalsAxis::max_raw_data()
     QTest::newRow("101.0") << 101.0;
 }
 
-void tst_QIntervalsAxis::max_raw()
+void tst_QCategoryAxis::max_raw()
 {
     QFETCH(qreal, max);
 
@@ -134,12 +134,12 @@ void tst_QIntervalsAxis::max_raw()
     QCOMPARE(spy2.count(), 1);
 }
 
-void tst_QIntervalsAxis::max_data()
+void tst_QCategoryAxis::max_data()
 {
     max_raw_data();
 }
 
-void tst_QIntervalsAxis::max()
+void tst_QCategoryAxis::max()
 {
     m_chart->setAxisX(m_intervalsaxis, m_series);
     m_view->show();
@@ -147,18 +147,18 @@ void tst_QIntervalsAxis::max()
     max_raw();
 }
 
-void tst_QIntervalsAxis::max_animation_data()
+void tst_QCategoryAxis::max_animation_data()
 {
     max_data();
 }
 
-void tst_QIntervalsAxis::max_animation()
+void tst_QCategoryAxis::max_animation()
 {
     m_chart->setAnimationOptions(QChart::GridAxisAnimations);
     max();
 }
 
-void tst_QIntervalsAxis::min_raw_data()
+void tst_QCategoryAxis::min_raw_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::newRow("-1.0") << -1.0;
@@ -166,7 +166,7 @@ void tst_QIntervalsAxis::min_raw_data()
     QTest::newRow("-101.0") << -101.0;
 }
 
-void tst_QIntervalsAxis::min_raw()
+void tst_QCategoryAxis::min_raw()
 {
     QFETCH(qreal, min);
 
@@ -182,12 +182,12 @@ void tst_QIntervalsAxis::min_raw()
     QCOMPARE(spy2.count(), 1);
 }
 
-void tst_QIntervalsAxis::min_data()
+void tst_QCategoryAxis::min_data()
 {
     min_raw_data();
 }
 
-void tst_QIntervalsAxis::min()
+void tst_QCategoryAxis::min()
 {
     m_chart->setAxisX(m_intervalsaxis, m_series);
     m_view->show();
@@ -195,18 +195,18 @@ void tst_QIntervalsAxis::min()
     min_raw();
 }
 
-void tst_QIntervalsAxis::min_animation_data()
+void tst_QCategoryAxis::min_animation_data()
 {
     min_data();
 }
 
-void tst_QIntervalsAxis::min_animation()
+void tst_QCategoryAxis::min_animation()
 {
     m_chart->setAnimationOptions(QChart::GridAxisAnimations);
     min();
 }
 
-void tst_QIntervalsAxis::range_raw_data()
+void tst_QCategoryAxis::range_raw_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::addColumn<qreal>("max");
@@ -215,7 +215,7 @@ void tst_QIntervalsAxis::range_raw_data()
     QTest::newRow("101.0") << 40.0 << 60.0;
 }
 
-void tst_QIntervalsAxis::range_raw()
+void tst_QCategoryAxis::range_raw()
 {
     QFETCH(qreal, min);
     QFETCH(qreal, max);
@@ -233,12 +233,12 @@ void tst_QIntervalsAxis::range_raw()
     QCOMPARE(spy2.count(), 1);
 }
 
-void tst_QIntervalsAxis::range_data()
+void tst_QCategoryAxis::range_data()
 {
     range_raw_data();
 }
 
-void tst_QIntervalsAxis::range()
+void tst_QCategoryAxis::range()
 {
     m_chart->setAxisX(m_intervalsaxis, m_series);
     m_view->show();
@@ -246,23 +246,23 @@ void tst_QIntervalsAxis::range()
     range_raw();
 }
 
-void tst_QIntervalsAxis::range_animation_data()
+void tst_QCategoryAxis::range_animation_data()
 {
     range_data();
 }
 
-void tst_QIntervalsAxis::range_animation()
+void tst_QCategoryAxis::range_animation()
 {
     m_chart->setAnimationOptions(QChart::GridAxisAnimations);
     range();
 }
 
-void tst_QIntervalsAxis::interval_data()
+void tst_QCategoryAxis::interval_data()
 {
     //
 }
 
-void tst_QIntervalsAxis::interval()
+void tst_QCategoryAxis::interval()
 {
     // append one correct interval
     m_intervalsaxis->append("first", (qreal)45);
@@ -299,6 +299,6 @@ void tst_QIntervalsAxis::interval()
     QCOMPARE(m_intervalsaxis->intervalMax("replaced"), (qreal)75);
 }
 
-QTEST_MAIN(tst_QIntervalsAxis)
+QTEST_MAIN(tst_QCategoryAxis)
 #include "tst_qintervalsaxis.moc"
 

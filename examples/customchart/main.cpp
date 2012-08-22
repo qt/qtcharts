@@ -22,7 +22,7 @@
 #include <QMainWindow>
 #include <QChartView>
 #include <QLineSeries>
-#include <QIntervalsAxis>
+#include <QCategoryAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -62,8 +62,8 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QIntervalsAxis* axisX = new QIntervalsAxis();
-    QIntervalsAxis* axisY = new QIntervalsAxis();
+    QCategoryAxis* axisX = new QCategoryAxis();
+    QCategoryAxis* axisY = new QCategoryAxis();
 
     // Customize axis label font
     QFont labelsFont;

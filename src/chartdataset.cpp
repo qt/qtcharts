@@ -185,7 +185,7 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type, Qt::Orient
         axis = new QBarCategoryAxis(this);
         break;
     case QAbstractAxis::AxisTypeIntervals:
-        axis = new QIntervalsAxis(this);
+        axis = new QCategoryAxis(this);
         break;
     case QAbstractAxis::AxisTypeDateTime:
         axis = new QDateTimeAxis(this);

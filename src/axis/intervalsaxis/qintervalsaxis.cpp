@@ -27,13 +27,13 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
-    \class QIntervalsAxis
-    \brief The QIntervalsAxis class is used for manipulating chart's axis.
+    \class QCategoryAxis
+    \brief The QCategoryAxis class is used for manipulating chart's axis.
     \mainclass
 */
 
 /*!
-    \qmlclass Axis QIntervalsAxis
+    \qmlclass Axis QCategoryAxis
     \brief The Axis element is used for manipulating chart's axes.
 
     Axis can be setup to show axis line with tick marks, grid lines and shades.
@@ -47,15 +47,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs an axis object which is a child of \a parent.
 */
-QIntervalsAxis::QIntervalsAxis(QObject *parent):
-    QValueAxis(*new QIntervalsAxisPrivate(this),parent)
+QCategoryAxis::QCategoryAxis(QObject *parent):
+    QValueAxis(*new QCategoryAxisPrivate(this),parent)
 {
 }
 
 /*!
     Destroys the object
 */
-QIntervalsAxis::~QIntervalsAxis()
+QCategoryAxis::~QCategoryAxis()
 {
     //    Q_D(QValueAxis);
     //    if(d->m_dataset) {
@@ -66,7 +66,7 @@ QIntervalsAxis::~QIntervalsAxis()
 /*!
     \internal
 */
-QIntervalsAxis::QIntervalsAxis(QIntervalsAxisPrivate &d,QObject *parent):QValueAxis(d,parent)
+QCategoryAxis::QCategoryAxis(QCategoryAxisPrivate &d,QObject *parent):QValueAxis(d,parent)
 {
 
 }
@@ -78,9 +78,9 @@ QIntervalsAxis::QIntervalsAxis(QIntervalsAxisPrivate &d,QObject *parent):QValueA
     It has to be greater than the high end limit of the previous interval.
     Otherwise the method returns without adding a new interval.
 */
-void QIntervalsAxis::append(const QString& intervalLabel, qreal intervalEnd)
+void QCategoryAxis::append(const QString& intervalLabel, qreal intervalEnd)
 {
-    Q_D(QIntervalsAxis);
+    Q_D(QCategoryAxis);
 
     if (!d->m_intervals.contains(intervalLabel))
     {
@@ -99,9 +99,9 @@ void QIntervalsAxis::append(const QString& intervalLabel, qreal intervalEnd)
 /*!
     Sets to \a min the low end limit of the first interval on the axis.
 */
-void QIntervalsAxis::setFisrtIntervalMinimum(qreal min)
+void QCategoryAxis::setFisrtIntervalMinimum(qreal min)
 {
-    Q_D(QIntervalsAxis);
+    Q_D(QCategoryAxis);
     if(d->m_intervals.isEmpty()){
         d->m_categoryMinimum = min;
     }else{
@@ -113,27 +113,27 @@ void QIntervalsAxis::setFisrtIntervalMinimum(qreal min)
 /*!
     Returns the low end limit of the interval specified by an \a intervalLabel
 */
-qreal QIntervalsAxis::intervalMin(const QString& intervalLabel) const
+qreal QCategoryAxis::intervalMin(const QString& intervalLabel) const
 {
-    Q_D(const QIntervalsAxis);
+    Q_D(const QCategoryAxis);
     return d->m_intervalsMap.value(intervalLabel).first;
 }
 
 /*!
     Returns the high end limit of the interval specified by an \a intervalLabel
 */
-qreal QIntervalsAxis::intervalMax(const QString& intervalLabel) const
+qreal QCategoryAxis::intervalMax(const QString& intervalLabel) const
 {
-    Q_D(const QIntervalsAxis);
+    Q_D(const QCategoryAxis);
     return d->m_intervalsMap.value(intervalLabel).second;
 }
 
 /*!
     Removes an interval specified by the \a intervalLabel from the axis
 */
-void QIntervalsAxis::remove(const QString &intervalLabel)
+void QCategoryAxis::remove(const QString &intervalLabel)
 {
-    Q_D(QIntervalsAxis);
+    Q_D(QCategoryAxis);
     int labelIndex = d->m_intervals.indexOf(intervalLabel);
 
     // check if such label exists
@@ -163,9 +163,9 @@ void QIntervalsAxis::remove(const QString &intervalLabel)
   Replaces \a oldLabel of an existing interval with a \a newLabel
   If the old label does not exist the method returns without making any changes.
  */
-void QIntervalsAxis::replaceLabel(const QString& oldLabel, const QString& newLabel)
+void QCategoryAxis::replaceLabel(const QString& oldLabel, const QString& newLabel)
 {
-    Q_D(QIntervalsAxis);
+    Q_D(QCategoryAxis);
     int labelIndex = d->m_intervals.indexOf(oldLabel);
 
     // check if such label exists
@@ -182,49 +182,49 @@ void QIntervalsAxis::replaceLabel(const QString& oldLabel, const QString& newLab
 /*!
   Returns the list of the intervals labels
  */
-QStringList QIntervalsAxis::intervalsLabels()
+QStringList QCategoryAxis::intervalsLabels()
 {
-    Q_D(QIntervalsAxis);
+    Q_D(QCategoryAxis);
     return d->m_intervals;
 }
 
 /*!
   Returns number of intervals.
  */
-int QIntervalsAxis::count() const
+int QCategoryAxis::count() const
 {
-    Q_D(const QIntervalsAxis);
+    Q_D(const QCategoryAxis);
     return d->m_intervals.count();
 }
 
 /*!
   Returns the type of the axis
 */
-QAbstractAxis::AxisType QIntervalsAxis::type() const
+QAbstractAxis::AxisType QCategoryAxis::type() const
 {
     return QAbstractAxis::AxisTypeIntervals;
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QIntervalsAxisPrivate::QIntervalsAxisPrivate(QIntervalsAxis* q):
+QCategoryAxisPrivate::QCategoryAxisPrivate(QCategoryAxis* q):
     QValueAxisPrivate(q),
     m_categoryMinimum(0)
 {
 
 }
 
-QIntervalsAxisPrivate::~QIntervalsAxisPrivate()
+QCategoryAxisPrivate::~QCategoryAxisPrivate()
 {
 
 }
 
-int QIntervalsAxisPrivate::ticksCount() const
+int QCategoryAxisPrivate::ticksCount() const
 {
     return m_intervals.count() + 1;
 }
 
-void QIntervalsAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
+void QCategoryAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
 {
     Q_UNUSED(count);
     Q_UNUSED(min);
@@ -233,9 +233,9 @@ void QIntervalsAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int coun
     //m_max = max;
 }
 
-ChartAxis* QIntervalsAxisPrivate::createGraphics(ChartPresenter* presenter)
+ChartAxis* QCategoryAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
-    Q_Q(QIntervalsAxis);
+    Q_Q(QCategoryAxis);
     if(m_orientation == Qt::Vertical){
         return new ChartIntervalAxisY(q,presenter);
     }else{

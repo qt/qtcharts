@@ -41,7 +41,7 @@ ChartIntervalAxisY::~ChartIntervalAxisY()
 
 QVector<qreal> ChartIntervalAxisY::calculateLayout() const
 {
-    QIntervalsAxis *axis = qobject_cast<QIntervalsAxis *>(m_chartAxis);
+    QCategoryAxis *axis = qobject_cast<QCategoryAxis *>(m_chartAxis);
     int tickCount = axis->intervalsLabels().count() + 1;
     QVector<qreal> points;
 
@@ -71,7 +71,7 @@ void ChartIntervalAxisY::updateGeometry()
 
     if(layout.isEmpty()) return;
 
-    QIntervalsAxis *intervalAxis = qobject_cast<QIntervalsAxis *>(m_chartAxis);
+    QCategoryAxis *intervalAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
 
     QStringList ticksList = intervalAxis->intervalsLabels();
 

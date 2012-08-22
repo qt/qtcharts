@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QIntervalsAxis_P_H
-#define QIntervalsAxis_P_H
+#ifndef QCATEGORYAXIS_P_H
+#define QCATEGORYAXIS_P_H
 
 #include "qintervalsaxis.h"
 #include "qvalueaxis_p.h"
@@ -37,13 +37,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 typedef QPair<qreal, qreal> Range;
 
-class QIntervalsAxisPrivate : public QValueAxisPrivate
+class QCategoryAxisPrivate : public QValueAxisPrivate
 {
     Q_OBJECT
 
 public:
-    QIntervalsAxisPrivate(QIntervalsAxis *q);
-    ~QIntervalsAxisPrivate();
+    QCategoryAxisPrivate(QCategoryAxis *q);
+    ~QCategoryAxisPrivate();
 
 
 public:
@@ -62,9 +62,9 @@ private:
     qreal m_categoryMinimum;
 
 private:
-    Q_DECLARE_PUBLIC(QIntervalsAxis)
+    Q_DECLARE_PUBLIC(QCategoryAxis)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QCATEGORIESAXIS_P_H
+#endif // QCATEGORYAXIS_P_H
