@@ -41,7 +41,7 @@
 #include <QGroupBox>
 #include <QLabel>
 #include <QTime>
-#include <QBarCategoriesAxis>
+#include <QBarCategoryAxis>
 
 ThemeWidget::ThemeWidget(QWidget* parent) :
     QWidget(parent),

@@ -25,7 +25,7 @@
 #include <qmath.h>
 #include <QBarSeries>
 #include <QBarSet>
-#include <QBarCategoriesAxis>
+#include <QBarCategoryAxis>
 #include <QLineSeries>
 #include <QHorizontalBarSeries>
 

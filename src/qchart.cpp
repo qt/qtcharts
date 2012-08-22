@@ -339,7 +339,7 @@ QAbstractAxis* QChart::axisY(QAbstractSeries *series) const
          \o QValueAxis
      \row
          \o QBarSeries
-         \o QBarCategoriesAxis
+         \o QBarCategoryAxis
          \o QValueAxis
      \row
          \o QPieSeries

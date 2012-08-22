@@ -28,8 +28,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
-    \class QBarCategoriesAxis
-    \brief The QBarCategoriesAxis class is used for manipulating chart's axis.
+    \class QBarCategoryAxis
+    \brief The QBarCategoryAxis class is used for manipulating chart's axis.
     \mainclass
 
     BarCategoriesAxis can be setup to show axis line with tick marks, grid lines and shades.
@@ -38,7 +38,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlclass BarCategoriesAxis QBarCategoriesAxis
+    \qmlclass BarCategoriesAxis QBarCategoryAxis
     \brief The Axis element is used for manipulating chart's axes.
 
     Axis can be setup to show axis line with tick marks, grid lines and shades.
@@ -57,7 +57,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QBarCategoriesAxis::categories
+  \property QBarCategoryAxis::categories
   Defines the categories of axis
 */
 /*!
@@ -66,7 +66,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QBarCategoriesAxis::min
+  \property QBarCategoryAxis::min
   Defines the minimum value on the axis.
 */
 /*!
@@ -75,7 +75,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QBarCategoriesAxis::max
+  \property QBarCategoryAxis::max
   Defines the maximum value on the axis.
 */
 /*!
@@ -85,11 +85,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
 /*!
-  \fn void QBarCategoriesAxis::categoriesChanged()
+  \fn void QBarCategoryAxis::categoriesChanged()
   Axis emits signal when the categories of the axis has changed.
 */
 /*!
-  \fn void QBarCategoriesAxis::minChanged(const QString &min)
+  \fn void QBarCategoryAxis::minChanged(const QString &min)
   Axis emits signal when \a min of axis has changed.
 */
 /*!
@@ -98,7 +98,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QBarCategoriesAxis::maxChanged(const QString &max)
+  \fn void QBarCategoryAxis::maxChanged(const QString &max)
   Axis emits signal when \a max of axis has changed.
 */
 /*!
@@ -107,7 +107,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QBarCategoriesAxis::rangeChanged(const QString &min, const QString &max)
+  \fn void QBarCategoryAxis::rangeChanged(const QString &min, const QString &max)
   Axis emits signal when \a min or \a max of axis has changed.
 */
 

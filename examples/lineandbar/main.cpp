@@ -25,7 +25,7 @@
 #include <QBarSet>
 #include <QLineSeries>
 #include <QLegend>
-#include <QBarCategoriesAxis>
+#include <QBarCategoryAxis>
 #include <QValueAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
