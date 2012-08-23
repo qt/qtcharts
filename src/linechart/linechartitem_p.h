@@ -52,7 +52,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
-    QPainterPath path() const { return m_path; }
+    QPainterPath path() const { return m_linePath; }
 
 public Q_SLOTS:
     void handleUpdated();
