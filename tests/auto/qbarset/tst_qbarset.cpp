@@ -443,8 +443,8 @@ void tst_QBarSet::customize()
     *set2 << 2 << 1 << 3 << 1;
 
     // Remove sets from series
-    series->remove(set1);
-    series->remove(set2);
+    series->take(set1);
+    series->take(set2);
 
     // Test pen
     QVERIFY(set1->pen() != QPen());
@@ -460,8 +460,8 @@ void tst_QBarSet::customize()
     QVERIFY(set2->pen() != QPen());   // Should be decorated by theme
 
     // Remove sets from series
-    series->remove(set1);
-    series->remove(set2);
+    series->take(set1);
+    series->take(set2);
 
     // Test brush
     set2->setBrush(QBrush());
@@ -478,8 +478,8 @@ void tst_QBarSet::customize()
     QVERIFY(set2->brush() != QBrush()); // Should be decorated by theme
 
     // Remove sets from series
-    series->remove(set1);
-    series->remove(set2);
+    series->take(set1);
+    series->take(set2);
 
     // Test label brush
     set2->setLabelBrush(QBrush());
