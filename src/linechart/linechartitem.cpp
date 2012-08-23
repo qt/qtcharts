@@ -83,7 +83,10 @@ void LineChartItem::updateGeometry()
 
     m_linePath=linePath;
     QPainterPathStroker stroker;
-    stroker.setWidth(m_linePen.width());
+    stroker.setWidth(m_linePen.width()*1.42);
+    stroker.setJoinStyle(m_linePen.joinStyle());
+    stroker.setCapStyle(m_linePen.capStyle());
+    stroker.setMiterLimit(m_linePen.miterLimit());
 
     prepareGeometryChange();
 
@@ -107,6 +110,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(option)
 
     painter->setPen(m_linePen);
+
     painter->setBrush(m_linePen.color());
     painter->setClipRect(clipRect());
 
