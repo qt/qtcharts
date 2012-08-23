@@ -81,11 +81,15 @@ void LineChartItem::updateGeometry()
         }
     }
 
-    m_linePath=linePath;
+    m_linePath = linePath;
+
     QPainterPathStroker stroker;
-    stroker.setWidth(m_linePen.width()*1.42);
-    stroker.setJoinStyle(m_linePen.joinStyle());
-    stroker.setCapStyle(m_linePen.capStyle());
+    // QPainter::drawLine does not respect join styles, for example BevelJoin becomes MiterJoin.
+    // This is why we are prepared for the "worst case" scenario, i.e. use always MiterJoin and
+    // multiply line width with square root of two when defining shape and bounding rectangle.
+    stroker.setWidth(m_linePen.width() * 1.42);
+    stroker.setJoinStyle(Qt::MiterJoin);
+    stroker.setCapStyle(Qt::SquareCap);
     stroker.setMiterLimit(m_linePen.miterLimit());
 
     prepareGeometryChange();
@@ -109,6 +113,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget)
     Q_UNUSED(option)
 
+
     painter->setPen(m_linePen);
 
     painter->setBrush(m_linePen.color());
@@ -119,7 +124,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     }
     else {
         for (int i(1); i < m_points.size();i++)
-        painter->drawLine(m_points.at(i-1), m_points.at(i));
+            painter->drawLine(m_points.at(i-1), m_points.at(i));
     }
 }
 
