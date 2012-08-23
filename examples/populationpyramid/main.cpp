@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
     QBarCategoryAxis* axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->setAxisY(axis,series);
+    chart->axisX(series)->setRange(-210000,210000);
 //![4]
 
 //![5]

@@ -51,7 +51,7 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
         qreal y = endVector[i].topLeft().y() + endVector[i].height() - h;
 
         QRectF value(x,y,w,h);
-        result << value;
+        result << value.normalized();
     }
     return qVariantFromValue(result);
 }

@@ -54,7 +54,7 @@ QVariant HorizontalPercentBarAnimation::interpolated(const QVariant &from, const
         qreal y = endVector[i].top();
 
         QRectF value(x,y,w,h);
-        result << value;
+        result << value.normalized();
     }
     return qVariantFromValue(result);
 }

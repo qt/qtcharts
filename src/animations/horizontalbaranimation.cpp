@@ -52,7 +52,7 @@ QVariant HorizontalBarAnimation::interpolated(const QVariant &from, const QVaria
         qreal y = endVector[i].top();
 
         QRectF value(x,y,w,h);
-        result << value;
+        result << value.normalized();
     }
     return qVariantFromValue(result);
 }
