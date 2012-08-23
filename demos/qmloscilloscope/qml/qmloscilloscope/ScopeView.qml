@@ -21,14 +21,21 @@
 import QtQuick 1.0
 import QtCommercial.Chart 1.0
 
+//![1]
 ChartView {
     id: chartView
     animationOptions: ChartView.NoAnimation
 
     ValueAxis {
-        id: axisY
+        id: axisY1
         min: -1
-        max: 3
+        max: 4
+    }
+
+    ValueAxis {
+        id: axisY2
+        min: -10
+        max: 5
     }
 
     ValueAxis {
@@ -41,15 +48,18 @@ ChartView {
         id: lineSeries1
         name: "signal 1"
         axisX: axisX
-        axisY: axisY
+        axisY: axisY1
     }
     LineSeries {
         id: lineSeries2
         name: "signal 2"
         axisX: axisX
-        axisY: axisY
+        axisY: axisY2
     }
+// ...
+//![1]
 
+    //![2]
     Timer {
         id: refreshTimer
         interval: 1 / 60 * 1000 // 60 Hz
@@ -60,6 +70,7 @@ ChartView {
             dataSource.update(chartView.series(1));
         }
     }
+    //![2]
 
     function changeSeriesType(type) {
         chartView.series(1).destroy();

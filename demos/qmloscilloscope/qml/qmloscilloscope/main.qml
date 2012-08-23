@@ -20,6 +20,7 @@
 
 import QtQuick 1.0
 
+//![1]
 Rectangle {
     id: main
     width: 400
@@ -32,6 +33,8 @@ Rectangle {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.leftMargin: 10
+// ...
+//![1]
 
         onSignalSourceChanged: {
             if (source == "sin")
@@ -45,6 +48,7 @@ Rectangle {
         onRefreshRateChanged: scopeView.changeRefreshRate(rate);
     }
 
+//![2]
     ScopeView {
         id: scopeView
         anchors.top: parent.top
@@ -53,4 +57,5 @@ Rectangle {
         anchors.left: controlPanel.right
         height: main.height
     }
+//![2]
 }

@@ -21,6 +21,7 @@
             <li><a href="demos-qmlweather.html">Qml Weather</a></li>
             <li><a href="demos-qmlf1legends.html">Qml F1 Legends</a></li>
             <li><a href="demos-qmlcustommodel.html">Qml Custom Model</a></li>
+            <li><a href="demos-qmloscilloscope.html">Qml Oscilloscope</a></li>
         </ul>
         </td>
         </tr>
