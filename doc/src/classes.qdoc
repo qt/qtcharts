@@ -35,6 +35,7 @@
                     <li><a href="qvalueaxis.html">QValueAxis</a></li>
                     <li><a href="qbarcategoryaxis.html">QBarCategoryAxis</a></li>                   
                     <li><a href="qcategoryaxis.html">QCategoryAxis</a></li>
+                    <li><a href="qdatetimeaxis.html">QDateTimeAxis</a></li>
                     <li><a href="qlegend.html">QLegend</a></li>
                     <li><a href="qabstractseries.html">QAbstractSeries</a></li>
                     <li><a href="qchartglobal.html">QChartGlobal</a></li>

@@ -113,9 +113,9 @@ void tst_QCategoryAxis::qcategoryaxis()
 void tst_QCategoryAxis::max_raw_data()
 {
     QTest::addColumn<qreal>("max");
-    QTest::newRow("1.0") << 1.0;
-    QTest::newRow("50.0") << 50.0;
-    QTest::newRow("101.0") << 101.0;
+    QTest::newRow("1.0") << (qreal)1.0;
+    QTest::newRow("50.0") << (qreal)50.0;
+    QTest::newRow("101.0") << (qreal)101.0;
 }
 
 void tst_QCategoryAxis::max_raw()
