@@ -23,8 +23,7 @@ import QtCommercial.Chart 1.0
 
 Rectangle {
     anchors.fill: parent
-    property int __explodedIndex: -1
-    property variant otherSlice: 0
+    property variant othersSlice: 0
 
     //![1]
     ChartView {
@@ -45,7 +44,7 @@ Rectangle {
 
     Component.onCompleted: {
         // You can also manipulate slices dynamically
-        otherSlice = pieSeries.append("Others", 52.0);
+        othersSlice = pieSeries.append("Others", 52.0);
         pieSeries.find("Volkswagen").exploded = true;
     }
     //![1]

@@ -24,7 +24,7 @@ import QtCommercial.Chart 1.0
 Rectangle {
     width: parent.width
     height: parent.height
-    property int viewNumber: 1
+    property int viewNumber: 12
 
     Loader {
         id: loader
@@ -74,7 +74,7 @@ Rectangle {
 
     function nextView() {
         var i = viewNumber + 1;
-        if (i > 11)
+        if (i > 12)
             viewNumber = 1;
         else
             viewNumber = i;
@@ -83,7 +83,7 @@ Rectangle {
     function previousView() {
         var i = viewNumber - 1;
         if (i <= 0)
-            viewNumber = 11;
+            viewNumber = 12;
         else
             viewNumber = i;
     }
