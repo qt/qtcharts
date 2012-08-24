@@ -31,6 +31,8 @@ class QGraphicsRectItem;
 class QGraphicsScene;
 class QGraphicsWidget;
 class View;
+class QGraphicsGridLayout;
+class Chart;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChart;
@@ -42,6 +44,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 class Window: public QMainWindow
 {
     Q_OBJECT
+    enum State{ NoState = 0, ZoomState, ScrollState};
 public:
     explicit Window(QWidget *parent = 0);
     ~Window();
@@ -55,12 +58,18 @@ private:
     void connectSignals();
     void createProxyWidgets();
     void comboBoxFocused(QComboBox *combox);
+    inline void checkAnimationOptions();
+    inline void checkLegend();
+    inline void checkOpenGL();
+    inline void checkTheme();
+    inline void checkState();
+    void showMenu(QChart * chart);
+    QAction* createMenuAction(QMenu *menu, const QIcon &icon, const QString &text, const QVariant &data);
 
 protected:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
-
 
 private:
     int m_listCount;
@@ -69,7 +78,7 @@ private:
     QGraphicsScene* m_scene;
     View* m_view;
     QHash<QString, QGraphicsProxyWidget*> m_widgetHash;
-    QList<QChart*> m_chartList;
+    QHash<QChart*, int> m_chartHash;
     DataTable m_dataTable;
 
     QGraphicsWidget *m_form;
@@ -82,11 +91,10 @@ private:
     QCheckBox *m_scrollCheckBox;
     QPoint m_origin;
     QGraphicsRectItem* m_rubberBand;
-
-    bool m_isScrolling;
-    bool m_isZooming;
-    bool m_scroll;
-    bool m_zoom;
+    QGraphicsGridLayout* m_baseLayout;
+    QMenu* m_menu;
+    State m_state;
+    State m_currentState;
 
     friend class ComboBox;
 };

@@ -34,6 +34,7 @@ protected:
     void resizeEvent(QResizeEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+
 private:
     QGraphicsWidget *m_form;
 };

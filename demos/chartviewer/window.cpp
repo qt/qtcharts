@@ -38,6 +38,7 @@
 #include <QGLWidget>
 #include <QApplication>
 #include <QDebug>
+#include <QMenu>
 
 Window::Window(QWidget* parent) :
     QMainWindow(parent),
@@ -56,16 +57,15 @@ Window::Window(QWidget* parent) :
     m_zoomCheckBox(0),
     m_scrollCheckBox(0),
     m_rubberBand(new QGraphicsRectItem()),
-    m_isScrolling(false),
-    m_isZooming(false),
-    m_scroll(false),
-    m_zoom(false)
+    m_baseLayout(new QGraphicsGridLayout()),
+    m_menu(new QMenu(this)),
+    m_state(NoState),
+    m_currentState(NoState)
 {
     createProxyWidgets();
     connectSignals();
 
     // create layout
-    QGraphicsGridLayout* baseLayout = new QGraphicsGridLayout();
     QGraphicsLinearLayout *settingsLayout = new QGraphicsLinearLayout();
     settingsLayout->setOrientation(Qt::Vertical);
     settingsLayout->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -80,19 +80,23 @@ Window::Window(QWidget* parent) :
     settingsLayout->addItem(m_widgetHash["scrollCheckBox"]);
     settingsLayout->addItem(m_widgetHash["zoomCheckBox"]);
     settingsLayout->addStretch();
-    baseLayout->addItem(settingsLayout, 0, 3, 2, 1);
+    m_baseLayout->addItem(settingsLayout, 0, 3, 2, 1);
+
     //create charts
     Charts::ChartList list = Charts::chartList();
 
-    for(int i = 0 ; i < 9 && i<list.size() ; ++i)
-    {
+    for (int i = 0; i < 9 && i < list.size(); ++i) {
         QChart* chart = list.at(i)->createChart(m_dataTable);
-        baseLayout->addItem(chart, i/3, i%3);
-        m_chartList << chart;
+        m_baseLayout->addItem(chart, i / 3, i % 3);
+        m_chartHash[chart] = i;
+    }
+
+    foreach(Chart* chart, list) {
+        createMenuAction(m_menu, QIcon(), chart->name(), qVariantFromValue((void *) chart));
     }
 
     m_form = new QGraphicsWidget();
-    m_form->setLayout(baseLayout);
+    m_form->setLayout(m_baseLayout);
     m_scene->addItem(m_form);
     m_scene->addItem(m_rubberBand);
     m_rubberBand->setVisible(false);
@@ -178,6 +182,32 @@ QComboBox* Window::createLegendBox()
 
 void Window::updateUI()
 {
+    checkOpenGL();
+    checkTheme();
+    checkAnimationOptions();
+    checkLegend();
+    checkState();
+}
+
+void Window::checkLegend()
+{
+    Qt::Alignment alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
+
+    if (!alignment) {
+        foreach (QChart *chart, m_chartHash.keys()) {
+            chart->legend()->hide();
+        }
+    }
+    else {
+        foreach (QChart *chart, m_chartHash.keys()) {
+            chart->legend()->setAlignment(alignment);
+            chart->legend()->show();
+        }
+    }
+}
+
+void Window::checkOpenGL()
+{
     bool opengl = m_openGLCheckBox->isChecked();
     bool isOpengl = qobject_cast<QGLWidget*>(m_view->viewport());
     if ((isOpengl && !opengl) || (!isOpengl && opengl)) {
@@ -187,10 +217,53 @@ void Window::updateUI()
         setCentralWidget(m_view);
     }
 
+    bool antialias = m_antialiasCheckBox->isChecked();
+
+       if (opengl)
+           m_view->setRenderHint(QPainter::HighQualityAntialiasing, antialias);
+       else
+           m_view->setRenderHint(QPainter::Antialiasing, antialias);
+}
+
+void Window::checkAnimationOptions()
+{
+    QChart::AnimationOptions options(
+           m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
+       if (!m_chartHash.isEmpty() && m_chartHash.keys().at(0)->animationOptions() != options) {
+           foreach (QChart *chart, m_chartHash.keys())
+               chart->setAnimationOptions(options);
+       }
+}
+
+void Window::checkState()
+{
+    bool scroll = m_scrollCheckBox->isChecked();
+
+    if (m_state != ScrollState && scroll) {
+        m_state = ScrollState;
+        m_zoomCheckBox->setChecked(false);
+    }
+    else if (!scroll && m_state == ScrollState) {
+        m_state = NoState;
+    }
+
+    bool zoom = m_zoomCheckBox->isChecked();
+
+    if (m_state != ZoomState && zoom) {
+        m_state = ZoomState;
+        m_scrollCheckBox->setChecked(false);
+    }
+    else if (!zoom && m_state == ZoomState) {
+        m_state = NoState;
+    }
+}
+
+void Window::checkTheme()
+{
     QChart::ChartTheme theme = (QChart::ChartTheme) m_themeComboBox->itemData(
         m_themeComboBox->currentIndex()).toInt();
 
-    foreach (QChart *chart, m_chartList)
+    foreach (QChart *chart, m_chartHash.keys())
         chart->setTheme(theme);
 
     QPalette pal = window()->palette();
@@ -231,51 +304,6 @@ void Window::updateUI()
     }
     m_view->setBackgroundBrush(pal.color((QPalette::Window)));
     m_rubberBand->setPen(pal.color((QPalette::WindowText)));
-
-    QChart::AnimationOptions options(
-        m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
-    if (!m_chartList.isEmpty() && m_chartList.at(0)->animationOptions() != options) {
-        foreach (QChart *chart, m_chartList)
-            chart->setAnimationOptions(options);
-    }
-
-    Qt::Alignment alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
-
-    if (!alignment) {
-        foreach (QChart *chart, m_chartList) {
-            chart->legend()->hide();
-        }
-    }
-    else {
-        foreach (QChart *chart, m_chartList) {
-            chart->legend()->setAlignment(alignment);
-            chart->legend()->show();
-        }
-    }
-
-    bool antialias = m_antialiasCheckBox->isChecked();
-
-    if (opengl)
-        m_view->setRenderHint(QPainter::HighQualityAntialiasing, antialias);
-    else
-        m_view->setRenderHint(QPainter::Antialiasing, antialias);
-
-    bool scroll = m_scrollCheckBox->isChecked();
-
-    if(!m_scroll & scroll){
-        m_scroll=true;
-        m_zoom=false;
-        m_zoomCheckBox->setChecked(false);
-    }
-
-    bool zoom = m_zoomCheckBox->isChecked();
-
-    if(!m_zoom & zoom){
-           m_scroll=false;
-           m_zoom=true;
-           m_scrollCheckBox->setChecked(false);
-    }
-
 }
 
 void Window::mousePressEvent(QMouseEvent *event)
@@ -283,56 +311,59 @@ void Window::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton) {
 
         m_origin = event->pos();
-        m_isScrolling = false;
-        m_isZooming = false;
+        m_currentState = NoState;
 
-        foreach (QChart *chart, m_chartList) {
+        foreach (QChart *chart, m_chartHash.keys()) {
 
             QRectF geometryRect = chart->geometry();
             QRectF plotArea = chart->plotArea();
             plotArea.translate(geometryRect.topLeft());
             if (plotArea.contains(m_origin)) {
-                m_isScrolling = m_scroll;
-                m_isZooming = m_zoom;
+                m_currentState = m_state;
+
+                if (m_currentState == NoState) {
+                    showMenu(chart);
+                }
                 break;
             }
         }
 
-        if (m_isZooming) {
+        if (m_currentState == ZoomState) {
             m_rubberBand->setRect(QRectF(m_origin, QSize()));
             m_rubberBand->setVisible(true);
         }
+
         event->accept();
     }
 
     if (event->button() == Qt::RightButton) {
         m_origin = event->pos();
-        m_isZooming = m_zoom;
+        m_currentState = m_state;
     }
 }
 
 void Window::mouseMoveEvent(QMouseEvent *event)
 {
-    if (m_isScrolling || m_isZooming) {
+    if ( m_currentState != NoState) {
 
-        foreach (QChart *chart, m_chartList) {
+        foreach (QChart *chart, m_chartHash.keys()) {
 
             QRectF geometryRect = chart->geometry();
             QRectF plotArea = chart->plotArea();
             plotArea.translate(geometryRect.topLeft());
 
             if (plotArea.contains(m_origin)) {
-                if (m_isScrolling) {
+                if (m_currentState == ScrollState) {
                     QPointF delta = m_origin - event->pos();
                     chart->scroll(delta.x(), -delta.y());
                 }
-                if (m_isZooming && plotArea.contains(event->pos())) {
+                if (m_currentState == ZoomState && plotArea.contains(event->pos())) {
                     m_rubberBand->setRect(QRectF(m_origin, event->pos()).normalized());
                 }
                 break;
             }
         }
-        if(m_isScrolling) m_origin = event->pos();
+        if(m_currentState == ScrollState) m_origin = event->pos();
         event->accept();
     }
 }
@@ -340,12 +371,10 @@ void Window::mouseMoveEvent(QMouseEvent *event)
 void Window::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
-        m_isScrolling = false;
-        if (m_isZooming) {
-            m_isZooming = false;
+        if (m_currentState == ZoomState) {
             m_rubberBand->setVisible(false);
 
-            foreach (QChart *chart, m_chartList) {
+            foreach (QChart *chart, m_chartHash.keys()) {
 
                 QRectF geometryRect = chart->geometry();
                 QRectF plotArea = chart->plotArea();
@@ -359,13 +388,15 @@ void Window::mouseReleaseEvent(QMouseEvent *event)
                 }
             }
         }
+
+        m_currentState = NoState;
         event->accept();
     }
 
     if (event->button() == Qt::RightButton) {
 
-        if (m_isZooming) {
-            foreach (QChart *chart, m_chartList) {
+        if (m_currentState == ZoomState) {
+            foreach (QChart *chart, m_chartHash.keys()) {
 
                 QRectF geometryRect = chart->geometry();
                 QRectF plotArea = chart->plotArea();
@@ -389,4 +420,31 @@ void Window::comboBoxFocused(QComboBox *combobox)
        else
         widget->setZValue(0.0);
     }
+}
+
+void Window::showMenu(QChart* qchart)
+{
+    QAction *chosen = m_menu->exec(QCursor::pos());
+
+    if (chosen) {
+        Chart* chart = (Chart *) chosen->data().value<void *>();
+        int index = m_chartHash[qchart];
+        m_baseLayout->removeItem(qchart);
+        m_chartHash.remove(qchart);
+        QChart* newChart = chart->createChart(m_dataTable);
+        m_baseLayout->addItem(newChart, index / 3, index % 3);
+        m_chartHash[newChart] = index;
+        delete qchart;
+        updateUI();
+    }
+
+}
+
+QAction* Window::createMenuAction(QMenu *menu, const QIcon &icon, const QString &text,
+    const QVariant &data)
+{
+    QAction *action = menu->addAction(icon, text);
+    action->setCheckable(false);
+    action->setData(data);
+    return action;
 }
