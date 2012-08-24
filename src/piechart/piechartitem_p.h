@@ -78,7 +78,7 @@ private:
     QRectF m_rect;
     QPointF m_pieCenter;
     qreal m_pieRadius;
-    qreal m_donutInnerRadius;
+    qreal m_holeSize;
     PieAnimation* m_animation;
 
 };

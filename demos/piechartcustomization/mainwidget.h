@@ -72,8 +72,7 @@ private:
     QDoubleSpinBox* m_sizeFactor;
     QDoubleSpinBox* m_startAngle;
     QDoubleSpinBox* m_endAngle;
-    QCheckBox* m_isDonut;
-    QDoubleSpinBox* m_donutInnerSize;
+    QDoubleSpinBox* m_holeSize;
 
     QLineEdit* m_sliceName;
     QDoubleSpinBox* m_sliceValue;

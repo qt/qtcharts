@@ -38,8 +38,8 @@ class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
     Q_PROPERTY(qreal endAngle READ pieEndAngle WRITE setPieEndAngle)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(qreal sum READ sum NOTIFY sumChanged)
-    Q_PROPERTY(qreal donutInnerSize READ donutInnerSize WRITE setDonutInnerSize)
-    Q_PROPERTY(bool donut READ donut WRITE setDonut)
+    Q_PROPERTY(qreal holeSize READ holeSize WRITE setHoleSize)
+//    Q_PROPERTY(bool donut READ donut WRITE setDonut)
 
 public:
     explicit QPieSeries(QObject *parent = 0);
@@ -65,11 +65,8 @@ public:
 
     qreal sum() const;
 
-    void setDonut(bool donut = true);
-    bool donut() const;
-
-    void setDonutInnerSize(qreal innerSize);
-    qreal donutInnerSize() const;
+    void setHoleSize(qreal holeSize);
+    qreal holeSize() const;
 
     void setHorizontalPosition(qreal relativePosition);
     qreal horizontalPosition() const;

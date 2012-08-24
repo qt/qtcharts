@@ -76,8 +76,7 @@ private:
     qreal m_pieStartAngle;
     qreal m_pieEndAngle;
     qreal m_sum;
-    bool m_donutChart;
-    qreal m_donutRelativeInnerSize;
+    qreal m_holeRelativeSize;
 
 private:
     friend class QLegendPrivate;

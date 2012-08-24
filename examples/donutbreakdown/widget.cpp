@@ -1,9 +1,10 @@
 #include "widget.h"
 #include <QGridLayout>
-
 #include <QPieSlice>
 #include <QTime>
 #include <QChartView>
+#include <QChart>
+#include <QLegend>
 #include <QTimer>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
@@ -18,7 +19,9 @@ Widget::Widget(QWidget *parent)
     //! [1]
     QChartView *chartView = new QChartView;
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->chart()->setAnimationOptions(QChart::AllAnimations);
+    QChart *chart = chartView->chart();
+    chart->setAnimationOptions(QChart::AllAnimations);
+    chart->legend()->setVisible(false);
     //! [1]
 
     //! [2]
@@ -35,8 +38,7 @@ Widget::Widget(QWidget *parent)
 
         // create a new detailed data for the slice
         QPieSeries *donut = new QPieSeries;
-        donut->setDonut();        
-        donut->setDonutInnerSize(mainData->pieSize());
+        donut->setHoleSize(mainData->pieSize());
         donut->setPieSize(mainData->pieSize() + 0.15);
 
         // when mainData slice is redrawn make sure the detailed data slices are aligned with it

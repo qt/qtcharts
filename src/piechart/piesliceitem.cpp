@@ -172,8 +172,8 @@ void PieSliceItem::updateGeometry()
     case QPieSlice::LabelInsideTangential:
     case QPieSlice::LabelInsideNormal:{
         QPointF textCenter;
-        if (m_data.m_donut)
-            textCenter = m_data.m_center + offset(centerAngle, m_data.m_innerRadius + (m_data.m_radius - m_data.m_innerRadius) / 2);
+        if (m_data.m_holeRadius > 0)
+            textCenter = m_data.m_center + offset(centerAngle, m_data.m_holeRadius + (m_data.m_radius - m_data.m_holeRadius) / 2);
         else
             textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
         m_labelTextRect.moveCenter(textCenter);
@@ -208,8 +208,8 @@ QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAn
 
     // slice path
     QPainterPath path;
-    if (m_data.m_donut) {
-        QRectF insideRect(center.x() - m_data.m_innerRadius, center.y()-m_data.m_innerRadius, m_data.m_innerRadius*2, m_data.m_innerRadius*2);
+    if (m_data.m_holeRadius > 0) {
+        QRectF insideRect(center.x() - m_data.m_holeRadius, center.y()-m_data.m_holeRadius, m_data.m_holeRadius*2, m_data.m_holeRadius*2);
         path.arcMoveTo(rect, -startAngle + 90);
         path.arcTo(rect, -startAngle + 90, -angleSpan);
         path.arcTo(insideRect, -startAngle + 90 - angleSpan, angleSpan);

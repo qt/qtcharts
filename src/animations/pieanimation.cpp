@@ -61,8 +61,8 @@ ChartAnimation* PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceDa
         startValue.m_startAngle = sliceData.m_startAngle + (sliceData.m_angleSpan / 2);
     startValue.m_angleSpan = 0;
 
-    if (sliceData.m_donut)
-        startValue.m_radius = sliceData.m_innerRadius;
+    if (sliceData.m_holeRadius > 0)
+        startValue.m_radius = sliceData.m_holeRadius;
 
     animation->setValue(startValue, sliceData);
     animation->setDuration(ChartAnimationDuration);
@@ -78,8 +78,8 @@ ChartAnimation* PieAnimation::removeSlice(PieSliceItem *sliceItem)
     animation->stop();
 
     PieSliceData endValue = animation->currentSliceValue();
-    if (endValue.m_donut)
-        endValue.m_radius = endValue.m_innerRadius;
+    if (endValue.m_holeRadius > 0)
+        endValue.m_radius = endValue.m_holeRadius;
     else
         endValue.m_radius = 0;
     endValue.m_startAngle = endValue.m_startAngle + endValue.m_angleSpan;

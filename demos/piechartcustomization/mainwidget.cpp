@@ -36,7 +36,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 MainWidget::MainWidget(QWidget* parent)
     :QWidget(parent),
-    m_slice(0)
+      m_slice(0)
 {
     // create chart
     QChart *chart = new QChart;
@@ -115,13 +115,11 @@ MainWidget::MainWidget(QWidget* parent)
     m_endAngle->setValue(m_series->pieEndAngle());
     m_endAngle->setSingleStep(1);
 
-    m_isDonut = new QCheckBox();
-
-    m_donutInnerSize = new QDoubleSpinBox();
-    m_donutInnerSize->setMinimum(0.0);
-    m_donutInnerSize->setMaximum(1.0);
-    m_donutInnerSize->setSingleStep(0.1);
-    m_donutInnerSize->setValue(m_series->donutInnerSize());
+    m_holeSize = new QDoubleSpinBox();
+    m_holeSize->setMinimum(0.0);
+    m_holeSize->setMaximum(1.0);
+    m_holeSize->setSingleStep(0.1);
+    m_holeSize->setValue(m_series->holeSize());
 
     QPushButton *appendSlice = new QPushButton("Append slice");
     QPushButton *insertSlice = new QPushButton("Insert slice");
@@ -133,8 +131,7 @@ MainWidget::MainWidget(QWidget* parent)
     seriesSettingsLayout->addRow("Size factor", m_sizeFactor);
     seriesSettingsLayout->addRow("Start angle", m_startAngle);
     seriesSettingsLayout->addRow("End angle", m_endAngle);
-    seriesSettingsLayout->addRow("Is donut", m_isDonut);
-    seriesSettingsLayout->addRow("Donut inner size", m_donutInnerSize);
+    seriesSettingsLayout->addRow("Hole size", m_holeSize);
     seriesSettingsLayout->addRow(appendSlice);
     seriesSettingsLayout->addRow(insertSlice);
     seriesSettingsLayout->addRow(removeSlice);
@@ -146,8 +143,7 @@ MainWidget::MainWidget(QWidget* parent)
     connect(m_sizeFactor, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
     connect(m_startAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
     connect(m_endAngle, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
-    connect(m_isDonut, SIGNAL(toggled(bool)), this, SLOT(updateSerieSettings()));
-    connect(m_donutInnerSize, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
+    connect(m_holeSize, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
     connect(appendSlice, SIGNAL(clicked()), this, SLOT(appendSlice()));
     connect(insertSlice, SIGNAL(clicked()), this, SLOT(insertSlice()));
     connect(removeSlice, SIGNAL(clicked()), this, SLOT(removeSlice()));
@@ -249,10 +245,10 @@ void MainWidget::updateSerieSettings()
     m_series->setHorizontalPosition(m_hPosition->value());
     m_series->setVerticalPosition(m_vPosition->value());
     m_series->setPieSize(m_sizeFactor->value());
+    m_holeSize->setMaximum(m_sizeFactor->value());
     m_series->setPieStartAngle(m_startAngle->value());
     m_series->setPieEndAngle(m_endAngle->value());
-    m_series->setDonut(m_isDonut->isChecked());
-    m_series->setDonutInnerSize(m_donutInnerSize->value());
+    m_series->setHoleSize(m_holeSize->value());
 }
 
 void MainWidget::updateSliceSettings()

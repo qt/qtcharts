@@ -132,7 +132,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \o 1.0 is the maximum size that can fit the chart.
     \endlist
 
-    When setting this property the donutInnerSize property is adjusted if necessary, to ensure that the inner size is not greater than the outer size.
+    When setting this property the holeSize property is adjusted if necessary, to ensure that the hole size is not greater than the outer size.
 
     Default value is 0.7.
 */
@@ -153,35 +153,35 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \property QPieSeries::donutInnerSize
-    \brief Defines the donut inner size.
+    \property QPieSeries::holeSize
+    \brief Defines the donut hole size.
 
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the minimum size (pie not drawn).
+    \o 0.0 is the minimum size (full pie drawn, without any hole inside).
     \o 1.0 is the maximum size that can fit the chart. (donut has no width)
     \endlist
 
     The value is never greater then size property.
-    Default value is 0.5.
+    Default value is 0.0.
 */
 
 /*!
-    \qmlproperty real PieSeries::donutInnerSize
+    \qmlproperty real PieSeries::holeSize
 
-    Defines the donut inner size.
+    Defines the donut hole size.
 
     The value is a relative value to the chart rectangle where:
 
     \list
-    \o 0.0 is the minimum size (donut is a pie).
+    \o 0.0 is the minimum size (full pie drawn, without any hole inside).
     \o 1.0 is the maximum size that can fit the chart. (donut has no width)
     \endlist
 
     When setting this property the size property is adjusted if necessary, to ensure that the inner size is not greater than the outer size.
 
-    Default value is 0.5.
+    Default value is 0.0.
 */
 
 /*!
@@ -232,18 +232,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmlproperty int PieSeries::count
 
     Number of slices in the series.
-*/
-
-/*!
-    \property QPieSeries::donut
-
-    Defines whether the series should be drawn as a donut
-*/
-
-/*!
-    \qmlproperty int PieSeries::donut
-
-    Defines whether the series should be drawn as a donut
 */
 
 /*!
@@ -594,30 +582,17 @@ qreal QPieSeries::sum() const
     return d->m_sum;
 }
 
-void QPieSeries::setDonut(bool donut)
+void QPieSeries::setHoleSize(qreal holeSize)
 {
     Q_D(QPieSeries);
-    d->m_donutChart = donut;
-    d->updateDerivativeData();
+    holeSize = qBound((qreal)0.0, holeSize, (qreal)1.0);
+    d->setSizes(holeSize, qMax(d->m_pieRelativeSize, holeSize));
 }
 
-bool QPieSeries::donut() const
+qreal QPieSeries::holeSize() const
 {
     Q_D(const QPieSeries);
-    return d->m_donutChart;
-}
-
-void QPieSeries::setDonutInnerSize(qreal innerSize)
-{
-    Q_D(QPieSeries);
-    innerSize = qBound((qreal)0.0, innerSize, (qreal)1.0);
-    d->setSizes(innerSize, qMax(d->m_pieRelativeSize, innerSize));
-}
-
-qreal QPieSeries::donutInnerSize() const
-{
-    Q_D(const QPieSeries);
-    return d->m_donutRelativeInnerSize;
+    return d->m_holeRelativeSize;
 }
 
 void QPieSeries::setHorizontalPosition(qreal relativePosition)
@@ -666,7 +641,7 @@ void QPieSeries::setPieSize(qreal relativeSize)
 {
     Q_D(QPieSeries);
     relativeSize = qBound((qreal)0.0, relativeSize, (qreal)1.0);
-    d->setSizes(qMin(d->m_donutRelativeInnerSize, relativeSize), relativeSize);
+    d->setSizes(qMin(d->m_holeRelativeSize, relativeSize), relativeSize);
 
 }
 
@@ -766,8 +741,8 @@ QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent) :
     m_pieStartAngle(0),
     m_pieEndAngle(360),
     m_sum(0),
-    m_donutChart(false),
-    m_donutRelativeInnerSize(0.5)
+//    m_donutChart(false),
+    m_holeRelativeSize(0.0)
 {
 }
 
@@ -811,8 +786,8 @@ void QPieSeriesPrivate::setSizes(qreal innerSize, qreal outerSize)
 {
     bool changed = false;
 
-    if (!qFuzzyIsNull(m_donutRelativeInnerSize - innerSize)) {
-        m_donutRelativeInnerSize = innerSize;
+    if (!qFuzzyIsNull(m_holeRelativeSize - innerSize)) {
+        m_holeRelativeSize = innerSize;
         changed = true;
     }
 

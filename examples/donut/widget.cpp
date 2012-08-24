@@ -1,5 +1,7 @@
 #include "widget.h"
 #include <QChartView>
+#include <QChart>
+#include <QLegend>
 #include <QPieSeries>
 #include <QPieSlice>
 #include <QTime>
@@ -17,19 +19,20 @@ Widget::Widget(QWidget *parent)
     //! [1]
     QChartView *chartView = new QChartView;
     chartView->setRenderHint(QPainter::Antialiasing);
-    chartView->chart()->setAnimationOptions(QChart::AllAnimations);
+    QChart *chart = chartView->chart();
+    chart->setAnimationOptions(QChart::AllAnimations);
+    chart->legend()->setVisible(false);
     //! [1]
 
     //! [2]
     qreal minSize = 0.1;
     qreal maxSize = 0.9;
-    int donutsCount = 5;
+    int donutCount = 5;
     //! [2]
 
     //! [3]
-    for (int i = 0; i < donutsCount; i++) {
+    for (int i = 0; i < donutCount; i++) {
         QPieSeries *donut = new QPieSeries;
-        donut->setDonut();
         int sliceCount =  3 + qrand() % 3;
         for (int j = 0; j < sliceCount; j++) {
             qreal value = 100 + qrand() % 100;
@@ -39,8 +42,8 @@ Widget::Widget(QWidget *parent)
             slice->setLabelPosition(QPieSlice::LabelInsideTangential);
             connect(slice, SIGNAL(hovered(bool)), this, SLOT(explodeSlice(bool)));
             donut->append(slice);
-            donut->setDonutInnerSize(minSize + i * (maxSize - minSize) / donutsCount);
-            donut->setPieSize(minSize + (i + 1) * (maxSize - minSize) / donutsCount);
+            donut->setHoleSize(minSize + i * (maxSize - minSize) / donutCount);
+            donut->setPieSize(minSize + (i + 1) * (maxSize - minSize) / donutCount);
         }
         m_donuts.append(donut);
         chartView->chart()->addSeries(donut);
