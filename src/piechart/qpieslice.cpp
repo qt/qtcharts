@@ -584,10 +584,11 @@ QColor QPieSlice::color()
 void QPieSlice::setColor(QColor color)
 {
     QBrush b = brush();
-    if (color != b.color()) {
-        b.setColor(color);
-        setBrush(b);
-    }
+
+    if (b == QBrush())
+        b.setStyle(Qt::SolidPattern);
+    b.setColor(color);
+    setBrush(b);
 }
 
 void QPieSlice::setLabelBrush(const QBrush &brush)
