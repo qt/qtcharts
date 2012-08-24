@@ -42,7 +42,7 @@ ChartCategoryAxisY::~ChartCategoryAxisY()
 QVector<qreal> ChartCategoryAxisY::calculateLayout() const
 {
     QCategoryAxis *axis = qobject_cast<QCategoryAxis *>(m_chartAxis);
-    int tickCount = axis->intervalsLabels().count() + 1;
+    int tickCount = axis->categoriesLabels().count() + 1;
     QVector<qreal> points;
 
     if (tickCount < 2)
@@ -53,10 +53,10 @@ QVector<qreal> ChartCategoryAxisY::calculateLayout() const
     qreal scale = m_rect.height() / axis->max();
     for (int i = 0; i < tickCount; ++i)
         if (i < tickCount - 1) {
-            int y = -axis->intervalMin(axis->intervalsLabels().at(i)) * scale + m_rect.bottom();
+            int y = -axis->categoryStart(axis->categoriesLabels().at(i)) * scale + m_rect.bottom();
             points[i] = y;
         } else {
-            int y = -axis->intervalMax(axis->intervalsLabels().at(i - 1))  * scale + m_rect.bottom();
+            int y = -axis->categoryEnd(axis->categoriesLabels().at(i - 1))  * scale + m_rect.bottom();
             points[i] = y;
         }
 
@@ -73,7 +73,7 @@ void ChartCategoryAxisY::updateGeometry()
 
     QCategoryAxis *intervalAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
 
-    QStringList ticksList = intervalAxis->intervalsLabels();
+    QStringList ticksList = intervalAxis->categoriesLabels();
 
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();

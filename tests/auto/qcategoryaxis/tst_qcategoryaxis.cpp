@@ -266,37 +266,37 @@ void tst_QCategoryAxis::interval()
 {
     // append one correct interval
     m_intervalsaxis->append("first", (qreal)45);
-    QCOMPARE(m_intervalsaxis->intervalMin("first"), (qreal)0);
-    QCOMPARE(m_intervalsaxis->intervalMax("first"), (qreal)45);
+    QCOMPARE(m_intervalsaxis->categoryStart("first"), (qreal)0);
+    QCOMPARE(m_intervalsaxis->categoryEnd("first"), (qreal)45);
 
     // append one more correct interval
     m_intervalsaxis->append("second", (qreal)75);
-    QCOMPARE(m_intervalsaxis->intervalMin("second"), (qreal)45);
-    QCOMPARE(m_intervalsaxis->intervalMax("second"), (qreal)75);
+    QCOMPARE(m_intervalsaxis->categoryStart("second"), (qreal)45);
+    QCOMPARE(m_intervalsaxis->categoryEnd("second"), (qreal)75);
 
     // append one incorrect interval
     m_intervalsaxis->append("third", (qreal)15);
     QCOMPARE(m_intervalsaxis->count(), 2);
-    QCOMPARE(m_intervalsaxis->intervalMax(m_intervalsaxis->intervalsLabels().last()), (qreal)75);
+    QCOMPARE(m_intervalsaxis->categoryEnd(m_intervalsaxis->categoriesLabels().last()), (qreal)75);
 //    QCOMPARE(intervalMax("first"), (qreal)75);
 
     // append one more correct interval
     m_intervalsaxis->append("third", (qreal)100);
     QCOMPARE(m_intervalsaxis->count(), 3);
-    QCOMPARE(m_intervalsaxis->intervalMin("third"), (qreal)75);
-    QCOMPARE(m_intervalsaxis->intervalMax("third"), (qreal)100);
+    QCOMPARE(m_intervalsaxis->categoryStart("third"), (qreal)75);
+    QCOMPARE(m_intervalsaxis->categoryEnd("third"), (qreal)100);
 
     // remove one interval
     m_intervalsaxis->remove("first");
     QCOMPARE(m_intervalsaxis->count(), 2);
-    QCOMPARE(m_intervalsaxis->intervalMin("second"), (qreal)0); // second interval should extend to firstInterval minimum
-    QCOMPARE(m_intervalsaxis->intervalMax("second"), (qreal)75);
+    QCOMPARE(m_intervalsaxis->categoryStart("second"), (qreal)0); // second interval should extend to firstInterval minimum
+    QCOMPARE(m_intervalsaxis->categoryEnd("second"), (qreal)75);
 
     // remove one interval
     m_intervalsaxis->replaceLabel("second", "replaced");
     QCOMPARE(m_intervalsaxis->count(), 2);
-    QCOMPARE(m_intervalsaxis->intervalMin("replaced"), (qreal)0); // second interval should extend to firstInterval minimum
-    QCOMPARE(m_intervalsaxis->intervalMax("replaced"), (qreal)75);
+    QCOMPARE(m_intervalsaxis->categoryStart("replaced"), (qreal)0); // second interval should extend to firstInterval minimum
+    QCOMPARE(m_intervalsaxis->categoryEnd("replaced"), (qreal)75);
 }
 
 QTEST_MAIN(tst_QCategoryAxis)

@@ -65,87 +65,87 @@ QCategoryAxis::QCategoryAxis(QCategoryAxisPrivate &d,QObject *parent):QValueAxis
 }
 
 /*!
-    Appends new interval to the axis with an \a intervalLabel.
-    Interval label has to be unique.
-    Parameter \a intervalEnd specifies the high end limit of the interval.
-    It has to be greater than the high end limit of the previous interval.
-    Otherwise the method returns without adding a new interval.
+    Appends new category to the axis with an \a categoryLabel.
+    Category label has to be unique.
+    Parameter \a categoryHighEnd specifies the high end limit of the category.
+    It has to be greater than the high end limit of the previous category.
+    Otherwise the method returns without adding a new category.
 */
-void QCategoryAxis::append(const QString& intervalLabel, qreal intervalEnd)
+void QCategoryAxis::append(const QString& categoryLabel, qreal categoryHighEnd)
 {
     Q_D(QCategoryAxis);
 
-    if (!d->m_intervals.contains(intervalLabel))
+    if (!d->m_categories.contains(categoryLabel))
     {
-        if(d->m_intervals.isEmpty()){
-            Range range(d->m_categoryMinimum, intervalEnd);
-            d->m_intervalsMap.insert(intervalLabel, range);
-            d->m_intervals.append(intervalLabel);
-        }else if (intervalEnd > intervalMax(d->m_intervals.last())){
-            Range range = d->m_intervalsMap.value(d->m_intervals.last());
-            d->m_intervalsMap.insert(intervalLabel, Range(range.second, intervalEnd));
-            d->m_intervals.append(intervalLabel);
+        if(d->m_categories.isEmpty()){
+            Range range(d->m_categoryMinimum, categoryHighEnd);
+            d->m_categoriesMap.insert(categoryLabel, range);
+            d->m_categories.append(categoryLabel);
+        }else if (categoryHighEnd > categoryEnd(d->m_categories.last())){
+            Range previousRange = d->m_categoriesMap.value(d->m_categories.last());
+            d->m_categoriesMap.insert(categoryLabel, Range(previousRange.second, categoryHighEnd));
+            d->m_categories.append(categoryLabel);
         }
     }
 }
 
 /*!
-    Sets to \a min the low end limit of the first interval on the axis.
+    Sets to \a min the low end limit of the first category on the axis.
 */
-void QCategoryAxis::setFisrtIntervalMinimum(qreal min)
+void QCategoryAxis::setStartValue(qreal min)
 {
     Q_D(QCategoryAxis);
-    if(d->m_intervals.isEmpty()){
+    if(d->m_categories.isEmpty()){
         d->m_categoryMinimum = min;
     }else{
-        Range range = d->m_intervalsMap.value(d->m_intervals.first());
-        d->m_intervalsMap.insert(d->m_intervals.first(), Range(min, range.second));
+        Range range = d->m_categoriesMap.value(d->m_categories.first());
+        d->m_categoriesMap.insert(d->m_categories.first(), Range(min, range.second));
     }
 }
 
 /*!
-    Returns the low end limit of the interval specified by an \a intervalLabel
+    Returns the low end limit of the category specified by an \a categoryLabel
 */
-qreal QCategoryAxis::intervalMin(const QString& intervalLabel) const
+qreal QCategoryAxis::categoryStart(const QString& categoryLabel) const
 {
     Q_D(const QCategoryAxis);
-    return d->m_intervalsMap.value(intervalLabel).first;
+    return d->m_categoriesMap.value(categoryLabel).first;
 }
 
 /*!
-    Returns the high end limit of the interval specified by an \a intervalLabel
+    Returns the high end limit of the interval specified by an \a categoryLabel
 */
-qreal QCategoryAxis::intervalMax(const QString& intervalLabel) const
+qreal QCategoryAxis::categoryEnd(const QString& categoryLabel) const
 {
     Q_D(const QCategoryAxis);
-    return d->m_intervalsMap.value(intervalLabel).second;
+    return d->m_categoriesMap.value(categoryLabel).second;
 }
 
 /*!
-    Removes an interval specified by the \a intervalLabel from the axis
+    Removes an interval specified by the \a categoryLabel from the axis
 */
-void QCategoryAxis::remove(const QString &intervalLabel)
+void QCategoryAxis::remove(const QString &categoryLabel)
 {
     Q_D(QCategoryAxis);
-    int labelIndex = d->m_intervals.indexOf(intervalLabel);
+    int labelIndex = d->m_categories.indexOf(categoryLabel);
 
     // check if such label exists
     if (labelIndex != -1) {
-        d->m_intervals.removeAt(labelIndex);
-        d->m_intervalsMap.remove(intervalLabel);
+        d->m_categories.removeAt(labelIndex);
+        d->m_categoriesMap.remove(categoryLabel);
 
         // the range of the interval that follows (if exists) needs to be updated
-        if (labelIndex < d->m_intervals.count()) {
-            QString label = d->m_intervals.at(labelIndex);
-            Range range = d->m_intervalsMap.value(label);
+        if (labelIndex < d->m_categories.count()) {
+            QString label = d->m_categories.at(labelIndex);
+            Range range = d->m_categoriesMap.value(label);
 
             // set the range
             if (labelIndex == 0) {
                 range.first = d->m_categoryMinimum;
-                d->m_intervalsMap.insert(label, range);
+                d->m_categoriesMap.insert(label, range);
             } else {
-                range.first = d->m_intervalsMap.value(d->m_intervals.at(labelIndex - 1)).second;
-                d->m_intervalsMap.insert(label, range);
+                range.first = d->m_categoriesMap.value(d->m_categories.at(labelIndex - 1)).second;
+                d->m_categoriesMap.insert(label, range);
             }
         }
         d->emitUpdated();
@@ -153,20 +153,20 @@ void QCategoryAxis::remove(const QString &intervalLabel)
 }
 
 /*!
-  Replaces \a oldLabel of an existing interval with a \a newLabel
+  Replaces \a oldLabel of an existing category with a \a newLabel
   If the old label does not exist the method returns without making any changes.
  */
 void QCategoryAxis::replaceLabel(const QString& oldLabel, const QString& newLabel)
 {
     Q_D(QCategoryAxis);
-    int labelIndex = d->m_intervals.indexOf(oldLabel);
+    int labelIndex = d->m_categories.indexOf(oldLabel);
 
     // check if such label exists
     if (labelIndex != -1) {
-        d->m_intervals.replace(labelIndex, newLabel);
-        Range range = d->m_intervalsMap.value(oldLabel);
-        d->m_intervalsMap.remove(oldLabel);
-        d->m_intervalsMap.insert(newLabel, range);
+        d->m_categories.replace(labelIndex, newLabel);
+        Range range = d->m_categoriesMap.value(oldLabel);
+        d->m_categoriesMap.remove(oldLabel);
+        d->m_categoriesMap.insert(newLabel, range);
         d->emitUpdated();
     }
 
@@ -175,10 +175,10 @@ void QCategoryAxis::replaceLabel(const QString& oldLabel, const QString& newLabe
 /*!
   Returns the list of the intervals labels
  */
-QStringList QCategoryAxis::intervalsLabels()
+QStringList QCategoryAxis::categoriesLabels()
 {
     Q_D(QCategoryAxis);
-    return d->m_intervals;
+    return d->m_categories;
 }
 
 /*!
@@ -187,7 +187,7 @@ QStringList QCategoryAxis::intervalsLabels()
 int QCategoryAxis::count() const
 {
     Q_D(const QCategoryAxis);
-    return d->m_intervals.count();
+    return d->m_categories.count();
 }
 
 /*!
@@ -214,7 +214,7 @@ QCategoryAxisPrivate::~QCategoryAxisPrivate()
 
 int QCategoryAxisPrivate::ticksCount() const
 {
-    return m_intervals.count() + 1;
+    return m_categories.count() + 1;
 }
 
 void QCategoryAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)

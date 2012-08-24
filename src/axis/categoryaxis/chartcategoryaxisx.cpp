@@ -41,7 +41,7 @@ ChartCategoryAxisX::~ChartCategoryAxisX()
 QVector<qreal> ChartCategoryAxisX::calculateLayout() const
 {
     QCategoryAxis *axis = qobject_cast<QCategoryAxis *>(m_chartAxis);
-    int tickCount = axis->intervalsLabels().count() + 1;
+    int tickCount = axis->categoriesLabels().count() + 1;
     QVector<qreal> points;
 
     if (tickCount < 2)
@@ -52,10 +52,10 @@ QVector<qreal> ChartCategoryAxisX::calculateLayout() const
     qreal scale = m_rect.width() / axis->max();
     for (int i = 0; i < tickCount; ++i)
         if (i < tickCount - 1) {
-            int x = axis->intervalMin(axis->intervalsLabels().at(i)) * scale + m_rect.left();
+            int x = axis->categoryStart(axis->categoriesLabels().at(i)) * scale + m_rect.left();
             points[i] = x;
         } else {
-            int x = axis->intervalMax(axis->intervalsLabels().at(i - 1))  * scale + m_rect.left();
+            int x = axis->categoryEnd(axis->categoriesLabels().at(i - 1))  * scale + m_rect.left();
             points[i] = x;
         }
 
@@ -73,7 +73,7 @@ void ChartCategoryAxisX::updateGeometry()
 
     QCategoryAxis *intervalAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
 
-    QStringList ticksList = intervalAxis->intervalsLabels();
+    QStringList ticksList = intervalAxis->categoriesLabels();
 
     //    createNumberLabels(ticksList,m_min,m_max,layout.size());
 

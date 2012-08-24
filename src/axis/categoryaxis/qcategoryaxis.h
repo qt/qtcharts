@@ -42,16 +42,16 @@ protected:
 public:
     AxisType type() const;
 
-    void append(const QString& label, qreal intervalEnd);
+    void append(const QString& label, qreal categoryHighEnd);
     void remove(const QString& label);
     void replaceLabel(const QString& oldLabel, const QString& newLabel);
 
-    void setFisrtIntervalMinimum(qreal min);
+    void setStartValue(qreal min);
 
-    qreal intervalMin(const QString& intervalLabel) const;
-    qreal intervalMax(const QString& intervalLabel) const;
+    qreal categoryStart(const QString& categoryLabel) const;
+    qreal categoryEnd(const QString& categoryLabel) const;
 
-    QStringList intervalsLabels();
+    QStringList categoriesLabels();
     int count() const;
 
 

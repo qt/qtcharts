@@ -57,8 +57,8 @@ public Q_SLOTS:
     void handleAxisRangeChanged(qreal min, qreal max,int count);
 
 private:
-    QMap<QString , Range> m_intervalsMap;
-    QStringList m_intervals;
+    QMap<QString , Range> m_categoriesMap;
+    QStringList m_categories;
     qreal m_categoryMinimum;
 
 private:

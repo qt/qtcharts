@@ -79,7 +79,7 @@ void tst_QDateTimeAxis::init()
     *m_series << QPointF(-100, -100) << QPointF(0, 0) << QPointF(100, 100);
     //    tst_QAbstractAxis::init(m_datetimeaxis, m_series);
 
-    m_view = new QChartView(new QChart());
+    m_view = new QChartView;
     m_chart = m_view->chart();
     m_chart->addSeries(m_series);
     m_chart->setAxisY(m_dateTimeAxisY, m_series);
@@ -158,7 +158,7 @@ void tst_QDateTimeAxis::max_data()
 
 void tst_QDateTimeAxis::max()
 {
-    m_chart->setAxisX(m_dateTimeAxisX, m_series);
+//    m_chart->setAxisX(m_dateTimeAxisX, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     max_raw();
@@ -217,7 +217,7 @@ void tst_QDateTimeAxis::min_data()
 
 void tst_QDateTimeAxis::min()
 {
-    m_chart->setAxisX(m_dateTimeAxisX, m_series);
+//    m_chart->setAxisX(m_dateTimeAxisX, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     min_raw();
@@ -291,7 +291,7 @@ void tst_QDateTimeAxis::range_data()
 
 void tst_QDateTimeAxis::range()
 {
-    m_chart->setAxisX(m_dateTimeAxisX, m_series);
+//    m_chart->setAxisX(m_dateTimeAxisX, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     range_raw();
