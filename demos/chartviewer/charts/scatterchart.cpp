@@ -25,11 +25,6 @@
 class ScatterChart: public Chart
 {
 public:
-
-    ScatterChart(){
-        initialize();
-    }
-
     QString name() { return QObject::tr("ScatterChart"); }
     QString category()  { return QObject::tr("XYSeries"); }
     QString subCategory() { return QString::null; }

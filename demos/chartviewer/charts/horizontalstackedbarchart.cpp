@@ -26,11 +26,6 @@
 class HorizontalStackedBarChart: public Chart
 {
 public:
-
-    HorizontalStackedBarChart(){
-        initialize();
-    }
-
     QString name() { return QObject::tr("HorizontalStackedBarChart"); }
     QString category()  { return QObject::tr("BarSeries"); }
     QString subCategory() { return QObject::tr("Vertical"); }

@@ -26,11 +26,6 @@
 class AreaChart: public Chart
 {
 public:
-
-    AreaChart(){
-        initialize();
-    }
-
     QString name() { return QObject::tr("AreaChart"); }
     QString category()  { return QObject::tr("XYSeries"); }
     QString subCategory() { return QString::null; }

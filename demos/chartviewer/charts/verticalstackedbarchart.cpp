@@ -26,11 +26,6 @@
 class VerticalStackedBarChart: public Chart
 {
 public:
-
-    VerticalStackedBarChart(){
-        initialize();
-    }
-
     QString name() { return QObject::tr("VerticalStackedBarChart"); }
     QString category()  { return QObject::tr("BarSeries"); }
     QString subCategory() { return QObject::tr("Vertical"); }

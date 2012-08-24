@@ -26,11 +26,6 @@
 class HorizontalBarChart: public Chart
 {
 public:
-
-    HorizontalBarChart(){
-        initialize();
-    }
-
     QString name() { return QObject::tr("HorizontalBarChart"); }
     QString category()  { return QObject::tr("BarSeries"); }
     QString subCategory() { return QObject::tr("Vertical"); }

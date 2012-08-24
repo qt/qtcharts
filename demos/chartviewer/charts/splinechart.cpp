@@ -25,11 +25,6 @@
 class SplineChart: public Chart
 {
 public:
-
-    SplineChart(){
-        initialize();
-    }
-
     QString name() { return QObject::tr("SplineChart"); }
     QString category()  { return QObject::tr("XYSeries"); }
     QString subCategory() { return QString::null; }

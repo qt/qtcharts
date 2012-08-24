@@ -35,11 +35,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 class Chart
 {
 public:
-    Chart();
-
-    virtual ~Chart();
-
-    virtual void initialize();
+    virtual ~Chart(){};
     virtual QChart* createChart(const DataTable& table) = 0;
     virtual QString name() = 0;
     virtual QString category() = 0;
@@ -81,6 +77,17 @@ inline void addChart(Chart* chart)
 }
 }
 
-#define DECLARE_CHART(chartName) static chartName t;
+template <class T>
+class ChartWrapper
+{
+public:
+    QSharedPointer<T> chart;
+    ChartWrapper() : chart(new T)
+    {
+        Charts::addChart(chart.data());
+    }
+};
+
+#define DECLARE_CHART(chartName) static ChartWrapper<chartName> t;
 
 #endif

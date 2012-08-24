@@ -25,11 +25,6 @@
 class PieChart: public Chart
 {
 public:
-
-    PieChart(){
-        initialize();
-    }
-
     QString name() { return QObject::tr("PieChart"); }
     QString category()  { return QString::null; }
     QString subCategory() { return QString::null; }
