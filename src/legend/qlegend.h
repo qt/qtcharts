@@ -21,7 +21,7 @@
 #ifndef QLEGEND_H
 #define QLEGEND_H
 
-#include <QChartGlobal>
+#include <qchartglobal.h>
 #include <QGraphicsWidget>
 #include <QPen>
 #include <QBrush>
