@@ -24,7 +24,7 @@ import QtCommercial.Chart 1.0
 Rectangle {
     width: parent.width
     height: parent.height
-    property int viewNumber: 12
+    property int viewNumber: 1
 
     Loader {
         id: loader

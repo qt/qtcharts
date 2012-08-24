@@ -56,7 +56,6 @@ Rectangle {
             PieSlice { label: "Logistics"; value: 1332; color: "#260D19"; borderColor: "#13060C"; borderWidth: 2 }
         }
     }
-    //![1]
 
     Component.onCompleted: {
         // Set the common slice properties dynamically for convenience
@@ -71,4 +70,5 @@ Rectangle {
             pieInner.at(i).borderWidth = 2;
         }
     }
+    //![1]
 }
