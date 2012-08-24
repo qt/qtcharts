@@ -20,8 +20,8 @@
 
 #include "chartlayout_p.h"
 #include "chartpresenter_p.h"
+#include "qlegend_p.h"
 #include "chartaxis_p.h"
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -30,7 +30,8 @@ m_presenter(presenter),
 m_marginBig(60),
 m_marginSmall(20),
 m_marginTiny(10),
-m_chartMargins(QPointF(m_marginBig,m_marginBig),QPointF(m_marginBig,m_marginBig))
+m_chartMargins(QPointF(m_marginBig,m_marginBig),QPointF(m_marginBig,m_marginBig)),
+m_intialized(false)
 {
 
 }
@@ -46,6 +47,11 @@ void ChartLayout::setGeometry(const QRectF& rect)
     if (!rect.isValid()) return;
 
     QGraphicsLayout::setGeometry(rect);
+
+    if(!m_intialized){
+        m_presenter->setGeometry(rect);
+        m_intialized=true;
+    }
 
     // check title size
 
@@ -69,12 +75,14 @@ void ChartLayout::setGeometry(const QRectF& rect)
 
     QLegend* legend = m_presenter->legend();
 
+    Q_ASSERT(legend);
+
     qreal titlePadding = m_chartMargins.top()/2;
 
     QRectF chartMargins = m_chartMargins;
 
     // recalculate legend position
-    if (legend != 0 && legend->isVisible() && legend->isAttachedToChart()) {
+    if ((legend->isAttachedToChart() && legend->isVisible())) {
 
         // Reserve some space for legend
         switch (legend->alignment()) {
@@ -89,7 +97,7 @@ void ChartLayout::setGeometry(const QRectF& rect)
         }
         case Qt::AlignBottom: {
         	QSizeF legendSize = legend->effectiveSizeHint(Qt::PreferredSize,QSizeF(rect.width(),-1));
-            int bottomMargin = m_marginTiny + m_marginSmall +  legendSize.height() + m_marginTiny + axisHeight;
+            int bottomMargin = m_marginTiny + legendSize.height() + m_marginTiny + axisHeight;
             chartMargins = QRect(QPoint(m_chartMargins.left(),m_chartMargins.top()),QPoint(m_chartMargins.right(),bottomMargin));
             m_legendMargins = QRect(QPoint(chartMargins.left(),rect.height()-bottomMargin + m_marginTiny + axisHeight),QPoint(chartMargins.right(),m_marginTiny + m_marginSmall));
             titlePadding = chartMargins.top()/2;
@@ -97,7 +105,8 @@ void ChartLayout::setGeometry(const QRectF& rect)
         }
         case Qt::AlignLeft: {
         	QSizeF legendSize = legend->effectiveSizeHint(Qt::PreferredSize,QSizeF(-1,rect.height()));
-            int leftPadding = m_marginTiny + m_marginSmall + legendSize.width() + m_marginTiny + axisWidth;
+            int leftPadding = m_marginTiny + legendSize.width() + m_marginTiny + axisWidth;
+
             chartMargins = QRect(QPoint(leftPadding,m_chartMargins.top()),QPoint(m_chartMargins.right(),m_chartMargins.bottom()));
             m_legendMargins = QRect(QPoint(m_marginTiny + m_marginSmall,chartMargins.top()),QPoint(rect.width()-leftPadding + m_marginTiny + axisWidth,chartMargins.bottom()));
             titlePadding = chartMargins.top()/2;
@@ -105,7 +114,7 @@ void ChartLayout::setGeometry(const QRectF& rect)
         }
         case Qt::AlignRight: {
         	QSizeF legendSize = legend->effectiveSizeHint(Qt::PreferredSize,QSizeF(-1,rect.height()));
-            int rightPadding = m_marginTiny + m_marginSmall + legendSize.width() + m_marginTiny;
+            int rightPadding = m_marginTiny + legendSize.width() + m_marginTiny;
             chartMargins = QRect(QPoint(m_chartMargins.left(),m_chartMargins.top()),QPoint(rightPadding,m_chartMargins.bottom()));
             m_legendMargins = QRect(QPoint(rect.width()- rightPadding+ m_marginTiny ,chartMargins.top()),QPoint(m_marginTiny + m_marginSmall,chartMargins.bottom()));
             titlePadding = chartMargins.top()/2;
@@ -137,7 +146,6 @@ void ChartLayout::setGeometry(const QRectF& rect)
     }else if(chartRect.size().isEmpty()){
         m_presenter->setGeometry(QRect(rect.width()/2,rect.height()/2,1,1));
     }
-
 }
 
 

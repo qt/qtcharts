@@ -50,10 +50,9 @@ private:
     int m_marginBig;
     int m_marginSmall;
     int m_marginTiny;
-
     QRectF m_chartMargins;
     QRectF m_legendMargins;
-
+    bool m_intialized;
 
 
 };

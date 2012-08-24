@@ -22,7 +22,6 @@
 #include "chartpresenter_p.h"
 #include "legendmarker_p.h"
 #include "qlegend_p.h"
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -86,15 +85,17 @@ QPointF LegendLayout::offset() const
 
 void LegendLayout::setGeometry(const QRectF& rect)
 {
-
-    QGraphicsLayout::setGeometry(rect);
+    m_legend->d_ptr->items()->setVisible(m_legend->isVisible());
 
     if(m_legend->isAttachedToChart()) {
+
         setAttachedGeometry(rect);
     }
     else {
         setDettachedGeometry(rect);
     }
+
+    QGraphicsLayout::setGeometry(rect);
 }
 
 void LegendLayout::setAttachedGeometry(const QRectF& rect)

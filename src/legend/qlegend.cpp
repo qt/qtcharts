@@ -403,8 +403,8 @@ bool QLegend::isBackgroundVisible() const
  */
 void QLegend::hideEvent(QHideEvent *event)
 {
-    QGraphicsWidget::hideEvent(event);
-    d_ptr->m_presenter->layout()->invalidate();
+   d_ptr->m_presenter->layout()->invalidate();
+   QGraphicsWidget::hideEvent(event);
 }
 
 /*!
@@ -412,8 +412,8 @@ void QLegend::hideEvent(QHideEvent *event)
  */
 void QLegend::showEvent(QShowEvent *event)
 {
-    QGraphicsWidget::showEvent(event);
-    d_ptr->m_presenter->layout()->invalidate();
+   d_ptr->m_presenter->layout()->invalidate();
+   QGraphicsWidget::showEvent(event);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

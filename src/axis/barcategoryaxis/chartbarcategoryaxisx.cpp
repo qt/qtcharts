@@ -50,6 +50,8 @@ QVector<qreal> ChartCategoriesAxisX::calculateLayout() const
     const qreal delta = m_rect.width()/(count);
     qreal offset =-m_min-0.5;
 
+    if(delta<1) return points;
+
     if(offset<=0) {
         offset = int(offset * m_rect.width()/(m_max - m_min))%int(delta) + delta;
     }

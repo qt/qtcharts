@@ -110,7 +110,7 @@ void ChartCategoryAxisX::updateGeometry()
         }
 
         m_minWidth += rect.width();
-        m_minHeight = qMax(rect.height(), m_minHeight);
+        m_minHeight = qMax(rect.height()+ label_padding, m_minHeight);
 
         if ((i + 1) % 2 && i > 1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));

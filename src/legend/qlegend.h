@@ -86,7 +86,6 @@ public:
     void setBackgroundVisible(bool visible = true);
     bool isBackgroundVisible() const;
 
-
 protected:
     void hideEvent(QHideEvent *event);
     void showEvent(QShowEvent *event);

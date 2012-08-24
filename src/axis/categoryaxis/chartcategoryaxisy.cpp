@@ -26,7 +26,6 @@
 #include <QFontMetrics>
 #include <qmath.h>
 
-
 static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -69,7 +68,9 @@ void ChartCategoryAxisY::updateGeometry()
     m_minWidth = 0;
     m_minHeight = 0;
 
-    if(layout.isEmpty()) return;
+    if(layout.isEmpty()) {
+        return;
+    }
 
     QCategoryAxis *intervalAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
 

@@ -22,6 +22,7 @@
 #include "chartpresenter_p.h"
 #include "qbarcategoryaxis_p.h"
 #include <qmath.h>
+#include <QDebug>
 
 static int label_padding = 5;
 
@@ -47,6 +48,8 @@ QVector<qreal> ChartCategoriesAxisY::calculateLayout() const
 
     const qreal delta = m_rect.height()/(count);
     qreal offset = - m_min - 0.5;
+
+    if(delta<1) return points;
 
     if(offset<=0) {
         offset = int(offset * m_rect.height()/(m_max - m_min))%int(delta) + delta;
@@ -132,8 +135,8 @@ void ChartCategoriesAxisY::updateGeometry()
             height=labelItem->pos().y();
         }
 
-        m_minWidth+=rect.width();
-        m_minHeight=qMax(rect.height()+label_padding,m_minHeight);
+        m_minWidth=qMax(rect.width()+label_padding,m_minWidth);
+        m_minHeight+=rect.height();
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));

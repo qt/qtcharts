@@ -52,6 +52,7 @@ ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : ChartEleme
 
     QGraphicsSimpleTextItem item;
     m_font = item.font();
+
 }
 
 ChartAxis::~ChartAxis()
