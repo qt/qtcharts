@@ -113,9 +113,8 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     Q_UNUSED(widget)
     Q_UNUSED(option)
 
-
+    painter->save();
     painter->setPen(m_linePen);
-
     painter->setBrush(m_linePen.color());
     painter->setClipRect(clipRect());
 
@@ -126,6 +125,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
         for (int i(1); i < m_points.size();i++)
             painter->drawLine(m_points.at(i-1), m_points.at(i));
     }
+    painter->restore();
 }
 
 void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
