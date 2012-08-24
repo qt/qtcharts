@@ -28,13 +28,26 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \class QCategoryAxis
-    \brief The QCategoryAxis class is used for manipulating chart's axis.
+    \brief The QCategoryAxis class allows putting a named ranges on the axis.
     \mainclass
+
+    This class can be used when the underlying data needs to be given extra meaning.
+    Unlike with the QBarCategoryAxis the QCategoryAxis allows the categories ranges widths to be specified freely.
 */
 
 /*!
     \qmlclass CategoryAxis QCategoryAxis
-    \brief The Axis element is used for manipulating chart's axes.
+    \brief The QCategoryAxis class allows putting a named ranges on the axis.
+*/
+
+/*!
+  \property QCategoryAxis::startValue
+  Defines the low end of the first category on the axis.
+*/
+
+/*!
+  \qmlproperty int CategoryAxis::startValue
+  Defines the low end of the first category on the axis.
 */
 
 /*!
@@ -90,7 +103,16 @@ void QCategoryAxis::append(const QString& categoryLabel, qreal categoryHighEnd)
 }
 
 /*!
-    Sets to \a min the low end limit of the first category on the axis.
+    Returns the low end limit of the first category on the axis.
+*/
+qreal QCategoryAxis::startValue() const
+{
+    Q_D(const QCategoryAxis);
+    return d->m_categoryMinimum;
+}
+
+/*!
+    Sets \a min to be the low end limit of the first category on the axis.
 */
 void QCategoryAxis::setStartValue(qreal min)
 {

@@ -33,7 +33,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     The labels can be configured by setting an appropriate DateTime format.
-    Note that any date before 4800 BCE or after about 1.4 million CE may not be accurately stored.
+    Note that any date before 4714 BCE or after about 1.4 million CE may not be accurately stored.
     QDateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
 */
 
@@ -42,7 +42,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The DateTimeAxis element is used for manipulating chart's axes
 
     The labels can be configured by setting an appropriate DateTime format.
-    Note that any date before 4800 BCE or after about 1.4 million CE may not be accurately stored.
+    Note that any date before 4714 BCE or after about 1.4 million CE may not be accurately stored.
     DateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
 */
 
@@ -174,8 +174,6 @@ void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
         changed = true;
         emit maxChanged(max);
     }
-
-    //        if(d->m_niceNumbers) d->looseNiceNumbers(d->m_min, d->m_max, d->m_tickCount);
 
     if (changed) {
         emit rangeChanged(d->m_min,d->m_max);

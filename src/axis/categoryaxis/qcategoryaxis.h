@@ -31,6 +31,7 @@ class QCategoryAxisPrivate;
 class QTCOMMERCIALCHART_EXPORT QCategoryAxis : public QValueAxis
 {
     Q_OBJECT
+    Q_PROPERTY(qreal startValue READ startValue WRITE setStartValue)
 
 public:
     explicit QCategoryAxis(QObject *parent = 0);
@@ -46,6 +47,7 @@ public:
     void remove(const QString& label);
     void replaceLabel(const QString& oldLabel, const QString& newLabel);
 
+    qreal startValue() const;
     void setStartValue(qreal min);
 
     qreal categoryStart(const QString& categoryLabel) const;
@@ -53,7 +55,6 @@ public:
 
     QStringList categoriesLabels();
     int count() const;
-
 
 private:
     Q_DECLARE_PRIVATE(QCategoryAxis)
