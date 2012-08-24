@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "declarativeareaseries.h"
+#include "declarativelineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

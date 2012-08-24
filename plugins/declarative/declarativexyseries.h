@@ -21,7 +21,6 @@
 #ifndef DECLARATIVE_XY_SERIES_H
 #define DECLARATIVE_XY_SERIES_H
 
-#include "declarativexypoint.h"
 #include <QXYSeries>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

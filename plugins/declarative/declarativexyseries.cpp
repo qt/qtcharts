@@ -20,8 +20,9 @@
 
 
 #include "declarativexyseries.h"
-#include <QVXYModelMapper>
-#include <QHXYModelMapper>
+#include "declarativexypoint.h"
+#include "qvxymodelmapper.h"
+#include "qhxymodelmapper.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "declarativexypoint.h"
+#include <QDataStream>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

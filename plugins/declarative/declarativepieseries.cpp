@@ -19,8 +19,9 @@
 ****************************************************************************/
 
 #include "declarativepieseries.h"
-#include <QVPieModelMapper>
-#include <QHPieModelMapper>
+#include "qpieslice.h"
+#include "qvpiemodelmapper.h"
+#include "qhpiemodelmapper.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

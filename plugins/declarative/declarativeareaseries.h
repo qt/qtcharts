@@ -22,9 +22,9 @@
 #define DECLARATIVEAREASERIES_H
 
 #include "qareaseries.h"
-#include "declarativelineseries.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class DeclarativeLineSeries;
 
 class DeclarativeAreaSeries : public QAreaSeries
 {

@@ -21,12 +21,12 @@
 #ifndef DECLARATIVEPIESERIES_H
 #define DECLARATIVEPIESERIES_H
 
-#include "qpieslice.h"
 #include "qpieseries.h"
 #include <QDeclarativeItem>
 #include <QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+class QPieSlice;
 
 class DeclarativePieSeries : public QPieSeries, public QDeclarativeParserStatus
 {

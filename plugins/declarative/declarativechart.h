@@ -23,7 +23,7 @@
 
 #include <QtCore/QtGlobal>
 #include <QDeclarativeItem>
-#include <qchart.h>
+#include "qchart.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -48,7 +48,6 @@ class DeclarativeChart : public QDeclarativeItem
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
-//    Q_ENUMS(AxisType)
 
 public:
     // duplicating enums from QChart to make the QML api namings 1-to-1 with the C++ api
