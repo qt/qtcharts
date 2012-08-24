@@ -44,16 +44,16 @@ Rectangle {
             id: pieInner
 
             PieSlice { label: "Materials"; value: 10334; color: "#618E87"; borderColor: "#163430" }
-            PieSlice { label: "Employee"; value: 3066; color: "#2D6960"; borderColor: "#163430"; borderWidth: 2 }
-            PieSlice { label: "Logistics"; value: 6111; color: "#214E48"; borderColor: "#163430"; borderWidth: 2 }
+            PieSlice { label: "Employee"; value: 3066; color: "#2D6960"; borderColor: "#163430" }
+            PieSlice { label: "Logistics"; value: 6111; color: "#214E48"; borderColor: "#163430" }
 
-            PieSlice { label: "Materials"; value: 7371; color: "#F7F28B"; borderColor: "#3B391C"; borderWidth: 2 }
-            PieSlice { label: "Employee"; value: 2443; color: "#EFE672"; borderColor: "#3B391C"; borderWidth: 2 }
-            PieSlice { label: "Logistics"; value: 1291; color: "#777339"; borderColor: "#3B391C"; borderWidth: 2 }
+            PieSlice { label: "Materials"; value: 7371; color: "#F7F28B"; borderColor: "#3B391C" }
+            PieSlice { label: "Employee"; value: 2443; color: "#EFE672"; borderColor: "#3B391C" }
+            PieSlice { label: "Logistics"; value: 1291; color: "#777339"; borderColor: "#3B391C" }
 
-            PieSlice { label: "Materials"; value: 4022; color: "#785466"; borderColor: "#13060C"; borderWidth: 2 }
-            PieSlice { label: "Employee"; value: 3998; color: "#4C1B33"; borderColor: "#13060C"; borderWidth: 2 }
-            PieSlice { label: "Logistics"; value: 1332; color: "#260D19"; borderColor: "#13060C"; borderWidth: 2 }
+            PieSlice { label: "Materials"; value: 4022; color: "#785466"; borderColor: "#13060C" }
+            PieSlice { label: "Employee"; value: 3998; color: "#4C1B33"; borderColor: "#13060C" }
+            PieSlice { label: "Logistics"; value: 1332; color: "#260D19"; borderColor: "#13060C" }
         }
     }
 
