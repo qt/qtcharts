@@ -269,37 +269,37 @@ void tst_QCategoryAxis::interval()
 {
     // append one correct interval
     m_categoryaxis->append("first", (qreal)45);
-    QCOMPARE(m_categoryaxis->categoryStart("first"), (qreal)0);
-    QCOMPARE(m_categoryaxis->categoryEnd("first"), (qreal)45);
+    QCOMPARE(m_categoryaxis->startValue("first"), (qreal)0);
+    QCOMPARE(m_categoryaxis->endValue("first"), (qreal)45);
 
     // append one more correct interval
     m_categoryaxis->append("second", (qreal)75);
-    QCOMPARE(m_categoryaxis->categoryStart("second"), (qreal)45);
-    QCOMPARE(m_categoryaxis->categoryEnd("second"), (qreal)75);
+    QCOMPARE(m_categoryaxis->startValue("second"), (qreal)45);
+    QCOMPARE(m_categoryaxis->endValue("second"), (qreal)75);
 
     // append one incorrect interval
     m_categoryaxis->append("third", (qreal)15);
     QCOMPARE(m_categoryaxis->count(), 2);
-    QCOMPARE(m_categoryaxis->categoryEnd(m_categoryaxis->categoriesLabels().last()), (qreal)75);
+    QCOMPARE(m_categoryaxis->endValue(m_categoryaxis->categoriesLabels().last()), (qreal)75);
 //    QCOMPARE(intervalMax("first"), (qreal)75);
 
     // append one more correct interval
     m_categoryaxis->append("third", (qreal)100);
     QCOMPARE(m_categoryaxis->count(), 3);
-    QCOMPARE(m_categoryaxis->categoryStart("third"), (qreal)75);
-    QCOMPARE(m_categoryaxis->categoryEnd("third"), (qreal)100);
+    QCOMPARE(m_categoryaxis->startValue("third"), (qreal)75);
+    QCOMPARE(m_categoryaxis->endValue("third"), (qreal)100);
 
     // remove one interval
     m_categoryaxis->remove("first");
     QCOMPARE(m_categoryaxis->count(), 2);
-    QCOMPARE(m_categoryaxis->categoryStart("second"), (qreal)0); // second interval should extend to firstInterval minimum
-    QCOMPARE(m_categoryaxis->categoryEnd("second"), (qreal)75);
+    QCOMPARE(m_categoryaxis->startValue("second"), (qreal)0); // second interval should extend to firstInterval minimum
+    QCOMPARE(m_categoryaxis->endValue("second"), (qreal)75);
 
     // remove one interval
     m_categoryaxis->replaceLabel("second", "replaced");
     QCOMPARE(m_categoryaxis->count(), 2);
-    QCOMPARE(m_categoryaxis->categoryStart("replaced"), (qreal)0); // second interval should extend to firstInterval minimum
-    QCOMPARE(m_categoryaxis->categoryEnd("replaced"), (qreal)75);
+    QCOMPARE(m_categoryaxis->startValue("replaced"), (qreal)0); // second interval should extend to firstInterval minimum
+    QCOMPARE(m_categoryaxis->endValue("replaced"), (qreal)75);
 }
 
 QTEST_MAIN(tst_QCategoryAxis)

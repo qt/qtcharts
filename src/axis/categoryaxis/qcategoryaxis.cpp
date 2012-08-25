@@ -94,7 +94,7 @@ void QCategoryAxis::append(const QString& categoryLabel, qreal categoryHighEnd)
             Range range(d->m_categoryMinimum, categoryHighEnd);
             d->m_categoriesMap.insert(categoryLabel, range);
             d->m_categories.append(categoryLabel);
-        }else if (categoryHighEnd > categoryEnd(d->m_categories.last())){
+        }else if (categoryHighEnd > endValue(d->m_categories.last())){
             Range previousRange = d->m_categoriesMap.value(d->m_categories.last());
             d->m_categoriesMap.insert(categoryLabel, Range(previousRange.second, categoryHighEnd));
             d->m_categories.append(categoryLabel);
@@ -103,16 +103,9 @@ void QCategoryAxis::append(const QString& categoryLabel, qreal categoryHighEnd)
 }
 
 /*!
-    Returns the low end limit of the first category on the axis.
-*/
-qreal QCategoryAxis::startValue() const
-{
-    Q_D(const QCategoryAxis);
-    return d->m_categoryMinimum;
-}
-
-/*!
     Sets \a min to be the low end limit of the first category on the axis.
+    If there is already some categories added to the axis then passed value must be lower than the high end value of the already defined first category range.
+    Otherwise nothing is done.
 */
 void QCategoryAxis::setStartValue(qreal min)
 {
@@ -121,23 +114,27 @@ void QCategoryAxis::setStartValue(qreal min)
         d->m_categoryMinimum = min;
     }else{
         Range range = d->m_categoriesMap.value(d->m_categories.first());
-        d->m_categoriesMap.insert(d->m_categories.first(), Range(min, range.second));
+        if (min < range.second)
+            d->m_categoriesMap.insert(d->m_categories.first(), Range(min, range.second));
     }
 }
 
 /*!
     Returns the low end limit of the category specified by an \a categoryLabel
 */
-qreal QCategoryAxis::categoryStart(const QString& categoryLabel) const
+qreal QCategoryAxis::startValue(const QString& categoryLabel) const
 {
     Q_D(const QCategoryAxis);
-    return d->m_categoriesMap.value(categoryLabel).first;
+    if (categoryLabel == QString())
+        return d->m_categoryMinimum;
+    else
+        return d->m_categoriesMap.value(categoryLabel).first;
 }
 
 /*!
     Returns the high end limit of the interval specified by an \a categoryLabel
 */
-qreal QCategoryAxis::categoryEnd(const QString& categoryLabel) const
+qreal QCategoryAxis::endValue(const QString& categoryLabel) const
 {
     Q_D(const QCategoryAxis);
     return d->m_categoriesMap.value(categoryLabel).second;

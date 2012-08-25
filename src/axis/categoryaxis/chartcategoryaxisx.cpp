@@ -53,10 +53,10 @@ QVector<qreal> ChartCategoryAxisX::calculateLayout() const
         qreal scale = m_rect.width() / range;
         for (int i = 0; i < tickCount; ++i)
             if (i < tickCount - 1) {
-                int x = (axis->categoryStart(axis->categoriesLabels().at(i)) - axis->min()) * scale + m_rect.left();
+                int x = (axis->startValue(axis->categoriesLabels().at(i)) - axis->min()) * scale + m_rect.left();
                 points[i] = x;
             } else {
-                int x = (axis->categoryEnd(axis->categoriesLabels().at(i - 1)) - axis->min())  * scale + m_rect.left();
+                int x = (axis->endValue(axis->categoriesLabels().at(i - 1)) - axis->min())  * scale + m_rect.left();
                 points[i] = x;
             }
     }
