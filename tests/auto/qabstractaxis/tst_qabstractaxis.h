@@ -45,8 +45,8 @@ private slots:
     void axisPenColor();
     void gridLinePen_data();
     void gridLinePen();
-    void arrowVisible_data();
-    void arrowVisible();
+    void lineVisible_data();
+    void lineVisible();
     void gridLineVisible_data();
     void gridLineVisible();
     void visible_data();

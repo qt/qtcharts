@@ -34,7 +34,7 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
-    Q_PROPERTY(bool arrowVisible READ isLineVisible WRITE setLineVisible NOTIFY lineVisibleChanged)
+    Q_PROPERTY(bool lineVisible READ isLineVisible WRITE setLineVisible NOTIFY lineVisibleChanged)
     Q_PROPERTY(QColor color READ linePenColor WRITE setLinePenColor NOTIFY colorChanged)
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
     Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle)
