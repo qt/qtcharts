@@ -59,7 +59,7 @@ private slots:
     void interval();
 
 private:
-    QCategoryAxis* m_intervalsaxis;
+    QCategoryAxis* m_categoryaxis;
     QLineSeries* m_series;
 };
 
@@ -73,10 +73,10 @@ void tst_QCategoryAxis::cleanupTestCase()
 
 void tst_QCategoryAxis::init()
 {
-    m_intervalsaxis = new QCategoryAxis();
+    m_categoryaxis = new QCategoryAxis();
     m_series = new QLineSeries();
     *m_series << QPointF(-100, -100) << QPointF(0, 0) << QPointF(100, 100);
-    tst_QAbstractAxis::init(m_intervalsaxis, m_series);
+    tst_QAbstractAxis::init(m_categoryaxis, m_series);
     m_chart->addSeries(m_series);
     m_chart->createDefaultAxes();
 }
@@ -84,9 +84,9 @@ void tst_QCategoryAxis::init()
 void tst_QCategoryAxis::cleanup()
 {
     delete m_series;
-    delete m_intervalsaxis;
+    delete m_categoryaxis;
     m_series = 0;
-    m_intervalsaxis = 0;
+    m_categoryaxis = 0;
     tst_QAbstractAxis::cleanup();
 }
 
@@ -98,16 +98,16 @@ void tst_QCategoryAxis::qcategoryaxis()
 {
     qabstractaxis();
 
-    QVERIFY(qFuzzyIsNull(m_intervalsaxis->max()));
-    QVERIFY(qFuzzyIsNull(m_intervalsaxis->min()));
-    QCOMPARE(m_intervalsaxis->type(), QAbstractAxis::AxisTypeCategory);
+    QVERIFY(qFuzzyIsNull(m_categoryaxis->max()));
+    QVERIFY(qFuzzyIsNull(m_categoryaxis->min()));
+    QCOMPARE(m_categoryaxis->type(), QAbstractAxis::AxisTypeCategory);
 
-    m_chart->setAxisX(m_intervalsaxis, m_series);
+    m_chart->setAxisX(m_categoryaxis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
 
-    QVERIFY(!qFuzzyIsNull(m_intervalsaxis->max()));
-    QVERIFY(!qFuzzyIsNull(m_intervalsaxis->min()));
+    QVERIFY(!qFuzzyIsNull(m_categoryaxis->max()));
+    QVERIFY(!qFuzzyIsNull(m_categoryaxis->min()));
 }
 
 void tst_QCategoryAxis::max_raw_data()
@@ -122,12 +122,12 @@ void tst_QCategoryAxis::max_raw()
 {
     QFETCH(qreal, max);
 
-    QSignalSpy spy0(m_intervalsaxis, SIGNAL(maxChanged(qreal)));
-    QSignalSpy spy1(m_intervalsaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_intervalsaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy0(m_categoryaxis, SIGNAL(maxChanged(qreal)));
+    QSignalSpy spy1(m_categoryaxis, SIGNAL(minChanged(qreal)));
+    QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal, qreal)));
 
-    m_intervalsaxis->setMax(max);
-    QVERIFY2(qFuzzyIsNull(m_intervalsaxis->max() - max), "Not equal");
+    m_categoryaxis->setMax(max);
+    QVERIFY2(qFuzzyIsNull(m_categoryaxis->max() - max), "Not equal");
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 0);
@@ -141,7 +141,7 @@ void tst_QCategoryAxis::max_data()
 
 void tst_QCategoryAxis::max()
 {
-    m_chart->setAxisX(m_intervalsaxis, m_series);
+    m_chart->setAxisX(m_categoryaxis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     max_raw();
@@ -170,12 +170,12 @@ void tst_QCategoryAxis::min_raw()
 {
     QFETCH(qreal, min);
 
-    QSignalSpy spy0(m_intervalsaxis, SIGNAL(maxChanged(qreal)));
-    QSignalSpy spy1(m_intervalsaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_intervalsaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy0(m_categoryaxis, SIGNAL(maxChanged(qreal)));
+    QSignalSpy spy1(m_categoryaxis, SIGNAL(minChanged(qreal)));
+    QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal, qreal)));
 
-    m_intervalsaxis->setMin(min);
-    QVERIFY2(qFuzzyIsNull(m_intervalsaxis->min() - min), "Not equal");
+    m_categoryaxis->setMin(min);
+    QVERIFY2(qFuzzyIsNull(m_categoryaxis->min() - min), "Not equal");
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 1);
@@ -189,7 +189,7 @@ void tst_QCategoryAxis::min_data()
 
 void tst_QCategoryAxis::min()
 {
-    m_chart->setAxisX(m_intervalsaxis, m_series);
+    m_chart->setAxisX(m_categoryaxis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     min_raw();
@@ -213,6 +213,9 @@ void tst_QCategoryAxis::range_raw_data()
     QTest::newRow("1.0 - 101.0") << -1.0 << 101.0;
     QTest::newRow("25.0 - 75.0") << 25.0 << 75.0;
     QTest::newRow("101.0") << 40.0 << 60.0;
+    QTest::newRow("-35.0 - 0.0") << -35.0 << 10.0;
+    QTest::newRow("-35.0 - 0.0") << -35.0 << -15.0;
+    QTest::newRow("0.0 - 0.0") << -0.1 << 0.1;
 }
 
 void tst_QCategoryAxis::range_raw()
@@ -220,13 +223,13 @@ void tst_QCategoryAxis::range_raw()
     QFETCH(qreal, min);
     QFETCH(qreal, max);
 
-    QSignalSpy spy0(m_intervalsaxis, SIGNAL(maxChanged(qreal)));
-    QSignalSpy spy1(m_intervalsaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_intervalsaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy0(m_categoryaxis, SIGNAL(maxChanged(qreal)));
+    QSignalSpy spy1(m_categoryaxis, SIGNAL(minChanged(qreal)));
+    QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal, qreal)));
 
-    m_intervalsaxis->setRange(min, max);
-    QVERIFY2(qFuzzyIsNull(m_intervalsaxis->min() - min), "Min not equal");
-    QVERIFY2(qFuzzyIsNull(m_intervalsaxis->max() - max), "Max not equal");
+    m_categoryaxis->setRange(min, max);
+    QVERIFY2(qFuzzyIsNull(m_categoryaxis->min() - min), "Min not equal");
+    QVERIFY2(qFuzzyIsNull(m_categoryaxis->max() - max), "Max not equal");
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);
@@ -240,7 +243,7 @@ void tst_QCategoryAxis::range_data()
 
 void tst_QCategoryAxis::range()
 {
-    m_chart->setAxisX(m_intervalsaxis, m_series);
+    m_chart->setAxisX(m_categoryaxis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
     range_raw();
@@ -265,38 +268,38 @@ void tst_QCategoryAxis::interval_data()
 void tst_QCategoryAxis::interval()
 {
     // append one correct interval
-    m_intervalsaxis->append("first", (qreal)45);
-    QCOMPARE(m_intervalsaxis->categoryStart("first"), (qreal)0);
-    QCOMPARE(m_intervalsaxis->categoryEnd("first"), (qreal)45);
+    m_categoryaxis->append("first", (qreal)45);
+    QCOMPARE(m_categoryaxis->categoryStart("first"), (qreal)0);
+    QCOMPARE(m_categoryaxis->categoryEnd("first"), (qreal)45);
 
     // append one more correct interval
-    m_intervalsaxis->append("second", (qreal)75);
-    QCOMPARE(m_intervalsaxis->categoryStart("second"), (qreal)45);
-    QCOMPARE(m_intervalsaxis->categoryEnd("second"), (qreal)75);
+    m_categoryaxis->append("second", (qreal)75);
+    QCOMPARE(m_categoryaxis->categoryStart("second"), (qreal)45);
+    QCOMPARE(m_categoryaxis->categoryEnd("second"), (qreal)75);
 
     // append one incorrect interval
-    m_intervalsaxis->append("third", (qreal)15);
-    QCOMPARE(m_intervalsaxis->count(), 2);
-    QCOMPARE(m_intervalsaxis->categoryEnd(m_intervalsaxis->categoriesLabels().last()), (qreal)75);
+    m_categoryaxis->append("third", (qreal)15);
+    QCOMPARE(m_categoryaxis->count(), 2);
+    QCOMPARE(m_categoryaxis->categoryEnd(m_categoryaxis->categoriesLabels().last()), (qreal)75);
 //    QCOMPARE(intervalMax("first"), (qreal)75);
 
     // append one more correct interval
-    m_intervalsaxis->append("third", (qreal)100);
-    QCOMPARE(m_intervalsaxis->count(), 3);
-    QCOMPARE(m_intervalsaxis->categoryStart("third"), (qreal)75);
-    QCOMPARE(m_intervalsaxis->categoryEnd("third"), (qreal)100);
+    m_categoryaxis->append("third", (qreal)100);
+    QCOMPARE(m_categoryaxis->count(), 3);
+    QCOMPARE(m_categoryaxis->categoryStart("third"), (qreal)75);
+    QCOMPARE(m_categoryaxis->categoryEnd("third"), (qreal)100);
 
     // remove one interval
-    m_intervalsaxis->remove("first");
-    QCOMPARE(m_intervalsaxis->count(), 2);
-    QCOMPARE(m_intervalsaxis->categoryStart("second"), (qreal)0); // second interval should extend to firstInterval minimum
-    QCOMPARE(m_intervalsaxis->categoryEnd("second"), (qreal)75);
+    m_categoryaxis->remove("first");
+    QCOMPARE(m_categoryaxis->count(), 2);
+    QCOMPARE(m_categoryaxis->categoryStart("second"), (qreal)0); // second interval should extend to firstInterval minimum
+    QCOMPARE(m_categoryaxis->categoryEnd("second"), (qreal)75);
 
     // remove one interval
-    m_intervalsaxis->replaceLabel("second", "replaced");
-    QCOMPARE(m_intervalsaxis->count(), 2);
-    QCOMPARE(m_intervalsaxis->categoryStart("replaced"), (qreal)0); // second interval should extend to firstInterval minimum
-    QCOMPARE(m_intervalsaxis->categoryEnd("replaced"), (qreal)75);
+    m_categoryaxis->replaceLabel("second", "replaced");
+    QCOMPARE(m_categoryaxis->count(), 2);
+    QCOMPARE(m_categoryaxis->categoryStart("replaced"), (qreal)0); // second interval should extend to firstInterval minimum
+    QCOMPARE(m_categoryaxis->categoryEnd("replaced"), (qreal)75);
 }
 
 QTEST_MAIN(tst_QCategoryAxis)

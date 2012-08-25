@@ -47,17 +47,19 @@ QVector<qreal> ChartCategoryAxisY::calculateLayout() const
     if (tickCount < 2)
         return points;
 
-    points.resize(tickCount);
-
-    qreal scale = m_rect.height() / axis->max();
-    for (int i = 0; i < tickCount; ++i)
-        if (i < tickCount - 1) {
-            int y = -axis->categoryStart(axis->categoriesLabels().at(i)) * scale + m_rect.bottom();
-            points[i] = y;
-        } else {
-            int y = -axis->categoryEnd(axis->categoriesLabels().at(i - 1))  * scale + m_rect.bottom();
-            points[i] = y;
-        }
+    qreal range = axis->max() - axis->min();
+    if (range > 0) {
+        points.resize(tickCount);
+        qreal scale = m_rect.height() / range;
+        for (int i = 0; i < tickCount; ++i)
+            if (i < tickCount - 1) {
+                int y = -(axis->categoryStart(axis->categoriesLabels().at(i)) - axis->min()) * scale + m_rect.bottom();
+                points[i] = y;
+            } else {
+                int y = -(axis->categoryEnd(axis->categoriesLabels().at(i - 1)) - axis->min())  * scale + m_rect.bottom();
+                points[i] = y;
+            }
+    }
 
     return points;
 }
