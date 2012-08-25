@@ -22,6 +22,7 @@ Widget::Widget(QWidget *parent)
     QChart *chart = chartView->chart();
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->legend()->setVisible(false);
+    chart->setTitle("Nested donuts example");
     //! [1]
 
     //! [2]
