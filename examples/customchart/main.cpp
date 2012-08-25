@@ -74,8 +74,8 @@ int main(int argc, char *argv[])
     // Customize axis colors
     QPen axisPen(QRgb(0xd18952));
     axisPen.setWidth(2);
-    axisX->setAxisPen(axisPen);
-    axisY->setAxisPen(axisPen);
+    axisX->setLinePen(axisPen);
+    axisY->setLinePen(axisPen);
 
     // Customize axis label colors
     QBrush axisBrush(Qt::white);

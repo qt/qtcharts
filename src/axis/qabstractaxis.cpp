@@ -278,7 +278,7 @@ QAbstractAxis::~QAbstractAxis()
 /*!
   Sets \a pen used to draw axis line and ticks.
  */
-void QAbstractAxis::setAxisPen(const QPen &pen)
+void QAbstractAxis::setLinePen(const QPen &pen)
 {
 	if (d_ptr->m_axisPen!=pen) {
 	    d_ptr->m_axisPen = pen;
@@ -289,22 +289,22 @@ void QAbstractAxis::setAxisPen(const QPen &pen)
 /*!
   Returns pen used to draw axis and ticks.
 */
-QPen QAbstractAxis::axisPen() const
+QPen QAbstractAxis::linePen() const
 {
     return d_ptr->m_axisPen;
 }
 
-void QAbstractAxis::setAxisPenColor(QColor color)
+void QAbstractAxis::setLinePenColor(QColor color)
 {
     QPen p = d_ptr->m_axisPen;
     if (p.color() != color) {
         p.setColor(color);
-        setAxisPen(p);
+        setLinePen(p);
         emit colorChanged(color);
     }
 }
 
-QColor QAbstractAxis::axisPenColor() const
+QColor QAbstractAxis::linePenColor() const
 {
     return d_ptr->m_axisPen.color();
 }
@@ -312,16 +312,16 @@ QColor QAbstractAxis::axisPenColor() const
 /*!
   Sets if axis and ticks are \a visible.
  */
-void QAbstractAxis::setArrowVisible(bool visible)
+void QAbstractAxis::setLineVisible(bool visible)
 {
     if (d_ptr->m_arrowVisible != visible) {
         d_ptr->m_arrowVisible = visible;
         d_ptr->emitUpdated();
-        emit arrowVisibleChanged(visible);
+        emit lineVisibleChanged(visible);
 	}
 }
 
-bool QAbstractAxis::isArrowVisible() const
+bool QAbstractAxis::isLineVisible() const
 {
     return d_ptr->m_arrowVisible;
 }

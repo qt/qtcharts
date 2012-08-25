@@ -49,10 +49,10 @@ void tst_QAbstractAxis::cleanup()
 
 void tst_QAbstractAxis::qabstractaxis()
 {
-    QCOMPARE(m_axis->axisPen(), QPen());
+    QCOMPARE(m_axis->linePen(), QPen());
     //TODO QCOMPARE(m_axis->axisPenColor(), QColor());
     QCOMPARE(m_axis->gridLinePen(), QPen());
-    QCOMPARE(m_axis->isArrowVisible(), true);
+    QCOMPARE(m_axis->isLineVisible(), true);
     QCOMPARE(m_axis->isGridLineVisible(), true);
     QCOMPARE(m_axis->isVisible(), false);
     QCOMPARE(m_axis->labelsAngle(), 0);
@@ -62,9 +62,9 @@ void tst_QAbstractAxis::qabstractaxis()
     QCOMPARE(m_axis->labelsPen(), QPen());
     QCOMPARE(m_axis->labelsVisible(), true);
     QCOMPARE(m_axis->orientation(), Qt::Orientation(0));
-    m_axis->setArrowVisible(false);
-    m_axis->setAxisPen(QPen());
-    m_axis->setAxisPenColor(QColor());
+    m_axis->setLineVisible(false);
+    m_axis->setLinePen(QPen());
+    m_axis->setLinePenColor(QColor());
     m_axis->setGridLinePen(QPen());
     m_axis->setGridLineVisible(false);
     m_axis->setLabelsAngle(-1);
@@ -114,8 +114,8 @@ void tst_QAbstractAxis::axisPen()
     QSignalSpy spy7(m_axis, SIGNAL(shadesVisibleChanged(bool)));
     QSignalSpy spy8(m_axis, SIGNAL(visibleChanged(bool)));
 
-    m_axis->setAxisPen(axisPen);
-    QCOMPARE(m_axis->axisPen(), axisPen);
+    m_axis->setLinePen(axisPen);
+    QCOMPARE(m_axis->linePen(), axisPen);
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 0);
@@ -197,7 +197,7 @@ void tst_QAbstractAxis::arrowVisible()
 {
     QFETCH(bool, arrowVisible);
 
-    m_axis->setArrowVisible(!arrowVisible);
+    m_axis->setLineVisible(!arrowVisible);
 
     QSignalSpy spy0(m_axis, SIGNAL(arrowVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
@@ -209,8 +209,8 @@ void tst_QAbstractAxis::arrowVisible()
     QSignalSpy spy7(m_axis, SIGNAL(shadesVisibleChanged(bool)));
     QSignalSpy spy8(m_axis, SIGNAL(visibleChanged(bool)));
 
-    m_axis->setArrowVisible(arrowVisible);
-    QCOMPARE(m_axis->isArrowVisible(), arrowVisible);
+    m_axis->setLineVisible(arrowVisible);
+    QCOMPARE(m_axis->isLineVisible(), arrowVisible);
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 0);
@@ -225,7 +225,7 @@ void tst_QAbstractAxis::arrowVisible()
     m_chart->setAxisX(m_axis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
-    QCOMPARE(m_axis->isArrowVisible(), arrowVisible);
+    QCOMPARE(m_axis->isLineVisible(), arrowVisible);
 }
 
 void tst_QAbstractAxis::gridLineVisible_data()

@@ -34,8 +34,8 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
 {
 	Q_OBJECT
 	Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
-    Q_PROPERTY(bool arrowVisible READ isArrowVisible WRITE setArrowVisible NOTIFY arrowVisibleChanged)
-    Q_PROPERTY(QColor color READ axisPenColor WRITE setAxisPenColor NOTIFY colorChanged)
+    Q_PROPERTY(bool arrowVisible READ isLineVisible WRITE setLineVisible NOTIFY lineVisibleChanged)
+    Q_PROPERTY(QColor color READ linePenColor WRITE setLinePenColor NOTIFY colorChanged)
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
     Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle)
     Q_PROPERTY(QFont labelsFont READ labelsFont WRITE setLabelsFont)
@@ -71,12 +71,12 @@ public:
 
 
     //axis handling
-    bool isArrowVisible() const;
-    void setArrowVisible(bool visible = true);
-    void setAxisPen(const QPen &pen);
-    QPen axisPen() const;
-    void setAxisPenColor(QColor color);
-    QColor axisPenColor() const;
+    bool isLineVisible() const;
+    void setLineVisible(bool visible = true);
+    void setLinePen(const QPen &pen);
+    QPen linePen() const;
+    void setLinePenColor(QColor color);
+    QColor linePenColor() const;
 
     //grid handling
     bool isGridLineVisible() const;
@@ -122,7 +122,7 @@ public:
 
 Q_SIGNALS:
     void visibleChanged(bool visible);
-    void arrowVisibleChanged(bool visible);
+    void lineVisibleChanged(bool visible);
     void labelsVisibleChanged(bool visible);
     void gridVisibleChanged(bool visible);
     void colorChanged(QColor color);

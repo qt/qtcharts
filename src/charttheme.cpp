@@ -266,7 +266,7 @@ void ChartTheme::decorate(QAbstractAxis *axis)
 
     bool axisX = axis->orientation()== Qt::Horizontal;
 
-    if (axis->isArrowVisible()) {
+    if (axis->isLineVisible()) {
 
         if(m_force || brush == axis->labelsBrush()){
             axis->setLabelsBrush(m_labelBrush);
@@ -294,8 +294,8 @@ void ChartTheme::decorate(QAbstractAxis *axis)
             }
         }
 
-        if(m_force || pen == axis->axisPen()){
-            axis->setAxisPen(m_axisLinePen);
+        if(m_force || pen == axis->linePen()){
+            axis->setLinePen(m_axisLinePen);
         }
 
         if(m_force || pen == axis->gridLinePen()){

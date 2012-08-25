@@ -299,12 +299,12 @@ void ChartAxis::handleAxisUpdated()
 
     bool visible = m_chartAxis->isVisible();
 
-    setArrowVisibility(visible && m_chartAxis->isArrowVisible());
+    setArrowVisibility(visible && m_chartAxis->isLineVisible());
     setGridVisibility(visible && m_chartAxis->isGridLineVisible());
     setLabelsVisibility(visible && m_chartAxis->labelsVisible());
     setShadesVisibility(visible && m_chartAxis->shadesVisible());
     setLabelsAngle(m_chartAxis->labelsAngle());
-    setArrowPen(m_chartAxis->axisPen());
+    setArrowPen(m_chartAxis->linePen());
     setLabelsPen(m_chartAxis->labelsPen());
     setLabelsBrush(m_chartAxis->labelsBrush());
     setLabelsFont(m_chartAxis->labelsFont());
