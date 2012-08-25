@@ -1,0 +1,8 @@
+/*!
+     \example examples/donutchart
+     \title Donutchart Example
+     \subtitle
+
+     The example shows how to create simple donut chart and do some customizations to a slice.
+     \image examples_donut.png
+*/

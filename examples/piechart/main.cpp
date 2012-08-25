@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple piechart example");
+    chart->legend()->hide();
 //![3]
 
 //![4]
