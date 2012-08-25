@@ -169,8 +169,17 @@ void PieSliceItem::updateGeometry()
         m_labelTextRect.moveBottomLeft(labelTextStart);
         break;
     case QPieSlice::LabelInsideHorizontal:
-    case QPieSlice::LabelInsideTangential:
+    case QPieSlice::LabelInsideTangential:{
+        QPointF textCenter;
+        if (m_data.m_holeRadius > 0)
+            textCenter = m_data.m_center + offset(centerAngle, m_data.m_holeRadius + (m_data.m_radius - m_data.m_holeRadius) / 2);
+        else
+            textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
+        m_labelTextRect.moveCenter(textCenter);
+        break;
+    }
     case QPieSlice::LabelInsideNormal:{
+        // TODO: align the label text to the slice arc insead of half the radius
         QPointF textCenter;
         if (m_data.m_holeRadius > 0)
             textCenter = m_data.m_center + offset(centerAngle, m_data.m_holeRadius + (m_data.m_radius - m_data.m_holeRadius) / 2);

@@ -741,7 +741,6 @@ QPieSeriesPrivate::QPieSeriesPrivate(QPieSeries *parent) :
     m_pieStartAngle(0),
     m_pieEndAngle(360),
     m_sum(0),
-//    m_donutChart(false),
     m_holeRelativeSize(0.0)
 {
 }

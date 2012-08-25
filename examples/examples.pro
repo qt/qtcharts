@@ -31,4 +31,5 @@ SUBDIRS += \
            donutbreakdown \
            scrollchart \
            datetimeaxis \
-           populationpyramid
+           populationpyramid \
+           donutchart
