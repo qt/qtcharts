@@ -72,12 +72,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \property QAbstractAxis::arrowVisible
-  The visibility of the axis arrow
+  \property QAbstractAxis::lineVisible
+  The visibility of the axis line
 */
 /*!
-  \qmlproperty bool AbstractAxis::arrrowVisible
-  The visibility of the axis arrow
+  \qmlproperty bool AbstractAxis::lineVisible
+  The visibility of the axis line
 */
 
 /*!
@@ -183,12 +183,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \fn void QAbstractAxis::arrowVisibleChanged(bool visible)
-  Visiblity of the axis arrow has changed to \a visible.
+  \fn void QAbstractAxis::lineVisibleChanged(bool visible)
+  Visiblity of the axis line has changed to \a visible.
 */
 /*!
-  \qmlsignal AbstractAxis::onArrowVisibleChanged(bool visible)
-  Visiblity of the axis arrow has changed to \a visible.
+  \qmlsignal AbstractAxis::onLineVisibleChanged(bool visible)
+  Visiblity of the axis line has changed to \a visible.
 */
 
 /*!
