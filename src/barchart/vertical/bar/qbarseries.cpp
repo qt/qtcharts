@@ -72,6 +72,9 @@ QAbstractSeries::SeriesType QBarSeries::type() const
     return QAbstractSeries::SeriesTypeBar;
 }
 
+/*!
+    Destructor. Removes series from chart.
+*/
 QBarSeries::~QBarSeries()
 {
     Q_D(QBarSeries);

@@ -64,6 +64,9 @@ QStackedBarSeries::QStackedBarSeries(QObject *parent)
 {
 }
 
+/*!
+    Destructor. Removes series from chart.
+*/
 QStackedBarSeries::~QStackedBarSeries()
 {
     Q_D(QStackedBarSeries);

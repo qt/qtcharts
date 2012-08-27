@@ -59,8 +59,6 @@ public:
     void setLabelsVisible(bool visible = true);
     bool isLabelsVisible() const;
 
-    // TODO. Good name for this. This affects how bars are laid out on chart. (for example with pyramid chart)
-    // Also do we support same for stacked and percent bar charts or just normal bar charts?
     void setGrouping(bool grouping = true);
 
 protected:

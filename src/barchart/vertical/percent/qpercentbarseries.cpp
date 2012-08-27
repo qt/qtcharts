@@ -63,6 +63,9 @@ QPercentBarSeries::QPercentBarSeries(QObject *parent)
 {
 }
 
+/*!
+    Destructor. Removes series from chart.
+*/
 QPercentBarSeries::~QPercentBarSeries()
 {
     Q_D(QPercentBarSeries);

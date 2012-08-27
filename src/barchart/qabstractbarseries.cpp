@@ -189,6 +189,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     This is depreciated constructor.
+    \a parent
 */
 QAbstractBarSeries::QAbstractBarSeries(QObject *parent) :
     QAbstractSeries(*(QAbstractBarSeriesPrivate*)(0),parent)
@@ -384,6 +385,11 @@ bool QAbstractBarSeries::isLabelsVisible() const
     return d->m_labelsVisible;
 }
 
+/*!
+    Sets the grouped drawing mode for bars. If \a grouping is true, then the bars
+    are drawn at same position inside group. Can be used for example to draw negative bars
+    at same position on axis than positive bars.
+*/
 void QAbstractBarSeries::setGrouping(bool grouping)
 {
     Q_D(QAbstractBarSeries);
