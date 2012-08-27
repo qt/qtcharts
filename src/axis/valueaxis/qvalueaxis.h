@@ -56,6 +56,9 @@ public:
     void setTickCount(int count);
     int tickCount() const;
 
+    void setLabelFormat(const QString &format);
+    QString labelFormat() const;
+
     void setNiceNumbersEnabled(bool enable = true);
     bool niceNumbersEnabled() const;
 

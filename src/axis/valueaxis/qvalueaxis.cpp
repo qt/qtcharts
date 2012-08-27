@@ -248,6 +248,18 @@ bool  QValueAxis::niceNumbersEnabled() const
     return d->m_niceNumbers;
 }
 
+void QValueAxis::setLabelFormat(const QString &format)
+{
+    Q_D(QValueAxis);
+    d->m_format = format;
+}
+
+QString QValueAxis::labelFormat() const
+{
+    Q_D(const QValueAxis);
+    return d->m_format;
+}
+
 /*!
   Returns the type of the axis
 */
@@ -263,7 +275,8 @@ QValueAxisPrivate::QValueAxisPrivate(QValueAxis* q):
     m_min(0),
     m_max(0),
     m_tickCount(5),
-    m_niceNumbers(false)
+    m_niceNumbers(false),
+    m_format("%g")
 {
 
 }

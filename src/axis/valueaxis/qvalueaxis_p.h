@@ -64,6 +64,7 @@ private:
     qreal m_max;
     int m_tickCount;
     bool m_niceNumbers;
+    QString m_format;
     Q_DECLARE_PUBLIC(QValueAxis)
 };
 

@@ -25,6 +25,7 @@
 #include "domain_p.h"
 #include <qmath.h>
 #include <QDateTime>
+#include <QValueAxis>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -360,9 +361,13 @@ void ChartAxis::createNumberLabels(QStringList &labels,qreal min, qreal max, int
 
     int n = qMax(int(-qFloor(log10((max-min)/(ticks-1)))),0);
     n++;
+
+    QValueAxis *axis = qobject_cast<QValueAxis *>(m_chartAxis);
+    QByteArray array = axis->labelFormat().toAscii();
     for (int i=0; i< ticks; i++) {
         qreal value = min + (i * (max - min)/ (ticks-1));
-        labels << QString::number(value,'f',n);
+        QString label;
+        labels << label.sprintf(array, value);;
     }
 }
 
