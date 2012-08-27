@@ -80,23 +80,23 @@ QCategoryAxis::QCategoryAxis(QCategoryAxisPrivate &d,QObject *parent):QValueAxis
 /*!
     Appends new category to the axis with an \a categoryLabel.
     Category label has to be unique.
-    Parameter \a categoryHighEnd specifies the high end limit of the category.
+    Parameter \a categoryEndValue specifies the high end limit of the category.
     It has to be greater than the high end limit of the previous category.
     Otherwise the method returns without adding a new category.
 */
-void QCategoryAxis::append(const QString& categoryLabel, qreal categoryHighEnd)
+void QCategoryAxis::append(const QString& categoryLabel, qreal categoryEndValue)
 {
     Q_D(QCategoryAxis);
 
     if (!d->m_categories.contains(categoryLabel))
     {
         if(d->m_categories.isEmpty()){
-            Range range(d->m_categoryMinimum, categoryHighEnd);
+            Range range(d->m_categoryMinimum, categoryEndValue);
             d->m_categoriesMap.insert(categoryLabel, range);
             d->m_categories.append(categoryLabel);
-        }else if (categoryHighEnd > endValue(d->m_categories.last())){
+        }else if (categoryEndValue > endValue(d->m_categories.last())){
             Range previousRange = d->m_categoriesMap.value(d->m_categories.last());
-            d->m_categoriesMap.insert(categoryLabel, Range(previousRange.second, categoryHighEnd));
+            d->m_categoriesMap.insert(categoryLabel, Range(previousRange.second, categoryEndValue));
             d->m_categories.append(categoryLabel);
         }
     }
