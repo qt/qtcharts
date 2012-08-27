@@ -33,8 +33,8 @@ class DeclarativeLineSeries : public QLineSeries, public DeclarativeXySeries, pu
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
@@ -61,8 +61,8 @@ public:
 
 Q_SIGNALS:
     void countChanged(int count);
-    void axisXChanged(QAbstractAxis *axis);
-    void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);

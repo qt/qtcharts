@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.0
+import QtCommercial.Chart 1.1
 import QmlCustomModel 1.0
 
 Rectangle {

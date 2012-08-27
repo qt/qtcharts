@@ -63,8 +63,8 @@ class DeclarativeBarSeries : public QBarSeries, public QDeclarativeParserStatus
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
@@ -88,8 +88,8 @@ public: // from QDeclarativeParserStatus
     void componentComplete();
 
 Q_SIGNALS:
-    void axisXChanged(QAbstractAxis *axis);
-    void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
@@ -103,8 +103,8 @@ class DeclarativeStackedBarSeries : public QStackedBarSeries, public QDeclarativ
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
@@ -128,8 +128,8 @@ public: // from QDeclarativeParserStatus
     void componentComplete();
 
 Q_SIGNALS:
-    void axisXChanged(QAbstractAxis *axis);
-    void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
@@ -143,8 +143,8 @@ class DeclarativePercentBarSeries : public QPercentBarSeries, public QDeclarativ
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
@@ -168,8 +168,8 @@ public: // from QDeclarativeParserStatus
     void componentComplete();
 
 Q_SIGNALS:
-    void axisXChanged(QAbstractAxis *axis);
-    void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
@@ -183,8 +183,8 @@ class DeclarativeHorizontalBarSeries : public QHorizontalBarSeries, public QDecl
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
@@ -208,8 +208,8 @@ public: // from QDeclarativeParserStatus
     void componentComplete();
 
 Q_SIGNALS:
-    void axisXChanged(QAbstractAxis *axis);
-    void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
@@ -223,8 +223,8 @@ class DeclarativeHorizontalStackedBarSeries : public QHorizontalStackedBarSeries
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
@@ -248,8 +248,8 @@ public: // from QDeclarativeParserStatus
     void componentComplete();
 
 Q_SIGNALS:
-    void axisXChanged(QAbstractAxis *axis);
-    void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
@@ -263,8 +263,8 @@ class DeclarativeHorizontalPercentBarSeries : public QHorizontalPercentBarSeries
 {
     Q_OBJECT
     Q_INTERFACES(QDeclarativeParserStatus)
-    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged)
-    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged)
+    Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
+    Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> seriesChildren READ seriesChildren)
     Q_CLASSINFO("DefaultProperty", "seriesChildren")
 
@@ -288,8 +288,8 @@ public: // from QDeclarativeParserStatus
     void componentComplete();
 
 Q_SIGNALS:
-    void axisXChanged(QAbstractAxis *axis);
-    void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);

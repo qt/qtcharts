@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.0
+import QtCommercial.Chart 1.1
 
 ChartView {
     property variant series: lineSeries

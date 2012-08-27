@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.0
+import QtCommercial.Chart 1.1
 
 ChartView {
     id: chartView
@@ -67,29 +67,29 @@ ChartView {
 
 
     ValueAxis{
-    onColorChanged:               console.log("axisX.onColorChanged: " + color);
-    onLabelsVisibleChanged:       console.log("axisX.onLabelsVisibleChanged: " + visible);
-    onLabelsColorChanged:         console.log("axisX.onLabelsColorChanged: " + color);
-    onVisibleChanged:             console.log("axisX.onVisibleChanged: " + visible);
-    onGridVisibleChanged:         console.log("axisX.onGridVisibleChanged: " + visible);
-    onShadesVisibleChanged:       console.log("axisX.onShadesVisibleChanged: " + visible);
-    onShadesColorChanged:         console.log("axisX.onShadesColorChanged: " + color);
-    onShadesBorderColorChanged:   console.log("axisX.onShadesBorderColorChanged: " + color);
-    onMinChanged:                 console.log("axisX.onMinChanged: " + min);
-    onMaxChanged:                 console.log("axisX.onMaxChanged: " + max);
+        onColorChanged:               console.log("axisX.onColorChanged: " + color);
+        onLabelsVisibleChanged:       console.log("axisX.onLabelsVisibleChanged: " + visible);
+        onLabelsColorChanged:         console.log("axisX.onLabelsColorChanged: " + color);
+        onVisibleChanged:             console.log("axisX.onVisibleChanged: " + visible);
+        onGridVisibleChanged:         console.log("axisX.onGridVisibleChanged: " + visible);
+        onShadesVisibleChanged:       console.log("axisX.onShadesVisibleChanged: " + visible);
+        onShadesColorChanged:         console.log("axisX.onShadesColorChanged: " + color);
+        onShadesBorderColorChanged:   console.log("axisX.onShadesBorderColorChanged: " + color);
+        onMinChanged:                 console.log("axisX.onMinChanged: " + min);
+        onMaxChanged:                 console.log("axisX.onMaxChanged: " + max);
     }
     
     ValueAxis{
-    onColorChanged:               console.log("axisY.onColorChanged: " + color);
-    onLabelsVisibleChanged:       console.log("axisY.onLabelsVisibleChanged: " + visible);
-    onLabelsColorChanged:         console.log("axisY.onLabelsColorChanged: " + color);
-    onVisibleChanged:             console.log("axisY.onVisibleChanged: " + visible);
-    onGridVisibleChanged:         console.log("axisY.onGridVisibleChanged: " + visible);
-    onShadesVisibleChanged:       console.log("axisY.onShadesVisibleChanged: " + visible);
-    onShadesColorChanged:         console.log("axisY.onShadesColorChanged: " + color);
-    onShadesBorderColorChanged:   console.log("axisY.onShadesBorderColorChanged: " + color);
-    onMinChanged:                 console.log("axisY.onMinChanged: " + min);
-    onMaxChanged:                 console.log("axisY.onMaxChanged: " + max);
+        onColorChanged:               console.log("axisY.onColorChanged: " + color);
+        onLabelsVisibleChanged:       console.log("axisY.onLabelsVisibleChanged: " + visible);
+        onLabelsColorChanged:         console.log("axisY.onLabelsColorChanged: " + color);
+        onVisibleChanged:             console.log("axisY.onVisibleChanged: " + visible);
+        onGridVisibleChanged:         console.log("axisY.onGridVisibleChanged: " + visible);
+        onShadesVisibleChanged:       console.log("axisY.onShadesVisibleChanged: " + visible);
+        onShadesColorChanged:         console.log("axisY.onShadesColorChanged: " + color);
+        onShadesBorderColorChanged:   console.log("axisY.onShadesBorderColorChanged: " + color);
+        onMinChanged:                 console.log("axisY.onMinChanged: " + min);
+        onMaxChanged:                 console.log("axisY.onMaxChanged: " + max);
     }
 
     Rectangle {

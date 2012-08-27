@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.0
+import QtCommercial.Chart 1.1
 
 ChartView {
     title: "Percent bar series"
@@ -33,7 +33,7 @@ ChartView {
     PercentBarSeries {
         id: mySeries
         name: "bar"
-        axisX: BarCategoriesAxis { categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
+        axisX: BarCategoryAxis { categories: ["2007", "2008", "2009", "2010", "2011", "2012" ] }
 
         BarSet { label: "Bob"; values: [2, 2, 3, 4, 5, 6]
             onClicked:                  console.log("barset.onClicked: " + index);
