@@ -19,7 +19,6 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.0
 
 Flow {
     flow: Flow.TopToBottom
