@@ -80,6 +80,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QValueAxis::labelFormat
+  Defines the label format for the axis.
+  See QString::sprintf() for the details.
+*/
+/*!
+  \qmlproperty real ValueAxis::labelFormat
+  Defines the label format for the axis.
+  See QString::sprintf() for the details.
+*/
+
+/*!
   \fn void QValueAxis::minChanged(qreal min)
   Axis emits signal when \a min of axis has changed.
 */

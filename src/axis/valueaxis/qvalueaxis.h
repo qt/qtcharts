@@ -34,6 +34,7 @@ class QTCOMMERCIALCHART_EXPORT QValueAxis : public QAbstractAxis
     Q_PROPERTY(bool niceNumbersEnabled READ niceNumbersEnabled WRITE setNiceNumbersEnabled)
     Q_PROPERTY(qreal min READ min WRITE setMin NOTIFY minChanged)
     Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
+    Q_PROPERTY(QString labelFormat READ labelFormat WRITE setLabelFormat)
 
 public:
     explicit QValueAxis(QObject *parent = 0);
