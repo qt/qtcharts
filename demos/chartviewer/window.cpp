@@ -429,7 +429,15 @@ void Window::showMenu(QChart* qchart)
     if (chosen) {
         Chart* chart = (Chart *) chosen->data().value<void *>();
         int index = m_chartHash[qchart];
-        m_baseLayout->removeItem(qchart);
+        //not in 4.7.2 m_baseLayout->removeItem(qchart);
+        for(int i = 0 ; i < m_baseLayout->count();++i)
+        {
+            if(m_baseLayout->itemAt(i)==qchart){
+                m_baseLayout->removeAt(i);
+                break;
+            }
+        }
+
         m_chartHash.remove(qchart);
         QChart* newChart = chart->createChart(m_dataTable);
         m_baseLayout->addItem(newChart, index / 3, index % 3);
