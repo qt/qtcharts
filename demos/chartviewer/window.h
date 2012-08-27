@@ -55,6 +55,7 @@ private:
     QComboBox* createThemeBox();
     QComboBox* createAnimationBox();
     QComboBox* createLegendBox();
+    QComboBox* createTempleteBox();
     void connectSignals();
     void createProxyWidgets();
     void comboBoxFocused(QComboBox *combox);
@@ -63,7 +64,9 @@ private:
     inline void checkOpenGL();
     inline void checkTheme();
     inline void checkState();
-    void showMenu(QChart * chart);
+    inline void checkTemplate();
+    QMenu* createMenu();
+    void handleMenu(QChart * chart);
     QAction* createMenuAction(QMenu *menu, const QIcon &icon, const QString &text, const QVariant &data);
 
 protected:
@@ -86,6 +89,7 @@ private:
     QCheckBox *m_antialiasCheckBox;
     QComboBox *m_animatedComboBox;
     QComboBox *m_legendComboBox;
+    QComboBox *m_templateComboBox;
     QCheckBox *m_openGLCheckBox;
     QCheckBox *m_zoomCheckBox;
     QCheckBox *m_scrollCheckBox;
@@ -95,6 +99,7 @@ private:
     QMenu* m_menu;
     State m_state;
     State m_currentState;
+    int m_template;
 
     friend class ComboBox;
 };

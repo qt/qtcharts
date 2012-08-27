@@ -28,7 +28,7 @@ class HorizontalBarChart: public Chart
 public:
     QString name() { return QObject::tr("HorizontalBarChart"); }
     QString category()  { return QObject::tr("BarSeries"); }
-    QString subCategory() { return QObject::tr("Vertical"); }
+    QString subCategory() { return QObject::tr("Horizontal"); }
 
     QChart* createChart(const DataTable& table)
     {

@@ -26,7 +26,7 @@ class PieChart: public Chart
 {
 public:
     QString name() { return QObject::tr("PieChart"); }
-    QString category()  { return QString::null; }
+    QString category()  { return QObject::tr("PieSeries"); }
     QString subCategory() { return QString::null; }
 
     QChart* createChart(const DataTable& table)

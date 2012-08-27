@@ -53,14 +53,16 @@ Window::Window(QWidget* parent) :
     m_antialiasCheckBox(0),
     m_animatedComboBox(0),
     m_legendComboBox(0),
+    m_templateComboBox(0),
     m_openGLCheckBox(0),
     m_zoomCheckBox(0),
     m_scrollCheckBox(0),
     m_rubberBand(new QGraphicsRectItem()),
     m_baseLayout(new QGraphicsGridLayout()),
-    m_menu(new QMenu(this)),
+    m_menu(createMenu()),
     m_state(NoState),
-    m_currentState(NoState)
+    m_currentState(NoState),
+    m_template(0)
 {
     createProxyWidgets();
     connectSignals();
@@ -77,6 +79,8 @@ Window::Window(QWidget* parent) :
     settingsLayout->addItem(m_widgetHash["animatedComboBox"]);
     settingsLayout->addItem(m_widgetHash["legendLabel"]);
     settingsLayout->addItem(m_widgetHash["legendComboBox"]);
+    settingsLayout->addItem(m_widgetHash["templateLabel"]);
+    settingsLayout->addItem(m_widgetHash["templateComboBox"]);
     settingsLayout->addItem(m_widgetHash["scrollCheckBox"]);
     settingsLayout->addItem(m_widgetHash["zoomCheckBox"]);
     settingsLayout->addStretch();
@@ -85,14 +89,17 @@ Window::Window(QWidget* parent) :
     //create charts
     Charts::ChartList list = Charts::chartList();
 
-    for (int i = 0; i < 9 && i < list.size(); ++i) {
-        QChart* chart = list.at(i)->createChart(m_dataTable);
+    for (int i = 0; i < 9; ++i) {
+        QChart* chart = 0;
+        if(i<list.size()){
+        chart = list.at(i)->createChart(m_dataTable);
+        }else{
+        chart = new QChart();
+        chart->setTitle(tr("Empty"));
+        }
+
         m_baseLayout->addItem(chart, i / 3, i % 3);
         m_chartHash[chart] = i;
-    }
-
-    foreach(Chart* chart, list) {
-        createMenuAction(m_menu, QIcon(), chart->name(), qVariantFromValue((void *) chart));
     }
 
     m_form = new QGraphicsWidget();
@@ -123,6 +130,7 @@ void Window::connectSignals()
     QObject::connect(m_scrollCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_animatedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
+    QObject::connect(m_templateComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
 }
 
 void Window::createProxyWidgets()
@@ -134,6 +142,7 @@ void Window::createProxyWidgets()
     m_openGLCheckBox = new QCheckBox(tr("OpenGL"));
     m_zoomCheckBox = new QCheckBox(tr("Zoom"));
     m_scrollCheckBox = new QCheckBox(tr("Scroll"));
+    m_templateComboBox= createTempleteBox();
     m_widgetHash["themeComboBox"] = m_scene->addWidget(m_themeComboBox);
     m_widgetHash["antialiasCheckBox"] = m_scene->addWidget(m_antialiasCheckBox);
     m_widgetHash["animatedComboBox"] = m_scene->addWidget(m_animatedComboBox);
@@ -142,8 +151,11 @@ void Window::createProxyWidgets()
     m_widgetHash["themeLabel"] = m_scene->addWidget(new QLabel("Theme"));
     m_widgetHash["animationsLabel"] = m_scene->addWidget(new QLabel("Animations"));
     m_widgetHash["legendLabel"] = m_scene->addWidget(new QLabel("Legend"));
+    m_widgetHash["templateLabel"] = m_scene->addWidget(new QLabel("Chart template"));
+    m_widgetHash["templateComboBox"] = m_scene->addWidget(m_templateComboBox);
     m_widgetHash["zoomCheckBox"] = m_scene->addWidget(m_zoomCheckBox);
     m_widgetHash["scrollCheckBox"] = m_scene->addWidget(m_scrollCheckBox);
+
 }
 
 QComboBox* Window::createThemeBox()
@@ -180,8 +192,27 @@ QComboBox* Window::createLegendBox()
     return legendComboBox;
 }
 
+QComboBox* Window::createTempleteBox()
+{
+    QComboBox* templateComboBox = new ComboBox(this);
+    templateComboBox->addItem("No Template", 0);
+
+    Charts::ChartList list = Charts::chartList();
+    QMultiMap<QString, Chart*> categoryMap;
+
+    foreach(Chart* chart, list) {
+          categoryMap.insertMulti(chart->category(), chart);
+    }
+    foreach(const QString& category, categoryMap.uniqueKeys()) {
+        templateComboBox->addItem(category, category);
+    }
+    return templateComboBox;
+}
+
+
 void Window::updateUI()
 {
+    checkTemplate();
     checkOpenGL();
     checkTheme();
     checkAnimationOptions();
@@ -258,6 +289,51 @@ void Window::checkState()
     }
 }
 
+void Window::checkTemplate()
+{
+
+    int index = m_templateComboBox->currentIndex();
+    if (m_template == index || index == 0)
+        return;
+
+    QString category = m_templateComboBox->itemData(index).toString();
+    Charts::ChartList list = Charts::chartList();
+
+    QList<QChart*> qchartList = m_chartHash.keys();
+
+    foreach(QChart* qchart,qchartList){
+    for(int i = 0 ; i < m_baseLayout->count();++i)
+           {
+               if(m_baseLayout->itemAt(i)==qchart){
+                   m_baseLayout->removeAt(i);
+                   break;
+               }
+           }
+    }
+
+    m_chartHash.clear();
+    qDeleteAll(qchartList);
+
+    QChart* qchart(0);
+
+    int j=0;
+    for (int i = 0; i < list.size(); ++i) {
+        Chart* chart = list.at(i);
+        if (chart->category() == category && j < 9) {
+            qchart = list.at(i)->createChart(m_dataTable);
+            m_baseLayout->addItem(qchart, j / 3, j % 3);
+            m_chartHash[qchart] = j;
+            j++;
+        }
+    }
+    for (; j < 9; ++j) {
+        qchart = new QChart();
+        qchart->setTitle(tr("Empty"));
+        m_baseLayout->addItem(qchart, j / 3, j % 3);
+        m_chartHash[qchart] = j;
+    }
+}
+
 void Window::checkTheme()
 {
     QChart::ChartTheme theme = (QChart::ChartTheme) m_themeComboBox->itemData(
@@ -321,8 +397,8 @@ void Window::mousePressEvent(QMouseEvent *event)
             if (plotArea.contains(m_origin)) {
                 m_currentState = m_state;
 
-                if (m_currentState == NoState) {
-                    showMenu(chart);
+                if (m_currentState == NoState && m_templateComboBox->currentIndex()==0) {
+                    handleMenu(chart);
                 }
                 break;
             }
@@ -422,7 +498,7 @@ void Window::comboBoxFocused(QComboBox *combobox)
     }
 }
 
-void Window::showMenu(QChart* qchart)
+void Window::handleMenu(QChart* qchart)
 {
     QAction *chosen = m_menu->exec(QCursor::pos());
 
@@ -446,6 +522,53 @@ void Window::showMenu(QChart* qchart)
         updateUI();
     }
 
+}
+
+QMenu* Window::createMenu()
+{
+    Charts::ChartList list = Charts::chartList();
+    QMultiMap<QString, Chart*> categoryMap;
+
+    QMenu* result = new QMenu(this);
+
+    foreach(Chart* chart, list) {
+        categoryMap.insertMulti(chart->category(), chart);
+    }
+
+    foreach(const QString& category, categoryMap.uniqueKeys()) {
+        QMenu* menu(0);
+        QMultiMap<QString, Chart*> subCategoryMap;
+        if (category.isEmpty()) {
+            menu = result;
+        }
+        else {
+            menu = new QMenu(category, this);
+            result->addMenu(menu);
+        }
+
+        foreach(Chart* chart , categoryMap.values(category)) {
+            subCategoryMap.insert(chart->subCategory(), chart);
+        }
+
+        foreach(const QString& subCategory, subCategoryMap.uniqueKeys()) {
+            QMenu* subMenu(0);
+            if (subCategory.isEmpty()) {
+                subMenu = menu;
+            }
+            else {
+                subMenu = new QMenu(subCategory, this);
+                menu->addMenu(subMenu);
+            }
+
+            foreach(Chart* chart , subCategoryMap.values(subCategory)) {
+
+                createMenuAction(subMenu, QIcon(), chart->name(),
+                    qVariantFromValue((void *) chart));
+            }
+        }
+    }
+
+    return result;
 }
 
 QAction* Window::createMenuAction(QMenu *menu, const QIcon &icon, const QString &text,
