@@ -1,13 +1,14 @@
-INCLUDEPATH += $$PWD 
+INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
-
-SOURCES+= \
-        linechart.cpp \
-        scatterchart.cpp \
-        splinechart.cpp \
-        piechart.cpp \
-        verticalstackedbarchart.cpp \
-        horizontalstackedbarchart.cpp \
-        verticalbarchart.cpp \
-        horizontalbarchart.cpp \
-        areachart.cpp
+SOURCES += linechart.cpp \
+    scatterchart.cpp \
+    splinechart.cpp \
+    verticalstackedbarchart.cpp \
+    horizontalstackedbarchart.cpp \
+    verticalbarchart.cpp \
+    horizontalbarchart.cpp \
+    horizontalpercentbarchart.cpp \
+    verticalpercentbarchart.cpp \
+    areachart.cpp \
+    piechart.cpp \
+    donutchart.cpp

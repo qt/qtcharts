@@ -296,6 +296,8 @@ void Window::checkTemplate()
     if (m_template == index || index == 0)
         return;
 
+    m_template = index;
+
     QString category = m_templateComboBox->itemData(index).toString();
     Charts::ChartList list = Charts::chartList();
 
