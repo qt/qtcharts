@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple horizontal percent barchart example");
-    chart->createDefaultAxes();
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 

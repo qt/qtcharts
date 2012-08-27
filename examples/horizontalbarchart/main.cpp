@@ -54,14 +54,12 @@ int main(int argc, char *argv[])
     series->append(set2);
     series->append(set3);
     series->append(set4);
-
 //![2]
 
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple horizontal barchart example");
-    chart->createDefaultAxes();
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
@@ -70,6 +68,7 @@ int main(int argc, char *argv[])
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     QBarCategoryAxis* axis = new QBarCategoryAxis();
     axis->append(categories);
+    chart->createDefaultAxes();
     chart->setAxisY(axis,series);
 //![4]
 
