@@ -59,6 +59,7 @@ int main(int argc, char *argv[])
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple stackedbarchart example");
+    chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
 //![4]
