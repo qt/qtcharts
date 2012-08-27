@@ -94,7 +94,6 @@ void tst_QHorizontalBarSeries::cleanup()
 {
     foreach(QBarSet* s, m_testSets) {
         m_barseries_with_sets->remove(s);
-        delete s;
     }
     m_testSets.clear();
 
