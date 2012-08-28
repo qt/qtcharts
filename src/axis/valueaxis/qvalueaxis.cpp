@@ -34,7 +34,19 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     ValueAxis can be setup to show axis line with tick marks, grid lines and shades.
-    Values of axis are drawn to position of ticks
+    Values of axis are drawn to position of ticks.
+
+    Example code on how to use QValueAxis.
+    \code
+    QChartView *chartView = new QChartView;
+    QLineSeries *series = new QLineSeries;
+    // ...
+    QValueAxis *axisX = new QValueAxis;
+    axisX->setRange(10, 20.5);
+    axisX->setTickCount(10);
+    axisX->setLabelFormat("%.2f");
+    chartView->chart()->setAxisX(series, axisX);
+    \endcode
 */
 
 /*!
