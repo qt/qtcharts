@@ -22,8 +22,12 @@ SUBDIRS += \
            qhorizontalpercentbarseries \
            qvalueaxis \
            qcategoryaxis \
-           qdatetimeaxis \
            qbarcategoryaxis
+
+!linux-arm*: {
+SUBDIRS += \
+           qdatetimeaxis
+}
 
 test_private:{
     SUBDIRS += domain chartdataset

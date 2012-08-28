@@ -3,14 +3,12 @@
 INCLUDEPATH += $$PWD \
     $$PWD/valueaxis \
     $$PWD/barcategoryaxis \
-    $$PWD/categoryaxis \
-    $$PWD/datetimeaxis
+    $$PWD/categoryaxis
 
 DEPENDPATH += $$PWD \
     $$PWD/valueaxis \
     $$PWD/barcategoryaxis \
-    $$PWD/categoryaxis \
-    $$PWD/datetimeaxis
+    $$PWD/categoryaxis
 
 SOURCES += \
     $$PWD/chartaxis.cpp \
@@ -23,10 +21,7 @@ SOURCES += \
     $$PWD/barcategoryaxis/qbarcategoryaxis.cpp \
     $$PWD/categoryaxis/chartcategoryaxisx.cpp \
     $$PWD/categoryaxis/chartcategoryaxisy.cpp \
-    $$PWD/categoryaxis/qcategoryaxis.cpp \
-    $$PWD/datetimeaxis/chartdatetimeaxisx.cpp \
-    $$PWD/datetimeaxis/chartdatetimeaxisy.cpp \
-    $$PWD/datetimeaxis/qdatetimeaxis.cpp
+    $$PWD/categoryaxis/qcategoryaxis.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/chartaxis_p.h \
@@ -39,14 +34,31 @@ PRIVATE_HEADERS += \
     $$PWD/barcategoryaxis/qbarcategoryaxis_p.h \
     $$PWD/categoryaxis/chartcategoryaxisx_p.h \
     $$PWD/categoryaxis/chartcategoryaxisy_p.h \
-    $$PWD/categoryaxis/qcategoryaxis_p.h \
-    $$PWD/datetimeaxis/chartdatetimeaxisx_p.h \
-    $$PWD/datetimeaxis/chartdatetimeaxisy_p.h \
-    $$PWD/datetimeaxis/qdatetimeaxis_p.h
+    $$PWD/categoryaxis/qcategoryaxis_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qabstractaxis.h \
     $$PWD/valueaxis/qvalueaxis.h \
     $$PWD/barcategoryaxis/qbarcategoryaxis.h \
-    $$PWD/categoryaxis/qcategoryaxis.h \
+    $$PWD/categoryaxis/qcategoryaxis.h
+
+!linux-arm*: {
+INCLUDEPATH += \
+    $$PWD/datetimeaxis
+
+DEPENDPATH += \
+    $$PWD/datetimeaxis
+
+SOURCES += \
+    $$PWD/datetimeaxis/chartdatetimeaxisx.cpp \
+    $$PWD/datetimeaxis/chartdatetimeaxisy.cpp \
+    $$PWD/datetimeaxis/qdatetimeaxis.cpp
+
+PRIVATE_HEADERS += \
+    $$PWD/datetimeaxis/chartdatetimeaxisx_p.h \
+    $$PWD/datetimeaxis/chartdatetimeaxisy_p.h \
+    $$PWD/datetimeaxis/qdatetimeaxis_p.h
+
+PUBLIC_HEADERS += \
     $$PWD/datetimeaxis/qdatetimeaxis.h
+}

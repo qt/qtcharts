@@ -24,12 +24,15 @@
 #include "qbarcategoryaxis.h"
 #include "qvalueaxis_p.h"
 #include "qcategoryaxis.h"
-#include "qdatetimeaxis.h"
 #include "qabstractseries_p.h"
 #include "qabstractbarseries.h"
 #include "qstackedbarseries.h"
 #include "qpercentbarseries.h"
 #include "qpieseries.h"
+
+#ifndef QT_ON_ARM
+    #include "qdatetimeaxis.h"
+#endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -187,9 +190,11 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type, Qt::Orient
     case QAbstractAxis::AxisTypeCategory:
         axis = new QCategoryAxis(this);
         break;
+#ifndef Q_WS_QWS
     case QAbstractAxis::AxisTypeDateTime:
         axis = new QDateTimeAxis(this);
         break;
+#endif
     default:
         axis = 0;
         break;

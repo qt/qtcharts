@@ -29,9 +29,12 @@
 #include "declarativescatterseries.h"
 #include "qbarcategoryaxis.h"
 #include "qvalueaxis.h"
-#include "qdatetimeaxis.h"
 #include "qcategoryaxis.h"
 #include "qabstractseries_p.h"
+
+#ifndef QT_ON_ARM
+    #include "qdatetimeaxis.h"
+#endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -638,9 +641,11 @@ void DeclarativeChart::createDefaultAxes(QAbstractSeries* series)
         case QAbstractAxis::AxisTypeCategory:
             m_chart->setAxisX(new QCategoryAxis(this), series);
             break;
+#ifndef QT_ON_ARM
         case QAbstractAxis::AxisTypeDateTime:
             m_chart->setAxisX(new QDateTimeAxis(this), series);
             break;
+#endif
         default:
             // Do nothing, assume AxisTypeNoAxis
             break;
@@ -659,9 +664,11 @@ void DeclarativeChart::createDefaultAxes(QAbstractSeries* series)
         case QAbstractAxis::AxisTypeCategory:
             m_chart->setAxisY(new QCategoryAxis(this), series);
             break;
+#ifndef QT_ON_ARM
         case QAbstractAxis::AxisTypeDateTime:
             m_chart->setAxisY(new QDateTimeAxis(this), series);
             break;
+#endif
         default:
             // Do nothing, assume AxisTypeNoAxis
             break;

@@ -30,6 +30,10 @@ SUBDIRS += \
            donut \
            donutbreakdown \
            scrollchart \
-           datetimeaxis \
            populationpyramid \
            donutchart
+
+!linux-arm*: {
+SUBDIRS += \
+    datetimeaxis
+}

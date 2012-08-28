@@ -64,6 +64,10 @@ mac: {
     QMAKE_LFLAGS *= -mmacosx-version-min=10.5
 }
 
+linux-arm*: {
+    DEFINES+=QT_ON_ARM
+}
+
 ##################### INCLUDES ############################################################
 
 
