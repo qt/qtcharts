@@ -150,7 +150,7 @@ private:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;
-    QRectF m_chartMargins;
+    QMargins m_chartMargins;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

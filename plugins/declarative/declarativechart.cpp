@@ -224,22 +224,24 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
 //    m_chart->axisX()->setNiceNumbersEnabled(false);
-    m_chartMargins = m_chart->margins();
+    //TODO: check what should be really here margins or platArea ?!
+    m_chartMargins = m_chart->minimumMargins();
     connect(m_chart, SIGNAL(marginsChanged(QRectF)), this, SLOT(handleMarginsChanged(QRectF)));
 }
 
 void DeclarativeChart::handleMarginsChanged(QRectF newMargins)
 {
+    //TODO: check what should be really here margins or platArea ?!
     if (m_chartMargins.top() != newMargins.top())
-        topMarginChanged(m_chart->margins().top());
+        topMarginChanged(m_chart->minimumMargins().top());
     if (m_chartMargins.bottom() != newMargins.bottom())
-        bottomMarginChanged(m_chart->margins().bottom());
+        bottomMarginChanged(m_chart->minimumMargins().bottom());
     if (m_chartMargins.left() != newMargins.left())
-        leftMarginChanged(m_chart->margins().left());
+        leftMarginChanged(m_chart->minimumMargins().left());
     if (m_chartMargins.right() != newMargins.right())
-        rightMarginChanged(m_chart->margins().right());
+        rightMarginChanged(m_chart->minimumMargins().right());
 
-    m_chartMargins = m_chart->margins();
+    m_chartMargins = m_chart->minimumMargins();
 }
 
 DeclarativeChart::~DeclarativeChart()
@@ -487,22 +489,22 @@ bool DeclarativeChart::dropShadowEnabled()
 
 qreal DeclarativeChart::topMargin()
 {
-    return m_chart->margins().top();
+    return m_chart->minimumMargins().top();
 }
 
 qreal DeclarativeChart::bottomMargin()
 {
-    return m_chart->margins().bottom();
+    return m_chart->minimumMargins().bottom();
 }
 
 qreal DeclarativeChart::leftMargin()
 {
-    return m_chart->margins().left();
+    return m_chart->minimumMargins().left();
 }
 
 qreal DeclarativeChart::rightMargin()
 {
-    return m_chart->margins().right();
+    return m_chart->minimumMargins().right();
 }
 
 void DeclarativeChart::zoom(qreal factor)

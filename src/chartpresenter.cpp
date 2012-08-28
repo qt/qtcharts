@@ -419,15 +419,14 @@ QGraphicsLayout* ChartPresenter::layout()
     return m_layout;
 }
 
-void ChartPresenter::setMarginsMinimum(const QRectF& margins)
+void ChartPresenter::setMinimumMargins(const QMargins& margins)
 {
-    Q_UNUSED(margins);
-  //  m_layout->setMarginsMinimum(margins);
+    m_layout->setMinimumMargins(margins);
 }
 
-QRectF ChartPresenter::margins() const
+QMargins ChartPresenter::minimumMargins() const
 {
-    return m_layout->margins();
+    return m_layout->minimumMargins();
 }
 
 QLegend* ChartPresenter::legend()

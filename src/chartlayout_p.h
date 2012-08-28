@@ -21,6 +21,7 @@
 #ifndef CHARTLAYOUT_H_
 #define CHARTLAYOUT_H_
 #include <QGraphicsLayout>
+#include <QMargins>
 #include "qchartglobal.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -34,8 +35,8 @@ public:
     ChartLayout(ChartPresenter* presenter);
     virtual ~ChartLayout();
 
-    void setMarginsMinimum(const QRectF& margins);
-    QRectF margins() const;
+    void setMinimumMargins(const QMargins& margins);
+    QMargins minimumMargins() const;
 
     void setGeometry(const QRectF& rect);
 
@@ -50,8 +51,8 @@ private:
     int m_marginBig;
     int m_marginSmall;
     int m_marginTiny;
-    QRectF m_chartMargins;
-    QRectF m_legendMargins;
+    QMargins m_chartMargins;
+    QMargins m_legendMargins;
     bool m_intialized;
 
 

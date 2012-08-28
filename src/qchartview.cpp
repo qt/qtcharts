@@ -122,10 +122,9 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 {
     if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
 
-        int padding = d_ptr->m_chart->margins().top();
-        QRect rect(padding, padding, width() - 2 * padding, height() - 2 * padding);
+        QRectF plotArea = d_ptr->m_chart->plotArea();
 
-        if (rect.contains(event->pos())) {
+        if (plotArea.contains(event->pos())) {
             d_ptr->m_rubberBandOrigin = event->pos();
             d_ptr->m_rubberBand->setGeometry(QRect(d_ptr->m_rubberBandOrigin, QSize()));
             d_ptr->m_rubberBand->show();
@@ -144,9 +143,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
     if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
-        QRectF margins = d_ptr->m_chart->margins();
-        QRectF geometry = d_ptr->m_chart->geometry();
-        QRectF rect =geometry.adjusted(margins.left(),margins.top(),-margins.right(),-margins.bottom());
+        QRectF rect = d_ptr->m_chart->plotArea();
         int width = event->pos().x() - d_ptr->m_rubberBandOrigin.x();
         int height = event->pos().y() - d_ptr->m_rubberBandOrigin.y();
         if (!d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)) {

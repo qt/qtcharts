@@ -371,12 +371,20 @@ QLegend* QChart::legend() const
 }
 
 /*!
+  Sets the minimum \a margins between the plot area (axes) and the edge of the chart widget.
+*/
+void QChart::setMinimumMargins(const QMargins& margins)
+{
+    d_ptr->m_presenter->setMinimumMargins(margins);
+}
+
+/*!
     Returns the rect that contains information about margins (distance between chart widget edge and axes).
     Individual margins can be obtained by calling left, top, right, bottom on the returned rect.
  */
-QRectF QChart::margins() const
+QMargins QChart::minimumMargins() const
 {
-    return d_ptr->m_presenter->margins();
+    return d_ptr->m_presenter->minimumMargins();
 }
 
 /*!
@@ -446,13 +454,6 @@ bool QChart::isDropShadowEnabled() const
 QList<QAbstractSeries*> QChart::series() const
 {
     return d_ptr->m_dataset->series();
-}
-/*!
-  Sets the minimum \a margins between the plot area (axes) and the edge of the chart widget.
-*/
-void QChart::setMarginsMinimum(const QRectF& margins)
-{
-    d_ptr->m_presenter->setMarginsMinimum(margins);
 }
 
 /*!

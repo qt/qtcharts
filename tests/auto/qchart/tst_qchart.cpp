@@ -72,8 +72,8 @@ private slots:
     void isBackgroundVisible();
     void legend_data();
     void legend();
-    void margins_data();
-    void margins();
+    void plotArea_data();
+    void plotArea();
     void removeAllSeries_data();
     void removeAllSeries();
     void removeSeries_data();
@@ -156,12 +156,10 @@ void tst_QChart::qchart()
     QVERIFY(m_chart->backgroundBrush()!=QBrush());
     QVERIFY(m_chart->backgroundPen()!=QPen());
     QCOMPARE(m_chart->isBackgroundVisible(), true);
-
-    QVERIFY(m_chart->margins().top()>0);
-    QVERIFY(m_chart->margins().left()>0);
-    QVERIFY(m_chart->margins().right()>0);
-    QVERIFY(m_chart->margins().bottom()>0);
-
+    QVERIFY(m_chart->plotArea().top()==0);
+    QVERIFY(m_chart->plotArea().left()==0);
+    QVERIFY(m_chart->plotArea().right()==0);
+    QVERIFY(m_chart->plotArea().bottom()==0);
     QCOMPARE(m_chart->theme(), QChart::ChartThemeLight);
     QCOMPARE(m_chart->title(), QString());
 
@@ -174,6 +172,13 @@ void tst_QChart::qchart()
     m_chart->zoomIn();
     m_chart->zoomIn(QRectF());
     m_chart->zoomOut();
+
+    m_view->show();
+
+    QVERIFY(m_chart->plotArea().top()>0);
+    QVERIFY(m_chart->plotArea().left()>0);
+    QVERIFY(m_chart->plotArea().right()>0);
+    QVERIFY(m_chart->plotArea().bottom()>0);
 }
 
 void tst_QChart::addSeries_data()
@@ -391,17 +396,18 @@ void tst_QChart::legend()
     QCOMPARE(fontSpy.count(), 1);
 }
 
-void tst_QChart::margins_data()
+void tst_QChart::plotArea_data()
 {
 
 }
 
-void tst_QChart::margins()
+void tst_QChart::plotArea()
 {
     createTestData();
     QRectF rect = m_chart->geometry();
-    QVERIFY(m_chart->margins().top()+m_chart->margins().bottom() < rect.height());
-    QVERIFY(m_chart->margins().left()+m_chart->margins().right() < rect.width());
+    QVERIFY(m_chart->plotArea().isValid());
+    QVERIFY(m_chart->plotArea().height() < rect.height());
+    QVERIFY(m_chart->plotArea().width() < rect.width());
 }
 
 void tst_QChart::removeAllSeries_data()
@@ -717,7 +723,7 @@ void tst_QChart::zoomIn()
     QFETCH(QRectF, rect);
     createTestData();
     m_chart->createDefaultAxes();
-    QRectF marigns = m_chart->margins();
+    QRectF marigns = m_chart->plotArea();
     rect.adjust(marigns.left(),marigns.top(),-marigns.right(),-marigns.bottom());
     QValueAxis* axisX = qobject_cast<QValueAxis*>(m_chart->axisX());
     QVERIFY(axisX!=0);

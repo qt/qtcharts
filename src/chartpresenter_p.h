@@ -33,6 +33,7 @@
 #include "qchartglobal.h"
 #include "qchart.h" //becouse of QChart::ChartThemeId //TODO
 #include <QRectF>
+#include <QMargins>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -131,8 +132,8 @@ public:
 
     void resetAllElements();
 
-    void setMarginsMinimum(const QRectF& margins);
-    QRectF margins() const;
+    void setMinimumMargins(const QMargins& margins);
+    QMargins minimumMargins() const;
     QGraphicsLayout* layout();
 
 private:

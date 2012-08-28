@@ -116,14 +116,12 @@ void tst_QChartView::rubberBand_data()
     QTest::addColumn<int>("Xcount");
     QTest::addColumn<int>("Ycount");
 
-    QTest::addColumn<int>("minX");
-    QTest::addColumn<int>("maxX");
-    QTest::addColumn<int>("minY");
-    QTest::addColumn<int>("maxY");
+    QTest::addColumn<QPoint>("min");
+    QTest::addColumn<QPoint>("max");
 
-    QTest::newRow("HorizonalRubberBand") << QChartView::RubberBands(QChartView::HorizonalRubberBand) << 0 << 1 << 20 << 180 << 0<< 200;
-    QTest::newRow("VerticalRubberBand") <<  QChartView::RubberBands(QChartView::VerticalRubberBand) << 1 << 0 << 0 << 200 << 20<< 180;
-    QTest::newRow("RectangleRubberBand") <<  QChartView::RubberBands(QChartView::RectangleRubberBand) << 1 << 1 <<20 << 180 << 20<< 180;
+    QTest::newRow("HorizonalRubberBand") << QChartView::RubberBands(QChartView::HorizonalRubberBand) << 0 << 1 << QPoint(5,5) << QPoint(5,5);
+    QTest::newRow("VerticalRubberBand") <<  QChartView::RubberBands(QChartView::VerticalRubberBand) << 1 << 0 << QPoint(5,5) << QPoint(5,5);
+    QTest::newRow("RectangleRubberBand") <<  QChartView::RubberBands(QChartView::RectangleRubberBand) << 1 << 1 << QPoint(5,5) << QPoint(5,5);
 }
 
 void tst_QChartView::rubberBand()
@@ -131,13 +129,11 @@ void tst_QChartView::rubberBand()
     QFETCH(QChartView::RubberBands, rubberBand);
     QFETCH(int, Xcount);
     QFETCH(int, Ycount);
-    QFETCH(int, minX);
-    QFETCH(int, maxX);
-    QFETCH(int, minY);
-    QFETCH(int, maxY);
+    QFETCH(QPoint, min);
+    QFETCH(QPoint, max);
 
     m_view->setRubberBand(rubberBand);
-    QRectF padding = m_view->chart()->margins();
+
     QCOMPARE(m_view->rubberBand(), rubberBand);
 
     QLineSeries* line = new QLineSeries();
@@ -145,9 +141,9 @@ void tst_QChartView::rubberBand()
 
     m_view->chart()->addSeries(line);
     m_view->chart()->createDefaultAxes();
-    m_view->resize(200 + padding.left() + padding.right(), 200 +  padding.top()+ padding.bottom());
     m_view->show();
 
+    QRectF plotArea = m_view->chart()->plotArea();
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(true);
 
@@ -156,11 +152,23 @@ void tst_QChartView::rubberBand()
     QAbstractAxis* axisX = m_view->chart()->axisX();
     QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal,qreal)));
 
+
+    QValueAxis* vaxisX = qobject_cast<QValueAxis*>(axisX);
+    QValueAxis* vaxisY = qobject_cast<QValueAxis*>(axisY);
+
+    int minX = vaxisX->min();
+    int minY = vaxisY->min();
+    int maxX = vaxisX->max();
+    int maxY = vaxisY->max();
+
     QTest::qWaitForWindowShown(m_view);
-    QTest::mouseMove(m_view->viewport(),  QPoint(minX, minY) + padding.topLeft().toPoint());
-    QTest::mousePress(m_view->viewport(), Qt::LeftButton, 0,  QPoint(minX, minY) + padding.topLeft().toPoint());
-    QTest::mouseMove(m_view->viewport(), QPoint(maxX, maxY) + padding.topLeft().toPoint());
-    QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, 0, QPoint(maxX, maxY)+ padding.topLeft().toPoint());
+    QTest::mouseMove(m_view->viewport(),  min + plotArea.topLeft().toPoint());
+    QTest::qWait(2000);
+    QTest::mousePress(m_view->viewport(), Qt::LeftButton, 0,  min + plotArea.topLeft().toPoint());
+    QTest::qWait(2000);
+    QTest::mouseMove(m_view->viewport(),  plotArea.bottomRight().toPoint() - max);
+    QTest::qWait(2000);
+    QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, 0, plotArea.bottomRight().toPoint() - max);
 
     TRY_COMPARE(spy0.count(), Xcount);
     TRY_COMPARE(spy1.count(), Ycount);
@@ -168,13 +176,10 @@ void tst_QChartView::rubberBand()
     //this is hack since view does not get events otherwise
     m_view->setMouseTracking(false);
 
-    QValueAxis* vaxisX = qobject_cast<QValueAxis*>(axisX);
-    QValueAxis* vaxisY = qobject_cast<QValueAxis*>(axisY);
-
-    QVERIFY(vaxisX->min() - minX < 1);
-    QVERIFY(vaxisX->max() - maxX < 1);
-    QVERIFY(vaxisY->min() - minY < 1);
-    QVERIFY(vaxisY->max() - maxY < 1);
+    QVERIFY(vaxisX->min() >= minX );
+    QVERIFY(vaxisX->max() <= maxX );
+    QVERIFY(vaxisY->min() >= minY );
+    QVERIFY(vaxisY->max() <= maxY );
 
 }
 
