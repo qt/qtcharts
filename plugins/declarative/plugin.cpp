@@ -23,6 +23,8 @@
 #include "qchart.h"
 #include "qabstractaxis.h"
 #include "qvalueaxis.h"
+#include "qdatetimeaxis.h"
+#include "declarativecategoryaxis.h"
 #include "qbarcategoryaxis.h"
 #include "declarativechart.h"
 #include "declarativexypoint.h"
@@ -113,6 +115,9 @@ public:
         qmlRegisterType<QHBarModelMapper>(uri, 1, 1, "HBarModelMapper");
         qmlRegisterType<QVBarModelMapper>(uri, 1, 1, "VBarModelMapper");
         qmlRegisterType<QValueAxis>(uri, 1, 1, "ValueAxis");
+        qmlRegisterType<QDateTimeAxis>(uri, 1, 1, "DateTimeAxis");
+        qmlRegisterType<DeclarativeCategoryAxis>(uri, 1, 1, "CategoryAxis");
+        qmlRegisterType<DeclarativeCategoryRange>(uri, 1, 1, "CategoryRange");
         qmlRegisterType<QBarCategoryAxis>(uri, 1, 1, "BarCategoryAxis");
         qmlRegisterUncreatableType<QLegend>(uri, 1, 1, "Legend",
                                           QLatin1String("Trying to create uncreatable: Legend."));

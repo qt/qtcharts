@@ -29,15 +29,26 @@ Rectangle {
         title: "NHL All-Star Team Players"
         anchors.fill: parent
 
-        BarCategoriesAxis {
-            id: catergoriesAxis
-            categories: ["2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008",
-                "2009", "2010", "2011" ]
+        CategoryAxis {
+            id: categoriesAxis
+            startValue: -0.5
+            CategoryRange { endValue: 0.5; label: "2000" }
+            CategoryRange { endValue: 1.5; label: "2001" }
+            CategoryRange { endValue: 2.5; label: "2002" }
+            CategoryRange { endValue: 3.5; label: "2003" }
+            CategoryRange { endValue: 4.5; label: "2004" }
+            CategoryRange { endValue: 5.5; label: "2005" }
+            CategoryRange { endValue: 6.5; label: "2006" }
+            CategoryRange { endValue: 7.5; label: "2007" }
+            CategoryRange { endValue: 8.5; label: "2008" }
+            CategoryRange { endValue: 9.5; label: "2009" }
+            CategoryRange { endValue: 10.5; label: "2010" }
+            CategoryRange { endValue: 11.5; label: "2011" }
         }
 
         AreaSeries {
             name: "Russian"
-            axisX: catergoriesAxis
+            axisX: categoriesAxis
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 1 }
                 XYPoint { x: 1; y: 1 }
@@ -58,7 +69,7 @@ Rectangle {
 
         AreaSeries {
             name: "Swedish"
-            axisX: catergoriesAxis
+            axisX: categoriesAxis
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 1 }
                 XYPoint { x: 1; y: 1 }
@@ -77,7 +88,7 @@ Rectangle {
 
         AreaSeries {
             name: "Finnish"
-            axisX: catergoriesAxis
+            axisX: categoriesAxis
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 0 }
                 XYPoint { x: 1; y: 0 }

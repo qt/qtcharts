@@ -34,18 +34,26 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This class can be used when the underlying data needs to be given extra meaning.
     Unlike with the QBarCategoryAxis the QCategoryAxis allows the categories ranges widths to be specified freely.
 */
-
 /*!
     \qmlclass CategoryAxis QCategoryAxis
     \inherits AbstractAxis
-    \brief The QCategoryAxis class allows putting a named ranges on the axis.
+    \brief CategoryAxis allows putting a named ranges on the axis.
+
+    For example:
+    \code
+        CategoryAxis {
+            startValue: 0.0
+            CategoryRange { endValue: 1.0; label: "min (0-1)" }
+            CategoryRange { endValue: 3.0; label: "standard (1-3)" }
+            CategoryRange { endValue: 4.0; label: "high (3-4)" }
+        }
+    \endcode
 */
 
 /*!
   \property QCategoryAxis::startValue
   Defines the low end of the first category on the axis.
 */
-
 /*!
   \qmlproperty int CategoryAxis::startValue
   Defines the low end of the first category on the axis.
@@ -78,6 +86,13 @@ QCategoryAxis::QCategoryAxis(QCategoryAxisPrivate &d,QObject *parent):QValueAxis
 
 }
 
+/*!
+    \qmlmethod CategoryAxis::append(string label, real endValue)
+    Appends new category to the axis with an \a label. Category label has to be unique.
+    Parameter \a endValue specifies the high end limit of the category.
+    It has to be greater than the high end limit of the previous category.
+    Otherwise the method returns without adding a new category.
+*/
 /*!
     Appends new category to the axis with an \a categoryLabel.
     Category label has to be unique.
@@ -142,6 +157,10 @@ qreal QCategoryAxis::endValue(const QString& categoryLabel) const
 }
 
 /*!
+    \qmlmethod CategoryAxis::remove(string label)
+    Removes a category specified by the \a label from the axis
+*/
+/*!
     Removes an interval specified by the \a categoryLabel from the axis
 */
 void QCategoryAxis::remove(const QString &categoryLabel)
@@ -172,6 +191,11 @@ void QCategoryAxis::remove(const QString &categoryLabel)
     }
 }
 
+/*!
+  \qmlmethod CategoryAxis::replace(string oldLabel, string newLabel)
+  Replaces \a oldLabel of an existing category with a \a newLabel.
+  If the old label does not exist the method returns without making any changes.
+*/
 /*!
   Replaces \a oldLabel of an existing category with a \a newLabel
   If the old label does not exist the method returns without making any changes.
