@@ -48,6 +48,7 @@ private:
 class DeclarativeCategoryAxis : public QCategoryAxis, public QDeclarativeParserStatus
 {
     Q_OBJECT
+    Q_INTERFACES(QDeclarativeParserStatus)
     Q_PROPERTY(QDeclarativeListProperty<QObject> axisChildren READ axisChildren)
     Q_CLASSINFO("DefaultProperty", "axisChildren")
 
