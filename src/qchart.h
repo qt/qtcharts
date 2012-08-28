@@ -119,9 +119,6 @@ public:
 
     QRectF plotArea() const;
 
-Q_SIGNALS:
-    void marginsChanged(QRectF newMargins);
-
 protected:
     QScopedPointer<QChartPrivate> d_ptr;
     friend class QLegend;
