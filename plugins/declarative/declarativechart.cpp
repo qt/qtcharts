@@ -262,7 +262,11 @@ void DeclarativeChart::componentComplete()
 {
     foreach(QObject *child, children()) {
         if (qobject_cast<QAbstractSeries *>(child)) {
-            m_chart->addSeries(qobject_cast<QAbstractSeries *>(child));
+            // Add series to the chart
+            QAbstractSeries *series = qobject_cast<QAbstractSeries *>(child);
+            m_chart->addSeries(series);
+
+            // Set optional user defined axes and connect axis related signals
             if (qobject_cast<DeclarativeLineSeries *>(child)) {
                 DeclarativeLineSeries *s = qobject_cast<DeclarativeLineSeries *>(child);
                 connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
@@ -324,14 +328,13 @@ void DeclarativeChart::componentComplete()
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             }
+
+            // Create the missing axes for the series that cannot be painted without axes
+            createDefaultAxes(series);
         } else if(qobject_cast<QAbstractAxis *>(child)) {
             // Do nothing, axes are set for the chart in the context of series
         }
     }
-
-    // Create the missing axes for the series that cannot be painted without axes
-    foreach(QAbstractSeries *series, m_chart->series())
-        createDefaultAxes(series);
 
     QDeclarativeItem::componentComplete();
 }
