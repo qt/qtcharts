@@ -30,7 +30,8 @@ SUBDIRS += \
            donut \
            donutbreakdown \
            scrollchart \
-           populationpyramid \
+           datetimeaxis \
+           temperaturerecords \
            donutchart
 
 !linux-arm*: {

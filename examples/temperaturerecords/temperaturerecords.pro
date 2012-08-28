@@ -2,5 +2,5 @@
  error( "Couldn't find the examples.pri file!" )
 }
 
-TARGET = populationpyramid
+TARGET = temperaturerecords
 SOURCES += main.cpp 

@@ -25,7 +25,7 @@
 #include <QBarSet>
 #include <QLegend>
 #include <QBarCategoryAxis>
-#include <QHorizontalBarSeries>
+#include <QBarSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -34,22 +34,17 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //![1]
-    QBarSet *male = new QBarSet("Male");
-    QBarSet *female = new QBarSet("Female");
+    QBarSet *low = new QBarSet("Min");
+    QBarSet *high = new QBarSet("Max");
 
-    // Not really negative population. Negated values are used to grow bar to left.
-    *male << -145596 << -149894 << -167327 << -164118 << -170710 << -169408 << -158395 << -176975 << -191803 << -191198 << -196815
-          << -207826 << -145517 << -113204 << -90986 << -70909 << -40013 << -15887 << -5769;
-
-    *female << 139353 << 143522 << 161212 << 156824 << 163226 << 161766 << 150595 << 170779 << 185979 << 187897 << 196158
-            << 209062 << 152460 << 129230 << 114778 << 109611 << 83845 << 44605 << 22328;
-
+    *low << -51.5 << -49 << -44.3 << -36.0 << -24.6 << -7.0 << -5.0 << -10.8 << -18.7 << -31.8 << -42.0 << -47.0;
+    *high << 10.9 << 11.8 << 17.5 << 25.5 << 31.0 << 33.8 << 37.2 << 33.8 << 28.8 << 19.4 << 14.1 << 10.8;
 //![1]
 
 //![2]
-    QHorizontalBarSeries *series = new QHorizontalBarSeries();
-    series->append(male);
-    series->append(female);
+    QBarSeries *series = new QBarSeries();
+    series->append(low);
+    series->append(high);
     series->setBarWidth(0.5);
     series->setOverlap(true);
 //![2]
@@ -57,20 +52,19 @@ int main(int argc, char *argv[])
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Population of Finland in 2005 by age group");
+    chart->setTitle("Temperature records in Finland in Celcius");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
 //![4]
     QStringList categories;
-    categories << "0-4" << "5-9" << "10-14" << "15-19" << "20-24" << "25-29" << "30-34" << "35-39" << "40-44" << "45-49"
-               << "50-54" << "55-59" << "60-64" << "65-69" << "70-74" << "75-79" << "80-84" << "85-89" << "90-";
+    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
     QBarCategoryAxis* axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->createDefaultAxes();
-    chart->setAxisY(axis,series);
-    chart->axisX(series)->setRange(-210000,210000);
+    chart->setAxisX(axis,series);
+    chart->axisY(series)->setRange(-52,52);
 //![4]
 
 //![5]
@@ -86,7 +80,7 @@ int main(int argc, char *argv[])
 //![7]
     QMainWindow window;
     window.setCentralWidget(chartView);
-    window.resize(400, 600);
+    window.resize(400, 300);
     window.show();
 //![7]
 
