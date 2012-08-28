@@ -46,9 +46,9 @@ int main(int argc, char *argv[])
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->chart()->setTitle("Donut with a lemon glaze (100g)");
     chartView->chart()->addSeries(series);
-    chartView->chart()->legend()->setAlignment(Qt::AlignLeft);
+    chartView->chart()->legend()->setAlignment(Qt::AlignBottom);
     chartView->chart()->setTheme(QChart::ChartThemeBlueCerulean);
-    //chartView->chart()->legend()->setFont(QFont("Arial", 7));
+    chartView->chart()->legend()->setFont(QFont("Arial", 7));
 //![2]
 
 //![3]
