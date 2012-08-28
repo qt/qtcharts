@@ -39,6 +39,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlclass ValueAxis QValueAxis
+    \inherits AbstractAxis
     \brief The ValueAxis element is used for manipulating chart's axes
 
     ValueAxis can be setup to show axis line with tick marks, grid lines and shades.

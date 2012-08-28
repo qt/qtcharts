@@ -37,6 +37,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlclass CategoryAxis QCategoryAxis
+    \inherits AbstractAxis
     \brief The QCategoryAxis class allows putting a named ranges on the axis.
 */
 

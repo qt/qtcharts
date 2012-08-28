@@ -19,8 +19,8 @@
                     <ul>
                     <li><a href="qml-chartview.html">ChartView</a></li>
                     <li><a href="qml-abstractaxis.html">AbstractAxis</a></li>
-                    <li><a href="qml-valuesaxis.html">ValuesAxis</a></li>
-                    <li><a href="qml-barcategoriesaxis.html">BarCategoriesAxis</a></li>
+                    <li><a href="qml-valueaxis.html">ValueAxis</a></li>
+                    <li><a href="qml-barcategoryaxis.html">BarCategoryAxis</a></li>
                     <li><a href="qml-legend.html">Legend</a></li>
                     <li><a href="qml-abstractseries.html">AbstractSeries</a></li>
                     </ul>

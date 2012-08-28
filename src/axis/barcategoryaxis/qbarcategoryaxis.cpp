@@ -32,22 +32,23 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief The QBarCategoryAxis class is used for manipulating chart's axis.
     \mainclass
 
-    BarCategoriesAxis can be setup to show axis line with tick marks, grid lines and shades.
+    BarCategoryAxis can be setup to show axis line with tick marks, grid lines and shades.
     Categories are drawn between ticks. Note that you can use this also with lineseries too.
     See the \l {Line and BarChart Example} {Line and BarChart Example} to learn how to do that.
 */
 
 /*!
-    \qmlclass BarCategoriesAxis QBarCategoryAxis
+    \qmlclass BarCategoryAxis QBarCategoryAxis
+    \inherits AbstractAxis
     \brief The Axis element is used for manipulating chart's axes.
 
     Axis can be setup to show axis line with tick marks, grid lines and shades.
     Categories are drawn between ticks. Note that you can use this also with lineseries too.
 
-    To access BarCategoriesAxis you can use ChartView API. For example:
+    To access BarCategoryAxis you can use ChartView API. For example:
     \code
         ChartView {
-            BarCategoriesAxis {
+            BarCategoryAxis {
                 id: categoryAxis
                 categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun" ]
             }
@@ -61,7 +62,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the categories of axis
 */
 /*!
-  \qmlproperty QStringList BarCategoriesAxis::categories
+  \qmlproperty QStringList BarCategoryAxis::categories
   Defines the categories of axis
 */
 
@@ -70,7 +71,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the minimum value on the axis.
 */
 /*!
-  \qmlproperty QString BarCategoriesAxis::min
+  \qmlproperty QString BarCategoryAxis::min
   Defines the minimum value on the axis.
 */
 
@@ -79,7 +80,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the maximum value on the axis.
 */
 /*!
-  \qmlproperty QString BarCategoriesAxis::max
+  \qmlproperty QString BarCategoryAxis::max
   Defines the maximum value on the axis.
 */
 
@@ -93,7 +94,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a min of axis has changed.
 */
 /*!
-  \qmlsignal BarCategoriesAxis::onMinChanged(const QString &min)
+  \qmlsignal BarCategoryAxis::onMinChanged(const QString &min)
   Axis emits signal when \a min of axis has changed.
 */
 
@@ -102,7 +103,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a max of axis has changed.
 */
 /*!
-  \qmlsignal BarCategoriesAxis::onMaxChanged(const QString &max)
+  \qmlsignal BarCategoryAxis::onMaxChanged(const QString &max)
   Axis emits signal when \a max of axis has changed.
 */
 
