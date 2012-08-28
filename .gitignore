@@ -195,7 +195,6 @@ include/*/*
 lib/*
 !lib/fonts
 !lib/README
-plugins/*/*
 release
 tmp
 doc-build
