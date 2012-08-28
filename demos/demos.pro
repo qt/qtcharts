@@ -7,6 +7,7 @@ TEMPLATE = subdirs
 SUBDIRS += chartthemes \
            piechartcustomization \
            dynamicspline \
+           nesteddonuts \
            qmlchart \
            qmlweather \
            qmlf1legends \
