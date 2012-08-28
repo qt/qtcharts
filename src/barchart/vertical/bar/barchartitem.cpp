@@ -50,10 +50,10 @@ QVector<QRectF> BarChartItem::calculateLayout()
     qreal scaleX = (width / rangeX);
     qreal barWidth;
 
-    if (m_series->d_func()->m_grouping) {
-        barWidth = (scaleX / setCount) * m_series->d_func()->barWidth();
-    } else {
+    if (m_series->d_func()->m_overlap) {
         barWidth = scaleX * m_series->d_func()->barWidth();
+    } else {
+        barWidth = (scaleX / setCount) * m_series->d_func()->barWidth();
     }
 
     int itemIndex(0);
@@ -64,12 +64,12 @@ QVector<QRectF> BarChartItem::calculateLayout()
 
             qreal xPos;
 
-            if (m_series->d_func()->m_grouping) {
+            if (m_series->d_func()->m_overlap) {
+                xPos = (barSet->pos(category) - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
+            } else {
                 xPos = (barSet->pos(category) - m_domainMinX) * scaleX + m_rect.left();
                 xPos -= setCount*barWidth/2;
                 xPos += set*barWidth;
-            } else {
-                xPos = (barSet->pos(category) - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
             }
 
             qreal barHeight = barSet->value(category) * scaleY;

@@ -49,10 +49,10 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
     qreal barHeight;
 
  // On horizontal chart barWidth of the barseries means height of the rect.
-    if (m_series->d_func()->m_grouping) {
-        barHeight = (scaleY / setCount) * m_series->d_func()->barWidth();
-    } else {
+    if (m_series->d_func()->m_overlap) {
         barHeight = scaleY * m_series->d_func()->barWidth();
+    } else {
+        barHeight = (scaleY / setCount) * m_series->d_func()->barWidth();
     }
 
     int itemIndex(0);
@@ -62,11 +62,11 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
             qreal yPos = m_rect.bottom() + (m_domainMinY - barSet->pos(category)) * scaleY;
-            if (m_series->d_func()->m_grouping) {
+            if (m_series->d_func()->m_overlap) {
+                yPos += barHeight/2;
+            } else {
                 yPos += setCount*barHeight/2;
                 yPos -= set*barHeight;
-            } else {
-                yPos += barHeight/2;
             }
 
             qreal barWidth = barSet->value(category) * scaleX;

@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     QBarSet *male = new QBarSet("Male");
     QBarSet *female = new QBarSet("Female");
 
-    // From wikipedia
+    // Not really negative population. Negated values are used to grow bar to left.
     *male << -145596 << -149894 << -167327 << -164118 << -170710 << -169408 << -158395 << -176975 << -191803 << -191198 << -196815
           << -207826 << -145517 << -113204 << -90986 << -70909 << -40013 << -15887 << -5769;
 
@@ -51,14 +51,13 @@ int main(int argc, char *argv[])
     series->append(male);
     series->append(female);
     series->setBarWidth(0.5);
-    series->setGrouping(false);
+    series->setOverlap(true);
 //![2]
 
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Population of Finland in 2005 by age group");
-    chart->createDefaultAxes();
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
@@ -69,6 +68,7 @@ int main(int argc, char *argv[])
 
     QBarCategoryAxis* axis = new QBarCategoryAxis();
     axis->append(categories);
+    chart->createDefaultAxes();
     chart->setAxisY(axis,series);
     chart->axisX(series)->setRange(-210000,210000);
 //![4]
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 //![7]
     QMainWindow window;
     window.setCentralWidget(chartView);
-    window.resize(400, 800);
+    window.resize(400, 600);
     window.show();
 //![7]
 
