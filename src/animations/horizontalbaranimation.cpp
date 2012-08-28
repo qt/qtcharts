@@ -46,10 +46,22 @@ QVariant HorizontalBarAnimation::interpolated(const QVariant &from, const QVaria
     Q_ASSERT(startVector.count() == endVector.count());
 
     for(int i = 0; i < startVector.count(); i++) {
-        qreal h = endVector[i].height();
-        qreal w = startVector[i].width() + ((endVector[i].width() - startVector[i].width()) * progress);
-        qreal x = endVector[i].left();
-        qreal y = endVector[i].top();
+        QRectF start = startVector[i].normalized();
+        QRectF end = endVector[i].normalized();
+
+        qreal x;
+        qreal y = end.top();
+        qreal w;
+        qreal h = end.height();
+
+        if (endVector[i].width() < 0) {
+            // Negative bar
+            w = start.width() + ((end.width() - start.width()) * progress);
+            x = endVector[i].right() - endVector[i].width() - w;
+        } else {
+            w = startVector[i].width() + ((endVector[i].width() - startVector[i].width()) * progress);
+            x = end.left();
+        }
 
         QRectF value(x,y,w,h);
         result << value.normalized();
