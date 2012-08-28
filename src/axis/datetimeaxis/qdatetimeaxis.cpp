@@ -35,6 +35,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The labels can be configured by setting an appropriate DateTime format.
     Note that any date before 4714 BCE or after about 1.4 million CE may not be accurately stored.
     QDateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
+
+    Example code on how to use QDateTimeAxis.
+    \code
+    QChartView *chartView = new QChartView;
+    QLineSeries *series = new QLineSeries;
+
+    QDateTime xValue;
+    xValue.setDate(QDate(2012, 1 , 18));
+    xValue.setTime(QTime(9, 34));
+    series->append(xValue.toMSecsSinceEpoch(), 12);
+
+    xValue.setDate(QDate(2013, 5 , 11));
+    xValue.setTime(QTime(11, 14));
+    series->append(xValue.toMSecsSinceEpoch(), 22);
+    chartView->chart()->addSeries(series);
+
+    // ...
+    QDateTimeAxis *axisX = new QDateTimeAxis;
+    axisX->setFormat("dd-MM-yyyy h:mm");
+    chartView->chart()->setAxisX(series, axisX);
+    \endcode
 */
 
 /*!

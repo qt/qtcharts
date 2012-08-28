@@ -41,6 +41,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     QChartView *chartView = new QChartView;
     QLineSeries *series = new QLineSeries;
     // ...
+    chartView->chart()->addSeries(series);
+
     QValueAxis *axisX = new QValueAxis;
     axisX->setRange(10, 20.5);
     axisX->setTickCount(10);
