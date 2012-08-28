@@ -4,6 +4,7 @@
 
 TARGET = donutbreakdown
 SOURCES += main.cpp\
-        widget.cpp
+    donutbreakdownchart.cpp
 
-HEADERS  += widget.h
+HEADERS  += \
+    donutbreakdownchart.h
