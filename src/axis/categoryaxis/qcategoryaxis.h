@@ -50,7 +50,6 @@ public:
     qreal startValue(const QString& categoryLabel = QString()) const;
     void setStartValue(qreal min);
 
-//    qreal startValue(const QString& categoryLabel) const;
     qreal endValue(const QString& categoryLabel) const;
 
     QStringList categoriesLabels();

@@ -428,7 +428,7 @@ void QXYModelMapperPrivate::insertData(int start, int end)
             }
         }
 
-        // remove excess of slices (abouve m_count)
+        // remove excess of points (above m_count)
         if (m_count != -1 && m_series->points().size() > m_count)
             for (int i = m_series->points().size() - 1; i >= m_count; i--) {
                 m_series->remove(m_series->points().at(i));
@@ -484,7 +484,7 @@ void QXYModelMapperPrivate::initializeXYFromModel()
     // clear current content
     m_series->clear();
 
-    // create the initial slices set
+    // create the initial points set
     int pointPos = 0;
     QModelIndex xIndex = xModelIndex(pointPos);
     QModelIndex yIndex = yModelIndex(pointPos);
