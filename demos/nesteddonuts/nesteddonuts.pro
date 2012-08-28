@@ -2,7 +2,7 @@
  error( "Couldn't find the demos.pri file!" )
 }
 
-TARGET = donut
+TARGET = nesteddonuts
 SOURCES += main.cpp\
         widget.cpp
 HEADERS  += widget.h
