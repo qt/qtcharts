@@ -88,6 +88,6 @@ public:
     }
 };
 
-#define DECLARE_CHART(chartName) static ChartWrapper<chartName> t;
+#define DECLARE_CHART(chartName) static ChartWrapper<chartName> chartName;
 
 #endif
