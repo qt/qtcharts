@@ -21,14 +21,14 @@
 #include "datasource.h"
 #include <QXYSeries>
 #include <QAreaSeries>
-#include <QAbstractScrollArea>
+#include <QDeclarativeView>
 #include <QGLWidget>
 #include <QDebug>
 #include <cmath>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-DataSource::DataSource(QAbstractScrollArea *appViewer, QObject *parent) :
+DataSource::DataSource(QDeclarativeView *appViewer, QObject *parent) :
     QObject(parent),
     m_appViewer(appViewer),
     m_index(-1)
@@ -93,4 +93,9 @@ void DataSource::setOpenGL(bool enabled)
         m_appViewer->setViewport(new QGLWidget());
     else
         m_appViewer->setViewport(0);
+}
+
+void DataSource::setAntialiasing(bool enabled)
+{
+    m_appViewer->setRenderHint(QPainter::Antialiasing, enabled);
 }

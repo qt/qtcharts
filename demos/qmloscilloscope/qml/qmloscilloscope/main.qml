@@ -46,6 +46,7 @@ Rectangle {
         onAnimationsEnabled: scopeView.setAnimations(enabled);
         onSeriesTypeChanged: scopeView.changeSeriesType(type);
         onRefreshRateChanged: scopeView.changeRefreshRate(rate);
+        onAntialiasingEnabled: dataSource.setAntialiasing(enabled);
     }
 
 //![2]

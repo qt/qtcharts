@@ -23,7 +23,7 @@ import QtQuick 1.0
 Rectangle {
     id: button
     width: 120
-    height: 35
+    height: 30
     border.color: "gray"
     radius: 7
     property string text: "Option: "

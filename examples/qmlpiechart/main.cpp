@@ -29,6 +29,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
 
     viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer->setSource(QUrl("qrc:/qml/qmlpiechart/main.qml"));
+    viewer->setRenderHint(QPainter::Antialiasing, true);
     viewer->showExpanded();
 
     return app->exec();

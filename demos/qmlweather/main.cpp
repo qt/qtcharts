@@ -38,6 +38,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     }
     viewer.rootContext()->setContextProperty("weatherAppKey", appKey);
     viewer.setSource(QUrl("qrc:/qml/qmlweather/main.qml"));
+    viewer.setRenderHint(QPainter::Antialiasing, true);
     viewer.showExpanded();
     return app->exec();
 }

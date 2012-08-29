@@ -223,7 +223,6 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
       m_chart(new QChart(this))
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
-//    m_chart->axisX()->setNiceNumbersEnabled(false);
     //TODO: check what should be really here margins or platArea ?!
     m_chartMargins = m_chart->minimumMargins();
     connect(m_chart, SIGNAL(marginsChanged(QRectF)), this, SLOT(handleMarginsChanged(QRectF)));
@@ -364,15 +363,6 @@ void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &
         }
     }
     QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
-}
-
-void DeclarativeChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
-{
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
-
-    // TODO: optimized?
-    painter->setRenderHint(QPainter::Antialiasing, true);
 }
 
 void DeclarativeChart::setTheme(DeclarativeChart::Theme theme)

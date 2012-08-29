@@ -90,7 +90,6 @@ public: // From QDeclarativeItem/QGraphicsItem
     void childEvent(QChildEvent *event);
     void componentComplete();
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry);
-    void paint (QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
 public:
     void setTheme(DeclarativeChart::Theme theme);

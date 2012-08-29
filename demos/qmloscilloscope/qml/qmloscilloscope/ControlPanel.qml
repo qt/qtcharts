@@ -27,6 +27,7 @@ Column {
     signal seriesTypeChanged(string type)
     signal refreshRateChanged(variant rate);
     signal signalSourceChanged(string source, int signalCount, int sampleCount);
+    signal antialiasingEnabled(bool enabled)
 
     Text {
         text: "Oscilloscope"
@@ -81,5 +82,12 @@ Column {
         items: ["OFF", "ON"]
         currentSelection: 0
         onSelectionChanged: animationsEnabled(currentSelection == 1);
+    }
+
+    MultiButton {
+        text: "Antialias: "
+        items: ["OFF", "ON"]
+        currentSelection: 0
+        onSelectionChanged: antialiasingEnabled(currentSelection == 1);
     }
 }
