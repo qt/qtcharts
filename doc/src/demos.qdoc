@@ -16,6 +16,7 @@
             <li><a href="demos-chartthemes.html">Chart themes</a></li>
             <li><a href="demos-piechartcustomization.html">Pie chart customization</a></li>
             <li><a href="demos-dynamicspline.html">Dynamic spline chart</a></li>
+            <li><a href="demos-nesteddonuts.html">Nested donuts chart</a></li>
             <li><a href="demos-qmlchart.html">Qml Basic Charts</a></li>
             <li><a href="demos-qmlcustomizations.html">Qml Customizations</a></li>
             <li><a href="demos-qmlweather.html">Qml Weather</a></li>
