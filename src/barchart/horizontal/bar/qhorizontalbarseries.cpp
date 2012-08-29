@@ -44,19 +44,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \sa QBarSet, QBarSeries, QPercentBarSeries, QAbstractBarSeries, QStackedBarSeries, QHorizontalStackedBarSeries, QHorizontalPercentBarSeries
 */
-/*
-    // TODO:
-    \qmlclass Horizontal QHorizontalBarSeries
+/*!
+    \qmlclass HorizontalBarSeries QHorizontalBarSeries
     \inherits AbstractBarSeries
 
-    The following QML shows how to create a simple grouped bar chart:
-    \snippet ../demos/qmlchart/qml/qmlchart/View6.qml 1
+    The following QML shows how to create a simple horizontal bar chart:
+    \snippet ../demos/qmlchart/qml/qmlchart/View9.qml 1
     \beginfloatleft
-    \image demos_qmlchart6.png
+    \image demos_qmlchart9.png
     \endfloat
     \clearfloat
 */
-
 
 /*!
     Constructs empty QHorizontalBarSeries.

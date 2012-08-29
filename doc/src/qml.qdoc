@@ -71,6 +71,9 @@
                     <li><a href="qml-barseries.html">BarSeries</a></li>
                     <li><a href="qml-stackedbarseries.html">StackedBarSeries</a></li>
                     <li><a href="qml-percentbarseries.html">PercentBarSeries</a></li>
+                    <li><a href="qml-horizontalbarseries.html">HorizontalBarSeries</a></li>
+                    <li><a href="qml-horizontalstackedbarseries.html">HorizontalStackedBarSeries</a></li>
+                    <li><a href="qml-horizontalpercentbarseries.html">HorizontalPercentBarSeries</a></li>
                     <li><a href="qml-barset.html">BarSet</a></li>
                     <li><a href="qml-hbarmodelmapper.html">HBarModelMapper</a></li>
                     <li><a href="qml-vbarmodelmapper.html">VBarModelMapper</a></li>
