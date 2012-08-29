@@ -107,6 +107,7 @@ void ChartValueAxisX::updateGeometry()
         lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
         lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
     }
+
 }
 
 void ChartValueAxisX::handleAxisUpdated()

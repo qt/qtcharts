@@ -26,6 +26,7 @@
 #include <qmath.h>
 #include <QDateTime>
 #include <QValueAxis>
+#include <QGraphicsLayout>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -138,6 +139,7 @@ void ChartAxis::updateLayout(QVector<qreal> &layout)
     else {
         setLayout(layout);
         updateGeometry();
+        checkLayout();
     }
 }
 
@@ -378,6 +380,17 @@ void ChartAxis::createNumberLabels(QStringList &labels,qreal min, qreal max, int
             qreal value = min + (i * (max - min)/ (ticks-1));
             labels << QString().sprintf(array, value);
         }
+    }
+}
+
+void ChartAxis::checkLayout()
+{
+    if(m_minWidth > m_rect.width()) {
+        presenter()->layout()->invalidate();
+    }
+
+    if(m_minHeight > m_rect.height()) {
+        presenter()->layout()->invalidate();
     }
 }
 

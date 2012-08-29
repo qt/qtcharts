@@ -131,6 +131,7 @@ void AxisAnimation::updateCurrentValue (const QVariant &value )
         Q_ASSERT(vector.count() != 0);
         m_axis->setLayout(vector);
         m_axis->updateGeometry();
+        m_axis->checkLayout();
     }
 
 }

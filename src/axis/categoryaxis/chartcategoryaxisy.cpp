@@ -129,6 +129,7 @@ void ChartCategoryAxisY::updateGeometry()
         lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
         lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
     }
+
 }
 
 void ChartCategoryAxisY::handleAxisUpdated()
