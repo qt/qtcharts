@@ -4,6 +4,7 @@
      \subtitle
 
      This example shows how to use create a donut breakdown chart using QPieSeries API.
+     \image examples_donutbreakdown.png
 
      Let's start by defining some data for the chart.
 

@@ -14,15 +14,15 @@
         <td valign="top">
         <ul>
             <li><a href="demos-chartthemes.html">Chart themes</a></li>
-            <li><a href="demos-piechartcustomization.html">Pie chart customization</a></li>
             <li><a href="demos-dynamicspline.html">Dynamic spline chart</a></li>
             <li><a href="demos-nesteddonuts.html">Nested donuts chart</a></li>
+            <li><a href="demos-piechartcustomization.html">Pie chart customization</a></li>
             <li><a href="demos-qmlchart.html">Qml Basic Charts</a></li>
             <li><a href="demos-qmlcustomizations.html">Qml Customizations</a></li>
-            <li><a href="demos-qmlweather.html">Qml Weather</a></li>
-            <li><a href="demos-qmlf1legends.html">Qml F1 Legends</a></li>
             <li><a href="demos-qmlcustommodel.html">Qml Custom Model</a></li>
+            <li><a href="demos-qmlf1legends.html">Qml F1 Legends</a></li>
             <li><a href="demos-qmloscilloscope.html">Qml Oscilloscope</a></li>
+            <li><a href="demos-qmlweather.html">Qml Weather</a></li>
         </ul>
         </td>
         </tr>
