@@ -52,7 +52,6 @@ public:
 
     void setVisible(bool visible);
     void setLabelsVisible(bool visible);
-    void setOverlap(bool overlap);
 
     void scaleDomain(Domain& domain);
     ChartElement* createGraphics(ChartPresenter* presenter);
@@ -96,7 +95,6 @@ protected:
     qreal m_barWidth;
     bool m_labelsVisible;
     bool m_visible;
-    bool m_overlap;
 
 private:
     Q_DECLARE_PUBLIC(QAbstractBarSeries)

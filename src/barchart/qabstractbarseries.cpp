@@ -376,28 +376,13 @@ bool QAbstractBarSeries::isLabelsVisible() const
     return d->m_labelsVisible;
 }
 
-/*!
-    Sets the overlap drawing mode for bars. If \a overlap is true, then the bars
-    are drawn at same position inside group. Can be used for example to draw negative bars
-    at same position on axis than positive bars. By default overlap is false and bars are drawn
-    next to each other. Note that this setting doesn't affect stacked and percent bar series.
-*/
-void QAbstractBarSeries::setOverlap(bool overlap)
-{
-    Q_D(QAbstractBarSeries);
-    d->setOverlap(overlap);
-}
-
-
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractBarSeriesPrivate::QAbstractBarSeriesPrivate(QAbstractBarSeries *q) :
     QAbstractSeriesPrivate(q),
     m_barWidth(0.5),  // Default value is 50% of category width
     m_labelsVisible(false),
-    m_visible(true),
-    m_overlap(false)
+    m_visible(true)
 {
 }
 
@@ -443,14 +428,6 @@ void QAbstractBarSeriesPrivate::setLabelsVisible(bool visible)
 {
     m_labelsVisible = visible;
     emit labelsVisibleChanged(visible);
-}
-
-void QAbstractBarSeriesPrivate::setOverlap(bool overlap)
-{
-    if (m_overlap != overlap) {
-        m_overlap = overlap;
-        emit updatedBars();
-    }
 }
 
 qreal QAbstractBarSeriesPrivate::min()

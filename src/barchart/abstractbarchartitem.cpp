@@ -160,7 +160,6 @@ void AbstractBarChartItem::handleDataStructureChanged()
         }
     }
 
-    // TODO: Is this the right place to call it?
     presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
     handleLayoutChanged();
 }

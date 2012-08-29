@@ -25,7 +25,7 @@
 #include <QBarSet>
 #include <QLegend>
 #include <QBarCategoryAxis>
-#include <QBarSeries>
+#include <QStackedBarSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -42,11 +42,9 @@ int main(int argc, char *argv[])
 //![1]
 
 //![2]
-    QBarSeries *series = new QBarSeries();
+    QStackedBarSeries *series = new QStackedBarSeries();
     series->append(low);
     series->append(high);
-    series->setBarWidth(0.5);
-    series->setOverlap(true);
 //![2]
 
 //![3]

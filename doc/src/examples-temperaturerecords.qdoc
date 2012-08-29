@@ -11,8 +11,7 @@
     
     \snippet ../examples/temperaturerecords/main.cpp 1
 
-    We create the series and append the barsets to it. The series takes ownership of the barsets. We want the bars to be at same position on the x-axis, so we turn the
-	overlap drawing on. We also set the bar width to be 50% of the category width.
+    We create the series and append the barsets to it. The series takes ownership of the barsets. 
 
     \snippet ../examples/temperaturerecords/main.cpp 2
 

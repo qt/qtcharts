@@ -55,8 +55,6 @@ public:
     void setLabelsVisible(bool visible = true);
     bool isLabelsVisible() const;
 
-    void setOverlap(bool overlap = true);
-
 protected:
     explicit QAbstractBarSeries(QAbstractBarSeriesPrivate &d,QObject *parent = 0);
 
