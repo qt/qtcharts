@@ -39,6 +39,21 @@ void DeclarativeBarSet::handleCountChanged(int index, int count)
     emit countChanged(QBarSet::count());
 }
 
+qreal DeclarativeBarSet::borderWidth() const
+{
+    return pen().widthF();
+}
+
+void DeclarativeBarSet::setBorderWidth(qreal width)
+{
+    if (width != pen().widthF()) {
+        QPen p = pen();
+        p.setWidthF(width);
+        setPen(p);
+        emit borderWidthChanged(width);
+    }
+}
+
 QVariantList DeclarativeBarSet::values()
 {
     QVariantList values;

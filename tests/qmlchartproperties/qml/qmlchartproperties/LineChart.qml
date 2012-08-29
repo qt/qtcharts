@@ -46,6 +46,9 @@ ChartView {
         onPointRemoved:             console.log("lineSeries.onPointRemoved: " + index);
         onPointAdded:               console.log("lineSeries.onPointAdded: " + series.at(index).x + ", " + series.at(index).y);
         onColorChanged:             console.log("lineSeries.onColorChanged: " + color);
+        onWidthChanged:             console.log("lineSeries.onWidthChanged: " + width);
+        onStyleChanged:             console.log("lineSeries.onStyleChanged: " + style);
+        onCapStyleChanged:          console.log("lineSeries.onCapStyleChanged: " + capStyle);
         onCountChanged:             console.log("lineSeries.onCountChanged: " + count);
     }
 

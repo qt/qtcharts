@@ -74,7 +74,7 @@ Row {
         }
         Button {
             text: "set 1 replace"
-            onClicked: series.at(0).replace(series.at(0).count - 1, series.at(0).at(series.at(0).count - 1).y + 0.5);
+            onClicked: series.at(0).replace(series.at(0).count - 1, series.at(0).at(series.at(0).count - 1) + 1.5);
         }
         Button {
             text: "set 1 remove"
@@ -88,6 +88,14 @@ Row {
         Button {
             text: "set 1 border color"
             onClicked: series.at(0).borderColor = main.nextColor();
+        }
+        Button {
+            text: "set 1 borderWidth + (" + series.at(0).borderWidth + ")"
+            onClicked: series.at(0).borderWidth += 0.5;
+        }
+        Button {
+            text: "set 1 borderWidth - (" + series.at(0).borderWidth + ")"
+            onClicked: series.at(0).borderWidth -= 0.5;
         }
         Button {
             text: "set 1 label color"

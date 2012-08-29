@@ -45,6 +45,7 @@ ChartView {
         onPointAdded:               console.log("scatterSeries.onPointAdded: " + series.at(index).x + ", " + series.at(index).y);
         onColorChanged:             console.log("scatterSeries.onColorChanged: " + color);
         onBorderColorChanged:       console.log("scatterSeries.onBorderColorChanged: " + borderColor);
+        onBorderWidthChanged:       console.log("scatterSeries.onBorderChanged: " + borderWidth);
         onCountChanged:             console.log("scatterSeries.onCountChanged: " + count);
     }
 

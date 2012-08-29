@@ -35,6 +35,7 @@ class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeri
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
     Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
+    Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
@@ -45,6 +46,8 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axisX = axis; emit axisXChanged(axis); }
     QAbstractAxis *axisY() { return m_axisY; }
     void setAxisY(QAbstractAxis *axis) { m_axisY = axis; emit axisYChanged(axis); }
+    qreal borderWidth() const;
+    void setBorderWidth(qreal borderWidth);
     QDeclarativeListProperty<QObject> declarativeChildren();
 
 public: // from QDeclarativeParserStatus
@@ -63,6 +66,7 @@ Q_SIGNALS:
     void countChanged(int count);
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
     Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void borderWidthChanged(qreal width);
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);

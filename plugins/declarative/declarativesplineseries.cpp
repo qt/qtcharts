@@ -37,6 +37,51 @@ void DeclarativeSplineSeries::handleCountChanged(int index)
     emit countChanged(points().count());
 }
 
+qreal DeclarativeSplineSeries::width() const
+{
+    return pen().widthF();
+}
+
+void DeclarativeSplineSeries::setWidth(qreal width)
+{
+    if (width != pen().widthF()) {
+        QPen p = pen();
+        p.setWidthF(width);
+        setPen(p);
+        emit widthChanged(width);
+    }
+}
+
+Qt::PenStyle DeclarativeSplineSeries::style() const
+{
+    return pen().style();
+}
+
+void DeclarativeSplineSeries::setStyle(Qt::PenStyle style)
+{
+    if (style != pen().style()) {
+        QPen p = pen();
+        p.setStyle(style);
+        setPen(p);
+        emit styleChanged(style);
+    }
+}
+
+Qt::PenCapStyle DeclarativeSplineSeries::capStyle() const
+{
+    return pen().capStyle();
+}
+
+void DeclarativeSplineSeries::setCapStyle(Qt::PenCapStyle capStyle)
+{
+    if (capStyle != pen().capStyle()) {
+        QPen p = pen();
+        p.setCapStyle(capStyle);
+        setPen(p);
+        emit capStyleChanged(capStyle);
+    }
+}
+
 QDeclarativeListProperty<QObject> DeclarativeSplineSeries::declarativeChildren()
 {
     return QDeclarativeListProperty<QObject>(this, 0, &appendDeclarativeChildren);

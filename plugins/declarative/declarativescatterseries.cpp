@@ -37,6 +37,21 @@ void DeclarativeScatterSeries::handleCountChanged(int index)
     emit countChanged(QScatterSeries::count());
 }
 
+qreal DeclarativeScatterSeries::borderWidth() const
+{
+    return pen().widthF();
+}
+
+void DeclarativeScatterSeries::setBorderWidth(qreal width)
+{
+    if (width != pen().widthF()) {
+        QPen p = pen();
+        p.setWidthF(width);
+        setPen(p);
+        emit borderWidthChanged(width);
+    }
+}
+
 QDeclarativeListProperty<QObject> DeclarativeScatterSeries::declarativeChildren()
 {
     return QDeclarativeListProperty<QObject>(this, 0, &appendDeclarativeChildren);

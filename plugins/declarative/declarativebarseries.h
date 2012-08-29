@@ -39,12 +39,15 @@ class DeclarativeBarSet : public QBarSet
 {
     Q_OBJECT
     Q_PROPERTY(QVariantList values READ values WRITE setValues)
+    Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
     Q_PROPERTY(int count READ count NOTIFY countChanged)
 
 public:
     explicit DeclarativeBarSet(QObject *parent = 0);
     QVariantList values();
     void setValues(QVariantList values);
+    qreal borderWidth() const;
+    void setBorderWidth(qreal borderWidth);
 
 public: // From QBarSet
     Q_INVOKABLE void append(qreal value) { QBarSet::append(value); }
@@ -54,6 +57,7 @@ public: // From QBarSet
 
 Q_SIGNALS:
     void countChanged(int count);
+    Q_REVISION(1) void borderWidthChanged(qreal width);
 
 private Q_SLOTS:
     void handleCountChanged(int index, int count);

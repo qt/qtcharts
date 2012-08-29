@@ -35,6 +35,9 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
     Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
+    Q_PROPERTY(qreal width READ width WRITE setWidth NOTIFY widthChanged REVISION 1)
+    Q_PROPERTY(Qt::PenStyle style READ style WRITE setStyle NOTIFY styleChanged REVISION 1)
+    Q_PROPERTY(Qt::PenCapStyle capStyle READ capStyle WRITE setCapStyle NOTIFY capStyleChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
 
@@ -45,6 +48,12 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axisX = axis; emit axisXChanged(axis); }
     QAbstractAxis *axisY() { return m_axisY; }
     void setAxisY(QAbstractAxis *axis) { m_axisY = axis; emit axisYChanged(axis); }
+    qreal width() const;
+    void setWidth(qreal width);
+    Qt::PenStyle style() const;
+    void setStyle(Qt::PenStyle style);
+    Qt::PenCapStyle capStyle() const;
+    void setCapStyle(Qt::PenCapStyle capStyle);
     QDeclarativeListProperty<QObject> declarativeChildren();
 
 public: // from QDeclarativeParserStatus
@@ -63,6 +72,9 @@ Q_SIGNALS:
     void countChanged(int count);
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
     Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void widthChanged(qreal width);
+    Q_REVISION(1) void styleChanged(Qt::PenStyle style);
+    Q_REVISION(1) void capStyleChanged(Qt::PenCapStyle capStyle);
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);

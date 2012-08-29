@@ -45,6 +45,9 @@ ChartView {
         onPointRemoved:             console.log("splineSeries.onPointRemoved: " + index);
         onPointAdded:               console.log("splineSeries.onPointAdded: " + series.at(index).x + ", " + series.at(index).y);
         onColorChanged:             console.log("splineSeries.onColorChanged: " + color);
+        onWidthChanged:             console.log("splineSeries.onWidthChanged: " + width);
+        onStyleChanged:             console.log("splineSeries.onStyleChanged: " + style);
+        onCapStyleChanged:          console.log("splineSeries.onCapStyleChanged: " + capStyle);
         onCountChanged:             console.log("splineSeries.onCountChanged: " + count);
     }
 

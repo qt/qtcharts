@@ -101,6 +101,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty real BarSet::borderWidth
+    The width of the border line. By default the width is 2.0.
+*/
+
+/*!
     \property QBarSet::labelColor
     The text (label) color of the bar set.
 */

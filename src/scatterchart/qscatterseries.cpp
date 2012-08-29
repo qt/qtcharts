@@ -79,6 +79,11 @@
 */
 
 /*!
+    \qmlproperty real ScatterSeries::borderWidth
+    The width of the border line. By default the width is 2.0.
+*/
+
+/*!
     \property QScatterSeries::markerShape
     Defines the shape of the marker used to draw the points in the series. The default shape is MarkerShapeCircle.
 */
