@@ -50,6 +50,21 @@ DeclarativeLineSeries* DeclarativeAreaSeries::lowerSeries() const
     return qobject_cast<DeclarativeLineSeries *>(QAreaSeries::lowerSeries());
 }
 
+qreal DeclarativeAreaSeries::borderWidth() const
+{
+    return pen().widthF();
+}
+
+void DeclarativeAreaSeries::setBorderWidth(qreal width)
+{
+    if (width != pen().widthF()) {
+        QPen p = pen();
+        p.setWidthF(width);
+        setPen(p);
+        emit borderWidthChanged(width);
+    }
+}
+
 #include "moc_declarativeareaseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

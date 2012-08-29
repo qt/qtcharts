@@ -67,6 +67,7 @@ ChartView {
         onSelected:                 console.log(name + ".onSelected");
         onColorChanged:             console.log(name + ".onColorChanged: " + color);
         onBorderColorChanged:       console.log(name + ".onBorderColorChanged: " + borderColor);
+        onBorderWidthChanged:       console.log(name + ".onBorderChanged: " + borderWidth);
 //        onCountChanged:             console.log(name + ".onCountChanged: " + count);
     }
 

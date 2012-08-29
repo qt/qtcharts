@@ -97,6 +97,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty real AreaSeries::borderWidth
+    The width of the border line. By default the width is 2.0.
+*/
+
+/*!
    \fn QPen QAreaSeries::pen() const
    \brief  Returns the pen used to draw line for this series.
     \sa setPen()

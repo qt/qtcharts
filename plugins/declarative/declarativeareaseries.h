@@ -33,6 +33,7 @@ class DeclarativeAreaSeries : public QAreaSeries
     Q_PROPERTY(DeclarativeLineSeries *lowerSeries READ lowerSeries WRITE setLowerSeries)
     Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
     Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
+    Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
 
 public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
@@ -44,10 +45,13 @@ public:
     void setAxisX(QAbstractAxis *axis) { m_axisX = axis; emit axisXChanged(axis); }
     QAbstractAxis *axisY() { return m_axisY; }
     void setAxisY(QAbstractAxis *axis) { m_axisY = axis; emit axisYChanged(axis); }
+    qreal borderWidth() const;
+    void setBorderWidth(qreal borderWidth);
 
 Q_SIGNALS:
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
     Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(1) void borderWidthChanged(qreal width);
 
 private:
     QAbstractAxis *m_axisX;

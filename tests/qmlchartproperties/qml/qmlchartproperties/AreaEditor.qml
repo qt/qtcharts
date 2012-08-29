@@ -39,6 +39,14 @@ Flow {
         onClicked: series.borderColor = main.nextColor();
     }
     Button {
+        text: "borderWidth + (" + series.borderWidth + ")"
+        onClicked: series.borderWidth += 0.5;
+    }
+    Button {
+        text: "borderWidth - (" + series.borderWidth + ")"
+        onClicked: series.borderWidth -= 0.5;
+    }
+    Button {
         id: upperButton
         text: "upper series"
         unpressedColor: "#79bd8f"
