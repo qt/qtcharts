@@ -13,23 +13,23 @@ int main(int argc, char *argv[])
     // Data from http://www.stat.fi/til/ekul/2010/ekul_2010_2011-12-13_tie_001_en.html
 
     QPieSeries *series1 = new QPieSeries();
-    series1->setName("Fossil");
+    series1->setName("Fossil fuels");
     series1->append("Oil", 353295);
-    series1->append("Wood", 319663);
     series1->append("Coal", 188500);
     series1->append("Natural gas", 148680);
     series1->append("Peat", 94545);
 
     QPieSeries *series2 = new QPieSeries();
-    series2->setName("Renewable");
+    series2->setName("Renewables");
+    series2->append("Wood fuels", 319663);
     series2->append("Hydro power", 45875);
     series2->append("Wind power", 1060);
 
     QPieSeries *series3 = new QPieSeries();
-    series3->setName("Other");
+    series3->setName("Others");
     series3->append("Nuclear energy", 238789);
     series3->append("Import energy", 37802);
-    series3->append("Others", 32441);
+    series3->append("Other", 32441);
     //![1]
 
     //![2]
