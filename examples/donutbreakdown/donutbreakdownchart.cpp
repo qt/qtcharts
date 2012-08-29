@@ -33,7 +33,7 @@ void DonutBreakdownChart::addBreakdownSeries(QPieSeries *breakdownSeries, QColor
     foreach (QPieSlice *slice, breakdownSeries->slices()) {
         color = color.lighter(110);
         slice->setBrush(color);
-        slice->setLabelFont(QFont("Arial", 7));
+        slice->setLabelFont(QFont("Arial", 8));
         slice->setLabelArmLengthFactor(0.05);
     }
 
