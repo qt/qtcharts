@@ -83,7 +83,6 @@ QPieSlice* DeclarativePieSeries::find(QString label)
 
 QPieSlice* DeclarativePieSeries::append(QString label, qreal value)
 {
-    // TODO: parameter order is wrong, switch it:
     QPieSlice *slice = new QPieSlice(this);
     slice->setLabel(label);
     slice->setValue(value);

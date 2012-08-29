@@ -28,8 +28,6 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class DeclarativeChart : public QDeclarativeItem
-// TODO: for QTQUICK2: extend QQuickPainterItem instead
-//class DeclarativeChart : public QQuickPaintedItem, public Chart
 {
     Q_OBJECT
     Q_PROPERTY(Theme theme READ theme WRITE setTheme)

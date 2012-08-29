@@ -6,11 +6,6 @@ QT += declarative
 }
 INCLUDEPATH += $$CHART_BUILD_PRIVATE_HEADER_DIR
 
-contains(QT_MAJOR_VERSION, 5) {
-    # TODO: QtQuick2 not supported by the implementation currently
-    DEFINES += QTQUICK2
-}
-
 CONFIG(debug, debug|release) {
   mac: TARGET = $$join(TARGET,,,_debug)
   win32: TARGET = $$join(TARGET,,,d)

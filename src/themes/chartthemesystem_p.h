@@ -45,11 +45,8 @@ public:
     ChartThemeSystem() : ChartTheme(QChart::ChartThemeLight /*QChart::ChartThemeSystem*/)
     {
 #ifdef Q_OS_WIN
-        // TODO: use theme specific window frame color as a series base color (it would give more
+        // We could also use theme specific window frame color as a series base color (it would give more
         // variation to the base colors in addition to the blue and black used now)
-        // TODO: COLOR_WINDOWTEXT for text color?
-        // TODO: COLOR_INFOTEXT for tooltip text color?
-        // TODO: COLOR_INFOBK for tooltip background color?
 
         // First series base color from COLOR_HIGHLIGHT
         DWORD colorHighlight;
@@ -104,7 +101,7 @@ public:
         m_backgroundShades = BackgroundShadesNone;
 
 #elif defined(Q_OS_LINUX)
-        // TODO: replace this dummy theme with linux specific theme
+        // Using a hard coded theme for Linux system theme
         m_seriesColors << QRgb(0x60a6e6);
         m_seriesColors << QRgb(0x92ca66);
         m_seriesColors << QRgb(0xeba85f);
@@ -127,7 +124,7 @@ public:
         m_backgroundShades = BackgroundShadesNone;
 
 #elif defined(Q_OS_MAC)
-        // TODO: replace this dummy theme with OSX specific theme
+        // Using a hard coded theme for OSX system theme; the colors match the OSX 10.7 colors
         m_seriesColors << QRgb(0x60a6e6);
         m_seriesColors << QRgb(0x92ca66);
         m_seriesColors << QRgb(0xeba85f);
@@ -150,7 +147,7 @@ public:
         m_backgroundShades = BackgroundShadesNone;
 
 #else
-        // TODO: replace this dummy theme with generic (not OS specific) theme
+        // Hard coded theme
         m_seriesColors << QRgb(0x60a6e6);
         m_seriesColors << QRgb(0x92ca66);
         m_seriesColors << QRgb(0xeba85f);
