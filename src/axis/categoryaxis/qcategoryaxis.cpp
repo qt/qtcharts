@@ -33,6 +33,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     This class can be used when the underlying data needs to be given extra meaning.
     Unlike with the QBarCategoryAxis the QCategoryAxis allows the categories ranges widths to be specified freely.
+
+    Example code on how to use QCategoryAxis.
+    \code
+    QChartView *chartView = new QChartView;
+    QLineSeries *series = new QLineSeries;
+    // ...
+    chartView->chart()->addSeries(series);
+
+    QCategoryAxis *axisX = new QCategoryAxis;
+    axisX->setStartValue(15);
+    axisX->append("First", 20);
+    axisX->append("Second", 37);
+    axisX->append("Third", 52);
+    chartView->chart()->setAxisX(series, axisX);
+    \endcode
 */
 /*!
     \qmlclass CategoryAxis QCategoryAxis
