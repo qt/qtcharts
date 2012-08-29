@@ -212,8 +212,6 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
 {
     Q_UNUSED(valueCount);
     QChart* chart = new QChart();
-   //TODO: chart->axisX()->setNiceNumbersEnabled(true);
-   //TODO: chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Bar chart");
 
     QStackedBarSeries* series = new QStackedBarSeries(chart);
@@ -232,8 +230,6 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
 QChart* ThemeWidget::createLineChart() const
 {
     QChart* chart = new QChart();
-    //TODO: chart->axisX()->setNiceNumbersEnabled(true);
-    //TODO: chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Line chart");
 
     QString name("Series ");
@@ -279,8 +275,6 @@ QChart* ThemeWidget::createPieChart() const
 QChart* ThemeWidget::createSplineChart() const
 { // spine chart
     QChart* chart = new QChart();
-   //TODO: chart->axisX()->setNiceNumbersEnabled(true);
-   //TODO: chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Spline chart");
     QString name("Series ");
     int nameIndex = 0;
@@ -299,8 +293,6 @@ QChart* ThemeWidget::createSplineChart() const
 QChart* ThemeWidget::createScatterChart() const
 { // scatter chart
     QChart* chart = new QChart();
-    //TODO: chart->axisX()->setNiceNumbersEnabled(true);
-    //TODO: chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Scatter chart");
     QString name("Series ");
     int nameIndex = 0;

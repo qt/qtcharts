@@ -84,9 +84,8 @@ MOC_DIR = $$CHART_BUILD_DIR/lib
 UI_DIR = $$CHART_BUILD_DIR/lib
 RCC_DIR = $$CHART_BUILD_DIR/lib
 
-############################# PUBLIC HEADERS GENERTOR ##########################################
+############################# PUBLIC HEADERS GENERATOR ##########################################
 
-#this is very primitive and lame parser , TODO: make perl script insted
 !exists($$CHART_BUILD_PUBLIC_HEADER_DIR/QChartGlobal)
 {
     system($$QMAKE_MKDIR $$CHART_BUILD_PUBLIC_HEADER_DIR)

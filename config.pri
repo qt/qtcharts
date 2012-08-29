@@ -56,7 +56,7 @@ win32:{
 }
 
 mac: {
-    # TODO: The following qmake flags are a work-around to make QtCommercial Charts compile on
+    # The following qmake flags are a work-around to make QtCommercial Charts compile on
     # QtCommercial 4.8. On the other hand Charts builds successfully with Qt open source 4.8
     # without these definitions, so this is probably a configuration issue on QtCommercial 4.8;
     # it should probably define the minimum OSX version to be 10.5...

@@ -100,7 +100,6 @@ int main(int argc, char *argv[])
 
 //! [6]
     drilldownChart->axisX()->setGridLineVisible(false);
-    //TODO: drilldownChart->axisY()->setNiceNumbersEnabled(true);
     drilldownChart->legend()->setVisible(true);
     drilldownChart->legend()->setAlignment(Qt::AlignBottom);
 //! [6]
