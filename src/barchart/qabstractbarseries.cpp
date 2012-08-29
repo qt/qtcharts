@@ -188,15 +188,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    This is depreciated constructor.
-    \a parent
-*/
-QAbstractBarSeries::QAbstractBarSeries(QObject *parent) :
-    QAbstractSeries(*(QAbstractBarSeriesPrivate*)(0),parent)
-{
-}
-
-/*!
     Destructs abstractbarseries and owned barsets.
 */
 QAbstractBarSeries::~QAbstractBarSeries()
@@ -600,6 +591,68 @@ qreal QAbstractBarSeriesPrivate::maxX()
     }
 
     return max;
+}
+
+qreal QAbstractBarSeriesPrivate::categoryTop(int category)
+{
+    // Returns top (sum of all positive values) of category.
+    // Returns 0, if all values are negative
+    qreal top(0);
+    int count = m_barSets.count();
+    for (int set = 0; set < count; set++) {
+        if (category < m_barSets.at(set)->count()) {
+            qreal temp = m_barSets.at(set)->at(category);
+            if (temp > 0) {
+                top += temp;
+            }
+        }
+    }
+    return top;
+}
+
+qreal QAbstractBarSeriesPrivate::categoryBottom(int category)
+{
+    // Returns bottom (sum of all negative values) of category
+    // Returns 0, if all values are positive
+    qreal bottom(0);
+    int count = m_barSets.count();
+    for (int set = 0; set < count; set++) {
+        if (category < m_barSets.at(set)->count()) {
+            qreal temp = m_barSets.at(set)->at(category);
+            if (temp < 0) {
+                bottom += temp;
+            }
+        }
+    }
+    return bottom;
+}
+
+qreal QAbstractBarSeriesPrivate::top()
+{
+    // Returns top of all categories
+    qreal top(0);
+    int count = categoryCount();
+    for (int i=0; i<count; i++) {
+        qreal temp = categoryTop(i);
+        if (temp > top) {
+            top = temp;
+        }
+    }
+    return top;
+}
+
+qreal QAbstractBarSeriesPrivate::bottom()
+{
+    // Returns bottom of all categories
+    qreal bottom(0);
+    int count = categoryCount();
+    for (int i=0; i<count; i++) {
+        qreal temp = categoryBottom(i);
+        if (temp < bottom) {
+            bottom = temp;
+        }
+    }
+    return bottom;
 }
 
 

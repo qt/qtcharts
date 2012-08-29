@@ -50,7 +50,8 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal xPos = -scaleX * m_domainMinX + geometry().left();
+        qreal xMax = -scaleX * m_domainMinX + geometry().left();
+        qreal xMin = -scaleX * m_domainMinX + geometry().left();
         for (int set = 0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
@@ -59,8 +60,6 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
             qreal barWidth = barSet->value(category) * scaleX;
             Bar* bar = m_bars.at(itemIndex);
 
-            QRectF rect(xPos, yPos - barHeight, barWidth, barHeight);
-            layout.append(rect);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
             if (qFuzzyIsNull(barHeight)) {
@@ -76,14 +75,23 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
             } else {
                 label->setText(QString(""));
             }
-
-            label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                          ,yPos - barHeight/2 - label->boundingRect().height()/2);
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 
+            if (barWidth > 0) {
+                QRectF rect(xMax, yPos - barHeight, barWidth, barHeight);
+                layout.append(rect);
+                label->setPos(xMax + (rect.width()/2 - label->boundingRect().width()/2)
+                              ,yPos - barHeight/2 - label->boundingRect().height()/2);
+                xMax += barWidth;
+            } else {
+                QRectF rect(xMin, yPos - barHeight, barWidth, barHeight);
+                layout.append(rect);
+                label->setPos(xMin + (rect.width()/2 - label->boundingRect().width()/2)
+                              ,yPos - barHeight/2 - label->boundingRect().height()/2);
+                xMin += barWidth;
+            }
             itemIndex++;
-            xPos += barWidth;
         }
     }
     return layout;

@@ -66,10 +66,9 @@ void QHorizontalStackedBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal maxY(domain.maxY());
 
     qreal y = categoryCount();
-    qreal x = maxCategorySum();
-    minX = qMin(minX, x);
+    minX = qMin(minX, bottom());
     minY = qMin(minY, - (qreal)0.5);
-    maxX = qMax(maxX, x);
+    maxX = qMax(maxX, top());
     maxY = qMax(maxY, y - (qreal)0.5);
 
     domain.setRange(minX,maxX,minY,maxY);

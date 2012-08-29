@@ -97,15 +97,13 @@ void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
     qreal maxY(domain.maxY());
 
     qreal x = categoryCount();
-    qreal y = maxCategorySum();
     minX = qMin(minX, - (qreal)0.5);
-    minY = qMin(minY, y);
+    minY = qMin(minY, bottom());
     maxX = qMax(maxX, x - (qreal)0.5);
-    maxY = qMax(maxY, y);
+    maxY = qMax(maxY, top());
 
     domain.setRange(minX,maxX,minY,maxY);
 }
-
 
 ChartElement* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {

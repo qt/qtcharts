@@ -50,7 +50,8 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal yPos = height + rangeY * m_domainMinY + geometry().topLeft().y();
+        qreal yMax = height + scaleY * m_domainMinY + geometry().topLeft().y();
+        qreal yMin = height + scaleY * m_domainMinY + geometry().topLeft().y();
         for (int set=0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
@@ -66,9 +67,6 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
                 bar->setVisible(barsVisible);
             }
 
-            QRectF rect(xPos, yPos-barHeight, barWidth, barHeight);
-            layout.append(rect);
-
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(barSet->value(category))) {
@@ -76,13 +74,24 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             } else {
                 label->setText(QString(""));
             }
-
-            label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                          ,yPos - barHeight/2 - label->boundingRect().height()/2);
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
+
+            if (barHeight < 0) {
+                QRectF rect(xPos, yMax-barHeight, barWidth, barHeight);
+                layout.append(rect);
+                label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
+                              ,yMax - barHeight/2 - label->boundingRect().height()/2);
+                yMax -= barHeight;
+            } else {
+                QRectF rect(xPos, yMin-barHeight, barWidth, barHeight);
+                layout.append(rect);
+                label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
+                              ,yMin - barHeight/2 - label->boundingRect().height()/2);
+                yMin -= barHeight;
+            }
+
             itemIndex++;
-            yPos -= barHeight;
         }
     }
 
