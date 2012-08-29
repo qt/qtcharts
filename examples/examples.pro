@@ -29,7 +29,6 @@ SUBDIRS += \
            horizontalpercentbarchart \
            donutbreakdown \
            scrollchart \
-           datetimeaxis \
            temperaturerecords \
            donutchart
 
