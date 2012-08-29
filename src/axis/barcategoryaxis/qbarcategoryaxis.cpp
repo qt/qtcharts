@@ -35,6 +35,21 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     BarCategoryAxis can be setup to show axis line with tick marks, grid lines and shades.
     Categories are drawn between ticks. Note that you can use this also with lineseries too.
     See the \l {Line and BarChart Example} {Line and BarChart Example} to learn how to do that.
+
+    Example code on how to use QBarCategoryAxis.
+    \code
+    QChartView *chartView = new QChartView;
+    QBarSeries *series = new QBarSeries;
+    // ...
+    chartView->chart()->addSeries(series);
+    chartView->chart()->createDefaultAxes();
+
+    QBarCategoryAxis *axisX = new QBarCategoryAxis;
+    QStringList categories;
+    categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
+    axisX->append(categories);
+    chartView->chart()->setAxisX(series, axisX);
+    \endcode
 */
 
 /*!
