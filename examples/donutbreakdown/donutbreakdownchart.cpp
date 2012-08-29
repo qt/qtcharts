@@ -10,7 +10,7 @@ DonutBreakdownChart::DonutBreakdownChart(QGraphicsItem *parent, Qt::WindowFlags 
     // create the series for main center pie
     mainSeries = new QPieSeries();
     mainSeries->setPieSize(0.7);
-    addSeries(mainSeries);
+    QChart::addSeries(mainSeries);
 }
 //![1]
 
@@ -38,13 +38,14 @@ void DonutBreakdownChart::addBreakdownSeries(QPieSeries *breakdownSeries, QColor
     }
 
     // add the series to the chart
-    addSeries(breakdownSeries);
+    QChart::addSeries(breakdownSeries);
 
     // recalculate breakdown donut segments
     recalculateAngles();
 }
 //![2]
 
+//![3]
 void DonutBreakdownChart::recalculateAngles()
 {
     qreal angle = 0;
@@ -52,16 +53,18 @@ void DonutBreakdownChart::recalculateAngles()
         QPieSeries *s = find(slice->label());
         if (s) {
             s->setPieStartAngle(angle);
-            angle += slice->percentage() * 360.0;
+            angle += slice->percentage() * 360.0; // full pie is 360.0
             s->setPieEndAngle(angle);
         }
     }
 }
+//![3]
 
+//![4]
 QPieSeries *DonutBreakdownChart::find(QString seriesName) const
 {
     // find pieseries by name
-    foreach (QAbstractSeries *series, this->series()) {
+    foreach (QAbstractSeries *series, QChart::series()) {
         QPieSeries *s = qobject_cast<QPieSeries*>(series);
         if (!s)
             continue;
@@ -70,4 +73,4 @@ QPieSeries *DonutBreakdownChart::find(QString seriesName) const
     }
     return 0;
 }
-
+//![4]

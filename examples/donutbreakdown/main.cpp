@@ -9,9 +9,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
+    //![1]
     // Data from http://www.stat.fi/til/ekul/2010/ekul_2010_2011-12-13_tie_001_en.html
 
-    //![1]
     QPieSeries *series1 = new QPieSeries();
     series1->setName("Fossil");
     series1->append("Oil", 353295);

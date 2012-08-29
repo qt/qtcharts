@@ -28,8 +28,7 @@
             <li><a href="examples-piechart.html">Pie chart</a></li>
             <li><a href="examples-donutchart.html">Donut chart</a></li>
             <li><a href="examples-piechartdrilldown.html">Pie chart drilldown</a></li>
-            <li><a href="examples-donut.html">Nested donuts chart</a></li>
-            <li><a href="examples-donutbreakdown.html">Donut chart drilldown</a></li>
+            <li><a href="examples-donutbreakdown.html">Donut breakdown chart</a></li>
             <li><a href="examples-presenterchart.html">Presenter chart</a></li>
             <li><a href="examples-scatterchart.html">Scatter chart</a></li>
             <li><a href="examples-scatterinteractions.html">Scatter interactions</a></li>

@@ -5,48 +5,31 @@
 
      This example shows how to use create a donut breakdown chart using QPieSeries API.
 
-     Let's start by creating a QChartView instance and enabling the Antialiasing on it. Last line enables the animations of the chart.
+     Let's start by defining some data for the chart.
 
-     \snippet ../examples/donutbreakdown/widget.cpp 1
+     \snippet ../examples/donutbreakdown/main.cpp 1
 
-     PieSeries is used to present the general data.
+     Then we create a chart where we add the data. Note that this this is our own chart derived from QChart.
 
-     \snippet ../examples/donutbreakdown/widget.cpp 2
+     \snippet ../examples/donutbreakdown/main.cpp 2
 
-     Following block of code creates the slices for the mainData QPieSeries.
-     Then for every created slice a new series is created that stores the detailed data.
-     The details series is set to be a donut. Its size is adjusted so that it wraps around the mainData pie.
-     Next two signals from the mainData pie's slices are connected. This is used to keep the mainData slices agligned with their respective details series.
+     Our own chart works so that in the constructor we create a main series
+     which aggregates the data provided by the breakdown series. This is the piechart in the center.
 
-     \snippet ../examples/donutbreakdown/widget.cpp 3
+     \snippet ../examples/donutbreakdown/donutbreakdownchart.cpp 1
 
-     Set the labels of the mainData to enabled and their postion to Outside.
-     Then add the mainData and detailedData series to the chart.
+     When a breakdown series is added the data is used to create a slice in the main series and the
+     breakdown series itself is used to create a segment of a donut positioned so that it is aligned
+     with the corresponding slice in the main series.
 
-     \snippet ../examples/donutbreakdown/widget.cpp 4
+     \snippet ../examples/donutbreakdown/donutbreakdownchart.cpp 2
 
-     Finally the widget is placed in a layout used by the application.
+     Here's how the start and end angles for the donut segments are calculated.
 
-     \snippet ../examples/donutbreakdown/widget.cpp 5
+     \snippet ../examples/donutbreakdown/donutbreakdownchart.cpp 3
 
-     To show that the detailed data stays aligned with the main data every 2.5 sec. one of the slices is modified.
-     It should be noted that int this example the mainData slices should not be modified directly as the change
-     cannot be applied to the detailed slices without the extra knowledge on how the split looks like.
+     And now that we have our chart defined we can finally create a QChartView and show the chart.
 
-     \snippet ../examples/donutbreakdown/widget.cpp 6
-
-     When the mainData slice layout is changed the detailed data layout has to be modified accordingly.
-     This is achived by setting the start and end angle of the detailed series.
-
-     \snippet ../examples/donutbreakdown/widget.cpp 7
-
-     Highlight slot selects a random slice for the modification.
-     The slice is set to exploded to notify the user that its going to be changed.
-     The actual data modification is delayed by 1 sec to give a user a chance to focus on the slice.
-
-     Then the slice is modified. Respective mainData slice is modified as well to contain as the value the sum of the detailed series slices values.
-     Finally the slice exploded state is set to false.
-
-     \snippet ../examples/donutbreakdown/widget.cpp 8
+     \snippet ../examples/donutbreakdown/main.cpp 3
 
 */
