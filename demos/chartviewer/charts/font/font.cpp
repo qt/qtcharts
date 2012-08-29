@@ -61,9 +61,9 @@ private:
 
 };
 
-class FontChart5:public FontChart{
+class FontChart6:public FontChart{
 public:
-    FontChart5():FontChart(5){};
+    FontChart6():FontChart(6){};
 };
 
 class FontChart8:public FontChart{
@@ -76,15 +76,11 @@ public:
     FontChart10():FontChart(10){};
 };
 
-class FontChart12:public FontChart{
+class FontChart14:public FontChart{
 public:
-    FontChart12():FontChart(12){};
+    FontChart14():FontChart(14){};
 };
 
-class FontChart15:public FontChart{
-public:
-    FontChart15():FontChart(15){};
-};
 
 class FontChart18:public FontChart{
 public:
@@ -106,12 +102,17 @@ public:
     FontChart28():FontChart(28){};
 };
 
-DECLARE_CHART(FontChart5);
+class FontChart32:public FontChart{
+public:
+    FontChart32():FontChart(32){};
+};
+
+DECLARE_CHART(FontChart6);
 DECLARE_CHART(FontChart8);
 DECLARE_CHART(FontChart10);
-DECLARE_CHART(FontChart12);
-DECLARE_CHART(FontChart15);
+DECLARE_CHART(FontChart14);
 DECLARE_CHART(FontChart18);
 DECLARE_CHART(FontChart20);
 DECLARE_CHART(FontChart24);
 DECLARE_CHART(FontChart28);
+DECLARE_CHART(FontChart32);
