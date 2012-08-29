@@ -25,17 +25,61 @@ Row {
     spacing: 5
     property variant series
 
+    // buttons for selecting the edited object: series, barset or label
     Flow {
         spacing: 5
         flow: Flow.TopToBottom
+        Button {
+            id: seriesButton
+            text: "series"
+            unpressedColor: "#79bd8f"
+            onClicked: {
+                seriesFlow.visible = true;
+                setFlow.visible = false;
+                labelsFlow.visible = false;
+                color = "#00a388";
+                sliceButton.color = "#79bd8f";
+                labelButton.color = "#79bd8f";
+            }
+        }
+        Button {
+            id: setButton
+            text: "BarSet"
+            unpressedColor: "#79bd8f"
+            onClicked: {
+                seriesFlow.visible = false;
+                setFlow.visible = true;
+                labelsFlow.visible = false;
+                color = "#00a388";
+                seriesButton.color = "#79bd8f";
+                labelButton.color = "#79bd8f";
+            }
+        }
+        Button {
+            id: labelButton
+            text: "label"
+            unpressedColor: "#79bd8f"
+            onClicked: {
+                seriesFlow.visible = false;
+                setFlow.visible = false;
+                labelsFlow.visible = true;
+                color = "#00a388";
+                seriesButton.color = "#79bd8f";
+                sliceButton.color = "#79bd8f";
+            }
+        }
+    }
+
+    // Buttons for editing series
+    Flow {
+        id: seriesFlow
+        spacing: 5
+        flow: Flow.TopToBottom
+        visible: false
 
         Button {
             text: "visible"
             onClicked: series.visible = !series.visible;
-        }
-        Button {
-            text: "labels visible"
-            onClicked: series.labelsVisible = !series.labelsVisible;
         }
         Button {
             text: "bar width +"
@@ -45,6 +89,15 @@ Row {
             text: "bar width -"
             onClicked: series.barWidth -= 0.1;
         }
+    }
+
+    // Buttons for editing sets
+    Flow {
+        id: setFlow
+        spacing: 5
+        flow: Flow.TopToBottom
+        visible: false
+
         Button {
             text: "append set"
             onClicked: {
@@ -97,17 +150,29 @@ Row {
             text: "set 1 borderWidth - (" + series.at(0).borderWidth + ")"
             onClicked: series.at(0).borderWidth -= 0.5;
         }
+    }
+
+
+    Flow {
+        id: labelsFlow
+        spacing: 5
+        flow: Flow.TopToBottom
+        visible: false
+
+        Button {
+            text: "labels visible"
+            onClicked: series.labelsVisible = !series.labelsVisible;
+        }
         Button {
             text: "set 1 label color"
             onClicked: series.at(0).labelColor = main.nextColor();
         }
-    }
-
-    FontEditor {
-        id: fontEditor
-        fontDescription: "label"
-        function editedFont() {
-            return series.at(0).labelFont;
+        FontEditor {
+            id: fontEditor
+            fontDescription: "label"
+            function editedFont() {
+                return series.at(0).labelFont;
+            }
         }
     }
 }

@@ -91,6 +91,8 @@ public:
                                              QLatin1String("Trying to create uncreatable: AbstractBarSeries."));
         qmlRegisterUncreatableType<QAbstractAxis>(uri, 1, 0, "AbstractAxis",
                                           QLatin1String("Trying to create uncreatable: AbstractAxis. Use specific types of axis instead."));
+        qmlRegisterUncreatableType<QBarSet>(uri, 1, 0, "BarSetBase",
+                                          QLatin1String("Trying to create uncreatable: BarsetBase."));
 
         // QtCommercial.Chart 1.1
         qmlRegisterType<DeclarativeChart>(uri, 1, 1, "ChartView");
@@ -137,6 +139,8 @@ public:
                                              QLatin1String("Trying to create uncreatable: AbstractBarSeries."));
         qmlRegisterUncreatableType<QAbstractAxis>(uri, 1, 1, "AbstractAxis",
                                           QLatin1String("Trying to create uncreatable: AbstractAxis. Use specific types of axis instead."));
+        qmlRegisterUncreatableType<QBarSet>(uri, 1, 1, "BarSetBase",
+                                          QLatin1String("Trying to create uncreatable: BarsetBase."));
     }
 };
 

@@ -29,7 +29,6 @@ Row {
 
     // buttons for selecting the edited object: series, slice or label
     Flow {
-        id: editorSelectorFlow
         spacing: 5
         flow: Flow.TopToBottom
         Button {
