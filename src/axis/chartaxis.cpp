@@ -363,11 +363,21 @@ void ChartAxis::createNumberLabels(QStringList &labels,qreal min, qreal max, int
     n++;
 
     QValueAxis *axis = qobject_cast<QValueAxis *>(m_chartAxis);
-    QByteArray array = axis->labelFormat().toAscii();
-    for (int i=0; i< ticks; i++) {
-        qreal value = min + (i * (max - min)/ (ticks-1));
-        QString label;
-        labels << label.sprintf(array, value);;
+
+    QString format = axis->labelFormat();
+
+    if(format.isNull()) {
+        for (int i=0; i< ticks; i++) {
+            qreal value = min + (i * (max - min)/ (ticks-1));
+            labels << QString::number(value,'f',n);
+        }
+    }
+    else {
+        QByteArray array = format.toAscii();
+        for (int i=0; i< ticks; i++) {
+            qreal value = min + (i * (max - min)/ (ticks-1));
+            labels << QString().sprintf(array, value);
+        }
     }
 }
 
