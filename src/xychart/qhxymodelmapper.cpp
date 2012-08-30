@@ -223,7 +223,7 @@ void QHXYModelMapper::setColumnCount(int columnCount)
 {
     if (columnCount != count()) {
         setCount(columnCount);
-        emit firstColumnChanged();
+        emit columnCountChanged();
     }
 }
 

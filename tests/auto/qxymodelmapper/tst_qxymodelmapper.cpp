@@ -63,6 +63,8 @@ class tst_qxymodelmapper : public QObject
     void horizontalModelInsertColumns();
     void horizontalModelRemoveColumns();
     void modelUpdateCell();
+    void verticalMapperSignals();
+    void horizontalMapperSignals();
 
     private:
     QStandardItemModel *m_model;
@@ -522,6 +524,59 @@ void tst_qxymodelmapper::modelUpdateCell()
     QVERIFY(m_model->setData(m_model->index(1, 0), 44));
     QCOMPARE(m_series->points().at(1).x(), 44.0);
     QCOMPARE(m_model->data(m_model->index(1, 0)).toReal(), 44.0);
+}
+
+void tst_qxymodelmapper::verticalMapperSignals()
+{
+    QVXYModelMapper *mapper = new QVXYModelMapper;
+
+    QSignalSpy spy0(mapper, SIGNAL(firstRowChanged()));
+    QSignalSpy spy1(mapper, SIGNAL(rowCountChanged()));
+    QSignalSpy spy2(mapper, SIGNAL(xColumnChanged()));
+    QSignalSpy spy3(mapper, SIGNAL(yColumnChanged()));
+    QSignalSpy spy4(mapper, SIGNAL(modelReplaced()));
+    QSignalSpy spy5(mapper, SIGNAL(seriesReplaced()));
+
+    mapper->setXColumn(0);
+    mapper->setYColumn(1);
+    mapper->setModel(m_model);
+    mapper->setSeries(m_series);
+    mapper->setFirstRow(1);
+    mapper->setRowCount(5);
+
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+    QCOMPARE(spy4.count(), 1);
+    QCOMPARE(spy5.count(), 1);
+
+}
+
+void tst_qxymodelmapper::horizontalMapperSignals()
+{
+    QHXYModelMapper *mapper = new QHXYModelMapper;
+
+    QSignalSpy spy0(mapper, SIGNAL(firstColumnChanged()));
+    QSignalSpy spy1(mapper, SIGNAL(columnCountChanged()));
+    QSignalSpy spy2(mapper, SIGNAL(xRowChanged()));
+    QSignalSpy spy3(mapper, SIGNAL(yRowChanged()));
+    QSignalSpy spy4(mapper, SIGNAL(modelReplaced()));
+    QSignalSpy spy5(mapper, SIGNAL(seriesReplaced()));
+
+    mapper->setXRow(0);
+    mapper->setYRow(1);
+    mapper->setModel(m_model);
+    mapper->setSeries(m_series);
+    mapper->setFirstColumn(1);
+    mapper->setColumnCount(5);
+
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+    QCOMPARE(spy4.count(), 1);
+    QCOMPARE(spy5.count(), 1);
 }
 
 QTEST_MAIN(tst_qxymodelmapper)
