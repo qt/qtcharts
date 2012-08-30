@@ -182,10 +182,10 @@ void tst_ChartDataSet::setAxisX_data()
     QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
     QAbstractSeries* scatter = new QScatterSeries(this);
     QAbstractSeries* spline = new QSplineSeries(this);
-    QAbstractSeries* pie = new QPieSeries(this);
-    QAbstractSeries* bar = new QBarSeries(this);
-    QAbstractSeries* percent = new QPercentBarSeries(this);
-    QAbstractSeries* stacked = new QStackedBarSeries(this);
+    /*QAbstractSeries* pie = */new QPieSeries(this);
+    /*QAbstractSeries* bar = */new QBarSeries(this);
+    /*QAbstractSeries* percent = */new QPercentBarSeries(this);
+    /*QAbstractSeries* stacked = */new QStackedBarSeries(this);
 
     QTest::newRow("line,spline,scatter: axis 0 axis1 axis 2")
         << (QList<QAbstractSeries*>() << line << spline << scatter)
