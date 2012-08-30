@@ -38,11 +38,11 @@ class QAbstractAxis;
 class QBarCategoryAxis;
 class ChartPresenter;
 
-class ChartCategoriesAxisY : public ChartAxis
+class ChartBarCategoryAxisY : public ChartAxis
 {
 public:
-    ChartCategoriesAxisY(QBarCategoryAxis *axis, ChartPresenter *presenter);
-    ~ChartCategoriesAxisY();
+    ChartBarCategoryAxisY(QBarCategoryAxis *axis, ChartPresenter *presenter);
+    ~ChartBarCategoryAxisY();
 
     AxisType axisType() const { return Y_AXIS;}
 

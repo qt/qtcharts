@@ -446,9 +446,9 @@ ChartAxis* QBarCategoryAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QBarCategoryAxis);
     if(m_orientation == Qt::Vertical){
-        return new ChartCategoriesAxisY(q,presenter);
+        return new ChartBarCategoryAxisY(q,presenter);
     }else{
-        return new ChartCategoriesAxisX(q,presenter);
+        return new ChartBarCategoryAxisX(q,presenter);
     }
 }
 

@@ -70,8 +70,8 @@ Q_SIGNALS:
 private:
     Q_DECLARE_PRIVATE(QBarCategoryAxis)
     Q_DISABLE_COPY(QBarCategoryAxis)
-    friend class ChartCategoriesAxisX;
-    friend class ChartCategoriesAxisY;
+    friend class ChartBarCategoryAxisX;
+    friend class ChartBarCategoryAxisY;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

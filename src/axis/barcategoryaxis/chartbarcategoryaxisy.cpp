@@ -28,16 +28,16 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartCategoriesAxisY::ChartCategoriesAxisY(QBarCategoryAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
+ChartBarCategoryAxisY::ChartBarCategoryAxisY(QBarCategoryAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
 m_categoriesAxis(axis)
 {
 }
 
-ChartCategoriesAxisY::~ChartCategoriesAxisY()
+ChartBarCategoryAxisY::~ChartBarCategoryAxisY()
 {
 }
 
-QVector<qreal> ChartCategoriesAxisY::calculateLayout() const
+QVector<qreal> ChartBarCategoryAxisY::calculateLayout() const
 {
     int count = m_categoriesAxis->d_ptr->count();
 
@@ -68,7 +68,7 @@ QVector<qreal> ChartCategoriesAxisY::calculateLayout() const
     return points;
 }
 
-QStringList ChartCategoriesAxisY::createCategoryLabels(const QVector<qreal>& layout) const
+QStringList ChartBarCategoryAxisY::createCategoryLabels(const QVector<qreal>& layout) const
 {
     QStringList result;
     qreal d = (m_max - m_min)/m_rect.height();
@@ -86,7 +86,7 @@ QStringList ChartCategoriesAxisY::createCategoryLabels(const QVector<qreal>& lay
     return result;
 }
 
-void ChartCategoriesAxisY::updateGeometry()
+void ChartBarCategoryAxisY::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
 
@@ -147,7 +147,7 @@ void ChartCategoriesAxisY::updateGeometry()
     }
 }
 
-void ChartCategoriesAxisY::handleAxisUpdated()
+void ChartBarCategoryAxisY::handleAxisUpdated()
 {
 
     if(m_categoriesAxis->categories()!=m_categories)
