@@ -260,10 +260,10 @@ QAbstractAxis::AxisType QDateTimeAxis::type() const
 
 QDateTimeAxisPrivate::QDateTimeAxisPrivate(QDateTimeAxis* q):
     QAbstractAxisPrivate(q),
+    m_min(QDateTime::fromMSecsSinceEpoch(0)),
+    m_max(QDateTime::fromMSecsSinceEpoch(0)),
     m_tickCount(5)
 {
-    m_min = QDateTime::fromMSecsSinceEpoch(0);
-    m_max = QDateTime::fromMSecsSinceEpoch(0);
     m_format = "dd-MM-yyyy\nh:mm";
 }
 

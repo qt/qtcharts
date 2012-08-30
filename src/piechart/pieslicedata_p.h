@@ -67,23 +67,19 @@ private:
 class PieSliceData
 {
 public:
-    PieSliceData()
+    PieSliceData() :
+        m_value(0),
+        m_isExploded(false),
+        m_explodeDistanceFactor(0.15),
+        m_isLabelVisible(false),
+        m_labelPosition(QPieSlice::LabelOutside),
+        m_labelArmLengthFactor(0.15),
+        m_percentage(0),
+        m_radius(0),
+        m_startAngle(0),
+        m_angleSpan(0),
+        m_holeRadius(0)
     {
-        m_value = 0;
-
-        m_isExploded = false;
-        m_explodeDistanceFactor = 0.15;
-
-        m_isLabelVisible = false;
-        m_labelPosition = QPieSlice::LabelOutside;
-        m_labelArmLengthFactor = 0.15;
-
-        m_percentage = 0;
-        m_radius = 0;
-        m_startAngle = 0;
-        m_angleSpan = 0;
-
-        m_holeRadius = 0;
     }
 
     bool operator!=(const PieSliceData &other) const
