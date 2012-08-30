@@ -240,7 +240,7 @@ void QHBarModelMapper::setColumnCount(int columnCount)
 {
     if (columnCount != count()) {
         QBarModelMapper::setCount(columnCount);
-        emit firstColumnChanged();
+        emit columnCountChanged();
     }
 }
 

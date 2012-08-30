@@ -239,7 +239,7 @@ void QVBarModelMapper::setRowCount(int rowCount)
 {
     if (rowCount != count()) {
         QBarModelMapper::setCount(rowCount);
-        emit firstRowChanged();
+        emit rowCountChanged();
     }
 }
 

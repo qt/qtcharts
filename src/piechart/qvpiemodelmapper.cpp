@@ -251,7 +251,7 @@ void QVPieModelMapper::setRowCount(int rowCount)
 {
     if (rowCount != count()) {
         setCount(rowCount);
-        emit firstRowChanged();
+        emit rowCountChanged();
     }
 }
 
