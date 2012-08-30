@@ -51,9 +51,6 @@ private:
 
 private:
     QLegend* m_legend;
-    int m_marginBig;
-    int m_marginSmall;
-    int m_marginTiny;
     qreal m_offsetX;
     qreal m_offsetY;
     qreal m_minOffsetX;

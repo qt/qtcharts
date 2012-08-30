@@ -63,6 +63,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartTheme::ChartTheme(QChart::ChartTheme id) :
+    m_id(id),
     m_masterFont(QFont("arial", 14)),
     m_labelFont(QFont("arial", 10)),
     m_labelBrush(QColor(QRgb(0x000000))),
@@ -74,7 +75,6 @@ ChartTheme::ChartTheme(QChart::ChartTheme id) :
     m_gridLinePen(QPen(QRgb(0x000000))),
     m_force(false)
 {
-    m_id = id;
     qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
 }
 

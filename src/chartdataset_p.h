@@ -91,8 +91,6 @@ private:
     QMap<QAbstractSeries*, QAbstractAxis*> m_seriesAxisYMap;
     QMap<QAbstractSeries*, Domain*> m_seriesDomainMap;
     QMap<int, QAbstractSeries*> m_indexSeriesMap;
-    int m_domainIndex;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

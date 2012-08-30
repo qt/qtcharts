@@ -38,7 +38,6 @@ protected:
 
 private:
     bool m_isScrolling;
-    bool m_isRubberBandShown;
     QRubberBand m_rubberBand;
     QPoint m_origin;
 };
