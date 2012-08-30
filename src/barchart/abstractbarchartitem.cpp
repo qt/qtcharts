@@ -38,8 +38,10 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, ChartPres
     m_animation(0),
     m_series(series)
 {
+
     setFlag(ItemClipsChildrenToShape);
-    connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleLayoutChanged()));
+    connect(series->d_func(), SIGNAL(updatedLayout()), this, SLOT(handleLayoutChanged()));
+    connect(series->d_func(), SIGNAL(updatedBars()), this, SLOT(handleUpdatedBars()));
     connect(series->d_func(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(handleLabelsVisibleChanged(bool)));
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
     connect(series, SIGNAL(visibleChanged()), this, SLOT(handleVisibleChanged()));
@@ -170,6 +172,30 @@ void AbstractBarChartItem::handleVisibleChanged()
     handleLabelsVisibleChanged(visible);
     foreach(QGraphicsItem *item, childItems()) {
         item->setVisible(visible);
+    }
+}
+
+void AbstractBarChartItem::handleUpdatedBars()
+{
+    // Handle changes in pen, brush, labels etc.
+    int categoryCount = m_series->d_func()->categoryCount();
+    int setCount = m_series->count();
+    int itemIndex(0);
+
+    for (int category = 0; category < categoryCount; category++) {
+        for (int set = 0; set < setCount; set++) {
+            QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+            Bar* bar = m_bars.at(itemIndex);
+            bar->setPen(barSet->m_pen);
+            bar->setBrush(barSet->m_brush);
+            bar->update();
+
+            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
+            label->setFont(barSet->m_labelFont);
+            label->setBrush(barSet->m_labelBrush);
+            label->update();
+            itemIndex++;
+        }
     }
 }
 

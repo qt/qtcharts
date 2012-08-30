@@ -84,8 +84,10 @@ public:
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);
     void updatedBars();
+    void updatedLayout();
     void restructuredBars();
     void labelsVisibleChanged(bool visible);
+    void visibleChanged();
 
 private:
     void populateCategories(QBarCategoryAxis* axis);

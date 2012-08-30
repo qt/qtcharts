@@ -405,7 +405,7 @@ void QAbstractBarSeriesPrivate::setBarWidth(qreal width)
         width = 0.0;
     }
     m_barWidth = width;
-    emit updatedBars();
+    emit updatedLayout();
 }
 
 qreal QAbstractBarSeriesPrivate::barWidth() const
@@ -421,7 +421,7 @@ QBarSet* QAbstractBarSeriesPrivate::barsetAt(int index)
 void QAbstractBarSeriesPrivate::setVisible(bool visible)
 {
     m_visible = visible;
-    emit updatedBars();
+    emit visibleChanged();
 }
 
 void QAbstractBarSeriesPrivate::setLabelsVisible(bool visible)
@@ -678,6 +678,7 @@ bool QAbstractBarSeriesPrivate::append(QBarSet *set)
         return false;
     }
     m_barSets.append(set);
+    QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
     QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     emit restructuredBars();      // this notifies barchartitem
@@ -695,6 +696,7 @@ bool QAbstractBarSeriesPrivate::remove(QBarSet *set)
         return false;
     }
     m_barSets.removeOne(set);
+    QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
     QObject::disconnect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     emit restructuredBars();        // this notifies barchartitem
@@ -720,6 +722,7 @@ bool QAbstractBarSeriesPrivate::append(QList<QBarSet* > sets)
 
     foreach (QBarSet* set, sets) {
         m_barSets.append(set);
+        QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
         QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     }
@@ -749,6 +752,7 @@ bool QAbstractBarSeriesPrivate::remove(QList<QBarSet* > sets)
 
     foreach (QBarSet* set, sets) {
         m_barSets.removeOne(set);
+        QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
         QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
         QObject::disconnect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     }
@@ -768,6 +772,7 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
         return false;
     }
     m_barSets.insert(index, set);
+    QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
     QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     emit restructuredBars();      // this notifies barchartitem

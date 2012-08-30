@@ -617,13 +617,13 @@ int QBarSetPrivate::remove(const int index, const int count)
 void QBarSetPrivate::replace(const int index, const qreal value)
 {
     m_values.replace(index,QPointF(index,value));
-    emit updatedBars();
+    emit updatedLayout();
 }
 
 void QBarSetPrivate::replace(const int index, const QPointF value)
 {
     m_values.replace(index,value);
-    emit updatedBars();
+    emit updatedLayout();
 }
 
 qreal QBarSetPrivate::pos(const int index)

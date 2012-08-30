@@ -63,6 +63,7 @@ public:
 Q_SIGNALS:
     void restructuredBars();
     void updatedBars();
+    void updatedLayout();
 
 public:
     QBarSet * const q_ptr;
