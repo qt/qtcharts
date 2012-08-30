@@ -92,7 +92,7 @@ Rectangle {
             width: buttonWidth
             onClicked: {
                 chartLoader.source = "LineChart.qml";
-                editorLoader.source = "PieEditor.qml";
+                editorLoader.source = "LineEditor.qml";
             }
         }
         Button {
@@ -100,7 +100,7 @@ Rectangle {
             width: buttonWidth
             onClicked: {
                 chartLoader.source = "SplineChart.qml";
-                editorLoader.source = "PieEditor.qml";
+                editorLoader.source = "LineEditor.qml";
             }
         }
         Button {
