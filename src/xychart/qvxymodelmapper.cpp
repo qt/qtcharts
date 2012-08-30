@@ -183,7 +183,7 @@ int QVXYModelMapper::xColumn() const
 void QVXYModelMapper::setXColumn(int xColumn)
 {
     if (xColumn != xSection()) {
-        return QXYModelMapper::setXSection(xColumn);
+        QXYModelMapper::setXSection(xColumn);
         emit xColumnChanged();
     }
 }
@@ -196,7 +196,7 @@ int QVXYModelMapper::yColumn() const
 void QVXYModelMapper::setYColumn(int yColumn)
 {
     if (yColumn != ySection()) {
-        return QXYModelMapper::setYSection(yColumn);
+        QXYModelMapper::setYSection(yColumn);
         emit yColumnChanged();
     }
 }

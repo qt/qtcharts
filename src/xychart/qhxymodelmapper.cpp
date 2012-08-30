@@ -183,7 +183,7 @@ int QHXYModelMapper::xRow() const
 void QHXYModelMapper::setXRow(int xRow)
 {
     if (xRow != xSection()) {
-        return QXYModelMapper::setXSection(xRow);
+        QXYModelMapper::setXSection(xRow);
         emit xRowChanged();
     }
 }
@@ -196,7 +196,7 @@ int QHXYModelMapper::yRow() const
 void QHXYModelMapper::setYRow(int yRow)
 {
     if (yRow != ySection()) {
-        return QXYModelMapper::setYSection(yRow);
+        QXYModelMapper::setYSection(yRow);
         emit yRowChanged();
     }
 }
