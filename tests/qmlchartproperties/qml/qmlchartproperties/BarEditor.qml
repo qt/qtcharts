@@ -143,11 +143,11 @@ Row {
             onClicked: series.at(0).borderColor = main.nextColor();
         }
         Button {
-            text: "set 1 borderWidth + (" + series.at(0).borderWidth + ")"
+            text: "set 1 borderWidth +"
             onClicked: series.at(0).borderWidth += 0.5;
         }
         Button {
-            text: "set 1 borderWidth - (" + series.at(0).borderWidth + ")"
+            text: "set 1 borderWidth -"
             onClicked: series.at(0).borderWidth -= 0.5;
         }
     }

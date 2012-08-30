@@ -39,11 +39,11 @@ Flow {
         onClicked: series.borderColor = main.nextColor();
     }
     Button {
-        text: "borderWidth + (" + series.borderWidth + ")"
+        text: series != undefined ? "borderWidth + (" + series.borderWidth + ")" : ""
         onClicked: series.borderWidth += 0.5;
     }
     Button {
-        text: "borderWidth - (" + series.borderWidth + ")"
+        text: series != undefined ? "borderWidth - (" + series.borderWidth + ")" : ""
         onClicked: series.borderWidth -= 0.5;
     }
     Button {

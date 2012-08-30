@@ -22,5 +22,8 @@
         <file>qml/qmlchartproperties/ChartEditor2.qml</file>
         <file>qml/qmlchartproperties/ChartEditor3.qml</file>
         <file>qml/qmlchartproperties/FontEditor.qml</file>
+        <file>qml/qmlchartproperties/HorizontalBarChart.qml</file>
+        <file>qml/qmlchartproperties/HorizontalPercentBarChart.qml</file>
+        <file>qml/qmlchartproperties/HorizontalStackedBarChart.qml</file>
     </qresource>
 </RCC>

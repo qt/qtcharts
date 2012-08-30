@@ -24,47 +24,14 @@ Rectangle {
     id: main
     width: parent.width
     height: parent.height
-    property int viewNumber: 0
     property int viewCount: 9
     property variant colors: ["#637D74", "#403D3A", "#8C3B3B", "#AB6937", "#D4A960"]
     property int colorIndex: 0
+    property int buttonWidth: 42
 
     function nextColor() {
         colorIndex++;
         return colors[colorIndex % colors.length];
-    }
-
-    onViewNumberChanged: {
-        if (viewNumber == 0) {
-            chartLoader.source = "Chart.qml";
-            editorLoader.source = "ChartEditor.qml";
-        } else if (viewNumber == 1) {
-            chartLoader.source = "PieChart.qml";
-            editorLoader.source = "PieEditor.qml";
-        } else if (viewNumber == 2) {
-            chartLoader.source = "LineChart.qml";
-            editorLoader.source = "LineEditor.qml";
-        } else if (viewNumber == 3) {
-            chartLoader.source = "SplineChart.qml";
-            editorLoader.source = "LineEditor.qml";
-        } else if (viewNumber == 4) {
-            chartLoader.source = "ScatterChart.qml";
-            editorLoader.source = "ScatterEditor.qml";
-        } else if (viewNumber == 5) {
-            chartLoader.source = "AreaChart.qml";
-            editorLoader.source = "AreaEditor.qml";
-        } else if (viewNumber == 6) {
-            chartLoader.source = "BarChart.qml";
-            editorLoader.source = "BarEditor.qml";
-        }  else if (viewNumber == 7) {
-            chartLoader.source = "StackedBarChart.qml";
-            editorLoader.source = "BarEditor.qml";
-        } else if (viewNumber == 8) {
-            chartLoader.source = "PercentBarChart.qml";
-            editorLoader.source = "BarEditor.qml";
-        } else {
-            console.log("Illegal view number");
-        }
     }
 
     Row {
@@ -105,16 +72,99 @@ Rectangle {
         spacing: 10
 
         Button {
-            text: "previous"
+            text: "chart"
+            width: buttonWidth
             onClicked: {
-                viewNumber = (viewNumber + viewCount - 1) % viewCount;
+                chartLoader.source = "Chart.qml";
+                editorLoader.source = "ChartEditor.qml";
             }
         }
-
         Button {
-            text: "next"
+            text: "pie"
+            width: buttonWidth
             onClicked: {
-                viewNumber = (viewNumber + 1) % viewCount;
+                chartLoader.source = "PieChart.qml";
+                editorLoader.source = "PieEditor.qml";
+            }
+        }
+        Button {
+            text: "line"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "LineChart.qml";
+                editorLoader.source = "PieEditor.qml";
+            }
+        }
+        Button {
+            text: "spline"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "SplineChart.qml";
+                editorLoader.source = "PieEditor.qml";
+            }
+        }
+        Button {
+            text: "scatter"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "ScatterChart.qml";
+                editorLoader.source = "ScatterEditor.qml";
+            }
+        }
+        Button {
+            text: "area"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "AreaChart.qml";
+                editorLoader.source = "AreaEditor.qml";
+            }
+        }
+        Button {
+            text: "bar"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "BarChart.qml";
+                editorLoader.source = "BarEditor.qml";
+            }
+        }
+        Button {
+            text: "sbar"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "StackedBarChart.qml";
+                editorLoader.source = "BarEditor.qml";
+            }
+        }
+        Button {
+            text: "pbar"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "PercentBarChart.qml";
+                editorLoader.source = "BarEditor.qml";
+            }
+        }
+        Button {
+            text: "hbar"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "HorizontalBarChart.qml";
+                editorLoader.source = "BarEditor.qml";
+            }
+        }
+        Button {
+            text: "hsbar"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "HorizontalStackedBarChart.qml";
+                editorLoader.source = "BarEditor.qml";
+            }
+        }
+        Button {
+            text: "hpbar"
+            width: buttonWidth
+            onClicked: {
+                chartLoader.source = "HorizontalPercentBarChart.qml";
+                editorLoader.source = "BarEditor.qml";
             }
         }
     }

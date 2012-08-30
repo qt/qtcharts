@@ -36,27 +36,27 @@ Flow {
         onClicked: series.color = main.nextColor();
     }
     Button {
-        text: "width + (" + series.width + ")"
+        text: series != undefined ? "width + (" + series.width + ")" : ""
         onClicked: series.width += 0.5;
     }
     Button {
-        text: "width - (" + series.width + ")"
+        text: series != undefined ? "width - (" + series.width + ")" : ""
         onClicked: series.width -= 0.5;
     }
     Button {
-        text: "style + (" + series.style + ")"
+        text: series != undefined ? "style + (" + series.style + ")" : ""
         onClicked: series.style++;
     }
     Button {
-        text: "style - (" + series.style + ")"
+        text: series != undefined ? "style - (" + series.style + ")" : ""
         onClicked: series.style--;
     }
     Button {
-        text: "cap style + (" + series.capStyle + ")"
+        text: series != undefined ? "cap style + (" + series.capStyle + ")" : ""
         onClicked: series.capStyle++;
     }
     Button {
-        text: "cap style - (" +series.capStyle + ")"
+        text: series != undefined ? "cap style - (" +series.capStyle + ")" : ""
         onClicked: series.capStyle--;
     }
     Button {
