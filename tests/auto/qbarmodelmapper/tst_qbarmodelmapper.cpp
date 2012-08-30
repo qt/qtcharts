@@ -63,6 +63,8 @@ class tst_qbarmodelmapper : public QObject
     void horizontalModelInsertColumns();
     void horizontalModelRemoveColumns();
     void modelUpdateCell();
+    void verticalMapperSignals();
+    void horizontalMapperSignals();
 
     private:
     QStandardItemModel *m_model;
@@ -607,6 +609,59 @@ void tst_qbarmodelmapper::modelUpdateCell()
     QVERIFY(m_model->setData(m_model->index(1, 0), 44));
     QCOMPARE(m_series->barSets().at(0)->at(1), 44.0);
     QCOMPARE(m_model->data(m_model->index(1, 0)).toReal(), 44.0);
+}
+
+void tst_qbarmodelmapper::verticalMapperSignals()
+{
+    QVBarModelMapper *mapper = new QVBarModelMapper;
+
+    QSignalSpy spy0(mapper, SIGNAL(firstRowChanged()));
+    QSignalSpy spy1(mapper, SIGNAL(rowCountChanged()));
+    QSignalSpy spy2(mapper, SIGNAL(firstBarSetColumnChanged()));
+    QSignalSpy spy3(mapper, SIGNAL(lastBarSetColumnChanged()));
+    QSignalSpy spy4(mapper, SIGNAL(modelReplaced()));
+    QSignalSpy spy5(mapper, SIGNAL(seriesReplaced()));
+
+    mapper->setFirstBarSetColumn(0);
+    mapper->setLastBarSetColumn(1);
+    mapper->setModel(m_model);
+    mapper->setSeries(m_series);
+    mapper->setFirstRow(1);
+    mapper->setRowCount(5);
+
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+    QCOMPARE(spy4.count(), 1);
+    QCOMPARE(spy5.count(), 1);
+
+}
+
+void tst_qbarmodelmapper::horizontalMapperSignals()
+{
+    QHBarModelMapper *mapper = new QHBarModelMapper;
+
+    QSignalSpy spy0(mapper, SIGNAL(firstColumnChanged()));
+    QSignalSpy spy1(mapper, SIGNAL(columnCountChanged()));
+    QSignalSpy spy2(mapper, SIGNAL(firstBarSetRowChanged()));
+    QSignalSpy spy3(mapper, SIGNAL(lastBarSetRowChanged()));
+    QSignalSpy spy4(mapper, SIGNAL(modelReplaced()));
+    QSignalSpy spy5(mapper, SIGNAL(seriesReplaced()));
+
+    mapper->setFirstBarSetRow(0);
+    mapper->setLastBarSetRow(1);
+    mapper->setModel(m_model);
+    mapper->setSeries(m_series);
+    mapper->setFirstColumn(1);
+    mapper->setColumnCount(5);
+
+    QCOMPARE(spy0.count(), 1);
+    QCOMPARE(spy1.count(), 1);
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), 1);
+    QCOMPARE(spy4.count(), 1);
+    QCOMPARE(spy5.count(), 1);
 }
 
 QTEST_MAIN(tst_qbarmodelmapper)
