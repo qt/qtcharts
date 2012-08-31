@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QVALUESAXIS_P_H
-#define QVALUESAXIS_P_H
+#ifndef QDATETIMEAXIS_P_H
+#define QDATETIMEAXIS_P_H
 
 #include "qdatetimeaxis.h"
 #include "qabstractaxis_p.h"
@@ -67,4 +67,4 @@ class QDateTimeAxisPrivate : public QAbstractAxisPrivate
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QVALUESAXIS_P_H
+#endif // QDATETIMEAXIS_P_H

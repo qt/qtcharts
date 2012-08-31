@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTVIEW_H_
-#define CHARTVIEW_H_
+#ifndef CHARTVIEW_H
+#define CHARTVIEW_H
 
 #include <QChartView>
 #include <QTimer>
@@ -46,4 +46,4 @@ private:
 };
 //![1]
 
-#endif /* CHARTVIEW_H_ */
+#endif /* CHARTVIEW_H */

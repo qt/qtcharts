@@ -45,4 +45,4 @@ public:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTITEM_H_ */
+#endif /* CHARTITEM_H */

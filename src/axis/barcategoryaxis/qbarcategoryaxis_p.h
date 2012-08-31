@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QBARCATEGORIESAXIS_P_H
-#define QBARCATEGORIESAXIS_P_H
+#ifndef QBARCATEGORYAXIS_P_H
+#define QBARCATEGORYAXIS_P_H
 
 #include "qbarcategoryaxis.h"
 #include "qabstractaxis_p.h"
@@ -73,4 +73,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QBARCATEGORIESAXIS_P_H
+#endif // QBARCATEGORYAXIS_P_H

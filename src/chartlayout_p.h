@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTLAYOUT_H_
-#define CHARTLAYOUT_H_
+#ifndef CHARTLAYOUT_H
+#define CHARTLAYOUT_H
 #include <QGraphicsLayout>
 #include <QMargins>
 #include "qchartglobal.h"

@@ -95,4 +95,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTENGINE_P_H_ */
+#endif /* CHARTENGINE_P_H */

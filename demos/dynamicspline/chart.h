@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHART_H_
-#define CHART_H_
+#ifndef CHART_H
+#define CHART_H
 
 #include <QChart>
 #include <QTimer>
@@ -53,4 +53,4 @@ private:
 };
 //![1]
 
-#endif /* CHART_H_ */
+#endif /* CHART_H */

@@ -18,11 +18,11 @@
 **
 ****************************************************************************/
 
-#ifndef MACROINCLUDE_H_
-#define MACROINCLUDE_H_
+#ifndef CHARTSNAMESPACE_H
+#define MACROINCLUDE_H
 
 // this is needed by the designer plugin.
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-#endif /* MACROINCLUDE_H_ */
+#endif /* CHARTSNAMESPACE_H */

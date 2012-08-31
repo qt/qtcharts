@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef QBARCATEGORIESAXIS_H
-#define QBARCATEGORIESAXIS_H
+#ifndef QBARCATEGORYAXIS_H
+#define QBARCATEGORYAXIS_H
 
 #include "qabstractaxis.h"
 
@@ -76,4 +76,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QCATEGORIESAXIS_H
+#endif // QBARCATEGORYAXIS_H

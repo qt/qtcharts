@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef MODEL_H_
-#define MODEL_H_
+#ifndef MODEL_H
+#define MODEL_H
 
 #include <QList>
 #include <QPair>

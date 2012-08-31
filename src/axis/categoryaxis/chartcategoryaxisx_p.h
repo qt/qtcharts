@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef CHARTINTERVALAXISX_H
-#define CHARTINTERVALAXISX_H
+#ifndef CHARTCATEGORYAXISX_H
+#define CHARTCATEGORYAXISX_H
 
 #include "chartaxis_p.h"
 
@@ -55,4 +55,4 @@ protected:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTINTERVALAXISX_H */
+#endif /* CHARTCATEGORYAXISX_H */

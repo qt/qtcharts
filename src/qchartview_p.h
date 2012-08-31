@@ -43,7 +43,7 @@ class QChartView;
 class QChartViewPrivate {
 
 public:
-    QChartViewPrivate(QChartView *q,QChart *chart = 0);
+    explicit QChartViewPrivate(QChartView *q, QChart *chart = 0);
     ~QChartViewPrivate();
 
 protected:

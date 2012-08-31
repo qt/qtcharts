@@ -287,7 +287,7 @@ bool QAbstractBarSeries::take(QBarSet *set)
 
 /*!
     Adds a list of barsets to series. Takes ownership of \a sets.
-    Returns true, if all sets were appended succesfully. If any of the sets is null or is already appended to series,
+    Returns true, if all sets were appended successfully. If any of the sets is null or is already appended to series,
     nothing is appended and function returns false. If any of the sets is in list more than once, nothing is appended
     and function returns false.
 */

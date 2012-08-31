@@ -550,8 +550,8 @@ void QBarModelMapperPrivate::initializeBarFromModel()
                 posInBar++;
                 barIndex = barModelIndex(i, posInBar);
             }
-            connect(barSet, SIGNAL(valuesAdded(int, int)), this, SLOT(valuesAdded(int, int)));
-            connect(barSet, SIGNAL(valuesRemoved(int, int)), this, SLOT(valuesRemoved(int, int)));
+            connect(barSet, SIGNAL(valuesAdded(int,int)), this, SLOT(valuesAdded(int,int)));
+            connect(barSet, SIGNAL(valuesRemoved(int,int)), this, SLOT(valuesRemoved(int,int)));
             connect(barSet, SIGNAL(valueChanged(int)), this, SLOT(barValueChanged(int)));
             connect(barSet, SIGNAL(labelChanged()), this, SLOT(barLabelChanged()));
             m_series->append(barSet);

@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef THEMEWINDOW_H_
-#define THEMEWINDOW_H_
+#ifndef THEMEWINDOW_H
+#define THEMEWINDOW_H
 #include <QWidget>
 #include <QChartGlobal>
 
@@ -73,4 +73,4 @@ private:
     QComboBox *m_legendComboBox;
 };
 
-#endif /* THEMEWINDOW_H_ */
+#endif /* THEMEWINDOW_H */

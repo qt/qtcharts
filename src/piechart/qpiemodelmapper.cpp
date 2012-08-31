@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include "qpiemodelmapper_p.h"
 #include "qpiemodelmapper.h"
+#include "qpiemodelmapper_p.h"
 #include "qpieseries.h"
 #include "qpieslice.h"
 #include <QAbstractItemModel>

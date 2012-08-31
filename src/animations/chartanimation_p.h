@@ -46,6 +46,4 @@ public:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-
-
-#endif /* AXISITEM_H_ */
+#endif /* CHARTANIMATION_H */

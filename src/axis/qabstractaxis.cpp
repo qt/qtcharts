@@ -572,7 +572,7 @@ void QAbstractAxis::hide()
 
 /*!
   Sets the minimum value shown on the axis.
-  Depending on the actual axis type the \a min paramter is converted to appropriate type.
+  Depending on the actual axis type the \a min parameter is converted to appropriate type.
   If the conversion is impossible then the function call does nothing
 */
 void QAbstractAxis::setMin(const QVariant &min)
@@ -582,7 +582,7 @@ void QAbstractAxis::setMin(const QVariant &min)
 
 /*!
   Sets the maximum value shown on the axis.
-  Depending on the actual axis type the \a max paramter is converted to appropriate type.
+  Depending on the actual axis type the \a max parameter is converted to appropriate type.
   If the conversion is impossible then the function call does nothing
 */
 void QAbstractAxis::setMax(const QVariant &max)
@@ -592,7 +592,7 @@ void QAbstractAxis::setMax(const QVariant &max)
 
 /*!
   Sets the range shown on the axis.
-  Depending on the actual axis type the \a min and \a max paramters are converted to appropriate types.
+  Depending on the actual axis type the \a min and \a max parameters are converted to appropriate types.
   If the conversion is impossible then the function call does nothing.
 */
 void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)

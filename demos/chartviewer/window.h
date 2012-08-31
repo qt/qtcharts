@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef WINDOW_H_
-#define WINDOW_H_
+#ifndef WINDOW_H
+#define WINDOW_H
 #include "model.h"
 #include <QMainWindow>
 #include <QChartGlobal>

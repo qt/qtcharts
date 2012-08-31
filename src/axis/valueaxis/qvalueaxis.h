@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef QVALUESAXIS_H
-#define QVALUESAXIS_H
+#ifndef QVALUEAXIS_H
+#define QVALUEAXIS_H
 
 #include "qabstractaxis.h"
 
@@ -75,4 +75,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QVALUESAXIS_H
+#endif // QVALUEAXIS_H

@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef XYCHARTITEM_H
-#define XYCHARTITEM_H
+#ifndef XYCHART_H
+#define XYCHART_H
 
 #include "qchartglobal.h"
 #include "chartitem_p.h"

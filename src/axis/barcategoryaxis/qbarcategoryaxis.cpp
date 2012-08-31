@@ -199,7 +199,7 @@ void QBarCategoryAxis::remove(const QString &category)
         if(!d->m_categories.isEmpty())
             setRange(d->m_categories.first(),d->m_categories.last());
         else
-            setRange(QString::null,QString::null);
+            setRange(QString(),QString());
         emit categoriesChanged();
     }
 }
@@ -242,7 +242,7 @@ void QBarCategoryAxis::clear()
 {
     Q_D(QBarCategoryAxis);
     d->m_categories.clear();
-    setRange(QString::null,QString::null);
+    setRange(QString(),QString());
     emit categoriesChanged();
 }
 

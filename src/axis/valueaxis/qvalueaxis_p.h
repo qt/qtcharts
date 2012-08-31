@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QVALUESAXIS_P_H
-#define QVALUESAXIS_P_H
+#ifndef QVALUEAXIS_P_H
+#define QVALUEAXIS_P_H
 
 #include "qvalueaxis.h"
 #include "qabstractaxis_p.h"
@@ -70,4 +70,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QVALUESAXIS_P_H
+#endif // QVALUEAXIS_P_H

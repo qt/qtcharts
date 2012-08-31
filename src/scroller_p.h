@@ -104,4 +104,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* SCROLLER_P_H_ */
+#endif /* SCROLLER_P_H */

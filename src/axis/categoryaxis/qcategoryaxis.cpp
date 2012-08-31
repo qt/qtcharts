@@ -156,7 +156,7 @@ void QCategoryAxis::setStartValue(qreal min)
 qreal QCategoryAxis::startValue(const QString& categoryLabel) const
 {
     Q_D(const QCategoryAxis);
-    if (categoryLabel == QString())
+    if (categoryLabel.isEmpty())
         return d->m_categoryMinimum;
     else
         return d->m_categoriesMap.value(categoryLabel).first;

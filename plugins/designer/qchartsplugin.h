@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef QCHARTSPLUGIN_H_
-#define QCHARTSPLUGIN_H_
+#ifndef QCHARTSPLUGIN_H
+#define QCHARTSPLUGIN_H
 
 #include <QDesignerCustomWidgetInterface>
 
@@ -41,4 +41,4 @@ public:
     QWidget *createWidget(QWidget *parent);
 };
 
-#endif /* QCHARTSPLUGIN_H_ */
+#endif /* QCHARTSPLUGIN_H */

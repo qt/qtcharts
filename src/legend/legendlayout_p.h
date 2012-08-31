@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef LEGENDLAYOUT_H_
-#define LEGENDLAYOUT_H_
+#ifndef LEGENDLAYOUT_H
+#define LEGENDLAYOUT_H
 #include <QGraphicsLayout>
 #include "qchartglobal.h"
 

@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef VIEW_H_
-#define VIEW_H_
+#ifndef VIEW_H
+#define VIEW_H
 #include <QGraphicsView>
 
 class QGraphicsScene;

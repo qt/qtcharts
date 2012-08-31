@@ -166,4 +166,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* AXISITEM_H_ */
+#endif /* CHARTAXI_H */

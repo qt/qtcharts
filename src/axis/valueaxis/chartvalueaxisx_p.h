@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef CHARTVALUESAXISX_H
-#define CHARTVALUESAXISX_H
+#ifndef CHARTVALUEAXISX_H
+#define CHARTVALUEAXISX_H
 
 #include "chartaxis_p.h"
 
@@ -57,4 +57,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTVALUESAXISX_H */
+#endif /* CHARTVALUEAXISX_H */
