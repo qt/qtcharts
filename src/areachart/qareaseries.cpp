@@ -248,8 +248,11 @@ void QAreaSeries::setBrush(const QBrush &brush)
 {
     Q_D(QAreaSeries);
     if (d->m_brush != brush) {
+        bool emitColorChanged = brush.color() != d->m_brush.color();
         d->m_brush = brush;
         emit d->updated();
+        if (emitColorChanged)
+            emit colorChanged(brush.color());
     }
 }
 
@@ -262,11 +265,10 @@ QBrush QAreaSeries::brush() const
 void QAreaSeries::setColor(const QColor &color)
 {
     QBrush b = brush();
-    if (b.color() != color) {
-        b.setColor(color);
-        setBrush(b);
-        emit colorChanged(color);
-    }
+    if (b == QBrush())
+        b.setStyle(Qt::SolidPattern);
+    b.setColor(color);
+    setBrush(b);
 }
 
 QColor QAreaSeries::color() const

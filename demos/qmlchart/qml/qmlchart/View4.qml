@@ -48,6 +48,9 @@ Rectangle {
 
         AreaSeries {
             name: "Russian"
+            color: "#FFD52B1E"
+            borderColor: "#FF0039A5"
+            borderWidth: 3
             axisX: categoriesAxis
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 1 }
@@ -69,6 +72,9 @@ Rectangle {
 
         AreaSeries {
             name: "Swedish"
+            color: "#AF005292"
+            borderColor: "#AFFDCA00"
+            borderWidth: 3
             axisX: categoriesAxis
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 1 }
@@ -88,6 +94,9 @@ Rectangle {
 
         AreaSeries {
             name: "Finnish"
+            color: "#00357F"
+            borderColor: "#FEFEFE"
+            borderWidth: 3
             axisX: categoriesAxis
             upperSeries: LineSeries {
                 XYPoint { x: 0; y: 0 }
@@ -102,10 +111,6 @@ Rectangle {
                 XYPoint { x: 9; y: 0 }
                 XYPoint { x: 10; y: 0 }
                 XYPoint { x: 11; y: 1 }
-            }
-            onClicked: {
-                color = "white";
-                borderColor = "blue";
             }
         }
     }

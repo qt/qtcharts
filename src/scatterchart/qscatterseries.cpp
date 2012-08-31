@@ -185,10 +185,10 @@ void QScatterSeries::setBrush(const QBrush &brush)
 void QScatterSeries::setColor(const QColor &color)
 {
     QBrush b = brush();
-    if (b.color() != color) {
-        b.setColor(color);
-        setBrush(b);
-    }
+    if (b == QBrush())
+        b.setStyle(Qt::SolidPattern);
+    b.setColor(color);
+    setBrush(b);
 }
 
 QColor QScatterSeries::color() const
