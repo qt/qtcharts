@@ -179,7 +179,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlmethod bool AbstractBarSeries::remove(BarSet barset)
-    Removes the barset from the series. Returns true if successfull, false otherwise.
+    Removes the barset from the series. Returns true if successful, false otherwise.
 */
 
 /*!
@@ -270,7 +270,7 @@ bool QAbstractBarSeries::remove(QBarSet *set)
     NOTE: The series remains as the barset's parent object. You must set the
     parent object to take full ownership.
 
-    Returns true if take was successfull.
+    Returns true if take was successful.
 */
 bool QAbstractBarSeries::take(QBarSet *set)
 {

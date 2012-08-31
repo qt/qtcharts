@@ -336,7 +336,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlmethod bool PieSeries::remove(PieSlice slice)
-    Removes the \a slice from the pie. Returns true if the removal was successfull, false otherwise.
+    Removes the \a slice from the pie. Returns true if the removal was successful, false otherwise.
 */
 
 /*!
@@ -384,7 +384,7 @@ bool QPieSeries::append(QPieSlice* slice)
     Appends an array of \a slices to the series.
     Slice ownership is passed to the series.
 
-    Returns true if append was successfull.
+    Returns true if append was successful.
 */
 bool QPieSeries::append(QList<QPieSlice*> slices)
 {
@@ -446,7 +446,7 @@ QPieSlice* QPieSeries::append(QString label, qreal value)
     Inserts a single \a slice to the series before the slice at \a index position.
     Slice ownership is passed to the series.
 
-    Returns true if insert was successfull.
+    Returns true if insert was successful.
 */
 bool QPieSeries::insert(int index, QPieSlice* slice)
 {
@@ -482,7 +482,7 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
 
     Do not reference the pointer after this call.
 
-    Returns true if remove was successfull.
+    Returns true if remove was successful.
 */
 bool QPieSeries::remove(QPieSlice* slice)
 {
@@ -508,7 +508,7 @@ bool QPieSeries::remove(QPieSlice* slice)
     NOTE: The series remains as the slice's parent object. You must set the
     parent object to take full ownership.
 
-    Returns true if take was successfull.
+    Returns true if take was successful.
 */
 bool QPieSeries::take(QPieSlice* slice)
 {

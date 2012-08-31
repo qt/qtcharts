@@ -304,7 +304,7 @@ void QBarSet::append(const QList<qreal> &values)
 }
 
 /*!
-    Convinience operator. Same as append, with real \a value.
+    Convenience operator. Same as append, with real \a value.
     \sa append()
 */
 QBarSet& QBarSet::operator << (const qreal &value)

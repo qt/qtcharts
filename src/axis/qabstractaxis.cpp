@@ -175,38 +175,38 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \fn void QAbstractAxis::visibleChanged(bool visible)
-  Visiblity of the axis has changed to \a visible.
+  Visibility of the axis has changed to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onVisibleChanged(bool visible)
-  Visiblity of the axis has changed to \a visible.
+  Visibility of the axis has changed to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::lineVisibleChanged(bool visible)
-  Visiblity of the axis line has changed to \a visible.
+  Visibility of the axis line has changed to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onLineVisibleChanged(bool visible)
-  Visiblity of the axis line has changed to \a visible.
+  Visibility of the axis line has changed to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::labelsVisibleChanged(bool visible)
-  Visiblity of the labels of the axis has changed to \a visible.
+  Visibility of the labels of the axis has changed to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onLabelsVisibleChanged(bool visible)
-  Visiblity of the labels of the axis has changed to \a visible.
+  Visibility of the labels of the axis has changed to \a visible.
 */
 
 /*!
   \fn void QAbstractAxis::gridVisibleChanged(bool visible)
-  Visiblity of the grid lines of the axis has changed to \a visible.
+  Visibility of the grid lines of the axis has changed to \a visible.
 */
 /*!
   \qmlsignal AbstractAxis::onGridVisibleChanged(bool visible)
-  Visiblity of the grid lines of the axis has changed to \a visible.
+  Visibility of the grid lines of the axis has changed to \a visible.
 */
 
 /*!
