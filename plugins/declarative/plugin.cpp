@@ -40,6 +40,7 @@
 #include "qvpiemodelmapper.h"
 #include "qhbarmodelmapper.h"
 #include "qvbarmodelmapper.h"
+#include "declarativemargins.h"
 #include <QAbstractItemModel>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -97,7 +98,7 @@ public:
                                           QLatin1String("Trying to create uncreatable: QPieSeries. Use PieSeries instead."));
 
         // QtCommercial.Chart 1.1
-        qmlRegisterType<DeclarativeChart>(uri, 1, 1, "ChartView");
+        qmlRegisterType<DeclarativeChart, 1>(uri, 1, 1, "ChartView");
         qmlRegisterType<DeclarativeXYPoint>(uri, 1, 1, "XYPoint");
         qmlRegisterType<DeclarativeScatterSeries, 1>(uri, 1, 1, "ScatterSeries");
         qmlRegisterType<DeclarativeLineSeries, 1>(uri, 1, 1, "LineSeries");
@@ -145,6 +146,8 @@ public:
                                           QLatin1String("Trying to create uncreatable: BarsetBase."));
         qmlRegisterUncreatableType<QPieSeries>(uri, 1, 1, "QPieSeries",
                                           QLatin1String("Trying to create uncreatable: QPieSeries. Use PieSeries instead."));
+        qmlRegisterUncreatableType<DeclarativeMargins>(uri, 1, 1, "Margins",
+                                          QLatin1String("Trying to create uncreatable: Margins."));
     }
 };
 

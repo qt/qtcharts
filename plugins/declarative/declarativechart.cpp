@@ -31,6 +31,7 @@
 #include "qvalueaxis.h"
 #include "qcategoryaxis.h"
 #include "qabstractseries_p.h"
+#include "declarativemargins.h"
 
 #ifndef QT_ON_ARM
     #include "qdatetimeaxis.h"
@@ -117,26 +118,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \qmlproperty real ChartView::topMargin
-  The space between the top of chart view and the top of the plot area. The title (if non-empty) is drawn on top margin
-  area of the chart view. Top margin area is also used by legend, if aligned to top.
+  Deprecated. Use minimumMargins and plotArea instead.
 */
 
 /*!
   \qmlproperty real ChartView::bottomMargin
-  The space between the bottom of chart view and the bottom of the plot area. The bottom margin area may be used by
-  legend (if aligned to bottom), x-axis, x-axis labels and x-axis tick marks.
+  Deprecated. Use minimumMargins and plotArea instead.
 */
 
 /*!
   \qmlproperty real ChartView::leftMargin
-  The space between the left side of chart view and the left side of the plot area. The left margin area may be used by
-  legend (if aligned to left), y-axis, y-axis labels and y-axis tick marks.
+  Deprecated. Use minimumMargins and plotArea instead.
 */
 
 /*!
   \qmlproperty real ChartView::rightMargin
-  The space between the right side of chart view and the right side of the plot area. The right margin area may be used
-  by legend (if aligned to right).
+  Deprecated. Use minimumMargins and plotArea instead.
+*/
+
+/*!
+  \qmlproperty Margins ChartView::minimumMargins
+  The minimum margins allowed between the outer bounds and the plotArea of the ChartView.
 */
 
 /*!
@@ -223,24 +225,17 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
       m_chart(new QChart(this))
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
-    //TODO: check what should be really here margins or platArea ?!
-    m_chartMargins = m_chart->minimumMargins();
-    connect(m_chart, SIGNAL(marginsChanged(QRectF)), this, SLOT(handleMarginsChanged(QRectF)));
+    m_minMargins = new DeclarativeMargins(this);
+    connect(m_minMargins, SIGNAL(topChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_minMargins, SIGNAL(bottomChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_minMargins, SIGNAL(leftChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_minMargins, SIGNAL(rightChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    // TODO: connect to plotAreaChanged signal from m_chart
 }
 
-void DeclarativeChart::handleMarginsChanged(QRectF newMargins)
+void DeclarativeChart::changeMinimumMargins(int top, int bottom, int left, int right)
 {
-    //TODO: check what should be really here margins or platArea ?!
-    if (m_chartMargins.top() != newMargins.top())
-        topMarginChanged(m_chart->minimumMargins().top());
-    if (m_chartMargins.bottom() != newMargins.bottom())
-        bottomMarginChanged(m_chart->minimumMargins().bottom());
-    if (m_chartMargins.left() != newMargins.left())
-        leftMarginChanged(m_chart->minimumMargins().left());
-    if (m_chartMargins.right() != newMargins.right())
-        rightMarginChanged(m_chart->minimumMargins().right());
-
-    m_chartMargins = m_chart->minimumMargins();
+    m_chart->setMinimumMargins(QMargins(left, top, right, bottom));
 }
 
 DeclarativeChart::~DeclarativeChart()
@@ -482,22 +477,26 @@ bool DeclarativeChart::dropShadowEnabled()
 
 qreal DeclarativeChart::topMargin()
 {
-    return m_chart->minimumMargins().top();
+    qWarning() << "ChartView.topMargin is deprecated. Use minimumMargins and plotArea instead.";
+    return m_chart->plotArea().top();
 }
 
 qreal DeclarativeChart::bottomMargin()
 {
-    return m_chart->minimumMargins().bottom();
+    qWarning() << "ChartView.bottomMargin is deprecated. Use minimumMargins and plotArea instead.";
+    return m_chart->plotArea().bottom();
 }
 
 qreal DeclarativeChart::leftMargin()
 {
-    return m_chart->minimumMargins().left();
+    qWarning() << "ChartView.leftMargin is deprecated. Use minimumMargins and plotArea instead.";
+    return m_chart->plotArea().left();
 }
 
 qreal DeclarativeChart::rightMargin()
 {
-    return m_chart->minimumMargins().right();
+    qWarning() << "ChartView.rightMargin is deprecated. Use minimumMargins and plotArea instead.";
+    return m_chart->plotArea().right();
 }
 
 void DeclarativeChart::zoom(qreal factor)

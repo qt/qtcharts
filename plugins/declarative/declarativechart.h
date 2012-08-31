@@ -27,6 +27,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class DeclarativeMargins;
+
 class DeclarativeChart : public QDeclarativeItem
 {
     Q_OBJECT
@@ -43,6 +45,7 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(qreal bottomMargin READ bottomMargin NOTIFY bottomMarginChanged)
     Q_PROPERTY(qreal leftMargin READ leftMargin NOTIFY leftMarginChanged)
     Q_PROPERTY(qreal rightMargin READ rightMargin NOTIFY rightMarginChanged)
+    Q_PROPERTY(DeclarativeMargins *minimumMargins READ minimumMargins REVISION 1)
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
@@ -111,6 +114,7 @@ public:
     qreal leftMargin();
     qreal rightMargin();
     void createDefaultAxes(QAbstractSeries* series);
+    DeclarativeMargins *minimumMargins() { return m_minMargins; }
 
 public:
     Q_INVOKABLE QAbstractSeries *series(int index);
@@ -139,7 +143,8 @@ Q_SIGNALS:
     void rightMarginChanged(qreal margin);
 
 public Q_SLOTS:
-    void handleMarginsChanged(QRectF newMargins);
+//    void handleMarginsChanged(QRectF newMargins);
+    void changeMinimumMargins(int top, int bottom, int left, int right);
     void handleAxisXSet(QAbstractAxis *axis);
     void handleAxisYSet(QAbstractAxis *axis);
 
@@ -147,7 +152,8 @@ private:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;
-    QMargins m_chartMargins;
+    //QMargins m_chartMargins;
+    DeclarativeMargins *m_minMargins;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

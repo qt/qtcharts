@@ -168,12 +168,13 @@ Rectangle {
                 }
             }
 
-            VPieModelMapper {
-                model: customModel
-                labelsColumn: 1
-                valuesColumn: 2
-                firstRow: 1
-            }
+        }
+        VPieModelMapper {
+            model: customModel
+            series: pieSeries
+            labelsColumn: 1
+            valuesColumn: 2
+            firstRow: 1
         }
         //![3]
     }

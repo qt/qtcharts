@@ -84,6 +84,42 @@ Row {
             text: "title color"
             onClicked: chart.titleColor = main.nextColor();
         }
+        Button {
+            text: "zoom -"
+            onClicked: chart.zoom(0.5);
+        }
+        Button {
+            text: "top min margin +"
+            onClicked: chart.minimumMargins.top += 5;
+        }
+        Button {
+            text: "top min margin -"
+            onClicked: chart.minimumMargins.top -= 5;
+        }
+        Button {
+            text: "bottom min margin +"
+            onClicked: chart.minimumMargins.bottom += 5;
+        }
+        Button {
+            text: "bottom min margin -"
+            onClicked: chart.minimumMargins.bottom -= 5;
+        }
+        Button {
+            text: "left min margin +"
+            onClicked: chart.minimumMargins.left += 5;
+        }
+        Button {
+            text: "left min margin -"
+            onClicked: chart.minimumMargins.left -= 5;
+        }
+        Button {
+            text: "right min margin +"
+            onClicked: chart.minimumMargins.right += 5;
+        }
+        Button {
+            text: "right min margin -"
+            onClicked: chart.minimumMargins.right -= 5;
+        }
     }
 
     FontEditor {
