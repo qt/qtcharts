@@ -29,21 +29,11 @@ Rectangle {
         title: "NHL All-Star Team Players"
         anchors.fill: parent
 
-        CategoryAxis {
-            id: categoriesAxis
-            startValue: -0.5
-            CategoryRange { endValue: 0.5; label: "2000" }
-            CategoryRange { endValue: 1.5; label: "2001" }
-            CategoryRange { endValue: 2.5; label: "2002" }
-            CategoryRange { endValue: 3.5; label: "2003" }
-            CategoryRange { endValue: 4.5; label: "2004" }
-            CategoryRange { endValue: 5.5; label: "2005" }
-            CategoryRange { endValue: 6.5; label: "2006" }
-            CategoryRange { endValue: 7.5; label: "2007" }
-            CategoryRange { endValue: 8.5; label: "2008" }
-            CategoryRange { endValue: 9.5; label: "2009" }
-            CategoryRange { endValue: 10.5; label: "2010" }
-            CategoryRange { endValue: 11.5; label: "2011" }
+        ValueAxis {
+            id: valueAxis
+            min: 2000
+            max: 2011
+            tickCount: 12
         }
 
         AreaSeries {
@@ -51,20 +41,20 @@ Rectangle {
             color: "#FFD52B1E"
             borderColor: "#FF0039A5"
             borderWidth: 3
-            axisX: categoriesAxis
+            axisX: valueAxis
             upperSeries: LineSeries {
-                XYPoint { x: 0; y: 1 }
-                XYPoint { x: 1; y: 1 }
-                XYPoint { x: 2; y: 1 }
-                XYPoint { x: 3; y: 1 }
-                XYPoint { x: 4; y: 1 }
-                XYPoint { x: 5; y: 0 }
-                XYPoint { x: 6; y: 1 }
-                XYPoint { x: 7; y: 1 }
-                XYPoint { x: 8; y: 4 }
-                XYPoint { x: 9; y: 3 }
-                XYPoint { x: 10; y: 2 }
-                XYPoint { x: 11; y: 1 }
+                XYPoint { x: 2000; y: 1 }
+                XYPoint { x: 2001; y: 1 }
+                XYPoint { x: 2002; y: 1 }
+                XYPoint { x: 2003; y: 1 }
+                XYPoint { x: 2004; y: 1 }
+                XYPoint { x: 2005; y: 0 }
+                XYPoint { x: 2006; y: 1 }
+                XYPoint { x: 2007; y: 1 }
+                XYPoint { x: 2008; y: 4 }
+                XYPoint { x: 2009; y: 3 }
+                XYPoint { x: 2010; y: 2 }
+                XYPoint { x: 2011; y: 1 }
             }
         }
         // ...
@@ -75,20 +65,20 @@ Rectangle {
             color: "#AF005292"
             borderColor: "#AFFDCA00"
             borderWidth: 3
-            axisX: categoriesAxis
+            axisX: valueAxis
             upperSeries: LineSeries {
-                XYPoint { x: 0; y: 1 }
-                XYPoint { x: 1; y: 1 }
-                XYPoint { x: 2; y: 3 }
-                XYPoint { x: 3; y: 3 }
-                XYPoint { x: 4; y: 2 }
-                XYPoint { x: 5; y: 0 }
-                XYPoint { x: 6; y: 2 }
-                XYPoint { x: 7; y: 1 }
-                XYPoint { x: 8; y: 2 }
-                XYPoint { x: 9; y: 1 }
-                XYPoint { x: 10; y: 3 }
-                XYPoint { x: 11; y: 3 }
+                XYPoint { x: 2000; y: 1 }
+                XYPoint { x: 2001; y: 1 }
+                XYPoint { x: 2002; y: 3 }
+                XYPoint { x: 2003; y: 3 }
+                XYPoint { x: 2004; y: 2 }
+                XYPoint { x: 2005; y: 0 }
+                XYPoint { x: 2006; y: 2 }
+                XYPoint { x: 2007; y: 1 }
+                XYPoint { x: 2008; y: 2 }
+                XYPoint { x: 2009; y: 1 }
+                XYPoint { x: 2010; y: 3 }
+                XYPoint { x: 2011; y: 3 }
             }
         }
 
@@ -97,20 +87,20 @@ Rectangle {
             color: "#00357F"
             borderColor: "#FEFEFE"
             borderWidth: 3
-            axisX: categoriesAxis
+            axisX: valueAxis
             upperSeries: LineSeries {
-                XYPoint { x: 0; y: 0 }
-                XYPoint { x: 1; y: 0 }
-                XYPoint { x: 2; y: 0 }
-                XYPoint { x: 3; y: 0 }
-                XYPoint { x: 4; y: 0 }
-                XYPoint { x: 5; y: 0 }
-                XYPoint { x: 6; y: 1 }
-                XYPoint { x: 7; y: 0 }
-                XYPoint { x: 8; y: 0 }
-                XYPoint { x: 9; y: 0 }
-                XYPoint { x: 10; y: 0 }
-                XYPoint { x: 11; y: 1 }
+                XYPoint { x: 2000; y: 0 }
+                XYPoint { x: 2001; y: 0 }
+                XYPoint { x: 2002; y: 0 }
+                XYPoint { x: 2003; y: 0 }
+                XYPoint { x: 2004; y: 0 }
+                XYPoint { x: 2005; y: 0 }
+                XYPoint { x: 2006; y: 1 }
+                XYPoint { x: 2007; y: 0 }
+                XYPoint { x: 2008; y: 0 }
+                XYPoint { x: 2009; y: 0 }
+                XYPoint { x: 2010; y: 0 }
+                XYPoint { x: 2011; y: 1 }
             }
         }
     }
