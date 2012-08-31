@@ -33,7 +33,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \mainclass
 
     The labels can be configured by setting an appropriate DateTime format.
-    Note that any date before 4714 BCE or after about 1.4 million CE may not be accurately stored.
+    QDateTimeAxis works correctly with dates from 4714 BCE to 287396 CE
+    There are also other limitiation that are specified in QDateTime documentation. Please refer to it.
     QDateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
 
     \image api_datatime_axis.png
