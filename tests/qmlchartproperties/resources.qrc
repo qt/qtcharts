@@ -18,12 +18,13 @@
         <file>qml/qmlchartproperties/PercentBarChart.qml</file>
         <file>qml/qmlchartproperties/Chart.qml</file>
         <file>qml/qmlchartproperties/ChartEditor.qml</file>
-        <file>qml/qmlchartproperties/ChartEditor1.qml</file>
-        <file>qml/qmlchartproperties/ChartEditor2.qml</file>
-        <file>qml/qmlchartproperties/ChartEditor3.qml</file>
         <file>qml/qmlchartproperties/FontEditor.qml</file>
         <file>qml/qmlchartproperties/HorizontalBarChart.qml</file>
         <file>qml/qmlchartproperties/HorizontalPercentBarChart.qml</file>
         <file>qml/qmlchartproperties/HorizontalStackedBarChart.qml</file>
+        <file>qml/qmlchartproperties/ChartEditorAxis.qml</file>
+        <file>qml/qmlchartproperties/ChartEditorLegend.qml</file>
+        <file>qml/qmlchartproperties/ChartEditorProperties.qml</file>
+        <file>qml/qmlchartproperties/ChartEditorTitle.qml</file>
     </qresource>
 </RCC>

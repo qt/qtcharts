@@ -23,12 +23,24 @@ import QtQuick 1.0
 Item {
     id: chartEditor
     property variant series // TODO: rename to chart
-    onSeriesChanged: loader.item.chart = series;
+    onSeriesChanged: {
+        if (loader.item != undefined)
+            loader.item.chart = series;
+    }
+
+    function selectButton(button) {
+        chartButton.color = "#79bd8f";
+        titleButton.color = "#79bd8f";
+        legendButton.color = "#79bd8f";
+        axisXButton.color = "#79bd8f";
+        axisYButton.color = "#79bd8f";
+        button.color = "#00a388";
+    }
 
     Flow {
         id: selectorFlow
         anchors.top: parent.top
-        height: 60
+        height: 90
         anchors.left: parent.left
         anchors.right: parent.right
         spacing: 5
@@ -39,11 +51,18 @@ Item {
             text: "Chart properties"
             unpressedColor: "#79bd8f"
             onClicked: {
-                color = "#00a388";
-                legendButton.color = "#79bd8f";
-                axisXButton.color = "#79bd8f";
-                axisYButton.color = "#79bd8f";
-                loader.source = "ChartEditor1.qml";
+                selectButton(chartButton);
+                loader.source = "ChartEditorProperties.qml";
+                loader.item.chart = series;
+            }
+        }
+        Button {
+            id: titleButton
+            text: "Title properties"
+            unpressedColor: "#79bd8f"
+            onClicked: {
+                selectButton(titleButton);
+                loader.source = "ChartEditorTitle.qml";
                 loader.item.chart = series;
             }
         }
@@ -52,11 +71,8 @@ Item {
             text: "Legend properties"
             unpressedColor: "#79bd8f"
             onClicked: {
-                color = "#00a388";
-                chartButton.color = "#79bd8f";
-                axisXButton.color = "#79bd8f";
-                axisYButton.color = "#79bd8f";
-                loader.source = "ChartEditor2.qml";
+                selectButton(legendButton);
+                loader.source = "ChartEditorLegend.qml";
                 loader.item.chartLegend = series.legend;
             }
         }
@@ -65,11 +81,8 @@ Item {
             text: "Axis X properties"
             unpressedColor: "#79bd8f"
             onClicked: {
-                color = "#00a388";
-                chartButton.color = "#79bd8f";
-                legendButton.color = "#79bd8f";
-                axisYButton.color = "#79bd8f";
-                loader.source = "ChartEditor3.qml";
+                selectButton(axisXButton);
+                loader.source = "ChartEditorAxis.qml";
                 loader.item.axis = series.axisX;
             }
         }
@@ -78,11 +91,8 @@ Item {
             text: "Axis Y properties"
             unpressedColor: "#79bd8f"
             onClicked: {
-                color = "#00a388";
-                chartButton.color = "#79bd8f";
-                legendButton.color = "#79bd8f";
-                axisXButton.color = "#79bd8f";
-                loader.source = "ChartEditor3.qml";
+                selectButton(axisYButton);
+                loader.source = "ChartEditorAxis.qml";
                 loader.item.axis = series.axisY;
             }
         }
@@ -95,5 +105,4 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
     }
-
 }

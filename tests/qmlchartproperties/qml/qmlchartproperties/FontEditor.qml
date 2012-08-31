@@ -34,7 +34,7 @@ Flow {
         onClicked: editedFont().capitalization++;
     }
     Button {
-        text: fontDescription + " family"
+        text: fontDescription + " font family"
         onClicked: editedFont().family = "courier";
     }
     Button {

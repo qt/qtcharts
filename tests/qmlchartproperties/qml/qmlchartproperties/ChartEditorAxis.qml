@@ -26,7 +26,6 @@ Row {
     property variant axis
 
     Flow {
-        id: flow
         spacing: 5
         flow: Flow.TopToBottom
 
