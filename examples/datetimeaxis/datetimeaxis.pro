@@ -3,3 +3,6 @@
 }
 TARGET = datetimeaxis
 SOURCES += main.cpp
+
+RESOURCES += \
+    sundata.qrc

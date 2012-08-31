@@ -24,6 +24,9 @@
 #include <QLineSeries>
 #include <QDateTime>
 #include <QDateTimeAxis>
+#include <QFile>
+#include <QTextStream>
+#include <QDebug>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -37,15 +40,26 @@ int main(int argc, char *argv[])
     //![1]
 
     //![2]
-    QDateTime momentInTime;
-    for (int i = 0; i < 200; i++) {
-        momentInTime.setDate(QDate(2012, 1 , (1 + i / 9) % 28));
-        momentInTime.setTime(QTime(9 + i % 9, 0));
-        if (i > 0)
-            series->append(momentInTime.toMSecsSinceEpoch(), series->points().at(i - 1).y() *  (0.99 + (qrand() % 3) / 100.0));
-        else
-            series->append(momentInTime.toMSecsSinceEpoch(), 45);
+    // data from http://www.swpc.noaa.gov/ftpdir/weekly/RecentIndices.txt
+    QFile sunSpots(":sun");
+    if (!sunSpots.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return 1;
     }
+
+    QTextStream stream(&sunSpots);
+    while (!stream.atEnd()) {
+        QString line = stream.readLine();
+        if (line.startsWith("#") || line.startsWith(":"))
+            continue;
+        int year = line.left(4).toInt();
+        int month = line.mid(5, 2).toInt();
+        qreal meanSpots = line.split(" ", QString::SkipEmptyParts).at(2).toDouble();
+        qDebug() << line.split(" ", QString::SkipEmptyParts).at(2);
+        QDateTime momentInTime;
+        momentInTime.setDate(QDate(year, month , 15));
+        series->append(momentInTime.toMSecsSinceEpoch(), meanSpots);
+    }
+    sunSpots.close();
     //![2]
 
     //![3]
@@ -54,16 +68,16 @@ int main(int argc, char *argv[])
     chart->addSeries(series);
     chart->createDefaultAxes();
     QDateTimeAxis *axisX = new QDateTimeAxis;
-//    axisX->setTicksCount(10);
+    axisX->setTickCount(10);
+    axisX->setFormat("MMM yyyy");
     chart->setAxisX(axisX, series);
-    chart->setTitle("Date and Time axis chart example");
+    chart->setTitle("Sunspots count (by Space Weather Prediction Center)");
     //![3]
 
     //![4]
     QChartView* chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     //![4]
-
 
     //![5]
     QMainWindow window;
