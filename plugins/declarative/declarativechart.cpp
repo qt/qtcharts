@@ -138,7 +138,18 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \qmlproperty Margins ChartView::minimumMargins
-  The minimum margins allowed between the outer bounds and the plotArea of the ChartView.
+  The minimum margins allowed between the outer bounds and the plotArea of the ChartView. Margins
+  area of ChartView is used for drawing title, axes and legend. Please note that setting the
+  properties of minimumMargins may be bigger than the defined value, depending on other ChartView
+  properties that affect it's layout. If you need to know the actual plotting area used at any
+  given time, you can check ChartView::plotArea instead.
+*/
+
+/*!
+  \qmlproperty rect ChartView::plotArea
+  The area on the ChartView that is used for drawing series. This is the ChartView rect without the
+  margins.
+  \sa ChartView::minimumMargins
 */
 
 /*!
@@ -236,6 +247,7 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
 void DeclarativeChart::changeMinimumMargins(int top, int bottom, int left, int right)
 {
     m_chart->setMinimumMargins(QMargins(left, top, right, bottom));
+    plotAreaChanged(m_chart->plotArea());
 }
 
 DeclarativeChart::~DeclarativeChart()

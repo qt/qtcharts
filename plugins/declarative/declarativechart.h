@@ -46,6 +46,7 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(qreal leftMargin READ leftMargin NOTIFY leftMarginChanged)
     Q_PROPERTY(qreal rightMargin READ rightMargin NOTIFY rightMarginChanged)
     Q_PROPERTY(DeclarativeMargins *minimumMargins READ minimumMargins REVISION 1)
+    Q_PROPERTY(QRectF plotArea READ plotArea NOTIFY plotAreaChanged REVISION 1)
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
@@ -115,6 +116,7 @@ public:
     qreal rightMargin();
     void createDefaultAxes(QAbstractSeries* series);
     DeclarativeMargins *minimumMargins() { return m_minMargins; }
+    QRectF plotArea() { return m_chart->plotArea(); }
 
 public:
     Q_INVOKABLE QAbstractSeries *series(int index);
@@ -141,6 +143,7 @@ Q_SIGNALS:
     void bottomMarginChanged(qreal margin);
     void leftMarginChanged(qreal margin);
     void rightMarginChanged(qreal margin);
+    void plotAreaChanged(QRectF plotArea);
 
 public Q_SLOTS:
 //    void handleMarginsChanged(QRectF newMargins);
