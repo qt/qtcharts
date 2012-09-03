@@ -481,7 +481,6 @@ void Window::mouseReleaseEvent(QMouseEvent *event)
                 plotArea.translate(geometryRect.topLeft());
 
                 if (plotArea.contains(m_origin)) {
-                    QRectF rect = m_rubberBand->rect();
                     chart->zoomOut();
                     break;
                 }
