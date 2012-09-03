@@ -74,9 +74,8 @@ void ChartCategoryAxisY::updateGeometry()
         return;
     }
 
-    QCategoryAxis *intervalAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
-
-    QStringList ticksList = intervalAxis->categoriesLabels();
+    QCategoryAxis *categoryAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
+    QStringList ticksList = categoryAxis->categoriesLabels();
 
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
@@ -88,12 +87,13 @@ void ChartCategoryAxisY::updateGeometry()
 
     qreal height =  2*m_rect.bottom();
 
+    // axis base line
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
     lineItem->setLine(m_rect.left() , m_rect.top(), m_rect.left(), m_rect.bottom());
 
     for (int i = 0; i < layout.size(); ++i) {
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        lineItem->setLine(m_rect.left() , layout[i], m_rect.right(), layout[i]);
+
+        // label items
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
 
         if (i < ticksList.count()) {
@@ -111,11 +111,9 @@ void ChartCategoryAxisY::updateGeometry()
 
         if(labelItem->pos().y()+rect.height()>height) {
             labelItem->setVisible(false);
-            lineItem->setVisible(false);
         }
         else {
             labelItem->setVisible(true);
-            lineItem->setVisible(true);
             height=labelItem->pos().y();
         }
 
@@ -126,8 +124,18 @@ void ChartCategoryAxisY::updateGeometry()
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
             rectItem->setRect(m_rect.left(),layout[i],m_rect.width(),layout[i-1]-layout[i]);
         }
+
+        // grid lines and axis line ticks
+        if (layout[i] < m_rect.left() || layout[i] > m_rect.right())
+            continue;
+
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
+        lineItem->setPos(m_rect.left(), layout[i]);
+        lineItem->setLine(0, 0, m_rect.width(), 0);
+
         lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setLine(m_rect.left()-5,layout[i],m_rect.left(),layout[i]);
+        lineItem->setPos(m_rect.left(), layout[i]);
+        lineItem->setLine(-5, 0, 0, 0);
     }
 
 }

@@ -72,11 +72,8 @@ void ChartCategoryAxisX::updateGeometry()
 
     if(layout.isEmpty()) return;
 
-    QCategoryAxis *intervalAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
-
-    QStringList ticksList = intervalAxis->categoriesLabels();
-
-    //    createNumberLabels(ticksList,m_min,m_max,layout.size());
+    QCategoryAxis *categoryAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
+    QStringList ticksList = categoryAxis->categoriesLabels();
 
     QList<QGraphicsItem *> lines = m_grid->childItems();
     QList<QGraphicsItem *> labels = m_labels->childItems();
@@ -86,13 +83,13 @@ void ChartCategoryAxisX::updateGeometry()
     //    Q_ASSERT(labels.size() == ticksList.size());
     //    Q_ASSERT(layout.size() == ticksList.size());
 
+    // axis base line
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
     lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
 
-    //    qreal width = 0;
     for (int i = 0; i < layout.size(); ++i) {
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
+
+        // label items
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
         if (i < ticksList.count()) {
             labelItem->setText(ticksList.at(i));
@@ -105,11 +102,6 @@ void ChartCategoryAxisX::updateGeometry()
         else
             labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
 
-        if(labelItem->pos().x() > m_rect.width() + m_rect.left() - rect.width() / 2){
-            labelItem->setVisible(false);
-            lineItem->setVisible(false);
-        }
-
         m_minWidth += rect.width();
         m_minHeight = qMax(rect.height()+ label_padding, m_minHeight);
 
@@ -117,8 +109,18 @@ void ChartCategoryAxisX::updateGeometry()
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));
             rectItem->setRect(layout[i - 1],m_rect.top(),layout[i]-layout[i - 1],m_rect.height());
         }
+
+        // grid lines and axis line ticks
+        if (layout[i] < m_rect.left() || layout[i] > m_rect.right())
+            continue;
+
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
+        lineItem->setPos(layout[i], m_rect.top());
+        lineItem->setLine(0, 0, 0, m_rect.height());
+
         lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setLine(layout[i],m_rect.bottom(),layout[i], m_rect.bottom() + 5);
+        lineItem->setPos(layout[i], m_rect.bottom());
+        lineItem->setLine(0, 0, 0, 5);
     }
 
 }

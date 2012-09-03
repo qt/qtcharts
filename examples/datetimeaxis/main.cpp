@@ -51,13 +51,10 @@ int main(int argc, char *argv[])
         QString line = stream.readLine();
         if (line.startsWith("#") || line.startsWith(":"))
             continue;
-        int year = line.left(4).toInt();
-        int month = line.mid(5, 2).toInt();
-        qreal meanSpots = line.split(" ", QString::SkipEmptyParts).at(2).toDouble();
-        qDebug() << line.split(" ", QString::SkipEmptyParts).at(2);
+        QStringList values = line.split(" ", QString::SkipEmptyParts);
         QDateTime momentInTime;
-        momentInTime.setDate(QDate(year, month , 15));
-        series->append(momentInTime.toMSecsSinceEpoch(), meanSpots);
+        momentInTime.setDate(QDate(values[0].toInt(), values[1].toInt() , 15));
+        series->append(momentInTime.toMSecsSinceEpoch(), values[2].toDouble());
     }
     sunSpots.close();
     //![2]
