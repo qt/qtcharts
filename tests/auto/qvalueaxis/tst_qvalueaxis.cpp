@@ -170,9 +170,9 @@ void tst_QValueAxis::max_animation()
 void tst_QValueAxis::min_raw_data()
 {
     QTest::addColumn<qreal>("min");
-    QTest::newRow("-1.0") << -1.0;
-    QTest::newRow("-50.0") << -50.0;
-    QTest::newRow("-101.0") << -101.0;
+    QTest::newRow("-1.0") << (qreal)-1.0;
+    QTest::newRow("-50.0") << (qreal)-50.0;
+    QTest::newRow("-101.0") << (qreal)-101.0;
 }
 
 void tst_QValueAxis::min_raw()
@@ -224,12 +224,12 @@ void tst_QValueAxis::niceNumbersEnabled_data()
     QTest::addColumn<qreal>("expectedMin");
     QTest::addColumn<qreal>("expectedMax");
     QTest::addColumn<int>("expectedTicks");
-    QTest::newRow("true 0.1 , 99.0 , 5") << true << 0.1 << 99.0 << 5 << 0.0 << 100.0 << 6;
-    QTest::newRow("true 1 , 10.0 , 5") << true << 1.0 << 10.0 << 5 << 0.0 << 10.0 << 6;
-    QTest::newRow("true 0.1 , 6.6 , 5") << true << 0.1 << 6.6 << 5 << 0.0 << 8.0 << 5;
-    QTest::newRow("false 0.1 , 6.6 , 5") << false << 0.1 << 6.6 << 5 << 0.1 << 6.6 << 5;
-    QTest::newRow("true 0.1, 99, 5") << true << 0.1 << 99.0 << 5 << 0.0 << 100.0 << 6;
-    QTest::newRow("true 5, 93.5 , 5") << true << 5.0 << 93.5 << 5 << 0.0 << 100.0 << 6;
+    QTest::newRow("true 0.1 , 99.0 , 5") << true << (qreal)0.1 << (qreal)99.0 << 5 << (qreal)0.0 << (qreal)100.0 << 6;
+    QTest::newRow("true 1 , 10.0 , 5") << true << (qreal)1.0 << (qreal)10.0 << 5 << (qreal)0.0 << (qreal)10.0 << 6;
+    QTest::newRow("true 0.1 , 6.6 , 5") << true << (qreal)0.1 << (qreal)6.6 << 5 << (qreal)0.0 << (qreal)8.0 << 5;
+    QTest::newRow("false 0.1 , 6.6 , 5") << false << (qreal)0.1 << (qreal)6.6 << 5 << (qreal)0.1 << (qreal)6.6 << 5;
+    QTest::newRow("true 0.1, 99, 5") << true << (qreal)0.1 << (qreal)99.0 << 5 << (qreal)0.0 << (qreal)100.0 << 6;
+    QTest::newRow("true 5, 93.5 , 5") << true << (qreal)5.0 << (qreal)93.5 << 5 << (qreal)0.0 << (qreal)100.0 << 6;
 }
 
 void tst_QValueAxis::niceNumbersEnabled()
@@ -272,9 +272,9 @@ void tst_QValueAxis::range_raw_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::addColumn<qreal>("max");
-    QTest::newRow("1.0 - 101.0") << -1.0 << 101.0;
-    QTest::newRow("25.0 - 75.0") << 25.0 << 75.0;
-    QTest::newRow("101.0") << 40.0 << 60.0;
+    QTest::newRow("1.0 - 101.0") << (qreal)-1.0 << (qreal)101.0;
+    QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0;
+    QTest::newRow("101.0") << (qreal)40.0 << (qreal)60.0;
 }
 
 void tst_QValueAxis::range_raw()
@@ -356,9 +356,9 @@ void tst_QValueAxis::noautoscale_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::addColumn<qreal>("max");
-    QTest::newRow("1.0 - 101.0") << -1.0 << 101.0;
-    QTest::newRow("25.0 - 75.0") << 25.0 << 75.0;
-    QTest::newRow("101.0") << 40.0 << 60.0;
+    QTest::newRow("1.0 - 101.0") << (qreal)-1.0 << (qreal)101.0;
+    QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0;
+    QTest::newRow("101.0") << (qreal)40.0 << (qreal)60.0;
 }
 
 void tst_QValueAxis::noautoscale()
