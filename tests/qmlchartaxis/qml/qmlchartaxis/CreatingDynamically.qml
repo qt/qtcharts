@@ -33,10 +33,7 @@ ChartView {
         onTriggered: {
             switch (index) {
             case 0:
-                while (chartView.count) {
-                    console.log("Destroying series. Count: " + chartView.count);
-                    chartView.series(0).destroy();
-                }
+                var count = chartView.count;
                 var line = chartView.createSeries(ChartView.SeriesTypeLine, "line");
                 line.append(0, 0);
                 line.append(1, 1);
@@ -50,7 +47,7 @@ ChartView {
                 chartView.axisY().min = 0;
                 chartView.axisY().max = 4.5;
                 break;
-            default:
+            case 2:
                 var scatter = chartView.createSeries(ChartView.SeriesTypeScatter, "scatter");
                 scatter.append(0, 0);
                 scatter.append(0.5, 1);
@@ -61,8 +58,11 @@ ChartView {
                 scatter.append(2, 2);
                 scatter.append(3, 3);
                 scatter.append(4, 4);
+                break;
+            default:
+                chartView.removeAllSeries();
             }
-            index = (index + 1) % 3;
+            index = (index + 1) % 4;
         }
     }
 }

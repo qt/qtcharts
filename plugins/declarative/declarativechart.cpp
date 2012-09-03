@@ -174,6 +174,16 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlmethod ChartView::removeSeries(AbstractSeries series)
+  Removes the \a series from the chart. The series object is also destroyed.
+*/
+
+/*!
+  \qmlmethod ChartView::removeAllSeries()
+  Removes all series from the chart. All the series objects are also destroyed.
+*/
+
+/*!
   \qmlmethod Axis ChartView::axisY(QAbstractSeries *series)
   The y-axis of the series. This is the same as the default y-axis of the chart as multiple y-axes are not yet supported.
 */
