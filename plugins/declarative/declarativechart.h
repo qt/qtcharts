@@ -41,11 +41,11 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(int count READ count)
     Q_PROPERTY(QColor backgroundColor READ backgroundColor WRITE setBackgroundColor NOTIFY backgroundColorChanged)
     Q_PROPERTY(bool dropShadowEnabled READ dropShadowEnabled WRITE setDropShadowEnabled NOTIFY dropShadowEnabledChanged)
-    Q_PROPERTY(qreal topMargin READ topMargin NOTIFY topMarginChanged)
-    Q_PROPERTY(qreal bottomMargin READ bottomMargin NOTIFY bottomMarginChanged)
-    Q_PROPERTY(qreal leftMargin READ leftMargin NOTIFY leftMarginChanged)
-    Q_PROPERTY(qreal rightMargin READ rightMargin NOTIFY rightMarginChanged)
-    Q_PROPERTY(DeclarativeMargins *minimumMargins READ minimumMargins REVISION 1)
+    Q_PROPERTY(qreal topMargin READ topMargin)
+    Q_PROPERTY(qreal bottomMargin READ bottomMargin)
+    Q_PROPERTY(qreal leftMargin READ leftMargin)
+    Q_PROPERTY(qreal rightMargin READ rightMargin)
+    Q_PROPERTY(DeclarativeMargins *minimumMargins READ minimumMargins NOTIFY minimumMarginsChanged REVISION 1)
     Q_PROPERTY(QRectF plotArea READ plotArea NOTIFY plotAreaChanged REVISION 1)
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
@@ -139,14 +139,10 @@ Q_SIGNALS:
     void titleColorChanged(QColor color);
     void backgroundColorChanged();
     void dropShadowEnabledChanged(bool enabled);
-    void topMarginChanged(qreal margin);
-    void bottomMarginChanged(qreal margin);
-    void leftMarginChanged(qreal margin);
-    void rightMarginChanged(qreal margin);
+    void minimumMarginsChanged();
     void plotAreaChanged(QRectF plotArea);
 
 public Q_SLOTS:
-//    void handleMarginsChanged(QRectF newMargins);
     void changeMinimumMargins(int top, int bottom, int left, int right);
     void handleAxisXSet(QAbstractAxis *axis);
     void handleAxisYSet(QAbstractAxis *axis);

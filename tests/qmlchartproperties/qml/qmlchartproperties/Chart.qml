@@ -42,22 +42,6 @@ ChartView {
     onTitleColorChanged:               console.log("chart.onTitleColorChanged: " + color);
     onBackgroundColorChanged:          console.log("chart.onBackgroundColorChanged: " + series.backgroundColor);
     onDropShadowEnabledChanged:        console.log("chart.onDropShadowEnabledChanged: " + enabled);
-    onTopMarginChanged: {
-        console.log("chart.onTopMarginChanged: " + margin);
-        marginVisualizer.opacity = 1.0;
-    }
-    onBottomMarginChanged: {
-        console.log("chart.onBottomMarginChanged: " + margin);
-        marginVisualizer.opacity = 1.0;
-    }
-    onLeftMarginChanged: {
-        console.log("chart.onLeftMarginChanged: " + margin);
-        marginVisualizer.opacity = 1.0;
-    }
-    onRightMarginChanged: {
-        console.log("chart.onRightMarginChanged: " + margin);
-        marginVisualizer.opacity = 1.0;
-    }
 
     legend.onVisibleChanged:           console.log("legend.onVisibleChanged: " + series.legend.visible);
     legend.onBackgroundVisibleChanged: console.log("legend.onBackgroundVisibleChanged: " + visible);
@@ -65,10 +49,16 @@ ChartView {
     legend.onBorderColorChanged:       console.log("legend.onBorderColorChanged: " + color);
     legend.onLabelColorChanged:        console.log("legend.onLabelColorChanged: " + color);
     minimumMargins.onTopChanged:       console.log("chart.minimumMargins.onTopChanged: " + top );
-    minimumMargins.onBottomChanged:    console.log("chart.minimumMargins.onBottomChanged: " + bottom + " " + chartView.plotArea.height);
-    minimumMargins.onLeftChanged:      console.log("chart.minimumMargins.onLeftChanged: " + left + " " + chartView.plotArea.left);
-    minimumMargins.onRightChanged:     console.log("chart.minimumMargins.onRightChanged: " + right + " " + chartView.plotArea.right);
-    onPlotAreaChanged:                 console.log("chart.onPlotAreaChanged, width:" + chartView.plotArea.width + " height: " + chartView.plotArea.height + " y: " + chartView.plotArea.y + " x: " + chartView.plotArea.x);
+    minimumMargins.onBottomChanged:    console.log("chart.minimumMargins.onBottomChanged: " + bottom);
+    minimumMargins.onLeftChanged:      console.log("chart.minimumMargins.onLeftChanged: " + left);
+    minimumMargins.onRightChanged:     console.log("chart.minimumMargins.onRightChanged: " + right);
+    onPlotAreaChanged: {
+        console.log("chart.onPlotAreaChanged, width: " + chartView.plotArea.width
+                                                       + " height: " + chartView.plotArea.height
+                                                       + " y: " + chartView.plotArea.y
+                                                       + " x: " + chartView.plotArea.x);
+        marginVisualizer.opacity = 1.0;
+    }
 
     ValueAxis{
         onColorChanged:               console.log("axisX.onColorChanged: " + color);
@@ -101,10 +91,10 @@ ChartView {
         color: "transparent"
         border.color: "red"
         anchors.fill: parent
-        anchors.topMargin: parent.topMargin
-        anchors.bottomMargin: parent.bottomMargin
-        anchors.leftMargin: parent.leftMargin
-        anchors.rightMargin: parent.rightMargin
+        anchors.topMargin: chartView.minimumMargins.top
+        anchors.bottomMargin: chartView.minimumMargins.bottom
+        anchors.leftMargin: chartView.minimumMargins.left
+        anchors.rightMargin: chartView.minimumMargins.right
         opacity: 0.0
         onOpacityChanged: if (opacity > 0.9) opacity = 0.0;
         Behavior on opacity {

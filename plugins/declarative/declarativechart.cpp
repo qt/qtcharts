@@ -208,27 +208,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlsignal ChartView::onTopMarginChanged(real margin)
-  The top margin of the chart view has changed to \a margin. This may happen for example if you modify font size
-  related properties of the legend or chart title.
-*/
-
-/*!
-  \qmlsignal ChartView::onBottomMarginChanged(real margin)
-  The bottom margin of the chart view has changed to \a margin. This may happen for example if you modify font size
-  related properties of the legend or chart title.
-*/
-
-/*!
-  \qmlsignal ChartView::onLeftMarginChanged(real margin)
-  The left margin of the chart view has changed to \a margin. This may happen for example if you modify font size
-  related properties of the legend or chart title.
-*/
-
-/*!
-  \qmlsignal ChartView::onRightMarginChanged(real margin)
-  The right margin of the chart view has changed to \a margin. This may happen for example if you modify font size
-  related properties of the legend or chart title.
+  \qmlsignal ChartView::onPlotAreaChanged(rect plotArea)
+  The plot area of the chart has changed. This may happen for example, if you modify minimumMargins
+  or if you resize the chart, or if you modify font size related properties of the legend or chart
+  title.
 */
 
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
@@ -237,17 +220,17 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
     m_minMargins = new DeclarativeMargins(this);
-    connect(m_minMargins, SIGNAL(topChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
-    connect(m_minMargins, SIGNAL(bottomChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
-    connect(m_minMargins, SIGNAL(leftChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
-    connect(m_minMargins, SIGNAL(rightChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
-    // TODO: connect to plotAreaChanged signal from m_chart
+    connect(m_minMargins, SIGNAL(topChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_minMargins, SIGNAL(bottomChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_minMargins, SIGNAL(leftChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_minMargins, SIGNAL(rightChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
 }
 
 void DeclarativeChart::changeMinimumMargins(int top, int bottom, int left, int right)
 {
     m_chart->setMinimumMargins(QMargins(left, top, right, bottom));
-    plotAreaChanged(m_chart->plotArea());
+    emit minimumMarginsChanged();
+    emit plotAreaChanged(m_chart->plotArea());
 }
 
 DeclarativeChart::~DeclarativeChart()
@@ -370,6 +353,11 @@ void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &
         }
     }
     QDeclarativeItem::geometryChanged(newGeometry, oldGeometry);
+
+    // It would be better to trigger the plotAreaChanged signal from QChart::plotAreaChanged or
+    // similar. Since that kind of a signal is not clearly needed in the C++ API the work-around is
+    // to implement it here for the QML API purposes.
+    emit plotAreaChanged(m_chart->plotArea());
 }
 
 void DeclarativeChart::setTheme(DeclarativeChart::Theme theme)
