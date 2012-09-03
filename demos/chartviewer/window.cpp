@@ -334,6 +334,7 @@ void Window::checkTemplate()
         m_baseLayout->addItem(qchart, j / 3, j % 3);
         m_chartHash[qchart] = j;
     }
+    m_baseLayout->activate();
 }
 
 void Window::checkTheme()
