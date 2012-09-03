@@ -22,50 +22,50 @@ import QtQuick 1.0
 import QtCommercial.Chart 1.1
 
 ChartView {
-    id: chartView
-    title: "user defined axes"
+    title: "default + user defined"
 
     ValueAxis {
         id: axisX
         min: 0
-        max: 10
-        // TODO: property to fix orientation to "X" to make this the X default axis for all series
-        // that don't have user defined X axis
+        max: 6
     }
 
     ValueAxis {
         id: axisY
         min: 0
-        max: 5
-        // TODO: property to fix orientation to "Y" to make this the Y default axis for all series
-        // that don't have user defined Y axis
+        max: 6
     }
 
     LineSeries {
-        name: "line series"
+        name: "line series 1"
         XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
 
     ScatterSeries {
         name: "scatter series"
-        id: scatter
+        axisX: axisX
+        axisY: axisY
         XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 0.5; y: 1 }
+        XYPoint { x: 1; y: 2 }
+        XYPoint { x: 1.5; y: 3 }
+        XYPoint { x: 2; y: 4 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
 
-    Component.onCompleted: {
-        // You can also set the axes dynamically
-        chartView.setAxisX(axisX, scatter);
+    LineSeries {
+        name: "line series 2"
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 0.5; y: 1 }
+        XYPoint { x: 1; y: 2 }
+        XYPoint { x: 1.5; y: 3 }
+        XYPoint { x: 2; y: 4 }
     }
 }

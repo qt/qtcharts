@@ -23,27 +23,49 @@ import QtCommercial.Chart 1.1
 
 ChartView {
     id: chartView
-    title: "default axes"
+    title: "switching axes dynamically"
 
-    LineSeries {
-        name: "line series"
-        XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+    Timer {
+        interval: 1000
+        repeat: true
+        running: true
+        onTriggered: {
+            //console.log("current axisX: " + lineSeries.axisX + " 1: " + valueAxis1 + " 2: " +valueAxis2);
+
+            // Note: an axis is destroyed if it is not used anymore
+            if (lineSeries.axisX == valueAxis1)
+                lineSeries.axisX = valueAxis2;
+            else if (lineSeries.axisX == valueAxis2)
+                lineSeries.axisX = valueAxis3;
+        }
     }
 
-    ScatterSeries {
-        name: "scatter series"
+    ValueAxis {
+        id: valueAxis1
+        min: 0
+        max: 5
+    }
+
+    ValueAxis {
+        id: valueAxis2
+        min: 1
+        max: 6
+    }
+
+    ValueAxis {
+        id: valueAxis3
+        min: 2
+        max: 7
+    }
+
+    LineSeries {
+        id: lineSeries
+        name: "line series"
+        axisX: valueAxis1
         XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
 }

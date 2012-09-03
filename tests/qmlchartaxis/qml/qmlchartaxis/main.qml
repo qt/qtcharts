@@ -24,7 +24,7 @@ Rectangle {
     id: main
     width: 400
     height: 300
-    property int viewNumber: 0
+    property string viewName: "DefaultAxes"
 
     Row {
         anchors.fill: parent
@@ -34,7 +34,7 @@ Rectangle {
             id: chartLoader
             width: parent.width - buttonColumn.width
             height: parent.height
-            source: "Chart" + viewNumber + ".qml"
+            source: viewName + ".qml"
         }
 
         Column {
@@ -44,40 +44,52 @@ Rectangle {
             spacing: 5
 
             Button {
-                text: "Default"
-                onClicked: viewNumber = 0;
+                text: "Default axes"
+                onClicked: viewName = "DefaultAxes";
+            }
+            Button {
+                text: "Default axes reverted"
+                onClicked: viewName = "DefaultAxesRevert";
             }
             Button {
                 text: "User defined"
-                onClicked: viewNumber = 1;
+                onClicked: viewName = "UserDefined";
+            }
+            Button {
+                text: "User defined reverted"
+                onClicked: viewName = "UserDefinedRevert";
             }
             Button {
                 text: "Chart axes"
-                onClicked: viewNumber = 2;
+                onClicked: viewName = "ChartAxes";
+            }
+            Button {
+                text: "Chart axes reverted"
+                onClicked: viewName = "ChartAxesRevert";
             }
             Button {
                 text: "Configuring dynamically"
-                onClicked: viewNumber = 3;
+                onClicked: viewName = "ConfiguringDynamically";
             }
             Button {
                 text: "Series specific dynamic"
-                onClicked: viewNumber = 4;
+                onClicked: viewName = "SeriesSpecificDynamic";
             }
             Button {
                 text: "Creating dynamically"
-                onClicked: viewNumber = 5;
+                onClicked: viewName = "CreatingDynamically";
             }
             Button {
                 text: "Switching dynamically"
-                onClicked: viewNumber = 6;
+                onClicked: viewName = "SwitchingDynamically";
             }
             Button {
-                text: "Axis scale"
-                onClicked: viewNumber = 7;
+                text: "Default + User defined"
+                onClicked: viewName = "DefaultAndUserDefined";
             }
             Button {
                 text: "Legacy"
-                onClicked: viewNumber = 8;
+                onClicked: viewName = "Legacy";
             }
         }
     }

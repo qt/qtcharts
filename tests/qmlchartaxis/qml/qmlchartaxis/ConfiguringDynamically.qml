@@ -22,8 +22,8 @@ import QtQuick 1.0
 import QtCommercial.Chart 1.1
 
 ChartView {
+    title: "configuring dynamically"
     id: chartView
-    title: "dynamically created series"
     property int index: 0
 
     Timer {
@@ -33,34 +33,42 @@ ChartView {
         onTriggered: {
             switch (index) {
             case 0:
-                while (chartView.count)
-                    chartView.series(0).destroy();
-                var line = chartView.createSeries(ChartView.SeriesTypeLine, "line");
-                line.append(0, 0);
-                line.append(1.1, 2.1);
-                line.append(1.9, 3.3);
-                line.append(2.1, 2.1);
-                line.append(2.9, 4.9);
-                line.append(3.4, 3.0);
-                line.append(4.1, 3.3);
+                chartView.axisX(lineSeries).max = 6;
+                chartView.axisY(lineSeries).max = 6;
                 break;
             case 1:
-                chartView.axisX().min = 0;
-                chartView.axisX().max = 4.5;
-                chartView.axisY().min = 0;
-                chartView.axisY().max = 4.5;
+                chartView.axisX(scatterSeries).max = 10;
+                chartView.axisY(scatterSeries).max = 10;
                 break;
             default:
-                var scatter = chartView.createSeries(ChartView.SeriesTypeScatter, "scatter");
-                scatter.append(0, 0);
-                scatter.append(1.1, 2.1);
-                scatter.append(1.9, 3.3);
-                scatter.append(2.1, 2.1);
-                scatter.append(2.9, 4.9);
-                scatter.append(3.4, 3.0);
-                scatter.append(4.1, 3.3);
+                chartView.axisX().max = 4;
+                chartView.axisY().max = 4;
             }
             index = (index + 1) % 3;
         }
+    }
+
+    LineSeries {
+        id: lineSeries
+        name: "line series"
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
+    }
+
+    ScatterSeries {
+        id: scatterSeries
+        name: "scatter series"
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 0.5; y: 1 }
+        XYPoint { x: 1; y: 2 }
+        XYPoint { x: 1.5; y: 3 }
+        XYPoint { x: 2; y: 4 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
 }

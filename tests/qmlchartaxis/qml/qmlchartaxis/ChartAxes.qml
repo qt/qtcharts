@@ -22,43 +22,54 @@ import QtQuick 1.0
 import QtCommercial.Chart 1.1
 
 ChartView {
-    title: "user defined axes"
+    id: chartView
+    title: "chart axes"
 
+    // TODO: Do we need a property for orientation or properties "axisX" and "axisY" on ChartView
+    // to make an axis the default axis for all series with no other axes defined...?
+//    ValueAxis {
+//        orientation: ValueAxis.AxisX
+//        min: 0
+//        max: 10
+//    }
+//    axisX: ValueAxis {
+//        min: 0
+//        max: 10
+//    }
+    // ...Now that we don't have this implementation, the following axes won't have any affect:
     ValueAxis {
-        id: axisX
         min: 0
         max: 10
     }
-
     ValueAxis {
-        id: axisY
         min: 0
-        max: 6
+        max: 5
     }
 
     LineSeries {
         name: "line series"
-        axisX: axisX
-        axisY: axisY
         XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
 
     ScatterSeries {
         name: "scatter series"
-        axisX: axisX
-        axisY: axisY
         XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 0.5; y: 1 }
+        XYPoint { x: 1; y: 2 }
+        XYPoint { x: 1.5; y: 3 }
+        XYPoint { x: 2; y: 4 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
+
+//    Component.onCompleted: {
+//        // You can also set the axes dynamically
+//        chartView.setAxisX(axisX, scatter);
+//    }
 }

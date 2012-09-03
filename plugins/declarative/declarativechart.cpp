@@ -255,7 +255,7 @@ void DeclarativeChart::componentComplete()
             QAbstractSeries *series = qobject_cast<QAbstractSeries *>(child);
             m_chart->addSeries(series);
 
-            // Set optional user defined axes and connect axis related signals
+            // Set optional user defined axes for the series and connect axis related signals
             if (qobject_cast<DeclarativeLineSeries *>(child)) {
                 DeclarativeLineSeries *s = qobject_cast<DeclarativeLineSeries *>(child);
                 connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
@@ -317,13 +317,12 @@ void DeclarativeChart::componentComplete()
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             }
-
-            // Create the missing axes for the series that cannot be painted without axes
-            createDefaultAxes(series);
-        } else if(qobject_cast<QAbstractAxis *>(child)) {
-            // Do nothing, axes are set for the chart in the context of series
         }
     }
+
+    // Create the missing axes for the series that cannot be painted without axes
+    foreach (QAbstractSeries *chartSeries, m_chart->series())
+        createDefaultAxes(chartSeries);
 
     QDeclarativeItem::componentComplete();
 }
@@ -331,17 +330,19 @@ void DeclarativeChart::componentComplete()
 void DeclarativeChart::handleAxisXSet(QAbstractAxis* axis)
 {
 //    qDebug() << "DeclarativeChart::handleAxisXSet" << sender() << axis;
-    if (axis && qobject_cast<DeclarativeLineSeries *>(sender())) {
-        m_chart->setAxisX(axis, qobject_cast<DeclarativeLineSeries *>(sender()));
-    }
+    if (axis && qobject_cast<QAbstractSeries *>(sender()))
+        m_chart->setAxisX(axis, qobject_cast<QAbstractSeries *>(sender()));
+    else
+        qWarning() << "Trying to set axisX to null.";
 }
 
 void DeclarativeChart::handleAxisYSet(QAbstractAxis* axis)
 {
 //    qDebug() << "DeclarativeChart::handleAxisYSet" << sender() << axis;
-    if (axis && qobject_cast<DeclarativeLineSeries *>(sender())) {
-        m_chart->setAxisY(axis, qobject_cast<DeclarativeLineSeries *>(sender()));
-    }
+    if (axis && qobject_cast<QAbstractSeries *>(sender()))
+        m_chart->setAxisY(axis, qobject_cast<QAbstractSeries *>(sender()));
+    else
+        qWarning() << "Trying to set axisY to null.";
 }
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)

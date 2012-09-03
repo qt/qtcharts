@@ -23,21 +23,27 @@ import QtCommercial.Chart 1.1
 
 ChartView {
     id: chartView
-    title: "axis scale; different series"
+    title: "default axes"
+
+    ScatterSeries {
+        name: "scatter series"
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 0.5; y: 1 }
+        XYPoint { x: 1; y: 2 }
+        XYPoint { x: 1.5; y: 3 }
+        XYPoint { x: 2; y: 4 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
+    }
 
     LineSeries {
         name: "line series"
         XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-    }
-
-    ScatterSeries {
-        name: "scatter series"
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
 }

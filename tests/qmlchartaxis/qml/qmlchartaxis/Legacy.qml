@@ -23,42 +23,34 @@ import QtCommercial.Chart 1.1
 
 ChartView {
     id: chartView
-    title: "switching axes dynamically"
+    title: "Deprecated code"
+    property int index: 0
 
-    Timer {
-        interval: 1000
-        repeat: true
-        running: true
-        onTriggered: {
-            if (lineSeries.axisX == valueAxis1)
-                lineSeries.axisX = valueAxis2;
-            else
-                lineSeries.axisX = valueAxis1;
-        }
-    }
-
-    ValueAxis {
-        id: valueAxis1
-        min: 0
-        max: 5
-    }
-
-    ValueAxis {
-        id: valueAxis2
-        min: 1
-        max: 6
+    Component.onCompleted: {
+        // Calling createDefaultAxes in onCompleted is now deprecated. It needs to be tested,
+        // though, because some application may still use it
+        chartView.createDefaultAxes();
     }
 
     LineSeries {
-        id: lineSeries
         name: "line series"
-        axisX: valueAxis1
         XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
+    }
+
+    ScatterSeries {
+        name: "scatter series"
+        XYPoint { x: 0; y: 0 }
+        XYPoint { x: 0.5; y: 1 }
+        XYPoint { x: 1; y: 2 }
+        XYPoint { x: 1.5; y: 3 }
+        XYPoint { x: 2; y: 4 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
 }

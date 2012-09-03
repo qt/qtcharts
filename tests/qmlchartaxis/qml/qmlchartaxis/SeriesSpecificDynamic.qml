@@ -33,20 +33,20 @@ ChartView {
         onTriggered: {
             switch (index) {
             case 0:
-                lineAxisX.max = 5;
-                lineAxisY.max = 5;
+                lineAxisX.max = 6;
+                lineAxisY.max = 6;
                 scatterAxisX.max = 10;
                 scatterAxisY.max = 10;
                 break;
             case 1:
                 lineAxisX.max = 10;
                 lineAxisY.max = 10;
-                scatterAxisX.max = 5;
-                scatterAxisY.max = 5;
+                scatterAxisX.max = 6;
+                scatterAxisY.max = 6;
                 break;
             default:
-                chartView.axisX().max = 2;
-                chartView.axisY().max = 2;
+                chartView.axisX().max = 4;
+                chartView.axisY().max = 4;
             }
             index = (index + 1) % 3;
         }
@@ -57,14 +57,11 @@ ChartView {
         name: "line series"
         axisX: ValueAxis { id: lineAxisX }
         axisY: ValueAxis { id: lineAxisY }
-
         XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
 
     ScatterSeries {
@@ -72,13 +69,14 @@ ChartView {
         name: "scatter series"
         axisX: ValueAxis { id: scatterAxisX }
         axisY: ValueAxis { id: scatterAxisY }
-
         XYPoint { x: 0; y: 0 }
-        XYPoint { x: 1.1; y: 2.1 }
-        XYPoint { x: 1.9; y: 3.3 }
-        XYPoint { x: 2.1; y: 2.1 }
-        XYPoint { x: 2.9; y: 4.9 }
-        XYPoint { x: 3.4; y: 3.0 }
-        XYPoint { x: 4.1; y: 3.3 }
+        XYPoint { x: 0.5; y: 1 }
+        XYPoint { x: 1; y: 2 }
+        XYPoint { x: 1.5; y: 3 }
+        XYPoint { x: 2; y: 4 }
+        XYPoint { x: 1; y: 1 }
+        XYPoint { x: 2; y: 2 }
+        XYPoint { x: 3; y: 3 }
+        XYPoint { x: 4; y: 4 }
     }
 }
