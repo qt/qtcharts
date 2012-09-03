@@ -28,8 +28,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 DeclarativeBarSet::DeclarativeBarSet(QObject *parent) :
     QBarSet("", parent)
 {
-    connect(this, SIGNAL(valuesAdded(int,int)), this, SLOT(handleCountChanged(int, int)));
-    connect(this, SIGNAL(valuesRemoved(int,int)), this, SLOT(handleCountChanged(int, int)));
+    connect(this, SIGNAL(valuesAdded(int,int)), this, SLOT(handleCountChanged(int,int)));
+    connect(this, SIGNAL(valuesRemoved(int,int)), this, SLOT(handleCountChanged(int,int)));
 }
 
 void DeclarativeBarSet::handleCountChanged(int index, int count)

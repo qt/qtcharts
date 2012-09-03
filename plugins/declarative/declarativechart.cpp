@@ -237,10 +237,10 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
     m_minMargins = new DeclarativeMargins(this);
-    connect(m_minMargins, SIGNAL(topChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
-    connect(m_minMargins, SIGNAL(bottomChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
-    connect(m_minMargins, SIGNAL(leftChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
-    connect(m_minMargins, SIGNAL(rightChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_minMargins, SIGNAL(topChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
+    connect(m_minMargins, SIGNAL(bottomChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
+    connect(m_minMargins, SIGNAL(leftChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
+    connect(m_minMargins, SIGNAL(rightChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
     // TODO: connect to plotAreaChanged signal from m_chart
 }
 
@@ -275,62 +275,62 @@ void DeclarativeChart::componentComplete()
             // Set optional user defined axes and connect axis related signals
             if (qobject_cast<DeclarativeLineSeries *>(child)) {
                 DeclarativeLineSeries *s = qobject_cast<DeclarativeLineSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             } else if (qobject_cast<DeclarativeSplineSeries *>(child)) {
                 DeclarativeSplineSeries *s = qobject_cast<DeclarativeSplineSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             } else if (qobject_cast<DeclarativeScatterSeries *>(child)) {
                 DeclarativeScatterSeries *s = qobject_cast<DeclarativeScatterSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             } else if (qobject_cast<DeclarativeAreaSeries *>(child)) {
                 DeclarativeAreaSeries *s = qobject_cast<DeclarativeAreaSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             } else if (qobject_cast<DeclarativeBarSeries *>(child)) {
                 DeclarativeBarSeries *s = qobject_cast<DeclarativeBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             } else if (qobject_cast<DeclarativeStackedBarSeries *>(child)) {
                 DeclarativeStackedBarSeries *s = qobject_cast<DeclarativeStackedBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             } else if (qobject_cast<DeclarativePercentBarSeries *>(child)) {
                 DeclarativePercentBarSeries *s = qobject_cast<DeclarativePercentBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             } else if (qobject_cast<DeclarativeHorizontalBarSeries *>(child)) {
                 DeclarativeHorizontalBarSeries *s = qobject_cast<DeclarativeHorizontalBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             } else if (qobject_cast<DeclarativeHorizontalStackedBarSeries *>(child)) {
                 DeclarativeHorizontalStackedBarSeries *s = qobject_cast<DeclarativeHorizontalStackedBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             } else if (qobject_cast<DeclarativeHorizontalPercentBarSeries *>(child)) {
                 DeclarativeHorizontalPercentBarSeries *s = qobject_cast<DeclarativeHorizontalPercentBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis *)), this, SLOT(handleAxisXSet(QAbstractAxis *)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis *)), this, SLOT(handleAxisYSet(QAbstractAxis *)));
+                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
                 setAxisX(s->axisX(), s);
                 setAxisY(s->axisY(), s);
             }
