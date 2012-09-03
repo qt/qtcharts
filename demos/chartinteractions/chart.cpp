@@ -18,12 +18,10 @@
 **
 ****************************************************************************/
 
+#include "chart.h"
 #include <QValueAxis>
 #include <QAbstractAxis>
 #include <cmath>
-#include <QDebug>
-
-#include "chart.h"
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags, QLineSeries *series)
     : QChart(parent, wFlags), m_series(series)

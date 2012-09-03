@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef TST_QABSTRACTSERIES_H
-#define TST_QABSTRACTSERIES_H
+#ifndef TST_QABSTRACTAXIS_H
+#define TST_QABSTRACTAXIS_H
 
 #include <QtTest/QtTest>
 #include <tst_definitions.h>

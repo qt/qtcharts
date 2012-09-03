@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef CHARTVIEW_H
+#define CHARTVIEW_H
 
 #include <QChartGlobal>
 #include <QChartView>
@@ -43,4 +43,4 @@ private:
     QScatterSeries *m_scatter2;
 };
 
-#endif // MAINWINDOW_H
+#endif // CHARTVIEW_H

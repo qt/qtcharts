@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef XYPOINTSMODEL_H
-#define XYPOINTSMODEL_H
+#ifndef CUSTOMTABLEMODEL_H
+#define CUSTOMTABLEMODEL_H
 
 #include <QAbstractTableModel>
 #include <QHash>
@@ -48,4 +48,4 @@ private:
     int m_rowCount;
 };
 
-#endif // XYPOINTSMODEL_H
+#endif // CUSTOMTABLEMODEL_H

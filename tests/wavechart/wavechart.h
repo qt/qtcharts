@@ -18,6 +18,9 @@
 **
 ****************************************************************************/
 
+#ifndef WAVECHART_H
+#define WAVECHART_H
+
 #include <QTimer>
 #include <QTime>
 #include <QObject>
@@ -42,3 +45,5 @@ private:
     qreal m_step;
     QTimer m_timer;
 };
+
+#endif

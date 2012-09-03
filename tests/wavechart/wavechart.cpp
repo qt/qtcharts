@@ -53,9 +53,7 @@ WaveChart::WaveChart(QChart* chart, QWidget* parent) :
     QObject::connect(&m_timer, SIGNAL(timeout()), this, SLOT(update()));
     m_timer.setInterval(5000);
     m_timer.start();
-
 }
-;
 
 void WaveChart::update()
 {

@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#include <QMouseEvent>
 #include "chartview.h"
+#include <QMouseEvent>
 #include "chart.h"
 
 ChartView::ChartView(Chart *chart, QWidget *parent) :

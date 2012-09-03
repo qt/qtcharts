@@ -18,8 +18,8 @@
  **
  ****************************************************************************/
 
-#ifndef ENGINE_H_
-#define ENGINE_H_
+#ifndef ENGINE_H
+#define ENGINE_H
 
 #include <QObject>
 #include <QAbstractSeries>
@@ -73,4 +73,4 @@ private:
     QMap<QAbstractSeries*, QList<QModelIndex> > m_seriesModelIndex;
 };
 
-#endif /* ENGINE_H_ */
+#endif /* ENGINE_H */
