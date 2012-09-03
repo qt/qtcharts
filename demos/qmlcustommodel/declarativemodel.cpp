@@ -80,7 +80,7 @@ QDeclarativeListProperty<QObject> DeclarativeTableModel::modelChildren()
 void DeclarativeTableModel::appendModelChild(QDeclarativeListProperty<QObject> *list,
                                              QObject *child)
 {
-    // childs are added in componentComplete instead
+    // children are added in componentComplete instead
     Q_UNUSED(list)
     Q_UNUSED(child)
 }

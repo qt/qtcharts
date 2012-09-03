@@ -494,7 +494,7 @@ void tst_qpieseries::clickedSignal()
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
 
-    // if you devide the chart in four equal tiles these
+    // if you divide the chart in four equal tiles these
     // are the center points of those tiles
     QPoint p1(90.25, 90);
     QPoint p2(150, 90);

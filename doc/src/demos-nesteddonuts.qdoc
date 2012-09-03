@@ -20,7 +20,7 @@
      The internal for loop creates the slices with a random value and label same as the value.
      Next the label of the slice is set to be visible and its color is set to white.
      To make the example more interesting the hovered signal of the slice is connected to widget's slot which inner workings are explained later.
-     Finally the slice is added to the donut. The donut's size is adjusted to achive the nesting of the donuts.
+     Finally the slice is added to the donut. The donut's size is adjusted to achieve the nesting of the donuts.
      Then the donut is added to the widget's list of donuts and to the chart.
 
      \snippet ../demos/nesteddonuts/widget.cpp 3

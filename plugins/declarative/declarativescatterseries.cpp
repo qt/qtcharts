@@ -61,7 +61,7 @@ void DeclarativeScatterSeries::appendDeclarativeChildren(QDeclarativeListPropert
 {
     Q_UNUSED(list)
     Q_UNUSED(element)
-    // Empty implementation, childs are parsed in componentComplete
+    // Empty implementation, children are parsed in componentComplete
 }
 
 #include "moc_declarativescatterseries.cpp"

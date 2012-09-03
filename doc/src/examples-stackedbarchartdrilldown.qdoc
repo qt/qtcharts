@@ -25,7 +25,7 @@
 	
     \snippet ../examples/stackedbarchartdrilldown/main.cpp 1
 
-	We define categories, from wich the drilldown series will be constructed.
+    We define categories, from which the drilldown series will be constructed.
 	
     \snippet ../examples/stackedbarchartdrilldown/main.cpp 2
 	
