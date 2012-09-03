@@ -26,7 +26,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSeriesPrivate;
-//class QPieSlice;
 
 class QTCOMMERCIALCHART_EXPORT QPieSeries : public QAbstractSeries
 {

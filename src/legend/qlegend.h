@@ -28,15 +28,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class Domain;
-class LegendMarker;
 class QPieSlice;
 class QXYSeries;
 class QBarSet;
 class QAbstractBarSeries;
 class QPieSeries;
 class QAreaSeries;
-class LegendScrollButton;
 class QChart;
 class QLegendPrivate;
 

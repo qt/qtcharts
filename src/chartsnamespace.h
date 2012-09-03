@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 #ifndef CHARTSNAMESPACE_H
-#define MACROINCLUDE_H
+#define CHARTSNAMESPACE_H
 
 // this is needed by the designer plugin.
 
