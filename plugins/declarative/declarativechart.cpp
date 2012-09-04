@@ -164,12 +164,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlmethod AbstractSeries ChartView::createSeries(SeriesType type, string name)
-  Creates a series object of \a type to the chart. For example:
+  \qmlmethod AbstractSeries ChartView::createSeries(SeriesType type, string name, AbstractAxis axisX, AbstractAxis axisY)
+  Creates a series object of \a type to the chart with name \a name, optional axis \a axisX and
+  optional axis \a axisY. For example:
   \code
-    var scatter = chartView.createSeries(ChartView.SeriesTypeScatter, "scatter series");
-    scatter.markerSize = 22;
-    scatter.append(1.1, 2.0);
+    // lineSeries is a LineSeries object that has already been added to the ChartView; re-use it's axes
+    var myAxisX = chartView.axisX(lineSeries);
+    var myAxisY = chartView.axisY(lineSeries);
+    var scatter = chartView.createSeries(ChartView.SeriesTypeScatter, "scatter series", myAxisX, myAxisY);
   \endcode
 */
 
@@ -184,8 +186,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \qmlmethod Axis ChartView::axisX(QAbstractSeries *series)
+  The x-axis of the series.
+*/
+
+/*!
   \qmlmethod Axis ChartView::axisY(QAbstractSeries *series)
-  The y-axis of the series. This is the same as the default y-axis of the chart as multiple y-axes are not yet supported.
+  The y-axis of the series.
 */
 
 /*!
@@ -554,6 +561,11 @@ QAbstractSeries *DeclarativeChart::series(QString seriesName)
 
 QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType type, QString name)
 {
+    return createSeries(type, name, 0, 0);
+}
+
+QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType type, QString name, QAbstractAxis *axisX, QAbstractAxis *axisY)
+{
     QAbstractSeries *series = 0;
 
     switch (type) {
@@ -597,6 +609,10 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
     if (series) {
         series->setName(name);
         m_chart->addSeries(series);
+        // Set possible user defined axes
+        setAxisX(axisX, series);
+        setAxisY(axisY, series);
+        // Then create the missing axes
         createDefaultAxes(series);
     }
 

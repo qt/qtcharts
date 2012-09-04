@@ -24,4 +24,8 @@
     The data of the line series is updated with a QML timer. In a real life application the
     updating could triggered with a signal from Qt C++ code.
     \snippet ../demos/qmloscilloscope/qml/qmloscilloscope/ScopeView.qml 2
+
+    The oscilloscope also allows you to switch the type of the series used for visualizing the
+    signal sources. This is implemented by dynamically destroying and creating series:
+    \snippet ../demos/qmloscilloscope/qml/qmloscilloscope/ScopeView.qml 3
 */

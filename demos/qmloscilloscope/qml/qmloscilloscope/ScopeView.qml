@@ -25,6 +25,7 @@ import QtCommercial.Chart 1.1
 ChartView {
     id: chartView
     animationOptions: ChartView.NoAnimation
+    theme: ChartView.ChartThemeDark
 
     ValueAxis {
         id: axisY1
@@ -72,23 +73,35 @@ ChartView {
     }
     //![2]
 
+    //![3]
     function changeSeriesType(type) {
-        chartView.series(1).destroy();
-        chartView.series(0).destroy();
-        var seriesCount = 2;
-        for (var i = 0; i < seriesCount; i++) {
-            var series;
-            if (type == "line") {
-                series = scopeView.createSeries(ChartView.SeriesTypeLine, "signal " + (i + 1));
-            } else if (type == "spline") {
-                series = chartView.createSeries(ChartView.SeriesTypeSpline, "signal " + (i + 1));
-            } else {
-                series = chartView.createSeries(ChartView.SeriesTypeScatter, "signal " + (i + 1));
-                series.markerSize = 3;
-                series.borderColor = "transparent";
-            }
+        chartView.removeAllSeries();
+
+        // Create two new series of the correct type. Axis x is the same for both of the series,
+        // but the series have their own y-axes to make it possible to control the y-offset
+        // of the "signal sources".
+        if (type == "line") {
+            scopeView.createSeries(ChartView.SeriesTypeLine, "signal 1", createAxis(0, 1000), createAxis(-1, 4));
+            scopeView.createSeries(ChartView.SeriesTypeLine, "signal 2", chartView.axisX(), createAxis(-10, 5));
+        } else if (type == "spline") {
+            scopeView.createSeries(ChartView.SeriesTypeSpline, "signal 1", createAxis(0, 1000), createAxis(-1, 4));
+            scopeView.createSeries(ChartView.SeriesTypeSpline, "signal 2", chartView.axisX(), createAxis(-10, 5));
+        } else {
+            var series1 = scopeView.createSeries(ChartView.SeriesTypeScatter, "signal 1", createAxis(0, 1000), createAxis(-1, 4));
+            series1.markerSize = 3;
+            series1.borderColor = "transparent";
+            var series2 = scopeView.createSeries(ChartView.SeriesTypeScatter, "signal 2", chartView.axisX(), createAxis(-10, 5));
+            series2.markerSize = 3;
+            series2.borderColor = "transparent";
         }
     }
+
+    function createAxis(min, max) {
+        // The following creates a ValueAxis object that can be then set as a x or y axis for a series
+        return Qt.createQmlObject("import QtQuick 1.1; import QtCommercial.Chart 1.1; ValueAxis { min: "
+                                  + min + "; max: " + max + " }", chartView);
+    }
+    //![3]
 
     function setAnimations(enabled) {
         if (enabled)

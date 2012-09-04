@@ -122,6 +122,7 @@ public:
     Q_INVOKABLE QAbstractSeries *series(int index);
     Q_INVOKABLE QAbstractSeries *series(QString seriesName);
     Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
+    Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name, QAbstractAxis *axisX, QAbstractAxis *axisY);
     Q_INVOKABLE void removeSeries(QAbstractSeries *series) { m_chart->removeSeries(series); }
     Q_INVOKABLE void removeAllSeries() { m_chart->removeAllSeries(); }
     Q_INVOKABLE void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = 0);
