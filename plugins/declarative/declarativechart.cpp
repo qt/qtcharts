@@ -517,12 +517,12 @@ void DeclarativeChart::zoom(qreal factor)
 
 void DeclarativeChart::scrollLeft(qreal pixels)
 {
-    m_chart->scroll(pixels, 0);
+    m_chart->scroll(-pixels, 0);
 }
 
 void DeclarativeChart::scrollRight(qreal pixels)
 {
-    m_chart->scroll(-pixels, 0);
+    m_chart->scroll(pixels, 0);
 }
 
 void DeclarativeChart::scrollUp(qreal pixels)
