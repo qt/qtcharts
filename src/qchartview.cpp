@@ -143,7 +143,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
     if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
-        QRectF rect = d_ptr->m_chart->plotArea();
+        QRect rect = d_ptr->m_chart->plotArea().toRect();
         int width = event->pos().x() - d_ptr->m_rubberBandOrigin.x();
         int height = event->pos().y() - d_ptr->m_rubberBandOrigin.y();
         if (!d_ptr->m_rubberBandFlags.testFlag(VerticalRubberBand)) {
