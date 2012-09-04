@@ -161,9 +161,9 @@ void tst_QCategoryAxis::max_animation()
 void tst_QCategoryAxis::min_raw_data()
 {
     QTest::addColumn<qreal>("min");
-    QTest::newRow("-1.0") << -1.0;
-    QTest::newRow("-50.0") << -50.0;
-    QTest::newRow("-101.0") << -101.0;
+    QTest::newRow("-1.0") << (qreal)-1.0;
+    QTest::newRow("-50.0") << (qreal)-50.0;
+    QTest::newRow("-101.0") << (qreal)-101.0;
 }
 
 void tst_QCategoryAxis::min_raw()
@@ -210,12 +210,12 @@ void tst_QCategoryAxis::range_raw_data()
 {
     QTest::addColumn<qreal>("min");
     QTest::addColumn<qreal>("max");
-    QTest::newRow("1.0 - 101.0") << -1.0 << 101.0;
-    QTest::newRow("25.0 - 75.0") << 25.0 << 75.0;
-    QTest::newRow("101.0") << 40.0 << 60.0;
-    QTest::newRow("-35.0 - 0.0") << -35.0 << 10.0;
-    QTest::newRow("-35.0 - 0.0") << -35.0 << -15.0;
-    QTest::newRow("0.0 - 0.0") << -0.1 << 0.1;
+    QTest::newRow("1.0 - 101.0") << (qreal)-1.0 << (qreal)101.0;
+    QTest::newRow("25.0 - 75.0") << (qreal)25.0 << (qreal)75.0;
+    QTest::newRow("101.0") << (qreal)40.0 << (qreal)60.0;
+    QTest::newRow("-35.0 - 0.0") << (qreal)-35.0 << (qreal)10.0;
+    QTest::newRow("-35.0 - 0.0") << (qreal)-35.0 << (qreal)-15.0;
+    QTest::newRow("0.0 - 0.0") << (qreal)-0.1 << (qreal)0.1;
 }
 
 void tst_QCategoryAxis::range_raw()
