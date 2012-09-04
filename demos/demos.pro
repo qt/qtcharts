@@ -4,8 +4,7 @@ CURRENTLY_BUILDING_COMPONENTS = "demos"
 }
 
 TEMPLATE = subdirs
-SUBDIRS += chartthemes \
-           piechartcustomization \
+SUBDIRS += piechartcustomization \
            dynamicspline \
            nesteddonuts \
            qmlchart \
@@ -13,6 +12,12 @@ SUBDIRS += chartthemes \
            qmlf1legends \
            qmlcustomizations \
            qmlcustommodel \
-           qmloscilloscope \
-           chartviewer \
            chartinteractions
+
+contains(QT_CONFIG, opengl) {
+        SUBDIRS +=  chartthemes \
+                    qmloscilloscope \
+                    chartviewer
+} else {
+    message("OpenGL not available. Some demos are disabled")
+}

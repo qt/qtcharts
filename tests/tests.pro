@@ -4,12 +4,13 @@
 
 TEMPLATE = subdirs
 SUBDIRS += \ 
-    auto \
-    chartwidgettest \
+    auto \    
     qmlchartproperties \
     qmlchartaxis
 
-!linux-arm*: {
-    SUBDIRS += \
-            wavechart
+contains(QT_CONFIG, opengl) {
+    SUBDIRS +=  chartwidgettest \
+                wavechart
+} else {
+    message("OpenGL not available. Some test apps are disabled")
 }
