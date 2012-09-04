@@ -82,10 +82,11 @@ void ChartCategoryAxisY::updateGeometry()
     QList<QGraphicsItem *> shades = m_shades->childItems();
     QList<QGraphicsItem *> axis = m_arrow->childItems();
 
-    //    Q_ASSERT(labels.size() == ticksList.size());
-    //    Q_ASSERT(layout.size() == ticksList.size());
+//    qreal height =  2*m_rect.bottom();
 
-    qreal height =  2*m_rect.bottom();
+    for (int i = 0; i < labels.count(); i++) {
+        labels.at(i)->setVisible(false);
+    }
 
     // axis base line
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
@@ -95,7 +96,6 @@ void ChartCategoryAxisY::updateGeometry()
 
         // label items
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-
         if (i < ticksList.count()) {
             labelItem->setText(ticksList.at(i));
         }
@@ -104,18 +104,24 @@ void ChartCategoryAxisY::updateGeometry()
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
 
-        if (i < ticksList.count())
+        if (i < layout.size() - 1)
             labelItem->setPos(m_rect.left() - rect.width() - label_padding , layout[i] + (layout[i + 1] - layout[i]) / 2 - center.y());
         else
             labelItem->setPos(m_rect.left() - rect.width() - label_padding , layout[i]-center.y());
 
-        if(labelItem->pos().y()+rect.height()>height) {
+        // check if the label should be shown
+        if (labelItem->pos().y() + center.y() < m_rect.top() || labelItem->pos().y() + center.y() > m_rect.bottom())
             labelItem->setVisible(false);
-        }
-        else {
+        else
             labelItem->setVisible(true);
-            height=labelItem->pos().y();
-        }
+
+//        if(labelItem->pos().y()+rect.height()>height) {
+//            labelItem->setVisible(false);
+//        }
+//        else {
+//            labelItem->setVisible(true);
+//            height=labelItem->pos().y();
+//        }
 
         m_minWidth=qMax(rect.width()+label_padding,m_minWidth);
         m_minHeight+=rect.height();
@@ -126,16 +132,22 @@ void ChartCategoryAxisY::updateGeometry()
         }
 
         // grid lines and axis line ticks
-        if (layout[i] < m_rect.left() || layout[i] > m_rect.right())
-            continue;
-
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
         lineItem->setPos(m_rect.left(), layout[i]);
         lineItem->setLine(0, 0, m_rect.width(), 0);
 
-        lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setPos(m_rect.left(), layout[i]);
-        lineItem->setLine(-5, 0, 0, 0);
+        QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
+        tickLineItem->setPos(m_rect.left(), layout[i]);
+        tickLineItem->setLine(-5, 0, 0, 0);
+
+        // check if the grid line and the axis tick should be shown
+        if (lineItem->pos().y() < m_rect.top() || lineItem->pos().y() > m_rect.bottom()) {
+            lineItem->setVisible(false);
+            tickLineItem->setVisible(false);
+        } else {
+            lineItem->setVisible(true);
+            tickLineItem->setVisible(true);
+        }
     }
 
 }

@@ -80,8 +80,10 @@ void ChartCategoryAxisX::updateGeometry()
     QList<QGraphicsItem *> shades = m_shades->childItems();
     QList<QGraphicsItem *> axis = m_arrow->childItems();
 
-    //    Q_ASSERT(labels.size() == ticksList.size());
-    //    Q_ASSERT(layout.size() == ticksList.size());
+
+    for (int i = 0; i < labels.count(); i++) {
+        labels.at(i)->setVisible(false);
+    }
 
     // axis base line
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
@@ -97,10 +99,17 @@ void ChartCategoryAxisX::updateGeometry()
         const QRectF& rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
-        if (i < ticksList.count())
+        if (i < layout.size() - 1) {
             labelItem->setPos(layout[i] + (layout[i + 1] - layout[i]) / 2 - center.x(), m_rect.bottom() + label_padding);
-        else
+        } else {
             labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
+        }
+
+        // check if the label should be shown
+        if (labelItem->pos().x() + center.x() < m_rect.left() || labelItem->pos().x() + center.x() > m_rect.right())
+            labelItem->setVisible(false);
+        else
+            labelItem->setVisible(true);
 
         m_minWidth += rect.width();
         m_minHeight = qMax(rect.height()+ label_padding, m_minHeight);
@@ -111,16 +120,22 @@ void ChartCategoryAxisX::updateGeometry()
         }
 
         // grid lines and axis line ticks
-        if (layout[i] < m_rect.left() || layout[i] > m_rect.right())
-            continue;
-
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
         lineItem->setPos(layout[i], m_rect.top());
         lineItem->setLine(0, 0, 0, m_rect.height());
 
-        lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setPos(layout[i], m_rect.bottom());
-        lineItem->setLine(0, 0, 0, 5);
+        QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
+        tickLineItem->setPos(layout[i], m_rect.bottom());
+        tickLineItem->setLine(0, 0, 0, 5);
+
+        // check if the grid line and the axis tick should be shown
+        if (lineItem->pos().x() < m_rect.left() || lineItem->pos().x() > m_rect.right()) {
+            lineItem->setVisible(false);
+            tickLineItem->setVisible(false);
+        } else {
+            lineItem->setVisible(true);
+            tickLineItem->setVisible(true);
+        }
     }
 
 }
