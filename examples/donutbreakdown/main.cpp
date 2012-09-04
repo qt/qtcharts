@@ -19,6 +19,7 @@
 ****************************************************************************/
 #include <QApplication>
 #include <QMainWindow>
+#include <QStatusBar>
 #include <QChartView>
 #include "donutbreakdownchart.h"
 
@@ -29,8 +30,6 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     //![1]
-    // Data from http://www.stat.fi/til/ekul/2010/ekul_2010_2011-12-13_tie_001_en.html
-
     QPieSeries *series1 = new QPieSeries();
     series1->setName("Fossil fuels");
     series1->append("Oil", 353295);
@@ -69,6 +68,11 @@ int main(int argc, char *argv[])
     window.resize(800, 600);
     window.show();
     //![3]
+
+    // Data is taken from Statistics Finland:
+    // http://www.stat.fi/til/ekul/2010/ekul_2010_2011-12-13_tie_001_en.html
+    window.statusBar()->setFont(QFont("Arial", 7));
+    window.statusBar()->showMessage("Graph is based on data of 'Total consumption of energy increased by 10 per cent in 2010' Statistics Finland, 13 December 2011");
     
     return a.exec();
 }
