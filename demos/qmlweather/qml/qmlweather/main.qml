@@ -24,6 +24,10 @@ import QtCommercial.Chart 1.1
 Rectangle {
     width: 360
     height: 360
+    gradient: Gradient {
+        GradientStop { position: 0.0; color: "lightblue" }
+        GradientStop { position: 1.0; color: "white" }
+    }
 
     //![1]
     ChartView {
@@ -157,7 +161,10 @@ Rectangle {
             //![4]
 
             //![5]
-            // Store temperature values, rainfall and weather icon
+            // Store temperature values, rainfall and weather icon.
+            // The temperature values begin from 0.5 instead of 0.0 to make the start from the
+            // middle of the rainfall bars. This makes the temperature lines visually better
+            // synchronized with the rainfall bars.
             maxTempSeries.append(Number(i) + 0.5, weatherObj.tempMaxC);
             minTempSeries.append(Number(i) + 0.5, weatherObj.tempMinC);
             rainfallSet.append(i, weatherObj.precipMM);
