@@ -4,7 +4,7 @@
      \subtitle
 
      This example shows how to use create a nested donuts chart using QPieSeries API.
-     \image examples_donutchart.png
+     \image demos_nesteddonuts.png
 
      Let's start by creating a QChartView instance and enabling the Antialiasing on it. Last line enables the animations of the chart.
 
