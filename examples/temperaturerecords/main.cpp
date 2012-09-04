@@ -37,8 +37,8 @@ int main(int argc, char *argv[])
     QBarSet *low = new QBarSet("Min");
     QBarSet *high = new QBarSet("Max");
 
-    *low << -51.5 << -49 << -44.3 << -36.0 << -24.6 << -7.0 << -5.0 << -10.8 << -18.7 << -31.8 << -42.0 << -47.0;
-    *high << 10.9 << 11.8 << 17.5 << 25.5 << 31.0 << 33.8 << 37.2 << 33.8 << 28.8 << 19.4 << 14.1 << 10.8;
+    *low << -52 << -50 << -45.3 << -37.0 << -25.6 << -8.0 << -6.0 << -11.8 << -19.7 << -32.8 << -43.0 << -48.0;
+    *high << 11.9 << 12.8 << 18.5 << 26.5 << 32.0 << 34.8 << 38.2 << 34.8 << 29.8 << 20.4 << 15.1 << 11.8;
 //![1]
 
 //![2]
@@ -50,7 +50,7 @@ int main(int argc, char *argv[])
 //![3]
     QChart* chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Temperature records in Finland in Celcius");
+    chart->setTitle("Temperature records in celcius");
     chart->setAnimationOptions(QChart::SeriesAnimations);
 //![3]
 
