@@ -49,16 +49,16 @@ public:
 //           chart->createDefaultAxes();
            QCategoryAxis *axisX = new QCategoryAxis;
            axisX->append("low", 5);
-           axisX->append("optimal", 12);
+           axisX->append("avg.", 12);
            axisX->append("high", 19);
-           axisX->setRange(-1, 20);
+           axisX->setRange(0, 20);
            chart->setAxisX(axisX, chart->series().at(0));
 
            QCategoryAxis *axisY = new QCategoryAxis;
-           axisY->append("low", 5);
-           axisY->append("optimal", 8);
-           axisY->append("high", 12);
-           axisY->setRange(-5, 20);
+           axisY->append("cheap", 5);
+           axisY->append("fair", 12);
+           axisY->append("pricy", 20);
+           axisY->setRange(0, 20);
            chart->setAxisY(axisY, chart->series().at(0));
 
            return chart;
