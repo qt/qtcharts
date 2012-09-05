@@ -87,10 +87,6 @@ QCategoryAxis::QCategoryAxis(QObject *parent):
 */
 QCategoryAxis::~QCategoryAxis()
 {
-    //    Q_D(QValueAxis);
-    //    if(d->m_dataset) {
-    //        d->m_dataset->removeAxis(this);
-    //    }
 }
 
 /*!
@@ -281,8 +277,6 @@ void QCategoryAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count
     Q_UNUSED(count);
     Q_UNUSED(min);
     Q_UNUSED(max);
-    //m_min = min;
-    //m_max = max;
 }
 
 ChartAxis* QCategoryAxisPrivate::createGraphics(ChartPresenter* presenter)
