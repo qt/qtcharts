@@ -51,6 +51,7 @@ public:
 
 private Q_SLOTS:
     void updateUI();
+    void handleGeometryChanged();
 private:
     QComboBox* createThemeBox();
     QComboBox* createAnimationBox();
