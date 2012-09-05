@@ -38,10 +38,10 @@ Widget::Widget(QWidget *parent)
     //! [1]
     QChartView *chartView = new QChartView;
     chartView->setRenderHint(QPainter::Antialiasing);
-    QChart *chart = chartView->chart();
-    chart->setAnimationOptions(QChart::AllAnimations);
+    QChart *chart = chartView->chart();    
     chart->legend()->setVisible(false);
     chart->setTitle("Nested donuts demo");
+    chart->setAnimationOptions(QChart::AllAnimations);
     //! [1]
 
     //! [2]
