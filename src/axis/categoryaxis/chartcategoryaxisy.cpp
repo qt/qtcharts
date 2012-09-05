@@ -82,8 +82,6 @@ void ChartCategoryAxisY::updateGeometry()
     QList<QGraphicsItem *> shades = m_shades->childItems();
     QList<QGraphicsItem *> axis = m_arrow->childItems();
 
-//    qreal height =  2*m_rect.bottom();
-
     for (int i = 0; i < labels.count(); i++) {
         labels.at(i)->setVisible(false);
     }
@@ -117,14 +115,6 @@ void ChartCategoryAxisY::updateGeometry()
             labelItem->setVisible(false);
         else
             labelItem->setVisible(true);
-
-//        if(labelItem->pos().y()+rect.height()>height) {
-//            labelItem->setVisible(false);
-//        }
-//        else {
-//            labelItem->setVisible(true);
-//            height=labelItem->pos().y();
-//        }
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
