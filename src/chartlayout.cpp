@@ -24,7 +24,6 @@
 #include "chartaxis_p.h"
 #include "charttitle_p.h"
 #include "chartbackground_p.h"
-#include "layoutdebuger_p.h"
 #include "legendmarker_p.h"
 #include <QDebug>
 
