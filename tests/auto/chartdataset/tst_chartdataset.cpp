@@ -17,6 +17,27 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#ifndef BUILD_PRIVATE_UNIT_TESTS
+#include <QtTest/QtTest>
+
+class tst_ChartDataSet: public QObject {
+
+    Q_OBJECT
+
+private Q_SLOTS:
+    void skip();
+
+};
+
+void tst_ChartDataSet::skip()
+{
+    QSKIP("This test requires the debug version of library", SkipAll);
+}
+
+QTEST_MAIN(tst_ChartDataSet)
+#include "tst_chartdataset.moc"
+
+#else
 
 #include <QtTest/QtTest>
 #include <qabstractaxis.h>
@@ -620,4 +641,4 @@ void tst_ChartDataSet::scrollDomain()
 
 QTEST_MAIN(tst_ChartDataSet)
 #include "tst_chartdataset.moc"
-
+#endif
