@@ -65,8 +65,6 @@ Window::Window(QWidget* parent) :
     m_template(0)
 {
     createProxyWidgets();
-    connectSignals();
-
     // create layout
     QGraphicsLinearLayout *settingsLayout = new QGraphicsLinearLayout();
     settingsLayout->setOrientation(Qt::Vertical);
@@ -109,12 +107,14 @@ Window::Window(QWidget* parent) :
     m_rubberBand->setVisible(false);
 
     m_view = new View(m_scene, m_form);
-    m_view->setMinimumSize(m_form->preferredSize().toSize());
+    m_view->setMinimumSize(m_form->minimumSize().toSize());
 
     // Set defaults
     m_antialiasCheckBox->setChecked(true);
     updateUI();
     setCentralWidget(m_view);
+
+    connectSignals();
 }
 
 Window::~Window()
@@ -123,6 +123,7 @@ Window::~Window()
 
 void Window::connectSignals()
 {
+    QObject::connect(m_form, SIGNAL(geometryChanged()),this ,SLOT(handleGeometryChanged()));
     QObject::connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
@@ -580,4 +581,9 @@ QAction* Window::createMenuAction(QMenu *menu, const QIcon &icon, const QString 
     action->setCheckable(false);
     action->setData(data);
     return action;
+}
+
+void Window::handleGeometryChanged()
+{
+   m_view->scene()->setSceneRect(0, 0, this->width(), this->height());
 }
