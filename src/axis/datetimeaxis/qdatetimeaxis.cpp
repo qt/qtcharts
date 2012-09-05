@@ -24,7 +24,6 @@
 #include "chartdatetimeaxisy_p.h"
 #include "domain_p.h"
 #include <cmath>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
@@ -34,24 +33,33 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     The labels can be configured by setting an appropriate DateTime format.
     QDateTimeAxis works correctly with dates from 4714 BCE to 287396 CE
-    There are also other limitiation that are specified in QDateTime documentation. Please refer to it.
+    There are also other limitiation related to QDateTime . Please refer to QDateTime documentation.
     QDateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
+
+    NOTE: QDateTimeAxis is disabled on ARM platform at the present time.
 
     \image api_datatime_axis.png
 
-    Example code on how to use QDateTimeAxis.
+    QDateTimeAxis can be used with QLineSeries, QSplineSeries or QScatterSeries.
+    To add a data point to the series QDateTime::toMSecsSinceEpoch() is used.
     \code
-    QChartView *chartView = new QChartView;
     QLineSeries *series = new QLineSeries;
 
     QDateTime xValue;
     xValue.setDate(QDate(2012, 1 , 18));
     xValue.setTime(QTime(9, 34));
-    series->append(xValue.toMSecsSinceEpoch(), 12);
+    qreal yValue = 12;
+    series->append(xValue.toMSecsSinceEpoch(), yValue);
 
     xValue.setDate(QDate(2013, 5 , 11));
     xValue.setTime(QTime(11, 14));
-    series->append(xValue.toMSecsSinceEpoch(), 22);
+    qreal yValue = 22;
+    series->append(xValue.toMSecsSinceEpoch(), yValue);
+    \endcode
+
+    Adding the series to the chart and setting up the QDateTimeAxis.
+    \code
+    QChartView *chartView = new QChartView;    
     chartView->chart()->addSeries(series);
 
     // ...
