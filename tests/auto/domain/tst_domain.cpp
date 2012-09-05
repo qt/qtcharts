@@ -17,6 +17,28 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
+#ifndef BUILD_PRIVATE_UNIT_TESTS
+
+#include <QtTest/QtTest>
+
+class tst_Domain: public QObject {
+
+    Q_OBJECT
+
+private Q_SLOTS:
+    void skip();
+
+};
+
+void tst_Domain::skip()
+{
+    QSKIP("This test requires the debug version of library", SkipAll);
+}
+
+QTEST_MAIN(tst_Domain)
+#include "tst_domain.moc"
+
+#else
 
 #include <QtTest/QtTest>
 #include <private/domain_p.h>
@@ -678,4 +700,4 @@ void tst_Domain::move()
 
 QTEST_MAIN(tst_Domain)
 #include "tst_domain.moc"
-
+#endif

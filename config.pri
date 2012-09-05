@@ -97,7 +97,6 @@ coverage: CONFIG += debug
 ##################### UNIT TESTS ##############################################################
 
 CONFIG(debug, debug|release) {
-    CONFIG+=test_private
     DEFINES+=BUILD_PRIVATE_UNIT_TESTS
 }
 
