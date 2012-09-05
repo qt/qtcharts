@@ -41,6 +41,8 @@ int main(int argc, char *argv[])
 
     //![2]
     // data from http://www.swpc.noaa.gov/ftpdir/weekly/RecentIndices.txt
+    // http://www.swpc.noaa.gov/ftpdir/weekly/README
+    // http://www.weather.gov/disclaimer
     QFile sunSpots(":sun");
     if (!sunSpots.open(QIODevice::ReadOnly | QIODevice::Text)) {
         return 1;
@@ -60,28 +62,31 @@ int main(int argc, char *argv[])
     //![2]
 
     //![3]
-    QChart* chart = new QChart();
-    chart->legend()->hide();
+    QChart* chart = new QChart();    
     chart->addSeries(series);
+    chart->legend()->hide();
     chart->createDefaultAxes();
-    QDateTimeAxis *axisX = new QDateTimeAxis;
-    axisX->setTickCount(10);
-    axisX->setFormat("MMM yyyy");
-    chart->setAxisX(axisX, series);
     chart->setTitle("Sunspots count (by Space Weather Prediction Center)");
     //![3]
 
     //![4]
-    QChartView* chartView = new QChartView(chart);
-    chartView->setRenderHint(QPainter::Antialiasing);
+    QDateTimeAxis *axisX = new QDateTimeAxis;
+    axisX->setTickCount(10);
+    axisX->setFormat("MMM yyyy");
+    chart->setAxisX(axisX, series);
     //![4]
 
     //![5]
+    QChartView* chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+    //![5]
+
+    //![6]
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(800, 600);
     window.show();
-    //![5]
+    //![6]
 
     return a.exec();
 }
