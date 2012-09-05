@@ -1,9 +1,10 @@
-TARGET = qtcommercialchartqml
-QT += declarative
-
 !include( ../plugins.pri ) {
     error( "Couldn't find the plugins.pri file!" )
 }
+
+TARGET = qtcommercialchartqml
+QT += declarative
+DESTDIR = $$CHART_BUILD_QML_PLUGIN_DIR
 INCLUDEPATH += $$CHART_BUILD_PRIVATE_HEADER_DIR
 
 CONFIG(debug, debug|release) {
@@ -46,4 +47,4 @@ INSTALLS += target qmldir
 
 FILE = $$PWD/qmldir
 win32:{FILE = $$replace(FILE, "/","\\")}
-QMAKE_POST_LINK += $$QMAKE_COPY $$FILE $$CHART_BUILD_PLUGIN_DIR
+QMAKE_POST_LINK += $$QMAKE_COPY $$FILE $$CHART_BUILD_QML_PLUGIN_DIR

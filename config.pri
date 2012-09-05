@@ -36,9 +36,24 @@ CHART_BUILD_PRIVATE_HEADER_DIR = $$CHART_BUILD_PUBLIC_HEADER_DIR/private
 CHART_BUILD_LIB_DIR = $$SHADOW/lib
 CHART_BUILD_DIR = $$SHADOW/build
 CHART_BUILD_BIN_DIR = $$SHADOW/bin
-CHART_BUILD_PLUGIN_DIR = $$CHART_BUILD_BIN_DIR/QtCommercial/Chart
+CHART_BUILD_QML_PLUGIN_DIR = $$CHART_BUILD_BIN_DIR
+CHART_BUILD_DESIGNER_PLUGIN_DIR = $$CHART_BUILD_LIB_DIR
 CHART_BUILD_DOC_DIR = $$SHADOW/doc
 
+CONFIG(release,debug|release){
+    CHART_BUILD_LIB_DIR = $$CHART_BUILD_LIB_DIR/release
+    CHART_BUILD_BIN_DIR = $$CHART_BUILD_BIN_DIR/release
+    CHART_BUILD_QML_PLUGIN_DIR = $$CHART_BUILD_QML_PLUGIN_DIR/release/QtCommercial/Chart
+    CHART_BUILD_DESIGNER_PLUGIN_DIR = $$CHART_BUILD_LIB_DIR
+}
+
+
+CONFIG(debug,debug|release){
+   CHART_BUILD_LIB_DIR = $$CHART_BUILD_LIB_DIR/debug
+   CHART_BUILD_BIN_DIR = $$CHART_BUILD_BIN_DIR/debug
+   CHART_BUILD_QML_PLUGIN_DIR = $$CHART_BUILD_QML_PLUGIN_DIR/debug/QtCommercial/Chart
+   CHART_BUILD_DESIGNER_PLUGIN_DIR = $$CHART_BUILD_LIB_DIR
+}
 # Use own folders for debug and release builds
 
 CONFIG(debug, debug|release):CHART_BUILD_DIR = $$join(CHART_BUILD_DIR,,,/debug)
@@ -50,7 +65,8 @@ win32:{
     CHART_BUILD_PRIVATE_HEADER_DIR = $$replace(CHART_BUILD_PRIVATE_HEADER_DIR, "/","\\")
     CHART_BUILD_BUILD_DIR = $$replace(CHART_BUILD_BUILD_DIR, "/","\\")
     CHART_BUILD_BIN_DIR = $$replace(CHART_BUILD_BIN_DIR, "/","\\")
-    CHART_BUILD_PLUGIN_DIR = $$replace(CHART_BUILD_PLUGIN_DIR, "/","\\")
+    CHART_BUILD_QML_PLUGIN_DIR = $$replace(CHART_BUILD_QML_PLUGIN_DIR, "/","\\")
+    CHART_BUILD_DESIGNER_PLUGIN_DIR = $$replace(CHART_BUILD_DESIGNER_PLUGIN_DIR, "/","\\")
     CHART_BUILD_DOC_DIR = $$replace(CHART_BUILD_DOC_DIR, "/","\\")
     CHART_BUILD_LIB_DIR = $$replace(CHART_BUILD_LIB_DIR, "/","\\")
 }
@@ -97,7 +113,6 @@ coverage: CONFIG += debug
 ##################### UNIT TESTS ##############################################################
 
 CONFIG(debug, debug|release) {
-    CONFIG+=test_private
     DEFINES+=BUILD_PRIVATE_UNIT_TESTS
 }
 
