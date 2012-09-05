@@ -84,8 +84,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  */
 
 /*!
- \property QChart::margins
- Margins around the plot area. Note that the margin area is used for drawing chart title, legend and axes.
+ \property QChart::minimumMargins
+ Minimum margins between the plot area (axes) and the edge of the chart widget.
  */
 
 /*!
@@ -99,12 +99,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
  \property QChart::title
  Title is the name (label) of a chart. It is shown as a headline on top of the chart.
- */
-
-/*!
- \fn void QChart::marginsChanged(QRectF newMargins)
- The margins around plot area have changed to \a newMargins. This may happen for example if you change title font size,
- modify axes or hide/show legend.
  */
 
 /*!
