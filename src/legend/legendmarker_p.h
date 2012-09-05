@@ -96,6 +96,7 @@ protected:
     QGraphicsRectItem *m_rectItem;
     qreal m_margin;
     qreal m_space;
+    QString m_text;
 
 };
 

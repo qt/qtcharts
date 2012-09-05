@@ -47,16 +47,18 @@ QVector<qreal> ChartCategoryAxisX::calculateLayout() const
     if (tickCount < 2)
         return points;
 
+    QRectF rect = presenter()->chartsGeometry();
+
     qreal range = axis->max() - axis->min();
     if (range > 0) {
         points.resize(tickCount);
-        qreal scale = m_rect.width() / range;
+        qreal scale = rect.width() / range;
         for (int i = 0; i < tickCount; ++i)
             if (i < tickCount - 1) {
-                int x = (axis->startValue(axis->categoriesLabels().at(i)) - axis->min()) * scale + m_rect.left();
+                int x = (axis->startValue(axis->categoriesLabels().at(i)) - axis->min()) * scale + rect.left();
                 points[i] = x;
             } else {
-                int x = (axis->endValue(axis->categoriesLabels().at(i - 1)) - axis->min())  * scale + m_rect.left();
+                int x = (axis->endValue(axis->categoriesLabels().at(i - 1)) - axis->min())  * scale + rect.left();
                 points[i] = x;
             }
     }
@@ -66,9 +68,6 @@ QVector<qreal> ChartCategoryAxisX::calculateLayout() const
 void ChartCategoryAxisX::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
-
-    m_minWidth = 0;
-    m_minHeight = 0;
 
     if(layout.isEmpty()) return;
 
@@ -85,13 +84,14 @@ void ChartCategoryAxisX::updateGeometry()
         labels.at(i)->setVisible(false);
     }
 
+    QRectF chartRect = presenter()->chartsGeometry();
     // axis base line
+
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
-    lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
+    lineItem->setLine(chartRect.left(), chartRect.bottom(), chartRect.right(), chartRect.bottom());
 
     for (int i = 0; i < layout.size(); ++i) {
 
-        // label items
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
         if (i < ticksList.count()) {
             labelItem->setText(ticksList.at(i));
@@ -99,43 +99,42 @@ void ChartCategoryAxisX::updateGeometry()
         const QRectF& rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
+
         if (i < layout.size() - 1) {
-            labelItem->setPos(layout[i] + (layout[i + 1] - layout[i]) / 2 - center.x(), m_rect.bottom() + label_padding);
+            labelItem->setPos(layout[i] + (layout[i + 1] - layout[i]) / 2 - center.x(), chartRect.bottom() + label_padding);
         } else {
-            labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
+            labelItem->setPos(layout[i] - center.x(), chartRect.bottom() + label_padding);
         }
 
         // check if the label should be shown
-        if (labelItem->pos().x() + center.x() < m_rect.left() || labelItem->pos().x() + center.x() > m_rect.right())
+        if (labelItem->pos().x() + center.x() < chartRect.left() || labelItem->pos().x() + center.x() > chartRect.right())
             labelItem->setVisible(false);
         else
             labelItem->setVisible(true);
 
-        m_minWidth += rect.width();
-        m_minHeight = qMax(rect.height()+ label_padding, m_minHeight);
-
         if ((i + 1) % 2 && i > 1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));
-            rectItem->setRect(layout[i - 1],m_rect.top(),layout[i]-layout[i - 1],m_rect.height());
+            rectItem->setRect(layout[i - 1],chartRect.top(),layout[i]-layout[i - 1],chartRect.height());
         }
 
         // grid lines and axis line ticks
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        lineItem->setPos(layout[i], m_rect.top());
-        lineItem->setLine(0, 0, 0, m_rect.height());
+        lineItem->setPos(layout[i], chartRect.top());
+        lineItem->setLine(0, 0, 0, chartRect.height());
 
         QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        tickLineItem->setPos(layout[i], m_rect.bottom());
+        tickLineItem->setPos(layout[i], chartRect.bottom());
         tickLineItem->setLine(0, 0, 0, 5);
 
         // check if the grid line and the axis tick should be shown
-        if (lineItem->pos().x() < m_rect.left() || lineItem->pos().x() > m_rect.right()) {
+        if (lineItem->pos().x() < chartRect.left() || lineItem->pos().x() > chartRect.right()) {
             lineItem->setVisible(false);
             tickLineItem->setVisible(false);
         } else {
             lineItem->setVisible(true);
             tickLineItem->setVisible(true);
         }
+
     }
 
 }
@@ -144,6 +143,45 @@ void ChartCategoryAxisX::handleAxisUpdated()
 {
     updateGeometry();
     ChartAxis::handleAxisUpdated();
+}
+
+QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+{
+    Q_UNUSED(constraint)
+
+    QFontMetrics fn(m_font);
+    QSizeF sh;
+    QSizeF base = ChartAxis::sizeHint(which, constraint);
+    QStringList ticksList ; //TODO:
+    qreal width=0;
+    qreal height=0;
+
+    switch (which) {
+        case Qt::MinimumSize:
+        width = fn.boundingRect("...").width();
+        height = fn.height() + label_padding;
+        width=qMax(width,base.width());
+        height+=base.height();
+        sh = QSizeF(width,height);
+        break;
+        case Qt::PreferredSize: {
+
+            for (int i = 0; i < ticksList.size(); ++i)
+            {
+                QRectF rect = fn.boundingRect(ticksList.at(i));
+                width+=rect.width();
+                height=qMax(rect.height()+label_padding,height);
+            }
+            width=qMax(width,base.width());
+            height+=base.height();
+            sh = QSizeF(width,height);
+            break;
+        }
+        default:
+        break;
+    }
+
+    return sh;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

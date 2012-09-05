@@ -245,7 +245,7 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
 
 void DeclarativeChart::changeMinimumMargins(int top, int bottom, int left, int right)
 {
-    m_chart->setMinimumMargins(QMargins(left, top, right, bottom));
+    m_chart->setMargins(QMargins(left, top, right, bottom));
     emit minimumMarginsChanged();
     emit plotAreaChanged(m_chart->plotArea());
 }
@@ -501,6 +501,7 @@ qreal DeclarativeChart::topMargin()
 
 qreal DeclarativeChart::bottomMargin()
 {
+
     qWarning() << "ChartView.bottomMargin is deprecated. Use minimumMargins and plotArea instead.";
     return m_chart->plotArea().bottom();
 }

@@ -98,6 +98,19 @@ public:
     void setLabelsColor(QColor color);
     QColor labelsColor() const;
 
+    //title handling
+    bool titleVisible() const;
+    void setTitleVisible(bool visible = true);
+    void setTitlePen(const QPen &pen);
+    QPen titlePen() const;
+    void setTitleBrush(const QBrush &brush);
+    QBrush titleBrush() const;
+    void setTitleFont(const QFont &font);
+    QFont titleFont() const;
+    void setTitle(const QString& title);
+    QString title() const;
+
+
     //shades handling
     bool shadesVisible() const;
     void setShadesVisible(bool visible = true);

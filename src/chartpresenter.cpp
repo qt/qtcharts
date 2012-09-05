@@ -28,11 +28,9 @@
 #include "qabstractseries_p.h"
 #include "qareaseries.h"
 #include "chartaxis_p.h"
-//#include "chartaxisx_p.h"
-//#include "chartaxisy_p.h"
-#include "areachartitem_p.h"
 #include "chartbackground_p.h"
 #include "chartlayout_p.h"
+#include "charttitle_p.h"
 #include <QTimer>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -44,8 +42,8 @@ m_chartTheme(0),
 m_options(QChart::NoAnimation),
 m_state(ShowState),
 m_layout(new ChartLayout(this)),
-m_backgroundItem(0),
-m_titleItem(0)
+m_background(0),
+m_title(0)
 {
 
 }
@@ -55,15 +53,22 @@ ChartPresenter::~ChartPresenter()
     delete m_chartTheme;
 }
 
-void ChartPresenter::setGeometry(const QRectF& rect)
+void ChartPresenter::setChartsGeometry(const QRectF& rect)
 {
-
     Q_ASSERT(rect.isValid());
 
-    if(m_rect!=rect) {
-           m_rect=rect;
-           emit geometryChanged(m_rect);
+    if(m_chartsRect!=rect) {
+        m_chartsRect=rect;
+        foreach(ChartElement* chart, m_chartItems)
+        {
+            chart->handleGeometryChanged(rect);
+        }
     }
+}
+
+QRectF ChartPresenter::chartsGeometry() const
+{
+    return m_chartsRect;
 }
 
 void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
@@ -84,7 +89,7 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis* axis,Domain* domain)
     m_chartTheme->decorate(axis);
     axis->d_ptr->setDirty(false);
     axis->d_ptr->emitUpdated();
-    if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
+    if(m_chartsRect.isValid()) item->handleGeometryChanged(m_chartsRect);
 
     m_axisItems.insert(axis, item);
     selectVisibleAxis();
@@ -113,7 +118,7 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries* series,Domain* domain)
     //initialize
     item->handleDomainUpdated();
 
-    if(m_rect.isValid()) item->handleGeometryChanged(m_rect);
+    if(m_chartsRect.isValid()) item->handleGeometryChanged(m_chartsRect);
     m_chartItems.insert(series,item);
 }
 
@@ -222,27 +227,29 @@ void ChartPresenter::resetAllElements()
               handleSeriesRemoved(series);
               handleSeriesAdded(series,domain);
        }
+
+       layout()->invalidate();
 }
 
 void ChartPresenter::zoomIn(qreal factor)
 {
-    QRectF rect = geometry();
+    QRectF rect = chartsGeometry();
     rect.setWidth(rect.width()/factor);
     rect.setHeight(rect.height()/factor);
-    rect.moveCenter(geometry().center());
+    rect.moveCenter(chartsGeometry().center());
     zoomIn(rect);
 }
 
 void ChartPresenter::zoomIn(const QRectF& rect)
 {
     QRectF r = rect.normalized();
-    r.translate(-geometry().topLeft());
+    r.translate(-chartsGeometry().topLeft());
     if (!r.isValid())
         return;
 
     m_state = ZoomInState;
-    m_statePoint = QPointF(r.center().x()/geometry().width(),r.center().y()/geometry().height());
-    m_dataset->zoomInDomain(r,geometry().size());
+    m_statePoint = QPointF(r.center().x()/chartsGeometry().width(),r.center().y()/chartsGeometry().height());
+    m_dataset->zoomInDomain(r,chartsGeometry().size());
     m_state = ShowState;
 }
 
@@ -251,14 +258,14 @@ void ChartPresenter::zoomOut(qreal factor)
     m_state = ZoomOutState;
 
     QRectF chartRect;
-    chartRect.setSize(geometry().size());
+    chartRect.setSize(chartsGeometry().size());
 
     QRectF rect;
     rect.setSize(chartRect.size()/factor);
     rect.moveCenter(chartRect.center());
     if (!rect.isValid())
         return;
-    m_statePoint = QPointF(rect.center().x()/geometry().width(),rect.center().y()/geometry().height());
+    m_statePoint = QPointF(rect.center().x()/chartsGeometry().width(),rect.center().y()/chartsGeometry().height());
     m_dataset->zoomOutDomain(rect, chartRect.size());
     m_state = ShowState;
 }
@@ -270,7 +277,7 @@ void ChartPresenter::scroll(qreal dx,qreal dy)
     if(dy<0) m_state=ScrollUpState;
     if(dy>0) m_state=ScrollDownState;
 
-    m_dataset->scrollDomain(dx,dy,geometry().size());
+    m_dataset->scrollDomain(dx,dy,chartsGeometry().size());
     m_state = ShowState;
 }
 
@@ -281,18 +288,18 @@ QChart::AnimationOptions ChartPresenter::animationOptions() const
 
 void ChartPresenter::createBackgroundItem()
 {
-    if (!m_backgroundItem) {
-        m_backgroundItem = new ChartBackground(rootItem());
-        m_backgroundItem->setPen(Qt::NoPen);
-        m_backgroundItem->setZValue(ChartPresenter::BackgroundZValue);
+    if (!m_background) {
+        m_background = new ChartBackground(rootItem());
+        m_background->setPen(Qt::NoPen);
+        m_background->setZValue(ChartPresenter::BackgroundZValue);
     }
 }
 
 void ChartPresenter::createTitleItem()
 {
-    if (!m_titleItem) {
-        m_titleItem = new QGraphicsSimpleTextItem(rootItem());
-        m_titleItem->setZValue(ChartPresenter::BackgroundZValue);
+    if (!m_title) {
+        m_title = new ChartTitle(rootItem());
+        m_title->setZValue(ChartPresenter::BackgroundZValue);
     }
 }
 
@@ -313,104 +320,94 @@ void ChartPresenter::startAnimation(ChartAnimation* animation)
     QTimer::singleShot(0, animation, SLOT(start()));
 }
 
-QGraphicsRectItem* ChartPresenter::backgroundItem()
-{
-    return m_backgroundItem;
-}
-
 void ChartPresenter::setBackgroundBrush(const QBrush& brush)
 {
     createBackgroundItem();
-    m_backgroundItem->setBrush(brush);
+    m_background->setBrush(brush);
     m_layout->invalidate();
 }
 
 QBrush ChartPresenter::backgroundBrush() const
 {
-    if (!m_backgroundItem) return QBrush();
-    return m_backgroundItem->brush();
+    if (!m_background) return QBrush();
+    return m_background->brush();
 }
 
 void ChartPresenter::setBackgroundPen(const QPen& pen)
 {
     createBackgroundItem();
-    m_backgroundItem->setPen(pen);
+    m_background->setPen(pen);
     m_layout->invalidate();
 }
 
 QPen ChartPresenter::backgroundPen() const
 {
-    if (!m_backgroundItem) return QPen();
-    return m_backgroundItem->pen();
-}
-
-QGraphicsItem* ChartPresenter::titleItem()
-{
-    return m_titleItem;
+    if (!m_background) return QPen();
+    return m_background->pen();
 }
 
 void ChartPresenter::setTitle(const QString& title)
 {
     createTitleItem();
-    m_titleItem->setText(title);
+    m_title->setText(title);
     m_layout->invalidate();
 }
 
 QString ChartPresenter::title() const
 {
-    if (!m_titleItem) return QString();
-    return m_titleItem->text();
+    if (!m_title) return QString();
+    return m_title->text();
 }
 
 void ChartPresenter::setTitleFont(const QFont& font)
 {
     createTitleItem();
-    m_titleItem->setFont(font);
+    m_title->setFont(font);
     m_layout->invalidate();
 }
 
 QFont ChartPresenter::titleFont() const
 {
-    if (!m_titleItem)  return QFont();
-    return m_titleItem->font();
+    if (!m_title)  return QFont();
+    return m_title->font();
 }
 
 void ChartPresenter::setTitleBrush(const QBrush &brush)
 {
     createTitleItem();
-    m_titleItem->setBrush(brush);
+    m_title->setBrush(brush);
     m_layout->invalidate();
 }
 
 QBrush ChartPresenter::titleBrush() const
 {
-    if (!m_titleItem) return QBrush();
-    return m_titleItem->brush();
+    if (!m_title) return QBrush();
+    return m_title->brush();
 }
 
 void ChartPresenter::setBackgroundVisible(bool visible)
 {
     createBackgroundItem();
-    m_backgroundItem->setVisible(visible);
+    m_background->setVisible(visible);
 }
 
 
 bool ChartPresenter::isBackgroundVisible() const
 {
-    if (!m_backgroundItem) return false;
-    return m_backgroundItem->isVisible();
+    if (!m_background) return false;
+    return m_background->isVisible();
 }
 
 void ChartPresenter::setBackgroundDropShadowEnabled(bool enabled)
 {
     createBackgroundItem();
-    m_backgroundItem->setDropShadowEnabled(enabled);
+    m_background->setDropShadowEnabled(enabled);
 }
 
 bool ChartPresenter::isBackgroundDropShadowEnabled() const
 {
-    if (!m_backgroundItem) return false;
-    return m_backgroundItem->isDropShadowEnabled();
+    if (!m_background) return false;
+    return m_background->isDropShadowEnabled();
 }
 
 
@@ -419,14 +416,14 @@ QGraphicsLayout* ChartPresenter::layout()
     return m_layout;
 }
 
-void ChartPresenter::setMinimumMargins(const QMargins& margins)
+void ChartPresenter::setMargins(const QMargins& margins)
 {
-    m_layout->setMinimumMargins(margins);
+    m_layout->setMargins(margins);
 }
 
-QMargins ChartPresenter::minimumMargins() const
+QMargins ChartPresenter::margins() const
 {
-    return m_layout->minimumMargins();
+    return m_layout->margins();
 }
 
 QLegend* ChartPresenter::legend()
@@ -434,14 +431,24 @@ QLegend* ChartPresenter::legend()
     return m_chart->legend();
 }
 
+void ChartPresenter::setVisible(bool visible)
+{
+    m_chart->setVisible(visible);
+}
+
+ChartBackground* ChartPresenter::backgroundElement()
+{
+    return m_background;
+}
+
 QList<ChartAxis*>  ChartPresenter::axisItems() const
 {
     return m_axisItems.values();
 }
 
-void ChartPresenter::setVisible(bool visible)
+ChartTitle* ChartPresenter::titleElement()
 {
-    m_chart->setVisible(visible);
+    return m_title;
 }
 
 #include "moc_chartpresenter_p.cpp"

@@ -44,7 +44,7 @@ public:
     ~ChartValueAxisY();
 
     AxisType axisType() const { return Y_AXIS;}
-
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint) const;
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();

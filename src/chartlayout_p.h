@@ -27,6 +27,10 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartPresenter;
+class ChartTitle;
+class QLegend;
+class ChartAxis;
+class ChartBackground;
 
 class ChartLayout : public QGraphicsLayout
 {
@@ -35,10 +39,11 @@ public:
     ChartLayout(ChartPresenter* presenter);
     virtual ~ChartLayout();
 
-    void setMinimumMargins(const QMargins& margins);
-    QMargins minimumMargins() const;
+    void setMargins(const QMargins& margins);
+    QMargins margins() const;
 
     void setGeometry(const QRectF& rect);
+    void adjustChartGeometry();
 
 protected:
     QSizeF sizeHint ( Qt::SizeHint which, const QSizeF & constraint = QSizeF() ) const;
@@ -47,15 +52,22 @@ protected:
     void removeAt(int){};
 
 private:
+    QRectF calculateBackgroundGeometry(const QRectF& geometry,ChartBackground* background) const;
+    QRectF calculateContentGeometry(const QRectF& geometry) const;
+    QRectF calculateTitleGeometry(const QRectF& geometry, ChartTitle* title) const;
+    QRectF calculateChartGeometry(const QRectF& geometry,const QList<ChartAxis*>& axes) const;
+    QRectF calculateLegendGeometry(const QRectF& geometry, QLegend* legend) const;
+    QRectF calculateBackgroundMinimum(const QRectF& minimum) const;
+    QRectF calculateContentMinimum(const QRectF& minimum) const;
+    QRectF calculateTitleMinimum(const QRectF& minimum,ChartTitle* title) const;
+    QRectF calculateAxisMinimum(const QRectF& minimum,const QList<ChartAxis*>& axes) const;
+    QRectF calculateLegendMinimum(const QRectF& minimum,QLegend* legend) const;
+
+private:
     ChartPresenter* m_presenter;
-    int m_marginBig;
-    int m_marginSmall;
-    int m_marginTiny;
-    QMargins m_chartMargins;
-    QMargins m_legendMargins;
-    bool m_intialized;
-
-
+    QMargins m_margins;
+    QRectF m_minChartRect;
+    QRectF m_minAxisRect;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

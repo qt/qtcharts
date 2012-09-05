@@ -44,7 +44,7 @@ public:
     ~ChartDateTimeAxisX();
 
     AxisType axisType() const { return X_AXIS;}
-
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint) const;
 protected:
     void createLabels(QStringList &labels,qreal min, qreal max, int ticks);
     void handleAxisUpdated();

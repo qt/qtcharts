@@ -45,6 +45,7 @@ class ChartAxis;
 class ChartTheme;
 class ChartAnimator;
 class ChartBackground;
+class ChartTitle;
 class ChartAnimation;
 class ChartLayout;
 
@@ -83,8 +84,8 @@ public:
     ChartTheme *chartTheme() const { return m_chartTheme; }
     ChartDataSet *dataSet() const { return m_dataset; }
     QGraphicsItem* rootItem() const { return m_chart; }
-    QGraphicsRectItem* backgroundItem();
-    QGraphicsItem* titleItem();
+    ChartBackground* backgroundElement();
+    ChartTitle* titleElement();
     QList<ChartAxis*> axisItems() const;
 
     QLegend* legend();
@@ -123,8 +124,8 @@ public:
     void zoomOut(qreal factor);
     void scroll(qreal dx,qreal dy);
 
-    void setGeometry(const QRectF& rect);
-    QRectF geometry() { return m_rect; }
+    void setChartsGeometry(const QRectF& rect);
+    QRectF chartsGeometry() const;
 
     void startAnimation(ChartAnimation* animation);
     State state() const { return m_state; }
@@ -132,8 +133,8 @@ public:
 
     void resetAllElements();
 
-    void setMinimumMargins(const QMargins& margins);
-    QMargins minimumMargins() const;
+    void setMargins(const QMargins& margins);
+    QMargins margins() const;
     QGraphicsLayout* layout();
 
 private:
@@ -162,14 +163,14 @@ private:
     ChartTheme *m_chartTheme;
     QMap<QAbstractSeries*, ChartElement*> m_chartItems;
     QMap<QAbstractAxis*, ChartAxis*> m_axisItems;
-    QRectF m_rect;
+    QRectF m_chartsRect;
     QChart::AnimationOptions m_options;
     State m_state;
     QPointF m_statePoint;
     QList<ChartAnimation*> m_animations;
     ChartLayout* m_layout;
-    ChartBackground* m_backgroundItem;
-    QGraphicsSimpleTextItem* m_titleItem;
+    ChartBackground* m_background;
+    ChartTitle* m_title;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

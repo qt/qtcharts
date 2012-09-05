@@ -178,7 +178,6 @@ void Domain::handleAxisUpdated()
     }else if(axis->orientation()==Qt::Vertical){
         setRangeY(axis->min(),axis->max());
     }
-
 }
 
 bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2)

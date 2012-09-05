@@ -43,7 +43,7 @@ class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
     Q_PROPERTY(bool backgroundVisible READ isBackgroundVisible WRITE setBackgroundVisible)
     Q_PROPERTY(bool dropShadowEnabled READ isDropShadowEnabled WRITE setDropShadowEnabled)
     Q_PROPERTY(QChart::AnimationOptions animationOptions READ animationOptions WRITE setAnimationOptions)
-    Q_PROPERTY(QMargins minimumMargins READ minimumMargins WRITE setMinimumMargins)
+    Q_PROPERTY(QMargins margins READ margins WRITE setMargins)
     Q_ENUMS(ChartTheme)
     Q_ENUMS(AnimationOption)
 
@@ -114,8 +114,8 @@ public:
 
     QLegend* legend() const;
 
-    void setMinimumMargins(const QMargins& margins);
-    QMargins minimumMargins() const;
+    void setMargins(const QMargins& margins);
+    QMargins margins() const;
 
     QRectF plotArea() const;
 

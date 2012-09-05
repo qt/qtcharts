@@ -34,6 +34,7 @@
 #include "chartelement_p.h"
 #include "axisanimation_p.h"
 #include <QGraphicsItem>
+#include <QGraphicsLayoutItem>
 #include <QFont>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -41,9 +42,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QAbstractAxis;
 class ChartPresenter;
 
-class ChartAxis : public ChartElement
+class ChartAxis : public ChartElement, public QGraphicsLayoutItem
 {
     Q_OBJECT
+    Q_INTERFACES(QGraphicsLayoutItem)
 public:
     enum AxisType{ X_AXIS,Y_AXIS };
 
@@ -81,29 +83,38 @@ public:
     void setLabelsBrush(const QBrush &brush);
     void setLabelsFont(const QFont &font);
 
+    void setTitlePen(const QPen &pen);
+    void setTitleBrush(const QBrush &brush);
+    void setTitleFont(const QFont &font);
+    void setTitleText(const QString& title);
+
+
     void setLayout(QVector<qreal> &layout);
     QVector<qreal> layout() const { return m_layoutVector; }
 
     void setAnimation(AxisAnimation* animation);
     ChartAnimation* animation() const { return m_animation; };
 
+    Qt::Orientation orientation() const;
+
+    bool isVisible();
+    void hide();
+
+    void setGeometry(const QRectF &size);
     QRectF geometry() const { return m_rect; }
 
-    qreal minimumWidth();
-    qreal minimumHeight();
-
-    void hide();
+    virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint = QSizeF()) const;
 
 protected:
     virtual void updateGeometry() = 0;
     virtual QVector<qreal> calculateLayout() const = 0;
-    void createNumberLabels(QStringList &labels,qreal min, qreal max,int ticks) const;
-    void checkLayout();
+    QStringList createNumberLabels(qreal min, qreal max,int ticks) const;
+
 
 public Q_SLOTS:
     virtual void handleAxisUpdated();
     virtual void handleDomainUpdated();
-    void handleGeometryChanged(const QRectF &size);
+
 
 private:
     inline bool isEmpty();
@@ -114,19 +125,20 @@ private:
 
 protected:
     QAbstractAxis* m_chartAxis;
-    QRectF m_rect;
     int m_labelsAngle;
+    //TODO: to be removed
+    QRectF m_rect;
     QScopedPointer<QGraphicsItemGroup> m_grid;
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;
     QScopedPointer<QGraphicsItemGroup> m_arrow;
+    QGraphicsSimpleTextItem* m_title;
     QVector<qreal> m_layoutVector;
     qreal m_min;
     qreal m_max;
     AxisAnimation *m_animation;
-    qreal m_minWidth;
-    qreal m_minHeight;
     QFont m_font;
+    QString m_titleText;
 
     friend class AxisAnimation;
     friend class AxisItem;

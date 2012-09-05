@@ -27,6 +27,7 @@
 #include <QDateTime>
 #include <QValueAxis>
 #include <QGraphicsLayout>
+#include <QFontMetrics>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -37,11 +38,10 @@ ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : ChartEleme
     m_shades(new QGraphicsItemGroup(presenter->rootItem())),
     m_labels(new QGraphicsItemGroup(presenter->rootItem())),
     m_arrow(new QGraphicsItemGroup(presenter->rootItem())),
+    m_title(new QGraphicsSimpleTextItem(presenter->rootItem())),
     m_min(0),
     m_max(0),
-    m_animation(0),
-    m_minWidth(0),
-    m_minHeight(0)
+    m_animation(0)
 {
     //initial initialization
     m_arrow->setZValue(ChartPresenter::AxisZValue);
@@ -139,7 +139,6 @@ void ChartAxis::updateLayout(QVector<qreal> &layout)
     else {
         setLayout(layout);
         updateGeometry();
-        checkLayout();
     }
 }
 
@@ -231,7 +230,15 @@ void ChartAxis::setLabelsFont(const QFont &font)
     foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setFont(font);
     }
-    m_font = font;
+    if(m_font!=font) {
+        m_font = font;
+        foreach(QGraphicsItem* item , m_labels->childItems()) {
+            static_cast<QGraphicsSimpleTextItem*>(item)->setFont(font);
+        }
+        QGraphicsLayoutItem::updateGeometry();
+        presenter()->layout()->invalidate();
+
+    }
 }
 
 void ChartAxis::setShadesBrush(const QBrush &brush)
@@ -264,7 +271,7 @@ void ChartAxis::setGridPen(const QPen &pen)
 
 bool ChartAxis::isEmpty()
 {
-    return m_rect.isEmpty() || qFuzzyIsNull(m_min - m_max);
+    return !m_rect.isValid() || presenter()->chartsGeometry().isEmpty() || qFuzzyIsNull(m_min - m_max);
 }
 
 void ChartAxis::handleDomainUpdated()
@@ -289,8 +296,20 @@ void ChartAxis::handleDomainUpdated()
         m_max = max;
 
         if (!isEmpty()) {
+
             QVector<qreal> layout = calculateLayout();
             updateLayout(layout);
+            QSizeF before = effectiveSizeHint(Qt::MinimumSize);
+
+            QSizeF after= sizeHint(Qt::MinimumSize);
+
+            if(before!=after) {
+                QGraphicsLayoutItem::updateGeometry();
+                //we don't want to call invalidate on layout, since it will change minimum size of component,
+                //which we would like to avoid since it causes nasty flips when scrolling or zooming,
+                //instead recalculate layout and use plotArea for extra space.
+                presenter()->layout()->setGeometry(presenter()->layout()->geometry());
+            }
         }
     }
 }
@@ -314,7 +333,17 @@ void ChartAxis::handleAxisUpdated()
     setGridPen(m_chartAxis->gridLinePen());
     setShadesPen(m_chartAxis->shadesPen());
     setShadesBrush(m_chartAxis->shadesBrush());
+    setTitleText(m_chartAxis->title());
+}
 
+void ChartAxis::setTitleText(const QString& title)
+{
+    if(m_titleText!=title) {
+        m_titleText = title;
+        m_rect = QRect();
+        QGraphicsLayoutItem::updateGeometry();
+        presenter()->layout()->invalidate();
+    }
 }
 
 void ChartAxis::hide()
@@ -325,41 +354,63 @@ void ChartAxis::hide()
     setShadesVisibility(false);
 }
 
-void ChartAxis::handleGeometryChanged(const QRectF &rect)
+void ChartAxis::setGeometry(const QRectF &rect)
 {
-    if(m_rect != rect)
-    {
+
         m_rect = rect;
+
         if (isEmpty()) return;
+
+        if(!m_titleText.isNull()) {
+            QFontMetrics fn(m_title->font());
+
+            int size(0);
+
+            QRectF chartRect = presenter()->chartsGeometry();
+
+            if(orientation()==Qt::Horizontal)
+            size = chartRect.width();
+            else if(orientation()==Qt::Vertical)
+            size = chartRect.height();
+
+            if (fn.boundingRect(m_titleText).width() > size)
+            {
+                QString string = m_titleText + "...";
+                while (fn.boundingRect(string).width() > size && string.length() > 3)
+                string.remove(string.length() - 4, 1);
+                m_title->setText(string);
+            }
+            else
+            m_title->setText(m_titleText);
+
+            QPointF center = chartRect.center() - m_title->boundingRect().center();
+            if(orientation()==Qt::Horizontal) {
+                m_title->setPos(center.x(),m_rect.bottom()-m_title->boundingRect().height());
+            }
+            else if(orientation()==Qt::Vertical) {
+                m_title->setTransformOriginPoint(m_title->boundingRect().center());
+                m_title->setRotation(270);
+                m_title->setPos(m_rect.left()- m_title->boundingRect().width()/2+m_title->boundingRect().height()/2,center.y());
+            }
+        }
+
         QVector<qreal> layout = calculateLayout();
         updateLayout(layout);
-    }
+
 }
-
-
-qreal ChartAxis::minimumWidth()
-{
-    if(m_minWidth == 0) updateGeometry();
-    return m_minWidth;
-}
-
-qreal ChartAxis::minimumHeight()
-{
-    if(m_minHeight == 0) updateGeometry();
-    return m_minHeight;
-}
-
 
 void ChartAxis::axisSelected()
 {
-    qDebug()<<"TODO: axis clicked";
+    //TODO: axis clicked;
 }
 
 
-void ChartAxis::createNumberLabels(QStringList &labels,qreal min, qreal max, int ticks) const
+QStringList ChartAxis::createNumberLabels(qreal min, qreal max, int ticks) const
 {
     Q_ASSERT(max>min);
     Q_ASSERT(ticks>1);
+
+    QStringList labels;
 
     int n = qMax(int(-qFloor(log10((max-min)/(ticks-1)))),0);
     n++;
@@ -381,17 +432,54 @@ void ChartAxis::createNumberLabels(QStringList &labels,qreal min, qreal max, int
             labels << QString().sprintf(array, value);
         }
     }
+
+    return labels;
 }
 
-void ChartAxis::checkLayout()
+Qt::Orientation ChartAxis::orientation() const
 {
-    if(m_minWidth > m_rect.width()) {
-        presenter()->layout()->invalidate();
+    return m_chartAxis->orientation();
+}
+
+bool ChartAxis::isVisible()
+{
+    return m_chartAxis->isVisible();
+}
+
+QSizeF ChartAxis::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+{
+
+    Q_UNUSED(constraint);
+    QFontMetrics fn(m_title->font());
+    QSizeF sh;
+
+    if(m_titleText.isNull()) return sh;
+
+    switch(which) {
+        case Qt::MinimumSize:
+        if(orientation()==Qt::Horizontal) {
+            sh = QSizeF(fn.boundingRect ("...").width(),fn.height());
+        }
+        else if(orientation()==Qt::Vertical) {
+            sh = QSizeF(fn.height(),fn.boundingRect ("...").width());
+        }
+
+        break;
+        case Qt::MaximumSize:
+        case Qt::PreferredSize:
+        if(orientation()==Qt::Horizontal) {
+            sh = QSizeF(fn.boundingRect(m_chartAxis->title()).width(),fn.height());
+        }
+        else if(orientation()==Qt::Vertical) {
+            sh = QSizeF(fn.height(),fn.boundingRect(m_chartAxis->title()).width());
+        }
+
+        break;
+        default:
+        break;
     }
 
-    if(m_minHeight > m_rect.height()) {
-        presenter()->layout()->invalidate();
-    }
+    return sh;
 }
 
 #include "moc_chartaxis_p.cpp"

@@ -61,10 +61,10 @@ QVector<qreal> ChartDateTimeAxisX::calculateLayout() const
 
     QVector<qreal> points;
     points.resize(m_tickCount);
-
-    const qreal deltaX = m_rect.width()/(m_tickCount-1);
+    QRectF rect = presenter()->chartsGeometry();
+    const qreal deltaX = rect.width()/(m_tickCount-1);
     for (int i = 0; i < m_tickCount; ++i) {
-        int x = i * deltaX + m_rect.left();
+        int x = i * deltaX + rect.left();
         points[i] = x;
     }
     return points;
@@ -73,9 +73,6 @@ QVector<qreal> ChartDateTimeAxisX::calculateLayout() const
 void ChartDateTimeAxisX::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
-
-    m_minWidth = 0;
-    m_minHeight = 0;
 
     if(layout.isEmpty()) return;
 
@@ -91,19 +88,21 @@ void ChartDateTimeAxisX::updateGeometry()
     Q_ASSERT(labels.size() == ticksList.size());
     Q_ASSERT(layout.size() == ticksList.size());
 
+    QRectF chartRect = presenter()->chartsGeometry();
+
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
-    lineItem->setLine(m_rect.left(), m_rect.bottom(), m_rect.right(), m_rect.bottom());
+    lineItem->setLine(chartRect.left(), chartRect.bottom(), chartRect.right(), chartRect.bottom());
 
     qreal width = 0;
     for (int i = 0; i < layout.size(); ++i) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        lineItem->setLine(layout[i], m_rect.top(), layout[i], m_rect.bottom());
+        lineItem->setLine(layout[i], chartRect.top(), layout[i], chartRect.bottom());
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
             labelItem->setText(ticksList.at(i));
             const QRectF& rect = labelItem->boundingRect();
             QPointF center = rect.center();
             labelItem->setTransformOriginPoint(center.x(), center.y());
-            labelItem->setPos(layout[i] - center.x(), m_rect.bottom() + label_padding);
+            labelItem->setPos(layout[i] - center.x(), chartRect.bottom() + label_padding);
 
             if(labelItem->pos().x()<=width){
                 labelItem->setVisible(false);
@@ -113,15 +112,13 @@ void ChartDateTimeAxisX::updateGeometry()
                 lineItem->setVisible(true);
                 width=rect.width()+labelItem->pos().x();
             }
-            m_minWidth+=rect.width();
-            m_minHeight=qMax(rect.height(),m_minHeight);
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
-            rectItem->setRect(layout[i-1],m_rect.top(),layout[i]-layout[i-1],m_rect.height());
+            rectItem->setRect(layout[i-1],chartRect.top(),layout[i]-layout[i-1],chartRect.height());
         }
         lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setLine(layout[i],m_rect.bottom(),layout[i],m_rect.bottom()+5);
+        lineItem->setLine(layout[i],chartRect.bottom(),layout[i],chartRect.bottom()+5);
     }
 }
 
@@ -131,6 +128,43 @@ void ChartDateTimeAxisX::handleAxisUpdated()
     QDateTimeAxis* axis = qobject_cast<QDateTimeAxis*>(m_chartAxis);
     m_tickCount = axis->tickCount();
     ChartAxis::handleAxisUpdated();
+}
+
+QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+{
+    Q_UNUSED(constraint)
+
+    QFontMetrics fn(m_font);
+    QSizeF sh;
+
+      switch (which) {
+        case Qt::MinimumSize:
+            sh = QSizeF(fn.boundingRect("...").width(),fn.height());
+            break;
+        case Qt::PreferredSize:{
+
+            const QVector<qreal>& layout = ChartAxis::layout();
+            if(layout.isEmpty()) break;
+            QStringList ticksList;
+
+
+            qreal width=0;
+            qreal height=0;
+
+            for (int i = 0; i < ticksList.size(); ++i)
+            {
+                QRectF rect = fn.boundingRect(ticksList.at(i));
+                width+=rect.width();
+                height+=qMax(rect.height()+label_padding,height);
+            }
+            sh = QSizeF(width,height);
+            break;
+        }
+        default:
+          break;
+      }
+
+      return sh;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

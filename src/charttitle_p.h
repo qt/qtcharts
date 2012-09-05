@@ -27,39 +27,27 @@
 //
 // We mean it.
 
-#ifndef CHARTBACKGROUND_H
-#define CHARTBACKGROUND_H
+#ifndef CHARTTITLE_P_H_
+#define CHARTTITLE_P_H_
 
 #include "qchartglobal.h"
-#include <QGraphicsRectItem>
+#include <QGraphicsSimpleTextItem>
 
-class QGraphicsDropShadowEffect;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartBackground: public QGraphicsRectItem
+class ChartTitle : public QGraphicsSimpleTextItem
 {
 public:
-    ChartBackground(QGraphicsItem *parent =0);
-    ~ChartBackground();
-
-    void setDimeter(int dimater);
-    int diameter() const;
-    void setDropShadowEnabled(bool enabled);
-    bool isDropShadowEnabled() {return m_dropShadow != 0;}
-
-protected:
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
-
+    ChartTitle(QGraphicsItem* parent = 0);
+    ~ChartTitle();
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
+    void setText(const QString &text);
+    QString text() const;
+    void setGeometry(const QRectF &rect);
 private:
-    int roundness(qreal size) const;
-
-private:
-    int m_diameter;
-    QGraphicsDropShadowEffect *m_dropShadow;
+    QString m_text;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTBACKGROUND_H */
-
-
+#endif /* CHARTTITLE_P_H_ */

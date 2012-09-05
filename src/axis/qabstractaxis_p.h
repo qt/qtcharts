@@ -94,6 +94,12 @@ private:
     QFont m_labelsFont;
     int m_labelsAngle;
 
+    bool m_titleVisible;
+    QPen m_titlePen;
+    QBrush m_titleBrush;
+    QFont m_titleFont;
+    QString m_title;
+
     bool m_shadesVisible;
     QPen m_shadesPen;
     QBrush m_shadesBrush;

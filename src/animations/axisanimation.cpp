@@ -20,6 +20,7 @@
 
 #include "axisanimation_p.h"
 #include "chartaxis_p.h"
+#include "chartpresenter_p.h"
 #include <QTimer>
 #include <QDebug>
 
@@ -61,7 +62,7 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
 
       switch (m_type) {
       case ZoomOutAnimation: {
-          QRectF rect = m_axis->geometry();
+          QRectF rect = m_axis->presenter()->chartsGeometry();
           oldLayout.resize(newLayout.count());
 
           for(int i = 0, j = oldLayout.count() - 1; i < (oldLayout.count() + 1) / 2; ++i, --j) {
@@ -94,7 +95,7 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
           break;
       default: {
           oldLayout.resize(newLayout.count());
-          QRectF rect = m_axis->geometry();
+          QRectF rect = m_axis->presenter()->chartsGeometry();
           for(int i = 0, j = oldLayout.count() - 1; i < oldLayout.count(); ++i, --j)
               oldLayout[i] = m_axis->axisType() == ChartAxis::X_AXIS ? rect.left() : rect.top();
       }
@@ -131,7 +132,6 @@ void AxisAnimation::updateCurrentValue (const QVariant &value )
         Q_ASSERT(vector.count() != 0);
         m_axis->setLayout(vector);
         m_axis->updateGeometry();
-        m_axis->checkLayout();
     }
 
 }

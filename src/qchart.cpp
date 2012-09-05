@@ -373,18 +373,18 @@ QLegend* QChart::legend() const
 /*!
   Sets the minimum \a margins between the plot area (axes) and the edge of the chart widget.
 */
-void QChart::setMinimumMargins(const QMargins& margins)
+void QChart::setMargins(const QMargins& margins)
 {
-    d_ptr->m_presenter->setMinimumMargins(margins);
+    d_ptr->m_presenter->setMargins(margins);
 }
 
 /*!
     Returns the rect that contains information about margins (distance between chart widget edge and axes).
     Individual margins can be obtained by calling left, top, right, bottom on the returned rect.
  */
-QMargins QChart::minimumMargins() const
+QMargins QChart::margins() const
 {
-    return d_ptr->m_presenter->minimumMargins();
+    return d_ptr->m_presenter->margins();
 }
 
 /*!
@@ -393,7 +393,7 @@ QMargins QChart::minimumMargins() const
  */
 QRectF QChart::plotArea() const
 {
-    return d_ptr->m_presenter->geometry();
+    return d_ptr->m_presenter->chartsGeometry();
 }
 
 ///*!

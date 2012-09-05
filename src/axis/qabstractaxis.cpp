@@ -458,6 +458,90 @@ QColor QAbstractAxis::labelsColor() const
     return d_ptr->m_labelsBrush.color();
 }
 
+void QAbstractAxis::setTitleVisible(bool visible)
+{
+    if (d_ptr->m_titleVisible != visible) {
+        d_ptr->m_titleVisible = visible;
+        d_ptr->emitUpdated();
+	}
+}
+
+bool QAbstractAxis::titleVisible() const
+{
+    return d_ptr->m_titleVisible;
+}
+
+/*!
+  Sets \a pen used to draw title.
+*/
+void QAbstractAxis::setTitlePen(const QPen &pen)
+{
+    if (d_ptr->m_titlePen != pen) {
+        d_ptr->m_titlePen = pen;
+        d_ptr->emitUpdated();
+	}
+}
+
+/*!
+  Returns the pen used to title.
+*/
+QPen QAbstractAxis::titlePen() const
+{
+    return d_ptr->m_titlePen;
+}
+
+/*!
+  Sets \a brush used to draw title.
+ */
+void QAbstractAxis::setTitleBrush(const QBrush &brush)
+{
+    if (d_ptr->m_titleBrush != brush) {
+        d_ptr->m_titleBrush = brush;
+        d_ptr->emitUpdated();
+	}
+}
+
+/*!
+  Returns brush used to draw title.
+*/
+QBrush  QAbstractAxis::titleBrush() const
+{
+    return d_ptr->m_titleBrush;
+}
+
+/*!
+  Sets \a font used to draw title.
+*/
+void QAbstractAxis::setTitleFont(const QFont &font)
+{
+    if (d_ptr->m_titleFont != font) {
+        d_ptr->m_titleFont = font;
+        d_ptr->emitUpdated();
+	}
+}
+
+/*!
+  Returns font used to draw title.
+*/
+QFont QAbstractAxis::titleFont() const
+{
+    return d_ptr->m_titleFont;
+}
+
+void QAbstractAxis::setTitle(const QString& title)
+{
+	if (d_ptr->m_title != title) {
+		d_ptr->m_title = title;
+		d_ptr->emitUpdated();
+	}
+}
+
+QString QAbstractAxis::title() const
+{
+	return d_ptr->m_title;
+}
+
+
 void QAbstractAxis::setShadesVisible(bool visible)
 {
     if (d_ptr->m_shadesVisible != visible) {
