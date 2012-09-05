@@ -24,6 +24,15 @@
     make install
     \endcode
 
+    Building both debug and release at the same time:
+    \code
+    qmake CONFIG+="debug_and_release build_all"
+    make
+    make install
+    \endcode
+
+    Please take a note that the \i build_all option is necessary for the install to work correctly. Otherwise it will not install both versions.
+
     \bold {New project}
 
     Create a new project in a usual way and then add to your project's *.pro file following line:
