@@ -15,7 +15,7 @@ my %job = Jobs::get($inifile, $jobname);
 
 # set/get paths
 my $root_path = abs_path();
-my $bin_path = "$root_path/bin/";
+my $bin_path = "$root_path/bin/" . $job{'Config'} . "/";
 my $reports_path = "test-reports";
 
 # create reports path
