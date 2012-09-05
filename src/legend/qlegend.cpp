@@ -176,6 +176,7 @@ d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,chart,this))
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries*)));
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
     setLayout(d_ptr->m_layout);
+    setVisible(false);
 }
 
 /*!
@@ -192,6 +193,7 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
+
     if(!d_ptr->m_backgroundVisible) return;
 
     painter->setOpacity(opacity());
@@ -412,8 +414,10 @@ void QLegend::hideEvent(QHideEvent *event)
  */
 void QLegend::showEvent(QShowEvent *event)
 {
-   d_ptr->m_presenter->layout()->invalidate();
    QGraphicsWidget::showEvent(event);
+   d_ptr->m_presenter->layout()->invalidate();
+   d_ptr->items()->setVisible(false);
+   //layout activation will show the items
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
