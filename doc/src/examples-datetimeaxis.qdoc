@@ -1,0 +1,37 @@
+/*!
+     \example examples/datetimeaxis
+     \title DateTimeAxis Example
+     \subtitle
+
+     The example shows how to use QLineChart with QDateTimeAxis.
+
+    \image examples_datetimeaxis.png
+    
+    To create line chart, QLineSeries instance is needed. Let's create one. 
+
+    \snippet ../examples/datetimeaxis/main.cpp 1
+
+    On the charts we will present how the number of sun spots changes in time. The data (by Space Weather Prediction Center) is read from a text file.
+    In the snippet below notice how QDateTime::toMSecsSinceEpoch method is used to convert the QDateTime object into a number that can be passed to QLineSeries append method.
+
+    \snippet ../examples/datetimeaxis/main.cpp 2
+
+    To present the data on the char we need QChart instance. We add the series to it, hide the legend, create the default axes and set the title of the chart.
+
+    \snippet ../examples/datetimeaxis/main.cpp 3
+
+    Becasue we use QLineSeries calling createDefaultAxes will create QValueAxis both as X and Y axis. To use QDateTimeAxis we need to set it manually to the chart.
+    First the instance of QDateTimeAxis is created, then the number of ticks that are to be shown is set. The number of sun spots is provided as an average for the month therfore we don't need the axis labels to contain the information about the time and the day. This is achived by setting a custom label format.
+    Please refer to QDateTime::toString() method documntation to learn about the avaiable format options.
+
+    \snippet ../examples/datetimeaxis/main.cpp 4
+
+    Then we create a QChartView object with QChart as a parameter. This way we don't need to create QGraphicsView scene ourselves. We also set the Antialiasing on to have the rendered lines look nicer. 
+    
+    \snippet ../examples/datetimeaxis/main.cpp 5 
+
+    Chart is ready to be shown.
+
+    \snippet ../examples/datetimeaxis/main.cpp 6
+    
+*/
