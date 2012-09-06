@@ -95,7 +95,7 @@ void ChartLayout::setGeometry(const QRectF& rect)
         case Qt::AlignTop: {
 
         	QSizeF legendSize = legend->effectiveSizeHint(Qt::PreferredSize,QSizeF(rect.width(),-1));
-            int topMargin = 2*m_marginTiny + titleSize.height() + legendSize.height() + m_marginTiny;
+            int topMargin = qMax(2*m_marginTiny + titleSize.height() + legendSize.height() + m_marginTiny,qreal(chartMargins.top()));
             chartMargins = QMargins(chartMargins.left(),topMargin,chartMargins.right(),chartMargins.bottom());
             m_legendMargins = QMargins(chartMargins.left(),topMargin - (legendSize.height() + m_marginTiny),chartMargins.right(),rect.height()-topMargin + m_marginTiny);
             titlePadding = m_marginTiny + m_marginTiny;
@@ -103,7 +103,7 @@ void ChartLayout::setGeometry(const QRectF& rect)
         }
         case Qt::AlignBottom: {
         	QSizeF legendSize = legend->effectiveSizeHint(Qt::PreferredSize,QSizeF(rect.width(),-1));
-            int bottomMargin = m_marginTiny + legendSize.height() + m_marginTiny + axisHeight;
+            int bottomMargin =  qMax(m_marginTiny + legendSize.height() + m_marginTiny + axisHeight,qreal(chartMargins.bottom()));
             chartMargins = QMargins(chartMargins.left(),chartMargins.top(),chartMargins.right(),bottomMargin);
             m_legendMargins = QMargins(chartMargins.left(),rect.height()-bottomMargin + m_marginTiny + axisHeight,chartMargins.right(),m_marginTiny + m_marginSmall);
             titlePadding = chartMargins.top()/2;
@@ -111,7 +111,7 @@ void ChartLayout::setGeometry(const QRectF& rect)
         }
         case Qt::AlignLeft: {
         	QSizeF legendSize = legend->effectiveSizeHint(Qt::PreferredSize,QSizeF(-1,rect.height()));
-            int leftPadding = m_marginTiny + legendSize.width() + m_marginTiny + axisWidth;
+            int leftPadding = qMax(m_marginTiny + legendSize.width() + m_marginTiny + axisWidth,qreal(chartMargins.left()));
             chartMargins = QMargins(leftPadding,chartMargins.top(),chartMargins.right(),chartMargins.bottom());
             m_legendMargins = QMargins(m_marginTiny + m_marginSmall,chartMargins.top(),rect.width()-leftPadding + m_marginTiny + axisWidth,chartMargins.bottom());
             titlePadding = chartMargins.top()/2;
@@ -119,7 +119,7 @@ void ChartLayout::setGeometry(const QRectF& rect)
         }
         case Qt::AlignRight: {
         	QSizeF legendSize = legend->effectiveSizeHint(Qt::PreferredSize,QSizeF(-1,rect.height()));
-            int rightPadding = m_marginTiny + legendSize.width() + m_marginTiny;
+            int rightPadding = qMax(m_marginTiny + legendSize.width() + m_marginTiny,qreal(chartMargins.right()));
             chartMargins = QMargins(chartMargins.left(),chartMargins.top(),rightPadding,chartMargins.bottom());
             m_legendMargins = QMargins(rect.width()- rightPadding+ m_marginTiny ,chartMargins.top(),m_marginTiny + m_marginSmall,chartMargins.bottom());
             titlePadding = chartMargins.top()/2;
