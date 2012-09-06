@@ -72,6 +72,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \qmlclass DateTimeAxis QDateTimeAxis
     \brief The DateTimeAxis element is used for manipulating chart's axes
+    \inherits AbstractAxis
 
     The labels can be configured by setting an appropriate DateTime format.
     Note that any date before 4714 BCE or after about 1.4 million CE may not be accurately stored.
@@ -129,8 +130,28 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty int ValuesAxis::tickCount
+  \qmlproperty int DateTimeAxis::tickCount
   The number of tick marks for the axis.
+*/
+
+/*!
+  \property QDateTimeAxis::format
+  The format string that is used when creating label for the axis out of a QDateTime object.
+  Check QDateTime documentation for information on how the string should be defined.
+*/
+/*!
+  \qmlproperty string DateTimeAxis::format
+  The format string that is used when creating label for the axis out of a QDateTime object.
+  Check QDateTime documentation for information on how the string should be defined.
+*/
+
+/*!
+  \fn void QDateTimeAxis::formatChanged(QString format)
+  Axis emits signal when \a format of the axis has changed.
+*/
+/*!
+  \qmlsignal DateTimeAxis::onFormatChanged(string format)
+  Axis emits signal when \a format of the axis has changed.
 */
 
 /*!
@@ -213,22 +234,15 @@ void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
     }
 }
 
-/*!
-  Sets \a format string that is used when creating label for the axis out of the QDateTime object.
-  Check QDateTime documentation for information on how the string should be defined.
-  \sa format()
-*/
 void QDateTimeAxis::setFormat(QString format)
 {
     Q_D(QDateTimeAxis);
-    d->m_format = format;
+    if (d->m_format != format) {
+        d->m_format = format;
+        emit formatChanged(format);
+    }
 }
 
-/*!
-  Returns the format string that is used when creating label for the axis out of the QDateTime object.
-  Check QDateTime documentation for information on how the string should be defined.
-  \sa setFormat()
-*/
 QString QDateTimeAxis::format() const
 {
     Q_D(const QDateTimeAxis);
