@@ -55,14 +55,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief CategoryAxis allows putting a named ranges on the axis.
 
     For example:
-    \code
-        CategoryAxis {
-            startValue: 0.0
-            CategoryRange { endValue: 1.0; label: "min (0-1)" }
-            CategoryRange { endValue: 3.0; label: "standard (1-3)" }
-            CategoryRange { endValue: 4.0; label: "high (3-4)" }
-        }
-    \endcode
+    \table
+        \row
+            \o  \br
+                \br
+                \br
+                \snippet ../demos/qmlaxes/qml/qmlaxes/View3.qml 1
+            \o \inlineimage demos_qmlaxes3.png
+    \endtable
 */
 
 /*!
