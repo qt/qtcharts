@@ -585,5 +585,7 @@ QAction* Window::createMenuAction(QMenu *menu, const QIcon &icon, const QString 
 
 void Window::handleGeometryChanged()
 {
+   QSizeF size = m_baseLayout->sizeHint(Qt::MinimumSize);
    m_view->scene()->setSceneRect(0, 0, this->width(), this->height());
+   m_view->setMinimumSize(size.toSize());
 }
