@@ -32,6 +32,7 @@
                     <li><a href="qml-categoryaxis.html">CategoryAxis</a></li>
                     <li><a href="qml-categoryrange.html">CategoryRange</a></li>
                     <li><a href="qml-barcategoryaxis.html">BarCategoryAxis</a></li>
+                    <li><a href="qml-datetimeaxis.html">DateTimeAxis</a></li>
                     <li><a href="qml-legend.html">Legend</a></li>
                     <li><a href="qml-abstractseries.html">AbstractSeries</a></li>
                     </ul>

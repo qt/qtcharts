@@ -34,6 +34,7 @@ Rectangle {
             min: 2000
             max: 2011
             tickCount: 12
+            labelFormat: "%.0f"
         }
 
         AreaSeries {
