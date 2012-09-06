@@ -10,7 +10,7 @@
 
      \snippet ../examples/donutbreakdown/main.cpp 1
 
-     Then we create a chart where we add the data. Note that this this is our own chart derived from QChart.
+     Then we create a chart where we add the data. Note that this is our own chart derived from QChart.
 
      \snippet ../examples/donutbreakdown/main.cpp 2
 

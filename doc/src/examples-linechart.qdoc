@@ -11,7 +11,7 @@
 
     \snippet ../examples/linechart/main.cpp 1
 
-    Then we add data to series. We can use add() member function or use stream operator.  
+    Then we add data to series. We can use append() member function or use stream operator.  
 
     \snippet ../examples/linechart/main.cpp 2
 

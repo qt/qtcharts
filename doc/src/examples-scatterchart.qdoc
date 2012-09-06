@@ -11,7 +11,7 @@
 
     \snippet ../examples/scatterchart/chartview.cpp 1
 
-    We add data to be shown. We can use add() member function or use stream operator.  
+    We add data to be shown. We can use append() member function or use stream operator.  
 
     \snippet ../examples/scatterchart/chartview.cpp 2
 
