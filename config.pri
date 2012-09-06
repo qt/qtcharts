@@ -12,6 +12,9 @@ LIBS += -l$$LIBRARY_NAME
 # They should not be used for staticlib builds.
 staticlib:DEFINES+=QTCOMMERCIALCHART_STATICLIB
 
+#################### COVERAGE #################################################################
+coverage: CONFIG += debug
+
 ##################### SHADOW CONFIG #################################################
 
 !contains($${PWD}, $${OUT_PWD}){
@@ -106,9 +109,6 @@ development_build: {
     CONFIG+=debug_and_release
     CONFIG+=build_all
 }
-
-#################### COVERAGE #################################################################
-coverage: CONFIG += debug
 
 ##################### UNIT TESTS ##############################################################
 
