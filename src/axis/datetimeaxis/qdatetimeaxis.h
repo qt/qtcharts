@@ -35,6 +35,7 @@ class QTCOMMERCIALCHART_EXPORT QDateTimeAxis : public QAbstractAxis
     Q_PROPERTY(int tickCount READ tickCount WRITE setTickCount)
     Q_PROPERTY(QDateTime min READ min WRITE setMin NOTIFY minChanged)
     Q_PROPERTY(QDateTime max READ max WRITE setMax NOTIFY maxChanged)
+    Q_PROPERTY(QString format READ format WRITE setFormat NOTIFY formatChanged)
 
 public:
     explicit QDateTimeAxis(QObject *parent = 0);
@@ -64,6 +65,7 @@ Q_SIGNALS:
     void minChanged(QDateTime min);
     void maxChanged(QDateTime max);
     void rangeChanged(QDateTime min, QDateTime max);
+    void formatChanged(QString format);
 
 private:
     Q_DECLARE_PRIVATE(QDateTimeAxis)
