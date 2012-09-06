@@ -24,7 +24,8 @@ SUBDIRS += \
            qcategoryaxis \
            qbarcategoryaxis \
            domain \
-           chartdataset
+           chartdataset \
+           qml
 
 !linux-arm*: {
 SUBDIRS += \
