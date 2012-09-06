@@ -81,10 +81,12 @@ void tst_QML::cleanup()
 void tst_QML::checkPlugin_data()
 {
     QTest::addColumn<QString>("source");
+
     QTest::newRow("createChartView") <<  imports() + "ChartView{}";
+    QTest::newRow("XYPoint") << imports() + "XYPoint{}";
+    QTest::newRow("scatterSeries") <<  imports() + "ScatterSeries{}";
     QTest::newRow("lineSeries") <<  imports() + "LineSeries{}";
     QTest::newRow("splineSeries") <<  imports() + "SplineSeries{}";
-    QTest::newRow("scatterSeries") <<  imports() + "ScatterSeries{}";
     QTest::newRow("areaSeries") <<  imports() + "AreaSeries{}";
     QTest::newRow("barSeries") << imports() + "BarSeries{}";
     QTest::newRow("stackedBarSeries") << imports() + "StackedBarSeries{}";
@@ -93,8 +95,22 @@ void tst_QML::checkPlugin_data()
     QTest::newRow("horizonatlStackedBarSeries") << imports() + "HorizontalStackedBarSeries{}";
     QTest::newRow("horizonatlstackedBarSeries") << imports() + "HorizontalPercentBarSeries{}";
     QTest::newRow("pieSeries") << imports() + "PieSeries{}";
+    QTest::newRow("PieSlice") << imports() + "PieSlice{}";
+    QTest::newRow("BarSet") << imports() + "BarSet{}";
+    QTest::newRow("HXYModelMapper") << imports() + "HXYModelMapper{}";
+    QTest::newRow("VXYModelMapper") << imports() + "VXYModelMapper{}";
+    QTest::newRow("HPieModelMapper") << imports() + "HPieModelMapper{}";
+    QTest::newRow("HPieModelMapper") << imports() + "HPieModelMapper{}";
+    QTest::newRow("HBarModelMapper") << imports() + "HBarModelMapper{}";
+    QTest::newRow("VBarModelMapper") << imports() + "VBarModelMapper{}";
+    QTest::newRow("ValueAxis") << imports() + "ValueAxis{}";
+#ifndef QT_ON_ARM
+    QTest::newRow("DateTimeAxis") << imports() + "DateTimeAxis{}";
+#endif
+    QTest::newRow("CategoryAxis") << imports() + "CategoryAxis{}";
+    QTest::newRow("CategoryRange") << imports() + "CategoryRange{}";
+    QTest::newRow("BarCategoryAxis") << imports() + "BarCategoryAxis{}";
 }
-
 
 void tst_QML::checkPlugin()
 {
