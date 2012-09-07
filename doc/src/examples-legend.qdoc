@@ -8,7 +8,11 @@
 	In example we use barseries where we add or remove barsets. The legend reflects the changes in series. Legend can be detached or attached back to chart and its alignment can be modified.
 	When legend is detached, it can be resized and positioned freely.
 
-    \image examples_legend_detach.png
+    \table
+        \row
+            \o \inlineimage examples_legend_detach.png
+            \o \inlineimage examples_legend_detach2.png
+    \endtable
 
 	Here we turn legend visible and set its alignment to the bottom of the chart.
 	

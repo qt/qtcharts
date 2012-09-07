@@ -36,12 +36,9 @@ MainWidget::MainWidget(QWidget *parent) :
 {
     // Create buttons for ui
     m_buttonLayout = new QGridLayout();
-    QPushButton *detachLegendButton = new QPushButton("detach legend");
-    connect(detachLegendButton, SIGNAL(clicked()), this, SLOT(detachLegend()));
+    QPushButton *detachLegendButton = new QPushButton("Toggle attached");
+    connect(detachLegendButton, SIGNAL(clicked()), this, SLOT(toggleAttached()));
     m_buttonLayout->addWidget(detachLegendButton, 0, 0);
-    QPushButton *attachLegendButton = new QPushButton("attach legend");
-    connect(attachLegendButton, SIGNAL(clicked()), this, SLOT(attachLegend()));
-    m_buttonLayout->addWidget(attachLegendButton, 1, 0);
 
     QPushButton *addSetButton = new QPushButton("add barset");
     connect(addSetButton, SIGNAL(clicked()), this, SLOT(addBarset()));
@@ -50,21 +47,9 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(removeBarsetButton, SIGNAL(clicked()), this, SLOT(removeBarset()));
     m_buttonLayout->addWidget(removeBarsetButton, 3, 0);
 
-    QPushButton *leftButton = new QPushButton("Align legend left");
-    connect(leftButton, SIGNAL(clicked()), this, SLOT(setLegendLeft()));
-    m_buttonLayout->addWidget(leftButton, 4, 0);
-
-    QPushButton *rightButton = new QPushButton("Align legend right");
-    connect(rightButton, SIGNAL(clicked()), this, SLOT(setLegendRight()));
-    m_buttonLayout->addWidget(rightButton, 5, 0);
-
-    QPushButton *topButton = new QPushButton("Align legend top");
-    connect(topButton, SIGNAL(clicked()), this, SLOT(setLegendTop()));
-    m_buttonLayout->addWidget(topButton, 6, 0);
-
-    QPushButton *bottomButton = new QPushButton("Align legend bottom");
-    connect(bottomButton, SIGNAL(clicked()), this, SLOT(setLegendBottom()));
-    m_buttonLayout->addWidget(bottomButton, 7, 0);
+    QPushButton *alignButton = new QPushButton("Align (Bottom)");
+    connect(alignButton, SIGNAL(clicked()), this, SLOT(setLegendAlignment()));
+    m_buttonLayout->addWidget(alignButton, 4, 0);
 
     QPushButton *boldButton = new QPushButton("Toggle bold");
     connect(boldButton, SIGNAL(clicked()), this, SLOT(toggleBold()));
@@ -85,8 +70,8 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(m_legendHeight, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
 
     QFormLayout* legendLayout = new QFormLayout();
-    legendLayout->addRow("Horizontal position", m_legendPosX);
-    legendLayout->addRow("Vertical position", m_legendPosY);
+    legendLayout->addRow("HPos", m_legendPosX);
+    legendLayout->addRow("VPos", m_legendPosY);
     legendLayout->addRow("Width", m_legendWidth);
     legendLayout->addRow("Height", m_legendHeight);
     m_legendSettings = new QGroupBox("Detached legend");
@@ -163,32 +148,25 @@ void MainWidget::hideLegendSpinbox()
 }
 
 
-void MainWidget::detachLegend()
+void MainWidget::toggleAttached()
 {
-//![2]
     QLegend *legend = m_chart->legend();
-    legend->detachFromChart();
-
-    m_chart->legend()->setBackgroundVisible(true);
-    m_chart->legend()->setBrush(QBrush(QColor(128,128,128,128)));
-    m_chart->legend()->setPen(QPen(QColor(192,192,192,192)));
-//![2]
-
-    showLegendSpinbox();
-    updateLegendLayout();
-    update();
-}
-
-
-void MainWidget::attachLegend()
-{
-//![3]
-    QLegend *legend = m_chart->legend();
-    legend->attachToChart();
-    m_chart->legend()->setBackgroundVisible(false);
-//![3]
-
-    hideLegendSpinbox();
+    if (legend->isAttachedToChart()) {
+        //![2]
+        legend->detachFromChart();
+        m_chart->legend()->setBackgroundVisible(true);
+        m_chart->legend()->setBrush(QBrush(QColor(128,128,128,128)));
+        m_chart->legend()->setPen(QPen(QColor(192,192,192,192)));
+        //![2]
+        showLegendSpinbox();
+        updateLegendLayout();
+    } else {
+        //![3]
+        legend->attachToChart();
+        legend->setBackgroundVisible(false);
+        //![3]
+        hideLegendSpinbox();
+    }
     update();
 }
 
@@ -208,24 +186,32 @@ void MainWidget::removeBarset()
     }
 }
 
-void MainWidget::setLegendLeft()
+void MainWidget::setLegendAlignment()
 {
-    m_chart->legend()->setAlignment(Qt::AlignLeft);
-}
+    QPushButton *button = qobject_cast<QPushButton *>(sender());
 
-void MainWidget::setLegendRight()
-{
-    m_chart->legend()->setAlignment(Qt::AlignRight);
-}
-
-void MainWidget::setLegendTop()
-{
-    m_chart->legend()->setAlignment(Qt::AlignTop);
-}
-
-void MainWidget::setLegendBottom()
-{
-    m_chart->legend()->setAlignment(Qt::AlignBottom);
+    switch (m_chart->legend()->alignment()) {
+    case Qt::AlignTop:
+        m_chart->legend()->setAlignment(Qt::AlignLeft);
+        if (button)
+            button->setText("Align (Left)");
+        break;
+    case Qt::AlignLeft:
+        m_chart->legend()->setAlignment(Qt::AlignBottom);
+        if (button)
+            button->setText("Align (Bottom)");
+        break;
+    case Qt::AlignBottom:
+        m_chart->legend()->setAlignment(Qt::AlignRight);
+        if (button)
+            button->setText("Align (Right)");
+        break;
+    default:
+        if (button)
+            button->setText("Align (Top)");
+        m_chart->legend()->setAlignment(Qt::AlignTop);
+        break;
+    }
 }
 
 void MainWidget::toggleBold()
