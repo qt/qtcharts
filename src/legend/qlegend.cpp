@@ -368,7 +368,7 @@ void QLegend::detachFromChart()
 void QLegend::attachToChart()
 {
     d_ptr->m_attachedToChart = true;
-    d_ptr->m_layout->invalidate();
+    d_ptr->m_presenter->layout()->invalidate();
     setParent(d_ptr->m_chart);
 }
 

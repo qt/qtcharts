@@ -46,15 +46,11 @@ public:
 signals:
     
 public slots:
-    void detachLegend();
-    void attachLegend();
+    void toggleAttached();
     void addBarset();
     void removeBarset();
 
-    void setLegendLeft();
-    void setLegendRight();
-    void setLegendTop();
-    void setLegendBottom();
+    void setLegendAlignment();
 
     void toggleBold();
     void toggleItalic();
