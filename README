@@ -77,7 +77,7 @@ Main Changes between 1.0.0 and 1.1.0
 - It is now possible to take PieSlices/BarSets back from the series without deleting
 - Build issues with Embedded Linux on ARM fixed
 - Several new examples and demos
-- QML Axis APIs improved
+- QML Axis APIs and series handling in ChartView API improved
 - Improved QML API: new borders/lines related properties for series
 - ChartView margins are now configured via minimumMargins property
 - QML API version number changed to 1.1
@@ -91,6 +91,13 @@ Bug Fixes
 - Fixed configuration issues with debug_and_release and build_all flags
 - Fixed setting color for a BarSet label
 - Fixed bar series autoscaling with negative values
+- Fixed build issue on OSX caused by an extra space in a LIBS definition
+- Switched the z-order of series to be on top of axis
+- The pen of legend marker now matches the color of legend label
+- Fixed initializing the color of a PieSlice and border color of a ScatterSeris in QML
+- Antialias is now disabled in declarative plugin by default
+- Fixed QML PieModelMappers defined outside the series scope
+- Fixed an issue with QLegend attach requiring a resize
 
 Known Issues
 ============
@@ -102,3 +109,6 @@ Known Issues
 - Setting minimum margins breaks down the layout in some cases
 - DateTimeAxis is not supported on ARM because of floating point precision
   issues (qreals are floats)
+- Declarative plugin is available from Qt 4.7.4 onwards because of missing
+  Q_REVISION macro in the earlier Qt releases
+- Fixed BarSet.remove in QML API
