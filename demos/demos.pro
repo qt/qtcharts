@@ -17,8 +17,7 @@ SUBDIRS += piechartcustomization \
 
 contains(QT_CONFIG, opengl) {
         SUBDIRS +=  chartthemes \
-                    qmloscilloscope \
-                    chartviewer
+                    qmloscilloscope
 } else {
     message("OpenGL not available. Some demos are disabled")
 }

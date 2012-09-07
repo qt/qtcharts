@@ -22,7 +22,7 @@
 
     Becasue we use QLineSeries calling createDefaultAxes will create QValueAxis both as X and Y axis. To use QDateTimeAxis we need to set it manually to the chart.
     First the instance of QDateTimeAxis is created, then the number of ticks that are to be shown is set. The number of sun spots is provided as an average for the month therfore we don't need the axis labels to contain the information about the time and the day. This is achived by setting a custom label format.
-    Please refer to QDateTime::toString() method documntation to learn about the avaiable format options.
+    Please refer to QDateTime::toString() method documentation to learn about the avaiable format options.
 
     \snippet ../examples/datetimeaxis/main.cpp 4
 
