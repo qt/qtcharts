@@ -36,7 +36,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     There are also other limitiation related to QDateTime . Please refer to QDateTime documentation.
     QDateTimeAxis can be setup to show axis line with tick marks, grid lines and shades.
 
-    NOTE: QDateTimeAxis is disabled on ARM platform at the present time.
+    NOTE: QDateTimeAxis is disabled on ARM architecture.
 
     \image api_datatime_axis.png
 
