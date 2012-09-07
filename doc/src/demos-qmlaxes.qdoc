@@ -14,9 +14,6 @@
                 \br
                 \snippet ../demos/qmlaxes/qml/qmlaxes/View1.qml 1
             \o \inlineimage demos_qmlaxes1.png
-    \endtable
-
-    \table
         \row
             \o  \br
                 The next example shows a chart with some accurate historical data that makes us to use a DateTimeAxis.
@@ -24,9 +21,6 @@
                 \br
                 \snippet ../demos/qmlaxes/qml/qmlaxes/View2.qml 1
             \o \inlineimage demos_qmlaxes2.png
-    \endtable
-
-    \table
         \row
             \o  \br
                 And the final example with a chart that uses a CategoryAxis to make the data easier to understand.
