@@ -26,14 +26,14 @@
 class CategoryLineChart: public Chart
 {
 public:
-    QString name() { return QObject::tr("CategoryLineChart"); }
-    QString category()  { return QObject::tr("XYSeries"); }
+    QString name() { return QObject::tr("CategoryAxis"); }
+    QString category()  { return QObject::tr("Axis"); }
     QString subCategory() { return QString::null; }
 
     QChart* createChart(const DataTable& table) {
 
            QChart* chart = new QChart();
-           chart->setTitle("Category Line chart");
+           chart->setTitle("Category X , Category Y ");
 
            QString name("Series ");
            int nameIndex = 0;
@@ -46,7 +46,6 @@ public:
                chart->addSeries(series);
            }
 
-//           chart->createDefaultAxes();
            QCategoryAxis *axisX = new QCategoryAxis;
            axisX->append("low", 5);
            axisX->append("avg.", 12);

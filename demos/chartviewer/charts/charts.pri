@@ -6,7 +6,6 @@ SOURCES += \
     xyseries/scatterchart.cpp \
     xyseries/splinechart.cpp \
     xyseries/areachart.cpp \
-    xyseries/categorylinechart.cpp \
     barseries/verticalstackedbarchart.cpp \
     barseries/horizontalstackedbarchart.cpp \
     barseries/verticalbarchart.cpp \
@@ -14,4 +13,6 @@ SOURCES += \
     barseries/horizontalpercentbarchart.cpp \
     barseries/verticalpercentbarchart.cpp \
     pieseries/piechart.cpp \
-    pieseries/donutchart.cpp 
+    pieseries/donutchart.cpp \
+    axis/valueaxis.cpp \
+    axis/categoryaxis.cpp 
