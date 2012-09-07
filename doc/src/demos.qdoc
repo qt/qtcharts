@@ -4,29 +4,63 @@
     \keyword Demos
     
     \raw HTML
-        <table cellpadding="2" cellspacing="1" border="0" width="100%" class="indextable">
+    <div class="demos">
+    <table>
         <tr>
-        <th class="titleheader" width="33%">
-        List of demos
-        </th>
+
+            <td align="center"><a href="demos-chartthemes.html">Chart Themes</a></td>
+            <td align="center"><a href="demos-dynamicspline.html">Dynamic Spline Chart</a></td>
         </tr>
         <tr>
-        <td valign="top">
-        <ul>
-            <li><a href="demos-chartthemes.html">Chart themes</a></li>
-            <li><a href="demos-dynamicspline.html">Dynamic spline chart</a></li>
-            <li><a href="demos-nesteddonuts.html">Nested donuts chart</a></li>
-            <li><a href="demos-piechartcustomization.html">Pie chart customization</a></li>
-            <li><a href="demos-qmlchart.html">Qml Basic Charts</a></li>
-            <li><a href="demos-qmlaxes.html">Qml Axes</a></li>
-            <li><a href="demos-qmlcustomizations.html">Qml Customizations</a></li>
-            <li><a href="demos-qmlcustommodel.html">Qml Custom Model</a></li>
-            <li><a href="demos-qmlf1legends.html">Qml F1 Legends</a></li>
-            <li><a href="demos-qmloscilloscope.html">Qml Oscilloscope</a></li>
-            <li><a href="demos-qmlweather.html">Qml Weather</a></li>
-        </ul>
-        </td>
+            <td><a href="demos-chartthemes.html"><img src="images/demo_chartthemes_blue_cerulean.png" width="300" alt="Chart Themes" /></a></td>
+            <td><a href="demos-dynamicspline.html"><img src="images/demos_dynamicspline2.png" width="300" alt="Dynamic Spline" /></a></td>
         </tr>
-        </table>
+
+        <tr>
+            <td align="center"><a href="demos-nesteddonuts.html">Nested Donuts Chart</a></td>
+            <td align="center"><a href="demos-piechartcustomization.html">Pie Chart Customization</a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-nesteddonuts.html"><img src="images/demos_nesteddonuts.png" width="300" alt="Nested Donuts Chart" /></a></td>
+            <td><a href="demos-piechartcustomization.html"><img src="images/piechart_customization.png" width="300" alt="Pie Chart Customization" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center"><a href="demos-qmlchart.html">Qml Basic Charts</a></td>
+            <td align="center"><a href="demos-qmlaxes.html">Qml Axes</a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-qmlchart.html"><img src="images/demos_qmlchart1.png" width="300" alt="Qml Basic Charts" /></a></td>
+            <td><a href="demos-qmlaxes.html"><img src="images/demos_qmlaxes1.png" width="300" alt="Qml Axes" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center"><a href="demos-qmlcustomizations.html">Qml Customizations</a></td>
+            <td align="center"><a href="demos-qmlcustommodel.html">Qml Custom Model</a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-qmlcustomizations.html"><img src="images/demos_qmlcustomizations.png" width="300" alt="Qml Customizations" /></a></td>
+            <td><a href="demos-qmlcustommodel.html"><img src="images/demos_qmlcustommodel.png" width="300" alt="Qml Custom Model" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center"><a href="demos-qmlf1legends.html">Qml F1 Legends</a></td>
+            <td align="center"><a href="demos-qmloscilloscope.html">Qml Oscilloscope</a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-qmlf1legends.html"><img src="images/demos_qmlf1legends.png" width="300" alt="Qml F1 Legends" /></a></td>
+            <td><a href="demos-qmloscilloscope.html"><img src="images/demos_qmloscilloscope.png" width="300" alt="Qml Oscilloscope" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center"><a href="demos-qmlweather.html">Qml Weather</a></td>
+        </tr>
+        <tr>
+            <td><a href="demos-qmlweather.html"><img src="images/demos_qmlweather.png" width="300" alt="Qml Weather" /></a></td>
+        </tr>
+
+    </table>
+    </div>
     \endraw
+
 */
