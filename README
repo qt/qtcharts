@@ -1,5 +1,5 @@
 --------------------------------
-Commercial Charts Add-on 1.0.0
+Commercial Charts Add-on 1.1.0
 --------------------------------
 
 What's in Qt Commercial Charts
@@ -19,10 +19,13 @@ demos/
 doc/
     Documentation
 licenses/
-    Licensing infromation
+    Licensing information
 
 Building
 ========
+Please note that if you have already installed a previous version of
+QtCommercial Charts, you should first uninstall it with
+    make uninstall
 
 Configure project with qmake and build project with make:
     (Linux) make 
@@ -31,7 +34,7 @@ Configure project with qmake and build project with make:
     (OSX) make
 
 For debug builds:
-    qmake CONFIG+=debug ; make
+    qmake CONFIG+=debug; make
     or 
     qmake CONFIG+=debug_and_release; make debug
     
@@ -41,8 +44,7 @@ For release builds:
     qmake CONFIG+=debug_and_release; make release
     
 For both builds
-    qmake CONFIG+=debug_and_release; make all    
-
+    qmake CONFIG+="debug_and_release build_all"; make
 
 If you want to install the libraries to your Qt library directory use:
     make install
@@ -58,30 +60,45 @@ The same as above applies you will just have to add staticlib to the CONFIG:
 
 Documentation
 =============
-Documentation can be found from doc/html directory.
+Documentation can be found from doc/html directory. The documentation
+can also be generated with:
+    make docs
 
-The documentation can also be generated with "make docs".
-
-KNOWN ISSUES
-============
-* Logartmic, polar axis are not supported at the moment.
-* Automatic scaling of the axes is only done when you add a series on a chart
-* API for Animations state (signaling started, finished) and setting duration
-  etc. is missing
-* Layout in QBarCategoriesAxis can cause categories to overlap
-* Only one Y and X axis can be visible at the same time
-* Unit label for axes is not implemented
-* In some cases (e.g. long texts) can cause some issues with layout
-* When setting new QBarCategoriesAxis to existing chart, axis doesn't initialise properly
-
-Main Changes between Beta and Final
+Main Changes between 1.0.0 and 1.1.0
 ===================================
-* QML examples and documentation has been added
-* Axis implementation has been refactored in order to support more flexible axis schemes in future. 
-* Setting Multiple axes is now possible and you can select which one is visible.
-* In future it's possible to display several axes at the same time.
-* QBarCategoriesAxis and QValuesAxis classes have been added.
-* QBarSeries change to QGroupedBarSeries introduced in Beta has been reverted.
-* "Getting Started" documentation has been added.
-* Chart layout management has been refactored.
+- Versions 1.0.0 and 1.1.0 are not binary or source compatible. We are sorry about this.
+- Horizontal bar series has been added
+- New axis types: DateTimeAxis and CategoryAxis
+- PieSeries now supports drawing as a donut
+- ValuesAxis renamed to ValueAxis
+- BarCategoriesAxis renamed to BarCategoryAxis
+- Drawing performance of LineSeries has been improved
+- New data replacament method with better performance implemented in XYSeries
+- It is now possible to take PieSlices/BarSets back from the series without deleting
+- Build issues with Embedded Linux on ARM fixed
+- Several new examples and demos
+- QML Axis APIs improved
+- Improved QML API: new borders/lines related properties for series
+- ChartView margins are now configured via minimumMargins property
+- QML API version number changed to 1.1
+- You can now set a custom format for ValueAxis labels
+- ValueAxis label layout improved
 
+Bug Fixes
+==========
+- Fixed: When a spline series is cleared then the first points still end up being drawn
+- Fixed nice numbers algorithm issue with zoom
+- Fixed configuration issues with debug_and_release and build_all flags
+- Fixed setting color for a BarSet label
+- Fixed bar series autoscaling with negative values
+
+Known Issues
+============
+- Automatic scaling of the axes is only done when you add a series on a chart
+- If adding several axes, automatic scaling is done based on the last axis added
+- Only one Y and X axis can be visible at the same time
+- Unit label for axes is not implemented
+- Switching off OpenGL (after using a QGLWidget as a viewport) causes a crash in OSX
+- Setting minimum margins breaks down the layout in some cases
+- DateTimeAxis is not supported on ARM because of floating point precision
+  issues (qreals are floats)
