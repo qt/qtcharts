@@ -47,8 +47,8 @@
             <td align="center">Horizontal Stacked Bar Chart</td>
         </tr>
         <tr>
-            <td><a href="examples-horizontalpercentbarchart.html"><img src="images/examples_percentbarchart.png" width="300" alt="Horizontal Percent Bar Chart" /></a></td>
-            <td><a href="examples-horizontalstackedbarchart.html"><img src="images/examples_stackedbarchart.png" width="300" alt="Horizontal Stacked Bar Chart" /></a></td>
+            <td><a href="examples-horizontalpercentbarchart.html"><img src="images/examples_horizontalpercentbarchart.png" width="300" alt="Horizontal Percent Bar Chart" /></a></td>
+            <td><a href="examples-horizontalstackedbarchart.html"><img src="images/examples_horizontalstackedbarchart.png" width="300" alt="Horizontal Stacked Bar Chart" /></a></td>
         </tr>
 
         <tr>
