@@ -24,21 +24,26 @@ mkdir $reports_path;
 # setup environment for running tests
 given ($job{'Platform'}) {
 	
-	when ("Win7") {
-		# Add qtdir to path
-		$ENV{'PATH'} .= ";" . $job{'QtDir'} . "\\bin";
-		
-		# replace / -> \
-		$ENV{'PATH'} =~ s/\//\\/g;
-	}
+    when ("Win7") {
+        # Add qtdir to path
+        $ENV{'PATH'} .= ";" . $job{'QtDir'} . "\\bin";
 
-	when ("Linux") {
-		# Add qtdir to path
-		$ENV{'PATH'} = $job{'QtDir'} . "/bin:" . $ENV{'PATH'};
-		
-		# If this is not set we get "cannot connect to X server" errors
-		$ENV{'DISPLAY'} = ":0.0";
-	}
+        # replace / -> \
+        $ENV{'PATH'} =~ s/\//\\/g;
+    }
+
+    when ("Linux") {
+        # Add qtdir to path
+        $ENV{'PATH'} = $job{'QtDir'} . "/bin:" . $ENV{'PATH'};
+
+        # If this is not set we get "cannot connect to X server" errors
+        $ENV{'DISPLAY'} = ":0.0";
+    }
+
+    when ("Mac") {
+        # Set QML_IMPORT_PATH point to QML plugin dir
+        $ENV{'QML_IMPORT_PATH'} = $bin_path;
+    }
 }	
 
 # Go through all the files in the test folder
