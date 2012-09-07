@@ -83,6 +83,7 @@ Main Changes between 1.0.0 and 1.1.0
 - QML API version number changed to 1.1
 - You can now set a custom format for ValueAxis labels
 - ValueAxis label layout improved
+- Two new ways of placing a label inside a pie slice
 
 Bug Fixes
 ==========
@@ -98,6 +99,7 @@ Bug Fixes
 - Antialias is now disabled in declarative plugin by default
 - Fixed QML PieModelMappers defined outside the series scope
 - Fixed an issue with QLegend attach requiring a resize
+- Fixed an issue with the axes ranges values being overwritten if set before axis added to the chart
 
 Known Issues
 ============
