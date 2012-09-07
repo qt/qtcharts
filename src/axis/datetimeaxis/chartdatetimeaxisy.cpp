@@ -132,7 +132,6 @@ void ChartDateTimeAxisY::updateGeometry()
 
 void ChartDateTimeAxisY::handleAxisUpdated()
 {
-    //TODO:: fix this
     QDateTimeAxis* axis = qobject_cast<QDateTimeAxis*>(m_chartAxis);
     m_tickCount = axis->tickCount();
     ChartAxis::handleAxisUpdated();

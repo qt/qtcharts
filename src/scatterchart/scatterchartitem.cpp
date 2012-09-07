@@ -176,7 +176,6 @@ void ScatterChartItem::handleUpdated()
     m_shape = m_series->markerShape();
 
     if(recreate) {
-        // TODO: optimize handleUpdate to recreate points only in case shape changed
         deletePoints(count);
         createPoints(count);
 

@@ -162,11 +162,6 @@ QChart* QAbstractSeries::chart() const
     return d_ptr->m_chart;
 }
 
-//void QAbstractSeries::adjustView()
-//{
-//    //TODO:
-//}
-
 /*!
     \brief Sets the visibility of the series to true
 

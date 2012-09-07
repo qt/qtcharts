@@ -155,7 +155,6 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
 {
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
 
-    // TODO: Add a descriptive comment of what happens here
     if (type.testFlag(QAbstractAxis::AxisTypeValue) && type.testFlag(QAbstractAxis::AxisTypeBarCategory)) {
         while (i.hasNext()) {
             i.next();

@@ -31,7 +31,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-//TODO: optimize : remove points which are not visible
 
 AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
     : ChartItem(presenter),

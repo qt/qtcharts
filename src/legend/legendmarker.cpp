@@ -154,7 +154,7 @@ QSizeF LegendMarker::sizeHint(Qt::SizeHint which, const QSizeF& constraint) cons
 void LegendMarker::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QGraphicsObject::mousePressEvent(event);
-    qDebug()<<"Not implemented"; //TODO: selected signal removed for now
+    qDebug()<<"Not implemented";
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

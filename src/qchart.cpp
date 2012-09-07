@@ -390,15 +390,6 @@ QRectF QChart::plotArea() const
     return d_ptr->m_presenter->geometry();
 }
 
-///*!
-//    TODO: Dummy.
-//    Adjest the ranges of the axes so that all the data of the specified \a series is visible
-// */
-//void QChart::adjustViewToSeries(QAbstractSeries* series)
-//{
-//    //
-//}
-
 /*!
  Sets animation \a options for the chart
  */

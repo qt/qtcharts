@@ -81,7 +81,6 @@ void ChartLayout::setGeometry(const QRectF& rect)
 
     QMargins chartMargins = m_chartMargins;
 
-    //TODO multiple axis handling;
     chartMargins.setLeft(qMax(m_chartMargins.left(),int(axisWidth + 2*m_marginTiny)));
     chartMargins.setBottom(qMax(m_chartMargins.bottom(),int(axisHeight + 2* m_marginTiny)));
 

@@ -502,8 +502,6 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 
 void QLegendPrivate::handleSeriesUpdated(QAbstractSeries *series)
 {
-    // TODO: find out which markers are are added or removed. Update them
-    // TODO: better implementation
     handleSeriesRemoved(series);
     Domain domain;
     handleSeriesAdded(series, &domain);
@@ -511,7 +509,6 @@ void QLegendPrivate::handleSeriesUpdated(QAbstractSeries *series)
 
 void QLegendPrivate::handleUpdatePieSeries()
 {
-    //TODO: reimplement to be optimal
     QPieSeries* series = qobject_cast<QPieSeries *> (sender());
     Q_ASSERT(series);
     handleSeriesRemoved(series);

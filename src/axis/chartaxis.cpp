@@ -352,7 +352,7 @@ qreal ChartAxis::minimumHeight()
 
 void ChartAxis::axisSelected()
 {
-    qDebug()<<"TODO: axis clicked";
+
 }
 
 
