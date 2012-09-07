@@ -4,43 +4,125 @@
     \keyword Examples
     
     \raw HTML
-        <table cellpadding="2" cellspacing="1" border="0" width="100%" class="indextable">
+    <div class="examples">
+    <table>
         <tr>
-        <th class="titleheader" width="33%">
-        List of examples
-        </th>
+            <td align="center">Area Chart</td>
+            <td align="center">Bar Chart</td>
         </tr>
         <tr>
-        <td valign="top">
-        <ul>
-            <li><a href="examples-areachart.html">Area chart</a></li>
-            <li><a href="examples-barchart.html">Bar chart</a></li>
-            <li><a href="examples-barmodelmapper.html">Bar chart from model</a></li>
-            <li><a href="examples-customchart.html">Custom chart</a></li>
-            <li><a href="examples-datetimeaxis.html">DateTimeAxis example</a></li>
-            <li><a href="examples-donutbreakdown.html">Donut breakdown chart</a></li>
-            <li><a href="examples-donutchart.html">Donut chart</a></li>
-            <li><a href="examples-horizontalbarchart.html">Horizontal bar chart</a></li>
-            <li><a href="examples-horizontalpercentbarchart.html">Horizontal percent bar chart</a></li>
-            <li><a href="examples-horizontalstackedbarchart.html">Horizontal stacked bar chart</a></li>
-            <li><a href="examples-legend.html">Legend</a></li>
-            <li><a href="examples-lineandbar.html">Line and barchart</a></li>
-            <li><a href="examples-linechart.html">Line chart</a></li>
-            <li><a href="examples-modeldata.html">Model data</a></li>
-            <li><a href="examples-percentbarchart.html">Percent bar chart</a></li>
-            <li><a href="examples-piechart.html">Pie chart</a></li>
-            <li><a href="examples-piechartdrilldown.html">Pie chart drilldown</a></li>
-            <li><a href="examples-presenterchart.html">Presenter chart</a></li>
-            <li><a href="examples-scatterchart.html">Scatter chart</a></li>
-            <li><a href="examples-scatterinteractions.html">Scatter interactions</a></li>
-            <li><a href="examples-splinechart.html">Spline chart</a></li>
-            <li><a href="examples-stackedbarchart.html">Stacked bar chart</a></li>
-            <li><a href="examples-stackedbarchartdrilldown.html">Stacked bar chart drilldown</a></li>
-            <li><a href="examples-temperaturerecords.html">Temperature records</a></li>
-            <li><a href="examples-zoomlinechart.html">Zoom line</a></li>
-        </ul>
-        </td>
+            <td><a href="examples-areachart.html"><img src="images/examples_areachart.png" width="300" alt="Area Chart" /></a></td>
+            <td><a href="examples-barchart.html"><img src="images/examples_barchart.png" width="300" alt="Bar Chart" /></a></td>
         </tr>
-        </table>
+
+        <tr>
+            <td align="center">Bar Chart from Model</td>
+            <td align="center">Custom Chart</td>
+        </tr>
+        <tr>
+            <td><a href="examples-barmodelmapper.html"><img src="images/examples_barmodelmapper.png" width="300" alt="Bar Chart from Model" /></a></td>
+            <td><a href="examples-customchart.html"><img src="images/examples_customchart.png" width="300" alt="Custom Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">DateTimeAxis Example</td>
+            <td align="center">Donut Breakdown Chart</td>
+        </tr>
+        <tr>
+            <td><a href="examples-datetimeaxis.html"><img src="images/examples_datetimeaxis.png" width="300" alt="DateTimeAxis Example" /></a></td>
+            <td><a href="examples-donutbreakdown.html"><img src="images/examples_donutbreakdown.png" width="300" alt="Donut Breakdown Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Donut Chart</td>
+            <td align="center">Horizontal Bar Chart</td>
+        </tr>
+        <tr>
+            <td><a href="examples-donutchart.html"><img src="images/examples_donutchart.png" width="300" alt="Donut Chart" /></a></td>
+            <td><a href="examples-horizontalbarchart.html"><img src="images/examples_horizontalbarchart.png" width="300" alt="Horizontal Bar Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Horizontal Percent Bar Chart</td>
+            <td align="center">Horizontal Stacked Bar Chart</td>
+        </tr>
+        <tr>
+            <td><a href="examples-horizontalpercentbarchart.html"><img src="images/examples_percentbarchart.png" width="300" alt="Horizontal Percent Bar Chart" /></a></td>
+            <td><a href="examples-horizontalstackedbarchart.html"><img src="images/examples_stackedbarchart.png" width="300" alt="Horizontal Stacked Bar Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Legend</td>
+            <td align="center">Line and Barchart</td>
+        </tr>
+        <tr>
+            <td><a href="examples-legend.html"><img src="images/examples_legend_detach.png" width="300" alt="Legend" /></a></td>
+            <td><a href="examples-lineandbar.html"><img src="images/examples_lineandbar.png" width="300" alt="Line and Barchart" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Line Chart</td>
+            <td align="center">Model Data</td>
+        </tr>
+        <tr>
+            <td><a href="examples-linechart.html"><img src="images/examples_linechart.png" width="300" alt="Line Chart" /></a></td>
+            <td><a href="examples-modeldata.html"><img src="images/examples_modeldata.png" width="300" alt="Model Data" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Percent Bar Chart</td>
+            <td align="center">Pie Chart</td>
+        </tr>
+        <tr>
+            <td><a href="examples-percentbarchart.html"><img src="images/examples_percentbarchart.png" width="300" alt="Percent Bar Chart" /></a></td>
+            <td><a href="examples-piechart.html"><img src="images/examples_piechart.png" width="300" alt="Pie Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Pie Chart Drilldown</td>
+            <td align="center">Presenter Chart</td>
+        </tr>
+        <tr>
+            <td><a href="examples-piechartdrilldown.html"><img src="images/examples_piechartdrill2.png" width="300" alt="Pie Chart Drilldown" /></a></td>
+            <td><a href="examples-presenterchart.html"><img src="images/examples_presenterchart4.png" width="300" alt="Presenter Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Scatter chart</td>
+            <td align="center">Scatter Interactions</td>
+        </tr>
+        <tr>
+            <td><a href="examples-scatterchart.html"><img src="images/examples_scatterchart.png" width="300" alt="Scatter chart" /></a></td>
+            <td><a href="examples-scatterinteractions.html"><img src="images/examples_scatterinteractions.png" width="300" alt="Scatter Interactions" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Spline Chart</td>
+            <td align="center">Stacked Bar Chart</td>
+        </tr>
+        <tr>
+            <td><a href="examples-splinechart.html"><img src="images/examples_splinechart.png" width="300" alt="Spline Chart" /></a></td>
+            <td><a href="examples-stackedbarchart.html"><img src="images/examples_stackedbarchart.png" width="300" alt="Stacked Bar Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Stacked Bar Chart Drilldown</td>
+            <td align="center">Temperature Records</td>
+        </tr>
+        <tr>
+            <td><a href="examples-stackedbarchartdrilldown.html"><img src="images/examples_stackedbarchartdrilldown1.png" width="300" alt="Stacked Bar Chart Drilldown" /></a></td>
+            <td><a href="examples-temperaturerecords.html"><img src="images/examples_temperaturerecords.png" width="300" alt="Temperature Records" /></a></td>
+        </tr>
+
+        <tr>
+            <td align="center">Zoom Line</td>
+        </tr>
+        <tr>
+            <td><a href="examples-zoomlinechart.html"><img src="images/examples_zoomlinechart1.png" width="300" alt="Zoom Line" /></a></td>
+        </tr>
+
+    </table>
+    </div>
     \endraw
+
 */
