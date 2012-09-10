@@ -67,11 +67,14 @@ can also be generated with:
 Main Changes between 1.0.0 and 1.1.0
 ===================================
 - Versions 1.0.0 and 1.1.0 are not binary or source compatible. We are sorry about this.
+- ValuesAxis renamed to ValueAxis
+- QAbstractAxis::arrowVisible and other related methods were renamed to
+  QAbstractSeries::lineVisible
+- QChart::margins was replaced with QChart::minimumMargins
+- BarCategoriesAxis renamed to BarCategoryAxis
 - Horizontal bar series has been added
 - New axis types: DateTimeAxis and CategoryAxis
 - PieSeries now supports drawing as a donut
-- ValuesAxis renamed to ValueAxis
-- BarCategoriesAxis renamed to BarCategoryAxis
 - Drawing performance of LineSeries has been improved
 - New data replacament method with better performance implemented in XYSeries
 - It is now possible to take PieSlices/BarSets back from the series without deleting
