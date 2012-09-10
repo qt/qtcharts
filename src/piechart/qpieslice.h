@@ -58,8 +58,8 @@ public:
     enum LabelPosition {
         LabelOutside,
         LabelInsideHorizontal,
-        LabelInsideTangential, // better name needed
-        LabelInsideNormal // better name needed
+        LabelInsideTangential,
+        LabelInsideNormal
     };
 
 public:
