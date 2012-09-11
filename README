@@ -117,3 +117,5 @@ Known Issues
 - Declarative plugin is available from Qt 4.7.4 onwards because of missing
   Q_REVISION macro in the earlier Qt releases
 - Fixed BarSet.remove in QML API
+- Object compatibility issues between the QML APIs and C++ APIs, if
+  QtCommercial Charts is compiled as a static library
