@@ -49,4 +49,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif
+#endif // QLINESERIES_H

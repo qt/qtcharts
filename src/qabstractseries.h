@@ -84,4 +84,4 @@ protected:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif
+#endif // QABSTRACTSERIES_H

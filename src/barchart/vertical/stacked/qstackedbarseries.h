@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef STACKEDBARSERIES_H
-#define STACKEDBARSERIES_H
+#ifndef QSTACKEDBARSERIES_H
+#define QSTACKEDBARSERIES_H
 
 #include <QStringList>
 #include <qabstractbarseries.h>
@@ -43,4 +43,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // STACKEDBARSERIES_H
+#endif // QSTACKEDBARSERIES_H

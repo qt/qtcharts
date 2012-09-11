@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef CHARTGLOBAL_H
-#define CHARTGLOBAL_H
+#ifndef QCHARTGLOBAL_H
+#define QCHARTGLOBAL_H
 
 #define QTCOMMERCIALCHART_VERSION_STR   "1.0"
 #define QTCOMMERCIALCHART_VERSION 0x01
@@ -76,4 +76,4 @@ static inline QDebug chartDebug(int numargs,...)
 }
 #endif
 
-#endif // CHARTGLOBAL_H
+#endif // QCHARTGLOBAL_H

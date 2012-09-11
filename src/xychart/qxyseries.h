@@ -91,4 +91,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif
+#endif // QXYSERIES_H

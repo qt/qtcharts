@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef PERCENTBARSERIES_H
-#define PERCENTBARSERIES_H
+#ifndef QPERCENTBARSERIES_H
+#define QPERCENTBARSERIES_H
 
 #include <QStringList>
 #include <qabstractbarseries.h>
@@ -43,4 +43,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // PERCENTBARSERIES_H
+#endif // QPERCENTBARSERIES_H

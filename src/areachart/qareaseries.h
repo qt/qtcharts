@@ -81,4 +81,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif
+#endif // QAREASERIES_H

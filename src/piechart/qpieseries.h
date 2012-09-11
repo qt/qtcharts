@@ -18,8 +18,8 @@
 **
 ****************************************************************************/
 
-#ifndef PIESERIES_H
-#define PIESERIES_H
+#ifndef QPIESERIES_H
+#define QPIESERIES_H
 
 #include <qabstractseries.h>
 #include <QPieSlice>
@@ -99,4 +99,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // PIESERIES_H
+#endif // QPIESERIES_H

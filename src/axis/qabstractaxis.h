@@ -65,7 +65,7 @@ public:
 
     virtual AxisType type() const = 0;
 
-    //visibilty hadnling
+    //visibilty handling
     bool isVisible() const;
     void setVisible(bool visible = true);
 
@@ -153,4 +153,5 @@ protected:
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
-#endif
+
+#endif // QABSTRACTAXIS_H
