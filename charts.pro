@@ -3,7 +3,8 @@
 }
 
 TEMPLATE = subdirs
-SUBDIRS = src plugins examples demos tests
+SUBDIRS = src plugins
+#examples demos tests
 
 development_build: message('Development build')
 

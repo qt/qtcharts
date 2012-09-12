@@ -18,8 +18,13 @@
 **
 ****************************************************************************/
 
-#include <QtDeclarative/qdeclarativeextensionplugin.h>
-#include <QtDeclarative/qdeclarative.h>
+#ifdef QT5_QUICK_1
+    #include <QtQuick1/qdeclarativeextensionplugin.h>
+    #include <QtQuick1/qdeclarative.h>
+#else
+    #include <QtDeclarative/qdeclarativeextensionplugin.h>
+    #include <QtDeclarative/qdeclarative.h>
+#endif
 #include "qchart.h"
 #include "qabstractaxis.h"
 #include "qvalueaxis.h"
@@ -51,6 +56,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartQmlPlugin : public QDeclarativeExtensionPlugin
 {
     Q_OBJECT
+
+#ifdef QT5_QUICK_1
+    Q_PLUGIN_METADATA(IID "org.qt-project.foo")
+#endif
+
     public:
     virtual void registerTypes(const char *uri)
     {
@@ -162,4 +172,6 @@ QTCOMMERCIALCHART_END_NAMESPACE
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-Q_EXPORT_PLUGIN2(qtcommercialchartqml, QT_PREPEND_NAMESPACE(ChartQmlPlugin))
+#ifndef QT5_QUICK_1
+    Q_EXPORT_PLUGIN2(qtcommercialchartqml, QT_PREPEND_NAMESPACE(ChartQmlPlugin))
+#endif

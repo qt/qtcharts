@@ -22,7 +22,11 @@
 #define DECLARATIVECHART_H
 
 #include <QtCore/QtGlobal>
-#include <QDeclarativeItem>
+#ifdef QT5_QUICK_1
+    #include <QtQuick1/QDeclarativeItem>
+#else
+    #include <QtDeclarative/QDeclarativeItem>
+#endif
 #include "qchart.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

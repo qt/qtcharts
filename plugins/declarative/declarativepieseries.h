@@ -22,8 +22,13 @@
 #define DECLARATIVEPIESERIES_H
 
 #include "qpieseries.h"
-#include <QDeclarativeItem>
-#include <QDeclarativeParserStatus>
+#ifdef QT5_QUICK_1
+    #include <QtQuick1/QDeclarativeItem>
+    #include <QtQuick1/QDeclarativeParserStatus>
+#else
+    #include <QtDeclarative/QDeclarativeItem>
+    #include <QtDeclarative/QDeclarativeParserStatus>
+#endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPieSlice;

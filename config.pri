@@ -85,6 +85,8 @@ linux-arm*: {
     DEFINES+=QT_ON_ARM
 }
 
+greaterThan(QT_MAJOR_VERSION, 4): DEFINES += QT5_QUICK_1
+
 ##################### INCLUDES ############################################################
 
 
