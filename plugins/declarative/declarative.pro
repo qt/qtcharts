@@ -3,7 +3,11 @@
 }
 
 TARGET = qtcommercialchartqml
-QT += declarative
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += quick1
+} else {
+    QT += declarative
+}
 DESTDIR = $$CHART_BUILD_QML_PLUGIN_DIR
 INCLUDEPATH += $$CHART_BUILD_PRIVATE_HEADER_DIR
 
