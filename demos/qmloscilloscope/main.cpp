@@ -18,7 +18,7 @@
 **
 ****************************************************************************/
 
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <QDeclarativeEngine>
 #include <QDeclarativeContext>
 #include "qmlapplicationviewer.h"

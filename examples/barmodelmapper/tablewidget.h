@@ -21,7 +21,7 @@
 #ifndef TABLEWIDGET_H
 #define TABLEWIDGET_H
 
-#include <QtGui/QWidget>
+#include <QWidget>
 
 class TableWidget : public QWidget
 {

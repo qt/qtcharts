@@ -15,7 +15,7 @@
 #include <QtDeclarative/QDeclarativeComponent>
 #include <QtDeclarative/QDeclarativeEngine>
 #include <QtDeclarative/QDeclarativeContext>
-#include <QtGui/QApplication>
+#include <QApplication>
 
 #include <qplatformdefs.h> // MEEGO_EDITION_HARMATTAN
 

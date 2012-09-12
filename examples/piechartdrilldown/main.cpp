@@ -20,7 +20,7 @@
 
 #include "drilldownchart.h"
 #include "drilldownslice.h"
-#include <QtGui/QApplication>
+#include <QApplication>
 #include <QMainWindow>
 #include <QTime>
 #include <QChartView>
