@@ -6,6 +6,7 @@ TARGET = $$LIBRARY_NAME
 DESTDIR = $$CHART_BUILD_LIB_DIR
 TEMPLATE = lib
 QT = core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 DEFINES += QTCOMMERCIALCHART_LIBRARY
 win32:CONFIG += create_prl
 # treat warnings as errors

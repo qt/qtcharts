@@ -10,6 +10,7 @@ RCC_DIR = $$CHART_BUILD_DIR/examples/$$TARGET
 
 TEMPLATE = app
 QT += core gui
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # staticlib config causes problems when building executables
 staticlib: CONFIG-=staticlib
