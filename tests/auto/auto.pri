@@ -2,7 +2,11 @@
     error( "Couldn't find the tests.pri file!" )
 }
 
-CONFIG  += qtestlib
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += testlib
+} else {
+    CONFIG  += qtestlib
+}
 !contains(TARGET, ^tst_.*):TARGET = $$join(TARGET,,"tst_")
 
 INCLUDEPATH += ../inc

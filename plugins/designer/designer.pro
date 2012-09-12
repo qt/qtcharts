@@ -4,7 +4,11 @@
 
 TARGET=qtcommercialchartdesigner
 DESTDIR = $$CHART_BUILD_DESIGNER_PLUGIN_DIR
-CONFIG += designer
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += designer
+} else {
+    CONFIG += designer
+}
 HEADERS = qchartsplugin.h
 SOURCES = qchartsplugin.cpp
 RESOURCES = qchartsplugin.qrc
