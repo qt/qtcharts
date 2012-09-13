@@ -19,8 +19,14 @@
 ****************************************************************************/
 
 #include <QApplication>
-#include <QDeclarativeEngine>
-#include <QtDeclarative>
+#ifdef QT5_QUICK_1
+    #include <QtQuick1/qdeclarative.h>
+    #include <QtQuick1/QDeclarativeEngine>
+#else
+    #include <QtDeclarative>
+    #include <QtDeclarative/QDeclarativeEngine>
+#endif
+//#include <QtDeclarative>
 #include <QAbstractItemModel>
 #include "declarativemodel.h"
 #include "customtablemodel.h"
@@ -39,7 +45,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     qmlRegisterType<DeclarativeTableModel>(uri, 1, 0, "CustomModel");
     qmlRegisterType<DeclarativeTableModelElement>(uri, 1, 0, "CustomModelElement");
 
-    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    // // viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer->setSource(QUrl("qrc:/qml/qmlcustommodel/loader.qml"));
     viewer->setRenderHint(QPainter::Antialiasing, true);
     viewer->showExpanded();

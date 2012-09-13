@@ -19,7 +19,11 @@
 ****************************************************************************/
 
 #include <QApplication>
-#include <QDeclarativeContext>
+#ifdef QT5_QUICK_1
+    #include <QtQuick1/QDeclarativeContext>
+#else
+    #include <QtDeclarative/QDeclarativeContext>
+#endif
 #include <QDebug>
 #include "qmlapplicationviewer.h"
 
@@ -28,7 +32,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QApplication> app(createApplication(argc, argv));
 
     QmlApplicationViewer viewer;
-    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+//    viewer.setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     QString appKey;
     if (argc > 1) {
         appKey = argv[1];

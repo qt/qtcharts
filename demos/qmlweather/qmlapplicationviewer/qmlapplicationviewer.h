@@ -33,7 +33,7 @@ public:
     void addImportPath(const QString &path);
 
     // Note that this will only have an effect on Symbian and Fremantle.
-    void setOrientation(ScreenOrientation orientation);
+    // void setOrientation(ScreenOrientation orientation);
 
     void showExpanded();
 

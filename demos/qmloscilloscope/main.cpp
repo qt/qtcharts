@@ -19,8 +19,11 @@
 ****************************************************************************/
 
 #include <QApplication>
-#include <QDeclarativeEngine>
-#include <QDeclarativeContext>
+#ifdef QT5_QUICK_1
+    #include <QtQuick1/QDeclarativeContext>
+#else
+    #include <QtDeclarative/QDeclarativeContext>
+#endif
 #include "qmlapplicationviewer.h"
 #include "datasource.h"
 
@@ -32,7 +35,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     DataSource dataSource(viewer.data());
     viewer->rootContext()->setContextProperty("dataSource", &dataSource);
 
-    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    // // viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer->setSource(QUrl("qrc:/qml/qmloscilloscope/main.qml"));
     viewer->showExpanded();
 

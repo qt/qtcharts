@@ -19,7 +19,11 @@
 ****************************************************************************/
 
 #include <QApplication>
-#include <QDeclarativeEngine>
+#ifdef QT5_QUICK_1
+    #include <QtQuick1/QDeclarativeEngine>
+#else
+    #include <QtDeclarative/QDeclarativeEngine>
+#endif
 #include "qmlapplicationviewer.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])
@@ -27,7 +31,7 @@ Q_DECL_EXPORT int main(int argc, char *argv[])
     QScopedPointer<QApplication> app(createApplication(argc, argv));
     QScopedPointer<QmlApplicationViewer> viewer(QmlApplicationViewer::create());
 
-    viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
+    // // viewer->setOrientation(QmlApplicationViewer::ScreenOrientationAuto);
     viewer->setSource(QUrl("qrc:/qml/qmlchart/loader.qml"));
     viewer->setRenderHint(QPainter::Antialiasing, true);
     viewer->showExpanded();
