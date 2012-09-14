@@ -23,6 +23,8 @@
 
 #include <QChart>
 
+class QGestureEvent;
+
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 //![1]
