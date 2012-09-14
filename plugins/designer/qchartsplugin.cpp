@@ -85,4 +85,7 @@ QWidget* QChartsPlugin::createWidget(QWidget *parent)
     return new QChartView(new QChart(), parent);
 }
 
-Q_EXPORT_PLUGIN2(qtcommercialchart, QChartsPlugin)
+#ifndef QT5_QUICK_1
+    Q_EXPORT_PLUGIN2(qtcommercialchart, QChartsPlugin)
+#endif
+

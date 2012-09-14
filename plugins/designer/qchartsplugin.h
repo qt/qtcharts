@@ -25,6 +25,11 @@
 
 class QChartsPlugin: public QObject,public QDesignerCustomWidgetInterface
 {
+
+#ifdef QT5_QUICK_1
+    Q_PLUGIN_METADATA(IID "org.qt-project.bar")
+#endif
+
     Q_OBJECT
     Q_INTERFACES(QDesignerCustomWidgetInterface)
 public:
