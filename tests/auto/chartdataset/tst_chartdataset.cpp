@@ -31,7 +31,11 @@ private Q_SLOTS:
 
 void tst_ChartDataSet::skip()
 {
+#ifdef QT5_QUICK_1
+    QSKIP("This test requires the debug version of library");
+#else
     QSKIP("This test requires the debug version of library", SkipAll);
+#endif
 }
 
 QTEST_MAIN(tst_ChartDataSet)

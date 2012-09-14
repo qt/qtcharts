@@ -3,7 +3,7 @@
 }
 
 greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += testlib
+    QT += testlib widgets
 } else {
     CONFIG  += qtestlib
 }
