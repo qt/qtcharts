@@ -54,7 +54,9 @@ public:
 
     void setRubberBand(const RubberBands& rubberBands);
     RubberBands rubberBand() const;
+
     QChart* chart() const;
+    void setChart(QChart *chart);
 
 protected:
     void resizeEvent(QResizeEvent *event);

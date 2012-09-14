@@ -88,6 +88,18 @@ QChart* QChartView::chart() const
 }
 
 /*!
+    Sets the current chart to \a chart. Ownership of the new chart is passed to chartview
+    and ownership of the previous chart is released.
+
+    To avoid memory leaks users needs to make sure the previous chart is deleted.
+*/
+
+void QChartView::setChart(QChart *chart)
+{
+    d_ptr->setChart(chart);
+}
+
+/*!
     Sets the RubberBandPlicy to \a rubberBand. Selected policy determines the way zooming is performed.
 */
 void QChartView::setRubberBand(const RubberBands& rubberBand)
@@ -191,9 +203,7 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
 void QChartView::resizeEvent(QResizeEvent *event)
 {
     QGraphicsView::resizeEvent(event);
-    d_ptr->m_chart->resize(size());
-    setMinimumSize(d_ptr->m_chart->minimumSize().toSize());
-    setSceneRect(d_ptr->m_chart->geometry());
+    d_ptr->resize();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -219,6 +229,29 @@ m_rubberBandFlags(QChartView::NoRubberBand)
 QChartViewPrivate::~QChartViewPrivate()
 {
 
+}
+
+void QChartViewPrivate::setChart(QChart *chart)
+{
+    Q_ASSERT(chart);
+
+    if (m_chart == chart)
+        return;
+
+    if (m_chart)
+        m_scene->removeItem(m_chart);
+
+    m_chart = chart;
+    m_scene->addItem(m_chart);
+
+    resize();
+}
+
+void QChartViewPrivate::resize()
+{
+    m_chart->resize(q_ptr->size());
+    q_ptr->setMinimumSize(m_chart->minimumSize().toSize());
+    q_ptr->setSceneRect(m_chart->geometry());
 }
 
 #include "moc_qchartview.cpp"

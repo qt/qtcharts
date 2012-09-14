@@ -45,6 +45,8 @@ class QChartViewPrivate {
 public:
     explicit QChartViewPrivate(QChartView *q, QChart *chart = 0);
     ~QChartViewPrivate();
+    void setChart(QChart *chart);
+    void resize();
 
 protected:
     QChartView *q_ptr;

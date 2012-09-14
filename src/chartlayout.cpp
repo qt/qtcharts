@@ -46,7 +46,8 @@ ChartLayout::~ChartLayout()
 
 void ChartLayout::setGeometry(const QRectF& rect)
 {
-    Q_ASSERT(rect.isValid());
+    if (!rect.isValid())
+        return;
 
     QList<ChartAxis*> axes = m_presenter->axisItems();
     ChartTitle* title = m_presenter->titleElement();

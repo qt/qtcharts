@@ -49,6 +49,7 @@ private Q_SLOTS:
     void chart();
     void rubberBand_data();
     void rubberBand();
+    void setChart();
 
 private:
     QChartView* m_view;
@@ -181,6 +182,40 @@ void tst_QChartView::rubberBand()
     QVERIFY(vaxisY->min() >= minY );
     QVERIFY(vaxisY->max() <= maxY );
 
+}
+
+void tst_QChartView::setChart()
+{
+    QPointer<QChart> oldChart = m_view->chart();
+    QLineSeries *series1 = new QLineSeries();
+    series1->append(0,0);
+    series1->append(1,1);
+    oldChart->addSeries(series1);
+
+    QPointer<QChart> newChart = new QChart();
+    QLineSeries *series2 = new QLineSeries();
+    series2->append(0,1);
+    series2->append(1,0);
+    newChart->addSeries(series2);
+
+    // show current chart
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QTest::qWait(1000);
+
+    // set new chart
+    m_view->setChart(newChart);
+    QVERIFY(m_view->chart() == newChart);
+    QVERIFY(!oldChart.isNull()); // ownership of the oldChart is released and not deleted
+    QTest::qWait(1000);
+
+    // delete the view
+    delete m_view;
+    m_view = 0;
+    QVERIFY(newChart.isNull()); // view owns and deletes it
+    QVERIFY(!oldChart.isNull()); // not owned by view
+
+    delete oldChart;
 }
 
 QTEST_MAIN(tst_QChartView)
