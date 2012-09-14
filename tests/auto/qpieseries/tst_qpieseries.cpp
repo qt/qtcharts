@@ -480,6 +480,8 @@ void tst_qpieseries::verifyCalculatedData(const QPieSeries &series, bool *ok)
 
 void tst_qpieseries::clickedSignal()
 {
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
     // add some slices
     QPieSlice *s1 = m_series->append("slice 1", 1);
     QPieSlice *s2 = m_series->append("slice 2", 1);
@@ -560,6 +562,8 @@ void tst_qpieseries::clickedSignal()
 
 void tst_qpieseries::hoverSignal()
 {
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
     // add some slices
     m_series->setPieSize(1.0);
     QPieSlice *s1 = m_series->append("slice 1", 1);
