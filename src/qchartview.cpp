@@ -212,7 +212,6 @@ QChartViewPrivate::QChartViewPrivate(QChartView *q,QChart* chart):
 q_ptr(q),
 m_scene(new QGraphicsScene(q)),
 m_chart(chart),
-m_presenter(0),
 m_rubberBand(0),
 m_rubberBandFlags(QChartView::NoRubberBand)
 {

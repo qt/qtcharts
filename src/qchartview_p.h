@@ -54,7 +54,6 @@ protected:
 public:
     QGraphicsScene *m_scene;
     QChart *m_chart;
-    ChartPresenter *m_presenter;
     QPoint m_rubberBandOrigin;
     QRubberBand *m_rubberBand;
     QChartView::RubberBands m_rubberBandFlags;
