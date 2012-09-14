@@ -7,8 +7,8 @@
     <div class="examples">
     <table>
         <tr>
-            <td align="center">Area Chart</td>
-            <td align="center">Bar Chart</td>
+            <td align="center"><a href="examples-areachart.html">Area Chart</a></td>
+            <td align="center"><a href="examples-barchart.html">Bar Chart</a></td>
         </tr>
         <tr>
             <td><a href="examples-areachart.html"><img src="images/examples_areachart.png" width="300" alt="Area Chart" /></a></td>
@@ -16,8 +16,8 @@
         </tr>
 
         <tr>
-            <td align="center">Bar Chart from Model</td>
-            <td align="center">Custom Chart</td>
+            <td align="center"><a href="examples-barmodelmapper.html">Bar Chart from Model</a></td>
+            <td align="center"><a href="examples-customchart.html">Custom Chart</a></td>
         </tr>
         <tr>
             <td><a href="examples-barmodelmapper.html"><img src="images/examples_barmodelmapper.png" width="300" alt="Bar Chart from Model" /></a></td>
@@ -25,8 +25,8 @@
         </tr>
 
         <tr>
-            <td align="center">DateTimeAxis Example</td>
-            <td align="center">Donut Breakdown Chart</td>
+            <td align="center"><a href="examples-datetimeaxis.html">DateTimeAxis Example</a></td>
+            <td align="center"><a href="examples-donutbreakdown.html">Donut Breakdown Chart</a></td>
         </tr>
         <tr>
             <td><a href="examples-datetimeaxis.html"><img src="images/examples_datetimeaxis.png" width="300" alt="DateTimeAxis Example" /></a></td>
@@ -34,8 +34,8 @@
         </tr>
 
         <tr>
-            <td align="center">Donut Chart</td>
-            <td align="center">Horizontal Bar Chart</td>
+            <td align="center"><a href="examples-donutchart.html">Donut Chart</a></td>
+            <td align="center"><a href="examples-horizontalbarchart.html">Horizontal Bar Chart</a></td>
         </tr>
         <tr>
             <td><a href="examples-donutchart.html"><img src="images/examples_donutchart.png" width="300" alt="Donut Chart" /></a></td>
@@ -43,8 +43,8 @@
         </tr>
 
         <tr>
-            <td align="center">Horizontal Percent Bar Chart</td>
-            <td align="center">Horizontal Stacked Bar Chart</td>
+            <td align="center"><a href="examples-horizontalpercentbarchart.html">Horizontal Percent Bar Chart</a></td>
+            <td align="center"><a href="examples-horizontalstackedbarchart.html">Horizontal Stacked Bar Chart</a></td>
         </tr>
         <tr>
             <td><a href="examples-horizontalpercentbarchart.html"><img src="images/examples_horizontalpercentbarchart.png" width="300" alt="Horizontal Percent Bar Chart" /></a></td>
@@ -52,8 +52,8 @@
         </tr>
 
         <tr>
-            <td align="center">Legend</td>
-            <td align="center">Line and Barchart</td>
+            <td align="center"><a href="examples-legend.html">Legend</a></td>
+            <td align="center"><a href="examples-lineandbar.html">Line and Barchart</a></td>
         </tr>
         <tr>
             <td><a href="examples-legend.html"><img src="images/examples_legend_detach.png" width="300" alt="Legend" /></a></td>
@@ -61,8 +61,8 @@
         </tr>
 
         <tr>
-            <td align="center">Line Chart</td>
-            <td align="center">Model Data</td>
+            <td align="center"><a href="examples-linechart.html">Line Chart</a></td>
+            <td align="center"><a href="examples-modeldata.html">Model Data</a></td>
         </tr>
         <tr>
             <td><a href="examples-linechart.html"><img src="images/examples_linechart.png" width="300" alt="Line Chart" /></a></td>
@@ -70,8 +70,8 @@
         </tr>
 
         <tr>
-            <td align="center">Percent Bar Chart</td>
-            <td align="center">Pie Chart</td>
+            <td align="center"><a href="examples-percentbarchart.html">Percent Bar Chart</a></td>
+            <td align="center"><a href="examples-piechart.html">Pie Chart</a></td>
         </tr>
         <tr>
             <td><a href="examples-percentbarchart.html"><img src="images/examples_percentbarchart.png" width="300" alt="Percent Bar Chart" /></a></td>
@@ -79,8 +79,8 @@
         </tr>
 
         <tr>
-            <td align="center">Pie Chart Drilldown</td>
-            <td align="center">Presenter Chart</td>
+            <td align="center"><a href="examples-piechartdrilldown.html">Pie Chart Drilldown</a></td>
+            <td align="center"><a href="examples-presenterchart.html">Presenter Chart</a></td>
         </tr>
         <tr>
             <td><a href="examples-piechartdrilldown.html"><img src="images/examples_piechartdrill2.png" width="300" alt="Pie Chart Drilldown" /></a></td>
@@ -88,8 +88,8 @@
         </tr>
 
         <tr>
-            <td align="center">Scatter chart</td>
-            <td align="center">Scatter Interactions</td>
+            <td align="center"><a href="examples-scatterchart.html">Scatter chart</a></td>
+            <td align="center"><a href="examples-scatterinteractions.html">Scatter Interactions</a></td>
         </tr>
         <tr>
             <td><a href="examples-scatterchart.html"><img src="images/examples_scatterchart.png" width="300" alt="Scatter chart" /></a></td>
@@ -97,8 +97,8 @@
         </tr>
 
         <tr>
-            <td align="center">Spline Chart</td>
-            <td align="center">Stacked Bar Chart</td>
+            <td align="center"><a href="examples-splinechart.html">Spline Chart</a></td>
+            <td align="center"><a href="examples-stackedbarchart.html">Stacked Bar Chart</a></td>
         </tr>
         <tr>
             <td><a href="examples-splinechart.html"><img src="images/examples_splinechart.png" width="300" alt="Spline Chart" /></a></td>
@@ -106,8 +106,8 @@
         </tr>
 
         <tr>
-            <td align="center">Stacked Bar Chart Drilldown</td>
-            <td align="center">Temperature Records</td>
+            <td align="center"><a href="examples-stackedbarchartdrilldown.html">Stacked Bar Chart Drilldown</a></td>
+            <td align="center"><a href="examples-temperaturerecords.html">Temperature Records</a></td>
         </tr>
         <tr>
             <td><a href="examples-stackedbarchartdrilldown.html"><img src="images/examples_stackedbarchartdrilldown1.png" width="300" alt="Stacked Bar Chart Drilldown" /></a></td>
@@ -115,7 +115,7 @@
         </tr>
 
         <tr>
-            <td align="center">Zoom Line</td>
+            <td align="center"><a href="examples-zoomlinechart.html">Zoom Line</a></td>
         </tr>
         <tr>
             <td><a href="examples-zoomlinechart.html"><img src="images/examples_zoomlinechart1.png" width="300" alt="Zoom Line" /></a></td>
