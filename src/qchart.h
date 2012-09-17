@@ -122,7 +122,7 @@ public:
 protected:
     QScopedPointer<QChartPrivate> d_ptr;
     friend class QLegend;
-    friend class ChartPresenter;
+    friend class DeclarativeChart;
     Q_DISABLE_COPY(QChart)
 };
 

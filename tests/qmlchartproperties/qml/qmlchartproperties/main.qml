@@ -47,8 +47,12 @@ Rectangle {
             height: parent.height
             source: "Chart.qml"
             onStatusChanged: {
-                if (status == Loader.Ready && editorLoader.status == Loader.Ready && chartLoader.item)
-                    editorLoader.item.series = chartLoader.item.series;
+                if (status == Loader.Ready && editorLoader.status == Loader.Ready && chartLoader.item) {
+                    if (source.toString().search("Chart.qml") > 0)
+                        editorLoader.item.chart = chartLoader.item.chart;
+                    else
+                        editorLoader.item.series = chartLoader.item.series;
+                }
             }
         }
 
@@ -58,8 +62,12 @@ Rectangle {
             height: parent.height
             source: "ChartEditor.qml"
             onStatusChanged: {
-                if (status == Loader.Ready && chartLoader.status == Loader.Ready && chartLoader.item)
-                    editorLoader.item.series = chartLoader.item.series;
+                if (status == Loader.Ready && chartLoader.status == Loader.Ready && chartLoader.item) {
+                    if (source.toString().search("ChartEditor.qml") > 0)
+                        editorLoader.item.chart = chartLoader.item.chart;
+                    else
+                        editorLoader.item.series = chartLoader.item.series;
+                }
             }
         }
     }

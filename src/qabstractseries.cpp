@@ -89,7 +89,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief whether the series is visible or not; true by default.
 */
 /*!
-    \qmlproperty void AbstractSeries::visible
+    \qmlproperty bool AbstractSeries::visible
     Visibility of the series. True by default.
 */
 
@@ -101,6 +101,27 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \qmlsignal AbstractSeries::onVisibleChanged()
     Emitted when the series visibility changes.
 */
+
+/*!
+    \property QAbstractSeries::opacity
+    \brief The opacity of the series.
+    By default the opacity is 1.0. The valid values range from 0.0 (transparent) to 1.0 (opaque).
+*/
+/*!
+    \qmlproperty real AbstractSeries::opacity
+    The opacity of the series. By default the opacity is 1.0.
+    The valid values range from 0.0 (transparent) to 1.0 (opaque).
+*/
+
+/*!
+    \fn void QAbstractSeries::opacityChanged()
+    Emitted when the opacity of the series changes.
+*/
+/*!
+    \qmlsignal AbstractSeries::onOpacityChanged()
+    Emitted when the opacity of the series changes.
+*/
+
 /*!
     \internal
     \brief Constructs ChartSeries object with \a parent.

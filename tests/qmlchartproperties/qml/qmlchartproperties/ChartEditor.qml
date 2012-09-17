@@ -22,10 +22,10 @@ import QtQuick 1.0
 
 Item {
     id: chartEditor
-    property variant series // TODO: rename to chart
-    onSeriesChanged: {
+    property variant chart
+    onChartChanged: {
         if (loader.item != undefined)
-            loader.item.chart = series;
+            loader.item.chart = chart;
     }
 
     function selectButton(button) {
@@ -34,6 +34,7 @@ Item {
         legendButton.color = "#79bd8f";
         axisXButton.color = "#79bd8f";
         axisYButton.color = "#79bd8f";
+        seriesButton.color = "#79bd8f";
         button.color = "#00a388";
     }
 
@@ -53,7 +54,7 @@ Item {
             onClicked: {
                 selectButton(chartButton);
                 loader.source = "ChartEditorProperties.qml";
-                loader.item.chart = series;
+                loader.item.chart = chart;
             }
         }
         Button {
@@ -63,7 +64,7 @@ Item {
             onClicked: {
                 selectButton(titleButton);
                 loader.source = "ChartEditorTitle.qml";
-                loader.item.chart = series;
+                loader.item.chart = chart;
             }
         }
         Button {
@@ -73,7 +74,7 @@ Item {
             onClicked: {
                 selectButton(legendButton);
                 loader.source = "ChartEditorLegend.qml";
-                loader.item.chartLegend = series.legend;
+                loader.item.chartLegend = chart.legend;
             }
         }
         Button {
@@ -83,7 +84,7 @@ Item {
             onClicked: {
                 selectButton(axisXButton);
                 loader.source = "ChartEditorAxis.qml";
-                loader.item.axis = series.axisX;
+                loader.item.axis = chart.axisX;
             }
         }
         Button {
@@ -93,7 +94,17 @@ Item {
             onClicked: {
                 selectButton(axisYButton);
                 loader.source = "ChartEditorAxis.qml";
-                loader.item.axis = series.axisY;
+                loader.item.axis = chart.axisY;
+            }
+        }
+        Button {
+            id: seriesButton
+            text: "Series"
+            unpressedColor: "#79bd8f"
+            onClicked: {
+                selectButton(seriesButton);
+                loader.source = "ChartEditorSeries.qml";
+                loader.item.chart = chart;
             }
         }
     }

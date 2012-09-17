@@ -32,6 +32,7 @@
 #include "qcategoryaxis.h"
 #include "qabstractseries_p.h"
 #include "declarativemargins.h"
+#include "qchart_p.h"
 
 #ifndef QT_ON_ARM
     #include "qdatetimeaxis.h"
@@ -186,12 +187,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlmethod Axis ChartView::axisX(QAbstractSeries *series)
+  \qmlmethod Axis ChartView::axisX(AbstractSeries series)
   The x-axis of the series.
 */
 
 /*!
-  \qmlmethod Axis ChartView::axisY(QAbstractSeries *series)
+  \qmlmethod Axis ChartView::axisY(AbstractSeries series)
   The y-axis of the series.
 */
 
@@ -231,6 +232,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   title.
 */
 
+/*!
+  \qmlsignal ChartView::seriesAdded(AbstractSeries series)
+  The \a series has been added to the chart.
+*/
+
+/*!
+  \qmlsignal ChartView::seriesRemoved(AbstractSeries series)
+  The \a series has been removed from the chart. Please note that \a series is no longer a valid
+  object after the signal handler has completed.
+*/
+
 DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     : QDeclarativeItem(parent),
       m_chart(new QChart(this))
@@ -241,6 +253,14 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     connect(m_minMargins, SIGNAL(bottomChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
     connect(m_minMargins, SIGNAL(leftChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
     connect(m_minMargins, SIGNAL(rightChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)), this, SLOT(handleSeriesAdded(QAbstractSeries *, Domain *)));
+    connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)), this, SIGNAL(seriesRemoved(QAbstractSeries *)));
+}
+
+void DeclarativeChart::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
+{
+    Q_UNUSED(domain)
+    emit seriesAdded(series);
 }
 
 void DeclarativeChart::changeMinimumMargins(int top, int bottom, int left, int right)
@@ -618,6 +638,14 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
     }
 
     return series;
+}
+
+void DeclarativeChart::removeSeries(QAbstractSeries *series)
+{
+    if (series)
+        m_chart->removeSeries(series);
+    else
+        qWarning("removeSeries: cannot remove null");
 }
 
 void DeclarativeChart::setAxisX(QAbstractAxis *axis, QAbstractSeries *series)

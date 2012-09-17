@@ -25,7 +25,7 @@ ChartView {
     id: chartView
     title: "Chart Title"
     anchors.fill: parent
-    property variant series: chartView
+    property variant chart: chartView
 
     LineSeries {
         name: "line"
@@ -40,10 +40,12 @@ ChartView {
 
     onVisibleChanged:                  console.log("chart.onVisibleChanged: " + visible);
     onTitleColorChanged:               console.log("chart.onTitleColorChanged: " + color);
-    onBackgroundColorChanged:          console.log("chart.onBackgroundColorChanged: " + series.backgroundColor);
+    onBackgroundColorChanged:          console.log("chart.onBackgroundColorChanged: " + chart.backgroundColor);
     onDropShadowEnabledChanged:        console.log("chart.onDropShadowEnabledChanged: " + enabled);
+    onSeriesAdded:                     console.log("chart.onSeriesAdded: " + series.name);
+    onSeriesRemoved:                   console.log("chart.onSeriesRemoved: " + series.name);
 
-    legend.onVisibleChanged:           console.log("legend.onVisibleChanged: " + series.legend.visible);
+    legend.onVisibleChanged:           console.log("legend.onVisibleChanged: " + chart.legend.visible);
     legend.onBackgroundVisibleChanged: console.log("legend.onBackgroundVisibleChanged: " + visible);
     legend.onColorChanged:             console.log("legend.onColorChanged: " + color);
     legend.onBorderColorChanged:       console.log("legend.onBorderColorChanged: " + color);

@@ -32,6 +32,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class DeclarativeMargins;
+class Domain;
 
 class DeclarativeChart : public QDeclarativeItem
 {
@@ -127,7 +128,7 @@ public:
     Q_INVOKABLE QAbstractSeries *series(QString seriesName);
     Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name = "");
     Q_INVOKABLE QAbstractSeries *createSeries(DeclarativeChart::SeriesType type, QString name, QAbstractAxis *axisX, QAbstractAxis *axisY);
-    Q_INVOKABLE void removeSeries(QAbstractSeries *series) { m_chart->removeSeries(series); }
+    Q_INVOKABLE void removeSeries(QAbstractSeries *series);
     Q_INVOKABLE void removeAllSeries() { m_chart->removeAllSeries(); }
     Q_INVOKABLE void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = 0);
     Q_INVOKABLE void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = 0);
@@ -147,11 +148,14 @@ Q_SIGNALS:
     void dropShadowEnabledChanged(bool enabled);
     void minimumMarginsChanged();
     void plotAreaChanged(QRectF plotArea);
+    void seriesAdded(QAbstractSeries* series);
+    void seriesRemoved(QAbstractSeries* series);
 
 public Q_SLOTS:
     void changeMinimumMargins(int top, int bottom, int left, int right);
     void handleAxisXSet(QAbstractAxis *axis);
     void handleAxisYSet(QAbstractAxis *axis);
+    void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
 
 private:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support

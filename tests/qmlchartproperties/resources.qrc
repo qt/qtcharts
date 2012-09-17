@@ -26,5 +26,6 @@
         <file>qml/qmlchartproperties/ChartEditorLegend.qml</file>
         <file>qml/qmlchartproperties/ChartEditorProperties.qml</file>
         <file>qml/qmlchartproperties/ChartEditorTitle.qml</file>
+        <file>qml/qmlchartproperties/ChartEditorSeries.qml</file>
     </qresource>
 </RCC>

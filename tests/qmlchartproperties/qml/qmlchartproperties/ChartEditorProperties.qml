@@ -82,10 +82,6 @@ Flow {
         onClicked: chart.titleColor = main.nextColor();
     }
     Button {
-        text: "zoom -"
-        onClicked: chart.zoom(0.5);
-    }
-    Button {
         text: "top min margin +"
         onClicked: chart.minimumMargins.top += 5;
     }
