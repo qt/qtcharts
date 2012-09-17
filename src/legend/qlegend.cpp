@@ -176,7 +176,6 @@ d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,chart,this))
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries*)));
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
     setLayout(d_ptr->m_layout);
-    setVisible(false);
 }
 
 /*!
