@@ -41,11 +41,11 @@ private slots:
     void construction();
     void changedSignals();
     void customize();
-    void mouseClick();
-    void mouseHover();
+    void clickedSignal();
+    void hoverSignal();
 
 private:
-
+    QList<QPoint> slicePoints(QRectF rect);
 
 private:
 
@@ -219,75 +219,110 @@ void tst_qpieslice::customize()
     QVERIFY(s1->labelFont() != f1);
 }
 
-void tst_qpieslice::mouseClick()
+void tst_qpieslice::clickedSignal()
 {
+    // NOTE:
+    // This test is the same as tst_qpieseries::clickedSignal()
+    // Just for different signals.
+
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
     // create a pie series
     QPieSeries *series = new QPieSeries();
-    series->setPieSize(1.0);
     QPieSlice *s1 = series->append("slice 1", 1);
-    QPieSlice *s2 = series->append("slice 2", 2);
-    QPieSlice *s3 = series->append("slice 3", 3);
+    QPieSlice *s2 = series->append("slice 2", 1);
+    QPieSlice *s3 = series->append("slice 3", 1);
+    QPieSlice *s4 = series->append("slice 4", 1);
     QSignalSpy clickSpy1(s1, SIGNAL(clicked()));
     QSignalSpy clickSpy2(s2, SIGNAL(clicked()));
     QSignalSpy clickSpy3(s3, SIGNAL(clicked()));
+    QSignalSpy clickSpy4(s4, SIGNAL(clicked()));
 
     // add series to the chart
-    QChartView view(new QChart());
+    QChartView view;
     view.chart()->legend()->setVisible(false);
-    view.resize(200, 200);
     view.chart()->addSeries(series);
     view.show();
     QTest::qWaitForWindowShown(&view);
 
     // simulate clicks
-    // pie rectangle: QRectF(60,60 121x121)
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0,  QPoint(139, 85)); // inside slice 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0,  QPoint(146, 136)); // inside slice 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0,  QPoint(91, 119)); // inside slice 3
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0,  QPoint(70, 70)); // inside pie rectangle but not inside a slice
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0,  QPoint(170, 170)); // inside pie rectangle but not inside a slice
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+    series->setPieSize(1.0);
+    QRectF pieRect = view.chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(1));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(2));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, points.at(3));
     QCOMPARE(clickSpy1.count(), 1);
     QCOMPARE(clickSpy2.count(), 1);
     QCOMPARE(clickSpy3.count(), 1);
+    QCOMPARE(clickSpy4.count(), 1);
 }
 
-void tst_qpieslice::mouseHover()
+void tst_qpieslice::hoverSignal()
 {
-    // create a pie series
+    // NOTE:
+    // This test is the same as tst_qpieseries::hoverSignal()
+    // Just for different signals.
+
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
+    // add some slices
     QPieSeries *series = new QPieSeries();
-    series->setPieSize(1.0);
     QPieSlice *s1 = series->append("slice 1", 1);
-    series->append("slice 2", 2);
-    series->append("slice 3", 3);
+    QPieSlice *s2 = series->append("slice 2", 1);
+    QPieSlice *s3 = series->append("slice 3", 1);
+    QPieSlice *s4 = series->append("slice 4", 1);
 
     // add series to the chart
-    QChartView view(new QChart());
+    QChartView view;
     view.chart()->legend()->setVisible(false);
-    view.resize(200, 200);
     view.chart()->addSeries(series);
     view.show();
     QTest::qWaitForWindowShown(&view);
 
-    // first move to right top corner
-    QTest::mouseMove(view.viewport(), QPoint(200, 0));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
+    // move inside the slices
+    series->setPieSize(1.0);
+    QRectF pieRect = view.chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseMove(view.viewport(), pieRect.topRight().toPoint());
+    QSignalSpy hoverSpy1(s1, SIGNAL(hovered(bool)));
+    QSignalSpy hoverSpy2(s2, SIGNAL(hovered(bool)));
+    QSignalSpy hoverSpy3(s3, SIGNAL(hovered(bool)));
+    QSignalSpy hoverSpy4(s4, SIGNAL(hovered(bool)));
+    QTest::mouseMove(view.viewport(), points.at(0));
+    QTest::mouseMove(view.viewport(), points.at(1));
+    QTest::mouseMove(view.viewport(), points.at(2));
+    QTest::mouseMove(view.viewport(), points.at(3));
+    QTest::mouseMove(view.viewport(), pieRect.topLeft().toPoint());
 
-    // move inside slice rectangle but NOT the actual slice
-    // pie rectangle: QRectF(60,60 121x121)
-    QSignalSpy hoverSpy(s1, SIGNAL(hovered(bool)));
-    QTest::mouseMove(view.viewport(), QPoint(170, 70));
-    TRY_COMPARE(hoverSpy.count(), 0);
+    // check
+    QCOMPARE(hoverSpy1.count(), 2);
+    QCOMPARE(qvariant_cast<bool>(hoverSpy1.at(0).at(0)), true);
+    QCOMPARE(qvariant_cast<bool>(hoverSpy1.at(1).at(0)), false);
+    QCOMPARE(hoverSpy2.count(), 2);
+    QCOMPARE(qvariant_cast<bool>(hoverSpy2.at(0).at(0)), true);
+    QCOMPARE(qvariant_cast<bool>(hoverSpy2.at(1).at(0)), false);
+    QCOMPARE(hoverSpy3.count(), 2);
+    QCOMPARE(qvariant_cast<bool>(hoverSpy3.at(0).at(0)), true);
+    QCOMPARE(qvariant_cast<bool>(hoverSpy3.at(1).at(0)), false);
+    QCOMPARE(hoverSpy4.count(), 2);
+    QCOMPARE(qvariant_cast<bool>(hoverSpy4.at(0).at(0)), true);
+    QCOMPARE(qvariant_cast<bool>(hoverSpy4.at(1).at(0)), false);
+}
 
-    // move inside the slice
-    QTest::mouseMove(view.viewport(), QPoint(139, 85));
-    TRY_COMPARE(hoverSpy.count(), 1);
-    QCOMPARE(qvariant_cast<bool>(hoverSpy.at(0).at(0)), true);
-
-    // move outside the slice
-    QTest::mouseMove(view.viewport(), QPoint(200, 0));
-    TRY_COMPARE(hoverSpy.count(), 2);
-    QCOMPARE(qvariant_cast<bool>(hoverSpy.at(1).at(0)), false);
+QList<QPoint> tst_qpieslice::slicePoints(QRectF rect)
+{
+    qreal x1 = rect.topLeft().x() + (rect.width() / 4);
+    qreal x2 = rect.topLeft().x() + (rect.width() / 4) * 3;
+    qreal y1 = rect.topLeft().y() + (rect.height() / 4);
+    qreal y2 = rect.topLeft().y() + (rect.height() / 4) * 3;
+    QList<QPoint> points;
+    points << QPoint(x2, y1);
+    points << QPoint(x2, y2);
+    points << QPoint(x1, y2);
+    points << QPoint(x1, y1);
+    return points;
 }
 
 QTEST_MAIN(tst_qpieslice)

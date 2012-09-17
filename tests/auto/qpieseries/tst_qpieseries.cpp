@@ -60,6 +60,7 @@ private slots:
 
 private:
     void verifyCalculatedData(const QPieSeries &series, bool *ok);
+    QList<QPoint> slicePoints(QRectF rect);
 
 private:
     QChartView *m_view;
@@ -477,9 +478,12 @@ void tst_qpieseries::verifyCalculatedData(const QPieSeries &series, bool *ok)
     *ok = true;
 }
 
-
 void tst_qpieseries::clickedSignal()
 {
+    // NOTE:
+    // This test is the same as tst_qpieslice::clickedSignal()
+    // Just for different signals.
+
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
 
     // add some slices
@@ -491,109 +495,85 @@ void tst_qpieseries::clickedSignal()
 
     // add series to the chart
     m_view->chart()->legend()->setVisible(false);
-    m_view->resize(200, 200);
     m_view->chart()->addSeries(m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
 
-    // if you divide the chart in four equal tiles these
-    // are the center points of those tiles
-    QPoint p1(90.25, 90);
-    QPoint p2(150, 90);
-    QPoint p3(90, 150);
-    QPoint p4(150, 150);
-
-    QPoint center(120, 120);
-
+    // test maximum size
     m_series->setPieSize(1.0);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
-    TRY_COMPARE(clickSpy.count(), 5); // all hit
-    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s4);
-    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(1).at(0)), s1);
+    QRectF pieRect = m_view->chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(1));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(2));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(3));
+    TRY_COMPARE(clickSpy.count(), 4);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s1);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(1).at(0)), s2);
     QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(2).at(0)), s3);
-    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(3).at(0)), s2);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(3).at(0)), s4);
     clickSpy.clear();
 
+    // test half size
     m_series->setPieSize(0.5);
     m_series->setVerticalPosition(0.25);
     m_series->setHorizontalPosition(0.25);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1); // hits
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
-    TRY_COMPARE(clickSpy.count(), 1);
-    clickSpy.clear();
-
-    m_series->setVerticalPosition(0.25);
-    m_series->setHorizontalPosition(0.75);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2); // hits
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
-    TRY_COMPARE(clickSpy.count(), 1);
-    clickSpy.clear();
-
-    m_series->setVerticalPosition(0.75);
-    m_series->setHorizontalPosition(0.25);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3); // hits
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
-    TRY_COMPARE(clickSpy.count(), 1);
-    clickSpy.clear();
-
-    m_series->setVerticalPosition(0.75);
-    m_series->setHorizontalPosition(0.75);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p1);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p2);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p3);
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, p4); // hits
-    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, center);
-    TRY_COMPARE(clickSpy.count(), 1);
-    clickSpy.clear();
+    pieRect = QRectF(m_view->chart()->plotArea().topLeft(), m_view->chart()->plotArea().center());
+    points = slicePoints(pieRect);
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(0));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(1));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(2));
+    QTest::mouseClick(m_view->viewport(), Qt::LeftButton, 0, points.at(3));
+    TRY_COMPARE(clickSpy.count(), 4);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(0).at(0)), s1);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(1).at(0)), s2);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(2).at(0)), s3);
+    QCOMPARE(qvariant_cast<QPieSlice*>(clickSpy.at(3).at(0)), s4);
 }
 
 void tst_qpieseries::hoverSignal()
 {
+    // NOTE:
+    // This test is the same as tst_qpieslice::hoverSignal()
+    // Just for different signals.
+
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
 
     // add some slices
-    m_series->setPieSize(1.0);
     QPieSlice *s1 = m_series->append("slice 1", 1);
-    m_series->append("slice 2", 2);
-    m_series->append("slice 3", 3);
+    QPieSlice *s2 = m_series->append("slice 2", 1);
+    QPieSlice *s3 = m_series->append("slice 3", 1);
+    QPieSlice *s4 = m_series->append("slice 4", 1);
 
     // add series to the chart
     m_view->chart()->legend()->setVisible(false);
-    m_view->resize(200, 200);
     m_view->chart()->addSeries(m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
 
-    // first move to right top corner
-    QTest::mouseMove(m_view->viewport(), QPoint(200, 0));
-    QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
-
-    // move inside the slice
-    // pie rectangle: QRectF(60,60 121x121)
+    // move inside the slices
+    m_series->setPieSize(1.0);
+    QRectF pieRect = m_view->chart()->plotArea();
+    QList<QPoint> points = slicePoints(pieRect);
+    QTest::mouseMove(m_view->viewport(), pieRect.topRight().toPoint());
     QSignalSpy hoverSpy(m_series, SIGNAL(hovered(QPieSlice*,bool)));
-    QTest::mouseMove(m_view->viewport(), QPoint(139, 85));
-    TRY_COMPARE(hoverSpy.count(), 1);
-    QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(0).at(0)), s1);
-    QCOMPARE(qvariant_cast<bool>(hoverSpy.at(0).at(1)), true);
+    QTest::mouseMove(m_view->viewport(), points.at(0));
+    QTest::mouseMove(m_view->viewport(), points.at(1));
+    QTest::mouseMove(m_view->viewport(), points.at(2));
+    QTest::mouseMove(m_view->viewport(), points.at(3));
+    QTest::mouseMove(m_view->viewport(), pieRect.topLeft().toPoint());
 
-    // move outside the slice
-    QTest::mouseMove(m_view->viewport(), QPoint(200, 0));
-    TRY_COMPARE(hoverSpy.count(), 2);
-    QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(1).at(0)), s1);
-    QCOMPARE(qvariant_cast<bool>(hoverSpy.at(1).at(1)), false);
+    // check
+    QCOMPARE(hoverSpy.count(), 8);
+    int i = 0;
+    foreach (QPieSlice *s, m_series->slices()) {
+        QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(i).at(0)), s);
+        QCOMPARE(qvariant_cast<bool>(hoverSpy.at(i).at(1)), true);
+        i++;
+        QCOMPARE(qvariant_cast<QPieSlice*>(hoverSpy.at(i).at(0)), s);
+        QCOMPARE(qvariant_cast<bool>(hoverSpy.at(i).at(1)), false);
+        i++;
+    }
 }
 
 void tst_qpieseries::sliceSeries()
@@ -634,6 +614,20 @@ void tst_qpieseries::destruction()
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), 1);
+}
+
+QList<QPoint> tst_qpieseries::slicePoints(QRectF rect)
+{
+    qreal x1 = rect.topLeft().x() + (rect.width() / 4);
+    qreal x2 = rect.topLeft().x() + (rect.width() / 4) * 3;
+    qreal y1 = rect.topLeft().y() + (rect.height() / 4);
+    qreal y2 = rect.topLeft().y() + (rect.height() / 4) * 3;
+    QList<QPoint> points;
+    points << QPoint(x2, y1);
+    points << QPoint(x2, y2);
+    points << QPoint(x1, y2);
+    points << QPoint(x1, y1);
+    return points;
 }
 
 QTEST_MAIN(tst_qpieseries)
