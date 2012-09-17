@@ -42,6 +42,7 @@ public slots:
 private slots:
     void seriesName();
     void seriesVisible();
+    void seriesOpacity();
     void oper_data();
     void oper();
     void pen_data();

@@ -63,6 +63,24 @@ void tst_QXYSeries::seriesVisible()
     TRY_COMPARE(visibleSpy.count(), 2);
 }
 
+void tst_QXYSeries::seriesOpacity()
+{
+    QSignalSpy opacitySpy(m_series, SIGNAL(opacityChanged()));
+    QCOMPARE(m_series->opacity(), 1.0);
+
+    m_series->setOpacity(0.5);
+    QCOMPARE(m_series->opacity(), 0.5);
+    QCOMPARE(opacitySpy.count(), 1);
+
+    m_series->setOpacity(0.0);
+    QCOMPARE(m_series->opacity(), 0.0);
+    QCOMPARE(opacitySpy.count(), 2);
+
+    m_series->setOpacity(1.0);
+    QCOMPARE(m_series->opacity(), 1.0);
+    QCOMPARE(opacitySpy.count(), 3);
+}
+
 void tst_QXYSeries::append_data()
 {
     QTest::addColumn< QList<QPointF> >("points");

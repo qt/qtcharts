@@ -36,6 +36,7 @@ class QTCOMMERCIALCHART_EXPORT QAbstractSeries : public QObject
     Q_OBJECT
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
+    Q_PROPERTY(qreal opacity READ opacity WRITE setOpacity NOTIFY opacityChanged)
     Q_PROPERTY(SeriesType type READ type)
     Q_ENUMS(SeriesType)
 
@@ -65,6 +66,9 @@ public:
     QString name() const;
     void setVisible(bool visible = true);
     bool isVisible() const;
+    qreal opacity() const;
+    void setOpacity(qreal opacity);
+
     QChart* chart() const;
 
     void show();
@@ -73,6 +77,7 @@ public:
 Q_SIGNALS:
     void nameChanged();
     void visibleChanged();
+    void opacityChanged();
 
 protected:
     QScopedPointer<QAbstractSeriesPrivate> d_ptr;

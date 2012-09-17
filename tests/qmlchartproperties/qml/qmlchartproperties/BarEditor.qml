@@ -82,6 +82,14 @@ Row {
             onClicked: series.visible = !series.visible;
         }
         Button {
+            text: "opacity +"
+            onClicked: series.opacity += 0.1;
+        }
+        Button {
+            text: "opacity -"
+            onClicked: series.opacity -= 0.1;
+        }
+        Button {
             text: "bar width +"
             onClicked: series.barWidth += 0.1;
         }

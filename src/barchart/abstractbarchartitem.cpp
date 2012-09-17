@@ -45,6 +45,7 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, ChartPres
     connect(series->d_func(), SIGNAL(labelsVisibleChanged(bool)), this, SLOT(handleLabelsVisibleChanged(bool)));
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
     connect(series, SIGNAL(visibleChanged()), this, SLOT(handleVisibleChanged()));
+    connect(series, SIGNAL(opacityChanged()), this, SLOT(handleOpacityChanged()));
     setZValue(ChartPresenter::BarSeriesZValue);
     handleDataStructureChanged();
 }
@@ -170,9 +171,14 @@ void AbstractBarChartItem::handleVisibleChanged()
 {
     bool visible = m_series->isVisible();
     handleLabelsVisibleChanged(visible);
-    foreach(QGraphicsItem *item, childItems()) {
+    foreach(QGraphicsItem *item, childItems())
         item->setVisible(visible);
-    }
+}
+
+void AbstractBarChartItem::handleOpacityChanged()
+{
+    foreach(QGraphicsItem *item, childItems())
+        item->setOpacity(m_series->opacity());
 }
 
 void AbstractBarChartItem::handleUpdatedBars()

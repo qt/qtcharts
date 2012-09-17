@@ -41,6 +41,7 @@ ChartView {
 
         onNameChanged:              console.log("lineSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("lineSeries.onVisibleChanged: " + visible);
+        onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
         onPointReplaced:            console.log("lineSeries.onPointReplaced: " + index);
         onPointRemoved:             console.log("lineSeries.onPointRemoved: " + index);

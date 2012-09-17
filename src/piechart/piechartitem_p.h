@@ -65,6 +65,7 @@ public Q_SLOTS:
     void handleSlicesRemoved(QList<QPieSlice*> slices);
     void handleSliceChanged();
     void handleSeriesVisibleChanged();
+    void handleOpacityChanged();
 
     void setAnimation(PieAnimation* animation);
     ChartAnimation* animation() const;

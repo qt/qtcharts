@@ -59,6 +59,7 @@ private slots:
     void barSets();
     void setLabelsVisible_data();
     void setLabelsVisible();
+    void opacity();
     void mouseclicked_data();
     void mouseclicked();
     void mousehovered_data();
@@ -340,6 +341,25 @@ void tst_QBarSeries::setLabelsVisible()
     m_barseries_with_sets->setLabelsVisible();
     // TODO: test the signal
     QVERIFY(m_barseries_with_sets->isLabelsVisible() == true);
+}
+
+void tst_QBarSeries::opacity()
+{
+    QSignalSpy opacitySpy(m_barseries, SIGNAL(opacityChanged()));
+
+    QCOMPARE(m_barseries->opacity(), 1.0);
+
+    m_barseries->setOpacity(0.5);
+    QCOMPARE(m_barseries->opacity(), 0.5);
+    QCOMPARE(opacitySpy.count(), 1);
+
+    m_barseries->setOpacity(0.0);
+    QCOMPARE(m_barseries->opacity(), 0.0);
+    QCOMPARE(opacitySpy.count(), 2);
+
+    m_barseries->setOpacity(1.0);
+    QCOMPARE(m_barseries->opacity(), 1.0);
+    QCOMPARE(opacitySpy.count(), 3);
 }
 
 void tst_QBarSeries::mouseclicked_data()

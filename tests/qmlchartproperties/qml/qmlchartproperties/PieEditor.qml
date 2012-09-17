@@ -83,6 +83,14 @@ Row {
             onClicked: series.visible = !series.visible;
         }
         Button {
+            text: "series opacity +"
+            onClicked: series.opacity += 0.1;
+        }
+        Button {
+            text: "series opacity -"
+            onClicked: series.opacity -= 0.1;
+        }
+        Button {
             text: "series hpos +"
             onClicked: series.horizontalPosition += 0.1;
         }

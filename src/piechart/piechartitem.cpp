@@ -41,6 +41,7 @@ PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
 
     QPieSeriesPrivate *p = QPieSeriesPrivate::fromSeries(series);
     connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
+    connect(series, SIGNAL(opacityChanged()), this, SLOT(handleOpacityChanged()));
     connect(series, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleSlicesAdded(QList<QPieSlice*>)));
     connect(series, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleSlicesRemoved(QList<QPieSlice*>)));
     connect(p, SIGNAL(horizontalPositionChanged()), this, SLOT(updateLayout()));
@@ -226,6 +227,11 @@ void PieChartItem::handleSliceChanged()
 void PieChartItem::handleSeriesVisibleChanged()
 {
     setVisible(m_series->isVisible());
+}
+
+void PieChartItem::handleOpacityChanged()
+{
+    setOpacity(m_series->opacity());
 }
 
 PieSliceData PieChartItem::updateSliceGeometry(QPieSlice *slice)

@@ -56,6 +56,7 @@ ChartView {
 
         onNameChanged:              console.log("percentBarSeries.onNameChanged: " + series.name);
         onVisibleChanged:           console.log("percentBarSeries.onVisibleChanged: " + series.visible);
+        onOpacityChanged:           console.log("percentBarSeries.onOpacityChanged: " + opacity);
         onClicked:                  console.log("percentBarSeries.onClicked: " + barset + " " + index);
         onHovered:                  console.log("percentBarSeries.onHovered: " + barset + " " + status);
         onLabelsVisibleChanged:     console.log("percentBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);

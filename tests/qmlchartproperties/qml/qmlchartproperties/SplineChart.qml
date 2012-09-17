@@ -40,6 +40,7 @@ ChartView {
 
         onNameChanged:              console.log("splineSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("splineSeries.onVisibleChanged: " + visible);
+        onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
         onPointReplaced:            console.log("splineSeries.onPointReplaced: " + index);
         onPointRemoved:             console.log("splineSeries.onPointRemoved: " + index);

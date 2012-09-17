@@ -54,11 +54,12 @@ ChartView {
         BarSet { label: "Susan"; values: [5, 1, 2, 4, 1, 7] }
         BarSet { label: "James"; values: [3, 5, 8, 13, 5, 8] }
 
-        onNameChanged:              console.log("groupedBarSeries.onNameChanged: " + series.name);
-        onVisibleChanged:           console.log("groupedBarSeries.onVisibleChanged: " + series.visible);
-        onClicked:                  console.log("groupedBarSeries.onClicked: " + barset + " " + index);
-        onHovered:                  console.log("groupedBarSeries.onHovered: " + barset + " " + status);
-        onLabelsVisibleChanged:     console.log("groupedBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);
-        onCountChanged:             console.log("groupedBarSeries.onCountChanged: " + count);
+        onNameChanged:              console.log("barSeries.onNameChanged: " + series.name);
+        onVisibleChanged:           console.log("barSeries.onVisibleChanged: " + series.visible);
+        onOpacityChanged:           console.log("barSeries.onOpacityChanged: " + opacity);
+        onClicked:                  console.log("barSeries.onClicked: " + barset + " " + index);
+        onHovered:                  console.log("barSeries.onHovered: " + barset + " " + status);
+        onLabelsVisibleChanged:     console.log("barSeries.onLabelsVisibleChanged: " + series.labelsVisible);
+        onCountChanged:             console.log("barSeries.onCountChanged: " + count);
     }
 }

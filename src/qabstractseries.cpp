@@ -151,6 +151,19 @@ bool QAbstractSeries::isVisible() const
     return d_ptr->m_visible;
 }
 
+qreal QAbstractSeries::opacity() const
+{
+    return d_ptr->m_opacity;
+}
+
+void QAbstractSeries::setOpacity(qreal opacity)
+{
+    if (opacity != d_ptr->m_opacity) {
+        d_ptr->m_opacity = opacity;
+        emit opacityChanged();
+    }
+}
+
 /*!
     \brief Returns the chart where series belongs to.
 
@@ -193,7 +206,8 @@ QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q):
     q_ptr(q),
     m_chart(0),
     m_dataset(0),
-    m_visible(true)
+    m_visible(true),
+    m_opacity(1.0)
 {
 }
 

@@ -61,6 +61,7 @@ protected:
     ChartDataSet *m_dataset;
     QString m_name;
     bool m_visible;
+    qreal m_opacity;
 
     friend class QAbstractSeries;
     friend class ChartDataSet;

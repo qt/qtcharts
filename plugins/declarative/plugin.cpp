@@ -58,6 +58,7 @@ class ChartQmlPlugin : public QDeclarativeExtensionPlugin
     Q_OBJECT
 
 #ifdef QT5_QUICK_1
+    // TODO: fix the metadata
     Q_PLUGIN_METADATA(IID "org.qt-project.foo")
 #endif
 

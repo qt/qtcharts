@@ -52,15 +52,16 @@ ChartView {
         PieSlice { label: "slice3"; value: 33 }
         PieSlice { label: "slice4"; value: 44 }
 
-        onNameChanged:              console.log("pieSeries.onNameChanged: " + series.name);
+        onNameChanged:              console.log("pieSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("pieSeries.onVisibleChanged: " + series.visible);
+        onOpacityChanged:           console.log("pieSeries.onOpacityChanged: " + opacity);
         onClicked:                  console.log("pieSeries.onClicked: " + slice.label);
         onHovered:                  console.log("pieSeries.onHovered: " + slice.label);
         onAdded:                    console.log("pieSeries.onAdded: " + slices);
         onSliceAdded:               console.log("pieSeries.onSliceAdded: " + slice.label);
         onRemoved:                  console.log("pieSeries.onRemoved: " + slices);
         onSliceRemoved:             console.log("pieSeries.onSliceRemoved: " + slice.label);
-        onCountChanged:             console.log("pieSeries.onCountChanged: " + series.count);
-        onSumChanged:               console.log("pieSeries.onSumChanged: " + series.sum);
+        onCountChanged:             console.log("pieSeries.onCountChanged: " + count);
+        onSumChanged:               console.log("pieSeries.onSumChanged: " + sum);
     }
 }

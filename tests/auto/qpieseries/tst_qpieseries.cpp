@@ -97,6 +97,7 @@ void tst_qpieseries::properties()
 {
     QSignalSpy countSpy(m_series, SIGNAL(countChanged()));
     QSignalSpy sumSpy(m_series, SIGNAL(sumChanged()));
+    QSignalSpy opacitySpy(m_series, SIGNAL(opacityChanged()));
 
     QVERIFY(m_series->type() == QAbstractSeries::SeriesTypePie);
     QVERIFY(m_series->count() == 0);
@@ -107,6 +108,7 @@ void tst_qpieseries::properties()
     QCOMPARE(m_series->pieSize(), 0.7);
     QCOMPARE(m_series->pieStartAngle(), 0.0);
     QCOMPARE(m_series->pieEndAngle(), 360.0);
+    QCOMPARE(m_series->opacity(), 1.0);
 
     m_series->append("s1", 1);
     m_series->append("s2", 1);
@@ -167,6 +169,16 @@ void tst_qpieseries::properties()
     m_series->setVerticalPosition(1.0);
     m_series->setVerticalPosition(2.0);
     QCOMPARE(m_series->verticalPosition(), 1.0);
+
+    m_series->setOpacity(0.5);
+    QCOMPARE(m_series->opacity(), 0.5);
+    QCOMPARE(opacitySpy.count(), 1);
+    m_series->setOpacity(0.0);
+    QCOMPARE(m_series->opacity(), 0.0);
+    QCOMPARE(opacitySpy.count(), 2);
+    m_series->setOpacity(1.0);
+    QCOMPARE(m_series->opacity(), 1.0);
+    QCOMPARE(opacitySpy.count(), 3);
 }
 
 void tst_qpieseries::append()

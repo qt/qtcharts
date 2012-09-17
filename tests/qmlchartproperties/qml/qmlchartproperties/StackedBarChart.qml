@@ -55,6 +55,7 @@ ChartView {
 
         onNameChanged:              console.log("stackedBarSeries.onNameChanged: " + series.name);
         onVisibleChanged:           console.log("stackedBarSeries.onVisibleChanged: " + series.visible);
+        onOpacityChanged:           console.log("stackedBarSeries.onOpacityChanged: " + opacity);
         onClicked:                  console.log("stackedBarSeries.onClicked: " + barset + " " + index);
         onHovered:                  console.log("stackedBarSeries.onHovered: " + barset + " " + status);
         onLabelsVisibleChanged:     console.log("stackedBarSeries.onLabelsVisibleChanged: " + series.labelsVisible);

@@ -48,6 +48,7 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
 
     QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
+    QObject::connect(m_series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
     QObject::connect(this,SIGNAL(clicked(QPointF)),areaSeries,SIGNAL(clicked(QPointF)));
 
     handleUpdated();
@@ -98,6 +99,7 @@ void AreaChartItem::handleUpdated()
     m_brush = m_series->brush();
     m_pointPen = m_series->pen();
     m_pointPen.setWidthF(2 * m_pointPen.width());
+    setOpacity(m_series->opacity());
 
     update();
 }

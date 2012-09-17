@@ -37,6 +37,7 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, ChartPresenter *presente
     setZValue(ChartPresenter::SplineChartZValue);
     QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
+    QObject::connect(series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
     handleUpdated();
 }
 
@@ -135,6 +136,7 @@ void SplineChartItem::updateGeometry()
 void SplineChartItem::handleUpdated()
 {
     setVisible(m_series->isVisible());
+    setOpacity(m_series->opacity());
     m_pointsVisible = m_series->pointsVisible();
     m_linePen = m_series->pen();
     m_pointPen = m_series->pen();

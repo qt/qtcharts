@@ -40,6 +40,7 @@ ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *prese
 {
     QObject::connect(m_series->d_func(),SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
+    QObject::connect(m_series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
 
     setZValue(ChartPresenter::ScatterSeriesZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
@@ -174,6 +175,7 @@ void ScatterChartItem::handleUpdated()
     m_visible = m_series->isVisible();
     m_size = m_series->markerSize();
     m_shape = m_series->markerShape();
+    setOpacity(m_series->opacity());
 
     if(recreate) {
         // TODO: optimize handleUpdate to recreate points only in case shape changed

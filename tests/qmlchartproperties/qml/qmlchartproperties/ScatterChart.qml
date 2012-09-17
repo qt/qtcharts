@@ -39,6 +39,7 @@ ChartView {
 
         onNameChanged:              console.log("scatterSeries.onNameChanged: " + name);
         onVisibleChanged:           console.log("scatterSeries.onVisibleChanged: " + visible);
+        onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
         onPointReplaced:            console.log("scatterSeries.onPointReplaced: " + index);
         onPointRemoved:             console.log("scatterSeries.onPointRemoved: " + index);

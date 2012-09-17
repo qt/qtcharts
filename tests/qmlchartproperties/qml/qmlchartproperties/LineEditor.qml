@@ -32,6 +32,14 @@ Flow {
         onClicked: series.visible = !series.visible;
     }
     Button {
+        text: "opacity +"
+        onClicked: series.opacity += 0.1;
+    }
+    Button {
+        text: "opacity -"
+        onClicked: series.opacity -= 0.1;
+    }
+    Button {
         text: "color"
         onClicked: series.color = main.nextColor();
     }

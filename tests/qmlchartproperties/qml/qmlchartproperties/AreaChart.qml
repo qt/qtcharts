@@ -63,6 +63,7 @@ ChartView {
 
         onNameChanged:              console.log(name + ".onNameChanged: " + name);
         onVisibleChanged:           console.log(name + ".onVisibleChanged: " + visible);
+        onOpacityChanged:           console.log(name + ".onOpacityChanged: " + opacity);
         onClicked:                  console.log(name + ".onClicked: " + point.x + ", " + point.y);
         onSelected:                 console.log(name + ".onSelected");
         onColorChanged:             console.log(name + ".onColorChanged: " + color);
