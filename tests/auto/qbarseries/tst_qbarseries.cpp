@@ -371,7 +371,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(95,143));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(72,150));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -389,7 +389,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(187,143));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(186,150));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -407,7 +407,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(280,143));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(300,150));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -425,7 +425,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(118,143));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(100,150));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -443,7 +443,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(210,143));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(214,150));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -461,7 +461,7 @@ void tst_QBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(303,143));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(328,150));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -510,7 +510,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse to left border
-    QTest::mouseMove(view.viewport(), QPoint(0, 143));
+    QTest::mouseMove(view.viewport(), QPoint(0, 150));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
     TRY_COMPARE(seriesSpy.count(), 0);
     TRY_COMPARE(setSpy1.count(), 0);
@@ -518,7 +518,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse on top of set1
-    QTest::mouseMove(view.viewport(), QPoint(95,143));
+    QTest::mouseMove(view.viewport(), QPoint(72,150));
     TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(setSpy1.count(), 1);
     TRY_COMPARE(setSpy2.count(), 0);
@@ -534,7 +534,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set1 to top of set2
-    QTest::mouseMove(view.viewport(), QPoint(118,143));
+    QTest::mouseMove(view.viewport(), QPoint(100,150));
     TRY_COMPARE(seriesSpy.count(), 2);
     TRY_COMPARE(setSpy1.count(), 1);
     TRY_COMPARE(setSpy2.count(), 1);
@@ -561,7 +561,7 @@ void tst_QBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set2 to background
-    QTest::mouseMove(view.viewport(), QPoint(118,0));
+    QTest::mouseMove(view.viewport(), QPoint(100,0));
     TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(setSpy1.count(), 0);
     TRY_COMPARE(setSpy2.count(), 1);

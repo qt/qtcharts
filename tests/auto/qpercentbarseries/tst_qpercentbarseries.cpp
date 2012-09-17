@@ -120,7 +120,7 @@ void tst_QPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, category test1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(106,190));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(86,211));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -132,7 +132,7 @@ void tst_QPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, category test2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(199,190));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(200,211));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -144,7 +144,7 @@ void tst_QPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, category test3
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(292,190));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(314,211));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -156,7 +156,7 @@ void tst_QPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, category test1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(106,95));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(86,90));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -168,7 +168,7 @@ void tst_QPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, category test2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(199,95));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(200,90));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -180,7 +180,7 @@ void tst_QPercentBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, category test3
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(292,95));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(314,90));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -221,13 +221,13 @@ void tst_QPercentBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse to left border
-    QTest::mouseMove(view.viewport(), QPoint(0, 190));
+    QTest::mouseMove(view.viewport(), QPoint(0, 211));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
     TRY_COMPARE(seriesSpy.count(), 0);
 
 //=======================================================================
 // move mouse on top of set1
-    QTest::mouseMove(view.viewport(), QPoint(106,190));
+    QTest::mouseMove(view.viewport(), QPoint(86,211));
     TRY_COMPARE(seriesSpy.count(), 1);
 
     QList<QVariant> seriesSpyArg = seriesSpy.takeFirst();
@@ -237,7 +237,7 @@ void tst_QPercentBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set1 to top of set2
-    QTest::mouseMove(view.viewport(), QPoint(106,95));
+    QTest::mouseMove(view.viewport(), QPoint(86,90));
     TRY_COMPARE(seriesSpy.count(), 2);
 
     // should leave set1
@@ -254,7 +254,7 @@ void tst_QPercentBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set2 to background
-    QTest::mouseMove(view.viewport(), QPoint(106,0));
+    QTest::mouseMove(view.viewport(), QPoint(86,0));
     TRY_COMPARE(seriesSpy.count(), 1);
 
     // should leave set2
