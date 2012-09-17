@@ -315,6 +315,8 @@ void tst_QHorizontalBarSeries::mouseclicked_data()
 
 void tst_QHorizontalBarSeries::mouseclicked()
 {
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
     QHorizontalBarSeries* series = new QHorizontalBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
@@ -451,6 +453,8 @@ void tst_QHorizontalBarSeries::mousehovered_data()
 
 void tst_QHorizontalBarSeries::mousehovered()
 {
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
     QHorizontalBarSeries* series = new QHorizontalBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));

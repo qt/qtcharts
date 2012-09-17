@@ -100,6 +100,8 @@ void tst_QHorizontalPercentBarSeries::mouseclicked_data()
 
 void tst_QHorizontalPercentBarSeries::mouseclicked()
 {
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
     QHorizontalPercentBarSeries* series = new QHorizontalPercentBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
@@ -198,6 +200,8 @@ void tst_QHorizontalPercentBarSeries::mousehovered_data()
 
 void tst_QHorizontalPercentBarSeries::mousehovered()
 {
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+
     QHorizontalPercentBarSeries* series = new QHorizontalPercentBarSeries();
 
     QBarSet* set1 = new QBarSet(QString("set 1"));
