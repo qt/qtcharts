@@ -552,10 +552,10 @@ void tst_qpieseries::hoverSignal()
     SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
 
     // add some slices
-    QPieSlice *s1 = m_series->append("slice 1", 1);
-    QPieSlice *s2 = m_series->append("slice 2", 1);
-    QPieSlice *s3 = m_series->append("slice 3", 1);
-    QPieSlice *s4 = m_series->append("slice 4", 1);
+    m_series->append("slice 1", 1);
+    m_series->append("slice 2", 1);
+    m_series->append("slice 3", 1);
+    m_series->append("slice 4", 1);
 
     // add series to the chart
     m_view->chart()->legend()->setVisible(false);
