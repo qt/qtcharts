@@ -47,28 +47,26 @@ QVector<QRectF> BarChartItem::calculateLayout()
     qreal rangeX = m_domainMaxX - m_domainMinX;
     qreal scaleY = (height / rangeY);
     qreal scaleX = (width / rangeX);
-    qreal barWidth;
-
-    barWidth = (scaleX / setCount) * m_series->d_func()->barWidth();
+    qreal rectWidth = (scaleX / setCount) * m_series->d_func()->barWidth();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal yPos = height + scaleY * m_domainMinY + geometry().topLeft().y();
+        qreal yPos = height + scaleY * m_domainMinY + geometry().top();
         for (int set = 0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + m_rect.left();
-            xPos -= setCount*barWidth/2;
-            xPos += set*barWidth;
+            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left();
+            xPos -= setCount*rectWidth/2;
+            xPos += set*rectWidth;
 
-            qreal barHeight = barSet->value(category) * scaleY;
+            qreal rectHeight = barSet->value(category) * scaleY;
             Bar* bar = m_bars.at(itemIndex);
 
-            QRectF rect(xPos, yPos - barHeight, barWidth, barHeight);
+            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
             layout.append(rect);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(barHeight)) {
+            if (qFuzzyIsNull(rectHeight)) {
                 bar->setVisible(false);
             } else {
                 bar->setVisible(barsVisible);
@@ -83,7 +81,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
             }
 
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                          ,yPos - barHeight/2 - label->boundingRect().height()/2);
+                          ,yPos - rectHeight/2 - label->boundingRect().height()/2);
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 

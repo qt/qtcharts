@@ -46,10 +46,9 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
     qreal rangeX = m_domainMaxX - m_domainMinX;
     qreal scaleY = (height / rangeY);
     qreal scaleX = (width / rangeX);
-    qreal barHeight;
 
- // On horizontal chart barWidth of the barseries means height of the rect.
-    barHeight = (scaleY / setCount) * m_series->d_func()->barWidth();
+    // On horizontal chart barWidth of the barseries means height of the rect.
+    qreal rectHeight = (scaleY / setCount) * m_series->d_func()->barWidth();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
@@ -57,18 +56,18 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
         for (int set = 0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal yPos = m_rect.bottom() + (m_domainMinY - barSet->pos(category)) * scaleY;
-            yPos += setCount*barHeight/2;
-            yPos -= set*barHeight;
+            qreal yPos = geometry().bottom() + (m_domainMinY - barSet->pos(category)) * scaleY;
+            yPos += setCount*rectHeight/2;
+            yPos -= set*rectHeight;
 
-            qreal barWidth = barSet->value(category) * scaleX;
+            qreal rectWidth = barSet->value(category) * scaleX;
             Bar* bar = m_bars.at(itemIndex);
 
-            QRectF rect(xPos, yPos - barHeight, barWidth, barHeight);
+            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
             layout.append(rect);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(barHeight)) {
+            if (qFuzzyIsNull(rectHeight)) {
                 bar->setVisible(false);
             } else {
                 bar->setVisible(barsVisible);
@@ -83,7 +82,7 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
             }
 
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                          ,yPos - barHeight/2 - label->boundingRect().height()/2);
+                          ,yPos - rectHeight/2 - label->boundingRect().height()/2);
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 

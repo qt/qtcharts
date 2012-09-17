@@ -46,22 +46,22 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     qreal rangeX = m_domainMaxX - m_domainMinX;
     qreal scaleY = (height / rangeY);
     qreal scaleX = (width / rangeX);
-    qreal barWidth = scaleX * m_series->d_func()->barWidth();
+    qreal rectWidth = scaleX * m_series->d_func()->barWidth();
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
-        qreal yMax = height + scaleY * m_domainMinY + geometry().topLeft().y();
-        qreal yMin = height + scaleY * m_domainMinY + geometry().topLeft().y();
+        qreal yMax = height + scaleY * m_domainMinY + geometry().top();
+        qreal yMin = height + scaleY * m_domainMinY + geometry().top();
         for (int set=0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + m_rect.left() - barWidth/2;
+            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth/2;
 
-            qreal barHeight = barSet->value(category) * scaleY;
+            qreal rectHeight = barSet->value(category) * scaleY;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(barHeight)) {
+            if (qFuzzyIsNull(rectHeight)) {
                 bar->setVisible(false);
             } else {
                 bar->setVisible(barsVisible);
@@ -77,18 +77,18 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 
-            if (barHeight < 0) {
-                QRectF rect(xPos, yMax-barHeight, barWidth, barHeight);
+            if (rectHeight < 0) {
+                QRectF rect(xPos, yMax-rectHeight, rectWidth, rectHeight);
                 layout.append(rect);
                 label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                              ,yMax - barHeight/2 - label->boundingRect().height()/2);
-                yMax -= barHeight;
+                              ,yMax - rectHeight/2 - label->boundingRect().height()/2);
+                yMax -= rectHeight;
             } else {
-                QRectF rect(xPos, yMin-barHeight, barWidth, barHeight);
+                QRectF rect(xPos, yMin-rectHeight, rectWidth, rectHeight);
                 layout.append(rect);
                 label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                              ,yMin - barHeight/2 - label->boundingRect().height()/2);
-                yMin -= barHeight;
+                              ,yMin - rectHeight/2 - label->boundingRect().height()/2);
+                yMin -= rectHeight;
             }
 
             itemIndex++;

@@ -327,6 +327,8 @@ void tst_QHorizontalBarSeries::mouseclicked()
     *set2 << 10 << 10 << 10;
     series->append(set2);
 
+    QList<QBarSet*> barSets = series->barSets();
+
     QSignalSpy seriesSpy(series,SIGNAL(clicked(int,QBarSet*)));
     QSignalSpy setSpy1(set1, SIGNAL(clicked(int)));
     QSignalSpy setSpy2(set2, SIGNAL(clicked(int)));
@@ -337,9 +339,40 @@ void tst_QHorizontalBarSeries::mouseclicked()
     view.show();
     QTest::qWaitForWindowShown(&view);
 
+    // Calculate expected layout for bars
+    QRectF plotArea = view.chart()->plotArea();
+    qreal width = plotArea.width();
+    qreal height = plotArea.height();
+    qreal rangeX = 10;  // From 0 to 10 because of maximum value in set is 10
+    qreal rangeY = 3;   // 3 values per set
+    qreal scaleY = (height / rangeY);
+    qreal scaleX = (width / rangeX);
+
+    qreal setCount = series->count();
+    qreal domainMinY = -0.5;    // These come from internal domain used by barseries.
+    qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
+    qreal rectHeight = (scaleY / setCount) * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
+
+    QVector<QRectF> layout;
+
+    // 3 = count of values in set
+    // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
+    for (int i = 0; i < 3; i++) {
+        qreal xPos = -scaleX * domainMinX + plotArea.left();
+        for (int set = 0; set < setCount; set++) {
+            qreal yPos = plotArea.bottom() + (domainMinY - i) * scaleY;
+            yPos += setCount*rectHeight/2;
+            yPos -= set*rectHeight;
+
+            qreal rectWidth = barSets.at(set)->at(i) * scaleX;
+            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
+            layout.append(rect);
+        }
+    }
+
 //====================================================================================
 // barset 1, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(200,241));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(0).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -357,7 +390,7 @@ void tst_QHorizontalBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(200,160));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(2).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -375,7 +408,7 @@ void tst_QHorizontalBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 1, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(200,79));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(4).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -393,7 +426,7 @@ void tst_QHorizontalBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 0
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(200,221));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(1).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -411,7 +444,7 @@ void tst_QHorizontalBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 1
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(200,140));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(3).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -429,7 +462,7 @@ void tst_QHorizontalBarSeries::mouseclicked()
 
 //====================================================================================
 // barset 2, bar 2
-    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, QPoint(200,59));
+    QTest::mouseClick(view.viewport(), Qt::LeftButton, 0, layout.at(5).center().toPoint());
     QCoreApplication::processEvents(QEventLoop::AllEvents, 1000);
 
     QCOMPARE(seriesSpy.count(), 1);
@@ -465,6 +498,8 @@ void tst_QHorizontalBarSeries::mousehovered()
     *set2 << 10 << 10 << 10;
     series->append(set2);
 
+    QList<QBarSet*> barSets = series->barSets();
+
     QSignalSpy seriesSpy(series,SIGNAL(hovered(bool,QBarSet*)));
     QSignalSpy setSpy1(set1, SIGNAL(hovered(bool)));
     QSignalSpy setSpy2(set2, SIGNAL(hovered(bool)));
@@ -478,9 +513,40 @@ void tst_QHorizontalBarSeries::mousehovered()
     //this is hack since view does not get events otherwise
     view.setMouseTracking(true);
 
+    // Calculate expected layout for bars
+    QRectF plotArea = view.chart()->plotArea();
+    qreal width = plotArea.width();
+    qreal height = plotArea.height();
+    qreal rangeX = 10;  // From 0 to 10 because of maximum value in set is 10
+    qreal rangeY = 3;   // 3 values per set
+    qreal scaleY = (height / rangeY);
+    qreal scaleX = (width / rangeX);
+
+    qreal setCount = series->count();
+    qreal domainMinY = -0.5;    // These come from internal domain used by barseries.
+    qreal domainMinX = 0;       // No access to domain from outside, so use hard coded values.
+    qreal rectHeight = (scaleY / setCount) * series->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
+
+    QVector<QRectF> layout;
+
+    // 3 = count of values in set
+    // Note that rects in this vector will be interleaved (set1 bar0, set2 bar0, set1 bar1, set2 bar1, etc.)
+    for (int i = 0; i < 3; i++) {
+        qreal xPos = -scaleX * domainMinX + plotArea.left();
+        for (int set = 0; set < setCount; set++) {
+            qreal yPos = plotArea.bottom() + (domainMinY - i) * scaleY;
+            yPos += setCount*rectHeight/2;
+            yPos -= set*rectHeight;
+
+            qreal rectWidth = barSets.at(set)->at(i) * scaleX;
+            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
+            layout.append(rect);
+        }
+    }
+
 //=======================================================================
 // move mouse to bottom border
-    QTest::mouseMove(view.viewport(), QPoint(200, 300));
+    QTest::mouseMove(view.viewport(), QPoint(layout.at(0).center().x(), 300));
     QCoreApplication::processEvents(QEventLoop::AllEvents, 10000);
     TRY_COMPARE(seriesSpy.count(), 0);
     TRY_COMPARE(setSpy1.count(), 0);
@@ -488,7 +554,7 @@ void tst_QHorizontalBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse on top of set1
-    QTest::mouseMove(view.viewport(), QPoint(200,241));
+    QTest::mouseMove(view.viewport(), layout.at(0).center().toPoint());
     TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(setSpy1.count(), 1);
     TRY_COMPARE(setSpy2.count(), 0);
@@ -504,7 +570,7 @@ void tst_QHorizontalBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set1 to top of set2
-    QTest::mouseMove(view.viewport(), QPoint(200,221));
+    QTest::mouseMove(view.viewport(), layout.at(1).center().toPoint());
     TRY_COMPARE(seriesSpy.count(), 2);
     TRY_COMPARE(setSpy1.count(), 1);
     TRY_COMPARE(setSpy2.count(), 1);
@@ -531,7 +597,7 @@ void tst_QHorizontalBarSeries::mousehovered()
 
 //=======================================================================
 // move mouse from top of set2 to background
-    QTest::mouseMove(view.viewport(), QPoint(0,221));
+    QTest::mouseMove(view.viewport(), QPoint(0, layout.at(0).center().y()));
     TRY_COMPARE(seriesSpy.count(), 1);
     TRY_COMPARE(setSpy1.count(), 0);
     TRY_COMPARE(setSpy2.count(), 1);

@@ -46,7 +46,7 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
     qreal rangeX = m_domainMaxX - m_domainMinX;
     qreal scaleY = (height / rangeY);
     qreal scaleX = (width / rangeX);
-    qreal barHeight = scaleY * m_series->d_func()->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
+    qreal rectHeight = scaleY * m_series->d_func()->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
 
     int itemIndex(0);
     for (int category = 0; category < categoryCount; category++) {
@@ -56,16 +56,16 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
         for (int set = 0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal yPos = (m_domainMinY +0.5 -barSet->pos(category)) * scaleY + m_rect.bottom() - barHeight/2;
+            qreal yPos = (m_domainMinY +0.5 -barSet->pos(category)) * scaleY + geometry().bottom() - rectHeight/2;
 
-            qreal barWidth = barSet->value(category) * percentage * scaleX;
+            qreal rectWidth = barSet->value(category) * percentage * scaleX;
             Bar* bar = m_bars.at(itemIndex);
 
-            QRectF rect(xPos, yPos - barHeight, barWidth, barHeight);
+            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
             layout.append(rect);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(barHeight)) {
+            if (qFuzzyIsNull(rectHeight)) {
                 bar->setVisible(false);
             } else {
                 bar->setVisible(barsVisible);
@@ -84,12 +84,12 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
             }
 
             label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                          ,yPos - barHeight/2 - label->boundingRect().height()/2);
+                          ,yPos - rectHeight/2 - label->boundingRect().height()/2);
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 
             itemIndex++;
-            xPos += barWidth;
+            xPos += rectWidth;
         }
     }
     return layout;
