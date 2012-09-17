@@ -53,9 +53,11 @@
 
         <tr>
             <td align="center"><a href="demos-qmlweather.html">Qml Weather</a></td>
+            <td align="center"><a href="demos-qmlcustomlegend.html">Qml Custom Legend</a></td>
         </tr>
         <tr>
             <td><a href="demos-qmlweather.html"><img src="images/demos_qmlweather.png" width="300" alt="Qml Weather" /></a></td>
+            <td><a href="demos-qmlcustomlegend.html"><img src="images/demos-qmlcustomlegend1.png" width="300" alt="Qml Custom Legend" /></a></td>
         </tr>
 
     </table>
