@@ -47,12 +47,23 @@ void DeclarativeCategoryAxis::classBegin()
 
 void DeclarativeCategoryAxis::componentComplete()
 {
+    QList<QPair<QString, qreal> > ranges;
     foreach(QObject *child, children()) {
         if (qobject_cast<DeclarativeCategoryRange *>(child)) {
             DeclarativeCategoryRange *range = qobject_cast<DeclarativeCategoryRange *>(child);
-            append(range->label(), range->endValue());
+            ranges.append(QPair<QString, qreal>(range->label(), range->endValue()));
         }
     }
+
+    // Sort and append the range objects according to end value
+    qSort(ranges.begin(), ranges.end(), endValueLessThan);
+    for (int i(0); i < ranges.count(); i++)
+        append(ranges.at(i).first, ranges.at(i).second);
+}
+
+bool DeclarativeCategoryAxis::endValueLessThan(const QPair<QString, qreal> &value1, const QPair<QString, qreal> &value2)
+{
+    return value1.second < value2.second;
 }
 
 QDeclarativeListProperty<QObject> DeclarativeCategoryAxis::axisChildren()

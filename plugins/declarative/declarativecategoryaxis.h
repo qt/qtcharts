@@ -70,6 +70,9 @@ public Q_SLOTS:
     Q_INVOKABLE void remove(const QString &label);
     Q_INVOKABLE void replace(const QString& oldLabel, const QString& newLabel);
     static void appendAxisChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
+
+private:
+    static bool endValueLessThan(const QPair<QString, qreal> &value1, const QPair<QString, qreal> &value2);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
