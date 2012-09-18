@@ -563,6 +563,13 @@ void tst_qpieseries::hoverSignal()
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
 
+    // try to ensure focus
+    QApplication::setActiveWindow(m_view);
+    m_view->setFocus();
+    QApplication::processEvents();
+    QVERIFY(m_view->isActiveWindow());
+    QVERIFY(m_view->hasFocus());
+
     // move inside the slices
     m_series->setPieSize(1.0);
     QRectF pieRect = m_view->chart()->plotArea();

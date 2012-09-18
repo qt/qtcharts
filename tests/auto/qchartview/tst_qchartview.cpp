@@ -143,6 +143,7 @@ void tst_QChartView::rubberBand()
     m_view->chart()->addSeries(line);
     m_view->chart()->createDefaultAxes();
     m_view->show();
+    QTest::qWaitForWindowShown(m_view);
 
     QRectF plotArea = m_view->chart()->plotArea();
     //this is hack since view does not get events otherwise
@@ -152,24 +153,25 @@ void tst_QChartView::rubberBand()
     QSignalSpy spy0(axisY, SIGNAL(rangeChanged(qreal,qreal)));
     QAbstractAxis* axisX = m_view->chart()->axisX();
     QSignalSpy spy1(axisX, SIGNAL(rangeChanged(qreal,qreal)));
-
-
     QValueAxis* vaxisX = qobject_cast<QValueAxis*>(axisX);
     QValueAxis* vaxisY = qobject_cast<QValueAxis*>(axisY);
-
     int minX = vaxisX->min();
     int minY = vaxisY->min();
     int maxX = vaxisX->max();
     int maxY = vaxisY->max();
 
-    QTest::qWaitForWindowShown(m_view);
-    QTest::mouseMove(m_view->viewport(),  min + plotArea.topLeft().toPoint());
-    QTest::qWait(2000);
-    QTest::mousePress(m_view->viewport(), Qt::LeftButton, 0,  min + plotArea.topLeft().toPoint());
-    QTest::qWait(2000);
-    QTest::mouseMove(m_view->viewport(),  plotArea.bottomRight().toPoint() - max);
-    QTest::qWait(2000);
-    QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, 0, plotArea.bottomRight().toPoint() - max);
+    // try to ensure focus
+    QApplication::setActiveWindow(m_view);
+    m_view->setFocus();
+    QApplication::processEvents();
+    QVERIFY(m_view->isActiveWindow());
+    QVERIFY(m_view->hasFocus());
+
+    QTest::mouseMove(m_view->viewport(),  min + plotArea.topLeft().toPoint(), 100);
+    QTest::mousePress(m_view->viewport(), Qt::LeftButton, 0,  min + plotArea.topLeft().toPoint(), 100);
+    QTest::mouseMove(m_view->viewport(),  plotArea.bottomRight().toPoint() - max, 100);
+    QTest::mouseRelease(m_view->viewport(), Qt::LeftButton, 0, plotArea.bottomRight().toPoint() - max, 100);
+    QApplication::processEvents();
 
     TRY_COMPARE(spy0.count(), Xcount);
     TRY_COMPARE(spy1.count(), Ycount);
