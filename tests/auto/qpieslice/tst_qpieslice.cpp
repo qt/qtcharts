@@ -295,6 +295,7 @@ void tst_qpieslice::hoverSignal()
     QTest::mouseMove(view.viewport(), points.at(2));
     QTest::mouseMove(view.viewport(), points.at(3));
     QTest::mouseMove(view.viewport(), pieRect.topLeft().toPoint());
+    QApplication::processEvents();
 
     // check
     QCOMPARE(hoverSpy1.count(), 2);
