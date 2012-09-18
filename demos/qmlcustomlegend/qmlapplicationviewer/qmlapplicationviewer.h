@@ -11,7 +11,11 @@
 #ifndef QMLAPPLICATIONVIEWER_H
 #define QMLAPPLICATIONVIEWER_H
 
-#include <QtDeclarative/QDeclarativeView>
+#ifdef QT5_QUICK_1
+    #include <QtQuick1/QDeclarativeView>
+#else
+    #include <QtDeclarative/QDeclarativeView>
+#endif
 
 class QmlApplicationViewer : public QDeclarativeView
 {
@@ -33,7 +37,7 @@ public:
     void addImportPath(const QString &path);
 
     // Note that this will only have an effect on Symbian and Fremantle.
-    void setOrientation(ScreenOrientation orientation);
+    // void setOrientation(ScreenOrientation orientation);
 
     void showExpanded();
 
