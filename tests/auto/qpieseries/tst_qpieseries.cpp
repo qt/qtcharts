@@ -567,7 +567,7 @@ void tst_qpieseries::hoverSignal()
     m_series->setPieSize(1.0);
     QRectF pieRect = m_view->chart()->plotArea();
     QList<QPoint> points = slicePoints(pieRect);
-    QTest::mouseMove(m_view->viewport(), pieRect.topRight().toPoint());
+    QTest::mouseMove(m_view->viewport(), pieRect.topRight().toPoint(), 100);
     QSignalSpy hoverSpy(m_series, SIGNAL(hovered(QPieSlice*,bool)));
     QTest::mouseMove(m_view->viewport(), points.at(0), 100);
     QTest::mouseMove(m_view->viewport(), points.at(1), 100);
