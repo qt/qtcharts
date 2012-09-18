@@ -290,11 +290,11 @@ void tst_qpieslice::hoverSignal()
     QSignalSpy hoverSpy2(s2, SIGNAL(hovered(bool)));
     QSignalSpy hoverSpy3(s3, SIGNAL(hovered(bool)));
     QSignalSpy hoverSpy4(s4, SIGNAL(hovered(bool)));
-    QTest::mouseMove(view.viewport(), points.at(0));
-    QTest::mouseMove(view.viewport(), points.at(1));
-    QTest::mouseMove(view.viewport(), points.at(2));
-    QTest::mouseMove(view.viewport(), points.at(3));
-    QTest::mouseMove(view.viewport(), pieRect.topLeft().toPoint());
+    QTest::mouseMove(view.viewport(), points.at(0), 100);
+    QTest::mouseMove(view.viewport(), points.at(1), 100);
+    QTest::mouseMove(view.viewport(), points.at(2), 100);
+    QTest::mouseMove(view.viewport(), points.at(3), 100);
+    QTest::mouseMove(view.viewport(), pieRect.topLeft().toPoint(), 100);
     QApplication::processEvents();
 
     // check
