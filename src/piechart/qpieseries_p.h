@@ -67,6 +67,7 @@ public Q_SLOTS:
     void sliceValueChanged();
     void sliceClicked();
     void sliceHovered(bool state);
+    void updateLegendProperties();
 
 private:
     QList<QPieSlice*> m_slices;

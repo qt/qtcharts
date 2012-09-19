@@ -677,14 +677,14 @@ bool QAbstractBarSeriesPrivate::append(QBarSet *set)
         // Fail if set is already in list or set is null.
         return false;
     }
+
     m_barSets.append(set);
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
     QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
-    emit restructuredBars();      // this notifies barchartitem
-    if (m_dataset) {
-        m_dataset->updateSeries(q);   // this notifies legend
-    }
+
+    emit restructuredBars();        // this notifies barchartitem
+    emit legendPropertiesUpdated(q); // this notifies legend
     return true;
 }
 
@@ -695,14 +695,14 @@ bool QAbstractBarSeriesPrivate::remove(QBarSet *set)
         // Fail if set is not in list
         return false;
     }
+
     m_barSets.removeOne(set);
     QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
     QObject::disconnect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
+
     emit restructuredBars();        // this notifies barchartitem
-    if (m_dataset) {
-        m_dataset->updateSeries(q);   // this notifies legend
-    }
+    emit legendPropertiesUpdated(q);
     return true;
 }
 
@@ -726,10 +726,9 @@ bool QAbstractBarSeriesPrivate::append(QList<QBarSet* > sets)
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
         QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     }
+
     emit restructuredBars();        // this notifies barchartitem
-    if (m_dataset) {
-        m_dataset->updateSeries(q);   // this notifies legend
-    }
+    emit legendPropertiesUpdated(q); // this notifies legend
     return true;
 }
 
@@ -758,9 +757,7 @@ bool QAbstractBarSeriesPrivate::remove(QList<QBarSet* > sets)
     }
 
     emit restructuredBars();        // this notifies barchartitem
-    if (m_dataset) {
-        m_dataset->updateSeries(q);   // this notifies legend
-    }
+    emit legendPropertiesUpdated(q);
     return true;
 }
 
@@ -771,14 +768,14 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
         // Fail if set is already in list or set is null.
         return false;
     }
+
     m_barSets.insert(index, set);
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
     QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
+
     emit restructuredBars();      // this notifies barchartitem
-    if (m_dataset) {
-        m_dataset->updateSeries(q);   // this notifies legend
-    }
+    emit legendPropertiesUpdated(q);
     return true;
 }
 

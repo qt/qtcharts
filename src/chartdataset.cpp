@@ -485,12 +485,12 @@ QList<QAbstractSeries*> ChartDataSet::series() const
 {
     return m_seriesDomainMap.keys();
 }
-
+/*
 void ChartDataSet::updateSeries(QAbstractSeries *series)
 {
     emit seriesUpdated(series);
 }
-
+*/
 #include "moc_chartdataset_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

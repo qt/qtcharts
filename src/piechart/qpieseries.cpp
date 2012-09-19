@@ -412,6 +412,13 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
         connect(s, SIGNAL(valueChanged()), d, SLOT(sliceValueChanged()));
         connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
         connect(s, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
+
+        connect(s, SIGNAL(labelChanged()), d, SLOT(updateLegendProperties()));
+        connect(s, SIGNAL(penChanged()), d, SLOT(updateLegendProperties()));
+        connect(s, SIGNAL(brushChanged()), d, SLOT(updateLegendProperties()));
+        connect(s, SIGNAL(labelBrushChanged()), d, SLOT(updateLegendProperties()));
+        connect(s, SIGNAL(labelFontChanged()), d, SLOT(updateLegendProperties()));
+        connect(s, SIGNAL(labelFontChanged()), d, SLOT(updateLegendProperties()));
     }
 
     emit added(slices);
@@ -470,6 +477,13 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
     connect(slice, SIGNAL(valueChanged()), d, SLOT(sliceValueChanged()));
     connect(slice, SIGNAL(clicked()), d, SLOT(sliceClicked()));
     connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
+
+    connect(slice, SIGNAL(labelChanged()), d, SLOT(updateLegendProperties()));
+    connect(slice, SIGNAL(penChanged()), d, SLOT(updateLegendProperties()));
+    connect(slice, SIGNAL(brushChanged()), d, SLOT(updateLegendProperties()));
+    connect(slice, SIGNAL(labelBrushChanged()), d, SLOT(updateLegendProperties()));
+    connect(slice, SIGNAL(labelFontChanged()), d, SLOT(updateLegendProperties()));
+    connect(slice, SIGNAL(labelFontChanged()), d, SLOT(updateLegendProperties()));
 
     emit added(QList<QPieSlice*>() << slice);
     emit countChanged();
@@ -828,6 +842,13 @@ void QPieSeriesPrivate::sliceHovered(bool state)
     Q_ASSERT(m_slices.contains(slice));
     Q_Q(QPieSeries);
     emit q->hovered(slice, state);
+}
+
+void QPieSeriesPrivate::updateLegendProperties()
+{
+    // This slot listens to all properties of slices, which may interest legend and signals it.
+    Q_Q(QPieSeries);
+    emit legendPropertiesUpdated(q);
 }
 
 void QPieSeriesPrivate::scaleDomain(Domain& domain)

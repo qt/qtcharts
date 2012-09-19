@@ -49,7 +49,7 @@ public:
     void addSeries(QAbstractSeries* series);
     void removeSeries(QAbstractSeries* series);
     void removeAllSeries();
-    void updateSeries(QAbstractSeries* series);
+//    void updateSeries(QAbstractSeries* series);
 
     void zoomInDomain(const QRectF& rect, const QSizeF& size);
     void zoomOutDomain(const QRectF& rect, const QSizeF& size);
@@ -72,7 +72,7 @@ public:
 Q_SIGNALS:
     void seriesAdded(QAbstractSeries* series, Domain* domain);
     void seriesRemoved(QAbstractSeries* series);
-    void seriesUpdated(QAbstractSeries* series);
+//    void seriesUpdated(QAbstractSeries* series);
     void axisAdded(QAbstractAxis* axis,Domain* domain);
     void axisRemoved(QAbstractAxis* axis);
 

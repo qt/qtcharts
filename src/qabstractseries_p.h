@@ -55,6 +55,9 @@ public:
     virtual void initializeAxis(QAbstractAxis* axis) = 0;
     virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation) const = 0;
 
+Q_SIGNALS:
+    void legendPropertiesUpdated(QAbstractSeries* series);
+
 protected:
     QAbstractSeries *q_ptr;
     QChart *m_chart;

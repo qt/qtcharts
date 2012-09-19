@@ -174,7 +174,7 @@ d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,chart,this))
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesAdded(QAbstractSeries*,Domain*)),d_ptr.data(),SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
     QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries*)));
-    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
+//    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
     setLayout(d_ptr->m_layout);
 }
 
@@ -464,7 +464,7 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 
     QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
 
-    foreach(LegendMarker* marker, markers) {
+    foreach (LegendMarker* marker, markers) {
         marker->setFont(m_font);
         marker->setLabelBrush(m_labelBrush);
         marker->setVisible(series->isVisible());
@@ -473,12 +473,7 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     }
 
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
-
-    if(series->type() == QAbstractSeries::SeriesTypePie) {
-        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        QObject::connect(pieSeries, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
-        QObject::connect(pieSeries, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
-    }
+    QObject::connect(series->d_ptr.data(), SIGNAL(legendPropertiesUpdated(QAbstractSeries*)), this, SLOT(handleLegendPropertiesUpdated(QAbstractSeries*)));
 
     q_ptr->layout()->invalidate();
     q_ptr->layout()->activate();
@@ -493,32 +488,10 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
         }
     }
 
-    if(series->type() == QAbstractSeries::SeriesTypePie)
-    {
-        QPieSeries *pieSeries = static_cast<QPieSeries *>(series);
-        QObject::disconnect(pieSeries, SIGNAL(added(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
-        QObject::disconnect(pieSeries, SIGNAL(removed(QList<QPieSlice*>)), this, SLOT(handleUpdatePieSeries()));
-    }
+    QObject::disconnect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
+    QObject::disconnect(series->d_ptr.data(), SIGNAL(legendPropertiesUpdated(QAbstractSeries*)), this, SLOT(handleLegendPropertiesUpdated(QAbstractSeries*)));
 
     q_ptr->layout()->invalidate();
-}
-
-void QLegendPrivate::handleSeriesUpdated(QAbstractSeries *series)
-{
-    // TODO: find out which markers are are added or removed. Update them
-    // TODO: better implementation
-    handleSeriesRemoved(series);
-    Domain domain;
-    handleSeriesAdded(series, &domain);
-}
-
-void QLegendPrivate::handleUpdatePieSeries()
-{
-    //TODO: reimplement to be optimal
-    QPieSeries* series = qobject_cast<QPieSeries *> (sender());
-    Q_ASSERT(series);
-    handleSeriesRemoved(series);
-    handleSeriesAdded(series, 0);
 }
 
 void QLegendPrivate::handleSeriesVisibleChanged()
@@ -532,6 +505,15 @@ void QLegendPrivate::handleSeriesVisibleChanged()
     }
 
     q_ptr->layout()->invalidate();
+}
+
+void QLegendPrivate::handleLegendPropertiesUpdated(QAbstractSeries *series)
+{
+    // Handle new or removed markers
+    // Handle changes of marker pen/brush/label. every property that legend is interested
+    handleSeriesRemoved(series);
+    Domain domain;
+    handleSeriesAdded(series, &domain);
 }
 
 #include "moc_qlegend.cpp"
