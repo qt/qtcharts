@@ -23,7 +23,7 @@ mkdir $reports_path;
 
 # setup environment for running tests
 given ($job{'Platform'}) {
-	
+
     when ("Win7") {
         # Add qtdir to path
         $ENV{'PATH'} .= ";" . $job{'QtDir'} . "\\bin";
@@ -44,7 +44,7 @@ given ($job{'Platform'}) {
         # Set QML_IMPORT_PATH point to QML plugin dir
         $ENV{'QML_IMPORT_PATH'} = $bin_path;
     }
-}	
+}
 
 # Go through all the files in the test folder
 # autotest is an executable beginning with "tst_"
@@ -55,9 +55,9 @@ while ($testapp = readdir TESTAPPDIR) {
     if (index($testapp, "tst_") == 0) {
         if (-x "$bin_path$testapp") {
             my $status = executeTestApp($testapp);
-			if ($status != 0) {
-				$script_exit_status = $status;
-			}
+                if ($status != 0) {
+                        $script_exit_status = $status;
+                }
         } else {
             #print "file $testapp not executable\n";
         }
@@ -65,31 +65,31 @@ while ($testapp = readdir TESTAPPDIR) {
 }
 closedir TESTAPPDIR;
 
-print "\n*** script exit status : $script_exit_status ***\n\n";
-exit($script_exit_status);
+# Do not return error codes for bamboo.
+# Bamboo will determine test failures by parsing the xml logs.
+exit(0);
 
 
 sub executeTestApp($) {
     my $testapp = $_[0];
-	
-	# On OSX the actual test binary is in a sub folder
-	my $cmd_postfix = "";
-	if ($^O eq "darwin") {
-		$cmd_postfix = "/Contents/MacOS/$testapp";
-		$cmd_postfix = substr($cmd_postfix, 0, rindex($cmd_postfix, ".app"));
-	}
-	
+
+    # On OSX the actual test binary is in a sub folder
+    my $cmd_postfix = "";
+    if ($^O eq "darwin") {
+        $cmd_postfix = "/Contents/MacOS/$testapp";
+        $cmd_postfix = substr($cmd_postfix, 0, rindex($cmd_postfix, ".app"));
+    }
+
     my $cmd = "$bin_path$testapp$cmd_postfix -xunitxml -o $reports_path/$testapp.xml";
     print "executing: $cmd\n";
     system($cmd);
-	
-	# From http://perldoc.perl.org/perlvar.html about $?:
-	# The upper eight bits reflect specific error conditions encountered by the
+
+    # From http://perldoc.perl.org/perlvar.html about $?:
+    # The upper eight bits reflect specific error conditions encountered by the
     # program (the program's exit() value). The lower eight bits reflect
     # mode of failure, like signal death and core dump information.
-    # See wait(2) for details. 
+    # See wait(2) for details.
     my $exit_status = $? >> 8;
     print "\texit status: $exit_status\n";
-	
-	return $exit_status;
+    return $exit_status;
 }
