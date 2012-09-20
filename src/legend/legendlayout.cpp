@@ -91,15 +91,14 @@ void LegendLayout::setGeometry(const QRectF& rect)
 {
     m_legend->d_ptr->items()->setVisible(m_legend->isVisible());
 
-    if(m_legend->isAttachedToChart()) {
+    QGraphicsLayout::setGeometry(rect);
 
+    if(m_legend->isAttachedToChart()) {
         setAttachedGeometry(rect);
-    }
-    else {
+    } else {
         setDettachedGeometry(rect);
     }
 
-    QGraphicsLayout::setGeometry(rect);
 }
 
 void LegendLayout::setAttachedGeometry(const QRectF& rect)

@@ -336,7 +336,6 @@ void QLegend::setAlignment(Qt::Alignment alignment)
 {
     if(d_ptr->m_alignment!=alignment) {
         d_ptr->m_alignment = alignment;
-        updateGeometry();
         if(isAttachedToChart()){
             d_ptr->m_presenter->layout()->invalidate();
         }else{
@@ -404,7 +403,7 @@ bool QLegend::isBackgroundVisible() const
  */
 void QLegend::hideEvent(QHideEvent *event)
 {
-   d_ptr->m_presenter->layout()->invalidate();
+   if(isAttachedToChart()) d_ptr->m_presenter->layout()->invalidate();
    QGraphicsWidget::hideEvent(event);
 }
 
@@ -413,9 +412,12 @@ void QLegend::hideEvent(QHideEvent *event)
  */
 void QLegend::showEvent(QShowEvent *event)
 {
+   if(isAttachedToChart()) {
+       d_ptr->m_presenter->layout()->invalidate();
+       d_ptr->items()->setVisible(false);
+       layout()->invalidate();
+   }
    QGraphicsWidget::showEvent(event);
-   d_ptr->m_presenter->layout()->invalidate();
-   d_ptr->items()->setVisible(false);
    //layout activation will show the items
 }
 
