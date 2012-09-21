@@ -190,6 +190,8 @@ QRectF ChartLayout::calculateLegendGeometry(const QRectF& geometry,QLegend* lege
             break;
         }
         default: {
+            legendRect = QRectF(0,0,0,0);
+            result = geometry;
             break;
         }
     }
