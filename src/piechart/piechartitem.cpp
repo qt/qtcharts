@@ -197,6 +197,8 @@ void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
             continue;
 
         m_sliceItems.remove(slice);
+        slice->disconnect(this);
+        QPieSlicePrivate::fromSlice(slice)->disconnect(this);
 
         if (m_animation)
             presenter()->startAnimation(m_animation->removeSlice(sliceItem)); // animator deletes the PieSliceItem

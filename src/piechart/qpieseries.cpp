@@ -532,6 +532,7 @@ bool QPieSeries::take(QPieSlice* slice)
         return false;
 
     QPieSlicePrivate::fromSlice(slice)->m_series = 0;
+    slice->disconnect(d);
 
     d->updateDerivativeData();
 
@@ -551,15 +552,16 @@ void QPieSeries::clear()
         return;
 
     QList<QPieSlice*> slices = d->m_slices;
-    foreach (QPieSlice* s, d->m_slices) {
+    foreach (QPieSlice* s, d->m_slices)
         d->m_slices.removeOne(s);
-        delete s;
-    }
 
     d->updateDerivativeData();
 
     emit removed(slices);
     emit countChanged();
+
+    foreach (QPieSlice* s, slices)
+        delete s;
 }
 
 /*!
