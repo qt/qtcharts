@@ -36,6 +36,7 @@ class QPieSeries;
 class QAreaSeries;
 class QChart;
 class QLegendPrivate;
+class QLegendMarker;
 
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
@@ -82,6 +83,9 @@ public:
 
     void setBackgroundVisible(bool visible = true);
     bool isBackgroundVisible() const;
+
+    // New stuff:
+    QList <QLegendMarker*> markers() const;
 
 protected:
     void hideEvent(QHideEvent *event);

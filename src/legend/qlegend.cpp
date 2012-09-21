@@ -392,6 +392,14 @@ bool QLegend::isBackgroundVisible() const
     return d_ptr->m_backgroundVisible;
 }
 
+
+QList<QLegendMarker*> QLegend::markers() const
+{
+    // TODO: name of PIMPL method will change.
+    return d_ptr->legendMarkers();
+}
+
+
 /*!
  \internal \a event see QGraphicsWidget for details
  */

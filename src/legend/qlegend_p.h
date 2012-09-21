@@ -52,8 +52,11 @@ public:
     QPointF offset() const;
     int roundness(qreal size);
 
-    QList<LegendMarker *> markers() { return m_markers; }
-    QGraphicsItemGroup *items() { return m_items; }
+    QList<LegendMarker*> markers() { return m_markers; }    // TODO: this will be removed
+    QGraphicsItemGroup* items() { return m_items; }
+
+    // New stuff:
+    QList<QLegendMarker*> legendMarkers() { return m_legendMarkers; }   // TODO: function name will change
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
@@ -65,9 +68,9 @@ private:
     QLegend *q_ptr;
     ChartPresenter *m_presenter;
     LegendLayout *m_layout;
-    QChart *m_chart;
-    QGraphicsItemGroup *m_items;
-    QList<LegendMarker *> m_markers;
+    QChart* m_chart;
+    QGraphicsItemGroup* m_items;
+    QList<LegendMarker*> m_markers;     // TODO: this will be removed
     Qt::Alignment m_alignment;
     QBrush m_brush;
     QPen m_pen;
@@ -80,6 +83,8 @@ private:
 
     friend class QLegend;
     friend class LegendLayout;
+    QList<QLegendMarker*> m_legendMarkers;  // TODO: rename to m_markers eventually.
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

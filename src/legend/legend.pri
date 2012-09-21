@@ -4,7 +4,8 @@ DEPENDPATH += $$PWD
 SOURCES += \
     $$PWD/qlegend.cpp \
     $$PWD/legendmarker.cpp \
-    $$PWD/legendlayout.cpp
+    $$PWD/legendlayout.cpp \
+    $$PWD/qlegendmarker.cpp
     
 PRIVATE_HEADERS += \
     $$PWD/legendmarker_p.h \
@@ -14,4 +15,5 @@ PRIVATE_HEADERS += \
    
     
 PUBLIC_HEADERS += \
-    $$PWD/qlegend.h 
+    $$PWD/qlegend.h \
+    $$PWD/qlegendmarker.h
