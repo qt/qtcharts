@@ -32,7 +32,7 @@
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsSimpleTextItem>
-#include <QDebug>
+#include <QGraphicsLayout>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -88,6 +88,7 @@ void LegendMarker::setLabel(const QString label)
 {
     m_text = label;
     updateGeometry();
+    m_legend->layout()->invalidate();
 }
 
 QString LegendMarker::label() const

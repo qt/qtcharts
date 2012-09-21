@@ -59,7 +59,7 @@ public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
     void handleSeriesRemoved(QAbstractSeries *series);
     void handleSeriesVisibleChanged();
-    void handleLegendPropertiesUpdated(QAbstractSeries *series);
+    void handleCountChanged();
 
 private:
     QLegend *q_ptr;

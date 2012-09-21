@@ -62,6 +62,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QBarSeries::QBarSeries(QObject *parent)
     : QAbstractBarSeries(*new QBarSeriesPrivate(this), parent)
 {
+
 }
 
 /*!

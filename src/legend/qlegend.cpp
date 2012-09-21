@@ -475,10 +475,11 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     }
 
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
-    QObject::connect(series->d_ptr.data(), SIGNAL(legendPropertiesUpdated(QAbstractSeries*)), this, SLOT(handleLegendPropertiesUpdated(QAbstractSeries*)));
+    QObject::connect(series->d_ptr.data(), SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
 
+    m_items->setVisible(false);
     q_ptr->layout()->invalidate();
-    q_ptr->layout()->activate();
+    m_presenter->layout()->invalidate();
 }
 
 void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
@@ -491,7 +492,7 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
     }
 
     QObject::disconnect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
-    QObject::disconnect(series->d_ptr.data(), SIGNAL(legendPropertiesUpdated(QAbstractSeries*)), this, SLOT(handleLegendPropertiesUpdated(QAbstractSeries*)));
+    QObject::disconnect(series->d_ptr.data(), SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
 
     q_ptr->layout()->invalidate();
 }
@@ -499,6 +500,7 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 void QLegendPrivate::handleSeriesVisibleChanged()
 {
     QAbstractSeries* series = qobject_cast<QAbstractSeries *> (sender());
+    Q_ASSERT(series);
 
     foreach (LegendMarker* marker, m_markers) {
         if (marker->series() == series) {
@@ -509,13 +511,12 @@ void QLegendPrivate::handleSeriesVisibleChanged()
     q_ptr->layout()->invalidate();
 }
 
-void QLegendPrivate::handleLegendPropertiesUpdated(QAbstractSeries *series)
+void QLegendPrivate::handleCountChanged()
 {
-    // Handle new or removed markers
-    // Handle changes of marker pen/brush/label. every property that legend is interested
-    handleSeriesRemoved(series);
-    Domain domain;
-    handleSeriesAdded(series, &domain);
+    QAbstractSeriesPrivate* series = qobject_cast<QAbstractSeriesPrivate *> (sender());
+    Q_ASSERT(series);
+    handleSeriesRemoved(series->q_ptr);
+    handleSeriesAdded(series->q_ptr, 0);
 }
 
 #include "moc_qlegend.cpp"

@@ -56,7 +56,7 @@ public:
     virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation) const = 0;
 
 Q_SIGNALS:
-    void legendPropertiesUpdated(QAbstractSeries* series);
+    void countChanged();
 
 protected:
     QAbstractSeries *q_ptr;
@@ -68,6 +68,7 @@ protected:
 
     friend class QAbstractSeries;
     friend class ChartDataSet;
+    friend class QLegendPrivate;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

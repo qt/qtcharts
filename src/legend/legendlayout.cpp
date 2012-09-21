@@ -104,7 +104,6 @@ void LegendLayout::setGeometry(const QRectF& rect)
 void LegendLayout::setAttachedGeometry(const QRectF& rect)
 {
     if (!rect.isValid()) return;
-
     m_offsetX=0;
     m_offsetY=0;
 
