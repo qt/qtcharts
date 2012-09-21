@@ -1,14 +1,14 @@
 /*!
     \page demos.html
-    \title Demos
     \keyword Demos
     
     \raw HTML
-    <div class="demos">
+    <div class="qchart">
+
     <table>
         <tr>
-            <td align="center"><a href="demos-chartthemes.html">Chart Themes</a></td>
-            <td align="center"><a href="demos-dynamicspline.html">Dynamic Spline Chart</a></td>
+            <td><a href="demos-chartthemes.html">Chart Themes</a></td>
+            <td><a href="demos-dynamicspline.html">Dynamic Spline Chart</a></td>
         </tr>
         <tr>
             <td><a href="demos-chartthemes.html"><img src="images/demo_chartthemes_blue_cerulean.png" width="300" alt="Chart Themes" /></a></td>
@@ -16,8 +16,8 @@
         </tr>
 
         <tr>
-            <td align="center"><a href="demos-nesteddonuts.html">Nested Donuts Chart</a></td>
-            <td align="center"><a href="demos-piechartcustomization.html">Pie Chart Customization</a></td>
+            <td><a href="demos-nesteddonuts.html">Nested Donuts Chart</a></td>
+            <td><a href="demos-piechartcustomization.html">Pie Chart Customization</a></td>
         </tr>
         <tr>
             <td><a href="demos-nesteddonuts.html"><img src="images/demos_nesteddonuts.png" width="300" alt="Nested Donuts Chart" /></a></td>
@@ -25,8 +25,8 @@
         </tr>
 
         <tr>
-            <td align="center"><a href="demos-qmlchart.html">Qml Basic Charts</a></td>
-            <td align="center"><a href="demos-qmlaxes.html">Qml Axes</a></td>
+            <td><a href="demos-qmlchart.html">Qml Basic Charts</a></td>
+            <td><a href="demos-qmlaxes.html">Qml Axes</a></td>
         </tr>
         <tr>
             <td><a href="demos-qmlchart.html"><img src="images/demos_qmlchart1.png" width="300" alt="Qml Basic Charts" /></a></td>
@@ -34,8 +34,8 @@
         </tr>
 
         <tr>
-            <td align="center"><a href="demos-qmlcustomizations.html">Qml Customizations</a></td>
-            <td align="center"><a href="demos-qmlcustommodel.html">Qml Custom Model</a></td>
+            <td><a href="demos-qmlcustomizations.html">Qml Customizations</a></td>
+            <td><a href="demos-qmlcustommodel.html">Qml Custom Model</a></td>
         </tr>
         <tr>
             <td><a href="demos-qmlcustomizations.html"><img src="images/demos_qmlcustomizations.png" width="300" alt="Qml Customizations" /></a></td>
@@ -43,8 +43,8 @@
         </tr>
 
         <tr>
-            <td align="center"><a href="demos-qmlf1legends.html">Qml F1 Legends</a></td>
-            <td align="center"><a href="demos-qmloscilloscope.html">Qml Oscilloscope</a></td>
+            <td><a href="demos-qmlf1legends.html">Qml F1 Legends</a></td>
+            <td><a href="demos-qmloscilloscope.html">Qml Oscilloscope</a></td>
         </tr>
         <tr>
             <td><a href="demos-qmlf1legends.html"><img src="images/demos_qmlf1legends.png" width="300" alt="Qml F1 Legends" /></a></td>
@@ -52,8 +52,8 @@
         </tr>
 
         <tr>
-            <td align="center"><a href="demos-qmlweather.html">Qml Weather</a></td>
-            <td align="center"><a href="demos-qmlcustomlegend.html">Qml Custom Legend</a></td>
+            <td><a href="demos-qmlweather.html">Qml Weather</a></td>
+            <td><a href="demos-qmlcustomlegend.html">Qml Custom Legend</a></td>
         </tr>
         <tr>
             <td><a href="demos-qmlweather.html"><img src="images/demos_qmlweather.png" width="300" alt="Qml Weather" /></a></td>

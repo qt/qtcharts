@@ -2,17 +2,21 @@
     \page index.html
     \keyword About
 
-	\raw HTML
+    \raw HTML
     <div class="qchart">
-     <img src="images/qt_commercial_logo.png" alt="qtcommercial"/>
+    <img src="images/qt_commercial_logo.png" alt="qtcommercial"/>
 
-     <p>
-     QCharts is a part of Qt Commercial addons package. It provides a set of easy to use chart
-	 components which are available for Qt Commercial customers. It uses Qt Graphics View
-     Framework, therefore charts can be easily integrated to modern user interfaces. QCharts can
-	 be used as QWidgets, QGraphicsWidget or QML elements. Users can easily create impressive
-	 graphs by selecting one of the charts themes.
-     </p>
+    <p>
+        QCharts is a part of Qt Commercial addons package. It provides a set of easy to use chart
+        components which are available for Qt Commercial customers. It uses Qt Graphics View
+        Framework, therefore charts can be easily integrated to modern user interfaces. QCharts can
+        be used as QWidgets, QGraphicsWidget or QML elements. Users can easily create impressive
+        graphs by selecting one of the charts themes.
+    </p>
+    <p>
+        Below are a few basic examples of the different chart types. You can find more applications
+        from the Examples and Demo sections of the documentation.
+    </p>
 
     <table>
         <tr>
@@ -24,19 +28,14 @@
             <td><a href="examples-barchart.html"><img src="images/examples_barchart.png" width="440" alt="barchart" /></a></td>
         </tr>
         <tr>
-            <td><a href="examples-stackedbarchart.html"><img src="images/examples_stackedbarchart.png" width="440" alt="stackedbarchart" /></a></td>
-            <td><a href="examples-percentbarchart.html"><img src="images/examples_percentbarchart.png" width="440" alt="percentbarcchart" /></a></td>
+            <td><a href="examples-horizontalbarchart.html"><img src="images/examples_horizontalbarchart.png" width="440" alt="horizontalbarchart" /></a></td>
+            <td><a href="examples-piechart.html"><img src="images/examples_piechart.png" width="440" alt="piechart" /></a></td>
         </tr>
         <tr>
             <td><a href="examples-splinechart.html"><img src="images/examples_splinechart.png" width="440" alt="linechart" /></a></td>
             <td><a href="examples-customchart.html"><img src="images/examples_customchart.png" width="440" alt="customerchart" /></a></td>
         </tr>
         <tr>
-            <td><a href="examples-piechart.html"><img src="images/examples_piechart.png" width="440" alt="piechart" /></a></td>
-            <td><a href="demos-chartthemes.html"><img src="images/demo_chartthemes_blue_cerulean.png" width=440 alt="charttheme" /></a></td>
-        </tr>
-        <tr>
-            <td><a href="examples-zoomlinechart.html"><img src="images/examples_zoomlinechart2.png" width="440" alt="zoomlinechart" /></a></td>
         </tr>
     </table>
     </div>
