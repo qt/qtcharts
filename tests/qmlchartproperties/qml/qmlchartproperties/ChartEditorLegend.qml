@@ -51,19 +51,19 @@ Row {
         }
         Button {
             text: "legend top"
-            onClicked: chartLegend.alignment ^= Qt.AlignTop;
+            onClicked: chartLegend.alignment = Qt.AlignTop;
         }
         Button {
             text: "legend bottom"
-            onClicked: chartLegend.alignment ^= Qt.AlignBottom;
+            onClicked: chartLegend.alignment = Qt.AlignBottom;
         }
         Button {
             text: "legend left"
-            onClicked: chartLegend.alignment ^= Qt.AlignLeft;
+            onClicked: chartLegend.alignment = Qt.AlignLeft;
         }
         Button {
             text: "legend right"
-            onClicked: chartLegend.alignment ^= Qt.AlignRight;
+            onClicked: chartLegend.alignment = Qt.AlignRight;
         }
     }
 
