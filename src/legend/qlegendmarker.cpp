@@ -74,6 +74,11 @@ void QLegendMarker::setVisible(bool visible)
     m_visible = visible;
 }
 
+void QLegendMarker::markersUpdated()
+{
+    // TODO:
+}
+
 #include "moc_qlegendmarker.cpp"
 //#include "moc_qlegendmarker_p.cpp"
 

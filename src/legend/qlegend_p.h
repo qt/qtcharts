@@ -40,6 +40,7 @@ class QAbstractSeries;
 class LegendLayout;
 class LegendMarker;
 class Domain;
+class QLegendMarker;
 
 class QLegendPrivate : public QObject
 {
