@@ -199,6 +199,7 @@ m_barset(barset)
 {
     //QObject::connect(this, SIGNAL(selected()),barset->d_ptr.data(), SIGNAL(selected()));
     QObject::connect(barset->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(updated()));
+    QObject::connect(barset, SIGNAL(labelChanged()), this, SLOT(updated()));
     updated();
 }
 
