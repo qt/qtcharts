@@ -50,6 +50,8 @@ public slots:
     void toggleAttached();
     void addSlice();
     void removeSlice();
+    void connectMarkers();
+    void disconnectMarkers();
 
     void setLegendAlignment();
 
@@ -59,6 +61,8 @@ public slots:
     void fontSizeChanged();
 
     void updateLegendLayout();
+
+    void handleMarkerClicked();
 
 
 private:

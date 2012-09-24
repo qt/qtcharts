@@ -32,6 +32,11 @@ QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject
     updated();
 }
 
+QPieSlice* QPieLegendMarker::peerObject()
+{
+    return m_slice;
+}
+
 void QPieLegendMarker::updated()
 {
     // TODO: to PIMPL.

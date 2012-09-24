@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef QLEGENDMARKERPRIVATE_H
-#define QLEGENDMARKERPRIVATE_H
+#ifndef LEGENDMARKERITEM_P_H
+#define LEGENDMARKERITEM_P_H
 
 #include "qchartglobal.h"
 #include <QGraphicsObject>
@@ -39,7 +39,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// TODO: check these
 class QAbstractSeries;
 class QAreaSeries;
 class QXYSeries;
@@ -49,16 +48,13 @@ class QPieSlice;
 class QLegend;
 class QPieSeries;
 
-class QLegendMarker;
-class LegendMarkerItem;
-
-class QLegendMarkerPrivate : public QGraphicsObject, public QGraphicsLayoutItem
+class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
-    explicit QLegendMarkerPrivate(QAbstractSeries *series, QLegendMarker *q);
-/*
+    explicit LegendMarkerItem(QAbstractSeries *m_series, QGraphicsObject *parent);
+
     void setPen(const QPen &pen);
     QPen pen() const;
 
@@ -73,7 +69,9 @@ public:
 
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
-*/
+
+    QAbstractSeries *series() const { return m_series;}
+
     void setGeometry(const QRectF& rect);
 
     QRectF boundingRect() const;
@@ -86,39 +84,63 @@ protected:
     // From QGraphicsObject
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
-public Q_SLOTS:
-    virtual void updated() {};
+//public Q_SLOTS:
+    //virtual void updated() = 0;
 
-private:
-    QLegendMarker *q_ptr;
-
-    LegendMarkerItem *m_item;
-
-/*
-    QLegend* m_legend;
-*/
-
-// New legend marker properties
-    QAbstractSeries* m_series;
-    QString m_label;
-    QBrush m_labelBrush;
-    QFont m_font;
-    QPen m_pen;
-    QBrush m_brush;
-    bool m_visible;
-
-// Implementation details of new marker
+protected:
+    QAbstractSeries *m_series;
     QRectF m_markerRect;
     QRectF m_boundingRect;
+//    QLegend* m_legend;
     QGraphicsSimpleTextItem *m_textItem;
     QGraphicsRectItem *m_rectItem;
     qreal m_margin;
     qreal m_space;
+    QString m_text;
 
-    friend class QLegendPrivate; // TODO: Is this needed?
-    Q_DECLARE_PUBLIC(QLegendMarker)
+};
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class XYLegendMarkerItem : public LegendMarkerItem
+{
+public:
+    XYLegendMarkerItem(QXYSeries *series, QLegend *legend);
+protected:
+    void updated();
+private:
+    QXYSeries *m_series;
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class AreaLegendMarkerItem : public LegendMarkerItem
+{
+public:
+    AreaLegendMarkerItem(QAreaSeries *series, QLegend *legend);
+protected:
+    void updated();
+private:
+    QAreaSeries *m_series;
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class BarLegendMarkerItem : public LegendMarkerItem
+{
+public:
+    BarLegendMarkerItem(QAbstractBarSeries *barseries, QBarSet *barset,QLegend *legend);
+protected:
+    void updated();
+private:
+    QBarSet *m_barset;
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class PieLegendMarkerItem : public LegendMarkerItem
+{
+public:
+    PieLegendMarkerItem(QPieSeries *pieSeries, QPieSlice *pieslice, QLegend *legend);
+protected:
+    void updated();
+private:
+    QPieSlice *m_pieslice;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QLEGENDMARKERPRIVATE_H
+#endif // LEGENDMARKERITEM_P_H

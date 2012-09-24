@@ -467,6 +467,8 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 {
     Q_UNUSED(domain)
 
+    qDebug() << "QLegendPrivate::handleSeriesAdded";
+
 // New markers --->
     QList<QLegendMarker*> newMarkers = series->d_ptr->createLegendMarkers(q_ptr);
     foreach (QLegendMarker* marker, newMarkers) {
@@ -474,7 +476,8 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
         marker->setLabelBrush(m_labelBrush);
         marker->setVisible(series->isVisible());
 // TODO: QLegendMarker has QGraphicsItem vs QLegendMarker is QGraphicsItem
-//        m_items->addToGroup(marker);
+// TODO: possible hazard. What if marker is deleted and group still has pointer?
+//        m_items->addToGroup(marker->d_ptr.data());
         m_legendMarkers << marker;
     }
 

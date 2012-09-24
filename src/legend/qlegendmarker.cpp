@@ -20,6 +20,7 @@
 
 #include "qlegendmarker.h"
 #include "qlegendmarker_p.h"
+#include "legendmarkeritem_p.h"
 #include <QDebug>
 #include <QFontMetrics>
 
@@ -106,7 +107,7 @@ QLegendMarkerPrivate::QLegendMarkerPrivate(QAbstractSeries *series, QLegendMarke
     q_ptr(q),
     m_series(series)
 {
-
+    m_item = new LegendMarkerItem(m_series,this);
 }
 
 void QLegendMarkerPrivate::setGeometry(const QRectF& rect)
@@ -174,6 +175,7 @@ QSizeF QLegendMarkerPrivate::sizeHint(Qt::SizeHint which, const QSizeF& constrai
 
 void QLegendMarkerPrivate::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    qDebug() << "QLegendMarkerPrivate::mousePressEvent" << event;
     QGraphicsObject::mousePressEvent(event);
     //TODO: selected signal removed for now
 }

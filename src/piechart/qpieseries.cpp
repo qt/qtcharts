@@ -865,10 +865,11 @@ QList<LegendMarker *> QPieSeriesPrivate::createLegendMarker(QLegend *legend)
 
 QList<QLegendMarker*> QPieSeriesPrivate::createLegendMarkers(QLegend* legend)
 {
+    Q_UNUSED(legend);
     Q_Q(QPieSeries);
     QList<QLegendMarker*> markers;
     foreach(QPieSlice* slice, q->slices()) {
-        QPieLegendMarker* marker = new QPieLegendMarker(q,slice,legend);
+        QPieLegendMarker* marker = new QPieLegendMarker(q,slice);
         markers << marker;
     }
     return markers;

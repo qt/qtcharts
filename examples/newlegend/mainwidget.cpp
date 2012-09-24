@@ -64,6 +64,15 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(infoButton, SIGNAL(clicked()), this, SLOT(showDebugInfo()));
     m_buttonLayout->addWidget(infoButton, 7, 0);
 
+    QPushButton *connectButton = new QPushButton("Connect markers");
+    connect(connectButton, SIGNAL(clicked()), this, SLOT(connectMarkers()));
+    m_buttonLayout->addWidget(connectButton, 8, 0);
+
+    QPushButton *disConnectButton = new QPushButton("Disconnect markers");
+    connect(disConnectButton, SIGNAL(clicked()), this, SLOT(disconnectMarkers()));
+    m_buttonLayout->addWidget(connectButton, 8, 0);
+
+
     m_legendPosX = new QDoubleSpinBox();
     m_legendPosY = new QDoubleSpinBox();
     m_legendWidth = new QDoubleSpinBox();
@@ -178,7 +187,6 @@ void MainWidget::toggleAttached()
 void MainWidget::addSlice()
 {
     QPieSlice* slice = new QPieSlice(QString("slice " + QString::number(m_series->count())), m_series->count()+1);
-//    slice->setValue();
     m_series->append(slice);
 }
 
@@ -187,6 +195,26 @@ void MainWidget::removeSlice()
     QList<QPieSlice*> slices = m_series->slices();
     if (slices.count() > 0) {
         m_series->remove(slices.at(slices.count()-1));
+    }
+}
+
+void MainWidget::connectMarkers()
+{
+    // Example use case.
+    // Explode slice via marker.
+    // Should be doable via public api.
+
+    foreach (QLegendMarker* marker, m_chart->legend()->markers()) {
+        // Disconnect possible existing connection to avoid multiple connections
+        QObject::disconnect(marker, SIGNAL(clicked()), this, SLOT(handleMarkerClicked()));
+        QObject::connect(marker, SIGNAL(clicked()), this, SLOT(handleMarkerClicked()));
+    }
+}
+
+void MainWidget::disconnectMarkers()
+{
+    foreach (QLegendMarker* marker, m_chart->legend()->markers()) {
+        QObject::disconnect(marker, SIGNAL(clicked()), this, SLOT(handleMarkerClicked()));
     }
 }
 
@@ -236,6 +264,8 @@ void MainWidget::showDebugInfo()
 {
     qDebug() << "marker count:" << m_chart->legend()->markers().count();
     foreach (QLegendMarker* marker, m_chart->legend()->markers()) {
+        qDebug() << "marker series type:" << marker->series()->type();
+        qDebug() << "peer object:" << marker->peerObject();
         qDebug() << "label:" << marker->label();
     }
 }
@@ -256,4 +286,16 @@ void MainWidget::updateLegendLayout()
                                    ,m_legendHeight->value()));
     m_chart->legend()->update();
 //![4]
+}
+
+void MainWidget::handleMarkerClicked()
+{
+    QLegendMarker* marker = qobject_cast<QLegendMarker*> (sender());
+
+    qDebug() << "marker clicked:" << marker;
+
+    QPieSlice* slice = qobject_cast<QPieSlice*> (marker->peerObject());
+    Q_ASSERT(slice);
+
+    slice->setExploded(!slice->isExploded());
 }
