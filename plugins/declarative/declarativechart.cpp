@@ -248,15 +248,15 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
       m_chart(new QChart(this))
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
-    m_minMargins = new DeclarativeMargins(this);
-    m_minMargins->setTop(m_chart->margins().top());
-    m_minMargins->setLeft(m_chart->margins().left());
-    m_minMargins->setRight(m_chart->margins().right());
-    m_minMargins->setBottom(m_chart->margins().bottom());
-    connect(m_minMargins, SIGNAL(topChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
-    connect(m_minMargins, SIGNAL(bottomChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
-    connect(m_minMargins, SIGNAL(leftChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
-    connect(m_minMargins, SIGNAL(rightChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    m_margins = new DeclarativeMargins(this);
+    m_margins->setTop(m_chart->margins().top());
+    m_margins->setLeft(m_chart->margins().left());
+    m_margins->setRight(m_chart->margins().right());
+    m_margins->setBottom(m_chart->margins().bottom());
+    connect(m_margins, SIGNAL(topChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_margins, SIGNAL(bottomChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_margins, SIGNAL(leftChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
+    connect(m_margins, SIGNAL(rightChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
     connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries *, Domain *)), this, SLOT(handleSeriesAdded(QAbstractSeries *, Domain *)));
     connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)), this, SIGNAL(seriesRemoved(QAbstractSeries *)));
 }

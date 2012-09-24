@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.2
 
 ChartView {
     id: chartView
@@ -50,10 +50,10 @@ ChartView {
     legend.onColorChanged:             console.log("legend.onColorChanged: " + color);
     legend.onBorderColorChanged:       console.log("legend.onBorderColorChanged: " + color);
     legend.onLabelColorChanged:        console.log("legend.onLabelColorChanged: " + color);
-    minimumMargins.onTopChanged:       console.log("chart.minimumMargins.onTopChanged: " + top );
-    minimumMargins.onBottomChanged:    console.log("chart.minimumMargins.onBottomChanged: " + bottom);
-    minimumMargins.onLeftChanged:      console.log("chart.minimumMargins.onLeftChanged: " + left);
-    minimumMargins.onRightChanged:     console.log("chart.minimumMargins.onRightChanged: " + right);
+    margins.onTopChanged:       console.log("chart.margins.onTopChanged: " + top );
+    margins.onBottomChanged:    console.log("chart.margins.onBottomChanged: " + bottom);
+    margins.onLeftChanged:      console.log("chart.margins.onLeftChanged: " + left);
+    margins.onRightChanged:     console.log("chart.margins.onRightChanged: " + right);
     onPlotAreaChanged: {
         console.log("chart.onPlotAreaChanged, width: " + chartView.plotArea.width
                                                        + " height: " + chartView.plotArea.height

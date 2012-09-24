@@ -164,6 +164,9 @@ class ChartQmlPlugin : public QDeclarativeExtensionPlugin
                                                QLatin1String("Trying to create uncreatable: QPieSeries. Use PieSeries instead."));
         qmlRegisterUncreatableType<DeclarativeMargins>(uri, 1, 1, "Margins",
                                                        QLatin1String("Trying to create uncreatable: Margins."));
+
+        // QtCommercial.Chart 1.2
+        qmlRegisterType<DeclarativeChart, 2>(uri, 1, 2, "ChartView");
     }
 };
 

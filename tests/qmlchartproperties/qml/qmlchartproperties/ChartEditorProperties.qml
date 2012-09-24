@@ -83,34 +83,34 @@ Flow {
     }
     Button {
         text: "top min margin +"
-        onClicked: chart.minimumMargins.top += 5;
+        onClicked: chart.margins.top += 5;
     }
     Button {
         text: "top min margin -"
-        onClicked: chart.minimumMargins.top -= 5;
+        onClicked: chart.margins.top -= 5;
     }
     Button {
         text: "bottom min margin +"
-        onClicked: chart.minimumMargins.bottom += 5;
+        onClicked: chart.margins.bottom += 5;
     }
     Button {
         text: "bottom min margin -"
-        onClicked: chart.minimumMargins.bottom -= 5;
+        onClicked: chart.margins.bottom -= 5;
     }
     Button {
         text: "left min margin +"
-        onClicked: chart.minimumMargins.left += 5;
+        onClicked: chart.margins.left += 5;
     }
     Button {
         text: "left min margin -"
-        onClicked: chart.minimumMargins.left -= 5;
+        onClicked: chart.margins.left -= 5;
     }
     Button {
         text: "right min margin +"
-        onClicked: chart.minimumMargins.right += 5;
+        onClicked: chart.margins.right += 5;
     }
     Button {
         text: "right min margin -"
-        onClicked: chart.minimumMargins.right -= 5;
+        onClicked: chart.margins.right -= 5;
     }
 }

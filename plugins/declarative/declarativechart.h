@@ -51,6 +51,7 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(qreal leftMargin READ leftMargin)
     Q_PROPERTY(qreal rightMargin READ rightMargin)
     Q_PROPERTY(DeclarativeMargins *minimumMargins READ minimumMargins NOTIFY minimumMarginsChanged REVISION 1)
+    Q_PROPERTY(DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION 2)
     Q_PROPERTY(QRectF plotArea READ plotArea NOTIFY plotAreaChanged REVISION 1)
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
@@ -120,7 +121,10 @@ public:
     qreal leftMargin();
     qreal rightMargin();
     void createDefaultAxes(QAbstractSeries* series);
-    DeclarativeMargins *minimumMargins() { return m_minMargins; }
+    //TODO this is depreciated:
+    DeclarativeMargins *minimumMargins() { return m_margins; }
+
+    Q_REVISION(2) DeclarativeMargins *margins() { return m_margins; }
     QRectF plotArea() { return m_chart->plotArea(); }
 
 public:
@@ -147,6 +151,7 @@ Q_SIGNALS:
     void backgroundColorChanged();
     void dropShadowEnabledChanged(bool enabled);
     void minimumMarginsChanged();
+    Q_REVISION(2) void marginsChanged();
     void plotAreaChanged(QRectF plotArea);
     void seriesAdded(QAbstractSeries* series);
     void seriesRemoved(QAbstractSeries* series);
@@ -162,7 +167,7 @@ private:
     // multi inheritance, so we now have a QChart as a member instead
     QChart *m_chart;
     //QMargins m_chartMargins;
-    DeclarativeMargins *m_minMargins;
+    DeclarativeMargins *m_margins;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
