@@ -53,7 +53,7 @@ class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
-    explicit LegendMarkerItem(QAbstractSeries *m_series, QGraphicsObject *parent);
+    explicit LegendMarkerItem(QAbstractSeries *m_series, QGraphicsObject *parent = 0);
 
     void setPen(const QPen &pen);
     QPen pen() const;

@@ -52,10 +52,9 @@ class QPieSeries;
 class QLegendMarker;
 class LegendMarkerItem;
 
-class QLegendMarkerPrivate : public QGraphicsObject, public QGraphicsLayoutItem
+class QLegendMarkerPrivate : public QObject
 {
     Q_OBJECT
-    Q_INTERFACES(QGraphicsLayoutItem)
 public:
     explicit QLegendMarkerPrivate(QAbstractSeries *series, QLegendMarker *q);
 /*
@@ -74,17 +73,6 @@ public:
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
 */
-    void setGeometry(const QRectF& rect);
-
-    QRectF boundingRect() const;
-
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
-
-    QSizeF sizeHint (Qt::SizeHint which, const QSizeF& constraint) const;
-
-protected:
-    // From QGraphicsObject
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 public Q_SLOTS:
     virtual void updated() {};
