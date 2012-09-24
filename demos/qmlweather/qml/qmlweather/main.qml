@@ -57,6 +57,8 @@ Rectangle {
      
         ValueAxis {
             id: valueAxisX
+            // Hide the value axis; it is only used to map the line series to bar categories axis
+            visible: false
             min: 0
             max: 5
         }
