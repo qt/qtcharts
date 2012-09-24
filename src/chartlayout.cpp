@@ -31,9 +31,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 static const qreal golden_ratio = 0.25;
 
 ChartLayout::ChartLayout(ChartPresenter* presenter):
-m_presenter(presenter),
-m_margins(20,20,20,20),
-m_minChartRect(0,0,200,200)
+    m_presenter(presenter),
+    m_margins(20,20,20,20),
+    m_minChartRect(0,0,200,200)
 {
 
 }
@@ -87,7 +87,7 @@ void ChartLayout::setGeometry(const QRectF& rect)
 
 QRectF ChartLayout::calculateContentGeometry(const QRectF& geometry) const
 {
-	return geometry.adjusted(m_margins.left(),m_margins.top(),-m_margins.right(),-m_margins.bottom());
+    return geometry.adjusted(m_margins.left(),m_margins.top(),-m_margins.right(),-m_margins.bottom());
 }
 
 QRectF ChartLayout::calculateContentMinimum(const QRectF& minimum) const
@@ -118,13 +118,26 @@ QRectF ChartLayout::calculateChartGeometry(const QRectF& geometry, const QList<C
     QSizeF vertical(0,0);
     QSizeF horizontal(0,0);
 
+    int topAxisCount = 0;
+    int bottomAxisCount = 0;
+    int leftAxisCount = 0;
+    int rightAxisCount = 0;
+
     // check axis size
     foreach(ChartAxis* axis , axes) {
         if(axis->orientation()==Qt::Vertical && axis->isVisible()) {
             vertical = vertical.expandedTo(axis->effectiveSizeHint(Qt::MinimumSize));
+            if (axis->alternativePlacement())
+                rightAxisCount++;
+            else
+                leftAxisCount++;
         }
         else if(axis->orientation()==Qt::Horizontal && axis->isVisible()) {
             horizontal = horizontal.expandedTo(axis->effectiveSizeHint(Qt::MinimumSize));
+            if (axis->alternativePlacement())
+                topAxisCount++;
+            else
+                bottomAxisCount++;
         }
 
     }
@@ -133,10 +146,37 @@ QRectF ChartLayout::calculateChartGeometry(const QRectF& geometry, const QList<C
 
     QRectF rect = geometry.adjusted(width,vertical.height()/2,-horizontal.width()/2,-horizontal.height());
 
+    // axis area width
+    // TODO: replase with dynamic size code
+    int axisWidth = 35;
+
+    // get the final size of the plot rect
+    rect.adjust(leftAxisCount * axisWidth, topAxisCount * axisWidth, -rightAxisCount * axisWidth, -bottomAxisCount * axisWidth);
     m_presenter->setChartsGeometry(rect);
 
+    leftAxisCount = 0;
+    rightAxisCount = 0;
+    bottomAxisCount = 0;
+    topAxisCount = 0;
+
+    // adjust the axes internal and external rects
     foreach(ChartAxis* axis , axes) {
-        axis->setGeometry(geometry);
+        if(axis->orientation()==Qt::Vertical) {
+            axis->setInternalRect(rect.adjusted(-leftAxisCount * axisWidth, 0, rightAxisCount * axisWidth, 0));
+            axis->setGeometry(rect.adjusted(-(leftAxisCount + 1) * axisWidth, 0, (rightAxisCount + 1) * axisWidth, 0));
+            if (axis->alternativePlacement())
+                rightAxisCount++;
+            else
+                leftAxisCount++;
+        }
+        else if(axis->orientation()==Qt::Horizontal) {
+            axis->setInternalRect(rect.adjusted(0, -topAxisCount * axisWidth, 0, bottomAxisCount * axisWidth));
+            axis->setGeometry(rect.adjusted(0, -(topAxisCount + 1) * axisWidth, 0, (bottomAxisCount + 1) * axisWidth));
+            if (axis->alternativePlacement())
+                topAxisCount++;
+            else
+                bottomAxisCount++;
+        }
     }
 
     return rect;
@@ -165,34 +205,33 @@ QRectF ChartLayout::calculateLegendGeometry(const QRectF& geometry,QLegend* lege
     QRectF result;
 
     switch (legend->alignment()) {
-
-        case Qt::AlignTop: {
-            legendRect = QRectF(geometry.topLeft(),QSizeF(geometry.width(),size.height()));
-            result = geometry.adjusted(0,legendRect.height(),0,0);
-            break;
-        }
-        case Qt::AlignBottom: {
-            legendRect = QRectF(QPointF(geometry.left(),geometry.bottom()-size.height()),QSizeF(geometry.width(),size.height()));
-            result = geometry.adjusted(0,0,0,-legendRect.height());
-            break;
-        }
-        case Qt::AlignLeft: {
-            qreal width = qMin(size.width(),geometry.width()*golden_ratio);
-            legendRect = QRectF(geometry.topLeft(),QSizeF(width,geometry.height()));
-            result = geometry.adjusted(width,0,0,0);
-            break;
-        }
-        case Qt::AlignRight: {
-            qreal width = qMin(size.width(),geometry.width()*golden_ratio);
-            legendRect = QRectF(QPointF(geometry.right()-width,geometry.top()),QSizeF(width,geometry.height()));
-            result = geometry.adjusted(0,0,-width,0);
-            break;
-        }
-        default: {
-            legendRect = QRectF(0,0,0,0);
-            result = geometry;
-            break;
-        }
+    case Qt::AlignTop: {
+        legendRect = QRectF(geometry.topLeft(),QSizeF(geometry.width(),size.height()));
+        result = geometry.adjusted(0,legendRect.height(),0,0);
+        break;
+    }
+    case Qt::AlignBottom: {
+        legendRect = QRectF(QPointF(geometry.left(),geometry.bottom()-size.height()),QSizeF(geometry.width(),size.height()));
+        result = geometry.adjusted(0,0,0,-legendRect.height());
+        break;
+    }
+    case Qt::AlignLeft: {
+        qreal width = qMin(size.width(),geometry.width()*golden_ratio);
+        legendRect = QRectF(geometry.topLeft(),QSizeF(width,geometry.height()));
+        result = geometry.adjusted(width,0,0,0);
+        break;
+    }
+    case Qt::AlignRight: {
+        qreal width = qMin(size.width(),geometry.width()*golden_ratio);
+        legendRect = QRectF(QPointF(geometry.right()-width,geometry.top()),QSizeF(width,geometry.height()));
+        result = geometry.adjusted(0,0,-width,0);
+        break;
+    }
+    default: {
+        legendRect = QRectF(0,0,0,0);
+        result = geometry;
+        break;
+    }
     }
 
     legend->setGeometry(legendRect);
@@ -202,22 +241,22 @@ QRectF ChartLayout::calculateLegendGeometry(const QRectF& geometry,QLegend* lege
 
 QRectF ChartLayout::calculateLegendMinimum(const QRectF& geometry,QLegend* legend) const
 {
-        QSizeF minSize = legend->effectiveSizeHint(Qt::MinimumSize,QSizeF(-1,-1));
-        return geometry.adjusted(0,0,minSize.width(),minSize.height());
+    QSizeF minSize = legend->effectiveSizeHint(Qt::MinimumSize,QSizeF(-1,-1));
+    return geometry.adjusted(0,0,minSize.width(),minSize.height());
 }
 
 QRectF ChartLayout::calculateTitleGeometry(const QRectF& geometry,ChartTitle* title) const
 {
-        title->setGeometry(geometry);
-        QPointF center = geometry.center() - title->boundingRect().center();
-        title->setPos(center.x(),title->pos().y());
-        return geometry.adjusted(0,title->boundingRect().height(),0,0);
+    title->setGeometry(geometry);
+    QPointF center = geometry.center() - title->boundingRect().center();
+    title->setPos(center.x(),title->pos().y());
+    return geometry.adjusted(0,title->boundingRect().height(),0,0);
 }
 
 QRectF ChartLayout::calculateTitleMinimum(const QRectF& minimum,ChartTitle* title) const
 {
-        QSizeF min = title->sizeHint(Qt::MinimumSize);
-        return  minimum.adjusted(0,0,min.width(),min.height());
+    QSizeF min = title->sizeHint(Qt::MinimumSize);
+    return  minimum.adjusted(0,0,min.width(),min.height());
 }
 
 QSizeF ChartLayout::sizeHint ( Qt::SizeHint which, const QSizeF & constraint) const

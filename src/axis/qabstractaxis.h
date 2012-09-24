@@ -32,8 +32,8 @@ class QAbstractAxisPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
 {
-	Q_OBJECT
-	Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
+    Q_OBJECT
+    Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
     Q_PROPERTY(bool lineVisible READ isLineVisible WRITE setLineVisible NOTIFY lineVisibleChanged)
     Q_PROPERTY(QColor color READ linePenColor WRITE setLinePenColor NOTIFY colorChanged)
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
@@ -124,6 +124,8 @@ public:
     QColor shadesBorderColor() const;
 
     Qt::Orientation orientation();
+    bool alternativePlacement() const;
+    void setAlternativePlacement(bool placement);
 
     //range handling
     void setMin(const QVariant &min);
@@ -145,7 +147,7 @@ Q_SIGNALS:
     void shadesBorderColorChanged(QColor color);
 
 protected:
-	QScopedPointer<QAbstractAxisPrivate> d_ptr;
+    QScopedPointer<QAbstractAxisPrivate> d_ptr;
     Q_DISABLE_COPY(QAbstractAxis)
     friend class ChartDataSet;
     friend class ChartAxis;

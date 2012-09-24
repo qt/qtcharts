@@ -96,12 +96,15 @@ public:
     ChartAnimation* animation() const { return m_animation; };
 
     Qt::Orientation orientation() const;
+    bool alternativePlacement() const;
 
     bool isVisible();
     void hide();
 
     void setGeometry(const QRectF &size);
     QRectF geometry() const { return m_rect; }
+
+    void setInternalRect(const QRectF &size);
 
     virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint = QSizeF()) const;
 
@@ -128,6 +131,7 @@ protected:
     int m_labelsAngle;
     //TODO: to be removed
     QRectF m_rect;
+    QRectF m_internalRect;
     QScopedPointer<QGraphicsItemGroup> m_grid;
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;

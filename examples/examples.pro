@@ -30,7 +30,8 @@ SUBDIRS += \
            donutbreakdown \
            scrollchart \
            temperaturerecords \
-           donutchart
+           donutchart \
+           multiaxis
 
 !linux-arm*: {
 SUBDIRS += \

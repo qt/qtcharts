@@ -32,7 +32,7 @@ static int label_padding = 5;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartValueAxisX::ChartValueAxisX(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
-m_tickCount(0)
+    m_tickCount(0)
 {
 }
 
@@ -76,35 +76,47 @@ void ChartValueAxisX::updateGeometry()
     QRectF chartRrect = presenter()->chartsGeometry();
 
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
-    lineItem->setLine(chartRrect.left(), chartRrect.bottom(), chartRrect.right(), chartRrect.bottom());
+    //    lineItem->setLine(chartRrect.left(), chartRrect.bottom(), chartRrect.right(), chartRrect.bottom());
+    if (m_chartAxis->alternativePlacement())
+        lineItem->setLine(chartRrect.left(), m_internalRect.top(), chartRrect.right(), m_internalRect.top());
+    else
+        lineItem->setLine(chartRrect.left(), m_internalRect.bottom(), chartRrect.right(), m_internalRect.bottom());
 
     qreal width = 0;
     for (int i = 0; i < layout.size(); ++i) {
         QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
         lineItem->setLine(layout[i], chartRrect.top(), layout[i], chartRrect.bottom());
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-            labelItem->setText(ticksList.at(i));
-            const QRectF& rect = labelItem->boundingRect();
-            QPointF center = rect.center();
-            labelItem->setTransformOriginPoint(center.x(), center.y());
-            labelItem->setPos(layout[i] - center.x(), chartRrect.bottom() + label_padding);
-            if(labelItem->pos().x() <= width ||
-               labelItem->pos().x() < m_rect.left() ||
-               labelItem->pos().x() + rect.width() > m_rect.right()){
-                labelItem->setVisible(false);
-                lineItem->setVisible(false);
-            }else{
-                labelItem->setVisible(true);
-                lineItem->setVisible(true);
-                width=rect.width()+labelItem->pos().x();
-            }
+        labelItem->setText(ticksList.at(i));
+        const QRectF& rect = labelItem->boundingRect();
+        QPointF center = rect.center();
+        labelItem->setTransformOriginPoint(center.x(), center.y());
+        //            labelItem->setPos(layout[i] - center.x(), chartRrect.bottom() + label_padding);
+        if (m_chartAxis->alternativePlacement())
+            labelItem->setPos(layout[i] - center.x(), m_internalRect.top() - rect.height() - label_padding);
+        else
+            labelItem->setPos(layout[i] - center.x(), m_internalRect.bottom() + label_padding);
+        if(labelItem->pos().x() <= width ||
+                labelItem->pos().x() < m_rect.left() ||
+                labelItem->pos().x() + rect.width() > m_rect.right()){
+            labelItem->setVisible(false);
+            lineItem->setVisible(false);
+        }else{
+            labelItem->setVisible(true);
+            lineItem->setVisible(true);
+            width=rect.width()+labelItem->pos().x();
+        }
 
         if ((i+1)%2 && i>1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
             rectItem->setRect(layout[i-1],chartRrect.top(),layout[i]-layout[i-1],chartRrect.height());
         }
         lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setLine(layout[i],chartRrect.bottom(),layout[i],chartRrect.bottom()+5);
+        //        lineItem->setLine(layout[i],chartRrect.bottom(),layout[i],chartRrect.bottom()+5);
+        if (m_chartAxis->alternativePlacement())
+            lineItem->setLine(layout[i],m_internalRect.top(),layout[i],m_internalRect.top()-5);
+        else
+            lineItem->setLine(layout[i],m_internalRect.bottom(),layout[i],m_internalRect.bottom()+5);
     }
 }
 
@@ -128,33 +140,33 @@ QSizeF ChartValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constraint) c
     qreal width=0;
     qreal height=0;
 
-      switch (which) {
-        case Qt::MinimumSize:{
-            int count = qMax(ticksList.last().count(),ticksList.first().count());
-            width=fn.averageCharWidth()*count;
-            height=fn.height()+label_padding;
-            width=qMax(width,base.width());
-            height+=base.height();
-            sh = QSizeF(width,height);
-            break;
-        }
-        case Qt::PreferredSize:{
-            for (int i = 0; i < ticksList.size(); ++i)
-            {
-                width+=fn.averageCharWidth()*ticksList.at(i).count();
+    switch (which) {
+    case Qt::MinimumSize:{
+        int count = qMax(ticksList.last().count(),ticksList.first().count());
+        width=fn.averageCharWidth()*count;
+        height=fn.height()+label_padding;
+        width=qMax(width,base.width());
+        height+=base.height();
+        sh = QSizeF(width,height);
+        break;
+    }
+    case Qt::PreferredSize:{
+        for (int i = 0; i < ticksList.size(); ++i)
+        {
+            width+=fn.averageCharWidth()*ticksList.at(i).count();
 
-            }
-            height=fn.height()+label_padding;
-            width=qMax(width,base.width());
-            height+=base.height();
-            sh = QSizeF(width,height);
-            break;
         }
-        default:
-          break;
-      }
+        height=fn.height()+label_padding;
+        width=qMax(width,base.width());
+        height+=base.height();
+        sh = QSizeF(width,height);
+        break;
+    }
+    default:
+        break;
+    }
 
-      return sh;
+    return sh;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -107,6 +107,8 @@ private:
 
     bool m_dirty;
 
+    bool m_alternativePlacement;
+
     friend class QAbstractAxis;
     friend class ChartDataSet;
 };

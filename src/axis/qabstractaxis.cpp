@@ -693,13 +693,23 @@ Qt::Orientation QAbstractAxis::orientation()
     return d_ptr->m_orientation;
 }
 
+bool QAbstractAxis::alternativePlacement() const
+{
+    return d_ptr->m_alternativePlacement;
+}
+
+void QAbstractAxis::setAlternativePlacement(bool placement)
+{
+    d_ptr->m_alternativePlacement = placement;
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     q_ptr(q),
     m_orientation(Qt::Orientation(0)),
     m_dataset(0),
-    m_visible(false),
+    m_visible(true),
     m_arrowVisible(true),
     m_gridLineVisible(true),
     m_labelsVisible(true),
@@ -707,7 +717,8 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
     m_shadesVisible(false),
     m_shadesBrush(Qt::SolidPattern),
     m_shadesOpacity(1.0),
-    m_dirty(false)
+    m_dirty(false),
+    m_alternativePlacement(false)
 {
 
 }

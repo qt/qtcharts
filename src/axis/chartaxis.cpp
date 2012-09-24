@@ -399,6 +399,11 @@ void ChartAxis::setGeometry(const QRectF &rect)
 
 }
 
+void ChartAxis::setInternalRect(const QRectF &size)
+{
+    m_internalRect = size;
+}
+
 void ChartAxis::axisSelected()
 {
     //TODO: axis clicked;
@@ -439,6 +444,11 @@ QStringList ChartAxis::createNumberLabels(qreal min, qreal max, int ticks) const
 Qt::Orientation ChartAxis::orientation() const
 {
     return m_chartAxis->orientation();
+}
+
+bool ChartAxis::alternativePlacement() const
+{
+    return m_chartAxis->alternativePlacement();
 }
 
 bool ChartAxis::isVisible()

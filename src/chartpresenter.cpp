@@ -135,26 +135,27 @@ void ChartPresenter::selectVisibleAxis()
 
     while (i.hasNext()) {
         i.next();
-        i.key()->hide();
+//        i.key()->hide();
+        i.key()->show();
     }
 
-    i.toFront();
+//    i.toFront();
 
-    bool axisX=false;
-    bool axisY=false;
+//    bool axisX=false;
+//    bool axisY=false;
 
-    while (i.hasNext()) {
-        i.next();
-        if(i.key()->orientation()==Qt::Vertical && !axisY) {
-            axisY=true;
-            i.key()->show();
-        }
-        if(i.key()->orientation()==Qt::Horizontal && !axisX) {
-            axisX=true;
-            i.key()->show();
-        }
+//    while (i.hasNext()) {
+//        i.next();
+//        if(i.key()->orientation()==Qt::Vertical && !axisY) {
+//            axisY=true;
+//            i.key()->show();
+//        }
+//        if(i.key()->orientation()==Qt::Horizontal && !axisX) {
+//            axisX=true;
+//            i.key()->show();
+//        }
 
-    }
+//    }
 }
 
 
