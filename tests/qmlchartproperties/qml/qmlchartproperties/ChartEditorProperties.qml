@@ -82,35 +82,35 @@ Flow {
         onClicked: chart.titleColor = main.nextColor();
     }
     Button {
-        text: "top min margin +"
+        text: "top margin +"
         onClicked: chart.margins.top += 5;
     }
     Button {
-        text: "top min margin -"
+        text: "top margin -"
         onClicked: chart.margins.top -= 5;
     }
     Button {
-        text: "bottom min margin +"
+        text: "bottom margin +"
         onClicked: chart.margins.bottom += 5;
     }
     Button {
-        text: "bottom min margin -"
+        text: "bottom margin -"
         onClicked: chart.margins.bottom -= 5;
     }
     Button {
-        text: "left min margin +"
+        text: "left margin +"
         onClicked: chart.margins.left += 5;
     }
     Button {
-        text: "left min margin -"
+        text: "left margin -"
         onClicked: chart.margins.left -= 5;
     }
     Button {
-        text: "right min margin +"
+        text: "right margin +"
         onClicked: chart.margins.right += 5;
     }
     Button {
-        text: "right min margin -"
+        text: "right margin -"
         onClicked: chart.margins.right -= 5;
     }
 }
