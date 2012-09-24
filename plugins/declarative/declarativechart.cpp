@@ -249,6 +249,10 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
 {
     setFlag(QGraphicsItem::ItemHasNoContents, false);
     m_minMargins = new DeclarativeMargins(this);
+    m_minMargins->setTop(m_chart->margins().top());
+    m_minMargins->setLeft(m_chart->margins().left());
+    m_minMargins->setRight(m_chart->margins().right());
+    m_minMargins->setBottom(m_chart->margins().bottom());
     connect(m_minMargins, SIGNAL(topChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
     connect(m_minMargins, SIGNAL(bottomChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
     connect(m_minMargins, SIGNAL(leftChanged(int, int, int, int)), this, SLOT(changeMinimumMargins(int, int, int, int)));
