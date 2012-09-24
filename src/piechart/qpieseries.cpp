@@ -29,6 +29,8 @@
 #include "qabstractaxis.h"
 #include "pieanimation_p.h"
 
+#include "qpielegendmarker.h"
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -856,6 +858,17 @@ QList<LegendMarker *> QPieSeriesPrivate::createLegendMarker(QLegend *legend)
     QList<LegendMarker *> markers;
     foreach (QPieSlice *slice, q->slices()) {
         PieLegendMarker* marker = new PieLegendMarker(q, slice, legend);
+        markers << marker;
+    }
+    return markers;
+}
+
+QList<QLegendMarker*> QPieSeriesPrivate::createLegendMarkers(QLegend* legend)
+{
+    Q_Q(QPieSeries);
+    QList<QLegendMarker*> markers;
+    foreach(QPieSlice* slice, q->slices()) {
+        QPieLegendMarker* marker = new QPieLegendMarker(q,slice,legend);
         markers << marker;
     }
     return markers;

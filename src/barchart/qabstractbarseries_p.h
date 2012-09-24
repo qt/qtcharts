@@ -39,6 +39,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarModelMapper;
 class QBarCategoryAxis;
+class QLegendMarker;
 
 class QAbstractBarSeriesPrivate : public QAbstractSeriesPrivate
 {
@@ -56,6 +57,7 @@ public:
     void scaleDomain(Domain &domain);
     ChartElement *createGraphics(ChartPresenter *presenter);
     QList<LegendMarker *> createLegendMarker(QLegend *legend);
+    QList<QLegendMarker*> createLegendMarkers(QLegend* legend);
 
     void initializeAxis(QAbstractAxis *axis);
     virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;

@@ -382,6 +382,15 @@ QList<LegendMarker *> QAreaSeriesPrivate::createLegendMarker(QLegend *legend)
     return list << new AreaLegendMarker(q, legend);
 }
 
+QList<QLegendMarker*> QAreaSeriesPrivate::createLegendMarkers(QLegend* legend)
+{
+    Q_UNUSED(legend);
+//    Q_Q(QAreaSeries);
+    QList<QLegendMarker*> list;
+// TODO:
+//    return list << new AreaLegendMarker(q,legend);
+    return list;
+}
 
 void QAreaSeriesPrivate::initializeAxis(QAbstractAxis *axis)
 {

@@ -659,6 +659,22 @@ QList<LegendMarker *> QAbstractBarSeriesPrivate::createLegendMarker(QLegend *leg
     return markers;
 }
 
+QList<QLegendMarker*> QAbstractBarSeriesPrivate::createLegendMarkers(QLegend* legend)
+{
+    Q_UNUSED(legend);
+//    Q_Q(QAbstractBarSeries);
+    QList<QLegendMarker*> markers;
+// TODO: when QBarLegendMarker is implemented
+/*
+    foreach(QBarSet* set, q->barSets()) {
+        BarLegendMarker* marker = new BarLegendMarker(q,set,legend);
+        markers << marker;
+    }
+*/
+    return markers;
+}
+
+
 bool QAbstractBarSeriesPrivate::append(QBarSet *set)
 {
     if ((m_barSets.contains(set)) || (set == 0))

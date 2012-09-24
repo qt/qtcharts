@@ -27,8 +27,17 @@ QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject
     QLegendMarker(series, parent),
     m_slice(slice)
 {
+    QObject::connect(slice, SIGNAL(labelChanged()), this, SLOT(updated()));
+    QObject::connect(slice, SIGNAL(brushChanged()), this, SLOT(updated()));
+    updated();
 }
 
+void QPieLegendMarker::updated()
+{
+    // TODO: to PIMPL.
+    setBrush(m_slice->brush());
+    setLabel(m_slice->label());
+}
 
 #include "moc_qpielegendmarker.cpp"
 //#include "moc_qpielegendmarker_p.cpp"

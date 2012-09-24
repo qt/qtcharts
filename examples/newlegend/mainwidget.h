@@ -55,6 +55,7 @@ public slots:
 
     void toggleBold();
     void toggleItalic();
+    void showDebugInfo();
     void fontSizeChanged();
 
     void updateLegendLayout();

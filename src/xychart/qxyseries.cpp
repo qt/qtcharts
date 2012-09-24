@@ -454,6 +454,16 @@ QList<LegendMarker *> QXYSeriesPrivate::createLegendMarker(QLegend *legend)
     return list << new XYLegendMarker(q, legend);
 }
 
+QList<QLegendMarker*> QXYSeriesPrivate::createLegendMarkers(QLegend* legend)
+{
+    Q_UNUSED(legend);
+//    Q_Q(QXYSeries);
+    QList<QLegendMarker*> list;
+// TODO:
+//    return list << new QXYLegendMarker(q,legend);
+    return list;
+}
+
 void QXYSeriesPrivate::initializeAxis(QAbstractAxis *axis)
 {
     Q_UNUSED(axis);

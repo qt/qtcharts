@@ -46,6 +46,7 @@ public:
 
     void scaleDomain(Domain &domain);
     QList<LegendMarker *> createLegendMarker(QLegend *legend);
+    QList<QLegendMarker*> createLegendMarkers(QLegend* legend);
 
     void initializeAxis(QAbstractAxis *axis);
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;

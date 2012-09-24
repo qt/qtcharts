@@ -25,14 +25,14 @@
 #include <QObject>
 #include <QPen>
 #include <QBrush>
+#include <QFont>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// TODO:
-//class QLegendMarkerPrivate;
+class QLegendMarkerPrivate;
 class QAbstractSeries;
 
-// TODO: should this be abstract?
+// TODO: should this be QAbstractLegendMarker?
 class QTCOMMERCIALCHART_EXPORT QLegendMarker : public QObject
 {
     Q_OBJECT
@@ -49,6 +49,12 @@ public:
     QString label() const;
     void setLabel(const QString &label);
 
+    QBrush labelBrush() const;
+    void setLabelBrush(const QBrush &brush);
+
+    QFont font() const;
+    void setFont(const QFont &font);
+
     QPen pen() const;
     void setPen(const QPen &pen);
 
@@ -59,7 +65,7 @@ public:
     void setVisible(bool visible);
 
 //    virtual QAbstractSeries::SeriesType type() = 0;
-    virtual QAbstractSeries* series() { return m_series; }
+    virtual QAbstractSeries* series();
     virtual QObject* peerObject() = 0;
 
 Q_SIGNALS:
@@ -67,19 +73,12 @@ Q_SIGNALS:
     void hovered(bool status);
 
 public Q_SLOTS:
-    void markersUpdated();  // TODO: private? Idea is that series signals, when for example pieslices have been added/removed.
+    virtual void updated() = 0;  // TODO: private. Idea is that series signals, when some property has changed
 
 public:
-// TODO:
-//    QScopedPointer<QLegendMarkerPrivate> d_ptr;
+    QScopedPointer<QLegendMarkerPrivate> d_ptr;
     Q_DISABLE_COPY(QLegendMarker)
 
-// TODO: move to PIMPL
-    QAbstractSeries* m_series;
-    QString m_label;
-    QPen m_pen;
-    QBrush m_brush;
-    bool m_visible;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

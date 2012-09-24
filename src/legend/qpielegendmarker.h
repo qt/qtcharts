@@ -36,6 +36,9 @@ public:
     
     virtual QPieSlice* peerObject() { return m_slice; }
 
+// TODO: to pimp.
+    void updated();
+
 //Q_SIGNALS:
     
 //public Q_SLOTS:

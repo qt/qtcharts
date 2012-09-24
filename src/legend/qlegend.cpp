@@ -44,6 +44,8 @@
 #include <QTimer>
 #include <QGraphicsSceneEvent>
 
+#include <QLegendMarker>
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -465,7 +467,21 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 {
     Q_UNUSED(domain)
 
-    QList<LegendMarker *> markers = series->d_ptr->createLegendMarker(q_ptr);
+// New markers --->
+    QList<QLegendMarker*> newMarkers = series->d_ptr->createLegendMarkers(q_ptr);
+    foreach (QLegendMarker* marker, newMarkers) {
+        marker->setFont(m_font);
+        marker->setLabelBrush(m_labelBrush);
+        marker->setVisible(series->isVisible());
+// TODO: QLegendMarker has QGraphicsItem vs QLegendMarker is QGraphicsItem
+//        m_items->addToGroup(marker);
+        m_legendMarkers << marker;
+    }
+
+    QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
+// <--- New markers
+
+    QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
 
     foreach (LegendMarker *marker, markers) {
         marker->setFont(m_font);
@@ -484,6 +500,17 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 
 void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 {
+// New markers --->
+    foreach (QLegendMarker *marker, m_legendMarkers) {
+        if (marker->series() == series) {
+            delete marker;
+            m_legendMarkers.removeAll(marker);
+        }
+    }
+
+    QObject::disconnect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
+// <--- New markers
+
     foreach (LegendMarker *marker, m_markers) {
         if (marker->series() == series) {
             delete marker;
@@ -501,8 +528,17 @@ void QLegendPrivate::handleSeriesVisibleChanged()
     QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
     Q_ASSERT(series);
 
-    foreach (LegendMarker *marker, m_markers) {
-        if (marker->series() == series)
+// New markers --->
+    foreach (QLegendMarker* marker, m_legendMarkers) {
+        if (marker->series() == series) {
+            marker->setVisible(series->isVisible());
+        }
+    }
+
+// <--- New markers
+
+    foreach (LegendMarker* marker, m_markers) {
+        if (marker->series() == series) {
             marker->setVisible(series->isVisible());
     }
     m_layout->invalidate();
@@ -510,10 +546,13 @@ void QLegendPrivate::handleSeriesVisibleChanged()
 
 void QLegendPrivate::handleCountChanged()
 {
-    QAbstractSeriesPrivate *series = qobject_cast<QAbstractSeriesPrivate *> (sender());
-    Q_ASSERT(series);
-    handleSeriesRemoved(series->q_ptr);
-    handleSeriesAdded(series->q_ptr, 0);
+    // With new markers, the series shoud notify markers directly?
+
+    // Handle new or removed markers
+    // Handle changes of marker pen/brush/label. every property that legend is interested
+    handleSeriesRemoved(series);
+    Domain domain;
+    handleSeriesAdded(series, &domain);
 }
 
 #include "moc_qlegend.cpp"

@@ -28,6 +28,7 @@
 #include <QFormLayout>
 #include <QPieSeries>
 #include <QPieSlice>
+#include <QLegendMarker>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -53,11 +54,15 @@ MainWidget::MainWidget(QWidget *parent) :
 
     QPushButton *boldButton = new QPushButton("Toggle bold");
     connect(boldButton, SIGNAL(clicked()), this, SLOT(toggleBold()));
-    m_buttonLayout->addWidget(boldButton, 8, 0);
+    m_buttonLayout->addWidget(boldButton, 5, 0);
 
     QPushButton *italicButton = new QPushButton("Toggle italic");
     connect(italicButton, SIGNAL(clicked()), this, SLOT(toggleItalic()));
-    m_buttonLayout->addWidget(italicButton, 9, 0);
+    m_buttonLayout->addWidget(italicButton, 6, 0);
+
+    QPushButton *infoButton = new QPushButton("Debug info");
+    connect(infoButton, SIGNAL(clicked()), this, SLOT(showDebugInfo()));
+    m_buttonLayout->addWidget(infoButton, 7, 0);
 
     m_legendPosX = new QDoubleSpinBox();
     m_legendPosY = new QDoubleSpinBox();
@@ -225,6 +230,14 @@ void MainWidget::toggleItalic()
     QFont font = m_chart->legend()->font();
     font.setItalic(!font.italic());
     m_chart->legend()->setFont(font);
+}
+
+void MainWidget::showDebugInfo()
+{
+    qDebug() << "marker count:" << m_chart->legend()->markers().count();
+    foreach (QLegendMarker* marker, m_chart->legend()->markers()) {
+        qDebug() << "label:" << marker->label();
+    }
 }
 
 void MainWidget::fontSizeChanged()

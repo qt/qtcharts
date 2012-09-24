@@ -41,6 +41,7 @@ class LegendMarker;
 class QLegend;
 class ChartDataSet;
 class QAbstractAxis;
+class QLegendMarker;
 
 class QAbstractSeriesPrivate : public QObject
 {
@@ -52,6 +53,7 @@ public:
     virtual void scaleDomain(Domain &domain) = 0;
     virtual ChartElement *createGraphics(ChartPresenter *presenter) = 0;
     virtual QList<LegendMarker *> createLegendMarker(QLegend *legend) = 0;
+    virtual QList<QLegendMarker*> createLegendMarkers(QLegend* legend) = 0;
     virtual void initializeAxis(QAbstractAxis *axis) = 0;
     virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation) const = 0;
 
