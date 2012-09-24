@@ -30,6 +30,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 // TODO:
 //class QLegendMarkerPrivate;
+class QAbstractSeries;
 
 // TODO: should this be abstract?
 class QTCOMMERCIALCHART_EXPORT QLegendMarker : public QObject
@@ -42,7 +43,7 @@ class QTCOMMERCIALCHART_EXPORT QLegendMarker : public QObject
 //    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged);
 
 public:
-    explicit QLegendMarker(QObject *parent = 0);
+    explicit QLegendMarker(QAbstractSeries* series, QObject *parent = 0);
     virtual ~QLegendMarker();
 
     QString label() const;
@@ -57,6 +58,10 @@ public:
     bool isVisible() const;
     void setVisible(bool visible);
 
+//    virtual QAbstractSeries::SeriesType type() = 0;
+    virtual QAbstractSeries* series() { return m_series; }
+    virtual QObject* peerObject() = 0;
+
 Q_SIGNALS:
     void clicked();
     void hovered(bool status);
@@ -70,6 +75,7 @@ public:
     Q_DISABLE_COPY(QLegendMarker)
 
 // TODO: move to PIMPL
+    QAbstractSeries* m_series;
     QString m_label;
     QPen m_pen;
     QBrush m_brush;

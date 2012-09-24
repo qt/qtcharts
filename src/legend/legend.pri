@@ -5,7 +5,8 @@ SOURCES += \
     $$PWD/qlegend.cpp \
     $$PWD/legendmarker.cpp \
     $$PWD/legendlayout.cpp \
-    $$PWD/qlegendmarker.cpp
+    $$PWD/qlegendmarker.cpp \
+    $$PWD/qpielegendmarker.cpp
     
 PRIVATE_HEADERS += \
     $$PWD/legendmarker_p.h \
@@ -16,4 +17,5 @@ PRIVATE_HEADERS += \
     
 PUBLIC_HEADERS += \
     $$PWD/qlegend.h \
-    $$PWD/qlegendmarker.h
+    $$PWD/qlegendmarker.h \
+    $$PWD/qpielegendmarker.h

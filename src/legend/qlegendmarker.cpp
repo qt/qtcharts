@@ -24,8 +24,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QLegendMarker::QLegendMarker(QObject *parent) :
-    QObject(parent)//,
+QLegendMarker::QLegendMarker(QAbstractSeries* series, QObject *parent) :
+    QObject(parent),
+    m_series(series)
 //    d_ptr(new QLegendMarkerPrivate(this))
 {
 }
