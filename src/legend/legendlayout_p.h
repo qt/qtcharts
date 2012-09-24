@@ -39,6 +39,7 @@ public:
     void setOffset(qreal x, qreal y);
     QPointF offset() const;
 
+    void invalidate();
 protected:
     QSizeF sizeHint ( Qt::SizeHint which, const QSizeF & constraint = QSizeF() ) const;
     int count() const { return 0; }

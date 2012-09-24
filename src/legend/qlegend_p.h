@@ -79,6 +79,7 @@ private:
     bool m_backgroundVisible;
 
 friend class QLegend;
+friend class LegendLayout;
 
 };
 

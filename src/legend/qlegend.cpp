@@ -336,11 +336,7 @@ void QLegend::setAlignment(Qt::Alignment alignment)
 {
     if(d_ptr->m_alignment!=alignment) {
         d_ptr->m_alignment = alignment;
-        if(isAttachedToChart()){
-            d_ptr->m_presenter->layout()->invalidate();
-        }else{
-            layout()->invalidate();
-        }
+        layout()->invalidate();
     }
 }
 
@@ -355,7 +351,7 @@ Qt::Alignment QLegend::alignment() const
 void QLegend::detachFromChart()
 {
     d_ptr->m_attachedToChart = false;
-    d_ptr->m_layout->invalidate();
+    layout()->invalidate();
     setParent(0);
 
 }
@@ -366,7 +362,7 @@ void QLegend::detachFromChart()
 void QLegend::attachToChart()
 {
     d_ptr->m_attachedToChart = true;
-    d_ptr->m_presenter->layout()->invalidate();
+    layout()->invalidate();
     setParent(d_ptr->m_chart);
 }
 
@@ -406,14 +402,12 @@ void QLegend::hideEvent(QHideEvent *event)
    if(isAttachedToChart()) d_ptr->m_presenter->layout()->invalidate();
    QGraphicsWidget::hideEvent(event);
 }
-
 /*!
  \internal \a event see QGraphicsWidget for details
  */
 void QLegend::showEvent(QShowEvent *event)
 {
    if(isAttachedToChart()) {
-       d_ptr->m_presenter->layout()->invalidate();
        d_ptr->items()->setVisible(false);
        layout()->invalidate();
    }
@@ -478,8 +472,7 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     QObject::connect(series->d_ptr.data(), SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
 
     m_items->setVisible(false);
-    q_ptr->layout()->invalidate();
-    m_presenter->layout()->invalidate();
+    m_layout->invalidate();
 }
 
 void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
@@ -493,8 +486,7 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 
     QObject::disconnect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
     QObject::disconnect(series->d_ptr.data(), SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
-
-    q_ptr->layout()->invalidate();
+    m_layout->invalidate();
 }
 
 void QLegendPrivate::handleSeriesVisibleChanged()
@@ -507,8 +499,7 @@ void QLegendPrivate::handleSeriesVisibleChanged()
             marker->setVisible(series->isVisible());
         }
     }
-
-    q_ptr->layout()->invalidate();
+    m_layout->invalidate();
 }
 
 void QLegendPrivate::handleCountChanged()

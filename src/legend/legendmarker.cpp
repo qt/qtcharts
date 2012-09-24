@@ -77,6 +77,7 @@ void LegendMarker::setFont(const QFont &font)
     QFontMetrics fn(font);
     m_markerRect = QRectF(0,0,fn.height()/2,fn.height()/2);
     updateGeometry();
+    m_legend->layout()->invalidate();
 }
 
 QFont LegendMarker::font() const
@@ -165,7 +166,6 @@ QSizeF LegendMarker::sizeHint(Qt::SizeHint which, const QSizeF& constraint) cons
         default:
           break;
       }
-
       return sh;
 }
 

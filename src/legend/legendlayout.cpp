@@ -87,6 +87,14 @@ QPointF LegendLayout::offset() const
     return QPointF(m_offsetX,m_offsetY);
 }
 
+void LegendLayout::invalidate()
+{
+    QGraphicsLayout::invalidate();
+    if(m_legend->isAttachedToChart()){
+        m_legend->d_ptr->m_presenter->layout()->invalidate();
+    }
+}
+
 void LegendLayout::setGeometry(const QRectF& rect)
 {
     m_legend->d_ptr->items()->setVisible(m_legend->isVisible());
