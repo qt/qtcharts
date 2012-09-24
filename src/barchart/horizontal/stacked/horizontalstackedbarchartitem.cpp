@@ -55,40 +55,38 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
         for (int set = 0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal yPos = (m_domainMinY +0.5 -barSet->pos(category)) * scaleY + geometry().bottom() - rectHeight/2;
+            qreal yPos = (m_domainMinY + 0.5 - barSet->pos(category)) * scaleY + geometry().bottom() - rectHeight / 2;
 
             qreal rectWidth = barSet->value(category) * scaleX;
             Bar* bar = m_bars.at(itemIndex);
 
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(rectHeight)) {
+            if (qFuzzyIsNull(rectHeight))
                 bar->setVisible(false);
-            } else {
+            else
                 bar->setVisible(barsVisible);
-            }
 
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(barSet->value(category))) {
+            if (!qFuzzyIsNull(barSet->value(category)))
                 label->setText(QString::number(barSet->value(category)));
-            } else {
+            else
                 label->setText(QString(""));
-            }
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 
             if (rectWidth > 0) {
                 QRectF rect(xMax, yPos - rectHeight, rectWidth, rectHeight);
                 layout.append(rect);
-                label->setPos(xMax + (rect.width()/2 - label->boundingRect().width()/2)
-                              ,yPos - rectHeight/2 - label->boundingRect().height()/2);
+                label->setPos(xMax + (rect.width() / 2 - label->boundingRect().width() / 2),
+                              yPos - rectHeight / 2 - label->boundingRect().height() / 2);
                 xMax += rectWidth;
             } else {
                 QRectF rect(xMin, yPos - rectHeight, rectWidth, rectHeight);
                 layout.append(rect);
-                label->setPos(xMin + (rect.width()/2 - label->boundingRect().width()/2)
-                              ,yPos - rectHeight/2 - label->boundingRect().height()/2);
+                label->setPos(xMin + (rect.width() / 2 - label->boundingRect().width() / 2),
+                              yPos - rectHeight / 2 - label->boundingRect().height() / 2);
                 xMin += rectWidth;
             }
             itemIndex++;

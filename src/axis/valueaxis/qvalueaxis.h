@@ -41,7 +41,7 @@ public:
     ~QValueAxis();
 
 protected:
-    QValueAxis(QValueAxisPrivate &d,QObject *parent = 0);
+    QValueAxis(QValueAxisPrivate &d, QObject *parent = 0);
 
 public:
     AxisType type() const;

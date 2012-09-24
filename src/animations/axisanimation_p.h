@@ -47,8 +47,8 @@ public:
     void setAnimationPoint(const QPointF& point);
     void setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayout);
 protected:
-    QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress ) const;
-    void updateCurrentValue(const QVariant &value );
+    QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;
+    void updateCurrentValue(const QVariant &value);
 private:
     ChartAxis *m_axis;
     Animation m_type;

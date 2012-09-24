@@ -79,9 +79,8 @@ QAbstractSeries::SeriesType QBarSeries::type() const
 QBarSeries::~QBarSeries()
 {
     Q_D(QBarSeries);
-    if(d->m_dataset) {
+    if (d->m_dataset)
         d->m_dataset->removeSeries(this);
-    }
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -103,7 +102,7 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
     maxX = qMax(maxX, x - (qreal)0.5);
     maxY = qMax(maxY, max());
 
-    domain.setRange(minX,maxX,minY,maxY);
+    domain.setRange(minX, maxX, minY, maxY);
 }
 
 
@@ -111,10 +110,9 @@ ChartElement* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QBarSeries);
 
-    BarChartItem* bar = new BarChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    BarChartItem* bar = new BarChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new BarAnimation(bar));
-    }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
 }

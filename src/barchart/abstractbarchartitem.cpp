@@ -69,9 +69,8 @@ QRectF AbstractBarChartItem::boundingRect() const
 void AbstractBarChartItem::applyLayout(const QVector<QRectF> &layout)
 {
     if (m_animation) {
-        m_animation->setup(m_layout,layout);
+        m_animation->setup(m_layout, layout);
         presenter()->startAnimation(m_animation);
-
     } else {
         setLayout(layout);
         update();
@@ -90,9 +89,8 @@ void AbstractBarChartItem::setLayout(const QVector<QRectF> &layout)
 
     m_layout = layout;
 
-    for (int i=0; i < m_bars.count(); i++) {
+    for (int i = 0; i < m_bars.count(); i++)
         m_bars.at(i)->setRect(layout.at(i));
-    }
 }
 //handlers
 
@@ -114,27 +112,23 @@ void AbstractBarChartItem::handleGeometryChanged(const QRectF &rect)
 
 void AbstractBarChartItem::handleLayoutChanged()
 {
-    if ((m_rect.width() <= 0) || (m_rect.height() <= 0)) {
-        // rect size zero.
-        return;
-    }
+    if ((m_rect.width() <= 0) || (m_rect.height() <= 0))
+        return; // rect size zero.
     QVector<QRectF> layout = calculateLayout();
     applyLayout(layout);
 }
 
 void AbstractBarChartItem::handleLabelsVisibleChanged(bool visible)
 {
-    foreach (QGraphicsSimpleTextItem* label, m_labels) {
+    foreach (QGraphicsSimpleTextItem *label, m_labels)
         label->setVisible(visible);
-    }
     update();
 }
 
 void AbstractBarChartItem::handleDataStructureChanged()
 {
-    foreach(QGraphicsItem *item, childItems()) {
+    foreach (QGraphicsItem *item, childItems())
         delete item;
-    }
 
     m_bars.clear();
     m_labels.clear();
@@ -148,12 +142,12 @@ void AbstractBarChartItem::handleDataStructureChanged()
             QBarSet *set = m_series->d_func()->barsetAt(s);
 
             // Bars
-            Bar *bar = new Bar(set,c,this);
+            Bar *bar = new Bar(set, c, this);
             m_bars.append(bar);
-            connect(bar, SIGNAL(clicked(int,QBarSet*)), m_series, SIGNAL(clicked(int,QBarSet*)));
-            connect(bar, SIGNAL(hovered(bool,QBarSet*)), m_series, SIGNAL(hovered(bool,QBarSet*)));
-            connect(bar, SIGNAL(clicked(int,QBarSet*)), set, SIGNAL(clicked(int)));
-            connect(bar, SIGNAL(hovered(bool,QBarSet*)), set, SIGNAL(hovered(bool)));
+            connect(bar, SIGNAL(clicked(int, QBarSet*)), m_series, SIGNAL(clicked(int, QBarSet*)));
+            connect(bar, SIGNAL(hovered(bool, QBarSet*)), m_series, SIGNAL(hovered(bool, QBarSet*)));
+            connect(bar, SIGNAL(clicked(int, QBarSet*)), set, SIGNAL(clicked(int)));
+            connect(bar, SIGNAL(hovered(bool, QBarSet*)), set, SIGNAL(hovered(bool)));
             m_layout.append(QRectF(0, 0, 0, 0));
 
             // Labels
@@ -171,13 +165,13 @@ void AbstractBarChartItem::handleVisibleChanged()
 {
     bool visible = m_series->isVisible();
     handleLabelsVisibleChanged(visible);
-    foreach(QGraphicsItem *item, childItems())
+    foreach (QGraphicsItem *item, childItems())
         item->setVisible(visible);
 }
 
 void AbstractBarChartItem::handleOpacityChanged()
 {
-    foreach(QGraphicsItem *item, childItems())
+    foreach (QGraphicsItem *item, childItems())
         item->setOpacity(m_series->opacity());
 }
 

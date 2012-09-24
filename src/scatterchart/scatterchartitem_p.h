@@ -80,40 +80,42 @@ class CircleMarker: public QGraphicsEllipseItem
 {
 
 public:
-   CircleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent) : QGraphicsEllipseItem(x,y,w,h,parent),
-       m_parent(parent)
+   CircleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
+    : QGraphicsEllipseItem(x, y, w, h, parent),
+      m_parent(parent)
    {
    }
 
 protected:
-   void mousePressEvent(QGraphicsSceneMouseEvent *event)
-   {
-       m_parent->markerSelected(this);
-       QGraphicsEllipseItem::mousePressEvent(event);
-   }
+    void mousePressEvent(QGraphicsSceneMouseEvent *event)
+    {
+        m_parent->markerSelected(this);
+        QGraphicsEllipseItem::mousePressEvent(event);
+    }
 
 private:
-   ScatterChartItem* m_parent;
+    ScatterChartItem* m_parent;
 };
 
 class RectangleMarker: public QGraphicsRectItem
 {
 
 public:
-   RectangleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent) : QGraphicsRectItem(x,y,w,h,parent),
-       m_parent(parent)
-   {
-   }
+    RectangleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
+        : QGraphicsRectItem(x, y, w, h, parent),
+          m_parent(parent)
+    {
+    }
 
 protected:
-   void mousePressEvent(QGraphicsSceneMouseEvent *event)
-   {
-       m_parent->markerSelected(this);
-       QGraphicsRectItem::mousePressEvent(event);
-   }
+    void mousePressEvent(QGraphicsSceneMouseEvent *event)
+    {
+        m_parent->markerSelected(this);
+        QGraphicsRectItem::mousePressEvent(event);
+    }
 
 private:
-   ScatterChartItem* m_parent;
+    ScatterChartItem* m_parent;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

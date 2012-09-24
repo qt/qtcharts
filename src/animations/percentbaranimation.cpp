@@ -27,7 +27,7 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 PercentBarAnimation::PercentBarAnimation(PercentBarChartItem *item)
-    :AbstractBarAnimation(item)
+    : AbstractBarAnimation(item)
 {
     setDuration(ChartAnimationDuration);
     setEasingCurve(QEasingCurve::OutQuart);
@@ -47,13 +47,13 @@ QVariant PercentBarAnimation::interpolated(const QVariant &from, const QVariant 
 
     qreal yAxis = m_item->geometry().height() + m_item->geometry().y();
 
-    for(int i = 0; i < startVector.count(); i++) {
+    for (int i = 0; i < startVector.count(); i++) {
         qreal w = endVector[i].width();
         qreal h = startVector[i].height() + ((endVector[i].height() - startVector[i].height()) * progress);
         qreal x = endVector[i].topLeft().x();
         qreal y = yAxis + ((endVector[i].topLeft().y() - yAxis) * progress);
 
-        QRectF value(x,y,w,h);
+        QRectF value(x, y, w, h);
         result << value.normalized();
     }
     return qVariantFromValue(result);

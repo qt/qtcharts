@@ -68,9 +68,8 @@ QHorizontalStackedBarSeries::QHorizontalStackedBarSeries(QObject *parent) :
 QHorizontalStackedBarSeries::~QHorizontalStackedBarSeries()
 {
     Q_D(QHorizontalStackedBarSeries);
-    if(d->m_dataset) {
+    if (d->m_dataset)
         d->m_dataset->removeSeries(this);
-    }
 }
 
 /*!
@@ -101,17 +100,16 @@ void QHorizontalStackedBarSeriesPrivate::scaleDomain(Domain& domain)
     maxX = qMax(maxX, top());
     maxY = qMax(maxY, y - (qreal)0.5);
 
-    domain.setRange(minX,maxX,minY,maxY);
+    domain.setRange(minX, maxX, minY, maxY);
 }
 
 ChartElement* QHorizontalStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QHorizontalStackedBarSeries);
 
-    HorizontalStackedBarChartItem* bar = new HorizontalStackedBarChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    HorizontalStackedBarChartItem* bar = new HorizontalStackedBarChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new HorizontalStackedBarAnimation(bar));
-    }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
 }

@@ -56,7 +56,7 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
         for (int set = 0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal yPos = (m_domainMinY +0.5 -barSet->pos(category)) * scaleY + geometry().bottom() - rectHeight/2;
+            qreal yPos = (m_domainMinY + 0.5 - barSet->pos(category)) * scaleY + geometry().bottom() - rectHeight / 2;
 
             qreal rectWidth = barSet->value(category) * percentage * scaleX;
             Bar* bar = m_bars.at(itemIndex);
@@ -65,16 +65,15 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
             layout.append(rect);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(rectHeight)) {
+            if (qFuzzyIsNull(rectHeight))
                 bar->setVisible(false);
-            } else {
+            else
                 bar->setVisible(barsVisible);
-            }
 
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(m_series->d_func()->valueAt(set,category))) {
-                int p = m_series->d_func()->percentageAt(set,category) * 100;
+            if (!qFuzzyIsNull(m_series->d_func()->valueAt(set, category))) {
+                int p = m_series->d_func()->percentageAt(set, category) * 100;
                 QString vString(QString::number(p));
                 vString.truncate(3);
                 vString.append("%");
@@ -83,8 +82,8 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
                 label->setText(QString(""));
             }
 
-            label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                          ,yPos - rectHeight/2 - label->boundingRect().height()/2);
+            label->setPos(xPos + (rect.width() / 2 - label->boundingRect().width() / 2),
+                          yPos - rectHeight / 2 - label->boundingRect().height() / 2);
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 

@@ -48,7 +48,7 @@ public:
     void handleDomainUpdated();
     qreal min(){ return m_min; };
     qreal max(){ return m_max; };
-    int count() const { return m_tickCount;}
+    int count() const { return m_tickCount; }
 
 protected:
     void setMin(const QVariant &min);
@@ -57,7 +57,7 @@ protected:
 
 private:
     void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const;
-    qreal niceNumber(qreal x,bool ceiling) const;
+    qreal niceNumber(qreal x, bool ceiling) const;
 
 private:
     qreal m_min;

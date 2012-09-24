@@ -137,7 +137,8 @@ QAbstractSeries::QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent) :
 */
 QAbstractSeries::~QAbstractSeries()
 {
-    if(d_ptr->m_dataset) qFatal("Still binded series detected !");
+    if (d_ptr->m_dataset)
+        qFatal("Still binded series detected !");
 }
 
 void QAbstractSeries::setName(const QString& name)
@@ -223,12 +224,12 @@ void QAbstractSeries::hide()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q):
-    q_ptr(q),
-    m_chart(0),
-    m_dataset(0),
-    m_visible(true),
-    m_opacity(1.0)
+QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q)
+    : q_ptr(q),
+      m_chart(0),
+      m_dataset(0),
+      m_visible(true),
+      m_opacity(1.0)
 {
 }
 

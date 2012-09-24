@@ -46,7 +46,7 @@ class ScrollTicker : public QObject
 {
     Q_OBJECT
 public:
-    explicit ScrollTicker(Scroller *scroller,QObject *parent = 0);
+    explicit ScrollTicker(Scroller *scroller, QObject *parent = 0);
     void start(int interval);
     void stop();
 protected:
@@ -77,7 +77,6 @@ public:
 public:
     void scrollTick();
 
-
 public:
     void mousePressEvent(QGraphicsSceneMouseEvent* event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
@@ -85,7 +84,7 @@ public:
 
 private:
     void calculateSpeed(const QPointF& position);
-    void lowerSpeed(QPointF& speed,qreal maxSpeed=100);
+    void lowerSpeed(QPointF& speed, qreal maxSpeed = 100);
 
 private:
     ScrollTicker m_ticker;
@@ -98,8 +97,6 @@ private:
     QPointF m_fraction;
     int m_moveThreshold;
     int m_timeTreshold;
-
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

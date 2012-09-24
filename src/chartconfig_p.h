@@ -48,29 +48,29 @@ const char *gitHead = "unknown";
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartConfig {
-
+class ChartConfig
+{
 private:
-    ChartConfig(){
-    #if defined(DEVELOPMENT_BUILD) && !defined(QT_NO_DEBUG)
-        qDebug()<<"buildTime" << buildTime;
-        qDebug()<<"gitHead" << gitHead;
-    #endif
+    ChartConfig() {
+#if defined(DEVELOPMENT_BUILD) && !defined(QT_NO_DEBUG)
+        qDebug() << "buildTime" << buildTime;
+        qDebug() << "gitHead" << gitHead;
+#endif
         m_instance = this;
     }
 public:
-    static ChartConfig* instance(){
-        if(!m_instance){
-            m_instance= new ChartConfig();
+    static ChartConfig* instance() {
+        if (!m_instance) {
+            m_instance = new ChartConfig();
         }
         return m_instance;
     }
 
-    QString compilationTime(){
+    QString compilationTime() {
         return buildTime;
     }
 
-    QString compilationHead(){
+    QString compilationHead() {
         return gitHead;
     }
 
@@ -79,7 +79,7 @@ private:
 };
 
 
-ChartConfig* ChartConfig::m_instance=0;
+ChartConfig* ChartConfig::m_instance = 0;
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

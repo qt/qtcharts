@@ -43,12 +43,12 @@ public:
 
     QXYSeries* series() const;
     void setSeries(QXYSeries *series);
-    
+
     int xColumn() const;
     void setXColumn(int xColumn);
 
     int yColumn() const;
-    void setYColumn(int yColumn);    
+    void setYColumn(int yColumn);
 
     int firstRow() const;
     void setFirstRow(int firstRow);

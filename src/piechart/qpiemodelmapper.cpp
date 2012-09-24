@@ -308,7 +308,7 @@ void QPieModelMapperPrivate::slicesAdded(QList<QPieSlice*> slices)
     else
         m_model->insertColumns(firstIndex + m_first, slices.count());
 
-    for(int i = firstIndex; i < firstIndex + slices.count(); i++) {
+    for (int i = firstIndex; i < firstIndex + slices.count(); i++) {
         m_model->setData(valueModelIndex(i), slices.at(i - firstIndex)->value());
         m_model->setData(labelModelIndex(i), slices.at(i - firstIndex)->label());
     }

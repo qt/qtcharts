@@ -37,8 +37,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartThemeBlueCerulean: public ChartTheme
 {
 public:
-    ChartThemeBlueCerulean() : ChartTheme(QChart::ChartThemeBlueCerulean)
-    {
+    ChartThemeBlueCerulean() : ChartTheme(QChart::ChartThemeBlueCerulean) {
         // Series colors
         m_seriesColors << QRgb(0xc7e85b);
         m_seriesColors << QRgb(0x1cb54f);

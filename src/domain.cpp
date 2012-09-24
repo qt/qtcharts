@@ -23,11 +23,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Domain::Domain(QObject* parent) : QObject(parent),
-    m_minX(0),
-    m_maxX(0),
-    m_minY(0),
-    m_maxY(0)
+Domain::Domain(QObject* parent)
+    : QObject(parent),
+      m_minX(0),
+      m_maxX(0),
+      m_minY(0),
+      m_maxY(0)
 {
 }
 
@@ -41,27 +42,26 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
     bool axisYChanged = false;
 
     if (!qFuzzyIsNull(m_minX - minX) || !qFuzzyIsNull(m_maxX - maxX)) {
-        m_minX=minX;
-        m_maxX=maxX;
-        axisXChanged=true;
-        emit rangeXChanged(m_minX,m_maxX);
+        m_minX = minX;
+        m_maxX = maxX;
+        axisXChanged = true;
+        emit rangeXChanged(m_minX, m_maxX);
     }
 
     if (!qFuzzyIsNull(m_minY - minY) || !qFuzzyIsNull(m_maxY - maxY)) {
-        m_minY=minY;
-        m_maxY=maxY;
-        axisYChanged=true;
-        emit rangeYChanged(m_minY,m_maxY);
+        m_minY = minY;
+        m_maxY = maxY;
+        axisYChanged = true;
+        emit rangeYChanged(m_minY, m_maxY);
     }
 
-    if(axisXChanged || axisYChanged) {
+    if (axisXChanged || axisYChanged)
         emit updated();
-    }
 }
 
 void Domain::setRangeX(qreal min, qreal max)
 {
-    setRange(min,max,m_minY, m_maxY);
+    setRange(min, max, m_minY, m_maxY);
 }
 
 void Domain::setRangeY(qreal min, qreal max)
@@ -121,7 +121,7 @@ void Domain::zoomIn(const QRectF& rect, const QSizeF& size)
     minY = maxY - dy * rect.bottom();
     maxY = maxY - dy * rect.top();
 
-    setRange(minX,maxX,minY,maxY);
+    setRange(minX, maxX, minY, maxY);
 }
 
 void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
@@ -139,10 +139,10 @@ void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
     maxY = minY + dy * rect.bottom();
     minY = maxY - dy * size.height();
 
-    setRange(minX,maxX,minY,maxY);
+    setRange(minX, maxX, minY, maxY);
 }
 
-void Domain::move(qreal dx,qreal dy,const QSizeF& size)
+void Domain::move(qreal dx, qreal dy, const QSizeF& size)
 {
     qreal x = spanX() / size.width();
     qreal y = spanY() / size.height();
@@ -152,15 +152,15 @@ void Domain::move(qreal dx,qreal dy,const QSizeF& size)
     qreal minY = m_minY;
     qreal maxY = m_maxY;
 
-    if(dx!=0) {
+    if (dx != 0) {
         minX = minX + x * dx;
         maxX = maxX + x * dx;
     }
-    if(dy!=0) {
+    if (dy != 0) {
         minY = minY + y * dy;
         maxY = maxY + y * dy;
     }
-    setRange(minX,maxX,minY,maxY);
+    setRange(minX, maxX, minY, maxY);
 }
 
 void Domain::emitUpdated()
@@ -173,19 +173,18 @@ void Domain::handleAxisUpdated()
     QAbstractAxisPrivate* axis = qobject_cast<QAbstractAxisPrivate*>(sender());
     Q_ASSERT(axis);
     axis->setDirty(false);
-    if(axis->orientation()==Qt::Horizontal){
-        setRangeX(axis->min(),axis->max());
-    }else if(axis->orientation()==Qt::Vertical){
-        setRangeY(axis->min(),axis->max());
-    }
+    if (axis->orientation() == Qt::Horizontal)
+        setRangeX(axis->min(), axis->max());
+    else if (axis->orientation() == Qt::Vertical)
+        setRangeY(axis->min(), axis->max());
 }
 
 bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2)
 {
     return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX) &&
-        qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY) &&
-        qFuzzyIsNull(domain1.m_minX - domain2.m_minX) &&
-        qFuzzyIsNull(domain1.m_minY - domain2.m_minY));
+            qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY) &&
+            qFuzzyIsNull(domain1.m_minX - domain2.m_minX) &&
+            qFuzzyIsNull(domain1.m_minY - domain2.m_minY));
 }
 
 
@@ -197,7 +196,7 @@ bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const Domain &domain1, const 
 
 QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const Domain &domain)
 {
-    dbg.nospace() << "Domain("<<domain.m_minX<<','<<domain.m_maxX<<','<<domain.m_minY<<','<<domain.m_maxY<<')';
+    dbg.nospace() << "Domain(" << domain.m_minX << ',' << domain.m_maxX << ',' << domain.m_minY << ',' << domain.m_maxY << ')';
     return dbg.maybeSpace();
 }
 

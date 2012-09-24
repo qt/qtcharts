@@ -43,7 +43,7 @@ public:
 
     QXYSeries* series() const;
     void setSeries(QXYSeries *series);
-    
+
     int xRow() const;
     void setXRow(int xRow);
 

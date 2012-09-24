@@ -58,8 +58,8 @@ QBrush linearPos(QBrush start, QBrush end, qreal pos)
 }
 
 PieSliceAnimation::PieSliceAnimation(PieSliceItem *sliceItem)
-    :ChartAnimation(sliceItem),
-    m_sliceItem(sliceItem)
+    : ChartAnimation(sliceItem),
+      m_sliceItem(sliceItem)
 {
 }
 

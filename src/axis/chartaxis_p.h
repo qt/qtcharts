@@ -47,7 +47,7 @@ class ChartAxis : public ChartElement, public QGraphicsLayoutItem
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
-    enum AxisType{ X_AXIS,Y_AXIS };
+    enum AxisType { X_AXIS, Y_AXIS };
 
     ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter);
     ~ChartAxis();
@@ -111,7 +111,7 @@ public:
 protected:
     virtual void updateGeometry() = 0;
     virtual QVector<qreal> calculateLayout() const = 0;
-    QStringList createNumberLabels(qreal min, qreal max,int ticks) const;
+    QStringList createNumberLabels(qreal min, qreal max, int ticks) const;
 
 
 public Q_SLOTS:
@@ -156,28 +156,24 @@ public:
     explicit AxisItem(ChartAxis *axis, QGraphicsItem *parent = 0) : QGraphicsLineItem(parent), m_axis(axis) {}
 
 protected:
-   void mousePressEvent(QGraphicsSceneMouseEvent *event)
-   {
-       Q_UNUSED(event)
-       m_axis->axisSelected();
-   }
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) {
+        Q_UNUSED(event)
+        m_axis->axisSelected();
+    }
 
-   QRectF boundingRect() const
-   {
-      return shape().boundingRect();
-   }
+    QRectF boundingRect() const {
+        return shape().boundingRect();
+    }
 
-   QPainterPath shape() const
-   {
-       QPainterPath path = QGraphicsLineItem::shape();
-       QRectF rect = path.boundingRect();
-       path.addRect(rect.adjusted(0,0,m_axis->axisType()!=ChartAxis::X_AXIS?8:0,m_axis->axisType()!=ChartAxis::Y_AXIS?8:0));
-       return path;
-   }
+    QPainterPath shape() const {
+        QPainterPath path = QGraphicsLineItem::shape();
+        QRectF rect = path.boundingRect();
+        path.addRect(rect.adjusted(0, 0, m_axis->axisType() != ChartAxis::X_AXIS ? 8 : 0, m_axis->axisType() != ChartAxis::Y_AXIS ? 8 : 0));
+        return path;
+    }
 
 private:
-   ChartAxis* m_axis;
-
+    ChartAxis* m_axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

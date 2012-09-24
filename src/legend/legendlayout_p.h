@@ -41,7 +41,7 @@ public:
 
     void invalidate();
 protected:
-    QSizeF sizeHint ( Qt::SizeHint which, const QSizeF & constraint = QSizeF() ) const;
+    QSizeF sizeHint ( Qt::SizeHint which, const QSizeF & constraint = QSizeF()) const;
     int count() const { return 0; }
     QGraphicsLayoutItem* itemAt(int) const { return 0; };
     void removeAt(int){};
@@ -60,7 +60,6 @@ private:
     qreal m_maxOffsetY;
     qreal m_width;
     qreal m_height;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

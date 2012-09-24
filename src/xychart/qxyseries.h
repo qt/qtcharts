@@ -40,15 +40,15 @@ class QTCOMMERCIALCHART_EXPORT QXYSeries : public QAbstractSeries
     Q_PROPERTY(QColor color READ color WRITE setColor NOTIFY colorChanged)
 
 protected:
-    explicit QXYSeries(QXYSeriesPrivate &d,QObject *parent = 0);
+    explicit QXYSeries(QXYSeriesPrivate &d, QObject *parent = 0);
 
 public:
     ~QXYSeries();
     void append(qreal x, qreal y);
     void append(const QPointF &point);
     void append(const QList<QPointF> &points);
-    void replace(qreal oldX,qreal oldY,qreal newX,qreal newY);
-    void replace(const QPointF &oldPoint,const QPointF &newPoint);
+    void replace(qreal oldX, qreal oldY, qreal newX, qreal newY);
+    void replace(const QPointF &oldPoint, const QPointF &newPoint);
     void remove(qreal x, qreal y);
     void remove(const QPointF &point);
     void insert(int index, const QPointF &point);

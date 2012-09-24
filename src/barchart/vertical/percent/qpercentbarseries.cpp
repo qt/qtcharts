@@ -69,9 +69,8 @@ QPercentBarSeries::QPercentBarSeries(QObject *parent)
 QPercentBarSeries::~QPercentBarSeries()
 {
     Q_D(QPercentBarSeries);
-    if(d->m_dataset) {
+    if (d->m_dataset)
         d->m_dataset->removeSeries(this);
-    }
 }
 
 /*!
@@ -102,7 +101,7 @@ void QPercentBarSeriesPrivate::scaleDomain(Domain& domain)
     minY = 0;
     maxY = 100;
 
-    domain.setRange(minX,maxX,minY,maxY);
+    domain.setRange(minX, maxX, minY, maxY);
 }
 
 
@@ -110,10 +109,9 @@ ChartElement* QPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter
 {
     Q_Q(QPercentBarSeries);
 
-    PercentBarChartItem* bar = new PercentBarChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    PercentBarChartItem* bar = new PercentBarChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new PercentBarAnimation(bar));
-    }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
 }

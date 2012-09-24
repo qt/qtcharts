@@ -26,11 +26,12 @@ Q_DECLARE_METATYPE(QVector<QPointF>)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-XYAnimation::XYAnimation(XYChart *item):ChartAnimation(item),
-    m_type(NewAnimation),
-    m_dirty(false),
-    m_index(-1),
-    m_item(item)
+XYAnimation::XYAnimation(XYChart *item)
+    : ChartAnimation(item),
+      m_type(NewAnimation),
+      m_dirty(false),
+      m_index(-1),
+      m_item(item)
 {
     setDuration(ChartAnimationDuration);
     setEasingCurve(QEasingCurve::OutQuart);
@@ -42,54 +43,50 @@ XYAnimation::~XYAnimation()
 
 void XYAnimation::setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints, int index)
 {
-	m_type = NewAnimation;
+    m_type = NewAnimation;
 
-	if (state() != QAbstractAnimation::Stopped){
-	    stop();
-	    m_dirty=false;
-	}
+    if (state() != QAbstractAnimation::Stopped) {
+        stop();
+        m_dirty = false;
+    }
 
-	if(!m_dirty){
-	    m_dirty = true;
-	    m_oldPoints = oldPoints;
-	}
+    if (!m_dirty) {
+        m_dirty = true;
+        m_oldPoints = oldPoints;
+    }
 
-	m_newPoints = newPoints;
+    m_newPoints = newPoints;
 
-	int x = m_oldPoints.count();
-	int y = m_newPoints.count();
+    int x = m_oldPoints.count();
+    int y = m_newPoints.count();
 
-	if(x - y == 1  && index >= 0 && y > 0){
-		 //remove point
-		 m_newPoints.insert(index, index > 0 ? newPoints[index-1] : newPoints[index]);
-		 m_index=index;
-		 m_type = RemovePointAnimation;
-	}
+    if (x - y == 1  && index >= 0 && y > 0) {
+        //remove point
+        m_newPoints.insert(index, index > 0 ? newPoints[index - 1] : newPoints[index]);
+        m_index = index;
+        m_type = RemovePointAnimation;
+    }
 
-	if(x - y == -1  && index >= 0){
-		  //add point
-		 m_oldPoints.insert(index, index > 0 ? newPoints[index-1] : newPoints[index]);
-		 m_index=index;
-		 m_type = AddPointAnimation;
-	}
+    if (x - y == -1  && index >= 0) {
+        //add point
+        m_oldPoints.insert(index, index > 0 ? newPoints[index - 1] : newPoints[index]);
+        m_index = index;
+        m_type = AddPointAnimation;
+    }
 
-	x = m_oldPoints.count();
-	y = m_newPoints.count();
+    x = m_oldPoints.count();
+    y = m_newPoints.count();
 
-	if(x != y)
-	{
-		m_type = NewAnimation;
-	}
-	else if(m_type == NewAnimation)
-	{
-		m_type = ReplacePointAnimation;
-	}
+    if (x != y)
+        m_type = NewAnimation;
+    else if (m_type == NewAnimation)
+        m_type = ReplacePointAnimation;
 
     setKeyValueAt(0.0, qVariantFromValue(m_oldPoints));
     setKeyValueAt(1.0, qVariantFromValue(m_newPoints));
 }
 
-QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress ) const
+QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
 {
     QVector<QPointF> startVector = qVariantValue<QVector<QPointF> >(start);
     QVector<QPointF> endVector = qVariantValue<QVector<QPointF> >(end);
@@ -99,25 +96,23 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, q
 
     case ReplacePointAnimation:
     case AddPointAnimation:
-    case RemovePointAnimation:
-    {
-        if (startVector.count() != endVector.count()){
+    case RemovePointAnimation: {
+        if (startVector.count() != endVector.count())
             break;
-        }
 
-        for(int i = 0; i < startVector.count(); i++) {
+        for (int i = 0; i < startVector.count(); i++) {
             qreal x = startVector[i].x() + ((endVector[i].x() - startVector[i].x()) * progress);
             qreal y = startVector[i].y() + ((endVector[i].y() - startVector[i].y()) * progress);
             result << QPointF(x, y);
         }
 
     }
-        break;
+    break;
     case NewAnimation: {
-        for(int i = 0; i < endVector.count() * qBound(qreal(0), progress, qreal(1)); i++)
+        for (int i = 0; i < endVector.count() * qBound(qreal(0), progress, qreal(1)); i++)
             result << endVector[i];
     }
-        break;
+    break;
     default:
         qWarning() << "Unknown type of animation";
         break;
@@ -126,28 +121,28 @@ QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, q
     return qVariantFromValue(result);
 }
 
-void XYAnimation::updateCurrentValue (const QVariant &value)
+void XYAnimation::updateCurrentValue(const QVariant &value)
 {
-    if(state()!=QAbstractAnimation::Stopped){ //workaround
+    if (state() != QAbstractAnimation::Stopped) { //workaround
 
         QVector<QPointF> vector = qVariantValue<QVector<QPointF> >(value);
         m_item->setGeometryPoints(vector);
         m_item->updateGeometry();
         m_item->setDirty(true);
-        m_dirty=false;
+        m_dirty = false;
 
     }
 }
 
-void XYAnimation::updateState( QAbstractAnimation::State newState, QAbstractAnimation::State oldState )
+void XYAnimation::updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState)
 {
-	if(oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped)
-	{
-		if(m_item->isDirty() && m_type==RemovePointAnimation){
-		    if(!m_newPoints.isEmpty()) m_newPoints.remove(m_index);
-			m_item->setGeometryPoints(m_newPoints);
-		}
-	}
+    if (oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped) {
+        if (m_item->isDirty() && m_type == RemovePointAnimation) {
+            if (!m_newPoints.isEmpty())
+                m_newPoints.remove(m_index);
+            m_item->setGeometryPoints(m_newPoints);
+        }
+    }
 }
 
 #include "moc_chartanimation_p.cpp"

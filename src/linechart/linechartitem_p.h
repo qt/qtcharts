@@ -41,10 +41,10 @@ class ChartPresenter;
 
 class LineChartItem :  public XYChart , public QGraphicsItem
 {
-     Q_OBJECT
-     Q_INTERFACES(QGraphicsItem)
+    Q_OBJECT
+    Q_INTERFACES(QGraphicsItem)
 public:
-     explicit LineChartItem(QLineSeries *series,ChartPresenter *presenter);
+    explicit LineChartItem(QLineSeries *series, ChartPresenter *presenter);
     ~LineChartItem() {}
 
     //from QGraphicsItem

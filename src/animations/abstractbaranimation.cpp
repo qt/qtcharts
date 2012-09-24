@@ -28,8 +28,8 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 AbstractBarAnimation::AbstractBarAnimation(AbstractBarChartItem *item)
-    :ChartAnimation(item),
-    m_item(item)
+    : ChartAnimation(item),
+      m_item(item)
 {
     setDuration(ChartAnimationDuration);
     setEasingCurve(QEasingCurve::OutQuart);

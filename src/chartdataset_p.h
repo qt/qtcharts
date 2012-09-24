@@ -43,7 +43,7 @@ class QTCOMMERCIALCHART_AUTOTEST_EXPORT ChartDataSet : public QObject
 {
     Q_OBJECT
 public:
-    ChartDataSet(QChart* parent=0);
+    ChartDataSet(QChart* parent = 0);
     virtual ~ChartDataSet();
 
     void addSeries(QAbstractSeries* series);
@@ -53,7 +53,7 @@ public:
 
     void zoomInDomain(const QRectF& rect, const QSizeF& size);
     void zoomOutDomain(const QRectF& rect, const QSizeF& size);
-    void scrollDomain(qreal dx,qreal dy,const QSizeF& size);
+    void scrollDomain(qreal dx, qreal dy, const QSizeF& size);
 
     int seriesCount(QAbstractSeries::SeriesType type);
     int seriesIndex(QAbstractSeries *series);
@@ -73,14 +73,14 @@ Q_SIGNALS:
     void seriesAdded(QAbstractSeries* series, Domain* domain);
     void seriesRemoved(QAbstractSeries* series);
 //    void seriesUpdated(QAbstractSeries* series);
-    void axisAdded(QAbstractAxis* axis,Domain* domain);
+    void axisAdded(QAbstractAxis* axis, Domain* domain);
     void axisRemoved(QAbstractAxis* axis);
 
 private:
-    void calculateDomain(QAbstractSeries* series,Domain* domain);
-    void createAxes(QAbstractAxis::AxisTypes type,Qt::Orientation orientation);
-    QAbstractAxis* createAxis(QAbstractAxis::AxisType type,Qt::Orientation orientation);
-    void initializeAxis(QAbstractAxis* axis,QAbstractSeries* series);
+    void calculateDomain(QAbstractSeries* series, Domain* domain);
+    void createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation orientation);
+    QAbstractAxis* createAxis(QAbstractAxis::AxisType type, Qt::Orientation orientation);
+    void initializeAxis(QAbstractAxis* axis, QAbstractSeries* series);
     void removeAxes(QAbstractSeries* series);
     void blockAxisSignals(bool enabled);
     void createSeriesIndex(QAbstractSeries* series);

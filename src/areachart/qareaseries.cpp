@@ -36,11 +36,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \mainclass
 
-	An area chart is used to show quantitative data. It is based on line chart, in the way that area between axis and the line
-	is emphasized with color. Since the area chart is based on line chart, QAreaSeries constructor needs QLineSeries instance,
-	which defines "upper" boundary of the area. "Lower" boundary is defined by default by axis X. Instead of axis X "lower" boundary can be specified by other line.
+    An area chart is used to show quantitative data. It is based on line chart, in the way that area between axis and the line
+    is emphasized with color. Since the area chart is based on line chart, QAreaSeries constructor needs QLineSeries instance,
+    which defines "upper" boundary of the area. "Lower" boundary is defined by default by axis X. Instead of axis X "lower" boundary can be specified by other line.
     In that case QAreaSeries should be initiated with two QLineSeries instances. Please note terms "upper" and "lower" boundary can be misleading in cases
-	where "lower" boundary had bigger values than the "upper" one, however the main point that area between these two boundary lines will be filled.
+    where "lower" boundary had bigger values than the "upper" one, however the main point that area between these two boundary lines will be filled.
 
     See the \l {AreaChart Example} {area chart example} to learn how to create a simple area chart.
     \image examples_areachart.png
@@ -162,7 +162,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     When series object is added to QChartView or QChart instance ownerships is transferred.
 */
 QAreaSeries::QAreaSeries(QLineSeries *upperSeries, QLineSeries *lowerSeries)
-    : QAbstractSeries(*new QAreaSeriesPrivate(upperSeries,lowerSeries,this),upperSeries)
+    : QAbstractSeries(*new QAreaSeriesPrivate(upperSeries, lowerSeries, this), upperSeries)
 {
 }
 
@@ -180,9 +180,8 @@ QAreaSeries::QAreaSeries(QObject *parent)
 QAreaSeries::~QAreaSeries()
 {
     Q_D(QAreaSeries);
-    if(d->m_dataset){
-           d->m_dataset->removeSeries(this);
-    }
+    if (d->m_dataset)
+        d->m_dataset->removeSeries(this);
 }
 
 /*!
@@ -315,11 +314,11 @@ bool QAreaSeries::pointsVisible() const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries,QAreaSeries* q) :
-    QAbstractSeriesPrivate(q),
-    m_upperSeries(upperSeries),
-    m_lowerSeries(lowerSeries),
-    m_pointsVisible(false)
+QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries* q)
+    : QAbstractSeriesPrivate(q),
+      m_upperSeries(upperSeries),
+      m_lowerSeries(lowerSeries),
+      m_pointsVisible(false)
 {
 }
 
@@ -337,8 +336,7 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
 
     const QList<QPointF>& points = upperSeries->points();
 
-    for (int i = 0; i < points.count(); i++)
-    {
+    for (int i = 0; i < points.count(); i++) {
         qreal x = points[i].x();
         qreal y = points[i].y();
         minX = qMin(minX, x);
@@ -346,33 +344,32 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
         maxX = qMax(maxX, x);
         maxY = qMax(maxY, y);
     }
-    if(lowerSeries) {
+    if (lowerSeries) {
 
         const QList<QPointF>& points = lowerSeries->points();
 
-        for (int i = 0; i < points.count(); i++)
-        {
+        for (int i = 0; i < points.count(); i++) {
             qreal x = points[i].x();
             qreal y = points[i].y();
             minX = qMin(minX, x);
             minY = qMin(minY, y);
             maxX = qMax(maxX, x);
             maxY = qMax(maxY, y);
-        }}
+        }
+    }
 
-    domain.setRange(minX,maxX,minY,maxY);
+    domain.setRange(minX, maxX, minY, maxY);
 }
 
 ChartElement* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QAreaSeries);
 
-    AreaChartItem* area = new AreaChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    AreaChartItem* area = new AreaChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
         area->upperLineItem()->setAnimation(new XYAnimation(area->upperLineItem()));
-        if(q->lowerSeries())  {
+        if (q->lowerSeries())
             area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem()));
-        }
     }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return area;
@@ -382,7 +379,7 @@ QList<LegendMarker*> QAreaSeriesPrivate::createLegendMarker(QLegend* legend)
 {
     Q_Q(QAreaSeries);
     QList<LegendMarker*> list;
-    return list << new AreaLegendMarker(q,legend);
+    return list << new AreaLegendMarker(q, legend);
 }
 
 

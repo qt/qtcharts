@@ -39,7 +39,7 @@ public:
     ~QBarCategoryAxis();
 
 protected:
-    QBarCategoryAxis(QBarCategoryAxisPrivate &d,QObject *parent = 0);
+    QBarCategoryAxis(QBarCategoryAxisPrivate &d, QObject *parent = 0);
 
 public:
     AxisType type() const;
@@ -63,9 +63,9 @@ public:
 
 Q_SIGNALS:
     void categoriesChanged();
-	void minChanged(const QString &min);
-	void maxChanged(const QString &max);
-	void rangeChanged(const QString &min, const QString &max);
+    void minChanged(const QString &min);
+    void maxChanged(const QString &max);
+    void rangeChanged(const QString &min, const QString &max);
 
 private:
     Q_DECLARE_PRIVATE(QBarCategoryAxis)

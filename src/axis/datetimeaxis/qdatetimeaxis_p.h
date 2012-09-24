@@ -39,11 +39,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QDateTimeAxisPrivate : public QAbstractAxisPrivate
 {
     Q_OBJECT
-    public:
+public:
     QDateTimeAxisPrivate(QDateTimeAxis *q);
     ~QDateTimeAxisPrivate();
 
-    public:
+public:
     ChartAxis* createGraphics(ChartPresenter* presenter);
     void intializeDomain(Domain* domain);
     void handleDomainUpdated();
@@ -51,13 +51,13 @@ class QDateTimeAxisPrivate : public QAbstractAxisPrivate
     qreal max(){ return m_max.toMSecsSinceEpoch(); }
     int count() const { /*TODO:*/ return 0;}
 
-    protected:
+protected:
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);
     void setRange(const QVariant &min, const QVariant &max);
     int tickCount() const;
 
-    protected:
+protected:
     QDateTime m_min;
     QDateTime m_max;
     int m_tickCount;

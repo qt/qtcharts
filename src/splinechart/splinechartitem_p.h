@@ -60,7 +60,7 @@ public Q_SLOTS:
 
 protected:
     void updateGeometry();
-    void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints,int index);
+    void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:

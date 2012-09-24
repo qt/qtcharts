@@ -78,7 +78,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs an axis object which is a child of \a parent.
 */
 QCategoryAxis::QCategoryAxis(QObject *parent):
-    QValueAxis(*new QCategoryAxisPrivate(this),parent)
+    QValueAxis(*new QCategoryAxisPrivate(this), parent)
 {
 }
 
@@ -92,7 +92,7 @@ QCategoryAxis::~QCategoryAxis()
 /*!
     \internal
 */
-QCategoryAxis::QCategoryAxis(QCategoryAxisPrivate &d,QObject *parent):QValueAxis(d,parent)
+QCategoryAxis::QCategoryAxis(QCategoryAxisPrivate &d, QObject *parent): QValueAxis(d, parent)
 {
 
 }
@@ -115,13 +115,12 @@ void QCategoryAxis::append(const QString& categoryLabel, qreal categoryEndValue)
 {
     Q_D(QCategoryAxis);
 
-    if (!d->m_categories.contains(categoryLabel))
-    {
-        if(d->m_categories.isEmpty()){
+    if (!d->m_categories.contains(categoryLabel)) {
+        if (d->m_categories.isEmpty()) {
             Range range(d->m_categoryMinimum, categoryEndValue);
             d->m_categoriesMap.insert(categoryLabel, range);
             d->m_categories.append(categoryLabel);
-        }else if (categoryEndValue > endValue(d->m_categories.last())){
+        } else if (categoryEndValue > endValue(d->m_categories.last())) {
             Range previousRange = d->m_categoriesMap.value(d->m_categories.last());
             d->m_categoriesMap.insert(categoryLabel, Range(previousRange.second, categoryEndValue));
             d->m_categories.append(categoryLabel);
@@ -137,9 +136,9 @@ void QCategoryAxis::append(const QString& categoryLabel, qreal categoryEndValue)
 void QCategoryAxis::setStartValue(qreal min)
 {
     Q_D(QCategoryAxis);
-    if(d->m_categories.isEmpty()){
+    if (d->m_categories.isEmpty()) {
         d->m_categoryMinimum = min;
-    }else{
+    } else {
         Range range = d->m_categoriesMap.value(d->m_categories.first());
         if (min < range.second)
             d->m_categoriesMap.insert(d->m_categories.first(), Range(min, range.second));
@@ -154,8 +153,7 @@ qreal QCategoryAxis::startValue(const QString& categoryLabel) const
     Q_D(const QCategoryAxis);
     if (categoryLabel.isEmpty())
         return d->m_categoryMinimum;
-    else
-        return d->m_categoriesMap.value(categoryLabel).first;
+    return d->m_categoriesMap.value(categoryLabel).first;
 }
 
 /*!
@@ -224,7 +222,6 @@ void QCategoryAxis::replaceLabel(const QString& oldLabel, const QString& newLabe
         d->m_categoriesMap.insert(newLabel, range);
         d->emitUpdated();
     }
-
 }
 
 /*!
@@ -272,7 +269,7 @@ int QCategoryAxisPrivate::ticksCount() const
     return m_categories.count() + 1;
 }
 
-void QCategoryAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count)
+void QCategoryAxisPrivate::handleAxisRangeChanged(qreal min, qreal max, int count)
 {
     Q_UNUSED(count);
     Q_UNUSED(min);
@@ -282,11 +279,9 @@ void QCategoryAxisPrivate::handleAxisRangeChanged(qreal min, qreal max,int count
 ChartAxis* QCategoryAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QCategoryAxis);
-    if(m_orientation == Qt::Vertical){
-        return new ChartCategoryAxisY(q,presenter);
-    }else{
-        return new ChartCategoryAxisX(q,presenter);
-    }
+    if (m_orientation == Qt::Vertical)
+        return new ChartCategoryAxisY(q, presenter);
+    return new ChartCategoryAxisX(q, presenter);
 }
 
 #include "moc_qcategoryaxis.cpp"

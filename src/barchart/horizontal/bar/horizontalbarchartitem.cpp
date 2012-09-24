@@ -25,8 +25,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-HorizontalBarChartItem::HorizontalBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter) :
-    AbstractBarChartItem(series, presenter)
+HorizontalBarChartItem::HorizontalBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter)
+    : AbstractBarChartItem(series, presenter)
 {
 }
 
@@ -57,8 +57,8 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
             qreal yPos = geometry().bottom() + (m_domainMinY - barSet->pos(category)) * scaleY;
-            yPos += setCount*rectHeight/2;
-            yPos -= set*rectHeight;
+            yPos += setCount * rectHeight / 2;
+            yPos -= set * rectHeight;
 
             qreal rectWidth = barSet->value(category) * scaleX;
             Bar* bar = m_bars.at(itemIndex);
@@ -67,22 +67,20 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
             layout.append(rect);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(rectHeight)) {
+            if (qFuzzyIsNull(rectHeight))
                 bar->setVisible(false);
-            } else {
+            else
                 bar->setVisible(barsVisible);
-            }
 
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(barSet->value(category))) {
+            if (!qFuzzyIsNull(barSet->value(category)))
                 label->setText(QString::number(barSet->value(category)));
-            } else {
+            else
                 label->setText(QString(""));
-            }
 
-            label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                          ,yPos - rectHeight/2 - label->boundingRect().height()/2);
+            label->setPos(xPos + (rect.width() / 2 - label->boundingRect().width() / 2),
+                          yPos - rectHeight / 2 - label->boundingRect().height() / 2);
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 

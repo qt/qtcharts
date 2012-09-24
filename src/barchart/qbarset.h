@@ -57,7 +57,7 @@ public:
     void remove(const int index, const int count = 1);
     void replace(const int index, const qreal value);
     qreal at(const int index) const;
-    qreal operator [] (const int index) const;
+    qreal operator [](const int index) const;
     int count() const;
     qreal sum() const;
 

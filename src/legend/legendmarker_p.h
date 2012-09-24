@@ -78,7 +78,7 @@ public:
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
-    QSizeF sizeHint (Qt::SizeHint which, const QSizeF& constraint) const;
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint) const;
 
 protected:
     // From QGraphicsObject
@@ -124,7 +124,7 @@ private:
 class BarLegendMarker : public LegendMarker
 {
 public:
-    BarLegendMarker(QAbstractBarSeries *barseries, QBarSet *barset,QLegend *legend);
+    BarLegendMarker(QAbstractBarSeries *barseries, QBarSet *barset, QLegend *legend);
 protected:
     void updated();
 private:

@@ -46,7 +46,7 @@ public:
     AxisType axisType() const { return Y_AXIS;}
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint) const;
 protected:
-    void createLabels(QStringList &labels,qreal min, qreal max, int ticks);
+    void createLabels(QStringList &labels, qreal min, qreal max, int ticks);
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
     void handleAxisUpdated();

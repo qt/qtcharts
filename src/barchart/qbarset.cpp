@@ -250,8 +250,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs QBarSet with a label of \a label and with parent of \a parent
 */
 QBarSet::QBarSet(const QString label, QObject *parent)
-    : QObject(parent)
-    ,d_ptr(new QBarSetPrivate(label,this))
+    : QObject(parent),
+      d_ptr(new QBarSetPrivate(label, this))
 {
 }
 
@@ -321,7 +321,7 @@ QBarSet& QBarSet::operator << (const qreal &value)
 void QBarSet::insert(const int index, const qreal value)
 {
     d_ptr->insert(index, value);
-    emit valuesAdded(index,1);
+    emit valuesAdded(index, 1);
 }
 
 /*!
@@ -330,10 +330,9 @@ void QBarSet::insert(const int index, const qreal value)
 */
 void QBarSet::remove(const int index, const int count)
 {
-    int removedCount = d_ptr->remove(index,count);
-    if (removedCount > 0) {
-        emit valuesRemoved(index,removedCount);
-    }
+    int removedCount = d_ptr->remove(index, count);
+    if (removedCount > 0)
+        emit valuesRemoved(index, removedCount);
     return;
 }
 
@@ -343,7 +342,7 @@ void QBarSet::remove(const int index, const int count)
 void QBarSet::replace(const int index, const qreal value)
 {
     if (index >= 0 && index < d_ptr->m_values.count()) {
-        d_ptr->replace(index,value);
+        d_ptr->replace(index, value);
         emit valueChanged(index);
     }
 }
@@ -355,10 +354,8 @@ void QBarSet::replace(const int index, const qreal value)
 */
 qreal QBarSet::at(const int index) const
 {
-    if (index < 0 || index >= d_ptr->m_values.count()) {
+    if (index < 0 || index >= d_ptr->m_values.count())
         return 0;
-    }
-
     return d_ptr->m_values.at(index).y();
 }
 
@@ -385,9 +382,8 @@ int QBarSet::count() const
 qreal QBarSet::sum() const
 {
     qreal total(0);
-    for (int i=0; i < d_ptr->m_values.count(); i++) {
+    for (int i = 0; i < d_ptr->m_values.count(); i++)
         total += d_ptr->m_values.at(i).y();
-    }
     return total;
 }
 
@@ -396,11 +392,11 @@ qreal QBarSet::sum() const
 */
 void QBarSet::setPen(const QPen &pen)
 {
-      if(d_ptr->m_pen!=pen){
-          d_ptr->m_pen = pen;
-          emit d_ptr->updatedBars();
-          emit penChanged();
-      }
+    if (d_ptr->m_pen != pen) {
+        d_ptr->m_pen = pen;
+        emit d_ptr->updatedBars();
+        emit penChanged();
+    }
 }
 
 /*!
@@ -416,10 +412,10 @@ QPen QBarSet::pen() const
 */
 void QBarSet::setBrush(const QBrush &brush)
 {
-    if(d_ptr->m_brush!=brush){
-      d_ptr->m_brush = brush;
-      emit d_ptr->updatedBars();
-      emit brushChanged();
+    if (d_ptr->m_brush != brush) {
+        d_ptr->m_brush = brush;
+        emit d_ptr->updatedBars();
+        emit brushChanged();
     }
 }
 
@@ -436,7 +432,7 @@ QBrush QBarSet::brush() const
 */
 void QBarSet::setLabelBrush(const QBrush &brush)
 {
-    if(d_ptr->m_labelBrush!=brush){
+    if (d_ptr->m_labelBrush != brush) {
         d_ptr->m_labelBrush = brush;
         emit d_ptr->updatedBars();
         emit labelBrushChanged();
@@ -456,7 +452,7 @@ QBrush QBarSet::labelBrush() const
 */
 void QBarSet::setLabelFont(const QFont &font)
 {
-    if(d_ptr->m_labelFont!=font) {
+    if (d_ptr->m_labelFont != font) {
         d_ptr->m_labelFont = font;
         emit d_ptr->updatedBars();
         emit labelFontChanged();
@@ -533,7 +529,7 @@ QColor QBarSet::labelColor()
     Sets the color of labels for this barset
 */
 void QBarSet::setLabelColor(QColor color)
-{    
+{
     QBrush b = labelBrush();
     if (b == QBrush())
         b.setStyle(Qt::SolidPattern);
@@ -565,17 +561,16 @@ void QBarSetPrivate::append(QPointF value)
 
 void QBarSetPrivate::append(QList<QPointF> values)
 {
-    for (int i=0; i<values.count(); i++) {
+    for (int i = 0; i < values.count(); i++)
         m_values.append(values.at(i));
-    }
     emit restructuredBars();
 }
 
 void QBarSetPrivate::append(QList<qreal> values)
 {
     int index = m_values.count();
-    for (int i=0; i<values.count(); i++) {
-        m_values.append(QPointF(index,values.at(i)));
+    for (int i = 0; i < values.count(); i++) {
+        m_values.append(QPointF(index, values.at(i)));
         index++;
     }
     emit restructuredBars();
@@ -597,13 +592,10 @@ int QBarSetPrivate::remove(const int index, const int count)
 {
     int removeCount = count;
 
-    if ((index <0) || (m_values.count() == 0)) {
-        // Invalid index or not values in list, remove nothing.
-        return 0;
-    } else if ((index + count) > m_values.count()) {
-        // Trying to remove more items than list has. Limit amount to be removed.
-        removeCount = m_values.count() - index;
-    }
+    if ((index < 0) || (m_values.count() == 0))
+        return 0; // Invalid index or not values in list, remove nothing.
+    else if ((index + count) > m_values.count())
+        removeCount = m_values.count() - index; // Trying to remove more items than list has. Limit amount to be removed.
 
     int c = 0;
     while (c < removeCount) {
@@ -616,31 +608,27 @@ int QBarSetPrivate::remove(const int index, const int count)
 
 void QBarSetPrivate::replace(const int index, const qreal value)
 {
-    m_values.replace(index,QPointF(index,value));
+    m_values.replace(index, QPointF(index, value));
     emit updatedLayout();
 }
 
 void QBarSetPrivate::replace(const int index, const QPointF value)
 {
-    m_values.replace(index,value);
+    m_values.replace(index, value);
     emit updatedLayout();
 }
 
 qreal QBarSetPrivate::pos(const int index)
 {
-    if (index < 0 || index >= m_values.count()) {
+    if (index < 0 || index >= m_values.count())
         return 0;
-    }
-
     return m_values.at(index).x();
 }
 
 qreal QBarSetPrivate::value(const int index)
 {
-    if (index < 0 || index >= m_values.count()) {
+    if (index < 0 || index >= m_values.count())
         return 0;
-    }
-
     return m_values.at(index).y();
 }
 

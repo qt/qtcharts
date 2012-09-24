@@ -69,7 +69,7 @@ protected:
     explicit ChartTheme(QChart::ChartTheme id = QChart::ChartThemeLight);
 public:
     static ChartTheme *createTheme(QChart::ChartTheme theme);
-    QChart::ChartTheme id() const {return m_id;}
+    QChart::ChartTheme id() const { return m_id; }
     void decorate(QChart *chart);
     void decorate(QLegend *legend);
     void decorate(QAbstractBarSeries *series, int index);

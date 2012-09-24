@@ -49,7 +49,7 @@ public:
 
 public Q_SLOTS:
     virtual void handleGeometryChanged(const QRectF& rect);
-    virtual void handleDomainChanged(qreal minX,qreal maxX,qreal minY,qreal maxY);
+    virtual void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     virtual void handleDomainUpdated();
     virtual ChartAnimation* animation() const { return 0; };
 

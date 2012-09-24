@@ -32,13 +32,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     \mainclass
 
-	A line chart is used to show information as a series of data points
-	connected by straight lines.
+    A line chart is used to show information as a series of data points
+    connected by straight lines.
 
     \image examples_linechart.png
 
-	Creating basic line chart is simple:
-	\code
+    Creating basic line chart is simple:
+    \code
     QLineSeries* series = new QLineSeries();
     series->append(0, 6);
     series->append(2, 4);
@@ -98,7 +98,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transferred.
 */
-QLineSeries::QLineSeries(QObject *parent) : QXYSeries(*new QLineSeriesPrivate(this),parent)
+QLineSeries::QLineSeries(QObject *parent)
+    : QXYSeries(*new QLineSeriesPrivate(this), parent)
 {
 
 }
@@ -106,7 +107,8 @@ QLineSeries::QLineSeries(QObject *parent) : QXYSeries(*new QLineSeriesPrivate(th
 /*!
     \internal
 */
-QLineSeries::QLineSeries(QLineSeriesPrivate &d,QObject *parent) : QXYSeries (d,parent)
+QLineSeries::QLineSeries(QLineSeriesPrivate &d, QObject *parent)
+    : QXYSeries(d, parent)
 {
 
 }
@@ -117,9 +119,8 @@ QLineSeries::QLineSeries(QLineSeriesPrivate &d,QObject *parent) : QXYSeries (d,p
 QLineSeries::~QLineSeries()
 {
     Q_D(QLineSeries);
-    if(d->m_dataset){
-           d->m_dataset->removeSeries(this);
-    }
+    if (d->m_dataset)
+        d->m_dataset->removeSeries(this);
 }
 
 QAbstractSeries::SeriesType QLineSeries::type() const
@@ -141,7 +142,7 @@ QDebug operator<< (QDebug debug, const QLineSeries series)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries* q):QXYSeriesPrivate(q)
+QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries* q): QXYSeriesPrivate(q)
 {
 
 };
@@ -149,10 +150,9 @@ QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries* q):QXYSeriesPrivate(q)
 ChartElement* QLineSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QLineSeries);
-    LineChartItem* line = new LineChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    LineChartItem* line = new LineChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         line->setAnimation(new XYAnimation(line));
-    }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return line;
 }

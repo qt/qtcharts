@@ -72,9 +72,8 @@ QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent) :
 QHorizontalBarSeries::~QHorizontalBarSeries()
 {
     Q_D(QHorizontalBarSeries);
-    if(d->m_dataset) {
+    if (d->m_dataset)
         d->m_dataset->removeSeries(this);
-    }
 }
 
 /*!
@@ -105,17 +104,16 @@ void QHorizontalBarSeriesPrivate::scaleDomain(Domain& domain)
     maxX = qMax(maxX, max());
     maxY = qMax(maxY, y - (qreal)0.5);
 
-    domain.setRange(minX,maxX,minY,maxY);
+    domain.setRange(minX, maxX, minY, maxY);
 }
 
 ChartElement* QHorizontalBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QHorizontalBarSeries);
 
-    HorizontalBarChartItem* bar = new HorizontalBarChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    HorizontalBarChartItem* bar = new HorizontalBarChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new HorizontalBarAnimation(bar));
-    }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
 }

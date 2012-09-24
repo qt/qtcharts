@@ -29,16 +29,16 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *presenter) :
-    XYChart(series,presenter),
-    QGraphicsItem(presenter ? presenter->rootItem() : 0),
-    m_series(series),
-    m_items(this),
-    m_visible(true),
-    m_shape(QScatterSeries::MarkerShapeRectangle),
-    m_size(15)
+ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *presenter)
+    : XYChart(series, presenter),
+      QGraphicsItem(presenter ? presenter->rootItem() : 0),
+      m_series(series),
+      m_items(this),
+      m_visible(true),
+      m_shape(QScatterSeries::MarkerShapeRectangle),
+      m_size(15)
 {
-    QObject::connect(m_series->d_func(),SIGNAL(updated()), this, SLOT(handleUpdated()));
+    QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
 
@@ -62,21 +62,20 @@ void ScatterChartItem::createPoints(int count)
         QGraphicsItem *item = 0;
 
         switch (m_shape) {
-            case QScatterSeries::MarkerShapeCircle: {
-                item = new CircleMarker(0,0,m_size,m_size,this);
-                const QRectF& rect = item->boundingRect();
-                item->setPos(-rect.width()/2,-rect.height()/2);
-                break;
-            }
-            case QScatterSeries::MarkerShapeRectangle: {
-                item = new RectangleMarker(0,0,m_size,m_size,this);
-                item->setPos(-m_size/2,-m_size/2);
-                break;
-            }
-            default:
-            qWarning()<<"Unsupported marker type";
+        case QScatterSeries::MarkerShapeCircle: {
+            item = new CircleMarker(0, 0, m_size, m_size, this);
+            const QRectF& rect = item->boundingRect();
+            item->setPos(-rect.width() / 2, -rect.height() / 2);
             break;
-
+            }
+        case QScatterSeries::MarkerShapeRectangle: {
+            item = new RectangleMarker(0, 0, m_size, m_size, this);
+            item->setPos(-m_size / 2, -m_size / 2);
+            break;
+            }
+        default:
+            qWarning() << "Unsupported marker type";
+            break;
         }
         m_items.addToGroup(item);
     }
@@ -103,22 +102,20 @@ void ScatterChartItem::updateGeometry()
 
     const QVector<QPointF>& points = geometryPoints();
 
-    if(points.size()==0)
-    {
+    if (points.size() == 0) {
         deletePoints(m_items.childItems().count());
         return;
     }
 
     int diff = m_items.childItems().size() - points.size();
 
-    if(diff>0) {
+    if (diff > 0)
         deletePoints(diff);
-    }
-    else if(diff<0) {
+    else if (diff < 0)
         createPoints(-diff);
-    }
 
-    if(diff!=0) handleUpdated();
+    if (diff != 0)
+        handleUpdated();
 
     QList<QGraphicsItem*> items = m_items.childItems();
 
@@ -126,14 +123,12 @@ void ScatterChartItem::updateGeometry()
         QGraphicsItem* item = items.at(i);
         const QPointF& point = points.at(i);
         const QRectF& rect = item->boundingRect();
-        m_markerMap[item]=point;
-        item->setPos(point.x()-rect.width()/2,point.y()-rect.height()/2);
-        if(!m_visible || !clipRect().contains(point)) {
+        m_markerMap[item] = point;
+        item->setPos(point.x() - rect.width() / 2, point.y() - rect.height() / 2);
+        if (!m_visible || !clipRect().contains(point))
             item->setVisible(false);
-        }
-        else {
+        else
             item->setVisible(true);
-        }
     }
 
     prepareGeometryChange();
@@ -150,34 +145,33 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
 
 void ScatterChartItem::setPen(const QPen& pen)
 {
-    foreach(QGraphicsItem* item , m_items.childItems()) {
+    foreach (QGraphicsItem *item , m_items.childItems())
         static_cast<QAbstractGraphicsShapeItem*>(item)->setPen(pen);
-    }
 }
 
 void ScatterChartItem::setBrush(const QBrush& brush)
 {
-    foreach(QGraphicsItem* item , m_items.childItems()) {
+    foreach (QGraphicsItem *item , m_items.childItems())
         static_cast<QAbstractGraphicsShapeItem*>(item)->setBrush(brush);
-    }
 }
 
 void ScatterChartItem::handleUpdated()
 {
     int count = m_items.childItems().count();
 
-    if(count==0) return;
+    if (count == 0)
+        return;
 
     bool recreate = m_visible != m_series->isVisible()
-            || m_size != m_series->markerSize()
-            || m_shape != m_series->markerShape();
+                    || m_size != m_series->markerSize()
+                    || m_shape != m_series->markerShape();
 
     m_visible = m_series->isVisible();
     m_size = m_series->markerSize();
     m_shape = m_series->markerShape();
     setOpacity(m_series->opacity());
 
-    if(recreate) {
+    if (recreate) {
         // TODO: optimize handleUpdate to recreate points only in case shape changed
         deletePoints(count);
         createPoints(count);

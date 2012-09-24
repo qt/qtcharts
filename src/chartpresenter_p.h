@@ -78,7 +78,7 @@ public:
         ZoomOutState
     };
 
-    ChartPresenter(QChart* chart,ChartDataSet *dataset);
+    ChartPresenter(QChart* chart, ChartDataSet *dataset);
     virtual ~ChartPresenter();
 
     ChartTheme *chartTheme() const { return m_chartTheme; }
@@ -113,7 +113,7 @@ public:
 
     void setVisible(bool visible);
 
-    void setTheme(QChart::ChartTheme theme,bool force = true);
+    void setTheme(QChart::ChartTheme theme, bool force = true);
     QChart::ChartTheme theme();
 
     void setAnimationOptions(QChart::AnimationOptions options);
@@ -122,7 +122,7 @@ public:
     void zoomIn(qreal factor);
     void zoomIn(const QRectF& rect);
     void zoomOut(qreal factor);
-    void scroll(qreal dx,qreal dy);
+    void scroll(qreal dx, qreal dy);
 
     void setChartsGeometry(const QRectF& rect);
     QRectF chartsGeometry() const;
@@ -143,9 +143,9 @@ private:
     void selectVisibleAxis();
 
 public Q_SLOTS:
-    void handleSeriesAdded(QAbstractSeries* series,Domain* domain);
+    void handleSeriesAdded(QAbstractSeries* series, Domain* domain);
     void handleSeriesRemoved(QAbstractSeries* series);
-    void handleAxisAdded(QAbstractAxis* axis,Domain* domain);
+    void handleAxisAdded(QAbstractAxis* axis, Domain* domain);
     void handleAxisRemoved(QAbstractAxis* axis);
     void handleAxisVisibleChanged(bool visible);
 

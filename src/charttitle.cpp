@@ -25,7 +25,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartTitle::ChartTitle(QGraphicsItem* parent):QGraphicsSimpleTextItem(parent)
+ChartTitle::ChartTitle(QGraphicsItem* parent)
+    : QGraphicsSimpleTextItem(parent)
 {
 
 }
@@ -37,7 +38,7 @@ ChartTitle::~ChartTitle()
 
 void ChartTitle::setText(const QString &text)
 {
-      m_text=text;
+    m_text = text;
 }
 
 QString ChartTitle::text() const
@@ -47,48 +48,47 @@ QString ChartTitle::text() const
 
 void ChartTitle::setGeometry(const QRectF &rect)
 {
-  QFontMetrics fn(font());
+    QFontMetrics fn(font());
 
-  int width = rect.width();
+    int width = rect.width();
 
-  if (fn.boundingRect(m_text).width() > width)
-  {
-    QString string = m_text + "...";
-    while (fn.boundingRect(string).width() > width && string.length() > 3)
-      string.remove(string.length() - 4, 1);
-    QGraphicsSimpleTextItem::setText(string);
-  }
-  else
-    QGraphicsSimpleTextItem::setText(m_text);
+    if (fn.boundingRect(m_text).width() > width) {
+        QString string = m_text + "...";
+        while (fn.boundingRect(string).width() > width && string.length() > 3)
+            string.remove(string.length() - 4, 1);
+        QGraphicsSimpleTextItem::setText(string);
+    } else {
+        QGraphicsSimpleTextItem::setText(m_text);
+    }
 
-  setPos(rect.topLeft());
+    setPos(rect.topLeft());
 }
 
 
 QSizeF ChartTitle::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
-  Q_UNUSED(constraint);
-  QFontMetrics fn (font ());
-  QSizeF sh;
+    Q_UNUSED(constraint);
+    QFontMetrics fn(font());
+    QSizeF sh;
 
-  switch(which) {
+    switch (which) {
     case Qt::MinimumSize:
-        sh = QSizeF(fn.boundingRect ("...").width(),fn.height());
+        sh = QSizeF(fn.boundingRect("...").width(), fn.height());
         break;
     case Qt::PreferredSize:
-        sh = QSizeF(fn.boundingRect(m_text).width(),fn.height());
+        sh = QSizeF(fn.boundingRect(m_text).width(), fn.height());
         break;
     case Qt::MaximumSize:
-        sh = QSizeF(fn.boundingRect(m_text).width(),fn.height());
+        sh = QSizeF(fn.boundingRect(m_text).width(), fn.height());
         break;
     case Qt::MinimumDescent:
-        sh = QSizeF(0, fn.descent ());
+        sh = QSizeF(0, fn.descent());
         break;
     default:
-      break;
-  }
+        break;
+    }
 
-  return sh;
+    return sh;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -29,8 +29,9 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartBarCategoryAxisY::ChartBarCategoryAxisY(QBarCategoryAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
-m_categoriesAxis(axis)
+ChartBarCategoryAxisY::ChartBarCategoryAxisY(QBarCategoryAxis *axis, ChartPresenter *presenter)
+    : ChartAxis(axis, presenter),
+      m_categoriesAxis(axis)
 {
 }
 
@@ -42,31 +43,29 @@ QVector<qreal> ChartBarCategoryAxisY::calculateLayout() const
 {
     int count = m_categoriesAxis->d_ptr->count();
 
-    Q_ASSERT(count>=1);
+    Q_ASSERT(count >= 1);
 
     QVector<qreal> points;
-    points.resize(count+2);
+    points.resize(count + 2);
 
     QRectF rect = presenter()->chartsGeometry();
 
-    const qreal delta = rect.height()/(count);
+    const qreal delta = rect.height() / (count);
     qreal offset = - m_min - 0.5;
 
-    if(delta<1) return points;
+    if (delta < 1) return points;
 
-    if(offset<=0) {
-        offset = int(offset * rect.height()/(m_max - m_min))%int(delta) + delta;
-    }
-    else {
-        offset = int(offset * rect.height()/(m_max - m_min))%int(delta);
-    }
+    if (offset <= 0)
+        offset = int(offset * rect.height() / (m_max - m_min)) % int(delta) + delta;
+    else
+        offset = int(offset * rect.height() / (m_max - m_min)) % int(delta);
 
     points[0] = rect.bottom();
-    points[count+1] = rect.top();
+    points[count + 1] = rect.top();
 
     for (int i = 0; i < count; ++i) {
         int y = rect.bottom() - i * delta - offset;
-        points[i+1] = y;
+        points[i + 1] = y;
     }
     return points;
 }
@@ -75,16 +74,13 @@ QStringList ChartBarCategoryAxisY::createCategoryLabels(const QVector<qreal>& la
 {
     QStringList result;
     QRectF rect = presenter()->chartsGeometry();
-    qreal d = (m_max - m_min)/rect.height();
-    for (int i = 0;i < layout.count()-1; ++i) {
-        qreal x = qFloor(((rect.height()- (layout[i+1] + layout[i])/2 + rect.top())*d + m_min+0.5));
-        if ((x < m_categoriesAxis->categories().count()) && (x >= 0)) {
+    qreal d = (m_max - m_min) / rect.height();
+    for (int i = 0; i < layout.count() - 1; ++i) {
+        qreal x = qFloor(((rect.height() - (layout[i + 1] + layout[i]) / 2 + rect.top()) * d + m_min + 0.5));
+        if ((x < m_categoriesAxis->categories().count()) && (x >= 0))
             result << m_categoriesAxis->categories().at(x);
-        }
-        else {
-            // No label for x coordinate
-            result << "";
-        }
+        else
+            result << ""; // No label for x coordinate
     }
     result << "";
     return result;
@@ -94,7 +90,8 @@ void ChartBarCategoryAxisY::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
 
-    if(layout.isEmpty()) return;
+    if (layout.isEmpty())
+        return;
 
     QStringList ticksList = createCategoryLabels(layout);
 
@@ -108,7 +105,7 @@ void ChartBarCategoryAxisY::updateGeometry()
 
     QRectF chartRect = presenter()->chartsGeometry();
 
-    const qreal delta = chartRect.height()/(m_categoriesAxis->d_ptr->count());
+    const qreal delta = chartRect.height() / (m_categoriesAxis->d_ptr->count());
 
     QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
     lineItem->setLine(chartRect.left() , chartRect.top(), chartRect.left(), chartRect.bottom());
@@ -123,39 +120,34 @@ void ChartBarCategoryAxisY::updateGeometry()
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
 
-        if(i==0) {
-           labelItem->setPos(chartRect.left() - rect.width() - label_padding ,layout[i+1] + (delta)/2 - center.y());
-        }
-        else {
-            labelItem->setPos(chartRect.left() - rect.width() - label_padding ,layout[i] - (delta)/2 - center.y());
-        }
+        if (i == 0)
+            labelItem->setPos(chartRect.left() - rect.width() - label_padding , layout[i + 1] + (delta) / 2 - center.y());
+        else
+            labelItem->setPos(chartRect.left() - rect.width() - label_padding , layout[i] - (delta) / 2 - center.y());
 
-        if(labelItem->pos().y()+rect.height()>= height || labelItem->pos().y() < chartRect.top()) {
+        if (labelItem->pos().y() + rect.height() >= height || labelItem->pos().y() < chartRect.top()) {
             labelItem->setVisible(false);
-        }
-        else {
+        } else {
             labelItem->setVisible(true);
-            height=labelItem->pos().y();
+            height = labelItem->pos().y();
         }
 
-        if ((i+1)%2 && i>1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
-            rectItem->setRect(chartRect.left(),layout[i],chartRect.width(),layout[i-1]-layout[i]);
+        if ((i + 1) % 2 && i > 1) {
+            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));
+            rectItem->setRect(chartRect.left(), layout[i], chartRect.width(), layout[i - 1] - layout[i]);
         }
-        lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setLine(chartRect.left()-5,layout[i],chartRect.left(),layout[i]);
+        lineItem = static_cast<QGraphicsLineItem*>(axis.at(i + 1));
+        lineItem->setLine(chartRect.left() - 5, layout[i], chartRect.left(), layout[i]);
     }
 }
 
 void ChartBarCategoryAxisY::handleAxisUpdated()
 {
 
-    if(m_categoriesAxis->categories()!=m_categories)
-    {
-        m_categories=m_categoriesAxis->categories();
-        if(ChartAxis::layout().count()==m_categoriesAxis->d_ptr->count()+2) {
+    if (m_categoriesAxis->categories() != m_categories) {
+        m_categories = m_categoriesAxis->categories();
+        if (ChartAxis::layout().count() == m_categoriesAxis->d_ptr->count() + 2)
             updateGeometry();
-        }
     }
     ChartAxis::handleAxisUpdated();
 }
@@ -168,35 +160,32 @@ QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constra
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
     QStringList ticksList = createCategoryLabels(ChartAxis::layout());
-    qreal width=0;
-    qreal height=0;
+    qreal width = 0;
+    qreal height = 0;
 
-      switch (which) {
-        case Qt::MinimumSize:
-            width = fn.boundingRect("...").width() + label_padding;
-            height = fn.height();
-            width+=base.width();
-            height=qMax(height,base.height());
-            sh = QSizeF(width,height);
-            break;
-        case Qt::PreferredSize:{
-
-            for (int i = 0; i < ticksList.size(); ++i)
-            {
-                QRectF rect = fn.boundingRect(ticksList.at(i));
-                height+=rect.height();
-                width=qMax(rect.width()+label_padding,width);
-            }
-            height=qMax(height,base.height());
-            width+=base.width();
-            sh = QSizeF(width,height);
-            break;
+    switch (which) {
+    case Qt::MinimumSize:
+        width = fn.boundingRect("...").width() + label_padding;
+        height = fn.height();
+        width += base.width();
+        height = qMax(height, base.height());
+        sh = QSizeF(width, height);
+        break;
+    case Qt::PreferredSize:
+        for (int i = 0; i < ticksList.size(); ++i) {
+            QRectF rect = fn.boundingRect(ticksList.at(i));
+            height += rect.height();
+            width = qMax(rect.width() + label_padding, width);
         }
-        default:
-          break;
-      }
+        height = qMax(height, base.height());
+        width += base.width();
+        sh = QSizeF(width, height);
+        break;
+    default:
+        break;
+    }
 
-      return sh;
+    return sh;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

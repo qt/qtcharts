@@ -56,7 +56,7 @@ public:
     bool isLabelsVisible() const;
 
 protected:
-    explicit QAbstractBarSeries(QAbstractBarSeriesPrivate &d,QObject *parent = 0);
+    explicit QAbstractBarSeries(QAbstractBarSeriesPrivate &d, QObject *parent = 0);
 
 Q_SIGNALS:
     void clicked(int index, QBarSet *barset);

@@ -38,7 +38,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartItem : public QGraphicsItem, public ChartElement
 {
-    enum ChartItemTypes{ AXIS_ITEM = UserType + 1, XYLINE_ITEM };
+    enum ChartItemTypes { AXIS_ITEM = UserType + 1, XYLINE_ITEM };
 public:
     ChartItem(ChartPresenter *presenter) : QGraphicsItem(presenter ? presenter->rootItem() : 0), ChartElement(presenter) {}
 };

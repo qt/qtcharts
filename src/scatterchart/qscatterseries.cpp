@@ -128,7 +128,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs a series object which is a child of \a parent.
 */
-QScatterSeries::QScatterSeries(QObject *parent) : QXYSeries(*new QScatterSeriesPrivate(this),parent)
+QScatterSeries::QScatterSeries(QObject *parent)
+    : QXYSeries(*new QScatterSeriesPrivate(this), parent)
 {
 }
 
@@ -138,9 +139,8 @@ QScatterSeries::QScatterSeries(QObject *parent) : QXYSeries(*new QScatterSeriesP
 QScatterSeries::~QScatterSeries()
 {
     Q_D(QScatterSeries);
-    if(d->m_dataset) {
+    if (d->m_dataset)
         d->m_dataset->removeSeries(this);
-    }
 }
 
 QAbstractSeries::SeriesType QScatterSeries::type() const
@@ -253,10 +253,9 @@ QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries* q) :
 ChartElement* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QScatterSeries);
-    ScatterChartItem *scatter = new ScatterChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    ScatterChartItem *scatter = new ScatterChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         scatter->setAnimation(new XYAnimation(scatter));
-    }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return scatter;
 }

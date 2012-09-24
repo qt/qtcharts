@@ -35,21 +35,20 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
     : ChartItem(presenter),
-    m_series(areaSeries),
-    m_upper(0),
-    m_lower(0),
-    m_pointsVisible(false)
+      m_series(areaSeries),
+      m_upper(0),
+      m_lower(0),
+      m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
-    m_upper = new AreaBoundItem(this,m_series->upperSeries(),presenter);
-    if (m_series->lowerSeries()){
-        m_lower = new AreaBoundItem(this,m_series->lowerSeries(),presenter);
-    }
+    m_upper = new AreaBoundItem(this, m_series->upperSeries(), presenter);
+    if (m_series->lowerSeries())
+        m_lower = new AreaBoundItem(this, m_series->lowerSeries(), presenter);
 
-    QObject::connect(m_series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
+    QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
-    QObject::connect(this,SIGNAL(clicked(QPointF)),areaSeries,SIGNAL(clicked(QPointF)));
+    QObject::connect(this, SIGNAL(clicked(QPointF)), areaSeries, SIGNAL(clicked(QPointF)));
 
     handleUpdated();
 }
@@ -81,8 +80,8 @@ void AreaChartItem::updatePath()
     } else {
         QPointF first = path.pointAtPercent(0);
         QPointF last =  path.pointAtPercent(1);
-        path.lineTo(last.x(),m_clipRect.bottom());
-        path.lineTo(first.x(),m_clipRect.bottom());
+        path.lineTo(last.x(), m_clipRect.bottom());
+        path.lineTo(first.x(), m_clipRect.bottom());
     }
     path.closeSubpath();
     prepareGeometryChange();
@@ -108,7 +107,7 @@ void AreaChartItem::handleDomainUpdated()
 {
     m_upper->setDomain(domain());
     m_upper->handleDomainUpdated();
-    if (m_lower){
+    if (m_lower) {
         m_lower->setDomain(domain());
         m_lower->handleDomainUpdated();
     }
@@ -116,7 +115,7 @@ void AreaChartItem::handleDomainUpdated()
 
 void AreaChartItem::handleGeometryChanged(const QRectF &rect)
 {
-    m_clipRect=rect.translated(-rect.topLeft());
+    m_clipRect = rect.translated(-rect.topLeft());
     setPos(rect.topLeft());
     m_upper->handleGeometryChanged(rect);
     if (m_lower)
@@ -134,10 +133,10 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->setClipRect(m_clipRect);
     painter->drawPath(m_path);
     if (m_pointsVisible) {
-           painter->setPen(m_pointPen);
-           painter->drawPoints(m_upper->geometryPoints());
-           if (m_lower)
-               painter->drawPoints(m_lower->geometryPoints());
+        painter->setPen(m_pointPen);
+        painter->drawPoints(m_upper->geometryPoints());
+        if (m_lower)
+            painter->drawPoints(m_lower->geometryPoints());
     }
     painter->restore();
 }

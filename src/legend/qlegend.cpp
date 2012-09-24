@@ -167,13 +167,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  Constructs the legend object and sets the parent to \a parent
  */
 
-QLegend::QLegend(QChart *chart):QGraphicsWidget(chart),
-d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter,chart,this))
+QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
+    d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter, chart, this))
 {
     setZValue(ChartPresenter::LegendZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
-    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesAdded(QAbstractSeries*,Domain*)),d_ptr.data(),SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
-    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesRemoved(QAbstractSeries*)));
+    QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)), d_ptr.data(), SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
+    QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)),d_ptr.data(), SLOT(handleSeriesRemoved(QAbstractSeries*)));
 //    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
     setLayout(d_ptr->m_layout);
 }
@@ -193,13 +193,13 @@ void QLegend::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     Q_UNUSED(option)
     Q_UNUSED(widget)
 
-    if(!d_ptr->m_backgroundVisible) return;
+    if (!d_ptr->m_backgroundVisible)
+        return;
 
     painter->setOpacity(opacity());
     painter->setPen(d_ptr->m_pen);
     painter->setBrush(d_ptr->m_brush);
-    painter->drawRoundRect(rect(),d_ptr->roundness(rect().width()),d_ptr->roundness(rect().height()));
-
+    painter->drawRoundRect(rect(), d_ptr->roundness(rect().width()), d_ptr->roundness(rect().height()));
 }
 
 
@@ -263,10 +263,8 @@ void QLegend::setFont(const QFont &font)
 {
     if (d_ptr->m_font != font) {
         d_ptr->m_font = font;
-
-        foreach (LegendMarker *marker, d_ptr->markers()) {
+        foreach (LegendMarker *marker, d_ptr->markers()) 
             marker->setFont(d_ptr->m_font);
-        }
         layout()->invalidate();
         emit fontChanged(font);
     }
@@ -274,7 +272,7 @@ void QLegend::setFont(const QFont &font)
 
 QFont QLegend::font() const
 {
-   return d_ptr->m_font;
+    return d_ptr->m_font;
 }
 
 void QLegend::setBorderColor(QColor color)
@@ -334,7 +332,7 @@ QColor QLegend::labelColor() const
 
 void QLegend::setAlignment(Qt::Alignment alignment)
 {
-    if(d_ptr->m_alignment!=alignment) {
+    if (d_ptr->m_alignment != alignment) {
         d_ptr->m_alignment = alignment;
         layout()->invalidate();
     }
@@ -379,7 +377,7 @@ bool QLegend::isAttachedToChart()
  */
 void QLegend::setBackgroundVisible(bool visible)
 {
-    if(d_ptr->m_backgroundVisible != visible) {
+    if (d_ptr->m_backgroundVisible != visible) {
         d_ptr->m_backgroundVisible = visible;
         update();
         emit backgroundVisibleChanged(visible);
@@ -399,37 +397,38 @@ bool QLegend::isBackgroundVisible() const
  */
 void QLegend::hideEvent(QHideEvent *event)
 {
-   if(isAttachedToChart()) d_ptr->m_presenter->layout()->invalidate();
-   QGraphicsWidget::hideEvent(event);
+    if (isAttachedToChart())
+        d_ptr->m_presenter->layout()->invalidate();
+    QGraphicsWidget::hideEvent(event);
 }
 /*!
  \internal \a event see QGraphicsWidget for details
  */
 void QLegend::showEvent(QShowEvent *event)
 {
-   if(isAttachedToChart()) {
-       d_ptr->items()->setVisible(false);
-       layout()->invalidate();
-   }
-   QGraphicsWidget::showEvent(event);
-   //layout activation will show the items
+    if (isAttachedToChart()) {
+        d_ptr->items()->setVisible(false);
+        layout()->invalidate();
+    }
+    QGraphicsWidget::showEvent(event);
+    //layout activation will show the items
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QLegendPrivate::QLegendPrivate(ChartPresenter* presenter, QChart *chart, QLegend *q):
-    q_ptr(q),
-    m_presenter(presenter),
-    m_layout(new LegendLayout(q)),
-    m_chart(chart),
-    m_items(new QGraphicsItemGroup(q)),
-    m_alignment(Qt::AlignTop),
-    m_brush(QBrush()),
-    m_pen(QPen()),
-    m_labelBrush(QBrush()),
-    m_diameter(5),
-    m_attachedToChart(true),
-    m_backgroundVisible(false)
+QLegendPrivate::QLegendPrivate(ChartPresenter* presenter, QChart *chart, QLegend *q)
+    : q_ptr(q),
+      m_presenter(presenter),
+      m_layout(new LegendLayout(q)),
+      m_chart(chart),
+      m_items(new QGraphicsItemGroup(q)),
+      m_alignment(Qt::AlignTop),
+      m_brush(QBrush()),
+      m_pen(QPen()),
+      m_labelBrush(QBrush()),
+      m_diameter(5),
+      m_attachedToChart(true),
+      m_backgroundVisible(false)
 {
 
 }
@@ -441,7 +440,7 @@ QLegendPrivate::~QLegendPrivate()
 
 void QLegendPrivate::setOffset(qreal x, qreal y)
 {
-   m_layout->setOffset(x,y);
+    m_layout->setOffset(x, y);
 }
 
 QPointF QLegendPrivate::offset() const
@@ -451,7 +450,7 @@ QPointF QLegendPrivate::offset() const
 
 int QLegendPrivate::roundness(qreal size)
 {
-    return 100*m_diameter/int(size);
+    return 100 * m_diameter / int(size);
 }
 
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
@@ -460,12 +459,12 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 
     QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
 
-    foreach (LegendMarker* marker, markers) {
+    foreach (LegendMarker *marker, markers) {
         marker->setFont(m_font);
         marker->setLabelBrush(m_labelBrush);
         marker->setVisible(series->isVisible());
         m_items->addToGroup(marker);
-        m_markers<<marker;
+        m_markers << marker;
     }
 
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
@@ -494,10 +493,9 @@ void QLegendPrivate::handleSeriesVisibleChanged()
     QAbstractSeries* series = qobject_cast<QAbstractSeries *> (sender());
     Q_ASSERT(series);
 
-    foreach (LegendMarker* marker, m_markers) {
-        if (marker->series() == series) {
+    foreach (LegendMarker *marker, m_markers) {
+        if (marker->series() == series)
             marker->setVisible(series->isVisible());
-        }
     }
     m_layout->invalidate();
 }

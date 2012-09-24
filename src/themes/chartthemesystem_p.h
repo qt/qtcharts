@@ -74,8 +74,8 @@ public:
                               GetBValue(colorGradientActiveCaptionLeft));
         g.setColorAt(0.0, start);
         QColor end = QColor(GetRValue(colorGradientActiveCaptionRight),
-                              GetGValue(colorGradientActiveCaptionRight),
-                              GetBValue(colorGradientActiveCaptionRight));
+                            GetGValue(colorGradientActiveCaptionRight),
+                            GetBValue(colorGradientActiveCaptionRight));
         g.setColorAt(1.0, end);
         m_seriesColors.append(colorAt(g, 0.5));
 
@@ -87,11 +87,11 @@ public:
         DWORD colorWindow;
         colorWindow = GetSysColor(COLOR_WINDOW);
         backgroundGradient.setColorAt(0.0, QColor(GetRValue(colorWindow),
-                                                  GetGValue(colorWindow),
-                                                  GetBValue(colorWindow)));
+                                      GetGValue(colorWindow),
+                                      GetBValue(colorWindow)));
         backgroundGradient.setColorAt(1.0, QColor(GetRValue(colorWindow),
-                                                  GetGValue(colorWindow),
-                                                  GetBValue(colorWindow)));
+                                      GetGValue(colorWindow),
+                                      GetBValue(colorWindow)));
         // Axes and other
         m_axisLinePen = QPen(0xd6d6d6);
         m_axisLinePen.setWidth(1);

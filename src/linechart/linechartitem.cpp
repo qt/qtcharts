@@ -29,14 +29,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 const qreal mouseEventMinWidth(12);
 
-LineChartItem::LineChartItem(QLineSeries* series,ChartPresenter *presenter):
-    XYChart(series, presenter),
-    QGraphicsItem(presenter ? presenter->rootItem() : 0),
-    m_series(series),
-    m_pointsVisible(false)
+LineChartItem::LineChartItem(QLineSeries* series, ChartPresenter *presenter)
+    : XYChart(series, presenter),
+      QGraphicsItem(presenter ? presenter->rootItem() : 0),
+      m_series(series),
+      m_pointsVisible(false)
 {
     setZValue(ChartPresenter::LineChartZValue);
-    QObject::connect(series->d_func(),SIGNAL(updated()),this,SLOT(handleUpdated()));
+    QObject::connect(series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
     handleUpdated();
@@ -44,7 +44,7 @@ LineChartItem::LineChartItem(QLineSeries* series,ChartPresenter *presenter):
 
 QRectF LineChartItem::boundingRect() const
 {
-	return m_rect;
+    return m_rect;
 }
 
 QPainterPath LineChartItem::shape() const
@@ -56,8 +56,7 @@ void LineChartItem::updateGeometry()
 {
     m_points = geometryPoints();
 
-    if(m_points.size()==0)
-    {
+    if (m_points.size() == 0) {
         prepareGeometryChange();
         m_path = QPainterPath();
         m_rect = QRect();
@@ -66,20 +65,18 @@ void LineChartItem::updateGeometry()
 
     QPainterPath linePath(m_points.at(0));
 
-    if(m_pointsVisible) {
+    if (m_pointsVisible) {
 
         int size = m_linePen.width();
-        linePath.addEllipse(m_points.at(0),size,size);
-        for(int i=1; i< m_points.size();i++) {
+        linePath.addEllipse(m_points.at(0), size, size);
+        for (int i = 1; i < m_points.size(); i++) {
             linePath.lineTo(m_points.at(i));
-            linePath.addEllipse(m_points.at(i),size,size);
+            linePath.addEllipse(m_points.at(i), size, size);
         }
 
     } else {
-
-        for(int i=1; i< m_points.size();i++) {
+        for (int i = 1; i < m_points.size(); i++)
             linePath.lineTo(m_points.at(i));
-        }
     }
 
     m_linePath = linePath;
@@ -122,10 +119,9 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
     if (m_pointsVisible) {
         painter->drawPath(m_linePath);
-    }
-    else {
-        for (int i(1); i < m_points.size();i++)
-            painter->drawLine(m_points.at(i-1), m_points.at(i));
+    } else {
+        for (int i(1); i < m_points.size(); i++)
+            painter->drawLine(m_points.at(i - 1), m_points.at(i));
     }
     painter->restore();
 }

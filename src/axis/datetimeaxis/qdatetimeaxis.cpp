@@ -59,7 +59,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
     Adding the series to the chart and setting up the QDateTimeAxis.
     \code
-    QChartView *chartView = new QChartView;    
+    QChartView *chartView = new QChartView;
     chartView->chart()->addSeries(series);
 
     // ...
@@ -158,7 +158,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs an axis object which is a child of \a parent.
 */
 QDateTimeAxis::QDateTimeAxis(QObject *parent) :
-    QAbstractAxis(*new QDateTimeAxisPrivate(this),parent)
+    QAbstractAxis(*new QDateTimeAxisPrivate(this), parent)
 {
 
 }
@@ -166,7 +166,7 @@ QDateTimeAxis::QDateTimeAxis(QObject *parent) :
 /*!
     \internal
 */
-QDateTimeAxis::QDateTimeAxis(QDateTimeAxisPrivate &d,QObject *parent) : QAbstractAxis(d,parent)
+QDateTimeAxis::QDateTimeAxis(QDateTimeAxisPrivate &d, QObject *parent) : QAbstractAxis(d, parent)
 {
 
 }
@@ -229,7 +229,7 @@ void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
     }
 
     if (changed) {
-        emit rangeChanged(d->m_min,d->m_max);
+        emit rangeChanged(d->m_min, d->m_max);
         d->emitUpdated();
     }
 }
@@ -253,9 +253,9 @@ QString QDateTimeAxis::format() const
   Sets \a count for ticks on the axis.
 */
 void QDateTimeAxis::setTickCount(int count)
-{    
+{
     Q_D(QDateTimeAxis);
-    if (d->m_tickCount != count && count >=2) {
+    if (d->m_tickCount != count && count >= 2) {
         d->m_tickCount = count;
         d->emitUpdated();
     }
@@ -301,11 +301,10 @@ void QDateTimeAxisPrivate::handleDomainUpdated()
     Domain* domain = qobject_cast<Domain*>(sender());
     Q_ASSERT(domain);
 
-    if(orientation()==Qt::Horizontal){
+    if (orientation() == Qt::Horizontal)
         q->setRange(QDateTime::fromMSecsSinceEpoch(domain->minX()), QDateTime::fromMSecsSinceEpoch(domain->maxX()));
-    }else if(orientation()==Qt::Vertical){
+    else if (orientation() == Qt::Vertical)
         q->setRange(QDateTime::fromMSecsSinceEpoch(domain->minY()), QDateTime::fromMSecsSinceEpoch(domain->maxY()));
-    }
 }
 
 
@@ -334,29 +333,24 @@ void QDateTimeAxisPrivate::setRange(const QVariant &min, const QVariant &max)
 ChartAxis* QDateTimeAxisPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QDateTimeAxis);
-    if(m_orientation == Qt::Vertical){
-        return new ChartDateTimeAxisY(q,presenter);
-    }else{
-        return new ChartDateTimeAxisX(q,presenter);
-    }
-
+    if (m_orientation == Qt::Vertical)
+        return new ChartDateTimeAxisY(q, presenter);
+    return new ChartDateTimeAxisX(q, presenter);
 }
 
 void QDateTimeAxisPrivate::intializeDomain(Domain* domain)
 {
     Q_Q(QDateTimeAxis);
-    if(m_max == m_min) {
-        if(m_orientation==Qt::Vertical){
+    if (m_max == m_min) {
+        if (m_orientation == Qt::Vertical)
             q->setRange(QDateTime::fromMSecsSinceEpoch(domain->minY()), QDateTime::fromMSecsSinceEpoch(domain->maxY()));
-        }else{
+        else
             q->setRange(QDateTime::fromMSecsSinceEpoch(domain->minX()), QDateTime::fromMSecsSinceEpoch(domain->maxX()));
-        }
     } else {
-        if(m_orientation==Qt::Vertical){
+        if (m_orientation == Qt::Vertical)
             domain->setRangeY(m_min.toMSecsSinceEpoch(), m_max.toMSecsSinceEpoch());
-        }else{
+        else
             domain->setRangeX(m_min.toMSecsSinceEpoch(), m_max.toMSecsSinceEpoch());
-        }
     }
 }
 

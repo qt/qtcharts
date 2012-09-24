@@ -78,9 +78,8 @@ private:
     bool m_attachedToChart;
     bool m_backgroundVisible;
 
-friend class QLegend;
-friend class LegendLayout;
-
+    friend class QLegend;
+    friend class LegendLayout;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

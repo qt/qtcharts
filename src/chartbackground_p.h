@@ -39,13 +39,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartBackground: public QGraphicsRectItem
 {
 public:
-    ChartBackground(QGraphicsItem *parent =0);
+    ChartBackground(QGraphicsItem *parent = 0);
     ~ChartBackground();
 
-    void setDimeter(int dimater);
+    void setDiameter(int diameter);
     int diameter() const;
     void setDropShadowEnabled(bool enabled);
-    bool isDropShadowEnabled() {return m_dropShadow != 0;}
+    bool isDropShadowEnabled() { return m_dropShadow != 0; }
 
 protected:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);

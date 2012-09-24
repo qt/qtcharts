@@ -51,8 +51,8 @@ protected:
     void updateGeometry();
 private:
     QStringList createCategoryLabels(const QVector<qreal>& layout) const;
-Q_SLOTS
-        void handleAxisUpdated();
+public Q_SLOTS:
+    void handleAxisUpdated();
 private:
     QStringList m_categories;
     QBarCategoryAxis *m_categoriesAxis;

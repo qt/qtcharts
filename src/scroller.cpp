@@ -25,11 +25,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Scroller::Scroller():
-m_ticker(this),
-m_state(Idle),
-m_moveThreshold(10),
-m_timeTreshold(50)
+Scroller::Scroller()
+    : m_ticker(this),
+      m_state(Idle),
+      m_moveThreshold(10),
+      m_timeTreshold(50)
 {
 
 }
@@ -41,30 +41,25 @@ Scroller::~Scroller()
 void Scroller::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     if (event->button() == Qt::LeftButton) {
-
         switch (m_state) {
         case Idle:
-        {
             m_state = Pressed;
             m_offset = offset();
             m_press = event->pos();
             m_timeStamp = QTime::currentTime();
             event->accept();
             break;
-        }
         case Scroll:
-        {
             m_state = Stop;
             m_speed = QPointF(0, 0);
             m_offset = offset();
             m_press = event->pos();
             event->accept();
             break;
-        }
         case Pressed:
         case Move:
         case Stop:
-            qWarning() << __FUNCTION__<<"Scroller unexpected state" << m_state;
+            qWarning() << __FUNCTION__ << "Scroller unexpected state" << m_state;
             event->ignore();
             break;
         }
@@ -78,34 +73,27 @@ void Scroller::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     switch (m_state) {
     case Pressed:
     case Stop:
-    {
         if (qAbs(delta.x()) > m_moveThreshold || qAbs(delta.y()) > m_moveThreshold) {
             m_state = Move;
             m_timeStamp = QTime::currentTime();
             m_distance = QPointF(0, 0);
             m_press = event->pos();
             event->accept();
-            break;
-        }
-        else {
+        } else {
             event->ignore();
-            break;
         }
-    }
+        break;
     case Move:
-    {
         setOffset(m_offset - delta);
         calculateSpeed(event->pos());
         event->accept();
         break;
-    }
     case Idle:
     case Scroll:
-        qWarning() << __FUNCTION__<<"Scroller unexpected state" << m_state;
+        qWarning() << __FUNCTION__ << "Scroller unexpected state" << m_state;
         event->ignore();
         break;
     }
-
 }
 
 void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -121,7 +109,6 @@ void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             event->accept();
             break;
         case Pressed:
-        {
             m_state = Idle;
             //if (m_timeStamp.elapsed() < m_clickedPressDelay) {
 
@@ -129,30 +116,24 @@ void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
             //}
             event->accept();
             break;
-        }
         case Move:
-        {
             calculateSpeed(event->pos());
             m_offset = offset();
             m_press = event->pos();
             if (m_speed == QPointF(0, 0)) {
                 m_state = Idle;
-            }
-            else {
+            } else {
                 m_speed /= 3.75;
                 m_state = Scroll;
                 m_ticker.start(25);
             }
             event->accept();
             break;
-        }
-
         case Stop:
         case Idle:
-            qWarning() << __FUNCTION__<<"Scroller unexpected state" << m_state;
+            qWarning() << __FUNCTION__ << "Scroller unexpected state" << m_state;
             event->ignore();
             break;
-
         }
     }
 }
@@ -160,25 +141,23 @@ void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 void Scroller::scrollTick()
 {
     switch (m_state) {
-        case Scroll:
-        {
-            lowerSpeed(m_speed);
-            setOffset(m_offset - m_speed);
-            m_offset = offset();
-            if (m_speed == QPointF(0, 0)) {
-                m_state = Idle;
-                m_ticker.stop();
-            }
-            break;
+    case Scroll:
+        lowerSpeed(m_speed);
+        setOffset(m_offset - m_speed);
+        m_offset = offset();
+        if (m_speed == QPointF(0, 0)) {
+            m_state = Idle;
+            m_ticker.stop();
         }
-        case Stop:
-            m_ticker.stop();
-            break;
-        case Idle:
-        case Move:
-        case Pressed:
-            qWarning() << __FUNCTION__<<"Scroller unexpected state" << m_state;
-            m_ticker.stop();
+        break;
+    case Stop:
+        m_ticker.stop();
+        break;
+    case Idle:
+    case Move:
+    case Pressed:
+        qWarning() << __FUNCTION__ << "Scroller unexpected state" << m_state;
+        m_ticker.stop();
         break;
 
     }
@@ -212,8 +191,7 @@ void Scroller::calculateSpeed(const QPointF& position)
         if (fraction != 0) {
             m_fraction.setX(qAbs(m_speed.x() / fraction));
             m_fraction.setY(qAbs(m_speed.y() / fraction));
-        }
-        else {
+        } else {
             m_fraction.setX(1);
             m_fraction.setY(1);
         }
@@ -222,17 +200,17 @@ void Scroller::calculateSpeed(const QPointF& position)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-ScrollTicker::ScrollTicker(Scroller *scroller,QObject* parent):QObject(parent),
-    m_scroller(scroller)
+ScrollTicker::ScrollTicker(Scroller *scroller, QObject* parent)
+    : QObject(parent),
+      m_scroller(scroller)
 {
 
 }
 
 void ScrollTicker::start(int interval)
 {
-    if (!m_timer.isActive()){
+    if (!m_timer.isActive())
         m_timer.start(interval, this);
-    }
 }
 
 void ScrollTicker::stop()

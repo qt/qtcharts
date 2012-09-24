@@ -39,7 +39,7 @@ class QTCOMMERCIALCHART_EXPORT QChartView : public QGraphicsView
     Q_ENUMS(RubberBand)
 public:
 
-    enum  RubberBand{
+    enum  RubberBand {
         NoRubberBand = 0x0,
         VerticalRubberBand = 0x1,
         HorizonalRubberBand = 0x2,
@@ -49,7 +49,7 @@ public:
     Q_DECLARE_FLAGS(RubberBands, RubberBand)
 
     explicit QChartView(QWidget *parent = 0);
-    explicit QChartView(QChart *chart,QWidget *parent = 0);
+    explicit QChartView(QChart *chart, QWidget *parent = 0);
     ~QChartView();
 
     void setRubberBand(const RubberBands& rubberBands);

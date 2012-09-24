@@ -47,13 +47,13 @@ QVariant HorizontalStackedBarAnimation::interpolated(const QVariant &from, const
 
     qreal xAxis = m_item->geometry().x();
 
-    for(int i = 0; i < startVector.count(); i++) {
+    for (int i = 0; i < startVector.count(); i++) {
         qreal h = endVector[i].height();
         qreal w = endVector[i].width() * progress;
         qreal x = xAxis + ((endVector[i].left() - xAxis) * progress);
         qreal y = endVector[i].top();
 
-        QRectF value(x,y,w,h);
+        QRectF value(x, y, w, h);
         result << value.normalized();
     }
     return qVariantFromValue(result);

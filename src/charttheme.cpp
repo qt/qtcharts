@@ -75,13 +75,13 @@ ChartTheme::ChartTheme(QChart::ChartTheme id) :
     m_gridLinePen(QPen(QRgb(0x000000))),
     m_force(false)
 {
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 }
 
 
 ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
 {
-    switch(theme) {
+    switch (theme) {
     case QChart::ChartThemeLight:
         return new ChartThemeLight();
     case QChart::ChartThemeBlueCerulean:
@@ -105,7 +105,7 @@ void ChartTheme::decorate(QChart *chart)
 {
     QBrush brush;
 
-    if(m_force || brush == chart->backgroundBrush())
+    if (m_force || brush == chart->backgroundBrush())
         chart->setBackgroundBrush(m_chartBackgroundGradient);
     chart->setTitleFont(m_masterFont);
     chart->setTitleBrush(m_labelBrush);
@@ -136,7 +136,7 @@ void ChartTheme::decorate(QAreaSeries *series, int index)
     QPen pen;
     QBrush brush;
 
-    if (m_force || pen == series->pen()){
+    if (m_force || pen == series->pen()) {
         pen.setColor(colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0));
         pen.setWidthF(2);
         series->setPen(pen);
@@ -149,11 +149,11 @@ void ChartTheme::decorate(QAreaSeries *series, int index)
 }
 
 
-void ChartTheme::decorate(QLineSeries *series,int index)
+void ChartTheme::decorate(QLineSeries *series, int index)
 {
     QPen pen;
-    if(m_force || pen == series->pen()){
-        pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
+    if (m_force || pen == series->pen()) {
+        pen.setColor(m_seriesColors.at(index % m_seriesColors.size()));
         pen.setWidthF(2);
         series->setPen(pen);
     }
@@ -167,7 +167,7 @@ void ChartTheme::decorate(QAbstractBarSeries *series, int index)
 
     qreal takeAtPos = 0.5;
     qreal step = 0.2;
-    if (sets.count() > 1 ) {
+    if (sets.count() > 1) {
         step = 1.0 / (qreal) sets.count();
         if (sets.count() % m_seriesGradients.count())
             step *= m_seriesGradients.count();
@@ -228,7 +228,7 @@ void ChartTheme::decorate(QPieSeries *series, int index)
         QColor penColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), 0.0);
 
         // Get color for a slice from a gradient linearly, beginning from the start of the gradient
-        qreal pos = (qreal) (i + 1) / (qreal) series->count();
+        qreal pos = (qreal)(i + 1) / (qreal) series->count();
         QColor brushColor = colorAt(m_seriesGradients.at(index % m_seriesGradients.size()), pos);
 
         QPieSlice *s = series->slices().at(i);
@@ -251,8 +251,8 @@ void ChartTheme::decorate(QPieSeries *series, int index)
 void ChartTheme::decorate(QSplineSeries *series, int index)
 {
     QPen pen;
-    if(m_force || pen == series->pen()){
-        pen.setColor(m_seriesColors.at(index%m_seriesColors.size()));
+    if (m_force || pen == series->pen()) {
+        pen.setColor(m_seriesColors.at(index % m_seriesColors.size()));
         pen.setWidthF(2);
         series->setPen(pen);
     }
@@ -264,54 +264,46 @@ void ChartTheme::decorate(QAbstractAxis *axis)
     QBrush brush;
     QFont font;
 
-    bool axisX = axis->orientation()== Qt::Horizontal;
+    bool axisX = axis->orientation() == Qt::Horizontal;
 
     if (axis->isLineVisible()) {
 
-        if(m_force || brush == axis->labelsBrush()){
+        if (m_force || brush == axis->labelsBrush())
             axis->setLabelsBrush(m_labelBrush);
-        }
-        if(m_force || pen == axis->labelsPen()){
-            axis->setLabelsPen(Qt::NoPen); // NoPen for performance reasons
-        }
 
+        if (m_force || pen == axis->labelsPen())
+            axis->setLabelsPen(Qt::NoPen); // NoPen for performance reasons
 
         if (m_force || axis->shadesVisible()) {
 
-            if(m_force || brush == axis->shadesBrush()){
+            if (m_force || brush == axis->shadesBrush())
                 axis->setShadesBrush(m_backgroundShadesBrush);
-            }
 
-            if(m_force || pen == axis->shadesPen()){
+            if (m_force || pen == axis->shadesPen())
                 axis->setShadesPen(m_backgroundShadesPen);
-            }
 
-            if( m_force && (m_backgroundShades == BackgroundShadesBoth
+            if (m_force && (m_backgroundShades == BackgroundShadesBoth
                             || (m_backgroundShades == BackgroundShadesVertical && axisX)
-                            || (m_backgroundShades == BackgroundShadesHorizontal && !axisX))){
+                            || (m_backgroundShades == BackgroundShadesHorizontal && !axisX))) {
                 axis->setShadesVisible(true);
-
             }
         }
 
-        if(m_force || pen == axis->linePen()){
+        if (m_force || pen == axis->linePen())
             axis->setLinePen(m_axisLinePen);
-        }
 
-        if(m_force || pen == axis->gridLinePen()){
+        if (m_force || pen == axis->gridLinePen())
             axis->setGridLinePen(m_gridLinePen);
-        }
 
-        if(m_force || font == axis->labelsFont()){
+        if (m_force || font == axis->labelsFont())
             axis->setLabelsFont(m_labelFont);
-        }
     }
 }
 
 void ChartTheme::generateSeriesGradients()
 {
     // Generate gradients in HSV color space
-    foreach (const QColor& color, m_seriesColors) {
+    foreach (const QColor &color, m_seriesColors) {
         QLinearGradient g;
         qreal h = color.hsvHueF();
         qreal s = color.hsvSaturationF();

@@ -84,7 +84,9 @@ private:
 class AreaBoundItem : public LineChartItem
 {
 public:
-    AreaBoundItem(AreaChartItem *item,QLineSeries *lineSeries,ChartPresenter* presenter) : LineChartItem(lineSeries, 0), m_item(item) {
+    AreaBoundItem(AreaChartItem *item, QLineSeries *lineSeries, ChartPresenter* presenter)
+        : LineChartItem(lineSeries, 0), m_item(item)
+    {
         setPresenter(presenter);
     }
     ~AreaBoundItem() {}

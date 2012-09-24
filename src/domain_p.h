@@ -36,10 +36,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_AUTOTEST_EXPORT Domain: public QObject {
+class QTCOMMERCIALCHART_AUTOTEST_EXPORT Domain: public QObject
+{
     Q_OBJECT
 public:
-    explicit Domain(QObject* object=0);
+    explicit Domain(QObject* object = 0);
     virtual ~Domain();
 
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
@@ -65,7 +66,7 @@ public:
 
     void zoomIn(const QRectF& rect, const QSizeF& size);
     void zoomOut(const QRectF& rect, const QSizeF& size);
-    void move(qreal dx,qreal dy,const QSizeF& size);
+    void move(qreal dx, qreal dy, const QSizeF& size);
     void emitUpdated();
 
 Q_SIGNALS:

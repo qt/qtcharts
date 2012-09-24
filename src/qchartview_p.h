@@ -40,8 +40,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChart;
 class QChartView;
 
-class QChartViewPrivate {
-
+class QChartViewPrivate
+{
 public:
     explicit QChartViewPrivate(QChartView *q, QChart *chart = 0);
     ~QChartViewPrivate();

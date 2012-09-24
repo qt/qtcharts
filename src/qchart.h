@@ -61,7 +61,7 @@ public:
     enum AnimationOption {
         NoAnimation = 0x0,
         GridAxisAnimations = 0x1,
-        SeriesAnimations =0x2,
+        SeriesAnimations = 0x2,
         AllAnimations = 0x3
     };
 

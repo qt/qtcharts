@@ -173,7 +173,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty series object which is a child of \a parent.
     When series object is added to QChartView or QChart instance ownerships is transferred.
 */
-QXYSeries::QXYSeries(QXYSeriesPrivate &d,QObject *parent) : QAbstractSeries(d, parent)
+QXYSeries::QXYSeries(QXYSeriesPrivate &d, QObject *parent)
+    : QAbstractSeries(d, parent)
 {
 }
 
@@ -188,9 +189,9 @@ QXYSeries::~QXYSeries()
 /*!
     Adds data point \a x \a y to the series. Points are connected with lines on the chart.
  */
-void QXYSeries::append(qreal x,qreal y)
+void QXYSeries::append(qreal x, qreal y)
 {
-    append(QPointF(x,y));
+    append(QPointF(x, y));
 }
 
 /*!
@@ -200,8 +201,8 @@ void QXYSeries::append(qreal x,qreal y)
 void QXYSeries::append(const QPointF &point)
 {
     Q_D(QXYSeries);
-    d->m_points<<point;
-    emit pointAdded(d->m_points.count()-1);
+    d->m_points << point;
+    emit pointAdded(d->m_points.count() - 1);
 }
 
 /*!
@@ -210,29 +211,29 @@ void QXYSeries::append(const QPointF &point)
  */
 void QXYSeries::append(const QList<QPointF> &points)
 {
-    foreach(const QPointF& point , points) {
+    foreach (const QPointF &point , points)
         append(point);
-    }
 }
 
 /*!
   Replaces data point \a oldX \a oldY with data point \a newX \a newY.
   \sa QXYSeries::pointReplaced()
 */
-void QXYSeries::replace(qreal oldX,qreal oldY,qreal newX,qreal newY)
+void QXYSeries::replace(qreal oldX, qreal oldY, qreal newX, qreal newY)
 {
-    replace(QPointF(oldX,oldY),QPointF(newX,newY));
+    replace(QPointF(oldX, oldY), QPointF(newX, newY));
 }
 
 /*!
   Replaces \a oldPoint with \a newPoint.
   \sa QXYSeries::pointReplaced()
 */
-void QXYSeries::replace(const QPointF &oldPoint,const QPointF &newPoint)
+void QXYSeries::replace(const QPointF &oldPoint, const QPointF &newPoint)
 {
     Q_D(QXYSeries);
     int index = d->m_points.indexOf(oldPoint);
-    if(index==-1) return;
+    if (index == -1)
+        return;
     d->m_points[index] = newPoint;
     emit pointReplaced(index);
 }
@@ -253,9 +254,9 @@ void QXYSeries::replace(QList<QPointF> points)
 /*!
   Removes current \a x and \a y value.
 */
-void QXYSeries::remove(qreal x,qreal y)
+void QXYSeries::remove(qreal x, qreal y)
 {
-    remove(QPointF(x,y));
+    remove(QPointF(x, y));
 }
 
 /*!
@@ -267,7 +268,8 @@ void QXYSeries::remove(const QPointF &point)
 {
     Q_D(QXYSeries);
     int index = d->m_points.indexOf(point);
-    if(index==-1) return;
+    if (index == -1)
+        return;
     d->m_points.remove(index);
     emit pointRemoved(index);
 }
@@ -342,7 +344,7 @@ QPen QXYSeries::pen() const
 void QXYSeries::setBrush(const QBrush &brush)
 {
     Q_D(QXYSeries);
-    if (d->m_brush!=brush) {
+    if (d->m_brush != brush) {
         d->m_brush = brush;
         emit d->updated();
     }
@@ -371,7 +373,7 @@ QColor QXYSeries::color() const
 void QXYSeries::setPointsVisible(bool visible)
 {
     Q_D(QXYSeries);
-    if (d->m_pointsVisible != visible){
+    if (d->m_pointsVisible != visible) {
         d->m_pointsVisible = visible;
         emit d->updated();
     }
@@ -426,7 +428,7 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
 
     const QList<QPointF>& points = q->points();
 
-    if (!points.isEmpty()){
+    if (!points.isEmpty()) {
         minX = points[0].x();
         minY = points[0].y();
         maxX = minX;
@@ -442,14 +444,14 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
         }
     }
 
-    domain.setRange(minX,maxX,minY,maxY);
+    domain.setRange(minX, maxX, minY, maxY);
 }
 
 QList<LegendMarker*> QXYSeriesPrivate::createLegendMarker(QLegend* legend)
 {
     Q_Q(QXYSeries);
     QList<LegendMarker*> list;
-    return list << new XYLegendMarker(q,legend);
+    return list << new XYLegendMarker(q, legend);
 }
 
 void QXYSeriesPrivate::initializeAxis(QAbstractAxis* axis)

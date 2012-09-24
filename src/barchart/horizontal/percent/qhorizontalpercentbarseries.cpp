@@ -77,9 +77,8 @@ QAbstractSeries::SeriesType QHorizontalPercentBarSeries::type() const
 QHorizontalPercentBarSeries::~QHorizontalPercentBarSeries()
 {
     Q_D(QHorizontalPercentBarSeries);
-    if(d->m_dataset) {
+    if (d->m_dataset)
         d->m_dataset->removeSeries(this);
-    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,17 +101,16 @@ void QHorizontalPercentBarSeriesPrivate::scaleDomain(Domain& domain)
     minY = qMin(minY, - (qreal)0.5);
     maxY = qMax(maxY, y - (qreal)0.5);
 
-    domain.setRange(minX,maxX,minY,maxY);
+    domain.setRange(minX, maxX, minY, maxY);
 }
 
 ChartElement* QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QHorizontalPercentBarSeries);
 
-    HorizontalPercentBarChartItem* bar = new HorizontalPercentBarChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    HorizontalPercentBarChartItem* bar = new HorizontalPercentBarChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new HorizontalPercentBarAnimation(bar));
-    }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
 }

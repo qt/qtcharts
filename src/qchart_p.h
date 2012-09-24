@@ -47,7 +47,6 @@ struct QChartPrivate
     ChartPresenter *m_presenter;
 
     void createConnections();
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

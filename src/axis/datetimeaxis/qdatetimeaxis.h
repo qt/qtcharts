@@ -42,7 +42,7 @@ public:
     ~QDateTimeAxis();
 
 protected:
-    QDateTimeAxis(QDateTimeAxisPrivate &d,QObject *parent = 0);
+    QDateTimeAxis(QDateTimeAxisPrivate &d, QObject *parent = 0);
 
 public:
     AxisType type() const;

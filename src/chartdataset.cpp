@@ -31,12 +31,12 @@
 #include "qpieseries.h"
 
 #ifndef QT_ON_ARM
-    #include "qdatetimeaxis.h"
+#include "qdatetimeaxis.h"
 #endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartDataSet::ChartDataSet(QChart *parent):QObject(parent)
+ChartDataSet::ChartDataSet(QChart *parent): QObject(parent)
 {
 
 }
@@ -50,13 +50,13 @@ void ChartDataSet::addSeries(QAbstractSeries* series)
 {
     Domain* domain = m_seriesDomainMap.value(series);
 
-    if(domain) {
+    if (domain) {
         qWarning() << "Can not add series. Series already on the chart";
         return;
     }
 
     domain = new Domain(series);
-    m_seriesDomainMap.insert(series,domain);
+    m_seriesDomainMap.insert(series, domain);
     series->d_ptr->scaleDomain(*domain);
 
     createSeriesIndex(series);
@@ -65,15 +65,15 @@ void ChartDataSet::addSeries(QAbstractSeries* series)
     series->d_ptr->m_chart = qobject_cast<QChart*>(parent());
     series->d_ptr->m_dataset = this;
 
-    emit seriesAdded(series,domain);
+    emit seriesAdded(series, domain);
 
 }
 
 void ChartDataSet::removeSeries(QAbstractSeries* series)
 {
 
-    if(!m_seriesDomainMap.contains(series)) {
-        qWarning()<<"Can not remove series. Series not found on the chart.";
+    if (!m_seriesDomainMap.contains(series)) {
+        qWarning() << "Can not remove series. Series not found on the chart.";
         return;
     }
 
@@ -98,22 +98,21 @@ void ChartDataSet::createSeriesIndex(QAbstractSeries* series)
 {
     QMapIterator<int, QAbstractSeries*> i(m_indexSeriesMap);
 
-    int key=0;
+    int key = 0;
     while (i.hasNext()) {
         i.next();
-        if(i.key()!=key) {
+        if (i.key() != key)
             break;
-        }
         key++;
     }
 
-    m_indexSeriesMap.insert(key,series);
+    m_indexSeriesMap.insert(key, series);
 }
 
 void ChartDataSet::removeSeriesIndex(QAbstractSeries* series)
 {
     int key = seriesIndex(series);
-    Q_ASSERT(key!=-1);
+    Q_ASSERT(key != -1);
     m_indexSeriesMap.remove(key);
 }
 
@@ -137,13 +136,16 @@ void ChartDataSet::createDefaultAxes()
     // Select the required axis x and axis y types based on the types of the current series
     while (i.hasNext()) {
         i.next();
-
         QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
         QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
-        if(axisX) typeX&=axisX->type();
-        else typeX|=i.key()->d_ptr->defaultAxisType(Qt::Horizontal);
-        if(axisY) typeY&=axisY->type();
-        else typeY|=i.key()->d_ptr->defaultAxisType(Qt::Vertical);
+        if (axisX)
+            typeX &= axisX->type();
+        else
+            typeX |= i.key()->d_ptr->defaultAxisType(Qt::Horizontal);
+        if (axisY)
+            typeY &= axisY->type();
+        else
+            typeY |= i.key()->d_ptr->defaultAxisType(Qt::Vertical);
     }
 
     // Create the axes of the types selected
@@ -170,9 +172,9 @@ void ChartDataSet::createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation ori
         i.toFront();
         while (i.hasNext()) {
             i.next();
-            initializeAxis(axis,i.key());
+            initializeAxis(axis, i.key());
         }
-        emit axisAdded(axis,i.value());
+        emit axisAdded(axis, i.value());
     }
 }
 
@@ -180,7 +182,7 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type, Qt::Orient
 {
     QAbstractAxis* axis = 0;
 
-    switch(type) {
+    switch (type) {
     case QAbstractAxis::AxisTypeValue:
         axis = new QValueAxis(this);
         break;
@@ -200,27 +202,26 @@ QAbstractAxis* ChartDataSet::createAxis(QAbstractAxis::AxisType type, Qt::Orient
         break;
     }
 
-    if(axis)
+    if (axis)
         axis->d_ptr->setOrientation(orientation);
 
     return axis;
 }
 
-void ChartDataSet::initializeAxis(QAbstractAxis* axis,QAbstractSeries* series)
+void ChartDataSet::initializeAxis(QAbstractAxis* axis, QAbstractSeries* series)
 {
     Domain* domain = m_seriesDomainMap.value(series);
     axis->d_ptr->m_dataset = this;
     series->d_ptr->initializeAxis(axis);
     axis->d_ptr->intializeDomain(domain);
-    if(axis->orientation()==Qt::Horizontal) {
-        QObject::connect(axis->d_ptr.data(),SIGNAL(updated()),domain,SLOT(handleAxisUpdated()));
-        QObject::connect(domain,SIGNAL(updated()),axis->d_ptr.data(),SLOT(handleDomainUpdated()));
-        m_seriesAxisXMap.insert(series,axis);
-    }
-    else {
-        QObject::connect(axis->d_ptr.data(),SIGNAL(updated()),domain,SLOT(handleAxisUpdated()));
-        QObject::connect(domain,SIGNAL(updated()),axis->d_ptr.data(),SLOT(handleDomainUpdated()));
-        m_seriesAxisYMap.insert(series,axis);
+    if (axis->orientation() == Qt::Horizontal) {
+        QObject::connect(axis->d_ptr.data(), SIGNAL(updated()), domain, SLOT(handleAxisUpdated()));
+        QObject::connect(domain, SIGNAL(updated()), axis->d_ptr.data(), SLOT(handleDomainUpdated()));
+        m_seriesAxisXMap.insert(series, axis);
+    } else {
+        QObject::connect(axis->d_ptr.data(), SIGNAL(updated()), domain, SLOT(handleAxisUpdated()));
+        QObject::connect(domain, SIGNAL(updated()), axis->d_ptr.data(), SLOT(handleDomainUpdated()));
+        m_seriesAxisYMap.insert(series, axis);
     }
     axis->d_ptr->emitUpdated();
 }
@@ -229,27 +230,27 @@ void ChartDataSet::removeAxes(QAbstractSeries* series)
 {
     QAbstractAxis* axisX = m_seriesAxisXMap.take(series);
 
-    if(axisX) {
+    if (axisX) {
         QList<QAbstractAxis*> axesX = m_seriesAxisXMap.values();
         int x = axesX.indexOf(axisX);
 
-        if(x==-1) {
+        if (x == -1) {
             emit axisRemoved(axisX);
-            axisX->d_ptr->m_dataset=0;
+            axisX->d_ptr->m_dataset = 0;
             axisX->deleteLater();
         }
     }
 
     QAbstractAxis* axisY = m_seriesAxisYMap.take(series);
 
-    if(axisY) {
+    if (axisY) {
         QList<QAbstractAxis*> axesY = m_seriesAxisYMap.values();
 
         int y = axesY.indexOf(axisY);
 
-        if(y==-1) {
+        if (y == -1) {
             emit axisRemoved(axisY);
-            axisY->d_ptr->m_dataset=0;
+            axisY->d_ptr->m_dataset = 0;
             axisY->deleteLater();
         }
     }
@@ -257,40 +258,36 @@ void ChartDataSet::removeAxes(QAbstractSeries* series)
 
 void ChartDataSet::removeAxis(QAbstractAxis* axis)
 {
-    if(!axis->d_ptr->m_dataset) {
-        qWarning()<<"UnBound axis found !";
+    if (!axis->d_ptr->m_dataset) {
+        qWarning() << "UnBound axis found !";
         return;
     }
 
     QMap<QAbstractSeries*, QAbstractAxis*> *seriesAxisMap;
 
-    if(axis->orientation()==Qt::Vertical) {
-        seriesAxisMap= &m_seriesAxisYMap;
-    }
-    else {
-        seriesAxisMap= &m_seriesAxisXMap;
-    }
+    if (axis->orientation() == Qt::Vertical)
+        seriesAxisMap = &m_seriesAxisYMap;
+    else
+        seriesAxisMap = &m_seriesAxisXMap;
 
     QMapIterator<QAbstractSeries*, QAbstractAxis*> i(*seriesAxisMap);
 
     while (i.hasNext()) {
         i.next();
-        if(i.value()==axis) {
+        if (i.value() == axis)
             removeSeries(i.key());
-        }
     }
 }
 
 void ChartDataSet::removeAllSeries()
 {
     QList<QAbstractSeries*> series =   m_seriesDomainMap.keys();
-    foreach(QAbstractSeries *s , series) {
+    foreach (QAbstractSeries *s , series)
         removeSeries(s);
-    }
 
-    Q_ASSERT(m_seriesAxisXMap.count()==0);
-    Q_ASSERT(m_seriesAxisXMap.count()==0);
-    Q_ASSERT(m_seriesDomainMap.count()==0);
+    Q_ASSERT(m_seriesAxisXMap.count() == 0);
+    Q_ASSERT(m_seriesAxisXMap.count() == 0);
+    Q_ASSERT(m_seriesDomainMap.count() == 0);
 
     qDeleteAll(series);
 }
@@ -306,7 +303,7 @@ void ChartDataSet::zoomInDomain(const QRectF& rect, const QSizeF& size)
 
     while (i.hasNext()) {
         i.next();
-        i.value()->zoomIn(rect,size);
+        i.value()->zoomIn(rect, size);
     }
 
     blockAxisSignals(false);
@@ -323,7 +320,7 @@ void ChartDataSet::zoomOutDomain(const QRectF& rect, const QSizeF& size)
 
     while (i.hasNext()) {
         i.next();
-        i.value()->zoomOut(rect,size);
+        i.value()->zoomOut(rect, size);
     }
 
     blockAxisSignals(false);
@@ -336,16 +333,16 @@ void ChartDataSet::blockAxisSignals(bool enabled)
         i.next();
         QAbstractAxis* axisX = m_seriesAxisXMap.value(i.key());
         QAbstractAxis* axisY = m_seriesAxisYMap.value(i.key());
-        if(axisX) {
+        if (axisX) {
             axisX->d_ptr->blockSignals(enabled);
-            if(!enabled) {
+            if (!enabled) {
                 axisX->d_ptr->setDirty(false);
                 axisX->d_ptr->emitUpdated();
             }
         }
-        if(axisY) {
+        if (axisY) {
             axisY->d_ptr->blockSignals(enabled);
-            if(!enabled) {
+            if (!enabled) {
                 axisY->d_ptr->setDirty(false);
                 axisY->d_ptr->emitUpdated();
             }
@@ -355,11 +352,12 @@ void ChartDataSet::blockAxisSignals(bool enabled)
 
 int ChartDataSet::seriesCount(QAbstractSeries::SeriesType type)
 {
-    int count=0;
+    int count = 0;
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
     while (i.hasNext()) {
         i.next();
-        if(i.key()->type()==type) count++;
+        if (i.key()->type() == type)
+            count++;
     }
     return count;
 }
@@ -377,13 +375,14 @@ int ChartDataSet::seriesIndex(QAbstractSeries *series)
 
 QAbstractAxis* ChartDataSet::axisX(QAbstractSeries *series) const
 {
-    if(series == 0) {
+    if (series == 0) {
 
         QMapIterator<QAbstractSeries*, QAbstractAxis *> i(m_seriesAxisXMap);
 
         while (i.hasNext()) {
             i.next();
-            if(i.value()->isVisible()) return i.value();
+            if (i.value()->isVisible())
+                return i.value();
         }
         return 0;
     }
@@ -392,12 +391,12 @@ QAbstractAxis* ChartDataSet::axisX(QAbstractSeries *series) const
 
 QAbstractAxis* ChartDataSet::axisY(QAbstractSeries *series) const
 {
-    if(series == 0) {
+    if (series == 0) {
         QMapIterator<QAbstractSeries*, QAbstractAxis *> i(m_seriesAxisYMap);
 
         while (i.hasNext()) {
             i.next();
-            if(i.value()->isVisible()) return i.value();
+            if (i.value()->isVisible()) return i.value();
         }
         return 0;
     }
@@ -408,25 +407,25 @@ void ChartDataSet::setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Ori
 {
     Q_ASSERT(axis);
 
-    if(!series) {
+    if (!series) {
         qWarning() << "Series not found on the chart.";
         return;
     }
 
     Domain* domain = m_seriesDomainMap.value(series);
 
-    if(!domain) {
+    if (!domain) {
         qWarning() << "Series not found on the chart.";
         return;
     }
 
-    if(orientation==Qt::Horizontal && axis->orientation()==Qt::Vertical) {
-        qWarning()<<"Axis already defined as axis Y";
+    if (orientation == Qt::Horizontal && axis->orientation() == Qt::Vertical) {
+        qWarning() << "Axis already defined as axis Y";
         return;
     }
 
-    if(orientation==Qt::Vertical && axis->orientation()==Qt::Horizontal) {
-        qWarning()<<"Axis already defined as axis X";
+    if (orientation == Qt::Vertical && axis->orientation() == Qt::Horizontal) {
+        qWarning() << "Axis already defined as axis X";
         return;
     }
 
@@ -434,11 +433,10 @@ void ChartDataSet::setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Ori
 
     QMap<QAbstractSeries*, QAbstractAxis*> *seriesAxisMap;
 
-    if(orientation==Qt::Vertical) {
-        seriesAxisMap= &m_seriesAxisYMap;
-    }else{
-        seriesAxisMap= &m_seriesAxisXMap;
-    }
+    if (orientation == Qt::Vertical)
+        seriesAxisMap = &m_seriesAxisYMap;
+    else
+        seriesAxisMap = &m_seriesAxisXMap;
 
     if (seriesAxisMap->value(series) == axis) {
         qWarning() << "The axis already set for the series";
@@ -447,21 +445,21 @@ void ChartDataSet::setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Ori
 
     QAbstractAxis *oldAxis = seriesAxisMap->take(series);
     QList<QAbstractAxis*> axes = seriesAxisMap->values();
-    if(oldAxis) {
-        if(axes.indexOf(oldAxis)==-1) {
+    if (oldAxis) {
+        if (axes.indexOf(oldAxis) == -1) {
             emit axisRemoved(oldAxis);
             oldAxis->disconnect();
-            QObject::disconnect(domain,0,oldAxis,0);
-            oldAxis->d_ptr->m_dataset=0;
+            QObject::disconnect(domain, 0, oldAxis, 0);
+            oldAxis->d_ptr->m_dataset = 0;
             oldAxis->deleteLater();
         }
     }
 
-    if(axes.indexOf(axis)==-1) {
-        initializeAxis(axis,series);
-        emit axisAdded(axis,domain);
-    }else{
-        initializeAxis(axis,series);
+    if (axes.indexOf(axis) == -1) {
+        initializeAxis(axis, series);
+        emit axisAdded(axis, domain);
+    } else {
+        initializeAxis(axis, series);
     }
 }
 
@@ -470,13 +468,13 @@ Domain* ChartDataSet::domain(QAbstractSeries *series) const
     return m_seriesDomainMap.value(series);
 }
 
-void ChartDataSet::scrollDomain(qreal dx,qreal dy,const QSizeF& size)
+void ChartDataSet::scrollDomain(qreal dx, qreal dy, const QSizeF& size)
 {
     blockAxisSignals(true);
     QMapIterator<QAbstractSeries*, Domain*> i(m_seriesDomainMap);
     while (i.hasNext()) {
         i.next();
-        i.value()->move(dx,dy,size);
+        i.value()->move(dx, dy, size);
     }
     blockAxisSignals(false);
 }

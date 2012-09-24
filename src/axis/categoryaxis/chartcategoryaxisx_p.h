@@ -43,7 +43,7 @@ public:
     ChartCategoryAxisX(QAbstractAxis *axis, ChartPresenter *presenter);
     ~ChartCategoryAxisX();
 
-    AxisType axisType() const { return X_AXIS;}
+    AxisType axisType() const { return X_AXIS; }
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint) const;
 protected:
     QVector<qreal> calculateLayout() const;

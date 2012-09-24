@@ -41,7 +41,7 @@ class QAreaSeriesPrivate: public QAbstractSeriesPrivate
     Q_OBJECT
 
 public:
-    QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries,QAreaSeries* q);
+    QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries* q);
 
     void scaleDomain(Domain& domain);
     ChartElement* createGraphics(ChartPresenter* presenter);

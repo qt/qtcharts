@@ -57,7 +57,7 @@ protected:
     void setLastBarSetSection(int lastBarSetSection);
 
     Qt::Orientation orientation() const;
-    void setOrientation(Qt::Orientation orientation);    
+    void setOrientation(Qt::Orientation orientation);
 
 protected:
     QBarModelMapperPrivate * const d_ptr;

@@ -49,10 +49,10 @@ public:
     int ticksCount() const;
 
 Q_SIGNALS:
-    void changed(qreal min, qreal max, int tickCount,bool niceNumbers);
+    void changed(qreal min, qreal max, int tickCount, bool niceNumbers);
 
 public Q_SLOTS:
-    void handleAxisRangeChanged(qreal min, qreal max,int count);
+    void handleAxisRangeChanged(qreal min, qreal max, int count);
 
 private:
     QMap<QString , Range> m_categoriesMap;

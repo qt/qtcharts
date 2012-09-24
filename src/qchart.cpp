@@ -104,11 +104,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
  Constructs a chart object which is a child of a\a parent. Parameter \a wFlags is passed to the QGraphicsWidget constructor.
  */
-QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags) : QGraphicsWidget(parent,wFlags),
-    d_ptr(new QChartPrivate())
+QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
+    : QGraphicsWidget(parent, wFlags),
+      d_ptr(new QChartPrivate())
 {
     d_ptr->m_dataset = new ChartDataSet(this);
-    d_ptr->m_presenter = new ChartPresenter(this,d_ptr->m_dataset);
+    d_ptr->m_presenter = new ChartPresenter(this, d_ptr->m_dataset);
     d_ptr->createConnections();
     d_ptr->m_legend = new LegendScroller(this);
     d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);
@@ -124,7 +125,7 @@ QChart::~QChart()
     //delete first presenter , since this is a root of all the graphical items
     setLayout(0);
     delete d_ptr->m_presenter;
-    d_ptr->m_presenter=0;
+    d_ptr->m_presenter = 0;
 }
 
 /*!
@@ -353,7 +354,7 @@ QAbstractAxis* QChart::axisY(QAbstractSeries *series) const
  */
 void QChart::createDefaultAxes()
 {
-	d_ptr->m_dataset->createDefaultAxes();
+    d_ptr->m_dataset->createDefaultAxes();
 }
 
 /*!
@@ -457,7 +458,7 @@ QList<QAbstractSeries*> QChart::series() const
 */
 void QChart::setAxisX(QAbstractAxis* axis , QAbstractSeries *series)
 {
-    d_ptr->m_dataset->setAxis(series,axis,Qt::Horizontal);
+    d_ptr->m_dataset->setAxis(series, axis, Qt::Horizontal);
 }
 
 /*!
@@ -465,9 +466,9 @@ void QChart::setAxisX(QAbstractAxis* axis , QAbstractSeries *series)
 
    \sa axisX(), axisY(), setAxisX(), createDefaultAxes()
 */
-void QChart::setAxisY( QAbstractAxis* axis , QAbstractSeries *series)
+void QChart::setAxisY(QAbstractAxis *axis , QAbstractSeries *series)
 {
-    d_ptr->m_dataset->setAxis(series,axis,Qt::Vertical);
+    d_ptr->m_dataset->setAxis(series, axis, Qt::Vertical);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -487,10 +488,10 @@ QChartPrivate::~QChartPrivate()
 
 void QChartPrivate::createConnections()
 {
-    QObject::connect(m_dataset,SIGNAL(seriesAdded(QAbstractSeries*,Domain*)),m_presenter,SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
-    QObject::connect(m_dataset,SIGNAL(seriesRemoved(QAbstractSeries*)),m_presenter,SLOT(handleSeriesRemoved(QAbstractSeries*)));
-    QObject::connect(m_dataset,SIGNAL(axisAdded(QAbstractAxis*,Domain*)),m_presenter,SLOT(handleAxisAdded(QAbstractAxis*,Domain*)));
-    QObject::connect(m_dataset,SIGNAL(axisRemoved(QAbstractAxis*)),m_presenter,SLOT(handleAxisRemoved(QAbstractAxis*)));
+    QObject::connect(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)), m_presenter, SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
+    QObject::connect(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), m_presenter, SLOT(handleSeriesRemoved(QAbstractSeries*)));
+    QObject::connect(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)), m_presenter, SLOT(handleAxisAdded(QAbstractAxis*,Domain*)));
+    QObject::connect(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)),m_presenter, SLOT(handleAxisRemoved(QAbstractAxis*)));
     //QObject::connect(m_presenter, SIGNAL(marginsChanged(QRectF)), q_ptr, SIGNAL(marginsChanged(QRectF)));
 }
 

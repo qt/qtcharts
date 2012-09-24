@@ -198,11 +198,11 @@ QAbstractBarSeries::~QAbstractBarSeries()
 /*!
     \internal
 */
-QAbstractBarSeries::QAbstractBarSeries(QAbstractBarSeriesPrivate &o, QObject *parent) :
-    QAbstractSeries(o,parent)
+QAbstractBarSeries::QAbstractBarSeries(QAbstractBarSeriesPrivate &o, QObject *parent)
+    : QAbstractSeries(o, parent)
 {
     Q_D(QAbstractSeries);
-    QObject::connect(this,SIGNAL(countChanged()),d,SIGNAL(countChanged()));
+    QObject::connect(this, SIGNAL(countChanged()), d, SIGNAL(countChanged()));
 }
 
 /*!
@@ -333,9 +333,8 @@ void QAbstractBarSeries::clear()
     if (success) {
         emit barsetsRemoved(sets);
         emit countChanged();
-        foreach (QBarSet* set, sets) {
+        foreach (QBarSet *set, sets)
             delete set;
-        }
     }
 }
 
@@ -392,10 +391,9 @@ int QAbstractBarSeriesPrivate::categoryCount() const
 {
     // No categories defined. return count of longest set.
     int count = 0;
-    for (int i=0; i<m_barSets.count(); i++) {
-        if (m_barSets.at(i)->count() > count) {
+    for (int i = 0; i < m_barSets.count(); i++) {
+        if (m_barSets.at(i)->count() > count)
             count = m_barSets.at(i)->count();
-        }
     }
 
     return count;
@@ -403,9 +401,8 @@ int QAbstractBarSeriesPrivate::categoryCount() const
 
 void QAbstractBarSeriesPrivate::setBarWidth(qreal width)
 {
-    if (width < 0.0) {
+    if (width < 0.0)
         width = 0.0;
-    }
     m_barWidth = width;
     emit updatedLayout();
 }
@@ -434,9 +431,9 @@ void QAbstractBarSeriesPrivate::setLabelsVisible(bool visible)
 
 qreal QAbstractBarSeriesPrivate::min()
 {
-    if (m_barSets.count() <= 0) {
+    if (m_barSets.count() <= 0)
         return 0;
-    }
+
     qreal min = INT_MAX;
 
     for (int i = 0; i < m_barSets.count(); i++) {
@@ -452,9 +449,9 @@ qreal QAbstractBarSeriesPrivate::min()
 
 qreal QAbstractBarSeriesPrivate::max()
 {
-    if (m_barSets.count() <= 0) {
+    if (m_barSets.count() <= 0)
         return 0;
-    }
+
     qreal max = INT_MIN;
 
     for (int i = 0; i < m_barSets.count(); i++) {
@@ -471,32 +468,25 @@ qreal QAbstractBarSeriesPrivate::max()
 
 qreal QAbstractBarSeriesPrivate::valueAt(int set, int category)
 {
-    if ((set < 0) || (set >= m_barSets.count())) {
-        // No set, no value.
-        return 0;
-    } else if ((category < 0) || (category >= m_barSets.at(set)->count())) {
-        // No category, no value.
-        return 0;
-    }
+    if ((set < 0) || (set >= m_barSets.count()))
+        return 0; // No set, no value.
+    else if ((category < 0) || (category >= m_barSets.at(set)->count()))
+        return 0; // No category, no value.
 
     return m_barSets.at(set)->at(category);
 }
 
 qreal QAbstractBarSeriesPrivate::percentageAt(int set, int category)
 {
-    if ((set < 0) || (set >= m_barSets.count())) {
-        // No set, no value.
-        return 0;
-    } else if ((category < 0) || (category >= m_barSets.at(set)->count())) {
-        // No category, no value.
-        return 0;
-    }
+    if ((set < 0) || (set >= m_barSets.count()))
+        return 0; // No set, no value.
+    else if ((category < 0) || (category >= m_barSets.at(set)->count()))
+        return 0; // No category, no value.
 
     qreal value = m_barSets.at(set)->at(category);
     qreal sum = categorySum(category);
-    if ( qFuzzyIsNull(sum) ) {
+    if (qFuzzyIsNull(sum))
         return 0;
-    }
 
     return value / sum;
 }
@@ -537,9 +527,9 @@ qreal QAbstractBarSeriesPrivate::maxCategorySum()
 
 qreal QAbstractBarSeriesPrivate::minX()
 {
-    if (m_barSets.count() <= 0) {
+    if (m_barSets.count() <= 0)
         return 0;
-    }
+
     qreal min = INT_MAX;
 
     for (int i = 0; i < m_barSets.count(); i++) {
@@ -555,9 +545,9 @@ qreal QAbstractBarSeriesPrivate::minX()
 
 qreal QAbstractBarSeriesPrivate::maxX()
 {
-    if (m_barSets.count() <= 0) {
+    if (m_barSets.count() <= 0)
         return 0;
-    }
+
     qreal max = INT_MIN;
 
     for (int i = 0; i < m_barSets.count(); i++) {
@@ -611,11 +601,10 @@ qreal QAbstractBarSeriesPrivate::top()
     // Returns top of all categories
     qreal top(0);
     int count = categoryCount();
-    for (int i=0; i<count; i++) {
+    for (int i = 0; i < count; i++) {
         qreal temp = categoryTop(i);
-        if (temp > top) {
+        if (temp > top)
             top = temp;
-        }
     }
     return top;
 }
@@ -625,11 +614,10 @@ qreal QAbstractBarSeriesPrivate::bottom()
     // Returns bottom of all categories
     qreal bottom(0);
     int count = categoryCount();
-    for (int i=0; i<count; i++) {
+    for (int i = 0; i < count; i++) {
         qreal temp = categoryBottom(i);
-        if (temp < bottom) {
+        if (temp < bottom)
             bottom = temp;
-        }
     }
     return bottom;
 }
@@ -650,7 +638,7 @@ void QAbstractBarSeriesPrivate::scaleDomain(Domain& domain)
     maxX = qMax(maxX, seriesMaxX + (qreal)0.5);
     maxY = qMax(maxY, y);
 
-    domain.setRange(minX,maxX,minY,maxY);
+    domain.setRange(minX, maxX, minY, maxY);
 }
 
 ChartElement* QAbstractBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
@@ -664,8 +652,8 @@ QList<LegendMarker*> QAbstractBarSeriesPrivate::createLegendMarker(QLegend* lege
 {
     Q_Q(QAbstractBarSeries);
     QList<LegendMarker*> markers;
-    foreach(QBarSet* set, q->barSets()) {
-        BarLegendMarker* marker = new BarLegendMarker(q,set,legend);
+    foreach (QBarSet *set, q->barSets()) {
+        BarLegendMarker* marker = new BarLegendMarker(q, set, legend);
         markers << marker;
     }
 
@@ -674,77 +662,65 @@ QList<LegendMarker*> QAbstractBarSeriesPrivate::createLegendMarker(QLegend* lege
 
 bool QAbstractBarSeriesPrivate::append(QBarSet *set)
 {
-    if ((m_barSets.contains(set)) || (set == 0)) {
-        // Fail if set is already in list or set is null.
-        return false;
-    }
+    if ((m_barSets.contains(set)) || (set == 0))
+        return false; // Fail if set is already in list or set is null.
 
     m_barSets.append(set);
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
     QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
 
-    emit restructuredBars();        // this notifies barchartitem
+    emit restructuredBars(); // this notifies barchartitem
     return true;
 }
 
 bool QAbstractBarSeriesPrivate::remove(QBarSet *set)
 {
-    if (!m_barSets.contains(set)) {
-        // Fail if set is not in list
-        return false;
-    }
+    if (!m_barSets.contains(set))
+        return false; // Fail if set is not in list
 
     m_barSets.removeOne(set);
     QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
     QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
     QObject::disconnect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
 
-    emit restructuredBars();        // this notifies barchartitem
+    emit restructuredBars(); // this notifies barchartitem
     return true;
 }
 
 bool QAbstractBarSeriesPrivate::append(QList<QBarSet* > sets)
 {
-    foreach (QBarSet* set, sets) {
-        if ((set == 0) || (m_barSets.contains(set))) {
-            // Fail if any of the sets is null or is already appended.
-            return false;
-        }
-        if (sets.count(set) != 1) {
-            // Also fail if same set is more than once in given list.
-            return false;
-        }
+    foreach (QBarSet *set, sets) {
+        if ((set == 0) || (m_barSets.contains(set)))
+            return false; // Fail if any of the sets is null or is already appended.
+        if (sets.count(set) != 1)
+            return false; // Also fail if same set is more than once in given list.
     }
 
-    foreach (QBarSet* set, sets) {
+    foreach (QBarSet *set, sets) {
         m_barSets.append(set);
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
         QObject::connect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
         QObject::connect(set->d_ptr.data(), SIGNAL(restructuredBars()), this, SIGNAL(restructuredBars()));
     }
 
-    emit restructuredBars();        // this notifies barchartitem
+    emit restructuredBars(); // this notifies barchartitem
     return true;
 }
 
 bool QAbstractBarSeriesPrivate::remove(QList<QBarSet* > sets)
 {
-    if (sets.count() == 0) {
+    if (sets.count() == 0)
         return false;
-    }
-    foreach (QBarSet* set, sets) {
-        if ((set == 0) || (!m_barSets.contains(set))) {
-            // Fail if any of the sets is null or is not in series
-            return false;
-        }
-        if (sets.count(set) != 1) {
-            // Also fail if same set is more than once in given list.
-            return false;
-        }
+
+    foreach (QBarSet *set, sets) {
+        if ((set == 0) || (!m_barSets.contains(set)))
+            return false; // Fail if any of the sets is null or is not in series
+        if (sets.count(set) != 1)
+            return false; // Also fail if same set is more than once in given list.
     }
 
-    foreach (QBarSet* set, sets) {
+    foreach (QBarSet *set, sets) {
         m_barSets.removeOne(set);
         QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
         QObject::disconnect(set->d_ptr.data(), SIGNAL(updatedBars()), this, SIGNAL(updatedBars()));
@@ -757,10 +733,8 @@ bool QAbstractBarSeriesPrivate::remove(QList<QBarSet* > sets)
 
 bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
 {
-    if ((m_barSets.contains(set)) || (set == 0)) {
-        // Fail if set is already in list or set is null.
-        return false;
-    }
+    if ((m_barSets.contains(set)) || (set == 0))
+        return false; // Fail if set is already in list or set is null.
 
     m_barSets.insert(index, set);
     QObject::connect(set->d_ptr.data(), SIGNAL(updatedLayout()), this, SIGNAL(updatedLayout()));
@@ -775,34 +749,23 @@ void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
 {
     Q_Q(QAbstractBarSeries);
 
-    if(axis->type()==QAbstractAxis::AxisTypeBarCategory) {
-
-        switch(q->type()) {
-
-            case QAbstractSeries::SeriesTypeHorizontalBar:
-            case QAbstractSeries::SeriesTypeHorizontalPercentBar:
-            case QAbstractSeries::SeriesTypeHorizontalStackedBar: {
-
-                if(axis->orientation()==Qt::Vertical)
-                {
-                    populateCategories(qobject_cast<QBarCategoryAxis*>(axis));
-                }
-                break;
-            }
-            case QAbstractSeries::SeriesTypeBar:
-            case QAbstractSeries::SeriesTypePercentBar:
-            case QAbstractSeries::SeriesTypeStackedBar: {
-
-                if(axis->orientation()==Qt::Horizontal)
-                {
-                    populateCategories(qobject_cast<QBarCategoryAxis*>(axis));
-                }
-                break;
-            }
-            default:
-            qWarning()<<"Unexpected series type";
+    if (axis->type() == QAbstractAxis::AxisTypeBarCategory) {
+        switch (q->type()) {
+        case QAbstractSeries::SeriesTypeHorizontalBar:
+        case QAbstractSeries::SeriesTypeHorizontalPercentBar:
+        case QAbstractSeries::SeriesTypeHorizontalStackedBar:
+            if (axis->orientation() == Qt::Vertical)
+                populateCategories(qobject_cast<QBarCategoryAxis*>(axis));
             break;
-
+        case QAbstractSeries::SeriesTypeBar:
+        case QAbstractSeries::SeriesTypePercentBar:
+        case QAbstractSeries::SeriesTypeStackedBar:
+            if (axis->orientation() == Qt::Horizontal)
+                populateCategories(qobject_cast<QBarCategoryAxis*>(axis));
+            break;
+        default:
+            qWarning() << "Unexpected series type";
+            break;
         }
     }
 }
@@ -811,32 +774,22 @@ QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientati
 {
     Q_Q(const QAbstractBarSeries);
 
-    switch(q->type()) {
-
-        case QAbstractSeries::SeriesTypeHorizontalBar:
-        case QAbstractSeries::SeriesTypeHorizontalPercentBar:
-        case QAbstractSeries::SeriesTypeHorizontalStackedBar: {
-
-            if(orientation==Qt::Vertical)
-            {
-                return QAbstractAxis::AxisTypeBarCategory;
-            }
-            break;
-        }
-        case QAbstractSeries::SeriesTypeBar:
-        case QAbstractSeries::SeriesTypePercentBar:
-        case QAbstractSeries::SeriesTypeStackedBar: {
-
-            if(orientation==Qt::Horizontal)
-            {
-                return QAbstractAxis::AxisTypeBarCategory;
-            }
-            break;
-        }
-        default:
-        qWarning()<<"Unexpected series type";
+    switch (q->type()) {
+    case QAbstractSeries::SeriesTypeHorizontalBar:
+    case QAbstractSeries::SeriesTypeHorizontalPercentBar:
+    case QAbstractSeries::SeriesTypeHorizontalStackedBar:
+        if (orientation == Qt::Vertical)
+            return QAbstractAxis::AxisTypeBarCategory;
         break;
-
+    case QAbstractSeries::SeriesTypeBar:
+    case QAbstractSeries::SeriesTypePercentBar:
+    case QAbstractSeries::SeriesTypeStackedBar:
+        if (orientation == Qt::Horizontal)
+            return QAbstractAxis::AxisTypeBarCategory;
+        break;
+    default:
+        qWarning() << "Unexpected series type";
+        break;
     }
     return QAbstractAxis::AxisTypeValue;
 
@@ -845,15 +798,14 @@ QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientati
 void QAbstractBarSeriesPrivate::populateCategories(QBarCategoryAxis* axis)
 {
     QStringList categories;
-    if(axis->categories().isEmpty()) {
-        for (int i(1); i < categoryCount()+1; i++)
-        categories << QString::number(i);
+    if (axis->categories().isEmpty()) {
+        for (int i(1); i < categoryCount() + 1; i++)
+            categories << QString::number(i);
         axis->append(categories);
     }
 }
 
 #include "moc_qabstractbarseries.cpp"
 #include "moc_qabstractbarseries_p.cpp"
-
 
 QTCOMMERCIALCHART_END_NAMESPACE

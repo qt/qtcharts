@@ -33,9 +33,9 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
-    :ChartItem(presenter),
-    m_series(series),
-    m_animation(0)
+    : ChartItem(presenter),
+      m_series(series),
+      m_animation(0)
 {
     Q_ASSERT(series);
 
@@ -62,7 +62,7 @@ PieChartItem::~PieChartItem()
 
 void PieChartItem::setAnimation(PieAnimation* animation)
 {
-    m_animation=animation;
+    m_animation = animation;
 }
 
 ChartAnimation* PieChartItem::animation() const
@@ -129,13 +129,12 @@ void PieChartItem::updateLayout()
     m_holeSize *= m_series->holeSize();
 
     // set layouts for existing slice items
-    foreach (QPieSlice* slice, m_series->slices()) {
+    foreach (QPieSlice *slice, m_series->slices()) {
         PieSliceItem *sliceItem = m_sliceItems.value(slice);
         if (sliceItem) {
             PieSliceData sliceData = updateSliceGeometry(slice);
-            if (m_animation){
+            if (m_animation)
                 presenter()->startAnimation(m_animation->updateValue(sliceItem, sliceData));
-            }
             else
                 sliceItem->setLayout(sliceData);
         }

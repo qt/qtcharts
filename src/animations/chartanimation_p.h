@@ -41,7 +41,7 @@ class ChartAnimation: public QVariantAnimation
 {
     Q_OBJECT
 public:
-    ChartAnimation(QObject *parent = 0):QVariantAnimation(parent){};
+    ChartAnimation(QObject *parent = 0): QVariantAnimation(parent) {};
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

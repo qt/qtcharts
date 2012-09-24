@@ -98,14 +98,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     When series object is added to QChartView or QChart instance then the ownerships is transferred.
   */
 
-QSplineSeries::QSplineSeries(QObject *parent) :
-    QLineSeries(*new QSplineSeriesPrivate(this),parent)
+QSplineSeries::QSplineSeries(QObject *parent)
+    : QLineSeries(*new QSplineSeriesPrivate(this), parent)
 {
     Q_D(QSplineSeries);
-    QObject::connect(this,SIGNAL(pointAdded(int)), d, SLOT(updateControlPoints()));
-    QObject::connect(this,SIGNAL(pointRemoved(int)), d, SLOT(updateControlPoints()));
-    QObject::connect(this,SIGNAL(pointReplaced(int)), d, SLOT(updateControlPoints()));
-    QObject::connect(this,SIGNAL(pointsReplaced()), d, SLOT(updateControlPoints()));
+    QObject::connect(this, SIGNAL(pointAdded(int)), d, SLOT(updateControlPoints()));
+    QObject::connect(this, SIGNAL(pointRemoved(int)), d, SLOT(updateControlPoints()));
+    QObject::connect(this, SIGNAL(pointReplaced(int)), d, SLOT(updateControlPoints()));
+    QObject::connect(this, SIGNAL(pointsReplaced()), d, SLOT(updateControlPoints()));
 }
 
 /*!
@@ -114,9 +114,8 @@ QSplineSeries::QSplineSeries(QObject *parent) :
 QSplineSeries::~QSplineSeries()
 {
     Q_D(QSplineSeries);
-    if(d->m_dataset){
+    if (d->m_dataset)
         d->m_dataset->removeSeries(this);
-    }
 }
 
 QAbstractSeries::SeriesType QSplineSeries::type() const
@@ -126,7 +125,8 @@ QAbstractSeries::SeriesType QSplineSeries::type() const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q):QLineSeriesPrivate(q)
+QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q)
+    : QLineSeriesPrivate(q)
 {
 }
 
@@ -141,8 +141,7 @@ void QSplineSeriesPrivate::calculateControlPoints()
 
     int n = points.count() - 1;
 
-    if (n == 1)
-    {
+    if (n == 1) {
         //for n==1
         m_controlPoints[0].setX((2 * points[0].x() + points[1].x()) / 3);
         m_controlPoints[0].setY((2 * points[0].y() + points[1].y()) / 3);
@@ -169,35 +168,33 @@ void QSplineSeriesPrivate::calculateControlPoints()
     vector[0] = points[0].x() + 2 * points[1].x();
 
 
-    for (int i = 1; i < n - 1; ++i){
+    for (int i = 1; i < n - 1; ++i)
         vector[i] = 4 * points[i].x() + 2 * points[i + 1].x();
-    }
 
-    vector[n - 1] = (8 * points[n-1].x() + points[n].x()) / 2.0;
+    vector[n - 1] = (8 * points[n - 1].x() + points[n].x()) / 2.0;
 
     QVector<qreal> xControl = firstControlPoints(vector);
 
     vector[0] = points[0].y() + 2 * points[1].y();
 
-    for (int i = 1; i < n - 1; ++i) {
+    for (int i = 1; i < n - 1; ++i)
         vector[i] = 4 * points[i].y() + 2 * points[i + 1].y();
-    }
 
-    vector[n - 1] = (8 * points[n-1].y() + points[n].y()) / 2.0;
+    vector[n - 1] = (8 * points[n - 1].y() + points[n].y()) / 2.0;
 
     QVector<qreal> yControl = firstControlPoints(vector);
 
-    for (int i = 0,j =0; i < n; ++i, ++j) {
+    for (int i = 0, j = 0; i < n; ++i, ++j) {
 
         m_controlPoints[j].setX(xControl[i]);
         m_controlPoints[j].setY(yControl[i]);
 
         j++;
 
-        if (i < n - 1){
-            m_controlPoints[j].setX(2 * points[i+1].x() - xControl[i + 1]);
-            m_controlPoints[j].setY(2 * points[i+1].y() - yControl[i + 1]);
-        }else{
+        if (i < n - 1) {
+            m_controlPoints[j].setX(2 * points[i + 1].x() - xControl[i + 1]);
+            m_controlPoints[j].setY(2 * points[i + 1].y() - yControl[i + 1]);
+        } else {
             m_controlPoints[j].setX((points[n].x() + xControl[n - 1]) / 2);
             m_controlPoints[j].setY((points[n].y() + yControl[n - 1]) / 2);
         }
@@ -221,8 +218,9 @@ QVector<qreal> QSplineSeriesPrivate::firstControlPoints(const QVector<qreal>& ve
     for (int i = 1; i < count; i++) {
         temp[i] = 1 / b;
         b = (i < count - 1 ? 4.0 : 3.5) - temp[i];
-        result[i]=(vector[i] - result[i - 1]) / b;
+        result[i] = (vector[i] - result[i - 1]) / b;
     }
+
     for (int i = 1; i < count; i++)
         result[count - i - 1] -= temp[count - i] * result[count - i];
 
@@ -241,7 +239,7 @@ void QSplineSeriesPrivate::updateControlPoints()
 {
     Q_Q(QSplineSeries);
     if (q->count() > 1) {
-        m_controlPoints.resize(2*q->count()-2);
+        m_controlPoints.resize(2 * q->count() - 2);
         calculateControlPoints();
     }
 }
@@ -249,11 +247,9 @@ void QSplineSeriesPrivate::updateControlPoints()
 ChartElement* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QSplineSeries);
-    SplineChartItem* spline  = new SplineChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    SplineChartItem *spline = new SplineChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         spline->setAnimation(new SplineAnimation(spline));
-    }
-
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return spline;
 }

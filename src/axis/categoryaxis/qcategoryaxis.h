@@ -38,7 +38,7 @@ public:
     ~QCategoryAxis();
 
 protected:
-    QCategoryAxis(QCategoryAxisPrivate &d,QObject *parent = 0);
+    QCategoryAxis(QCategoryAxisPrivate &d, QObject *parent = 0);
 
 public:
     AxisType type() const;

@@ -70,9 +70,8 @@ QStackedBarSeries::QStackedBarSeries(QObject *parent)
 QStackedBarSeries::~QStackedBarSeries()
 {
     Q_D(QStackedBarSeries);
-    if(d->m_dataset) {
+    if (d->m_dataset)
         d->m_dataset->removeSeries(this);
-    }
 }
 /*!
     Returns QChartSeries::SeriesTypeStackedBar.
@@ -102,17 +101,16 @@ void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
     maxX = qMax(maxX, x - (qreal)0.5);
     maxY = qMax(maxY, top());
 
-    domain.setRange(minX,maxX,minY,maxY);
+    domain.setRange(minX, maxX, minY, maxY);
 }
 
 ChartElement* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QStackedBarSeries);
 
-    StackedBarChartItem* bar = new StackedBarChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    StackedBarChartItem* bar = new StackedBarChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new StackedBarAnimation(bar));
-    }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return bar;
 }

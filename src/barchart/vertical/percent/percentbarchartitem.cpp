@@ -54,28 +54,27 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
         qreal colSum = m_series->d_func()->categorySum(category);
         qreal percentage = (100 / colSum);
         qreal yPos = height + scaleY * m_domainMinY + geometry().top();
-        for (int set=0; set < setCount; set++) {
+        for (int set = 0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth/2;
+            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth / 2;
 
             qreal rectHeight = barSet->value(category) * percentage * scaleY;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(rectHeight)) {
+            if (qFuzzyIsNull(rectHeight))
                 bar->setVisible(false);
-            } else {
+            else
                 bar->setVisible(barsVisible);
-            }
 
-            QRectF rect(xPos, yPos-rectHeight, rectWidth, rectHeight);
+            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
             layout.append(rect);
 
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(m_series->d_func()->valueAt(set,category))) {
-                int p = m_series->d_func()->percentageAt(set,category) * 100;
+            if (!qFuzzyIsNull(m_series->d_func()->valueAt(set, category))) {
+                int p = m_series->d_func()->percentageAt(set, category) * 100;
                 QString vString(QString::number(p));
                 vString.truncate(3);
                 vString.append("%");
@@ -84,8 +83,8 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
                 label->setText(QString(""));
             }
 
-            label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                          ,yPos - rectHeight/2 - label->boundingRect().height()/2);
+            label->setPos(xPos + (rect.width() / 2 - label->boundingRect().width() / 2),
+                          yPos - rectHeight / 2 - label->boundingRect().height() / 2);
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 

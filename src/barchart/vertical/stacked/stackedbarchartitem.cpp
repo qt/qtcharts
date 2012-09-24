@@ -52,42 +52,41 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     for (int category = 0; category < categoryCount; category++) {
         qreal yMax = height + scaleY * m_domainMinY + geometry().top();
         qreal yMin = height + scaleY * m_domainMinY + geometry().top();
-        for (int set=0; set < setCount; set++) {
+        for (int set = 0; set < setCount; set++) {
             QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
-            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth/2;
+            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth / 2;
 
             qreal rectHeight = barSet->value(category) * scaleY;
             Bar* bar = m_bars.at(itemIndex);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(rectHeight)) {
+            if (qFuzzyIsNull(rectHeight))
                 bar->setVisible(false);
-            } else {
+            else
                 bar->setVisible(barsVisible);
-            }
 
             QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(barSet->value(category))) {
+            if (!qFuzzyIsNull(barSet->value(category)))
                 label->setText(QString::number(barSet->value(category)));
-            } else {
+            else
                 label->setText(QString(""));
-            }
+
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
 
             if (rectHeight < 0) {
-                QRectF rect(xPos, yMax-rectHeight, rectWidth, rectHeight);
+                QRectF rect(xPos, yMax - rectHeight, rectWidth, rectHeight);
                 layout.append(rect);
-                label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                              ,yMax - rectHeight/2 - label->boundingRect().height()/2);
+                label->setPos(xPos + (rect.width() / 2 - label->boundingRect().width() / 2),
+                              yMax - rectHeight / 2 - label->boundingRect().height() / 2);
                 yMax -= rectHeight;
             } else {
-                QRectF rect(xPos, yMin-rectHeight, rectWidth, rectHeight);
+                QRectF rect(xPos, yMin - rectHeight, rectWidth, rectHeight);
                 layout.append(rect);
-                label->setPos(xPos + (rect.width()/2 - label->boundingRect().width()/2)
-                              ,yMin - rectHeight/2 - label->boundingRect().height()/2);
+                label->setPos(xPos + (rect.width() / 2 - label->boundingRect().width() / 2),
+                              yMin - rectHeight / 2 - label->boundingRect().height() / 2);
                 yMin -= rectHeight;
             }
 

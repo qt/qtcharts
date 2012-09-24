@@ -27,7 +27,7 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarAnimation::BarAnimation(AbstractBarChartItem *item)
-    :AbstractBarAnimation(item)
+    : AbstractBarAnimation(item)
 {
 
 }
@@ -44,7 +44,7 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
 
     Q_ASSERT(startVector.count() == endVector.count());
 
-    for(int i = 0; i < startVector.count(); i++) {
+    for (int i = 0; i < startVector.count(); i++) {
         QRectF start = startVector[i].normalized();
         QRectF end = endVector[i].normalized();
 
@@ -62,7 +62,7 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
             y = endVector[i].top() + endVector[i].height() - h;
         }
 
-        QRectF value(x,y,w,h);
+        QRectF value(x, y, w, h);
         result << value.normalized();
     }
     return qVariantFromValue(result);

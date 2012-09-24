@@ -435,8 +435,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa QPieSeries::append(), QPieSeries::insert()
 */
 QPieSlice::QPieSlice(QObject *parent)
-    :QObject(parent),
-    d_ptr(new QPieSlicePrivate(this))
+    : QObject(parent),
+      d_ptr(new QPieSlicePrivate(this))
 {
 
 }
@@ -446,8 +446,8 @@ QPieSlice::QPieSlice(QObject *parent)
     \sa QPieSeries::append(), QPieSeries::insert()
 */
 QPieSlice::QPieSlice(QString label, qreal value, QObject *parent)
-    :QObject(parent),
-    d_ptr(new QPieSlicePrivate(this))
+    : QObject(parent),
+      d_ptr(new QPieSlicePrivate(this))
 {
     setValue(value);
     setLabel(label);
@@ -677,9 +677,9 @@ QPieSeries *QPieSlice::series() const
 }
 
 QPieSlicePrivate::QPieSlicePrivate(QPieSlice *parent)
-    :QObject(parent),
-    q_ptr(parent),
-    m_series(0)
+    : QObject(parent),
+      q_ptr(parent),
+      m_series(0)
 {
 
 }

@@ -347,11 +347,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs a series object which is a child of \a parent.
 */
-QPieSeries::QPieSeries(QObject *parent) :
-    QAbstractSeries(*new QPieSeriesPrivate(this),parent)
+QPieSeries::QPieSeries(QObject *parent)
+    : QAbstractSeries(*new QPieSeriesPrivate(this), parent)
 {
     Q_D(QPieSeries);
-    QObject::connect(this,SIGNAL(countChanged()),d,SIGNAL(countChanged()));
+    QObject::connect(this, SIGNAL(countChanged()), d, SIGNAL(countChanged()));
 }
 
 /*!
@@ -394,14 +394,14 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
     if (slices.count() == 0)
         return false;
 
-    foreach (QPieSlice* s, slices) {
+    foreach (QPieSlice *s, slices) {
         if (!s || d->m_slices.contains(s))
             return false;
         if (s->series()) // already added to some series
             return false;
     }
 
-    foreach (QPieSlice* s, slices) {
+    foreach (QPieSlice *s, slices) {
         s->setParent(this);
         QPieSlicePrivate::fromSlice(s)->m_series = this;
         d->m_slices << s;
@@ -409,7 +409,7 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
 
     d->updateDerivativeData();
 
-    foreach (QPieSlice* s, slices) {
+    foreach (QPieSlice *s, slices) {
         connect(s, SIGNAL(valueChanged()), d, SLOT(sliceValueChanged()));
         connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
         connect(s, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
@@ -540,7 +540,7 @@ void QPieSeries::clear()
         return;
 
     QList<QPieSlice*> slices = d->m_slices;
-    foreach (QPieSlice* s, d->m_slices)
+    foreach (QPieSlice *s, d->m_slices)
         d->m_slices.removeOne(s);
 
     d->updateDerivativeData();
@@ -548,7 +548,7 @@ void QPieSeries::clear()
     emit removed(slices);
     emit countChanged();
 
-    foreach (QPieSlice* s, slices)
+    foreach (QPieSlice *s, slices)
         delete s;
 }
 
@@ -719,7 +719,7 @@ qreal QPieSeries::pieEndAngle() const
 void QPieSeries::setLabelsVisible(bool visible)
 {
     Q_D(QPieSeries);
-    foreach (QPieSlice* s, d->m_slices)
+    foreach (QPieSlice *s, d->m_slices)
         s->setLabelVisible(visible);
 }
 
@@ -734,7 +734,7 @@ void QPieSeries::setLabelsVisible(bool visible)
 void QPieSeries::setLabelsPosition(QPieSlice::LabelPosition position)
 {
     Q_D(QPieSeries);
-    foreach (QPieSlice* s, d->m_slices)
+    foreach (QPieSlice *s, d->m_slices)
         s->setLabelPosition(position);
 }
 
@@ -761,7 +761,7 @@ void QPieSeriesPrivate::updateDerivativeData()
 {
     // calculate sum of all slices
     qreal sum = 0;
-    foreach (QPieSlice* s, m_slices)
+    foreach (QPieSlice *s, m_slices)
         sum += s->value();
 
     if (!qFuzzyIsNull(m_sum - sum)) {
@@ -777,7 +777,7 @@ void QPieSeriesPrivate::updateDerivativeData()
     qreal sliceAngle = m_pieStartAngle;
     qreal pieSpan = m_pieEndAngle - m_pieStartAngle;
     QVector<QPieSlice*> changed;
-    foreach (QPieSlice* s, m_slices) {
+    foreach (QPieSlice *s, m_slices) {
         QPieSlicePrivate *d = QPieSlicePrivate::fromSlice(s);
         d->setPercentage(s->value() / m_sum);
         d->setStartAngle(sliceAngle);
@@ -843,10 +843,9 @@ void QPieSeriesPrivate::scaleDomain(Domain& domain)
 ChartElement* QPieSeriesPrivate::createGraphics(ChartPresenter* presenter)
 {
     Q_Q(QPieSeries);
-    PieChartItem* pie = new PieChartItem(q,presenter);
-    if(presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    PieChartItem* pie = new PieChartItem(q, presenter);
+    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         pie->setAnimation(new PieAnimation(pie));
-    }
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return pie;
 }
@@ -855,8 +854,8 @@ QList<LegendMarker*> QPieSeriesPrivate::createLegendMarker(QLegend* legend)
 {
     Q_Q(QPieSeries);
     QList<LegendMarker*> markers;
-    foreach(QPieSlice* slice, q->slices()) {
-        PieLegendMarker* marker = new PieLegendMarker(q,slice,legend);
+    foreach (QPieSlice *slice, q->slices()) {
+        PieLegendMarker* marker = new PieLegendMarker(q, slice, legend);
         markers << marker;
     }
     return markers;

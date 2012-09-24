@@ -52,9 +52,8 @@ void QXYModelMapper::setModel(QAbstractItemModel *model)
         return;
 
     Q_D(QXYModelMapper);
-    if (d->m_model) {
+    if (d->m_model)
         disconnect(d->m_model, 0, d, 0);
-    }
 
     d->m_model = model;
     d->initializeXYFromModel();
@@ -82,9 +81,8 @@ QXYSeries* QXYModelMapper::series() const
 void QXYModelMapper::setSeries(QXYSeries *series)
 {
     Q_D(QXYModelMapper);
-    if (d->m_series) {
+    if (d->m_series)
         disconnect(d->m_series, 0, d, 0);
-    }
 
     if (series == 0)
         return;

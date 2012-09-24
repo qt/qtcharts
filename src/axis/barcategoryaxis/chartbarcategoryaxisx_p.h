@@ -51,7 +51,7 @@ protected:
     void updateGeometry();
 private:
     QStringList createCategoryLabels(const QVector<qreal>& layout) const;
-Q_SLOTS
+public Q_SLOTS:
     void handleAxisUpdated();
 
 private:

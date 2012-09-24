@@ -43,9 +43,9 @@ class QXYSeries;
 
 class XYChart :  public ChartElement
 {
-     Q_OBJECT
+    Q_OBJECT
 public:
-     explicit XYChart(QXYSeries *series, ChartPresenter *presenter);
+    explicit XYChart(QXYSeries *series, ChartPresenter *presenter);
     ~XYChart() {}
 
     void setGeometryPoints(const QVector<QPointF>& points);
@@ -76,7 +76,7 @@ Q_SIGNALS:
     void clicked(const QPointF& point);
 
 protected:
-    virtual void updateChart(QVector<QPointF> &oldPoints,QVector<QPointF> &newPoints,int index = -1);
+    virtual void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index = -1);
     QPointF calculateGeometryPoint(const QPointF &point) const;
     QPointF calculateGeometryPoint(int index) const;
     QPointF calculateDomainPoint(const QPointF &point) const;
@@ -99,7 +99,6 @@ protected:
     bool m_dirty;
 
     friend class AreaChartItem;
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

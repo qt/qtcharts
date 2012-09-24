@@ -30,7 +30,8 @@ static int label_padding = 5;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartCategoryAxisX::ChartCategoryAxisX(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter)
+ChartCategoryAxisX::ChartCategoryAxisX(QAbstractAxis *axis, ChartPresenter *presenter)
+    : ChartAxis(axis, presenter)
 {
 }
 
@@ -69,7 +70,8 @@ void ChartCategoryAxisX::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
 
-    if(layout.isEmpty()) return;
+    if (layout.isEmpty())
+        return;
 
     QCategoryAxis *categoryAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
     QStringList ticksList = categoryAxis->categoriesLabels();
@@ -80,9 +82,8 @@ void ChartCategoryAxisX::updateGeometry()
     QList<QGraphicsItem *> axis = m_arrow->childItems();
 
 
-    for (int i = 0; i < labels.count(); i++) {
+    for (int i = 0; i < labels.count(); i++)
         labels.at(i)->setVisible(false);
-    }
 
     QRectF chartRect = presenter()->chartsGeometry();
     // axis base line
@@ -93,18 +94,16 @@ void ChartCategoryAxisX::updateGeometry()
     for (int i = 0; i < layout.size(); ++i) {
 
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-        if (i < ticksList.count()) {
+        if (i < ticksList.count())
             labelItem->setText(ticksList.at(i));
-        }
         const QRectF& rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
 
-        if (i < layout.size() - 1) {
+        if (i < layout.size() - 1)
             labelItem->setPos(layout[i] + (layout[i + 1] - layout[i]) / 2 - center.x(), chartRect.bottom() + label_padding);
-        } else {
+        else
             labelItem->setPos(layout[i] - center.x(), chartRect.bottom() + label_padding);
-        }
 
         // check if the label should be shown
         if (labelItem->pos().x() + center.x() < chartRect.left() || labelItem->pos().x() + center.x() > chartRect.right())
@@ -114,7 +113,7 @@ void ChartCategoryAxisX::updateGeometry()
 
         if ((i + 1) % 2 && i > 1) {
             QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));
-            rectItem->setRect(layout[i - 1],chartRect.top(),layout[i]-layout[i - 1],chartRect.height());
+            rectItem->setRect(layout[i - 1], chartRect.top(), layout[i] - layout[i - 1], chartRect.height());
         }
 
         // grid lines and axis line ticks
@@ -122,7 +121,7 @@ void ChartCategoryAxisX::updateGeometry()
         lineItem->setPos(layout[i], chartRect.top());
         lineItem->setLine(0, 0, 0, chartRect.height());
 
-        QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
+        QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem*>(axis.at(i + 1));
         tickLineItem->setPos(layout[i], chartRect.bottom());
         tickLineItem->setLine(0, 0, 0, 5);
 
@@ -134,9 +133,7 @@ void ChartCategoryAxisX::updateGeometry()
             lineItem->setVisible(true);
             tickLineItem->setVisible(true);
         }
-
     }
-
 }
 
 void ChartCategoryAxisX::handleAxisUpdated()
@@ -153,31 +150,28 @@ QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constraint
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
     QStringList ticksList ; //TODO:
-    qreal width=0;
-    qreal height=0;
+    qreal width = 0;
+    qreal height = 0;
 
     switch (which) {
-        case Qt::MinimumSize:
+    case Qt::MinimumSize:
         width = fn.boundingRect("...").width();
         height = fn.height() + label_padding;
-        width=qMax(width,base.width());
-        height+=base.height();
-        sh = QSizeF(width,height);
+        width = qMax(width, base.width());
+        height += base.height();
+        sh = QSizeF(width, height);
         break;
-        case Qt::PreferredSize: {
-
-            for (int i = 0; i < ticksList.size(); ++i)
-            {
-                QRectF rect = fn.boundingRect(ticksList.at(i));
-                width+=rect.width();
-                height=qMax(rect.height()+label_padding,height);
-            }
-            width=qMax(width,base.width());
-            height+=base.height();
-            sh = QSizeF(width,height);
-            break;
+    case Qt::PreferredSize:
+        for (int i = 0; i < ticksList.size(); ++i) {
+            QRectF rect = fn.boundingRect(ticksList.at(i));
+            width += rect.width();
+            height = qMax(rect.height() + label_padding, height);
         }
-        default:
+        width = qMax(width, base.width());
+        height += base.height();
+        sh = QSizeF(width, height);
+        break;
+    default:
         break;
     }
 

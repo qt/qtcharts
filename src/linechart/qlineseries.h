@@ -39,7 +39,7 @@ public:
     QAbstractSeries::SeriesType type() const;
 
 protected:
-    QLineSeries(QLineSeriesPrivate &d,QObject *parent = 0);
+    QLineSeries(QLineSeriesPrivate &d, QObject *parent = 0);
 
 private:
     Q_DECLARE_PRIVATE(QLineSeries)

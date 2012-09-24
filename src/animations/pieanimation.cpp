@@ -26,8 +26,8 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 PieAnimation::PieAnimation(PieChartItem *item)
-    :ChartAnimation(item),
-    m_item(item)
+    : ChartAnimation(item),
+      m_item(item)
 {
 }
 

@@ -44,12 +44,12 @@ protected:
 public:
     XYAnimation(XYChart *item);
     ~XYAnimation();
-    void setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints,int index = -1);
+    void setup(const QVector<QPointF> &oldPoints, const QVector<QPointF> &newPoints, int index = -1);
     Animation animationType() const { return m_type; };
 
 protected:
-    QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress ) const;
-    void updateCurrentValue (const QVariant &value );
+    QVariant interpolated(const QVariant &start, const QVariant &end, qreal progress) const;
+    void updateCurrentValue(const QVariant &value);
     void updateState(QAbstractAnimation::State newState, QAbstractAnimation::State oldState);
 protected:
     Animation m_type;

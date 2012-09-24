@@ -53,9 +53,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs a chartView object with parent \a parent.
 */
 
-QChartView::QChartView(QWidget *parent) :
-    QGraphicsView(parent),
-    d_ptr(new QChartViewPrivate(this))
+QChartView::QChartView(QWidget *parent)
+    : QGraphicsView(parent),
+      d_ptr(new QChartViewPrivate(this))
 {
 
 }
@@ -64,9 +64,9 @@ QChartView::QChartView(QWidget *parent) :
     Constructs a chartView object with parent \a parent to display a \a chart.
 */
 
-QChartView::QChartView(QChart *chart,QWidget *parent) :
-    QGraphicsView(parent),
-    d_ptr(new QChartViewPrivate(this,chart))
+QChartView::QChartView(QChart *chart, QWidget *parent)
+    : QGraphicsView(parent),
+      d_ptr(new QChartViewPrivate(this, chart))
 {
 
 }
@@ -104,11 +104,11 @@ void QChartView::setChart(QChart *chart)
 */
 void QChartView::setRubberBand(const RubberBands& rubberBand)
 {
-    d_ptr->m_rubberBandFlags=rubberBand;
+    d_ptr->m_rubberBandFlags = rubberBand;
 
     if (!d_ptr->m_rubberBandFlags) {
         delete d_ptr->m_rubberBand;
-        d_ptr->m_rubberBand=0;
+        d_ptr->m_rubberBand = 0;
         return;
     }
 
@@ -132,7 +132,7 @@ QChartView::RubberBands QChartView::rubberBand() const
 */
 void QChartView::mousePressEvent(QMouseEvent *event)
 {
-    if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
+    if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isEnabled() && event->button() == Qt::LeftButton) {
 
         QRectF plotArea = d_ptr->m_chart->plotArea();
 
@@ -142,8 +142,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
             d_ptr->m_rubberBand->show();
             event->accept();
         }
-    }
-    else {
+    } else {
         QGraphicsView::mousePressEvent(event);
     }
 }
@@ -154,7 +153,7 @@ void QChartView::mousePressEvent(QMouseEvent *event)
 */
 void QChartView::mouseMoveEvent(QMouseEvent *event)
 {
-    if(d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
+    if (d_ptr->m_rubberBand && d_ptr->m_rubberBand->isVisible()) {
         QRect rect = d_ptr->m_chart->plotArea().toRect();
         int width = event->pos().x() - d_ptr->m_rubberBandOrigin.x();
         int height = event->pos().y() - d_ptr->m_rubberBandOrigin.y();
@@ -164,11 +163,10 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
         }
         if (!d_ptr->m_rubberBandFlags.testFlag(HorizonalRubberBand)) {
             d_ptr->m_rubberBandOrigin.setX(rect.left());
-            width= rect.width();
+            width = rect.width();
         }
-        d_ptr->m_rubberBand->setGeometry(QRect(d_ptr->m_rubberBandOrigin.x(),d_ptr->m_rubberBandOrigin.y(), width,height).normalized());
-    }
-    else {
+        d_ptr->m_rubberBand->setGeometry(QRect(d_ptr->m_rubberBandOrigin.x(), d_ptr->m_rubberBandOrigin.y(), width, height).normalized());
+    } else {
         QGraphicsView::mouseMoveEvent(event);
     }
 }
@@ -179,7 +177,7 @@ void QChartView::mouseMoveEvent(QMouseEvent *event)
 */
 void QChartView::mouseReleaseEvent(QMouseEvent *event)
 {
-    if(d_ptr->m_rubberBand) {
+    if (d_ptr->m_rubberBand) {
         if (event->button() == Qt::LeftButton && d_ptr->m_rubberBand->isVisible()) {
             d_ptr->m_rubberBand->hide();
             QRect rect = d_ptr->m_rubberBand->geometry();
@@ -187,12 +185,11 @@ void QChartView::mouseReleaseEvent(QMouseEvent *event)
             event->accept();
         }
 
-        if(event->button()==Qt::RightButton){
+        if (event->button() == Qt::RightButton) {
             d_ptr->m_chart->zoomOut();
             event->accept();
         }
-    }
-    else {
+    } else {
         QGraphicsView::mouseReleaseEvent(event);
     }
 }
@@ -208,12 +205,12 @@ void QChartView::resizeEvent(QResizeEvent *event)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QChartViewPrivate::QChartViewPrivate(QChartView *q,QChart* chart):
-q_ptr(q),
-m_scene(new QGraphicsScene(q)),
-m_chart(chart),
-m_rubberBand(0),
-m_rubberBandFlags(QChartView::NoRubberBand)
+QChartViewPrivate::QChartViewPrivate(QChartView *q, QChart* chart)
+    : q_ptr(q),
+      m_scene(new QGraphicsScene(q)),
+      m_chart(chart),
+      m_rubberBand(0),
+      m_rubberBandFlags(QChartView::NoRubberBand)
 {
     q_ptr->setFrameShape(QFrame::NoFrame);
     q_ptr->setBackgroundRole(QPalette::Window);
@@ -221,7 +218,8 @@ m_rubberBandFlags(QChartView::NoRubberBand)
     q_ptr->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     q_ptr->setScene(m_scene);
     q_ptr->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    if(!m_chart) m_chart = new QChart();
+    if (!m_chart)
+        m_chart = new QChart();
     m_scene->addItem(m_chart);
 }
 

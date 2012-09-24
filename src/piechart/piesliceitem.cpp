@@ -33,13 +33,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 QPointF offset(qreal angle, qreal length)
 {
-    qreal dx = qSin(angle*(M_PI/180)) * length;
-    qreal dy = qCos(angle*(M_PI/180)) * length;
+    qreal dx = qSin(angle * (M_PI / 180)) * length;
+    qreal dy = qCos(angle * (M_PI / 180)) * length;
     return QPointF(dx, -dy);
 }
 
 PieSliceItem::PieSliceItem(QGraphicsItem* parent)
-    :QGraphicsObject(parent),
+    : QGraphicsObject(parent),
       m_hovered(false)
 {
     setAcceptHoverEvents(true);
@@ -85,8 +85,7 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
         painter->setBrush(m_data.m_labelBrush);
         painter->setFont(m_data.m_labelFont);
 
-        switch (m_data.m_labelPosition)
-        {
+        switch (m_data.m_labelPosition) {
         case QPieSlice::LabelOutside:
             painter->setClipRect(parentItem()->boundingRect());
             painter->strokePath(m_labelArmPath, m_data.m_labelBrush.color());
@@ -163,13 +162,12 @@ void PieSliceItem::updateGeometry()
     m_labelArmPath = labelArmPath(armStart, centerAngle, m_data.m_radius * m_data.m_labelArmLengthFactor, m_labelTextRect.width(), &labelTextStart);
 
     // text position
-    switch (m_data.m_labelPosition)
-    {
+    switch (m_data.m_labelPosition) {
     case QPieSlice::LabelOutside:
         m_labelTextRect.moveBottomLeft(labelTextStart);
         break;
     case QPieSlice::LabelInsideHorizontal:
-    case QPieSlice::LabelInsideTangential:{
+    case QPieSlice::LabelInsideTangential: {
         QPointF textCenter;
         if (m_data.m_holeRadius > 0)
             textCenter = m_data.m_center + offset(centerAngle, m_data.m_holeRadius + (m_data.m_radius - m_data.m_holeRadius) / 2);
@@ -177,8 +175,8 @@ void PieSliceItem::updateGeometry()
             textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
         m_labelTextRect.moveCenter(textCenter);
         break;
-    }
-    case QPieSlice::LabelInsideNormal:{
+        }
+    case QPieSlice::LabelInsideNormal: {
         QPointF textCenter;
         if (m_data.m_holeRadius > 0)
             textCenter = m_data.m_center + offset(centerAngle, m_data.m_holeRadius + (m_data.m_radius - m_data.m_holeRadius) / 2);
@@ -186,7 +184,7 @@ void PieSliceItem::updateGeometry()
             textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
         m_labelTextRect.moveCenter(textCenter);
         break;
-    }
+        }
     }
 
     //  bounding rect
@@ -199,7 +197,7 @@ void PieSliceItem::updateGeometry()
 QPointF PieSliceItem::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
 {
     if (slice->isExploded()) {
-        qreal centerAngle = slice->startAngle() + (slice->angleSpan()/2);
+        qreal centerAngle = slice->startAngle() + (slice->angleSpan() / 2);
         qreal len = radius * slice->explodeDistanceFactor();
         point += offset(centerAngle, len);
     }
@@ -209,15 +207,15 @@ QPointF PieSliceItem::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
 QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal *centerAngle, QPointF* armStart)
 {
     // calculate center angle
-    *centerAngle = startAngle + (angleSpan/2);
+    *centerAngle = startAngle + (angleSpan / 2);
 
     // calculate slice rectangle
-    QRectF rect(center.x()-radius, center.y()-radius, radius*2, radius*2);
+    QRectF rect(center.x() - radius, center.y() - radius, radius * 2, radius * 2);
 
     // slice path
     QPainterPath path;
     if (m_data.m_holeRadius > 0) {
-        QRectF insideRect(center.x() - m_data.m_holeRadius, center.y()-m_data.m_holeRadius, m_data.m_holeRadius*2, m_data.m_holeRadius*2);
+        QRectF insideRect(center.x() - m_data.m_holeRadius, center.y() - m_data.m_holeRadius, m_data.m_holeRadius * 2, m_data.m_holeRadius * 2);
         path.arcMoveTo(rect, -startAngle + 90);
         path.arcTo(rect, -startAngle + 90, -angleSpan);
         path.arcTo(insideRect, -startAngle + 90 - angleSpan, angleSpan);
@@ -263,9 +261,8 @@ QPainterPath PieSliceItem::labelArmPath(QPointF start, qreal angle, qreal length
     if (angle < 180) { // arm swings the other way on the left side
         parm2 += QPointF(textWidth, 0);
         *textStart = parm1;
-    }
-    else {
-        parm2 += QPointF(-textWidth,0);
+    } else {
+        parm2 += QPointF(-textWidth, 0);
         *textStart = parm2;
     }
 

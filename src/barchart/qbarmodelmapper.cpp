@@ -45,13 +45,12 @@ void QBarModelMapper::setModel(QAbstractItemModel *model)
         return;
 
     Q_D(QBarModelMapper);
-    if (d->m_model) {
+    if (d->m_model)
         disconnect(d->m_model, 0, d, 0);
-    }
 
     d->m_model = model;
     d->initializeBarFromModel();
-    //    connect signals from the model
+    // connect signals from the model
     connect(d->m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)), d, SLOT(modelUpdated(QModelIndex,QModelIndex)));
     connect(d->m_model, SIGNAL(headerDataChanged(Qt::Orientation,int,int)), d, SLOT(modelHeaderDataUpdated(Qt::Orientation,int,int)));
     connect(d->m_model, SIGNAL(rowsInserted(QModelIndex,int,int)), d, SLOT(modelRowsAdded(QModelIndex,int,int)));
@@ -70,9 +69,8 @@ QAbstractBarSeries* QBarModelMapper::series() const
 void QBarModelMapper::setSeries(QAbstractBarSeries *series)
 {
     Q_D(QBarModelMapper);
-    if (d->m_series) {
+    if (d->m_series)
         disconnect(d->m_series, 0, d, 0);
-    }
 
     if (series == 0)
         return;
@@ -402,9 +400,10 @@ void QBarModelMapperPrivate::barSetsAdded(QList<QBarSet*> sets)
         return;
 
     int maxCount = 0;
-    for(int i = 0; i < sets.count(); i++)
+    for (int i = 0; i < sets.count(); i++) {
         if (sets.at(i)->count() > m_count)
             maxCount = sets.at(i)->count();
+    }
 
     if (m_count != -1 && m_count < maxCount)
         m_count = maxCount;
@@ -426,7 +425,7 @@ void QBarModelMapperPrivate::barSetsAdded(QList<QBarSet*> sets)
         m_model->insertRows(firstIndex + m_firstBarSetSection, sets.count());
 
 
-    for(int i = firstIndex + m_firstBarSetSection; i < firstIndex + m_firstBarSetSection + sets.count(); i++) {
+    for (int i = firstIndex + m_firstBarSetSection; i < firstIndex + m_firstBarSetSection + sets.count(); i++) {
         m_model->setHeaderData(i, m_orientation == Qt::Vertical ? Qt::Horizontal : Qt::Vertical, sets.at(i - firstIndex - m_firstBarSetSection)->label());
         for (int j = 0; j < sets.at(i - firstIndex - m_firstBarSetSection)->count(); j++)
             m_model->setData(barModelIndex(i, j), sets.at(i - firstIndex - m_firstBarSetSection)->at(j));

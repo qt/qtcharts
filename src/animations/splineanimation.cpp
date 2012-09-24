@@ -27,9 +27,9 @@ Q_DECLARE_METATYPE(SplineVector)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-SplineAnimation::SplineAnimation(SplineChartItem* item):XYAnimation(item),
-m_item(item),
-m_valid(false)
+SplineAnimation::SplineAnimation(SplineChartItem* item): XYAnimation(item),
+    m_item(item),
+    m_valid(false)
 {
 }
 
@@ -40,8 +40,8 @@ SplineAnimation::~SplineAnimation()
 void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, QVector<QPointF> &oldControlPoints, QVector<QPointF> &newControlPoints, int index)
 {
     if (newPoints.count() * 2 - 2 != newControlPoints.count() || newControlPoints.count() < 2) {
-        m_valid=false;
-        m_dirty=false;
+        m_valid = false;
+        m_dirty = false;
         m_item->setGeometryPoints(newPoints);
         m_item->setControlGeometryPoints(newControlPoints);
         m_item->setDirty(false);
@@ -53,61 +53,58 @@ void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPo
 
     if (state() != QAbstractAnimation::Stopped) {
         stop();
-        m_dirty=false;
+        m_dirty = false;
     }
 
-    if(!m_dirty) {
+    if (!m_dirty) {
         m_dirty = true;
         m_oldSpline.first = oldPoints;
         m_oldSpline.second = oldControlPoints;
     }
 
-    m_newSpline.first=newPoints;
-    m_newSpline.second=newControlPoints;
+    m_newSpline.first = newPoints;
+    m_newSpline.second = newControlPoints;
 
 
     int x = m_oldSpline.first.count();
     int y = m_newSpline.first.count();
 
-    if(x - y == 1 && index >= 0 && y>0) {
+    if (x - y == 1 && index >= 0 && y > 0) {
         //remove point
-        if(index>0){
-            m_newSpline.first.insert(index, newPoints[index-1]);
-            m_newSpline.second.insert((index -1) * 2, newPoints[index-1] );
-            m_newSpline.second.insert((index -1) * 2 + 1, newPoints[index-1]);
-        }else{
+        if (index > 0) {
+            m_newSpline.first.insert(index, newPoints[index - 1]);
+            m_newSpline.second.insert((index - 1) * 2, newPoints[index - 1]);
+            m_newSpline.second.insert((index - 1) * 2 + 1, newPoints[index - 1]);
+        } else {
             m_newSpline.first.insert(index, newPoints[index]);
-            m_newSpline.second.insert(index * 2, newPoints[index] );
+            m_newSpline.second.insert(index * 2, newPoints[index]);
             m_newSpline.second.insert(index * 2 + 1, newPoints[index]);
         }
-        m_index=index;
+        m_index = index;
         m_type = RemovePointAnimation;
     }
 
-    if(x - y == -1 && index >= 0) {
+    if (x - y == -1 && index >= 0) {
         //add point
-        if(index>0){
-            m_oldSpline.first.insert(index, newPoints[index-1]);
-            m_oldSpline.second.insert((index - 1) * 2, newPoints[index-1]);
-            m_oldSpline.second.insert((index - 1) * 2 + 1, newPoints[index-1]);
-        }else{
+        if (index > 0) {
+            m_oldSpline.first.insert(index, newPoints[index - 1]);
+            m_oldSpline.second.insert((index - 1) * 2, newPoints[index - 1]);
+            m_oldSpline.second.insert((index - 1) * 2 + 1, newPoints[index - 1]);
+        } else {
             m_oldSpline.first.insert(index, newPoints[index]);
             m_oldSpline.second.insert((index - 1) * 2, newPoints[index]);
             m_oldSpline.second.insert((index - 1) * 2 + 1, newPoints[index]);
         }
-        m_index=index;
+        m_index = index;
         m_type = AddPointAnimation;
     }
 
     x = m_oldSpline.first.count();
     y = m_newSpline.first.count();
 
-    if(x != y)
-    {
+    if (x != y) {
         m_type = NewAnimation;
-    }
-    else if(m_type == NewAnimation)
-    {
+    } else if (m_type == NewAnimation) {
         m_type = ReplacePointAnimation;
     }
 
@@ -115,11 +112,11 @@ void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPo
     setKeyValueAt(0.0, qVariantFromValue(m_oldSpline));
     setKeyValueAt(1.0, qVariantFromValue(m_newSpline));
 
-    m_valid=true;
+    m_valid = true;
 
 }
 
-QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress ) const
+QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
 {
 
     SplineVector startPair = qVariantValue< SplineVector >(start);
@@ -127,44 +124,41 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
     SplineVector result;
 
     switch (animationType()) {
-
-        case RemovePointAnimation:
-        case AddPointAnimation:
-        case ReplacePointAnimation:
-        {
+    case RemovePointAnimation:
+    case AddPointAnimation:
+    case ReplacePointAnimation: {
             if (startPair.first.count() != endPair.first.count())
-            break;
+                break;
             Q_ASSERT(startPair.first.count() * 2 - 2 == startPair.second.count());
             Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
-            for(int i = 0; i < endPair.first.count(); i++) {
+            for (int i = 0; i < endPair.first.count(); i++) {
                 qreal x = startPair.first[i].x() + ((endPair.first[i].x() - startPair.first[i].x()) * progress);
                 qreal y = startPair.first[i].y() + ((endPair.first[i].y() - startPair.first[i].y()) * progress);
-                result.first << QPointF(x,y);
+                result.first << QPointF(x, y);
                 if (i + 1 >= endPair.first.count())
-                continue;
+                    continue;
                 x = startPair.second[i * 2].x() + ((endPair.second[i * 2].x() - startPair.second[i * 2].x()) * progress);
                 y = startPair.second[i * 2].y() + ((endPair.second[i * 2].y() - startPair.second[i * 2].y()) * progress);
-                result.second << QPointF(x,y);
+                result.second << QPointF(x, y);
                 x = startPair.second[i * 2 + 1].x() + ((endPair.second[i * 2 + 1].x() - startPair.second[i * 2 + 1].x()) * progress);
                 y = startPair.second[i * 2 + 1].y() + ((endPair.second[i * 2 + 1].y() - startPair.second[i * 2 + 1].y()) * progress);
-                result.second << QPointF(x,y);
+                result.second << QPointF(x, y);
             }
-
         }
         break;
-        case NewAnimation: {
+    case NewAnimation: {
             Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
-            int count = endPair.first.count()* qBound(qreal(0), progress, qreal(1));
-            for(int i = 0; i < count; i++) {
+            int count = endPair.first.count() * qBound(qreal(0), progress, qreal(1));
+            for (int i = 0; i < count; i++) {
                 result.first << endPair.first[i];
-                if(i + 1 == count)
-                break;
+                if (i + 1 == count)
+                    break;
                 result.second << endPair.second[2 * i];
                 result.second << endPair.second[2 * i + 1];
             }
         }
         break;
-        default:
+    default:
         qWarning() << "Unknown type of animation";
         break;
     }
@@ -172,7 +166,7 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
     return qVariantFromValue(result);
 }
 
-void SplineAnimation::updateCurrentValue (const QVariant &value )
+void SplineAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped && m_valid) { //workaround
         QPair<QVector<QPointF >, QVector<QPointF > > pair = qVariantValue< QPair< QVector<QPointF>, QVector<QPointF> > >(value);
@@ -188,24 +182,21 @@ void SplineAnimation::updateState(QAbstractAnimation::State newState, QAbstractA
 {
     XYAnimation::updateState(newState, oldState);
 
-    if(oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped)
-    {
-        if(m_item->isDirty() && m_type==RemovePointAnimation) {
-            if(!m_newSpline.first.isEmpty()) {
+    if (oldState == QAbstractAnimation::Running && newState == QAbstractAnimation::Stopped) {
+        if (m_item->isDirty() && m_type == RemovePointAnimation) {
+            if (!m_newSpline.first.isEmpty()) {
                 m_newSpline.first.remove(m_index);
-                m_newSpline.second.remove((m_index-1) * 2);
-                m_newSpline.second.remove((m_index-1) * 2);
+                m_newSpline.second.remove((m_index - 1) * 2);
+                m_newSpline.second.remove((m_index - 1) * 2);
             }
             m_item->setGeometryPoints(m_newSpline.first);
             m_item->setControlGeometryPoints(m_newSpline.second);
         }
     }
 
-    if(oldState == QAbstractAnimation::Stopped && newState == QAbstractAnimation::Running)
-    {
-        if(!m_valid) {
-           stop();
-        }
+    if (oldState == QAbstractAnimation::Stopped && newState == QAbstractAnimation::Running) {
+        if (!m_valid)
+            stop();
     }
 }
 
