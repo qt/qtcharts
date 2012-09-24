@@ -38,7 +38,7 @@ Row {
                 setFlow.visible = false;
                 labelsFlow.visible = false;
                 color = "#00a388";
-                sliceButton.color = "#79bd8f";
+                setButton.color = "#79bd8f";
                 labelButton.color = "#79bd8f";
             }
         }
@@ -65,7 +65,7 @@ Row {
                 labelsFlow.visible = true;
                 color = "#00a388";
                 seriesButton.color = "#79bd8f";
-                sliceButton.color = "#79bd8f";
+                setButton.color = "#79bd8f";
             }
         }
     }

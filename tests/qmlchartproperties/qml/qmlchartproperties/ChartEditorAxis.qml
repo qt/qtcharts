@@ -82,12 +82,12 @@ Row {
             onClicked: axis.min -= 0.1;
         }
         Button {
-            text: "axis ticks count +"
-            onClicked: axis.ticksCount++;
+            text: "axis tick count +"
+            onClicked: axis.tickCount++;
         }
         Button {
-            text: "axis ticks count -"
-            onClicked: axis.ticksCount--;
+            text: "axis tick count -"
+            onClicked: axis.tickCount--;
         }
         Button {
             text: "axis nice nmb"

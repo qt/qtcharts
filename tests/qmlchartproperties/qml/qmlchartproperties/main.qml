@@ -48,7 +48,7 @@ Rectangle {
             source: "Chart.qml"
             onStatusChanged: {
                 if (status == Loader.Ready && editorLoader.status == Loader.Ready && chartLoader.item) {
-                    if (source.toString().search("Chart.qml") > 0)
+                    if (source.toString().search("/Chart.qml") > 0)
                         editorLoader.item.chart = chartLoader.item.chart;
                     else
                         editorLoader.item.series = chartLoader.item.series;
@@ -63,7 +63,7 @@ Rectangle {
             source: "ChartEditor.qml"
             onStatusChanged: {
                 if (status == Loader.Ready && chartLoader.status == Loader.Ready && chartLoader.item) {
-                    if (source.toString().search("ChartEditor.qml") > 0)
+                    if (source.toString().search("/ChartEditor.qml") > 0)
                         editorLoader.item.chart = chartLoader.item.chart;
                     else
                         editorLoader.item.series = chartLoader.item.series;
