@@ -24,7 +24,7 @@
 #include "qabstractseries_p.h"
 #include "qchart_p.h"
 #include "legendlayout_p.h"
-#include "legendmarker_p.h"
+#include "legendmarker_p.h" // TODO: deprecated
 #include "qxyseries.h"
 #include "qlineseries.h"
 #include "qareaseries.h"
@@ -45,6 +45,8 @@
 #include <QGraphicsSceneEvent>
 
 #include <QLegendMarker>
+#include "qlegendmarker_p.h"
+#include "legendmarkeritem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -401,6 +403,15 @@ QList<QLegendMarker*> QLegend::markers() const
     return d_ptr->legendMarkers();
 }
 
+void QLegend::appendSeries(QAbstractSeries* series)
+{
+    d_ptr->appendSeries(series);
+}
+
+void QLegend::removeSeries(QAbstractSeries* series)
+{
+    d_ptr->removeSeries(series);
+}
 
 /*!
  \internal \a event see QGraphicsWidget for details
@@ -463,6 +474,30 @@ int QLegendPrivate::roundness(qreal size)
     return 100 * m_diameter / int(size);
 }
 
+void QLegendPrivate::appendSeries(QAbstractSeries* series)
+{
+    Q_UNUSED(series);
+    // TODO:
+    /*
+    if (!m_series.contains(series)) {
+        m_series.append(series);
+        handleSeriesAdded(series,0);    // Dummy domain
+    }
+    */
+}
+
+void QLegendPrivate::removeSeries(QAbstractSeries* series)
+{
+    Q_UNUSED(series);
+    // TODO:
+    /*
+    if (m_series.contains(series)) {
+        m_series.removeOne(series);
+        handleSeriesRemoved(series);
+    }
+    */
+}
+
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 {
     Q_UNUSED(domain)
@@ -475,9 +510,9 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
         marker->setFont(m_font);
         marker->setLabelBrush(m_labelBrush);
         marker->setVisible(series->isVisible());
-// TODO: QLegendMarker has QGraphicsItem vs QLegendMarker is QGraphicsItem
 // TODO: possible hazard. What if marker is deleted and group still has pointer?
-//        m_items->addToGroup(marker->d_ptr.data());
+        m_items->addToGroup(marker->d_ptr.data()->item());
+//        qDebug() << "item:" << marker->d_ptr.data()->item();
         m_legendMarkers << marker;
     }
 

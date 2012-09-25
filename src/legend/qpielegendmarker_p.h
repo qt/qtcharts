@@ -33,6 +33,10 @@
 #include "qchartglobal.h"
 #include "qlegendmarker_p.h"
 #include "legendmarkeritem_p.h"
+#include <QPieSeries>
+#include <QPieSlice>
+
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -42,15 +46,18 @@ class QPieLegendMarkerPrivate : public QLegendMarkerPrivate
 {
     Q_OBJECT
 public:
-    explicit QPieLegendMarkerPrivate(QAbstractSeries *series, QPieLegendMarker *q);
+//    explicit QPieLegendMarkerPrivate(QAbstractSeries *series, QPieLegendMarker *q);
+    explicit QPieLegendMarkerPrivate(QPieSeries *series, QPieSlice *slice, QPieLegendMarker *q);
     virtual ~QPieLegendMarkerPrivate();
 
 public Q_SLOTS:
-    virtual void updated() {};
+    virtual void updated();
 
 private:
     QPieLegendMarker *q_ptr;
-    PieLegendMarkerItem *m_item;
+
+    QPieSeries* m_series;
+    QPieSlice* m_slice;
 
     friend class QLegendPrivate; // TODO: Is this needed?
     Q_DECLARE_PUBLIC(QPieLegendMarker)

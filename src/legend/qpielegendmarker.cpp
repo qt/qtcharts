@@ -21,39 +21,68 @@
 #include "qpielegendmarker.h"
 #include "qpielegendmarker_p.h"
 #include <QPieSeries>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
+/*
 QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject *parent) :
     QLegendMarker(series, parent),
-    m_slice(slice)
+    d_ptr(new QPieLegendMarkerPrivate(series,slice,this))
 {
     QObject::connect(slice, SIGNAL(labelChanged()), this, SLOT(updated()));
     QObject::connect(slice, SIGNAL(brushChanged()), this, SLOT(updated()));
     updated();
 }
 
-QPieSlice* QPieLegendMarker::peerObject()
+*/
+QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject *parent) :
+    QLegendMarker(*new QPieLegendMarkerPrivate(series,slice,this), parent)
 {
-    return m_slice;
+    QObject::connect(slice, SIGNAL(labelChanged()), this, SLOT(updated()));
+    QObject::connect(slice, SIGNAL(brushChanged()), this, SLOT(updated()));
+//    updated();
 }
 
-void QPieLegendMarker::updated()
+/*!
+    \internal
+*/
+QPieLegendMarker::QPieLegendMarker(QPieLegendMarkerPrivate &d, QObject *parent) :
+    QLegendMarker(d, parent)
 {
-    // TODO: to PIMPL.
-    setBrush(m_slice->brush());
-    setLabel(m_slice->label());
+}
+
+QAbstractSeries* QPieLegendMarker::series()
+{
+    Q_D(QPieLegendMarker);
+    return d->m_series;
+}
+
+QPieSlice* QPieLegendMarker::peerObject()
+{
+    Q_D(QPieLegendMarker);
+    return d->m_slice;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QAbstractSeries *series, QPieLegendMarker *q) :
-    QLegendMarkerPrivate(series, q)
+//QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QAbstractSeries *series, QPieLegendMarker *q) :
+QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QPieSeries *series, QPieSlice *slice, QPieLegendMarker *q) :
+    QLegendMarkerPrivate(q),
+    m_series(series),
+    m_slice(slice)
 {
+    qDebug() << "QPieLegendMarkerPrivate created";
+    updated();
 }
 
 QPieLegendMarkerPrivate::~QPieLegendMarkerPrivate()
 {
+}
+
+void QPieLegendMarkerPrivate::updated()
+{
+    m_item->setBrush(m_slice->brush());
+    m_item->setLabel(m_slice->label());
 }
 
 #include "moc_qpielegendmarker.cpp"

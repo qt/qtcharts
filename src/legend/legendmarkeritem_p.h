@@ -39,21 +39,15 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAbstractSeries;
-class QAreaSeries;
-class QXYSeries;
-class QBarSet;
-class QAbstractBarSeries;
-class QPieSlice;
-class QLegend;
-class QPieSeries;
+class QLegendMarkerPrivate;
 
 class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
-    explicit LegendMarkerItem(QAbstractSeries *m_series, QGraphicsObject *parent = 0);
+//    explicit LegendMarkerItem(QAbstractSeries *m_series, QGraphicsObject *parent = 0);
+    explicit LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent = 0);
 
     void setPen(const QPen &pen);
     QPen pen() const;
@@ -70,8 +64,6 @@ public:
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
 
-    QAbstractSeries *series() const { return m_series;}
-
     void setGeometry(const QRectF& rect);
 
     QRectF boundingRect() const;
@@ -84,61 +76,16 @@ protected:
     // From QGraphicsObject
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
-//public Q_SLOTS:
-    //virtual void updated() = 0;
-
 protected:
-    QAbstractSeries *m_series;
+    QLegendMarkerPrivate *m_marker;
     QRectF m_markerRect;
     QRectF m_boundingRect;
-//    QLegend* m_legend;
     QGraphicsSimpleTextItem *m_textItem;
     QGraphicsRectItem *m_rectItem;
     qreal m_margin;
     qreal m_space;
     QString m_text;
 
-};
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class XYLegendMarkerItem : public LegendMarkerItem
-{
-public:
-    XYLegendMarkerItem(QXYSeries *series, QLegend *legend);
-protected:
-    void updated();
-private:
-    QXYSeries *m_series;
-};
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class AreaLegendMarkerItem : public LegendMarkerItem
-{
-public:
-    AreaLegendMarkerItem(QAreaSeries *series, QLegend *legend);
-protected:
-    void updated();
-private:
-    QAreaSeries *m_series;
-};
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class BarLegendMarkerItem : public LegendMarkerItem
-{
-public:
-    BarLegendMarkerItem(QAbstractBarSeries *barseries, QBarSet *barset,QLegend *legend);
-protected:
-    void updated();
-private:
-    QBarSet *m_barset;
-};
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class PieLegendMarkerItem : public LegendMarkerItem
-{
-public:
-    PieLegendMarkerItem(QPieSeries *pieSeries, QPieSlice *pieslice, QLegend *legend);
-protected:
-    void updated();
-private:
-    QPieSlice *m_pieslice;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

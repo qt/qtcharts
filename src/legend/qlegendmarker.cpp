@@ -25,10 +25,16 @@
 #include <QFontMetrics>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-
+/*
 QLegendMarker::QLegendMarker(QAbstractSeries* series, QObject *parent) :
     QObject(parent),
     d_ptr(new QLegendMarkerPrivate(series, this))
+{
+}
+*/
+QLegendMarker::QLegendMarker(QLegendMarkerPrivate &d, QObject *parent) :
+    QObject(parent),
+    d_ptr(&d)
 {
 }
 
@@ -96,22 +102,32 @@ void QLegendMarker::setVisible(bool visible)
     d_ptr->m_visible = visible;
 }
 
-QAbstractSeries* QLegendMarker::series()
-{
-    return d_ptr->m_series;
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+/*
 QLegendMarkerPrivate::QLegendMarkerPrivate(QAbstractSeries *series, QLegendMarker *q) :
     q_ptr(q),
     m_series(series)
 {
     m_item = new LegendMarkerItem(m_series);
 }
+*/
+QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q) :
+    q_ptr(q)
+{
+    qDebug() << "QLegendMarkerPrivate created";
+    m_item = new LegendMarkerItem(this);
+}
 
 QLegendMarkerPrivate::~QLegendMarkerPrivate()
 {
+}
+
+void QLegendMarkerPrivate::handleMousePressEvent(QGraphicsSceneEvent *event)
+{
+    // Just emit clicked signal for now
+    Q_UNUSED(event);
+    Q_Q(QLegendMarker);
+    emit q->clicked();
 }
 
 

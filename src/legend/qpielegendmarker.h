@@ -35,21 +35,19 @@ class QTCOMMERCIALCHART_EXPORT QPieLegendMarker : public QLegendMarker
 public:
     explicit QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject *parent = 0);
     
+    virtual QAbstractSeries* series();
     virtual QPieSlice* peerObject();
 
-// TODO: to pimpl.
-    void updated();
+protected:
+    QPieLegendMarker(QPieLegendMarkerPrivate &d, QObject *parent = 0);
 
 //Q_SIGNALS:
     
 //public Q_SLOTS:
 
 private:
-    QScopedPointer<QPieLegendMarkerPrivate> d_ptr;
+    Q_DECLARE_PRIVATE(QPieLegendMarker)
     Q_DISABLE_COPY(QPieLegendMarker)
-
-// TODO: PIMPL
-    QPieSlice* m_slice;
 
 };
 

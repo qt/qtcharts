@@ -43,7 +43,7 @@ class QTCOMMERCIALCHART_EXPORT QLegendMarker : public QObject
 //    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged);
 
 public:
-    explicit QLegendMarker(QAbstractSeries* series, QObject *parent = 0);
+//    explicit QLegendMarker(QAbstractSeries* series, QObject *parent = 0);
     virtual ~QLegendMarker();
 
     QString label() const;
@@ -64,9 +64,12 @@ public:
     bool isVisible() const;
     void setVisible(bool visible);
 
-//    virtual QAbstractSeries::SeriesType type() = 0;
-    virtual QAbstractSeries* series();
+//    virtual QAbstractSeries::SeriesType type() = 0; // TODO?
+    virtual QAbstractSeries* series() = 0;
     virtual QObject* peerObject() = 0;
+
+protected:
+    explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = 0);
 
 Q_SIGNALS:
     void clicked();
@@ -75,10 +78,11 @@ Q_SIGNALS:
 public Q_SLOTS:
     virtual void updated() = 0;  // TODO: private. Idea is that series signals, when some property has changed
 
-public:
+protected:
     QScopedPointer<QLegendMarkerPrivate> d_ptr;
     Q_DISABLE_COPY(QLegendMarker)
-
+    friend class QLegendPrivate;
+    friend class QLegendMarkerPrivate;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

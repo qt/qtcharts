@@ -19,26 +19,19 @@
  ****************************************************************************/
 
 #include "legendmarkeritem_p.h"
-#include "qxyseries.h"
-#include "qxyseries_p.h"
-#include "qlegend.h"
-#include "qabstractbarseries.h"
-#include "qpieseries.h"
-#include "qpieslice.h"
-#include "qbarset.h"
-#include "qbarset_p.h"
-#include "qareaseries.h"
-#include "qareaseries_p.h"
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsSimpleTextItem>
 #include <QDebug>
 
+#include "qlegendmarker_p.h"
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-LegendMarkerItem::LegendMarkerItem(QAbstractSeries *series, QGraphicsObject *parent) :
+//LegendMarkerItem::LegendMarkerItem(QAbstractSeries *series, QGraphicsObject *parent) :
+LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent) :
     QGraphicsObject(parent),
-    m_series(series),
+    m_marker(marker),
     m_markerRect(0,0,10.0,10.0),
     m_boundingRect(0,0,0,0),
     m_textItem(new QGraphicsSimpleTextItem(this)),
@@ -46,7 +39,8 @@ LegendMarkerItem::LegendMarkerItem(QAbstractSeries *series, QGraphicsObject *par
     m_margin(4),
     m_space(4)
 {
-    //setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
+    qDebug() << "LegendMarkerItem created for marker:" << m_marker;
+    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     m_rectItem->setRect(m_markerRect);
 }
 
@@ -170,82 +164,10 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
 void LegendMarkerItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     qDebug() << "LegendMarkerItem::mousePressEvent";
-    QGraphicsObject::mousePressEvent(event);
+//    QGraphicsObject::mousePressEvent(event);
     //TODO: selected signal removed for now
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-AreaLegendMarkerItem::AreaLegendMarkerItem(QAreaSeries *series,QLegend *legend) : LegendMarkerItem(series,legend),
-m_series(series)
-{
-    //QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
-//    QObject::connect(series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
-//    QObject::connect(series, SIGNAL(nameChanged()), this, SLOT(updated()));
-    updated();
-}
-
-void AreaLegendMarkerItem::updated()
-{
-    setBrush(m_series->brush());
-    setLabel(m_series->name());
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-BarLegendMarkerItem::BarLegendMarkerItem(QAbstractBarSeries *barseries,QBarSet *barset, QLegend *legend) : LegendMarkerItem(barseries,legend),
-m_barset(barset)
-{
-    //QObject::connect(this, SIGNAL(selected()),barset->d_ptr.data(), SIGNAL(selected()));
-//    QObject::connect(barset->d_ptr.data(), SIGNAL(updatedBars()), this, SLOT(updated()));
-    updated();
-}
-
-void BarLegendMarkerItem::updated()
-{
-    setBrush(m_barset->brush());
-    setLabel(m_barset->label());
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-PieLegendMarkerItem::PieLegendMarkerItem(QPieSeries* series,QPieSlice *pieslice, QLegend *legend) : LegendMarkerItem(series,legend),
-m_pieslice(pieslice)
-{
-//    QObject::connect(pieslice, SIGNAL(labelChanged()), this, SLOT(updated()));
-//    QObject::connect(pieslice, SIGNAL(brushChanged()), this, SLOT(updated()));
-    updated();
-}
-
-void PieLegendMarkerItem::updated()
-{
-    setBrush(m_pieslice->brush());
-    setLabel(m_pieslice->label());
-}
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-XYLegendMarkerItem::XYLegendMarkerItem(QXYSeries *series, QLegend *legend) : LegendMarkerItem(series,legend),
-m_series(series)
-{
-    //QObject::connect(this, SIGNAL(selected()), series, SIGNAL(selected()));
-//    QObject::connect(series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
-//    QObject::connect(series, SIGNAL(nameChanged()), this, SLOT(updated()));
-    updated();
-}
-
-void XYLegendMarkerItem::updated()
-{
-    setLabel(m_series->name());
-
-    if(m_series->type()== QAbstractSeries::SeriesTypeScatter)
-    {
-        setBrush(m_series->brush());
-
-    }
-    else {
-        setBrush(QBrush(m_series->pen().color()));
-    }
+    emit m_marker->handleMousePressEvent(event);
+    QGraphicsItem::mousePressEvent(event);
 }
 
 #include "moc_legendmarkeritem_p.cpp"

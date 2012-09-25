@@ -58,6 +58,8 @@ public:
 
     // New stuff:
     QList<QLegendMarker*> legendMarkers() { return m_legendMarkers; }   // TODO: function name will change
+    void appendSeries(QAbstractSeries* series);
+    void removeSeries(QAbstractSeries* series);
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
@@ -85,6 +87,7 @@ private:
     friend class QLegend;
     friend class LegendLayout;
     QList<QLegendMarker*> m_legendMarkers;  // TODO: rename to m_markers eventually.
+    QList<QAbstractSeries*> m_series;
 
 };
 

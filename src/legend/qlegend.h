@@ -28,15 +28,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QPieSlice;
-class QXYSeries;
-class QBarSet;
-class QAbstractBarSeries;
-class QPieSeries;
-class QAreaSeries;
 class QChart;
 class QLegendPrivate;
 class QLegendMarker;
+class QAbstractSeries;
 
 class QTCOMMERCIALCHART_EXPORT QLegend : public QGraphicsWidget
 {
@@ -86,6 +81,8 @@ public:
 
     // New stuff:
     QList <QLegendMarker*> markers() const;
+    void appendSeries(QAbstractSeries* series);
+    void removeSeries(QAbstractSeries* series);
 
 protected:
     void hideEvent(QHideEvent *event);
