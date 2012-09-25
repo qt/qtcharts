@@ -71,20 +71,20 @@ public:
     Scroller();
     virtual ~Scroller();
 
-    virtual void setOffset(const QPointF& point) = 0;
+    virtual void setOffset(const QPointF &point) = 0;
     virtual QPointF offset() const = 0;
 
 public:
     void scrollTick();
 
 public:
-    void mousePressEvent(QGraphicsSceneMouseEvent* event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    void calculateSpeed(const QPointF& position);
-    void lowerSpeed(QPointF& speed, qreal maxSpeed = 100);
+    void calculateSpeed(const QPointF &position);
+    void lowerSpeed(QPointF &speed, qreal maxSpeed = 100);
 
 private:
     ScrollTicker m_ticker;

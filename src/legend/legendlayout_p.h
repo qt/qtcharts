@@ -31,27 +31,27 @@ class LegendLayout : public QGraphicsLayout
 {
 public:
 
-    LegendLayout(QLegend* legend);
+    LegendLayout(QLegend *legend);
     virtual ~LegendLayout();
 
-    void setGeometry(const QRectF& rect);
+    void setGeometry(const QRectF &rect);
 
     void setOffset(qreal x, qreal y);
     QPointF offset() const;
 
     void invalidate();
 protected:
-    QSizeF sizeHint ( Qt::SizeHint which, const QSizeF & constraint = QSizeF()) const;
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
     int count() const { return 0; }
-    QGraphicsLayoutItem* itemAt(int) const { return 0; };
-    void removeAt(int){};
+    QGraphicsLayoutItem *itemAt(int) const { return 0; };
+    void removeAt(int) {};
 
 private:
-    void setAttachedGeometry(const QRectF& rect);
-    void setDettachedGeometry(const QRectF& rect);
+    void setAttachedGeometry(const QRectF &rect);
+    void setDettachedGeometry(const QRectF &rect);
 
 private:
-    QLegend* m_legend;
+    QLegend *m_legend;
     qreal m_offsetX;
     qreal m_offsetY;
     qreal m_minOffsetX;

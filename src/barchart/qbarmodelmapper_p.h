@@ -56,8 +56,8 @@ public Q_SLOTS:
     void handleModelDestroyed();
 
     // for the series
-    void barSetsAdded(QList<QBarSet*> sets);
-    void barSetsRemoved(QList<QBarSet*> sets);
+    void barSetsAdded(QList<QBarSet *> sets);
+    void barSetsRemoved(QList<QBarSet *> sets);
     void valuesAdded(int index, int count);
     void valuesRemoved(int index, int count);
     void barLabelChanged();
@@ -67,7 +67,7 @@ public Q_SLOTS:
     void initializeBarFromModel();
 
 private:
-    QBarSet* barSet(QModelIndex index);
+    QBarSet *barSet(QModelIndex index);
     QModelIndex barModelIndex(int barSection, int posInBar);
     void insertData(int start, int end);
     void removeData(int start, int end);
@@ -76,7 +76,7 @@ private:
 
 private:
     QAbstractBarSeries *m_series;
-    QList<QBarSet*> m_barSets;
+    QList<QBarSet *> m_barSets;
     QAbstractItemModel *m_model;
     int m_first;
     int m_count;

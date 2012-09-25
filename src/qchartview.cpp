@@ -82,7 +82,7 @@ QChartView::~QChartView()
 /*!
     Returns the pointer to the associated chart
 */
-QChart* QChartView::chart() const
+QChart *QChartView::chart() const
 {
     return d_ptr->m_chart;
 }
@@ -102,7 +102,7 @@ void QChartView::setChart(QChart *chart)
 /*!
     Sets the RubberBandPlicy to \a rubberBand. Selected policy determines the way zooming is performed.
 */
-void QChartView::setRubberBand(const RubberBands& rubberBand)
+void QChartView::setRubberBand(const RubberBands &rubberBand)
 {
     d_ptr->m_rubberBandFlags = rubberBand;
 
@@ -205,7 +205,7 @@ void QChartView::resizeEvent(QResizeEvent *event)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QChartViewPrivate::QChartViewPrivate(QChartView *q, QChart* chart)
+QChartViewPrivate::QChartViewPrivate(QChartView *q, QChart *chart)
     : q_ptr(q),
       m_scene(new QGraphicsScene(q)),
       m_chart(chart),

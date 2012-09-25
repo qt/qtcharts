@@ -92,16 +92,16 @@ void ChartDateTimeAxisX::updateGeometry()
 
     QRectF chartRect = presenter()->chartsGeometry();
 
-    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
+    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(axis.at(0));
     lineItem->setLine(chartRect.left(), chartRect.bottom(), chartRect.right(), chartRect.bottom());
 
     qreal width = 0;
     for (int i = 0; i < layout.size(); ++i) {
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(lines.at(i));
         lineItem->setLine(layout[i], chartRect.top(), layout[i], chartRect.bottom());
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
         labelItem->setText(ticksList.at(i));
-        const QRectF& rect = labelItem->boundingRect();
+        const QRectF &rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
         labelItem->setPos(layout[i] - center.x(), chartRect.bottom() + label_padding);
@@ -116,10 +116,10 @@ void ChartDateTimeAxisX::updateGeometry()
         }
 
         if ((i + 1) % 2 && i > 1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));
+            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem *>(shades.at(i / 2 - 1));
             rectItem->setRect(layout[i - 1], chartRect.top(), layout[i] - layout[i - 1], chartRect.height());
         }
-        lineItem = static_cast<QGraphicsLineItem*>(axis.at(i + 1));
+        lineItem = static_cast<QGraphicsLineItem *>(axis.at(i + 1));
         lineItem->setLine(layout[i], chartRect.bottom(), layout[i], chartRect.bottom() + 5);
     }
 }
@@ -127,12 +127,12 @@ void ChartDateTimeAxisX::updateGeometry()
 void ChartDateTimeAxisX::handleAxisUpdated()
 {
     //TODO:: fix this
-    QDateTimeAxis* axis = qobject_cast<QDateTimeAxis*>(m_chartAxis);
+    QDateTimeAxis *axis = qobject_cast<QDateTimeAxis *>(m_chartAxis);
     m_tickCount = axis->tickCount();
     ChartAxis::handleAxisUpdated();
 }
 
-QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 
@@ -157,7 +157,7 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constraint
         }
         sh = QSizeF(width, height);
         break;
-        }
+    }
     default:
         break;
     }

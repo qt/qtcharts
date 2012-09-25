@@ -163,7 +163,7 @@ QVPieModelMapper::QVPieModelMapper(QObject *parent) :
     QPieModelMapper::setOrientation(Qt::Vertical);
 }
 
-QAbstractItemModel* QVPieModelMapper::model() const
+QAbstractItemModel *QVPieModelMapper::model() const
 {
     return QPieModelMapper::model();
 }
@@ -176,7 +176,7 @@ void QVPieModelMapper::setModel(QAbstractItemModel *model)
     }
 }
 
-QPieSeries* QVPieModelMapper::series() const
+QPieSeries *QVPieModelMapper::series() const
 {
     return QPieModelMapper::series();
 }

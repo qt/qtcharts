@@ -88,15 +88,15 @@ void ChartCategoryAxisX::updateGeometry()
     QRectF chartRect = presenter()->chartsGeometry();
     // axis base line
 
-    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
+    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(axis.at(0));
     lineItem->setLine(chartRect.left(), chartRect.bottom(), chartRect.right(), chartRect.bottom());
 
     for (int i = 0; i < layout.size(); ++i) {
 
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
         if (i < ticksList.count())
             labelItem->setText(ticksList.at(i));
-        const QRectF& rect = labelItem->boundingRect();
+        const QRectF &rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
 
@@ -112,16 +112,16 @@ void ChartCategoryAxisX::updateGeometry()
             labelItem->setVisible(true);
 
         if ((i + 1) % 2 && i > 1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));
+            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem *>(shades.at(i / 2 - 1));
             rectItem->setRect(layout[i - 1], chartRect.top(), layout[i] - layout[i - 1], chartRect.height());
         }
 
         // grid lines and axis line ticks
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(lines.at(i));
         lineItem->setPos(layout[i], chartRect.top());
         lineItem->setLine(0, 0, 0, chartRect.height());
 
-        QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem*>(axis.at(i + 1));
+        QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem *>(axis.at(i + 1));
         tickLineItem->setPos(layout[i], chartRect.bottom());
         tickLineItem->setLine(0, 0, 0, 5);
 
@@ -142,7 +142,7 @@ void ChartCategoryAxisX::handleAxisUpdated()
     ChartAxis::handleAxisUpdated();
 }
 
-QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 

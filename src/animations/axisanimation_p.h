@@ -44,7 +44,7 @@ public:
     AxisAnimation(ChartAxis *axis);
     ~AxisAnimation();
     void setAnimationType(Animation type);
-    void setAnimationPoint(const QPointF& point);
+    void setAnimationPoint(const QPointF &point);
     void setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayout);
 protected:
     QVariant interpolated(const QVariant &from, const QVariant &to, qreal progress) const;

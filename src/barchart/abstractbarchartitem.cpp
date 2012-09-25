@@ -184,13 +184,13 @@ void AbstractBarChartItem::handleUpdatedBars()
 
     for (int category = 0; category < categoryCount; category++) {
         for (int set = 0; set < setCount; set++) {
-            QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
-            Bar* bar = m_bars.at(itemIndex);
+            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+            Bar *bar = m_bars.at(itemIndex);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
             bar->update();
 
-            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
+            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
             label->update();

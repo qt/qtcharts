@@ -39,9 +39,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QPercentBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
-    QPercentBarSeriesPrivate(QPercentBarSeries* q);
-    void scaleDomain(Domain& domain);
-    ChartElement* createGraphics(ChartPresenter* presenter);
+    QPercentBarSeriesPrivate(QPercentBarSeries *q);
+    void scaleDomain(Domain &domain);
+    ChartElement *createGraphics(ChartPresenter *presenter);
 private:
     Q_DECLARE_PUBLIC(QPercentBarSeries)
 };

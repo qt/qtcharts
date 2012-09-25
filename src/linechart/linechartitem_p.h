@@ -62,7 +62,7 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-    QLineSeries* m_series;
+    QLineSeries *m_series;
     QPainterPath m_path;
     QPainterPath m_linePath;
     QVector<QPointF> m_points;

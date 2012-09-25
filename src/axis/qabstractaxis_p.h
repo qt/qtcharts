@@ -47,13 +47,12 @@ public:
     ~QAbstractAxisPrivate();
 
 public:
-
-    virtual ChartAxis* createGraphics(ChartPresenter* presenter) = 0;
-    virtual void intializeDomain(Domain* domain) = 0;
+    virtual ChartAxis *createGraphics(ChartPresenter *presenter) = 0;
+    virtual void intializeDomain(Domain *domain) = 0;
 
     void emitUpdated();
     void setDirty(bool dirty);
-    bool isDirty(){ return m_dirty; }
+    bool isDirty() { return m_dirty; }
     void setOrientation(Qt::Orientation orientation);
     Qt::Orientation orientation() const { return m_orientation; }
 

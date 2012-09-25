@@ -55,12 +55,12 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
         qreal percentage = (100 / colSum);
         qreal yPos = height + scaleY * m_domainMinY + geometry().top();
         for (int set = 0; set < setCount; set++) {
-            QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
             qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth / 2;
 
             qreal rectHeight = barSet->value(category) * percentage * scaleY;
-            Bar* bar = m_bars.at(itemIndex);
+            Bar *bar = m_bars.at(itemIndex);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
             if (qFuzzyIsNull(rectHeight))
@@ -71,7 +71,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
             QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
             layout.append(rect);
 
-            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
+            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(m_series->d_func()->valueAt(set, category))) {
                 int p = m_series->d_func()->percentageAt(set, category) * 100;

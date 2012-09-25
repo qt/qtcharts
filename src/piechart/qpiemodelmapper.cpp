@@ -32,7 +32,7 @@ QPieModelMapper::QPieModelMapper(QObject *parent) :
 {
 }
 
-QAbstractItemModel* QPieModelMapper::model() const
+QAbstractItemModel *QPieModelMapper::model() const
 {
     Q_D(const QPieModelMapper);
     return d->m_model;
@@ -59,7 +59,7 @@ void QPieModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(destroyed()), d, SLOT(handleModelDestroyed()));
 }
 
-QPieSeries* QPieModelMapper::series() const
+QPieSeries *QPieModelMapper::series() const
 {
     Q_D(const QPieModelMapper);
     return d->m_series;
@@ -216,7 +216,7 @@ void QPieModelMapperPrivate::blockSeriesSignals(bool block)
 }
 
 
-QPieSlice* QPieModelMapperPrivate::pieSlice(QModelIndex index) const
+QPieSlice *QPieModelMapperPrivate::pieSlice(QModelIndex index) const
 {
     if (!index.isValid())
         return 0; // index is invalid
@@ -281,7 +281,7 @@ bool QPieModelMapperPrivate::isValueIndex(QModelIndex index) const
     return false;
 }
 
-void QPieModelMapperPrivate::slicesAdded(QList<QPieSlice*> slices)
+void QPieModelMapperPrivate::slicesAdded(QList<QPieSlice *> slices)
 {
     if (m_seriesSignalsBlock)
         return;
@@ -315,7 +315,7 @@ void QPieModelMapperPrivate::slicesAdded(QList<QPieSlice*> slices)
     blockModelSignals(false);
 }
 
-void QPieModelMapperPrivate::slicesRemoved(QList<QPieSlice*> slices)
+void QPieModelMapperPrivate::slicesRemoved(QList<QPieSlice *> slices)
 {
     if (m_seriesSignalsBlock)
         return;

@@ -297,13 +297,13 @@ QAbstractAxis::AxisType QValueAxis::type() const
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QValueAxisPrivate::QValueAxisPrivate(QValueAxis* q):
-    QAbstractAxisPrivate(q),
-    m_min(0),
-    m_max(0),
-    m_tickCount(5),
-    m_niceNumbers(false),
-    m_format(QString::null)
+QValueAxisPrivate::QValueAxisPrivate(QValueAxis *q)
+    : QAbstractAxisPrivate(q),
+      m_min(0),
+      m_max(0),
+      m_tickCount(5),
+      m_niceNumbers(false),
+      m_format(QString::null)
 {
 
 }
@@ -316,7 +316,7 @@ QValueAxisPrivate::~QValueAxisPrivate()
 void QValueAxisPrivate::handleDomainUpdated()
 {
     Q_Q(QValueAxis);
-    Domain* domain = qobject_cast<Domain*>(sender());
+    Domain *domain = qobject_cast<Domain *>(sender());
     Q_ASSERT(domain);
 
     if (orientation() == Qt::Horizontal)
@@ -356,7 +356,7 @@ void QValueAxisPrivate::setRange(const QVariant &min, const QVariant &max)
         q->setRange(value1, value2);
 }
 
-ChartAxis* QValueAxisPrivate::createGraphics(ChartPresenter* presenter)
+ChartAxis *QValueAxisPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QValueAxis);
     if (m_orientation == Qt::Vertical)
@@ -364,7 +364,7 @@ ChartAxis* QValueAxisPrivate::createGraphics(ChartPresenter* presenter)
     return new ChartValueAxisX(q, presenter);
 }
 
-void QValueAxisPrivate::intializeDomain(Domain* domain)
+void QValueAxisPrivate::intializeDomain(Domain *domain)
 {
     Q_Q(QValueAxis);
     if (qFuzzyCompare(m_max, m_min)) {

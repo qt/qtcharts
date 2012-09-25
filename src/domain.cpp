@@ -23,7 +23,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-Domain::Domain(QObject* parent)
+Domain::Domain(QObject *parent)
     : QObject(parent),
       m_minX(0),
       m_maxX(0),
@@ -106,7 +106,7 @@ bool Domain::isEmpty() const
     return qFuzzyIsNull(spanX()) || qFuzzyIsNull(spanY());
 }
 
-void Domain::zoomIn(const QRectF& rect, const QSizeF& size)
+void Domain::zoomIn(const QRectF &rect, const QSizeF &size)
 {
     qreal dx = spanX() / size.width();
     qreal dy = spanY() / size.height();
@@ -124,7 +124,7 @@ void Domain::zoomIn(const QRectF& rect, const QSizeF& size)
     setRange(minX, maxX, minY, maxY);
 }
 
-void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
+void Domain::zoomOut(const QRectF &rect, const QSizeF &size)
 {
     qreal dx = spanX() / rect.width();
     qreal dy = spanY() / rect.height();
@@ -142,7 +142,7 @@ void Domain::zoomOut(const QRectF& rect, const QSizeF& size)
     setRange(minX, maxX, minY, maxY);
 }
 
-void Domain::move(qreal dx, qreal dy, const QSizeF& size)
+void Domain::move(qreal dx, qreal dy, const QSizeF &size)
 {
     qreal x = spanX() / size.width();
     qreal y = spanY() / size.height();
@@ -170,7 +170,7 @@ void Domain::emitUpdated()
 
 void Domain::handleAxisUpdated()
 {
-    QAbstractAxisPrivate* axis = qobject_cast<QAbstractAxisPrivate*>(sender());
+    QAbstractAxisPrivate *axis = qobject_cast<QAbstractAxisPrivate *>(sender());
     Q_ASSERT(axis);
     axis->setDirty(false);
     if (axis->orientation() == Qt::Horizontal)

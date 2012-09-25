@@ -42,12 +42,12 @@ class QXYSeriesPrivate: public QAbstractSeriesPrivate
     Q_OBJECT
 
 public:
-    QXYSeriesPrivate(QXYSeries* q);
+    QXYSeriesPrivate(QXYSeries *q);
 
-    void scaleDomain(Domain& domain);
-    QList<LegendMarker*> createLegendMarker(QLegend* legend);
+    void scaleDomain(Domain &domain);
+    QList<LegendMarker *> createLegendMarker(QLegend *legend);
 
-    void initializeAxis(QAbstractAxis* axis);
+    void initializeAxis(QAbstractAxis *axis);
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
 
 Q_SIGNALS:

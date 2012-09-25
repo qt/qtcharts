@@ -79,7 +79,7 @@ ChartTheme::ChartTheme(QChart::ChartTheme id) :
 }
 
 
-ChartTheme* ChartTheme::createTheme(QChart::ChartTheme theme)
+ChartTheme *ChartTheme::createTheme(QChart::ChartTheme theme)
 {
     switch (theme) {
     case QChart::ChartThemeLight:

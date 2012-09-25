@@ -51,7 +51,7 @@ class PieSliceItem : public QGraphicsObject
     Q_OBJECT
 
 public:
-    PieSliceItem(QGraphicsItem* parent = 0);
+    PieSliceItem(QGraphicsItem *parent = 0);
     ~PieSliceItem();
 
     // from QGraphicsItem

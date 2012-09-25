@@ -53,12 +53,12 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
         qreal yMax = height + scaleY * m_domainMinY + geometry().top();
         qreal yMin = height + scaleY * m_domainMinY + geometry().top();
         for (int set = 0; set < setCount; set++) {
-            QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
             qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth / 2;
 
             qreal rectHeight = barSet->value(category) * scaleY;
-            Bar* bar = m_bars.at(itemIndex);
+            Bar *bar = m_bars.at(itemIndex);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
             if (qFuzzyIsNull(rectHeight))
@@ -66,7 +66,7 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             else
                 bar->setVisible(barsVisible);
 
-            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
+            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(barSet->value(category)))
                 label->setText(QString::number(barSet->value(category)));

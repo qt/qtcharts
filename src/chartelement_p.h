@@ -48,20 +48,19 @@ public:
     explicit ChartElement(ChartPresenter *presenter);
 
 public Q_SLOTS:
-    virtual void handleGeometryChanged(const QRectF& rect);
+    virtual void handleGeometryChanged(const QRectF &rect);
     virtual void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     virtual void handleDomainUpdated();
-    virtual ChartAnimation* animation() const { return 0; };
+    virtual ChartAnimation *animation() const { return 0; }
 
     void setPresenter(ChartPresenter *presenter);
-    ChartPresenter* presenter() const;
+    ChartPresenter *presenter() const;
     void setDomain(Domain *domain);
-    Domain* domain() const;
-
+    Domain *domain() const;
 
 private:
-    ChartPresenter* m_presenter;
-    Domain* m_domain;
+    ChartPresenter *m_presenter;
+    Domain *m_domain;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

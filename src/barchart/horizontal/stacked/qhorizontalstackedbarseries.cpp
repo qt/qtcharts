@@ -56,8 +56,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QHorizontalStackedBarSeries.
     QHorizontalStackedBarSeries is QObject which is a child of a \a parent.
 */
-QHorizontalStackedBarSeries::QHorizontalStackedBarSeries(QObject *parent) :
-    QAbstractBarSeries(*new QHorizontalStackedBarSeriesPrivate(this), parent)
+QHorizontalStackedBarSeries::QHorizontalStackedBarSeries(QObject *parent)
+    : QAbstractBarSeries(*new QHorizontalStackedBarSeriesPrivate(this), parent)
 {
 }
 
@@ -87,7 +87,7 @@ QHorizontalStackedBarSeriesPrivate::QHorizontalStackedBarSeriesPrivate(QHorizont
 
 }
 
-void QHorizontalStackedBarSeriesPrivate::scaleDomain(Domain& domain)
+void QHorizontalStackedBarSeriesPrivate::scaleDomain(Domain &domain)
 {
     qreal minX(domain.minX());
     qreal minY(domain.minY());
@@ -103,11 +103,11 @@ void QHorizontalStackedBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement* QHorizontalStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QHorizontalStackedBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QHorizontalStackedBarSeries);
 
-    HorizontalStackedBarChartItem* bar = new HorizontalStackedBarChartItem(q, presenter);
+    HorizontalStackedBarChartItem *bar = new HorizontalStackedBarChartItem(q, presenter);
     if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new HorizontalStackedBarAnimation(bar));
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

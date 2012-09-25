@@ -40,7 +40,7 @@ class QTCOMMERCIALCHART_AUTOTEST_EXPORT Domain: public QObject
 {
     Q_OBJECT
 public:
-    explicit Domain(QObject* object = 0);
+    explicit Domain(QObject *object = 0);
     virtual ~Domain();
 
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
@@ -64,9 +64,9 @@ public:
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const Domain &domain1, const Domain &domain2);
     friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const Domain &domain);
 
-    void zoomIn(const QRectF& rect, const QSizeF& size);
-    void zoomOut(const QRectF& rect, const QSizeF& size);
-    void move(qreal dx, qreal dy, const QSizeF& size);
+    void zoomIn(const QRectF &rect, const QSizeF &size);
+    void zoomOut(const QRectF &rect, const QSizeF &size);
+    void move(qreal dx, qreal dy, const QSizeF &size);
     void emitUpdated();
 
 Q_SIGNALS:

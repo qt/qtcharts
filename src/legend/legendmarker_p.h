@@ -72,13 +72,13 @@ public:
 
     QAbstractSeries *series() const { return m_series;}
 
-    void setGeometry(const QRectF& rect);
+    void setGeometry(const QRectF &rect);
 
     QRectF boundingRect() const;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint) const;
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
 
 protected:
     // From QGraphicsObject
@@ -91,7 +91,7 @@ protected:
     QAbstractSeries *m_series;
     QRectF m_markerRect;
     QRectF m_boundingRect;
-    QLegend* m_legend;
+    QLegend *m_legend;
     QGraphicsSimpleTextItem *m_textItem;
     QGraphicsRectItem *m_rectItem;
     qreal m_margin;

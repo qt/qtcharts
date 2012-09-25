@@ -59,7 +59,7 @@ void XYChart::setClipRect(const QRectF &rect)
     m_clipRect = rect;
 }
 
-void XYChart::setAnimation(XYAnimation* animation)
+void XYChart::setAnimation(XYAnimation *animation)
 {
     m_animation = animation;
 }

@@ -38,12 +38,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QLineSeriesPrivate: public QXYSeriesPrivate
 {
 public:
-    QLineSeriesPrivate(QLineSeries* q);
-    ChartElement* createGraphics(ChartPresenter* presenter);
+    QLineSeriesPrivate(QLineSeries *q);
+    ChartElement *createGraphics(ChartPresenter *presenter);
 
 private:
     Q_DECLARE_PUBLIC(QLineSeries);
-
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

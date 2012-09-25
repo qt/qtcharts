@@ -61,26 +61,26 @@ public Q_SLOTS:
     virtual void rangeYChanged(qreal min, qreal max, int tickYCount);
 
     void updateLayout();
-    void handleSlicesAdded(QList<QPieSlice*> slices);
-    void handleSlicesRemoved(QList<QPieSlice*> slices);
+    void handleSlicesAdded(QList<QPieSlice *> slices);
+    void handleSlicesRemoved(QList<QPieSlice *> slices);
     void handleSliceChanged();
     void handleSeriesVisibleChanged();
     void handleOpacityChanged();
 
-    void setAnimation(PieAnimation* animation);
-    ChartAnimation* animation() const;
+    void setAnimation(PieAnimation *animation);
+    ChartAnimation *animation() const;
 
 private:
     PieSliceData updateSliceGeometry(QPieSlice *slice);
 
 private:
-    QHash<QPieSlice*, PieSliceItem*> m_sliceItems;
+    QHash<QPieSlice *, PieSliceItem *> m_sliceItems;
     QPieSeries *m_series;
     QRectF m_rect;
     QPointF m_pieCenter;
     qreal m_pieRadius;
     qreal m_holeSize;
-    PieAnimation* m_animation;
+    PieAnimation *m_animation;
 
 };
 

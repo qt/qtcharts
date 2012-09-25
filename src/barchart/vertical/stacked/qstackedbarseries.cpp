@@ -88,7 +88,7 @@ QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QStackedBarSeries *q) : QAbst
 
 }
 
-void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
+void QStackedBarSeriesPrivate::scaleDomain(Domain &domain)
 {
     qreal minX(domain.minX());
     qreal minY(domain.minY());
@@ -104,11 +104,11 @@ void QStackedBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement* QStackedBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QStackedBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QStackedBarSeries);
 
-    StackedBarChartItem* bar = new StackedBarChartItem(q, presenter);
+    StackedBarChartItem *bar = new StackedBarChartItem(q, presenter);
     if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new StackedBarAnimation(bar));
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

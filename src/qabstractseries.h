@@ -62,14 +62,14 @@ public:
     ~QAbstractSeries();
     virtual SeriesType type() const = 0;
 
-    void setName(const QString& name);
+    void setName(const QString &name);
     QString name() const;
     void setVisible(bool visible = true);
     bool isVisible() const;
     qreal opacity() const;
     void setOpacity(qreal opacity);
 
-    QChart* chart() const;
+    QChart *chart() const;
 
     void show();
     void hide();

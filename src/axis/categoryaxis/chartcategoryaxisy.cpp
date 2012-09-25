@@ -90,17 +90,17 @@ void ChartCategoryAxisY::updateGeometry()
     QRectF chartRect = presenter()->chartsGeometry();
 
     // axis base line
-    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
+    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(axis.at(0));
     lineItem->setLine(chartRect.left() , chartRect.top(), chartRect.left(), chartRect.bottom());
 
     for (int i = 0; i < layout.size(); ++i) {
 
         // label items
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
         if (i < ticksList.count()) {
             labelItem->setText(ticksList.at(i));
         }
-        const QRectF& rect = labelItem->boundingRect();
+        const QRectF &rect = labelItem->boundingRect();
 
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
@@ -118,16 +118,16 @@ void ChartCategoryAxisY::updateGeometry()
             labelItem->setVisible(true);
 
         if ((i + 1) % 2 && i > 1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));
+            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem *>(shades.at(i / 2 - 1));
             rectItem->setRect(chartRect.left(), layout[i], chartRect.width(), layout[i - 1] - layout[i]);
         }
 
         // grid lines and axis line ticks
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(lines.at(i));
         lineItem->setPos(chartRect.left(), layout[i]);
         lineItem->setLine(0, 0, chartRect.width(), 0);
 
-        QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem*>(axis.at(i + 1));
+        QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem *>(axis.at(i + 1));
         tickLineItem->setPos(chartRect.left(), layout[i]);
         tickLineItem->setLine(-5, 0, 0, 0);
 
@@ -148,7 +148,7 @@ void ChartCategoryAxisY::handleAxisUpdated()
     ChartAxis::handleAxisUpdated();
 }
 
-QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 

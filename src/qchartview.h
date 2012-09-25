@@ -52,10 +52,10 @@ public:
     explicit QChartView(QChart *chart, QWidget *parent = 0);
     ~QChartView();
 
-    void setRubberBand(const RubberBands& rubberBands);
+    void setRubberBand(const RubberBands &rubberBands);
     RubberBands rubberBand() const;
 
-    QChart* chart() const;
+    QChart *chart() const;
     void setChart(QChart *chart);
 
 protected:

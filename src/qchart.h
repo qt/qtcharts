@@ -74,22 +74,22 @@ public:
     void addSeries(QAbstractSeries *series);
     void removeSeries(QAbstractSeries *series);
     void removeAllSeries();
-    QList<QAbstractSeries*> series() const;
+    QList<QAbstractSeries *> series() const;
 
-    void setAxisX(QAbstractAxis* axis, QAbstractSeries *series = 0);
-    void setAxisY(QAbstractAxis* axis, QAbstractSeries *series = 0);
+    void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = 0);
+    void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = 0);
 
-    QAbstractAxis* axisX(QAbstractSeries* series = 0) const;
-    QAbstractAxis* axisY(QAbstractSeries* series = 0) const;
+    QAbstractAxis *axisX(QAbstractSeries *series = 0) const;
+    QAbstractAxis *axisY(QAbstractSeries *series = 0) const;
 
     void createDefaultAxes();
 
     void setTheme(QChart::ChartTheme theme);
     QChart::ChartTheme theme() const;
 
-    void setTitle(const QString& title);
+    void setTitle(const QString &title);
     QString title() const;
-    void setTitleFont(const QFont& font);
+    void setTitleFont(const QFont &font);
     QFont titleFont() const;
     void setTitleBrush(const QBrush &brush);
     QBrush titleBrush() const;
@@ -112,9 +112,9 @@ public:
     void zoom(qreal factor);
     void scroll(qreal dx, qreal dy);
 
-    QLegend* legend() const;
+    QLegend *legend() const;
 
-    void setMargins(const QMargins& margins);
+    void setMargins(const QMargins &margins);
     QMargins margins() const;
 
     QRectF plotArea() const;

@@ -52,8 +52,8 @@ public:
     void setControlGeometryPoints(QVector<QPointF>& points);
     QVector<QPointF> controlGeometryPoints() const;
 
-    void setAnimation(SplineAnimation* animation);
-    ChartAnimation* animation() const;
+    void setAnimation(SplineAnimation *animation);
+    ChartAnimation *animation() const;
 
 public Q_SLOTS:
     void handleUpdated();
@@ -74,7 +74,7 @@ private:
     QPen m_pointPen;
     bool m_pointsVisible;
     QVector<QPointF> m_controlPoints;
-    SplineAnimation* m_animation;
+    SplineAnimation *m_animation;
 
     friend class SplineAnimation;
 };

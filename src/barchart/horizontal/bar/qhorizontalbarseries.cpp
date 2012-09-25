@@ -60,8 +60,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     Constructs empty QHorizontalBarSeries.
     QHorizontalBarSeries is QObject which is a child of a \a parent.
 */
-QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent) :
-    QAbstractBarSeries(*new QHorizontalBarSeriesPrivate(this), parent)
+QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent)
+    : QAbstractBarSeries(*new QHorizontalBarSeriesPrivate(this), parent)
 {
 }
 
@@ -86,12 +86,13 @@ QAbstractSeries::SeriesType QHorizontalBarSeries::type() const
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QHorizontalBarSeriesPrivate::QHorizontalBarSeriesPrivate(QHorizontalBarSeries *q) : QAbstractBarSeriesPrivate(q)
+QHorizontalBarSeriesPrivate::QHorizontalBarSeriesPrivate(QHorizontalBarSeries *q)
+    : QAbstractBarSeriesPrivate(q)
 {
 
 }
 
-void QHorizontalBarSeriesPrivate::scaleDomain(Domain& domain)
+void QHorizontalBarSeriesPrivate::scaleDomain(Domain &domain)
 {
     qreal minX(domain.minX());
     qreal minY(domain.minY());
@@ -107,11 +108,11 @@ void QHorizontalBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement* QHorizontalBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QHorizontalBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QHorizontalBarSeries);
 
-    HorizontalBarChartItem* bar = new HorizontalBarChartItem(q, presenter);
+    HorizontalBarChartItem *bar = new HorizontalBarChartItem(q, presenter);
     if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new HorizontalBarAnimation(bar));
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

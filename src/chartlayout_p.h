@@ -36,35 +36,35 @@ class ChartLayout : public QGraphicsLayout
 {
 public:
 
-    ChartLayout(ChartPresenter* presenter);
+    ChartLayout(ChartPresenter *presenter);
     virtual ~ChartLayout();
 
-    void setMargins(const QMargins& margins);
+    void setMargins(const QMargins &margins);
     QMargins margins() const;
 
-    void setGeometry(const QRectF& rect);
+    void setGeometry(const QRectF &rect);
     void adjustChartGeometry();
 
 protected:
-    QSizeF sizeHint ( Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
     int count() const { return 0; }
-    QGraphicsLayoutItem* itemAt(int) const { return 0; };
-    void removeAt(int){};
+    QGraphicsLayoutItem *itemAt(int) const { return 0; };
+    void removeAt(int) {};
 
 private:
-    QRectF calculateBackgroundGeometry(const QRectF& geometry, ChartBackground* background) const;
-    QRectF calculateContentGeometry(const QRectF& geometry) const;
-    QRectF calculateTitleGeometry(const QRectF& geometry, ChartTitle* title) const;
-    QRectF calculateChartGeometry(const QRectF& geometry, const QList<ChartAxis*>& axes) const;
-    QRectF calculateLegendGeometry(const QRectF& geometry, QLegend* legend) const;
-    QRectF calculateBackgroundMinimum(const QRectF& minimum) const;
-    QRectF calculateContentMinimum(const QRectF& minimum) const;
-    QRectF calculateTitleMinimum(const QRectF& minimum, ChartTitle* title) const;
-    QRectF calculateAxisMinimum(const QRectF& minimum, const QList<ChartAxis*>& axes) const;
-    QRectF calculateLegendMinimum(const QRectF& minimum, QLegend* legend) const;
+    QRectF calculateBackgroundGeometry(const QRectF &geometry, ChartBackground *background) const;
+    QRectF calculateContentGeometry(const QRectF &geometry) const;
+    QRectF calculateTitleGeometry(const QRectF &geometry, ChartTitle *title) const;
+    QRectF calculateChartGeometry(const QRectF &geometry, const QList<ChartAxis *>& axes) const;
+    QRectF calculateLegendGeometry(const QRectF &geometry, QLegend *legend) const;
+    QRectF calculateBackgroundMinimum(const QRectF &minimum) const;
+    QRectF calculateContentMinimum(const QRectF &minimum) const;
+    QRectF calculateTitleMinimum(const QRectF &minimum, ChartTitle *title) const;
+    QRectF calculateAxisMinimum(const QRectF &minimum, const QList<ChartAxis *>& axes) const;
+    QRectF calculateLegendMinimum(const QRectF &minimum, QLegend *legend) const;
 
 private:
-    ChartPresenter* m_presenter;
+    ChartPresenter *m_presenter;
     QMargins m_margins;
     QRectF m_minChartRect;
     QRectF m_minAxisRect;

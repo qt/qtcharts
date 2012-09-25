@@ -236,7 +236,7 @@ bool QAbstractBarSeries::append(QBarSet *set)
     Q_D(QAbstractBarSeries);
     bool success = d->append(set);
     if (success) {
-        QList<QBarSet*> sets;
+        QList<QBarSet *> sets;
         sets.append(set);
         set->setParent(this);
         emit barsetsAdded(sets);
@@ -255,7 +255,7 @@ bool QAbstractBarSeries::remove(QBarSet *set)
     Q_D(QAbstractBarSeries);
     bool success = d->remove(set);
     if (success) {
-        QList<QBarSet*> sets;
+        QList<QBarSet *> sets;
         sets.append(set);
         set->setParent(0);
         emit barsetsRemoved(sets);
@@ -279,7 +279,7 @@ bool QAbstractBarSeries::take(QBarSet *set)
     Q_D(QAbstractBarSeries);
     bool success = d->remove(set);
     if (success) {
-        QList<QBarSet*> sets;
+        QList<QBarSet *> sets;
         sets.append(set);
         emit barsetsRemoved(sets);
         emit countChanged();
@@ -293,7 +293,7 @@ bool QAbstractBarSeries::take(QBarSet *set)
     nothing is appended and function returns false. If any of the sets is in list more than once, nothing is appended
     and function returns false.
 */
-bool QAbstractBarSeries::append(QList<QBarSet* > sets)
+bool QAbstractBarSeries::append(QList<QBarSet *> sets)
 {
     Q_D(QAbstractBarSeries);
     bool success = d->append(sets);
@@ -314,7 +314,7 @@ bool QAbstractBarSeries::insert(int index, QBarSet *set)
     Q_D(QAbstractBarSeries);
     bool success = d->insert(index, set);
     if (success) {
-        QList<QBarSet*> sets;
+        QList<QBarSet *> sets;
         sets.append(set);
         emit barsetsAdded(sets);
         emit countChanged();
@@ -350,7 +350,7 @@ int QAbstractBarSeries::count() const
 /*!
     Returns a list of sets in series. Keeps ownership of sets.
  */
-QList<QBarSet*> QAbstractBarSeries::barSets() const
+QList<QBarSet *> QAbstractBarSeries::barSets() const
 {
     Q_D(const QAbstractBarSeries);
     return d->m_barSets;
@@ -412,7 +412,7 @@ qreal QAbstractBarSeriesPrivate::barWidth() const
     return m_barWidth;
 }
 
-QBarSet* QAbstractBarSeriesPrivate::barsetAt(int index)
+QBarSet *QAbstractBarSeriesPrivate::barsetAt(int index)
 {
     return m_barSets.at(index);
 }
@@ -623,7 +623,7 @@ qreal QAbstractBarSeriesPrivate::bottom()
 }
 
 
-void QAbstractBarSeriesPrivate::scaleDomain(Domain& domain)
+void QAbstractBarSeriesPrivate::scaleDomain(Domain &domain)
 {
     qreal minX(domain.minX());
     qreal minY(domain.minY());
@@ -641,17 +641,17 @@ void QAbstractBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement* QAbstractBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QAbstractBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_UNUSED(presenter);
     qWarning() << "QAbstractBarSeriesPrivate::createGraphics called";
     return 0;
 }
 
-QList<LegendMarker*> QAbstractBarSeriesPrivate::createLegendMarker(QLegend* legend)
+QList<LegendMarker *> QAbstractBarSeriesPrivate::createLegendMarker(QLegend *legend)
 {
     Q_Q(QAbstractBarSeries);
-    QList<LegendMarker*> markers;
+    QList<LegendMarker *> markers;
     foreach (QBarSet *set, q->barSets()) {
         BarLegendMarker* marker = new BarLegendMarker(q, set, legend);
         markers << marker;
@@ -688,7 +688,7 @@ bool QAbstractBarSeriesPrivate::remove(QBarSet *set)
     return true;
 }
 
-bool QAbstractBarSeriesPrivate::append(QList<QBarSet* > sets)
+bool QAbstractBarSeriesPrivate::append(QList<QBarSet * > sets)
 {
     foreach (QBarSet *set, sets) {
         if ((set == 0) || (m_barSets.contains(set)))
@@ -708,7 +708,7 @@ bool QAbstractBarSeriesPrivate::append(QList<QBarSet* > sets)
     return true;
 }
 
-bool QAbstractBarSeriesPrivate::remove(QList<QBarSet* > sets)
+bool QAbstractBarSeriesPrivate::remove(QList<QBarSet * > sets)
 {
     if (sets.count() == 0)
         return false;
@@ -745,7 +745,7 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
     return true;
 }
 
-void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
+void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis *axis)
 {
     Q_Q(QAbstractBarSeries);
 
@@ -755,13 +755,13 @@ void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis* axis)
         case QAbstractSeries::SeriesTypeHorizontalPercentBar:
         case QAbstractSeries::SeriesTypeHorizontalStackedBar:
             if (axis->orientation() == Qt::Vertical)
-                populateCategories(qobject_cast<QBarCategoryAxis*>(axis));
+                populateCategories(qobject_cast<QBarCategoryAxis *>(axis));
             break;
         case QAbstractSeries::SeriesTypeBar:
         case QAbstractSeries::SeriesTypePercentBar:
         case QAbstractSeries::SeriesTypeStackedBar:
             if (axis->orientation() == Qt::Horizontal)
-                populateCategories(qobject_cast<QBarCategoryAxis*>(axis));
+                populateCategories(qobject_cast<QBarCategoryAxis *>(axis));
             break;
         default:
             qWarning() << "Unexpected series type";
@@ -795,7 +795,7 @@ QAbstractAxis::AxisType QAbstractBarSeriesPrivate::defaultAxisType(Qt::Orientati
 
 }
 
-void QAbstractBarSeriesPrivate::populateCategories(QBarCategoryAxis* axis)
+void QAbstractBarSeriesPrivate::populateCategories(QBarCategoryAxis *axis)
 {
     QStringList categories;
     if (axis->categories().isEmpty()) {

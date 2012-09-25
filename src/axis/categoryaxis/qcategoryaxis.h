@@ -43,14 +43,14 @@ protected:
 public:
     AxisType type() const;
 
-    void append(const QString& label, qreal categoryEndValue);
-    void remove(const QString& label);
-    void replaceLabel(const QString& oldLabel, const QString& newLabel);
+    void append(const QString &label, qreal categoryEndValue);
+    void remove(const QString &label);
+    void replaceLabel(const QString &oldLabel, const QString &newLabel);
 
-    qreal startValue(const QString& categoryLabel = QString()) const;
+    qreal startValue(const QString &categoryLabel = QString()) const;
     void setStartValue(qreal min);
 
-    qreal endValue(const QString& categoryLabel) const;
+    qreal endValue(const QString &categoryLabel) const;
 
     QStringList categoriesLabels();
     int count() const;

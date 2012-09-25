@@ -57,8 +57,8 @@ public:
     int count() const;
     QList<QPointF> points() const;
 
-    QXYSeries& operator << (const QPointF &point);
-    QXYSeries& operator << (const QList<QPointF> &points);
+    QXYSeries &operator << (const QPointF &point);
+    QXYSeries &operator << (const QList<QPointF> &points);
 
     virtual void setPen(const QPen &pen);
     QPen pen() const;

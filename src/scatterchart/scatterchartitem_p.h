@@ -80,11 +80,11 @@ class CircleMarker: public QGraphicsEllipseItem
 {
 
 public:
-   CircleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
-    : QGraphicsEllipseItem(x, y, w, h, parent),
-      m_parent(parent)
-   {
-   }
+    CircleMarker(qreal x, qreal y, qreal w, qreal h, ScatterChartItem *parent)
+        : QGraphicsEllipseItem(x, y, w, h, parent),
+          m_parent(parent)
+    {
+    }
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event)
@@ -94,7 +94,7 @@ protected:
     }
 
 private:
-    ScatterChartItem* m_parent;
+    ScatterChartItem *m_parent;
 };
 
 class RectangleMarker: public QGraphicsRectItem
@@ -115,7 +115,7 @@ protected:
     }
 
 private:
-    ScatterChartItem* m_parent;
+    ScatterChartItem *m_parent;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -41,7 +41,7 @@ template <class T>
 class Themed : public T
 {
 public:
-    Themed():m_isThemed(true) {}
+    Themed(): m_isThemed(true) {}
 
     inline T &operator=(const T &other) { return T::operator =(other); }
 
@@ -82,8 +82,7 @@ public:
     {
     }
 
-    bool operator!=(const PieSliceData &other) const
-    {
+    bool operator!=(const PieSliceData &other) const {
         if (!qFuzzyIsNull(m_value - other.m_value))
             return true;
 

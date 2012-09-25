@@ -64,15 +64,14 @@ void ScatterChartItem::createPoints(int count)
         switch (m_shape) {
         case QScatterSeries::MarkerShapeCircle: {
             item = new CircleMarker(0, 0, m_size, m_size, this);
-            const QRectF& rect = item->boundingRect();
+            const QRectF &rect = item->boundingRect();
             item->setPos(-rect.width() / 2, -rect.height() / 2);
             break;
             }
-        case QScatterSeries::MarkerShapeRectangle: {
+        case QScatterSeries::MarkerShapeRectangle:
             item = new RectangleMarker(0, 0, m_size, m_size, this);
             item->setPos(-m_size / 2, -m_size / 2);
             break;
-            }
         default:
             qWarning() << "Unsupported marker type";
             break;
@@ -86,7 +85,7 @@ void ScatterChartItem::deletePoints(int count)
     QList<QGraphicsItem *> items = m_items.childItems();
 
     for (int i = 0; i < count; ++i) {
-        QGraphicsItem * item = items.takeLast();
+        QGraphicsItem *item = items.takeLast();
         m_markerMap.remove(item);
         delete(item);
     }
@@ -117,12 +116,12 @@ void ScatterChartItem::updateGeometry()
     if (diff != 0)
         handleUpdated();
 
-    QList<QGraphicsItem*> items = m_items.childItems();
+    QList<QGraphicsItem *> items = m_items.childItems();
 
     for (int i = 0; i < points.size(); i++) {
-        QGraphicsItem* item = items.at(i);
-        const QPointF& point = points.at(i);
-        const QRectF& rect = item->boundingRect();
+        QGraphicsItem *item = items.at(i);
+        const QPointF &point = points.at(i);
+        const QRectF &rect = item->boundingRect();
         m_markerMap[item] = point;
         item->setPos(point.x() - rect.width() / 2, point.y() - rect.height() / 2);
         if (!m_visible || !clipRect().contains(point))
@@ -143,13 +142,13 @@ void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *
     Q_UNUSED(widget)
 }
 
-void ScatterChartItem::setPen(const QPen& pen)
+void ScatterChartItem::setPen(const QPen &pen)
 {
     foreach (QGraphicsItem *item , m_items.childItems())
         static_cast<QAbstractGraphicsShapeItem*>(item)->setPen(pen);
 }
 
-void ScatterChartItem::setBrush(const QBrush& brush)
+void ScatterChartItem::setBrush(const QBrush &brush)
 {
     foreach (QGraphicsItem *item , m_items.childItems())
         static_cast<QAbstractGraphicsShapeItem*>(item)->setBrush(brush);

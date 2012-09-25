@@ -149,7 +149,7 @@ QHXYModelMapper::QHXYModelMapper(QObject *parent) :
     QXYModelMapper::setOrientation(Qt::Horizontal);
 }
 
-QAbstractItemModel* QHXYModelMapper::model() const
+QAbstractItemModel *QHXYModelMapper::model() const
 {
     return QXYModelMapper::model();
 }
@@ -162,7 +162,7 @@ void QHXYModelMapper::setModel(QAbstractItemModel *model)
     }
 }
 
-QXYSeries* QHXYModelMapper::series() const
+QXYSeries *QHXYModelMapper::series() const
 {
     return QXYModelMapper::series();
 }

@@ -25,8 +25,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-HorizontalStackedBarChartItem::HorizontalStackedBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter) :
-    AbstractBarChartItem(series, presenter)
+HorizontalStackedBarChartItem::HorizontalStackedBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter)
+    : AbstractBarChartItem(series, presenter)
 {
 }
 
@@ -53,12 +53,12 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
         qreal xMax = -scaleX * m_domainMinX + geometry().left();
         qreal xMin = -scaleX * m_domainMinX + geometry().left();
         for (int set = 0; set < setCount; set++) {
-            QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
             qreal yPos = (m_domainMinY + 0.5 - barSet->pos(category)) * scaleY + geometry().bottom() - rectHeight / 2;
 
             qreal rectWidth = barSet->value(category) * scaleX;
-            Bar* bar = m_bars.at(itemIndex);
+            Bar *bar = m_bars.at(itemIndex);
 
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
@@ -67,7 +67,7 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
             else
                 bar->setVisible(barsVisible);
 
-            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
+            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(barSet->value(category)))
                 label->setText(QString::number(barSet->value(category)));

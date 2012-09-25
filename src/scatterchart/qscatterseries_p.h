@@ -37,8 +37,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QScatterSeriesPrivate: public QXYSeriesPrivate
 {
 public:
-    QScatterSeriesPrivate(QScatterSeries* q);
-    ChartElement* createGraphics(ChartPresenter* presenter);
+    QScatterSeriesPrivate(QScatterSeries *q);
+    ChartElement *createGraphics(ChartPresenter *presenter);
 
 private:
     QScatterSeries::MarkerShape m_shape;

@@ -51,8 +51,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
     QPainterPath shape() const;
 
-    LineChartItem* upperLineItem() const { return m_upper; }
-    LineChartItem* lowerLineItem() const { return m_lower; }
+    LineChartItem *upperLineItem() const { return m_upper; }
+    LineChartItem *lowerLineItem() const { return m_lower; }
 
     void updatePath();
 
@@ -68,9 +68,9 @@ public Q_SLOTS:
     void handleGeometryChanged(const QRectF &size);
 
 private:
-    QAreaSeries* m_series;
-    LineChartItem* m_upper;
-    LineChartItem* m_lower;
+    QAreaSeries *m_series;
+    LineChartItem *m_upper;
+    LineChartItem *m_lower;
     QPainterPath m_path;
     QRectF m_rect;
     QRectF m_clipRect;
@@ -84,20 +84,21 @@ private:
 class AreaBoundItem : public LineChartItem
 {
 public:
-    AreaBoundItem(AreaChartItem *item, QLineSeries *lineSeries, ChartPresenter* presenter)
+    AreaBoundItem(AreaChartItem *item, QLineSeries *lineSeries, ChartPresenter *presenter)
         : LineChartItem(lineSeries, 0), m_item(item)
     {
         setPresenter(presenter);
     }
     ~AreaBoundItem() {}
 
-    void updateGeometry() {
+    void updateGeometry() 
+    {
         LineChartItem::updateGeometry();
         m_item->updatePath();
     }
 
 private:
-    AreaChartItem* m_item;
+    AreaChartItem *m_item;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

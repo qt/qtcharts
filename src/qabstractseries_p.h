@@ -49,10 +49,10 @@ public:
     QAbstractSeriesPrivate(QAbstractSeries *q);
     ~QAbstractSeriesPrivate();
 
-    virtual void scaleDomain(Domain& domain) = 0;
-    virtual ChartElement* createGraphics(ChartPresenter* presenter) = 0;
-    virtual QList<LegendMarker*> createLegendMarker(QLegend* legend) = 0;
-    virtual void initializeAxis(QAbstractAxis* axis) = 0;
+    virtual void scaleDomain(Domain &domain) = 0;
+    virtual ChartElement *createGraphics(ChartPresenter *presenter) = 0;
+    virtual QList<LegendMarker *> createLegendMarker(QLegend *legend) = 0;
+    virtual void initializeAxis(QAbstractAxis *axis) = 0;
     virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation) const = 0;
 
 Q_SIGNALS:

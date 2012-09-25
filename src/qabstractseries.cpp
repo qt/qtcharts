@@ -141,7 +141,7 @@ QAbstractSeries::~QAbstractSeries()
         qFatal("Still binded series detected !");
 }
 
-void QAbstractSeries::setName(const QString& name)
+void QAbstractSeries::setName(const QString &name)
 {
     if (name != d_ptr->m_name) {
         d_ptr->m_name = name;
@@ -192,7 +192,7 @@ void QAbstractSeries::setOpacity(qreal opacity)
     Set automatically when the series is added to the chart
     and unset when the series is removed from the chart.
 */
-QChart* QAbstractSeries::chart() const
+QChart *QAbstractSeries::chart() const
 {
     return d_ptr->m_chart;
 }
@@ -224,7 +224,7 @@ void QAbstractSeries::hide()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries* q)
+QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries *q)
     : q_ptr(q),
       m_chart(0),
       m_dataset(0),

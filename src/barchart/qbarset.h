@@ -51,7 +51,7 @@ public:
     void append(const qreal value);
     void append(const QList<qreal> &values);
 
-    QBarSet& operator << (const qreal &value);
+    QBarSet &operator << (const qreal &value);
 
     void insert(const int index, const qreal value);
     void remove(const int index, const int count = 1);

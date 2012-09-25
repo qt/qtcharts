@@ -86,14 +86,14 @@ public:
     void setTitlePen(const QPen &pen);
     void setTitleBrush(const QBrush &brush);
     void setTitleFont(const QFont &font);
-    void setTitleText(const QString& title);
+    void setTitleText(const QString &title);
 
 
     void setLayout(QVector<qreal> &layout);
     QVector<qreal> layout() const { return m_layoutVector; }
 
-    void setAnimation(AxisAnimation* animation);
-    ChartAnimation* animation() const { return m_animation; };
+    void setAnimation(AxisAnimation *animation);
+    ChartAnimation *animation() const { return m_animation; };
 
     Qt::Orientation orientation() const;
     bool alternativePlacement() const;
@@ -106,7 +106,7 @@ public:
 
     void setInternalRect(const QRectF &size);
 
-    virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF& constraint = QSizeF()) const;
+    virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 
 protected:
     virtual void updateGeometry() = 0;
@@ -127,7 +127,7 @@ private:
     void axisSelected();
 
 protected:
-    QAbstractAxis* m_chartAxis;
+    QAbstractAxis *m_chartAxis;
     int m_labelsAngle;
     //TODO: to be removed
     QRectF m_rect;
@@ -136,7 +136,7 @@ protected:
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;
     QScopedPointer<QGraphicsItemGroup> m_arrow;
-    QGraphicsSimpleTextItem* m_title;
+    QGraphicsSimpleTextItem *m_title;
     QVector<qreal> m_layoutVector;
     qreal m_min;
     qreal m_max;
@@ -173,7 +173,7 @@ protected:
     }
 
 private:
-    ChartAxis* m_axis;
+    ChartAxis *m_axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

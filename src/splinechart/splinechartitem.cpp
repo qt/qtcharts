@@ -51,13 +51,13 @@ QPainterPath SplineChartItem::shape() const
     return m_path;
 }
 
-void SplineChartItem::setAnimation(SplineAnimation* animation)
+void SplineChartItem::setAnimation(SplineAnimation *animation)
 {
     m_animation = animation;
     XYChart::setAnimation(animation);
 }
 
-ChartAnimation* SplineChartItem::animation() const
+ChartAnimation *SplineChartItem::animation() const
 {
     return m_animation;
 }
@@ -119,7 +119,7 @@ void SplineChartItem::updateGeometry()
     QPainterPath splinePath(points.at(0));
 
     for (int i = 0; i < points.size() - 1; i++) {
-        const QPointF& point = points.at(i + 1);
+        const QPointF &point = points.at(i + 1);
         splinePath.cubicTo(controlPoints[2 * i], controlPoints[2 * i + 1], point);
     }
 

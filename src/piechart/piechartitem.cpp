@@ -32,7 +32,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter* presenter)
+PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter *presenter)
     : ChartItem(presenter),
       m_series(series),
       m_animation(0)
@@ -60,17 +60,17 @@ PieChartItem::~PieChartItem()
     // slices deleted automatically through QGraphicsItem
 }
 
-void PieChartItem::setAnimation(PieAnimation* animation)
+void PieChartItem::setAnimation(PieAnimation *animation)
 {
     m_animation = animation;
 }
 
-ChartAnimation* PieChartItem::animation() const
+ChartAnimation *PieChartItem::animation() const
 {
     return m_animation;
 }
 
-void PieChartItem::handleGeometryChanged(const QRectF& rect)
+void PieChartItem::handleGeometryChanged(const QRectF &rect)
 {
     prepareGeometryChange();
     m_rect = rect;
@@ -143,7 +143,7 @@ void PieChartItem::updateLayout()
     update();
 }
 
-void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
+void PieChartItem::handleSlicesAdded(QList<QPieSlice *> slices)
 {
     // delay creating slice items until there is a proper rectangle
     if (!m_rect.isValid() && m_sliceItems.isEmpty())
@@ -153,8 +153,8 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
 
     bool startupAnimation = m_sliceItems.isEmpty();
 
-    foreach (QPieSlice *slice, slices) {
-        PieSliceItem* sliceItem = new PieSliceItem(this);
+    foreach(QPieSlice * slice, slices) {
+        PieSliceItem *sliceItem = new PieSliceItem(this);
         m_sliceItems.insert(slice, sliceItem);
 
         // Note: no need to connect to slice valueChanged() etc.
@@ -183,7 +183,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice*> slices)
     }
 }
 
-void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
+void PieChartItem::handleSlicesRemoved(QList<QPieSlice *> slices)
 {
     presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
 
@@ -208,9 +208,9 @@ void PieChartItem::handleSlicesRemoved(QList<QPieSlice*> slices)
 
 void PieChartItem::handleSliceChanged()
 {
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    QPieSlice *slice = qobject_cast<QPieSlice *>(sender());
     if (!slice) {
-        QPieSlicePrivate* slicep = qobject_cast<QPieSlicePrivate *>(sender());
+        QPieSlicePrivate *slicep = qobject_cast<QPieSlicePrivate *>(sender());
         slice = slicep->q_ptr;
     }
     Q_ASSERT(m_sliceItems.contains(slice));

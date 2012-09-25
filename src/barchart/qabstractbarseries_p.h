@@ -53,20 +53,20 @@ public:
     void setVisible(bool visible);
     void setLabelsVisible(bool visible);
 
-    void scaleDomain(Domain& domain);
-    ChartElement* createGraphics(ChartPresenter* presenter);
-    QList<LegendMarker*> createLegendMarker(QLegend* legend);
+    void scaleDomain(Domain &domain);
+    ChartElement *createGraphics(ChartPresenter *presenter);
+    QList<LegendMarker *> createLegendMarker(QLegend *legend);
 
-    void initializeAxis(QAbstractAxis* axis);
+    void initializeAxis(QAbstractAxis *axis);
     virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
 
     bool append(QBarSet *set);
     bool remove(QBarSet *set);
-    bool append(QList<QBarSet* > sets);
-    bool remove(QList<QBarSet* > sets);
+    bool append(QList<QBarSet *> sets);
+    bool remove(QList<QBarSet *> sets);
     bool insert(int index, QBarSet *set);
 
-    QBarSet* barsetAt(int index);
+    QBarSet *barsetAt(int index);
     qreal min();
     qreal max();
     qreal valueAt(int set, int category);
@@ -90,7 +90,7 @@ Q_SIGNALS:
     void visibleChanged();
 
 private:
-    void populateCategories(QBarCategoryAxis* axis);
+    void populateCategories(QBarCategoryAxis *axis);
 
 protected:
     QList<QBarSet *> m_barSets;

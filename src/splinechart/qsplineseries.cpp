@@ -125,7 +125,7 @@ QAbstractSeries::SeriesType QSplineSeries::type() const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries* q)
+QSplineSeriesPrivate::QSplineSeriesPrivate(QSplineSeries *q)
     : QLineSeriesPrivate(q)
 {
 }
@@ -244,7 +244,7 @@ void QSplineSeriesPrivate::updateControlPoints()
     }
 }
 
-ChartElement* QSplineSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QSplineSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QSplineSeries);
     SplineChartItem *spline = new SplineChartItem(q, presenter);

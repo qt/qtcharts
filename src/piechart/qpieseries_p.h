@@ -44,16 +44,16 @@ public:
     QPieSeriesPrivate(QPieSeries *parent);
     ~QPieSeriesPrivate();
 
-    void scaleDomain(Domain& domain);
-    ChartElement* createGraphics(ChartPresenter *presenter);
-    QList<LegendMarker*> createLegendMarker(QLegend *legend);
-    void initializeAxis(QAbstractAxis* axis);
+    void scaleDomain(Domain &domain);
+    ChartElement *createGraphics(ChartPresenter *presenter);
+    QList<LegendMarker *> createLegendMarker(QLegend *legend);
+    void initializeAxis(QAbstractAxis *axis);
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
 
     void updateDerivativeData();
     void setSizes(qreal innerSize, qreal outerSize);
 
-    static QPieSeriesPrivate* fromSeries(QPieSeries *series);
+    static QPieSeriesPrivate *fromSeries(QPieSeries *series);
 
 signals:
     void calculatedDataChanged();
@@ -69,7 +69,7 @@ public Q_SLOTS:
     void sliceHovered(bool state);
 
 private:
-    QList<QPieSlice*> m_slices;
+    QList<QPieSlice *> m_slices;
     qreal m_pieRelativeHorPos;
     qreal m_pieRelativeVerPos;
     qreal m_pieRelativeSize;

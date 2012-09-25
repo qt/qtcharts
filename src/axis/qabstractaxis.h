@@ -107,7 +107,7 @@ public:
     QBrush titleBrush() const;
     void setTitleFont(const QFont &font);
     QFont titleFont() const;
-    void setTitle(const QString& title);
+    void setTitle(const QString &title);
     QString title() const;
 
 

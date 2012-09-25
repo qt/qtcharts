@@ -49,7 +49,7 @@ void AxisAnimation::setAnimationType(Animation type)
     m_type = type;
 }
 
-void AxisAnimation::setAnimationPoint(const QPointF& point)
+void AxisAnimation::setAnimationPoint(const QPointF &point)
 {
     if (state() != QAbstractAnimation::Stopped)
         stop();

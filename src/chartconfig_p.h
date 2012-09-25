@@ -59,7 +59,7 @@ private:
         m_instance = this;
     }
 public:
-    static ChartConfig* instance() {
+    static ChartConfig *instance() {
         if (!m_instance) {
             m_instance = new ChartConfig();
         }
@@ -75,11 +75,11 @@ public:
     }
 
 private:
-    static ChartConfig* m_instance;
+    static ChartConfig *m_instance;
 };
 
 
-ChartConfig* ChartConfig::m_instance = 0;
+ChartConfig *ChartConfig::m_instance = 0;
 
 QTCOMMERCIALCHART_END_NAMESPACE
 

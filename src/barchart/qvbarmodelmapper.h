@@ -38,10 +38,10 @@ class QTCOMMERCIALCHART_EXPORT QVBarModelMapper : public QBarModelMapper
 public:
     explicit QVBarModelMapper(QObject *parent = 0);
 
-    QAbstractItemModel* model() const;
+    QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);
 
-    QAbstractBarSeries* series() const;
+    QAbstractBarSeries *series() const;
     void setSeries(QAbstractBarSeries *series);
 
     int firstBarSetColumn() const;

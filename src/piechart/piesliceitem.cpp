@@ -38,7 +38,7 @@ QPointF offset(qreal angle, qreal length)
     return QPointF(dx, -dy);
 }
 
-PieSliceItem::PieSliceItem(QGraphicsItem* parent)
+PieSliceItem::PieSliceItem(QGraphicsItem *parent)
     : QGraphicsObject(parent),
       m_hovered(false)
 {
@@ -67,7 +67,7 @@ QPainterPath PieSliceItem::shape() const
     return m_slicePath;
 }
 
-void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*option*/, QWidget* /*widget*/)
+void PieSliceItem::paint(QPainter *painter, const QStyleOptionGraphicsItem * /*option*/, QWidget * /*widget*/)
 {
     painter->save();
     painter->setClipRect(parentItem()->boundingRect());
@@ -116,13 +116,13 @@ void PieSliceItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* /*op
     }
 }
 
-void PieSliceItem::hoverEnterEvent(QGraphicsSceneHoverEvent* /*event*/)
+void PieSliceItem::hoverEnterEvent(QGraphicsSceneHoverEvent * /*event*/)
 {
     m_hovered = true;
     emit hovered(true);
 }
 
-void PieSliceItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* /*event*/)
+void PieSliceItem::hoverLeaveEvent(QGraphicsSceneHoverEvent * /*event*/)
 {
     m_hovered = false;
     emit hovered(false);
@@ -204,7 +204,7 @@ QPointF PieSliceItem::sliceCenter(QPointF point, qreal radius, QPieSlice *slice)
     return point;
 }
 
-QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal *centerAngle, QPointF* armStart)
+QPainterPath PieSliceItem::slicePath(QPointF center, qreal radius, qreal startAngle, qreal angleSpan, qreal *centerAngle, QPointF *armStart)
 {
     // calculate center angle
     *centerAngle = startAngle + (angleSpan / 2);

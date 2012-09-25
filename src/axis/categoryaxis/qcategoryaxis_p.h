@@ -45,7 +45,7 @@ public:
     QCategoryAxisPrivate(QCategoryAxis *q);
     ~QCategoryAxisPrivate();
 
-    ChartAxis* createGraphics(ChartPresenter* presenter);
+    ChartAxis *createGraphics(ChartPresenter *presenter);
     int ticksCount() const;
 
 Q_SIGNALS:

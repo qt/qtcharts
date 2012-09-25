@@ -111,7 +111,7 @@ QCategoryAxis::QCategoryAxis(QCategoryAxisPrivate &d, QObject *parent): QValueAx
     It has to be greater than the high end limit of the previous category.
     Otherwise the method returns without adding a new category.
 */
-void QCategoryAxis::append(const QString& categoryLabel, qreal categoryEndValue)
+void QCategoryAxis::append(const QString &categoryLabel, qreal categoryEndValue)
 {
     Q_D(QCategoryAxis);
 
@@ -148,7 +148,7 @@ void QCategoryAxis::setStartValue(qreal min)
 /*!
     Returns the low end limit of the category specified by an \a categoryLabel
 */
-qreal QCategoryAxis::startValue(const QString& categoryLabel) const
+qreal QCategoryAxis::startValue(const QString &categoryLabel) const
 {
     Q_D(const QCategoryAxis);
     if (categoryLabel.isEmpty())
@@ -159,7 +159,7 @@ qreal QCategoryAxis::startValue(const QString& categoryLabel) const
 /*!
     Returns the high end limit of the interval specified by an \a categoryLabel
 */
-qreal QCategoryAxis::endValue(const QString& categoryLabel) const
+qreal QCategoryAxis::endValue(const QString &categoryLabel) const
 {
     Q_D(const QCategoryAxis);
     return d->m_categoriesMap.value(categoryLabel).second;
@@ -209,7 +209,7 @@ void QCategoryAxis::remove(const QString &categoryLabel)
   Replaces \a oldLabel of an existing category with a \a newLabel
   If the old label does not exist the method returns without making any changes.
  */
-void QCategoryAxis::replaceLabel(const QString& oldLabel, const QString& newLabel)
+void QCategoryAxis::replaceLabel(const QString &oldLabel, const QString &newLabel)
 {
     Q_D(QCategoryAxis);
     int labelIndex = d->m_categories.indexOf(oldLabel);
@@ -252,9 +252,9 @@ QAbstractAxis::AxisType QCategoryAxis::type() const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QCategoryAxisPrivate::QCategoryAxisPrivate(QCategoryAxis* q):
-    QValueAxisPrivate(q),
-    m_categoryMinimum(0)
+QCategoryAxisPrivate::QCategoryAxisPrivate(QCategoryAxis *q)
+    : QValueAxisPrivate(q),
+      m_categoryMinimum(0)
 {
 
 }
@@ -276,7 +276,7 @@ void QCategoryAxisPrivate::handleAxisRangeChanged(qreal min, qreal max, int coun
     Q_UNUSED(max);
 }
 
-ChartAxis* QCategoryAxisPrivate::createGraphics(ChartPresenter* presenter)
+ChartAxis *QCategoryAxisPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QCategoryAxis);
     if (m_orientation == Qt::Vertical)

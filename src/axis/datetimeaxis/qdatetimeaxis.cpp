@@ -281,11 +281,11 @@ QAbstractAxis::AxisType QDateTimeAxis::type() const
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QDateTimeAxisPrivate::QDateTimeAxisPrivate(QDateTimeAxis* q):
-    QAbstractAxisPrivate(q),
-    m_min(QDateTime::fromMSecsSinceEpoch(0)),
-    m_max(QDateTime::fromMSecsSinceEpoch(0)),
-    m_tickCount(5)
+QDateTimeAxisPrivate::QDateTimeAxisPrivate(QDateTimeAxis *q)
+    : QAbstractAxisPrivate(q),
+      m_min(QDateTime::fromMSecsSinceEpoch(0)),
+      m_max(QDateTime::fromMSecsSinceEpoch(0)),
+      m_tickCount(5)
 {
     m_format = "dd-MM-yyyy\nh:mm";
 }
@@ -298,7 +298,7 @@ QDateTimeAxisPrivate::~QDateTimeAxisPrivate()
 void QDateTimeAxisPrivate::handleDomainUpdated()
 {
     Q_Q(QDateTimeAxis);
-    Domain* domain = qobject_cast<Domain*>(sender());
+    Domain *domain = qobject_cast<Domain *>(sender());
     Q_ASSERT(domain);
 
     if (orientation() == Qt::Horizontal)
@@ -330,7 +330,7 @@ void QDateTimeAxisPrivate::setRange(const QVariant &min, const QVariant &max)
         q->setRange(min.toDateTime(), max.toDateTime());
 }
 
-ChartAxis* QDateTimeAxisPrivate::createGraphics(ChartPresenter* presenter)
+ChartAxis *QDateTimeAxisPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QDateTimeAxis);
     if (m_orientation == Qt::Vertical)
@@ -338,7 +338,7 @@ ChartAxis* QDateTimeAxisPrivate::createGraphics(ChartPresenter* presenter)
     return new ChartDateTimeAxisX(q, presenter);
 }
 
-void QDateTimeAxisPrivate::intializeDomain(Domain* domain)
+void QDateTimeAxisPrivate::intializeDomain(Domain *domain)
 {
     Q_Q(QDateTimeAxis);
     if (m_max == m_min) {

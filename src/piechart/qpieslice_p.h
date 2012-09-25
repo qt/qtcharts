@@ -45,7 +45,7 @@ public:
     QPieSlicePrivate(QPieSlice *parent);
     ~QPieSlicePrivate();
 
-    static QPieSlicePrivate* fromSlice(QPieSlice *slice);
+    static QPieSlicePrivate *fromSlice(QPieSlice *slice);
 
     void setPen(const QPen &pen, bool themed);
     void setBrush(const QBrush &brush, bool themed);

@@ -243,14 +243,14 @@ void QScatterSeries::setMarkerSize(qreal size)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries* q) :
-    QXYSeriesPrivate(q),
-    m_shape(QScatterSeries::MarkerShapeCircle),
-    m_size(15.0)
+QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries *q)
+    : QXYSeriesPrivate(q),
+      m_shape(QScatterSeries::MarkerShapeCircle),
+      m_size(15.0)
 {
 }
 
-ChartElement* QScatterSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QScatterSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QScatterSeries);
     ScatterChartItem *scatter = new ScatterChartItem(q, presenter);

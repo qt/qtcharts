@@ -165,7 +165,7 @@ QVBarModelMapper::QVBarModelMapper(QObject *parent) :
     QBarModelMapper::setOrientation(Qt::Vertical);
 }
 
-QAbstractItemModel* QVBarModelMapper::model() const
+QAbstractItemModel *QVBarModelMapper::model() const
 {
     return QBarModelMapper::model();
 }
@@ -178,7 +178,7 @@ void QVBarModelMapper::setModel(QAbstractItemModel *model)
     }
 }
 
-QAbstractBarSeries* QVBarModelMapper::series() const
+QAbstractBarSeries *QVBarModelMapper::series() const
 {
     return QBarModelMapper::series();
 }

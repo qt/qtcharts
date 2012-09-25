@@ -78,8 +78,8 @@ static inline QDebug chartDebug(int numargs,...)
     va_start(valist, numargs);
     //for( int i = 0 ; i < numargs; i++ )
     int line = va_arg(valist, int);
-    char* file = va_arg(valist, char*);
-    char* function = va_arg(valist, char*);
+    char *file = va_arg(valist, char *);
+    char *function = va_arg(valist, char *);
     va_end(valist);
     return qDebug() << QString().append(function).append("(").append(file).append(":%1)").arg(line);
 }

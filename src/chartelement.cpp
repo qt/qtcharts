@@ -36,7 +36,7 @@ void ChartElement::setPresenter(ChartPresenter *presenter)
     m_presenter = presenter;
 }
 
-ChartPresenter* ChartElement::presenter() const
+ChartPresenter *ChartElement::presenter() const
 {
     return m_presenter;
 }
@@ -46,12 +46,12 @@ void ChartElement::setDomain(Domain *domain)
     m_domain = domain;
 }
 
-Domain* ChartElement::domain() const
+Domain *ChartElement::domain() const
 {
     return m_domain;
 }
 
-void ChartElement::handleGeometryChanged(const QRectF& rect)
+void ChartElement::handleGeometryChanged(const QRectF &rect)
 {
     Q_UNUSED(rect);
     qWarning() << "Slot not implemented";

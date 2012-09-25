@@ -142,15 +142,16 @@ QDebug operator<< (QDebug debug, const QLineSeries series)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries* q): QXYSeriesPrivate(q)
+QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries *q)
+    : QXYSeriesPrivate(q)
 {
 
 };
 
-ChartElement* QLineSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QLineSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QLineSeries);
-    LineChartItem* line = new LineChartItem(q, presenter);
+    LineChartItem *line = new LineChartItem(q, presenter);
     if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         line->setAnimation(new XYAnimation(line));
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

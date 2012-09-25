@@ -52,8 +52,8 @@ public:
     QPointF offset() const;
     int roundness(qreal size);
 
-    QList<LegendMarker*> markers() { return m_markers; }
-    QGraphicsItemGroup* items() { return m_items; }
+    QList<LegendMarker *> markers() { return m_markers; }
+    QGraphicsItemGroup *items() { return m_items; }
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
@@ -65,9 +65,9 @@ private:
     QLegend *q_ptr;
     ChartPresenter *m_presenter;
     LegendLayout *m_layout;
-    QChart* m_chart;
-    QGraphicsItemGroup* m_items;
-    QList<LegendMarker*> m_markers;
+    QChart *m_chart;
+    QGraphicsItemGroup *m_items;
+    QList<LegendMarker *> m_markers;
     Qt::Alignment m_alignment;
     QBrush m_brush;
     QPen m_pen;

@@ -38,9 +38,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QHorizontalStackedBarSeriesPrivate: public QAbstractBarSeriesPrivate
 {
 public:
-    QHorizontalStackedBarSeriesPrivate(QHorizontalStackedBarSeries* q);
-    ChartElement* createGraphics(ChartPresenter* presenter);
-    void scaleDomain(Domain& domain);
+    QHorizontalStackedBarSeriesPrivate(QHorizontalStackedBarSeries *q);
+    ChartElement *createGraphics(ChartPresenter *presenter);
+    void scaleDomain(Domain &domain);
 private:
     Q_DECLARE_PUBLIC(QHorizontalStackedBarSeries)
 };

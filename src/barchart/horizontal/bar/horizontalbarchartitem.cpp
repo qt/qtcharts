@@ -54,14 +54,14 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
     for (int category = 0; category < categoryCount; category++) {
         qreal xPos = -scaleX * m_domainMinX + geometry().left();
         for (int set = 0; set < setCount; set++) {
-            QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
             qreal yPos = geometry().bottom() + (m_domainMinY - barSet->pos(category)) * scaleY;
             yPos += setCount * rectHeight / 2;
             yPos -= set * rectHeight;
 
             qreal rectWidth = barSet->value(category) * scaleX;
-            Bar* bar = m_bars.at(itemIndex);
+            Bar *bar = m_bars.at(itemIndex);
 
             QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
             layout.append(rect);
@@ -72,7 +72,7 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
             else
                 bar->setVisible(barsVisible);
 
-            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
+            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(barSet->value(category)))
                 label->setText(QString::number(barSet->value(category)));

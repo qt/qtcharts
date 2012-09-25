@@ -33,7 +33,7 @@ QBarModelMapper::QBarModelMapper(QObject *parent) :
 {
 }
 
-QAbstractItemModel* QBarModelMapper::model() const
+QAbstractItemModel *QBarModelMapper::model() const
 {
     Q_D(const QBarModelMapper);
     return d->m_model;
@@ -60,7 +60,7 @@ void QBarModelMapper::setModel(QAbstractItemModel *model)
     connect(d->m_model, SIGNAL(destroyed()), d, SLOT(handleModelDestroyed()));
 }
 
-QAbstractBarSeries* QBarModelMapper::series() const
+QAbstractBarSeries *QBarModelMapper::series() const
 {
     Q_D(const QBarModelMapper);
     return d->m_series;
@@ -215,7 +215,7 @@ void QBarModelMapperPrivate::blockSeriesSignals(bool block)
     m_seriesSignalsBlock = block;
 }
 
-QBarSet* QBarModelMapperPrivate::barSet(QModelIndex index)
+QBarSet *QBarModelMapperPrivate::barSet(QModelIndex index)
 {
     if (!index.isValid())
         return 0;
@@ -269,7 +269,7 @@ void QBarModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex botto
     for (int row = topLeft.row(); row <= bottomRight.row(); row++) {
         for (int column = topLeft.column(); column <= bottomRight.column(); column++) {
             index = topLeft.sibling(row, column);
-            QBarSet* bar = barSet(index);
+            QBarSet *bar = barSet(index);
             if (bar) {
                 if (m_orientation == Qt::Vertical)
                     bar->replace(row - m_first, m_model->data(index).toReal());
@@ -293,7 +293,7 @@ void QBarModelMapperPrivate::modelHeaderDataUpdated(Qt::Orientation orientation,
     if (orientation != m_orientation) {
         for (int section = first; section <= last; section++) {
             if (section >= m_firstBarSetSection && section <= m_lastBarSetSection) {
-                QBarSet* bar = m_series->barSets().at(section - m_firstBarSetSection);
+                QBarSet *bar = m_series->barSets().at(section - m_firstBarSetSection);
                 if (bar)
                     bar->setLabel(m_model->headerData(section, orientation).toString());
             }
@@ -387,7 +387,7 @@ void QBarModelMapperPrivate::removeData(int start, int end)
     // To be implemented
 }
 
-void QBarModelMapperPrivate::barSetsAdded(QList<QBarSet*> sets)
+void QBarModelMapperPrivate::barSetsAdded(QList<QBarSet *> sets)
 {
     if (m_seriesSignalsBlock)
         return;
@@ -434,7 +434,7 @@ void QBarModelMapperPrivate::barSetsAdded(QList<QBarSet*> sets)
     initializeBarFromModel();
 }
 
-void QBarModelMapperPrivate::barSetsRemoved(QList<QBarSet*> sets)
+void QBarModelMapperPrivate::barSetsRemoved(QList<QBarSet *> sets)
 {
     if (m_seriesSignalsBlock)
         return;

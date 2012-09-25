@@ -57,8 +57,8 @@ public:
     QSizeF size() const { return m_size; }
     QPointF origin() const { return m_origin; }
 
-    void setAnimation(XYAnimation* animation);
-    ChartAnimation* animation() const { return m_animation; }
+    void setAnimation(XYAnimation *animation);
+    ChartAnimation *animation() const { return m_animation; }
     virtual void updateGeometry() = 0;
 
     bool isDirty() const { return m_dirty; }
@@ -73,7 +73,7 @@ public Q_SLOTS:
     void handleGeometryChanged(const QRectF &size);
 
 Q_SIGNALS:
-    void clicked(const QPointF& point);
+    void clicked(const QPointF &point);
 
 protected:
     virtual void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index = -1);
@@ -90,12 +90,12 @@ protected:
     qreal m_maxX;
     qreal m_minY;
     qreal m_maxY;
-    QXYSeries* m_series;
+    QXYSeries *m_series;
     QSizeF m_size;
     QPointF m_origin;
     QRectF m_clipRect;
     QVector<QPointF> m_points;
-    XYAnimation* m_animation;
+    XYAnimation *m_animation;
     bool m_dirty;
 
     friend class AreaChartItem;

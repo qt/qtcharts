@@ -38,7 +38,7 @@ Scroller::~Scroller()
 {
 }
 
-void Scroller::mousePressEvent(QGraphicsSceneMouseEvent* event)
+void Scroller::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
         switch (m_state) {
@@ -66,7 +66,7 @@ void Scroller::mousePressEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void Scroller::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
+void Scroller::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QPointF delta = event->pos() - m_press;
 
@@ -96,7 +96,7 @@ void Scroller::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
 
@@ -163,7 +163,7 @@ void Scroller::scrollTick()
     }
 }
 
-void Scroller::lowerSpeed(QPointF& speed, qreal maxSpeed)
+void Scroller::lowerSpeed(QPointF &speed, qreal maxSpeed)
 {
     qreal x = qBound(-maxSpeed, speed.x(), maxSpeed);
     qreal y = qBound(-maxSpeed, speed.y(), maxSpeed);
@@ -176,7 +176,7 @@ void Scroller::lowerSpeed(QPointF& speed, qreal maxSpeed)
     speed.setY(y);
 }
 
-void Scroller::calculateSpeed(const QPointF& position)
+void Scroller::calculateSpeed(const QPointF &position)
 {
     if (m_timeStamp.elapsed() > m_timeTreshold) {
 
@@ -200,7 +200,7 @@ void Scroller::calculateSpeed(const QPointF& position)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-ScrollTicker::ScrollTicker(Scroller *scroller, QObject* parent)
+ScrollTicker::ScrollTicker(Scroller *scroller, QObject *parent)
     : QObject(parent),
       m_scroller(scroller)
 {

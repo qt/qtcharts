@@ -55,11 +55,11 @@ public:
     QString at(int index) const;
 
     //range handling
-    void setMin(const QString& minCategory);
+    void setMin(const QString &minCategory);
     QString min() const;
-    void setMax(const QString& maxCategory);
+    void setMax(const QString &maxCategory);
     QString max() const;
-    void setRange(const QString& minCategory, const QString& maxCategory);
+    void setRange(const QString &minCategory, const QString &maxCategory);
 
 Q_SIGNALS:
     void categoriesChanged();

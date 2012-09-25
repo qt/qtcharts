@@ -27,10 +27,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartBackground::ChartBackground(QGraphicsItem* parent) :
-    QGraphicsRectItem(parent),
-    m_diameter(15),
-    m_dropShadow(0)
+ChartBackground::ChartBackground(QGraphicsItem *parent)
+    : QGraphicsRectItem(parent),
+      m_diameter(15),
+      m_dropShadow(0)
 {
 }
 

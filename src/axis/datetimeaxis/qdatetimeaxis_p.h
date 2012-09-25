@@ -44,11 +44,11 @@ public:
     ~QDateTimeAxisPrivate();
 
 public:
-    ChartAxis* createGraphics(ChartPresenter* presenter);
-    void intializeDomain(Domain* domain);
+    ChartAxis *createGraphics(ChartPresenter *presenter);
+    void intializeDomain(Domain *domain);
     void handleDomainUpdated();
-    qreal min(){ return m_min.toMSecsSinceEpoch(); }
-    qreal max(){ return m_max.toMSecsSinceEpoch(); }
+    qreal min() { return m_min.toMSecsSinceEpoch(); }
+    qreal max() { return m_max.toMSecsSinceEpoch(); }
     int count() const { /*TODO:*/ return 0;}
 
 protected:

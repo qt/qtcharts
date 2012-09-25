@@ -37,7 +37,7 @@ QXYModelMapper::QXYModelMapper(QObject *parent):
 /*!
     \internal
 */
-QAbstractItemModel* QXYModelMapper::model() const
+QAbstractItemModel *QXYModelMapper::model() const
 {
     Q_D(const QXYModelMapper);
     return d->m_model;
@@ -69,7 +69,7 @@ void QXYModelMapper::setModel(QAbstractItemModel *model)
 /*!
     \internal
 */
-QXYSeries* QXYModelMapper::series() const
+QXYSeries *QXYModelMapper::series() const
 {
     Q_D(const QXYModelMapper);
     return d->m_series;

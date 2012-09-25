@@ -390,7 +390,7 @@ bool QXYSeries::pointsVisible() const
     Stream operator for adding a data \a point to the series.
     \sa append()
 */
-QXYSeries& QXYSeries::operator<< (const QPointF &point)
+QXYSeries &QXYSeries::operator<< (const QPointF &point)
 {
     append(point);
     return *this;
@@ -402,7 +402,7 @@ QXYSeries& QXYSeries::operator<< (const QPointF &point)
     \sa append()
 */
 
-QXYSeries& QXYSeries::operator<< (const QList<QPointF>& points)
+QXYSeries &QXYSeries::operator<< (const QList<QPointF>& points)
 {
     append(points);
     return *this;
@@ -411,13 +411,13 @@ QXYSeries& QXYSeries::operator<< (const QList<QPointF>& points)
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q) :
-    QAbstractSeriesPrivate(q),
-    m_pointsVisible(false)
+QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q)
+    : QAbstractSeriesPrivate(q),
+      m_pointsVisible(false)
 {
 }
 
-void QXYSeriesPrivate::scaleDomain(Domain& domain)
+void QXYSeriesPrivate::scaleDomain(Domain &domain)
 {
     qreal minX(0);
     qreal minY(0);
@@ -447,14 +447,14 @@ void QXYSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX, maxX, minY, maxY);
 }
 
-QList<LegendMarker*> QXYSeriesPrivate::createLegendMarker(QLegend* legend)
+QList<LegendMarker *> QXYSeriesPrivate::createLegendMarker(QLegend *legend)
 {
     Q_Q(QXYSeries);
-    QList<LegendMarker*> list;
+    QList<LegendMarker *> list;
     return list << new XYLegendMarker(q, legend);
 }
 
-void QXYSeriesPrivate::initializeAxis(QAbstractAxis* axis)
+void QXYSeriesPrivate::initializeAxis(QAbstractAxis *axis)
 {
     Q_UNUSED(axis);
 }

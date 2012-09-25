@@ -38,10 +38,10 @@ class QTCOMMERCIALCHART_EXPORT QVXYModelMapper : public QXYModelMapper
 public:
     explicit QVXYModelMapper(QObject *parent = 0);
 
-    QAbstractItemModel* model() const;
+    QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);
 
-    QXYSeries* series() const;
+    QXYSeries *series() const;
     void setSeries(QXYSeries *series);
 
     int xColumn() const;

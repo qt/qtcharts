@@ -38,7 +38,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartTitle : public QGraphicsSimpleTextItem
 {
 public:
-    ChartTitle(QGraphicsItem* parent = 0);
+    ChartTitle(QGraphicsItem *parent = 0);
     ~ChartTitle();
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
     void setText(const QString &text);

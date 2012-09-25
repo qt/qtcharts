@@ -89,7 +89,7 @@ QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) : QAbstractBarSeriesPrivate(
 
 }
 
-void QBarSeriesPrivate::scaleDomain(Domain& domain)
+void QBarSeriesPrivate::scaleDomain(Domain &domain)
 {
     qreal minX(domain.minX());
     qreal minY(domain.minY());
@@ -106,11 +106,11 @@ void QBarSeriesPrivate::scaleDomain(Domain& domain)
 }
 
 
-ChartElement* QBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QBarSeries);
 
-    BarChartItem* bar = new BarChartItem(q, presenter);
+    BarChartItem *bar = new BarChartItem(q, presenter);
     if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new BarAnimation(bar));
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

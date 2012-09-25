@@ -284,7 +284,7 @@ QString QBarCategoryAxis::at(int index) const
 /*!
     Sets minimum category to \a min.
 */
-void QBarCategoryAxis::setMin(const QString& min)
+void QBarCategoryAxis::setMin(const QString &min)
 {
     Q_D(QBarCategoryAxis);
     setRange(min, d->m_maxCategory);
@@ -302,7 +302,7 @@ QString QBarCategoryAxis::min() const
 /*!
     Sets maximum category to \a max.
 */
-void QBarCategoryAxis::setMax(const QString& max)
+void QBarCategoryAxis::setMax(const QString &max)
 {
     Q_D(QBarCategoryAxis);
     setRange(d->m_minCategory, max);
@@ -320,7 +320,7 @@ QString QBarCategoryAxis::max() const
 /*!
     Sets range from \a minCategory to \a maxCategory
 */
-void QBarCategoryAxis::setRange(const QString& minCategory, const QString& maxCategory)
+void QBarCategoryAxis::setRange(const QString &minCategory, const QString &maxCategory)
 {
     Q_D(QBarCategoryAxis);
 
@@ -373,11 +373,11 @@ QAbstractAxis::AxisType QBarCategoryAxis::type() const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QBarCategoryAxisPrivate::QBarCategoryAxisPrivate(QBarCategoryAxis* q):
-    QAbstractAxisPrivate(q),
-    m_min(0.0),
-    m_max(0.0),
-    m_count(0)
+QBarCategoryAxisPrivate::QBarCategoryAxisPrivate(QBarCategoryAxis *q)
+    : QAbstractAxisPrivate(q),
+      m_min(0.0),
+      m_max(0.0),
+      m_count(0)
 {
 
 }
@@ -408,7 +408,7 @@ void QBarCategoryAxisPrivate::setRange(const QVariant &min, const QVariant &max)
 void QBarCategoryAxisPrivate::handleDomainUpdated()
 {
     Q_Q(QBarCategoryAxis);
-    Domain* domain = qobject_cast<Domain*>(sender());
+    Domain *domain = qobject_cast<Domain *>(sender());
 
     if (m_orientation == Qt::Horizontal) {
         m_min = domain->minX();
@@ -442,7 +442,7 @@ void QBarCategoryAxisPrivate::handleDomainUpdated()
         emit q->rangeChanged(m_minCategory, m_maxCategory);
 }
 
-ChartAxis* QBarCategoryAxisPrivate::createGraphics(ChartPresenter* presenter)
+ChartAxis *QBarCategoryAxisPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QBarCategoryAxis);
     if (m_orientation == Qt::Vertical)
@@ -450,7 +450,7 @@ ChartAxis* QBarCategoryAxisPrivate::createGraphics(ChartPresenter* presenter)
     return new ChartBarCategoryAxisX(q, presenter);
 }
 
-void QBarCategoryAxisPrivate::intializeDomain(Domain* domain)
+void QBarCategoryAxisPrivate::intializeDomain(Domain *domain)
 {
 
     Q_Q(QBarCategoryAxis);

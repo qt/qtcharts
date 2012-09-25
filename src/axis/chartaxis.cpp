@@ -62,7 +62,7 @@ ChartAxis::~ChartAxis()
 {
 }
 
-void ChartAxis::setAnimation(AxisAnimation* animation)
+void ChartAxis::setAnimation(AxisAnimation *animation)
 {
     m_animation = animation;
 }
@@ -271,7 +271,7 @@ bool ChartAxis::isEmpty()
 
 void ChartAxis::handleDomainUpdated()
 {
-    Domain* domain = qobject_cast<Domain*>(sender());
+    Domain *domain = qobject_cast<Domain *>(sender());
     qreal min(0);
     qreal max(0);
 
@@ -328,7 +328,7 @@ void ChartAxis::handleAxisUpdated()
     setTitleText(m_chartAxis->title());
 }
 
-void ChartAxis::setTitleText(const QString& title)
+void ChartAxis::setTitleText(const QString &title)
 {
     if (m_titleText != title) {
         m_titleText = title;
@@ -444,9 +444,8 @@ bool ChartAxis::isVisible()
     return m_chartAxis->isVisible();
 }
 
-QSizeF ChartAxis::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF ChartAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
-
     Q_UNUSED(constraint);
     QFontMetrics fn(m_title->font());
     QSizeF sh;

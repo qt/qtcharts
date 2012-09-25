@@ -27,9 +27,10 @@ Q_DECLARE_METATYPE(SplineVector)
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-SplineAnimation::SplineAnimation(SplineChartItem* item): XYAnimation(item),
-    m_item(item),
-    m_valid(false)
+SplineAnimation::SplineAnimation(SplineChartItem *item)
+    : XYAnimation(item),
+      m_item(item),
+      m_valid(false)
 {
 }
 

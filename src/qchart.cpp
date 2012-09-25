@@ -166,7 +166,7 @@ void QChart::removeAllSeries()
 /*!
  Sets the \a brush that is used for painting the background of the chart area.
  */
-void QChart::setBackgroundBrush(const QBrush& brush)
+void QChart::setBackgroundBrush(const QBrush &brush)
 {
     d_ptr->m_presenter->setBackgroundBrush(brush);
 }
@@ -182,7 +182,7 @@ QBrush QChart::backgroundBrush() const
 /*!
  Sets the \a pen that is used for painting the background of the chart area.
  */
-void QChart::setBackgroundPen(const QPen& pen)
+void QChart::setBackgroundPen(const QPen &pen)
 {
     d_ptr->m_presenter->setBackgroundPen(pen);
 }
@@ -198,7 +198,7 @@ QPen QChart::backgroundPen() const
 /*!
  Sets the chart \a title. The description text that is drawn above the chart.
  */
-void QChart::setTitle(const QString& title)
+void QChart::setTitle(const QString &title)
 {
     d_ptr->m_presenter->setTitle(title);
 }
@@ -214,7 +214,7 @@ QString QChart::title() const
 /*!
  Sets the \a font that is used for drawing the chart description text that is rendered above the chart.
  */
-void QChart::setTitleFont(const QFont& font)
+void QChart::setTitleFont(const QFont &font)
 {
     d_ptr->m_presenter->setTitleFont(font);
 }
@@ -264,9 +264,10 @@ void QChart::zoomIn()
 /*!
  Zooms in the view to a maximum level at which \a rect is still fully visible.
  */
-void QChart::zoomIn(const QRectF& rect)
+void QChart::zoomIn(const QRectF &rect)
 {
-    if (!rect.isValid()) return;
+    if (!rect.isValid())
+        return;
     d_ptr->m_presenter->zoomIn(rect);
 }
 
@@ -304,7 +305,7 @@ void QChart::zoom(qreal factor)
  Returns the pointer to the x axis object of the chart asociated with the specified \a series
  If no series is provided then pointer to currently visible axis is provided
  */
-QAbstractAxis* QChart::axisX(QAbstractSeries* series) const
+QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 {
     return d_ptr->m_dataset->axisX(series);
 }
@@ -313,7 +314,7 @@ QAbstractAxis* QChart::axisX(QAbstractSeries* series) const
  Returns the pointer to the y axis object of the chart asociated with the specified \a series
  If no series is provided then pointer to currently visible axis is provided
  */
-QAbstractAxis* QChart::axisY(QAbstractSeries *series) const
+QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
 {
     return d_ptr->m_dataset->axisY(series);
 }
@@ -360,7 +361,7 @@ void QChart::createDefaultAxes()
 /*!
  Returns the legend object of the chart. Ownership stays in chart.
  */
-QLegend* QChart::legend() const
+QLegend *QChart::legend() const
 {
     return d_ptr->m_legend;
 }
@@ -368,7 +369,7 @@ QLegend* QChart::legend() const
 /*!
   Sets the minimum \a margins between the plot area (axes) and the edge of the chart widget.
 */
-void QChart::setMargins(const QMargins& margins)
+void QChart::setMargins(const QMargins &margins)
 {
     d_ptr->m_presenter->setMargins(margins);
 }
@@ -446,7 +447,7 @@ bool QChart::isDropShadowEnabled() const
 
   \sa addSeries(), removeSeries(), removeAllSeries()
 */
-QList<QAbstractSeries*> QChart::series() const
+QList<QAbstractSeries *> QChart::series() const
 {
     return d_ptr->m_dataset->series();
 }
@@ -456,7 +457,7 @@ QList<QAbstractSeries*> QChart::series() const
 
    \sa axisX(), axisY(), setAxisY(), createDefaultAxes()
 */
-void QChart::setAxisX(QAbstractAxis* axis , QAbstractSeries *series)
+void QChart::setAxisX(QAbstractAxis *axis , QAbstractSeries *series)
 {
     d_ptr->m_dataset->setAxis(series, axis, Qt::Horizontal);
 }

@@ -25,7 +25,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartTitle::ChartTitle(QGraphicsItem* parent)
+ChartTitle::ChartTitle(QGraphicsItem *parent)
     : QGraphicsSimpleTextItem(parent)
 {
 

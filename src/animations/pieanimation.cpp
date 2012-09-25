@@ -35,7 +35,7 @@ PieAnimation::~PieAnimation()
 {
 }
 
-ChartAnimation* PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &sliceData)
+ChartAnimation *PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &sliceData)
 {
     PieSliceAnimation *animation = m_animations.value(sliceItem);
     Q_ASSERT(animation);
@@ -48,7 +48,7 @@ ChartAnimation* PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSlic
     return animation;
 }
 
-ChartAnimation* PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceData, bool startupAnimation)
+ChartAnimation *PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceData &sliceData, bool startupAnimation)
 {
     PieSliceAnimation *animation = new PieSliceAnimation(sliceItem);
     m_animations.insert(sliceItem, animation);
@@ -71,7 +71,7 @@ ChartAnimation* PieAnimation::addSlice(PieSliceItem *sliceItem, const PieSliceDa
     return animation;
 }
 
-ChartAnimation* PieAnimation::removeSlice(PieSliceItem *sliceItem)
+ChartAnimation *PieAnimation::removeSlice(PieSliceItem *sliceItem)
 {
     PieSliceAnimation *animation = m_animations.value(sliceItem);
     Q_ASSERT(animation);

@@ -46,10 +46,10 @@ public:
     bool append(QBarSet *set);
     bool remove(QBarSet *set);
     bool take(QBarSet *set);
-    bool append(QList<QBarSet* > sets);
+    bool append(QList<QBarSet *> sets);
     bool insert(int index, QBarSet *set);
     int count() const;
-    QList<QBarSet*> barSets() const;
+    QList<QBarSet *> barSets() const;
     void clear();
 
     void setLabelsVisible(bool visible = true);
@@ -64,8 +64,8 @@ Q_SIGNALS:
     void countChanged();
     void labelsVisibleChanged();
 
-    void barsetsAdded(QList<QBarSet*> sets);
-    void barsetsRemoved(QList<QBarSet*> sets);
+    void barsetsAdded(QList<QBarSet *> sets);
+    void barsetsRemoved(QList<QBarSet *> sets);
 
 protected:
     Q_DECLARE_PRIVATE(QAbstractBarSeries)

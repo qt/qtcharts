@@ -39,8 +39,8 @@ class QSplineSeriesPrivate: public QLineSeriesPrivate
 {
     Q_OBJECT
 public:
-    ChartElement* createGraphics(ChartPresenter* presenter);
-    QSplineSeriesPrivate(QSplineSeries* q);
+    ChartElement *createGraphics(ChartPresenter *presenter);
+    QSplineSeriesPrivate(QSplineSeries *q);
 
     QPointF controlPoint(int index) const;
 

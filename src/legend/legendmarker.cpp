@@ -113,7 +113,7 @@ QBrush LegendMarker::labelBrush() const
 }
 
 
-void LegendMarker::setGeometry(const QRectF& rect)
+void LegendMarker::setGeometry(const QRectF &rect)
 {
     QFontMetrics fn(font());
 
@@ -130,7 +130,7 @@ void LegendMarker::setGeometry(const QRectF& rect)
         m_textItem->setText(m_text);
     }
 
-    const QRectF& textRect = m_textItem->boundingRect();
+    const QRectF &textRect = m_textItem->boundingRect();
     m_textItem->setPos(x - m_margin, y / 2 - textRect.height() / 2);
     m_rectItem->setRect(m_markerRect);
     m_rectItem->setPos(m_margin, y / 2  - m_markerRect.height() / 2);
@@ -146,7 +146,7 @@ void LegendMarker::paint(QPainter *painter, const QStyleOptionGraphicsItem *opti
     Q_UNUSED(painter)
 }
 
-QSizeF LegendMarker::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF LegendMarker::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 
@@ -210,7 +210,7 @@ void BarLegendMarker::updated()
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-PieLegendMarker::PieLegendMarker(QPieSeries* series, QPieSlice *pieslice, QLegend *legend)
+PieLegendMarker::PieLegendMarker(QPieSeries *series, QPieSlice *pieslice, QLegend *legend)
     : LegendMarker(series, legend),
       m_pieslice(pieslice)
 {

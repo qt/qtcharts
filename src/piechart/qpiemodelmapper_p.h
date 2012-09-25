@@ -56,8 +56,8 @@ public Q_SLOTS:
     void handleModelDestroyed();
 
     // for the series
-    void slicesAdded(QList<QPieSlice*> slices);
-    void slicesRemoved(QList<QPieSlice*> slices);
+    void slicesAdded(QList<QPieSlice *> slices);
+    void slicesRemoved(QList<QPieSlice *> slices);
     void sliceLabelChanged();
     void sliceValueChanged();
     void handleSeriesDestroyed();
@@ -65,7 +65,7 @@ public Q_SLOTS:
     void initializePieFromModel();
 
 private:
-    QPieSlice* pieSlice(QModelIndex index) const;
+    QPieSlice *pieSlice(QModelIndex index) const;
     bool isLabelIndex(QModelIndex index) const;
     bool isValueIndex(QModelIndex index) const;
     QModelIndex valueModelIndex(int slicePos);
@@ -78,7 +78,7 @@ private:
 
 private:
     QPieSeries *m_series;
-    QList<QPieSlice*> m_slices;
+    QList<QPieSlice *> m_slices;
     QAbstractItemModel *m_model;
     int m_first;
     int m_count;

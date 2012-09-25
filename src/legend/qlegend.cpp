@@ -416,7 +416,7 @@ void QLegend::showEvent(QShowEvent *event)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QLegendPrivate::QLegendPrivate(ChartPresenter* presenter, QChart *chart, QLegend *q)
+QLegendPrivate::QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend *q)
     : q_ptr(q),
       m_presenter(presenter),
       m_layout(new LegendLayout(q)),
@@ -457,7 +457,7 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 {
     Q_UNUSED(domain)
 
-    QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
+    QList<LegendMarker *> markers = series->d_ptr->createLegendMarker(q_ptr);
 
     foreach (LegendMarker *marker, markers) {
         marker->setFont(m_font);
@@ -490,7 +490,7 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 
 void QLegendPrivate::handleSeriesVisibleChanged()
 {
-    QAbstractSeries* series = qobject_cast<QAbstractSeries *> (sender());
+    QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
     Q_ASSERT(series);
 
     foreach (LegendMarker *marker, m_markers) {
@@ -502,7 +502,7 @@ void QLegendPrivate::handleSeriesVisibleChanged()
 
 void QLegendPrivate::handleCountChanged()
 {
-    QAbstractSeriesPrivate* series = qobject_cast<QAbstractSeriesPrivate *> (sender());
+    QAbstractSeriesPrivate *series = qobject_cast<QAbstractSeriesPrivate *> (sender());
     Q_ASSERT(series);
     handleSeriesRemoved(series->q_ptr);
     handleSeriesAdded(series->q_ptr, 0);

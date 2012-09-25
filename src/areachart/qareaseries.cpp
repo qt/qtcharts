@@ -195,13 +195,13 @@ QAbstractSeries::SeriesType QAreaSeries::type() const
 /*!
     Sets the \a series that is to be used as the area chart upper series.
 */
-void QAreaSeries::setUpperSeries(QLineSeries* series)
+void QAreaSeries::setUpperSeries(QLineSeries *series)
 {
     Q_D(QAreaSeries);
     d->m_upperSeries = series;
 }
 
-QLineSeries* QAreaSeries::upperSeries() const
+QLineSeries *QAreaSeries::upperSeries() const
 {
     Q_D(const QAreaSeries);
     return d->m_upperSeries;
@@ -210,13 +210,13 @@ QLineSeries* QAreaSeries::upperSeries() const
 /*!
     Sets the \a series that is to be used as the area chart lower series.
 */
-void QAreaSeries::setLowerSeries(QLineSeries* series)
+void QAreaSeries::setLowerSeries(QLineSeries *series)
 {
     Q_D(QAreaSeries);
     d->m_lowerSeries = series;
 }
 
-QLineSeries* QAreaSeries::lowerSeries() const
+QLineSeries *QAreaSeries::lowerSeries() const
 {
     Q_D(const QAreaSeries);
     return d->m_lowerSeries;
@@ -314,7 +314,7 @@ bool QAreaSeries::pointsVisible() const
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries* q)
+QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries *q)
     : QAbstractSeriesPrivate(q),
       m_upperSeries(upperSeries),
       m_lowerSeries(lowerSeries),
@@ -322,7 +322,7 @@ QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lo
 {
 }
 
-void QAreaSeriesPrivate::scaleDomain(Domain& domain)
+void QAreaSeriesPrivate::scaleDomain(Domain &domain)
 {
     Q_Q(QAreaSeries);
 
@@ -331,8 +331,8 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
     qreal maxX(domain.maxX());
     qreal maxY(domain.maxY());
 
-    QLineSeries* upperSeries = q->upperSeries();
-    QLineSeries* lowerSeries = q->lowerSeries();
+    QLineSeries *upperSeries = q->upperSeries();
+    QLineSeries *lowerSeries = q->lowerSeries();
 
     const QList<QPointF>& points = upperSeries->points();
 
@@ -361,11 +361,11 @@ void QAreaSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QAreaSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QAreaSeries);
 
-    AreaChartItem* area = new AreaChartItem(q, presenter);
+    AreaChartItem *area = new AreaChartItem(q, presenter);
     if (presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
         area->upperLineItem()->setAnimation(new XYAnimation(area->upperLineItem()));
         if (q->lowerSeries())
@@ -375,15 +375,15 @@ ChartElement* QAreaSeriesPrivate::createGraphics(ChartPresenter* presenter)
     return area;
 }
 
-QList<LegendMarker*> QAreaSeriesPrivate::createLegendMarker(QLegend* legend)
+QList<LegendMarker *> QAreaSeriesPrivate::createLegendMarker(QLegend *legend)
 {
     Q_Q(QAreaSeries);
-    QList<LegendMarker*> list;
+    QList<LegendMarker *> list;
     return list << new AreaLegendMarker(q, legend);
 }
 
 
-void QAreaSeriesPrivate::initializeAxis(QAbstractAxis* axis)
+void QAreaSeriesPrivate::initializeAxis(QAbstractAxis *axis)
 {
     Q_UNUSED(axis);
 }

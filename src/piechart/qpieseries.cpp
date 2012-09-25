@@ -376,9 +376,9 @@ QAbstractSeries::SeriesType QPieSeries::type() const
 
     Returns true if append was succesfull.
 */
-bool QPieSeries::append(QPieSlice* slice)
+bool QPieSeries::append(QPieSlice *slice)
 {
-    return append(QList<QPieSlice*>() << slice);
+    return append(QList<QPieSlice *>() << slice);
 }
 
 /*!
@@ -387,7 +387,7 @@ bool QPieSeries::append(QPieSlice* slice)
 
     Returns true if append was successful.
 */
-bool QPieSeries::append(QList<QPieSlice*> slices)
+bool QPieSeries::append(QList<QPieSlice *> slices)
 {
     Q_D(QPieSeries);
 
@@ -425,7 +425,7 @@ bool QPieSeries::append(QList<QPieSlice*> slices)
     Appends a single \a slice to the series and returns a reference to the series.
     Slice ownership is passed to the series.
 */
-QPieSeries& QPieSeries::operator << (QPieSlice* slice)
+QPieSeries &QPieSeries::operator << (QPieSlice *slice)
 {
     append(slice);
     return *this;
@@ -436,9 +436,9 @@ QPieSeries& QPieSeries::operator << (QPieSlice* slice)
     Appends a single slice to the series with give \a value and \a label.
     Slice ownership is passed to the series.
 */
-QPieSlice* QPieSeries::append(QString label, qreal value)
+QPieSlice *QPieSeries::append(QString label, qreal value)
 {
-    QPieSlice* slice = new QPieSlice(label, value);
+    QPieSlice *slice = new QPieSlice(label, value);
     append(slice);
     return slice;
 }
@@ -449,7 +449,7 @@ QPieSlice* QPieSeries::append(QString label, qreal value)
 
     Returns true if insert was successful.
 */
-bool QPieSeries::insert(int index, QPieSlice* slice)
+bool QPieSeries::insert(int index, QPieSlice *slice)
 {
     Q_D(QPieSeries);
 
@@ -473,7 +473,7 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
     connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
 
 
-    emit added(QList<QPieSlice*>() << slice);
+    emit added(QList<QPieSlice *>() << slice);
     emit countChanged();
 
     return true;
@@ -486,7 +486,7 @@ bool QPieSeries::insert(int index, QPieSlice* slice)
 
     Returns true if remove was successful.
 */
-bool QPieSeries::remove(QPieSlice* slice)
+bool QPieSeries::remove(QPieSlice *slice)
 {
     Q_D(QPieSeries);
 
@@ -495,7 +495,7 @@ bool QPieSeries::remove(QPieSlice* slice)
 
     d->updateDerivativeData();
 
-    emit removed(QList<QPieSlice*>() << slice);
+    emit removed(QList<QPieSlice *>() << slice);
     emit countChanged();
 
     delete slice;
@@ -512,7 +512,7 @@ bool QPieSeries::remove(QPieSlice* slice)
 
     Returns true if take was successful.
 */
-bool QPieSeries::take(QPieSlice* slice)
+bool QPieSeries::take(QPieSlice *slice)
 {
     Q_D(QPieSeries);
 
@@ -524,7 +524,7 @@ bool QPieSeries::take(QPieSlice* slice)
 
     d->updateDerivativeData();
 
-    emit removed(QList<QPieSlice*>() << slice);
+    emit removed(QList<QPieSlice *>() << slice);
     emit countChanged();
 
     return true;
@@ -539,7 +539,7 @@ void QPieSeries::clear()
     if (d->m_slices.count() == 0)
         return;
 
-    QList<QPieSlice*> slices = d->m_slices;
+    QList<QPieSlice *> slices = d->m_slices;
     foreach (QPieSlice *s, d->m_slices)
         d->m_slices.removeOne(s);
 
@@ -555,7 +555,7 @@ void QPieSeries::clear()
 /*!
     Returns a list of slices that belong to this series.
 */
-QList<QPieSlice*> QPieSeries::slices() const
+QList<QPieSlice *> QPieSeries::slices() const
 {
     Q_D(const QPieSeries);
     return d->m_slices;
@@ -776,7 +776,7 @@ void QPieSeriesPrivate::updateDerivativeData()
     // update slice attributes
     qreal sliceAngle = m_pieStartAngle;
     qreal pieSpan = m_pieEndAngle - m_pieStartAngle;
-    QVector<QPieSlice*> changed;
+    QVector<QPieSlice *> changed;
     foreach (QPieSlice *s, m_slices) {
         QPieSlicePrivate *d = QPieSlicePrivate::fromSlice(s);
         d->setPercentage(s->value() / m_sum);
@@ -807,7 +807,7 @@ void QPieSeriesPrivate::setSizes(qreal innerSize, qreal outerSize)
         emit pieSizeChanged();
 }
 
-QPieSeriesPrivate* QPieSeriesPrivate::fromSeries(QPieSeries *series)
+QPieSeriesPrivate *QPieSeriesPrivate::fromSeries(QPieSeries *series)
 {
     return series->d_func();
 }
@@ -820,7 +820,7 @@ void QPieSeriesPrivate::sliceValueChanged()
 
 void QPieSeriesPrivate::sliceClicked()
 {
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    QPieSlice *slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
     Q_Q(QPieSeries);
     emit q->clicked(slice);
@@ -828,32 +828,32 @@ void QPieSeriesPrivate::sliceClicked()
 
 void QPieSeriesPrivate::sliceHovered(bool state)
 {
-    QPieSlice* slice = qobject_cast<QPieSlice *>(sender());
+    QPieSlice *slice = qobject_cast<QPieSlice *>(sender());
     Q_ASSERT(m_slices.contains(slice));
     Q_Q(QPieSeries);
     emit q->hovered(slice, state);
 }
 
-void QPieSeriesPrivate::scaleDomain(Domain& domain)
+void QPieSeriesPrivate::scaleDomain(Domain &domain)
 {
     Q_UNUSED(domain);
     // does not apply to pie
 }
 
-ChartElement* QPieSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QPieSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QPieSeries);
-    PieChartItem* pie = new PieChartItem(q, presenter);
+    PieChartItem *pie = new PieChartItem(q, presenter);
     if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         pie->setAnimation(new PieAnimation(pie));
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
     return pie;
 }
 
-QList<LegendMarker*> QPieSeriesPrivate::createLegendMarker(QLegend* legend)
+QList<LegendMarker *> QPieSeriesPrivate::createLegendMarker(QLegend *legend)
 {
     Q_Q(QPieSeries);
-    QList<LegendMarker*> markers;
+    QList<LegendMarker *> markers;
     foreach (QPieSlice *slice, q->slices()) {
         PieLegendMarker* marker = new PieLegendMarker(q, slice, legend);
         markers << marker;
@@ -861,7 +861,7 @@ QList<LegendMarker*> QPieSeriesPrivate::createLegendMarker(QLegend* legend)
     return markers;
 }
 
-void QPieSeriesPrivate::initializeAxis(QAbstractAxis* axis)
+void QPieSeriesPrivate::initializeAxis(QAbstractAxis *axis)
 {
     Q_UNUSED(axis);
 }

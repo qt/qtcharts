@@ -38,10 +38,10 @@ class QTCOMMERCIALCHART_EXPORT QXYModelMapper : public QObject
 protected:
     explicit QXYModelMapper(QObject *parent = 0);
 
-    QAbstractItemModel* model() const;
+    QAbstractItemModel *model() const;
     void setModel(QAbstractItemModel *model);
 
-    QXYSeries* series() const;
+    QXYSeries *series() const;
     void setSeries(QXYSeries *series);
 
     int first() const;
@@ -60,7 +60,7 @@ protected:
     void setYSection(int ySection);
 
 protected:
-    QXYModelMapperPrivate * const d_ptr;
+    QXYModelMapperPrivate *const d_ptr;
     Q_DECLARE_PRIVATE(QXYModelMapper)
 };
 

@@ -80,7 +80,7 @@ void ChartValueAxisY::updateGeometry()
 
     qreal height = m_rect.bottom();
 
-    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
+    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(axis.at(0));
     //    lineItem->setLine( chartRect.left() ,  chartRect.top(),  chartRect.left(),  chartRect.bottom());
     if (m_chartAxis->alternativePlacement())
         lineItem->setLine(m_internalRect.right(), chartRect.top(), m_internalRect.right(), chartRect.bottom());
@@ -90,9 +90,9 @@ void ChartValueAxisY::updateGeometry()
     QFontMetrics fn(m_font);
 
     for (int i = 0; i < layout.size(); ++i) {
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(lines.at(i));
         lineItem->setLine(chartRect.left(), layout[i], chartRect.right(), layout[i]);
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
 
         QString text = ticksList.at(i);
 
@@ -105,7 +105,7 @@ void ChartValueAxisY::updateGeometry()
             labelItem->setText(text);
         }
 
-        const QRectF& rect = labelItem->boundingRect();
+        const QRectF &rect = labelItem->boundingRect();
 
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
@@ -126,10 +126,10 @@ void ChartValueAxisY::updateGeometry()
         }
 
         if ((i + 1) % 2 && i > 1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));
+            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem *>(shades.at(i / 2 - 1));
             rectItem->setRect(chartRect.left(), layout[i], chartRect.width(), layout[i - 1] - layout[i]);
         }
-        lineItem = static_cast<QGraphicsLineItem*>(axis.at(i + 1));
+        lineItem = static_cast<QGraphicsLineItem *>(axis.at(i + 1));
         //        lineItem->setLine( chartRect.left()-5,layout[i], chartRect.left(),layout[i]);
         if (m_chartAxis->alternativePlacement())
             lineItem->setLine(m_internalRect.right() + 5, layout[i], m_internalRect.right(), layout[i]);
@@ -141,7 +141,7 @@ void ChartValueAxisY::updateGeometry()
 void ChartValueAxisY::handleAxisUpdated()
 {
     //TODO:: fix this
-    QValueAxis* axis = qobject_cast<QValueAxis*>(m_chartAxis);
+    QValueAxis *axis = qobject_cast<QValueAxis *>(m_chartAxis);
     if (m_tickCount != axis->tickCount()) {
         m_tickCount = axis->tickCount();
         presenter()->layout()->invalidate();
@@ -149,7 +149,7 @@ void ChartValueAxisY::handleAxisUpdated()
     ChartAxis::handleAxisUpdated();
 }
 
-QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 

@@ -41,12 +41,12 @@ class QAreaSeriesPrivate: public QAbstractSeriesPrivate
     Q_OBJECT
 
 public:
-    QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries* q);
+    QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries *q);
 
-    void scaleDomain(Domain& domain);
-    ChartElement* createGraphics(ChartPresenter* presenter);
-    QList<LegendMarker*> createLegendMarker(QLegend* legend);
-    void initializeAxis(QAbstractAxis* axis);
+    void scaleDomain(Domain &domain);
+    ChartElement *createGraphics(ChartPresenter *presenter);
+    QList<LegendMarker *> createLegendMarker(QLegend *legend);
+    void initializeAxis(QAbstractAxis *axis);
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
 
 Q_SIGNALS:
@@ -55,8 +55,8 @@ Q_SIGNALS:
 protected:
     QBrush m_brush;
     QPen m_pen;
-    QLineSeries* m_upperSeries;
-    QLineSeries* m_lowerSeries;
+    QLineSeries *m_upperSeries;
+    QLineSeries *m_lowerSeries;
     bool m_pointsVisible;
 private:
     Q_DECLARE_PUBLIC(QAreaSeries);

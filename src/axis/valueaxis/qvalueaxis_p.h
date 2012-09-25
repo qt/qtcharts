@@ -43,11 +43,11 @@ public:
     ~QValueAxisPrivate();
 
 public:
-    ChartAxis* createGraphics(ChartPresenter* presenter);
-    void intializeDomain(Domain* domain);
+    ChartAxis *createGraphics(ChartPresenter *presenter);
+    void intializeDomain(Domain *domain);
     void handleDomainUpdated();
-    qreal min(){ return m_min; };
-    qreal max(){ return m_max; };
+    qreal min() { return m_min; };
+    qreal max() { return m_max; };
     int count() const { return m_tickCount; }
 
 protected:

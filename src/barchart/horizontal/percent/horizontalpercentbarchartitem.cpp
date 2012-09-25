@@ -25,8 +25,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-HorizontalPercentBarChartItem::HorizontalPercentBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter) :
-    AbstractBarChartItem(series, presenter)
+HorizontalPercentBarChartItem::HorizontalPercentBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter)
+    : AbstractBarChartItem(series, presenter)
 {
 }
 
@@ -54,12 +54,12 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
         qreal percentage = (100 / colSum);
         qreal xPos = -scaleX * m_domainMinX + geometry().left();
         for (int set = 0; set < setCount; set++) {
-            QBarSetPrivate* barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
 
             qreal yPos = (m_domainMinY + 0.5 - barSet->pos(category)) * scaleY + geometry().bottom() - rectHeight / 2;
 
             qreal rectWidth = barSet->value(category) * percentage * scaleX;
-            Bar* bar = m_bars.at(itemIndex);
+            Bar *bar = m_bars.at(itemIndex);
 
             QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
             layout.append(rect);
@@ -70,7 +70,7 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
             else
                 bar->setVisible(barsVisible);
 
-            QGraphicsSimpleTextItem* label = m_labels.at(itemIndex);
+            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
 
             if (!qFuzzyIsNull(m_series->d_func()->valueAt(set, category))) {
                 int p = m_series->d_func()->percentageAt(set, category) * 100;

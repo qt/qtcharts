@@ -107,16 +107,16 @@ void ChartBarCategoryAxisY::updateGeometry()
 
     const qreal delta = chartRect.height() / (m_categoriesAxis->d_ptr->count());
 
-    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
+    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(axis.at(0));
     lineItem->setLine(chartRect.left() , chartRect.top(), chartRect.left(), chartRect.bottom());
 
     qreal height = chartRect.bottom();
     for (int i = 0; i < layout.size(); ++i) {
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
+        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(lines.at(i));
         lineItem->setLine(chartRect.left() , layout[i], chartRect.right(), layout[i]);
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
+        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
         labelItem->setText(ticksList.at(i));
-        const QRectF& rect = labelItem->boundingRect();
+        const QRectF &rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
 
@@ -133,10 +133,10 @@ void ChartBarCategoryAxisY::updateGeometry()
         }
 
         if ((i + 1) % 2 && i > 1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i / 2 - 1));
+            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem *>(shades.at(i / 2 - 1));
             rectItem->setRect(chartRect.left(), layout[i], chartRect.width(), layout[i - 1] - layout[i]);
         }
-        lineItem = static_cast<QGraphicsLineItem*>(axis.at(i + 1));
+        lineItem = static_cast<QGraphicsLineItem *>(axis.at(i + 1));
         lineItem->setLine(chartRect.left() - 5, layout[i], chartRect.left(), layout[i]);
     }
 }
@@ -152,7 +152,7 @@ void ChartBarCategoryAxisY::handleAxisUpdated()
     ChartAxis::handleAxisUpdated();
 }
 
-QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 

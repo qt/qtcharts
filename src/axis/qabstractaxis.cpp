@@ -529,7 +529,7 @@ QFont QAbstractAxis::titleFont() const
     return d_ptr->m_titleFont;
 }
 
-void QAbstractAxis::setTitle(const QString& title)
+void QAbstractAxis::setTitle(const QString &title)
 {
     if (d_ptr->m_title != title) {
         d_ptr->m_title = title;
@@ -706,20 +706,20 @@ void QAbstractAxis::setAlternativePlacement(bool placement)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis* q):
-    q_ptr(q),
-    m_orientation(Qt::Orientation(0)),
-    m_dataset(0),
-    m_visible(true),
-    m_arrowVisible(true),
-    m_gridLineVisible(true),
-    m_labelsVisible(true),
-    m_labelsAngle(0),
-    m_shadesVisible(false),
-    m_shadesBrush(Qt::SolidPattern),
-    m_shadesOpacity(1.0),
-    m_dirty(false),
-    m_alternativePlacement(false)
+QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
+    : q_ptr(q),
+      m_orientation(Qt::Orientation(0)),
+      m_dataset(0),
+      m_visible(true),
+      m_arrowVisible(true),
+      m_gridLineVisible(true),
+      m_labelsVisible(true),
+      m_labelsAngle(0),
+      m_shadesVisible(false),
+      m_shadesBrush(Qt::SolidPattern),
+      m_shadesOpacity(1.0),
+      m_dirty(false),
+      m_alternativePlacement(false)
 {
 
 }

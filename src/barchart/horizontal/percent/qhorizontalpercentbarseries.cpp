@@ -88,7 +88,7 @@ QHorizontalPercentBarSeriesPrivate::QHorizontalPercentBarSeriesPrivate(QHorizont
 
 }
 
-void QHorizontalPercentBarSeriesPrivate::scaleDomain(Domain& domain)
+void QHorizontalPercentBarSeriesPrivate::scaleDomain(Domain &domain)
 {
     qreal minX(domain.minX());
     qreal minY(domain.minY());
@@ -104,11 +104,11 @@ void QHorizontalPercentBarSeriesPrivate::scaleDomain(Domain& domain)
     domain.setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement* QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter* presenter)
+ChartElement *QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
 {
     Q_Q(QHorizontalPercentBarSeries);
 
-    HorizontalPercentBarChartItem* bar = new HorizontalPercentBarChartItem(q, presenter);
+    HorizontalPercentBarChartItem *bar = new HorizontalPercentBarChartItem(q, presenter);
     if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
         bar->setAnimation(new HorizontalPercentBarAnimation(bar));
     presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));

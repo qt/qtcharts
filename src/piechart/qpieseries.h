@@ -45,18 +45,18 @@ public:
 
     QAbstractSeries::SeriesType type() const;
 
-    bool append(QPieSlice* slice);
-    bool append(QList<QPieSlice*> slices);
-    QPieSeries& operator << (QPieSlice* slice);
-    QPieSlice* append(QString label, qreal value);
+    bool append(QPieSlice *slice);
+    bool append(QList<QPieSlice *> slices);
+    QPieSeries &operator << (QPieSlice *slice);
+    QPieSlice *append(QString label, qreal value);
 
-    bool insert(int index, QPieSlice* slice);
+    bool insert(int index, QPieSlice *slice);
 
-    bool remove(QPieSlice* slice);
-    bool take(QPieSlice* slice);
+    bool remove(QPieSlice *slice);
+    bool take(QPieSlice *slice);
     void clear();
 
-    QList<QPieSlice*> slices() const;
+    QList<QPieSlice *> slices() const;
     int count() const;
 
     bool isEmpty() const;
@@ -85,10 +85,10 @@ public:
     void setLabelsPosition(QPieSlice::LabelPosition position);
 
 Q_SIGNALS:
-    void added(QList<QPieSlice*> slices);
-    void removed(QList<QPieSlice*> slices);
-    void clicked(QPieSlice* slice);
-    void hovered(QPieSlice* slice, bool state);
+    void added(QList<QPieSlice *> slices);
+    void removed(QList<QPieSlice *> slices);
+    void clicked(QPieSlice *slice);
+    void hovered(QPieSlice *slice, bool state);
     void countChanged();
     void sumChanged();
 
