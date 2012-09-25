@@ -48,13 +48,21 @@ int main(int argc, char *argv[])
         axisX = new QValueAxis;
         axisX->setTickCount(7 + i);
         axisX->setLinePenColor(series->pen().color());
+
         if (i % 2)
-            axisX->setAlternativePlacement(true);
+            axisX->setAlignment(Qt::AlignTop);
+        else
+            axisX->setAlignment(Qt::AlignBottom);
+
         axisY = new QValueAxis;
         axisY->setTickCount(7 + i);
         axisY->setLinePenColor(series->pen().color());
+
         if (i % 2)
-            axisY->setAlternativePlacement(true);
+            axisY->setAlignment(Qt::AlignRight);
+        else
+            axisY->setAlignment(Qt::AlignLeft);
+
 
         chart->setAxisX(axisX, series);
         chart->setAxisY(axisY, series);

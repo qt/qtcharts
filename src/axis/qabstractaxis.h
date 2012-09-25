@@ -123,9 +123,9 @@ public:
     void setShadesBorderColor(QColor color);
     QColor shadesBorderColor() const;
 
-    Qt::Orientation orientation();
-    bool alternativePlacement() const;
-    void setAlternativePlacement(bool placement);
+    Qt::Orientation orientation() const;
+    Qt::Alignment alignment() const;
+    void setAlignment( Qt::Alignment alignment);
 
     //range handling
     void setMin(const QVariant &min);

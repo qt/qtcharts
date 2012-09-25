@@ -38,10 +38,10 @@
 #include "qpieseries_p.h"
 #include "qpieslice.h"
 #include "chartpresenter_p.h"
+#include "chartlayout_p.h"
 #include <QPainter>
 #include <QPen>
 #include <QTimer>
-#include <QGraphicsLayout>
 #include <QGraphicsSceneEvent>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

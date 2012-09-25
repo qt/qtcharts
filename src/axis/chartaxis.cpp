@@ -22,6 +22,7 @@
 #include "qabstractaxis.h"
 #include "qabstractaxis_p.h"
 #include "chartpresenter_p.h"
+#include "chartlayout_p.h"
 #include "domain_p.h"
 #include <qmath.h>
 #include <QDateTime>
@@ -31,18 +32,18 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartAxis::ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter)
-    : ChartElement(presenter),
-      m_chartAxis(axis),
-      m_labelsAngle(0),
-      m_grid(new QGraphicsItemGroup(presenter->rootItem())),
-      m_shades(new QGraphicsItemGroup(presenter->rootItem())),
-      m_labels(new QGraphicsItemGroup(presenter->rootItem())),
-      m_arrow(new QGraphicsItemGroup(presenter->rootItem())),
-      m_title(new QGraphicsSimpleTextItem(presenter->rootItem())),
-      m_min(0),
-      m_max(0),
-      m_animation(0)
+ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : ChartElement(presenter),
+    m_chartAxis(axis),
+    m_labelsAngle(0),
+    m_grid(new QGraphicsItemGroup(presenter->rootItem())),
+    m_shades(new QGraphicsItemGroup(presenter->rootItem())),
+    m_labels(new QGraphicsItemGroup(presenter->rootItem())),
+    m_arrow(new QGraphicsItemGroup(presenter->rootItem())),
+    m_title(new QGraphicsSimpleTextItem(presenter->rootItem())),
+    m_min(0),
+    m_max(0),
+    m_animation(0),
+    m_labelPadding(5)
 {
     //initial initialization
     m_arrow->setZValue(ChartPresenter::AxisZValue);
@@ -51,7 +52,7 @@ ChartAxis::ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter)
     m_shades->setZValue(ChartPresenter::ShadesZValue);
     m_grid->setZValue(ChartPresenter::GridZValue);
 
-    QObject::connect(m_chartAxis->d_ptr.data(), SIGNAL(updated()), this, SLOT(handleAxisUpdated()));
+    QObject::connect(m_chartAxis->d_ptr.data(),SIGNAL(updated()),this,SLOT(handleAxisUpdated()));
 
     QGraphicsSimpleTextItem item;
     m_font = item.font();
@@ -62,27 +63,25 @@ ChartAxis::~ChartAxis()
 {
 }
 
-void ChartAxis::setAnimation(AxisAnimation *animation)
+void ChartAxis::setAnimation(AxisAnimation* animation)
 {
-    m_animation = animation;
+    m_animation=animation;
 }
 
 void ChartAxis::setLayout(QVector<qreal> &layout)
 {
-    m_layoutVector = layout;
+    m_layoutVector=layout;
 }
 
 void ChartAxis::createItems(int count)
 {
     if (m_arrow->children().size() == 0)
-        m_arrow->addToGroup(new AxisItem(this, presenter()->rootItem()));
-
+    m_arrow->addToGroup(new AxisItem(this,presenter()->rootItem()));
     for (int i = 0; i < count; ++i) {
         m_grid->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
         m_labels->addToGroup(new QGraphicsSimpleTextItem(presenter()->rootItem()));
         m_arrow->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
-        if ((m_grid->childItems().size()) % 2 && m_grid->childItems().size() > 2)
-            m_shades->addToGroup(new QGraphicsRectItem(presenter()->rootItem()));
+        if ((m_grid->childItems().size())%2 && m_grid->childItems().size()>2) m_shades->addToGroup(new QGraphicsRectItem(presenter()->rootItem()));
     }
 }
 
@@ -94,8 +93,7 @@ void ChartAxis::deleteItems(int count)
     QList<QGraphicsItem *> axis = m_arrow->childItems();
 
     for (int i = 0; i < count; ++i) {
-        if (lines.size() % 2 && lines.size() > 1)
-            delete(shades.takeLast());
+        if (lines.size()%2 && lines.size() > 1) delete(shades.takeLast());
         delete(lines.takeLast());
         delete(labels.takeLast());
         delete(axis.takeLast());
@@ -106,39 +104,41 @@ void ChartAxis::updateLayout(QVector<qreal> &layout)
 {
     int diff = m_layoutVector.size() - layout.size();
 
-    if (diff > 0)
+    if (diff>0) {
         deleteItems(diff);
-    else if (diff < 0)
+    }
+    else if (diff<0) {
         createItems(-diff);
+    }
 
-    if (diff < 0)
-        handleAxisUpdated();
+    if(diff<0) handleAxisUpdated();
 
     if (m_animation) {
-        switch (presenter()->state()) {
-        case ChartPresenter::ZoomInState:
-            m_animation->setAnimationType(AxisAnimation::ZoomInAnimation);
-            m_animation->setAnimationPoint(presenter()->statePoint());
-            break;
-        case ChartPresenter::ZoomOutState:
-            m_animation->setAnimationType(AxisAnimation::ZoomOutAnimation);
-            m_animation->setAnimationPoint(presenter()->statePoint());
-            break;
-        case ChartPresenter::ScrollUpState:
-        case ChartPresenter::ScrollLeftState:
-            m_animation->setAnimationType(AxisAnimation::MoveBackwordAnimation);
-            break;
-        case ChartPresenter::ScrollDownState:
-        case ChartPresenter::ScrollRightState:
-            m_animation->setAnimationType(AxisAnimation::MoveForwardAnimation);
-            break;
-        case ChartPresenter::ShowState:
-            m_animation->setAnimationType(AxisAnimation::DefaultAnimation);
-            break;
-        }
-        m_animation->setValues(m_layoutVector, layout);
-        presenter()->startAnimation(m_animation);
-    } else {
+          switch(presenter()->state()){
+              case ChartPresenter::ZoomInState:
+                  m_animation->setAnimationType(AxisAnimation::ZoomInAnimation);
+                  m_animation->setAnimationPoint(presenter()->statePoint());
+                  break;
+              case ChartPresenter::ZoomOutState:
+                  m_animation->setAnimationType(AxisAnimation::ZoomOutAnimation);
+                  m_animation->setAnimationPoint(presenter()->statePoint());
+                  break;
+              case ChartPresenter::ScrollUpState:
+              case ChartPresenter::ScrollLeftState:
+                  m_animation->setAnimationType(AxisAnimation::MoveBackwordAnimation);
+                  break;
+              case ChartPresenter::ScrollDownState:
+              case ChartPresenter::ScrollRightState:
+                  m_animation->setAnimationType(AxisAnimation::MoveForwardAnimation);
+                  break;
+              case ChartPresenter::ShowState:
+                  m_animation->setAnimationType(AxisAnimation::DefaultAnimation);
+                  break;
+          }
+          m_animation->setValues(m_layoutVector,layout);
+          presenter()->startAnimation(m_animation);
+    }
+    else {
         setLayout(layout);
         updateGeometry();
     }
@@ -206,84 +206,99 @@ void ChartAxis::setShadesVisibility(bool visible)
 
 void ChartAxis::setLabelsAngle(int angle)
 {
-    foreach (QGraphicsItem *item , m_labels->childItems())
-        item->setRotation(angle);
+    foreach(QGraphicsItem* item , m_labels->childItems()) {
+          item->setRotation(angle);
+    }
 
-    m_labelsAngle = angle;
+    m_labelsAngle=angle;
 }
 
 void ChartAxis::setLabelsPen(const QPen &pen)
 {
-    foreach (QGraphicsItem *item , m_labels->childItems())
+    foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setPen(pen);
+    }
 }
 
 void ChartAxis::setLabelsBrush(const QBrush &brush)
 {
-    foreach (QGraphicsItem *item , m_labels->childItems())
+    foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setBrush(brush);
+    }
 }
 
 void ChartAxis::setLabelsFont(const QFont &font)
 {
-    foreach (QGraphicsItem *item , m_labels->childItems())
+    foreach(QGraphicsItem* item , m_labels->childItems()) {
         static_cast<QGraphicsSimpleTextItem*>(item)->setFont(font);
-
-    if (m_font != font) {
+    }
+    if(m_font!=font) {
         m_font = font;
-        foreach (QGraphicsItem *item , m_labels->childItems())
+        foreach(QGraphicsItem* item , m_labels->childItems()) {
             static_cast<QGraphicsSimpleTextItem*>(item)->setFont(font);
+        }
         QGraphicsLayoutItem::updateGeometry();
         presenter()->layout()->invalidate();
+
     }
 }
 
 void ChartAxis::setShadesBrush(const QBrush &brush)
 {
-    foreach (QGraphicsItem *item , m_shades->childItems())
+    foreach(QGraphicsItem* item , m_shades->childItems()) {
         static_cast<QGraphicsRectItem*>(item)->setBrush(brush);
+    }
 }
 
 void ChartAxis::setShadesPen(const QPen &pen)
 {
-    foreach (QGraphicsItem *item , m_shades->childItems())
+    foreach(QGraphicsItem* item , m_shades->childItems()) {
         static_cast<QGraphicsRectItem*>(item)->setPen(pen);
+    }
 }
 
 void ChartAxis::setArrowPen(const QPen &pen)
 {
-    foreach (QGraphicsItem *item , m_arrow->childItems())
-        static_cast<QGraphicsLineItem*>(item)->setPen(pen);
+    foreach(QGraphicsItem* item , m_arrow->childItems()) {
+           static_cast<QGraphicsLineItem*>(item)->setPen(pen);
+    }
 }
 
 void ChartAxis::setGridPen(const QPen &pen)
 {
-    foreach (QGraphicsItem *item , m_grid->childItems())
+    foreach(QGraphicsItem* item , m_grid->childItems()) {
         static_cast<QGraphicsLineItem*>(item)->setPen(pen);
+    }
+}
+
+void ChartAxis::setLabelPadding(int padding)
+{
+    m_labelPadding=padding;
 }
 
 bool ChartAxis::isEmpty()
 {
-    return !m_rect.isValid() ||
-           presenter()->chartsGeometry().isEmpty() ||
-           qFuzzyIsNull(m_min - m_max);
+    return !m_axisRect.isValid() || m_gridRect.isEmpty() || qFuzzyIsNull(m_min - m_max);
 }
 
 void ChartAxis::handleDomainUpdated()
 {
-    Domain *domain = qobject_cast<Domain *>(sender());
+    Domain* domain = qobject_cast<Domain*>(sender());
     qreal min(0);
     qreal max(0);
 
-    if (m_chartAxis->orientation() == Qt::Horizontal) {
+    if(m_chartAxis->orientation()==Qt::Horizontal) {
         min = domain->minX();
         max = domain->maxX();
-    } else if (m_chartAxis->orientation() == Qt::Vertical) {
+    }
+    else if (m_chartAxis->orientation()==Qt::Vertical)
+    {
         min = domain->minY();
         max = domain->maxY();
     }
 
-    if (!qFuzzyIsNull(m_min - min) || !qFuzzyIsNull(m_max - max)) {
+    if (!qFuzzyIsNull(m_min - min) || !qFuzzyIsNull(m_max - max))
+    {
         m_min = min;
         m_max = max;
 
@@ -293,9 +308,9 @@ void ChartAxis::handleDomainUpdated()
             updateLayout(layout);
             QSizeF before = effectiveSizeHint(Qt::MinimumSize);
 
-            QSizeF after = sizeHint(Qt::MinimumSize);
+            QSizeF after= sizeHint(Qt::MinimumSize);
 
-            if (before != after) {
+            if(before!=after) {
                 QGraphicsLayoutItem::updateGeometry();
                 //we don't want to call invalidate on layout, since it will change minimum size of component,
                 //which we would like to avoid since it causes nasty flips when scrolling or zooming,
@@ -308,8 +323,8 @@ void ChartAxis::handleDomainUpdated()
 
 void ChartAxis::handleAxisUpdated()
 {
-    if (isEmpty())
-        return;
+    if(isEmpty()) return;
+
 
     bool visible = m_chartAxis->isVisible();
 
@@ -328,11 +343,11 @@ void ChartAxis::handleAxisUpdated()
     setTitleText(m_chartAxis->title());
 }
 
-void ChartAxis::setTitleText(const QString &title)
+void ChartAxis::setTitleText(const QString& title)
 {
-    if (m_titleText != title) {
+    if(m_titleText!=title) {
         m_titleText = title;
-        m_rect = QRect();
+        m_axisRect = QRect();
         QGraphicsLayoutItem::updateGeometry();
         presenter()->layout()->invalidate();
     }
@@ -346,51 +361,47 @@ void ChartAxis::hide()
     setShadesVisibility(false);
 }
 
-void ChartAxis::setGeometry(const QRectF &rect)
+void ChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
 {
-    m_rect = rect;
+        m_gridRect = grid;
+        m_axisRect = axis;
 
-    if (isEmpty())
-        return;
+        if (isEmpty()) return;
 
-    if (!m_titleText.isNull()) {
-        QFontMetrics fn(m_title->font());
+        if(!m_titleText.isNull()) {
+            QFontMetrics fn(m_title->font());
 
-        int size(0);
+            int size(0);
 
-        QRectF chartRect = presenter()->chartsGeometry();
+            if(orientation()==Qt::Horizontal)
+            size = grid.width();
+            else if(orientation()==Qt::Vertical)
+            size = grid.height();
 
-        if (orientation() == Qt::Horizontal)
-            size = chartRect.width();
-        else if (orientation() == Qt::Vertical)
-            size = chartRect.height();
-
-        if (fn.boundingRect(m_titleText).width() > size) {
-            QString string = m_titleText + "...";
-            while (fn.boundingRect(string).width() > size && string.length() > 3)
+            if (fn.boundingRect(m_titleText).width() > size)
+            {
+                QString string = m_titleText + "...";
+                while (fn.boundingRect(string).width() > size && string.length() > 3)
                 string.remove(string.length() - 4, 1);
-            m_title->setText(string);
-        } else {
+                m_title->setText(string);
+            }
+            else
             m_title->setText(m_titleText);
+
+            QPointF center = grid.center() - m_title->boundingRect().center();
+            if(orientation()==Qt::Horizontal) {
+                m_title->setPos(center.x(),m_axisRect.bottom()-m_title->boundingRect().height());
+            }
+            else if(orientation()==Qt::Vertical) {
+                m_title->setTransformOriginPoint(m_title->boundingRect().center());
+                m_title->setRotation(270);
+                m_title->setPos(m_axisRect.left()- m_title->boundingRect().width()/2+m_title->boundingRect().height()/2,center.y());
+            }
         }
 
-        QPointF center = chartRect.center() - m_title->boundingRect().center();
-        if (orientation() == Qt::Horizontal) {
-            m_title->setPos(center.x(), m_rect.bottom() - m_title->boundingRect().height());
-        } else if (orientation() == Qt::Vertical) {
-            m_title->setTransformOriginPoint(m_title->boundingRect().center());
-            m_title->setRotation(270);
-            m_title->setPos(m_rect.left() - m_title->boundingRect().width() / 2 + m_title->boundingRect().height() / 2, center.y());
-        }
-    }
+        QVector<qreal> layout = calculateLayout();
+        updateLayout(layout);
 
-    QVector<qreal> layout = calculateLayout();
-    updateLayout(layout);
-}
-
-void ChartAxis::setInternalRect(const QRectF &size)
-{
-    m_internalRect = size;
 }
 
 void ChartAxis::axisSelected()
@@ -401,27 +412,28 @@ void ChartAxis::axisSelected()
 
 QStringList ChartAxis::createNumberLabels(qreal min, qreal max, int ticks) const
 {
-    Q_ASSERT(max > min);
-    Q_ASSERT(ticks > 1);
+    Q_ASSERT(max>min);
+    Q_ASSERT(ticks>1);
 
     QStringList labels;
 
-    int n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0);
+    int n = qMax(int(-qFloor(log10((max-min)/(ticks-1)))),0);
     n++;
 
     QValueAxis *axis = qobject_cast<QValueAxis *>(m_chartAxis);
 
     QString format = axis->labelFormat();
 
-    if (format.isNull()) {
-        for (int i = 0; i < ticks; i++) {
-            qreal value = min + (i * (max - min) / (ticks - 1));
-            labels << QString::number(value, 'f', n);
+    if(format.isNull()) {
+        for (int i=0; i< ticks; i++) {
+            qreal value = min + (i * (max - min)/ (ticks-1));
+            labels << QString::number(value,'f',n);
         }
-    } else {
+    }
+    else {
         QByteArray array = format.toAscii();
-        for (int i = 0; i < ticks; i++) {
-            qreal value = min + (i * (max - min) / (ticks - 1));
+        for (int i=0; i< ticks; i++) {
+            qreal value = min + (i * (max - min)/ (ticks-1));
             labels << QString().sprintf(array, value);
         }
     }
@@ -434,9 +446,9 @@ Qt::Orientation ChartAxis::orientation() const
     return m_chartAxis->orientation();
 }
 
-bool ChartAxis::alternativePlacement() const
+Qt::Alignment ChartAxis::alignment() const
 {
-    return m_chartAxis->alternativePlacement();
+    return m_chartAxis->alignment();
 }
 
 bool ChartAxis::isVisible()
@@ -444,30 +456,36 @@ bool ChartAxis::isVisible()
     return m_chartAxis->isVisible();
 }
 
-QSizeF ChartAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
+QSizeF ChartAxis::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
 {
+
     Q_UNUSED(constraint);
     QFontMetrics fn(m_title->font());
     QSizeF sh;
 
-    if (m_titleText.isNull())
-        return sh;
+    if(m_titleText.isNull()) return sh;
 
-    switch (which) {
-    case Qt::MinimumSize:
-        if (orientation() == Qt::Horizontal)
-            sh = QSizeF(fn.boundingRect("...").width(), fn.height());
-        else if (orientation() == Qt::Vertical)
-            sh = QSizeF(fn.height(), fn.boundingRect("...").width());
+    switch(which) {
+        case Qt::MinimumSize:
+        if(orientation()==Qt::Horizontal) {
+            sh = QSizeF(fn.boundingRect ("...").width(),fn.height());
+        }
+        else if(orientation()==Qt::Vertical) {
+            sh = QSizeF(fn.height(),fn.boundingRect ("...").width());
+        }
+
         break;
-    case Qt::MaximumSize:
-    case Qt::PreferredSize:
-        if (orientation() == Qt::Horizontal)
-            sh = QSizeF(fn.boundingRect(m_chartAxis->title()).width(), fn.height());
-        else if (orientation() == Qt::Vertical)
-            sh = QSizeF(fn.height(), fn.boundingRect(m_chartAxis->title()).width());
+        case Qt::MaximumSize:
+        case Qt::PreferredSize:
+        if(orientation()==Qt::Horizontal) {
+            sh = QSizeF(fn.boundingRect(m_chartAxis->title()).width(),fn.height());
+        }
+        else if(orientation()==Qt::Vertical) {
+            sh = QSizeF(fn.height(),fn.boundingRect(m_chartAxis->title()).width());
+        }
+
         break;
-    default:
+        default:
         break;
     }
 

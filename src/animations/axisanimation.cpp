@@ -58,51 +58,49 @@ void AxisAnimation::setAnimationPoint(const QPointF &point)
 
 void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayout)
 {
-    if (state() != QAbstractAnimation::Stopped)
-        stop();
+    if (state() != QAbstractAnimation::Stopped) stop();
 
     if (newLayout.count() == 0)
-        return;
+    return;
 
     switch (m_type) {
-    case ZoomOutAnimation: {
-            QRectF rect = m_axis->presenter()->chartsGeometry();
+        case ZoomOutAnimation: {
+            QRectF rect = m_axis->gridGeometry();
             oldLayout.resize(newLayout.count());
 
-            for (int i = 0, j = oldLayout.count() - 1; i < (oldLayout.count() + 1) / 2; ++i, --j) {
+            for(int i = 0, j = oldLayout.count() - 1; i < (oldLayout.count() + 1) / 2; ++i, --j) {
                 oldLayout[i] = m_axis->axisType() == ChartAxis::X_AXIS ? rect.left() : rect.bottom();
                 oldLayout[j] = m_axis->axisType() == ChartAxis::X_AXIS ? rect.right() : rect.top();
             }
         }
         break;
-    case ZoomInAnimation: {
-            int index = qMin(oldLayout.count() * (m_axis->axisType() == ChartAxis::X_AXIS ? m_point.x() : (1 - m_point.y())),
-                             newLayout.count() - (qreal)1.0);
+        case ZoomInAnimation: {
+            int index = qMin(oldLayout.count() * (m_axis->axisType() == ChartAxis::X_AXIS ? m_point.x() : (1 - m_point.y())), newLayout.count() - (qreal)1.0);
             oldLayout.resize(newLayout.count());
 
-            for (int i = 0; i < oldLayout.count(); i++)
-                oldLayout[i] = oldLayout[index];
+            for(int i = 0; i < oldLayout.count(); i++)
+            oldLayout[i]= oldLayout[index];
         }
         break;
-    case MoveForwardAnimation: {
+        case MoveForwardAnimation: {
             oldLayout.resize(newLayout.count());
 
-            for (int i = 0, j = i + 1; i < oldLayout.count() - 1; ++i, ++j)
-                oldLayout[i] = oldLayout[j];
+            for(int i = 0, j = i + 1; i < oldLayout.count() - 1; ++i, ++j)
+            oldLayout[i]= oldLayout[j];
         }
         break;
-    case MoveBackwordAnimation: {
+        case MoveBackwordAnimation: {
             oldLayout.resize(newLayout.count());
 
-            for (int i = oldLayout.count() - 1, j = i - 1; i > 0; --i, --j)
-                oldLayout[i] = oldLayout[j];
+            for(int i = oldLayout.count() - 1, j = i - 1; i > 0; --i, --j)
+            oldLayout[i]= oldLayout[j];
         }
         break;
-    default: {
+        default: {
             oldLayout.resize(newLayout.count());
-            QRectF rect = m_axis->presenter()->chartsGeometry();
-            for (int i = 0, j = oldLayout.count() - 1; i < oldLayout.count(); ++i, --j)
-                oldLayout[i] = m_axis->axisType() == ChartAxis::X_AXIS ? rect.left() : rect.top();
+            QRectF rect = m_axis->gridGeometry();
+            for(int i = 0, j = oldLayout.count() - 1; i < oldLayout.count(); ++i, --j)
+            oldLayout[i] = m_axis->axisType() == ChartAxis::X_AXIS ? rect.left() : rect.top();
         }
         break;
     }

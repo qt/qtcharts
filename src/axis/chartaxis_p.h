@@ -82,12 +82,13 @@ public:
     void setLabelsPen(const QPen &pen);
     void setLabelsBrush(const QBrush &brush);
     void setLabelsFont(const QFont &font);
+    void setLabelPadding(int padding);
+    int labelPadding() const { return m_labelPadding;};
 
     void setTitlePen(const QPen &pen);
     void setTitleBrush(const QBrush &brush);
     void setTitleFont(const QFont &font);
     void setTitleText(const QString &title);
-
 
     void setLayout(QVector<qreal> &layout);
     QVector<qreal> layout() const { return m_layoutVector; }
@@ -96,19 +97,19 @@ public:
     ChartAnimation *animation() const { return m_animation; };
 
     Qt::Orientation orientation() const;
-    bool alternativePlacement() const;
+    Qt::Alignment alignment() const;
 
     bool isVisible();
     void hide();
 
-    void setGeometry(const QRectF &size);
-    QRectF geometry() const { return m_rect; }
-
-    void setInternalRect(const QRectF &size);
+    void setGeometry(const QRectF &axis, const QRectF &grid);
+    QRectF axisGeometry() const { return m_axisRect; }
+    QRectF gridGeometry() const { return m_gridRect; }
 
     virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 
 protected:
+    void setGeometry(const QRectF &size){ Q_UNUSED(size);};
     virtual void updateGeometry() = 0;
     virtual QVector<qreal> calculateLayout() const = 0;
     QStringList createNumberLabels(qreal min, qreal max, int ticks) const;
@@ -130,8 +131,8 @@ protected:
     QAbstractAxis *m_chartAxis;
     int m_labelsAngle;
     //TODO: to be removed
-    QRectF m_rect;
-    QRectF m_internalRect;
+    QRectF m_axisRect;
+    QRectF m_gridRect;
     QScopedPointer<QGraphicsItemGroup> m_grid;
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;
@@ -143,6 +144,7 @@ protected:
     AxisAnimation *m_animation;
     QFont m_font;
     QString m_titleText;
+    int m_labelPadding;
 
     friend class AxisAnimation;
     friend class AxisItem;

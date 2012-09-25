@@ -75,6 +75,7 @@ Q_SIGNALS:
 protected:
     QAbstractAxis *q_ptr;
     Qt::Orientation m_orientation;
+    Qt::Alignment m_alignment;
     ChartDataSet *m_dataset;
 
 private:
@@ -105,8 +106,6 @@ private:
     qreal m_shadesOpacity;
 
     bool m_dirty;
-
-    bool m_alternativePlacement;
 
     friend class QAbstractAxis;
     friend class ChartDataSet;

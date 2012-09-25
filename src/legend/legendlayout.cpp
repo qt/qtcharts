@@ -22,7 +22,7 @@
 #include "chartpresenter_p.h"
 #include "legendmarker_p.h"
 #include "qlegend_p.h"
-#include <QDebug>
+#include "chartlayout_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

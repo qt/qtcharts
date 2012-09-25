@@ -78,28 +78,29 @@ public:
         ZoomOutState
     };
 
-    ChartPresenter(QChart *chart, ChartDataSet *dataset);
+    ChartPresenter(QChart* chart,ChartDataSet *dataset);
     virtual ~ChartPresenter();
 
     ChartTheme *chartTheme() const { return m_chartTheme; }
     ChartDataSet *dataSet() const { return m_dataset; }
-    QGraphicsItem *rootItem() const { return m_chart; }
-    ChartBackground *backgroundElement();
-    ChartTitle *titleElement();
-    QList<ChartAxis *> axisItems() const;
+    QGraphicsItem* rootItem() const { return m_chart; }
+    ChartBackground* backgroundElement();
+    ChartTitle* titleElement();
+    QList<ChartAxis*> axisItems() const;
+    QList<ChartElement*> chartItems() const;
 
-    QLegend *legend();
+    QLegend* legend();
 
-    void setBackgroundBrush(const QBrush &brush);
+    void setBackgroundBrush(const QBrush& brush);
     QBrush backgroundBrush() const;
 
-    void setBackgroundPen(const QPen &pen);
+    void setBackgroundPen(const QPen& pen);
     QPen backgroundPen() const;
 
-    void setTitle(const QString &title);
+    void setTitle(const QString& title);
     QString title() const;
 
-    void setTitleFont(const QFont &font);
+    void setTitleFont(const QFont& font);
     QFont titleFont() const;
 
     void setTitleBrush(const QBrush &brush);
@@ -113,29 +114,24 @@ public:
 
     void setVisible(bool visible);
 
-    void setTheme(QChart::ChartTheme theme, bool force = true);
+    void setTheme(QChart::ChartTheme theme,bool force = true);
     QChart::ChartTheme theme();
 
     void setAnimationOptions(QChart::AnimationOptions options);
     QChart::AnimationOptions animationOptions() const;
 
     void zoomIn(qreal factor);
-    void zoomIn(const QRectF &rect);
+    void zoomIn(const QRectF& rect);
     void zoomOut(qreal factor);
-    void scroll(qreal dx, qreal dy);
+    void scroll(qreal dx,qreal dy);
 
-    void setChartsGeometry(const QRectF &rect);
-    QRectF chartsGeometry() const;
-
-    void startAnimation(ChartAnimation *animation);
+    void startAnimation(ChartAnimation* animation);
     State state() const { return m_state; }
     QPointF statePoint() const { return m_statePoint; }
 
     void resetAllElements();
 
-    void setMargins(const QMargins &margins);
-    QMargins margins() const;
-    QGraphicsLayout *layout();
+    ChartLayout* layout();
 
 private:
     void createBackgroundItem();
@@ -143,34 +139,31 @@ private:
     void selectVisibleAxis();
 
 public Q_SLOTS:
-    void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
-    void handleSeriesRemoved(QAbstractSeries *series);
-    void handleAxisAdded(QAbstractAxis *axis, Domain *domain);
-    void handleAxisRemoved(QAbstractAxis *axis);
+    void handleSeriesAdded(QAbstractSeries* series,Domain* domain);
+    void handleSeriesRemoved(QAbstractSeries* series);
+    void handleAxisAdded(QAbstractAxis* axis,Domain* domain);
+    void handleAxisRemoved(QAbstractAxis* axis);
     void handleAxisVisibleChanged(bool visible);
 
 private Q_SLOTS:
     void handleAnimationFinished();
 
 Q_SIGNALS:
-    void geometryChanged(const QRectF &rect);
     void animationsFinished();
-    void marginsChanged(QRectF margins);
 
 private:
-    QChart *m_chart;
-    ChartDataSet *m_dataset;
+    QChart* m_chart;
+    ChartDataSet* m_dataset;
     ChartTheme *m_chartTheme;
-    QMap<QAbstractSeries *, ChartElement *> m_chartItems;
-    QMap<QAbstractAxis *, ChartAxis *> m_axisItems;
-    QRectF m_chartsRect;
+    QMap<QAbstractSeries*, ChartElement*> m_chartItems;
+    QMap<QAbstractAxis*, ChartAxis*> m_axisItems;
     QChart::AnimationOptions m_options;
     State m_state;
     QPointF m_statePoint;
-    QList<ChartAnimation *> m_animations;
-    ChartLayout *m_layout;
-    ChartBackground *m_background;
-    ChartTitle *m_title;
+    QList<ChartAnimation*> m_animations;
+    ChartLayout* m_layout;
+    ChartBackground* m_background;
+    ChartTitle* m_title;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
