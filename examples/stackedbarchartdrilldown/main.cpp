@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     QMainWindow window;
 
 //! [1]
-    DrilldownChart* drilldownChart =  new DrilldownChart();
+    DrilldownChart *drilldownChart =  new DrilldownChart();
     drilldownChart->setTheme(QChart::ChartThemeBlueIcy);
     drilldownChart->setAnimationOptions(QChart::SeriesAnimations);
 //! [1]
@@ -51,14 +51,14 @@ int main(int argc, char *argv[])
 
 //! [3]
     // Create drilldown structure
-    DrilldownBarSeries* seasonSeries = new DrilldownBarSeries(months, drilldownChart);
+    DrilldownBarSeries *seasonSeries = new DrilldownBarSeries(months, drilldownChart);
     seasonSeries->setName("Crop by month - Season");
 
     // Each month in season series has drilldown series for weekly data
     for (int month = 0; month < months.count(); month++) {
 
         // Create drilldown series for every week
-        DrilldownBarSeries* weeklySeries = new DrilldownBarSeries(weeks, drilldownChart);
+        DrilldownBarSeries *weeklySeries = new DrilldownBarSeries(weeks, drilldownChart);
         seasonSeries->mapDrilldownSeries(month, weeklySeries);
 
         // Drilling down from weekly data brings us back to season data.
@@ -68,19 +68,19 @@ int main(int argc, char *argv[])
         }
 
         // Use clicked signal to implement drilldown
-        QObject::connect(weeklySeries, SIGNAL(clicked(int, QBarSet*)), drilldownChart, SLOT(handleClicked(int, QBarSet*)));
+        QObject::connect(weeklySeries, SIGNAL(clicked(int, QBarSet *)), drilldownChart, SLOT(handleClicked(int, QBarSet *)));
     }
 
     // Enable drilldown from season series using clicked signal
-    QObject::connect(seasonSeries, SIGNAL(clicked(int, QBarSet*)), drilldownChart, SLOT(handleClicked(int, QBarSet*)));
+    QObject::connect(seasonSeries, SIGNAL(clicked(int, QBarSet *)), drilldownChart, SLOT(handleClicked(int, QBarSet *)));
 //! [3]
 
 //! [4]
     // Fill monthly and weekly series with data
     foreach (QString plant, plants) {
-        QBarSet* monthlyCrop = new QBarSet(plant);
+        QBarSet *monthlyCrop = new QBarSet(plant);
         for (int month = 0; month < months.count(); month++) {
-            QBarSet* weeklyCrop = new QBarSet(plant);
+            QBarSet *weeklyCrop = new QBarSet(plant);
             for (int week = 0; week < weeks.count(); week++)
                 *weeklyCrop << (qrand() % 20);
             // Get the drilldown series from season series and add crop to it.

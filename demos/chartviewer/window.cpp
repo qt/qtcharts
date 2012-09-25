@@ -544,7 +544,7 @@ QMenu *Window::createMenu()
                 menu->addMenu(subMenu);
             }
 
-            foreach(Chart *chart, subCategoryMap.values(subCategory)) {
+            foreach (Chart *chart, subCategoryMap.values(subCategory)) {
                 createMenuAction(subMenu, QIcon(), chart->name(),
                                  qVariantFromValue((void *) chart));
             }

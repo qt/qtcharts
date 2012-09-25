@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //![1]
-    QLineSeries* series = new QLineSeries();
+    QLineSeries *series = new QLineSeries();
 //![1]
 
 //![2]
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
     chart->createDefaultAxes();
@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
 //![3]
 
 //![4]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![4]
 

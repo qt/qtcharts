@@ -45,13 +45,13 @@ CustomTableModel::CustomTableModel(QObject *parent) :
     }
 }
 
-int CustomTableModel::rowCount(const QModelIndex & parent) const
+int CustomTableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return m_data.count();
 }
 
-int CustomTableModel::columnCount(const QModelIndex & parent) const
+int CustomTableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return m_columnCount;
@@ -68,7 +68,7 @@ QVariant CustomTableModel::headerData(int section, Qt::Orientation orientation, 
         return QString("%1").arg(section + 1);
 }
 
-QVariant CustomTableModel::data(const QModelIndex & index, int role) const
+QVariant CustomTableModel::data(const QModelIndex &index, int role) const
 {
     if (role == Qt::DisplayRole) {
         return m_data[index.row()]->at(index.column());
@@ -86,7 +86,7 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
     return QVariant();
 }
 
-bool CustomTableModel::setData(const QModelIndex & index, const QVariant & value, int role)
+bool CustomTableModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
     if (index.isValid() && role == Qt::EditRole) {
         m_data[index.row()]->replace(index.column(), value.toDouble());
@@ -96,7 +96,7 @@ bool CustomTableModel::setData(const QModelIndex & index, const QVariant & value
     return false;
 }
 
-Qt::ItemFlags CustomTableModel::flags(const QModelIndex & index) const
+Qt::ItemFlags CustomTableModel::flags(const QModelIndex &index) const
 {
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }

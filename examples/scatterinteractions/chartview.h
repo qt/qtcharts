@@ -36,7 +36,7 @@ public:
     ~ChartView();
 
 private Q_SLOTS:
-    void handleClickedPoint(const QPointF& point);
+    void handleClickedPoint(const QPointF &point);
 
 private:
     QScatterSeries *m_scatter;

@@ -31,9 +31,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //![1]
-    QLineSeries* series = new QLineSeries();
+    QLineSeries *series = new QLineSeries();
     *series << QPointF(0, 6) << QPointF(9, 4) << QPointF(15, 20) << QPointF(25, 12) << QPointF(29, 26);
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
 //![1]
@@ -62,8 +62,8 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QCategoryAxis* axisX = new QCategoryAxis();
-    QCategoryAxis* axisY = new QCategoryAxis();
+    QCategoryAxis *axisX = new QCategoryAxis();
+    QCategoryAxis *axisY = new QCategoryAxis();
 
     // Customize axis label font
     QFont labelsFont;
@@ -106,7 +106,7 @@ int main(int argc, char *argv[])
 //![4]
 
 //![5]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![5]
 

@@ -56,7 +56,7 @@ ChartView::~ChartView()
 {
 }
 
-void ChartView::handleClickedPoint(const QPointF& point)
+void ChartView::handleClickedPoint(const QPointF &point)
 {
     QPointF clickedPoint = point;
     // Find the closest point from series 1

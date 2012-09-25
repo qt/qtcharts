@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     //![1]
-    QLineSeries* series = new QLineSeries();
+    QLineSeries *series = new QLineSeries();
     //![1]
 
     //![2]
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     //![2]
 
     //![3]
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->addSeries(series);
     chart->legend()->hide();
     chart->createDefaultAxes();
@@ -77,7 +77,7 @@ int main(int argc, char *argv[])
     //![4]
 
     //![5]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     //![5]
 

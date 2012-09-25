@@ -25,7 +25,7 @@
 #include <QAreaSeries>
 #include <QTime>
 
-ChartView::ChartView(QChart* chart, QWidget* parent)
+ChartView::ChartView(QChart *chart, QWidget *parent)
     : QChartView(chart, parent),
       m_index(-1),
       m_chart(chart)
@@ -36,16 +36,16 @@ ChartView::ChartView(QChart* chart, QWidget* parent)
     m_timer.setInterval(3000);
 
     //![1]
-    QLineSeries* series0 = new QLineSeries();
+    QLineSeries *series0 = new QLineSeries();
     series0->setName("line");
 
-    QScatterSeries* series1 = new QScatterSeries();
+    QScatterSeries *series1 = new QScatterSeries();
     series1->setName("scatter");
 
-    QSplineSeries* series2 = new QSplineSeries();
+    QSplineSeries *series2 = new QSplineSeries();
     series2->setName("spline");
 
-    QAreaSeries* series3 = new QAreaSeries(series0);
+    QAreaSeries *series3 = new QAreaSeries(series0);
     series3->setName("area");
     //![1]
 

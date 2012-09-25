@@ -28,12 +28,12 @@ DrilldownBarSeries::DrilldownBarSeries(QStringList categories, QObject *parent)
     m_categories = categories;
 }
 
-void DrilldownBarSeries::mapDrilldownSeries(int index, DrilldownBarSeries* drilldownSeries)
+void DrilldownBarSeries::mapDrilldownSeries(int index, DrilldownBarSeries *drilldownSeries)
 {
     m_DrilldownSeries[index] = drilldownSeries;
 }
 
-DrilldownBarSeries* DrilldownBarSeries::drilldownSeries(int index)
+DrilldownBarSeries *DrilldownBarSeries::drilldownSeries(int index)
 {
     return m_DrilldownSeries[index];
 }

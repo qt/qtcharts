@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QMainWindow window;
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     ChartView chartView(chart, &window);
     chartView.setRenderHint(QPainter::Antialiasing);
     chart->setAnimationOptions(QChart::SeriesAnimations);

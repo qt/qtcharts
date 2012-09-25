@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 
     //![3]
     QMainWindow window;
-    QChartView* chartView = new QChartView(donutBreakdown);
+    QChartView *chartView = new QChartView(donutBreakdown);
     chartView->setRenderHint(QPainter::Antialiasing);
     window.setCentralWidget(chartView);
     window.resize(800, 600);

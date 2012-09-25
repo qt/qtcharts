@@ -38,7 +38,7 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
     m_currentSeries = series;
 
     // Reset axis
-    QBarCategoryAxis* axis = new QBarCategoryAxis();
+    QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(m_currentSeries->categories());
 
     addSeries(series);
@@ -52,7 +52,7 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
 void DrilldownChart::handleClicked(int index, QBarSet *barset)
 {
     Q_UNUSED(barset)
-    DrilldownBarSeries* series = static_cast<DrilldownBarSeries*>(sender());
+    DrilldownBarSeries *series = static_cast<DrilldownBarSeries *>(sender());
     changeSeries(series->drilldownSeries(index));
 }
 

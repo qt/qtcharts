@@ -39,10 +39,7 @@ protected:
     bool sceneEvent(QEvent *event);
 
 private:
-    bool gestureEvent(QGestureEvent* event);
-
-private:
-
+    bool gestureEvent(QGestureEvent *event);
 };
 
 #endif // CHART_H

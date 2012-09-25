@@ -35,10 +35,10 @@ int main(int argc, char *argv[])
     qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     //![1]
-    QLineSeries* series;
+    QLineSeries *series;
     QValueAxis *axisX;
     QValueAxis *axisY;
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     for (int i = 0; i < 5; i++) {
         series = new QLineSeries;
         for (int k(0); k < 8; k++)
@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
     //![3]
 
     //![4]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     //![4]
 

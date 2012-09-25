@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 //![1]
 
 //![2]
-    QChartView* chartView = new QChartView();
+    QChartView *chartView = new QChartView();
     chartView->setRenderHint(QPainter::Antialiasing);
     chartView->chart()->setTitle("Donut with a lemon glaze (100g)");
     chartView->chart()->addSeries(series);

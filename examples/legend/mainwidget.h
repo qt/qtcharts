@@ -68,7 +68,7 @@ private:
     QDoubleSpinBox *m_fontSize;
 
     // For detached layout
-    QGroupBox*  m_legendSettings;
+    QGroupBox *m_legendSettings;
     QDoubleSpinBox *m_legendPosX;
     QDoubleSpinBox *m_legendPosY;
     QDoubleSpinBox *m_legendWidth;

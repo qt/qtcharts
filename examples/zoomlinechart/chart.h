@@ -39,7 +39,7 @@ protected:
     bool sceneEvent(QEvent *event);
 
 private:
-    bool gestureEvent(QGestureEvent* event);
+    bool gestureEvent(QGestureEvent *event);
 
 private:
 

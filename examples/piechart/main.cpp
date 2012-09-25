@@ -48,14 +48,14 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple piechart example");
     chart->legend()->hide();
 //![3]
 
 //![4]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![4]
 

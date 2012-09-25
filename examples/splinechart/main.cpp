@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     //![1]
-    QSplineSeries* series = new QSplineSeries();
+    QSplineSeries *series = new QSplineSeries();
     series->setName("spline");
     //![1]
 
@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     //![2]
 
     //![3]
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->legend()->hide();
     chart->addSeries(series);
     chart->setTitle("Simple spline chart example");
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     //![3]
 
     //![4]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     //![4]
 

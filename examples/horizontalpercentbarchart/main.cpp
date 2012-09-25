@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple horizontal percent barchart example");
     chart->setAnimationOptions(QChart::SeriesAnimations);
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 //![4]
     QStringList categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
-    QBarCategoryAxis* axis = new QBarCategoryAxis();
+    QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->createDefaultAxes();
     chart->setAxisY(axis, series);
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 //![5]
 
 //![6]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![6]
 

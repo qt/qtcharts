@@ -33,16 +33,16 @@ class DrilldownSlice : public QPieSlice
     Q_OBJECT
 
 public:
-    DrilldownSlice(qreal value, QString prefix, QAbstractSeries* drilldownSeries);
+    DrilldownSlice(qreal value, QString prefix, QAbstractSeries *drilldownSeries);
     virtual ~DrilldownSlice();
-    QAbstractSeries* drilldownSeries() const;
+    QAbstractSeries *drilldownSeries() const;
 
 public Q_SLOTS:
     void updateLabel();
     void showHighlight(bool show);
 
 private:
-    QAbstractSeries* m_drilldownSeries;
+    QAbstractSeries *m_drilldownSeries;
     QString m_prefix;
 };
 

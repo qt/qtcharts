@@ -22,7 +22,7 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-DrilldownSlice::DrilldownSlice(qreal value, QString prefix, QAbstractSeries* drilldownSeries)
+DrilldownSlice::DrilldownSlice(qreal value, QString prefix, QAbstractSeries *drilldownSeries)
     : m_drilldownSeries(drilldownSeries),
       m_prefix(prefix)
 {
@@ -38,7 +38,7 @@ DrilldownSlice::~DrilldownSlice()
 
 }
 
-QAbstractSeries* DrilldownSlice::drilldownSeries() const
+QAbstractSeries *DrilldownSlice::drilldownSeries() const
 {
     return m_drilldownSeries;
 }

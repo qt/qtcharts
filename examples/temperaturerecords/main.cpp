@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Temperature records in celcius");
     chart->setAnimationOptions(QChart::SeriesAnimations);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     QStringList categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun" << "Jul" << "Aug" << "Sep" << "Oct" << "Nov" << "Dec";
 
-    QBarCategoryAxis* axis = new QBarCategoryAxis();
+    QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->createDefaultAxes();
     chart->setAxisX(axis, series);
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
 //![5]
 
 //![6]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![6]
 

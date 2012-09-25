@@ -102,7 +102,7 @@ TableWidget::TableWidget(QWidget *parent)
 
     //! [9]
     // create main layout
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout *mainLayout = new QGridLayout;
     mainLayout->addWidget(tableView, 1, 0);
     mainLayout->addWidget(chartView, 1, 1);
     mainLayout->setColumnStretch(1, 1);

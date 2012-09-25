@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QLineSeries* series = new QLineSeries();
+    QLineSeries *series = new QLineSeries();
     for (int i = 0; i < 500; i++) {
         QPointF p((qreal) i, qSin(M_PI / 50 * i) * 100);
         p.ry() += qrand() % 20;
@@ -55,14 +55,14 @@ int main(int argc, char *argv[])
     *set4 << 9 << 7 << 5 << 3 << 1 << 2;
 
     //QHorizontalBarSeries* series2 = new QHorizontalBarSeries();
-    QBarSeries* series2 = new QBarSeries();
+    QBarSeries *series2 = new QBarSeries();
     series2->append(set0);
     series2->append(set1);
     series2->append(set2);
     series2->append(set3);
     series2->append(set4);
 
-    Chart* chart = new Chart();
+    Chart *chart = new Chart();
     // chart->addSeries(series);
     chart->addSeries(series2);
     chart->setTitle("Scroll in/out example");
@@ -71,11 +71,11 @@ int main(int argc, char *argv[])
 
     QStringList categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
-    QBarCategoryAxis* axis = new QBarCategoryAxis();
+    QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->setAxisX(axis, series2);
 
-    ChartView* chartView = new ChartView(chart);
+    ChartView *chartView = new ChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
     QMainWindow window;

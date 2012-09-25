@@ -69,7 +69,7 @@ MainWidget::MainWidget(QWidget *parent) :
     connect(m_legendWidth, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
     connect(m_legendHeight, SIGNAL(valueChanged(double)), this, SLOT(updateLegendLayout()));
 
-    QFormLayout* legendLayout = new QFormLayout();
+    QFormLayout *legendLayout = new QFormLayout();
     legendLayout->addRow("HPos", m_legendPosX);
     legendLayout->addRow("VPos", m_legendPosY);
     legendLayout->addRow("Width", m_legendWidth);
@@ -88,7 +88,7 @@ MainWidget::MainWidget(QWidget *parent) :
     m_fontSize->setValue(m_chart->legend()->font().pointSizeF());
     connect(m_fontSize, SIGNAL(valueChanged(double)), this, SLOT(fontSizeChanged()));
 
-    QFormLayout* fontLayout = new QFormLayout();
+    QFormLayout *fontLayout = new QFormLayout();
     fontLayout->addRow("Legend font size", m_fontSize);
 
     // Create layout for grid and detached legend
@@ -180,7 +180,7 @@ void MainWidget::addBarset()
 
 void MainWidget::removeBarset()
 {
-    QList<QBarSet*> sets = m_series->barSets();
+    QList<QBarSet *> sets = m_series->barSets();
     if (sets.count() > 0) {
         m_series->remove(sets.at(sets.count() - 1));
     }

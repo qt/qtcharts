@@ -37,13 +37,13 @@ int main(int argc, char *argv[])
 
     QMainWindow window;
 
-    DrilldownChart* chart = new DrilldownChart();
+    DrilldownChart *chart = new DrilldownChart();
     chart->setTheme(QChart::ChartThemeLight);
     chart->setAnimationOptions(QChart::AllAnimations);
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignRight);
 
-    QPieSeries* yearSeries = new QPieSeries(&window);
+    QPieSeries *yearSeries = new QPieSeries(&window);
     yearSeries->setName("Sales by year - All");
 
     QList<QString> months;
@@ -52,22 +52,22 @@ int main(int argc, char *argv[])
     names << "Jane" << "John" << "Axel" << "Mary" << "Susan" << "Bob";
 
     foreach (QString name, names) {
-        QPieSeries* series = new QPieSeries(&window);
+        QPieSeries *series = new QPieSeries(&window);
         series->setName("Sales by month - " + name);
 
         foreach (QString month, months)
-            *series << new DrilldownSlice(qrand() % 1000, month, yearSeries);
+        *series << new DrilldownSlice(qrand() % 1000, month, yearSeries);
 
-        QObject::connect(series, SIGNAL(clicked(QPieSlice*)), chart, SLOT(handleSliceClicked(QPieSlice*)));
+        QObject::connect(series, SIGNAL(clicked(QPieSlice *)), chart, SLOT(handleSliceClicked(QPieSlice *)));
 
         *yearSeries << new DrilldownSlice(series->sum(), name, series);
     }
 
-    QObject::connect(yearSeries, SIGNAL(clicked(QPieSlice*)), chart, SLOT(handleSliceClicked(QPieSlice*)));
+    QObject::connect(yearSeries, SIGNAL(clicked(QPieSlice *)), chart, SLOT(handleSliceClicked(QPieSlice *)));
 
     chart->changeSeries(yearSeries);
 
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
     window.setCentralWidget(chartView);
     window.resize(800, 500);

@@ -39,7 +39,7 @@ public Q_SLOTS:
     void handleClicked(int index, QBarSet *barset);
 
 private:
-    DrilldownBarSeries* m_currentSeries;
+    DrilldownBarSeries *m_currentSeries;
 };
 //! [1]
 

@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //![4]
-    ChartView* chartView = new ChartView();
+    ChartView *chartView = new ChartView();
     QMainWindow window;
     window.setCentralWidget(chartView);
     window.resize(400, 300);

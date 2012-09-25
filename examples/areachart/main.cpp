@@ -31,8 +31,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 //![1]
-    QLineSeries* series0 = new QLineSeries();
-    QLineSeries* series1 = new QLineSeries();
+    QLineSeries *series0 = new QLineSeries();
+    QLineSeries *series1 = new QLineSeries();
 //![1]
 
 //![2]
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 //![2]
 
 //![3]
-    QAreaSeries* series = new QAreaSeries(series0, series1);
+    QAreaSeries *series = new QAreaSeries(series0, series1);
     series->setName("Batman");
     QPen pen(0x059605);
     pen.setWidth(3);
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
 //![3]
 
 //![4]
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->addSeries(series);
     chart->setTitle("Simple areachart example");
     chart->createDefaultAxes();
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 //![4]
 
 //![5]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![5]
 

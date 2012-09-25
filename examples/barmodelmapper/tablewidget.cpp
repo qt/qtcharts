@@ -78,7 +78,7 @@ TableWidget::TableWidget(QWidget *parent)
     QString seriesColorHex = "#000000";
 
     // get the color of the series and use it for showing the mapped area
-    QList<QBarSet*> barsets = series->barSets();
+    QList<QBarSet *> barsets = series->barSets();
     for (int i = 0; i < barsets.count(); i++) {
         seriesColorHex = "#" + QString::number(barsets.at(i)->brush().color().rgb(), 16).right(6).toUpper();
         model->addMapping(seriesColorHex, QRect(1 + i, first, 1, barsets.at(i)->count()));
@@ -88,7 +88,7 @@ TableWidget::TableWidget(QWidget *parent)
     //! [6]
     QStringList categories;
     categories << "April" << "May" << "June" << "July" << "August";
-    QBarCategoryAxis* axis = new QBarCategoryAxis();
+    QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->createDefaultAxes();
     chart->setAxisX(axis, series);
@@ -102,7 +102,7 @@ TableWidget::TableWidget(QWidget *parent)
 
     //! [8]
     // create main layout
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout *mainLayout = new QGridLayout;
     mainLayout->addWidget(tableView, 1, 0);
     mainLayout->addWidget(chartView, 1, 1);
     mainLayout->setColumnStretch(1, 1);

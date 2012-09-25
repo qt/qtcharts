@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 //![1]
 
 //![2]
-    QBarSeries* barseries = new QBarSeries();
+    QBarSeries *barseries = new QBarSeries();
     barseries->append(set0);
     barseries->append(set1);
     barseries->append(set2);
@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
 //![2]
 
 //![8]
-    QLineSeries* lineseries = new QLineSeries();
+    QLineSeries *lineseries = new QLineSeries();
 
     lineseries->append(QPoint(0, 4));
     lineseries->append(QPoint(1, 15));
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
 //![8]
 
 //![3]
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->addSeries(barseries);
     chart->addSeries(lineseries);
     chart->setTitle("Line and barchart example");
@@ -78,13 +78,13 @@ int main(int argc, char *argv[])
 //![4]
     QStringList categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
-    QBarCategoryAxis* axisX = new QBarCategoryAxis();
+    QBarCategoryAxis *axisX = new QBarCategoryAxis();
     axisX->append(categories);
     chart->setAxisX(axisX, lineseries);
     chart->setAxisX(axisX, barseries);
     axisX->setRange(QString("Jan"), QString("Jun"));
 
-    QValueAxis* axisY = new QValueAxis();
+    QValueAxis *axisY = new QValueAxis();
     chart->setAxisY(axisY, lineseries);
     chart->setAxisY(axisY, barseries);
     axisY->setRange(0, 20);
@@ -96,7 +96,7 @@ int main(int argc, char *argv[])
 //![5]
 
 //![6]
-    QChartView* chartView = new QChartView(chart);
+    QChartView *chartView = new QChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 //![6]
 

@@ -34,7 +34,7 @@ DrilldownChart::~DrilldownChart()
 
 }
 
-void DrilldownChart::changeSeries(QAbstractSeries* series)
+void DrilldownChart::changeSeries(QAbstractSeries *series)
 {
     // NOTE: if the series is owned by the chart it will be deleted
     // here the "window" owns the series...
@@ -45,9 +45,9 @@ void DrilldownChart::changeSeries(QAbstractSeries* series)
     setTitle(series->name());
 }
 
-void DrilldownChart::handleSliceClicked(QPieSlice* slice)
+void DrilldownChart::handleSliceClicked(QPieSlice *slice)
 {
-    DrilldownSlice* drilldownSlice = static_cast<DrilldownSlice*>(slice);
+    DrilldownSlice *drilldownSlice = static_cast<DrilldownSlice *>(slice);
     changeSeries(drilldownSlice->drilldownSeries());
 }
 
