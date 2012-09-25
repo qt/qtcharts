@@ -73,6 +73,8 @@ private:
     void removeData(int start, int end);
     void blockModelSignals(bool block = true);
     void blockSeriesSignals(bool block = true);
+    qreal valueFromModel(QModelIndex index);
+    void setValueToModel(QModelIndex index, qreal value);
 
 private:
     QXYSeries *m_series;

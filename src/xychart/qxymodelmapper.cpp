@@ -22,6 +22,7 @@
 #include "qxymodelmapper_p.h"
 #include "qxyseries.h"
 #include <QAbstractItemModel>
+#include <QDateTime>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -246,6 +247,34 @@ QModelIndex QXYModelMapperPrivate::yModelIndex(int yPos)
         return m_model->index(m_ySection, yPos + m_first);
 }
 
+qreal QXYModelMapperPrivate::valueFromModel(QModelIndex index)
+{
+    QVariant value = m_model->data(index, Qt::DisplayRole);
+    switch (value.type()) {
+    case QVariant::DateTime:
+        return value.toDateTime().toMSecsSinceEpoch();
+    case QVariant::Date:
+        return QDateTime(value.toDate()).toMSecsSinceEpoch();
+    default:
+        return value.toReal();
+    }
+}
+
+void QXYModelMapperPrivate::setValueToModel(QModelIndex index, qreal value)
+{
+    QVariant oldValue = m_model->data(index, Qt::DisplayRole);
+    switch (oldValue.type()) {
+    case QVariant::DateTime:
+        m_model->setData(index, QDateTime::fromMSecsSinceEpoch(value));
+        break;
+    case QVariant::Date:
+        m_model->setData(index, QDateTime::fromMSecsSinceEpoch(value).date());
+        break;
+    default:
+        m_model->setData(index, value);
+    }
+}
+
 void QXYModelMapperPrivate::handlePointAdded(int pointPos)
 {
     if (m_seriesSignalsBlock)
@@ -260,8 +289,8 @@ void QXYModelMapperPrivate::handlePointAdded(int pointPos)
     else
         m_model->insertColumns(pointPos + m_first, 1);
 
-    m_model->setData(xModelIndex(pointPos), m_series->points().at(pointPos).x());
-    m_model->setData(yModelIndex(pointPos), m_series->points().at(pointPos).y());
+    setValueToModel(xModelIndex(pointPos), m_series->points().at(pointPos).x());
+    setValueToModel(yModelIndex(pointPos), m_series->points().at(pointPos).y());
     blockModelSignals(false);
 }
 
@@ -287,8 +316,8 @@ void QXYModelMapperPrivate::handlePointReplaced(int pointPos)
         return;
 
     blockModelSignals();
-    m_model->setData(xModelIndex(pointPos), m_series->points().at(pointPos).x());
-    m_model->setData(yModelIndex(pointPos), m_series->points().at(pointPos).y());
+    setValueToModel(xModelIndex(pointPos), m_series->points().at(pointPos).x());
+    setValueToModel(yModelIndex(pointPos), m_series->points().at(pointPos).y());
     blockModelSignals(false);
 }
 
@@ -318,8 +347,8 @@ void QXYModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottom
                     QModelIndex yIndex = yModelIndex(index.row() - m_first);
                     if (xIndex.isValid() && yIndex.isValid()) {
                         oldPoint = m_series->points().at(index.row() - m_first);
-                        newPoint.setX(m_model->data(xIndex).toReal());
-                        newPoint.setY(m_model->data(yIndex).toReal());
+                        newPoint.setX(valueFromModel(xIndex));
+                        newPoint.setY(valueFromModel(yIndex));
                     }
                 }
             } else if (m_orientation == Qt::Horizontal && (index.row() == m_xSection || index.row() == m_ySection)) {
@@ -328,8 +357,8 @@ void QXYModelMapperPrivate::modelUpdated(QModelIndex topLeft, QModelIndex bottom
                     QModelIndex yIndex = yModelIndex(index.column() - m_first);
                     if (xIndex.isValid() && yIndex.isValid()) {
                         oldPoint = m_series->points().at(index.column() - m_first);
-                        newPoint.setX(m_model->data(xIndex).toReal());
-                        newPoint.setY(m_model->data(yIndex).toReal());
+                        newPoint.setX(valueFromModel(xIndex));
+                        newPoint.setY(valueFromModel(yIndex));
                     }
                 }
             } else {
@@ -420,8 +449,8 @@ void QXYModelMapperPrivate::insertData(int start, int end)
             QModelIndex xIndex = xModelIndex(i - m_first);
             QModelIndex yIndex = yModelIndex(i - m_first);
             if (xIndex.isValid() && yIndex.isValid()) {
-                point.setX(m_model->data(xIndex, Qt::DisplayRole).toDouble());
-                point.setY(m_model->data(yIndex, Qt::DisplayRole).toDouble());
+                point.setX(valueFromModel(xIndex));
+                point.setY(valueFromModel(yIndex));
                 m_series->insert(i - m_first, point);
             }
         }
@@ -464,8 +493,8 @@ void QXYModelMapperPrivate::removeData(int start, int end)
                     QModelIndex xIndex = xModelIndex(i);
                     QModelIndex yIndex = yModelIndex(i);
                     if (xIndex.isValid() && yIndex.isValid()) {
-                        point.setX(m_model->data(xIndex, Qt::DisplayRole).toDouble());
-                        point.setY(m_model->data(yIndex, Qt::DisplayRole).toDouble());
+                        point.setX(valueFromModel(xIndex));
+                        point.setY(valueFromModel(yIndex));
                         m_series->insert(i, point);
                     }
                 }
@@ -488,8 +517,8 @@ void QXYModelMapperPrivate::initializeXYFromModel()
     QModelIndex yIndex = yModelIndex(pointPos);
     while (xIndex.isValid() && yIndex.isValid()) {
         QPointF point;
-        point.setX(m_model->data(xIndex, Qt::DisplayRole).toDouble());
-        point.setY(m_model->data(yIndex, Qt::DisplayRole).toDouble());
+        point.setX(valueFromModel(xIndex));
+        point.setY(valueFromModel(yIndex));
         m_series->append(point);
         pointPos++;
         xIndex = xModelIndex(pointPos);
