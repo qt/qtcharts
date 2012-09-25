@@ -60,7 +60,7 @@ public:
 //    explicit QLegendMarkerPrivate(QAbstractSeries *series, QLegendMarker *q);
     explicit QLegendMarkerPrivate(QLegendMarker *q);
     virtual ~QLegendMarkerPrivate();
-/*
+
     void setPen(const QPen &pen);
     QPen pen() const;
 
@@ -75,7 +75,10 @@ public:
 
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
-*/
+
+    bool isVisible() const;
+    void setVisible(bool visible);
+
     // Helper for now.
     LegendMarkerItem* item() const { return m_item; }
 
@@ -95,13 +98,14 @@ private:
 */
 
 // New legend marker properties
+/*
     QString m_label;
     QBrush m_labelBrush;
     QFont m_font;
     QPen m_pen;
     QBrush m_brush;
     bool m_visible;
-
+*/
     friend class QLegendPrivate; // TODO: Is this needed?
     Q_DECLARE_PUBLIC(QLegendMarker)
 };

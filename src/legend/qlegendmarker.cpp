@@ -44,77 +44,69 @@ QLegendMarker::~QLegendMarker()
 
 QString QLegendMarker::label() const
 {
-    return d_ptr->m_label;
+    return d_ptr->label();
 }
 
 void QLegendMarker::setLabel(const QString &label)
 {
-    d_ptr->m_label = label;
+    d_ptr->setLabel(label);
 }
 
 QBrush QLegendMarker::labelBrush() const
 {
-    return d_ptr->m_labelBrush;
+    return d_ptr->labelBrush();
 }
 
 void QLegendMarker::setLabelBrush(const QBrush &brush)
 {
-    d_ptr->m_labelBrush = brush;
+    d_ptr->setLabelBrush(brush);
 }
 
 QFont QLegendMarker::font() const
 {
-    return d_ptr->m_font;
+    return d_ptr->font();
 }
 
 void QLegendMarker::setFont(const QFont &font)
 {
-    d_ptr->m_font = font;
+    d_ptr->setFont(font);
 }
 
 QPen QLegendMarker::pen() const
 {
-    return d_ptr->m_pen;
+    return d_ptr->pen();
 }
 
 void QLegendMarker::setPen(const QPen &pen)
 {
-    d_ptr->m_pen = pen;
+    d_ptr->setPen(pen);
 }
 
 QBrush QLegendMarker::brush() const
 {
-    return d_ptr->m_brush;
+    return d_ptr->brush();
 }
 
 void QLegendMarker::setBrush(const QBrush &brush)
 {
-    d_ptr->m_brush = brush;
+    d_ptr->setBrush(brush);
 }
 
 bool QLegendMarker::isVisible() const
 {
-    return d_ptr->m_visible;
+    return d_ptr->isVisible();
 }
 
 void QLegendMarker::setVisible(bool visible)
 {
-    d_ptr->m_visible = visible;
+    d_ptr->setVisible(visible);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*
-QLegendMarkerPrivate::QLegendMarkerPrivate(QAbstractSeries *series, QLegendMarker *q) :
-    q_ptr(q),
-    m_series(series)
-{
-    m_item = new LegendMarkerItem(m_series);
-}
-*/
 QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q) :
     q_ptr(q)
 {
-    qDebug() << "QLegendMarkerPrivate created";
+//    qDebug() << "QLegendMarkerPrivate created";
     m_item = new LegendMarkerItem(this);
 }
 
@@ -128,6 +120,66 @@ void QLegendMarkerPrivate::handleMousePressEvent(QGraphicsSceneEvent *event)
     Q_UNUSED(event);
     Q_Q(QLegendMarker);
     emit q->clicked();
+}
+
+void QLegendMarkerPrivate::setPen(const QPen &pen)
+{
+    m_item->setPen(pen);
+}
+
+QPen QLegendMarkerPrivate::pen() const
+{
+    return m_item->pen();
+}
+
+void QLegendMarkerPrivate::setBrush(const QBrush &brush)
+{
+    m_item->setBrush(brush);
+}
+
+QBrush QLegendMarkerPrivate::brush() const
+{
+    return m_item->brush();
+}
+
+void QLegendMarkerPrivate::setFont(const QFont &font)
+{
+    m_item->setFont(font);
+}
+
+QFont QLegendMarkerPrivate::font() const
+{
+    return m_item->font();
+}
+
+void QLegendMarkerPrivate::setLabel(const QString label)
+{
+    m_item->setLabel(label);
+}
+
+QString QLegendMarkerPrivate::label() const
+{
+    return m_item->label();
+}
+
+void QLegendMarkerPrivate::setLabelBrush(const QBrush &brush)
+{
+    m_item->setLabelBrush(brush);
+}
+
+QBrush QLegendMarkerPrivate::labelBrush() const
+{
+    return m_item->labelBrush();
+}
+
+bool QLegendMarkerPrivate::isVisible() const
+{
+    return m_item->isVisible();
+}
+
+void QLegendMarkerPrivate::setVisible(bool visible)
+{
+    m_item->setVisible(visible);
 }
 
 

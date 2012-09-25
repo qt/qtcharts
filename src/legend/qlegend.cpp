@@ -510,9 +510,7 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
         marker->setFont(m_font);
         marker->setLabelBrush(m_labelBrush);
         marker->setVisible(series->isVisible());
-// TODO: possible hazard. What if marker is deleted and group still has pointer?
         m_items->addToGroup(marker->d_ptr.data()->item());
-//        qDebug() << "item:" << marker->d_ptr.data()->item();
         m_legendMarkers << marker;
     }
 

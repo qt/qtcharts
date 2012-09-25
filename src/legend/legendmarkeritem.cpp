@@ -33,15 +33,17 @@ LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject
     QGraphicsObject(parent),
     m_marker(marker),
     m_markerRect(0,0,10.0,10.0),
-    m_boundingRect(0,0,0,0),
+    m_boundingRect(0,0,10,10),
     m_textItem(new QGraphicsSimpleTextItem(this)),
     m_rectItem(new QGraphicsRectItem(this)),
     m_margin(4),
     m_space(4)
 {
-    qDebug() << "LegendMarkerItem created for marker:" << m_marker;
+//    qDebug() << "LegendMarkerItem created for marker:" << m_marker;
     setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     m_rectItem->setRect(m_markerRect);
+//    setZValue(zValue() + 20);
+//    qDebug() << "z:" << this->zValue();
 }
 
 void LegendMarkerItem::setPen(const QPen &pen)
@@ -79,6 +81,7 @@ QFont LegendMarkerItem::font() const
 
 void LegendMarkerItem::setLabel(const QString label)
 {
+    qDebug() << "LegendMarkerItem::setlabel" << label;
     m_text = label;
     updateGeometry();
 }
@@ -86,11 +89,6 @@ void LegendMarkerItem::setLabel(const QString label)
 QString LegendMarkerItem::label() const
 {
     return m_text;
-}
-
-QRectF LegendMarkerItem::boundingRect() const
-{
-    return m_boundingRect;
 }
 
 void LegendMarkerItem::setLabelBrush(const QBrush &brush)
@@ -103,10 +101,9 @@ QBrush LegendMarkerItem::labelBrush() const
     return m_textItem->brush();
 }
 
-
 void LegendMarkerItem::setGeometry(const QRectF& rect)
 {
-    QFontMetrics fn (font());
+    QFontMetrics fn (m_font);
 
     int width = rect.width();
     qreal x = m_margin + m_markerRect.width() +  m_space + m_margin;
@@ -131,6 +128,11 @@ void LegendMarkerItem::setGeometry(const QRectF& rect)
 
     prepareGeometryChange();
     m_boundingRect = QRectF(0,0,x+textRect.width()+m_margin,y);
+}
+
+QRectF LegendMarkerItem::boundingRect() const
+{
+    return m_boundingRect;
 }
 
 void LegendMarkerItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

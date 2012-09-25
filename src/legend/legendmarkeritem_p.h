@@ -32,6 +32,7 @@
 
 #include "qchartglobal.h"
 #include <QGraphicsObject>
+#include <QFont>
 #include <QBrush>
 #include <QPen>
 #include <QGraphicsSimpleTextItem>
@@ -46,7 +47,6 @@ class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
-//    explicit LegendMarkerItem(QAbstractSeries *m_series, QGraphicsObject *parent = 0);
     explicit LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent = 0);
 
     void setPen(const QPen &pen);
@@ -77,7 +77,7 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 protected:
-    QLegendMarkerPrivate *m_marker;
+    QLegendMarkerPrivate *m_marker; // Knows
     QRectF m_markerRect;
     QRectF m_boundingRect;
     QGraphicsSimpleTextItem *m_textItem;
@@ -86,6 +86,15 @@ protected:
     qreal m_space;
     QString m_text;
 
+    QString m_label;
+    QBrush m_labelBrush;
+    QFont m_font;
+    QPen m_pen;
+    QBrush m_brush;
+    bool m_visible;
+
+    friend class QLegendMarkerPrivate;
+    friend class LegendLayout;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

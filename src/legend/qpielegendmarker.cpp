@@ -24,23 +24,14 @@
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
-/*
-QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject *parent) :
-    QLegendMarker(series, parent),
-    d_ptr(new QPieLegendMarkerPrivate(series,slice,this))
-{
-    QObject::connect(slice, SIGNAL(labelChanged()), this, SLOT(updated()));
-    QObject::connect(slice, SIGNAL(brushChanged()), this, SLOT(updated()));
-    updated();
-}
 
-*/
 QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject *parent) :
     QLegendMarker(*new QPieLegendMarkerPrivate(series,slice,this), parent)
 {
-    QObject::connect(slice, SIGNAL(labelChanged()), this, SLOT(updated()));
-    QObject::connect(slice, SIGNAL(brushChanged()), this, SLOT(updated()));
-//    updated();
+}
+
+QPieLegendMarker::~QPieLegendMarker()
+{
 }
 
 /*!
@@ -65,24 +56,30 @@ QPieSlice* QPieLegendMarker::peerObject()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QAbstractSeries *series, QPieLegendMarker *q) :
 QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QPieSeries *series, QPieSlice *slice, QPieLegendMarker *q) :
     QLegendMarkerPrivate(q),
     m_series(series),
     m_slice(slice)
 {
     qDebug() << "QPieLegendMarkerPrivate created";
+    QObject::connect(m_slice, SIGNAL(labelChanged()), this, SLOT(updated()));
+    QObject::connect(m_slice, SIGNAL(brushChanged()), this, SLOT(updated()));
     updated();
 }
 
 QPieLegendMarkerPrivate::~QPieLegendMarkerPrivate()
 {
+    QObject::disconnect(m_slice, SIGNAL(labelChanged()), this, SLOT(updated()));
+    QObject::disconnect(m_slice, SIGNAL(brushChanged()), this, SLOT(updated()));
 }
 
 void QPieLegendMarkerPrivate::updated()
 {
+    qDebug() << "QPieLegendMarkerPrivate::updated";
     m_item->setBrush(m_slice->brush());
     m_item->setLabel(m_slice->label());
+    m_item->setPen(m_slice->pen());
+    m_item->setBrush(m_slice->brush());
 }
 
 #include "moc_qpielegendmarker.cpp"

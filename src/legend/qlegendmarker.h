@@ -75,14 +75,12 @@ Q_SIGNALS:
     void clicked();
     void hovered(bool status);
 
-public Q_SLOTS:
-    virtual void updated() = 0;  // TODO: private. Idea is that series signals, when some property has changed
-
 protected:
     QScopedPointer<QLegendMarkerPrivate> d_ptr;
     Q_DISABLE_COPY(QLegendMarker)
     friend class QLegendPrivate;
     friend class QLegendMarkerPrivate;
+    friend class LegendLayout;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

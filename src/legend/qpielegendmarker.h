@@ -34,6 +34,7 @@ class QTCOMMERCIALCHART_EXPORT QPieLegendMarker : public QLegendMarker
 
 public:
     explicit QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject *parent = 0);
+    virtual ~QPieLegendMarker();
     
     virtual QAbstractSeries* series();
     virtual QPieSlice* peerObject();
