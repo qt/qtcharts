@@ -126,7 +126,10 @@ void ChartValueAxisX::handleAxisUpdated()
 {
     //TODO:: fix this
     QValueAxis* axis = qobject_cast<QValueAxis*>(m_chartAxis);
-    m_tickCount = axis->tickCount();
+    if (m_tickCount != axis->tickCount()) {
+        m_tickCount = axis->tickCount();
+        presenter()->layout()->invalidate();
+    }
     ChartAxis::handleAxisUpdated();
 }
 

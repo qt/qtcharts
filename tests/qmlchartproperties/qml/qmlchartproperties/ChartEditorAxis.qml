@@ -87,6 +87,7 @@ Row {
         }
         Button {
             text: "axis tick count -"
+
             onClicked: axis.tickCount--;
         }
         Button {
