@@ -40,7 +40,7 @@ LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject
     m_space(4)
 {
 //    qDebug() << "LegendMarkerItem created for marker:" << m_marker;
-    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
+//    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     m_rectItem->setRect(m_markerRect);
 //    setZValue(zValue() + 20);
 //    qDebug() << "z:" << this->zValue();
@@ -168,7 +168,7 @@ void LegendMarkerItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
     qDebug() << "LegendMarkerItem::mousePressEvent";
 //    QGraphicsObject::mousePressEvent(event);
     //TODO: selected signal removed for now
-    emit m_marker->handleMousePressEvent(event);
+    m_marker->handleMousePressEvent(event);
     QGraphicsItem::mousePressEvent(event);
 }
 

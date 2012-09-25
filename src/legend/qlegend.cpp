@@ -451,7 +451,7 @@ QLegendPrivate::QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend
       m_attachedToChart(true),
       m_backgroundVisible(false)
 {
-
+    m_items->setHandlesChildEvents(false);
 }
 
 QLegendPrivate::~QLegendPrivate()

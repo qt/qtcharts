@@ -23,6 +23,7 @@
 #include "legendmarkeritem_p.h"
 #include <QDebug>
 #include <QFontMetrics>
+#include <QGraphicsSceneEvent>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*
@@ -116,8 +117,10 @@ QLegendMarkerPrivate::~QLegendMarkerPrivate()
 
 void QLegendMarkerPrivate::handleMousePressEvent(QGraphicsSceneEvent *event)
 {
-    // Just emit clicked signal for now
-    Q_UNUSED(event);
+    // Just emit clicked signal for now (our default logic for events)
+    // This could propably be on the LegendMarkerItem?
+    // TODO: how to handle scrolling vs clicking? drag event?
+    event->accept();
     Q_Q(QLegendMarker);
     emit q->clicked();
 }

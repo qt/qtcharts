@@ -70,7 +70,7 @@ MainWidget::MainWidget(QWidget *parent) :
 
     QPushButton *disConnectButton = new QPushButton("Disconnect markers");
     connect(disConnectButton, SIGNAL(clicked()), this, SLOT(disconnectMarkers()));
-    m_buttonLayout->addWidget(connectButton, 8, 0);
+    m_buttonLayout->addWidget(disConnectButton, 9, 0);
 
 
     m_legendPosX = new QDoubleSpinBox();
