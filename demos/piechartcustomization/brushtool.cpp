@@ -24,7 +24,7 @@
 #include <QColorDialog>
 
 BrushTool::BrushTool(QString title, QWidget *parent)
-    :QWidget(parent)
+    : QWidget(parent)
 {
     setWindowTitle(title);
     setWindowFlags(Qt::Tool);

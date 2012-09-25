@@ -29,10 +29,9 @@ public:
     QString category()  { return QObject::tr("XYSeries"); }
     QString subCategory() { return QString::null; }
 
-    QChart* createChart(const DataTable& table)
+    QChart *createChart(const DataTable &table)
     {
-
-        QChart* chart = new QChart();
+        QChart *chart = new QChart();
         chart->setTitle("Scatter chart");
         QString name("Series ");
         int nameIndex = 0;
@@ -45,10 +44,8 @@ public:
             chart->addSeries(series);
         }
         chart->createDefaultAxes();
-
         return chart;
     }
-
 };
 
 DECLARE_CHART(ScatterChart)

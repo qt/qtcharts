@@ -31,14 +31,14 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
-{    
+{
     setMinimumSize(800, 600);
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     //! [1]
     QChartView *chartView = new QChartView;
     chartView->setRenderHint(QPainter::Antialiasing);
-    QChart *chart = chartView->chart();    
+    QChart *chart = chartView->chart();
     chart->legend()->setVisible(false);
     chart->setTitle("Nested donuts demo");
     chart->setAnimationOptions(QChart::AllAnimations);
@@ -72,7 +72,7 @@ Widget::Widget(QWidget *parent)
 
     // create main layout
     //! [4]
-    QGridLayout* mainLayout = new QGridLayout;
+    QGridLayout *mainLayout = new QGridLayout;
     mainLayout->addWidget(chartView, 1, 1);
     setLayout(mainLayout);
     //! [4]
@@ -86,10 +86,10 @@ Widget::Widget(QWidget *parent)
 
 Widget::~Widget()
 {
-    
+
 }
 
-    //! [6]
+//! [6]
 void Widget::updateRotation()
 {
     for (int i = 0; i < m_donuts.count(); i++) {
@@ -99,9 +99,9 @@ void Widget::updateRotation()
         donut->setPieEndAngle(donut->pieEndAngle() + phaseShift);
     }
 }
-    //! [6]
+//! [6]
 
-    //! [7]
+//! [7]
 void Widget::explodeSlice(bool exploded)
 {
     QPieSlice *slice = qobject_cast<QPieSlice *>(sender());
@@ -125,4 +125,4 @@ void Widget::explodeSlice(bool exploded)
     }
     slice->setExploded(exploded);
 }
-    //! [7]
+//! [7]

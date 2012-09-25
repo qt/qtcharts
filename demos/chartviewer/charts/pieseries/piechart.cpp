@@ -29,11 +29,10 @@ public:
     QString category()  { return QObject::tr("PieSeries"); }
     QString subCategory() { return QString::null; }
 
-    QChart* createChart(const DataTable& table)
+    QChart *createChart(const DataTable &table)
     {
-        QChart* chart = new QChart();
+        QChart *chart = new QChart();
         chart->setTitle("Pie chart");
-
         qreal pieSize = 1.0 / table.count();
         for (int i = 0; i < table.count(); i++) {
             QPieSeries *series = new QPieSeries(chart);
@@ -52,7 +51,6 @@ public:
         }
         return chart;
     }
-
 };
 
 DECLARE_CHART(PieChart)

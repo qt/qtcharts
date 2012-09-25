@@ -23,7 +23,7 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 CustomSlice::CustomSlice(QString label, qreal value)
-    :QPieSlice(label, value)
+    : QPieSlice(label, value)
 {
     connect(this, SIGNAL(hovered(bool)), this, SLOT(showHighlight(bool)));
 }

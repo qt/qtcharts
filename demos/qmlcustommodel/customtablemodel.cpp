@@ -31,13 +31,13 @@ CustomTableModel::CustomTableModel(QObject *parent) :
 {
 }
 
-int CustomTableModel::rowCount(const QModelIndex & parent) const
+int CustomTableModel::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return m_data.count();
 }
 
-int CustomTableModel::columnCount(const QModelIndex & parent) const
+int CustomTableModel::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return m_columnCount;
@@ -128,7 +128,7 @@ bool CustomTableModel::removeRows(int row, int count, const QModelIndex &parent)
     return removed;
 }
 
-Qt::ItemFlags CustomTableModel::flags ( const QModelIndex & index ) const
+Qt::ItemFlags CustomTableModel::flags(const QModelIndex &index) const
 {
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }

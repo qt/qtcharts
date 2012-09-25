@@ -30,9 +30,8 @@ public:
     QString category()  { return QObject::tr("XYSeries"); }
     QString subCategory() { return QString::null; }
 
-    QChart* createChart(const DataTable& table)
+    QChart *createChart(const DataTable &table)
     {
-
         QChart *chart = new QChart();
         chart->setTitle("Area chart");
 
@@ -47,9 +46,9 @@ public:
                 if (lowerSeries) {
                     const QList<QPointF>& points = lowerSeries->points();
                     upperSeries->append(QPointF(j, points[i].y() + data.first.y()));
-                }
-                else
+                } else {
                     upperSeries->append(QPointF(j, data.first.y()));
+                }
             }
             QAreaSeries *area = new QAreaSeries(upperSeries, lowerSeries);
             area->setName(name + QString::number(nameIndex));
@@ -58,11 +57,8 @@ public:
             chart->createDefaultAxes();
             lowerSeries = upperSeries;
         }
-
         return chart;
-
     }
-
 };
 
 DECLARE_CHART(AreaChart)

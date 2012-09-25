@@ -30,39 +30,38 @@ public:
     QString category()  { return QObject::tr("Axis"); }
     QString subCategory() { return QString::null; }
 
-    QChart* createChart(const DataTable& table) {
+    QChart *createChart(const DataTable &table) 
+    {
+        QChart *chart = new QChart();
+        chart->setTitle("Category X , Category Y ");
 
-           QChart* chart = new QChart();
-           chart->setTitle("Category X , Category Y ");
+        QString name("Series ");
+        int nameIndex = 0;
+        foreach (DataList list, table) {
+            QLineSeries *series = new QLineSeries(chart);
+            foreach(Data data, list)
+                series->append(data.first);
+            series->setName(name + QString::number(nameIndex));
+            nameIndex++;
+            chart->addSeries(series);
+        }
 
-           QString name("Series ");
-           int nameIndex = 0;
-           foreach (DataList list, table) {
-               QLineSeries *series = new QLineSeries(chart);
-               foreach (Data data, list)
-                   series->append(data.first);
-               series->setName(name + QString::number(nameIndex));
-               nameIndex++;
-               chart->addSeries(series);
-           }
+        QCategoryAxis *axisX = new QCategoryAxis;
+        axisX->append("low", 5);
+        axisX->append("avg.", 12);
+        axisX->append("high", 19);
+        axisX->setRange(0, 20);
+        chart->setAxisX(axisX, chart->series().at(0));
 
-           QCategoryAxis *axisX = new QCategoryAxis;
-           axisX->append("low", 5);
-           axisX->append("avg.", 12);
-           axisX->append("high", 19);
-           axisX->setRange(0, 20);
-           chart->setAxisX(axisX, chart->series().at(0));
+        QCategoryAxis *axisY = new QCategoryAxis;
+        axisY->append("cheap", 5);
+        axisY->append("fair", 12);
+        axisY->append("pricy", 20);
+        axisY->setRange(0, 20);
+        chart->setAxisY(axisY, chart->series().at(0));
 
-           QCategoryAxis *axisY = new QCategoryAxis;
-           axisY->append("cheap", 5);
-           axisY->append("fair", 12);
-           axisY->append("pricy", 20);
-           axisY->setRange(0, 20);
-           chart->setAxisY(axisY, chart->series().at(0));
-
-           return chart;
+        return chart;
     }
-
 };
 
 DECLARE_CHART(CategoryLineChart)

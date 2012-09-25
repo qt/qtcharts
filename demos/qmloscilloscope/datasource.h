@@ -33,9 +33,9 @@ class DataSource : public QObject
     Q_OBJECT
 public:
     explicit DataSource(QDeclarativeView *appViewer, QObject *parent = 0);
-    
+
 signals:
-    
+
 public slots:
     void generateData(int type, int rowCount, int colCount);
     void update(QAbstractSeries *series);

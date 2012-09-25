@@ -35,7 +35,7 @@ typedef QList<DataList> DataTable;
 class Model
 {
 private:
-    Model(){}
+    Model() {}
 
 public:
     static DataTable generateRandomData(int listCount, int valueMax, int valueCount)
@@ -50,19 +50,17 @@ public:
             DataList dataList;
             qreal yValue(0);
             for (int j(0); j < valueCount; j++) {
-                yValue = yValue + (qreal) (qrand() % valueMax) / (qreal) valueCount;
+                yValue = yValue + (qreal)(qrand() % valueMax) / (qreal) valueCount;
                 QPointF value(
                     (j + (qreal) qrand() / (qreal) RAND_MAX)
-                        * ((qreal) valueMax / (qreal) valueCount), yValue);
+                    * ((qreal) valueMax / (qreal) valueCount), yValue);
                 QString label = "Slice " + QString::number(i) + ":" + QString::number(j);
                 dataList << Data(value, label);
             }
             dataTable << dataList;
         }
-
         return dataTable;
     }
-
 };
 
 #endif

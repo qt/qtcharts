@@ -45,13 +45,13 @@ class MainWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MainWidget(QWidget* parent = 0);
+    explicit MainWidget(QWidget *parent = 0);
 
 public Q_SLOTS:
     void updateChartSettings();
     void updateSerieSettings();
     void updateSliceSettings();
-    void handleSliceClicked(QPieSlice* slice);
+    void handleSliceClicked(QPieSlice *slice);
     void showFontDialog();
     void appendSlice();
     void insertSlice();
@@ -63,23 +63,23 @@ private:
     QCheckBox *m_animationsCheckBox;
     QCheckBox *m_legendCheckBox;
 
-    QChartView* m_chartView;
-    QPieSeries* m_series;
-    CustomSlice* m_slice;
+    QChartView *m_chartView;
+    QPieSeries *m_series;
+    CustomSlice *m_slice;
 
-    QDoubleSpinBox* m_hPosition;
-    QDoubleSpinBox* m_vPosition;
-    QDoubleSpinBox* m_sizeFactor;
-    QDoubleSpinBox* m_startAngle;
-    QDoubleSpinBox* m_endAngle;
-    QDoubleSpinBox* m_holeSize;
+    QDoubleSpinBox *m_hPosition;
+    QDoubleSpinBox *m_vPosition;
+    QDoubleSpinBox *m_sizeFactor;
+    QDoubleSpinBox *m_startAngle;
+    QDoubleSpinBox *m_endAngle;
+    QDoubleSpinBox *m_holeSize;
 
-    QLineEdit* m_sliceName;
-    QDoubleSpinBox* m_sliceValue;
-    QCheckBox* m_sliceLabelVisible;
-    QDoubleSpinBox* m_sliceLabelArmFactor;
-    QCheckBox* m_sliceExploded;
-    QDoubleSpinBox* m_sliceExplodedFactor;
+    QLineEdit *m_sliceName;
+    QDoubleSpinBox *m_sliceValue;
+    QCheckBox *m_sliceLabelVisible;
+    QDoubleSpinBox *m_sliceLabelArmFactor;
+    QCheckBox *m_sliceExploded;
+    QDoubleSpinBox *m_sliceExplodedFactor;
     QPushButton *m_brush;
     BrushTool *m_brushTool;
     QPushButton *m_pen;

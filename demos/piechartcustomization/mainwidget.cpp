@@ -34,8 +34,8 @@
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-MainWidget::MainWidget(QWidget* parent)
-    :QWidget(parent),
+MainWidget::MainWidget(QWidget *parent)
+    : QWidget(parent),
       m_slice(0)
 {
     // create chart
@@ -71,18 +71,18 @@ MainWidget::MainWidget(QWidget* parent)
 
     m_legendCheckBox = new QCheckBox();
 
-    QFormLayout* chartSettingsLayout = new QFormLayout();
+    QFormLayout *chartSettingsLayout = new QFormLayout();
     chartSettingsLayout->addRow("Theme", m_themeComboBox);
     chartSettingsLayout->addRow("Antialiasing", m_aaCheckBox);
     chartSettingsLayout->addRow("Animations", m_animationsCheckBox);
     chartSettingsLayout->addRow("Legend", m_legendCheckBox);
-    QGroupBox* chartSettings = new QGroupBox("Chart");
+    QGroupBox *chartSettings = new QGroupBox("Chart");
     chartSettings->setLayout(chartSettingsLayout);
 
-    connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this ,SLOT(updateChartSettings()));
-    connect(m_aaCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateChartSettings()));
-    connect(m_animationsCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateChartSettings()));
-    connect(m_legendCheckBox, SIGNAL(toggled(bool)), this ,SLOT(updateChartSettings()));
+    connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateChartSettings()));
+    connect(m_aaCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateChartSettings()));
+    connect(m_animationsCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateChartSettings()));
+    connect(m_legendCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateChartSettings()));
 
     // series settings
     m_hPosition = new QDoubleSpinBox();
@@ -125,7 +125,7 @@ MainWidget::MainWidget(QWidget* parent)
     QPushButton *insertSlice = new QPushButton("Insert slice");
     QPushButton *removeSlice = new QPushButton("Remove selected slice");
 
-    QFormLayout* seriesSettingsLayout = new QFormLayout();
+    QFormLayout *seriesSettingsLayout = new QFormLayout();
     seriesSettingsLayout->addRow("Horizontal position", m_hPosition);
     seriesSettingsLayout->addRow("Vertical position", m_vPosition);
     seriesSettingsLayout->addRow("Size factor", m_sizeFactor);
@@ -135,7 +135,7 @@ MainWidget::MainWidget(QWidget* parent)
     seriesSettingsLayout->addRow(appendSlice);
     seriesSettingsLayout->addRow(insertSlice);
     seriesSettingsLayout->addRow(removeSlice);
-    QGroupBox* seriesSettings = new QGroupBox("Series");
+    QGroupBox *seriesSettings = new QGroupBox("Series");
     seriesSettings->setLayout(seriesSettingsLayout);
 
     connect(m_vPosition, SIGNAL(valueChanged(double)), this, SLOT(updateSerieSettings()));
@@ -172,7 +172,7 @@ MainWidget::MainWidget(QWidget* parent)
     m_labelPosition->addItem("Inside tangential", QPieSlice::LabelInsideTangential);
     m_labelPosition->addItem("Inside normal", QPieSlice::LabelInsideNormal);
 
-    QFormLayout* sliceSettingsLayout = new QFormLayout();
+    QFormLayout *sliceSettingsLayout = new QFormLayout();
     sliceSettingsLayout->addRow("Label", m_sliceName);
     sliceSettingsLayout->addRow("Value", m_sliceValue);
     sliceSettingsLayout->addRow("Pen", m_pen);
@@ -184,7 +184,7 @@ MainWidget::MainWidget(QWidget* parent)
     sliceSettingsLayout->addRow("Label arm length", m_sliceLabelArmFactor);
     sliceSettingsLayout->addRow("Exploded", m_sliceExploded);
     sliceSettingsLayout->addRow("Explode distance", m_sliceExplodedFactor);
-    QGroupBox* sliceSettings = new QGroupBox("Selected slice");
+    QGroupBox *sliceSettings = new QGroupBox("Selected slice");
     sliceSettings->setLayout(sliceSettingsLayout);
 
     connect(m_sliceName, SIGNAL(textChanged(QString)), this, SLOT(updateSliceSettings()));
@@ -213,7 +213,7 @@ MainWidget::MainWidget(QWidget* parent)
     settingsLayout->addWidget(sliceSettings);
     settingsLayout->addStretch();
 
-    QGridLayout* baseLayout = new QGridLayout();
+    QGridLayout *baseLayout = new QGridLayout();
     baseLayout->addLayout(settingsLayout, 0, 0);
     baseLayout->addWidget(m_chartView, 0, 1);
     setLayout(baseLayout);
@@ -272,9 +272,9 @@ void MainWidget::updateSliceSettings()
     m_slice->setExplodeDistanceFactor(m_sliceExplodedFactor->value());
 }
 
-void MainWidget::handleSliceClicked(QPieSlice* slice)
+void MainWidget::handleSliceClicked(QPieSlice *slice)
 {
-    m_slice = static_cast<CustomSlice*>(slice);
+    m_slice = static_cast<CustomSlice *>(slice);
 
     // name
     m_sliceName->blockSignals(true);
@@ -332,7 +332,7 @@ void MainWidget::showFontDialog()
 
 void MainWidget::appendSlice()
 {
-    *m_series << new CustomSlice("Slice " + QString::number(m_series->count()+1), 10.0);
+    *m_series << new CustomSlice("Slice " + QString::number(m_series->count() + 1), 10.0);
 }
 
 void MainWidget::insertSlice()
@@ -342,7 +342,7 @@ void MainWidget::insertSlice()
 
     int i = m_series->slices().indexOf(m_slice);
 
-    m_series->insert(i, new CustomSlice("Slice " + QString::number(m_series->count()+1), 10.0));
+    m_series->insert(i, new CustomSlice("Slice " + QString::number(m_series->count() + 1), 10.0));
 }
 
 void MainWidget::removeSlice()

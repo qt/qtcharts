@@ -54,7 +54,7 @@ qreal Chart::distance(const QPointF &p1, const QPointF &p2)
 
 void Chart::setPointClicked(bool clicked)
 {
-   m_clicked = clicked;
+    m_clicked = clicked;
 }
 
 void Chart::handlePointMove(const QPoint &point)
@@ -63,30 +63,30 @@ void Chart::handlePointMove(const QPoint &point)
         //Map the point clicked from the ChartView
         //to the area occupied by the chart.
         QPoint mappedPoint = point;
-        mappedPoint.setX(point.x()-this->plotArea().x());
-        mappedPoint.setY(point.y()-this->plotArea().y());
+        mappedPoint.setX(point.x() - this->plotArea().x());
+        mappedPoint.setY(point.y() - this->plotArea().y());
 
         //Get the x- and y axis to be able to convert the mapped
         //coordinate point to the charts scale.
-        QAbstractAxis * axisx = this->axisX();
-        QValueAxis* haxis = 0;
+        QAbstractAxis *axisx = this->axisX();
+        QValueAxis *haxis = 0;
         if (axisx->type() == QAbstractAxis::AxisTypeValue)
-            haxis = qobject_cast<QValueAxis*>(axisx);
+            haxis = qobject_cast<QValueAxis *>(axisx);
 
-        QAbstractAxis * axisy = this->axisY();
-        QValueAxis* vaxis = 0;
+        QAbstractAxis *axisy = this->axisY();
+        QValueAxis *vaxis = 0;
         if (axisy->type() == QAbstractAxis::AxisTypeValue)
-            vaxis = qobject_cast<QValueAxis*>(axisy);
+            vaxis = qobject_cast<QValueAxis *>(axisy);
 
         if (haxis && vaxis) {
             //Calculate the "unit" between points on the x
             //y axis.
-            double xUnit = this->plotArea().width()/haxis->max();
-            double yUnit = this->plotArea().height()/vaxis->max();
+            double xUnit = this->plotArea().width() / haxis->max();
+            double yUnit = this->plotArea().height() / vaxis->max();
 
             //Convert the mappedPoint to the actual chart scale.
-            double x = mappedPoint.x()/xUnit;
-            double y = vaxis->max() - mappedPoint.y()/yUnit;
+            double x = mappedPoint.x() / xUnit;
+            double y = vaxis->max() - mappedPoint.y() / yUnit;
 
             //Replace the old point with the new one.
             m_series->replace(m_movingPoint, QPointF(x, y));

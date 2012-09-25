@@ -33,17 +33,17 @@ class CustomTableModel : public QAbstractTableModel
 public:
     explicit CustomTableModel(QObject *parent = 0);
 
-    int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
-    int columnCount ( const QModelIndex & parent = QModelIndex() ) const;
-    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole ) const;
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const;
     bool setHeaderData(int section, Qt::Orientation orientation, const QVariant &value, int role = Qt::EditRole);
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-    bool setData ( const QModelIndex & index, const QVariant & value, int role = Qt::EditRole );
-    Qt::ItemFlags flags ( const QModelIndex & index ) const;
+    bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    Qt::ItemFlags flags(const QModelIndex &index) const;
     void insertColumn(int column, const QModelIndex &parent = QModelIndex());
     void insertRow(int row, const QModelIndex &parent = QModelIndex());
-    Q_INVOKABLE bool removeRows(int row, int count, const QModelIndex & parent = QModelIndex());
-    Q_INVOKABLE bool removeRow (int row, const QModelIndex &parent = QModelIndex());
+    Q_INVOKABLE bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+    Q_INVOKABLE bool removeRow(int row, const QModelIndex &parent = QModelIndex());
     Q_INVOKABLE QVariant at(int row, int column);
 
 private:

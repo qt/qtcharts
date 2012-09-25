@@ -40,7 +40,7 @@
 #include <QDebug>
 #include <QMenu>
 
-Window::Window(QWidget* parent) :
+Window::Window(QWidget *parent) :
     QMainWindow(parent),
     m_listCount(3),
     m_valueMax(10),
@@ -88,12 +88,12 @@ Window::Window(QWidget* parent) :
     Charts::ChartList list = Charts::chartList();
 
     for (int i = 0; i < 9; ++i) {
-        QChart* chart = 0;
-        if(i<list.size()){
-        chart = list.at(i)->createChart(m_dataTable);
-        }else{
-        chart = new QChart();
-        chart->setTitle(tr("Empty"));
+        QChart *chart = 0;
+        if (i < list.size()) {
+            chart = list.at(i)->createChart(m_dataTable);
+        } else {
+            chart = new QChart();
+            chart->setTitle(tr("Empty"));
         }
 
         m_baseLayout->addItem(chart, i / 3, i % 3);
@@ -123,7 +123,7 @@ Window::~Window()
 
 void Window::connectSignals()
 {
-    QObject::connect(m_form, SIGNAL(geometryChanged()),this ,SLOT(handleGeometryChanged()));
+    QObject::connect(m_form, SIGNAL(geometryChanged()), this , SLOT(handleGeometryChanged()));
     QObject::connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
@@ -143,7 +143,7 @@ void Window::createProxyWidgets()
     m_openGLCheckBox = new QCheckBox(tr("OpenGL"));
     m_zoomCheckBox = new QCheckBox(tr("Zoom"));
     m_scrollCheckBox = new QCheckBox(tr("Scroll"));
-    m_templateComboBox= createTempleteBox();
+    m_templateComboBox = createTempleteBox();
     m_widgetHash["themeComboBox"] = m_scene->addWidget(m_themeComboBox);
     m_widgetHash["antialiasCheckBox"] = m_scene->addWidget(m_antialiasCheckBox);
     m_widgetHash["animatedComboBox"] = m_scene->addWidget(m_animatedComboBox);
@@ -159,9 +159,9 @@ void Window::createProxyWidgets()
 
 }
 
-QComboBox* Window::createThemeBox()
+QComboBox *Window::createThemeBox()
 {
-    QComboBox* themeComboBox = new ComboBox(this);
+    QComboBox *themeComboBox = new ComboBox(this);
     themeComboBox->addItem("Light", QChart::ChartThemeLight);
     themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
     themeComboBox->addItem("Dark", QChart::ChartThemeDark);
@@ -172,9 +172,9 @@ QComboBox* Window::createThemeBox()
     return themeComboBox;
 }
 
-QComboBox* Window::createAnimationBox()
+QComboBox *Window::createAnimationBox()
 {
-    QComboBox* animationComboBox = new ComboBox(this);
+    QComboBox *animationComboBox = new ComboBox(this);
     animationComboBox->addItem("No Animations", QChart::NoAnimation);
     animationComboBox->addItem("GridAxis Animations", QChart::GridAxisAnimations);
     animationComboBox->addItem("Series Animations", QChart::SeriesAnimations);
@@ -182,9 +182,9 @@ QComboBox* Window::createAnimationBox()
     return animationComboBox;
 }
 
-QComboBox* Window::createLegendBox()
+QComboBox *Window::createLegendBox()
 {
-    QComboBox* legendComboBox = new ComboBox(this);
+    QComboBox *legendComboBox = new ComboBox(this);
     legendComboBox->addItem("No Legend ", 0);
     legendComboBox->addItem("Legend Top", Qt::AlignTop);
     legendComboBox->addItem("Legend Bottom", Qt::AlignBottom);
@@ -193,20 +193,20 @@ QComboBox* Window::createLegendBox()
     return legendComboBox;
 }
 
-QComboBox* Window::createTempleteBox()
+QComboBox *Window::createTempleteBox()
 {
-    QComboBox* templateComboBox = new ComboBox(this);
+    QComboBox *templateComboBox = new ComboBox(this);
     templateComboBox->addItem("No Template", 0);
 
     Charts::ChartList list = Charts::chartList();
-    QMultiMap<QString, Chart*> categoryMap;
+    QMultiMap<QString, Chart *> categoryMap;
 
-    foreach(Chart* chart, list) {
-          categoryMap.insertMulti(chart->category(), chart);
-    }
-    foreach(const QString& category, categoryMap.uniqueKeys()) {
+    foreach (Chart *chart, list)
+        categoryMap.insertMulti(chart->category(), chart);
+
+    foreach (const QString &category, categoryMap.uniqueKeys())
         templateComboBox->addItem(category, category);
-    }
+
     return templateComboBox;
 }
 
@@ -226,11 +226,9 @@ void Window::checkLegend()
     Qt::Alignment alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
 
     if (!alignment) {
-        foreach (QChart *chart, m_chartHash.keys()) {
+        foreach (QChart *chart, m_chartHash.keys())
             chart->legend()->hide();
-        }
-    }
-    else {
+    } else {
         foreach (QChart *chart, m_chartHash.keys()) {
             chart->legend()->setAlignment(alignment);
             chart->legend()->show();
@@ -241,7 +239,7 @@ void Window::checkLegend()
 void Window::checkOpenGL()
 {
     bool opengl = m_openGLCheckBox->isChecked();
-    bool isOpengl = qobject_cast<QGLWidget*>(m_view->viewport());
+    bool isOpengl = qobject_cast<QGLWidget *>(m_view->viewport());
     if ((isOpengl && !opengl) || (!isOpengl && opengl)) {
         m_view->deleteLater();
         m_view = new View(m_scene, m_form);
@@ -251,20 +249,21 @@ void Window::checkOpenGL()
 
     bool antialias = m_antialiasCheckBox->isChecked();
 
-       if (opengl)
-           m_view->setRenderHint(QPainter::HighQualityAntialiasing, antialias);
-       else
-           m_view->setRenderHint(QPainter::Antialiasing, antialias);
+    if (opengl)
+        m_view->setRenderHint(QPainter::HighQualityAntialiasing, antialias);
+    else
+        m_view->setRenderHint(QPainter::Antialiasing, antialias);
 }
 
 void Window::checkAnimationOptions()
 {
     QChart::AnimationOptions options(
-           m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
-       if (!m_chartHash.isEmpty() && m_chartHash.keys().at(0)->animationOptions() != options) {
-           foreach (QChart *chart, m_chartHash.keys())
-               chart->setAnimationOptions(options);
-       }
+        m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
+
+    if (!m_chartHash.isEmpty() && m_chartHash.keys().at(0)->animationOptions() != options) {
+        foreach (QChart *chart, m_chartHash.keys())
+            chart->setAnimationOptions(options);
+    }
 }
 
 void Window::checkState()
@@ -274,8 +273,7 @@ void Window::checkState()
     if (m_state != ScrollState && scroll) {
         m_state = ScrollState;
         m_zoomCheckBox->setChecked(false);
-    }
-    else if (!scroll && m_state == ScrollState) {
+    } else if (!scroll && m_state == ScrollState) {
         m_state = NoState;
     }
 
@@ -284,8 +282,7 @@ void Window::checkState()
     if (m_state != ZoomState && zoom) {
         m_state = ZoomState;
         m_scrollCheckBox->setChecked(false);
-    }
-    else if (!zoom && m_state == ZoomState) {
+    } else if (!zoom && m_state == ZoomState) {
         m_state = NoState;
     }
 }
@@ -302,26 +299,25 @@ void Window::checkTemplate()
     QString category = m_templateComboBox->itemData(index).toString();
     Charts::ChartList list = Charts::chartList();
 
-    QList<QChart*> qchartList = m_chartHash.keys();
+    QList<QChart *> qchartList = m_chartHash.keys();
 
-    foreach(QChart* qchart,qchartList){
-    for(int i = 0 ; i < m_baseLayout->count();++i)
-           {
-               if(m_baseLayout->itemAt(i)==qchart){
-                   m_baseLayout->removeAt(i);
-                   break;
-               }
-           }
+    foreach (QChart *qchart, qchartList) {
+        for (int i = 0 ; i < m_baseLayout->count(); ++i) {
+            if (m_baseLayout->itemAt(i) == qchart) {
+                m_baseLayout->removeAt(i);
+                break;
+            }
+        }
     }
 
     m_chartHash.clear();
     qDeleteAll(qchartList);
 
-    QChart* qchart(0);
+    QChart *qchart(0);
 
-    int j=0;
+    int j = 0;
     for (int i = 0; i < list.size(); ++i) {
-        Chart* chart = list.at(i);
+        Chart *chart = list.at(i);
         if (chart->category() == category && j < 9) {
             qchart = list.at(i)->createChart(m_dataTable);
             m_baseLayout->addItem(qchart, j / 3, j % 3);
@@ -341,7 +337,7 @@ void Window::checkTemplate()
 void Window::checkTheme()
 {
     QChart::ChartTheme theme = (QChart::ChartTheme) m_themeComboBox->itemData(
-        m_themeComboBox->currentIndex()).toInt();
+                                   m_themeComboBox->currentIndex()).toInt();
 
     foreach (QChart *chart, m_chartHash.keys())
         chart->setTheme(theme);
@@ -350,38 +346,30 @@ void Window::checkTheme()
     if (theme == QChart::ChartThemeLight) {
         pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
         pal.setColor(QPalette::WindowText, QRgb(0x404044));
-    }
-    else if (theme == QChart::ChartThemeDark) {
+    } else if (theme == QChart::ChartThemeDark) {
         pal.setColor(QPalette::Window, QRgb(0x121218));
         pal.setColor(QPalette::WindowText, QRgb(0xd6d6d6));
-    }
-    else if (theme == QChart::ChartThemeBlueCerulean) {
+    } else if (theme == QChart::ChartThemeBlueCerulean) {
         pal.setColor(QPalette::Window, QRgb(0x40434a));
         pal.setColor(QPalette::WindowText, QRgb(0xd6d6d6));
-    }
-    else if (theme == QChart::ChartThemeBrownSand) {
+    } else if (theme == QChart::ChartThemeBrownSand) {
         pal.setColor(QPalette::Window, QRgb(0x9e8965));
         pal.setColor(QPalette::WindowText, QRgb(0x404044));
-    }
-    else if (theme == QChart::ChartThemeBlueNcs) {
+    } else if (theme == QChart::ChartThemeBlueNcs) {
         pal.setColor(QPalette::Window, QRgb(0x018bba));
         pal.setColor(QPalette::WindowText, QRgb(0x404044));
-    }
-    else if (theme == QChart::ChartThemeHighContrast) {
+    } else if (theme == QChart::ChartThemeHighContrast) {
         pal.setColor(QPalette::Window, QRgb(0xffab03));
         pal.setColor(QPalette::WindowText, QRgb(0x181818));
-    }
-    else if (theme == QChart::ChartThemeBlueIcy) {
+    } else if (theme == QChart::ChartThemeBlueIcy) {
         pal.setColor(QPalette::Window, QRgb(0xcee7f0));
         pal.setColor(QPalette::WindowText, QRgb(0x404044));
-    }
-    else {
+    } else {
         pal.setColor(QPalette::Window, QRgb(0xf0f0f0));
         pal.setColor(QPalette::WindowText, QRgb(0x404044));
     }
-    foreach(QGraphicsProxyWidget* widget , m_widgetHash) {
+    foreach (QGraphicsProxyWidget *widget, m_widgetHash)
         widget->setPalette(pal);
-    }
     m_view->setBackgroundBrush(pal.color((QPalette::Window)));
     m_rubberBand->setPen(pal.color((QPalette::WindowText)));
 }
@@ -400,10 +388,8 @@ void Window::mousePressEvent(QMouseEvent *event)
             plotArea.translate(geometryRect.topLeft());
             if (plotArea.contains(m_origin)) {
                 m_currentState = m_state;
-
-                if (m_currentState == NoState && m_templateComboBox->currentIndex()==0) {
+                if (m_currentState == NoState && m_templateComboBox->currentIndex() == 0)
                     handleMenu(chart);
-                }
                 break;
             }
         }
@@ -424,7 +410,7 @@ void Window::mousePressEvent(QMouseEvent *event)
 
 void Window::mouseMoveEvent(QMouseEvent *event)
 {
-    if ( m_currentState != NoState) {
+    if (m_currentState != NoState) {
 
         foreach (QChart *chart, m_chartHash.keys()) {
 
@@ -437,13 +423,13 @@ void Window::mouseMoveEvent(QMouseEvent *event)
                     QPointF delta = m_origin - event->pos();
                     chart->scroll(delta.x(), -delta.y());
                 }
-                if (m_currentState == ZoomState && plotArea.contains(event->pos())) {
+                if (m_currentState == ZoomState && plotArea.contains(event->pos()))
                     m_rubberBand->setRect(QRectF(m_origin, event->pos()).normalized());
-                }
                 break;
             }
         }
-        if(m_currentState == ScrollState) m_origin = event->pos();
+        if (m_currentState == ScrollState)
+            m_origin = event->pos();
         event->accept();
     }
 }
@@ -493,32 +479,31 @@ void Window::mouseReleaseEvent(QMouseEvent *event)
 
 void Window::comboBoxFocused(QComboBox *combobox)
 {
-    foreach(QGraphicsProxyWidget* widget , m_widgetHash) {
-       if(widget->widget()==combobox)
-        widget->setZValue(2.0);
-       else
-        widget->setZValue(0.0);
+    foreach (QGraphicsProxyWidget *widget , m_widgetHash) {
+        if (widget->widget() == combobox)
+            widget->setZValue(2.0);
+        else
+            widget->setZValue(0.0);
     }
 }
 
-void Window::handleMenu(QChart* qchart)
+void Window::handleMenu(QChart *qchart)
 {
     QAction *chosen = m_menu->exec(QCursor::pos());
 
     if (chosen) {
-        Chart* chart = (Chart *) chosen->data().value<void *>();
+        Chart *chart = (Chart *) chosen->data().value<void *>();
         int index = m_chartHash[qchart];
         //not in 4.7.2 m_baseLayout->removeItem(qchart);
-        for(int i = 0 ; i < m_baseLayout->count();++i)
-        {
-            if(m_baseLayout->itemAt(i)==qchart){
+        for (int i = 0 ; i < m_baseLayout->count(); ++i) {
+            if (m_baseLayout->itemAt(i) == qchart) {
                 m_baseLayout->removeAt(i);
                 break;
             }
         }
 
         m_chartHash.remove(qchart);
-        QChart* newChart = chart->createChart(m_dataTable);
+        QChart *newChart = chart->createChart(m_dataTable);
         m_baseLayout->addItem(newChart, index / 3, index % 3);
         m_chartHash[newChart] = index;
         delete qchart;
@@ -527,46 +512,41 @@ void Window::handleMenu(QChart* qchart)
 
 }
 
-QMenu* Window::createMenu()
+QMenu *Window::createMenu()
 {
     Charts::ChartList list = Charts::chartList();
-    QMultiMap<QString, Chart*> categoryMap;
+    QMultiMap<QString, Chart *> categoryMap;
 
-    QMenu* result = new QMenu(this);
+    QMenu *result = new QMenu(this);
 
-    foreach(Chart* chart, list) {
+    foreach (Chart *chart, list)
         categoryMap.insertMulti(chart->category(), chart);
-    }
 
-    foreach(const QString& category, categoryMap.uniqueKeys()) {
-        QMenu* menu(0);
-        QMultiMap<QString, Chart*> subCategoryMap;
+    foreach (const QString &category, categoryMap.uniqueKeys()) {
+        QMenu *menu(0);
+        QMultiMap<QString, Chart *> subCategoryMap;
         if (category.isEmpty()) {
             menu = result;
-        }
-        else {
+        } else {
             menu = new QMenu(category, this);
             result->addMenu(menu);
         }
 
-        foreach(Chart* chart , categoryMap.values(category)) {
+        foreach (Chart *chart, categoryMap.values(category))
             subCategoryMap.insert(chart->subCategory(), chart);
-        }
 
-        foreach(const QString& subCategory, subCategoryMap.uniqueKeys()) {
-            QMenu* subMenu(0);
+        foreach (const QString &subCategory, subCategoryMap.uniqueKeys()) {
+            QMenu *subMenu(0);
             if (subCategory.isEmpty()) {
                 subMenu = menu;
-            }
-            else {
+            } else {
                 subMenu = new QMenu(subCategory, this);
                 menu->addMenu(subMenu);
             }
 
-            foreach(Chart* chart , subCategoryMap.values(subCategory)) {
-
+            foreach(Chart *chart, subCategoryMap.values(subCategory)) {
                 createMenuAction(subMenu, QIcon(), chart->name(),
-                    qVariantFromValue((void *) chart));
+                                 qVariantFromValue((void *) chart));
             }
         }
     }
@@ -574,8 +554,8 @@ QMenu* Window::createMenu()
     return result;
 }
 
-QAction* Window::createMenuAction(QMenu *menu, const QIcon &icon, const QString &text,
-    const QVariant &data)
+QAction *Window::createMenuAction(QMenu *menu, const QIcon &icon, const QString &text,
+                                  const QVariant &data)
 {
     QAction *action = menu->addAction(icon, text);
     action->setCheckable(false);
@@ -585,7 +565,7 @@ QAction* Window::createMenuAction(QMenu *menu, const QIcon &icon, const QString 
 
 void Window::handleGeometryChanged()
 {
-   QSizeF size = m_baseLayout->sizeHint(Qt::MinimumSize);
-   m_view->scene()->setSceneRect(0, 0, this->width(), this->height());
-   m_view->setMinimumSize(size.toSize());
+    QSizeF size = m_baseLayout->sizeHint(Qt::MinimumSize);
+    m_view->scene()->setSceneRect(0, 0, this->width(), this->height());
+    m_view->setMinimumSize(size.toSize());
 }

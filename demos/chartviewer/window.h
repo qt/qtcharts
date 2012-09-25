@@ -44,7 +44,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 class Window: public QMainWindow
 {
     Q_OBJECT
-    enum State{ NoState = 0, ZoomState, ScrollState};
+    enum State { NoState = 0, ZoomState, ScrollState};
 public:
     explicit Window(QWidget *parent = 0);
     ~Window();
@@ -53,10 +53,10 @@ private Q_SLOTS:
     void updateUI();
     void handleGeometryChanged();
 private:
-    QComboBox* createThemeBox();
-    QComboBox* createAnimationBox();
-    QComboBox* createLegendBox();
-    QComboBox* createTempleteBox();
+    QComboBox *createThemeBox();
+    QComboBox *createAnimationBox();
+    QComboBox *createLegendBox();
+    QComboBox *createTempleteBox();
     void connectSignals();
     void createProxyWidgets();
     void comboBoxFocused(QComboBox *combox);
@@ -66,9 +66,9 @@ private:
     inline void checkTheme();
     inline void checkState();
     inline void checkTemplate();
-    QMenu* createMenu();
-    void handleMenu(QChart * chart);
-    QAction* createMenuAction(QMenu *menu, const QIcon &icon, const QString &text, const QVariant &data);
+    QMenu *createMenu();
+    void handleMenu(QChart *chart);
+    QAction *createMenuAction(QMenu *menu, const QIcon &icon, const QString &text, const QVariant &data);
 
 protected:
     void mousePressEvent(QMouseEvent *event);
@@ -79,10 +79,10 @@ private:
     int m_listCount;
     int m_valueMax;
     int m_valueCount;
-    QGraphicsScene* m_scene;
-    View* m_view;
-    QHash<QString, QGraphicsProxyWidget*> m_widgetHash;
-    QHash<QChart*, int> m_chartHash;
+    QGraphicsScene *m_scene;
+    View *m_view;
+    QHash<QString, QGraphicsProxyWidget *> m_widgetHash;
+    QHash<QChart *, int> m_chartHash;
     DataTable m_dataTable;
 
     QGraphicsWidget *m_form;
@@ -95,9 +95,9 @@ private:
     QCheckBox *m_zoomCheckBox;
     QCheckBox *m_scrollCheckBox;
     QPoint m_origin;
-    QGraphicsRectItem* m_rubberBand;
-    QGraphicsGridLayout* m_baseLayout;
-    QMenu* m_menu;
+    QGraphicsRectItem *m_rubberBand;
+    QGraphicsGridLayout *m_baseLayout;
+    QMenu *m_menu;
     State m_state;
     State m_currentState;
     int m_template;
@@ -108,17 +108,16 @@ private:
 class ComboBox: public QComboBox
 {
 public:
-    ComboBox(Window* window,QWidget *parent = 0):QComboBox(parent),m_window(window)
+    ComboBox(Window *window, QWidget *parent = 0): QComboBox(parent), m_window(window)
     {}
 
 protected:
-    void focusInEvent(QFocusEvent *e)
-    {
+    void focusInEvent(QFocusEvent *e) {
         QComboBox::focusInEvent(e);
         m_window->comboBoxFocused(this);
     }
 private:
-    Window* m_window;
+    Window *m_window;
 };
 
 #endif

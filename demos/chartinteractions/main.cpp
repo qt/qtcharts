@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QLineSeries* series = new QLineSeries();
+    QLineSeries *series = new QLineSeries();
 
     series->append(0, 6);
     series->append(1, 3);
@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
     series->append(10, 5);
     *series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
 
-    Chart* chart = new Chart(0, 0, series);
+    Chart *chart = new Chart(0, 0, series);
     chart->legend()->hide();
     chart->addSeries(series);
     QPen p = series->pen();
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(series, SIGNAL(clicked(QPointF)), chart, SLOT(clickPoint(QPointF)));
 
-    ChartView* chartView = new ChartView(chart);
+    ChartView *chartView = new ChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 
     QMainWindow window;

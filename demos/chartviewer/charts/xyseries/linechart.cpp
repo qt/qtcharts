@@ -29,27 +29,23 @@ public:
     QString category()  { return QObject::tr("XYSeries"); }
     QString subCategory() { return QString::null; }
 
-    QChart* createChart(const DataTable& table) {
-
-           QChart* chart = new QChart();
-           chart->setTitle("Line chart");
-
-           QString name("Series ");
-           int nameIndex = 0;
-           foreach (DataList list, table) {
-               QLineSeries *series = new QLineSeries(chart);
-               foreach (Data data, list)
-                   series->append(data.first);
-               series->setName(name + QString::number(nameIndex));
-               nameIndex++;
-               chart->addSeries(series);
-           }
-
-           chart->createDefaultAxes();
-
-           return chart;
+    QChart *createChart(const DataTable &table)
+    {
+        QChart *chart = new QChart();
+        chart->setTitle("Line chart");
+        QString name("Series ");
+        int nameIndex = 0;
+        foreach (DataList list, table) {
+            QLineSeries *series = new QLineSeries(chart);
+            foreach (Data data, list)
+                series->append(data.first);
+            series->setName(name + QString::number(nameIndex));
+            nameIndex++;
+            chart->addSeries(series);
+        }
+        chart->createDefaultAxes();
+        return chart;
     }
-
 };
 
 DECLARE_CHART(LineChart)

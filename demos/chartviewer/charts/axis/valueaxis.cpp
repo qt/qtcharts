@@ -31,30 +31,29 @@ public:
     QString category()  { return QObject::tr("Axis"); }
     QString subCategory() { return QString::null; }
 
-    QChart* createChart(const DataTable& table) {
+    QChart *createChart(const DataTable &table)
+    {
+        QChart *chart = new QChart();
+        chart->setTitle("Value X , Value Y");
 
-           QChart* chart = new QChart();
-           chart->setTitle("Value X , Value Y");
+        QString name("Series ");
+        int nameIndex = 0;
+        foreach (DataList list, table) {
+            QLineSeries *series = new QLineSeries(chart);
+            foreach (Data data, list)
+                series->append(data.first);
+            series->setName(name + QString::number(nameIndex));
+            nameIndex++;
+            chart->addSeries(series);
+        }
 
-           QString name("Series ");
-           int nameIndex = 0;
-           foreach (DataList list, table) {
-               QLineSeries *series = new QLineSeries(chart);
-               foreach (Data data, list)
-                   series->append(data.first);
-               series->setName(name + QString::number(nameIndex));
-               nameIndex++;
-               chart->addSeries(series);
-           }
+        chart->createDefaultAxes();
+        QValueAxis *axis = new QValueAxis();
+        foreach (QAbstractSeries *series, chart->series())
+            chart->setAxisX(axis, series);
 
-           chart->createDefaultAxes();
-           QValueAxis* axis = new QValueAxis();
-           foreach (QAbstractSeries* series,chart->series())
-                   chart->setAxisX(axis,series);
-
-           return chart;
+        return chart;
     }
-
 };
 
 DECLARE_CHART(ValueAxis);

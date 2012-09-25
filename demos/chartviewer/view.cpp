@@ -23,8 +23,9 @@
 #include <QResizeEvent>
 #include <QDebug>
 
-View::View(QGraphicsScene *scene, QGraphicsWidget *form , QWidget *parent):QGraphicsView(scene,parent),
-    m_form(form)
+View::View(QGraphicsScene *scene, QGraphicsWidget *form , QWidget *parent)
+    : QGraphicsView(scene, parent),
+      m_form(form)
 {
     setDragMode(QGraphicsView::NoDrag);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -49,8 +50,7 @@ void View::mouseMoveEvent(QMouseEvent *event)
 
 void View::mouseReleaseEvent(QMouseEvent *event)
 {
-
     QGraphicsView::mouseReleaseEvent(event);
-   //BugFix somehow view always eats the mouse release event;
+    //BugFix somehow view always eats the mouse release event;
     event->setAccepted(false);
 }

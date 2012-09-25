@@ -30,14 +30,11 @@ public:
     QString category()  { return QObject::tr("BarSeries"); }
     QString subCategory() { return QObject::tr("Horizontal"); }
 
-    QChart* createChart(const DataTable& table)
-    {
-
-        QChart* chart = new QChart();
-
+    QChart *createChart(const DataTable &table)
+     {
+        QChart *chart = new QChart();
         chart->setTitle("Horizontal bar chart");
-
-        QHorizontalBarSeries* series = new QHorizontalBarSeries(chart);
+        QHorizontalBarSeries *series = new QHorizontalBarSeries(chart);
         for (int i(0); i < table.count(); i++) {
             QBarSet *set = new QBarSet("Bar set " + QString::number(i));
             foreach (Data data, table[i])
@@ -48,7 +45,6 @@ public:
         chart->createDefaultAxes();
         return chart;
     }
-
 };
 
 DECLARE_CHART(HorizontalBarChart)

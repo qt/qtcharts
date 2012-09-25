@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QMainWindow window;
-    ThemeWidget* widget = new ThemeWidget();
+    ThemeWidget *widget = new ThemeWidget();
     window.setCentralWidget(widget);
     window.resize(900, 600);
     window.show();

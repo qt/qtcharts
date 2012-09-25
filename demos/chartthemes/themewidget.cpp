@@ -43,12 +43,12 @@
 #include <QTime>
 #include <QBarCategoryAxis>
 
-ThemeWidget::ThemeWidget(QWidget* parent) :
+ThemeWidget::ThemeWidget(QWidget *parent) :
     QWidget(parent),
     m_listCount(3),
     m_valueMax(10),
     m_valueCount(7),
-    m_dataTable(generateRandomData(m_listCount,m_valueMax,m_valueCount)),
+    m_dataTable(generateRandomData(m_listCount, m_valueMax, m_valueCount)),
     m_themeComboBox(createThemeBox()),
     m_antialiasCheckBox(new QCheckBox("Anti-aliasing")),
     m_animatedComboBox(createAnimationBox()),
@@ -56,7 +56,7 @@ ThemeWidget::ThemeWidget(QWidget* parent) :
 {
     connectSignals();
     // create layout
-    QGridLayout* baseLayout = new QGridLayout();
+    QGridLayout *baseLayout = new QGridLayout();
     QHBoxLayout *settingsLayout = new QHBoxLayout();
     settingsLayout->addWidget(new QLabel("Theme:"));
     settingsLayout->addWidget(m_themeComboBox);
@@ -116,7 +116,7 @@ void ThemeWidget::connectSignals()
     connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
 }
 
-DataTable ThemeWidget::generateRandomData(int listCount,int valueMax,int valueCount) const
+DataTable ThemeWidget::generateRandomData(int listCount, int valueMax, int valueCount) const
 {
     DataTable dataTable;
 
@@ -128,7 +128,7 @@ DataTable ThemeWidget::generateRandomData(int listCount,int valueMax,int valueCo
         DataList dataList;
         qreal yValue(0);
         for (int j(0); j < valueCount; j++) {
-            yValue = yValue + (qreal) (qrand() % valueMax) / (qreal) valueCount;
+            yValue = yValue + (qreal)(qrand() % valueMax) / (qreal) valueCount;
             QPointF value((j + (qreal) rand() / (qreal) RAND_MAX) * ((qreal) m_valueMax / (qreal) valueCount),
                           yValue);
             QString label = "Slice " + QString::number(i) + ":" + QString::number(j);
@@ -140,10 +140,10 @@ DataTable ThemeWidget::generateRandomData(int listCount,int valueMax,int valueCo
     return dataTable;
 }
 
-QComboBox* ThemeWidget::createThemeBox() const
+QComboBox *ThemeWidget::createThemeBox() const
 {
     // settings layout
-    QComboBox* themeComboBox = new QComboBox();
+    QComboBox *themeComboBox = new QComboBox();
     themeComboBox->addItem("Light", QChart::ChartThemeLight);
     themeComboBox->addItem("Blue Cerulean", QChart::ChartThemeBlueCerulean);
     themeComboBox->addItem("Dark", QChart::ChartThemeDark);
@@ -154,10 +154,10 @@ QComboBox* ThemeWidget::createThemeBox() const
     return themeComboBox;
 }
 
-QComboBox* ThemeWidget::createAnimationBox() const
+QComboBox *ThemeWidget::createAnimationBox() const
 {
     // settings layout
-    QComboBox* animationComboBox = new QComboBox();
+    QComboBox *animationComboBox = new QComboBox();
     animationComboBox->addItem("No Animations", QChart::NoAnimation);
     animationComboBox->addItem("GridAxis Animations", QChart::GridAxisAnimations);
     animationComboBox->addItem("Series Animations", QChart::SeriesAnimations);
@@ -165,9 +165,9 @@ QComboBox* ThemeWidget::createAnimationBox() const
     return animationComboBox;
 }
 
-QComboBox* ThemeWidget::createLegendBox() const
+QComboBox *ThemeWidget::createLegendBox() const
 {
-    QComboBox* legendComboBox = new QComboBox();
+    QComboBox *legendComboBox = new QComboBox();
     legendComboBox->addItem("No Legend ", 0);
     legendComboBox->addItem("Legend Top", Qt::AlignTop);
     legendComboBox->addItem("Legend Bottom", Qt::AlignBottom);
@@ -176,7 +176,7 @@ QComboBox* ThemeWidget::createLegendBox() const
     return legendComboBox;
 }
 
-QChart* ThemeWidget::createAreaChart() const
+QChart *ThemeWidget::createAreaChart() const
 {
     QChart *chart = new QChart();
 //    chart->axisX()->setNiceNumbersEnabled(true);
@@ -191,11 +191,12 @@ QChart* ThemeWidget::createAreaChart() const
         QLineSeries *upperSeries = new QLineSeries(chart);
         for (int j(0); j < m_dataTable[i].count(); j++) {
             Data data = m_dataTable[i].at(j);
-            if (lowerSeries){
+            if (lowerSeries) {
                 const QList<QPointF>& points = lowerSeries->points();
                 upperSeries->append(QPointF(j, points[i].y() + data.first.y()));
-            }else
+            } else {
                 upperSeries->append(QPointF(j, data.first.y()));
+            }
         }
         QAreaSeries *area = new QAreaSeries(upperSeries, lowerSeries);
         area->setName(name + QString::number(nameIndex));
@@ -208,13 +209,13 @@ QChart* ThemeWidget::createAreaChart() const
     return chart;
 }
 
-QChart* ThemeWidget::createBarChart(int valueCount) const
+QChart *ThemeWidget::createBarChart(int valueCount) const
 {
     Q_UNUSED(valueCount);
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->setTitle("Bar chart");
 
-    QStackedBarSeries* series = new QStackedBarSeries(chart);
+    QStackedBarSeries *series = new QStackedBarSeries(chart);
     for (int i(0); i < m_dataTable.count(); i++) {
         QBarSet *set = new QBarSet("Bar set " + QString::number(i));
         foreach (Data data, m_dataTable[i])
@@ -227,9 +228,9 @@ QChart* ThemeWidget::createBarChart(int valueCount) const
     return chart;
 }
 
-QChart* ThemeWidget::createLineChart() const
+QChart *ThemeWidget::createLineChart() const
 {
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->setTitle("Line chart");
 
     QString name("Series ");
@@ -247,9 +248,9 @@ QChart* ThemeWidget::createLineChart() const
     return chart;
 }
 
-QChart* ThemeWidget::createPieChart() const
+QChart *ThemeWidget::createPieChart() const
 {
-    QChart* chart = new QChart();
+    QChart *chart = new QChart();
     chart->setTitle("Pie chart");
 
     qreal pieSize = 1.0 / m_dataTable.count();
@@ -272,9 +273,10 @@ QChart* ThemeWidget::createPieChart() const
     return chart;
 }
 
-QChart* ThemeWidget::createSplineChart() const
-{ // spine chart
-    QChart* chart = new QChart();
+QChart *ThemeWidget::createSplineChart() const
+{
+    // spine chart
+    QChart *chart = new QChart();
     chart->setTitle("Spline chart");
     QString name("Series ");
     int nameIndex = 0;
@@ -290,9 +292,10 @@ QChart* ThemeWidget::createSplineChart() const
     return chart;
 }
 
-QChart* ThemeWidget::createScatterChart() const
-{ // scatter chart
-    QChart* chart = new QChart();
+QChart *ThemeWidget::createScatterChart() const
+{
+    // scatter chart
+    QChart *chart = new QChart();
     chart->setTitle("Scatter chart");
     QString name("Series ");
     int nameIndex = 0;
@@ -358,9 +361,8 @@ void ThemeWidget::updateUI()
     Qt::Alignment alignment(m_legendComboBox->itemData(m_legendComboBox->currentIndex()).toInt());
 
     if (!alignment) {
-        foreach (QChartView *chartView, m_charts) {
+        foreach (QChartView *chartView, m_charts)
             chartView->chart()->legend()->hide();
-        }
     } else {
         foreach (QChartView *chartView, m_charts) {
             chartView->chart()->legend()->setAlignment(alignment);
