@@ -110,6 +110,11 @@ QLegendMarkerPrivate::QLegendMarkerPrivate(QAbstractSeries *series, QLegendMarke
     m_item = new LegendMarkerItem(m_series);
 }
 
+QLegendMarkerPrivate::~QLegendMarkerPrivate()
+{
+}
+
+
 #include "moc_qlegendmarker.cpp"
 #include "moc_qlegendmarker_p.cpp"
 

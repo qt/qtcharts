@@ -19,6 +19,7 @@
 ****************************************************************************/
 
 #include "qpielegendmarker.h"
+#include "qpielegendmarker_p.h"
 #include <QPieSeries>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -44,7 +45,18 @@ void QPieLegendMarker::updated()
     setLabel(m_slice->label());
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QAbstractSeries *series, QPieLegendMarker *q) :
+    QLegendMarkerPrivate(series, q)
+{
+}
+
+QPieLegendMarkerPrivate::~QPieLegendMarkerPrivate()
+{
+}
+
 #include "moc_qpielegendmarker.cpp"
-//#include "moc_qpielegendmarker_p.cpp"
+#include "moc_qpielegendmarker_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

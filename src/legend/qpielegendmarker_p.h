@@ -18,40 +18,44 @@
 **
 ****************************************************************************/
 
-#ifndef QPIELEGENDMARKER_H
-#define QPIELEGENDMARKER_H
+//  W A R N I N G
+//  -------------
+//
+// This file is not part of the QtCommercial Chart API.  It exists purely as an
+// implementation detail.  This header file may change from version to
+// version without notice, or even be removed.
+//
+// We mean it.
 
-#include <QChartGlobal>
-#include <QLegendMarker>
-#include <QPieSlice>
-#include "qpielegendmarker_p.h"
+#ifndef QPIELEGENDMARKER_P_H
+#define QPIELEGENDMARKER_P_H
+
+#include "qchartglobal.h"
+#include "qlegendmarker_p.h"
+#include "legendmarkeritem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_EXPORT QPieLegendMarker : public QLegendMarker
+class QPieLegendMarker;
+
+class QPieLegendMarkerPrivate : public QLegendMarkerPrivate
 {
     Q_OBJECT
-
 public:
-    explicit QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject *parent = 0);
-    
-    virtual QPieSlice* peerObject();
+    explicit QPieLegendMarkerPrivate(QAbstractSeries *series, QPieLegendMarker *q);
+    virtual ~QPieLegendMarkerPrivate();
 
-// TODO: to pimpl.
-    void updated();
-
-//Q_SIGNALS:
-    
-//public Q_SLOTS:
+public Q_SLOTS:
+    virtual void updated() {};
 
 private:
-    QScopedPointer<QPieLegendMarkerPrivate> d_ptr;
-    Q_DISABLE_COPY(QPieLegendMarker)
+    QPieLegendMarker *q_ptr;
+    PieLegendMarkerItem *m_item;
 
-// TODO: PIMPL
-    QPieSlice* m_slice;
-
+    friend class QLegendPrivate; // TODO: Is this needed?
+    Q_DECLARE_PUBLIC(QPieLegendMarker)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
-#endif // QPIELEGENDMARKER_H
+
+#endif // QPIELEGENDMARKER_P_H

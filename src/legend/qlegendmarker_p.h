@@ -57,6 +57,7 @@ class QLegendMarkerPrivate : public QObject
     Q_OBJECT
 public:
     explicit QLegendMarkerPrivate(QAbstractSeries *series, QLegendMarker *q);
+    virtual ~QLegendMarkerPrivate();
 /*
     void setPen(const QPen &pen);
     QPen pen() const;

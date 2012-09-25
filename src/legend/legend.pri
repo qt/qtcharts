@@ -15,7 +15,8 @@ PRIVATE_HEADERS += \
     $$PWD/qlegend_p.h  \
     $$PWD/legendlayout_p.h \
     $$PWD/qlegendmarker_p.h \
-    $$PWD/legendmarkeritem_p.h
+    $$PWD/legendmarkeritem_p.h \
+    $$PWD/qpielegendmarker_p.h
    
     
 PUBLIC_HEADERS += \
