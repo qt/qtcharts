@@ -38,7 +38,7 @@ void DeclarativePieSeries::classBegin()
 
 void DeclarativePieSeries::componentComplete()
 {
-    foreach(QObject *child, children()) {
+    foreach (QObject *child, children()) {
         if (qobject_cast<QPieSlice *>(child)) {
             QPieSeries::append(qobject_cast<QPieSlice *>(child));
         } else if(qobject_cast<QVPieModelMapper *>(child)) {
@@ -102,13 +102,13 @@ void DeclarativePieSeries::clear()
 
 void DeclarativePieSeries::handleAdded(QList<QPieSlice*> slices)
 {
-    foreach(QPieSlice *slice, slices)
+    foreach (QPieSlice *slice, slices)
         emit sliceAdded(slice);
 }
 
 void DeclarativePieSeries::handleRemoved(QList<QPieSlice*> slices)
 {
-    foreach(QPieSlice *slice, slices)
+    foreach (QPieSlice *slice, slices)
         emit sliceRemoved(slice);
 }
 

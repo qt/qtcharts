@@ -182,7 +182,7 @@ void tst_QXYSeries::remove_raw()
     TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points(), points);
 
-    foreach(const QPointF& point,points)
+    foreach (const QPointF& point,points)
         m_series->remove(point);
 
     QCOMPARE(m_series->points().count(), 0);
@@ -279,7 +279,7 @@ void tst_QXYSeries::replace_raw()
     TRY_COMPARE(pointsReplacedSpy.count(), 0);
     QCOMPARE(m_series->points(), points);
 
-    foreach(const QPointF& point, points)
+    foreach (const QPointF& point, points)
        m_series->replace(point.x(),point.y(),point.x(),0);
     TRY_COMPARE(pointReplacedSpy.count(), points.count());
     TRY_COMPARE(pointsReplacedSpy.count(), 0);
@@ -362,7 +362,7 @@ void tst_QXYSeries::oper()
 
     QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
 
-    foreach(const QPointF& point,points)
+    foreach (const QPointF& point,points)
     {
         *m_series<<point;
     }

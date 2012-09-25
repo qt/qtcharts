@@ -290,7 +290,7 @@ void DeclarativeChart::childEvent(QChildEvent *event)
 
 void DeclarativeChart::componentComplete()
 {
-    foreach(QObject *child, children()) {
+    foreach (QObject *child, children()) {
         if (qobject_cast<QAbstractSeries *>(child)) {
             // Add series to the chart
             QAbstractSeries *series = qobject_cast<QAbstractSeries *>(child);
@@ -577,7 +577,7 @@ QAbstractSeries *DeclarativeChart::series(int index)
 
 QAbstractSeries *DeclarativeChart::series(QString seriesName)
 {
-    foreach(QAbstractSeries *series, m_chart->series()) {
+    foreach (QAbstractSeries *series, m_chart->series()) {
         if (series->name() == seriesName)
             return series;
     }

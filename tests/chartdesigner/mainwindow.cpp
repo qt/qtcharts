@@ -234,7 +234,7 @@ void MainWindow::updateUI()
 
     QMap<int, QModelIndex> columns;
 
-    foreach(const QModelIndex& index, list) {
+    foreach (const QModelIndex& index, list) {
         columns.insertMulti(index.column(), index);
     }
 
@@ -242,7 +242,7 @@ void MainWindow::updateUI()
 
     bool seriesEnabled = false;
 
-    foreach(QAction* action, m_addSeriesMenu->actions()) {
+    foreach (QAction* action, m_addSeriesMenu->actions()) {
         switch (action->data().toInt()) {
         case QAbstractSeries::SeriesTypeLine:
         case QAbstractSeries::SeriesTypeSpline:
@@ -272,24 +272,24 @@ void MainWindow::updateUI()
     m_removeAllAction->setEnabled(m_engine->chart()->series().count() > 0);
 
     int theme = m_engine->chart()->theme();
-    foreach(QAction* action, m_themeMenu->actions()) {
+    foreach (QAction* action, m_themeMenu->actions()) {
         action->setChecked(action->data().toInt() == theme);
     }
 
     int animation = m_engine->chart()->animationOptions();
-    foreach(QAction* action, m_animationMenu->actions()) {
+    foreach (QAction* action, m_animationMenu->actions()) {
         action->setChecked(action->data().toInt() == animation);
     }
 
     int zoom = m_view->rubberBand();
-    foreach(QAction* action, m_zoomMenu->actions()) {
+    foreach (QAction* action, m_zoomMenu->actions()) {
         action->setChecked(action->data().toInt() == zoom);
     }
 
     m_legendAction->setChecked(m_engine->chart()->legend()->isVisible());
     m_antialiasingAction->setChecked(m_view->renderHints().testFlag(QPainter::Antialiasing));
 
-    foreach(QAction *action, m_seriesMenu->actions()) {
+    foreach (QAction *action, m_seriesMenu->actions()) {
         //TODO: visibility handling
         //if (m_series.value(action->text()))
         //    ;
@@ -324,7 +324,7 @@ void MainWindow::handleAddSeriesMenu()
     QAction* action = qobject_cast<QAction*>(sender());
     QList<QAbstractSeries*> series = m_engine->addSeries(QAbstractSeries::SeriesType(action->data().toInt()));
 
-    foreach(QAbstractSeries* s , series)
+    foreach (QAbstractSeries* s , series)
     {
         QAction *newAction = new QAction(s->name(),this);
         //newAction->setCheckable(true);
@@ -338,7 +338,7 @@ void MainWindow::handleAddSeriesMenu()
 void MainWindow::handleRemoveAllSeriesAction()
 {
 
-    foreach(QAction* action, m_seriesMenu->actions()){
+    foreach (QAction* action, m_seriesMenu->actions()){
         if(m_series.contains(action->text())){
             m_seriesMenu->removeAction(action);
             m_engine->removeSeries(m_series.value(action->text()));

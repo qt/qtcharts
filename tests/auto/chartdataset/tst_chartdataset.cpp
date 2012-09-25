@@ -128,7 +128,7 @@ void tst_ChartDataSet::init()
 void tst_ChartDataSet::cleanup()
 {
     QList<QAbstractSeries*> series = m_dataset->series();
-    foreach(QAbstractSeries* serie, series)
+    foreach (QAbstractSeries* serie, series)
     {
         m_dataset->removeSeries(serie);
     }
@@ -241,7 +241,7 @@ void tst_ChartDataSet::setAxisX()
     QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries *,Domain*)));
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
-    foreach(QAbstractSeries* series, seriesList){
+    foreach (QAbstractSeries* series, seriesList){
         m_dataset->addSeries(series);
     }
 
@@ -287,7 +287,7 @@ void tst_ChartDataSet::setAxisY()
     QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries *,Domain*)));
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries *)));
 
-    foreach(QAbstractSeries* series, seriesList){
+    foreach (QAbstractSeries* series, seriesList){
         m_dataset->addSeries(series);
     }
 
@@ -365,7 +365,7 @@ void tst_ChartDataSet::removeAllSeries()
     QFETCH(QList<QAbstractAxis*>, axisList);
     QFETCH(int, axisCount);
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         m_dataset->addSeries(series);
     }
 
@@ -401,7 +401,7 @@ void tst_ChartDataSet::seriesCount()
     QFETCH(QList<QAbstractSeries*>, seriesList);
     QFETCH(int, seriesCount);
 
-    foreach(QAbstractSeries* series, seriesList){
+    foreach (QAbstractSeries* series, seriesList){
           m_dataset->addSeries(series);
     }
 
@@ -430,7 +430,7 @@ void tst_ChartDataSet::seriesIndex()
 
     QFETCH(QList<QAbstractSeries*>, seriesList);
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         m_dataset->addSeries(series);
     }
 
@@ -448,7 +448,7 @@ void tst_ChartDataSet::seriesIndex()
     TRY_COMPARE(spy2.count(), 0);
     TRY_COMPARE(spy3.count(), 0);
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         m_dataset->removeSeries(series);
     }
 
@@ -456,7 +456,7 @@ void tst_ChartDataSet::seriesIndex()
         QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), -1);
     }
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         m_dataset->addSeries(series);
     }
 
@@ -554,7 +554,7 @@ void tst_ChartDataSet::zoomInDomain()
     QFETCH(bool, sameAxis);
     QFETCH(QList<QAbstractSeries*>, seriesList);
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         m_dataset->addSeries(series);
     }
 
@@ -562,13 +562,13 @@ void tst_ChartDataSet::zoomInDomain()
 
     QList<QSignalSpy*> spyList;
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         spyList << new QSignalSpy(m_dataset->domain(series),SIGNAL(updated()));
     }
 
     m_dataset->zoomInDomain(QRect(0, 0, 100, 100), QSize(1000, 1000));
 
-    foreach(QSignalSpy* spy, spyList) {
+    foreach (QSignalSpy* spy, spyList) {
         TRY_COMPARE(spy->count(), 1);
     }
 
@@ -587,7 +587,7 @@ void tst_ChartDataSet::zoomOutDomain()
     QFETCH(bool, sameAxis);
     QFETCH(QList<QAbstractSeries*>, seriesList);
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         m_dataset->addSeries(series);
     }
 
@@ -596,13 +596,13 @@ void tst_ChartDataSet::zoomOutDomain()
 
     QList<QSignalSpy*> spyList;
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         spyList << new QSignalSpy(m_dataset->domain(series), SIGNAL(updated()));
     }
 
     m_dataset->zoomOutDomain(QRect(0, 0, 100, 100), QSize(1000, 1000));
 
-    foreach(QSignalSpy* spy, spyList) {
+    foreach (QSignalSpy* spy, spyList) {
         TRY_COMPARE(spy->count(), 1);
     }
 
@@ -619,7 +619,7 @@ void tst_ChartDataSet::scrollDomain()
     QFETCH(bool, sameAxis);
     QFETCH(QList<QAbstractSeries*>, seriesList);
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         m_dataset->addSeries(series);
     }
 
@@ -628,7 +628,7 @@ void tst_ChartDataSet::scrollDomain()
 
     QList<QSignalSpy*> spyList;
 
-    foreach(QAbstractSeries* series, seriesList) {
+    foreach (QAbstractSeries* series, seriesList) {
         spyList
             << new QSignalSpy(m_dataset->domain(series),
                 SIGNAL(updated()));
@@ -636,7 +636,7 @@ void tst_ChartDataSet::scrollDomain()
 
     m_dataset->scrollDomain(10, 10, QSize(1000, 1000));
 
-    foreach(QSignalSpy* spy, spyList) {
+    foreach (QSignalSpy* spy, spyList) {
         TRY_COMPARE(spy->count(), 1);
     }
 

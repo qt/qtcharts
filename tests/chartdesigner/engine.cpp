@@ -68,7 +68,7 @@ QList<QAbstractSeries*> Engine::addSeries(QAbstractSeries::SeriesType type)
 
     QMap<int, QModelIndex> columns;
 
-    foreach(const QModelIndex& index, list) {
+    foreach (const QModelIndex& index, list) {
         columns.insertMulti(index.column(), index);
     }
 
@@ -79,7 +79,7 @@ QList<QAbstractSeries*> Engine::addSeries(QAbstractSeries::SeriesType type)
     int minRow = m_count + 1;
     int maxRow = -1;
 
-    foreach(const QModelIndex& index, rows) {
+    foreach (const QModelIndex& index, rows) {
         minRow = qMin(index.row(), minRow);
         maxRow = qMax(index.row(), maxRow);
     }
@@ -163,7 +163,7 @@ void Engine::removeSeries(QAbstractSeries* series)
 {
     m_chart->removeSeries(series);
 
-    foreach(const QModelIndex& index, m_seriesModelIndex.value(series)) {
+    foreach (const QModelIndex& index, m_seriesModelIndex.value(series)) {
         m_model->setData(index, Qt::white, Qt::BackgroundRole);
     }
 }
@@ -268,7 +268,7 @@ void Engine::setupXYSeries(QXYSeries *xyseries, const QList<int>& columns, int c
     QObject::connect(xyseries,SIGNAL(clicked(const QPointF&)),this,SIGNAL(selected()));
     const QModelIndexList& list = m_selection->selectedIndexes();
     QModelIndexList result;
-    foreach(const QModelIndex& index, list) {
+    foreach (const QModelIndex& index, list) {
         if (index.column() ==columns.at(column)){
             m_model->setData(index, xyseries->pen().color(), Qt::BackgroundRole);
             result << index;
@@ -290,7 +290,7 @@ void Engine::setupBarSeries(QAbstractBarSeries *bar, const QList<int>& columns, 
     bar->setName(QString("Series %1").arg(m_chart->series().count()));
 
     const QModelIndexList& list = m_selection->selectedIndexes();
-    foreach(const QModelIndex& index, list) {
+    foreach (const QModelIndex& index, list) {
         if (index.column() >= columns.at(1) && index.column()<= columns.last()) {
             //m_model->setData(index, bar->barSets().at(index.column())->brush().color(), Qt::BackgroundRole);
         }
@@ -310,7 +310,7 @@ void Engine::setupPieSeries(QPieSeries *pie, const QList<int>& columns, int minR
     pie->setName(QString("Series %1").arg(m_chart->series().count()));
 
     const QModelIndexList& list = m_selection->selectedIndexes();
-    foreach(const QModelIndex& index, list) {
+    foreach (const QModelIndex& index, list) {
        // m_model->setData(index, bar->barSets()pen().color(), Qt::BackgroundRole);
     }
 }
@@ -337,7 +337,7 @@ void Engine::setupAreaSeries(QAreaSeries *series, const QList<int>& columns, int
     series->setName(QString("Series %1").arg(m_chart->series().count()));
 
     const QModelIndexList& list = m_selection->selectedIndexes();
-    foreach(const QModelIndex& index, list) {
+    foreach (const QModelIndex& index, list) {
         //if (index.column() ==columns.at(column))
           //  m_model->setData(index, xyseries->pen().color(), Qt::BackgroundRole);
     }

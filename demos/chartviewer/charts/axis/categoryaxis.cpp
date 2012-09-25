@@ -39,7 +39,7 @@ public:
         int nameIndex = 0;
         foreach (DataList list, table) {
             QLineSeries *series = new QLineSeries(chart);
-            foreach(Data data, list)
+            foreach (Data data, list)
                 series->append(data.first);
             series->setName(name + QString::number(nameIndex));
             nameIndex++;

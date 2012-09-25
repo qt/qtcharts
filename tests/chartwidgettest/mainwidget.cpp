@@ -289,7 +289,7 @@ void MainWidget::addSeries(QString seriesName, int columnCount, int rowCount, QS
                || seriesName == "Percent bar") {
         QStringList category;
         QStringList labels = generateLabels(rowCount);
-        foreach(QString label, labels)
+        foreach (QString label, labels)
             category << label;
         QAbstractBarSeries* series = 0;
         if (seriesName == "Bar") {

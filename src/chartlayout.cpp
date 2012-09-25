@@ -122,7 +122,7 @@ QRectF ChartLayout::calculateChartGeometry(const QRectF& geometry, const QList<C
     int rightAxisCount = 0;
 
     // check axis size
-    foreach(ChartAxis* axis , axes) {
+    foreach (ChartAxis* axis , axes) {
         if (axis->orientation() == Qt::Vertical && axis->isVisible()) {
 //            vertical = vertical.expandedTo(axis->effectiveSizeHint(Qt::MinimumSize));
             if (axis->alternativePlacement())
