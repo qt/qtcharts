@@ -23,7 +23,7 @@
 
 #include <QDesignerCustomWidgetInterface>
 
-class QChartsPlugin: public QObject,public QDesignerCustomWidgetInterface
+class QChartsPlugin: public QObject, public QDesignerCustomWidgetInterface
 {
 
 #ifdef QT5_QUICK_1

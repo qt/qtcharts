@@ -62,7 +62,7 @@ class ChartQmlPlugin : public QDeclarativeExtensionPlugin
     Q_PLUGIN_METADATA(IID "org.qt-project.foo")
 #endif
 
-    public:
+public:
     virtual void registerTypes(const char *uri)
     {
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCommercial.Chart"));

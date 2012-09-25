@@ -72,7 +72,7 @@ public:
     enum Animation {
         NoAnimation = 0x0,
         GridAxisAnimations = 0x1,
-        SeriesAnimations =0x2,
+        SeriesAnimations = 0x2,
         AllAnimations = 0x3
     };
 
@@ -108,7 +108,7 @@ public:
     QString title();
     QLegend *legend();
     QFont titleFont() const;
-    void setTitleFont(const QFont& font);
+    void setTitleFont(const QFont &font);
     void setTitleColor(QColor color);
     QColor titleColor();
     void setBackgroundColor(QColor color);
@@ -120,7 +120,7 @@ public:
     qreal bottomMargin();
     qreal leftMargin();
     qreal rightMargin();
-    void createDefaultAxes(QAbstractSeries* series);
+    void createDefaultAxes(QAbstractSeries *series);
     //TODO this is depreciated:
     DeclarativeMargins *minimumMargins() { return m_margins; }
 
@@ -153,8 +153,8 @@ Q_SIGNALS:
     void minimumMarginsChanged();
     Q_REVISION(2) void marginsChanged();
     void plotAreaChanged(QRectF plotArea);
-    void seriesAdded(QAbstractSeries* series);
-    void seriesRemoved(QAbstractSeries* series);
+    void seriesAdded(QAbstractSeries *series);
+    void seriesRemoved(QAbstractSeries *series);
 
 public Q_SLOTS:
     void changeMinimumMargins(int top, int bottom, int left, int right);

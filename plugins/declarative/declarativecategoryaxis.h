@@ -68,7 +68,7 @@ public: // from QDeclarativeParserStatus
 public Q_SLOTS:
     Q_INVOKABLE void append(const QString &label, qreal categoryEndValue);
     Q_INVOKABLE void remove(const QString &label);
-    Q_INVOKABLE void replace(const QString& oldLabel, const QString& newLabel);
+    Q_INVOKABLE void replace(const QString &oldLabel, const QString &newLabel);
     static void appendAxisChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 
 private:

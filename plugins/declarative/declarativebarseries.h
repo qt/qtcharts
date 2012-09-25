@@ -104,8 +104,8 @@ public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 
 private:
-    QAbstractAxis* m_axisX;
-    QAbstractAxis* m_axisY;
+    QAbstractAxis *m_axisX;
+    QAbstractAxis *m_axisY;
 };
 
 class DeclarativeStackedBarSeries : public QStackedBarSeries, public QDeclarativeParserStatus
@@ -144,8 +144,8 @@ public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 
 private:
-    QAbstractAxis* m_axisX;
-    QAbstractAxis* m_axisY;
+    QAbstractAxis *m_axisX;
+    QAbstractAxis *m_axisY;
 };
 
 class DeclarativePercentBarSeries : public QPercentBarSeries, public QDeclarativeParserStatus
@@ -184,8 +184,8 @@ public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 
 private:
-    QAbstractAxis* m_axisX;
-    QAbstractAxis* m_axisY;
+    QAbstractAxis *m_axisX;
+    QAbstractAxis *m_axisY;
 };
 
 class DeclarativeHorizontalBarSeries : public QHorizontalBarSeries, public QDeclarativeParserStatus
@@ -224,8 +224,8 @@ public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 
 private:
-    QAbstractAxis* m_axisX;
-    QAbstractAxis* m_axisY;
+    QAbstractAxis *m_axisX;
+    QAbstractAxis *m_axisY;
 };
 
 class DeclarativeHorizontalStackedBarSeries : public QHorizontalStackedBarSeries, public QDeclarativeParserStatus
@@ -264,8 +264,8 @@ public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 
 private:
-    QAbstractAxis* m_axisX;
-    QAbstractAxis* m_axisY;
+    QAbstractAxis *m_axisX;
+    QAbstractAxis *m_axisY;
 };
 
 class DeclarativeHorizontalPercentBarSeries : public QHorizontalPercentBarSeries, public QDeclarativeParserStatus
@@ -304,8 +304,8 @@ public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
 
 private:
-    QAbstractAxis* m_axisX;
-    QAbstractAxis* m_axisY;
+    QAbstractAxis *m_axisX;
+    QAbstractAxis *m_axisY;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

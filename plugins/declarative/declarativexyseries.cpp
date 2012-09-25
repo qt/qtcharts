@@ -47,10 +47,10 @@ void DeclarativeXySeries::componentComplete()
         if (qobject_cast<DeclarativeXYPoint *>(child)) {
             DeclarativeXYPoint *point = qobject_cast<DeclarativeXYPoint *>(child);
             series->append(point->x(), point->y());
-        } else if(qobject_cast<QVXYModelMapper *>(child)) {
+        } else if (qobject_cast<QVXYModelMapper *>(child)) {
             QVXYModelMapper *mapper = qobject_cast<QVXYModelMapper *>(child);
             mapper->setSeries(series);
-        } else if(qobject_cast<QHXYModelMapper *>(child)) {
+        } else if (qobject_cast<QHXYModelMapper *>(child)) {
             QHXYModelMapper *mapper = qobject_cast<QHXYModelMapper *>(child);
             mapper->setSeries(series);
         }

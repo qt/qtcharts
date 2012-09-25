@@ -368,7 +368,7 @@ void DeclarativeChart::componentComplete()
     QDeclarativeItem::componentComplete();
 }
 
-void DeclarativeChart::handleAxisXSet(QAbstractAxis* axis)
+void DeclarativeChart::handleAxisXSet(QAbstractAxis *axis)
 {
 //    qDebug() << "DeclarativeChart::handleAxisXSet" << sender() << axis;
     if (axis && qobject_cast<QAbstractSeries *>(sender()))
@@ -377,7 +377,7 @@ void DeclarativeChart::handleAxisXSet(QAbstractAxis* axis)
         qWarning() << "Trying to set axisX to null.";
 }
 
-void DeclarativeChart::handleAxisYSet(QAbstractAxis* axis)
+void DeclarativeChart::handleAxisYSet(QAbstractAxis *axis)
 {
 //    qDebug() << "DeclarativeChart::handleAxisYSet" << sender() << axis;
     if (axis && qobject_cast<QAbstractSeries *>(sender()))
@@ -473,7 +473,7 @@ QFont DeclarativeChart::titleFont() const
     return m_chart->titleFont();
 }
 
-void DeclarativeChart::setTitleFont(const QFont& font)
+void DeclarativeChart::setTitleFont(const QFont &font)
 {
     m_chart->setTitleFont(font);
 }
@@ -669,17 +669,17 @@ void DeclarativeChart::createDefaultAxes()
     qWarning() << "ChartView.createDefaultAxes() is deprecated. Axes are created automatically.";
 }
 
-void DeclarativeChart::createDefaultAxes(QAbstractSeries* series)
+void DeclarativeChart::createDefaultAxes(QAbstractSeries *series)
 {
     foreach (QAbstractSeries *s, m_chart->series()) {
         // If there is already an x axis of the correct type, re-use it
         if (!m_chart->axisX(series) && s != series && m_chart->axisX(s)
-                && m_chart->axisX(s)->type() == series->d_ptr->defaultAxisType(Qt::Horizontal))
+            && m_chart->axisX(s)->type() == series->d_ptr->defaultAxisType(Qt::Horizontal))
             m_chart->setAxisX(m_chart->axisX(s), series);
 
         // If there is already a y axis of the correct type, re-use it
         if (!m_chart->axisY(series) && s != series && m_chart->axisY(s)
-                && m_chart->axisY(s)->type() == series->d_ptr->defaultAxisType(Qt::Vertical))
+            && m_chart->axisY(s)->type() == series->d_ptr->defaultAxisType(Qt::Vertical))
             m_chart->setAxisY(m_chart->axisY(s), series);
     }
 

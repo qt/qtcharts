@@ -41,10 +41,10 @@ void DeclarativePieSeries::componentComplete()
     foreach (QObject *child, children()) {
         if (qobject_cast<QPieSlice *>(child)) {
             QPieSeries::append(qobject_cast<QPieSlice *>(child));
-        } else if(qobject_cast<QVPieModelMapper *>(child)) {
+        } else if (qobject_cast<QVPieModelMapper *>(child)) {
             QVPieModelMapper *mapper = qobject_cast<QVPieModelMapper *>(child);
             mapper->setSeries(this);
-        } else if(qobject_cast<QHPieModelMapper *>(child)) {
+        } else if (qobject_cast<QHPieModelMapper *>(child)) {
             QHPieModelMapper *mapper = qobject_cast<QHPieModelMapper *>(child);
             mapper->setSeries(this);
         }
@@ -65,14 +65,14 @@ void DeclarativePieSeries::appendSeriesChildren(QDeclarativeListProperty<QObject
 
 QPieSlice *DeclarativePieSeries::at(int index)
 {
-    QList<QPieSlice*> sliceList = slices();
+    QList<QPieSlice *> sliceList = slices();
     if (index >= 0 && index < sliceList.count())
         return sliceList[index];
 
     return 0;
 }
 
-QPieSlice* DeclarativePieSeries::find(QString label)
+QPieSlice *DeclarativePieSeries::find(QString label)
 {
     foreach (QPieSlice *slice, slices()) {
         if (slice->label() == label)
@@ -81,7 +81,7 @@ QPieSlice* DeclarativePieSeries::find(QString label)
     return 0;
 }
 
-QPieSlice* DeclarativePieSeries::append(QString label, qreal value)
+QPieSlice *DeclarativePieSeries::append(QString label, qreal value)
 {
     QPieSlice *slice = new QPieSlice(this);
     slice->setLabel(label);
@@ -100,13 +100,13 @@ void DeclarativePieSeries::clear()
     QPieSeries::clear();
 }
 
-void DeclarativePieSeries::handleAdded(QList<QPieSlice*> slices)
+void DeclarativePieSeries::handleAdded(QList<QPieSlice *> slices)
 {
     foreach (QPieSlice *slice, slices)
         emit sliceAdded(slice);
 }
 
-void DeclarativePieSeries::handleRemoved(QList<QPieSlice*> slices)
+void DeclarativePieSeries::handleRemoved(QList<QPieSlice *> slices)
 {
     foreach (QPieSlice *slice, slices)
         emit sliceRemoved(slice);

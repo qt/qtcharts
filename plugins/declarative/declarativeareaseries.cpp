@@ -30,22 +30,22 @@ DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
 {
 }
 
-void DeclarativeAreaSeries::setUpperSeries(DeclarativeLineSeries* series)
+void DeclarativeAreaSeries::setUpperSeries(DeclarativeLineSeries *series)
 {
     QAreaSeries::setUpperSeries(series);
 }
 
-DeclarativeLineSeries* DeclarativeAreaSeries::upperSeries() const
+DeclarativeLineSeries *DeclarativeAreaSeries::upperSeries() const
 {
     return qobject_cast<DeclarativeLineSeries *>(QAreaSeries::upperSeries());
 }
 
-void DeclarativeAreaSeries::setLowerSeries(DeclarativeLineSeries* series)
+void DeclarativeAreaSeries::setLowerSeries(DeclarativeLineSeries *series)
 {
     QAreaSeries::setLowerSeries(series);
 }
 
-DeclarativeLineSeries* DeclarativeAreaSeries::lowerSeries() const
+DeclarativeLineSeries *DeclarativeAreaSeries::lowerSeries() const
 {
     return qobject_cast<DeclarativeLineSeries *>(QAreaSeries::lowerSeries());
 }

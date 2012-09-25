@@ -42,16 +42,15 @@ QString QChartsPlugin::name() const
 
 QString QChartsPlugin::includeFile() const
 {
-    #ifdef linux
+#ifdef linux
     QString myNewLine = "\n";
-    #endif
-    #ifdef WIN32
+#endif
+#ifdef WIN32
     QString myNewLine = "\n\r";
-    #endif
-    #ifdef __APPLE__
+#endif
+#ifdef __APPLE__
     QString myNewLine = "\n";
-    #endif
-
+#endif
     return "<qchartview.h>" + myNewLine + "#include <chartsnamespace.h>";
 }
 
@@ -80,7 +79,7 @@ bool QChartsPlugin::isContainer() const
     return false;
 }
 
-QWidget* QChartsPlugin::createWidget(QWidget *parent)
+QWidget *QChartsPlugin::createWidget(QWidget *parent)
 {
     return new QChartView(new QChart(), parent);
 }

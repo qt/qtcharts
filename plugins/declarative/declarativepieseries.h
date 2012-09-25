@@ -54,13 +54,13 @@ public:
     void componentComplete();
 
 Q_SIGNALS:
-    void sliceAdded(QPieSlice* slice);
-    void sliceRemoved(QPieSlice* slice);
+    void sliceAdded(QPieSlice *slice);
+    void sliceRemoved(QPieSlice *slice);
 
 public Q_SLOTS:
     static void appendSeriesChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
-    void handleAdded(QList<QPieSlice*> slices);
-    void handleRemoved(QList<QPieSlice*> slices);
+    void handleAdded(QList<QPieSlice *> slices);
+    void handleRemoved(QList<QPieSlice *> slices);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

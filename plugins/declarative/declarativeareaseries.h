@@ -37,10 +37,10 @@ class DeclarativeAreaSeries : public QAreaSeries
 
 public:
     explicit DeclarativeAreaSeries(QObject *parent = 0);
-    void setUpperSeries(DeclarativeLineSeries* series);
-    DeclarativeLineSeries* upperSeries() const;
-    void setLowerSeries(DeclarativeLineSeries* series);
-    DeclarativeLineSeries* lowerSeries() const;
+    void setUpperSeries(DeclarativeLineSeries *series);
+    DeclarativeLineSeries *upperSeries() const;
+    void setLowerSeries(DeclarativeLineSeries *series);
+    DeclarativeLineSeries *lowerSeries() const;
     QAbstractAxis *axisX() { return m_axisX; }
     void setAxisX(QAbstractAxis *axis) { m_axisX = axis; emit axisXChanged(axis); }
     QAbstractAxis *axisY() { return m_axisY; }

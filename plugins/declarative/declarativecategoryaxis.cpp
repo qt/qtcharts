@@ -81,7 +81,7 @@ void DeclarativeCategoryAxis::remove(const QString &label)
     QCategoryAxis::remove(label);
 }
 
-void DeclarativeCategoryAxis::replace(const QString& oldLabel, const QString& newLabel)
+void DeclarativeCategoryAxis::replace(const QString &oldLabel, const QString &newLabel)
 {
     QCategoryAxis::replaceLabel(oldLabel, newLabel);
 }
