@@ -61,8 +61,8 @@ int main(int argc, char *argv[])
     QBarCategoryAxis* axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->createDefaultAxes();
-    chart->setAxisX(axis,series);
-    chart->axisY(series)->setRange(-52,52);
+    chart->setAxisX(axis, series);
+    chart->axisY(series)->setRange(-52, 52);
 //![4]
 
 //![5]

@@ -23,8 +23,8 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 DrilldownSlice::DrilldownSlice(qreal value, QString prefix, QAbstractSeries* drilldownSeries)
-    :m_drilldownSeries(drilldownSeries),
-    m_prefix(prefix)
+    : m_drilldownSeries(drilldownSeries),
+      m_prefix(prefix)
 {
     setValue(value);
     updateLabel();
@@ -49,7 +49,7 @@ void DrilldownSlice::updateLabel()
     label += " $";
     label += QString::number(this->value());
     label += ", ";
-    label += QString::number(this->percentage()*100, 'f', 1);
+    label += QString::number(this->percentage() * 100, 'f', 1);
     label += "%";
     setLabel(label);
 }

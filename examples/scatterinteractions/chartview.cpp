@@ -35,8 +35,8 @@ ChartView::ChartView(QWidget *parent)
 
     m_scatter = new QScatterSeries();
     m_scatter->setName("scatter1");
-    for(qreal x(0.5); x <= 4.0; x += 0.5) {
-        for(qreal y(0.5); y <= 4.0; y += 0.5) {
+    for (qreal x(0.5); x <= 4.0; x += 0.5) {
+        for (qreal y(0.5); y <= 4.0; y += 0.5) {
             *m_scatter << QPointF(x, y);
         }
     }
@@ -64,7 +64,7 @@ void ChartView::handleClickedPoint(const QPointF& point)
     qreal distance(INT_MAX);
     foreach(QPointF currentPoint, m_scatter->points()) {
         qreal currentDistance = sqrt((currentPoint.x() - clickedPoint.x()) * (currentPoint.x() - clickedPoint.x())
-                                      + (currentPoint.y() - clickedPoint.y()) * (currentPoint.y() - clickedPoint.y()));
+                                     + (currentPoint.y() - clickedPoint.y()) * (currentPoint.y() - clickedPoint.y()));
         if (currentDistance < distance) {
             distance = currentDistance;
             closest = currentPoint;

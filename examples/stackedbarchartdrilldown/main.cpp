@@ -55,14 +55,14 @@ int main(int argc, char *argv[])
     seasonSeries->setName("Crop by month - Season");
 
     // Each month in season series has drilldown series for weekly data
-    for (int month=0; month < months.count(); month++) {
+    for (int month = 0; month < months.count(); month++) {
 
         // Create drilldown series for every week
         DrilldownBarSeries* weeklySeries = new DrilldownBarSeries(weeks, drilldownChart);
         seasonSeries->mapDrilldownSeries(month, weeklySeries);
 
         // Drilling down from weekly data brings us back to season data.
-        for (int week=0; week < weeks.count(); week++) {
+        for (int week = 0; week < weeks.count(); week++) {
             weeklySeries->mapDrilldownSeries(week, seasonSeries);
             weeklySeries->setName(QString("Crop by week - " + months.at(month)));
         }
@@ -79,11 +79,10 @@ int main(int argc, char *argv[])
     // Fill monthly and weekly series with data
     foreach (QString plant, plants) {
         QBarSet* monthlyCrop = new QBarSet(plant);
-        for (int month=0; month<months.count(); month++) {
+        for (int month = 0; month < months.count(); month++) {
             QBarSet* weeklyCrop = new QBarSet(plant);
-            for (int week=0; week<weeks.count(); week++) {
+            for (int week = 0; week < weeks.count(); week++)
                 *weeklyCrop << (qrand() % 20);
-            }
             // Get the drilldown series from season series and add crop to it.
             seasonSeries->drilldownSeries(month)->append(weeklyCrop);
             *monthlyCrop << weeklyCrop->sum();

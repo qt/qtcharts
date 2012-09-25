@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     QBarCategoryAxis* axis = new QBarCategoryAxis();
     axis->append(categories);
     chart->createDefaultAxes();
-    chart->setAxisY(axis,series);
+    chart->setAxisY(axis, series);
 //![4]
 
 //![5]

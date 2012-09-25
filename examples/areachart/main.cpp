@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
 
 //![2]
     *series0 << QPointF(1, 5) << QPointF(3, 7) << QPointF(7, 6) << QPointF(9, 7) << QPointF(12, 6)
-        << QPointF(16, 7) << QPointF(18, 5);
+             << QPointF(16, 7) << QPointF(18, 5);
     *series1 << QPointF(1, 3) << QPointF(3, 4) << QPointF(7, 3) << QPointF(8, 2) << QPointF(12, 3)
-        << QPointF(16, 4) << QPointF(18, 3);
+             << QPointF(16, 4) << QPointF(18, 3);
 //![2]
 
 //![3]

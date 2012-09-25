@@ -61,7 +61,7 @@ void ChartView::mouseMoveEvent(QMouseEvent *event)
 
     if (m_isScrolling) {
         QPointF delta = m_origin - event->pos();
-        chart()->scroll(delta.x(),-delta.y());
+        chart()->scroll(delta.x(), -delta.y());
         m_origin = event->pos();
     }
 

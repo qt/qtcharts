@@ -43,9 +43,7 @@ public:
     void showLegendSpinbox();
     void hideLegendSpinbox();
 
-signals:
-    
-public slots:
+public Q_SLOTS:
     void toggleAttached();
     void addBarset();
     void removeBarset();
@@ -58,9 +56,7 @@ public slots:
 
     void updateLegendLayout();
 
-
 private:
-
     QChart *m_chart;
     QBarSeries *m_series;
 

@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     //![1]
     QLineSeries* series;
@@ -42,18 +42,18 @@ int main(int argc, char *argv[])
     for (int i = 0; i < 5; i++) {
         series = new QLineSeries;
         for (int k(0); k < 8; k++)
-            series->append(i + k, qrand()%20);
+            series->append(i + k, qrand() % 20);
         chart->addSeries(series);
 
         axisX = new QValueAxis;
         axisX->setTickCount(7 + i);
         axisX->setLinePenColor(series->pen().color());
-        if (i%2)
+        if (i % 2)
             axisX->setAlternativePlacement(true);
         axisY = new QValueAxis;
         axisY->setTickCount(7 + i);
         axisY->setLinePenColor(series->pen().color());
-        if (i%2)
+        if (i % 2)
             axisY->setAlternativePlacement(true);
 
         chart->setAxisX(axisX, series);

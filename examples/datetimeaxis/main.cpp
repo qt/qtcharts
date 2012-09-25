@@ -33,7 +33,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     //![1]
     QLineSeries* series = new QLineSeries();
@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
     //![2]
 
     //![3]
-    QChart* chart = new QChart();    
+    QChart* chart = new QChart();
     chart->addSeries(series);
     chart->legend()->hide();
     chart->createDefaultAxes();

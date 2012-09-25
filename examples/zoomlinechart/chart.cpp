@@ -24,7 +24,7 @@
 #include <QGraphicsView>
 
 Chart::Chart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
-    :QChart(parent, wFlags)
+    : QChart(parent, wFlags)
 {
     // Seems that QGraphicsView (QChartView) does not grab gestures.
     // They can only be grabbed here in the QGraphicsWidget (QChart).
@@ -49,7 +49,7 @@ bool Chart::gestureEvent(QGestureEvent* event)
 {
     if (QGesture *gesture = event->gesture(Qt::PanGesture)) {
         QPanGesture *pan = static_cast<QPanGesture *>(gesture);
-        QChart::scroll(pan->delta().x(),pan->delta().y());
+        QChart::scroll(pan->delta().x(), pan->delta().y());
     }
 
     if (QGesture *gesture = event->gesture(Qt::PinchGesture)) {

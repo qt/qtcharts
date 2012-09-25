@@ -30,11 +30,6 @@ class ChartView : public QChartView
     Q_OBJECT
 public:
     explicit ChartView(QWidget *parent = 0);
-    
-signals:
-    
-public slots:
-    
 };
 
 #endif // CHARTVIEW_H

@@ -24,8 +24,8 @@
 QTCOMMERCIALCHART_USE_NAMESPACE
 
 DrilldownChart::DrilldownChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
-    : QChart(parent, wFlags)
-    ,m_currentSeries(0)
+    : QChart(parent, wFlags),
+      m_currentSeries(0)
 {
 }
 
@@ -44,7 +44,7 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
     addSeries(series);
 
     createDefaultAxes();
-    setAxisX(axis,series);
+    setAxisX(axis, series);
 
     setTitle(series->name());
 }
@@ -52,7 +52,7 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
 void DrilldownChart::handleClicked(int index, QBarSet *barset)
 {
     Q_UNUSED(barset)
-    DrilldownBarSeries* series = static_cast<DrilldownBarSeries*> (sender());
+    DrilldownBarSeries* series = static_cast<DrilldownBarSeries*>(sender());
     changeSeries(series->drilldownSeries(index));
 }
 

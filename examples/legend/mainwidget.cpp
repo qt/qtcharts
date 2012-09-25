@@ -94,7 +94,7 @@ MainWidget::MainWidget(QWidget *parent) :
     // Create layout for grid and detached legend
     m_mainLayout = new QGridLayout();
     m_mainLayout->addLayout(m_buttonLayout, 0, 0);
-    m_mainLayout->addLayout(fontLayout,1,0);
+    m_mainLayout->addLayout(fontLayout, 1, 0);
     m_mainLayout->addWidget(m_chartView, 0, 1, 3, 1);
     setLayout(m_mainLayout);
 
@@ -155,8 +155,8 @@ void MainWidget::toggleAttached()
         //![2]
         legend->detachFromChart();
         m_chart->legend()->setBackgroundVisible(true);
-        m_chart->legend()->setBrush(QBrush(QColor(128,128,128,128)));
-        m_chart->legend()->setPen(QPen(QColor(192,192,192,192)));
+        m_chart->legend()->setBrush(QBrush(QColor(128, 128, 128, 128)));
+        m_chart->legend()->setPen(QPen(QColor(192, 192, 192, 192)));
         //![2]
         showLegendSpinbox();
         updateLegendLayout();
@@ -182,7 +182,7 @@ void MainWidget::removeBarset()
 {
     QList<QBarSet*> sets = m_series->barSets();
     if (sets.count() > 0) {
-        m_series->remove(sets.at(sets.count()-1));
+        m_series->remove(sets.at(sets.count() - 1));
     }
 }
 
@@ -238,10 +238,10 @@ void MainWidget::fontSizeChanged()
 void MainWidget::updateLegendLayout()
 {
 //![4]
-    m_chart->legend()->setGeometry(QRectF(m_legendPosX->value()
-                                   ,m_legendPosY->value()
-                                   ,m_legendWidth->value()
-                                   ,m_legendHeight->value()));
+    m_chart->legend()->setGeometry(QRectF(m_legendPosX->value(),
+                                          m_legendPosY->value(),
+                                          m_legendWidth->value(),
+                                          m_legendHeight->value()));
     m_chart->legend()->update();
 //![4]
 }

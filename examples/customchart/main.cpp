@@ -53,8 +53,8 @@ int main(int argc, char *argv[])
 
     // Customize chart background
     QLinearGradient backgroundGradient;
-    backgroundGradient.setStart(QPointF(0,0));
-    backgroundGradient.setFinalStop(QPointF(0,1));
+    backgroundGradient.setStart(QPointF(0, 0));
+    backgroundGradient.setFinalStop(QPointF(0, 1));
     backgroundGradient.setColorAt(0.0, QRgb(0xd2d0d1));
     backgroundGradient.setColorAt(1.0, QRgb(0x4c4547));
     backgroundGradient.setCoordinateMode(QGradient::ObjectBoundingMode);

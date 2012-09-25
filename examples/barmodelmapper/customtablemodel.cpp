@@ -27,21 +27,19 @@
 CustomTableModel::CustomTableModel(QObject *parent) :
     QAbstractTableModel(parent)
 {
-    qsrand(QTime(0,0,0).secsTo(QTime::currentTime()));
+    qsrand(QTime(0, 0, 0).secsTo(QTime::currentTime()));
 
     m_columnCount = 6;
     m_rowCount = 12;
 
     // m_data
-    for (int i = 0; i < m_rowCount; i++)
-    {
+    for (int i = 0; i < m_rowCount; i++) {
         QVector<qreal>* dataVec = new QVector<qreal>(m_columnCount);
-        for (int k = 0; k < dataVec->size(); k++)
-        {
-            if (k%2 == 0)
-                dataVec->replace(k, i * 50 + qrand()%20);
+        for (int k = 0; k < dataVec->size(); k++) {
+            if (k % 2 == 0)
+                dataVec->replace(k, i * 50 + qrand() % 20);
             else
-                dataVec->replace(k, qrand()%100);
+                dataVec->replace(k, qrand() % 100);
         }
         m_data.append(dataVec);
     }
@@ -59,35 +57,28 @@ int CustomTableModel::columnCount(const QModelIndex & parent) const
     return m_columnCount;
 }
 
-QVariant CustomTableModel::headerData (int section, Qt::Orientation orientation, int role ) const
+QVariant CustomTableModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
     if (role != Qt::DisplayRole)
         return QVariant();
 
     if (orientation == Qt::Horizontal)
-    {
         return QString("201%1").arg(section);
-    }
     else
         return QString("%1").arg(section + 1);
 }
 
 QVariant CustomTableModel::data(const QModelIndex & index, int role) const
 {
-    if (role == Qt::DisplayRole)
-    {
+    if (role == Qt::DisplayRole) {
         return m_data[index.row()]->at(index.column());
-    }
-    else if (role == Qt::EditRole)
-    {
+    } else if (role == Qt::EditRole) {
         return m_data[index.row()]->at(index.column());
-    }
-    else if (role == Qt::BackgroundRole)
-    {
+    } else if (role == Qt::BackgroundRole) {
         QRect rect;
         foreach(rect, m_mapping)
-            if(rect.contains(index.column(), index.row()))
-                return QColor(m_mapping.key(rect));
+        if (rect.contains(index.column(), index.row()))
+            return QColor(m_mapping.key(rect));
 
         // cell not mapped return white color
         return QColor(Qt::white);
@@ -95,10 +86,9 @@ QVariant CustomTableModel::data(const QModelIndex & index, int role) const
     return QVariant();
 }
 
-bool CustomTableModel::setData ( const QModelIndex & index, const QVariant & value, int role)
+bool CustomTableModel::setData(const QModelIndex & index, const QVariant & value, int role)
 {
-    if (index.isValid() && role == Qt::EditRole)
-    {
+    if (index.isValid() && role == Qt::EditRole) {
         m_data[index.row()]->replace(index.column(), value.toDouble());
         emit dataChanged(index, index);
         return true;
@@ -106,7 +96,7 @@ bool CustomTableModel::setData ( const QModelIndex & index, const QVariant & val
     return false;
 }
 
-Qt::ItemFlags CustomTableModel::flags ( const QModelIndex & index ) const
+Qt::ItemFlags CustomTableModel::flags(const QModelIndex & index) const
 {
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }

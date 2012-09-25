@@ -60,12 +60,12 @@ int main(int argc, char *argv[])
 //![8]
     QLineSeries* lineseries = new QLineSeries();
 
-    lineseries->append(QPoint(0,4));
-    lineseries->append(QPoint(1,15));
-    lineseries->append(QPoint(2,20));
-    lineseries->append(QPoint(3,4));
-    lineseries->append(QPoint(4,12));
-    lineseries->append(QPoint(5,17));
+    lineseries->append(QPoint(0, 4));
+    lineseries->append(QPoint(1, 15));
+    lineseries->append(QPoint(2, 20));
+    lineseries->append(QPoint(3, 4));
+    lineseries->append(QPoint(4, 12));
+    lineseries->append(QPoint(5, 17));
 //![8]
 
 //![3]
@@ -80,14 +80,14 @@ int main(int argc, char *argv[])
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     QBarCategoryAxis* axisX = new QBarCategoryAxis();
     axisX->append(categories);
-    chart->setAxisX(axisX,lineseries);
-    chart->setAxisX(axisX,barseries);
-    axisX->setRange(QString("Jan"),QString("Jun"));
+    chart->setAxisX(axisX, lineseries);
+    chart->setAxisX(axisX, barseries);
+    axisX->setRange(QString("Jan"), QString("Jun"));
 
     QValueAxis* axisY = new QValueAxis();
-    chart->setAxisY(axisY,lineseries);
-    chart->setAxisY(axisY,barseries);
-    axisY->setRange(0,20);
+    chart->setAxisY(axisY, lineseries);
+    chart->setAxisY(axisY, barseries);
+    axisY->setRange(0, 20);
 //![4]
 
 //![5]

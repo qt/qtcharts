@@ -25,14 +25,14 @@
 #include <QAreaSeries>
 #include <QTime>
 
-ChartView::ChartView(QChart* chart,QWidget* parent):
-    QChartView(chart,parent),
-    m_index(-1),
-    m_chart(chart)
+ChartView::ChartView(QChart* chart, QWidget* parent)
+    : QChartView(chart, parent),
+      m_index(-1),
+      m_chart(chart)
 {
     m_chart->setTitle("Charts presenter");
     m_chart->setDropShadowEnabled(false);
-    QObject::connect(&m_timer,SIGNAL(timeout()),this,SLOT(handleTimeout()));
+    QObject::connect(&m_timer, SIGNAL(timeout()), this, SLOT(handleTimeout()));
     m_timer.setInterval(3000);
 
     //![1]
@@ -54,21 +54,21 @@ ChartView::ChartView(QChart* chart,QWidget* parent):
 
     for (int x = 0; x <= numPoints; ++x) {
         qreal y = qrand() % 100;
-        series0->append(x,y);
-        series1->append(x,y);
-        series2->append(x,y);
+        series0->append(x, y);
+        series1->append(x, y);
+        series2->append(x, y);
     }
     //![2]
 
     //![3]
-    m_series<<series0;
-    m_titles<< m_chart->title()+": LineChart";
-    m_series<<series1;
-    m_titles<< m_chart->title()+": ScatterChart";
-    m_series<<series2;
-    m_titles<< m_chart->title()+": SplineChart";
-    m_series<<series3;
-    m_titles<< m_chart->title()+": AreaChart";
+    m_series << series0;
+    m_titles << m_chart->title() + ": LineChart";
+    m_series << series1;
+    m_titles << m_chart->title() + ": ScatterChart";
+    m_series << series2;
+    m_titles << m_chart->title() + ": SplineChart";
+    m_series << series3;
+    m_titles << m_chart->title() + ": AreaChart";
     //![3]
 
     m_timer.start();
@@ -77,7 +77,8 @@ ChartView::ChartView(QChart* chart,QWidget* parent):
 
 ChartView::~ChartView()
 {
-    if(m_series.size() == 0) return;
+    if (m_series.size() == 0)
+        return;
     m_chart->removeSeries(m_series.at(m_index));
     m_series.removeLast();  //remove QAreaSeries instance since they will be deleted when QLineSeries instance is gone
     qDeleteAll(m_series);
@@ -86,8 +87,9 @@ ChartView::~ChartView()
 //![4]
 void ChartView::handleTimeout()
 {
-    if(m_series.size() == 0) return;
-    if(m_index >= 0)
+    if (m_series.size() == 0)
+        return;
+    if (m_index >= 0)
         m_chart->removeSeries(m_series.at(m_index));
     m_index++;
     m_index = m_index % m_series.size();
