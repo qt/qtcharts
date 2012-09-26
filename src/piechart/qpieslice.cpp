@@ -293,7 +293,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 /*!
     \qmlproperty LabelPosition PieSlice::labelPosition
-    Position of the slice label. One of PieSlice.LabelOutside or PieSlice.LabelInside.
+    Position of the slice label. One of PieSlice.LabelOutside, PieSlice.LabelInsideHorizontal,
+    PieSlice.LabelInsideTangential or PieSlice.LabelInsideNormal. By default the position is
+    PieSlice.LabelOutside.
     \sa labelVisible
 */
 

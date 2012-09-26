@@ -52,6 +52,8 @@
 #endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
+Q_DECLARE_METATYPE(QList<QPieSlice *>)
+Q_DECLARE_METATYPE(QList<QBarSet *>)
 
 class ChartQmlPlugin : public QDeclarativeExtensionPlugin
 {
@@ -66,6 +68,9 @@ public:
     virtual void registerTypes(const char *uri)
     {
         Q_ASSERT(QLatin1String(uri) == QLatin1String("QtCommercial.Chart"));
+
+        qRegisterMetaType<QList<QPieSlice *> >();
+        qRegisterMetaType<QList<QBarSet *> >();
 
         // QtCommercial.Chart 1.0
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "ChartView");
