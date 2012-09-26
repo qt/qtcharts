@@ -21,6 +21,7 @@
 #include "qlegendmarker.h"
 #include "qlegendmarker_p.h"
 #include "legendmarkeritem_p.h"
+#include "qlegend.h"
 #include <QDebug>
 #include <QFontMetrics>
 #include <QGraphicsSceneEvent>
@@ -104,8 +105,9 @@ void QLegendMarker::setVisible(bool visible)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q) :
-    q_ptr(q)
+QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend) :
+    q_ptr(q),
+    m_legend(legend)
 {
 //    qDebug() << "QLegendMarkerPrivate created";
     m_item = new LegendMarkerItem(this);
@@ -113,7 +115,6 @@ QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q) :
 
 QLegendMarkerPrivate::~QLegendMarkerPrivate()
 {
-//    delete m_item;
 }
 
 void QLegendMarkerPrivate::handleMousePressEvent(QGraphicsSceneEvent *event)

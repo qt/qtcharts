@@ -25,8 +25,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject *parent) :
-    QLegendMarker(*new QPieLegendMarkerPrivate(series,slice,this), parent)
+QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QLegend *legend, QObject *parent) :
+    QLegendMarker(*new QPieLegendMarkerPrivate(this,series,slice,legend), parent)
 {
 }
 
@@ -57,10 +57,11 @@ QPieSlice* QPieLegendMarker::peerObject()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QPieSeries *series, QPieSlice *slice, QPieLegendMarker *q) :
-    QLegendMarkerPrivate(q),
+QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QPieLegendMarker *q, QPieSeries *series, QPieSlice *slice, QLegend *legend) :
+    QLegendMarkerPrivate(q,legend),
     m_series(series),
     m_slice(slice)
+//    m_legend(legend)
 {
 //    qDebug() << "QPieLegendMarkerPrivate created";
     QObject::connect(m_slice, SIGNAL(labelChanged()), this, SLOT(updated()));

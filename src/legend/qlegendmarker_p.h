@@ -58,9 +58,10 @@ class QLegendMarkerPrivate : public QObject
     Q_OBJECT
 public:
 //    explicit QLegendMarkerPrivate(QAbstractSeries *series, QLegendMarker *q);
-    explicit QLegendMarkerPrivate(QLegendMarker *q);
+    explicit QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend);
     virtual ~QLegendMarkerPrivate();
 
+    // TODO: remove temporary setters/getters and use the m_item directly from public class via d_ptr
     void setPen(const QPen &pen);
     QPen pen() const;
 
@@ -90,14 +91,13 @@ public Q_SLOTS:
 
 protected:
     LegendMarkerItem *m_item;
+    QLegend* m_legend;
 
 private:
     QLegendMarker *q_ptr;
-/*
-    QLegend* m_legend;
-*/
 
 // New legend marker properties
+// Moved to item.
 /*
     QString m_label;
     QBrush m_labelBrush;

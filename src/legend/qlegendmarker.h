@@ -31,6 +31,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QLegendMarkerPrivate;
 class QAbstractSeries;
+class QLegend;
 
 // TODO: should this be QAbstractLegendMarker?
 class QTCOMMERCIALCHART_EXPORT QLegendMarker : public QObject

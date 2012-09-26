@@ -62,7 +62,7 @@ public:
     void removeSeries(QAbstractSeries* series);
 
 public Q_SLOTS:
-    void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
+    void handleSeriesAdded(QAbstractSeries *series/*, Domain *domain*/);
     void handleSeriesRemoved(QAbstractSeries *series);
     void handleSeriesVisibleChanged();
     void handleCountChanged();

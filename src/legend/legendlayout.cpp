@@ -20,7 +20,7 @@
 
 #include "legendlayout_p.h"
 #include "chartpresenter_p.h"
-#include "legendmarker_p.h"
+//#include "legendmarker_p.h"
 #include "qlegend_p.h"
 #include "chartlayout_p.h"
 
@@ -118,7 +118,6 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
 
     QSizeF size(0, 0);
 
-//    if( m_legend->d_ptr->markers().isEmpty()) return;
     if (m_legend->d_ptr->legendMarkers().isEmpty()) {
         return;
     }
@@ -135,24 +134,9 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
     case Qt::AlignTop:
     case Qt::AlignBottom: {
             QPointF point(0,0);
-            /*
-            foreach (LegendMarker* marker, m_legend->d_ptr->markers()) {
-                if (marker->isVisible()) {
-                    marker->setGeometry(geometry);
-                    marker->setPos(point.x(),geometry.height()/2 - marker->boundingRect().height()/2);
-                    const QRectF& rect = marker->boundingRect();
-                    size = size.expandedTo(rect.size());
-                    qreal w = rect.width();
-                    m_width+=w;
-                    point.setX(point.x() + w);
-                }
-            }
-            */
-// New markers -->>
             foreach (QLegendMarker* marker, m_legend->d_ptr->legendMarkers()) {
                 LegendMarkerItem* item = marker->d_ptr->item();
                 if (item->isVisible()) {
-//                    LegendMarkerItem* item = marker->d_ptr.data()->item();
                     item->setGeometry(geometry);
                     item->setPos(point.x(),geometry.height()/2 - item->boundingRect().height()/2);
                     const QRectF& rect = item->boundingRect();
@@ -162,7 +146,6 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
                     point.setX(point.x() + w);
                 }
             }
-// <<-- New markers
             if (m_width < geometry.width())
                 m_legend->d_ptr->items()->setPos(geometry.width() / 2 - m_width / 2, geometry.top());
             else
@@ -173,24 +156,9 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
     case Qt::AlignLeft:
     case Qt::AlignRight: {
             QPointF point(0,0);
-/*
-            foreach (LegendMarker* marker, m_legend->d_ptr->markers()) {
-                if (marker->isVisible()) {
-                    marker->setGeometry(geometry);
-                    marker->setPos(point);
-                    const QRectF& rect = marker->boundingRect();
-                    qreal h = rect.height();
-                    size = size.expandedTo(rect.size());
-                    m_height+=h;
-                    point.setY(point.y() + h);
-                }
-            }
-*/
-// New markers -->>
             foreach (QLegendMarker* marker, m_legend->d_ptr->legendMarkers()) {
                 LegendMarkerItem* item = marker->d_ptr->item();
                 if (item->isVisible()) {
-//                    LegendMarkerItem* item = marker->d_ptr->item();
                     item->setGeometry(geometry);
                     item->setPos(point);
                     const QRectF& rect = item->boundingRect();
@@ -200,7 +168,6 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
                     point.setY(point.y() + h);
                 }
             }
-// <<--- New markers
 
             if (m_height < geometry.height())
                 m_legend->d_ptr->items()->setPos(geometry.left(), geometry.height() / 2 - m_height / 2);
@@ -236,7 +203,6 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
 
     QSizeF size(0, 0);
 
-//    QList<LegendMarker *> markers = m_legend->d_ptr->markers();
     QList<QLegendMarker *> markers = m_legend->d_ptr->legendMarkers();
 
     if (markers.isEmpty())
@@ -248,31 +214,8 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
         m_width = 0;
         m_height = 0;
         for (int i = 0; i < markers.count(); i++) {
-            /*
-            LegendMarker *marker = markers.at(i);
-            if (marker->isVisible()) {
-                marker->setGeometry(geometry);
-                marker->setPos(point.x(),point.y());
-                const QRectF& boundingRect = marker->boundingRect();
-                qreal w = boundingRect.width();
-                qreal h = boundingRect.height();
-                m_width = qMax(m_width,w);
-                m_height = qMax(m_height,h);
-                point.setX(point.x() + w);
-                if (point.x() + w > geometry.left() + geometry.width() - right) {
-                    // Next item would go off rect.
-                    point.setX(0);
-                    point.setY(point.y() + h);
-                    if (i+1 < markers.count()) {
-                        m_height += h;
-                    }
-                }
-            }
-            */
-//                QLegendMarker *marker = markers.at(i);
             LegendMarkerItem *item = markers.at(i)->d_ptr->item();
             if (item->isVisible()) {
-//                    LegendMarkerItem *item = marker->d_ptr->item();
                 item->setGeometry(geometry);
                 item->setPos(point.x(),point.y());
                 const QRectF& boundingRect = item->boundingRect();
@@ -304,28 +247,6 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
         m_width = 0;
         m_height = 0;
         for (int i = 0; i < markers.count(); i++) {
-            /*
-            LegendMarker *marker = markers.at(i);
-            if (marker->isVisible()) {
-                marker->setGeometry(geometry);
-                const QRectF& boundingRect = marker->boundingRect();
-                qreal w = boundingRect.width();
-                qreal h = boundingRect.height();
-                m_width = qMax(m_width,w);
-                m_height = qMax(m_height,h);
-                marker->setPos(point.x(),point.y() - h);
-                point.setX(point.x() + w);
-                if (point.x() + w > geometry.left() + geometry.width() - right) {
-                    // Next item would go off rect.
-                    point.setX(0);
-                    point.setY(point.y() - h);
-                    if (i+1 < markers.count()) {
-                        m_height += h;
-                    }
-                }
-            }
-            */
-//                QLegendMarker *marker = markers.at(i);
             LegendMarkerItem *item = markers.at(i)->d_ptr->item();
             if (item->isVisible()) {
                 item->setGeometry(geometry);
@@ -346,12 +267,12 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
                 }
             }
         }
-    m_legend->d_ptr->items()->setPos(geometry.topLeft());
+        m_legend->d_ptr->items()->setPos(geometry.topLeft());
 
-    m_minOffsetX = -left;
-    m_minOffsetY = -m_height + geometry.height() - top;
-    m_maxOffsetX = m_width - geometry.width() - right;
-    m_maxOffsetY = -bottom;
+        m_minOffsetX = -left;
+        m_minOffsetY = -m_height + geometry.height() - top;
+        m_maxOffsetX = m_width - geometry.width() - right;
+        m_maxOffsetY = -bottom;
     }
     break;
     case Qt::AlignLeft: {
@@ -360,32 +281,8 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
         m_height = 0;
         qreal maxWidth = 0;
         for (int i = 0; i < markers.count(); i++) {
-            /*
-            LegendMarker *marker = markers.at(i);
-            if (marker->isVisible()) {
-                marker->setGeometry(geometry);
-                const QRectF& boundingRect = marker->boundingRect();
-                qreal w = boundingRect.width();
-                qreal h = boundingRect.height();
-                m_height = qMax(m_height,h);
-                maxWidth = qMax(maxWidth,w);
-                marker->setPos(point.x(),point.y());
-                point.setY(point.y() + h);
-                if (point.y() + h > geometry.bottom() - bottom) {
-                    // Next item would go off rect.
-                    point.setX(point.x() + maxWidth);
-                    point.setY(0);
-                    if (i+1 < markers.count()) {
-                        m_width += maxWidth;
-                        maxWidth = 0;
-                    }
-                }
-            }
-            */
-//                QLegendMarker *marker = markers.at(i);
             LegendMarkerItem *item = markers.at(i)->d_ptr->item();
             if (item->isVisible()) {
-//                    LegendMarkerItem *item = marker->d_ptr->item();
                 item->setGeometry(geometry);
                 const QRectF& boundingRect = item->boundingRect();
                 qreal w = boundingRect.width();
@@ -405,13 +302,13 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
                 }
             }
         }
-    m_width += maxWidth;
-    m_legend->d_ptr->items()->setPos(geometry.topLeft());
+        m_width += maxWidth;
+        m_legend->d_ptr->items()->setPos(geometry.topLeft());
 
-    m_minOffsetX = -left;
-    m_minOffsetY = -top;
-    m_maxOffsetX = m_width - geometry.width() - right;
-    m_maxOffsetY = m_height - geometry.height() - bottom;
+        m_minOffsetX = -left;
+        m_minOffsetY = -top;
+        m_maxOffsetX = m_width - geometry.width() - right;
+        m_maxOffsetY = m_height - geometry.height() - bottom;
     }
     break;
     case Qt::AlignRight: {
@@ -420,32 +317,8 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
         m_height = 0;
         qreal maxWidth = 0;
         for (int i = 0; i < markers.count(); i++) {
-            /*
-            LegendMarker *marker = markers.at(i);
-            if (marker->isVisible()) {
-                marker->setGeometry(geometry);
-                const QRectF& boundingRect = marker->boundingRect();
-                qreal w = boundingRect.width();
-                qreal h = boundingRect.height();
-                m_height = qMax(m_height,h);
-                maxWidth = qMax(maxWidth,w);
-                marker->setPos(point.x() - w,point.y());
-                point.setY(point.y() + h);
-                if (point.y() + h > geometry.bottom()-bottom) {
-                    // Next item would go off rect.
-                    point.setX(point.x() - maxWidth);
-                    point.setY(0);
-                    if (i+1 < markers.count()) {
-                        m_width += maxWidth;
-                        maxWidth = 0;
-                    }
-                }
-            }
-            */
-//                QLegendMarker *marker = markers.at(i);
             LegendMarkerItem *item = markers.at(i)->d_ptr->item();
             if (item->isVisible()) {
-//                    LegendMarkerItem *item = marker->d_ptr->item();
                 item->setGeometry(geometry);
                 const QRectF& boundingRect = item->boundingRect();
                 qreal w = boundingRect.width();
@@ -465,13 +338,13 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
                 }
             }
         }
-    m_width += maxWidth;
-    m_legend->d_ptr->items()->setPos(geometry.topLeft());
+        m_width += maxWidth;
+        m_legend->d_ptr->items()->setPos(geometry.topLeft());
 
-    m_minOffsetX = - m_width + geometry.width() - left;
-    m_minOffsetY = -top;
-    m_maxOffsetX = - right;
-    m_maxOffsetY = m_height - geometry.height() - bottom;
+        m_minOffsetX = - m_width + geometry.width() - left;
+        m_minOffsetY = -top;
+        m_maxOffsetX = - right;
+        m_maxOffsetY = m_height - geometry.height() - bottom;
     }
     break;
     default:
@@ -482,40 +355,6 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
 
 QSizeF LegendLayout::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
-/*
-    QSizeF size(0, 0);
-    qreal left, top, right, bottom;
-    getContentsMargins(&left, &top, &right, &bottom);
-
-    if (constraint.isValid()) {
-        foreach (LegendMarker *marker, m_legend->d_ptr->markers())
-            size = size.expandedTo(marker->effectiveSizeHint(which));
-        size = size.boundedTo(constraint);
-    } else if (constraint.width() >= 0) {
-        qreal width = 0;
-        qreal height = 0;
-        foreach (LegendMarker *marker, m_legend->d_ptr->markers()) {
-            width += marker->effectiveSizeHint(which).width();
-            height = qMax(height, marker->effectiveSizeHint(which).height());
-        }
-
-        size = QSizeF(qMin(constraint.width(), width), height);
-    } else if (constraint.height() >= 0) {
-        qreal width = 0;
-        qreal height = 0;
-        foreach (LegendMarker *marker, m_legend->d_ptr->markers()) {
-            width = qMax(width, marker->effectiveSizeHint(which).width());
-            height += height, marker->effectiveSizeHint(which).height();
-        }
-        size = QSizeF(width, qMin(constraint.height(), height));
-    } else {
-        foreach (LegendMarker *marker, m_legend->d_ptr->markers())
-            size = size.expandedTo(marker->effectiveSizeHint(which));
-    }
-    size += QSize(left + right, top + bottom);
-    return size;
-*/
-// New markers -->>
     QSizeF size(0, 0);
     qreal left, top, right, bottom;
     getContentsMargins(&left, &top, &right, &bottom);
@@ -556,7 +395,6 @@ QSizeF LegendLayout::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     }
     size += QSize(left + right, top + bottom);
     return size;
-// <<-- New markers
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

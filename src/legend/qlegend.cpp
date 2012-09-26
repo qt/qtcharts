@@ -176,7 +176,7 @@ QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
 {
     setZValue(ChartPresenter::LegendZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
-    QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)), d_ptr.data(), SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
+    QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)), d_ptr.data(), SLOT(handleSeriesAdded(QAbstractSeries*/*,Domain**/)));
     QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), d_ptr.data(), SLOT(handleSeriesRemoved(QAbstractSeries*)));
 //    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
     setLayout(d_ptr->m_layout);
@@ -476,9 +476,10 @@ int QLegendPrivate::roundness(qreal size)
 
 void QLegendPrivate::appendSeries(QAbstractSeries* series)
 {
+    // Only allow one instance of series
     if (!m_series.contains(series)) {
         m_series.append(series);
-        handleSeriesAdded(series,0);
+        handleSeriesAdded(series/*,0*/);
     }
 }
 
@@ -490,13 +491,12 @@ void QLegendPrivate::removeSeries(QAbstractSeries* series)
     }
 }
 
-void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
+void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series/*, Domain *domain*/)
 {
-    Q_UNUSED(domain)
+//    Q_UNUSED(domain)
 
-    qDebug() << "QLegendPrivate::handleSeriesAdded";
+    qDebug() << "QLegendPrivate::handleSeriesAdded" << series;
 
-// New markers --->
     QList<QLegendMarker*> newMarkers = series->d_ptr->createLegendMarkers(q_ptr);
     foreach (QLegendMarker* marker, newMarkers) {
         marker->setFont(m_font);
@@ -507,22 +507,7 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
     }
 
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
-// <--- New markers
-
-/*
-    QList<LegendMarker*> markers = series->d_ptr->createLegendMarker(q_ptr);
-
-    foreach (LegendMarker *marker, markers) {
-        marker->setFont(m_font);
-        marker->setLabelBrush(m_labelBrush);
-        marker->setVisible(series->isVisible());
-        m_items->addToGroup(marker);
-        m_markers << marker;
-    }
-*/
-
-    QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
-    QObject::connect(series->d_ptr.data(), SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
+//    QObject::connect(series->d_ptr.data(), SIGNAL(legendPropertiesUpdated(QAbstractSeries*)), this, SLOT(handleLegendPropertiesUpdated(QAbstractSeries*)));
 
     m_items->setVisible(false);
     m_layout->invalidate();
@@ -530,7 +515,8 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
 
 void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 {
-// New markers --->
+    qDebug() << "QLegendPrivate::handleSeriesRemoved" << series;
+
     foreach (QLegendMarker *marker, m_legendMarkers) {
         if (marker->series() == series) {
             marker->d_ptr.data()->item()->setVisible(false);
@@ -541,18 +527,8 @@ void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
     }
 
     QObject::disconnect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
-// <--- New markers
+//    QObject::disconnect(series->d_ptr.data(), SIGNAL(legendPropertiesUpdated(QAbstractSeries*)), this, SLOT(handleLegendPropertiesUpdated(QAbstractSeries*)));
 
-/*
-    foreach (LegendMarker *marker, m_markers) {
-        if (marker->series() == series) {
-            delete marker;
-            m_markers.removeAll(marker);
-        }
-    }
-*/
-    QObject::disconnect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
-    QObject::disconnect(series->d_ptr.data(), SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
     m_layout->invalidate();
 }
 
@@ -561,33 +537,25 @@ void QLegendPrivate::handleSeriesVisibleChanged()
     QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
     Q_ASSERT(series);
 
-// New markers --->
     foreach (QLegendMarker* marker, m_legendMarkers) {
         if (marker->series() == series) {
             marker->setVisible(series->isVisible());
         }
     }
-
-// <--- New markers
-/*
-    foreach (LegendMarker* marker, m_markers) {
-        if (marker->series() == series) {
-            marker->setVisible(series->isVisible());
-    }
-*/
     m_layout->invalidate();
 }
 
 void QLegendPrivate::handleCountChanged()
 {
-    // With new markers, the series shoud notify markers directly?
-    qDebug() << "handleLegendPropertiesUpdated";
+    // TODO: With new markers, the series should notify markers directly.
+    // TODO: This is not a good way to handle updates.
+    qDebug() << "handleLegendPropertiesUpdated" << series;
 
     // Handle new or removed markers
     // Handle changes of marker pen/brush/label. every property that legend is interested
     handleSeriesRemoved(series);
-    Domain domain;
-    handleSeriesAdded(series, &domain);
+//    Domain domain;
+    handleSeriesAdded(series/*, &domain*/);
 }
 
 #include "moc_qlegend.cpp"
