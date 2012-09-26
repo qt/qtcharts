@@ -140,7 +140,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa append(), insert()
 */
 /*!
-    \qmlsignal AbstractBarSeries::onAdded(BarSet barset)
+    \qmlsignal AbstractBarSeries::onBarsetsAdded(BarSet barset)
     Emitted when \a barset has been added to the series.
 */
 
@@ -150,7 +150,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \sa remove()
 */
 /*!
-    \qmlsignal AbstractBarSeries::onRemoved(BarSet barset)
+    \qmlsignal AbstractBarSeries::onBarsetsRemoved(BarSet barset)
     Emitted when \a barset has been removed from the series.
 */
 
@@ -161,11 +161,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlmethod BarSet AbstractBarSeries::append(string label, VariantList values)
-    Adds a new bar set with \a label and \a values to \a index. Values can be a list of reals or a list of XYPoints.
+    Adds a new bar set with \a label and \a values to \a index. Values is a list of reals.
     For example:
     \code
         myBarSeries.append("set 1", [0, 0.2, 0.2, 0.5, 0.4, 1.5, 0.9]);
-        myBarSeries.append("set 2", [Qt.point(0, 1), Qt.point(2, 2.5), Qt.point(3.5, 2.2)]);
     \endcode
 */
 

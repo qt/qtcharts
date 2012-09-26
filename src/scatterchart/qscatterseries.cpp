@@ -77,6 +77,10 @@
     Line (pen) color of the series. This is a convenience property for modifying the color of pen.
     \sa QScatterSeries::pen()
 */
+/*!
+    \qmlproperty color ScatterSeries::borderColor
+    Border (pen) color of the series.
+*/
 
 /*!
     \qmlproperty real ScatterSeries::borderWidth
