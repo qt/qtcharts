@@ -97,7 +97,7 @@ void tst_QXYSeries::append_raw_data()
 void tst_QXYSeries::append_raw()
 {
     QFETCH(QList<QPointF>, points);
-    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     QSignalSpy addedSpy(m_series, SIGNAL(pointAdded(int)));
     m_series->append(points);
     TRY_COMPARE(spy0.count(), 0);
@@ -160,7 +160,7 @@ void tst_QXYSeries::count_raw()
 {
     QFETCH(int, count);
 
-    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
 
     for(int i=0 ; i< count; ++i)
         m_series->append(i,i);
@@ -177,7 +177,7 @@ void tst_QXYSeries::remove_raw_data()
 void tst_QXYSeries::remove_raw()
 {
     QFETCH(QList<QPointF>, points);
-    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     m_series->append(points);
     TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points(), points);
@@ -231,7 +231,7 @@ void tst_QXYSeries::clear_raw_data()
 void tst_QXYSeries::clear_raw()
 {
     QFETCH(QList<QPointF>, points);
-    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     m_series->append(points);
     TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->points(), points);
@@ -360,7 +360,7 @@ void tst_QXYSeries::oper()
 {
     QFETCH(QList<QPointF>, points);
 
-    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
 
     foreach (const QPointF& point,points)
     {
@@ -385,7 +385,7 @@ void tst_QXYSeries::pen()
 {
     QFETCH(QPen, pen);
 
-    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     m_series->setPen(pen);
 
     TRY_COMPARE(spy0.count(), 0);
@@ -418,7 +418,7 @@ void tst_QXYSeries::pointsVisible_raw_data()
 void tst_QXYSeries::pointsVisible_raw()
 {
     QFETCH(bool, pointsVisible);
-    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF const&)));
+    QSignalSpy spy0(m_series, SIGNAL(clicked(QPointF)));
     m_series->setPointsVisible(pointsVisible);
     TRY_COMPARE(spy0.count(), 0);
     QCOMPARE(m_series->pointsVisible(), pointsVisible);

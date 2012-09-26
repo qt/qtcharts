@@ -132,7 +132,7 @@ void tst_QValueAxis::max_raw()
 
     QSignalSpy spy0(m_valuesaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_valuesaxis->setMax(max);
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->max() - max), "Not equal");
@@ -181,7 +181,7 @@ void tst_QValueAxis::min_raw()
 
     QSignalSpy spy0(m_valuesaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_valuesaxis->setMin(min);
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->min() - min), "Not equal");
@@ -250,7 +250,7 @@ void tst_QValueAxis::niceNumbersEnabled()
 
     QSignalSpy spy0(m_valuesaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_valuesaxis->setNiceNumbersEnabled(niceNumbersEnabled);
     QCOMPARE(m_valuesaxis->niceNumbersEnabled(), niceNumbersEnabled);
@@ -284,7 +284,7 @@ void tst_QValueAxis::range_raw()
 
     QSignalSpy spy0(m_valuesaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_valuesaxis->setRange(min, max);
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->min() - min), "Min not equal");
@@ -336,7 +336,7 @@ void tst_QValueAxis::ticksCount()
 
     QSignalSpy spy0(m_valuesaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_valuesaxis->setTickCount(ticksCount);
     QCOMPARE(m_valuesaxis->tickCount(), ticksCount);
@@ -368,7 +368,7 @@ void tst_QValueAxis::noautoscale()
 
     QSignalSpy spy0(m_valuesaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_valuesaxis->setRange(min, max);
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->min() - min), "Min not equal");
@@ -394,7 +394,7 @@ void tst_QValueAxis::autoscale()
 {
     QSignalSpy spy0(m_valuesaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->min()), "Min not equal");
     QVERIFY2(qFuzzyIsNull(m_valuesaxis->max()), "Max not equal");

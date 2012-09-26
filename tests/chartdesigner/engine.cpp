@@ -265,7 +265,7 @@ void Engine::setupXYSeries(QXYSeries *xyseries, const QList<int>& columns, int c
     mapper->setRowCount(maxRow - minRow + 1);
     m_chart->addSeries(xyseries);
     xyseries->setName(QString("Series %1").arg(m_chart->series().count()));
-    QObject::connect(xyseries,SIGNAL(clicked(const QPointF&)),this,SIGNAL(selected()));
+    QObject::connect(xyseries,SIGNAL(clicked(QPointF)),this,SIGNAL(selected()));
     const QModelIndexList& list = m_selection->selectedIndexes();
     QModelIndexList result;
     foreach (const QModelIndex& index, list) {

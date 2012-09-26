@@ -124,7 +124,7 @@ void tst_QCategoryAxis::max_raw()
 
     QSignalSpy spy0(m_categoryaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_categoryaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_categoryaxis->setMax(max);
     QVERIFY2(qFuzzyIsNull(m_categoryaxis->max() - max), "Not equal");
@@ -172,7 +172,7 @@ void tst_QCategoryAxis::min_raw()
 
     QSignalSpy spy0(m_categoryaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_categoryaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_categoryaxis->setMin(min);
     QVERIFY2(qFuzzyIsNull(m_categoryaxis->min() - min), "Not equal");
@@ -225,7 +225,7 @@ void tst_QCategoryAxis::range_raw()
 
     QSignalSpy spy0(m_categoryaxis, SIGNAL(maxChanged(qreal)));
     QSignalSpy spy1(m_categoryaxis, SIGNAL(minChanged(qreal)));
-    QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal, qreal)));
+    QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_categoryaxis->setRange(min, max);
     QVERIFY2(qFuzzyIsNull(m_categoryaxis->min() - min), "Min not equal");

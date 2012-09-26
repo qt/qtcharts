@@ -114,7 +114,7 @@ void tst_QStackedBarSeries::mouseclicked()
 
     QList<QBarSet*> barSets = series->barSets();
 
-    QSignalSpy seriesSpy(series,SIGNAL(clicked(int, QBarSet*)));
+    QSignalSpy seriesSpy(series,SIGNAL(clicked(int,QBarSet*)));
 
     QChartView view(new QChart());
     view.resize(400,300);
@@ -252,7 +252,7 @@ void tst_QStackedBarSeries::mousehovered()
 
     QList<QBarSet*> barSets = series->barSets();
 
-    QSignalSpy seriesSpy(series,SIGNAL(hovered(bool, QBarSet*)));
+    QSignalSpy seriesSpy(series,SIGNAL(hovered(bool,QBarSet*)));
 
     QChartView view(new QChart());
     view.resize(400,300);

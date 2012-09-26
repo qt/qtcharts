@@ -144,10 +144,10 @@ void AbstractBarChartItem::handleDataStructureChanged()
             // Bars
             Bar *bar = new Bar(set, c, this);
             m_bars.append(bar);
-            connect(bar, SIGNAL(clicked(int, QBarSet*)), m_series, SIGNAL(clicked(int, QBarSet*)));
-            connect(bar, SIGNAL(hovered(bool, QBarSet*)), m_series, SIGNAL(hovered(bool, QBarSet*)));
-            connect(bar, SIGNAL(clicked(int, QBarSet*)), set, SIGNAL(clicked(int)));
-            connect(bar, SIGNAL(hovered(bool, QBarSet*)), set, SIGNAL(hovered(bool)));
+            connect(bar, SIGNAL(clicked(int,QBarSet*)), m_series, SIGNAL(clicked(int,QBarSet*)));
+            connect(bar, SIGNAL(hovered(bool,QBarSet*)), m_series, SIGNAL(hovered(bool,QBarSet*)));
+            connect(bar, SIGNAL(clicked(int,QBarSet*)), set, SIGNAL(clicked(int)));
+            connect(bar, SIGNAL(hovered(bool,QBarSet*)), set, SIGNAL(hovered(bool)));
             m_layout.append(QRectF(0, 0, 0, 0));
 
             // Labels

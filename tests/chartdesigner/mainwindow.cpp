@@ -223,7 +223,7 @@ void MainWindow::createTable()
 {
     m_table->setModel(m_engine->model());
     m_table->setSelectionModel(m_engine->selectionModel());
-    QObject::connect(m_table->selectionModel(),SIGNAL(selectionChanged(const QItemSelection&, const QItemSelection&)), this,SLOT(updateUI()));
+    QObject::connect(m_table->selectionModel(),SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this,SLOT(updateUI()));
 }
 
 void MainWindow::updateUI()

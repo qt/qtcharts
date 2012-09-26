@@ -221,7 +221,7 @@ void tst_QBarSeries::take()
     QVERIFY(m_barseries_with_sets->count() == count);
 
     QSignalSpy countSpy(m_barseries_with_sets,SIGNAL(countChanged()));
-    QSignalSpy removedSpy(m_barseries_with_sets,SIGNAL(barsetsRemoved(QList<QBarSet *>)));
+    QSignalSpy removedSpy(m_barseries_with_sets,SIGNAL(barsetsRemoved(QList<QBarSet*>)));
 
     for (int i=0; i<m_testSets.count(); i++) {
         QBarSet* set = m_testSets.at(i);

@@ -68,11 +68,11 @@ int main(int argc, char *argv[])
         }
 
         // Use clicked signal to implement drilldown
-        QObject::connect(weeklySeries, SIGNAL(clicked(int, QBarSet *)), drilldownChart, SLOT(handleClicked(int, QBarSet *)));
+        QObject::connect(weeklySeries, SIGNAL(clicked(int,QBarSet*)), drilldownChart, SLOT(handleClicked(int,QBarSet*)));
     }
 
     // Enable drilldown from season series using clicked signal
-    QObject::connect(seasonSeries, SIGNAL(clicked(int, QBarSet *)), drilldownChart, SLOT(handleClicked(int, QBarSet *)));
+    QObject::connect(seasonSeries, SIGNAL(clicked(int,QBarSet*)), drilldownChart, SLOT(handleClicked(int,QBarSet*)));
 //! [3]
 
 //! [4]

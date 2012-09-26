@@ -134,7 +134,7 @@ void tst_QDateTimeAxis::max_raw()
 
     QSignalSpy spy0(m_dateTimeAxisX, SIGNAL(maxChanged(QDateTime)));
     QSignalSpy spy1(m_dateTimeAxisX, SIGNAL(minChanged(QDateTime)));
-    QSignalSpy spy2(m_dateTimeAxisX, SIGNAL(rangeChanged(QDateTime, QDateTime)));
+    QSignalSpy spy2(m_dateTimeAxisX, SIGNAL(rangeChanged(QDateTime,QDateTime)));
 
     m_dateTimeAxisX->setMax(max);
 
@@ -193,7 +193,7 @@ void tst_QDateTimeAxis::min_raw()
 
     QSignalSpy spy0(m_dateTimeAxisX, SIGNAL(maxChanged(QDateTime)));
     QSignalSpy spy1(m_dateTimeAxisX, SIGNAL(minChanged(QDateTime)));
-    QSignalSpy spy2(m_dateTimeAxisX, SIGNAL(rangeChanged(QDateTime, QDateTime)));
+    QSignalSpy spy2(m_dateTimeAxisX, SIGNAL(rangeChanged(QDateTime,QDateTime)));
 
     m_dateTimeAxisX->setMin(min);
 
@@ -269,7 +269,7 @@ void tst_QDateTimeAxis::range_raw()
 
     QSignalSpy spy0(m_dateTimeAxisX, SIGNAL(maxChanged(QDateTime)));
     QSignalSpy spy1(m_dateTimeAxisX, SIGNAL(minChanged(QDateTime)));
-    QSignalSpy spy2(m_dateTimeAxisX, SIGNAL(rangeChanged(QDateTime, QDateTime)));
+    QSignalSpy spy2(m_dateTimeAxisX, SIGNAL(rangeChanged(QDateTime,QDateTime)));
 
     m_dateTimeAxisX->setRange(min, max);
 

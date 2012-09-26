@@ -58,12 +58,12 @@ int main(int argc, char *argv[])
         foreach (QString month, months)
         *series << new DrilldownSlice(qrand() % 1000, month, yearSeries);
 
-        QObject::connect(series, SIGNAL(clicked(QPieSlice *)), chart, SLOT(handleSliceClicked(QPieSlice *)));
+        QObject::connect(series, SIGNAL(clicked(QPieSlice*)), chart, SLOT(handleSliceClicked(QPieSlice*)));
 
         *yearSeries << new DrilldownSlice(series->sum(), name, series);
     }
 
-    QObject::connect(yearSeries, SIGNAL(clicked(QPieSlice *)), chart, SLOT(handleSliceClicked(QPieSlice *)));
+    QObject::connect(yearSeries, SIGNAL(clicked(QPieSlice*)), chart, SLOT(handleSliceClicked(QPieSlice*)));
 
     chart->changeSeries(yearSeries);
 
