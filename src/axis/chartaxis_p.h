@@ -47,12 +47,9 @@ class ChartAxis : public ChartElement, public QGraphicsLayoutItem
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
-    enum AxisType { X_AXIS, Y_AXIS };
 
     ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter);
     ~ChartAxis();
-
-    virtual AxisType axisType() const = 0;
 
     void setArrowOpacity(qreal opacity);
     qreal arrowOpacity() const;
@@ -106,19 +103,33 @@ public:
     QRectF axisGeometry() const { return m_axisRect; }
     QRectF gridGeometry() const { return m_gridRect; }
 
+    void setLabels(const QStringList& labels);
+    QStringList labels() const { return m_labelsList; }
+
+    void setLabelBetweenTicks(bool enabled);
+    bool labelBetweenTicks() const { return m_labelBetween; }
+
     virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 
 protected:
     void setGeometry(const QRectF &size){ Q_UNUSED(size);};
     virtual void updateGeometry() = 0;
     virtual QVector<qreal> calculateLayout() const = 0;
-    QStringList createNumberLabels(qreal min, qreal max, int ticks) const;
 
+    QList<QGraphicsItem *> lineItems() { return m_grid->childItems(); };
+    QList<QGraphicsItem *> labelItems() { return m_labels->childItems();};
+    QList<QGraphicsItem *> shadeItems() { return m_shades->childItems();};
+    QList<QGraphicsItem *> arrowItems() { return m_arrow->childItems();};
+
+    QFont font() const { return m_font; }
+    qreal min() const {return m_min; }
+    qreal max() const {return m_max; }
+    QStringList createValueLabels(int ticks) const;
+    QStringList createDateTimeLabels(const QString& format,int ticks) const;
 
 public Q_SLOTS:
     virtual void handleAxisUpdated();
     virtual void handleDomainUpdated();
-
 
 private:
     inline bool isEmpty();
@@ -127,10 +138,9 @@ private:
     void updateLayout(QVector<qreal> &layout);
     void axisSelected();
 
-protected:
+private:
     QAbstractAxis *m_chartAxis;
     int m_labelsAngle;
-    //TODO: to be removed
     QRectF m_axisRect;
     QRectF m_gridRect;
     QScopedPointer<QGraphicsItemGroup> m_grid;
@@ -145,9 +155,11 @@ protected:
     QFont m_font;
     QString m_titleText;
     int m_labelPadding;
+    QStringList m_labelsList;
+    bool m_labelBetween;
 
-    friend class AxisAnimation;
-    friend class AxisItem;
+friend class AxisAnimation;
+friend class AxisItem;
 
 };
 
@@ -170,7 +182,7 @@ protected:
     QPainterPath shape() const {
         QPainterPath path = QGraphicsLineItem::shape();
         QRectF rect = path.boundingRect();
-        path.addRect(rect.adjusted(0, 0, m_axis->axisType() != ChartAxis::X_AXIS ? 8 : 0, m_axis->axisType() != ChartAxis::Y_AXIS ? 8 : 0));
+        path.addRect(rect.adjusted(0, 0, m_axis->orientation() != Qt::Horizontal ? 8 : 0, m_axis->orientation() != Qt::Vertical ? 8 : 0));
         return path;
     }
 

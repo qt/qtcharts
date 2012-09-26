@@ -26,12 +26,12 @@
 #include <QFontMetrics>
 #include <qmath.h>
 
-static int label_padding = 5;
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartCategoryAxisY::ChartCategoryAxisY(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter)
+ChartCategoryAxisY::ChartCategoryAxisY(QCategoryAxis *axis,ChartPresenter *presenter) : VerticalAxis(axis,presenter),
+     m_axis(axis)
 {
+    setLabelBetweenTicks(true);
 }
 
 ChartCategoryAxisY::~ChartCategoryAxisY()
@@ -40,23 +40,23 @@ ChartCategoryAxisY::~ChartCategoryAxisY()
 
 QVector<qreal> ChartCategoryAxisY::calculateLayout() const
 {
-    QCategoryAxis *axis = qobject_cast<QCategoryAxis *>(m_chartAxis);
-    int tickCount = axis->categoriesLabels().count() + 1;
+    int tickCount = m_axis->categoriesLabels().count() + 1;
     QVector<qreal> points;
 
     if (tickCount < 2)
         return points;
 
-    qreal range = axis->max() - axis->min();
+    const QRectF& gridRect = gridGeometry();
+    qreal range = m_axis->max() - m_axis->min();
     if (range > 0) {
         points.resize(tickCount);
-        qreal scale = m_gridRect.height() / range;
+        qreal scale = gridRect.height() / range;
         for (int i = 0; i < tickCount; ++i)
             if (i < tickCount - 1) {
-                int y = -(axis->startValue(axis->categoriesLabels().at(i)) - axis->min()) * scale + m_gridRect.bottom();
+                int y = -(m_axis->startValue(m_axis->categoriesLabels().at(i)) - m_axis->min()) * scale + gridRect.bottom();
                 points[i] = y;
             } else {
-                int y = -(axis->endValue(axis->categoriesLabels().at(i - 1)) - axis->min())  * scale + m_gridRect.bottom();
+                int y = -(m_axis->endValue(m_axis->categoriesLabels().at(i - 1)) - m_axis->min())  * scale + gridRect.bottom();
                 points[i] = y;
             }
     }
@@ -66,77 +66,8 @@ QVector<qreal> ChartCategoryAxisY::calculateLayout() const
 
 void ChartCategoryAxisY::updateGeometry()
 {
-    const QVector<qreal> &layout = ChartAxis::layout();
-
-    if(layout.isEmpty()) {
-        return;
-    }
-
-    QCategoryAxis *categoryAxis = qobject_cast<QCategoryAxis *>(m_chartAxis);
-    QStringList ticksList = categoryAxis->categoriesLabels();
-
-    QList<QGraphicsItem *> lines = m_grid->childItems();
-    QList<QGraphicsItem *> labels = m_labels->childItems();
-    QList<QGraphicsItem *> shades = m_shades->childItems();
-    QList<QGraphicsItem *> axis = m_arrow->childItems();
-
-    for (int i = 0; i < labels.count(); i++) {
-        labels.at(i)->setVisible(false);
-    }
-
-    // axis base line
-    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
-    lineItem->setLine(m_gridRect.left() , m_gridRect.top(), m_gridRect.left(), m_gridRect.bottom());
-
-    for (int i = 0; i < layout.size(); ++i) {
-
-        // label items
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-        if (i < ticksList.count()) {
-            labelItem->setText(ticksList.at(i));
-        }
-        const QRectF& rect = labelItem->boundingRect();
-
-        QPointF center = rect.center();
-        labelItem->setTransformOriginPoint(center.x(), center.y());
-
-
-        if (i < layout.size() - 1)
-            labelItem->setPos(m_gridRect.left() - rect.width() - label_padding , layout[i] + (layout[i + 1] - layout[i]) / 2 - center.y());
-        else
-            labelItem->setPos(m_gridRect.left() - rect.width() - label_padding , layout[i]-center.y());
-
-        // check if the label should be shown
-        if (labelItem->pos().y() + center.y() < m_gridRect.top() || labelItem->pos().y() + center.y() > m_gridRect.bottom())
-            labelItem->setVisible(false);
-        else
-            labelItem->setVisible(true);
-
-        if ((i+1)%2 && i>1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
-            rectItem->setRect(m_gridRect.left(),layout[i],m_gridRect.width(),layout[i-1]-layout[i]);
-        }
-
-        // grid lines and axis line ticks
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        lineItem->setPos(m_gridRect.left(), layout[i]);
-        lineItem->setLine(0, 0, m_gridRect.width(), 0);
-
-        QGraphicsLineItem *tickLineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        tickLineItem->setPos(m_gridRect.left(), layout[i]);
-        tickLineItem->setLine(-5, 0, 0, 0);
-
-        // check if the grid line and the axis tick should be shown
-        if (lineItem->pos().y() < m_gridRect.top() || lineItem->pos().y() > m_gridRect.bottom()) {
-            lineItem->setVisible(false);
-            tickLineItem->setVisible(false);
-        } else {
-            lineItem->setVisible(true);
-            tickLineItem->setVisible(true);
-        }
-
-    }
-
+    setLabels(m_axis->categoriesLabels()<<"");
+    VerticalAxis::updateGeometry();
 }
 
 void ChartCategoryAxisY::handleAxisUpdated()
@@ -149,7 +80,7 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(m_font);
+    QFontMetrics fn(font());
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
     QStringList ticksList; //TODO::
@@ -158,7 +89,7 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint
 
       switch (which) {
         case Qt::MinimumSize:
-            width = fn.boundingRect("...").width()+label_padding;
+            width = fn.boundingRect("...").width()+labelPadding();
             height = fn.height();
             width=qMax(width,base.width());
             height+=base.height();
@@ -170,7 +101,7 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint
             {
                 QRectF rect = fn.boundingRect(ticksList.at(i));
                 height+=rect.height();
-                width=qMax(rect.width()+label_padding,width);
+                width=qMax(rect.width()+labelPadding(),width);
             }
             height=qMax(height,base.height());
             width+=base.width();

@@ -30,21 +30,19 @@
 #ifndef CHARTBARCATEGORYAXISX_H
 #define CHARTBARCATEGORYAXISX_H
 
-#include "chartaxis_p.h"
+#include "horizontalaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAbstractAxis;
 class ChartPresenter;
 class QBarCategoryAxis;
 
-class ChartBarCategoryAxisX : public ChartAxis
+class ChartBarCategoryAxisX : public HorizontalAxis
 {
 public:
     ChartBarCategoryAxisX(QBarCategoryAxis *axis, ChartPresenter *presenter);
     ~ChartBarCategoryAxisX();
 
-    AxisType axisType() const { return X_AXIS;}
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
 protected:
     QVector<qreal> calculateLayout() const;

@@ -29,8 +29,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartValueAxisY::ChartValueAxisY(QAbstractAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
-    m_tickCount(0)
+ChartValueAxisY::ChartValueAxisY(QValueAxis *axis,ChartPresenter *presenter) : VerticalAxis(axis,presenter),
+    m_tickCount(0),m_axis(axis)
 {
 }
 
@@ -45,9 +45,11 @@ QVector<qreal> ChartValueAxisY::calculateLayout() const
     QVector<qreal> points;
     points.resize(m_tickCount);
 
-    const qreal deltaY = m_gridRect.height()/(m_tickCount-1);
+    const QRectF& gridRect = gridGeometry();
+
+    const qreal deltaY = gridRect.height()/(m_tickCount-1);
     for (int i = 0; i < m_tickCount; ++i) {
-        int y = i * -deltaY + m_gridRect.bottom();
+        int y = i * -deltaY + gridRect.bottom();
         points[i] = y;
     }
 
@@ -57,89 +59,15 @@ QVector<qreal> ChartValueAxisY::calculateLayout() const
 void ChartValueAxisY::updateGeometry()
 {
     const QVector<qreal> &layout = ChartAxis::layout();
-
     if(layout.isEmpty()) return;
-
-    QStringList ticksList = createNumberLabels(m_min,m_max,layout.size());
-
-    QList<QGraphicsItem *> lines = m_grid->childItems();
-    QList<QGraphicsItem *> labels = m_labels->childItems();
-    QList<QGraphicsItem *> shades = m_shades->childItems();
-    QList<QGraphicsItem *> axis = m_arrow->childItems();
-
-    Q_ASSERT(labels.size() == ticksList.size());
-    Q_ASSERT(layout.size() == ticksList.size());
-
-    qreal height = m_axisRect.bottom();
-
-    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
-    //lineItem->setLine( m_gridRect.left() ,  m_gridRect.top(),  m_gridRect.left(),  m_gridRect.bottom());
-
-    if (m_chartAxis->alignment()==Qt::AlignLeft)
-        lineItem->setLine( m_axisRect.right() ,  m_gridRect.top(),  m_axisRect.right(),  m_gridRect.bottom());
-    else if(m_chartAxis->alignment()==Qt::AlignRight)
-        lineItem->setLine( m_axisRect.left() ,   m_gridRect.top(),  m_axisRect.left(),  m_gridRect.bottom());
-
-    QFontMetrics fn(m_font);
-
-    for (int i = 0; i < layout.size(); ++i) {
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        lineItem->setLine( m_gridRect.left() , layout[i],  m_gridRect.right(), layout[i]);
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-
-        QString text = ticksList.at(i);
-
-        if (fn.boundingRect(text).width() >  m_axisRect.right() - m_axisRect.left() - labelPadding() )
-        {
-            QString label = text + "...";
-            while (fn.boundingRect(label).width() > m_axisRect.right() - m_axisRect.left() - labelPadding() && label.length() > 3)
-                label.remove(label.length() - 4, 1);
-            labelItem->setText(label);
-        }else{
-            labelItem->setText(text);
-        }
-
-        const QRectF& rect = labelItem->boundingRect();
-
-        QPointF center = rect.center();
-        labelItem->setTransformOriginPoint(center.x(), center.y());
-        //labelItem->setPos( m_gridRect.left() - rect.width() - labelPadding() , layout[i]-center.y());
-
-        if (m_chartAxis->alignment()==Qt::AlignLeft)
-            labelItem->setPos( m_axisRect.right() - rect.width() - labelPadding() , layout[i]-center.y());
-        else if(m_chartAxis->alignment()==Qt::AlignRight)
-            labelItem->setPos( m_axisRect.left() + labelPadding() , layout[i]-center.y());
-
-        if(labelItem->pos().y() + rect.height() > height ||
-                labelItem->pos().y() < m_axisRect.top()) {
-            labelItem->setVisible(false);
-            lineItem->setVisible(false);
-        }else{
-            labelItem->setVisible(true);
-            lineItem->setVisible(true);
-            height=labelItem->pos().y();
-        }
-
-        if ((i+1)%2 && i>1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
-            rectItem->setRect( m_gridRect.left(),layout[i], m_gridRect.width(),layout[i-1]-layout[i]);
-        }
-        lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        // lineItem->setLine( m_gridRect.left()-5,layout[i], m_gridRect.left(),layout[i]);
-
-        if (m_chartAxis->alignment()==Qt::AlignLeft)
-            lineItem->setLine( m_axisRect.right()- labelPadding(),layout[i], m_axisRect.right(),layout[i]);
-        else if(m_chartAxis->alignment()==Qt::AlignRight)
-            lineItem->setLine( m_axisRect.left(),layout[i], m_axisRect.left()+ labelPadding(),layout[i]);
-
-    }
+    setLabels(createValueLabels(layout.size()));
+    VerticalAxis::updateGeometry();
 }
 
 void ChartValueAxisY::handleAxisUpdated()
 {
-    QValueAxis* axis = qobject_cast<QValueAxis*>(m_chartAxis);
-    if (m_tickCount != axis->tickCount()) {
-        m_tickCount = axis->tickCount();
+    if (m_tickCount != m_axis->tickCount()) {
+        m_tickCount = m_axis->tickCount();
         presenter()->layout()->invalidate();
     }
 
@@ -150,10 +78,10 @@ QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint) c
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(m_font);
+    QFontMetrics fn(font());
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
-    QStringList ticksList = createNumberLabels(m_min,m_max,m_tickCount);
+    QStringList ticksList = createValueLabels(m_tickCount);
     qreal width=0;
     qreal height=0;
 

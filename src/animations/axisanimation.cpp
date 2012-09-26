@@ -69,13 +69,13 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
             oldLayout.resize(newLayout.count());
 
             for(int i = 0, j = oldLayout.count() - 1; i < (oldLayout.count() + 1) / 2; ++i, --j) {
-                oldLayout[i] = m_axis->axisType() == ChartAxis::X_AXIS ? rect.left() : rect.bottom();
-                oldLayout[j] = m_axis->axisType() == ChartAxis::X_AXIS ? rect.right() : rect.top();
+                oldLayout[i] = m_axis->orientation() == Qt::Horizontal ? rect.left() : rect.bottom();
+                oldLayout[j] = m_axis->orientation() == Qt::Horizontal ? rect.right() : rect.top();
             }
         }
         break;
         case ZoomInAnimation: {
-            int index = qMin(oldLayout.count() * (m_axis->axisType() == ChartAxis::X_AXIS ? m_point.x() : (1 - m_point.y())), newLayout.count() - (qreal)1.0);
+            int index = qMin(oldLayout.count() * (m_axis->orientation() == Qt::Horizontal ? m_point.x() : (1 - m_point.y())), newLayout.count() - (qreal)1.0);
             oldLayout.resize(newLayout.count());
 
             for(int i = 0; i < oldLayout.count(); i++)
@@ -100,7 +100,7 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
             oldLayout.resize(newLayout.count());
             QRectF rect = m_axis->gridGeometry();
             for(int i = 0, j = oldLayout.count() - 1; i < oldLayout.count(); ++i, --j)
-            oldLayout[i] = m_axis->axisType() == ChartAxis::X_AXIS ? rect.left() : rect.top();
+            oldLayout[i] = m_axis->orientation() == Qt::Horizontal ? rect.left() : rect.top();
         }
         break;
     }

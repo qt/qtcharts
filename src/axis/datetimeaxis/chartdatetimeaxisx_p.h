@@ -30,29 +30,28 @@
 #ifndef CHARTDATETIMEAXISX_H
 #define CHARTDATETIMEAXISX_H
 
-#include "chartaxis_p.h"
+#include "horizontalaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAbstractAxis;
+class QDateTimeAxis;
 class ChartPresenter;
 
-class ChartDateTimeAxisX : public ChartAxis
+class ChartDateTimeAxisX : public HorizontalAxis
 {
 public:
-    ChartDateTimeAxisX(QAbstractAxis *axis, ChartPresenter *presenter);
+    ChartDateTimeAxisX(QDateTimeAxis *axis, ChartPresenter *presenter);
     ~ChartDateTimeAxisX();
 
-    AxisType axisType() const { return X_AXIS;}
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
 protected:
-    void createLabels(QStringList &labels, qreal min, qreal max, int ticks);
     void handleAxisUpdated();
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
 
 private:
     int m_tickCount;
+    QDateTimeAxis *m_axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

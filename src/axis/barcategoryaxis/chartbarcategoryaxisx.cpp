@@ -25,14 +25,12 @@
 #include <QDebug>
 #include <qmath.h>
 
-static int label_padding = 5;
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartBarCategoryAxisX::ChartBarCategoryAxisX(QBarCategoryAxis *axis,ChartPresenter *presenter) : ChartAxis(axis,presenter),
+ChartBarCategoryAxisX::ChartBarCategoryAxisX(QBarCategoryAxis *axis,ChartPresenter *presenter) : HorizontalAxis(axis,presenter),
 m_categoriesAxis(axis)
 {
-
+    setLabelBetweenTicks(true);
 }
 
 ChartBarCategoryAxisX::~ChartBarCategoryAxisX()
@@ -48,23 +46,22 @@ QVector<qreal> ChartBarCategoryAxisX::calculateLayout() const
     QVector<qreal> points;
     points.resize(count+2);
 
-    const qreal delta = m_gridRect.width()/(count);
-    qreal offset =-m_min-0.5;
+    const QRectF& gridRect = gridGeometry();
+
+    const qreal delta = gridRect.width()/(count);
+    qreal offset =-min()-0.5;
 
     if(delta<1) return points;
 
-    if(offset<=0) {
-        offset = int(offset * m_gridRect.width()/(m_max - m_min))%int(delta) + delta;
+    if(offset<0) {
+        offset = int(offset * gridRect.width()/(max() - min()))%int(delta) + delta;
     }
     else {
-        offset = int(offset * m_gridRect.width()/(m_max - m_min))%int(delta);
+        offset = int(offset * gridRect.width()/(max() - min()))%int(delta);
     }
 
-    points[0] = m_gridRect.left();
-    points[count+1] = m_gridRect.right();
-
-    for (int i = 0; i < count; ++i) {
-        qreal x = offset + i * delta + m_gridRect.left();
+    for (int i = -1; i < count+1; ++i) {
+        qreal x = offset + i * delta + gridRect.left();
         points[i+1] = x;
     }
     return points;
@@ -72,11 +69,12 @@ QVector<qreal> ChartBarCategoryAxisX::calculateLayout() const
 
 QStringList ChartBarCategoryAxisX::createCategoryLabels(const QVector<qreal>& layout) const
 {
-    QStringList result;
+    QStringList result ;
+    const QRectF& gridRect = gridGeometry();
 
-    qreal d = (m_max - m_min)/m_gridRect.width();
+    qreal d = (max() - min())/gridRect.width();
     for (int i = 0;i < layout.count()-1; ++i) {
-        qreal x = qFloor((((layout[i+1] + layout[i])/2-m_gridRect.left())*d + m_min+0.5));
+        qreal x = qFloor((((layout[i] + layout[i+1])/2-gridRect.left())*d + min()+0.5));
         if ((x < m_categoriesAxis->categories().count()) && (x >= 0)) {
             result << m_categoriesAxis->categories().at(x);
         }
@@ -93,55 +91,9 @@ QStringList ChartBarCategoryAxisX::createCategoryLabels(const QVector<qreal>& la
 void ChartBarCategoryAxisX::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
-
     if(layout.isEmpty()) return;
-
-    QStringList ticksList = createCategoryLabels(layout);
-
-    QList<QGraphicsItem *> lines = m_grid->childItems();
-    QList<QGraphicsItem *> labels = m_labels->childItems();
-    QList<QGraphicsItem *> shades = m_shades->childItems();
-    QList<QGraphicsItem *> axis = m_arrow->childItems();
-
-    Q_ASSERT(labels.size() == ticksList.size());
-    Q_ASSERT(layout.size() == ticksList.size());
-
-    const qreal delta =  m_gridRect.width()/(m_categoriesAxis->d_ptr->count());
-
-    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(axis.at(0));
-    lineItem->setLine( m_gridRect.left(),  m_gridRect.bottom(),  m_gridRect.right(),  m_gridRect.bottom());
-
-    qreal width =  m_gridRect.left();
-    for (int i = 0; i < layout.size(); ++i) {
-        QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem*>(lines.at(i));
-        lineItem->setLine(layout[i],  m_gridRect.top(), layout[i],  m_gridRect.bottom());
-        QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem*>(labels.at(i));
-        labelItem->setText(ticksList.at(i));
-        const QRectF& rect = labelItem->boundingRect();
-        QPointF center = rect.center();
-        labelItem->setTransformOriginPoint(center.x(), center.y());
-
-        if(i==0){
-            labelItem->setPos(layout[i+1] - (delta)/2 - center.x(),  m_gridRect.bottom() + label_padding);
-        }else{
-            labelItem->setPos(layout[i] + (delta)/2 - center.x(),  m_gridRect.bottom() + label_padding);
-        }
-
-        if(labelItem->pos().x()<=width || labelItem->pos().x()+ rect.width()> m_gridRect.right()) {
-            labelItem->setVisible(false);
-        }
-        else {
-            labelItem->setVisible(true);
-            width=rect.width()+labelItem->pos().x();
-        }
-
-        if ((i+1)%2 && i>1) {
-            QGraphicsRectItem *rectItem = static_cast<QGraphicsRectItem*>(shades.at(i/2-1));
-            rectItem->setRect(layout[i-1], m_gridRect.top(),layout[i]-layout[i-1], m_gridRect.height());
-        }
-        lineItem = static_cast<QGraphicsLineItem*>(axis.at(i+1));
-        lineItem->setLine(layout[i], m_gridRect.bottom(),layout[i], m_gridRect.bottom()+5);
-    }
+    setLabels(createCategoryLabels(layout));
+    HorizontalAxis::updateGeometry();
 }
 
 void ChartBarCategoryAxisX::handleAxisUpdated()
@@ -158,7 +110,7 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constra
 {
     Q_UNUSED(constraint)
 
-    QFontMetrics fn(m_font);
+    QFontMetrics fn(font());
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
     QStringList ticksList = createCategoryLabels(ChartAxis::layout());
@@ -168,7 +120,7 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constra
       switch (which) {
         case Qt::MinimumSize:
             width = fn.boundingRect("...").width();
-            height = fn.height()+label_padding;
+            height = fn.height()+labelPadding();
             width=qMax(width,base.width());
             height+=base.height();
             sh = QSizeF(width,height);
@@ -179,7 +131,7 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constra
             {
                 QRectF rect = fn.boundingRect(ticksList.at(i));
                 width+=rect.width();
-                height=qMax(rect.height()+label_padding,height);
+                height=qMax(rect.height()+labelPadding(),height);
             }
             width=qMax(width,base.width());
             height+=base.height();

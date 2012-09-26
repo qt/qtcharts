@@ -30,27 +30,27 @@
 #ifndef CHARTCATEGORYAXISX_H
 #define CHARTCATEGORYAXISX_H
 
-#include "chartaxis_p.h"
+#include "horizontalaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QAbstractAxis;
+class QCategoryAxis;
 class ChartPresenter;
 
-class ChartCategoryAxisX : public ChartAxis
+class ChartCategoryAxisX : public HorizontalAxis
 {
 public:
-    ChartCategoryAxisX(QAbstractAxis *axis, ChartPresenter *presenter);
+    ChartCategoryAxisX(QCategoryAxis *axis, ChartPresenter *presenter);
     ~ChartCategoryAxisX();
 
-    AxisType axisType() const { return X_AXIS; }
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
-
-    Q_SLOTS
+Q_SLOTS
     void handleAxisUpdated();
+private:
+    QCategoryAxis *m_axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

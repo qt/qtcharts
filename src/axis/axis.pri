@@ -13,6 +13,8 @@ DEPENDPATH += $$PWD \
 SOURCES += \
     $$PWD/chartaxis.cpp \
     $$PWD/qabstractaxis.cpp \
+    $$PWD/verticalaxis.cpp \
+    $$PWD/horizontalaxis.cpp \
     $$PWD/valueaxis/chartvalueaxisx.cpp \
     $$PWD/valueaxis/chartvalueaxisy.cpp \
     $$PWD/valueaxis/qvalueaxis.cpp \
@@ -21,11 +23,13 @@ SOURCES += \
     $$PWD/barcategoryaxis/qbarcategoryaxis.cpp \
     $$PWD/categoryaxis/chartcategoryaxisx.cpp \
     $$PWD/categoryaxis/chartcategoryaxisy.cpp \
-    $$PWD/categoryaxis/qcategoryaxis.cpp
+    $$PWD/categoryaxis/qcategoryaxis.cpp 
 
 PRIVATE_HEADERS += \
     $$PWD/chartaxis_p.h \
     $$PWD/qabstractaxis_p.h \
+    $$PWD/verticalaxis_p.h \
+    $$PWD/horizontalaxis_p.h \
     $$PWD/valueaxis/chartvalueaxisx_p.h \
     $$PWD/valueaxis/chartvalueaxisy_p.h \
     $$PWD/valueaxis/qvalueaxis_p.h \

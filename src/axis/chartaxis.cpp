@@ -43,7 +43,8 @@ ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : ChartEleme
     m_min(0),
     m_max(0),
     m_animation(0),
-    m_labelPadding(5)
+    m_labelPadding(5),
+    m_labelBetween(false)
 {
     //initial initialization
     m_arrow->setZValue(ChartPresenter::AxisZValue);
@@ -76,12 +77,17 @@ void ChartAxis::setLayout(QVector<qreal> &layout)
 void ChartAxis::createItems(int count)
 {
     if (m_arrow->children().size() == 0)
-    m_arrow->addToGroup(new AxisItem(this,presenter()->rootItem()));
+        m_arrow->addToGroup(new AxisItem(this,presenter()->rootItem()));
+    if (m_grid->children().size() == 0){
+        for(int i = 0 ; i < 2 ;i  ++)
+            m_grid->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
+    }
     for (int i = 0; i < count; ++i) {
         m_grid->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
         m_labels->addToGroup(new QGraphicsSimpleTextItem(presenter()->rootItem()));
         m_arrow->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
-        if ((m_grid->childItems().size())%2 && m_grid->childItems().size()>2) m_shades->addToGroup(new QGraphicsRectItem(presenter()->rootItem()));
+        if ((m_grid->childItems().size())%2 && m_grid->childItems().size()>2)
+            m_shades->addToGroup(new QGraphicsRectItem(presenter()->rootItem()));
     }
 }
 
@@ -409,36 +415,9 @@ void ChartAxis::axisSelected()
     //TODO: axis clicked;
 }
 
-
-QStringList ChartAxis::createNumberLabels(qreal min, qreal max, int ticks) const
+void ChartAxis::setLabelBetweenTicks(bool enabled)
 {
-    Q_ASSERT(max>min);
-    Q_ASSERT(ticks>1);
-
-    QStringList labels;
-
-    int n = qMax(int(-qFloor(log10((max-min)/(ticks-1)))),0);
-    n++;
-
-    QValueAxis *axis = qobject_cast<QValueAxis *>(m_chartAxis);
-
-    QString format = axis->labelFormat();
-
-    if(format.isNull()) {
-        for (int i=0; i< ticks; i++) {
-            qreal value = min + (i * (max - min)/ (ticks-1));
-            labels << QString::number(value,'f',n);
-        }
-    }
-    else {
-        QByteArray array = format.toAscii();
-        for (int i=0; i< ticks; i++) {
-            qreal value = min + (i * (max - min)/ (ticks-1));
-            labels << QString().sprintf(array, value);
-        }
-    }
-
-    return labels;
+    m_labelBetween=enabled;
 }
 
 Qt::Orientation ChartAxis::orientation() const
@@ -454,6 +433,11 @@ Qt::Alignment ChartAxis::alignment() const
 bool ChartAxis::isVisible()
 {
     return m_chartAxis->isVisible();
+}
+
+void ChartAxis::setLabels(const QStringList& labels)
+{
+    m_labelsList=labels;
 }
 
 QSizeF ChartAxis::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
@@ -490,6 +474,52 @@ QSizeF ChartAxis::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
     }
 
     return sh;
+}
+
+QStringList ChartAxis::createValueLabels(int ticks) const
+{
+    Q_ASSERT(m_max>m_min);
+    Q_ASSERT(ticks>1);
+
+    QStringList labels;
+
+    int n = qMax(int(-qFloor(log10((m_max-m_min)/(ticks-1)))),0);
+    n++;
+
+    QValueAxis *axis = qobject_cast<QValueAxis *>(m_chartAxis);
+
+    QString format = axis->labelFormat();
+
+    if(format.isNull()) {
+        for (int i=0; i< ticks; i++) {
+            qreal value = m_min + (i * (m_max - m_min)/ (ticks-1));
+            labels << QString::number(value,'f',n);
+        }
+    }
+    else {
+        QByteArray array = format.toAscii();
+        for (int i=0; i< ticks; i++) {
+            qreal value = m_min + (i * (m_max - m_min)/ (ticks-1));
+            labels << QString().sprintf(array, value);
+        }
+    }
+
+    return labels;
+}
+
+QStringList ChartAxis::createDateTimeLabels(const QString& format,int ticks) const
+{
+    Q_ASSERT(m_max>m_min);
+    Q_ASSERT(ticks>1);
+    QStringList labels;
+    int n = qMax(int(-floor(log10((m_max-m_min)/(ticks-1)))),0);
+    n++;
+    for (int i=0; i< ticks; i++) {
+        qreal value = m_min + (i * (m_max - m_min)/ (ticks-1));
+        labels << QDateTime::fromMSecsSinceEpoch(value).toString(format);
+    }
+
+    return labels;
 }
 
 #include "moc_chartaxis_p.cpp"

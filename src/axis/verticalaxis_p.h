@@ -27,34 +27,23 @@
 //
 // We mean it.
 
-#ifndef CHARTVALUEAXISX_H
-#define CHARTVALUEAXISX_H
+#ifndef VERTICALAXIS_P_H_
+#define VERTICALAXIS_P_H_
 
-#include "horizontalaxis_p.h"
+#include "chartaxis_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartPresenter;
-class QValueAxis;
-
-class ChartValueAxisX : public HorizontalAxis
+class VerticalAxis : public ChartAxis
 {
 public:
-    ChartValueAxisX(QValueAxis *axis, ChartPresenter *presenter);
-    ~ChartValueAxisX();
-
-    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
-
+    VerticalAxis(QAbstractAxis *axis, ChartPresenter *presenter);
+    ~VerticalAxis();
 protected:
-    void handleAxisUpdated();
-    QVector<qreal> calculateLayout() const;
     void updateGeometry();
 
-private:
-    int m_tickCount;
-    QValueAxis *m_axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif /* CHARTVALUEAXISX_H */
+#endif /* VERTICALAXIS_P_H_ */
