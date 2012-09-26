@@ -63,7 +63,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty Animation ChartView::animation
+  \qmlproperty Animation ChartView::animationOptions
   Animation configuration of the chart. One of ChartView.NoAnimation, ChartView.GridAxisAnimations,
   ChartView.SeriesAnimations or ChartView.AllAnimations.
 */
@@ -82,18 +82,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  \qmlproperty string ChartView::titleColor
+  \qmlproperty color ChartView::titleColor
   The color of the title text.
-*/
-
-/*!
-  \qmlproperty Axis ChartView::axisX
-  The x-axis of the chart.
-*/
-
-/*!
-  \qmlproperty Axis ChartView::axisY
-  The default y-axis of the chart.
 */
 
 /*!

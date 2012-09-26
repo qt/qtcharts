@@ -125,7 +125,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     The font of markers used by legend
 */
 /*!
-    \qmlproperty color Legend::font
+    \qmlproperty Font Legend::font
     The font of markers used by legend
 */
 
