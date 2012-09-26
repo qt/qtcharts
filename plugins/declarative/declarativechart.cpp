@@ -587,9 +587,12 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
     case DeclarativeChart::SeriesTypeLine:
         series = new DeclarativeLineSeries();
         break;
-    case DeclarativeChart::SeriesTypeArea:
-        series = new DeclarativeAreaSeries();
+    case DeclarativeChart::SeriesTypeArea: {
+        DeclarativeAreaSeries *area = new DeclarativeAreaSeries();
+        area->setUpperSeries(new DeclarativeLineSeries());
+        series = area;
         break;
+    }
     case DeclarativeChart::SeriesTypeStackedBar:
         series = new DeclarativeStackedBarSeries();
         break;
