@@ -61,9 +61,7 @@ QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QPieLegendMarker *q, QPieSeries
     QLegendMarkerPrivate(q,legend),
     m_series(series),
     m_slice(slice)
-//    m_legend(legend)
 {
-//    qDebug() << "QPieLegendMarkerPrivate created";
     QObject::connect(m_slice, SIGNAL(labelChanged()), this, SLOT(updated()));
     QObject::connect(m_slice, SIGNAL(brushChanged()), this, SLOT(updated()));
     updated();
@@ -77,7 +75,6 @@ QPieLegendMarkerPrivate::~QPieLegendMarkerPrivate()
 
 void QPieLegendMarkerPrivate::updated()
 {
-//    qDebug() << "QPieLegendMarkerPrivate::updated";
     m_item->setBrush(m_slice->brush());
     m_item->setLabel(m_slice->label());
     m_item->setPen(m_slice->pen());

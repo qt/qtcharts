@@ -28,7 +28,6 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-//LegendMarkerItem::LegendMarkerItem(QAbstractSeries *series, QGraphicsObject *parent) :
 LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent) :
     QGraphicsObject(parent),
     m_marker(marker),
@@ -160,7 +159,6 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
 
 void LegendMarkerItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "LegendMarkerItem::mousePressEvent";
 //    QGraphicsObject::mousePressEvent(event);
     //TODO: selected signal removed for now
     m_marker->handleMousePressEvent(event);

@@ -474,7 +474,6 @@ bool QPieSeries::insert(int index, QPieSlice *slice)
     connect(slice, SIGNAL(clicked()), d, SLOT(sliceClicked()));
     connect(slice, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));
 
-
     emit added(QList<QPieSlice *>() << slice);
     emit countChanged();
 

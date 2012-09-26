@@ -743,6 +743,7 @@ bool QAbstractBarSeriesPrivate::remove(QList<QBarSet * > sets)
     }
 
     emit restructuredBars();        // this notifies barchartitem
+
     return true;
 }
 
