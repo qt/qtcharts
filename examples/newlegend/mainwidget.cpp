@@ -294,8 +294,22 @@ void MainWidget::handleMarkerClicked()
 
     qDebug() << "marker clicked:" << marker;
 
-    QPieSlice* slice = qobject_cast<QPieSlice*> (marker->peerObject());
-    Q_ASSERT(slice);
+    switch (marker->series()->type())
+    {
+        case QAbstractSeries::SeriesTypePie:
+        {
+            // Series type is pie.
+            // The peer object is QPieSlice
+            QPieSlice* slice = qobject_cast<QPieSlice*> (marker->peerObject());
+            Q_ASSERT(slice);
+            slice->setExploded(!slice->isExploded());
+            break;
+        }
+        default:
+        {
+            qDebug() << "Unknown series type";
+            break;
+        }
+    }
 
-    slice->setExploded(!slice->isExploded());
 }
