@@ -65,7 +65,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     // ...
     QDateTimeAxis *axisX = new QDateTimeAxis;
     axisX->setFormat("dd-MM-yyyy h:mm");
-    chartView->chart()->setAxisX(series, axisX);
+    chartView->chart()->setAxisX(axisX, series);
     \endcode
 */
 

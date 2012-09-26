@@ -47,7 +47,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     axisX->setRange(10, 20.5);
     axisX->setTickCount(10);
     axisX->setLabelFormat("%.2f");
-    chartView->chart()->setAxisX(series, axisX);
+    chartView->chart()->setAxisX(axisX, series);
     \endcode
 */
 

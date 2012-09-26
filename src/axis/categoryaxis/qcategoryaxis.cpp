@@ -46,7 +46,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     axisX->append("First", 20);
     axisX->append("Second", 37);
     axisX->append("Third", 52);
-    chartView->chart()->setAxisX(series, axisX);
+    chartView->chart()->setAxisX(axisX, series);
     \endcode
 */
 /*!

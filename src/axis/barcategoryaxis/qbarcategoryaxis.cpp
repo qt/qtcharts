@@ -48,7 +48,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     QStringList categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
     axisX->append(categories);
-    chartView->chart()->setAxisX(series, axisX);
+    axisX->setRange("Feb", "May");
+    chartView->chart()->setAxisX(axisX, series);
     \endcode
 */
 
