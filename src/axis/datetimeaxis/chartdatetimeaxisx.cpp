@@ -26,9 +26,6 @@
 #include <QFontMetrics>
 #include <qmath.h>
 
-
-static int label_padding = 5;
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartDateTimeAxisX::ChartDateTimeAxisX(QDateTimeAxis *axis,ChartPresenter *presenter) : HorizontalAxis(axis,presenter),
@@ -94,7 +91,7 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constraint
             {
                 QRectF rect = fn.boundingRect(ticksList.at(i));
                 width+=rect.width();
-                height+=qMax(rect.height()+label_padding,height);
+                height+=qMax(rect.height()+labelPadding(),height);
             }
             sh = QSizeF(width,height);
             break;

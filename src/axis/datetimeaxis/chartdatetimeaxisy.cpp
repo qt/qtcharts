@@ -26,9 +26,6 @@
 #include <QDateTime>
 #include <qmath.h>
 
-
-static int label_padding = 5;
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 ChartDateTimeAxisY::ChartDateTimeAxisY(QDateTimeAxis *axis,ChartPresenter *presenter) : VerticalAxis(axis,presenter),
@@ -95,7 +92,7 @@ QSizeF ChartDateTimeAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint
             {
                 QRectF rect = fn.boundingRect(ticksList.at(i));
                 width+=rect.width();
-                height+=qMax(rect.height()+label_padding,height);
+                height+=qMax(rect.height()+labelPadding(),height);
             }
             sh = QSizeF(width,height);
             break;
