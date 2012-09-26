@@ -33,17 +33,13 @@ LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject
     QGraphicsObject(parent),
     m_marker(marker),
     m_markerRect(0,0,10.0,10.0),
-    m_boundingRect(0,0,10,10),
+    m_boundingRect(0,0,0,0),
     m_textItem(new QGraphicsSimpleTextItem(this)),
     m_rectItem(new QGraphicsRectItem(this)),
     m_margin(4),
     m_space(4)
 {
-//    qDebug() << "LegendMarkerItem created for marker:" << m_marker;
-//    setAcceptedMouseButtons(Qt::LeftButton|Qt::RightButton);
     m_rectItem->setRect(m_markerRect);
-//    setZValue(zValue() + 20);
-//    qDebug() << "z:" << this->zValue();
 }
 
 void LegendMarkerItem::setPen(const QPen &pen)
@@ -81,7 +77,6 @@ QFont LegendMarkerItem::font() const
 
 void LegendMarkerItem::setLabel(const QString label)
 {
-    qDebug() << "LegendMarkerItem::setlabel" << label;
     m_text = label;
     updateGeometry();
 }

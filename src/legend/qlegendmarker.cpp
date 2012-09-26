@@ -113,6 +113,7 @@ QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q) :
 
 QLegendMarkerPrivate::~QLegendMarkerPrivate()
 {
+//    delete m_item;
 }
 
 void QLegendMarkerPrivate::handleMousePressEvent(QGraphicsSceneEvent *event)

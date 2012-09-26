@@ -32,6 +32,7 @@ QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QObject
 
 QPieLegendMarker::~QPieLegendMarker()
 {
+    qDebug() << "deleting pie marker" << this;
 }
 
 /*!
@@ -61,7 +62,7 @@ QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QPieSeries *series, QPieSlice *
     m_series(series),
     m_slice(slice)
 {
-    qDebug() << "QPieLegendMarkerPrivate created";
+//    qDebug() << "QPieLegendMarkerPrivate created";
     QObject::connect(m_slice, SIGNAL(labelChanged()), this, SLOT(updated()));
     QObject::connect(m_slice, SIGNAL(brushChanged()), this, SLOT(updated()));
     updated();
@@ -75,7 +76,7 @@ QPieLegendMarkerPrivate::~QPieLegendMarkerPrivate()
 
 void QPieLegendMarkerPrivate::updated()
 {
-    qDebug() << "QPieLegendMarkerPrivate::updated";
+//    qDebug() << "QPieLegendMarkerPrivate::updated";
     m_item->setBrush(m_slice->brush());
     m_item->setLabel(m_slice->label());
     m_item->setPen(m_slice->pen());
