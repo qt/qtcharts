@@ -22,10 +22,45 @@
 #include <QApplication>
 #include <QMainWindow>
 
+QVariantHash parseArgs(QStringList args)
+{
+    QVariantHash parameters;
+
+    while (!args.isEmpty()) {
+
+        QString param = args.takeFirst();
+        if (param.startsWith("--")) {
+            param.remove(0, 2);
+
+            if (args.isEmpty() || args.first().startsWith("--")) {
+                parameters[param] = true;
+            }
+            else {
+
+                QString value = args.takeFirst();
+                if (value == "true" || value == "on" || value == "enabled") {
+                    parameters[param] = true;
+                }
+                else if (value == "false" || value == "off" || value == "disable") {
+                    parameters[param] = false;
+                }
+                else {
+                    if(value.endsWith( '"' )) value.chop(1);
+                    if(value.startsWith( '"' )) value.remove(0,1);
+                    parameters[param] = value;
+                }
+            }
+        }
+    }
+
+    return parameters;
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    Window window;
+    QVariantHash parameters = parseArgs(QApplication::arguments());
+    Window window(parameters);
     window.show();
     return a.exec();
 }

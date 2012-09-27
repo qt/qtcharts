@@ -46,7 +46,7 @@ class Window: public QMainWindow
     Q_OBJECT
     enum State { NoState = 0, ZoomState, ScrollState};
 public:
-    explicit Window(QWidget *parent = 0);
+    explicit Window(const QVariantHash& parameters, QWidget *parent = 0);
     ~Window();
 
 private Q_SLOTS:
@@ -69,6 +69,7 @@ private:
     QMenu *createMenu();
     void handleMenu(QChart *chart);
     QAction *createMenuAction(QMenu *menu, const QIcon &icon, const QString &text, const QVariant &data);
+    void initializeFromParamaters(const QVariantHash& parameters);
 
 protected:
     void mousePressEvent(QMouseEvent *event);

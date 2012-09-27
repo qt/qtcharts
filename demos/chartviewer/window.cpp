@@ -40,7 +40,7 @@
 #include <QDebug>
 #include <QMenu>
 
-Window::Window(QWidget *parent) :
+Window::Window(const QVariantHash& parameters,QWidget *parent) :
     QMainWindow(parent),
     m_listCount(3),
     m_valueMax(10),
@@ -111,6 +111,7 @@ Window::Window(QWidget *parent) :
 
     // Set defaults
     m_antialiasCheckBox->setChecked(true);
+    initializeFromParamaters(parameters);
     updateUI();
     setCentralWidget(m_view);
 
@@ -210,6 +211,49 @@ QComboBox *Window::createTempleteBox()
     return templateComboBox;
 }
 
+void Window::initializeFromParamaters(const QVariantHash& parameters)
+{
+    if (parameters.contains("template")) {
+        QString t = parameters["template"].toString();
+        for (int i = 0; i < m_templateComboBox->count(); ++i) {
+            if (m_templateComboBox->itemText(i) == t) {
+                m_templateComboBox->setCurrentIndex(i);
+                break;
+            }
+        }
+    }
+    if (parameters.contains("opengl")) {
+        bool checked = parameters["opengl"].toBool();
+        m_openGLCheckBox->setChecked(checked);
+    }
+    if (parameters.contains("theme")) {
+        QString t = parameters["theme"].toString();
+        for (int i = 0; i < m_themeComboBox->count(); ++i) {
+            if (m_themeComboBox->itemText(i) == t) {
+                m_themeComboBox->setCurrentIndex(i);
+                break;
+            }
+        }
+    }
+    if (parameters.contains("animation")) {
+        QString t = parameters["animation"].toString();
+        for (int i = 0; i < m_animatedComboBox->count(); ++i) {
+            if (m_animatedComboBox->itemText(i) == t) {
+                m_animatedComboBox->setCurrentIndex(i);
+                break;
+            }
+        }
+    }
+    if (parameters.contains("legend")) {
+        QString t = parameters["legend"].toString();
+        for (int i = 0; i < m_legendComboBox->count(); ++i) {
+            if (m_legendComboBox->itemText(i) == t) {
+                m_legendComboBox->setCurrentIndex(i);
+                break;
+            }
+        }
+    }
+}
 
 void Window::updateUI()
 {
