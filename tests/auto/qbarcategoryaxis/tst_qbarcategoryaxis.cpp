@@ -37,6 +37,8 @@ private slots:
     void qbarcategoryaxis_data();
     void qbarcategoryaxis();
 
+    void append2_data();
+    void append2();
     void append_data();
     void append();
     void at_data();
@@ -113,7 +115,8 @@ void tst_QBarCategoriesAxis::init()
     QStringList categories;
     categories << "Jan" << "Feb" << "Mar" << "Apr" << "May" << "Jun";
 
-    m_baraxis->append(categories);
+    foreach(QString category, categories)
+        m_baraxis->append(category);
 
     tst_QAbstractAxis::init(m_baraxis, m_series);
     m_chart->addSeries(m_series);
@@ -190,6 +193,43 @@ void tst_QBarCategoriesAxis::append()
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), 1);
+}
+
+void tst_QBarCategoriesAxis::append2_data()
+{
+    QTest::addColumn<QStringList>("categories");
+    QTest::newRow("Jan Feb Mar Apr") << (QStringList() << "Jan" << "Feb" << "Mar" << "Apr");
+    QTest::newRow("Jul Aug Sep") << (QStringList() << "Jul" << "Aug" << "Sep");
+}
+
+void tst_QBarCategoriesAxis::append2()
+{
+    QFETCH(QStringList, categories);
+
+    QBarCategoryAxis axis;
+
+    QSignalSpy spy0(&axis, SIGNAL(categoriesChanged()));
+    QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString)));
+    QSignalSpy spy2(&axis, SIGNAL(minChanged(QString)));
+    QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
+
+    foreach(QString category, categories)
+        axis.append(category);
+
+    QCOMPARE(spy0.count(), categories.count());
+    QCOMPARE(spy1.count(), categories.count());
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), categories.count());
+
+    m_chart->setAxisX(&axis, m_series);
+    m_view->show();
+    QTest::qWaitForWindowShown(m_view);
+    QCOMPARE(axis.categories(), categories);
+
+    QCOMPARE(spy0.count(), categories.count());
+    QCOMPARE(spy1.count(), categories.count());
+    QCOMPARE(spy2.count(), 1);
+    QCOMPARE(spy3.count(), categories.count());
 }
 
 void tst_QBarCategoriesAxis::at_data()
@@ -509,10 +549,11 @@ void tst_QBarCategoriesAxis::min_data()
 
 void tst_QBarCategoriesAxis::min()
 {
+    min_raw();
     m_chart->setAxisX(m_baraxis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
-    min_raw();
+
 }
 
 void tst_QBarCategoriesAxis::min_animation_data()
@@ -564,10 +605,11 @@ void tst_QBarCategoriesAxis::range_data()
 
 void tst_QBarCategoriesAxis::range()
 {
+    range_raw();
     m_chart->setAxisX(m_baraxis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
-    range_raw();
+
 }
 
 void tst_QBarCategoriesAxis::range_animation_data()
