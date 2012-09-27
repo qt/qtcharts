@@ -511,14 +511,13 @@ void QLegendPrivate::appendSeries(QAbstractSeries* series)
         QObject::connect(s, SIGNAL(countChanged()), this, SLOT(handleSeriesUpdated()));
         break;
     }
-    // TODO:
     case QAbstractSeries::SeriesTypeLine:
     case QAbstractSeries::SeriesTypeArea:
     case QAbstractSeries::SeriesTypeScatter:
     case QAbstractSeries::SeriesTypeSpline:
     default: {
-        // No need to connect any series related signals?
-        qDebug() << "Not yet implemented";
+        // No need to connect any series related signals. We have no series level
+        // changes, that would generate or delete markers
     }
     }
 
@@ -567,7 +566,7 @@ void QLegendPrivate::removeSeries(QAbstractSeries* series)
     case QAbstractSeries::SeriesTypeScatter:
     case QAbstractSeries::SeriesTypeSpline:
     default: {
-        // No need to disconnect any series related signals?
+        // No need to disconnect any series related signals
         break;
     }
     }
@@ -610,7 +609,7 @@ void QLegendPrivate::handleSeriesVisibleChanged()
 void QLegendPrivate::handleCountChanged()
 {
     // TODO: With new markers, the series should notify markers directly.
-    // TODO: Better way to handle updates
+    // TODO: Better way to handle updates. Remove/Add series again seems like overkill.
 
     QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
     qDebug() << "QLegendPrivate::handleSeriesUpdated" << series;

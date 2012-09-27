@@ -28,6 +28,8 @@
 #include "charttheme_p.h"
 #include "qvalueaxis.h"
 
+#include "qarealegendmarker.h"
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -384,12 +386,9 @@ QList<LegendMarker *> QAreaSeriesPrivate::createLegendMarker(QLegend *legend)
 
 QList<QLegendMarker*> QAreaSeriesPrivate::createLegendMarkers(QLegend* legend)
 {
-    Q_UNUSED(legend);
-//    Q_Q(QAreaSeries);
+    Q_Q(QAreaSeries);
     QList<QLegendMarker*> list;
-// TODO:
-//    return list << new AreaLegendMarker(q,legend);
-    return list;
+    return list << new QAreaLegendMarker(q,legend);
 }
 
 void QAreaSeriesPrivate::initializeAxis(QAbstractAxis *axis)
