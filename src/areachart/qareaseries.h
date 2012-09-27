@@ -77,6 +77,7 @@ private:
     Q_DISABLE_COPY(QAreaSeries)
     friend class AreaLegendMarker;
     friend class AreaChartItem;
+    friend class QAreaLegendMarkerPrivate;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

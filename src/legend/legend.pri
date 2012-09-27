@@ -9,7 +9,8 @@ SOURCES += \
     $$PWD/qpielegendmarker.cpp \
     $$PWD/legendmarkeritem.cpp \
     $$PWD/qbarlegendmarker.cpp \
-    $$PWD/qxylegendmarker.cpp
+    $$PWD/qxylegendmarker.cpp \
+    $$PWD/qarealegendmarker.cpp
     
 PRIVATE_HEADERS += \
     $$PWD/legendmarker_p.h \
@@ -20,7 +21,8 @@ PRIVATE_HEADERS += \
     $$PWD/legendmarkeritem_p.h \
     $$PWD/qpielegendmarker_p.h \
     $$PWD/qbarlegendmarker_p.h \
-    $$PWD/qxylegendmarker_p.h
+    $$PWD/qxylegendmarker_p.h \
+    $$PWD/qarealegendmarker_p.h
    
     
 PUBLIC_HEADERS += \
@@ -28,4 +30,5 @@ PUBLIC_HEADERS += \
     $$PWD/qlegendmarker.h \
     $$PWD/qpielegendmarker.h \
     $$PWD/qbarlegendmarker.h \
-    $$PWD/qxylegendmarker.h
+    $$PWD/qxylegendmarker.h \
+    $$PWD/qarealegendmarker.h
