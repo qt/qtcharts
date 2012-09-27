@@ -51,9 +51,12 @@
 #include "qdatetimeaxis.h"
 #endif
 
-QTCOMMERCIALCHART_BEGIN_NAMESPACE
+QTCOMMERCIALCHART_USE_NAMESPACE
+
 Q_DECLARE_METATYPE(QList<QPieSlice *>)
 Q_DECLARE_METATYPE(QList<QBarSet *>)
+
+QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartQmlPlugin : public QDeclarativeExtensionPlugin
 {
