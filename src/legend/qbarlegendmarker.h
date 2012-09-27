@@ -37,15 +37,14 @@ public:
     explicit QBarLegendMarker(QAbstractBarSeries* series, QBarSet* barset, QLegend *legend, QObject *parent = 0);
     virtual ~QBarLegendMarker();
 
-    virtual QAbstractBarSeries* series();
-    virtual QBarSet* peerObject();    // TODO: rename to slice and remove these virtuals from base class?
+    virtual LegendMarkerType type() { return LegendMarkerTypeBar; }
+
+    // Related series and barset
+    QAbstractBarSeries* series();
+    QBarSet* barset();
 
 protected:
     QBarLegendMarker(QBarLegendMarkerPrivate &d, QObject *parent = 0);
-
-//Q_SIGNALS:
-
-//public Q_SLOTS:
 
 private:
     Q_DECLARE_PRIVATE(QBarLegendMarker)

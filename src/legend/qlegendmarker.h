@@ -33,19 +33,25 @@ class QLegendMarkerPrivate;
 class QAbstractSeries;
 class QLegend;
 
-// TODO: should this be QAbstractLegendMarker?
 class QTCOMMERCIALCHART_EXPORT QLegendMarker : public QObject
 {
     Q_OBJECT
 
-// TODO: need for these?
+    enum LegendMarkerType {
+        LegendMarkerTypeArea,
+        LegendMarkerTypeBar,
+        LegendMarkerTypePie,
+        LegendMarkerTypeXY
+    };
+
+// TODO:
 //    Q_PROPERTY(QString label READ label WRITE setlabel NOTIFY labelChanged);
 //    Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged);
 //    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged);
 
 public:
-//    explicit QLegendMarker(QAbstractSeries* series, QObject *parent = 0);
     virtual ~QLegendMarker();
+    virtual LegendMarkerType type() = 0;
 
     QString label() const;
     void setLabel(const QString &label);
@@ -64,10 +70,6 @@ public:
 
     bool isVisible() const;
     void setVisible(bool visible);
-
-//    virtual QAbstractSeries::SeriesType type() = 0; // TODO? Or use LegendMarker type enum?
-    virtual QAbstractSeries* series() = 0;      // TODO: remove these and use specialised functions on derived classes?
-    virtual QObject* peerObject() = 0;
 
 protected:
     explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = 0);

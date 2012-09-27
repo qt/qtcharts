@@ -50,7 +50,7 @@ QAbstractBarSeries *QBarLegendMarker::series()
     return d->m_series;
 }
 
-QBarSet* QBarLegendMarker::peerObject()
+QBarSet* QBarLegendMarker::barset()
 {
     Q_D(QBarLegendMarker);
     return d->m_barset;

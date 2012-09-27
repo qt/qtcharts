@@ -50,7 +50,7 @@ QPieSeries* QPieLegendMarker::series()
     return d->m_series;
 }
 
-QPieSlice* QPieLegendMarker::peerObject()
+QPieSlice* QPieLegendMarker::slice()
 {
     Q_D(QPieLegendMarker);
     return d->m_slice;

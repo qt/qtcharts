@@ -50,12 +50,6 @@ QXYSeries* QXYLegendMarker::series()
     return d->m_series;
 }
 
-QXYSeries* QXYLegendMarker::peerObject()
-{
-    Q_D(QXYLegendMarker);
-    return d->m_series;
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QXYLegendMarkerPrivate::QXYLegendMarkerPrivate(QXYLegendMarker *q, QXYSeries *series, QLegend *legend) :

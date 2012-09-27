@@ -50,12 +50,6 @@ QAreaSeries* QAreaLegendMarker::series()
     return d->m_series;
 }
 
-QAreaSeries* QAreaLegendMarker::peerObject()
-{
-    Q_D(QAreaLegendMarker);
-    return d->m_series;
-}
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAreaLegendMarkerPrivate::QAreaLegendMarkerPrivate(QAreaLegendMarker *q, QAreaSeries *series, QLegend *legend) :

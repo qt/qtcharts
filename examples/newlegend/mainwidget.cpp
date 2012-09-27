@@ -29,6 +29,7 @@
 #include <QPieSeries>
 #include <QPieSlice>
 #include <QLegendMarker>
+#include <QPieLegendMarker>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -264,9 +265,8 @@ void MainWidget::showDebugInfo()
 {
     qDebug() << "marker count:" << m_chart->legend()->markers().count();
     foreach (QLegendMarker* marker, m_chart->legend()->markers()) {
-        qDebug() << "marker series type:" << marker->series()->type();
-        qDebug() << "peer object:" << marker->peerObject();
-        qDebug() << "label:" << marker->label();
+        qDebug() << "marker type:" << marker->type();
+        qDebug() << "related series:" << marker->series();
     }
 }
 
@@ -291,23 +291,20 @@ void MainWidget::updateLegendLayout()
 void MainWidget::handleMarkerClicked()
 {
     QLegendMarker* marker = qobject_cast<QLegendMarker*> (sender());
+    Q_ASSERT(marker);
 
-    qDebug() << "marker clicked:" << marker;
-
-    switch (marker->series()->type())
+    switch (marker->type())
     {
-        case QAbstractSeries::SeriesTypePie:
+        case QLegendMarker::LegendMarkerTypePie:
         {
-            // Series type is pie.
-            // The peer object is QPieSlice
-            QPieSlice* slice = qobject_cast<QPieSlice*> (marker->peerObject());
-            Q_ASSERT(slice);
+            QPieLegendMarker *pieMarker = qobject_cast<QPieLegendMarker *> (marker);
+            QPieSlice* slice = pieMarker->slice();
             slice->setExploded(!slice->isExploded());
             break;
         }
         default:
         {
-            qDebug() << "Unknown series type";
+            qDebug() << "Unknown marker type";
             break;
         }
     }

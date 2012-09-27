@@ -38,15 +38,13 @@ public:
     explicit QAreaLegendMarker(QAreaSeries* series, QLegend *legend, QObject *parent = 0);
     virtual ~QAreaLegendMarker();
 
-    virtual QAreaSeries* series();
-    virtual QAreaSeries* peerObject();    // TODO: rename to slice and remove these virtuals from base class?
+    virtual LegendMarkerType type() { return LegendMarkerTypeArea; }
+
+    // Related series
+    QAreaSeries* series();
 
 protected:
     QAreaLegendMarker(QAreaLegendMarkerPrivate &d, QObject *parent = 0);
-
-//Q_SIGNALS:
-
-//public Q_SLOTS:
 
 private:
     Q_DECLARE_PRIVATE(QAreaLegendMarker)
