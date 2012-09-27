@@ -29,6 +29,8 @@
 #include "qvalueaxis.h"
 #include "qbarcategoryaxis.h"
 
+#include "qbarlegendmarker.h"
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -661,16 +663,13 @@ QList<LegendMarker *> QAbstractBarSeriesPrivate::createLegendMarker(QLegend *leg
 
 QList<QLegendMarker*> QAbstractBarSeriesPrivate::createLegendMarkers(QLegend* legend)
 {
-    Q_UNUSED(legend);
-//    Q_Q(QAbstractBarSeries);
+    Q_Q(QAbstractBarSeries);
     QList<QLegendMarker*> markers;
-// TODO: when QBarLegendMarker is implemented
-/*
+
     foreach(QBarSet* set, q->barSets()) {
-        BarLegendMarker* marker = new BarLegendMarker(q,set,legend);
+        QBarLegendMarker* marker = new QBarLegendMarker(q,set,legend);
         markers << marker;
     }
-*/
     return markers;
 }
 

@@ -46,7 +46,6 @@ class QPieLegendMarkerPrivate : public QLegendMarkerPrivate
 {
     Q_OBJECT
 public:
-//    explicit QPieLegendMarkerPrivate(QAbstractSeries *series, QPieLegendMarker *q);
     explicit QPieLegendMarkerPrivate(QPieLegendMarker *q, QPieSeries *series, QPieSlice *slice, QLegend *legend);
     virtual ~QPieLegendMarkerPrivate();
 

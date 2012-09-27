@@ -76,13 +76,13 @@ QFont LegendMarkerItem::font() const
 
 void LegendMarkerItem::setLabel(const QString label)
 {
-    m_text = label;
+    m_label = label;
     updateGeometry();
 }
 
 QString LegendMarkerItem::label() const
 {
-    return m_text;
+    return m_label;
 }
 
 void LegendMarkerItem::setLabelBrush(const QBrush &brush)
@@ -103,15 +103,15 @@ void LegendMarkerItem::setGeometry(const QRectF& rect)
     qreal x = m_margin + m_markerRect.width() +  m_space + m_margin;
     qreal y = qMax(m_markerRect.height()+2*m_margin,fn.height()+2*m_margin);
 
-    if (fn.boundingRect(m_text).width() + x > width)
+    if (fn.boundingRect(m_label).width() + x > width)
     {
-        QString string = m_text + "...";
+        QString string = m_label + "...";
         while(fn.boundingRect(string).width() + x > width && string.length() > 3)
             string.remove(string.length() - 4, 1);
         m_textItem->setText(string);
     }
     else
-        m_textItem->setText(m_text);
+        m_textItem->setText(m_label);
 
     const QRectF& textRect = m_textItem->boundingRect();
 
@@ -148,7 +148,7 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
             sh = QSizeF(fn.boundingRect("...").width() + 2*m_margin + m_space +m_markerRect.width(),qMax(m_markerRect.height()+2*m_margin,fn.height()+2*m_margin));
             break;
         case Qt::PreferredSize:
-            sh = QSizeF(fn.boundingRect(m_text).width() + 2*m_margin + m_space +m_markerRect.width(),qMax(m_markerRect.height()+2*m_margin,fn.height()+2*m_margin));
+            sh = QSizeF(fn.boundingRect(m_label).width() + 2*m_margin + m_space +m_markerRect.width(),qMax(m_markerRect.height()+2*m_margin,fn.height()+2*m_margin));
             break;
         default:
           break;

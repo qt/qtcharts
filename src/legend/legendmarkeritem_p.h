@@ -84,15 +84,15 @@ protected:
     QGraphicsRectItem *m_rectItem;
     qreal m_margin;
     qreal m_space;
-    QString m_text;
-
     QString m_label;
+
     QBrush m_labelBrush;
     QFont m_font;
     QPen m_pen;
     QBrush m_brush;
     bool m_visible;
 
+    friend class QLegendMarker;
     friend class QLegendMarkerPrivate;
     friend class LegendLayout;
 };

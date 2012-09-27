@@ -27,59 +27,41 @@
 //
 // We mean it.
 
-#ifndef QLEGENDMARKERPRIVATE_H
-#define QLEGENDMARKERPRIVATE_H
+#ifndef QBARLEGENDMARKER_P_H
+#define QBARLEGENDMARKER_P_H
 
 #include "qchartglobal.h"
-#include <QGraphicsObject>
-#include <QBrush>
-#include <QPen>
-#include <QGraphicsSimpleTextItem>
-#include <QGraphicsLayoutItem>
+#include "qlegendmarker_p.h"
+#include "legendmarkeritem_p.h"
+#include <QAbstractBarSeries>
+#include <QBarSet>
+
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-// TODO: check these
-class QAbstractSeries;
-class QAreaSeries;
-class QXYSeries;
-class QBarSet;
-class QAbstractBarSeries;
-class QPieSlice;
-class QLegend;
-class QPieSeries;
+class QBarLegendMarker;
 
-class QLegendMarker;
-class LegendMarkerItem;
-
-class QLegendMarkerPrivate : public QObject
+class QBarLegendMarkerPrivate : public QLegendMarkerPrivate
 {
     Q_OBJECT
 public:
-    explicit QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend);
-    virtual ~QLegendMarkerPrivate();
-
-    // Helper for now. (or deckare LegendLayout as friend)
-    LegendMarkerItem* item() const { return m_item; }
-
-    // Item gets the event, logic for event is here
-    void handleMousePressEvent(QGraphicsSceneEvent *event);
+    explicit QBarLegendMarkerPrivate(QBarLegendMarker *q, QAbstractBarSeries *series, QBarSet *barset, QLegend *legend);
+    virtual ~QBarLegendMarkerPrivate();
 
 public Q_SLOTS:
-    virtual void updated() {};
-
-protected:
-    LegendMarkerItem *m_item;
-    QLegend* m_legend;
+    virtual void updated();
 
 private:
-    QLegendMarker *q_ptr;
+    QBarLegendMarker *q_ptr;
+
+    QAbstractBarSeries* m_series;
+    QBarSet* m_barset;
 
     friend class QLegendPrivate; // TODO: Is this needed?
-    Q_DECLARE_PUBLIC(QLegendMarker)
+    Q_DECLARE_PUBLIC(QBarLegendMarker)
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QLEGENDMARKERPRIVATE_H
+#endif // QBARLEGENDMARKER_P_H

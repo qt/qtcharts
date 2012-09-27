@@ -21,6 +21,7 @@
 #include "qpielegendmarker.h"
 #include "qpielegendmarker_p.h"
 #include <QPieSeries>
+#include <QPieSlice>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -32,7 +33,7 @@ QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QLegend
 
 QPieLegendMarker::~QPieLegendMarker()
 {
-    qDebug() << "deleting pie marker" << this;
+//    qDebug() << "deleting pie marker" << this;
 }
 
 /*!
@@ -43,7 +44,7 @@ QPieLegendMarker::QPieLegendMarker(QPieLegendMarkerPrivate &d, QObject *parent) 
 {
 }
 
-QAbstractSeries* QPieLegendMarker::series()
+QPieSeries* QPieLegendMarker::series()
 {
     Q_D(QPieLegendMarker);
     return d->m_series;
@@ -64,6 +65,7 @@ QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QPieLegendMarker *q, QPieSeries
 {
     QObject::connect(m_slice, SIGNAL(labelChanged()), this, SLOT(updated()));
     QObject::connect(m_slice, SIGNAL(brushChanged()), this, SLOT(updated()));
+    QObject::connect(m_slice, SIGNAL(penChanged()), this, SLOT(updated()));
     updated();
 }
 
@@ -71,14 +73,14 @@ QPieLegendMarkerPrivate::~QPieLegendMarkerPrivate()
 {
     QObject::disconnect(m_slice, SIGNAL(labelChanged()), this, SLOT(updated()));
     QObject::disconnect(m_slice, SIGNAL(brushChanged()), this, SLOT(updated()));
+    QObject::disconnect(m_slice, SIGNAL(penChanged()), this, SLOT(updated()));
 }
 
 void QPieLegendMarkerPrivate::updated()
 {
-    m_item->setBrush(m_slice->brush());
-    m_item->setLabel(m_slice->label());
     m_item->setPen(m_slice->pen());
     m_item->setBrush(m_slice->brush());
+    m_item->setLabel(m_slice->label());
 }
 
 #include "moc_qpielegendmarker.cpp"

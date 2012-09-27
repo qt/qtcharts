@@ -65,8 +65,8 @@ public:
     bool isVisible() const;
     void setVisible(bool visible);
 
-//    virtual QAbstractSeries::SeriesType type() = 0; // TODO?
-    virtual QAbstractSeries* series() = 0;
+//    virtual QAbstractSeries::SeriesType type() = 0; // TODO? Or use LegendMarker type enum?
+    virtual QAbstractSeries* series() = 0;      // TODO: remove these and use specialised functions on derived classes?
     virtual QObject* peerObject() = 0;
 
 protected:

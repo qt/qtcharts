@@ -17,44 +17,43 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-
-#ifndef QPIELEGENDMARKER_H
-#define QPIELEGENDMARKER_H
+#ifndef QBARLEGENDMARKER_H
+#define QBARLEGENDMARKER_H
 
 #include <QChartGlobal>
 #include <QLegendMarker>
-#include <QPieSeries>
-#include <QPieSlice>
-//#include "qpielegendmarker_p.h"
+#include <QAbstractBarSeries>
+#include <QBarSet>
+//#include "qbarlegendmarker_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QPieLegendMarkerPrivate;
+class QLegend;
+class QBarLegendMarkerPrivate;
 
-// TODO: No export? make this private. QLegendMarker should be enough for user of the api (why expose the details?)
-class QTCOMMERCIALCHART_EXPORT QPieLegendMarker : public QLegendMarker
+class QTCOMMERCIALCHART_EXPORT QBarLegendMarker : public QLegendMarker
 {
     Q_OBJECT
-
 public:
-    explicit QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QLegend *legend, QObject *parent = 0);
-    virtual ~QPieLegendMarker();
-    
-    virtual QPieSeries* series();
-    virtual QPieSlice* peerObject();    // TODO: rename to slice and remove these virtuals from base class?
+    explicit QBarLegendMarker(QAbstractBarSeries* series, QBarSet* barset, QLegend *legend, QObject *parent = 0);
+    virtual ~QBarLegendMarker();
+
+    virtual QAbstractBarSeries* series();
+    virtual QBarSet* peerObject();    // TODO: rename to slice and remove these virtuals from base class?
 
 protected:
-    QPieLegendMarker(QPieLegendMarkerPrivate &d, QObject *parent = 0);
+    QBarLegendMarker(QBarLegendMarkerPrivate &d, QObject *parent = 0);
 
 //Q_SIGNALS:
-    
+
 //public Q_SLOTS:
 
 private:
-    Q_DECLARE_PRIVATE(QPieLegendMarker)
-    Q_DISABLE_COPY(QPieLegendMarker)
+    Q_DECLARE_PRIVATE(QBarLegendMarker)
+    Q_DISABLE_COPY(QBarLegendMarker)
 
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
-#endif // QPIELEGENDMARKER_H
+
+#endif // QBARLEGENDMARKER_H
