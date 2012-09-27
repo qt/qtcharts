@@ -85,6 +85,7 @@ Q_SIGNALS:
 private:
     Q_DECLARE_PRIVATE(QXYSeries)
     Q_DISABLE_COPY(QXYSeries)
+    friend class QXYLegendMarkerPrivate;
     friend class XYLegendMarker;
     friend class XYChart;
 };

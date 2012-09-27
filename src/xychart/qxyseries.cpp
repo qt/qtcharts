@@ -24,6 +24,8 @@
 #include "legendmarker_p.h"
 #include "qvalueaxis.h"
 
+#include "qxylegendmarker.h"
+
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
@@ -456,12 +458,9 @@ QList<LegendMarker *> QXYSeriesPrivate::createLegendMarker(QLegend *legend)
 
 QList<QLegendMarker*> QXYSeriesPrivate::createLegendMarkers(QLegend* legend)
 {
-    Q_UNUSED(legend);
-//    Q_Q(QXYSeries);
+    Q_Q(QXYSeries);
     QList<QLegendMarker*> list;
-// TODO:
-//    return list << new QXYLegendMarker(q,legend);
-    return list;
+    return list << new QXYLegendMarker(q,legend);
 }
 
 void QXYSeriesPrivate::initializeAxis(QAbstractAxis *axis)
