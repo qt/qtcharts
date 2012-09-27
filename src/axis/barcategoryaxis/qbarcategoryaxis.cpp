@@ -156,108 +156,172 @@ QBarCategoryAxis::QBarCategoryAxis(QBarCategoryAxisPrivate &d, QObject *parent)
 }
 
 /*!
-    Appends \a categories to axis
+    Appends \a categories to axis. A maximum of the axis will be changed to last category in \a categories.
+    If there were no categories previously defined, minimum of axis will be also changed to first category in \a categories.
+    A category has to be valid QStrings and can not be duplicated. Duplicated categories will not be appended.
 */
 void QBarCategoryAxis::append(const QStringList &categories)
 {
     if (categories.isEmpty())
-        return;
+    return;
 
     Q_D(QBarCategoryAxis);
-    if (d->m_categories.isEmpty()) {
-        d->m_categories.append(categories);
-        setRange(categories.first(), categories.last());
-    } else {
-        d->m_categories.append(categories);
-        d->emitUpdated();
+
+    int count = d->m_categories.count();
+
+    foreach(QString category, categories)
+    {
+        if(!d->m_categories.contains(category) && !category.isNull()) {
+            d->m_categories.append(category);
+        }
     }
+
+    if(d->m_categories.count() == count) return;
+
+    if (count == 0) {
+        setRange(d->m_categories.first(), d->m_categories.last());
+    } else {
+        setRange(d->m_minCategory, d->m_categories.last());
+    }
+
     emit categoriesChanged();
 }
 
 /*!
-    Appends \a category to axis
+    Appends \a category to axis. A maximum of the axis will be changed to last \a category.
+    If there were no categories previously defined, minimum of axis will be also changed to \a category.
+    A \a category has to be valid QStrings and can not be duplicated. Duplicated categories will not be appended.
 */
 void QBarCategoryAxis::append(const QString &category)
 {
     Q_D(QBarCategoryAxis);
-    if (d->m_categories.isEmpty()) {
+
+    int count = d->m_categories.count();
+
+    if(!d->m_categories.contains(category) && !category.isNull()){
         d->m_categories.append(category);
-        setRange(category, category);
-    } else {
-        d->m_categories.append(category);
-        d->emitUpdated();
     }
+
+    if(d->m_categories.count() == count) return;
+
+    if (count == 0) {
+        setRange(d->m_categories.last(), d->m_categories.last());
+    } else {
+        setRange(d->m_minCategory, d->m_categories.last());
+    }
+
     emit categoriesChanged();
 }
 
 /*!
-    Removes \a category from axis
+    Removes \a category from axis. Removing category which is currently maximum or minimum
+    will affect the axis range.
 */
 void QBarCategoryAxis::remove(const QString &category)
 {
     Q_D(QBarCategoryAxis);
+
     if (d->m_categories.contains(category)) {
         d->m_categories.removeAt(d->m_categories.indexOf(category));
-        if (!d->m_categories.isEmpty())
-            setRange(d->m_categories.first(), d->m_categories.last());
-        else
+        if (!d->m_categories.isEmpty()){
+            if(d->m_minCategory == category){
+                setRange(d->m_categories.first(), d->m_maxCategory);
+            } else if(d->m_maxCategory == category){
+                setRange(d->m_minCategory, d->m_categories.last());
+            } else {
+                d->updateCategoryDomain();
+                d->emitUpdated();
+            }
+        }else
             setRange(QString::null, QString::null);
         emit categoriesChanged();
     }
 }
 
 /*!
-    Inserts \a category to axis at \a index
+    Inserts \a category to axis at \a index. A \a category has to be valid QStrings and can not be duplicated.
+    If \a category is prepended or appended to categories, minimum and maximum of axis is updated accordingly.
 */
 void QBarCategoryAxis::insert(int index, const QString &category)
 {
     Q_D(QBarCategoryAxis);
-    if (d->m_categories.isEmpty()) {
+
+    int count = d->m_categories.count();
+
+    if(!d->m_categories.contains(category) && !category.isNull()){
         d->m_categories.insert(index, category);
-        setRange(category, category);
+    }
+
+    if(d->m_categories.count() == count) return;
+
+    if (count == 0) {
+        setRange(d->m_categories.first(), d->m_categories.first());
+    } else if (index == 0) {
+        setRange(d->m_categories.first(), d->m_maxCategory);
+    } else if (index == count){
+        setRange(d->m_minCategory, d->m_categories.last());
     } else {
-        d->m_categories.insert(index, category);
+        d->updateCategoryDomain();
         d->emitUpdated();
     }
+
     emit categoriesChanged();
 }
 
 /*!
-    Replaces \a oldCategory with \a newCategory.
-    If \a oldCategory does not exits on the axis nothing is done.
+    Replaces \a oldCategory with \a newCategory. If \a oldCategory does not exits on the axis nothing is done.
+    A \a newVategory has to be valid QStrings and can not be duplicated. In case of replacing minimum or maximum category,
+    minimum and maximum of axis is updated accordingly.
 */
 void QBarCategoryAxis::replace(const QString &oldCategory, const QString &newCategory)
 {
     Q_D(QBarCategoryAxis);
+
     int pos = d->m_categories.indexOf(oldCategory);
-    if (pos != -1) {
+
+    if (pos != -1 && !d->m_categories.contains(newCategory) && !newCategory.isNull()) {
         d->m_categories.replace(pos, newCategory);
-        d->emitUpdated();
+        if(d->m_minCategory == oldCategory) {
+            setRange(newCategory, d->m_maxCategory);
+        } else if(d->m_maxCategory == oldCategory) {
+            setRange(d->m_minCategory, newCategory);
+        } else {
+            d->emitUpdated();
+        }
         emit categoriesChanged();
     }
 }
 
 /*!
-  Removes all categories.
+  Removes all categories. Sets the maximum and minimum of the axis's range to QString::null.
  */
 void QBarCategoryAxis::clear()
 {
     Q_D(QBarCategoryAxis);
     d->m_categories.clear();
-    setRange(QString::null, QString::null);
+        setRange(QString::null, QString::null);
     emit categoriesChanged();
 }
 
+/*!
+   Set \a categories and discards the old ones, range of axis is adjusted to match first and last category in \a categories.
+   A category has to be valid QStrings and can not be duplicated.
+*/
 void QBarCategoryAxis::setCategories(const QStringList &categories)
 {
     Q_D(QBarCategoryAxis);
-    if (d->m_categories != categories) {
-        d->m_categories = categories;
-        setRange(categories.first(), categories.last());
-        emit categoriesChanged();
-    }
+    d->m_categories.clear();
+    d->m_minCategory = QString::null;
+    d->m_maxCategory = QString::null;
+    d->m_min = 0;
+    d->m_max = 0;
+    d->m_count = 0;
+    append(categories);
 }
 
+/*!
+    Returns categories
+*/
 QStringList QBarCategoryAxis::categories()
 {
     Q_D(QBarCategoryAxis);
@@ -327,7 +391,7 @@ void QBarCategoryAxis::setRange(const QString &minCategory, const QString &maxCa
 
     bool changed = false;
 
-    //special case
+    //special case in case or clearing all categories
     if (minCategory.isNull() && maxCategory.isNull()) {
         d->m_minCategory = minCategory;
         d->m_maxCategory = maxCategory;
@@ -340,9 +404,9 @@ void QBarCategoryAxis::setRange(const QString &minCategory, const QString &maxCa
         d->emitUpdated();
     }
 
-    if (d->m_categories.indexOf(d->m_maxCategory) < d->m_categories.indexOf(d->m_minCategory))
+    if (d->m_categories.indexOf(maxCategory) < d->m_categories.indexOf(minCategory)){
         return;
-
+    }
     if (!minCategory.isEmpty() && d->m_minCategory != minCategory && d->m_categories.contains(minCategory)) {
         d->m_minCategory = minCategory;
         d->m_min = d->m_categories.indexOf(d->m_minCategory) - 0.5;
@@ -450,6 +514,14 @@ ChartAxis *QBarCategoryAxisPrivate::createGraphics(ChartPresenter *presenter)
         return new ChartBarCategoryAxisY(q, presenter);
     return new ChartBarCategoryAxisX(q, presenter);
 }
+
+void QBarCategoryAxisPrivate::updateCategoryDomain()
+{
+    m_min = m_categories.indexOf(m_minCategory) - 0.5;
+    m_max = m_categories.indexOf(m_maxCategory) + 0.5;
+    m_count = m_max - m_min;
+}
+
 
 void QBarCategoryAxisPrivate::intializeDomain(Domain *domain)
 {

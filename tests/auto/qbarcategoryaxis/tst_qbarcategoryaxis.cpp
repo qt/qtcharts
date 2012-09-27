@@ -142,9 +142,8 @@ void tst_QBarCategoriesAxis::qbarcategoryaxis()
     QBarCategoryAxis axis;
     axis.append(QStringList());
     axis.append(QString());
-    QCOMPARE(axis.at(0), QString());
+    QCOMPARE(axis.count(), 0);
     QStringList test;
-    test.append(QString());
     QCOMPARE(axis.categories(),test);
     axis.clear();
     QCOMPARE(axis.count(), 0);
@@ -395,8 +394,7 @@ void tst_QBarCategoriesAxis::insert_data()
     QTest::addColumn<QStringList>("categories");
     QTest::addColumn<int>("index");
     QTest::addColumn<QString>("category");
-    QTest::newRow("Jul Aug Sep 0 Jun") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 0 << "Jun";
-    QTest::newRow("Jul Aug Sep 3 Sep") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 3 << "Sep";
+    QTest::newRow("Jul Aug Sep 0 Jun") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 1 << "Jun";
     QTest::newRow("Jul Aug Sep 2 Summer") <<  (QStringList() << "Jul" << "Aug" << "Sep") << 2 << "Summer";
 }
 
