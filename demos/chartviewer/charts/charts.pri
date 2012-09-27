@@ -15,4 +15,5 @@ SOURCES += \
     pieseries/piechart.cpp \
     pieseries/donutchart.cpp \
     axis/valueaxis.cpp \
-    axis/categoryaxis.cpp 
+    axis/categoryaxis.cpp \
+    axis/barcategoryaxisx.cpp
