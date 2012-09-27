@@ -25,7 +25,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-HorizontalAxis::HorizontalAxis(QAbstractAxis *axis, ChartPresenter *presenter):ChartAxis(axis,presenter)
+HorizontalAxis::HorizontalAxis(QAbstractAxis *axis, ChartPresenter *presenter,bool intervalAxis):ChartAxis(axis,presenter,intervalAxis)
 {
 }
 
@@ -86,7 +86,7 @@ void HorizontalAxis::updateGeometry()
             tickItem->setLine(layout[i],axisRect.top(),layout[i],axisRect.top() + labelPadding());
         }
 
-        if(labelBetweenTicks()&& i+1!=layout.size()) {
+        if(intervalAxis()&& i+1!=layout.size()) {
             const qreal delta = (layout[i+1] - layout[i])/2;
             labelItem->setPos(layout[i] + delta - center.x(), labelItem->pos().y());
         }
@@ -117,14 +117,14 @@ void HorizontalAxis::updateGeometry()
         if (x < gridRect.left() || x > gridRect.right()) {
               gridItem->setVisible(false);
               tickItem->setVisible(false);
-              if( labelBetweenTicks() && ( labelItem->pos().x() < gridRect.left() || labelItem->pos().x() + rect.width() > gridRect.right()))
+              if( intervalAxis() && ( labelItem->pos().x() < gridRect.left() || labelItem->pos().x() + rect.width() > gridRect.right()))
                   labelItem->setVisible(false);
         }
 
     }
 
     //begin/end grid line in case labels between
-    if(labelBetweenTicks()) {
+    if(intervalAxis()) {
         QGraphicsLineItem *gridLine;
         gridLine = static_cast<QGraphicsLineItem*>(lines.at(layout.size()));
         gridLine->setLine(gridRect.right(), gridRect.top(), gridRect.right(), gridRect.bottom());

@@ -26,10 +26,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartBarCategoryAxisY::ChartBarCategoryAxisY(QBarCategoryAxis *axis,ChartPresenter *presenter) : VerticalAxis(axis,presenter),
+ChartBarCategoryAxisY::ChartBarCategoryAxisY(QBarCategoryAxis *axis,ChartPresenter *presenter) : VerticalAxis(axis,presenter,true),
 m_categoriesAxis(axis)
 {
-    setLabelBetweenTicks(true);
 }
 
 ChartBarCategoryAxisY::~ChartBarCategoryAxisY()

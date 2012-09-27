@@ -32,7 +32,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : ChartElement(presenter),
+ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter, bool intervalAxis) : ChartElement(presenter),
     m_chartAxis(axis),
     m_labelsAngle(0),
     m_grid(new QGraphicsItemGroup(presenter->rootItem())),
@@ -44,7 +44,7 @@ ChartAxis::ChartAxis(QAbstractAxis *axis,ChartPresenter *presenter) : ChartEleme
     m_max(0),
     m_animation(0),
     m_labelPadding(5),
-    m_labelBetween(false)
+    m_intervalAxis(intervalAxis)
 {
     //initial initialization
     m_arrow->setZValue(ChartPresenter::AxisZValue);
@@ -78,7 +78,7 @@ void ChartAxis::createItems(int count)
 {
     if (m_arrow->children().size() == 0)
         m_arrow->addToGroup(new AxisItem(this,presenter()->rootItem()));
-    if (m_grid->children().size() == 0){
+    if (m_intervalAxis && m_grid->children().size() == 0){
         for(int i = 0 ; i < 2 ;i  ++)
             m_grid->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
     }
@@ -413,11 +413,6 @@ void ChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
 void ChartAxis::axisSelected()
 {
     //TODO: axis clicked;
-}
-
-void ChartAxis::setLabelBetweenTicks(bool enabled)
-{
-    m_labelBetween=enabled;
 }
 
 Qt::Orientation ChartAxis::orientation() const

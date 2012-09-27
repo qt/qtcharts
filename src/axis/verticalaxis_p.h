@@ -37,7 +37,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class VerticalAxis : public ChartAxis
 {
 public:
-    VerticalAxis(QAbstractAxis *axis, ChartPresenter *presenter);
+    VerticalAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool intervalAxis = false);
     ~VerticalAxis();
 protected:
     void updateGeometry();

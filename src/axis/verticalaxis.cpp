@@ -24,7 +24,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-VerticalAxis::VerticalAxis(QAbstractAxis *axis, ChartPresenter *presenter):ChartAxis(axis,presenter)
+VerticalAxis::VerticalAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool intervalAxis):ChartAxis(axis,presenter,intervalAxis)
 {
 
 }
@@ -98,7 +98,7 @@ void VerticalAxis::updateGeometry()
             labelItem->setPos( axisRect.left() + labelPadding() , layout[i]-center.y());
             tickItem->setLine( axisRect.left(),layout[i], axisRect.left()+ labelPadding(),layout[i]);
         }
-        if(labelBetweenTicks()&& i+1!=layout.size()) {
+        if(intervalAxis()&& i+1!=layout.size()) {
             const qreal delta = (layout[i+1] - layout[i])/2;
             labelItem->setPos(labelItem->pos().x() , layout[i] + delta - center.y());
         }
@@ -128,13 +128,13 @@ void VerticalAxis::updateGeometry()
         if (y < gridRect.top() || y > gridRect.bottom()) {
             gridItem->setVisible(false);
             tickItem->setVisible(false);
-            if( labelBetweenTicks() && ( labelItem->pos().y() < gridRect.top() || labelItem->pos().y() + rect.height() > gridRect.bottom()))
+            if( intervalAxis() && ( labelItem->pos().y() < gridRect.top() || labelItem->pos().y() + rect.height() > gridRect.bottom()))
             labelItem->setVisible(false);
         }
 
     }
     //begin/end grid line in case labels between
-    if(labelBetweenTicks()) {
+    if(intervalAxis()) {
         QGraphicsLineItem *gridLine;
         gridLine = static_cast<QGraphicsLineItem*>(lines.at(layout.size()));
         gridLine->setLine(gridRect.left(), gridRect.top(), gridRect.right(), gridRect.top());

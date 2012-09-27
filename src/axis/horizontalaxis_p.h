@@ -37,7 +37,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class HorizontalAxis : public ChartAxis
 {
 public:
-    HorizontalAxis(QAbstractAxis *axis, ChartPresenter *presenter);
+    HorizontalAxis(QAbstractAxis *axis, ChartPresenter *presenter,bool intervalAxis = false);
     ~HorizontalAxis();
 protected:
     void updateGeometry();

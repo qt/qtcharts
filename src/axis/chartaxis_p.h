@@ -48,7 +48,7 @@ class ChartAxis : public ChartElement, public QGraphicsLayoutItem
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
 
-    ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter);
+    ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool intervalAxis = false);
     ~ChartAxis();
 
     void setArrowOpacity(qreal opacity);
@@ -106,8 +106,8 @@ public:
     void setLabels(const QStringList& labels);
     QStringList labels() const { return m_labelsList; }
 
-    void setLabelBetweenTicks(bool enabled);
-    bool labelBetweenTicks() const { return m_labelBetween; }
+    //this flag indicates that axis is used to show intervals it means labels are in between ticks
+    bool intervalAxis() const { return m_intervalAxis; }
 
     virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 
@@ -156,7 +156,7 @@ private:
     QString m_titleText;
     int m_labelPadding;
     QStringList m_labelsList;
-    bool m_labelBetween;
+    bool m_intervalAxis;
 
 friend class AxisAnimation;
 friend class AxisItem;

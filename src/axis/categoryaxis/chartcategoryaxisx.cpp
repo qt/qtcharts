@@ -28,10 +28,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartCategoryAxisX::ChartCategoryAxisX(QCategoryAxis *axis,ChartPresenter *presenter) : HorizontalAxis(axis,presenter),
+ChartCategoryAxisX::ChartCategoryAxisX(QCategoryAxis *axis,ChartPresenter *presenter) : HorizontalAxis(axis,presenter,true),
     m_axis(axis)
 {
-    setLabelBetweenTicks(true);
 }
 
 ChartCategoryAxisX::~ChartCategoryAxisX()
