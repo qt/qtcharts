@@ -62,7 +62,6 @@ QAreaLegendMarkerPrivate::QAreaLegendMarkerPrivate(QAreaLegendMarker *q, QAreaSe
     QLegendMarkerPrivate(q,legend),
     m_series(series)
 {
-    qDebug() << "QAreaLegendMarkerPrivate created";
     QObject::connect(m_series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
     QObject::connect(m_series, SIGNAL(nameChanged()), this, SLOT(updated()));
     updated();
@@ -76,7 +75,6 @@ QAreaLegendMarkerPrivate::~QAreaLegendMarkerPrivate()
 
 void QAreaLegendMarkerPrivate::updated()
 {
-    qDebug() << "QAreaLegendMarkerPrivate::updated";
     m_item->setBrush(m_series->brush());
     m_item->setLabel(m_series->name());
 }

@@ -25,7 +25,6 @@
 #include <QLegendMarker>
 #include <QPieSeries>
 #include <QPieSlice>
-//#include "qpielegendmarker_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

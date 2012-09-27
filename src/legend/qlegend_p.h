@@ -38,7 +38,6 @@ class QChart;
 class ChartPresenter;
 class QAbstractSeries;
 class LegendLayout;
-class LegendMarker;
 class Domain;
 class QLegendMarker;
 
@@ -53,11 +52,10 @@ public:
     QPointF offset() const;
     int roundness(qreal size);
 
-    QList<LegendMarker*> markers() { return m_markers; }    // TODO: this will be removed
     QGraphicsItemGroup* items() { return m_items; }
 
     // New stuff:
-    QList<QLegendMarker*> legendMarkers() { return m_legendMarkers; }   // TODO: function name will change
+    QList<QLegendMarker*> legendMarkers() { return m_legendMarkers; }
     void appendSeries(QAbstractSeries* series);
     void removeSeries(QAbstractSeries* series);
 
@@ -73,7 +71,6 @@ private:
     LegendLayout *m_layout;
     QChart* m_chart;
     QGraphicsItemGroup* m_items;
-    QList<LegendMarker*> m_markers;     // TODO: this will be removed
     Qt::Alignment m_alignment;
     QBrush m_brush;
     QPen m_pen;

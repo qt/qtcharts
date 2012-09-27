@@ -24,7 +24,6 @@
 #include "qabstractseries_p.h"
 #include "qchart_p.h"
 #include "legendlayout_p.h"
-#include "legendmarker_p.h" // TODO: deprecated
 #include "qxyseries.h"
 #include "qlineseries.h"
 #include "qareaseries.h"
@@ -265,10 +264,11 @@ QPen QLegend::pen() const
 
 void QLegend::setFont(const QFont &font)
 {
-    if (d_ptr->m_font != font) {
+    if (d_ptr->m_font != font)
         d_ptr->m_font = font;
-        foreach (LegendMarker *marker, d_ptr->markers()) 
-            marker->setFont(d_ptr->m_font);
+
+    foreach (QLegendMarker *marker, d_ptr->legendMarkers()) {
+        marker->setFont(d_ptr->m_font);
         layout()->invalidate();
         emit fontChanged(font);
     }
@@ -300,7 +300,7 @@ void QLegend::setLabelBrush(const QBrush &brush)
 {
     if (d_ptr->m_labelBrush != brush) {
         d_ptr->m_labelBrush = brush;
-        foreach (LegendMarker *marker, d_ptr->markers()) {
+        foreach (QLegendMarker *marker, d_ptr->legendMarkers()) {
             marker->setLabelBrush(d_ptr->m_labelBrush);
             // Note: The pen of the marker rectangle could be exposed in the public QLegend API
             // instead of mapping it from label brush color

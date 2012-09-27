@@ -45,7 +45,6 @@ public:
 
     void scaleDomain(Domain &domain);
     ChartElement *createGraphics(ChartPresenter *presenter);
-    QList<LegendMarker *> createLegendMarker(QLegend *legend);
     QList<QLegendMarker*> createLegendMarkers(QLegend* legend);
     void initializeAxis(QAbstractAxis *axis);
 

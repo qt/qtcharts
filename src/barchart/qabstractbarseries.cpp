@@ -23,7 +23,6 @@
 #include "qbarset.h"
 #include "qbarset_p.h"
 #include "domain_p.h"
-#include "legendmarker_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "qvalueaxis.h"
@@ -647,18 +646,6 @@ ChartElement *QAbstractBarSeriesPrivate::createGraphics(ChartPresenter *presente
     Q_UNUSED(presenter);
     qWarning() << "QAbstractBarSeriesPrivate::createGraphics called";
     return 0;
-}
-
-QList<LegendMarker *> QAbstractBarSeriesPrivate::createLegendMarker(QLegend *legend)
-{
-    Q_Q(QAbstractBarSeries);
-    QList<LegendMarker *> markers;
-    foreach (QBarSet *set, q->barSets()) {
-        BarLegendMarker* marker = new BarLegendMarker(q, set, legend);
-        markers << marker;
-    }
-
-    return markers;
 }
 
 QList<QLegendMarker*> QAbstractBarSeriesPrivate::createLegendMarkers(QLegend* legend)

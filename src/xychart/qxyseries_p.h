@@ -45,7 +45,6 @@ public:
     QXYSeriesPrivate(QXYSeries *q);
 
     void scaleDomain(Domain &domain);
-    QList<LegendMarker *> createLegendMarker(QLegend *legend);
     QList<QLegendMarker*> createLegendMarkers(QLegend* legend);
 
     void initializeAxis(QAbstractAxis *axis);
@@ -53,9 +52,6 @@ public:
 
 Q_SIGNALS:
     void updated();
-//    void pointReplaced(int index);
-//    void pointRemoved(int index);
-//    void pointAdded(int index);
 
 protected:
     QVector<QPointF> m_points;

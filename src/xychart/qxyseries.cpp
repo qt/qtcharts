@@ -21,7 +21,6 @@
 #include "qxyseries.h"
 #include "qxyseries_p.h"
 #include "domain_p.h"
-#include "legendmarker_p.h"
 #include "qvalueaxis.h"
 
 #include "qxylegendmarker.h"
@@ -447,13 +446,6 @@ void QXYSeriesPrivate::scaleDomain(Domain &domain)
     }
 
     domain.setRange(minX, maxX, minY, maxY);
-}
-
-QList<LegendMarker *> QXYSeriesPrivate::createLegendMarker(QLegend *legend)
-{
-    Q_Q(QXYSeries);
-    QList<LegendMarker *> list;
-    return list << new XYLegendMarker(q, legend);
 }
 
 QList<QLegendMarker*> QXYSeriesPrivate::createLegendMarkers(QLegend* legend)

@@ -20,7 +20,6 @@
 
 #include "legendlayout_p.h"
 #include "chartpresenter_p.h"
-//#include "legendmarker_p.h"
 #include "qlegend_p.h"
 #include "chartlayout_p.h"
 

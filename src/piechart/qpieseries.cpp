@@ -25,7 +25,6 @@
 #include "pieslicedata_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "legendmarker_p.h"
 #include "qabstractaxis.h"
 #include "pieanimation_p.h"
 
@@ -851,20 +850,8 @@ ChartElement *QPieSeriesPrivate::createGraphics(ChartPresenter *presenter)
     return pie;
 }
 
-QList<LegendMarker *> QPieSeriesPrivate::createLegendMarker(QLegend *legend)
-{
-    Q_Q(QPieSeries);
-    QList<LegendMarker *> markers;
-    foreach (QPieSlice *slice, q->slices()) {
-        PieLegendMarker* marker = new PieLegendMarker(q, slice, legend);
-        markers << marker;
-    }
-    return markers;
-}
-
 QList<QLegendMarker*> QPieSeriesPrivate::createLegendMarkers(QLegend* legend)
 {
-//    Q_UNUSED(legend);
     Q_Q(QPieSeries);
     QList<QLegendMarker*> markers;
     foreach(QPieSlice* slice, q->slices()) {

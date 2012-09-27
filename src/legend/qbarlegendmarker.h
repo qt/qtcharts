@@ -24,7 +24,6 @@
 #include <QLegendMarker>
 #include <QAbstractBarSeries>
 #include <QBarSet>
-//#include "qbarlegendmarker_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
