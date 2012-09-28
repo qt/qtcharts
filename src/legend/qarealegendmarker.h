@@ -41,7 +41,7 @@ public:
     virtual LegendMarkerType type() { return LegendMarkerTypeArea; }
 
     // Related series
-    QAreaSeries* series();
+    virtual QAreaSeries* series();
 
 protected:
     QAreaLegendMarker(QAreaLegendMarkerPrivate &d, QObject *parent = 0);

@@ -40,7 +40,7 @@ public:
     virtual LegendMarkerType type() { return LegendMarkerTypeBar; }
 
     // Related series and barset
-    QAbstractBarSeries* series();
+    virtual QAbstractBarSeries* series();
     QBarSet* barset();
 
 protected:

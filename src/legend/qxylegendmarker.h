@@ -39,7 +39,7 @@ public:
     virtual LegendMarkerType type() { return LegendMarkerTypeXY; }
 
     // Related series
-    QXYSeries* series();
+    virtual QXYSeries* series();
 
 protected:
     QXYLegendMarker(QXYLegendMarkerPrivate &d, QObject *parent = 0);

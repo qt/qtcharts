@@ -42,7 +42,7 @@ public:
     virtual LegendMarkerType type() { return LegendMarkerTypePie; }
 
     // Related series and slice
-    QPieSeries* series();
+    virtual QPieSeries* series();
     QPieSlice* slice();
 
 protected:

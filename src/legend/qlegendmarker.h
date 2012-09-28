@@ -72,6 +72,8 @@ public:
     bool isVisible() const;
     void setVisible(bool visible);
 
+    virtual QAbstractSeries* series() = 0;
+
 protected:
     explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = 0);
 
