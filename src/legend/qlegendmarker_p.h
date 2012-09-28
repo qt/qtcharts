@@ -66,6 +66,10 @@ public:
     // Item gets the event, logic for event is here
     void handleMousePressEvent(QGraphicsSceneEvent *event);
 
+    // internal
+    virtual QAbstractSeries* series() = 0;
+    virtual QObject* relatedObject() = 0;
+
 public Q_SLOTS:
     virtual void updated() {};
 

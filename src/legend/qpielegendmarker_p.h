@@ -49,6 +49,10 @@ public:
     explicit QPieLegendMarkerPrivate(QPieLegendMarker *q, QPieSeries *series, QPieSlice *slice, QLegend *legend);
     virtual ~QPieLegendMarkerPrivate();
 
+    // internal
+    virtual QPieSeries* series();
+    virtual QObject* relatedObject();
+
 public Q_SLOTS:
     virtual void updated();
 

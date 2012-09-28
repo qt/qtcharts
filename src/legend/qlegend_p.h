@@ -66,6 +66,12 @@ public Q_SLOTS:
     void handleCountChanged();
 
 private:
+    // Internal helpers
+    void addMarkers(QList<QLegendMarker *> markers);
+    void removeMarkers(QList<QLegendMarker *> markers);
+    void decorateMarkers(QList<QLegendMarker *> markers);
+
+private:
     QLegend *q_ptr;
     ChartPresenter *m_presenter;
     LegendLayout *m_layout;

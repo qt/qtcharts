@@ -76,6 +76,16 @@ QPieLegendMarkerPrivate::~QPieLegendMarkerPrivate()
     QObject::disconnect(m_slice, SIGNAL(penChanged()), this, SLOT(updated()));
 }
 
+QPieSeries* QPieLegendMarkerPrivate::series()
+{
+    return m_series;
+}
+
+QObject* QPieLegendMarkerPrivate::relatedObject()
+{
+    return m_slice;
+}
+
 void QPieLegendMarkerPrivate::updated()
 {
     m_item->setPen(m_slice->pen());

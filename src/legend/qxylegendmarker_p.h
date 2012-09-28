@@ -48,6 +48,10 @@ public:
     explicit QXYLegendMarkerPrivate(QXYLegendMarker *q, QXYSeries *series, QLegend *legend);
     virtual ~QXYLegendMarkerPrivate();
 
+    // internal
+    virtual QAbstractSeries* series();
+    virtual QObject* relatedObject();
+
 public Q_SLOTS:
     virtual void updated();
 

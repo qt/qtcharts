@@ -67,6 +67,16 @@ QXYLegendMarkerPrivate::~QXYLegendMarkerPrivate()
     QObject::disconnect(m_series, SIGNAL(nameChanged()), this, SLOT(updated()));
 }
 
+QAbstractSeries* QXYLegendMarkerPrivate::series()
+{
+    return m_series;
+}
+
+QObject* QXYLegendMarkerPrivate::relatedObject()
+{
+    return m_series;
+}
+
 void QXYLegendMarkerPrivate::updated()
 {
     m_item->setLabel(m_series->name());

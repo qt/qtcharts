@@ -43,7 +43,7 @@
 #include <QTimer>
 #include <QGraphicsSceneEvent>
 
-#include <QLegendMarker>
+#include "qlegendmarker.h"
 #include "qlegendmarker_p.h"
 #include "legendmarkeritem_p.h"
 
@@ -483,13 +483,8 @@ void QLegendPrivate::appendSeries(QAbstractSeries* series)
     }
 
     QList<QLegendMarker*> newMarkers = series->d_ptr->createLegendMarkers(q_ptr);
-    foreach (QLegendMarker* marker, newMarkers) {
-        marker->setFont(m_font);
-        marker->setLabelBrush(m_labelBrush);
-        marker->setVisible(series->isVisible());
-        m_items->addToGroup(marker->d_ptr.data()->item());
-        m_legendMarkers << marker;
-    }
+    decorateMarkers(newMarkers);
+    addMarkers(newMarkers);
 
     // TODO: This is the part I don't like. There should be better solution.
     // On the other hand. It is only one switch case for appending and another for removing series
@@ -534,14 +529,14 @@ void QLegendPrivate::removeSeries(QAbstractSeries* series)
         m_series.removeOne(series);
     }
 
-    foreach (QLegendMarker *marker, m_legendMarkers) {
-        if (marker->series() == series) {
-            marker->d_ptr.data()->item()->setVisible(false);
-            m_items->removeFromGroup(marker->d_ptr.data()->item());
-            delete marker;
-            m_legendMarkers.removeAll(marker);
+    // Find out, which markers to remove
+    QList<QLegendMarker *> removed;
+    foreach (QLegendMarker *m, m_legendMarkers) {
+        if (m->series() == series) {
+            removed << m;
         }
     }
+    removeMarkers(removed);
 
     switch (series->type())
     {
@@ -571,9 +566,7 @@ void QLegendPrivate::removeSeries(QAbstractSeries* series)
     }
     }
 
-
     QObject::disconnect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
-//    QObject::disconnect(series->d_ptr.data(), SIGNAL(legendPropertiesUpdated(QAbstractSeries*)), this, SLOT(handleLegendPropertiesUpdated(QAbstractSeries*)));
 
     m_layout->invalidate();
 //    q_ptr->layout()->activate();
@@ -608,17 +601,69 @@ void QLegendPrivate::handleSeriesVisibleChanged()
 
 void QLegendPrivate::handleCountChanged()
 {
-    // TODO: With new markers, the series should notify markers directly.
-    // TODO: Better way to handle updates. Remove/Add series again seems like overkill.
+    // Here we handle the changes in marker count.
+    // Can happen for example when pieslice(s) have been added to or removed from pieseries.
 
     QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
     qDebug() << "QLegendPrivate::handleSeriesUpdated" << series;
 
-    // Handle new or removed markers
-    // Handle changes of marker pen/brush/label. every property that legend is interested
-    handleSeriesRemoved(series);
-    handleSeriesAdded(series);
+    QList<QLegendMarker *> createdMarkers = series->d_ptr->createLegendMarkers(q_ptr);
+
+    // Find out removed markers and created markers
+    QList<QLegendMarker *> removedMarkers;
+    foreach (QLegendMarker *oldMarker, m_legendMarkers) {
+        // we have marker, which is related to sender.
+        if (oldMarker->series() == series) {
+            bool found = false;
+            foreach(QLegendMarker *newMarker, createdMarkers) {
+                // New marker considered existing if:
+                // - d_ptr->relatedObject() is same for both markers.
+                if (newMarker->d_ptr->relatedObject() == oldMarker->d_ptr->relatedObject()) {
+                    // Delete the new marker, since we already have existing marker, that might be connected on user side.
+                    found = true;
+                    createdMarkers.removeOne(newMarker);
+                    delete newMarker;
+                }
+            }
+            if (!found) {
+                // No related object found for marker, add to removedMarkers list
+                removedMarkers << oldMarker;
+            }
+        }
+    }
+
+    removeMarkers(removedMarkers);
+    addMarkers(createdMarkers);
+
+    q_ptr->layout()->invalidate();
 }
+
+void QLegendPrivate::addMarkers(QList<QLegendMarker *> markers)
+{
+    foreach (QLegendMarker* marker, markers) {
+        m_items->addToGroup(marker->d_ptr.data()->item());
+        m_legendMarkers << marker;
+    }
+}
+
+void QLegendPrivate::removeMarkers(QList<QLegendMarker *> markers)
+{
+    foreach (QLegendMarker *marker, markers) {
+        marker->d_ptr->item()->setVisible(false);
+        m_items->removeFromGroup(marker->d_ptr->item());
+        delete marker;
+        m_legendMarkers.removeOne(marker);
+    }
+}
+
+void QLegendPrivate::decorateMarkers(QList<QLegendMarker *> markers)
+{
+    foreach (QLegendMarker* marker, markers) {
+        marker->setFont(m_font);
+        marker->setLabelBrush(m_labelBrush);
+    }
+}
+
 
 #include "moc_qlegend.cpp"
 #include "moc_qlegend_p.cpp"

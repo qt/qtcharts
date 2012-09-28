@@ -74,14 +74,13 @@ public:
 
     virtual QAbstractSeries* series() = 0;
 
-protected:
-    explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = 0);
-
 Q_SIGNALS:
     void clicked();
     void hovered(bool status);
 
 protected:
+    explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = 0);
+
     QScopedPointer<QLegendMarkerPrivate> d_ptr;
     Q_DISABLE_COPY(QLegendMarker)
     friend class QLegendPrivate;

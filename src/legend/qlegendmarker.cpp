@@ -25,6 +25,7 @@
 #include <QDebug>
 #include <QFontMetrics>
 #include <QGraphicsSceneEvent>
+#include <QAbstractSeries>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -32,6 +33,7 @@ QLegendMarker::QLegendMarker(QLegendMarkerPrivate &d, QObject *parent) :
     QObject(parent),
     d_ptr(&d)
 {
+    d_ptr->m_item->setVisible(d_ptr->series()->isVisible());
 }
 
 QLegendMarker::~QLegendMarker()
@@ -104,6 +106,7 @@ QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend) :
     m_legend(legend)
 {
     m_item = new LegendMarkerItem(this);
+//    m_item->setVisible(q->series()->isVisible());
 }
 
 QLegendMarkerPrivate::~QLegendMarkerPrivate()

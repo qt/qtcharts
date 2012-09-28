@@ -67,6 +67,16 @@ QAreaLegendMarkerPrivate::~QAreaLegendMarkerPrivate()
     QObject::disconnect(m_series, SIGNAL(nameChanged()), this, SLOT(updated()));
 }
 
+QAreaSeries* QAreaLegendMarkerPrivate::series()
+{
+    return m_series;
+}
+
+QObject* QAreaLegendMarkerPrivate::relatedObject()
+{
+    return m_series;
+}
+
 void QAreaLegendMarkerPrivate::updated()
 {
     m_item->setBrush(m_series->brush());

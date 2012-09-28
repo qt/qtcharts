@@ -76,6 +76,16 @@ QBarLegendMarkerPrivate::~QBarLegendMarkerPrivate()
     QObject::disconnect(m_barset, SIGNAL(penChanged()), this, SLOT(updated()));
 }
 
+QAbstractBarSeries* QBarLegendMarkerPrivate::series()
+{
+    return m_series;
+}
+
+QObject* QBarLegendMarkerPrivate::relatedObject()
+{
+    return m_barset;
+}
+
 void QBarLegendMarkerPrivate::updated()
 {
     m_item->setPen(m_barset->pen());
