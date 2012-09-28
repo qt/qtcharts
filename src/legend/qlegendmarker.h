@@ -37,6 +37,7 @@ class QTCOMMERCIALCHART_EXPORT QLegendMarker : public QObject
 {
     Q_OBJECT
 
+public:
     enum LegendMarkerType {
         LegendMarkerTypeArea,
         LegendMarkerTypeBar,
