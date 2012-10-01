@@ -23,6 +23,7 @@
 #include "chartdatetimeaxisx_p.h"
 #include "chartdatetimeaxisy_p.h"
 #include "domain_p.h"
+#include <float.h>
 #include <cmath>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
