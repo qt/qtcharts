@@ -39,6 +39,7 @@
 #include <QApplication>
 #include <QDebug>
 #include <QMenu>
+#include <QPushButton>
 
 Window::Window(const QVariantHash& parameters,QWidget *parent) :
     QMainWindow(parent),
@@ -50,21 +51,25 @@ Window::Window(const QVariantHash& parameters,QWidget *parent) :
     m_animatedComboBox(0),
     m_legendComboBox(0),
     m_templateComboBox(0),
+    m_viewComboBox(0),
     m_openGLCheckBox(0),
     m_zoomCheckBox(0),
     m_scrollCheckBox(0),
     m_baseLayout(new QGraphicsLinearLayout()),
     m_menu(createMenu()),
     m_template(0),
-    m_grid(new Grid(3))
+    m_grid(new Grid(1))
 {
     createProxyWidgets();
     // create layout
     QGraphicsLinearLayout *settingsLayout = new QGraphicsLinearLayout();
+
     settingsLayout->setOrientation(Qt::Vertical);
     settingsLayout->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     settingsLayout->addItem(m_widgetHash["openGLCheckBox"]);
     settingsLayout->addItem(m_widgetHash["antialiasCheckBox"]);
+    settingsLayout->addItem(m_widgetHash["viewLabel"]);
+    settingsLayout->addItem(m_widgetHash["viewComboBox"]);
     settingsLayout->addItem(m_widgetHash["themeLabel"]);
     settingsLayout->addItem(m_widgetHash["themeComboBox"]);
     settingsLayout->addItem(m_widgetHash["animationsLabel"]);
@@ -94,6 +99,7 @@ Window::Window(const QVariantHash& parameters,QWidget *parent) :
     m_antialiasCheckBox->setChecked(true);
     initializeFromParamaters(parameters);
     updateUI();
+    handleGeometryChanged();
     setCentralWidget(m_view);
 
     connectSignals();
@@ -106,6 +112,7 @@ Window::~Window()
 void Window::connectSignals()
 {
     QObject::connect(m_form, SIGNAL(geometryChanged()), this , SLOT(handleGeometryChanged()));
+    QObject::connect(m_viewComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_themeComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_antialiasCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
     QObject::connect(m_openGLCheckBox, SIGNAL(toggled(bool)), this, SLOT(updateUI()));
@@ -120,6 +127,7 @@ void Window::connectSignals()
 void Window::createProxyWidgets()
 {
     m_themeComboBox = createThemeBox();
+    m_viewComboBox = createViewBox();
     m_antialiasCheckBox = new QCheckBox(tr("Anti-aliasing"));
     m_animatedComboBox = createAnimationBox();
     m_legendComboBox = createLegendBox();
@@ -127,6 +135,8 @@ void Window::createProxyWidgets()
     m_zoomCheckBox = new QCheckBox(tr("Zoom"));
     m_scrollCheckBox = new QCheckBox(tr("Scroll"));
     m_templateComboBox = createTempleteBox();
+    m_widgetHash["viewLabel"] = m_scene->addWidget(new QLabel("View"));
+    m_widgetHash["viewComboBox"] = m_scene->addWidget(m_viewComboBox);
     m_widgetHash["themeComboBox"] = m_scene->addWidget(m_themeComboBox);
     m_widgetHash["antialiasCheckBox"] = m_scene->addWidget(m_antialiasCheckBox);
     m_widgetHash["animatedComboBox"] = m_scene->addWidget(m_animatedComboBox);
@@ -139,7 +149,6 @@ void Window::createProxyWidgets()
     m_widgetHash["templateComboBox"] = m_scene->addWidget(m_templateComboBox);
     m_widgetHash["zoomCheckBox"] = m_scene->addWidget(m_zoomCheckBox);
     m_widgetHash["scrollCheckBox"] = m_scene->addWidget(m_scrollCheckBox);
-
 }
 
 QComboBox *Window::createThemeBox()
@@ -153,6 +162,16 @@ QComboBox *Window::createThemeBox()
     themeComboBox->addItem("High Contrast", QChart::ChartThemeHighContrast);
     themeComboBox->addItem("Blue Icy", QChart::ChartThemeBlueIcy);
     return themeComboBox;
+}
+
+QComboBox *Window::createViewBox()
+{
+    QComboBox *viewComboBox = new ComboBox(this);
+    viewComboBox->addItem("1 chart", 1);
+    viewComboBox->addItem("4 charts", 2);
+    viewComboBox->addItem("9 charts", 3);
+    viewComboBox->addItem("16 charts", 4);
+    return viewComboBox;
 }
 
 QComboBox *Window::createAnimationBox()
@@ -235,16 +254,33 @@ void Window::initializeFromParamaters(const QVariantHash& parameters)
             }
         }
     }
+    if (parameters.contains("view")) {
+          int t = parameters["view"].toInt();
+          for (int i = 0; i < m_viewComboBox->count(); ++i) {
+              if (m_viewComboBox->itemData(i).toInt() == t) {
+
+                  m_viewComboBox->setCurrentIndex(i);
+                  break;
+              }
+          }
+      }
 }
 
 void Window::updateUI()
 {
     checkTemplate();
+    checkView();
     checkOpenGL();
     checkTheme();
     checkAnimationOptions();
     checkLegend();
     checkState();
+}
+
+void Window::checkView()
+{
+    int count(m_viewComboBox->itemData(m_viewComboBox->currentIndex()).toInt());
+    m_grid->setSize(count);
 }
 
 void Window::checkLegend()

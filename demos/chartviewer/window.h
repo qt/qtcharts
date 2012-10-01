@@ -33,6 +33,7 @@ class View;
 class QGraphicsLinearLayout;
 class Chart;
 class Grid;
+class QPushButton;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChart;
@@ -53,6 +54,7 @@ private Q_SLOTS:
     void handleGeometryChanged();
     void handleChartSelected(QChart *chart);
 private:
+    QComboBox *createViewBox();
     QComboBox *createThemeBox();
     QComboBox *createAnimationBox();
     QComboBox *createLegendBox();
@@ -61,6 +63,7 @@ private:
     void createProxyWidgets();
     void comboBoxFocused(QComboBox *combox);
     inline void checkAnimationOptions();
+    inline void checkView();
     inline void checkLegend();
     inline void checkOpenGL();
     inline void checkTheme();
@@ -69,11 +72,6 @@ private:
     QMenu *createMenu();
     QAction *createMenuAction(QMenu *menu, const QIcon &icon, const QString &text, const QVariant &data);
     void initializeFromParamaters(const QVariantHash& parameters);
-
-protected:
-    //void mousePressEvent(QMouseEvent *event);
-    //void mouseMoveEvent(QMouseEvent *event);
-    //void mouseReleaseEvent(QMouseEvent *event);
 
 private:
     QGraphicsScene *m_scene;
@@ -86,6 +84,7 @@ private:
     QComboBox *m_animatedComboBox;
     QComboBox *m_legendComboBox;
     QComboBox *m_templateComboBox;
+    QComboBox *m_viewComboBox;
     QCheckBox *m_openGLCheckBox;
     QCheckBox *m_zoomCheckBox;
     QCheckBox *m_scrollCheckBox;

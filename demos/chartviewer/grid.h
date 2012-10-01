@@ -26,7 +26,6 @@
 #include <QChartGlobal>
 
 class QGraphicsGridLayout;
-class GridControl;
 class Chart;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -43,12 +42,13 @@ public:
     Grid(int size , QGraphicsItem *parent = 0 );
     ~Grid();
     QList<QChart*> charts();
-    void createCharts();
-    void createCharts(const QString& category);
+    void createCharts(const QString& category = QString());
     void replaceChart(QChart* oldChart, Chart* newChart);
     void setState(State state);
-    State state(){ return m_state; };
+    State state() const { return m_state; };
     void setRubberPen(const QPen& pen);
+    void setSize(int size);
+    int size() const {return m_size;}
 Q_SIGNAL
     void chartSelected(QChart* chart);
 protected:
@@ -64,12 +64,12 @@ private:
     int m_size;
     DataTable m_dataTable;
     QHash<QChart *, int> m_chartHash;
-    GridControl* m_control;
     State m_state;
     State m_currentState;
     QPointF m_origin;
     QGraphicsRectItem *m_rubberBand;
     QGraphicsGridLayout* m_gridLayout;
+    QString m_category;
 };
 
 #endif /* GRID_H_ */
