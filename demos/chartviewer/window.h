@@ -20,7 +20,6 @@
 
 #ifndef WINDOW_H
 #define WINDOW_H
-#include "model.h"
 #include <QMainWindow>
 #include <QChartGlobal>
 #include <QHash>
@@ -31,8 +30,9 @@ class QGraphicsRectItem;
 class QGraphicsScene;
 class QGraphicsWidget;
 class View;
-class QGraphicsGridLayout;
+class QGraphicsLinearLayout;
 class Chart;
+class Grid;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QChart;
@@ -44,7 +44,6 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 class Window: public QMainWindow
 {
     Q_OBJECT
-    enum State { NoState = 0, ZoomState, ScrollState};
 public:
     explicit Window(const QVariantHash& parameters, QWidget *parent = 0);
     ~Window();
@@ -52,6 +51,7 @@ public:
 private Q_SLOTS:
     void updateUI();
     void handleGeometryChanged();
+    void handleChartSelected(QChart *chart);
 private:
     QComboBox *createThemeBox();
     QComboBox *createAnimationBox();
@@ -67,24 +67,18 @@ private:
     inline void checkState();
     inline void checkTemplate();
     QMenu *createMenu();
-    void handleMenu(QChart *chart);
     QAction *createMenuAction(QMenu *menu, const QIcon &icon, const QString &text, const QVariant &data);
     void initializeFromParamaters(const QVariantHash& parameters);
 
 protected:
-    void mousePressEvent(QMouseEvent *event);
-    void mouseMoveEvent(QMouseEvent *event);
-    void mouseReleaseEvent(QMouseEvent *event);
+    //void mousePressEvent(QMouseEvent *event);
+    //void mouseMoveEvent(QMouseEvent *event);
+    //void mouseReleaseEvent(QMouseEvent *event);
 
 private:
-    int m_listCount;
-    int m_valueMax;
-    int m_valueCount;
     QGraphicsScene *m_scene;
     View *m_view;
     QHash<QString, QGraphicsProxyWidget *> m_widgetHash;
-    QHash<QChart *, int> m_chartHash;
-    DataTable m_dataTable;
 
     QGraphicsWidget *m_form;
     QComboBox *m_themeComboBox;
@@ -95,13 +89,10 @@ private:
     QCheckBox *m_openGLCheckBox;
     QCheckBox *m_zoomCheckBox;
     QCheckBox *m_scrollCheckBox;
-    QPoint m_origin;
-    QGraphicsRectItem *m_rubberBand;
-    QGraphicsGridLayout *m_baseLayout;
+    QGraphicsLinearLayout *m_baseLayout;
     QMenu *m_menu;
-    State m_state;
-    State m_currentState;
     int m_template;
+    Grid* m_grid;
 
     friend class ComboBox;
 };
