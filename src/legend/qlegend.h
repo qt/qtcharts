@@ -101,6 +101,7 @@ private:
     friend class LegendScroller;
     friend class LegendLayout;
     friend class ChartLayout;
+    friend class LegendMarkerItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -113,15 +113,6 @@ QLegendMarkerPrivate::~QLegendMarkerPrivate()
 {
 }
 
-void QLegendMarkerPrivate::handleMousePressEvent(QGraphicsSceneEvent *event)
-{
-    // Just emit clicked signal for now (our default logic for events)
-    // This could propably be on the LegendMarkerItem?
-    // TODO: how to handle scrolling vs clicking? drag event?
-    event->accept();
-    Q_Q(QLegendMarker);
-    emit q->clicked();
-}
 
 #include "moc_qlegendmarker.cpp"
 #include "moc_qlegendmarker_p.cpp"

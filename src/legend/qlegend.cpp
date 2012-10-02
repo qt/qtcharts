@@ -42,6 +42,7 @@
 #include <QPen>
 #include <QTimer>
 #include <QGraphicsSceneEvent>
+#include <QGraphicsItemGroup>
 
 #include "qlegendmarker.h"
 #include "qlegendmarker_p.h"
@@ -633,6 +634,7 @@ void QLegendPrivate::handleCountChanged()
     }
 
     removeMarkers(removedMarkers);
+    decorateMarkers(createdMarkers);
     addMarkers(createdMarkers);
 
     q_ptr->layout()->invalidate();

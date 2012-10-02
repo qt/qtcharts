@@ -63,9 +63,6 @@ public:
     // Helper for now. (or deckare LegendLayout as friend)
     LegendMarkerItem* item() const { return m_item; }
 
-    // Item gets the event, logic for event is here
-    void handleMousePressEvent(QGraphicsSceneEvent *event);
-
     // internal
     virtual QAbstractSeries* series() = 0;
     virtual QObject* relatedObject() = 0;
@@ -80,7 +77,8 @@ protected:
 private:
     QLegendMarker *q_ptr;
 
-    friend class QLegendPrivate; // TODO: Is this needed?
+    friend class QLegendPrivate;
+    friend class LegendMarkerItem;
     Q_DECLARE_PUBLIC(QLegendMarker)
 };
 

@@ -18,13 +18,16 @@
  **
  ****************************************************************************/
 
-#include "legendmarkeritem_p.h"
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsSimpleTextItem>
 #include <QDebug>
 
+#include "qlegend.h"
+#include "qlegend_p.h"
+#include "qlegendmarker.h"
 #include "qlegendmarker_p.h"
+#include "legendmarkeritem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -159,10 +162,32 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
 
 void LegendMarkerItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-//    QGraphicsObject::mousePressEvent(event);
-    //TODO: selected signal removed for now
-    m_marker->handleMousePressEvent(event);
-    QGraphicsItem::mousePressEvent(event);
+    MouseEventHandler::handleMousePressEvent(event);
+}
+
+void LegendMarkerItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    MouseEventHandler::handleMouseMoveEvent(event);
+}
+
+void LegendMarkerItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    MouseEventHandler::handleMouseReleaseEvent(event);
+}
+
+void LegendMarkerItem::mouseClicked()
+{
+    emit m_marker->q_func()->clicked();
+}
+
+void LegendMarkerItem::mouseMoved(QPointF delta)
+{
+    m_marker->m_legend->d_ptr->setOffset(-delta.x(), delta.y());
+}
+
+void LegendMarkerItem::mouseReleased(QPointF delta)
+{
+    m_marker->m_legend->d_ptr->setOffset(-delta.x(), delta.y());
 }
 
 #include "moc_legendmarkeritem_p.cpp"

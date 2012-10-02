@@ -74,6 +74,8 @@ public:
     virtual void setOffset(const QPointF &point) = 0;
     virtual QPointF offset() const = 0;
 
+    void scroll(const QPointF& velocity);
+
 public:
     void scrollTick();
 

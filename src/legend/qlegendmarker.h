@@ -85,6 +85,7 @@ protected:
     Q_DISABLE_COPY(QLegendMarker)
     friend class QLegendPrivate;
     friend class QLegendMarkerPrivate;
+    friend class LegendMarkerItem;
     friend class LegendLayout;
 };
 

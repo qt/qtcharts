@@ -92,6 +92,8 @@ private:
     QList<QLegendMarker*> m_legendMarkers;  // TODO: rename to m_markers eventually.
     QList<QAbstractSeries*> m_series;
 
+    friend class QLegend;
+    friend class LegendMarkerItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

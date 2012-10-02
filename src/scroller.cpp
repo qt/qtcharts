@@ -111,7 +111,6 @@ void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         case Pressed:
             m_state = Idle;
             //if (m_timeStamp.elapsed() < m_clickedPressDelay) {
-
             //emit clicked(m_offset.toPoint());
             //}
             event->accept();
@@ -137,6 +136,25 @@ void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
     }
 }
+
+void Scroller::scroll(const QPointF &velocity)
+{
+    Q_UNUSED(velocity);
+    // TODO:
+/*
+    m_offset = offset();
+    m_speed = velocity;
+    if (m_speed == QPointF(0, 0)) {
+        m_state = Idle;
+    }
+    else {
+        m_speed /= 3.75;
+        m_state = Scroll;
+        m_ticker.start(25);
+    }
+*/
+}
+
 
 void Scroller::scrollTick()
 {
