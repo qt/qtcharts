@@ -282,7 +282,7 @@ void ChartDataSet::removeAxis(QAbstractAxis *axis)
 
 void ChartDataSet::removeAllSeries()
 {
-    QList<QAbstractSeries*> series =   m_seriesDomainMap.keys();
+    QList<QAbstractSeries *> series =   m_seriesDomainMap.keys();
     foreach (QAbstractSeries *s , series)
         removeSeries(s);
 

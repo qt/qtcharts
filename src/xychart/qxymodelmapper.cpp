@@ -29,9 +29,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     Constructs a mapper object which is a child of \a parent.
 */
-QXYModelMapper::QXYModelMapper(QObject *parent):
-    QObject(parent),
-    d_ptr(new QXYModelMapperPrivate(this))
+QXYModelMapper::QXYModelMapper(QObject *parent)
+    : QObject(parent),
+      d_ptr(new QXYModelMapperPrivate(this))
 {
 }
 

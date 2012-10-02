@@ -67,7 +67,7 @@ void ScatterChartItem::createPoints(int count)
             const QRectF &rect = item->boundingRect();
             item->setPos(-rect.width() / 2, -rect.height() / 2);
             break;
-            }
+        }
         case QScatterSeries::MarkerShapeRectangle:
             item = new RectangleMarker(0, 0, m_size, m_size, this);
             item->setPos(-m_size / 2, -m_size / 2);

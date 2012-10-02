@@ -175,7 +175,7 @@ void PieSliceItem::updateGeometry()
             textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
         m_labelTextRect.moveCenter(textCenter);
         break;
-        }
+    }
     case QPieSlice::LabelInsideNormal: {
         QPointF textCenter;
         if (m_data.m_holeRadius > 0)
@@ -184,7 +184,7 @@ void PieSliceItem::updateGeometry()
             textCenter = m_data.m_center + offset(centerAngle, m_data.m_radius / 2);
         m_labelTextRect.moveCenter(textCenter);
         break;
-        }
+    }
     }
 
     //  bounding rect

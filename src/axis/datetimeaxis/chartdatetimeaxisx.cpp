@@ -28,8 +28,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartDateTimeAxisX::ChartDateTimeAxisX(QDateTimeAxis *axis,ChartPresenter *presenter) : HorizontalAxis(axis,presenter),
-m_tickCount(0),m_axis(axis)
+ChartDateTimeAxisX::ChartDateTimeAxisX(QDateTimeAxis *axis, ChartPresenter *presenter)
+    : HorizontalAxis(axis, presenter),
+      m_tickCount(0),
+      m_axis(axis)
 {
 }
 
@@ -39,12 +41,12 @@ ChartDateTimeAxisX::~ChartDateTimeAxisX()
 
 QVector<qreal> ChartDateTimeAxisX::calculateLayout() const
 {
-    Q_ASSERT(m_tickCount>=2);
+    Q_ASSERT(m_tickCount >= 2);
 
     QVector<qreal> points;
     points.resize(m_tickCount);
-    const QRectF& gridRect = gridGeometry();
-    const qreal deltaX = gridRect.width()/(m_tickCount-1);
+    const QRectF &gridRect = gridGeometry();
+    const qreal deltaX = gridRect.width() / (m_tickCount - 1);
     for (int i = 0; i < m_tickCount; ++i) {
         int x = i * deltaX + gridRect.left();
         points[i] = x;
@@ -55,8 +57,9 @@ QVector<qreal> ChartDateTimeAxisX::calculateLayout() const
 void ChartDateTimeAxisX::updateGeometry()
 {
     const QVector<qreal>& layout = ChartAxis::layout();
-    if(layout.isEmpty()) return;
-    setLabels(createDateTimeLabels(m_axis->format(),layout.size()));
+    if (layout.isEmpty())
+        return;
+    setLabels(createDateTimeLabels(m_axis->format(), layout.size()));
     HorizontalAxis::updateGeometry();
 }
 
@@ -66,41 +69,40 @@ void ChartDateTimeAxisX::handleAxisUpdated()
     ChartAxis::handleAxisUpdated();
 }
 
-QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 
     QFontMetrics fn(font());
     QSizeF sh;
 
-      switch (which) {
-        case Qt::MinimumSize:
-            sh = QSizeF(fn.boundingRect("...").width(),fn.height());
+    switch (which) {
+    case Qt::MinimumSize:
+        sh = QSizeF(fn.boundingRect("...").width(), fn.height());
+        break;
+    case Qt::PreferredSize: {
+
+        const QVector<qreal>& layout = ChartAxis::layout();
+        if (layout.isEmpty())
             break;
-        case Qt::PreferredSize:{
+        QStringList ticksList;
 
-            const QVector<qreal>& layout = ChartAxis::layout();
-            if(layout.isEmpty()) break;
-            QStringList ticksList;
+        qreal width = 0;
+        qreal height = 0;
 
-
-            qreal width=0;
-            qreal height=0;
-
-            for (int i = 0; i < ticksList.size(); ++i)
-            {
-                QRectF rect = fn.boundingRect(ticksList.at(i));
-                width+=rect.width();
-                height+=qMax(rect.height()+labelPadding(),height);
-            }
-            sh = QSizeF(width,height);
-            break;
+        for (int i = 0; i < ticksList.size(); ++i) {
+            QRectF rect = fn.boundingRect(ticksList.at(i));
+            width += rect.width();
+            height += qMax(rect.height() + labelPadding(), height);
         }
-        default:
-          break;
-      }
+        sh = QSizeF(width, height);
+        break;
+    }
+    default:
+        break;
+    }
 
-      return sh;
+    return sh;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

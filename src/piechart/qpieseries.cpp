@@ -409,7 +409,7 @@ bool QPieSeries::append(QList<QPieSlice *> slices)
 
     d->updateDerivativeData();
 
-    foreach (QPieSlice *s, slices) {
+    foreach(QPieSlice * s, slices) {
         connect(s, SIGNAL(valueChanged()), d, SLOT(sliceValueChanged()));
         connect(s, SIGNAL(clicked()), d, SLOT(sliceClicked()));
         connect(s, SIGNAL(hovered(bool)), d, SLOT(sliceHovered(bool)));

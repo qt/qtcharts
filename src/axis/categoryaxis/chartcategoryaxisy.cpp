@@ -28,8 +28,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartCategoryAxisY::ChartCategoryAxisY(QCategoryAxis *axis,ChartPresenter *presenter) : VerticalAxis(axis,presenter,true),
-     m_axis(axis)
+ChartCategoryAxisY::ChartCategoryAxisY(QCategoryAxis *axis, ChartPresenter *presenter)
+    : VerticalAxis(axis, presenter, true),
+      m_axis(axis)
 {
 }
 
@@ -45,12 +46,12 @@ QVector<qreal> ChartCategoryAxisY::calculateLayout() const
     if (tickCount < 2)
         return points;
 
-    const QRectF& gridRect = gridGeometry();
+    const QRectF &gridRect = gridGeometry();
     qreal range = m_axis->max() - m_axis->min();
     if (range > 0) {
         points.resize(tickCount);
         qreal scale = gridRect.height() / range;
-        for (int i = 0; i < tickCount; ++i)
+        for (int i = 0; i < tickCount; ++i) {
             if (i < tickCount - 1) {
                 int y = -(m_axis->startValue(m_axis->categoriesLabels().at(i)) - m_axis->min()) * scale + gridRect.bottom();
                 points[i] = y;
@@ -58,6 +59,7 @@ QVector<qreal> ChartCategoryAxisY::calculateLayout() const
                 int y = -(m_axis->endValue(m_axis->categoriesLabels().at(i - 1)) - m_axis->min())  * scale + gridRect.bottom();
                 points[i] = y;
             }
+        }
     }
 
     return points;
@@ -65,7 +67,7 @@ QVector<qreal> ChartCategoryAxisY::calculateLayout() const
 
 void ChartCategoryAxisY::updateGeometry()
 {
-    setLabels(m_axis->categoriesLabels()<<"");
+    setLabels(m_axis->categoriesLabels() << "");
     VerticalAxis::updateGeometry();
 }
 
@@ -75,7 +77,7 @@ void ChartCategoryAxisY::handleAxisUpdated()
     ChartAxis::handleAxisUpdated();
 }
 
-QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 
@@ -83,35 +85,34 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
     QStringList ticksList; //TODO::
-    qreal width=0;
-    qreal height=0;
+    qreal width = 0;
+    qreal height = 0;
 
-      switch (which) {
-        case Qt::MinimumSize:
-            width = fn.boundingRect("...").width()+labelPadding();
-            height = fn.height();
-            width=qMax(width,base.width());
-            height+=base.height();
-            sh = QSizeF(width,height);
-            break;
-        case Qt::PreferredSize:{
+    switch (which) {
+    case Qt::MinimumSize:
+        width = fn.boundingRect("...").width() + labelPadding();
+        height = fn.height();
+        width = qMax(width, base.width());
+        height += base.height();
+        sh = QSizeF(width, height);
+        break;
+    case Qt::PreferredSize: {
 
-            for (int i = 0; i < ticksList.size(); ++i)
-            {
-                QRectF rect = fn.boundingRect(ticksList.at(i));
-                height+=rect.height();
-                width=qMax(rect.width()+labelPadding(),width);
-            }
-            height=qMax(height,base.height());
-            width+=base.width();
-            sh = QSizeF(width,height);
-            break;
+        for (int i = 0; i < ticksList.size(); ++i) {
+            QRectF rect = fn.boundingRect(ticksList.at(i));
+            height += rect.height();
+            width = qMax(rect.width() + labelPadding(), width);
         }
-        default:
-          break;
-      }
+        height = qMax(height, base.height());
+        width += base.width();
+        sh = QSizeF(width, height);
+        break;
+    }
+    default:
+        break;
+    }
 
-      return sh;
+    return sh;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

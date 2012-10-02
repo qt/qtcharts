@@ -44,11 +44,14 @@ public:
     ~ChartCategoryAxisY();
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
+
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
-Q_SLOTS
+
+public Q_SLOTS:
     void handleAxisUpdated();
+
 private:
     QCategoryAxis *m_axis;
 };

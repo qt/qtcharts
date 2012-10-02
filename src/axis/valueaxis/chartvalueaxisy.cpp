@@ -29,8 +29,10 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartValueAxisY::ChartValueAxisY(QValueAxis *axis,ChartPresenter *presenter) : VerticalAxis(axis,presenter),
-    m_tickCount(0),m_axis(axis)
+ChartValueAxisY::ChartValueAxisY(QValueAxis *axis, ChartPresenter *presenter)
+    : VerticalAxis(axis, presenter),
+      m_tickCount(0),
+      m_axis(axis)
 {
 }
 
@@ -40,14 +42,14 @@ ChartValueAxisY::~ChartValueAxisY()
 
 QVector<qreal> ChartValueAxisY::calculateLayout() const
 {
-    Q_ASSERT(m_tickCount>=2);
+    Q_ASSERT(m_tickCount >= 2);
 
     QVector<qreal> points;
     points.resize(m_tickCount);
 
-    const QRectF& gridRect = gridGeometry();
+    const QRectF &gridRect = gridGeometry();
 
-    const qreal deltaY = gridRect.height()/(m_tickCount-1);
+    const qreal deltaY = gridRect.height() / (m_tickCount - 1);
     for (int i = 0; i < m_tickCount; ++i) {
         int y = i * -deltaY + gridRect.bottom();
         points[i] = y;
@@ -59,7 +61,8 @@ QVector<qreal> ChartValueAxisY::calculateLayout() const
 void ChartValueAxisY::updateGeometry()
 {
     const QVector<qreal> &layout = ChartAxis::layout();
-    if(layout.isEmpty()) return;
+    if (layout.isEmpty())
+        return;
     setLabels(createValueLabels(layout.size()));
     VerticalAxis::updateGeometry();
 }
@@ -74,7 +77,7 @@ void ChartValueAxisY::handleAxisUpdated()
     ChartAxis::handleAxisUpdated();
 }
 
-QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint) const
+QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint)
 
@@ -82,29 +85,27 @@ QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF& constraint) c
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
     QStringList ticksList = createValueLabels(m_tickCount);
-    qreal width=0;
-    qreal height=0;
+    qreal width = 0;
+    qreal height = 0;
 
     switch (which) {
     case Qt::MinimumSize: {
         int count = qMax(ticksList.first().count() , ticksList.last().count());
-        width=fn.averageCharWidth()*count+labelPadding();
-        height=fn.height();
-        height=qMax(height,base.height());
-        width+=base.width();
-        sh = QSizeF(width,height);
+        width = fn.averageCharWidth() * count + labelPadding();
+        height = fn.height();
+        height = qMax(height, base.height());
+        width += base.width();
+        sh = QSizeF(width, height);
         break;
     }
-    case Qt::PreferredSize:
-    {
-        for (int i = 0; i < ticksList.size(); ++i)
-        {
-            width=qMax(qreal(fn.averageCharWidth()*ticksList.at(i).count())+labelPadding(),width);
-            height+=fn.height();
+    case Qt::PreferredSize: {
+        for (int i = 0; i < ticksList.size(); ++i) {
+            width = qMax(qreal(fn.averageCharWidth() * ticksList.at(i).count()) + labelPadding(), width);
+            height += fn.height();
         }
-        height=qMax(height,base.height());
-        width+=base.width();
-        sh = QSizeF(width,height);
+        height = qMax(height, base.height());
+        width += base.width();
+        sh = QSizeF(width, height);
         break;
     }
     default:

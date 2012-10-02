@@ -125,7 +125,7 @@ public:
 
     Qt::Orientation orientation() const;
     Qt::Alignment alignment() const;
-    void setAlignment( Qt::Alignment alignment);
+    void setAlignment(Qt::Alignment alignment);
 
     //range handling
     void setMin(const QVariant &min);

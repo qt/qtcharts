@@ -50,7 +50,7 @@ protected:
     void handleAxisUpdated();
 private:
     int m_tickCount;
-    QValueAxis* m_axis;
+    QValueAxis *m_axis;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

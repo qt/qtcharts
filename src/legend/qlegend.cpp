@@ -173,7 +173,7 @@ QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
     setZValue(ChartPresenter::LegendZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)), d_ptr.data(), SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
-    QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)),d_ptr.data(), SLOT(handleSeriesRemoved(QAbstractSeries*)));
+    QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), d_ptr.data(), SLOT(handleSeriesRemoved(QAbstractSeries*)));
 //    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
     setLayout(d_ptr->m_layout);
 }

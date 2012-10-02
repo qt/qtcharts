@@ -26,9 +26,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QPieModelMapper::QPieModelMapper(QObject *parent) :
-    QObject(parent),
-    d_ptr(new QPieModelMapperPrivate(this))
+QPieModelMapper::QPieModelMapper(QObject *parent)
+    : QObject(parent),
+      d_ptr(new QPieModelMapperPrivate(this))
 {
 }
 

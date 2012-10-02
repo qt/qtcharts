@@ -128,37 +128,37 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
     case RemovePointAnimation:
     case AddPointAnimation:
     case ReplacePointAnimation: {
-            if (startPair.first.count() != endPair.first.count())
-                break;
-            Q_ASSERT(startPair.first.count() * 2 - 2 == startPair.second.count());
-            Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
-            for (int i = 0; i < endPair.first.count(); i++) {
-                qreal x = startPair.first[i].x() + ((endPair.first[i].x() - startPair.first[i].x()) * progress);
-                qreal y = startPair.first[i].y() + ((endPair.first[i].y() - startPair.first[i].y()) * progress);
-                result.first << QPointF(x, y);
-                if (i + 1 >= endPair.first.count())
-                    continue;
-                x = startPair.second[i * 2].x() + ((endPair.second[i * 2].x() - startPair.second[i * 2].x()) * progress);
-                y = startPair.second[i * 2].y() + ((endPair.second[i * 2].y() - startPair.second[i * 2].y()) * progress);
-                result.second << QPointF(x, y);
-                x = startPair.second[i * 2 + 1].x() + ((endPair.second[i * 2 + 1].x() - startPair.second[i * 2 + 1].x()) * progress);
-                y = startPair.second[i * 2 + 1].y() + ((endPair.second[i * 2 + 1].y() - startPair.second[i * 2 + 1].y()) * progress);
-                result.second << QPointF(x, y);
-            }
+        if (startPair.first.count() != endPair.first.count())
+            break;
+        Q_ASSERT(startPair.first.count() * 2 - 2 == startPair.second.count());
+        Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
+        for (int i = 0; i < endPair.first.count(); i++) {
+            qreal x = startPair.first[i].x() + ((endPair.first[i].x() - startPair.first[i].x()) * progress);
+            qreal y = startPair.first[i].y() + ((endPair.first[i].y() - startPair.first[i].y()) * progress);
+            result.first << QPointF(x, y);
+            if (i + 1 >= endPair.first.count())
+                continue;
+            x = startPair.second[i * 2].x() + ((endPair.second[i * 2].x() - startPair.second[i * 2].x()) * progress);
+            y = startPair.second[i * 2].y() + ((endPair.second[i * 2].y() - startPair.second[i * 2].y()) * progress);
+            result.second << QPointF(x, y);
+            x = startPair.second[i * 2 + 1].x() + ((endPair.second[i * 2 + 1].x() - startPair.second[i * 2 + 1].x()) * progress);
+            y = startPair.second[i * 2 + 1].y() + ((endPair.second[i * 2 + 1].y() - startPair.second[i * 2 + 1].y()) * progress);
+            result.second << QPointF(x, y);
         }
-        break;
+    }
+    break;
     case NewAnimation: {
-            Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
-            int count = endPair.first.count() * qBound(qreal(0), progress, qreal(1));
-            for (int i = 0; i < count; i++) {
-                result.first << endPair.first[i];
-                if (i + 1 == count)
-                    break;
-                result.second << endPair.second[2 * i];
-                result.second << endPair.second[2 * i + 1];
-            }
+        Q_ASSERT(endPair.first.count() * 2 - 2 == endPair.second.count());
+        int count = endPair.first.count() * qBound(qreal(0), progress, qreal(1));
+        for (int i = 0; i < count; i++) {
+            result.first << endPair.first[i];
+            if (i + 1 == count)
+                break;
+            result.second << endPair.second[2 * i];
+            result.second << endPair.second[2 * i + 1];
         }
-        break;
+    }
+    break;
     default:
         qWarning() << "Unknown type of animation";
         break;

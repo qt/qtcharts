@@ -103,7 +103,7 @@ public:
     QRectF axisGeometry() const { return m_axisRect; }
     QRectF gridGeometry() const { return m_gridRect; }
 
-    void setLabels(const QStringList& labels);
+    void setLabels(const QStringList &labels);
     QStringList labels() const { return m_labelsList; }
 
     //this flag indicates that axis is used to show intervals it means labels are in between ticks
@@ -112,7 +112,7 @@ public:
     virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 
 protected:
-    void setGeometry(const QRectF &size){ Q_UNUSED(size);};
+    void setGeometry(const QRectF &size) { Q_UNUSED(size);};
     virtual void updateGeometry() = 0;
     virtual QVector<qreal> calculateLayout() const = 0;
 
@@ -125,7 +125,7 @@ protected:
     qreal min() const {return m_min; }
     qreal max() const {return m_max; }
     QStringList createValueLabels(int ticks) const;
-    QStringList createDateTimeLabels(const QString& format,int ticks) const;
+    QStringList createDateTimeLabels(const QString &format, int ticks) const;
 
 public Q_SLOTS:
     virtual void handleAxisUpdated();
@@ -158,8 +158,8 @@ private:
     QStringList m_labelsList;
     bool m_intervalAxis;
 
-friend class AxisAnimation;
-friend class AxisItem;
+    friend class AxisAnimation;
+    friend class AxisItem;
 
 };
 
