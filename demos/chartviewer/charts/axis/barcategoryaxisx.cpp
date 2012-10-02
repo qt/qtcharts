@@ -41,19 +41,18 @@ public:
         QBarSeries *series = new QBarSeries(chart);
         QValueAxis *valueaxis = new QValueAxis();
         QBarCategoryAxis *barcategory = new QBarCategoryAxis();
-                for (int i(0); i < table.count(); i++) {
-                    QBarSet *set = new QBarSet("Bar set " + QString::number(i));
-                    foreach (Data data, table[i])
-                        *set << data.first.y();
-                    series->append(set);
-                }
-                chart->addSeries(series);
+        for (int i(0); i < table.count(); i++) {
+            QBarSet *set = new QBarSet("Bar set " + QString::number(i));
+            foreach (Data data, table[i])
+                *set << data.first.y();
+            series->append(set);
+        }
+        chart->addSeries(series);
 
         int count = series->barSets().first()->count();
 
-        for(int i =0 ; i < count ; i++){
+        for (int i = 0; i < count; i++)
             barcategory->append(QString::number(i));
-        }
 
         chart->setAxisY(valueaxis, series);
         chart->setAxisX(barcategory, series);

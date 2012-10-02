@@ -25,16 +25,17 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 
-Grid::Grid(int size,QGraphicsItem *parent):QGraphicsWidget(parent),
-    m_listCount(3),
-    m_valueMax(10),
-    m_valueCount(7),
-    m_size(size),
-    m_dataTable(Model::generateRandomData(m_listCount, m_valueMax, m_valueCount)),
-    m_state(NoState),
-    m_currentState(NoState),
-    m_rubberBand(new QGraphicsRectItem()),
-    m_gridLayout(new QGraphicsGridLayout())
+Grid::Grid(int size, QGraphicsItem *parent)
+    : QGraphicsWidget(parent),
+      m_listCount(3),
+      m_valueMax(10),
+      m_valueCount(7),
+      m_size(size),
+      m_dataTable(Model::generateRandomData(m_listCount, m_valueMax, m_valueCount)),
+      m_state(NoState),
+      m_currentState(NoState),
+      m_rubberBand(new QGraphicsRectItem()),
+      m_gridLayout(new QGraphicsGridLayout())
 {
     setLayout(m_gridLayout);
     m_rubberBand->setParentItem(this);
@@ -47,7 +48,7 @@ Grid::~Grid()
 
 }
 
-void Grid::createCharts(const QString& category)
+void Grid::createCharts(const QString &category)
 {
     clear();
 
@@ -55,23 +56,18 @@ void Grid::createCharts(const QString& category)
     Charts::ChartList list = Charts::chartList();
 
     if (category.isEmpty()) {
-
         for (int i = 0; i < m_size * m_size; ++i) {
             QChart *chart = 0;
             if (i < list.size()) {
                 chart = list.at(i)->createChart(m_dataTable);
-            }
-            else {
+            } else {
                 chart = new QChart();
                 chart->setTitle(QObject::tr("Empty"));
             }
-
             m_gridLayout->addItem(chart, i / m_size, i % m_size);
             m_chartHash[chart] = i;
         }
-    }
-    else {
-
+    } else {
         int j = 0;
         for (int i = 0; i < list.size(); ++i) {
             Chart *chart = list.at(i);
@@ -95,15 +91,14 @@ void Grid::createCharts(const QString& category)
 
 void Grid::clear()
 {
-    for (int i = 0; i < m_gridLayout->count(); ++i) {
+    for (int i = 0; i < m_gridLayout->count(); ++i)
         m_gridLayout->removeAt(i);
-    }
 
     qDeleteAll(m_chartHash.keys());
     m_chartHash.clear();
 }
 
-QList<QChart*> Grid::charts()
+QList<QChart *> Grid::charts()
 {
     return m_chartHash.keys();
 }
@@ -115,19 +110,18 @@ void Grid::setState(State state)
 
 void Grid::setSize(int size)
 {
-    if(m_size !=size)
-    {
-       m_size = size;
-       createCharts(m_category);
+    if (m_size != size) {
+        m_size = size;
+        createCharts(m_category);
     }
 }
 
-void Grid::setRubberPen(const QPen& pen)
+void Grid::setRubberPen(const QPen &pen)
 {
     m_rubberBand->setPen(pen);
 }
 
-void Grid::replaceChart(QChart* oldChart, Chart* newChart)
+void Grid::replaceChart(QChart *oldChart, Chart *newChart)
 {
     int index = m_chartHash[oldChart];
     //not in 4.7.2 m_baseLayout->removeItem(qchart);
@@ -152,7 +146,6 @@ void Grid::mousePressEvent(QGraphicsSceneMouseEvent *event)
         m_currentState = NoState;
 
         foreach (QChart *chart, charts()) {
-
             QRectF geometryRect = chart->geometry();
             QRectF plotArea = chart->plotArea();
             plotArea.translate(geometryRect.topLeft());
@@ -181,11 +174,9 @@ void Grid::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     if (m_currentState != NoState) {
 
         foreach (QChart *chart, charts()) {
-
             QRectF geometryRect = chart->geometry();
             QRectF plotArea = chart->plotArea();
             plotArea.translate(geometryRect.topLeft());
-
             if (plotArea.contains(m_origin)) {
                 if (m_currentState == ScrollState) {
                     QPointF delta = m_origin - event->pos();
@@ -209,11 +200,9 @@ void Grid::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             m_rubberBand->setVisible(false);
 
             foreach (QChart *chart, charts()) {
-
                 QRectF geometryRect = chart->geometry();
                 QRectF plotArea = chart->plotArea();
                 plotArea.translate(geometryRect.topLeft());
-
                 if (plotArea.contains(m_origin)) {
                     QRectF rect = m_rubberBand->rect();
                     rect.translate(-geometryRect.topLeft());
@@ -222,20 +211,16 @@ void Grid::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                 }
             }
         }
-
         m_currentState = NoState;
         event->accept();
     }
 
     if (event->button() == Qt::RightButton) {
-
         if (m_currentState == ZoomState) {
             foreach (QChart *chart, charts()) {
-
                 QRectF geometryRect = chart->geometry();
                 QRectF plotArea = chart->plotArea();
                 plotArea.translate(geometryRect.topLeft());
-
                 if (plotArea.contains(m_origin)) {
                     chart->zoomOut();
                     break;

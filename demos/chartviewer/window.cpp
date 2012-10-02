@@ -41,24 +41,24 @@
 #include <QMenu>
 #include <QPushButton>
 
-Window::Window(const QVariantHash& parameters,QWidget *parent) :
-    QMainWindow(parent),
-    m_scene(new QGraphicsScene(this)),
-    m_view(0),
-    m_form(0),
-    m_themeComboBox(0),
-    m_antialiasCheckBox(0),
-    m_animatedComboBox(0),
-    m_legendComboBox(0),
-    m_templateComboBox(0),
-    m_viewComboBox(0),
-    m_openGLCheckBox(0),
-    m_zoomCheckBox(0),
-    m_scrollCheckBox(0),
-    m_baseLayout(new QGraphicsLinearLayout()),
-    m_menu(createMenu()),
-    m_template(0),
-    m_grid(new Grid(1))
+Window::Window(const QVariantHash &parameters, QWidget *parent)
+    : QMainWindow(parent),
+      m_scene(new QGraphicsScene(this)),
+      m_view(0),
+      m_form(0),
+      m_themeComboBox(0),
+      m_antialiasCheckBox(0),
+      m_animatedComboBox(0),
+      m_legendComboBox(0),
+      m_templateComboBox(0),
+      m_viewComboBox(0),
+      m_openGLCheckBox(0),
+      m_zoomCheckBox(0),
+      m_scrollCheckBox(0),
+      m_baseLayout(new QGraphicsLinearLayout()),
+      m_menu(createMenu()),
+      m_template(0),
+      m_grid(new Grid(1))
 {
     createProxyWidgets();
     // create layout
@@ -121,7 +121,7 @@ void Window::connectSignals()
     QObject::connect(m_animatedComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_legendComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
     QObject::connect(m_templateComboBox, SIGNAL(currentIndexChanged(int)), this, SLOT(updateUI()));
-    QObject::connect(m_grid, SIGNAL(chartSelected(QChart*)),this,SLOT(handleChartSelected(QChart*)));
+    QObject::connect(m_grid, SIGNAL(chartSelected(QChart*)), this, SLOT(handleChartSelected(QChart*)));
 }
 
 void Window::createProxyWidgets()
@@ -212,7 +212,7 @@ QComboBox *Window::createTempleteBox()
     return templateComboBox;
 }
 
-void Window::initializeFromParamaters(const QVariantHash& parameters)
+void Window::initializeFromParamaters(const QVariantHash &parameters)
 {
     if (parameters.contains("template")) {
         QString t = parameters["template"].toString();
@@ -255,15 +255,14 @@ void Window::initializeFromParamaters(const QVariantHash& parameters)
         }
     }
     if (parameters.contains("view")) {
-          int t = parameters["view"].toInt();
-          for (int i = 0; i < m_viewComboBox->count(); ++i) {
-              if (m_viewComboBox->itemData(i).toInt() == t) {
-
-                  m_viewComboBox->setCurrentIndex(i);
-                  break;
-              }
-          }
-      }
+        int t = parameters["view"].toInt();
+        for (int i = 0; i < m_viewComboBox->count(); ++i) {
+            if (m_viewComboBox->itemData(i).toInt() == t) {
+                m_viewComboBox->setCurrentIndex(i);
+                break;
+            }
+        }
+    }
 }
 
 void Window::updateUI()
@@ -322,7 +321,7 @@ void Window::checkAnimationOptions()
     QChart::AnimationOptions options(
         m_animatedComboBox->itemData(m_animatedComboBox->currentIndex()).toInt());
 
-    QList<QChart*> charts = m_grid->charts();
+    QList<QChart *> charts = m_grid->charts();
 
     if (!charts.isEmpty() && charts.at(0)->animationOptions() != options) {
         foreach (QChart *chart, charts)
@@ -415,13 +414,14 @@ void Window::comboBoxFocused(QComboBox *combobox)
 
 void Window::handleChartSelected(QChart *qchart)
 {
-    if(m_templateComboBox->currentIndex() != 0) return;
+    if (m_templateComboBox->currentIndex() != 0)
+        return;
 
     QAction *chosen = m_menu->exec(QCursor::pos());
 
     if (chosen) {
         Chart *chart = (Chart *) chosen->data().value<void *>();
-        m_grid->replaceChart(qchart,chart);
+        m_grid->replaceChart(qchart, chart);
         updateUI();
     }
 }

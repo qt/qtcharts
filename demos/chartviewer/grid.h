@@ -39,24 +39,30 @@ class Grid : public QGraphicsWidget
     Q_OBJECT
 public:
     enum State { NoState = 0, ZoomState, ScrollState};
-    Grid(int size , QGraphicsItem *parent = 0 );
+
+    Grid(int size, QGraphicsItem *parent = 0);
     ~Grid();
-    QList<QChart*> charts();
-    void createCharts(const QString& category = QString());
-    void replaceChart(QChart* oldChart, Chart* newChart);
+
+    QList<QChart *> charts();
+    void createCharts(const QString &category = QString());
+    void replaceChart(QChart *oldChart, Chart *newChart);
     void setState(State state);
     State state() const { return m_state; };
-    void setRubberPen(const QPen& pen);
+    void setRubberPen(const QPen &pen);
     void setSize(int size);
     int size() const {return m_size;}
-Q_SIGNAL
-    void chartSelected(QChart* chart);
+
+Q_SIGNALS:
+    void chartSelected(QChart *chart);
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
 private:
     void clear();
+
 private:
     int m_listCount;
     int m_valueMax;
@@ -68,7 +74,7 @@ private:
     State m_currentState;
     QPointF m_origin;
     QGraphicsRectItem *m_rubberBand;
-    QGraphicsGridLayout* m_gridLayout;
+    QGraphicsGridLayout *m_gridLayout;
     QString m_category;
 };
 

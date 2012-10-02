@@ -46,7 +46,7 @@ class Window: public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit Window(const QVariantHash& parameters, QWidget *parent = 0);
+    explicit Window(const QVariantHash &parameters, QWidget *parent = 0);
     ~Window();
 
 private Q_SLOTS:
@@ -71,7 +71,7 @@ private:
     inline void checkTemplate();
     QMenu *createMenu();
     QAction *createMenuAction(QMenu *menu, const QIcon &icon, const QString &text, const QVariant &data);
-    void initializeFromParamaters(const QVariantHash& parameters);
+    void initializeFromParamaters(const QVariantHash &parameters);
 
 private:
     QGraphicsScene *m_scene;
@@ -91,7 +91,7 @@ private:
     QGraphicsLinearLayout *m_baseLayout;
     QMenu *m_menu;
     int m_template;
-    Grid* m_grid;
+    Grid *m_grid;
 
     friend class ComboBox;
 };

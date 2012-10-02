@@ -30,7 +30,7 @@ public:
     QString subCategory() { return QString::null; }
 
     QChart *createChart(const DataTable &table)
-     {
+    {
         QChart *chart = new QChart();
         chart->setTitle("Donut chart");
         for (int i = 0, j = table.count(); i < table.count(); i++, j--) {

@@ -34,19 +34,17 @@ QVariantHash parseArgs(QStringList args)
 
             if (args.isEmpty() || args.first().startsWith("--")) {
                 parameters[param] = true;
-            }
-            else {
-
+            } else {
                 QString value = args.takeFirst();
                 if (value == "true" || value == "on" || value == "enabled") {
                     parameters[param] = true;
-                }
-                else if (value == "false" || value == "off" || value == "disable") {
+                } else if (value == "false" || value == "off" || value == "disable") {
                     parameters[param] = false;
-                }
-                else {
-                    if(value.endsWith( '"' )) value.chop(1);
-                    if(value.startsWith( '"' )) value.remove(0,1);
+                } else {
+                    if (value.endsWith('"'))
+                        value.chop(1);
+                    if (value.startsWith('"'))
+                        value.remove(0, 1);
                     parameters[param] = value;
                 }
             }
