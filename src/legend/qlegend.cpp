@@ -178,7 +178,7 @@ QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)), d_ptr.data(), SLOT(handleSeriesAdded(QAbstractSeries*)));
     QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), d_ptr.data(), SLOT(handleSeriesRemoved(QAbstractSeries*)));
-//    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleSeriesUpdated(QAbstractSeries*)));
+//    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleCountChanged(QAbstractSeries*)));
     setLayout(d_ptr->m_layout);
 }
 
@@ -492,7 +492,7 @@ void QLegendPrivate::addSeries(QAbstractSeries* series)
     {
     case QAbstractSeries::SeriesTypePie: {
         QPieSeries *s = qobject_cast<QPieSeries *> (series);
-        QObject::connect(s, SIGNAL(countChanged()), this, SLOT(handleSeriesUpdated()));
+        QObject::connect(s, SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
         break;
     }
     case QAbstractSeries::SeriesTypeBar:
@@ -502,7 +502,7 @@ void QLegendPrivate::addSeries(QAbstractSeries* series)
     case QAbstractSeries::SeriesTypeHorizontalStackedBar:
     case QAbstractSeries::SeriesTypeHorizontalPercentBar: {
         QAbstractBarSeries *s = qobject_cast<QAbstractBarSeries *> (series);
-        QObject::connect(s, SIGNAL(countChanged()), this, SLOT(handleSeriesUpdated()));
+        QObject::connect(s, SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
         break;
     }
     case QAbstractSeries::SeriesTypeLine:
@@ -541,7 +541,7 @@ void QLegendPrivate::removeSeries(QAbstractSeries* series)
     {
     case QAbstractSeries::SeriesTypePie: {
         QPieSeries *s = qobject_cast<QPieSeries *> (series);
-        QObject::disconnect(s, SIGNAL(countChanged()), this, SLOT(handleSeriesUpdated()));
+        QObject::disconnect(s, SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
         break;
     }
     case QAbstractSeries::SeriesTypeBar:
@@ -551,7 +551,7 @@ void QLegendPrivate::removeSeries(QAbstractSeries* series)
     case QAbstractSeries::SeriesTypeHorizontalStackedBar:
     case QAbstractSeries::SeriesTypeHorizontalPercentBar: {
         QAbstractBarSeries *s = qobject_cast<QAbstractBarSeries *> (series);
-        QObject::disconnect(s, SIGNAL(countChanged()), this, SLOT(handleSeriesUpdated()));
+        QObject::disconnect(s, SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
         break;
     }
     // TODO:
