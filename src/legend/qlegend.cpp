@@ -606,8 +606,6 @@ void QLegendPrivate::handleCountChanged()
     // Can happen for example when pieslice(s) have been added to or removed from pieseries.
 
     QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
-    qDebug() << "QLegendPrivate::handleSeriesUpdated" << series;
-
     QList<QLegendMarker *> createdMarkers = series->d_ptr->createLegendMarkers(q_ptr);
 
     // Find out removed markers and created markers

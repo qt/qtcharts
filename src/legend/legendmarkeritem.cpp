@@ -182,12 +182,12 @@ void LegendMarkerItem::mouseClicked()
 
 void LegendMarkerItem::mouseMoved(QPointF delta)
 {
-    m_marker->m_legend->d_ptr->setOffset(-delta.x(), delta.y());
+    m_marker->m_legend->d_ptr->setOffset(-delta.x(), -delta.y());
 }
 
 void LegendMarkerItem::mouseReleased(QPointF delta)
 {
-    m_marker->m_legend->d_ptr->setOffset(-delta.x(), delta.y());
+    m_marker->m_legend->d_ptr->setOffset(-delta.x(), -delta.y());
 }
 
 #include "moc_legendmarkeritem_p.cpp"
