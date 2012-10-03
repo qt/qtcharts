@@ -63,8 +63,6 @@ QAreaLegendMarkerPrivate::QAreaLegendMarkerPrivate(QAreaLegendMarker *q, QAreaSe
 
 QAreaLegendMarkerPrivate::~QAreaLegendMarkerPrivate()
 {
-    QObject::disconnect(m_series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
-    QObject::disconnect(m_series, SIGNAL(nameChanged()), this, SLOT(updated()));
 }
 
 QAreaSeries* QAreaLegendMarkerPrivate::series()

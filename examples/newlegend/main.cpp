@@ -23,8 +23,6 @@
 #include <QApplication>
 #include <QMainWindow>
 
-QTCOMMERCIALCHART_USE_NAMESPACE
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

@@ -44,8 +44,6 @@ public:
     void showLegendSpinbox();
     void hideLegendSpinbox();
 
-signals:
-    
 public slots:
     void toggleAttached();
     void addSlice();
@@ -61,9 +59,7 @@ public slots:
     void fontSizeChanged();
 
     void updateLegendLayout();
-
     void handleMarkerClicked();
-
 
 private:
 

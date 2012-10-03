@@ -27,7 +27,6 @@
 #include "charttheme_p.h"
 #include "qvalueaxis.h"
 #include "qbarcategoryaxis.h"
-
 #include "qbarlegendmarker.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

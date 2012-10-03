@@ -71,9 +71,6 @@ QPieLegendMarkerPrivate::QPieLegendMarkerPrivate(QPieLegendMarker *q, QPieSeries
 
 QPieLegendMarkerPrivate::~QPieLegendMarkerPrivate()
 {
-    QObject::disconnect(m_slice, SIGNAL(labelChanged()), this, SLOT(updated()));
-    QObject::disconnect(m_slice, SIGNAL(brushChanged()), this, SLOT(updated()));
-    QObject::disconnect(m_slice, SIGNAL(penChanged()), this, SLOT(updated()));
 }
 
 QPieSeries* QPieLegendMarkerPrivate::series()

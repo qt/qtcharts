@@ -71,9 +71,6 @@ QBarLegendMarkerPrivate::QBarLegendMarkerPrivate(QBarLegendMarker *q, QAbstractB
 
 QBarLegendMarkerPrivate::~QBarLegendMarkerPrivate()
 {
-    QObject::disconnect(m_barset, SIGNAL(labelChanged()), this, SLOT(updated()));
-    QObject::disconnect(m_barset, SIGNAL(brushChanged()), this, SLOT(updated()));
-    QObject::disconnect(m_barset, SIGNAL(penChanged()), this, SLOT(updated()));
 }
 
 QAbstractBarSeries* QBarLegendMarkerPrivate::series()

@@ -63,8 +63,6 @@ QXYLegendMarkerPrivate::QXYLegendMarkerPrivate(QXYLegendMarker *q, QXYSeries *se
 
 QXYLegendMarkerPrivate::~QXYLegendMarkerPrivate()
 {
-    QObject::disconnect(m_series->d_func(), SIGNAL(updated()), this, SLOT(updated()));
-    QObject::disconnect(m_series, SIGNAL(nameChanged()), this, SLOT(updated()));
 }
 
 QAbstractSeries* QXYLegendMarkerPrivate::series()

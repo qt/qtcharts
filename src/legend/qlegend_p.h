@@ -55,8 +55,8 @@ public:
     QGraphicsItemGroup* items() { return m_items; }
 
     // New stuff:
-    QList<QLegendMarker*> legendMarkers() { return m_legendMarkers; }
-    void appendSeries(QAbstractSeries* series);
+    QList<QLegendMarker*> markers() { return m_markers; }
+    void addSeries(QAbstractSeries* series);
     void removeSeries(QAbstractSeries* series);
 
 public Q_SLOTS:
@@ -89,7 +89,7 @@ private:
 
     friend class QLegend;
     friend class LegendLayout;
-    QList<QLegendMarker*> m_legendMarkers;  // TODO: rename to m_markers eventually.
+    QList<QLegendMarker*> m_markers;
     QList<QAbstractSeries*> m_series;
 
     friend class QLegend;

@@ -81,7 +81,7 @@ public:
 
     // New stuff:
     QList <QLegendMarker*> markers() const;
-    void appendSeries(QAbstractSeries* series);
+    void addSeries(QAbstractSeries* series);
     void removeSeries(QAbstractSeries* series);
 
 protected:

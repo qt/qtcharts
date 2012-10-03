@@ -61,7 +61,7 @@ private:
     QAbstractBarSeries* m_series;
     QBarSet* m_barset;
 
-    friend class QLegendPrivate; // TODO: Is this needed?
+    friend class QLegendPrivate;
     Q_DECLARE_PUBLIC(QBarLegendMarker)
 };
 

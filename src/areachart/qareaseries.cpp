@@ -26,7 +26,6 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "qvalueaxis.h"
-
 #include "qarealegendmarker.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

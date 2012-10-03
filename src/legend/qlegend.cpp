@@ -268,11 +268,11 @@ void QLegend::setFont(const QFont &font)
     if (d_ptr->m_font != font)
         d_ptr->m_font = font;
 
-    foreach (QLegendMarker *marker, d_ptr->legendMarkers()) {
+    foreach (QLegendMarker *marker, d_ptr->markers()) {
         marker->setFont(d_ptr->m_font);
-        layout()->invalidate();
-        emit fontChanged(font);
     }
+    layout()->invalidate();
+    emit fontChanged(font);
 }
 
 QFont QLegend::font() const
@@ -301,7 +301,7 @@ void QLegend::setLabelBrush(const QBrush &brush)
 {
     if (d_ptr->m_labelBrush != brush) {
         d_ptr->m_labelBrush = brush;
-        foreach (QLegendMarker *marker, d_ptr->legendMarkers()) {
+        foreach (QLegendMarker *marker, d_ptr->markers()) {
             marker->setLabelBrush(d_ptr->m_labelBrush);
             // Note: The pen of the marker rectangle could be exposed in the public QLegend API
             // instead of mapping it from label brush color
@@ -397,16 +397,14 @@ bool QLegend::isBackgroundVisible() const
     return d_ptr->m_backgroundVisible;
 }
 
-
 QList<QLegendMarker*> QLegend::markers() const
 {
-    // TODO: name of PIMPL method will change.
-    return d_ptr->legendMarkers();
+    return d_ptr->markers();
 }
 
-void QLegend::appendSeries(QAbstractSeries* series)
+void QLegend::addSeries(QAbstractSeries* series)
 {
-    d_ptr->appendSeries(series);
+    d_ptr->addSeries(series);
 }
 
 void QLegend::removeSeries(QAbstractSeries* series)
@@ -475,7 +473,7 @@ int QLegendPrivate::roundness(qreal size)
     return 100 * m_diameter / int(size);
 }
 
-void QLegendPrivate::appendSeries(QAbstractSeries* series)
+void QLegendPrivate::addSeries(QAbstractSeries* series)
 {
     // Only allow one instance of series
     if (m_series.contains(series)) {
@@ -532,7 +530,7 @@ void QLegendPrivate::removeSeries(QAbstractSeries* series)
 
     // Find out, which markers to remove
     QList<QLegendMarker *> removed;
-    foreach (QLegendMarker *m, m_legendMarkers) {
+    foreach (QLegendMarker *m, m_markers) {
         if (m->series() == series) {
             removed << m;
         }
@@ -577,7 +575,7 @@ void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series)
 {
     // Moved to appendSeries
     // This slot is just to make old code work for now.
-    appendSeries(series);
+    addSeries(series);
 }
 
 void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
@@ -592,7 +590,7 @@ void QLegendPrivate::handleSeriesVisibleChanged()
     QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
     Q_ASSERT(series);
 
-    foreach (QLegendMarker* marker, m_legendMarkers) {
+    foreach (QLegendMarker* marker, m_markers) {
         if (marker->series() == series) {
             marker->setVisible(series->isVisible());
         }
@@ -610,7 +608,7 @@ void QLegendPrivate::handleCountChanged()
 
     // Find out removed markers and created markers
     QList<QLegendMarker *> removedMarkers;
-    foreach (QLegendMarker *oldMarker, m_legendMarkers) {
+    foreach (QLegendMarker *oldMarker, m_markers) {
         // we have marker, which is related to sender.
         if (oldMarker->series() == series) {
             bool found = false;
@@ -642,7 +640,7 @@ void QLegendPrivate::addMarkers(QList<QLegendMarker *> markers)
 {
     foreach (QLegendMarker* marker, markers) {
         m_items->addToGroup(marker->d_ptr.data()->item());
-        m_legendMarkers << marker;
+        m_markers << marker;
     }
 }
 
@@ -652,7 +650,7 @@ void QLegendPrivate::removeMarkers(QList<QLegendMarker *> markers)
         marker->d_ptr->item()->setVisible(false);
         m_items->removeFromGroup(marker->d_ptr->item());
         delete marker;
-        m_legendMarkers.removeOne(marker);
+        m_markers.removeOne(marker);
     }
 }
 
