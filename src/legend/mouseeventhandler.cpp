@@ -43,6 +43,7 @@ void MouseEventHandler::handleMousePressEvent(QGraphicsSceneMouseEvent* event)
 {
     m_pressedPos = event->pos();
     m_state = Pressed;
+    event->accept();
 }
 
 void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent* event)
@@ -56,14 +57,17 @@ void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent* event)
             m_state = Moved;
             mouseMoved(delta);
         }
+        event->accept();
         break;
     }
     case Moved: {
         mouseMoved(delta);
+        event->accept();
         break;
     }
     case Idle:
     default: {
+        event->ignore();
         break;
     }
     }
@@ -78,17 +82,20 @@ void MouseEventHandler::handleMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     {
         m_state = Idle;
         mouseClicked();
+        event->accept();
         break;
     }
     case Moved:
     {
         m_state = Idle;
         mouseReleased(delta);
+        event->accept();
         break;
     }
     default:
     {
         m_state = Idle;
+        event->ignore();
         break;
     }
     }
