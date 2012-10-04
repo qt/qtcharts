@@ -79,7 +79,7 @@ public:
     void handleMouseReleaseEvent(QGraphicsSceneMouseEvent* event);
 
 private:
-    QPointF m_pressedPos;
+    QPointF m_lastPos;
     State m_state;
     qreal m_treshold;
 };

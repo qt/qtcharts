@@ -24,7 +24,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 MouseEventHandler::MouseEventHandler() :
-    m_pressedPos(0,0),
+    m_lastPos(0,0),
     m_state(Idle),
     m_treshold(10)
 {
@@ -41,26 +41,28 @@ void MouseEventHandler::setMoveTreshold(qreal treshold)
 
 void MouseEventHandler::handleMousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    m_pressedPos = event->pos();
+    m_lastPos = event->screenPos();
     m_state = Pressed;
     event->accept();
 }
 
 void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    QPointF delta = event->pos() - m_pressedPos;
+    QPointF delta = event->screenPos() - m_lastPos;
 
     switch (m_state) {
     case Pressed: {
         // calculate treshold. If enough, change to move state and send out move deltas.
         if (qAbs(delta.x()) > m_treshold || qAbs(delta.y()) > m_treshold) {
             m_state = Moved;
+            m_lastPos = event->screenPos();
             mouseMoved(delta);
         }
         event->accept();
         break;
     }
     case Moved: {
+        m_lastPos = event->screenPos();
         mouseMoved(delta);
         event->accept();
         break;
@@ -75,7 +77,8 @@ void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void MouseEventHandler::handleMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    QPointF delta = event->pos() - m_pressedPos;
+    QPointF delta = event->screenPos() - m_lastPos;
+    m_lastPos = event->screenPos();
 
     switch (m_state) {
     case Pressed:
