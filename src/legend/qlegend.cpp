@@ -458,9 +458,9 @@ QLegendPrivate::~QLegendPrivate()
 
 }
 
-void QLegendPrivate::setOffset(qreal x, qreal y)
+void QLegendPrivate::setOffset(const QPointF &offset)
 {
-    m_layout->setOffset(x, y);
+    m_layout->setOffset(offset.x(), offset.y());
 }
 
 QPointF QLegendPrivate::offset() const

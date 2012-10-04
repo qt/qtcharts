@@ -62,10 +62,8 @@ class Scroller
 public:
     enum State {
         Idle,
-        Pressed,
         Move,
-        Scroll,
-        Stop
+        Scroll
     };
 
     Scroller();
@@ -74,15 +72,15 @@ public:
     virtual void setOffset(const QPointF &point) = 0;
     virtual QPointF offset() const = 0;
 
-    void scroll(const QPointF& velocity);
+    void move(const QPointF &delta);
+    void release(const QPointF &delta);
 
-public:
     void scrollTick();
 
-public:
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+private:
+    void startTicker(int interval);
+    void stopTicker();
+
 
 private:
     void calculateSpeed(const QPointF &position);
@@ -90,15 +88,13 @@ private:
 
 private:
     ScrollTicker m_ticker;
-    State m_state;
     QTime m_timeStamp;
-    QPointF m_press;
-    QPointF m_offset;
     QPointF m_speed;
-    QPointF m_distance;
     QPointF m_fraction;
-    int m_moveThreshold;
-    int m_timeTreshold;
+    int m_timeTresholdMin;
+    int m_timeTresholdMax;
+
+    State m_state;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

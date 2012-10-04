@@ -24,7 +24,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 MouseEventHandler::MouseEventHandler() :
-    m_lastPos(0,0),
+    m_lastPos(0, 0),
     m_state(Idle),
     m_treshold(10)
 {
@@ -77,7 +77,6 @@ void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void MouseEventHandler::handleMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    QPointF delta = event->screenPos() - m_lastPos;
     m_lastPos = event->screenPos();
 
     switch (m_state) {
@@ -91,7 +90,7 @@ void MouseEventHandler::handleMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     case Moved:
     {
         m_state = Idle;
-        mouseReleased(delta);
+        mouseReleased(m_lastPos);
         event->accept();
         break;
     }

@@ -31,6 +31,7 @@
 #define QLEGEND_P_H
 
 #include "qlegend.h"
+#include "scroller_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -41,14 +42,14 @@ class LegendLayout;
 class Domain;
 class QLegendMarker;
 
-class QLegendPrivate : public QObject
+class QLegendPrivate : public QObject, public Scroller
 {
     Q_OBJECT
 public:
     QLegendPrivate(ChartPresenter *presenter, QChart *chart, QLegend *q);
     ~QLegendPrivate();
 
-    void setOffset(qreal x, qreal y);
+    void setOffset(const QPointF &offset);
     QPointF offset() const;
     int roundness(qreal size);
 

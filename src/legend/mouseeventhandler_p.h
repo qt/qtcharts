@@ -71,8 +71,8 @@ public:
     void setMoveTreshold(qreal treshold);
 
     virtual void mouseClicked() = 0;
-    virtual void mouseMoved(QPointF delta) = 0;
-    virtual void mouseReleased(QPointF delta) = 0;
+    virtual void mouseMoved(const QPointF &delta) = 0;
+    virtual void mouseReleased(const QPointF &pos) = 0;
 
     void handleMousePressEvent(QGraphicsSceneMouseEvent* event);
     void handleMouseMoveEvent(QGraphicsSceneMouseEvent* event);

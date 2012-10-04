@@ -80,8 +80,8 @@ public:
 
     // Filtered callbacks from MouseEventHandler
     void mouseClicked();
-    void mouseMoved(QPointF delta);
-    void mouseReleased(QPointF delta);
+    void mouseMoved(const QPointF &delta);
+    void mouseReleased(const QPointF &pos);
 
 protected:
     QLegendMarkerPrivate *m_marker; // Knows
@@ -98,6 +98,8 @@ protected:
     QPen m_pen;
     QBrush m_brush;
     bool m_visible;
+
+    QPointF m_pressPos;
 
     friend class QLegendMarker;
     friend class QLegendMarkerPrivate;

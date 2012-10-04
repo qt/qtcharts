@@ -39,7 +39,8 @@ LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject
     m_textItem(new QGraphicsSimpleTextItem(this)),
     m_rectItem(new QGraphicsRectItem(this)),
     m_margin(4),
-    m_space(4)
+    m_space(4),
+    m_pressPos(0, 0)
 {
     m_rectItem->setRect(m_markerRect);
 }
@@ -163,6 +164,7 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
 void LegendMarkerItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     MouseEventHandler::handleMousePressEvent(event);
+    m_pressPos = event->screenPos();
 }
 
 void LegendMarkerItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -180,18 +182,14 @@ void LegendMarkerItem::mouseClicked()
     emit m_marker->q_func()->clicked();
 }
 
-void LegendMarkerItem::mouseMoved(QPointF delta)
+void LegendMarkerItem::mouseMoved(const QPointF &delta)
 {
-    qreal dx = m_marker->m_legend->d_ptr->offset().x() - delta.x();
-    qreal dy = m_marker->m_legend->d_ptr->offset().y() - delta.y();
-    m_marker->m_legend->d_ptr->setOffset(dx, dy);
+    m_marker->m_legend->d_ptr->move(delta);
 }
 
-void LegendMarkerItem::mouseReleased(QPointF delta)
+void LegendMarkerItem::mouseReleased(const QPointF &pos)
 {
-    qreal dx = m_marker->m_legend->d_ptr->offset().x() - delta.x();
-    qreal dy = m_marker->m_legend->d_ptr->offset().y() - delta.y();
-    m_marker->m_legend->d_ptr->setOffset(dx, dy);
+    m_marker->m_legend->d_ptr->release(pos - m_pressPos);
 }
 
 #include "moc_legendmarkeritem_p.cpp"

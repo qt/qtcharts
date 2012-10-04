@@ -27,9 +27,9 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 Scroller::Scroller()
     : m_ticker(this),
-      m_state(Idle),
-      m_moveThreshold(10),
-      m_timeTreshold(50)
+      m_timeTresholdMin(50),
+      m_timeTresholdMax(300),
+      m_state(Idle)
 {
 
 }
@@ -38,146 +38,80 @@ Scroller::~Scroller()
 {
 }
 
-void Scroller::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void Scroller::move(const QPointF &delta)
 {
-    if (event->button() == Qt::LeftButton) {
-        switch (m_state) {
-        case Idle:
-            m_state = Pressed;
-            m_offset = offset();
-            m_press = event->pos();
-            m_timeStamp = QTime::currentTime();
-            event->accept();
-            break;
-        case Scroll:
-            m_state = Stop;
-            m_speed = QPointF(0, 0);
-            m_offset = offset();
-            m_press = event->pos();
-            event->accept();
-            break;
-        case Pressed:
-        case Move:
-        case Stop:
-            qWarning() << __FUNCTION__ << "Scroller unexpected state" << m_state;
-            event->ignore();
-            break;
-        }
-    }
-}
-
-void Scroller::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    QPointF delta = event->pos() - m_press;
-
     switch (m_state) {
-    case Pressed:
-    case Stop:
-        if (qAbs(delta.x()) > m_moveThreshold || qAbs(delta.y()) > m_moveThreshold) {
-            m_state = Move;
-            m_timeStamp = QTime::currentTime();
-            m_distance = QPointF(0, 0);
-            m_press = event->pos();
-            event->accept();
-        } else {
-            event->ignore();
-        }
-        break;
-    case Move:
-        setOffset(m_offset - delta);
-        calculateSpeed(event->pos());
-        event->accept();
-        break;
     case Idle:
+        m_timeStamp = QTime::currentTime();
+        m_state = Move;
+        break;
     case Scroll:
-        qWarning() << __FUNCTION__ << "Scroller unexpected state" << m_state;
-        event->ignore();
+        stopTicker();
+        m_timeStamp = QTime::currentTime();
+        m_state = Move;
+        break;
+    default:
         break;
     }
+    setOffset(offset() - delta);
 }
 
-void Scroller::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void Scroller::release(const QPointF &delta)
 {
-    if (event->button() == Qt::LeftButton) {
+    // Starts scrolling, if at least m_timeTresholdMin msecs has gone since timestamp
+    // current time is no more than m_timeTresholdMax from timestamp
 
-        switch (m_state) {
+    if ((m_timeStamp.elapsed() > m_timeTresholdMin) && (m_timeStamp.msecsTo(QTime::currentTime()) < m_timeTresholdMax)) {
+        // Release was quick enough. Start scrolling.
+        // Magic number is to make scroll bit slower (the resolution of screen may affect this)
+        m_speed = delta / 5;
 
-        case Scroll:
-            m_state = Stop;
-            m_speed = QPointF(0, 0);
-            m_offset = offset();
-            event->accept();
-            break;
-        case Pressed:
-            m_state = Idle;
-            //if (m_timeStamp.elapsed() < m_clickedPressDelay) {
-            //emit clicked(m_offset.toPoint());
-            //}
-            event->accept();
-            break;
-        case Move:
-            calculateSpeed(event->pos());
-            m_offset = offset();
-            m_press = event->pos();
-            if (m_speed == QPointF(0, 0)) {
-                m_state = Idle;
-            } else {
-                m_speed /= 3.75;
-                m_state = Scroll;
-                m_ticker.start(25);
-            }
-            event->accept();
-            break;
-        case Stop:
-        case Idle:
-            qWarning() << __FUNCTION__ << "Scroller unexpected state" << m_state;
-            event->ignore();
-            break;
+        qreal fraction = qMax(qAbs(m_speed.x()), qAbs(m_speed.y()));
+
+        if (!qFuzzyIsNull(fraction)) {
+            m_fraction.setX(qAbs(m_speed.x() / fraction));
+            m_fraction.setY(qAbs(m_speed.y() / fraction));
+        } else {
+            m_fraction.setX(1);
+            m_fraction.setY(1);
         }
-    }
-}
-
-void Scroller::scroll(const QPointF &velocity)
-{
-    Q_UNUSED(velocity);
-    // TODO:
-/*
-    m_offset = offset();
-    m_speed = velocity;
-    if (m_speed == QPointF(0, 0)) {
+        startTicker(25);
+        m_state = Scroll;
+    } else {
+        stopTicker();   // Stop ticker, if one is running.
         m_state = Idle;
     }
-    else {
-        m_speed /= 3.75;
-        m_state = Scroll;
-        m_ticker.start(25);
-    }
-*/
 }
 
+void Scroller::startTicker(int interval)
+{
+    m_state = Scroll;
+    m_ticker.start(interval);
+}
+
+void Scroller::stopTicker()
+{
+    m_state = Idle;
+    m_ticker.stop();
+}
 
 void Scroller::scrollTick()
 {
     switch (m_state) {
     case Scroll:
         lowerSpeed(m_speed);
-        setOffset(m_offset - m_speed);
-        m_offset = offset();
+        setOffset(offset() - m_speed);
         if (m_speed == QPointF(0, 0)) {
             m_state = Idle;
             m_ticker.stop();
         }
         break;
-    case Stop:
-        m_ticker.stop();
-        break;
     case Idle:
     case Move:
-    case Pressed:
         qWarning() << __FUNCTION__ << "Scroller unexpected state" << m_state;
         m_ticker.stop();
+        m_state = Idle;
         break;
-
     }
 }
 
@@ -192,28 +126,6 @@ void Scroller::lowerSpeed(QPointF &speed, qreal maxSpeed)
         (y > 0) ? qMax(qreal(0), y - m_fraction.y()) : qMin(qreal(0), y + m_fraction.y());
     speed.setX(x);
     speed.setY(y);
-}
-
-void Scroller::calculateSpeed(const QPointF &position)
-{
-    if (m_timeStamp.elapsed() > m_timeTreshold) {
-
-        QPointF distance = position - m_press;
-
-        m_timeStamp = QTime::currentTime();
-        m_speed = distance -  m_distance;
-        m_distance = distance;
-
-        qreal fraction = qMax(qAbs(m_speed.x()), qAbs(m_speed.y()));
-
-        if (fraction != 0) {
-            m_fraction.setX(qAbs(m_speed.x() / fraction));
-            m_fraction.setY(qAbs(m_speed.y() / fraction));
-        } else {
-            m_fraction.setX(1);
-            m_fraction.setY(1);
-        }
-    }
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
