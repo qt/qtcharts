@@ -63,8 +63,12 @@ void Scroller::release(const QPointF &delta)
 
     if ((m_timeStamp.elapsed() > m_timeTresholdMin) && (m_timeStamp.msecsTo(QTime::currentTime()) < m_timeTresholdMax)) {
         // Release was quick enough. Start scrolling.
-        // Magic number is to make scroll bit slower (the resolution of screen may affect this)
-        m_speed = delta / 5;
+        qreal interval = 25;
+        qreal time = m_timeStamp.msecsTo(QTime::currentTime());
+        if (qFuzzyIsNull(time))
+            m_speed = delta / 5;
+        else
+            m_speed = delta * interval / time;
 
         qreal fraction = qMax(qAbs(m_speed.x()), qAbs(m_speed.y()));
 
@@ -75,7 +79,7 @@ void Scroller::release(const QPointF &delta)
             m_fraction.setX(1);
             m_fraction.setY(1);
         }
-        startTicker(25);
+        startTicker(interval);
         m_state = Scroll;
     } else {
         stopTicker();   // Stop ticker, if one is running.
