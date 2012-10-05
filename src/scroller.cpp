@@ -65,10 +65,11 @@ void Scroller::release(const QPointF &delta)
         // Release was quick enough. Start scrolling.
         qreal interval = 25;
         qreal time = m_timeStamp.msecsTo(QTime::currentTime());
-        if (qFuzzyIsNull(time))
+        if (qFuzzyIsNull(time)) {
             m_speed = delta / 5;
-        else
+        } else {
             m_speed = delta * interval / time;
+        }
 
         qreal fraction = qMax(qAbs(m_speed.x()), qAbs(m_speed.y()));
 
@@ -80,10 +81,8 @@ void Scroller::release(const QPointF &delta)
             m_fraction.setY(1);
         }
         startTicker(interval);
-        m_state = Scroll;
     } else {
         stopTicker();   // Stop ticker, if one is running.
-        m_state = Idle;
     }
 }
 
