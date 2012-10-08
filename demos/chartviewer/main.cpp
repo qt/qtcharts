@@ -21,6 +21,7 @@
 #include "window.h"
 #include <QApplication>
 #include <QMainWindow>
+#include <iostream>
 
 QVariantHash parseArgs(QStringList args)
 {
@@ -54,10 +55,29 @@ QVariantHash parseArgs(QStringList args)
     return parameters;
 }
 
+void printHelp()
+{
+    std::cout << "chartviewer <options> "<< std::endl;
+    std::cout << "  --view <1/2/3/4>  - set size of charts' grid" << std::endl;
+    std::cout << "  --chart <categoryName::subCategory::chartName>  - set template to be show " << std::endl;
+    std::cout << "  --opengl <enabled/disbaled>  - set opengl mode" << std::endl;
+    std::cout << "  --theme <name>  - set theme" << std::endl;
+    std::cout << "  --legend <alignment>  - set legend alignment" << std::endl;
+    std::cout << "  --help  - prints this help" << std::endl;
+    std::cout << "Examples: " << std::endl;
+    std::cout << "  chartviewer --view 4 --chart Axis" << std::endl;
+    std::cout << "  chartviewer --view 1 --chart Axis::BarCategoryAxis::Axis " << std::endl;
+}
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QVariantHash parameters = parseArgs(QApplication::arguments());
+    if(parameters.contains("help"))
+    {
+        printHelp();
+        return 0;
+    }
     Window window(parameters);
     window.show();
     return a.exec();

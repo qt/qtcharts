@@ -214,8 +214,8 @@ QComboBox *Window::createTempleteBox()
 
 void Window::initializeFromParamaters(const QVariantHash &parameters)
 {
-    if (parameters.contains("template")) {
-        QString t = parameters["template"].toString();
+    if (parameters.contains("chart")) {
+        QString t = parameters["chart"].toString();
         for (int i = 0; i < m_templateComboBox->count(); ++i) {
             if (m_templateComboBox->itemText(i) == t) {
                 m_templateComboBox->setCurrentIndex(i);
