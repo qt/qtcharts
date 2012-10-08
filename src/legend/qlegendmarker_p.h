@@ -65,8 +65,10 @@ public:
     virtual QAbstractSeries* series() = 0;
     virtual QObject* relatedObject() = 0;
 
+    void invalidateLegend();
+
 public Q_SLOTS:
-    virtual void updated() {};
+    virtual void updated() { invalidateLegend(); }
 
 protected:
     LegendMarkerItem *m_item;

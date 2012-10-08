@@ -86,6 +86,7 @@ void QBarLegendMarkerPrivate::updated()
     m_item->setPen(m_barset->pen());
     m_item->setBrush(m_barset->brush());
     m_item->setLabel(m_barset->label());
+    invalidateLegend();
 }
 
 #include "moc_qbarlegendmarker.cpp"

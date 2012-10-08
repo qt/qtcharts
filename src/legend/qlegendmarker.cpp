@@ -22,6 +22,8 @@
 #include "qlegendmarker_p.h"
 #include "legendmarkeritem_p.h"
 #include "qlegend.h"
+#include "qlegend_p.h"
+#include "legendlayout_p.h"
 #include <QFontMetrics>
 #include <QGraphicsSceneEvent>
 #include <QAbstractSeries>
@@ -111,6 +113,12 @@ QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend) :
 QLegendMarkerPrivate::~QLegendMarkerPrivate()
 {
 }
+
+void QLegendMarkerPrivate::invalidateLegend()
+{
+    m_legend->d_ptr->m_layout->invalidate();
+}
+
 
 
 #include "moc_qlegendmarker.cpp"

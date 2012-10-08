@@ -82,6 +82,7 @@ void QXYLegendMarkerPrivate::updated()
     } else {
         m_item->setBrush(QBrush(m_series->pen().color()));
     }
+    invalidateLegend();
 }
 
 #include "moc_qxylegendmarker.cpp"

@@ -77,6 +77,7 @@ void QAreaLegendMarkerPrivate::updated()
 {
     m_item->setBrush(m_series->brush());
     m_item->setLabel(m_series->name());
+    invalidateLegend();
 }
 
 #include "moc_qarealegendmarker.cpp"

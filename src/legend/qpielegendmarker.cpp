@@ -86,6 +86,7 @@ void QPieLegendMarkerPrivate::updated()
     m_item->setPen(m_slice->pen());
     m_item->setBrush(m_slice->brush());
     m_item->setLabel(m_slice->label());
+    invalidateLegend();
 }
 
 #include "moc_qpielegendmarker.cpp"
