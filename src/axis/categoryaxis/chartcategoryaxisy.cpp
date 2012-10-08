@@ -25,6 +25,7 @@
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -47,16 +48,16 @@ QVector<qreal> ChartCategoryAxisY::calculateLayout() const
         return points;
 
     const QRectF &gridRect = gridGeometry();
-    qreal range = m_axis->max() - m_axis->min();
+    qreal range = max() - min();
     if (range > 0) {
         points.resize(tickCount);
         qreal scale = gridRect.height() / range;
         for (int i = 0; i < tickCount; ++i) {
             if (i < tickCount - 1) {
-                int y = -(m_axis->startValue(m_axis->categoriesLabels().at(i)) - m_axis->min()) * scale + gridRect.bottom();
+                int y = -(m_axis->startValue(m_axis->categoriesLabels().at(i)) - min()) * scale + gridRect.bottom();
                 points[i] = y;
             } else {
-                int y = -(m_axis->endValue(m_axis->categoriesLabels().at(i - 1)) - m_axis->min())  * scale + gridRect.bottom();
+                int y = -(m_axis->endValue(m_axis->categoriesLabels().at(i - 1)) - min())  * scale + gridRect.bottom();
                 points[i] = y;
             }
         }
@@ -84,7 +85,7 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     QFontMetrics fn(font());
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
-    QStringList ticksList; //TODO::
+    QStringList ticksList = m_axis->categoriesLabels();
     qreal width = 0;
     qreal height = 0;
 
@@ -92,16 +93,16 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     case Qt::MinimumSize:
         width = fn.boundingRect("...").width() + labelPadding();
         height = fn.height();
-        width = qMax(width, base.width());
-        height += base.height();
+        width += base.width();
+        height = qMax(height, base.height());;
         sh = QSizeF(width, height);
         break;
     case Qt::PreferredSize: {
 
         for (int i = 0; i < ticksList.size(); ++i) {
             QRectF rect = fn.boundingRect(ticksList.at(i));
+            width = qMax(rect.width() + labelPadding() + 1, width);
             height += rect.height();
-            width = qMax(rect.width() + labelPadding(), width);
         }
         height = qMax(height, base.height());
         width += base.width();
@@ -111,7 +112,6 @@ QSizeF ChartCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     default:
         break;
     }
-
     return sh;
 }
 

@@ -47,16 +47,16 @@ QVector<qreal> ChartCategoryAxisX::calculateLayout() const
         return points;
 
     const QRectF &gridRect = gridGeometry();
-    qreal range = m_axis->max() - m_axis->min();
+    qreal range  = max() - min();
     if (range > 0) {
         points.resize(tickCount);
         qreal scale = gridRect.width() / range;
         for (int i = 0; i < tickCount; ++i) {
             if (i < tickCount - 1) {
-                int x = (m_axis->startValue(m_axis->categoriesLabels().at(i)) - m_axis->min()) * scale + gridRect.left();
+                int x = (m_axis->startValue(m_axis->categoriesLabels().at(i)) - min()) * scale + gridRect.left();
                 points[i] = x;
             } else {
-                int x = (m_axis->endValue(m_axis->categoriesLabels().at(i - 1)) - m_axis->min())  * scale + gridRect.left();
+                int x = (m_axis->endValue(m_axis->categoriesLabels().at(i - 1)) - min())  * scale + gridRect.left();
                 points[i] = x;
             }
         }
@@ -67,6 +67,7 @@ QVector<qreal> ChartCategoryAxisX::calculateLayout() const
 
 void ChartCategoryAxisX::updateGeometry()
 {
+    //TODO: this is not optimal when many categories :( , create only visible lables
     setLabels(m_axis->categoriesLabels() << "");
     HorizontalAxis::updateGeometry();
 }
@@ -84,7 +85,7 @@ QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     QFontMetrics fn(font());
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
-    QStringList ticksList ; //TODO:
+    QStringList ticksList = m_axis->categoriesLabels();
     qreal width = 0;
     qreal height = 0;
 
