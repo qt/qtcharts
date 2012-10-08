@@ -22,7 +22,6 @@
 #include "qarealegendmarker_p.h"
 #include "qareaseries_p.h"
 #include <QAreaSeries>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -33,7 +32,6 @@ QAreaLegendMarker::QAreaLegendMarker(QAreaSeries* series, QLegend *legend, QObje
 
 QAreaLegendMarker::~QAreaLegendMarker()
 {
-//    qDebug() << "deleting Area marker" << this;
 }
 
 /*!

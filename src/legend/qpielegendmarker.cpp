@@ -22,7 +22,6 @@
 #include "qpielegendmarker_p.h"
 #include <QPieSeries>
 #include <QPieSlice>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -33,7 +32,6 @@ QPieLegendMarker::QPieLegendMarker(QPieSeries* series, QPieSlice* slice, QLegend
 
 QPieLegendMarker::~QPieLegendMarker()
 {
-//    qDebug() << "deleting pie marker" << this;
 }
 
 /*!

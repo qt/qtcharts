@@ -22,7 +22,6 @@
 #include "qbarlegendmarker_p.h"
 #include <QAbstractBarSeries>
 #include <QBarSet>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -33,7 +32,6 @@ QBarLegendMarker::QBarLegendMarker(QAbstractBarSeries* series, QBarSet* barset, 
 
 QBarLegendMarker::~QBarLegendMarker()
 {
-//    qDebug() << "deleting bar marker" << this;
 }
 
 /*!

@@ -29,7 +29,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAreaLegendMarkerPrivate;
 
-// TODO: No export? make this private. QLegendMarker should be enough for user of the api (why expose the details?)
 class QTCOMMERCIALCHART_EXPORT QAreaLegendMarker : public QLegendMarker
 {
     Q_OBJECT

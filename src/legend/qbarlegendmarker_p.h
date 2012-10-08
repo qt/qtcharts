@@ -36,8 +36,6 @@
 #include <QAbstractBarSeries>
 #include <QBarSet>
 
-#include <QDebug>
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QBarLegendMarker;
@@ -57,11 +55,9 @@ public Q_SLOTS:
 
 private:
     QBarLegendMarker *q_ptr;
-
     QAbstractBarSeries* m_series;
     QBarSet* m_barset;
 
-    friend class QLegendPrivate;
     Q_DECLARE_PUBLIC(QBarLegendMarker)
 };
 

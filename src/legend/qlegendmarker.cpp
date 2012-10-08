@@ -22,7 +22,6 @@
 #include "qlegendmarker_p.h"
 #include "legendmarkeritem_p.h"
 #include "qlegend.h"
-#include <QDebug>
 #include <QFontMetrics>
 #include <QGraphicsSceneEvent>
 #include <QAbstractSeries>

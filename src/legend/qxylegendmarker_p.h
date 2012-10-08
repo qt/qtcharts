@@ -35,8 +35,6 @@
 #include "legendmarkeritem_p.h"
 #include <QXYSeries>
 
-#include <QDebug>
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QXYLegendMarker;
@@ -48,7 +46,6 @@ public:
     explicit QXYLegendMarkerPrivate(QXYLegendMarker *q, QXYSeries *series, QLegend *legend);
     virtual ~QXYLegendMarkerPrivate();
 
-    // internal
     virtual QAbstractSeries* series();
     virtual QObject* relatedObject();
 
@@ -57,10 +54,8 @@ public Q_SLOTS:
 
 private:
     QXYLegendMarker *q_ptr;
-
     QXYSeries* m_series;
 
-    friend class QLegendPrivate; // TODO: Is this needed?
     Q_DECLARE_PUBLIC(QXYLegendMarker)
 };
 

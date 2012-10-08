@@ -36,8 +36,6 @@
 #include <QPieSeries>
 #include <QPieSlice>
 
-#include <QDebug>
-
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QPieLegendMarker;
@@ -62,7 +60,6 @@ private:
     QPieSeries* m_series;
     QPieSlice* m_slice;
 
-    friend class QLegendPrivate; // TODO: Is this needed?
     Q_DECLARE_PUBLIC(QPieLegendMarker)
 };
 

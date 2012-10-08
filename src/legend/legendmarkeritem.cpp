@@ -21,7 +21,6 @@
 #include <QPainter>
 #include <QGraphicsSceneEvent>
 #include <QGraphicsSimpleTextItem>
-#include <QDebug>
 
 #include "qlegend.h"
 #include "qlegend_p.h"

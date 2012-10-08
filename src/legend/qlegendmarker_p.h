@@ -36,7 +36,6 @@
 #include <QPen>
 #include <QGraphicsSimpleTextItem>
 #include <QGraphicsLayoutItem>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -60,10 +59,9 @@ public:
     explicit QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend);
     virtual ~QLegendMarkerPrivate();
 
-    // Helper for now. (or deckare LegendLayout as friend)
+    // Helper for now. (or declare LegendLayout as friend)
     LegendMarkerItem* item() const { return m_item; }
 
-    // internal
     virtual QAbstractSeries* series() = 0;
     virtual QObject* relatedObject() = 0;
 

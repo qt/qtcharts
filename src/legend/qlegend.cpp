@@ -178,7 +178,6 @@ QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
     QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)), d_ptr.data(), SLOT(handleSeriesAdded(QAbstractSeries*)));
     QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), d_ptr.data(), SLOT(handleSeriesRemoved(QAbstractSeries*)));
-//    QObject::connect(chart->d_ptr->m_dataset,SIGNAL(seriesUpdated(QAbstractSeries*)),d_ptr.data(),SLOT(handleCountChanged(QAbstractSeries*)));
     setLayout(d_ptr->m_layout);
 }
 
@@ -477,7 +476,6 @@ void QLegendPrivate::addSeries(QAbstractSeries* series)
 {
     // Only allow one instance of series
     if (m_series.contains(series)) {
-        qDebug() << "series already added" << series;
         return;
     }
 
@@ -485,36 +483,7 @@ void QLegendPrivate::addSeries(QAbstractSeries* series)
     decorateMarkers(newMarkers);
     addMarkers(newMarkers);
 
-    // TODO: This is the part I don't like. There should be better solution.
-    // On the other hand. It is only one switch case for appending and another for removing series
-    // If countChanged signal were on QAbstractSeries, there would be no need for switch at all.
-    switch (series->type())
-    {
-    case QAbstractSeries::SeriesTypePie: {
-        QPieSeries *s = qobject_cast<QPieSeries *> (series);
-        QObject::connect(s, SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
-        break;
-    }
-    case QAbstractSeries::SeriesTypeBar:
-    case QAbstractSeries::SeriesTypeStackedBar:
-    case QAbstractSeries::SeriesTypePercentBar:
-    case QAbstractSeries::SeriesTypeHorizontalBar:
-    case QAbstractSeries::SeriesTypeHorizontalStackedBar:
-    case QAbstractSeries::SeriesTypeHorizontalPercentBar: {
-        QAbstractBarSeries *s = qobject_cast<QAbstractBarSeries *> (series);
-        QObject::connect(s, SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
-        break;
-    }
-    case QAbstractSeries::SeriesTypeLine:
-    case QAbstractSeries::SeriesTypeArea:
-    case QAbstractSeries::SeriesTypeScatter:
-    case QAbstractSeries::SeriesTypeSpline:
-    default: {
-        // No need to connect any series related signals. We have no series level
-        // changes, that would generate or delete markers
-    }
-    }
-
+    QObject::connect(series->d_ptr.data(), SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
 
     m_series.append(series);
@@ -537,38 +506,10 @@ void QLegendPrivate::removeSeries(QAbstractSeries* series)
     }
     removeMarkers(removed);
 
-    switch (series->type())
-    {
-    case QAbstractSeries::SeriesTypePie: {
-        QPieSeries *s = qobject_cast<QPieSeries *> (series);
-        QObject::disconnect(s, SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
-        break;
-    }
-    case QAbstractSeries::SeriesTypeBar:
-    case QAbstractSeries::SeriesTypeStackedBar:
-    case QAbstractSeries::SeriesTypePercentBar:
-    case QAbstractSeries::SeriesTypeHorizontalBar:
-    case QAbstractSeries::SeriesTypeHorizontalStackedBar:
-    case QAbstractSeries::SeriesTypeHorizontalPercentBar: {
-        QAbstractBarSeries *s = qobject_cast<QAbstractBarSeries *> (series);
-        QObject::disconnect(s, SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
-        break;
-    }
-    // TODO:
-    case QAbstractSeries::SeriesTypeLine:
-    case QAbstractSeries::SeriesTypeArea:
-    case QAbstractSeries::SeriesTypeScatter:
-    case QAbstractSeries::SeriesTypeSpline:
-    default: {
-        // No need to disconnect any series related signals
-        break;
-    }
-    }
-
+    QObject::disconnect(series->d_ptr.data(), SIGNAL(countChanged()), this, SLOT(handleCountChanged()));
     QObject::disconnect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
 
     m_layout->invalidate();
-//    q_ptr->layout()->activate();
 }
 
 void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series)
@@ -603,14 +544,14 @@ void QLegendPrivate::handleCountChanged()
     // Here we handle the changes in marker count.
     // Can happen for example when pieslice(s) have been added to or removed from pieseries.
 
-    QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
-    QList<QLegendMarker *> createdMarkers = series->d_ptr->createLegendMarkers(q_ptr);
+    QAbstractSeriesPrivate *series = qobject_cast<QAbstractSeriesPrivate *> (sender());
+    QList<QLegendMarker *> createdMarkers = series->createLegendMarkers(q_ptr);
 
     // Find out removed markers and created markers
     QList<QLegendMarker *> removedMarkers;
     foreach (QLegendMarker *oldMarker, m_markers) {
         // we have marker, which is related to sender.
-        if (oldMarker->series() == series) {
+        if (oldMarker->series() == series->q_ptr) {
             bool found = false;
             foreach(QLegendMarker *newMarker, createdMarkers) {
                 // New marker considered existing if:

@@ -22,7 +22,6 @@
 #include "qxylegendmarker_p.h"
 #include "qxyseries_p.h"
 #include <QXYSeries>
-#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -33,7 +32,6 @@ QXYLegendMarker::QXYLegendMarker(QXYSeries* series, QLegend *legend, QObject *pa
 
 QXYLegendMarker::~QXYLegendMarker()
 {
-//    qDebug() << "deleting xy marker" << this;
 }
 
 /*!
