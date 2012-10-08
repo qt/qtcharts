@@ -92,6 +92,9 @@ private:
     QMenu *m_menu;
     int m_template;
     Grid *m_grid;
+    QString m_category;
+    QString m_subcategory;
+    QString m_name;
 
     friend class ComboBox;
 };

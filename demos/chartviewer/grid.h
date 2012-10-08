@@ -45,6 +45,7 @@ public:
 
     QList<QChart *> charts();
     void createCharts(const QString &category = QString());
+    void createCharts(const QString &category, const QString &subcategory, const QString &name);
     void replaceChart(QChart *oldChart, Chart *newChart);
     void setState(State state);
     State state() const { return m_state; };
@@ -70,12 +71,12 @@ private:
     int m_size;
     DataTable m_dataTable;
     QHash<QChart *, int> m_chartHash;
+    QHash<int, QChart *> m_chartHashRev;
     State m_state;
     State m_currentState;
     QPointF m_origin;
     QGraphicsRectItem *m_rubberBand;
     QGraphicsGridLayout *m_gridLayout;
-    QString m_category;
 };
 
 #endif /* GRID_H_ */

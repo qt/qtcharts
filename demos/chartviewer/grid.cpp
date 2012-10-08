@@ -57,15 +57,11 @@ void Grid::createCharts(const QString &category)
 
     if (category.isEmpty()) {
         for (int i = 0; i < m_size * m_size; ++i) {
-            QChart *chart = 0;
-            if (i < list.size()) {
-                chart = list.at(i)->createChart(m_dataTable);
-            } else {
-                chart = new QChart();
-                chart->setTitle(QObject::tr("Empty"));
-            }
+            QChart *chart = new QChart();
+            chart->setTitle(QObject::tr("Empty"));
             m_gridLayout->addItem(chart, i / m_size, i % m_size);
             m_chartHash[chart] = i;
+            m_chartHashRev[i] = chart;
         }
     } else {
         int j = 0;
@@ -75,6 +71,7 @@ void Grid::createCharts(const QString &category)
                 qchart = list.at(i)->createChart(m_dataTable);
                 m_gridLayout->addItem(qchart, j / m_size, j % m_size);
                 m_chartHash[qchart] = j;
+                m_chartHashRev[j] = qchart;
                 j++;
             }
         }
@@ -83,19 +80,58 @@ void Grid::createCharts(const QString &category)
             qchart->setTitle(QObject::tr("Empty"));
             m_gridLayout->addItem(qchart, j / m_size, j % m_size);
             m_chartHash[qchart] = j;
+            m_chartHashRev[j] = qchart;
         }
     }
-    m_category = category;
+    m_gridLayout->activate();
+}
+
+void Grid::createCharts(const QString &category, const QString &subcategory, const QString &name)
+{
+    clear();
+
+    QChart *qchart(0);
+    Charts::ChartList list = Charts::chartList();
+    Chart *chart;
+
+    //find chart
+    for (int i = 0; i < list.size(); ++i) {
+
+        chart = list.at(i);
+        if (chart->category() == category &&
+            chart->subCategory() == subcategory &&
+            chart->name() == name) {
+            break;
+        }
+        chart = 0;
+    }
+
+    //create charts
+    for (int j = 0; j < m_size * m_size; ++j) {
+
+        if(!chart){
+            qchart = new QChart();
+        }else{
+            qchart = chart->createChart(m_dataTable);
+        }
+        qchart->setTitle(QObject::tr("Empty"));
+        m_gridLayout->addItem(qchart, j / m_size, j % m_size);
+        m_chartHash[qchart] = j;
+        m_chartHashRev[j] = qchart;
+    }
+
     m_gridLayout->activate();
 }
 
 void Grid::clear()
 {
-    for (int i = 0; i < m_gridLayout->count(); ++i)
-        m_gridLayout->removeAt(i);
+    int count = m_gridLayout->count();
+    for (int i = 0; i < count; ++i)
+        m_gridLayout->removeAt(0);
 
     qDeleteAll(m_chartHash.keys());
     m_chartHash.clear();
+    m_chartHashRev.clear();
 }
 
 QList<QChart *> Grid::charts()
@@ -111,8 +147,40 @@ void Grid::setState(State state)
 void Grid::setSize(int size)
 {
     if (m_size != size) {
+
+        //remove old;
+        int count = m_gridLayout->count();
+        for (int i = 0; i < count; ++i) {
+            m_gridLayout->removeAt(0);
+        }
+
+
+        QChart* qchart = 0;
+        int j = 0;
+
+        for (; j < size * size; ++j) {
+
+            qchart = m_chartHashRev[j];
+
+            if (!qchart){
+                qchart = new QChart();
+                qchart->setTitle(QObject::tr("Empty"));
+            }
+
+            m_chartHash[qchart] = j;
+            m_chartHashRev[j] = qchart;
+            m_gridLayout->addItem(qchart, j / size, j % size);
+        }
+
+        //delete rest
+        while (j < m_size * m_size) {
+            QChart* qchart = m_chartHashRev.take(j);
+            delete(qchart);
+            m_chartHash.remove(qchart);
+            j++;
+        }
+
         m_size = size;
-        createCharts(m_category);
     }
 }
 
@@ -132,9 +200,11 @@ void Grid::replaceChart(QChart *oldChart, Chart *newChart)
         }
     }
     m_chartHash.remove(oldChart);
+    m_chartHashRev.remove(index);
     QChart *chart = newChart->createChart(m_dataTable);
     m_gridLayout->addItem(chart, index / m_size, index % m_size);
     m_chartHash[chart] = index;
+    m_chartHashRev[index] = chart;
     delete oldChart;
 }
 

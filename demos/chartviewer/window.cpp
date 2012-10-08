@@ -58,7 +58,7 @@ Window::Window(const QVariantHash &parameters, QWidget *parent)
       m_baseLayout(new QGraphicsLinearLayout()),
       m_menu(createMenu()),
       m_template(0),
-      m_grid(new Grid(1))
+      m_grid(new Grid(-1))
 {
     createProxyWidgets();
     // create layout
@@ -82,8 +82,6 @@ Window::Window(const QVariantHash &parameters, QWidget *parent)
     settingsLayout->addItem(m_widgetHash["zoomCheckBox"]);
     settingsLayout->addStretch();
 
-    m_grid->createCharts();
-
     m_baseLayout->setOrientation(Qt::Horizontal);
     m_baseLayout->addItem(m_grid);
     m_baseLayout->addItem(settingsLayout);
@@ -99,6 +97,10 @@ Window::Window(const QVariantHash &parameters, QWidget *parent)
     m_antialiasCheckBox->setChecked(true);
     initializeFromParamaters(parameters);
     updateUI();
+    if(!m_category.isEmpty() && !m_subcategory.isEmpty() && !m_name.isEmpty())
+        m_grid->createCharts(m_category,m_subcategory,m_name);
+
+
     handleGeometryChanged();
     setCentralWidget(m_view);
 
@@ -214,12 +216,34 @@ QComboBox *Window::createTempleteBox()
 
 void Window::initializeFromParamaters(const QVariantHash &parameters)
 {
+    if (parameters.contains("view")) {
+           int t = parameters["view"].toInt();
+           for (int i = 0; i < m_viewComboBox->count(); ++i) {
+               if (m_viewComboBox->itemData(i).toInt() == t) {
+                   m_viewComboBox->setCurrentIndex(i);
+                   break;
+               }
+           }
+       }
+
     if (parameters.contains("chart")) {
         QString t = parameters["chart"].toString();
-        for (int i = 0; i < m_templateComboBox->count(); ++i) {
-            if (m_templateComboBox->itemText(i) == t) {
-                m_templateComboBox->setCurrentIndex(i);
-                break;
+
+        QRegExp rx("([a-zA-Z0-9_]*)::([a-zA-Z0-9_]*)::([a-zA-Z0-9_]*)");
+        int pos = rx.indexIn(t);
+
+        if (pos > -1) {
+            m_category = rx.cap(1);
+            m_subcategory = rx.cap(2);
+            m_name = rx.cap(3);
+            m_templateComboBox->setCurrentIndex(0);
+        }
+        else {
+            for (int i = 0; i < m_templateComboBox->count(); ++i) {
+                if (m_templateComboBox->itemText(i) == t) {
+                    m_templateComboBox->setCurrentIndex(i);
+                    break;
+                }
             }
         }
     }
@@ -254,21 +278,12 @@ void Window::initializeFromParamaters(const QVariantHash &parameters)
             }
         }
     }
-    if (parameters.contains("view")) {
-        int t = parameters["view"].toInt();
-        for (int i = 0; i < m_viewComboBox->count(); ++i) {
-            if (m_viewComboBox->itemData(i).toInt() == t) {
-                m_viewComboBox->setCurrentIndex(i);
-                break;
-            }
-        }
-    }
 }
 
 void Window::updateUI()
 {
-    checkTemplate();
     checkView();
+    checkTemplate();
     checkOpenGL();
     checkTheme();
     checkAnimationOptions();
@@ -279,7 +294,10 @@ void Window::updateUI()
 void Window::checkView()
 {
     int count(m_viewComboBox->itemData(m_viewComboBox->currentIndex()).toInt());
-    m_grid->setSize(count);
+    if(m_grid->size()!=count){
+        m_grid->setSize(count);
+        m_template = 0;
+    }
 }
 
 void Window::checkLegend()
