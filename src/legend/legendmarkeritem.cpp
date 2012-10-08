@@ -98,7 +98,7 @@ QBrush LegendMarkerItem::labelBrush() const
     return m_textItem->brush();
 }
 
-void LegendMarkerItem::setGeometry(const QRectF& rect)
+void LegendMarkerItem::setGeometry(const QRectF &rect)
 {
     QFontMetrics fn (m_font);
 
@@ -116,7 +116,7 @@ void LegendMarkerItem::setGeometry(const QRectF& rect)
     else
         m_textItem->setText(m_label);
 
-    const QRectF& textRect = m_textItem->boundingRect();
+    const QRectF &textRect = m_textItem->boundingRect();
 
 
     m_textItem->setPos(x-m_margin,y/2 - textRect.height()/2);

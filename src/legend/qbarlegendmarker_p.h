@@ -55,8 +55,8 @@ public Q_SLOTS:
 
 private:
     QBarLegendMarker *q_ptr;
-    QAbstractBarSeries* m_series;
-    QBarSet* m_barset;
+    QAbstractBarSeries *m_series;
+    QBarSet *m_barset;
 
     Q_DECLARE_PUBLIC(QBarLegendMarker)
 };

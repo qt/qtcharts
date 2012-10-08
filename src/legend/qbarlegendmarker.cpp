@@ -25,7 +25,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-QBarLegendMarker::QBarLegendMarker(QAbstractBarSeries* series, QBarSet* barset, QLegend *legend, QObject *parent) :
+QBarLegendMarker::QBarLegendMarker(QAbstractBarSeries *series, QBarSet *barset, QLegend *legend, QObject *parent) :
     QLegendMarker(*new QBarLegendMarkerPrivate(this,series,barset,legend), parent)
 {
 }

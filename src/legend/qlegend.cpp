@@ -24,29 +24,14 @@
 #include "qabstractseries_p.h"
 #include "qchart_p.h"
 #include "legendlayout_p.h"
-#include "qxyseries.h"
-#include "qlineseries.h"
-#include "qareaseries.h"
-#include "qscatterseries.h"
-#include "qsplineseries.h"
-#include "qabstractbarseries.h"
-#include "qstackedbarseries.h"
-#include "qpercentbarseries.h"
-#include "qbarset.h"
-#include "qpieseries.h"
-#include "qpieseries_p.h"
-#include "qpieslice.h"
 #include "chartpresenter_p.h"
 #include "chartlayout_p.h"
-#include <QPainter>
-#include <QPen>
-#include <QTimer>
-#include <QGraphicsSceneEvent>
-#include <QGraphicsItemGroup>
-
 #include "qlegendmarker.h"
 #include "qlegendmarker_p.h"
 #include "legendmarkeritem_p.h"
+#include <QPainter>
+#include <QPen>
+#include <QGraphicsItemGroup>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -396,17 +381,17 @@ bool QLegend::isBackgroundVisible() const
     return d_ptr->m_backgroundVisible;
 }
 
-QList<QLegendMarker*> QLegend::markers() const
+QList<QLegendMarker*> QLegend::markers(QAbstractSeries *series) const
 {
-    return d_ptr->markers();
+    return d_ptr->markers(series);
 }
 
-void QLegend::addSeries(QAbstractSeries* series)
+void QLegend::addSeries(QAbstractSeries *series)
 {
     d_ptr->addSeries(series);
 }
 
-void QLegend::removeSeries(QAbstractSeries* series)
+void QLegend::removeSeries(QAbstractSeries *series)
 {
     d_ptr->removeSeries(series);
 }
@@ -472,7 +457,24 @@ int QLegendPrivate::roundness(qreal size)
     return 100 * m_diameter / int(size);
 }
 
-void QLegendPrivate::addSeries(QAbstractSeries* series)
+QList<QLegendMarker*> QLegendPrivate::markers(QAbstractSeries *series)
+{
+    // Return all markers
+    if (!series) {
+        return m_markers;
+    }
+
+    // Create filtered list
+    QList<QLegendMarker *> markers;
+    foreach (QLegendMarker *marker, m_markers) {
+        if (marker->series() == series) {
+            markers.append(marker);
+        }
+    }
+    return markers;
+}
+
+void QLegendPrivate::addSeries(QAbstractSeries *series)
 {
     // Only allow one instance of series
     if (m_series.contains(series)) {
@@ -491,7 +493,7 @@ void QLegendPrivate::addSeries(QAbstractSeries* series)
     m_layout->invalidate();
 }
 
-void QLegendPrivate::removeSeries(QAbstractSeries* series)
+void QLegendPrivate::removeSeries(QAbstractSeries *series)
 {
     if (m_series.contains(series)) {
         m_series.removeOne(series);
@@ -531,7 +533,7 @@ void QLegendPrivate::handleSeriesVisibleChanged()
     QAbstractSeries *series = qobject_cast<QAbstractSeries *> (sender());
     Q_ASSERT(series);
 
-    foreach (QLegendMarker* marker, m_markers) {
+    foreach (QLegendMarker *marker, m_markers) {
         if (marker->series() == series) {
             marker->setVisible(series->isVisible());
         }
@@ -579,7 +581,7 @@ void QLegendPrivate::handleCountChanged()
 
 void QLegendPrivate::addMarkers(QList<QLegendMarker *> markers)
 {
-    foreach (QLegendMarker* marker, markers) {
+    foreach (QLegendMarker *marker, markers) {
         m_items->addToGroup(marker->d_ptr.data()->item());
         m_markers << marker;
     }
@@ -597,7 +599,7 @@ void QLegendPrivate::removeMarkers(QList<QLegendMarker *> markers)
 
 void QLegendPrivate::decorateMarkers(QList<QLegendMarker *> markers)
 {
-    foreach (QLegendMarker* marker, markers) {
+    foreach (QLegendMarker *marker, markers) {
         marker->setFont(m_font);
         marker->setLabelBrush(m_labelBrush);
     }

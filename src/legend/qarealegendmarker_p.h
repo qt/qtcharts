@@ -54,7 +54,7 @@ public Q_SLOTS:
 
 private:
     QAreaLegendMarker *q_ptr;
-    QAreaSeries* m_series;
+    QAreaSeries *m_series;
 
     Q_DECLARE_PUBLIC(QAreaLegendMarker)
 };

@@ -34,7 +34,7 @@ class QTCOMMERCIALCHART_EXPORT QBarLegendMarker : public QLegendMarker
 {
     Q_OBJECT
 public:
-    explicit QBarLegendMarker(QAbstractBarSeries* series, QBarSet* barset, QLegend *legend, QObject *parent = 0);
+    explicit QBarLegendMarker(QAbstractBarSeries *series, QBarSet *barset, QLegend *legend, QObject *parent = 0);
     virtual ~QBarLegendMarker();
 
     virtual LegendMarkerType type() { return LegendMarkerTypeBar; }

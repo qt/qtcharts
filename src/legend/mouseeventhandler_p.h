@@ -74,9 +74,9 @@ public:
     virtual void mouseMoved(const QPointF &delta) = 0;
     virtual void mouseReleased(const QPointF &pos) = 0;
 
-    void handleMousePressEvent(QGraphicsSceneMouseEvent* event);
-    void handleMouseMoveEvent(QGraphicsSceneMouseEvent* event);
-    void handleMouseReleaseEvent(QGraphicsSceneMouseEvent* event);
+    void handleMousePressEvent(QGraphicsSceneMouseEvent *event);
+    void handleMouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 private:
     QPointF m_lastPos;

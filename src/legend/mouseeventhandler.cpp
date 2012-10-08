@@ -39,14 +39,14 @@ void MouseEventHandler::setMoveTreshold(qreal treshold)
     m_treshold = treshold;
 }
 
-void MouseEventHandler::handleMousePressEvent(QGraphicsSceneMouseEvent* event)
+void MouseEventHandler::handleMousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     m_lastPos = event->screenPos();
     m_state = Pressed;
     event->accept();
 }
 
-void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent* event)
+void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QPointF delta = event->screenPos() - m_lastPos;
 
@@ -75,7 +75,7 @@ void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-void MouseEventHandler::handleMouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void MouseEventHandler::handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     m_lastPos = event->screenPos();
 

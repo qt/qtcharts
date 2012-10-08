@@ -65,13 +65,13 @@ public:
     void setLabelBrush(const QBrush &brush);
     QBrush labelBrush() const;
 
-    void setGeometry(const QRectF& rect);
+    void setGeometry(const QRectF &rect);
 
     QRectF boundingRect() const;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
 
-    QSizeF sizeHint (Qt::SizeHint which, const QSizeF& constraint) const;
+    QSizeF sizeHint (Qt::SizeHint which, const QSizeF &constraint) const;
 
     // Event handlers, logic delegated to MouseEventHandler
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

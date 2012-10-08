@@ -55,10 +55,9 @@ public:
 
     QGraphicsItemGroup* items() { return m_items; }
 
-    // New stuff:
-    QList<QLegendMarker*> markers() { return m_markers; }
-    void addSeries(QAbstractSeries* series);
-    void removeSeries(QAbstractSeries* series);
+    QList<QLegendMarker*> markers(QAbstractSeries *series = 0);
+    void addSeries(QAbstractSeries *series);
+    void removeSeries(QAbstractSeries *series);
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series);
@@ -76,8 +75,8 @@ private:
     QLegend *q_ptr;
     ChartPresenter *m_presenter;
     LegendLayout *m_layout;
-    QChart* m_chart;
-    QGraphicsItemGroup* m_items;
+    QChart *m_chart;
+    QGraphicsItemGroup *m_items;
     Qt::Alignment m_alignment;
     QBrush m_brush;
     QPen m_pen;
@@ -88,13 +87,12 @@ private:
     bool m_attachedToChart;
     bool m_backgroundVisible;
 
-    friend class QLegend;
-    friend class LegendLayout;
-    QList<QLegendMarker*> m_markers;
-    QList<QAbstractSeries*> m_series;
+    QList<QLegendMarker *> m_markers;
+    QList<QAbstractSeries *> m_series;
 
     friend class QLegend;
     friend class LegendMarkerItem;
+    friend class LegendLayout;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

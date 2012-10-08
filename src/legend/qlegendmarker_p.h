@@ -70,7 +70,7 @@ public Q_SLOTS:
 
 protected:
     LegendMarkerItem *m_item;
-    QLegend* m_legend;
+    QLegend *m_legend;
 
 private:
     QLegendMarker *q_ptr;

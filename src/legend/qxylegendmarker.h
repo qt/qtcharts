@@ -33,7 +33,7 @@ class QTCOMMERCIALCHART_EXPORT QXYLegendMarker : public QLegendMarker
 {
     Q_OBJECT
 public:
-    explicit QXYLegendMarker(QXYSeries* series, QLegend *legend, QObject *parent = 0);
+    explicit QXYLegendMarker(QXYSeries *series, QLegend *legend, QObject *parent = 0);
     virtual ~QXYLegendMarker();
 
     virtual LegendMarkerType type() { return LegendMarkerTypeXY; }

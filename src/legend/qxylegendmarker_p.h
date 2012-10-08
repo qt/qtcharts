@@ -54,7 +54,7 @@ public Q_SLOTS:
 
 private:
     QXYLegendMarker *q_ptr;
-    QXYSeries* m_series;
+    QXYSeries *m_series;
 
     Q_DECLARE_PUBLIC(QXYLegendMarker)
 };

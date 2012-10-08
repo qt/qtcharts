@@ -80,9 +80,9 @@ public:
     bool isBackgroundVisible() const;
 
     // New stuff:
-    QList <QLegendMarker*> markers() const;
-    void addSeries(QAbstractSeries* series);
-    void removeSeries(QAbstractSeries* series);
+    QList <QLegendMarker*> markers(QAbstractSeries *series = 0) const;
+    void addSeries(QAbstractSeries *series);
+    void removeSeries(QAbstractSeries *series);
 
 protected:
     void hideEvent(QHideEvent *event);

@@ -57,8 +57,8 @@ public Q_SLOTS:
 private:
     QPieLegendMarker *q_ptr;
 
-    QPieSeries* m_series;
-    QPieSlice* m_slice;
+    QPieSeries *m_series;
+    QPieSlice *m_slice;
 
     Q_DECLARE_PUBLIC(QPieLegendMarker)
 };

@@ -34,7 +34,7 @@ class QTCOMMERCIALCHART_EXPORT QAreaLegendMarker : public QLegendMarker
     Q_OBJECT
 
 public:
-    explicit QAreaLegendMarker(QAreaSeries* series, QLegend *legend, QObject *parent = 0);
+    explicit QAreaLegendMarker(QAreaSeries *series, QLegend *legend, QObject *parent = 0);
     virtual ~QAreaLegendMarker();
 
     virtual LegendMarkerType type() { return LegendMarkerTypeArea; }
