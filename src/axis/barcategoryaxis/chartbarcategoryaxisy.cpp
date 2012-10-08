@@ -23,6 +23,7 @@
 #include "qbarcategoryaxis_p.h"
 #include <qmath.h>
 #include <QFontMetrics>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -111,34 +112,35 @@ QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constra
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
     QStringList ticksList = createCategoryLabels(ChartAxis::layout());
-    qreal width = 0;
-    qreal height = 0;
 
-    switch (which) {
-    case Qt::MinimumSize:
-        width = fn.boundingRect("...").width() + labelPadding();
-        height = fn.height();
-        width += base.width();
-        height = qMax(height, base.height());
-        sh = QSizeF(width, height);
-        break;
-    case Qt::PreferredSize: {
+    qreal width=0;
+    qreal height=0;
 
-        for (int i = 0; i < ticksList.size(); ++i) {
-            QRectF rect = fn.boundingRect(ticksList.at(i));
-            height += rect.height();
-            width = qMax(rect.width() + labelPadding(), width);
+      switch (which) {
+        case Qt::MinimumSize:
+            width = fn.boundingRect("...").width() + labelPadding();
+            height = fn.height();
+            width+=base.width();
+            height=qMax(height,base.height());
+            sh = QSizeF(width,height);
+            break;
+        case Qt::PreferredSize:{
+
+            for (int i = 0; i < ticksList.size(); ++i)
+            {
+                QRectF rect = fn.boundingRect(ticksList.at(i));
+                height+=rect.height();
+                width=qMax(rect.width()+labelPadding() +1 ,width); //one pixel torelance
+            }
+            height=qMax(height,base.height());
+            width+=base.width();
+            sh = QSizeF(width,height);
+            break;
         }
-        height = qMax(height, base.height());
-        width += base.width();
-        sh = QSizeF(width, height);
-        break;
-    }
-    default:
-        break;
-    }
-
-    return sh;
+        default:
+          break;
+      }
+      return sh;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -26,6 +26,7 @@
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -90,22 +91,21 @@ QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
 
     switch (which) {
     case Qt::MinimumSize: {
-        int count = qMax(ticksList.first().count() , ticksList.last().count());
-        width = fn.averageCharWidth() * count + labelPadding();
-        height = fn.height();
-        height = qMax(height, base.height());
+        width = fn.boundingRect("...").width() + labelPadding();
         width += base.width();
-        sh = QSizeF(width, height);
+        height = fn.height();
+        height = qMax(height,base.height());
+        sh = QSizeF(width,height);
         break;
     }
-    case Qt::PreferredSize: {
-        for (int i = 0; i < ticksList.size(); ++i) {
-            width = qMax(qreal(fn.averageCharWidth() * ticksList.at(i).count()) + labelPadding(), width);
-            height += fn.height();
-        }
-        height = qMax(height, base.height());
+    case Qt::PreferredSize:
+    {
+        int count = qMax(ticksList.first().count() , ticksList.last().count());
+        width = count*fn.averageCharWidth() + labelPadding() + 2; //two pixels of tolerance
         width += base.width();
-        sh = QSizeF(width, height);
+        height = fn.height() * ticksList.count();
+        height = qMax(height,base.height());
+        sh = QSizeF(width,height);
         break;
     }
     default:

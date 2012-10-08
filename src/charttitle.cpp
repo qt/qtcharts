@@ -76,10 +76,10 @@ QSizeF ChartTitle::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
         sh = QSizeF(fn.boundingRect("...").width(), fn.height());
         break;
     case Qt::PreferredSize:
-        sh = QSizeF(fn.boundingRect(m_text).width(), fn.height());
+        sh = fn.boundingRect(m_text).size();
         break;
     case Qt::MaximumSize:
-        sh = QSizeF(fn.boundingRect(m_text).width(), fn.height());
+        sh = fn.boundingRect(m_text).size();
         break;
     case Qt::MinimumDescent:
         sh = QSizeF(0, fn.descent());

@@ -57,17 +57,21 @@ void VerticalAxis::updateGeometry()
 
     qreal height = axisRect.bottom();
 
-    QGraphicsLineItem *lineItem = static_cast<QGraphicsLineItem *>(axis.at(0));
 
-    if (alignment() == Qt::AlignLeft)
-        lineItem->setLine(axisRect.right() , gridRect.top(), axisRect.right(), gridRect.bottom());
-    else if (alignment() == Qt::AlignRight)
-        lineItem->setLine(axisRect.left() , gridRect.top(), axisRect.left(), gridRect.bottom());
+    //arrow
+    QGraphicsLineItem *arrowItem = static_cast<QGraphicsLineItem*>(axis.at(0));
+
+    //arrow position
+    if (alignment()==Qt::AlignLeft)
+        arrowItem->setLine( axisRect.right() , gridRect.top(), axisRect.right(), gridRect.bottom());
+    else if(alignment()==Qt::AlignRight)
+        arrowItem->setLine( axisRect.left() , gridRect.top(), axisRect.left(), gridRect.bottom());
 
     QFontMetrics fn(font());
 
     for (int i = 0; i < layout.size(); ++i) {
 
+        //items
         QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem *>(lines.at(i));
         QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem *>(axis.at(i + 1));
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
@@ -75,7 +79,7 @@ void VerticalAxis::updateGeometry()
         //grid line
         gridItem->setLine(gridRect.left() , layout[i], gridRect.right(), layout[i]);
 
-        //label text
+        //label text wrapping
         QString text = labelList.at(i);
         if (fn.boundingRect(text).width() > axisRect.right() - axisRect.left() - labelPadding()) {
             QString label = text + "...";
@@ -85,7 +89,9 @@ void VerticalAxis::updateGeometry()
         } else {
             labelItem->setText(text);
         }
+        //label transformation origin point
         const QRectF &rect = labelItem->boundingRect();
+
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
 
@@ -97,22 +103,22 @@ void VerticalAxis::updateGeometry()
             labelItem->setPos(axisRect.left() + labelPadding() , layout[i] - center.y());
             tickItem->setLine(axisRect.left(), layout[i], axisRect.left() + labelPadding(), layout[i]);
         }
-        if (intervalAxis() && i + 1 != layout.size()) {
-            const qreal delta = (layout[i + 1] - layout[i]) / 2;
+
+        //label in beetwen
+        if(intervalAxis()&& i+1!=layout.size()) {
+            const qreal delta = (layout[i+1] - layout[i])/2;
             labelItem->setPos(labelItem->pos().x() , layout[i] + delta - center.y());
         }
 
-        //overlap detection
-        if (labelItem->pos().y() + rect.height() > height ||
-            labelItem->pos().y() + rect.height() > axisRect.bottom() ||
-            labelItem->pos().y() < axisRect.top()) {
+        //label overlap detection
+        if(labelItem->pos().y() + rect.height() > height ||
+            labelItem->pos().y() + rect.height()/2 > gridRect.bottom() ||
+            labelItem->pos().y() + rect.height()/2 < gridRect.top()) {
             labelItem->setVisible(false);
-            gridItem->setVisible(false);
-            tickItem->setVisible(false);
-        } else {
+        }
+        else {
             labelItem->setVisible(true);
-            gridItem->setVisible(true);
-            height = labelItem->pos().y();
+            height=labelItem->pos().y();
         }
 
         //shades
@@ -123,11 +129,13 @@ void VerticalAxis::updateGeometry()
 
         // check if the grid line and the axis tick should be shown
         qreal y = gridItem->line().p1().y();
-        if (y < gridRect.top() || y > gridRect.bottom()) {
+        if ((y < gridRect.top() || y > gridRect.bottom()))
+        {
             gridItem->setVisible(false);
             tickItem->setVisible(false);
-            if (intervalAxis() && (labelItem->pos().y() < gridRect.top() || labelItem->pos().y() + rect.height() > gridRect.bottom()))
-                labelItem->setVisible(false);
+        }else{
+            gridItem->setVisible(true);
+            tickItem->setVisible(true);
         }
 
     }
@@ -136,8 +144,10 @@ void VerticalAxis::updateGeometry()
         QGraphicsLineItem *gridLine;
         gridLine = static_cast<QGraphicsLineItem *>(lines.at(layout.size()));
         gridLine->setLine(gridRect.left(), gridRect.top(), gridRect.right(), gridRect.top());
-        gridLine = static_cast<QGraphicsLineItem *>(lines.at(layout.size() + 1));
+        gridLine->setVisible(true);
+        gridLine = static_cast<QGraphicsLineItem*>(lines.at(layout.size()+1));
         gridLine->setLine(gridRect.left(), gridRect.bottom(), gridRect.right(), gridRect.bottom());
+        gridLine->setVisible(true);
     }
 }
 

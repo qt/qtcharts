@@ -88,23 +88,23 @@ QSizeF ChartValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
     qreal height = 0;
 
     switch (which) {
-    case Qt::MinimumSize: {
-        int count = qMax(ticksList.last().count(), ticksList.first().count());
+    case Qt::MinimumSize:{
+        int count = qMax(ticksList.last().count(),ticksList.first().count());
+        count = qMin(count,5);
         width = fn.averageCharWidth() * count;
         height = fn.height() + labelPadding();
-        width = qMax(width, base.width());
+        width = qMax(width,base.width());
         height += base.height();
-        sh = QSizeF(width, height);
+        sh = QSizeF(width,height);
         break;
     }
-    case Qt::PreferredSize: {
-        for (int i = 0; i < ticksList.size(); ++i) {
-            width += fn.averageCharWidth() * ticksList.at(i).count();
-        }
-        height = fn.height() + labelPadding();
-        width = qMax(width, base.width());
-        height += base.height();
-        sh = QSizeF(width, height);
+    case Qt::PreferredSize:{
+        int count = qMax(ticksList.last().count(),ticksList.first().count());
+        width=fn.averageCharWidth() * count;
+        height=fn.height()+labelPadding();
+        width=qMax(width,base.width());
+        height+=base.height();
+        sh = QSizeF(width,height);
         break;
     }
     default:

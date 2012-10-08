@@ -40,30 +40,30 @@ ChartBarCategoryAxisX::~ChartBarCategoryAxisX()
 
 QVector<qreal> ChartBarCategoryAxisX::calculateLayout() const
 {
-    int count = m_categoriesAxis->d_ptr->count();
-
-    Q_ASSERT(count >= 1);
-
     QVector<qreal> points;
-    points.resize(count + 2);
 
-    const QRectF &gridRect = gridGeometry();
+    const QRectF& gridRect = gridGeometry();
+    qreal range = max() - min();
 
-    const qreal delta = gridRect.width() / (count);
-    qreal offset = -min() - 0.5;
+    const qreal delta = gridRect.width()/range;
 
-    if (delta < 1)
-        return points;
+    if(delta<2) return points;
 
-    if (offset < 0)
-        offset = int(offset * gridRect.width() / (max() - min())) % int(delta) + delta;
-    else
-        offset = int(offset * gridRect.width() / (max() - min())) % int(delta);
+    qreal offset =-min()-0.5;
 
-    for (int i = -1; i < count + 1; ++i) {
+    offset = int(offset * delta)%int(delta);
+
+    int count = qFloor(range);
+
+    if(count < 1 ) return points;
+
+    points.resize(count+2);
+
+    for (int i = 0; i < count+2; ++i) {
         qreal x = offset + i * delta + gridRect.left();
-        points[i + 1] = x;
+        points[i] = x;
     }
+
     return points;
 }
 
@@ -114,34 +114,35 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constra
     QSizeF sh;
     QSizeF base = ChartAxis::sizeHint(which, constraint);
     QStringList ticksList = createCategoryLabels(ChartAxis::layout());
-    qreal width = 0;
-    qreal height = 0;
 
-    switch (which) {
-    case Qt::MinimumSize:
-        width = fn.boundingRect("...").width();
-        height = fn.height() + labelPadding();
-        width = qMax(width, base.width());
-        height += base.height();
-        sh = QSizeF(width, height);
-        break;
-    case Qt::PreferredSize: {
+    qreal width=0;
+    qreal height=0;
 
-        for (int i = 0; i < ticksList.size(); ++i) {
-            QRectF rect = fn.boundingRect(ticksList.at(i));
-            width += rect.width();
-            height = qMax(rect.height() + labelPadding(), height);
+      switch (which) {
+        case Qt::MinimumSize:
+            width = fn.boundingRect("...").width();
+            height = fn.height()+labelPadding();
+            width=qMax(width,base.width());
+            height += base.height();
+            sh = QSizeF(width,height);
+            break;
+        case Qt::PreferredSize:{
+
+            for (int i = 0; i < ticksList.size(); ++i)
+            {
+                QRectF rect = fn.boundingRect(ticksList.at(i));
+                width += rect.width();
+            }
+            height = fn.height()+labelPadding();
+            width = qMax(width,base.width());
+            height += base.height();
+            sh = QSizeF(width,height);
+            break;
         }
-        width = qMax(width, base.width());
-        height += base.height();
-        sh = QSizeF(width, height);
-        break;
-    }
-    default:
-        break;
-    }
-
-    return sh;
+        default:
+          break;
+      }
+      return sh;
 }
 
 QTCOMMERCIALCHART_END_NAMESPACE

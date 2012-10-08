@@ -51,8 +51,9 @@ public:
 
         int count = series->barSets().first()->count();
 
-        for (int i = 0; i < count; i++)
-            barcategory->append(QString::number(i));
+        for (int i = 0; i < count; i++) {
+            barcategory->append("BarSet " + QString::number(i));
+        }
 
         chart->setAxisX(valueaxis, series);
         chart->setAxisY(barcategory, series);

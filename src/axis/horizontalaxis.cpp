@@ -21,6 +21,7 @@
 #include "horizontalaxis_p.h"
 #include "qabstractaxis.h"
 #include <QFontMetrics>
+#include <qmath.h>
 #include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -41,15 +42,15 @@ void HorizontalAxis::updateGeometry()
     if (layout.isEmpty())
         return;
 
-    QStringList ticksList = labels();
+    QStringList labelList = labels();
 
     QList<QGraphicsItem *> lines = lineItems();
     QList<QGraphicsItem *> labels = labelItems();
     QList<QGraphicsItem *> shades = shadeItems();
     QList<QGraphicsItem *> axis = arrowItems();
 
-    Q_ASSERT(labels.size() == ticksList.size());
-    Q_ASSERT(layout.size() == ticksList.size());
+    Q_ASSERT(labels.size() == labelList.size());
+    Q_ASSERT(layout.size() == labelList.size());
 
     const QRectF &axisRect = axisGeometry();
     const QRectF &gridRect = gridGeometry();
@@ -63,19 +64,39 @@ void HorizontalAxis::updateGeometry()
         arrowItem->setLine(gridRect.left(), axisRect.top(), gridRect.right(), axisRect.top());
 
     qreal width = 0;
+    QFontMetrics fn(font());
 
     for (int i = 0; i < layout.size(); ++i) {
 
-        QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem *>(lines.at(i));
-        QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem *>(axis.at(i + 1));
+        //items
+        QGraphicsLineItem *gridItem = static_cast<QGraphicsLineItem*>(lines.at(i));
+        QGraphicsLineItem *tickItem = static_cast<QGraphicsLineItem*>(axis.at(i + 1));
         QGraphicsSimpleTextItem *labelItem = static_cast<QGraphicsSimpleTextItem *>(labels.at(i));
 
         //grid line
         gridItem->setLine(layout[i], gridRect.top(), layout[i], gridRect.bottom());
 
-        //label text
-        labelItem->setText(ticksList.at(i));
-        const QRectF &rect = labelItem->boundingRect();
+        //label text wrapping
+        if(intervalAxis()&& i+1!=layout.size()) {
+            //wrapping in case of interval axis
+            const qreal delta = layout[i+1] - layout[i];
+            QString text = labelList.at(i);
+            if (fn.boundingRect(text).width() > delta )
+            {
+                QString label = text + "...";
+                while (fn.boundingRect(label).width() > delta && label.length() > 3)
+                label.remove(label.length() - 4, 1);
+                labelItem->setText(label);
+            }
+            else {
+                labelItem->setText(text);
+            }
+        }else{
+            labelItem->setText(labelList.at(i));
+        }
+
+        //label transformation origin point
+        const QRectF& rect = labelItem->boundingRect();
         QPointF center = rect.center();
         labelItem->setTransformOriginPoint(center.x(), center.y());
 
@@ -88,23 +109,21 @@ void HorizontalAxis::updateGeometry()
             tickItem->setLine(layout[i], axisRect.top(), layout[i], axisRect.top() + labelPadding());
         }
 
-        if (intervalAxis() && i + 1 != layout.size()) {
-            const qreal delta = (layout[i + 1] - layout[i]) / 2;
+        //label in beetwen
+        if(intervalAxis()&& i+1!=layout.size()) {
+            const qreal delta = (layout[i+1] - layout[i])/2;
             labelItem->setPos(layout[i] + delta - center.x(), labelItem->pos().y());
         }
 
-        //overlap detection
-        if (labelItem->pos().x() <= width ||
+        //label overlap detection
+        if(labelItem->pos().x() <= width ||
             labelItem->pos().x() < axisRect.left() ||
             labelItem->pos().x() + rect.width() > axisRect.right()) {
             labelItem->setVisible(false);
-            gridItem->setVisible(false);
-            tickItem->setVisible(false);
-        } else {
+        }
+        else {
             labelItem->setVisible(true);
-            gridItem->setVisible(true);
-            tickItem->setVisible(true);
-            width = rect.width() + labelItem->pos().x();
+            width=rect.width()+labelItem->pos().x();
         }
 
         //shades
@@ -118,8 +137,9 @@ void HorizontalAxis::updateGeometry()
         if (x < gridRect.left() || x > gridRect.right()) {
             gridItem->setVisible(false);
             tickItem->setVisible(false);
-            if (intervalAxis() && (labelItem->pos().x() < gridRect.left() || labelItem->pos().x() + rect.width() > gridRect.right()))
-                labelItem->setVisible(false);
+        }else{
+            gridItem->setVisible(true);
+            tickItem->setVisible(true);
         }
 
     }
@@ -129,8 +149,10 @@ void HorizontalAxis::updateGeometry()
         QGraphicsLineItem *gridLine;
         gridLine = static_cast<QGraphicsLineItem *>(lines.at(layout.size()));
         gridLine->setLine(gridRect.right(), gridRect.top(), gridRect.right(), gridRect.bottom());
-        gridLine = static_cast<QGraphicsLineItem *>(lines.at(layout.size() + 1));
+        gridLine->setVisible(true);
+        gridLine = static_cast<QGraphicsLineItem*>(lines.at(layout.size()+1));
         gridLine->setLine(gridRect.left(), gridRect.top(), gridRect.left(), gridRect.bottom());
+        gridLine->setVisible(true);
     }
 }
 

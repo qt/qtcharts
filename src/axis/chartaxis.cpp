@@ -301,9 +301,8 @@ void ChartAxis::handleDomainUpdated()
 
             QVector<qreal> layout = calculateLayout();
             updateLayout(layout);
-            QSizeF before = effectiveSizeHint(Qt::MinimumSize);
-
-            QSizeF after = sizeHint(Qt::MinimumSize);
+            QSizeF before = effectiveSizeHint(Qt::PreferredSize);
+            QSizeF after = sizeHint(Qt::PreferredSize);
 
             if (before != after) {
                 QGraphicsLayoutItem::updateGeometry();
