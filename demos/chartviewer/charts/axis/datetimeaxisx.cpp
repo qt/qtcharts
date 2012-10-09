@@ -59,4 +59,21 @@ public:
     }
 };
 
+class DateTimeAxisXTitle: public DateTimeAxisX
+{
+public:
+    QString name() { return "AxisX Title"; }
+
+    QChart *createChart(const DataTable &table)
+    {
+        QChart *chart = DateTimeAxisX::createChart(table);
+        chart->axisX()->setTitle("Axis X");
+        chart->axisY()->setTitle("Axis Y");
+        chart->setTitle("DateTime X , Value Y, Title");
+        return chart;
+    }
+};
+
+
 DECLARE_CHART(DateTimeAxisX);
+DECLARE_CHART(DateTimeAxisXTitle);

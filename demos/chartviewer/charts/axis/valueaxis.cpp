@@ -56,4 +56,20 @@ public:
     }
 };
 
+class ValueAxisTitle: public ValueAxis
+{
+public:
+    QString name() { return "ValueAxis Title"; }
+
+    QChart *createChart(const DataTable &table)
+    {
+        QChart *chart = ValueAxis::createChart(table);
+        chart->axisX()->setTitle("Axis X");
+        chart->axisY()->setTitle("Axis Y");
+        chart->setTitle("Value X , Value Y, title");
+        return chart;
+    }
+};
+
 DECLARE_CHART(ValueAxis);
+DECLARE_CHART(ValueAxisTitle);

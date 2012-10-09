@@ -30,7 +30,7 @@ public:
     QString category()  { return QObject::tr("Axis"); }
     QString subCategory() { return QString::null; }
 
-    QChart *createChart(const DataTable &table) 
+    QChart *createChart(const DataTable &table)
     {
         QChart *chart = new QChart();
         chart->setTitle("Category X , Category Y ");
@@ -64,5 +64,20 @@ public:
     }
 };
 
-DECLARE_CHART(CategoryLineChart)
+class CategoryLineChartTitle: public CategoryLineChart
+{
+public:
+    QString name() { return QObject::tr("CategoryAxis, Title"); }
 
+    QChart *createChart(const DataTable &table)
+    {
+        QChart *chart = CategoryLineChart::createChart(table);
+        chart->axisX()->setTitle("Axis X");
+        chart->axisY()->setTitle("Axis Y");
+        chart->setTitle("Category X , Category Y,title  ");
+        return chart;
+    }
+};
+
+DECLARE_CHART(CategoryLineChart)
+DECLARE_CHART(CategoryLineChartTitle)

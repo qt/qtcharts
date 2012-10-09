@@ -63,4 +63,18 @@ public:
     }
 };
 
+class BarCategoryAxisXTitle: public BarCategoryAxisX
+{
+    QString name() { return "AxisX Title"; }
+    QChart *createChart(const DataTable &table)
+    {
+        QChart *chart = BarCategoryAxisX::createChart(table);
+        chart->axisX()->setTitle("Axis X");
+        chart->axisY()->setTitle("Axis Y");
+        chart->setTitle(" BarCateogry X , Value Y, title");
+        return chart;
+    }
+};
+
 DECLARE_CHART(BarCategoryAxisX);
+DECLARE_CHART(BarCategoryAxisXTitle);
