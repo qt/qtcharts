@@ -20,7 +20,8 @@ SOURCES += \
     axis/barcategoryaxisy.cpp \
     axis/datetimeaxisx.cpp \
     axis/datetimeaxisy.cpp \
-    axis/multivalueaxis.cpp \
-    axis/multivalueaxis2.cpp \
-    axis/multivalueaxis3.cpp \
-    axis/multivalueaxis4.cpp 
+    multiaxis/multivalueaxis.cpp \
+    multiaxis/multivalueaxis2.cpp \
+    multiaxis/multivalueaxis3.cpp \
+    multiaxis/multivalueaxis4.cpp \
+    multiaxis/multivaluebaraxis.cpp 
