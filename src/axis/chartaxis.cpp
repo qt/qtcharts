@@ -53,6 +53,7 @@ ChartAxis::ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool interv
     m_labels->setZValue(ChartPresenter::AxisZValue);
     m_shades->setZValue(ChartPresenter::ShadesZValue);
     m_grid->setZValue(ChartPresenter::GridZValue);
+    m_title->setZValue(ChartPresenter::GridZValue);
 
     QObject::connect(m_chartAxis->d_ptr.data(), SIGNAL(updated()), this, SLOT(handleAxisUpdated()));
 
@@ -276,7 +277,7 @@ void ChartAxis::setLabelPadding(int padding)
 
 bool ChartAxis::isEmpty()
 {
-    return !m_axisRect.isValid() || m_gridRect.isEmpty() || qFuzzyIsNull(m_min - m_max);
+    return m_axisRect.isEmpty() || m_gridRect.isEmpty() || qFuzzyIsNull(m_min - m_max);
 }
 
 void ChartAxis::handleDomainUpdated()
@@ -341,7 +342,6 @@ void ChartAxis::setTitleText(const QString &title)
 {
     if (m_titleText != title) {
         m_titleText = title;
-        m_axisRect = QRect();
         QGraphicsLayoutItem::updateGeometry();
         presenter()->layout()->invalidate();
     }
