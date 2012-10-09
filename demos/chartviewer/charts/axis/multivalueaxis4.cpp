@@ -24,12 +24,12 @@
 #include "qvalueaxis.h"
 #include "qcategoryaxis.h"
 
-class MultiValueAxis: public Chart
+class MultiValueAxis4: public Chart
 {
 public:
     QString name()
     {
-        return "AxisSet 1";
+        return "AxisSet 4";
     }
     QString category()
     {
@@ -46,10 +46,10 @@ public:
         QValueAxis *axisX;
         QValueAxis *axisY;
 
-        chart->setTitle("MultiValueAxis1");
+        chart->setTitle("MultiValueAxis4");
 
         QString name("Series");
-        int nameIndex = 0;
+        int nameIndex = 1;
         foreach (DataList list, table) {
             QLineSeries *series = new QLineSeries(chart);
             foreach (Data data, list)
@@ -59,12 +59,14 @@ public:
             chart->addSeries(series);
             axisX = new QValueAxis();
             axisX->setLinePenColor(series->pen().color());
+            axisX->setTitle("ValueAxis for series" + QString::number(nameIndex));
             if (nameIndex % 2)
                 axisX->setAlignment(Qt::AlignTop);
             else
                 axisX->setAlignment(Qt::AlignBottom);
             axisY = new QValueAxis();
             axisY->setLinePenColor(series->pen().color());
+            axisY->setTitle("ValueAxis for series" + QString::number(nameIndex));
 
             if (nameIndex % 2)
                 axisY->setAlignment(Qt::AlignRight);
@@ -80,4 +82,4 @@ public:
     }
 };
 
-DECLARE_CHART(MultiValueAxis);
+DECLARE_CHART(MultiValueAxis4);

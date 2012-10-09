@@ -24,12 +24,12 @@
 #include "qvalueaxis.h"
 #include "qcategoryaxis.h"
 
-class MultiValueAxis: public Chart
+class MultiValueAxis3: public Chart
 {
 public:
     QString name()
     {
-        return "AxisSet 1";
+        return "AxisSet 3";
     }
     QString category()
     {
@@ -46,7 +46,7 @@ public:
         QValueAxis *axisX;
         QValueAxis *axisY;
 
-        chart->setTitle("MultiValueAxis1");
+        chart->setTitle("MultiValueAxis3");
 
         QString name("Series");
         int nameIndex = 0;
@@ -59,17 +59,22 @@ public:
             chart->addSeries(series);
             axisX = new QValueAxis();
             axisX->setLinePenColor(series->pen().color());
-            if (nameIndex % 2)
+            if (nameIndex % 2){
                 axisX->setAlignment(Qt::AlignTop);
-            else
+            } else{
                 axisX->setAlignment(Qt::AlignBottom);
+            }
+            axisX->setTitle("ValueAxis for series" + QString::number(nameIndex));
+
             axisY = new QValueAxis();
             axisY->setLinePenColor(series->pen().color());
 
-            if (nameIndex % 2)
+            if (nameIndex % 2){
                 axisY->setAlignment(Qt::AlignRight);
-            else
+            }else{
                 axisY->setAlignment(Qt::AlignLeft);
+            }
+            axisY->setTitle("ValueAxis for series" + QString::number(nameIndex));
 
             chart->setAxisX(axisX, series);
             chart->setAxisY(axisY, series);
@@ -80,4 +85,4 @@ public:
     }
 };
 
-DECLARE_CHART(MultiValueAxis);
+DECLARE_CHART(MultiValueAxis3);
