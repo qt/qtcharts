@@ -29,7 +29,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-static const qreal golden_ratio = 0.4;
+static const qreal golden_ratio = 0.8;//0.4;
 
 ChartLayout::ChartLayout(ChartPresenter *presenter)
     : m_presenter(presenter),

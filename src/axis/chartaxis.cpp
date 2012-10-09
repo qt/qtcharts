@@ -363,35 +363,6 @@ void ChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
     if (isEmpty())
         return;
 
-    if (!m_titleText.isNull()) {
-        QFontMetrics fn(m_title->font());
-
-        int size(0);
-
-        if (orientation() == Qt::Horizontal)
-            size = grid.width();
-        else if (orientation() == Qt::Vertical)
-            size = grid.height();
-
-        if (fn.boundingRect(m_titleText).width() > size) {
-            QString string = m_titleText + "...";
-            while (fn.boundingRect(string).width() > size && string.length() > 3)
-                string.remove(string.length() - 4, 1);
-            m_title->setText(string);
-        } else {
-            m_title->setText(m_titleText);
-        }
-
-        QPointF center = grid.center() - m_title->boundingRect().center();
-        if (orientation() == Qt::Horizontal) {
-            m_title->setPos(center.x(), m_axisRect.bottom() - m_title->boundingRect().height());
-        } else if (orientation() == Qt::Vertical) {
-            m_title->setTransformOriginPoint(m_title->boundingRect().center());
-            m_title->setRotation(270);
-            m_title->setPos(m_axisRect.left() - m_title->boundingRect().width() / 2 + m_title->boundingRect().height() / 2, center.y());
-        }
-    }
-
     QVector<qreal> layout = calculateLayout();
     updateLayout(layout);
 

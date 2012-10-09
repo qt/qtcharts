@@ -48,6 +48,7 @@ void HorizontalAxis::updateGeometry()
     QList<QGraphicsItem *> labels = labelItems();
     QList<QGraphicsItem *> shades = shadeItems();
     QList<QGraphicsItem *> axis = arrowItems();
+    QGraphicsSimpleTextItem* title = titleItem();
 
     Q_ASSERT(labels.size() == labelList.size());
     Q_ASSERT(layout.size() == labelList.size());
@@ -154,12 +155,40 @@ void HorizontalAxis::updateGeometry()
         gridLine->setLine(gridRect.left(), gridRect.top(), gridRect.left(), gridRect.bottom());
         gridLine->setVisible(true);
     }
+
+    //title
+
+    if (!titleText().isNull()) {
+        QFontMetrics fn(title->font());
+
+        int size(0);
+
+        size = gridRect.width();
+        QString titleText = this->titleText();
+
+        if (fn.boundingRect(titleText).width() > size) {
+            QString string = titleText + "...";
+            while (fn.boundingRect(string).width() > size && string.length() > 3)
+                string.remove(string.length() - 4, 1);
+            title->setText(string);
+        } else {
+            title->setText(titleText);
+        }
+
+        QPointF center = gridRect.center() - title->boundingRect().center();
+        if (alignment() == Qt::AlignTop) {
+            title->setPos(center.x(), axisRect.top());
+        } else  if (alignment() == Qt::AlignBottom) {
+            title->setPos(center.x(), axisRect.bottom() - title->boundingRect().height());
+        }
+    }
+
 }
 
 QSizeF HorizontalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
     Q_UNUSED(constraint);
-    QFontMetrics fn(titleItem()->font());
+    QFontMetrics fn(titleFont());
     QSizeF sh;
 
     if (titleText().isNull())

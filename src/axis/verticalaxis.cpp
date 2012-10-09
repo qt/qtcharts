@@ -21,6 +21,7 @@
 #include "verticalaxis_p.h"
 #include "qabstractaxis.h"
 #include <QFontMetrics>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -48,6 +49,7 @@ void VerticalAxis::updateGeometry()
     QList<QGraphicsItem *> labels = labelItems();
     QList<QGraphicsItem *> shades = shadeItems();
     QList<QGraphicsItem *> axis = arrowItems();
+    QGraphicsSimpleTextItem* title = titleItem();
 
     Q_ASSERT(labels.size() == labelList.size());
     Q_ASSERT(layout.size() == labelList.size());
@@ -149,13 +151,41 @@ void VerticalAxis::updateGeometry()
         gridLine->setLine(gridRect.left(), gridRect.bottom(), gridRect.right(), gridRect.bottom());
         gridLine->setVisible(true);
     }
+
+    //title
+
+    if (!titleText().isNull()) {
+        QFontMetrics fn(title->font());
+
+        int size(0);
+        size = gridRect.height();
+        QString titleText = this->titleText();
+
+        if (fn.boundingRect(titleText).width() > size) {
+            QString string = titleText + "...";
+            while (fn.boundingRect(string).width() > size && string.length() > 3)
+                string.remove(string.length() - 4, 1);
+            title->setText(string);
+        } else {
+            title->setText(titleText);
+        }
+
+        QPointF center = gridRect.center() - title->boundingRect().center();
+        if (alignment() == Qt::AlignLeft) {
+            title->setPos(axisRect.left() - title->boundingRect().width()/2 + title->boundingRect().height()/2 , center.y());
+        }else if (alignment() == Qt::AlignRight) {
+            title->setPos(axisRect.right()- title->boundingRect().width()/2 - title->boundingRect().height()/2, center.y());
+        }
+        title->setTransformOriginPoint(title->boundingRect().center());
+        title->setRotation(270);
+    }
 }
 
 QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
 
     Q_UNUSED(constraint);
-    QFontMetrics fn(titleItem()->font());
+    QFontMetrics fn(titleFont());
     QSizeF sh;
 
     if (titleText().isNull())
