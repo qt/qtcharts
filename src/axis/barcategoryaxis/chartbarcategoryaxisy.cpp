@@ -117,6 +117,7 @@ QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constra
             width = fn.boundingRect("...").width() + labelPadding();
             height = fn.height();
             width+=base.width();
+            if(base.width()>0) width+=labelPadding();
             height=qMax(height,base.height());
             sh = QSizeF(width,height);
             break;
@@ -126,10 +127,11 @@ QSizeF ChartBarCategoryAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constra
             {
                 QRectF rect = fn.boundingRect(ticksList.at(i));
                 height+=rect.height();
-                width=qMax(rect.width()+labelPadding() + 1 ,width); //one pixel torelance
+                width=qMax(rect.width()+labelPadding(),width); //one pixel torelance
             }
             height=qMax(height,base.height());
             width+=base.width();
+            if(base.width()>0) width+=labelPadding();
             sh = QSizeF(width,height);
             break;
         }
