@@ -21,6 +21,7 @@
 #include "chartdatetimeaxisx_p.h"
 #include "chartpresenter_p.h"
 #include "qdatetimeaxis.h"
+#include "chartlayout_p.h"
 #include <QGraphicsLayout>
 #include <QDateTime>
 #include <QFontMetrics>
@@ -65,7 +66,10 @@ void ChartDateTimeAxisX::updateGeometry()
 
 void ChartDateTimeAxisX::handleAxisUpdated()
 {
-    m_tickCount = m_axis->tickCount();
+    if (m_tickCount != m_axis->tickCount()) {
+        m_tickCount = m_axis->tickCount();
+        presenter()->layout()->invalidate();
+    }
     ChartAxis::handleAxisUpdated();
 }
 
@@ -76,26 +80,29 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     QFontMetrics fn(font());
     QSizeF sh;
 
+    QSizeF base = HorizontalAxis::sizeHint(which, constraint);
+    QStringList ticksList = createDateTimeLabels(m_axis->format(), m_tickCount);
+    qreal width = 0;
+    qreal height = 0;
+
+
     switch (which) {
-    case Qt::MinimumSize:
-        sh = QSizeF(fn.boundingRect("...").width(), fn.height());
+    case Qt::MinimumSize:{
+        int count = qMax(ticksList.last().count(),ticksList.first().count());
+        width = fn.averageCharWidth() * count;
+        height = fn.height() + labelPadding();
+        width = qMax(width,base.width());
+        height += base.height();
+        sh = QSizeF(width,height);
         break;
+    }
     case Qt::PreferredSize: {
-
-        const QVector<qreal>& layout = ChartAxis::layout();
-        if (layout.isEmpty())
-            break;
-        QStringList ticksList;
-
-        qreal width = 0;
-        qreal height = 0;
-
-        for (int i = 0; i < ticksList.size(); ++i) {
-            QRectF rect = fn.boundingRect(ticksList.at(i));
-            width += rect.width();
-            height += qMax(rect.height() + labelPadding(), height);
-        }
-        sh = QSizeF(width, height);
+        int count = qMax(ticksList.last().count(),ticksList.first().count());
+        width=fn.averageCharWidth() * count;
+        height=fn.height()+labelPadding();
+        width=qMax(width,base.width());
+        height+=base.height();
+        sh = QSizeF(width,height);
         break;
     }
     default:

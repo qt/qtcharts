@@ -21,6 +21,7 @@
 #include "chartdatetimeaxisy_p.h"
 #include "chartpresenter_p.h"
 #include "qdatetimeaxis.h"
+#include "chartlayout_p.h"
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <QDateTime>
@@ -66,7 +67,10 @@ void ChartDateTimeAxisY::updateGeometry()
 
 void ChartDateTimeAxisY::handleAxisUpdated()
 {
-    m_tickCount = m_axis->tickCount();
+    if (m_tickCount != m_axis->tickCount()) {
+        m_tickCount = m_axis->tickCount();
+        presenter()->layout()->invalidate();
+    }
     ChartAxis::handleAxisUpdated();
 }
 
@@ -77,28 +81,30 @@ QSizeF ChartDateTimeAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     QFontMetrics fn(font());
     QSizeF sh;
 
+    QSizeF base = VerticalAxis::sizeHint(which, constraint);
+    QStringList ticksList = createDateTimeLabels(m_axis->format(),m_tickCount);
+    qreal width = 0;
+    qreal height = 0;
+
     switch (which) {
-    case Qt::MinimumSize:
-        sh = QSizeF(fn.boundingRect("...").width(), fn.height());
-        break;
-    case Qt::PreferredSize: {
-
-        const QVector<qreal>& layout = ChartAxis::layout();
-        if (layout.isEmpty()) break;
-        QStringList ticksList;
-
-        qreal width = 0;
-        qreal height = 0;
-
-        for (int i = 0; i < ticksList.size(); ++i) {
-            QRectF rect = fn.boundingRect(ticksList.at(i));
-            width += rect.width();
-            height += qMax(rect.height() + labelPadding(), height);
+        case Qt::MinimumSize: {
+            width = fn.boundingRect("...").width() + labelPadding();
+            width += base.width();
+            height = fn.height();
+            height = qMax(height,base.height());
+            sh = QSizeF(width,height);
+            break;
         }
-        sh = QSizeF(width, height);
-        break;
-    }
-    default:
+        case Qt::PreferredSize: {
+            int count = qMax(ticksList.first().count() , ticksList.last().count());
+            width = count*fn.averageCharWidth() + labelPadding() + 2; //two pixels of tolerance
+            width += base.width();
+            height = fn.height() * ticksList.count();
+            height = qMax(height,base.height());
+            sh = QSizeF(width,height);
+            break;
+        }
+        default:
         break;
     }
 
