@@ -53,7 +53,7 @@ void QLegendMarker::setLabel(const QString &label)
 
 QBrush QLegendMarker::labelBrush() const
 {
-    return d_ptr->m_item->brush();
+    return d_ptr->m_item->labelBrush();
 }
 
 void QLegendMarker::setLabelBrush(const QBrush &brush)
