@@ -71,6 +71,36 @@ void VerticalAxis::updateGeometry()
 
     QFontMetrics fn(font());
 
+    //title
+
+    if (!titleText().isNull()) {
+        QFontMetrics fn(title->font());
+
+        int size(0);
+        size = gridRect.height();
+        QString titleText = this->titleText();
+
+        if (fn.boundingRect(titleText).width() > size) {
+            QString string = titleText + "...";
+            while (fn.boundingRect(string).width() > size && string.length() > 3)
+            string.remove(string.length() - 4, 1);
+            title->setText(string);
+        }
+        else {
+            title->setText(titleText);
+        }
+
+        QPointF center = gridRect.center() - title->boundingRect().center();
+        if (alignment() == Qt::AlignLeft) {
+            title->setPos(axisRect.left() - title->boundingRect().width()/2 + title->boundingRect().height()/2 , center.y());
+        }
+        else if (alignment() == Qt::AlignRight) {
+            title->setPos(axisRect.right()- title->boundingRect().width()/2 - title->boundingRect().height()/2, center.y());
+        }
+        title->setTransformOriginPoint(title->boundingRect().center());
+        title->setRotation(270);
+    }
+
     for (int i = 0; i < layout.size(); ++i) {
 
         //items
@@ -83,9 +113,10 @@ void VerticalAxis::updateGeometry()
 
         //label text wrapping
         QString text = labelList.at(i);
-        if (fn.boundingRect(text).width() > axisRect.right() - axisRect.left() - labelPadding()) {
+        qreal size = axisRect.right() - axisRect.left() - labelPadding() - title->boundingRect().height();
+        if (fn.boundingRect(text).width() > size) {
             QString label = text + "...";
-            while (fn.boundingRect(label).width() > axisRect.right() - axisRect.left() - labelPadding() && label.length() > 3)
+            while (fn.boundingRect(label).width() > size && label.length() > 3)
                 label.remove(label.length() - 4, 1);
             labelItem->setText(label);
         } else {
@@ -150,34 +181,6 @@ void VerticalAxis::updateGeometry()
         gridLine = static_cast<QGraphicsLineItem*>(lines.at(layout.size()+1));
         gridLine->setLine(gridRect.left(), gridRect.bottom(), gridRect.right(), gridRect.bottom());
         gridLine->setVisible(true);
-    }
-
-    //title
-
-    if (!titleText().isNull()) {
-        QFontMetrics fn(title->font());
-
-        int size(0);
-        size = gridRect.height();
-        QString titleText = this->titleText();
-
-        if (fn.boundingRect(titleText).width() > size) {
-            QString string = titleText + "...";
-            while (fn.boundingRect(string).width() > size && string.length() > 3)
-                string.remove(string.length() - 4, 1);
-            title->setText(string);
-        } else {
-            title->setText(titleText);
-        }
-
-        QPointF center = gridRect.center() - title->boundingRect().center();
-        if (alignment() == Qt::AlignLeft) {
-            title->setPos(axisRect.left() - title->boundingRect().width()/2 + title->boundingRect().height()/2 , center.y());
-        }else if (alignment() == Qt::AlignRight) {
-            title->setPos(axisRect.right()- title->boundingRect().width()/2 - title->boundingRect().height()/2, center.y());
-        }
-        title->setTransformOriginPoint(title->boundingRect().center());
-        title->setRotation(270);
     }
 }
 
