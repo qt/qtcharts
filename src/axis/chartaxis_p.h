@@ -124,7 +124,7 @@ protected:
     QList<QGraphicsItem *> labelItems() { return m_labels->childItems();};
     QList<QGraphicsItem *> shadeItems() { return m_shades->childItems();};
     QList<QGraphicsItem *> arrowItems() { return m_arrow->childItems();};
-    QGraphicsSimpleTextItem* titleItem() const { return m_title;}
+    QGraphicsSimpleTextItem* titleItem() const { return m_title.data();}
 
     QFont font() const { return m_font; }
     qreal min() const {return m_min; }
@@ -152,7 +152,7 @@ private:
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;
     QScopedPointer<QGraphicsItemGroup> m_arrow;
-    QGraphicsSimpleTextItem *m_title;
+    QScopedPointer<QGraphicsSimpleTextItem> m_title;
     QVector<qreal> m_layoutVector;
     qreal m_min;
     qreal m_max;
