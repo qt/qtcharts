@@ -41,27 +41,22 @@ ChartBarCategoryAxisX::~ChartBarCategoryAxisX()
 QVector<qreal> ChartBarCategoryAxisX::calculateLayout() const
 {
     QVector<qreal> points;
-
     const QRectF& gridRect = gridGeometry();
     qreal range = max() - min();
-
     const qreal delta = gridRect.width()/range;
 
     if(delta<2) return points;
 
     qreal offset =-min()-0.5;
-
     offset = int(offset * delta)%int(delta);
 
     int count = qFloor(range);
-
     if(count < 1 ) return points;
 
     points.resize(count+2);
 
     for (int i = 0; i < count+2; ++i) {
-        qreal x = offset + i * delta + gridRect.left();
-        points[i] = x;
+        points[i] = offset + i * delta + gridRect.left();
     }
 
     return points;
@@ -71,8 +66,8 @@ QStringList ChartBarCategoryAxisX::createCategoryLabels(const QVector<qreal>& la
 {
     QStringList result ;
     const QRectF &gridRect = gridGeometry();
-
     qreal d = (max() - min()) / gridRect.width();
+
     for (int i = 0; i < layout.count() - 1; ++i) {
         qreal x = qFloor((((layout[i] + layout[i + 1]) / 2 - gridRect.left()) * d + min() + 0.5));
         if ((x < m_categoriesAxis->categories().count()) && (x >= 0)) {

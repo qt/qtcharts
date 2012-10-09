@@ -39,30 +39,25 @@ ChartBarCategoryAxisY::~ChartBarCategoryAxisY()
 
 QVector<qreal> ChartBarCategoryAxisY::calculateLayout() const
 {
-    int count = m_categoriesAxis->d_ptr->count();
-
-    Q_ASSERT(count >= 1);
-
     QVector<qreal> points;
-    points.resize(count + 2);
+    const QRectF& gridRect = gridGeometry();
+    qreal range = max() - min();
+    const qreal delta = gridRect.height()/range;
 
-    const QRectF &gridRect = gridGeometry();
+    if(delta<2) return points;
 
-    const qreal delta = gridRect.height() / (count);
     qreal offset = - min() - 0.5;
+    offset = int(offset * delta)%int(delta);
 
-    if (delta < 1)
-        return points;
+    int count = qFloor(range);
+    if(count < 1 ) return points;
 
-    if (offset < 0)
-        offset = int(offset * gridRect.height() / (max() - min())) % int(delta) + delta;
-    else
-        offset = int(offset * gridRect.height() / (max() - min())) % int(delta);
+    points.resize(count+2);
 
-    for (int i = -1; i < count + 1; ++i) {
-        int y = gridRect.bottom() - i * delta - offset;
-        points[i + 1] = y;
+    for (int i = 0; i < count+2; ++i) {
+        points[i] =  gridRect.bottom() - i * delta -offset;
     }
+
     return points;
 }
 
@@ -71,6 +66,7 @@ QStringList ChartBarCategoryAxisY::createCategoryLabels(const QVector<qreal>& la
     QStringList result;
     const QRectF &gridRect = gridGeometry();
     qreal d = (max() - min()) / gridRect.height();
+
     for (int i = 0; i < layout.count() - 1; ++i) {
         qreal x = qFloor(((gridRect.height() - (layout[i + 1] + layout[i]) / 2 + gridRect.top()) * d + min() + 0.5));
         if ((x < m_categoriesAxis->categories().count()) && (x >= 0)) {

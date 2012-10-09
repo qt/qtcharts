@@ -82,10 +82,10 @@ void HorizontalAxis::updateGeometry()
             //wrapping in case of interval axis
             const qreal delta = layout[i+1] - layout[i];
             QString text = labelList.at(i);
-            if (fn.boundingRect(text).width() > delta )
+            if (fn.boundingRect(text).width() + 1 > delta )
             {
                 QString label = text + "...";
-                while (fn.boundingRect(label).width() > delta && label.length() > 3)
+                while (fn.boundingRect(label).width() >= delta && label.length() > 3)
                 label.remove(label.length() - 4, 1);
                 labelItem->setText(label);
             }
@@ -117,12 +117,11 @@ void HorizontalAxis::updateGeometry()
         }
 
         //label overlap detection
-        if(labelItem->pos().x() <= width ||
+        if(labelItem->pos().x() < width ||
             labelItem->pos().x() < axisRect.left() ||
             labelItem->pos().x() + rect.width() > axisRect.right()) {
             labelItem->setVisible(false);
-        }
-        else {
+        } else {
             labelItem->setVisible(true);
             width=rect.width()+labelItem->pos().x();
         }
