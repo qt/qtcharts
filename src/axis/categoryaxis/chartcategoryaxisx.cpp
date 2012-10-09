@@ -84,7 +84,7 @@ QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     QFontMetrics fn(font());
     QSizeF sh;
-    QSizeF base = ChartAxis::sizeHint(which, constraint);
+    QSizeF base = HorizontalAxis::sizeHint(which, constraint);
     QStringList ticksList = m_axis->categoriesLabels();
     qreal width = 0;
     qreal height = 0;

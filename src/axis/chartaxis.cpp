@@ -422,37 +422,6 @@ void ChartAxis::setLabels(const QStringList &labels)
     m_labelsList = labels;
 }
 
-QSizeF ChartAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
-{
-
-    Q_UNUSED(constraint);
-    QFontMetrics fn(m_title->font());
-    QSizeF sh;
-
-    if (m_titleText.isNull())
-        return sh;
-
-    switch (which) {
-    case Qt::MinimumSize:
-        if (orientation() == Qt::Horizontal)
-            sh = QSizeF(fn.boundingRect("...").width(), fn.height());
-        else if (orientation() == Qt::Vertical)
-            sh = QSizeF(fn.height(), fn.boundingRect("...").width());
-        break;
-    case Qt::MaximumSize:
-    case Qt::PreferredSize:
-        if (orientation() == Qt::Horizontal)
-            sh = QSizeF(fn.boundingRect(m_chartAxis->title()).width(), fn.height());
-        else if (orientation() == Qt::Vertical)
-            sh = QSizeF(fn.height(), fn.boundingRect(m_chartAxis->title()).width());
-        break;
-    default:
-        break;
-    }
-
-    return sh;
-}
-
 QStringList ChartAxis::createValueLabels(int ticks) const
 {
     Q_ASSERT(m_max > m_min);
@@ -495,6 +464,13 @@ QStringList ChartAxis::createDateTimeLabels(const QString &format, int ticks) co
         labels << QDateTime::fromMSecsSinceEpoch(value).toString(format);
     }
     return labels;
+}
+
+QSizeF ChartAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
+{
+    Q_UNUSED(which);
+    Q_UNUSED(constraint);
+    return QSizeF();
 }
 
 #include "moc_chartaxis_p.cpp"

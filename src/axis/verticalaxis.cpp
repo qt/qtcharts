@@ -151,4 +151,29 @@ void VerticalAxis::updateGeometry()
     }
 }
 
+QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
+{
+
+    Q_UNUSED(constraint);
+    QFontMetrics fn(titleItem()->font());
+    QSizeF sh;
+
+    if (titleText().isNull())
+        return sh;
+
+    switch (which) {
+    case Qt::MinimumSize:
+            sh = QSizeF(fn.height(), fn.boundingRect("...").width());
+        break;
+    case Qt::MaximumSize:
+    case Qt::PreferredSize:
+            sh = QSizeF(fn.height(), fn.boundingRect(axis()->title()).width());
+        break;
+    default:
+        break;
+    }
+
+    return sh;
+}
+
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -112,7 +112,7 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constra
 
     QFontMetrics fn(font());
     QSizeF sh;
-    QSizeF base = ChartAxis::sizeHint(which, constraint);
+    QSizeF base = HorizontalAxis::sizeHint(which, constraint);
     QStringList ticksList = createCategoryLabels(ChartAxis::layout());
 
     qreal width=0;

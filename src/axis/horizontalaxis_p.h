@@ -39,6 +39,7 @@ class HorizontalAxis : public ChartAxis
 public:
     HorizontalAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool intervalAxis = false);
     ~HorizontalAxis();
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 protected:
     void updateGeometry();
 

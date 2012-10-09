@@ -51,6 +51,8 @@ public:
     ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool intervalAxis = false);
     ~ChartAxis();
 
+    QAbstractAxis* axis() const { return m_chartAxis; }
+
     void setArrowOpacity(qreal opacity);
     qreal arrowOpacity() const;
     void setArrowVisibility(bool visible);
@@ -86,6 +88,7 @@ public:
     void setTitleBrush(const QBrush &brush);
     void setTitleFont(const QFont &font);
     void setTitleText(const QString &title);
+    QString titleText() const {return m_titleText; };
 
     void setLayout(QVector<qreal> &layout);
     QVector<qreal> layout() const { return m_layoutVector; }
@@ -120,6 +123,7 @@ protected:
     QList<QGraphicsItem *> labelItems() { return m_labels->childItems();};
     QList<QGraphicsItem *> shadeItems() { return m_shades->childItems();};
     QList<QGraphicsItem *> arrowItems() { return m_arrow->childItems();};
+    QGraphicsSimpleTextItem* titleItem() const { return m_title;}
 
     QFont font() const { return m_font; }
     qreal min() const {return m_min; }

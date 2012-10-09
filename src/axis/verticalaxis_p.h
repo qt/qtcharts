@@ -39,6 +39,7 @@ class VerticalAxis : public ChartAxis
 public:
     VerticalAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool intervalAxis = false);
     ~VerticalAxis();
+    QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 protected:
     void updateGeometry();
 
