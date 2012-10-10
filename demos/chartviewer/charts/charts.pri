@@ -24,4 +24,5 @@ SOURCES += \
     multiaxis/multivalueaxis2.cpp \
     multiaxis/multivalueaxis3.cpp \
     multiaxis/multivalueaxis4.cpp \
-    multiaxis/multivaluebaraxis.cpp 
+    multiaxis/multivaluebaraxis.cpp \
+    size/sizecharts.cpp
