@@ -30,7 +30,9 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 LegendLayout::LegendLayout(QLegend *legend)
-    : m_legend(legend)
+    : m_legend(legend),
+      m_offsetX(0),
+      m_offsetY(0)
 {
 
 }
@@ -112,6 +114,8 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
     if (!rect.isValid())
         return;
 
+    qreal oldOffsetX = m_offsetX;
+    qreal oldOffsetY = m_offsetY;
     m_offsetX = 0;
     m_offsetY = 0;
 
@@ -181,6 +185,8 @@ void LegendLayout::setAttachedGeometry(const QRectF &rect)
     m_minOffsetY = - top;
     m_maxOffsetX = m_width - geometry.width() - right;
     m_maxOffsetY = m_height - geometry.height() - bottom;
+
+    setOffset(oldOffsetX, oldOffsetY);
 }
 
 void LegendLayout::setDettachedGeometry(const QRectF &rect)
@@ -193,6 +199,8 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
     // differ a log from attached mode.
     // Also the scrolling logic is bit different.
 
+    qreal oldOffsetX = m_offsetX;
+    qreal oldOffsetY = m_offsetY;
     m_offsetX = 0;
     m_offsetY = 0;
 
@@ -350,6 +358,7 @@ void LegendLayout::setDettachedGeometry(const QRectF &rect)
         break;
     }
 
+    setOffset(oldOffsetX, oldOffsetY);
 }
 
 QSizeF LegendLayout::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
