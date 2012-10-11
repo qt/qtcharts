@@ -31,7 +31,8 @@ SUBDIRS += \
            scrollchart \
            temperaturerecords \
            donutchart \
-           multiaxis
+           multiaxis \
+           callout
 
 !linux-arm*: {
 SUBDIRS += \
