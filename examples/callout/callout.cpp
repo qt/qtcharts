@@ -14,9 +14,9 @@ QRectF Callout::boundingRect() const
     QPointF anchor = mapFromParent(m_anchor);
     QRectF rect;
     rect.setLeft(qMin(m_textRect.left(), anchor.x()));
-    rect.setRight(qMax(m_textRect.right(), anchor.x()));
+    rect.setRight(qMax(m_textRect.right() + 4, anchor.x()));
     rect.setTop(qMin(m_textRect.top(), anchor.y()));
-    rect.setBottom(qMax(m_textRect.bottom(), anchor.y()));
+    rect.setBottom(qMax(m_textRect.bottom() + 4, anchor.y()));
     return rect;
 }
 
