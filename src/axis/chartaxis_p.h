@@ -87,7 +87,7 @@ public:
     void setTitlePen(const QPen &pen);
     void setTitleBrush(const QBrush &brush);
     void setTitleFont(const QFont &font);
-    QFont titleFont() const { return  m_titleFont; };
+    QFont titleFont() const;
     void setTitleText(const QString &title);
     QString titleText() const {return m_titleText; };
 
@@ -158,7 +158,6 @@ private:
     qreal m_max;
     AxisAnimation *m_animation;
     QFont m_font;
-    QFont m_titleFont;
     QString m_titleText;
     int m_labelPadding;
     QStringList m_labelsList;

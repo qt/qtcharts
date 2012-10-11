@@ -234,9 +234,6 @@ void ChartAxis::setLabelsBrush(const QBrush &brush)
 
 void ChartAxis::setLabelsFont(const QFont &font)
 {
-    foreach (QGraphicsItem *item , m_labels->childItems())
-        static_cast<QGraphicsSimpleTextItem *>(item)->setFont(font);
-
     if (m_font != font) {
         m_font = font;
         foreach (QGraphicsItem *item , m_labels->childItems())
@@ -323,6 +320,7 @@ void ChartAxis::handleAxisUpdated()
 
     bool visible = m_chartAxis->isVisible();
 
+    //TODO: split this into separate signal/slots ?
     setArrowVisibility(visible && m_chartAxis->isLineVisible());
     setGridVisibility(visible && m_chartAxis->isGridLineVisible());
     setLabelsVisibility(visible && m_chartAxis->labelsVisible());
@@ -336,6 +334,9 @@ void ChartAxis::handleAxisUpdated()
     setShadesPen(m_chartAxis->shadesPen());
     setShadesBrush(m_chartAxis->shadesBrush());
     setTitleText(m_chartAxis->title());
+    setTitleFont(m_chartAxis->titleFont());
+    setTitlePen(m_chartAxis->titlePen());
+    setTitleBrush(m_chartAxis->titleBrush());
 }
 
 void ChartAxis::setTitleText(const QString &title)
@@ -345,6 +346,30 @@ void ChartAxis::setTitleText(const QString &title)
         QGraphicsLayoutItem::updateGeometry();
         presenter()->layout()->invalidate();
     }
+}
+
+void ChartAxis::setTitlePen(const QPen &pen)
+{
+    m_title->setPen(pen);
+}
+
+void ChartAxis::setTitleBrush(const QBrush &brush)
+{
+    m_title->setBrush(brush);
+}
+
+void ChartAxis::setTitleFont(const QFont &font)
+{
+    if(m_title->font() != font){
+        m_title->setFont(font);
+        QGraphicsLayoutItem::updateGeometry();
+        presenter()->layout()->invalidate();
+    }
+}
+
+QFont ChartAxis::titleFont() const
+{
+    return  m_title->font();
 }
 
 void ChartAxis::hide()

@@ -50,6 +50,10 @@ public:
         chart->setTitleFont(font);
         chart->axisX()->setLabelsFont(font);
         chart->axisY()->setLabelsFont(font);
+        chart->axisX()->setTitle("Axis X");
+        chart->axisY()->setTitle("Axis Y");
+        chart->axisX()->setTitleFont(font);
+        chart->axisY()->setTitleFont(font);
         return chart;
     }
 

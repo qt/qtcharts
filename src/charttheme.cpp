@@ -271,8 +271,15 @@ void ChartTheme::decorate(QAbstractAxis *axis)
         if (m_force || brush == axis->labelsBrush())
             axis->setLabelsBrush(m_labelBrush);
 
+        //TODO: introduce axis brush
+        if (m_force || brush == axis->titleBrush())
+                  axis->setTitleBrush(m_labelBrush);
+
         if (m_force || pen == axis->labelsPen())
             axis->setLabelsPen(Qt::NoPen); // NoPen for performance reasons
+
+        if (m_force || pen == axis->titlePen())
+            axis->setTitlePen(Qt::NoPen); // Noen for performance reasons
 
         if (m_force || axis->shadesVisible()) {
 
@@ -297,6 +304,13 @@ void ChartTheme::decorate(QAbstractAxis *axis)
 
         if (m_force || font == axis->labelsFont())
             axis->setLabelsFont(m_labelFont);
+
+        //TODO: discuss with Tero
+        if (m_force || font == axis->titleFont()){
+                   QFont font(m_labelFont);
+                   font.setBold(true);
+                   axis->setTitleFont(font);
+        }
     }
 }
 
