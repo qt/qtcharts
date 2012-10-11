@@ -222,10 +222,7 @@ QBarSet *QBarModelMapperPrivate::barSet(QModelIndex index)
 
     if (m_orientation == Qt::Vertical && index.column() >= m_firstBarSetSection && index.column() <= m_lastBarSetSection) {
         if (index.row() >= m_first && (m_count == - 1 || index.row() < m_first + m_count)) {
-            //            if (m_model->index(index.row(), m_valuesSection).isValid() && m_model->index(index.row(), m_labelsSection).isValid())
             return m_series->barSets().at(index.column() - m_firstBarSetSection);
-            //            else
-            //                return 0;
         }
     } else if (m_orientation == Qt::Horizontal && index.row() >= m_firstBarSetSection && index.row() <= m_lastBarSetSection) {
         if (index.column() >= m_first && (m_count == - 1 || index.column() < m_first + m_count))
@@ -304,15 +301,13 @@ void QBarModelMapperPrivate::modelHeaderDataUpdated(Qt::Orientation orientation,
 
 void QBarModelMapperPrivate::modelRowsAdded(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(end)
+    Q_UNUSED(parent)
     if (m_modelSignalsBlock)
         return;
 
     blockSeriesSignals();
     if (m_orientation == Qt::Vertical)
-        //        insertData(start, end);
-        initializeBarFromModel();
+        insertData(start, end);
     else if (start <= m_firstBarSetSection || start <= m_lastBarSetSection) // if the changes affect the map - reinitialize
         initializeBarFromModel();
     blockSeriesSignals(false);
@@ -320,15 +315,13 @@ void QBarModelMapperPrivate::modelRowsAdded(QModelIndex parent, int start, int e
 
 void QBarModelMapperPrivate::modelRowsRemoved(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(end)
+    Q_UNUSED(parent)
     if (m_modelSignalsBlock)
         return;
 
     blockSeriesSignals();
     if (m_orientation == Qt::Vertical)
-        //        removeData(start, end);
-        initializeBarFromModel();
+        removeData(start, end);
     else if (start <= m_firstBarSetSection || start <= m_lastBarSetSection) // if the changes affect the map - reinitialize
         initializeBarFromModel();
     blockSeriesSignals(false);
@@ -336,15 +329,13 @@ void QBarModelMapperPrivate::modelRowsRemoved(QModelIndex parent, int start, int
 
 void QBarModelMapperPrivate::modelColumnsAdded(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(end)
+    Q_UNUSED(parent)
     if (m_modelSignalsBlock)
         return;
 
     blockSeriesSignals();
     if (m_orientation == Qt::Horizontal)
-        //        insertData(start, end);
-        initializeBarFromModel();
+        insertData(start, end);
     else if (start <= m_firstBarSetSection || start <= m_lastBarSetSection) // if the changes affect the map - reinitialize
         initializeBarFromModel();
     blockSeriesSignals(false);
@@ -352,15 +343,13 @@ void QBarModelMapperPrivate::modelColumnsAdded(QModelIndex parent, int start, in
 
 void QBarModelMapperPrivate::modelColumnsRemoved(QModelIndex parent, int start, int end)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(end)
+    Q_UNUSED(parent)
     if (m_modelSignalsBlock)
         return;
 
     blockSeriesSignals();
     if (m_orientation == Qt::Horizontal)
-        //        removeData(start, end);
-        initializeBarFromModel();
+        removeData(start, end);
     else if (start <= m_firstBarSetSection || start <= m_lastBarSetSection) // if the changes affect the map - reinitialize
         initializeBarFromModel();
     blockSeriesSignals(false);
@@ -376,7 +365,9 @@ void QBarModelMapperPrivate::insertData(int start, int end)
     Q_UNUSED(end)
     Q_UNUSED(start)
     Q_UNUSED(end)
-    // To be implemented
+    // Currently barchart needs to be fully recalculated when change is made.
+    // Re-initialize
+    initializeBarFromModel();
 }
 
 void QBarModelMapperPrivate::removeData(int start, int end)
@@ -384,7 +375,9 @@ void QBarModelMapperPrivate::removeData(int start, int end)
     Q_UNUSED(end)
     Q_UNUSED(start)
     Q_UNUSED(end)
-    // To be implemented
+    // Currently barchart needs to be fully recalculated when change is made.
+    // Re-initialize
+    initializeBarFromModel();
 }
 
 void QBarModelMapperPrivate::barSetsAdded(QList<QBarSet *> sets)
