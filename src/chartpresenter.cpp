@@ -63,7 +63,6 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis *axis, Domain *domain)
         item->setAnimation(new AxisAnimation(item));
 
     QObject::connect(domain, SIGNAL(updated()), item, SLOT(handleDomainUpdated()));
-    QObject::connect(axis, SIGNAL(visibleChanged(bool)), this, SLOT(handleAxisVisibleChanged(bool)));
 
     //initialize
     domain->emitUpdated();
@@ -72,7 +71,6 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis *axis, Domain *domain)
     axis->d_ptr->emitUpdated();
 
     m_axisItems.insert(axis, item);
-    selectVisibleAxis();
     m_layout->invalidate();
 }
 
@@ -80,11 +78,11 @@ void ChartPresenter::handleAxisRemoved(QAbstractAxis *axis)
 {
     ChartAxis *item = m_axisItems.take(axis);
     Q_ASSERT(item);
-    selectVisibleAxis();
     item->hide();
     item->disconnect();
     QObject::disconnect(this, 0, item, 0);
     item->deleteLater();
+    m_layout->invalidate();
 }
 
 
@@ -107,54 +105,6 @@ void ChartPresenter::handleSeriesRemoved(QAbstractSeries *series)
     ChartElement *item = m_chartItems.take(series);
     Q_ASSERT(item);
     item->deleteLater();
-}
-
-void ChartPresenter::selectVisibleAxis()
-{
-    QMapIterator<QAbstractAxis *, ChartAxis *> i(m_axisItems);
-
-    while (i.hasNext()) {
-        i.next();
-//        i.key()->hide();
-        i.key()->show();
-    }
-
-//    i.toFront();
-
-//    bool axisX=false;
-//    bool axisY=false;
-
-//    while (i.hasNext()) {
-//        i.next();
-//        if(i.key()->orientation()==Qt::Vertical && !axisY) {
-//            axisY=true;
-//            i.key()->show();
-//        }
-//        if(i.key()->orientation()==Qt::Horizontal && !axisX) {
-//            axisX=true;
-//            i.key()->show();
-//        }
-
-//    }
-}
-
-
-void ChartPresenter::handleAxisVisibleChanged(bool visible)
-{
-    QAbstractAxis *axis = static_cast<QAbstractAxis *>(sender());
-    Q_ASSERT(axis);
-    if (visible) {
-
-        QMapIterator<QAbstractAxis *, ChartAxis *> i(m_axisItems);
-
-        while (i.hasNext()) {
-            i.next();
-            if (i.key() == axis)
-                continue;
-            if (i.key()->orientation() == axis->orientation())
-                i.key()->setVisible(false);
-        }
-    }
 }
 
 void ChartPresenter::setTheme(QChart::ChartTheme theme, bool force)

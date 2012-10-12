@@ -136,14 +136,12 @@ public:
 private:
     void createBackgroundItem();
     void createTitleItem();
-    void selectVisibleAxis();
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
     void handleSeriesRemoved(QAbstractSeries *series);
     void handleAxisAdded(QAbstractAxis *axis, Domain *domain);
     void handleAxisRemoved(QAbstractAxis *axis);
-    void handleAxisVisibleChanged(bool visible);
 
 private Q_SLOTS:
     void handleAnimationFinished();
