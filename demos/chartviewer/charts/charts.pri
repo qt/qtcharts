@@ -18,11 +18,15 @@ SOURCES += \
     axis/categoryaxis.cpp \
     axis/barcategoryaxisx.cpp \
     axis/barcategoryaxisy.cpp \
-    axis/datetimeaxisx.cpp \
-    axis/datetimeaxisy.cpp \
     multiaxis/multivalueaxis.cpp \
     multiaxis/multivalueaxis2.cpp \
     multiaxis/multivalueaxis3.cpp \
     multiaxis/multivalueaxis4.cpp \
     multiaxis/multivaluebaraxis.cpp \
     size/sizecharts.cpp
+
+!linux-arm*: {
+SOURCES += \
+    axis/datetimeaxisx.cpp \
+    axis/datetimeaxisy.cpp
+}
