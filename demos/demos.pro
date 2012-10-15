@@ -14,8 +14,8 @@ SUBDIRS += piechartcustomization \
            qmlcustommodel \
            chartinteractions \
            qmlaxes \
-           qmlcustomlegend \
-    audio
+           qmlcustomlegend
+#    audio
 
 contains(QT_CONFIG, opengl) {
         SUBDIRS +=  chartthemes \
