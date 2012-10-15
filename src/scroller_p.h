@@ -62,6 +62,7 @@ class Scroller
 public:
     enum State {
         Idle,
+        Pressed,
         Move,
         Scroll
     };
@@ -74,6 +75,10 @@ public:
 
     void move(const QPointF &delta);
     void scrollTo(const QPointF &delta);
+
+    void handleMousePressEvent(QGraphicsSceneMouseEvent *event);
+    void handleMouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
     void scrollTick();
 
@@ -94,6 +99,9 @@ private:
     int m_timeTresholdMax;
 
     State m_state;
+    QPointF m_pressPos;
+    QPointF m_lastPos;
+    qreal m_treshold;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

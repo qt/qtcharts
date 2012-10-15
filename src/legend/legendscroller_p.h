@@ -47,25 +47,9 @@ public:
     void setOffset(const QPointF &point);
     QPointF offset() const;
 
-    void setMoveTreshold(qreal treshold);
-
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-
-private:
-
-    enum State {
-        Idle,
-        Pressed,
-        Moved,
-        Released
-    };
-
-    QPointF m_pressPos;
-    QPointF m_lastPos;
-    State m_state;
-    qreal m_treshold;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

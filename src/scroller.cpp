@@ -29,7 +29,8 @@ Scroller::Scroller()
     : m_ticker(this),
       m_timeTresholdMin(50),
       m_timeTresholdMax(300),
-      m_state(Idle)
+      m_state(Idle),
+      m_treshold(10)
 {
 
 }
@@ -41,14 +42,12 @@ Scroller::~Scroller()
 void Scroller::move(const QPointF &delta)
 {
     switch (m_state) {
-    case Idle:
+    case Pressed:
         m_timeStamp = QTime::currentTime();
-        m_state = Move;
         break;
     case Scroll:
         stopTicker();
         m_timeStamp = QTime::currentTime();
-        m_state = Move;
         break;
     default:
         break;
@@ -86,6 +85,62 @@ void Scroller::scrollTo(const QPointF &delta)
     }
 }
 
+void Scroller::handleMousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    stopTicker();
+    m_pressPos = event->screenPos();
+    m_lastPos = m_pressPos;
+    m_state = Pressed;
+    event->accept();
+}
+
+void Scroller::handleMouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    QPointF delta = event->screenPos() - m_lastPos;
+
+    switch (m_state) {
+    case Pressed: {
+        // calculate treshold. If enough, change to move state and send out move deltas.
+        if (qAbs(delta.x()) > m_treshold || qAbs(delta.y()) > m_treshold) {
+            m_lastPos = event->screenPos();
+            move(delta);
+            m_state = Move;
+        }
+        event->accept();
+        break;
+    }
+    case Move: {
+        m_lastPos = event->screenPos();
+        move(delta);
+        event->accept();
+        break;
+    }
+    case Idle:
+    default: {
+        event->ignore();
+        break;
+    }
+    }
+}
+
+void Scroller::handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    switch (m_state) {
+    case Move:
+    {
+        scrollTo(m_lastPos - m_pressPos);
+        event->accept();
+        break;
+    }
+    default:
+    {
+        m_state = Idle;
+        event->ignore();
+        break;
+    }
+    }
+}
+
 void Scroller::startTicker(int interval)
 {
     m_state = Scroll;
@@ -109,8 +164,7 @@ void Scroller::scrollTick()
             m_ticker.stop();
         }
         break;
-    case Idle:
-    case Move:
+    default:
         qWarning() << __FUNCTION__ << "Scroller unexpected state" << m_state;
         m_ticker.stop();
         m_state = Idle;
