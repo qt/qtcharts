@@ -160,37 +160,6 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
       return sh;
 }
 
-void LegendMarkerItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
-{
-    MouseEventHandler::handleMousePressEvent(event);
-    m_pressPos = event->screenPos();
-}
-
-void LegendMarkerItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    MouseEventHandler::handleMouseMoveEvent(event);
-}
-
-void LegendMarkerItem::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    MouseEventHandler::handleMouseReleaseEvent(event);
-}
-
-void LegendMarkerItem::mouseClicked()
-{
-    emit m_marker->q_func()->clicked();
-}
-
-void LegendMarkerItem::mouseMoved(const QPointF &delta)
-{
-    m_marker->m_legend->d_ptr->move(delta);
-}
-
-void LegendMarkerItem::mouseReleased(const QPointF &pos)
-{
-    m_marker->m_legend->d_ptr->release(pos - m_pressPos);
-}
-
 #include "moc_legendmarkeritem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

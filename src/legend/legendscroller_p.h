@@ -33,18 +33,39 @@
 
 #include "qlegend.h"
 #include "qlegend_p.h"
+#include "scroller_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class LegendScroller: public QLegend
+class LegendScroller: public QLegend, public Scroller
 {
+    Q_OBJECT
 
 public:
-    LegendScroller(QChart *chart): QLegend(chart) { }
+    LegendScroller(QChart *chart);
 
-    void setOffset(const QPointF &point) { d_ptr->setOffset(point); }
+    void setOffset(const QPointF &point);
+    QPointF offset() const;
 
-    QPointF offset() const { return d_ptr->offset(); }
+    void setMoveTreshold(qreal treshold);
+
+    void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+
+private:
+
+    enum State {
+        Idle,
+        Pressed,
+        Moved,
+        Released
+    };
+
+    QPointF m_pressPos;
+    QPointF m_lastPos;
+    State m_state;
+    qreal m_treshold;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

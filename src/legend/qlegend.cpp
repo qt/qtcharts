@@ -584,6 +584,7 @@ void QLegendPrivate::addMarkers(QList<QLegendMarker *> markers)
     foreach (QLegendMarker *marker, markers) {
         m_items->addToGroup(marker->d_ptr.data()->item());
         m_markers << marker;
+        m_markerHash.insert(marker->d_ptr->item(), marker);
     }
 }
 
@@ -592,8 +593,9 @@ void QLegendPrivate::removeMarkers(QList<QLegendMarker *> markers)
     foreach (QLegendMarker *marker, markers) {
         marker->d_ptr->item()->setVisible(false);
         m_items->removeFromGroup(marker->d_ptr->item());
-        delete marker;
         m_markers.removeOne(marker);
+        m_markerHash.remove(marker->d_ptr->item());
+        delete marker;
     }
 }
 

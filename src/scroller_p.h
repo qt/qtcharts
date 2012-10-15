@@ -73,14 +73,13 @@ public:
     virtual QPointF offset() const = 0;
 
     void move(const QPointF &delta);
-    void release(const QPointF &delta);
+    void scrollTo(const QPointF &delta);
 
     void scrollTick();
 
 private:
     void startTicker(int interval);
     void stopTicker();
-
 
 private:
     void calculateSpeed(const QPointF &position);

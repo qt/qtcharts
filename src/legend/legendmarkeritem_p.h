@@ -37,13 +37,12 @@
 #include <QPen>
 #include <QGraphicsSimpleTextItem>
 #include <QGraphicsLayoutItem>
-#include "mouseeventhandler_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QLegendMarkerPrivate;
 
-class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem, public MouseEventHandler
+class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsLayoutItem)
@@ -66,22 +65,10 @@ public:
     QBrush labelBrush() const;
 
     void setGeometry(const QRectF &rect);
-
     QRectF boundingRect() const;
 
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
-
     QSizeF sizeHint (Qt::SizeHint which, const QSizeF &constraint) const;
-
-    // Event handlers, logic delegated to MouseEventHandler
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-
-    // Filtered callbacks from MouseEventHandler
-    void mouseClicked();
-    void mouseMoved(const QPointF &delta);
-    void mouseReleased(const QPointF &pos);
 
 protected:
     QLegendMarkerPrivate *m_marker; // Knows

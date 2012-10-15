@@ -56,7 +56,7 @@ void Scroller::move(const QPointF &delta)
     setOffset(offset() - delta);
 }
 
-void Scroller::release(const QPointF &delta)
+void Scroller::scrollTo(const QPointF &delta)
 {
     // Starts scrolling, if at least m_timeTresholdMin msecs has gone since timestamp
     // current time is no more than m_timeTresholdMax from timestamp

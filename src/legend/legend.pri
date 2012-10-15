@@ -10,7 +10,7 @@ SOURCES += \
     $$PWD/qbarlegendmarker.cpp \
     $$PWD/qxylegendmarker.cpp \
     $$PWD/qarealegendmarker.cpp \
-    $$PWD/mouseeventhandler.cpp
+    $$PWD/legendscroller.cpp
     
 PRIVATE_HEADERS += \
     $$PWD/legendscroller_p.h \
@@ -21,8 +21,7 @@ PRIVATE_HEADERS += \
     $$PWD/qpielegendmarker_p.h \
     $$PWD/qbarlegendmarker_p.h \
     $$PWD/qxylegendmarker_p.h \
-    $$PWD/qarealegendmarker_p.h \
-    $$PWD/mouseeventhandler_p.h
+    $$PWD/qarealegendmarker_p.h
    
     
 PUBLIC_HEADERS += \

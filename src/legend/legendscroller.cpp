@@ -18,35 +18,47 @@
 **
 ****************************************************************************/
 
-#include "mouseeventhandler_p.h"
+#include <QDebug>
 #include <QGraphicsSceneMouseEvent>
+#include <QGraphicsScene>
+#include <QLegendMarker>
+#include "qlegendmarker_p.h"
+#include "legendmarkeritem_p.h"
+#include "legendscroller_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-MouseEventHandler::MouseEventHandler() :
+LegendScroller::LegendScroller(QChart *chart) : QLegend(chart),
     m_lastPos(0, 0),
     m_state(Idle),
     m_treshold(10)
 {
 }
 
-MouseEventHandler::~MouseEventHandler()
+void LegendScroller::setOffset(const QPointF &point)
 {
+    d_ptr->setOffset(point);
 }
 
-void MouseEventHandler::setMoveTreshold(qreal treshold)
+QPointF LegendScroller::offset() const
+{
+    return d_ptr->offset();
+}
+
+void LegendScroller::setMoveTreshold(qreal treshold)
 {
     m_treshold = treshold;
 }
 
-void MouseEventHandler::handleMousePressEvent(QGraphicsSceneMouseEvent *event)
+void LegendScroller::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    m_lastPos = event->screenPos();
+    m_pressPos = event->screenPos();
+    m_lastPos = m_pressPos;
     m_state = Pressed;
     event->accept();
 }
 
-void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void LegendScroller::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     QPointF delta = event->screenPos() - m_lastPos;
 
@@ -56,14 +68,14 @@ void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent *event)
         if (qAbs(delta.x()) > m_treshold || qAbs(delta.y()) > m_treshold) {
             m_state = Moved;
             m_lastPos = event->screenPos();
-            mouseMoved(delta);
+            move(delta);
         }
         event->accept();
         break;
     }
     case Moved: {
         m_lastPos = event->screenPos();
-        mouseMoved(delta);
+        move(delta);
         event->accept();
         break;
     }
@@ -75,7 +87,7 @@ void MouseEventHandler::handleMouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-void MouseEventHandler::handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void LegendScroller::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     m_lastPos = event->screenPos();
 
@@ -83,14 +95,21 @@ void MouseEventHandler::handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     case Pressed:
     {
         m_state = Idle;
-        mouseClicked();
+        QList<QGraphicsItem *> items = scene()->items(event->scenePos());
+
+        foreach (QGraphicsItem *i, items) {
+            if (d_ptr->m_markerHash.contains(i)) {
+                QLegendMarker *marker = d_ptr->m_markerHash.value(i);
+                emit marker->clicked();
+            }
+        }
+
         event->accept();
         break;
     }
     case Moved:
     {
-        m_state = Idle;
-        mouseReleased(m_lastPos);
+        scrollTo(m_lastPos - m_pressPos);
         event->accept();
         break;
     }
@@ -103,4 +122,6 @@ void MouseEventHandler::handleMouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
+
+#include "moc_legendscroller_p.cpp"
 QTCOMMERCIALCHART_END_NAMESPACE

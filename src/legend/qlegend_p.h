@@ -31,7 +31,6 @@
 #define QLEGEND_P_H
 
 #include "qlegend.h"
-#include "scroller_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -42,7 +41,7 @@ class LegendLayout;
 class Domain;
 class QLegendMarker;
 
-class QLegendPrivate : public QObject, public Scroller
+class QLegendPrivate : public QObject
 {
     Q_OBJECT
 public:
@@ -90,10 +89,13 @@ private:
     QList<QLegendMarker *> m_markers;
     QList<QAbstractSeries *> m_series;
 
+    QHash<QGraphicsItem *, QLegendMarker *> m_markerHash;
+
     friend class QLegend;
     friend class LegendMarkerItem;
     friend class LegendLayout;
     friend class QLegendMarkerPrivate;
+    friend class LegendScroller;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
