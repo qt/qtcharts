@@ -87,6 +87,7 @@ protected:
     friend class QLegendMarkerPrivate;
     friend class LegendMarkerItem;
     friend class LegendLayout;
+    friend class LegendScroller;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
