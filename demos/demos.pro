@@ -15,7 +15,6 @@ SUBDIRS += piechartcustomization \
            chartinteractions \
            qmlaxes \
            qmlcustomlegend
-#    audio
 
 contains(QT_CONFIG, opengl) {
         SUBDIRS +=  chartthemes \
@@ -23,4 +22,10 @@ contains(QT_CONFIG, opengl) {
                     chartviewer
 } else {
     message("OpenGL not available. Some demos are disabled")
+}
+
+contains(QT_CONFIG, multimedia) {
+        SUBDIRS += audio
+} else {
+    message("QtMultimedia library not available. Some demos are disabled")
 }
