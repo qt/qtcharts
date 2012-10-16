@@ -23,11 +23,12 @@ Widget::Widget(QWidget *parent)
     m_series = new QLineSeries;
     m_chart->addSeries(m_series);
     QValueAxis *axisX = new QValueAxis;
-    axisX->setRange(0, 8000);
+    axisX->setRange(0, 4000);
     QValueAxis *axisY = new QValueAxis;
     axisY->setRange(0, 256);
     m_chart->setAxisX(axisX, m_series);
     m_chart->setAxisY(axisY, m_series);
+    m_chart->legend()->hide();
     m_chart->setTitle("Data from microphone");
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -48,7 +49,6 @@ Widget::Widget(QWidget *parent)
     m_device = new XYSeriesIODevice(m_series, this);
     m_device->open(QIODevice::WriteOnly);
 
-    m_audioInput->setBufferSize(10);
     m_audioInput->start(m_device);
 }
 
