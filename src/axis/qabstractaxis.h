@@ -44,6 +44,9 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
     Q_PROPERTY(QColor shadesColor READ shadesColor WRITE setShadesColor NOTIFY shadesColorChanged)
     Q_PROPERTY(QColor shadesBorderColor READ shadesBorderColor WRITE setShadesBorderColor NOTIFY shadesBorderColorChanged)
+    Q_PROPERTY(bool titleVisible READ titleVisible WRITE setTitleVisible)
+    Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
+    Q_PROPERTY(QString title READ title WRITE setTitle)
 
 public:
 
