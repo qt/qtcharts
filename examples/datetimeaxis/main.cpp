@@ -27,6 +27,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QDebug>
+#include <QValueAxis>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -73,7 +74,9 @@ int main(int argc, char *argv[])
     QDateTimeAxis *axisX = new QDateTimeAxis;
     axisX->setTickCount(10);
     axisX->setFormat("MMM yyyy");
+    axisX->setTitle("Date");
     chart->setAxisX(axisX, series);
+    chart->axisY(series)->setTitle("Sunspots count");
     //![4]
 
     //![5]
