@@ -33,7 +33,6 @@ SUBDIRS += \
            donutchart \
            multiaxis \
            callout \
-           newlegend \
            legendmarkers
 
 !linux-arm*: {
