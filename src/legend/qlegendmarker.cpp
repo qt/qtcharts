@@ -103,8 +103,8 @@ void QLegendMarker::setVisible(bool visible)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 QLegendMarkerPrivate::QLegendMarkerPrivate(QLegendMarker *q, QLegend *legend) :
-    q_ptr(q),
-    m_legend(legend)
+    m_legend(legend),
+    q_ptr(q)
 {
     m_item = new LegendMarkerItem(this);
 //    m_item->setVisible(q->series()->isVisible());

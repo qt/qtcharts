@@ -90,7 +90,6 @@ protected:
 
     friend class QLegendMarker;
     friend class QLegendMarkerPrivate;
-    friend class LegendMarkerItem;
     friend class LegendLayout;
 };
 
