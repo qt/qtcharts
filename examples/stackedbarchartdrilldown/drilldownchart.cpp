@@ -45,6 +45,7 @@ void DrilldownChart::changeSeries(DrilldownBarSeries *series)
 
     createDefaultAxes();
     setAxisX(axis, series);
+    axisY()->setTitle("Crops");
 
     setTitle(series->name());
 }
