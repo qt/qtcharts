@@ -47,6 +47,7 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(bool titleVisible READ titleVisible WRITE setTitleVisible)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
     Q_PROPERTY(QString title READ title WRITE setTitle)
+    Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment)
 
 public:
 

@@ -43,12 +43,21 @@ Rectangle {
     //![2]
         BarCategoriesAxis {
             id: barCategoriesAxis
+            title: "Date"
+        }
+
+        ValueAxis{
+            id: valueAxisY2
+            min: 0
+            max: 10
+            title: "Rainfall [mm]"
+            alignment: Qt.AlignRight
         }
     
         BarSeries {
             id: myBarSeries
             axisX: barCategoriesAxis
-            axisY: valueAxisY
+            axisY: valueAxisY2
             BarSet {
                 id: rainfallSet
                 label: "Rainfall"
@@ -60,13 +69,14 @@ Rectangle {
             // Hide the value axis; it is only used to map the line series to bar categories axis
             visible: false
             min: 0
-            max: 5
+            max: 5            
         }
 
         ValueAxis{
             id: valueAxisY
             min: 0
-            max: 10
+            max: 15
+            title: "Temperature [\u00B0C]"
         }
 
         LineSeries {
