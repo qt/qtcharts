@@ -40,13 +40,15 @@ public:
         datetimeaxis->setTickCount(10);
         datetimeaxis->setFormat("yyyy");
 
+        qreal day = 1000l * 60l * 60l * 24l;
+
         QString name("Series ");
         int nameIndex = 0;
         foreach (DataList list, table) {
             QLineSeries *series = new QLineSeries(chart);
             foreach (Data data, list) {
                 QPointF point = data.first;
-                series->append(point.x(), 1000l * 60l * 60l * 24l * 365l * 30l + point.y() * 1000l * 60l * 60l * 24l * 365l);
+                series->append(point.x(), day * 365l * 30l + point.y() * day * 365l);
             }
             series->setName(name + QString::number(nameIndex));
             nameIndex++;
