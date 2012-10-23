@@ -277,12 +277,12 @@ void tst_QLegend::addAndRemoveSeries()
     pie->append(QString("slice2"), 2);
     pie->append(QString("slice3"), 3);
 
-    legend->addSeries(pie);
+    m_chart->addSeries(pie);
 
     QList<QLegendMarker *> markers = legend->markers();
     QVERIFY(markers.count() == 3);
 
-    legend->removeSeries(pie);
+    m_chart->removeSeries(pie);
 
     markers = legend->markers();
     QVERIFY(markers.count() == 0);

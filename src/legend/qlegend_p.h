@@ -55,8 +55,6 @@ public:
     QGraphicsItemGroup* items() { return m_items; }
 
     QList<QLegendMarker*> markers(QAbstractSeries *series = 0);
-    void addSeries(QAbstractSeries *series);
-    void removeSeries(QAbstractSeries *series);
 
 public Q_SLOTS:
     void handleSeriesAdded(QAbstractSeries *series);

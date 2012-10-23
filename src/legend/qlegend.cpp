@@ -386,16 +386,6 @@ QList<QLegendMarker*> QLegend::markers(QAbstractSeries *series) const
     return d_ptr->markers(series);
 }
 
-void QLegend::addSeries(QAbstractSeries *series)
-{
-    d_ptr->addSeries(series);
-}
-
-void QLegend::removeSeries(QAbstractSeries *series)
-{
-    d_ptr->removeSeries(series);
-}
-
 /*!
  \internal \a event see QGraphicsWidget for details
  */
@@ -474,9 +464,8 @@ QList<QLegendMarker*> QLegendPrivate::markers(QAbstractSeries *series)
     return markers;
 }
 
-void QLegendPrivate::addSeries(QAbstractSeries *series)
+void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series)
 {
-    // Only allow one instance of series
     if (m_series.contains(series)) {
         return;
     }
@@ -493,7 +482,7 @@ void QLegendPrivate::addSeries(QAbstractSeries *series)
     m_layout->invalidate();
 }
 
-void QLegendPrivate::removeSeries(QAbstractSeries *series)
+void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
 {
     if (m_series.contains(series)) {
         m_series.removeOne(series);
@@ -512,20 +501,6 @@ void QLegendPrivate::removeSeries(QAbstractSeries *series)
     QObject::disconnect(series, SIGNAL(visibleChanged()), this, SLOT(handleSeriesVisibleChanged()));
 
     m_layout->invalidate();
-}
-
-void QLegendPrivate::handleSeriesAdded(QAbstractSeries *series)
-{
-    // Moved to appendSeries
-    // This slot is just to make old code work for now.
-    addSeries(series);
-}
-
-void QLegendPrivate::handleSeriesRemoved(QAbstractSeries *series)
-{
-    // Moved to removeSeries
-    // This slot is just to make old code work for now.
-    removeSeries(series);
 }
 
 void QLegendPrivate::handleSeriesVisibleChanged()
