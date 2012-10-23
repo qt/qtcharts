@@ -48,6 +48,7 @@ class LegendMarkerItem : public QGraphicsObject, public QGraphicsLayoutItem
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
     explicit LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject *parent = 0);
+    ~LegendMarkerItem();
 
     void setPen(const QPen &pen);
     QPen pen() const;
@@ -70,6 +71,9 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget = 0);
     QSizeF sizeHint (Qt::SizeHint which, const QSizeF &constraint) const;
 
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
+
 protected:
     QLegendMarkerPrivate *m_marker; // Knows
     QRectF m_markerRect;
@@ -84,7 +88,7 @@ protected:
     QFont m_font;
     QPen m_pen;
     QBrush m_brush;
-    bool m_visible;
+    bool m_hovering;
 
     QPointF m_pressPos;
 

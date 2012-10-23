@@ -58,6 +58,7 @@ private slots:
     void areaMarkerProperties();
     void xyMarkerPropertiesLine();
     void xyMarkerPropertiesScatter();
+    void markerSignals();
 
 private:
 
@@ -477,6 +478,71 @@ void tst_QLegend::xyMarkerPropertiesScatter()
     TRY_COMPARE(pm->isVisible(), false);
     scatter->setVisible(true);
     TRY_COMPARE(pm->isVisible(), true);
+}
+
+void tst_QLegend::markerSignals()
+{
+    SKIP_IF_CANNOT_TEST_MOUSE_EVENTS();
+    QChart *chart = new QChart();
+    QLegend *legend = chart->legend();
+
+    QBarSeries *bar = new QBarSeries();
+    QBarSet *set1 = new QBarSet(QString("set 1"));
+    *set1 << 10 << 10 << 10;
+    bar->append(set1);
+    QBarSet *set2 = new QBarSet(QString("set 2"));
+    *set2 << 10 << 10 << 10;
+    bar->append(set2);
+    chart->addSeries(bar);
+
+    QPieSeries *pie = new QPieSeries();
+    pie->append(QString("slice1"), 1);
+    pie->append(QString("slice2"), 2);
+    pie->append(QString("slice3"), 3);
+    chart->addSeries(pie);
+    legend->setAlignment(Qt::AlignRight);
+
+    QLineSeries *line = new QLineSeries();
+    line->setName(QString("Line 1"));
+    line->append(1,1);
+    chart->addSeries(line);
+
+    QAreaSeries *area = new QAreaSeries();
+    area->setName(QString("Area 1"));
+    QLineSeries *upper = new QLineSeries();
+    QLineSeries *lower = new QLineSeries();
+    upper->append(2,2);
+    lower->append(1,1);
+    area->setUpperSeries(upper);
+    area->setLowerSeries(lower);
+    chart->addSeries(area);
+
+    QScatterSeries *scatter = new QScatterSeries();
+    scatter->setName(QString("Scatter"));
+    scatter->append(3,3);
+    chart->addSeries(scatter);
+
+    QList<QSignalSpy *> spies;
+    foreach(QLegendMarker *m, legend->markers()) {
+        QSignalSpy *spy = new QSignalSpy(m, SIGNAL(hovered(bool)));
+        spies.append(spy);
+    }
+
+    QChartView view(chart);
+    view.resize(400,300);
+    view.show();
+    QTest::qWaitForWindowShown(&view);
+
+    // Sweep mouse over all legend items
+    for ( int i = 0; i < 300; i++ ) {
+        QTest::mouseMove(view.viewport(), QPoint(333,i));
+    }
+
+    foreach(QSignalSpy *spy, spies) {
+        TRY_COMPARE(spy->count(), 2);
+    }
+
+    qDeleteAll(spies);
 }
 
 QTEST_MAIN(tst_QLegend)

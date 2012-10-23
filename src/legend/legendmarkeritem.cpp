@@ -39,9 +39,18 @@ LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject
     m_rectItem(new QGraphicsRectItem(this)),
     m_margin(4),
     m_space(4),
+    m_hovering(false),
     m_pressPos(0, 0)
 {
     m_rectItem->setRect(m_markerRect);
+    setAcceptsHoverEvents(true);
+}
+
+LegendMarkerItem::~LegendMarkerItem()
+{
+    if (m_hovering) {
+        emit m_marker->q_ptr->hovered(false);
+    }
 }
 
 void LegendMarkerItem::setPen(const QPen &pen)
@@ -159,6 +168,21 @@ QSizeF LegendMarkerItem::sizeHint(Qt::SizeHint which, const QSizeF& constraint) 
 
       return sh;
 }
+
+void LegendMarkerItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    Q_UNUSED(event)
+    m_hovering = true;
+    emit m_marker->q_ptr->hovered(true);
+}
+
+void LegendMarkerItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    Q_UNUSED(event)
+    m_hovering = false;
+    emit m_marker->q_ptr->hovered(false);
+}
+
 
 #include "moc_legendmarkeritem_p.cpp"
 
