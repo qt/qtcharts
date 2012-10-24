@@ -35,10 +35,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \brief LegendMarker object
     \mainclass
 
-    QLegendMarker is abstract object that can be used to access markers inside QLegend. The QLegendMarker is always connected
-    to some series
+    QLegendMarker is abstract object that can be used to access markers inside QLegend. Legend marker consists of two
+    items: The colored box, which reflects the color of series and label, which is the name of series (or label of slice/barset
+    in case of pie or bar series)
+    The QLegendMarker is always related to one series.
 
-    \image examples_legendmarkers.png
+    \image examples_percentbarchart_legend.png
 
     \sa QLegend
 */
