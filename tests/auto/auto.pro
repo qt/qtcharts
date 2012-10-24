@@ -36,7 +36,11 @@ contains(QT_VERSION, ^4\\.[0-7]\\.[0-3]\\s*$) | contains(QT_VERSION, ^4\\.[0-6]\
     exists($$(QTDIR)/lib/QtQuickTest.lib) {
         SUBDIRS += qml-qtquicktest
     } else {
-        warning("QtQuickTest not found; cannot build QML api unit tests")
+        exists($$(QTDIR)/lib/libQtQuickTest.dylib) {
+            SUBDIRS += qml-qtquicktest
+        } else {
+            warning("QtQuickTest not found; cannot build QML api unit tests")
+        }
     }
 }
 
