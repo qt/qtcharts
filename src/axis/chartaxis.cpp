@@ -88,7 +88,9 @@ void ChartAxis::createItems(int count)
 
     for (int i = 0; i < count; ++i) {
         m_grid->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
-        m_labels->addToGroup(new QGraphicsSimpleTextItem(presenter()->rootItem()));
+        QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem(presenter()->rootItem());
+        label->setFont(m_font);
+        m_labels->addToGroup(label);
         m_arrow->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
         if ((m_grid->childItems().size()) % 2 && m_grid->childItems().size() > 2)
             m_shades->addToGroup(new QGraphicsRectItem(presenter()->rootItem()));
