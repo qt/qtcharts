@@ -16,20 +16,21 @@ qint64 XYSeriesIODevice::readData(char * data, qint64 maxSize)
 
 qint64 XYSeriesIODevice::writeData(const char * data, qint64 maxSize)
 {
-    qint64 range = 4000;
+    qint64 range = 2000;
     QList<QPointF> oldPoints = m_series->points();
     QList<QPointF> points;
+    int resolution = 4;
 
     if (oldPoints.count() < range) {
         points = m_series->points();
     } else {
-        for (int i = maxSize/2; i < oldPoints.count(); i++)
-            points.append(QPointF(i - maxSize/2, oldPoints.at(i).y()));
+        for (int i = maxSize/resolution; i < oldPoints.count(); i++)
+            points.append(QPointF(i - maxSize/resolution, oldPoints.at(i).y()));
     }
 
     qint64 size = points.count();
-    for (int k = 0; k < maxSize/2; k++)
-        points.append(QPointF(k + size, (quint8)data[2 * k]));
+    for (int k = 0; k < maxSize/resolution; k++)
+        points.append(QPointF(k + size, ((quint8)data[resolution * k] - 128)/128.0));
 
     m_series->replace(points);
     return maxSize;

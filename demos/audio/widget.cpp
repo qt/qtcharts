@@ -23,13 +23,16 @@ Widget::Widget(QWidget *parent)
     m_series = new QLineSeries;
     m_chart->addSeries(m_series);
     QValueAxis *axisX = new QValueAxis;
-    axisX->setRange(0, 4000);
+    axisX->setRange(0, 2000);
+    axisX->setLabelFormat("%g");
+    axisX->setTitle("Samples");
     QValueAxis *axisY = new QValueAxis;
-    axisY->setRange(0, 256);
-    m_chart->setAxisX(axisX, m_series);
+    axisY->setRange(-1, 1);
+    axisY->setTitle("Audio level");
+    m_chart->setAxisX(axisX, m_series);    
     m_chart->setAxisY(axisY, m_series);
     m_chart->legend()->hide();
-    m_chart->setTitle("Data from microphone");
+    m_chart->setTitle("Data from the microphone");
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
     mainLayout->addWidget(chartView);
