@@ -25,11 +25,32 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \class QBarLegendMarker
+    \brief QBarLegendMarker object
+    \mainclass
+
+    QBarLegendMarker is related to QAbstractBarSeries derived classes. With bar series, each marker is related to one QBarSet.
+
+    \sa QLegend QAbstractBarSeries QBarSet
+*/
+
+/*!
+  \fn virtual LegendMarkerType QBarLegendMarker::type()
+  Returns QLegendMarker::LegendMarkerTypeBar
+*/
+
+/*!
+  Constructor
+*/
 QBarLegendMarker::QBarLegendMarker(QAbstractBarSeries *series, QBarSet *barset, QLegend *legend, QObject *parent) :
     QLegendMarker(*new QBarLegendMarkerPrivate(this,series,barset,legend), parent)
 {
 }
 
+/*!
+  Desturctor
+*/
 QBarLegendMarker::~QBarLegendMarker()
 {
 }
@@ -42,12 +63,18 @@ QBarLegendMarker::QBarLegendMarker(QBarLegendMarkerPrivate &d, QObject *parent) 
 {
 }
 
+/*!
+  Returns the related series of marker
+*/
 QAbstractBarSeries *QBarLegendMarker::series()
 {
     Q_D(QBarLegendMarker);
     return d->m_series;
 }
 
+/*!
+  Returns the related barset of marker
+*/
 QBarSet* QBarLegendMarker::barset()
 {
     Q_D(QBarLegendMarker);

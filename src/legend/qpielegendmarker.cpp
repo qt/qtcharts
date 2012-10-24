@@ -25,11 +25,32 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \class QPieLegendMarker
+    \brief LegendMarker object
+    \mainclass
+
+    QPieLegendMarker is related to QPieSeries. With QPieSeries, each slice of pie is related to one marker in QLegend.
+
+    \sa QLegend QPieSeries QPieSlice
+*/
+
+/*!
+  \fn virtual LegendMarkerType QPieLegendMarker::type()
+  Returns QLegendMarker::LegendMarkerTypePie
+*/
+
+/*!
+  Constructor
+*/
 QPieLegendMarker::QPieLegendMarker(QPieSeries *series, QPieSlice *slice, QLegend *legend, QObject *parent) :
     QLegendMarker(*new QPieLegendMarkerPrivate(this,series,slice,legend), parent)
 {
 }
 
+/*!
+  Destructor
+*/
 QPieLegendMarker::~QPieLegendMarker()
 {
 }
@@ -42,12 +63,18 @@ QPieLegendMarker::QPieLegendMarker(QPieLegendMarkerPrivate &d, QObject *parent) 
 {
 }
 
+/*!
+  Returns the related series of marker.
+*/
 QPieSeries* QPieLegendMarker::series()
 {
     Q_D(QPieLegendMarker);
     return d->m_series;
 }
 
+/*!
+  Returns the related slice of marker.
+*/
 QPieSlice* QPieLegendMarker::slice()
 {
     Q_D(QPieLegendMarker);

@@ -25,11 +25,32 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \class QAreaLegendMarker
+    \brief QAreaLegendMarker object
+    \mainclass
+
+    QAreaLegendMarker is related to QAreaSeries. One QAreaSeries results in one marker.
+
+    \sa QLegend QAreaSeries
+*/
+
+/*!
+  \fn virtual LegendMarkerType QAreaLegendMarker::type()
+  Returns QLegendMarker::LegendMarkerTypeArea
+*/
+
+/*!
+  Constructor
+*/
 QAreaLegendMarker::QAreaLegendMarker(QAreaSeries *series, QLegend *legend, QObject *parent) :
     QLegendMarker(*new QAreaLegendMarkerPrivate(this,series,legend), parent)
 {
 }
 
+/*!
+  Destructor
+*/
 QAreaLegendMarker::~QAreaLegendMarker()
 {
 }
@@ -42,6 +63,9 @@ QAreaLegendMarker::QAreaLegendMarker(QAreaLegendMarkerPrivate &d, QObject *paren
 {
 }
 
+/*!
+  Returns related series of marker
+*/
 QAreaSeries* QAreaLegendMarker::series()
 {
     Q_D(QAreaLegendMarker);

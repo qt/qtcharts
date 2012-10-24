@@ -25,11 +25,32 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+/*!
+    \class QXYLegendMarker
+    \brief QXYLegendMarker object
+    \mainclass
+
+    QXYLegendMarker is related to QXYSeries derived classes. Each marker is related to one series.
+
+    \sa QLegend QXYSeries QSplineSeries QScatterSeries QLineSeries
+*/
+
+/*!
+  \fn virtual LegendMarkerType QXYLegendMarker::type()
+  Returns QLegendMarker::LegendMarkerTypeXY
+*/
+
+/*!
+  Constructor
+*/
 QXYLegendMarker::QXYLegendMarker(QXYSeries *series, QLegend *legend, QObject *parent) :
     QLegendMarker(*new QXYLegendMarkerPrivate(this,series,legend), parent)
 {
 }
 
+/*!
+  Destructor
+*/
 QXYLegendMarker::~QXYLegendMarker()
 {
 }
@@ -42,6 +63,9 @@ QXYLegendMarker::QXYLegendMarker(QXYLegendMarkerPrivate &d, QObject *parent) :
 {
 }
 
+/*!
+  Returns the related series
+*/
 QXYSeries* QXYLegendMarker::series()
 {
     Q_D(QXYLegendMarker);

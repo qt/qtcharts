@@ -37,6 +37,11 @@
                     <li><a href="qcategoryaxis.html">QCategoryAxis</a></li>
                     <li><a href="qdatetimeaxis.html">QDateTimeAxis</a></li>
                     <li><a href="qlegend.html">QLegend</a></li>
+                    <li><a href="qlegendmarker.html">QLegendMarker</a></li>
+                    <li><a href="qpielegendmarker.html">QPieLegendMarker</a></li>
+                    <li><a href="qxylegendmarker.html">QXYLegendMarker</a></li>
+                    <li><a href="qbarlegendmarker.html">QBarLegendMarker</a></li>
+                    <li><a href="qarealegendmarker.html">QAreaLegendMarker</a></li>
                     <li><a href="qabstractseries.html">QAbstractSeries</a></li>
                     <li><a href="qchartglobal.html">QChartGlobal</a></li>
                     </ul>

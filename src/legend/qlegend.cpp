@@ -381,6 +381,10 @@ bool QLegend::isBackgroundVisible() const
     return d_ptr->m_backgroundVisible;
 }
 
+/*!
+  Returns the list of markers in legend. The list can be filtered with \a series parameter.
+  If \a series is given, only markers related to that series are returned.
+*/
 QList<QLegendMarker*> QLegend::markers(QAbstractSeries *series) const
 {
     return d_ptr->markers(series);
