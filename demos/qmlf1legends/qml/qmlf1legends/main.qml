@@ -64,23 +64,28 @@ Rectangle {
                 if (!lineSeries) {
                     lineSeries = chartView.createSeries(ChartView.SeriesTypeLine, speedsXml.get(currentIndex).driver);
                     chartView.axisY().min = 0;
-                    chartView.axisY().max = 250
+                    chartView.axisY().max = 250;
+                    chartView.axisY().tickCount = 6;
+                    chartView.axisY().title = "speed (kph)";
+                    chartView.axisX().title = "speed trap";
+                    chartView.axisX().labelFormat = "%.0f";
                 }
-                lineSeries.append(currentIndex, speedsXml.get(currentIndex).speed);
+                lineSeries.append(speedsXml.get(currentIndex).speedTrap, speedsXml.get(currentIndex).speed);
 
-                // Make the x-axis range dynamic
-                if (currentIndex > 9)
-                    chartView.axisX().min = currentIndex - 10;
-                else
+                if (speedsXml.get(currentIndex).speedTrap > 3) {
+                    chartView.axisX().max = Number(speedsXml.get(currentIndex).speedTrap) + 1;
+                    chartView.axisX().min = chartView.axisX().max - 5;
+                } else {
+                    chartView.axisX().max = 5;
                     chartView.axisX().min = 0;
-
-                chartView.axisX().max = currentIndex + 1;
+                }
+                chartView.axisX().tickCount = chartView.axisX().max - chartView.axisX().min + 1;
             } else {
                 // No more data, change x-axis range to show all the data
                 timer.stop();
                 chartView.animationOptions = ChartView.AllAnimations;
                 chartView.axisX().min = 0;
-                chartView.axisX().max = currentIndex + 1;
+                chartView.axisX().max = speedsXml.get(currentIndex - 1).speedTrap;
             }
         }
     }

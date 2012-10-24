@@ -25,9 +25,9 @@ XmlListModel {
     // Hard-coded test data
     xml: "<results><row><speedTrap>0</speedTrap><driver>Fittipaldi</driver><speed>104.12</speed></row>"
         +"<row><speedTrap>0</speedTrap><driver>Stewart</driver><speed>106.12</speed></row>"
-        // ...
-//![1]
         +"<row><speedTrap>0</speedTrap><driver>Hunt</driver><speed>106.12</speed></row>"
+    // ...
+//![1]
         +"<row><speedTrap>1</speedTrap><driver>Fittipaldi</driver><speed>115.12</speed></row>"
         +"<row><speedTrap>1</speedTrap><driver>Stewart</driver><speed>114.12</speed></row>"
         +"<row><speedTrap>1</speedTrap><driver>Hunt</driver><speed>115.12</speed></row>"
