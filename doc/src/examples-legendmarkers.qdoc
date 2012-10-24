@@ -1,0 +1,41 @@
+/*!
+    \example examples/legendmarkers
+    \title LegendMarkers Example
+    \subtitle
+
+    The example shows how to make use of legend markers. In this example we create an application which uses QLegendMarker clicked signal to show/hide corresponding series
+	in chart.
+
+    \image examples_legendmarkers.png
+
+    Our application has buttons for adding or removing series in chart and button to connect or disconnect legend markers clicked signal to our handler. In the image above,
+	we have connected the markers and clicked on one of them.
+
+    \snippet ../examples/legendmarkers/mainwidget.cpp 1
+
+    Here we connect the markers in legend to our handler. To avoid conncecting same marker more than once, we first disconnect it.
+
+    \snippet ../examples/legendmarkers/mainwidget.cpp 2
+
+    Here we disconnect all markers from our handler.
+
+    \snippet ../examples/legendmarkers/mainwidget.cpp 3
+
+    In our handler we first cast the sender of event to QLegendMarker.
+
+    \snippet ../examples/legendmarkers/mainwidget.cpp 4
+
+    Then we check the type of marker. This is needed if we want to access the detailed methods of the marker and cast it to correct type.
+	If all we need is the pointer to QAbstractSeries, the casting isn't necessary. In case of pie or bar series, we may need the pointer to related QPieSlice or QBarSet.
+
+    \snippet ../examples/legendmarkers/mainwidget.cpp 5
+
+    We want to toggle the visibility of the series, when marker is clicked. To do so, we get the pointer to related series from marker and toggle its visibility.
+	Because the legend marker follows the visibility of the series by default, we also set the marked back to visible. If we don't do that, the marker will be
+	invisible in legend	and we can't click on it anymore.
+
+    \snippet ../examples/legendmarkers/mainwidget.cpp 6
+
+    Instead of making marker invisible when series is hidden, we dim the color of the marker. Here we do it by modifying the color of the laberBrush.
+
+*/

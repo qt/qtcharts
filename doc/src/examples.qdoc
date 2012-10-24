@@ -116,9 +116,11 @@
 
         <tr>
             <td><a href="examples-zoomlinechart.html">Zoom Line</a></td>
+            <td><a href="examples-legendmarkers.html">Legend Markers</a></td>
         </tr>
         <tr>
             <td><a href="examples-zoomlinechart.html"><img src="images/examples_zoomlinechart1.png" width="300" alt="Zoom Line" /></a></td>
+            <td><a href="examples-legendmarkers.html"><img src="images/examples_legendmarkers.png" width="300" alt="Legend Markers" /></a></td>
         </tr>
 
     </table>

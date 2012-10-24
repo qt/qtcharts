@@ -141,7 +141,6 @@ void MainWidget::handleMarkerClicked()
     Q_ASSERT(marker);
 //![3]
 
-
 //![4]
     switch (marker->type())
 //![4]
@@ -159,8 +158,8 @@ void MainWidget::handleMarkerClicked()
 
 //![6]
         // Dim the marker, if series is not visible
-        QXYLegendMarker *xymarker = qobject_cast<QXYLegendMarker *> (marker);
-        QColor color = xymarker->labelBrush().color();
+        QBrush labelBrush = marker->labelBrush();
+        QColor color = labelBrush.color();
 
         if (marker->series()->isVisible()) {
             color.setAlphaF(1.0);
@@ -168,7 +167,8 @@ void MainWidget::handleMarkerClicked()
             color.setAlphaF(0.5);
         }
 
-        xymarker->setLabelBrush(QBrush(color));
+        labelBrush.setColor(color);
+        marker->setLabelBrush(labelBrush);
 //![6]
         break;
         }
