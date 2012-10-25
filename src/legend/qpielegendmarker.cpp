@@ -110,10 +110,30 @@ QObject* QPieLegendMarkerPrivate::relatedObject()
 
 void QPieLegendMarkerPrivate::updated()
 {
-    m_item->setPen(m_slice->pen());
-    m_item->setBrush(m_slice->brush());
-    m_item->setLabel(m_slice->label());
+    bool labelChanged = false;
+    bool brushChanged = false;
+    bool penChanged = false;
+
+    if (m_item->pen() != m_slice->pen()) {
+        m_item->setPen(m_slice->pen());
+        penChanged = true;
+    }
+    if (m_item->brush() != m_slice->brush()) {
+        m_item->setBrush(m_slice->brush());
+        brushChanged = true;
+    }
+    if (m_item->label() != m_slice->label()) {
+        m_item->setLabel(m_slice->label());
+        labelChanged = true;
+    }
     invalidateLegend();
+
+    if (labelChanged)
+        emit q_ptr->labelChanged();
+    if (brushChanged)
+        emit q_ptr->brushChanged();
+    if (penChanged)
+        emit q_ptr->penChanged();
 }
 
 #include "moc_qpielegendmarker.cpp"

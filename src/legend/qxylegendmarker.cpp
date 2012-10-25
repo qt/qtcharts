@@ -99,14 +99,33 @@ QObject* QXYLegendMarkerPrivate::relatedObject()
 
 void QXYLegendMarkerPrivate::updated()
 {
-    m_item->setLabel(m_series->name());
+    bool labelChanged = false;
+    bool brushChanged = false;
+
+    if (m_item->label() != m_series->name()) {
+        m_item->setLabel(m_series->name());
+        labelChanged = true;
+    }
 
     if (m_series->type()== QAbstractSeries::SeriesTypeScatter)  {
-        m_item->setBrush(m_series->brush());
+        if (m_item->brush() != m_series->brush()) {
+            m_item->setBrush(m_series->brush());
+            brushChanged = true;
+        }
     } else {
-        m_item->setBrush(QBrush(m_series->pen().color()));
+        if (m_item->brush().color() != m_series->pen().color()) {
+            QBrush b = m_item->brush();
+            b.setColor(m_series->pen().color());
+            m_item->setBrush(b);
+            brushChanged = true;
+        }
     }
     invalidateLegend();
+
+    if (labelChanged)
+        emit q_ptr->labelChanged();
+    if (brushChanged)
+        emit q_ptr->brushChanged();
 }
 
 #include "moc_qxylegendmarker.cpp"

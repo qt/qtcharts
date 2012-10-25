@@ -45,12 +45,12 @@ public:
         LegendMarkerTypeXY
     };
 
-    Q_PROPERTY(QString label READ label WRITE setLabel)
-    Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush)
-    Q_PROPERTY(QFont font READ font WRITE setFont)
-    Q_PROPERTY(QPen pen READ pen WRITE setPen)
-    Q_PROPERTY(QBrush brush READ brush WRITE setBrush)
-    Q_PROPERTY(bool visible READ isVisible WRITE setVisible)
+    Q_PROPERTY(QString label READ label WRITE setLabel NOTIFY labelChanged)
+    Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush NOTIFY labelBrushChanged)
+    Q_PROPERTY(QFont font READ font WRITE setFont NOTIFY fontChanged)
+    Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged)
+    Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
     Q_ENUMS(LegendMarkerType)
 
 public:
@@ -80,6 +80,12 @@ public:
 Q_SIGNALS:
     void clicked();
     void hovered(bool status);
+    void labelChanged();
+    void labelBrushChanged();
+    void fontChanged();
+    void penChanged();
+    void brushChanged();
+    void visibleChanged();
 
 protected:
     explicit QLegendMarker(QLegendMarkerPrivate &d, QObject *parent = 0);

@@ -99,9 +99,23 @@ QObject* QAreaLegendMarkerPrivate::relatedObject()
 
 void QAreaLegendMarkerPrivate::updated()
 {
-    m_item->setBrush(m_series->brush());
-    m_item->setLabel(m_series->name());
+    bool labelChanged = false;
+    bool brushChanged = false;
+
+    if (m_item->brush() != m_series->brush()) {
+        m_item->setBrush(m_series->brush());
+        brushChanged = true;
+    }
+    if (m_item->label() != m_series->name()) {
+        m_item->setLabel(m_series->name());
+        labelChanged = true;
+    }
     invalidateLegend();
+
+    if (labelChanged)
+        emit q_ptr->labelChanged();
+    if (brushChanged)
+        emit q_ptr->brushChanged();
 }
 
 #include "moc_qarealegendmarker.cpp"

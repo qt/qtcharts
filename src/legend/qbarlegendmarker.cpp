@@ -110,10 +110,30 @@ QObject* QBarLegendMarkerPrivate::relatedObject()
 
 void QBarLegendMarkerPrivate::updated()
 {
-    m_item->setPen(m_barset->pen());
-    m_item->setBrush(m_barset->brush());
-    m_item->setLabel(m_barset->label());
+    bool labelChanged = false;
+    bool brushChanged = false;
+    bool penChanged = false;
+
+    if (m_item->pen() != m_barset->pen()) {
+        m_item->setPen(m_barset->pen());
+        penChanged = true;
+    }
+    if (m_item->brush() != m_barset->brush()) {
+        m_item->setBrush(m_barset->brush());
+        brushChanged = true;
+    }
+    if (m_item->label() != m_barset->label()) {
+        m_item->setLabel(m_barset->label());
+        labelChanged = true;
+    }
     invalidateLegend();
+
+    if (labelChanged)
+        emit q_ptr->labelChanged();
+    if (brushChanged)
+        emit q_ptr->brushChanged();
+    if (penChanged)
+        emit q_ptr->penChanged();
 }
 
 #include "moc_qbarlegendmarker.cpp"

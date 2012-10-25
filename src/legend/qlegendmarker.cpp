@@ -78,6 +78,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \property QLegendMarker::label
+    Label of the marker. This is the text that is shown in legend.
+    \sa QScatterSeries::pen()
+*/
+
+/*!
  Constructor of marker
  */
 QLegendMarker::QLegendMarker(QLegendMarkerPrivate &d, QObject *parent) :
