@@ -46,6 +46,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QXYLegendMarker::QXYLegendMarker(QXYSeries *series, QLegend *legend, QObject *parent) :
     QLegendMarker(*new QXYLegendMarkerPrivate(this,series,legend), parent)
 {
+    d_ptr->updated();
 }
 
 /*!
@@ -76,11 +77,11 @@ QXYSeries* QXYLegendMarker::series()
 
 QXYLegendMarkerPrivate::QXYLegendMarkerPrivate(QXYLegendMarker *q, QXYSeries *series, QLegend *legend) :
     QLegendMarkerPrivate(q,legend),
+    q_ptr(q),
     m_series(series)
 {
     QObject::connect(m_series, SIGNAL(nameChanged()), this, SLOT(updated()));
     QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(updated()));
-    updated();
 }
 
 QXYLegendMarkerPrivate::~QXYLegendMarkerPrivate()
@@ -114,9 +115,7 @@ void QXYLegendMarkerPrivate::updated()
         }
     } else {
         if (m_item->brush().color() != m_series->pen().color()) {
-            QBrush b = m_item->brush();
-            b.setColor(m_series->pen().color());
-            m_item->setBrush(b);
+            m_item->setBrush(QBrush(m_series->pen().color()));
             brushChanged = true;
         }
     }

@@ -158,17 +158,31 @@ void MainWidget::handleMarkerClicked()
 
 //![6]
         // Dim the marker, if series is not visible
-        QBrush labelBrush = marker->labelBrush();
-        QColor color = labelBrush.color();
+        qreal alpha = 1.0;
 
-        if (marker->series()->isVisible()) {
-            color.setAlphaF(1.0);
-        } else {
-            color.setAlphaF(0.5);
+        if (!marker->series()->isVisible()) {
+            alpha = 0.5;
         }
 
-        labelBrush.setColor(color);
-        marker->setLabelBrush(labelBrush);
+        QColor color;
+        QBrush brush = marker->labelBrush();
+        color = brush.color();
+        color.setAlphaF(alpha);
+        brush.setColor(color);
+        marker->setLabelBrush(brush);
+
+        brush = marker->brush();
+        color = brush.color();
+        color.setAlphaF(alpha);
+        brush.setColor(color);
+        marker->setBrush(brush);
+
+        QPen pen = marker->pen();
+        color = pen.color();
+        color.setAlphaF(alpha);
+        pen.setColor(color);
+        marker->setPen(pen);
+
 //![6]
         break;
         }

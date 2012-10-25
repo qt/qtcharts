@@ -46,6 +46,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QAreaLegendMarker::QAreaLegendMarker(QAreaSeries *series, QLegend *legend, QObject *parent) :
     QLegendMarker(*new QAreaLegendMarkerPrivate(this,series,legend), parent)
 {
+    d_ptr->updated();
 }
 
 /*!
@@ -76,11 +77,11 @@ QAreaSeries* QAreaLegendMarker::series()
 
 QAreaLegendMarkerPrivate::QAreaLegendMarkerPrivate(QAreaLegendMarker *q, QAreaSeries *series, QLegend *legend) :
     QLegendMarkerPrivate(q,legend),
+    q_ptr(q),
     m_series(series)
 {
     QObject::connect(m_series->d_func(),SIGNAL(updated()), this, SLOT(updated()));
     QObject::connect(m_series, SIGNAL(nameChanged()), this, SLOT(updated()));
-    updated();
 }
 
 QAreaLegendMarkerPrivate::~QAreaLegendMarkerPrivate()

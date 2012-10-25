@@ -68,7 +68,7 @@ public:
     void invalidateLegend();
 
 public Q_SLOTS:
-    virtual void updated() { invalidateLegend(); }
+    virtual void updated() = 0;
 
 protected:
     LegendMarkerItem *m_item;

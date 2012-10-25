@@ -46,6 +46,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 QBarLegendMarker::QBarLegendMarker(QAbstractBarSeries *series, QBarSet *barset, QLegend *legend, QObject *parent) :
     QLegendMarker(*new QBarLegendMarkerPrivate(this,series,barset,legend), parent)
 {
+    d_ptr->updated();
 }
 
 /*!
@@ -85,13 +86,13 @@ QBarSet* QBarLegendMarker::barset()
 
 QBarLegendMarkerPrivate::QBarLegendMarkerPrivate(QBarLegendMarker *q, QAbstractBarSeries *series, QBarSet *barset, QLegend *legend) :
     QLegendMarkerPrivate(q,legend),
+    q_ptr(q),
     m_series(series),
     m_barset(barset)
 {
     QObject::connect(m_barset, SIGNAL(penChanged()), this, SLOT(updated()));
     QObject::connect(m_barset, SIGNAL(labelChanged()), this, SLOT(updated()));
     QObject::connect(m_barset, SIGNAL(brushChanged()), this, SLOT(updated()));
-    updated();
 }
 
 QBarLegendMarkerPrivate::~QBarLegendMarkerPrivate()
