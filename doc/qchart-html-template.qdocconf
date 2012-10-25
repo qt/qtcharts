@@ -32,7 +32,7 @@ HTML.footer = \
     "<div class=\"footer\">\n" \
     "  <p>\n" \
     "     <acronym title=\"Copyright\">&copy;</acronym> 2012 Digia ." \
-    "     Qt and Qt logos are trademarks of of Nokia Corporation \n" \
+    "     Qt and Qt logos are trademarks of of Digia Corporation \n" \
     "     in Finland and/or other countries worldwide.</p>\n" \
     "  <p>\n" \
     "     All other trademarks are property of their respective owners.</p>\n" \
@@ -44,7 +44,7 @@ HTML.footer = \
     "  <p>\n" \
     "     <img src=\"images/digia_logo.png\" alt=\"digia\" /></p>\n" \
     "</div>\n" \
-    
+
 # Files not referenced in any qdoc file.
 # See also extraimages.HTML
 qhp.QDoc.extraFiles = index.html \
