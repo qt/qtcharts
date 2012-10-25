@@ -45,10 +45,13 @@ public:
         LegendMarkerTypeXY
     };
 
-// TODO:
-//    Q_PROPERTY(QString label READ label WRITE setlabel NOTIFY labelChanged);
-//    Q_PROPERTY(QPen pen READ pen WRITE setPen NOTIFY penChanged);
-//    Q_PROPERTY(QBrush brush READ brush WRITE setBrush NOTIFY brushChanged);
+    Q_PROPERTY(QString label READ label WRITE setLabel)
+    Q_PROPERTY(QBrush labelBrush READ labelBrush WRITE setLabelBrush)
+    Q_PROPERTY(QFont font READ font WRITE setFont)
+    Q_PROPERTY(QPen pen READ pen WRITE setPen)
+    Q_PROPERTY(QBrush brush READ brush WRITE setBrush)
+    Q_PROPERTY(bool visible READ isVisible WRITE setVisible)
+    Q_ENUMS(LegendMarkerType)
 
 public:
     virtual ~QLegendMarker();

@@ -4,7 +4,7 @@
     \subtitle
 
     The example shows how to make use of legend markers. In this example we create an application which uses QLegendMarker clicked signal to show/hide corresponding series
-	in chart.
+	in chart. The connect marker button connects clicked signal from all markers in legend to handleMarkerClicked slot. 
 
     \image examples_legendmarkers.png
 
