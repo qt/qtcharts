@@ -80,8 +80,33 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
     \property QLegendMarker::label
     Label of the marker. This is the text that is shown in legend.
-    \sa QScatterSeries::pen()
 */
+
+/*!
+    \property QLegendMarker::labelBrush
+    Brush of the label
+*/
+
+/*!
+    \property QLegendMarker::font
+    Font of the label
+*/
+
+/*!
+    \property QLegendMarker::pen
+    Pen of the marker. This is the outline of the colored square.
+*/
+
+/*!
+    \property QLegendMarker::brush
+    Brush of the marker. This is the inside of the colored square.
+*/
+
+/*!
+    \property QLegendMarker::visible
+    Visibility of the legend marker. Affects label and the colored square.
+*/
+
 
 /*!
  Constructor of marker
