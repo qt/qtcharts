@@ -28,7 +28,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "ChartView Signals"
+        name: "tst_qml-qtquicktest ChartView Signals"
         when: windowShown
 
         // Verify onSeriesAdded and onSeriesRemoved signals

@@ -28,7 +28,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "ChartView Properties"
+        name: "tst_qml-qtquicktest ChartView Properties"
         when: windowShown
 
         function test_chartViewProperties() {

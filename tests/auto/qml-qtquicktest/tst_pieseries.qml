@@ -28,7 +28,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "PieSeries"
+        name: "tst_qml-qtquicktest PieSeries"
         when: windowShown
 
         function test_properties() {
