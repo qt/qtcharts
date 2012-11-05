@@ -17,26 +17,32 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef DONUTBREAKDOWNCHART_H
-#define DONUTBREAKDOWNCHART_H
 
-#include <QChart>
+#ifndef MAINSLICE_H
+#define MAINSLICE_H
+
+#include <QPieSlice>
 #include <QPieSeries>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-class DonutBreakdownChart : public QChart
+class MainSlice : public QPieSlice
 {
+    Q_OBJECT
 public:
-    DonutBreakdownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
-    void addBreakdownSeries(QPieSeries *series, QColor color);
+    MainSlice(QPieSeries *breakdownSeries, QObject *parent = 0);
+
+    QPieSeries *breakdownSeries() const;
+
+    void setName(QString name);
+    QString name() const;
+
+public Q_SLOTS:
+    void updateLabel();
 
 private:
-    void recalculateAngles();
-    void updateLegendMarkers();
-
-private:
-    QPieSeries *m_mainSeries;
+    QPieSeries *m_breakdownSeries;
+    QString m_name;
 };
 
-#endif // DONUTBREAKDOWNCHART_H
+#endif // MAINSLICE_H

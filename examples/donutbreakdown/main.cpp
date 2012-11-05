@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
     DonutBreakdownChart *donutBreakdown = new DonutBreakdownChart();
     donutBreakdown->setAnimationOptions(QChart::AllAnimations);
     donutBreakdown->setTitle("Total consumption of energy in Finland 2010");
-    donutBreakdown->legend()->setVisible(false);
+    donutBreakdown->legend()->setAlignment(Qt::AlignRight);
     donutBreakdown->addBreakdownSeries(series1, Qt::red);
     donutBreakdown->addBreakdownSeries(series2, Qt::darkGreen);
     donutBreakdown->addBreakdownSeries(series3, Qt::darkBlue);
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
     QChartView *chartView = new QChartView(donutBreakdown);
     chartView->setRenderHint(QPainter::Antialiasing);
     window.setCentralWidget(chartView);
-    window.resize(800, 600);
+    window.resize(800, 500);
     window.show();
     //![3]
 

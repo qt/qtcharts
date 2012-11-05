@@ -17,26 +17,41 @@
 ** $QT_END_LICENSE$
 **
 ****************************************************************************/
-#ifndef DONUTBREAKDOWNCHART_H
-#define DONUTBREAKDOWNCHART_H
 
-#include <QChart>
-#include <QPieSeries>
+#include "mainslice.h"
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-class DonutBreakdownChart : public QChart
+//![1]
+MainSlice::MainSlice(QPieSeries *breakdownSeries, QObject *parent)
+    : QPieSlice(parent),
+      m_breakdownSeries(breakdownSeries)
 {
-public:
-    DonutBreakdownChart(QGraphicsItem *parent = 0, Qt::WindowFlags wFlags = 0);
-    void addBreakdownSeries(QPieSeries *series, QColor color);
+    connect(this, SIGNAL(percentageChanged()), this, SLOT(updateLabel()));
+}
+//![1]
 
-private:
-    void recalculateAngles();
-    void updateLegendMarkers();
+QPieSeries *MainSlice::breakdownSeries() const
+{
+    return m_breakdownSeries;
+}
 
-private:
-    QPieSeries *m_mainSeries;
-};
+void MainSlice::setName(QString name)
+{
+    m_name = name;
+}
 
-#endif // DONUTBREAKDOWNCHART_H
+QString MainSlice::name() const
+{
+    return m_name;
+}
+
+//![2]
+void MainSlice::updateLabel()
+{
+    this->setLabel(QString("%1 %2%").arg(m_name).arg(percentage() * 100, 0, 'f', 2));
+}
+//![2]
+
+#include "moc_mainslice.cpp"
+

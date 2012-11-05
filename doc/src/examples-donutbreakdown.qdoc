@@ -29,6 +29,15 @@
 
      \snippet ../examples/donutbreakdown/donutbreakdownchart.cpp 3
 
+     Legend markers are customized to show the breakdown percentage and markers for the main level slices are hidden.
+
+     \snippet ../examples/donutbreakdown/donutbreakdownchart.cpp 4
+
+     Instead the main level slices show the percentage on the label.
+
+     \snippet ../examples/donutbreakdown/mainslice.cpp 1
+     \snippet ../examples/donutbreakdown/mainslice.cpp 2
+
      And now that we have our chart defined we can finally create a QChartView and show the chart.
 
      \snippet ../examples/donutbreakdown/main.cpp 3
