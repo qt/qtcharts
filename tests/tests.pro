@@ -6,8 +6,7 @@ TEMPLATE = subdirs
 SUBDIRS += \ 
     auto \    
     qmlchartproperties \
-    qmlchartaxis \
-    uitest
+    qmlchartaxis
 
 contains(QT_CONFIG, opengl) {
     SUBDIRS +=  chartwidgettest \
