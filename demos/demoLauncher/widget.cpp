@@ -13,10 +13,13 @@ Widget::Widget(QWidget *parent)
     QList<QFileInfo> appList;
 
     QDir appFolder(QApplication::applicationDirPath());
-    QStringList nameFilters;
-    nameFilters << "[^t][^s][^t]*";
-    appFolder.setNameFilters(nameFilters);
     appList = appFolder.entryInfoList(QDir::Files);
+
+    for (int k = appList.count() - 1; k >= 0; k--) {
+        QString name = appList[k].fileName();
+        if (name.endsWith("exp") || name.endsWith("dll") || name.endsWith("lib") || name.startsWith("tst_"))
+            appList.removeAt(k);
+    }
 
     QGridLayout* demosLayout = new QGridLayout;
     for( int i = 0; i < appList.count(); i++) {
@@ -29,7 +32,8 @@ Widget::Widget(QWidget *parent)
 
 Widget::~Widget()
 {
-    m_demoApp->close();
+    if (m_demoApp)
+        m_demoApp->close();
 }
 
 void Widget::runApp()
