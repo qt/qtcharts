@@ -15,17 +15,15 @@ Widget::Widget(QWidget *parent)
 
     for (int k = appList.count() - 1; k >= 0; k--) {
         QString name = appList[k].fileName();
-        if (name.endsWith("exp")
-                || name.endsWith("dll")
-                || name.endsWith("lib")
-                || name.startsWith("tst_")
-                || name.startsWith("demoLauncher"))
+        if (name.startsWith("tst_")
+                || name.startsWith("demoLauncher")
+                || (name.right(4).left(1) == "." && !name.endsWith("exe")))
             appList.removeAt(k);
     }
 
     QGridLayout* demosLayout = new QGridLayout;
     for( int i = 0; i < appList.count(); i++) {
-        QPushButton *button = new QPushButton(appList[i].fileName());
+        QPushButton *button = new QPushButton(appList[i].baseName());
         connect(button, SIGNAL(clicked()), this, SLOT (runApp()));
         demosLayout->addWidget(button, i%10, i/10);
     }
@@ -41,7 +39,7 @@ Widget::~Widget()
 void Widget::runApp()
 {
     QString name = qobject_cast<QPushButton *>(sender())->text();
-    QString program = QApplication::applicationDirPath() + QDir::separator() + name;
+    QString program = QDir(BINPATH).absolutePath() + QDir::separator() + name;
 
     m_demoApp = new QProcess(this);
     m_demoApp->start(program);
