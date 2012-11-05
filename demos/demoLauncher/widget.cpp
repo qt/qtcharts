@@ -4,20 +4,22 @@
 #include <QGridLayout>
 #include <QApplication>
 #include <QProcess>
-#include <QTimer>
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent),
       m_demoApp(0)
 {
     QList<QFileInfo> appList;
-
-    QDir appFolder(QApplication::applicationDirPath());
+    QDir appFolder = QDir(BINPATH);
     appList = appFolder.entryInfoList(QDir::Files);
 
     for (int k = appList.count() - 1; k >= 0; k--) {
         QString name = appList[k].fileName();
-        if (name.endsWith("exp") || name.endsWith("dll") || name.endsWith("lib") || name.startsWith("tst_"))
+        if (name.endsWith("exp")
+                || name.endsWith("dll")
+                || name.endsWith("lib")
+                || name.startsWith("tst_")
+                || name.startsWith("demoLauncher"))
             appList.removeAt(k);
     }
 

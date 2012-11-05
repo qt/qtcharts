@@ -15,7 +15,6 @@ public:
 
 public slots:
     void runApp();
-//    void runAppShow();
 
 private:
     QProcess *m_demoApp;
