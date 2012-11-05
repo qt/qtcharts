@@ -62,7 +62,7 @@ Rectangle {
         anchors.left: parent.left
         anchors.leftMargin: 0
         width: parent.width
-        height: parent.height - parent.anchors.margins * 2 - customLegend.height
+        height: parent.height
         onSeriesAdded: chartViewSelector.seriesAdded(series.name, series.color);
     }
 
@@ -70,7 +70,7 @@ Rectangle {
         id: chartViewSelected
         anchors.left: chartViewStacked.right
         width: parent.width
-        height: parent.height - parent.anchors.margins * 2 - customLegend.height
+        height: parent.height
 
         opacity: 0.0
         onClicked: {

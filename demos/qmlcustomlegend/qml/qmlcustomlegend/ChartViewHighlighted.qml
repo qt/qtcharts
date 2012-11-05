@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.2
 
 //![1]
 ChartView {
@@ -27,6 +27,9 @@ ChartView {
     title: ""
     property variant selectedSeries
     signal clicked
+    legend.visible: false
+    margins.top: 10
+    margins.bottom: 0
 
     LineSeries {
         id: lineSeries

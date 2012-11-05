@@ -19,13 +19,16 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.2
 
 ChartView {
     id: chartView
     title: "Government Finance Taxes in Finland"
+    legend.visible: false
     signal entered(string seriesName)
     signal exited(string seriesName)
+    margins.top: 10
+    margins.bottom: 0
 
     ValueAxis {
         id: axisX
