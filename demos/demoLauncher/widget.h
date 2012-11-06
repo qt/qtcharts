@@ -2,6 +2,7 @@
 #define WIDGET_H
 
 #include <QWidget>
+#include <QDir>
 
 class QProcess;
 
@@ -17,6 +18,7 @@ public slots:
     void runApp();
 
 private:
+    QDir m_appFolder;
     QProcess *m_demoApp;
 };
 
