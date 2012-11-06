@@ -19,7 +19,7 @@ Widget::Widget(QWidget *parent)
     m_appFolder.cdUp();
     m_appFolder.cdUp();
     appList = m_appFolder.entryInfoList(QStringList("*.app"), QDir::Executable | QDir::Dirs | QDir::NoDotAndDotDot);
-#elif Q_WS_WIN
+#elif defined(Q_WS_WIN)
     appList = m_appFolder.entryInfoList(QStringList("*.exe"), QDir::Executable | QDir::Files | QDir::NoDotAndDotDot);
 #else
     appList = m_appFolder.entryInfoList(QDir::Executable | QDir::Files | QDir::NoDotAndDotDot);
