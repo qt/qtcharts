@@ -39,8 +39,8 @@ Widget::Widget(QWidget *parent)
     setLayout(mainLayout);
 
     QAudioFormat formatAudio;
-    formatAudio.setFrequency(8000);
-    formatAudio.setChannels(1);
+    formatAudio.setSampleRate(8000);
+    formatAudio.setChannelCount(1);
     formatAudio.setSampleSize(8);
     formatAudio.setCodec("audio/pcm");
     formatAudio.setByteOrder(QAudioFormat::LittleEndian);

@@ -13,13 +13,13 @@ Widget::Widget(QWidget *parent)
     // Create a list of executables
     QList<QFileInfo> appList;
     m_appFolder = QDir(QApplication::applicationDirPath());
-#ifdef Q_WS_MAC
+#ifdef Q_OS_MAC
     // The executable is inside an application bundle (a folder) on OSX
     m_appFolder.cdUp();
     m_appFolder.cdUp();
     m_appFolder.cdUp();
     appList = m_appFolder.entryInfoList(QStringList("*.app"), QDir::Executable | QDir::Dirs | QDir::NoDotAndDotDot);
-#elif defined(Q_WS_WIN)
+#elif defined(Q_OS_WIN)
     appList = m_appFolder.entryInfoList(QStringList("*.exe"), QDir::Executable | QDir::Files | QDir::NoDotAndDotDot);
 #else
     appList = m_appFolder.entryInfoList(QDir::Executable | QDir::Files | QDir::NoDotAndDotDot);
