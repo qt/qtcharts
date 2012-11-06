@@ -53,74 +53,74 @@
 
         <tr>
             <td><a href="examples-legend.html">Legend</a></td>
-            <td><a href="examples-lineandbar.html">Line and Barchart</a></td>
-        </tr>
-        <tr>
-            <td><a href="examples-legend.html"><img src="images/examples_legend_detach.png" width="300" alt="Legend" /></a></td>
-            <td><a href="examples-lineandbar.html"><img src="images/examples_lineandbar.png" width="300" alt="Line and Barchart" /></a></td>
-        </tr>
-
-        <tr>
-            <td><a href="examples-linechart.html">Line Chart</a></td>
-            <td><a href="examples-modeldata.html">Model Data</a></td>
-        </tr>
-        <tr>
-            <td><a href="examples-linechart.html"><img src="images/examples_linechart.png" width="300" alt="Line Chart" /></a></td>
-            <td><a href="examples-modeldata.html"><img src="images/examples_modeldata.png" width="300" alt="Model Data" /></a></td>
-        </tr>
-
-        <tr>
-            <td><a href="examples-percentbarchart.html">Percent Bar Chart</a></td>
-            <td><a href="examples-piechart.html">Pie Chart</a></td>
-        </tr>
-        <tr>
-            <td><a href="examples-percentbarchart.html"><img src="images/examples_percentbarchart.png" width="300" alt="Percent Bar Chart" /></a></td>
-            <td><a href="examples-piechart.html"><img src="images/examples_piechart.png" width="300" alt="Pie Chart" /></a></td>
-        </tr>
-
-        <tr>
-            <td><a href="examples-piechartdrilldown.html">Pie Chart Drilldown</a></td>
-            <td><a href="examples-presenterchart.html">Presenter Chart</a></td>
-        </tr>
-        <tr>
-            <td><a href="examples-piechartdrilldown.html"><img src="images/examples_piechartdrill2.png" width="300" alt="Pie Chart Drilldown" /></a></td>
-            <td><a href="examples-presenterchart.html"><img src="images/examples_presenterchart4.png" width="300" alt="Presenter Chart" /></a></td>
-        </tr>
-
-        <tr>
-            <td><a href="examples-scatterchart.html">Scatter chart</a></td>
-            <td><a href="examples-scatterinteractions.html">Scatter Interactions</a></td>
-        </tr>
-        <tr>
-            <td><a href="examples-scatterchart.html"><img src="images/examples_scatterchart.png" width="300" alt="Scatter chart" /></a></td>
-            <td><a href="examples-scatterinteractions.html"><img src="images/examples_scatterinteractions.png" width="300" alt="Scatter Interactions" /></a></td>
-        </tr>
-
-        <tr>
-            <td><a href="examples-splinechart.html">Spline Chart</a></td>
-            <td><a href="examples-stackedbarchart.html">Stacked Bar Chart</a></td>
-        </tr>
-        <tr>
-            <td><a href="examples-splinechart.html"><img src="images/examples_splinechart.png" width="300" alt="Spline Chart" /></a></td>
-            <td><a href="examples-stackedbarchart.html"><img src="images/examples_stackedbarchart.png" width="300" alt="Stacked Bar Chart" /></a></td>
-        </tr>
-
-        <tr>
-            <td><a href="examples-stackedbarchartdrilldown.html">Stacked Bar Chart Drilldown</a></td>
-            <td><a href="examples-temperaturerecords.html">Temperature Records</a></td>
-        </tr>
-        <tr>
-            <td><a href="examples-stackedbarchartdrilldown.html"><img src="images/examples_stackedbarchartdrilldown1.png" width="300" alt="Stacked Bar Chart Drilldown" /></a></td>
-            <td><a href="examples-temperaturerecords.html"><img src="images/examples_temperaturerecords.png" width="300" alt="Temperature Records" /></a></td>
-        </tr>
-
-        <tr>
-            <td><a href="examples-zoomlinechart.html">Zoom Line</a></td>
             <td><a href="examples-legendmarkers.html">Legend Markers</a></td>
         </tr>
         <tr>
-            <td><a href="examples-zoomlinechart.html"><img src="images/examples_zoomlinechart1.png" width="300" alt="Zoom Line" /></a></td>
+            <td><a href="examples-legend.html"><img src="images/examples_legend_detach.png" width="300" alt="Legend" /></a></td>
             <td><a href="examples-legendmarkers.html"><img src="images/examples_legendmarkers.png" width="300" alt="Legend Markers" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="examples-lineandbar.html">Line and Barchart</a></td>
+            <td><a href="examples-linechart.html">Line Chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-lineandbar.html"><img src="images/examples_lineandbar.png" width="300" alt="Line and Barchart" /></a></td>
+            <td><a href="examples-linechart.html"><img src="images/examples_linechart.png" width="300" alt="Line Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="examples-modeldata.html">Model Data</a></td>
+            <td><a href="examples-percentbarchart.html">Percent Bar Chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-modeldata.html"><img src="images/examples_modeldata.png" width="300" alt="Model Data" /></a></td>
+            <td><a href="examples-percentbarchart.html"><img src="images/examples_percentbarchart.png" width="300" alt="Percent Bar Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="examples-piechart.html">Pie Chart</a></td>
+            <td><a href="examples-piechartdrilldown.html">Pie Chart Drilldown</a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-piechart.html"><img src="images/examples_piechart.png" width="300" alt="Pie Chart" /></a></td>
+            <td><a href="examples-piechartdrilldown.html"><img src="images/examples_piechartdrill2.png" width="300" alt="Pie Chart Drilldown" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="examples-presenterchart.html">Presenter Chart</a></td>
+            <td><a href="examples-scatterchart.html">Scatter chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-presenterchart.html"><img src="images/examples_presenterchart4.png" width="300" alt="Presenter Chart" /></a></td>
+            <td><a href="examples-scatterchart.html"><img src="images/examples_scatterchart.png" width="300" alt="Scatter chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="examples-scatterinteractions.html">Scatter Interactions</a></td>
+            <td><a href="examples-splinechart.html">Spline Chart</a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-scatterinteractions.html"><img src="images/examples_scatterinteractions.png" width="300" alt="Scatter Interactions" /></a></td>
+            <td><a href="examples-splinechart.html"><img src="images/examples_splinechart.png" width="300" alt="Spline Chart" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="examples-stackedbarchart.html">Stacked Bar Chart</a></td>
+            <td><a href="examples-stackedbarchartdrilldown.html">Stacked Bar Chart Drilldown</a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-stackedbarchart.html"><img src="images/examples_stackedbarchart.png" width="300" alt="Stacked Bar Chart" /></a></td>
+            <td><a href="examples-stackedbarchartdrilldown.html"><img src="images/examples_stackedbarchartdrilldown1.png" width="300" alt="Stacked Bar Chart Drilldown" /></a></td>
+        </tr>
+
+        <tr>
+            <td><a href="examples-temperaturerecords.html">Temperature Records</a></td>
+            <td><a href="examples-zoomlinechart.html">Zoom Line</a></td>
+        </tr>
+        <tr>
+            <td><a href="examples-temperaturerecords.html"><img src="images/examples_temperaturerecords.png" width="300" alt="Temperature Records" /></a></td>
+            <td><a href="examples-zoomlinechart.html"><img src="images/examples_zoomlinechart1.png" width="300" alt="Zoom Line" /></a></td>
         </tr>
 
     </table>

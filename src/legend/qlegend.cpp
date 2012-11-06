@@ -64,6 +64,10 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \endcode
 
     \image examples_percentbarchart_legend.png
+
+    Please note that there is no QML API available for modifying legend markers, unlike in the Qt API of Charts.
+    The use case of modifying markers can be implemented for example by creating your own custom legend. For an example
+    on how to do this, see \l {demos/qmlcustomlegend}{Qml Custom Demo} application.
 */
 
 /*!
