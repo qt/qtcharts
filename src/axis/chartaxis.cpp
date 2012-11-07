@@ -276,7 +276,7 @@ void ChartAxis::setLabelPadding(int padding)
 
 bool ChartAxis::isEmpty()
 {
-    return m_axisRect.isEmpty() || m_gridRect.isEmpty() || qFuzzyIsNull(m_min - m_max);
+    return m_axisRect.isEmpty() || m_gridRect.isEmpty() || qFuzzyCompare(m_min, m_max);
 }
 
 void ChartAxis::handleDomainUpdated()
@@ -293,7 +293,7 @@ void ChartAxis::handleDomainUpdated()
         max = domain->maxY();
     }
 
-    if (!qFuzzyIsNull(m_min - min) || !qFuzzyIsNull(m_max - max)) {
+    if (!qFuzzyCompare(m_min, min) || !qFuzzyCompare(m_max, max)) {
         m_min = min;
         m_max = max;
 

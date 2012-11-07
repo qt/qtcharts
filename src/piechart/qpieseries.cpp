@@ -612,7 +612,7 @@ void QPieSeries::setHorizontalPosition(qreal relativePosition)
     if (relativePosition > 1.0)
         relativePosition = 1.0;
 
-    if (!qFuzzyIsNull(d->m_pieRelativeHorPos - relativePosition)) {
+    if (!qFuzzyCompare(d->m_pieRelativeHorPos, relativePosition)) {
         d->m_pieRelativeHorPos = relativePosition;
         emit d->horizontalPositionChanged();
     }
@@ -633,7 +633,7 @@ void QPieSeries::setVerticalPosition(qreal relativePosition)
     if (relativePosition > 1.0)
         relativePosition = 1.0;
 
-    if (!qFuzzyIsNull(d->m_pieRelativeVerPos - relativePosition)) {
+    if (!qFuzzyCompare(d->m_pieRelativeVerPos, relativePosition)) {
         d->m_pieRelativeVerPos = relativePosition;
         emit d->verticalPositionChanged();
     }
@@ -663,7 +663,7 @@ qreal QPieSeries::pieSize() const
 void QPieSeries::setPieStartAngle(qreal angle)
 {
     Q_D(QPieSeries);
-    if (qFuzzyIsNull(d->m_pieStartAngle - angle))
+    if (qFuzzyCompare(d->m_pieStartAngle, angle))
         return;
     d->m_pieStartAngle = angle;
     d->updateDerivativeData();
@@ -688,7 +688,7 @@ qreal QPieSeries::pieStartAngle() const
 void QPieSeries::setPieEndAngle(qreal angle)
 {
     Q_D(QPieSeries);
-    if (qFuzzyIsNull(d->m_pieEndAngle - angle))
+    if (qFuzzyCompare(d->m_pieEndAngle, angle))
         return;
     d->m_pieEndAngle = angle;
     d->updateDerivativeData();
@@ -764,13 +764,13 @@ void QPieSeriesPrivate::updateDerivativeData()
     foreach (QPieSlice *s, m_slices)
         sum += s->value();
 
-    if (!qFuzzyIsNull(m_sum - sum)) {
+    if (!qFuzzyCompare(m_sum, sum)) {
         m_sum = sum;
         emit q_func()->sumChanged();
     }
 
     // nothing to show..
-    if (qFuzzyIsNull(m_sum))
+    if (qFuzzyCompare(m_sum, 0))
         return;
 
     // update slice attributes
@@ -793,12 +793,12 @@ void QPieSeriesPrivate::setSizes(qreal innerSize, qreal outerSize)
 {
     bool changed = false;
 
-    if (!qFuzzyIsNull(m_holeRelativeSize - innerSize)) {
+    if (!qFuzzyCompare(m_holeRelativeSize, innerSize)) {
         m_holeRelativeSize = innerSize;
         changed = true;
     }
 
-    if (!qFuzzyIsNull(m_pieRelativeSize - outerSize)) {
+    if (!qFuzzyCompare(m_pieRelativeSize, outerSize)) {
         m_pieRelativeSize = outerSize;
         changed = true;
     }

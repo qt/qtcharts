@@ -219,7 +219,7 @@ void XYChart::handleGeometryChanged(const QRectF &rect)
 
 bool XYChart::isEmpty()
 {
-    return !m_clipRect.isValid() || qFuzzyIsNull(m_maxX - m_minX) || qFuzzyIsNull(m_maxY - m_minY) || m_series->points().isEmpty();
+    return !m_clipRect.isValid() || qFuzzyCompare(m_maxX, m_minX) || qFuzzyCompare(m_maxY, m_minY) || m_series->points().isEmpty();
 }
 
 #include "moc_xychart_p.cpp"

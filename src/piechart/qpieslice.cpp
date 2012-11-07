@@ -480,7 +480,7 @@ QString QPieSlice::label() const
 void QPieSlice::setValue(qreal value)
 {
     value = qAbs(value); // negative values not allowed
-    if (!qFuzzyIsNull(d_ptr->m_data.m_value - value)) {
+    if (!qFuzzyCompare(d_ptr->m_data.m_value, value)) {
         d_ptr->m_data.m_value = value;
         emit valueChanged();
     }
@@ -629,7 +629,7 @@ QFont QPieSlice::labelFont() const
 
 void QPieSlice::setLabelArmLengthFactor(qreal factor)
 {
-    if (!qFuzzyIsNull(d_ptr->m_data.m_labelArmLengthFactor - factor)) {
+    if (!qFuzzyCompare(d_ptr->m_data.m_labelArmLengthFactor, factor)) {
         d_ptr->m_data.m_labelArmLengthFactor = factor;
         emit d_ptr->labelArmLengthFactorChanged();
     }
@@ -642,7 +642,7 @@ qreal QPieSlice::labelArmLengthFactor() const
 
 void QPieSlice::setExplodeDistanceFactor(qreal factor)
 {
-    if (!qFuzzyIsNull(d_ptr->m_data.m_explodeDistanceFactor - factor)) {
+    if (!qFuzzyCompare(d_ptr->m_data.m_explodeDistanceFactor, factor)) {
         d_ptr->m_data.m_explodeDistanceFactor = factor;
         emit d_ptr->explodeDistanceFactorChanged();
     }
@@ -754,7 +754,7 @@ void QPieSlicePrivate::setLabelFont(const QFont &font, bool themed)
 
 void QPieSlicePrivate::setPercentage(qreal percentage)
 {
-    if (!qFuzzyIsNull(m_data.m_percentage - percentage)) {
+    if (!qFuzzyCompare(m_data.m_percentage, percentage)) {
         m_data.m_percentage = percentage;
         emit q_ptr->percentageChanged();
     }
@@ -762,7 +762,7 @@ void QPieSlicePrivate::setPercentage(qreal percentage)
 
 void QPieSlicePrivate::setStartAngle(qreal angle)
 {
-    if (!qFuzzyIsNull(m_data.m_startAngle - angle)) {
+    if (!qFuzzyCompare(m_data.m_startAngle, angle)) {
         m_data.m_startAngle = angle;
         emit q_ptr->startAngleChanged();
     }
@@ -770,7 +770,7 @@ void QPieSlicePrivate::setStartAngle(qreal angle)
 
 void QPieSlicePrivate::setAngleSpan(qreal span)
 {
-    if (!qFuzzyIsNull(m_data.m_angleSpan - span)) {
+    if (!qFuzzyCompare(m_data.m_angleSpan, span)) {
         m_data.m_angleSpan = span;
         emit q_ptr->angleSpanChanged();
     }

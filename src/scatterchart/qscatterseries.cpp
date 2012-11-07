@@ -239,7 +239,7 @@ void QScatterSeries::setMarkerSize(qreal size)
 {
     Q_D(QScatterSeries);
 
-    if (!qFuzzyIsNull(d->m_size - size)) {
+    if (!qFuzzyCompare(d->m_size, size)) {
         d->m_size = size;
         emit d->updated();
     }

@@ -286,7 +286,7 @@ void QChart::zoomOut()
  */
 void QChart::zoom(qreal factor)
 {
-    if (qFuzzyIsNull(factor))
+    if (qFuzzyCompare(factor, 0))
         return;
 
     if (qFuzzyCompare(factor, (qreal)1.0))

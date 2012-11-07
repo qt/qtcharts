@@ -41,14 +41,14 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
     bool axisXChanged = false;
     bool axisYChanged = false;
 
-    if (!qFuzzyIsNull(m_minX - minX) || !qFuzzyIsNull(m_maxX - maxX)) {
+    if (!qFuzzyCompare(m_minX, minX) || !qFuzzyCompare(m_maxX, maxX)) {
         m_minX = minX;
         m_maxX = maxX;
         axisXChanged = true;
         emit rangeXChanged(m_minX, m_maxX);
     }
 
-    if (!qFuzzyIsNull(m_minY - minY) || !qFuzzyIsNull(m_maxY - maxY)) {
+    if (!qFuzzyCompare(m_minY, minY) || !qFuzzyCompare(m_maxY, maxY)) {
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
@@ -103,7 +103,7 @@ qreal Domain::spanY() const
 
 bool Domain::isEmpty() const
 {
-    return qFuzzyIsNull(spanX()) || qFuzzyIsNull(spanY());
+    return qFuzzyCompare(spanX(), 0) || qFuzzyCompare(spanY(), 0);
 }
 
 void Domain::zoomIn(const QRectF &rect, const QSizeF &size)
@@ -181,10 +181,10 @@ void Domain::handleAxisUpdated()
 
 bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2)
 {
-    return (qFuzzyIsNull(domain1.m_maxX - domain2.m_maxX) &&
-            qFuzzyIsNull(domain1.m_maxY - domain2.m_maxY) &&
-            qFuzzyIsNull(domain1.m_minX - domain2.m_minX) &&
-            qFuzzyIsNull(domain1.m_minY - domain2.m_minY));
+    return (qFuzzyCompare(domain1.m_maxX, domain2.m_maxX) &&
+            qFuzzyCompare(domain1.m_maxY, domain2.m_maxY) &&
+            qFuzzyCompare(domain1.m_minX, domain2.m_minX) &&
+            qFuzzyCompare(domain1.m_minY, domain2.m_minY));
 }
 
 

@@ -83,7 +83,7 @@ void ChartBackground::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 int ChartBackground::roundness(qreal size) const
 {
-    if (qFuzzyIsNull(size))
+    if (qFuzzyCompare(size, 0))
         return 0;
     return 100 * m_diameter / int(size);
 }

@@ -98,16 +98,16 @@ void tst_QCategoryAxis::qcategoryaxis()
 {
     qabstractaxis();
 
-    QVERIFY(qFuzzyIsNull(m_categoryaxis->max()));
-    QVERIFY(qFuzzyIsNull(m_categoryaxis->min()));
+    QVERIFY(qFuzzyCompare(m_categoryaxis->max(), 0));
+    QVERIFY(qFuzzyCompare(m_categoryaxis->min(), 0));
     QCOMPARE(m_categoryaxis->type(), QAbstractAxis::AxisTypeCategory);
 
     m_chart->setAxisX(m_categoryaxis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
 
-    QVERIFY(!qFuzzyIsNull(m_categoryaxis->max()));
-    QVERIFY(!qFuzzyIsNull(m_categoryaxis->min()));
+    QVERIFY(!qFuzzyCompare(m_categoryaxis->max(), 0));
+    QVERIFY(!qFuzzyCompare(m_categoryaxis->min(), 0));
 }
 
 void tst_QCategoryAxis::max_raw_data()
@@ -127,7 +127,7 @@ void tst_QCategoryAxis::max_raw()
     QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_categoryaxis->setMax(max);
-    QVERIFY2(qFuzzyIsNull(m_categoryaxis->max() - max), "Not equal");
+    QVERIFY2(qFuzzyCompare(m_categoryaxis->max(), max), "Not equal");
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 0);
@@ -175,7 +175,7 @@ void tst_QCategoryAxis::min_raw()
     QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_categoryaxis->setMin(min);
-    QVERIFY2(qFuzzyIsNull(m_categoryaxis->min() - min), "Not equal");
+    QVERIFY2(qFuzzyCompare(m_categoryaxis->min(), min), "Not equal");
 
     QCOMPARE(spy0.count(), 0);
     QCOMPARE(spy1.count(), 1);
@@ -228,8 +228,8 @@ void tst_QCategoryAxis::range_raw()
     QSignalSpy spy2(m_categoryaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
     m_categoryaxis->setRange(min, max);
-    QVERIFY2(qFuzzyIsNull(m_categoryaxis->min() - min), "Min not equal");
-    QVERIFY2(qFuzzyIsNull(m_categoryaxis->max() - max), "Max not equal");
+    QVERIFY2(qFuzzyCompare(m_categoryaxis->min(), min), "Min not equal");
+    QVERIFY2(qFuzzyCompare(m_categoryaxis->max(), max), "Max not equal");
 
     QCOMPARE(spy0.count(), 1);
     QCOMPARE(spy1.count(), 1);

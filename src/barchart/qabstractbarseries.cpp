@@ -484,7 +484,7 @@ qreal QAbstractBarSeriesPrivate::percentageAt(int set, int category)
 
     qreal value = m_barSets.at(set)->at(category);
     qreal sum = categorySum(category);
-    if (qFuzzyIsNull(sum))
+    if (qFuzzyCompare(sum, 0))
         return 0;
 
     return value / sum;

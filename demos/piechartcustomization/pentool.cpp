@@ -106,7 +106,7 @@ void PenTool::showColorDialog()
 
 void PenTool::updateWidth(double width)
 {
-    if (!qFuzzyIsNull(width - m_pen.widthF())) {
+    if (!qFuzzyCompare(width, m_pen.widthF())) {
         m_pen.setWidthF(width);
         emit changed();
     }

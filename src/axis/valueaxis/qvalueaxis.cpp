@@ -219,13 +219,13 @@ void QValueAxis::setRange(qreal min, qreal max)
             setTickCount(ticks);
     }
 
-    if (!qFuzzyIsNull(d->m_min - min)) {
+    if (!qFuzzyCompare(d->m_min, min)) {
         d->m_min = min;
         changed = true;
         emit minChanged(min);
     }
 
-    if (!qFuzzyIsNull(d->m_max - max)) {
+    if (!qFuzzyCompare(d->m_max, max)) {
         d->m_max = max;
         changed = true;
         emit maxChanged(max);
@@ -264,7 +264,7 @@ void QValueAxis::setNiceNumbersEnabled(bool enable)
     Q_D(QValueAxis);
     if (d->m_niceNumbers != enable) {
         d->m_niceNumbers = enable;
-        if (enable && !qFuzzyIsNull(d->m_max - d->m_min))
+        if (enable && !qFuzzyCompare(d->m_max, d->m_min))
             setRange(d->m_min, d->m_max);
     }
 }

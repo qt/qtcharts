@@ -64,7 +64,7 @@ void Scroller::scrollTo(const QPointF &delta)
         // Release was quick enough. Start scrolling.
         qreal interval = 25;
         qreal time = m_timeStamp.msecsTo(QTime::currentTime());
-        if (qFuzzyIsNull(time)) {
+        if (qFuzzyCompare(time, 0)) {
             m_speed = delta / 5;
         } else {
             m_speed = delta * interval / time;
@@ -72,7 +72,7 @@ void Scroller::scrollTo(const QPointF &delta)
 
         qreal fraction = qMax(qAbs(m_speed.x()), qAbs(m_speed.y()));
 
-        if (!qFuzzyIsNull(fraction)) {
+        if (!qFuzzyCompare(fraction, 0)) {
             m_fraction.setX(qAbs(m_speed.x() / fraction));
             m_fraction.setY(qAbs(m_speed.y() / fraction));
         } else {

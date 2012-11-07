@@ -66,14 +66,14 @@ QVector<QRectF> BarChartItem::calculateLayout()
             layout.append(rect);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(rectHeight))
+            if (qFuzzyCompare(rectHeight, 0))
                 bar->setVisible(false);
             else
                 bar->setVisible(barsVisible);
 
             QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(barSet->value(category)))
+            if (!qFuzzyCompare(barSet->value(category), 0))
                 label->setText(QString::number(barSet->value(category)));
             else
                 label->setText(QString(""));

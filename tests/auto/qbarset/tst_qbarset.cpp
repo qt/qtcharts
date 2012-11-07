@@ -93,7 +93,7 @@ void tst_QBarSet::qbarset()
     QBarSet barset(QString("label"));
     QCOMPARE(barset.label(), QString("label"));
     QCOMPARE(barset.count(), 0);
-    QVERIFY(qFuzzyIsNull(barset.sum()));
+    QVERIFY(qFuzzyCompare(barset.sum(), 0));
 }
 
 void tst_QBarSet::label_data()
@@ -129,7 +129,7 @@ void tst_QBarSet::append()
     QFETCH(int, count);
 
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
 
     QSignalSpy valueSpy(m_barset, SIGNAL(valuesAdded(int,int)));
 
@@ -159,7 +159,7 @@ void tst_QBarSet::appendOperator()
     QFETCH(int, count);
 
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
 
     QSignalSpy valueSpy(m_barset,SIGNAL(valuesAdded(int,int)));
 
@@ -185,7 +185,7 @@ void tst_QBarSet::insert_data()
 void tst_QBarSet::insert()
 {
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
     QSignalSpy valueSpy(m_barset,SIGNAL(valuesAdded(int,int)));
 
     m_barset->insert(0, 1.0);       // 1.0
@@ -215,7 +215,7 @@ void tst_QBarSet::remove_data()
 void tst_QBarSet::remove()
 {
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
 
     QSignalSpy valueSpy(m_barset,SIGNAL(valuesRemoved(int,int)));
 
@@ -275,7 +275,7 @@ void tst_QBarSet::remove()
     // Remove more items than list has
     m_barset->remove(0,312);
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
 
     QCOMPARE(valueSpy.count(), 1);
     valueSpyArg = valueSpy.takeFirst();
@@ -296,7 +296,7 @@ void tst_QBarSet::replace_data()
 void tst_QBarSet::replace()
 {
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
     QSignalSpy valueSpy(m_barset,SIGNAL(valueChanged(int)));
 
     m_barset->append(1.0);
@@ -347,7 +347,7 @@ void tst_QBarSet::at_data()
 void tst_QBarSet::at()
 {
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
 
     m_barset->append(1.0);
     m_barset->append(2.0);
@@ -368,7 +368,7 @@ void tst_QBarSet::atOperator_data()
 void tst_QBarSet::atOperator()
 {
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
 
     m_barset->append(1.0);
     m_barset->append(2.0);
@@ -389,7 +389,7 @@ void tst_QBarSet::count_data()
 void tst_QBarSet::count()
 {
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
 
     m_barset->append(1.0);
     QCOMPARE(m_barset->count(),1);
@@ -409,7 +409,7 @@ void tst_QBarSet::sum_data()
 void tst_QBarSet::sum()
 {
     QCOMPARE(m_barset->count(), 0);
-    QVERIFY(qFuzzyIsNull(m_barset->sum()));
+    QVERIFY(qFuzzyCompare(m_barset->sum(), 0));
 
     m_barset->append(1.0);
     QVERIFY(qFuzzyCompare(m_barset->sum(), (qreal)1.0));

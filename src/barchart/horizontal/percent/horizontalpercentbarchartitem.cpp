@@ -65,14 +65,14 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
             layout.append(rect);
             bar->setPen(barSet->m_pen);
             bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(rectHeight))
+            if (qFuzzyCompare(rectHeight, 0))
                 bar->setVisible(false);
             else
                 bar->setVisible(barsVisible);
 
             QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
 
-            if (!qFuzzyIsNull(m_series->d_func()->valueAt(set, category))) {
+            if (!qFuzzyCompare(m_series->d_func()->valueAt(set, category), 0)) {
                 int p = m_series->d_func()->percentageAt(set, category) * 100;
                 QString vString(QString::number(p));
                 vString.truncate(3);
