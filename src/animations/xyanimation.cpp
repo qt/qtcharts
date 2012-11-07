@@ -88,8 +88,8 @@ void XYAnimation::setup(const QVector<QPointF> &oldPoints, const QVector<QPointF
 
 QVariant XYAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
 {
-    QVector<QPointF> startVector = qVariantValue<QVector<QPointF> >(start);
-    QVector<QPointF> endVector = qVariantValue<QVector<QPointF> >(end);
+    QVector<QPointF> startVector = qvariant_cast<QVector<QPointF> >(start);
+    QVector<QPointF> endVector = qvariant_cast<QVector<QPointF> >(end);
     QVector<QPointF> result;
 
     switch (m_type) {
@@ -125,7 +125,7 @@ void XYAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped) { //workaround
 
-        QVector<QPointF> vector = qVariantValue<QVector<QPointF> >(value);
+        QVector<QPointF> vector = qvariant_cast<QVector<QPointF> >(value);
         m_item->setGeometryPoints(vector);
         m_item->updateGeometry();
         m_item->setDirty(true);

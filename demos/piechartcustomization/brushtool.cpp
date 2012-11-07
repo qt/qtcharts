@@ -31,21 +31,21 @@ BrushTool::BrushTool(QString title, QWidget *parent)
 
     m_colorButton = new QPushButton();
     m_styleCombo = new QComboBox();
-    m_styleCombo->addItem("Nobrush", Qt::NoBrush);
-    m_styleCombo->addItem("Solidpattern", Qt::SolidPattern);
-    m_styleCombo->addItem("Dense1pattern", Qt::Dense1Pattern);
-    m_styleCombo->addItem("Dense2attern", Qt::Dense2Pattern);
-    m_styleCombo->addItem("Dense3Pattern", Qt::Dense3Pattern);
-    m_styleCombo->addItem("Dense4Pattern", Qt::Dense4Pattern);
-    m_styleCombo->addItem("Dense5Pattern", Qt::Dense5Pattern);
-    m_styleCombo->addItem("Dense6Pattern", Qt::Dense6Pattern);
-    m_styleCombo->addItem("Dense7Pattern", Qt::Dense7Pattern);
-    m_styleCombo->addItem("HorPattern", Qt::HorPattern);
-    m_styleCombo->addItem("VerPattern", Qt::VerPattern);
-    m_styleCombo->addItem("CrossPattern", Qt::CrossPattern);
-    m_styleCombo->addItem("BDiagPattern", Qt::BDiagPattern);
-    m_styleCombo->addItem("FDiagPattern", Qt::FDiagPattern);
-    m_styleCombo->addItem("DiagCrossPattern", Qt::DiagCrossPattern);
+    m_styleCombo->addItem("Nobrush", (int) Qt::NoBrush);
+    m_styleCombo->addItem("Solidpattern", (int) Qt::SolidPattern);
+    m_styleCombo->addItem("Dense1pattern", (int) Qt::Dense1Pattern);
+    m_styleCombo->addItem("Dense2attern", (int) Qt::Dense2Pattern);
+    m_styleCombo->addItem("Dense3Pattern", (int) Qt::Dense3Pattern);
+    m_styleCombo->addItem("Dense4Pattern", (int) Qt::Dense4Pattern);
+    m_styleCombo->addItem("Dense5Pattern", (int) Qt::Dense5Pattern);
+    m_styleCombo->addItem("Dense6Pattern", (int) Qt::Dense6Pattern);
+    m_styleCombo->addItem("Dense7Pattern", (int) Qt::Dense7Pattern);
+    m_styleCombo->addItem("HorPattern", (int) Qt::HorPattern);
+    m_styleCombo->addItem("VerPattern", (int) Qt::VerPattern);
+    m_styleCombo->addItem("CrossPattern", (int) Qt::CrossPattern);
+    m_styleCombo->addItem("BDiagPattern", (int) Qt::BDiagPattern);
+    m_styleCombo->addItem("FDiagPattern", (int) Qt::FDiagPattern);
+    m_styleCombo->addItem("DiagCrossPattern", (int) Qt::DiagCrossPattern);
 
     QFormLayout *layout = new QFormLayout();
     layout->addRow("Color", m_colorButton);

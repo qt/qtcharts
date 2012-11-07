@@ -43,8 +43,13 @@ TableWidget::TableWidget(QWidget *parent)
     // create table view and add model to it
     QTableView *tableView = new QTableView;
     tableView->setModel(model);
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    tableView->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+#else
     tableView->horizontalHeader()->setResizeMode(QHeaderView::Stretch);
     tableView->verticalHeader()->setResizeMode(QHeaderView::Stretch);
+#endif
     //! [2]
 
     //! [3]

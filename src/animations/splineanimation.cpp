@@ -120,8 +120,8 @@ void SplineAnimation::setup(QVector<QPointF> &oldPoints, QVector<QPointF> &newPo
 QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
 {
 
-    SplineVector startPair = qVariantValue< SplineVector >(start);
-    SplineVector endPair = qVariantValue< SplineVector >(end);
+    SplineVector startPair = qvariant_cast< SplineVector >(start);
+    SplineVector endPair = qvariant_cast< SplineVector >(end);
     SplineVector result;
 
     switch (animationType()) {
@@ -170,7 +170,7 @@ QVariant SplineAnimation::interpolated(const QVariant &start, const QVariant &en
 void SplineAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped && m_valid) { //workaround
-        QPair<QVector<QPointF >, QVector<QPointF > > pair = qVariantValue< QPair< QVector<QPointF>, QVector<QPointF> > >(value);
+        QPair<QVector<QPointF >, QVector<QPointF > > pair = qvariant_cast< QPair< QVector<QPointF>, QVector<QPointF> > >(value);
         m_item->setGeometryPoints(pair.first);
         m_item->setControlGeometryPoints(pair.second);
         m_item->updateGeometry();

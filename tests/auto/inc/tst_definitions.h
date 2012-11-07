@@ -24,6 +24,17 @@
 #include <QtTest/QtTest>
 #include <QPushButton>
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+namespace QTest
+{
+    // This was deprecated in Qt5. This is a small hack for the sake of compatibility.
+    inline static bool qWaitForWindowShown(QWidget *window)
+    {
+        return QTest::qWaitForWindowExposed(window);
+    }
+}
+#endif
+
 #define TRY_COMPARE(actual, expected) { \
     do { \
         const int timeout(1000); \

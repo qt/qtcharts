@@ -99,8 +99,8 @@ PieSliceData PieSliceAnimation::currentSliceValue()
 
 QVariant PieSliceAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
 {
-    PieSliceData startValue = qVariantValue<PieSliceData>(start);
-    PieSliceData endValue = qVariantValue<PieSliceData>(end);
+    PieSliceData startValue = qvariant_cast<PieSliceData>(start);
+    PieSliceData endValue = qvariant_cast<PieSliceData>(end);
 
     PieSliceData result;
     result = endValue;
@@ -118,7 +118,7 @@ QVariant PieSliceAnimation::interpolated(const QVariant &start, const QVariant &
 void PieSliceAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped) { //workaround
-        m_currentValue = qVariantValue<PieSliceData>(value);
+        m_currentValue = qvariant_cast<PieSliceData>(value);
         m_sliceItem->setLayout(m_currentValue);
     }
 }

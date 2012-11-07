@@ -22,6 +22,7 @@
 #include <qbarset.h>
 #include <qbarseries.h>
 #include <qchartview.h>
+#include "tst_definitions.h"
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 

@@ -113,8 +113,8 @@ void AxisAnimation::setValues(QVector<qreal> &oldLayout, QVector<qreal> &newLayo
 
 QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant &end, qreal progress) const
 {
-    QVector<qreal> startVector = qVariantValue<QVector<qreal> >(start);
-    QVector<qreal> endVecotr = qVariantValue<QVector<qreal> >(end);
+    QVector<qreal> startVector = qvariant_cast<QVector<qreal> >(start);
+    QVector<qreal> endVecotr = qvariant_cast<QVector<qreal> >(end);
     QVector<qreal> result;
 
     Q_ASSERT(startVector.count() == endVecotr.count()) ;
@@ -130,7 +130,7 @@ QVariant AxisAnimation::interpolated(const QVariant &start, const QVariant &end,
 void AxisAnimation::updateCurrentValue(const QVariant &value)
 {
     if (state() != QAbstractAnimation::Stopped) { //workaround
-        QVector<qreal> vector = qVariantValue<QVector<qreal> >(value);
+        QVector<qreal> vector = qvariant_cast<QVector<qreal> >(value);
         Q_ASSERT(vector.count() != 0);
         m_axis->setLayout(vector);
         m_axis->updateGeometry();

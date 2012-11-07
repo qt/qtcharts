@@ -39,8 +39,8 @@ PercentBarAnimation::~PercentBarAnimation()
 
 QVariant PercentBarAnimation::interpolated(const QVariant &from, const QVariant &to, qreal progress) const
 {
-    QVector<QRectF> startVector = qVariantValue<QVector<QRectF> >(from);
-    QVector<QRectF> endVector = qVariantValue<QVector<QRectF> >(to);
+    QVector<QRectF> startVector = qvariant_cast<QVector<QRectF> >(from);
+    QVector<QRectF> endVector = qvariant_cast<QVector<QRectF> >(to);
     QVector<QRectF> result;
 
     Q_ASSERT(startVector.count() == endVector.count());

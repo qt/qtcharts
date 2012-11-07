@@ -78,10 +78,10 @@ void ChartAxis::setLayout(QVector<qreal> &layout)
 
 void ChartAxis::createItems(int count)
 {
-    if (m_arrow->children().size() == 0)
+    if (m_arrow->childItems().size() == 0)
         m_arrow->addToGroup(new AxisItem(this, presenter()->rootItem()));
 
-    if (m_intervalAxis && m_grid->children().size() == 0) {
+    if (m_intervalAxis && m_grid->childItems().size() == 0) {
         for (int i = 0 ; i < 2 ; i  ++)
             m_grid->addToGroup(new QGraphicsLineItem(presenter()->rootItem()));
     }
@@ -440,7 +440,7 @@ QStringList ChartAxis::createValueLabels(int ticks) const
             labels << QString::number(value, 'f', n);
         }
     } else {
-        QByteArray array = format.toAscii();
+        QByteArray array = format.toLatin1();
         for (int i = 0; i < ticks; i++) {
             qreal value = m_min + (i * (m_max - m_min) / (ticks - 1));
             labels << QString().sprintf(array, value);

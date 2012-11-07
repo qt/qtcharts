@@ -43,7 +43,7 @@ LegendMarkerItem::LegendMarkerItem(QLegendMarkerPrivate *marker, QGraphicsObject
     m_pressPos(0, 0)
 {
     m_rectItem->setRect(m_markerRect);
-    setAcceptsHoverEvents(true);
+    setAcceptHoverEvents(true);
 }
 
 LegendMarkerItem::~LegendMarkerItem()

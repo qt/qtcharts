@@ -50,7 +50,7 @@ QVariant AbstractBarAnimation::interpolated(const QVariant &from, const QVariant
 
 void AbstractBarAnimation::updateCurrentValue(const QVariant &value)
 {
-    QVector<QRectF> layout = qVariantValue<QVector<QRectF> >(value);
+    QVector<QRectF> layout = qvariant_cast<QVector<QRectF> >(value);
     m_item->setLayout(layout);
 }
 
