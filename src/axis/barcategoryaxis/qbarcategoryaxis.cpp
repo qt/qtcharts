@@ -100,11 +100,20 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the maximum value on the axis.
 */
 
+/*!
+  \property QBarCategoryAxis::count
+  The count of categories.
+*/
+/*!
+  \qmlproperty int BarCategoryAxis::count
+  The count of categories.
+*/
 
 /*!
   \fn void QBarCategoryAxis::categoriesChanged()
   Axis emits signal when the categories of the axis has changed.
 */
+
 /*!
   \fn void QBarCategoryAxis::minChanged(const QString &min)
   Axis emits signal when \a min of axis has changed.
@@ -121,6 +130,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \qmlsignal BarCategoryAxis::onMaxChanged(const QString &max)
   Axis emits signal when \a max of axis has changed.
+*/
+
+/*!
+  \fn void QBarCategoryAxis::countChanged()
+  Axis emits signal when the count of categories has changed.
+*/
+/*!
+  \qmlsignal BarCategoryAxis::onCountChanged()
+  Axis emits signal when the count of categories has changed.
 */
 
 /*!
@@ -184,6 +202,7 @@ void QBarCategoryAxis::append(const QStringList &categories)
         setRange(d->m_minCategory, d->m_categories.last());
 
     emit categoriesChanged();
+    emit countChanged();
 }
 
 /*!
@@ -209,6 +228,7 @@ void QBarCategoryAxis::append(const QString &category)
         setRange(d->m_minCategory, d->m_categories.last());
 
     emit categoriesChanged();
+    emit countChanged();
 }
 
 /*!
@@ -234,6 +254,7 @@ void QBarCategoryAxis::remove(const QString &category)
             setRange(QString::null, QString::null);
         }
         emit categoriesChanged();
+        emit countChanged();
     }
 }
 
@@ -265,11 +286,12 @@ void QBarCategoryAxis::insert(int index, const QString &category)
     }
 
     emit categoriesChanged();
+    emit countChanged();
 }
 
 /*!
     Replaces \a oldCategory with \a newCategory. If \a oldCategory does not exits on the axis nothing is done.
-    A \a newVategory has to be valid QStrings and can not be duplicated. In case of replacing minimum or maximum category,
+    A \a newCategory has to be valid QStrings and can not be duplicated. In case of replacing minimum or maximum category,
     minimum and maximum of axis is updated accordingly.
 */
 void QBarCategoryAxis::replace(const QString &oldCategory, const QString &newCategory)
@@ -288,6 +310,7 @@ void QBarCategoryAxis::replace(const QString &oldCategory, const QString &newCat
             d->emitUpdated();
         }
         emit categoriesChanged();
+        emit countChanged();
     }
 }
 
@@ -300,6 +323,7 @@ void QBarCategoryAxis::clear()
     d->m_categories.clear();
     setRange(QString::null, QString::null);
     emit categoriesChanged();
+    emit countChanged();
 }
 
 /*!

@@ -28,14 +28,42 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest ValuesAxis"
+        name: "tst_qml-qtquicktest ValueAxis"
         when: windowShown
 
-        function test_minMax() {
+        function test_defaultPropertyValues() {
             compare(lineSeries1.axisX.min, 0, "AxisX min");
             compare(lineSeries1.axisX.max, 10, "AxisX max");
             compare(lineSeries1.axisY.min, 0, "AxisY min");
             compare(lineSeries1.axisY.max, 10, "AxisY max");
+            verify(axisX.tickCount > 0, "AxisX tick count");
+            verify(axisY.tickCount > 0, "AxisX tick count");
+            compare(axisX.niceNumbersEnabled, false, "nice numbers");
+            compare(axisX.labelFormat, "", "label format");
+        }
+
+        function test_modifyProperties() {
+            lineSeries1.axisX.tickCount = 3;
+            compare(lineSeries1.axisX.tickCount, 3, "set tick count");
+
+            lineSeries1.axisX.niceNumbersEnabled = true;
+            compare(axisX.niceNumbersEnabled, true, "nice numbers");
+        }
+
+        function test_signals() {
+            axisX.min = 2;
+            compare(minChangedSpy.count, 1, "onMinChanged");
+            compare(maxChangedSpy.count, 0, "onMaxChanged");
+
+            axisX.max = 8;
+            compare(minChangedSpy.count, 1, "onMinChanged");
+            compare(maxChangedSpy.count, 1, "onMaxChanged");
+
+            // restore original values
+            axisX.min = 0;
+            axisX.max = 10;
+            compare(minChangedSpy.count, 2, "onMinChanged");
+            compare(maxChangedSpy.count, 2, "onMaxChanged");
         }
     }
 
@@ -45,12 +73,12 @@ Rectangle {
 
         LineSeries {
             id: lineSeries1
-            axisX: ValuesAxis {
+            axisX: ValueAxis {
                 id: axisX
                 min: 0
                 max: 10
             }
-            axisY: ValuesAxis {
+            axisY: ValueAxis {
                 id: axisY
                 min: 0
                 max: 10
@@ -58,6 +86,17 @@ Rectangle {
             XYPoint { x: -1; y: -1 }
             XYPoint { x: 0; y: 0 }
             XYPoint { x: 5; y: 5 }
+        }
+
+        SignalSpy {
+            id: minChangedSpy
+            target: axisX
+            signalName: "minChanged"
+        }
+        SignalSpy {
+            id: maxChangedSpy
+            target: axisX
+            signalName: "maxChanged"
         }
     }
 }

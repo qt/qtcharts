@@ -126,6 +126,7 @@ public:
         qmlRegisterType<DeclarativeHorizontalPercentBarSeries, 1>(uri, 1, 1, "HorizontalPercentBarSeries");
         qmlRegisterType<DeclarativePieSeries>(uri, 1, 1, "PieSeries");
         qmlRegisterType<DeclarativeBarSet>(uri, 1, 1, "BarSet");
+        qmlRegisterType<QValueAxis>(uri, 1, 1, "ValueAxis");
 #ifndef QT_ON_ARM
         qmlRegisterType<QDateTimeAxis>(uri, 1, 1, "DateTimeAxis");
 #endif

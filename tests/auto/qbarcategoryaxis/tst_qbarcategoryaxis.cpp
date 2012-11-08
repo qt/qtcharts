@@ -175,6 +175,7 @@ void tst_QBarCategoriesAxis::append()
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(&axis, SIGNAL(countChanged()));
 
     axis.append(categories);
 
@@ -192,6 +193,7 @@ void tst_QBarCategoriesAxis::append()
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), 1);
+    QCOMPARE(spy4.count(), 1);
 }
 
 void tst_QBarCategoriesAxis::append2_data()
@@ -211,6 +213,7 @@ void tst_QBarCategoriesAxis::append2()
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(&axis, SIGNAL(countChanged()));
 
     foreach(QString category, categories)
         axis.append(category);
@@ -229,6 +232,7 @@ void tst_QBarCategoriesAxis::append2()
     QCOMPARE(spy1.count(), categories.count());
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), categories.count());
+    QCOMPARE(spy4.count(), categories.count());
 }
 
 void tst_QBarCategoriesAxis::at_data()
@@ -254,6 +258,7 @@ void tst_QBarCategoriesAxis::at()
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(&axis, SIGNAL(countChanged()));
 
     QCOMPARE(axis.at(index), string);
 
@@ -271,6 +276,7 @@ void tst_QBarCategoriesAxis::at()
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
+    QCOMPARE(spy4.count(), 0);
 }
 
 void tst_QBarCategoriesAxis::categories_data()
@@ -289,6 +295,7 @@ void tst_QBarCategoriesAxis::categories()
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(&axis, SIGNAL(countChanged()));
 
     axis.setCategories(categories);
     QCOMPARE(axis.categories(), categories);
@@ -307,7 +314,7 @@ void tst_QBarCategoriesAxis::categories()
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), 1);
-
+    QCOMPARE(spy4.count(), 1);
 }
 
 void tst_QBarCategoriesAxis::clear_data()
@@ -329,6 +336,7 @@ void tst_QBarCategoriesAxis::clear()
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(&axis, SIGNAL(countChanged()));
 
     axis.clear();
     QCOMPARE(axis.categories(), QStringList());
@@ -353,6 +361,7 @@ void tst_QBarCategoriesAxis::clear()
     QCOMPARE(spy1.count(), 3);
     QCOMPARE(spy2.count(), 3);
     QCOMPARE(spy3.count(), 3);
+    QCOMPARE(spy4.count(), 3);
 }
 
 void tst_QBarCategoriesAxis::count_data()
@@ -375,6 +384,7 @@ void tst_QBarCategoriesAxis::count()
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(&axis, SIGNAL(countChanged()));
 
     QCOMPARE(axis.count(), count);
 
@@ -382,6 +392,7 @@ void tst_QBarCategoriesAxis::count()
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
+    QCOMPARE(spy4.count(), 0);
 
     m_chart->setAxisX(&axis, m_series);
     m_view->show();
@@ -411,6 +422,7 @@ void tst_QBarCategoriesAxis::insert()
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(&axis, SIGNAL(countChanged()));
 
     axis.insert(index, category);
     QCOMPARE(axis.at(index),category);
@@ -419,6 +431,7 @@ void tst_QBarCategoriesAxis::insert()
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 0);
+    QCOMPARE(spy4.count(), 1);
 
     m_chart->setAxisX(&axis, m_series);
     m_view->show();
@@ -451,6 +464,7 @@ void tst_QBarCategoriesAxis::remove()
     QSignalSpy spy1(&axis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(&axis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(&axis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(&axis, SIGNAL(countChanged()));
 
     axis.remove(category);
     QCOMPARE(axis.categories(),result);
@@ -459,6 +473,7 @@ void tst_QBarCategoriesAxis::remove()
     QCOMPARE(spy1.count(), maxCount);
     QCOMPARE(spy2.count(), minCount);
     QCOMPARE(spy3.count(), rangeCount);
+    QCOMPARE(spy4.count(), 1);
 }
 
 void tst_QBarCategoriesAxis::max_raw_data()
@@ -478,6 +493,7 @@ void tst_QBarCategoriesAxis::max_raw()
     QSignalSpy spy1(m_baraxis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(m_baraxis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(m_baraxis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(m_baraxis, SIGNAL(countChanged()));
 
     m_baraxis->setMax(max);
     QCOMPARE(m_baraxis->max(), max);
@@ -486,6 +502,7 @@ void tst_QBarCategoriesAxis::max_raw()
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 0);
     QCOMPARE(spy3.count(), 1);
+    QCOMPARE(spy4.count(), 0);
 }
 
 void tst_QBarCategoriesAxis::max_data()
@@ -529,6 +546,7 @@ void tst_QBarCategoriesAxis::min_raw()
     QSignalSpy spy1(m_baraxis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(m_baraxis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(m_baraxis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(m_baraxis, SIGNAL(countChanged()));
 
     m_baraxis->setMin(min);
     QCOMPARE(m_baraxis->min(), min);
@@ -537,7 +555,7 @@ void tst_QBarCategoriesAxis::min_raw()
     QCOMPARE(spy1.count(), 0);
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), 1);
-
+    QCOMPARE(spy4.count(), 0);
 }
 
 void tst_QBarCategoriesAxis::min_data()
@@ -585,6 +603,7 @@ void tst_QBarCategoriesAxis::range_raw()
     QSignalSpy spy1(m_baraxis, SIGNAL(maxChanged(QString)));
     QSignalSpy spy2(m_baraxis, SIGNAL(minChanged(QString)));
     QSignalSpy spy3(m_baraxis, SIGNAL(rangeChanged(QString,QString)));
+    QSignalSpy spy4(m_baraxis, SIGNAL(countChanged()));
 
     m_baraxis->setRange(min, max);
     QCOMPARE(m_baraxis->min(), min);
@@ -594,6 +613,7 @@ void tst_QBarCategoriesAxis::range_raw()
     QCOMPARE(spy1.count(), 1);
     QCOMPARE(spy2.count(), 1);
     QCOMPARE(spy3.count(), 1);
+    QCOMPARE(spy4.count(), 0);
 }
 
 void tst_QBarCategoriesAxis::range_data()

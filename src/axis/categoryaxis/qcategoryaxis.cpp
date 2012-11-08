@@ -84,6 +84,24 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QCategoryAxis::count
+  The count of categories.
+*/
+/*!
+  \qmlproperty int CategoryAxis::count
+  The count of categories.
+*/
+
+/*!
+  \property QCategoryAxis::categoriesLabels
+  The category labels as a string list.
+*/
+/*!
+  \qmlproperty StringList CategoryAxis::categoriesLabels
+  The category labels as a list of strings.
+*/
+
+/*!
     Constructs an axis object which is a child of \a parent.
 */
 QCategoryAxis::QCategoryAxis(QObject *parent):

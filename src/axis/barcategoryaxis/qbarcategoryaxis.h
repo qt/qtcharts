@@ -33,6 +33,7 @@ class QTCOMMERCIALCHART_EXPORT QBarCategoryAxis : public QAbstractAxis
     Q_PROPERTY(QStringList categories READ categories WRITE setCategories NOTIFY categoriesChanged)
     Q_PROPERTY(QString min READ min WRITE setMin NOTIFY minChanged)
     Q_PROPERTY(QString max READ max WRITE setMax NOTIFY maxChanged)
+    Q_PROPERTY(int count READ count NOTIFY countChanged)
 
 public:
     explicit QBarCategoryAxis(QObject *parent = 0);
@@ -66,6 +67,7 @@ Q_SIGNALS:
     void minChanged(const QString &min);
     void maxChanged(const QString &max);
     void rangeChanged(const QString &min, const QString &max);
+    void countChanged();
 
 private:
     Q_DECLARE_PRIVATE(QBarCategoryAxis)
