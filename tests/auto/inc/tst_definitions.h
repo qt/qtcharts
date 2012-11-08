@@ -50,20 +50,6 @@ namespace QTest
 // Some bamboo clients have trouble passing mouse events to the test application.
 // This can be used to skip those tests so that they don't show up as a failure
 // in the test report.
-#ifdef QT5_QUICK_1
-#define SKIP_IF_CANNOT_TEST_MOUSE_EVENTS() { \
-    do { \
-        QPushButton b; \
-        b.resize(100, 100); \
-        b.show(); \
-        QTest::qWaitForWindowShown(&b); \
-        QSignalSpy spy(&b, SIGNAL(clicked())); \
-        QTest::mouseClick(&b, Qt::LeftButton, 0, b.rect().center()); \
-        if (spy.count() == 0) \
-            QSKIP("Cannot test mouse events in this environment"); \
-    } while (0); \
-}
-#else
 #define SKIP_IF_CANNOT_TEST_MOUSE_EVENTS() { \
     do { \
         QPushButton b; \
@@ -76,6 +62,5 @@ namespace QTest
             QSKIP("Cannot test mouse events in this environment", SkipAll); \
     } while (0); \
 }
-#endif
 
 #endif // TST_DEFINITIONS_H

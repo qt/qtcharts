@@ -84,7 +84,7 @@ QWidget *QChartsPlugin::createWidget(QWidget *parent)
     return new QChartView(new QChart(), parent);
 }
 
-#ifndef QT5_QUICK_1
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     Q_EXPORT_PLUGIN2(qtcommercialchart, QChartsPlugin)
 #endif
 

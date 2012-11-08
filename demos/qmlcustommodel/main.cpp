@@ -19,14 +19,8 @@
 ****************************************************************************/
 
 #include <QApplication>
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/qdeclarative.h>
-    #include <QtQuick1/QDeclarativeEngine>
-#else
-    #include <QtDeclarative>
-    #include <QtDeclarative/QDeclarativeEngine>
-#endif
-//#include <QtDeclarative>
+#include <QtDeclarative>
+#include <QtDeclarative/QDeclarativeEngine>
 #include <QAbstractItemModel>
 #include "declarativemodel.h"
 #include "customtablemodel.h"

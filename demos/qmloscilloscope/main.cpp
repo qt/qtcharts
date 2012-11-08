@@ -19,11 +19,7 @@
 ****************************************************************************/
 
 #include <QApplication>
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/QDeclarativeContext>
-#else
-    #include <QtDeclarative/QDeclarativeContext>
-#endif
+#include <QtDeclarative/QDeclarativeContext>
 #include "qmlapplicationviewer.h"
 #include "datasource.h"
 

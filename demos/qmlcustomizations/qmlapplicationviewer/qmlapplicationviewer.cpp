@@ -12,15 +12,9 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QFileInfo>
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/QDeclarativeComponent>
-    #include <QtQuick1/QDeclarativeEngine>
-    #include <QtQuick1/QDeclarativeContext>
-#else
-    #include <QtDeclarative/QDeclarativeComponent>
-    #include <QtDeclarative/QDeclarativeEngine>
-    #include <QtDeclarative/QDeclarativeContext>
-#endif
+#include <QtDeclarative/QDeclarativeComponent>
+#include <QtDeclarative/QDeclarativeEngine>
+#include <QtDeclarative/QDeclarativeContext>
 #include <QApplication>
 
 #include <qplatformdefs.h> // MEEGO_EDITION_HARMATTAN

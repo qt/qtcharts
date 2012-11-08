@@ -11,11 +11,7 @@
 #ifndef QMLAPPLICATIONVIEWER_H
 #define QMLAPPLICATIONVIEWER_H
 
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/QDeclarativeView>
-#else
-    #include <QtDeclarative/QDeclarativeView>
-#endif
+#include <QtDeclarative/QDeclarativeView>
 
 class QmlApplicationViewer : public QDeclarativeView
 {

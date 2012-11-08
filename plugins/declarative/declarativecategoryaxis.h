@@ -22,13 +22,8 @@
 #define DECLARATIVECATEGORYAXIS_H
 
 #include "qcategoryaxis.h"
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/QDeclarativeListProperty>
-    #include <QtQuick1/QDeclarativeParserStatus>
-#else
-    #include <QtDeclarative/QDeclarativeListProperty>
-    #include <QtDeclarative/QDeclarativeParserStatus>
-#endif
+#include <QtDeclarative/QDeclarativeListProperty>
+#include <QtDeclarative/QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

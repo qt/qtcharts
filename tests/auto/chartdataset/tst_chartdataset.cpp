@@ -31,11 +31,7 @@ private Q_SLOTS:
 
 void tst_ChartDataSet::skip()
 {
-#ifdef QT5_QUICK_1
-    QSKIP("This test requires the debug version of library");
-#else
     QSKIP("This test requires the debug version of library", SkipAll);
-#endif
 }
 
 QTEST_MAIN(tst_ChartDataSet)
@@ -73,32 +69,32 @@ class tst_ChartDataSet: public QObject {
     Q_OBJECT
 
 public Q_SLOTS:
-	void initTestCase();
-	void cleanupTestCase();
-	void init();
-	void cleanup();
+    void initTestCase();
+    void cleanupTestCase();
+    void init();
+    void cleanup();
 
 private Q_SLOTS:
-	void chartdataset_data();
-	void chartdataset();
-	void addSeries_data();
-	void addSeries();
+    void chartdataset_data();
+    void chartdataset();
+    void addSeries_data();
+    void addSeries();
     void setAxisX_data();
     void setAxisX();
     void setAxisY_data();
     void setAxisY();
-	void removeSeries_data();
-	void removeSeries();
-	void removeAllSeries_data();
-	void removeAllSeries();
+    void removeSeries_data();
+    void removeSeries();
+    void removeAllSeries_data();
+    void removeAllSeries();
     void seriesCount_data();
-	void seriesCount();
+    void seriesCount();
     void seriesIndex_data();
-	void seriesIndex();
-	void domain_data();
-	void domain();
+    void seriesIndex();
+    void domain_data();
+    void domain();
     void zoomInDomain_data();
-	void zoomInDomain();
+    void zoomInDomain();
     void zoomOutDomain_data();
     void zoomOutDomain();
     void scrollDomain_data();
@@ -111,7 +107,7 @@ private:
 void tst_ChartDataSet::initTestCase()
 {
     qRegisterMetaType<Domain*>();
-	qRegisterMetaType<QAbstractAxis*>();
+    qRegisterMetaType<QAbstractAxis*>();
     qRegisterMetaType<QAbstractSeries*>();
 }
 
@@ -140,20 +136,20 @@ void tst_ChartDataSet::chartdataset_data()
 
 void tst_ChartDataSet::chartdataset()
 {
-	QVERIFY(m_dataset->axisX(0) == 0);
-	QVERIFY(m_dataset->axisY(0) == 0);
-	QLineSeries* series = new QLineSeries(this);
-	QCOMPARE(m_dataset->seriesIndex(series),-1);
-	QVERIFY(m_dataset->domain(series) == 0);
-	QVERIFY(m_dataset->axisX(series) == 0);
-	QVERIFY(m_dataset->axisY(series) == 0);
-	m_dataset->createDefaultAxes();
+    QVERIFY(m_dataset->axisX(0) == 0);
+    QVERIFY(m_dataset->axisY(0) == 0);
+    QLineSeries* series = new QLineSeries(this);
+    QCOMPARE(m_dataset->seriesIndex(series),-1);
+    QVERIFY(m_dataset->domain(series) == 0);
+    QVERIFY(m_dataset->axisX(series) == 0);
+    QVERIFY(m_dataset->axisY(series) == 0);
+    m_dataset->createDefaultAxes();
 }
 
 
 void tst_ChartDataSet::addSeries_data()
 {
-	QTest::addColumn<QAbstractSeries*>("series");
+    QTest::addColumn<QAbstractSeries*>("series");
 
     QAbstractSeries* line = new QLineSeries(this);
     QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
@@ -164,14 +160,14 @@ void tst_ChartDataSet::addSeries_data()
     QAbstractSeries* percent = new QPercentBarSeries(this);
     QAbstractSeries* stacked = new QStackedBarSeries(this);
 
-	QTest::newRow("line") << line;
-	QTest::newRow("area") << area;
-	QTest::newRow("scatter") << scatter;
-	QTest::newRow("spline") << spline;
-	QTest::newRow("pie") << pie;
+    QTest::newRow("line") << line;
+    QTest::newRow("area") << area;
+    QTest::newRow("scatter") << scatter;
+    QTest::newRow("spline") << spline;
+    QTest::newRow("pie") << pie;
     QTest::newRow("bar") << bar;
-	QTest::newRow("percent") << percent;
-	QTest::newRow("stacked") << stacked;
+    QTest::newRow("percent") << percent;
+    QTest::newRow("stacked") << stacked;
 }
 
 void tst_ChartDataSet::addSeries()

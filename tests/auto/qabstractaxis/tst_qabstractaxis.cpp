@@ -139,11 +139,7 @@ void tst_QAbstractAxis::axisPenColor_data()
 
 void tst_QAbstractAxis::axisPenColor()
 {
-#ifdef QT5_QUICK_1
-    QSKIP("Test is not implemented. This is depreciated function");
-#else
-    QSKIP("Test is not implemented. This is depreciated function", SkipAll);
-#endif
+    QSKIP("Test is not implemented. This is deprecated function", SkipAll);
 }
 
 void tst_QAbstractAxis::gridLinePen_data()
@@ -408,11 +404,7 @@ void tst_QAbstractAxis::labelsColor_data()
 
 void tst_QAbstractAxis::labelsColor()
 {
-#ifdef QT5_QUICK_1
-    QSKIP("Test is not implemented. This is depreciated function");
-#else
-    QSKIP("Test is not implemented. This is depreciated function", SkipAll);
-#endif
+    QSKIP("Test is not implemented. This is deprecated function", SkipAll);
 }
 
 void tst_QAbstractAxis::labelsFont_data()
@@ -637,11 +629,7 @@ void tst_QAbstractAxis::shadesBorderColor_data()
 
 void tst_QAbstractAxis::shadesBorderColor()
 {
-#ifdef QT5_QUICK_1
-    QSKIP("Test is not implemented. This is depreciated function");
-#else
-    QSKIP("Test is not implemented. This is depreciated function", SkipAll);
-#endif
+    QSKIP("Test is not implemented. This is deprecated function", SkipAll);
 }
 
 void tst_QAbstractAxis::shadesBrush_data()
@@ -691,11 +679,7 @@ void tst_QAbstractAxis::shadesColor_data()
 // public QColor shadesColor() const
 void tst_QAbstractAxis::shadesColor()
 {
-#ifdef QT5_QUICK_1
-    QSKIP("Test is not implemented. This is depreciated function");
-#else
-    QSKIP("Test is not implemented. This is depreciated function", SkipAll);
-#endif
+    QSKIP("Test is not implemented. This is deprecated function", SkipAll);
 }
 
 void tst_QAbstractAxis::shadesPen_data()

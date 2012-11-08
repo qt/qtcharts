@@ -22,11 +22,8 @@
 #define DECLARATIVECHART_H
 
 #include <QtCore/QtGlobal>
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/QDeclarativeItem>
-#else
-    #include <QtDeclarative/QDeclarativeItem>
-#endif
+#include <QtDeclarative/QDeclarativeItem>
+
 #include "qchart.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -121,7 +118,7 @@ public:
     qreal leftMargin();
     qreal rightMargin();
     void createDefaultAxes(QAbstractSeries *series);
-    //TODO this is depreciated:
+    //TODO this is deprecated:
     DeclarativeMargins *minimumMargins() { return m_margins; }
 
     Q_REVISION(2) DeclarativeMargins *margins() { return m_margins; }

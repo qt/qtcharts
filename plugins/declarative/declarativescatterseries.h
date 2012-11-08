@@ -23,13 +23,8 @@
 
 #include "qscatterseries.h"
 #include "declarativexyseries.h"
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/QDeclarativeListProperty>
-    #include <QtQuick1/QDeclarativeParserStatus>
-#else
-    #include <QtDeclarative/QDeclarativeListProperty>
-    #include <QtDeclarative/QDeclarativeParserStatus>
-#endif
+#include <QtDeclarative/QDeclarativeListProperty>
+#include <QtDeclarative/QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

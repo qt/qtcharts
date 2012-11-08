@@ -19,11 +19,7 @@
 ****************************************************************************/
 
 #include <QApplication>
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/QDeclarativeEngine>
-#else
-    #include <QtDeclarative/QDeclarativeEngine>
-#endif
+#include <QtDeclarative/QDeclarativeEngine>
 #include "qmlapplicationviewer.h"
 
 Q_DECL_EXPORT int main(int argc, char *argv[])

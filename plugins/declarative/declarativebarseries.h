@@ -28,13 +28,8 @@
 #include "qhorizontalstackedbarseries.h"
 #include "qhorizontalpercentbarseries.h"
 #include "qbarset.h"
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/QDeclarativeItem>
-    #include <QtQuick1/QDeclarativeParserStatus>
-#else
-    #include <QtDeclarative/QDeclarativeItem>
-    #include <QtDeclarative/QDeclarativeParserStatus>
-#endif
+#include <QtDeclarative/QDeclarativeItem>
+#include <QtDeclarative/QDeclarativeParserStatus>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

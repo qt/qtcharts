@@ -26,8 +26,8 @@
 class QChartsPlugin: public QObject, public QDesignerCustomWidgetInterface
 {
 
-#ifdef QT5_QUICK_1
-    Q_PLUGIN_METADATA(IID "org.qt-project.bar")
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QDesignerCustomWidgetInterface")
 #endif
 
     Q_OBJECT

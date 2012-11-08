@@ -19,17 +19,17 @@ coverage: CONFIG += debug
 
 !contains($${PWD}, $${OUT_PWD}){
     search = "$$PWD:::"
-    temp = $$split(search,"/")    
+    temp = $$split(search,"/")
     temp = $$last(temp)
     path = $$replace(search,$$temp,'')
     temp = $$split(OUT_PWD,$$path)
     temp = $$split(temp,'/')
     temp = $$first(temp)
     path = "$${path}$${temp}"
-    SHADOW=$$path   
+    SHADOW=$$path
 }else{
     SHADOW=$$PWD
-    CONFIG-=development_build 
+    CONFIG-=development_build
 }
 
 ##################### BUILD PATHS ##################################################
@@ -84,8 +84,6 @@ mac: {
 linux-arm*: {
     DEFINES+=QT_ON_ARM
 }
-
-greaterThan(QT_MAJOR_VERSION, 4): DEFINES += QT5_QUICK_1
 
 ##################### INCLUDES ############################################################
 

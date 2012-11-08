@@ -1,8 +1,4 @@
-greaterThan(QT_MAJOR_VERSION, 4) {
-    QT += quick1
-} else {
-    QT += declarative
-}
+QT += declarative
 
 SOURCES += $$PWD/qmlapplicationviewer.cpp
 HEADERS += $$PWD/qmlapplicationviewer.h

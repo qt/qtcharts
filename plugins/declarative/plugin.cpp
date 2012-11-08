@@ -18,13 +18,6 @@
 **
 ****************************************************************************/
 
-#ifdef QT5_QUICK_1
-    #include <QtQuick1/qdeclarativeextensionplugin.h>
-    #include <QtQuick1/qdeclarative.h>
-#else
-    #include <QtDeclarative/qdeclarativeextensionplugin.h>
-    #include <QtDeclarative/qdeclarative.h>
-#endif
 #include "qchart.h"
 #include "qabstractaxis.h"
 #include "qvalueaxis.h"
@@ -45,11 +38,12 @@
 #include "qhbarmodelmapper.h"
 #include "qvbarmodelmapper.h"
 #include "declarativemargins.h"
-#include <QAbstractItemModel>
-
 #ifndef QT_ON_ARM
-#include "qdatetimeaxis.h"
+    #include "qdatetimeaxis.h"
 #endif
+#include <QAbstractItemModel>
+#include <QtDeclarative/qdeclarativeextensionplugin.h>
+#include <QtDeclarative/qdeclarative.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -62,9 +56,8 @@ class ChartQmlPlugin : public QDeclarativeExtensionPlugin
 {
     Q_OBJECT
 
-#ifdef QT5_QUICK_1
-    // TODO: fix the metadata
-    Q_PLUGIN_METADATA(IID "org.qt-project.foo")
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QDeclarativeExtensionInterface")
 #endif
 
 public:
@@ -153,6 +146,6 @@ QTCOMMERCIALCHART_END_NAMESPACE
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-#ifndef QT5_QUICK_1
+#if (QT_VERSION < QT_VERSION_CHECK(5, 0, 0))
     Q_EXPORT_PLUGIN2(qtcommercialchartqml, QT_PREPEND_NAMESPACE(ChartQmlPlugin))
 #endif
