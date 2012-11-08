@@ -32,6 +32,8 @@ class QTCOMMERCIALCHART_EXPORT QCategoryAxis : public QValueAxis
 {
     Q_OBJECT
     Q_PROPERTY(qreal startValue READ startValue WRITE setStartValue)
+    Q_PROPERTY(int count READ count)
+    Q_PROPERTY(QStringList categoriesLabels READ categoriesLabels)
 
 public:
     explicit QCategoryAxis(QObject *parent = 0);
