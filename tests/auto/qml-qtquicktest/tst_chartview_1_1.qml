@@ -20,7 +20,7 @@
 
 import QtQuick 1.0
 import QtQuickTest 1.0
-import QtCommercial.Chart 1.2
+import QtCommercial.Chart 1.1
 
 Rectangle {
     width: 400
@@ -28,7 +28,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest ChartView Properties"
+        name: "tst_qml-qtquicktest ChartView Properties 1.1"
         when: windowShown
 
         function test_chartViewProperties() {
@@ -38,10 +38,6 @@ Rectangle {
             verify(chartView.topMargin > 0, "ChartView.topMargin");
             verify(chartView.leftMargin > 0, "ChartView.leftMargin");
             verify(chartView.rightMargin > 0, "ChartView.rightMargin");
-            verify(chartView.margins.bottom > 0, "ChartView.margins.bottom");
-            verify(chartView.margins.top > 0, "ChartView.margins.top");
-            verify(chartView.margins.left > 0, "ChartView.margins.left");
-            verify(chartView.margins.right > 0, "ChartView.margins.right");
             compare(chartView.count, 0, "ChartView.count");
             compare(chartView.dropShadowEnabled, false, "ChartView.dropShadowEnabled");
             verify(chartView.plotArea.height > 0, "ChartView.plotArea.height");

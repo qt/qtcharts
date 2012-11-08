@@ -20,7 +20,7 @@
 
 import QtQuick 1.0
 import QtQuickTest 1.0
-import QtCommercial.Chart 1.2
+import QtCommercial.Chart 1.1
 
 Rectangle {
     width: 400
@@ -28,7 +28,7 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest PieSeries"
+        name: "tst_qml-qtquicktest PieSeries 1.1"
         when: windowShown
 
         function test_properties() {

@@ -20,7 +20,7 @@
 
 import QtQuick 1.0
 import QtQuickTest 1.0
-import QtCommercial.Chart 1.2
+import QtCommercial.Chart 1.1
 
 Rectangle {
     width: 400
@@ -28,32 +28,23 @@ Rectangle {
 
     TestCase {
         id: tc1
-        name: "tst_qml-qtquicktest XY Series"
+        name: "tst_qml-qtquicktest XY Series 1.1"
         when: windowShown
 
         function test_properties() {
             verify(lineSeries.color != undefined);
             compare(lineSeries.pointsVisible, false);
-            // TODO: Should the properties be set or not?
-//            verify(lineSeries.axisX != null);
-//            verify(lineSeries.axisY != null);
             compare(lineSeries.capStyle, Qt.SquareCap);
             compare(lineSeries.style, Qt.SolidLine);
             compare(lineSeries.width, 2.0);
 
             verify(splineSeries.color != undefined);
             compare(splineSeries.pointsVisible, false);
-            // TODO: Should the properties be set or not?
-//            verify(splineSeries.axisX != null);
-//            verify(splineSeries.axisY != null);
             compare(splineSeries.capStyle, Qt.SquareCap);
             compare(splineSeries.style, Qt.SolidLine);
             compare(splineSeries.width, 2.0);
 
             verify(scatterSeries.color != undefined);
-            // TODO: Should the properties be set or not?
-//            verify(scatterSeries.axisX != null);
-//            verify(scatterSeries.axisY != null);
             verify(scatterSeries.borderColor != undefined);
             compare(scatterSeries.borderWidth, 2.0);
             compare(scatterSeries.markerShape, ScatterSeries.MarkerShapeCircle);
