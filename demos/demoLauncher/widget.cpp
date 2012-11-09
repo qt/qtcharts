@@ -68,7 +68,7 @@ Widget::Widget(QWidget *parent)
     button = new GraphicsButton(imageFolder.absolutePath() + "/doc/images/examples_datetimeaxis.png", m_appFolder, "datetimeaxis", this);
     demosLayout->addWidget(button, 2, 1);
 
-    button = new GraphicsButton(imageFolder.absolutePath() + "/doc/images/examples_datetimeaxis.png", m_appFolder, "donutbreakdown", this);
+    button = new GraphicsButton(imageFolder.absolutePath() + "/doc/images/examples_donutbreakdown.png", m_appFolder, "donutbreakdown", this);
     demosLayout->addWidget(button, 2, 2);
 
     setLayout(demosLayout);
