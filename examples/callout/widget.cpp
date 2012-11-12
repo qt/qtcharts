@@ -14,13 +14,15 @@ Widget::Widget(QWidget *parent)
     : QWidget(parent),
       m_scene(0),
       m_chart(0),
-      m_view(0)
+      m_view(0),
+      m_tooltip(0)
 {
     // chart
     m_chart = new QChart;
     m_chart->setMinimumSize(640, 480);
+    m_chart->setTitle("Hover the line to show callout. Click the line to make it stay");
+    m_chart->legend()->hide();
     QLineSeries *series = new QLineSeries;
-    series->setName("Click the line to create a movable callout");
     series->append(1, 3);
     series->append(4, 5);
     series->append(5, 4.5);
@@ -38,7 +40,8 @@ Widget::Widget(QWidget *parent)
     mainLayout->addWidget(m_view);
     setLayout(mainLayout);
 
-    connect(series, SIGNAL(clicked(QPointF)), this, SLOT(addCallout(QPointF)));
+    connect(series, SIGNAL(clicked(QPointF)), this, SLOT(keepCallout()));
+    connect(series, SIGNAL(hovered(QPointF, bool)), this, SLOT(tooltip(QPointF,bool)));
 }
 
 Widget::~Widget()
@@ -46,11 +49,23 @@ Widget::~Widget()
     
 }
 
-void Widget::addCallout(QPointF point)
+void Widget::keepCallout()
 {
-    Callout *label = new Callout(m_chart);
-    label->setText(QString("X: %1\nY: %2").arg(point.x()).arg(point.y()));
-    label->setAnchor(m_chart->mapFromParent(m_view->mapToScene(m_view->mapFromGlobal(QCursor::pos()))));
-    label->setPos(m_chart->mapFromParent(m_view->mapToScene(m_view->mapFromGlobal(QCursor::pos() + QPoint(10, -50)))));
-    label->setZValue(11);
+    m_tooltip = new Callout(m_chart);
+}
+
+void Widget::tooltip(QPointF point, bool state)
+{
+    if (m_tooltip == 0)
+        m_tooltip = new Callout(m_chart);
+
+    if (state) {
+        m_tooltip->setText(QString("X: %1\nY: %2").arg(point.x()).arg(point.y()));
+        m_tooltip->setAnchor(m_chart->mapFromParent(m_view->mapToScene(m_view->mapFromGlobal(QCursor::pos()))));
+        m_tooltip->setPos(m_chart->mapFromParent(m_view->mapToScene(m_view->mapFromGlobal(QCursor::pos() + QPoint(10, -50)))));
+        m_tooltip->setZValue(11);
+        m_tooltip->show();
+    } else {
+        m_tooltip->hide();
+    }
 }

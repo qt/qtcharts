@@ -76,6 +76,7 @@ public:
 
 Q_SIGNALS:
     void clicked(const QPointF &point);
+    void hovered(const QPointF &point, bool state);
     void pointReplaced(int index);
     void pointRemoved(int index);
     void pointAdded(int index);

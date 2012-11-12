@@ -47,6 +47,7 @@ XYChart::XYChart(QXYSeries *series, ChartPresenter *presenter)
     QObject::connect(series, SIGNAL(pointAdded(int)), this, SLOT(handlePointAdded(int)));
     QObject::connect(series, SIGNAL(pointRemoved(int)), this, SLOT(handlePointRemoved(int)));
     QObject::connect(this, SIGNAL(clicked(QPointF)), series, SIGNAL(clicked(QPointF)));
+    QObject::connect(this, SIGNAL(hovered(QPointF,bool)), series, SIGNAL(hovered(QPointF,bool)));
 }
 
 void XYChart::setGeometryPoints(const QVector<QPointF>& points)

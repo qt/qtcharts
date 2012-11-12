@@ -35,6 +35,7 @@ LineChartItem::LineChartItem(QLineSeries *series, ChartPresenter *presenter)
       m_series(series),
       m_pointsVisible(false)
 {
+    setAcceptHoverEvents(true);
     setZValue(ChartPresenter::LineChartZValue);
     QObject::connect(series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
@@ -130,6 +131,18 @@ void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit XYChart::clicked(calculateDomainPoint(event->pos()));
     QGraphicsItem::mousePressEvent(event);
+}
+
+void LineChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    emit XYChart::hovered(calculateDomainPoint(event->pos()), true);
+    QGraphicsItem::hoverEnterEvent(event);
+}
+
+void LineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    emit XYChart::hovered(calculateDomainPoint(event->pos()), false);
+    QGraphicsItem::hoverEnterEvent(event);
 }
 
 #include "moc_linechartitem_p.cpp"

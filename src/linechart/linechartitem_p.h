@@ -60,6 +60,8 @@ public Q_SLOTS:
 protected:
     void updateGeometry();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 private:
     QLineSeries *m_series;

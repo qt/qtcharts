@@ -6,6 +6,7 @@
 
 class QGraphicsScene;
 class QGraphicsView;
+class Callout;
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
@@ -18,12 +19,14 @@ public:
     ~Widget();
 
 public slots:
-    void addCallout(QPointF point);
+    void keepCallout();
+    void tooltip(QPointF point, bool state);
 
 private:
     QGraphicsScene *m_scene;
     QChart *m_chart;
     QGraphicsView *m_view;
+    Callout *m_tooltip;
 };
 
 #endif // WIDGET_H
