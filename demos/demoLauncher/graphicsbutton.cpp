@@ -7,16 +7,23 @@ GraphicsButton::GraphicsButton(const QString& path,  QDir appFolder, const QStri
     QWidget(parent),
     m_path(path),
     m_appFolder(appFolder),
-    m_app(app)
+    m_app(app),
+    m_demoApp(0)
 {
     m_pixmap = QPixmap(path);
+}
+
+GraphicsButton::~GraphicsButton()
+{
+    if (m_demoApp)
+        m_demoApp->close();
 }
 
 void GraphicsButton::mousePressEvent(QMouseEvent * event)
 {
     QString program = m_appFolder.absolutePath() + QDir::separator() + m_app;
-    QProcess *demoApp = new QProcess(this);
-    demoApp->start(program);
+    m_demoApp = new QProcess(this);
+    m_demoApp->start(program);
     event->accept();
 }
 
