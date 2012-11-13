@@ -127,7 +127,9 @@ public:
 
         qRegisterMetaType<QList<QPieSlice *> >();
         qRegisterMetaType<QList<QBarSet *> >();
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         qRegisterMetaType<DeclarativeChart::SeriesType>();
+#endif
 
         // QtCommercial.Chart 1.0
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "ChartView");
