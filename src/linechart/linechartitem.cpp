@@ -73,6 +73,7 @@ void LineChartItem::updateGeometry()
         for (int i = 1; i < m_points.size(); i++) {
             linePath.lineTo(m_points.at(i));
             linePath.addEllipse(m_points.at(i), size, size);
+            linePath.moveTo(m_points.at(i));
         }
 
     } else {
