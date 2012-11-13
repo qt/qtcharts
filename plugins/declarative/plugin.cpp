@@ -38,6 +38,10 @@
 #include "qhbarmodelmapper.h"
 #include "qvbarmodelmapper.h"
 #include "declarativemargins.h"
+#include "qarealegendmarker.h"
+#include "qbarlegendmarker.h"
+#include "qpielegendmarker.h"
+#include "qxylegendmarker.h"
 #ifndef QT_ON_ARM
     #include "qdatetimeaxis.h"
 #endif
@@ -49,7 +53,62 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QList<QPieSlice *>)
 Q_DECLARE_METATYPE(QList<QBarSet *>)
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
+
+// NOTE: Hackish fixes for Qt5 (beta2).
+// These should not be needed or at least they are not needed in Qt4.
+
+Q_DECLARE_METATYPE(DeclarativeChart::SeriesType)
+Q_DECLARE_METATYPE(DeclarativeMargins *)
+Q_DECLARE_METATYPE(DeclarativeAreaSeries *)
+Q_DECLARE_METATYPE(DeclarativeBarSeries *)
+Q_DECLARE_METATYPE(DeclarativeLineSeries *)
+Q_DECLARE_METATYPE(DeclarativePieSeries *)
+Q_DECLARE_METATYPE(DeclarativeScatterSeries *)
+Q_DECLARE_METATYPE(DeclarativeSplineSeries *)
+
+Q_DECLARE_METATYPE(QAbstractAxis *)
+Q_DECLARE_METATYPE(QValueAxis *)
+Q_DECLARE_METATYPE(QBarCategoryAxis *)
+Q_DECLARE_METATYPE(QCategoryAxis *)
+Q_DECLARE_METATYPE(QDateTimeAxis *)
+
+Q_DECLARE_METATYPE(QLegend *)
+Q_DECLARE_METATYPE(QLegendMarker *)
+Q_DECLARE_METATYPE(QAreaLegendMarker *)
+Q_DECLARE_METATYPE(QBarLegendMarker *)
+Q_DECLARE_METATYPE(QPieLegendMarker *)
+
+Q_DECLARE_METATYPE(QHPieModelMapper *)
+Q_DECLARE_METATYPE(QHXYModelMapper *)
+Q_DECLARE_METATYPE(QPieModelMapper *)
+Q_DECLARE_METATYPE(QHBarModelMapper *)
+Q_DECLARE_METATYPE(QBarModelMapper *)
+Q_DECLARE_METATYPE(QVBarModelMapper *)
+Q_DECLARE_METATYPE(QVPieModelMapper *)
+Q_DECLARE_METATYPE(QVXYModelMapper *)
+Q_DECLARE_METATYPE(QXYLegendMarker *)
+Q_DECLARE_METATYPE(QXYModelMapper *)
+
 Q_DECLARE_METATYPE(QAbstractSeries *)
+Q_DECLARE_METATYPE(QXYSeries *)
+Q_DECLARE_METATYPE(QAbstractBarSeries *)
+Q_DECLARE_METATYPE(QBarSeries *)
+Q_DECLARE_METATYPE(QBarSet *)
+Q_DECLARE_METATYPE(QAreaSeries *)
+Q_DECLARE_METATYPE(QHorizontalBarSeries *)
+Q_DECLARE_METATYPE(QHorizontalPercentBarSeries *)
+Q_DECLARE_METATYPE(QHorizontalStackedBarSeries *)
+Q_DECLARE_METATYPE(QLineSeries *)
+Q_DECLARE_METATYPE(QPercentBarSeries *)
+Q_DECLARE_METATYPE(QPieSeries *)
+Q_DECLARE_METATYPE(QPieSlice *)
+Q_DECLARE_METATYPE(QScatterSeries *)
+Q_DECLARE_METATYPE(QSplineSeries *)
+Q_DECLARE_METATYPE(QStackedBarSeries *)
+
+#endif
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -68,6 +127,7 @@ public:
 
         qRegisterMetaType<QList<QPieSlice *> >();
         qRegisterMetaType<QList<QBarSet *> >();
+        qRegisterMetaType<DeclarativeChart::SeriesType>();
 
         // QtCommercial.Chart 1.0
         qmlRegisterType<DeclarativeChart>(uri, 1, 0, "ChartView");
