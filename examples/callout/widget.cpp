@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include <QChart>
 #include <QLineSeries>
+#include <QSplineSeries>
 #include <QGraphicsTextItem>
 #include <QGraphicsLineItem>
 #include "callout.h"
@@ -29,6 +30,15 @@ Widget::Widget(QWidget *parent)
     series->append(7, 1);
     series->append(11, 2);
     m_chart->addSeries(series);
+
+    QSplineSeries *series2 = new QSplineSeries;
+    series2->append(1.6, 1.4);
+    series2->append(2.4, 3.5);
+    series2->append(3.7, 2.5);
+    series2->append(7, 4);
+    series2->append(10, 2);
+    m_chart->addSeries(series2);
+
     m_chart->createDefaultAxes();
 
     m_scene = new QGraphicsScene;
@@ -42,6 +52,9 @@ Widget::Widget(QWidget *parent)
 
     connect(series, SIGNAL(clicked(QPointF)), this, SLOT(keepCallout()));
     connect(series, SIGNAL(hovered(QPointF, bool)), this, SLOT(tooltip(QPointF,bool)));
+
+    connect(series2, SIGNAL(clicked(QPointF)), this, SLOT(keepCallout()));
+    connect(series2, SIGNAL(hovered(QPointF, bool)), this, SLOT(tooltip(QPointF,bool)));
 }
 
 Widget::~Widget()

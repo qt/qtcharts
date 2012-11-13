@@ -34,6 +34,7 @@ SplineChartItem::SplineChartItem(QSplineSeries *series, ChartPresenter *presente
       m_pointsVisible(false),
       m_animation(0)
 {
+    setAcceptHoverEvents(true);
     setZValue(ChartPresenter::SplineChartZValue);
     QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
@@ -48,7 +49,8 @@ QRectF SplineChartItem::boundingRect() const
 
 QPainterPath SplineChartItem::shape() const
 {
-    return m_path;
+    QPainterPathStroker stroker;
+    return stroker.createStroke(m_path);
 }
 
 void SplineChartItem::setAnimation(SplineAnimation *animation)
@@ -124,6 +126,9 @@ void SplineChartItem::updateGeometry()
     }
 
     prepareGeometryChange();
+    //    QPainterPathStroker stroker;
+    //    stroker.setWidth(m_linePen.width() / 2.0);
+    //    m_path = stroker.createStroke(splinePath);
     m_path = splinePath;
     m_rect = splinePath.boundingRect();
     setPos(origin());
@@ -150,8 +155,10 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     Q_UNUSED(option)
 
     painter->save();
-    painter->setClipRect(clipRect());
     painter->setPen(m_linePen);
+    //    painter->setBrush(m_linePen.color());
+    painter->setClipRect(clipRect());
+
     painter->drawPath(m_path);
     if (m_pointsVisible) {
         painter->setPen(m_pointPen);
@@ -164,6 +171,18 @@ void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit XYChart::clicked(calculateDomainPoint(event->pos()));
     QGraphicsItem::mousePressEvent(event);
+}
+
+void SplineChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    emit XYChart::hovered(calculateDomainPoint(event->pos()), true);
+    event->accept();
+}
+
+void SplineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    emit XYChart::hovered(calculateDomainPoint(event->pos()), false);
+    event->accept();
 }
 
 #include "moc_splinechartitem_p.cpp"

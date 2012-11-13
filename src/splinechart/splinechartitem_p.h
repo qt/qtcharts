@@ -62,6 +62,8 @@ protected:
     void updateGeometry();
     void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 private:
     QPointF calculateGeometryControlPoint(int index) const;
