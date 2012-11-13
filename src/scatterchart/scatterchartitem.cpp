@@ -96,6 +96,11 @@ void ScatterChartItem::markerSelected(QGraphicsItem *marker)
     emit XYChart::clicked(calculateDomainPoint(m_markerMap[marker]));
 }
 
+void ScatterChartItem::markerHovered(QGraphicsItem *marker, bool state)
+{
+    emit XYChart::hovered(calculateDomainPoint(m_markerMap[marker]), state);
+}
+
 void ScatterChartItem::updateGeometry()
 {
 

@@ -55,6 +55,7 @@ public:
     void setBrush(const QBrush &brush);
 
     void markerSelected(QGraphicsItem *item);
+    void markerHovered(QGraphicsItem *item, bool state);
 
 public Q_SLOTS:
     void handleUpdated();
@@ -84,6 +85,7 @@ public:
         : QGraphicsEllipseItem(x, y, w, h, parent),
           m_parent(parent)
     {
+        setAcceptHoverEvents(true);
     }
 
 protected:
@@ -91,6 +93,16 @@ protected:
     {
         m_parent->markerSelected(this);
         QGraphicsEllipseItem::mousePressEvent(event);
+    }
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+    {
+        m_parent->markerHovered(this, true);
+        QGraphicsEllipseItem::hoverEnterEvent(event);
+    }
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+    {
+        m_parent->markerHovered(this, false);
+        QGraphicsEllipseItem::hoverLeaveEvent(event);
     }
 
 private:
@@ -105,6 +117,7 @@ public:
         : QGraphicsRectItem(x, y, w, h, parent),
           m_parent(parent)
     {
+        setAcceptHoverEvents(true);
     }
 
 protected:
@@ -112,6 +125,16 @@ protected:
     {
         m_parent->markerSelected(this);
         QGraphicsRectItem::mousePressEvent(event);
+    }
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+    {
+        m_parent->markerHovered(this, true);
+        QGraphicsRectItem::hoverEnterEvent(event);
+    }
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+    {
+        m_parent->markerHovered(this, false);
+        QGraphicsRectItem::hoverLeaveEvent(event);
     }
 
 private:
