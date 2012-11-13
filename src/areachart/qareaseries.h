@@ -67,7 +67,8 @@ public:
     bool pointsVisible() const;
 
 Q_SIGNALS:
-    void clicked(const QPointF &point);
+    void clicked(const QPointF &point);    
+    void hovered(const QPointF &point, bool state);
     void selected();
     void colorChanged(QColor color);
     void borderColorChanged(QColor color);

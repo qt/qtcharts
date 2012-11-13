@@ -58,9 +58,12 @@ public:
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event);
 
 Q_SIGNALS:
-    void clicked(const QPointF &point);
+    void clicked(const QPointF &point);    
+    void hovered(const QPointF &point, bool state);
 
 public Q_SLOTS:
     void handleUpdated();

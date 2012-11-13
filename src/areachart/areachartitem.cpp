@@ -40,6 +40,7 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
       m_lower(0),
       m_pointsVisible(false)
 {
+    setAcceptHoverEvents(true);
     setZValue(ChartPresenter::LineChartZValue);
     m_upper = new AreaBoundItem(this, m_series->upperSeries(), presenter);
     if (m_series->lowerSeries())
@@ -49,6 +50,7 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(opacityChanged()), this, SLOT(handleUpdated()));
     QObject::connect(this, SIGNAL(clicked(QPointF)), areaSeries, SIGNAL(clicked(QPointF)));
+    QObject::connect(this, SIGNAL(hovered(QPointF,bool)), areaSeries, SIGNAL(hovered(QPointF,bool)));
 
     handleUpdated();
 }
@@ -145,6 +147,20 @@ void AreaChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     emit clicked(m_upper->calculateDomainPoint(event->pos()));
     ChartItem::mousePressEvent(event);
+}
+
+void AreaChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    emit hovered(m_upper->calculateDomainPoint(event->pos()), true);
+    event->accept();
+//    QGraphicsItem::hoverEnterEvent(event);
+}
+
+void AreaChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    emit hovered(m_upper->calculateDomainPoint(event->pos()), false);
+    event->accept();
+//    QGraphicsItem::hoverEnterEvent(event);
 }
 
 #include "moc_areachartitem_p.cpp"
