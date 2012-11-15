@@ -41,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-  Constructor
+  \internal
 */
 QAreaLegendMarker::QAreaLegendMarker(QAreaSeries *series, QLegend *legend, QObject *parent) :
     QLegendMarker(*new QAreaLegendMarkerPrivate(this,series,legend), parent)

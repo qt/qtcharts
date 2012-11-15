@@ -78,6 +78,36 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \fn void QLegendMarker::labelChanged()
+    This signal is emitted when the label of the legend marker has changed.
+*/
+
+/*!
+    \fn void QLegendMarker::labelBrushChanged()
+    This signal is emitted when the label brush of the legend marker has changed.
+*/
+
+/*!
+    \fn void QLegendMarker::fontChanged()
+    This signal is emitted when the (label) font of the legend marker has changed.
+*/
+
+/*!
+    \fn void QLegendMarker::penChanged()
+    This signal is emitted when the pen of the legend marker has changed.
+*/
+
+/*!
+    \fn void QLegendMarker::brushChanged()
+    This signal is emitted when the brush of the legend marker has changed.
+*/
+
+/*!
+    \fn void QLegendMarker::visibleChanged()
+    This signal is emitted when the visibility of the legend marker has changed.
+*/
+
+/*!
     \property QLegendMarker::label
     Label of the marker. This is the text that is shown in legend.
 */
@@ -109,7 +139,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 
 /*!
- Constructor of marker
+    \internal
  */
 QLegendMarker::QLegendMarker(QLegendMarkerPrivate &d, QObject *parent) :
     QObject(parent),

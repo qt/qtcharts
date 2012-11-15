@@ -156,10 +156,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     This signal is emitted when the color of brush used to draw labels has changed to \a color.
 */
 
-/*!
- Constructs the legend object and sets the parent to \a parent
- */
-
 QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
     d_ptr(new QLegendPrivate(chart->d_ptr->m_presenter, chart, this))
 {

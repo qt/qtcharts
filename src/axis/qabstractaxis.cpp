@@ -174,6 +174,42 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QAbstractAxis::titleVisible
+  The visibility of the axis title. By default the value is true.
+*/
+/*!
+  \qmlproperty bool AbstractAxis::titleVisible
+  The visibility of the axis title. By default the value is true.
+*/
+
+/*!
+  \property QAbstractAxis::titleFont
+  The font of the title of the axis.
+*/
+/*!
+  \qmlproperty Font AbstractAxis::title
+  The font of the title of the axis.
+*/
+
+/*!
+  \property QAbstractAxis::title
+  The title of the axis. Empty by default.
+*/
+/*!
+  \qmlproperty string AbstractAxis::title
+  The title of the axis. Empty string by default.
+*/
+
+/*!
+  \property QAbstractAxis::alignment
+  The alignment of the axis. Either Qt::AlignLeft or Qt::AlignBottom.
+*/
+/*!
+  \qmlproperty alignment AbstractAxis::alignment
+  The alignment of the axis. Either Qt.AlignLeft or Qt.AlignBottom.
+*/
+
+/*!
   \fn void QAbstractAxis::visibleChanged(bool visible)
   Visibility of the axis has changed to \a visible.
 */
