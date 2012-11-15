@@ -54,7 +54,7 @@ void tst_QAbstractAxis::qabstractaxis()
     QCOMPARE(m_axis->gridLinePen(), QPen());
     QCOMPARE(m_axis->isLineVisible(), true);
     QCOMPARE(m_axis->isGridLineVisible(), true);
-    QCOMPARE(m_axis->isVisible(), false);
+    QCOMPARE(m_axis->isVisible(), true);
     QCOMPARE(m_axis->labelsAngle(), 0);
     QCOMPARE(m_axis->labelsBrush(), QBrush());
     //TODO QCOMPARE(m_axis->labelsColor(), QColor());
@@ -310,7 +310,7 @@ void tst_QAbstractAxis::visible()
     m_chart->setAxisX(m_axis, m_series);
     m_view->show();
     QTest::qWaitForWindowShown(m_view);
-    QCOMPARE(m_axis->isVisible(), true);
+    QCOMPARE(m_axis->isVisible(), visible);
 }
 
 void tst_QAbstractAxis::labelsAngle_data()
