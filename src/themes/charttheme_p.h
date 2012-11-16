@@ -30,33 +30,15 @@
 #ifndef CHARTTHEME_H
 #define CHARTTHEME_H
 
-#include "qchartglobal.h"
-#include "qchart.h"
+#include "chartthememanager_p.h"
 #include <QColor>
 #include <QGradientStops>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartItem;
-class LineChartItem;
-class QLineSeries;
-class AbstractBarChartItem;
-class QAbstractBarSeries;
-class StackedBarChartItem;
-class QStackedBarSeries;
-class QPercentBarSeries;
-class PercentBarChartItem;
-class QScatterSeries;
-class ScatterChartItem;
-class PieChartItem;
-class QPieSeries;
-class SplineChartItem;
-class QSplineSeries;
-class AreaChartItem;
-class QAreaSeries;
-
 class ChartTheme
 {
+
 public:
     enum BackgroundShadesMode {
         BackgroundShadesNone = 0,
@@ -66,26 +48,23 @@ public:
     };
 
 protected:
-    explicit ChartTheme(QChart::ChartTheme id = QChart::ChartThemeLight);
+    explicit ChartTheme(QChart::ChartTheme id = QChart::ChartThemeLight):m_id(id),
+    m_backgroundShades(BackgroundShadesNone),
+    m_backgroundDropShadowEnabled(false){};
 public:
-    static ChartTheme *createTheme(QChart::ChartTheme theme);
     QChart::ChartTheme id() const { return m_id; }
-    void decorate(QChart *chart);
-    void decorate(QLegend *legend);
-    void decorate(QAbstractBarSeries *series, int index);
-    void decorate(QLineSeries *series, int index);
-    void decorate(QAreaSeries *series, int index);
-    void decorate(QScatterSeries *series, int index);
-    void decorate(QPieSeries *series, int index);
-    void decorate(QSplineSeries *series, int index);
-    void decorate(QAbstractAxis *axis);
-    void setForced(bool enabled);
-    bool isForced() { return m_force; }
-
-public: // utils
-    void generateSeriesGradients();
-    static QColor colorAt(const QColor &start, const QColor &end, qreal pos);
-    static QColor colorAt(const QGradient &gradient, qreal pos);
+    QList<QGradient> seriesGradients() const { return m_seriesGradients; }
+    QList<QColor> seriesColors() const { return m_seriesColors; }
+    QLinearGradient chartBackgroundGradient() const { return m_chartBackgroundGradient; }
+    QFont masterFont() const { return m_masterFont; }
+    QFont labelFont() const { return m_labelFont; }
+    QBrush labelBrush() const { return m_labelBrush; }
+    QPen axisLinePen() const { return m_axisLinePen; }
+    QPen backgroundShadesPen() const { return m_backgroundShadesPen; }
+    QBrush backgroundShadesBrush() const { return m_backgroundShadesBrush; }
+    BackgroundShadesMode backgroundShades() const { return m_backgroundShades; }
+    bool isBackgroundDropShadowEnabled() const { return m_backgroundDropShadowEnabled; }
+    QPen girdLinePen() const { return m_gridLinePen; }
 
 protected:
     QChart::ChartTheme m_id;
@@ -102,7 +81,7 @@ protected:
     BackgroundShadesMode m_backgroundShades;
     bool m_backgroundDropShadowEnabled;
     QPen m_gridLinePen;
-    bool m_force;
+
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

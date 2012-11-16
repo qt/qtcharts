@@ -22,6 +22,7 @@
 #include "qxyseries_p.h"
 #include "domain_p.h"
 #include "qvalueaxis.h"
+#include "xychart_p.h"
 
 #include "qxylegendmarker.h"
 
@@ -418,7 +419,7 @@ QXYSeriesPrivate::QXYSeriesPrivate(QXYSeries *q)
 {
 }
 
-void QXYSeriesPrivate::scaleDomain(Domain &domain)
+void QXYSeriesPrivate::initializeDomain()
 {
     qreal minX(0);
     qreal minY(0);
@@ -445,7 +446,7 @@ void QXYSeriesPrivate::scaleDomain(Domain &domain)
         }
     }
 
-    domain.setRange(minX, maxX, minY, maxY);
+    domain()->setRange(minX, maxX, minY, maxY);
 }
 
 QList<QLegendMarker*> QXYSeriesPrivate::createLegendMarkers(QLegend* legend)
@@ -455,15 +456,33 @@ QList<QLegendMarker*> QXYSeriesPrivate::createLegendMarkers(QLegend* legend)
     return list << new QXYLegendMarker(q,legend);
 }
 
-void QXYSeriesPrivate::initializeAxis(QAbstractAxis *axis)
+void QXYSeriesPrivate::initializeAxes()
 {
-    Q_UNUSED(axis);
+
 }
 
 QAbstractAxis::AxisType QXYSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
 {
     Q_UNUSED(orientation);
     return QAbstractAxis::AxisTypeValue;
+}
+
+QAbstractAxis* QXYSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) const
+{
+    Q_UNUSED(orientation);
+    return 0;
+}
+
+void QXYSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
+{
+    XYChart *item = static_cast<XYChart *>(m_item.data());
+    Q_ASSERT(item);
+    if (options.testFlag(QChart::SeriesAnimations)) {
+        item->setAnimation(new XYAnimation(item));
+    }else{
+        item->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 #include "moc_qxyseries.cpp"

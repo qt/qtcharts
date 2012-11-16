@@ -25,6 +25,9 @@
 #include "chartbackground_p.h"
 #include "qabstractaxis.h"
 #include "chartlayout_p.h"
+#include "charttheme_p.h"
+#include "chartpresenter_p.h"
+#include "chartdataset_p.h"
 #include <QGraphicsScene>
 #include <QGraphicsSceneResizeEvent>
 
@@ -106,13 +109,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
  */
 QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
     : QGraphicsWidget(parent, wFlags),
-      d_ptr(new QChartPrivate())
+      d_ptr(new QChartPrivate(this))
 {
-    d_ptr->m_dataset = new ChartDataSet(this);
-    d_ptr->m_presenter = new ChartPresenter(this, d_ptr->m_dataset);
-    d_ptr->createConnections();
     d_ptr->m_legend = new LegendScroller(this);
-    d_ptr->m_presenter->setTheme(QChart::ChartThemeLight, false);
+    setTheme(QChart::ChartThemeLight);
+    //TODO: what is that ?
     //connect(d_ptr->m_presenter, SIGNAL(marginsChanged(QRectF)), this, SIGNAL(marginsChanged(QRectF)));
     setLayout(d_ptr->m_presenter->layout());
 }
@@ -122,10 +123,9 @@ QChart::QChart(QGraphicsItem *parent, Qt::WindowFlags wFlags)
  */
 QChart::~QChart()
 {
-    //delete first presenter , since this is a root of all the graphical items
-    setLayout(0);
-    delete d_ptr->m_presenter;
-    d_ptr->m_presenter = 0;
+    //start by deleting dataset, it will remove all series and axes
+    delete d_ptr->m_dataset;
+    d_ptr->m_dataset = 0;
 }
 
 /*!
@@ -245,12 +245,12 @@ QBrush QChart::titleBrush() const
 
 void QChart::setTheme(QChart::ChartTheme theme)
 {
-    d_ptr->m_presenter->setTheme(theme);
+    d_ptr->m_themeManager->setTheme(theme);
 }
 
 QChart::ChartTheme QChart::theme() const
 {
-    return d_ptr->m_presenter->theme();
+    return d_ptr->m_themeManager->theme()->id();
 }
 
 /*!
@@ -258,7 +258,7 @@ QChart::ChartTheme QChart::theme() const
  */
 void QChart::zoomIn()
 {
-    d_ptr->m_presenter->zoomIn(2.0);
+    d_ptr->zoomIn(2.0);
 }
 
 /*!
@@ -266,9 +266,7 @@ void QChart::zoomIn()
  */
 void QChart::zoomIn(const QRectF &rect)
 {
-    if (!rect.isValid())
-        return;
-    d_ptr->m_presenter->zoomIn(rect);
+	d_ptr->zoomIn(rect);
 }
 
 /*!
@@ -276,7 +274,7 @@ void QChart::zoomIn(const QRectF &rect)
  */
 void QChart::zoomOut()
 {
-    d_ptr->m_presenter->zoomOut(2.0);
+    d_ptr->zoomOut(2.0);
 }
 
 /*!
@@ -296,9 +294,9 @@ void QChart::zoom(qreal factor)
         return;
 
     if (factor > 1.0)
-        d_ptr->m_presenter->zoomIn(factor);
+        d_ptr->zoomIn(factor);
     else
-        d_ptr->m_presenter->zoomOut(1.0 / factor);
+        d_ptr->zoomOut(1.0 / factor);
 }
 
 /*!
@@ -307,7 +305,27 @@ void QChart::zoom(qreal factor)
  */
 QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 {
-    return d_ptr->m_dataset->axisX(series);
+    if(!series && d_ptr->m_dataset->series().size()>0){
+        series = d_ptr->m_dataset->series().first();
+    }else{
+        return 0;
+    }
+
+    QList<QAbstractAxis*> axes = series->attachedAxes();
+    QAbstractAxis* bottom=0;
+    QAbstractAxis* top=0;
+
+    foreach(QAbstractAxis* axis, axes){
+
+        if(axis->alignment()==Qt::AlignTop){
+            top=axis;
+        }
+
+        if(axis->alignment()==Qt::AlignBottom){
+            bottom=axis;
+        }
+    }
+    return bottom?bottom:top;
 }
 
 /*!
@@ -316,7 +334,42 @@ QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
  */
 QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
 {
-    return d_ptr->m_dataset->axisY(series);
+    if(!series && d_ptr->m_dataset->series().size()>0) {
+        series = d_ptr->m_dataset->series().first();
+    } else {
+        return 0;
+    }
+
+    QList<QAbstractAxis*> axes = series->attachedAxes();
+
+    QAbstractAxis* left=0;
+    QAbstractAxis* right=0;
+
+    foreach(QAbstractAxis* axis, axes){
+
+        if(axis->alignment()==Qt::AlignLeft){
+           left=axis;
+        }
+
+        if(axis->alignment()==Qt::AlignRight){
+           right=axis;
+        }
+    }
+
+    return left?left:right;
+}
+
+
+QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSeries *series) const
+{
+    QList<QAbstractAxis *> result ;
+
+    foreach(QAbstractAxis* axis,series->attachedAxes()){
+        if(orientation.testFlag(axis->orientation()))
+            result << axis;
+    }
+
+    return result;
 }
 
 /*!
@@ -410,7 +463,7 @@ QMargins QChart::margins() const
  */
 QRectF QChart::plotArea() const
 {
-    return d_ptr->m_presenter->layout()->chartsGeometry();
+    return d_ptr->m_presenter->geometry();
 }
 
 ///*!
@@ -440,7 +493,7 @@ QChart::AnimationOptions QChart::animationOptions() const
  */
 void QChart::scroll(qreal dx, qreal dy)
 {
-    d_ptr->m_presenter->scroll(dx, dy);
+    d_ptr->scroll(dx,dy);
 }
 
 void QChart::setBackgroundVisible(bool visible)
@@ -480,9 +533,18 @@ QList<QAbstractSeries *> QChart::series() const
 */
 void QChart::setAxisX(QAbstractAxis *axis , QAbstractSeries *series)
 {
-    if (axis->alignment() == Qt::AlignLeft || axis->alignment() == Qt::AlignRight)
-        return;
-    d_ptr->m_dataset->setAxis(series, axis, Qt::Horizontal);
+   QList<QAbstractAxis*> list = axes(Qt::Horizontal,series);
+
+   foreach(QAbstractAxis* a, list){
+       if(a->alignment()==axis->alignment()){
+           d_ptr->m_dataset->removeAxis(a);
+           delete a;
+       }
+   }
+
+   if(!d_ptr->m_dataset->axes().contains(axis))
+       d_ptr->m_dataset->addAxis(axis,Qt::AlignBottom);
+   d_ptr->m_dataset->attachAxis(series,axis);
 }
 
 /*!
@@ -492,19 +554,47 @@ void QChart::setAxisX(QAbstractAxis *axis , QAbstractSeries *series)
 */
 void QChart::setAxisY(QAbstractAxis *axis , QAbstractSeries *series)
 {
-    if (axis->alignment() == Qt::AlignTop || axis->alignment() == Qt::AlignBottom)
-        return;
-    d_ptr->m_dataset->setAxis(series, axis, Qt::Vertical);
+    QList<QAbstractAxis*> list = axes(Qt::Vertical,series);
+
+    foreach(QAbstractAxis* a, list) {
+        if(a->alignment()==axis->alignment()) {
+            d_ptr->m_dataset->removeAxis(a);
+            delete a;
+        }
+    }
+
+    if(!d_ptr->m_dataset->axes().contains(axis))
+          d_ptr->m_dataset->addAxis(axis,Qt::AlignLeft);
+    d_ptr->m_dataset->attachAxis(series,axis);
+}
+
+void QChart::addAxis(QAbstractAxis *axis,Qt::Alignment aligment)
+{
+	d_ptr->m_dataset->addAxis(axis,aligment);
+}
+
+void QChart::removeAxis(QAbstractAxis *axis)
+{
+	d_ptr->m_dataset->removeAxis(axis);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-QChartPrivate::QChartPrivate():
+QChartPrivate::QChartPrivate(QChart *q):
+    q_ptr(q),
     m_legend(0),
-    m_dataset(0),
-    m_presenter(0)
+    m_dataset(new ChartDataSet(q)),
+    m_presenter(new ChartPresenter(q)),
+    m_themeManager(new ChartThemeManager(q))
 {
-
+    QObject::connect(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)), m_presenter, SLOT(handleSeriesAdded(QAbstractSeries*)));
+    QObject::connect(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), m_presenter, SLOT(handleSeriesRemoved(QAbstractSeries*)));
+    QObject::connect(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)), m_presenter, SLOT(handleAxisAdded(QAbstractAxis*)));
+    QObject::connect(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)), m_presenter, SLOT(handleAxisRemoved(QAbstractAxis*)));
+    QObject::connect(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)), m_themeManager, SLOT(handleSeriesAdded(QAbstractSeries*)));
+    QObject::connect(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), m_themeManager, SLOT(handleSeriesRemoved(QAbstractSeries*)));
+    QObject::connect(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)), m_themeManager, SLOT(handleAxisAdded(QAbstractAxis*)));
+    QObject::connect(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)), m_themeManager, SLOT(handleAxisRemoved(QAbstractAxis*)));
 }
 
 QChartPrivate::~QChartPrivate()
@@ -512,13 +602,59 @@ QChartPrivate::~QChartPrivate()
 
 }
 
-void QChartPrivate::createConnections()
+void QChartPrivate::zoomIn(qreal factor)
 {
-    QObject::connect(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)), m_presenter, SLOT(handleSeriesAdded(QAbstractSeries*,Domain*)));
-    QObject::connect(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), m_presenter, SLOT(handleSeriesRemoved(QAbstractSeries*)));
-    QObject::connect(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)), m_presenter, SLOT(handleAxisAdded(QAbstractAxis*,Domain*)));
-    QObject::connect(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)), m_presenter, SLOT(handleAxisRemoved(QAbstractAxis*)));
-    //QObject::connect(m_presenter, SIGNAL(marginsChanged(QRectF)), q_ptr, SIGNAL(marginsChanged(QRectF)));
+    QRectF rect = m_presenter->geometry();
+    rect.setWidth(rect.width() / factor);
+    rect.setHeight(rect.height() / factor);
+    rect.moveCenter(m_presenter->geometry().center());
+    zoomIn(rect);
+}
+
+void QChartPrivate::zoomIn(const QRectF &rect)
+{
+    if (!rect.isValid())
+    return;
+
+    QRectF r = rect.normalized();
+    const QRectF geometry = m_presenter->geometry();
+    r.translate(-geometry.topLeft());
+
+    if (!r.isValid())
+        return;
+
+    QPointF zoomPoint(r.center().x() / geometry.width(), r.center().y() / geometry.height());
+    m_presenter->setState(ChartPresenter::ZoomInState,zoomPoint);
+    m_dataset->zoomInDomain(r);
+    m_presenter->setState(ChartPresenter::ShowState,QPointF());
+
+}
+
+void QChartPrivate::zoomOut(qreal factor)
+{
+    const QRectF geometry = m_presenter->geometry();
+
+    QRectF r;
+    r.setSize(geometry.size() / factor);
+    r.moveCenter(QPointF(geometry.size().width()/2 ,geometry.size().height()/2));
+    if (!r.isValid())
+        return;
+
+    QPointF zoomPoint(r.center().x() / geometry.width(), r.center().y() / geometry.height());
+    m_presenter->setState(ChartPresenter::ZoomOutState,zoomPoint);
+    m_dataset->zoomOutDomain(r);
+    m_presenter->setState(ChartPresenter::ShowState,QPointF());
+}
+
+void QChartPrivate::scroll(qreal dx, qreal dy)
+{
+    if (dx < 0) m_presenter->setState(ChartPresenter::ScrollLeftState,QPointF());
+    if (dx > 0) m_presenter->setState(ChartPresenter::ScrollRightState,QPointF());
+    if (dy < 0) m_presenter->setState(ChartPresenter::ScrollUpState,QPointF());
+    if (dy > 0) m_presenter->setState(ChartPresenter::ScrollDownState,QPointF());
+
+    m_dataset->scrollDomain(dx, dy);
+    m_presenter->setState(ChartPresenter::ShowState,QPointF());
 }
 
 #include "moc_qchart.cpp"

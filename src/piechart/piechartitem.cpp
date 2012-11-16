@@ -32,8 +32,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PieChartItem::PieChartItem(QPieSeries *series, ChartPresenter *presenter)
-    : ChartItem(presenter),
+PieChartItem::PieChartItem(QPieSeries *series, QGraphicsItem* item)
+    : ChartItem(series->d_func(),item),
       m_series(series),
       m_animation(0)
 {
@@ -70,46 +70,17 @@ ChartAnimation *PieChartItem::animation() const
     return m_animation;
 }
 
-void PieChartItem::handleGeometryChanged(const QRectF &rect)
-{
-    prepareGeometryChange();
-    m_rect = rect;
-    updateLayout();
-
-    // This is for delayed initialization of the slice items during startup.
-    // It ensures that startup animation originates from the correct position.
-    if (m_sliceItems.isEmpty())
-        handleSlicesAdded(m_series->slices());
-}
-
-void PieChartItem::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
-{
-    Q_UNUSED(minX);
-    Q_UNUSED(maxX);
-    Q_UNUSED(minY);
-    Q_UNUSED(maxY);
-    // does not apply to pie
-}
-
 void PieChartItem::handleDomainUpdated()
 {
-    // does not apply to pie
-}
+    QRectF rect(QPointF(0,0),domain()->size());
+    if(m_rect!=rect){
+        prepareGeometryChange();
+        m_rect = rect;
+        updateLayout();
 
-void PieChartItem::rangeXChanged(qreal min, qreal max, int tickXCount)
-{
-    Q_UNUSED(min);
-    Q_UNUSED(max);
-    Q_UNUSED(tickXCount);
-    // does not apply to pie
-}
-
-void PieChartItem::rangeYChanged(qreal min, qreal max, int tickYCount)
-{
-    Q_UNUSED(min);
-    Q_UNUSED(max);
-    Q_UNUSED(tickYCount);
-    // does not apply to pie
+        if (m_sliceItems.isEmpty())
+              handleSlicesAdded(m_series->slices());
+    }
 }
 
 void PieChartItem::updateLayout()
@@ -149,7 +120,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice *> slices)
     if (!m_rect.isValid() && m_sliceItems.isEmpty())
         return;
 
-    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
+    themeManager()->updateSeries(m_series);
 
     bool startupAnimation = m_sliceItems.isEmpty();
 
@@ -185,7 +156,7 @@ void PieChartItem::handleSlicesAdded(QList<QPieSlice *> slices)
 
 void PieChartItem::handleSlicesRemoved(QList<QPieSlice *> slices)
 {
-    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
+    themeManager()->updateSeries(m_series);
 
     foreach (QPieSlice *slice, slices) {
 

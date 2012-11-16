@@ -45,14 +45,11 @@ public:
     QCategoryAxisPrivate(QCategoryAxis *q);
     ~QCategoryAxisPrivate();
 
-    ChartAxis *createGraphics(ChartPresenter *presenter);
+    void initializeGraphics(QGraphicsItem* parent);
     int ticksCount() const;
 
 Q_SIGNALS:
     void changed(qreal min, qreal max, int tickCount, bool niceNumbers);
-
-public Q_SLOTS:
-    void handleAxisRangeChanged(qreal min, qreal max, int count);
 
 private:
     QMap<QString , Range> m_categoriesMap;

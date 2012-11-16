@@ -43,12 +43,16 @@ class QAreaSeriesPrivate: public QAbstractSeriesPrivate
 public:
     QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lowerSeries, QAreaSeries *q);
 
-    void scaleDomain(Domain &domain);
-    ChartElement *createGraphics(ChartPresenter *presenter);
-    QList<QLegendMarker*> createLegendMarkers(QLegend* legend);
-    void initializeAxis(QAbstractAxis *axis);
+    void initializeDomain();
+    void initializeAxes();
+    void initializeGraphics(QGraphicsItem* parent);
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
+    void initializeAnimations(QChart::AnimationOptions options);
+
+    QList<QLegendMarker *> createLegendMarkers(QLegend *legend);
 
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
+    QAbstractAxis* createDefaultAxis(Qt::Orientation) const;
 
 Q_SIGNALS:
     void updated();

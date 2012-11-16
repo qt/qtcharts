@@ -45,7 +45,7 @@ class PieChartItem : public ChartItem
     Q_OBJECT
 
 public:
-    explicit PieChartItem(QPieSeries *series, ChartPresenter *presenter);
+    explicit PieChartItem(QPieSeries *series, QGraphicsItem* item = 0);
     ~PieChartItem();
 
     // from QGraphicsItem
@@ -54,11 +54,7 @@ public:
 
 public Q_SLOTS:
     // from Chart
-    virtual void handleGeometryChanged(const QRectF &rect);
-    virtual void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
     virtual void handleDomainUpdated();
-    virtual void rangeXChanged(qreal min, qreal max, int tickXCount);
-    virtual void rangeYChanged(qreal min, qreal max, int tickYCount);
 
     void updateLayout();
     void handleSlicesAdded(QList<QPieSlice *> slices);

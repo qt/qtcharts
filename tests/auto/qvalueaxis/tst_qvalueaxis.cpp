@@ -47,8 +47,8 @@ private slots:
     void min();
     void min_animation_data();
     void min_animation();
-    void niceNumbersEnabled_data();
-    void niceNumbersEnabled();
+    void applyNiceNumbers_data();
+    void applyNiceNumbers();
     void range_raw_data();
     void range_raw();
     void range_data();
@@ -215,7 +215,7 @@ void tst_QValueAxis::min_animation()
     min();
 }
 
-void tst_QValueAxis::niceNumbersEnabled_data()
+void tst_QValueAxis::applyNiceNumbers_data()
 {
     QTest::addColumn<bool>("niceNumbersEnabled");
     QTest::addColumn<qreal>("min");
@@ -232,7 +232,7 @@ void tst_QValueAxis::niceNumbersEnabled_data()
     QTest::newRow("true 5, 93.5 , 5") << true << (qreal)5.0 << (qreal)93.5 << 5 << (qreal)0.0 << (qreal)100.0 << 6;
 }
 
-void tst_QValueAxis::niceNumbersEnabled()
+void tst_QValueAxis::applyNiceNumbers()
 {
     QFETCH(bool, niceNumbersEnabled);
     QFETCH(qreal, min);
@@ -252,8 +252,7 @@ void tst_QValueAxis::niceNumbersEnabled()
     QSignalSpy spy1(m_valuesaxis, SIGNAL(minChanged(qreal)));
     QSignalSpy spy2(m_valuesaxis, SIGNAL(rangeChanged(qreal,qreal)));
 
-    m_valuesaxis->setNiceNumbersEnabled(niceNumbersEnabled);
-    QCOMPARE(m_valuesaxis->niceNumbersEnabled(), niceNumbersEnabled);
+    if(niceNumbersEnabled) m_valuesaxis->applyNiceNumbers();
 
     if(!qFuzzyCompare(expectedMin, min))
         QCOMPARE(spy1.count(), 1);

@@ -26,8 +26,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-PercentBarChartItem::PercentBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter) :
-    AbstractBarChartItem(series, presenter)
+PercentBarChartItem::PercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item) :
+    AbstractBarChartItem(series, item)
 {
 }
 

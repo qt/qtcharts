@@ -33,34 +33,31 @@
 #include "qchartglobal.h"
 #include <QObject>
 #include <QRect>
+#include <QGraphicsObject>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartAnimator;
 class ChartPresenter;
 class ChartAnimation;
+class ChartThemeManager;
 class Domain;
 
-class ChartElement: public QObject
+class ChartElement: public QGraphicsObject
 {
-    Q_OBJECT
+
 public:
-    explicit ChartElement(ChartPresenter *presenter);
+    explicit ChartElement(QGraphicsItem* item = 0);
 
-public Q_SLOTS:
-    virtual void handleGeometryChanged(const QRectF &rect);
-    virtual void handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY);
-    virtual void handleDomainUpdated();
     virtual ChartAnimation *animation() const { return 0; }
-
-    void setPresenter(ChartPresenter *presenter);
+    virtual void setPresenter(ChartPresenter *presenter);
     ChartPresenter *presenter() const;
-    void setDomain(Domain *domain);
-    Domain *domain() const;
+    virtual void setThemeManager(ChartThemeManager *manager);
+    ChartThemeManager* themeManager() const;
 
 private:
     ChartPresenter *m_presenter;
-    Domain *m_domain;
+    ChartThemeManager *m_themeManager;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

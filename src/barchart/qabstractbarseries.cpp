@@ -622,12 +622,12 @@ qreal QAbstractBarSeriesPrivate::bottom()
 }
 
 
-void QAbstractBarSeriesPrivate::scaleDomain(Domain &domain)
+void QAbstractBarSeriesPrivate::initializeDomain()
 {
-    qreal minX(domain.minX());
-    qreal minY(domain.minY());
-    qreal maxX(domain.maxX());
-    qreal maxY(domain.maxY());
+    qreal minX(domain()->minX());
+    qreal minY(domain()->minY());
+    qreal maxX(domain()->maxX());
+    qreal maxY(domain()->maxY());
 
     qreal seriesMinX = this->minX();
     qreal seriesMaxX = this->maxX();
@@ -637,14 +637,7 @@ void QAbstractBarSeriesPrivate::scaleDomain(Domain &domain)
     maxX = qMax(maxX, seriesMaxX + (qreal)0.5);
     maxY = qMax(maxY, y);
 
-    domain.setRange(minX, maxX, minY, maxY);
-}
-
-ChartElement *QAbstractBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
-{
-    Q_UNUSED(presenter);
-    qWarning() << "QAbstractBarSeriesPrivate::createGraphics called";
-    return 0;
+    domain()->setRange(minX, maxX, minY, maxY);
 }
 
 QList<QLegendMarker*> QAbstractBarSeriesPrivate::createLegendMarkers(QLegend* legend)
@@ -746,27 +739,30 @@ bool QAbstractBarSeriesPrivate::insert(int index, QBarSet *set)
     return true;
 }
 
-void QAbstractBarSeriesPrivate::initializeAxis(QAbstractAxis *axis)
+void QAbstractBarSeriesPrivate::initializeAxes()
 {
     Q_Q(QAbstractBarSeries);
 
-    if (axis->type() == QAbstractAxis::AxisTypeBarCategory) {
-        switch (q->type()) {
-        case QAbstractSeries::SeriesTypeHorizontalBar:
-        case QAbstractSeries::SeriesTypeHorizontalPercentBar:
-        case QAbstractSeries::SeriesTypeHorizontalStackedBar:
-            if (axis->orientation() == Qt::Vertical)
+    foreach(QAbstractAxis* axis, m_axes) {
+
+        if (axis->type() == QAbstractAxis::AxisTypeBarCategory) {
+            switch (q->type()) {
+                case QAbstractSeries::SeriesTypeHorizontalBar:
+                case QAbstractSeries::SeriesTypeHorizontalPercentBar:
+                case QAbstractSeries::SeriesTypeHorizontalStackedBar:
+                if (axis->orientation() == Qt::Vertical)
                 populateCategories(qobject_cast<QBarCategoryAxis *>(axis));
-            break;
-        case QAbstractSeries::SeriesTypeBar:
-        case QAbstractSeries::SeriesTypePercentBar:
-        case QAbstractSeries::SeriesTypeStackedBar:
-            if (axis->orientation() == Qt::Horizontal)
+                break;
+                case QAbstractSeries::SeriesTypeBar:
+                case QAbstractSeries::SeriesTypePercentBar:
+                case QAbstractSeries::SeriesTypeStackedBar:
+                if (axis->orientation() == Qt::Horizontal)
                 populateCategories(qobject_cast<QBarCategoryAxis *>(axis));
-            break;
-        default:
-            qWarning() << "Unexpected series type";
-            break;
+                break;
+                default:
+                qWarning() << "Unexpected series type";
+                break;
+            }
         }
     }
 }
@@ -803,6 +799,57 @@ void QAbstractBarSeriesPrivate::populateCategories(QBarCategoryAxis *axis)
         for (int i(1); i < categoryCount() + 1; i++)
             categories << QString::number(i);
         axis->append(categories);
+    }
+}
+
+QAbstractAxis* QAbstractBarSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) const
+{
+    Q_UNUSED(orientation);
+    return 0;
+}
+
+void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
+{
+    const QList<QGradient> gradients = theme->seriesGradients();
+
+    QBrush brush;
+    QPen pen;
+
+    qreal takeAtPos = 0.5;
+    qreal step = 0.2;
+    if (m_barSets.count() > 1) {
+        step = 1.0 / (qreal) m_barSets.count();
+        if (m_barSets.count() % gradients.count())
+        step *= gradients.count();
+        else
+        step *= (gradients.count() - 1);
+    }
+
+    for (int i(0); i < m_barSets.count(); i++) {
+        int colorIndex = (index + i) % gradients.count();
+        if (i > 0 && i %gradients.count() == 0) {
+            // There is no dedicated base color for each sets, generate more colors
+            takeAtPos += step;
+            if (takeAtPos == 1.0)
+            takeAtPos += step;
+            takeAtPos -= (int) takeAtPos;
+        }
+        if (forced || brush == m_barSets.at(i)->brush())
+            m_barSets.at(i)->setBrush(ChartThemeManager::colorAt(gradients.at(colorIndex), takeAtPos));
+
+        // Pick label color from the opposite end of the gradient.
+        // 0.3 as a boundary seems to work well.
+        if (forced || brush == m_barSets.at(i)->labelBrush()) {
+            if (takeAtPos < 0.3)
+                m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 1));
+            else
+                m_barSets.at(i)->setLabelBrush(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0));
+        }
+
+        if (forced || pen == m_barSets.at(i)->pen()) {
+            QColor c = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0);
+            m_barSets.at(i)->setPen(c);
+        }
     }
 }
 

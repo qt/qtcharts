@@ -834,20 +834,29 @@ void QPieSeriesPrivate::sliceHovered(bool state)
     emit q->hovered(slice, state);
 }
 
-void QPieSeriesPrivate::scaleDomain(Domain &domain)
+void QPieSeriesPrivate::initializeDomain()
 {
-    Q_UNUSED(domain);
     // does not apply to pie
 }
 
-ChartElement *QPieSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QPieSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QPieSeries);
-    PieChartItem *pie = new PieChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
-        pie->setAnimation(new PieAnimation(pie));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return pie;
+    PieChartItem *pie = new PieChartItem(q,parent);
+    m_item.reset(pie);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
+}
+
+void QPieSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
+{
+    PieChartItem *item = static_cast<PieChartItem *>(m_item.data());
+    Q_ASSERT(item);
+    if (options.testFlag(QChart::SeriesAnimations)) {
+        item->setAnimation(new PieAnimation(item));
+    }else{
+        item->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 QList<QLegendMarker*> QPieSeriesPrivate::createLegendMarkers(QLegend* legend)
@@ -861,9 +870,9 @@ QList<QLegendMarker*> QPieSeriesPrivate::createLegendMarkers(QLegend* legend)
     return markers;
 }
 
-void QPieSeriesPrivate::initializeAxis(QAbstractAxis *axis)
+void QPieSeriesPrivate::initializeAxes()
 {
-    Q_UNUSED(axis);
+
 }
 
 QAbstractAxis::AxisType QPieSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
@@ -871,6 +880,44 @@ QAbstractAxis::AxisType QPieSeriesPrivate::defaultAxisType(Qt::Orientation orien
     Q_UNUSED(orientation);
     return QAbstractAxis::AxisTypeNoAxis;
 }
+
+QAbstractAxis* QPieSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) const
+{
+    Q_UNUSED(orientation);
+    return 0;
+}
+
+void QPieSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
+{
+    Q_Q(QPieSeries);
+    const QList<QColor>& colors = theme->seriesColors();
+    const QList<QGradient>& gradients = theme->seriesGradients();
+
+    for (int i(0); i < m_slices.count(); i++) {
+
+        QColor penColor = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0);
+
+        // Get color for a slice from a gradient linearly, beginning from the start of the gradient
+        qreal pos = (qreal)(i + 1) / (qreal) m_slices.count();
+        QColor brushColor = ChartThemeManager::colorAt(gradients.at(index % gradients.size()), pos);
+
+        QPieSlice *s = m_slices.at(i);
+        QPieSlicePrivate *d = QPieSlicePrivate::fromSlice(s);
+
+        if (forced || d->m_data.m_slicePen.isThemed())
+            d->setPen(penColor, true);
+
+        if (forced || d->m_data.m_sliceBrush.isThemed())
+            d->setBrush(brushColor, true);
+
+        if (forced || d->m_data.m_labelBrush.isThemed())
+            d->setLabelBrush(theme->labelBrush().color(), true);
+
+        if (forced || d->m_data.m_labelFont.isThemed())
+            d->setLabelFont(theme->labelFont(), true);
+    }
+}
+
 
 #include "moc_qpieseries.cpp"
 #include "moc_qpieseries_p.cpp"

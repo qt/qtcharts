@@ -46,19 +46,23 @@ public:
     ~QBarCategoryAxisPrivate();
 
 public:
-    ChartAxis *createGraphics(ChartPresenter *presenter);
-    void intializeDomain(Domain *domain);
-    void handleDomainUpdated();
+    void initializeGraphics(QGraphicsItem* parent);
+    void initializeDomain(Domain *domain);
     void updateCategoryDomain();
+
+    //interface for manipulating range form base class
+    void setRange(const QVariant &min, const QVariant &max);
+    void setMin(const QVariant &min);
+    void setMax(const QVariant &max);
+
+    //interface manipulating range form domain
     qreal min() { return m_min; }
     qreal max() { return m_max; }
-    int count() const { return m_count; }
+    void setRange(qreal min,qreal max);
 
 private:
     //range handling
-    void setMin(const QVariant &min);
-    void setMax(const QVariant &max);
-    void setRange(const QVariant &min, const QVariant &max);
+    void setRange(const QString &minCategory, const QString &maxCategory);
 
 private:
     QStringList m_categories;

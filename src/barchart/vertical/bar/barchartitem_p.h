@@ -41,7 +41,7 @@ class BarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:
-    BarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
+    BarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
 
 private:
     virtual QVector<QRectF> calculateLayout();

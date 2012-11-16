@@ -33,8 +33,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter) :
-    ChartItem(presenter),
+AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item) :
+    ChartItem(series->d_func(),item),
     m_animation(0),
     m_series(series)
 {
@@ -100,13 +100,14 @@ void AbstractBarChartItem::handleDomainUpdated()
     m_domainMaxX = domain()->maxX();
     m_domainMinY = domain()->minY();
     m_domainMaxY = domain()->maxY();
-    handleLayoutChanged();
-}
 
-void AbstractBarChartItem::handleGeometryChanged(const QRectF &rect)
-{
-    prepareGeometryChange();
-    m_rect = rect;
+    QRectF rect(QPointF(0,0),domain()->size());
+
+    if(m_rect != rect){
+        prepareGeometryChange();
+        m_rect = rect;
+    }
+
     handleLayoutChanged();
 }
 
@@ -157,7 +158,7 @@ void AbstractBarChartItem::handleDataStructureChanged()
         }
     }
 
-    presenter()->chartTheme()->decorate(m_series, presenter()->dataSet()->seriesIndex(m_series));
+    if(themeManager()) themeManager()->updateSeries(m_series);
     handleLayoutChanged();
 }
 

@@ -60,11 +60,11 @@ int main(int argc, char *argv[])
 
     QBarCategoryAxis *axis = new QBarCategoryAxis();
     axis->append(categories);
-    axis->setTitle("Month");
+    axis->setTitleText("Month");
     chart->createDefaultAxes();
     chart->setAxisX(axis, series);
     chart->axisY(series)->setRange(-52, 52);
-    chart->axisY(series)->setTitle(QString::fromUtf8("Temperature [\u00B0C]"));
+    chart->axisY(series)->setTitleText(QString::fromUtf8("Temperature [\u00B0C]"));
 //![4]
 
 //![5]

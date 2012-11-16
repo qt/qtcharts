@@ -95,6 +95,7 @@ Q_SIGNALS:
 private:
     Q_DECLARE_PRIVATE(QPieSeries)
     Q_DISABLE_COPY(QPieSeries)
+    friend class PieChartItem;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -36,11 +36,17 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartItem : public QGraphicsItem, public ChartElement
+class ChartItem : public ChartElement
 {
+	Q_OBJECT
     enum ChartItemTypes { AXIS_ITEM = UserType + 1, XYLINE_ITEM };
 public:
-    ChartItem(ChartPresenter *presenter) : QGraphicsItem(presenter ? presenter->rootItem() : 0), ChartElement(presenter) {}
+    ChartItem(QAbstractSeriesPrivate *series,QGraphicsItem* item);
+    QSharedPointer<Domain>  domain() const;
+public Q_SLOTS:
+	virtual void handleDomainUpdated();
+private:
+    QAbstractSeriesPrivate* m_series;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

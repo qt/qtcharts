@@ -79,8 +79,8 @@ QAbstractSeries::SeriesType QBarSeries::type() const
 QBarSeries::~QBarSeries()
 {
     Q_D(QBarSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -89,12 +89,12 @@ QBarSeriesPrivate::QBarSeriesPrivate(QBarSeries *q) : QAbstractBarSeriesPrivate(
 
 }
 
-void QBarSeriesPrivate::scaleDomain(Domain &domain)
+void QBarSeriesPrivate::initializeDomain()
 {
-    qreal minX(domain.minX());
-    qreal minY(domain.minY());
-    qreal maxX(domain.maxX());
-    qreal maxY(domain.maxY());
+    qreal minX(domain()->minX());
+    qreal minY(domain()->minY());
+    qreal maxX(domain()->maxX());
+    qreal maxY(domain()->maxY());
 
     qreal x = categoryCount();
     minX = qMin(minX, - (qreal)0.5);
@@ -102,19 +102,28 @@ void QBarSeriesPrivate::scaleDomain(Domain &domain)
     maxX = qMax(maxX, x - (qreal)0.5);
     maxY = qMax(maxY, max());
 
-    domain.setRange(minX, maxX, minY, maxY);
+    domain()->setRange(minX, maxX, minY, maxY);
 }
 
 
-ChartElement *QBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QBarSeries);
+    BarChartItem *bar = new BarChartItem(q,parent);
+    m_item.reset(bar);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
+}
 
-    BarChartItem *bar = new BarChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
+void QBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
+{
+    BarChartItem *bar = static_cast<BarChartItem *>(m_item.data());
+    Q_ASSERT(bar);
+    if (options.testFlag(QChart::SeriesAnimations)) {
         bar->setAnimation(new BarAnimation(bar));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return bar;
+    }else{
+        bar->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 #include "moc_qbarseries.cpp"

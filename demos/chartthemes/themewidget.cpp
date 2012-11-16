@@ -179,8 +179,6 @@ QComboBox *ThemeWidget::createLegendBox() const
 QChart *ThemeWidget::createAreaChart() const
 {
     QChart *chart = new QChart();
-//    chart->axisX()->setNiceNumbersEnabled(true);
-//    chart->axisY()->setNiceNumbersEnabled(true);
     chart->setTitle("Area chart");
 
     // The lower series initialized to zero values

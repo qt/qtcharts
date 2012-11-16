@@ -2,6 +2,7 @@ INCLUDEPATH += $$PWD
 DEPENDPATH += $$PWD
 
 THEMES += \ 
+    $$PWD/charttheme_p.h \
     $$PWD/chartthemesystem_p.h \
     $$PWD/chartthemelight_p.h \
     $$PWD/chartthemebluecerulean_p.h \

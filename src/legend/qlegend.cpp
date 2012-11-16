@@ -29,6 +29,7 @@
 #include "qlegendmarker.h"
 #include "qlegendmarker_p.h"
 #include "legendmarkeritem_p.h"
+#include "chartdataset_p.h"
 #include <QPainter>
 #include <QPen>
 #include <QGraphicsItemGroup>
@@ -161,7 +162,7 @@ QLegend::QLegend(QChart *chart): QGraphicsWidget(chart),
 {
     setZValue(ChartPresenter::LegendZValue);
     setFlags(QGraphicsItem::ItemClipsChildrenToShape);
-    QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)), d_ptr.data(), SLOT(handleSeriesAdded(QAbstractSeries*)));
+    QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)), d_ptr.data(), SLOT(handleSeriesAdded(QAbstractSeries*)));
     QObject::connect(chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), d_ptr.data(), SLOT(handleSeriesRemoved(QAbstractSeries*)));
     setLayout(d_ptr->m_layout);
 }
@@ -249,14 +250,14 @@ QPen QLegend::pen() const
 
 void QLegend::setFont(const QFont &font)
 {
-    if (d_ptr->m_font != font)
+    if (d_ptr->m_font != font) {
         d_ptr->m_font = font;
-
-    foreach (QLegendMarker *marker, d_ptr->markers()) {
-        marker->setFont(d_ptr->m_font);
+        foreach (QLegendMarker *marker, d_ptr->markers()) {
+            marker->setFont(d_ptr->m_font);
+        }
+        layout()->invalidate();
+        emit fontChanged(font);
     }
-    layout()->invalidate();
-    emit fontChanged(font);
 }
 
 QFont QLegend::font() const

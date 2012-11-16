@@ -39,8 +39,11 @@ class QSplineSeriesPrivate: public QLineSeriesPrivate
 {
     Q_OBJECT
 public:
-    ChartElement *createGraphics(ChartPresenter *presenter);
     QSplineSeriesPrivate(QSplineSeries *q);
+
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
+    void initializeGraphics(QGraphicsItem* parent);
+    void initializeAnimations(QtCommercialChart::QChart::AnimationOptions options);
 
     QPointF controlPoint(int index) const;
 

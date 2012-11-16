@@ -76,11 +76,17 @@ public:
     void removeAllSeries();
     QList<QAbstractSeries *> series() const;
 
+    //depreciated shit//////////////////////////////////////////////////.
     void setAxisX(QAbstractAxis *axis, QAbstractSeries *series = 0);
     void setAxisY(QAbstractAxis *axis, QAbstractSeries *series = 0);
 
     QAbstractAxis *axisX(QAbstractSeries *series = 0) const;
     QAbstractAxis *axisY(QAbstractSeries *series = 0) const;
+    /////////////////////////////////////////////////////////////////////
+
+    void addAxis(QAbstractAxis *axis,Qt::Alignment aligment);
+    void removeAxis(QAbstractAxis *axis);
+    QList<QAbstractAxis*> axes(Qt::Orientations orientation = Qt::Horizontal|Qt::Vertical, QAbstractSeries *series = 0) const;
 
     void createDefaultAxes();
 
@@ -107,9 +113,11 @@ public:
     AnimationOptions animationOptions() const;
 
     void zoomIn();
-    void zoomIn(const QRectF &rect);
     void zoomOut();
+
+    void zoomIn(const QRectF &rect);
     void zoom(qreal factor);
+
     void scroll(qreal dx, qreal dy);
 
     QLegend *legend() const;
@@ -126,6 +134,10 @@ protected:
     QScopedPointer<QChartPrivate> d_ptr;
     friend class QLegend;
     friend class DeclarativeChart;
+    friend class ChartDataSet;
+    friend class ChartPresenter;
+    friend class ChartThemeManager;
+    friend class QAbstractSeries;
     Q_DISABLE_COPY(QChart)
 };
 

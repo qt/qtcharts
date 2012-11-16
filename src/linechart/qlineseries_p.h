@@ -39,7 +39,8 @@ class QLineSeriesPrivate: public QXYSeriesPrivate
 {
 public:
     QLineSeriesPrivate(QLineSeries *q);
-    ChartElement *createGraphics(ChartPresenter *presenter);
+    void initializeGraphics(QGraphicsItem* parent);
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
 
 private:
     Q_DECLARE_PUBLIC(QLineSeries);

@@ -44,11 +44,14 @@ class QXYSeriesPrivate: public QAbstractSeriesPrivate
 public:
     QXYSeriesPrivate(QXYSeries *q);
 
-    void scaleDomain(Domain &domain);
+    void initializeDomain();
+    void initializeAxes();
+    void initializeAnimations(QtCommercialChart::QChart::AnimationOptions options);
+
     QList<QLegendMarker*> createLegendMarkers(QLegend* legend);
 
-    void initializeAxis(QAbstractAxis *axis);
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
+    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const;
 
 Q_SIGNALS:
     void updated();

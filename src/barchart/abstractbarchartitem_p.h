@@ -47,7 +47,7 @@ class AbstractBarChartItem : public ChartItem
 {
     Q_OBJECT
 public:
-    AbstractBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
+    AbstractBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
     virtual ~AbstractBarChartItem();
 
 public:
@@ -63,7 +63,6 @@ public:
 
 public Q_SLOTS:
     void handleDomainUpdated();
-    void handleGeometryChanged(const QRectF &size);
     void handleLayoutChanged();
     void handleLabelsVisibleChanged(bool visible);
     void handleDataStructureChanged();     // structure of of series has changed, recreate graphic items

@@ -22,6 +22,7 @@
 #include "qlineseries.h"
 #include "qlineseries_p.h"
 #include "chartpresenter_p.h"
+#include "domain_p.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 
@@ -29,9 +30,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 const qreal mouseEventMinWidth(12);
 
-LineChartItem::LineChartItem(QLineSeries *series, ChartPresenter *presenter)
-    : XYChart(series, presenter),
-      QGraphicsItem(presenter ? presenter->rootItem() : 0),
+LineChartItem::LineChartItem(QLineSeries *series,QGraphicsItem* item)
+    : XYChart(series,item),
       m_series(series),
       m_pointsVisible(false)
 {
@@ -96,8 +96,6 @@ void LineChartItem::updateGeometry()
 
     m_path = stroker.createStroke(linePath);
     m_rect = m_path.boundingRect();
-
-    setPos(origin());
 }
 
 void LineChartItem::handleUpdated()
@@ -117,7 +115,7 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
     painter->save();
     painter->setPen(m_linePen);
     painter->setBrush(m_linePen.color());
-    painter->setClipRect(clipRect());
+    painter->setClipRect(QRectF(QPointF(0,0),domain()->size()));
 
     if (m_pointsVisible) {
         painter->drawPath(m_linePath);
@@ -130,22 +128,22 @@ void LineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void LineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit XYChart::clicked(calculateDomainPoint(event->pos()));
+    emit XYChart::clicked(domain()->calculateDomainPoint(event->pos()));
     QGraphicsItem::mousePressEvent(event);
 }
 
 void LineChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit XYChart::hovered(calculateDomainPoint(event->pos()), true);
+    emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), true);
     event->accept();
-//    QGraphicsItem::hoverEnterEvent(event);
+    //QGraphicsItem::hoverEnterEvent(event);
 }
 
 void LineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit XYChart::hovered(calculateDomainPoint(event->pos()), false);
+    emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), false);
     event->accept();
-//    QGraphicsItem::hoverEnterEvent(event);
+    //QGraphicsItem::hoverEnterEvent(event);
 }
 
 #include "moc_linechartitem_p.cpp"

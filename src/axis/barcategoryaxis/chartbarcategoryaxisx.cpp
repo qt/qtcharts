@@ -27,8 +27,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartBarCategoryAxisX::ChartBarCategoryAxisX(QBarCategoryAxis *axis, ChartPresenter *presenter)
-    : HorizontalAxis(axis, presenter, true),
+ChartBarCategoryAxisX::ChartBarCategoryAxisX(QBarCategoryAxis *axis, QGraphicsItem* item)
+    : HorizontalAxis(axis, item, true),
       m_categoriesAxis(axis)
 {
 
@@ -93,12 +93,15 @@ void ChartBarCategoryAxisX::updateGeometry()
 
 void ChartBarCategoryAxisX::handleAxisUpdated()
 {
+	//TODO:
+	/*
     if (m_categoriesAxis->categories() != m_categories) {
         m_categories = m_categoriesAxis->categories();
         if (ChartAxis::layout().count() == m_categoriesAxis->d_ptr->count() + 2)
             updateGeometry();
     }
-    ChartAxis::handleAxisUpdated();
+    */
+    //TODO: ChartAxis::handleAxisUpdated();
 }
 
 QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const

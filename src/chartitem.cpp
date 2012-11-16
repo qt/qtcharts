@@ -18,35 +18,29 @@
 **
 ****************************************************************************/
 
-//  W A R N I N G
-//  -------------
-//
-// This file is not part of the QtCommercial Chart API.  It exists purely as an
-// implementation detail.  This header file may change from version to
-// version without notice, or even be removed.
-//
-// We mean it.
-
-#ifndef QSTACKEDBARSERIES_P_H
-#define QSTACKEDBARSERIES_P_H
-
-#include "qabstractbarseries_p.h"
+#include "chartitem_p.h"
+#include "qabstractseries_p.h"
 #include "domain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-
-class QStackedBarSeriesPrivate: public QAbstractBarSeriesPrivate
+ChartItem::ChartItem(QAbstractSeriesPrivate *series,QGraphicsItem* item):
+      ChartElement(item),
+      m_series(series)
 {
-public:
-    QStackedBarSeriesPrivate(QStackedBarSeries *q);
-    void initializeGraphics(QGraphicsItem* parent);
-    void initializeAnimations(QtCommercialChart::QChart::AnimationOptions options);
-    void initializeDomain();
-private:
-    Q_DECLARE_PUBLIC(QStackedBarSeries)
-};
+
+}
+
+QSharedPointer<Domain> ChartItem::domain() const
+{
+    return m_series->domain();
+}
+
+void ChartItem::handleDomainUpdated()
+{
+    qWarning() <<  __FUNCTION__<< "Slot not implemented";
+}
+
+#include "moc_chartitem_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
-
-#endif

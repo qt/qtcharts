@@ -22,6 +22,7 @@
 #include "qcategoryaxis_p.h"
 #include "chartcategoryaxisx_p.h"
 #include "chartcategoryaxisy_p.h"
+#include "qchart.h"
 #include <qmath.h>
 #include <QDebug>
 
@@ -114,6 +115,9 @@ QCategoryAxis::QCategoryAxis(QObject *parent):
 */
 QCategoryAxis::~QCategoryAxis()
 {
+    Q_D(QCategoryAxis);
+    if (d->m_chart)
+        d->m_chart->removeAxis(this);
 }
 
 /*!
@@ -223,7 +227,7 @@ void QCategoryAxis::remove(const QString &categoryLabel)
                 d->m_categoriesMap.insert(label, range);
             }
         }
-        d->emitUpdated();
+        //TODO:: d->emitUpdated();
     }
 }
 
@@ -247,7 +251,7 @@ void QCategoryAxis::replaceLabel(const QString &oldLabel, const QString &newLabe
         Range range = d->m_categoriesMap.value(oldLabel);
         d->m_categoriesMap.remove(oldLabel);
         d->m_categoriesMap.insert(newLabel, range);
-        d->emitUpdated();
+        //TODO:: d->emitUpdated();
     }
 }
 
@@ -296,19 +300,17 @@ int QCategoryAxisPrivate::ticksCount() const
     return m_categories.count() + 1;
 }
 
-void QCategoryAxisPrivate::handleAxisRangeChanged(qreal min, qreal max, int count)
-{
-    Q_UNUSED(count);
-    Q_UNUSED(min);
-    Q_UNUSED(max);
-}
-
-ChartAxis *QCategoryAxisPrivate::createGraphics(ChartPresenter *presenter)
+void QCategoryAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QCategoryAxis);
-    if (m_orientation == Qt::Vertical)
-        return new ChartCategoryAxisY(q, presenter);
-    return new ChartCategoryAxisX(q, presenter);
+    ChartAxis* axis(0);
+    if (orientation() == Qt::Vertical)
+        axis = new ChartCategoryAxisY(q,parent);
+    else if(orientation() == Qt::Horizontal)
+        axis = new ChartCategoryAxisX(q,parent);
+
+    m_item.reset(axis);
+    QAbstractAxisPrivate::initializeGraphics(parent);
 }
 
 #include "moc_qcategoryaxis.cpp"

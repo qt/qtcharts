@@ -59,20 +59,14 @@ public:
             chart->addSeries(series);
             axisX = new QValueAxis();
             axisX->setLinePenColor(series->pen().color());
-            if (nameIndex % 2)
-                axisX->setAlignment(Qt::AlignTop);
-            else
-                axisX->setAlignment(Qt::AlignBottom);
             axisY = new QValueAxis();
             axisY->setLinePenColor(series->pen().color());
 
-            if (nameIndex % 2)
-                axisY->setAlignment(Qt::AlignRight);
-            else
-                axisY->setAlignment(Qt::AlignLeft);
+            chart->addAxis(axisX,nameIndex % 2?Qt::AlignTop:Qt::AlignBottom);
+            chart->addAxis(axisY,nameIndex % 2?Qt::AlignRight:Qt::AlignLeft);
+            series->attachAxis(axisX);
+            series->attachAxis(axisY);
 
-            chart->setAxisX(axisX, series);
-            chart->setAxisY(axisY, series);
             nameIndex++;
         }
 

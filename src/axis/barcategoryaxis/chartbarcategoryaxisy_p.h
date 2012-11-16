@@ -40,7 +40,7 @@ class ChartPresenter;
 class ChartBarCategoryAxisY : public VerticalAxis
 {
 public:
-    ChartBarCategoryAxisY(QBarCategoryAxis *axis, ChartPresenter *presenter);
+    ChartBarCategoryAxisY(QBarCategoryAxis *axis, QGraphicsItem* item = 0);
     ~ChartBarCategoryAxisY();
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;

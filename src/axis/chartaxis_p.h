@@ -48,48 +48,16 @@ class ChartAxis : public ChartElement, public QGraphicsLayoutItem
     Q_INTERFACES(QGraphicsLayoutItem)
 public:
 
-    ChartAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool intervalAxis = false);
+    ChartAxis(QAbstractAxis *axis, QGraphicsItem* item = 0, bool intervalAxis = false);
     ~ChartAxis();
 
-    QAbstractAxis* axis() const { return m_chartAxis; }
+    QAbstractAxis* axis() const { return m_axis; }
 
-    void setArrowOpacity(qreal opacity);
-    qreal arrowOpacity() const;
-    void setArrowVisibility(bool visible);
-
-    void setGridOpacity(qreal opacity);
-    qreal gridOpacity() const;
-    void setGridVisibility(bool visible);
-
-    void setLabelsOpacity(qreal opacity);
-    qreal labelsOpacity() const;
-    void setLabelsVisibility(bool visible);
-
-    void setShadesOpacity(qreal opacity);
-    qreal shadesOpacity() const;
-    void setShadesVisibility(bool visible);
-
-    void setLabelsAngle(int angle);
-    int labelsAngle()const { return m_labelsAngle; }
-
-    void setShadesBrush(const QBrush &brush);
-    void setShadesPen(const QPen &pen);
-
-    void setArrowPen(const QPen &pen);
-    void setGridPen(const QPen &pen);
-
-    void setLabelsPen(const QPen &pen);
-    void setLabelsBrush(const QBrush &brush);
-    void setLabelsFont(const QFont &font);
     void setLabelPadding(int padding);
     int labelPadding() const { return m_labelPadding;};
 
-    void setTitlePen(const QPen &pen);
-    void setTitleBrush(const QBrush &brush);
-    void setTitleFont(const QFont &font);
     QFont titleFont() const;
-    void setTitleText(const QString &title);
-    QString titleText() const {return m_titleText; };
+    QString titleText() const;
 
     void setLayout(QVector<qreal> &layout);
     QVector<qreal> layout() const { return m_layoutVector; }
@@ -99,9 +67,6 @@ public:
 
     Qt::Orientation orientation() const;
     Qt::Alignment alignment() const;
-
-    bool isVisible();
-    void hide();
 
     void setGeometry(const QRectF &axis, const QRectF &grid);
     QRectF axisGeometry() const { return m_axisRect; }
@@ -115,6 +80,20 @@ public:
 
     virtual QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 
+
+    QRectF boundingRect() const{
+        return QRectF();
+    }
+
+    void paint(QPainter*, const QStyleOptionGraphicsItem*, QWidget*)
+    {
+
+    }
+
+//helpers
+    static QStringList createValueLabels(qreal max, qreal min, int ticks, const QString &format);
+    static QStringList createDateTimeLabels(qreal max, qreal min, int ticks, const QString &format);
+
 protected:
     void setGeometry(const QRectF &size) { Q_UNUSED(size);};
     virtual void updateGeometry() = 0;
@@ -126,15 +105,33 @@ protected:
     QList<QGraphicsItem *> arrowItems() { return m_arrow->childItems();};
     QGraphicsSimpleTextItem* titleItem() const { return m_title.data();}
 
-    QFont font() const { return m_font; }
-    qreal min() const {return m_min; }
-    qreal max() const {return m_max; }
-    QStringList createValueLabels(int ticks) const;
-    QStringList createDateTimeLabels(const QString &format, int ticks) const;
+    QFont font() const;
+    qreal min() const;
+    qreal max() const;
 
+//handlers
 public Q_SLOTS:
-    virtual void handleAxisUpdated();
-    virtual void handleDomainUpdated();
+	void handleVisibleChanged(bool visible);
+	void handleArrowVisibleChanged(bool visible);
+	void handleGridVisibleChanged(bool visible);
+	void handleLabelsVisibleChanged(bool visible);
+	void handleShadesVisibleChanged(bool visible);
+	void handleLabelsAngleChanged(int angle);
+	void handleShadesBrushChanged(const QBrush &brush);
+	void handleShadesPenChanged(const QPen &pen);
+	void handleArrowPenChanged(const QPen &pen);
+	void handleGridPenChanged(const QPen &pen);
+	void handleLabelsPenChanged(const QPen &pen);
+	void handleLabelsBrushChanged(const QBrush &brush);
+	void handleLabelsFontChanged(const QFont &font);
+    void handleTitlePenChanged(const QPen &pen);
+    void handleTitleBrushChanged(const QBrush &brush);
+    void handleTitleFontChanged(const QFont &font);
+    void handleTitleTextChanged(const QString &title);
+    void handleRangeChanged(qreal min , qreal max);
+
+Q_SIGNALS:
+	void clicked();
 
 private:
     inline bool isEmpty();
@@ -142,37 +139,34 @@ private:
     void deleteItems(int count);
     void updateLayout(QVector<qreal> &layout);
     void axisSelected();
+    void connectSlots();
 
 private:
-    QAbstractAxis *m_chartAxis;
+    QAbstractAxis *m_axis;
     int m_labelsAngle;
     QRectF m_axisRect;
     QRectF m_gridRect;
     QScopedPointer<QGraphicsItemGroup> m_grid;
+    QScopedPointer<QGraphicsItemGroup> m_arrow;
     QScopedPointer<QGraphicsItemGroup> m_shades;
     QScopedPointer<QGraphicsItemGroup> m_labels;
-    QScopedPointer<QGraphicsItemGroup> m_arrow;
     QScopedPointer<QGraphicsSimpleTextItem> m_title;
     QVector<qreal> m_layoutVector;
-    qreal m_min;
-    qreal m_max;
     AxisAnimation *m_animation;
-    QFont m_font;
-    QString m_titleText;
     int m_labelPadding;
     QStringList m_labelsList;
     bool m_intervalAxis;
 
     friend class AxisAnimation;
-    friend class AxisItem;
+    friend class ArrowItem;
 
 };
 
-class AxisItem: public QGraphicsLineItem
+class ArrowItem: public QGraphicsLineItem
 {
 
 public:
-    explicit AxisItem(ChartAxis *axis, QGraphicsItem *parent = 0) : QGraphicsLineItem(parent), m_axis(axis) {}
+    explicit ArrowItem(ChartAxis *axis, QGraphicsItem *parent = 0) : QGraphicsLineItem(parent), m_axis(axis) {}
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event) {

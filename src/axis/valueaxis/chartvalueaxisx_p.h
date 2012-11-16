@@ -34,24 +34,23 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartPresenter;
 class QValueAxis;
+class ChartPresenter;
 
 class ChartValueAxisX : public HorizontalAxis
 {
+	Q_OBJECT
 public:
-    ChartValueAxisX(QValueAxis *axis, ChartPresenter *presenter);
+    ChartValueAxisX(QValueAxis *axis, QGraphicsItem* item = 0);
     ~ChartValueAxisX();
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
-
 protected:
-    void handleAxisUpdated();
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
-
+private Q_SLOTS:
+    void handleTickCountChanged(int tick);
 private:
-    int m_tickCount;
     QValueAxis *m_axis;
 };
 

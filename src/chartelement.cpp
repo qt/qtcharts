@@ -24,11 +24,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartElement::ChartElement(ChartPresenter *presenter)
-    : QObject(presenter),
-      m_presenter(presenter),
-      m_domain(0)
+ChartElement::ChartElement(QGraphicsItem* item):
+      QGraphicsObject(item),
+      m_presenter(0),
+      m_themeManager(0)
 {
+
 }
 
 void ChartElement::setPresenter(ChartPresenter *presenter)
@@ -41,37 +42,14 @@ ChartPresenter *ChartElement::presenter() const
     return m_presenter;
 }
 
-void ChartElement::setDomain(Domain *domain)
+void ChartElement::setThemeManager(ChartThemeManager *manager)
 {
-    m_domain = domain;
+    m_themeManager = manager;
 }
 
-Domain *ChartElement::domain() const
+ChartThemeManager* ChartElement::themeManager() const
 {
-    return m_domain;
+    return m_themeManager;
 }
-
-void ChartElement::handleGeometryChanged(const QRectF &rect)
-{
-    Q_UNUSED(rect);
-    qWarning() << "Slot not implemented";
-}
-
-void ChartElement::handleDomainChanged(qreal minX, qreal maxX, qreal minY, qreal maxY)
-{
-    Q_UNUSED(minX);
-    Q_UNUSED(maxX);
-    Q_UNUSED(minY);
-    Q_UNUSED(maxY);
-    qWarning() << "Slot not implemented";
-}
-
-void ChartElement::handleDomainUpdated()
-{
-    qWarning() << "Slot not implemented";
-}
-
-
-#include "moc_chartelement_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

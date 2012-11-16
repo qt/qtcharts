@@ -25,8 +25,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-HorizontalStackedBarChartItem::HorizontalStackedBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter)
-    : AbstractBarChartItem(series, presenter)
+HorizontalStackedBarChartItem::HorizontalStackedBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item)
+    : AbstractBarChartItem(series, item)
 {
 }
 

@@ -45,7 +45,7 @@ public:
         m_seriesColors << QRgb(0x0c2673);
         m_seriesColors << QRgb(0x5f3dba);
         m_seriesColors << QRgb(0x2fa3b4);
-        generateSeriesGradients();
+        m_seriesGradients = ChartThemeManager::generateSeriesGradients(m_seriesColors);
 
         // Background
         QLinearGradient backgroundGradient(0.5, 0.0, 0.5, 1.0);

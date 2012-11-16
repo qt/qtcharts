@@ -69,8 +69,8 @@ QPercentBarSeries::QPercentBarSeries(QObject *parent)
 QPercentBarSeries::~QPercentBarSeries()
 {
     Q_D(QPercentBarSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 
 /*!
@@ -88,12 +88,12 @@ QPercentBarSeriesPrivate::QPercentBarSeriesPrivate(QPercentBarSeries *q) : QAbst
 
 }
 
-void QPercentBarSeriesPrivate::scaleDomain(Domain &domain)
+void QPercentBarSeriesPrivate::initializeDomain()
 {
-    qreal minX(domain.minX());
-    qreal minY(domain.minY());
-    qreal maxX(domain.maxX());
-    qreal maxY(domain.maxY());
+    qreal minX(domain()->minX());
+    qreal minY(domain()->minY());
+    qreal maxX(domain()->maxX());
+    qreal maxY(domain()->maxY());
 
     qreal x = categoryCount();
     minX = qMin(minX, - (qreal)0.5);
@@ -101,21 +101,29 @@ void QPercentBarSeriesPrivate::scaleDomain(Domain &domain)
     minY = 0;
     maxY = 100;
 
-    domain.setRange(minX, maxX, minY, maxY);
+    domain()->setRange(minX, maxX, minY, maxY);
 }
 
 
-ChartElement *QPercentBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QPercentBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QPercentBarSeries);
-
-    PercentBarChartItem *bar = new PercentBarChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
-        bar->setAnimation(new PercentBarAnimation(bar));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return bar;
+    PercentBarChartItem *bar = new PercentBarChartItem(q,parent);
+    m_item.reset(bar);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
+void QPercentBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
+{
+    PercentBarChartItem *bar = static_cast<PercentBarChartItem *>(m_item.data());
+    Q_ASSERT(bar);
+    if (options.testFlag(QChart::SeriesAnimations)) {
+        bar->setAnimation(new PercentBarAnimation(bar));
+    }else{
+        bar->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
+}
 #include "moc_qpercentbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

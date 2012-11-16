@@ -39,7 +39,7 @@ class HorizontalStackedBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:
-    HorizontalStackedBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
+    HorizontalStackedBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
 
 private:
     virtual QVector<QRectF> calculateLayout();

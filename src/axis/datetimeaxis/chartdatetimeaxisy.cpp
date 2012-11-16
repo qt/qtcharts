@@ -29,11 +29,11 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartDateTimeAxisY::ChartDateTimeAxisY(QDateTimeAxis *axis, ChartPresenter *presenter)
-    : VerticalAxis(axis, presenter),
-      m_tickCount(0),
+ChartDateTimeAxisY::ChartDateTimeAxisY(QDateTimeAxis *axis, QGraphicsItem* item)
+    : VerticalAxis(axis, item),
       m_axis(axis)
 {
+    QObject::connect(m_axis,SIGNAL(tickCountChanged(int)),this, SLOT(handleTickCountChanged(int)));
 }
 
 ChartDateTimeAxisY::~ChartDateTimeAxisY()
@@ -42,13 +42,15 @@ ChartDateTimeAxisY::~ChartDateTimeAxisY()
 
 QVector<qreal> ChartDateTimeAxisY::calculateLayout() const
 {
-    Q_ASSERT(m_tickCount >= 2);
+    int tickCount = m_axis->tickCount();
+
+    Q_ASSERT(tickCount >= 2);
 
     QVector<qreal> points;
-    points.resize(m_tickCount);
+    points.resize(tickCount);
     const QRectF &gridRect = gridGeometry();
-    const qreal deltaY = gridRect.height() / (m_tickCount - 1);
-    for (int i = 0; i < m_tickCount; ++i) {
+    const qreal deltaY = gridRect.height() / (tickCount - 1);
+    for (int i = 0; i < tickCount; ++i) {
         int y = i * -deltaY + gridRect.bottom();
         points[i] = y;
     }
@@ -61,17 +63,14 @@ void ChartDateTimeAxisY::updateGeometry()
     const QVector<qreal> &layout = ChartAxis::layout();
     if (layout.isEmpty())
         return;
-    setLabels(createDateTimeLabels(m_axis->format(), layout.size()));
+    setLabels(createDateTimeLabels(min(),max(), layout.size(),m_axis->format()));
     VerticalAxis::updateGeometry();
 }
 
-void ChartDateTimeAxisY::handleAxisUpdated()
+void ChartDateTimeAxisY::handleTickCountChanged(int tick)
 {
-    if (m_tickCount != m_axis->tickCount()) {
-        m_tickCount = m_axis->tickCount();
-        presenter()->layout()->invalidate();
-    }
-    ChartAxis::handleAxisUpdated();
+    Q_UNUSED(tick)
+    if(presenter()) presenter()->layout()->invalidate();
 }
 
 QSizeF ChartDateTimeAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
@@ -82,9 +81,13 @@ QSizeF ChartDateTimeAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     QSizeF sh;
 
     QSizeF base = VerticalAxis::sizeHint(which, constraint);
-    QStringList ticksList = createDateTimeLabels(m_axis->format(),m_tickCount);
+    QStringList ticksList = createDateTimeLabels(min(),max(),m_axis->tickCount(),m_axis->format());
     qreal width = 0;
     qreal height = 0;
+
+    if(ticksList.empty()){
+        return sh;
+    }
 
     switch (which) {
         case Qt::MinimumSize: {
@@ -110,5 +113,7 @@ QSizeF ChartDateTimeAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     return sh;
 }
+
+#include "moc_chartdatetimeaxisy_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

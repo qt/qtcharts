@@ -65,7 +65,7 @@ Q_SIGNALS:
 private:
     friend class QPieSeries;
     friend class QPieSeriesPrivate;
-    friend class ChartTheme;
+    friend class ChartThemeManager;
     friend class PieChartItem;
 
     QPieSlice * const q_ptr;

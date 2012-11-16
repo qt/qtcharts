@@ -114,8 +114,8 @@ QSplineSeries::QSplineSeries(QObject *parent)
 QSplineSeries::~QSplineSeries()
 {
     Q_D(QSplineSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 
 QAbstractSeries::SeriesType QSplineSeries::type() const
@@ -244,14 +244,38 @@ void QSplineSeriesPrivate::updateControlPoints()
     }
 }
 
-ChartElement *QSplineSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QSplineSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QSplineSeries);
-    SplineChartItem *spline = new SplineChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
-        spline->setAnimation(new SplineAnimation(spline));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return spline;
+    SplineChartItem *spline = new SplineChartItem(q,parent);
+    m_item.reset(spline);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
+}
+
+void QSplineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
+{
+    Q_Q(QSplineSeries);
+    const QList<QColor> colors = theme->seriesColors();
+
+    QPen pen;
+    if (forced || pen == m_pen) {
+        pen.setColor(colors.at(index % colors.size()));
+        pen.setWidthF(2);
+        q->setPen(pen);
+    }
+}
+
+
+void QSplineSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
+{
+    SplineChartItem *item = static_cast<SplineChartItem *>(m_item.data());
+    Q_ASSERT(item);
+    if (options.testFlag(QChart::SeriesAnimations)) {
+        item->setAnimation(new SplineAnimation(item));
+    }else{
+        item->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 #include "moc_qsplineseries.cpp"

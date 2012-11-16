@@ -54,12 +54,14 @@ public:
     void setVisible(bool visible);
     void setLabelsVisible(bool visible);
 
-    void scaleDomain(Domain &domain);
-    ChartElement *createGraphics(ChartPresenter *presenter);
-    QList<QLegendMarker*> createLegendMarkers(QLegend* legend);
+    void initializeDomain();
+    void initializeAxes();
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
 
-    void initializeAxis(QAbstractAxis *axis);
+    QList<QLegendMarker*> createLegendMarkers(QLegend *legend);
+
     virtual QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
+    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const;
 
     bool append(QBarSet *set);
     bool remove(QBarSet *set);

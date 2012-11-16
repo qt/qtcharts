@@ -28,8 +28,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartCategoryAxisX::ChartCategoryAxisX(QCategoryAxis *axis, ChartPresenter *presenter)
-    : HorizontalAxis(axis, presenter, true),
+ChartCategoryAxisX::ChartCategoryAxisX(QCategoryAxis *axis, QGraphicsItem* item)
+    : HorizontalAxis(axis, item, true),
       m_axis(axis)
 {
 }
@@ -75,7 +75,7 @@ void ChartCategoryAxisX::updateGeometry()
 void ChartCategoryAxisX::handleAxisUpdated()
 {
     updateGeometry();
-    ChartAxis::handleAxisUpdated();
+    //TODO :: ChartAxis::handleAxisUpdated();
 }
 
 QSizeF ChartCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const

@@ -19,11 +19,11 @@
  ****************************************************************************/
 #include "chartpresenter_p.h"
 #include "qchart.h"
+#include "chartitem_p.h"
 #include "qchart_p.h"
 #include "qabstractaxis.h"
 #include "qabstractaxis_p.h"
 #include "chartdataset_p.h"
-#include "charttheme_p.h"
 #include "chartanimation_p.h"
 #include "qabstractseries_p.h"
 #include "qareaseries.h"
@@ -35,11 +35,9 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartPresenter::ChartPresenter(QChart *chart, ChartDataSet *dataset)
+ChartPresenter::ChartPresenter(QChart *chart)
     : QObject(chart),
       m_chart(chart),
-      m_dataset(dataset),
-      m_chartTheme(0),
       m_options(QChart::NoAnimation),
       m_state(ShowState),
       m_layout(new ChartLayout(this)),
@@ -51,164 +49,97 @@ ChartPresenter::ChartPresenter(QChart *chart, ChartDataSet *dataset)
 
 ChartPresenter::~ChartPresenter()
 {
-    delete m_chartTheme;
+
 }
 
-void ChartPresenter::handleAxisAdded(QAbstractAxis *axis, Domain *domain)
+void ChartPresenter::setGeometry(const QRectF rect)
 {
-    ChartAxis *item = axis->d_ptr->createGraphics(this);
-    item->setDomain(domain);
+	if(m_rect != rect) {
+		m_rect=rect;
+		foreach (ChartItem *chart, m_chartItems){
+			chart->domain()->setSize(rect.size());
+			chart->setPos(rect.topLeft());
+		}
+	}
+}
 
-    if (m_options.testFlag(QChart::GridAxisAnimations))
-        item->setAnimation(new AxisAnimation(item));
+QRectF ChartPresenter::geometry() const
+{
+	return m_rect;
+}
 
-    QObject::connect(domain, SIGNAL(updated()), item, SLOT(handleDomainUpdated()));
-
-    //initialize
-    domain->emitUpdated();
-    m_chartTheme->decorate(axis);
-    axis->d_ptr->setDirty(false);
-    axis->d_ptr->emitUpdated();
-
-    m_axisItems.insert(axis, item);
+void ChartPresenter::handleAxisAdded(QAbstractAxis *axis)
+{
+    qDebug()<<__FUNCTION__;
+    axis->d_ptr->initializeGraphics(rootItem());
+    axis->d_ptr->initializeAnimations(m_options);
+    ChartAxis *item = axis->d_ptr->axisItem();
+    item->setPresenter(this);
+    item->setThemeManager(m_chart->d_ptr->m_themeManager);
+    m_axisItems<<item;
+    m_axes<<axis;
     m_layout->invalidate();
 }
 
 void ChartPresenter::handleAxisRemoved(QAbstractAxis *axis)
 {
-    ChartAxis *item = m_axisItems.take(axis);
-    Q_ASSERT(item);
+    qDebug()<<__FUNCTION__;
+    ChartAxis *item  = axis->d_ptr->m_item.take();
     item->hide();
     item->disconnect();
-    QObject::disconnect(this, 0, item, 0);
     item->deleteLater();
+    m_axisItems.removeAll(item);
+    m_axes.removeAll(axis);
     m_layout->invalidate();
 }
 
 
-void ChartPresenter::handleSeriesAdded(QAbstractSeries *series, Domain *domain)
+void ChartPresenter::handleSeriesAdded(QAbstractSeries *series)
 {
-    ChartElement *item = series->d_ptr->createGraphics(this);
-    Q_ASSERT(item);
-    item->setDomain(domain);
-
-    QObject::connect(domain, SIGNAL(updated()), item, SLOT(handleDomainUpdated()));
-    //initialize
-    item->handleDomainUpdated();
-
-    m_chartItems.insert(series, item);
+    qDebug()<<__FUNCTION__;
+    series->d_ptr->initializeGraphics(rootItem());
+    series->d_ptr->initializeAnimations(m_options);
+    ChartItem *chart = series->d_ptr->chartItem();
+    chart->setPresenter(this);
+    chart->setThemeManager(m_chart->d_ptr->m_themeManager);
+    chart->domain()->setSize(m_rect.size());
+    chart->setPos(m_rect.topLeft());
+    chart->handleDomainUpdated(); //this could be moved to intializeGraphics when animator is refactored
+    m_chartItems<<chart;
+    m_series<<series;
     m_layout->invalidate();
 }
 
 void ChartPresenter::handleSeriesRemoved(QAbstractSeries *series)
 {
-    ChartElement *item = m_chartItems.take(series);
-    Q_ASSERT(item);
-    item->deleteLater();
-}
-
-void ChartPresenter::setTheme(QChart::ChartTheme theme, bool force)
-{
-    if (m_chartTheme && m_chartTheme->id() == theme)
-        return;
-    delete m_chartTheme;
-    m_chartTheme = ChartTheme::createTheme(theme);
-    m_chartTheme->setForced(force);
-    m_chartTheme->decorate(m_chart);
-    m_chartTheme->decorate(m_chart->legend());
-    resetAllElements();
-
-    // We do not want "force" to stay on.
-    // Bar/pie are calling decorate when adding/removing slices/bars which means
-    // that to preserve users colors "force" must not be on.
-    m_chartTheme->setForced(false);
-}
-
-QChart::ChartTheme ChartPresenter::theme()
-{
-    return m_chartTheme->id();
+    qDebug()<<__FUNCTION__;
+    ChartItem *chart  = series->d_ptr->m_item.take();
+    chart->hide();
+    chart->disconnect();
+    chart->deleteLater();
+    m_chartItems.removeAll(chart);
+    m_series.removeAll(series);
+    m_layout->invalidate();
 }
 
 void ChartPresenter::setAnimationOptions(QChart::AnimationOptions options)
 {
     if (m_options != options) {
         m_options = options;
-        resetAllElements();
+
+        foreach(QAbstractSeries* series, m_series){
+            series->d_ptr->initializeAnimations(m_options);
+        }
+        foreach(QAbstractAxis* axis, m_axes){
+            axis->d_ptr->initializeAnimations(m_options);
+        }
     }
-
 }
 
-void ChartPresenter::resetAllElements()
+void ChartPresenter::setState(State state,QPointF point)
 {
-    QMapIterator<QAbstractAxis *, ChartAxis *> i(m_axisItems);
-    while (i.hasNext()) {
-        i.next();
-        Domain *domain = i.value()->domain();
-        QAbstractAxis *axis = i.key();
-        handleAxisRemoved(axis);
-        handleAxisAdded(axis, domain);
-    }
-
-    QMapIterator<QAbstractSeries *, ChartElement *> j(m_chartItems);
-    while (j.hasNext()) {
-        j.next();
-        Domain *domain = j.value()->domain();
-        QAbstractSeries *series = j.key();
-        handleSeriesRemoved(series);
-        handleSeriesAdded(series, domain);
-    }
-
-    layout()->invalidate();
-}
-
-void ChartPresenter::zoomIn(qreal factor)
-{
-    QRectF rect = m_layout->chartsGeometry();
-    rect.setWidth(rect.width() / factor);
-    rect.setHeight(rect.height() / factor);
-    rect.moveCenter(m_layout->chartsGeometry().center());
-    zoomIn(rect);
-}
-
-void ChartPresenter::zoomIn(const QRectF &rect)
-{
-    QRectF r = rect.normalized();
-    r.translate(-m_layout->chartsGeometry().topLeft());
-    if (!r.isValid())
-        return;
-
-    m_state = ZoomInState;
-    m_statePoint = QPointF(r.center().x() / m_layout->chartsGeometry().width(), r.center().y() / m_layout->chartsGeometry().height());
-    m_dataset->zoomInDomain(r, m_layout->chartsGeometry().size());
-    m_state = ShowState;
-}
-
-void ChartPresenter::zoomOut(qreal factor)
-{
-    m_state = ZoomOutState;
-
-    QRectF chartRect;
-    chartRect.setSize(m_layout->chartsGeometry().size());
-
-    QRectF rect;
-    rect.setSize(chartRect.size() / factor);
-    rect.moveCenter(chartRect.center());
-    if (!rect.isValid())
-        return;
-    m_statePoint = QPointF(rect.center().x() / m_layout->chartsGeometry().width(), rect.center().y() / m_layout->chartsGeometry().height());
-    m_dataset->zoomOutDomain(rect, chartRect.size());
-    m_state = ShowState;
-}
-
-void ChartPresenter::scroll(qreal dx, qreal dy)
-{
-    if (dx < 0) m_state = ScrollLeftState;
-    if (dx > 0) m_state = ScrollRightState;
-    if (dy < 0) m_state = ScrollUpState;
-    if (dy > 0) m_state = ScrollDownState;
-
-    m_dataset->scrollDomain(dx, dy, m_layout->chartsGeometry().size());
-    m_state = ShowState;
+	m_state=state;
+	m_statePoint=point;
 }
 
 QChart::AnimationOptions ChartPresenter::animationOptions() const
@@ -370,12 +301,12 @@ ChartBackground *ChartPresenter::backgroundElement()
 
 QList<ChartAxis *>  ChartPresenter::axisItems() const
 {
-    return m_axisItems.values();
+    return m_axisItems;
 }
 
-QList<ChartElement *> ChartPresenter::chartItems() const
+QList<ChartItem *> ChartPresenter::chartItems() const
 {
-    return m_chartItems.values();
+    return m_chartItems;
 }
 
 ChartTitle *ChartPresenter::titleElement()

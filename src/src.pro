@@ -31,13 +31,14 @@ INCLUDEPATH += ../include .
 SOURCES += \
     $$PWD/chartdataset.cpp \
     $$PWD/chartpresenter.cpp \
-    $$PWD/charttheme.cpp \
+    $$PWD/chartthememanager.cpp \
     $$PWD/domain.cpp \
     $$PWD/qchart.cpp \
     $$PWD/qchartview.cpp \
     $$PWD/qabstractseries.cpp \
     $$PWD/chartbackground.cpp \
     $$PWD/chartelement.cpp \
+    $$PWD/chartitem.cpp \
     $$PWD/scroller.cpp \
     $$PWD/chartlayout.cpp \
     $$PWD/charttitle.cpp
@@ -45,7 +46,7 @@ PRIVATE_HEADERS += \
     $$PWD/chartdataset_p.h \
     $$PWD/chartitem_p.h \
     $$PWD/chartpresenter_p.h \
-    $$PWD/charttheme_p.h \
+    $$PWD/chartthememanager_p.h \
     $$PWD/domain_p.h \
     $$PWD/chartbackground_p.h \
     $$PWD/chartelement_p.h \

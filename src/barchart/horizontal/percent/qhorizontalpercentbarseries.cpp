@@ -77,8 +77,8 @@ QAbstractSeries::SeriesType QHorizontalPercentBarSeries::type() const
 QHorizontalPercentBarSeries::~QHorizontalPercentBarSeries()
 {
     Q_D(QHorizontalPercentBarSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -88,12 +88,12 @@ QHorizontalPercentBarSeriesPrivate::QHorizontalPercentBarSeriesPrivate(QHorizont
 
 }
 
-void QHorizontalPercentBarSeriesPrivate::scaleDomain(Domain &domain)
+void QHorizontalPercentBarSeriesPrivate::initializeDomain()
 {
-    qreal minX(domain.minX());
-    qreal minY(domain.minY());
-    qreal maxX(domain.maxX());
-    qreal maxY(domain.maxY());
+    qreal minX(domain()->minX());
+    qreal minY(domain()->minY());
+    qreal maxX(domain()->maxX());
+    qreal maxY(domain()->maxY());
 
     qreal y = categoryCount();
     minX = 0;
@@ -101,20 +101,28 @@ void QHorizontalPercentBarSeriesPrivate::scaleDomain(Domain &domain)
     minY = qMin(minY, - (qreal)0.5);
     maxY = qMax(maxY, y - (qreal)0.5);
 
-    domain.setRange(minX, maxX, minY, maxY);
+    domain()->setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement *QHorizontalPercentBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QHorizontalPercentBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QHorizontalPercentBarSeries);
-
-    HorizontalPercentBarChartItem *bar = new HorizontalPercentBarChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
-        bar->setAnimation(new HorizontalPercentBarAnimation(bar));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return bar;
+    HorizontalPercentBarChartItem *bar = new HorizontalPercentBarChartItem(q,parent);
+    m_item.reset(bar);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
+void QHorizontalPercentBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
+{
+    HorizontalPercentBarChartItem *bar = static_cast<HorizontalPercentBarChartItem *>(m_item.data());
+    Q_ASSERT(bar);
+    if (options.testFlag(QChart::SeriesAnimations)) {
+        bar->setAnimation(new HorizontalPercentBarAnimation(bar));
+    }else{
+        bar->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
+}
 #include "moc_qhorizontalpercentbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

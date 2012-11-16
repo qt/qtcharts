@@ -106,7 +106,7 @@ void tst_QAbstractAxis::axisPen()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -159,7 +159,7 @@ void tst_QAbstractAxis::gridLinePen()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -201,7 +201,7 @@ void tst_QAbstractAxis::lineVisible()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -243,7 +243,7 @@ void tst_QAbstractAxis::gridLineVisible()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -286,7 +286,7 @@ void tst_QAbstractAxis::visible()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -327,7 +327,7 @@ void tst_QAbstractAxis::labelsAngle()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -370,7 +370,7 @@ void tst_QAbstractAxis::labelsBrush()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -421,7 +421,7 @@ void tst_QAbstractAxis::labelsFont()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -463,7 +463,7 @@ void tst_QAbstractAxis::labelsPen()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -505,7 +505,7 @@ void tst_QAbstractAxis::labelsVisible()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -545,7 +545,7 @@ void tst_QAbstractAxis::orientation()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -646,7 +646,7 @@ void tst_QAbstractAxis::shadesBrush()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -697,7 +697,7 @@ void tst_QAbstractAxis::shadesPen()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -739,7 +739,7 @@ void tst_QAbstractAxis::shadesVisible()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -778,7 +778,7 @@ void tst_QAbstractAxis::show()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));
@@ -812,7 +812,7 @@ void tst_QAbstractAxis::hide()
 
     QSignalSpy spy0(m_axis, SIGNAL(lineVisibleChanged(bool)));
     QSignalSpy spy1(m_axis, SIGNAL(colorChanged(QColor)));
-    QSignalSpy spy2(m_axis, SIGNAL(gridVisibleChanged(bool)));
+    QSignalSpy spy2(m_axis, SIGNAL(gridLineVisibleChanged(bool)));
     QSignalSpy spy3(m_axis, SIGNAL(labelsColorChanged(QColor)));
     QSignalSpy spy4(m_axis, SIGNAL(labelsVisibleChanged(bool)));
     QSignalSpy spy5(m_axis, SIGNAL(shadesBorderColorChanged(QColor)));

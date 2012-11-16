@@ -33,7 +33,7 @@ public:
     QChart *createChart(const DataTable &table)
     {
         QChart *chart = new QChart();
-        chart->setTitle("Stacked bar chart");
+        chart->setTitle("Percent bar chart");
         QPercentBarSeries *series = new QPercentBarSeries(chart);
         for (int i(0); i < table.count(); i++) {
             QBarSet *set = new QBarSet("Bar set " + QString::number(i));

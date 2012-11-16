@@ -69,8 +69,8 @@ class BarCategoryAxisXTitle: public BarCategoryAxisX
     QChart *createChart(const DataTable &table)
     {
         QChart *chart = BarCategoryAxisX::createChart(table);
-        chart->axisX()->setTitle("Axis X");
-        chart->axisY()->setTitle("Axis Y");
+        chart->axisX()->setTitleText("Axis X");
+        chart->axisY()->setTitleText("Axis Y");
         chart->setTitle(" BarCateogry X , Value Y, title");
         return chart;
     }

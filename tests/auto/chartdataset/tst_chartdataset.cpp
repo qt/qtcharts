@@ -43,6 +43,8 @@ QTEST_MAIN(tst_ChartDataSet)
 #include <qabstractaxis.h>
 #include <qvalueaxis.h>
 #include <qbarcategoryaxis.h>
+#include <qcategoryaxis.h>
+#include <qdatetimeaxis.h>
 #include <qlineseries.h>
 #include <qareaseries.h>
 #include <qscatterseries.h>
@@ -62,6 +64,8 @@ Q_DECLARE_METATYPE(QAbstractAxis *)
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QList<QAbstractSeries *>)
 Q_DECLARE_METATYPE(QList<QAbstractAxis *>)
+Q_DECLARE_METATYPE(Qt::Alignment)
+Q_DECLARE_METATYPE(QList<Qt::Alignment>)
 Q_DECLARE_METATYPE(QLineSeries *)
 
 class tst_ChartDataSet: public QObject {
@@ -79,26 +83,20 @@ private Q_SLOTS:
     void chartdataset();
     void addSeries_data();
     void addSeries();
-    void setAxisX_data();
-    void setAxisX();
-    void setAxisY_data();
-    void setAxisY();
     void removeSeries_data();
     void removeSeries();
     void removeAllSeries_data();
     void removeAllSeries();
-    void seriesCount_data();
-    void seriesCount();
-    void seriesIndex_data();
-    void seriesIndex();
-    void domain_data();
-    void domain();
-    void zoomInDomain_data();
-    void zoomInDomain();
-    void zoomOutDomain_data();
-    void zoomOutDomain();
-    void scrollDomain_data();
-    void scrollDomain();
+    void addAxis_data();
+    void addAxis();
+    void removeAxis_data();
+    void removeAxis();
+    void removeAllAxes_data();
+    void removeAllAxes();
+    void attachAxis_data();
+    void attachAxis();
+    void detachAxis_data();
+    void detachAxis();
 
 private:
     ChartDataSet* m_dataset;
@@ -117,7 +115,7 @@ void tst_ChartDataSet::cleanupTestCase()
 
 void tst_ChartDataSet::init()
 {
-    m_dataset = new ChartDataSet();
+    m_dataset = new ChartDataSet(0);
 }
 
 
@@ -136,14 +134,9 @@ void tst_ChartDataSet::chartdataset_data()
 
 void tst_ChartDataSet::chartdataset()
 {
-    QVERIFY(m_dataset->axisX(0) == 0);
-    QVERIFY(m_dataset->axisY(0) == 0);
-    QLineSeries* series = new QLineSeries(this);
-    QCOMPARE(m_dataset->seriesIndex(series),-1);
-    QVERIFY(m_dataset->domain(series) == 0);
-    QVERIFY(m_dataset->axisX(series) == 0);
-    QVERIFY(m_dataset->axisY(series) == 0);
-    m_dataset->createDefaultAxes();
+	QVERIFY(m_dataset->axes().isEmpty());
+	QVERIFY(m_dataset->series().isEmpty());
+	m_dataset->createDefaultAxes();
 }
 
 
@@ -172,143 +165,21 @@ void tst_ChartDataSet::addSeries_data()
 
 void tst_ChartDataSet::addSeries()
 {
-
     QFETCH(QAbstractSeries*, series);
+    QVERIFY(m_dataset->series().isEmpty());
 
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
     QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
     m_dataset->addSeries(series);
-    m_dataset->createDefaultAxes();
-    if(series->type()==QAbstractSeries::SeriesTypePie){
-        TRY_COMPARE(spy0.count(), 0);
-    }else{
-        TRY_COMPARE(spy0.count(), 2);
-    }
+
+    QCOMPARE(m_dataset->series().count(),1);
+    TRY_COMPARE(spy0.count(), 0);
     TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), 1);
     TRY_COMPARE(spy3.count(), 0);
-}
-
-
-void tst_ChartDataSet::setAxisX_data()
-{
-    QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
-    QTest::addColumn<QList<QAbstractAxis*> >("axisList");
-    QTest::addColumn<int>("axisCount");
-
-    QAbstractSeries* line = new QLineSeries(this);
-    QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
-    QAbstractSeries* scatter = new QScatterSeries(this);
-    QAbstractSeries* spline = new QSplineSeries(this);
-    /*QAbstractSeries* pie = */new QPieSeries(this);
-    /*QAbstractSeries* bar = */new QBarSeries(this);
-    /*QAbstractSeries* percent = */new QPercentBarSeries(this);
-    /*QAbstractSeries* stacked = */new QStackedBarSeries(this);
-
-    QTest::newRow("line,spline,scatter: axis 0 axis1 axis 2")
-        << (QList<QAbstractSeries*>() << line << spline << scatter)
-        << (QList<QAbstractAxis*>() << new QValueAxis(this) << new QValueAxis(this) << new QValueAxis(this)) << 3;
-
-    QTest::newRow("area: axis 0") << (QList<QAbstractSeries*>() << area)
-        << (QList<QAbstractAxis*>() << new QValueAxis(this)) << 1;
-
-    QList<QAbstractAxis*> axes0;
-    axes0 << new QValueAxis(this) << new QValueAxis(this);
-    axes0 << axes0.last();
-    QTest::newRow("line,spline,scatter: axis 0 axis1 axis 1")
-        << (QList<QAbstractSeries*>() << line << spline << scatter)
-        << axes0 << 2;
-    //TODO: add more test cases
-}
-
-void tst_ChartDataSet::setAxisX()
-{
-    QFETCH(QList<QAbstractSeries*>, seriesList);
-    QFETCH(QList<QAbstractAxis*>, axisList);
-    QFETCH(int, axisCount);
-
-    Q_ASSERT(seriesList.count() == axisList.count());
-
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
-    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
-    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
-
-    foreach (QAbstractSeries* series, seriesList){
-        m_dataset->addSeries(series);
-    }
-
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), seriesList.count());
-    TRY_COMPARE(spy3.count(), 0);
-
-    QSignalSpy spy4(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
-    QSignalSpy spy5(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy6(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
-    QSignalSpy spy7(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
-
-    for(int i=0 ; i < seriesList.count(); i++){
-           m_dataset->setAxis(seriesList.at(i),axisList.at(i),Qt::Horizontal);
-    }
-
-    TRY_COMPARE(spy4.count(), axisCount);
-    TRY_COMPARE(spy5.count(), 0);
-    TRY_COMPARE(spy6.count(), 0);
-    TRY_COMPARE(spy7.count(), 0);
-
-    for(int i=0 ; i < seriesList.count(); i++){
-        QVERIFY(m_dataset->axisX(seriesList.at(i)) == axisList.at(i));
-    }
-}
-
-void tst_ChartDataSet::setAxisY_data()
-{
-    setAxisX_data();
-}
-
-void tst_ChartDataSet::setAxisY()
-{
-    QFETCH(QList<QAbstractSeries*>, seriesList);
-    QFETCH(QList<QAbstractAxis*>, axisList);
-    QFETCH(int, axisCount);
-
-    Q_ASSERT(seriesList.count() == axisList.count());
-
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
-    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
-    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
-
-    foreach (QAbstractSeries* series, seriesList){
-        m_dataset->addSeries(series);
-    }
-
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), seriesList.count());
-    TRY_COMPARE(spy3.count(), 0);
-
-    QSignalSpy spy4(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
-    QSignalSpy spy5(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy6(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
-    QSignalSpy spy7(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
-
-    for(int i=0 ; i < seriesList.count(); i++){
-           m_dataset->setAxis(seriesList.at(i),axisList.at(i),Qt::Vertical);
-    }
-
-    TRY_COMPARE(spy4.count(), axisCount);
-    TRY_COMPARE(spy5.count(), 0);
-    TRY_COMPARE(spy6.count(), 0);
-    TRY_COMPARE(spy7.count(), 0);
-
-    for(int i=0 ; i < seriesList.count(); i++){
-        QVERIFY(m_dataset->axisY(seriesList.at(i)) == axisList.at(i));
-    }
 }
 
 void tst_ChartDataSet::removeSeries_data()
@@ -319,24 +190,19 @@ void tst_ChartDataSet::removeSeries_data()
 void tst_ChartDataSet::removeSeries()
 {
     QFETCH(QAbstractSeries*, series);
-
+    QVERIFY(m_dataset->series().isEmpty());
     m_dataset->addSeries(series);
-    m_dataset->createDefaultAxes();
 
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
     QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
     m_dataset->removeSeries(series);
 
+    QCOMPARE(m_dataset->series().count(),0);
     TRY_COMPARE(spy0.count(), 0);
-    if (series->type() == QAbstractSeries::SeriesTypePie) {
-        TRY_COMPARE(spy1.count(), 0);
-    }
-    else {
-        TRY_COMPARE(spy1.count(), 2);
-    }
+    TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), 0);
     TRY_COMPARE(spy3.count(), 1);
 }
@@ -345,298 +211,270 @@ void tst_ChartDataSet::removeAllSeries_data()
 {
     QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
     QTest::addColumn<QList<QAbstractAxis*> >("axisList");
-    QTest::addColumn<int>("axisCount");
 
-    QTest::newRow("line,spline,scatter: axis 0 axis1 axis 2")
-        << (QList<QAbstractSeries*>() << new QLineSeries(this) << new QSplineSeries(this)
-            << new QScatterSeries(this))
-        << (QList<QAbstractAxis*>() << new QValueAxis(this) << new QValueAxis(this)
-            << new QValueAxis(this)) << 3;
-    //TODO:
+    QList<QAbstractSeries*> series;
+    QList<QAbstractAxis*> axis;
+
+    series << new QLineSeries(this) << new QSplineSeries(this) << new QScatterSeries(this);
+    axis << new QValueAxis(this) << new QValueAxis(this) << new QValueAxis(this);
+
+    QTest::newRow("3 series , 3 axis") << series << axis;
 }
 
 void tst_ChartDataSet::removeAllSeries()
 {
     QFETCH(QList<QAbstractSeries*>, seriesList);
     QFETCH(QList<QAbstractAxis*>, axisList);
-    QFETCH(int, axisCount);
+
+    QCOMPARE(m_dataset->series().count(),0);
+    QCOMPARE(m_dataset->axes().count(),0);
 
     foreach (QAbstractSeries* series, seriesList) {
         m_dataset->addSeries(series);
     }
 
-    for (int i = 0; i < seriesList.count(); i++) {
-        m_dataset->setAxis(seriesList.at(i), axisList.at(i),Qt::Horizontal);
+    foreach (QAbstractAxis* axis, axisList) {
+        m_dataset->addAxis(axis,Qt::AlignBottom);
     }
 
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
+    for (int i = 0; i < seriesList.count(); i++) {
+        m_dataset->attachAxis(seriesList.at(i),axisList.at(i));
+    }
+
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
     QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
     m_dataset->removeAllSeries();
 
     TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), axisCount);
+    TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), 0);
     TRY_COMPARE(spy3.count(), seriesList.count());
+
+    QCOMPARE(m_dataset->series().count(),0);
+    QCOMPARE(m_dataset->axes().count(),axisList.count());
 }
 
-
-void tst_ChartDataSet::seriesCount_data()
+void tst_ChartDataSet::addAxis_data()
 {
-    QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
-    QTest::addColumn<int>("seriesCount");
+    QTest::addColumn<QAbstractAxis*>("axis");
+    QAbstractAxis* value = new QValueAxis(this);
+    QAbstractAxis* category = new QCategoryAxis(this);
+    QAbstractAxis* barcategory = new QBarCategoryAxis(this);
+    QAbstractAxis* datetime = new QDateTimeAxis(this);
 
-    QTest::newRow("line,line, line, spline  3") << (QList<QAbstractSeries*>() <<  new QLineSeries(this) <<  new QLineSeries(this) <<  new QLineSeries(this) << new QSplineSeries(this) ) << 3;
-    QTest::newRow("scatter,scatter, line, line  2") << (QList<QAbstractSeries*>() <<  new QScatterSeries(this) <<  new QScatterSeries(this) << new QLineSeries(this) << new QLineSeries(this) ) << 2;
+    QTest::newRow("value") << value;
+    QTest::newRow("category") << category;
+    QTest::newRow("barcategory") << barcategory;
+    QTest::newRow("datetime") << datetime;
 }
 
-void tst_ChartDataSet::seriesCount()
+void tst_ChartDataSet::addAxis()
 {
-    QFETCH(QList<QAbstractSeries*>, seriesList);
-    QFETCH(int, seriesCount);
+    QFETCH(QAbstractAxis*, axis);
+    QVERIFY(m_dataset->axes().isEmpty());
 
-    foreach (QAbstractSeries* series, seriesList){
-          m_dataset->addSeries(series);
-    }
-
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
     QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
-    QCOMPARE(m_dataset->seriesCount(seriesList.at(0)->type()),seriesCount);
-    TRY_COMPARE(spy0.count(), 0);
+    m_dataset->addAxis(axis,Qt::AlignBottom);
+
+    QCOMPARE(m_dataset->axes().count(),1);
+    TRY_COMPARE(spy0.count(), 1);
     TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), 0);
     TRY_COMPARE(spy3.count(), 0);
 }
 
-void tst_ChartDataSet::seriesIndex_data()
+void tst_ChartDataSet::removeAxis_data()
 {
-    QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
-
-    QTest::newRow("line,line, line, spline") << (QList<QAbstractSeries*>() <<  new QLineSeries(this) <<  new QLineSeries(this) <<  new QLineSeries(this) << new QSplineSeries(this) );
-    QTest::newRow("scatter,scatter, line, line") << (QList<QAbstractSeries*>() <<  new QScatterSeries(this) <<  new QScatterSeries(this) << new QLineSeries(this) << new QLineSeries(this) );
+    addAxis_data();
 }
 
-void tst_ChartDataSet::seriesIndex()
+void tst_ChartDataSet::removeAxis()
 {
+    QFETCH(QAbstractAxis*, axis);
+    QVERIFY(m_dataset->series().isEmpty());
+    m_dataset->addAxis(axis,Qt::AlignBottom);
 
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
+    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
+
+    m_dataset->removeAxis(axis);
+
+    QCOMPARE(m_dataset->series().count(),0);
+    TRY_COMPARE(spy0.count(), 0);
+    TRY_COMPARE(spy1.count(), 1);
+    TRY_COMPARE(spy2.count(), 0);
+    TRY_COMPARE(spy3.count(), 0);
+}
+
+void tst_ChartDataSet::removeAllAxes_data()
+{
+    QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
+    QTest::addColumn<QList<QAbstractAxis*> >("axisList");
+
+    QList<QAbstractSeries*> series;
+    QList<QAbstractAxis*> axis;
+
+    series << new QLineSeries(this) << new QSplineSeries(this) << new QScatterSeries(this);
+    axis << new QValueAxis(this) << new QValueAxis(this) << new QValueAxis(this);
+
+    QTest::newRow("3 series , 3 axis") << series << axis;
+}
+
+void tst_ChartDataSet::removeAllAxes()
+{
     QFETCH(QList<QAbstractSeries*>, seriesList);
+    QFETCH(QList<QAbstractAxis*>, axisList);
+
+    QCOMPARE(m_dataset->series().count(),0);
+    QCOMPARE(m_dataset->axes().count(),0);
 
     foreach (QAbstractSeries* series, seriesList) {
         m_dataset->addSeries(series);
     }
 
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
-    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
-    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
-
-    for (int i = 0; i < seriesList.count(); i++) {
-        QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), i);
+    foreach (QAbstractAxis* axis, axisList) {
+        m_dataset->addAxis(axis,Qt::AlignBottom);
     }
 
+    for (int i = 0; i < seriesList.count(); i++) {
+        m_dataset->attachAxis(seriesList.at(i),axisList.at(i));
+    }
+
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
+    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
+
+    m_dataset->removeAllAxes();
+
     TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
+    TRY_COMPARE(spy1.count(), axisList.count());
     TRY_COMPARE(spy2.count(), 0);
     TRY_COMPARE(spy3.count(), 0);
 
-    foreach (QAbstractSeries* series, seriesList) {
-        m_dataset->removeSeries(series);
-    }
+    QCOMPARE(m_dataset->series().count(),seriesList.count());
+    QCOMPARE(m_dataset->axes().count(),0);
+}
 
-    for (int i = 0; i < seriesList.count(); i++) {
-        QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), -1);
-    }
+void tst_ChartDataSet::attachAxis_data()
+{
+    QTest::addColumn<QList<QAbstractSeries*> >("series");
+    QTest::addColumn<QList<QAbstractAxis*> >("axis");
+    QTest::addColumn<QList<Qt::Alignment> >("alignment");
+    QTest::addColumn<QAbstractSeries*>("attachSeries");
+    QTest::addColumn<QAbstractAxis*>("attachAxis");
+    QTest::addColumn<bool>("success");
 
-    foreach (QAbstractSeries* series, seriesList) {
-        m_dataset->addSeries(series);
-    }
+    QList<QAbstractSeries*> series;
+    QList<QAbstractAxis*> axes;
+    QList<Qt::Alignment> alignment;
 
-    for (int i = 0; i < seriesList.count(); i++) {
-        QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), i);
-    }
+    QAbstractSeries* line = new QLineSeries(this);
+    QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
+    QAbstractSeries* scatter = new QScatterSeries(this);
+    QAbstractSeries* spline = new QSplineSeries(this);
+    QAbstractSeries* pie = new QPieSeries(this);
+    QAbstractSeries* bar = new QBarSeries(this);
+    QAbstractSeries* percent = new QPercentBarSeries(this);
+    QAbstractSeries* stacked = new QStackedBarSeries(this);
 
-    m_dataset->removeSeries(seriesList.at(1));
+    QAbstractAxis* value1 = new QValueAxis(this);
+    QAbstractAxis* value2 = new QValueAxis(this);
+    QAbstractAxis* category = new QCategoryAxis(this);
+    QAbstractAxis* barcategory = new QBarCategoryAxis(this);
+    QAbstractAxis* datetime = new QDateTimeAxis(this);
 
-    for (int i = 0; i < seriesList.count(); i++) {
-        if (i != 1)
-            QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), i);
-        else
-            QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), -1);
-    }
 
-    m_dataset->addSeries(seriesList.at(1));
-
-    for (int i = 0; i < seriesList.count(); i++) {
-        QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), i);
-    }
-
-    m_dataset->removeSeries(seriesList.at(2));
-
-    for (int i = 0; i < seriesList.count(); i++) {
-        if (i != 2)
-            QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), i);
-        else
-            QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), -1);
-    }
-
-    m_dataset->removeSeries(seriesList.at(0));
-
-    for (int i = 0; i < seriesList.count(); i++) {
-        if (i != 2 && i != 0)
-            QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), i);
-        else
-            QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), -1);
-    }
-
-    m_dataset->addSeries(seriesList.at(2));
-    m_dataset->addSeries(seriesList.at(0));
-
-    for (int i = 0; i < seriesList.count(); i++) {
-        if (i == 2)
-            QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), 0);
-        else if (i == 0)
-            QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), 2);
-        else
-            QCOMPARE(m_dataset->seriesIndex(seriesList.at(i)), i);
-    }
+    series << line << 0;
+    axes << value1 << value2;
+    alignment << Qt::AlignBottom << Qt::AlignLeft;
+    QTest::newRow("line + two axes") << series << axes << alignment << line << value2 << true;
 
 }
 
-void tst_ChartDataSet::domain_data()
+void tst_ChartDataSet::attachAxis()
 {
-    addSeries_data();
-}
+    QFETCH(QList<QAbstractSeries*>, series);
+    QFETCH(QList<QAbstractAxis*>, axis);
+    QFETCH(QList<Qt::Alignment>, alignment);
+    QFETCH(QAbstractSeries*, attachSeries);
+    QFETCH(QAbstractAxis*, attachAxis);
+    QFETCH(bool, success);
 
-void tst_ChartDataSet::domain()
-{
-    QFETCH(QAbstractSeries*, series);
+    Q_ASSERT(series.count() == axis.count());
+    Q_ASSERT(series.count() == alignment.count());
 
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*,Domain*)));
+    QVERIFY(m_dataset->series().isEmpty());
+    QVERIFY(m_dataset->axes().isEmpty());
+
+    for(int i = 0 ; i < series.count() ; i++){
+        if(series[i]) m_dataset->addSeries(series[i]);
+        if(axis[i]) m_dataset->addAxis(axis[i],alignment[i]);
+        if(series[i] && axis[i]) m_dataset->attachAxis(series[i],axis[i]);
+    }
+
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
     QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,Domain*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
-    m_dataset->addSeries(series);
-    QVERIFY(m_dataset->domain(series));
-
-
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 1);
-
-    QList<QVariant> arguments = spy2.takeFirst();
-    Domain *domain = (Domain *) arguments.at(1).value<Domain *>();
-    QVERIFY(m_dataset->domain(series) == domain);
-
-    TRY_COMPARE(spy3.count(), 0);
+    QCOMPARE(m_dataset->attachAxis(attachSeries,attachAxis),success);
 
 }
 
-void tst_ChartDataSet::zoomInDomain_data()
+void tst_ChartDataSet::detachAxis_data()
 {
-    QTest::addColumn<bool >("sameAxis");
-    QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
-    QTest::newRow("sameAxis: line,line, line, spline") << true << (QList<QAbstractSeries*>() <<  new QLineSeries(this) <<  new QLineSeries(this) <<  new QLineSeries(this) << new QSplineSeries(this) );
-    QTest::newRow("separeateAxis: line,line, line, spline") << false << (QList<QAbstractSeries*>() <<  new QLineSeries(this) <<  new QLineSeries(this) <<  new QLineSeries(this) << new QSplineSeries(this) );
+    QTest::addColumn<QList<QAbstractSeries*> >("series");
+    QTest::addColumn<QList<QAbstractAxis*> >("axis");
+    QTest::addColumn<QAbstractSeries*>("detachSeries");
+    QTest::addColumn<QAbstractAxis*>("detachAxis");
+    QTest::addColumn<bool>("success");
+
+    QList<QAbstractSeries*> series;
+    QList<QAbstractAxis*> axes;
+
+    QAbstractSeries* line = new QLineSeries(this);
+    QAbstractAxis* value = new QValueAxis(this);
+
+    series << line;
+    axes << value;
+    QTest::newRow("line + axis") << series << axes << line << value << true;
 }
 
-void tst_ChartDataSet::zoomInDomain()
+void tst_ChartDataSet::detachAxis()
 {
-    QFETCH(bool, sameAxis);
-    QFETCH(QList<QAbstractSeries*>, seriesList);
+    QFETCH(QList<QAbstractSeries*>, series);
+    QFETCH(QList<QAbstractAxis*>, axis);
+    QFETCH(QAbstractSeries*, detachSeries);
+    QFETCH(QAbstractAxis*, detachAxis);
+    QFETCH(bool, success);
 
-    foreach (QAbstractSeries* series, seriesList) {
-        m_dataset->addSeries(series);
+    Q_ASSERT(series.count() == axis.count());
+
+    QVERIFY(m_dataset->series().isEmpty());
+    QVERIFY(m_dataset->axes().isEmpty());
+
+    for(int i = 0; i < series.count(); i++) {
+        if(series[i]) m_dataset->addSeries(series[i]);
+        if(axis[i]) m_dataset->addAxis(axis[i],Qt::AlignBottom);
+        if(series[i] && axis[i]) m_dataset->attachAxis(series[i],axis[i]);
     }
 
-    if(sameAxis) m_dataset->createDefaultAxes();
+    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
+    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
+    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
+    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
-    QList<QSignalSpy*> spyList;
-
-    foreach (QAbstractSeries* series, seriesList) {
-        spyList << new QSignalSpy(m_dataset->domain(series),SIGNAL(updated()));
-    }
-
-    m_dataset->zoomInDomain(QRect(0, 0, 100, 100), QSize(1000, 1000));
-
-    foreach (QSignalSpy* spy, spyList) {
-        TRY_COMPARE(spy->count(), 1);
-    }
-
-    qDeleteAll(spyList);
-}
-
-
-
-void tst_ChartDataSet::zoomOutDomain_data()
-{
-    zoomInDomain_data();
-}
-
-void tst_ChartDataSet::zoomOutDomain()
-{
-    QFETCH(bool, sameAxis);
-    QFETCH(QList<QAbstractSeries*>, seriesList);
-
-    foreach (QAbstractSeries* series, seriesList) {
-        m_dataset->addSeries(series);
-    }
-
-    if (sameAxis)
-        m_dataset->createDefaultAxes();
-
-    QList<QSignalSpy*> spyList;
-
-    foreach (QAbstractSeries* series, seriesList) {
-        spyList << new QSignalSpy(m_dataset->domain(series), SIGNAL(updated()));
-    }
-
-    m_dataset->zoomOutDomain(QRect(0, 0, 100, 100), QSize(1000, 1000));
-
-    foreach (QSignalSpy* spy, spyList) {
-        TRY_COMPARE(spy->count(), 1);
-    }
-
-    qDeleteAll (spyList);
-}
-
-void tst_ChartDataSet::scrollDomain_data()
-{
-    zoomInDomain_data();
-}
-
-void tst_ChartDataSet::scrollDomain()
-{
-    QFETCH(bool, sameAxis);
-    QFETCH(QList<QAbstractSeries*>, seriesList);
-
-    foreach (QAbstractSeries* series, seriesList) {
-        m_dataset->addSeries(series);
-    }
-
-    if (sameAxis)
-        m_dataset->createDefaultAxes();
-
-    QList<QSignalSpy*> spyList;
-
-    foreach (QAbstractSeries* series, seriesList) {
-        spyList
-            << new QSignalSpy(m_dataset->domain(series),
-                SIGNAL(updated()));
-    }
-
-    m_dataset->scrollDomain(10, 10, QSize(1000, 1000));
-
-    foreach (QSignalSpy* spy, spyList) {
-        TRY_COMPARE(spy->count(), 1);
-    }
-
-    qDeleteAll(spyList);
+    QCOMPARE(m_dataset->detachAxis(detachSeries,detachAxis),success);
 }
 
 QTEST_MAIN(tst_ChartDataSet)

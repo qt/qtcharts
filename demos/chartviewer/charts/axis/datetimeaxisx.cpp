@@ -69,8 +69,8 @@ public:
     QChart *createChart(const DataTable &table)
     {
         QChart *chart = DateTimeAxisX::createChart(table);
-        chart->axisX()->setTitle("Axis X");
-        chart->axisY()->setTitle("Axis Y");
+        chart->axisX()->setTitleText("Axis X");
+        chart->axisY()->setTitleText("Axis Y");
         chart->setTitle("DateTime X , Value Y, Title");
         return chart;
     }

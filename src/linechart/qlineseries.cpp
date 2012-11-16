@@ -119,8 +119,8 @@ QLineSeries::QLineSeries(QLineSeriesPrivate &d, QObject *parent)
 QLineSeries::~QLineSeries()
 {
     Q_D(QLineSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 
 QAbstractSeries::SeriesType QLineSeries::type() const
@@ -148,14 +148,25 @@ QLineSeriesPrivate::QLineSeriesPrivate(QLineSeries *q)
 
 };
 
-ChartElement *QLineSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QLineSeriesPrivate::initializeGraphics(QGraphicsItem *parent)
 {
     Q_Q(QLineSeries);
-    LineChartItem *line = new LineChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
-        line->setAnimation(new XYAnimation(line));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return line;
+    LineChartItem *line = new LineChartItem(q,parent);
+    m_item.reset(line);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
+}
+
+void QLineSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
+{
+    Q_Q(QLineSeries);
+    const QList<QColor> colors = theme->seriesColors();
+
+    QPen pen;
+    if (forced || pen == m_pen) {
+        pen.setColor(colors.at(index % colors.size()));
+        pen.setWidthF(2);
+        q->setPen(pen);
+    }
 }
 
 #include "moc_qlineseries.cpp"

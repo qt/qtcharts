@@ -74,9 +74,9 @@ int main(int argc, char *argv[])
     QDateTimeAxis *axisX = new QDateTimeAxis;
     axisX->setTickCount(10);
     axisX->setFormat("MMM yyyy");
-    axisX->setTitle("Date");
+    axisX->setTitleText("Date");
     chart->setAxisX(axisX, series);
-    chart->axisY(series)->setTitle("Sunspots count");
+    chart->axisY(series)->setTitleText("Sunspots count");
     //![4]
 
     //![5]

@@ -41,21 +41,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class ChartPresenter;
 class QXYSeries;
 
-class XYChart :  public ChartElement
+class XYChart :  public ChartItem
 {
     Q_OBJECT
 public:
-    explicit XYChart(QXYSeries *series, ChartPresenter *presenter);
+    explicit XYChart(QXYSeries *series,QGraphicsItem* item = 0);
     ~XYChart() {}
 
     void setGeometryPoints(const QVector<QPointF>& points);
     QVector<QPointF> geometryPoints() const { return m_points; }
-
-    void setClipRect(const QRectF &rect);
-    QRectF clipRect() const { return m_clipRect; }
-
-    QSizeF size() const { return m_size; }
-    QPointF origin() const { return m_origin; }
 
     void setAnimation(XYAnimation *animation);
     ChartAnimation *animation() const { return m_animation; }
@@ -70,7 +64,6 @@ public Q_SLOTS:
     void handlePointReplaced(int index);
     void handlePointsReplaced();
     void handleDomainUpdated();
-    void handleGeometryChanged(const QRectF &size);
 
 Q_SIGNALS:
     void clicked(const QPointF &point);
@@ -78,23 +71,12 @@ Q_SIGNALS:
 
 protected:
     virtual void updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> &newPoints, int index = -1);
-    QPointF calculateGeometryPoint(const QPointF &point) const;
-    QPointF calculateGeometryPoint(int index) const;
-    QPointF calculateDomainPoint(const QPointF &point) const;
-    QVector<QPointF> calculateGeometryPoints() const;
 
 private:
     inline bool isEmpty();
 
 protected:
-    qreal m_minX;
-    qreal m_maxX;
-    qreal m_minY;
-    qreal m_maxY;
     QXYSeries *m_series;
-    QSizeF m_size;
-    QPointF m_origin;
-    QRectF m_clipRect;
     QVector<QPointF> m_points;
     XYAnimation *m_animation;
     bool m_dirty;

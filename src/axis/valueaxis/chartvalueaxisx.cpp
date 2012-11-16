@@ -26,14 +26,16 @@
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
+#include <QDebug>
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ChartValueAxisX::ChartValueAxisX(QValueAxis *axis, ChartPresenter *presenter)
-    : HorizontalAxis(axis, presenter),
-      m_tickCount(0), m_axis(axis)
+ChartValueAxisX::ChartValueAxisX(QValueAxis *axis, QGraphicsItem* item )
+    : HorizontalAxis(axis, item),
+      m_axis(axis)
 {
+	QObject::connect(m_axis,SIGNAL(tickCountChanged(int)),this, SLOT(handleTickCountChanged(int)));
 }
 
 ChartValueAxisX::~ChartValueAxisX()
@@ -42,14 +44,16 @@ ChartValueAxisX::~ChartValueAxisX()
 
 QVector<qreal> ChartValueAxisX::calculateLayout() const
 {
-    Q_ASSERT(m_tickCount >= 2);
+	int tickCount = m_axis->tickCount();
+
+    Q_ASSERT(tickCount >= 2);
 
     QVector<qreal> points;
-    points.resize(m_tickCount);
+    points.resize(tickCount);
 
     const QRectF &gridRect = gridGeometry();
-    const qreal deltaX = gridRect.width() / (m_tickCount - 1);
-    for (int i = 0; i < m_tickCount; ++i) {
+    const qreal deltaX = gridRect.width() / (tickCount - 1);
+    for (int i = 0; i < tickCount; ++i) {
         points[i] = i * deltaX + gridRect.left();
     }
     return points;
@@ -60,18 +64,16 @@ void ChartValueAxisX::updateGeometry()
     const QVector<qreal>& layout = ChartAxis::layout();
     if (layout.isEmpty())
         return;
-    setLabels(createValueLabels(layout.size()));
+    setLabels(createValueLabels(min(),max(),layout.size(),m_axis->labelFormat()));
     HorizontalAxis::updateGeometry();
 }
 
-void ChartValueAxisX::handleAxisUpdated()
+void ChartValueAxisX::handleTickCountChanged(int tick)
 {
-    if (m_tickCount != m_axis->tickCount()) {
-        m_tickCount = m_axis->tickCount();
-        presenter()->layout()->invalidate();
-    }
-
-    ChartAxis::handleAxisUpdated();
+	Q_UNUSED(tick);
+    if(presenter()) presenter()->layout()->invalidate();
+    //QVector<qreal> layout = calculateLayout();
+    //updateLayout(layout);
 }
 
 QSizeF ChartValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
@@ -82,13 +84,18 @@ QSizeF ChartValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
     QSizeF sh;
 
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);
-    QStringList ticksList = createValueLabels(m_tickCount);
+    QStringList ticksList = createValueLabels(min(),max(),m_axis->tickCount(),m_axis->labelFormat());
     qreal width = 0;
     qreal height = 0;
 
+    int count = 1;
+
+    if(!ticksList.empty()) {
+        count = qMax(ticksList.last().count(),ticksList.first().count());
+    }
+
     switch (which) {
     case Qt::MinimumSize:{
-        int count = qMax(ticksList.last().count(),ticksList.first().count());
         count = qMin(count,5);
         width = fn.averageCharWidth() * count;
         height = fn.height() + labelPadding();
@@ -98,7 +105,6 @@ QSizeF ChartValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
         break;
     }
     case Qt::PreferredSize:{
-        int count = qMax(ticksList.last().count(),ticksList.first().count());
         width=fn.averageCharWidth() * count;
         height=fn.height()+labelPadding();
         width=qMax(width,base.width());
@@ -112,5 +118,7 @@ QSizeF ChartValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
 
     return sh;
 }
+
+#include "moc_chartvalueaxisx_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

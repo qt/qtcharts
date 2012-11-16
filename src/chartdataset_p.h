@@ -38,59 +38,48 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QAbstractAxis;
+class ChartPresenter;
 
 class QTCOMMERCIALCHART_AUTOTEST_EXPORT ChartDataSet : public QObject
 {
     Q_OBJECT
 public:
-    ChartDataSet(QChart *parent = 0);
+    ChartDataSet(QChart *chart);
     virtual ~ChartDataSet();
 
     void addSeries(QAbstractSeries *series);
     void removeSeries(QAbstractSeries *series);
-    void removeAllSeries();
-//    void updateSeries(QAbstractSeries* series);
-
-    void zoomInDomain(const QRectF &rect, const QSizeF &size);
-    void zoomOutDomain(const QRectF &rect, const QSizeF &size);
-    void scrollDomain(qreal dx, qreal dy, const QSizeF &size);
-
-    int seriesCount(QAbstractSeries::SeriesType type);
-    int seriesIndex(QAbstractSeries *series);
-
-    QAbstractAxis *axisX(QAbstractSeries *series) const;
-    QAbstractAxis *axisY(QAbstractSeries *series) const;
-
-    void setAxis(QAbstractSeries *series, QAbstractAxis *axis, Qt::Orientation orientation);
-
     QList<QAbstractSeries *> series() const;
-    Domain *domain(QAbstractSeries *series) const;
+    void removeAllSeries();
 
+    void addAxis(QAbstractAxis *axis,Qt::Alignment aligment);
     void removeAxis(QAbstractAxis *axis);
+    QList<QAbstractAxis*> axes() const;
+    void removeAllAxes();
+
+    bool attachAxis(QAbstractSeries* series,QAbstractAxis *axis);
+    bool detachAxis(QAbstractSeries* series,QAbstractAxis *axis);
+
     void createDefaultAxes();
 
+    void zoomInDomain(const QRectF &rect);
+    void zoomOutDomain(const QRectF &rect);
+    void scrollDomain(qreal dx, qreal dy);
+
 Q_SIGNALS:
-    void seriesAdded(QAbstractSeries *series, Domain *domain);
-    void seriesRemoved(QAbstractSeries *series);
-//    void seriesUpdated(QAbstractSeries* series);
-    void axisAdded(QAbstractAxis *axis, Domain *domain);
-    void axisRemoved(QAbstractAxis *axis);
+    void axisAdded(QAbstractAxis* axis);
+    void axisRemoved(QAbstractAxis* axis);
+    void seriesAdded(QAbstractSeries* series);
+    void seriesRemoved(QAbstractSeries* series);
 
 private:
-    void calculateDomain(QAbstractSeries *series, Domain *domain);
     void createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation orientation);
     QAbstractAxis *createAxis(QAbstractAxis::AxisType type, Qt::Orientation orientation);
-    void initializeAxis(QAbstractAxis *axis, QAbstractSeries *series);
-    void removeAxes(QAbstractSeries *series);
-    void blockAxisSignals(bool enabled);
-    void createSeriesIndex(QAbstractSeries *series);
-    void removeSeriesIndex(QAbstractSeries *series);
 
 private:
-    QMap<QAbstractSeries *, QAbstractAxis *> m_seriesAxisXMap;
-    QMap<QAbstractSeries *, QAbstractAxis *> m_seriesAxisYMap;
-    QMap<QAbstractSeries *, Domain *> m_seriesDomainMap;
-    QMap<int, QAbstractSeries *> m_indexSeriesMap;
+    QList<QAbstractSeries *> m_seriesList;
+    QList<QAbstractAxis *> m_axisList;
+    QChart* m_chart;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

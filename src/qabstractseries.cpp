@@ -21,6 +21,9 @@
 #include "qabstractseries.h"
 #include "qabstractseries_p.h"
 #include "chartdataset_p.h"
+#include "qchart.h"
+#include "qchart_p.h"
+#include "chartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -137,7 +140,7 @@ QAbstractSeries::QAbstractSeries(QAbstractSeriesPrivate &d, QObject *parent) :
 */
 QAbstractSeries::~QAbstractSeries()
 {
-    if (d_ptr->m_dataset)
+    if (d_ptr->m_chart)
         qFatal("Still binded series detected !");
 }
 
@@ -222,12 +225,39 @@ void QAbstractSeries::hide()
     setVisible(false);
 }
 
+bool QAbstractSeries::attachAxis(QAbstractAxis* axis)
+{
+    if(d_ptr->m_chart) {
+        return d_ptr->m_chart->d_ptr->m_dataset->attachAxis(this,axis);
+    } else {
+        qWarning()<<"Series not in the chart. Please addSeries to chart first.";
+        return false;
+    }
+}
+
+bool QAbstractSeries::detachAxis(QAbstractAxis* axis)
+{
+    if(d_ptr->m_chart) {
+        return d_ptr->m_chart->d_ptr->m_dataset->detachAxis(this,axis);
+    }
+    else {
+        qWarning()<<"Series not in the chart. Please addSeries to chart first.";
+        return false;
+    }
+}
+
+QList<QAbstractAxis*> QAbstractSeries::attachedAxes()
+{
+    return d_ptr->m_axes;
+}
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries *q)
     : q_ptr(q),
       m_chart(0),
-      m_dataset(0),
+      m_item(0),
+      m_domain(new Domain()),
       m_visible(true),
       m_opacity(1.0)
 {
@@ -235,6 +265,31 @@ QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries *q)
 
 QAbstractSeriesPrivate::~QAbstractSeriesPrivate()
 {
+}
+
+void QAbstractSeriesPrivate::setDomain(QSharedPointer<Domain> domain)
+{
+    Q_ASSERT(!domain.isNull());
+    if(m_domain!=domain) {
+        if(!m_item.isNull()) QObject::disconnect(m_domain.data(), SIGNAL(updated()), m_item.data(), SLOT(handleDomainUpdated()));
+        m_domain = domain;
+        if(!m_item.isNull()) {
+            QObject::connect(m_domain.data(), SIGNAL(updated()),m_item.data(), SLOT(handleDomainUpdated()));
+            m_item->handleDomainUpdated();
+        }
+    }
+}
+
+void QAbstractSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
+{
+    Q_ASSERT(!m_item.isNull());
+    Q_UNUSED(parent);
+    QObject::connect(m_domain.data(), SIGNAL(updated()),m_item.data(), SLOT(handleDomainUpdated()));
+}
+
+void QAbstractSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
+{
+    Q_UNUSED(options);
 }
 
 #include "moc_qabstractseries.cpp"

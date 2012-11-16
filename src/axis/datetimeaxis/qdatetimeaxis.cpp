@@ -23,6 +23,7 @@
 #include "chartdatetimeaxisx_p.h"
 #include "chartdatetimeaxisy_p.h"
 #include "domain_p.h"
+#include "qchart.h"
 #include <float.h>
 #include <cmath>
 
@@ -177,33 +178,35 @@ QDateTimeAxis::QDateTimeAxis(QDateTimeAxisPrivate &d, QObject *parent) : QAbstra
 */
 QDateTimeAxis::~QDateTimeAxis()
 {
-
+    Q_D(QDateTimeAxis);
+    if (d->m_chart)
+        d->m_chart->removeAxis(this);
 }
 
 void QDateTimeAxis::setMin(QDateTime min)
 {
     Q_D(QDateTimeAxis);
     if (min.isValid())
-        setRange(min, qMax(d->m_max, min));
+        d->setRange(min.toMSecsSinceEpoch(), qMax(d->m_max, qreal(min.toMSecsSinceEpoch())));
 }
 
 QDateTime QDateTimeAxis::min() const
 {
     Q_D(const QDateTimeAxis);
-    return d->m_min;
+    return QDateTime::fromMSecsSinceEpoch(d->m_min);
 }
 
 void QDateTimeAxis::setMax(QDateTime max)
 {
     Q_D(QDateTimeAxis);
     if (max.isValid())
-        setRange(qMin(d->m_min, max), max);
+        d->setRange(qMin(d->m_min, qreal(max.toMSecsSinceEpoch())), max.toMSecsSinceEpoch());
 }
 
 QDateTime QDateTimeAxis::max() const
 {
     Q_D(const QDateTimeAxis);
-    return d->m_max;
+    return QDateTime::fromMSecsSinceEpoch(d->m_max);
 }
 
 /*!
@@ -216,23 +219,7 @@ void QDateTimeAxis::setRange(QDateTime min, QDateTime max)
     if (!min.isValid() || !max.isValid() || min > max)
         return;
 
-    bool changed = false;
-    if (d->m_min != min) {
-        d->m_min = min;
-        changed = true;
-        emit minChanged(min);
-    }
-
-    if (d->m_max != max) {
-        d->m_max = max;
-        changed = true;
-        emit maxChanged(max);
-    }
-
-    if (changed) {
-        emit rangeChanged(d->m_min, d->m_max);
-        d->emitUpdated();
-    }
+    d->setRange(min.toMSecsSinceEpoch(),max.toMSecsSinceEpoch());
 }
 
 void QDateTimeAxis::setFormat(QString format)
@@ -258,7 +245,7 @@ void QDateTimeAxis::setTickCount(int count)
     Q_D(QDateTimeAxis);
     if (d->m_tickCount != count && count >= 2) {
         d->m_tickCount = count;
-        d->emitUpdated();
+       emit tickCountChanged(count);
     }
 }
 
@@ -284,8 +271,8 @@ QAbstractAxis::AxisType QDateTimeAxis::type() const
 
 QDateTimeAxisPrivate::QDateTimeAxisPrivate(QDateTimeAxis *q)
     : QAbstractAxisPrivate(q),
-      m_min(QDateTime::fromMSecsSinceEpoch(0)),
-      m_max(QDateTime::fromMSecsSinceEpoch(0)),
+      m_min(0),
+      m_max(0),
       m_tickCount(5)
 {
     m_format = "dd-MM-yyyy\nh:mm";
@@ -296,16 +283,28 @@ QDateTimeAxisPrivate::~QDateTimeAxisPrivate()
 
 }
 
-void QDateTimeAxisPrivate::handleDomainUpdated()
+void QDateTimeAxisPrivate::setRange(qreal min,qreal max)
 {
     Q_Q(QDateTimeAxis);
-    Domain *domain = qobject_cast<Domain *>(sender());
-    Q_ASSERT(domain);
 
-    if (orientation() == Qt::Horizontal)
-        q->setRange(QDateTime::fromMSecsSinceEpoch(domain->minX()), QDateTime::fromMSecsSinceEpoch(domain->maxX()));
-    else if (orientation() == Qt::Vertical)
-        q->setRange(QDateTime::fromMSecsSinceEpoch(domain->minY()), QDateTime::fromMSecsSinceEpoch(domain->maxY()));
+    bool changed = false;
+
+    if (m_min != min) {
+        m_min = min;
+        changed = true;
+        emit q->minChanged(QDateTime::fromMSecsSinceEpoch(min));
+    }
+
+    if (m_max != max) {
+        m_max = max;
+        changed = true;
+        emit q->maxChanged(QDateTime::fromMSecsSinceEpoch(max));
+    }
+
+    if (changed) {
+        emit q->rangeChanged(QDateTime::fromMSecsSinceEpoch(min), QDateTime::fromMSecsSinceEpoch(max));
+        emit rangeChanged(m_min,m_max);
+    }
 }
 
 
@@ -331,27 +330,31 @@ void QDateTimeAxisPrivate::setRange(const QVariant &min, const QVariant &max)
         q->setRange(min.toDateTime(), max.toDateTime());
 }
 
-ChartAxis *QDateTimeAxisPrivate::createGraphics(ChartPresenter *presenter)
+void QDateTimeAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QDateTimeAxis);
-    if (m_orientation == Qt::Vertical)
-        return new ChartDateTimeAxisY(q, presenter);
-    return new ChartDateTimeAxisX(q, presenter);
+    ChartAxis* axis(0);
+    if (orientation() == Qt::Vertical)
+        axis = new ChartDateTimeAxisY(q,parent);
+    if (orientation() == Qt::Horizontal)
+        axis = new ChartDateTimeAxisX(q,parent);
+
+    m_item.reset(axis);
+    QAbstractAxisPrivate::initializeGraphics(parent);
 }
 
-void QDateTimeAxisPrivate::intializeDomain(Domain *domain)
+void QDateTimeAxisPrivate::initializeDomain(Domain *domain)
 {
-    Q_Q(QDateTimeAxis);
     if (m_max == m_min) {
-        if (m_orientation == Qt::Vertical)
-            q->setRange(QDateTime::fromMSecsSinceEpoch(domain->minY()), QDateTime::fromMSecsSinceEpoch(domain->maxY()));
+        if (orientation() == Qt::Vertical)
+            setRange(domain->minY(), domain->maxY());
         else
-            q->setRange(QDateTime::fromMSecsSinceEpoch(domain->minX()), QDateTime::fromMSecsSinceEpoch(domain->maxX()));
+            setRange(domain->minX(), domain->maxX());
     } else {
-        if (m_orientation == Qt::Vertical)
-            domain->setRangeY(m_min.toMSecsSinceEpoch(), m_max.toMSecsSinceEpoch());
+        if (orientation() == Qt::Vertical)
+            domain->setRangeY(m_min, m_max);
         else
-            domain->setRangeX(m_min.toMSecsSinceEpoch(), m_max.toMSecsSinceEpoch());
+            domain->setRangeX(m_min, m_max);
     }
 }
 

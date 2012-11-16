@@ -44,11 +44,16 @@ public:
     QPieSeriesPrivate(QPieSeries *parent);
     ~QPieSeriesPrivate();
 
-    void scaleDomain(Domain &domain);
-    ChartElement *createGraphics(ChartPresenter *presenter);
+    void initializeDomain();
+    void initializeAxes();
+    void initializeGraphics(QGraphicsItem* parent);
+    void initializeAnimations(QtCommercialChart::QChart::AnimationOptions options);
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
+
     QList<QLegendMarker *> createLegendMarkers(QLegend *legend);
-    void initializeAxis(QAbstractAxis *axis);
+
     QAbstractAxis::AxisType defaultAxisType(Qt::Orientation orientation) const;
+    QAbstractAxis* createDefaultAxis(Qt::Orientation orientation) const;
 
     void updateDerivativeData();
     void setSizes(qreal innerSize, qreal outerSize);
@@ -78,7 +83,7 @@ private:
     qreal m_sum;
     qreal m_holeRelativeSize;
 
-private:
+public:
     friend class QLegendPrivate;
     Q_DECLARE_PUBLIC(QPieSeries)
 };

@@ -30,23 +30,32 @@
 #ifndef QCHART_P_H
 #define QCHART_P_H
 
-#include "qlegend.h"
-#include "chartpresenter_p.h"
-#include "chartdataset_p.h"
+#include "qchartglobal.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QChart;
+class ChartThemeManager;
+class ChartPresenter;
+class QLegend;
+class ChartDataSet;
 
-struct QChartPrivate
+class QChartPrivate
 {
-    QChartPrivate();
+
+public:
+    QChartPrivate(QChart *q);
     ~QChartPrivate();
+    QChart *q_ptr;
     QLegend *m_legend;
     ChartDataSet *m_dataset;
     ChartPresenter *m_presenter;
+    ChartThemeManager *m_themeManager;
 
-    void createConnections();
+    void zoomIn(qreal factor);
+    void zoomOut(qreal factor);
+    void zoomIn(const QRectF &rect);
+    void scroll(qreal dx, qreal dy);
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

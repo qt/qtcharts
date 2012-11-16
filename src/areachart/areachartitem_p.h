@@ -43,7 +43,7 @@ class AreaChartItem : public ChartItem
 {
     Q_OBJECT
 public:
-    AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter);
+    AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item = 0);
     ~AreaChartItem();
 
     //from QGraphicsItem
@@ -56,6 +56,7 @@ public:
 
     void updatePath();
 
+    void setPresenter(ChartPresenter *presenter);
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event);
@@ -68,7 +69,6 @@ Q_SIGNALS:
 public Q_SLOTS:
     void handleUpdated();
     void handleDomainUpdated();
-    void handleGeometryChanged(const QRectF &size);
 
 private:
     QAreaSeries *m_series;
@@ -76,7 +76,6 @@ private:
     LineChartItem *m_lower;
     QPainterPath m_path;
     QRectF m_rect;
-    QRectF m_clipRect;
     QPen m_linePen;
     QPen m_pointPen;
     QBrush m_brush;
@@ -87,14 +86,13 @@ private:
 class AreaBoundItem : public LineChartItem
 {
 public:
-    AreaBoundItem(AreaChartItem *item, QLineSeries *lineSeries, ChartPresenter *presenter)
-        : LineChartItem(lineSeries, 0), m_item(item)
+    AreaBoundItem(AreaChartItem *area, QLineSeries *lineSeries,QGraphicsItem* item = 0)
+        : LineChartItem(lineSeries, item), m_item(area)
     {
-        setPresenter(presenter);
     }
     ~AreaBoundItem() {}
 
-    void updateGeometry() 
+    void updateGeometry()
     {
         LineChartItem::updateGeometry();
         m_item->updatePath();

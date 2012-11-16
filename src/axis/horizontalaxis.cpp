@@ -26,8 +26,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-HorizontalAxis::HorizontalAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool intervalAxis)
-    : ChartAxis(axis, presenter, intervalAxis)
+HorizontalAxis::HorizontalAxis(QAbstractAxis *axis, QGraphicsItem* item , bool intervalAxis)
+    : ChartAxis(axis, item, intervalAxis)
 {
 }
 
@@ -198,7 +198,7 @@ QSizeF HorizontalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) co
         break;
     case Qt::MaximumSize:
     case Qt::PreferredSize:
-            sh = QSizeF(fn.boundingRect(axis()->title()).width(), fn.height());
+            sh = QSizeF(fn.boundingRect(axis()->titleText()).width(), fn.height());
         break;
     default:
         break;

@@ -44,22 +44,25 @@ public:
     ~QDateTimeAxisPrivate();
 
 public:
-    ChartAxis *createGraphics(ChartPresenter *presenter);
-    void intializeDomain(Domain *domain);
-    void handleDomainUpdated();
-    qreal min() { return m_min.toMSecsSinceEpoch(); }
-    qreal max() { return m_max.toMSecsSinceEpoch(); }
-    int count() const { /*TODO:*/ return 0;}
+    void initializeGraphics(QGraphicsItem* parent);
+    void initializeDomain(Domain *domain);
 
-protected:
+    //interface for manipulating range form base class
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);
     void setRange(const QVariant &min, const QVariant &max);
+
+    //interface manipulating range form domain
+    qreal min() { return m_min; }
+    qreal max() { return m_max; }
+    void setRange(qreal min,qreal max);
+
+protected:
     int tickCount() const;
 
 protected:
-    QDateTime m_min;
-    QDateTime m_max;
+    qreal m_min;
+    qreal m_max;
     int m_tickCount;
     QString m_format;
     Q_DECLARE_PUBLIC(QDateTimeAxis)

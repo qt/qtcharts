@@ -37,12 +37,12 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class ChartElement;
+class ChartItem;
+class AxisItem;
 class QAbstractSeries;
 class ChartDataSet;
 class Domain;
 class ChartAxis;
-class ChartTheme;
 class ChartAnimator;
 class ChartBackground;
 class ChartTitle;
@@ -78,16 +78,21 @@ public:
         ZoomOutState
     };
 
-    ChartPresenter(QChart *chart, ChartDataSet *dataset);
+    ChartPresenter(QChart *chart);
     virtual ~ChartPresenter();
 
-    ChartTheme *chartTheme() const { return m_chartTheme; }
-    ChartDataSet *dataSet() const { return m_dataset; }
-    QGraphicsItem *rootItem() const { return m_chart; }
+
+    void setGeometry(QRectF rect);
+    QRectF geometry() const;
+
+    QGraphicsItem *rootItem(){ return m_chart; }
     ChartBackground *backgroundElement();
     ChartTitle *titleElement();
     QList<ChartAxis *> axisItems() const;
-    QList<ChartElement *> chartItems() const;
+    QList<ChartItem *> chartItems() const;
+
+    ChartItem* chartElement(QAbstractSeries* series) const;
+    ChartAxis* chartElement(QAbstractAxis* axis) const;
 
     QLegend *legend();
 
@@ -114,23 +119,15 @@ public:
 
     void setVisible(bool visible);
 
-    void setTheme(QChart::ChartTheme theme, bool force = true);
-    QChart::ChartTheme theme();
-
     void setAnimationOptions(QChart::AnimationOptions options);
     QChart::AnimationOptions animationOptions() const;
 
-    void zoomIn(qreal factor);
-    void zoomIn(const QRectF &rect);
-    void zoomOut(qreal factor);
-    void scroll(qreal dx, qreal dy);
-
     void startAnimation(ChartAnimation *animation);
+
+    //TODO refactor
+    void setState(State state,QPointF point);
     State state() const { return m_state; }
     QPointF statePoint() const { return m_statePoint; }
-
-    void resetAllElements();
-
     ChartLayout *layout();
 
 private:
@@ -138,9 +135,9 @@ private:
     void createTitleItem();
 
 public Q_SLOTS:
-    void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
+    void handleSeriesAdded(QAbstractSeries *series);
     void handleSeriesRemoved(QAbstractSeries *series);
-    void handleAxisAdded(QAbstractAxis *axis, Domain *domain);
+    void handleAxisAdded(QAbstractAxis *axis);
     void handleAxisRemoved(QAbstractAxis *axis);
 
 private Q_SLOTS:
@@ -151,10 +148,10 @@ Q_SIGNALS:
 
 private:
     QChart *m_chart;
-    ChartDataSet *m_dataset;
-    ChartTheme *m_chartTheme;
-    QMap<QAbstractSeries *, ChartElement *> m_chartItems;
-    QMap<QAbstractAxis *, ChartAxis *> m_axisItems;
+    QList<ChartItem *> m_chartItems;
+    QList<ChartAxis *> m_axisItems;
+    QList<QAbstractSeries *> m_series;
+    QList<QAbstractAxis *> m_axes;
     QChart::AnimationOptions m_options;
     State m_state;
     QPointF m_statePoint;
@@ -162,6 +159,7 @@ private:
     ChartLayout *m_layout;
     ChartBackground *m_background;
     ChartTitle *m_title;
+    QRectF m_rect;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

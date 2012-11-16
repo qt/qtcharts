@@ -33,8 +33,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 //TODO: optimize : remove points which are not visible
 
-AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
-    : ChartItem(presenter),
+AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, QGraphicsItem* item)
+    : ChartItem(areaSeries->d_func(),item), //TODO: fix me
       m_series(areaSeries),
       m_upper(0),
       m_lower(0),
@@ -42,9 +42,9 @@ AreaChartItem::AreaChartItem(QAreaSeries *areaSeries, ChartPresenter *presenter)
 {
     setAcceptHoverEvents(true);
     setZValue(ChartPresenter::LineChartZValue);
-    m_upper = new AreaBoundItem(this, m_series->upperSeries(), presenter);
+    m_upper = new AreaBoundItem(this, m_series->upperSeries());
     if (m_series->lowerSeries())
-        m_lower = new AreaBoundItem(this, m_series->lowerSeries(), presenter);
+        m_lower = new AreaBoundItem(this, m_series->lowerSeries());
 
     QObject::connect(m_series->d_func(), SIGNAL(updated()), this, SLOT(handleUpdated()));
     QObject::connect(m_series, SIGNAL(visibleChanged()), this, SLOT(handleUpdated()));
@@ -61,6 +61,15 @@ AreaChartItem::~AreaChartItem()
     delete m_lower;
 }
 
+void AreaChartItem::setPresenter(ChartPresenter *presenter)
+{
+    m_upper->setPresenter(presenter);
+    if (m_lower) {
+        m_lower->setPresenter(presenter);
+    }
+	ChartItem::setPresenter(presenter);
+}
+
 QRectF AreaChartItem::boundingRect() const
 {
     return m_rect;
@@ -74,6 +83,7 @@ QPainterPath AreaChartItem::shape() const
 void AreaChartItem::updatePath()
 {
     QPainterPath path;
+    QRectF rect(QPointF(0,0),domain()->size());
 
     path = m_upper->path();
 
@@ -82,8 +92,8 @@ void AreaChartItem::updatePath()
     } else {
         QPointF first = path.pointAtPercent(0);
         QPointF last =  path.pointAtPercent(1);
-        path.lineTo(last.x(), m_clipRect.bottom());
-        path.lineTo(first.x(), m_clipRect.bottom());
+        path.lineTo(last.x(), rect.bottom());
+        path.lineTo(first.x(), rect.bottom());
     }
     path.closeSubpath();
     prepareGeometryChange();
@@ -101,38 +111,33 @@ void AreaChartItem::handleUpdated()
     m_pointPen = m_series->pen();
     m_pointPen.setWidthF(2 * m_pointPen.width());
     setOpacity(m_series->opacity());
-
     update();
 }
 
 void AreaChartItem::handleDomainUpdated()
 {
-    m_upper->setDomain(domain());
-    m_upper->handleDomainUpdated();
-    if (m_lower) {
-        m_lower->setDomain(domain());
-        m_lower->handleDomainUpdated();
-    }
-}
+	Domain* d = m_upper->domain().data();
 
-void AreaChartItem::handleGeometryChanged(const QRectF &rect)
-{
-    m_clipRect = rect.translated(-rect.topLeft());
-    setPos(rect.topLeft());
-    m_upper->handleGeometryChanged(rect);
-    if (m_lower)
-        m_lower->handleGeometryChanged(rect);
+	d->setSize(domain()->size());
+	d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
+	m_upper->handleDomainUpdated();
+
+    if (m_lower) {
+    	Domain* d = m_lower->domain().data();
+    	d->setSize(domain()->size());
+    	d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
+    	m_lower->handleDomainUpdated();
+    }
 }
 
 void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     Q_UNUSED(widget)
     Q_UNUSED(option)
-
     painter->save();
     painter->setPen(m_linePen);
     painter->setBrush(m_brush);
-    painter->setClipRect(m_clipRect);
+    painter->setClipRect(QRectF(QPointF(0,0),domain()->size()));
     painter->drawPath(m_path);
     if (m_pointsVisible) {
         painter->setPen(m_pointPen);
@@ -145,20 +150,20 @@ void AreaChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *opt
 
 void AreaChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit clicked(m_upper->calculateDomainPoint(event->pos()));
+    emit clicked(m_upper->domain()->calculateDomainPoint(event->pos()));
     ChartItem::mousePressEvent(event);
 }
 
 void AreaChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit hovered(m_upper->calculateDomainPoint(event->pos()), true);
+    emit hovered(domain()->calculateDomainPoint(event->pos()), true);
     event->accept();
 //    QGraphicsItem::hoverEnterEvent(event);
 }
 
 void AreaChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit hovered(m_upper->calculateDomainPoint(event->pos()), false);
+    emit hovered(domain()->calculateDomainPoint(event->pos()), false);
     event->accept();
 //    QGraphicsItem::hoverEnterEvent(event);
 }

@@ -68,8 +68,8 @@ QHorizontalStackedBarSeries::QHorizontalStackedBarSeries(QObject *parent)
 QHorizontalStackedBarSeries::~QHorizontalStackedBarSeries()
 {
     Q_D(QHorizontalStackedBarSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 
 /*!
@@ -87,12 +87,12 @@ QHorizontalStackedBarSeriesPrivate::QHorizontalStackedBarSeriesPrivate(QHorizont
 
 }
 
-void QHorizontalStackedBarSeriesPrivate::scaleDomain(Domain &domain)
+void QHorizontalStackedBarSeriesPrivate::initializeDomain()
 {
-    qreal minX(domain.minX());
-    qreal minY(domain.minY());
-    qreal maxX(domain.maxX());
-    qreal maxY(domain.maxY());
+    qreal minX(domain()->minX());
+    qreal minY(domain()->minY());
+    qreal maxX(domain()->maxX());
+    qreal maxY(domain()->maxY());
 
     qreal y = categoryCount();
     minX = qMin(minX, bottom());
@@ -100,20 +100,28 @@ void QHorizontalStackedBarSeriesPrivate::scaleDomain(Domain &domain)
     maxX = qMax(maxX, top());
     maxY = qMax(maxY, y - (qreal)0.5);
 
-    domain.setRange(minX, maxX, minY, maxY);
+    domain()->setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement *QHorizontalStackedBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QHorizontalStackedBarSeriesPrivate::initializeGraphics(QGraphicsItem *parent)
 {
     Q_Q(QHorizontalStackedBarSeries);
-
-    HorizontalStackedBarChartItem *bar = new HorizontalStackedBarChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
-        bar->setAnimation(new HorizontalStackedBarAnimation(bar));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return bar;
+    HorizontalStackedBarChartItem *bar = new HorizontalStackedBarChartItem(q,parent);
+    m_item.reset(bar);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
+void QHorizontalStackedBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
+{
+    HorizontalStackedBarChartItem *bar = static_cast<HorizontalStackedBarChartItem *>(m_item.data());
+    Q_ASSERT(bar);
+    if (options.testFlag(QChart::SeriesAnimations)) {
+        bar->setAnimation(new HorizontalStackedBarAnimation(bar));
+    }else{
+        bar->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
+}
 #include "moc_qhorizontalstackedbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -39,17 +39,18 @@ class ChartPresenter;
 
 class ChartValueAxisY : public VerticalAxis
 {
+	Q_OBJECT
 public:
-    ChartValueAxisY(QValueAxis *axis, ChartPresenter *presenter);
+    ChartValueAxisY(QValueAxis *axis, QGraphicsItem* item = 0);
     ~ChartValueAxisY();
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
 protected:
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
-    void handleAxisUpdated();
+private Q_SLOTS:
+    void handleTickCountChanged(int tick);
 private:
-    int m_tickCount;
     QValueAxis *m_axis;
 };
 

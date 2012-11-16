@@ -43,6 +43,9 @@ public:
     explicit Domain(QObject *object = 0);
     virtual ~Domain();
 
+    void setSize(const QSizeF& size);
+    QSizeF size() const;
+
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
     void setRangeX(qreal min, qreal max);
     void setRangeY(qreal min, qreal max);
@@ -60,28 +63,40 @@ public:
     qreal spanY() const;
     bool isEmpty() const;
 
+    void blockAxisSignals(bool block);
+    bool axisSignalsBlocked() const { return m_axisSignalsBlocked; }
+
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2);
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const Domain &domain1, const Domain &domain2);
     friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const Domain &domain);
 
-    void zoomIn(const QRectF &rect, const QSizeF &size);
-    void zoomOut(const QRectF &rect, const QSizeF &size);
-    void move(qreal dx, qreal dy, const QSizeF &size);
-    void emitUpdated();
+    void zoomIn(const QRectF &rect);
+    void zoomOut(const QRectF &rect);
+    void move(qreal dx, qreal dy);
+
+    QPointF calculateGeometryPoint(const QPointF &point) const;
+    QPointF calculateDomainPoint(const QPointF &point) const;
+    QVector<QPointF> calculateGeometryPoints(const QList<QPointF>& vector) const;
+
+    static void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount);
+    static qreal niceNumber(qreal x, bool ceiling);
 
 Q_SIGNALS:
     void updated();
-    void rangeXChanged(qreal min, qreal max);
-    void rangeYChanged(qreal min, qreal max);
+    void rangeHorizontalChanged(qreal min, qreal max);
+    void rangeVerticalChanged(qreal min, qreal max);
 
 public Q_SLOTS:
-    void handleAxisUpdated();
+    void handleVerticalAxisRangeChanged(qreal min,qreal max);
+    void handleHorizontalAxisRangeChanged(qreal min,qreal max);
 
 private:
     qreal m_minX;
     qreal m_maxX;
     qreal m_minY;
     qreal m_maxY;
+    QSizeF m_size;
+    bool m_axisSignalsBlocked;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

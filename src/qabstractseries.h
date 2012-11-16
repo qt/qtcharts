@@ -71,6 +71,10 @@ public:
 
     QChart *chart() const;
 
+    bool attachAxis(QAbstractAxis* axis);
+    bool detachAxis(QAbstractAxis* axis);
+    QList<QAbstractAxis*> attachedAxes();
+
     void show();
     void hide();
 
@@ -83,6 +87,7 @@ protected:
     QScopedPointer<QAbstractSeriesPrivate> d_ptr;
     friend class ChartDataSet;
     friend class ChartPresenter;
+    friend class ChartThemeManager;
     friend class QLegendPrivate;
     friend class DeclarativeChart;
 };

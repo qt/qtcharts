@@ -37,12 +37,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class SplineAnimation;
 
-class SplineChartItem : public XYChart, public QGraphicsItem
+class SplineChartItem : public XYChart
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
-    SplineChartItem(QSplineSeries *series, ChartPresenter *presenter);
+    SplineChartItem(QSplineSeries *series, QGraphicsItem* item = 0);
 
     //from QGraphicsItem
     QRectF boundingRect() const;

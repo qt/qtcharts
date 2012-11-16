@@ -22,6 +22,7 @@
 #include "qscatterseries.h"
 #include "qscatterseries_p.h"
 #include "chartpresenter_p.h"
+#include "domain_p.h"
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QDebug>
@@ -29,9 +30,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-ScatterChartItem::ScatterChartItem(QScatterSeries *series, ChartPresenter *presenter)
-    : XYChart(series, presenter),
-      QGraphicsItem(presenter ? presenter->rootItem() : 0),
+ScatterChartItem::ScatterChartItem(QScatterSeries *series, QGraphicsItem* item)
+    : XYChart(series,item),
       m_series(series),
       m_items(this),
       m_visible(true),
@@ -93,12 +93,12 @@ void ScatterChartItem::deletePoints(int count)
 
 void ScatterChartItem::markerSelected(QGraphicsItem *marker)
 {
-    emit XYChart::clicked(calculateDomainPoint(m_markerMap[marker]));
+    emit XYChart::clicked(domain()->calculateDomainPoint(m_markerMap[marker]));
 }
 
 void ScatterChartItem::markerHovered(QGraphicsItem *marker, bool state)
 {
-    emit XYChart::hovered(calculateDomainPoint(m_markerMap[marker]), state);
+    emit XYChart::hovered(domain()->calculateDomainPoint(m_markerMap[marker]), state);
 }
 
 void ScatterChartItem::updateGeometry()
@@ -123,21 +123,22 @@ void ScatterChartItem::updateGeometry()
 
     QList<QGraphicsItem *> items = m_items.childItems();
 
+    QRectF clipRect(QPointF(0,0),domain()->size());
+
     for (int i = 0; i < points.size(); i++) {
         QGraphicsItem *item = items.at(i);
         const QPointF &point = points.at(i);
         const QRectF &rect = item->boundingRect();
         m_markerMap[item] = point;
         item->setPos(point.x() - rect.width() / 2, point.y() - rect.height() / 2);
-        if (!m_visible || !clipRect().contains(point))
+        if (!m_visible || !clipRect.contains(point))
             item->setVisible(false);
         else
             item->setVisible(true);
     }
 
     prepareGeometryChange();
-    m_rect = clipRect();
-    setPos(origin());
+    m_rect = clipRect;
 }
 
 void ScatterChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)

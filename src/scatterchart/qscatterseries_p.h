@@ -38,7 +38,8 @@ class QScatterSeriesPrivate: public QXYSeriesPrivate
 {
 public:
     QScatterSeriesPrivate(QScatterSeries *q);
-    ChartElement *createGraphics(ChartPresenter *presenter);
+    void initializeGraphics(QGraphicsItem* parent);
+    void initializeTheme(int index, ChartTheme* theme, bool forced = false);
 
 private:
     QScatterSeries::MarkerShape m_shape;

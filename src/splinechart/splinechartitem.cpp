@@ -22,14 +22,14 @@
 #include "qsplineseries_p.h"
 #include "chartpresenter_p.h"
 #include "splineanimation_p.h"
+#include "domain_p.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-SplineChartItem::SplineChartItem(QSplineSeries *series, ChartPresenter *presenter)
-    : XYChart(series, presenter),
-      QGraphicsItem(presenter ? presenter->rootItem() : 0),
+SplineChartItem::SplineChartItem(QSplineSeries *series, QGraphicsItem* item)
+    : XYChart(series,item),
       m_series(series),
       m_pointsVisible(false),
       m_animation(0)
@@ -101,7 +101,7 @@ void SplineChartItem::updateChart(QVector<QPointF> &oldPoints, QVector<QPointF> 
 
 QPointF SplineChartItem::calculateGeometryControlPoint(int index) const
 {
-    return XYChart::calculateGeometryPoint(m_series->d_func()->controlPoint(index));
+    return domain()->calculateGeometryPoint(m_series->d_func()->controlPoint(index));
 }
 
 void SplineChartItem::updateGeometry()
@@ -131,7 +131,7 @@ void SplineChartItem::updateGeometry()
     //    m_path = stroker.createStroke(splinePath);
     m_path = splinePath;
     m_rect = splinePath.boundingRect();
-    setPos(origin());
+
 }
 
 //handlers
@@ -155,9 +155,9 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
     Q_UNUSED(option)
 
     painter->save();
+    painter->setClipRect(QRectF(QPointF(0,0),domain()->size()));
     painter->setPen(m_linePen);
     //    painter->setBrush(m_linePen.color());
-    painter->setClipRect(clipRect());
 
     painter->drawPath(m_path);
     if (m_pointsVisible) {
@@ -169,19 +169,19 @@ void SplineChartItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *o
 
 void SplineChartItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    emit XYChart::clicked(calculateDomainPoint(event->pos()));
+    emit XYChart::clicked(domain()->calculateDomainPoint(event->pos()));
     QGraphicsItem::mousePressEvent(event);
 }
 
 void SplineChartItem::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit XYChart::hovered(calculateDomainPoint(event->pos()), true);
+    emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), true);
     event->accept();
 }
 
 void SplineChartItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
-    emit XYChart::hovered(calculateDomainPoint(event->pos()), false);
+    emit XYChart::hovered(domain()->calculateDomainPoint(event->pos()), false);
     event->accept();
 }
 

@@ -24,7 +24,8 @@
 #include "chartvalueaxisy_p.h"
 #include "domain_p.h"
 #include "chartdataset_p.h"
-#include <qmath.h>
+#include "chartpresenter_p.h"
+#include "charttheme_p.h"
 
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -174,8 +175,8 @@ QValueAxis::QValueAxis(QValueAxisPrivate &d, QObject *parent)
 QValueAxis::~QValueAxis()
 {
     Q_D(QValueAxis);
-    if (d->m_dataset)
-        d->m_dataset->removeAxis(this);
+    if (d->m_chart)
+        d->m_chart->removeAxis(this);
 }
 
 void QValueAxis::setMin(qreal min)
@@ -209,34 +210,7 @@ qreal QValueAxis::max() const
 void QValueAxis::setRange(qreal min, qreal max)
 {
     Q_D(QValueAxis);
-    bool changed = false;
-
-    if (min > max)
-        return;
-
-    if (d->m_niceNumbers) {
-        int ticks = d->m_tickCount;
-        d->looseNiceNumbers(min, max, ticks);
-        if (ticks != d->m_tickCount)
-            setTickCount(ticks);
-    }
-
-    if (!qFuzzyCompare(d->m_min, min)) {
-        d->m_min = min;
-        changed = true;
-        emit minChanged(min);
-    }
-
-    if (!qFuzzyCompare(d->m_max, max)) {
-        d->m_max = max;
-        changed = true;
-        emit maxChanged(max);
-    }
-
-    if (changed) {
-        emit rangeChanged(min, max);
-        d->emitUpdated();
-    }
+    d->setRange(min,max);
 }
 
 /*!
@@ -247,7 +221,7 @@ void QValueAxis::setTickCount(int count)
     Q_D(QValueAxis);
     if (d->m_tickCount != count && count >= 2) {
         d->m_tickCount = count;
-        d->emitUpdated();
+        emit tickCountChanged(count);
     }
 }
 
@@ -263,18 +237,14 @@ int QValueAxis::tickCount() const
 
 void QValueAxis::setNiceNumbersEnabled(bool enable)
 {
-    Q_D(QValueAxis);
-    if (d->m_niceNumbers != enable) {
-        d->m_niceNumbers = enable;
-        if (enable && !qFuzzyCompare(d->m_max, d->m_min))
-            setRange(d->m_min, d->m_max);
-    }
+    Q_UNUSED(enable);
+    qWarning()<<"This function is depreciated.Use applyNiceNumbers().";
 }
 
-bool  QValueAxis::niceNumbersEnabled() const
+bool QValueAxis::niceNumbersEnabled() const
 {
-    Q_D(const QValueAxis);
-    return d->m_niceNumbers;
+    qWarning()<<"This function is depreciated.Use applyNiceNumbers().";
+    return false;
 }
 
 void QValueAxis::setLabelFormat(const QString &format)
@@ -297,6 +267,17 @@ QAbstractAxis::AxisType QValueAxis::type() const
     return AxisTypeValue;
 }
 
+void QValueAxis::applyNiceNumbers()
+{
+    Q_D(QValueAxis);
+    qreal min = d->m_min;
+    qreal max = d->m_max;
+    int ticks = d->m_tickCount;
+    Domain::looseNiceNumbers(min,max,ticks);
+    d->setRange(min,max);
+    setTickCount(ticks);
+}
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QValueAxisPrivate::QValueAxisPrivate(QValueAxis *q)
@@ -304,7 +285,6 @@ QValueAxisPrivate::QValueAxisPrivate(QValueAxis *q)
       m_min(0),
       m_max(0),
       m_tickCount(5),
-      m_niceNumbers(false),
       m_format(QString::null)
 {
 
@@ -314,19 +294,6 @@ QValueAxisPrivate::~QValueAxisPrivate()
 {
 
 }
-
-void QValueAxisPrivate::handleDomainUpdated()
-{
-    Q_Q(QValueAxis);
-    Domain *domain = qobject_cast<Domain *>(sender());
-    Q_ASSERT(domain);
-
-    if (orientation() == Qt::Horizontal)
-        q->setRange(domain->minX(), domain->maxX());
-    else if (orientation() == Qt::Vertical)
-        q->setRange(domain->minY(), domain->maxY());
-}
-
 
 void QValueAxisPrivate::setMin(const QVariant &min)
 {
@@ -358,62 +325,64 @@ void QValueAxisPrivate::setRange(const QVariant &min, const QVariant &max)
         q->setRange(value1, value2);
 }
 
-ChartAxis *QValueAxisPrivate::createGraphics(ChartPresenter *presenter)
+void QValueAxisPrivate::setRange(qreal min, qreal max)
 {
-    Q_Q(QValueAxis);
-    if (m_orientation == Qt::Vertical)
-        return new ChartValueAxisY(q, presenter);
-    return new ChartValueAxisX(q, presenter);
+	Q_Q(QValueAxis);
+    bool changed = false;
+
+    if (min > max)
+        return;
+
+    if (!qFuzzyCompare(m_min,min)) {
+    	m_min = min;
+        changed = true;
+        emit q->minChanged(min);
+    }
+
+    if (!qFuzzyCompare(m_max,max)) {
+        m_max = max;
+        changed = true;
+        emit q->maxChanged(max);
+    }
+
+    if (changed) {
+        emit q->rangeChanged(min, max);
+        emit rangeChanged(min,max);
+    }
 }
 
-void QValueAxisPrivate::intializeDomain(Domain *domain)
+void QValueAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QValueAxis);
-    if (qFuzzyCompare(m_max, m_min)) {
-        if (m_orientation == Qt::Vertical)
-            q->setRange(domain->minY(), domain->maxY());
-        else
-            q->setRange(domain->minX(), domain->maxX());
-    } else {
-        if (m_orientation == Qt::Vertical)
+    ChartAxis* axis(0);
+    if (orientation() == Qt::Vertical)
+        axis = new ChartValueAxisY(q,parent);
+    if (orientation() == Qt::Horizontal)
+        axis = new ChartValueAxisX(q,parent);
+
+    m_item.reset(axis);
+    QAbstractAxisPrivate::initializeGraphics(parent);
+}
+
+
+void QValueAxisPrivate::initializeDomain(Domain *domain)
+{
+    if (orientation() == Qt::Vertical) {
+        if(!qFuzzyIsNull(m_max - m_min)) {
             domain->setRangeY(m_min, m_max);
-        else
+        }
+        else {
+            setRange(domain->minY(), domain->maxY());
+        }
+    }
+    if (orientation() == Qt::Horizontal) {
+        if(!qFuzzyIsNull(m_max - m_min)) {
             domain->setRangeX(m_min, m_max);
+        }
+        else {
+            setRange(domain->minX(), domain->maxX());
+        }
     }
-}
-
-//algorithm defined by Paul S.Heckbert GraphicalGems I
-
-void QValueAxisPrivate::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const
-{
-    qreal range = niceNumber(max - min, true); //range with ceiling
-    qreal step = niceNumber(range / (ticksCount - 1), false);
-    min = qFloor(min / step);
-    max = qCeil(max / step);
-    ticksCount = int(max - min) + 1;
-    min *= step;
-    max *= step;
-}
-
-//nice numbers can be expressed as form of 1*10^n, 2* 10^n or 5*10^n
-
-qreal QValueAxisPrivate::niceNumber(qreal x, bool ceiling) const
-{
-    qreal z = qPow(10, qFloor(log10(x))); //find corresponding number of the form of 10^n than is smaller than x
-    qreal q = x / z; //q<10 && q>=1;
-
-    if (ceiling) {
-        if (q <= 1.0) q = 1;
-        else if (q <= 2.0) q = 2;
-        else if (q <= 5.0) q = 5;
-        else q = 10;
-    } else {
-        if (q < 1.5) q = 1;
-        else if (q < 3.0) q = 2;
-        else if (q < 7.0) q = 5;
-        else q = 10;
-    }
-    return q * z;
 }
 
 #include "moc_qvalueaxis.cpp"

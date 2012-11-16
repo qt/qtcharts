@@ -73,8 +73,8 @@ public:
     QChart *createChart(const DataTable &table)
     {
         QChart *chart = BarCategoryAxisY::createChart(table);
-        chart->axisX()->setTitle("Axis X");
-        chart->axisY()->setTitle("Axis Y");
+        chart->axisX()->setTitleText("Axis X");
+        chart->axisY()->setTitleText("Axis Y");
         chart->setTitle(" BarCateogry Y , Value X, title");
         return chart;
     }

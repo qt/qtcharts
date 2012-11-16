@@ -49,23 +49,14 @@ int main(int argc, char *argv[])
         axisX->setTickCount(7 + i);
         axisX->setLinePenColor(series->pen().color());
 
-        if (i % 2)
-            axisX->setAlignment(Qt::AlignTop);
-        else
-            axisX->setAlignment(Qt::AlignBottom);
-
         axisY = new QValueAxis;
         axisY->setTickCount(7 + i);
         axisY->setLinePenColor(series->pen().color());
 
-        if (i % 2)
-            axisY->setAlignment(Qt::AlignRight);
-        else
-            axisY->setAlignment(Qt::AlignLeft);
-
-
-        chart->setAxisX(axisX, series);
-        chart->setAxisY(axisY, series);
+        chart->addAxis(axisX,i % 2?Qt::AlignTop:Qt::AlignBottom);
+        chart->addAxis(axisY,i % 2?Qt::AlignRight:Qt::AlignLeft);
+        series->attachAxis(axisX);
+        series->attachAxis(axisY);
     }
     //![2]
 

@@ -72,8 +72,8 @@ QHorizontalBarSeries::QHorizontalBarSeries(QObject *parent)
 QHorizontalBarSeries::~QHorizontalBarSeries()
 {
     Q_D(QHorizontalBarSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 
 /*!
@@ -92,12 +92,12 @@ QHorizontalBarSeriesPrivate::QHorizontalBarSeriesPrivate(QHorizontalBarSeries *q
 
 }
 
-void QHorizontalBarSeriesPrivate::scaleDomain(Domain &domain)
+void QHorizontalBarSeriesPrivate::initializeDomain()
 {
-    qreal minX(domain.minX());
-    qreal minY(domain.minY());
-    qreal maxX(domain.maxX());
-    qreal maxY(domain.maxY());
+    qreal minX(domain()->minX());
+    qreal minY(domain()->minY());
+    qreal maxX(domain()->maxX());
+    qreal maxY(domain()->maxY());
 
     qreal y = categoryCount();
     minX = qMin(minX, min());
@@ -105,18 +105,27 @@ void QHorizontalBarSeriesPrivate::scaleDomain(Domain &domain)
     maxX = qMax(maxX, max());
     maxY = qMax(maxY, y - (qreal)0.5);
 
-    domain.setRange(minX, maxX, minY, maxY);
+    domain()->setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement *QHorizontalBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QHorizontalBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QHorizontalBarSeries);
+    HorizontalBarChartItem *bar = new HorizontalBarChartItem(q,parent);
+    m_item.reset(bar);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
+}
 
-    HorizontalBarChartItem *bar = new HorizontalBarChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
+void QHorizontalBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
+{
+    HorizontalBarChartItem *bar = static_cast<HorizontalBarChartItem *>(m_item.data());
+    Q_ASSERT(bar);
+    if (options.testFlag(QChart::SeriesAnimations)) {
         bar->setAnimation(new HorizontalBarAnimation(bar));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return bar;
+    }else{
+        bar->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 #include "moc_qhorizontalbarseries.cpp"

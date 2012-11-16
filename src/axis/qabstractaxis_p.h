@@ -31,13 +31,20 @@
 #define QABSTRACTAXIS_P_H
 
 #include "qabstractaxis.h"
+#include "chartaxis_p.h"
+#include "qchart.h"
+#include <QDebug>
+
+class QGraphicsItem;
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartPresenter;
-class ChartAxis;
 class Domain;
-class ChartDataSet;
+class QChart;
+class QAbstractSeries;
+class ChartTheme;
+class ChartElement;
 
 class QTCOMMERCIALCHART_AUTOTEST_EXPORT QAbstractAxisPrivate : public QObject
 {
@@ -47,38 +54,43 @@ public:
     ~QAbstractAxisPrivate();
 
 public:
-    virtual ChartAxis *createGraphics(ChartPresenter *presenter) = 0;
-    virtual void intializeDomain(Domain *domain) = 0;
-
-    void emitUpdated();
-    void setDirty(bool dirty);
-    bool isDirty() { return m_dirty; }
-    void setOrientation(Qt::Orientation orientation);
+    Qt::Alignment alignment() const { return m_alignment; }
     Qt::Orientation orientation() const { return m_orientation; }
+    void setAlignment( Qt::Alignment alignment);
 
+    virtual void initializeDomain(Domain *domain) = 0;
+    virtual void initializeGraphics(QGraphicsItem* parent) = 0;
+    virtual void initializeTheme(ChartTheme* theme, bool forced = false);
+    virtual void initializeAnimations(QChart::AnimationOptions options);
+
+    //interface for manipulating range form base class
     virtual void setMin(const QVariant &min) = 0;
-    virtual qreal min() = 0;
-
     virtual void setMax(const QVariant &max) = 0;
-    virtual qreal max() = 0;
-
-    virtual int count() const = 0;
-
     virtual void setRange(const QVariant &min, const QVariant &max) = 0;
 
+    //interface manipulating range form domain
+    virtual void setRange(qreal min, qreal max) = 0;
+    virtual qreal min() = 0;
+    virtual qreal max() = 0;
+
+    ChartAxis* axisItem() { return m_item.data(); }
+
 public Q_SLOTS:
-    virtual void handleDomainUpdated() = 0;
+    void handleRangeChanged(qreal min, qreal max);
 
 Q_SIGNALS:
-    void updated();
+    void rangeChanged(qreal min, qreal max);
 
 protected:
     QAbstractAxis *q_ptr;
-    Qt::Orientation m_orientation;
-    Qt::Alignment m_alignment;
-    ChartDataSet *m_dataset;
-
+    QChart *m_chart;
+    QScopedPointer<ChartAxis> m_item;
 private:
+    QList<QAbstractSeries*> m_series;
+
+    Qt::Alignment m_alignment;
+    Qt::Orientation m_orientation;
+
     bool m_visible;
 
     bool m_arrowVisible;
@@ -109,6 +121,7 @@ private:
 
     friend class QAbstractAxis;
     friend class ChartDataSet;
+    friend class ChartPresenter;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -33,21 +33,39 @@ class QAbstractAxisPrivate;
 class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
 {
     Q_OBJECT
+    //visibility
     Q_PROPERTY(bool visible READ isVisible WRITE setVisible NOTIFY visibleChanged)
+    //arrow
     Q_PROPERTY(bool lineVisible READ isLineVisible WRITE setLineVisible NOTIFY lineVisibleChanged)
+    Q_PROPERTY(QPen linePen READ linePen WRITE setLinePen NOTIFY linePenChanged)
+    //TODO: make wrapping of color for qml
     Q_PROPERTY(QColor color READ linePenColor WRITE setLinePenColor NOTIFY colorChanged)
+    //labels
     Q_PROPERTY(bool labelsVisible READ labelsVisible WRITE setLabelsVisible NOTIFY labelsVisibleChanged)
-    Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle)
-    Q_PROPERTY(QFont labelsFont READ labelsFont WRITE setLabelsFont)
+    Q_PROPERTY(QPen lablesPen READ labelsPen WRITE setLabelsPen NOTIFY labelsPenChanged)
+    Q_PROPERTY(QBrush lablesBrush READ labelsBrush WRITE setLabelsBrush NOTIFY labelsBrushChanged)
+    //TODO: fix labels angles to work with layout
+    Q_PROPERTY(int labelsAngle READ labelsAngle WRITE setLabelsAngle NOTIFY labelsAngleChanged)
+    Q_PROPERTY(QFont labelsFont READ labelsFont WRITE setLabelsFont NOTIFY labelsFontChanged)
+    //TODO: make wrapping of color for qml
     Q_PROPERTY(QColor labelsColor READ labelsColor WRITE setLabelsColor NOTIFY labelsColorChanged)
-    Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridVisibleChanged)
+    //grid
+    Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridLineVisibleChanged)
+    Q_PROPERTY(QPen girdLinePen READ gridLinePen WRITE setGridLinePen NOTIFY gridLinePenChanged)
+    //shades
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
+    //TODO: make wrapping of color for qml
     Q_PROPERTY(QColor shadesColor READ shadesColor WRITE setShadesColor NOTIFY shadesColorChanged)
+    //TODO: make wrapping of border for qml
     Q_PROPERTY(QColor shadesBorderColor READ shadesBorderColor WRITE setShadesBorderColor NOTIFY shadesBorderColorChanged)
+    Q_PROPERTY(QPen shadesPen READ shadesPen WRITE setShadesPen NOTIFY shadesPenChanged)
+    Q_PROPERTY(QBrush shadesBrush READ shadesBrush WRITE setShadesBrush NOTIFY shadesBrushChanged)
+    //title
+    Q_PROPERTY(QString titleText READ titleText WRITE setTitleText NOTIFY titleTextChanged)
+    Q_PROPERTY(QPen titlePen READ titlePen WRITE setTitlePen NOTIFY titlePenChanged)
+    Q_PROPERTY(QBrush titleBrush READ titleBrush WRITE setTitleBrush NOTIFY titleBrushChanged)
     Q_PROPERTY(bool titleVisible READ titleVisible WRITE setTitleVisible)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
-    Q_PROPERTY(QString title READ title WRITE setTitle)
-    Q_PROPERTY(Qt::Alignment alignment READ alignment WRITE setAlignment)
 
 public:
 
@@ -69,12 +87,13 @@ public:
 
     virtual AxisType type() const = 0;
 
-    //visibilty handling
+    //visibility handling
     bool isVisible() const;
     void setVisible(bool visible = true);
+    void show();
+    void hide();
 
-
-    //axis handling
+    //arrow handling
     bool isLineVisible() const;
     void setLineVisible(bool visible = true);
     void setLinePen(const QPen &pen);
@@ -111,9 +130,8 @@ public:
     QBrush titleBrush() const;
     void setTitleFont(const QFont &font);
     QFont titleFont() const;
-    void setTitle(const QString &title);
-    QString title() const;
-
+    void setTitleText(const QString &title);
+    QString titleText() const;
 
     //shades handling
     bool shadesVisible() const;
@@ -127,28 +145,37 @@ public:
     void setShadesBorderColor(QColor color);
     QColor shadesBorderColor() const;
 
-    Qt::Orientation orientation();
+    Qt::Orientation orientation(); //TODO: missing const <- BC
     Qt::Alignment alignment() const;
-    void setAlignment(Qt::Alignment alignment);
 
     //range handling
     void setMin(const QVariant &min);
     void setMax(const QVariant &max);
     void setRange(const QVariant &min, const QVariant &max);
 
-    void show();
-    void hide();
-
 Q_SIGNALS:
     void visibleChanged(bool visible);
+    void linePenChanged(const QPen& pen);
     void lineVisibleChanged(bool visible);
     void labelsVisibleChanged(bool visible);
-    void gridVisibleChanged(bool visible);
+    void labelsPenChanged(const QPen& pen);
+    void labelsBrushChanged(const QBrush& brush);
+    void labelsFontChanged(const QFont& pen);
+    void labelsAngleChanged(int angle);
+    void gridLinePenChanged(const QPen& pen);
+    void gridLineVisibleChanged(bool visible);
     void colorChanged(QColor color);
     void labelsColorChanged(QColor color);
+    void titleTextChanged(const QString& title);
+    void titlePenChanged(const QPen& pen);
+    void titleBrushChanged(const QBrush brush);
+    void titleVisibleChanged(bool visible);
+    void titleFontChanged(const QFont& font);
     void shadesVisibleChanged(bool visible);
     void shadesColorChanged(QColor color);
     void shadesBorderColorChanged(QColor color);
+    void shadesPenChanged(const QPen& pen);
+    void shadesBrushChanged(const QBrush brush);
 
 protected:
     QScopedPointer<QAbstractAxisPrivate> d_ptr;
@@ -156,6 +183,7 @@ protected:
     friend class ChartDataSet;
     friend class ChartAxis;
     friend class ChartPresenter;
+    friend class ChartThemeManager;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

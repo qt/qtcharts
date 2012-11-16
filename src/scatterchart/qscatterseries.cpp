@@ -143,8 +143,8 @@ QScatterSeries::QScatterSeries(QObject *parent)
 QScatterSeries::~QScatterSeries()
 {
     Q_D(QScatterSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 
 QAbstractSeries::SeriesType QScatterSeries::type() const
@@ -254,14 +254,32 @@ QScatterSeriesPrivate::QScatterSeriesPrivate(QScatterSeries *q)
 {
 }
 
-ChartElement *QScatterSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QScatterSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QScatterSeries);
-    ScatterChartItem *scatter = new ScatterChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
-        scatter->setAnimation(new XYAnimation(scatter));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return scatter;
+    ScatterChartItem *scatter = new ScatterChartItem(q,parent);
+    m_item.reset(scatter);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
+}
+
+void QScatterSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
+{
+    Q_Q(QScatterSeries);
+    QPen pen;
+    QBrush brush;
+    const QList<QColor> colors = theme->seriesColors();
+    const QList<QGradient> gradients = theme->seriesGradients();
+
+    if (forced || pen == m_pen) {
+        pen.setColor(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0));
+        pen.setWidthF(2);
+        q->setPen(pen);
+    }
+
+    if (forced || brush == m_brush) {
+        QBrush brush(colors.at(index % colors.size()));
+        q->setBrush(brush);
+    }
 }
 
 #include "moc_qscatterseries.cpp"

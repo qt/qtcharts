@@ -39,18 +39,19 @@ class ChartPresenter;
 
 class ChartDateTimeAxisX : public HorizontalAxis
 {
+    Q_OBJECT
 public:
-    ChartDateTimeAxisX(QDateTimeAxis *axis, ChartPresenter *presenter);
+    ChartDateTimeAxisX(QDateTimeAxis *axis, QGraphicsItem* item = 0);
     ~ChartDateTimeAxisX();
 
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint) const;
 protected:
-    void handleAxisUpdated();
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
+private Q_SLOTS:
+    void handleTickCountChanged(int tick);
 
 private:
-    int m_tickCount;
     QDateTimeAxis *m_axis;
 };
 

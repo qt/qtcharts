@@ -39,12 +39,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class QScatterSeries;
 
-class ScatterChartItem : public XYChart, public QGraphicsItem
+class ScatterChartItem : public XYChart
 {
     Q_OBJECT
     Q_INTERFACES(QGraphicsItem)
 public:
-    explicit ScatterChartItem(QScatterSeries *series, ChartPresenter *presenter);
+    explicit ScatterChartItem(QScatterSeries *series, QGraphicsItem* item = 0);
 
 public:
     //from QGraphicsItem

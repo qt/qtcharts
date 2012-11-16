@@ -31,7 +31,6 @@ class ChartTitle;
 class QLegend;
 class ChartAxis;
 class ChartBackground;
-class ChartElement;
 
 class ChartLayout : public QGraphicsLayout
 {
@@ -44,7 +43,6 @@ public:
     QMargins margins() const;
 
     void setGeometry(const QRectF &rect);
-    QRectF chartsGeometry() const { return m_chartsRect;}
 
 protected:
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
@@ -56,10 +54,8 @@ private:
     QRectF calculateBackgroundGeometry(const QRectF &geometry, ChartBackground *background) const;
     QRectF calculateContentGeometry(const QRectF &geometry) const;
     QRectF calculateTitleGeometry(const QRectF &geometry, ChartTitle *title) const;
-    QRectF calculateChartGeometry(const QRectF &geometry, const QList<ChartAxis *>& axes) const;
     QRectF calculateLegendGeometry(const QRectF &geometry, QLegend *legend) const;
     QRectF calculateAxisGeometry(const QRectF &geometry, const QList<ChartAxis *>& axes) const;
-    QRectF calculateChartsGeometry(const QRectF &geometry, const QList<ChartElement *>& charts) const;
     QRectF calculateBackgroundMinimum(const QRectF &minimum) const;
     QRectF calculateContentMinimum(const QRectF &minimum) const;
     QRectF calculateTitleMinimum(const QRectF &minimum, ChartTitle *title) const;
@@ -71,7 +67,6 @@ private:
     QMargins m_margins;
     QRectF m_minChartRect;
     QRectF m_minAxisRect;
-    QRectF m_chartsRect;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

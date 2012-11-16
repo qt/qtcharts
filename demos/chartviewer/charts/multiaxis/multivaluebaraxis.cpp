@@ -64,22 +64,16 @@ public:
             chart->addSeries(series);
             axisX = new QValueAxis();
             axisX->setLinePenColor(series->pen().color());
-            axisX->setTitle("ValueAxis for series" + QString::number(nameIndex));
-            if (nameIndex % 2)
-                axisX->setAlignment(Qt::AlignTop);
-            else
-                axisX->setAlignment(Qt::AlignBottom);
+            axisX->setTitleText("ValueAxis for series" + QString::number(nameIndex));
+
             axisY = new QValueAxis();
             axisY->setLinePenColor(series->pen().color());
-            axisY->setTitle("ValueAxis for series" + QString::number(nameIndex));
+            axisY->setTitleText("ValueAxis for series" + QString::number(nameIndex));
 
-            if (nameIndex % 2)
-                axisY->setAlignment(Qt::AlignRight);
-            else
-                axisY->setAlignment(Qt::AlignLeft);
-
-            chart->setAxisX(axisX, series);
-            chart->setAxisY(axisY, series);
+            chart->addAxis(axisX, nameIndex % 2?Qt::AlignTop:Qt::AlignBottom);
+            chart->addAxis(axisY, nameIndex % 2?Qt::AlignRight:Qt::AlignLeft);
+            series->attachAxis(axisX);
+            series->attachAxis(axisY);
             nameIndex++;
         }
 
@@ -96,7 +90,7 @@ public:
 
         barcategory->setLinePen(set->brush().color());
         barcategory->setGridLinePen(set->brush().color());
-        barcategory->setTitle("BarCategoryAxis Title");
+        barcategory->setTitleText("BarCategoryAxis Title");
 
         chart->setAxisX(barcategory, series);
 

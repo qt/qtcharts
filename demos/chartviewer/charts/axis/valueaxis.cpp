@@ -64,8 +64,8 @@ public:
     QChart *createChart(const DataTable &table)
     {
         QChart *chart = ValueAxis::createChart(table);
-        chart->axisX()->setTitle("Axis X");
-        chart->axisY()->setTitle("Axis Y");
+        chart->axisX()->setTitleText("Axis X");
+        chart->axisY()->setTitleText("Axis Y");
         chart->setTitle("Value X , Value Y, title");
         return chart;
     }

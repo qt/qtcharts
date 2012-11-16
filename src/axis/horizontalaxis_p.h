@@ -37,7 +37,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class HorizontalAxis : public ChartAxis
 {
 public:
-    HorizontalAxis(QAbstractAxis *axis, ChartPresenter *presenter, bool intervalAxis = false);
+    HorizontalAxis(QAbstractAxis *axis, QGraphicsItem* item = 0, bool intervalAxis = false);
     ~HorizontalAxis();
     QSizeF sizeHint(Qt::SizeHint which, const QSizeF &constraint = QSizeF()) const;
 protected:

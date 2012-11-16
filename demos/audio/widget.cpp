@@ -25,11 +25,11 @@ Widget::Widget(QWidget *parent)
     QValueAxis *axisX = new QValueAxis;
     axisX->setRange(0, 2000);
     axisX->setLabelFormat("%g");
-    axisX->setTitle("Samples");
+    axisX->setTitleText("Samples");
     QValueAxis *axisY = new QValueAxis;
     axisY->setRange(-1, 1);
-    axisY->setTitle("Audio level");
-    m_chart->setAxisX(axisX, m_series);    
+    axisY->setTitleText("Audio level");
+    m_chart->setAxisX(axisX, m_series);
     m_chart->setAxisY(axisY, m_series);
     m_chart->legend()->hide();
     m_chart->setTitle("Data from the microphone");

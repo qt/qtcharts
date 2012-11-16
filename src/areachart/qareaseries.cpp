@@ -27,6 +27,7 @@
 #include "charttheme_p.h"
 #include "qvalueaxis.h"
 #include "qarealegendmarker.h"
+#include "qchart_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -180,8 +181,8 @@ QAreaSeries::QAreaSeries(QObject *parent)
 QAreaSeries::~QAreaSeries()
 {
     Q_D(QAreaSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 
 /*!
@@ -198,7 +199,10 @@ QAbstractSeries::SeriesType QAreaSeries::type() const
 void QAreaSeries::setUpperSeries(QLineSeries *series)
 {
     Q_D(QAreaSeries);
-    d->m_upperSeries = series;
+    if(d->m_upperSeries!=series){
+    	d->m_upperSeries = series;
+    	//TODO:
+    }
 }
 
 QLineSeries *QAreaSeries::upperSeries() const
@@ -322,14 +326,14 @@ QAreaSeriesPrivate::QAreaSeriesPrivate(QLineSeries *upperSeries, QLineSeries *lo
 {
 }
 
-void QAreaSeriesPrivate::scaleDomain(Domain &domain)
+void QAreaSeriesPrivate::initializeDomain()
 {
     Q_Q(QAreaSeries);
 
-    qreal minX(domain.minX());
-    qreal minY(domain.minY());
-    qreal maxX(domain.maxX());
-    qreal maxY(domain.maxY());
+    qreal minX(domain()->minX());
+    qreal minY(domain()->minY());
+    qreal maxX(domain()->maxX());
+    qreal maxY(domain()->maxY());
 
     QLineSeries *upperSeries = q->upperSeries();
     QLineSeries *lowerSeries = q->lowerSeries();
@@ -358,21 +362,30 @@ void QAreaSeriesPrivate::scaleDomain(Domain &domain)
         }
     }
 
-    domain.setRange(minX, maxX, minY, maxY);
+    domain()->setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement *QAreaSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QAreaSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QAreaSeries);
-
-    AreaChartItem *area = new AreaChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations)) {
+    AreaChartItem *area = new AreaChartItem(q,parent);
+    m_item.reset(area);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
+}
+void  QAreaSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
+{
+    Q_Q(QAreaSeries);
+    AreaChartItem *area = static_cast<AreaChartItem *>(m_item.data());
+    if (options.testFlag(QChart::SeriesAnimations)) {
         area->upperLineItem()->setAnimation(new XYAnimation(area->upperLineItem()));
         if (q->lowerSeries())
-            area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem()));
+        area->lowerLineItem()->setAnimation(new XYAnimation(area->lowerLineItem()));
+    }else{
+        area->upperLineItem()->setAnimation(0);
+        if (q->lowerSeries())
+               area->lowerLineItem()->setAnimation(0);
     }
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return area;
+    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 QList<QLegendMarker*> QAreaSeriesPrivate::createLegendMarkers(QLegend* legend)
@@ -382,9 +395,10 @@ QList<QLegendMarker*> QAreaSeriesPrivate::createLegendMarkers(QLegend* legend)
     return list << new QAreaLegendMarker(q,legend);
 }
 
-void QAreaSeriesPrivate::initializeAxis(QAbstractAxis *axis)
+
+void QAreaSeriesPrivate::initializeAxes()
 {
-    Q_UNUSED(axis);
+
 }
 
 QAbstractAxis::AxisType QAreaSeriesPrivate::defaultAxisType(Qt::Orientation orientation) const
@@ -392,6 +406,34 @@ QAbstractAxis::AxisType QAreaSeriesPrivate::defaultAxisType(Qt::Orientation orie
     Q_UNUSED(orientation);
     return QAbstractAxis::AxisTypeValue;
 }
+
+QAbstractAxis* QAreaSeriesPrivate::createDefaultAxis(Qt::Orientation orientation) const
+{
+    Q_UNUSED(orientation);
+    return 0;
+}
+
+void QAreaSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
+{
+    Q_Q(QAreaSeries);
+    QPen pen;
+    QBrush brush;
+
+    const QList<QGradient> gradients = theme->seriesGradients();
+    const QList<QColor> colors = theme->seriesColors();
+
+    if (forced || pen == m_pen) {
+        pen.setColor(ChartThemeManager::colorAt(gradients.at(index % gradients.size()), 0.0));
+        pen.setWidthF(2);
+        q->setPen(pen);
+    }
+
+    if (forced || brush == m_brush) {
+        QBrush brush(colors.at(index % colors.size()));
+        q->setBrush(brush);
+    }
+}
+
 
 #include "moc_qareaseries.cpp"
 #include "moc_qareaseries_p.cpp"

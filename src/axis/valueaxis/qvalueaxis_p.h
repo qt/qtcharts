@@ -43,12 +43,12 @@ public:
     ~QValueAxisPrivate();
 
 public:
-    ChartAxis *createGraphics(ChartPresenter *presenter);
-    void intializeDomain(Domain *domain);
-    void handleDomainUpdated();
+    void initializeGraphics(QGraphicsItem* parent);
+    void initializeDomain(Domain *domain);
+
     qreal min() { return m_min; };
     qreal max() { return m_max; };
-    int count() const { return m_tickCount; }
+    void setRange(qreal min,qreal max);
 
 protected:
     void setMin(const QVariant &min);
@@ -56,14 +56,9 @@ protected:
     void setRange(const QVariant &min, const QVariant &max);
 
 private:
-    void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount) const;
-    qreal niceNumber(qreal x, bool ceiling) const;
-
-private:
     qreal m_min;
     qreal m_max;
     int m_tickCount;
-    bool m_niceNumbers;
     QString m_format;
     Q_DECLARE_PUBLIC(QValueAxis)
 };

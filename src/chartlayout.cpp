@@ -49,7 +49,6 @@ void ChartLayout::setGeometry(const QRectF &rect)
         return;
 
     QList<ChartAxis *> axes = m_presenter->axisItems();
-    QList<ChartElement *> charts = m_presenter->chartItems();
     ChartTitle *title = m_presenter->titleElement();
     QLegend *legend = m_presenter->legend();
     ChartBackground *background = m_presenter->backgroundElement();
@@ -66,7 +65,7 @@ void ChartLayout::setGeometry(const QRectF &rect)
 
     contentGeometry = calculateAxisGeometry(contentGeometry, axes);
 
-    m_chartsRect = calculateChartsGeometry(contentGeometry, charts);
+    m_presenter->setGeometry(contentGeometry);
 
     QGraphicsLayout::setGeometry(rect);
 }
@@ -120,6 +119,7 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
         if (!axis->isVisible())
             continue;
 
+
         QSizeF size = axis->effectiveSizeHint(Qt::PreferredSize);
         //this is used to get single thick font size
         QSizeF minSize = axis->effectiveSizeHint(Qt::MinimumSize);
@@ -153,6 +153,9 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
             minBottom.setHeight(minBottom.height() + minSize.height());
             bottomCount++;
             break;
+        default:
+            qWarning()<<"Axis is without alignment !";
+            break;
         }
     }
 
@@ -176,7 +179,10 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
     qreal topOffset = 0;
     qreal bottomOffset = 0;
 
-    foreach(ChartAxis* axis , axes) {
+    foreach(ChartElement *axisElement , axes) {
+
+        //TODO fixme
+        ChartAxis* axis = qobject_cast<ChartAxis*>(axisElement);
 
         if (!axis->isVisible())
             continue;
@@ -217,7 +223,7 @@ QRectF ChartLayout::calculateAxisMinimum(const QRectF &minimum, const QList<Char
     QSizeF bottom;
     QSizeF top;
 
-    foreach (ChartAxis *axis , axes) {
+    foreach (ChartAxis *axis, axes) {
 
         QSizeF size = axis->effectiveSizeHint(Qt::MinimumSize);
 
@@ -285,15 +291,6 @@ QRectF ChartLayout::calculateLegendGeometry(const QRectF &geometry, QLegend *leg
     legend->setGeometry(legendRect);
 
     return result;
-}
-
-
-QRectF ChartLayout::calculateChartsGeometry(const QRectF &geometry, const QList<ChartElement *>& charts) const
-{
-    Q_ASSERT(geometry.isValid());
-    foreach (ChartElement *chart, charts)
-        chart->handleGeometryChanged(geometry);
-    return geometry;
 }
 
 QRectF ChartLayout::calculateLegendMinimum(const QRectF &geometry, QLegend *legend) const

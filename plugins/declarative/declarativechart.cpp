@@ -32,6 +32,7 @@
 #include "qcategoryaxis.h"
 #include "qabstractseries_p.h"
 #include "declarativemargins.h"
+#include "chartdataset_p.h"
 #include "qchart_p.h"
 
 #ifndef QT_ON_ARM

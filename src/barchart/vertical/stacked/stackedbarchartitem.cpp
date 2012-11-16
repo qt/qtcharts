@@ -26,8 +26,8 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-StackedBarChartItem::StackedBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter) :
-    AbstractBarChartItem(series, presenter)
+StackedBarChartItem::StackedBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item) :
+    AbstractBarChartItem(series, item)
 {
 }
 

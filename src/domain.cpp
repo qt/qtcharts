@@ -20,6 +20,7 @@
 
 #include "domain_p.h"
 #include "qabstractaxis_p.h"
+#include <qmath.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -28,12 +29,27 @@ Domain::Domain(QObject *parent)
       m_minX(0),
       m_maxX(0),
       m_minY(0),
-      m_maxY(0)
+      m_maxY(0),
+      m_axisSignalsBlocked(false)
 {
 }
 
 Domain::~Domain()
 {
+}
+
+void Domain::setSize(const QSizeF& size)
+{
+	if(m_size!=size)
+	{
+		m_size=size;
+		emit updated();
+	}
+}
+
+QSizeF Domain::size() const
+{
+	return m_size;
 }
 
 void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
@@ -45,14 +61,14 @@ void Domain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minX = minX;
         m_maxX = maxX;
         axisXChanged = true;
-        emit rangeXChanged(m_minX, m_maxX);
+        emit rangeHorizontalChanged(m_minX, m_maxX);
     }
 
     if (!qFuzzyCompare(m_minY, minY) || !qFuzzyCompare(m_maxY, maxY)) {
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
-        emit rangeYChanged(m_minY, m_maxY);
+        emit rangeVerticalChanged(m_minY, m_maxY);
     }
 
     if (axisXChanged || axisYChanged)
@@ -103,13 +119,13 @@ qreal Domain::spanY() const
 
 bool Domain::isEmpty() const
 {
-    return qFuzzyCompare(spanX(), 0) || qFuzzyCompare(spanY(), 0);
+    return qFuzzyCompare(spanX(),0) || qFuzzyCompare(spanY(),0) || m_size.isEmpty() ;
 }
 
-void Domain::zoomIn(const QRectF &rect, const QSizeF &size)
+void Domain::zoomIn(const QRectF &rect)
 {
-    qreal dx = spanX() / size.width();
-    qreal dy = spanY() / size.height();
+    qreal dx = spanX() / m_size.width();
+    qreal dy = spanY() / m_size.height();
 
     qreal maxX = m_maxX;
     qreal minX = m_minX;
@@ -124,7 +140,7 @@ void Domain::zoomIn(const QRectF &rect, const QSizeF &size)
     setRange(minX, maxX, minY, maxY);
 }
 
-void Domain::zoomOut(const QRectF &rect, const QSizeF &size)
+void Domain::zoomOut(const QRectF &rect)
 {
     qreal dx = spanX() / rect.width();
     qreal dy = spanY() / rect.height();
@@ -135,17 +151,17 @@ void Domain::zoomOut(const QRectF &rect, const QSizeF &size)
     qreal maxY = m_maxY;
 
     minX = maxX - dx * rect.right();
-    maxX = minX + dx * size.width();
+    maxX = minX + dx * m_size.width();
     maxY = minY + dy * rect.bottom();
-    minY = maxY - dy * size.height();
+    minY = maxY - dy * m_size.height();
 
     setRange(minX, maxX, minY, maxY);
 }
 
-void Domain::move(qreal dx, qreal dy, const QSizeF &size)
+void Domain::move(qreal dx, qreal dy)
 {
-    qreal x = spanX() / size.width();
-    qreal y = spanY() / size.height();
+    qreal x = spanX() / m_size.width();
+    qreal y = spanY() / m_size.height();
 
     qreal maxX = m_maxX;
     qreal minX = m_minX;
@@ -163,21 +179,96 @@ void Domain::move(qreal dx, qreal dy, const QSizeF &size)
     setRange(minX, maxX, minY, maxY);
 }
 
-void Domain::emitUpdated()
+QPointF Domain::calculateGeometryPoint(const QPointF &point) const
 {
-    emit updated();
+    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
+    const qreal deltaY = m_size.height() / (m_maxY - m_minY);
+    qreal x = (point.x() - m_minX) * deltaX;
+    qreal y = (point.y() - m_minY) * -deltaY + m_size.height();
+    return QPointF(x, y);
 }
 
-void Domain::handleAxisUpdated()
+QVector<QPointF> Domain::calculateGeometryPoints(const QList<QPointF>& vector) const
 {
-    QAbstractAxisPrivate *axis = qobject_cast<QAbstractAxisPrivate *>(sender());
-    Q_ASSERT(axis);
-    axis->setDirty(false);
-    if (axis->orientation() == Qt::Horizontal)
-        setRangeX(axis->min(), axis->max());
-    else if (axis->orientation() == Qt::Vertical)
-        setRangeY(axis->min(), axis->max());
+    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
+    const qreal deltaY = m_size.height() / (m_maxY - m_minY);
+
+    QVector<QPointF> result;
+    result.resize(vector.count());
+
+    for (int i = 0; i < vector.count(); ++i) {
+        qreal x = (vector[i].x() - m_minX) * deltaX;
+        qreal y = (vector[i].y() - m_minY) * -deltaY + m_size.height();
+        result[i].setX(x);
+        result[i].setY(y);
+    }
+    return result;
 }
+
+QPointF Domain::calculateDomainPoint(const QPointF &point) const
+{
+    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
+    const qreal deltaY = m_size.height() / (m_maxY - m_minY);
+    qreal x = point.x() / deltaX + m_minX;
+    qreal y = (point.y() - m_size.height()) / (-deltaY) + m_minY;
+    return QPointF(x, y);
+}
+
+// handlers
+
+void Domain::handleVerticalAxisRangeChanged(qreal min, qreal max)
+{
+    if(!m_axisSignalsBlocked)
+        setRangeY(min, max);
+}
+
+void Domain::handleHorizontalAxisRangeChanged(qreal min, qreal max)
+{
+    if(!m_axisSignalsBlocked)
+        setRangeX(min, max);
+}
+
+void Domain::blockAxisSignals(bool block)
+{
+    m_axisSignalsBlocked=block;
+}
+
+//algorithm defined by Paul S.Heckbert GraphicalGems I
+
+void Domain::looseNiceNumbers(qreal &min, qreal &max, int &ticksCount)
+{
+    qreal range = niceNumber(max - min, true); //range with ceiling
+    qreal step = niceNumber(range / (ticksCount - 1), false);
+    min = qFloor(min / step);
+    max = qCeil(max / step);
+    ticksCount = int(max - min) + 1;
+    min *= step;
+    max *= step;
+}
+
+//nice numbers can be expressed as form of 1*10^n, 2* 10^n or 5*10^n
+
+qreal Domain::niceNumber(qreal x, bool ceiling)
+{
+    qreal z = qPow(10, qFloor(log10(x))); //find corresponding number of the form of 10^n than is smaller than x
+    qreal q = x / z; //q<10 && q>=1;
+
+    if (ceiling) {
+        if (q <= 1.0) q = 1;
+        else if (q <= 2.0) q = 2;
+        else if (q <= 5.0) q = 5;
+        else q = 10;
+    } else {
+        if (q < 1.5) q = 1;
+        else if (q < 3.0) q = 2;
+        else if (q < 7.0) q = 5;
+        else q = 10;
+    }
+    return q * z;
+}
+
+
+// operators
 
 bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2)
 {
@@ -196,7 +287,7 @@ bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const Domain &domain1, const 
 
 QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const Domain &domain)
 {
-    dbg.nospace() << "Domain(" << domain.m_minX << ',' << domain.m_maxX << ',' << domain.m_minY << ',' << domain.m_maxY << ')';
+    dbg.nospace() << "Domain(" << domain.m_minX << ',' << domain.m_maxX << ',' << domain.m_minY << ',' << domain.m_maxY << ')' << domain.m_size;
     return dbg.maybeSpace();
 }
 

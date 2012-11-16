@@ -42,7 +42,7 @@ class PercentBarChartItem : public AbstractBarChartItem
 {
     Q_OBJECT
 public:
-    PercentBarChartItem(QAbstractBarSeries *series, ChartPresenter *presenter);
+    PercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
 
 private:
     virtual QVector<QRectF> calculateLayout();

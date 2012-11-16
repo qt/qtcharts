@@ -20,6 +20,8 @@
 
 #include "qabstractaxis.h"
 #include "qabstractaxis_p.h"
+#include "chartdataset_p.h"
+#include "charttheme_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -308,7 +310,7 @@ QAbstractAxis::QAbstractAxis(QAbstractAxisPrivate &d, QObject *parent)
 
 QAbstractAxis::~QAbstractAxis()
 {
-    if (d_ptr->m_dataset)
+    if (d_ptr->m_chart)
         qFatal("Still binded axis detected !");
 }
 
@@ -319,7 +321,7 @@ void QAbstractAxis::setLinePen(const QPen &pen)
 {
     if (d_ptr->m_axisPen != pen) {
         d_ptr->m_axisPen = pen;
-        d_ptr->emitUpdated();
+        emit linePenChanged(pen);
     }
 }
 
@@ -331,6 +333,7 @@ QPen QAbstractAxis::linePen() const
     return d_ptr->m_axisPen;
 }
 
+//TODO: remove me
 void QAbstractAxis::setLinePenColor(QColor color)
 {
     QPen p = d_ptr->m_axisPen;
@@ -353,7 +356,6 @@ void QAbstractAxis::setLineVisible(bool visible)
 {
     if (d_ptr->m_arrowVisible != visible) {
         d_ptr->m_arrowVisible = visible;
-        d_ptr->emitUpdated();
         emit lineVisibleChanged(visible);
     }
 }
@@ -367,8 +369,7 @@ void QAbstractAxis::setGridLineVisible(bool visible)
 {
     if (d_ptr->m_gridLineVisible != visible) {
         d_ptr->m_gridLineVisible = visible;
-        d_ptr->emitUpdated();
-        emit gridVisibleChanged(visible);
+        emit gridLineVisibleChanged(visible);
     }
 }
 
@@ -384,7 +385,7 @@ void QAbstractAxis::setGridLinePen(const QPen &pen)
 {
     if (d_ptr->m_gridLinePen != pen) {
         d_ptr->m_gridLinePen = pen;
-        d_ptr->emitUpdated();
+        emit gridLinePenChanged(pen);
     }
 }
 
@@ -400,7 +401,6 @@ void QAbstractAxis::setLabelsVisible(bool visible)
 {
     if (d_ptr->m_labelsVisible != visible) {
         d_ptr->m_labelsVisible = visible;
-        d_ptr->emitUpdated();
         emit labelsVisibleChanged(visible);
     }
 }
@@ -417,7 +417,7 @@ void QAbstractAxis::setLabelsPen(const QPen &pen)
 {
     if (d_ptr->m_labelsPen != pen) {
         d_ptr->m_labelsPen = pen;
-        d_ptr->emitUpdated();
+        emit labelsPenChanged(pen);
     }
 }
 
@@ -436,7 +436,7 @@ void QAbstractAxis::setLabelsBrush(const QBrush &brush)
 {
     if (d_ptr->m_labelsBrush != brush) {
         d_ptr->m_labelsBrush = brush;
-        d_ptr->emitUpdated();
+        emit labelsBrushChanged(brush);
     }
 }
 
@@ -455,7 +455,7 @@ void QAbstractAxis::setLabelsFont(const QFont &font)
 {
     if (d_ptr->m_labelsFont != font) {
         d_ptr->m_labelsFont = font;
-        d_ptr->emitUpdated();
+        emit labelsFontChanged(font);
     }
 }
 
@@ -471,7 +471,7 @@ void QAbstractAxis::setLabelsAngle(int angle)
 {
     if (d_ptr->m_labelsAngle != angle) {
         d_ptr->m_labelsAngle = angle;
-        d_ptr->emitUpdated();
+        emit labelsAngleChanged(angle);
     }
 }
 
@@ -479,7 +479,7 @@ int QAbstractAxis::labelsAngle() const
 {
     return d_ptr->m_labelsAngle;
 }
-
+//TODO: remove me
 void QAbstractAxis::setLabelsColor(QColor color)
 {
     QBrush b = d_ptr->m_labelsBrush;
@@ -499,7 +499,7 @@ void QAbstractAxis::setTitleVisible(bool visible)
 {
     if (d_ptr->m_titleVisible != visible) {
         d_ptr->m_titleVisible = visible;
-        d_ptr->emitUpdated();
+        emit labelsVisibleChanged(visible);
     }
 }
 
@@ -515,7 +515,7 @@ void QAbstractAxis::setTitlePen(const QPen &pen)
 {
     if (d_ptr->m_titlePen != pen) {
         d_ptr->m_titlePen = pen;
-        d_ptr->emitUpdated();
+        emit titlePenChanged(pen);
     }
 }
 
@@ -534,7 +534,7 @@ void QAbstractAxis::setTitleBrush(const QBrush &brush)
 {
     if (d_ptr->m_titleBrush != brush) {
         d_ptr->m_titleBrush = brush;
-        d_ptr->emitUpdated();
+        emit titleBrushChanged(brush);
     }
 }
 
@@ -553,7 +553,7 @@ void QAbstractAxis::setTitleFont(const QFont &font)
 {
     if (d_ptr->m_titleFont != font) {
         d_ptr->m_titleFont = font;
-        d_ptr->emitUpdated();
+        emit titleFontChanged(font);
     }
 }
 
@@ -565,15 +565,15 @@ QFont QAbstractAxis::titleFont() const
     return d_ptr->m_titleFont;
 }
 
-void QAbstractAxis::setTitle(const QString &title)
+void QAbstractAxis::setTitleText(const QString &title)
 {
     if (d_ptr->m_title != title) {
         d_ptr->m_title = title;
-        d_ptr->emitUpdated();
+        emit titleTextChanged(title);
     }
 }
 
-QString QAbstractAxis::title() const
+QString QAbstractAxis::titleText() const
 {
     return d_ptr->m_title;
 }
@@ -583,7 +583,6 @@ void QAbstractAxis::setShadesVisible(bool visible)
 {
     if (d_ptr->m_shadesVisible != visible) {
         d_ptr->m_shadesVisible = visible;
-        d_ptr->emitUpdated();
         emit shadesVisibleChanged(visible);
     }
 }
@@ -600,7 +599,7 @@ void QAbstractAxis::setShadesPen(const QPen &pen)
 {
     if (d_ptr->m_shadesPen != pen) {
         d_ptr->m_shadesPen = pen;
-        d_ptr->emitUpdated();
+        emit shadesPenChanged(pen);
     }
 }
 
@@ -619,8 +618,7 @@ void QAbstractAxis::setShadesBrush(const QBrush &brush)
 {
     if (d_ptr->m_shadesBrush != brush) {
         d_ptr->m_shadesBrush = brush;
-        d_ptr->emitUpdated();
-        emit shadesColorChanged(brush.color());
+        emit shadesBrushChanged(brush);
     }
 }
 
@@ -635,8 +633,11 @@ QBrush QAbstractAxis::shadesBrush() const
 void QAbstractAxis::setShadesColor(QColor color)
 {
     QBrush b = d_ptr->m_shadesBrush;
-    b.setColor(color);
-    setShadesBrush(b);
+    if (b.color() != color) {
+        b.setColor(color);
+        setShadesBrush(b);
+        emit shadesColorChanged(color);
+    }
 }
 
 QColor QAbstractAxis::shadesColor() const
@@ -646,9 +647,12 @@ QColor QAbstractAxis::shadesColor() const
 
 void QAbstractAxis::setShadesBorderColor(QColor color)
 {
-    QPen p = d_ptr->m_shadesPen;
-    p.setColor(color);
-    setShadesPen(p);
+	QPen p = d_ptr->m_shadesPen;
+	if (p.color() != color) {
+		p.setColor(color);
+		setShadesPen(p);
+		emit shadesColorChanged(color);
+	}
 }
 
 QColor QAbstractAxis::shadesBorderColor() const
@@ -669,7 +673,6 @@ void QAbstractAxis::setVisible(bool visible)
 {
     if (d_ptr->m_visible != visible) {
         d_ptr->m_visible = visible;
-        d_ptr->emitUpdated();
         emit visibleChanged(visible);
     }
 }
@@ -729,26 +732,21 @@ void QAbstractAxis::setRange(const QVariant &min, const QVariant &max)
 // http://techbase.kde.org/Policies/Binary_Compatibility_Examples#Change_the_CV-qualifiers_of_a_member_function
 Qt::Orientation QAbstractAxis::orientation()
 {
-    return d_ptr->m_orientation;
+    return d_ptr->orientation();
 }
 
 Qt::Alignment QAbstractAxis::alignment() const
 {
-    return d_ptr->m_alignment;
-}
-
-void QAbstractAxis::setAlignment(Qt::Alignment alignment)
-{
-    d_ptr->m_alignment = alignment;
+    return d_ptr->alignment();
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
     : q_ptr(q),
+      m_chart(0),
       m_orientation(Qt::Orientation(0)),
       m_alignment(0),
-      m_dataset(0),
       m_visible(true),
       m_arrowVisible(true),
       m_gridLineVisible(true),
@@ -764,29 +762,103 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
 
 QAbstractAxisPrivate::~QAbstractAxisPrivate()
 {
-
 }
 
-void QAbstractAxisPrivate::emitUpdated()
+void QAbstractAxisPrivate::setAlignment( Qt::Alignment alignment)
 {
-    if (!m_dirty) {
-        m_dirty = true;
-        emit updated();
+    switch(alignment) {
+        case Qt::AlignTop:
+        case Qt::AlignBottom:
+        m_orientation = Qt::Horizontal;
+        break;
+        case Qt::AlignLeft:
+        case Qt::AlignRight:
+        m_orientation = Qt::Vertical;
+        break;
+        default:
+        qWarning()<<"No alignment specified !";
+        break;
+    };
+    m_alignment=alignment;
+}
+
+void QAbstractAxisPrivate::initializeTheme(ChartTheme* theme, bool forced)
+{
+    QPen pen;
+    QBrush brush;
+    QFont font;
+
+    bool axisX = m_orientation == Qt::Horizontal;
+
+    if (m_arrowVisible) {
+
+        if (forced || brush == m_labelsBrush){
+            q_ptr->setLabelsBrush(theme->labelBrush());
+        }
+        //TODO: introduce axis brush
+        if (forced || brush == m_titleBrush){
+            q_ptr->setTitleBrush(theme->labelBrush());
+        }
+        if (forced || pen == m_labelsPen){
+            q_ptr->setLabelsPen(Qt::NoPen);// NoPen for performance reasons
+        }
+        if (forced || pen == m_titlePen){
+            q_ptr->setTitlePen(Qt::NoPen);// Noen for performance reasons
+        }
+        if (forced || m_shadesVisible) {
+
+            if (forced || brush == m_shadesBrush){
+                q_ptr->setShadesBrush(theme->backgroundShadesBrush());
+            }
+            if (forced || pen == m_shadesPen){
+                q_ptr->setShadesPen(theme->backgroundShadesPen());
+            }
+            if (forced && (theme->backgroundShades() == ChartTheme::BackgroundShadesBoth
+                    || (theme->backgroundShades() == ChartTheme::BackgroundShadesVertical && axisX)
+                    || (theme->backgroundShades() == ChartTheme::BackgroundShadesHorizontal && !axisX))) {
+            	 q_ptr->setShadesVisible(true);
+            }
+        }
+
+		if (forced || pen == m_axisPen) {
+			q_ptr->setLinePen(theme->axisLinePen());
+		}
+
+		if (forced || pen == m_gridLinePen) {
+			q_ptr->setGridLinePen(theme->girdLinePen());
+		}
+
+        if (forced || font == m_labelsFont){
+        	q_ptr->setLabelsFont(theme->labelFont());
+        }
+        //TODO: discuss with Tero
+        if (forced || font == m_titleFont){
+            QFont font(m_labelsFont);
+            font.setBold(true);
+            q_ptr->setTitleFont(font);
+        }
     }
 }
 
-void QAbstractAxisPrivate::setDirty(bool dirty)
+void QAbstractAxisPrivate::handleRangeChanged(qreal min, qreal max)
 {
-    m_dirty = dirty;
+    setRange(min,max);
 }
 
-void QAbstractAxisPrivate::setOrientation(Qt::Orientation orientation)
+void QAbstractAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 {
-    m_orientation = orientation;
-    if (m_orientation == Qt::Horizontal && !m_alignment)
-        m_alignment = Qt::AlignBottom;
-    else if (m_orientation == Qt::Vertical && !m_alignment)
-        m_alignment = Qt::AlignLeft;
+    Q_UNUSED(parent);
+}
+
+void QAbstractAxisPrivate::initializeAnimations(QChart::AnimationOptions options)
+{
+    ChartAxis* axis = m_item.data();
+    Q_ASSERT(axis);
+    if(options.testFlag(QChart::GridAxisAnimations)) {
+        axis->setAnimation(new AxisAnimation(axis));
+    }else{
+        axis->setAnimation(0);
+    }
 }
 
 

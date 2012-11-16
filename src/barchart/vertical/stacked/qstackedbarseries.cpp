@@ -70,8 +70,8 @@ QStackedBarSeries::QStackedBarSeries(QObject *parent)
 QStackedBarSeries::~QStackedBarSeries()
 {
     Q_D(QStackedBarSeries);
-    if (d->m_dataset)
-        d->m_dataset->removeSeries(this);
+    if (d->m_chart)
+        d->m_chart->removeSeries(this);
 }
 /*!
     Returns QChartSeries::SeriesTypeStackedBar.
@@ -88,12 +88,12 @@ QStackedBarSeriesPrivate::QStackedBarSeriesPrivate(QStackedBarSeries *q) : QAbst
 
 }
 
-void QStackedBarSeriesPrivate::scaleDomain(Domain &domain)
+void QStackedBarSeriesPrivate::initializeDomain()
 {
-    qreal minX(domain.minX());
-    qreal minY(domain.minY());
-    qreal maxX(domain.maxX());
-    qreal maxY(domain.maxY());
+    qreal minX(domain()->minX());
+    qreal minY(domain()->minY());
+    qreal maxX(domain()->maxX());
+    qreal maxY(domain()->maxY());
 
     qreal x = categoryCount();
     minX = qMin(minX, - (qreal)0.5);
@@ -101,20 +101,28 @@ void QStackedBarSeriesPrivate::scaleDomain(Domain &domain)
     maxX = qMax(maxX, x - (qreal)0.5);
     maxY = qMax(maxY, top());
 
-    domain.setRange(minX, maxX, minY, maxY);
+    domain()->setRange(minX, maxX, minY, maxY);
 }
 
-ChartElement *QStackedBarSeriesPrivate::createGraphics(ChartPresenter *presenter)
+void QStackedBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
 {
     Q_Q(QStackedBarSeries);
-
-    StackedBarChartItem *bar = new StackedBarChartItem(q, presenter);
-    if (presenter->animationOptions().testFlag(QChart::SeriesAnimations))
-        bar->setAnimation(new StackedBarAnimation(bar));
-    presenter->chartTheme()->decorate(q, presenter->dataSet()->seriesIndex(q));
-    return bar;
+    StackedBarChartItem *bar = new StackedBarChartItem(q,parent);
+    m_item.reset(bar);
+    QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
+void QStackedBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
+{
+    StackedBarChartItem *bar = static_cast<StackedBarChartItem *>(m_item.data());
+    Q_ASSERT(bar);
+    if (options.testFlag(QChart::SeriesAnimations)) {
+        bar->setAnimation(new StackedBarAnimation(bar));
+    }else{
+        bar->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
+}
 #include "moc_qstackedbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
