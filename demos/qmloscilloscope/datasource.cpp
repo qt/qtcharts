@@ -87,14 +87,6 @@ void DataSource::generateData(int type, int rowCount, int colCount)
     }
 }
 
-void DataSource::setOpenGL(bool enabled)
-{
-    if (enabled)
-        m_appViewer->setViewport(new QGLWidget());
-    else
-        m_appViewer->setViewport(0);
-}
-
 void DataSource::setAntialiasing(bool enabled)
 {
     m_appViewer->setRenderHint(QPainter::Antialiasing, enabled);

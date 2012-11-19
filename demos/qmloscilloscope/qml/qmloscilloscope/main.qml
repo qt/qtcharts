@@ -42,7 +42,6 @@ Rectangle {
             else
                 dataSource.generateData(1, signalCount, sampleCount);
         }
-        onOpenGLEnabled: dataSource.setOpenGL(enabled);
         onAnimationsEnabled: scopeView.setAnimations(enabled);
         onSeriesTypeChanged: scopeView.changeSeriesType(type);
         onRefreshRateChanged: scopeView.changeRefreshRate(rate);

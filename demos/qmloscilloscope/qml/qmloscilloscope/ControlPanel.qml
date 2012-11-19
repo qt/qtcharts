@@ -22,7 +22,6 @@ import QtQuick 1.0
 
 Column {
     spacing: 5
-    signal openGLEnabled(bool enabled)
     signal animationsEnabled(bool enabled)
     signal seriesTypeChanged(string type)
     signal refreshRateChanged(variant rate);
@@ -68,13 +67,6 @@ Column {
         items: [1, 24, 60, 100]
         currentSelection: 2
         onSelectionChanged: refreshRateChanged(items[currentSelection]);
-    }
-
-    MultiButton {
-        text: "OpenGL: "
-        items: ["OFF", "ON"]
-        currentSelection: 0
-        onSelectionChanged: openGLEnabled(currentSelection == 1);
     }
 
     MultiButton {

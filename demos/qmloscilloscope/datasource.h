@@ -39,7 +39,6 @@ signals:
 public slots:
     void generateData(int type, int rowCount, int colCount);
     void update(QAbstractSeries *series);
-    void setOpenGL(bool enabled);
     void setAntialiasing(bool enabled);
 
 private:
