@@ -446,13 +446,14 @@ QStringList ChartAxis::createValueLabels(int ticks) const
             if (format.contains("d")
                     || format.contains("i")
                     || format.contains("c"))
-
                 labels << QString().sprintf(array, (qint64)value);
             else if (format.contains("u")
                      || format.contains("o")
                      || format.contains("x", Qt::CaseInsensitive))
                 labels << QString().sprintf(array, (quint64)value);
-            else
+            else if (format.contains("f", Qt::CaseInsensitive)
+                      || format.contains("e", Qt::CaseInsensitive)
+                      || format.contains("g", Qt::CaseInsensitive))
                 labels << QString().sprintf(array, value);
         }
     }
