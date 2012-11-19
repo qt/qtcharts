@@ -443,7 +443,17 @@ QStringList ChartAxis::createValueLabels(int ticks) const
         QByteArray array = format.toLatin1();
         for (int i = 0; i < ticks; i++) {
             qreal value = m_min + (i * (m_max - m_min) / (ticks - 1));
-            labels << QString().sprintf(array, value);
+            if (format.contains("d")
+                    || format.contains("i")
+                    || format.contains("c"))
+
+                labels << QString().sprintf(array, (qint64)value);
+            else if (format.contains("u")
+                     || format.contains("o")
+                     || format.contains("x", Qt::CaseInsensitive))
+                labels << QString().sprintf(array, (quint64)value);
+            else
+                labels << QString().sprintf(array, value);
         }
     }
 

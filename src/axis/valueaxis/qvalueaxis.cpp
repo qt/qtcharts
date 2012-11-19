@@ -97,12 +97,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 /*!
   \property QValueAxis::labelFormat
   Defines the label format for the axis.
-  See QString::sprintf() for the details.
+  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
+  See QString::sprintf() for additional details.
 */
 /*!
   \qmlproperty real ValueAxis::labelFormat
   Defines the label format for the axis.
-  See QString::sprintf() for the details.
+  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
+  See QString::sprintf() for additional details.
 */
 
 /*!
