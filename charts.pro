@@ -9,7 +9,7 @@ development_build: message('Development build')
 
 CONFIG += ordered
 QMAKE_CXXFLAGS += -g -Wall
-unix:QMAKE_DISTCLEAN += -r build bin include lib doc/html 
+unix:QMAKE_DISTCLEAN += -r build bin include lib doc/html
 win32:QMAKE_DISTCLEAN += /Q /s build bin include lib doc\\html
 
 # install feature file
@@ -17,15 +17,25 @@ feature.path = $$[QT_INSTALL_DATA]/mkspecs/features
 feature.files = $$PWD/features/qtcommercialchart.prf
 INSTALLS += feature
 
-docs.target = docs
-win32:{
-    docs.commands = qdoc3 $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
-}else{
-    docs.commands = qdoc3 $$CHART_BUILD_DOC_DIR/qcharts.qdocconf
+# docs
+win32: {
+    QDOC_CONF = $$CHART_BUILD_DOC_DIR\\qcharts.qdocconf
+} else {
+    QDOC_CONF = $$CHART_BUILD_DOC_DIR/qcharts.qdocconf
 }
+
+contains(QT_MAJOR_VERSION, 5) {
+    QDOC_CMD = qdoc
+} else {
+    QDOC_CMD = qdoc3
+}
+
+docs.target = docs
+docs.commands = $$QDOC_CMD $$QDOC_CONF
 docs.depends = FORCE
 QMAKE_EXTRA_TARGETS += docs
 
+# coverage
 unix:coverage:{
     QMAKE_DISTCLEAN += -r ./coverage
     QMAKE_CLEAN += build/*.gcda build/*.gcno
