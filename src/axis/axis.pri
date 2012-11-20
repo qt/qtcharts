@@ -3,12 +3,14 @@
 INCLUDEPATH += $$PWD \
     $$PWD/valueaxis \
     $$PWD/barcategoryaxis \
-    $$PWD/categoryaxis
+    $$PWD/categoryaxis \
+    $$PWD/logvalueaxis
 
 DEPENDPATH += $$PWD \
     $$PWD/valueaxis \
     $$PWD/barcategoryaxis \
-    $$PWD/categoryaxis
+    $$PWD/categoryaxis \
+    $$PWD/logvalueaxis
 
 SOURCES += \
     $$PWD/chartaxis.cpp \
@@ -23,7 +25,10 @@ SOURCES += \
     $$PWD/barcategoryaxis/qbarcategoryaxis.cpp \
     $$PWD/categoryaxis/chartcategoryaxisx.cpp \
     $$PWD/categoryaxis/chartcategoryaxisy.cpp \
-    $$PWD/categoryaxis/qcategoryaxis.cpp 
+    $$PWD/categoryaxis/qcategoryaxis.cpp \
+    $$PWD/logvalueaxis/chartlogvalueaxisx.cpp \
+    $$PWD/logvalueaxis/chartlogvalueaxisy.cpp \
+    $$PWD/logvalueaxis/qlogvalueaxis.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/chartaxis_p.h \
@@ -38,13 +43,17 @@ PRIVATE_HEADERS += \
     $$PWD/barcategoryaxis/qbarcategoryaxis_p.h \
     $$PWD/categoryaxis/chartcategoryaxisx_p.h \
     $$PWD/categoryaxis/chartcategoryaxisy_p.h \
-    $$PWD/categoryaxis/qcategoryaxis_p.h
+    $$PWD/categoryaxis/qcategoryaxis_p.h \
+    $$PWD/logvalueaxis/chartlogvalueaxisx_p.h \
+    $$PWD/logvalueaxis/chartlogvalueaxisy_p.h \
+    $$PWD/logvalueaxis/qlogvalueaxis_p.h
 
 PUBLIC_HEADERS += \
     $$PWD/qabstractaxis.h \
     $$PWD/valueaxis/qvalueaxis.h \
     $$PWD/barcategoryaxis/qbarcategoryaxis.h \
-    $$PWD/categoryaxis/qcategoryaxis.h
+    $$PWD/categoryaxis/qcategoryaxis.h \
+    $$PWD/logvalueaxis/qlogvalueaxis.h \
 
 !linux-arm*: {
 INCLUDEPATH += \
@@ -66,3 +75,4 @@ PRIVATE_HEADERS += \
 PUBLIC_HEADERS += \
     $$PWD/datetimeaxis/qdatetimeaxis.h
 }
+

@@ -92,6 +92,7 @@ public:
 
 //helpers
     static QStringList createValueLabels(qreal max, qreal min, int ticks, const QString &format);
+    static QStringList createLogValueLabels(qreal min, qreal max, qreal base, int ticks, const QString& format);
     static QStringList createDateTimeLabels(qreal max, qreal min, int ticks, const QString &format);
 
 protected:

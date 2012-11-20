@@ -27,6 +27,7 @@
 #include <qmath.h>
 #include <QDateTime>
 #include <QValueAxis>
+#include <QLogValueAxis>
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 
@@ -432,6 +433,44 @@ QStringList ChartAxis::createValueLabels(qreal min, qreal max, int ticks,const Q
                       || format.contains("e", Qt::CaseInsensitive)
                       || format.contains("g", Qt::CaseInsensitive))
                 labels << QString().sprintf(array, value);
+        }
+    }
+
+    return labels;
+}
+
+QStringList ChartAxis::createLogValueLabels(qreal min, qreal max, qreal base, int ticks, const QString& format)
+{
+//    Q_ASSERT(m_max > m_min);
+    //    Q_ASSERT(ticks > 1);
+
+    QStringList labels;
+
+    int n = 0;
+    if (ticks > 1)
+        n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0);
+    n++;
+
+//    QLogValueAxis *axis = qobject_cast<QLogValueAxis *>(m_chartAxis);
+
+//    QString format = axis->labelFormat();
+
+    int firstTick;
+    if (base > 1)
+        firstTick = (int)(log10(min) / log10(base));
+    else
+        firstTick = (int)(log10(max) / log10(base));
+
+    if (format.isNull()) {
+        for (int i = firstTick; i < ticks + firstTick; i++) {
+            qreal value = qPow(base, i);
+            labels << QString::number(value, 'f', n);
+        }
+    } else {
+        QByteArray array = format.toAscii();
+        for (int i = firstTick; i < ticks + firstTick; i++) {
+            qreal value = qPow(base, i);
+            labels << QString().sprintf(array, value);
         }
     }
 
