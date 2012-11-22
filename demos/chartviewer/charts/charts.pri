@@ -15,9 +15,13 @@ SOURCES += \
     $$PWD/pieseries/piechart.cpp \
     $$PWD/pieseries/donutchart.cpp \
     $$PWD/axis/valueaxis.cpp \
+    $$PWD/axis/logvalueaxisx.cpp \
+    $$PWD/axis/logvalueaxisy.cpp \
     $$PWD/axis/categoryaxis.cpp \
     $$PWD/axis/barcategoryaxisx.cpp \
     $$PWD/axis/barcategoryaxisy.cpp \
+    $$PWD/axis/barcategoryaxisxlogy.cpp \
+    $$PWD/axis/barcategoryaxisylogx.cpp \
     $$PWD/multiaxis/multivalueaxis.cpp \
     $$PWD/multiaxis/multivalueaxis2.cpp \
     $$PWD/multiaxis/multivalueaxis3.cpp \
