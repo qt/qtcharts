@@ -127,7 +127,7 @@ public:
     void setShadesBorderColor(QColor color);
     QColor shadesBorderColor() const;
 
-    Qt::Orientation orientation() const;
+    Qt::Orientation orientation();
     Qt::Alignment alignment() const;
     void setAlignment(Qt::Alignment alignment);
 
