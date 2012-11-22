@@ -307,8 +307,6 @@ QAbstractAxis *QChart::axisX(QAbstractSeries *series) const
 {
     if(!series && d_ptr->m_dataset->series().size()>0){
         series = d_ptr->m_dataset->series().first();
-    }else{
-        return 0;
     }
 
     QList<QAbstractAxis*> axes = series->attachedAxes();
@@ -336,8 +334,6 @@ QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
 {
     if(!series && d_ptr->m_dataset->series().size()>0) {
         series = d_ptr->m_dataset->series().first();
-    } else {
-        return 0;
     }
 
     QList<QAbstractAxis*> axes = series->attachedAxes();
@@ -536,10 +532,8 @@ void QChart::setAxisX(QAbstractAxis *axis , QAbstractSeries *series)
    QList<QAbstractAxis*> list = axes(Qt::Horizontal,series);
 
    foreach(QAbstractAxis* a, list){
-       if(a->alignment()==axis->alignment()){
-           d_ptr->m_dataset->removeAxis(a);
-           delete a;
-       }
+        d_ptr->m_dataset->removeAxis(a);
+        delete a;
    }
 
    if(!d_ptr->m_dataset->axes().contains(axis))
@@ -557,10 +551,8 @@ void QChart::setAxisY(QAbstractAxis *axis , QAbstractSeries *series)
     QList<QAbstractAxis*> list = axes(Qt::Vertical,series);
 
     foreach(QAbstractAxis* a, list) {
-        if(a->alignment()==axis->alignment()) {
-            d_ptr->m_dataset->removeAxis(a);
-            delete a;
-        }
+        d_ptr->m_dataset->removeAxis(a);
+        delete a;
     }
 
     if(!d_ptr->m_dataset->axes().contains(axis))
