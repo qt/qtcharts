@@ -33,7 +33,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class QAbstractSeries;
 class QAbstractAxis;
 class QLegend;
-struct QChartPrivate;
+class QChartPrivate;
 
 class QTCOMMERCIALCHART_EXPORT QChart : public QGraphicsWidget
 {

@@ -101,16 +101,16 @@ void ChartAxis::setLayout(QVector<qreal> &layout)
 
 void ChartAxis::createItems(int count)
 {
-    if (m_arrow->children().size() == 0){
+    if (m_arrow->childItems().size() == 0){
         QGraphicsLineItem* arrow = new ArrowItem(this, this);
         arrow->setPen(m_axis->linePen());
         m_arrow->addToGroup(arrow);
     }
 
-    if (m_intervalAxis && m_grid->children().size() == 0) {
+    if (m_intervalAxis && m_grid->childItems().size() == 0) {
         for (int i = 0 ; i < 2 ; i  ++){
-        	QGraphicsLineItem* item = new QGraphicsLineItem(this);
-        	item->setPen(m_axis->gridLinePen());
+            QGraphicsLineItem* item = new QGraphicsLineItem(this);
+            item->setPen(m_axis->gridLinePen());
             m_grid->addToGroup(item);
         }
     }
@@ -118,20 +118,20 @@ void ChartAxis::createItems(int count)
     for (int i = 0; i < count; ++i) {
         QGraphicsLineItem* arrow = new QGraphicsLineItem(this);
         arrow->setPen(m_axis->linePen());
-    	QGraphicsLineItem* grid = new QGraphicsLineItem(this);
-    	grid->setPen(m_axis->gridLinePen());
-    	QGraphicsSimpleTextItem* label = new QGraphicsSimpleTextItem(this);
-    	label->setFont(m_axis->labelsFont());
-    	label->setPen(m_axis->labelsPen());
-    	label->setBrush(m_axis->labelsBrush());
-    	m_arrow->addToGroup(arrow);
+        QGraphicsLineItem* grid = new QGraphicsLineItem(this);
+        grid->setPen(m_axis->gridLinePen());
+        QGraphicsSimpleTextItem* label = new QGraphicsSimpleTextItem(this);
+        label->setFont(m_axis->labelsFont());
+        label->setPen(m_axis->labelsPen());
+        label->setBrush(m_axis->labelsBrush());
+        m_arrow->addToGroup(arrow);
         m_grid->addToGroup(grid);
         m_labels->addToGroup(label);
 
         if ((m_grid->childItems().size()) % 2 && m_grid->childItems().size() > 2){
-        	QGraphicsRectItem* shades = new QGraphicsRectItem(this);
-        	shades->setPen(m_axis->shadesPen());
-         	shades->setBrush(m_axis->shadesBrush());
+            QGraphicsRectItem* shades = new QGraphicsRectItem(this);
+            shades->setPen(m_axis->shadesPen());
+            shades->setBrush(m_axis->shadesBrush());
             m_shades->addToGroup(shades);
         }
     }
@@ -217,32 +217,32 @@ void ChartAxis::setGeometry(const QRectF &axis, const QRectF &grid)
 
 qreal ChartAxis::min() const
 {
-	return m_axis->d_ptr->min();
+    return m_axis->d_ptr->min();
 }
 
 qreal ChartAxis::max() const
 {
-	return m_axis->d_ptr->max();
+    return m_axis->d_ptr->max();
 }
 
 QFont ChartAxis::font() const
 {
-	return m_axis->labelsFont();
+    return m_axis->labelsFont();
 }
 
 QFont ChartAxis::titleFont() const
 {
-	return m_axis->titleFont();
+    return m_axis->titleFont();
 }
 
 QString ChartAxis::titleText() const
 {
-	return m_axis->titleText();
+    return m_axis->titleText();
 }
 
 void ChartAxis::axisSelected()
 {
-	emit clicked();
+    emit clicked();
 }
 
 Qt::Orientation ChartAxis::orientation() const
@@ -311,10 +311,10 @@ void ChartAxis::handleLabelsBrushChanged(const QBrush &brush)
 
 void ChartAxis::handleLabelsFontChanged(const QFont &font)
 {
-	foreach (QGraphicsItem *item , m_labels->childItems())
-	static_cast<QGraphicsSimpleTextItem *>(item)->setFont(font);
-	QGraphicsLayoutItem::updateGeometry();
-	presenter()->layout()->invalidate();
+    foreach (QGraphicsItem *item , m_labels->childItems())
+    static_cast<QGraphicsSimpleTextItem *>(item)->setFont(font);
+    QGraphicsLayoutItem::updateGeometry();
+    presenter()->layout()->invalidate();
 }
 
 void ChartAxis::handleShadesBrushChanged(const QBrush &brush)
@@ -343,9 +343,9 @@ void ChartAxis::handleGridPenChanged(const QPen &pen)
 
 void ChartAxis::handleTitleTextChanged(const QString &title)
 {
-	Q_UNUSED(title)
-	QGraphicsLayoutItem::updateGeometry();
-	presenter()->layout()->invalidate();
+    Q_UNUSED(title)
+    QGraphicsLayoutItem::updateGeometry();
+    presenter()->layout()->invalidate();
 }
 
 
@@ -370,29 +370,29 @@ void ChartAxis::handleTitleFontChanged(const QFont &font)
 
 void ChartAxis::handleVisibleChanged(bool visible)
 {
-	setVisible(visible);
+    setVisible(visible);
 }
 
 void ChartAxis::handleRangeChanged(qreal min, qreal max)
 {
-	Q_UNUSED(min);
-	Q_UNUSED(max);
+    Q_UNUSED(min);
+    Q_UNUSED(max);
 
-	if (!isEmpty()) {
+    if (!isEmpty()) {
 
-		QVector<qreal> layout = calculateLayout();
-		updateLayout(layout);
-		QSizeF before = effectiveSizeHint(Qt::PreferredSize);
-		QSizeF after = sizeHint(Qt::PreferredSize);
+        QVector<qreal> layout = calculateLayout();
+        updateLayout(layout);
+        QSizeF before = effectiveSizeHint(Qt::PreferredSize);
+        QSizeF after = sizeHint(Qt::PreferredSize);
 
-		if (before != after) {
-			QGraphicsLayoutItem::updateGeometry();
-			//we don't want to call invalidate on layout, since it will change minimum size of component,
-			//which we would like to avoid since it causes nasty flips when scrolling or zooming,
-			//instead recalculate layout and use plotArea for extra space.
-			presenter()->layout()->setGeometry(presenter()->layout()->geometry());
-		}
-	}
+        if (before != after) {
+            QGraphicsLayoutItem::updateGeometry();
+            //we don't want to call invalidate on layout, since it will change minimum size of component,
+            //which we would like to avoid since it causes nasty flips when scrolling or zooming,
+            //instead recalculate layout and use plotArea for extra space.
+            presenter()->layout()->setGeometry(presenter()->layout()->geometry());
+        }
+    }
 
 }
 
@@ -463,7 +463,7 @@ QStringList ChartAxis::createLogValueLabels(qreal min, qreal max, qreal base, in
             labels << QString::number(value, 'f', n);
         }
     } else {
-        QByteArray array = format.toAscii();
+        QByteArray array = format.toLatin1();
         for (int i = firstTick; i < ticks + firstTick; i++) {
             qreal value = qPow(base, i);
             labels << QString().sprintf(array, value);

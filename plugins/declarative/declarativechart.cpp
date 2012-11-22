@@ -248,13 +248,12 @@ DeclarativeChart::DeclarativeChart(QDeclarativeItem *parent)
     connect(m_margins, SIGNAL(bottomChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
     connect(m_margins, SIGNAL(leftChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
     connect(m_margins, SIGNAL(rightChanged(int,int,int,int)), this, SLOT(changeMinimumMargins(int,int,int,int)));
-    connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*,AbstractDomain*)), this, SLOT(handleSeriesAdded(QAbstractSeries*,AbstractDomain*)));
+    connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)), this, SLOT(handleSeriesAdded(QAbstractSeries*)));
     connect(m_chart->d_ptr->m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)), this, SIGNAL(seriesRemoved(QAbstractSeries*)));
 }
 
-void DeclarativeChart::handleSeriesAdded(QAbstractSeries *series, AbstractDomain *domain)
+void DeclarativeChart::handleSeriesAdded(QAbstractSeries *series)
 {
-    Q_UNUSED(domain)
     emit seriesAdded(series);
 }
 

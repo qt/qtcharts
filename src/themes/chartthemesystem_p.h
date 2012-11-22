@@ -77,10 +77,10 @@ public:
                             GetGValue(colorGradientActiveCaptionRight),
                             GetBValue(colorGradientActiveCaptionRight));
         g.setColorAt(1.0, end);
-        m_seriesColors.append(colorAt(g, 0.5));
+        m_seriesColors.append(ChartThemeManager::colorAt(g, 0.5));
 
         // Generate gradients from the base colors
-        generateSeriesGradients();
+        ChartThemeManager::generateSeriesGradients(m_seriesColors);
 
         // Background fill color from COLOR_WINDOW
         QLinearGradient backgroundGradient;

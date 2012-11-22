@@ -889,8 +889,8 @@ QAbstractAxis* QPieSeriesPrivate::createDefaultAxis(Qt::Orientation orientation)
 
 void QPieSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bool forced)
 {
-    Q_Q(QPieSeries);
-    const QList<QColor>& colors = theme->seriesColors();
+    //Q_Q(QPieSeries);
+    //const QList<QColor>& colors = theme->seriesColors();
     const QList<QGradient>& gradients = theme->seriesGradients();
 
     for (int i(0); i < m_slices.count(); i++) {
