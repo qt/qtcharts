@@ -66,6 +66,10 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(QBrush titleBrush READ titleBrush WRITE setTitleBrush NOTIFY titleBrushChanged)
     Q_PROPERTY(bool titleVisible READ titleVisible WRITE setTitleVisible)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
+    //orientation
+    Q_PROPERTY(Qt::Orientation orinetation READ orientation)
+    //aligment
+    Q_PROPERTY(Qt::Alignment alignment READ alignment)
 
 public:
 
