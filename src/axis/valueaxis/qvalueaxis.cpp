@@ -22,7 +22,7 @@
 #include "qvalueaxis_p.h"
 #include "chartvalueaxisx_p.h"
 #include "chartvalueaxisy_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include "chartdataset_p.h"
 #include "chartpresenter_p.h"
 #include "charttheme_p.h"
@@ -273,7 +273,7 @@ void QValueAxis::applyNiceNumbers()
     qreal min = d->m_min;
     qreal max = d->m_max;
     int ticks = d->m_tickCount;
-    Domain::looseNiceNumbers(min,max,ticks);
+    AbstractDomain::looseNiceNumbers(min,max,ticks);
     d->setRange(min,max);
     setTickCount(ticks);
 }
@@ -365,7 +365,7 @@ void QValueAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 }
 
 
-void QValueAxisPrivate::initializeDomain(Domain *domain)
+void QValueAxisPrivate::initializeDomain(AbstractDomain *domain)
 {
     if (orientation() == Qt::Vertical) {
         if(!qFuzzyIsNull(m_max - m_min)) {

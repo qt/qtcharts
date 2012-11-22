@@ -35,7 +35,7 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class Domain;
+class AbstractDomain;
 
 class QBarCategoryAxisPrivate : public QAbstractAxisPrivate
 {
@@ -47,7 +47,7 @@ public:
 
 public:
     void initializeGraphics(QGraphicsItem* parent);
-    void initializeDomain(Domain *domain);
+    void initializeDomain(AbstractDomain *domain);
     void updateCategoryDomain();
 
     //interface for manipulating range form base class

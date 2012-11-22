@@ -41,13 +41,13 @@ QTEST_MAIN(tst_Domain)
 #else
 
 #include <QtTest/QtTest>
-#include <private/domain_p.h>
+#include <private/xydomain_p.h>
 #include <private/qabstractaxis_p.h>
 #include <tst_definitions.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-Q_DECLARE_METATYPE(Domain*)
+Q_DECLARE_METATYPE(XYDomain*)
 Q_DECLARE_METATYPE(QSizeF)
 Q_DECLARE_METATYPE(QMargins)
 
@@ -61,7 +61,8 @@ public:
     {
         Q_UNUSED(item);
     };
-    void initializeDomain(Domain* domain)
+
+    void initializeDomain(AbstractDomain* domain)
     {
         Q_UNUSED(domain);
     };
@@ -161,7 +162,7 @@ void tst_Domain::cleanup()
 
 void tst_Domain::domain()
 {
-    Domain domain;
+    XYDomain domain;
 
     QCOMPARE(domain.isEmpty(), true);
     QCOMPARE(domain.maxX(), 0.0);
@@ -184,7 +185,7 @@ void tst_Domain::handleHorizontalAxisRangeChanged()
     QFETCH(qreal, min);
     QFETCH(qreal, max);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -221,7 +222,7 @@ void tst_Domain::handleVerticalAxisRangeChanged()
     QFETCH(qreal, min);
     QFETCH(qreal, max);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -267,7 +268,7 @@ void tst_Domain::isEmpty()
     QFETCH(QSizeF, size);
     QFETCH(bool, isEmpty);
 
-    Domain domain;
+    XYDomain domain;
     domain.setRange(minX, maxX, minY, maxY);
     domain.setSize(size);
     QCOMPARE(domain.isEmpty(), isEmpty);
@@ -289,7 +290,7 @@ void tst_Domain::maxX()
     QFETCH(qreal, maxX2);
     QFETCH(int, count);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -322,7 +323,7 @@ void tst_Domain::maxY()
     QFETCH(qreal, maxY2);
     QFETCH(int, count);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -354,7 +355,7 @@ void tst_Domain::minX()
     QFETCH(qreal, minX2);
     QFETCH(int, count);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -386,7 +387,7 @@ void tst_Domain::minY()
     QFETCH(qreal, minY2);
     QFETCH(int, count);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -405,25 +406,25 @@ void tst_Domain::minY()
 void tst_Domain::operatorEquals_data()
 {
 
-    QTest::addColumn<Domain*>("domain1");
-    QTest::addColumn<Domain*>("domain2");
+    QTest::addColumn<XYDomain*>("domain1");
+    QTest::addColumn<XYDomain*>("domain2");
     QTest::addColumn<bool>("equals");
     QTest::addColumn<bool>("notEquals");
-    Domain* a;
-    Domain* b;
-    a = new Domain();
+    XYDomain* a;
+    XYDomain* b;
+    a = new XYDomain();
     a->setRange(0, 100, 0, 100);
-    b = new Domain();
+    b = new XYDomain();
     b->setRange(0, 100, 0, 100);
     QTest::newRow("equals") << a << b << true << false;
-    a = new Domain();
+    a = new XYDomain();
     a->setRange(0, 100, 0, 100);
-    b = new Domain();
+    b = new XYDomain();
     b->setRange(0, 100, 0, 1);
     QTest::newRow("equals") << a << b << false << true;
-    a = new Domain();
+    a = new XYDomain();
     a->setRange(0, 100, 0, 100);
-    b = new Domain();
+    b = new XYDomain();
     b->setRange(0, 1, 0, 100);
     QTest::newRow("equals") << a << b << false << true;
 
@@ -431,12 +432,12 @@ void tst_Domain::operatorEquals_data()
 
 void tst_Domain::operatorEquals()
 {
-    QFETCH(Domain*, domain1);
-    QFETCH(Domain*, domain2);
+    QFETCH(XYDomain*, domain1);
+    QFETCH(XYDomain*, domain2);
     QFETCH(bool, equals);
     QFETCH(bool, notEquals);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -468,7 +469,7 @@ void tst_Domain::setRange()
     QFETCH(qreal, minY);
     QFETCH(qreal, maxY);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -501,7 +502,7 @@ void tst_Domain::setRangeX()
     QFETCH(qreal, min);
     QFETCH(qreal, max);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -535,7 +536,7 @@ void tst_Domain::setRangeY()
     QFETCH(qreal, min);
     QFETCH(qreal, max);
 
-    Domain domain;
+    XYDomain domain;
 
     QSignalSpy spy0(&domain, SIGNAL(updated()));
     QSignalSpy spy1(&domain, SIGNAL(rangeHorizontalChanged(qreal,qreal)));
@@ -570,7 +571,7 @@ void tst_Domain::spanX()
     QFETCH(qreal, maxX);
     QFETCH(qreal, spanX);
 
-    Domain domain;
+    XYDomain domain;
 
     domain.setRangeX(minX, maxX);
 
@@ -600,7 +601,7 @@ void tst_Domain::spanY()
     QFETCH(qreal, maxY);
     QFETCH(qreal, spanY);
 
-    Domain domain;
+    XYDomain domain;
 
     domain.setRangeY(minY, maxY);
 
@@ -635,7 +636,7 @@ void tst_Domain::zoomIn()
     QFETCH(QMargins, zoom);
     QFETCH(QMargins, result);
 
-    Domain domain;
+    XYDomain domain;
     domain.setRange(range.left(), range.right(), range.top(),range.bottom());
     domain.setSize(size);
 
@@ -675,7 +676,7 @@ void tst_Domain::zoomOut()
     QFETCH(QMargins, zoom);
     QFETCH(QMargins, result);
 
-    Domain domain;
+    XYDomain domain;
     domain.setRange(range.left(), range.right(), range.top(),range.bottom());
     domain.setSize(size);
 
@@ -717,7 +718,7 @@ void tst_Domain::move()
     QFETCH(int, dy);
     QFETCH(QMargins, result);
 
-    Domain domain;
+    XYDomain domain;
     domain.setRange(range.left(), range.right(), range.top(),range.bottom());
     domain.setSize(size);
 

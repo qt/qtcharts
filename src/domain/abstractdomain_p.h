@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef DOMAIN_H
-#define DOMAIN_H
+#ifndef ABSTRACTDOMAIN_H
+#define ABSTRACTDOMAIN_H
 #include "qchartglobal.h"
 #include <QRectF>
 #include <QSizeF>
@@ -36,17 +36,17 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QTCOMMERCIALCHART_AUTOTEST_EXPORT Domain: public QObject
+class QTCOMMERCIALCHART_AUTOTEST_EXPORT AbstractDomain: public QObject
 {
     Q_OBJECT
 public:
-    explicit Domain(QObject *object = 0);
-    virtual ~Domain();
+    explicit AbstractDomain(QObject *object = 0);
+    virtual ~AbstractDomain();
 
     void setSize(const QSizeF& size);
     QSizeF size() const;
 
-    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
+    virtual void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY) = 0;
     void setRangeX(qreal min, qreal max);
     void setRangeY(qreal min, qreal max);
     void setMinX(qreal min);
@@ -63,20 +63,22 @@ public:
     qreal spanY() const;
     bool isEmpty() const;
 
+
     void blockAxisSignals(bool block);
     bool axisSignalsBlocked() const { return m_axisSignalsBlocked; }
 
-    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const Domain &domain1, const Domain &domain2);
-    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const Domain &domain1, const Domain &domain2);
-    friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const Domain &domain);
+
+    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const AbstractDomain &domain2);
+    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const AbstractDomain &domain2);
+    friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const AbstractDomain &domain);
 
     void zoomIn(const QRectF &rect);
     void zoomOut(const QRectF &rect);
     void move(qreal dx, qreal dy);
 
-    QPointF calculateGeometryPoint(const QPointF &point) const;
-    QPointF calculateDomainPoint(const QPointF &point) const;
-    QVector<QPointF> calculateGeometryPoints(const QList<QPointF>& vector) const;
+    virtual QPointF calculateGeometryPoint(const QPointF &point) const = 0;
+    virtual QPointF calculateDomainPoint(const QPointF &point) const = 0;
+    virtual QVector<QPointF> calculateGeometryPoints(const QList<QPointF>& vector) const = 0;
 
     static void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount);
     static qreal niceNumber(qreal x, bool ceiling);
@@ -90,7 +92,7 @@ public Q_SLOTS:
     void handleVerticalAxisRangeChanged(qreal min,qreal max);
     void handleHorizontalAxisRangeChanged(qreal min,qreal max);
 
-private:
+protected:
     qreal m_minX;
     qreal m_maxX;
     qreal m_minY;
@@ -101,4 +103,4 @@ private:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif
+#endif // ABSTRACTDOMAIN_H

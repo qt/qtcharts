@@ -31,7 +31,7 @@
 #define QSTACKEDBARSERIES_P_H
 
 #include "qabstractbarseries_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

@@ -24,6 +24,10 @@
 #include "qchart.h"
 #include "qchart_p.h"
 #include "chartitem_p.h"
+#include "xydomain_p.h"
+#include "xlogydomain_p.h"
+#include "logxydomain_p.h"
+#include "logxlogydomain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -257,7 +261,7 @@ QAbstractSeriesPrivate::QAbstractSeriesPrivate(QAbstractSeries *q)
     : q_ptr(q),
       m_chart(0),
       m_item(0),
-      m_domain(new Domain()),
+      m_domain(new XYDomain()),
       m_visible(true),
       m_opacity(1.0)
 {
@@ -267,7 +271,7 @@ QAbstractSeriesPrivate::~QAbstractSeriesPrivate()
 {
 }
 
-void QAbstractSeriesPrivate::setDomain(QSharedPointer<Domain> domain)
+void QAbstractSeriesPrivate::setDomain(QSharedPointer<AbstractDomain> domain)
 {
     Q_ASSERT(!domain.isNull());
     if(m_domain!=domain) {

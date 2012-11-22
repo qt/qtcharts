@@ -27,47 +27,41 @@
 //
 // We mean it.
 
-#ifndef QDATETIMEAXIS_P_H
-#define QDATETIMEAXIS_P_H
-
-#include "qdatetimeaxis.h"
-#include "qabstractaxis_p.h"
-#include <QDateTime>
+#ifndef LOGXYDOMAIN_H
+#define LOGXYDOMAIN_H
+#include "abstractdomain_p.h"
+#include <QRectF>
+#include <QSizeF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QDateTimeAxisPrivate : public QAbstractAxisPrivate
+class QTCOMMERCIALCHART_AUTOTEST_EXPORT LogXYDomain: public AbstractDomain
 {
     Q_OBJECT
 public:
-    QDateTimeAxisPrivate(QDateTimeAxis *q);
-    ~QDateTimeAxisPrivate();
+    explicit LogXYDomain(QObject *object = 0);
+    virtual ~LogXYDomain();
 
-public:
-    void initializeGraphics(QGraphicsItem* parent);
-    void initializeDomain(AbstractDomain *domain);
+    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
 
-    //interface for manipulating range form base class
-    void setMin(const QVariant &min);
-    void setMax(const QVariant &max);
-    void setRange(const QVariant &min, const QVariant &max);
+    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const LogXYDomain &domain1, const LogXYDomain &domain2);
+    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const LogXYDomain &domain1, const LogXYDomain &domain2);
+    friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const LogXYDomain &domain);
 
-    //interface manipulating range form domain
-    qreal min() { return m_min; }
-    qreal max() { return m_max; }
-    void setRange(qreal min,qreal max);
+    void zoomIn(const QRectF &rect);
+    void zoomOut(const QRectF &rect);
+    void move(qreal dx, qreal dy);
 
-protected:
-    int tickCount() const;
+    QPointF calculateGeometryPoint(const QPointF &point) const;
+    QPointF calculateDomainPoint(const QPointF &point) const;
+    QVector<QPointF> calculateGeometryPoints(const QList<QPointF>& vector) const;
 
-protected:
-    qreal m_min;
-    qreal m_max;
-    int m_tickCount;
-    QString m_format;
-    Q_DECLARE_PUBLIC(QDateTimeAxis)
+private:
+    qreal m_logMinX;
+    qreal m_logMaxX;
+    qreal m_logBaseX;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QDATETIMEAXIS_P_H
+#endif // LOGXYDOMAIN_H

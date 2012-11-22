@@ -31,7 +31,7 @@
 #define CHARTDATASET_P_H
 
 #include "qabstractseries.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include "qabstractaxis_p.h"
 #include <QVector>
 

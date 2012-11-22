@@ -32,6 +32,7 @@
 #include "qpercentbarseries.h"
 #include "qpieseries.h"
 #include "chartitem_p.h"
+#include "xydomain_p.h"
 
 #ifndef QT_ON_ARM
 #include "qdatetimeaxis.h"
@@ -88,7 +89,7 @@ void ChartDataSet::addAxis(QAbstractAxis *axis,Qt::Alignment aligment)
         return;
     };
 
-    QSharedPointer<Domain> domain(new Domain());
+    QSharedPointer<AbstractDomain> domain(new XYDomain());
     axis->d_ptr->initializeDomain(domain.data());
 
     axis->setParent(this);
@@ -158,7 +159,7 @@ bool ChartDataSet::attachAxis(QAbstractSeries* series,QAbstractAxis *axis)
 
     QList<QAbstractSeries* > attachedSeriesList = axis->d_ptr->m_series;
     QList<QAbstractAxis* > attachedAxisList = series->d_ptr->m_axes;
-    QSharedPointer<Domain> domain =  series->d_ptr->m_domain;
+    QSharedPointer<AbstractDomain> domain =  series->d_ptr->m_domain;
 
     if (!m_seriesList.contains(series)) {
         qWarning() << QObject::tr("Can not find series on the chart.");
@@ -183,7 +184,7 @@ bool ChartDataSet::attachAxis(QAbstractSeries* series,QAbstractAxis *axis)
     }else{
         domain = attachedSeriesList.first()->d_ptr->domain();
         Q_ASSERT(!domain.isNull());
-    	series->d_ptr->setDomain(domain);
+        series->d_ptr->setDomain(domain);
     }
 
     series->d_ptr->m_axes<<axis;
@@ -215,7 +216,7 @@ bool ChartDataSet::detachAxis(QAbstractSeries* series,QAbstractAxis *axis)
 
     QList<QAbstractSeries* > attachedSeriesList = axis->d_ptr->m_series;
     QList<QAbstractAxis* > attachedAxisList = series->d_ptr->m_axes;
-    QSharedPointer<Domain> domain =  series->d_ptr->m_domain;
+    QSharedPointer<AbstractDomain> domain =  series->d_ptr->m_domain;
 
     if (!m_seriesList.contains(series)) {
         qWarning() << QObject::tr("Can not find series on the chart.");
@@ -342,52 +343,52 @@ void ChartDataSet::removeAllAxes()
 
 void ChartDataSet::zoomInDomain(const QRectF &rect)
 {
-    QList<Domain*> domains;
+    QList<AbstractDomain*> domains;
     foreach(QAbstractSeries *s, m_seriesList) {
-        Domain* domain = s->d_ptr->m_domain.data();
+        AbstractDomain* domain = s->d_ptr->m_domain.data();
         if(domains.contains(domain)) continue;
         s->d_ptr->m_domain->blockAxisSignals(true);
         domains<<domain;
     }
 
-    foreach(Domain *domain, domains)
+    foreach(AbstractDomain *domain, domains)
         domain->zoomIn(rect);
 
-    foreach(Domain *domain, domains)
+    foreach(AbstractDomain *domain, domains)
         domain->blockAxisSignals(false);
 }
 
 void ChartDataSet::zoomOutDomain(const QRectF &rect)
 {
-    QList<Domain*> domains;
+    QList<AbstractDomain*> domains;
     foreach(QAbstractSeries *s, m_seriesList) {
-        Domain* domain = s->d_ptr->m_domain.data();
+        AbstractDomain* domain = s->d_ptr->m_domain.data();
         if(domains.contains(domain)) continue;
         s->d_ptr->m_domain->blockAxisSignals(true);
         domains<<domain;
     }
 
-    foreach(Domain *domain, domains)
+    foreach(AbstractDomain *domain, domains)
         domain->zoomOut(rect);
 
-    foreach(Domain *domain, domains)
+    foreach(AbstractDomain *domain, domains)
         domain->blockAxisSignals(false);
 }
 
 void ChartDataSet::scrollDomain(qreal dx, qreal dy)
 {
-    QList<Domain*> domains;
+    QList<AbstractDomain*> domains;
     foreach(QAbstractSeries *s, m_seriesList) {
-        Domain* domain = s->d_ptr->m_domain.data();
+        AbstractDomain* domain = s->d_ptr->m_domain.data();
         if(domains.contains(domain)) continue;
         s->d_ptr->m_domain->blockAxisSignals(true);
         domains<<domain;
     }
 
-    foreach(Domain *domain, domains)
+    foreach(AbstractDomain *domain, domains)
         domain->move(dx, dy);
 
-    foreach(Domain *domain, domains)
+    foreach(AbstractDomain *domain, domains)
         domain->blockAxisSignals(false);
 }
 

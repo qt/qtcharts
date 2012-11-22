@@ -43,16 +43,16 @@ QVector<qreal> ChartLogValueAxisY::calculateLayout() const
     QVector<qreal> points;
     qreal logMax = log10(m_axis->max()) / log10(m_axis->base());
     qreal logMin = log10(m_axis->min()) / log10(m_axis->base());
+    qreal leftEdge = logMin < logMax ? logMin : logMax;
+    qreal ceilEdge = ceil(leftEdge);
     int tickCount = qAbs(qRound(logMax - logMin));
+    tickCount++;
 
     points.resize(tickCount);
     const QRectF &gridRect = gridGeometry();
     const qreal deltaY = gridRect.height() / qAbs(logMax - logMin);
     for (int i = 0; i < tickCount; ++i)
-        if (logMax > logMin)
-            points[i] = ((int)logMin + i) * -deltaY - logMin * -deltaY + gridRect.bottom();
-        else
-            points[i] = ((int)logMax + i) * -deltaY - logMax * -deltaY + gridRect.bottom();
+        points[i] = (ceilEdge + i) * -deltaY - leftEdge * -deltaY + gridRect.bottom();
 
     return points;
 }
@@ -84,6 +84,7 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
     qreal logMax = log10(m_axis->max()) / log10(m_axis->base());
     qreal logMin = log10(m_axis->min()) / log10(m_axis->base());
     int tickCount = qAbs(qRound(logMax - logMin));
+    tickCount++;
     if (m_axis->max() > m_axis->min() && tickCount > 1)
         ticksList = createLogValueLabels(m_axis->min(), m_axis->max(), m_axis->base(), tickCount, m_axis->labelFormat());
     else

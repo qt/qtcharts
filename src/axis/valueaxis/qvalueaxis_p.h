@@ -44,7 +44,7 @@ public:
 
 public:
     void initializeGraphics(QGraphicsItem* parent);
-    void initializeDomain(Domain *domain);
+    void initializeDomain(AbstractDomain *domain);
 
     qreal min() { return m_min; };
     qreal max() { return m_max; };

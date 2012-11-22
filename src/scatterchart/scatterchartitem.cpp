@@ -22,7 +22,7 @@
 #include "qscatterseries.h"
 #include "qscatterseries_p.h"
 #include "chartpresenter_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include <QPainter>
 #include <QGraphicsScene>
 #include <QDebug>

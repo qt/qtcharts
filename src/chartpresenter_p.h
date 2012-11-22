@@ -41,7 +41,7 @@ class ChartItem;
 class AxisItem;
 class QAbstractSeries;
 class ChartDataSet;
-class Domain;
+class AbstractDomain;
 class ChartAxis;
 class ChartAnimator;
 class ChartBackground;

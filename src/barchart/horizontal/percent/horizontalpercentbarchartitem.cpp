@@ -39,7 +39,7 @@ QVector<QRectF> HorizontalPercentBarChartItem::calculateLayout()
     qreal setCount = m_series->count();
     bool barsVisible = m_series->isVisible();
 
-    // Domain:
+    // AbstractDomain:
     qreal width = geometry().width();
     qreal height = geometry().height();
     qreal rangeY = m_domainMaxY - m_domainMinY;

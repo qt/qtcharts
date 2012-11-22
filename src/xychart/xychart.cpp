@@ -22,7 +22,7 @@
 #include "qxyseries.h"
 #include "qxyseries_p.h"
 #include "chartpresenter_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include "qxymodelmapper.h"
 #include <QPainter>
 #include <QAbstractItemModel>

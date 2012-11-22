@@ -22,7 +22,7 @@
 #include "qlogvalueaxis_p.h"
 #include "chartlogvalueaxisx_p.h"
 #include "chartlogvalueaxisy_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include <float.h>
 #include <cmath>
 
@@ -289,7 +289,7 @@ void QLogValueAxisPrivate::initializeGraphics(QGraphicsItem* parent)
 }
 
 
-void QLogValueAxisPrivate::initializeDomain(Domain *domain)
+void QLogValueAxisPrivate::initializeDomain(AbstractDomain *domain)
 {
     if (orientation() == Qt::Vertical) {
         if(!qFuzzyCompare(m_max, m_min)) {

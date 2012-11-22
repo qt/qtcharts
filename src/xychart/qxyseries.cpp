@@ -20,10 +20,9 @@
 
 #include "qxyseries.h"
 #include "qxyseries_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include "qvalueaxis.h"
 #include "xychart_p.h"
-
 #include "qxylegendmarker.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE

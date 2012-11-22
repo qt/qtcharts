@@ -22,7 +22,7 @@
 #include "qabstractbarseries_p.h"
 #include "qbarset.h"
 #include "qbarset_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "qvalueaxis.h"

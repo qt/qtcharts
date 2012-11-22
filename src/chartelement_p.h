@@ -41,7 +41,7 @@ class ChartAnimator;
 class ChartPresenter;
 class ChartAnimation;
 class ChartThemeManager;
-class Domain;
+class AbstractDomain;
 
 class ChartElement: public QGraphicsObject
 {

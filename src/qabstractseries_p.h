@@ -32,7 +32,7 @@
 
 #include "qabstractseries.h"
 #include "qchart.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 
 class QGraphicsItem;
 
@@ -69,8 +69,8 @@ public:
 
     ChartItem* chartItem() { return m_item.data(); }
 
-    virtual void setDomain(QSharedPointer<Domain> domain);
-    QSharedPointer<Domain> domain() { return m_domain; }
+    virtual void setDomain(QSharedPointer<AbstractDomain> domain);
+    QSharedPointer<AbstractDomain> domain() { return m_domain; }
 
     QChart* chart() { return m_chart; }
 
@@ -83,7 +83,7 @@ protected:
     QScopedPointer<ChartItem> m_item;
     QList<QAbstractAxis*> m_axes;
 private:
-    QSharedPointer<Domain> m_domain;
+    QSharedPointer<AbstractDomain> m_domain;
     QString m_name;
     bool m_visible;
     qreal m_opacity;

@@ -22,7 +22,7 @@
 #include "qbarcategoryaxis_p.h"
 #include "chartbarcategoryaxisx_p.h"
 #include "chartbarcategoryaxisy_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include "qchart.h"
 #include <qmath.h>
 
@@ -569,7 +569,7 @@ void QBarCategoryAxisPrivate::updateCategoryDomain()
 }
 
 
-void QBarCategoryAxisPrivate::initializeDomain(Domain *domain)
+void QBarCategoryAxisPrivate::initializeDomain(AbstractDomain *domain)
 {
     Q_Q(QBarCategoryAxis);
     if (m_max == m_min) {

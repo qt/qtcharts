@@ -22,7 +22,7 @@
 #include "qareaseries_p.h"
 #include "qlineseries.h"
 #include "areachartitem_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "qvalueaxis.h"

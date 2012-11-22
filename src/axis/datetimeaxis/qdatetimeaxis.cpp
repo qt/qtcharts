@@ -22,7 +22,7 @@
 #include "qdatetimeaxis_p.h"
 #include "chartdatetimeaxisx_p.h"
 #include "chartdatetimeaxisy_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include "qchart.h"
 #include <float.h>
 #include <cmath>
@@ -343,7 +343,7 @@ void QDateTimeAxisPrivate::initializeGraphics(QGraphicsItem* parent)
     QAbstractAxisPrivate::initializeGraphics(parent);
 }
 
-void QDateTimeAxisPrivate::initializeDomain(Domain *domain)
+void QDateTimeAxisPrivate::initializeDomain(AbstractDomain *domain)
 {
     if (m_max == m_min) {
         if (orientation() == Qt::Vertical)

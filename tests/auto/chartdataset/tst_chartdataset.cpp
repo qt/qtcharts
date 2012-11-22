@@ -54,12 +54,12 @@ QTEST_MAIN(tst_ChartDataSet)
 #include <qpercentbarseries.h>
 #include <qstackedbarseries.h>
 #include <private/chartdataset_p.h>
-#include <private/domain_p.h>
+#include <private/abstractdomain_p.h>
 #include <tst_definitions.h>
 
 QTCOMMERCIALCHART_USE_NAMESPACE
 
-Q_DECLARE_METATYPE(Domain *)
+Q_DECLARE_METATYPE(AbstractDomain *)
 Q_DECLARE_METATYPE(QAbstractAxis *)
 Q_DECLARE_METATYPE(QAbstractSeries *)
 Q_DECLARE_METATYPE(QList<QAbstractSeries *>)
@@ -104,7 +104,7 @@ private:
 
 void tst_ChartDataSet::initTestCase()
 {
-    qRegisterMetaType<Domain*>();
+    qRegisterMetaType<AbstractDomain*>();
     qRegisterMetaType<QAbstractAxis*>();
     qRegisterMetaType<QAbstractSeries*>();
 }
@@ -174,6 +174,7 @@ void tst_ChartDataSet::addSeries()
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
     m_dataset->addSeries(series);
+
 
     QCOMPARE(m_dataset->series().count(),1);
     TRY_COMPARE(spy0.count(), 0);

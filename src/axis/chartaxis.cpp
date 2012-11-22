@@ -23,7 +23,7 @@
 #include "qabstractaxis_p.h"
 #include "chartpresenter_p.h"
 #include "chartlayout_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include <qmath.h>
 #include <QDateTime>
 #include <QValueAxis>
@@ -451,15 +451,11 @@ QStringList ChartAxis::createLogValueLabels(qreal min, qreal max, qreal base, in
         n = qMax(int(-qFloor(log10((max - min) / (ticks - 1)))), 0);
     n++;
 
-//    QLogValueAxis *axis = qobject_cast<QLogValueAxis *>(m_chartAxis);
-
-//    QString format = axis->labelFormat();
-
     int firstTick;
     if (base > 1)
-        firstTick = (int)(log10(min) / log10(base));
+        firstTick = ceil(log10(min) / log10(base));
     else
-        firstTick = (int)(log10(max) / log10(base));
+        firstTick = ceil(log10(max) / log10(base));
 
     if (format.isNull()) {
         for (int i = firstTick; i < ticks + firstTick; i++) {

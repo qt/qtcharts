@@ -29,7 +29,7 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class DeclarativeMargins;
-class Domain;
+class AbstractDomain;
 
 class DeclarativeChart : public QDeclarativeItem
 {
@@ -157,7 +157,7 @@ public Q_SLOTS:
     void changeMinimumMargins(int top, int bottom, int left, int right);
     void handleAxisXSet(QAbstractAxis *axis);
     void handleAxisYSet(QAbstractAxis *axis);
-    void handleSeriesAdded(QAbstractSeries *series, Domain *domain);
+    void handleSeriesAdded(QAbstractSeries *series, AbstractDomain *domain);
 
 private:
     // Extending QChart with DeclarativeChart is not possible because QObject does not support

@@ -20,7 +20,7 @@
 
 #include "chartitem_p.h"
 #include "qabstractseries_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -31,7 +31,7 @@ ChartItem::ChartItem(QAbstractSeriesPrivate *series,QGraphicsItem* item):
 
 }
 
-QSharedPointer<Domain> ChartItem::domain() const
+QSharedPointer<AbstractDomain> ChartItem::domain() const
 {
     return m_series->domain();
 }

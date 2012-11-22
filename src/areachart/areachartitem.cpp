@@ -23,7 +23,7 @@
 #include "qareaseries_p.h"
 #include "qlineseries.h"
 #include "chartpresenter_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 #include <QPainter>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
@@ -116,14 +116,14 @@ void AreaChartItem::handleUpdated()
 
 void AreaChartItem::handleDomainUpdated()
 {
-	Domain* d = m_upper->domain().data();
+    AbstractDomain* d = m_upper->domain().data();
 
 	d->setSize(domain()->size());
 	d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
 	m_upper->handleDomainUpdated();
 
     if (m_lower) {
-    	Domain* d = m_lower->domain().data();
+        AbstractDomain* d = m_lower->domain().data();
     	d->setSize(domain()->size());
     	d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
     	m_lower->handleDomainUpdated();

@@ -20,7 +20,7 @@
 
 #include "chartelement_p.h"
 #include "chartpresenter_p.h"
-#include "domain_p.h"
+#include "abstractdomain_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

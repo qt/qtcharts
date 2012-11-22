@@ -40,7 +40,7 @@ class QGraphicsItem;
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class ChartPresenter;
-class Domain;
+class AbstractDomain;
 class QChart;
 class QAbstractSeries;
 class ChartTheme;
@@ -58,7 +58,7 @@ public:
     Qt::Orientation orientation() const { return m_orientation; }
     void setAlignment( Qt::Alignment alignment);
 
-    virtual void initializeDomain(Domain *domain) = 0;
+    virtual void initializeDomain(AbstractDomain *domain) = 0;
     virtual void initializeGraphics(QGraphicsItem* parent) = 0;
     virtual void initializeTheme(ChartTheme* theme, bool forced = false);
     virtual void initializeAnimations(QChart::AnimationOptions options);

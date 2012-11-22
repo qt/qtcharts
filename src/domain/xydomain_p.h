@@ -27,47 +27,36 @@
 //
 // We mean it.
 
-#ifndef QDATETIMEAXIS_P_H
-#define QDATETIMEAXIS_P_H
-
-#include "qdatetimeaxis.h"
-#include "qabstractaxis_p.h"
-#include <QDateTime>
+#ifndef XYDOMAIN_H
+#define XYDOMAIN_H
+#include "abstractdomain_p.h"
+#include <QRectF>
+#include <QSizeF>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
-class QDateTimeAxisPrivate : public QAbstractAxisPrivate
+class QTCOMMERCIALCHART_AUTOTEST_EXPORT XYDomain: public AbstractDomain
 {
     Q_OBJECT
 public:
-    QDateTimeAxisPrivate(QDateTimeAxis *q);
-    ~QDateTimeAxisPrivate();
+    explicit XYDomain(QObject *object = 0);
+    virtual ~XYDomain();
 
-public:
-    void initializeGraphics(QGraphicsItem* parent);
-    void initializeDomain(AbstractDomain *domain);
+    void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
 
-    //interface for manipulating range form base class
-    void setMin(const QVariant &min);
-    void setMax(const QVariant &max);
-    void setRange(const QVariant &min, const QVariant &max);
+    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const XYDomain &Domain1, const XYDomain &Domain2);
+    friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const XYDomain &Domain1, const XYDomain &Domain2);
+    friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const XYDomain &AbstractDomain);
 
-    //interface manipulating range form domain
-    qreal min() { return m_min; }
-    qreal max() { return m_max; }
-    void setRange(qreal min,qreal max);
+    void zoomIn(const QRectF &rect);
+    void zoomOut(const QRectF &rect);
+    void move(qreal dx, qreal dy);
 
-protected:
-    int tickCount() const;
-
-protected:
-    qreal m_min;
-    qreal m_max;
-    int m_tickCount;
-    QString m_format;
-    Q_DECLARE_PUBLIC(QDateTimeAxis)
+    QPointF calculateGeometryPoint(const QPointF &point) const;
+    QPointF calculateDomainPoint(const QPointF &point) const;
+    QVector<QPointF> calculateGeometryPoints(const QList<QPointF>& vector) const;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // QDATETIMEAXIS_P_H
+#endif // XYDOMAIN_H

@@ -32,7 +32,6 @@ SOURCES += \
     $$PWD/chartdataset.cpp \
     $$PWD/chartpresenter.cpp \
     $$PWD/chartthememanager.cpp \
-    $$PWD/domain.cpp \
     $$PWD/qchart.cpp \
     $$PWD/qchartview.cpp \
     $$PWD/qabstractseries.cpp \
@@ -47,7 +46,6 @@ PRIVATE_HEADERS += \
     $$PWD/chartitem_p.h \
     $$PWD/chartpresenter_p.h \
     $$PWD/chartthememanager_p.h \
-    $$PWD/domain_p.h \
     $$PWD/chartbackground_p.h \
     $$PWD/chartelement_p.h \
     $$PWD/chartconfig_p.h \
@@ -67,6 +65,7 @@ PUBLIC_HEADERS += \
 include(animations/animations.pri)
 include(areachart/areachart.pri)    
 include(axis/axis.pri)
+include(domain/domain.pri)
 include(barchart/barchart.pri)
 include(legend/legend.pri)
 include(linechart/linechart.pri)
