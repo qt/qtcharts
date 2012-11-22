@@ -114,6 +114,9 @@ public:
 
     QLegend *legend() const;
 
+    void setMinimumMargins(const QMargins& margins);
+    QMargins minimumMargins() const;
+
     void setMargins(const QMargins &margins);
     QMargins margins() const;
 
