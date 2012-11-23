@@ -48,7 +48,7 @@ public:
         // generate random data
         for (int i(0); i < listCount; i++) {
             DataList dataList;
-            qreal yValue(0);
+            qreal yValue(0.1);
             for (int j(0); j < valueCount; j++) {
                 yValue = yValue + (qreal)(qrand() % valueMax) / (qreal) valueCount;
                 QPointF value(

@@ -27,7 +27,22 @@ SOURCES += \
     $$PWD/multiaxis/multivalueaxis3.cpp \
     $$PWD/multiaxis/multivalueaxis4.cpp \
     $$PWD/multiaxis/multivaluebaraxis.cpp \
-    $$PWD/size/sizecharts.cpp
+    $$PWD/size/sizecharts.cpp \
+    $$PWD/domain/barlogy.cpp \
+    $$PWD/domain/barlogx.cpp \
+    $$PWD/domain/barstackedlogy.cpp \
+    $$PWD/domain/barstackedlogx.cpp \
+    $$PWD/domain/barpercentlogy.cpp \
+    $$PWD/domain/barpercentlogx.cpp \
+    $$PWD/domain/linelogxlogy.cpp \
+    $$PWD/domain/linelogxy.cpp \
+    $$PWD/domain/linexlogy.cpp \
+    $$PWD/domain/splinelogxlogy.cpp \
+    $$PWD/domain/splinelogxy.cpp \
+    $$PWD/domain/splinexlogy.cpp \
+    $$PWD/domain/scatterlogxlogy.cpp \
+    $$PWD/domain/scatterlogxy.cpp \
+    $$PWD/domain/scatterxlogy.cpp
 
 !linux-arm*: {
 SOURCES += \
