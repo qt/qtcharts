@@ -33,6 +33,9 @@
 #include "qpieseries.h"
 #include "chartitem_p.h"
 #include "xydomain_p.h"
+#include "xlogydomain_p.h"
+#include "logxydomain_p.h"
+#include "logxlogydomain_p.h"
 
 #ifndef QT_ON_ARM
 #include "qdatetimeaxis.h"

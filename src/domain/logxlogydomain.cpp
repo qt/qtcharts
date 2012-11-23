@@ -68,58 +68,46 @@ void LogXLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 
 void LogXLogYDomain::zoomIn(const QRectF &rect)
 {
-    qreal dx = spanX() / m_size.width();
-    qreal dy = spanY() / m_size.height();
+    qreal newLogMinX = rect.left() * (m_logMaxX - m_logMinX) / m_size.width() + m_logMinX;
+    qreal newLogMaxX = rect.right() * (m_logMaxX - m_logMinX) / m_size.width() + m_logMinX;
+    qreal minX = qPow(m_logBaseX, newLogMinX);
+    qreal maxX = qPow(m_logBaseX, newLogMaxX);
 
-    qreal maxX = m_maxX;
-    qreal minX = m_minX;
-    qreal minY = m_minY;
-    qreal maxY = m_maxY;
-
-    maxX = minX + dx * rect.right();
-    minX = minX + dx * rect.left();
-    minY = maxY - dy * rect.bottom();
-    maxY = maxY - dy * rect.top();
+    qreal newLogMinY = m_logMaxY - rect.bottom() * (m_logMaxY - m_logMinY) / m_size.height();
+    qreal newLogMaxY = m_logMaxY - rect.top() * (m_logMaxY - m_logMinY) / m_size.height();
+    qreal minY = qPow(m_logBaseY, newLogMinY);
+    qreal maxY = qPow(m_logBaseY, newLogMaxY);
 
     setRange(minX, maxX, minY, maxY);
 }
 
 void LogXLogYDomain::zoomOut(const QRectF &rect)
 {
-    qreal dx = spanX() / rect.width();
-    qreal dy = spanY() / rect.height();
+    qreal ratioX = m_size.width()/rect.width();
+    qreal newLogMinX = m_logMinX - (m_logMaxX - m_logMinX) / ratioX;
+    qreal newLogMaxX = m_logMaxX + (m_logMaxX - m_logMinX) / ratioX;
+    qreal minX = qPow(m_logBaseX, newLogMinX);
+    qreal maxX = qPow(m_logBaseX, newLogMaxX);
 
-    qreal maxX = m_maxX;
-    qreal minX = m_minX;
-    qreal minY = m_minY;
-    qreal maxY = m_maxY;
-
-    minX = maxX - dx * rect.right();
-    maxX = minX + dx * m_size.width();
-    maxY = minY + dy * rect.bottom();
-    minY = maxY - dy * m_size.height();
+    qreal ratioY = m_size.height()/rect.height();
+    qreal newLogMinY = m_logMaxY - (m_logMaxY - m_logMinY) / ratioY;
+    qreal newLogMaxY = m_logMaxY + (m_logMaxY - m_logMinY) / ratioY;
+    qreal minY = qPow(m_logBaseY, newLogMinY);
+    qreal maxY = qPow(m_logBaseY, newLogMaxY);
 
     setRange(minX, maxX, minY, maxY);
 }
 
 void LogXLogYDomain::move(qreal dx, qreal dy)
 {
-    qreal x = spanX() / m_size.width();
-    qreal y = spanY() / m_size.height();
+    qreal stepX = dx * qAbs(m_logMaxX - m_logMinX) / m_size.width();
+    qreal minX = qPow(m_logBaseX, m_logMinX + stepX);
+    qreal maxX = qPow(m_logBaseX, m_logMaxX + stepX);
 
-    qreal maxX = m_maxX;
-    qreal minX = m_minX;
-    qreal minY = m_minY;
-    qreal maxY = m_maxY;
+    qreal stepY = dy * qAbs(m_logMaxY - m_logMinY) / m_size.height();
+    qreal minY = qPow(m_logBaseY, m_logMinY + stepY);
+    qreal maxY = qPow(m_logBaseY, m_logMaxY + stepY);
 
-    if (dx != 0) {
-        minX = minX + x * dx;
-        maxX = maxX + x * dx;
-    }
-    if (dy != 0) {
-        minY = minY + y * dy;
-        maxY = maxY + y * dy;
-    }
     setRange(minX, maxX, minY, maxY);
 }
 

@@ -52,29 +52,6 @@ QSizeF AbstractDomain::size() const
 	return m_size;
 }
 
-//void AbstractDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
-//{
-//    bool axisXChanged = false;
-//    bool axisYChanged = false;
-
-//    if (!qFuzzyIsNull(m_minX - minX) || !qFuzzyIsNull(m_maxX - maxX)) {
-//        m_minX = minX;
-//        m_maxX = maxX;
-//        axisXChanged = true;
-//        emit rangeHorizontalChanged(m_minX, m_maxX);
-//    }
-
-//    if (!qFuzzyIsNull(m_minY - minY) || !qFuzzyIsNull(m_maxY - maxY)) {
-//        m_minY = minY;
-//        m_maxY = maxY;
-//        axisYChanged = true;
-//        emit rangeVerticalChanged(m_minY, m_maxY);
-//    }
-
-//    if (axisXChanged || axisYChanged)
-//        emit updated();
-//}
-
 void AbstractDomain::setRangeX(qreal min, qreal max)
 {
     setRange(min, max, m_minY, m_maxY);
@@ -121,89 +98,6 @@ bool AbstractDomain::isEmpty() const
 {
     return qFuzzyIsNull(spanX()) || qFuzzyIsNull(spanY()) || m_size.isEmpty() ;
 }
-
-void AbstractDomain::zoomIn(const QRectF &rect)
-{
-    qreal dx = spanX() / m_size.width();
-    qreal dy = spanY() / m_size.height();
-
-    qreal maxX = m_maxX;
-    qreal minX = m_minX;
-    qreal minY = m_minY;
-    qreal maxY = m_maxY;
-
-    maxX = minX + dx * rect.right();
-    minX = minX + dx * rect.left();
-    minY = maxY - dy * rect.bottom();
-    maxY = maxY - dy * rect.top();
-
-    setRange(minX, maxX, minY, maxY);
-}
-
-void AbstractDomain::zoomOut(const QRectF &rect)
-{
-    qreal dx = spanX() / rect.width();
-    qreal dy = spanY() / rect.height();
-
-    qreal maxX = m_maxX;
-    qreal minX = m_minX;
-    qreal minY = m_minY;
-    qreal maxY = m_maxY;
-
-    minX = maxX - dx * rect.right();
-    maxX = minX + dx * m_size.width();
-    maxY = minY + dy * rect.bottom();
-    minY = maxY - dy * m_size.height();
-
-    setRange(minX, maxX, minY, maxY);
-}
-
-void AbstractDomain::move(qreal dx, qreal dy)
-{
-    qreal x = spanX() / m_size.width();
-    qreal y = spanY() / m_size.height();
-
-    qreal maxX = m_maxX;
-    qreal minX = m_minX;
-    qreal minY = m_minY;
-    qreal maxY = m_maxY;
-
-    if (dx != 0) {
-        minX = minX + x * dx;
-        maxX = maxX + x * dx;
-    }
-    if (dy != 0) {
-        minY = minY + y * dy;
-        maxY = maxY + y * dy;
-    }
-    setRange(minX, maxX, minY, maxY);
-}
-
-//QPointF AbstractDomain::calculateGeometryPoint(const QPointF &point) const
-//{
-//    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
-//    const qreal deltaY = m_size.height() / (m_maxY - m_minY);
-//    qreal x = (point.x() - m_minX) * deltaX;
-//    qreal y = (point.y() - m_minY) * -deltaY + m_size.height();
-//    return QPointF(x, y);
-//}
-
-//QVector<QPointF> AbstractDomain::calculateGeometryPoints(const QList<QPointF>& vector) const
-//{
-//    const qreal deltaX = m_size.width() / (m_maxX - m_minX);
-//    const qreal deltaY = m_size.height() / (m_maxY - m_minY);
-
-//    QVector<QPointF> result;
-//    result.resize(vector.count());
-
-//    for (int i = 0; i < vector.count(); ++i) {
-//        qreal x = (vector[i].x() - m_minX) * deltaX;
-//        qreal y = (vector[i].y() - m_minY) * -deltaY + m_size.height();
-//        result[i].setX(x);
-//        result[i].setY(y);
-//    }
-//    return result;
-//}
 
 QPointF AbstractDomain::calculateDomainPoint(const QPointF &point) const
 {

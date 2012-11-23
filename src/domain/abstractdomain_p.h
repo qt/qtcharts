@@ -72,9 +72,9 @@ public:
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const AbstractDomain &domain2);
     friend QDebug QTCOMMERCIALCHART_AUTOTEST_EXPORT operator<<(QDebug dbg, const AbstractDomain &domain);
 
-    void zoomIn(const QRectF &rect);
-    void zoomOut(const QRectF &rect);
-    void move(qreal dx, qreal dy);
+    virtual void zoomIn(const QRectF &rect) = 0;
+    virtual void zoomOut(const QRectF &rect) = 0;
+    virtual void move(qreal dx, qreal dy) = 0;
 
     virtual QPointF calculateGeometryPoint(const QPointF &point) const = 0;
     virtual QPointF calculateDomainPoint(const QPointF &point) const = 0;
