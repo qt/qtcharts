@@ -56,6 +56,9 @@ class QLogValueAxisPrivate : public QAbstractAxisPrivate
     void setRange(const QVariant &min, const QVariant &max);
     int tickCount() const;
 
+    Q_SIGNALS:
+    void baseChanged(qreal base);
+
     protected:
     qreal m_min;
     qreal m_max;

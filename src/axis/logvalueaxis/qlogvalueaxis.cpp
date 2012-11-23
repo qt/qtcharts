@@ -180,11 +180,14 @@ QString QLogValueAxis::labelFormat() const
 void QLogValueAxis::setBase(qreal base)
 {
     // check if base is correct
-    if (base <= 0 || qFuzzyCompare(base, 1))
+    if (qFuzzyCompare(base, 1))
         return;
 
-    Q_D(QLogValueAxis);
-    d->m_base = base;
+    if (base > 0) {
+        Q_D(QLogValueAxis);
+        d->m_base = base;
+        emit d->baseChanged(base);
+    }
 }
 
 qreal QLogValueAxis::base() const
