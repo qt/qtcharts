@@ -67,7 +67,7 @@ void ChartAxis::connectSlots()
 {
     QObject::connect(m_axis,SIGNAL(visibleChanged(bool)),this,SLOT(handleVisibleChanged(bool)));
     QObject::connect(m_axis,SIGNAL(lineVisibleChanged(bool)),this,SLOT(handleArrowVisibleChanged(bool)));
-    QObject::connect(m_axis,SIGNAL(gridLineVisibleChanged(bool)),this,SLOT(handleGridVisibleChanged(bool)));
+    QObject::connect(m_axis,SIGNAL(gridVisibleChanged(bool)),this,SLOT(handleGridVisibleChanged(bool)));
     QObject::connect(m_axis,SIGNAL(labelsVisibleChanged(bool)),this,SLOT(handleLabelsVisibleChanged(bool)));
     QObject::connect(m_axis,SIGNAL(shadesVisibleChanged(bool)),this,SLOT(handleShadesVisibleChanged(bool)));
     QObject::connect(m_axis,SIGNAL(labelsAngleChanged(int)),this,SLOT(handleLabelsAngleChanged(int)));

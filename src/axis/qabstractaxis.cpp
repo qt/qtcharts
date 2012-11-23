@@ -369,7 +369,7 @@ void QAbstractAxis::setGridLineVisible(bool visible)
 {
     if (d_ptr->m_gridLineVisible != visible) {
         d_ptr->m_gridLineVisible = visible;
-        emit gridLineVisibleChanged(visible);
+        emit gridVisibleChanged(visible);
     }
 }
 

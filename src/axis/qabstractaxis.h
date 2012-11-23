@@ -50,7 +50,7 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
     //TODO: make wrapping of color for qml
     Q_PROPERTY(QColor labelsColor READ labelsColor WRITE setLabelsColor NOTIFY labelsColorChanged)
     //grid
-    Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridLineVisibleChanged)
+    Q_PROPERTY(bool gridVisible READ isGridLineVisible WRITE setGridLineVisible NOTIFY gridVisibleChanged)
     Q_PROPERTY(QPen girdLinePen READ gridLinePen WRITE setGridLinePen NOTIFY gridLinePenChanged)
     //shades
     Q_PROPERTY(bool shadesVisible READ shadesVisible WRITE setShadesVisible NOTIFY shadesVisibleChanged)
@@ -168,7 +168,7 @@ Q_SIGNALS:
     void labelsFontChanged(const QFont& pen);
     void labelsAngleChanged(int angle);
     void gridLinePenChanged(const QPen& pen);
-    void gridLineVisibleChanged(bool visible);
+    void gridVisibleChanged(bool visible);
     void colorChanged(QColor color);
     void labelsColorChanged(QColor color);
     void titleTextChanged(const QString& title);
