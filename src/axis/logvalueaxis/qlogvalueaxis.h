@@ -63,6 +63,7 @@ Q_SIGNALS:
     void minChanged(qreal min);
     void maxChanged(qreal max);
     void rangeChanged(qreal min, qreal max);
+    void baseChanged(qreal base);
 
 private:
     Q_DECLARE_PRIVATE(QLogValueAxis)

@@ -20,6 +20,7 @@
 
 #include "logxydomain_p.h"
 #include "qabstractaxis_p.h"
+#include "qlogvalueaxis.h"
 #include <qmath.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -152,6 +153,33 @@ QPointF LogXYDomain::calculateDomainPoint(const QPointF &point) const
     qreal x = qPow(m_logBaseX, leftEdgeX + point.x() / deltaX);
     qreal y = (point.y() - m_size.height()) / (-deltaY) + m_minY;
     return QPointF(x, y);
+}
+
+bool LogXYDomain::attachAxis(QAbstractAxis* axis)
+{
+    AbstractDomain::attachAxis(axis);
+    QLogValueAxis *logAxis = qobject_cast<QLogValueAxis *>(axis);
+
+    if(logAxis && logAxis->orientation()==Qt::Horizontal)
+        QObject::connect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleHorizontalAxisBaseChanged(qreal)));
+
+    return true;
+}
+
+bool LogXYDomain::detachAxis(QAbstractAxis* axis)
+{
+    AbstractDomain::detachAxis(axis);
+    QLogValueAxis *logAxis = qobject_cast<QLogValueAxis *>(axis);
+
+    if(logAxis && logAxis->orientation()==Qt::Horizontal)
+        QObject::disconnect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleHorizontalAxisBaseChanged(qreal)));
+
+    return true;
+}
+
+void LogXYDomain::handleHorizontalAxisBaseChanged(qreal baseX)
+{
+    m_logBaseX = baseX;
 }
 
 // operators

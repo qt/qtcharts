@@ -186,7 +186,7 @@ void QLogValueAxis::setBase(qreal base)
     if (base > 0) {
         Q_D(QLogValueAxis);
         d->m_base = base;
-        emit d->baseChanged(base);
+        emit baseChanged(base);
     }
 }
 

@@ -20,6 +20,7 @@
 
 #include "logxlogydomain_p.h"
 #include "qabstractaxis_p.h"
+#include "qlogvalueaxis.h"
 #include <qmath.h>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
@@ -152,6 +153,44 @@ QPointF LogXLogYDomain::calculateDomainPoint(const QPointF &point) const
     qreal x = qPow(m_logBaseX, leftEdgeX + point.x() / deltaX);
     qreal y = qPow(m_logBaseY, leftEdgeY + (m_size.height() - point.y()) / deltaY);
     return QPointF(x, y);
+}
+
+bool LogXLogYDomain::attachAxis(QAbstractAxis* axis)
+{
+    AbstractDomain::attachAxis(axis);
+    QLogValueAxis *logAxis = qobject_cast<QLogValueAxis *>(axis);
+
+    if(logAxis && logAxis->orientation()==Qt::Vertical)
+        QObject::connect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleVerticalAxisBaseChanged(qreal)));
+
+    if(logAxis && logAxis->orientation()==Qt::Horizontal)
+        QObject::connect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleHorizontalAxisBaseChanged(qreal)));
+
+    return true;
+}
+
+bool LogXLogYDomain::detachAxis(QAbstractAxis* axis)
+{
+    AbstractDomain::detachAxis(axis);
+    QLogValueAxis *logAxis = qobject_cast<QLogValueAxis *>(axis);
+
+    if(logAxis && logAxis->orientation()==Qt::Vertical)
+        QObject::disconnect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleVerticalAxisBaseChanged(qreal)));
+
+    if(logAxis && logAxis->orientation()==Qt::Horizontal)
+        QObject::disconnect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleHorizontalAxisBaseChanged(qreal)));
+
+    return true;
+}
+
+void LogXLogYDomain::handleVerticalAxisBaseChanged(qreal baseY)
+{
+    m_logBaseY = baseY;
+}
+
+void LogXLogYDomain::handleHorizontalAxisBaseChanged(qreal baseX)
+{
+    m_logBaseX = baseX;
 }
 
 // operators
