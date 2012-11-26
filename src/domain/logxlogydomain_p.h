@@ -42,7 +42,7 @@ public:
     explicit LogXLogYDomain(QObject *object = 0);
     virtual ~LogXLogYDomain();
 
-    DomainType type(){ return AbstractDomain::XLogYLogDomain;}
+    DomainType type(){ return AbstractDomain::LogXLogYDomain;}
 
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
 

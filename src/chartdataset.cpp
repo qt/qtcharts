@@ -435,7 +435,7 @@ AbstractDomain::DomainType ChartDataSet::selectDomain(QList<QAbstractAxis*> axes
     }
 
     if(vertical==LogType && horizontal== LogType) {
-        return AbstractDomain::XLogYLogDomain;
+        return AbstractDomain::LogXLogYDomain;
     }
 
     return AbstractDomain::UndefinedDomain;
@@ -447,14 +447,14 @@ AbstractDomain* ChartDataSet::createDomain(AbstractDomain::DomainType type)
 {
 	switch(type)
 	{
-		case AbstractDomain::XLogYLogDomain:
-			return 0;
+		case AbstractDomain::LogXLogYDomain:
+			return new LogXLogYDomain();
 		case AbstractDomain::XYDomain:
 			return new XYDomain();
 		case AbstractDomain::XLogYDomain:
-			return 0;
+			return new XLogYDomain();
 		case AbstractDomain::LogXYDomain:
-			return 0;
+			return new LogXYDomain();
 		default:
 			return 0;
 	}

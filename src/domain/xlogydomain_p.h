@@ -42,7 +42,7 @@ public:
     explicit XLogYDomain(QObject *object = 0);
     virtual ~XLogYDomain();
 
-    DomainType type(){ return AbstractDomain::XLogYDomain;}
+    DomainType type(){ return AbstractDomain::XLogYDomain;};
 
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
 
