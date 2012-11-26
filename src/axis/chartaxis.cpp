@@ -466,7 +466,18 @@ QStringList ChartAxis::createLogValueLabels(qreal min, qreal max, qreal base, in
         QByteArray array = format.toLatin1();
         for (int i = firstTick; i < ticks + firstTick; i++) {
             qreal value = qPow(base, i);
-            labels << QString().sprintf(array, value);
+            if (format.contains("d")
+                    || format.contains("i")
+                    || format.contains("c"))
+                labels << QString().sprintf(array, (qint64)value);
+            else if (format.contains("u")
+                     || format.contains("o")
+                     || format.contains("x", Qt::CaseInsensitive))
+                labels << QString().sprintf(array, (quint64)value);
+            else if (format.contains("f", Qt::CaseInsensitive)
+                      || format.contains("e", Qt::CaseInsensitive)
+                      || format.contains("g", Qt::CaseInsensitive))
+                labels << QString().sprintf(array, value);
         }
     }
 
