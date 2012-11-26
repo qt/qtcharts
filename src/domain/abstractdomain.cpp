@@ -161,6 +161,35 @@ qreal AbstractDomain::niceNumber(qreal x, bool ceiling)
     return q * z;
 }
 
+bool AbstractDomain::attachAxis(QAbstractAxis* axis)
+{
+	if(axis->orientation()==Qt::Vertical) {
+		QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleVerticalAxisRangeChanged(qreal,qreal)));
+		QObject::connect(this, SIGNAL(rangeVerticalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
+	}
+
+	if(axis->orientation()==Qt::Horizontal) {
+		QObject::connect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleHorizontalAxisRangeChanged(qreal,qreal)));
+		QObject::connect(this, SIGNAL(rangeHorizontalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
+	}
+
+	return true;
+}
+
+bool AbstractDomain::detachAxis(QAbstractAxis* axis)
+{
+	if(axis->orientation()==Qt::Vertical) {
+		QObject::disconnect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleVerticalAxisRangeChanged(qreal,qreal)));
+		QObject::disconnect(this, SIGNAL(rangeVerticalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
+	}
+
+	if(axis->orientation()==Qt::Horizontal) {
+		QObject::disconnect(axis->d_ptr.data(), SIGNAL(rangeChanged(qreal,qreal)), this, SLOT(handleHorizontalAxisRangeChanged(qreal,qreal)));
+		QObject::disconnect(this, SIGNAL(rangeHorizontalChanged(qreal,qreal)), axis->d_ptr.data(), SLOT(handleRangeChanged(qreal,qreal)));
+	}
+
+	return true;
+}
 
 // operators
 

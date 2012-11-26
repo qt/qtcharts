@@ -38,7 +38,6 @@ class QChart;
 class ChartPresenter;
 class QAbstractSeries;
 class LegendLayout;
-class Domain;
 class QLegendMarker;
 
 class QLegendPrivate : public QObject

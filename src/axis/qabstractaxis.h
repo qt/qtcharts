@@ -189,6 +189,7 @@ protected:
     friend class ChartAxis;
     friend class ChartPresenter;
     friend class ChartThemeManager;
+    friend class AbstractDomain;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

@@ -42,6 +42,8 @@ public:
     explicit XYDomain(QObject *object = 0);
     virtual ~XYDomain();
 
+    DomainType type(){ return AbstractDomain::XYDomain;}
+
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
 
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const XYDomain &Domain1, const XYDomain &Domain2);

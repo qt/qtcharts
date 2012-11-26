@@ -50,12 +50,10 @@ public:
     void addSeries(QAbstractSeries *series);
     void removeSeries(QAbstractSeries *series);
     QList<QAbstractSeries *> series() const;
-    void removeAllSeries();
 
     void addAxis(QAbstractAxis *axis,Qt::Alignment aligment);
     void removeAxis(QAbstractAxis *axis);
     QList<QAbstractAxis*> axes() const;
-    void removeAllAxes();
 
     bool attachAxis(QAbstractSeries* series,QAbstractAxis *axis);
     bool detachAxis(QAbstractSeries* series,QAbstractAxis *axis);
@@ -75,7 +73,10 @@ Q_SIGNALS:
 private:
     void createAxes(QAbstractAxis::AxisTypes type, Qt::Orientation orientation);
     QAbstractAxis *createAxis(QAbstractAxis::AxisType type, Qt::Orientation orientation);
-
+    AbstractDomain::DomainType selectDomain(QList<QAbstractAxis* > axes);
+    AbstractDomain* createDomain(AbstractDomain::DomainType type);
+    void deleteAllAxes();
+    void deleteAllSeries();
 private:
     QList<QAbstractSeries *> m_seriesList;
     QList<QAbstractAxis *> m_axisList;

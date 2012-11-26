@@ -160,7 +160,10 @@ void QChart::removeSeries(QAbstractSeries *series)
  */
 void QChart::removeAllSeries()
 {
-    d_ptr->m_dataset->removeAllSeries();
+    foreach (QAbstractSeries *s ,  d_ptr->m_dataset->series()){
+        removeSeries(s);
+        delete s;
+    }
 }
 
 /*!

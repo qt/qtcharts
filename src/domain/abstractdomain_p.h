@@ -36,15 +36,21 @@
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
+class QAbstractAxis;
+
 class QTCOMMERCIALCHART_AUTOTEST_EXPORT AbstractDomain: public QObject
 {
     Q_OBJECT
+public:
+    enum DomainType { UndefinedDomain, XYDomain, XLogYDomain, LogXYDomain, XLogYLogDomain };
 public:
     explicit AbstractDomain(QObject *object = 0);
     virtual ~AbstractDomain();
 
     void setSize(const QSizeF& size);
     QSizeF size() const;
+
+    virtual DomainType type() = 0;
 
     virtual void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY) = 0;
     void setRangeX(qreal min, qreal max);
@@ -63,10 +69,8 @@ public:
     qreal spanY() const;
     bool isEmpty() const;
 
-
     void blockAxisSignals(bool block);
     bool axisSignalsBlocked() const { return m_axisSignalsBlocked; }
-
 
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const AbstractDomain &domain2);
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const AbstractDomain &domain2);
@@ -79,6 +83,9 @@ public:
     virtual QPointF calculateGeometryPoint(const QPointF &point) const = 0;
     virtual QPointF calculateDomainPoint(const QPointF &point) const = 0;
     virtual QVector<QPointF> calculateGeometryPoints(const QList<QPointF>& vector) const = 0;
+
+    virtual bool attachAxis(QAbstractAxis* axis);
+    virtual bool detachAxis(QAbstractAxis* axis);
 
     static void looseNiceNumbers(qreal &min, qreal &max, int &ticksCount);
     static qreal niceNumber(qreal x, bool ceiling);

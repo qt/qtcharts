@@ -71,6 +71,8 @@ Q_DECLARE_METATYPE(QLineSeries *)
 class tst_ChartDataSet: public QObject {
 
     Q_OBJECT
+public:
+    tst_ChartDataSet():m_dataset(0){};
 
 public Q_SLOTS:
     void initTestCase();
@@ -85,14 +87,10 @@ private Q_SLOTS:
     void addSeries();
     void removeSeries_data();
     void removeSeries();
-    void removeAllSeries_data();
-    void removeAllSeries();
     void addAxis_data();
     void addAxis();
     void removeAxis_data();
     void removeAxis();
-    void removeAllAxes_data();
-    void removeAllAxes();
     void attachAxis_data();
     void attachAxis();
     void detachAxis_data();
@@ -115,17 +113,15 @@ void tst_ChartDataSet::cleanupTestCase()
 
 void tst_ChartDataSet::init()
 {
+	Q_ASSERT(!m_dataset);
     m_dataset = new ChartDataSet(0);
 }
 
 
 void tst_ChartDataSet::cleanup()
 {
-    QList<QAbstractSeries*> series = m_dataset->series();
-    foreach (QAbstractSeries* serie, series)
-    {
-        m_dataset->removeSeries(serie);
-    }
+  delete m_dataset;
+  m_dataset=0;
 }
 
 void tst_ChartDataSet::chartdataset_data()
@@ -145,21 +141,27 @@ void tst_ChartDataSet::addSeries_data()
     QTest::addColumn<QAbstractSeries*>("series");
 
     QAbstractSeries* line = new QLineSeries(this);
-    QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
-    QAbstractSeries* scatter = new QScatterSeries(this);
-    QAbstractSeries* spline = new QSplineSeries(this);
-    QAbstractSeries* pie = new QPieSeries(this);
-    QAbstractSeries* bar = new QBarSeries(this);
-    QAbstractSeries* percent = new QPercentBarSeries(this);
-    QAbstractSeries* stacked = new QStackedBarSeries(this);
-
     QTest::newRow("line") << line;
+
+    QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(new QLineSeries(this)));
     QTest::newRow("area") << area;
+
+    QAbstractSeries* scatter = new QScatterSeries(this);
     QTest::newRow("scatter") << scatter;
+
+    QAbstractSeries* spline = new QSplineSeries(this);
     QTest::newRow("spline") << spline;
+
+    QAbstractSeries* pie = new QPieSeries(this);
     QTest::newRow("pie") << pie;
+
+    QAbstractSeries* bar = new QBarSeries(this);
     QTest::newRow("bar") << bar;
+
+    QAbstractSeries* percent = new QPercentBarSeries(this);
     QTest::newRow("percent") << percent;
+
+    QAbstractSeries* stacked = new QStackedBarSeries(this);
     QTest::newRow("stacked") << stacked;
 }
 
@@ -174,7 +176,6 @@ void tst_ChartDataSet::addSeries()
     QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
 
     m_dataset->addSeries(series);
-
 
     QCOMPARE(m_dataset->series().count(),1);
     TRY_COMPARE(spy0.count(), 0);
@@ -206,56 +207,6 @@ void tst_ChartDataSet::removeSeries()
     TRY_COMPARE(spy1.count(), 0);
     TRY_COMPARE(spy2.count(), 0);
     TRY_COMPARE(spy3.count(), 1);
-}
-
-void tst_ChartDataSet::removeAllSeries_data()
-{
-    QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
-    QTest::addColumn<QList<QAbstractAxis*> >("axisList");
-
-    QList<QAbstractSeries*> series;
-    QList<QAbstractAxis*> axis;
-
-    series << new QLineSeries(this) << new QSplineSeries(this) << new QScatterSeries(this);
-    axis << new QValueAxis(this) << new QValueAxis(this) << new QValueAxis(this);
-
-    QTest::newRow("3 series , 3 axis") << series << axis;
-}
-
-void tst_ChartDataSet::removeAllSeries()
-{
-    QFETCH(QList<QAbstractSeries*>, seriesList);
-    QFETCH(QList<QAbstractAxis*>, axisList);
-
-    QCOMPARE(m_dataset->series().count(),0);
-    QCOMPARE(m_dataset->axes().count(),0);
-
-    foreach (QAbstractSeries* series, seriesList) {
-        m_dataset->addSeries(series);
-    }
-
-    foreach (QAbstractAxis* axis, axisList) {
-        m_dataset->addAxis(axis,Qt::AlignBottom);
-    }
-
-    for (int i = 0; i < seriesList.count(); i++) {
-        m_dataset->attachAxis(seriesList.at(i),axisList.at(i));
-    }
-
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
-    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
-    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
-
-    m_dataset->removeAllSeries();
-
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), 0);
-    TRY_COMPARE(spy2.count(), 0);
-    TRY_COMPARE(spy3.count(), seriesList.count());
-
-    QCOMPARE(m_dataset->series().count(),0);
-    QCOMPARE(m_dataset->axes().count(),axisList.count());
 }
 
 void tst_ChartDataSet::addAxis_data()
@@ -316,58 +267,9 @@ void tst_ChartDataSet::removeAxis()
     TRY_COMPARE(spy3.count(), 0);
 }
 
-void tst_ChartDataSet::removeAllAxes_data()
-{
-    QTest::addColumn<QList<QAbstractSeries*> >("seriesList");
-    QTest::addColumn<QList<QAbstractAxis*> >("axisList");
-
-    QList<QAbstractSeries*> series;
-    QList<QAbstractAxis*> axis;
-
-    series << new QLineSeries(this) << new QSplineSeries(this) << new QScatterSeries(this);
-    axis << new QValueAxis(this) << new QValueAxis(this) << new QValueAxis(this);
-
-    QTest::newRow("3 series , 3 axis") << series << axis;
-}
-
-void tst_ChartDataSet::removeAllAxes()
-{
-    QFETCH(QList<QAbstractSeries*>, seriesList);
-    QFETCH(QList<QAbstractAxis*>, axisList);
-
-    QCOMPARE(m_dataset->series().count(),0);
-    QCOMPARE(m_dataset->axes().count(),0);
-
-    foreach (QAbstractSeries* series, seriesList) {
-        m_dataset->addSeries(series);
-    }
-
-    foreach (QAbstractAxis* axis, axisList) {
-        m_dataset->addAxis(axis,Qt::AlignBottom);
-    }
-
-    for (int i = 0; i < seriesList.count(); i++) {
-        m_dataset->attachAxis(seriesList.at(i),axisList.at(i));
-    }
-
-    QSignalSpy spy0(m_dataset, SIGNAL(axisAdded(QAbstractAxis*)));
-    QSignalSpy spy1(m_dataset, SIGNAL(axisRemoved(QAbstractAxis*)));
-    QSignalSpy spy2(m_dataset, SIGNAL(seriesAdded(QAbstractSeries*)));
-    QSignalSpy spy3(m_dataset, SIGNAL(seriesRemoved(QAbstractSeries*)));
-
-    m_dataset->removeAllAxes();
-
-    TRY_COMPARE(spy0.count(), 0);
-    TRY_COMPARE(spy1.count(), axisList.count());
-    TRY_COMPARE(spy2.count(), 0);
-    TRY_COMPARE(spy3.count(), 0);
-
-    QCOMPARE(m_dataset->series().count(),seriesList.count());
-    QCOMPARE(m_dataset->axes().count(),0);
-}
-
 void tst_ChartDataSet::attachAxis_data()
 {
+
     QTest::addColumn<QList<QAbstractSeries*> >("series");
     QTest::addColumn<QList<QAbstractAxis*> >("axis");
     QTest::addColumn<QList<Qt::Alignment> >("alignment");
@@ -375,12 +277,7 @@ void tst_ChartDataSet::attachAxis_data()
     QTest::addColumn<QAbstractAxis*>("attachAxis");
     QTest::addColumn<bool>("success");
 
-    QList<QAbstractSeries*> series;
-    QList<QAbstractAxis*> axes;
-    QList<Qt::Alignment> alignment;
-
-    QAbstractSeries* line = new QLineSeries(this);
-    QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
+    //QAbstractSeries* area = new QAreaSeries(static_cast<QLineSeries*>(line));
     QAbstractSeries* scatter = new QScatterSeries(this);
     QAbstractSeries* spline = new QSplineSeries(this);
     QAbstractSeries* pie = new QPieSeries(this);
@@ -388,17 +285,35 @@ void tst_ChartDataSet::attachAxis_data()
     QAbstractSeries* percent = new QPercentBarSeries(this);
     QAbstractSeries* stacked = new QStackedBarSeries(this);
 
-    QAbstractAxis* value1 = new QValueAxis(this);
-    QAbstractAxis* value2 = new QValueAxis(this);
     QAbstractAxis* category = new QCategoryAxis(this);
     QAbstractAxis* barcategory = new QBarCategoryAxis(this);
     QAbstractAxis* datetime = new QDateTimeAxis(this);
 
+    {
+     QList<QAbstractSeries*> series;
+     QList<QAbstractAxis*> axes;
+     QList<Qt::Alignment> alignment;
+     QAbstractSeries* line = new QLineSeries(this);
+     QAbstractAxis* value1 = new QValueAxis(this);
+     QAbstractAxis* value2 = new QValueAxis(this);
+     series << line << 0;
+     axes << value1 << value2;
+     alignment << Qt::AlignBottom << Qt::AlignLeft;
+     QTest::newRow("first") << series << axes << alignment << line << value2 << true ;
+    }
 
-    series << line << 0;
-    axes << value1 << value2;
-    alignment << Qt::AlignBottom << Qt::AlignLeft;
-    QTest::newRow("line + two axes") << series << axes << alignment << line << value2 << true;
+    {
+      QList<QAbstractSeries*> series;
+      QList<QAbstractAxis*> axes;
+      QList<Qt::Alignment> alignment;
+      QAbstractSeries* line = new QLineSeries(this);
+      QAbstractAxis* value1 = new QValueAxis(this);
+      QAbstractAxis* value2 = new QValueAxis(this);
+      series << 0 << line;
+      axes << value1 << value2;
+      alignment << Qt::AlignBottom << Qt::AlignLeft;
+      QTest::newRow("second") << series << axes << alignment << line << value1 << true;
+    }
 
 }
 
@@ -440,15 +355,15 @@ void tst_ChartDataSet::detachAxis_data()
     QTest::addColumn<QAbstractAxis*>("detachAxis");
     QTest::addColumn<bool>("success");
 
+    {
     QList<QAbstractSeries*> series;
     QList<QAbstractAxis*> axes;
-
     QAbstractSeries* line = new QLineSeries(this);
     QAbstractAxis* value = new QValueAxis(this);
-
     series << line;
     axes << value;
-    QTest::newRow("line + axis") << series << axes << line << value << true;
+    QTest::newRow("first") << series << axes << line << value << true;
+    }
 }
 
 void tst_ChartDataSet::detachAxis()

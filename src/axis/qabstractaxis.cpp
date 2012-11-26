@@ -862,6 +862,7 @@ void QAbstractAxisPrivate::initializeAnimations(QChart::AnimationOptions options
 }
 
 
+
 #include "moc_qabstractaxis.cpp"
 #include "moc_qabstractaxis_p.cpp"
 
