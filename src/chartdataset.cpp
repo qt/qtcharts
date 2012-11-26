@@ -197,13 +197,18 @@ bool ChartDataSet::attachAxis(QAbstractSeries* series,QAbstractAxis *axis)
 
     if(!domain->attachAxis(axis)) return false;
 
-    series->d_ptr->m_axes<<axis;
-    axis->d_ptr->m_series<<series;
-
     if(domain!=series->d_ptr->domain()){
+        foreach(QAbstractAxis* axis,series->d_ptr->m_axes){
+            series->d_ptr->domain()->detachAxis(axis);
+            domain->attachAxis(axis);
+        }
         series->d_ptr->setDomain(domain);
         series->d_ptr->initializeDomain();
     }
+
+    series->d_ptr->m_axes<<axis;
+    axis->d_ptr->m_series<<series;
+
     series->d_ptr->initializeAxes();
     axis->d_ptr->initializeDomain(domain);
 

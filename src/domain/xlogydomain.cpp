@@ -158,24 +158,22 @@ QPointF XLogYDomain::calculateDomainPoint(const QPointF &point) const
 
 bool XLogYDomain::attachAxis(QAbstractAxis* axis)
 {
-    AbstractDomain::attachAxis(axis);
     QLogValueAxis *logAxis = qobject_cast<QLogValueAxis *>(axis);
 
     if(logAxis && logAxis->orientation()==Qt::Vertical)
         QObject::connect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleVerticalAxisBaseChanged(qreal)));
 
-    return true;
+    return  AbstractDomain::attachAxis(axis);
 }
 
 bool XLogYDomain::detachAxis(QAbstractAxis* axis)
 {
-    AbstractDomain::detachAxis(axis);
     QLogValueAxis *logAxis = qobject_cast<QLogValueAxis *>(axis);
 
     if(logAxis && logAxis->orientation()==Qt::Vertical)
         QObject::disconnect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleVerticalAxisBaseChanged(qreal)));
 
-    return true;
+    return AbstractDomain::detachAxis(axis);
 }
 
 void XLogYDomain::handleVerticalAxisBaseChanged(qreal baseY)
