@@ -189,7 +189,6 @@ bool ChartDataSet::attachAxis(QAbstractSeries* series,QAbstractAxis *axis)
 
     if(type == AbstractDomain::UndefinedDomain) return false;
 
-
     if(domain->type()!=type){
         domain =  createDomain(type);
     }
@@ -201,8 +200,10 @@ bool ChartDataSet::attachAxis(QAbstractSeries* series,QAbstractAxis *axis)
     series->d_ptr->m_axes<<axis;
     axis->d_ptr->m_series<<series;
 
-    series->d_ptr->setDomain(domain);
-    series->d_ptr->initializeDomain();
+    if(domain!=series->d_ptr->domain()){
+        series->d_ptr->setDomain(domain);
+        series->d_ptr->initializeDomain();
+    }
     series->d_ptr->initializeAxes();
     axis->d_ptr->initializeDomain(domain);
 
@@ -397,30 +398,46 @@ QList<QAbstractSeries *> ChartDataSet::series() const
 AbstractDomain::DomainType ChartDataSet::selectDomain(QList<QAbstractAxis*> axes)
 {
     enum Type {
+        Undefined = 0,
         LogType = 0x1,
         ValueType = 0x2
     };
 
-    int horizontal(ValueType);
-    int vertical(ValueType);
+    int horizontal(Undefined);
+    int vertical(Undefined);
 
     foreach(QAbstractAxis* axis, axes)
     {
         switch(axis->type()) {
             case QAbstractAxis::AxisTypeLogValue:
-                axis->orientation()==Qt::Horizontal?horizontal:vertical|=LogType;
+
+            if(axis->orientation()==Qt::Horizontal) {
+                horizontal|=LogType;
+            }
+            if(axis->orientation()==Qt::Vertical) {
+                vertical|=LogType;
+            }
+
             break;
             case QAbstractAxis::AxisTypeValue:
             case QAbstractAxis::AxisTypeBarCategory:
             case QAbstractAxis::AxisTypeCategory:
             case QAbstractAxis::AxisTypeDateTime:
-                axis->orientation()==Qt::Horizontal?horizontal:vertical|=ValueType;
+            if(axis->orientation()==Qt::Horizontal) {
+                horizontal|=ValueType;
+            }
+            if(axis->orientation()==Qt::Vertical) {
+                vertical|=ValueType;
+            }
             break;
             default:
             qWarning()<<"Undefined type";
             break;
         }
     }
+
+    if(vertical==Undefined) vertical=ValueType;
+    if(horizontal==Undefined) horizontal=ValueType;
 
     if(vertical==ValueType && horizontal== ValueType) {
         return AbstractDomain::XYDomain;

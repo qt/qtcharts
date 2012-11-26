@@ -47,7 +47,7 @@ void LogXYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         axisXChanged = true;
         m_logMinX = log10(m_minX) / log10(m_logBaseX);
         m_logMaxX = log10(m_maxX) / log10(m_logBaseX);
-
+        if(!m_signalsBlocked)
         emit rangeHorizontalChanged(m_minX, m_maxX);
     }
 
@@ -55,6 +55,7 @@ void LogXYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
+        if(!m_signalsBlocked)
         emit rangeVerticalChanged(m_minY, m_maxY);
     }
 

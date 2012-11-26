@@ -70,7 +70,6 @@ QRectF ChartPresenter::geometry() const
 
 void ChartPresenter::handleAxisAdded(QAbstractAxis *axis)
 {
-    qDebug()<<__FUNCTION__;
     axis->d_ptr->initializeGraphics(rootItem());
     axis->d_ptr->initializeAnimations(m_options);
     ChartAxis *item = axis->d_ptr->axisItem();
@@ -83,7 +82,6 @@ void ChartPresenter::handleAxisAdded(QAbstractAxis *axis)
 
 void ChartPresenter::handleAxisRemoved(QAbstractAxis *axis)
 {
-    qDebug()<<__FUNCTION__;
     ChartAxis *item  = axis->d_ptr->m_item.take();
     item->hide();
     item->disconnect();
@@ -96,7 +94,6 @@ void ChartPresenter::handleAxisRemoved(QAbstractAxis *axis)
 
 void ChartPresenter::handleSeriesAdded(QAbstractSeries *series)
 {
-    qDebug()<<__FUNCTION__;
     series->d_ptr->initializeGraphics(rootItem());
     series->d_ptr->initializeAnimations(m_options);
     ChartItem *chart = series->d_ptr->chartItem();
@@ -112,7 +109,6 @@ void ChartPresenter::handleSeriesAdded(QAbstractSeries *series)
 
 void ChartPresenter::handleSeriesRemoved(QAbstractSeries *series)
 {
-    qDebug()<<__FUNCTION__;
     ChartItem *chart  = series->d_ptr->m_item.take();
     chart->hide();
     chart->disconnect();

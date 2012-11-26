@@ -45,6 +45,7 @@ void XLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minX = minX;
         m_maxX = maxX;
         axisXChanged = true;
+        if(!m_signalsBlocked)
         emit rangeHorizontalChanged(m_minX, m_maxX);
     }
 
@@ -54,6 +55,7 @@ void XLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         axisYChanged = true;
         m_logMinY = log10(m_minY) / log10(m_logBaseY);
         m_logMaxY = log10(m_maxY) / log10(m_logBaseY);
+        if(!m_signalsBlocked)
         emit rangeVerticalChanged(m_minY, m_maxY);
     }
 
