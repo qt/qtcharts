@@ -42,7 +42,7 @@ class ChartItem : public ChartElement
     enum ChartItemTypes { AXIS_ITEM = UserType + 1, XYLINE_ITEM };
 public:
     ChartItem(QAbstractSeriesPrivate *series,QGraphicsItem* item);
-    QSharedPointer<AbstractDomain>  domain() const;
+    AbstractDomain*  domain() const;
 public Q_SLOTS:
 	virtual void handleDomainUpdated();
 private:

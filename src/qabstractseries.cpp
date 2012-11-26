@@ -271,12 +271,12 @@ QAbstractSeriesPrivate::~QAbstractSeriesPrivate()
 {
 }
 
-void QAbstractSeriesPrivate::setDomain(QSharedPointer<AbstractDomain> domain)
+void QAbstractSeriesPrivate::setDomain(AbstractDomain* domain)
 {
-    Q_ASSERT(!domain.isNull());
-    if(m_domain!=domain) {
+    Q_ASSERT(domain);
+    if(m_domain.data()!=domain) {
         if(!m_item.isNull()) QObject::disconnect(m_domain.data(), SIGNAL(updated()), m_item.data(), SLOT(handleDomainUpdated()));
-        m_domain = domain;
+        m_domain.reset(domain);
         if(!m_item.isNull()) {
             QObject::connect(m_domain.data(), SIGNAL(updated()),m_item.data(), SLOT(handleDomainUpdated()));
             m_item->handleDomainUpdated();

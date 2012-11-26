@@ -116,14 +116,14 @@ void AreaChartItem::handleUpdated()
 
 void AreaChartItem::handleDomainUpdated()
 {
-    AbstractDomain* d = m_upper->domain().data();
+    AbstractDomain* d = m_upper->domain();
 
 	d->setSize(domain()->size());
 	d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
 	m_upper->handleDomainUpdated();
 
     if (m_lower) {
-        AbstractDomain* d = m_lower->domain().data();
+        AbstractDomain* d = m_lower->domain();
     	d->setSize(domain()->size());
     	d->setRange(domain()->minX(),domain()->maxX(),domain()->minY(),domain()->maxY());
     	m_lower->handleDomainUpdated();

@@ -69,8 +69,8 @@ public:
 
     ChartItem* chartItem() { return m_item.data(); }
 
-    virtual void setDomain(QSharedPointer<AbstractDomain> domain);
-    QSharedPointer<AbstractDomain> domain() { return m_domain; }
+    virtual void setDomain(AbstractDomain* domain);
+    AbstractDomain* domain() { return m_domain.data(); }
 
     QChart* chart() { return m_chart; }
 
@@ -83,7 +83,7 @@ protected:
     QScopedPointer<ChartItem> m_item;
     QList<QAbstractAxis*> m_axes;
 private:
-    QSharedPointer<AbstractDomain> m_domain;
+    QScopedPointer<AbstractDomain> m_domain;
     QString m_name;
     bool m_visible;
     qreal m_opacity;

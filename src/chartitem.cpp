@@ -31,7 +31,7 @@ ChartItem::ChartItem(QAbstractSeriesPrivate *series,QGraphicsItem* item):
 
 }
 
-QSharedPointer<AbstractDomain> ChartItem::domain() const
+AbstractDomain* ChartItem::domain() const
 {
     return m_series->domain();
 }
