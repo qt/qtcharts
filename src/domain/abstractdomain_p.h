@@ -42,7 +42,7 @@ class QTCOMMERCIALCHART_AUTOTEST_EXPORT AbstractDomain: public QObject
 {
     Q_OBJECT
 public:
-    enum DomainType { UndefinedDomain, XYDomain, XLogYDomain, LogXYDomain, XLogYLogDomain };
+    enum DomainType { UndefinedDomain, XYDomain, XLogYDomain, LogXYDomain, LogXLogYDomain };
 public:
     explicit AbstractDomain(QObject *object = 0);
     virtual ~AbstractDomain();

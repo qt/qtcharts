@@ -42,6 +42,8 @@ public:
     explicit XLogYDomain(QObject *object = 0);
     virtual ~XLogYDomain();
 
+    DomainType type(){ return AbstractDomain::XLogYDomain;}
+
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
 
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const XLogYDomain &domain1, const XLogYDomain &domain2);

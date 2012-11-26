@@ -42,6 +42,8 @@ public:
     explicit LogXYDomain(QObject *object = 0);
     virtual ~LogXYDomain();
 
+    DomainType type(){ return AbstractDomain::LogXYDomain;}
+
     void setRange(qreal minX, qreal maxX, qreal minY, qreal maxY);
 
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const LogXYDomain &domain1, const LogXYDomain &domain2);
