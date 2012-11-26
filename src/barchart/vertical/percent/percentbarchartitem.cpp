@@ -38,60 +38,82 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
     // Use temporary qreals for accuracy
     qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->count();
-    bool barsVisible = m_series->isVisible();
+//    bool barsVisible = m_series->isVisible();
 
-    // Domain:
-    qreal width = geometry().width();
-    qreal height = geometry().height();
-    qreal rangeY = m_domainMaxY - m_domainMinY;
-    qreal rangeX = m_domainMaxX - m_domainMinX;
-    qreal scaleY = (height / rangeY);
-    qreal scaleX = (width / rangeX);
-    qreal rectWidth = scaleX * m_series->d_func()->barWidth();
+    qreal barWidth = m_series->d_func()->barWidth();
 
-    int itemIndex(0);
-    for (int category = 0; category < categoryCount; category++) {
-        qreal colSum = m_series->d_func()->categorySum(category);
-        qreal percentage = (100 / colSum);
-        qreal yPos = height + scaleY * m_domainMinY + geometry().top();
+    for(int category = 0; category < categoryCount; category++) {
+        qreal sum = 0;
+        qreal categorySum = m_series->d_func()->categorySum(category);
         for (int set = 0; set < setCount; set++) {
-            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
-
-            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth / 2;
-
-            qreal rectHeight = barSet->value(category) * percentage * scaleY;
-            Bar *bar = m_bars.at(itemIndex);
-            bar->setPen(barSet->m_pen);
-            bar->setBrush(barSet->m_brush);
-            if (qFuzzyIsNull(rectHeight))
-                bar->setVisible(false);
+            qreal value = m_series->barSets().at(set)->at(category);
+            QRectF rect;            
+            QPointF topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth/2, 100 * (value + sum)/categorySum));
+            QPointF bottomRight;
+            if (domain()->type() == AbstractDomain::XLogYDomain
+                    || domain()->type() == AbstractDomain::LogXLogYDomain)
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? 100 * sum/categorySum : domain()->minY()));
             else
-                bar->setVisible(barsVisible);
-
-            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? 100 * sum/categorySum : 0));
+            rect.setTopLeft(topLeft);
+            rect.setBottomRight(bottomRight);
             layout.append(rect);
-
-            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
-
-            if (!qFuzzyIsNull(m_series->d_func()->valueAt(set, category))) {
-                int p = m_series->d_func()->percentageAt(set, category) * 100;
-                QString vString(QString::number(p));
-                vString.truncate(3);
-                vString.append("%");
-                label->setText(vString);
-            } else {
-                label->setText(QString(""));
-            }
-
-            label->setPos(xPos + (rect.width() / 2 - label->boundingRect().width() / 2),
-                          yPos - rectHeight / 2 - label->boundingRect().height() / 2);
-            label->setFont(barSet->m_labelFont);
-            label->setBrush(barSet->m_labelBrush);
-
-            itemIndex++;
-            yPos -= rectHeight;
+            sum +=value;
         }
     }
+
+    // AbstractDomain:
+//    qreal width = geometry().width();
+//    qreal height = geometry().height();
+//    qreal rangeY = m_domainMaxY - m_domainMinY;
+//    qreal rangeX = m_domainMaxX - m_domainMinX;
+//    qreal scaleY = (height / rangeY);
+//    qreal scaleX = (width / rangeX);
+//    qreal rectWidth = scaleX * m_series->d_func()->barWidth();
+
+//    int itemIndex(0);
+//    for (int category = 0; category < categoryCount; category++) {
+//        qreal colSum = m_series->d_func()->categorySum(category);
+//        qreal percentage = (100 / colSum);
+//        qreal yPos = height + scaleY * m_domainMinY + geometry().top();
+//        for (int set = 0; set < setCount; set++) {
+//            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+
+//            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth / 2;
+
+//            qreal rectHeight = barSet->value(category) * percentage * scaleY;
+//            Bar *bar = m_bars.at(itemIndex);
+//            bar->setPen(barSet->m_pen);
+//            bar->setBrush(barSet->m_brush);
+//            if (qFuzzyIsNull(rectHeight))
+//                bar->setVisible(false);
+//            else
+//                bar->setVisible(barsVisible);
+
+//            QRectF rect(xPos, yPos - rectHeight, rectWidth, rectHeight);
+//            layout.append(rect);
+
+//            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
+
+//            if (!qFuzzyIsNull(m_series->d_func()->valueAt(set, category))) {
+//                int p = m_series->d_func()->percentageAt(set, category) * 100;
+//                QString vString(QString::number(p));
+//                vString.truncate(3);
+//                vString.append("%");
+//                label->setText(vString);
+//            } else {
+//                label->setText(QString(""));
+//            }
+
+//            label->setPos(xPos + (rect.width() / 2 - label->boundingRect().width() / 2),
+//                          yPos - rectHeight / 2 - label->boundingRect().height() / 2);
+//            label->setFont(barSet->m_labelFont);
+//            label->setBrush(barSet->m_labelBrush);
+
+//            itemIndex++;
+//            yPos -= rectHeight;
+//        }
+//    }
     return layout;
 }
 

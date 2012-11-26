@@ -37,61 +37,94 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
     // Use temporary qreals for accuracy
     qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->count();
-    bool barsVisible = m_series->isVisible();
+//    bool barsVisible = m_series->isVisible();
 
-    // AbstractDomain:
-    qreal width = geometry().width();
-    qreal height = geometry().height();
-    qreal rangeY = m_domainMaxY - m_domainMinY;
-    qreal rangeX = m_domainMaxX - m_domainMinX;
-    qreal scaleY = (height / rangeY);
-    qreal scaleX = (width / rangeX);
-    qreal rectHeight = scaleY * m_series->d_func()->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
+    qreal barWidth = m_series->d_func()->barWidth();
 
-    int itemIndex(0);
-    for (int category = 0; category < categoryCount; category++) {
-        qreal xMax = -scaleX * m_domainMinX + geometry().left();
-        qreal xMin = -scaleX * m_domainMinX + geometry().left();
+    for(int category = 0; category < categoryCount; category++) {
+        qreal positiveSum = 0;
+        qreal negativeSum = 0;
         for (int set = 0; set < setCount; set++) {
-            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
-
-            qreal yPos = (m_domainMinY + 0.5 - barSet->pos(category)) * scaleY + geometry().bottom() - rectHeight / 2;
-
-            qreal rectWidth = barSet->value(category) * scaleX;
-            Bar *bar = m_bars.at(itemIndex);
-
-            bar->setPen(barSet->m_pen);
-            bar->setBrush(barSet->m_brush);
-            if (qFuzzyCompare(rectHeight, 0))
-                bar->setVisible(false);
-            else
-                bar->setVisible(barsVisible);
-
-            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
-
-            if (!qFuzzyCompare(barSet->value(category), 0))
-                label->setText(QString::number(barSet->value(category)));
-            else
-                label->setText(QString(""));
-            label->setFont(barSet->m_labelFont);
-            label->setBrush(barSet->m_labelBrush);
-
-            if (rectWidth > 0) {
-                QRectF rect(xMax, yPos - rectHeight, rectWidth, rectHeight);
-                layout.append(rect);
-                label->setPos(xMax + (rect.width() / 2 - label->boundingRect().width() / 2),
-                              yPos - rectHeight / 2 - label->boundingRect().height() / 2);
-                xMax += rectWidth;
+            qreal value = m_series->barSets().at(set)->at(category);
+            QRectF rect;
+            QPointF topLeft;
+            QPointF bottomRight;
+            if (value < 0) {
+                bottomRight = domain()->calculateGeometryPoint(QPointF(value + negativeSum, category - barWidth / 2));
+                if (domain()->type() == AbstractDomain::LogXYDomain
+                        || domain()->type() == AbstractDomain::LogXLogYDomain)
+                    topLeft = domain()->calculateGeometryPoint(QPointF(set ? negativeSum : domain()->minX(), category + barWidth / 2));
+                else
+                    topLeft = domain()->calculateGeometryPoint(QPointF(set ? negativeSum : 0, category + barWidth / 2));
+                negativeSum += value;
             } else {
-                QRectF rect(xMin, yPos - rectHeight, rectWidth, rectHeight);
-                layout.append(rect);
-                label->setPos(xMin + (rect.width() / 2 - label->boundingRect().width() / 2),
-                              yPos - rectHeight / 2 - label->boundingRect().height() / 2);
-                xMin += rectWidth;
+                bottomRight = domain()->calculateGeometryPoint(QPointF(value + positiveSum, category - barWidth / 2));
+                if (domain()->type() == AbstractDomain::LogXYDomain
+                        || domain()->type() == AbstractDomain::LogXLogYDomain)
+                    topLeft = domain()->calculateGeometryPoint(QPointF(set ? positiveSum : domain()->minX(), category + barWidth / 2));
+                else
+                    topLeft = domain()->calculateGeometryPoint(QPointF(set ? positiveSum : 0, category + barWidth / 2));
+                positiveSum += value;
             }
-            itemIndex++;
+            rect.setTopLeft(topLeft);
+            rect.setBottomRight(bottomRight);
+            layout.append(rect);
         }
     }
+
+    //    // AbstractDomain:
+    //    qreal width = geometry().width();
+    //    qreal height = geometry().height();
+    //    qreal rangeY = m_domainMaxY - m_domainMinY;
+    //    qreal rangeX = m_domainMaxX - m_domainMinX;
+    //    qreal scaleY = (height / rangeY);
+    //    qreal scaleX = (width / rangeX);
+    //    qreal rectHeight = scaleY * m_series->d_func()->barWidth(); // On horizontal chart barWidth of the barseries means height of the rect.
+
+    //    int itemIndex(0);
+    //    for (int category = 0; category < categoryCount; category++) {
+    //        qreal xMax = -scaleX * m_domainMinX + geometry().left();
+    //        qreal xMin = -scaleX * m_domainMinX + geometry().left();
+    //        for (int set = 0; set < setCount; set++) {
+    //            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
+
+    //            qreal yPos = (m_domainMinY + 0.5 - barSet->pos(category)) * scaleY + geometry().bottom() - rectHeight / 2;
+
+    //            qreal rectWidth = barSet->value(category) * scaleX;
+    //            Bar *bar = m_bars.at(itemIndex);
+
+    //            bar->setPen(barSet->m_pen);
+    //            bar->setBrush(barSet->m_brush);
+    //            if (qFuzzyCompare(rectHeight, 0))
+    //                bar->setVisible(false);
+    //            else
+    //                bar->setVisible(barsVisible);
+
+    //            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
+
+    //            if (!qFuzzyCompare(barSet->value(category), 0))
+    //                label->setText(QString::number(barSet->value(category)));
+    //            else
+    //                label->setText(QString(""));
+    //            label->setFont(barSet->m_labelFont);
+    //            label->setBrush(barSet->m_labelBrush);
+
+    //            if (rectWidth > 0) {
+    //                QRectF rect(xMax, yPos - rectHeight, rectWidth, rectHeight);
+    //                layout.append(rect);
+    //                label->setPos(xMax + (rect.width() / 2 - label->boundingRect().width() / 2),
+    //                              yPos - rectHeight / 2 - label->boundingRect().height() / 2);
+    //                xMax += rectWidth;
+    //            } else {
+    //                QRectF rect(xMin, yPos - rectHeight, rectWidth, rectHeight);
+    //                layout.append(rect);
+    //                label->setPos(xMin + (rect.width() / 2 - label->boundingRect().width() / 2),
+    //                              yPos - rectHeight / 2 - label->boundingRect().height() / 2);
+    //                xMin += rectWidth;
+    //            }
+    //            itemIndex++;
+    //        }
+    //    }
     return layout;
 }
 
