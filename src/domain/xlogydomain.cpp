@@ -91,7 +91,7 @@ void XLogYDomain::zoomOut(const QRectF &rect)
     maxX = minX + dx * m_size.width();
 
     qreal ratioY = m_size.height()/rect.height();
-    qreal newLogMinY = m_logMaxY - (m_logMaxY - m_logMinY) / ratioY;
+    qreal newLogMinY = m_logMinY - (m_logMaxY - m_logMinY) / ratioY;
     qreal newLogMaxY = m_logMaxY + (m_logMaxY - m_logMinY) / ratioY;
     qreal minY = qPow(m_logBaseY, newLogMinY);
     qreal maxY = qPow(m_logBaseY, newLogMaxY);
