@@ -48,7 +48,7 @@ public:
         }
 
         QLogValueAxis *axisX= new QLogValueAxis();
-        axisX->setBase(1.2);
+        axisX->setBase(2);
         QValueAxis *axisY= new QValueAxis();
         foreach (QAbstractSeries *series, chart->series()) {
             chart->setAxisX(axisX, series);
