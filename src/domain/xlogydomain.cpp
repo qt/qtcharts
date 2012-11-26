@@ -160,9 +160,10 @@ bool XLogYDomain::attachAxis(QAbstractAxis* axis)
 {
     QLogValueAxis *logAxis = qobject_cast<QLogValueAxis *>(axis);
 
-    if(logAxis && logAxis->orientation()==Qt::Vertical)
+    if(logAxis && logAxis->orientation()==Qt::Vertical){
         QObject::connect(logAxis, SIGNAL(baseChanged(qreal)), this, SLOT(handleVerticalAxisBaseChanged(qreal)));
-
+        handleVerticalAxisBaseChanged(logAxis->base());
+}
     return  AbstractDomain::attachAxis(axis);
 }
 
