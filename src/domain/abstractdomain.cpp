@@ -30,7 +30,7 @@ AbstractDomain::AbstractDomain(QObject *parent)
       m_maxX(0),
       m_minY(0),
       m_maxY(0),
-      m_axisSignalsBlocked(false)
+      m_signalsBlocked(false)
 {
 }
 
@@ -112,19 +112,23 @@ QPointF AbstractDomain::calculateDomainPoint(const QPointF &point) const
 
 void AbstractDomain::handleVerticalAxisRangeChanged(qreal min, qreal max)
 {
-    if(!m_axisSignalsBlocked)
-        setRangeY(min, max);
+    setRangeY(min, max);
 }
 
 void AbstractDomain::handleHorizontalAxisRangeChanged(qreal min, qreal max)
 {
-    if(!m_axisSignalsBlocked)
-        setRangeX(min, max);
+    setRangeX(min, max);
 }
 
-void AbstractDomain::blockAxisSignals(bool block)
+void AbstractDomain::blockRangeSignals(bool block)
 {
-    m_axisSignalsBlocked=block;
+    if(m_signalsBlocked!=block){
+        m_signalsBlocked=block;
+        if(!block) {
+            emit rangeHorizontalChanged(m_minX,m_maxX);
+            emit rangeVerticalChanged(m_minY,m_maxY);
+        }
+    }
 }
 
 //algorithm defined by Paul S.Heckbert GraphicalGems I

@@ -69,8 +69,8 @@ public:
     qreal spanY() const;
     bool isEmpty() const;
 
-    void blockAxisSignals(bool block);
-    bool axisSignalsBlocked() const { return m_axisSignalsBlocked; }
+    void blockRangeSignals(bool block);
+    bool rangeSignalsBlocked() const { return m_signalsBlocked; }
 
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator== (const AbstractDomain &domain1, const AbstractDomain &domain2);
     friend bool QTCOMMERCIALCHART_AUTOTEST_EXPORT operator!= (const AbstractDomain &domain1, const AbstractDomain &domain2);
@@ -105,7 +105,7 @@ protected:
     qreal m_minY;
     qreal m_maxY;
     QSizeF m_size;
-    bool m_axisSignalsBlocked;
+    bool m_signalsBlocked;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

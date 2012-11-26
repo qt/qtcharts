@@ -341,7 +341,7 @@ void ChartDataSet::zoomInDomain(const QRectF &rect)
     QList<AbstractDomain*> domains;
     foreach(QAbstractSeries *s, m_seriesList) {
         AbstractDomain* domain = s->d_ptr->domain();
-        s->d_ptr->m_domain->blockAxisSignals(true);
+        s->d_ptr->m_domain->blockRangeSignals(true);
         domains<<domain;
     }
 
@@ -349,7 +349,7 @@ void ChartDataSet::zoomInDomain(const QRectF &rect)
         domain->zoomIn(rect);
 
     foreach(AbstractDomain *domain, domains)
-        domain->blockAxisSignals(false);
+        domain->blockRangeSignals(false);
 }
 
 void ChartDataSet::zoomOutDomain(const QRectF &rect)
@@ -357,7 +357,7 @@ void ChartDataSet::zoomOutDomain(const QRectF &rect)
     QList<AbstractDomain*> domains;
     foreach(QAbstractSeries *s, m_seriesList) {
         AbstractDomain* domain = s->d_ptr->domain();
-        s->d_ptr->m_domain->blockAxisSignals(true);
+        s->d_ptr->m_domain->blockRangeSignals(true);
         domains<<domain;
     }
 
@@ -365,16 +365,15 @@ void ChartDataSet::zoomOutDomain(const QRectF &rect)
         domain->zoomOut(rect);
 
     foreach(AbstractDomain *domain, domains)
-        domain->blockAxisSignals(false);
+        domain->blockRangeSignals(false);
 }
 
 void ChartDataSet::scrollDomain(qreal dx, qreal dy)
 {
     QList<AbstractDomain*> domains;
     foreach(QAbstractSeries *s, m_seriesList) {
-        AbstractDomain* domain = s->d_ptr->m_domain.data();
-        if(domains.contains(domain)) continue;
-        s->d_ptr->m_domain->blockAxisSignals(true);
+        AbstractDomain* domain = s->d_ptr->domain();
+        s->d_ptr->m_domain->blockRangeSignals(true);
         domains<<domain;
     }
 
@@ -382,7 +381,7 @@ void ChartDataSet::scrollDomain(qreal dx, qreal dy)
         domain->move(dx, dy);
 
     foreach(AbstractDomain *domain, domains)
-        domain->blockAxisSignals(false);
+        domain->blockRangeSignals(false);
 }
 
 QList<QAbstractAxis*> ChartDataSet::axes() const

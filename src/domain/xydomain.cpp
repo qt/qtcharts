@@ -42,14 +42,16 @@ void XYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minX = minX;
         m_maxX = maxX;
         axisXChanged = true;
-        emit rangeHorizontalChanged(m_minX, m_maxX);
+        if(!m_signalsBlocked)
+            emit rangeHorizontalChanged(m_minX, m_maxX);
     }
 
     if (!qFuzzyCompare(m_minY, minY) || !qFuzzyCompare(m_maxY, maxY)) {
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
-        emit rangeVerticalChanged(m_minY, m_maxY);
+        if(!m_signalsBlocked)
+            emit rangeVerticalChanged(m_minY, m_maxY);
     }
 
     if (axisXChanged || axisYChanged)
