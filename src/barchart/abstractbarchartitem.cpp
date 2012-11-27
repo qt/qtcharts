@@ -46,8 +46,10 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphics
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
     connect(series, SIGNAL(visibleChanged()), this, SLOT(handleVisibleChanged()));
     connect(series, SIGNAL(opacityChanged()), this, SLOT(handleOpacityChanged()));
-    setZValue(ChartPresenter::BarSeriesZValue);
+    setZValue(ChartPresenter::BarSeriesZValue);    
     handleDataStructureChanged();
+    handleVisibleChanged();
+    handleUpdatedBars();
 }
 
 AbstractBarChartItem::~AbstractBarChartItem()
@@ -89,8 +91,12 @@ void AbstractBarChartItem::setLayout(const QVector<QRectF> &layout)
 
     m_layout = layout;
 
-    for (int i = 0; i < m_bars.count(); i++)
+    for (int i = 0; i < m_bars.count(); i++) {
         m_bars.at(i)->setRect(layout.at(i));
+        QGraphicsSimpleTextItem *label = m_labels.at(i);
+        label->setPos(layout.at(i).center() - label->boundingRect().center());
+
+    }
 }
 //handlers
 
@@ -192,6 +198,7 @@ void AbstractBarChartItem::handleUpdatedBars()
             bar->update();
 
             QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
+            label->setText(QString("%1").arg(barSet->value(category)));
             label->setFont(barSet->m_labelFont);
             label->setBrush(barSet->m_labelBrush);
             label->update();

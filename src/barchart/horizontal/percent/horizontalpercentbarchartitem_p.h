@@ -40,6 +40,7 @@ class HorizontalPercentBarChartItem : public AbstractBarChartItem
     Q_OBJECT
 public:
     HorizontalPercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
+    void handleUpdatedBars();
 
 private:
     virtual QVector<QRectF> calculateLayout();

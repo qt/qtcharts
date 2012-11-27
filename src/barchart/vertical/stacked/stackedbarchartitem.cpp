@@ -37,7 +37,6 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
     // Use temporary qreals for accuracy
     qreal categoryCount = m_series->d_func()->categoryCount();
     qreal setCount = m_series->count();
-//    bool barsVisible = m_series->isVisible();
     qreal barWidth = m_series->d_func()->barWidth();
 
     for(int category = 0; category < categoryCount; category++) {
@@ -50,16 +49,14 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             QPointF bottomRight;
             if (value < 0) {
                 bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + negativeSum));
-                if (domain()->type() == AbstractDomain::XLogYDomain
-                        || domain()->type() == AbstractDomain::LogXLogYDomain)
+                if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
                     topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? negativeSum : domain()->minY()));
                 else
                     topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? negativeSum : 0));
                 negativeSum += value;
             } else {
                 bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + positiveSum));
-                if (domain()->type() == AbstractDomain::XLogYDomain
-                        || domain()->type() == AbstractDomain::LogXLogYDomain)
+                if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
                     topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : domain()->minY()));
                 else
                     topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : 0));
@@ -70,64 +67,7 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
             layout.append(rect);
         }
     }
-
-
-// AbstractDomain:
-//    qreal width = geometry().width();
-//    qreal height = geometry().height();
-//    qreal rangeY = m_domainMaxY - m_domainMinY;
-//    qreal rangeX = m_domainMaxX - m_domainMinX;
-//    qreal scaleY = (height / rangeY);
-//    qreal scaleX = (width / rangeX);
-//    qreal rectWidth = scaleX * m_series->d_func()->barWidth();
-
-//    int itemIndex(0);
-//    for (int category = 0; category < categoryCount; category++) {
-//        qreal yMax = height + scaleY * m_domainMinY + geometry().top();
-//        qreal yMin = height + scaleY * m_domainMinY + geometry().top();
-//        for (int set = 0; set < setCount; set++) {
-//            QBarSetPrivate *barSet = m_series->d_func()->barsetAt(set)->d_ptr.data();
-
-//            qreal xPos = (barSet->pos(category) - m_domainMinX) * scaleX + geometry().left() - rectWidth / 2;
-
-//            qreal rectHeight = barSet->value(category) * scaleY;
-//            Bar *bar = m_bars.at(itemIndex);
-//            bar->setPen(barSet->m_pen);
-//            bar->setBrush(barSet->m_brush);
-//            if (qFuzzyIsNull(rectHeight))
-//                bar->setVisible(false);
-//            else
-//                bar->setVisible(barsVisible);
-
-//            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
-
-//            if (!qFuzzyIsNull(barSet->value(category)))
-//                label->setText(QString::number(barSet->value(category)));
-//            else
-//                label->setText(QString(""));
-
-//            label->setFont(barSet->m_labelFont);
-//            label->setBrush(barSet->m_labelBrush);
-
-//            if (rectHeight < 0) {
-//                QRectF rect(xPos, yMax - rectHeight, rectWidth, rectHeight);
-//                layout.append(rect);
-//                label->setPos(xPos + (rect.width() / 2 - label->boundingRect().width() / 2),
-//                              yMax - rectHeight / 2 - label->boundingRect().height() / 2);
-//                yMax -= rectHeight;
-//            } else {
-//                QRectF rect(xPos, yMin - rectHeight, rectWidth, rectHeight);
-//                layout.append(rect);
-//                label->setPos(xPos + (rect.width() / 2 - label->boundingRect().width() / 2),
-//                              yMin - rectHeight / 2 - label->boundingRect().height() / 2);
-//                yMin -= rectHeight;
-//            }
-
-//            itemIndex++;
-//        }
-//    }
-
-return layout;
+    return layout;
 }
 
 #include "moc_stackedbarchartitem_p.cpp"

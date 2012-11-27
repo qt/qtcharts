@@ -43,9 +43,10 @@ class PercentBarChartItem : public AbstractBarChartItem
     Q_OBJECT
 public:
     PercentBarChartItem(QAbstractBarSeries *series, QGraphicsItem* item = 0);
+    void handleUpdatedBars();
 
 private:
-    virtual QVector<QRectF> calculateLayout();
+    virtual QVector<QRectF> calculateLayout();        
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE
