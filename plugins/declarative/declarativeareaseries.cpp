@@ -25,9 +25,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeAreaSeries::DeclarativeAreaSeries(QObject *parent) :
     QAreaSeries(parent),
-    m_axisX(0),
-    m_axisY(0)
+    m_axes(new DeclarativeAxes(this))
 {
+    connect(m_axes, SIGNAL(axisXChanged(QAbstractAxis*)), this, SIGNAL(axisXChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
 }
 
 void DeclarativeAreaSeries::setUpperSeries(DeclarativeLineSeries *series)

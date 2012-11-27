@@ -31,6 +31,7 @@
 #include "declarativescatterseries.h"
 #include "declarativebarseries.h"
 #include "declarativepieseries.h"
+#include "declarativeaxes.h"
 #include "qvxymodelmapper.h"
 #include "qhxymodelmapper.h"
 #include "qhpiemodelmapper.h"
@@ -53,6 +54,7 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 
 Q_DECLARE_METATYPE(QList<QPieSlice *>)
 Q_DECLARE_METATYPE(QList<QBarSet *>)
+Q_DECLARE_METATYPE(QList<QAbstractAxis *>)
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
 
@@ -127,6 +129,7 @@ public:
 
         qRegisterMetaType<QList<QPieSlice *> >();
         qRegisterMetaType<QList<QBarSet *> >();
+        qRegisterMetaType<QList<QAbstractAxis *> >();
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 0, 0))
         qRegisterMetaType<DeclarativeChart::SeriesType>();
 #endif
@@ -174,6 +177,8 @@ public:
                                             QLatin1String("Trying to create uncreatable: BarsetBase."));
         qmlRegisterUncreatableType<QPieSeries>(uri, 1, 0, "QPieSeries",
                                                QLatin1String("Trying to create uncreatable: QPieSeries. Use PieSeries instead."));
+        qmlRegisterUncreatableType<DeclarativeAxes>(uri, 1, 0, "DeclarativeAxes",
+                                               QLatin1String("Trying to create uncreatable: DeclarativeAxes."));
 
         // QtCommercial.Chart 1.1
         qmlRegisterType<DeclarativeChart, 1>(uri, 1, 1, "ChartView");
@@ -201,6 +206,16 @@ public:
 
         // QtCommercial.Chart 1.2
         qmlRegisterType<DeclarativeChart, 2>(uri, 1, 2, "ChartView");
+        qmlRegisterType<DeclarativeScatterSeries, 2>(uri, 1, 2, "ScatterSeries");
+        qmlRegisterType<DeclarativeLineSeries, 2>(uri, 1, 2, "LineSeries");
+        qmlRegisterType<DeclarativeSplineSeries, 2>(uri, 1, 2, "SplineSeries");
+        qmlRegisterType<DeclarativeAreaSeries, 2>(uri, 1, 2, "AreaSeries");
+        qmlRegisterType<DeclarativeBarSeries, 2>(uri, 1, 2, "BarSeries");
+        qmlRegisterType<DeclarativeStackedBarSeries, 2>(uri, 1, 2, "StackedBarSeries");
+        qmlRegisterType<DeclarativePercentBarSeries, 2>(uri, 1, 2, "PercentBarSeries");
+        qmlRegisterType<DeclarativeHorizontalBarSeries, 2>(uri, 1, 2, "HorizontalBarSeries");
+        qmlRegisterType<DeclarativeHorizontalStackedBarSeries, 2>(uri, 1, 2, "HorizontalStackedBarSeries");
+        qmlRegisterType<DeclarativeHorizontalPercentBarSeries, 2>(uri, 1, 2, "HorizontalPercentBarSeries");
     }
 };
 

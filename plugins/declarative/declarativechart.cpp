@@ -33,6 +33,7 @@
 #include "qabstractseries_p.h"
 #include "declarativemargins.h"
 #include "chartdataset_p.h"
+#include "declarativeaxes.h"
 #include "qchart_p.h"
 
 #ifndef QT_ON_ARM
@@ -286,94 +287,71 @@ void DeclarativeChart::componentComplete()
             QAbstractSeries *series = qobject_cast<QAbstractSeries *>(child);
             m_chart->addSeries(series);
 
-            // Set optional user defined axes for the series and connect axis related signals
-            if (qobject_cast<DeclarativeLineSeries *>(child)) {
-                DeclarativeLineSeries *s = qobject_cast<DeclarativeLineSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
-            } else if (qobject_cast<DeclarativeSplineSeries *>(child)) {
-                DeclarativeSplineSeries *s = qobject_cast<DeclarativeSplineSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
-            } else if (qobject_cast<DeclarativeScatterSeries *>(child)) {
-                DeclarativeScatterSeries *s = qobject_cast<DeclarativeScatterSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
-            } else if (qobject_cast<DeclarativeAreaSeries *>(child)) {
-                DeclarativeAreaSeries *s = qobject_cast<DeclarativeAreaSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
-            } else if (qobject_cast<DeclarativeBarSeries *>(child)) {
-                DeclarativeBarSeries *s = qobject_cast<DeclarativeBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
-            } else if (qobject_cast<DeclarativeStackedBarSeries *>(child)) {
-                DeclarativeStackedBarSeries *s = qobject_cast<DeclarativeStackedBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
-            } else if (qobject_cast<DeclarativePercentBarSeries *>(child)) {
-                DeclarativePercentBarSeries *s = qobject_cast<DeclarativePercentBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
-            } else if (qobject_cast<DeclarativeHorizontalBarSeries *>(child)) {
-                DeclarativeHorizontalBarSeries *s = qobject_cast<DeclarativeHorizontalBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
-            } else if (qobject_cast<DeclarativeHorizontalStackedBarSeries *>(child)) {
-                DeclarativeHorizontalStackedBarSeries *s = qobject_cast<DeclarativeHorizontalStackedBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
-            } else if (qobject_cast<DeclarativeHorizontalPercentBarSeries *>(child)) {
-                DeclarativeHorizontalPercentBarSeries *s = qobject_cast<DeclarativeHorizontalPercentBarSeries *>(child);
-                connect(s, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
-                connect(s, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
-                setAxisX(s->axisX(), s);
-                setAxisY(s->axisY(), s);
+            // Connect to axis changed signals (unless this is a pie series)
+            if (!qobject_cast<DeclarativePieSeries *>(series)) {
+                connect(series, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(series, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+                connect(series, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
+                connect(series, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SLOT(handleAxisYRightSet(QAbstractAxis*)));
             }
+
+            initializeAxes(series);
         }
     }
-
-    // Create the missing axes for the series that cannot be painted without axes
-    foreach (QAbstractSeries *chartSeries, m_chart->series())
-        createDefaultAxes(chartSeries);
 
     QDeclarativeItem::componentComplete();
 }
 
 void DeclarativeChart::handleAxisXSet(QAbstractAxis *axis)
 {
-//    qDebug() << "DeclarativeChart::handleAxisXSet" << sender() << axis;
-    if (axis && qobject_cast<QAbstractSeries *>(sender()))
-        m_chart->setAxisX(axis, qobject_cast<QAbstractSeries *>(sender()));
-    else
+    QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
+    if (axis && s) {
+        if (!m_chart->axes(Qt::Horizontal).contains(axis))
+            m_chart->addAxis(axis, Qt::AlignBottom);
+        if (!s->attachedAxes().contains(axis))
+            s->attachAxis(axis);
+    } else {
         qWarning() << "Trying to set axisX to null.";
+    }
+}
+
+void DeclarativeChart::handleAxisXTopSet(QAbstractAxis *axis)
+{
+    QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
+    if (axis && s) {
+        if (!m_chart->axes(Qt::Horizontal).contains(axis))
+            m_chart->addAxis(axis, Qt::AlignTop);
+        if (!s->attachedAxes().contains(axis))
+            s->attachAxis(axis);
+    } else {
+        qWarning() << "Trying to set axisXTop to null.";
+    }
 }
 
 void DeclarativeChart::handleAxisYSet(QAbstractAxis *axis)
 {
-//    qDebug() << "DeclarativeChart::handleAxisYSet" << sender() << axis;
-    if (axis && qobject_cast<QAbstractSeries *>(sender()))
-        m_chart->setAxisY(axis, qobject_cast<QAbstractSeries *>(sender()));
-    else
+    QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
+    if (axis && s) {
+        if (!m_chart->axes(Qt::Vertical).contains(axis))
+            m_chart->addAxis(axis, Qt::AlignLeft);
+        if (!s->attachedAxes().contains(axis))
+            s->attachAxis(axis);
+    } else {
         qWarning() << "Trying to set axisY to null.";
+    }
+}
+
+void DeclarativeChart::handleAxisYRightSet(QAbstractAxis *axis)
+{
+    QAbstractSeries *s = qobject_cast<QAbstractSeries *>(sender());
+    if (axis && s) {
+        if (!m_chart->axes(Qt::Vertical).contains(axis))
+            m_chart->addAxis(axis, Qt::AlignRight);
+        if (!s->attachedAxes().contains(axis))
+            s->attachAxis(axis);
+    } else {
+        qWarning() << "Trying to set axisYRight to null.";
+    }
 }
 
 void DeclarativeChart::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
@@ -435,12 +413,18 @@ QString DeclarativeChart::title()
 
 QAbstractAxis *DeclarativeChart::axisX(QAbstractSeries *series)
 {
-    return m_chart->axisX(series);
+    QList<QAbstractAxis *> axes = m_chart->axes(Qt::Horizontal, series);
+    if (axes.count())
+        return axes[0];
+    return 0;
 }
 
 QAbstractAxis *DeclarativeChart::axisY(QAbstractSeries *series)
 {
-    return m_chart->axisY(series);
+    QList<QAbstractAxis *> axes = m_chart->axes(Qt::Vertical, series);
+    if (axes.count())
+        return axes[0];
+    return 0;
 }
 
 QLegend *DeclarativeChart::legend()
@@ -557,6 +541,40 @@ void DeclarativeChart::scrollDown(qreal pixels)
     m_chart->scroll(0, -pixels);
 }
 
+QDeclarativeListProperty<QAbstractAxis> DeclarativeChart::axes()
+{
+    return QDeclarativeListProperty<QAbstractAxis>(this, 0,
+                &DeclarativeChart::axesAppendFunc,
+                &DeclarativeChart::axesCountFunc,
+                &DeclarativeChart::axesAtFunc);
+}
+
+void DeclarativeChart::axesAppendFunc(QDeclarativeListProperty<QAbstractAxis> *list, QAbstractAxis *element)
+{
+    // Empty implementation
+    Q_UNUSED(list);
+    Q_UNUSED(element);
+}
+
+int DeclarativeChart::axesCountFunc(QDeclarativeListProperty<QAbstractAxis> *list)
+{
+    if (qobject_cast<DeclarativeChart *>(list->object)) {
+        DeclarativeChart *chart = qobject_cast<DeclarativeChart *>(list->object);
+        return chart->m_chart->axes(Qt::Horizontal | Qt::Vertical, chart->m_chart->series()[0]).count();
+    }
+    return 0;
+}
+
+QAbstractAxis *DeclarativeChart::axesAtFunc(QDeclarativeListProperty<QAbstractAxis> *list, int index)
+{
+    if (qobject_cast<DeclarativeChart *>(list->object)) {
+        DeclarativeChart *chart = qobject_cast<DeclarativeChart *>(list->object);
+        QList<QAbstractAxis *> axes = chart->m_chart->axes(Qt::Horizontal | Qt::Vertical, chart->m_chart->series()[0]);
+        return axes.at(index);
+    }
+    return 0;
+}
+
 QAbstractSeries *DeclarativeChart::series(int index)
 {
     if (index < m_chart->series().count()) {
@@ -625,13 +643,24 @@ QAbstractSeries *DeclarativeChart::createSeries(DeclarativeChart::SeriesType typ
     }
 
     if (series) {
+        // Connect to axis changed signals (unless this is a pie series)
+        if (!qobject_cast<DeclarativePieSeries *>(series)) {
+            connect(series, SIGNAL(axisXChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+            connect(series, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SLOT(handleAxisXSet(QAbstractAxis*)));
+            connect(series, SIGNAL(axisYChanged(QAbstractAxis*)), this, SLOT(handleAxisYSet(QAbstractAxis*)));
+            connect(series, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SLOT(handleAxisYRightSet(QAbstractAxis*)));
+        }
+
         series->setName(name);
         m_chart->addSeries(series);
-        // Set possible user defined axes
-        setAxisX(axisX, series);
-        setAxisY(axisY, series);
-        // Then create the missing axes
-        createDefaultAxes(series);
+
+        if (axisX)
+            setAxisX(axisX, series);
+        if (axisY)
+            setAxisY(axisY, series);
+
+        if (series->attachedAxes().count() < 2)
+            initializeAxes(series);
     }
 
     return series;
@@ -662,67 +691,77 @@ void DeclarativeChart::createDefaultAxes()
     qWarning() << "ChartView.createDefaultAxes() is deprecated. Axes are created automatically.";
 }
 
-void DeclarativeChart::createDefaultAxes(QAbstractSeries *series)
+QAbstractAxis *DeclarativeChart::defaultAxis(Qt::Orientation orientation, QAbstractSeries *series)
 {
-    foreach (QAbstractSeries *s, m_chart->series()) {
-        // If there is already an x axis of the correct type, re-use it
-        if (!m_chart->axisX(series) && s != series && m_chart->axisX(s)
-            && m_chart->axisX(s)->type() == series->d_ptr->defaultAxisType(Qt::Horizontal))
-            m_chart->setAxisX(m_chart->axisX(s), series);
-
-        // If there is already a y axis of the correct type, re-use it
-        if (!m_chart->axisY(series) && s != series && m_chart->axisY(s)
-            && m_chart->axisY(s)->type() == series->d_ptr->defaultAxisType(Qt::Vertical))
-            m_chart->setAxisY(m_chart->axisY(s), series);
+    if (!series) {
+        qWarning() << "No axis type defined for null series";
+        return 0;
     }
 
-    // If no x axis of correct type was found, create a new x axis based of default axis type
-    if (!m_chart->axisX(series)) {
-        switch (series->d_ptr->defaultAxisType(Qt::Horizontal)) {
-        case QAbstractAxis::AxisTypeValue:
-            m_chart->setAxisX(new QValueAxis(this), series);
-            break;
-        case QAbstractAxis::AxisTypeBarCategory:
-            m_chart->setAxisX(new QBarCategoryAxis(this), series);
-            break;
-        case QAbstractAxis::AxisTypeCategory:
-            m_chart->setAxisX(new QCategoryAxis(this), series);
-            break;
+    foreach (QAbstractAxis *existingAxis, m_chart->axes(orientation)) {
+        if (existingAxis->type() == series->d_ptr->defaultAxisType(orientation))
+            return existingAxis;
+    }
+
+    switch (series->d_ptr->defaultAxisType(orientation)) {
+    case QAbstractAxis::AxisTypeValue:
+        return new QValueAxis(this);
+    case QAbstractAxis::AxisTypeBarCategory:
+        return new QBarCategoryAxis(this);
+    case QAbstractAxis::AxisTypeCategory:
+        return new QCategoryAxis(this);
 #ifndef QT_ON_ARM
-        case QAbstractAxis::AxisTypeDateTime:
-            m_chart->setAxisX(new QDateTimeAxis(this), series);
-            break;
+    case QAbstractAxis::AxisTypeDateTime:
+        return new QDateTimeAxis(this);
 #endif
-        default:
-            // Do nothing, assume AxisTypeNoAxis
-            break;
-        }
+    default:
+        // assume AxisTypeNoAxis
+        return 0;
     }
+}
 
-    // If no y axis of correct type was found, create a new y axis based of default axis type
-    if (!m_chart->axisY(series)) {
-        switch (series->d_ptr->defaultAxisType(Qt::Vertical)) {
-        case QAbstractAxis::AxisTypeValue:
-            m_chart->setAxisY(new QValueAxis(this), series);
-            break;
-        case QAbstractAxis::AxisTypeBarCategory:
-            m_chart->setAxisY(new QBarCategoryAxis(this), series);
-            break;
-        case QAbstractAxis::AxisTypeCategory:
-            m_chart->setAxisY(new QCategoryAxis(this), series);
-            break;
-#ifndef QT_ON_ARM
-        case QAbstractAxis::AxisTypeDateTime:
-            m_chart->setAxisY(new QDateTimeAxis(this), series);
-            break;
-#endif
-        default:
-            // Do nothing, assume AxisTypeNoAxis
-            break;
-        }
-    }
+void DeclarativeChart::initializeAxes(QAbstractSeries *series)
+{
+    if (qobject_cast<DeclarativeLineSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeLineSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeScatterSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeScatterSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeSplineSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeSplineSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeAreaSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeAreaSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeBarSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeBarSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeStackedBarSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeStackedBarSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativePercentBarSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativePercentBarSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeHorizontalBarSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeHorizontalBarSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeHorizontalStackedBarSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeHorizontalStackedBarSeries *>(series)->m_axes);
+    else if (qobject_cast<DeclarativeHorizontalPercentBarSeries *>(series))
+        doInitializeAxes(series, qobject_cast<DeclarativeHorizontalPercentBarSeries *>(series)->m_axes);
+    // else: do nothing
+}
 
-    //qDebug() << "axis for series" << series << "x:" << m_chart->axisX(series) << "y:" << m_chart->axisY(series);
+void DeclarativeChart::doInitializeAxes(QAbstractSeries *series, DeclarativeAxes *axes)
+{
+    // Initialize axis X
+    if (axes->axisX())
+        axes->emitAxisXChanged();
+    else if (axes->axisXTop())
+        axes->emitAxisXTopChanged();
+    else
+        axes->setAxisX(defaultAxis(Qt::Horizontal, series));
+
+    // Initialize axis Y
+    if (axes->axisY())
+        axes->emitAxisYChanged();
+    else if (axes->axisYRight())
+        axes->emitAxisYRightChanged();
+    else
+        axes->setAxisY(defaultAxis(Qt::Vertical, series));
 }
 
 #include "moc_declarativechart.cpp"

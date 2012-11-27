@@ -23,6 +23,7 @@
 
 #include "qscatterseries.h"
 #include "declarativexyseries.h"
+#include "declarativeaxes.h"
 #include <QtDeclarative/QDeclarativeListProperty>
 #include <QtDeclarative/QDeclarativeParserStatus>
 
@@ -35,6 +36,8 @@ class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeri
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
     Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
+    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION 2)
+    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
     Q_PROPERTY(qreal borderWidth READ borderWidth WRITE setBorderWidth NOTIFY borderWidthChanged REVISION 1)
     Q_PROPERTY(QDeclarativeListProperty<QObject> declarativeChildren READ declarativeChildren)
     Q_CLASSINFO("DefaultProperty", "declarativeChildren")
@@ -42,10 +45,14 @@ class DeclarativeScatterSeries : public QScatterSeries, public DeclarativeXySeri
 public:
     explicit DeclarativeScatterSeries(QObject *parent = 0);
     QXYSeries *xySeries() { return this; }
-    QAbstractAxis *axisX() { return m_axisX; }
-    void setAxisX(QAbstractAxis *axis) { m_axisX = axis; emit axisXChanged(axis); }
-    QAbstractAxis *axisY() { return m_axisY; }
-    void setAxisY(QAbstractAxis *axis) { m_axisY = axis; emit axisYChanged(axis); }
+    QAbstractAxis *axisX() { return m_axes->axisX(); }
+    void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
+    QAbstractAxis *axisY() { return m_axes->axisY(); }
+    void setAxisY(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
+    Q_REVISION(2) QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
+    Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
+    Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
+    Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
     qreal borderWidth() const;
     void setBorderWidth(qreal borderWidth);
     QDeclarativeListProperty<QObject> declarativeChildren();
@@ -67,14 +74,15 @@ Q_SIGNALS:
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
     Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
     Q_REVISION(1) void borderWidthChanged(qreal width);
+    Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
+    Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
 
 public Q_SLOTS:
     static void appendDeclarativeChildren(QDeclarativeListProperty<QObject> *list, QObject *element);
     void handleCountChanged(int index);
 
-private:
-    QAbstractAxis *m_axisX;
-    QAbstractAxis *m_axisY;
+public:
+    DeclarativeAxes *m_axes;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

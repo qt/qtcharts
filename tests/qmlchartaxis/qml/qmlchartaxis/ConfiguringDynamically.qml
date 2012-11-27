@@ -33,12 +33,12 @@ ChartView {
         onTriggered: {
             switch (index) {
             case 0:
-                chartView.axisX(lineSeries).max = 6;
-                chartView.axisY(lineSeries).max = 6;
+                lineSeries.axisX.max = 6;
+                lineSeries.axisY.max = 6;
                 break;
             case 1:
-                chartView.axisX(scatterSeries).max = 10;
-                chartView.axisY(scatterSeries).max = 10;
+                scatterSeries.axisX.max = 10;
+                scatterSeries.axisY.max = 10;
                 break;
             default:
                 chartView.axisX().max = 4;

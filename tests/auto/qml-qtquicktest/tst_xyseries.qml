@@ -34,26 +34,17 @@ Rectangle {
         function test_properties() {
             verify(lineSeries.color != undefined);
             compare(lineSeries.pointsVisible, false);
-            // TODO: Should the properties be set or not?
-//            verify(lineSeries.axisX != null);
-//            verify(lineSeries.axisY != null);
             compare(lineSeries.capStyle, Qt.SquareCap);
             compare(lineSeries.style, Qt.SolidLine);
             compare(lineSeries.width, 2.0);
 
             verify(splineSeries.color != undefined);
             compare(splineSeries.pointsVisible, false);
-            // TODO: Should the properties be set or not?
-//            verify(splineSeries.axisX != null);
-//            verify(splineSeries.axisY != null);
             compare(splineSeries.capStyle, Qt.SquareCap);
             compare(splineSeries.style, Qt.SolidLine);
             compare(splineSeries.width, 2.0);
 
             verify(scatterSeries.color != undefined);
-            // TODO: Should the properties be set or not?
-//            verify(scatterSeries.axisX != null);
-//            verify(scatterSeries.axisY != null);
             verify(scatterSeries.borderColor != undefined);
             compare(scatterSeries.borderWidth, 2.0);
             compare(scatterSeries.markerShape, ScatterSeries.MarkerShapeCircle);
@@ -62,6 +53,20 @@ Rectangle {
             verify(areaSeries.color != undefined);
             verify(areaSeries.borderColor != undefined);
             compare(areaSeries.borderWidth, 2.0);
+        }
+
+        function test_axes() {
+            compare(chartView.axes.length, 2);
+            console.log("chart.axes[0] " + chartView.axes[0]);
+            console.log("chart.axes[1] " + chartView.axes[1]);
+            console.log("lineSeries.axisX " + lineSeries.axisX);
+            console.log("lineSeries.axisY " + lineSeries.axisY);
+            verify(chartView.axes[0] == lineSeries.axisX || chartView.axes[1] == lineSeries.axisX);
+            verify(chartView.axes[0] == lineSeries.axisY || chartView.axes[1] == lineSeries.axisY);
+            verify(lineSeries.axisX == splineSeries.axisX);
+            verify(lineSeries.axisY == splineSeries.axisY);
+            verify(lineSeries.axisX == areaSeries.axisX);
+            verify(lineSeries.axisY == areaSeries.axisY);
         }
 
         function test_append() {

@@ -23,6 +23,7 @@
 
 #include "qsplineseries.h"
 #include "declarativexyseries.h"
+#include "declarativeaxes.h"
 #include <QtDeclarative/QDeclarativeListProperty>
 #include <QtDeclarative/QDeclarativeParserStatus>
 
@@ -35,6 +36,8 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
     Q_PROPERTY(int count READ count NOTIFY countChanged)
     Q_PROPERTY(QAbstractAxis *axisX READ axisX WRITE setAxisX NOTIFY axisXChanged REVISION 1)
     Q_PROPERTY(QAbstractAxis *axisY READ axisY WRITE setAxisY NOTIFY axisYChanged REVISION 1)
+    Q_PROPERTY(QAbstractAxis *axisXTop READ axisXTop WRITE setAxisXTop NOTIFY axisXTopChanged REVISION 2)
+    Q_PROPERTY(QAbstractAxis *axisYRight READ axisYRight WRITE setAxisYRight NOTIFY axisYRightChanged REVISION 2)
     Q_PROPERTY(qreal width READ width WRITE setWidth NOTIFY widthChanged REVISION 1)
     Q_PROPERTY(Qt::PenStyle style READ style WRITE setStyle NOTIFY styleChanged REVISION 1)
     Q_PROPERTY(Qt::PenCapStyle capStyle READ capStyle WRITE setCapStyle NOTIFY capStyleChanged REVISION 1)
@@ -44,10 +47,14 @@ class DeclarativeSplineSeries : public QSplineSeries, public DeclarativeXySeries
 public:
     explicit DeclarativeSplineSeries(QObject *parent = 0);
     QXYSeries *xySeries() { return this; }
-    QAbstractAxis *axisX() { return m_axisX; }
-    void setAxisX(QAbstractAxis *axis) { m_axisX = axis; emit axisXChanged(axis); }
-    QAbstractAxis *axisY() { return m_axisY; }
-    void setAxisY(QAbstractAxis *axis) { m_axisY = axis; emit axisYChanged(axis); }
+    QAbstractAxis *axisX() { return m_axes->axisX(); }
+    void setAxisX(QAbstractAxis *axis) { m_axes->setAxisX(axis); }
+    QAbstractAxis *axisY() { return m_axes->axisY(); }
+    void setAxisY(QAbstractAxis *axis) { m_axes->setAxisY(axis); }
+    Q_REVISION(2) QAbstractAxis *axisXTop() { return m_axes->axisXTop(); }
+    Q_REVISION(2) void setAxisXTop(QAbstractAxis *axis) { m_axes->setAxisXTop(axis); }
+    Q_REVISION(2) QAbstractAxis *axisYRight() { return m_axes->axisYRight(); }
+    Q_REVISION(2) void setAxisYRight(QAbstractAxis *axis) { m_axes->setAxisYRight(axis); }
     qreal width() const;
     void setWidth(qreal width);
     Qt::PenStyle style() const;
@@ -72,6 +79,8 @@ Q_SIGNALS:
     void countChanged(int count);
     Q_REVISION(1) void axisXChanged(QAbstractAxis *axis);
     Q_REVISION(1) void axisYChanged(QAbstractAxis *axis);
+    Q_REVISION(2) void axisXTopChanged(QAbstractAxis *axis);
+    Q_REVISION(2) void axisYRightChanged(QAbstractAxis *axis);
     Q_REVISION(1) void widthChanged(qreal width);
     Q_REVISION(1) void styleChanged(Qt::PenStyle style);
     Q_REVISION(1) void capStyleChanged(Qt::PenCapStyle capStyle);
@@ -81,8 +90,7 @@ public Q_SLOTS:
     void handleCountChanged(int index);
 
 public:
-    QAbstractAxis *m_axisX;
-    QAbstractAxis *m_axisY;
+    DeclarativeAxes *m_axes;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

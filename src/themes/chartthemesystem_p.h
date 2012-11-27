@@ -80,7 +80,7 @@ public:
         m_seriesColors.append(ChartThemeManager::colorAt(g, 0.5));
 
         // Generate gradients from the base colors
-        ChartThemeManager::generateSeriesGradients(m_seriesColors);
+        m_seriesGradients = ChartThemeManager::generateSeriesGradients(m_seriesColors);
 
         // Background fill color from COLOR_WINDOW
         QLinearGradient backgroundGradient;
@@ -129,7 +129,7 @@ public:
         m_seriesColors << QRgb(0x92ca66);
         m_seriesColors << QRgb(0xeba85f);
         m_seriesColors << QRgb(0xfc5751);
-        generateSeriesGradients();
+        m_seriesGradients = ChartThemeManager::generateSeriesGradients(m_seriesColors);
 
         // Background
         QLinearGradient backgroundGradient;

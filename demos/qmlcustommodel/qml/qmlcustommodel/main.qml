@@ -37,14 +37,14 @@ Rectangle {
             categories: ["2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014" ]
             min: "2007"
             max: "2014"
-            title: "Year"
+            titleText: "Year"
         }
 
         ValueAxis {
             id: valueAxis
             min: 0
             max: 60
-            title: "Sales count [ku]"
+            titleText: "Sales count [ku]"
         }
         // ...
         //![1]

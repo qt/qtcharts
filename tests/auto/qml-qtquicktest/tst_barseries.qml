@@ -36,6 +36,18 @@ Rectangle {
             compare(barSeries.labelsVisible, false);
         }
 
+        function test_axes() {
+            compare(chartView.axes.length, 2);
+            verify(chartView.axes[0] == barSeries.axisX || chartView.axes[1] == barSeries.axisX);
+            verify(chartView.axes[0] == barSeries.axisY || chartView.axes[1] == barSeries.axisY);
+
+            compare(barSeries.axisX, stackedBarSeries.axisX);
+            compare(barSeries.axisY, stackedBarSeries.axisY);
+
+            compare(barSeries.axisX, percentBarSeries.axisX);
+            compare(barSeries.axisY, percentBarSeries.axisY);
+        }
+
         function test_append() {
             var setCount = 5;
             var valueCount = 50;
@@ -105,10 +117,10 @@ Rectangle {
         anchors.fill: parent
 
         BarSeries {
-            axisX: BarCategoriesAxis {}
-            axisY: ValuesAxis { min: 0; max: 10 }
             id: barSeries
             name: "bar"
+            axisX: BarCategoryAxis {}
+            axisY: ValueAxis { min: 0; max: 10 }
 
             SignalSpy {
                 id: addedSpy
@@ -120,6 +132,16 @@ Rectangle {
                 target: barSeries
                 signalName: "barsetsRemoved"
             }
+        }
+
+        StackedBarSeries {
+            id: stackedBarSeries
+            name: "stackedBar"
+        }
+
+        PercentBarSeries {
+            id: percentBarSeries
+            name: "percentBar"
         }
     }
 }

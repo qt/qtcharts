@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.1
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.2
 
 Rectangle {
     width: 360
@@ -43,21 +43,20 @@ Rectangle {
     //![2]
         BarCategoriesAxis {
             id: barCategoriesAxis
-            title: "Date"
+            titleText: "Date"
         }
 
         ValueAxis{
             id: valueAxisY2
             min: 0
             max: 10
-            title: "Rainfall [mm]"
-            alignment: Qt.AlignRight
+            titleText: "Rainfall [mm]"
         }
     
         BarSeries {
             id: myBarSeries
             axisX: barCategoriesAxis
-            axisY: valueAxisY2
+            axisYRight: valueAxisY2
             BarSet {
                 id: rainfallSet
                 label: "Rainfall"
@@ -76,7 +75,7 @@ Rectangle {
             id: valueAxisY
             min: 0
             max: 15
-            title: "Temperature [\u00B0C]"
+            titleText: "Temperature [\u00B0C]"
         }
 
         LineSeries {

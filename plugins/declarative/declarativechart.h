@@ -29,7 +29,8 @@
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 class DeclarativeMargins;
-class AbstractDomain;
+class Domain;
+class DeclarativeAxes;
 
 class DeclarativeChart : public QDeclarativeItem
 {
@@ -50,6 +51,7 @@ class DeclarativeChart : public QDeclarativeItem
     Q_PROPERTY(DeclarativeMargins *minimumMargins READ minimumMargins NOTIFY minimumMarginsChanged REVISION 1)
     Q_PROPERTY(DeclarativeMargins *margins READ margins NOTIFY marginsChanged REVISION 2)
     Q_PROPERTY(QRectF plotArea READ plotArea NOTIFY plotAreaChanged REVISION 1)
+    Q_PROPERTY(QDeclarativeListProperty<QAbstractAxis> axes READ axes REVISION 2)
     Q_ENUMS(Animation)
     Q_ENUMS(Theme)
     Q_ENUMS(SeriesType)
@@ -117,12 +119,20 @@ public:
     qreal bottomMargin();
     qreal leftMargin();
     qreal rightMargin();
-    void createDefaultAxes(QAbstractSeries *series);
+    QAbstractAxis *defaultAxis(Qt::Orientation orientation, QAbstractSeries *series);
+    void initializeAxes(QAbstractSeries *series);
+    void doInitializeAxes(QAbstractSeries *series, DeclarativeAxes *axes);
     //TODO this is deprecated:
     DeclarativeMargins *minimumMargins() { return m_margins; }
 
     Q_REVISION(2) DeclarativeMargins *margins() { return m_margins; }
     QRectF plotArea() { return m_chart->plotArea(); }
+
+    // Axis list property methods
+    QDeclarativeListProperty<QAbstractAxis> axes();
+    static void axesAppendFunc(QDeclarativeListProperty<QAbstractAxis> *list, QAbstractAxis *element);
+    static int axesCountFunc(QDeclarativeListProperty<QAbstractAxis> *list);
+    static QAbstractAxis *axesAtFunc(QDeclarativeListProperty<QAbstractAxis> *list, int index);
 
 public:
     Q_INVOKABLE QAbstractSeries *series(int index);
@@ -153,10 +163,12 @@ Q_SIGNALS:
     void seriesAdded(QAbstractSeries *series);
     void seriesRemoved(QAbstractSeries *series);
 
-public Q_SLOTS:
+private Q_SLOTS:
     void changeMinimumMargins(int top, int bottom, int left, int right);
     void handleAxisXSet(QAbstractAxis *axis);
     void handleAxisYSet(QAbstractAxis *axis);
+    void handleAxisXTopSet(QAbstractAxis *axis);
+    void handleAxisYRightSet(QAbstractAxis *axis);
     void handleSeriesAdded(QAbstractSeries *series);
 
 private:

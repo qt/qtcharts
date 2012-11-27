@@ -76,9 +76,12 @@ void DeclarativeBarSet::setValues(QVariantList values)
 // Declarative bar series ======================================================================================
 DeclarativeBarSeries::DeclarativeBarSeries(QDeclarativeItem *parent) :
     QBarSeries(parent),
-    m_axisX(0),
-    m_axisY(0)
+    m_axes(new DeclarativeAxes(this))
 {
+    connect(m_axes, SIGNAL(axisXChanged(QAbstractAxis*)), this, SIGNAL(axisXChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
 }
 
 void DeclarativeBarSeries::classBegin()
@@ -135,9 +138,13 @@ DeclarativeBarSet *DeclarativeBarSeries::insert(int index, QString label, QVaria
 // Declarative stacked bar series ==============================================================================
 DeclarativeStackedBarSeries::DeclarativeStackedBarSeries(QDeclarativeItem *parent) :
     QStackedBarSeries(parent),
-    m_axisX(0),
-    m_axisY(0)
+    m_axes(0)
 {
+    m_axes = new DeclarativeAxes(this);
+    connect(m_axes, SIGNAL(axisXChanged(QAbstractAxis*)), this, SIGNAL(axisXChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
 }
 
 void DeclarativeStackedBarSeries::classBegin()
@@ -195,9 +202,13 @@ DeclarativeBarSet *DeclarativeStackedBarSeries::insert(int index, QString label,
 // Declarative percent bar series ==============================================================================
 DeclarativePercentBarSeries::DeclarativePercentBarSeries(QDeclarativeItem *parent) :
     QPercentBarSeries(parent),
-    m_axisX(0),
-    m_axisY(0)
+    m_axes(0)
 {
+    m_axes = new DeclarativeAxes(this);
+    connect(m_axes, SIGNAL(axisXChanged(QAbstractAxis*)), this, SIGNAL(axisXChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
 }
 
 void DeclarativePercentBarSeries::classBegin()
@@ -254,9 +265,13 @@ DeclarativeBarSet *DeclarativePercentBarSeries::insert(int index, QString label,
 // Declarative horizontal bar series ===========================================================================
 DeclarativeHorizontalBarSeries::DeclarativeHorizontalBarSeries(QDeclarativeItem *parent) :
     QHorizontalBarSeries(parent),
-    m_axisX(0),
-    m_axisY(0)
+    m_axes(0)
 {
+    m_axes = new DeclarativeAxes(this);
+    connect(m_axes, SIGNAL(axisXChanged(QAbstractAxis*)), this, SIGNAL(axisXChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
 }
 
 void DeclarativeHorizontalBarSeries::classBegin()
@@ -313,9 +328,13 @@ DeclarativeBarSet *DeclarativeHorizontalBarSeries::insert(int index, QString lab
 // Declarative horizontal stacked bar series ===================================================================
 DeclarativeHorizontalStackedBarSeries::DeclarativeHorizontalStackedBarSeries(QDeclarativeItem *parent) :
     QHorizontalStackedBarSeries(parent),
-    m_axisX(0),
-    m_axisY(0)
+    m_axes(0)
 {
+    m_axes = new DeclarativeAxes(this);
+    connect(m_axes, SIGNAL(axisXChanged(QAbstractAxis*)), this, SIGNAL(axisXChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
 }
 
 void DeclarativeHorizontalStackedBarSeries::classBegin()
@@ -372,9 +391,13 @@ DeclarativeBarSet *DeclarativeHorizontalStackedBarSeries::insert(int index, QStr
 // Declarative horizontal percent bar series ===================================================================
 DeclarativeHorizontalPercentBarSeries::DeclarativeHorizontalPercentBarSeries(QDeclarativeItem *parent) :
     QHorizontalPercentBarSeries(parent),
-    m_axisX(0),
-    m_axisY(0)
+    m_axes(0)
 {
+    m_axes = new DeclarativeAxes(this);
+    connect(m_axes, SIGNAL(axisXChanged(QAbstractAxis*)), this, SIGNAL(axisXChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
 }
 
 void DeclarativeHorizontalPercentBarSeries::classBegin()

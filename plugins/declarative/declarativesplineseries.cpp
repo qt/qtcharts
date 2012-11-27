@@ -24,9 +24,12 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 DeclarativeSplineSeries::DeclarativeSplineSeries(QObject *parent) :
     QSplineSeries(parent),
-    m_axisX(0),
-    m_axisY(0)
+    m_axes(new DeclarativeAxes(this))
 {
+    connect(m_axes, SIGNAL(axisXChanged(QAbstractAxis*)), this, SIGNAL(axisXChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYChanged(QAbstractAxis*)), this, SIGNAL(axisYChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisXTopChanged(QAbstractAxis*)), this, SIGNAL(axisXTopChanged(QAbstractAxis*)));
+    connect(m_axes, SIGNAL(axisYRightChanged(QAbstractAxis*)), this, SIGNAL(axisYRightChanged(QAbstractAxis*)));
     connect(this, SIGNAL(pointAdded(int)), this, SLOT(handleCountChanged(int)));
     connect(this, SIGNAL(pointRemoved(int)), this, SLOT(handleCountChanged(int)));
 }

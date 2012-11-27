@@ -358,14 +358,22 @@ QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
     return left?left:right;
 }
 
-
 QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSeries *series) const
 {
     QList<QAbstractAxis *> result ;
 
-    foreach(QAbstractAxis* axis,series->attachedAxes()){
-        if(orientation.testFlag(axis->orientation()))
-            result << axis;
+    if (series) {
+        foreach (QAbstractAxis *axis, series->attachedAxes()){
+            if (orientation.testFlag(axis->orientation()))
+                result << axis;
+        }
+    } else {
+        foreach (QAbstractSeries *s, QChart::series()) {
+            foreach (QAbstractAxis *axis, s->attachedAxes()){
+                if (orientation.testFlag(axis->orientation()))
+                    result << axis;
+            }
+        }
     }
 
     return result;
