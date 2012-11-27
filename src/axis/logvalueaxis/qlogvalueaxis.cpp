@@ -106,7 +106,9 @@ QLogValueAxis::QLogValueAxis(QLogValueAxisPrivate &d, QObject *parent) : QAbstra
 */
 QLogValueAxis::~QLogValueAxis()
 {
-
+    Q_D(QLogValueAxis);
+    if (d->m_chart)
+        d->m_chart->removeAxis(this);
 }
 
 void QLogValueAxis::setMin(qreal min)
@@ -209,7 +211,7 @@ QAbstractAxis::AxisType QLogValueAxis::type() const
 QLogValueAxisPrivate::QLogValueAxisPrivate(QLogValueAxis *q)
     : QAbstractAxisPrivate(q),
       m_min(1),
-      m_max(10),
+      m_max(1),
       m_base(10),
       m_format(QString::null)
 {
@@ -298,16 +300,20 @@ void QLogValueAxisPrivate::initializeDomain(AbstractDomain *domain)
         if(!qFuzzyCompare(m_max, m_min)) {
             domain->setRangeY(m_min, m_max);
         }
-        else {
-            setRange(domain->minY() + 1, domain->maxY());
+        else if ( domain->minY() > 0) {
+            setRange(domain->minY(), domain->maxY());
+        } else {
+            domain->setRangeY(m_min, domain->maxY());
         }
     }
     if (orientation() == Qt::Horizontal) {
         if(!qFuzzyCompare(m_max, m_min)) {
             domain->setRangeX(m_min, m_max);
         }
-        else {
-            setRange(domain->minX() + 1, domain->maxX());
+        else if (domain->minX() > 0){
+            setRange(domain->minX(), domain->maxX());
+        } else {
+            domain->setRangeX(m_min, domain->maxX());
         }
     }
 }
