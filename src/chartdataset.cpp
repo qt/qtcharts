@@ -113,20 +113,17 @@ void ChartDataSet::removeSeries(QAbstractSeries *series)
         return;
     }
 
+    QList<QAbstractAxis*> axes = series->d_ptr->m_axes;
+
+    foreach(QAbstractAxis* axis, axes) {
+        detachAxis(series,axis);
+    }
+
     emit seriesRemoved(series);
     m_seriesList.removeAll(series);
 
     series->setParent(0);
     series->d_ptr->m_chart = 0;
-    series->d_ptr->m_domain.reset(0);
-
-    QList<QAbstractAxis*> axes = series->d_ptr->m_axes;
-
-    foreach(QAbstractAxis* axis, axes) {
-        axis->d_ptr->m_series.removeAll(series);
-        series->d_ptr->m_axes.removeAll(axis);
-    }
-
 }
 
 /*
@@ -139,18 +136,17 @@ void ChartDataSet::removeAxis(QAbstractAxis *axis)
         return;
     }
 
+    QList<QAbstractSeries*> series =  axis->d_ptr->m_series;
+
+    foreach(QAbstractSeries* s, series) {
+      detachAxis(s,axis);
+    }
+
     emit axisRemoved(axis);
     m_axisList.removeAll(axis);
 
     axis->setParent(0);
     axis->d_ptr->m_chart = 0;
-
-    QList<QAbstractSeries*> series =  axis->d_ptr->m_series;
-
-    foreach(QAbstractSeries* s, series) {
-       s->d_ptr->m_axes.removeAll(axis);
-       axis->d_ptr->m_series.removeAll(s);
-    }
 }
 
 /*
@@ -327,7 +323,7 @@ void ChartDataSet::deleteAllSeries()
 {
     foreach (QAbstractSeries *s , m_seriesList){
         removeSeries(s);
-        delete s;
+        s->deleteLater();
     }
     Q_ASSERT(m_seriesList.count() == 0);
 }
@@ -336,7 +332,7 @@ void ChartDataSet::deleteAllAxes()
 {
     foreach (QAbstractAxis *a , m_axisList){
         removeAxis(a);
-        delete a;
+        a->deleteLater();
     }
     Q_ASSERT(m_axisList.count() == 0);
 }
