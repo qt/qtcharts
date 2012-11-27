@@ -499,11 +499,11 @@ void QAbstractAxis::setTitleVisible(bool visible)
 {
     if (d_ptr->m_titleVisible != visible) {
         d_ptr->m_titleVisible = visible;
-        emit labelsVisibleChanged(visible);
+        emit titleVisibleChanged(visible);
     }
 }
 
-bool QAbstractAxis::titleVisible() const
+bool QAbstractAxis::isTitleVisible() const
 {
     return d_ptr->m_titleVisible;
 }

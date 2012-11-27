@@ -64,8 +64,8 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(QString titleText READ titleText WRITE setTitleText NOTIFY titleTextChanged)
     Q_PROPERTY(QPen titlePen READ titlePen WRITE setTitlePen NOTIFY titlePenChanged)
     Q_PROPERTY(QBrush titleBrush READ titleBrush WRITE setTitleBrush NOTIFY titleBrushChanged)
-    Q_PROPERTY(bool titleVisible READ titleVisible WRITE setTitleVisible)
-    Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont)
+    Q_PROPERTY(bool titleVisible READ isTitleVisible WRITE setTitleVisible NOTIFY titleVisibleChanged)
+    Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont NOTIFY titleFontChanged)
     //orientation
     Q_PROPERTY(Qt::Orientation orinetation READ orientation)
     //aligment
@@ -127,7 +127,7 @@ public:
     QColor labelsColor() const;
 
     //title handling
-    bool titleVisible() const;
+    bool isTitleVisible() const;
     void setTitleVisible(bool visible = true);
     void setTitlePen(const QPen &pen);
     QPen titlePen() const;

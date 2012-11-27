@@ -129,6 +129,7 @@ public Q_SLOTS:
     void handleTitleBrushChanged(const QBrush &brush);
     void handleTitleFontChanged(const QFont &font);
     void handleTitleTextChanged(const QString &title);
+    void handleTitleVisibleChanged(bool visible);
     void handleRangeChanged(qreal min , qreal max);
 
 Q_SIGNALS:

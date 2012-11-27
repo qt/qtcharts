@@ -191,7 +191,7 @@ QSizeF VerticalAxis::sizeHint(Qt::SizeHint which, const QSizeF &constraint) cons
     QFontMetrics fn(titleFont());
     QSizeF sh;
 
-    if (titleText().isNull())
+    if (titleText().isNull() || !titleItem()->isVisible())
         return sh;
 
     switch (which) {

@@ -82,6 +82,7 @@ void ChartAxis::connectSlots()
     QObject::connect(m_axis,SIGNAL(titleFontChanged(const QFont&)),this,SLOT(handleTitleFontChanged(const QFont&)));
     QObject::connect(m_axis,SIGNAL(titlePenChanged(const QPen&)),this,SLOT(handleTitlePenChanged(const QPen&)));
     QObject::connect(m_axis,SIGNAL(titleBrushChanged(const QBrush&)),this,SLOT(handleTitleBrushChanged(const QBrush&)));
+    QObject::connect(m_axis,SIGNAL(titleVisibleChanged(bool)),this,SLOT(handleTitleVisibleChanged(bool)));
     QObject::connect(m_axis->d_ptr.data(),SIGNAL(rangeChanged(qreal,qreal)),this,SLOT(handleRangeChanged(qreal,qreal)));
 }
 
@@ -289,6 +290,12 @@ void ChartAxis::handleShadesVisibleChanged(bool visible)
     m_shades->setVisible(visible);
 }
 
+void ChartAxis::handleTitleVisibleChanged(bool visible)
+{
+    m_title->setVisible(visible);
+    presenter()->layout()->invalidate();
+}
+
 void ChartAxis::handleLabelsAngleChanged(int angle)
 {
     foreach (QGraphicsItem *item, m_labels->childItems())
@@ -371,6 +378,21 @@ void ChartAxis::handleTitleFontChanged(const QFont &font)
 void ChartAxis::handleVisibleChanged(bool visible)
 {
     setVisible(visible);
+    if(!visible) {
+        m_grid->setVisible(visible);
+        m_arrow->setVisible(visible);
+        m_shades->setVisible(visible);
+        m_labels->setVisible(visible);
+        m_title->setVisible(visible);
+    }else {
+        m_grid->setVisible(m_axis->isGridLineVisible());
+        m_arrow->setVisible(m_axis->isLineVisible());
+        m_shades->setVisible(m_axis->shadesVisible());
+        m_labels->setVisible(m_axis->labelsVisible());
+        m_title->setVisible(m_axis->isTitleVisible());
+    }
+
+    presenter()->layout()->invalidate();
 }
 
 void ChartAxis::handleRangeChanged(qreal min, qreal max)
