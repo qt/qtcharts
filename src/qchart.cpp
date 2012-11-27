@@ -370,7 +370,7 @@ QList<QAbstractAxis *> QChart::axes(Qt::Orientations orientation, QAbstractSerie
     } else {
         foreach (QAbstractSeries *s, QChart::series()) {
             foreach (QAbstractAxis *axis, s->attachedAxes()){
-                if (orientation.testFlag(axis->orientation()))
+                if (orientation.testFlag(axis->orientation()) && !result.contains(axis))
                     result << axis;
             }
         }
