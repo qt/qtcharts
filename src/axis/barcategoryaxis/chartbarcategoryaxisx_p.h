@@ -39,6 +39,7 @@ class QBarCategoryAxis;
 
 class ChartBarCategoryAxisX : public HorizontalAxis
 {
+    Q_OBJECT
 public:
     ChartBarCategoryAxisX(QBarCategoryAxis *axis, QGraphicsItem* item = 0);
     ~ChartBarCategoryAxisX();
@@ -50,10 +51,9 @@ protected:
 private:
     QStringList createCategoryLabels(const QVector<qreal>& layout) const;
 public Q_SLOTS:
-    void handleAxisUpdated();
+    void handleCategoriesChanged();
 
 private:
-    QStringList m_categories;
     QBarCategoryAxis *m_categoriesAxis;
 };
 

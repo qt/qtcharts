@@ -21,6 +21,7 @@
 #include "chartbarcategoryaxisx_p.h"
 #include "chartpresenter_p.h"
 #include "qbarcategoryaxis_p.h"
+#include "chartlayout_p.h"
 #include <QFontMetrics>
 #include <QDebug>
 #include <qmath.h>
@@ -31,7 +32,8 @@ ChartBarCategoryAxisX::ChartBarCategoryAxisX(QBarCategoryAxis *axis, QGraphicsIt
     : HorizontalAxis(axis, item, true),
       m_categoriesAxis(axis)
 {
-
+    QObject::connect(m_categoriesAxis,SIGNAL(categoriesChanged()),this, SLOT(handleCategoriesChanged()));
+    handleCategoriesChanged();
 }
 
 ChartBarCategoryAxisX::~ChartBarCategoryAxisX()
@@ -91,17 +93,9 @@ void ChartBarCategoryAxisX::updateGeometry()
     HorizontalAxis::updateGeometry();
 }
 
-void ChartBarCategoryAxisX::handleAxisUpdated()
+void ChartBarCategoryAxisX::handleCategoriesChanged()
 {
-	//TODO:
-	/*
-    if (m_categoriesAxis->categories() != m_categories) {
-        m_categories = m_categoriesAxis->categories();
-        if (ChartAxis::layout().count() == m_categoriesAxis->d_ptr->count() + 2)
-            updateGeometry();
-    }
-    */
-    //TODO: ChartAxis::handleAxisUpdated();
+    if(presenter()) presenter()->layout()->invalidate();
 }
 
 QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
@@ -111,7 +105,7 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constra
     QFontMetrics fn(font());
     QSizeF sh;
     QSizeF base = HorizontalAxis::sizeHint(which, constraint);
-    QStringList ticksList = createCategoryLabels(ChartAxis::layout());
+    QStringList ticksList = m_categoriesAxis->categories();
 
     qreal width=0;
     qreal height=0;
@@ -142,5 +136,7 @@ QSizeF ChartBarCategoryAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constra
       }
       return sh;
 }
+
+#include "moc_chartbarcategoryaxisx_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

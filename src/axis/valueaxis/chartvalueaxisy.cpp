@@ -73,8 +73,6 @@ void ChartValueAxisY::handleTickCountChanged(int tick)
 {
 	Q_UNUSED(tick);
 	if(presenter()) presenter()->layout()->invalidate();
-	//QVector<qreal> layout = calculateLayout();
-	//updateLayout(layout);
 }
 
 QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
