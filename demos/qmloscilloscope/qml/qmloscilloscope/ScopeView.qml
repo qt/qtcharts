@@ -81,16 +81,16 @@ ChartView {
         // but the series have their own y-axes to make it possible to control the y-offset
         // of the "signal sources".
         if (type == "line") {
-            scopeView.createSeries(ChartView.SeriesTypeLine, "signal 1", createAxis(0, 1000), createAxis(-1, 4));
-            scopeView.createSeries(ChartView.SeriesTypeLine, "signal 2", chartView.axisX(), createAxis(-10, 5));
+            scopeView.createSeries(ChartView.SeriesTypeLine, "signal 1", axisX, axisY1);
+            scopeView.createSeries(ChartView.SeriesTypeLine, "signal 2", axisX, axisY2);
         } else if (type == "spline") {
-            scopeView.createSeries(ChartView.SeriesTypeSpline, "signal 1", createAxis(0, 1000), createAxis(-1, 4));
-            scopeView.createSeries(ChartView.SeriesTypeSpline, "signal 2", chartView.axisX(), createAxis(-10, 5));
+            scopeView.createSeries(ChartView.SeriesTypeSpline, "signal 1", axisX, axisY1);
+            scopeView.createSeries(ChartView.SeriesTypeSpline, "signal 2", axisX, axisY2);
         } else {
-            var series1 = scopeView.createSeries(ChartView.SeriesTypeScatter, "signal 1", createAxis(0, 1000), createAxis(-1, 4));
+            var series1 = scopeView.createSeries(ChartView.SeriesTypeScatter, "signal 1", axisX, axisY1);
             series1.markerSize = 3;
             series1.borderColor = "transparent";
-            var series2 = scopeView.createSeries(ChartView.SeriesTypeScatter, "signal 2", chartView.axisX(), createAxis(-10, 5));
+            var series2 = scopeView.createSeries(ChartView.SeriesTypeScatter, "signal 2", axisX, axisY2);
             series2.markerSize = 3;
             series2.borderColor = "transparent";
         }
