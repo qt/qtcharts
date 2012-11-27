@@ -560,7 +560,7 @@ int DeclarativeChart::axesCountFunc(QDeclarativeListProperty<QAbstractAxis> *lis
 {
     if (qobject_cast<DeclarativeChart *>(list->object)) {
         DeclarativeChart *chart = qobject_cast<DeclarativeChart *>(list->object);
-        return chart->m_chart->axes(Qt::Horizontal | Qt::Vertical, chart->m_chart->series()[0]).count();
+        return chart->m_chart->axes(Qt::Horizontal | Qt::Vertical).count();
     }
     return 0;
 }

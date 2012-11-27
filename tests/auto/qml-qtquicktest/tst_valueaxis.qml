@@ -32,10 +32,10 @@ Rectangle {
         when: windowShown
 
         function test_defaultPropertyValues() {
-            compare(lineSeries1.axisX.min, 0, "AxisX min");
-            compare(lineSeries1.axisX.max, 10, "AxisX max");
-            compare(lineSeries1.axisY.min, 0, "AxisY min");
-            compare(lineSeries1.axisY.max, 10, "AxisY max");
+            verify(axisX.min < 0, "AxisX min");
+            verify(axisX.max > 0, "AxisX max");
+            verify(axisY.min < 0, "AxisY min");
+            verify(axisY.max > 0, "AxisY max");
             verify(axisX.tickCount > 0, "AxisX tick count");
             verify(axisY.tickCount > 0, "AxisX tick count");
             compare(axisX.niceNumbersEnabled, false, "nice numbers");
@@ -43,14 +43,16 @@ Rectangle {
         }
 
         function test_modifyProperties() {
-            lineSeries1.axisX.tickCount = 3;
-            compare(lineSeries1.axisX.tickCount, 3, "set tick count");
+            axisX.tickCount = 3;
+            compare(axisX.tickCount, 3, "set tick count");
 
-            lineSeries1.axisX.niceNumbersEnabled = true;
+            axisX.niceNumbersEnabled = true;
             compare(axisX.niceNumbersEnabled, true, "nice numbers");
         }
 
         function test_signals() {
+            minChangedSpy.clear();
+            maxChangedSpy.clear();
             axisX.min = 2;
             compare(minChangedSpy.count, 1, "onMinChanged");
             compare(maxChangedSpy.count, 0, "onMaxChanged");
@@ -75,13 +77,9 @@ Rectangle {
             id: lineSeries1
             axisX: ValueAxis {
                 id: axisX
-                min: 0
-                max: 10
             }
             axisY: ValueAxis {
                 id: axisY
-                min: 0
-                max: 10
             }
             XYPoint { x: -1; y: -1 }
             XYPoint { x: 0; y: 0 }

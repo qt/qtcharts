@@ -115,20 +115,20 @@ public:
     int count();
     void setDropShadowEnabled(bool enabled);
     bool dropShadowEnabled();
+
+    // Margins & plotArea
     qreal topMargin();
     qreal bottomMargin();
     qreal leftMargin();
     qreal rightMargin();
-    QAbstractAxis *defaultAxis(Qt::Orientation orientation, QAbstractSeries *series);
-    void initializeAxes(QAbstractSeries *series);
-    void doInitializeAxes(QAbstractSeries *series, DeclarativeAxes *axes);
-    //TODO this is deprecated:
     DeclarativeMargins *minimumMargins() { return m_margins; }
-
     Q_REVISION(2) DeclarativeMargins *margins() { return m_margins; }
     QRectF plotArea() { return m_chart->plotArea(); }
 
-    // Axis list property methods
+    // Axis handling
+    QAbstractAxis *defaultAxis(Qt::Orientation orientation, QAbstractSeries *series);
+    void initializeAxes(QAbstractSeries *series);
+    void doInitializeAxes(QAbstractSeries *series, DeclarativeAxes *axes);
     QDeclarativeListProperty<QAbstractAxis> axes();
     static void axesAppendFunc(QDeclarativeListProperty<QAbstractAxis> *list, QAbstractAxis *element);
     static int axesCountFunc(QDeclarativeListProperty<QAbstractAxis> *list);

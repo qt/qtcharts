@@ -58,7 +58,7 @@ Rectangle {
             // Legend font
             compare(chartView.legend.font.bold, false, "ChartView.legend.font.bold");
             compare(chartView.legend.font.capitalization, Font.MixedCase, "ChartView.legend.font.capitalization");
-            compare(chartView.legend.font.family, "arial", "ChartView.legend.font.family");
+            verify(chartView.legend.font.family != "", "ChartView.legend.font.family");
             compare(chartView.legend.font.italic, false, "ChartView.legend.font.italic");
             compare(chartView.legend.font.letterSpacing, 0.0, "ChartView.legend.font.letterSpacing");
             verify(chartView.legend.font.pixelSize > 0

@@ -57,10 +57,6 @@ Rectangle {
 
         function test_axes() {
             compare(chartView.axes.length, 2);
-            console.log("chart.axes[0] " + chartView.axes[0]);
-            console.log("chart.axes[1] " + chartView.axes[1]);
-            console.log("lineSeries.axisX " + lineSeries.axisX);
-            console.log("lineSeries.axisY " + lineSeries.axisY);
             verify(chartView.axes[0] == lineSeries.axisX || chartView.axes[1] == lineSeries.axisX);
             verify(chartView.axes[0] == lineSeries.axisY || chartView.axes[1] == lineSeries.axisY);
             verify(lineSeries.axisX == splineSeries.axisX);
