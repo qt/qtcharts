@@ -132,6 +132,7 @@ Rectangle {
             yMax = chartView.axisY().max;
             yMin = chartView.axisY().min;
 
+            // Scroll left
             chartView.scrollLeft(10);
             verify(chartView.axisX().max < xMax);
             verify(chartView.axisX().min < xMin);
@@ -142,6 +143,7 @@ Rectangle {
             yMax = chartView.axisY().max;
             yMin = chartView.axisY().min;
 
+            // Scroll right
             chartView.scrollRight(10);
             verify(chartView.axisX().max > xMax);
             verify(chartView.axisX().min > xMin);

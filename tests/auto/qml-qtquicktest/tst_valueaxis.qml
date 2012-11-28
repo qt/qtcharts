@@ -31,7 +31,8 @@ Rectangle {
         name: "tst_qml-qtquicktest ValueAxis"
         when: windowShown
 
-        function test_defaultPropertyValues() {
+        function test_properties() {
+            // Default properties
             verify(axisX.min < 0, "AxisX min");
             verify(axisX.max > 0, "AxisX max");
             verify(axisY.min < 0, "AxisY min");
@@ -40,14 +41,30 @@ Rectangle {
             verify(axisY.tickCount > 0, "AxisX tick count");
             compare(axisX.niceNumbersEnabled, false, "nice numbers");
             compare(axisX.labelFormat, "", "label format");
-        }
 
-        function test_modifyProperties() {
+            // Modify properties
             axisX.tickCount = 3;
             compare(axisX.tickCount, 3, "set tick count");
-
             axisX.niceNumbersEnabled = true;
             compare(axisX.niceNumbersEnabled, true, "nice numbers");
+        }
+
+        function test_functions() {
+            // Set the axis ranges to not "nice" ones...
+            var min = 0.032456456;
+            var max = 10.67845634;
+            axisX.max = min;
+            axisX.max = max;
+            axisY.max = min;
+            axisY.max = max;
+
+            // ...And then apply nice numbers and verify the range was changed
+            axisX.applyNiceNumbers();
+            axisY.applyNiceNumbers();
+            verify(axisX.min != min);
+            verify(axisX.max != max);
+            verify(axisY.min != min);
+            verify(axisY.max != max);
         }
 
         function test_signals() {

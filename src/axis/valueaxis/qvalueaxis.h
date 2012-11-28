@@ -60,11 +60,12 @@ public:
     void setLabelFormat(const QString &format);
     QString labelFormat() const;
 
-    void applyNiceNumbers();
-
     //TODO: depreciated !
     void setNiceNumbersEnabled(bool enable = true);
     bool niceNumbersEnabled() const;
+
+public Q_SLOTS:
+    void applyNiceNumbers();
 
 Q_SIGNALS:
     void minChanged(qreal min);
