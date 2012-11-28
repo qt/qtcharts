@@ -21,7 +21,7 @@
 import QtQuick 1.0
 
 Column {
-    spacing: 5
+    spacing: 8
     signal animationsEnabled(bool enabled)
     signal seriesTypeChanged(string type)
     signal refreshRateChanged(variant rate);
@@ -29,8 +29,9 @@ Column {
     signal antialiasingEnabled(bool enabled)
 
     Text {
-        text: "Oscilloscope"
+        text: "Scope-PAS2"
         font.pointSize: 18
+        color: "white"
     }
 
     MultiButton {

@@ -22,9 +22,14 @@ import QtQuick 1.0
 
 Rectangle {
     id: button
-    width: 120
-    height: 30
-    border.color: "gray"
+    width: 115
+    height: 31
+    gradient: Gradient {
+        GradientStop { position: mouseArea.pressed ? 1.0 : 0.0; color: "#A09090" }
+        GradientStop { position: mouseArea.pressed ? 0.0 : 1.0; color: "#505050" }
+    }
+    smooth: true
+
     radius: 7
     property string text: "Option: "
     property variant items: ["first"]
@@ -34,10 +39,12 @@ Rectangle {
     Text {
         id: buttonText
         anchors.centerIn: parent
+        color: "#FFFFFF"
         text: button.text + button.items[currentSelection]
     }
 
     MouseArea {
+        id: mouseArea
         anchors.fill: parent
         onClicked: {
             currentSelection = (currentSelection + 1) % items.length;

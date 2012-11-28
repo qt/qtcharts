@@ -19,7 +19,7 @@
 ****************************************************************************/
 
 import QtQuick 1.0
-import QtCommercial.Chart 1.1
+import QtCommercial.Chart 1.2
 
 //![1]
 ChartView {
@@ -55,7 +55,7 @@ ChartView {
         id: lineSeries2
         name: "signal 2"
         axisX: axisX
-        axisY: axisY2
+        axisYRight: axisY2
     }
 // ...
 //![1]

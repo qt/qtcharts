@@ -25,6 +25,7 @@ Rectangle {
     id: main
     width: 400
     height: 300
+    color: "#404040"
 
     ControlPanel {
         id: controlPanel

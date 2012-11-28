@@ -53,8 +53,6 @@ void DataSource::update(QAbstractSeries *series)
 
 void DataSource::generateData(int type, int rowCount, int colCount)
 {
-    qDebug() << "DataSource::generateData:" << type << rowCount << colCount;
-
     // Remove previous data
     foreach (QList<QPointF> row, m_data)
         row.clear();
