@@ -55,7 +55,6 @@ private:
 
     QChartView *m_chartView;
     QGridLayout *m_mainLayout;
-    QGridLayout *m_buttonLayout;
     QGridLayout *m_fontLayout;
 
 };

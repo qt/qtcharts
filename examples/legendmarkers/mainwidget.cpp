@@ -36,32 +36,12 @@ QTCOMMERCIALCHART_USE_NAMESPACE
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent)
 {
-    // Create buttons for ui
-    m_buttonLayout = new QGridLayout();
-
-    QPushButton *addSliceButton = new QPushButton("add series");
-    connect(addSliceButton, SIGNAL(clicked()), this, SLOT(addSeries()));
-    m_buttonLayout->addWidget(addSliceButton, 1, 0);
-
-    QPushButton *removeSliceButton = new QPushButton("remove series");
-    connect(removeSliceButton, SIGNAL(clicked()), this, SLOT(removeSeries()));
-    m_buttonLayout->addWidget(removeSliceButton, 2, 0);
-
-    QPushButton *connectButton = new QPushButton("Connect markers");
-    connect(connectButton, SIGNAL(clicked()), this, SLOT(connectMarkers()));
-    m_buttonLayout->addWidget(connectButton, 3, 0);
-
-    QPushButton *disConnectButton = new QPushButton("Disconnect markers");
-    connect(disConnectButton, SIGNAL(clicked()), this, SLOT(disconnectMarkers()));
-    m_buttonLayout->addWidget(disConnectButton, 4, 0);
-
     // Create chart view with the chart
     m_chart = new QChart();
     m_chartView = new QChartView(m_chart, this);
 
     // Create layout for grid and detached legend
     m_mainLayout = new QGridLayout();
-    m_mainLayout->addLayout(m_buttonLayout, 0, 0);
     m_mainLayout->addWidget(m_chartView, 0, 1, 3, 1);
     setLayout(m_mainLayout);
 
@@ -71,8 +51,10 @@ MainWidget::MainWidget(QWidget *parent) :
     addSeries();
     addSeries();
 
+    connectMarkers();
+
     // Set the title and show legend
-    m_chart->setTitle("Legendmarker example");
+    m_chart->setTitle("Legendmarker example (click on legend)");
     m_chart->legend()->setVisible(true);
     m_chart->legend()->setAlignment(Qt::AlignBottom);
 
