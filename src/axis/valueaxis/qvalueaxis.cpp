@@ -240,14 +240,25 @@ int QValueAxis::tickCount() const
 
 void QValueAxis::setNiceNumbersEnabled(bool enable)
 {
-    Q_UNUSED(enable);
-    qWarning()<<"This function is depreciated.Use applyNiceNumbers().";
+    Q_D(QValueAxis);
+    qWarning()<<"This function is depreciated, it can lead to unexpected behaviour.Use applyNiceNumbers(). ";
+    if(enable) {
+        QObject::connect(this,SIGNAL(rangeChanged(qreal,qreal)),this,SLOT(applyNiceNumbers()));
+        QObject::connect(this,SIGNAL(tickCountChanged(int)),this,SLOT(applyNiceNumbers()));
+        applyNiceNumbers();
+    }
+    else {
+        QObject::disconnect(this,SIGNAL(rangeChanged(qreal,qreal)),this,SLOT(applyNiceNumbers()));
+        QObject::disconnect(this,SIGNAL(tickCountChanged(int)),this,SLOT(applyNiceNumbers()));
+    }
+    d->m_niceNumbersEnabled=true;
 }
 
 bool QValueAxis::niceNumbersEnabled() const
 {
+    Q_D(const QValueAxis);
     qWarning()<<"This function is depreciated.Use applyNiceNumbers().";
-    return false;
+    return d->m_niceNumbersEnabled;
 }
 
 void QValueAxis::setLabelFormat(const QString &format)
@@ -273,12 +284,15 @@ QAbstractAxis::AxisType QValueAxis::type() const
 void QValueAxis::applyNiceNumbers()
 {
     Q_D(QValueAxis);
+    if(d->m_applying) return;
     qreal min = d->m_min;
     qreal max = d->m_max;
     int ticks = d->m_tickCount;
     AbstractDomain::looseNiceNumbers(min,max,ticks);
+    d->m_applying=true;
     d->setRange(min,max);
     setTickCount(ticks);
+    d->m_applying=false;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,7 +302,9 @@ QValueAxisPrivate::QValueAxisPrivate(QValueAxis *q)
       m_min(0),
       m_max(0),
       m_tickCount(5),
-      m_format(QString::null)
+      m_format(QString::null),
+      m_applying(false),
+      m_niceNumbersEnabled(false)
 {
 
 }
@@ -309,7 +325,6 @@ void QValueAxisPrivate::setMin(const QVariant &min)
 
 void QValueAxisPrivate::setMax(const QVariant &max)
 {
-
     Q_Q(QValueAxis);
     bool ok;
     qreal value = max.toReal(&ok);
@@ -349,8 +364,8 @@ void QValueAxisPrivate::setRange(qreal min, qreal max)
     }
 
     if (changed) {
-        emit q->rangeChanged(min, max);
         emit rangeChanged(min,max);
+        emit q->rangeChanged(min, max);
     }
 }
 

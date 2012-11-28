@@ -60,6 +60,8 @@ private:
     qreal m_max;
     int m_tickCount;
     QString m_format;
+    bool m_applying;
+    bool m_niceNumbersEnabled; //TODO: this depreciated
     Q_DECLARE_PUBLIC(QValueAxis)
 };
 
