@@ -96,6 +96,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \property QValueAxis::tickCount
+  Defines the number of ticks on the axis. This indicates how many grid lines are draw on the chart.
+  The default value is 5, and it can not be below 2.
+*/
+/*!
+  \qmlproperty real ValueAxis::tickCount
+   Defines the number of ticks on the axis. This indicates how many grid lines are draw on the chart.
+  The default value is 5, and it can not be below 2.
+*/
+
+/*!
   \property QValueAxis::labelFormat
   Defines the label format for the axis.
   Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
@@ -127,18 +138,17 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \fn void QValueAxis::tickCountChanged(int tickCount)
+  Axis emits signal when number of ticks on axis have changed.
+*/
+/*!
+  \qmlsignal ValueAxis::tickCountChanged(int tickCount)
+  Axis emits signal when number of ticks on axis have changed.
+*/
+
+/*!
   \fn void QValueAxis::rangeChanged(qreal min, qreal max)
   Axis emits signal when \a min or \a max of axis has changed.
-*/
-
-/*!
-  \property QValueAxis::tickCount
-  The number of tick marks for the axis.
-*/
-
-/*!
-  \qmlproperty int ValueAxis::tickCount
-  The number of tick marks for the axis.
 */
 
 /*!
@@ -213,9 +223,6 @@ void QValueAxis::setRange(qreal min, qreal max)
     d->setRange(min,max);
 }
 
-/*!
-  Sets \a count for ticks on the axis.
-*/
 void QValueAxis::setTickCount(int count)
 {
     Q_D(QValueAxis);
@@ -225,10 +232,6 @@ void QValueAxis::setTickCount(int count)
     }
 }
 
-/*!
-  \fn int QValueAxis::tickCount() const
-  Return number of ticks on the axis
-*/
 int QValueAxis::tickCount() const
 {
     Q_D(const QValueAxis);
