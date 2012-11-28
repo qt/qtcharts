@@ -123,6 +123,7 @@ void AbstractBarChartItem::handleLayoutChanged()
         return; // rect size zero.
     QVector<QRectF> layout = calculateLayout();
     applyLayout(layout);
+    handleUpdatedBars();
 }
 
 void AbstractBarChartItem::handleLabelsVisibleChanged(bool visible)
@@ -141,8 +142,6 @@ void AbstractBarChartItem::handleDataStructureChanged()
     m_labels.clear();
     m_layout.clear();
 
-    bool labelsVisible = m_series->isLabelsVisible();
-
     // Create new graphic items for bars
     for (int c = 0; c < m_series->d_func()->categoryCount(); c++) {
         for (int s = 0; s < m_series->count(); s++) {
@@ -158,14 +157,13 @@ void AbstractBarChartItem::handleDataStructureChanged()
             m_layout.append(QRectF(0, 0, 0, 0));
 
             // Labels
-            QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem(this);
-            label->setVisible(labelsVisible);
-            m_labels.append(label);
+            m_labels.append(new QGraphicsSimpleTextItem(this));
         }
     }
 
     if(themeManager()) themeManager()->updateSeries(m_series);
     handleLayoutChanged();
+    handleVisibleChanged();
 }
 
 void AbstractBarChartItem::handleVisibleChanged()
