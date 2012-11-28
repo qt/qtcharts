@@ -171,9 +171,13 @@ void AbstractBarChartItem::handleDataStructureChanged()
 void AbstractBarChartItem::handleVisibleChanged()
 {
     bool visible = m_series->isVisible();
-    handleLabelsVisibleChanged(visible);
-    foreach (QGraphicsItem *item, childItems())
-        item->setVisible(visible);
+    if (visible)
+        handleLabelsVisibleChanged(m_series->isLabelsVisible());
+    else
+        handleLabelsVisibleChanged(visible);
+
+    foreach (QGraphicsItem *bar, m_bars)
+        bar->setVisible(visible);
 }
 
 void AbstractBarChartItem::handleOpacityChanged()
