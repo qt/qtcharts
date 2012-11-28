@@ -41,8 +41,8 @@ Rectangle {
 
         CustomLegend {
             id: customLegend
-            width: 360
-            height: 30
+            width: parent.width
+            height: 35
             anchors.horizontalCenter: parent.horizontalCenter
             onEntered: chartViewSelector.highlightSeries(seriesName);
             onExited: chartViewSelector.highlightSeries("");

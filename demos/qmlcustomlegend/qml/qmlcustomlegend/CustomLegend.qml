@@ -23,8 +23,7 @@ import QtCommercial.Chart 1.1
 
 Rectangle {
     id: legend
-    radius: 8
-    color: "lightblue"
+    color: "lightgray"
     property int seriesCount: 0
     property variant seriesNames: []
     property variant seriesColors: []
@@ -44,6 +43,18 @@ Rectangle {
         seriesCount++;
     }
 
+    Gradient {
+        id: buttonGradient
+        GradientStop { position: 0.0; color: "#F0F0F0" }
+        GradientStop { position: 1.0; color: "#A0A0A0" }
+    }
+
+    Gradient {
+        id: buttonGradientHovered
+        GradientStop { position: 0.0; color: "#FFFFFF" }
+        GradientStop { position: 1.0; color: "#B0B0B0" }
+    }
+
     //![2]
     Component {
         id: legendDelegate
@@ -53,12 +64,12 @@ Rectangle {
     //![2]
             property string name: seriesNames[index]
             property color markerColor: seriesColors[index]
-            color: "transparent"
-            border.color: seriesColors[index]
-            border.width: 2
+            gradient: buttonGradient
+            border.color: "#A0A0A0"
+            border.width: 1
             radius: 4
             height: 20
-            width: row.width + row.anchors.leftMargin * 2
+            width: 100
 
             Row {
                 id: row
@@ -70,31 +81,38 @@ Rectangle {
                     id: marker
                     anchors.verticalCenter: parent.verticalCenter
                     color: markerColor
+                    opacity: 0.3
                     radius: 4
                     width: 12
-                    height: 12
+                    height: 10
                 }
                 Text {
                     id: label
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.verticalCenterOffset: -1
                     text: name
                 }
             }
 
     //![3]
             MouseArea {
+                id: mouseArea
                 anchors.fill: parent
                 hoverEnabled: true
                 onEntered: {
-                    rect.color = "white";
+                    rect.gradient = buttonGradientHovered;
                     legend.entered(label.text);
                 }
                 onExited: {
-                    rect.color = "transparent";
+                    rect.gradient = buttonGradient;
                     legend.exited(label.text);
+                    marker.opacity = 0.3;
+                    marker.height = 10;
                 }
                 onClicked: {
                     legend.selected(label.text);
+                    marker.opacity = 1.0;
+                    marker.height = 12;
                 }
             }
     //![3]
@@ -105,7 +123,7 @@ Rectangle {
     Row {
         id: legendRow
         anchors.centerIn: parent
-        spacing: 4
+        spacing: 6
 
         Repeater {
             id: legendRepeater

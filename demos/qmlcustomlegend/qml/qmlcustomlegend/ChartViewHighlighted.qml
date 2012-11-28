@@ -35,13 +35,14 @@ ChartView {
         id: lineSeries
 
         axisX: ValueAxis {
-            min: 2005
-            max: 2011
+            min: 2006
+            max: 2012
             labelFormat: "%.0f"
             tickCount: 7
         }
         axisY: ValueAxis {
             id: axisY
+            titleText: "EUR"
             min: 0
             max: 40000
             niceNumbersEnabled: true
