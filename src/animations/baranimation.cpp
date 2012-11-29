@@ -61,8 +61,11 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
 
 void BarAnimation::updateCurrentValue(const QVariant &value)
 {
-    QVector<QRectF> layout = qvariant_cast<QVector<QRectF> >(value);
-    m_item->setLayout(layout);
+    if (state() != QAbstractAnimation::Stopped) { //workaround
+
+        QVector<QRectF> layout = qvariant_cast<QVector<QRectF> >(value);
+        m_item->setLayout(layout);
+    }
 }
 
 void BarAnimation::setup(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
