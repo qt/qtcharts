@@ -153,12 +153,14 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \property QValueAxis::niceNumbersEnabled
-  Whether the nice numbers algorithm is enabled or not for the axis.
+  \obsolete
+  Using this function can lead to unexpected behavior. Use applyNiceNumbers() instead.
 */
 
 /*!
   \qmlproperty bool ValueAxis::niceNumbersEnabled
-  Whether the nice numbers algorithm is enabled or not for the axis.
+  \obsolete
+  Using this function can lead to unexpected behavior. Use applyNiceNumbers() instead.
 */
 
 /*!
@@ -241,7 +243,7 @@ int QValueAxis::tickCount() const
 void QValueAxis::setNiceNumbersEnabled(bool enable)
 {
     Q_D(QValueAxis);
-    qWarning()<<"This function is depreciated, it can lead to unexpected behaviour.Use applyNiceNumbers(). ";
+    qWarning()<<"This function is depreciated, it can lead to unexpected behavior.Use applyNiceNumbers(). ";
     if(enable) {
         QObject::connect(this,SIGNAL(rangeChanged(qreal,qreal)),this,SLOT(applyNiceNumbers()));
         QObject::connect(this,SIGNAL(tickCountChanged(int)),this,SLOT(applyNiceNumbers()));
@@ -282,6 +284,12 @@ QAbstractAxis::AxisType QValueAxis::type() const
     return AxisTypeValue;
 }
 
+/*!
+    This method modifies range and number of ticks on the axis to look "nice". Algorithm considers numbers that
+    can be expressed as form of 1*10^n, 2* 10^n or 5*10^n as a nice numbers. These numbers are used for spacing the ticks.
+    This method will modify the current range and number of ticks.
+    \sa setRange(), setTicks()
+*/
 void QValueAxis::applyNiceNumbers()
 {
     Q_D(QValueAxis);
