@@ -33,6 +33,7 @@ ChartLogValueAxisY::ChartLogValueAxisY(QLogValueAxis *axis, QGraphicsItem* item)
       m_axis(axis)
 {
     QObject::connect(m_axis, SIGNAL(baseChanged(qreal)),this, SLOT(handleBaseChanged(qreal)));
+    QObject::connect(m_axis,SIGNAL(labelFormatChanged(QString)),this, SLOT(handleLabelFormatChanged(QString)));
 }
 
 ChartLogValueAxisY::~ChartLogValueAxisY()
@@ -71,6 +72,12 @@ void ChartLogValueAxisY::updateGeometry()
 void ChartLogValueAxisY::handleBaseChanged(qreal base)
 {
     Q_UNUSED(base);
+    if(presenter()) presenter()->layout()->invalidate();
+}
+
+void ChartLogValueAxisY::handleLabelFormatChanged(const QString &format)
+{
+    Q_UNUSED(format);
     if(presenter()) presenter()->layout()->invalidate();
 }
 

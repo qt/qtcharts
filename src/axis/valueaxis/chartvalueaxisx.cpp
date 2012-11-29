@@ -36,6 +36,7 @@ ChartValueAxisX::ChartValueAxisX(QValueAxis *axis, QGraphicsItem* item )
       m_axis(axis)
 {
 	QObject::connect(m_axis,SIGNAL(tickCountChanged(int)),this, SLOT(handleTickCountChanged(int)));
+    QObject::connect(m_axis,SIGNAL(labelFormatChanged(QString)),this, SLOT(handleLabelFormatChanged(QString)));
 }
 
 ChartValueAxisX::~ChartValueAxisX()
@@ -71,6 +72,12 @@ void ChartValueAxisX::updateGeometry()
 void ChartValueAxisX::handleTickCountChanged(int tick)
 {
 	Q_UNUSED(tick);
+    if(presenter()) presenter()->layout()->invalidate();
+}
+
+void ChartValueAxisX::handleLabelFormatChanged(const QString &format)
+{
+    Q_UNUSED(format);
     if(presenter()) presenter()->layout()->invalidate();
 }
 

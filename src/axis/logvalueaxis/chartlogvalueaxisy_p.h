@@ -54,6 +54,7 @@ protected:
 
 private Q_SLOTS:
     void handleBaseChanged(qreal base);
+    void handleLabelFormatChanged(const QString &format);
 
 private:
     QLogValueAxis *m_axis;

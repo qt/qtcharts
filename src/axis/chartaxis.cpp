@@ -455,6 +455,8 @@ QStringList ChartAxis::createValueLabels(qreal min, qreal max, int ticks,const Q
                       || format.contains("e", Qt::CaseInsensitive)
                       || format.contains("g", Qt::CaseInsensitive))
                 labels << QString().sprintf(array, value);
+            else
+                labels << QString();
         }
     }
 
@@ -500,6 +502,8 @@ QStringList ChartAxis::createLogValueLabels(qreal min, qreal max, qreal base, in
                       || format.contains("e", Qt::CaseInsensitive)
                       || format.contains("g", Qt::CaseInsensitive))
                 labels << QString().sprintf(array, value);
+            else
+                labels << QString();
         }
     }
 
