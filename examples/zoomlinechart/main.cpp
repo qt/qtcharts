@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
     chart->setAnimationOptions(QChart::SeriesAnimations);
     chart->legend()->hide();
     chart->createDefaultAxes();
-    qobject_cast<QValueAxis*>(chart->axisX())->setNiceNumbersEnabled(true);
 
     ChartView *chartView = new ChartView(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
@@ -58,8 +57,6 @@ int main(int argc, char *argv[])
     window.grabGesture(Qt::PanGesture);
     window.grabGesture(Qt::PinchGesture);
     window.show();
-
-    qobject_cast<QValueAxis*>(chart->axisX())->setMax(600);
 
     return a.exec();
 }
