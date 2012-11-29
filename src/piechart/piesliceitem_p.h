@@ -81,6 +81,8 @@ private:
     QPainterPath m_labelArmPath;
     QRectF m_labelTextRect;
     bool m_hovered;
+
+    friend class PieSliceAnimation;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

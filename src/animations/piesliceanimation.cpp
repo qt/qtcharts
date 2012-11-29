@@ -59,8 +59,10 @@ QBrush linearPos(QBrush start, QBrush end, qreal pos)
 
 PieSliceAnimation::PieSliceAnimation(PieSliceItem *sliceItem)
     : ChartAnimation(sliceItem),
-      m_sliceItem(sliceItem)
+      m_sliceItem(sliceItem),
+      m_currentValue(m_sliceItem->m_data)
 {
+
 }
 
 PieSliceAnimation::~PieSliceAnimation()

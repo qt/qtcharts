@@ -37,8 +37,12 @@ PieAnimation::~PieAnimation()
 ChartAnimation *PieAnimation::updateValue(PieSliceItem *sliceItem, const PieSliceData &sliceData)
 {
     PieSliceAnimation *animation = m_animations.value(sliceItem);
-    Q_ASSERT(animation);
-    animation->stop();
+    if (!animation) {
+        animation = new PieSliceAnimation(sliceItem);
+        m_animations.insert(sliceItem, animation);
+    } else {
+        animation->stop();
+    }
 
     animation->updateValue(sliceData);
     animation->setDuration(ChartAnimationDuration);
