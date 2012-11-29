@@ -32,6 +32,7 @@ ChartLogValueAxisY::ChartLogValueAxisY(QLogValueAxis *axis, QGraphicsItem* item)
     : VerticalAxis(axis, item),
       m_axis(axis)
 {
+    QObject::connect(m_axis, SIGNAL(baseChanged(qreal)),this, SLOT(handleBaseChanged(qreal)));
 }
 
 ChartLogValueAxisY::~ChartLogValueAxisY()
@@ -67,10 +68,11 @@ void ChartLogValueAxisY::updateGeometry()
     VerticalAxis::updateGeometry();
 }
 
-//void ChartLogValueAxisY::handleAxisUpdated()
-//{
-//    ChartAxis::handleAxisUpdated();
-//}
+void ChartLogValueAxisY::handleBaseChanged(qreal base)
+{
+    Q_UNUSED(base);
+    if(presenter()) presenter()->layout()->invalidate();
+}
 
 QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) const
 {
@@ -116,5 +118,7 @@ QSizeF ChartLogValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint
 
     return sh;
 }
+
+#include "moc_chartlogvalueaxisy_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

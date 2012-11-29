@@ -184,6 +184,7 @@ void LogXYDomain::handleHorizontalAxisBaseChanged(qreal baseX)
     m_logBaseX = baseX;
     m_logMinX = log10(m_minX) / log10(m_logBaseX);
     m_logMaxX = log10(m_maxX) / log10(m_logBaseX);
+    emit updated();
 }
 
 // operators

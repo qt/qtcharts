@@ -182,6 +182,7 @@ void XLogYDomain::handleVerticalAxisBaseChanged(qreal baseY)
     m_logBaseY = baseY;
     m_logMinY = log10(m_minY) / log10(m_logBaseY);
     m_logMaxY = log10(m_maxY) / log10(m_logBaseY);
+    emit updated();
 }
 
 // operators

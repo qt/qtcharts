@@ -39,6 +39,8 @@ class ChartPresenter;
 
 class ChartLogValueAxisX : public HorizontalAxis
 {
+    Q_OBJECT
+
 public:
     ChartLogValueAxisX(QLogValueAxis *axis, QGraphicsItem* item);
     ~ChartLogValueAxisX();
@@ -49,6 +51,9 @@ protected:
     void handleAxisUpdated();
     QVector<qreal> calculateLayout() const;
     void updateGeometry();
+
+private Q_SLOTS:
+    void handleBaseChanged(qreal base);
 
 private:
     QLogValueAxis *m_axis;

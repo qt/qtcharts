@@ -192,6 +192,7 @@ void LogXLogYDomain::handleVerticalAxisBaseChanged(qreal baseY)
     m_logBaseY = baseY;
     m_logMinY = log10(m_minY) / log10(m_logBaseY);
     m_logMaxY = log10(m_maxY) / log10(m_logBaseY);
+    emit updated();
 }
 
 void LogXLogYDomain::handleHorizontalAxisBaseChanged(qreal baseX)
@@ -199,6 +200,7 @@ void LogXLogYDomain::handleHorizontalAxisBaseChanged(qreal baseX)
     m_logBaseX = baseX;
     m_logMinX = log10(m_minX) / log10(m_logBaseX);
     m_logMaxX = log10(m_maxX) / log10(m_logBaseX);
+    emit updated();
 }
 
 // operators
