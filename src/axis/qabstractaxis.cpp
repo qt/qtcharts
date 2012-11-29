@@ -745,8 +745,8 @@ Qt::Alignment QAbstractAxis::alignment() const
 QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
     : q_ptr(q),
       m_chart(0),
-      m_orientation(Qt::Orientation(0)),
       m_alignment(0),
+      m_orientation(Qt::Orientation(0)),
       m_visible(true),
       m_arrowVisible(true),
       m_gridLineVisible(true),
