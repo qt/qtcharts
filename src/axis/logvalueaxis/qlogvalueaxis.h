@@ -34,7 +34,8 @@ class QTCOMMERCIALCHART_EXPORT QLogValueAxis : public QAbstractAxis
     Q_OBJECT
     Q_PROPERTY(qreal min READ min WRITE setMin NOTIFY minChanged)
     Q_PROPERTY(qreal max READ max WRITE setMax NOTIFY maxChanged)
-    Q_PROPERTY(QString labelFormat READ labelFormat WRITE setLabelFormat)
+    Q_PROPERTY(QString labelFormat READ labelFormat WRITE setLabelFormat NOTIFY labelFormatChanged)
+    Q_PROPERTY(qreal base READ base WRITE setBase NOTIFY baseChanged)
 
 public:
     explicit QLogValueAxis(QObject *parent = 0);
@@ -63,6 +64,7 @@ Q_SIGNALS:
     void minChanged(qreal min);
     void maxChanged(qreal max);
     void rangeChanged(qreal min, qreal max);
+    void labelFormatChanged(const QString &format);
     void baseChanged(qreal base);
 
 private:

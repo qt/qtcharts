@@ -265,6 +265,7 @@ void QValueAxis::setLabelFormat(const QString &format)
 {
     Q_D(QValueAxis);
     d->m_format = format;
+    emit labelFormatChanged(format);
 }
 
 QString QValueAxis::labelFormat() const

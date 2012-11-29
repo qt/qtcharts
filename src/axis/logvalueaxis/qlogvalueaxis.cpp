@@ -171,6 +171,7 @@ void QLogValueAxis::setLabelFormat(const QString &format)
 {
     Q_D(QLogValueAxis);
     d->m_format = format;
+    emit labelFormatChanged(format);
 }
 
 QString QLogValueAxis::labelFormat() const
