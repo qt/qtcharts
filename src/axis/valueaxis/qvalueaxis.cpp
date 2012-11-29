@@ -251,7 +251,7 @@ void QValueAxis::setNiceNumbersEnabled(bool enable)
         QObject::disconnect(this,SIGNAL(rangeChanged(qreal,qreal)),this,SLOT(applyNiceNumbers()));
         QObject::disconnect(this,SIGNAL(tickCountChanged(int)),this,SLOT(applyNiceNumbers()));
     }
-    d->m_niceNumbersEnabled=true;
+    d->m_niceNumbersEnabled=enable;
 }
 
 bool QValueAxis::niceNumbersEnabled() const
