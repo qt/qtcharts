@@ -21,7 +21,6 @@
 #include "pieanimation_p.h"
 #include "piesliceanimation_p.h"
 #include "piechartitem_p.h"
-#include <QTimer>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 

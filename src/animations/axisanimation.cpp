@@ -20,9 +20,6 @@
 
 #include "axisanimation_p.h"
 #include "chartaxis_p.h"
-#include "chartpresenter_p.h"
-#include <QTimer>
-#include <QDebug>
 
 Q_DECLARE_METATYPE(QVector<qreal>)
 

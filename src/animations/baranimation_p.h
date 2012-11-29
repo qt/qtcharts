@@ -27,8 +27,8 @@
 //
 // We mean it.
 
-#ifndef ABSTRACTBARANIMATION_P_H
-#define ABSTRACTBARANIMATION_P_H
+#ifndef BARANIMATION_P_H
+#define BARANIMATION_P_H
 
 #include "chartanimation_p.h"
 
@@ -56,4 +56,4 @@ protected:
 
 QTCOMMERCIALCHART_END_NAMESPACE
 
-#endif // ABSTRACTBARANIMATION_P_H
+#endif // BARANIMATION_P_H

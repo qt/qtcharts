@@ -20,7 +20,6 @@
 
 #include "baranimation_p.h"
 #include "abstractbarchartitem_p.h"
-#include <QTimer>
 
 Q_DECLARE_METATYPE(QVector<QRectF>)
 
