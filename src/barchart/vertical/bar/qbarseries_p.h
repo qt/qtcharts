@@ -41,7 +41,6 @@ class QBarSeriesPrivate: public QAbstractBarSeriesPrivate
 public:
     QBarSeriesPrivate(QBarSeries *q);
     void initializeGraphics(QGraphicsItem* parent);
-    void initializeAnimations(QtCommercialChart::QChart::AnimationOptions options);
     void initializeDomain();
 
 private:

@@ -30,6 +30,33 @@ HorizontalStackedBarChartItem::HorizontalStackedBarChartItem(QAbstractBarSeries 
 {
 }
 
+void HorizontalStackedBarChartItem::initializeLayout()
+{
+    qreal categoryCount = m_series->d_func()->categoryCount();
+    qreal setCount = m_series->count();
+    qreal barWidth = m_series->d_func()->barWidth();
+
+    m_layout.clear();
+    for(int category = 0; category < categoryCount; category++) {
+        for (int set = 0; set < setCount; set++) {
+            QRectF rect;
+            QPointF topLeft;
+            QPointF bottomRight;
+            if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
+                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category + barWidth / 2));
+            } else {
+                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(0, category + barWidth / 2));
+            }
+
+            rect.setTopLeft(topLeft);
+            rect.setBottomRight(bottomRight);
+            m_layout.append(rect.normalized());
+        }
+    }
+}
+
 QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
@@ -64,7 +91,7 @@ QVector<QRectF> HorizontalStackedBarChartItem::calculateLayout()
             }
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            layout.append(rect);
+            layout.append(rect.normalized());
         }
     }
     return layout;

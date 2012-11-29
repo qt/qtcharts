@@ -20,7 +20,6 @@
 #include "qhorizontalpercentbarseries.h"
 #include "qhorizontalpercentbarseries_p.h"
 #include "horizontalpercentbarchartitem_p.h"
-#include "horizontalpercentbaranimation_p.h"
 
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
@@ -112,17 +111,6 @@ void QHorizontalPercentBarSeriesPrivate::initializeGraphics(QGraphicsItem* paren
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-void QHorizontalPercentBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
-{
-    HorizontalPercentBarChartItem *bar = static_cast<HorizontalPercentBarChartItem *>(m_item.data());
-    Q_ASSERT(bar);
-    if (options.testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimation(new HorizontalPercentBarAnimation(bar));
-    }else{
-        bar->setAnimation(0);
-    }
-    QAbstractSeriesPrivate::initializeAnimations(options);
-}
 #include "moc_qhorizontalpercentbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

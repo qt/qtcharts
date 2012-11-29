@@ -42,7 +42,6 @@ public:
     QPercentBarSeriesPrivate(QPercentBarSeries *q);
     void initializeDomain();
     void initializeGraphics(QGraphicsItem* parent);
-    void initializeAnimations(QtCommercialChart::QChart::AnimationOptions options);
 private:
     Q_DECLARE_PUBLIC(QPercentBarSeries)
 };

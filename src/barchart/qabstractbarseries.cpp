@@ -28,6 +28,8 @@
 #include "qvalueaxis.h"
 #include "qbarcategoryaxis.h"
 #include "qbarlegendmarker.h"
+#include "baranimation_p.h"
+#include "abstractbarchartitem_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -851,6 +853,18 @@ void QAbstractBarSeriesPrivate::initializeTheme(int index, ChartTheme* theme, bo
             m_barSets.at(i)->setPen(c);
         }
     }
+}
+
+void QAbstractBarSeriesPrivate::initializeAnimations(QChart::AnimationOptions options)
+{
+    AbstractBarChartItem *bar = static_cast<AbstractBarChartItem *>(m_item.data());
+    Q_ASSERT(bar);
+    if (options.testFlag(QChart::SeriesAnimations)) {
+        bar->setAnimation(new BarAnimation(bar));
+    }else{
+        bar->setAnimation(0);
+    }
+    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 #include "moc_qabstractbarseries.cpp"

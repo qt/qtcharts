@@ -21,7 +21,6 @@
 #include "qhorizontalbarseries.h"
 #include "qhorizontalbarseries_p.h"
 #include "horizontalbarchartitem_p.h"
-#include "horizontalbaranimation_p.h"
 #include "qbarcategoryaxis.h"
 
 #include "chartdataset_p.h"
@@ -114,18 +113,6 @@ void QHorizontalBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     HorizontalBarChartItem *bar = new HorizontalBarChartItem(q,parent);
     m_item.reset(bar);
     QAbstractSeriesPrivate::initializeGraphics(parent);
-}
-
-void QHorizontalBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
-{
-    HorizontalBarChartItem *bar = static_cast<HorizontalBarChartItem *>(m_item.data());
-    Q_ASSERT(bar);
-    if (options.testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimation(new HorizontalBarAnimation(bar));
-    }else{
-        bar->setAnimation(0);
-    }
-    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 #include "moc_qhorizontalbarseries.cpp"

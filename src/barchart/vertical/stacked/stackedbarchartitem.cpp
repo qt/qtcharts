@@ -31,6 +31,34 @@ StackedBarChartItem::StackedBarChartItem(QAbstractBarSeries *series, QGraphicsIt
 {
 }
 
+void StackedBarChartItem::initializeLayout()
+{
+    qreal categoryCount = m_series->d_func()->categoryCount();
+    qreal setCount = m_series->count();
+    qreal barWidth = m_series->d_func()->barWidth();
+
+    m_layout.clear();
+    for(int category = 0; category < categoryCount; category++) {
+        for (int set = 0; set < setCount; set++) {
+            QRectF rect;
+            QPointF topLeft;
+            QPointF bottomRight;
+
+            if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, domain()->minY()));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, domain()->minY()));
+            } else {
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, 0));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, 0));
+            }
+
+            rect.setTopLeft(topLeft);
+            rect.setBottomRight(bottomRight);
+            m_layout.append(rect.normalized());
+        }
+    }
+}
+
 QVector<QRectF> StackedBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
@@ -55,16 +83,16 @@ QVector<QRectF> StackedBarChartItem::calculateLayout()
                     topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? negativeSum : 0));
                 negativeSum += value;
             } else {
-                bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + positiveSum));
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, value + positiveSum));
                 if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                    topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : domain()->minY()));
+                    bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : domain()->minY()));
                 else
-                    topLeft = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : 0));
+                    bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, set ? positiveSum : 0));
                 positiveSum += value;
             }
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            layout.append(rect);
+            layout.append(rect.normalized());
         }
     }
     return layout;

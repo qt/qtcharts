@@ -20,7 +20,6 @@
 #include "qhorizontalstackedbarseries.h"
 #include "qhorizontalstackedbarseries_p.h"
 #include "horizontalstackedbarchartitem_p.h"
-#include "horizontalstackedbaranimation_p.h"
 
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
@@ -111,17 +110,6 @@ void QHorizontalStackedBarSeriesPrivate::initializeGraphics(QGraphicsItem *paren
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-void QHorizontalStackedBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
-{
-    HorizontalStackedBarChartItem *bar = static_cast<HorizontalStackedBarChartItem *>(m_item.data());
-    Q_ASSERT(bar);
-    if (options.testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimation(new HorizontalStackedBarAnimation(bar));
-    }else{
-        bar->setAnimation(0);
-    }
-    QAbstractSeriesPrivate::initializeAnimations(options);
-}
 #include "moc_qhorizontalstackedbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

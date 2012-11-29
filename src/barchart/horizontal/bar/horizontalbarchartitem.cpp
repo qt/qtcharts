@@ -30,6 +30,33 @@ HorizontalBarChartItem::HorizontalBarChartItem(QAbstractBarSeries *series, QGrap
 {
 }
 
+void HorizontalBarChartItem::initializeLayout()
+{
+    qreal categoryCount = m_series->d_func()->categoryCount();
+    qreal setCount = m_series->count();
+    qreal barWidth = m_series->d_func()->barWidth();
+
+    m_layout.clear();
+    for(int category = 0; category < categoryCount; category++) {
+        for (int set = 0; set < setCount; set++) {
+            QRectF rect;
+            QPointF topLeft;
+            QPointF bottomRight;
+            if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
+                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + set/setCount * barWidth));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category + barWidth / 2 + (set + 1)/setCount * barWidth));
+            } else {
+                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + set/setCount * barWidth));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + (set + 1)/setCount * barWidth));
+            }
+
+            rect.setTopLeft(topLeft);
+            rect.setBottomRight(bottomRight);
+            m_layout.append(rect.normalized());
+        }
+    }
+}
+
 QVector<QRectF> HorizontalBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
@@ -39,27 +66,20 @@ QVector<QRectF> HorizontalBarChartItem::calculateLayout()
     qreal setCount = m_series->count();
     qreal barWidth = m_series->d_func()->barWidth();
 
-    int itemIndex(0);
     for(int category = 0; category < categoryCount; category++) {
         for (int set = 0; set < setCount; set++) {
             qreal value = m_series->barSets().at(set)->at(category);
             QRectF rect;
             QPointF topLeft;
             if (domain()->type() == AbstractDomain::LogXYDomain || domain()->type() == AbstractDomain::LogXLogYDomain)
-                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + (set + 1)/(setCount) * barWidth));
+                topLeft = domain()->calculateGeometryPoint(QPointF(domain()->minX(), category - barWidth / 2 + set/setCount * barWidth));
             else
-                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + (set + 1)/(setCount) * barWidth));
+                topLeft = domain()->calculateGeometryPoint(QPointF(0, category - barWidth / 2 + set/setCount * barWidth));
 
-            QPointF bottomRight = domain()->calculateGeometryPoint(QPointF(value, category - barWidth / 2 + (set)/(setCount) * barWidth));
+            QPointF bottomRight = domain()->calculateGeometryPoint(QPointF(value, category - barWidth / 2 + (set + 1)/setCount * barWidth));
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            layout.append(rect);
-
-            QGraphicsSimpleTextItem *label = m_labels.at(itemIndex);
-            label->setPos(rect.center() - label->boundingRect().center());
-            label->setZValue(200);
-            itemIndex++;
-            label->setBrush(Qt::black);
+            layout.append(rect.normalized());
         }
     }
     return layout;

@@ -7,13 +7,7 @@ SOURCES += \
     $$PWD/pieanimation.cpp \
     $$PWD/piesliceanimation.cpp \
     $$PWD/splineanimation.cpp \
-    $$PWD/baranimation.cpp \
-    $$PWD/stackedbaranimation.cpp \
-    $$PWD/percentbaranimation.cpp \
-    $$PWD/abstractbaranimation.cpp \
-    $$PWD/horizontalbaranimation.cpp \
-    $$PWD/horizontalstackedbaranimation.cpp \
-    $$PWD/horizontalpercentbaranimation.cpp
+    $$PWD/baranimation.cpp
 
 PRIVATE_HEADERS += \
     $$PWD/axisanimation_p.h \
@@ -22,10 +16,4 @@ PRIVATE_HEADERS += \
     $$PWD/pieanimation_p.h \
     $$PWD/piesliceanimation_p.h \
     $$PWD/splineanimation_p.h \
-    $$PWD/baranimation_p.h \
-    $$PWD/stackedbaranimation_p.h \
-    $$PWD/percentbaranimation_p.h \
-    $$PWD/abstractbaranimation_p.h \
-    $$PWD/horizontalbaranimation_p.h \
-    $$PWD/horizontalstackedbaranimation_p.h \
-    $$PWD/horizontalpercentbaranimation_p.h
+    $$PWD/baranimation_p.h

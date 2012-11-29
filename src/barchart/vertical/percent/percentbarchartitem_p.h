@@ -46,7 +46,8 @@ public:
     void handleUpdatedBars();
 
 private:
-    virtual QVector<QRectF> calculateLayout();        
+    virtual QVector<QRectF> calculateLayout();
+    void initializeLayout();
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

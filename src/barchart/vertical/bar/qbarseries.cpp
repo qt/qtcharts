@@ -23,7 +23,6 @@
 #include "barchartitem_p.h"
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
-#include "baranimation_p.h"
 #include "qvalueaxis.h"
 #include "qbarcategoryaxis.h"
 
@@ -112,18 +111,6 @@ void QBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     BarChartItem *bar = new BarChartItem(q,parent);
     m_item.reset(bar);
     QAbstractSeriesPrivate::initializeGraphics(parent);
-}
-
-void QBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
-{
-    BarChartItem *bar = static_cast<BarChartItem *>(m_item.data());
-    Q_ASSERT(bar);
-    if (options.testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimation(new BarAnimation(bar));
-    }else{
-        bar->setAnimation(0);
-    }
-    QAbstractSeriesPrivate::initializeAnimations(options);
 }
 
 #include "moc_qbarseries.cpp"

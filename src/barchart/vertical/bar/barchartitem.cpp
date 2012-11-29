@@ -31,6 +31,34 @@ BarChartItem::BarChartItem(QAbstractBarSeries *series, QGraphicsItem* item) :
 {
 }
 
+void BarChartItem::initializeLayout()
+{
+    qreal categoryCount = m_series->d_func()->categoryCount();
+    qreal setCount = m_series->count();
+    qreal barWidth = m_series->d_func()->barWidth();
+
+    m_layout.clear();
+    for(int category = 0; category < categoryCount; category++) {
+        for (int set = 0; set < setCount; set++) {
+            QRectF rect;
+            QPointF topLeft;
+            QPointF bottomRight;
+
+            if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2 + set/setCount * barWidth, domain()->minY()));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2 + (set + 1)/setCount * barWidth, domain()->minY()));
+            } else {
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2 + set/setCount * barWidth, 0));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2 + (set + 1)/setCount * barWidth, 0));
+            }
+
+            rect.setTopLeft(topLeft);
+            rect.setBottomRight(bottomRight);
+            m_layout.append(rect.normalized());
+        }
+    }
+}
+
 QVector<QRectF> BarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
@@ -52,7 +80,7 @@ QVector<QRectF> BarChartItem::calculateLayout()
                 bottomRight = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2 + (set + 1)/(setCount) * barWidth, 0));
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            layout.append(rect);
+            layout.append(rect.normalized());
         }
     }
     return layout;

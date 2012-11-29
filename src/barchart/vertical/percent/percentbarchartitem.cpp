@@ -31,6 +31,34 @@ PercentBarChartItem::PercentBarChartItem(QAbstractBarSeries *series, QGraphicsIt
 {
 }
 
+void PercentBarChartItem::initializeLayout()
+{
+    qreal categoryCount = m_series->d_func()->categoryCount();
+    qreal setCount = m_series->count();
+    qreal barWidth = m_series->d_func()->barWidth();
+
+    m_layout.clear();
+    for(int category = 0; category < categoryCount; category++) {
+        for (int set = 0; set < setCount; set++) {
+            QRectF rect;
+            QPointF topLeft;
+            QPointF bottomRight;
+
+            if (domain()->type() == AbstractDomain::XLogYDomain || domain()->type() == AbstractDomain::LogXLogYDomain) {
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, domain()->minY()));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, domain()->minY()));
+            } else {
+                topLeft = domain()->calculateGeometryPoint(QPointF(category - barWidth / 2, 0));
+                bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth / 2, 0));
+            }
+
+            rect.setTopLeft(topLeft);
+            rect.setBottomRight(bottomRight);
+            m_layout.append(rect.normalized());
+        }
+    }
+}
+
 QVector<QRectF> PercentBarChartItem::calculateLayout()
 {
     QVector<QRectF> layout;
@@ -54,7 +82,7 @@ QVector<QRectF> PercentBarChartItem::calculateLayout()
                 bottomRight = domain()->calculateGeometryPoint(QPointF(category + barWidth/2, set ? 100 * sum/categorySum : 0));
             rect.setTopLeft(topLeft);
             rect.setBottomRight(bottomRight);
-            layout.append(rect);
+            layout.append(rect.normalized());
             sum +=value;
         }
     }

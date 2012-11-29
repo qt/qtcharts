@@ -24,7 +24,6 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "qvalueaxis.h"
-#include "percentbaranimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -113,17 +112,6 @@ void QPercentBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-void QPercentBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
-{
-    PercentBarChartItem *bar = static_cast<PercentBarChartItem *>(m_item.data());
-    Q_ASSERT(bar);
-    if (options.testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimation(new PercentBarAnimation(bar));
-    }else{
-        bar->setAnimation(0);
-    }
-    QAbstractSeriesPrivate::initializeAnimations(options);
-}
 #include "moc_qpercentbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

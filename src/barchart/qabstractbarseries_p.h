@@ -56,6 +56,7 @@ public:
 
     void initializeDomain();
     void initializeAxes();
+    void initializeAnimations(QChart::AnimationOptions options);
     void initializeTheme(int index, ChartTheme* theme, bool forced = false);
 
     QList<QLegendMarker*> createLegendMarkers(QLegend *legend);

@@ -27,9 +27,11 @@ Q_DECLARE_METATYPE(QVector<QRectF>)
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 BarAnimation::BarAnimation(AbstractBarChartItem *item)
-    : AbstractBarAnimation(item)
+    : ChartAnimation(item),
+      m_item(item)
 {
-
+    setDuration(ChartAnimationDuration);
+    setEasingCurve(QEasingCurve::OutQuart);
 }
 
 BarAnimation::~BarAnimation()
@@ -47,27 +49,32 @@ QVariant BarAnimation::interpolated(const QVariant &from, const QVariant &to, qr
     for (int i = 0; i < startVector.count(); i++) {
         QRectF start = startVector[i].normalized();
         QRectF end = endVector[i].normalized();
+        qreal x1 = start.left() + progress * (end.left() - start.left());
+        qreal x2 = start.right() + progress * (end.right() - start.right());
+        qreal y1 = start.top() + progress * (end.top() - start.top());
+        qreal y2 = start.bottom() + progress * (end.bottom() - start.bottom());
 
-        qreal x = end.left();
-        qreal y;
-        qreal w = end.width();
-        qreal h;
-
-        if (endVector[i].height() < 0) {
-            // Negative bar
-            y = end.top();
-            h = start.height() + ((end.height() - start.height()) * progress);
-        } else {
-            h = startVector[i].height() + ((endVector[i].height() - startVector[i].height()) * progress);
-            y = endVector[i].top() + endVector[i].height() - h;
-        }
-
-        QRectF value(x, y, w, h);
+        QRectF value(QPointF(x1, y1), QPointF(x2, y2));
         result << value.normalized();
     }
     return qVariantFromValue(result);
 }
 
+void BarAnimation::updateCurrentValue(const QVariant &value)
+{
+    QVector<QRectF> layout = qvariant_cast<QVector<QRectF> >(value);
+    m_item->setLayout(layout);
+}
+
+void BarAnimation::setup(const QVector<QRectF> &oldLayout, const QVector<QRectF> &newLayout)
+{
+    QVariantAnimation::KeyValues value;
+    setKeyValues(value); //workaround for wrong interpolation call
+    setKeyValueAt(0.0, qVariantFromValue(oldLayout));
+    setKeyValueAt(1.0, qVariantFromValue(newLayout));
+}
+
 #include "moc_baranimation_p.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE
+

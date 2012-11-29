@@ -41,7 +41,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 class Bar;
 class QAxisCategories;
 class QChart;
-class AbstractBarAnimation;
+class BarAnimation;
 
 class AbstractBarChartItem : public ChartItem
 {
@@ -55,8 +55,9 @@ public:
     QRectF boundingRect() const;
 
     virtual QVector<QRectF> calculateLayout() = 0;
+    virtual void initializeLayout() = 0;
     virtual void applyLayout(const QVector<QRectF> &layout);
-    virtual void setAnimation(AbstractBarAnimation *animation);
+    virtual void setAnimation(BarAnimation *animation);
     void setLayout(const QVector<QRectF> &layout);
     void updateLayout(const QVector<QRectF> &layout);
     QRectF geometry() const { return m_rect;}
@@ -80,11 +81,12 @@ protected:
     QRectF m_rect;
     QVector<QRectF> m_layout;
 
-    AbstractBarAnimation *m_animation;
+    BarAnimation *m_animation;
 
     QAbstractBarSeries *m_series; // Not owned.
     QList<Bar *> m_bars;
     QList<QGraphicsSimpleTextItem *> m_labels;
+    QSizeF m_oldSize;
 };
 
 QTCOMMERCIALCHART_END_NAMESPACE

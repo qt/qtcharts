@@ -24,7 +24,6 @@
 #include "chartdataset_p.h"
 #include "charttheme_p.h"
 #include "qvalueaxis.h"
-#include "stackedbaranimation_p.h"
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -112,17 +111,6 @@ void QStackedBarSeriesPrivate::initializeGraphics(QGraphicsItem* parent)
     QAbstractSeriesPrivate::initializeGraphics(parent);
 }
 
-void QStackedBarSeriesPrivate::initializeAnimations(QtCommercialChart::QChart::AnimationOptions options)
-{
-    StackedBarChartItem *bar = static_cast<StackedBarChartItem *>(m_item.data());
-    Q_ASSERT(bar);
-    if (options.testFlag(QChart::SeriesAnimations)) {
-        bar->setAnimation(new StackedBarAnimation(bar));
-    }else{
-        bar->setAnimation(0);
-    }
-    QAbstractSeriesPrivate::initializeAnimations(options);
-}
 #include "moc_qstackedbarseries.cpp"
 
 QTCOMMERCIALCHART_END_NAMESPACE

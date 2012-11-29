@@ -40,7 +40,6 @@ class QHorizontalBarSeriesPrivate: public QAbstractBarSeriesPrivate
 public:
     QHorizontalBarSeriesPrivate(QHorizontalBarSeries *q);
     void initializeGraphics(QGraphicsItem* parent);
-    void initializeAnimations(QtCommercialChart::QChart::AnimationOptions options);
     void initializeDomain();
 private:
     Q_DECLARE_PUBLIC(QHorizontalBarSeries)

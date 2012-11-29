@@ -27,7 +27,7 @@
 #include "qchart.h"
 #include "chartpresenter_p.h"
 #include "charttheme_p.h"
-#include "abstractbaranimation_p.h"
+#include "baranimation_p.h"
 #include "chartdataset_p.h"
 #include <QPainter>
 
@@ -46,7 +46,7 @@ AbstractBarChartItem::AbstractBarChartItem(QAbstractBarSeries *series, QGraphics
     connect(series->d_func(), SIGNAL(restructuredBars()), this, SLOT(handleDataStructureChanged()));
     connect(series, SIGNAL(visibleChanged()), this, SLOT(handleVisibleChanged()));
     connect(series, SIGNAL(opacityChanged()), this, SLOT(handleOpacityChanged()));
-    setZValue(ChartPresenter::BarSeriesZValue);    
+    setZValue(ChartPresenter::BarSeriesZValue);
     handleDataStructureChanged();
     handleVisibleChanged();
     handleUpdatedBars();
@@ -70,16 +70,23 @@ QRectF AbstractBarChartItem::boundingRect() const
 
 void AbstractBarChartItem::applyLayout(const QVector<QRectF> &layout)
 {
-    if (m_animation) {
-        m_animation->setup(m_layout, layout);
-        presenter()->startAnimation(m_animation);
-    } else {
-        setLayout(layout);
-        update();
+    QSizeF size = geometry().size();
+    if (geometry().size().isValid()) {
+        if (m_animation) {
+            if (m_layout.count() == 0 || m_oldSize != size) {
+                initializeLayout();
+                m_oldSize = size;
+            }
+            m_animation->setup(m_layout, layout);
+            presenter()->startAnimation(m_animation);
+        } else {
+            setLayout(layout);
+            update();
+        }
     }
 }
 
-void AbstractBarChartItem::setAnimation(AbstractBarAnimation *animation)
+void AbstractBarChartItem::setAnimation(BarAnimation *animation)
 {
     m_animation = animation;
 }
@@ -154,7 +161,7 @@ void AbstractBarChartItem::handleDataStructureChanged()
             connect(bar, SIGNAL(hovered(bool,QBarSet*)), m_series, SIGNAL(hovered(bool,QBarSet*)));
             connect(bar, SIGNAL(clicked(int,QBarSet*)), set, SIGNAL(clicked(int)));
             connect(bar, SIGNAL(hovered(bool,QBarSet*)), set, SIGNAL(hovered(bool)));
-            m_layout.append(QRectF(0, 0, 0, 0));
+            //            m_layout.append(QRectF(0, 0, 1, 1));
 
             // Labels
             m_labels.append(new QGraphicsSimpleTextItem(this));
