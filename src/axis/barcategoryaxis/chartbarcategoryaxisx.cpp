@@ -95,6 +95,7 @@ void ChartBarCategoryAxisX::updateGeometry()
 
 void ChartBarCategoryAxisX::handleCategoriesChanged()
 {
+    QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
 

@@ -70,12 +70,14 @@ void ChartDateTimeAxisX::updateGeometry()
 void ChartDateTimeAxisX::handleTickCountChanged(int tick)
 {
     Q_UNUSED(tick)
+    QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
 
 void ChartDateTimeAxisX::handleFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
 
