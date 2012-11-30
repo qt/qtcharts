@@ -97,7 +97,6 @@ QSizeF ChartDateTimeAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint
         return sh;
     }
 
-
     switch (which) {
     case Qt::MinimumSize:{
         int count = qMax(ticksList.last().count(),ticksList.first().count());

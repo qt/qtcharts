@@ -95,10 +95,11 @@ QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
     qreal width = 0;
     qreal height = 0;
 
-    int count = 1;
+    int labelWidth = 0;
 
-    if(!ticksList.empty()){
-        count = qMax(ticksList.last().count(),ticksList.first().count());
+    foreach(const QString& s, ticksList)
+    {
+        labelWidth=qMax(fn.width(s),labelWidth);
     }
 
     switch (which) {
@@ -112,7 +113,7 @@ QSizeF ChartValueAxisY::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
     }
     case Qt::PreferredSize:
     {
-        width = count*fn.averageCharWidth() + labelPadding() + 2; //two pixels of tolerance
+        width = labelWidth + labelPadding() + 2; //two pixels of tolerance
         width += base.width();
         height = fn.height() * ticksList.count();
         height = qMax(height,base.height());
