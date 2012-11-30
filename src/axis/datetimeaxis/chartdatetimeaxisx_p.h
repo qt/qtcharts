@@ -50,6 +50,7 @@ protected:
     void updateGeometry();
 private Q_SLOTS:
     void handleTickCountChanged(int tick);
+    void handleFormatChanged(const QString &format);
 
 private:
     QDateTimeAxis *m_axis;

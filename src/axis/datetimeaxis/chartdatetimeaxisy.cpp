@@ -34,6 +34,7 @@ ChartDateTimeAxisY::ChartDateTimeAxisY(QDateTimeAxis *axis, QGraphicsItem* item)
       m_axis(axis)
 {
     QObject::connect(m_axis,SIGNAL(tickCountChanged(int)),this, SLOT(handleTickCountChanged(int)));
+    QObject::connect(m_axis,SIGNAL(formatChanged(QString)),this, SLOT(handleFormatChanged(QString)));
 }
 
 ChartDateTimeAxisY::~ChartDateTimeAxisY()
@@ -70,6 +71,12 @@ void ChartDateTimeAxisY::updateGeometry()
 void ChartDateTimeAxisY::handleTickCountChanged(int tick)
 {
     Q_UNUSED(tick)
+    if(presenter()) presenter()->layout()->invalidate();
+}
+
+void ChartDateTimeAxisY::handleFormatChanged(const QString &format)
+{
+    Q_UNUSED(format);
     if(presenter()) presenter()->layout()->invalidate();
 }
 
