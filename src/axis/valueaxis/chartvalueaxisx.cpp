@@ -72,12 +72,14 @@ void ChartValueAxisX::updateGeometry()
 void ChartValueAxisX::handleTickCountChanged(int tick)
 {
 	Q_UNUSED(tick);
+    QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
 
 void ChartValueAxisX::handleLabelFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
 

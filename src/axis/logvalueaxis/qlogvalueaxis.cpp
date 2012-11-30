@@ -140,7 +140,7 @@ qreal QLogValueAxis::max() const
   If min is greater than max then this function returns without making any changes.
 */
 void QLogValueAxis::setRange(qreal min, qreal max)
-{    
+{
     Q_D(QLogValueAxis);
     bool changed = false;
 
@@ -275,8 +275,8 @@ void QLogValueAxisPrivate::setRange(qreal min, qreal max)
         }
 
         if (changed) {
-            emit q->rangeChanged(min, max);
             emit rangeChanged(min,max);
+            emit q->rangeChanged(min, max);
         }
     }
 }

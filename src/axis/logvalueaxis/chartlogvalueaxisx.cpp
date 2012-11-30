@@ -25,6 +25,7 @@
 #include <QGraphicsLayout>
 #include <QFontMetrics>
 #include <qmath.h>
+#include <QDebug>
 
 QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
@@ -72,12 +73,14 @@ void ChartLogValueAxisX::updateGeometry()
 void ChartLogValueAxisX::handleBaseChanged(qreal base)
 {
     Q_UNUSED(base);
+    QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
 
 void ChartLogValueAxisX::handleLabelFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
 

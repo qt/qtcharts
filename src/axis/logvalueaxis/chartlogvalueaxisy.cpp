@@ -72,12 +72,14 @@ void ChartLogValueAxisY::updateGeometry()
 void ChartLogValueAxisY::handleBaseChanged(qreal base)
 {
     Q_UNUSED(base);
+    QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
 
 void ChartLogValueAxisY::handleLabelFormatChanged(const QString &format)
 {
     Q_UNUSED(format);
+    QGraphicsLayoutItem::updateGeometry();
     if(presenter()) presenter()->layout()->invalidate();
 }
 
