@@ -28,7 +28,6 @@ SUBDIRS += \
            horizontalstackedbarchart \
            horizontalpercentbarchart \
            donutbreakdown \
-           scrollchart \
            temperaturerecords \
            donutchart \
            multiaxis \
