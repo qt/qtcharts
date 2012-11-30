@@ -66,7 +66,6 @@ int main(int argc, char *argv[])
     QChart *chart = new QChart();
     chart->addSeries(series);
     chart->legend()->hide();
-    chart->createDefaultAxes();
     chart->setTitle("Sunspots count (by Space Weather Prediction Center)");
     //![3]
 
@@ -75,8 +74,14 @@ int main(int argc, char *argv[])
     axisX->setTickCount(10);
     axisX->setFormat("MMM yyyy");
     axisX->setTitleText("Date");
-    chart->setAxisX(axisX, series);
-    chart->axisY(series)->setTitleText("Sunspots count");
+    chart->addAxis(axisX, Qt::AlignBottom);
+    series->attachAxis(axisX);
+
+    QValueAxis *axisY = new QValueAxis;
+    axisY->setLabelFormat("%i");
+    axisY->setTitleText("Sunspots count");
+    chart->addAxis(axisY, Qt::AlignLeft);
+    series->attachAxis(axisY);
     //![4]
 
     //![5]
