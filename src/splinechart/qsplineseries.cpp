@@ -62,18 +62,6 @@
 */
 
 /*!
-    \qmlproperty AbstractAxis SplineSeries::axisX
-    The x axis used for the series. If you leave the x axis undefined, a ValueAxis is created for
-    the series.
-*/
-
-/*!
-    \qmlproperty AbstractAxis SplineSeries::axisY
-    The y axis used for the series. If you leave the y axis undefined, a ValueAxis is created for
-    the series.
-*/
-
-/*!
     \qmlproperty real SplineSeries::width
     The width of the line. By default the width is 2.0.
 */

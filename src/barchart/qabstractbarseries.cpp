@@ -62,6 +62,34 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty AbstractAxis AbstractBarSeries::axisX
+    The x axis used for the series. If you leave both axisX and axisXTop undefined, a BarCategoriesAxis is created for
+    the series.
+    \sa axisXTop
+*/
+
+/*!
+    \qmlproperty AbstractAxis AbstractBarSeries::axisY
+    The y axis used for the series. If you leave both axisY and axisYRight undefined, a ValueAxis is created for
+    the series.
+    \sa axisYRight
+*/
+
+/*!
+    \qmlproperty AbstractAxis AbstractBarSeries::axisXTop
+    The x axis used for the series, drawn on top of the chart view. Note that you can only provide either axisX or
+    axisXTop, but not both.
+    \sa axisX
+*/
+
+/*!
+    \qmlproperty AbstractAxis AbstractBarSeries::axisYRight
+    The y axis used for the series, drawn to the right on the chart view. Note that you can only provide either axisY
+    or axisYRight, but not both.
+    \sa axisY
+*/
+
+/*!
     \property QAbstractBarSeries::barWidth
     The width of the bars of the series. The unit of \a width is the unit of x-axis. The minimum width for bars
     is zero and negative values are treated as zero. Setting the width to zero means that width of the bar on screen

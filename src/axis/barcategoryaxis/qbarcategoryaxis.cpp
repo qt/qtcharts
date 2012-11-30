@@ -87,8 +87,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the minimum value on the axis.
 */
 /*!
-  \qmlproperty QString Bar    if (d->m_chart)
-        d->m_chart->removeAxis(this);CategoryAxis::min
+  \qmlproperty string BarCategoryAxis::min
   Defines the minimum value on the axis.
 */
 
@@ -97,7 +96,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Defines the maximum value on the axis.
 */
 /*!
-  \qmlproperty QString BarCategoryAxis::max
+  \qmlproperty string BarCategoryAxis::max
   Defines the maximum value on the axis.
 */
 

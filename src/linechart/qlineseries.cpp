@@ -65,18 +65,6 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlproperty AbstractAxis LineSeries::axisX
-    The x axis used for the series. If you leave the x axis undefined, a ValueAxis is created for
-    the series.
-*/
-
-/*!
-    \qmlproperty AbstractAxis LineSeries::axisY
-    The y axis used for the series. If you leave the y axis undefined, a ValueAxis is created for
-    the series.
-*/
-
-/*!
     \qmlproperty real LineSeries::width
     The width of the line. By default the width is 2.0.
 */

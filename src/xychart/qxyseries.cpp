@@ -40,6 +40,34 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+    \qmlproperty AbstractAxis XYSeries::axisX
+    The x axis used for the series. If you leave both axisX and axisXTop undefined, a ValueAxis is created for
+    the series.
+    \sa axisXTop
+*/
+
+/*!
+    \qmlproperty AbstractAxis XYSeries::axisY
+    The y axis used for the series. If you leave both axisY and axisYRight undefined, a ValueAxis is created for
+    the series.
+    \sa axisYRight
+*/
+
+/*!
+    \qmlproperty AbstractAxis XYSeries::axisXTop
+    The x axis used for the series, drawn on top of the chart view. Note that you can only provide either axisX or
+    axisXTop, but not both.
+    \sa axisX
+*/
+
+/*!
+    \qmlproperty AbstractAxis XYSeries::axisYRight
+    The y axis used for the series, drawn to the right on the chart view. Note that you can only provide either axisY
+    or axisYRight, but not both.
+    \sa axisY
+*/
+
+/*!
     \property QXYSeries::pointsVisible
     Controls if the data points are visible and should be drawn.
 */
