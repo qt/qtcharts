@@ -56,13 +56,24 @@ Rectangle {
         }
 
         function test_axes() {
+            // Axis initialization
             compare(chartView.axes.length, 2);
             verify(chartView.axes[0] == lineSeries.axisX || chartView.axes[1] == lineSeries.axisX);
             verify(chartView.axes[0] == lineSeries.axisY || chartView.axes[1] == lineSeries.axisY);
-            verify(lineSeries.axisX == splineSeries.axisX);
-            verify(lineSeries.axisY == splineSeries.axisY);
-            verify(lineSeries.axisX == areaSeries.axisX);
-            verify(lineSeries.axisY == areaSeries.axisY);
+            compare(lineSeries.axisX, splineSeries.axisX);
+            compare(lineSeries.axisY, splineSeries.axisY);
+            compare(lineSeries.axisX, areaSeries.axisX);
+            compare(lineSeries.axisY, areaSeries.axisY);
+
+            // Set illegal axes
+            lineSeries.axisX = lineSeries.axisY;
+            compare(lineSeries.axisX, splineSeries.axisX);
+            lineSeries.axisXTop = lineSeries.axisX;
+            compare(lineSeries.axisX, splineSeries.axisX);
+            lineSeries.axisY = lineSeries.axisX;
+            compare(lineSeries.axisY, splineSeries.axisY);
+            lineSeries.axisYRight = lineSeries.axisY;
+            compare(lineSeries.axisY, splineSeries.axisY);
         }
 
         function test_append() {
