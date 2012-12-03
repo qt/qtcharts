@@ -35,7 +35,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
     \qmlclass DateTimeAxis QLogValueAxis
-    \brief The DateTimeAxis element is used for manipulating chart's axes
+    \brief The QLogValueAxis element is used for manipulating chart's axes
     \inherits AbstractAxis
 */
 
@@ -43,22 +43,51 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   \property QLogValueAxis::min
   Defines the minimum value on the axis.
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
+  Value has to be greater then 0.
 */
 /*!
-  \qmlproperty real ValuesAxis::min
+  \qmlproperty real LogValuesAxis::min
   Defines the minimum value on the axis.
   When setting this property the max is adjusted if necessary, to ensure that the range remains valid.
+  Value has to be greater then 0.
 */
 
 /*!
   \property QLogValueAxis::max
   Defines the maximum value on the axis.
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
+  Value has to be greater then 0.
 */
 /*!
-  \qmlproperty real ValuesAxis::max
+  \qmlproperty real LogValuesAxis::max
   Defines the maximum value on the axis.
   When setting this property the min is adjusted if necessary, to ensure that the range remains valid.
+  Value has to be greater then 0.
+*/
+
+/*!
+  \property QLogValueAxis::base
+  Defines the base of the logarithm.
+  Value has to be greater then 0 and not equal 1
+*/
+/*!
+  \qmlproperty real LogValuesAxis::base
+  Defines the maximum value on the axis.
+  Defines the base of the logarithm.
+  Value has to be greater then 0 and not equal 1
+*/
+
+/*!
+  \property QLogValueAxis::labelFormat
+  Defines the label format of the axis.
+  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
+  See QString::sprintf() for additional details.
+*/
+/*!
+  \qmlproperty real LogValuesAxis::labelFormat
+  Defines the label format of the axis.
+  Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
+  See QString::sprintf() for additional details.
 */
 
 /*!
@@ -66,7 +95,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a min of axis has changed.
 */
 /*!
-  \qmlsignal ValuesAxis::onMinChanged(qreal min)
+  \qmlsignal LogValuesAxis::onMinChanged(qreal min)
   Axis emits signal when \a min of axis has changed.
 */
 
@@ -75,13 +104,31 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
   Axis emits signal when \a max of axis has changed.
 */
 /*!
-  \qmlsignal ValuesAxis::onMaxChanged(qreal max)
+  \qmlsignal LogValuesAxis::onMaxChanged(qreal max)
   Axis emits signal when \a max of axis has changed.
 */
 
 /*!
   \fn void QLogValueAxis::rangeChanged(qreal min, qreal max)
   Axis emits signal when \a min or \a max of axis has changed.
+*/
+
+/*!
+  \fn void QLogValueAxis::labelFormatChanged(const QString &format)
+  Axis emits signal when \a format of axis labels has changed.
+*/
+/*!
+  \qmlsignal LogValueAxis::labelFormatChanged(const QString &format)
+   Axis emits signal when \a format of axis labels has changed.
+*/
+
+/*!
+  \fn void QLogValueAxis::baseChanged(qreal base)
+  Axis emits signal when \a base of logarithm of the axis has changed.
+*/
+/*!
+  \qmlsignal LogValuesAxis::baseChanged(qreal base)
+  Axis emits signal when \a base of logarithm of the axis has changed.
 */
 
 /*!
