@@ -108,13 +108,13 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \property QValueAxis::labelFormat
-  Defines the label format for the axis.
+  Defines the label format of the axis.
   Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
   See QString::sprintf() for additional details.
 */
 /*!
   \qmlproperty real ValueAxis::labelFormat
-  Defines the label format for the axis.
+  Defines the label format of the axis.
   Supported specifiers are: d, i, o, x, X, f, F, e, E, g, G, c
   See QString::sprintf() for additional details.
 */
@@ -139,16 +139,25 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 /*!
   \fn void QValueAxis::tickCountChanged(int tickCount)
-  Axis emits signal when number of ticks on axis have changed.
+  Axis emits signal when \a tickCount number on axis have changed.
 */
 /*!
   \qmlsignal ValueAxis::tickCountChanged(int tickCount)
-  Axis emits signal when number of ticks on axis have changed.
+  Axis emits signal when \a tickCount number on axis have changed.
 */
 
 /*!
   \fn void QValueAxis::rangeChanged(qreal min, qreal max)
   Axis emits signal when \a min or \a max of axis has changed.
+*/
+
+/*!
+  \fn void QValueAxis::labelFormatChanged(const QString &format)
+  Axis emits signal when \a format of axis labels has changed.
+*/
+/*!
+  \qmlsignal ValueAxis::labelFormatChanged(const QString &format)
+   Axis emits signal when \a format of axis labels has changed.
 */
 
 /*!
@@ -288,7 +297,7 @@ QAbstractAxis::AxisType QValueAxis::type() const
     This method modifies range and number of ticks on the axis to look "nice". Algorithm considers numbers that
     can be expressed as form of 1*10^n, 2* 10^n or 5*10^n as a nice numbers. These numbers are used for spacing the ticks.
     This method will modify the current range and number of ticks.
-    \sa setRange(), setTicks()
+    \sa setRange(), setTickCount()
 */
 void QValueAxis::applyNiceNumbers()
 {

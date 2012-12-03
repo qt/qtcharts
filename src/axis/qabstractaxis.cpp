@@ -66,6 +66,7 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
     \value AxisTypeBarCategory
     \value AxisTypeCategory
     \value AxisTypeDateTime
+    \value AxisTypeLogValue
 */
 
 /*!

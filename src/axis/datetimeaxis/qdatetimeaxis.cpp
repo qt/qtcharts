@@ -148,6 +148,15 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
+  \fn void QDateTimeAxis::tickCountChanged(int tickCount)
+  Axis emits signal when \a tickCount number on axis have changed.
+*/
+/*!
+  \qmlsignal DateTimeAxis::tickCountChanged(int tickCount)
+  Axis emits signal when \a tickCount number on axis have changed.
+*/
+
+/*!
   \fn void QDateTimeAxis::formatChanged(QString format)
   Axis emits signal when \a format of the axis has changed.
 */
