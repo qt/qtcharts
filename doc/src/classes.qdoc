@@ -33,6 +33,7 @@
                     <li><a href="qchartview.html">QChartView</a></li>
                     <li><a href="qabstractaxis.html">QAbstractAxis</a></li>
                     <li><a href="qvalueaxis.html">QValueAxis</a></li>
+                    <li><a href="qlogvalueaxis.html">QLogValueAxis</a></li>
                     <li><a href="qbarcategoryaxis.html">QBarCategoryAxis</a></li>                   
                     <li><a href="qcategoryaxis.html">QCategoryAxis</a></li>
                     <li><a href="qdatetimeaxis.html">QDateTimeAxis</a></li>

@@ -34,8 +34,8 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 */
 
 /*!
-    \qmlclass DateTimeAxis QLogValueAxis
-    \brief The QLogValueAxis element is used for manipulating chart's axes
+    \qmlclass LogValuesAxis QLogValueAxis
+    \brief The LogValueAxis element is used for manipulating chart's axes
     \inherits AbstractAxis
 */
 
