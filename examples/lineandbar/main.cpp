@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     QBarSet *set1 = new QBarSet("John");
     QBarSet *set2 = new QBarSet("Axel");
     QBarSet *set3 = new QBarSet("Mary");
-    QBarSet *set4 = new QBarSet("Samantha");
+    QBarSet *set4 = new QBarSet("Sam");
 
     *set0 << 1 << 2 << 3 << 4 << 5 << 6;
     *set1 << 5 << 0 << 0 << 4 << 0 << 7;
@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 
 //![8]
     QLineSeries *lineseries = new QLineSeries();
-
+    lineseries->setName("trend");
     lineseries->append(QPoint(0, 4));
     lineseries->append(QPoint(1, 15));
     lineseries->append(QPoint(2, 20));
