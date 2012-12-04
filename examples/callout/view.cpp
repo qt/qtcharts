@@ -41,7 +41,7 @@ View::View(QWidget *parent)
 
     // chart
     m_chart = new QChart;
-    m_chart->setMinimumSize(800, 600);
+    m_chart->setMinimumSize(640, 480);
     m_chart->setTitle("Hover the line to show callout. Click the line to make it stay");
     m_chart->legend()->hide();
     QLineSeries *series = new QLineSeries;
@@ -84,8 +84,12 @@ View::View(QWidget *parent)
 
 void View::resizeEvent(QResizeEvent *event)
 {
-    if (scene())
+    if (scene()) {
         scene()->setSceneRect(QRect(QPoint(0, 0), event->size()));
+         m_chart->resize(event->size());
+         m_coordX->setPos(m_chart->size().width()/2 - 50, m_chart->size().height() - 20);
+         m_coordY->setPos(m_chart->size().width()/2 + 50, m_chart->size().height() - 20);
+    }
     QGraphicsView::resizeEvent(event);
 }
 

@@ -65,8 +65,8 @@ public Q_SLOTS:
     void handleVerticalAxisBaseChanged(qreal baseY);
 
 private:
-    qreal m_logMinY;
-    qreal m_logMaxY;
+    qreal m_logLeftY;
+    qreal m_logRightY;
     qreal m_logBaseY;
 };
 

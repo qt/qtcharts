@@ -21,6 +21,7 @@ SUBDIRS += \
            qhorizontalstackedbarseries \
            qhorizontalpercentbarseries \
            qvalueaxis \
+           qlogvalueaxis \
            qcategoryaxis \
            qbarcategoryaxis \
            domain \

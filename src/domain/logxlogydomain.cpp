@@ -27,11 +27,11 @@ QTCOMMERCIALCHART_BEGIN_NAMESPACE
 
 LogXLogYDomain::LogXLogYDomain(QObject *parent)
     : AbstractDomain(parent),
-      m_logMinX(0),
-      m_logMaxX(1),
+      m_logLeftX(0),
+      m_logRightX(1),
       m_logBaseX(10),
-      m_logMinY(0),
-      m_logMaxY(1),
+      m_logLeftY(0),
+      m_logRightY(1),
       m_logBaseY(10)
 {
 }
@@ -49,8 +49,10 @@ void LogXLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minX = minX;
         m_maxX = maxX;
         axisXChanged = true;
-        m_logMinX = log10(m_minX) / log10(m_logBaseX);
-        m_logMaxX = log10(m_maxX) / log10(m_logBaseX);
+        qreal logMinX = log10(m_minX) / log10(m_logBaseX);
+        qreal logMaxX = log10(m_maxX) / log10(m_logBaseX);
+        m_logLeftX = logMinX < logMaxX ? logMinX : logMaxX;
+        m_logRightX = logMinX > logMaxX ? logMinX : logMaxX;
         if(!m_signalsBlocked)
         emit rangeHorizontalChanged(m_minX, m_maxX);
     }
@@ -59,8 +61,10 @@ void LogXLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
         m_minY = minY;
         m_maxY = maxY;
         axisYChanged = true;
-        m_logMinY = log10(m_minY) / log10(m_logBaseY);
-        m_logMaxY = log10(m_maxY) / log10(m_logBaseY);
+        qreal logMinY = log10(m_minY) / log10(m_logBaseY);
+        qreal logMaxY = log10(m_maxY) / log10(m_logBaseY);
+        m_logLeftY = logMinY < logMaxY ? logMinY : logMaxY;
+        m_logRightY = logMinY > logMaxY ? logMinY : logMaxY;
         if(!m_signalsBlocked)
         emit rangeVerticalChanged(m_minY, m_maxY);
     }
@@ -71,73 +75,82 @@ void LogXLogYDomain::setRange(qreal minX, qreal maxX, qreal minY, qreal maxY)
 
 void LogXLogYDomain::zoomIn(const QRectF &rect)
 {
-    qreal newLogMinX = rect.left() * (m_logMaxX - m_logMinX) / m_size.width() + m_logMinX;
-    qreal newLogMaxX = rect.right() * (m_logMaxX - m_logMinX) / m_size.width() + m_logMinX;
-    qreal minX = qPow(m_logBaseX, newLogMinX);
-    qreal maxX = qPow(m_logBaseX, newLogMaxX);
+    qreal logLeftX = rect.left() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
+    qreal logRightX = rect.right() * (m_logRightX - m_logLeftX) / m_size.width() + m_logLeftX;
+    qreal leftX = qPow(m_logBaseX, logLeftX);
+    qreal rightX = qPow(m_logBaseX, logRightX);
+    qreal minX = leftX < rightX ? leftX : rightX;
+    qreal maxX = leftX > rightX ? leftX : rightX;
 
-    qreal newLogMinY = m_logMaxY - rect.bottom() * (m_logMaxY - m_logMinY) / m_size.height();
-    qreal newLogMaxY = m_logMaxY - rect.top() * (m_logMaxY - m_logMinY) / m_size.height();
-    qreal minY = qPow(m_logBaseY, newLogMinY);
-    qreal maxY = qPow(m_logBaseY, newLogMaxY);
+    qreal logLeftY = m_logRightY - rect.bottom() * (m_logRightY - m_logLeftY) / m_size.height();
+    qreal logRightY = m_logRightY - rect.top() * (m_logRightY - m_logLeftY) / m_size.height();
+    qreal leftY = qPow(m_logBaseY, logLeftY);
+    qreal rightY = qPow(m_logBaseY, logRightY);
+    qreal minY = leftY < rightY ? leftY : rightY;
+    qreal maxY = leftY > rightY ? leftY : rightY;
 
     setRange(minX, maxX, minY, maxY);
 }
 
 void LogXLogYDomain::zoomOut(const QRectF &rect)
 {
-    qreal ratioX = m_size.width()/rect.width();
-    qreal newLogMinX = m_logMinX - (m_logMaxX - m_logMinX) / ratioX;
-    qreal newLogMaxX = m_logMaxX + (m_logMaxX - m_logMinX) / ratioX;
-    qreal minX = qPow(m_logBaseX, newLogMinX);
-    qreal maxX = qPow(m_logBaseX, newLogMaxX);
+    const qreal factorX = m_size.width() / rect.width();
+    const qreal factorY = m_size.height() / rect.height();
 
-    qreal ratioY = m_size.height()/rect.height();
-    qreal newLogMinY = m_logMinY - (m_logMaxY - m_logMinY) / ratioY;
-    qreal newLogMaxY = m_logMaxY + (m_logMaxY - m_logMinY) / ratioY;
-    qreal minY = qPow(m_logBaseY, newLogMinY);
-    qreal maxY = qPow(m_logBaseY, newLogMaxY);
+    qreal logLeftX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 - factorX);
+    qreal logRIghtX = m_logLeftX + (m_logRightX - m_logLeftX) / 2 * (1 + factorX);
+    qreal leftX = qPow(m_logBaseX, logLeftX);
+    qreal rightX = qPow(m_logBaseX, logRIghtX);
+    qreal minX = leftX < rightX ? leftX : rightX;
+    qreal maxX = leftX > rightX ? leftX : rightX;
+
+    qreal newLogMinY = m_logLeftY + (m_logRightY - m_logLeftY) / 2 * (1 - factorY);
+    qreal newLogMaxY = m_logLeftY + (m_logRightY - m_logLeftY) / 2 * (1 + factorY);
+    qreal leftY = qPow(m_logBaseY, newLogMinY);
+    qreal rightY = qPow(m_logBaseY, newLogMaxY);
+    qreal minY = leftY < rightY ? leftY : rightY;
+    qreal maxY = leftY > rightY ? leftY : rightY;
 
     setRange(minX, maxX, minY, maxY);
 }
 
 void LogXLogYDomain::move(qreal dx, qreal dy)
 {
-    qreal stepX = dx * qAbs(m_logMaxX - m_logMinX) / m_size.width();
-    qreal minX = qPow(m_logBaseX, m_logMinX + stepX);
-    qreal maxX = qPow(m_logBaseX, m_logMaxX + stepX);
+    qreal stepX = dx * qAbs(m_logRightX - m_logLeftX) / m_size.width();
+    qreal leftX = qPow(m_logBaseX, m_logLeftX + stepX);
+    qreal rightX = qPow(m_logBaseX, m_logRightX + stepX);
+    qreal minX = leftX < rightX ? leftX : rightX;
+    qreal maxX = leftX > rightX ? leftX : rightX;
 
-    qreal stepY = dy * qAbs(m_logMaxY - m_logMinY) / m_size.height();
-    qreal minY = qPow(m_logBaseY, m_logMinY + stepY);
-    qreal maxY = qPow(m_logBaseY, m_logMaxY + stepY);
+    qreal stepY = dy * (m_logRightY - m_logLeftY) / m_size.height();
+    qreal leftY = qPow(m_logBaseY, m_logLeftY + stepY);
+    qreal rightY = qPow(m_logBaseY, m_logRightY + stepY);
+    qreal minY = leftY < rightY ? leftY : rightY;
+    qreal maxY = leftY > rightY ? leftY : rightY;
 
     setRange(minX, maxX, minY, maxY);
 }
 
 QPointF LogXLogYDomain::calculateGeometryPoint(const QPointF &point) const
 {
-    const qreal leftEdgeX= m_logMinX < m_logMaxX ? m_logMinX : m_logMaxX;
-    const qreal leftEdgeY = m_logMinY < m_logMaxY ? m_logMinY : m_logMaxY;
-    const qreal deltaX = m_size.width() / qAbs(m_logMaxX - m_logMinX);
-    const qreal deltaY = m_size.height() / qAbs(m_logMaxY - m_logMinY);
-    qreal x = (log10(point.x()) / log10(m_logBaseX)) * deltaX - leftEdgeX * deltaX;
-    qreal y = (log10(point.y()) / log10(m_logBaseY)) * -deltaY - leftEdgeY * -deltaY + m_size.height();
+    const qreal deltaX = m_size.width() / qAbs(m_logRightX - m_logLeftX);
+    const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
+    qreal x = (log10(point.x()) / log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
+    qreal y = (log10(point.y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
     return QPointF(x, y);
 }
 
 QVector<QPointF> LogXLogYDomain::calculateGeometryPoints(const QList<QPointF>& vector) const
 {
-    const qreal leftEdgeX= m_logMinX < m_logMaxX ? m_logMinX : m_logMaxX;
-    const qreal leftEdgeY = m_logMinY < m_logMaxY ? m_logMinY : m_logMaxY;
-    const qreal deltaX = m_size.width() / qAbs(m_logMaxX - m_logMinX);
-    const qreal deltaY = m_size.height() / qAbs(m_logMaxY - m_logMinY);
+    const qreal deltaX = m_size.width() / qAbs(m_logRightX - m_logLeftX);
+    const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
 
     QVector<QPointF> result;
     result.resize(vector.count());
 
     for (int i = 0; i < vector.count(); ++i) {
-        qreal x = (log10(vector[i].x()) / log10(m_logBaseX)) * deltaX - leftEdgeX * deltaX;
-        qreal y = (log10(vector[i].y()) / log10(m_logBaseY)) * -deltaY - leftEdgeY * -deltaY + m_size.height();
+        qreal x = (log10(vector[i].x()) / log10(m_logBaseX)) * deltaX - m_logLeftX * deltaX;
+        qreal y = (log10(vector[i].y()) / log10(m_logBaseY)) * -deltaY - m_logLeftY * -deltaY + m_size.height();
         result[i].setX(x);
         result[i].setY(y);
     }
@@ -146,12 +159,10 @@ QVector<QPointF> LogXLogYDomain::calculateGeometryPoints(const QList<QPointF>& v
 
 QPointF LogXLogYDomain::calculateDomainPoint(const QPointF &point) const
 {
-    const qreal leftEdgeX= m_logMinX < m_logMaxX ? m_logMinX : m_logMaxX;
-    const qreal leftEdgeY = m_logMinY < m_logMaxY ? m_logMinY : m_logMaxY;
-    const qreal deltaX = m_size.width() / qAbs(m_logMaxX - m_logMinX);
-    const qreal deltaY = m_size.height() / qAbs(m_logMaxY - m_logMinY);
-    qreal x = qPow(m_logBaseX, leftEdgeX + point.x() / deltaX);
-    qreal y = qPow(m_logBaseY, leftEdgeY + (m_size.height() - point.y()) / deltaY);
+    const qreal deltaX = m_size.width() / qAbs(m_logRightX - m_logLeftX);
+    const qreal deltaY = m_size.height() / qAbs(m_logRightY - m_logLeftY);
+    qreal x = qPow(m_logBaseX, m_logLeftX + point.x() / deltaX);
+    qreal y = qPow(m_logBaseY, m_logLeftY + (m_size.height() - point.y()) / deltaY);
     return QPointF(x, y);
 }
 
@@ -190,16 +201,20 @@ bool LogXLogYDomain::detachAxis(QAbstractAxis* axis)
 void LogXLogYDomain::handleVerticalAxisBaseChanged(qreal baseY)
 {
     m_logBaseY = baseY;
-    m_logMinY = log10(m_minY) / log10(m_logBaseY);
-    m_logMaxY = log10(m_maxY) / log10(m_logBaseY);
+    qreal logMinY = log10(m_minY) / log10(m_logBaseY);
+    qreal logMaxY = log10(m_maxY) / log10(m_logBaseY);
+    m_logLeftY = logMinY < logMaxY ? logMinY : logMaxY;
+    m_logRightY = logMinY > logMaxY ? logMinY : logMaxY;
     emit updated();
 }
 
 void LogXLogYDomain::handleHorizontalAxisBaseChanged(qreal baseX)
 {
     m_logBaseX = baseX;
-    m_logMinX = log10(m_minX) / log10(m_logBaseX);
-    m_logMaxX = log10(m_maxX) / log10(m_logBaseX);
+    qreal logMinX = log10(m_minX) / log10(m_logBaseX);
+    qreal logMaxX = log10(m_maxX) / log10(m_logBaseX);
+    m_logLeftX = logMinX < logMaxX ? logMinX : logMaxX;
+    m_logRightX = logMinX > logMaxX ? logMinX : logMaxX;
     emit updated();
 }
 

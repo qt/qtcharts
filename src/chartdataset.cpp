@@ -391,8 +391,11 @@ QPointF ChartDataSet::mapToValue(const QPointF &position, QAbstractSeries *serie
     if (series == 0 && !m_seriesList.isEmpty())
         series = m_seriesList.first();
 
+    if (series && series->type() == QAbstractSeries::SeriesTypePie)
+        return point;
+
     if (series && m_seriesList.contains(series))
-        point = series->d_ptr->m_domain->calculateDomainPoint(position);
+        point = series->d_ptr->m_domain->calculateDomainPoint(position - m_chart->plotArea().topLeft());
     return point;
 }
 
@@ -401,6 +404,9 @@ QPointF ChartDataSet::mapToPosition(const QPointF &value, QAbstractSeries *serie
     QPointF point = m_chart->plotArea().topLeft();
     if (series == 0 && !m_seriesList.isEmpty())
         series = m_seriesList.first();
+
+    if (series && series->type() == QAbstractSeries::SeriesTypePie)
+        return QPoint(0, 0);
 
     if (series && m_seriesList.contains(series))
         point += series->d_ptr->m_domain->calculateGeometryPoint(value);

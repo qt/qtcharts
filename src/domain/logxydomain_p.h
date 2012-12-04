@@ -65,8 +65,8 @@ public Q_SLOTS:
     void handleHorizontalAxisBaseChanged(qreal baseX);
 
 private:
-    qreal m_logMinX;
-    qreal m_logMaxX;
+    qreal m_logLeftX;
+    qreal m_logRightX;
     qreal m_logBaseX;
 };
 
