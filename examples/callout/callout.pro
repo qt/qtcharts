@@ -5,9 +5,11 @@
 TARGET = callout
 TEMPLATE = app
 
-SOURCES += main.cpp\
-        widget.cpp \
-    callout.cpp
+SOURCES += \
+        main.cpp\
+        callout.cpp \
+        view.cpp
 
-HEADERS  += widget.h \
-    callout.h
+HEADERS  += \
+        callout.h \
+        view.h

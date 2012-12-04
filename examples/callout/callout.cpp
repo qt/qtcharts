@@ -2,7 +2,7 @@
 #include <QPainter>
 #include <QFontMetrics>
 #include <QGraphicsSceneMouseEvent>
-#include <QCursor>
+#include <QMouseEvent>
 
 Callout::Callout(QGraphicsItem * parent):
     QGraphicsItem(parent)
