@@ -130,6 +130,9 @@ public:
 
     QRectF plotArea() const;
 
+    QPointF mapToValue(const QPointF &position, QAbstractSeries *series = 0);
+    QPointF mapToPosition(const QPointF &value, QAbstractSeries *series = 0);
+
 protected:
     QScopedPointer<QChartPrivate> d_ptr;
     friend class QLegend;

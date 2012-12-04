@@ -73,9 +73,10 @@ void Widget::tooltip(QPointF point, bool state)
         m_tooltip = new Callout(m_chart);
 
     if (state) {
-        m_tooltip->setText(QString("X: %1\nY: %2").arg(point.x()).arg(point.y()));
-        m_tooltip->setAnchor(m_chart->mapFromParent(m_view->mapToScene(m_view->mapFromGlobal(QCursor::pos()))));
-        m_tooltip->setPos(m_chart->mapFromParent(m_view->mapToScene(m_view->mapFromGlobal(QCursor::pos() + QPoint(10, -50)))));
+        m_tooltip->setText(QString("X: %1 \nY: %2 ").arg(point.x()).arg(point.y()));
+        QXYSeries *series = qobject_cast<QXYSeries *>(sender());
+        m_tooltip->setAnchor(m_chart->mapToPosition(point, series));
+        m_tooltip->setPos(m_chart->mapToPosition(point, series) + QPoint(10, -50));
         m_tooltip->setZValue(11);
         m_tooltip->show();
     } else {

@@ -269,7 +269,7 @@ void QChart::zoomIn()
  */
 void QChart::zoomIn(const QRectF &rect)
 {
-	d_ptr->zoomIn(rect);
+    d_ptr->zoomIn(rect);
 }
 
 /*!
@@ -347,11 +347,11 @@ QAbstractAxis *QChart::axisY(QAbstractSeries *series) const
     foreach(QAbstractAxis* axis, axes){
 
         if(axis->alignment()==Qt::AlignLeft){
-           left=axis;
+            left=axis;
         }
 
         if(axis->alignment()==Qt::AlignRight){
-           right=axis;
+            right=axis;
         }
     }
 
@@ -540,16 +540,16 @@ QList<QAbstractSeries *> QChart::series() const
 */
 void QChart::setAxisX(QAbstractAxis *axis , QAbstractSeries *series)
 {
-   QList<QAbstractAxis*> list = axes(Qt::Horizontal,series);
+    QList<QAbstractAxis*> list = axes(Qt::Horizontal,series);
 
-   foreach(QAbstractAxis* a, list){
+    foreach(QAbstractAxis* a, list){
         d_ptr->m_dataset->removeAxis(a);
         delete a;
-   }
+    }
 
-   if(!d_ptr->m_dataset->axes().contains(axis))
-       d_ptr->m_dataset->addAxis(axis,Qt::AlignBottom);
-   d_ptr->m_dataset->attachAxis(series,axis);
+    if(!d_ptr->m_dataset->axes().contains(axis))
+        d_ptr->m_dataset->addAxis(axis,Qt::AlignBottom);
+    d_ptr->m_dataset->attachAxis(series,axis);
 }
 
 /*!
@@ -567,18 +567,28 @@ void QChart::setAxisY(QAbstractAxis *axis , QAbstractSeries *series)
     }
 
     if(!d_ptr->m_dataset->axes().contains(axis))
-          d_ptr->m_dataset->addAxis(axis,Qt::AlignLeft);
+        d_ptr->m_dataset->addAxis(axis,Qt::AlignLeft);
     d_ptr->m_dataset->attachAxis(series,axis);
 }
 
 void QChart::addAxis(QAbstractAxis *axis,Qt::Alignment aligment)
 {
-	d_ptr->m_dataset->addAxis(axis,aligment);
+    d_ptr->m_dataset->addAxis(axis,aligment);
 }
 
 void QChart::removeAxis(QAbstractAxis *axis)
 {
-	d_ptr->m_dataset->removeAxis(axis);
+    d_ptr->m_dataset->removeAxis(axis);
+}
+
+QPointF QChart::mapToValue(const QPointF &position, QAbstractSeries *series)
+{
+    return d_ptr->m_dataset->mapToValue(position, series);
+}
+
+QPointF QChart::mapToPosition(const QPointF &value, QAbstractSeries *series)
+{
+    return d_ptr->m_dataset->mapToPosition(value, series);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -617,7 +627,7 @@ void QChartPrivate::zoomIn(qreal factor)
 void QChartPrivate::zoomIn(const QRectF &rect)
 {
     if (!rect.isValid())
-    return;
+        return;
 
     QRectF r = rect.normalized();
     const QRectF geometry = m_presenter->geometry();

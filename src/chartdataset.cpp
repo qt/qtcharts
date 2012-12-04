@@ -385,6 +385,28 @@ void ChartDataSet::scrollDomain(qreal dx, qreal dy)
         domain->blockRangeSignals(false);
 }
 
+QPointF ChartDataSet::mapToValue(const QPointF &position, QAbstractSeries *series)
+{
+    QPointF point;
+    if (series == 0 && !m_seriesList.isEmpty())
+        series = m_seriesList.first();
+
+    if (series && m_seriesList.contains(series))
+        point = series->d_ptr->m_domain->calculateDomainPoint(position);
+    return point;
+}
+
+QPointF ChartDataSet::mapToPosition(const QPointF &value, QAbstractSeries *series)
+{
+    QPointF point = m_chart->plotArea().topLeft();
+    if (series == 0 && !m_seriesList.isEmpty())
+        series = m_seriesList.first();
+
+    if (series && m_seriesList.contains(series))
+        point += series->d_ptr->m_domain->calculateGeometryPoint(value);
+    return point;
+}
+
 QList<QAbstractAxis*> ChartDataSet::axes() const
 {
    return m_axisList;

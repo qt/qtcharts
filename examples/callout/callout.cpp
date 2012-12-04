@@ -14,9 +14,9 @@ QRectF Callout::boundingRect() const
     QPointF anchor = mapFromParent(m_anchor);
     QRectF rect;
     rect.setLeft(qMin(m_textRect.left(), anchor.x()));
-    rect.setRight(qMax(m_textRect.right() + 4, anchor.x()));
+    rect.setRight(qMax(m_textRect.right() + 8, anchor.x()));
     rect.setTop(qMin(m_textRect.top(), anchor.y()));
-    rect.setBottom(qMax(m_textRect.bottom() + 4, anchor.y()));
+    rect.setBottom(qMax(m_textRect.bottom() + 8, anchor.y()));
     return rect;
 }
 
@@ -65,7 +65,7 @@ void Callout::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
     }
     painter->setBrush(QColor(255, 255, 255));
     painter->drawPath(path);
-    painter->drawText(m_textRect.adjusted(2, 2, 0, 0), m_text);
+    painter->drawText(m_textRect.adjusted(4, 4, 0, 0), m_text);
 }
 
 void Callout::mousePressEvent(QGraphicsSceneMouseEvent *event)

@@ -64,6 +64,9 @@ public:
     void zoomOutDomain(const QRectF &rect);
     void scrollDomain(qreal dx, qreal dy);
 
+    QPointF mapToValue(const QPointF &position, QAbstractSeries *series = 0);
+    QPointF mapToPosition(const QPointF &value, QAbstractSeries *series = 0);
+
 Q_SIGNALS:
     void axisAdded(QAbstractAxis* axis);
     void axisRemoved(QAbstractAxis* axis);
