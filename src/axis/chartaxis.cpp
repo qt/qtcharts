@@ -47,17 +47,14 @@ ChartAxis::ChartAxis(QAbstractAxis *axis, QGraphicsItem* item , bool intervalAxi
       m_intervalAxis(intervalAxis)
 {
     Q_ASSERT(item);
-    //initial initialization
+    //initial initialization    
     m_arrow->setHandlesChildEvents(false);
     m_arrow->setZValue(ChartPresenter::AxisZValue);
-    m_arrow->setVisible(m_axis->isLineVisible());
     m_labels->setZValue(ChartPresenter::AxisZValue);
-    m_labels->setVisible(m_axis->labelsVisible());
     m_shades->setZValue(ChartPresenter::ShadesZValue);
-    m_shades->setVisible(m_axis->shadesVisible());
     m_grid->setZValue(ChartPresenter::GridZValue);
-    m_grid->setVisible(m_axis->isGridLineVisible());
     m_title->setZValue(ChartPresenter::GridZValue);
+    handleVisibleChanged(m_axis->isVisible());
     connectSlots();
 
     setFlag(QGraphicsItem::ItemHasNoContents,true);
@@ -392,7 +389,7 @@ void ChartAxis::handleVisibleChanged(bool visible)
         m_title->setVisible(m_axis->isTitleVisible());
     }
 
-    presenter()->layout()->invalidate();
+    if(presenter()) presenter()->layout()->invalidate();
 }
 
 void ChartAxis::handleRangeChanged(qreal min, qreal max)

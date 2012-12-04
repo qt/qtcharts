@@ -753,6 +753,7 @@ QAbstractAxisPrivate::QAbstractAxisPrivate(QAbstractAxis *q)
       m_gridLineVisible(true),
       m_labelsVisible(true),
       m_labelsAngle(0),
+      m_titleVisible(true),
       m_shadesVisible(false),
       m_shadesBrush(Qt::SolidPattern),
       m_shadesOpacity(1.0),
