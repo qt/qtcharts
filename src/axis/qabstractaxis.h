@@ -67,7 +67,7 @@ class QTCOMMERCIALCHART_EXPORT QAbstractAxis : public QObject
     Q_PROPERTY(bool titleVisible READ isTitleVisible WRITE setTitleVisible NOTIFY titleVisibleChanged)
     Q_PROPERTY(QFont titleFont READ titleFont WRITE setTitleFont NOTIFY titleFontChanged)
     //orientation
-    Q_PROPERTY(Qt::Orientation orinetation READ orientation)
+    Q_PROPERTY(Qt::Orientation orientation READ orientation)
     //aligment
     Q_PROPERTY(Qt::Alignment alignment READ alignment)
 
