@@ -22,8 +22,8 @@ import QtQuick 1.1
 import QtCommercial.Chart 1.1
 
 Rectangle {
-    width: 360
-    height: 360
+    width: 400
+    height: 300
     property int currentIndex: -1
 
     //![1]
