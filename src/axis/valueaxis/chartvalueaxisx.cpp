@@ -99,7 +99,9 @@ QSizeF ChartValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
     switch (which) {
         case Qt::MinimumSize: {
             if(!ticksList.empty()) {
-                width = qMax(fn.boundingRect(ticksList.last()).width(),fn.boundingRect(ticksList.first()).width());
+                foreach(QString label,ticksList) {
+                    width = qMax(qreal(fn.boundingRect(label).width()),width);
+                }
             }
             height = fn.height() + labelPadding();
             width = qMax(width,base.width());

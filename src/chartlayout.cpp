@@ -169,8 +169,8 @@ QRectF ChartLayout::calculateAxisGeometry(const QRectF &geometry, const QList<Ch
     if(rightCount>0)
         right.setWidth(qMin(right.width(),hratio*rightCount));
 
-    qreal minHeight = qMax(minLeft.height(),minRight.height());
-    qreal minWidth = qMax(minTop.width(),minBottom.width());
+    qreal minHeight = qMax(minLeft.height(),minRight.height()) + 1;
+    qreal minWidth = qMax(minTop.width(),minBottom.width()) + 1;
 
     QRectF chartRect = geometry.adjusted(qMax(left.width(),minWidth/2), qMax(top.height(), minHeight/2),-qMax(right.width(),minWidth/2),-qMax(bottom.height(),minHeight/2));
 
