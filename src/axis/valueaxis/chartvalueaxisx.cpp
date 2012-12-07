@@ -95,31 +95,31 @@ QSizeF ChartValueAxisX::sizeHint(Qt::SizeHint which, const QSizeF &constraint) c
     qreal width = 0;
     qreal height = 0;
 
-    int count = 1;
-
-    if(!ticksList.empty()) {
-        count = qMax(ticksList.last().count(),ticksList.first().count());
-    }
 
     switch (which) {
-    case Qt::MinimumSize:{
-        count = qMin(count,5);
-        width = fn.averageCharWidth() * count;
-        height = fn.height() + labelPadding();
-        width = qMax(width,base.width());
-        height += base.height();
-        sh = QSizeF(width,height);
-        break;
-    }
-    case Qt::PreferredSize:{
-        width=fn.averageCharWidth() * count;
-        height=fn.height()+labelPadding();
-        width=qMax(width,base.width());
-        height+=base.height();
-        sh = QSizeF(width,height);
-        break;
-    }
-    default:
+        case Qt::MinimumSize: {
+            if(!ticksList.empty()) {
+                width = qMax(fn.boundingRect(ticksList.last()).width(),fn.boundingRect(ticksList.first()).width());
+            }
+            height = fn.height() + labelPadding();
+            width = qMax(width,base.width());
+            height += base.height();
+            sh = QSizeF(width,height);
+            break;
+        }
+        case Qt::PreferredSize: {
+            if(!ticksList.empty()) {
+                foreach(QString label,ticksList) {
+                    width+=fn.boundingRect(label).width();
+                }
+            }
+            height=fn.height()+labelPadding();
+            width=qMax(width,base.width());
+            height+=base.height();
+            sh = QSizeF(width,height);
+            break;
+        }
+        default:
         break;
     }
 
