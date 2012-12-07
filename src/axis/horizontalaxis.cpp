@@ -146,7 +146,7 @@ void HorizontalAxis::updateGeometry()
         //label overlap detection
         if(labelItem->pos().x() < width ||
             labelItem->pos().x() < axisRect.left() ||
-            labelItem->pos().x() + rect.width() > axisRect.right()) {
+            labelItem->pos().x() + rect.width() - 1 > axisRect.right()) {
             labelItem->setVisible(false);
         } else {
             labelItem->setVisible(true);
